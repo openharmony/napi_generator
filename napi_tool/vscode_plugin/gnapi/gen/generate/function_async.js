@@ -90,8 +90,9 @@ function GenerateFunctionAsync(func, class_name) {
     middle_func = ReplaceAll(middle_func, "[value_checkout]", param.value_checkout)//  # 输入参数解析
 
     middle_func = ReplaceAll(middle_func, "[start_async]", `
-    napi_value result = pxt->StartAsync(%s_execute, vio, %s_complete, pxt->GetArgc() == %s ? pxt->GetArgv(%d) : nullptr);`.format
-        (func.name, func.name, parseInt(param.callback.offset) + 1, param.callback.offset))// 注册异步调用
+    napi_value result = \
+pxt->StartAsync(%s_execute, vio, %s_complete, pxt->GetArgc() == %s ? pxt->GetArgv(%d) : nullptr);`.format(func.name,
+        func.name, parseInt(param.callback.offset) + 1, param.callback.offset))// 注册异步调用
 
     let call_func = "%s%s(%s);".format(class_name == null ? "" : "pInstance->", func.name, param.value_fill)
     middle_func = ReplaceAll(middle_func, "[call_func]", call_func)//执行

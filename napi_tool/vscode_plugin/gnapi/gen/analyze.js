@@ -12,7 +12,7 @@ function AnalyzeFile(fn) {
     data = RemoveExplains(data)//去除注释
     data = RemoveEmptyLine(data)//去除空行
     while (true) {//去除import
-        let tt = re.search("import ([{}A-Za-z ,]+) from [\"\']{1}([@./a-zA-Z]+)[\"\']{1};*", data);
+        let tt = re.search("import ([{}A-Za-z ,]+) from [\"']{1}([@./a-zA-Z]+)[\"']{1};*", data);
         if (tt != null) data = re.remove_reg(data, tt.regs[0]);
         else break;
     }

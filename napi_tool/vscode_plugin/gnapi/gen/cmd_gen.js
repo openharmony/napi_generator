@@ -16,7 +16,7 @@ else
 {
     let fn=re.get_file_in_path(process.argv[2])
     
-    let tt=re.match("@ohos\.[a-zA-Z0-9]+\.d\.ts",fn)
+    let tt=re.match("@ohos.[a-zA-Z0-9]+.d.ts",fn)
     if(tt)
     {
         main.DoGenerate(process.argv[2])
