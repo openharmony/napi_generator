@@ -4,6 +4,7 @@ try {
     vscode = require('vscode');
 }
 catch (err) {
+    vscode = null;
 }
 
 function print(...args) {
@@ -54,9 +55,9 @@ function CheckOutBody(body, off, flag, binside) {
         csr[idx[f]] = 0
     }
     let cs1 = 0
-    if (flag[0].length == 0 || body.substring(off, off + flag[0].length) == flag[0]) {
+    if (flag[0].length > 0 && body.substring(off, off + flag[0].length) != flag[0]) {
+        return null;
     }
-    else return null;
 
     for (let i = off + flag[0].length; i < body.length; i++) {
         // print(body[i])
@@ -104,7 +105,7 @@ function RemoveExplains(data) {
         // # print("------------------------------------------------------------------------------")
     }
     while (true) {
-        let tt = re.search("\n *//([a-zA-Z \.]+)\n", data)
+        let tt = re.search("\n *//([a-zA-Z .]+)\n", data)
         // print(tt)
         if (tt != null) {
             //     # print("help",data[tt.regs[1][0]:tt.regs[1][1]])
