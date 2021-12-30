@@ -13,7 +13,7 @@
 XNapiTool::XNapiTool(napi_env env, napi_callback_info info)
 {
     env_ = env;
-    //bFailed_ = false;
+    bFailed_ = false;
     executeFunction_ = nullptr;
     completeFunction_ = nullptr;
     valueData_ = nullptr;
@@ -22,6 +22,8 @@ XNapiTool::XNapiTool(napi_env env, napi_callback_info info)
     pInstance_ = nullptr;
     releaseInstance_ = nullptr;
     wrapper_ = nullptr;
+    asyncInstance_ = nullptr;
+    data_ = nullptr;
 
     argc_ = 8;
 
@@ -36,6 +38,16 @@ XNapiTool::XNapiTool(napi_env env, napi_value exports)
 
     asyncMode_ = AsyncMode::NONE;
     wrapper_ = nullptr;
+
+    bFailed_ = false;
+    executeFunction_ = nullptr;
+    completeFunction_ = nullptr;
+    valueData_ = nullptr;
+    asyncNeedRelease_ = false;
+    pInstance_ = nullptr;
+    releaseInstance_ = nullptr;
+    asyncInstance_ = nullptr;
+    data_ = nullptr;
 }
 
 XNapiTool::~XNapiTool()
