@@ -103,6 +103,9 @@ function GenerateInterface(name, data, in_namespace) {
             case FuncType.PROMISE:
                 tmp = GenerateFunctionAsync(func, name)
                 break
+            default:
+                    //to do yichangchuli
+                    return
         }
         middle_func += tmp[0]
         impl_h += tmp[1]

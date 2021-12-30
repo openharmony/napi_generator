@@ -55,6 +55,9 @@ function GenerateNamespace(name, data, in_namespace = "") {
             case FuncType.PROMISE:
                 tmp = GenerateFunctionAsync(func)
                 break
+            default:
+                // to do yichangchuli
+                return
         }
         middle_func += tmp[0]
         impl_h += tmp[1]

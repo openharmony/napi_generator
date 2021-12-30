@@ -44,7 +44,7 @@ function CheckOutBody(body, off, flag, binside) {
         "(": ")",
         "{": "}",
         "<": ">",
-        "<": "<",
+        //"<": "<",
         ">": ">",
     };
     let csl = {};
