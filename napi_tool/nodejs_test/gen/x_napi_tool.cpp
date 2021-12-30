@@ -13,7 +13,7 @@
 XNapiTool::XNapiTool(napi_env env, napi_callback_info info)
 {
     env_ = env;
-    bFailed_ = false;
+    //bFailed_ = false;
     executeFunction_ = nullptr;
     completeFunction_ = nullptr;
     valueData_ = nullptr;
