@@ -72,13 +72,13 @@ private:
 
     //解析参数
     napi_value argv_[8];
-    size_t argc_;
+    size_t argc_ = 8;
     napi_value thisVar_;
     void *data_;
 
     //错误信息
     napi_value error_;
-    bool bFailed_;
+    bool bFailed_ = false;
     bool CheckFailed(bool b, const char *errStr);
     bool CheckValueType(napi_value value, napi_valuetype type);
 
@@ -113,7 +113,7 @@ public:
     void *GetAsyncInstance();
 
 private:
-    napi_ref wrapper_;
+    napi_ref wrapper_ = nullptr;
     void *pInstance_;
     RELEASE_INSTANCE releaseInstance_;
     void *asyncInstance_;
