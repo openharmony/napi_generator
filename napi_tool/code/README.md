@@ -17,21 +17,22 @@
 ```
 
 #### 说明
+##### 可执行文件开发说明
+1.安装pkg : 执行命令sudo npm i -g pkg
 
-gnapi是使用yo code生成的插件代码框架，其中gnapi/gen目录下是我们开发的自动化生成napi程序的源代码
+2.打包三个版本 : 执行命令pkg vscode_plugin/gnapi/gen/cmd_gen.js
 
-yo生成插件框架:
-安装yo : npm install -g yo generator-code
-使用yo : yo code
+执行以上步骤后，即可在gen目录下生成Windows、linux、mac系统下的可执行程序。
 
-使用nodejs测试生成代码:
-node vscode_plugin/gnapi/gen/test.js
-node vscode_plugin/gnapi/gen/cmd_gen.js nodejs_test/gen/@ohos.napitest.d.ts
+##### 插件开发说明
+1. 安装yo : 执行命令npm install -g yo generator-code。
 
-插件打包成visx:
-安装vsce : npm i -g vsce
-打包 : vsce package
+2. 使用yo : 执行命令yo code，gnapi是使用yo code生成的插件代码框架，其中gnapi/gen目录下是我们开发的自动化生成napi程序的源代码。
 
-插件打包成windows,mac,linux三种版本的命令行可执行文件
-安装pkg : npm i -g pkg
-打包三个版本 : pkg vscode_plugin/gnapi/gen/cmd_gen.js
+   ![](image/image-20220106161201896.png)
+
+3. 在napi_generator/vscode_plugin/gnapi这个目录中执行命令npm i vsce。
+
+4. 执行命令./node_modules/vsce/vsce package命令，最终会打包生成一个插件gnapi-0.0.1.vsix。
+
+   ![](image/image-20220106162517246.png)
