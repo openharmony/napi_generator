@@ -1,39 +1,22 @@
 # assist_tools
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+####仓名
+ assist_tools
+#### 简介
+此仓用于孵化OpenHarmony系统的辅助工具，以便开发者提升开发效率。当前已实现的工具有NAPI框架代码生成工具、正在规划的工具是开机动画生成工具，后续其他类似工具均可在此仓孵化。
 
-#### 软件架构
-软件架构说明
+#### 目录
+```
+/assist_tools/
+├── napi_tool            # NAPI框架代码生成工具
+│   ├── doc              # 工具当前能力、版本规划
+│   ├── output           # 工具对应的可执行程序与插件程序
+│   ├── code             # 工具源码
+│   └── README           # 工具使用指导    
+└──README 
+```
 
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+#### 相关仓
+无
 
 
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
