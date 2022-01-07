@@ -8,6 +8,7 @@ This warehouse is used to incubate the assist tools of openharmony system, so th
 /assist_tools/
 ├── napi_tool            # NAPI framework code generation tool
 │   ├── doc              # Current capability and version planning
+│   ├── image            # image resource
 │   ├── output           # Executable program and plug-in program corresponding to the tool
 │   ├── code             # Source code of tool
 │   └── README           # Instructions of tool

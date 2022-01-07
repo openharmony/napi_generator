@@ -42,12 +42,14 @@ public:
     XNapiTool(napi_env env, napi_value exports);
     ~XNapiTool();
 
+    bool SwapJs2CBool(napi_value value);
     int32_t SwapJs2CInt32(napi_value value);
     uint32_t SwapJs2CUint32(napi_value value);
     int64_t SwapJs2CInt64(napi_value value);
     double_t SwapJs2CDouble(napi_value value);
     size_t SwapJs2CUtf8(napi_value value, std::string &str);
 
+    napi_value SwapC2JsBool(bool value);
     napi_value SwapC2JsInt32(int32_t value);
     napi_value SwapC2JsUint32(uint32_t value);
     napi_value SwapC2JsInt64(int64_t value);
@@ -202,6 +204,15 @@ XNapiTool::~XNapiTool()
     /*printf("----------------release XNapiTool\\n");*/
 }
 
+bool XNapiTool::SwapJs2CBool(napi_value value)
+{
+   bool result;
+   napi_status result_status = napi_get_value_bool(env_, value, &result);
+   if (CheckFailed(result_status == napi_ok, "swap_js_2_c_bool fail"))
+    return -1;
+   return result;
+}
+
 napi_value XNapiTool::GetArgv(uint32_t p)
 {
     if (CheckFailed(p < argc_, "GetArgv失败"))
@@ -328,6 +339,14 @@ size_t XNapiTool::SwapJs2CUtf8(napi_value value, std::string &str)
     if (CheckFailed(result_status == napi_ok, "napi_get_value_string_utf8 fail"))
         return -1;
     str = buf;
+    return result;
+}
+
+napi_value XNapiTool::SwapC2JsBool(bool value)
+{
+    napi_value result;
+    napi_status result_status = napi_create_int32(env_, value, &result);
+    CC_ASSERT(result_status == napi_ok);
     return result;
 }
 

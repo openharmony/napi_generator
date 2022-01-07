@@ -10,6 +10,7 @@
 /assist_tools/
 ├── napi_tool            # NAPI框架代码生成工具
 │   ├── doc              # 工具当前能力、版本规划
+│   ├── image            # 图片资源文件
 │   ├── output           # 工具对应的可执行程序与插件程序
 │   ├── code             # 工具源码
 │   └── README           # 工具使用指导    
