@@ -1,23 +1,19 @@
 # assist_tools
 
-#### 仓名
- assist_tools
-#### 简介
-此仓用于孵化OpenHarmony系统的辅助工具，以便开发者提升开发效率。当前已实现的工具有NAPI框架代码生成工具、正在规划的工具是开机动画生成工具，后续其他类似工具均可在此仓孵化。
+#### Description
+This warehouse is used to incubate the assist tools of openharmony system, so that developers can improve development efficiency.Currently NAPI framework code generation tool has been implemented, and the bootanimation tool is being planned.Other similar tools can be incubated in this warehouse.
 
-#### 目录
+#### Directory Structure
 ```
 /assist_tools/
-├── napi_tool            # NAPI框架代码生成工具
-│   ├── doc              # 工具当前能力、版本规划
-│   ├── image            # 图片资源文件
-│   ├── output           # 工具对应的可执行程序与插件程序
-│   ├── code             # 工具源码
-│   └── README           # 工具使用指导    
+├── napi_tool            # NAPI framework code generation tool
+│   ├── doc              # Current capability and version planning
+│   ├── image            # image resource
+│   ├── output           # Executable program and plug-in program corresponding to the tool
+│   ├── code             # Source code of tool
+│   └── README           # Instructions of tool
 └──README 
 ```
 
-#### 相关仓
-无
-
-
+#### Repositories Involved
+no
