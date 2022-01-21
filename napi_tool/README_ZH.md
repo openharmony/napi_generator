@@ -20,8 +20,8 @@ NAPI框架代码生成工具,根据用户指定的路径下的ts接口文件可�
 
 #### 安装教程
 
-1. 将Windows可执行程序cmd_gen-win.exe拷贝到对应目录下，不需要安装，可以在cmd命令行中直接运行。
-2. 将Linux可执行程序cmd_gen-linux拷贝到对应目录下，可以在终端下直接运行。
+1. 将output目录下Windows可执行程序cmd_gen-win.exe拷贝到对应目录下，不需要安装，可以在cmd命令行中直接运行。
+2. 将output目录下Linux可执行程序cmd_gen-linux拷贝到对应目录下，可以在终端下直接运行。
 
 #### 使用说明
 
