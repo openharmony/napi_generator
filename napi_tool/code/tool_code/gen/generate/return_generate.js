@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const { ReplaceAll, print } = require("../tools/tool");
-const { InterfaceList, get_array_type } = require("../tools/common");
+const { InterfaceList, getArrayType } = require("../tools/common");
 
 function c_to_js(value, type, dest, deep = 1) {
     // print(value, type, dest)
@@ -39,7 +39,7 @@ function c_to_js(value, type, dest, deep = 1) {
         return tt
     }
     else if (type.substring(0, 6) == "Array<") {
-        let array_type = get_array_type(type)
+        let arrayType = getArrayType(type)
         let lt = deep
         let tnv = dest
         let tnvdef = `uint32_t len%d=%s.size();
@@ -49,14 +49,14 @@ function c_to_js(value, type, dest, deep = 1) {
         pxt->SetArrayElement(%s, i, tnv%d);
     }`.format(lt, value, lt, lt, tnv, lt)
         let ret = ""
-        if (array_type.substring(0, 12) == "NUMBER_TYPE_") {
+        if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
             ret = tnvdef.ReplaceAll("[calc_out]", `tnv%d = NUMBER_C_2_JS(pxt,%s[i]);`.format(lt, value))
         }
-        else if (array_type == "string") {
+        else if (arrayType == "string") {
             ret = tnvdef.ReplaceAll("[calc_out]", `tnv%d = pxt->SwapC2JsUtf8(%s[i].c_str());`.format(lt, value))
         }
-        else if (InterfaceList.GetValue(array_type)) {
-            ret = tnvdef.ReplaceAll("[calc_out]", c_to_js(value + "[i]", array_type, "tnv" + lt, deep + 1))
+        else if (InterfaceList.GetValue(arrayType)) {
+            ret = tnvdef.ReplaceAll("[calc_out]", c_to_js(value + "[i]", arrayType, "tnv" + lt, deep + 1))
         }
         return ret
     }
@@ -65,59 +65,59 @@ function c_to_js(value, type, dest, deep = 1) {
 }
 
 function ReturnGenerate(type, param) {
-    param.value_fill += "%svio->out".format(param.value_fill.length > 0 ? ", " : "")
-    param.value_package = "napi_value result = nullptr;\n    " + c_to_js("vio->out", type, "result")
+    param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")
+    param.valuePackage = "napi_value result = nullptr;\n    " + c_to_js("vio->out", type, "result")
     if (type == "string") {
-        param.value_out = "std::string out;"
-        param.value_define += "%sstd::string &out".format(param.value_define.length > 0 ? ", " : "")
+        param.valueOut = "std::string out;"
+        param.valueDefine += "%sstd::string &out".format(param.valueDefine.length > 0 ? ", " : "")
     }
     else if (type == "void") {
         return;
     }
     else if (type == "boolean") {
-        param.value_out = "bool out;"
-        param.value_define += "%sbool &out".format(param.value_define.length > 0 ? ", " : "")
+        param.valueOut = "bool out;"
+        param.valueDefine += "%sbool &out".format(param.valueDefine.length > 0 ? ", " : "")
     }    
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
-        param.value_out = type + " out;"
-        param.value_define += "%s%s &out".format(param.value_define.length > 0 ? ", " : "", type)
+        param.valueOut = type + " out;"
+        param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
         // this.values_["value_call"] += "%svio->out".format(len(this.values_["value_call"]) > 0 ? ", " : "")
         // this.generate_value_package("vio->out", type)
-        // this.values_["value_out"] = "%s out;".format(type)
-        // this.values_["value_define"] += "%s%s &out".format(
-        //     len(this.values_["value_define"]) > 0 ? ", " : "", type)
+        // this.values_["valueOut"] = "%s out;".format(type)
+        // this.values_["valueDefine"] += "%s%s &out".format(
+        //     len(this.values_["valueDefine"]) > 0 ? ", " : "", type)
     }
     else if (InterfaceList.GetValue(type)) {
-        param.value_out = type + " out;"
-        param.value_define += "%s%s &out".format(param.value_define.length > 0 ? ", " : "", type)
+        param.valueOut = type + " out;"
+        param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
     }
     else if (type.substring(0, 6) == "Array<") {
-        let array_type = get_array_type(type)
-        if (array_type == "string") array_type = "std::string"
-        param.value_out = "std::vector<%s> out;".format(array_type)
-        param.value_define += "%sstd::vector<%s> &out".format(param.value_define.length > 0 ? ", " : "", array_type)
+        let arrayType = getArrayType(type)
+        if (arrayType == "string") arrayType = "std::string"
+        param.valueOut = "std::vector<%s> out;".format(arrayType)
+        param.valueDefine += "%sstd::vector<%s> &out".format(param.valueDefine.length > 0 ? ", " : "", arrayType)
     }
     // else if (type in this.interface_list) {
     //     this.values_["value_call"] += "%svio->out".format(len(this.values_["value_call"]) > 0 ? ", " : "")
     //     this.generate_value_package("vio->out", type)
-    //     this.values_["value_out"] = "%s out;".format(type)
-    //     this.values_["value_define"] += "%s%s &out".format(
-    //         len(this.values_["value_define"]) > 0 ? ", " : "", type)
+    //     this.values_["valueOut"] = "%s out;".format(type)
+    //     this.values_["valueDefine"] += "%s%s &out".format(
+    //         len(this.values_["valueDefine"]) > 0 ? ", " : "", type)
     // }
 
     // else if (type.substring(0, 6) == "Array<") {
-    //     let array_type = get_array_type(type)
-    //     if (array_type == "string") array_type = "std::string"
+    //     let arrayType = getArrayType(type)
+    //     if (arrayType == "string") arrayType = "std::string"
     //     this.values_["value_call"] += "%svio->out".format(len(this.values_["value_call"]) > 0 ? ", " : "")
     //     this.generate_value_package("vio->out", type)
-    //     this.values_["value_out"] = "std::vector<%s> out;".formatarray_type
-    //     this.values_["value_define"] += "%sstd::vector<%s> &out".format(
-    //         len(this.values_["value_define"]) > 0 ? ", " : "", array_type)
+    //     this.values_["valueOut"] = "std::vector<%s> out;".formatarrayType
+    //     this.values_["valueDefine"] += "%sstd::vector<%s> &out".format(
+    //         len(this.values_["valueDefine"]) > 0 ? ", " : "", arrayType)
     // }
     else {
         print(`\n---- ReturnGenerate fail %s ----\n`.format(type))
     }
-    param.value_fill += "%svio->out".format(param.value_fill.length > 0 ? ", " : "")        
+    param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")        
 }
 
 module.exports = {

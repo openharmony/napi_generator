@@ -20,10 +20,10 @@ const re = require("./tools/re")
 function DoGenerate(ifname) {
     // console.log("----------generate start---------")
 
-    let struct_of_ts = AnalyzeFile(ifname);
-    // print(struct_of_ts)
+    let structOfTs = AnalyzeFile(ifname);
+    // print(structOfTs)
 
-    GenerateAll(struct_of_ts, re.get_path_in_path(ifname));
+    GenerateAll(structOfTs, re.getPathInPath(ifname));
 
     // console.log("----------generate end---------")
 }

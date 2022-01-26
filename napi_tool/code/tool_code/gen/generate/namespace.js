@@ -19,26 +19,26 @@ const { GenerateFunctionAsync } = require("./function_async");
 const { GenerateInterface } = require("./interface");
 const { FuncType, InterfaceList } = require("../tools/common");
 
-function GenerateNamespace(name, data, in_namespace = "") {
+function GenerateNamespace(name, data, inNamespace = "") {
     // print(name)
     // print(data)
-    // print(in_namespace)
+    // print(inNamespace)
     // print(JSON.stringify(result, null, 4))
     //生成module_middle.cpp
     //生成module.h
     //生成module.cpp
 
-    let impl_h = ""
-    let impl_cpp = ""
-    let middle_func = ""
-    let middle_init = ""
+    let implH = ""
+    let implCpp = ""
+    let middleFunc = ""
+    let middleInit = ""
 
-    if (in_namespace.length > 0) {
-        let nsl = in_namespace.split("::")
+    if (inNamespace.length > 0) {
+        let nsl = inNamespace.split("::")
         nsl.pop()
-        let parent_ns = nsl[nsl.length - 1]
-        // print("parent=", parent_ns)
-        middle_init = `{\nnapi_value %s=pxt->CreateSubObject(%s,"%s");\n`.format(name, nsl.length == 1 ? "exports" : parent_ns, name)
+        let parentNs = nsl[nsl.length - 1]
+        // print("parent=", parentNs)
+        middleInit = `{\nnapi_value %s=pxt->CreateSubObject(%s,"%s");\n`.format(name, nsl.length == 1 ? "exports" : parentNs, name)
     }
 
     InterfaceList.Push(data.interface)
@@ -46,12 +46,12 @@ function GenerateNamespace(name, data, in_namespace = "") {
     for (let i in data.interface) {
         let ii = data.interface[i]
         // print(ii)
-        let result = GenerateInterface(ii.name, ii.body, in_namespace + name + "::")
+        let result = GenerateInterface(ii.name, ii.body, inNamespace + name + "::")
 
-        middle_func += result.middle_body
-        impl_h += result.impl_h
-        impl_cpp += result.impl_cpp
-        middle_init += result.middle_init
+        middleFunc += result.middleBody
+        implH += result.implH
+        implCpp += result.implCpp
+        middleInit += result.middleInit
     }
 
     for (let i in data.function) {
@@ -73,42 +73,42 @@ function GenerateNamespace(name, data, in_namespace = "") {
                 // to do yichangchuli
                 return
         }
-        middle_func += tmp[0]
-        impl_h += tmp[1]
-        impl_cpp += tmp[2]
-        middle_init += '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'.format(func.name, in_namespace, name, func.name, in_namespace.length > 0 ? ", "+name : "")
+        middleFunc += tmp[0]
+        implH += tmp[1]
+        implCpp += tmp[2]
+        middleInit += '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'.format(func.name, inNamespace, name, func.name, inNamespace.length > 0 ? ", "+name : "")
     }
 
     for (let i in data.namespace) {
         let ns = data.namespace[i]
         // print(ns)
-        let result = GenerateNamespace(ns.name, ns.body, in_namespace + name + "::")
-        middle_func += result.middle_body
-        impl_h += result.impl_h
-        impl_cpp += result.impl_cpp
-        middle_init += result.middle_init
+        let result = GenerateNamespace(ns.name, ns.body, inNamespace + name + "::")
+        middleFunc += result.middleBody
+        implH += result.implH
+        implCpp += result.implCpp
+        middleInit += result.middleInit
     }
     InterfaceList.Pop();
 
-    if (in_namespace.length > 0) {
-        middle_init += "}"
+    if (inNamespace.length > 0) {
+        middleInit += "}"
     }
     let result = {
-        impl_h: `
+        implH: `
 namespace %s {
 %s
-}`.format(name, impl_h),
-        impl_cpp: `
-namespace %s {
-%s
-}
-`.format(name, impl_cpp),
-        middle_body: `
+}`.format(name, implH),
+        implCpp: `
 namespace %s {
 %s
 }
-`.format(name, middle_func),
-        middle_init: middle_init
+`.format(name, implCpp),
+        middleBody: `
+namespace %s {
+%s
+}
+`.format(name, middleFunc),
+        middleInit: middleInit
     }
     return result
 }

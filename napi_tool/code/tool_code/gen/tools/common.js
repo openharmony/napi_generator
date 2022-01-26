@@ -57,14 +57,14 @@ InterfaceList.GetValue = function (name) {
     return null;
 }
 
-function get_array_type(type) {
+function getArrayType(type) {
     let tt = re.match("Array<([a-zA-Z_0-9]+)>", type)
-    return re.get_reg(type, tt.regs[1])
+    return re.getReg(type, tt.regs[1])
 }
 
 module.exports = {
     FuncType,
     NumberIncrease,
     InterfaceList,
-    get_array_type
+    getArrayType
 }

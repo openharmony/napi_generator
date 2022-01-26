@@ -18,11 +18,11 @@ const { FuncType,NumberIncrease } = require("../tools/common");
 
 /**函数返回值解析 */
 function AnalyzeReturn(ret) {
-    let is_promise = false
+    let isPromise = false
     if (ret.indexOf("Promise") >= 0) {
-        is_promise = true
+        isPromise = true
     }
-    return [ret, is_promise]
+    return [ret, isPromise]
 }
 
 module.exports = {

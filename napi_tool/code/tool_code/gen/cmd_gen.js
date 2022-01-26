@@ -19,16 +19,16 @@ function print(...args)
     console.log(...args)
 }
 
-let usage_str=`usage:
+let usageStr=`usage:
 cmd_gen-win.exe d:\\@ohos.youmodulename.d.ts`
 
 if(process.argv.length<=2)
 {
-    print(usage_str)
+    print(usageStr)
 }
 else
 {
-    let fn=re.get_file_in_path(process.argv[2])
+    let fn=re.getFileInPath(process.argv[2])
     
     let tt=re.match("@ohos.[a-zA-Z0-9]+.d.ts",fn)
     if(tt)

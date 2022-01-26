@@ -15,14 +15,14 @@
 const { WriteFile } = require("../tools/FileRW");
 const re = require("../tools/re");
 
-let gyp_templete = `
+let gypTemplete = `
 {
     "targets": [
         {
-          "target_name": "[impl_name]",
+          "target_name": "[implName]",
           "sources": [
-              "./[impl_name].cpp",
-              "./[impl_name]_middle.cpp",
+              "./[implName].cpp",
+              "./[implName]_middle.cpp",
               "./x_napi_tool.cpp"],
           "include_dirs": ["."],
           "cflags_cc": [ "-frtti","-std=c++17" ]
@@ -32,11 +32,11 @@ let gyp_templete = `
 `
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
-function GenerateGYP(dest_dir, impl_name) {
-    let ss = gyp_templete.ReplaceAll("[impl_name]", impl_name)
-    WriteFile(re.path_join(dest_dir, "binding.gyp"), ss)
+function GenerateGYP(destDir, implName) {
+    let ss = gypTemplete.ReplaceAll("[implName]", implName)
+    WriteFile(re.pathJoin(destDir, "binding.gyp"), ss)
 
-    WriteFile(re.path_join(dest_dir, "test.sh"), "node-gyp configure build && sleep 0.5 && node --expose-gc test.js")
+    WriteFile(re.pathJoin(destDir, "test.sh"), "node-gyp configure build && sleep 0.5 && node --expose-gc test.js")
     
 }
 

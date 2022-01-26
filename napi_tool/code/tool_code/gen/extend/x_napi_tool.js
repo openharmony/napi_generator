@@ -15,7 +15,7 @@
 const { WriteFile } = require("../tools/FileRW");
 const re = require("../tools/re");
 
-let x_napi_tool_h = `\
+let xNapiToolH = `\
 #ifndef CC_TOOL_H
 #define CC_TOOL_H
 
@@ -142,7 +142,7 @@ private:
 #endif
 `
 
-let x_napi_tool_cpp = `
+let xNapiToolCpp = `
 
 #include "x_napi_tool.h"
 #include <cassert>
@@ -392,10 +392,10 @@ napi_value XNapiTool::SwapC2JsUtf8(const char *value)
 
 bool XNapiTool::CheckValueType(napi_value value, napi_valuetype type)
 {
-    napi_valuetype value_type;
-    napi_status result_status = napi_typeof(env_, value, &value_type);
+    napi_valuetype valueType;
+    napi_status result_status = napi_typeof(env_, value, &valueType);
     CC_ASSERT(result_status == napi_ok);
-    if (CheckFailed(value_type == type, "传入参数类型不是回调函数"))
+    if (CheckFailed(valueType == type, "传入参数类型不是回调函数"))
         return false;
     return true;
 }
@@ -598,9 +598,9 @@ void *XNapiTool::GetAsyncInstance()
 }
 `
 
-function GenerateBase(dest_dir) {
-    WriteFile(re.path_join(dest_dir, "x_napi_tool.h"), x_napi_tool_h)
-    WriteFile(re.path_join(dest_dir, "x_napi_tool.cpp"), x_napi_tool_cpp)
+function GenerateBase(destDir) {
+    WriteFile(re.pathJoin(destDir, "x_napi_tool.h"), xNapiToolH)
+    WriteFile(re.pathJoin(destDir, "x_napi_tool.cpp"), xNapiToolCpp)
 }
 
 module.exports = {
