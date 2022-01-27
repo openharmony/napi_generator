@@ -14,9 +14,9 @@
 */
 const re = require("../tools/re");
 const { print, RemoveExplains, RemoveEmptyLine, CheckOutBody } = require("../tools/tool");
-const { FuncType,NumberIncrease } = require("../tools/common");
+const { FuncType, NumberIncrease } = require("../tools/common");
 
-const { AnalyzeFunction }=require("./function");
+const { AnalyzeFunction } = require("./function");
 
 /**interface解析 */
 function AnalyzeInterface(data) {//same as class
@@ -50,7 +50,8 @@ function AnalyzeInterface(data) {//same as class
         }
         tt = re.match(" *([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+)", t)
         if (tt) {//函数
-            let funcDetail = AnalyzeFunction(re.getReg(t, tt.regs[1]), re.getReg(t, tt.regs[2]), re.getReg(t, tt.regs[3]))
+            let funcDetail = AnalyzeFunction(re.getReg(t, tt.regs[1]),
+                re.getReg(t, tt.regs[2]), re.getReg(t, tt.regs[3]))
             if (funcDetail != null)
                 result.function.push(funcDetail)
             continue

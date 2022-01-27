@@ -36,7 +36,9 @@ public:
 
     napi_value CreateSubObject(napi_value parent, const char *name);
     void DefineFunction(const char *funcName, napi_callback callback, napi_value dest = nullptr);
-    void DefineClass(const char *className, napi_callback constructorFunc, std::map<const char *, std::map<const char *, napi_callback>> &valueList, std::map<const char *, napi_callback> &funcList, napi_value dest = nullptr);
+    void DefineClass(const char *className, napi_callback constructorFunc,
+        std::map<const char *, std::map<const char *, napi_callback>> &valueList, std::map<const char *,
+        napi_callback> &funcList, napi_value dest = nullptr);
 
     XNapiTool(napi_env env, napi_callback_info info);
     XNapiTool(napi_env env, napi_value exports);
@@ -456,7 +458,8 @@ napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFuncti
     napi_value resourceName = nullptr;
     result_status = napi_create_string_utf8(env_, "x_napi_tool", NAPI_AUTO_LENGTH, &resourceName);
     CC_ASSERT(result_status == napi_ok);
-    result_status = napi_create_async_work(env_, nullptr, resourceName, XNapiTool::AsyncExecute, XNapiTool::AsyncComplete, this, &work_);
+    result_status = napi_create_async_work(env_, nullptr, resourceName, XNapiTool::AsyncExecute,
+        XNapiTool::AsyncComplete, this, &work_);
     CC_ASSERT(result_status == napi_ok);
     result_status = napi_queue_async_work(env_, work_);
     CC_ASSERT(result_status == napi_ok);
@@ -529,7 +532,9 @@ void XNapiTool::DefineFunction(const char *funcName, napi_callback callback, nap
     CC_ASSERT(result_status == napi_ok);
 }
 
-void XNapiTool::DefineClass(const char *className, napi_callback constructorFunc, std::map<const char *, std::map<const char *, napi_callback>> &valueList, std::map<const char *, napi_callback> &funcList, napi_value dest)
+void XNapiTool::DefineClass(const char *className, napi_callback constructorFunc,
+    std::map<const char *, std::map<const char *, napi_callback>> &valueList,
+    std::map<const char *, napi_callback> &funcList, napi_value dest)
 {
     if (dest == nullptr)
         dest = exports_;

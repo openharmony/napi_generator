@@ -62,7 +62,7 @@ function AnalyzeFile(fn) {
             data = re.removeReg(data, tt.regs[0]);
             result.declareType.push({
                 name: exportName,
-                body: exportBody//todo
+                body: exportBody
             })
             if (tt.regs[1][0] != -1) {
                 result.exports.push(exportName)
@@ -77,7 +77,7 @@ function AnalyzeFile(fn) {
             data = data.substring(tt.regs[3][1] + exportBody.length + 2, data.length)
             result.declareType.push({
                 name: exportName,
-                body: exportBody//todo
+                body: exportBody
             })
             if (tt.regs[1][0] != -1) {
                 result.exports.push(exportName)
@@ -111,12 +111,13 @@ function AnalyzeFile(fn) {
             data = data.substring(tt.regs[5][1] + interfaceData.length + 1, data.length)
             result.declareInterface.push({
                 name: interfaceName,
-                body: {}//todo
+                body: {}
             })
             continue
         }
 
-        tt = re.match("declare function ([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+);*", data)
+        tt = re.match
+            ("declare function ([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+);*", data)
         if (tt) {
             let functionName = re.getReg(data, tt.regs[1])
             let functionBody = re.getReg(data, tt.regs[2])
@@ -125,7 +126,7 @@ function AnalyzeFile(fn) {
             data = re.removeReg(data, tt.regs[0])
             result.declareFunction.push({
                 name: functionName,
-                body: functionBody//todo
+                body: functionBody
             })
             continue
         }

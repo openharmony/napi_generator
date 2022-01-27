@@ -57,7 +57,6 @@ function GenerateVariable(name, type, variable, className) {
         print(`
 ---- GenerateVariable fail %s,%s ----
 `.format(name, type))
-    //todo
     variable.middleValue += `
     static napi_value getvalue_%s(napi_env env, napi_callback_info info)
     {
@@ -95,7 +94,8 @@ function GenerateInterface(name, data, inNamespace) {
         GenerateVariable(v.name, v.type, variable, name)
         middleInit += `
     valueList["%s"]["getvalue"]=%s%s_middle::getvalue_%s;
-    valueList["%s"]["setvalue"]=%s%s_middle::setvalue_%s;`.format(v.name, inNamespace, name, v.name, v.name, inNamespace, name, v.name)
+    valueList["%s"]["setvalue"]=%s%s_middle::setvalue_%s;`
+        .format(v.name, inNamespace, name, v.name, v.name, inNamespace, name, v.name)
     }
     implH += variable.hDefine
     middleFunc += variable.middleValue
@@ -118,8 +118,8 @@ function GenerateInterface(name, data, inNamespace) {
                 tmp = GenerateFunctionAsync(func, name)
                 break
             default:
-                    //to do yichangchuli
-                    return
+                //to do yichangchuli
+                return
         }
         middleFunc += tmp[0]
         implH += tmp[1]
@@ -128,15 +128,16 @@ function GenerateInterface(name, data, inNamespace) {
         middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name, inNamespace, name, func.name)
     }
 
-    let selfNs=""
+    let selfNs = ""
     if (inNamespace.length > 0) {
         let nsl = inNamespace.split("::")
         nsl.pop()
         if (nsl.length >= 2) {
-            selfNs = ", "+nsl[nsl.length - 1]
+            selfNs = ", " + nsl[nsl.length - 1]
         }
     }
-    middleInit += `\n    pxt->DefineClass("%s", %s%s_middle::constructor, valueList ,funcList%s);\n}\n`.format(name, inNamespace, name, selfNs)
+    middleInit += `\n    pxt->DefineClass("%s", %s%s_middle::constructor, valueList ,funcList%s);\n}\n`
+        .format(name, inNamespace, name, selfNs)
 
     let result = {
         implH: `

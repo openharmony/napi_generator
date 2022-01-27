@@ -33,7 +33,8 @@ function js_to_c(dest, napiVn, type) {
     if (type == "string") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.GetAndIncrease()
-            return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){pxt->SwapJs2CUtf8(tnv%d,%s);}`.format(lt, napiVn, lt, lt, dest)
+            return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){pxt->SwapJs2CUtf8(tnv%d,%s);}`
+                .format(lt, napiVn, lt, lt, dest)
         }
         else
             return "pxt->SwapJs2CUtf8(%s, %s);".format(napiVn, dest)
@@ -41,7 +42,8 @@ function js_to_c(dest, napiVn, type) {
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.GetAndIncrease()
-            return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C(tnv%d,%s,%s);}`.format(lt, napiVn, lt, lt, type, dest)
+            return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C(tnv%d,%s,%s);}`
+                .format(lt, napiVn, lt, lt, type, dest)
         }
         else
             return `NUMBER_JS_2_C(%s,%s,%s);`.format(napiVn, type, dest)
@@ -104,7 +106,7 @@ function ParamCheckout(name, napiVn, type) {
             this.js_to_c(name, napiVn, type))
 }
 
-//函数的参数处理
+// 函数的参数处理
 function ParamGenerate(p, name, type, param) {
     if (type == "string") {
         param.valueIn += "\n    std::string in%d;".format(p)
@@ -121,7 +123,6 @@ function ParamGenerate(p, name, type, param) {
     else if (InterfaceList.GetValue(type)) {
         param.valueIn += "\n    %s in%d;".format(type, p)
         param.valueCheckout += js_to_c("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
-        // this.ParamCheckout("vio->in%d".format(p), "pxt->GetArgv(%d)".format(p), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%s%s &%s".format(param.valueDefine.length > 0 ? ", " : "", type, name)
     }
@@ -130,7 +131,6 @@ function ParamGenerate(p, name, type, param) {
         if (arrayType == "string") arrayType = "std::string"
         param.valueIn += "\n    std::vector<%s> in%d;".format(arrayType, p)
         param.valueCheckout += js_to_c("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
-        // this.ParamCheckout("vio->in%d".format(p), "pxt->GetArgv(%d)".format(p), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sstd::vector<%s> &%s".format(param.valueDefine.length > 0 ? ", " : "", arrayType, name)
     }
@@ -141,8 +141,6 @@ function ParamGenerate(p, name, type, param) {
             offset: p
         }
     }
-
-
     else
         print("param generate err :", name, "type :", type)
 }

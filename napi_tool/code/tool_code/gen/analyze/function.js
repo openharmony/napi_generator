@@ -14,9 +14,9 @@
 */
 const re = require("../tools/re");
 const { print, RemoveExplains, RemoveEmptyLine, CheckOutBody } = require("../tools/tool");
-const { FuncType,NumberIncrease } = require("../tools/common");
+const { FuncType, NumberIncrease } = require("../tools/common");
 const { AnalyzeParams } = require("./params");
-const { AnalyzeReturn }=require("./return");
+const { AnalyzeReturn } = require("./return");
 
 /**函数解析 */
 function AnalyzeFunction(name, values, ret) {
@@ -31,7 +31,8 @@ function AnalyzeFunction(name, values, ret) {
         funcType = FuncType.PROMISE
 
     if (funcType == FuncType.ASYNC || funcType == FuncType.PROMISE) {
-        //查看是否有同名的函数，async_callback和promise，只需要保留一个，这里简单处理，忽略所有promise
+        // 查看是否有同名的函数，async_callback和promise，
+        // 只需要保留一个，这里简单处理，忽略所有promise
         if (funcType == FuncType.PROMISE) return null;
     }
 

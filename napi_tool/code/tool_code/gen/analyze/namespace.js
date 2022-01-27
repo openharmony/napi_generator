@@ -48,7 +48,6 @@ function AnalyzeNamespace(data) {
                 body: enumBody.substring(1, -1)
             })
             data = data.substring(tt.regs[3][0] + enumBody.length)
-            //todo
             if (tt.regs[1][0] != -1) {
                 result.exports.push(enumName)
             }
@@ -63,7 +62,6 @@ function AnalyzeNamespace(data) {
                 body: re.getReg(data, tt.regs[2])
             })
             data = re.removeReg(data, tt.regs[0])
-            //todo
             if (tt.regs[1][0] != -1) {
                 result.exports.push(constName)
             }
@@ -79,16 +77,17 @@ function AnalyzeNamespace(data) {
                 name: interfaceName,
                 body: AnalyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1))
             })
-            // XGenerate.gi().AddInterface(re.getReg(data,tt.regs[2]), data1.substring(1,data1.length-1))
+            // XGenerate.gi().AddInterface(re.getReg(data,tt.regs[2]),
+            // data1.substring(1,data1.length-1))
             data = data.substring(tt.regs[5][0] + interfaceBody.length, data.length)
-            //todo
             if (tt.regs[1][0] != -1) {
                 result.exports.push(interfaceName)
             }
             continue
         }
 
-        // tt = re.match("(export )*function ([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|\\.\\[\\]]*)\\) *: *([A-Za-z0-9_<>{}:, .=]+);*", data)
+        // tt = re.match("(export )*function
+        // ([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|\\.\\[\\]]*)\\) *: *([A-Za-z0-9_<>{}:, .=]+);*", data)
         tt = re.match("(export )*function ([A-Za-z0-9_]+) *(\\()", data)
         if (tt) {
             let funcName = re.getReg(data, tt.regs[2])
@@ -112,7 +111,6 @@ function AnalyzeNamespace(data) {
             if (funcDetail != null)
                 result.function.push(funcDetail)
 
-            //todo
             if (tt.regs[1][0] != -1) {
                 result.exports.push(funcName)
             }
@@ -127,7 +125,6 @@ function AnalyzeNamespace(data) {
                 body: re.getReg(data, tt.regs[3])
             })
             data = re.removeReg(data, tt.regs[0])
-            //todo
             if (tt.regs[1][0] != -1) {
                 result.exports.push(typeName)
             }
@@ -143,7 +140,6 @@ function AnalyzeNamespace(data) {
                 body: typeBody
             })
             data = data.substring(tt.regs[3][0] + typeBody.length + 2, data.length)
-            //todo
             if (tt.regs[1][0] != -1) {
                 result.exports.push(typeName)
             }
@@ -161,7 +157,6 @@ function AnalyzeNamespace(data) {
             // print(className)
             // print(classBody)
             data = data.substring(tt.regs[5][0] + classBody.length + 2, data.length)
-            //todo
             if (tt.regs[1][0] != -1) {
                 result.exports.push(className)
             }
@@ -177,7 +172,6 @@ function AnalyzeNamespace(data) {
                 body: AnalyzeNamespace(namespaceBody)
             })
             data = data.substring(tt.regs[3][0] + namespaceBody.length + 2, data.length)
-            //todo
             if (tt.regs[1][0] != -1) {
                 result.exports.push(namespaceName)
             }
@@ -189,18 +183,17 @@ function AnalyzeNamespace(data) {
             let exportName = re.getReg(data, tt.regs[1])
             result.exports.push(exportName)
             data = re.removeReg(data, tt.regs[0])
-            //todo
             continue
         }
 
         tt = re.match("export import [a-zA-Z]+ = [a-zA-Z\\.]+;", data)
-        if (tt) {//todo
+        if (tt) {
             data = re.removeReg(data, tt.regs[0])
             continue
         }
 
         tt = re.match("readonly [a-zA-Z]+: [a-z\\[\\]]+;*", data)
-        if (tt) {//todo
+        if (tt) {
             data = re.removeReg(data, tt.regs[0])
             continue
         }

@@ -38,7 +38,8 @@ function GenerateNamespace(name, data, inNamespace = "") {
         nsl.pop()
         let parentNs = nsl[nsl.length - 1]
         // print("parent=", parentNs)
-        middleInit = `{\nnapi_value %s=pxt->CreateSubObject(%s,"%s");\n`.format(name, nsl.length == 1 ? "exports" : parentNs, name)
+        middleInit = `{\nnapi_value %s=pxt->CreateSubObject(%s,"%s");\n`
+            .format(name, nsl.length == 1 ? "exports" : parentNs, name)
     }
 
     InterfaceList.Push(data.interface)
@@ -76,7 +77,8 @@ function GenerateNamespace(name, data, inNamespace = "") {
         middleFunc += tmp[0]
         implH += tmp[1]
         implCpp += tmp[2]
-        middleInit += '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'.format(func.name, inNamespace, name, func.name, inNamespace.length > 0 ? ", "+name : "")
+        middleInit += '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'
+            .format(func.name, inNamespace, name, func.name, inNamespace.length > 0 ? ", "+name : "")
     }
 
     for (let i in data.namespace) {
