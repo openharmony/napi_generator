@@ -1,12 +1,12 @@
 # napi_tool
 
-#### 介绍
+## 概述
 NAPI框架代码生成工具,根据用户指定的路径下的ts接口文件可以一键生成NAPI框架代码、业务代码框架、GN文件等，这样框架层开发者无需关注Nodejs相关语法，C++与JS之间的接口类型转换、数据类型转换等，只需关注业务实现逻辑即可，从而可以大大提高开发效率。目前工具支持命令行、VScode插件两种入口。
 
-#### 软件架构
-![](image/frm.png)
+## 软件架构
+![](pic/pic-frm.png)
 
-#### 目录
+## 目录
 
 ```
 ├── napi_tool            # NAPI框架代码生成工具
@@ -17,84 +17,118 @@ NAPI框架代码生成工具,根据用户指定的路径下的ts接口文件可�
 │   └── README           # 工具使用指导    
 └──README 
 ```
+### code目录源码介绍
+此目录为NAPI框架代码生成工具对应的源码，开发者可基于此代码进行二次开发。
+### code工具源码目录
+```
+/napi_tool/code
+├── tool_code             # 工具源码
+│   ├── gen              
+│   |   |── analyze       # 解析器
+│   │   |── extend        # 扩展模块，包括gn文件生成、linux环境适配代码等
+│   │	|── generate        # 生成器
+│   │   └── tools         # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等
+│   └── test              # 插件测试用例    
+└──ts_test                # 工具需要的ts文件样例  
+```
 
-#### 安装教程
+### 功能
+#### 可执行文件开发说明
+1.安装pkg : 执行命令sudo npm i -g pkg
 
-1. 将output目录下Windows可执行程序cmd_gen-win.exe拷贝到对应目录下，不需要安装，可以在cmd命令行中直接运行。
-2. 将output目录下Linux可执行程序cmd_gen-linux拷贝到对应目录下，可以在终端下直接运行。
+2.打包三个版本 : 执行命令pkg vscode_plugin/gnapi/gen/cmd_gen.js
 
-#### 使用说明
+执行以上步骤后，即可在gen目录下生成Windows、linux、mac系统下的可执行程序:cmd_gen-win.exe、cmd_gen-linux。
 
-##### 可执行程序使用方法
+#### 插件开发说明
+1. 安装yo : 执行命令npm install -g yo generator-code。
 
-###### Windows
+2. 使用yo : 执行命令yo code，gnapi是使用yo code生成的插件代码框架，其中gnapi/gen目录下是我们开发的自动化生成napi程序的源代码。
 
- 1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序cmd_gen-win.exe同级目录下，例如：
+   ![](pic/pic-gen-source-code.png)
 
-   ![](image/image-20220106103805904.png)
+3. 在napi_generator/vscode_plugin/gnapi这个目录中执行命令npm i vsce。
 
- 2) 右键windows开始菜单，点击运行，输入cmd，点击确定。
+4. 执行命令./node_modules/vsce/vsce package命令，最终会打包生成一个插件gnapi-0.0.1.vsix。
 
-   ![](image/image-20220106104037879.png)
+   ![](pic/pic-gen-vsix.png)
+
+## 开发流程
+
+1. 将gen目录下Windows可执行程序cmd_gen-win.exe拷贝到对应目录下，不需要安装，可以在cmd命令行中直接运行。
+2. 将gen目录下Linux可执行程序cmd_gen-linux拷贝到对应目录下，可以在终端下直接运行。
+
+### 可执行程序使用方法
+
+#### Windows
+
+1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序cmd_gen-win.exe同级目录下，例如：
+
+![](pic/pic-d-ts-location.png)
+
+2) 右键windows开始菜单，点击运行，输入cmd，点击确定。
+
+![](pic/pic-cmd.png)
 
 3) 在命令行中进入到之前可执行程序cmd_gen-win.exe所在的目录，并运行cmd_gen-win.exe，在cmd_gen-win.exe后面要对应的.d.ts文件名，例如：
 
-![](image/image-20220106105707675.png)
+![](pic/pic-cmd-execute.png)
 
 4) 运行成功后会在.d.ts文件说在的目录下生成对应的文件，例如：
 
-   ![](image/image-20220106110113948.png)
+![](pic/pic-d-ts-transition.png)
 
-###### Linux
+#### Linux
 
 1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序cmd_gen-linux同级目录下，例如：
 
-   ![](image/image-20220106111154843.png)
+   ![](pic/pic-d-ts-location-linux.png)
 
 2) 在终端中进入到之前可执行程序cmd_gen-linux所在的目录，并运行cmd_gen-linux，在cmd_gen-linux后面要对应的.d.ts文件名，例如：
 
-   ![](image/image-20220106111753702.png)
+   ![](pic/pic-cmd-execute-linux.png)
 
 3) 运行成功后会在.d.ts文件说在的目录下生成对应的文件，例如：
 
-   ![](image/image-20220106111909233.png)
+   ![](pic/pic-d-ts-transition-linux.png)
 
-###### Mac
- 方法步骤参考windows、Linux的使用方法
+#### Mac
+方法步骤参考windows、Linux的使用方法
 
-##### 插件使用方法
-###### 说明
-   visual studio code 版本需1.62.0及以上
+## 插件使用方法
+### 说明
+visual studio code 版本需1.62.0及以上
 
-###### 步骤
+### 步骤
 
 1) 打开vscode，在左侧边栏中选择插件安装。
 
-   ![](image/image-20220106145345449.png)
+   ![](pic/pic-plug-in-search.png)
 
 2) 点击上面三个点的按钮，选择从VSIX安装选项，然后选择刚才生成的gnapi-0.0.1.vsix插件文件，再点击安装。
 
-   ![](image/image-20220106145540860.png)
+   ![](pic/pic-plug-in-select.png)
 
 3) 安装完成后就会在vscode的插件管理器中能看到gnapi这个插件了。
 
-   ![](image/image-20220106150434168.png)
+   ![](pic/pic-plug-in-gnapi.png)
 
 4) 在vscode中找到需要转换的.d.ts文件，例如：
 
-   ![](image/image-20220106151044789.png)
+   ![](pic/pic-plug-in-select-d-ts.png)
 
 5) 鼠标在.d.ts上点击右键，选择.d.ts生成c++选项。
 
-   ![](image/image-20220106151204896.png)
+   ![](pic/pic-plug-in-gen-c++.png)
 
 6) 之后就会在该目录下生成对应文件，例如：
 
-   ![](image/image-20220106151510092.png)
+   ![](pic/pic-plug-in-gen-result.png)
 
-注：以上插件使用示例为windows的，linux、mac的使用方法类似。
+## 注意事项
+以上插件使用示例为windows的，linux、mac的使用方法类似。
 
-#### 参与贡献
+## 参与贡献
 
 1.  Fork 本仓库
 2.  新建开发分支
