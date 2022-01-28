@@ -19,7 +19,7 @@ function print(...args) {
 }
 
 function search(ss, data) {
-    ss = replace_all(ss, "\\.", "\\.")
+    ss = replaceAll(ss, "\\.", "\\.")
     let reg = new RegExp(ss);
     let tt = reg.exec(data);
     // print("#############")
@@ -46,15 +46,15 @@ function match(ss, data) {
     return null;
 }
 
-function remove_reg(data, reg) {
+function removeReg(data, reg) {
     return data.substring(0, reg[0]) + data.substring(reg[1], data.length)
 }
 
-function get_reg(data, reg) {
+function getReg(data, reg) {
     return data.substring(reg[0], reg[1])
 }
 
-function get_file_in_path(tpath) {
+function getFileInPath(tpath) {
     return path.parse(tpath).base;
     // for(let i=tpath.length-1;i>=0;i--)
     // {
@@ -64,7 +64,7 @@ function get_file_in_path(tpath) {
     // return tpath;
 }
 
-function get_path_in_path(tpath) {
+function getPathInPath(tpath) {
     return path.parse(tpath).dir;
     // for(let i=tpath.length-1;i>=0;i--)
     // {
@@ -78,11 +78,11 @@ function all(sfrom) {
     return new RegExp(sfrom, "g");
 }
 
-function replace_all(ss, sfrom, sto) {
+function replaceAll(ss, sfrom, sto) {
     return ss.replace(all(sfrom), sto)
 }
 
-function path_join(...args) {
+function pathJoin(...args) {
     return path.join(...args)
     // let ret=""
     // for (let i=0;i<args.length;i++)
@@ -99,11 +99,11 @@ function path_join(...args) {
 module.exports = {
     search,
     match,
-    remove_reg,
-    get_reg,
-    get_file_in_path,
-    get_path_in_path,
-    path_join,
-    replace_all,
+    removeReg,
+    getReg,
+    getFileInPath,
+    getPathInPath,
+    pathJoin,
+    replaceAll,
     all
 }

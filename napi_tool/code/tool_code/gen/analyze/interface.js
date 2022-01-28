@@ -14,13 +14,13 @@
 */
 const re = require("../tools/re");
 const { print, RemoveExplains, RemoveEmptyLine, CheckOutBody } = require("../tools/tool");
-const { FuncType,NumberIncrease } = require("../tools/common");
+const { FuncType, NumberIncrease } = require("../tools/common");
 
-const { AnalyzeFunction }=require("./function");
+const { AnalyzeFunction } = require("./function");
 
 /**interface解析 */
 function AnalyzeInterface(data) {//same as class
-    let body = re.replace_all(data, "\n", "").split(";")//  # replace(" ", "").
+    let body = re.replaceAll(data, "\n", "").split(";")//  # replace(" ", "").
     // print(body)
     let result = {
         value: [],
@@ -37,22 +37,23 @@ function AnalyzeInterface(data) {//same as class
         let tt = re.match(" *([a-zA-Z0-9_]+) *: *([a-zA-Z_0-9<>]+)", t)
         if (tt) {//变量
 
-            let value_name = re.get_reg(t, tt.regs[1])
-            let value_type = re.get_reg(t, tt.regs[2])
-            if (value_type.indexOf("number") >= 0) {
-                value_type = value_type.replace("number", "NUMBER_TYPE_" + NumberIncrease.GetAndIncrease())
+            let valueName = re.getReg(t, tt.regs[1])
+            let valueType = re.getReg(t, tt.regs[2])
+            if (valueType.indexOf("number") >= 0) {
+                valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.GetAndIncrease())
             }
             result.value.push({
-                name: value_name,
-                type: value_type
+                name: valueName,
+                type: valueType
             })
             continue
         }
         tt = re.match(" *([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+)", t)
         if (tt) {//函数
-            let func_detail = AnalyzeFunction(re.get_reg(t, tt.regs[1]), re.get_reg(t, tt.regs[2]), re.get_reg(t, tt.regs[3]))
-            if (func_detail != null)
-                result.function.push(func_detail)
+            let funcDetail = AnalyzeFunction(re.getReg(t, tt.regs[1]),
+                re.getReg(t, tt.regs[2]), re.getReg(t, tt.regs[3]))
+            if (funcDetail != null)
+                result.function.push(funcDetail)
             continue
         }
     }

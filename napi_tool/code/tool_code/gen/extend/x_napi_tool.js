@@ -15,7 +15,7 @@
 const { WriteFile } = require("../tools/FileRW");
 const re = require("../tools/re");
 
-let x_napi_tool_h = `\
+let xNapiToolH = `\
 #ifndef CC_TOOL_H
 #define CC_TOOL_H
 
@@ -36,7 +36,9 @@ public:
 
     napi_value CreateSubObject(napi_value parent, const char *name);
     void DefineFunction(const char *funcName, napi_callback callback, napi_value dest = nullptr);
-    void DefineClass(const char *className, napi_callback constructorFunc, std::map<const char *, std::map<const char *, napi_callback>> &valueList, std::map<const char *, napi_callback> &funcList, napi_value dest = nullptr);
+    void DefineClass(const char *className, napi_callback constructorFunc,
+        std::map<const char *, std::map<const char *, napi_callback>> &valueList, std::map<const char *,
+        napi_callback> &funcList, napi_value dest = nullptr);
 
     XNapiTool(napi_env env, napi_callback_info info);
     XNapiTool(napi_env env, napi_value exports);
@@ -142,7 +144,7 @@ private:
 #endif
 `
 
-let x_napi_tool_cpp = `
+let xNapiToolCpp = `
 
 #include "x_napi_tool.h"
 #include <cassert>
@@ -392,10 +394,10 @@ napi_value XNapiTool::SwapC2JsUtf8(const char *value)
 
 bool XNapiTool::CheckValueType(napi_value value, napi_valuetype type)
 {
-    napi_valuetype value_type;
-    napi_status result_status = napi_typeof(env_, value, &value_type);
+    napi_valuetype valueType;
+    napi_status result_status = napi_typeof(env_, value, &valueType);
     CC_ASSERT(result_status == napi_ok);
-    if (CheckFailed(value_type == type, "传入参数类型不是回调函数"))
+    if (CheckFailed(valueType == type, "传入参数类型不是回调函数"))
         return false;
     return true;
 }
@@ -456,7 +458,8 @@ napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFuncti
     napi_value resourceName = nullptr;
     result_status = napi_create_string_utf8(env_, "x_napi_tool", NAPI_AUTO_LENGTH, &resourceName);
     CC_ASSERT(result_status == napi_ok);
-    result_status = napi_create_async_work(env_, nullptr, resourceName, XNapiTool::AsyncExecute, XNapiTool::AsyncComplete, this, &work_);
+    result_status = napi_create_async_work(env_, nullptr, resourceName, XNapiTool::AsyncExecute,
+        XNapiTool::AsyncComplete, this, &work_);
     CC_ASSERT(result_status == napi_ok);
     result_status = napi_queue_async_work(env_, work_);
     CC_ASSERT(result_status == napi_ok);
@@ -529,7 +532,9 @@ void XNapiTool::DefineFunction(const char *funcName, napi_callback callback, nap
     CC_ASSERT(result_status == napi_ok);
 }
 
-void XNapiTool::DefineClass(const char *className, napi_callback constructorFunc, std::map<const char *, std::map<const char *, napi_callback>> &valueList, std::map<const char *, napi_callback> &funcList, napi_value dest)
+void XNapiTool::DefineClass(const char *className, napi_callback constructorFunc,
+    std::map<const char *, std::map<const char *, napi_callback>> &valueList,
+    std::map<const char *, napi_callback> &funcList, napi_value dest)
 {
     if (dest == nullptr)
         dest = exports_;
@@ -598,9 +603,9 @@ void *XNapiTool::GetAsyncInstance()
 }
 `
 
-function GenerateBase(dest_dir) {
-    WriteFile(re.path_join(dest_dir, "x_napi_tool.h"), x_napi_tool_h)
-    WriteFile(re.path_join(dest_dir, "x_napi_tool.cpp"), x_napi_tool_cpp)
+function GenerateBase(destDir) {
+    WriteFile(re.pathJoin(destDir, "x_napi_tool.h"), xNapiToolH)
+    WriteFile(re.pathJoin(destDir, "x_napi_tool.cpp"), xNapiToolCpp)
 }
 
 module.exports = {

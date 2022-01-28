@@ -15,14 +15,17 @@
 const { ReplaceAll, print } = require("../tools/tool");
 const { ParamGenerate } = require("./param_generate");
 const { ReturnGenerate } = require("./return_generate");
-/**结果通过同步回调(CallBack)返回 */
-let func_sync_templete = `
-struct [func_name]_value_struct {[value_in]
+
+/**
+ * 结果通过同步回调(CallBack)返回
+ */
+let funcSyncTemplete = `
+struct [funcName]_value_struct {[valueIn]
     
-    [value_out]
+    [valueOut]
 };
 
-[static_define]napi_value [func_name]_middle(napi_env env, napi_callback_info info)
+[static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
     if (pxt->IsFailed())
@@ -33,13 +36,13 @@ struct [func_name]_value_struct {[value_in]
     }
     [unwarp_instance]
 
-    struct [func_name]_value_struct *vio=new [func_name]_value_struct();
+    struct [funcName]_value_struct *vio=new [funcName]_value_struct();
     
-    [value_checkout]
+    [valueCheckout]
 
-    [call_func]
+    [callFunc]
 
-    [value_package]
+    [valuePackage]
 
     {
         napi_value args[1] = {result};
@@ -54,28 +57,29 @@ struct [func_name]_value_struct {[value_in]
     return result;
 }`
 
-function GenerateFunctionSync(func, class_name) {
+function GenerateFunctionSync(func, className) {
     //     this.len_to = 0
     //     // print(type, name, values, ret_type)
-    let middle_func = ReplaceAll(func_sync_templete, "[func_name]", func.name)
-    if(class_name==null)
+    let middleFunc = ReplaceAll(funcSyncTemplete, "[funcName]", func.name)
+    if(className == null)
     {
-        middle_func=middle_func.ReplaceAll("[static_define]","")
-        middle_func=middle_func.ReplaceAll("[unwarp_instance]","")
+        middleFunc = middleFunc.ReplaceAll("[static_define]","")
+        middleFunc = middleFunc.ReplaceAll("[unwarp_instance]","")
     }
     else
     {
-        middle_func=middle_func.ReplaceAll("[static_define]","static ")
-        middle_func=middle_func.ReplaceAll("[unwarp_instance]","%s *pInstance = (%s *)pxt->UnWarpInstance();".format(class_name,class_name))
+        middleFunc = middleFunc.ReplaceAll("[static_define]","static ")
+        middleFunc = middleFunc.ReplaceAll("[unwarp_instance]",
+            "%s *pInstance = (%s *)pxt->UnWarpInstance();".format(className,className))
     }
     let param = {
-        value_in: "",//定义输入
-        value_out: "",//定义输出
+        valueIn: "",//定义输入
+        valueOut: "",//定义输出
 
-        value_checkout: "",//解析
-        value_fill: "",//填充到函数内
-        value_package: "",//输出参数打包
-        value_define: ""//impl参数定义
+        valueCheckout: "",//解析
+        valueFill: "",//填充到函数内
+        valuePackage: "",//输出参数打包
+        valueDefine: ""//impl参数定义
     }
 
     for (let i in func.value) {
@@ -86,63 +90,26 @@ function GenerateFunctionSync(func, class_name) {
     // ReturnGenerate(func.ret, param)
     ReturnGenerate(param.callback.type, param)
 
-    middle_func = ReplaceAll(middle_func, "[value_in]", param.value_in)//  # 输入参数定义
-    middle_func = ReplaceAll(middle_func, "[value_out]", param.value_out)//  # 输出参数定义
+    middleFunc = ReplaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
+    middleFunc = ReplaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
 
-    middle_func = ReplaceAll(middle_func, "[value_checkout]", param.value_checkout)//  # 输入参数解析
+    middleFunc = ReplaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
 
-    let call_func = "%s%s(%s);".format(class_name==null?"":"pInstance->",func.name, param.value_fill)
-    middle_func = ReplaceAll(middle_func, "[call_func]", call_func)//执行
+    let callFunc = "%s%s(%s);".format(className == null?"":"pInstance->",func.name, param.valueFill)
+    middleFunc = ReplaceAll(middleFunc, "[callFunc]", callFunc)//执行
 
-    middle_func = ReplaceAll(middle_func, "[value_package]", param.value_package)//输出参数打包
+    middleFunc = ReplaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
 
-    middle_func = middle_func.ReplaceAll("[callback_param_offset]", param.callback.offset);//呼叫回调
+    middleFunc = middleFunc.ReplaceAll("[callback_param_offset]", param.callback.offset);//呼叫回调
 
-    //     if (type == (FuncType.ASYNC | FuncType.PROMISE)) {
-    //         this.generate_value_out(this.callback_type)
-    //         middle_func = ReplaceAll(middle_func, "[call_static_func]",
-    //             `
-    // napi_value result = pxt->StartAsync(%s_execute, vio, %s_complete, pxt->GetArgc() == %s ? pxt->GetArgv(%d) : nullptr);`.format
-    //                 (name, name, this.callback_offet + 1, this.callback_offet))
-    //         middle_func = ReplaceAll(middle_func, "    delete vio;", "")
-    //         middle_func = ReplaceAll(middle_func, "    delete pxt;// release", "")
-    //         let ttt = ReplaceAll(codestring.func_promise, "[func_name]", name)
-    //         let call_func;
-
-    //         if (cvs == null)
-    //             call_func = "%s::%s(%s);".format(this.declare_name, name, param["value_call"])
-    //         else
-    //             call_func = "%s::%s(%s);".format(cvs[0], cvs[1], param["value_call"])
-    //         // print(call_func)
-    //         ttt = ReplaceAll(ttt, "[call_static_func]", call_func)
-    //         print("=====1======")
-    //         let ttt2 = "napi_value result = nullptr;\n%s".format(this.c_to_js("vio->out", this.callback_type, "result"))
-    //         // print(this.callback_type)
-    //         print("=====2======")
-    //         ttt = ReplaceAll(ttt, "[promise_arg]", "%s    napi_value args[1] = {result,};".format(ttt2))
-    //         middle_func = middle_func.replace("};", ttt)
-    //     }
-
-
-    //     if (ret_type == "void" && type != (FuncType.ASYNC | FuncType.PROMISE))
-    //         param["value_package"] = "napi_value result = XNapiTool::UndefinedValue(env);"
-
-    //     middle_func = ReplaceAll(middle_func, "[value_out]", param["value_out"])
-    //     if (type != (FuncType.ASYNC | FuncType.PROMISE))
-    //         middle_func = ReplaceAll(middle_func, "[value_package]", param["value_package"])
-    //     else
-    //         middle_func = ReplaceAll(middle_func, "[value_package]", "")
-
-    //     if (cvs == null) {
-    let impl_h = "\nbool %s(%s);".format(func.name, param.value_define)
-    let impl_cpp = `
+    let implH = "\nbool %s(%s);".format(func.name, param.valueDefine)
+    let implCpp = `
 bool %s%s(%s) {
-    // TODO
     return true;
 }
-`.format(class_name==null?"":class_name+"::",func.name, param.value_define)
+`.format(className == null?"":className+"::",func.name, param.valueDefine)
 
-    return [middle_func, impl_h, impl_cpp]
+    return [middleFunc, implH, implCpp]
 }
 
 module.exports = {

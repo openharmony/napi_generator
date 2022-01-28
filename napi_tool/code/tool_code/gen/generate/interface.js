@@ -16,19 +16,19 @@ const { print } = require("../tools/tool");
 const { GenerateFunctionDirect } = require("./function_direct");
 const { GenerateFunctionSync } = require("./function_sync");
 const { GenerateFunctionAsync } = require("./function_async");
-const { FuncType, InterfaceList, get_array_type } = require("../tools/common");
+const { FuncType, InterfaceList, getArrayType } = require("../tools/common");
 const { js_to_c } = require("./param_generate");
 const { c_to_js } = require("./return_generate");
 const re = require("../tools/re");
 
-let middle_body_tmplete = `
-class [class_name]_middle {
+let middleBodyTmplete = `
+class [className]_middle {
 public:
 static napi_value constructor(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = new XNapiTool(env, info);
 
-    [class_name] *p = new [class_name]();
+    [className] *p = new [className]();
     // printf("static constructor %x\\n", p);
 
     napi_value thisvar = pxt->WrapInstance(p, release);
@@ -38,33 +38,32 @@ static napi_value constructor(napi_env env, napi_callback_info info)
 static void release(void *p)
 {
     // printf("test2 released\\n");
-    [class_name] *p2 = ([class_name] *)p;
+    [className] *p2 = ([className] *)p;
     delete p2;
 }
 [static_funcs]
 };`
 
-function GenerateVariable(name, type, variable, class_name) {
-    if (type == "string") variable.h_define += "\n    std::string %s;".format(name)
-    else if (type.substring(0, 12) == "NUMBER_TYPE_") variable.h_define += "\n    %s %s;".format(type, name)
-    else if (InterfaceList.GetValue(type)) variable.h_define += "\n    %s %s;".format(type, name)
+function GenerateVariable(name, type, variable, className) {
+    if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
+    else if (type.substring(0, 12) == "NUMBER_TYPE_") variable.hDefine += "\n    %s %s;".format(type, name)
+    else if (InterfaceList.GetValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (type.indexOf("Array<") == 0) {
-        let type2 = get_array_type(type)
+        let type2 = getArrayType(type)
         if (type2 == "string") type2 = "std::string"
-        variable.h_define += "\n    std::vector<%s> %s;".format(type2, name)
+        variable.hDefine += "\n    std::vector<%s> %s;".format(type2, name)
     }
     else
         print(`
 ---- GenerateVariable fail %s,%s ----
 `.format(name, type))
-    //todo
-    variable.middle_value += `
+    variable.middleValue += `
     static napi_value getvalue_%s(napi_env env, napi_callback_info info)
     {
         XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
         %s *p = (%s *)pxt->UnWarpInstance();
         napi_value result;
-        `.format(name, class_name, class_name) + c_to_js("p->" + name, type, "result") + `
+        `.format(name, className, className) + c_to_js("p->" + name, type, "result") + `
         delete pxt;
         return result;
     }
@@ -72,36 +71,37 @@ function GenerateVariable(name, type, variable, class_name) {
     {
         std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);
         %s *p = (%s *)pxt->UnWarpInstance();
-        `.format(name, class_name, class_name) + js_to_c("p->" + name, "pxt->GetArgv(0)", type) + `
+        `.format(name, className, className) + js_to_c("p->" + name, "pxt->GetArgv(0)", type) + `
         return nullptr;
     }
 `
 }
 
-function GenerateInterface(name, data, in_namespace) {
-    let impl_h = ""
-    let impl_cpp = ""
-    let middle_func = ""
-    let middle_init = ""
+function GenerateInterface(name, data, inNamespace) {
+    let implH = ""
+    let implCpp = ""
+    let middleFunc = ""
+    let middleInit = ""
     let variable = {
-        h_define: "",
-        middle_value: "",
+        hDefine: "",
+        middleValue: "",
     }
 
-    middle_init = `{\n    std::map<const char *,std::map<const char *,napi_callback>> valueList;`
+    middleInit = `{\n    std::map<const char *,std::map<const char *,napi_callback>> valueList;`
     for (let i in data.value) {
         let v = data.value[i]
         // print(v)
         GenerateVariable(v.name, v.type, variable, name)
-        middle_init += `
+        middleInit += `
     valueList["%s"]["getvalue"]=%s%s_middle::getvalue_%s;
-    valueList["%s"]["setvalue"]=%s%s_middle::setvalue_%s;`.format(v.name, in_namespace, name, v.name, v.name, in_namespace, name, v.name)
+    valueList["%s"]["setvalue"]=%s%s_middle::setvalue_%s;`
+        .format(v.name, inNamespace, name, v.name, v.name, inNamespace, name, v.name)
     }
-    impl_h += variable.h_define
-    middle_func += variable.middle_value
+    implH += variable.hDefine
+    middleFunc += variable.middleValue
     // 
     // 
-    middle_init += `\n    std::map<const char *, napi_callback> funcList;`
+    middleInit += `\n    std::map<const char *, napi_callback> funcList;`
     for (let i in data.function) {
         let func = data.function[i]
         // print(func)
@@ -118,41 +118,42 @@ function GenerateInterface(name, data, in_namespace) {
                 tmp = GenerateFunctionAsync(func, name)
                 break
             default:
-                    //to do yichangchuli
-                    return
+                //to do yichangchuli
+                return
         }
-        middle_func += tmp[0]
-        impl_h += tmp[1]
-        impl_cpp += tmp[2]
+        middleFunc += tmp[0]
+        implH += tmp[1]
+        implCpp += tmp[2]
 
-        middle_init += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name, in_namespace, name, func.name)
+        middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name, inNamespace, name, func.name)
     }
 
-    let self_ns=""
-    if (in_namespace.length > 0) {
-        let nsl = in_namespace.split("::")
+    let selfNs = ""
+    if (inNamespace.length > 0) {
+        let nsl = inNamespace.split("::")
         nsl.pop()
         if (nsl.length >= 2) {
-            self_ns = ", "+nsl[nsl.length - 1]
+            selfNs = ", " + nsl[nsl.length - 1]
         }
     }
-    middle_init += `\n    pxt->DefineClass("%s", %s%s_middle::constructor, valueList ,funcList%s);\n}\n`.format(name, in_namespace, name, self_ns)
+    middleInit += `\n    pxt->DefineClass("%s", %s%s_middle::constructor, valueList ,funcList%s);\n}\n`
+        .format(name, inNamespace, name, selfNs)
 
     let result = {
-        impl_h: `
+        implH: `
 class %s {
 public:%s
-};`.format(name, impl_h),
-        impl_cpp: impl_cpp,
-        middle_body: middle_body_tmplete.ReplaceAll("[class_name]", name).ReplaceAll("[static_funcs]", middle_func),
-        middle_init: middle_init
+};`.format(name, implH),
+        implCpp: implCpp,
+        middleBody: middleBodyTmplete.ReplaceAll("[className]", name).ReplaceAll("[static_funcs]", middleFunc),
+        middleInit: middleInit
     }
     // print("----------------------------")
-    // print(result.impl_h)
+    // print(result.implH)
     // print("----------------------------")
-    // print(result.impl_cpp)
+    // print(result.implCpp)
     // print("----------------------------")
-    // print(result.middle_body)
+    // print(result.middleBody)
     return result
 }
 

@@ -14,25 +14,26 @@
 */
 const re = require("../tools/re");
 const { print, RemoveExplains, RemoveEmptyLine, CheckOutBody } = require("../tools/tool");
-const { FuncType,NumberIncrease } = require("../tools/common");
+const { FuncType, NumberIncrease } = require("../tools/common");
 const { AnalyzeParams } = require("./params");
-const { AnalyzeReturn }=require("./return");
+const { AnalyzeReturn } = require("./return");
 
 /**函数解析 */
 function AnalyzeFunction(name, values, ret) {
-    values = re.replace_all(re.replace_all(values, " ", ""), "\n", "")
+    values = re.replaceAll(re.replaceAll(values, " ", ""), "\n", "")
     let tmp = AnalyzeParams(values)
     values = tmp[0]
-    let func_type = tmp[1]
+    let funcType = tmp[1]
 
     tmp = AnalyzeReturn(ret)
     ret = tmp[0]
     if (tmp[1])
-        func_type = FuncType.PROMISE
+        funcType = FuncType.PROMISE
 
-    if (func_type == FuncType.ASYNC || func_type == FuncType.PROMISE) {
-        //查看是否有同名的函数，async_callback和promise，只需要保留一个，这里简单处理，忽略所有promise
-        if (func_type == FuncType.PROMISE) return null;
+    if (funcType == FuncType.ASYNC || funcType == FuncType.PROMISE) {
+        // 查看是否有同名的函数，async_callback和promise，
+        // 只需要保留一个，这里简单处理，忽略所有promise
+        if (funcType == FuncType.PROMISE) return null;
     }
 
     for (let j in values) {
@@ -47,7 +48,7 @@ function AnalyzeFunction(name, values, ret) {
 
     let result = {
         name: name,
-        type: func_type,
+        type: funcType,
         value: values,
         ret: ret,
     }

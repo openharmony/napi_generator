@@ -23,14 +23,14 @@ const { GenerateGN } = require("./extend/build_gn");
 const { GenerateBase } = require("./extend/x_napi_tool");
 const { NumberIncrease } = require("./tools/common");
 
-let module_cpp_tmplete = `\
+let moduleCppTmplete = `\
 #include <cstring>
 #include <string>
 #include <memory>
 #include <vector>
 #include <node_api.h>
 #include "x_napi_tool.h"
-#include "[impl_name].h"
+#include "[implName].h"
 
 #define NUMBER_JS_2_C(napi_v, type, dest)      \\
     if (typeid(type) == typeid(int32_t))       \\
@@ -68,7 +68,7 @@ napi_value init(napi_env env, napi_value exports)
     return exports;
 }
 
-static napi_module g_[impl_name]_Module = {
+static napi_module g_[implName]_Module = {
     .nm_version = 1,
     .nm_flags = 0,
     .nm_filename = nullptr,
@@ -78,13 +78,13 @@ static napi_module g_[impl_name]_Module = {
     .reserved = {(void *)0},
 };
 
-extern "C" __attribute__((constructor)) void Register_[impl_name]_Module(void)
+extern "C" __attribute__((constructor)) void Register_[implName]_Module(void)
 {
-    napi_module_register(&g_[impl_name]_Module);
+    napi_module_register(&g_[implName]_Module);
 }
 `
 
-let impl_h_templete = `\
+let implH_templete = `\
 #ifndef IMPL_[impl_name_upper]_H
 #define IMPL_[impl_name_upper]_H
 
@@ -94,48 +94,48 @@ let impl_h_templete = `\
 #include <vector>
 #include <math.h>
 
-[number_using]
+[numberUsing]
 
-[impl_h_detail]
+[implH_detail]
 
 #endif // IMPL_[impl_name_upper]_H
 `
 
-let impl_cpp_templete = `\
-#include "[impl_name].h"
+let implCpp_templete = `\
+#include "[implName].h"
 
-[impl_cpp_detail]
+[implCpp_detail]
 `
 
-function GenerateAll(struct_of_ts, dest_dir) {
-    let ns0 = struct_of_ts.declare_namespace[0];
+function GenerateAll(structOfTs, destDir) {
+    let ns0 = structOfTs.declareNamespace[0];
 
     let result = GenerateNamespace(ns0.name, ns0.body)
 
-    let number_using = ""
+    let numberUsing = ""
     for (let i = 1; i < NumberIncrease.Get(); i++) {
-        number_using += "using NUMBER_TYPE_%d = uint32_t;\n".format(i)
+        numberUsing += "using NUMBER_TYPE_%d = uint32_t;\n".format(i)
     }
 
-    let middle_cpp = ReplaceAll(module_cpp_tmplete, "[body_replace]", result.middle_body);
-    middle_cpp = ReplaceAll(middle_cpp, "[init_replace]", result.middle_init);
-    middle_cpp = ReplaceAll(middle_cpp, "[impl_name]", ns0.name);
-    WriteFile(re.path_join(dest_dir, "%s_middle.cpp".format(ns0.name)), middle_cpp)
+    let middleCpp = ReplaceAll(moduleCppTmplete, "[body_replace]", result.middleBody);
+    middleCpp = ReplaceAll(middleCpp, "[init_replace]", result.middleInit);
+    middleCpp = ReplaceAll(middleCpp, "[implName]", ns0.name);
+    WriteFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)), middleCpp)
 
-    let impl_h = ReplaceAll(impl_h_templete, "[impl_name_upper]", ns0.name.toUpperCase())
-    impl_h = impl_h.ReplaceAll("[number_using]", number_using);
-    impl_h = ReplaceAll(impl_h, "[impl_h_detail]", result.impl_h)
-    WriteFile(re.path_join(dest_dir, "%s.h".format(ns0.name)), impl_h)
+    let implH = ReplaceAll(implH_templete, "[impl_name_upper]", ns0.name.toUpperCase())
+    implH = implH.ReplaceAll("[numberUsing]", numberUsing);
+    implH = ReplaceAll(implH, "[implH_detail]", result.implH)
+    WriteFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), implH)
 
-    let impl_cpp = impl_cpp_templete.ReplaceAll("[impl_name]", ns0.name)
-    impl_cpp = impl_cpp.ReplaceAll("[impl_cpp_detail]", result.impl_cpp)
-    WriteFile(re.path_join(dest_dir, "%s.cpp".format(ns0.name)), impl_cpp)
+    let implCpp = implCpp_templete.ReplaceAll("[implName]", ns0.name)
+    implCpp = implCpp.ReplaceAll("[implCpp_detail]", result.implCpp)
+    WriteFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), implCpp)
 
 
-    GenerateGYP(dest_dir, ns0.name)//生成ubuntu下测试的编译脚本
-    GenerateGN(dest_dir, ns0.name)//生成BUILD.gn for ohos
-    GenerateBase(dest_dir)//x_napi_tool.h/cpp
-    // print(middle_cpp)
+    GenerateGYP(destDir, ns0.name)//生成ubuntu下测试的编译脚本
+    GenerateGN(destDir, ns0.name)//生成BUILD.gn for ohos
+    GenerateBase(destDir)//x_napi_tool.h/cpp
+    // print(middleCpp)
 }
 
 module.exports = {
