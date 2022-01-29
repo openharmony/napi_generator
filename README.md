@@ -1,7 +1,7 @@
 # assist_tools
 
 #### Description
-This warehouse is used to incubate the assist tools of openharmony system, so that developers can improve development efficiency.Currently NAPI framework code generation tool has been implemented, and the bootanimation tool is being planned.Other similar tools can be incubated in this warehouse.
+This warehouse is used to incubate the assist tools of openharmony system, so that developers can improve development efficiency.Currently NAPI framework code generation tool has been implemented.Other similar tools can be incubated in this warehouse.
 
 #### Directory Structure
 ```
