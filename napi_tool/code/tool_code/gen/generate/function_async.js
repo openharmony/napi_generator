@@ -13,8 +13,8 @@
 * limitations under the License. 
 */
 const { ReplaceAll, print } = require("../tools/tool");
-const { ParamGenerate } = require("./param_generate");
-const { ReturnGenerate } = require("./return_generate");
+const { paramGenerate } = require("./param_generate");
+const { returnGenerate } = require("./return_generate");
 
 /**
  * 结果异步返回Async|Promise
@@ -69,7 +69,7 @@ struct [funcName]_value_struct {[valueIn]
     return result;
 }`
 
-function GenerateFunctionAsync(func, className) {
+function generateFunctionAsync(func, className) {
     //     this.len_to = 0
     //     // print(type, name, values, ret_type)
     let middleFunc = ReplaceAll(funcAsyncTemplete, "[funcName]", func.name)
@@ -97,11 +97,10 @@ function GenerateFunctionAsync(func, className) {
 
     for (let i in func.value) {
         let v = func.value[i]
-        ParamGenerate(i, v.name, v.type, param)
+        paramGenerate(i, v.name, v.type, param)
     }
 
-    // ReturnGenerate(func.ret, param)
-    ReturnGenerate(param.callback.type, param)
+    returnGenerate(param.callback.type, param)
 
     middleFunc = ReplaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
     middleFunc = ReplaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
@@ -129,5 +128,5 @@ bool %s%s(%s) {
 }
 
 module.exports = {
-    GenerateFunctionAsync
+    generateFunctionAsync
 }

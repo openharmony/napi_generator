@@ -13,8 +13,8 @@
 * limitations under the License. 
 */
 const { ReplaceAll, print } = require("../tools/tool");
-const { ParamGenerate } = require("./param_generate");
-const { ReturnGenerate } = require("./return_generate");
+const { paramGenerate } = require("./param_generate");
+const { returnGenerate } = require("./return_generate");
 
 /**
  * 结果直接返回
@@ -51,20 +51,18 @@ struct [funcName]_value_struct {[valueIn]
     return result;
 }`
 
-function GenerateFunctionDirect(func, className) {
+function generateFunctionDirect(func, className) {
     //     this.len_to = 0
     //     // print(type, name, values, ret_type)
     let middleFunc = ReplaceAll(funcDirectTemplete, "[funcName]", func.name)
-    if(className == null)
-    {
-        middleFunc = middleFunc.ReplaceAll("[static_define]","")
-        middleFunc = middleFunc.ReplaceAll("[unwarp_instance]","")
+    if (className == null) {
+        middleFunc = middleFunc.ReplaceAll("[static_define]", "")
+        middleFunc = middleFunc.ReplaceAll("[unwarp_instance]", "")
     }
-    else
-    {
-        middleFunc = middleFunc.ReplaceAll("[static_define]","static ")
+    else {
+        middleFunc = middleFunc.ReplaceAll("[static_define]", "static ")
         middleFunc = middleFunc.ReplaceAll("[unwarp_instance]",
-            "%s *pInstance = (%s *)pxt->UnWarpInstance();".format(className,className))
+            "%s *pInstance = (%s *)pxt->UnWarpInstance();".format(className, className))
     }
     let param = {
         valueIn: "",//定义输入
@@ -78,17 +76,17 @@ function GenerateFunctionDirect(func, className) {
 
     for (let i in func.value) {
         let v = func.value[i]
-        ParamGenerate(i, v.name, v.type, param)
+        paramGenerate(i, v.name, v.type, param)
     }
 
-    ReturnGenerate(func.ret, param)
+    returnGenerate(func.ret, param)
 
     middleFunc = ReplaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
     middleFunc = ReplaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
 
     middleFunc = ReplaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
 
-    let callFunc = "%s%s(%s);".format(className == null?"":"pInstance->",func.name, param.valueFill)
+    let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = ReplaceAll(middleFunc, "[callFunc]", callFunc)//执行
 
     middleFunc = ReplaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
@@ -98,11 +96,11 @@ function GenerateFunctionDirect(func, className) {
 bool %s%s(%s) {
     return true;
 }
-`.format(className == null?"":className+"::",func.name, param.valueDefine)
+`.format(className == null ? "" : className + "::", func.name, param.valueDefine)
 
     return [middleFunc, implH, implCpp]
 }
 
 module.exports = {
-    GenerateFunctionDirect
+    generateFunctionDirect
 }

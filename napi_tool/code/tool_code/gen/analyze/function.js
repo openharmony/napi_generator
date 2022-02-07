@@ -13,19 +13,19 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { print, RemoveExplains, RemoveEmptyLine, CheckOutBody } = require("../tools/tool");
+const { print, removeExplains, removeEmptyLine, checkOutBody } = require("../tools/tool");
 const { FuncType, NumberIncrease } = require("../tools/common");
-const { AnalyzeParams } = require("./params");
-const { AnalyzeReturn } = require("./return");
+const { analyzeParams } = require("./params");
+const { analyzeReturn } = require("./return");
 
 /**函数解析 */
-function AnalyzeFunction(name, values, ret) {
+function analyzeFunction(name, values, ret) {
     values = re.replaceAll(re.replaceAll(values, " ", ""), "\n", "")
-    let tmp = AnalyzeParams(values)
+    let tmp = analyzeParams(values)
     values = tmp[0]
     let funcType = tmp[1]
 
-    tmp = AnalyzeReturn(ret)
+    tmp = analyzeReturn(ret)
     ret = tmp[0]
     if (tmp[1])
         funcType = FuncType.PROMISE
@@ -39,11 +39,11 @@ function AnalyzeFunction(name, values, ret) {
     for (let j in values) {
         let v = values[j]
         if (v["type"].indexOf("number") >= 0) {
-            v["type"] = v["type"].replace("number", "NUMBER_TYPE_" + NumberIncrease.GetAndIncrease())
+            v["type"] = v["type"].replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
         }
     }
     if (ret.indexOf("number") >= 0) {
-        ret = ret.replace("number", "NUMBER_TYPE_" + NumberIncrease.GetAndIncrease())
+        ret = ret.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
     }
 
     let result = {
@@ -56,5 +56,5 @@ function AnalyzeFunction(name, values, ret) {
 }
 
 module.exports = {
-    AnalyzeFunction
+    analyzeFunction
 }

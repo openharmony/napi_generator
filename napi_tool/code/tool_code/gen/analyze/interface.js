@@ -13,13 +13,13 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { print, RemoveExplains, RemoveEmptyLine, CheckOutBody } = require("../tools/tool");
+const { print, removeExplains, removeEmptyLine, checkOutBody } = require("../tools/tool");
 const { FuncType, NumberIncrease } = require("../tools/common");
 
-const { AnalyzeFunction } = require("./function");
+const { analyzeFunction } = require("./function");
 
 /**interface解析 */
-function AnalyzeInterface(data) {//same as class
+function analyzeInterface(data) {//same as class
     let body = re.replaceAll(data, "\n", "").split(";")//  # replace(" ", "").
     // print(body)
     let result = {
@@ -40,7 +40,7 @@ function AnalyzeInterface(data) {//same as class
             let valueName = re.getReg(t, tt.regs[1])
             let valueType = re.getReg(t, tt.regs[2])
             if (valueType.indexOf("number") >= 0) {
-                valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.GetAndIncrease())
+                valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
             }
             result.value.push({
                 name: valueName,
@@ -50,7 +50,7 @@ function AnalyzeInterface(data) {//same as class
         }
         tt = re.match(" *([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+)", t)
         if (tt) {//函数
-            let funcDetail = AnalyzeFunction(re.getReg(t, tt.regs[1]),
+            let funcDetail = analyzeFunction(re.getReg(t, tt.regs[1]),
                 re.getReg(t, tt.regs[2]), re.getReg(t, tt.regs[3]))
             if (funcDetail != null)
                 result.function.push(funcDetail)
@@ -61,5 +61,5 @@ function AnalyzeInterface(data) {//same as class
 }
 
 module.exports = {
-    AnalyzeInterface
+    analyzeInterface
 }

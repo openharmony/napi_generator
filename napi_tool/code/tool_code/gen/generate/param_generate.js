@@ -21,7 +21,7 @@ LenIncrease.LEN_TO = 1;
 LenIncrease.Reset = function () {
     LenIncrease.LEN_TO = 1;
 }
-LenIncrease.GetAndIncrease = function () {
+LenIncrease.getAndIncrease = function () {
     return LenIncrease.LEN_TO++;
 }
 
@@ -29,10 +29,10 @@ function getValueProperty(napiVn, name) {
     return 'pxt->GetValueProperty(%s, "%s")'.format(napiVn, name)
 }
 
-function js_to_c(dest, napiVn, type) {
+function jsToC(dest, napiVn, type) {
     if (type == "string") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
-            let lt = LenIncrease.GetAndIncrease()
+            let lt = LenIncrease.getAndIncrease()
             return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){pxt->SwapJs2CUtf8(tnv%d,%s);}`
                 .format(lt, napiVn, lt, lt, dest)
         }
@@ -41,26 +41,26 @@ function js_to_c(dest, napiVn, type) {
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
-            let lt = LenIncrease.GetAndIncrease()
+            let lt = LenIncrease.getAndIncrease()
             return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C(tnv%d,%s,%s);}`
                 .format(lt, napiVn, lt, lt, type, dest)
         }
         else
             return `NUMBER_JS_2_C(%s,%s,%s);`.format(napiVn, type, dest)
     }
-    else if (InterfaceList.GetValue(type)) {
+    else if (InterfaceList.getValue(type)) {
         let tt = ""
-        let ifl = InterfaceList.GetValue(type)
+        let ifl = InterfaceList.getValue(type)
         for (let i in ifl) {
             let name2 = ifl[i].name
             let type2 = ifl[i].type
-            tt += js_to_c("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2)
+            tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2)
         }
         return tt
     }
     else if (type.indexOf("Array<") == 0) {
         let arrayType = getArrayType(type)
-        let lt = LenIncrease.GetAndIncrease()
+        let lt = LenIncrease.getAndIncrease()
         if (arrayType == "string") arrayType = "std::string"
         let arrTemplete = `\
         uint32_t len[replace_lt]=pxt->GetArrayLength(%s);
@@ -79,14 +79,14 @@ function js_to_c(dest, napiVn, type) {
             arrTemplete = arrTemplete.ReplaceAll("[replace_swap]",
                 "pxt->SwapJs2CUtf8(pxt->GetArrayElement(%s,i%d), tt%d);".format(napiVn, lt, lt))
         }
-        else if (InterfaceList.GetValue(arrayType)) {
+        else if (InterfaceList.getValue(arrayType)) {
             arrTemplete = arrTemplete.ReplaceAll("[replace_swap]",
-                js_to_c("tt" + lt, "pxt->GetArrayElement(%s,i%d)".format(napiVn, lt), arrayType))
+                jsToC("tt" + lt, "pxt->GetArrayElement(%s,i%d)".format(napiVn, lt), arrayType))
         }
         return arrTemplete;
     }
     else
-        print(`\n---- generate js_to_c fail %s,%s,%s ----\n`.format(dest, napiVn, type))
+        print(`\n---- generate jsToC fail %s,%s,%s ----\n`.format(dest, napiVn, type))
 }
 
 function ParamCheckout(name, napiVn, type) {
@@ -96,33 +96,33 @@ function ParamCheckout(name, napiVn, type) {
             let name2 = Object.keys(e)[0]
             let type2 = e[name2]
             this.values_["value_analyze"] += "%s%s".format(new_line(this.values_["value_analyze"]),
-                this.js_to_c("%s.%s".format(name, name2),
+                this.jsToC("%s.%s".format(name, name2),
                     this.getValueProperty(napiVn, name2),
                     type2))
         }
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_" || type == "string" || type.substring(0, 6) == "Array<")
         this.values_["value_analyze"] += "%s%s".format(new_line(this.values_["value_analyze"]),
-            this.js_to_c(name, napiVn, type))
+            this.jsToC(name, napiVn, type))
 }
 
 // 函数的参数处理
-function ParamGenerate(p, name, type, param) {
+function paramGenerate(p, name, type, param) {
     if (type == "string") {
         param.valueIn += "\n    std::string in%d;".format(p)
-        param.valueCheckout += js_to_c("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sstd::string &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         param.valueIn += "\n    %s in%d;".format(type, p)
-        param.valueCheckout += js_to_c("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%s%s &%s".format(param.valueDefine.length > 0 ? ", " : "", type, name)
     }
-    else if (InterfaceList.GetValue(type)) {
+    else if (InterfaceList.getValue(type)) {
         param.valueIn += "\n    %s in%d;".format(type, p)
-        param.valueCheckout += js_to_c("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%s%s &%s".format(param.valueDefine.length > 0 ? ", " : "", type, name)
     }
@@ -130,7 +130,7 @@ function ParamGenerate(p, name, type, param) {
         let arrayType = getArrayType(type)
         if (arrayType == "string") arrayType = "std::string"
         param.valueIn += "\n    std::vector<%s> in%d;".format(arrayType, p)
-        param.valueCheckout += js_to_c("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sstd::vector<%s> &%s".format(param.valueDefine.length > 0 ? ", " : "", arrayType, name)
     }
@@ -146,6 +146,6 @@ function ParamGenerate(p, name, type, param) {
 }
 
 module.exports = {
-    js_to_c,
-    ParamGenerate
+    jsToC,
+    paramGenerate
 }

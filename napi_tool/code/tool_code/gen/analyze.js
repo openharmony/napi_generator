@@ -13,18 +13,18 @@
 * limitations under the License. 
 */
 const re = require("./tools/re");
-const { print, RemoveExplains, RemoveEmptyLine, CheckOutBody } = require("./tools/tool");
+const { print, removeExplains, removeEmptyLine, checkOutBody } = require("./tools/tool");
 const { FuncType, NumberIncrease } = require("./tools/common");
-const { ReadFile } = require("./tools/FileRW");
+const { readFile } = require("./tools/FileRW");
 
-const { AnalyzeNamespace } = require("./analyze/namespace");
+const { analyzeNamespace } = require("./analyze/namespace");
 
-function AnalyzeFile(fn) {
-    NumberIncrease.Reset();
-    let data = ReadFile(fn);
+function analyzeFile(fn) {
+    NumberIncrease.reset();
+    let data = readFile(fn);
     // print("[",fn,"]")
-    data = RemoveExplains(data)//去除注释
-    data = RemoveEmptyLine(data)//去除空行
+    data = removeExplains(data)//去除注释
+    data = removeEmptyLine(data)//去除空行
     while (true) {//去除import
         let tt = re.search("import ([{}A-Za-z ,]+) from [\"']{1}([@./a-zA-Z]+)[\"']{1};*", data);
         if (tt != null) data = re.removeReg(data, tt.regs[0]);
@@ -42,7 +42,7 @@ function AnalyzeFile(fn) {
     }
     while (true) {
         let oldData = data
-        data = RemoveEmptyLine(data)
+        data = removeEmptyLine(data)
 
         let tt = re.match(" *\n*", data)
         if (tt && tt.regs[0][1] == data.length) break//只剩下空格和回车时，解析完成
@@ -73,7 +73,7 @@ function AnalyzeFile(fn) {
         tt = re.match("(export )*type ([a-zA-Z]+) = ({)", data)
         if (tt) {
             let exportName = re.getReg(data, tt.regs[2])
-            let exportBody = CheckOutBody(data, tt.regs[3][0], null, true)
+            let exportBody = checkOutBody(data, tt.regs[3][0], null, true)
             data = data.substring(tt.regs[3][1] + exportBody.length + 2, data.length)
             result.declareType.push({
                 name: exportName,
@@ -90,7 +90,7 @@ function AnalyzeFile(fn) {
         {
             let namespaceName = re.getReg(data, tt.regs[1])
             // print(1, "declare namespace", namespaceName)
-            let namespaceData = CheckOutBody(data, tt.regs[2][0], null, true)
+            let namespaceData = checkOutBody(data, tt.regs[2][0], null, true)
             // XGenerate.gi().Start(re.getFileInPath(ifname), namespaceName)
             // CheckOutDeclare(data)
             // XGenerate.gi().End(re.getPathInPath(ifname))//odname
@@ -98,7 +98,7 @@ function AnalyzeFile(fn) {
             result.declareNamespace.push({
                 name: namespaceName,
                 // zzzz: "zzzz",//this is namespace
-                body: AnalyzeNamespace(namespaceData)
+                body: analyzeNamespace(namespaceData)
             })
             continue;
         }
@@ -107,7 +107,7 @@ function AnalyzeFile(fn) {
         if (tt) {
             let interfaceName = re.getReg(data, tt.regs[3])
             // print(1, "declare interface", interfaceName)
-            let interfaceData = CheckOutBody(data, tt.regs[5][0], null, true)
+            let interfaceData = checkOutBody(data, tt.regs[5][0], null, true)
             data = data.substring(tt.regs[5][1] + interfaceData.length + 1, data.length)
             result.declareInterface.push({
                 name: interfaceName,
@@ -144,5 +144,5 @@ function AnalyzeFile(fn) {
 }
 
 module.exports = {
-    AnalyzeFile
+    analyzeFile
 }

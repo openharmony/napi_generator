@@ -13,13 +13,13 @@
 * limitations under the License. 
 */
 const { print } = require("../tools/tool");
-const { GenerateFunctionDirect } = require("./function_direct");
-const { GenerateFunctionSync } = require("./function_sync");
-const { GenerateFunctionAsync } = require("./function_async");
-const { GenerateInterface } = require("./interface");
+const { generateFunctionDirect } = require("./function_direct");
+const { generateFunctionSync } = require("./function_sync");
+const { generateFunctionAsync } = require("./function_async");
+const { generateInterface } = require("./interface");
 const { FuncType, InterfaceList } = require("../tools/common");
 
-function GenerateNamespace(name, data, inNamespace = "") {
+function generateNamespace(name, data, inNamespace = "") {
     // print(name)
     // print(data)
     // print(inNamespace)
@@ -42,12 +42,12 @@ function GenerateNamespace(name, data, inNamespace = "") {
             .format(name, nsl.length == 1 ? "exports" : parentNs, name)
     }
 
-    InterfaceList.Push(data.interface)
-    // InterfaceList.GetValue("TestClass1")
+    InterfaceList.push(data.interface)
+    // InterfaceList.getValue("TestClass1")
     for (let i in data.interface) {
         let ii = data.interface[i]
         // print(ii)
-        let result = GenerateInterface(ii.name, ii.body, inNamespace + name + "::")
+        let result = generateInterface(ii.name, ii.body, inNamespace + name + "::")
 
         middleFunc += result.middleBody
         implH += result.implH
@@ -61,14 +61,14 @@ function GenerateNamespace(name, data, inNamespace = "") {
         let tmp;
         switch (func.type) {
             case FuncType.DIRECT:
-                tmp = GenerateFunctionDirect(func)
+                tmp = generateFunctionDirect(func)
                 break;
             case FuncType.SYNC:
-                tmp = GenerateFunctionSync(func)
+                tmp = generateFunctionSync(func)
                 break
             case FuncType.ASYNC:
             case FuncType.PROMISE:
-                tmp = GenerateFunctionAsync(func)
+                tmp = generateFunctionAsync(func)
                 break
             default:
                 // to do yichangchuli
@@ -78,19 +78,19 @@ function GenerateNamespace(name, data, inNamespace = "") {
         implH += tmp[1]
         implCpp += tmp[2]
         middleInit += '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'
-            .format(func.name, inNamespace, name, func.name, inNamespace.length > 0 ? ", "+name : "")
+            .format(func.name, inNamespace, name, func.name, inNamespace.length > 0 ? ", " + name : "")
     }
 
     for (let i in data.namespace) {
         let ns = data.namespace[i]
         // print(ns)
-        let result = GenerateNamespace(ns.name, ns.body, inNamespace + name + "::")
+        let result = generateNamespace(ns.name, ns.body, inNamespace + name + "::")
         middleFunc += result.middleBody
         implH += result.implH
         implCpp += result.implCpp
         middleInit += result.middleInit
     }
-    InterfaceList.Pop();
+    InterfaceList.pop();
 
     if (inNamespace.length > 0) {
         middleInit += "}"
@@ -116,5 +116,5 @@ namespace %s {
 }
 
 module.exports = {
-    GenerateNamespace
+    generateNamespace
 }

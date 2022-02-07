@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { WriteFile } = require("../tools/FileRW");
+const { writeFile } = require("../tools/FileRW");
 const re = require("../tools/re");
 
 let gypTemplete = `
@@ -32,14 +32,14 @@ let gypTemplete = `
 `
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
-function GenerateGYP(destDir, implName) {
+function generateGYP(destDir, implName) {
     let ss = gypTemplete.ReplaceAll("[implName]", implName)
-    WriteFile(re.pathJoin(destDir, "binding.gyp"), ss)
+    writeFile(re.pathJoin(destDir, "binding.gyp"), ss)
 
-    WriteFile(re.pathJoin(destDir, "test.sh"), "node-gyp configure build && sleep 0.5 && node --expose-gc test.js")
-    
+    writeFile(re.pathJoin(destDir, "test.sh"), "node-gyp configure build && sleep 0.5 && node --expose-gc test.js")
+
 }
 
 module.exports = {
-    GenerateGYP
+    generateGYP
 }

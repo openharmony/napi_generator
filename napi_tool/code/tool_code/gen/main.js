@@ -13,21 +13,21 @@
 * limitations under the License. 
 */
 // const vscode = require('vscode');
-const { AnalyzeFile } = require("./analyze");
-const { GenerateAll } = require("./generate");
+const { analyzeFile } = require("./analyze");
+const { generateAll } = require("./generate");
 const re = require("./tools/re")
 
-function DoGenerate(ifname) {
+function doGenerate(ifname) {
     // console.log("----------generate start---------")
 
-    let structOfTs = AnalyzeFile(ifname);
+    let structOfTs = analyzeFile(ifname);
     // print(structOfTs)
 
-    GenerateAll(structOfTs, re.getPathInPath(ifname));
+    generateAll(structOfTs, re.getPathInPath(ifname));
 
     // console.log("----------generate end---------")
 }
 
 module.exports = {
-    DoGenerate
+    doGenerate
 }

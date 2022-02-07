@@ -15,12 +15,12 @@
 //生成BUILD.gn
 //生成x_napi_tool.h，生成x_napi_tool.cpp
 const { ReplaceAll, print } = require("./tools/tool");
-const { GenerateNamespace } = require("./generate/namespace");
-const { WriteFile } = require("./tools/FileRW");
+const { generateNamespace } = require("./generate/namespace");
+const { writeFile } = require("./tools/FileRW");
 const re = require("./tools/re");
-const { GenerateGYP } = require("./extend/binding_gyp");
-const { GenerateGN } = require("./extend/build_gn");
-const { GenerateBase } = require("./extend/x_napi_tool");
+const { generateGYP } = require("./extend/binding_gyp");
+const { generateGN } = require("./extend/build_gn");
+const { generateBase } = require("./extend/x_napi_tool");
 const { NumberIncrease } = require("./tools/common");
 
 let moduleCppTmplete = `\
@@ -84,7 +84,7 @@ extern "C" __attribute__((constructor)) void Register_[implName]_Module(void)
 }
 `
 
-let implH_templete = `\
+let implHTemplete = `\
 #ifndef IMPL_[impl_name_upper]_H
 #define IMPL_[impl_name_upper]_H
 
@@ -101,43 +101,43 @@ let implH_templete = `\
 #endif // IMPL_[impl_name_upper]_H
 `
 
-let implCpp_templete = `\
+let implCppTemplete = `\
 #include "[implName].h"
 
 [implCpp_detail]
 `
 
-function GenerateAll(structOfTs, destDir) {
+function generateAll(structOfTs, destDir) {
     let ns0 = structOfTs.declareNamespace[0];
 
-    let result = GenerateNamespace(ns0.name, ns0.body)
+    let result = generateNamespace(ns0.name, ns0.body)
 
     let numberUsing = ""
-    for (let i = 1; i < NumberIncrease.Get(); i++) {
+    for (let i = 1; i < NumberIncrease.get(); i++) {
         numberUsing += "using NUMBER_TYPE_%d = uint32_t;\n".format(i)
     }
 
     let middleCpp = ReplaceAll(moduleCppTmplete, "[body_replace]", result.middleBody);
     middleCpp = ReplaceAll(middleCpp, "[init_replace]", result.middleInit);
     middleCpp = ReplaceAll(middleCpp, "[implName]", ns0.name);
-    WriteFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)), middleCpp)
+    writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)), middleCpp)
 
-    let implH = ReplaceAll(implH_templete, "[impl_name_upper]", ns0.name.toUpperCase())
+    let implH = ReplaceAll(implHTemplete, "[impl_name_upper]", ns0.name.toUpperCase())
     implH = implH.ReplaceAll("[numberUsing]", numberUsing);
     implH = ReplaceAll(implH, "[implH_detail]", result.implH)
-    WriteFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), implH)
+    writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), implH)
 
-    let implCpp = implCpp_templete.ReplaceAll("[implName]", ns0.name)
+    let implCpp = implCppTemplete.ReplaceAll("[implName]", ns0.name)
     implCpp = implCpp.ReplaceAll("[implCpp_detail]", result.implCpp)
-    WriteFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), implCpp)
+    writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), implCpp)
 
 
-    GenerateGYP(destDir, ns0.name)//生成ubuntu下测试的编译脚本
-    GenerateGN(destDir, ns0.name)//生成BUILD.gn for ohos
-    GenerateBase(destDir)//x_napi_tool.h/cpp
+    generateGYP(destDir, ns0.name)//生成ubuntu下测试的编译脚本
+    generateGN(destDir, ns0.name)//生成BUILD.gn for ohos
+    generateBase(destDir)//x_napi_tool.h/cpp
     // print(middleCpp)
 }
 
 module.exports = {
-    GenerateAll
+    generateAll
 }

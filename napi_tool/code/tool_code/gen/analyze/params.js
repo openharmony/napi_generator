@@ -13,15 +13,15 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { print, RemoveExplains, RemoveEmptyLine, CheckOutBody } = require("../tools/tool");
-const { FuncType,NumberIncrease } = require("../tools/common");
+const { print, removeExplains, removeEmptyLine, checkOutBody } = require("../tools/tool");
+const { FuncType, NumberIncrease } = require("../tools/common");
 
 /**函数参数解析 */
-function AnalyzeParams(values) {
+function analyzeParams(values) {
     let result = []
     let funcType = FuncType.DIRECT
     while (values.length > 0) {
-        let v = CheckOutBody(values, 0, ["", ","])
+        let v = checkOutBody(values, 0, ["", ","])
         if (v == null)
             v = values
         values = values.substring(v.length, values.length)
@@ -44,5 +44,5 @@ function AnalyzeParams(values) {
 }
 
 module.exports = {
-    AnalyzeParams
+    analyzeParams
 }

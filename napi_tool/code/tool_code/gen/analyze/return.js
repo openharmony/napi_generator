@@ -13,11 +13,11 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { print, RemoveExplains, RemoveEmptyLine, CheckOutBody } = require("../tools/tool");
-const { FuncType,NumberIncrease } = require("../tools/common");
+const { print, removeExplains, removeEmptyLine, checkOutBody } = require("../tools/tool");
+const { FuncType, NumberIncrease } = require("../tools/common");
 
 /**函数返回值解析 */
-function AnalyzeReturn(ret) {
+function analyzeReturn(ret) {
     let isPromise = false
     if (ret.indexOf("Promise") >= 0) {
         isPromise = true
@@ -26,5 +26,5 @@ function AnalyzeReturn(ret) {
 }
 
 module.exports = {
-    AnalyzeReturn
+    analyzeReturn
 }
