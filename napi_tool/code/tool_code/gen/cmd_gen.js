@@ -14,30 +14,25 @@
 */
 const main = require("./main");
 const re = require("./tools/re");
-function print(...args)
-{
+function print(...args) {
     console.log(...args)
 }
 
-let usageStr=`usage:
+let usageStr = `usage:
 cmd_gen-win.exe d:\\@ohos.youmodulename.d.ts`
 
-if(process.argv.length<=2)
-{
+if (process.argv.length <= 2) {
     print(usageStr)
 }
-else
-{
-    let fn=re.getFileInPath(process.argv[2])
-    
-    let tt=re.match("@ohos.[a-zA-Z0-9]+.d.ts",fn)
-    if(tt)
-    {
-        main.DoGenerate(process.argv[2])
+else {
+    let fn = re.getFileInPath(process.argv[2])
+
+    let tt = re.match("@ohos.[a-zA-Z0-9]+.d.ts", fn)
+    if (tt) {
+        main.doGenerate(process.argv[2])
     }
-    else
-    {
-        print("\n文件名 "+fn+" 校验失败，需要符合 @ohos.xxx.d.ts")
+    else {
+        print("\n文件名 " + fn + " 校验失败，需要符合 @ohos.xxx.d.ts")
     }
 }
 

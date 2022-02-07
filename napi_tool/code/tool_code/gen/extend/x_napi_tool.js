@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { WriteFile } = require("../tools/FileRW");
+const { writeFile } = require("../tools/FileRW");
 const re = require("../tools/re");
 
 let xNapiToolH = `\
@@ -551,7 +551,8 @@ void XNapiTool::DefineClass(const char *className, napi_callback constructorFunc
         funcs[p++] = {it->first, 0, it->second, 0, 0, 0, napi_default, 0};
     }
 
-    napi_status result_status = napi_define_class(env_, className, NAPI_AUTO_LENGTH, constructorFunc, nullptr, p, funcs, &tmpClass);
+    napi_status result_status = napi_define_class(env_, className, NAPI_AUTO_LENGTH, constructorFunc, 
+        nullptr, p, funcs, &tmpClass);
     CC_ASSERT(result_status == napi_ok);
 
     result_status = napi_set_named_property(env_, dest, className, tmpClass);
@@ -603,11 +604,11 @@ void *XNapiTool::GetAsyncInstance()
 }
 `
 
-function GenerateBase(destDir) {
-    WriteFile(re.pathJoin(destDir, "x_napi_tool.h"), xNapiToolH)
-    WriteFile(re.pathJoin(destDir, "x_napi_tool.cpp"), xNapiToolCpp)
+function generateBase(destDir) {
+    writeFile(re.pathJoin(destDir, "x_napi_tool.h"), xNapiToolH)
+    writeFile(re.pathJoin(destDir, "x_napi_tool.cpp"), xNapiToolCpp)
 }
 
 module.exports = {
-    GenerateBase
+    generateBase
 }

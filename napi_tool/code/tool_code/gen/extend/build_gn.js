@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { WriteFile } = require("../tools/FileRW");
+const { writeFile } = require("../tools/FileRW");
 const re = require("../tools/re");
 
 let gnTemplete = `\
@@ -48,11 +48,11 @@ ohos_shared_library("[implName]")
 `
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
-function GenerateGN(destDir, implName) {
+function generateGN(destDir, implName) {
     let ss = gnTemplete.ReplaceAll("[implName]", implName)
-    WriteFile(re.pathJoin(destDir, "BUILD.gn"), ss)
+    writeFile(re.pathJoin(destDir, "BUILD.gn"), ss)
 }
 
 module.exports = {
-    GenerateGN
+    generateGN
 }

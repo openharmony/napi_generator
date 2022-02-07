@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("./re");
-let vscode=null;
+let vscode = null;
 try {
     vscode = require('vscode');
 }
@@ -22,8 +22,7 @@ catch (err) {
 }
 
 function print(...args) {
-    if(vscode)
-    {
+    if (vscode) {
         vscode.window.showInformationMessage(...args);
     }
     console.log(...args)
@@ -51,7 +50,7 @@ String.prototype.ReplaceAll = function (...args) {
     return result;
 }
 
-function CheckOutBody(body, off, flag, binside) {
+function checkOutBody(body, off, flag, binside) {
     off = off || 0;
     flag = flag || ["{", "}"];
     binside = binside || false;
@@ -110,7 +109,7 @@ function CheckOutBody(body, off, flag, binside) {
 }
 
 
-function RemoveExplains(data) {
+function removeExplains(data) {
     while (data.indexOf("/*") >= 0) {
         let i1 = data.indexOf("/*")
         let i2 = data.indexOf("*/") + 2
@@ -130,7 +129,7 @@ function RemoveExplains(data) {
     return data
 }
 
-function RemoveEmptyLine(data) {
+function removeEmptyLine(data) {
     while (data.indexOf("\r") >= 0) {
         data = data.replace("\r", "")
     }
@@ -152,7 +151,7 @@ function RemoveEmptyLine(data) {
     return data
 }
 
-function RemoveEmptyLine2(data) {
+function removeEmptyLine2(data) {
     while (data.indexOf(" \n"))
         data = data.replace(" \n", "\n")
     while (data.indexOf("\n\n\n"))
@@ -168,10 +167,10 @@ function ReplaceAll(s, sfrom, sto) {
 }
 
 module.exports = {
-    CheckOutBody,
-    RemoveExplains,
-    RemoveEmptyLine,
-    RemoveEmptyLine2,
+    checkOutBody,
+    removeExplains,
+    removeEmptyLine,
+    removeEmptyLine2,
     ReplaceAll,
     print
 }

@@ -15,7 +15,7 @@
 const { ReplaceAll, print } = require("../tools/tool");
 const { InterfaceList, getArrayType } = require("../tools/common");
 
-function c_to_js(value, type, dest, deep = 1) {
+function cToJs(value, type, dest, deep = 1) {
     // print(value, type, dest)
     if (type == "void")
         return "%s = pxt->UndefinedValue();".format(dest);
@@ -25,14 +25,14 @@ function c_to_js(value, type, dest, deep = 1) {
         return `%s = pxt->SwapC2JsUtf8(%s.c_str());`.format(dest, value)
     else if (type.substring(0, 12) == "NUMBER_TYPE_")
         return `%s = NUMBER_C_2_JS(pxt, %s);`.format(dest, value)
-    else if (InterfaceList.GetValue(type)) {
+    else if (InterfaceList.getValue(type)) {
         let lt = deep
         let tt = ""
-        let ifl = InterfaceList.GetValue(type)
+        let ifl = InterfaceList.getValue(type)
         for (let i in ifl) {
             let name2 = ifl[i].name
             let type2 = ifl[i].type
-            let tt1 = c_to_js("%s.%s".format(value, name2), type2, "tnv%d".format(lt), deep + 1)
+            let tt1 = cToJs("%s.%s".format(value, name2), type2, "tnv%d".format(lt), deep + 1)
             tt += "{\nnapi_value tnv%d = nullptr;\n".format(lt) + tt1 + `\npxt->SetValueProperty(%s,"%s",tnv%d);\n}`
                 .format(dest, name2, lt)
         }
@@ -55,18 +55,18 @@ function c_to_js(value, type, dest, deep = 1) {
         else if (arrayType == "string") {
             ret = tnvdef.ReplaceAll("[calc_out]", `tnv%d = pxt->SwapC2JsUtf8(%s[i].c_str());`.format(lt, value))
         }
-        else if (InterfaceList.GetValue(arrayType)) {
-            ret = tnvdef.ReplaceAll("[calc_out]", c_to_js(value + "[i]", arrayType, "tnv" + lt, deep + 1))
+        else if (InterfaceList.getValue(arrayType)) {
+            ret = tnvdef.ReplaceAll("[calc_out]", cToJs(value + "[i]", arrayType, "tnv" + lt, deep + 1))
         }
         return ret
     }
     else
-        print(`\n---- generate c_to_js fail %s,%s,%s ----\n`.format(value, type, dest))
+        print(`\n---- generate cToJs fail %s,%s,%s ----\n`.format(value, type, dest))
 }
 
-function ReturnGenerate(type, param) {
+function returnGenerate(type, param) {
     param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")
-    param.valuePackage = "napi_value result = nullptr;\n    " + c_to_js("vio->out", type, "result")
+    param.valuePackage = "napi_value result = nullptr;\n    " + cToJs("vio->out", type, "result")
     if (type == "string") {
         param.valueOut = "std::string out;"
         param.valueDefine += "%sstd::string &out".format(param.valueDefine.length > 0 ? ", " : "")
@@ -77,12 +77,12 @@ function ReturnGenerate(type, param) {
     else if (type == "boolean") {
         param.valueOut = "bool out;"
         param.valueDefine += "%sbool &out".format(param.valueDefine.length > 0 ? ", " : "")
-    }    
+    }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         param.valueOut = type + " out;"
         param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
     }
-    else if (InterfaceList.GetValue(type)) {
+    else if (InterfaceList.getValue(type)) {
         param.valueOut = type + " out;"
         param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
     }
@@ -93,12 +93,12 @@ function ReturnGenerate(type, param) {
         param.valueDefine += "%sstd::vector<%s> &out".format(param.valueDefine.length > 0 ? ", " : "", arrayType)
     }
     else {
-        print(`\n---- ReturnGenerate fail %s ----\n`.format(type))
+        print(`\n---- returnGenerate fail %s ----\n`.format(type))
     }
-    param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")        
+    param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")
 }
 
 module.exports = {
-    c_to_js,
-    ReturnGenerate
+    cToJs,
+    returnGenerate
 }

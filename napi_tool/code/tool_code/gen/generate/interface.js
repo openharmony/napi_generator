@@ -13,12 +13,12 @@
 * limitations under the License. 
 */
 const { print } = require("../tools/tool");
-const { GenerateFunctionDirect } = require("./function_direct");
-const { GenerateFunctionSync } = require("./function_sync");
-const { GenerateFunctionAsync } = require("./function_async");
+const { generateFunctionDirect } = require("./function_direct");
+const { generateFunctionSync } = require("./function_sync");
+const { generateFunctionAsync } = require("./function_async");
 const { FuncType, InterfaceList, getArrayType } = require("../tools/common");
-const { js_to_c } = require("./param_generate");
-const { c_to_js } = require("./return_generate");
+const { jsToC } = require("./param_generate");
+const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
 
 let middleBodyTmplete = `
@@ -47,7 +47,7 @@ static void release(void *p)
 function GenerateVariable(name, type, variable, className) {
     if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
     else if (type.substring(0, 12) == "NUMBER_TYPE_") variable.hDefine += "\n    %s %s;".format(type, name)
-    else if (InterfaceList.GetValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
+    else if (InterfaceList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (type.indexOf("Array<") == 0) {
         let type2 = getArrayType(type)
         if (type2 == "string") type2 = "std::string"
@@ -63,7 +63,7 @@ function GenerateVariable(name, type, variable, className) {
         XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
         %s *p = (%s *)pxt->UnWarpInstance();
         napi_value result;
-        `.format(name, className, className) + c_to_js("p->" + name, type, "result") + `
+        `.format(name, className, className) + cToJs("p->" + name, type, "result") + `
         delete pxt;
         return result;
     }
@@ -71,13 +71,13 @@ function GenerateVariable(name, type, variable, className) {
     {
         std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);
         %s *p = (%s *)pxt->UnWarpInstance();
-        `.format(name, className, className) + js_to_c("p->" + name, "pxt->GetArgv(0)", type) + `
+        `.format(name, className, className) + jsToC("p->" + name, "pxt->GetArgv(0)", type) + `
         return nullptr;
     }
 `
 }
 
-function GenerateInterface(name, data, inNamespace) {
+function generateInterface(name, data, inNamespace) {
     let implH = ""
     let implCpp = ""
     let middleFunc = ""
@@ -95,7 +95,7 @@ function GenerateInterface(name, data, inNamespace) {
         middleInit += `
     valueList["%s"]["getvalue"]=%s%s_middle::getvalue_%s;
     valueList["%s"]["setvalue"]=%s%s_middle::setvalue_%s;`
-        .format(v.name, inNamespace, name, v.name, v.name, inNamespace, name, v.name)
+            .format(v.name, inNamespace, name, v.name, v.name, inNamespace, name, v.name)
     }
     implH += variable.hDefine
     middleFunc += variable.middleValue
@@ -108,14 +108,14 @@ function GenerateInterface(name, data, inNamespace) {
         let tmp;
         switch (func.type) {
             case FuncType.DIRECT:
-                tmp = GenerateFunctionDirect(func, name)
+                tmp = generateFunctionDirect(func, name)
                 break;
             case FuncType.SYNC:
-                tmp = GenerateFunctionSync(func, name)
+                tmp = generateFunctionSync(func, name)
                 break
             case FuncType.ASYNC:
             case FuncType.PROMISE:
-                tmp = GenerateFunctionAsync(func, name)
+                tmp = generateFunctionAsync(func, name)
                 break
             default:
                 //to do yichangchuli
@@ -158,5 +158,5 @@ public:%s
 }
 
 module.exports = {
-    GenerateInterface
+    generateInterface
 }

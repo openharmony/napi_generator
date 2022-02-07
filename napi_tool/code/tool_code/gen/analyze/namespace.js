@@ -13,14 +13,14 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { print, RemoveExplains, RemoveEmptyLine, CheckOutBody } = require("../tools/tool");
+const { print, removeExplains, removeEmptyLine, checkOutBody } = require("../tools/tool");
 const { FuncType, NumberIncrease } = require("../tools/common");
 
-const { AnalyzeFunction } = require("./function");
-const { AnalyzeInterface } = require("./interface");
+const { analyzeFunction } = require("./function");
+const { analyzeInterface } = require("./interface");
 
 /**namespace解析 */
-function AnalyzeNamespace(data) {
+function analyzeNamespace(data) {
     let result = {
         exports: [],
 
@@ -35,14 +35,14 @@ function AnalyzeNamespace(data) {
     }
     while (data != '\n') {
         let oldData = data
-        data = RemoveEmptyLine(data)
+        data = removeEmptyLine(data)
         let tt = re.match(" *\n*", data)
         if (tt && tt.regs[0][1] == data.length) break//只剩下空格和回车时，解析完成
 
         tt = re.match("(export )*enum *([A-Za-z]+) *({)", data)
         if (tt != null) {
             let enumName = re.getReg(data, tt.regs[2]);
-            let enumBody = CheckOutBody(data, tt.regs[3][0], null, null)
+            let enumBody = checkOutBody(data, tt.regs[3][0], null, null)
             result.enum.push({
                 name: enumName,
                 body: enumBody.substring(1, -1)
@@ -71,11 +71,11 @@ function AnalyzeNamespace(data) {
         tt = re.match("(export )*interface ([A-Za-z_0-9]+)(<T>)* (extends [a-zA-Z]+ )*({)", data)
         if (tt) {
             let interfaceName = re.getReg(data, tt.regs[2])
-            let interfaceBody = CheckOutBody(data, tt.regs[5][0], null, null)
+            let interfaceBody = checkOutBody(data, tt.regs[5][0], null, null)
             // print(interfaceBody)
             result.interface.push({
                 name: interfaceName,
-                body: AnalyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1))
+                body: analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1))
             })
             // XGenerate.gi().AddInterface(re.getReg(data,tt.regs[2]),
             // data1.substring(1,data1.length-1))
@@ -92,8 +92,8 @@ function AnalyzeNamespace(data) {
         if (tt) {
             let funcName = re.getReg(data, tt.regs[2])
             // print(funcName)
-            let funcValue = CheckOutBody(data, tt.regs[3][0], ["(", ")"], null)
-            let funcRet = CheckOutBody(data.substring(tt.regs[3][0] + funcValue.length), 0, ["", "\n"], null)
+            let funcValue = checkOutBody(data, tt.regs[3][0], ["(", ")"], null)
+            let funcRet = checkOutBody(data.substring(tt.regs[3][0] + funcValue.length), 0, ["", "\n"], null)
 
             data = data.substring(tt.regs[3][0] + funcValue.length + funcRet.length)
             // print(funcValue)
@@ -107,7 +107,7 @@ function AnalyzeNamespace(data) {
                 funcRet = "void"
             }
 
-            let funcDetail = AnalyzeFunction(funcName, funcValue.substring(1, funcValue.length - 1), funcRet)
+            let funcDetail = analyzeFunction(funcName, funcValue.substring(1, funcValue.length - 1), funcRet)
             if (funcDetail != null)
                 result.function.push(funcDetail)
 
@@ -134,7 +134,7 @@ function AnalyzeNamespace(data) {
         tt = re.match("(export )*type ([a-zA-Z]+) = ({)", data)
         if (tt) {
             let typeName = re.getReg(data, tt.regs[2]);
-            let typeBody = CheckOutBody(data, tt.regs[3][0], null, true)
+            let typeBody = checkOutBody(data, tt.regs[3][0], null, true)
             result.type.push({
                 name: typeName,
                 body: typeBody
@@ -149,7 +149,7 @@ function AnalyzeNamespace(data) {
         tt = re.match("(export )*class ([a-zA-Z]+) (extends [a-zA-Z]+ )*(implements [a-zA-Z]+ )*({)", data)
         if (tt) {
             let className = re.getReg(data, tt.regs[2])
-            let classBody = CheckOutBody(data, tt.regs[5][0], null, true)
+            let classBody = checkOutBody(data, tt.regs[5][0], null, true)
             result.class.push({
                 name: className,
                 body: classBody
@@ -166,10 +166,10 @@ function AnalyzeNamespace(data) {
         tt = re.match("(export )*namespace ([a-zA-Z0-9]+) ({)", data)
         if (tt) {
             let namespaceName = re.getReg(data, tt.regs[2])
-            let namespaceBody = CheckOutBody(data, tt.regs[3][0], null, true)
+            let namespaceBody = checkOutBody(data, tt.regs[3][0], null, true)
             result.namespace.push({
                 name: namespaceName,
-                body: AnalyzeNamespace(namespaceBody)
+                body: analyzeNamespace(namespaceBody)
             })
             data = data.substring(tt.regs[3][0] + namespaceBody.length + 2, data.length)
             if (tt.regs[1][0] != -1) {
@@ -211,5 +211,5 @@ function AnalyzeNamespace(data) {
 }
 
 module.exports = {
-    AnalyzeNamespace
+    analyzeNamespace
 }

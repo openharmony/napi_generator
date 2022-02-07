@@ -29,25 +29,25 @@ FuncType.ToString = function (type) {
 
 class NumberIncrease { }
 NumberIncrease.num = 1
-NumberIncrease.GetAndIncrease = function () {
+NumberIncrease.getAndIncrease = function () {
     return NumberIncrease.num++;
 }
-NumberIncrease.Get = function () {
+NumberIncrease.get = function () {
     return NumberIncrease.num;
 }
-NumberIncrease.Reset = function () {
+NumberIncrease.reset = function () {
     NumberIncrease.num = 1
 }
 
 class InterfaceList { }
 InterfaceList.interfacess_ = [];
-InterfaceList.Push = function (ifs) {
+InterfaceList.push = function (ifs) {
     InterfaceList.interfacess_.push(ifs)
 }
-InterfaceList.Pop = function () {
+InterfaceList.pop = function () {
     InterfaceList.interfacess_.pop()
 }
-InterfaceList.GetValue = function (name) {
+InterfaceList.getValue = function (name) {
     let ifs = InterfaceList.interfacess_[InterfaceList.interfacess_.length - 1]
     for (let i in ifs) {
         if (ifs[i].name == name) {
