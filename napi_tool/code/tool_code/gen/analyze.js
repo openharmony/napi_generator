@@ -116,8 +116,7 @@ function analyzeFile(fn) {
             continue
         }
 
-        tt = re.match
-            ("declare function ([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+);*", data)
+        tt = re.match("declare function ([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+);*", data)
         if (tt) {
             let functionName = re.getReg(data, tt.regs[1])
             let functionBody = re.getReg(data, tt.regs[2])
