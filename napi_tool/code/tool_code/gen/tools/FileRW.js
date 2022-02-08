@@ -52,11 +52,9 @@ function stringToUint8Array(string,
   if (options.stream) {
     throw new Error(`Failed to encode: the 'stream' option is unsupported.`);
   }
-
   let pos = 0;
   const len = string.length;
   const out = [];
-
   let at = 0;  // output position
   let tlen = Math.max(32, len + (len >> 1) + 7);  // 1.5x size
   let target = new Uint8Array((tlen >> 3) << 3);  // ... but at 8 byte offset
@@ -101,13 +99,10 @@ function stringToUint8Array(string,
       target[at++] = ((value >> 12) & 0x3f) | 0x80;
       target[at++] = ((value >> 6) & 0x3f) | 0x80;
     } else {
-      // FIXME: do we care
       continue;
     }
-
     target[at++] = (value & 0x3f) | 0x80;
   }
-
   return target.slice(0, at);
 }
 

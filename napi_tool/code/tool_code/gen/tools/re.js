@@ -56,22 +56,10 @@ function getReg(data, reg) {
 
 function getFileInPath(tpath) {
     return path.parse(tpath).base;
-    // for(let i=tpath.length-1;i>=0;i--)
-    // {
-    //     if(tpath[i]=='\\' || tpath[i]=='/')
-    //     return tpath.substring(i+1,tpath.length);
-    // }
-    // return tpath;
 }
 
 function getPathInPath(tpath) {
     return path.parse(tpath).dir;
-    // for(let i=tpath.length-1;i>=0;i--)
-    // {
-    //     if(tpath[i]=='\\' || tpath[i]=='/')
-    //     return tpath.substring(0,i);
-    // }
-    // return tpath;
 }
 
 function all(sfrom) {
@@ -84,16 +72,6 @@ function replaceAll(ss, sfrom, sto) {
 
 function pathJoin(...args) {
     return path.join(...args)
-    // let ret=""
-    // for (let i=0;i<args.length;i++)
-    // {
-    //     if(i>0)
-    //     {
-    //         if(ret[ret.length-1]!="/" && ret[ret.length-1]!="\\")ret+="\\"
-    //     }
-    //     ret+=args[i];
-    // }
-    // return ret
 }
 
 module.exports = {

@@ -14,7 +14,7 @@
 */
 //生成BUILD.gn
 //生成x_napi_tool.h，生成x_napi_tool.cpp
-const { ReplaceAll, print } = require("./tools/tool");
+const { replaceAll, print } = require("./tools/tool");
 const { generateNamespace } = require("./generate/namespace");
 const { writeFile } = require("./tools/FileRW");
 const re = require("./tools/re");
@@ -117,18 +117,18 @@ function generateAll(structOfTs, destDir) {
         numberUsing += "using NUMBER_TYPE_%d = uint32_t;\n".format(i)
     }
 
-    let middleCpp = ReplaceAll(moduleCppTmplete, "[body_replace]", result.middleBody);
-    middleCpp = ReplaceAll(middleCpp, "[init_replace]", result.middleInit);
-    middleCpp = ReplaceAll(middleCpp, "[implName]", ns0.name);
+    let middleCpp = replaceAll(moduleCppTmplete, "[body_replace]", result.middleBody);
+    middleCpp = replaceAll(middleCpp, "[init_replace]", result.middleInit);
+    middleCpp = replaceAll(middleCpp, "[implName]", ns0.name);
     writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)), middleCpp)
 
-    let implH = ReplaceAll(implHTemplete, "[impl_name_upper]", ns0.name.toUpperCase())
-    implH = implH.ReplaceAll("[numberUsing]", numberUsing);
-    implH = ReplaceAll(implH, "[implH_detail]", result.implH)
+    let implH = replaceAll(implHTemplete, "[impl_name_upper]", ns0.name.toUpperCase())
+    implH = implH.replaceAll("[numberUsing]", numberUsing);
+    implH = replaceAll(implH, "[implH_detail]", result.implH)
     writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), implH)
 
-    let implCpp = implCppTemplete.ReplaceAll("[implName]", ns0.name)
-    implCpp = implCpp.ReplaceAll("[implCpp_detail]", result.implCpp)
+    let implCpp = implCppTemplete.replaceAll("[implName]", ns0.name)
+    implCpp = implCpp.replaceAll("[implCpp_detail]", result.implCpp)
     writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), implCpp)
 
 

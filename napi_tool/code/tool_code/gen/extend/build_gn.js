@@ -49,7 +49,7 @@ ohos_shared_library("[implName]")
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
 function generateGN(destDir, implName) {
-    let ss = gnTemplete.ReplaceAll("[implName]", implName)
+    let ss = gnTemplete.replaceAll("[implName]", implName)
     writeFile(re.pathJoin(destDir, "BUILD.gn"), ss)
 }
 
