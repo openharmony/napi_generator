@@ -42,7 +42,7 @@ String.prototype.format = function (...args) {
     return result;
 }
 
-String.prototype.ReplaceAll = function (...args) {
+String.prototype.replaceAll = function (...args) {
     let result = this;
     while (result.indexOf(args[0]) >= 0) {
         result = result.replace(args[0], args[1])
@@ -159,7 +159,7 @@ function removeEmptyLine2(data) {
     return data
 }
 
-function ReplaceAll(s, sfrom, sto) {
+function replaceAll(s, sfrom, sto) {
     while (s.indexOf(sfrom) >= 0) {
         s = s.replace(sfrom, sto)
     }
@@ -171,6 +171,6 @@ module.exports = {
     removeExplains,
     removeEmptyLine,
     removeEmptyLine2,
-    ReplaceAll,
+    replaceAll,
     print
 }

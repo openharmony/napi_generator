@@ -44,7 +44,7 @@ static void release(void *p)
 [static_funcs]
 };`
 
-function GenerateVariable(name, type, variable, className) {
+function generateVariable(name, type, variable, className) {
     if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
     else if (type.substring(0, 12) == "NUMBER_TYPE_") variable.hDefine += "\n    %s %s;".format(type, name)
     else if (InterfaceList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
@@ -55,7 +55,7 @@ function GenerateVariable(name, type, variable, className) {
     }
     else
         print(`
----- GenerateVariable fail %s,%s ----
+---- generateVariable fail %s,%s ----
 `.format(name, type))
     variable.middleValue += `
     static napi_value getvalue_%s(napi_env env, napi_callback_info info)
@@ -86,12 +86,10 @@ function generateInterface(name, data, inNamespace) {
         hDefine: "",
         middleValue: "",
     }
-
     middleInit = `{\n    std::map<const char *,std::map<const char *,napi_callback>> valueList;`
     for (let i in data.value) {
         let v = data.value[i]
-        // print(v)
-        GenerateVariable(v.name, v.type, variable, name)
+        generateVariable(v.name, v.type, variable, name)
         middleInit += `
     valueList["%s"]["getvalue"]=%s%s_middle::getvalue_%s;
     valueList["%s"]["setvalue"]=%s%s_middle::setvalue_%s;`
@@ -99,12 +97,9 @@ function generateInterface(name, data, inNamespace) {
     }
     implH += variable.hDefine
     middleFunc += variable.middleValue
-    // 
-    // 
     middleInit += `\n    std::map<const char *, napi_callback> funcList;`
     for (let i in data.function) {
         let func = data.function[i]
-        // print(func)
         let tmp;
         switch (func.type) {
             case FuncType.DIRECT:
@@ -118,16 +113,13 @@ function generateInterface(name, data, inNamespace) {
                 tmp = generateFunctionAsync(func, name)
                 break
             default:
-                //to do yichangchuli
                 return
         }
         middleFunc += tmp[0]
         implH += tmp[1]
         implCpp += tmp[2]
-
         middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name, inNamespace, name, func.name)
     }
-
     let selfNs = ""
     if (inNamespace.length > 0) {
         let nsl = inNamespace.split("::")
@@ -138,22 +130,15 @@ function generateInterface(name, data, inNamespace) {
     }
     middleInit += `\n    pxt->DefineClass("%s", %s%s_middle::constructor, valueList ,funcList%s);\n}\n`
         .format(name, inNamespace, name, selfNs)
-
     let result = {
         implH: `
 class %s {
 public:%s
 };`.format(name, implH),
         implCpp: implCpp,
-        middleBody: middleBodyTmplete.ReplaceAll("[className]", name).ReplaceAll("[static_funcs]", middleFunc),
+        middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc),
         middleInit: middleInit
     }
-    // print("----------------------------")
-    // print(result.implH)
-    // print("----------------------------")
-    // print(result.implCpp)
-    // print("----------------------------")
-    // print(result.middleBody)
     return result
 }
 

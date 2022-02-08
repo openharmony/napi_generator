@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { ReplaceAll, print } = require("../tools/tool");
+const { replaceAll, print } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 
@@ -54,14 +54,14 @@ struct [funcName]_value_struct {[valueIn]
 function generateFunctionDirect(func, className) {
     //     this.len_to = 0
     //     // print(type, name, values, ret_type)
-    let middleFunc = ReplaceAll(funcDirectTemplete, "[funcName]", func.name)
+    let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
     if (className == null) {
-        middleFunc = middleFunc.ReplaceAll("[static_define]", "")
-        middleFunc = middleFunc.ReplaceAll("[unwarp_instance]", "")
+        middleFunc = middleFunc.replaceAll("[static_define]", "")
+        middleFunc = middleFunc.replaceAll("[unwarp_instance]", "")
     }
     else {
-        middleFunc = middleFunc.ReplaceAll("[static_define]", "static ")
-        middleFunc = middleFunc.ReplaceAll("[unwarp_instance]",
+        middleFunc = middleFunc.replaceAll("[static_define]", "static ")
+        middleFunc = middleFunc.replaceAll("[unwarp_instance]",
             "%s *pInstance = (%s *)pxt->UnWarpInstance();".format(className, className))
     }
     let param = {
@@ -81,15 +81,15 @@ function generateFunctionDirect(func, className) {
 
     returnGenerate(func.ret, param)
 
-    middleFunc = ReplaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
-    middleFunc = ReplaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
+    middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
+    middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
 
-    middleFunc = ReplaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
+    middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
 
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
-    middleFunc = ReplaceAll(middleFunc, "[callFunc]", callFunc)//执行
+    middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc)//执行
 
-    middleFunc = ReplaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
+    middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
 
     let implH = "\nbool %s(%s);".format(func.name, param.valueDefine)
     let implCpp = `

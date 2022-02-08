@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { ReplaceAll, print } = require("../tools/tool");
+const { replaceAll, print } = require("../tools/tool");
 const { InterfaceList, getArrayType } = require("../tools/common");
 
 function cToJs(value, type, dest, deep = 1) {
@@ -50,13 +50,13 @@ function cToJs(value, type, dest, deep = 1) {
     }`.format(lt, value, lt, lt, tnv, lt)
         let ret = ""
         if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
-            ret = tnvdef.ReplaceAll("[calc_out]", `tnv%d = NUMBER_C_2_JS(pxt,%s[i]);`.format(lt, value))
+            ret = tnvdef.replaceAll("[calc_out]", `tnv%d = NUMBER_C_2_JS(pxt,%s[i]);`.format(lt, value))
         }
         else if (arrayType == "string") {
-            ret = tnvdef.ReplaceAll("[calc_out]", `tnv%d = pxt->SwapC2JsUtf8(%s[i].c_str());`.format(lt, value))
+            ret = tnvdef.replaceAll("[calc_out]", `tnv%d = pxt->SwapC2JsUtf8(%s[i].c_str());`.format(lt, value))
         }
         else if (InterfaceList.getValue(arrayType)) {
-            ret = tnvdef.ReplaceAll("[calc_out]", cToJs(value + "[i]", arrayType, "tnv" + lt, deep + 1))
+            ret = tnvdef.replaceAll("[calc_out]", cToJs(value + "[i]", arrayType, "tnv" + lt, deep + 1))
         }
         return ret
     }

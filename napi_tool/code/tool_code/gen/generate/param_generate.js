@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { ReplaceAll, print } = require("../tools/tool");
+const { replaceAll, print } = require("../tools/tool");
 const { InterfaceList, getArrayType } = require("../tools/common");
 const re = require("../tools/re");
 
@@ -70,17 +70,17 @@ function jsToC(dest, napiVn, type) {
             %s.push_back(tt[replace_lt]);
         }`.format(napiVn, arrayType, dest)
 
-        arrTemplete = arrTemplete.ReplaceAll("[replace_lt]", lt)
+        arrTemplete = arrTemplete.replaceAll("[replace_lt]", lt)
         if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
-            arrTemplete = arrTemplete.ReplaceAll("[replace_swap]",
+            arrTemplete = arrTemplete.replaceAll("[replace_swap]",
                 "NUMBER_JS_2_C(pxt->GetArrayElement(%s,i%d),%s,tt%d);".format(napiVn, lt, arrayType, lt))
         }
         else if (arrayType == "std::string") {
-            arrTemplete = arrTemplete.ReplaceAll("[replace_swap]",
+            arrTemplete = arrTemplete.replaceAll("[replace_swap]",
                 "pxt->SwapJs2CUtf8(pxt->GetArrayElement(%s,i%d), tt%d);".format(napiVn, lt, lt))
         }
         else if (InterfaceList.getValue(arrayType)) {
-            arrTemplete = arrTemplete.ReplaceAll("[replace_swap]",
+            arrTemplete = arrTemplete.replaceAll("[replace_swap]",
                 jsToC("tt" + lt, "pxt->GetArrayElement(%s,i%d)".format(napiVn, lt), arrayType))
         }
         return arrTemplete;
@@ -89,7 +89,7 @@ function jsToC(dest, napiVn, type) {
         print(`\n---- generate jsToC fail %s,%s,%s ----\n`.format(dest, napiVn, type))
 }
 
-function ParamCheckout(name, napiVn, type) {
+function paramCheckout(name, napiVn, type) {
     if (type in this.interface_list) {
         for (let i in this.interface_list[type]) {
             let e = this.interface_list[type][i]

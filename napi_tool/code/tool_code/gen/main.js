@@ -12,7 +12,6 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-// const vscode = require('vscode');
 const { analyzeFile } = require("./analyze");
 const { generateAll } = require("./generate");
 const re = require("./tools/re")
