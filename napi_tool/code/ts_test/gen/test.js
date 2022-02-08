@@ -21,18 +21,12 @@ console.log(result)
 
 //同步回调
 test.fun3("callback", function (ret) { console.log(ret) })
-
-// function cb(ret)
-// {
-//     console.log(ret)
-// }
 //异步回调
 function testAsync() {
     test.fun4("async", function (ret) { console.log(ret) })
     test.fun4("promise").then(ret => { console.log(ret); })
 }
 testAsync()
-// //promise
 
 let tc1 = new test.TestClass1()
 tc1.str1 = "asdf"
@@ -50,8 +44,3 @@ console.log("==== end ====")
 setTimeout(function () {
     console.log('interval')
 }, 100);
-
-// function asdfasdf(ret)
-// {
-//     console.log(ret)
-// }
