@@ -93,7 +93,7 @@ function returnGenerate(type, param) {
         param.valueDefine += "%sstd::vector<%s> &out".format(param.valueDefine.length > 0 ? ", " : "", arrayType)
     }
     else {
-        print(`\n---- This version do not support this type %s ----\n`.format(type))
+        print(`\n---- The current version do not support this type return %s ----\n`.format(type))
     }
     param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")
 }
