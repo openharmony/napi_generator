@@ -40,13 +40,6 @@ function analyzeFile(fn) {
         declareNamespace: [],
         declareInterface: [],
     }
-    result = analyzeResult(data, result);
-    // print(JSON.stringify(result, null, 4))
-    // print(result)
-    return result
-}
-
-function analyzeResult(data, result) {
     while (true) {
         let oldData = data
         data = removeEmptyLine(data)
@@ -138,9 +131,12 @@ function analyzeResult(data, result) {
             print("^^^ 解析文件失败 ^^^\n")
             break;
         }
-        return result;
     }
+    // print(JSON.stringify(result, null, 4))
+    // print(result)
+    return result
 }
+
 module.exports = {
     analyzeFile
 }
