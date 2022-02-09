@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd. 
+* Copyright (c) 2021 Shenzhen Kaihong Digital Industry Development Co., Ltd. 
 * Licensed under the Apache License, Version 2.0 (the "License"); 
 * you may not use this file except in compliance with the License. 
 * You may obtain a copy of the License at 
@@ -51,7 +51,6 @@ function analyzeNamespace(data) {
             if (tt.regs[1][0] != -1) {
                 result.exports.push(enumName)
             }
-            continue
         }
 
         tt = re.match("(export )*const ([a-zA-Z_]+) *[:=]{1} ([a-zA-Z0-9]+);", data)
@@ -65,7 +64,6 @@ function analyzeNamespace(data) {
             if (tt.regs[1][0] != -1) {
                 result.exports.push(constName)
             }
-            continue
         }
 
         tt = re.match("(export )*interface ([A-Za-z_0-9]+)(<T>)* (extends [a-zA-Z]+ )*({)", data)
@@ -83,7 +81,6 @@ function analyzeNamespace(data) {
             if (tt.regs[1][0] != -1) {
                 result.exports.push(interfaceName)
             }
-            continue
         }
 
         // tt = re.match("(export )*function
@@ -114,7 +111,6 @@ function analyzeNamespace(data) {
             if (tt.regs[1][0] != -1) {
                 result.exports.push(funcName)
             }
-            continue
         }
 
         tt = re.match("(export )*type ([a-zA-Z]+) = *([\\(\\):=a-zA-Z<> |\n']+);", data)
@@ -128,7 +124,6 @@ function analyzeNamespace(data) {
             if (tt.regs[1][0] != -1) {
                 result.exports.push(typeName)
             }
-            continue
         }
 
         tt = re.match("(export )*type ([a-zA-Z]+) = ({)", data)
@@ -143,7 +138,6 @@ function analyzeNamespace(data) {
             if (tt.regs[1][0] != -1) {
                 result.exports.push(typeName)
             }
-            continue
         }
 
         tt = re.match("(export )*class ([a-zA-Z]+) (extends [a-zA-Z]+ )*(implements [a-zA-Z]+ )*({)", data)
@@ -160,7 +154,6 @@ function analyzeNamespace(data) {
             if (tt.regs[1][0] != -1) {
                 result.exports.push(className)
             }
-            continue
         }
 
         tt = re.match("(export )*namespace ([a-zA-Z0-9]+) ({)", data)
@@ -175,7 +168,6 @@ function analyzeNamespace(data) {
             if (tt.regs[1][0] != -1) {
                 result.exports.push(namespaceName)
             }
-            continue
         }
 
         tt = re.match("export { ([a-zA-Z]+) };", data)
@@ -183,19 +175,16 @@ function analyzeNamespace(data) {
             let exportName = re.getReg(data, tt.regs[1])
             result.exports.push(exportName)
             data = re.removeReg(data, tt.regs[0])
-            continue
         }
 
         tt = re.match("export import [a-zA-Z]+ = [a-zA-Z\\.]+;", data)
         if (tt) {
             data = re.removeReg(data, tt.regs[0])
-            continue
         }
 
         tt = re.match("readonly [a-zA-Z]+: [a-z\\[\\]]+;*", data)
         if (tt) {
             data = re.removeReg(data, tt.regs[0])
-            continue
         }
 
         if (oldData == data) {

@@ -46,7 +46,6 @@ function analyzeInterface(data) {//same as class
                 name: valueName,
                 type: valueType
             })
-            continue
         }
         tt = re.match(" *([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+)", t)
         if (tt) {//函数
@@ -54,7 +53,6 @@ function analyzeInterface(data) {//same as class
                 re.getReg(t, tt.regs[2]), re.getReg(t, tt.regs[3]))
             if (funcDetail != null)
                 result.function.push(funcDetail)
-            continue
         }
     }
     return result
