@@ -75,34 +75,33 @@ function checkOutBody(body, off, flag, binside) {
     for (let i = off + flag[0].length; i < body.length; i++) {
         // print(body[i])
         if (body[i] == '"') cs1 += 1
-        if (cs1 % 2 != 0) continue
+        if (cs1 % 2 == 0) {
+            // print(i,csl,csr)
+            let tb1 = true;
+            for (let k in csl) {
+                if (csl[k] != csr[idx[k]]) {
+                    tb1 = false;
+                    break;
+                }
+            }
+            if (tb1) {
+                // # print("i=",i,body[i:i + len(flag[1])])
+                if (body.substring(i, i + flag[1].length) == flag[1]) {
+                    if (binside)
+                        return body.substring(off + flag[0].length, i);
+                    return body.substring(off, i + flag[1].length);
+                }
+            }
 
-        // print(i,csl,csr)
-        let tb1 = true;
-        for (let k in csl) {
-            if (csl[k] != csr[idx[k]]) {
-                tb1 = false;
-                break;
+            if (body[i] in csl) {
+                csl[body[i]] += 1;
+                if (body[i] in csr) csr[body[i]] += 1;
+            }
+            if (body[i] in csr) {
+                csr[body[i]] += 1;
             }
         }
-        if (tb1) {
-            // # print("i=",i,body[i:i + len(flag[1])])
-            if (body.substring(i, i + flag[1].length) == flag[1]) {
-                if (binside)
-                    return body.substring(off + flag[0].length, i);
-                return body.substring(off, i + flag[1].length);
-            }
-        }
 
-        if (body[i] in csl) {
-            csl[body[i]] += 1;
-            if (body[i] in csr) csr[body[i]] += 1;
-            continue;
-        }
-        if (body[i] in csr) {
-            csr[body[i]] += 1;
-            continue;
-        }
     }
 
     return null;

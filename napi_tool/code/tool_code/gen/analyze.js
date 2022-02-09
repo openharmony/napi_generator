@@ -52,7 +52,6 @@ function analyzeFile(fn) {
             let exportName = re.getReg(data, tt.regs[1])
             data = re.removeReg(data, tt.regs[0]);
             result.exportDefault.push(exportName)
-            continue;
         }
 
         tt = re.match("(export )*type ([a-zA-Z]+) = ([()a-zA-Z :=>,\"| ]+);", data)
@@ -67,7 +66,6 @@ function analyzeFile(fn) {
             if (tt.regs[1][0] != -1) {
                 result.exports.push(exportName)
             }
-            continue;
         }
 
         tt = re.match("(export )*type ([a-zA-Z]+) = ({)", data)
@@ -82,7 +80,6 @@ function analyzeFile(fn) {
             if (tt.regs[1][0] != -1) {
                 result.exports.push(exportName)
             }
-            continue;
         }
 
         tt = re.match("declare namespace ([a-zA-Z0-9]+) ({)", data);
@@ -100,7 +97,6 @@ function analyzeFile(fn) {
                 // zzzz: "zzzz",//this is namespace
                 body: analyzeNamespace(namespaceData)
             })
-            continue;
         }
 
         tt = re.match("(export )*(declare )*interface ([A-Za-z_0-9<>= ]+) (extends [a-zA-Z]+ )*({)", data)
@@ -113,7 +109,6 @@ function analyzeFile(fn) {
                 name: interfaceName,
                 body: {}
             })
-            continue
         }
 
         tt = re.match("declare function ([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *:"
@@ -128,7 +123,6 @@ function analyzeFile(fn) {
                 name: functionName,
                 body: functionBody
             })
-            continue
         }
 
         if (oldData == data) {
