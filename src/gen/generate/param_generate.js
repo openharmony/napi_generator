@@ -59,34 +59,39 @@ function jsToC(dest, napiVn, type) {
         return tt
     }
     else if (type.indexOf("Array<") == 0) {
-        let arrayType = getArrayType(type)
-        let lt = LenIncrease.getAndIncrease()
-        if (arrayType == "string") arrayType = "std::string"
-        let arrTemplete = `\
-        uint32_t len[replace_lt]=pxt->GetArrayLength(%s);
-        for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
-            %s tt[replace_lt];
-            [replace_swap]
-            %s.push_back(tt[replace_lt]);
-        }`.format(napiVn, arrayType, dest)
-
-        arrTemplete = arrTemplete.replaceAll("[replace_lt]", lt)
-        if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
-            arrTemplete = arrTemplete.replaceAll("[replace_swap]",
-                "NUMBER_JS_2_C(pxt->GetArrayElement(%s,i%d),%s,tt%d);".format(napiVn, lt, arrayType, lt))
-        }
-        else if (arrayType == "std::string") {
-            arrTemplete = arrTemplete.replaceAll("[replace_swap]",
-                "pxt->SwapJs2CUtf8(pxt->GetArrayElement(%s,i%d), tt%d);".format(napiVn, lt, lt))
-        }
-        else if (InterfaceList.getValue(arrayType)) {
-            arrTemplete = arrTemplete.replaceAll("[replace_swap]",
-                jsToC("tt" + lt, "pxt->GetArrayElement(%s,i%d)".format(napiVn, lt), arrayType))
-        }
-        return arrTemplete;
+        return arrTemplete(dest, napiVn, type);
     }
     else
         print(`\n---- do not support to generate jsToC %s,%s,%s ----\n`.format(dest, napiVn, type))
+}
+
+function arrTemplete(dest, napiVn, type) {
+    let arrayType = getArrayType(type)
+    let lt = LenIncrease.getAndIncrease()
+    if (arrayType == "string") arrayType = "std::string"
+    let arrTemplete = `\
+    uint32_t len[replace_lt]=pxt->GetArrayLength(%s);
+    for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
+        %s tt[replace_lt];
+        [replace_swap]
+        %s.push_back(tt[replace_lt]);
+    }`.format(napiVn, arrayType, dest)
+
+    arrTemplete = arrTemplete.replaceAll("[replace_lt]", lt)
+    if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
+        arrTemplete = arrTemplete.replaceAll("[replace_swap]",
+            "NUMBER_JS_2_C(pxt->GetArrayElement(%s,i%d),%s,tt%d);".format(napiVn, lt, arrayType, lt))
+    }
+    else if (arrayType == "std::string") {
+        arrTemplete = arrTemplete.replaceAll("[replace_swap]",
+            "pxt->SwapJs2CUtf8(pxt->GetArrayElement(%s,i%d), tt%d);".format(napiVn, lt, lt))
+    }
+    else if (InterfaceList.getValue(arrayType)) {
+        arrTemplete = arrTemplete.replaceAll("[replace_swap]",
+            jsToC("tt" + lt, "pxt->GetArrayElement(%s,i%d)".format(napiVn, lt), arrayType))
+    }
+
+    return arrTemplete
 }
 
 function paramCheckout(name, napiVn, type) {

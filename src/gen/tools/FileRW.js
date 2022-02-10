@@ -47,14 +47,12 @@ function utf8ArrayToStr(array) {
   return out;
 }
 
-function stringToUint8Array(string,
-  options = { stream: false }) {
+function stringToUint8Array(string, options = { stream: false }) {
   if (options.stream) {
     throw new Error(`Failed to encode: the 'stream' option is unsupported.`);
   }
   let pos = 0;
   const len = string.length;
-  const out = [];
   let at = 0;  // output position
   let tlen = Math.max(32, len + (len >> 1) + 7);  // 1.5x size
   let target = new Uint8Array((tlen >> 3) << 3);  // ... but at 8 byte offset
@@ -63,8 +61,7 @@ function stringToUint8Array(string,
     let value = string.charCodeAt(pos++);
     let isContinue = false;
     if (value >= 0xd800 && value <= 0xdbff) {
-      // high surrogate
-      if (pos < len) {
+      if (pos < len) {// high surrogate
         const extra = string.charCodeAt(pos);
         if ((extra & 0xfc00) === 0xdc00) {
           ++pos;
@@ -83,9 +80,7 @@ function stringToUint8Array(string,
         tlen *= (1.0 + (pos / string.length) * 2);  // take 2x the remaining
         tlen = (tlen >> 3) << 3;  // 8 byte offset
 
-        const update = new Uint8Array(tlen);
-        update.set(target);
-        target = update;
+        target = uint8Array(tlen, target);
       }
 
       if ((value & 0xffffff80) === 0) {  // 1-byte
@@ -109,6 +104,12 @@ function stringToUint8Array(string,
     }
   }
   return target.slice(0, at);
+}
+
+function uint8Array(tlen, target) {
+  const update = new Uint8Array(tlen);
+  update.set(target);
+  return update
 }
 
 function readFile(fn) {

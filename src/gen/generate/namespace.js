@@ -20,23 +20,13 @@ const { generateInterface } = require("./interface");
 const { FuncType, InterfaceList } = require("../tools/common");
 
 function generateNamespace(name, data, inNamespace = "") {
-    //生成module_middle.cpp
-    //生成module.h
-    //生成module.cpp
+    //生成module_middle.cpp、module.h、module.cpp
     let implH = ""
     let implCpp = ""
     let middleFunc = ""
     let middleInit = ""
-    if (inNamespace.length > 0) {
-        let nsl = inNamespace.split("::")
-        nsl.pop()
-        let parentNs = nsl[nsl.length - 1]
-        // print("parent=", parentNs)
-        middleInit = `{\nnapi_value %s=pxt->CreateSubObject(%s,"%s");\n`
-            .format(name, nsl.length == 1 ? "exports" : parentNs, name)
-    }
+    middleInit += formatMiddleInit(inNamespace, name)
     InterfaceList.push(data.interface)
-    // InterfaceList.getValue("TestClass1")
     for (let i in data.interface) {
         let ii = data.interface[i]
         let result = generateInterface(ii.name, ii.body, inNamespace + name + "::")
@@ -47,21 +37,7 @@ function generateNamespace(name, data, inNamespace = "") {
     }
     for (let i in data.function) {
         let func = data.function[i]
-        let tmp;
-        switch (func.type) {
-            case FuncType.DIRECT:
-                tmp = generateFunctionDirect(func)
-                break;
-            case FuncType.SYNC:
-                tmp = generateFunctionSync(func)
-                break
-            case FuncType.ASYNC:
-            case FuncType.PROMISE:
-                tmp = generateFunctionAsync(func)
-                break
-            default:
-                return
-        }
+        let tmp = generateFunction(func)
         middleFunc += tmp[0]
         implH += tmp[1]
         implCpp += tmp[2]
@@ -98,6 +74,37 @@ namespace %s {
         middleInit: middleInit
     }
     return result
+}
+
+function generateFunction(func) {
+    let tmp;
+    switch (func.type) {
+        case FuncType.DIRECT:
+            tmp = generateFunctionDirect(func)
+            break;
+        case FuncType.SYNC:
+            tmp = generateFunctionSync(func)
+            break
+        case FuncType.ASYNC:
+        case FuncType.PROMISE:
+            tmp = generateFunctionAsync(func)
+            break
+        default:
+            return
+    }
+    return tmp
+}
+
+function formatMiddleInit(inNamespace, name) {
+    let middleInit
+    if (inNamespace.length > 0) {
+        let nsl = inNamespace.split("::")
+        nsl.pop()
+        let parentNs = nsl[nsl.length - 1]
+        middleInit = `{\nnapi_value %s=pxt->CreateSubObject(%s,"%s");\n`
+            .format(name, nsl.length == 1 ? "exports" : parentNs, name)
+    }
+    return middleInit
 }
 
 module.exports = {
