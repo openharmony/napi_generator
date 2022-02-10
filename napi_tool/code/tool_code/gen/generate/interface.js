@@ -78,6 +78,34 @@ function generateVariable(name, type, variable, className) {
 }
 
 function generateInterface(name, data, inNamespace) {
+    let resultConnect = connectResult(data, inNamespace, name)
+    let middleFunc = resultConnect[0]
+    let implH = resultConnect[1]
+    let implCpp = resultConnect[2]
+    let middleInit = resultConnect[3]
+    let selfNs = ""
+    if (inNamespace.length > 0) {
+        let nsl = inNamespace.split("::")
+        nsl.pop()
+        if (nsl.length >= 2) {
+            selfNs = ", " + nsl[nsl.length - 1]
+        }
+    }
+    middleInit += `\n    pxt->DefineClass("%s", %s%s_middle::constructor, valueList ,funcList%s);\n}\n`
+        .format(name, inNamespace, name, selfNs)
+    let result = {
+        implH: `
+class %s {
+public:%s
+};`.format(name, implH),
+        implCpp: implCpp,
+        middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc),
+        middleInit: middleInit
+    }
+    return result
+}
+
+function connectResult(data, inNamespace, name) {
     let implH = ""
     let implCpp = ""
     let middleFunc = ""
@@ -120,26 +148,7 @@ function generateInterface(name, data, inNamespace) {
         implCpp += tmp[2]
         middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name, inNamespace, name, func.name)
     }
-    let selfNs = ""
-    if (inNamespace.length > 0) {
-        let nsl = inNamespace.split("::")
-        nsl.pop()
-        if (nsl.length >= 2) {
-            selfNs = ", " + nsl[nsl.length - 1]
-        }
-    }
-    middleInit += `\n    pxt->DefineClass("%s", %s%s_middle::constructor, valueList ,funcList%s);\n}\n`
-        .format(name, inNamespace, name, selfNs)
-    let result = {
-        implH: `
-class %s {
-public:%s
-};`.format(name, implH),
-        implCpp: implCpp,
-        middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc),
-        middleInit: middleInit
-    }
-    return result
+    return [middleFunc, implH, implCpp, middleInit]
 }
 
 module.exports = {

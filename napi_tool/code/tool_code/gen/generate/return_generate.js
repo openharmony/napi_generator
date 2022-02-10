@@ -61,7 +61,7 @@ function cToJs(value, type, dest, deep = 1) {
         return ret
     }
     else
-        print(`\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest))
+        print(`\n---- generate cToJs fail %s,%s,%s ----\n`.format(value, type, dest))
 }
 
 function returnGenerate(type, param) {
@@ -93,7 +93,7 @@ function returnGenerate(type, param) {
         param.valueDefine += "%sstd::vector<%s> &out".format(param.valueDefine.length > 0 ? ", " : "", arrayType)
     }
     else {
-        print(`\n---- The current version do not support this type return %s ----\n`.format(type))
+        print(`\n---- returnGenerate fail %s ----\n`.format(type))
     }
     param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")
 }
