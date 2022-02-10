@@ -62,7 +62,7 @@ function jsToC(dest, napiVn, type) {
         return arrTemplete(dest, napiVn, type);
     }
     else
-        print(`\n---- generate jsToC fail %s,%s,%s ----\n`.format(dest, napiVn, type))
+        print(`\n---- do not support to generate jsToC %s,%s,%s ----\n`.format(dest, napiVn, type))
 }
 
 function arrTemplete(dest, napiVn, type) {
@@ -147,7 +147,7 @@ function paramGenerate(p, name, type, param) {
         }
     }
     else
-        print("param generate err :", name, "type :", type)
+        print("The current version do not support to this param to generate :", name, "type :", type)
 }
 
 module.exports = {
