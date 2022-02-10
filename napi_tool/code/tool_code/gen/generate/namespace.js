@@ -20,7 +20,7 @@ const { generateInterface } = require("./interface");
 const { FuncType, InterfaceList } = require("../tools/common");
 
 function generateNamespace(name, data, inNamespace = "") {
-    //生成module_middle.cpp;生成module.h;生成module.cpp
+    //生成module_middle.cpp、module.h、module.cpp
     let implH = ""
     let implCpp = ""
     let middleFunc = ""

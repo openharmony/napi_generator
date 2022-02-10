@@ -90,15 +90,10 @@ function analyzeMatchNamespace(tt, data, result) {
     if (tt != null)//解析declare
     {
         let namespaceName = re.getReg(data, tt.regs[1])
-        // print(1, "declare namespace", namespaceName)
         let namespaceData = checkOutBody(data, tt.regs[2][0], null, true)
-        // XGenerate.gi().Start(re.getFileInPath(ifname), namespaceName)
-        // CheckOutDeclare(data)
-        // XGenerate.gi().End(re.getPathInPath(ifname))//odname
         data = data.substring(tt.regs[2][1] + namespaceData.length + 1, data.length)
         result.declareNamespace.push({
             name: namespaceName,
-            // zzzz: "zzzz",//this is namespace
             body: analyzeNamespace(namespaceData)
         })
     }
@@ -109,7 +104,6 @@ function analyzeMatchInterface(tt, data, result) {
     tt = re.match("(export )*(declare )*interface ([A-Za-z_0-9<>= ]+) (extends [a-zA-Z]+ )*({)", data)
     if (tt) {
         let interfaceName = re.getReg(data, tt.regs[3])
-        // print(1, "declare interface", interfaceName)
         let interfaceData = checkOutBody(data, tt.regs[5][0], null, true)
         data = data.substring(tt.regs[5][1] + interfaceData.length + 1, data.length)
         result.declareInterface.push({
@@ -126,8 +120,6 @@ function analyzeMatchFunction(tt, data, result) {
     if (tt) {
         let functionName = re.getReg(data, tt.regs[1])
         let functionBody = re.getReg(data, tt.regs[2])
-        // print(1, "declare function", functionName)
-        // # print("function :",data[tt.regs[1][0]:tt.regs[1][1]])
         data = re.removeReg(data, tt.regs[0])
         result.declareFunction.push({
             name: functionName,
