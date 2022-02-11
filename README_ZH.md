@@ -55,13 +55,31 @@
 
 2. 使用yo : 执行命令yo code，gnapi是使用yo code生成的插件代码框架，其中gnapi/gen目录下是我们开发的自动化生成napi程序的源代码。
 
-   ![](figures/pic-gen-source-code.png)
+   ```
+   xudong@xudong:~/gen_plug_napi/napi/gen$ ls
+   analyze  analyze.js  cmd_gen.js  extend  generate  generate.js  main.js  test.js  tools
+   
+   ```
 
 3. 在napi_generator/vscode_plugin/gnapi这个目录中执行命令npm i vsce。
 
 4. 执行命令./node_modules/vsce/vsce package命令，最终会打包生成一个插件gnapi-0.0.1.vsix。
 
-   ![](figures/pic-gen-vsix.png)
+   ```
+   xudong@xudong:~/gen_plug_napi/napi$ npx vsce package
+   WARNING  A 'repository' field is missing from the 'package.json' manifest file.
+   Do you want to continue? [y/N] y
+   WARNING  Using '*' activation is usually a bad idea as it impacts performance.
+   More info: https://code.visualstudio.com/api/references/activation-events#Start-up
+   Do you want to continue? [y/N] y
+   WARNING  LICENSE.md, LICENSE.txt or LICENSE not found
+   Do you want to continue? [y/N] y
+   DONE  Packaged: /home/xudong/gen_plug_napi/napi/napi3-0.0.1.vsix (30 files, 37.7KB)
+   xudong@xudong:~/gen_plug_napi/napi$ ls
+   CHANGELOG.md  extension.js  gen  jsconfig.json  napi3-0.0.1.vsix  node_modules  package.json  package-lock.json  README.md  test  vsc-extension-quickstart.md
+   xudong@xudong:~/gen_plug_napi/napi$ 
+
+   ```
 
 ## 使用说明
 
@@ -82,7 +100,10 @@
 
 3) 在命令行中进入到之前可执行程序cmd_gen-win.exe所在的目录，并运行cmd_gen-win.exe，在cmd_gen-win.exe后面要对应的.d.ts文件名，例如：
 
-![](figures/pic-cmd-execute.png)
+   ```
+   E:\napi_tool>cmd_gen-win.exe @ohos.power.d.ts
+
+   ```
 
 4) 运行成功后会在.d.ts文件说在的目录下生成对应的文件，例如：
 
@@ -92,16 +113,29 @@
 
 1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序cmd_gen-linux同级目录下，例如：
 
-   ![](figures/pic-d-ts-location-linux.png)
+   ```
+   xudong@xudong:~/napi_tool$ ls
+   cmd_gen-linux  @ohos.power.d.ts
+   xudong@xudong:~/napi_tool$ 
+
+   ```
 
 2) 在终端中进入到之前可执行程序cmd_gen-linux所在的目录，并运行cmd_gen-linux，在cmd_gen-linux后面要对应的.d.ts文件名，例如：
 
-   ![](figures/pic-cmd-execute-linux.png)
+   ```
+   xudong@xudong:~/napi_tool$ ls
+   cmd_gen-linux  @ohos.power.d.ts
+   xudong@xudong:~/napi_tool$ ./cmd_gen-linux @ohos.power.d.ts 
 
+   ```
 3) 运行成功后会在.d.ts文件说在的目录下生成对应的文件，例如：
 
-   ![](figures/pic-d-ts-transition-linux.png)
+   ```
+   xudong@xudong:~/napi_tool$ ls
+   binding.gyp  BUILD.gn  cmd_gen-linux  @ohos.power.d.ts  power.cpp  power.h  power_middle.cpp  test.sh  x_napi_tool.cpp  x_napi_tool.h
+   xudong@xudong:~/napi_tool$ 
 
+   ```
 #### Mac
 方法步骤参考windows、Linux的使用方法
 
@@ -113,7 +147,7 @@ visual studio code 版本需1.62.0及以上
 
 1) 打开vscode，在左侧边栏中选择插件安装。
 
-   ![](figures/pic-plug-in-search.png)
+  ![](figures/pic-plug-in-search.png)
 
 2) 点击上面三个点的按钮，选择从VSIX安装选项，然后选择刚才生成的gnapi-0.0.1.vsix插件文件，再点击安装。
 
