@@ -57,20 +57,9 @@ function generateNamespace(name, data, inNamespace = "") {
         middleInit += "}"
     }
     let result = {
-        implH: `
-namespace %s {
-%s
-}`.format(name, implH),
-        implCpp: `
-namespace %s {
-%s
-}
-`.format(name, implCpp),
-        middleBody: `
-namespace %s {
-%s
-}
-`.format(name, middleFunc),
+        implH: `namespace %s {%s}`.format(name, implH),
+        implCpp: `namespace %s {%s}`.format(name, implCpp),
+        middleBody: `namespace %s {%s}`.format(name, middleFunc),
         middleInit: middleInit
     }
     return result

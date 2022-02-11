@@ -31,13 +31,10 @@ function print(...args) {
 String.prototype.format = function (...args) {
     var result = this;
     let reg = new RegExp("%[sd]{1}")
-    // print(result)
-    // print(args)
     for (let i = 0; i < args.length; i++) {
         let p = result.search(reg)
         if (p < 0) break;
         result = result.substring(0, p) + args[i] + result.substring(p + 2, result.length)
-        // print(i,result,0)
     }
     return result;
 }
@@ -73,10 +70,8 @@ function checkOutBody(body, off, flag, binside) {
     }
 
     for (let i = off + flag[0].length; i < body.length; i++) {
-        // print(body[i])
         if (body[i] == '"') cs1 += 1
         if (cs1 % 2 == 0) {
-            // print(i,csl,csr)
             let tb1 = true;
             for (let k in csl) {
                 if (csl[k] != csr[idx[k]]) {
@@ -84,13 +79,10 @@ function checkOutBody(body, off, flag, binside) {
                     break;
                 }
             }
-            if (tb1) {
-                // # print("i=",i,body[i:i + len(flag[1])])
-                if (body.substring(i, i + flag[1].length) == flag[1]) {
-                    if (binside)
-                        return body.substring(off + flag[0].length, i);
-                    return body.substring(off, i + flag[1].length);
-                }
+            if (tb1 && body.substring(i, i + flag[1].length) == flag[1]) {
+                if (binside)
+                    return body.substring(off + flag[0].length, i);
+                return body.substring(off, i + flag[1].length);
             }
 
             if (body[i] in csl) {
@@ -107,20 +99,15 @@ function checkOutBody(body, off, flag, binside) {
     return null;
 }
 
-
 function removeExplains(data) {
     while (data.indexOf("/*") >= 0) {
         let i1 = data.indexOf("/*")
         let i2 = data.indexOf("*/") + 2
-        // # print(data[i1:i2])
         data = data.substring(0, i1) + data.substring(i2, data.length)
-        // # print("------------------------------------------------------------------------------")
     }
     while (true) {
         let tt = re.search("\n *//([a-zA-Z .]+)\n", data)
-        // print(tt)
         if (tt != null) {
-            //     # print("help",data[tt.regs[1][0]:tt.regs[1][1]])
             data = data.substring(0, tt.regs[0][0]) + data.substring(tt.regs[0][1], data.length)
         }
         else break;
