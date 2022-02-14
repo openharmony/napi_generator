@@ -14,17 +14,10 @@
 */
 const { analyzeFile } = require("./analyze");
 const { generateAll } = require("./generate");
-const re = require("./tools/re")
 
-function doGenerate(ifname) {
-    // console.log("----------generate start---------")
-
+function doGenerate(ifname, destdir) {
     let structOfTs = analyzeFile(ifname);
-    // print(structOfTs)
-
-    generateAll(structOfTs, re.getPathInPath(ifname));
-
-    // console.log("----------generate end---------")
+    generateAll(structOfTs, destdir);
 }
 
 module.exports = {
