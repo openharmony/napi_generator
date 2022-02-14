@@ -9,20 +9,20 @@
 ## 目录
 
 ```
-├── napi_tool                     # NAPI框架代码生成工具
+├── napi_generator                # NAPI框架代码生成工具
 │   ├── docs                      # 工具当前能力、版本规划
 │   ├── figures                   # 图片资源文件
-│   ├── code                      # 工具源码
-|   |   ├── tool_code             # 工具源码
-│   |       ├── gen              
-│   |           |── analyze       # 解析器
-│   │           |── extend        # 扩展模块，包括gn文件生成、linux环境适配代码等
-│   │	        |── generate      # 生成器
-│   │           └── tools         # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等
-│   |       └── test              # 插件测试用例    
-|   |   └──ts_test                # 工具需要的ts文件样例  
+│   ├── prebuilt                  # 可执行文件、插件文件
+│   ├── release-notes             # 发布说明
+│   ├── src                       # 工具源码
+|   |   └── gen                  
+│   |       ├── analyze           # 解析器
+│   |       |── extend            # 扩展模块，包括gn文件生成、linux环境适配代码等
+│   │       |── generate          # 生成器
+│   │       └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等  
+|   ├── ts_test                   # 工具需要的ts文件样例  
 │   └── README                    # 工具使用指导    
-└──README 
+
 ```
 ### code目录源码介绍
 此目录为NAPI框架代码生成工具对应的源码，开发者可基于此代码进行二次开发。
@@ -43,43 +43,9 @@
 
 ### 打包
 
-#### 可执行文件开发说明
-1.安装pkg : 执行命令sudo npm i -g pkg
+### 开发说明
 
-2.打包三个版本 : 执行命令pkg vscode_plugin/gnapi/gen/cmd_gen.js
-
-执行以上步骤后，即可在gen目录下生成Windows、linux、mac系统下的可执行程序:cmd_gen-win.exe、cmd_gen-linux、cmd_gen-macos。
-
-#### 插件开发说明
-1. 安装yo : 执行命令npm install -g yo generator-code。
-
-2. 使用yo : 执行命令yo code，gnapi是使用yo code生成的插件代码框架，其中gnapi/gen目录下是我们开发的自动化生成napi程序的源代码。
-
-   ```
-   xudong@xudong:~/gen_plug_napi/napi/gen$ ls
-   analyze  analyze.js  cmd_gen.js  extend  generate  generate.js  main.js  test.js  tools
-   
-   ```
-
-3. 在napi_generator/vscode_plugin/gnapi这个目录中执行命令npm i vsce。
-
-4. 执行命令./node_modules/vsce/vsce package命令，最终会打包生成一个插件gnapi-0.0.1.vsix。
-
-   ```
-   xudong@xudong:~/gen_plug_napi/napi$ npx vsce package
-   WARNING  A 'repository' field is missing from the 'package.json' manifest file.
-   Do you want to continue? [y/N] y
-   WARNING  Using '*' activation is usually a bad idea as it impacts performance.
-   More info: https://code.visualstudio.com/api/references/activation-events#Start-up
-   Do you want to continue? [y/N] y
-   WARNING  LICENSE.md, LICENSE.txt or LICENSE not found
-   Do you want to continue? [y/N] y
-   DONE  Packaged: /home/xudong/gen_plug_napi/napi/napi3-0.0.1.vsix (30 files, 37.7KB)
-   xudong@xudong:~/gen_plug_napi/napi$ ls
-   CHANGELOG.md  extension.js  gen  jsconfig.json  napi3-0.0.1.vsix  node_modules  package.json  package-lock.json  README.md  test  vsc-extension-quickstart.md
-   xudong@xudong:~/gen_plug_napi/napi$ 
-
-   ```
+   https://gitee.com/openharmony-sig/napi_generator/blob/master/DEVELOP.md
 
 ## 使用说明
 
@@ -147,7 +113,7 @@ visual studio code 版本需1.62.0及以上
 
 1) 打开vscode，在左侧边栏中选择插件安装。
 
-  ![](figures/pic-plug-in-search.png)
+   ![](figures/pic-plug-in-search.png)
 
 2) 点击上面三个点的按钮，选择从VSIX安装选项，然后选择刚才生成的gnapi-0.0.1.vsix插件文件，再点击安装。
 
@@ -168,6 +134,83 @@ visual studio code 版本需1.62.0及以上
 6) 之后就会在该目录下生成对应文件，例如：
 
    ![](figures/pic-plug-in-gen-result.png)
+
+## 使用场景
+1) 系统框架层新增子系统，需对应用层提供接口
+
+2) 系统框架层已有子系统增强能力后，需对应用层提供新接口
+
+## 使用对象
+系统框架开发者
+
+## 使用效果
+根据指定的ts文件生成C/C++接口框架，如ts_test\gen\@ohos.napitest.d.ts转换后生成napitest.cpp文件。
+效果图如下：
+![](figures/pic-gen-result.png)
+
+```
+#include "napitest.h"
+
+
+namespace napitest {
+
+bool TestClass1::if_direct(std::string &v1, std::string &out) {
+    // TODO
+    return true;
+}
+
+bool TestClass1::if_callback(std::string &v1, std::string &out) {
+    // TODO
+    return true;
+}
+
+bool TestClass1::if_async(std::string &v1, std::string &out) {
+    // TODO
+    return true;
+}
+
+bool fun2(std::string &v2, std::vector<NUMBER_TYPE_4> &numcc, Human &mancc, std::vector<Human> &out) {
+    // TODO
+    return true;
+}
+
+bool fun3(std::string &v2, std::string &out) {
+    // TODO
+    return true;
+}
+
+bool fun4(std::string &v2, std::string &out) {
+    // TODO
+    return true;
+}
+
+namespace Space3 {
+
+bool fun3(std::string &v3, std::string &out) {
+    // TODO
+    return true;
+}
+
+namespace Space4 {
+
+bool TestClass3::add(std::vector<NUMBER_TYPE_7> &v1, NUMBER_TYPE_8 &out) {
+    // TODO
+    return true;
+}
+
+bool fun3(std::string &v3, std::string &out) {
+    // TODO
+    return true;
+}
+
+}
+
+}
+
+}
+```
+
+## FAQ
 
 ## 注意事项
 以上插件使用示例为windows的，linux、mac的使用方法类似。
