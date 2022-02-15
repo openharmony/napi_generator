@@ -1,8 +1,8 @@
-# napi_tool-1.0（2022-03-30）
+# napi_generator-1.0（2022-03-30）
 
 ## 版本概述<a name="section249611124916"></a>
 
-首次发布napi_tool-1.0。
+首次发布napi_generator-1.0。
 
 ## 版本特性<a name="section249611124917"></a>
 **表 1**  已支持特性
@@ -46,4 +46,8 @@
 </tr>
 </tbody>
 </table>
+
+**表 2**  待开发特性
+
+https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md
 
