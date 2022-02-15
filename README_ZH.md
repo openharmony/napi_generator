@@ -212,6 +212,8 @@ bool fun3(std::string &v3, std::string &out) {
 
 ## FAQ
 
+https://gitee.com/openharmony-sig/napi_generator/blob/master/FAQ.md
+
 ## 注意事项
 以上插件使用示例为windows的，linux、mac的使用方法类似。
 

@@ -60,6 +60,9 @@ Note:If the text contains special characters, please escape them according to th
             </policy>
         </policylist>
         <filefilterlist>
+            <filefilter name="defaultFilter" desc="Files not to check">
+                <filteritem type="filename" name="*.mp4" desc="mp4 files"/>
+            </filefilter>       
             <filefilter name="binaryFileTypePolicyFilter" desc="Filters for binaryFile" >
                 <filteritem type="filename" name="*.jpg" desc="all jpg file have check "/>
                 <filteritem type="filename" name="*.gif" desc="all gif file have check "/>
