@@ -63,7 +63,7 @@ public class GenDTS extends AnAction {
         try {
             Runtime.getRuntime().exec(command);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            LOG.debug("exec command error");
         }
     }
 
@@ -73,7 +73,6 @@ public class GenDTS extends AnAction {
         VirtualFile file = event.getData(PlatformDataKeys.VIRTUAL_FILE);
         if (file == null) {
             event.getPresentation().setEnabledAndVisible(false);
-            return;
         } else {
             String extension = file.getExtension();
             if (extension != null && "ts".equals(extension)) {
