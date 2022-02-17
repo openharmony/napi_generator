@@ -1,0 +1,29 @@
+{
+  "name": "napi_generator",
+  "version": "1.0.0",
+  "description": "This paper mainly introduces the NAPi framework code generation tool, which can generate NAPi framework code, business code framework and designed.the GN file according to the TS interface file in the path specified by the user. So developers need to focus on Nodejs related grammar framework layer, interface between c + + with JS type conversion, data type conversion, etc.. This tool is mainly used in the scenario of JS application calling NaPi interface, can focus on business logic implementation, Thus, the development efficiency can be greatly improved. Currently, the tool supports command line and VScode plug-in.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "stdio": "^2.1.1",
+    "typescript": "^4.5.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitee.com:joeysun001/napi_generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": "./src/gen/cmd_gen.js",
+  "pkg": {
+    "assets": [
+      "node_modules/typescript/**/*"
+    ]
+  }
+}
