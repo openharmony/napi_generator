@@ -13,6 +13,29 @@
 * limitations under the License. 
 */
 const re = require("./re");
+const tsc = require("../../../node_modules/typescript");
+
+function CheckFileError(ifname) {
+    let program = tsc.createProgram([ifname], {})
+    let emitResult = program.emit();
+    let allDiagnostics = tsc.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
+
+    let errorMsg = ''
+    allDiagnostics.forEach(diagnostic => {
+        if (diagnostic.file) {
+            let { line, character } = tsc.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
+            let message = tsc.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+            errorMsg += `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}\n`;
+        } else {
+            errorMsg += tsc.flattenDiagnosticMessageText(diagnostic.messageText, "\n") + "\n";
+        }
+    });
+
+    if (allDiagnostics.length > 0) {
+        return [false, errorMsg];
+    }
+    return [true, ""];
+}
 
 class FuncType { }
 FuncType.DIRECT = 1
@@ -66,5 +89,6 @@ module.exports = {
     FuncType,
     NumberIncrease,
     InterfaceList,
-    getArrayType
+    getArrayType,
+    CheckFileError
 }

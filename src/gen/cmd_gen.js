@@ -14,6 +14,7 @@
 */
 const main = require("./main");
 const re = require("./tools/re");
+const { CheckFileError } = require("./tools/common");
 
 function print(...args) {
     console.log(...args)
@@ -31,7 +32,13 @@ let fn = re.getFileInPath(ops.filename)
 
 let tt = re.match("@ohos.[a-zA-Z0-9]+.d.ts", fn)
 if (tt) {
-    main.doGenerate(ops.filename, ops.out)
+    let result = CheckFileError(ops.filename);
+    if (result[0]) {
+        main.doGenerate(ops.filename, ops.out)
+    }
+    else {
+        console.log(result[1])
+    }
 }
 else {
     print("\n文件名 " + fn + " 校验失败，需要符合 @ohos.xxx.d.ts")

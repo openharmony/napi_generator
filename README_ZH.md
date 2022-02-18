@@ -39,7 +39,7 @@
 
 ### 源码
 
-通过命令：git clone git@gitee.com:openharmony-sig/assist_tools.git  下载对应的源码。
+通过命令：git clone git@gitee.com:openharmony-sig/napi_generator.git   下载对应的源码。
 
 ### 打包
 
@@ -49,14 +49,14 @@
 
 ## 使用说明
 
-1. 将gen目录下Windows可执行程序cmd_gen-win.exe拷贝到对应目录下，不需要安装，可以在cmd命令行中直接运行。
-2. 将gen目录下Linux可执行程序cmd_gen-linux拷贝到对应目录下，可以在终端下直接运行。
+1. 将gen目录下Windows可执行程序napi_generator-win.exe拷贝到对应目录下，不需要安装，可以在cmd命令行中直接运行。
+2. 将gen目录下Linux可执行程序napi_generator-linux拷贝到对应目录下，可以在终端下直接运行。
 
 ### 可执行程序使用方法
 
 #### Windows
 
-1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序cmd_gen-win.exe同级目录下，例如：
+1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序napi_generator-win.exe同级目录下，并且检查需要转换的d.ts文件中是否声明了import的d.ts文件，如果存在需要将import的d.ts文件也放入到待转换的d.ts文件相同的目录下，比如，目前需要待转换的d.ts文件是@ohos.power.d.ts，在该文件中存在import {AsyncCallback} from './basic';这段逻辑，所以需要将basic.d.ts放入到@ohos.power.d.ts相同的目录下。例如：
 
 ![](figures/pic-d-ts-location.png)
 
@@ -64,35 +64,43 @@
 
 ![](figures/pic-cmd.png)
 
-3) 在命令行中进入到之前可执行程序cmd_gen-win.exe所在的目录，并运行cmd_gen-win.exe，在cmd_gen-win.exe后面要对应的.d.ts文件名，例如：
+3. 在命令行中进入到之前可执行程序napi_generator-win.exe所在的目录，并运行napi_generator-win.exe，在napi_generator-win.exe后面要加参数-f，后面在加要对应的.d.ts文件名，如果不加参数-o，输出文件就默认在当前目录下，例如：
 
    ```
-   E:\napi_tool>cmd_gen-win.exe @ohos.power.d.ts
-
+   E:\napi_tool>napi_generator-win.exe -f @ohos.power.d.ts
+   
    ```
 
-4) 运行成功后会在.d.ts文件说在的目录下生成对应的文件，例如：
+   命令行参数如下，-f是必须添加的参数，-o是可选参数，如果不加就默认当前目录。
+
+   ```
+   -f, --filename <ARG1>         .d.ts file                                            -o, --out <ARG1>              output directory ("." by default)
+   ```
+
+   
+
+4. 运行成功后会在.d.ts文件说在的目录下生成对应的文件，例如：
 
 ![](figures/pic-d-ts-transition.png)
 
 #### Linux
 
-1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序cmd_gen-linux同级目录下，例如：
+1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序napi_generator-linux同级目录下，并且检查需要转换的d.ts文件中是否声明了import的d.ts文件，如果存在需要将import的d.ts文件也放入到待转换的d.ts文件相同的目录下，例如：
 
    ```
    xudong@xudong:~/napi_tool$ ls
-   cmd_gen-linux  @ohos.power.d.ts
+   napi_generator-linux  @ohos.power.d.ts  basic.d.ts
    xudong@xudong:~/napi_tool$ 
 
    ```
 
-2) 在终端中进入到之前可执行程序cmd_gen-linux所在的目录，并运行cmd_gen-linux，在cmd_gen-linux后面要对应的.d.ts文件名，例如：
+2) 在终端中进入到之前可执行程序napi_generator-linux所在的目录，并运行napi_generator-linux，在napi_generator-linux后面要加参数-f，后面在加要对应的.d.ts文件名，如果不加参数-o，输出文件就默认在当前目录下，例如：
 
    ```
    xudong@xudong:~/napi_tool$ ls
-   cmd_gen-linux  @ohos.power.d.ts
-   xudong@xudong:~/napi_tool$ ./cmd_gen-linux @ohos.power.d.ts 
-
+   napi_generator-linux  @ohos.power.d.ts  basic.d.ts
+   xudong@xudong:~/napi_tool$ ./napi_generator-linux -f @ohos.power.d.ts 
+   
    ```
 3) 运行成功后会在.d.ts文件说在的目录下生成对应的文件，例如：
 
@@ -100,7 +108,7 @@
    xudong@xudong:~/napi_tool$ ls
    binding.gyp  BUILD.gn  cmd_gen-linux  @ohos.power.d.ts  power.cpp  power.h  power_middle.cpp  test.sh  x_napi_tool.cpp  x_napi_tool.h
    xudong@xudong:~/napi_tool$ 
-
+   
    ```
 #### Mac
 方法步骤参考windows、Linux的使用方法
