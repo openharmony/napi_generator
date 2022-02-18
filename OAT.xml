@@ -59,11 +59,20 @@ Note:If the text contains special characters, please escape them according to th
                 <policyitem type="copyright" name="Copyright (c) 2022 Shenzhen Kaihong Digital" path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc=""/>
             </policy>
         </policylist>
-        <filefilterlist>      
+        <filefilterlist>
+            <filefilter name="defaultFilter" desc="Files not to check">
+                <filteritem type="filename" name="*.mp4" desc="mp4 files"/>
+            </filefilter>       
             <filefilter name="binaryFileTypePolicyFilter" desc="Filters for binaryFile" >
                 <filteritem type="filename" name="*.jpg" desc="all jpg file have check "/>
                 <filteritem type="filename" name="*.gif" desc="all gif file have check "/>
                 <filteritem type="filename" name="*.png" desc="all png file have check "/>
+                <filteritem type="filename" name="*.exe" desc="all exe file have check "/>
+                <filteritem type="filename" name="*.docx" desc="all docx file have check "/>
+                <filteritem type="filename" name="*.vsix" desc="all vsix file have check "/>
+                <filteritem type="filename" name="napi_generator-linux" desc="all napi_generator-linux file have check "/>
+                <filteritem type="filename" name="napi_generator-macos" desc="all napi_generator-macos file have check "/>
+
             </filefilter>
         </filefilterlist>
     </oatconfig>

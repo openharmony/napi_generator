@@ -49,5 +49,5 @@
 
 **表 2**  待开发特性
 
-https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md
+https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/%E7%89%88%E6%9C%AC%E8%A7%84%E5%88%92.md
 
