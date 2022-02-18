@@ -29,7 +29,6 @@ static napi_value constructor(napi_env env, napi_callback_info info)
     XNapiTool *pxt = new XNapiTool(env, info);
 
     [className] *p = new [className]();
-    // printf("static constructor %x\\n", p);
 
     napi_value thisvar = pxt->WrapInstance(p, release);
 
@@ -37,7 +36,6 @@ static napi_value constructor(napi_env env, napi_callback_info info)
 }
 static void release(void *p)
 {
-    // printf("test2 released\\n");
     [className] *p2 = ([className] *)p;
     delete p2;
 }

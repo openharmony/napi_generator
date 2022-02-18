@@ -70,8 +70,6 @@ struct [funcName]_value_struct {[valueIn]
 }`
 
 function generateFunctionAsync(func, className) {
-    //     this.len_to = 0
-    //     // print(type, name, values, ret_type)
     let middleFunc = replaceAll(funcAsyncTemplete, "[funcName]", func.name)
     if (className == null) {
         middleFunc = middleFunc.replaceAll("[static_define]", "")

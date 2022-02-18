@@ -178,19 +178,15 @@ function parseFunction(tt, data, result) {
     tt = re.match("(export )*function ([A-Za-z0-9_]+) *(\\()", data)
     if (tt) {
         let funcName = re.getReg(data, tt.regs[2])
-        // print(funcName)
         let funcValue = checkOutBody(data, tt.regs[3][0], ["(", ")"], null)
         let funcRet = checkOutBody(data.substring(tt.regs[3][0] + funcValue.length), 0, ["", "\n"], null)
 
         data = data.substring(tt.regs[3][0] + funcValue.length + funcRet.length)
-        // print(funcValue)
-        // print(funcRet)
         let tt2 = re.match(" *: *([A-Za-z0-9_<>{}:, .=]+);*", funcRet)
         if (tt2) {
             funcRet = re.getReg(funcRet, tt2.regs[1])
         }
         else {//maybe error
-            // print(funcRet)
             funcRet = "void"
         }
 
@@ -210,7 +206,6 @@ function parseInterface(tt, data, result) {
     if (tt) {
         let interfaceName = re.getReg(data, tt.regs[2])
         let interfaceBody = checkOutBody(data, tt.regs[5][0], null, null)
-        // print(interfaceBody)
         result.interface.push({
             name: interfaceName,
             body: analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1))

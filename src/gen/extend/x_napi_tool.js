@@ -203,7 +203,6 @@ XNapiTool::~XNapiTool()
         napi_status result_status = napi_delete_reference(env_, wrapper_);
         CC_ASSERT(result_status == napi_ok);
     }
-    /*printf("----------------release XNapiTool\\n");*/
 }
 
 bool XNapiTool::SwapJs2CBool(napi_value value)
@@ -561,8 +560,6 @@ void XNapiTool::DefineClass(const char *className, napi_callback constructorFunc
 
 void XNapiTool::WrapFinalize(napi_env env, void *data, void *hint)
 {
-    // (void)env;
-    // (void)hint;
     XNapiTool *pxt = (XNapiTool *)data;
     pxt->ReleaseInstance();
     delete pxt;

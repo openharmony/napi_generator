@@ -115,6 +115,17 @@ function removeExplains(data) {
     return data
 }
 
+function getLicense(data) {
+    while (data.indexOf("/*") >= 0) {
+        let i1 = data.indexOf("/*")
+        let i2 = data.indexOf("*/") + 2
+        let licenseData = data.substring(i1, i2)
+        if (licenseData.search("Copyright")) {
+            return licenseData
+        }
+    }
+}
+
 function removeEmptyLine(data) {
     while (data.indexOf("\r") >= 0) {
         data = data.replace("\r", "")
@@ -158,5 +169,6 @@ module.exports = {
     removeEmptyLine,
     removeEmptyLine2,
     replaceAll,
-    print
+    print,
+    getLicense
 }
