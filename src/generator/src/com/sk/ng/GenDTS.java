@@ -21,7 +21,10 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.regex.Pattern;
 
@@ -61,8 +64,8 @@ public class GenDTS extends AnAction {
         }
 
         try {
-            Runtime.getRuntime().exec(command);
-        } catch (IOException ex) {
+            callExtProcess(command);
+        } catch (IOException | InterruptedException ex) {
             LOG.debug("exec command error");
         }
     }
@@ -79,6 +82,45 @@ public class GenDTS extends AnAction {
                 event.getPresentation().setEnabledAndVisible(true);
             } else {
                 event.getPresentation().setEnabledAndVisible(false);
+            }
+        }
+    }
+
+    public void callExtProcess(String command) throws IOException, InterruptedException {
+        Process process = Runtime.getRuntime().exec(command);
+
+        StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
+        StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
+
+        errConsumer.start();
+        outputConsumer.start();
+
+        int exitVal = process.waitFor();
+        if (exitVal != 0) {
+            LOG.error(" callExtProcess process.waitFor() != 0");
+        }
+        errConsumer.join();
+        outputConsumer.join();
+    }
+
+    class StreamConsumer extends Thread {
+        InputStream is;
+
+        StreamConsumer(InputStream is) {
+            this.is = is;
+        }
+
+        @Override
+        public void run() {
+            try {
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader br = new BufferedReader(isr);
+                String line;
+                while ((line = br.readLine()) != null) {
+                    LOG.error("StreamConsumer" + line);
+                }
+            } catch (IOException ex) {
+                LOG.error("StreamConsumer io error");
             }
         }
     }
