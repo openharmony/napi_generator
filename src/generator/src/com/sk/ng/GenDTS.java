@@ -64,8 +64,13 @@ public class GenDTS extends AnAction {
         }
 
         try {
-            callExtProcess(command);
-        } catch (IOException | InterruptedException ex) {
+            try {
+                callExtProcess(command);
+            } catch (InterruptedException e) {
+                LOG.warn("exec command Interrupted");
+                Thread.currentThread().interrupt();
+            }
+        } catch (IOException ex) {
             LOG.debug("exec command error");
         }
     }
