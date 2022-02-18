@@ -22,8 +22,8 @@ function print(...args) {
 const stdio = require("stdio");
 
 let ops = stdio.getopt({
-    'filename':{key:'f', args:1, description:".d.ts file"},
-    'out':{key:'o', args:1, description:"output directory", default:"."}
+    'filename': { key: 'f', args: 1, description: ".d.ts file" },
+    'out': { key: 'o', args: 1, description: "output directory", default: "." }
 });
 
 
@@ -36,9 +36,3 @@ if (tt) {
 else {
     print("\n文件名 " + fn + " 校验失败，需要符合 @ohos.xxx.d.ts")
 }
-// }
-
-/*
-打包成exe文件
-pkg vscode_plugin/gnapi/gen/cmd_gen.js
-*/

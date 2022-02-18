@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("./tools/re");
-const { print, removeExplains, removeEmptyLine, checkOutBody } = require("./tools/tool");
+const { print, removeExplains, removeEmptyLine, checkOutBody, getLicense } = require("./tools/tool");
 const { FuncType, NumberIncrease } = require("./tools/common");
 const { readFile } = require("./tools/FileRW");
 
@@ -22,6 +22,7 @@ const { analyzeNamespace } = require("./analyze/namespace");
 function analyzeFile(fn) {
     NumberIncrease.reset();
     let data = readFile(fn);
+    let licenseData = getLicense(data)
     data = removeExplains(data)//去除注释
     data = removeEmptyLine(data)//去除空行
     while (true) {//去除import
@@ -36,6 +37,11 @@ function analyzeFile(fn) {
         declareFunction: [],
         declareNamespace: [],
         declareInterface: [],
+        declareLicense: [],
+    }
+
+    if (null != licenseData) {
+        result.declareLicense.push(licenseData)
     }
     while (true) {
         let oldData = data

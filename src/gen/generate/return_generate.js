@@ -16,7 +16,6 @@ const { replaceAll, print } = require("../tools/tool");
 const { InterfaceList, getArrayType } = require("../tools/common");
 
 function cToJs(value, type, dest, deep = 1) {
-    // print(value, type, dest)
     if (type == "void")
         return "%s = pxt->UndefinedValue();".format(dest);
     else if (type == "boolean")

@@ -22,9 +22,6 @@ function search(ss, data) {
     ss = replaceAll(ss, "\\.", "\\.")
     let reg = new RegExp(ss);
     let tt = reg.exec(data);
-    // print("#############")
-    // print(tt)
-    // print("#############")
     if (tt == null) return null;
     let ret = { "regs": [] }
     for (let i = 0; i < tt.length; i++) {
