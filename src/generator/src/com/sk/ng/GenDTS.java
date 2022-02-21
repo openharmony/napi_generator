@@ -28,28 +28,35 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.regex.Pattern;
 
+/**
+ * 工具转换插件
+ */
 public class GenDTS extends AnAction {
     private static final Logger LOG = Logger.getInstance(GenDTS.class);
 
     @Override
-    public void actionPerformed(AnActionEvent e) {
-        //获取需要处理的.d.ts文件绝对路径
-        VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
-        if (file == null) return;
-        //正则匹配所选文件名是否符合规范
+    public void actionPerformed(AnActionEvent anActionEvent) {
+
+        // 获取需要处理的.d.ts文件绝对路径
+        VirtualFile file = anActionEvent.getData(PlatformDataKeys.VIRTUAL_FILE);
+        if (file == null) {
+            return;
+        }
+
+        // 正则匹配所选文件名是否符合规范
         if (!Pattern.matches("@ohos.[a-zA-Z0-9]+.d.ts", file.getName())) {
             Messages.showErrorDialog("选择@ohos.xxx.d.ts文件生成", "错误");
             return;
         }
         String dest_path = file.getPath();
 
-        //执行命令行
-        RunFun(dest_path);
+        // 执行命令行
+        runFun(dest_path);
 
-        Messages.showMessageDialog(e.getProject(), dest_path, "generating", Messages.getInformationIcon());
+        Messages.showMessageDialog(anActionEvent.getProject(), dest_path, "generating", Messages.getInformationIcon());
     }
 
-    public void RunFun(String dest_path) {
+    private void runFun(String dest_path) {
         String command = "";
         String sysName = System.getProperties().getProperty("os.name").toUpperCase();
         if (sysName.indexOf("WIN") >= 0) {
@@ -60,7 +67,8 @@ public class GenDTS extends AnAction {
             URL res = getClass().getClassLoader().getResource("cmds/linux/napi_generator-linux");
             command = res.getPath() + "  " + dest_path;
         } else {
-            //mac support
+            URL res = getClass().getClassLoader().getResource("cmds/mac/napi_generator-mac");
+            command = res.getPath() + "  " + dest_path;
         }
 
         try {
@@ -77,7 +85,8 @@ public class GenDTS extends AnAction {
 
     @Override
     public void update(AnActionEvent event) {
-        //根据所选文件名，判断是否显示生成菜单项
+
+        // 根据所选文件名，判断是否显示生成菜单项
         VirtualFile file = event.getData(PlatformDataKeys.VIRTUAL_FILE);
         if (file == null) {
             event.getPresentation().setEnabledAndVisible(false);
@@ -91,7 +100,7 @@ public class GenDTS extends AnAction {
         }
     }
 
-    public void callExtProcess(String command) throws IOException, InterruptedException {
+    private void callExtProcess(String command) throws IOException, InterruptedException {
         Process process = Runtime.getRuntime().exec(command);
 
         StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
@@ -112,6 +121,7 @@ public class GenDTS extends AnAction {
         InputStream is;
 
         StreamConsumer(InputStream is) {
+            super.setName("StreamConsumer");
             this.is = is;
         }
 
