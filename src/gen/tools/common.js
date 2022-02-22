@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("./re");
-const tsc = require("../../../node_modules/typescript");
+const tsc = require("../../node_modules/typescript");
 
 function checkFileError(ifname) {
     let program = tsc.createProgram([ifname], {})

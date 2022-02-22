@@ -1,7 +1,7 @@
 
 
 ## 可执行文件开发说明
-1.安装typescript：在napi_generator目录下执行命令npm i typescript
+1.安装typescript：在napi_generator目录下和napi_generator/src目录下分别都执行命令npm i typescript
 
 2.安装stdio：在napi_generator目录下执行命令npm i stdio
 
