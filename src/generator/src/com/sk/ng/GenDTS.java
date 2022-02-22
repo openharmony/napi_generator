@@ -29,7 +29,9 @@ import java.net.URL;
 import java.util.regex.Pattern;
 
 /**
- * 工具转换插件
+ * @author: xudong
+ * @createDate: 2022/02/21
+ * @description: 工具转换插件
  */
 public class GenDTS extends AnAction {
     private static final Logger LOG = Logger.getInstance(GenDTS.class);

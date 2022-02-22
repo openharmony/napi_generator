@@ -121,21 +121,21 @@ function generateAll(structOfTs, destDir) {
     let middleCpp = replaceAll(moduleCppTmplete, "[body_replace]", result.middleBody);
     middleCpp = replaceAll(middleCpp, "[init_replace]", result.middleInit);
     middleCpp = replaceAll(middleCpp, "[implName]", ns0.name);
-    writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)), license + "\n" + middleCpp)
+    writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)), null != license ? (license + "\n" + middleCpp) : middleCpp)
 
     let implH = replaceAll(implHTemplete, "[impl_name_upper]", ns0.name.toUpperCase())
     implH = implH.replaceAll("[numberUsing]", numberUsing);
     implH = replaceAll(implH, "[implH_detail]", result.implH)
-    writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), license + "\n" + implH)
+    writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), null != license ? (license + "\n" + implH) : implH)
 
     let implCpp = implCppTemplete.replaceAll("[implName]", ns0.name)
     implCpp = implCpp.replaceAll("[implCpp_detail]", result.implCpp)
-    writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), license + "\n" + implCpp)
+    writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), null != license ? (license + "\n" + implCpp) : implCpp)
 
 
-    generateGYP(destDir, ns0.name)//生成ubuntu下测试的编译脚本
-    generateGN(destDir, ns0.name)//生成BUILD.gn for ohos
-    generateBase(destDir)//x_napi_tool.h/cpp
+    generateGYP(destDir, ns0.name, license)//生成ubuntu下测试的编译脚本
+    generateGN(destDir, ns0.name, license)//生成BUILD.gn for ohos
+    generateBase(destDir, license)//x_napi_tool.h/cpp
 }
 
 module.exports = {

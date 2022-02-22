@@ -601,9 +601,9 @@ void *XNapiTool::GetAsyncInstance()
 }
 `
 
-function generateBase(destDir) {
-    writeFile(re.pathJoin(destDir, "x_napi_tool.h"), xNapiToolH)
-    writeFile(re.pathJoin(destDir, "x_napi_tool.cpp"), xNapiToolCpp)
+function generateBase(destDir, license) {
+    writeFile(re.pathJoin(destDir, "x_napi_tool.h"), null != license ? (license + "\n" + xNapiToolH) : xNapiToolH)
+    writeFile(re.pathJoin(destDir, "x_napi_tool.cpp"), null != license ? (license + "\n" + xNapiToolCpp) : xNapiToolCpp)
 }
 
 module.exports = {
