@@ -32,9 +32,9 @@ let gypTemplete = `
 `
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
-function generateGYP(destDir, implName) {
+function generateGYP(destDir, implName, license) {
     let ss = gypTemplete.replaceAll("[implName]", implName)
-    writeFile(re.pathJoin(destDir, "binding.gyp"), ss)
+    writeFile(re.pathJoin(destDir, "binding.gyp"), null != license ? (license + "\n" + ss) : ss)
 
     writeFile(re.pathJoin(destDir, "test.sh"), "node-gyp configure build && sleep 0.5 && node --expose-gc test.js")
 

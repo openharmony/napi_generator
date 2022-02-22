@@ -137,7 +137,7 @@ visual studio code 版本需1.62.0及以上
 
 5) 鼠标在.d.ts上点击右键，选择.d.ts生成c++选项。
 
-   ![](figures/pic-plug-in-gen-c++.png)
+   ![](figures/pic-plug-in-gen.png)
 
 6) 之后就会在该目录下生成对应文件，例如：
 

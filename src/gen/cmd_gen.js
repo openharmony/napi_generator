@@ -14,7 +14,7 @@
 */
 const main = require("./main");
 const re = require("./tools/re");
-const { CheckFileError } = require("./tools/common");
+const { checkFileError } = require("./tools/common");
 
 function print(...args) {
     console.log(...args)
@@ -32,7 +32,7 @@ let fn = re.getFileInPath(ops.filename)
 
 let tt = re.match("@ohos.[a-zA-Z0-9]+.d.ts", fn)
 if (tt) {
-    let result = CheckFileError(ops.filename);
+    let result = checkFileError(ops.filename);
     if (result[0]) {
         main.doGenerate(ops.filename, ops.out)
     }

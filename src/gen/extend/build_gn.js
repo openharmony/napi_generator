@@ -48,9 +48,9 @@ ohos_shared_library("[implName]")
 `
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
-function generateGN(destDir, implName) {
+function generateGN(destDir, implName, license) {
     let ss = gnTemplete.replaceAll("[implName]", implName)
-    writeFile(re.pathJoin(destDir, "BUILD.gn"), ss)
+    writeFile(re.pathJoin(destDir, "BUILD.gn"), null != license ? (license + "\n" + ss) : ss)
 }
 
 module.exports = {

@@ -15,7 +15,7 @@
 const re = require("./re");
 const tsc = require("../../../node_modules/typescript");
 
-function CheckFileError(ifname) {
+function checkFileError(ifname) {
     let program = tsc.createProgram([ifname], {})
     let emitResult = program.emit();
     let allDiagnostics = tsc.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
@@ -90,5 +90,5 @@ module.exports = {
     NumberIncrease,
     InterfaceList,
     getArrayType,
-    CheckFileError
+    checkFileError
 }
