@@ -131,13 +131,13 @@ visual studio code 版本需1.62.0及以上
 
    ![](figures/pic-plug-in-gnapi.png)
 
-4) 在vscode中找到需要转换的.d.ts文件，例如：
+4) 在vscode中找到需要转换的.d.ts文件，并且检查需要转换的d.ts文件中是否声明了import的d.ts文件，如果存在需要将import的d.ts文件也放入到待转换的d.ts文件相同的目录下，例如
 
    ![](figures/pic-plug-in-select-d-ts.png)
 
 5) 鼠标在.d.ts上点击右键，选择.d.ts生成c++选项。
 
-   ![](figures/pic-plug-in-gen.png)
+   ![](figures/pic-plug-in-gen-c++.png)
 
 6) 之后就会在该目录下生成对应文件，例如：
 

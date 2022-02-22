@@ -17,6 +17,8 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const xgen = require('./gen/main');
+const path = require("path");
+const { CheckFileError } = require("./gen/tools/common");
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -32,9 +34,15 @@ function activate(context) {
 	let disposable = vscode.commands.registerCommand('generate_napi', function (uri) {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
-		vscode.window.showInformationMessage("正在生成" + uri.fsPath);
-		xgen.doGenerate(uri.fsPath);
-		vscode.window.showInformationMessage("生成成功");
+		let result = CheckFileError(uri.fsPath);
+		if (result[0]) {
+			vscode.window.showInformationMessage("正在生成" + uri.fsPath);
+			xgen.doGenerate(uri.fsPath, path.dirname(uri.fsPath));
+			vscode.window.showInformationMessage("生成成功");
+		}
+		else {
+			vscode.window.showErrorMessage("" + result[1]);
+		}
 	});
 
 	context.subscriptions.push(disposable);

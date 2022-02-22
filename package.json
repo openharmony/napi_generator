@@ -23,7 +23,7 @@
   "bin": "./src/gen/cmd_gen.js",
   "pkg": {
     "assets": [
-      "node_modules/typescript/**/*"
+      "src/node_modules/typescript/**/*"
     ]
   }
 }
