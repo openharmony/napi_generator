@@ -19,6 +19,7 @@ const vscode = require('vscode');
 const xgen = require('./gen/main');
 const path = require("path");
 const { CheckFileError } = require("./gen/tools/common");
+const { NLog } = require("./gen/tools/NLog");
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -37,8 +38,15 @@ function activate(context) {
 		let result = CheckFileError(uri.fsPath);
 		if (result[0]) {
 			vscode.window.showInformationMessage("正在生成" + uri.fsPath);
+			NLog.Init(1, path.join("" + path.dirname(uri.fsPath), "napi_gen.log"))
 			xgen.doGenerate(uri.fsPath, path.dirname(uri.fsPath));
-			vscode.window.showInformationMessage("生成成功");
+            let ret=NLog.GetResult();
+            if(ret[0]) {
+                vscode.window.showInformationMessage("生成成功");
+            }
+            else {
+                vscode.window.showInformationMessage(""+ret[1]);
+            }
 		}
 		else {
 			vscode.window.showErrorMessage("" + result[1]);
