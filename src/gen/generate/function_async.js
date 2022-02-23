@@ -58,7 +58,7 @@ struct [funcName]_value_struct {[valueIn]
     }
     [unwarp_instance]
 
-    struct [funcName]_value_struct *vio=new [funcName]_value_struct();
+    struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     
     [valueCheckout]
 

@@ -551,7 +551,7 @@ void XNapiTool::DefineClass(const char *className, napi_callback constructorFunc
     }
 
     napi_status result_status = napi_define_class(env_, className, NAPI_AUTO_LENGTH, constructorFunc, 
-        nullptr, p, funcs, &tmpClass);
+    nullptr, p, funcs, &tmpClass);
     CC_ASSERT(result_status == napi_ok);
 
     result_status = napi_set_named_property(env_, dest, className, tmpClass);
