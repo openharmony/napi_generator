@@ -32,6 +32,7 @@ public:
     using CallbackFunction = void (*)(XNapiTool *pxt, void *data);
     using RELEASE_INSTANCE = void (*)(void *p);
     static napi_value UndefinedValue(napi_env env);
+    const uint32_t DEFAULT_ARG_COUNT = 8;
     napi_value UndefinedValue();
 
     napi_value CreateSubObject(napi_value parent, const char *name);
@@ -94,7 +95,7 @@ private:
 
     //解析参数
     napi_value argv_[8];
-    size_t argc_;
+    size_t argc_size;
     napi_value thisVar_;
     void *data_;
 
@@ -169,9 +170,9 @@ XNapiTool::XNapiTool(napi_env env, napi_callback_info info)
     releaseInstance_ = nullptr;
     wrapper_ = nullptr;
 
-    argc_ = 8;
+    argc_size = DEFAULT_ARG_COUNT;
 
-    napi_status result_status = napi_get_cb_info(env, info, &argc_, argv_, &thisVar_, &data_);
+    napi_status result_status = napi_get_cb_info(env, info, &argc_size, argv_, &thisVar_, &data_);
     CheckFailed(result_status == napi_ok, "get args fail");
 }
 
@@ -216,7 +217,7 @@ bool XNapiTool::SwapJs2CBool(napi_value value)
 
 napi_value XNapiTool::GetArgv(uint32_t p)
 {
-    if (CheckFailed(p < argc_, "GetArgv失败"))
+    if (CheckFailed(p < argc_size, "GetArgv失败"))
         return error_;
 
     return argv_[p];
@@ -224,7 +225,7 @@ napi_value XNapiTool::GetArgv(uint32_t p)
 
 uint32_t XNapiTool::GetArgc()
 {
-    return argc_;
+    return argc_size;
 }
 
 napi_value XNapiTool::GetValueProperty(napi_value value, const char *propertyName)

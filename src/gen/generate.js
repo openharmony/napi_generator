@@ -88,11 +88,10 @@ let implHTemplete = `\
 #ifndef IMPL_[impl_name_upper]_H
 #define IMPL_[impl_name_upper]_H
 
-#include <cstring>
 #include <string>
 #include <memory>
 #include <vector>
-#include <math.h>
+#include <cmath>
 
 [numberUsing]
 
