@@ -85,7 +85,7 @@ function generateFunction(func) {
 }
 
 function formatMiddleInit(inNamespace, name) {
-    let middleInit
+    let middleInit = ""
     if (inNamespace.length > 0) {
         let nsl = inNamespace.split("::")
         nsl.pop()
