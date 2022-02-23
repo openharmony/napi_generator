@@ -15,18 +15,22 @@
 const main = require("./main");
 const re = require("./tools/re");
 const { checkFileError } = require("./tools/common");
+const { NLog } = require("./tools/NLog");
+const path = require("path");
 
-function print(...args) {
-    console.log(...args)
-}
+//function print(...args) {
+//    console.log(...args)
+//}
 
 const stdio = require("stdio");
 
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: ".d.ts file" },
-    'out': { key: 'o', args: 1, description: "output directory", default: "." }
+    'out': { key: 'o', args: 1, description: "output directory", default: "." },
+    'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" }
 });
 
+NLog.Init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"))
 
 let fn = re.getFileInPath(ops.filename)
 
@@ -37,9 +41,11 @@ if (tt) {
         main.doGenerate(ops.filename, ops.out)
     }
     else {
-        console.log(result[1])
+        //console.log(result[1])
+        NLog.LOGE(result[1]);
     }
 }
 else {
-    print("\n文件名 " + fn + " 校验失败，需要符合 @ohos.xxx.d.ts")
+    //print("\n文件名 " + fn + " 校验失败，需要符合 @ohos.xxx.d.ts")
+    NLog.LOGE("file name " + fn + " format invalid, @ohos.xxx.d.ts");
 }
