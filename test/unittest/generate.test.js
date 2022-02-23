@@ -1,13 +1,14 @@
-const { generateNamespace } = require("../gen/generate/namespace");
-const { analyzeFile } = require("../gen/analyze");
+let genDir="../../src/gen/"
+const { generateNamespace } = require(genDir+"generate/namespace");
+const { analyzeFile } = require(genDir+"analyze");
 var assert = require("assert");
-const { readFile, writeFile } = require("../gen/tools/FileRW");
-const { jsToC, paramGenerate } = require("../gen/generate/param_generate");
-const { cToJs, returnGenerate } = require("../gen/generate/return_generate");
-const { generateInterface } = require("../gen/generate/interface");
-const { generateFunctionAsync } = require("../gen/generate/function_async");
-const { generateFunctionDirect } = require("../gen/generate/function_direct");
-const { generateFunctionSync } = require("../gen/generate/function_sync");
+const { readFile, writeFile } = require(genDir+"tools/FileRW");
+const { jsToC, paramGenerate } = require(genDir+"generate/param_generate");
+const { cToJs, returnGenerate } = require(genDir+"generate/return_generate");
+const { generateInterface } = require(genDir+"generate/interface");
+const { generateFunctionAsync } = require(genDir+"generate/function_async");
+const { generateFunctionDirect } = require(genDir+"generate/function_direct");
+const { generateFunctionSync } = require(genDir+"generate/function_sync");
 const { AssertionError } = require("assert");
 
 describe('Generate', function () {

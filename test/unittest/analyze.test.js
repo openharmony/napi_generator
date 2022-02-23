@@ -1,9 +1,10 @@
-const { analyzeFile } = require("../gen/analyze");
-const { analyzeFunction } = require("../gen/analyze/function");
-const { analyzeInterface } = require("../gen/analyze/interface");
-const { analyzeNamespace } = require("../gen/analyze/namespace");
-const { analyzeParams } = require("../gen/analyze/params");
-const { analyzeReturn } = require("../gen/analyze/return");
+let genDir="../../src/gen/"
+const { analyzeFile } = require(genDir+"analyze");
+const { analyzeFunction } = require(genDir+"analyze/function");
+const { analyzeInterface } = require(genDir+"analyze/interface");
+const { analyzeNamespace } = require(genDir+"analyze/namespace");
+const { analyzeParams } = require(genDir+"analyze/params");
+const { analyzeReturn } = require(genDir+"analyze/return");
 var assert = require("assert");
 
 

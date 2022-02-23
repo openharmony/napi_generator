@@ -9,7 +9,7 @@ def do_test():
         return
     if not os.path.exists("out"):
         os.mkdir("out")
-    ret=os.popen("node ../../gen/cmd_gen.js -f @ohos.test.d.ts -o ./out")
+    ret=os.popen("node ../../../src/gen/cmd_gen.js -f @ohos.test.d.ts -o ./out")
     print(ret.read())
 
     os.chdir("out")

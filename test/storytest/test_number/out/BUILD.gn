@@ -1,0 +1,29 @@
+import("//build/ohos.gni")
+
+ohos_shared_library("napitest")
+{
+    sources = [
+        "napitest_middle.cpp",
+        "napitest.cpp",
+        "x_napi_tool.cpp",
+    ]
+    include_dirs = [
+        ".",
+        "//third_party/node/src",
+    ]
+    deps=[
+        "//foundation/ace/napi:ace_napi",
+    ]
+    remove_configs = [ "//build/config/compiler:no_rtti" ]
+    cflags=[
+    ]
+    cflags_cc=[
+        "-frtti",
+    ]
+    ldflags = [
+    ]
+    
+    relative_install_dir = "module"
+    part_name = "<your part name>"
+    subsystem_name = "<your subsystem name>"
+}
