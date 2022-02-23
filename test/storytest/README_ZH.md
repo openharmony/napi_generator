@@ -27,20 +27,35 @@
 
 系统：建议Ubuntu 20.04
 
-依赖版本：vscode 1.62.0 -- 需要吗？
+依赖版本：python3.8
 
-安装以下依赖：
 
-1.npm i  
+步骤一：
+napi_generator目录下安装以下依赖：
+
+1.npm i 
+ 
+2.npm i stdio
+
+3.npm i node-gyp
+
+步骤二：
+napi_generator/src目录下安装以下依赖：
+
+1.npm i
+  
 2.npm i stdio
 
 3.npm i node-gyp
 
 
+
 ## 使用说明
 
 进入napi_generator/目录：
+
 1.执行所有用例：命令为python test/storytest/test.py
+
 2.执行单个用例,如test_interface，命令为python test/storytest/test.py test_interface
 
 
