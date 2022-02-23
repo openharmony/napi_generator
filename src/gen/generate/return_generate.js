@@ -94,7 +94,6 @@ function returnGenerate(type, param) {
     else {
         print(`\n---- The current version do not support this type return %s ----\n`.format(type))
     }
-    // param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")
 }
 
 module.exports = {
