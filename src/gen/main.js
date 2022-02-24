@@ -27,7 +27,7 @@ function doGenerate(ifname, destdir) {
         generateAll(structOfTs, destdir, moduleName);
     }
     else {
-        NLog.LOGE("file name " + fn + " format invalid, @ohos.xxx.d.ts");
+        NLog.LOGE("file name " + fn + " format invalid, @ohos.input_sample.d.ts");
     }
 }
 
