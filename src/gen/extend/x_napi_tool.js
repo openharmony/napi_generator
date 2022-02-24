@@ -93,19 +93,19 @@ private:
     napi_env env_;
     napi_value exports_;
 
-    //解析参数
+    // analyze params
     napi_value argv_[8];
     size_t argc_size;
     napi_value thisVar_;
     void *data_;
 
-    //错误信息
+    // error message
     napi_value error_;
     bool bFailed_;
     bool CheckFailed(bool b, const char *errStr);
     bool CheckValueType(napi_value value, napi_valuetype type);
 
-    //异步调用相关代码
+    // asynchronous call related code
     static void AsyncExecute(napi_env env, void *p);
     void AsyncExecuteFunction();
     static void AsyncComplete(napi_env env, napi_status status, void *p);
@@ -125,7 +125,7 @@ private:
     };
     AsyncMode asyncMode_;
 
-    //创建类相关代码
+    // create code related class
 public:
     static void WrapFinalize(napi_env env, void *data, void *hint);
     void ReleaseInstance();
@@ -151,10 +151,10 @@ let xNapiToolCpp = `
 #include <cassert>
 #include <cstring>
 
-#define CC_ASSERT(btrue) \\
-    if (!(btrue))        \\
-    {                    \\
-    }                    \\
+#define CC_ASSERT(btrue)   \\
+    if (!(btrue)) {        \\
+                           \\
+    }                      \\
     assert(btrue);
 
 XNapiTool::XNapiTool(napi_env env, napi_callback_info info)
@@ -187,20 +187,17 @@ XNapiTool::XNapiTool(napi_env env, napi_value exports)
 
 XNapiTool::~XNapiTool()
 {
-    if (asyncMode_ == AsyncMode::PROMISE)
-    {
+    if (asyncMode_ == AsyncMode::PROMISE) {
         napi_status result_status = napi_delete_async_work(env_, work_);
         CC_ASSERT(result_status == napi_ok);
     }
-    if (asyncMode_ == AsyncMode::CALLBACK)
-    {
+    if (asyncMode_ == AsyncMode::CALLBACK) {
         napi_status result_status = napi_delete_reference(env_, callbackFunc_);
         CC_ASSERT(result_status == napi_ok);
         result_status = napi_delete_async_work(env_, work_);
         CC_ASSERT(result_status == napi_ok);
     }
-    if (wrapper_ != nullptr)
-    {
+    if (wrapper_ != nullptr) {
         napi_status result_status = napi_delete_reference(env_, wrapper_);
         CC_ASSERT(result_status == napi_ok);
     }
@@ -239,8 +236,7 @@ napi_value XNapiTool::GetValueProperty(napi_value value, const char *propertyNam
 napi_value XNapiTool::SetValueProperty(napi_value &value, const char *propertyName, napi_value property)
 {
     napi_status result_status;
-    if (value == nullptr)
-    {
+    if (value == nullptr) {
         result_status = napi_create_object(env_, &value);
         CC_ASSERT(result_status == napi_ok);
     }
@@ -268,8 +264,7 @@ napi_value XNapiTool::GetArrayElement(napi_value value, uint32_t p)
 napi_value XNapiTool::SetArrayElement(napi_value &value, uint32_t p, napi_value ele)
 {
     napi_status result_status;
-    if (value == nullptr)
-    {
+    if (value == nullptr) {
         result_status = napi_create_array(env_, &value);
         CC_ASSERT(result_status == napi_ok);
     }
@@ -412,8 +407,7 @@ napi_value XNapiTool::SyncCallBack(napi_value func, size_t argc, napi_value *arg
 
 void XNapiTool::AsyncExecuteFunction()
 {
-    if (executeFunction_ != nullptr)
-    {
+    if (executeFunction_ != nullptr) {
         executeFunction_(this, valueData_);
     }
 }
@@ -424,8 +418,7 @@ void XNapiTool::AsyncExecute(napi_env env, void *p)
 }
 void XNapiTool::AsyncCompleteFunction()
 {
-    if (completeFunction_ != nullptr)
-    {
+    if (completeFunction_ != nullptr) {
         completeFunction_(this, valueData_);
     }
 }
@@ -441,14 +434,13 @@ napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFuncti
     napi_value result;
     napi_status result_status;
 
-    if (func == nullptr)
-    { // promise
+    if (func == nullptr) {
+        // promise
         result_status = napi_create_promise(env_, &deferred_, &result);
         CC_ASSERT(result_status == napi_ok);
         asyncMode_ = AsyncMode::PROMISE;
-    }
-    else
-    { // callback
+    } else {
+        // callback
         result_status = napi_create_reference(env_, func, 1, &callbackFunc_);
         CC_ASSERT(result_status == napi_ok);
         asyncMode_ = AsyncMode::CALLBACK;
@@ -474,14 +466,10 @@ napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFuncti
 
 void XNapiTool::FinishAsync(size_t argc, napi_value *args)
 {
-    if (asyncMode_ == AsyncMode::PROMISE)
-    {
-        if (argc > 0)
-        {
+    if (asyncMode_ == AsyncMode::PROMISE) {
+        if (argc > 0) {
             napi_resolve_deferred(env_, deferred_, args[0]);
-        }
-        else
-        {
+        } else {
             napi_reject_deferred(env_, deferred_, SwapC2JsUtf8("promise fail"));
         }
         return;
@@ -542,12 +530,10 @@ void XNapiTool::DefineClass(const char *className, napi_callback constructorFunc
     napi_property_descriptor funcs[funcList.size() + valueList.size()];
 
     uint32_t p = 0;
-    for (auto it = valueList.begin(); it != valueList.end(); it++)
-    {
+    for (auto it = valueList.begin(); it != valueList.end(); it++) {
         funcs[p++] = {it->first, 0, 0, it->second["getvalue"], it->second["setvalue"], 0, napi_default, 0}; // get,set
     }
-    for (auto it = funcList.begin(); it != funcList.end(); it++)
-    {
+    for (auto it = funcList.begin(); it != funcList.end(); it++) {
         funcs[p++] = {it->first, 0, it->second, 0, 0, 0, napi_default, 0};
     }
 
@@ -568,8 +554,7 @@ void XNapiTool::WrapFinalize(napi_env env, void *data, void *hint)
 
 void XNapiTool::ReleaseInstance()
 {
-    if (releaseInstance_ != nullptr)
-    {
+    if (releaseInstance_ != nullptr) {
         releaseInstance_(pInstance_);
     }
 }

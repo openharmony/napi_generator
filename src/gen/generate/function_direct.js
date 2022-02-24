@@ -28,8 +28,7 @@ struct [funcName]_value_struct {[valueIn]
 [static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
-    if (pxt->IsFailed())
-    {
+    if (pxt->IsFailed()) {
         napi_value err = pxt->GetError();
         delete pxt;
         return err;
@@ -45,9 +44,10 @@ struct [funcName]_value_struct {[valueIn]
     [valuePackage]
 
     delete vio;
-    if (pxt->IsFailed())
+    if (pxt->IsFailed()) {
         result = pxt->GetError();
-    delete pxt;// release
+    }
+    delete pxt; // release
     return result;
 }`
 
@@ -91,7 +91,8 @@ function generateFunctionDirect(func, className) {
 
     let implH = "\nbool %s(%s);".format(func.name, param.valueDefine)
     let implCpp = `
-bool %s%s(%s) {
+bool %s%s(%s)
+{
     return true;
 }
 `.format(className == null ? "" : className + "::", func.name, param.valueDefine)
