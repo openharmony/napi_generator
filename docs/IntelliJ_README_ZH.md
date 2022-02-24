@@ -26,23 +26,23 @@
 
 1.通过IntelliJ IDEA打开generator目录下的代码
 
-![](figures/IntelliJ_step_one.png)
+![](../figures/IntelliJ_step_one.png)
 
 2.执行IntelliJ IDEA工具右上角的run
 
-![](figures/IntelliJ_step_two.png)
+![](../figures/IntelliJ_step_two.png)
 
 3.IntelliJ IDEA会自动拉起一个应用程序
 
-![](figures/IntelliJ_step_three.png)
+![](../figures/IntelliJ_step_three.png)
 
 4.选择.d.ts文件,右键选择generate.d.ts选项，生成文件
 
-![](figures/IntelliJ_step_four.png)
+![](../figures/IntelliJ_step_four.png)
 
 5.执行结束后会在目录下生成对应的文件
 
-![](figures/IntelliJ_step_five.png)
+![](../figures/IntelliJ_step_five.png)
 
 
 ## 相关仓
