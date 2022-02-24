@@ -77,7 +77,7 @@ static napi_module g_[implName]_Module = {
     .nm_flags = 0,
     .nm_filename = nullptr,
     .nm_register_func = init,
-    .nm_modname = "",
+    .nm_modname = "[modulename]",
     .nm_priv = ((void *)0),
     .reserved = {(void *)0},
 };
@@ -110,7 +110,7 @@ let implCppTemplete = `\
 [implCpp_detail]
 `
 
-function generateAll(structOfTs, destDir) {
+function generateAll(structOfTs, destDir, moduleName) {
     let ns0 = structOfTs.declareNamespace[0];
 
     let license = structOfTs.declareLicense[0];
@@ -124,6 +124,7 @@ function generateAll(structOfTs, destDir) {
     let middleCpp = replaceAll(moduleCppTmplete, "[body_replace]", result.middleBody);
     middleCpp = replaceAll(middleCpp, "[init_replace]", result.middleInit);
     middleCpp = replaceAll(middleCpp, "[implName]", ns0.name);
+    middleCpp = replaceAll(middleCpp, "[modulename]", moduleName);
     writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)), null != license ? (license + "\n" + middleCpp) : middleCpp)
 
     let implH = replaceAll(implHTemplete, "[impl_name_upper]", ns0.name.toUpperCase())
