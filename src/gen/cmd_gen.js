@@ -46,6 +46,6 @@ if (tt) {
     }
 }
 else {
-    //print("\n文件名 " + fn + " 校验失败，需要符合 @ohos.xxx.d.ts")
-    NLog.LOGE("file name " + fn + " format invalid, @ohos.xxx.d.ts");
+    //print("\n文件名 " + fn + " 校验失败，需要符合 @ohos.input_sample.d.ts")
+    NLog.LOGE("file name " + fn + " format invalid, @ohos.input_sample.d.ts");
 }

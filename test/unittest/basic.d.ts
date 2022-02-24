@@ -12,25 +12,18 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { analyzeFile } = require("./analyze");
-const { generateAll } = require("./generate");
-const { NLog } = require("./tools/NLog");
-const re = require("./tools/re");
-
-function doGenerate(ifname, destdir) {
-    let structOfTs = analyzeFile(ifname);
-    let fn = re.getFileInPath(ifname)
-    let tt = re.match("@ohos.([a-zA-Z0-9]+).d.ts", fn)
-    if(tt)
-    {
-        let moduleName=re.getReg(fn,tt.regs[1]);
-        generateAll(structOfTs, destdir, moduleName);
-    }
-    else {
-        NLog.LOGE("file name " + fn + " format invalid, @ohos.input_sample.d.ts");
-    }
+export interface Callback<T> {
+    (data: T): void;
 }
 
-module.exports = {
-    doGenerate
+export interface ErrorCallback<T extends Error = BusinessError> {
+    (err: T): void;
+}
+
+export interface AsyncCallback<T> {
+    (err: BusinessError, data: T): void;
+}
+
+export interface BusinessError extends Error {
+    code: number;
 }

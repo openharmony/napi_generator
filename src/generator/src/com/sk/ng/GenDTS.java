@@ -47,7 +47,7 @@ public class GenDTS extends AnAction {
 
         // 正则匹配所选文件名是否符合规范
         if (!Pattern.matches("@ohos.[a-zA-Z0-9]+.d.ts", file.getName())) {
-            Messages.showErrorDialog("选择@ohos.xxx.d.ts文件生成", "错误");
+            Messages.showErrorDialog("选择@ohos.input_sample.d.ts文件生成", "错误");
             return;
         }
         String dest_path = file.getPath();
