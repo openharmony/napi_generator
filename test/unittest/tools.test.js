@@ -20,7 +20,6 @@ const { search,match,removeReg,getReg,getFileInPath,getPathInPath,pathJoin,repla
 const { checkOutBody,removeExplains,removeEmptyLine,removeEmptyLine2,print} = require(genDir+"tools/tool");
 const assert = require("assert");
 const rewire = require("rewire");
-require("should");
 
 describe('Tools', function () {
    

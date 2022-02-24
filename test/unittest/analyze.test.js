@@ -25,7 +25,7 @@ var assert = require("assert");
 describe('Analyze', function () {
 
     it('test gen/analyze analyzeFile', function () {
-        let structOfTs = analyzeFile("test/@ohos.xxx.d.ts");
+        let structOfTs = analyzeFile("test/@ohos.input_sample.d.ts");
         let ret = JSON.stringify(structOfTs)
         assert.strictEqual(ret, `{"exportDefault":[],"exports":[],"declareType":[],"declareFunction":[],"declareNamespace":[],"declareInterface":[],"declareLicense":[]}`);
     });
