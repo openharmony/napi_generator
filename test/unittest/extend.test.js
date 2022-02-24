@@ -17,7 +17,6 @@ const { generateGYP } = require(genDir+"extend/binding_gyp");
 const { generateGN } = require(genDir+"extend/build_gn");
 const { generateBase } = require(genDir+"extend/x_napi_tool");
 const rewire = require("rewire");
-require("should");
 String.prototype.replaceAll = function (...args) {
     let result = this;
     while (result.indexOf(args[0]) >= 0) {
