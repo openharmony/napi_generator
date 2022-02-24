@@ -6,10 +6,10 @@
 ## 目录
 
 ```
-├── napi_generator                     # NAPI框架代码生成工具
-│   ├── src                      # 工具源码
-│   ├── ...                   # 其他文件夹
-│   ├── test                      # 测试用例
+├── napi_generator             # NAPI框架代码生成工具
+│   ├── src                    # 工具源码
+│   ├── ...                    # 其他文件夹
+│   ├── test                   # 测试用例
 |   |   ├── storytest
 │   |   |   ├── test_direct    # 同步直接返回函数用例
 │   |   |   ├── test_interface # ts文件输入interface测试用例
@@ -33,20 +33,20 @@
 步骤一：
 napi_generator目录下安装以下依赖：
 
-1.npm i 
+1.npm i               #下载node_modules包
  
-2.npm i stdio
+2.npm i stdio         #标准输入输出函数的头文件
 
-3.npm i node-gyp
+3.npm i node-gyp      #将源码形式的node modules编译成适应于本地环境的、编译好的node modules
 
 步骤二：
 napi_generator/src目录下安装以下依赖：
 
-1.npm i
+1.npm i               #下载node_modules包
   
-2.npm i stdio
+2.npm i stdio         #标准输入输出函数的头文件 
 
-3.npm i node-gyp
+3.npm i node-gyp      #将源码形式的node modules编译成适应于本地环境的、编译好的node modules
 
 
 

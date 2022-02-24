@@ -30,7 +30,7 @@ describe('Generate', function () {
     var testStr;
 
     before(function(){
-        structOfTs = analyzeFile("test/unittest/@ohos.xxx.d.ts");
+        structOfTs = analyzeFile("test/unittest/@ohos.input_sample.d.ts");
 
         testStr = readFile("test/unittest/test.txt");
     });
@@ -81,7 +81,7 @@ describe('Generate', function () {
            '    for(uint32_t i12=0;i12<len12;i12++) {\n' +
            '        std::string tt12;\n' +
            '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i12), tt12);\n' +
-           '        a.push_back(tt12);\n' +              
+           '        a.push_back(tt12);\n' +             
            '    }');
     });
 
