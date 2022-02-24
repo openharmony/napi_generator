@@ -14,10 +14,21 @@
 */
 const { analyzeFile } = require("./analyze");
 const { generateAll } = require("./generate");
+const { NLog } = require("./tools/NLog");
+const re = require("./tools/re");
 
 function doGenerate(ifname, destdir) {
     let structOfTs = analyzeFile(ifname);
-    generateAll(structOfTs, destdir);
+    let fn = re.getFileInPath(ifname)
+    let tt = re.match("@ohos.([a-zA-Z0-9]+).d.ts", fn)
+    if(tt)
+    {
+        let moduleName=re.getReg(fn,tt.regs[1]);
+        generateAll(structOfTs, destdir, moduleName);
+    }
+    else {
+        NLog.LOGE("file name " + fn + " format invalid, @ohos.xxx.d.ts");
+    }
 }
 
 module.exports = {
