@@ -30,8 +30,8 @@ import java.util.regex.Pattern;
 
 /**
  * @author: xudong
- * @createDate: 2022/02/21
- * @description: 工具转换插件
+ * @see: 工具转换插件
+ * @version: 2022/02/21/v1.0.0
  */
 public class GenDTS extends AnAction {
     private static final Logger LOG = Logger.getInstance(GenDTS.class);

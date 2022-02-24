@@ -33,16 +33,20 @@ let moduleCppTmplete = `\
 #include "[implName].h"
 
 #define NUMBER_JS_2_C(napi_v, type, dest)      \\
-    if (typeid(type) == typeid(int32_t))       \\
+    if (typeid(type) == typeid(int32_t))  {    \\
         dest = pxt->SwapJs2CInt32(napi_v);     \\
-    else if (typeid(type) == typeid(uint32_t)) \\
+    }                                          \\
+    else if (typeid(type) == typeid(uint32_t)){\\
         dest = pxt->SwapJs2CUint32(napi_v);    \\
-    else if (typeid(type) == typeid(int64_t))  \\
+    }                                          \\
+    else if (typeid(type) == typeid(int64_t)){ \\
         dest = pxt->SwapJs2CInt64(napi_v);     \\
-    else if (typeid(type) == typeid(double_t)) \\
-        dest = pxt->SwapJs2CDouble(napi_v);
+    }                                          \\
+    else if (typeid(type) == typeid(double_t)){\\
+        dest = pxt->SwapJs2CDouble(napi_v);    \\
+    } 
 
-napi_value number_c_to_js(XNapiTool *pxt, const std::type_info &n, void *num)
+static napi_value number_c_to_js(XNapiTool *pxt, const std::type_info &n, void *num)
 {
     if (n == typeid(int32_t))
         return pxt->SwapC2JsInt32(*(int32_t *)num);
@@ -59,7 +63,7 @@ napi_value number_c_to_js(XNapiTool *pxt, const std::type_info &n, void *num)
 
 [body_replace]
 
-napi_value init(napi_env env, napi_value exports)
+static napi_value init(napi_env env, napi_value exports)
 {
     std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, exports);
 
