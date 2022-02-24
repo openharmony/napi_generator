@@ -125,7 +125,8 @@ function generateAll(structOfTs, destDir, moduleName) {
     middleCpp = replaceAll(middleCpp, "[init_replace]", result.middleInit);
     middleCpp = replaceAll(middleCpp, "[implName]", ns0.name);
     middleCpp = replaceAll(middleCpp, "[modulename]", moduleName);
-    writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)), null != license ? (license + "\n" + middleCpp) : middleCpp)
+    writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)),
+        null != license ? (license + "\n" + middleCpp) : middleCpp)
 
     let implH = replaceAll(implHTemplete, "[impl_name_upper]", ns0.name.toUpperCase())
     implH = implH.replaceAll("[numberUsing]", numberUsing);
