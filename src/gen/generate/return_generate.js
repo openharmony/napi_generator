@@ -71,7 +71,7 @@ function returnGenerate(type, param) {
         param.valueDefine += "%sstd::string &out".format(param.valueDefine.length > 0 ? ", " : "")
     }
     else if (type == "void") {
-        return;
+
     }
     else if (type == "boolean") {
         param.valueOut = "bool out;"

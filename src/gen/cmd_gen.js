@@ -15,12 +15,8 @@
 const main = require("./main");
 const re = require("./tools/re");
 const { checkFileError } = require("./tools/common");
-const { NLog } = require("./tools/NLog");
+const { NapiLog } = require("./tools/NapiLog");
 const path = require("path");
-
-//function print(...args) {
-//    console.log(...args)
-//}
 
 const stdio = require("stdio");
 
@@ -30,7 +26,7 @@ let ops = stdio.getopt({
     'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" }
 });
 
-NLog.Init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"))
+NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"))
 
 let fn = re.getFileInPath(ops.filename)
 
@@ -42,10 +38,10 @@ if (tt) {
     }
     else {
         //console.log(result[1])
-        NLog.LOGE(result[1]);
+        NapiLog.logError(result[1]);
     }
 }
 else {
     //print("\n文件名 " + fn + " 校验失败，需要符合 @ohos.input_sample.d.ts")
-    NLog.LOGE("file name " + fn + " format invalid, @ohos.input_sample.d.ts");
+    NapiLog.logError("file name " + fn + " format invalid, @ohos.input_sample.d.ts");
 }
