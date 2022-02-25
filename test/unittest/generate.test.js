@@ -26,162 +26,164 @@ const { generateFunctionSync } = require(genDir+"generate/function_sync");
 const { AssertionError } = require("assert");
 const rewire = require("rewire");
 
+function FuncAsyncAssert(){
+    let valueFi = {name: 'v1', type: 'string'};
+        let value1Se = {name: 'cb', type: 'AsyncCallback<string>'};
+        let funParam = {name: 'if_async', type: 4, value: [valueFi,value1Se], ret: 'string'}
+        let ret = generateFunctionAsync(funParam, 'TestClass1');
+        let retJson=JSON.stringify(ret);
+        return retJson
+}
+
+
+function FuncDirectAssert(){
+    let valueFi = {name: 'v1', type: 'string'};
+        let value1Se = {name: 'cb', type: 'AsyncCallback<string>'};
+        let funParam = {name: 'if_async', type: 4, value:[valueFi,value1Se], ret: 'string'};
+        let ret = generateFunctionDirect(funParam, 'TestClass1');
+        let retJson=JSON.stringify(ret);
+        return retJson
+}
+
+function FuncSyncAssert(){
+    let valueFi = {name: 'v1', type: 'string'};
+    let value1Se = {name: 'cb', type: 'Callback<string>'};
+    let funParam = {name: 'if_callback', type: 2, value: [valueFi,value1Se], ret: 'string'};
+    let ret = generateFunctionSync(funParam, 'TestClass1');
+    let retJson=JSON.stringify(ret);
+    return retJson
+}
+
+function cToJsParam(){
+    let value = 'uint32_t len1=a.size();\n' +
+    '    for(uint32_t i=0;i<len1;i++) {\n' +
+    '        napi_value tnv1 = nullptr;\n' +
+    '        tnv1 = pxt->SwapC2JsUtf8(a[i].c_str());\n' +
+    '        pxt->SetArrayElement(b, i, tnv1);\n' +
+    '    }'
+    return value
+}
+
+function jsToCParam(){
+    let value = '    uint32_t len12=pxt->GetArrayLength(b);\n' +
+       '    for(uint32_t i12=0;i12<len12;i12++) {\n' +
+       '        std::string tt12;\n' +
+       '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i12), tt12);\n' +
+       '        a.push_back(tt12);\n' +                   
+    '    }'
+    return value
+}
+
+function paramGenerateAndAssert(dataType){
+    param = {
+        valueIn: "",
+        valueOut: "",
+
+        valueCheckout: "",
+        valueFill: "",
+        valuePackage: "",
+        valueDefine: ""
+    }
+    paramGenerate(0, "a", dataType, param)
+    let result=JSON.stringify(param);
+    return result
+}
+
+function returnGenerateAndAssert(dataType){
+    param = {
+        valueIn: "",
+        valueOut: "",
+
+        valueCheckout: "",
+        valueFill: "",
+        valuePackage: "",
+        valueDefine: ""
+    }
+    returnGenerate(dataType, param)
+    let result=JSON.stringify(param);
+    return result
+}
+
+function partOfTest(){
+    it('test gen/generate/param_generate jsToC', function () {
+        assert.strictEqual(jsToC("a", "b", "string"), "pxt->SwapJs2CUtf8(b, a);");
+
+        assert.strictEqual(jsToC("a", "b", "NUMBER_TYPE_1"), "NUMBER_JS_2_C(b,NUMBER_TYPE_1,a);");
+
+        assert.strictEqual(jsToC("a", "b", "Array<string>"), jsToCParam());
+    });
+
+    it('test gen/generate/return_generate cToJs', function () {
+        assert.strictEqual(cToJs("a", "string", "b",1), "b = pxt->SwapC2JsUtf8(a.c_str());");
+
+        ret = cToJs("a","NUMBER_TYPE_1","b",1)
+        assert.strictEqual(ret, "b = NUMBER_C_2_JS(pxt, a);");
+
+        assert.strictEqual(cToJs("a","Array<string>","b",1), cToJsParam());
+    });
+
+}
+
 describe('Generate', function () {
     var structOfTs;
     var testStr;
-
+    var correctResult;
     before(function(){
+        let data=readFile("test/unittest/result.json")
+        if(data){
+            correctResult=JSON.parse(data);
+        }
         structOfTs = analyzeFile("test/unittest/@ohos.input_sample.d.ts");
-
         testStr = readFile("test/unittest/test.txt");
     });
 
     it('test gen/generate/function_async generateFunctionAsync', function () {
-        let ret = generateFunctionAsync({name: 'if_async', type: 4, value: [{name: 'v1', type: 'string'},{name: 'cb', type: 'AsyncCallback<string>'}], ret: 'string'}, 'TestClass1');
-        let retJson=JSON.stringify(ret);
-        assert.strictEqual(retJson,'["\\nstruct if_async_value_struct {\\n    std::string in0;\\n    \\n    std::string out;\\n};\\n\\nstatic void if_async_execute(XNapiTool *pxt, void *data)\\n{\\n    if_async_value_struct *vio = (if_async_value_struct *)data;\\n    TestClass1 *pInstance = (TestClass1 *)pxt->GetAsyncInstance();\\n\\n    pInstance->if_async(vio->in0, vio->out);\\n}\\n\\nstatic void if_async_complete(XNapiTool *pxt, void *data)\\n{\\n    if_async_value_struct *vio = (if_async_value_struct *)data;\\n    \\n    napi_value result = nullptr;\\n    result = pxt->SwapC2JsUtf8(vio->out.c_str());\\n    \\n    {\\n        napi_value args[1] = {result};\\n        pxt->FinishAsync(1, args);\\n    }\\n\\n    delete vio;\\n}\\n\\nstatic napi_value if_async_middle(napi_env env, napi_callback_info info)\\n{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }\\n    pxt->SetAsyncInstance(pxt->UnWarpInstance());\\n\\n    struct if_async_value_struct *vio = new if_async_value_struct();\\n    \\n    pxt->SwapJs2CUtf8(pxt->GetArgv(0), vio->in0);\\n\\n    \\n    napi_value result = pxt->StartAsync(if_async_execute, vio, if_async_complete, pxt->GetArgc() == 2 ? pxt->GetArgv(1) : nullptr);\\n\\n    if (pxt->IsFailed()) {\\n        result = pxt->GetError();\\n    }\\n    return result;\\n}","\\nbool if_async(std::string &v1, std::string &out);","\\nbool TestClass1::if_async(std::string &v1, std::string &out)\\n{\\n    return true;\\n}\\n"]');
+        assert.strictEqual(FuncAsyncAssert(), correctResult['Generate']['generateFunctionAsync']);
     });
 
     it('test gen/generate/function_direct generateFunctionDirect', function () {
-        let ret = generateFunctionDirect({name: 'if_async', type: 4, value:[{name: 'v1', type: 'string'},{name: 'cb', type: 'AsyncCallback<string>'}], ret: 'string'}, 'TestClass1');
-        let retJson=JSON.stringify(ret);
-        assert.strictEqual(retJson,'["\\nstruct if_async_value_struct {\\n    std::string in0;\\n    \\n    std::string out;\\n};\\n\\nstatic napi_value if_async_middle(napi_env env, napi_callback_info info)\\n{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }\\n    TestClass1 *pInstance = (TestClass1 *)pxt->UnWarpInstance();\\n\\n    struct if_async_value_struct *vio = new if_async_value_struct();\\n    \\n    pxt->SwapJs2CUtf8(pxt->GetArgv(0), vio->in0);\\n\\n    pInstance->if_async(vio->in0, vio->out);\\n\\n    napi_value result = nullptr;\\n    result = pxt->SwapC2JsUtf8(vio->out.c_str());\\n\\n    delete vio;\\n    if (pxt->IsFailed()) {\\n        result = pxt->GetError();\\n    }\\n    delete pxt; // release\\n    return result;\\n}","\\nbool if_async(std::string &v1, std::string &out);","\\nbool TestClass1::if_async(std::string &v1, std::string &out)\\n{\\n    return true;\\n}\\n"]');
+        assert.strictEqual(FuncDirectAssert(), correctResult['Generate']['generateFunctionDirect']);
     });
 
     it('test gen/generate/function_sync generateFunctionSync', function () {
-        let ret = generateFunctionSync({name: 'if_callback', type: 2, value: [{name: 'v1', type: 'string'},{name: 'cb', type: 'Callback<string>'}], ret: 'string'}, 'TestClass1');
-        let retJson=JSON.stringify(ret);
-        assert.strictEqual(retJson,'["\\nstruct if_callback_value_struct {\\n    std::string in0;\\n    \\n    std::string out;\\n};\\n\\nstatic napi_value if_callback_middle(napi_env env, napi_callback_info info)\\n{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }\\n    TestClass1 *pInstance = (TestClass1 *)pxt->UnWarpInstance();\\n\\n    struct if_callback_value_struct *vio = new if_callback_value_struct();\\n    \\n    pxt->SwapJs2CUtf8(pxt->GetArgv(0), vio->in0);\\n\\n    pInstance->if_callback(vio->in0, vio->out);\\n\\n    napi_value result = nullptr;\\n    result = pxt->SwapC2JsUtf8(vio->out.c_str());\\n\\n    {\\n        napi_value args[1] = {result};\\n        pxt->SyncCallBack(pxt->GetArgv(1), 1, args);\\n    }\\n    result = pxt->UndefinedValue();\\n\\n    delete vio;\\n    if (pxt->IsFailed()) {\\n        result = pxt->GetError();\\n    }\\n    delete pxt; // release\\n    return result;\\n}","\\nbool if_callback(std::string &v1, std::string &out);","\\nbool TestClass1::if_callback(std::string &v1, std::string &out)\\n{\\n    return true;\\n}\\n"]');
+        assert.strictEqual(FuncSyncAssert(), correctResult['Generate']['generateFunctionSync']);
     });
 
     it('test gen/generate/interface generateInterface', function () {
         let ns = structOfTs.declareNamespace[0];
         let ret = generateInterface('a', 'name:string',ns);
-        let retJson=JSON.stringify(ret);
-        assert.strictEqual(retJson,'{"implH":"\\nclass a {\\npublic:\\n};","implCpp":"","middleBody":"\\nclass a_middle {\\npublic:\\nstatic napi_value constructor(napi_env env, napi_callback_info info)\\n{\\n    XNapiTool *pxt = new XNapiTool(env, info);\\n\\n    a *p = new a();\\n\\n    napi_value thisvar = pxt->WrapInstance(p, release);\\n\\n    return thisvar;\\n}\\nstatic void release(void *p)\\n{\\n    a *p2 = (a *)p;\\n    delete p2;\\n}\\n\\n};","middleInit":"{\\n    std::map<const char *,std::map<const char *,napi_callback>> valueList;\\n    std::map<const char *, napi_callback> funcList;\\n    pxt->DefineClass(\\"a\\", [object Object]a_middle::constructor, valueList ,funcList);\\n}\\n"}');
+        assert.strictEqual(JSON.stringify(ret), correctResult['Generate']['generateInterface']);
     });
 
     it('test gen/generate/namespace generateNamespace', function () {
         let ns = structOfTs.declareNamespace[0];
         let ret = generateNamespace(ns.name, ns.body);
-        let retJson=JSON.stringify(ret);
-        let lib = rewire(genDir+'tools/re.js');
-        let print = lib.__get__("print");
-        if(typeof(retJson)=="undefined"){
-            print("check success") 
-        }
+        assert.strictEqual(JSON.stringify(ret), correctResult['Generate']['generateNamespace']);
     });
 
-    it('test gen/generate/param_generate jsToC', function () {
-
-        let ret = jsToC("a", "b", "string")
-        assert.strictEqual(ret, "pxt->SwapJs2CUtf8(b, a);");
-
-        ret = jsToC("a", "b", "NUMBER_TYPE_1")
-        assert.strictEqual(ret, "NUMBER_JS_2_C(b,NUMBER_TYPE_1,a);");
-
-        ret = jsToC("a", "b", "Array<string>")
-        assert.strictEqual(ret,   '    uint32_t len12=pxt->GetArrayLength(b);\n' +
-           '    for(uint32_t i12=0;i12<len12;i12++) {\n' +
-           '        std::string tt12;\n' +
-           '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i12), tt12);\n' +
-           '        a.push_back(tt12);\n' +             
-           '    }');
-    });
+    partOfTest();
 
     it('test gen/generate/param_generate ParamGenerate', function () {
+        let retJson= paramGenerateAndAssert("string")
+        assert.strictEqual(retJson, correctResult['Generate']['ParamGenerate']);
 
-        let param = {
-            valueIn: "",//定义输入
-            valueOut: "",//定义输出
+        let retJson1= paramGenerateAndAssert("NUMBER_TYPE_1")
+        assert.strictEqual(retJson1, correctResult['Generate1']['ParamGenerate']);
 
-            valueCheckout: "",//解析
-            valueFill: "",//填充到函数内
-            valuePackage: "",//输出参数打包
-            valueDefine: ""//impl参数定义
-        }
-        paramGenerate(0, "a", "string", param)
-        assert.strictEqual(JSON.stringify(param), `{"valueIn":"\\n    std::string in0;","valueOut":"","valueCheckout":"pxt->SwapJs2CUtf8(pxt->GetArgv(0), vio->in0);","valueFill":"vio->in0","valuePackage":"","valueDefine":"std::string &a"}`);
+        let retJson2= paramGenerateAndAssert("Array<string>")
+        assert.strictEqual(retJson2, correctResult['Generate2']['ParamGenerate']);
 
-        param = {
-            valueIn: "",//定义输入
-            valueOut: "",//定义输出
-
-            valueCheckout: "",//解析
-            valueFill: "",//填充到函数内
-            valuePackage: "",//输出参数打包
-            valueDefine: ""//impl参数定义
-        }
-        paramGenerate(0, "a", "NUMBER_TYPE_1", param)
-        assert.strictEqual(JSON.stringify(param), `{"valueIn":"\\n    NUMBER_TYPE_1 in0;","valueOut":"","valueCheckout":"NUMBER_JS_2_C(pxt->GetArgv(0),NUMBER_TYPE_1,vio->in0);","valueFill":"vio->in0","valuePackage":"","valueDefine":"NUMBER_TYPE_1 &a"}`);
-
-        param = {
-            valueIn: "",//定义输入
-            valueOut: "",//定义输出
-
-            valueCheckout: "",//解析
-            valueFill: "",//填充到函数内
-            valuePackage: "",//输出参数打包
-            valueDefine: ""//impl参数定义
-        }
-        paramGenerate(0, "a", "Array<string>", param)
-        assert.strictEqual(JSON.stringify(param), `{"valueIn":"\\n    std::vector<std::string> in0;","valueOut":"","valueCheckout":"    uint32_t len13=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i13=0;i13<len13;i13++) {\\n        std::string tt13;\\n        pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetArgv(0),i13), tt13);\\n        vio->in0.push_back(tt13);\\n    }","valueFill":"vio->in0","valuePackage":"","valueDefine":"std::vector<std::string> &a"}`);
-
-     });
-
-    it('test gen/generate/return_generate cToJs', function () {
-
-        let ret = cToJs("a", "string", "b",1)
-        assert.strictEqual(ret, "b = pxt->SwapC2JsUtf8(a.c_str());");
-
-        ret = cToJs("a","NUMBER_TYPE_1","b",1)
-        assert.strictEqual(ret, "b = NUMBER_C_2_JS(pxt, a);");
-
-        ret = cToJs("a","Array<string>","b",1)
-        assert.strictEqual(ret,   'uint32_t len1=a.size();\n' +
-           '    for(uint32_t i=0;i<len1;i++) {\n' +
-           '        napi_value tnv1 = nullptr;\n' +
-           '        tnv1 = pxt->SwapC2JsUtf8(a[i].c_str());\n' +
-           '        pxt->SetArrayElement(b, i, tnv1);\n' +
-           '    }');
-    });
+      });
 
     it('test gen/generate/return_generate returnGenerate', function () {
+        let retJson= returnGenerateAndAssert("string")
+        assert.strictEqual(retJson, correctResult['Generate']['returnGenerate']);
 
-        let param = {
-            valueIn: "",//定义输入
-            valueOut: "",//定义输出
+        let retJson1= returnGenerateAndAssert("NUMBER_TYPE_1")
+        assert.strictEqual(retJson1, correctResult['Generate1']['returnGenerate']);
 
-            valueCheckout: "",//解析
-            valueFill: "",//填充到函数内
-            valuePackage: "",//输出参数打包
-            valueDefine: ""//impl参数定义
-        }
-        returnGenerate("string", param)
-        assert.strictEqual(JSON.stringify(param), `{"valueIn":"","valueOut":"std::string out;","valueCheckout":"","valueFill":"vio->out","valuePackage":"napi_value result = nullptr;\\n    result = pxt->SwapC2JsUtf8(vio->out.c_str());","valueDefine":"std::string &out"}`);
-
-        param = {    
-            valueIn: "",//定义输入
-            valueOut: "",//定义输出
-
-            valueCheckout: "",//解析
-            valueFill: "",//填充到函数内
-            valuePackage: "",//输出参数打包
-            valueDefine: ""//impl参数定义
-        }
-        returnGenerate("NUMBER_TYPE_1", param)
-        assert.strictEqual(JSON.stringify(param), `{"valueIn":"","valueOut":"NUMBER_TYPE_1 out;","valueCheckout":"","valueFill":"vio->out","valuePackage":"napi_value result = nullptr;\\n    result = NUMBER_C_2_JS(pxt, vio->out);","valueDefine":"NUMBER_TYPE_1 &out"}`);
-
-        param = {
-            valueIn: "",//定义输入
-            valueOut: "",//定义输出
-
-            valueCheckout: "",//解析
-            valueFill: "",//填充到函数内
-            valuePackage: "",//输出参数打包
-            valueDefine: ""//impl参数定义
-        }
-        returnGenerate("Array<string>", param)
-        assert.strictEqual(JSON.stringify(param), `{"valueIn":"","valueOut":"std::vector<std::string> out;","valueCheckout":"","valueFill":"vio->out","valuePackage":"napi_value result = nullptr;\\n    uint32_t len1=vio->out.size();\\n    for(uint32_t i=0;i<len1;i++) {\\n        napi_value tnv1 = nullptr;\\n        tnv1 = pxt->SwapC2JsUtf8(vio->out[i].c_str());\\n        pxt->SetArrayElement(result, i, tnv1);\\n    }","valueDefine":"std::vector<std::string> &out"}`);
+        let retJson2= returnGenerateAndAssert("Array<string>")
+        assert.strictEqual(retJson2, correctResult['Generate2']['returnGenerate']);
      });
+   
 });
