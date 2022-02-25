@@ -21,43 +21,51 @@ const { analyzeParams } = require(genDir+"analyze/params");
 const { analyzeReturn } = require(genDir+"analyze/return");
 var assert = require("assert");
 
+const { readFile} = require("../../src/gen/tools/FileRW");
 
 describe('Analyze', function () {
+    var correctResult;
+    before(function(){
+        let data=readFile("test/unittest/result.json")
+        if(data){
+            correctResult=JSON.parse(data);
+        }
+    });
 
     it('test gen/analyze analyzeFile', function () {
         let structOfTs = analyzeFile("test/@ohos.input_sample.d.ts");
         let ret = JSON.stringify(structOfTs)
-        assert.strictEqual(ret, `{"exportDefault":[],"exports":[],"declareType":[],"declareFunction":[],"declareNamespace":[],"declareInterface":[],"declareLicense":[]}`);
+        assert.strictEqual(ret, correctResult['Analyze']['analyzeFile']);
     });
     
     it('test gen/analyze/function analyzeFunction', function () {
         let ret = analyzeFunction("a", `b:number`, "string");
         let retJson = JSON.stringify(ret)
-        assert.strictEqual(retJson, `{"name":"a","type":1,"value":[{"name":"b","type":"NUMBER_TYPE_1"}],"ret":"string"}`);
+        assert.strictEqual(retJson, correctResult['Analyze']['analyzeFunction']);
     });
     
     it('test gen/analyze/interface analyzeInterface', function () {
         let ret = analyzeInterface("name: string;");
         let retJson = JSON.stringify(ret)
-        assert.strictEqual(retJson, `{"value":[{"name":"name","type":"string"}],"function":[]}`);
+        assert.strictEqual(retJson, correctResult['Analyze']['analyzeInterface']);
     });
 
     it('test gen/analyze/namespace analyzeNamespace', function () {
         let ret = analyzeNamespace("name: string;");
         let retJson = JSON.stringify(ret)
-        assert.strictEqual(retJson, `{"exports":[],"enum":[],"const":[],"type":[],"function":[],"interface":[],"class":[],"namespace":[]}`);
+        assert.strictEqual(retJson, correctResult['Analyze']['analyzeNamespace']);
     });
 
     it('test gen/analyze/params analyzeParams', function () {
         let ret = analyzeParams("name: string");
         let retJson = JSON.stringify(ret)
-        assert.strictEqual(retJson, `[[],1]`);
+        assert.strictEqual(retJson, correctResult['Analyze']['analyzeParams']);
     });
 
     it('test gen/analyze/return analyzeReturn', function () {
         let ret = analyzeReturn("string");
         let retJson = JSON.stringify(ret)
-        assert.strictEqual(retJson, `["string",false]`);
+        assert.strictEqual(retJson, correctResult['Analyze']['analyzeReturn']);
     });
 
 });
