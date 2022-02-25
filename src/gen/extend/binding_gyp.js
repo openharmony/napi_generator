@@ -35,7 +35,7 @@ let gypTemplete = `
 function generateGYP(destDir, implName, license) {
     let ss = gypTemplete.replaceAll("[implName]", implName)
     if (license) {
-        let s2 = license.substring(2, ss.length - 2).split("\n");
+        let s2 = license.substring(2, license.length - 2).split("\n");
         license = "";
         for (let i = 1; i < s2.length; i++) {
             if (s2[i].length > 0) {
