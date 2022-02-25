@@ -41,7 +41,8 @@ function saveLog(dateStr, levStr, detail) {
 }
 
 NapiLog.init = function (level, fileName) {
-    logLevel = level in [NapiLog.LEV_NONE, NapiLog.LEV_ERROR, NapiLog.LEV_DEBUG, NapiLog.LEV_INFO] ? level : NapiLog.LEV_ERROR;
+    logLevel = level in [NapiLog.LEV_NONE, NapiLog.LEV_ERROR, NapiLog.LEV_DEBUG, NapiLog.LEV_INFO]
+        ? level : NapiLog.LEV_ERROR;
     logFileName = fileName ? fileName : "napi_generator.log";
 }
 
