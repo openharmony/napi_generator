@@ -26,7 +26,7 @@ const { generateFunctionSync } = require(genDir+"generate/function_sync");
 const { AssertionError } = require("assert");
 const rewire = require("rewire");
 
-function FuncAsyncAssert(){
+function funcAsyncAssert(){
     let valueFi = {name: 'v1', type: 'string'};
         let value1Se = {name: 'cb', type: 'AsyncCallback<string>'};
         let funParam = {name: 'if_async', type: 4, value: [valueFi,value1Se], ret: 'string'}
@@ -36,7 +36,7 @@ function FuncAsyncAssert(){
 }
 
 
-function FuncDirectAssert(){
+function funcDirectAssert(){
     let valueFi = {name: 'v1', type: 'string'};
         let value1Se = {name: 'cb', type: 'AsyncCallback<string>'};
         let funParam = {name: 'if_async', type: 4, value:[valueFi,value1Se], ret: 'string'};
@@ -45,7 +45,7 @@ function FuncDirectAssert(){
         return retJson
 }
 
-function FuncSyncAssert(){
+function funcSyncAssert(){
     let valueFi = {name: 'v1', type: 'string'};
     let value1Se = {name: 'cb', type: 'Callback<string>'};
     let funParam = {name: 'if_callback', type: 2, value: [valueFi,value1Se], ret: 'string'};
@@ -138,15 +138,15 @@ describe('Generate', function () {
     });
 
     it('test gen/generate/function_async generateFunctionAsync', function () {
-        assert.strictEqual(FuncAsyncAssert(), correctResult['Generate']['generateFunctionAsync']);
+        assert.strictEqual(funcAsyncAssert(), correctResult['Generate']['generateFunctionAsync']);
     });
 
     it('test gen/generate/function_direct generateFunctionDirect', function () {
-        assert.strictEqual(FuncDirectAssert(), correctResult['Generate']['generateFunctionDirect']);
+        assert.strictEqual(funcDirectAssert(), correctResult['Generate']['generateFunctionDirect']);
     });
 
     it('test gen/generate/function_sync generateFunctionSync', function () {
-        assert.strictEqual(FuncSyncAssert(), correctResult['Generate']['generateFunctionSync']);
+        assert.strictEqual(funcSyncAssert(), correctResult['Generate']['generateFunctionSync']);
     });
 
     it('test gen/generate/interface generateInterface', function () {
