@@ -23,26 +23,25 @@
 开发工具：IntelliJ IDEA
 
 ## 使用说明
+IntelliJ插件我们提供了Jar包，在项目的prebuilt目录下generator.jar，开发者只需要下载这个jar包按照下述步骤安装使用即可：
 
-1.通过IntelliJ IDEA打开generator目录下的代码
+1.新建或者打开项目工程，把需要转换的.d.ts文件放到项目中
 
 ![](../figures/IntelliJ_step_one.png)
 
-2.执行IntelliJ IDEA工具右上角的run
+2.安装插件，File->Settings->Plugins->Installed->Install Plugin from Disk...
+选择从项目prebuilt目录下generator.jar
+安装成功之后重启IDE
 
 ![](../figures/IntelliJ_step_two.png)
 
-3.IntelliJ IDEA会自动拉起一个应用程序
+3.选择.d.ts文件,右键选择generate.d.ts选项，生成文件
 
 ![](../figures/IntelliJ_step_three.png)
 
-4.选择.d.ts文件,右键选择generate.d.ts选项，生成文件
+4.执行结束后会在目录下生成对应的文件
 
 ![](../figures/IntelliJ_step_four.png)
-
-5.执行结束后会在目录下生成对应的文件
-
-![](../figures/IntelliJ_step_five.png)
 
 
 ## 相关仓
