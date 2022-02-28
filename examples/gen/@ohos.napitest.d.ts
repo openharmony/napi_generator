@@ -16,12 +16,11 @@
 import {AsyncCallback} from './basic';
 
 /**
- * Provides interfaces to manage power.
+ * Provides interfaces to napitest.
  *
- * @SysCap SystemCapability.PowerMgr.PowerManager
  * @since 7
  */
-declare namespace power {
+declare namespace napitest {
   /**
    * Shuts down the system.
    *
@@ -53,5 +52,5 @@ declare namespace power {
   function isScreenOn(callback: AsyncCallback<boolean>): void;
   function isScreenOn(): Promise<boolean>;
 }
-export default power;
+export default napitest;
 
