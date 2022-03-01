@@ -47,9 +47,10 @@ public class GenDTS extends AnAction {
             return;
         }
         String destPath = file.getPath();
+        String parentPath = file.getParent().getPath();
 
         // 执行命令行
-        runFun(destPath);
+        runFun(destPath, parentPath);
 
         Messages.showMessageDialog(anActionEvent.getProject(), destPath, "generating", Messages.getInformationIcon());
     }
@@ -57,14 +58,17 @@ public class GenDTS extends AnAction {
     private void write_tmp_file(String path, byte[] bs) throws IOException {
         File file = new File(path);
         if (!file.exists()) {
-            file.createNewFile();
+            boolean isNewFile = file.createNewFile();
+            if (!isNewFile) {
+                LOG.info("write_tmp_file createNewFile error");
+            }
         }
 
         FileOutputStream fw = null;
         try {
             // 设置为:True,表示写入的时候追加数据
             fw = new FileOutputStream(file);
-            //回车并换行
+            // 回车并换行
             fw.write(bs, 0, bs.length);
         } catch (IOException e) {
             LOG.error("write_tmp_file io error");
@@ -75,7 +79,7 @@ public class GenDTS extends AnAction {
         }
     }
 
-    private void runFun(String destPath) {
+    private void runFun(String destPath, String parentPath) {
         String command = "";
         InputStream inputStream;
         String sysName = System.getProperties().getProperty("os.name").toUpperCase();
@@ -87,7 +91,7 @@ public class GenDTS extends AnAction {
         } else {
             inputStream = getClass().getClassLoader().getResourceAsStream("cmds/linux/napi_generator-mac");
         }
-        command = genCommand(inputStream, destPath);
+        command = genCommand(inputStream, destPath, parentPath);
 
         try {
             try {
@@ -117,7 +121,7 @@ public class GenDTS extends AnAction {
         }
     }
 
-    private String genCommand(InputStream inputStream, String destPath) {
+    private String genCommand(InputStream inputStream, String destPath, String parentPath) {
         String sysName = System.getProperties().getProperty("os.name").toUpperCase();
         String tmpDir = System.getProperty("java.io.tmpdir");
         String execFn = tmpDir + "/napi_generator.exe";
@@ -134,7 +138,7 @@ public class GenDTS extends AnAction {
                 LOG.error("runFun WIN write_tmp_file io error");
             }
         }
-        return file + " " + "-f" + " " + destPath + " " + "-o" + " " + destPath.substring(0, destPath.lastIndexOf("/"));
+        return file + " " + "-f" + " " + destPath + " " + "-o" + " " + parentPath;
     }
 
     private void callExtProcess(String command) throws IOException, InterruptedException {
