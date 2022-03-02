@@ -21,11 +21,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
+import java.io.*;
 import java.util.regex.Pattern;
 
 /**
@@ -47,31 +43,55 @@ public class GenDTS extends AnAction {
 
         // 正则匹配所选文件名是否符合规范
         if (!Pattern.matches("@ohos.[a-zA-Z0-9]+.d.ts", file.getName())) {
-            Messages.showErrorDialog("选择@ohos.input_sample.d.ts文件生成", "错误");
+            Messages.showErrorDialog("选择@ohos.xxx.d.ts文件生成", "错误");
             return;
         }
-        String dest_path = file.getPath();
+        String destPath = file.getPath();
+        String parentPath = file.getParent().getPath();
 
         // 执行命令行
-        runFun(dest_path);
+        runFun(destPath, parentPath);
 
-        Messages.showMessageDialog(anActionEvent.getProject(), dest_path, "generating", Messages.getInformationIcon());
+        Messages.showMessageDialog(anActionEvent.getProject(), destPath, "generating", Messages.getInformationIcon());
     }
 
-    private void runFun(String dest_path) {
-        String command = "";
-        String sysName = System.getProperties().getProperty("os.name").toUpperCase();
-        if (sysName.indexOf("WIN") >= 0) {
-            URL res = getClass().getClassLoader().getResource("cmds/win/napi_generator-win.exe");
-            String exePath = res.getPath().substring(1);
-            command = exePath.replace("%20", " ") + " " + dest_path.replace("/", "\\");
-        } else if (sysName.indexOf("LINUX") >= 0) {
-            URL res = getClass().getClassLoader().getResource("cmds/linux/napi_generator-linux");
-            command = res.getPath() + "  " + dest_path;
-        } else {
-            URL res = getClass().getClassLoader().getResource("cmds/mac/napi_generator-mac");
-            command = res.getPath() + "  " + dest_path;
+    private void write_tmp_file(String path, byte[] bs) throws IOException {
+        File file = new File(path);
+        if (!file.exists()) {
+            boolean isNewFile = file.createNewFile();
+            if (!isNewFile) {
+                LOG.info("write_tmp_file createNewFile error");
+            }
         }
+
+        FileOutputStream fw = null;
+        try {
+            // 设置为:True,表示写入的时候追加数据
+            fw = new FileOutputStream(file);
+            // 回车并换行
+            fw.write(bs, 0, bs.length);
+        } catch (IOException e) {
+            LOG.error("write_tmp_file io error");
+        } finally {
+            if (fw != null) {
+                fw.close();
+            }
+        }
+    }
+
+    private void runFun(String destPath, String parentPath) {
+        String command = "";
+        InputStream inputStream;
+        String sysName = System.getProperties().getProperty("os.name").toUpperCase();
+
+        if (sysName.indexOf("WIN") >= 0) {
+            inputStream = getClass().getClassLoader().getResourceAsStream("cmds/win/napi_generator-win.exe");
+        } else if (sysName.indexOf("LINUX") >= 0) {
+            inputStream = getClass().getClassLoader().getResourceAsStream("cmds/linux/napi_generator-linux");
+        } else {
+            inputStream = getClass().getClassLoader().getResourceAsStream("cmds/linux/napi_generator-mac");
+        }
+        command = genCommand(inputStream, destPath, parentPath);
 
         try {
             try {
@@ -87,7 +107,6 @@ public class GenDTS extends AnAction {
 
     @Override
     public void update(AnActionEvent event) {
-
         // 根据所选文件名，判断是否显示生成菜单项
         VirtualFile file = event.getData(PlatformDataKeys.VIRTUAL_FILE);
         if (file == null) {
@@ -100,6 +119,26 @@ public class GenDTS extends AnAction {
                 event.getPresentation().setEnabledAndVisible(false);
             }
         }
+    }
+
+    private String genCommand(InputStream inputStream, String destPath, String parentPath) {
+        String sysName = System.getProperties().getProperty("os.name").toUpperCase();
+        String tmpDir = System.getProperty("java.io.tmpdir");
+        String execFn = tmpDir + "/napi_generator.exe";
+        if (sysName.indexOf("LINUX") >= 0) {
+            executable(execFn);
+        }
+
+        File file = new File(execFn);
+        if (!file.exists()) {
+            try {
+                byte[] bs = inputStream.readAllBytes();
+                write_tmp_file(execFn, bs);
+            } catch (IOException e) {
+                LOG.error("runFun WIN write_tmp_file io error");
+            }
+        }
+        return file + " " + "-f" + " " + destPath + " " + "-o" + " " + parentPath;
     }
 
     private void callExtProcess(String command) throws IOException, InterruptedException {
@@ -139,6 +178,17 @@ public class GenDTS extends AnAction {
             } catch (IOException ex) {
                 LOG.error("StreamConsumer io error");
             }
+        }
+    }
+
+    private void executable(String execFn) {
+        try {
+            callExtProcess("chmod a+x " + execFn);
+        } catch (IOException e) {
+            LOG.warn("LINUX IOException error");
+        } catch (InterruptedException e) {
+            LOG.warn("exec chmod command Interrupted");
+            Thread.currentThread().interrupt();
         }
     }
 }
