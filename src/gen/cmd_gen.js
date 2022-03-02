@@ -45,3 +45,13 @@ else {
     //print("\n文件名 " + fn + " 校验失败，需要符合 @ohos.input_sample.d.ts")
     NapiLog.logError("file name " + fn + " format invalid, @ohos.input_sample.d.ts");
 }
+
+let ret = NapiLog.getResult()
+if (ret[0]) {
+    console.log("success")
+}
+else {
+    console.log(ret[1])
+    console.log("fail")
+    console.log("fail")
+}
