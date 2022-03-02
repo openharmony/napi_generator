@@ -32,3 +32,63 @@ D:\napi_tool>cmd_gen-win.exe @ohos.power.d.ts                                   
 问题定位：在windows命令行中执行cmd_gen-win.exe的时候后面没有加d.ts文件所在的绝对路径，导致d.ts文件没有找到。
 
 问题解决：在执行cmd_gen-win.exe的时候后面要加.d.ts文件所在的绝对路径，或者把d.ts文件放入到cmd_gen-win.exe所在的目录中，例如直接执行cmd_gen-win.exe @ohos.power.d.ts。
+
+### 3.未安装系统依赖插件，运行测试用例失败
+
+问题描述：首次运行UT或ST用例失败。
+
+Error: Cannot find module '../../node_modules/typescript'
+Require stack:
+- /home/harmony/hhhh/napi_generator_1/src/gen/tools/common.js
+- /home/harmony/hhhh/napi_generator_1/src/gen/analyze.js
+- /home/harmony/hhhh/napi_generator_1/test/unittest/analyze.test.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:902:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:746:27)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+    at require (internal/modules/cjs/helpers.js:101:18)
+    at Object.<anonymous> (/home/harmony/hhhh/napi_generator_1/src/gen/tools/common.js:16:13)
+
+问题定位：首次运行测试用例napi_generator目录下、napi_generator/src目录下依赖插件未全部安装。
+
+问题解决：napi_generator目录下、napi_generator/src目录下重新安装依赖即可，直到napi_generator/src/package.json文件中包含以下所有插件：
+"devDependencies": {
+		"@types/glob": "^7.1.4",
+		"@types/mocha": "^9.0.0",
+		"@types/node": "14.x",
+		"@types/vscode": "^1.62.0",
+		"@vscode/test-electron": "^1.6.2",
+		"eslint": "^8.1.0",
+		"glob": "^7.1.7",
+		"mocha": "^9.1.3",
+		"webpack": "^5.64.4",
+		"webpack-cli": "^4.9.1"
+	}
+
+### 4.未安装rewire插件，运行测试用例失败
+
+问题描述：readme中插件全部安装完成后，执行测试用例失败。
+
+Error: Cannot find module 'rewire'
+Require stack:
+- /home/harmony/myNapi/napi_generator_1/test/unittest/extend.test.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:902:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:746:27)
+    at Module.require (internal/modules/cjs/loader.js:974:19)
+
+问题定位：由于ut用例代码中引入rewire，执行用例时未安装该插件，导致执行用例失败。
+
+问题解决：执行npm i rewire安装插件之后，再次运行用例即可。
+
+### 5.后缀为gyp文件中包含/*注释，执行用例失败
+
+问题描述：代码中后缀为gyp的文件中包含/*注释，执行用例失败。
+
+File "/home/harmony/myNapi/napi_generator/node_moduless/node-gyp/gyp/pylib/gyp/input.py",line 237,in LoadOneBuildFile
+  build_file_data = eval(build_file_contents,{"__builtins__":{}},None)
+File "bingding.gyp",Line 1
+  /*
+  ^
+
+问题定位：代码中后缀为gyp的文件中包含/*，但工具不能解析，只能解析#后面的注释，导致执行用例失败。
+
+问题解决：修改代码。
