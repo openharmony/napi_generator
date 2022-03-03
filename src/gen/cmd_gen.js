@@ -51,7 +51,5 @@ if (ret[0]) {
     console.log("success")
 }
 else {
-    console.log(ret[1])
-    console.log("fail")
-    console.log("fail")
+    console.log("fail\n" + ret[1])
 }
