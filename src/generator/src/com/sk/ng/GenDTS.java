@@ -20,7 +20,9 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.apache.http.util.TextUtils;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.regex.Pattern;
 
@@ -31,6 +33,8 @@ import java.util.regex.Pattern;
  */
 public class GenDTS extends AnAction {
     private static final Logger LOG = Logger.getInstance(GenDTS.class);
+    private boolean generateSuccess = true;
+    private String sErrorMessage = "";
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
@@ -143,6 +147,7 @@ public class GenDTS extends AnAction {
 
     private void callExtProcess(String command) throws IOException, InterruptedException {
         Process process = Runtime.getRuntime().exec(command);
+        genResultLog(process);
 
         StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
         StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
@@ -150,12 +155,53 @@ public class GenDTS extends AnAction {
         errConsumer.start();
         outputConsumer.start();
 
-        int exitVal = process.waitFor();
-        if (exitVal != 0) {
+        if (!generateSuccess) {
             LOG.error(" callExtProcess process.waitFor() != 0");
+            promptDialog("失败");
+        } else {
+            promptDialog("成功");
         }
         errConsumer.join();
         outputConsumer.join();
+    }
+
+    private void genResultLog(Process process) {
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+        String sErr = "", sOut = "";
+        while (true) {
+            String sTmp;
+            try {
+                if ((sTmp = stdError.readLine()) == null) {
+                    break;
+                }
+                sErr += sTmp + "\n";
+            } catch (IOException e) {
+                LOG.error(" genResultLog stdInput error");
+            }
+        }
+        if (TextUtils.isEmpty(sErr)) {
+            while (true) {
+                String sTmp;
+                try {
+                    if ((sTmp = stdInput.readLine()) == null) {
+                        break;
+                    }
+                    sOut += sTmp + "\n";
+                } catch (IOException e) {
+                    LOG.error(" genResultLog stdInput error");
+                }
+            }
+            if (!TextUtils.isEmpty(sOut) && sOut.indexOf("success") >= 0) {
+                generateSuccess = true;
+            } else {
+                generateSuccess = false;
+                sErrorMessage = sOut;
+            }
+            return;
+        }
+        generateSuccess = false;
+        sErrorMessage = sErr;
     }
 
     class StreamConsumer extends Thread {
@@ -189,6 +235,15 @@ public class GenDTS extends AnAction {
         } catch (InterruptedException e) {
             LOG.warn("exec chmod command Interrupted");
             Thread.currentThread().interrupt();
+        }
+    }
+
+    private void promptDialog(String message) {
+        if (generateSuccess) {
+            JOptionPane.showMessageDialog(null, TextUtils.isEmpty(sErrorMessage) ? "成功" : sErrorMessage, "执行" + message,
+                    JOptionPane.YES_NO_OPTION);
+        } else {
+            JOptionPane.showMessageDialog(null, sErrorMessage, "执行" + message, JOptionPane.ERROR_MESSAGE);
         }
     }
 }
