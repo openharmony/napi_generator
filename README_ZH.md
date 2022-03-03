@@ -3,22 +3,24 @@
 ## 简介
 本文主要介绍NAPI框架代码生成工具，它可以根据用户指定路径下的ts接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。在开发JS应用与NAPI间接口时，底层框架开发者无需关注Nodejs语法、C++与JS之间的数据类型转换等上层应用转换逻辑，只关注底层业务逻辑即可，专业的人做专业的事，从而可以大大提高开发效率。目前工具支持可执行文件、VS插件、IntelliJ插件三种入口。
 软件架构如下：
+
 ![](figures/pic-frm.png)
 
 ## 目录
 
 ```
 ├── napi_generator                # NAPI框架代码生成工具
-│   ├── docs                      # 工具当前能力、版本规划
+│   ├── docs                      # 工具说明、版本规划
 │   ├── figures                   # 图片资源文件
 │   ├── prebuilt                  # 可执行文件、插件文件
 │   ├── release-notes             # 发布说明
 │   ├── src                       # 工具源码
-|   |   └── gen                  
-│   |       ├── analyze           # 解析器
-│   |       |── extend            # 扩展模块，包括gn文件生成、linux环境适配代码等
-│   │       |── generate          # 生成器
-│   │       └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等  
+|   |   ├── gen                  
+│   |   |   ├── analyze           # 解析器
+│   |   |   |── extend            # 扩展模块，包括gn文件生成、linux环境适配代码等
+│   │   |   |── generate          # 生成器
+│   │   |   └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等  
+|   |   └── generator             #IntelliJ IDEA插件代码
 |   ├── examples                  # 工具需要的ts文件样例  
 │   └── README                    # 工具使用指导    
 
@@ -45,11 +47,11 @@
 系统框架开发者
 
 ### 使用效果
-根据指定的ts文件生成C/C++接口框架，如ts_test\gen\@ohos.napitest.d.ts转换后生成napitest.cpp文件。
+根据指定的ts文件生成C/C++接口框架，如examples/ts/@ohos.napitest.d.ts转换后生成napitest.cpp文件。
 效果图如下：
 ![](figures/pic-d-ts-transition.png)
 
-```
+```c++
 #include "napitest.h"
 
 
