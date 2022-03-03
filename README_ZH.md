@@ -26,6 +26,7 @@
 
 
 ##约束
+
 系统：建议Ubuntu 20.04或者Windows 10
 
 依赖版本：vscode 1.62.0
@@ -34,6 +35,7 @@
 
 
 ##使用方法
+
 工具支持三种入口，分别是可执行文件、VS插件、IntelliJ插件，使用方法如下：
    https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md
 
