@@ -1,5 +1,5 @@
 # 使用方法
-##简介
+## 简介
 工具支持三种入口，分别是可执行程序、VS插件、IntelliJ插件，在napi_generator/prebuilt目录下存有已生成的文件，用户可直接使用。
 生成文件说明如下：
 
@@ -142,12 +142,12 @@ visual studio code 版本需1.62.0及以上
 
 
 ### IntelliJ插件使用方法
-####依赖
+#### 依赖
 系统：不限
 
 开发工具：IntelliJ IDEA
 
-####使用指导
+#### 使用指导
 IntelliJ插件路径：napi_generator/prebuilt/generator.jar，下载jar包后，按下述步骤安装使用：
 
 1.新建或者打开项目工程，把需要转换的.d.ts文件放到项目中
