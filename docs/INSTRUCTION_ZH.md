@@ -36,7 +36,7 @@ joey@joey-virtual-machine:~/code/napi_test$
 ```
 ### Vscode插件
 
-![](figures\pic-plug-in-pre-inspection.png)
+![](../figures/pic-plug-in-pre-inspection.png)
 
 ### Windows
 
@@ -78,11 +78,11 @@ D:\napi_tool>napi_generator-win.exe -f @ohos.napitest.d.ts                      
 
 1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序napi_generator-win.exe同级目录下，并且检查需要转换的d.ts文件中是否声明了import的d.ts文件，如果存在需要将import的d.ts文件也放入到待转换的d.ts文件相同的目录下，比如，目前需要待转换的d.ts文件是@ohos.napitest.d.ts，在该文件中存在import {AsyncCallback} from './basic';这段逻辑，所以需要将basic.d.ts放入到@ohos.napitest.d.ts相同的目录下。示例中用到的@ohos.napitest.d.ts和basic.d.ts文件在napi_generator\examples\gen下，例如：
 
-![](figures/pic-d-ts-location.png)
+![](../figures/pic-d-ts-location.png)
 
 2) 右键windows开始菜单，点击运行，输入cmd，点击确定。
 
-![](figures/pic-cmd.png)
+![](../figures/pic-cmd.png)
 
 3. 在命令行中进入到之前可执行程序napi_generator-win.exe所在的目录，并运行napi_generator-win.exe，在napi_generator-win.exe后面要加参数-f，后面在加要对应的.d.ts文件名，如果不加参数-o，输出文件就默认在当前目录下，例如：
 
@@ -101,7 +101,7 @@ D:\napi_tool>napi_generator-win.exe -f @ohos.napitest.d.ts                      
 
 4. 运行成功后会在.d.ts文件说在的目录下生成对应的文件，例如：
 
-![](figures/pic-d-ts-transition.png)
+![](../figures/pic-d-ts-transition.png)
 
 
 
@@ -116,29 +116,29 @@ visual studio code 版本需1.62.0及以上
 
 1) 打开vscode，在左侧边栏中选择插件安装。
 
-   ![](figures/pic-plug-in-search.png)
+   ![](../figures/pic-plug-in-search.png)
 
 2) 点击上面三个点的按钮，选择从VSIX安装选项，然后选择刚才生成的gnapi-0.0.1.vsix插件文件，再点击安装。
 
-   ![](figures/pic-plug-in-select.png)
+   ![](../figures/pic-plug-in-select.png)
 
 3) 安装完成后就会在vscode的插件管理器中能看到gnapi这个插件了。
 
-   ![](figures/pic-plug-in-gnapi.png)
+   ![](../figures/pic-plug-in-gnapi.png)
 
 4. 在vscode中找到需要转换的.d.ts文件，并且检查需要转换的d.ts文件中是否声明了import的d.ts文件，如果存在需要将import的d.ts文件也放入到待转换的d.ts文件相同的目录下，例如
 
-   ![](figures/pic-plug-in-select-d-ts.png)
+   ![](../figures/pic-plug-in-select-d-ts.png)
 
 5. 鼠标在.d.ts上点击右键，选择.d.ts生成c++选项。
 
-   ![](figures/pic-plug-in-gen-c++.png)
+   ![](../figures/pic-plug-in-gen-c++.png)
 
 6. 转换成功就会提示“生成成功”的信息，并且在该目录下生成对应文件，例如：
 
-   ![](figures/pic-plug-in-gen-sucess.png)
+   ![](../figures/pic-plug-in-gen-sucess.png)
 
-   ![](figures/pic-plug-in-gen-result.png)
+   ![](../figures/pic-plug-in-gen-result.png)
 
 
 ### IntelliJ插件使用方法
