@@ -38,6 +38,7 @@
    https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md
 
 
+
 ##说明
 
 ### 使用场景
@@ -73,6 +74,7 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 ......
 }
 ```
+
 
 ### 工具开发说明
 
