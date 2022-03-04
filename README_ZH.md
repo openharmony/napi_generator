@@ -78,6 +78,15 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 
    https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/DEVELOP_ZH.md
 
+## 版本说明
+  当前版本特性： 
+
+https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md
+
+  后续版本特性：
+
+https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/版本规划.md
+
 ## FAQ
 对于常见问题解决方法指导如下：
 https://gitee.com/openharmony-sig/napi_generator/blob/master/FAQ.md
