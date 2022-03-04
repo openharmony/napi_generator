@@ -168,7 +168,21 @@ public class GenDTS extends AnAction {
     private void genResultLog(Process process) {
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
         BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        String sErr = "", sOut = "";
+        String sErr, sOut;
+        sErr = getErrorResult(stdError);
+        if (TextUtils.isEmpty(sErr)) {
+            sOut = genInputLog(stdInput);
+            if (!generateIsSuccess(sOut)) {
+                sErrorMessage = sOut;
+            }
+            return;
+        }
+        generateSuccess = false;
+        sErrorMessage = sErr;
+    }
+
+    private String getErrorResult(BufferedReader stdError) {
+        String sErr = "";
         while (true) {
             String sTmp;
             try {
@@ -180,28 +194,32 @@ public class GenDTS extends AnAction {
                 LOG.error(" genResultLog stdInput error");
             }
         }
-        if (TextUtils.isEmpty(sErr)) {
-            while (true) {
-                String sTmp;
-                try {
-                    if ((sTmp = stdInput.readLine()) == null) {
-                        break;
-                    }
-                    sOut += sTmp + "\n";
-                } catch (IOException e) {
-                    LOG.error(" genResultLog stdInput error");
-                }
-            }
-            if (!TextUtils.isEmpty(sOut) && sOut.indexOf("success") >= 0) {
-                generateSuccess = true;
-            } else {
-                generateSuccess = false;
-                sErrorMessage = sOut;
-            }
-            return;
+        return sErr;
+    }
+
+    private boolean generateIsSuccess(String sOut) {
+        if (!TextUtils.isEmpty(sOut) && sOut.indexOf("success") >= 0) {
+            generateSuccess = true;
+        } else {
+            generateSuccess = false;
         }
-        generateSuccess = false;
-        sErrorMessage = sErr;
+        return generateSuccess;
+    }
+
+    private String genInputLog(BufferedReader stdInput) {
+        String sOut = "";
+        while (true) {
+            String sTmp;
+            try {
+                if ((sTmp = stdInput.readLine()) == null) {
+                    break;
+                }
+                sOut += sTmp + "\n";
+            } catch (IOException e) {
+                LOG.error(" genResultLog stdInput error");
+            }
+        }
+        return sOut;
     }
 
     class StreamConsumer extends Thread {
