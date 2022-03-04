@@ -100,7 +100,9 @@ public class FileUtil {
         String line = null;
         while (true) {
             try {
-                if (!((line = bufferedReader.readLine()) != null)) break;
+                if (!((line = bufferedReader.readLine()) != null)) {
+                    return false;
+                }
             } catch (IOException e) {
                 LOG.error("findStringInFile IOException");
             } finally {
@@ -117,6 +119,5 @@ public class FileUtil {
                 return true;
             }
         }
-        return false;
     }
 }
