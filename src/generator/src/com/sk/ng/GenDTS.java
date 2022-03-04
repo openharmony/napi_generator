@@ -20,10 +20,8 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.apache.http.util.TextUtils;
+import com.sk.dialog.GenerateDialog;
 
-import javax.swing.*;
-import java.io.*;
 import java.util.regex.Pattern;
 
 /**
@@ -33,15 +31,13 @@ import java.util.regex.Pattern;
  */
 public class GenDTS extends AnAction {
     private static final Logger LOG = Logger.getInstance(GenDTS.class);
-    private boolean generateSuccess = true;
-    private String sErrorMessage = "";
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
-
         // 获取需要处理的.d.ts文件绝对路径
         VirtualFile file = anActionEvent.getData(PlatformDataKeys.VIRTUAL_FILE);
         if (file == null) {
+            LOG.error("file is not exit");
             return;
         }
 
@@ -51,62 +47,16 @@ public class GenDTS extends AnAction {
             return;
         }
         String destPath = file.getPath();
-        String parentPath = file.getParent().getPath();
-
-        // 执行命令行
-        runFun(destPath, parentPath);
-
-        Messages.showMessageDialog(anActionEvent.getProject(), destPath, "generating", Messages.getInformationIcon());
+        String directoryPath = file.getParent().getPath();
+        String fileName = file.getName();
+        showDialog(destPath, directoryPath, fileName);
     }
 
-    private void write_tmp_file(String path, byte[] bs) throws IOException {
-        File file = new File(path);
-        if (!file.exists()) {
-            boolean isNewFile = file.createNewFile();
-            if (!isNewFile) {
-                LOG.info("write_tmp_file createNewFile error");
-            }
-        }
-
-        FileOutputStream fw = null;
-        try {
-            // 设置为:True,表示写入的时候追加数据
-            fw = new FileOutputStream(file);
-            // 回车并换行
-            fw.write(bs, 0, bs.length);
-        } catch (IOException e) {
-            LOG.error("write_tmp_file io error");
-        } finally {
-            if (fw != null) {
-                fw.close();
-            }
-        }
-    }
-
-    private void runFun(String destPath, String parentPath) {
-        String command = "";
-        InputStream inputStream;
-        String sysName = System.getProperties().getProperty("os.name").toUpperCase();
-
-        if (sysName.indexOf("WIN") >= 0) {
-            inputStream = getClass().getClassLoader().getResourceAsStream("cmds/win/napi_generator-win.exe");
-        } else if (sysName.indexOf("LINUX") >= 0) {
-            inputStream = getClass().getClassLoader().getResourceAsStream("cmds/linux/napi_generator-linux");
-        } else {
-            inputStream = getClass().getClassLoader().getResourceAsStream("cmds/linux/napi_generator-mac");
-        }
-        command = genCommand(inputStream, destPath, parentPath);
-
-        try {
-            try {
-                callExtProcess(command);
-            } catch (InterruptedException e) {
-                LOG.warn("exec command Interrupted");
-                Thread.currentThread().interrupt();
-            }
-        } catch (IOException ex) {
-            LOG.debug("exec command error");
-        }
+    private void showDialog(String destPath, String directoryPath, String fileName) {
+        GenerateDialog dialog = new GenerateDialog(destPath, directoryPath, fileName);
+        dialog.setLocationRelativeTo(dialog);
+        dialog.pack();
+        dialog.setVisible(true);
     }
 
     @Override
@@ -122,146 +72,6 @@ public class GenDTS extends AnAction {
             } else {
                 event.getPresentation().setEnabledAndVisible(false);
             }
-        }
-    }
-
-    private String genCommand(InputStream inputStream, String destPath, String parentPath) {
-        String sysName = System.getProperties().getProperty("os.name").toUpperCase();
-        String tmpDir = System.getProperty("java.io.tmpdir");
-        String execFn = tmpDir + "/napi_generator.exe";
-        if (sysName.indexOf("LINUX") >= 0) {
-            executable(execFn);
-        }
-
-        File file = new File(execFn);
-        if (!file.exists()) {
-            try {
-                byte[] bs = inputStream.readAllBytes();
-                write_tmp_file(execFn, bs);
-            } catch (IOException e) {
-                LOG.error("runFun WIN write_tmp_file io error");
-            }
-        }
-        return file + " " + "-f" + " " + destPath + " " + "-o" + " " + parentPath;
-    }
-
-    private void callExtProcess(String command) throws IOException, InterruptedException {
-        Process process = Runtime.getRuntime().exec(command);
-        genResultLog(process);
-
-        StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
-        StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
-
-        errConsumer.start();
-        outputConsumer.start();
-
-        if (!generateSuccess) {
-            LOG.error(" callExtProcess process.waitFor() != 0");
-            promptDialog("失败");
-        } else {
-            promptDialog("成功");
-        }
-        errConsumer.join();
-        outputConsumer.join();
-    }
-
-    private void genResultLog(Process process) {
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        String sErr, sOut;
-        sErr = getErrorResult(stdError);
-        if (TextUtils.isEmpty(sErr)) {
-            sOut = genInputLog(stdInput);
-            if (!generateIsSuccess(sOut)) {
-                sErrorMessage = sOut;
-            }
-            return;
-        }
-        generateSuccess = false;
-        sErrorMessage = sErr;
-    }
-
-    private String getErrorResult(BufferedReader stdError) {
-        String sErr = "";
-        while (true) {
-            String sTmp;
-            try {
-                if ((sTmp = stdError.readLine()) == null) {
-                    break;
-                }
-                sErr += sTmp + "\n";
-            } catch (IOException e) {
-                LOG.error(" genResultLog stdInput error");
-            }
-        }
-        return sErr;
-    }
-
-    private boolean generateIsSuccess(String sOut) {
-        if (!TextUtils.isEmpty(sOut) && sOut.indexOf("success") >= 0) {
-            generateSuccess = true;
-        } else {
-            generateSuccess = false;
-        }
-        return generateSuccess;
-    }
-
-    private String genInputLog(BufferedReader stdInput) {
-        String sOut = "";
-        while (true) {
-            String sTmp;
-            try {
-                if ((sTmp = stdInput.readLine()) == null) {
-                    break;
-                }
-                sOut += sTmp + "\n";
-            } catch (IOException e) {
-                LOG.error(" genResultLog stdInput error");
-            }
-        }
-        return sOut;
-    }
-
-    class StreamConsumer extends Thread {
-        InputStream is;
-
-        StreamConsumer(InputStream is) {
-            super.setName("StreamConsumer");
-            this.is = is;
-        }
-
-        @Override
-        public void run() {
-            try {
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
-                String line;
-                while ((line = br.readLine()) != null) {
-                    LOG.error("StreamConsumer" + line);
-                }
-            } catch (IOException ex) {
-                LOG.error("StreamConsumer io error");
-            }
-        }
-    }
-
-    private void executable(String execFn) {
-        try {
-            callExtProcess("chmod a+x " + execFn);
-        } catch (IOException e) {
-            LOG.warn("LINUX IOException error");
-        } catch (InterruptedException e) {
-            LOG.warn("exec chmod command Interrupted");
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    private void promptDialog(String message) {
-        if (generateSuccess) {
-            JOptionPane.showMessageDialog(null, TextUtils.isEmpty(sErrorMessage) ? "成功" : sErrorMessage, "执行" + message,
-                    JOptionPane.YES_NO_OPTION);
-        } else {
-            JOptionPane.showMessageDialog(null, sErrorMessage, "执行" + message, JOptionPane.ERROR_MESSAGE);
         }
     }
 }
