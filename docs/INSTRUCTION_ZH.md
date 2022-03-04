@@ -195,4 +195,5 @@ File->New->Project
 
 ## 集成测试
 NAPI框架代码生成后，系统框架开发者进行二次开发后，即可集成到openharmony编译系统，生成对应的库文件，供应用开发者调用接口，指导如下：
+
 https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/NAPI集成到openharmony系统集成测试.md
