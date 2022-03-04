@@ -93,6 +93,10 @@ public class FileUtil {
         }
         //考虑到编码格式
         BufferedReader bufferedReader = new BufferedReader(read);
+        return isContainString(bufferedReader, command);
+    }
+
+    private boolean isContainString(BufferedReader bufferedReader, String[] command) {
         String line = null;
         while (true) {
             try {
@@ -109,10 +113,8 @@ public class FileUtil {
                 }
             }
             line += line;
-            for (String model : command) {
-                if (line.contains(model)) {
-                    return true;
-                }
+            if (line.contains(command[0])) {
+                return true;
             }
         }
         return false;
