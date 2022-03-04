@@ -1,13 +1,15 @@
 # 集成测试
 
 ## 简介
-	本文主要介绍如何集成NAPI到openharmony系统，进而进行集成测试。
+
+  本文主要介绍如何集成NAPI到openharmony系统，进而进行集成测试。
 
 ## 设备准备
 
-	1.硬件：rk3566开发套件
-	2.系统镜像：镜像生成方式见：https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/集成方法.md
-    3.应用hap包：hap包及源码路径如下：napi_generator/examples/app
+ 1.硬件：rk3566开发套件
+ 2.系统镜像：镜像生成方式见：
+   https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/集成方法.md
+ 3.应用hap包：hap包及源码路径如下：napi_generator/examples/app
 
 
 ## 使用说明
@@ -28,10 +30,10 @@
 ## 查看结果
 log.txt中包含“===isScreenOn===”日志表示接口调用成功，如下所示：
 
-03-01 19:48:19.594   916   940 I 00000/power_interface: ===isScreenOn===
-03-01 19:48:19.594   916   925 I 00000/ProducerEglSurface: <342>AddEglData: bufferImpl is reused return.
-03-01 19:48:19.594   916   925 I 00000/ProducerEglSurface: (Window)<217>WaitForReleaseFence: releaseFence 39.
-03-01 19:48:19.594   916   923 I 03b00/JSApp: app Log: power_is_screen_on_promise_test screenOn is 0
+    03-01 19:48:19.594   916   940 I 00000/power_interface: ===isScreenOn===
+    03-01 19:48:19.594   916   925 I 00000/ProducerEglSurface: <342>AddEglData: bufferImpl is reused return.
+    03-01 19:48:19.594   916   925 I 00000/ProducerEglSurface: (Window)<217>WaitForReleaseFence: releaseFence 39.
+    03-01 19:48:19.594   916   923 I 03b00/JSApp: app Log: power_is_screen_on_promise_test screenOn is 0
 
 ## 相关仓
 
