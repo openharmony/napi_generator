@@ -63,7 +63,8 @@ public class FileUtil {
         File file = new File(path);
         if (!file.exists()) {
             try {
-                file.createNewFile();
+                boolean isCreateFile = file.createNewFile();
+                LOG.info("makeFile result isCreateFile = " + isCreateFile);
             } catch (IOException e) {
                 LOG.error("writeErrorToTxt io error");
                 return "";
@@ -98,6 +99,14 @@ public class FileUtil {
                 if (!((line = bufferedReader.readLine()) != null)) break;
             } catch (IOException e) {
                 LOG.error("findStringInFile IOException");
+            } finally {
+                if (bufferedReader != null) {
+                    try {
+                        bufferedReader.close();
+                    } catch (IOException e) {
+                        LOG.error("findStringInFile io error");
+                    }
+                }
             }
             line += line;
             for (String model : command) {
