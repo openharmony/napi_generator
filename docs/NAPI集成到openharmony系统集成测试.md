@@ -1,11 +1,13 @@
 # 集成测试
 
-## 概述
-	本文主要介绍NAPI集成到openharmony系统集成测试使用指导。
+## 简介
+	本文主要介绍如何集成NAPI到openharmony系统，进而进行集成测试。
 
 ## 设备准备
 
-	rk3516开发套件
+	1.硬件：rk3566开发套件
+	2.系统镜像：镜像生成方式见：https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/集成方法.md
+    3.应用hap包：hap包及源码路径如下：napi_generator/examples/app
 
 
 ## 使用说明
