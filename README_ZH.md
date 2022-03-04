@@ -21,7 +21,7 @@
 │   │   |   |── generate          # 生成器
 │   │   |   └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等  
 |   |   └── generator             #IntelliJ IDEA插件代码
-|   ├── examples                  # 工具需要的ts文件样例  
+|   ├── examples                  # 工具需要的文件样例  
 │   └── README                    # 工具使用指导    
 
 ```
