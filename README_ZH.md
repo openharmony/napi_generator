@@ -21,7 +21,7 @@
 │   │   |   |── generate          # 生成器
 │   │   |   └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等  
 |   |   └── generator             #IntelliJ IDEA插件代码
-|   ├── examples                  # 工具需要的ts文件样例  
+|   ├── examples                  # 工具需要的文件样例  
 │   └── README                    # 工具使用指导    
 
 ```
@@ -77,6 +77,15 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 开发者可以基于已有源码进行工具二次开发，编译打包生成自定义的可执行文件和插件。工具开发说明如下：
 
    https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/DEVELOP_ZH.md
+
+## 版本说明
+  当前版本特性： 
+
+https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md
+
+  后续版本特性：
+
+https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/版本规划.md
 
 ## FAQ
 对于常见问题解决方法指导如下：
