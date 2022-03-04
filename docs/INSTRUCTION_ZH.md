@@ -183,7 +183,7 @@ File->New->Project
 ![](../figures/IntelliJ_step_pluginsOk.png)
 ![](../figures/IntelliJ_step_applyPlugins.png)
 
-5.选择.d.ts文件,右键选择generate.d.ts选项，生成文件
+5.选择.d.ts文件,右键选择Generate Napi Frame选项，生成文件
 
 ![](../figures/IntelliJ_step_generate.png)
 
