@@ -63,7 +63,8 @@ public class FileUtil {
         File file = new File(path);
         if (!file.exists()) {
             try {
-                file.createNewFile();
+                boolean isCreateFile = file.createNewFile();
+                LOG.info("makeFile result isCreateFile = " + isCreateFile);
             } catch (IOException e) {
                 LOG.error("writeErrorToTxt io error");
                 return "";
@@ -92,18 +93,28 @@ public class FileUtil {
         }
         //考虑到编码格式
         BufferedReader bufferedReader = new BufferedReader(read);
+        return isContainString(bufferedReader, command);
+    }
+
+    private boolean isContainString(BufferedReader bufferedReader, String[] command) {
         String line = null;
         while (true) {
             try {
                 if (!((line = bufferedReader.readLine()) != null)) break;
             } catch (IOException e) {
                 LOG.error("findStringInFile IOException");
+            } finally {
+                if (bufferedReader != null) {
+                    try {
+                        bufferedReader.close();
+                    } catch (IOException e) {
+                        LOG.error("findStringInFile io error");
+                    }
+                }
             }
             line += line;
-            for (String model : command) {
-                if (line.contains(model)) {
-                    return true;
-                }
+            if (line.contains(command[0])) {
+                return true;
             }
         }
         return false;
