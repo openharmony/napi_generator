@@ -106,12 +106,10 @@ public class FileUtil {
             } catch (IOException e) {
                 LOG.error("findStringInFile IOException");
             } finally {
-                if (bufferedReader != null) {
-                    try {
-                        bufferedReader.close();
-                    } catch (IOException e) {
-                        LOG.error("findStringInFile io error");
-                    }
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    LOG.error("findStringInFile io error");
                 }
             }
             line += line;
