@@ -92,7 +92,26 @@
    ```
 
   ### IntelliJ插件开发说明
-   //待补充
+
+1.通过IntelliJ IDEA打开generator目录下的代码
+
+![](../figures/IntelliJ_develop_one.png)
+
+2.执行IntelliJ IDEA工具右上角的run
+
+![](../figures/IntelliJ_develop_two.png)
+
+3.IntelliJ IDEA会自动拉起一个应用程序
+
+![](../figures/IntelliJ_develop_three.png)
+
+4.选择.d.ts文件,右键选择generate.d.ts选项，生成文件
+
+![](../figures/IntelliJ_develop_four.png)
+
+5.执行结束后会在目录下生成对应的文件
+
+![](../figures/IntelliJ_develop_five.png)
 
 ## 工具测试
   进行工具二次开发后，本地可进行单元测试、特性测试确保工具的可用性。
