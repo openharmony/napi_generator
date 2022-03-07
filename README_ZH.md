@@ -1,7 +1,7 @@
-# napi_generator
+# NAPI框架生成工具
 
 ## 简介
-本文主要介绍NAPI框架代码生成工具，它可以根据用户指定路径下的ts接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。在开发JS应用与NAPI间接口时，底层框架开发者无需关注Nodejs语法、C++与JS之间的数据类型转换等上层应用转换逻辑，只关注底层业务逻辑即可，专业的人做专业的事，从而可以大大提高开发效率。目前工具支持可执行文件、VS插件、IntelliJ插件三种入口。
+本文主要介绍NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。在开发JS应用与NAPI间接口时，底层框架开发者无需关注Nodejs语法、C++与JS之间的数据类型转换等上层应用转换逻辑，只关注底层业务逻辑即可，专业的人做专业的事，从而可以大大提高开发效率。目前工具支持可执行文件、VS插件、IntelliJ插件三种入口。
 软件架构如下：
 
 ![](figures/pic-frm.png)
@@ -49,6 +49,7 @@
 ### 使用效果
 根据指定的ts文件生成C/C++接口框架，如examples/ts/@ohos.napitest.d.ts转换后生成napitest.cpp文件。
 效果图如下：
+
 ![](figures/pic-d-ts-transition.png)
 
 ```c++
@@ -85,7 +86,7 @@ https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_
 
   后续版本特性：
 
-https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/版本规划.md
+https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ROADMAP_ZH.md
 
 ## FAQ
 对于常见问题解决方法指导如下：
