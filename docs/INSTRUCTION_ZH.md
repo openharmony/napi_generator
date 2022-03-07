@@ -1,6 +1,6 @@
-# NAPI生成工具使用说明
+# NAPI框架生成工具使用说明
 ## 简介
-NAPI生成工具支持三种入口，分别是可执行程序、VS插件、IntelliJ插件，在napi_generator/prebuilt目录下存有已生成的文件，用户可直接使用。
+NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，在napi_generator/prebuilt目录下存有已生成的文件，用户可直接使用。
 生成文件说明如下：
 
 ```
@@ -34,6 +34,7 @@ joey@joey-virtual-machine:~/code/napi_test$ ./napi_generator-linux -f @ohos.napi
 
 joey@joey-virtual-machine:~/code/napi_test$ 
 ```
+
 其中括号中第一个参数含义为行号，第二个参数含义为列号
 
 ### VS Code插件
