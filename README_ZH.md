@@ -8,23 +8,23 @@
 
 ## 目录
 
-```
-├── napi_generator                # NAPI框架代码生成工具
-│   ├── docs                      # 工具说明、版本规划
-│   ├── figures                   # 图片资源文件
-│   ├── prebuilt                  # 可执行文件、插件文件
-│   ├── release-notes             # 发布说明
-│   ├── src                       # 工具源码
-|   |   ├── gen                  
-│   |   |   ├── analyze           # 解析器
-│   |   |   |── extend            # 扩展模块，包括gn文件生成、linux环境适配代码等
-│   │   |   |── generate          # 生成器
-│   │   |   └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等  
-|   |   └── generator             #IntelliJ IDEA插件代码
-|   ├── examples                  # 工具需要的文件样例  
-│   └── README                    # 工具使用指导    
-
-```
+	```
+	├── napi_generator                # NAPI框架代码生成工具
+	│   ├── docs                      # 工具说明、版本规划
+	│   ├── figures                   # 图片资源文件
+	│   ├── prebuilt                  # 可执行文件、插件文件
+	│   ├── release-notes             # 发布说明
+	│   ├── src                       # 工具源码
+	|   |   ├── gen                  
+	│   |   |   ├── analyze           # 解析器
+	│   |   |   |── extend            # 扩展模块，包括gn文件生成、linux环境适配代码等
+	│   │   |   |── generate          # 生成器
+	│   │   |   └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等  
+	|   |   └── generator             #IntelliJ IDEA插件代码
+	|   ├── examples                  # 工具需要的文件样例  
+	│   └── README                    # 工具使用指导    
+	
+	```
 ## 约束
 系统：建议Ubuntu 20.04或者Windows 10
 
@@ -32,7 +32,8 @@
 
 ## 使用方法
 工具支持三种入口，分别是可执行文件、VS插件、IntelliJ插件，使用方法如下：
-   https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md
+
+	https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md
 
 
 
@@ -52,41 +53,42 @@
 
 ![](figures/pic-d-ts-transition.png)
 
-```c++
-#include "napitest.h"
 
-
-namespace napitest {
-
-bool TestClass1::if_direct(std::string &v1, std::string &out) {
-    // TODO
-    return true;
-}
-
-bool TestClass1::if_callback(std::string &v1, std::string &out) {
-    // TODO
-    return true;
-}
-
-......
-}
-```
+	```c++
+	#include "napitest.h"
+	
+	
+	namespace napitest {
+	
+	bool TestClass1::if_direct(std::string &v1, std::string &out) {
+	    // TODO
+	    return true;
+	}
+	
+	bool TestClass1::if_callback(std::string &v1, std::string &out) {
+	    // TODO
+	    return true;
+	}
+	
+	......
+	}
+	```
 
 
 ### 工具开发说明
 
-开发者可以基于已有源码进行工具二次开发，编译打包生成自定义的可执行文件和插件。工具开发说明如下：
+若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的可执行文件和插件。工具开发说明如下：
 
-   https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/DEVELOP_ZH.md
+	https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/DEVELOP_ZH.md
 
 ## 版本说明
   当前版本特性： 
 
-https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md
+	https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md
 
   后续版本特性：
 
-https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ROADMAP_ZH.md
+	https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ROADMAP_ZH.md
 
 ## FAQ
 对于常见问题解决方法指导如下：
