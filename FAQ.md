@@ -1,4 +1,4 @@
-## NAPI_GENERATOR 问题反馈
+## NAPI框架生成工具 问题反馈
 
 ### 1. pkg cmd_gen.js 生成.exe程序失败
 
@@ -31,7 +31,7 @@
 
 问题定位：在windows命令行中执行cmd_gen-win.exe的时候后面没有加d.ts文件所在的绝对路径，导致d.ts文件没有找到。
 
-问题解决：在执行cmd_gen-win.exe的时候后面要加.d.ts文件所在的绝对路径，或者把d.ts文件放入到cmd_gen-win.exe所在的目录中，例如直接执行：
+问题解决：在执行cmd_gen-win.exe的时候后面要加.d.ts文件所在的绝对路径，或者把d.ts文件放入到cmd_gen-win.exe所在的目录中。例如直接执行：
 
 	cmd_gen-win.exe @ohos.power.d.ts
 
