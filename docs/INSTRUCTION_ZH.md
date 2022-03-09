@@ -111,11 +111,11 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 
 
 #### Mac
-方法步骤参考windows、Linux的使用方法
+方法步骤参考windows、Linux的使用方法。
 
 ### VS Code插件使用方法
 #### 说明
-visual studio code 版本需1.62.0及以上
+visual studio code 版本需1.62.0及以上。
 
 #### 步骤
 

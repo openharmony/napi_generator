@@ -13,8 +13,6 @@
 </th>
 <th class="cellrowborder" valign="top" width="40%" id="mcps1.2.3.1.2"><p id="p1133115820331"><a name="p1133115820331"></a><a name="p1133115820331"></a>待开发特性</p>
 </th>
-<th class="cellrowborder" valign="top" width="40%" id="mcps1.2.3.1.2"><p id="p1133115820331"><a name="p1133115820331"></a><a name="p1133115820331"></a>时间</p>
-</th>
 </tr>
 </thead>
 <tbody><tr id="row333115812331"><td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.3.1.1 "><p id="p2142111345714"><a name="p2142111345714"></a><a name="p2142111345714"></a>变量</p>
@@ -37,8 +35,6 @@
 <td class="cellrowborder" valign="top" width="74.22999999999999%" headers="mcps1.2.3.1.2 "><a name="ul94024441879"></a><a name="ul94024441879"></a><ul id="ul94024441879"><li>命令行方式转换时支持多个文件路径，相互之间用空格分开</li><li>命令行方式转换时支持文件夹路径</li></ul>
 </td>
 </tr>
-<tr id="row333115812331"><td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.3.1.1 "><p id="p2142111345714"><a name="p2142111345714"></a><a name="p2142111345714"></a>2022.6.30</p>
-</td>
 </tbody>
 </table>
 
@@ -48,8 +44,6 @@
 <table><thead align="left"><tr id="row53375863312"><th class="cellrowborder" valign="top" width="25%" id="mcps1.2.3.1.1"><p id="p20331858193317"><a name="p20331858193317"></a><a name="p20331858193317"></a>类别</p>
 </th>
 <th class="cellrowborder" valign="top" width="45%" id="mcps1.2.3.1.2"><p id="p1133115820331"><a name="p1133115820331"></a><a name="p1133115820331"></a>待开发特性</p>
-</th>
-<th class="cellrowborder" valign="top" width="30%" id="mcps1.2.3.1.2"><p id="p1133115820331"><a name="p1133115820331"></a><a name="p1133115820331"></a>时间</p>
 </th>
 </tr>
 </thead>
@@ -81,8 +75,6 @@
 <tr id="row18711154213388"><td class="cellrowborder" valign="top" width="25.77%" headers="mcps1.2.3.1.1 "><p id="p111921822185713"><a name="p111921822185713"></a><a name="p111921822185713"></a>文件</p>
 </td>
 <td class="cellrowborder" valign="top" width="74.22999999999999%" headers="mcps1.2.3.1.2 "><a name="ul94024441879"></a><a name="ul94024441879"></a><ul id="ul94024441879"></ul>
-</td>
-<td class="cellrowborder" valign="top" width="30%" headers="mcps1.2.3.1.1 "><p id="p2142111345714"><a name="p2142111345714"></a><a name="p2142111345714"></a>2022.9.30</p>
 </td>
 </tr>
 </tbody>
