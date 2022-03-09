@@ -9,17 +9,15 @@
 **表 1**  2022.6.30待支持特性
 
 <a name="table143385853320"></a>
-<table><thead align="left"><tr id="row53375863312"><th class="cellrowborder" valign="top" width="25%" id="mcps1.2.3.1.1"><p id="p20331858193317"><a name="p20331858193317"></a><a name="p20331858193317"></a>类别</p>
+<table><thead align="left"><tr id="row53375863312"><th class="cellrowborder" valign="top" width="20%" id="mcps1.2.3.1.1"><p id="p20331858193317"><a name="p20331858193317"></a><a name="p20331858193317"></a>类别</p>
 </th>
-<th class="cellrowborder" valign="top" width="45%" id="mcps1.2.3.1.2"><p id="p1133115820331"><a name="p1133115820331"></a><a name="p1133115820331"></a>待开发特性</p>
-</th>
-<th class="cellrowborder" valign="top" width="30%" id="mcps1.2.3.1.2"><p id="p1133115820331"><a name="p1133115820331"></a><a name="p1133115820331"></a>时间</p>
+<th class="cellrowborder" valign="top" width="40%" id="mcps1.2.3.1.2"><p id="p1133115820331"><a name="p1133115820331"></a><a name="p1133115820331"></a>待开发特性</p>
 </th>
 </tr>
 </thead>
-<tbody><tr id="row333115812331"><td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.1 "><p id="p2142111345714"><a name="p2142111345714"></a><a name="p2142111345714"></a>变量</p>
+<tbody><tr id="row333115812331"><td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.3.1.1 "><p id="p2142111345714"><a name="p2142111345714"></a><a name="p2142111345714"></a>变量</p>
 </td>
-<td class="cellrowborder" valign="top" width="45%" headers="mcps1.2.3.1.2 "><a name="ul9264132010"></a><a name="ul9264132010"></a><ul id="ul9264132010"><li>支持ts接口文件中namespace域的boolean类型变量转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的Enum_number/string变量类型转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的回调函数类型变量 转换为对应C++ JSCallbackInfo-类型变量</li><li>支持ts接口文件中namespace域的map[string]any(string/number/bool/interface/map/array)变量入参一部分指定参数值，一部分定义参数类型变量</li><li>支持ts接口文件中namespace域的类型[]此方式声明的数组变量转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的array<boolean>、array<map>、 array<enum>类型转换变量为对应C++类型变量</li></ul>
+<td class="cellrowborder" valign="top" width="40%" headers="mcps1.2.3.1.2 "><a name="ul9264132010"></a><a name="ul9264132010"></a><ul id="ul9264132010"><li>支持ts接口文件中namespace域的boolean类型变量转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的Enum_number/string变量类型转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的回调函数类型变量 转换为对应C++ JSCallbackInfo-类型变量</li><li>支持ts接口文件中namespace域的map[string]any(string/number/bool/interface/map/array)变量入参一部分指定参数值，一部分定义参数类型变量</li><li>支持ts接口文件中namespace域的类型[]此方式声明的数组变量转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的array<boolean>、array<map>、 array<enum>类型转换变量为对应C++类型变量</li></ul>
 </td>
 </tr>
 <tr id="row15331058133314"><td class="cellrowborder" valign="top" width="25.77%" headers="mcps1.2.3.1.1 "><p id="p056093211916"><a name="p056093211916"></a><a name="p056093211916"></a>函数返回值</p>
@@ -36,8 +34,6 @@
 </td>
 <td class="cellrowborder" valign="top" width="74.22999999999999%" headers="mcps1.2.3.1.2 "><a name="ul94024441879"></a><a name="ul94024441879"></a><ul id="ul94024441879"><li>命令行方式转换时支持多个文件路径，相互之间用空格分开</li><li>命令行方式转换时支持文件夹路径</li></ul>
 </td>
-<td class="cellrowborder" valign="top" width="30%" headers="mcps1.2.3.1.1 "><p id="p2142111345714"><a name="p2142111345714"></a><a name="p2142111345714"></a>2022.6.30</p>
-</td>
 </tr>
 </tbody>
 </table>
@@ -48,8 +44,6 @@
 <table><thead align="left"><tr id="row53375863312"><th class="cellrowborder" valign="top" width="25%" id="mcps1.2.3.1.1"><p id="p20331858193317"><a name="p20331858193317"></a><a name="p20331858193317"></a>类别</p>
 </th>
 <th class="cellrowborder" valign="top" width="45%" id="mcps1.2.3.1.2"><p id="p1133115820331"><a name="p1133115820331"></a><a name="p1133115820331"></a>待开发特性</p>
-</th>
-<th class="cellrowborder" valign="top" width="30%" id="mcps1.2.3.1.2"><p id="p1133115820331"><a name="p1133115820331"></a><a name="p1133115820331"></a>时间</p>
 </th>
 </tr>
 </thead>
@@ -76,13 +70,6 @@
 <tr id="row119944512385"><td class="cellrowborder" valign="top" width="25.77%" headers="mcps1.2.3.1.1 "><p id="p919862210573"><a name="p919862210573"></a><a name="p919862210573"></a>namespace</p>
 </td>
 <td class="cellrowborder" valign="top" width="74.22999999999999%" headers="mcps1.2.3.1.2 "><a name="ul12374158862"></a><a name="ul12374158862"></a><ul id="ul12374158862"><li>支持ts接口文件中namespace域类转换为C++的类</li><li>支持ts接口文件中namespace域类继承转换为C++中继承的类</li></ul>
-</td>
-</tr>
-<tr id="row18711154213388"><td class="cellrowborder" valign="top" width="25.77%" headers="mcps1.2.3.1.1 "><p id="p111921822185713"><a name="p111921822185713"></a><a name="p111921822185713"></a>文件</p>
-</td>
-<td class="cellrowborder" valign="top" width="74.22999999999999%" headers="mcps1.2.3.1.2 "><a name="ul94024441879"></a><a name="ul94024441879"></a><ul id="ul94024441879"></ul>
-</td>
-<td class="cellrowborder" valign="top" width="30%" headers="mcps1.2.3.1.1 "><p id="p2142111345714"><a name="p2142111345714"></a><a name="p2142111345714"></a>2022.9.30</p>
 </td>
 </tr>
 </tbody>
