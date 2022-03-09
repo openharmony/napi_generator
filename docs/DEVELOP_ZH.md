@@ -1,4 +1,5 @@
-# 工具开发说明
+# NAPI框架生成工具开发说明
+若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的可执行文件和插件。
 
 ## 工具开发
 ### 可执行文件开发说明
@@ -142,10 +143,6 @@
 ## 工具测试
   进行工具二次开发后，本地可进行单元测试、特性测试确保工具的可用性。
 
-  单元测试方法如下：
+  [单元测试方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/unittest/README_ZH.md)
 
-	https://gitee.com/openharmony-sig/napi_generator/blob/master/test/unittest/README_ZH.md
-
-  特性测试方法如下：
-
-    https://gitee.com/openharmony-sig/napi_generator/blob/master/test/storytest/README_ZH.md
+  [特性测试方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/storytest/README_ZH.md)
