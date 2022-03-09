@@ -23,7 +23,7 @@
 开发工具：IntelliJ IDEA
 
 ## 使用说明
-IntelliJ插件我们提供了Jar包，在项目的prebuilt目录下generator.jar，开发者只需要下载这个jar包按照下述步骤安装使用即可：
+IntelliJ插件我们提供了Jar包，在项目的prebuilt目录下generator.jar，开发者只需要下载这个jar包按照下述步骤安装使用即可。
 
 1.新建或打开项目工程，以下以新建项目工程为例。
 
@@ -31,15 +31,15 @@ File->New->Project
 
 ![](../figures/IntelliJ_step_newFile.png)
 
-左侧栏选择Java，右侧默认选择，点击Next
+左侧栏选择Java，右侧默认选择，单击Next。
 
 ![](../figures/IntelliJ_step_firstNext.png)
 
-点击Next
+单击Next。
 
 ![](../figures/IntelliJ_step_secondNext.png)
 
-点击Finish
+单击Finish。
 
 ![](../figures/IntelliJ_step_finish.png)
 
@@ -51,18 +51,17 @@ File->New->Project
 
 ![](../figures/IntelliJ_step_project.png)
 
-4.安装插件，File->Settings->Plugins->Installed->Install Plugin from Disk...
-选择从项目prebuilt目录下generator.jar
-安装成功之后重启IDE
+4.安装插件，File->Settings->Plugins->Installed->Install Plugin from Disk...,
+选择从项目prebuilt目录下generator.jar,安装成功之后重启IDE。
 
 ![](../figures/IntelliJ_step_pluginsOk.png)
 ![](../figures/IntelliJ_step_applyPlugins.png)
 
-5.选择.d.ts文件,右键选择generate.d.ts选项，生成文件
+5.选择.d.ts文件,右键选择generate.d.ts选项，生成文件。
 
 ![](../figures/IntelliJ_step_generate.png)
 
-6.执行结束后会在目录下生成对应的文件
+6.执行结束后会在目录下生成对应的文件。
 
 ![](../figures/IntelliJ_step_generateSuccess.png)
 
