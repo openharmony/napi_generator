@@ -7,9 +7,9 @@
 
   1.硬件：rk3566开发套件
 
-  2.系统镜像：镜像生成方式见：
+  2.系统镜像：
 
-	https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/集成方法.md
+	[镜像生成方式](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/集成方法.md)
 
   3.应用hap包：hap包及源码路径如下：napi_generator/examples/app
 
