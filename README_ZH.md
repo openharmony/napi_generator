@@ -31,9 +31,9 @@
 依赖版本：vscode 1.62.0
 
 ## 使用方法
-工具支持三种入口，分别是可执行文件、VS插件、IntelliJ插件。使用方法如下：
+工具支持三种入口，分别是可执行文件、VS插件、IntelliJ插件。
 
-	https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md
+  [使用方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
 
 
 
@@ -77,22 +77,20 @@
 
 ### 工具开发说明
 
-若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的可执行文件和插件。工具开发说明如下：
+若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的可执行文件和插件。
 
-	https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/DEVELOP_ZH.md
+  [工具开发说明](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/DEVELOP_ZH.md)
 
 ## 版本说明
-  当前版本特性： 
 
-	https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md
+  [当前版本特性](https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md)
 
-  后续版本特性：
-
-	https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ROADMAP_ZH.md
+  [后续版本特性](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ROADMAP_ZH.md)
 
 ## FAQ
 对于常见问题解决方法指导如下：
-https://gitee.com/openharmony-sig/napi_generator/blob/master/FAQ.md
+
+  [FAQ](https://gitee.com/openharmony-sig/napi_generator/blob/master/FAQ.md)
 
 ## 参与贡献
 
