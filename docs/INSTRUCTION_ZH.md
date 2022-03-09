@@ -187,9 +187,13 @@ File->New->Project。
 
 ![](../figures/IntelliJ_step_generateSuccess.png)
 
+### 注意
 
+对于ts文件中的number类型，默认转为C++ uint32_t类型，修改框架生成目录中的napitest.h类型赋值，可实现number类型到C++指定数据类型的转换。
+
+![](../figures/instruction_number_type.png)
 
 ## 集成测试
-NAPI框架代码生成后，系统框架开发者进行二次开发后，即可集成到OpenHarmony编译系统，生成对应的库文件，供应用开发者调用接口。指导如下：
+NAPI框架代码生成后，系统框架开发者进行二次开发后，即可集成到OpenHarmony编译系统，生成对应的库文件，供应用开发者调用接口。
 
-	https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/Integration_Testing.md
+  [集成测试指导](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/Integration_Testing.md)
