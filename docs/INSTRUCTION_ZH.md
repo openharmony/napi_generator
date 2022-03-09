@@ -16,7 +16,7 @@ NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插
 
 
 ## 预检查
-napi_generator的可执行程序方式和插件方式都具有预检查的功能，如果.d.ts文件中存在语法错误，那么执行的时候命令行会打印出错误信息，指出代码中存在错误的行号，例如：
+napi_generator的可执行程序方式和插件方式都具有预检查的功能，如果.d.ts文件中存在语法错误，那么执行的时候命令行会打印出错误信息，指出代码中存在错误的行号。例如：
 
 ### Linux
 
@@ -52,7 +52,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 ### 可执行程序使用方法
 #### Linux
 
-1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序napi_generator-linux同级目录下，并且检查需要转换的d.ts文件中是否声明了import的d.ts文件，如果存在需要将import的d.ts文件也放入到待转换的d.ts文件相同的目录下，例如：
+1) 将要转换的.d.ts文件放到任意目录下，建议放到可执行程序napi_generator-linux同级目录下，并且检查需要转换的d.ts文件中是否声明了import的d.ts文件，如果存在需要将import的d.ts文件也放入到待转换的d.ts文件相同的目录下。例如：
 
 	   ```
 	   xudong@xudong:~/napi_tool$ ls
@@ -61,7 +61,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 	
 	   ```
 
-2) 在终端中进入到之前可执行程序napi_generator-linux所在的目录，并运行napi_generator-linux，在napi_generator-linux后面要加参数-f，后面再加要对应的.d.ts文件名，如果不加参数-o，输出文件就默认在当前目录下，例如：
+2) 在终端中进入到之前可执行程序napi_generator-linux所在的目录，并运行napi_generator-linux，在napi_generator-linux后面要加参数-f，后面再加要对应的.d.ts文件名，如果不加参数-o，输出文件就默认在当前目录下。例如：
 
 	   ```
 	   xudong@xudong:~/napi_tool$ ls
@@ -69,7 +69,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 	   xudong@xudong:~/napi_tool$ ./napi_generator-linux -f @ohos.napitest.d.ts 
 	   
 	   ```
-3) 运行成功后会在.d.ts文件说在的目录下生成对应的文件，例如：
+3) 运行成功后会在.d.ts文件说在的目录下生成对应的文件。例如：
 
 	   ```
 	   xudong@xudong:~/napi_tool$ ls
@@ -81,7 +81,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 
 1.将要转换的.d.ts文件放到任意目录下，建议放到可执行程序napi_generator-win.exe同级目录下，并且检查需要转换的d.ts文件中是否声明了import的d.ts文件，如果存在需要将import的d.ts文件也放入到待转换的d.ts文件相同的目录下。示例如下：
 
-1) 将@ohos.napitest.d.ts和basic.d.ts文件放在napi_generator\examples\gen目录下，例如：
+1) 将@ohos.napitest.d.ts和basic.d.ts文件放在napi_generator\examples\gen目录下。例如：
 
 ![](../figures/pic-d-ts-location.png)
 
@@ -89,7 +89,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 
 ![](../figures/pic-cmd.png)
 
-2.在命令行中进入到之前可执行程序napi_generator-win.exe所在的目录，并运行napi_generator-win.exe，在napi_generator-win.exe后面要加参数-f，后面再加要对应的.d.ts文件名，如果不加参数-o，输出文件就默认在当前目录下，例如：
+2.在命令行中进入到之前可执行程序napi_generator-win.exe所在的目录，并运行napi_generator-win.exe，在napi_generator-win.exe后面要加参数-f，后面再加要对应的.d.ts文件名，如果不加参数-o，输出文件就默认在当前目录下。例如：
 
 	```
 	E:\napi_tool>napi_generator-win.exe -f @ohos.napitest.d.ts
@@ -104,7 +104,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 
    
 
-3.运行成功后会在.d.ts文件说在的目录下生成对应的文件，例如：
+3.运行成功后会在.d.ts文件说在的目录下生成对应的文件。例如：
 
 ![](../figures/pic-d-ts-transition.png)
 
@@ -187,9 +187,13 @@ File->New->Project。
 
 ![](../figures/IntelliJ_step_generateSuccess.png)
 
+### 注意
 
+对于ts文件中的number类型，默认转为C++ uint32_t类型，修改框架生成目录中的napitest.h类型赋值，可实现number类型到C++指定数据类型的转换。
+
+![](../figures/instruction_number_type.png)
 
 ## 集成测试
-NAPI框架代码生成后，系统框架开发者进行二次开发后，即可集成到OpenHarmony编译系统，生成对应的库文件，供应用开发者调用接口，指导如下：
+NAPI框架代码生成后，系统框架开发者进行二次开发后，即可集成到OpenHarmony编译系统，生成对应的库文件，供应用开发者调用接口。
 
-	https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/Integration_Testing.md
+  [集成测试指导](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/Integration_Testing.md)
