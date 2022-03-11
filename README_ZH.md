@@ -8,7 +8,6 @@
 
 ## 目录
 
-	```
 	├── napi_generator                # NAPI框架代码生成工具
 	│   ├── docs                      # 工具说明、版本规划
 	│   ├── figures                   # 图片资源文件
@@ -24,7 +23,6 @@
 	|   ├── examples                  # 工具需要的文件样例  
 	│   └── README                    # 工具使用指导    
 	
-	```
 ## 约束
 系统：建议Ubuntu 20.04或者Windows 10
 
@@ -54,7 +52,7 @@
 ![](figures/pic-d-ts-transition.png)
 
 
-	```c++
+	c++
 	#include "napitest.h"
 	
 	
@@ -72,8 +70,6 @@
 	
 	......
 	}
-	```
-
 
 ### 工具开发说明
 
