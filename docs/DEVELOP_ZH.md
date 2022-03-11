@@ -31,7 +31,6 @@
 
 		npm i typescript
 
-		   ```
 		   joey@joey-virtual-machine:~/code/napi_tool_myself/napi_generator/src$ npm i typescript
 		   npm WARN gnapi@0.0.1 No repository field.
 		   npm WARN gnapi@0.0.1 No license field.
@@ -45,13 +44,11 @@
 		     run `npm fund` for details
 		     
 		   joey@joey-virtual-machine:~/code/napi_tool_myself/napi_generator/src$
-		   ```
 
 2. 在napi_generator/src这个目录下执行命令：
 
 		npm i vsce
 
-		   ```
 		   joey@joey-virtual-machine:~/code/napi_tool_myself/napi_generator/src$ npm i vsce
 		   
 		   > keytar@7.9.0 install /home/joey/code/napi_tool_myself/napi_generator/src/node_modules/keytar
@@ -69,14 +66,12 @@
 		     run `npm fund` for details
 		   
 		   joey@joey-virtual-machine:~/code/napi_tool_myself/napi_generator/src$ 
-		   ```
 
 3. 在napi_generator/src这个目录下执行命令：
 
 		npx vsce package
   每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。
 
-		```
 		joey@joey-virtual-machine:~/code/napi_tool_myself/napi_generator/src$ npx vsce package
 		WARNING  A 'repository' field is missing from the 'package.json' manifest file.
 		Do you want to continue? [y/N] y
@@ -89,24 +84,19 @@
 		DONE  Packaged: /home/joey/code/napi_tool_myself/napi_generator/src/gnapi-0.0.1.vsix (2189 files, 13.61MB)
 		joey@joey-virtual-machine:~/code/napi_tool_myself/napi_generator/src$ 
 		   
-		```
 #### Windows
 
 1. 在napi_generator/src这个目录下执行命令：
 
 		npm i typescript
 
-		   ```
 		   D:\napi_tool_myself\napi_generator\src>npm i typescript                                                                   npm WARN gnapi@0.0.1 No repository field.                                                                                  npm WARN gnapi@0.0.1 No license field.                                                                                      npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.3.2 (node_modules\fsevents):                                    npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})                                                                                                                                                                                                                + typescript@4.5.5                                                                                                          updated 1 package and audited 373 packages in 2.729s                                                                                                                                                                                                  64 packages are looking for funding                                                                                         run `npm fund` for details                                                                                                                                                                                                                          found 1 moderate severity vulnerability                                                                                     run `npm audit fix` to fix them, or `npm audit` for details                                                                                                                                                                                       D:\napi_tool_myself\napi_generator\src>        
-		   ```
 
 2. 在napi_generator/src这个目录下执行命令：
 
 		npm i vsce
 
-		   ```
 		   D:\napi_tool_myself\napi_generator\src>npm i vsce                                                                                                                                                                                                    > keytar@7.9.0 install D:\napi_tool_myself\napi_generator\src\node_modules\keytar                                          > prebuild-install || npm run build                                                                                                                                                                                                                  npm WARN gnapi@0.0.1 No repository field.                                                                                  npm WARN gnapi@0.0.1 No license field.                                                                                      npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.3.2 (node_modules\fsevents):                                    npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})                                                                                                                                                                                                                + vsce@2.6.7                                                                                                                added 103 packages from 191 contributors and audited 373 packages in 21.128s                                                                                                                                                                          64 packages are looking for funding                                                                                         run `npm fund` for details                                                                                                                                                                                                                          found 1 moderate severity vulnerability                                                                                     run `npm audit fix` to fix them, or `npm audit` for details                                                                                                                                                                                        D:\napi_tool_myself\napi_generator\src>  
-		   ```
    
 3. 在napi_generator/src这个目录下执行命令：
 
@@ -114,9 +104,7 @@
 
   每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。
 
-		   ```
 		   D:\napi_tool_myself\napi_generator\src>npx vsce package                                                                                                                                                                                       WARNING  A 'repository' field is missing from the 'package.json' manifest file.                                            Do you want to continue? [y/N] y                                                                                            WARNING  Using '*' activation is usually a bad idea as it impacts performance.                                              More info: https://code.visualstudio.com/api/references/activation-events#Start-up                                          Do you want to continue? [y/N] y                                                                                            WARNING  LICENSE.md, LICENSE.txt or LICENSE not found                                                                      Do you want to continue? [y/N] y                                                                                        This extension consists of 2189 files, out of which 1184 are JavaScript files. For performance reasons, you should bundle your extension: https://aka.ms/vscode-bundle-extension . You should also exclude unnecessary files by adding them to your .vscodeignore: https://aka.ms/vscode-vscodeignore                                                                          DONE  Packaged: D:\napi_tool_myself\napi_generator\src\gnapi-0.0.1.vsix (2189 files, 13.79MB)                                                                                                                                                        D:\napi_tool_myself\napi_generator\src> 
-		   ```
 
   ### IntelliJ插件开发说明
 
@@ -143,6 +131,6 @@
 ## 工具测试
   进行工具二次开发后，本地可进行单元测试、特性测试确保工具的可用性。
 
-  [单元测试方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/unittest/README_ZH.md)
+  [单元测试方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/unittest/README_ZH%20.md)
 
   [特性测试方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/storytest/README_ZH.md)
