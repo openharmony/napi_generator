@@ -1,7 +1,7 @@
 # NAPI框架生成工具
 
 ## 简介
-本文主要介绍NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。在开发JS应用与NAPI间接口时，底层框架开发者无需关注Nodejs语法、C++与JS之间的数据类型转换等上层应用转换逻辑，只关注底层业务逻辑即可，专业的人做专业的事，从而可以大大提高开发效率。目前工具支持可执行文件、VS插件、IntelliJ插件三种入口。
+本文主要介绍NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。在开发JS应用与NAPI间接口时，底层框架开发者无需关注Nodejs语法、C++与JS之间的数据类型转换等上层应用转换逻辑，只关注底层业务逻辑即可，专业的人做专业的事，从而可以大大提高开发效率。目前工具支持可执行文件、VS Code插件、IntelliJ插件三种入口。
 软件架构如下：
 
 ![](figures/pic-frm.png)
@@ -22,14 +22,14 @@
 	|   |   └── generator             #IntelliJ IDEA插件代码
 	|   ├── examples                  # 工具需要的文件样例  
 	│   └── README                    # 工具使用指导    
-	
+
 ## 约束
 系统：建议Ubuntu 20.04或者Windows 10
 
-依赖版本：vscode 1.62.0
+依赖版本：VS Code 1.62.0
 
 ## 使用方法
-工具支持三种入口，分别是可执行文件、VS插件、IntelliJ插件。
+工具支持三种入口，分别是可执行文件、VS Code插件、IntelliJ插件。
 
   [使用方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
 
@@ -51,10 +51,8 @@
 
 ![](figures/pic-d-ts-transition.png)
 
-
-	c++
-	#include "napitest.h"
 	
+	#include "napitest.h"
 	
 	namespace napitest {
 	
@@ -70,6 +68,7 @@
 	
 	......
 	}
+	
 
 ### 工具开发说明
 
