@@ -9,19 +9,23 @@
 
   2.系统镜像：
 
-	[镜像生成方式](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/集成方法.md)
+  [镜像生成方式](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
 
-  3.应用hap包：hap包及源码路径如下：napi_generator/examples/app。
+  3.应用hap包：hap包及源码路径如下：
+
+```
+napi_generator/examples/app
+```
 
 
 ## 使用说明
-步骤一：安装镜像环境
+步骤一：安装镜像环境。
 
     |-- system.img
     |-- userdata.img
     |-- vendor.img
 
-步骤二：安装hap包
+步骤二：安装hap包。
 
   hdc中输入命令安装hap包：
 
@@ -29,7 +33,7 @@
 
   执行完成后，设备中会出现安装的APP。
 
-步骤三：打印日志并验证结果
+步骤三：打印日志并验证结果。
 
   hap包安装成功后，进入hdc shell，输入命令实时打印日志并输出至windows中。
 
