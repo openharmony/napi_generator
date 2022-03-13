@@ -23,6 +23,7 @@ OpenHarmony应用层需要通过动态库调用NAPI接口，本文介绍如何�
 
 ### 修改build.gn文件
 
+```
 import("//build/ohos.gni")
 
 ohos_shared_library("napitest")
@@ -59,10 +60,12 @@ ohos_shared_library("napitest")
     part_name = "napitest_interface"
     subsystem_name = "napitest"
 }
+```
 
 ### 修改ohos.build文件
 其中module_list选项中的"//foundation/napitest"指的是napitest目录，":napitest"指的是上面BUILD.gn中的目标ohos_shared_library("napitest")。
 
+```
 {
   "subsystem": "napitest",
   "parts": {
@@ -74,16 +77,20 @@ ohos_shared_library("napitest")
     }
   }
 }
+```
 
 ### 增加子系统
+
 在源码/build/subsystem_config.json中增加子系统选项。如下所示：
 
-  "napitest": {
+```
+"napitest": {
     "project": "hmf/napitest",
     "path": "foundation/napitest",
     "name": "napitest",
     "dir": "foundation"
   }
+```
 
 ### 添加功能模块
 在产品配置中添加上述子系统的功能模块，编译到产品产出文件中，例如在源码/productdefine/common/products/rk3566.json中增加part选项，其中napitest就是上面填的part_name，napitest_interface就是上面填的subsystem_name。
@@ -92,6 +99,9 @@ ohos_shared_library("napitest")
 
 ## 编译验证
 
-编译成功后，就会在
+编译成功后，就会生成libpower.z.so，目录如下所示：
+
     /out/ohos-arm-release/packages/phone/system/lib/module
-目录下生成libpower.z.so。
+
+
+
