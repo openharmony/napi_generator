@@ -14,9 +14,7 @@ NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插
 	
 
 ## 预检查
-napi_generator的可执行程序方式和插件方式都具有预检查的功能，如果.d.ts文件中存在语法错误，那么执行的时候命令行会打印出错误信息，指出代码中存在错误的行号。例如：
-
-### Linux
+napi_generator的可执行程序方式和插件方式都具有预检查的功能，如果.d.ts文件中存在语法错误，那么执行的时候命令行会打印出错误信息，指出代码中存在错误的行号。使用效果图如下：
 
 	joey@joey-virtual-machine:~/code/napi_test$ ./napi_generator-linux -f @ohos.napitest.d.ts
 	@ohos.napitest.d.ts (33,12): Identifier expected.
@@ -33,13 +31,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 
 @ohos.napitest.d.ts (33,49)，其中括号中第一个参数含义为行号，第二个参数含义为列号。
 
-### VS Code插件
-
-![](../figures/pic-plug-in-pre-inspection.png)
-
-### Windows
-
-	D:\napi_tool>napi_generator-win.exe -f @ohos.napitest.d.ts                                                                      @ohos.napitest.d.ts (33,12): Identifier expected.                                                                              @ohos.napitest.d.ts (33,13): ';' expected.                                                                                    @ohos.napitest.d.ts (33,13): An identifier or keyword cannot immediately follow a numeric literal.                            @ohos.napitest.d.ts (33,13): Cannot find name 'shutdownDevice'.                                                                @ohos.napitest.d.ts (33,28): Cannot find name 'reason'.                                                            @ohos.napitest.d.ts (33,34): ',' expected.                                                                                      @ohos.napitest.d.ts (33,36): 'string' only refers to a type, but is being used as a value here.                                @ohos.napitest.d.ts (33,43): ';' expected.                                                                                      @ohos.napitest.d.ts (33,49): Expression expected.    
+预检查的触发方式与生成框架的入口一致，使用方法参见生成框架描述。
 
 ## 生成框架
 

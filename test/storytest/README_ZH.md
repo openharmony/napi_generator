@@ -1,4 +1,4 @@
-# story_test
+# NAPI框架生成工具story测试
 
 ## 概述
 本文主要介绍NAPI框架代码生成工具story功能测试使用指导。
@@ -9,7 +9,7 @@
 	│   ├── src                    # 工具源码
 	│   ├── ...                    # 其他文件夹
 	│   ├── test                   # 测试用例
-	|   |   ├── storytest
+	|   |   ├── storytest          # story测试代码
 	│   |   |   ├── test_direct    # 同步直接返回函数用例
 	│   |   |   ├── test_interface # ts文件输入interface测试用例
 	│   |   |   ├── test_namespace # ts文件输入namespace测试用例
@@ -18,11 +18,6 @@
 	│   |   |   └── test.py        # 用例执行脚本
 	|   |   └── unittest  # 单元测试用例
 	 
-
-### code目录源码介绍
-
-此目录为NAPI框架代码生成工具对应的源码，开发者可基于此代码进行二次开发。
-
 ## 软件环境准备
 
 系统：建议Ubuntu 20.04
