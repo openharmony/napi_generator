@@ -52,22 +52,25 @@
 ![](figures/pic-d-ts-transition.png)
 
 	
-	#include "napitest.h"
-	
-	namespace napitest {
-	
-	bool TestClass1::if_direct(std::string &v1, std::string &out) {
-	    // TODO
-	    return true;
-	}
-	
-	bool TestClass1::if_callback(std::string &v1, std::string &out) {
-	    // TODO
-	    return true;
-	}
-	
-	......
-	}
+```c++
+#include "napitest.h"
+
+
+namespace napitest {
+
+bool TestClass1::if_direct(std::string &v1, std::string &out) {
+    // TODO
+    return true;
+}
+
+bool TestClass1::if_callback(std::string &v1, std::string &out) {
+    // TODO
+    return true;
+}
+
+......
+}
+```
 	
 
 ### 工具开发说明
