@@ -1,4 +1,4 @@
-# unit_test
+# NAPI框架生成工具单元测试
 
 ## 概述
 本文主要介绍NAPI框架代码生成工具unit单元测试使用指导。
@@ -9,7 +9,7 @@
 	│   ├── src                    # 工具源码
 	│   ├── ...                    # 其他文件夹
 	│   ├── test                   # 测试用例
-	|   |   ├── unittest
+	|   |   ├── unittest           # 单元测试代码
 	│   |   |   ├── analyze.test.js              #执行gen/analyze目录下函数测试用例 
 	│   |   |   ├── basic.d.ts*                  #基础函数模板
 	│   |   |   ├── extend.test.js*              #执行gen/extend目录下函数测试用例 
@@ -19,10 +19,6 @@
 	│   |   |   └── tools.test.js*               #执行gen/tools目录下函数测试用例 
 	|   |   └── storytest  # 功能测试用例
 	 
-### code目录源码介绍
-
-此目录为NAPI框架代码生成工具对应的源码，开发者可基于此代码进行二次开发。
-
 ## 软件环境准备
 
 系统：建议Ubuntu 20.04

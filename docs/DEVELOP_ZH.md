@@ -2,7 +2,15 @@
 若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的可执行文件和插件。
 
 ## 工具开发
+
 ### 可执行文件开发说明
+
+#### 环境说明
+
+系统：建议Ubuntu 20.04或者Windows 10
+
+#### 开发步骤
+
 1.安装typescript：在napi_generator目录下和napi_generator/src目录下分别都执行命令：
 
 	npm i typescript
@@ -106,7 +114,13 @@
 
 		   D:\napi_tool_myself\napi_generator\src>npx vsce package                                                                                                                                                                                       WARNING  A 'repository' field is missing from the 'package.json' manifest file.                                            Do you want to continue? [y/N] y                                                                                            WARNING  Using '*' activation is usually a bad idea as it impacts performance.                                              More info: https://code.visualstudio.com/api/references/activation-events#Start-up                                          Do you want to continue? [y/N] y                                                                                            WARNING  LICENSE.md, LICENSE.txt or LICENSE not found                                                                      Do you want to continue? [y/N] y                                                                                        This extension consists of 2189 files, out of which 1184 are JavaScript files. For performance reasons, you should bundle your extension: https://aka.ms/vscode-bundle-extension . You should also exclude unnecessary files by adding them to your .vscodeignore: https://aka.ms/vscode-vscodeignore                                                                          DONE  Packaged: D:\napi_tool_myself\napi_generator\src\gnapi-0.0.1.vsix (2189 files, 13.79MB)                                                                                                                                                        D:\napi_tool_myself\napi_generator\src> 
 
-  ### IntelliJ插件开发说明
+### IntelliJ插件开发说明
+
+#### 环境说明
+
+系统：建议Ubuntu 20.04或者Windows 10
+
+#### 开发步骤
 
 1.通过IntelliJ IDEA打开generator目录下的代码。
 

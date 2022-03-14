@@ -1,4 +1,4 @@
-# NAPI集成到OpenHarmony的方法
+# NAPI框架生成代码集成到OpenHarmony的方法
 
 ## 场景说明
 
