@@ -17,12 +17,12 @@
 </thead>
 <tbody><tr id="row333115812331"><td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.3.1.1 "><p id="p2142111345714"><a name="p2142111345714"></a><a name="p2142111345714"></a>变量</p>
 </td>
-<td class="cellrowborder" valign="top" width="40%" headers="mcps1.2.3.1.2 "><a name="ul9264132010"></a><a name="ul9264132010"></a><ul id="ul9264132010"><li>支持ts接口文件中namespace域的boolean类型变量转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的Enum_number/string变量类型转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的回调函数类型变量 转换为对应C++ JSCallbackInfo-类型变量</li><li>支持ts接口文件中namespace域的map[string]any(string/number/bool/interface/map/array)变量入参一部分指定参数值，一部分定义参数类型变量</li><li>支持ts接口文件中namespace域的类型[]此方式声明的数组变量转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的array<boolean>、array<map>、 array<enum>类型转换变量为对应C++类型变量</li></ul>
+<td class="cellrowborder" valign="top" width="40%" headers="mcps1.2.3.1.2 "><a name="ul9264132010"></a><a name="ul9264132010"></a><ul id="ul9264132010"><li>支持ts接口文件中namespace域的boolean类型变量转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的Enum_number/string变量类型转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的回调函数类型变量 转换为对应C++ JSCallbackInfo-类型变量</li><li>支持ts接口文件中namespace域的map[string]any(string/number/bool/interface/map/array)变量入参一部分指定参数值，一部分定义参数类型变量</li><li>支持ts接口文件中namespace域的类型[]此方式声明的数组变量转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的array<boolean>、array<map>、array<enum>类型转换变量为对应C++类型变量</li></ul>
 </td>
 </tr>
 <tr id="row15331058133314"><td class="cellrowborder" valign="top" width="25.77%" headers="mcps1.2.3.1.1 "><p id="p056093211916"><a name="p056093211916"></a><a name="p056093211916"></a>函数返回值</p>
 </td>
-<td class="cellrowborder" valign="top" width="74.22999999999999%" headers="mcps1.2.3.1.2 "><a name="ul166113311811"></a><a name="ul166113311811"></a><ul id="ul166113311811"><li>函数返回值支持 enum_string、enum_number</li><li>函数返回值支持array<boolean>、array<map>、 array<enum>，以及类型的嵌套</li></ul>
+<td class="cellrowborder" valign="top" width="74.22999999999999%" headers="mcps1.2.3.1.2 "><a name="ul166113311811"></a><a name="ul166113311811"></a><ul id="ul166113311811"><li>函数返回值支持 enum_string、enum_number</li><li>函数返回值支持array<boolean>、array<map>、array<enum>，以及类型的嵌套</li></ul>
 </td>
 </tr>
 <tr id="row334175803317"><td class="cellrowborder" valign="top" width="25.77%" headers="mcps1.2.3.1.1 "><p id="p382391145710"><a name="p382391145710"></a><a name="p382391145710"></a>函数</p>
