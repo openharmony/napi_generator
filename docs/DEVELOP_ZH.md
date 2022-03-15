@@ -49,7 +49,7 @@
 
 4. 每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
 
-  ![](figures/linux_package_vsix.png)
+  ![](../figures/linux_package_vsix.png)
 		   
 #### Windows
 
@@ -67,7 +67,7 @@
 
 4. 每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
 
-  ![](figures/win_package_vsix.png)
+  ![](../figures/win_package_vsix.png)
 
 ### IntelliJ插件开发说明
 
