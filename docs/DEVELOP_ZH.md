@@ -37,7 +37,7 @@
 
 1.在napi_generator/src这个目录下执行命令：
 
-  npm i typescript
+	npm i typescript
 
 2.在napi_generator/src这个目录下执行命令：
 
