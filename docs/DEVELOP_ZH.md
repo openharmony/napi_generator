@@ -35,37 +35,37 @@
 
 #### Linux
 
-1. 在napi_generator/src这个目录下执行命令：
+1.在napi_generator/src这个目录下执行命令：
 
-	npm i typescript
+  npm i typescript
 
-2. 在napi_generator/src这个目录下执行命令：
+2.在napi_generator/src这个目录下执行命令：
 
 	npm i vsce
 
-3. 在napi_generator/src这个目录下执行命令：
+3.在napi_generator/src这个目录下执行命令：
 
 	npx vsce package
 
-4. 每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
+4.每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
 
   ![](../figures/linux_package_vsix.png)
 		   
 #### Windows
 
-1. 在napi_generator/src这个目录下执行命令：
+1.在napi_generator/src这个目录下执行命令：
 
 	npm i typescript
 
-2. 在napi_generator/src这个目录下执行命令：
+2.在napi_generator/src这个目录下执行命令：
 
 	npm i vsce
    
-3. 在napi_generator/src这个目录下执行命令：
+3.在napi_generator/src这个目录下执行命令：
 
 	npx vsce package
 
-4. 每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
+4.每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
 
   ![](../figures/win_package_vsix.png)
 
