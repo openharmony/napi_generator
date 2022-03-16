@@ -29,29 +29,39 @@
 依赖版本：VS Code 1.62.0
 
 ## 使用方法
-工具支持三种入口，分别是可执行文件、VS Code插件、IntelliJ插件。
 
-  [使用方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
+### 使用对象
 
+工具的使用者
 
-
-## 说明
 ### 使用场景
 
 1) 系统框架层新增子系统，需对应用层提供接口。
+2) 系统框架层子系统能力增强后，需对应用层提供新接口。
 
-2) 系统框架层已有子系统增强能力后，需对应用层提供新接口。
+### 工具使用
 
-### 使用对象
-系统框架开发者
+工具有三种类型，分别是可执行文件、VS Code插件、IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。
 
-### 使用效果
-根据指定的ts文件生成C/C++接口框架，如examples/ts/@ohos.napitest.d.ts转换后生成napitest.cpp文件。
-效果图如下：
+使用者可以根据自己的需要选择合适的工具，所有的工具存放在以下路径：
 
-![](figures/pic-d-ts-transition.png)
+```
+napi_generator/ prebuilt
+```
 
-	
+[使用方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
+
+### 工具输出
+
+根据使用者指定的typescript文件，工具会输出NAPI框架代码、业务代码框架、GN文件等文件。
+
+在window环境下的，根据输入文件@ohos.napitest.d.ts和basic.d.ts生成的输出文件，如下所示：
+
+![](./figures/pic-d-ts-transition.png)
+
+其中生成的"napitest.h"文件，定义了框架代码的接口，如下所示：
+
+
 ```c++
 #include "napitest.h"
 
@@ -71,11 +81,26 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 ......
 }
 ```
-	
 
-### 工具开发说明
+### 代码集成
 
-若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的可执行文件和插件。
+为了实现工具生成的接口被其他子系统或者应用调用，需将生成的代码编译集成到OpenHarmony系统中，编译生成动态库。
+
+[工具生成的代码集成到OpenHarmony的方法说明](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
+
+## 说明
+
+### 对象
+
+工具的开发者
+
+### 开发场景
+
+若当前工具的功能已经不能满足开发者的全部需求，则开发者可以基于已有的源码对工具进行二次开发，来增强工具的能力，编译打包生成自定义的可执行文件和插件。
+
+### 开发步骤
+
+开发者可以根据如下的步骤来完成对工具的开发：
 
   [工具开发说明](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/DEVELOP_ZH.md)
 
