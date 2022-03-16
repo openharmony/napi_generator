@@ -3,9 +3,9 @@
 ## 简介
 本文主要介绍NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。在开发JS应用与NAPI间接口时，底层框架开发者无需关注Nodejs语法、C++与JS之间的数据类型转换等上层应用转换逻辑，只关注底层业务逻辑即可，专业的人做专业的事，从而可以大大提高开发效率。目前工具支持可执行文件、VS Code插件、IntelliJ插件三种入口。
 
-了解更多工具的架构和实现原理介绍：
+更多工具的架构和实现原理详情，可以左键单击以下链接了解：
 
-[NAPI框架生成工具的架构和原理介绍](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
+[工具使用说明](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
 
 ## 目录
 
@@ -50,7 +50,9 @@
 napi_generator/ prebuilt
 ```
 
-[使用方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
+具体的工具使用步骤，可以左键单击以下链接了解：
+
+[工具使用说明](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
 
 ### 工具输出
 
@@ -93,7 +95,9 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 
 为了实现工具生成的接口被其他子系统或者应用调用，需将生成的代码编译集成到OpenHarmony系统中，编译生成动态库。
 
-[工具生成的代码集成到OpenHarmony的方法说明](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
+把工具的生成代码集成到OpenHarmony的具体操作步骤，可以左键单击以下链接了解：
+
+[生成代码集成到OpenHarmony的方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
 
 ## 工具开发说明
 
@@ -113,9 +117,11 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 
 ## 版本说明
 
-  [当前版本特性](https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md)
+ 当前版本已支持的特性和代开发的特性，如下所示：
 
-  [后续版本特性](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ROADMAP_ZH.md)
+ [已支持特性](https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md)
+
+  [待支持特性](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ROADMAP_ZH.md)
 
 ## FAQ
 对于常见问题解决方法指导如下：
