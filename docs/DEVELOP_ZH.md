@@ -60,7 +60,7 @@
 2.在napi_generator/src这个目录下执行命令：
 
 	npm i vsce
-   
+
 3.在napi_generator/src这个目录下执行命令：
 
 	npx vsce package
@@ -98,8 +98,9 @@
 ![](../figures/IntelliJ_develop_five.png)
 
 ## 工具测试
-  进行工具二次开发后，本地可进行单元测试、特性测试确保工具的可用性。
+  进行工具二次开发后，本地可进行单元测试、story特性测试确保工具的可用性。左键单击以下链接了解详情：
 
-  [单元测试方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/unittest/README_ZH%20.md)
+  [单元测试](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/unittest/README_ZH%20.md)
 
-  [特性测试方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/storytest/README_ZH.md)
+  [story测试](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/storytest/README_ZH.md)
+
