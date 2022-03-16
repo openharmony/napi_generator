@@ -55,6 +55,12 @@ napi_generator/ prebuilt
 
 根据使用者指定的typescript文件，工具会输出NAPI框架代码、业务代码框架、GN文件等文件。
 
+为了方便使用者快速上手工具，可供测试的typescript文件存放在以下路径：
+
+```
+napi_generator/ examples / ts
+```
+
 在window环境下的，根据输入文件@ohos.napitest.d.ts和basic.d.ts生成的输出文件，如下所示：
 
 ![](./figures/pic-d-ts-transition.png)
@@ -88,7 +94,7 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 
 [工具生成的代码集成到OpenHarmony的方法说明](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
 
-## 说明
+## 工具开发说明
 
 ### 对象
 
