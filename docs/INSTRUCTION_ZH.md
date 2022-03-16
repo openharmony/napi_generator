@@ -14,11 +14,7 @@ NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插
 
 ## 工具介绍
 
-如果没有NAPI框架生成工具，生成NAPI接口及框架代码等功能可以参考以下步骤：
-
- [NAPI开发说明](https://gitee.com/openharmony/ace_napi/blob/master/README_zh.md)
-
-而通过NAPI框架生成工具，使用者可输入一个接口定义的ts文件，一键生成NAPI框架代码、业务代码框架、GN脚本等文件，并使用生成的NAPI接口及功能。NAPI框架生成工具的软件架构如下：
+通过NAPI框架生成工具，使用者可输入一个接口定义的ts文件，一键生成NAPI框架代码、业务代码框架、GN脚本等文件，并使用生成的NAPI接口及功能。NAPI框架生成工具的软件架构如下：
 
 ![](../figures/pic-frm.png)
 
@@ -177,6 +173,7 @@ File->New->Project。
 ![](../figures/instruction_number_type.png)
 
 ## 集成测试
-NAPI框架代码生成后，系统框架开发者进行二次开发后，即可集成到OpenHarmony编译系统，生成对应的库文件，供应用开发者调用接口。
+NAPI框架代码生成后，系统框架开发者进行二次开发后，即可集成到OpenHarmony编译系统，生成对应的库文件，供应用开发者调用接口。工具集成测试的具体操作步骤可以左键单击以下链接了解：
 
-  [集成测试指导](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INTEGRATION_TESTING_ZH.md)
+  [工具集成测试](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INTEGRATION_TESTING_ZH.md)
+
