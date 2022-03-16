@@ -11,9 +11,19 @@ NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插
 	│   │   |── napi_generator-linux    # Linux可执行程序 
 	│   │   |── napi_generator-win.exe  # Windows可执行程序    
 	|   |   └── napi_generator-macos    # Mac可执行程序              
-	
+
+## 工具介绍
+
+如果没有NAPI框架生成工具，生成NAPI接口及框架代码等功能可以参考以下步骤：
+
+ [NAPI开发说明](https://gitee.com/openharmony/ace_napi/blob/master/README_zh.md)
+
+而通过NAPI框架生成工具，使用者可输入一个接口定义的ts文件，一键生成NAPI框架代码、业务代码框架、GN脚本等文件，并使用生成的NAPI接口及功能。NAPI框架生成工具的软件架构如下：
+
+![](../figures/pic-frm.png)
 
 ## 预检查
+
 napi_generator的可执行程序方式和插件方式都具有预检查的功能，如果.d.ts文件中存在语法错误，那么执行的时候命令行会打印出错误信息，指出代码中存在错误的行号。使用效果图如下：
 
 	joey@joey-virtual-machine:~/code/napi_test$ ./napi_generator-linux -f @ohos.napitest.d.ts
@@ -49,13 +59,13 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 	   xudong@xudong:~/napi_tool$ ls
 	   napi_generator-linux  @ohos.napitest.d.ts  basic.d.ts
 	   xudong@xudong:~/napi_tool$ ./napi_generator-linux -f @ohos.napitest.d.ts 
-	   
+	
 3) 运行成功后会在.d.ts文件说在的目录下生成对应的文件。例如：
 
 	   xudong@xudong:~/napi_tool$ ls
 	   binding.gyp  BUILD.gn  cmd_gen-linux  @ohos.napitest.d.ts  napitest.cpp  napitest.h  napitest_middle.cpp  test.sh  x_napi_tool.cpp  x_napi_tool.h
 	   xudong@xudong:~/napi_tool$ 
-	   
+	
 #### Windows
 
 1.将要转换的.d.ts文件放到任意目录下，建议放到可执行程序napi_generator-win.exe同级目录下，并且检查需要转换的d.ts文件中是否声明了import的d.ts文件，如果存在需要将import的d.ts文件也放入到待转换的d.ts文件相同的目录下。示例如下：
@@ -71,11 +81,11 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 2.在命令行中进入到之前可执行程序napi_generator-win.exe所在的目录，并运行napi_generator-win.exe，在napi_generator-win.exe后面要加参数-f，后面再加要对应的.d.ts文件名，如果不加参数-o，输出文件就默认在当前目录下。例如：
 
 	E:\napi_tool>napi_generator-win.exe -f @ohos.napitest.d.ts
-	   
+
    命令行参数如下，-f是必须添加的参数，-o是可选参数，如果不加就默认当前目录。
 
 	 -f, --filename <ARG1>         .d.ts file                                            -o, --out <ARG1>              output directory ("." by default)
-   
+
 
 3.运行成功后会在.d.ts文件说在的目录下生成对应的文件。例如：
 
