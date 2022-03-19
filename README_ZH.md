@@ -12,7 +12,7 @@
 	├── napi_generator                # NAPI框架代码生成工具
 	│   ├── docs                      # 工具说明、版本规划
 	│   ├── figures                   # 图片资源文件
-	│   ├── prebuilt                  # 可执行文件、插件文件
+	│   ├── prebuilt                  # VS Code插件文件
 	│   ├── release-notes             # 发布说明
 	│   ├── src                       # 工具源码
 	|   |   ├── gen                  
@@ -44,11 +44,15 @@
 
 工具有三种类型，分别是可执行文件、VS Code插件、IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。
 
-使用者可以根据自己的需要选择合适的工具，所有的工具存放在以下路径：
+使用者可以根据自己的需要选择合适的工具，VS Code插件存放在以下路径：
 
 ```
 napi_generator/ prebuilt
 ```
+
+可执行文件与IntelliJ插件下载路径如下：
+
+[下载链接](https://repo.huaweicloud.com/harmonyos/develop_tools/napi_generator/napi_generator_20220319.tart.gz)
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
