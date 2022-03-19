@@ -1,13 +1,21 @@
 # NAPI框架生成工具使用说明
 ## 简介
 
-NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，在napi_generator/prebuilt目录下存有已生成的文件，用户可直接使用。
-生成文件说明如下：
+NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，使用者可以根据自己的需要选择合适的工具，VS Code插件存放在以下路径：
 
-	├── napi_generator                # NAPI框架代码生成工具
-	│   ├── prebuilt                  # 可执行程序、插件文件
+```
+napi_generator/ prebuilt
+```
+
+可执行文件与IntelliJ插件下载路径如下：
+
+[下载链接](https://repo.huaweicloud.com/harmonyos/develop_tools/napi_generator/napi_generator_20220319.tart.gz)
+
+
+下载文件说明如下：
+
+
 	│   |   ├── generator.jar           # IntelliJ插件
-	│   |   |── gnapi-0.0.1.vsix        # VS插件
 	│   │   |── napi_generator-linux    # Linux可执行程序 
 	│   │   |── napi_generator-win.exe  # Windows可执行程序    
 	|   |   └── napi_generator-macos    # Mac可执行程序              
@@ -132,7 +140,13 @@ visual studio code 版本需1.62.0及以上。
 开发工具：IntelliJ IDEA
 
 #### 使用指导
-在napi_generator/prebuilt目录下提供了插件包，其名称为generator.jar，开发者只需要下载插件包按照下述步骤安装使用即可：
+下载可执行程序与插件包generator.jar，将需要平台下的可执行文件放到以下路径中的对应平台目录下
+    
+    napi_generator\src\generator\resources\cmds
+
+[下载链接](https://repo.huaweicloud.com/harmonyos/develop_tools/napi_generator/napi_generator_20220319.tart.gz)
+
+使用者下载插件包后，按照下述步骤安装使用即可：
 
 1.新建或打开项目工程，以下以新建项目工程为例。
 
@@ -152,7 +166,7 @@ File->New->Project。
 
 ![](../figures/IntelliJ_step_project.png)
 
-4.安装插件，File->Settings->Plugins->Installed->Install Plugin from Disk...，选择从项目prebuilt目录下generator.jar，安装成功之后重启IDE。
+4.安装插件，File->Settings->Plugins->Installed->Install Plugin from Disk...，选择下载的generator.jar，安装成功之后重启IDE。
 
 ![](../figures/IntelliJ_step_pluginsOk.png)
 
