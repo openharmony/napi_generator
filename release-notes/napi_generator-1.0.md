@@ -49,5 +49,5 @@
 
 **表 2** 
 
-[待开发特性](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ROADMAP_ZH.md)
+[待开发特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ROADMAP_ZH.md)
 
