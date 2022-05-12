@@ -11,7 +11,7 @@
 
   系统镜像的具体生成方法，可以左键单击以下链接了解：
 
-  [生成代码集成到OpenHarmony的方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
+  [生成代码集成到OpenHarmony的方法](https://gitee.com/openharmony/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
 
   3.应用hap包：hap包及源码路径如下：
 
