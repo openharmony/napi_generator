@@ -13,22 +13,20 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { print, removeExplains, removeEmptyLine, checkOutBody } = require("../tools/tool");
-const { FuncType, NumberIncrease } = require("../tools/common");
-
+const { removeEmptyLine, checkOutBody } = require("../tools/tool");
 const { analyzeFunction } = require("./function");
 const { analyzeInterface } = require("./interface");
+const { analyzeClass } = require("./class");
+const { NapiLog } = require("../tools/NapiLog");
 
 /**namespace解析 */
 function analyzeNamespace(data) {
     let result = {
         exports: [],
-
         enum: [],
         const: [],
         type: [],
         function: [],
-
         interface: [],
         class: [],
         namespace: [],
@@ -36,44 +34,37 @@ function analyzeNamespace(data) {
     while (data != '\n') {
         let oldData = data
         data = removeEmptyLine(data)
-        let tt = re.match(" *\n*", data)
-        if (tt && tt.regs[0][1] == data.length) break//只剩下空格和回车时，解析完成
-
-        let parseEnumResult = parseEnum(tt, data, result)
+        let matchs = re.match(" *\n*", data)
+        //只剩下空格和回车时，解析完成
+        if (matchs && matchs.regs[0][1] == data.length) break
+        let parseEnumResult = parseEnum(matchs, data, result)
         if (parseEnumResult != null) {
             data = parseEnumResult
         }
-
-        let parseInterResult = parseInterface(tt, data, result)
+        let parseInterResult = parseInterface(matchs, data, result)
         if (parseInterResult != null) {
             data = parseInterResult
         }
-
-        let parseFunctionResult = parseFunction(tt, data, result)
+        let parseFunctionResult = parseFunction(matchs, data, result)
         if (parseFunctionResult != null) {
             data = parseFunctionResult
         }
-
-        let parseTypeResult = parseType(tt, data, result)
+        let parseTypeResult = parseType(matchs, data, result)
         if (parseTypeResult != null) {
             data = parseTypeResult
         }
-
-        let parseClassResult = parseClass(tt, data, result)
+        let parseClassResult = parseClass(matchs, data, result)
         if (parseClassResult != null) {
             data = parseClassResult
         }
-
-        let parseNamespaceResult = parseNamespace(tt, data, result)
+        let parseNamespaceResult = parseNamespace(matchs, data, result)
         if (parseNamespaceResult != null) {
             data = parseNamespaceResult
         }
-
-        data = removeReg(tt, data, result)
+        data = removeReg(matchs, data, result)
         if (oldData == data) {
-            print("\nvvv 解析Namespace失败 vvv")
-            print("[", data.substring(0, data.length > 128 ? 128 : data.length), "]")
-            print("^^^ 解析Namespace失败 ^^^\n")
+            NapiLog.logError("解析Namespace失败");
+            NapiLog.logError("[", data.substring(0, data.length > 128 ? 128 : data.length), "]");
             break;
         }
     }
@@ -97,96 +88,102 @@ function parseNamespace(tt, data, result) {
     return data
 }
 
-function parseClass(tt, data, result) {
-    tt = re.match("(export )*class ([a-zA-Z]+) (extends [a-zA-Z]+ )*(implements [a-zA-Z]+ )*({)", data)
-    if (tt) {
-        let className = re.getReg(data, tt.regs[2])
-        let classBody = checkOutBody(data, tt.regs[5][0], null, true)
+function parseClass(matchs, data, result) {
+    matchs = re.match("(export )*class ([a-zA-Z]+) (extends [a-zA-Z]+ )*(implements [a-zA-Z]+ )*({)", data)
+    if (matchs) {
+        let className = re.getReg(data, matchs.regs[2])
+        let classBody = checkOutBody(data, matchs.regs[5][0], null, true)
         result.class.push({
             name: className,
-            body: classBody
+            body: analyzeClass(classBody.substring(1, classBody.length - 1)),
+            functiontType: classBody.indexOf('static') > 0 ? 'static' : ''
         })
-        data = data.substring(tt.regs[5][0] + classBody.length + 2, data.length)
-        if (tt.regs[1][0] != -1) {
+        data = data.substring(matchs.regs[5][0] + classBody.length + 2, data.length)
+        if (matchs.regs[1][0] != -1) {
             result.exports.push(className)
         }
     }
     return data
 }
 
-function parseEnum(tt, data, result) {
-    tt = re.match("(export )*enum *([A-Za-z]+) *({)", data)
-    if (tt != null) {
-        let enumName = re.getReg(data, tt.regs[2]);
-        let enumBody = checkOutBody(data, tt.regs[3][0], null, null)
+function parseEnum(matchs, data, result) {
+    matchs = re.match("(export )*enum *([A-Za-z]+) *({)", data)
+    if (matchs != null) {
+        let enumName = re.getReg(data, matchs.regs[2]);
+        let enumBody = checkOutBody(data, matchs.regs[3][0], null, null)
         result.enum.push({
             name: enumName,
-            body: enumBody.substring(1, -1)
         })
-        data = data.substring(tt.regs[3][0] + enumBody.length)
-        if (tt.regs[1][0] != -1) {
+        data = data.substring(matchs.regs[3][0] + enumBody.length)
+        if (matchs.regs[1][0] != -1) {
             result.exports.push(enumName)
         }
     }
 
-    tt = re.match("(export )*const ([a-zA-Z_]+) *[:=]{1} ([a-zA-Z0-9]+);", data)
-    if (tt) {
-        let constName = re.getReg(data, tt.regs[1])
+    matchs = re.match("(export )*const ([a-zA-Z_]+) *[:=]{1} ([a-zA-Z0-9]+);", data)
+    if (matchs) {
+        let constName = re.getReg(data, matchs.regs[1])
         result.const.push({
             name: constName,
-            body: re.getReg(data, tt.regs[2])
+            body: re.getReg(data, matchs.regs[2])
         })
-        data = re.removeReg(data, tt.regs[0])
-        if (tt.regs[1][0] != -1) {
+        data = re.removeReg(data, matchs.regs[0])
+        if (matchs.regs[1][0] != -1) {
             result.exports.push(constName)
         }
     }
     return data
 }
 
-function parseType(tt, data, result) {
-    tt = re.match("(export )*type ([a-zA-Z]+) = *([\\(\\):=a-zA-Z<> |\n']+);", data)
-    if (tt) {
-        let typeName = re.getReg(data, tt.regs[2]);
+function parseType(matchs, data, result) {
+    matchs = re.match("(export )*type ([a-zA-Z]+) = *([\\(\\):=a-zA-Z<> |\n']+);", data)
+    if (matchs) {
+        let typeName = re.getReg(data, matchs.regs[2]);
         result.type.push({
             name: typeName,
-            body: re.getReg(data, tt.regs[3])
+            body: re.getReg(data, matchs.regs[3])
         })
-        data = re.removeReg(data, tt.regs[0])
-        if (tt.regs[1][0] != -1) {
+        data = re.removeReg(data, matchs.regs[0])
+        if (matchs.regs[1][0] != -1) {
             result.exports.push(typeName)
         }
     }
 
-    tt = re.match("(export )*type ([a-zA-Z]+) = ({)", data)
-    if (tt) {
-        let typeName = re.getReg(data, tt.regs[2]);
-        let typeBody = checkOutBody(data, tt.regs[3][0], null, true)
+    matchs = re.match("(export )*type ([a-zA-Z]+) = ({)", data)
+    if (matchs) {
+        let typeName = re.getReg(data, matchs.regs[2]);
+        let typeBody = checkOutBody(data, matchs.regs[3][0], null, true)
         result.type.push({
             name: typeName,
             body: typeBody
         })
-        data = data.substring(tt.regs[3][0] + typeBody.length + 2, data.length)
-        if (tt.regs[1][0] != -1) {
+        data = data.substring(matchs.regs[3][0] + typeBody.length + 2, data.length)
+        if (matchs.regs[1][0] != -1) {
             result.exports.push(typeName)
         }
     }
     return data
 }
 
-function parseFunction(tt, data, result) {
-    tt = re.match("(export )*function ([A-Za-z0-9_]+) *(\\()", data)
-    if (tt) {
-        let funcName = re.getReg(data, tt.regs[2])
-        let funcValue = checkOutBody(data, tt.regs[3][0], ["(", ")"], null)
-        let funcRet = checkOutBody(data.substring(tt.regs[3][0] + funcValue.length), 0, ["", "\n"], null)
-
-        data = data.substring(tt.regs[3][0] + funcValue.length + funcRet.length)
-        let tt2 = re.match(" *: *([A-Za-z0-9_<>{}:, .=]+);*", funcRet)
-        if (tt2) {
-            funcRet = re.getReg(funcRet, tt2.regs[1])
+function parseFunction(matchs, data, result) {
+    matchs = re.match("(export )*function (\\$*[A-Za-z0-9_]+) *(\\()", data)
+    if (null == matchs) {
+        matchs = re.match("(export )*function (static )*(\\$*[A-Za-z0-9_]+) *(\\()", data)
+    }
+    if (matchs) {
+        let funcName = re.getReg(data,
+            matchs.regs.length == 5 ? [matchs.regs[2][0], matchs.regs[3][1]] : matchs.regs[2])
+        let funcValue = checkOutBody(data,
+            matchs.regs.length == 5 ? matchs.regs[4][0] : matchs.regs[3][0], ["(", ")"], null)
+        let funcRet = checkOutBody(data.substring(matchs.regs.length == 5 ?
+            matchs.regs[4][0] : matchs.regs[3][0] + funcValue.length), 0, ["", "\n"], null)
+        data = data.substring(matchs.regs.length == 5 ?
+            matchs.regs[4][0] : matchs.regs[3][0] + funcValue.length + funcRet.length)
+        let matchFunc = re.match(" *: *([A-Za-z0-9_<>{}:, .=]+);*", funcRet)
+        if (matchFunc) {
+            funcRet = re.getReg(funcRet, matchFunc.regs[1])
         }
-        else {//maybe error
+        else {
             funcRet = "void"
         }
 
@@ -194,46 +191,46 @@ function parseFunction(tt, data, result) {
         if (funcDetail != null)
             result.function.push(funcDetail)
 
-        if (tt.regs[1][0] != -1) {
+        if (matchs.regs[1][0] != -1) {
             result.exports.push(funcName)
         }
     }
     return data
 }
 
-function parseInterface(tt, data, result) {
-    tt = re.match("(export )*interface ([A-Za-z_0-9]+)(<T>)* (extends [a-zA-Z]+ )*({)", data)
-    if (tt) {
-        let interfaceName = re.getReg(data, tt.regs[2])
-        let interfaceBody = checkOutBody(data, tt.regs[5][0], null, null)
+function parseInterface(matchs, data, result) {
+    matchs = re.match("(export )*interface ([A-Za-z_0-9]+)(<T>)* (extends [a-zA-Z]+ )*({)", data)
+    if (matchs) {
+        let interfaceName = re.getReg(data, matchs.regs[2])
+        let interfaceBody = checkOutBody(data, matchs.regs[5][0], null, null)
         result.interface.push({
             name: interfaceName,
             body: analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1))
         })
-        data = data.substring(tt.regs[5][0] + interfaceBody.length, data.length)
-        if (tt.regs[1][0] != -1) {
+        data = data.substring(matchs.regs[5][0] + interfaceBody.length, data.length)
+        if (matchs.regs[1][0] != -1) {
             result.exports.push(interfaceName)
         }
     }
     return data
 }
 
-function removeReg(tt, data, result) {
-    tt = re.match("export { ([a-zA-Z]+) };", data)
-    if (tt) {
-        let exportName = re.getReg(data, tt.regs[1])
+function removeReg(matchs, data, result) {
+    matchs = re.match("export { ([a-zA-Z]+) };", data)
+    if (matchs) {
+        let exportName = re.getReg(data, matchs.regs[1])
         result.exports.push(exportName)
-        data = re.removeReg(data, tt.regs[0])
+        data = re.removeReg(data, matchs.regs[0])
     }
 
-    tt = re.match("export import [a-zA-Z]+ = [a-zA-Z\\.]+;", data)
-    if (tt) {
-        data = re.removeReg(data, tt.regs[0])
+    matchs = re.match("export import [a-zA-Z]+ = [a-zA-Z\\.]+;", data)
+    if (matchs) {
+        data = re.removeReg(data, matchs.regs[0])
     }
 
-    tt = re.match("readonly [a-zA-Z]+: [a-z\\[\\]]+;*", data)
-    if (tt) {
-        data = re.removeReg(data, tt.regs[0])
+    matchs = re.match("readonly [a-zA-Z]+: [a-z\\[\\]]+;*", data)
+    if (matchs) {
+        data = re.removeReg(data, matchs.regs[0])
     }
 
     return data
