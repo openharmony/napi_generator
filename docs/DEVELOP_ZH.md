@@ -100,7 +100,7 @@
 ## 工具测试
   进行工具二次开发后，本地可进行单元测试、story特性测试确保工具的可用性。左键单击以下链接了解详情：
 
-  [单元测试](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/unittest/README_ZH%20.md)
+  [单元测试](https://gitee.com/openharmony/napi_generator/blob/master/test/unittest/README_ZH%20.md)
 
-  [story测试](https://gitee.com/openharmony-sig/napi_generator/blob/master/test/storytest/README_ZH.md)
+  [story测试](https://gitee.com/openharmony/napi_generator/blob/master/test/storytest/README_ZH.md)
 

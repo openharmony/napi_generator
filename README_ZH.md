@@ -5,7 +5,7 @@
 
 更多工具的架构和实现原理详情，可以左键单击以下链接了解：
 
-[工具使用说明](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
+[工具使用说明](https://gitee.com/openharmony/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
 
 ## 目录
 
@@ -56,7 +56,7 @@ napi_generator/ prebuilt
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
-[工具使用说明](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
+[工具使用说明](https://gitee.com/openharmony/napi_generator/blob/master/docs/INSTRUCTION_ZH.md)
 
 ### 工具输出
 
@@ -101,7 +101,7 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 
 把工具的生成代码集成到OpenHarmony的具体操作步骤，可以左键单击以下链接了解：
 
-[生成代码集成到OpenHarmony的方法](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
+[生成代码集成到OpenHarmony的方法](https://gitee.com/openharmony/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
 
 ## 工具开发说明
 
@@ -117,20 +117,20 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 
 开发者可以根据如下的步骤来完成对工具的开发：
 
-  [工具开发说明](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/DEVELOP_ZH.md)
+ [工具开发说明](https://gitee.com/openharmony/napi_generator/blob/master/docs/DEVELOP_ZH.md)
 
 ## 版本说明
 
  当前版本已支持的特性和代开发的特性，如下所示：
 
- [已支持特性](https://gitee.com/openharmony-sig/napi_generator/blob/master/release-notes/napi_generator-1.0.md)
+ [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/release-notes/napi_generator-1.0.md)
 
-  [待支持特性](https://gitee.com/openharmony-sig/napi_generator/blob/master/docs/ROADMAP_ZH.md)
+ [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ROADMAP_ZH.md)
 
 ## FAQ
 对于常见问题解决方法指导如下：
 
-  [FAQ](https://gitee.com/openharmony-sig/napi_generator/blob/master/FAQ.md)
+  [FAQ](https://gitee.com/openharmony/napi_generator/blob/master/FAQ.md)
 
 ## 参与贡献
 
