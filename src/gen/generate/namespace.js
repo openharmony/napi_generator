@@ -12,15 +12,14 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { print } = require("../tools/tool");
 const { generateFunctionDirect } = require("./function_direct");
 const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
 const { generateInterface } = require("./interface");
 const { FuncType, InterfaceList } = require("../tools/common");
 
+//生成module_middle.cpp、module.h、module.cpp
 function generateNamespace(name, data, inNamespace = "") {
-    //生成module_middle.cpp、module.h、module.cpp
     let implH = ""
     let implCpp = ""
     let middleFunc = ""
@@ -37,7 +36,7 @@ function generateNamespace(name, data, inNamespace = "") {
     }
     for (let i in data.function) {
         let func = data.function[i]
-        let tmp = generateFunction(func)
+        let tmp = generateFunction(func, data)
         middleFunc += tmp[0]
         implH += tmp[1]
         implCpp += tmp[2]
@@ -56,27 +55,31 @@ function generateNamespace(name, data, inNamespace = "") {
     if (inNamespace.length > 0) {
         middleInit += "}"
     }
+    return generateResult(name, implH, implCpp, middleFunc, middleInit)
+}
+
+function generateResult(name, implH, implCpp, middleFunc, middleInit) {
     let result = {
         implH: `namespace %s {%s\n}`.format(name, implH),
         implCpp: `namespace %s {%s}`.format(name, implCpp),
         middleBody: `namespace %s {%s}`.format(name, middleFunc),
         middleInit: middleInit
     }
-    return result
+    return result;
 }
 
-function generateFunction(func) {
+function generateFunction(func, data) {
     let tmp;
     switch (func.type) {
         case FuncType.DIRECT:
-            tmp = generateFunctionDirect(func)
+            tmp = generateFunctionDirect(func, data)
             break;
         case FuncType.SYNC:
-            tmp = generateFunctionSync(func)
+            tmp = generateFunctionSync(func, data)
             break
         case FuncType.ASYNC:
         case FuncType.PROMISE:
-            tmp = generateFunctionAsync(func)
+            tmp = generateFunctionAsync(func, data)
             break
         default:
             return
