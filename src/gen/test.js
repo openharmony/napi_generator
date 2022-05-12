@@ -12,9 +12,5 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const fs = require("fs");
-const path = require("path");
 const main = require("./main");
-const { print } = require("./tools/tool");
-
 main.doGenerate("nodejs_test/gen/@ohos.napitest.d.ts");

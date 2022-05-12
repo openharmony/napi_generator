@@ -17,9 +17,7 @@ const re = require("./tools/re");
 const { checkFileError } = require("./tools/common");
 const { NapiLog } = require("./tools/NapiLog");
 const path = require("path");
-
 const stdio = require("stdio");
-
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: ".d.ts file" },
     'out': { key: 'o', args: 1, description: "output directory", default: "." },
@@ -27,29 +25,25 @@ let ops = stdio.getopt({
 });
 
 NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"))
-
 let fn = re.getFileInPath(ops.filename)
-
-let tt = re.match("@ohos.[a-zA-Z0-9]+.d.ts", fn)
-if (tt) {
+let matchOhosFile = re.match("@ohos.[a-zA-Z0-9]+.d.ts", fn)
+if (matchOhosFile) {
     let result = checkFileError(ops.filename);
     if (result[0]) {
         main.doGenerate(ops.filename, ops.out)
     }
     else {
-        //console.log(result[1])
         NapiLog.logError(result[1]);
     }
 }
 else {
-    //print("\n文件名 " + fn + " 校验失败，需要符合 @ohos.input_sample.d.ts")
     NapiLog.logError("file name " + fn + " format invalid, @ohos.input_sample.d.ts");
 }
 
 let ret = NapiLog.getResult()
 if (ret[0]) {
-    console.log("success")
+    NapiLog.logError("success");
 }
 else {
-    console.log("fail\n" + ret[1])
+    NapiLog.logError("fail\n" + ret[1]);
 }

@@ -13,8 +13,6 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { print, removeExplains, removeEmptyLine, checkOutBody } = require("../tools/tool");
-const { FuncType, NumberIncrease } = require("../tools/common");
 
 /**函数返回值解析 */
 function analyzeReturn(ret) {
