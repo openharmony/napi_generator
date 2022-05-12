@@ -16,6 +16,7 @@ const { generateFunctionDirect } = require("./function_direct");
 const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
 const { generateInterface } = require("./interface");
+const { generateClass } = require("./class");
 const { FuncType, InterfaceList } = require("../tools/common");
 
 //生成module_middle.cpp、module.h、module.cpp
@@ -29,6 +30,14 @@ function generateNamespace(name, data, inNamespace = "") {
     for (let i in data.interface) {
         let ii = data.interface[i]
         let result = generateInterface(ii.name, ii.body, inNamespace + name + "::")
+        middleFunc += result.middleBody
+        implH += result.implH
+        implCpp += result.implCpp
+        middleInit += result.middleInit
+    }
+    for (let i in data.class) {
+        let ii = data.class[i]
+        let result = generateClass(ii.name, ii.body, inNamespace + name + "::", ii.functiontType)
         middleFunc += result.middleBody
         implH += result.implH
         implCpp += result.implCpp
