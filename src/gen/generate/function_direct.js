@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { replaceAll, print } = require("../tools/tool");
+const { replaceAll } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 
@@ -51,7 +51,7 @@ struct [funcName]_value_struct {[valueIn]
     return result;
 }`
 
-function generateFunctionDirect(func, className) {
+function generateFunctionDirect(func, data, className) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
     if (className == null) {
         middleFunc = middleFunc.replaceAll("[static_define]", "")
@@ -65,7 +65,6 @@ function generateFunctionDirect(func, className) {
     let param = {
         valueIn: "",//定义输入
         valueOut: "",//定义输出
-
         valueCheckout: "",//解析
         valueFill: "",//填充到函数内
         valuePackage: "",//输出参数打包
@@ -74,10 +73,10 @@ function generateFunctionDirect(func, className) {
 
     for (let i in func.value) {
         let v = func.value[i]
-        paramGenerate(i, v.name, v.type, param)
+        paramGenerate(i, v.name, v.type, param, data)
     }
 
-    returnGenerate(func.ret, param)
+    returnGenerate(func.ret, param, data)
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
     middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
