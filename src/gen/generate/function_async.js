@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { replaceAll, print } = require("../tools/tool");
+const { replaceAll } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 
@@ -69,7 +69,7 @@ struct [funcName]_value_struct {[valueIn]
     return result;
 }`
 
-function generateFunctionAsync(func, className) {
+function generateFunctionAsync(func, data, className) {
     let middleFunc = replaceAll(funcAsyncTemplete, "[funcName]", func.name)
     if (className == null) {
         middleFunc = middleFunc.replaceAll("[static_define]", "")
@@ -95,10 +95,10 @@ function generateFunctionAsync(func, className) {
 
     for (let i in func.value) {
         let v = func.value[i]
-        paramGenerate(i, v.name, v.type, param)
+        paramGenerate(i, v.name, v.type, param, data)
     }
 
-    returnGenerate(param.callback.type, param)
+    returnGenerate(param.callback.type, param, data)
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
     middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
