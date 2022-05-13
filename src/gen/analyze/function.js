@@ -13,7 +13,6 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { print, removeExplains, removeEmptyLine, checkOutBody } = require("../tools/tool");
 const { FuncType, NumberIncrease } = require("../tools/common");
 const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
@@ -24,18 +23,15 @@ function analyzeFunction(name, values, ret) {
     let tmp = analyzeParams(values)
     values = tmp[0]
     let funcType = tmp[1]
-
     tmp = analyzeReturn(ret)
     ret = tmp[0]
     if (tmp[1])
         funcType = FuncType.PROMISE
-
     if (funcType == FuncType.ASYNC || funcType == FuncType.PROMISE) {
         // 查看是否有同名的函数，async_callback和promise，
         // 只需要保留一个，这里简单处理，忽略所有promise
         if (funcType == FuncType.PROMISE) return null;
     }
-
     for (let j in values) {
         let v = values[j]
         if (v["type"].indexOf("number") >= 0) {

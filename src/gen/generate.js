@@ -14,7 +14,7 @@
 */
 //生成BUILD.gn
 //生成x_napi_tool.h，生成x_napi_tool.cpp
-const { replaceAll, print } = require("./tools/tool");
+const { replaceAll } = require("./tools/tool");
 const { generateNamespace } = require("./generate/namespace");
 const { writeFile } = require("./tools/FileRW");
 const re = require("./tools/re");
@@ -112,15 +112,12 @@ let implCppTemplete = `\
 
 function generateAll(structOfTs, destDir, moduleName) {
     let ns0 = structOfTs.declareNamespace[0];
-
     let license = structOfTs.declareLicense[0];
     let result = generateNamespace(ns0.name, ns0.body)
-
     let numberUsing = ""
     for (let i = 1; i < NumberIncrease.get(); i++) {
         numberUsing += "using NUMBER_TYPE_%d = uint32_t;\n".format(i)
     }
-
     let middleCpp = replaceAll(moduleCppTmplete, "[body_replace]", result.middleBody);
     middleCpp = replaceAll(middleCpp, "[init_replace]", result.middleInit);
     middleCpp = replaceAll(middleCpp, "[implName]", ns0.name);
@@ -136,7 +133,6 @@ function generateAll(structOfTs, destDir, moduleName) {
     let implCpp = implCppTemplete.replaceAll("[implName]", ns0.name)
     implCpp = implCpp.replaceAll("[implCpp_detail]", result.implCpp)
     writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), null != license ? (license + "\n" + implCpp) : implCpp)
-
 
     generateGYP(destDir, ns0.name, license)//生成ubuntu下测试的编译脚本
     generateGN(destDir, ns0.name, license)//生成BUILD.gn for ohos

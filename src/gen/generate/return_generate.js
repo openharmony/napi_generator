@@ -12,8 +12,22 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { replaceAll, print } = require("../tools/tool");
-const { InterfaceList, getArrayType } = require("../tools/common");
+const { InterfaceList, getArrayType, NumberIncrease } = require("../tools/common");
+const { NapiLog } = require("../tools/NapiLog");
+
+function isEnum(type, data) {
+    let isEnum = false
+    if (null == data) {
+        return isEnum
+    }
+    for (let i in data.enum) {
+        let enumm = data.enum[i]
+        if (type == enumm.name) {
+            isEnum = true
+        }
+    }
+    return isEnum
+}
 
 function cToJs(value, type, dest, deep = 1) {
     if (type == "void")
@@ -26,16 +40,17 @@ function cToJs(value, type, dest, deep = 1) {
         return `%s = NUMBER_C_2_JS(pxt, %s);`.format(dest, value)
     else if (InterfaceList.getValue(type)) {
         let lt = deep
-        let tt = ""
+        let result = ""
         let ifl = InterfaceList.getValue(type)
         for (let i in ifl) {
             let name2 = ifl[i].name
             let type2 = ifl[i].type
-            let tt1 = cToJs("%s.%s".format(value, name2), type2, "tnv%d".format(lt), deep + 1)
-            tt += "{\nnapi_value tnv%d = nullptr;\n".format(lt) + tt1 + `\npxt->SetValueProperty(%s,"%s",tnv%d);\n}`
-                .format(dest, name2, lt)
+            let interfaceType = cToJs("%s.%s".format(value, name2), type2, "tnv%d".format(lt), deep + 1)
+            result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
+                interfaceType + `\npxt->SetValueProperty(%s,"%s",tnv%d);\n}`
+                    .format(dest, name2, lt)
         }
-        return tt
+        return result
     }
     else if (type.substring(0, 6) == "Array<") {
         let arrayType = getArrayType(type)
@@ -60,18 +75,20 @@ function cToJs(value, type, dest, deep = 1) {
         return ret
     }
     else
-        print(`\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest))
+        NapiLog.logError(`This type do not generate cToJs %s,%s,%s`.format(value, type, dest));
 }
 
-function returnGenerate(type, param) {
+function returnGenerate(type, param, data) {
     param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")
-    param.valuePackage = "napi_value result = nullptr;\n    " + cToJs("vio->out", type, "result")
+    if (!isEnum(type, data)) {
+        param.valuePackage = "napi_value result = nullptr;\n    " + cToJs("vio->out", type, "result")
+    }
     if (type == "string") {
         param.valueOut = "std::string out;"
         param.valueDefine += "%sstd::string &out".format(param.valueDefine.length > 0 ? ", " : "")
     }
     else if (type == "void") {
-
+        NapiLog.logInfo("The current type don't need generate return %s`.format(type)");
     }
     else if (type == "boolean") {
         param.valueOut = "bool out;"
@@ -92,7 +109,7 @@ function returnGenerate(type, param) {
         param.valueDefine += "%sstd::vector<%s> &out".format(param.valueDefine.length > 0 ? ", " : "", arrayType)
     }
     else {
-        print(`\n---- The current version do not support this type return %s ----\n`.format(type))
+        NapiLog.logError("The current version do not support this type return %s`.format(type)");
     }
 }
 

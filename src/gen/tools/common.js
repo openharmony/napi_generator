@@ -85,10 +85,16 @@ function getArrayType(type) {
     return re.getReg(type, tt.regs[1])
 }
 
+function getArrayTypeTwo(type) {
+    let tt = re.match("([a-zA-Z_0-9]+)", type)
+    return re.getReg(type, tt.regs[1])
+}
+
 module.exports = {
     FuncType,
     NumberIncrease,
     InterfaceList,
     getArrayType,
+    getArrayTypeTwo,
     checkFileError
 }
