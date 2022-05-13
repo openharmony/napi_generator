@@ -12,7 +12,6 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { print } = require("../tools/tool");
 const { generateFunctionDirect } = require("./function_direct");
 const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
@@ -49,12 +48,17 @@ function generateVariable(name, type, variable, className) {
     else if (type.indexOf("Array<") == 0) {
         let type2 = getArrayType(type)
         if (type2 == "string") type2 = "std::string"
+        if (type2 == "boolean") type2 = "bool"
         variable.hDefine += "\n    std::vector<%s> %s;".format(type2, name)
+    } else if (type == "boolean") {
+        variable.hDefine += "\n    bool %s;".format(name)
+    } else if (type.indexOf("[]") == 0) {
+        variable.hDefine += "\n    std::vector<%s> %s;".format(type, name)
     }
     else
-        print(`
----- generateVariable fail %s,%s ----
-`.format(name, type))
+        NapiLog.logError(`
+        ---- generateVariable fail %s,%s ----
+        `.format(name, type));
     variable.middleValue += `
     static napi_value getvalue_%s(napi_env env, napi_callback_info info)
     {
@@ -129,14 +133,14 @@ function connectResult(data, inNamespace, name) {
         let tmp;
         switch (func.type) {
             case FuncType.DIRECT:
-                tmp = generateFunctionDirect(func, name)
+                tmp = generateFunctionDirect(func, data, name)
                 break;
             case FuncType.SYNC:
-                tmp = generateFunctionSync(func, name)
+                tmp = generateFunctionSync(func, data, name)
                 break
             case FuncType.ASYNC:
             case FuncType.PROMISE:
-                tmp = generateFunctionAsync(func, name)
+                tmp = generateFunctionAsync(func, data, name)
                 break
             default:
                 return

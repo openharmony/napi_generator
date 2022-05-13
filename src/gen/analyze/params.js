@@ -13,8 +13,9 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { print, removeExplains, removeEmptyLine, checkOutBody } = require("../tools/tool");
-const { FuncType, NumberIncrease } = require("../tools/common");
+const { checkOutBody } = require("../tools/tool");
+const { FuncType } = require("../tools/common");
+const { NapiLog } = require("../tools/NapiLog");
 
 /**函数参数解析 */
 function analyzeParams(values) {
@@ -25,19 +26,18 @@ function analyzeParams(values) {
         if (v == null)
             v = values
         values = values.substring(v.length, values.length)
-        let tt = re.match("([a-zA-Z0-9\\.]+)\\?*:([a-zA-Z<>_0-9\\(\\):='{}]+)", v)
-        if (tt != null) {
-            let type = re.getReg(v, tt.regs[2])
-            result.push({ "name": re.getReg(v, tt.regs[1]), "type": type })
+        let matchs = re.match("([a-zA-Z0-9\\.]+)\\?*:([a-zA-Z<>_0-9\\[\\]\\(\\):='{}]+)", v)
+        if (matchs != null) {
+            let type = re.getReg(v, matchs.regs[2])
+            result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type })
             if (type.indexOf("AsyncCallback") >= 0)
                 funcType = FuncType.ASYNC
             if (funcType == FuncType.DIRECT && type.indexOf("Callback") >= 0 && type.indexOf("AsyncCallback") < 0)
                 funcType = FuncType.SYNC
         }
         else {
-            print("\nvvv 参数列表解析失败 vvv")
-            print(v, values)
-            print("^^^ 参数列表解析失败 ^^^\n")
+            NapiLog.logError("参数列表解析失败");
+            NapiLog.logError("analyzeParams error params:" + v);
         }
     }
     return [result, funcType]

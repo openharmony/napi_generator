@@ -50,9 +50,11 @@ function recordLog(lev, ...args) {
     let dataStr = getDateString();
     let detail = args.join(" ");
     saveLog(dataStr, LEV_STR[lev], detail);
-    logResultMessage = [false, detail];
+    if (lev == NapiLog.LEV_ERROR) {
+        logResultMessage = [false, detail];
+    }
     if (logLevel < lev) return;
-    console.log(dataStr, LEV_STR[lev], detail)
+    NapiLog.logInfo(dataStr + LEV_STR[lev] + detail);
 }
 
 NapiLog.logError = function (...args) {

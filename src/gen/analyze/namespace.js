@@ -71,17 +71,17 @@ function analyzeNamespace(data) {
     return result
 }
 
-function parseNamespace(tt, data, result) {
-    tt = re.match("(export )*namespace ([a-zA-Z0-9]+) ({)", data)
-    if (tt) {
-        let namespaceName = re.getReg(data, tt.regs[2])
-        let namespaceBody = checkOutBody(data, tt.regs[3][0], null, true)
+function parseNamespace(matchs, data, result) {
+    matchs = re.match("(export )*namespace ([a-zA-Z0-9]+) ({)", data)
+    if (matchs) {
+        let namespaceName = re.getReg(data, matchs.regs[2])
+        let namespaceBody = checkOutBody(data, matchs.regs[3][0], null, true)
         result.namespace.push({
             name: namespaceName,
             body: analyzeNamespace(namespaceBody)
         })
-        data = data.substring(tt.regs[3][0] + namespaceBody.length + 2, data.length)
-        if (tt.regs[1][0] != -1) {
+        data = data.substring(matchs.regs[3][0] + namespaceBody.length + 2, data.length)
+        if (matchs.regs[1][0] != -1) {
             result.exports.push(namespaceName)
         }
     }
@@ -186,11 +186,9 @@ function parseFunction(matchs, data, result) {
         else {
             funcRet = "void"
         }
-
         let funcDetail = analyzeFunction(funcName, funcValue.substring(1, funcValue.length - 1), funcRet)
         if (funcDetail != null)
             result.function.push(funcDetail)
-
         if (matchs.regs[1][0] != -1) {
             result.exports.push(funcName)
         }
@@ -222,17 +220,14 @@ function removeReg(matchs, data, result) {
         result.exports.push(exportName)
         data = re.removeReg(data, matchs.regs[0])
     }
-
     matchs = re.match("export import [a-zA-Z]+ = [a-zA-Z\\.]+;", data)
     if (matchs) {
         data = re.removeReg(data, matchs.regs[0])
     }
-
     matchs = re.match("readonly [a-zA-Z]+: [a-z\\[\\]]+;*", data)
     if (matchs) {
         data = re.removeReg(data, matchs.regs[0])
     }
-
     return data
 }
 module.exports = {

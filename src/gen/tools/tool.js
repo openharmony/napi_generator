@@ -12,6 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
+const { NapiLog } = require("./NapiLog");
 const re = require("./re");
 let vscode = null;
 try {
@@ -25,7 +26,7 @@ function print(...args) {
     if (vscode) {
         vscode.window.showInformationMessage(...args);
     }
-    console.log(...args)
+    NapiLog.logInfo(...args);
 }
 
 String.prototype.format = function (...args) {

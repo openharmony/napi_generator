@@ -13,8 +13,7 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { print, removeExplains, removeEmptyLine, checkOutBody } = require("../tools/tool");
-const { FuncType, NumberIncrease } = require("../tools/common");
+const { NumberIncrease } = require("../tools/common");
 
 const { analyzeFunction } = require("./function");
 
