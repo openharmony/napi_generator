@@ -12,9 +12,9 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { replaceAll, print } = require("../tools/tool");
-const { InterfaceList, getArrayType } = require("../tools/common");
+const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease } = require("../tools/common");
 const re = require("../tools/re");
+const { NapiLog } = require("../tools/NapiLog");
 
 class LenIncrease { }
 LenIncrease.LEN_TO = 1;
@@ -39,6 +39,10 @@ function jsToC(dest, napiVn, type) {
         else
             return "pxt->SwapJs2CUtf8(%s, %s);".format(napiVn, dest)
     }
+
+    else if (type.indexOf("[]") > 0) {
+        return arrTemplete(dest, napiVn, type);
+    }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
@@ -61,12 +65,21 @@ function jsToC(dest, napiVn, type) {
     else if (type.indexOf("Array<") == 0) {
         return arrTemplete(dest, napiVn, type);
     }
+    else if (type == "boolean") {
+        return "pxt->SwapC2JsBool(%s);".format(napiVn)
+    }
+
     else
-        print(`\n---- do not support to generate jsToC %s,%s,%s ----\n`.format(dest, napiVn, type))
+        NapiLog.logError(`do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type));
 }
 
 function arrTemplete(dest, napiVn, type) {
-    let arrayType = getArrayType(type)
+    let arrayType
+    if (type.indexOf("[]") > 0) {
+        arrayType = getArrayTypeTwo(type)
+    } else {
+        arrayType = getArrayType(type)
+    }
     let lt = LenIncrease.getAndIncrease()
     if (arrayType == "string") arrayType = "std::string"
     let arrTemplete = `\
@@ -75,7 +88,7 @@ function arrTemplete(dest, napiVn, type) {
         %s tt[replace_lt];
         [replace_swap]
         %s.push_back(tt[replace_lt]);
-    }`.format(napiVn, arrayType, dest)
+    }`.format(napiVn, arrayType == "boolean" ? "bool" : arrayType, dest)
 
     arrTemplete = arrTemplete.replaceAll("[replace_lt]", lt)
     if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
@@ -90,29 +103,39 @@ function arrTemplete(dest, napiVn, type) {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             jsToC("tt" + lt, "pxt->GetArrayElement(%s,i%d)".format(napiVn, lt), arrayType))
     }
+    else if (arrayType == "boolean") {
+        arrTemplete = arrTemplete.replaceAll("[replace_swap]",
+            "pxt->SwapJs2CBool(pxt->GetArrayElement(%s,i%d));".format(napiVn, lt))
+    }
 
     return arrTemplete
 }
 
-function paramCheckout(name, napiVn, type) {
-    if (type in this.interface_list) {
-        for (let i in this.interface_list[type]) {
-            let e = this.interface_list[type][i]
-            let name2 = Object.keys(e)[0]
-            let type2 = e[name2]
-            this.values_["value_analyze"] += "%s%s".format(new_line(this.values_["value_analyze"]),
-                this.jsToC("%s.%s".format(name, name2),
-                    this.getValueProperty(napiVn, name2),
-                    type2))
-        }
+function paramGenerateArray(p, name, type, param) {
+    if (type.indexOf("[]") > 0) {
+        let arrayType = getArrayTypeTwo(type)
+        if (arrayType == "string") arrayType = "std::string"
+        if (arrayType == "boolean") arrayType = "bool"
+        param.valueIn += "\n    std::vector<%s> in%d;".format(arrayType, p)
+        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+        param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
+        param.valueDefine += "%sstd::vector<%s> &%s".format(param.valueDefine.length > 0 ? ", " : "", arrayType, name)
+    } else if (type.substring(0, 6) == "Array<") {
+        let arrayType = getArrayType(type)
+        if (arrayType == "string") arrayType = "std::string"
+        if (arrayType == "boolean") arrayType = "bool"
+        param.valueIn += "\n    std::vector<%s> in%d;".format(arrayType, p)
+        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+        param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
+        param.valueDefine += "%sstd::vector<%s> &%s".format(param.valueDefine.length > 0 ? ", " : "", arrayType, name)
+    } else {
+        NapiLog.logError("The current version do not support to this param to generate :", name, "type :", type);
     }
-    else if (type.substring(0, 12) == "NUMBER_TYPE_" || type == "string" || type.substring(0, 6) == "Array<")
-        this.values_["value_analyze"] += "%s%s".format(new_line(this.values_["value_analyze"]),
-            this.jsToC(name, napiVn, type))
+    return param
 }
 
 // 函数的参数处理
-function paramGenerate(p, name, type, param) {
+function paramGenerate(p, name, type, param, data) {
     if (type == "string") {
         param.valueIn += "\n    std::string in%d;".format(p)
         param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
@@ -131,14 +154,6 @@ function paramGenerate(p, name, type, param) {
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%s%s &%s".format(param.valueDefine.length > 0 ? ", " : "", type, name)
     }
-    else if (type.substring(0, 6) == "Array<") {
-        let arrayType = getArrayType(type)
-        if (arrayType == "string") arrayType = "std::string"
-        param.valueIn += "\n    std::vector<%s> in%d;".format(arrayType, p)
-        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
-        param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
-        param.valueDefine += "%sstd::vector<%s> &%s".format(param.valueDefine.length > 0 ? ", " : "", arrayType, name)
-    }
     else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
         let tt = re.match("(Async)*Callback<([a-zA-Z_0-9]+)>", type)
         param.callback = {
@@ -146,10 +161,15 @@ function paramGenerate(p, name, type, param) {
             offset: p
         }
     }
-    else
-        print("The current version do not support to this param to generate :", name, "type :", type)
+    else if (type == "boolean") {
+        param.valueIn += "\n    bool in%d;".format(p)
+        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+        param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
+        param.valueDefine += "%sbool &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
+    } else {
+        param = paramGenerateArray(p, name, type, param);
+    }
 }
-
 module.exports = {
     jsToC,
     paramGenerate
