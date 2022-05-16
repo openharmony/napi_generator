@@ -16,35 +16,41 @@ package com.sk.dialog;
 
 import com.intellij.openapi.diagnostic.Logger;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JList;
+import javax.swing.JPanel;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author: xudong
- * @see: 成功弹窗
- * @version: 2022/02/21/v1.0.0
+ * @see: generate success dialog
+ * @version: v1.0.0
+ * @since 2022/02/21
  */
 public class GenResultDialog extends JDialog {
     private static final Logger LOG = Logger.getInstance(GenResultDialog.class);
     private JPanel contentPane;
     private JButton buttonOK;
     private JList resultList;
+    private String path;
 
     public GenResultDialog(String directoryPath) {
+        path = directoryPath;
+    }
+
+    /**
+     * 初始化
+     */
+    public void initResultDialog() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setTitle("执行成功");
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-        List<String> fileList = getDirFileName(directoryPath);
+        buttonOK.addActionListener(actionEvent -> onOK());
+        List<String> fileList = getDirFileName(path);
         resultList.setListData(fileList.toArray(new String[fileList.size()]));
     }
 
@@ -54,14 +60,14 @@ public class GenResultDialog extends JDialog {
 
     private List<String> getDirFileName(String path) {
         List<String> files = new ArrayList<>();
-        File f = new File(path);
-        if (!f.exists()) {
+        File file = new File(path);
+        if (!file.exists()) {
             LOG.info("getDirFileName f not exist");
             return files;
         }
-        File fa[] = f.listFiles();
-        for (int i = 0; i < fa.length; i++) {
-            File fs = fa[i];
+        File[] fileArray = file.listFiles();
+        for (int i = 0; i < fileArray.length; i++) {
+            File fs = fileArray[i];
             if (!fs.isDirectory()) {
                 files.add(fs.getPath());
             } else {

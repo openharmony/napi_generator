@@ -26,8 +26,9 @@ import java.util.regex.Pattern;
 
 /**
  * @author: xudong
- * @see: 工具转换插件
- * @version: 2022/02/21/v1.0.0
+ * @see: tool conversion plug-in
+ * @version: v1.0.0
+ * @since 2022/02/21
  */
 public class GenDTS extends AnAction {
     private static final Logger LOG = Logger.getInstance(GenDTS.class);
@@ -54,6 +55,7 @@ public class GenDTS extends AnAction {
 
     private void showDialog(String destPath, String directoryPath, String fileName) {
         GenerateDialog dialog = new GenerateDialog(destPath, directoryPath, fileName);
+        dialog.initDialog();
         dialog.setLocationRelativeTo(dialog);
         dialog.pack();
         dialog.setVisible(true);

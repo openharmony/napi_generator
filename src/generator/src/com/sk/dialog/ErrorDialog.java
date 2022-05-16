@@ -16,54 +16,68 @@ package com.sk.dialog;
 
 import com.intellij.openapi.diagnostic.Logger;
 
-import javax.swing.*;
-import java.awt.event.*;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 /**
  * @author: xudong
- * @see: 生成文件错误弹窗
- * @version: 2022/02/21/v1.0.0
+ * @see: generator error dialog
+ * @version: v1.0.0
+ * @since 2022/02/21
  */
 public class ErrorDialog extends JDialog {
     private static final Logger LOG = Logger.getInstance(ErrorDialog.class);
+    private static final String URL =
+            "rundll32 url.dll,FileProtocolHandler" + " https://gitee" + ".com/openharmony" + "-sig/napi_generator";
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonHelp;
     private JTextArea textAreaError;
+    private String errorMessage;
 
     public ErrorDialog(String sErrorMessage) {
+        errorMessage = sErrorMessage;
+    }
+
+    /**
+     * 初始化
+     */
+    public void initDialog() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setTitle("执行失败");
-        textAreaError.setText(sErrorMessage);
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        textAreaError.setText(errorMessage);
+        buttonOK.addActionListener(actionEvent -> onOK());
 
-        buttonHelp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonHelp.addActionListener(actionEvent -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+            /**
+             * close dialog
+             * @param windowEvent WindowEvent
+             */
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
                 onCancel();
             }
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(actionEvent -> onCancel(),
+                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onOK() {
@@ -72,10 +86,9 @@ public class ErrorDialog extends JDialog {
 
     private void onCancel() {
         try {
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler" +
-                    " https://gitee.com/openharmony-sig/napi_generator");
-        } catch (IOException e) {
-            LOG.error("exec command help error");
+            Runtime.getRuntime().exec(URL);
+        } catch (IOException ioException) {
+            LOG.error("exec command help error" + ioException);
         }
         dispose();
     }
