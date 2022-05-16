@@ -1,3 +1,18 @@
+/*
+* Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd. 
+* Licensed under the Apache License, Version 2.0 (the "License"); 
+* you may not use this file except in compliance with the License. 
+* You may obtain a copy of the License at 
+*
+* http://www.apache.org/licenses/LICENSE-2.0 
+*
+* Unless required by applicable law or agreed to in writing, software 
+* distributed under the License is distributed on an "AS IS" BASIS, 
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+* See the License for the specific language governing permissions and 
+* limitations under the License. 
+*/
+
 ## End User License Agreement
 
 THIS END USER LICENSE AGREEMENT (“AGREEMENT”) IS A LEGAL AGREEMENT BETWEEN YOU (EITHER A SINGLE INDIVIDUAL, OR SINGLE LEGAL ENTITY) AND【 深圳开鸿数字产业发展有限公司 】 (HERE AFTER REFERRED TO AS"【 深开鸿】") FOR THE USE OF THE SOFTWARE ACCOMPANYING THIS AGREEMENT. 【 深开鸿】 IS ONLY WILLING TO LICENSE THE SOFTWARE TO YOU ON CONDITION THAT YOU ACCEPT ALL OF THE TERMS IN THIS AGREEMENT. BY DOWNDOADING OR BY INSTALLING OR OTHERWISE USING OR COPYING THE SOFTWARE YOU INDICATE THAT YOU AGREE TO BE BOUND BY ALL OF THE TERMS OF THIS AGREEMENT. IF YOU DO NOT AGREE TO THE TERMS OF THIS AGREEMENT,【深开鸿 】 WILL NOT LICENSE THE SOFTWARE TO YOU AND YOU MAY NOT INSTALL, USE OR COPY THE SOFTWARE, AND YOU SHALL PROMPTLY DESTROY, DELETE, OR RETURN THE SOFTWARE TO YOUR SUPPLIER.

@@ -15,13 +15,20 @@
 package com.sk.utils;
 
 import com.intellij.openapi.diagnostic.Logger;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @author: xudong
- * @see: 文件相关操作工具
- * @version: 2022/02/21/v1.0.0
+ * @see: file utils
+ * @version: v1.0.0
+ * @since 2022/02/21
  */
 public class FileUtil {
     private static final Logger LOG = Logger.getInstance(FileUtil.class);
@@ -29,27 +36,16 @@ public class FileUtil {
     /**
      * 将错误信息输入到txt中
      *
-     * @param path
-     * @param content
-     * @throws IOException
+     * @param path    路径
+     * @param content 内容
+     * @throws IOException 异常
      */
     public void writeErrorToTxt(String path, String content) {
         File file = new File(path);
-        FileWriter fw = null;
-        try {
-            //设置为:True,表示写入的时候追加数据
-            fw = new FileWriter(file, true);
-            fw.write(content + "\r\n");
-        } catch (IOException e) {
-            LOG.error("writeErrorToTxt io error");
-        } finally {
-            if (fw != null) {
-                try {
-                    fw.close();
-                } catch (IOException e) {
-                    LOG.error("writeErrorToTxt io error");
-                }
-            }
+        try (FileWriter fw = new FileWriter(file, true)) {
+            fw.write(content + FileUtil.getNewline());
+        } catch (IOException ioException) {
+            LOG.error("writeErrorToTxt io error" + ioException);
         }
     }
 
@@ -64,9 +60,13 @@ public class FileUtil {
         if (!file.exists()) {
             try {
                 boolean isCreateFile = file.createNewFile();
-                LOG.info("makeFile result isCreateFile = " + isCreateFile);
-            } catch (IOException e) {
-                LOG.error("writeErrorToTxt io error");
+                if (isCreateFile) {
+                    LOG.info("makeFile result success");
+                } else {
+                    LOG.info("makeFile result error");
+                }
+            } catch (IOException ioException) {
+                LOG.error("makeFile io error" + ioException);
                 return "";
             }
         }
@@ -79,21 +79,15 @@ public class FileUtil {
      * @param path    文件路径
      * @param content 指定内容
      * @return 是否包含指定字符串
+     * @throws IOException 异常信息
      */
-    public boolean findStringInFile(String path, String content) {
+    public boolean findStringInFile(String path, String content) throws IOException {
         File file = new File(path);
-        String[] command = content.split("\n");
-        InputStreamReader read = null;
-        try {
-            read = new InputStreamReader(new FileInputStream(file), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            LOG.error("findStringInFile encodingException");
-        } catch (FileNotFoundException e) {
-            LOG.error("findStringInFile FileNotFoundException");
+        String[] command = content.split(StringUtils.LF);
+        try (InputStreamReader read = new InputStreamReader(new FileInputStream(file), "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(read)) {
+            return isContainString(bufferedReader, command);
         }
-        //考虑到编码格式
-        BufferedReader bufferedReader = new BufferedReader(read);
-        return isContainString(bufferedReader, command);
     }
 
     private boolean isContainString(BufferedReader bufferedReader, String[] command) {
@@ -103,13 +97,13 @@ public class FileUtil {
                 if (!((line = bufferedReader.readLine()) != null)) {
                     return false;
                 }
-            } catch (IOException e) {
-                LOG.error("findStringInFile IOException");
+            } catch (IOException ioException) {
+                LOG.error("findStringInFile IOException" + ioException);
             } finally {
                 try {
                     bufferedReader.close();
-                } catch (IOException e) {
-                    LOG.error("findStringInFile io error");
+                } catch (IOException ioException) {
+                    LOG.error("findStringInFile io error" + ioException);
                 }
             }
             line += line;
@@ -117,5 +111,14 @@ public class FileUtil {
                 return true;
             }
         }
+    }
+
+    /**
+     * 获取换行符
+     *
+     * @return 换行符
+     */
+    public static String getNewline() {
+        return System.getProperty("line.separator");
     }
 }

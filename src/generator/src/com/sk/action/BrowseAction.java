@@ -14,15 +14,18 @@
  */
 package com.sk.action;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
  * @author: xudong
- * @see: 选择文件
- * @version: 2022/02/21/v1.0.0
+ * @see: select file
+ * @version: v1.0.0
+ * @since 2022/02/21
  */
 public class BrowseAction implements ActionListener {
     private JButton button;
@@ -34,8 +37,8 @@ public class BrowseAction implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(button)) {
+    public void actionPerformed(ActionEvent actionEvent) {
+        if (actionEvent.getSource().equals(button)) {
             JFileChooser fcDlg = new JFileChooser();
             fcDlg.setDialogTitle("请选择接口文件...");
             fcDlg.setFileSelectionMode(JFileChooser.FILES_ONLY);
