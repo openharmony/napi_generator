@@ -131,7 +131,6 @@ function paramGenerateArray(p, name, type, param) {
     } else {
         NapiLog.logError("The current version do not support to this param to generate :", name, "type :", type);
     }
-    return param
 }
 
 // 函数的参数处理
@@ -142,7 +141,7 @@ function paramGenerate(p, name, type, param, data) {
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sstd::string &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
     }
-    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+    else if (type.substring(0, 12) == "NUMBER_TYPE_" && type.indexOf("[]") < 0) {
         param.valueIn += "\n    %s in%d;".format(type, p)
         param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
@@ -167,7 +166,7 @@ function paramGenerate(p, name, type, param, data) {
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sbool &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
     } else {
-        param = paramGenerateArray(p, name, type, param);
+        paramGenerateArray(p, name, type, param);
     }
 }
 module.exports = {
