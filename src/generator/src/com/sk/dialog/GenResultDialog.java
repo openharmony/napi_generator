@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class GenResultDialog extends JDialog {
     private static final Logger LOG = Logger.getInstance(GenResultDialog.class);
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JList resultList;

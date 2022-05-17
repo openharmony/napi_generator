@@ -189,6 +189,14 @@ public class GenerateDialog extends JDialog {
         } catch (InterruptedException exception) {
             LOG.warn("exec command Interrupted" + exception);
             Thread.currentThread().interrupt();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException ioException) {
+                    LOG.error("exec command close inputStream error" + ioException);
+                }
+            }
         }
     }
 
@@ -298,7 +306,8 @@ public class GenerateDialog extends JDialog {
     private void genResultLog(Process process) {
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
         BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        String sErr, sOut;
+        String sErr;
+        String sOut;
         sErr = getErrorResult(stdError);
         if (TextUtils.isEmpty(sErr)) {
             sOut = genInputLog(stdInput);
