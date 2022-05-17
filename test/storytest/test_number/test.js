@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { fun1, fun2, fun3,fun4,fun5 } = require("./out/build/Release/napitest")
+const { fun1, fun2, fun3, fun4, fun5 } = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('Number', function () {
@@ -39,7 +39,7 @@ describe('Number', function () {
     });
 
     it('test fun4', function () {
-        fun4('aaa',abc);
+        fun4('aaa', abc);
     });
 
     function def(ret) {
@@ -47,7 +47,7 @@ describe('Number', function () {
     }
 
     it('test fun5', function () {
-        fun5(12,def);
+        fun5(12, def);
         //fun5(12).then(def);
     });
 
