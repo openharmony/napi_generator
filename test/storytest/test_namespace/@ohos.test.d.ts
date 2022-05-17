@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-import { AsyncCallback, Callback } from './basic';
+import { AsyncCallback, Callback } from './../basic';
 
 declare namespace napitest {
     namespace Space3 {
@@ -23,7 +23,7 @@ declare namespace napitest {
         }
         interface TestClass2 {
             animal: Animal;
-            fix(v1:string):string;
+            fix(v1: string): string;
             fun2(numcc: Array<number>, animalcc: Animal): Animal;
         }
     }

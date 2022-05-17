@@ -15,11 +15,11 @@ def do_test():
         return
     if not os.path.exists("out"):
         os.mkdir("out")
-    ret=os.popen("node ../../../src/gen/cmd_gen.js -f @ohos.test.d.ts -o ./out")
+    ret = os.popen("node ../../../src/gen/cmd_gen.js -f @ohos.test.d.ts -o ./out")
     print(ret.read())
 
     os.chdir("out")
-    ret=os.popen("npx node-gyp configure build")
+    ret = os.popen("npx node-gyp configure build")
     os.chdir("..")
     
     if "COPY Release" not in ret.read():
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     work_path = os.path.split(sys.argv[0])[0]
     os.chdir(work_path)
 
-    if len(sys.argv)>=2:
+    if len(sys.argv) >= 2:
         for fn in sys.argv[1:]:
             if os.path.isdir(fn):
                 os.chdir(fn)

@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-import { AsyncCallback, Callback } from './basic';
+import { AsyncCallback, Callback } from './../basic';
 
 declare namespace napitest {
     interface Human {
@@ -25,7 +25,7 @@ declare namespace napitest {
         num1: number;
         fun1(v: number): number;
         fun2(numcc: Array<number>, mancc: Human): Human;
-        fun3(v: number):boolean;
+        fun3(v: number): boolean;
         fun4(v2: string, mancc: Array<Human>): Human;
     }
 }
