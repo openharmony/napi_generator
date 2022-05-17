@@ -21,18 +21,42 @@ import com.sk.action.ScriptAction;
 import com.sk.utils.FileUtil;
 import org.apache.http.util.TextUtils;
 
-import javax.swing.*;
-import java.awt.event.*;
-import java.io.*;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author: xudong
- * @see: 选择路径弹窗
- * @version: 2022/02/21/v1.0.0
+ * @see: select generate dialog
+ * @version: v1.0.0
+ * @since 2022/02/21
  */
 public class GenerateDialog extends JDialog {
     private static final Logger LOG = Logger.getInstance(GenerateDialog.class);
     private static final String TITLE = "Generate Napi Frame";
+    private static final String URL =
+            "rundll32 url.dll,FileProtocolHandler" + " https://gitee" + ".com/openharmony" + "-sig/napi_generator";
+    private static final String COMMAND_STATEMENT = "add_library(napitest SHARED x_napi_tool.cpp napitest.cpp "
+            + "napitest_middle.cpp)" + FileUtil.getNewline() + "target_link_libraries(napitest libace_napi.z.so)";
+    private static final String REGEX = "napitest";
+    private static final Pattern LF_PATTERN = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -48,61 +72,69 @@ public class GenerateDialog extends JDialog {
     private JButton buttonHelp;
     private boolean generateSuccess = true;
     private String sErrorMessage = "";
-    private String destPath, directoryPath, fileName;
+    private String destPath;
+    private String directoryPath;
+    private String fileName;
 
+    /**
+     * 构造函数
+     *
+     * @param destPath      接口文件路径
+     * @param directoryPath 生成框架文件路径
+     * @param fileName      文件名
+     */
     public GenerateDialog(String destPath, String directoryPath, String fileName) {
         this.destPath = destPath;
         this.directoryPath = directoryPath;
         this.fileName = fileName;
+    }
+
+    /**
+     * 初始化对话框
+     */
+    public void initDialog() {
         initData();
         setContentPane(contentPane);
         setModal(true);
         setTitle(TITLE);
         getRootPane().setDefaultButton(buttonOK);
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        btnGenPath.setText("生成框架路径：");
+        btnSelectScript.setText("编译脚本路径：");
+        btnSelectInter.setText("接口文件：");
+        buttonOK.addActionListener(actionEvent -> onOK());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(actionEvent -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+            /**
+             * close dialog
+             * @param windowEvent WindowEvent
+             */
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
                 onCancel();
             }
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(actionEvent -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         selectInter.addActionListener(new BrowseAction(selectInter, textField1));
         selectGenPath.addActionListener(new GenAction(selectGenPath, textField2));
         select.addActionListener(new ScriptAction(select, textField3));
         buttonHelp.addComponentListener(new ComponentAdapter() {
         });
-        buttonHelp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onHelp();
-            }
-        });
+        buttonHelp.addActionListener(actionEvent -> onHelp());
     }
 
     private void onHelp() {
         try {
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler" + " https://gitee.com/openharmony-sig/napi_generator");
-        } catch (IOException e) {
-            LOG.error("exec command help error");
+            Runtime.getRuntime().exec(URL);
+        } catch (IOException ioException) {
+            LOG.error("exec command help error" + ioException);
         }
         dispose();
     }
@@ -139,7 +171,6 @@ public class GenerateDialog extends JDialog {
     }
 
     private void runFun(String destPath, String parentPath) {
-        String command;
         InputStream inputStream;
         String sysName = System.getProperties().getProperty("os.name").toUpperCase();
 
@@ -150,17 +181,14 @@ public class GenerateDialog extends JDialog {
         } else {
             inputStream = getClass().getClassLoader().getResourceAsStream("cmds/linux/napi_generator-mac");
         }
-        command = genCommand(inputStream, destPath, parentPath);
-
+        String command = genCommand(inputStream, destPath, parentPath);
         try {
-            try {
-                callExtProcess(command);
-            } catch (InterruptedException e) {
-                LOG.warn("exec command Interrupted");
-                Thread.currentThread().interrupt();
-            }
-        } catch (IOException ex) {
-            LOG.debug("exec command error");
+            callExtProcess(command);
+        } catch (IOException ioException) {
+            LOG.error("exec command error" + ioException);
+        } catch (InterruptedException exception) {
+            LOG.warn("exec command Interrupted" + exception);
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -177,8 +205,8 @@ public class GenerateDialog extends JDialog {
             try {
                 byte[] bs = inputStream.readAllBytes();
                 writeTmpFile(execFn, bs);
-            } catch (IOException e) {
-                LOG.error("runFun WIN write_tmp_file io error");
+            } catch (IOException ioException) {
+                LOG.error("runFun WIN write_tmp_file io error" + ioException);
             }
         }
         return file + " " + "-f" + " " + destPath + " " + "-o" + " " + parentPath;
@@ -206,25 +234,30 @@ public class GenerateDialog extends JDialog {
     }
 
     private void writeCommand() {
-        String command = "add_library(napitest SHARED x_napi_tool.cpp napitest.cpp napitest_middle.cpp)".replaceAll("napitest", fileName) + "\n" + "target_link_libraries(napitest libace_napi.z.so)".replaceAll("napitest", fileName);
         FileUtil fileUtil = new FileUtil();
         String filePath = fileUtil.makeFile(directoryPath + "/makeFile.txt");
         if (TextUtils.isEmpty(filePath)) {
             LOG.error("makeFile is error");
             return;
         }
-        if (!fileUtil.findStringInFile(filePath, command)) {
-            fileUtil.writeErrorToTxt(filePath, command);
+        Matcher matcher = LF_PATTERN.matcher(COMMAND_STATEMENT);
+        String statement = matcher.replaceAll(fileName);
+        try {
+            if (!fileUtil.findStringInFile(filePath, statement)) {
+                fileUtil.writeErrorToTxt(filePath, statement);
+            }
+        } catch (IOException ioException) {
+            LOG.error("writeCommand io error" + ioException);
         }
     }
 
     private void executable(String execFn) {
         try {
             callExtProcess("chmod a+x " + execFn);
-        } catch (IOException e) {
-            LOG.warn("LINUX IOException error");
-        } catch (InterruptedException e) {
-            LOG.warn("exec chmod command Interrupted");
+        } catch (IOException ioException) {
+            LOG.warn("LINUX IOException error" + ioException);
+        } catch (InterruptedException exception) {
+            LOG.warn("exec chmod command Interrupted" + exception);
             Thread.currentThread().interrupt();
         }
     }
@@ -237,26 +270,26 @@ public class GenerateDialog extends JDialog {
                 LOG.info("writeTmpFile createNewFile error");
             }
         }
-        FileOutputStream fw = null;
-        try {
-            fw = new FileOutputStream(file);
+        try (FileOutputStream fw = new FileOutputStream(file)) {
             fw.write(bs, 0, bs.length);
-        } catch (IOException e) {
-            LOG.error("writeTmpFile io error");
-        } finally {
-            if (fw != null) {
-                fw.close();
-            }
+        } catch (IOException ioException) {
+            LOG.error("writeTmpFile io error" + ioException);
         }
     }
 
     private void promptDialog() {
-        JDialog dialog;
         if (generateSuccess) {
-            dialog = new GenResultDialog(directoryPath);
+            GenResultDialog genResultDialog = new GenResultDialog(directoryPath);
+            genResultDialog.initResultDialog();
+            setMethod(genResultDialog);
         } else {
-            dialog = new ErrorDialog(sErrorMessage);
+            ErrorDialog errorDialog = new ErrorDialog(sErrorMessage);
+            errorDialog.initDialog();
+            setMethod(errorDialog);
         }
+    }
+
+    private void setMethod(JDialog dialog) {
         dialog.setLocationRelativeTo(dialog);
         dialog.pack();
         dialog.setVisible(true);
@@ -286,9 +319,9 @@ public class GenerateDialog extends JDialog {
                 if ((sTmp = stdError.readLine()) == null) {
                     break;
                 }
-                sErr += sTmp + "\n";
-            } catch (IOException e) {
-                LOG.error(" genResultLog stdInput error");
+                sErr += sTmp + FileUtil.getNewline();
+            } catch (IOException ioException) {
+                LOG.error(" genResultLog stdInput error" + ioException);
             }
         }
         return sErr;
@@ -311,9 +344,9 @@ public class GenerateDialog extends JDialog {
                 if ((sTmp = stdInput.readLine()) == null) {
                     break;
                 }
-                sOut += sTmp + "\n";
-            } catch (IOException e) {
-                LOG.error(" genResultLog stdInput error");
+                sOut += sTmp + FileUtil.getNewline();
+            } catch (IOException ioException) {
+                LOG.error(" genResultLog stdInput error" + ioException);
             }
         }
         return sOut;
@@ -336,8 +369,8 @@ public class GenerateDialog extends JDialog {
                 while ((line = br.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);
                 }
-            } catch (IOException ex) {
-                LOG.error("StreamConsumer io error");
+            } catch (IOException ioException) {
+                LOG.error("StreamConsumer io error" + ioException);
             }
         }
     }
