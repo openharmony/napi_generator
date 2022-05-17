@@ -47,6 +47,10 @@ function analyzeFile(fn) {
     if (null != licenseData) {
         result.declareLicense.push(licenseData)
     }
+    return analyze(data, result)
+}
+
+function analyze(data, result) {
     while (true) {
         let oldData = data
         data = removeEmptyLine(data)
