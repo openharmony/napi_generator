@@ -46,6 +46,10 @@ let moduleCppTmplete = `\
         dest = pxt->SwapJs2CDouble(napi_v);    \\
     } 
 
+#define BOOLEAN_JS_2_C(napi_v, type, dest){    \\
+    dest = pxt->SwapC2JsBool(napi_v);          \\
+}                                               \\
+
 static napi_value number_c_to_js(XNapiTool *pxt, const std::type_info &n, void *num)
 {
     if (n == typeid(int32_t))

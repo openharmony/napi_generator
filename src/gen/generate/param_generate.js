@@ -66,7 +66,7 @@ function jsToC(dest, napiVn, type) {
         return arrTemplete(dest, napiVn, type);
     }
     else if (type == "boolean") {
-        return "pxt->SwapC2JsBool(%s);".format(napiVn)
+        return `BOOLEAN_JS_2_C(%s,%s,%s);`.format(napiVn, "bool", dest)
     }
 
     else

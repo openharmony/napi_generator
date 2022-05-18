@@ -171,32 +171,23 @@ public class GenerateDialog extends JDialog {
     }
 
     private void runFun(String destPath, String parentPath) {
-        InputStream inputStream;
         String sysName = System.getProperties().getProperty("os.name").toUpperCase();
-
+        String executeProgram;
         if (sysName.indexOf("WIN") >= 0) {
-            inputStream = getClass().getClassLoader().getResourceAsStream("cmds/win/napi_generator-win.exe");
+            executeProgram = "cmds/win/napi_generator-win.exe";
         } else if (sysName.indexOf("LINUX") >= 0) {
-            inputStream = getClass().getClassLoader().getResourceAsStream("cmds/linux/napi_generator-linux");
+            executeProgram = "cmds/linux/napi_generator-linux";
         } else {
-            inputStream = getClass().getClassLoader().getResourceAsStream("cmds/linux/napi_generator-mac");
+            executeProgram = "cmds/linux/napi_generator-mac";
         }
-        String command = genCommand(inputStream, destPath, parentPath);
-        try {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(executeProgram)) {
+            String command = genCommand(inputStream, destPath, parentPath);
             callExtProcess(command);
         } catch (IOException ioException) {
             LOG.error("exec command error" + ioException);
         } catch (InterruptedException exception) {
             LOG.warn("exec command Interrupted" + exception);
             Thread.currentThread().interrupt();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException ioException) {
-                    LOG.error("exec command close inputStream error" + ioException);
-                }
-            }
         }
     }
 
