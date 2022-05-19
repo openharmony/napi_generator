@@ -12,22 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { InterfaceList, getArrayType, NumberIncrease } = require("../tools/common");
+const { InterfaceList, getArrayType, NumberIncrease, enumIndex, isEnum, EnumValueType } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
-
-function isEnum(type, data) {
-    let isEnum = false
-    if (null == data) {
-        return isEnum
-    }
-    for (let i in data.enum) {
-        let enumm = data.enum[i]
-        if (type == enumm.name) {
-            isEnum = true
-        }
-    }
-    return isEnum
-}
 
 function cToJs(value, type, dest, deep = 1) {
     if (type == "void")
@@ -94,6 +80,9 @@ function returnGenerate(type, param, data) {
         param.valueOut = "bool out;"
         param.valueDefine += "%sbool &out".format(param.valueDefine.length > 0 ? ", " : "")
     }
+    else if (isEnum(type, data)) {
+        returnGenerateEnum(data, type, param)
+    }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         param.valueOut = type + " out;"
         param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
@@ -110,6 +99,27 @@ function returnGenerate(type, param, data) {
     }
     else {
         NapiLog.logError("The current version do not support this type return %s`.format(type)");
+    }
+}
+
+function returnGenerateEnum(data, type, param) {
+    let index = enumIndex(type, data)
+    if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+        type = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
+    } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+        type = "string"
+    } else {
+        NapiLog.logError(`returnGenerate is not support`);
+        return
+    }
+    param.valuePackage = "napi_value result = nullptr;\n    " + cToJs("vio->out", type, "result")
+    if (type == "string") {
+        param.valueOut = "std::string out;"
+        param.valueDefine += "%sstd::string &out".format(param.valueDefine.length > 0 ? ", " : "")
+    }
+    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+        param.valueOut = type + " out;"
+        param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
     }
 }
 
