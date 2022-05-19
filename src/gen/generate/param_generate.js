@@ -12,7 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease } = require("../tools/common");
+const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease,
+    enumIndex, isEnum, EnumValueType } = require("../tools/common");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
 
@@ -133,6 +134,19 @@ function paramGenerateArray(p, name, type, param) {
     }
 }
 
+function paramGenerateEnum(data, type, param, name, p) {
+    let index = enumIndex(type, data)
+    if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+        type = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
+    } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+        type = "string"
+    } else {
+        NapiLog.logError(`paramGenerate is not support`);
+        return
+    }
+    paramGenerate(p, name, type, param, data)
+}
+
 // 函数的参数处理
 function paramGenerate(p, name, type, param, data) {
     if (type == "string") {
@@ -165,7 +179,11 @@ function paramGenerate(p, name, type, param, data) {
         param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sbool &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
-    } else {
+    }
+    else if (isEnum(type, data)) {
+        paramGenerateEnum(data, type, param, name, p)
+    }
+    else {
         paramGenerateArray(p, name, type, param);
     }
 }
