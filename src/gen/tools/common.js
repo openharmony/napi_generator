@@ -90,11 +90,46 @@ function getArrayTypeTwo(type) {
     return re.getReg(type, tt.regs[1])
 }
 
+class EnumValueType { }
+EnumValueType.ENUM_VALUE_TYPE_NUMBER = 0
+EnumValueType.ENUM_VALUE_TYPE_STRING = 1
+
+function isEnum(type, data) {
+    let isEnum = false
+    if (null == data) {
+        return isEnum
+    }
+    for (let i in data.enum) {
+        let enumm = data.enum[i]
+        if (type == enumm.name) {
+            isEnum = true
+        }
+    }
+    return isEnum
+}
+
+function enumIndex(type, data) {
+    let index;
+    if (null == data) {
+        return index
+    }
+    for (let i in data.enum) {
+        let enumm = data.enum[i]
+        if (type == enumm.name) {
+            index = i
+        }
+    }
+    return index
+}
+
 module.exports = {
     FuncType,
+    EnumValueType,
     NumberIncrease,
     InterfaceList,
     getArrayType,
     getArrayTypeTwo,
-    checkFileError
+    checkFileError,
+    isEnum,
+    enumIndex
 }

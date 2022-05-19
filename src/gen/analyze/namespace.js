@@ -17,6 +17,7 @@ const { removeEmptyLine, checkOutBody } = require("../tools/tool");
 const { analyzeFunction } = require("./function");
 const { analyzeInterface } = require("./interface");
 const { analyzeClass } = require("./class");
+const { analyzeEnum } = require("./enum");
 const { NapiLog } = require("../tools/NapiLog");
 
 /**namespace解析 */
@@ -35,7 +36,7 @@ function analyzeNamespace(data) {
         let oldData = data
         data = removeEmptyLine(data)
         let matchs = re.match(" *\n*", data)
-        //只剩下空格和回车时，解析完成
+        // 只剩下空格和回车时，解析完成
         if (matchs && matchs.regs[0][1] == data.length) break
         let parseEnumResult = parseEnum(matchs, data, result)
         if (parseEnumResult != null) {
@@ -113,13 +114,13 @@ function parseEnum(matchs, data, result) {
         let enumBody = checkOutBody(data, matchs.regs[3][0], null, null)
         result.enum.push({
             name: enumName,
+            body: analyzeEnum(enumBody.substring(1, enumBody.length - 1))
         })
         data = data.substring(matchs.regs[3][0] + enumBody.length)
         if (matchs.regs[1][0] != -1) {
             result.exports.push(enumName)
         }
     }
-
     matchs = re.match("(export )*const ([a-zA-Z_]+) *[:=]{1} ([a-zA-Z0-9]+);", data)
     if (matchs) {
         let constName = re.getReg(data, matchs.regs[1])
@@ -148,7 +149,6 @@ function parseType(matchs, data, result) {
             result.exports.push(typeName)
         }
     }
-
     matchs = re.match("(export )*type ([a-zA-Z]+) = ({)", data)
     if (matchs) {
         let typeName = re.getReg(data, matchs.regs[2]);
