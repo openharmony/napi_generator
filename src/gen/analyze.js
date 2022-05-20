@@ -93,7 +93,7 @@ function analyze(data, result) {
 }
 
 function analyzeMatchNamespace(matchs, data, result) {
-    matchs = re.match("declare namespace ([a-zA-Z0-9]+) ({)", data);
+    matchs = re.match("declare namespace ([a-zA-Z0-9]+) *({)", data);
     // 解析declare
     if (matchs != null) {
         let namespaceName = re.getReg(data, matchs.regs[1])
