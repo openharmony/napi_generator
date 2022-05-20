@@ -35,6 +35,13 @@
     },
     "Generate2": {
         "returnGenerate": "{\"valueIn\":\"\",\"valueOut\":\"std::vector<std::string> out;\",\"valueCheckout\":\"\",\"valueFill\":\"vio->out\",\"valuePackage\":\"napi_value result = nullptr;\\n    uint32_t len1=vio->out.size();\\n    for(uint32_t i=0;i<len1;i++) {\\n        napi_value tnv1 = nullptr;\\n        tnv1 = pxt->SwapC2JsUtf8(vio->out[i].c_str());\\n        pxt->SetArrayElement(result, i, tnv1);\\n    }\",\"valueDefine\":\"std::vector<std::string> &out\"}",
-        "ParamGenerate": "{\"valueIn\":\"\\n    std::vector<std::string> in0;\",\"valueOut\":\"\",\"valueCheckout\":\"    uint32_t len13=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i13=0;i13<len13;i13++) {\\n        std::string tt13;\\n        pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetArgv(0),i13), tt13);\\n        vio->in0.push_back(tt13);\\n    }\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::vector<std::string> &a\"}"
+        "ParamGenerate": "{\"valueIn\":\"\\n    std::vector<std::string> in0;\",\"valueOut\":\"\",\"valueCheckout\":\"    uint32_t len3=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i3=0;i3<len3;i3++) {\\n        std::string tt3;\\n        pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetArgv(0),i3), tt3);\\n        vio->in0.push_back(tt3);\\n    }\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::vector<std::string> &a\"}"
+    },
+    "Generate3": {
+        "returnGenerate": "{\"valueIn\":\"\",\"valueOut\":\"std::vector<boolean> out;\",\"valueCheckout\":\"\",\"valueFill\":\"vio->out\",\"valuePackage\":\"napi_value result = nullptr;\\n    \",\"valueDefine\":\"std::vector<boolean> &out\"}",
+        "ParamGenerate": "{\"valueIn\":\"\\n    std::vector<bool> in0;\",\"valueOut\":\"\",\"valueCheckout\":\"    uint32_t len4=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i4=0;i4<len4;i4++) {\\n        bool tt4;\\n        pxt->SwapJs2CBool(pxt->GetArrayElement(pxt->GetArgv(0),i4));\\n        vio->in0.push_back(tt4);\\n    }\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::vector<bool> &a\"}"
+    },
+    "retJson2": {
+        "ParamGenerate": "{\"valueIn\":\"\\n    std::vector<std::string> in0;\",\"valueOut\":\"\",\"valueCheckout\":\"    uint32_t len3=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i3=0;i3<len3;i3++) {\\n        std::string tt3;\\n        pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetArgv(0),i3), tt3);\\n        vio->in0.push_back(tt3);\\n    }\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::vector<std::string> &a\"}"
     }
 }

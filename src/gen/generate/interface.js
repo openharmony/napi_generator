@@ -19,6 +19,7 @@ const { FuncType, InterfaceList, getArrayType } = require("../tools/common");
 const { jsToC } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
+const { NapiLog } = require("../tools/NapiLog");
 
 let middleBodyTmplete = `
 class [className]_middle {
