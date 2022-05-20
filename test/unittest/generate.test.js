@@ -66,11 +66,11 @@ function cToJsParam() {
 }
 
 function jsToCParam() {
-    let value = '    uint32_t len2=pxt->GetArrayLength(b);\n' +
-        '    for(uint32_t i2=0;i2<len2;i2++) {\n' +
-        '        std::string tt2;\n' +
-        '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i2), tt2);\n' +
-        '        a.push_back(tt2);\n' +
+    let value = '    uint32_t len13=pxt->GetArrayLength(b);\n' +
+        '    for(uint32_t i13=0;i13<len13;i13++) {\n' +
+        '        std::string tt13;\n' +
+        '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i13), tt13);\n' +
+        '        a.push_back(tt13);\n' +
         '    }'
     return value
 }
@@ -110,8 +110,6 @@ function partOfTest() {
         assert.strictEqual(jsToC("a", "b", "string"), "pxt->SwapJs2CUtf8(b, a);");
 
         assert.strictEqual(jsToC("a", "b", "NUMBER_TYPE_1"), "NUMBER_JS_2_C(b,NUMBER_TYPE_1,a);");
-        writeFile("test/unittest/write1.json", jsToC("a", "b", "Array<string>"));
-        writeFile("test/unittest/write2.json", jsToCParam());
         assert.strictEqual(jsToC("a", "b", "Array<string>"), jsToCParam());
     });
 
@@ -126,7 +124,7 @@ function partOfTest() {
 
 }
 
-function returnGenerate() {
+function returnGenerateParam(correctResult) {
     it('test gen/generate/return_generate returnGenerate', function () {
         let retJson = returnGenerateAndAssert("string")
         assert.strictEqual(retJson, correctResult['Generate']['returnGenerate']);
@@ -176,7 +174,7 @@ describe('Generate', function () {
     it('test gen/generate/namespace generateNamespace', function () {
         let ns = structOfTs.declareNamespace[0];
         let ret = generateNamespace(ns.name, ns.body);
-        assert.strictEqual(JSON.stringify(ret), correctResult['Generate']['generateNamespace']);
+        assert.strictEqual(JSON.stringify(ret), JSON.stringify(correctResult['Generate']['demo']));
     });
 
     partOfTest();
@@ -195,5 +193,7 @@ describe('Generate', function () {
         assert.strictEqual(retJson3, correctResult['Generate3']['ParamGenerate']);
 
     });
-    returnGenerate();
+    it('test gen/generate/return_generate returnGenerate', function () {
+        returnGenerateParam(correctResult);
+    });
 });
