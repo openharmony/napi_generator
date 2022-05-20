@@ -12,23 +12,23 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-let genDir="../../src/gen/"
-const { analyzeFile } = require(genDir+"analyze");
-const { analyzeFunction } = require(genDir+"analyze/function");
-const { analyzeInterface } = require(genDir+"analyze/interface");
-const { analyzeNamespace } = require(genDir+"analyze/namespace");
-const { analyzeParams } = require(genDir+"analyze/params");
-const { analyzeReturn } = require(genDir+"analyze/return");
+let genDir = "../../src/gen/"
+const { analyzeFile } = require(genDir + "analyze");
+const { analyzeFunction } = require(genDir + "analyze/function");
+const { analyzeInterface } = require(genDir + "analyze/interface");
+const { analyzeNamespace } = require(genDir + "analyze/namespace");
+const { analyzeParams } = require(genDir + "analyze/params");
+const { analyzeReturn } = require(genDir + "analyze/return");
 var assert = require("assert");
 
-const { readFile} = require("../../src/gen/tools/FileRW");
+const { readFile } = require("../../src/gen/tools/FileRW");
 
 describe('Analyze', function () {
     var correctResult;
-    before(function(){
-        let data=readFile("test/unittest/result.json")
-        if(data){
-            correctResult=JSON.parse(data);
+    before(function () {
+        let data = readFile("test/unittest/result.json")
+        if (data) {
+            correctResult = JSON.parse(data);
         }
     });
 
@@ -37,13 +37,13 @@ describe('Analyze', function () {
         let ret = JSON.stringify(structOfTs)
         assert.strictEqual(ret, correctResult['Analyze']['analyzeFile']);
     });
-    
+
     it('test gen/analyze/function analyzeFunction', function () {
         let ret = analyzeFunction("a", `b:number`, "string");
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeFunction']);
     });
-    
+
     it('test gen/analyze/interface analyzeInterface', function () {
         let ret = analyzeInterface("name: string;");
         let retJson = JSON.stringify(ret)
@@ -62,10 +62,21 @@ describe('Analyze', function () {
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeParams']);
     });
 
+    it('test gen/analyze/params analyzeParams', function () {
+        let ret = analyzeParams("name: boolean");
+        let retJson = JSON.stringify(ret)
+        assert.strictEqual(retJson, correctResult['Analyze']['analyzeParams']);
+    });
+
+    it('test gen/analyze/params analyzeParams', function () {
+        let ret = analyzeParams("name: number");
+        let retJson = JSON.stringify(ret)
+        assert.strictEqual(retJson, correctResult['Analyze']['analyzeParams']);
+    });
+
     it('test gen/analyze/return analyzeReturn', function () {
         let ret = analyzeReturn("string");
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeReturn']);
     });
-
 });

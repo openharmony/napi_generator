@@ -18,6 +18,7 @@ declare namespace napitest {
     interface Human {
         name: string;
         age: number;
+        isAboy: true;
     }
 
     interface TestClass1 {
@@ -27,7 +28,7 @@ declare namespace napitest {
         nums: Array<number>;
         strs: Array<string>;
         mans: Array<Human>;
-        if_direct(v1: string): string;
+        if_direct(v1: string, v2: boolean): string;
         if_callback(v1: string, cb: Callback<string>): string;
         if_async(v1: string, cb: AsyncCallback<string>): string;
     }
@@ -35,6 +36,8 @@ declare namespace napitest {
     function fun2(v2: string, numcc: Array<number>, mancc: Human): Array<Human>;
     function fun3(v2: string, cb: Callback<string>): void;
     function fun4(v2: string, cb: AsyncCallback<string>): void;
+    function fun5(v2: boolean, cb: Callback<boolean>): boolean;
+    function fun6(v2: Array<boolean>): boolean;
 
     namespace Space3 {
         function fun3(v3: string): string;
