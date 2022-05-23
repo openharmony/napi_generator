@@ -21,10 +21,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * 编译文件夹选择框
+ *
  * @author: xudong
  * @see: select generator file path
  * @version: v1.0.0
- * @since 2022/02/21
+ * @since 2022-02-21
  */
 public class GenAction implements ActionListener {
     private JButton button;
