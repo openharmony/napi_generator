@@ -14,52 +14,51 @@
  */
 package com.sk.ng;
 
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.sk.dialog.GenerateDialog;
-
-import java.util.regex.Pattern;
+import com.sk.utils.FileUtil;
+import com.sk.utils.GenNotification;
 
 /**
+ * 项目文件入口
+ *
  * @author: xudong
  * @see: tool conversion plug-in
  * @version: v1.0.0
- * @since 2022/02/21
+ * @since 2022-02-21
  */
 public class GenDTS extends AnAction {
-    private static final Logger LOG = Logger.getInstance(GenDTS.class);
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
+        Project project = anActionEvent.getProject();
         // 获取需要处理的.d.ts文件绝对路径
         VirtualFile file = anActionEvent.getData(PlatformDataKeys.VIRTUAL_FILE);
         if (file == null) {
-            LOG.error("file is not exit");
+            GenNotification.notifyMessage(project, "", "file is not exist", NotificationType.ERROR);
             return;
         }
 
-        // 正则匹配所选文件名是否符合规范
-        if (!Pattern.matches("@ohos.[a-zA-Z0-9]+.d.ts", file.getName())) {
-            Messages.showErrorDialog("选择@ohos.xxx.d.ts文件生成", "错误");
+        String baseFile = project.getBasePath();
+
+        if (!FileUtil.checkProjectSDK(project, baseFile)) {
             return;
         }
+
         String destPath = file.getPath();
         String directoryPath = file.getParent().getPath();
         String fileName = file.getName();
-        showDialog(destPath, directoryPath, fileName);
+        GenerateDialog wrapper = new GenerateDialog(project, destPath, directoryPath, fileName);
+        if (wrapper.showAndGet()) {
+            return;
+        }
     }
 
-    private void showDialog(String destPath, String directoryPath, String fileName) {
-        GenerateDialog dialog = new GenerateDialog(destPath, directoryPath, fileName);
-        dialog.initDialog();
-        dialog.setLocationRelativeTo(dialog);
-        dialog.pack();
-        dialog.setVisible(true);
-    }
 
     @Override
     public void update(AnActionEvent event) {
@@ -68,8 +67,7 @@ public class GenDTS extends AnAction {
         if (file == null) {
             event.getPresentation().setEnabledAndVisible(false);
         } else {
-            String extension = file.getExtension();
-            if (extension != null && "ts".equals(extension)) {
+            if (FileUtil.patternFileName(file.getName())) {
                 event.getPresentation().setEnabledAndVisible(true);
             } else {
                 event.getPresentation().setEnabledAndVisible(false);

@@ -57,6 +57,7 @@ Note:If the text contains special characters, please escape them according to th
         <policylist>
             <policy name="projectPolicy" desc="">
                 <policyitem type="copyright" name="Copyright (c) 2022 Shenzhen Kaihong Digital" path=".*" rule="may" group="defaultGroup" filefilter="copyrightPolicyFilter" desc=""/>
+                <policyitem type="copyright" name="Copyright (c) 2022 Guangzhou Digitalchina Information Technology Co., Ltd." path=".*" desc=""/>
             </policy>
         </policylist>
         <filefilterlist>

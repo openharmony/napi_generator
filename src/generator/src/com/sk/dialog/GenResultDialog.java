@@ -25,10 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * GenResultDialog结果生成框
+ *
  * @author: xudong
  * @see: generate success dialog
  * @version: v1.0.0
- * @since 2022/02/21
+ * @since 2022-02-21
  */
 public class GenResultDialog extends JDialog {
     private static final Logger LOG = Logger.getInstance(GenResultDialog.class);

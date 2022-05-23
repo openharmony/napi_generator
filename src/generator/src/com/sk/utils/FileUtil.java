@@ -14,7 +14,9 @@
  */
 package com.sk.utils;
 
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.project.Project;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
@@ -23,15 +25,21 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Properties;
+import java.util.regex.Pattern;
 
 /**
+ * 文本文件工具
+ *
  * @author: xudong
  * @see: file utils
  * @version: v1.0.0
- * @since 2022/02/21
+ * @since 2022-02-21
  */
 public class FileUtil {
     private static final Logger LOG = Logger.getInstance(FileUtil.class);
+
+    private static final int COMPILE_SDK_VERSION = 5;
 
     /**
      * 将错误信息输入到txt中
@@ -85,7 +93,7 @@ public class FileUtil {
         File file = new File(path);
         String[] command = content.split(StringUtils.LF);
         try (InputStreamReader read = new InputStreamReader(new FileInputStream(file), "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(read)) {
+        BufferedReader bufferedReader = new BufferedReader(read)) {
             return isContainString(bufferedReader, command);
         }
     }
@@ -120,5 +128,55 @@ public class FileUtil {
      */
     public static String getNewline() {
         return System.getProperty("line.separator");
+    }
+
+    /**
+     * 正则匹配所选文件名是否符合规范
+     *
+     * @param fileName 文件名
+     * @return boolean 是否匹配
+     */
+    public static boolean patternFileName(String fileName) {
+        String pattern = "@ohos.([a-zA-Z0-9]+).d.ts";
+        return Pattern.matches(pattern, fileName);
+    }
+
+    /**
+     * check project SDK
+     *
+     * @param project projectid
+     * @param baseFile project root file
+     * @return boolean
+     */
+    public static boolean checkProjectSDK(Project project, String baseFile) {
+
+        String gradlePath = "";
+        File baseDir = new File(baseFile);
+        if (baseDir.isDirectory()) {
+            File[] childFile = baseDir.listFiles();
+            for (File file : childFile) {
+                if (file.getName().equals("build.gradle")) {
+                    gradlePath = file.getPath();
+                }
+            }
+        }
+
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(gradlePath));
+        } catch (IOException e) {
+            GenNotification.notifyMessage(project, e.getMessage(), "提示", NotificationType.ERROR);
+            LOG.error(String.format("Can not load file :%s . %s", gradlePath, e));
+            return false;
+        }
+        String ohosSDK = properties.getProperty("compileSdkVersion");
+
+        if (ohosSDK != null && Integer.parseInt(ohosSDK) < COMPILE_SDK_VERSION) {
+            GenNotification.notifyMessage(project, "SKD版本过低，NAPI仅支持5.0及以上版本",
+                    "提示",
+                    NotificationType.WARNING);
+            return false;
+        }
+        return true;
     }
 }
