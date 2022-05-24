@@ -17,8 +17,10 @@
         "analyzeFunction": "{\"name\":\"a\",\"type\":1,\"value\":[{\"name\":\"b\",\"type\":\"NUMBER_TYPE_1\"}],\"ret\":\"string\"}",
         "analyzeInterface": "{\"value\":[{\"name\":\"name\",\"type\":\"string\"}],\"function\":[]}",
         "analyzeNamespace": "{\"exports\":[],\"enum\":[],\"const\":[],\"type\":[],\"function\":[],\"interface\":[],\"class\":[],\"namespace\":[]}",
-        "analyzeParams": "[[],1]",
-        "analyzeReturn": "[\"string\",false]"
+        "analyzeParams": "[[{\"name\":\"name\",\"type\":\"string\"}],1]",
+        "analyzeReturn": "[\"string\",false]",
+        "analyzeParamsBool": "[[{\"name\":\"name\",\"type\":\"boolean\"}],1]",
+        "analyzeParamsNum": "[[{\"name\":\"name\",\"type\":\"number\"}],1]"
     },
     "Generate": {
         "generateFunctionAsync": "[\"\\nstruct if_async_value_struct {\\n    std::string in0;\\n    \\n    std::string out;\\n};\\n\\nstatic void if_async_execute(XNapiTool *pxt, void *data)\\n{\\n    if_async_value_struct *vio = (if_async_value_struct *)data;\\n    TestClass1 *pInstance = (TestClass1 *)pxt->GetAsyncInstance();\\n\\n    pInstance->if_async(vio->in0, vio->out);\\n}\\n\\nstatic void if_async_complete(XNapiTool *pxt, void *data)\\n{\\n    if_async_value_struct *vio = (if_async_value_struct *)data;\\n    \\n    napi_value result = nullptr;\\n    result = pxt->SwapC2JsUtf8(vio->out.c_str());\\n    \\n    {\\n        napi_value args[1] = {result};\\n        pxt->FinishAsync(1, args);\\n    }\\n\\n    delete vio;\\n}\\n\\nstatic napi_value if_async_middle(napi_env env, napi_callback_info info)\\n{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }\\n    pxt->SetAsyncInstance(pxt->UnWarpInstance());\\n\\n    struct if_async_value_struct *vio = new if_async_value_struct();\\n    \\n    pxt->SwapJs2CUtf8(pxt->GetArgv(0), vio->in0);\\n\\n    \\n    napi_value result = pxt->StartAsync(if_async_execute, vio, if_async_complete, pxt->GetArgc() == 2 ? pxt->GetArgv(1) : nullptr);\\n\\n    if (pxt->IsFailed()) {\\n        result = pxt->GetError();\\n    }\\n    return result;\\n}\",\"\\nbool if_async(std::string &v1, std::string &out);\",\"\\nbool TestClass1::if_async(std::string &v1, std::string &out)\\n{\\n    return true;\\n}\\n\"]",
@@ -41,13 +43,19 @@
     },
     "Generate2": {
         "returnGenerate": "{\"valueIn\":\"\",\"valueOut\":\"std::vector<std::string> out;\",\"valueCheckout\":\"\",\"valueFill\":\"vio->out\",\"valuePackage\":\"napi_value result = nullptr;\\n    uint32_t len1=vio->out.size();\\n    for(uint32_t i=0;i<len1;i++) {\\n        napi_value tnv1 = nullptr;\\n        tnv1 = pxt->SwapC2JsUtf8(vio->out[i].c_str());\\n        pxt->SetArrayElement(result, i, tnv1);\\n    }\",\"valueDefine\":\"std::vector<std::string> &out\"}",
-        "ParamGenerate": "{\"valueIn\":\"\\n    std::vector<std::string> in0;\",\"valueOut\":\"\",\"valueCheckout\":\"    uint32_t len14=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i14=0;i14<len14;i14++) {\\n        std::string tt14;\\n        pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetArgv(0),i14), tt14);\\n        vio->in0.push_back(tt14);\\n    }\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::vector<std::string> &a\"}"
+        "ParamGenerate": "{\"valueIn\":\"\\n    std::vector<std::string> in0;\",\"valueOut\":\"\",\"valueCheckout\":\"    uint32_t len15=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i15=0;i15<len15;i15++) {\\n        std::string tt15;\\n        pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetArgv(0),i15), tt15);\\n        vio->in0.push_back(tt15);\\n    }\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::vector<std::string> &a\"}"
     },
     "Generate3": {
         "returnGenerate": "{\"valueIn\":\"\",\"valueOut\":\"std::vector<boolean> out;\",\"valueCheckout\":\"\",\"valueFill\":\"vio->out\",\"valuePackage\":\"napi_value result = nullptr;\\n    \",\"valueDefine\":\"std::vector<boolean> &out\"}",
-        "ParamGenerate": "{\"valueIn\":\"\\n    std::vector<bool> in0;\",\"valueOut\":\"\",\"valueCheckout\":\"    uint32_t len15=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i15=0;i15<len15;i15++) {\\n        bool tt15;\\n        pxt->SwapJs2CBool(pxt->GetArrayElement(pxt->GetArgv(0),i15));\\n        vio->in0.push_back(tt15);\\n    }\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::vector<bool> &a\"}"
+        "ParamGenerate": "{\"valueIn\":\"\\n    std::vector<bool> in0;\",\"valueOut\":\"\",\"valueCheckout\":\"    uint32_t len16=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i16=0;i16<len16;i16++) {\\n        bool tt16;\\n        pxt->SwapJs2CBool(pxt->GetArrayElement(pxt->GetArgv(0),i16));\\n        vio->in0.push_back(tt16);\\n    }\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::vector<bool> &a\"}"
     },
     "retJson2": {
         "ParamGenerate": "{\"valueIn\":\"\\n    std::vector<std::string> in0;\",\"valueOut\":\"\",\"valueCheckout\":\"    uint32_t len16=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i16=0;i16<len16;i16++) {\\n        std::string tt16;\\n        pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetArgv(0),i16), tt16);\\n        vio->in0.push_back(tt16);\\n    }\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::vector<std::string> &a\"}"
+    },
+    "Generate4": {
+        "ParamGenerate": "{\"valueIn\":\"\",\"valueOut\":\"\",\"valueCheckout\":\"\",\"valueFill\":\"\",\"valuePackage\":\"\",\"valueDefine\":\"\"}"
+    },
+    "Generate5": {
+        "ParamGenerate": "{\"valueIn\":\"\",\"valueOut\":\"\",\"valueCheckout\":\"\",\"valueFill\":\"\",\"valuePackage\":\"\",\"valueDefine\":\"\"}"
     }
 }

@@ -12,7 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { InterfaceList, getArrayType, NumberIncrease, enumIndex, isEnum, EnumValueType } = require("../tools/common");
+const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
+    isEnum, EnumValueType, getArrayTypeTwo } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 
 function cToJs(value, type, dest, deep = 1) {
@@ -38,8 +39,8 @@ function cToJs(value, type, dest, deep = 1) {
         }
         return result
     }
-    else if (type.substring(0, 6) == "Array<") {
-        let arrayType = getArrayType(type)
+    else if (type.substring(0, 6) == "Array<" || type.substring(type.length - 2) == "[]") {
+        let arrayType = checkArrayParamType(type)
         let lt = deep
         let tnv = dest
         let tnvdef = `uint32_t len%d=%s.size();
@@ -62,6 +63,17 @@ function cToJs(value, type, dest, deep = 1) {
     }
     else
         NapiLog.logError(`This type do not generate cToJs %s,%s,%s`.format(value, type, dest));
+}
+
+function checkArrayParamType(type) {
+    let arrayType
+    if (type.substring(type.length - 2) == "[]") {
+        arrayType = getArrayTypeTwo(type)
+    }
+    else {
+        arrayType = getArrayType(type)
+    }
+    return arrayType
 }
 
 function returnGenerate(type, param, data) {
@@ -93,6 +105,12 @@ function returnGenerate(type, param, data) {
     }
     else if (type.substring(0, 6) == "Array<") {
         let arrayType = getArrayType(type)
+        if (arrayType == "string") arrayType = "std::string"
+        param.valueOut = "std::vector<%s> out;".format(arrayType)
+        param.valueDefine += "%sstd::vector<%s> &out".format(param.valueDefine.length > 0 ? ", " : "", arrayType)
+    }
+    else if (type.substring(type.length - 2) == "[]") {
+        let arrayType = getArrayTypeTwo(type)
         if (arrayType == "string") arrayType = "std::string"
         param.valueOut = "std::vector<%s> out;".format(arrayType)
         param.valueDefine += "%sstd::vector<%s> &out".format(param.valueDefine.length > 0 ? ", " : "", arrayType)
