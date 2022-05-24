@@ -53,9 +53,22 @@
         "ParamGenerate": "{\"valueIn\":\"\\n    std::vector<std::string> in0;\",\"valueOut\":\"\",\"valueCheckout\":\"    uint32_t len16=pxt->GetArrayLength(pxt->GetArgv(0));\\n    for(uint32_t i16=0;i16<len16;i16++) {\\n        std::string tt16;\\n        pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetArgv(0),i16), tt16);\\n        vio->in0.push_back(tt16);\\n    }\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::vector<std::string> &a\"}"
     },
     "Generate4": {
-        "ParamGenerate": "{\"valueIn\":\"\",\"valueOut\":\"\",\"valueCheckout\":\"\",\"valueFill\":\"\",\"valuePackage\":\"\",\"valueDefine\":\"\"}"
+        "ParamGenerate": "{\"valueIn\":\"\",\"valueOut\":\"\",\"valueCheckout\":\"\",\"valueFill\":\"\",\"valuePackage\":\"\",\"valueDefine\":\"\"}",
+        "returnGenerate": "{\"valueIn\":\"\",\"valueOut\":\"\",\"valueCheckout\":\"\",\"valueFill\":\"vio->out\",\"valuePackage\":\"napi_value result = nullptr;\\n    undefined\",\"valueDefine\":\"\"}"
     },
     "Generate5": {
-        "ParamGenerate": "{\"valueIn\":\"\",\"valueOut\":\"\",\"valueCheckout\":\"\",\"valueFill\":\"\",\"valuePackage\":\"\",\"valueDefine\":\"\"}"
+        "ParamGenerate": "{\"valueIn\":\"\",\"valueOut\":\"\",\"valueCheckout\":\"\",\"valueFill\":\"\",\"valuePackage\":\"\",\"valueDefine\":\"\"}",
+        "returnGenerate": "{\"valueIn\":\"\",\"valueOut\":\"\",\"valueCheckout\":\"\",\"valueFill\":\"vio->out\",\"valuePackage\":\"napi_value result = nullptr;\\n    undefined\",\"valueDefine\":\"\"}"
+    },
+    "Generate6": {
+        "ParamGenerate": "{\"valueIn\":\"\\n    std::string in0;\",\"valueOut\":\"\",\"valueCheckout\":\"pxt->SwapJs2CUtf8(pxt->GetArgv(0), vio->in0);\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"std::string &a\"}",
+        "returnGenerate": "{\"valueIn\":\"\",\"valueOut\":\"\",\"valueCheckout\":\"\",\"valueFill\":\"vio->out\",\"valuePackage\":\"napi_value result = nullptr;\\n    undefined\",\"valueDefine\":\"\"}"
+    },
+    "Generate7": {
+        "ParamGenerate": "{\"valueIn\":\"\\n    NUMBER_TYPE_9 in0;\",\"valueOut\":\"\",\"valueCheckout\":\"NUMBER_JS_2_C(pxt->GetArgv(0),NUMBER_TYPE_9,vio->in0);\",\"valueFill\":\"vio->in0\",\"valuePackage\":\"\",\"valueDefine\":\"NUMBER_TYPE_9 &a\"}",
+        "returnGenerate": "{\"valueIn\":\"\",\"valueOut\":\"std::string out;\",\"valueCheckout\":\"\",\"valueFill\":\"vio->out\",\"valuePackage\":\"napi_value result = nullptr;\\n    result = pxt->SwapC2JsUtf8(vio->out.c_str());\",\"valueDefine\":\"std::string &out\"}"
+    },
+    "Generate8": {
+        "returnGenerate": "{\"valueIn\":\"\",\"valueOut\":\"NUMBER_TYPE_10 out;\",\"valueCheckout\":\"\",\"valueFill\":\"vio->out\",\"valuePackage\":\"napi_value result = nullptr;\\n    result = NUMBER_C_2_JS(pxt, vio->out);\",\"valueDefine\":\"NUMBER_TYPE_10 &out\"}"
     }
 }

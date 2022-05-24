@@ -24,6 +24,16 @@ const { generateFunctionAsync } = require(genDir + "generate/function_async");
 const { generateFunctionDirect } = require(genDir + "generate/function_direct");
 const { generateFunctionSync } = require(genDir + "generate/function_sync");
 
+let result = {
+    exportDefault: [],
+    exports: [],
+    declareType: [],
+    declareFunction: [],
+    declareNamespace: [],
+    declareInterface: [],
+    declareLicense: [],
+}
+
 function funcAsyncAssert() {
     let valueFi = { name: 'v1', type: 'string' };
     let value1Se = { name: 'cb', type: 'AsyncCallback<string>' };
@@ -92,7 +102,7 @@ function jsToCParamArray() {
     return value
 }
 
-function paramGenerateAndAssert(dataType) {
+function paramGenerateAndAssert(dataType, structOfTs) {
     param = {
         valueIn: "",
         valueOut: "",
@@ -102,12 +112,16 @@ function paramGenerateAndAssert(dataType) {
         valuePackage: "",
         valueDefine: ""
     }
-    paramGenerate(0, "a", dataType, param)
+    if (null != structOfTs) {
+        paramGenerate(0, "a", dataType, param, structOfTs)
+    } else {
+        paramGenerate(0, "a", dataType, param)
+    }
     let result = JSON.stringify(param);
     return result
 }
 
-function returnGenerateAndAssert(dataType) {
+function returnGenerateAndAssert(dataType, structOfTs) {
     param = {
         valueIn: "",
         valueOut: "",
@@ -117,7 +131,11 @@ function returnGenerateAndAssert(dataType) {
         valuePackage: "",
         valueDefine: ""
     }
-    returnGenerate(dataType, param)
+    if (null != structOfTs) {
+        returnGenerate(dataType, param, structOfTs)
+    } else {
+        returnGenerate(dataType, param)
+    }
     let result = JSON.stringify(param);
     return result
 }
@@ -149,28 +167,58 @@ function partOfTest() {
 }
 
 function returnGenerateParam(correctResult) {
-    it('test gen/generate/return_generate returnGenerate', function () {
-        let retJson = returnGenerateAndAssert("string")
-        assert.strictEqual(retJson, correctResult['Generate']['returnGenerate']);
+    let retJson = returnGenerateAndAssert("string")
+    assert.strictEqual(retJson, correctResult['Generate']['returnGenerate']);
 
-        let retJson1 = returnGenerateAndAssert("NUMBER_TYPE_1")
-        assert.strictEqual(retJson1, correctResult['Generate1']['returnGenerate']);
+    let retJson1 = returnGenerateAndAssert("NUMBER_TYPE_1")
+    assert.strictEqual(retJson1, correctResult['Generate1']['returnGenerate']);
 
-        let retJson2 = returnGenerateAndAssert("Array<string>")
-        assert.strictEqual(retJson2, correctResult['Generate2']['returnGenerate']);
+    let retJson2 = returnGenerateAndAssert("Array<string>")
+    assert.strictEqual(retJson2, correctResult['Generate2']['returnGenerate']);
 
-        let retJson3 = returnGenerateAndAssert("Array<boolean>")
-        assert.strictEqual(retJson3, correctResult['Generate3']['returnGenerate']);
+    let retJson3 = returnGenerateAndAssert("Array<boolean>")
+    assert.strictEqual(retJson3, correctResult['Generate3']['returnGenerate']);
 
-        let retJson4 = returnGenerateAndAssert("[string]")
-        assert.strictEqual(retJson4, correctResult['Generate4']['returnGenerate']);
+    let retJson4 = returnGenerateAndAssert("[string]")
+    assert.strictEqual(retJson4, correctResult['Generate4']['returnGenerate']);
 
-        let retJson5 = returnGenerateAndAssert("[boolean]")
-        assert.strictEqual(retJson5, correctResult['Generate5']['returnGenerate']);
+    let retJson5 = returnGenerateAndAssert("[boolean]")
+    assert.strictEqual(retJson5, correctResult['Generate5']['returnGenerate']);
 
-        let retJson6 = returnGenerateAndAssert("[boolean]")
-        assert.strictEqual(retJson6, correctResult['Generate6']['returnGenerate']);
-    });
+    let retJson6 = returnGenerateAndAssert("[boolean]")
+    assert.strictEqual(retJson6, correctResult['Generate6']['returnGenerate']);
+
+    let retJson7 = returnGenerateAndAssert("GrantStatus", result.declareNamespace[0].body)
+    assert.strictEqual(retJson7, correctResult['Generate7']['returnGenerate']);
+
+    let retJson8 = returnGenerateAndAssert("HttpStatus", result.declareNamespace[0].body)
+    assert.strictEqual(retJson8, correctResult['Generate8']['returnGenerate']);
+}
+
+function paramGenerateResult(correctResult) {
+    let retJson = paramGenerateAndAssert("string")
+    assert.strictEqual(retJson, correctResult['Generate']['ParamGenerate']);
+
+    let retJson1 = paramGenerateAndAssert("NUMBER_TYPE_1")
+    assert.strictEqual(retJson1, correctResult['Generate1']['ParamGenerate']);
+
+    let retJson2 = paramGenerateAndAssert("Array<string>")
+    assert.strictEqual(retJson2, correctResult['Generate2']['ParamGenerate']);
+
+    let retJson3 = paramGenerateAndAssert("Array<boolean>")
+    assert.strictEqual(retJson3, correctResult['Generate3']['ParamGenerate']);
+
+    let retJson4 = paramGenerateAndAssert("[string]")
+    assert.strictEqual(retJson4, correctResult['Generate4']['ParamGenerate']);
+
+    let retJson5 = paramGenerateAndAssert("[boolean]")
+    assert.strictEqual(retJson5, correctResult['Generate5']['ParamGenerate']);
+
+    let retJson6 = paramGenerateAndAssert("GrantStatus", result.declareNamespace[0].body)
+    assert.strictEqual(retJson6, correctResult['Generate6']['ParamGenerate']);
+
+    let retJson7 = paramGenerateAndAssert("HttpStatus", result.declareNamespace[0].body)
+    assert.strictEqual(retJson7, correctResult['Generate7']['ParamGenerate']);
 }
 
 describe('Generate', function () {
@@ -183,6 +231,7 @@ describe('Generate', function () {
             correctResult = JSON.parse(data);
         }
         structOfTs = analyzeFile("test/unittest/@ohos.input_sample.d.ts");
+        result = analyzeFile("test/unittest/@ohos.input_sample.d.ts");
         testStr = readFile("test/unittest/test.txt");
     });
 
@@ -213,24 +262,7 @@ describe('Generate', function () {
     partOfTest();
 
     it('test gen/generate/param_generate ParamGenerate', function () {
-        let retJson = paramGenerateAndAssert("string")
-        assert.strictEqual(retJson, correctResult['Generate']['ParamGenerate']);
-
-        let retJson1 = paramGenerateAndAssert("NUMBER_TYPE_1")
-        assert.strictEqual(retJson1, correctResult['Generate1']['ParamGenerate']);
-
-        let retJson2 = paramGenerateAndAssert("Array<string>")
-        assert.strictEqual(retJson2, correctResult['Generate2']['ParamGenerate']);
-
-        let retJson3 = paramGenerateAndAssert("Array<boolean>")
-        assert.strictEqual(retJson3, correctResult['Generate3']['ParamGenerate']);
-
-        let retJson4 = paramGenerateAndAssert("[string]")
-        assert.strictEqual(retJson4, correctResult['Generate4']['ParamGenerate']);
-
-        let retJson5 = paramGenerateAndAssert("[boolean]")
-        assert.strictEqual(retJson5, correctResult['Generate5']['ParamGenerate']);
-
+        paramGenerateResult(correctResult);
     });
     it('test gen/generate/return_generate returnGenerate', function () {
         returnGenerateParam(correctResult);
