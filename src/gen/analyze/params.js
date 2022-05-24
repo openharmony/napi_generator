@@ -26,7 +26,7 @@ function analyzeParams(values) {
         if (v == null)
             v = values
         values = values.substring(v.length, values.length)
-        let matchs = re.match("([a-zA-Z0-9\\.]+)\\?*:([a-zA-Z<>_0-9\\[\\]\\(\\):='{}]+)", v)
+        let matchs = re.match("([a-zA-Z0-9\\.]+)\\?*: *([a-zA-Z<>_0-9\\[\\]\\(\\):='{}]+)", v)
         if (matchs != null) {
             let type = re.getReg(v, matchs.regs[2])
             result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type })
