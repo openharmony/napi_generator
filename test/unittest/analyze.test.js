@@ -65,13 +65,13 @@ describe('Analyze', function () {
     it('test gen/analyze/params analyzeParams', function () {
         let ret = analyzeParams("name: boolean");
         let retJson = JSON.stringify(ret)
-        assert.strictEqual(retJson, correctResult['Analyze']['analyzeParams']);
+        assert.strictEqual(retJson, correctResult['Analyze']['analyzeParamsBool']);
     });
 
     it('test gen/analyze/params analyzeParams', function () {
         let ret = analyzeParams("name: number");
         let retJson = JSON.stringify(ret)
-        assert.strictEqual(retJson, correctResult['Analyze']['analyzeParams']);
+        assert.strictEqual(retJson, correctResult['Analyze']['analyzeParamsNum']);
     });
 
     it('test gen/analyze/return analyzeReturn', function () {
