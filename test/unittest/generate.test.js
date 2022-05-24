@@ -16,16 +16,13 @@ let genDir = "../../src/gen/"
 const { generateNamespace } = require(genDir + "generate/namespace");
 const { analyzeFile } = require(genDir + "analyze");
 var assert = require("assert");
-const { readFile, writeFile } = require(genDir + "tools/FileRW");
+const { readFile } = require(genDir + "tools/FileRW");
 const { jsToC, paramGenerate } = require(genDir + "generate/param_generate");
 const { cToJs, returnGenerate } = require(genDir + "generate/return_generate");
 const { generateInterface } = require(genDir + "generate/interface");
 const { generateFunctionAsync } = require(genDir + "generate/function_async");
 const { generateFunctionDirect } = require(genDir + "generate/function_direct");
 const { generateFunctionSync } = require(genDir + "generate/function_sync");
-const { AssertionError } = require("assert");
-const { Console } = require("console");
-const rewire = require("rewire");
 
 function funcAsyncAssert() {
     let valueFi = { name: 'v1', type: 'string' };
@@ -65,12 +62,32 @@ function cToJsParam() {
     return value
 }
 
+function cToJsParamArray() {
+    let value = 'uint32_t len1=a.size();\n' +
+        '    for(uint32_t i=0;i<len1;i++) {\n' +
+        '        napi_value tnv1 = nullptr;\n' +
+        '        tnv1 = pxt->SwapC2JsUtf8(a[i].c_str());\n' +
+        '        pxt->SetArrayElement(b, i, tnv1);\n' +
+        '    }'
+    return value
+}
+
 function jsToCParam() {
     let value = '    uint32_t len13=pxt->GetArrayLength(b);\n' +
         '    for(uint32_t i13=0;i13<len13;i13++) {\n' +
         '        std::string tt13;\n' +
         '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i13), tt13);\n' +
         '        a.push_back(tt13);\n' +
+        '    }'
+    return value
+}
+
+function jsToCParamArray() {
+    let value = '    uint32_t len14=pxt->GetArrayLength(b);\n' +
+        '    for(uint32_t i14=0;i14<len14;i14++) {\n' +
+        '        std::string tt14;\n' +
+        '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i14), tt14);\n' +
+        '        a.push_back(tt14);\n' +
         '    }'
     return value
 }
@@ -110,7 +127,9 @@ function partOfTest() {
         assert.strictEqual(jsToC("a", "b", "string"), "pxt->SwapJs2CUtf8(b, a);");
 
         assert.strictEqual(jsToC("a", "b", "NUMBER_TYPE_1"), "NUMBER_JS_2_C(b,NUMBER_TYPE_1,a);");
+        assert.strictEqual(jsToC("a", "b", "boolean"), "BOOLEAN_JS_2_C(b,bool,a);");
         assert.strictEqual(jsToC("a", "b", "Array<string>"), jsToCParam());
+        assert.strictEqual(jsToC("a", "b", "string[]"), jsToCParamArray());
     });
 
     it('test gen/generate/return_generate cToJs', function () {
@@ -119,7 +138,12 @@ function partOfTest() {
         ret = cToJs("a", "NUMBER_TYPE_1", "b", 1)
         assert.strictEqual(ret, "b = NUMBER_C_2_JS(pxt, a);");
 
+        ret = cToJs("a", "boolean", "b", 1)
+        assert.strictEqual(ret, "b = pxt->SwapC2JsBool(a);");
+
         assert.strictEqual(cToJs("a", "Array<string>", "b", 1), cToJsParam());
+
+        assert.strictEqual(cToJs("a", "string[]", "b", 1), cToJsParamArray());
     });
 
 }
@@ -137,6 +161,15 @@ function returnGenerateParam(correctResult) {
 
         let retJson3 = returnGenerateAndAssert("Array<boolean>")
         assert.strictEqual(retJson3, correctResult['Generate3']['returnGenerate']);
+
+        let retJson4 = returnGenerateAndAssert("[string]")
+        assert.strictEqual(retJson4, correctResult['Generate4']['returnGenerate']);
+
+        let retJson5 = returnGenerateAndAssert("[boolean]")
+        assert.strictEqual(retJson5, correctResult['Generate5']['returnGenerate']);
+
+        let retJson6 = returnGenerateAndAssert("[boolean]")
+        assert.strictEqual(retJson6, correctResult['Generate6']['returnGenerate']);
     });
 }
 
@@ -191,6 +224,12 @@ describe('Generate', function () {
 
         let retJson3 = paramGenerateAndAssert("Array<boolean>")
         assert.strictEqual(retJson3, correctResult['Generate3']['ParamGenerate']);
+
+        let retJson4 = paramGenerateAndAssert("[string]")
+        assert.strictEqual(retJson4, correctResult['Generate4']['ParamGenerate']);
+
+        let retJson5 = paramGenerateAndAssert("[boolean]")
+        assert.strictEqual(retJson5, correctResult['Generate5']['ParamGenerate']);
 
     });
     it('test gen/generate/return_generate returnGenerate', function () {

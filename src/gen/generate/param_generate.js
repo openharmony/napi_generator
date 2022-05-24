@@ -41,7 +41,7 @@ function jsToC(dest, napiVn, type) {
             return "pxt->SwapJs2CUtf8(%s, %s);".format(napiVn, dest)
     }
 
-    else if (type.indexOf("[]") > 0) {
+    else if (type.substring(type.length - 2) == "[]") {
         return arrTemplete(dest, napiVn, type);
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
@@ -76,7 +76,7 @@ function jsToC(dest, napiVn, type) {
 
 function arrTemplete(dest, napiVn, type) {
     let arrayType
-    if (type.indexOf("[]") > 0) {
+    if (type.substring(type.length - 2) == "[]") {
         arrayType = getArrayTypeTwo(type)
     } else {
         arrayType = getArrayType(type)
@@ -113,7 +113,7 @@ function arrTemplete(dest, napiVn, type) {
 }
 
 function paramGenerateArray(p, name, type, param) {
-    if (type.indexOf("[]") > 0) {
+    if (type.substring(type.length - 2) == "[]") {
         let arrayType = getArrayTypeTwo(type)
         if (arrayType == "string") arrayType = "std::string"
         if (arrayType == "boolean") arrayType = "bool"
@@ -189,5 +189,6 @@ function paramGenerate(p, name, type, param, data) {
 }
 module.exports = {
     jsToC,
+    arrTemplete,
     paramGenerate
 }
