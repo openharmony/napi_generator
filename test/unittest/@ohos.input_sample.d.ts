@@ -15,6 +15,18 @@
 import { AsyncCallback, Callback } from './basic';
 
 declare namespace napitest {
+    export enum GrantStatus {
+        PERMISSION_DEFAULT = "",
+        PERMISSION_DENIED = "-1",
+        PERMISSION_GRANTED = "2",
+        PERMISSION_PASS = "3",
+    }
+
+    export enum HttpStatus {
+        STATUS0 = 0,
+        STATUS1 = 500,
+        STATUS2 = 503,
+    }
     interface Human {
         name: string;
         age: number;
