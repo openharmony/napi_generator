@@ -57,7 +57,7 @@ function analyze(data, result) {
         let matchs = re.match(" *\n*", data)
         //只剩下空格和回车时，解析完成
         if (matchs && matchs.regs[0][1] == data.length) break
-        matchs = re.match("export default ([a-zA-Z]+);", data);
+        matchs = re.match("export default ([a-zA-Z_]+);", data);
         if (matchs != null) {
             let exportName = re.getReg(data, matchs.regs[1])
             data = re.removeReg(data, matchs.regs[0]);
@@ -93,7 +93,7 @@ function analyze(data, result) {
 }
 
 function analyzeMatchNamespace(matchs, data, result) {
-    matchs = re.match("declare namespace ([a-zA-Z0-9]+) *({)", data);
+    matchs = re.match("declare namespace ([a-zA-Z_0-9]+) *({)", data);
     // 解析declare
     if (matchs != null) {
         let namespaceName = re.getReg(data, matchs.regs[1])
