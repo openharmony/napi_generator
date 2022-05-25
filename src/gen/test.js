@@ -13,4 +13,4 @@
 * limitations under the License. 
 */
 const main = require("./main");
-main.doGenerate("nodejs_test/gen/@ohos.napitest.d.ts");
+main.doGenerate("nodejs_test/gen/@ohos.napitest.d.ts","nodejs_test/gen/out");
