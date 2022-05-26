@@ -100,6 +100,7 @@ let implHTemplete = `\
 #include <memory>
 #include <vector>
 #include <cmath>
+#include <map>
 
 [numberUsing]
 

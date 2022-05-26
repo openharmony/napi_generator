@@ -68,6 +68,11 @@ public:
     uint32_t GetArrayLength(napi_value value);
     napi_value GetArrayElement(napi_value value, uint32_t p);
     napi_value SetArrayElement(napi_value &value, uint32_t p, napi_value ele);
+    
+    uint32_t GetMapLength(napi_value value);
+    napi_value GetMapElementName(napi_value value, uint32_t p);
+    napi_value GetMapElementValue(napi_value value, const char * p);
+    napi_value SetMapElement(napi_value &value, const char * ele_key, napi_value value);
 
     napi_value SyncCallBack(napi_value func, size_t argc, napi_value *args);
 
@@ -269,6 +274,44 @@ napi_value XNapiTool::SetArrayElement(napi_value &value, uint32_t p, napi_value 
         CC_ASSERT(result_status == napi_ok);
     }
     result_status = napi_set_element(env_, value, p, ele);
+    CC_ASSERT(result_status == napi_ok);
+    return value;
+}
+
+uint32_t XNapiTool::GetMapLength(napi_value value)
+{   
+    napi_value name_result;
+    napi_get_property_names(env_, value, &name_result);
+    uint32_t ret;
+    napi_status result_status = napi_get_array_length(env_, name_result, &ret);
+    CC_ASSERT(result_status == napi_ok);
+    return ret;
+}
+
+napi_value XNapiTool::GetMapElementName(napi_value value, uint32_t p)
+{
+    napi_value result;
+    napi_status result_status = napi_get_element(env_, value, p, &result);
+    CC_ASSERT(result_status == napi_ok);
+    return result;
+}
+
+napi_value XNapiTool::GetMapElementValue(napi_value value, const char * utf8Name)
+{
+    napi_value result;
+    napi_status result_status = napi_get_named_property(env_, value, utf8Name, &result);
+    CC_ASSERT(result_status == napi_ok);
+    return result;
+}
+
+napi_value XNapiTool::SetMapElement(napi_value &value, const char * ele_key, napi_value ele_value)
+{
+    napi_status result_status;
+    if (value == nullptr) {
+        result_status = napi_create_object(env_, &value);
+        CC_ASSERT(result_status == napi_ok);
+    }
+    result_status = napi_set_named_property(env_, value, ele_key, ele_value);
     CC_ASSERT(result_status == napi_ok);
     return value;
 }
