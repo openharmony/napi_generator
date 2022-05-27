@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
-    isEnum, EnumValueType, getArrayTypeTwo, getMapType} = require("../tools/common");
+    isEnum, EnumValueType, getArrayTypeTwo, getMapType } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 
 function cToJs(value, type, dest, deep = 1) {
@@ -43,7 +43,7 @@ function cToJs(value, type, dest, deep = 1) {
         let arrayType = checkArrayParamType(type)
         return arrayTempleteFunc(arrayType, deep, dest, value)
     }
-    else if (type.substring(0, 1) == "{" ) {
+    else if (type.substring(0, 1) == "{") {
         return mapTempleteFunc(type, deep, dest, value)
     }
     else
@@ -61,115 +61,115 @@ function checkArrayParamType(type) {
     return arrayType
 }
 
-function arrayTempleteFunc(arrayType, deep, dest, value){
+function arrayTempleteFunc(arrayType, deep, dest, value) {
     let lt = deep
-        let tnv = dest
-        let tnvdef = `uint32_t len%d=%s.size();
+    let tnv = dest
+    let tnvdef = `uint32_t len%d=%s.size();
     for(uint32_t i=0;i<len%d;i++) {
         napi_value tnv%d = nullptr;
         [calc_out]
         pxt->SetArrayElement(%s, i, tnv%d);
     }`.format(lt, value, lt, lt, tnv, lt)
-        let ret = ""
-        if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
-            ret = tnvdef.replaceAll("[calc_out]", `tnv%d = NUMBER_C_2_JS(pxt,%s[i]);`.format(lt, value))
-        }
-        else if (arrayType == "string") {
-            ret = tnvdef.replaceAll("[calc_out]", `tnv%d = pxt->SwapC2JsUtf8(%s[i].c_str());`.format(lt, value))
-        }
-        else if (InterfaceList.getValue(arrayType)) {
-            ret = tnvdef.replaceAll("[calc_out]", cToJs(value + "[i]", arrayType, "tnv" + lt, deep + 1))
-        }
-        return ret
+    let ret = ""
+    if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
+        ret = tnvdef.replaceAll("[calc_out]", `tnv%d = NUMBER_C_2_JS(pxt,%s[i]);`.format(lt, value))
+    }
+    else if (arrayType == "string") {
+        ret = tnvdef.replaceAll("[calc_out]", `tnv%d = pxt->SwapC2JsUtf8(%s[i].c_str());`.format(lt, value))
+    }
+    else if (InterfaceList.getValue(arrayType)) {
+        ret = tnvdef.replaceAll("[calc_out]", cToJs(value + "[i]", arrayType, "tnv" + lt, deep + 1))
+    }
+    return ret
 }
 
-function mapTempleteFunc(type, deep, dest, value){
+function mapTempleteFunc(type, deep, dest, value) {
     let mapType = getMapType(type)
-        let lt = deep
-        let tnv = dest
-        let tnvdef = `for (auto i = %s.begin(); i != %s.end(); i++)
+    let lt = deep
+    let tnv = dest
+    let tnvdef = `for (auto i = %s.begin(); i != %s.end(); i++)
         {
             const char * tnv%d;
             napi_value tnv%d = nullptr;
             [calc_out]
             pxt->SetMapElement(%s, tnv%d, tnv%d);
-        }`.format(value, value, lt, lt+1, tnv, lt, lt+1)
-        let ret = ""
-        if (mapType[1] != undefined && mapType[2] == undefined){
-            ret = mapTempleteValue(mapType, tnvdef, lt, value, tnv)
-        }
-        else if (mapType[2] != undefined){
-            ret = mapTempleteMap(mapType, tnvdef, lt)
-        }
-        else if(mapType[3] != undefined){
-            ret = mapTempleteArray(mapType, tnvdef, lt)
-        }
+        }`.format(value, value, lt, lt + 1, tnv, lt, lt + 1)
+    let ret = ""
+    if (mapType[1] != undefined && mapType[2] == undefined) {
+        ret = mapTempleteValue(mapType, tnvdef, lt, value, tnv)
+    }
+    else if (mapType[2] != undefined) {
+        ret = mapTempleteMap(mapType, tnvdef, lt)
+    }
+    else if (mapType[3] != undefined) {
+        ret = mapTempleteArray(mapType, tnvdef, lt)
+    }
     return ret
 }
 
-function mapInterface(value, lt, tnv, mapType){
+function mapInterface(value, lt, tnv, mapType) {
     let ret
     let tnvdefInterface = `for (auto i = %s.begin(); i != %s.end(); i++)
     {
         const char *tnv%d;
         [calc_out]
-    }`.format(value, value, lt, lt+1, tnv, lt, lt+1)
-        let interfaceValue = InterfaceList.getValue(mapType[1])
-        let interfaceVarName = ""
-        let interfaceVar = ""
-        let interfaceFun = ""
-        for (let i = 0; i < interfaceValue.length; i++){
-            if(interfaceValue[i].type == 'string'){
-                interfaceVarName += `const char * tnv_%s_name;
-                napi_value tnv_%s = nullptr;\n`.format(interfaceValue[i].name,interfaceValue[i].name)
-                interfaceVar += `tnv_%s_name = "%s";
+    }`.format(value, value, lt, lt + 1, tnv, lt, lt + 1)
+    let interfaceValue = InterfaceList.getValue(mapType[1])
+    let interfaceVarName = ""
+    let interfaceVar = ""
+    let interfaceFun = ""
+    for (let i = 0; i < interfaceValue.length; i++) {
+        if (interfaceValue[i].type == 'string') {
+            interfaceVarName += `const char * tnv_%s_name;
+                napi_value tnv_%s = nullptr;\n`.format(interfaceValue[i].name, interfaceValue[i].name)
+            interfaceVar += `tnv_%s_name = "%s";
                 tnv_%s = pxt->SwapC2JsUtf8(i->second.%s.c_str());\n`
-                .format(interfaceValue[i].name,interfaceValue[i].name,interfaceValue[i].name,interfaceValue[i].name)
-                interfaceFun += `pxt->SetMapElement(result_obj, tnv_%s_name, tnv_%s);\n`
-                .format(interfaceValue[i].name,interfaceValue[i].name,interfaceValue[i].name)
-            }
-            else if(interfaceValue[i].type.substring(0, 12) == "NUMBER_TYPE_"){
-                interfaceVarName += `const char * tnv_%s_name;
-                napi_value tnv_%s = nullptr;\n`.format(interfaceValue[i].name,interfaceValue[i].name)
-                interfaceVar += `tnv_%s_name = "%s";
-                tnv_%s = NUMBER_C_2_JS(pxt,i->second.%s);\n`
-                .format(interfaceValue[i].name,interfaceValue[i].name,interfaceValue[i].name,interfaceValue[i].name)
-                interfaceFun += `pxt->SetMapElement(result_obj, tnv_%s_name, tnv_%s);\n`
-                .format(interfaceValue[i].name,interfaceValue[i].name,interfaceValue[i].name)
-            }
-            else if(interfaceValue[i].type == 'boolean'){
-                interfaceVarName += `const char * tnv_%s_name;
-                napi_value tnv_%s = nullptr;\n`.format(interfaceValue[i].name,interfaceValue[i].name)
-                interfaceVar += `tnv_%s_name = "%s";
-                tnv_%s = pxt->SwapC2JsBool(i->second.%s);\n`
-                .format(interfaceValue[i].name,interfaceValue[i].name,interfaceValue[i].name,interfaceValue[i].name)
-                interfaceFun += `pxt->SetMapElement(result_obj, tnv_%s_name, tnv_%s);\n`
-                .format(interfaceValue[i].name,interfaceValue[i].name,interfaceValue[i].name)
-            }
+                .format(interfaceValue[i].name, interfaceValue[i].name, interfaceValue[i].name, interfaceValue[i].name)
+            interfaceFun += `pxt->SetMapElement(result_obj, tnv_%s_name, tnv_%s);\n`
+                .format(interfaceValue[i].name, interfaceValue[i].name, interfaceValue[i].name)
         }
-        ret = tnvdefInterface.replaceAll("[calc_out]", `tnv%d = (i -> first).c_str();
+        else if (interfaceValue[i].type.substring(0, 12) == "NUMBER_TYPE_") {
+            interfaceVarName += `const char * tnv_%s_name;
+                napi_value tnv_%s = nullptr;\n`.format(interfaceValue[i].name, interfaceValue[i].name)
+            interfaceVar += `tnv_%s_name = "%s";
+                tnv_%s = NUMBER_C_2_JS(pxt,i->second.%s);\n`
+                .format(interfaceValue[i].name, interfaceValue[i].name, interfaceValue[i].name, interfaceValue[i].name)
+            interfaceFun += `pxt->SetMapElement(result_obj, tnv_%s_name, tnv_%s);\n`
+                .format(interfaceValue[i].name, interfaceValue[i].name, interfaceValue[i].name)
+        }
+        else if (interfaceValue[i].type == 'boolean') {
+            interfaceVarName += `const char * tnv_%s_name;
+                napi_value tnv_%s = nullptr;\n`.format(interfaceValue[i].name, interfaceValue[i].name)
+            interfaceVar += `tnv_%s_name = "%s";
+                tnv_%s = pxt->SwapC2JsBool(i->second.%s);\n`
+                .format(interfaceValue[i].name, interfaceValue[i].name, interfaceValue[i].name, interfaceValue[i].name)
+            interfaceFun += `pxt->SetMapElement(result_obj, tnv_%s_name, tnv_%s);\n`
+                .format(interfaceValue[i].name, interfaceValue[i].name, interfaceValue[i].name)
+        }
+    }
+    ret = tnvdefInterface.replaceAll("[calc_out]", `tnv%d = (i -> first).c_str();
         napi_value result_obj;
         %s
         %s
         %s
         pxt->SetMapElement(result, tnv%d, result_obj);`
-        .format(lt,interfaceVarName,interfaceVar,interfaceFun,lt))
+        .format(lt, interfaceVarName, interfaceVar, interfaceFun, lt))
     return ret
 }
 
-function mapTempleteValue(mapType, tnvdef, lt, value, tnv){
+function mapTempleteValue(mapType, tnvdef, lt, value, tnv) {
     let ret
     if (mapType[1] == "string") {
         ret = tnvdef.replaceAll("[calc_out]", `tnv%d = (i -> first).c_str();
-        tnv%d = pxt->SwapC2JsUtf8(i->second.c_str());`.format(lt ,lt+1))
-    }else if (mapType[1] == "boolean") {
+        tnv%d = pxt->SwapC2JsUtf8(i->second.c_str());`.format(lt, lt + 1))
+    } else if (mapType[1] == "boolean") {
         ret = tnvdef.replaceAll("[calc_out]", `tnv%d = (i -> first).c_str();
-        tnv%d = pxt->SwapC2JsBool(i->second);`.format(lt, lt+1))
-    }else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") {
+        tnv%d = pxt->SwapC2JsBool(i->second);`.format(lt, lt + 1))
+    } else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") {
         ret = tnvdef.replaceAll("[calc_out]", `tnv%d = (i -> first).c_str();
-        tnv%d = NUMBER_C_2_JS(pxt,i->second);`.format(lt, lt+1))
+        tnv%d = NUMBER_C_2_JS(pxt,i->second);`.format(lt, lt + 1))
     }
-    else if (InterfaceList.getValue(mapType[1])){
+    else if (InterfaceList.getValue(mapType[1])) {
         ret = mapInterface(value, lt, tnv, mapType)
     }
     else
@@ -177,7 +177,7 @@ function mapTempleteValue(mapType, tnvdef, lt, value, tnv){
     return ret
 }
 
-function mapTempleteMap(mapType, tnvdef, lt){
+function mapTempleteMap(mapType, tnvdef, lt) {
     let ret
     if (mapType[2] == "string") {
         ret = tnvdef.replaceAll("[calc_out]", `std::string tt%d = i->first;
@@ -187,7 +187,7 @@ function mapTempleteMap(mapType, tnvdef, lt){
             tt%d = j->first.c_str();
             tt%d = pxt->SwapC2JsUtf8(j->second.c_str());
             pxt->SetMapElement(tnv%d, tt%d, tt%d);
-        }`.format(lt, lt+2, lt+3, lt+2, lt+3, lt+1, lt+2, lt+3))
+        }`.format(lt, lt + 2, lt + 3, lt + 2, lt + 3, lt + 1, lt + 2, lt + 3))
     }
     else if (mapType[2] == "boolean") {
         ret = tnvdef.replaceAll("[calc_out]", `std::string tt%d = i->first;
@@ -197,7 +197,7 @@ function mapTempleteMap(mapType, tnvdef, lt){
             tt%d = j->first.c_str();
             tt%d = pxt->SwapC2JsBool(j->second);
             pxt->SetMapElement(tnv%d, tt%d, tt%d);
-        }`.format(lt, lt+2, lt+3, lt+2, lt+3, lt+1, lt+2, lt+3))
+        }`.format(lt, lt + 2, lt + 3, lt + 2, lt + 3, lt + 1, lt + 2, lt + 3))
     }
     if (mapType[2].substring(0, 12) == "NUMBER_TYPE_") {
         ret = tnvdef.replaceAll("[calc_out]", `std::string tt%d = i->first;
@@ -207,12 +207,12 @@ function mapTempleteMap(mapType, tnvdef, lt){
             tt%d = j->first.c_str();
             tt%d = NUMBER_C_2_JS(pxt,j->second);
             pxt->SetMapElement(tnv%d, tt%d, tt%d);
-        }`.format(lt, lt+2, lt+3, lt+2, lt+3, lt+1, lt+2, lt+3))
+        }`.format(lt, lt + 2, lt + 3, lt + 2, lt + 3, lt + 1, lt + 2, lt + 3))
     }
     return ret
 }
 
-function mapTempleteArray(mapType, tnvdef, lt){
+function mapTempleteArray(mapType, tnvdef, lt) {
     let ret
     if (mapType[3] == "string") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
@@ -221,44 +221,44 @@ function mapTempleteArray(mapType, tnvdef, lt){
         for(uint32_t j=0;j<len%d;j++) {
             tnv%d = pxt->SwapC2JsUtf8(i->second[j].c_str());
             pxt->SetArrayElement(tnv%d, j, tnv%d);
-        }`.format(lt+2, lt, lt, lt, lt+1, lt+2, lt+1))
-    }else if (mapType[3] == "boolean") {
+        }`.format(lt + 2, lt, lt, lt, lt + 1, lt + 2, lt + 1))
+    } else if (mapType[3] == "boolean") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
         tnv%d = (i -> first).c_str();
         uint32_t len%d = i->second.size();
         for(uint32_t j=0;j<len%d;j++) {
             tnv%d = pxt->SwapC2JsBool(i->second[j]);
             pxt->SetArrayElement(tnv%d, j, tnv%d);
-        }`.format(lt+2, lt, lt, lt, lt+1, lt+2, lt+1))
-    }else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") {
+        }`.format(lt + 2, lt, lt, lt, lt + 1, lt + 2, lt + 1))
+    } else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
         tnv%d = (i -> first).c_str();
         uint32_t len%d = i->second.size();
         for(uint32_t j=0;j<len%d;j++) {
             tnv%d = NUMBER_C_2_JS(pxt,i->second[j]);
             pxt->SetArrayElement(tnv%d, j, tnv%d);
-        }`.format(lt+2, lt, lt, lt, lt+1, lt+2, lt+1))
+        }`.format(lt + 2, lt, lt, lt, lt + 1, lt + 2, lt + 1))
     }
     return ret
 }
 
-function returnGenerateMap(type, param){
+function returnGenerateMap(type, param) {
     let mapType = getMapType(type)
-        if(mapType[1] != undefined && mapType[2] == undefined){
-            let mapTypeString
-            if (mapType[1] == "string") {
-                mapTypeString = "std::string"
-            }
-            else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") {
-                mapTypeString = mapType[1]
-            }
-            else if (mapType[1] == "boolean") {
-                mapTypeString = "bool"
-            }
-            param.valueOut = "std::map<std::string,%s> out;".format(mapTypeString)
-            param.valueDefine += "%sstd::map<std::string,%s> &out"
-            .format(param.valueDefine.length > 0 ? ", " : "", mapTypeString)
+    if (mapType[1] != undefined && mapType[2] == undefined) {
+        let mapTypeString
+        if (mapType[1] == "string") {
+            mapTypeString = "std::string"
         }
+        else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") {
+            mapTypeString = mapType[1]
+        }
+        else if (mapType[1] == "boolean") {
+            mapTypeString = "bool"
+        }
+        param.valueOut = "std::map<std::string,%s> out;".format(mapTypeString)
+        param.valueDefine += "%sstd::map<std::string,%s> &out"
+            .format(param.valueDefine.length > 0 ? ", " : "", mapTypeString)
+    }
 }
 
 function returnGenerate(type, param, data) {
@@ -271,7 +271,7 @@ function returnGenerate(type, param, data) {
         param.valueDefine += "%sstd::string &out".format(param.valueDefine.length > 0 ? ", " : "")
     }
     else if (type == "void") {
-        NapiLog.logInfo("The current type don't need generate return %s`.format(type)");
+        NapiLog.logInfo("The current void type don't need generate");
     }
     else if (type == "boolean") {
         param.valueOut = "bool out;"
