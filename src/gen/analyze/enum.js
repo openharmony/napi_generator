@@ -33,35 +33,49 @@ function analyzeEnum(data) {
         if (bodyContent == "") {
             break
         }
-        let regString = re.match(" *([a-zA-Z0-9_]+) * = *\"([a-zA-Z_0-9<>-]+)\"", bodyContent)
-        let regSingleQuotes = re.match(" *([a-zA-Z0-9_]+) * = *'([a-zA-Z_0-9<>-]+)'", bodyContent)
-        let regNumber = re.match(" *([a-zA-Z0-9_]+) * = *([a-zA-Z_0-9<>-]+)", bodyContent)
-        if (regString) {
-            let elementName = re.getReg(bodyContent, regString.regs[1])
-            let elementValue = re.getReg(bodyContent, regString.regs[2])
-            result.element.push({
-                name: elementName,
-                value: elementValue
-            })
-            result.enumValueType = 1
-        } else if (regSingleQuotes) {
-            let elementName = re.getReg(bodyContent, regSingleQuotes.regs[1])
-            let elementValue = re.getReg(bodyContent, regSingleQuotes.regs[2])
-            result.element.push({
-                name: elementName,
-                value: elementValue
-            })
-            result.enumValueType = 1
-        } else if (regNumber) {
-            let elementName = re.getReg(bodyContent, regNumber.regs[1])
-            let elementValue = re.getReg(bodyContent, regNumber.regs[2])
-            typeof (elementValue)
-            result.element.push({
-                name: elementName,
-                value: elementValue
-            })
-            result.enumValueType = 0
-        }
+        analyzeEnumResult(result, bodyContent, i)
+    }
+    return result
+}
+
+function analyzeEnumResult(result, bodyContent, index) {
+    let regString = re.match(" *([a-zA-Z0-9_]+) * = *\"([a-zA-Z_0-9<>-]+)\"", bodyContent)
+    let regSingleQuotes = re.match(" *([a-zA-Z0-9_]+) * = *'([a-zA-Z_0-9<>-]+)'", bodyContent)
+    let regNumber = re.match(" *([a-zA-Z0-9_]+) * = *([a-zA-Z_0-9<>-]+)", bodyContent)
+    let reg = re.match(" *([a-zA-Z0-9_]+) *", bodyContent)
+    if (regString) {
+        let elementName = re.getReg(bodyContent, regString.regs[1])
+        let elementValue = re.getReg(bodyContent, regString.regs[2])
+        result.element.push({
+            name: elementName,
+            value: elementValue
+        })
+        result.enumValueType = 1
+    } else if (regSingleQuotes) {
+        let elementName = re.getReg(bodyContent, regSingleQuotes.regs[1])
+        let elementValue = re.getReg(bodyContent, regSingleQuotes.regs[2])
+        result.element.push({
+            name: elementName,
+            value: elementValue
+        })
+        result.enumValueType = 1
+    } else if (regNumber) {
+        let elementName = re.getReg(bodyContent, regNumber.regs[1])
+        let elementValue = re.getReg(bodyContent, regNumber.regs[2])
+        typeof (elementValue)
+        result.element.push({
+            name: elementName,
+            value: elementValue
+        })
+        result.enumValueType = 0
+    } else if (reg) {
+        let elementName = re.getReg(bodyContent, reg.regs[1])
+        let elementValue = index
+        result.element.push({
+            name: elementName,
+            value: elementValue
+        })
+        result.enumValueType = 0
     }
     return result
 }
