@@ -72,7 +72,7 @@ public:
     uint32_t GetMapLength(napi_value value);
     napi_value GetMapElementName(napi_value value, uint32_t p);
     napi_value GetMapElementValue(napi_value value, const char * p);
-    napi_value SetMapElement(napi_value &value, const char * ele_key, napi_value value);
+    napi_value SetMapElement(napi_value &value, const char * ele_key, napi_value ele_value);
 
     napi_value SyncCallBack(napi_value func, size_t argc, napi_value *args);
 
