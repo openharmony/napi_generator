@@ -40,26 +40,33 @@ if (fileNames == null && pathDir == null) {
 }
 
 function readFiles() {
-    let filenameArray = fileNames.split(" ");
+    fileNames = fileNames.replace(/(^\s*)|(\s*$)/g, ''); // trim before and after espace
+    let regex = ',';
+    let filenameArray = fileNames.toString().split(regex);
+
     let n = filenameArray.length;
     for (let i = 0; i < n; i++) {
         let fileName = filenameArray[i];
-        checkGenerate(fileName);
+        if (fileName !== ' ') {
+            fileName = fileName.replace(/(^\s*)|(\s*$)/g, '');
+            checkGenerate(fileName);
+        }
     }
 }
+
 function readDirFiles() {
-    fs.readdir(pathDir + "", function (err, files) {
+    fs.readdir(pathDir + '', function (err, files) {
         if (err) {
-            NapiLog.logError("readdir file error" + err);
+            NapiLog.logError('readdir file error' + err);
             return;
         }
         (function iterator(i) {
-            if (i == files.length) {
+            if (i === files.length) {
                 return;
             }
-            fs.stat(path.join(pathDir + "", files[i]), function (err, data) {
+            fs.stat(path.join(pathDir + '', files[i]), function (err, data) {
                 if (err) {
-                    NapiLog.logError("read file error" + err);
+                    NapiLog.logError('read file error' + err);
                     return;
                 }
                 if (data.isFile()) {
@@ -74,7 +81,7 @@ function readDirFiles() {
 
 function checkGenerate(fileName) {
     let fn = re.getFileInPath(fileName);
-    let tt = re.match("@ohos.[a-zA-Z0-9]+.d.ts", fn);
+    let tt = re.match('@ohos.[a-zA-Z0-9]+.d.ts', fn);
     if (tt) {
         let result = checkFileError(fileName);
         if (result[0]) {
@@ -86,14 +93,14 @@ function checkGenerate(fileName) {
 
     }
     else {
-        NapiLog.logError("file name " + fn + " format invalid, @ohos.input_sample.d.ts");
+        NapiLog.logError('file name ' + fn + ' format invalid, @ohos.input_sample.d.ts');
     }
 }
 
 let ret = NapiLog.getResult();
 if (ret[0]) {
-    NapiLog.logInfo("success");
+    NapiLog.logInfo('success');
 }
 else {
-    NapiLog.logInfo("fail\n" + ret[1]);
+    NapiLog.logInfo('fail\n' + ret[1]);
 }
