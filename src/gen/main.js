@@ -19,15 +19,13 @@ const re = require("./tools/re");
 
 function doGenerate(ifname, destdir) {
     let structOfTs = analyzeFile(ifname);
-    let fn = re.getFileInPath(ifname)
-    let tt = re.match("@ohos.([a-zA-Z0-9]+).d.ts", fn)
-    if(tt)
-    {
-        let moduleName=re.getReg(fn,tt.regs[1]);
+    let fn = re.getFileInPath(ifname);
+    let tt = re.match('@ohos.([.a-z_A-Z0-9]+).d.ts', fn);
+    if (tt) {
+        let moduleName = re.getReg(fn, tt.regs[1]);
         generateAll(structOfTs, destdir, moduleName);
-    }
-    else {
-        NapiLog.logError("file name " + fn + " format invalid, @ohos.input_sample.d.ts");
+    } else {
+        NapiLog.logError('file name ' + fn + ' format invalid, @ohos.input_sample.d.ts');
     }
 }
 
