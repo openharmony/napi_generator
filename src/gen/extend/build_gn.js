@@ -48,8 +48,11 @@ ohos_shared_library("[implName]")
 `
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
-function generateGN(destDir, implName, license) {
-    let ss = gnTemplete.replaceAll("[implName]", implName)
+function generateGN(destDir, implName, license, partName) {
+    let subsystemName = implName;
+    let gnFile = gnTemplete.replaceAll("[implName]", implName);
+    gnFile = gnFile.replaceAll("[subsystemName]", subsystemName);
+    gnFile = gnFile.replaceAll("[partName]", partName);
     if (license) {
         let s2 = license.substring(2, license.length - 2).split("\n");
         license = "";
@@ -62,7 +65,7 @@ function generateGN(destDir, implName, license) {
             }
         }
     }
-    writeFile(re.pathJoin(destDir, "BUILD.gn"), null != license ? (license + "\n" + ss) : ss)
+    writeFile(re.pathJoin(destDir, "BUILD.gn"), null != license ? (license + "\n" + gnFile) : gnFile)
 }
 
 module.exports = {

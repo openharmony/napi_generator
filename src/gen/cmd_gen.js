@@ -22,7 +22,7 @@ var fs = require('fs');
 
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: ".d.ts file", default: "" },
-    'directory': { key: 'dir', args: 1, description: ".d.ts directory", default: "" },
+    'directory': { key: 'd', args: 1, description: ".d.ts directory", default: "" },
     'out': { key: 'o', args: 1, description: "output directory", default: "." },
     'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" }
 });
