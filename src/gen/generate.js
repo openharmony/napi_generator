@@ -139,8 +139,9 @@ function generateAll(structOfTs, destDir, moduleName) {
     implCpp = implCpp.replaceAll("[implCpp_detail]", result.implCpp)
     writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), null != license ? (license + "\n" + implCpp) : implCpp)
 
+    let partName = moduleName.replace('.', '_')
     generateGYP(destDir, ns0.name, license)//生成ubuntu下测试的编译脚本
-    generateGN(destDir, ns0.name, license)//生成BUILD.gn for ohos
+    generateGN(destDir, ns0.name, license, partName)//生成BUILD.gn for ohos
     generateBase(destDir, license)//x_napi_tool.h/cpp
 }
 
