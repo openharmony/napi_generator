@@ -28,10 +28,12 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 /**
+ * ErrorDialog错误对话框
+ *
  * @author: xudong
  * @see: generator error dialog
  * @version: v1.0.0
- * @since 2022/02/21
+ * @since 2022-02-21
  */
 public class ErrorDialog extends JDialog {
     private static final Logger LOG = Logger.getInstance(ErrorDialog.class);

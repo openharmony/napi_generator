@@ -21,10 +21,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * 脚本选择对话框
+ *
  * @author: xudong
  * @see: select compile script
  * @version: v1.0.0
- * @since 2022/02/21
+ * @since 2022-02-21
  */
 public class ScriptAction implements ActionListener {
     private JButton button;
