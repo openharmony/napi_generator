@@ -14,15 +14,11 @@
 */
 declare namespace napitest {
     interface TestClass1 {
-        map1 : {[key: string]: number} ;
-        map2 : {[key: string]: string} ;
-        map3 : {[key: string]: boolean} ;
+        map1 : {[key: string]: string} ;
     }
 
     interface TestClass2 {
-        fun1(v: {[key: string]: string}): {[key: string]: string};
-        fun1(v: {[key: string]: number}): {[key: string]: number};
-        fun1(v: {[key: string]: boolean}): {[key: string]: boolean};
+        fun1(v: {[key: string]: string}):  number;
     }
 }
 export default napitest;
