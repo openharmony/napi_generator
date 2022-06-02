@@ -42,8 +42,8 @@ ohos_shared_library("[implName]")
     ]
     
     relative_install_dir = "module"
-    part_name = "<your part name>"
-    subsystem_name = "<your subsystem name>"
+    part_name = "[partName]"
+    subsystem_name = "[subsystemName]"
 }
 `
 
