@@ -81,7 +81,7 @@ function readDirFiles() {
 
 function checkGenerate(fileName) {
     let fn = re.getFileInPath(fileName);
-    let tt = re.match('@ohos.[a-zA-Z0-9]+.d.ts', fn);
+    let tt = re.match('@ohos([.a-z_A-Z0-9]+).d.ts', fn);
     if (tt) {
         let result = checkFileError(fileName);
         if (result[0]) {
