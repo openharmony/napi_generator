@@ -290,8 +290,10 @@ uint32_t XNapiTool::GetMapLength(napi_value value)
 
 napi_value XNapiTool::GetMapElementName(napi_value value, uint32_t p)
 {
+    napi_value name_result;
+    napi_get_property_names(env_, value, &name_result);
     napi_value result;
-    napi_status result_status = napi_get_element(env_, value, p, &result);
+    napi_status result_status = napi_get_element(env_, name_result, p, &result);
     CC_ASSERT(result_status == napi_ok);
     return result;
 }
