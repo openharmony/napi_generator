@@ -148,7 +148,7 @@ function checkGenerate(fileName, genDir) {
 function deactivate() { }
 
 function getWebviewContent() {
-	let data = readFile('src/config.html');
+	let data = readFile(__dirname + '/config.html');
 	return data.toString();
 }
 
