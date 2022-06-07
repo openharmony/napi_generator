@@ -34,8 +34,14 @@ function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "gnapi" is now active!');
+	let disposable = register(context, 'generate_napi');
+	let disposableMenu = register(context, 'generate_napi_menu');
+	context.subscriptions.push(disposable);
+	context.subscriptions.push(disposableMenu);
+}
 
-	let disposable = vscode.commands.registerCommand('generate_napi', function (uri) {
+function register(context, command) {
+	let disposable = vscode.commands.registerCommand(command, function (uri) {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		const panel = vscode.window.createWebviewPanel(
@@ -55,7 +61,7 @@ function activate(context) {
 				let mode = message.mode;
 				let fileNames = message.fileNames;
 				let fileDir = message.fileDir;
-				let genDir = message.genFile;
+				let genDir = message.genDir;
 				if (mode == 0) {
 					genFiles(fileNames, genDir);
 				} else if (mode == 1) {
@@ -63,13 +69,18 @@ function activate(context) {
 				}
 			}
 		}, undefined, context.subscriptions);
-		panel.webview.postMessage(uri.fsPath);
+		let fn = re.getFileInPath(uri.fsPath);
+		let tt = re.match("@ohos.[a-zA-Z_0-9]+.d.ts", fn);
+		panel.webview.postMessage(tt ? uri.fsPath : "");
 	});
-
-	context.subscriptions.push(disposable);
+	return disposable;
 }
 
 function genFiles(fileNames, genDir) {
+	if("" == re.replaceAll(fileNames, " ", "")){
+		vscode.window.showErrorMessage("Please enter the file path!");
+		return;
+	}
 	if (fileNames.indexOf(".") < 0) {
 		vscode.window.showErrorMessage("Please enter the correct file path!");
 		return;
@@ -84,6 +95,10 @@ function genFiles(fileNames, genDir) {
 }
 
 function genDirPath(fileDir, genDir) {
+	if("" == re.replaceAll(fileDir, " ", "")){
+		vscode.window.showErrorMessage("Please enter the folder path!");
+		return;
+	}
 	if (fileDir.indexOf(".") > 0) {
 		vscode.window.showErrorMessage("Please enter the correct folder path!");
 		return;
@@ -121,7 +136,7 @@ function checkGenerate(fileName, genDir) {
 			if (result[0]) {
 				vscode.window.showInformationMessage("Building" + fileName);
 				NapiLog.init(1, path.join("" + path.dirname(fileName), "napi_gen.log"))
-				xgen.doGenerate(fileName, genDir == null ? path.dirname(fileName) : genDir);
+				xgen.doGenerate(fileName, genDir == null || genDir == "" ? path.dirname(fileName) : genDir);
 				let ret = NapiLog.getResult();
 				if (ret[0]) {
 					vscode.window.showInformationMessage("Generated successfully");

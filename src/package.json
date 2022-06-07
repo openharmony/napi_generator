@@ -17,7 +17,11 @@
 		"commands": [
 			{
 				"command": "generate_napi",
-				"title": ".d.ts生成c++"
+				"title": "Generater Napi Frame"
+			},
+			{
+				"command": "generate_napi_menu",
+				"title": "Generater Napi Frame"
 			}
 		],
 		"menus": {
@@ -25,6 +29,11 @@
 				{
 					"when": "resourceExtname == .ts",
 					"command": "generate_napi"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "generate_napi_menu"
 				}
 			]
 		}
