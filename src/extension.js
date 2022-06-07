@@ -39,12 +39,12 @@ function activate(context) {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		const panel = vscode.window.createWebviewPanel(
-			'generate', // 标识webview的类型
-			'Generate Napi Frame', // 展示给用户的面板的标题
-			vscode.ViewColumn.One, // 显示webview面板以编辑器新列的方式.
+			'generate', // Identifies the type of WebView
+			'Generate Napi Frame', // Title of the panel displayed to the user
+			vscode.ViewColumn.One, // Display the WebView panel in the form of new columns in the editor
 			{
-				enableScripts: true, // 启用JS，默认禁用
-				retainContextWhenHidden: true, // webview被隐藏时保持状态，避免被重置
+				enableScripts: true, // Enable or disable JS, default is Enable
+				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
 			}
 		);
 		panel.webview.html = getWebviewContent();
@@ -71,7 +71,7 @@ function activate(context) {
 
 function genFiles(fileNames, genDir) {
 	if (fileNames.indexOf(".") < 0) {
-		vscode.window.showErrorMessage("请输入正确的文件路径");
+		vscode.window.showErrorMessage("Please enter the correct file path!");
 		return;
 	}
 	var regex = ",";
@@ -85,7 +85,7 @@ function genFiles(fileNames, genDir) {
 
 function genDirPath(fileDir, genDir) {
 	if (fileDir.indexOf(".") > 0) {
-		vscode.window.showErrorMessage("请输入正确的文件夹路径");
+		vscode.window.showErrorMessage("Please enter the correct folder path!");
 		return;
 	}
 	fs.readdir(fileDir + "", function (err, files) {
@@ -119,12 +119,12 @@ function checkGenerate(fileName, genDir) {
 		let result = checkFileError(fileName);
 		if (result[0]) {
 			if (result[0]) {
-				vscode.window.showInformationMessage("正在生成" + fileName);
+				vscode.window.showInformationMessage("Building" + fileName);
 				NapiLog.init(1, path.join("" + path.dirname(fileName), "napi_gen.log"))
 				xgen.doGenerate(fileName, genDir == null ? path.dirname(fileName) : genDir);
 				let ret = NapiLog.getResult();
 				if (ret[0]) {
-					vscode.window.showInformationMessage("生成成功");
+					vscode.window.showInformationMessage("Generated successfully");
 				}
 				else {
 					vscode.window.showInformationMessage("" + ret[1]);
