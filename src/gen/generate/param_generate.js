@@ -69,7 +69,7 @@ function jsToC(dest, napiVn, type) {
     else if (type == "boolean") {
         return `BOOLEAN_JS_2_C(%s,%s,%s);`.format(napiVn, "bool", dest)
     }
-    else if (type.indexOf("{") == 0) {
+    else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         return mapTempleteFunc(dest, napiVn, type);
     }
     else
@@ -347,18 +347,18 @@ function mapArray(mapType, napiVn, dest, lt){
                 pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetMapElementValue(%s,tt%d.c_str()),i%d), tt%d);
                 tt%d.push_back(tt%d);
             }`.format(napiVn, lt, lt, lt+1, napiVn, lt, lt+1, lt+1, lt+1,
-                 lt+1, lt+2, napiVn, lt, lt, lt+2 ,lt+1, lt+2))
+                lt+1, lt+2, napiVn, lt, lt+1, lt+2 ,lt+1, lt+2))
         }
         else if(mapType[3] == "boolean"){
             mapTemplete = mapTemplete.replaceAll("[replace_swap]",
             `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%s), tt%d);
             uint32_t len%s=pxt->GetArrayLength(pxt->GetMapElementValue(%s,tt%d.c_str()));
             for(uint32_t i%d=0;i%d<len%d;i%d++){
-                std::string tt%d;
-                pxt->SwapJs2CBool(pxt->GetArrayElement(pxt->GetMapElementValue(%s,tt%d.c_str()),i%d), tt%d);
+                bool tt%d;
+                tt%d = pxt->SwapJs2CBool(pxt->GetArrayElement(pxt->GetMapElementValue(%s,tt%d.c_str()),i%d));
                 tt%d.push_back(tt%d);
             }`.format(napiVn, lt, lt, lt+1, napiVn, lt, lt+1, lt+1, lt+1,
-                 lt+1, lt+2, napiVn, lt, lt, lt+2 ,lt+1, lt+2))
+                lt+1, lt+2, lt+2, napiVn, lt, lt ,lt+1, lt+2))
         }
         else if(mapType[3].substring(0, 12) == "NUMBER_TYPE_"){
             mapTemplete = mapTemplete.replaceAll("[replace_swap]",
@@ -410,7 +410,7 @@ function paramGenerate(p, name, type, param, data) {
     else if (isEnum(type, data)) {
         paramGenerateEnum(data, type, param, name, p)
     }
-    else if (type.indexOf("{") == 0) {
+    else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         paramGenerateMap(type, param, p, name)
     }
     else {
