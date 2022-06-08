@@ -71,7 +71,7 @@ function readDirFiles() {
                 }
                 if (data.isFile()) {
                     let fileName = files[i];
-                    checkGenerate(fileName);
+                    checkGenerate(pathDir + '/' + fileName);
                 }
                 iterator(i + 1);
             });
