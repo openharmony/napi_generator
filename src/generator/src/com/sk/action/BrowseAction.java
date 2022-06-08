@@ -18,12 +18,15 @@ import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
 import com.sk.utils.FileUtil;
 import com.sk.utils.GenNotification;
+import org.apache.http.util.TextUtils;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.prefs.Preferences;
 
 /**
@@ -49,42 +52,86 @@ public class BrowseAction implements ActionListener {
         this.interField = interField;
         this.genField = geField;
         this.scriptField = scriptField;
+
     }
+
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(button)) {
             Preferences preferences = Preferences.userRoot();
-
-
             JFileChooser fcDlg = new JFileChooser();
+
+            // 获取上次打开文件的路径。
+
             String pathRecord = preferences.get("interPathRecord", "");
             if (!pathRecord.equals("")) {
                 fcDlg = new JFileChooser(pathRecord);
             }
 
             fcDlg.setDialogTitle("请选择接口文件...");
-            fcDlg.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fcDlg.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("文本文件(*.ts)", "ts");
+            fcDlg.setMultiSelectionEnabled(true);
             fcDlg.setFileFilter(filter);
             int returnVal = fcDlg.showOpenDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                String filepath = fcDlg.getSelectedFile().getPath();
-                String filename = fcDlg.getSelectedFile().getName();
+                String upPath = fcDlg.getSelectedFile().getParent();
+                File[] files = fcDlg.getSelectedFiles();
 
-                if (!FileUtil.patternFileName(filename)) {
-                    GenNotification.notifyMessage(project,
-                            "当前文件名不符合转换规则！",
-                            "提示",
-                            NotificationType.WARNING);
+                String interFile = setSelectFile(files);
+
+                if (TextUtils.isBlank(interFile)) {
                     return;
                 }
-                String upPath = fcDlg.getSelectedFile().getParent();
-                preferences.put("interPathRecord", filepath);
-                interField.setText(filepath);
+
+                // 设置默认打开路径；
+
+                preferences.put("interPathRecord", upPath);
+                interField.setText(interFile.substring(0, interFile.length() - 1));
                 genField.setText(upPath);
                 scriptField.setText(upPath);
             }
         }
+    }
+
+    private String setSelectFile(File[] files) {
+        String interFile = "";
+        boolean existFile = false;
+        boolean existDir = false;
+        for (File file : files) {
+            if (file.isDirectory()) {
+                if (!existDir) {
+                    existDir = true;
+                    interFile += file.getPath() + ",";
+                } else {
+                    GenNotification.notifyMessage(project,
+                            "目前只支持单个文件夹转换",
+                            "选择不符合要求",
+                            NotificationType.WARNING);
+                    interField.setText("");
+                    return "";
+                }
+            } else {
+                if (!FileUtil.patternFileName(file.getName())) {
+                    GenNotification.notifyMessage(project,
+                            file.getPath(),
+                            file.getName() + "文件名不符合",
+                            NotificationType.WARNING);
+                    return "";
+                }
+                existFile = true;
+                interFile += file.getPath() + ",";
+            }
+        }
+        if (existDir && existFile) {
+            GenNotification.notifyMessage(project,
+                    "不能同时转换文件和文件夹",
+                    "选择不符合要求",
+                    NotificationType.WARNING);
+            interField.setText("");
+            return "";
+        }
+        return interFile;
     }
 }
