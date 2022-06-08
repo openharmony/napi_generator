@@ -26,6 +26,7 @@
           <component id="b2411" class="javax.swing.JTextField" binding="interPath">
             <constraints/>
             <properties>
+              <editable value="false"/>
               <margin top="2" left="6" bottom="2" right="6"/>
               <maximumSize width="500" height="30"/>
               <minimumSize width="300" height="30"/>
@@ -56,6 +57,7 @@
           <component id="c4c1b" class="javax.swing.JTextField" binding="genPath">
             <constraints/>
             <properties>
+              <editable value="false"/>
               <maximumSize width="500" height="30"/>
               <minimumSize width="300" height="30"/>
               <preferredSize width="400" height="30"/>
@@ -88,6 +90,7 @@
           <component id="7194f" class="javax.swing.JTextField" binding="scriptPath">
             <constraints/>
             <properties>
+              <editable value="false"/>
               <maximumSize width="500" height="30"/>
               <minimumSize width="300" height="30"/>
               <preferredSize width="400" height="30"/>
