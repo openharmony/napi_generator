@@ -87,13 +87,14 @@ function mapTempleteFunc(type, deep, dest, value) {
     let mapType = getMapType(type)
     let lt = deep
     let tnv = dest
-    let tnvdef = `for (auto i = %s.begin(); i != %s.end(); i++)
+    let tnvdef = `result = nullptr;
+    for (auto i = %s.begin(); i != %s.end(); i++)
         {
             const char * tnv%d;
             napi_value tnv%d = nullptr;
             [calc_out]
             pxt->SetMapElement(%s, tnv%d, tnv%d);
-        }`.format(value, value, lt, lt + 1, tnv, lt, lt + 1)
+        }`.format(value, value, lt, lt + 1, tnv, lt, lt + 2)
     let ret = ""
     if (mapType[1] != undefined && mapType[2] == undefined) {
         ret = mapTempleteValue(mapType, tnvdef, lt, value, tnv)
@@ -284,7 +285,34 @@ function returnGenerate(type, param, data) {
         param.valueOut = type + " out;"
         param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
     }
-    else if (InterfaceList.getValue(type)) {
+    else if(generateType(type)){
+        returnGenerate2(type, param, data)
+    }
+    else {
+        NapiLog.logError("The current version do not support this type return %s`.format(type)");
+    }
+}
+
+function generateType(type){
+    if (InterfaceList.getValue(type)) {
+        return true
+    }
+    else if (type.substring(0, 6) == "Array<") {
+        return true
+    }
+    else if (type.substring(type.length - 2) == "[]") {
+        return true
+    }
+    else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
+        return true
+    }
+    else {
+        return false
+    }
+}
+
+function returnGenerate2(type, param, data){
+    if (InterfaceList.getValue(type)) {
         param.valueOut = type + " out;"
         param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
     }
@@ -300,11 +328,8 @@ function returnGenerate(type, param, data) {
         param.valueOut = "std::vector<%s> out;".format(arrayType)
         param.valueDefine += "%sstd::vector<%s> &out".format(param.valueDefine.length > 0 ? ", " : "", arrayType)
     }
-    else if (type.substring(0, 1) == "{") {
+    else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         returnGenerateMap(type, param)
-    }
-    else {
-        NapiLog.logError("The current version do not support this type return %s`.format(type)");
     }
 }
 

@@ -23,4 +23,34 @@ describe('Map', function () {
         assert.strictEqual(ret, 0);
     });
     
+    it('test TestClass2 fun2', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun2({"age":1234,"name":5678});
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test TestClass2 fun3', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun3({"age":true,"name":false});
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test TestClass2 fun4', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun4({"age":["1","12","145"],"name":["21","22","23"]});
+        assert.strictEqual(ret, 0);
+    });
+    
+    it('test TestClass2 fun5', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun5({"age":[1,2,3],"name":[4,5,6]});
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test TestClass2 fun6', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun6({"age":[true,true,true],"name":[false,false,false]});
+        assert.strictEqual(ret, 0);
+    });
+    
 });
