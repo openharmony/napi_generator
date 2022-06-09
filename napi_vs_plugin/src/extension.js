@@ -18,9 +18,12 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const re = require("./gen/tools/VsPluginRe");
-const path = require("path");
+let compressing = require('compressing');
+let http = require("https");
 const { VsPluginLog } = require("./gen/tools/VsPluginLog");
 const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
+const url = "https://repo.huaweicloud.com/harmonyos/develop_tools/napi_generator/napi_generator_20220319.tart.gz";
+var exeFilePath = null;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -28,7 +31,6 @@ const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "gnapi" is now active!');
@@ -36,6 +38,17 @@ function activate(context) {
 	let disposableMenu = register(context, 'generate_napi_menu');
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposableMenu);
+	var platform = detectPlatform();
+	if (platform == 'win') {
+		exeFilePath = __dirname + "/napi_generator/napi_generator-win.exe";
+	} else if (platform == 'mac') {
+		exeFilePath = __dirname + "/napi_generator/napi_generator-macos";
+	} else if (platform == 'Linux') {
+		exeFilePath = __dirname + "/napi_generator-linux";
+	}
+	if (!exeFileExit()) {
+		requestFile(null, null, null);
+	}
 }
 
 function executor(name, genDir, mode) {
@@ -51,21 +64,15 @@ function executor(name, genDir, mode) {
 }
 
 function genCommand(name, genDir, mode) {
-	var command;
-	var platform = detectPlatform();
-	var genFileMode = genMode(mode);
-	if (platform == 'win') {
-		command = __dirname + '/napi_generator-win.exe' + genFileMode + name + " -o " + genDir;
-	} else if (platform == 'mac') {
-		command = __dirname + '/napi_generator-macos' + genFileMode + name + " -o " + genDir;
-	} else if (platform == 'Linux') {
-		command = __dirname + '/napi_generator-linux' + genFileMode + name + " -o " + genDir;
-	}
-	return command;
+	var genFileMode = mode == 0 ? " -f " : " -d ";
+	return exeFilePath + genFileMode + name + " -o " + genDir;
 }
 
-function genMode(mode) {
-	return mode == 0 ? " -f " : " -d ";
+function exeFileExit() {
+	if (fs.existsSync(exeFilePath)) {
+		return true;
+	}
+	return false;
 }
 
 function register(context, command) {
@@ -74,7 +81,7 @@ function register(context, command) {
 		// Display a message box to the user
 		const panel = vscode.window.createWebviewPanel(
 			'generate', // Identifies the type of WebView
-			'Generate NAPI Frame', // Title of the panel displayed to the user
+			'Generate Napi Frame', // Title of the panel displayed to the user
 			vscode.ViewColumn.One, // Display the WebView panel in the form of new columns in the editor
 			{
 				enableScripts: true, // Enable or disable JS, default is Enable
@@ -116,7 +123,11 @@ function checkMode(name, genDir, mode) {
 			return;
 		}
 	}
-	executor(name, genDir, mode);
+	if (exeFileExit()) {
+		executor(name, genDir, mode);
+	} else {
+		requestFile(name, genDir, mode);
+	}
 }
 
 // this method is called when your extension is deactivated
@@ -125,6 +136,43 @@ function deactivate() { }
 function getWebviewContent() {
 	let data = readFile(__dirname + '/vs_plugin_view.html');
 	return data.toString();
+}
+
+function requestFile(name, genDir, mode) {
+	http.get(url, function (res) {
+		let imgData = "";
+		let contentLength = parseInt(res.headers['content-length']);
+		res.setEncoding("binary");
+		res.on("data", function (chunk) {
+			imgData += chunk;
+			let process = ((imgData.length) / contentLength) * 100;
+			let percent = parseInt(((process).toFixed(0)));
+			VsPluginLog.logInfo("VsPlugin:" + percent);
+		});
+		res.on("end", function () {
+			fs.writeFile(__dirname + "/napi_generator.tart.gz", imgData, "binary", function (err) {
+				if (err) {
+					VsPluginLog.logInfo("VsPlugin: down fail");
+				} else {
+					VsPluginLog.logInfo("VsPlugin: down success");
+					decompress(__dirname + '/' + 'napi_generator.tart.gz', __dirname, name, genDir, mode);
+				}
+			});
+		});
+	});
+}
+
+const decompress = function (filePath, decompressPath = __dirname, name, genDir, mode) {
+	compressing.tgz.uncompress(filePath, decompressPath, { zipFileNameEncoding: 'GBK' })
+		.then(() => {
+			VsPluginLog.logInfo('VsPlugin: success' + exeFilePath);
+			if(name != null){
+				executor(name, genDir, mode);
+			}
+		})
+		.catch(err => {
+			VsPluginLog.logInfo("VsPlugin:" + err);
+		})
 }
 
 module.exports = {
