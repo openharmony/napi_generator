@@ -55,7 +55,7 @@ function generateVariable(name, type, variable, className) {
         variable.hDefine += "\n    bool %s;".format(name)
     } else if (type.indexOf("[]") == 0) {
         variable.hDefine += "\n    std::vector<%s> %s;".format(type, name)
-    } else if (type.indexOf("{") == 0) {
+    } else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         variable.hDefine += mapTypeString(type, name)
     }
     else
