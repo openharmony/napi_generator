@@ -17,12 +17,10 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const fs = require('fs');
-const re = require("./gen/tools/re");
-const xgen = require('./gen/main');
+const re = require("./gen/tools/VsPluginRe");
 const path = require("path");
-const { checkFileError } = require("./gen/tools/common");
-const { NapiLog } = require("./gen/tools/NapiLog");
-const { readFile } = require('./gen/tools/FileRW');
+const { VsPluginLog } = require("./gen/tools/VsPluginLog");
+const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -40,13 +38,43 @@ function activate(context) {
 	context.subscriptions.push(disposableMenu);
 }
 
+function executor(name, genDir, mode) {
+	var exec = require('child_process').exec;
+	exec(genCommand(name, genDir, mode), function (error, stdout, stderr) {
+		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
+		if (error) {
+			vscode.window.showErrorMessage("genError:" + error);
+			return VsPluginLog.logError("VsPlugin:" + error);
+		}
+		vscode.window.showInformationMessage("Generated successfully");
+	});
+}
+
+function genCommand(name, genDir, mode) {
+	var command;
+	var platform = detectPlatform();
+	var genFileMode = genMode(mode);
+	if (platform == 'win') {
+		command = __dirname + '/napi_generator-win.exe' + genFileMode + name + " -o " + genDir;
+	} else if (platform == 'mac') {
+		command = __dirname + '/napi_generator-macos' + genFileMode + name + " -o " + genDir;
+	} else if (platform == 'Linux') {
+		command = __dirname + '/napi_generator-linux' + genFileMode + name + " -o " + genDir;
+	}
+	return command;
+}
+
+function genMode(mode) {
+	return mode == 0 ? " -f " : " -d ";
+}
+
 function register(context, command) {
 	let disposable = vscode.commands.registerCommand(command, function (uri) {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		const panel = vscode.window.createWebviewPanel(
 			'generate', // Identifies the type of WebView
-			'Generate Napi Frame', // Title of the panel displayed to the user
+			'Generate NAPI Frame', // Title of the panel displayed to the user
 			vscode.ViewColumn.One, // Display the WebView panel in the form of new columns in the editor
 			{
 				enableScripts: true, // Enable or disable JS, default is Enable
@@ -59,14 +87,9 @@ function register(context, command) {
 				panel.dispose();
 			} else {
 				let mode = message.mode;
-				let fileNames = message.fileNames;
-				let fileDir = message.fileDir;
+				let name = message.fileNames;
 				let genDir = message.genDir;
-				if (mode == 0) {
-					genFiles(fileNames, genDir);
-				} else if (mode == 1) {
-					genDirPath(fileDir, genDir);
-				}
+				checkMode(name, genDir, mode);
 			}
 		}, undefined, context.subscriptions);
 		let fn = re.getFileInPath(uri.fsPath);
@@ -76,94 +99,31 @@ function register(context, command) {
 	return disposable;
 }
 
-function genFiles(fileNames, genDir) {
-	if("" == re.replaceAll(fileNames, " ", "")){
-		vscode.window.showErrorMessage("Please enter the file path!");
+function checkMode(name, genDir, mode) {
+	name = re.replaceAll(name, " ", "");
+	if ("" == name) {
+		vscode.window.showErrorMessage("Please enter the path!");
 		return;
 	}
-	if (fileNames.indexOf(".") < 0) {
-		vscode.window.showErrorMessage("Please enter the correct file path!");
-		return;
-	}
-	var regex = ",";
-	let filenameArray = fileNames.toString().split(regex);
-	let n = filenameArray.length;
-	for (let i = 0; i < n; i++) {
-		let fileName = filenameArray[i];
-		checkGenerate(fileName, genDir);
-	}
-}
-
-function genDirPath(fileDir, genDir) {
-	if("" == re.replaceAll(fileDir, " ", "")){
-		vscode.window.showErrorMessage("Please enter the folder path!");
-		return;
-	}
-	if (fileDir.indexOf(".") > 0) {
-		vscode.window.showErrorMessage("Please enter the correct folder path!");
-		return;
-	}
-	fs.readdir(fileDir + "", function (err, files) {
-		if (err) {
-			NapiLog.logError("readdir file error" + err);
+	if (mode == 0) {
+		if (name.indexOf(".") < 0) {
+			vscode.window.showErrorMessage("Please enter the correct file path!");
 			return;
 		}
-		(function iterator(i) {
-			if (i == files.length) {
-				return;
-			}
-			fs.stat(path.join(fileDir + "", files[i]), function (err, data) {
-				if (err) {
-					NapiLog.logError("read file error" + err);
-					return;
-				}
-				if (data.isFile()) {
-					let fileName = files[i];
-					checkGenerate(fileName, genDir);
-				}
-				iterator(i + 1);
-			});
-		})(0);
-	});
-}
-
-function checkGenerate(fileName, genDir) {
-	let fn = re.getFileInPath(fileName);
-	let tt = re.match("@ohos.[a-zA-Z_0-9]+.d.ts", fn);
-	if (tt) {
-		let result = checkFileError(fileName);
-		if (result[0]) {
-			if (result[0]) {
-				vscode.window.showInformationMessage("Building" + fileName);
-				NapiLog.init(1, path.join("" + path.dirname(fileName), "napi_gen.log"))
-				xgen.doGenerate(fileName, genDir == null || genDir == "" ? path.dirname(fileName) : genDir);
-				let ret = NapiLog.getResult();
-				if (ret[0]) {
-					vscode.window.showInformationMessage("Generated successfully");
-				}
-				else {
-					vscode.window.showInformationMessage("" + ret[1]);
-				}
-			}
-			else {
-				vscode.window.showErrorMessage("" + result[1]);
-			}
+	} else {
+		if (name.indexOf(".") > 0) {
+			vscode.window.showErrorMessage("Please enter the correct folder path!");
+			return;
 		}
-		else {
-			NapiLog.logError(result[1]);
-		}
-
 	}
-	else {
-		NapiLog.logError("file name " + fn + " format invalid, @ohos.input_sample.d.ts");
-	}
+	executor(name, genDir, mode);
 }
 
 // this method is called when your extension is deactivated
 function deactivate() { }
 
 function getWebviewContent() {
-	let data = readFile(__dirname + '/config.html');
+	let data = readFile(__dirname + '/vs_plugin_view.html');
 	return data.toString();
 }
 
