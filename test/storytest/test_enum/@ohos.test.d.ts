@@ -12,6 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
+import { Callback } from './../basic';
 
 declare namespace napitest {
     export enum GrantStatus {
@@ -28,6 +29,7 @@ declare namespace napitest {
     }
     function fun1(v1: GrantStatus): HttpStatus;
     function fun2(v1: HttpStatus): GrantStatus;
+    function fun3(reason: string, callback: Callback<HttpStatus>): void;
 }
 
 export default napitest;
