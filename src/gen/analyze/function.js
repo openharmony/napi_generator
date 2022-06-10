@@ -34,14 +34,18 @@ function analyzeFunction(name, values, ret) {
     }
     for (let j in values) {
         let v = values[j]
-        if (v["type"].indexOf("number") >= 0) {
+        let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", v["type"])
+        let parameter = v["type"]
+        if(arrayType){
+            parameter = re.getReg(v["type"], arrayType.regs[2])
+        }
+        if (parameter.indexOf("number") >= 0) {
             v["type"] = v["type"].replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
         }
     }
     if (ret.indexOf("number") >= 0) {
         ret = ret.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
     }
-
     let result = {
         name: name,
         type: funcType,

@@ -374,6 +374,22 @@ function mapArray(mapType, napiVn, dest, lt){
     return mapTemplete
 }
 
+function paramGenerateCallBack(data, type, param, p){
+    let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", type)
+    let regType
+    if(arrayType){
+        regType = re.getReg(type, arrayType.regs[2])
+    }
+    let tt = re.match("(Async)*Callback<([a-zA-Z_0-9]+)>", type)
+    if(tt){
+        regType = re.getReg(type, tt.regs[2])
+    }
+    param.callback = {
+        type: regType,
+        offset: p
+    }
+}
+
 // 函数的参数处理
 function paramGenerate(p, name, type, param, data) {
     if (type == "string") {
@@ -395,11 +411,7 @@ function paramGenerate(p, name, type, param, data) {
         param.valueDefine += "%s%s &%s".format(param.valueDefine.length > 0 ? ", " : "", type, name)
     }
     else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
-        let tt = re.match("(Async)*Callback<([a-zA-Z_0-9]+)>", type)
-        param.callback = {
-            type: re.getReg(type, tt.regs[2]),
-            offset: p
-        }
+        paramGenerateCallBack(data, type, param, p)
     }
     else if (type == "boolean") {
         param.valueIn += "\n    bool in%d;".format(p)
