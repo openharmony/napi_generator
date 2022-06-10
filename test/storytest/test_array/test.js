@@ -37,5 +37,12 @@ describe('String', function () {
         assert.strictEqual(ret, 0);
     });
 
+    function abc(ret) {
+        assert.strictEqual(ret, '');
+    }
+
+    it('test fun4', function () {
+        fun4().then(abc);
+    });
 });
 
