@@ -190,7 +190,7 @@ function parseFunction(matchs, data, result) {
         else {
             funcRet = "void"
         }
-        let funcDetail = analyzeFunction(funcName, funcValue.substring(1, funcValue.length - 1), funcRet)
+        let funcDetail = analyzeFunction(result, funcName, funcValue.substring(1, funcValue.length - 1), funcRet)
         if (funcDetail != null)
             result.function.push(funcDetail)
         if (matchs.regs[1][0] != -1) {
