@@ -13,12 +13,13 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { FuncType, NumberIncrease } = require("../tools/common");
+const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex } = require("../tools/common");
 const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
+const { NapiLog } = require("../tools/NapiLog");
 
 /**函数解析 */
-function analyzeFunction(name, values, ret) {
+function analyzeFunction(data, name, values, ret) {
     values = re.replaceAll(re.replaceAll(values, " ", ""), "\n", "")
     let tmp = analyzeParams(values)
     values = tmp[0]
@@ -36,8 +37,19 @@ function analyzeFunction(name, values, ret) {
         let v = values[j]
         let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", v["type"])
         let parameter = v["type"]
-        if(arrayType){
+        if (arrayType) {
             parameter = re.getReg(v["type"], arrayType.regs[2])
+        }
+        if(isEnum(parameter, data)){
+            let index = enumIndex(parameter, data)
+            if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+                v["type"] = v["type"].replace(parameter, "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
+            } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+                v["type"] = v["type"].replace(parameter, "string")
+            } else {
+                NapiLog.logError(`returnGenerate is not support`);
+                return
+            }
         }
         if (parameter.indexOf("number") >= 0) {
             v["type"] = v["type"].replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())

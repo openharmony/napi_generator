@@ -37,7 +37,7 @@ function analyzeInterface(data) {//same as class
             let valueName = re.getReg(t, tt.regs[1])
             let valueType = re.getReg(t, tt.regs[2])
             let index = valueType.indexOf("number")
-            while (index !== -1){
+            while (index !== -1) {
                 valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
                 index = valueType.indexOf("number")
             }
@@ -48,7 +48,7 @@ function analyzeInterface(data) {//same as class
         }
         tt = re.match(" *([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|[\\]]*)\\) *: *([A-Za-z0-9_<>{}:, .[\\]]+)", t)
         if (tt) {//函数
-            let funcDetail = analyzeFunction(re.getReg(t, tt.regs[1]),
+            let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]),
                 re.getReg(t, tt.regs[2]), re.getReg(t, tt.regs[3]))
             if (funcDetail != null)
                 result.function.push(funcDetail)

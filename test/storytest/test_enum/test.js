@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { fun1, fun2 } = require("./out/build/Release/napitest")
+const { fun1, fun2, fun3 } = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('String', function () {
@@ -36,6 +36,14 @@ describe('String', function () {
     it('test fun2', function () {
         let ret = fun2(HttpStatus.STATUS1);
         assert.strictEqual(ret, GrantStatus.PERMISSION_DEFAULT);
+    });
+
+    function abc(ret) {
+        assert.strictEqual(ret, 0);
+    }
+
+    it('test fun3', function () {
+        fun3('1', abc);
     });
 });
 

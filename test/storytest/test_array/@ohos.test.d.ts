@@ -12,12 +12,18 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-import { AsyncCallback, Callback } from './../basic';
+import { AsyncCallback } from './../basic';
 
 declare namespace napitest {
+    interface PeerInfo {
+        readonly deviceName: string;
+        readonly networkId: string;
+        readonly isOnline: boolean;
+    }
     function fun1(v1: Array<string>): number;
     function fun2(v1: Array<number>): number;
     function fun3(v1: Array<boolean>): number;
+    function fun4(callback: AsyncCallback<Array<PeerInfo>>): void;
 }
 
 export default napitest;
