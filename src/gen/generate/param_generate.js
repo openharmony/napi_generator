@@ -369,7 +369,7 @@ function mapArray(mapType, napiVn, dest, lt) {
                 NUMBER_JS_2_C(pxt->GetArrayElement(pxt->GetMapElementValue(%s,tt%d.c_str()),i%d), %s, tt%d);
                 tt%d.push_back(tt%d);
             }`.format(napiVn, lt, lt, lt + 1, napiVn, lt, lt + 1, lt + 1, lt + 1,
-                lt + 1, mapTypeString, lt + 2, napiVn, lt, lt, mapTypeString, lt + 2, lt + 1, lt + 2))
+                lt + 1, mapTypeString, lt + 2, napiVn, lt, lt + 1, mapTypeString, lt + 2, lt + 1, lt + 2))
     }
     return mapTemplete
 }

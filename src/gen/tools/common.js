@@ -125,26 +125,31 @@ function enumIndex(type, data) {
 function getMapType(type) {
     type = type.replace(/\s*/g,"")
     let tt1 = re.search("Map<([a-zA-Z_0-9]+),", type)
-    let tt2 = re.search(",([a-zA-Z_0-9]+)>", type)
+    let tt2 = re.search(",([a-zA-Z_0-9<>]+)>", type)
     let tt3
     let tt4
 
     let valueType
     let valueMapType
     let valueArrayType
-    if(tt1 == null && tt2 == null){
+    if (tt1 == null && tt2 == null) {
         tt1 = re.search("key:([a-zA-Z_0-9]+)", type)
         tt2 = re.search(":([a-zA-Z_0-9]+)}", type)
         tt3 = re.search(":([a-zA-Z_0-9]+)}}", type)
         tt4 = re.search("Array<([a-zA-Z_0-9]+)>", type)
     }
-    if(tt2 != null){
+    if (tt2 != null) {
         valueType = re.getReg(type, tt2.regs[1])
+        if (valueType.indexOf("Array<") == 0) {
+            let tt5 = re.search("Array<([a-zA-Z_0-9]+)>", valueType)
+            valueArrayType = re.getReg(valueType, tt5.regs[1])
+            valueType = undefined
+        }
     }
-    if(tt3 != null){
+    if (tt3 != null) {
         valueMapType = re.getReg(type, tt3.regs[1])
     }
-    if(tt4 != null){
+    if (tt4 != null) {
         valueArrayType = re.getReg(type, tt4.regs[1])
     }
     return [re.getReg(type, tt1.regs[1]), valueType, valueMapType, valueArrayType]
