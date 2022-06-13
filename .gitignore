@@ -1,6 +1,7 @@
 *.iml
 .gitignore
 .gradle
+.vscode
 /local.properties
 /.idea/caches
 /.idea/libraries
@@ -23,3 +24,5 @@
 /src/generator/resources/cmds/mac/napi_generator-macos
 /src/generator/resources/cmds/win/napi_generator-win.exe
 /src/generator/.idea/
+/src/package-lock.json
+/src/package.json

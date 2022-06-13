@@ -84,7 +84,6 @@ public class GenerateDialog extends DialogWrapper {
     @Nullable
     @Override
     protected ValidationInfo doValidate() {
-
         return genDiag.validationInfo();
     }
 
@@ -128,6 +127,7 @@ public class GenerateDialog extends DialogWrapper {
             if (validationInfo != null) {
                 LOG.info(validationInfo.message);
             } else {
+
                 if (genDiag.runFun()) {
                     close(CANCEL_EXIT_CODE);
                 }

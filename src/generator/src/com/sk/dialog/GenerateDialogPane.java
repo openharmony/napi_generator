@@ -24,6 +24,8 @@ import com.sk.action.ScriptAction;
 import com.sk.utils.FileUtil;
 import com.sk.utils.GenNotification;
 import org.apache.http.util.TextUtils;
+import org.jetbrains.annotations.Nullable;
+
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -76,9 +78,11 @@ public class GenerateDialogPane extends JDialog {
     private String fileName;
     private Project project;
 
+
     /**
      * 构造函数
-     * @param project projectid
+     *
+     * @param project       projectid
      * @param interFilePath 接口文件路径
      * @param genDir        生成框架文件路径
      * @param scriptDir     脚本目录
@@ -101,7 +105,8 @@ public class GenerateDialogPane extends JDialog {
         contentPane.registerKeyboardAction(actionEvent -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        selectInter.addActionListener(new BrowseAction(project, selectInter, interPath, genPath, scriptPath));
+        BrowseAction browseAction = new BrowseAction(project, selectInter, interPath, genPath, scriptPath);
+        selectInter.addActionListener(browseAction);
         selectGenPath.addActionListener(new GenAction(selectGenPath, genPath));
         selectScriptPath.addActionListener(new ScriptAction(selectScriptPath, scriptPath));
     }
@@ -127,6 +132,7 @@ public class GenerateDialogPane extends JDialog {
      *
      * @return ValidationInfo 返回不符要求的信息。
      */
+    @Nullable
     public ValidationInfo validationInfo() {
         String fileInter = interPath.getText();
         String scriptDir = scriptPath.getText();
@@ -135,7 +141,7 @@ public class GenerateDialogPane extends JDialog {
                 || TextUtils.isEmpty(scriptDir)
                 || TextUtils.isEmpty(filegypDir);
 
-        ValidationInfo validationInfo = new ValidationInfo(null);
+        ValidationInfo validationInfo = null;
         if (isEmptyFile) {
             String warnMsg = "接口文件、框架、编译脚本路径不能为空";
             warningMessage("Please input interface,gen and gyp file directory", warnMsg);
@@ -199,8 +205,6 @@ public class GenerateDialogPane extends JDialog {
         String sysName = System.getProperties().getProperty("os.name").toUpperCase();
         String tmpDirFile = System.getProperty("java.io.tmpdir");
         String execFn;
-
-
         if (sysName.indexOf("WIN") >= 0) {
             execFn = "cmds/win/napi_generator-win.exe";
             tmpDirFile += "napi_generator-win.exe";
@@ -211,13 +215,11 @@ public class GenerateDialogPane extends JDialog {
             execFn = "cmds/mac/napi_generator-macos";
             tmpDirFile += "napi_generator-macos";
         }
-        ;
-
         File file = new File(tmpDirFile);
         if (!file.exists()) {
             try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(execFn)) {
                 if (inputStream == null) {
-                    return "";
+                    throw new IOException("exec File InputStream is Null");
                 }
                 byte[] bs = inputStream.readAllBytes();
                 writeTmpFile(tmpDirFile, bs);
@@ -231,7 +233,44 @@ public class GenerateDialogPane extends JDialog {
                 return "";
             }
         }
-        return file + " " + "-f" + " " + destPath + " " + "-o" + " " + parentPath;
+
+        String command = file.toString();
+        String inArgs = genInArgs(destPath);
+        command += inArgs + " -o " + parentPath;
+        return command;
+    }
+
+    /**
+     * 生成 -f -d 输入参数。
+     *
+     * @param destPath 源文件路径。
+     * @return 生成后的值-f -d的值
+     */
+    private String genInArgs(String destPath) {
+
+        String[] interArr = destPath.split(",");
+        String tsParam = " -f ";
+        String dirParam = " -d ";
+        String inputCommand = "";
+        if (interArr.length > 0) {
+            for (String interStr : interArr) {
+                File interFile = new File(interStr);
+                if (interFile.isDirectory()) {
+                    dirParam += interStr + " ";
+                } else {
+                    tsParam += interStr + ",";
+                }
+            }
+            if (!TextUtils.isEmpty(tsParam.replaceAll("-f", ""))
+                    && !TextUtils.isBlank(tsParam.replaceAll("-f", ""))) {
+                inputCommand += tsParam.substring(0, tsParam.length() - 1);
+            }
+            if (!TextUtils.isEmpty(dirParam.replace("-d", ""))
+                    && !TextUtils.isBlank(dirParam.replace("-d", ""))) {
+                inputCommand += dirParam.substring(0, dirParam.length() - 1);
+            }
+        }
+        return inputCommand;
     }
 
     private boolean callExtProcess(String command) throws IOException, InterruptedException {
@@ -263,7 +302,7 @@ public class GenerateDialogPane extends JDialog {
     /**
      * 写makeFile.txt文件
      *
-     * @throws  IOException 文件异常
+     * @throws IOException 文件异常
      */
     private void writeCommand() {
         FileUtil fileUtil = new FileUtil();
@@ -287,7 +326,7 @@ public class GenerateDialogPane extends JDialog {
      * 赋值可执行文件权限。
      *
      * @param execFn 可执行命令
-     * @throws IOException 打开文件异常
+     * @throws IOException          打开文件异常
      * @throws InterruptedException 中断异常
      */
     private void executable(String execFn) throws IOException, InterruptedException {
