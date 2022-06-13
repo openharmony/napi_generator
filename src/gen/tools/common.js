@@ -80,6 +80,24 @@ InterfaceList.getValue = function (name) {
     return null;
 }
 
+class EnumList { }
+EnumList.enum_ = [];
+EnumList.push = function (ifs) {
+    EnumList.enum_.push(ifs)
+}
+EnumList.pop = function () {
+    EnumList.enum_.pop()
+}
+EnumList.getValue = function (name) {
+    let ifs = EnumList.enum_[EnumList.enum_.length - 1]
+    for (let i in ifs) {
+        if (ifs[i].name == name) {
+            return ifs[i].body.element;
+        }
+    }
+    return null;
+}
+
 function getArrayType(type) {
     let tt = re.match("Array<([a-zA-Z_0-9]+)>", type)
     return re.getReg(type, tt.regs[1])
@@ -123,7 +141,7 @@ function enumIndex(type, data) {
 }
 
 function getMapType(type) {
-    type = type.replace(/\s*/g,"")
+    type = type.replace(/\s*/g, "")
     let tt1 = re.search("Map<([a-zA-Z_0-9]+),", type)
     let tt2 = re.search(",([a-zA-Z_0-9]+)>", type)
     let tt3
@@ -132,19 +150,19 @@ function getMapType(type) {
     let valueType
     let valueMapType
     let valueArrayType
-    if(tt1 == null && tt2 == null){
+    if (tt1 == null && tt2 == null) {
         tt1 = re.search("key:([a-zA-Z_0-9]+)", type)
         tt2 = re.search(":([a-zA-Z_0-9]+)}", type)
         tt3 = re.search(":([a-zA-Z_0-9]+)}}", type)
         tt4 = re.search("Array<([a-zA-Z_0-9]+)>", type)
     }
-    if(tt2 != null){
+    if (tt2 != null) {
         valueType = re.getReg(type, tt2.regs[1])
     }
-    if(tt3 != null){
+    if (tt3 != null) {
         valueMapType = re.getReg(type, tt3.regs[1])
     }
-    if(tt4 != null){
+    if (tt4 != null) {
         valueArrayType = re.getReg(type, tt4.regs[1])
     }
     return [re.getReg(type, tt1.regs[1]), valueType, valueMapType, valueArrayType]
@@ -160,5 +178,6 @@ module.exports = {
     checkFileError,
     isEnum,
     enumIndex,
-    getMapType
+    getMapType,
+    EnumList
 }

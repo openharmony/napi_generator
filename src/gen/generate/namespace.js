@@ -17,7 +17,7 @@ const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
 const { generateInterface } = require("./interface");
 const { generateClass } = require("./class");
-const { FuncType, InterfaceList } = require("../tools/common");
+const { FuncType, InterfaceList, EnumList } = require("../tools/common");
 const { generateEnum } = require("./enum");
 
 //生成module_middle.cpp、module.h、module.cpp
@@ -28,6 +28,7 @@ function generateNamespace(name, data, inNamespace = "") {
     let middleInit = ""
     middleInit += formatMiddleInit(inNamespace, name)
     InterfaceList.push(data.interface)
+    EnumList.push(data.enum)
     for (let i in data.interface) {
         let ii = data.interface[i]
         let result = generateInterface(ii.name, ii.body, inNamespace + name + "::")
@@ -63,6 +64,7 @@ function generateNamespace(name, data, inNamespace = "") {
         middleInit += result.middleInit
     }
     InterfaceList.pop();
+    EnumList.pop();
     if (inNamespace.length > 0) {
         middleInit += "}"
     }
