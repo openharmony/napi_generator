@@ -18,6 +18,7 @@ import com.intellij.notification.NotificationType;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.util.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -93,7 +94,7 @@ public class FileUtil {
         File file = new File(path);
         String[] command = content.split(StringUtils.LF);
         try (InputStreamReader read = new InputStreamReader(new FileInputStream(file), "UTF-8");
-        BufferedReader bufferedReader = new BufferedReader(read)) {
+    BufferedReader bufferedReader = new BufferedReader(read)) {
             return isContainString(bufferedReader, command);
         }
     }
@@ -144,7 +145,7 @@ public class FileUtil {
     /**
      * check project SDK
      *
-     * @param project projectid
+     * @param project  projectid
      * @param baseFile project root file
      * @return boolean
      */
@@ -155,13 +156,19 @@ public class FileUtil {
         if (baseDir.isDirectory()) {
             File[] childFile = baseDir.listFiles();
             for (File file : childFile) {
-                if (file.getName().equals("build.gradle")) {
+                if (file.getName().equals("build.gradle") || file.getName().equals("build-profile.json5")) {
                     gradlePath = file.getPath();
                 }
             }
         }
 
         Properties properties = new Properties();
+        if (TextUtils.isBlank(gradlePath)) {
+            GenNotification.notifyMessage(project, "项目结构中没有grandle配置文件。",
+                    "当前项目结构不支持",
+                    NotificationType.WARNING);
+            return false;
+        }
         try {
             properties.load(new FileInputStream(gradlePath));
         } catch (IOException e) {
