@@ -100,7 +100,7 @@ ohos_shared_library("napitest")
 
 ## 编译验证
 
-编译成功后，就会生成libpower.z.so，目录如下所示：
+编译成功后，就会生成libnapitest.z.so，目录如下所示：
 
     /out/ohos-arm-release/packages/phone/system/lib/module
 
