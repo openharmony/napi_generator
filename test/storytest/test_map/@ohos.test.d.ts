@@ -14,7 +14,8 @@
 */
 declare namespace napitest {
     interface TestClass1 {
-        map1 : {[key: string]: Array<number>} ;
+        map1 : {[key: string]: Array<string>} ;
+        map2 : Map<string,Array<boolean>>
     }
 
     interface TestClass2 {
@@ -24,6 +25,7 @@ declare namespace napitest {
         fun4(v: {[key: string]: Array<string>}):  number;
         fun5(v: {[key: string]: Array<number>}):  number;
         fun6(v: {[key: string]: Array<boolean>}):  number;
+        fun7(v: Map<string,Array<string>>):  number;
     }
 }
 export default napitest;

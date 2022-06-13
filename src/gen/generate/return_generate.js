@@ -43,7 +43,7 @@ function cToJs(value, type, dest, deep = 1) {
         let arrayType = checkArrayParamType(type)
         return arrayTempleteFunc(arrayType, deep, dest, value)
     }
-    else if (type.substring(0, 1) == "{") {
+    else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         return mapTempleteFunc(type, deep, dest, value)
     }
     else
@@ -94,7 +94,7 @@ function mapTempleteFunc(type, deep, dest, value) {
             napi_value tnv%d = nullptr;
             [calc_out]
             pxt->SetMapElement(%s, tnv%d, tnv%d);
-        }`.format(value, value, lt, lt + 1, tnv, lt, lt + 2)
+        }`.format(value, value, lt, lt + 1, tnv, lt, lt + 1)
     let ret = ""
     if (mapType[1] != undefined && mapType[2] == undefined) {
         ret = mapTempleteValue(mapType, tnvdef, lt, value, tnv)
@@ -222,7 +222,7 @@ function mapTempleteArray(mapType, tnvdef, lt) {
         for(uint32_t j=0;j<len%d;j++) {
             tnv%d = pxt->SwapC2JsUtf8(i->second[j].c_str());
             pxt->SetArrayElement(tnv%d, j, tnv%d);
-        }`.format(lt + 2, lt, lt, lt, lt + 1, lt + 2, lt + 1))
+        }`.format(lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
     } else if (mapType[3] == "boolean") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
         tnv%d = (i -> first).c_str();
@@ -230,7 +230,7 @@ function mapTempleteArray(mapType, tnvdef, lt) {
         for(uint32_t j=0;j<len%d;j++) {
             tnv%d = pxt->SwapC2JsBool(i->second[j]);
             pxt->SetArrayElement(tnv%d, j, tnv%d);
-        }`.format(lt + 2, lt, lt, lt, lt + 1, lt + 2, lt + 1))
+        }`.format(lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
     } else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
         tnv%d = (i -> first).c_str();
@@ -238,7 +238,7 @@ function mapTempleteArray(mapType, tnvdef, lt) {
         for(uint32_t j=0;j<len%d;j++) {
             tnv%d = NUMBER_C_2_JS(pxt,i->second[j]);
             pxt->SetArrayElement(tnv%d, j, tnv%d);
-        }`.format(lt + 2, lt, lt, lt, lt + 1, lt + 2, lt + 1))
+        }`.format(lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
     }
     return ret
 }
