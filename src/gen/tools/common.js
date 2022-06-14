@@ -143,7 +143,7 @@ function enumIndex(type, data) {
 function getMapType(type) {
     type = type.replace(/\s*/g, "")
     let tt1 = re.search("Map<([a-zA-Z_0-9]+),", type)
-    let tt2 = re.search(",([a-zA-Z_0-9]+)>", type)
+    let tt2 = re.search(",([a-zA-Z_0-9<>]+)>", type)
     let tt3
     let tt4
 
@@ -158,6 +158,11 @@ function getMapType(type) {
     }
     if (tt2 != null) {
         valueType = re.getReg(type, tt2.regs[1])
+        if (valueType.indexOf("Array<") == 0) {
+            let tt5 = re.search("Array<([a-zA-Z_0-9]+)>", valueType)
+            valueArrayType = re.getReg(valueType, tt5.regs[1])
+            valueType = undefined
+        }
     }
     if (tt3 != null) {
         valueMapType = re.getReg(type, tt3.regs[1])

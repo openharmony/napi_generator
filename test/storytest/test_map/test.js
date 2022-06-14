@@ -43,7 +43,7 @@ describe('Map', function () {
     
     it('test TestClass2 fun5', function () {
         let tc2 = new TestClass2();
-        let ret = tc2.fun5({"age":[1,2,3],"name":[4,5,6]});
+        let ret = tc2.fun5({"age":[122,222,322],"name":[422,522,622]});
         assert.strictEqual(ret, 0);
     });
 
@@ -52,5 +52,10 @@ describe('Map', function () {
         let ret = tc2.fun6({"age":[true,true,true],"name":[false,false,false]});
         assert.strictEqual(ret, 0);
     });
-    
+
+    it('test TestClass2 fun7', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun7({"age":"ageValue","name":"nameValue"});
+        assert.strictEqual(ret, 0);
+    });
 });
