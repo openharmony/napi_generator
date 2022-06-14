@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
-    isEnum, EnumValueType, getArrayTypeTwo, getMapType } = require("../tools/common");
+    isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 
 function cToJs(value, type, dest, deep = 1) {
@@ -29,6 +29,20 @@ function cToJs(value, type, dest, deep = 1) {
         let lt = deep
         let result = ""
         let ifl = InterfaceList.getValue(type)
+        for (let i in ifl) {
+            let name2 = ifl[i].name
+            let type2 = ifl[i].type
+            let interfaceType = cToJs("%s.%s".format(value, name2), type2, "tnv%d".format(lt), deep + 1)
+            result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
+                interfaceType + `\npxt->SetValueProperty(%s,"%s",tnv%d);\n}`
+                    .format(dest, name2, lt)
+        }
+        return result
+    }
+    else if(EnumList.getValue(type)){
+        let lt = deep
+        let result = ""
+        let ifl = EnumList.getValue(type)
         for (let i in ifl) {
             let name2 = ifl[i].name
             let type2 = ifl[i].type

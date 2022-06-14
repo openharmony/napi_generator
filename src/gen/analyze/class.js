@@ -52,7 +52,7 @@ function analyzeClass(data) {
         let rules = "(static)? *([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+)";
         matchNameAndType = re.match(rules, classBody)
         if (matchNameAndType) {
-            let funcDetail = analyzeFunction(re.getReg(classBody, matchNameAndType.regs[2]),
+            let funcDetail = analyzeFunction(data, re.getReg(classBody, matchNameAndType.regs[2]),
                 re.getReg(classBody, matchNameAndType.regs[3]), re.getReg(classBody, matchNameAndType.regs[4]))
             if (funcDetail != null)
                 result.function.push(funcDetail)

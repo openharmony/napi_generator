@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease,
-    enumIndex, isEnum, EnumValueType, getMapType } = require("../tools/common");
+    enumIndex, isEnum, EnumValueType, getMapType, EnumList } = require("../tools/common");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
 
@@ -63,6 +63,9 @@ function jsToC(dest, napiVn, type) {
         }
         return tt
     }
+    else if (EnumList.getValue(type)) {
+        return jsToCEnum(type, dest, napiVn)
+    }
     else if (type.indexOf("Array<") == 0) {
         return arrTemplete(dest, napiVn, type);
     }
@@ -74,6 +77,17 @@ function jsToC(dest, napiVn, type) {
     }
     else
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type));
+}
+
+function jsToCEnum(type, dest, napiVn) {
+    let tt = ""
+    let ifl = EnumList.getValue(type)
+    for (let i in ifl) {
+        let name2 = ifl[i].name
+        let type2 = ifl[i].type
+        tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2)
+    }
+    return tt
 }
 
 function arrTemplete(dest, napiVn, type) {

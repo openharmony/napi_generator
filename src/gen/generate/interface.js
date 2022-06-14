@@ -15,7 +15,7 @@
 const { generateFunctionDirect } = require("./function_direct");
 const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
-const { FuncType, InterfaceList, getArrayType, getMapType } = require("../tools/common");
+const { FuncType, InterfaceList, getArrayType, getMapType, EnumList } = require("../tools/common");
 const { jsToC } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
@@ -46,6 +46,7 @@ function generateVariable(name, type, variable, className) {
     if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
     else if (type.substring(0, 12) == "NUMBER_TYPE_") variable.hDefine += "\n    %s %s;".format(type, name)
     else if (InterfaceList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
+    else if (EnumList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (type.indexOf("Array<") == 0) {
         let type2 = getArrayType(type)
         if (type2 == "string") type2 = "std::string"
