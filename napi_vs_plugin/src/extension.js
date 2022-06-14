@@ -18,11 +18,8 @@
 const vscode = require('vscode');
 const fs = require('fs');
 const re = require("./gen/tools/VsPluginRe");
-let compressing = require('compressing');
-let http = require("https");
 const { VsPluginLog } = require("./gen/tools/VsPluginLog");
 const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
-const url = "https://repo.huaweicloud.com/harmonyos/develop_tools/napi_generator/napi_generator_20220319.tart.gz";
 var exeFilePath = null;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -40,14 +37,11 @@ function activate(context) {
 	context.subscriptions.push(disposableMenu);
 	var platform = detectPlatform();
 	if (platform == 'win') {
-		exeFilePath = __dirname + "/napi_generator/napi_generator-win.exe";
+		exeFilePath = __dirname + "/napi_generator-win.exe";
 	} else if (platform == 'mac') {
-		exeFilePath = __dirname + "/napi_generator/napi_generator-macos";
+		exeFilePath = __dirname + "/napi_generator-macos";
 	} else if (platform == 'Linux') {
 		exeFilePath = __dirname + "/napi_generator-linux";
-	}
-	if (!exeFileExit()) {
-		requestFile(null, null, null);
 	}
 }
 
@@ -126,7 +120,7 @@ function checkMode(name, genDir, mode) {
 	if (exeFileExit()) {
 		executor(name, genDir, mode);
 	} else {
-		requestFile(name, genDir, mode);
+		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
 	}
 }
 
@@ -136,43 +130,6 @@ function deactivate() { }
 function getWebviewContent() {
 	let data = readFile(__dirname + '/vs_plugin_view.html');
 	return data.toString();
-}
-
-function requestFile(name, genDir, mode) {
-	http.get(url, function (res) {
-		let imgData = "";
-		let contentLength = parseInt(res.headers['content-length']);
-		res.setEncoding("binary");
-		res.on("data", function (chunk) {
-			imgData += chunk;
-			let process = ((imgData.length) / contentLength) * 100;
-			let percent = parseInt(((process).toFixed(0)));
-			VsPluginLog.logInfo("VsPlugin:" + percent);
-		});
-		res.on("end", function () {
-			fs.writeFile(__dirname + "/napi_generator.tart.gz", imgData, "binary", function (err) {
-				if (err) {
-					VsPluginLog.logInfo("VsPlugin: down fail");
-				} else {
-					VsPluginLog.logInfo("VsPlugin: down success");
-					decompress(__dirname + '/' + 'napi_generator.tart.gz', __dirname, name, genDir, mode);
-				}
-			});
-		});
-	});
-}
-
-const decompress = function (filePath, decompressPath = __dirname, name, genDir, mode) {
-	compressing.tgz.uncompress(filePath, decompressPath, { zipFileNameEncoding: 'GBK' })
-		.then(() => {
-			VsPluginLog.logInfo('VsPlugin: success' + exeFilePath);
-			if(name != null){
-				executor(name, genDir, mode);
-			}
-		})
-		.catch(err => {
-			VsPluginLog.logInfo("VsPlugin:" + err);
-		})
 }
 
 module.exports = {
