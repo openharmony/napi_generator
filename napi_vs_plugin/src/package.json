@@ -17,11 +17,11 @@
 		"commands": [
 			{
 				"command": "generate_napi",
-				"title": "Generater NAPI Frame"
+				"title": "Generate Napi Frame"
 			},
 			{
 				"command": "generate_napi_menu",
-				"title": "Generater NAPI Frame"
+				"title": "Generate Napi Frame"
 			}
 		],
 		"menus": {
