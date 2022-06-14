@@ -12,6 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
+const { NumberIncrease } = require("../tools/common");
 const re = require("../tools/re");
 
 /** Enum解析 */
@@ -39,8 +40,8 @@ function analyzeEnum(data) {
 }
 
 function analyzeEnumResult(result, bodyContent, index) {
-    let regString = re.match(" *([a-zA-Z0-9_]+) * = *\"([a-zA-Z_0-9<>-]+)\"", bodyContent)
-    let regSingleQuotes = re.match(" *([a-zA-Z0-9_]+) * = *'([a-zA-Z_0-9<>-]+)'", bodyContent)
+    let regString = re.match(" *([a-zA-Z0-9_]+) * = *\"([a-zA-Z_0-9<>-]+)*\"", bodyContent)
+    let regSingleQuotes = re.match(" *([a-zA-Z0-9_]+) * = *'([a-zA-Z_0-9<>-]+)*'", bodyContent)
     let regNumber = re.match(" *([a-zA-Z0-9_]+) * = *([a-zA-Z_0-9<>-]+)", bodyContent)
     let reg = re.match(" *([a-zA-Z0-9_]+) *", bodyContent)
     if (regString) {
@@ -48,7 +49,8 @@ function analyzeEnumResult(result, bodyContent, index) {
         let elementValue = re.getReg(bodyContent, regString.regs[2])
         result.element.push({
             name: elementName,
-            value: elementValue
+            value: elementValue,
+            type: 'string'
         })
         result.enumValueType = 1
     } else if (regSingleQuotes) {
@@ -56,7 +58,8 @@ function analyzeEnumResult(result, bodyContent, index) {
         let elementValue = re.getReg(bodyContent, regSingleQuotes.regs[2])
         result.element.push({
             name: elementName,
-            value: elementValue
+            value: elementValue,
+            type: 'string'
         })
         result.enumValueType = 1
     } else if (regNumber) {
@@ -65,7 +68,8 @@ function analyzeEnumResult(result, bodyContent, index) {
         typeof (elementValue)
         result.element.push({
             name: elementName,
-            value: elementValue
+            value: elementValue,
+            type: "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
         })
         result.enumValueType = 0
     } else if (reg) {
@@ -73,7 +77,8 @@ function analyzeEnumResult(result, bodyContent, index) {
         let elementValue = index
         result.element.push({
             name: elementName,
-            value: elementValue
+            value: elementValue,
+            type: "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
         })
         result.enumValueType = 0
     }
