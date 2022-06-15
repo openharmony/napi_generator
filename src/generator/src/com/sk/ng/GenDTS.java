@@ -43,10 +43,12 @@ public class GenDTS extends AnAction {
             GenNotification.notifyMessage(project, "", "file is not exist", NotificationType.ERROR);
             return;
         }
-
+        if (project == null) {
+            return;
+        }
         String baseFile = project.getBasePath();
 
-        if (!FileUtil.checkProjectSDK(project, baseFile)) {
+        if (FileUtil.checkProjectSDK(project, baseFile)) {
             return;
         }
 
@@ -54,9 +56,7 @@ public class GenDTS extends AnAction {
         String directoryPath = file.getParent().getPath();
         String fileName = file.getName();
         GenerateDialog wrapper = new GenerateDialog(project, destPath, directoryPath, fileName);
-        if (wrapper.showAndGet()) {
-            return;
-        }
+        wrapper.showAndGet();
     }
 
 
@@ -67,11 +67,7 @@ public class GenDTS extends AnAction {
         if (file == null) {
             event.getPresentation().setEnabledAndVisible(false);
         } else {
-            if (FileUtil.patternFileName(file.getName())) {
-                event.getPresentation().setEnabledAndVisible(true);
-            } else {
-                event.getPresentation().setEnabledAndVisible(false);
-            }
+            event.getPresentation().setEnabledAndVisible(FileUtil.patternFileName(file.getName()));
         }
     }
 }

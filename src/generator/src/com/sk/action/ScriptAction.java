@@ -29,8 +29,8 @@ import java.awt.event.ActionListener;
  * @since 2022-02-21
  */
 public class ScriptAction implements ActionListener {
-    private JButton button;
-    private JTextField textField;
+    private final JButton button;
+    private final JTextField textField;
 
     public ScriptAction(JButton button, JTextField textField) {
         this.button = button;

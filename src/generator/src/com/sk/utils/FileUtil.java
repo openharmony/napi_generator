@@ -20,12 +20,14 @@ import com.intellij.openapi.project.Project;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.util.TextUtils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -47,7 +49,6 @@ public class FileUtil {
      *
      * @param path    路径
      * @param content 内容
-     * @throws IOException 异常
      */
     public void writeErrorToTxt(String path, String content) {
         File file = new File(path);
@@ -70,12 +71,10 @@ public class FileUtil {
             try {
                 boolean isCreateFile = file.createNewFile();
                 if (isCreateFile) {
-                    LOG.info("makeFile result success");
-                } else {
-                    LOG.info("makeFile result error");
+                    LOG.info(String.format("makeFile %s success", path));
                 }
             } catch (IOException ioException) {
-                LOG.error("makeFile io error" + ioException);
+                LOG.error(String.format("makeFile %s error:%s", path, ioException));
                 return "";
             }
         }
@@ -93,9 +92,13 @@ public class FileUtil {
     public boolean findStringInFile(String path, String content) throws IOException {
         File file = new File(path);
         String[] command = content.split(StringUtils.LF);
-        try (InputStreamReader read = new InputStreamReader(new FileInputStream(file), "UTF-8");
+
+        try (InputStreamReader read = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
     BufferedReader bufferedReader = new BufferedReader(read)) {
             return isContainString(bufferedReader, command);
+        } catch (FileNotFoundException foundException) {
+            LOG.error("file not found" + foundException);
+            return false;
         }
     }
 
@@ -103,17 +106,11 @@ public class FileUtil {
         String line = null;
         while (true) {
             try {
-                if (!((line = bufferedReader.readLine()) != null)) {
+                if ((line = bufferedReader.readLine()) == null) {
                     return false;
                 }
             } catch (IOException ioException) {
                 LOG.error("findStringInFile IOException" + ioException);
-            } finally {
-                try {
-                    bufferedReader.close();
-                } catch (IOException ioException) {
-                    LOG.error("findStringInFile io error" + ioException);
-                }
             }
             line += line;
             if (line.contains(command[0])) {
@@ -155,6 +152,7 @@ public class FileUtil {
         File baseDir = new File(baseFile);
         if (baseDir.isDirectory()) {
             File[] childFile = baseDir.listFiles();
+            assert childFile != null;
             for (File file : childFile) {
                 if (file.getName().equals("build.gradle") || file.getName().equals("build-profile.json5")) {
                     gradlePath = file.getPath();
@@ -167,14 +165,14 @@ public class FileUtil {
             GenNotification.notifyMessage(project, "项目结构中没有grandle配置文件。",
                     "当前项目结构不支持",
                     NotificationType.WARNING);
-            return false;
+            return true;
         }
         try {
             properties.load(new FileInputStream(gradlePath));
         } catch (IOException e) {
             GenNotification.notifyMessage(project, e.getMessage(), "提示", NotificationType.ERROR);
             LOG.error(String.format("Can not load file :%s . %s", gradlePath, e));
-            return false;
+            return true;
         }
         String ohosSDK = properties.getProperty("compileSdkVersion");
 
@@ -182,8 +180,8 @@ public class FileUtil {
             GenNotification.notifyMessage(project, "SKD版本过低，NAPI仅支持5.0及以上版本",
                     "提示",
                     NotificationType.WARNING);
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }
