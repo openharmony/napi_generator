@@ -38,11 +38,11 @@ import java.util.prefs.Preferences;
  * @since 2022-02-21
  */
 public class BrowseAction implements ActionListener {
-    private JButton button;
-    private JTextField interField;
-    private JTextField genField;
-    private JTextField scriptField;
-    private Project project;
+    private final JButton button;
+    private final JTextField interField;
+    private final JTextField genField;
+    private final JTextField scriptField;
+    private final Project project;
 
 
     public BrowseAction(Project project, JButton button, JTextField interField,
@@ -52,9 +52,7 @@ public class BrowseAction implements ActionListener {
         this.interField = interField;
         this.genField = geField;
         this.scriptField = scriptField;
-
     }
-
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
@@ -68,7 +66,6 @@ public class BrowseAction implements ActionListener {
             if (!pathRecord.equals("")) {
                 fcDlg = new JFileChooser(pathRecord);
             }
-
             fcDlg.setDialogTitle("请选择接口文件...");
             fcDlg.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("文本文件(*.ts)", "ts");
@@ -78,9 +75,7 @@ public class BrowseAction implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 String upPath = fcDlg.getSelectedFile().getParent();
                 File[] files = fcDlg.getSelectedFiles();
-
                 String interFile = setSelectFile(files);
-
                 if (TextUtils.isBlank(interFile)) {
                     return;
                 }
@@ -96,14 +91,14 @@ public class BrowseAction implements ActionListener {
     }
 
     private String setSelectFile(File[] files) {
-        String interFile = "";
+        StringBuilder interFile = new StringBuilder();
         boolean existFile = false;
         boolean existDir = false;
         for (File file : files) {
             if (file.isDirectory()) {
                 if (!existDir) {
                     existDir = true;
-                    interFile += file.getPath() + ",";
+                    interFile.append(file.getPath()).append(",");
                 } else {
                     GenNotification.notifyMessage(project,
                             "目前只支持单个文件夹转换",
@@ -121,7 +116,7 @@ public class BrowseAction implements ActionListener {
                     return "";
                 }
                 existFile = true;
-                interFile += file.getPath() + ",";
+                interFile.append(file.getPath()).append(",");
             }
         }
         if (existDir && existFile) {
@@ -132,6 +127,6 @@ public class BrowseAction implements ActionListener {
             interField.setText("");
             return "";
         }
-        return interFile;
+        return interFile.toString();
     }
 }

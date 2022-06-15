@@ -28,7 +28,7 @@ import javax.swing.JComponent;
  * @since 2022-02-21
  */
 public class ConfirmDialog extends DialogWrapper {
-    private ConfirmDiagPane confirmDiagPane;
+    private final ConfirmDiagPane confirmDiagPane;
 
     /**
      * 构造函数

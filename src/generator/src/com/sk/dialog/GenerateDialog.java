@@ -42,10 +42,7 @@ public class GenerateDialog extends DialogWrapper {
     private static final String TITLE = "Generate Napi Frame";
     private static final String URL = "https://gitee.com/openharmony/napi_generator";
 
-    private GenerateDialogPane genDiag;
-    private DialogWrapperExitAction exitAction;
-    private CustomOKAction okAction;
-    private CustomHelpAction helpAction;
+    private final GenerateDialogPane genDiag;
 
     /**
      * 构造函数
@@ -95,8 +92,8 @@ public class GenerateDialog extends DialogWrapper {
     @NotNull
     @Override
     protected Action[] createActions() {
-        exitAction = new DialogWrapperExitAction("Cancel", CANCEL_EXIT_CODE);
-        okAction = new CustomOKAction();
+        DialogWrapperExitAction exitAction = new DialogWrapperExitAction("Cancel", CANCEL_EXIT_CODE);
+        CustomOKAction okAction = new CustomOKAction();
 
         // 设置默认的焦点按钮
         okAction.putValue(DialogWrapper.DEFAULT_ACTION, true);
@@ -106,7 +103,7 @@ public class GenerateDialog extends DialogWrapper {
     @NotNull
     @Override
     protected Action[] createLeftSideActions() {
-        helpAction = new CustomHelpAction();
+        CustomHelpAction helpAction = new CustomHelpAction();
         return new Action[]{helpAction};
     }
 
@@ -127,7 +124,6 @@ public class GenerateDialog extends DialogWrapper {
             if (validationInfo != null) {
                 LOG.info(validationInfo.message);
             } else {
-
                 if (genDiag.runFun()) {
                     close(CANCEL_EXIT_CODE);
                 }

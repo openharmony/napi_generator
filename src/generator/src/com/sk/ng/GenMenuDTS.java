@@ -35,16 +35,17 @@ public class GenMenuDTS extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
         Project project = anActionEvent.getProject();
 
+        if (project == null) {
+            return;
+        }
         String baseFile = project.getBasePath();
 
-        if (!FileUtil.checkProjectSDK(project, baseFile)) {
+        if (FileUtil.checkProjectSDK(project, baseFile)) {
             return;
         }
 
         GenerateDialog wrapper = new GenerateDialog(project, "", "", "");
-        if (wrapper.showAndGet()) {
-            return;
-        }
+        wrapper.showAndGet();
     }
 
 }
