@@ -7,7 +7,7 @@
 
 ## 建立模块位置
 
-模块目录理论上可以建立在OpenHarmony代码库的任何地方，为行文方便，假设OpenHarmony代码库的目录为`OHOS_SRC`，在`OHOS_SRC`目录下，例如建立此次测试模块目录：napitest。此时，`OHOS_SRC`目录下应该有 ark, foundation, device, …, napitest等目录，其中napitest就是刚刚建立的，在napitest目录下，把之前用可执行文件或者插件转换出来的文件全部拷贝到该目录下，并且在该目录下新建一个文件ohos.build。例如napitest目录下有以下文件：
+模块目录理论上可以建立在OpenHarmony代码库的任何地方，为行方便，假设OpenHarmony代码库的目录为`OHOS_SRC`，在`OHOS_SRC`目录下，例如建立此次测试模块目录：napitest。此时，`OHOS_SRC`目录下应该有 ark, foundation, device, …, napitest等目录，其中napitest就是刚刚建立的，在napitest目录下，把之前用可执行文件或者插件转换出来的文件全部拷贝到该目录下，并且在该目录下新建一个文件ohos.build。例如napitest目录下有以下文件：
 
     foundation/napitest
     |-- binding.gyp
