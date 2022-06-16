@@ -68,15 +68,15 @@ public class GenerateDialogPane extends JDialog {
     private JButton selectInter;
     private JButton selectGenPath;
     private JButton selectScriptPath;
+    private JLabel interText;
     private JLabel genText;
     private JLabel scriptText;
-    private JLabel interText;
     private boolean generateSuccess = true;
     private String sErrorMessage = "";
-    private String destPath;
-    private String directoryPath;
-    private String fileName;
-    private Project project;
+    private String interFileOrDir;
+    private String genOutDir;
+    private String scriptOutDir;
+    private final Project project;
 
 
     /**
@@ -89,17 +89,17 @@ public class GenerateDialogPane extends JDialog {
      */
     public GenerateDialogPane(Project project, String interFilePath, String genDir, String scriptDir) {
         this.project = project;
-        this.destPath = interFilePath;
-        this.directoryPath = genDir;
-        this.fileName = scriptDir;
+        this.interFileOrDir = interFilePath;
+        this.genOutDir = genDir;
+        this.scriptOutDir = scriptDir;
 
         interText.setText("接口文件:");
         genText.setText("生成框架路径:");
         scriptText.setText("编译脚本路径:");
 
-        interPath.setText(destPath);
-        genPath.setText(directoryPath);
-        scriptPath.setText(directoryPath);
+        interPath.setText(interFileOrDir);
+        genPath.setText(genOutDir);
+        scriptPath.setText(genOutDir);
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(actionEvent -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
@@ -144,7 +144,7 @@ public class GenerateDialogPane extends JDialog {
         ValidationInfo validationInfo = null;
         if (isEmptyFile) {
             String warnMsg = "接口文件、框架、编译脚本路径不能为空";
-            warningMessage("Please input interface,gen and gyp file directory", warnMsg);
+            warningMessage(warnMsg);
             validationInfo = new ValidationInfo(warnMsg);
             return validationInfo;
         }
@@ -164,31 +164,32 @@ public class GenerateDialogPane extends JDialog {
         dispose();
     }
 
-    private void warningMessage(String message, String title) {
-        GenNotification.notifyMessage(this.project, message, title, NotificationType.WARNING);
+    private void warningMessage(String title) {
+        String notiContent = "请选择接口文件或文件夹，生成框架路径，编译脚本路径";
+        GenNotification.notifyMessage(this.project, notiContent, title, NotificationType.WARNING);
     }
 
     /**
      * 执行主程序入口
      *
      * @return 执行状态
-     * @throws IOException 文件打开
      */
     public boolean runFun() {
         GenNotification.notifyMessage(this.project, "", "正在生成", NotificationType.INFORMATION);
-        destPath = interPath.getText();
-        String parentPath = genPath.getText();
+        interFileOrDir = interPath.getText();
+        genOutDir = genPath.getText();
+        scriptOutDir = scriptPath.getText();
 
         String command;
-        command = genCommand(destPath, parentPath);
+        command = genCommand();
 
         try {
             if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
-                GenNotification.notifyMessage(project, directoryPath, "提示", NotificationType.INFORMATION, true);
+                GenNotification.notifyMessage(project, genPath.getText(), "提示", NotificationType.INFORMATION, true);
                 return true;
             }
         } catch (IOException | InterruptedException ex) {
-            GenNotification.notifyMessage(project, directoryPath, "Command exec error", NotificationType.ERROR);
+            GenNotification.notifyMessage(project, genPath.getText(), "Command exec error", NotificationType.ERROR);
             LOG.error(ex);
         }
         return false;
@@ -197,18 +198,16 @@ public class GenerateDialogPane extends JDialog {
     /**
      * 生成命令行指令
      *
-     * @param destPath   目标文件
-     * @param parentPath 父目录文件
      * @return 返回命令行执行内容
      */
-    private String genCommand(String destPath, String parentPath) {
+    private String genCommand() {
         String sysName = System.getProperties().getProperty("os.name").toUpperCase();
         String tmpDirFile = System.getProperty("java.io.tmpdir");
         String execFn;
-        if (sysName.indexOf("WIN") >= 0) {
+        if (sysName.contains("WIN")) {
             execFn = "cmds/win/napi_generator-win.exe";
             tmpDirFile += "napi_generator-win.exe";
-        } else if (sysName.indexOf("LINUX") >= 0) {
+        } else if (sysName.contains("LINUX")) {
             execFn = "cmds/linux/napi_generator-linux";
             tmpDirFile += "napi_generator-linux";
         } else {
@@ -223,50 +222,49 @@ public class GenerateDialogPane extends JDialog {
                 }
                 byte[] bs = inputStream.readAllBytes();
                 writeTmpFile(tmpDirFile, bs);
-                if (sysName.indexOf("LINUX") >= 0 || sysName.indexOf("MAC OS") >= 0) {
+                if (sysName.contains("LINUX") || sysName.contains("MAC OS")) {
                     executable(tmpDirFile);
                 }
             } catch (IOException | InterruptedException e) {
                 GenNotification.notifyMessage(this.project, e.getMessage(), "Can not Find File:" + execFn,
                         NotificationType.ERROR);
                 LOG.error(e);
+
                 return "";
             }
         }
-
         String command = file.toString();
-        String inArgs = genInArgs(destPath);
-        command += inArgs + " -o " + parentPath;
+        String inArgs = genInArgs();
+        command += inArgs + " -o " + genOutDir;
         return command;
     }
 
     /**
      * 生成 -f -d 输入参数。
      *
-     * @param destPath 源文件路径。
      * @return 生成后的值-f -d的值
      */
-    private String genInArgs(String destPath) {
+    private String genInArgs() {
 
-        String[] interArr = destPath.split(",");
-        String tsParam = " -f ";
-        String dirParam = " -d ";
+        String[] interArr = interFileOrDir.split(",");
+        StringBuilder tsParam = new StringBuilder(" -f ");
+        StringBuilder dirParam = new StringBuilder(" -d ");
         String inputCommand = "";
         if (interArr.length > 0) {
             for (String interStr : interArr) {
                 File interFile = new File(interStr);
                 if (interFile.isDirectory()) {
-                    dirParam += interStr + " ";
+                    dirParam.append(interStr).append(" ");
                 } else {
-                    tsParam += interStr + ",";
+                    tsParam.append(interStr).append(",");
                 }
             }
-            if (!TextUtils.isEmpty(tsParam.replaceAll("-f", ""))
-                    && !TextUtils.isBlank(tsParam.replaceAll("-f", ""))) {
+            if (!TextUtils.isEmpty(tsParam.toString().replaceAll("-f", ""))
+                    && !TextUtils.isBlank(tsParam.toString().replaceAll("-f", ""))) {
                 inputCommand += tsParam.substring(0, tsParam.length() - 1);
             }
-            if (!TextUtils.isEmpty(dirParam.replace("-d", ""))
-                    && !TextUtils.isBlank(dirParam.replace("-d", ""))) {
+            if (!TextUtils.isEmpty(dirParam.toString().replace("-d", ""))
+                    && !TextUtils.isBlank(dirParam.toString().replace("-d", ""))) {
                 inputCommand += dirParam.substring(0, dirParam.length() - 1);
             }
         }
@@ -281,10 +279,8 @@ public class GenerateDialogPane extends JDialog {
         }
         Process process = Runtime.getRuntime().exec(command);
         genResultLog(process);
-
         StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
         StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
-
         errConsumer.start();
         outputConsumer.start();
 
@@ -301,18 +297,16 @@ public class GenerateDialogPane extends JDialog {
 
     /**
      * 写makeFile.txt文件
-     *
-     * @throws IOException 文件异常
      */
     private void writeCommand() {
         FileUtil fileUtil = new FileUtil();
-        String filePath = fileUtil.makeFile(directoryPath + "/makeFile.txt");
+        String filePath = fileUtil.makeFile(genOutDir + "/makeFile.txt");
         if (TextUtils.isEmpty(filePath)) {
-            LOG.error("makeFile is error");
+            LOG.info("makeFile is fail");
             return;
         }
         Matcher matcher = LF_PATTERN.matcher(COMMAND_STATEMENT);
-        String statement = matcher.replaceAll(fileName);
+        String statement = matcher.replaceAll(scriptOutDir);
         try {
             if (!fileUtil.findStringInFile(filePath, statement)) {
                 fileUtil.writeErrorToTxt(filePath, statement);
@@ -326,7 +320,7 @@ public class GenerateDialogPane extends JDialog {
      * 赋值可执行文件权限。
      *
      * @param execFn 可执行命令
-     * @throws IOException          打开文件异常
+     * @throws IOException 打开文件异常
      * @throws InterruptedException 中断异常
      */
     private void executable(String execFn) throws IOException, InterruptedException {
@@ -382,27 +376,23 @@ public class GenerateDialogPane extends JDialog {
      * @return ErrorResult
      */
     private String getErrorResult(BufferedReader stdError) {
-        String sErr = "";
+        StringBuilder sErr = new StringBuilder();
         while (true) {
             String sTmp;
             try {
                 if ((sTmp = stdError.readLine()) == null) {
                     break;
                 }
-                sErr += sTmp + FileUtil.getNewline();
+                sErr.append(sTmp).append(FileUtil.getNewline());
             } catch (IOException ioException) {
                 LOG.error(" genResultLog stdInput error" + ioException);
             }
         }
-        return sErr;
+        return sErr.toString();
     }
 
     private boolean generateIsSuccess(String sOut) {
-        if (sOut.indexOf("success") >= 0 || TextUtils.isEmpty(sOut)) {
-            generateSuccess = true;
-        } else {
-            generateSuccess = false;
-        }
+        generateSuccess = sOut.contains("success") || TextUtils.isEmpty(sOut);
         return generateSuccess;
     }
 
@@ -413,22 +403,22 @@ public class GenerateDialogPane extends JDialog {
      * @return 返回当前输入框内容
      */
     private String genInputLog(BufferedReader stdInput) {
-        String sOut = "";
+        StringBuilder sOut = new StringBuilder();
         while (true) {
             String sTmp;
             try {
                 if ((sTmp = stdInput.readLine()) == null) {
                     break;
                 }
-                sOut += sTmp + FileUtil.getNewline();
+                sOut.append(sTmp).append(FileUtil.getNewline());
             } catch (IOException ioException) {
                 LOG.error(" genResultLog stdInput error" + ioException);
             }
         }
-        return sOut;
+        return sOut.toString();
     }
 
-    class StreamConsumer extends Thread {
+    static class StreamConsumer extends Thread {
         InputStream is;
 
         StreamConsumer(InputStream is) {
