@@ -64,9 +64,10 @@ Note:If the text contains special characters, please escape them according to th
             <filefilter name="defaultFilter" desc="Files not to check">
                 <filteritem type="filename" name="*.mp4" desc="mp4 files"/>
                 <filteritem type="filepath" name="src/generator/src/com/sk/dialog/.*." desc=""/>
+                <filteritem type="filepath" name="napi_IntelliJ_plugin/generator/src/com/sk/dialog/.*." desc=""/>
                 <filteritem type="filepath" name="test/storytest/test.py" desc="GPL or BSD license"/>
                 <filteritem type="filepath" name="prebuilt/End User License Agreement.md" desc="EULA file"/>
-            </filefilter>      
+            </filefilter>
             <filefilter name="binaryFileTypePolicyFilter" desc="Filters for binaryFile" >
                 <filteritem type="filename" name="*.png|*.vsix|*.hap|*.zip" desc="all file have check "/>
             </filefilter>
