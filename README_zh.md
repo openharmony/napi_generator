@@ -47,12 +47,12 @@
 使用者可以根据自己的需要选择合适的工具，VS Code插件存放在以下路径：
 
 ```
-napi_generator/ prebuilt
+napi_generator/prebuilt
 ```
 
-可执行文件与IntelliJ插件下载路径如下：
+可执行文件与IntelliJ插件下载路径如下，选择napi_generator_outputs.zip下载。
 
-[下载链接](https://repo.huaweicloud.com/harmonyos/develop_tools/napi_generator/napi_generator_20220319.tart.gz)
+[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/PPVcNMgVv/2022-06-13)
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
@@ -65,7 +65,7 @@ napi_generator/ prebuilt
 为了方便使用者快速上手工具，可供测试的typescript文件存放在以下路径：
 
 ```
-napi_generator/ examples / ts
+napi_generator/examples/ts
 ```
 
 在window环境下的，根据输入文件@ohos.napitest.d.ts和basic.d.ts生成的输出文件，如下所示：
@@ -121,7 +121,7 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 
 ## 版本说明
 
- 当前版本已支持的特性和代开发的特性，如下所示：
+ 当前版本已支持的特性和待开发的特性，如下所示：
 
  [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/release-notes/napi_generator-1.0.md)
 

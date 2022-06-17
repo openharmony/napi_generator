@@ -1,6 +1,6 @@
-## NAPI框架生成工具 问题反馈
+# NAPI框架生成工具 问题反馈
 
-### 1. pkg cmd_gen.js 生成.exe程序失败
+## 1. pkg cmd_gen.js 生成.exe程序失败
 
 问题描述：在Linux命令行入口安装辅助工具过程中，按文档步骤，在使用pkg命令打包生成.exe文件时，发生报错。
 
@@ -23,7 +23,7 @@
 
 
 
-### 2. 用可执行程序生成c++代码失败
+## 2. 用可执行程序生成c++代码失败
 
 问题描述：在windows下用cmd_gen-win.exe生成对应的c++代码报错。
 
@@ -35,7 +35,7 @@
 
 	cmd_gen-win.exe @ohos.power.d.ts
 
-### 3.未安装系统依赖插件，运行测试用例失败
+## 3.未安装系统依赖插件，运行测试用例失败
 
 问题描述：首次运行UT或ST用例失败。
 
@@ -50,7 +50,7 @@
 	    at require (internal/modules/cjs/helpers.js:101:18)
 	    at Object.<anonymous> (/home/harmony/hhhh/napi_generator_1/src/gen/tools/common.js:16:13)
 
-问题定位：首次运行测试用例napi_generator目录下、napi_generator/src目录下依赖插件未全部安装。
+问题定位：首次运行测试用例,napi_generator目录下、napi_generator/src目录下依赖插件未全部安装。
 
 问题解决：napi_generator目录下、napi_generator/src目录下重新安装依赖即可，直到napi_generator/src/package.json文件中包含以下所有插件：
 
@@ -67,7 +67,7 @@
 			"webpack-cli": "^4.9.1"
 		}
 
-### 4.未安装rewire插件，运行测试用例失败
+## 4.未安装rewire插件，运行测试用例失败
 
 问题描述：readme中插件全部安装完成后，执行测试用例失败。
 
@@ -86,7 +86,7 @@
 
   安装插件之后，再次运行用例即可。
 
-### 5.后缀为gyp文件中包含/*注释，执行用例失败
+## 5.后缀为gyp文件中包含/*注释，执行用例失败
 
 问题描述：代码中后缀为gyp的文件中包含/*注释，执行用例失败。
 
