@@ -13,9 +13,15 @@
 * limitations under the License. 
 */
 declare namespace napitest {
+    interface Human {
+        name: string;
+        age: number;
+        isTrue: boolean;
+    }
+
     interface TestClass1 {
-        map1 : {[key: string]: Array<string>} ;
-        map2 : Map<string,Array<boolean>>
+        map1 : {[key: string]: {[key: string]: string}} ;
+        map2 : Map<string,Human> ;
     }
 
     interface TestClass2 {
@@ -25,7 +31,10 @@ declare namespace napitest {
         fun4(v: {[key: string]: Array<string>}):  number;
         fun5(v: {[key: string]: Array<number>}):  number;
         fun6(v: {[key: string]: Array<boolean>}):  number;
-        fun7(v: Map<string,Array<string>>):  number;
+        fun7(v: {[key: string]: {[key: string]: string}}):  number;
+        fun8(v: Map<string,Map<string,string>>):  number;
+        fun9(v: {[key: string]: Human}):  number;
+        fun10(v: Map<string,Human>):  number;
     }
 }
 export default napitest;
