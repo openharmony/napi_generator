@@ -18,16 +18,19 @@ function generateEnum(name, data) {
     let implCpp = ""
 
     if (re.match("[a-zA-Z]", data.element[0].value)) {
-        implH = `class %s {\npublic:\n`.format(name, implH)
+        implH = `\nclass %s {\npublic:\n`.format(name, implH)
     } else {
         implH = `\nenum %s {\n`.format(name, implH)
     }
     for (let i in data.element) {
         let v = data.element[i]
         if (re.match("[a-zA-Z]", v.value)) {
-            implH += `    static const std::string %s,\n`.format(v.name)
-            implCpp += `const std::string %s::%s = "%s";\n`.format(name, v.name, v.value)
+            implH += `    static const std::string %s;\n`.format(v.name)
+            implCpp += `\nconst std::string %s::%s = "%s";\n`.format(name, v.name, v.value)
         } else {
+            if (v.value = '') {
+                v.value = 0
+            }
             implH += `    %s = %s,\n`.format(v.name, v.value)
         }
     }

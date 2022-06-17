@@ -46,6 +46,20 @@ let moduleCppTmplete = `\
         dest = pxt->SwapJs2CDouble(napi_v);    \\
     } 
 
+#define NUMBER_JS_2_C_ENUM(napi_v, type, dest, enum_type)      \\
+    if (typeid(type) == typeid(int32_t))  {    \\
+        dest = static_cast<enum_type>(pxt->SwapJs2CInt32(napi_v));     \\
+    }                                          \\
+    else if (typeid(type) == typeid(uint32_t)){\\
+        dest = static_cast<enum_type>(pxt->SwapJs2CUint32(napi_v));    \\
+    }                                          \\
+    else if (typeid(type) == typeid(int64_t)){ \\
+        dest = static_cast<enum_type>(pxt->SwapJs2CInt64(napi_v));     \\
+    }                                          \\
+    else if (typeid(type) == typeid(double_t)){\\
+        dest = static_cast<enum_type>(pxt->SwapJs2CDouble(napi_v));    \\
+    } 
+    
 #define BOOLEAN_JS_2_C(napi_v, type, dest){    \\
     dest = pxt->SwapC2JsBool(napi_v);          \\
 }                                               \\
