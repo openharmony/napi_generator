@@ -46,10 +46,10 @@ function cToJs(value, type, dest, deep = 1) {
         for (let i in ifl) {
             let name2 = ifl[i].name
             let type2 = ifl[i].type
-            let interfaceType = cToJs("%s.%s".format(value, name2), type2, "tnv%d".format(lt), deep + 1)
+            let interfaceType = cToJs("%s".format(value), type2, "tnv%d".format(lt), deep + 1)
             result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
                 interfaceType + `\npxt->SetValueProperty(%s,"%s",tnv%d);\n}`
-                    .format(dest, name2, lt)
+                    .format(dest, value, lt)
         }
         return result
     }
