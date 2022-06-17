@@ -29,6 +29,9 @@ function analyzeParams(values) {
         let matchs = re.match("([a-zA-Z_0-9\\.]+)\\?*: *([a-zA-Z<,>_0-9\\[\\]\\(\\):='{}]+)", v)
         if (matchs != null) {
             let type = re.getReg(v, matchs.regs[2])
+            if (type.indexOf("Map") < 0) {
+                type = type.replace(/,/g, "")
+            }
             result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type })
             if (type.indexOf("AsyncCallback") >= 0)
                 funcType = FuncType.ASYNC
