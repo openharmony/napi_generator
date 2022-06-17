@@ -22,62 +22,74 @@ const { generateEnum } = require("./enum");
 
 //生成module_middle.cpp、module.h、module.cpp
 function generateNamespace(name, data, inNamespace = "") {
-    let implH = ""
-    let implCpp = ""
-    let middleFunc = ""
-    let middleInit = ""
-    middleInit += formatMiddleInit(inNamespace, name)
+    let namespaceResult = {
+        implH: "",
+        implCpp: "",
+        middleFunc: "",
+        middleInit: ""
+    }
+
+    namespaceResult.middleInit += formatMiddleInit(inNamespace, name)
     InterfaceList.push(data.interface)
     EnumList.push(data.enum)
+    let result = generateEnumResult(data);
+    namespaceResult.implH += result.implH
+    namespaceResult.implCpp += result.implCpp    
     for (let i in data.interface) {
         let ii = data.interface[i]
         let result = generateInterface(ii.name, ii.body, inNamespace + name + "::")
-        middleFunc += result.middleBody
-        implH += result.implH
-        implCpp += result.implCpp
-        middleInit += result.middleInit
+        namespaceResult = getNamespaceResult(result, namespaceResult)      
     }
+
     for (let i in data.class) {
         let ii = data.class[i]
         let result = generateClass(ii.name, ii.body, inNamespace + name + "::", ii.functiontType)
-        middleFunc += result.middleBody
-        implH += result.implH
-        implCpp += result.implCpp
-        middleInit += result.middleInit
-    }
-    generateEnumResult(data, implH, implCpp);
+        namespaceResult = getNamespaceResult(result, namespaceResult)
+    }    
     for (let i in data.function) {
         let func = data.function[i]
         let tmp = generateFunction(func, data)
-        middleFunc += tmp[0]
-        implH += tmp[1]
-        implCpp += tmp[2]
-        middleInit += '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'
+        namespaceResult.middleFunc += tmp[0]
+        namespaceResult.implH += tmp[1]
+        namespaceResult.implCpp += tmp[2]
+        namespaceResult.middleInit += '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'
             .format(func.name, inNamespace, name, func.name, inNamespace.length > 0 ? ", " + name : "")
     }
     for (let i in data.namespace) {
         let ns = data.namespace[i]
         let result = generateNamespace(ns.name, ns.body, inNamespace + name + "::")
-        middleFunc += result.middleBody
-        implH += result.implH
-        implCpp += result.implCpp
-        middleInit += result.middleInit
+        namespaceResult = getNamespaceResult(result, namespaceResult)
     }
     InterfaceList.pop();
     EnumList.pop();
     if (inNamespace.length > 0) {
-        middleInit += "}"
+        namespaceResult.middleInit += "}"
     }
-    return generateResult(name, implH, implCpp, middleFunc, middleInit)
+    return generateResult(name, namespaceResult.implH, namespaceResult.implCpp, namespaceResult.middleFunc,
+        namespaceResult.middleInit)
 }
 
-function generateEnumResult(data, implH, implCpp) {
+function getNamespaceResult(subResult, returnResult) {    
+    returnResult.middleFunc += subResult.middleBody
+    returnResult.implH += subResult.implH
+    returnResult.implCpp += subResult.implCpp
+    returnResult.middleInit += subResult.middleInit
+    return returnResult
+}
+
+function generateEnumResult(data) {
+    let resultEnum = {
+        implH: "",
+        implCpp: ""
+    }
+
     for (let i in data.enum) {
         let enumm = data.enum[i]
         let result = generateEnum(enumm.name, enumm.body)
-        implH += result.implH
-        implCpp += result.implCpp
+        resultEnum.implH += result.implH
+        resultEnum.implCpp += result.implCpp
     }
+    return resultEnum
 }
 
 function generateResult(name, implH, implCpp, middleFunc, middleInit) {

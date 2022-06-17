@@ -30,30 +30,36 @@ function getValueProperty(napiVn, name) {
     return 'pxt->GetValueProperty(%s, "%s")'.format(napiVn, name)
 }
 
-function jsToC(dest, napiVn, type) {
+function jsToC(dest, napiVn, type, enumType = 0) {
     if (type == "string") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
             return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){pxt->SwapJs2CUtf8(tnv%d,%s);}`
                 .format(lt, napiVn, lt, lt, dest)
-        }
-        else
+        } else {
             return "pxt->SwapJs2CUtf8(%s, %s);".format(napiVn, dest)
-    }
-
-    else if (type.substring(type.length - 2) == "[]") {
+        }           
+    } else if (type.substring(type.length - 2) == "[]") {
         return arrTemplete(dest, napiVn, type);
-    }
-    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
-        if (napiVn.indexOf("GetValueProperty") >= 0) {
-            let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C(tnv%d,%s,%s);}`
+    } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+        if (enumType) {
+            if (napiVn.indexOf("GetValueProperty") >= 0) {
+                let lt = LenIncrease.getAndIncrease()
+                return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C_ENUM(tnv%d,%s,%s,%s);}`
+                .format(lt, napiVn, lt, lt, type, dest, enumType)
+            } else {
+                return `NUMBER_JS_2_C_ENUM(%s,%s,%s,%s);`.format(napiVn, type, dest, enumType)
+            } 
+        } else {
+            if (napiVn.indexOf("GetValueProperty") >= 0) {
+                let lt = LenIncrease.getAndIncrease()
+                return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C(tnv%d,%s,%s);}`
                 .format(lt, napiVn, lt, lt, type, dest)
-        }
-        else
-            return `NUMBER_JS_2_C(%s,%s,%s);`.format(napiVn, type, dest)
-    }
-    else if (InterfaceList.getValue(type)) {
+            } else {
+                return `NUMBER_JS_2_C(%s,%s,%s);`.format(napiVn, type, dest)
+            } 
+       }
+    } else if (InterfaceList.getValue(type)) {
         let tt = ""
         let ifl = InterfaceList.getValue(type)
         for (let i in ifl) {
@@ -62,30 +68,25 @@ function jsToC(dest, napiVn, type) {
             tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2)
         }
         return tt
-    }
-    else if (EnumList.getValue(type)) {
+    } else if (EnumList.getValue(type)) {
         return jsToCEnum(type, dest, napiVn)
-    }
-    else if (type.indexOf("Array<") == 0) {
+    } else if (type.indexOf("Array<") == 0) {
         return arrTemplete(dest, napiVn, type);
-    }
-    else if (type == "boolean") {
+    } else if (type == "boolean") {
         return `BOOLEAN_JS_2_C(%s,%s,%s);`.format(napiVn, "bool", dest)
-    }
-    else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
+    } else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         return mapTempleteFunc(dest, napiVn, type);
-    }
-    else
+    } else {
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type));
+    }        
 }
 
 function jsToCEnum(type, dest, napiVn) {
     let tt = ""
     let ifl = EnumList.getValue(type)
     for (let i in ifl) {
-        let name2 = ifl[i].name
         let type2 = ifl[i].type
-        tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2)
+        tt += jsToC("%s".format(dest), getValueProperty(napiVn, dest), type2, type)
     }
     return tt
 }
