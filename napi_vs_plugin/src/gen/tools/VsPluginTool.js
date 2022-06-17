@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const os = require('os');
-const tsc = require("../../../node_modules/typescript");
+const tsc = require("../../node_modules/typescript");
 const fs = require('fs');
 let vscode = null;
 try {
