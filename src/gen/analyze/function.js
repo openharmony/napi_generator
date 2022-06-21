@@ -17,10 +17,26 @@ const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex } = require("
 const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
 const { NapiLog } = require("../tools/NapiLog");
+const { randomInt } = require("crypto");
+const { analyzeInterface } = require("./interface");
 
 /**函数解析 */
 function analyzeFunction(data, name, values, ret) {
     values = re.replaceAll(re.replaceAll(values, " ", ""), "\n", "")
+    let matchsInterface = re.match("([a-zA-Z_0-9]*):{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", values)
+    let interfaceName = ''
+    if (matchsInterface) {
+        let interfacePara = re.getReg(values, matchsInterface.regs[1])
+        let number = randomInt(10);
+        interfaceName = 'AUTO_INTERFACE_%s_%s'.format(interfacePara, number)
+        let interfaceBody = values.substring(interfacePara.length+2, values.length-1)
+        interfaceBody = re.replaceAll(interfaceBody, ",", ";")
+        data.interface.push({
+            name: interfaceName,
+            body: analyzeInterface(interfaceBody)
+        })
+    }  
+
     let tmp = analyzeParams(values)
     values = tmp[0]
     let funcType = tmp[1]
@@ -51,6 +67,12 @@ function analyzeFunction(data, name, values, ret) {
                 return
             }
         }
+
+        let interfaceType = re.match("{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", v["type"])
+        if (interfaceType) {
+            v["type"] = interfaceName
+        }
+
         if (parameter.indexOf("number") >= 0) {
             v["type"] = v["type"].replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
         }
