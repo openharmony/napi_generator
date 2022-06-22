@@ -18,7 +18,38 @@ const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
 const { NapiLog } = require("../tools/NapiLog");
 const { randomInt } = require("crypto");
-const { analyzeInterface } = require("./interface");
+
+function analyzeSubInterface(data) {
+    let body = re.replaceAll(data, "\n", "").split(";")//  # replace(" ", "").
+    let result = {
+        value: [],
+        function: []
+    }
+    for (let i in body) {
+        let t = body[i]
+        while (t.length > 0 && t[0] == ' ')//去除前面的空格
+            t = t.substring(1, t.length)
+        while (t.length > 0 && t[-1] == ' ')//去除后面的空格
+            t = t.substring(0, t.length - 1)
+        if (t == "") break//如果t为空直接返回
+        let tt = re.match(" *([a-zA-Z0-9_]+) *: *([a-zA-Z_0-9<>,:{}[\\] ]+)", t)
+        if (tt) {//变量
+
+            let valueName = re.getReg(t, tt.regs[1])
+            let valueType = re.getReg(t, tt.regs[2])
+            let index = valueType.indexOf("number")
+            while (index !== -1) {
+                valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
+                index = valueType.indexOf("number")
+            }
+            result.value.push({
+                name: valueName,
+                type: valueType
+            })
+        }
+    }
+    return result
+}
 
 function getFuncParaType(v, interfaceName, data) {
     let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", v["type"])
@@ -62,7 +93,7 @@ function analyzeFunction(data, name, values, ret) {
         interfaceBody = re.replaceAll(interfaceBody, ",", ";")
         data.interface.push({
             name: interfaceName,
-            body: analyzeInterface(interfaceBody)
+            body: analyzeSubInterface(interfaceBody)
         })
     }  
 
