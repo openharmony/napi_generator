@@ -440,6 +440,13 @@ function paramGenerateCallBack(data, type, param, p) {
     }
 }
 
+function isArrayType(type) {    
+    if (type.substring(type.length - 2) == "[]" || type.substring(0, 6) == "Array<") {
+        return true;
+    }
+    return false;
+}
+
 // 函数的参数处理
 function paramGenerate(p, name, type, param, data) {
     if (type == "string") {
@@ -474,9 +481,10 @@ function paramGenerate(p, name, type, param, data) {
     }
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         paramGenerateMap(type, param, p, name)
-    }
-    else {
+    } else if (isArrayType(type)) {
         paramGenerateArray(p, name, type, param);
+    } else {
+        NapiLog.logError("The current version do not support to this param to generate :", name, "type :", type);
     }
 }
 module.exports = {
