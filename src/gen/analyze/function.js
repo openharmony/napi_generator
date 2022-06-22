@@ -20,13 +20,42 @@ const { NapiLog } = require("../tools/NapiLog");
 const { randomInt } = require("crypto");
 const { analyzeInterface } = require("./interface");
 
+function getFuncParaType(v, interfaceName, data) {
+    let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", v["type"])
+    let parameter = v["type"]
+    if (arrayType) {
+        parameter = re.getReg(v["type"], arrayType.regs[2])
+    }
+    if (isEnum(parameter, data)) {
+        let index = enumIndex(parameter, data)
+        if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+            v["type"] = v["type"].replace(parameter, "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
+        } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+            v["type"] = v["type"].replace(parameter, "string")
+        } else {
+            NapiLog.logError(`returnGenerate is not support`);
+            return null
+        }
+    }
+
+    let interfaceType = re.match("{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", v["type"])
+    if (interfaceType) {
+        v["type"] = interfaceName
+    }
+
+    if (parameter.indexOf("number") >= 0) {
+        v["type"] = v["type"].replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
+    }
+    return v
+}
+
 /**函数解析 */
 function analyzeFunction(data, name, values, ret) {
     values = re.replaceAll(re.replaceAll(values, " ", ""), "\n", "")
-    let matchsInterface = re.match("([a-zA-Z_0-9]*):{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", values)
+    let matchs = re.match("([a-zA-Z_0-9]*):{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", values)
     let interfaceName = ''
-    if (matchsInterface) {
-        let interfacePara = re.getReg(values, matchsInterface.regs[1])
+    if (matchs) {
+        let interfacePara = re.getReg(values, matchs.regs[1])
         let number = randomInt(10);
         interfaceName = 'AUTO_INTERFACE_%s_%s'.format(interfacePara, number)
         let interfaceBody = values.substring(interfacePara.length+2, values.length-1)
@@ -51,30 +80,9 @@ function analyzeFunction(data, name, values, ret) {
     }
     for (let j in values) {
         let v = values[j]
-        let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", v["type"])
-        let parameter = v["type"]
-        if (arrayType) {
-            parameter = re.getReg(v["type"], arrayType.regs[2])
-        }
-        if(isEnum(parameter, data)){
-            let index = enumIndex(parameter, data)
-            if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-                v["type"] = v["type"].replace(parameter, "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
-            } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
-                v["type"] = v["type"].replace(parameter, "string")
-            } else {
-                NapiLog.logError(`returnGenerate is not support`);
-                return
-            }
-        }
-
-        let interfaceType = re.match("{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", v["type"])
-        if (interfaceType) {
-            v["type"] = interfaceName
-        }
-
-        if (parameter.indexOf("number") >= 0) {
-            v["type"] = v["type"].replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
+        v = getFuncParaType(v, interfaceName, data)
+        if (v == null) {
+            NapiLog.logError(`returnGenerate is not support`);
         }
     }
     if (ret.indexOf("number") >= 0) {
