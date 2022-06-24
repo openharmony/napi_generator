@@ -55,7 +55,7 @@ napi_generator/src目录下安装以下依赖：
 
 1.执行所有用例，命令为：
 
-	python npx mocha test/unittest/
+	npx mocha test/unittest/
 
 2.执行单个目录用例,如analyze，命令为：
 
