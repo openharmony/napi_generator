@@ -28,7 +28,7 @@ function generateEnum(name, data) {
             implH += `    static const std::string %s;\n`.format(v.name)
             implCpp += `\nconst std::string %s::%s = "%s";\n`.format(name, v.name, v.value)
         } else {
-            if (v.value = '') {
+            if (v.value == '') {
                 v.value = 0
             }
             implH += `    %s = %s,\n`.format(v.name, v.value)
