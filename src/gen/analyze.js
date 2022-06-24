@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("./tools/re");
-const { removeExplains, removeEmptyLine, checkOutBody, getLicense } = require("./tools/tool");
+const { removeExplains, removeEmptyLine, replaceTab, checkOutBody, getLicense } = require("./tools/tool");
 const { NumberIncrease } = require("./tools/common");
 const { readFile } = require("./tools/FileRW");
 
@@ -28,6 +28,8 @@ function analyzeFile(fn) {
     data = removeExplains(data)
     // 去除空行
     data = removeEmptyLine(data)
+    // 去除Tab
+    data = replaceTab(data)
     while (true) {
         // 去除import
         let matchImport = re.search("import ([{}A-Za-z ,]+) from [\"']{1}([@./a-zA-Z]+)[\"']{1};*", data);
