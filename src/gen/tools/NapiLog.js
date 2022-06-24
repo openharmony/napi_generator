@@ -47,14 +47,15 @@ NapiLog.init = function (level, fileName) {
 }
 
 function recordLog(lev, ...args) {
+    let origMsgInfo = args;
     let dataStr = getDateString();
     let detail = args.join(" ");
     saveLog(dataStr, LEV_STR[lev], detail);
     if (lev == NapiLog.LEV_ERROR) {
         logResultMessage = [false, detail];
     }
-    if (logLevel < lev) return;
-    NapiLog.logInfo(dataStr + LEV_STR[lev] + detail);
+    if (logLevel <= lev) return;
+    NapiLog.logInfo(origMsgInfo[0]);
 }
 
 NapiLog.logError = function (...args) {
