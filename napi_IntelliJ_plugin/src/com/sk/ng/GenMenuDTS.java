@@ -18,7 +18,6 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.sk.dialog.GenerateDialog;
-import com.sk.utils.FileUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -38,12 +37,6 @@ public class GenMenuDTS extends AnAction {
         if (project == null) {
             return;
         }
-        String baseFile = project.getBasePath();
-
-        if (FileUtil.checkProjectSDK(project, baseFile)) {
-            return;
-        }
-
         GenerateDialog wrapper = new GenerateDialog(project, "", "", "");
         wrapper.showAndGet();
     }
