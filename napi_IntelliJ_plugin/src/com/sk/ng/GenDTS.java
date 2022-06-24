@@ -46,12 +46,6 @@ public class GenDTS extends AnAction {
         if (project == null) {
             return;
         }
-        String baseFile = project.getBasePath();
-
-        if (FileUtil.checkProjectSDK(project, baseFile)) {
-            return;
-        }
-
         String destPath = file.getPath();
         String directoryPath = file.getParent().getPath();
         String fileName = file.getName();
