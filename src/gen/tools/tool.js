@@ -149,6 +149,13 @@ function removeEmptyLine(data) {
     return data
 }
 
+function replaceTab(data) {
+    while (data.indexOf("\t") >= 0) {
+        data = data.replace("\t", "    ")
+    }
+    return data
+}
+
 function removeEmptyLine2(data) {
     while (data.indexOf(" \n"))
         data = data.replace(" \n", "\n")
@@ -171,5 +178,6 @@ module.exports = {
     removeEmptyLine2,
     replaceAll,
     print,
-    getLicense
+    getLicense,
+    replaceTab
 }
