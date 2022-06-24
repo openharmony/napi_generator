@@ -39,7 +39,7 @@ describe('Analyze', function () {
     });
 
     it('test gen/analyze/function analyzeFunction', function () {
-        let ret = analyzeFunction("a", `b:number`, "string");
+        let ret = analyzeFunction("a", `b:number`, "string","asdfgh");
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeFunction']);
     });

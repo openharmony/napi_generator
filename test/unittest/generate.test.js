@@ -16,6 +16,7 @@ let genDir = "../../src/gen/"
 const { generateNamespace } = require(genDir + "generate/namespace");
 const { analyzeFile } = require(genDir + "analyze");
 var assert = require("assert");
+const { JsxEmit } = require("typescript");
 const { readFile } = require(genDir + "tools/FileRW");
 const { jsToC, paramGenerate } = require(genDir + "generate/param_generate");
 const { cToJs, returnGenerate } = require(genDir + "generate/return_generate");
@@ -83,21 +84,21 @@ function cToJsParamArray() {
 }
 
 function jsToCParam() {
-    let value = '    uint32_t len13=pxt->GetArrayLength(b);\n' +
-        '    for(uint32_t i13=0;i13<len13;i13++) {\n' +
-        '        std::string tt13;\n' +
-        '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i13), tt13);\n' +
-        '        a.push_back(tt13);\n' +
-        '    }'
+    let value =  '    uint32_t len13=pxt->GetArrayLength(b);\n' +
+       '    for(uint32_t i13=0;i13<len13;i13++) {\n' +
+       '        std::string tt13;\n' +
+       '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i13), tt13);\n' +
+       '        a.push_back(tt13);\n' +
+       '    }'
     return value
 }
 
 function jsToCParamArray() {
     let value = '    uint32_t len14=pxt->GetArrayLength(b);\n' +
-        '    for(uint32_t i14=0;i14<len14;i14++) {\n' +
-        '        std::string tt14;\n' +
-        '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i14), tt14);\n' +
-        '        a.push_back(tt14);\n' +
+       '    for(uint32_t i14=0;i14<len14;i14++) {\n' +
+       '        std::string tt14;\n' +
+       '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i14), tt14);\n' +
+       '        a.push_back(tt14);\n' +
         '    }'
     return value
 }
@@ -168,6 +169,7 @@ function partOfTest() {
 
 function returnGenerateParam(correctResult) {
     let retJson = returnGenerateAndAssert("string")
+    ret = JSON.stringify(retJson)
     assert.strictEqual(retJson, correctResult['Generate']['returnGenerate']);
 
     let retJson1 = returnGenerateAndAssert("NUMBER_TYPE_1")
@@ -186,26 +188,32 @@ function returnGenerateParam(correctResult) {
     assert.strictEqual(retJson5, correctResult['Generate5']['returnGenerate']);
 
     let retJson6 = returnGenerateAndAssert("[boolean]")
+    ret = JSON.stringify(retJson6)
     assert.strictEqual(retJson6, correctResult['Generate6']['returnGenerate']);
 
     let retJson7 = returnGenerateAndAssert("GrantStatus", result.declareNamespace[0].body)
+    ret = JSON.stringify(retJson7)
     assert.strictEqual(retJson7, correctResult['Generate7']['returnGenerate']);
 
     let retJson8 = returnGenerateAndAssert("HttpStatus", result.declareNamespace[0].body)
+    ret = JSON.stringify(retJson8)
     assert.strictEqual(retJson8, correctResult['Generate8']['returnGenerate']);
 }
 
 function paramGenerateResult(correctResult) {
     let retJson = paramGenerateAndAssert("string")
-    assert.strictEqual(retJson, correctResult['Generate']['ParamGenerate']);
+    ret = JSON.stringify(retJson)
+    assert.strictEqual(ret, correctResult['Generate']['ParamGenerate']);
 
     let retJson1 = paramGenerateAndAssert("NUMBER_TYPE_1")
     assert.strictEqual(retJson1, correctResult['Generate1']['ParamGenerate']);
 
     let retJson2 = paramGenerateAndAssert("Array<string>")
+    ret = JSON.stringify(retJson2)
     assert.strictEqual(retJson2, correctResult['Generate2']['ParamGenerate']);
 
     let retJson3 = paramGenerateAndAssert("Array<boolean>")
+    ret = JSON.stringify(retJson3)
     assert.strictEqual(retJson3, correctResult['Generate3']['ParamGenerate']);
 
     let retJson4 = paramGenerateAndAssert("[string]")
@@ -218,6 +226,7 @@ function paramGenerateResult(correctResult) {
     assert.strictEqual(retJson6, correctResult['Generate6']['ParamGenerate']);
 
     let retJson7 = paramGenerateAndAssert("HttpStatus", result.declareNamespace[0].body)
+    ret = JSON.stringify(retJson7)
     assert.strictEqual(retJson7, correctResult['Generate7']['ParamGenerate']);
 }
 
@@ -256,7 +265,7 @@ describe('Generate', function () {
     it('test gen/generate/namespace generateNamespace', function () {
         let ns = structOfTs.declareNamespace[0];
         let ret = generateNamespace(ns.name, ns.body);
-        assert.strictEqual(JSON.stringify(ret), JSON.stringify(correctResult['Generate']['demo']));
+        assert.strictEqual(JSON.stringify(ret), correctResult['Generate']['generateNamespace']);
     });
 
     partOfTest();
