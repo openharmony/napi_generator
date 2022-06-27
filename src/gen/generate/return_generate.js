@@ -16,7 +16,48 @@ const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
     isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 
+const specialPrefixArr = ["p->", "vio->out."];
+
+/**
+ * Get the real value name by deleting prefix like "p->", "vio->out.", e.g.
+ * @param {*} valueName, example: p->xxx, vio->out.yyy
+ * @returns the real value without prefix, example: xxx, yyy
+ */
+function delPrefix(valueName) {
+    for ( var i in specialPrefixArr) {
+        if (valueName.indexOf(specialPrefixArr[i]) == 0) {
+            // Find special prefix and delete it.
+            return valueName.substring(specialPrefixArr[i].length, valueName.length);
+        }
+    }
+    // Without special prefix, nothing is changed.
+    return valueName;
+}
+
+function cToJsForInterface(value, type, dest, deep) {
+    let lt = deep
+    let result = ""
+    let ifl = InterfaceList.getValue(type)
+    for (let i in ifl) {
+        let name2 = ifl[i].name
+        let type2 = ifl[i].type
+        let isSubEnum = EnumList.getValue(type2) ? true : false;
+        let subDest = isSubEnum ? dest : "tnv%d".format(lt)
+        let interfaceType = cToJs("%s.%s".format(value, name2), type2, subDest, deep + 1)
+        if (isSubEnum) {
+            // interface include enum properties
+            result += interfaceType 
+        } else {
+            result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
+            interfaceType + `\npxt->SetValueProperty(%s,"%s",tnv%d);\n}\n`
+                .format(dest, name2, lt)
+        }
+    }
+    return result
+}
+
 function cToJs(value, type, dest, deep = 1) {
+    var propertyName = delPrefix(value);
     if (type == "void")
         return "%s = pxt->UndefinedValue();".format(dest);
     else if (type == "boolean")
@@ -26,31 +67,17 @@ function cToJs(value, type, dest, deep = 1) {
     else if (type.substring(0, 12) == "NUMBER_TYPE_")
         return `%s = NUMBER_C_2_JS(pxt, %s);`.format(dest, value)
     else if (InterfaceList.getValue(type)) {
-        let lt = deep
-        let result = ""
-        let ifl = InterfaceList.getValue(type)
-        for (let i in ifl) {
-            let name2 = ifl[i].name
-            let type2 = ifl[i].type
-            let interfaceType = cToJs("%s.%s".format(value, name2), type2, "tnv%d".format(lt), deep + 1)
-            result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
-                interfaceType + `\npxt->SetValueProperty(%s,"%s",tnv%d);\n}`
-                    .format(dest, name2, lt)
-        }
-        return result
+        return cToJsForInterface(value, type, dest, deep);
     }
     else if(EnumList.getValue(type)){
         let lt = deep
         let result = ""
         let ifl = EnumList.getValue(type)
-        for (let i in ifl) {
-            let name2 = ifl[i].name
-            let type2 = ifl[i].type
-            let interfaceType = cToJs("%s".format(value), type2, "tnv%d".format(lt), deep + 1)
-            result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
-                interfaceType + `\npxt->SetValueProperty(%s,"%s",tnv%d);\n}`
-                    .format(dest, value, lt)
-        }
+        let type2 = ifl[0].type
+        let enumCtoJsStr = cToJs("enumInt%d".format(lt), type2, "tnv%d".format(lt), deep + 1)
+        result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) + "int enumInt%d = %s;\n".format(lt, value) + 
+                enumCtoJsStr + `\npxt->SetValueProperty(%s,"%s",tnv%d);\n}\n`
+                    .format(dest, propertyName, lt)
         return result
     }
     else if (type.substring(0, 6) == "Array<" || type.substring(type.length - 2) == "[]") {
