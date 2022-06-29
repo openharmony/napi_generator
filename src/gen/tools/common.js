@@ -16,7 +16,7 @@ const re = require("./re");
 const tsc = require("../../node_modules/typescript");
 
 function checkFileError(ifname) {
-    let program = tsc.createProgram([ifname], {})
+    let program = tsc.createProgram([ifname], {target: tsc.ScriptTarget.Latest,})
     let emitResult = program.emit();
     let allDiagnostics = tsc.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
 
