@@ -11,18 +11,21 @@
 
 	├── napi_generator                # NAPI框架代码生成工具
 	│   ├── docs                      # 工具说明、版本规划
+	│   ├── examples                  # 工具需要的文件样例 
 	│   ├── figures                   # 图片资源文件
-	│   ├── prebuilt                  # VS Code插件文件
+	│   ├── napi_IntelliJ_plugin      # Intellij IDEA插件代码
+	│   ├── napi_vs_plugin            # VS Code插件代码
 	│   ├── release-notes             # 发布说明
 	│   ├── src                       # 工具源码
-	|   |   ├── gen                  
-	│   |   |   ├── analyze           # 解析器
-	│   |   |   |── extend            # 扩展模块，包括gn文件生成、linux环境适配代码等
+	│   │   ├── gen                  
+	│   │   |   ├── analyze           # 解析器
+	│   │   |   |── extend            # 扩展模块，包括gn文件生成、linux环境适配代码等
 	│   │   |   |── generate          # 生成器
 	│   │   |   └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等  
-	|   |   └── generator             #IntelliJ IDEA插件代码
-	|   ├── examples                  # 工具需要的文件样例  
-	│   └── README                    # 工具使用指导    
+	│   │   └── generator             #IntelliJ IDEA插件代码
+	│   ├── test                      # UT、ST测试
+	│   ├── FAQ                       # NAPI框架工具问题反馈
+	│   └── README                    # 工具使用指导     
 
 ## 约束
 系统：建议Ubuntu 20.04或者Windows 10
@@ -33,7 +36,7 @@
 
 ### 使用对象
 
-工具的使用者
+系统开发者
 
 ### 使用场景
 
@@ -42,15 +45,7 @@
 
 ### 工具使用
 
-工具有三种类型，分别是可执行文件、VS Code插件、IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。
-
-使用者可以根据自己的需要选择合适的工具，VS Code插件存放在以下路径：
-
-```
-napi_generator/prebuilt
-```
-
-可执行文件与IntelliJ插件下载路径如下，选择napi_generator_outputs.zip下载。
+工具有三种类型，分别是可执行文件、VS Code插件、IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。可执行文件、IntelliJ插件、VS Code插件下载路径如下，选择napi_generator_outputs.zip下载。
 
 [下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/PPVcNMgVv/2022-06-13)
 

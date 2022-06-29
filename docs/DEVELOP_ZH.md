@@ -161,7 +161,7 @@
 
 #### 开发步骤
 
-1.将napi_generator目录下的可执行文件分别放置在napi_generator\src\generator\resources\cmds目录下对应系统的文件夹下。
+1.将napi_generator目录下的可执行文件分别放置在napi_generator/src/generator/resources/cmds目录下对应系统的文件夹下。
 
 2.通过IntelliJ IDEA打开napi_generator/src/generator目录下的代码。
 
@@ -185,7 +185,7 @@
 ## 工具测试
   进行工具二次开发后，本地可进行单元测试、story特性测试确保工具的可用性。左键单击以下链接了解详情：
 
-  [单元测试](https://gitee.com/openharmony/napi_generator/blob/master/test/unittest/README_ZH%20.md)
+  [单元测试](https://gitee.com/openharmony/napi_generator/blob/master/test/unittest/README_ZH.md)
 
   [story测试](https://gitee.com/openharmony/napi_generator/blob/master/test/storytest/README_ZH.md)
 
