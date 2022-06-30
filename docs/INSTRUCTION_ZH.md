@@ -1,23 +1,17 @@
 # NAPI框架生成工具使用说明
 ## 简介
 
-NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，使用者可以根据自己的需要选择合适的工具，VS Code插件存放在以下路径：
-
-```
-napi_generator/prebuilt
-```
-
-可执行文件与IntelliJ插件下载路径如下，选择napi_generator_outputs.zip下载。
+NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。可执行文件、IntelliJ插件、VS Code插件下载路径如下，选择napi_generator_outputs.zip下载。
 
 [下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/PPVcNMgVv/2022-06-13)
 
 下载文件说明如下：
 
-
-	│   |   ├── generator.jar           # IntelliJ插件
+	│   │   |── generator.jar           # IntelliJ插件
+	│   │   |── gnapi-0.0.1.vsix        # VS Code插件
 	│   │   |── napi_generator-linux    # Linux可执行程序 
 	│   │   |── napi_generator-win.exe  # Windows可执行程序    
-	|   |   └── napi_generator-macos    # Mac可执行程序              
+	│   │   └── napi_generator-macos    # Mac可执行程序                
 
 ## 工具介绍
 
@@ -128,7 +122,6 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 
 3)多级模块.d.ts文件转换。.../gen目录下存在@ohos.napi_.test.A.d.ts文件。命令执行成功后，gen目录中成功生成对应的文件，与指定路径下.d.ts文件转换效果图一致，转换命令如下：
 	
-
 	E:\napi_generator\napi_generator-master\examples\gen>napi_generator-win.exe -f @ohos.napi_.test.A.d.ts
 
 #### Mac

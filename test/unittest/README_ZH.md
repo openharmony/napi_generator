@@ -6,26 +6,26 @@
 
 ## 目录
 
-	├── napi_generator             # NAPI框架代码生成工具
-	│   ├── src                    # 工具源码
-	│   ├── ...                    # 其他文件夹
-	│   ├── test                   # 测试用例
-	|   |   ├── unittest           # 单元测试代码
+	├── napi_generator                           # NAPI框架代码生成工具
+	│   ├── src                                  # 工具源码
+	│   ├── ...                                  # 其他文件夹
+	│   ├── test                                 # 测试用例
+	│   |   ├── ...                              # 其他文件夹
+	│   |   ├── unittest                         # 单元测试代码
 	│   |   |   ├── analyze.test.js              #执行gen/analyze目录下函数测试用例 
 	│   |   |   ├── basic.d.ts*                  #基础函数模板
 	│   |   |   ├── extend.test.js*              #执行gen/extend目录下函数测试用例 
 	│   |   |   ├── generate.test.js*            #执行gen/generate目录下函数测试用例 
 	│   |   |   ├── napi_generator.test.js*      #执行全部测试用例
 	│   |   |   ├── '@ohos.input_sample.d.ts'*   #接口、函数等定义模板
-	│   |   |   └── tools.test.js*               #执行gen/tools目录下函数测试用例 
-	|   |   └── storytest  # 功能测试用例
+	│   |   |   ├── README_ZH.md                 # 测试用例使用指导
+	│   |   |   └── tools.test.js*               #执行gen/tools目录下函数测试用例
 	 
 ## 软件环境准备
 
 系统：建议Ubuntu 20.04
 
 依赖版本：python3.8
-
 
 步骤一：
 
@@ -47,8 +47,6 @@ napi_generator/src目录下安装以下依赖：
 
 	npm i  
 
-
-
 ## 使用说明
 
 进入napi_generator/目录：
@@ -61,13 +59,11 @@ napi_generator/src目录下安装以下依赖：
 
 	npx mocha test/unittest/analyze.test.js
 
-
 ## 查看结果
 
 红色：用例执行失败，代表修改的代码有bug或者用例的输出发生变化，需要修复bug或修改用例。
 
 绿色：用例执行成功。
-
 
 ## 相关仓
 
