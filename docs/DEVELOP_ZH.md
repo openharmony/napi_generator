@@ -169,7 +169,7 @@
 
 3.基础环境配置按照IDEA插件开发环境配置操作，确保项目可运行，且.d.ts文件可正常生成框架代码。
 
-[IDEA插件开发环境配置](https://gitee.com/openharmony/napi_generator/blob/master/src/generator/README_zh.md)
+[IDEA插件开发环境配置](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/README_zh.md)
 
 4.点击Intellij IDEA工具右上角Built Project按钮，等待工程built完成。
 
