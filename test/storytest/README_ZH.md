@@ -6,25 +6,34 @@
 
 ## 目录
 
-	├── napi_generator             # NAPI框架代码生成工具
-	│   ├── src                    # 工具源码
-	│   ├── ...                    # 其他文件夹
-	│   ├── test                   # 测试用例
-	|   |   ├── storytest          # story测试代码
-	│   |   |   ├── test_direct    # 同步直接返回函数用例
-	│   |   |   ├── test_interface # ts文件输入interface测试用例
-	│   |   |   ├── test_namespace # ts文件输入namespace测试用例
-	│   |   |   ├── test_number    # ts文件输入number测试用例
-	│   |   |   ├── test_string    # ts文件输入string测试用例
-	│   |   |   └── test.py        # 用例执行脚本
-	|   |   └── unittest  # 单元测试用例
+	├── napi_generator                       # NAPI框架代码生成工具
+	│   ├── ...                              # 其他文件夹
+	│   ├── test                             # 测试用例
+	│   |   ├── ...                          # 其他文件夹
+	│   |   ├── storytest                    # story测试代码
+	│   |   |   ├── test_$                   # ts文件输入以$开头的函数测试用例
+	│   |   |   ├── test_[]                  # ts文件输入[]格式数组测试用例
+	│   |   |   ├── test_array               # ts文件输入array<>格式数组测试用例
+	│   |   |   ├── test_bool                # ts文件输入boolean测试用例
+	│   |   |   ├── test_direct              # 同步直接返回函数用例
+	│   |   |   ├── test_enum                # ts文件输入enum测试用例
+	│   |   |   ├── test_enum_interface      # ts文件输入interface嵌套enum测试用例
+	│   |   |   ├── test_interface           # ts文件输入interface测试用例
+	│   |   |   ├── test_interface_no_name   # ts文件输入interface测试用例
+	│   |   |   ├── test_map                 # ts文件输入map测试用例
+	│   |   |   ├── test_namespace           # ts文件输入namespace测试用例
+	│   |   |   ├── test_number              # ts文件输入number测试用例
+	│   |   |   ├── test_static              # ts文件输入static的函数测试用例
+	│   |   |   ├── test_string              # ts文件输入string测试用例
+	│   |   |   ├── basic.d.ts               # 基础函数模板
+	│   |   |   ├── README_ZH.md             # 测试用例使用指导
+	│   |   |   └── test.py                  # 用例执行脚本
 	 
 ## 软件环境准备
 
 系统：建议Ubuntu 20.04
 
 依赖版本：python3.8
-
 
 步骤一：
 
@@ -70,13 +79,11 @@ napi_generator/src目录下安装以下依赖：
 
 	python test/storytest/test.py test_interface
 
-
 ## 查看结果
 
 红色：用例执行失败，代表修改的代码有bug或者用例的输出发生变化，需要修复bug或修改用例。
 
 绿色：用例执行成功。
-
 
 ## 相关仓
 

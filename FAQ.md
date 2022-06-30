@@ -1,6 +1,8 @@
 # NAPI框架生成工具 问题反馈
 
-## 1. pkg cmd_gen.js 生成.exe程序失败
+## 问题反馈
+
+### 1. pkg cmd_gen.js 生成.exe程序失败
 
 问题描述：在Linux命令行入口安装辅助工具过程中，按文档步骤，在使用pkg命令打包生成.exe文件时，发生报错。
 
@@ -23,7 +25,7 @@
 
 
 
-## 2. 用可执行程序生成c++代码失败
+### 2. 用可执行程序生成c++代码失败
 
 问题描述：在windows下用cmd_gen-win.exe生成对应的c++代码报错。
 
@@ -35,7 +37,7 @@
 
 	cmd_gen-win.exe @ohos.power.d.ts
 
-## 3.未安装系统依赖插件，运行测试用例失败
+### 3.未安装系统依赖插件，运行测试用例失败
 
 问题描述：首次运行UT或ST用例失败。
 
@@ -67,7 +69,7 @@
 			"webpack-cli": "^4.9.1"
 		}
 
-## 4.未安装rewire插件，运行测试用例失败
+### 4.未安装rewire插件，运行测试用例失败
 
 问题描述：readme中插件全部安装完成后，执行测试用例失败。
 
@@ -86,7 +88,7 @@
 
   安装插件之后，再次运行用例即可。
 
-## 5.后缀为gyp文件中包含/*注释，执行用例失败
+### 5.后缀为gyp文件中包含/*注释，执行用例失败
 
 问题描述：代码中后缀为gyp的文件中包含/*注释，执行用例失败。
 
@@ -99,3 +101,42 @@
 问题定位：代码中后缀为gyp的文件中包含/*，但工具不能解析，只能解析#后面的注释，导致执行用例失败。
 
 问题解决：修改代码。
+
+## 已知Bug
+
+### 1.Map<string,string>类型的函数转换框架代码失败
+
+问题描述：当待转换的ts文件中包含map数据类型，且书写方式为Map<string,string>时，框架代码转换失败。
+
+	2022-6-28 9:16:42 [ERR] @ohos.napitest.d.ts (17,20): Cannot find name 'Map'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2015' or later.
+	2022-6-28 9:16:42 [INF] fail@ohos.napitest.d.ts (17,20): Cannot find name 'Map'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2015' or later.
+
+问题定位：当前代码不支持Map<string,string>此种书写方式。
+
+问题解决：当ts文件中包含Map<string,string>书写方式的方法时，通过可执行文件方式进行框架代码转换之前安装@types/node依赖，即可转换成功，命令如下：
+
+	npm install @types/node -D
+
+通过Intellij IDEA插件或VS Code插件转换时，不支持ts文件包含Map<string,string>书写方式的方法，敬请期待后续更新解决方案。
+
+### 2.枚举值中包含左移右移等符号的函数框架代码转换失败
+
+问题描述：当待转换的ts文件中包含enum数据类型，且enum中包含左移右移时，框架代码转换失败，函数如下：
+
+	enum HiTraceFlag {
+		DEFAULT           = 0,
+		DONOT_CREATE_SPAN = 1 << 1,
+		TP_INFO           = 1 << 2,
+	}
+	function begin(name: string, flags: HiTraceFlag): HiTraceFlag;
+
+问题定位：当前代码不支持Map<string,string>此种书写方式。
+
+### 3.array<Map<string,any>>与array<{[key:string]:any}>数据类型框架代码转换失败
+
+问题描述：当待转换的ts文件中包含array<map>数据类型时，框架代码转换失败，函数如下：
+
+	function fun1(v: Array<{ [key: string]: string }>): void;
+	function fun2(v: Array<Map<string, string>>): string;
+
+问题定位：当前代码不支持Map<string,string>此种书写方式。
