@@ -1,43 +1,123 @@
-# IDEA插件开发环境配置
+# NAPI框架生成工具IntelliJ插件说明
 
-基础环境要求：
-JDK 11 ，IDEA Community 2021.3.3
+## 简介
 
-1.下载IDEA Community 与 JDK11 配置好环境
-点击 https://www.jetbrains.com/idea/download/ 下载Community版本，并完成安装。
+NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。目前工具支持可执行文件、VS Code插件、IntelliJ插件三种入口，本文主要介绍IntelliJ插件使用说明。
+
+## 目录 
+
+	├── napi_generator                # NAPI框架代码生成工具
+	│   ├── ...                       # 其他文件
+	│   ├── napi_IntelliJ_plugin      # IntelliJ插件代码
+	│   │   ├── docs                  # IntelliJ插件说明
+	│   │   ├── resources             # IntelliJ插件说明
+	│   │   ├── src    				  # IntelliJ插件源码
+	│   │   └── README_zh             # IntelliJ插件说明
+
+## 约束 
+
+系统：不限
+
+依赖版本：JDK 11
+
+开发工具：DevEco stdio、IDEA Community 2021.3.3
+
+## 使用方法 
+
+### 使用对象
+
+系统开发者
+
+### 使用场景
+
+1) 系统框架层新增子系统，需对应用层提供接口。
+2) 系统框架层子系统能力增强后，需对应用层提供新接口。
+
+### 工具使用
+
+插件下载路径如下，选择napi_generator_outputs.zip下载。
+
+[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/GGsW3B68u/generator_outputs)
+
+具体的工具使用步骤，可以左键单击以下链接了解：
+
+[工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/napi_IntelliJ_plugin/docs/INSTRUCTION_ZH.md)
+
+### 工具输出
+
+根据使用者指定的typescript文件，工具会输出NAPI框架代码、业务代码框架、GN脚本等文件。
+
+为了方便使用者快速上手工具，可供测试的typescript文件存放在以下路径：
+
+```
+napi_IntelliJ_plugin
+```
+
+在window环境下的，根据输入文件@ohos.napitest.d.ts和basic.d.ts生成的输出文件，如下所示：
+
+![](../figures/pic-d-ts-transition.png)
+
+其中生成的"napitest.h"文件，定义了框架代码的接口，如下所示：
 
 
-2.打开IDEA Community 应用程序。
-依次点击项目File>Open 选择napi_generator/napi_IntelliJ_plugin/generator项目文件夹。
-![](../figures/IntelliJ_env_config_open_proj.png)
-
-3.配置Project
-项目打开完成，点击File>Project Structure,在出现的界面中点击Project,下图的SDK选择JDK 11，选择或者新建complier output目录为项目文件下的out目录。
-![](../figures/IntelliJ_env_proj_structure.png)
+```c++
+#include "napitest.h"
 
 
-4.配置Modules.
-Project Settings > Modules 新建Modules.点击上方“-”删除原有的Modules，“+”选择 New Modules。
-![](../figures/IntelliJ_env_Proj_Module.png)
+namespace napitest {
 
+bool TestClass1::if_direct(std::string &v1, std::string &out) {
+    // TODO
+    return true;
+}
 
-5.配置Module SDK.（若SDKs中有相应的Plugin SDK和JDK 11，可以选择默认的Module SDK，点击图中next）
-在New Modules对话框中，选择IntelliJ Platform Plugin。若为首次环境配置，请在Module SDK 下拉框中点击 Add IntelliJ Platform Plugin SDK 选择IDEA Community安装目录，点击OK,在Select Internal Java Platform 选择 JAVA SDK 11（213版本只支持 11)
-![](../figures/IntelliJ_env_Proj_Module_New.png)
+bool TestClass1::if_callback(std::string &v1, std::string &out) {
+    // TODO
+    return true;
+}
 
-6.配置Root Content.
-在上图界面点击Next，选择Content root:选择或者理性为项目根目录(<font style="color: red;">注意：此处必须为项目文件夹的目录</font>），module name会自动变为generator,若出现提示已存在是否覆盖的提示，请点“Finish”完成配置。
-![](../figures/IntelliJ_env_module_root.png)
+......
+}
+```
+      
+### 集成方法
 
+为了实现工具生成的接口被其他子系统或者应用调用，需将生成的代码编译集成到OpenHarmony系统中，编译生成动态库。
 
-7.配置完成Modules后，若在SDKs中无相应JDK和Plugin SDK,请点击+号分别添加 Add Java JDK和Add Intellij PlantForm Plugin SDK,Java JDK为java11的安装目录，Plugin SDK为 IDEA Community 2021.3.3的安装目录。
-![](../figures/IntelliJ_env_config_SDKs.png)
+把工具的生成代码集成到OpenHarmony的具体操作步骤，可以左键单击以下链接了解：
 
-8.若完成步骤7配置，点击OK完成配置。Rebuild项目，若IDEA依然不能点击右上角的运行。请点击Edit configuration编译选择Use classpath of Mode为前面配置好的Module名称。
-![](../figures/IntelliJ_env_edit_configurations.png)
+[生成代码集成到OpenHarmony的方法](https://gitee.com/openharmony/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
 
-9.项目运行成功后，会另起一个IDEA应用程序。插件运行在IDEA中，只需要新建一个Grandle Project,添加相应的TS文件到项目文件夹里面，就可以右击文件，选择Generate napi Frame出现插件主界面进行相应操作。
+## 开发说明
 
-10.在Deveco stdio中安装插件。
-请在IDEA Community中依次点击Build>Prepare Plugin Module " " for development"生成jar包(jar一般生成在generator目录下)。打开DevEco Studio 工具，点击File>settings>plugin。点击右方齿轮选择install plugin from disk选择jar包，点击确定完成。重新IDE完成安装
-![](../figures/IntelliJ_env_deveco_install.png)
+### 对象
+
+工具的开发者
+
+### 开发场景
+
+若当前工具的功能已经不能满足开发者的全部需求，则开发者可以基于已有的源码对工具进行二次开发，来增强工具的能力，编译打包生成自定义的可执行文件和插件。
+       
+### 开发步骤
+
+开发者可以根据如下的步骤来完成对工具IntelliJ插件的开发：
+
+ [工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/napi_IntelliJ_plugin/docs/DEVELOP_ZH.md)
+    
+## 版本说明 
+
+当前版本已支持的特性和待开发的特性，如下所示：
+
+ [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/release-notes/napi_generator-1.0.md)
+
+ [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ROADMAP_ZH.md)
+
+## FAQ
+
+对于常见问题解决方法指导如下：
+
+  [FAQ](https://gitee.com/openharmony/napi_generator/blob/master/FAQ.md)
+
+## 相关仓
+
+暂无
