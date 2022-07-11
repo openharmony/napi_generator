@@ -487,8 +487,23 @@ function paramGenerate(p, name, type, param, data) {
         NapiLog.logError("The current version do not support to this param to generate :", name, "type :", type);
     }
 }
+
+// on/off 接口的event名称参数处理
+function eventParamGenerate(p, name, type, param, data) {
+    let regName = re.match("'([a-zA-Z_0-9]+)'", type)
+    if (regName) {
+        param.eventName = re.getReg(type, regName.regs[1])
+        param.valueDefine += "%sstd::string &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
+    } else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
+        paramGenerateCallBack(data, type, param, p)
+    } else {
+        NapiLog.logError("The current version do not support to this param to generate :", name, "type :", type);
+    }
+}
+
 module.exports = {
     jsToC,
     arrTemplete,
-    paramGenerate
+    paramGenerate,
+    eventParamGenerate
 }
