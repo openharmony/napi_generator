@@ -90,25 +90,50 @@ function jsToCEnum(type, dest, napiVn) {
     }
     return tt
 }
-
-function arrTemplete(dest, napiVn, type) {
+function getArrayTypeTemplete(type) {
     let arrayType
     if (type.substring(type.length - 2) == "[]") {
         arrayType = getArrayTypeTwo(type)
     } else {
         arrayType = getArrayType(type)
-    }
-    let lt = LenIncrease.getAndIncrease()
+    }    
     if (arrayType == "string") arrayType = "std::string"
+    if (arrayType == "[key:string]:string") {
+        arrayType = "std::map<std::string, std::string>"
+    }
+    return arrayType
+}
+
+function arrTemplete(dest, napiVn, type) {  
+    let lt = LenIncrease.getAndIncrease()
+    let arrayType = getArrayTypeTemplete(type)
     let arrTemplete = `\
     uint32_t len[replace_lt]=pxt->GetArrayLength(%s);
     for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
         %s tt[replace_lt];
         [replace_swap]
         %s.push_back(tt[replace_lt]);
+
     }`.format(napiVn, arrayType == "boolean" ? "bool" : arrayType, dest)
 
+    let arrMapTemplete = `\
+    uint32_t len[replace_lt]=pxt->GetArrayLength(%s);
+    for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
+        std::map<std::string, std::string> tt[replace_lt];        
+        
+        napi_value mapPara = pxt->GetArrayElement(pxt->GetArgv(0),i1);
+        uint32_t len2=pxt->GetMapLength(mapPara);
+        for(uint32_t i2=0;i2<len2;i2++) {
+            std::string tt2, tt3;
+            pxt->SwapJs2CUtf8(pxt->GetMapElementName(mapPara, i2), tt2);
+            pxt->SwapJs2CUtf8(pxt->GetMapElementValue(mapPara,tt2.c_str()), tt3);
+            tt[replace_lt].insert(std::make_pair(tt2, tt3)); 
+        }
+        %s.push_back(tt[replace_lt]);
+
+    }`.format(napiVn, dest)
     arrTemplete = arrTemplete.replaceAll("[replace_lt]", lt)
+    arrMapTemplete = arrMapTemplete.replaceAll("[replace_lt]", lt)
     if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             "NUMBER_JS_2_C(pxt->GetArrayElement(%s,i%d),%s,tt%d);".format(napiVn, lt, arrayType, lt))
@@ -124,8 +149,9 @@ function arrTemplete(dest, napiVn, type) {
     else if (arrayType == "boolean") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             "pxt->SwapJs2CBool(pxt->GetArrayElement(%s,i%d));".format(napiVn, lt))
+    } else if (arrayType == "std::map<std::string, std::string>") {
+        return arrMapTemplete
     }
-
     return arrTemplete
 }
 
@@ -142,6 +168,9 @@ function paramGenerateArray(p, name, type, param) {
         let arrayType = getArrayType(type)
         if (arrayType == "string") arrayType = "std::string"
         if (arrayType == "boolean") arrayType = "bool"
+        if (arrayType == "[key:string]:string") {
+            arrayType = "std::map<std::string, std::string>"
+        }
         param.valueIn += "\n    std::vector<%s> in%d;".format(arrayType, p)
         param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
