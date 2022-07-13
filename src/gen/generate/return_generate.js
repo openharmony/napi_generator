@@ -403,5 +403,7 @@ function returnGenerateEnum(data, type, param) {
 
 module.exports = {
     cToJs,
-    returnGenerate
+    cToJsForInterface,
+    returnGenerate,
+    returnGenerateEnum
 }

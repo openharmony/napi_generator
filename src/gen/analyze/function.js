@@ -129,5 +129,7 @@ function analyzeFunction(data, name, values, ret) {
 }
 
 module.exports = {
-    analyzeFunction
+    analyzeFunction,
+    analyzeSubInterface,
+    getFuncParaType
 }
