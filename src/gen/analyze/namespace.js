@@ -235,5 +235,9 @@ function removeReg(matchs, data, result) {
     return data
 }
 module.exports = {
-    analyzeNamespace
+    analyzeNamespace,
+    parseNamespace,
+    parseEnum,
+    parseFunction,
+    parseInterface
 }
