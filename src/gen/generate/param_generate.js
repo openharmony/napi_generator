@@ -148,7 +148,6 @@ function arrTemplete(dest, napiVn, type) {
 
     let str = "std::map<std::string,"
     let strLen = str.length    
-    
     if (arrayType.substring(0, strLen) == "std::map<std::string,") {  
         let codegen = getMapValueCode(arrayType)
         if (codegen == null) {
@@ -158,7 +157,7 @@ function arrTemplete(dest, napiVn, type) {
         arrMapTemplete = arrMapTemplete.replaceAll("[code_gen]", codegen)
         return arrMapTemplete
     } else {
-        arrTemplete = getarrTempletereplace_swap(arrTemplete, arrayType, napiVn, lt)
+        arrTemplete = getArrTempletereplaceSwap(arrTemplete, arrayType, napiVn, lt)
     }
     return arrTemplete
 }
@@ -183,20 +182,17 @@ function getMapValueCode(arrayType) {
     return codegen
 }
 
-function getarrTempletereplace_swap(arrTemplete, arrayType, napiVn, lt) { 
+function getArrTempletereplaceSwap(arrTemplete, arrayType, napiVn, lt) { 
     if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             "NUMBER_JS_2_C(pxt->GetArrayElement(%s,i%d),%s,tt%d);".format(napiVn, lt, arrayType, lt))
-    }
-    else if (arrayType == "std::string") {
+    } else if (arrayType == "std::string") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             "pxt->SwapJs2CUtf8(pxt->GetArrayElement(%s,i%d), tt%d);".format(napiVn, lt, lt))
-    }
-    else if (InterfaceList.getValue(arrayType)) {
+    } else if (InterfaceList.getValue(arrayType)) {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             jsToC("tt" + lt, "pxt->GetArrayElement(%s,i%d)".format(napiVn, lt), arrayType))
-    }
-    else if (arrayType == "bool") {
+    } else if (arrayType == "bool") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             "pxt->SwapJs2CBool(pxt->GetArrayElement(%s,i%d));".format(napiVn, lt))
     }
