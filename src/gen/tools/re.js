@@ -16,7 +16,7 @@ const path = require('path');
 const { NapiLog } = require('./NapiLog');
 
 function print(...args) {
-    NapiLog.logInfo(...args);
+    console.log(...args);
 }
 
 function search(ss, data) {

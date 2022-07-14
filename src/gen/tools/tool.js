@@ -26,7 +26,7 @@ function print(...args) {
     if (vscode) {
         vscode.window.showInformationMessage(...args);
     }
-    NapiLog.logInfo(...args);
+    console.log(...args);
 }
 
 String.prototype.format = function (...args) {
