@@ -16,6 +16,7 @@ const { analyzeFile } = require("./analyze");
 const { generateAll } = require("./generate");
 const { NapiLog } = require("./tools/NapiLog");
 const re = require("./tools/re");
+const { print } = require("./tools/tool");
 
 function doGenerate(ifname, destdir) {
     let structOfTs = analyzeFile(ifname);
@@ -25,7 +26,9 @@ function doGenerate(ifname, destdir) {
         let moduleName = re.getReg(fn, tt.regs[1]);
         generateAll(structOfTs, destdir, moduleName);
     } else {
-        NapiLog.logError('file name ' + fn + ' format invalid, @ohos.input_sample.d.ts');
+        let errorLog = 'file name ' + fn + ' format invalid, @ohos.input_sample.d.ts';
+        print(errorLog);
+        NapiLog.logError(errorLog);
     }
 }
 
