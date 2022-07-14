@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { checkOutBody } = require("../tools/tool");
+const { checkOutBody, print } = require("../tools/tool");
 const { FuncType } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 
@@ -39,6 +39,7 @@ function analyzeParams(values) {
                 funcType = FuncType.SYNC
         }
         else {
+            print("\nanalyzeParams error params:" + v)
             NapiLog.logError("参数列表解析失败");
             NapiLog.logError("analyzeParams error params:" + v);
         }

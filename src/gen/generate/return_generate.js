@@ -15,6 +15,7 @@
 const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
     isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
+const { print } = require("../tools/tool");
 
 const specialPrefixArr = ["p->", "vio->out."];
 
@@ -87,8 +88,11 @@ function cToJs(value, type, dest, deep = 1) {
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         return mapTempleteFunc(type, deep, dest, value)
     }
-    else
-        NapiLog.logError(`This type do not generate cToJs %s,%s,%s`.format(value, type, dest));
+    else {
+        let errorLog = `\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest);
+        print(errorLog)
+        NapiLog.logError(errorLog);
+    }
 }
 
 function checkArrayParamType(type) {
@@ -320,6 +324,7 @@ function returnGenerate(type, param, data) {
     }
     else if (type == "void") {
         NapiLog.logInfo("The current void type don't need generate");
+        print("The current void type don't need generate");
     }
     else if (type == "boolean") {
         param.valueOut = "bool out;"
@@ -336,7 +341,9 @@ function returnGenerate(type, param, data) {
         returnGenerate2(type, param, data)
     }
     else {
-        NapiLog.logError("The current version do not support this type return %s`.format(type)");
+        let errorLog = "function returnGenerate:The current version do not support this type return %s";
+        NapiLog.logError(errorLog.format(type));
+        print(errorLog.format(type));
     }
 }
 
@@ -387,7 +394,9 @@ function returnGenerateEnum(data, type, param) {
     } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
         type = "string"
     } else {
-        NapiLog.logError(`returnGenerate is not support`);
+        let errorLog = `function returnGenerateEnum:this type is not support %s`.format(type);
+        print(errorLog);
+        NapiLog.logError(errorLog);
         return
     }
     param.valuePackage = "napi_value result = nullptr;\n    " + cToJs("vio->out", type, "result")

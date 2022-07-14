@@ -19,6 +19,7 @@ const { NapiLog } = require("./tools/NapiLog");
 const path = require("path");
 const stdio = require("stdio");
 var fs = require('fs');
+const { print } = require("./tools/tool");
 
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: ".d.ts file", default: "" },
@@ -93,14 +94,18 @@ function checkGenerate(fileName) {
 
     }
     else {
-        NapiLog.logError('file name ' + fn + ' format invalid, @ohos.input_sample.d.ts');
+        let errorLog = 'file name ' + fn + ' format invalid, @ohos.input_sample.d.ts';
+        print(errorLog);
+        NapiLog.logError(errorLog);
     }
 }
 
 let ret = NapiLog.getResult();
 if (ret[0]) {
+    print('success');
     NapiLog.logInfo('success');
 }
 else {
+    print('fail\n' + ret[1]);
     NapiLog.logInfo('fail\n' + ret[1]);
 }
