@@ -18,6 +18,7 @@ const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
 const { NapiLog } = require("../tools/NapiLog");
 const { randomInt } = require("crypto");
+const { print } = require("../tools/tool");
 
 function analyzeSubInterface(data) {
     let body = re.replaceAll(data, "\n", "").split(";")//  # replace(" ", "").
@@ -64,7 +65,9 @@ function getFuncParaType(v, interfaceName, data) {
         } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
             v["type"] = v["type"].replace(parameter, "string")
         } else {
-            NapiLog.logError(`returnGenerate is not support`);
+            let errorLog = "analyzeFunction getFuncParaType is not support this type %s".format(data.enum[index].body.enumValueType)
+            print(errorLog)
+            NapiLog.logError(errorLog);
             return null
         }
     }
@@ -113,7 +116,9 @@ function analyzeFunction(data, name, values, ret) {
         let v = values[j]
         v = getFuncParaType(v, interfaceName, data)
         if (v == null) {
-            NapiLog.logError(`returnGenerate is not support`);
+            let errorLog = "analyzeFunction is not support this type %s".format(v);
+            print(errorLog);
+            NapiLog.logError(errorLog);
         }
     }
     if (ret.indexOf("number") >= 0) {
