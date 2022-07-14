@@ -14,8 +14,10 @@
 */
 import { AsyncCallback, Callback } from './../basic';
 
-declare namespace napitest {
-    function fun1(v: Array<{[key: string]: string}>):  number;
+declare namespace napitest {  
+    function fun1(v: Array<{[key: string]:string}>): number;
+    function fun2(v: Array<{[key: string]:number}>): number;
+    function fun3(v: Array<{[key: string]:boolean}>): number;
 }
 
 export default napitest;
