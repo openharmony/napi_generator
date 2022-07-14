@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("./tools/re");
-const { removeExplains, removeEmptyLine, replaceTab, checkOutBody, getLicense } = require("./tools/tool");
+const { removeExplains, removeEmptyLine, replaceTab, checkOutBody, getLicense, print } = require("./tools/tool");
 const { NumberIncrease } = require("./tools/common");
 const { readFile } = require("./tools/FileRW");
 
@@ -86,7 +86,10 @@ function analyze(data, result) {
             result = functionMatch[1]
         }
         if (oldData == data) {
-            NapiLog.logError("解析文件失败");
+            let errorMsg = "\nvvv 解析文件失败 vvv";
+            print(errorMsg)
+            print("[", data.substring(0, data.length > 64 ? 64 : data.length), "]")
+            NapiLog.logError(errorMsg);
             NapiLog.logError("[", data.substring(0, data.length > 64 ? 64 : data.length), "]");
             break;
         }

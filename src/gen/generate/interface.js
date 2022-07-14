@@ -20,6 +20,7 @@ const { jsToC } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
+const { print } = require("../tools/tool");
 
 let middleBodyTmplete = `
 class [className]_middle {
@@ -59,10 +60,14 @@ function generateVariable(name, type, variable, className) {
     } else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         variable.hDefine += mapTypeString(type, name)
     }
-    else
+    else {
         NapiLog.logError(`
         ---- generateVariable fail %s,%s ----
         `.format(name, type));
+        print(`
+        ---- generateVariable fail %s,%s ----
+        `.format(name, type));
+    }
     variable.middleValue += `
     static napi_value getvalue_%s(napi_env env, napi_callback_info info)
     {
