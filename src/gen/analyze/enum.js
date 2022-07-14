@@ -86,5 +86,6 @@ function analyzeEnumResult(result, bodyContent, index) {
 }
 
 module.exports = {
-    analyzeEnum
+    analyzeEnum,
+    analyzeEnumResult
 }
