@@ -12,13 +12,22 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { fun1 } = require("./out/build/Release/napitest")
+const { fun1, fun2, fun3 } = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('boolean', function () {
+describe('array_map', function () {    
     it('test fun1', function () {
-        let ret = fun1([{"age":"ageValue"}, {"name":"testName"}]);
+        let ret = fun1([{"age":"a"}, {"name":"b"}]);
+        assert.strictEqual(ret, 0);
+    });
+    
+    it('test fun2', function () {
+        let ret = fun2([{"age":1}, {"name":2}]);
         assert.strictEqual(ret, 0);
     });
 
+    it('test fun3', function () {
+        let ret = fun3([{"age":true}, {"name":false}]);
+        assert.strictEqual(ret, 0);
+    });
 });
