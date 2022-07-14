@@ -103,12 +103,14 @@ function getArrayType(type) {
     if (tt != null) {
         return re.getReg(type, tt.regs[1])
     } else {
-        tt = re.match("Array<{([[a-z:]+)([a-z:]]+)([a-z:]+)", type)
+        tt = re.match("Array<{([[a-z:]+)([a-z:]]+)([a-zA-Z_1-9:]+)", type)
         if (tt != null) {
-            let regs1 = re.getReg(type, tt.regs[1])
-            let regs2 = re.getReg(type, tt.regs[2])
-            let regs3 = re.getReg(type, tt.regs[3])
-            let res = regs1 + regs2 + regs3
+            let res = ''
+            let len = tt.regs.length
+            for (let i=1; i<len; i++) {
+                let regs1 = re.getReg(type, tt.regs[i])
+                res += regs1
+            }          
             return res
         }
     }
