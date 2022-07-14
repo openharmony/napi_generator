@@ -532,7 +532,10 @@ function eventParamGenerate(p, name, type, param, data) {
 
 module.exports = {
     jsToC,
+    jsToCEnum,
     arrTemplete,
     paramGenerate,
-    eventParamGenerate
+    paramGenerateArray,
+    paramGenerateMap,
+    mapTempleteFunc
 }

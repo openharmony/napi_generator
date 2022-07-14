@@ -138,5 +138,10 @@ function formatMiddleInit(inNamespace, name) {
 }
 
 module.exports = {
-    generateNamespace
+    generateNamespace,
+    getNamespaceResult,
+    generateEnumResult,
+    generateResult,
+    generateFunction,
+    formatMiddleInit
 }
