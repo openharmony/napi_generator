@@ -46,10 +46,9 @@ describe('Number', function () {
         assert.strictEqual(ret, '');
     }
 
-    it('test fun5', function () {
-        fun5(12, def);
-        //fun5(12).then(def);
+	it('test fun5', function () {
+        let promiseObj = fun5(12);
+        promiseObj.then(ret => {def(ret)});
     });
-
 });
 
