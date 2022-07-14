@@ -30,6 +30,8 @@
 		"webpack-cli": "^4.9.1"
 	},
 	"dependencies": {
+		"node-gyp": "^9.0.0",
+		"stdio": "^2.1.1",
 		"typescript": "^4.6.2",
 		"vsce": "^2.6.7"
 	}
