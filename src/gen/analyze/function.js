@@ -65,8 +65,9 @@ function getFuncParaType(v, interfaceName, data) {
         } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
             v["type"] = v["type"].replace(parameter, "string")
         } else {
-            let errorLog = "analyzeFunction getFuncParaType is not support this type %s".format(data.enum[index].body.enumValueType)
-            print(errorLog)
+            let errorLog = "analyzeFunction getFuncParaType is not support this type %s"
+            .format(data.enum[index].body.enumValueType);
+            print(errorLog);
             NapiLog.logError(errorLog);
             return null
         }

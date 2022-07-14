@@ -78,10 +78,14 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     } else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         return mapTempleteFunc(dest, napiVn, type);
     } else {
-        let errorLog = `do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type);
-        print(errorLog);
-        NapiLog.logError(errorLog);
+        printLog(dest, napiVn, type);
     }        
+}
+
+function printLog(dest, napiVn, type) {
+    let errorLog = `do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type);
+    print(errorLog);
+    NapiLog.logError(errorLog);
 }
 
 function jsToCEnum(type, dest, napiVn) {
@@ -519,8 +523,10 @@ function paramGenerate(p, name, type, param, data) {
     } else if (isArrayType(type)) {
         paramGenerateArray(p, name, type, param);
     } else {
-        print("function paramGenerate: The current version do not support to this param to generate :", name, "type :", type);
-        NapiLog.logError("function paramGenerate: The current version do not support to this param to generate :", name, "type :", type);
+        print("function paramGenerate: The current version do not support to this param to generate :"
+        , name, "type :", type);
+        NapiLog.logError("function paramGenerate: The current version do not support to this param to generate :"
+        , name, "type :", type);
     }
 }
 
@@ -533,8 +539,10 @@ function eventParamGenerate(p, name, type, param, data) {
     } else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
         paramGenerateCallBack(data, type, param, p)
     } else {
-        print("function eventParamGenerate:The current version do not support to this param to generate :", name, "type :", type);
-        NapiLog.logError("function eventParamGenerate:The current version do not support to this param to generate :", name, "type :", type);
+        print("function eventParamGenerate:The current version do not support to this param to generate :"
+        , name, "type :", type);
+        NapiLog.logError("function eventParamGenerate:The current version do not support to this param to generate :"
+        , name, "type :", type);
     }
 }
 

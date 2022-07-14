@@ -324,6 +324,7 @@ function returnGenerate(type, param, data) {
     }
     else if (type == "void") {
         NapiLog.logInfo("The current void type don't need generate");
+        print("The current void type don't need generate");
     }
     else if (type == "boolean") {
         param.valueOut = "bool out;"
@@ -340,7 +341,9 @@ function returnGenerate(type, param, data) {
         returnGenerate2(type, param, data)
     }
     else {
-        NapiLog.logError("The current version do not support this type return %s`.format(type)");
+        let errorLog = "function returnGenerate:The current version do not support this type return %s";
+        NapiLog.logError(errorLog.format(type));
+        print(errorLog.format(type));
     }
 }
 
