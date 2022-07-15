@@ -507,6 +507,11 @@ napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFuncti
         result = UndefinedValue(env_);
     }
 
+    asyncNeedRelease_ = true;
+    executeFunction_ = pe;
+    completeFunction_ = pc;
+    valueData_ = data;
+
     napi_value resourceName = nullptr;
     result_status = napi_create_string_utf8(env_, "x_napi_tool", NAPI_AUTO_LENGTH, &resourceName);
     CC_ASSERT(result_status == napi_ok);
@@ -515,11 +520,6 @@ napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFuncti
     CC_ASSERT(result_status == napi_ok);
     result_status = napi_queue_async_work(env_, work_);
     CC_ASSERT(result_status == napi_ok);
-
-    asyncNeedRelease_ = true;
-    executeFunction_ = pe;
-    completeFunction_ = pc;
-    valueData_ = data;
 
     return result;
 }
