@@ -64,9 +64,6 @@ function generateVariable(name, type, variable, className) {
         NapiLog.logError(`
         ---- generateVariable fail %s,%s ----
         `.format(name, type));
-        print(`
-        ---- generateVariable fail %s,%s ----
-        `.format(name, type));
     }
     variable.middleValue += `
     static napi_value getvalue_%s(napi_env env, napi_callback_info info)
