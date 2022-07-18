@@ -89,9 +89,7 @@ function cToJs(value, type, dest, deep = 1) {
         return mapTempleteFunc(type, deep, dest, value)
     }
     else {
-        let errorLog = `\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest);
-        print(errorLog)
-        NapiLog.logError(errorLog);
+        NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest));
     }
 }
 
@@ -324,7 +322,6 @@ function returnGenerate(type, param, data) {
     }
     else if (type == "void") {
         NapiLog.logInfo("The current void type don't need generate");
-        print("The current void type don't need generate");
     }
     else if (type == "boolean") {
         param.valueOut = "bool out;"
@@ -341,9 +338,7 @@ function returnGenerate(type, param, data) {
         returnGenerate2(type, param, data)
     }
     else {
-        let errorLog = "function returnGenerate:The current version do not support this type return %s";
-        NapiLog.logError(errorLog.format(type));
-        print(errorLog.format(type));
+        NapiLog.logError("function returnGenerate:The current version do not support this type return %s".format(type));
     }
 }
 
@@ -394,9 +389,7 @@ function returnGenerateEnum(data, type, param) {
     } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
         type = "string"
     } else {
-        let errorLog = `function returnGenerateEnum:this type is not support %s`.format(type);
-        print(errorLog);
-        NapiLog.logError(errorLog);
+        NapiLog.logError(`function returnGenerateEnum:this type is not support %s`.format(type));
         return
     }
     param.valuePackage = "napi_value result = nullptr;\n    " + cToJs("vio->out", type, "result")

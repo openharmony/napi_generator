@@ -39,7 +39,6 @@ function analyzeParams(values) {
                 funcType = FuncType.SYNC
         }
         else {
-            print("\nanalyzeParams error params:" + v)
             NapiLog.logError("参数列表解析失败");
             NapiLog.logError("analyzeParams error params:" + v);
         }

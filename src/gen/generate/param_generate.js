@@ -78,14 +78,8 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     } else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         return mapTempleteFunc(dest, napiVn, type);
     } else {
-        printLog(dest, napiVn, type);
+        NapiLog.logError(`do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type));
     }        
-}
-
-function printLog(dest, napiVn, type) {
-    let errorLog = `do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type);
-    print(errorLog);
-    NapiLog.logError(errorLog);
 }
 
 function jsToCEnum(type, dest, napiVn) {
@@ -238,7 +232,6 @@ function paramGenerateArray(p, name, type, param) {
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sstd::vector<%s> &%s".format(param.valueDefine.length > 0 ? ", " : "", arrayType, name)
     } else {
-        print("The current version do not support to this param to generate :", name, "type :", type);
         NapiLog.logError("The current version do not support to this param to generate :", name, "type :", type);
     }
 }
@@ -522,9 +515,7 @@ function paramGenerateCallBack(data, type, param, p) {
         } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
             regType = "string"
         } else {
-            let errorLog = `paramGenerate is not support`;
-            print(errorLog);
-            NapiLog.logError(errorLog);
+            NapiLog.logError(`paramGenerate is not support`);
             return
         }
     }
@@ -578,8 +569,6 @@ function paramGenerate(p, name, type, param, data) {
     } else if (isArrayType(type)) {
         paramGenerateArray(p, name, type, param);
     } else {
-        print("function paramGenerate: The current version do not support to this param to generate :"
-        , name, "type :", type);
         NapiLog.logError("function paramGenerate: The current version do not support to this param to generate :"
         , name, "type :", type);
     }
@@ -594,8 +583,6 @@ function eventParamGenerate(p, name, type, param, data) {
     } else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
         paramGenerateCallBack(data, type, param, p)
     } else {
-        print("function eventParamGenerate:The current version do not support to this param to generate :"
-        , name, "type :", type);
         NapiLog.logError("function eventParamGenerate:The current version do not support to this param to generate :"
         , name, "type :", type);
     }
