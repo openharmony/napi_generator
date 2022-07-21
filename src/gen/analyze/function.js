@@ -65,10 +65,8 @@ function getFuncParaType(v, interfaceName, data) {
         } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
             v["type"] = v["type"].replace(parameter, "string")
         } else {
-            let errorLog = "analyzeFunction getFuncParaType is not support this type %s"
-            .format(data.enum[index].body.enumValueType);
-            print(errorLog);
-            NapiLog.logError(errorLog);
+            NapiLog.logError("analyzeFunction getFuncParaType is not support this type %s"
+                .format(data.enum[index].body.enumValueType));
             return null
         }
     }
@@ -117,9 +115,7 @@ function analyzeFunction(data, name, values, ret) {
         let v = values[j]
         v = getFuncParaType(v, interfaceName, data)
         if (v == null) {
-            let errorLog = "analyzeFunction is not support this type %s".format(v);
-            print(errorLog);
-            NapiLog.logError(errorLog);
+            NapiLog.logError("analyzeFunction is not support this type %s".format(v));
         }
     }
     if (ret.indexOf("number") >= 0) {

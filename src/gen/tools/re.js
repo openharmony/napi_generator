@@ -13,11 +13,6 @@
 * limitations under the License. 
 */
 const path = require('path');
-const { NapiLog } = require('./NapiLog');
-
-function print(...args) {
-    console.log(...args);
-}
 
 function search(ss, data) {
     ss = replaceAll(ss, "\\.", "\\.")
