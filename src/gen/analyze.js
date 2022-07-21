@@ -86,10 +86,7 @@ function analyze(data, result) {
             result = functionMatch[1]
         }
         if (oldData == data) {
-            let errorMsg = "\nvvv 解析文件失败 vvv";
-            print(errorMsg)
-            print("[", data.substring(0, data.length > 64 ? 64 : data.length), "]")
-            NapiLog.logError(errorMsg);
+            NapiLog.logError("\nvvv 解析文件失败 vvv");
             NapiLog.logError("[", data.substring(0, data.length > 64 ? 64 : data.length), "]");
             break;
         }

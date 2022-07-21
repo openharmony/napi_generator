@@ -13,6 +13,14 @@
 * limitations under the License. 
 */
 const fs = require('fs');
+const path = require("path");
+let vscode = null;
+try {
+    vscode = require('vscode');
+}
+catch (err) {
+    vscode = null;
+}
 
 class NapiLog {
     constructor() {
@@ -46,20 +54,58 @@ NapiLog.init = function (level, fileName) {
     logFileName = fileName ? fileName : "napi_generator.log";
 }
 
+function getCallPath() {
+    let callPath = ""
+    let stackArray = new Error().stack.split('\n');
+    for (let i = stackArray.length -1; i >=0 ; --i) {
+        if (stackArray[i].indexOf("NapiLog.log") > 0 || stackArray[i].indexOf("Function.log") > 0) {
+            let stackMsg = stackArray[i+1].trim()
+            let leftIndex = stackMsg.indexOf("(")
+            let rightIndex = stackMsg.indexOf(")")
+
+            if (leftIndex > 0 && rightIndex > 0) {
+                let funInfo = stackMsg.substring(0, leftIndex);
+                let srcPath = stackMsg.substring(leftIndex + 1, rightIndex)
+                let colNumIndex = srcPath.lastIndexOf(":")
+                let colNum = srcPath.substring(colNumIndex + 1, srcPath.length)
+                let lineNumIndex = srcPath.lastIndexOf(":", colNumIndex - 1)
+                let lineNum = srcPath.substring(lineNumIndex + 1, colNumIndex)
+                let filePath = srcPath.substring(0, lineNumIndex)
+
+                callPath = "%s[%s(%s:%s)]".format(funInfo,filePath,lineNum,colNum)
+            }
+            break;
+        }
+    }
+
+    return callPath;
+}
+
+function print(...args) {
+    if (vscode) {
+        vscode.window.showInformationMessage(...args);
+    }
+    console.log(args + "");
+}
+
 function recordLog(lev, ...args) {
     let origMsgInfo = args;
+    let callPath = getCallPath();
     let dataStr = getDateString();
     let detail = args.join(" ");
-    saveLog(dataStr, LEV_STR[lev], detail);
+    saveLog(dataStr  + " " + callPath, LEV_STR[lev], detail);
     if (lev == NapiLog.LEV_ERROR) {
         logResultMessage = [false, detail];
     }
-    if (logLevel <= lev) return;
+    let logStr = callPath + " " + detail;
+    if (logLevel <= lev) return logStr;
     NapiLog.logInfo(origMsgInfo[0]);
+    return logStr;
 }
 
 NapiLog.logError = function (...args) {
-    recordLog(NapiLog.LEV_ERROR, args);
+    let logInfo = recordLog(NapiLog.LEV_ERROR, args);
+    print(logInfo);
 }
 
 NapiLog.logDebug = function (...args) {

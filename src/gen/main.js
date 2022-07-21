@@ -26,9 +26,7 @@ function doGenerate(ifname, destdir) {
         let moduleName = re.getReg(fn, tt.regs[1]);
         generateAll(structOfTs, destdir, moduleName);
     } else {
-        let errorLog = 'file name ' + fn + ' format invalid, @ohos.input_sample.d.ts';
-        print(errorLog);
-        NapiLog.logError(errorLog);
+        NapiLog.logError('file name ' + fn + ' format invalid, @ohos.input_sample.d.ts');
     }
 }
 

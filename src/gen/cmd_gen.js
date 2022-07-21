@@ -94,9 +94,7 @@ function checkGenerate(fileName) {
 
     }
     else {
-        let errorLog = 'file name ' + fn + ' format invalid, @ohos.input_sample.d.ts';
-        print(errorLog);
-        NapiLog.logError(errorLog);
+        NapiLog.logError('file name ' + fn + ' format invalid, @ohos.input_sample.d.ts');
     }
 }
 
