@@ -49,9 +49,9 @@ function executor(name, genDir, mode) {
 	var exec = require('child_process').exec;
 	exec(genCommand(name, genDir, mode), function (error, stdout, stderr) {
 		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
-		if (error) {
-			vscode.window.showErrorMessage("genError:" + error);
-			return VsPluginLog.logError("VsPlugin:" + error);
+		if (error || stdout.indexOf("success") < 0) {
+			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
+			return VsPluginLog.logError("VsPlugin:" + error + stdout);
 		}
 		vscode.window.showInformationMessage("Generated successfully");
 	});
@@ -59,6 +59,9 @@ function executor(name, genDir, mode) {
 
 function genCommand(name, genDir, mode) {
 	var genFileMode = mode == 0 ? " -f " : " -d ";
+	if (genDir == "") {
+		return exeFilePath + genFileMode + name;
+	}
 	return exeFilePath + genFileMode + name + " -o " + genDir;
 }
 
