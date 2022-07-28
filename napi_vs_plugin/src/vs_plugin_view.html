@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="width: 100%; height: 100%; text-align: center;">
 
 <head>
 	<meta charset="UTF-8">
@@ -8,19 +8,66 @@
 </head>
 
 <body>
-	<style>
+	<style type="text/css">
 		body {
-			background-color: #778899;
-			padding: 100px;
+			background-color: #F5F5F5;
+			margin:0 auto;
+			position:absolute;
+			left:35%;
+			top:30%;
+			font-family: Consolas, sans-serif;
 		}
 
 		a {
 			text-decoration: none;
 		}
 
-		.input {
-			color: blue;
+		button {
+			background-color: #ffffff;
+            font-family: Consolas, sans-serif;
+            font-size: 16px;
+            border-radius: 20px;
+            border-color: #C4C4C4;
+            align-self: center;
+            border: 1px solid #C4C4C4;
+            outline: none;
+			width: 100px; 
+			height:24px
 		}
+
+		button:hover {
+			background: #4B97D9;
+			color: #fff;
+			border: 0px;
+			font-family: Consolas, sans-serif;
+            font-size: 16px;
+			width: 100px; 
+			height: 24px
+		}
+
+		input.text:focus {
+			outline: 2px solid #4B97D9;
+  			border: 0px;
+        }
+
+		input.text {
+			outline: 2px solid #C4C4C4;
+			border: 0px;
+		}
+
+		input.radio {
+			outline: none;
+		}
+
+		div {
+			font-size: 16px;
+			color: black;
+			font-weight: bold;
+			width: 800px;
+			height: 50px;
+			text-align: left;
+		}
+
 	</style>
 	<script type="text/javascript">
 		var mode = 0;
@@ -79,28 +126,33 @@
 		}
 	</script>
 	<div id="selectMode">
-		选择方式：
-		<input type="radio" name="mode" value="0" id="files" checked="checked">.d.ts文件(多个文件之间用,号分割)</input>
-		<input type="radio" name="mode" value="1" id="dir">文件夹</input>
+		选择生成方式：
+		<div style="margin-left: 110px; margin-top: -20px;">
+			<input class="radio" type="radio" name="mode" value="0" id="files" checked="checked"> .d.ts文件(多个文件之间用,号分割)</input><br>
+			<br>
+			<input class="radio" type="radio" name="mode" value="1" id="dir"> 文件夹</input>
+		</div>
 	</div>
 	</br>
-	<div id="interface">
-		选择接口文件: <input type="text" id="interfaceFile" onchange="inputChange()" onporpertychange="inputChange() ">
+	<div id="interface" style="margin-top: 10px;">
+		选择接口文件：
+		<input class="text" style="width: 200px; height: 18px;" type="text" id="interfaceFile" onchange="inputChange()" onporpertychange="inputChange() ">
 	</div>
 
 	<div style="margin-top: 10px;">
-		生成框架路径: <input accept="text" id="genFile">
+		生成框架路径：
+		<input class="text" style="width: 200px; height: 18px;" accept="text" id="genFile">
 	</div>
-
 	<div style="margin-top: 10px;">
-		编译脚本路径: <input type="text" id="buildFile">
+		编译脚本路径：
+		<input class="text" style="width: 200px; height: 18px;" type="text" id="buildFile">
 	</div>
 	<div style="margin-top: 10px;">
 		<a href="https://gitee.com/openharmony/napi_generator" target="_blank">
-			<button style="width: 90px;">Help</button>
+			<button type="button">Help</button>
 		</a>
-		<button type="button" style="width: 90px;" onclick="cancel()">Cancel</button>
-		<button type="button" style="width: 90px;" onclick="sendMsg()">Ok</button>
+		<button type="button" onclick="cancel()">Cancel</button>
+		<button type="button" onclick="sendMsg()">Ok</button>
 	</div>
 </body>
 
