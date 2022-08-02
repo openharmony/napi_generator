@@ -16,6 +16,7 @@ let genDir = "../../src/gen/"
 
 const { analyzeFile } = require(genDir + "analyze");
 var assert = require("assert");
+const { info } = require("console");
 const { JsxEmit } = require("typescript");
 const { readFile } = require(genDir + "tools/FileRW");
 const { generateEnum } = require(genDir + "generate/enum");
@@ -382,7 +383,8 @@ function partofParamGenerate(correctResult){
             valueOut: '',
             valuePackage: ''
         }
-        paramGenerateArray('0','v','Array<string>',param);
+        let funcValue = {name: 'v', type: 'Array<string>'}
+        paramGenerateArray('0',funcValue,param);
         assert.strictEqual(JSON.stringify(param), correctResult['Generate']['paramGenerateArray']);
     });
 
@@ -452,10 +454,11 @@ function returnGenerateAndAssert(dataType, structOfTs) {
         valuePackage: "",
         valueDefine: ""
     }
+    let returnInfo = {type: dataType, optional: false}
     if (null != structOfTs) {
-        returnGenerate(dataType, param, structOfTs)
+        returnGenerate(returnInfo, param, structOfTs)
     } else {
-        returnGenerate(dataType, param)
+        returnGenerate(returnInfo, param)
     }
     let result = JSON.stringify(param);
     return result
@@ -503,10 +506,11 @@ function paramGenerateAndAssert(dataType, structOfTs) {
         valuePackage: "",
         valueDefine: ""
     }
+    let funcValue = {name: "a", type: dataType}
     if (null != structOfTs) {
-        paramGenerate(0, "a", dataType, param, structOfTs)
+        paramGenerate(0, funcValue, param, structOfTs)
     } else {
-        paramGenerate(0, "a", dataType, param)
+        paramGenerate(0, funcValue, param)
     }
     let result = JSON.stringify(param);
     return result

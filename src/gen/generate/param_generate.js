@@ -125,7 +125,7 @@ function arrTemplete(dest, napiVn, type) {
         [replace_swap]
         %s.push_back(tt[replace_lt]);
 
-    }`.format(napiVn, arrayType == "boolean" ? "bool" : arrayType, dest)
+    }\n`.format(napiVn, arrayType == "boolean" ? "bool" : arrayType, dest)
    
     let arrMapTemplete = `\
     uint32_t len[replace_lt]=pxt->GetArrayLength(%s);
@@ -144,7 +144,7 @@ function arrTemplete(dest, napiVn, type) {
         }
         %s.push_back(tt[replace_lt]);
 
-    }`.format(napiVn, arrayType, dest)
+    }\n`.format(napiVn, arrayType, dest)
     arrTemplete = arrTemplete.replaceAll("[replace_lt]", lt)    
 
     let str = "std::map<std::string,"
@@ -195,20 +195,26 @@ function getArrTempletereplaceSwap(arrTemplete, arrayType, napiVn, lt) {
             jsToC("tt" + lt, "pxt->GetArrayElement(%s,i%d)".format(napiVn, lt), arrayType))
     } else if (arrayType == "bool") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
-            "pxt->SwapJs2CBool(pxt->GetArrayElement(%s,i%d));".format(napiVn, lt))
+            "tt%d = pxt->SwapJs2CBool(pxt->GetArrayElement(%s,i%d));".format(lt, napiVn, lt))
     }
     return arrTemplete
 }
 
-function paramGenerateArray(p, name, type, param) {
+function paramGenerateArray(p, funcValue, param) {
+    let type = funcValue.type
+    let name = funcValue.name
+    let inParamName = funcValue.optional ? "(*vio->in" + p + ")" : "vio->in" + p
+    let modifiers = funcValue.optional ? "* " : "&"
     if (type.substring(type.length - 2) == "[]") {
         let arrayType = getArrayTypeTwo(type)
         if (arrayType == "string") arrayType = "std::string"
         if (arrayType == "boolean") arrayType = "bool"
-        param.valueIn += "\n    std::vector<%s> in%d;".format(arrayType, p)
-        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+        param.valueIn += funcValue.optional ? "\n    std::vector<%s>* in%d = nullptr;".format(arrayType, p) 
+                                            : "\n    std::vector<%s> in%d;".format(arrayType, p)
+        param.valueCheckout += jsToC(inParamName, "pxt->GetArgv(%d)".format(p), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
-        param.valueDefine += "%sstd::vector<%s> &%s".format(param.valueDefine.length > 0 ? ", " : "", arrayType, name)
+        param.valueDefine += "%sstd::vector<%s> %s%s".format(param.valueDefine.length > 0 ? ", " 
+                            : "", arrayType, modifiers, name)
     } else if (type.substring(0, 6) == "Array<") {
         let str = "[key:string]:"
         let strLen = str.length
@@ -227,29 +233,39 @@ function paramGenerateArray(p, name, type, param) {
             }
             arrayType = "std::map<std::string, %s>".format(valueTypeOut)
         }
-        param.valueIn += "\n    std::vector<%s> in%d;".format(arrayType, p)
-        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+        param.valueIn += funcValue.optional ? "\n    std::vector<%s>* in%d = nullptr;".format(arrayType, p) 
+                                            : "\n    std::vector<%s> in%d;".format(arrayType, p)
+        let arrValueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(p), type)
+        if (funcValue.optional) {
+            arrValueCheckout = "if (pxt->GetArgc() > %s) {\n        vio->in%d = new std::vector<%s>;\n"
+                .format(p, p, arrayType) + arrValueCheckout + "    }\n"
+            param.optionalParamDestory += "C_DELETE(vio->in%d);\n    ".format(p)
+        }                                   
+        param.valueCheckout += arrValueCheckout
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
-        param.valueDefine += "%sstd::vector<%s> &%s".format(param.valueDefine.length > 0 ? ", " : "", arrayType, name)
+        param.valueDefine += "%sstd::vector<%s> %s%s".format(param.valueDefine.length > 0 ? ", "
+            : "", arrayType, modifiers, name)
     } else {
         NapiLog.logError("The current version do not support to this param to generate :", name, "type :", type);
     }
 }
 
-function paramGenerateEnum(data, type, param, name, p) {
-    let index = enumIndex(type, data)
+function paramGenerateEnum(data, funcValue, param, p) {
+    let index = enumIndex(funcValue.type, data)
     if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-        type = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
+        funcValue.type = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
     } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
-        type = "string"
+        funcValue.type = "string"
     } else {
         NapiLog.logError(`paramGenerate is not support`);
         return
     }
-    paramGenerate(p, name, type, param, data)
+    paramGenerate(p, funcValue, param, data)
 }
 
-function paramGenerateMap(type, param, p, name) {
+function paramGenerateMap(funcValue, param, p) {
+    let type = funcValue.type
+    let name = funcValue.name
     let mapType = getMapType(type)
     let mapTypeString
     if (mapType[1] != undefined && mapType[2] == undefined) {
@@ -268,11 +284,15 @@ function paramGenerateMap(type, param, p, name) {
         else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = "std::vector<"+mapType[3]+">" }
         else if (mapType[3] == "boolean") { mapTypeString = "std::vector<bool>" }
     }
-    param.valueIn += "\n    std::map<std::string,%s> in%d;".format(mapTypeString, p)
-        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
-        param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
-        param.valueDefine += "%sstd::map<std::string,%s> &%s"
-            .format(param.valueDefine.length > 0 ? ", " : "", mapTypeString, name)
+    let inParamName = funcValue.optional ? "(*vio->in" + p + ")" : "vio->in" + p
+    let modifiers = funcValue.optional ? "*" : "&"
+    param.valueIn += funcValue.optional ? "\n    std::map<std::string,%s>* in%d = nullptr;".format(mapTypeString, p)
+                                        : "\n    std::map<std::string,%s> in%d;".format(mapTypeString, p)
+    param.valueCheckout += getValueCheckout(funcValue, param, inParamName, p,
+        "std::map<std::string,%s>".format(mapTypeString))
+    param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
+    param.valueDefine += "%sstd::map<std::string,%s>%s %s"
+            .format(param.valueDefine.length > 0 ? ", " : "", mapTypeString, modifiers, name)
 }
 
 function mapTempleteFunc(dest, napiVn, type) {
@@ -498,7 +518,8 @@ function mapArray(mapType, napiVn, dest, lt) {
     return mapTemplete
 }
 
-function paramGenerateCallBack(data, type, param, p) {
+function paramGenerateCallBack(data, funcValue, param, p) {
+    let type = funcValue.type
     let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", type)
     let regType
     if (arrayType) {
@@ -521,7 +542,8 @@ function paramGenerateCallBack(data, type, param, p) {
     }
     param.callback = {
         type: regType,
-        offset: p
+        offset: p,
+        optional: funcValue.optional
     }
 }
 
@@ -532,42 +554,53 @@ function isArrayType(type) {
     return false;
 }
 
+function getValueCheckout(funcValue, param, inParamName, p, cType) {
+    let valueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(p), funcValue.type) + "\n    "
+    if (funcValue.optional) {
+        valueCheckout = "if (pxt->GetArgc() > %d) {\n        vio->in%d = new %s;\n        ".format(p, p, cType)
+            + valueCheckout + "}\n    "
+        param.optionalParamDestory += "C_DELETE(vio->in%d);\n    ".format(p)
+    }  
+    return valueCheckout; 
+}
+
+function paramGenerateCommon(p, cType, funcValue, param, modifiers, inParamName) {
+    param.valueIn += funcValue.optional ? "\n    %s* in%d = nullptr;".format(cType, p)
+                                            : "\n    %s in%d;".format(cType, p)
+    param.valueCheckout += getValueCheckout(funcValue, param, inParamName, p, cType)
+    param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
+    param.valueDefine += "%s%s%s %s".format(
+        param.valueDefine.length > 0 ? ", " : "", cType, modifiers, funcValue.name)
+}
+
 // 函数的参数处理
-function paramGenerate(p, name, type, param, data) {
+function paramGenerate(p, funcValue, param, data) {
+    let type = funcValue.type
+    let name = funcValue.name
+    let inParamName = funcValue.optional ? "(*vio->in" + p + ")" : "vio->in" + p
+    let modifiers = funcValue.optional ? "*" : "&"
     if (type == "string") {
-        param.valueIn += "\n    std::string in%d;".format(p)
-        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
-        param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
-        param.valueDefine += "%sstd::string &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
+        paramGenerateCommon(p, "std::string", funcValue, param, modifiers, inParamName)
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_" && type.indexOf("[]") < 0) {
-        param.valueIn += "\n    %s in%d;".format(type, p)
-        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
-        param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
-        param.valueDefine += "%s%s &%s".format(param.valueDefine.length > 0 ? ", " : "", type, name)
+        paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
     }
     else if (InterfaceList.getValue(type)) {
-        param.valueIn += "\n    %s in%d;".format(type, p)
-        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
-        param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
-        param.valueDefine += "%s%s &%s".format(param.valueDefine.length > 0 ? ", " : "", type, name)
+        paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
     }
     else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
-        paramGenerateCallBack(data, type, param, p)
+        paramGenerateCallBack(data, funcValue, param, p)
     }
     else if (type == "boolean") {
-        param.valueIn += "\n    bool in%d;".format(p)
-        param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
-        param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
-        param.valueDefine += "%sbool &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
+        paramGenerateCommon(p, "bool", funcValue, param, modifiers, inParamName)
     }
     else if (isEnum(type, data)) {
-        paramGenerateEnum(data, type, param, name, p)
+        paramGenerateEnum(data, funcValue, param, p)
     }
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
-        paramGenerateMap(type, param, p, name)
+        paramGenerateMap(funcValue, param, p)
     } else if (isArrayType(type)) {
-        paramGenerateArray(p, name, type, param);
+        paramGenerateArray(p, funcValue, param);
     } else {
         NapiLog.logError("function paramGenerate: The current version do not support to this param to generate :"
         , name, "type :", type);
@@ -575,13 +608,15 @@ function paramGenerate(p, name, type, param, data) {
 }
 
 // on/off 接口的event名称参数处理
-function eventParamGenerate(p, name, type, param, data) {
+function eventParamGenerate(p, funcValue, param, data) {
+    let name = funcValue.name;
+    let type = funcValue.type;
     let regName = re.match("'([a-zA-Z_0-9]+)'", type)
     if (regName) {
         param.eventName = re.getReg(type, regName.regs[1])
         param.valueDefine += "%sstd::string &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
     } else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
-        paramGenerateCallBack(data, type, param, p)
+        paramGenerateCallBack(data, funcValue, param, p)
     } else {
         NapiLog.logError("function eventParamGenerate:The current version do not support to this param to generate :"
         , name, "type :", type);
@@ -595,5 +630,6 @@ module.exports = {
     paramGenerate,
     paramGenerateArray,
     paramGenerateMap,
-    mapTempleteFunc
+    mapTempleteFunc,
+    eventParamGenerate
 }
