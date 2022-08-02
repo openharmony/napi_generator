@@ -37,6 +37,7 @@ struct [funcName]_value_struct {[valueIn]
 {
     [funcName]_value_struct *vio = ([funcName]_value_struct *)data;
     
+    napi_value result = nullptr;
     [valuePackage]
     
     {
@@ -44,6 +45,7 @@ struct [funcName]_value_struct {[valueIn]
         pxt->FinishAsync(1, args);
     }
 
+    [optionalParamDestory]
     delete vio;
 }
 
@@ -61,6 +63,8 @@ struct [funcName]_value_struct {[valueIn]
     
     [valueCheckout]
 
+    [optionalCallbackInit]
+
     [start_async]
 
     if (pxt->IsFailed()) {
@@ -68,6 +72,14 @@ struct [funcName]_value_struct {[valueIn]
     }
     return result;
 }`
+
+function getOptionalCallbackInit(param) {
+    if (!param.callback.optional) {
+        return ""
+    }
+    let cType = param.valueOut.substr(0, param.valueOut.indexOf("*"))
+    return "vio->out = new %s;".format(cType)
+}
 
 function generateFunctionAsync(func, data, className) {
     let middleFunc = replaceAll(funcAsyncTemplete, "[funcName]", func.name)
@@ -86,24 +98,26 @@ function generateFunctionAsync(func, data, className) {
     let param = {
         valueIn: "",//定义输入
         valueOut: "",//定义输出
-
         valueCheckout: "",//解析
         valueFill: "",//填充到函数内
         valuePackage: "",//输出参数打包
-        valueDefine: ""//impl参数定义
+        valueDefine: "",//impl参数定义
+        optionalParamDestory: ""//可选参数内存释放
     }
 
     for (let i in func.value) {
-        let v = func.value[i]
-        paramGenerate(i, v.name, v.type, param, data)
+        paramGenerate(i, func.value[i], param, data)
     }
 
-    returnGenerate(param.callback.type, param, data)
+    returnGenerate(param.callback, param, data)
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
     middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
 
     middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
+
+    let optionalCallback = getOptionalCallbackInit(param)
+    middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback)//可选callback参数初始化
 
     middleFunc = replaceAll(middleFunc, "[start_async]", `
     napi_value result = \
@@ -114,6 +128,7 @@ pxt->StartAsync(%s_execute, vio, %s_complete, pxt->GetArgc() == %s ? pxt->GetArg
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc)//执行
 
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
+    middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory)//可选参数内存释放
 
     let implH = "\nbool %s(%s);".format(func.name, param.valueDefine)
     let implCpp = `
