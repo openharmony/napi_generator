@@ -85,7 +85,7 @@ function getFuncParaType(v, interfaceName, data) {
 /**函数解析 */
 function analyzeFunction(data, name, values, ret) {
     values = re.replaceAll(re.replaceAll(values, " ", ""), "\n", "")
-    let matchs = re.match("([a-zA-Z_0-9]*):{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", values)
+    let matchs = re.match("([a-zA-Z_0-9]*)\\?*:{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", values)
     let interfaceName = ''
     if (matchs) {
         let interfacePara = re.getReg(values, matchs.regs[1])
@@ -99,7 +99,7 @@ function analyzeFunction(data, name, values, ret) {
         })
     }  
 
-    let tmp = analyzeParams(values)
+    let tmp = analyzeParams(name, values)
     values = tmp[0]
     let funcType = tmp[1]
     tmp = analyzeReturn(ret)
