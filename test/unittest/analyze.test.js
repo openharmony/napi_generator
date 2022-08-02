@@ -232,34 +232,34 @@ function partOfNamespaceTwo(correctResult){
 
 function partOfParam(correctResult) {
     it('test gen/analyze/params analyzeDirectParams', function () {
-        let ret = analyzeParams('v1:string,v2:boolean');
+        let ret = analyzeParams('', 'v1:string,v2:boolean');
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeDirectParams']);
         assert.strictEqual(ret[1], 1);
     });
 
     it('test gen/analyze/params analyzeAsynctParams', function () {
-        let ret = analyzeParams('v2:string,cb:AsyncCallback<string>');
+        let ret = analyzeParams('', 'v2:string,cb:AsyncCallback<string>');
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeAsynctParams']);
         assert.strictEqual(ret[1], 4);
     });
 
     it('test gen/analyze/params analyzeSynctParams', function () {
-        let ret = analyzeParams('v2:boolean,cb:Callback<boolean>');
+        let ret = analyzeParams('', 'v2:boolean,cb:Callback<boolean>');
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeSynctParams']);
         assert.strictEqual(ret[1], 2);
     });
 
     it('test gen/analyze/params analyzeArrayParams', function () {
-        let ret = analyzeParams("v1: Array<number>,v2:Map<string,boolean>");
+        let ret = analyzeParams('', "v1: Array<number>,v2:Map<string,boolean>");
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeArrayParams']);
     });
 
     it('test gen/analyze/params analyzeMapParams', function () {
-        let ret = analyzeParams("v1: string[],v2:{[key:string]:boolean}");
+        let ret = analyzeParams('', "v1: string[],v2:{[key:string]:boolean}");
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeMapParams']);
     });

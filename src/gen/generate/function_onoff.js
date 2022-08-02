@@ -140,7 +140,7 @@ return true;
 }
 
 function gennerateEventCallback(codeContext, data, param) {
-    returnGenerate(param.callback.type, param)
+    returnGenerate(param.callback, param)
     let paramType = param.valueOut.substring(0, param.valueOut.length - "out;".length)
     let realParamType = paramType.substring(0, 12) == "NUMBER_TYPE_" ? "uint32_t" : paramType
     if (!isOnTypeExist(data.onTypeList, realParamType)) {
@@ -171,12 +171,12 @@ function generateFunctionOnOff(func, data, className) {
         valueFill: "",//填充到函数内
         valuePackage: "",//输出参数打包
         valueDefine: "",//impl参数定义
-        eventName:""//注册/去注册事件名称
+        eventName:"",//注册/去注册事件名称
+        optionalParamDestory: ""//可选参数内存释放
     }
 
     for (let i in func.value) {
-        let v = func.value[i]
-        eventParamGenerate(i, v.name, v.type, param, data)
+        eventParamGenerate(i, func.value[i], param, data)
     }
 
     let codeContext = {
