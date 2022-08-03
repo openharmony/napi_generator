@@ -21,7 +21,7 @@ const { returnGenerate } = require("./return_generate");
  */
 let funcAsyncTemplete = `
 struct [funcName]_value_struct {[valueIn]
-    
+    uint32_t outErrCode = 0;
     [valueOut]
 };
 
@@ -38,11 +38,16 @@ struct [funcName]_value_struct {[valueIn]
     [funcName]_value_struct *vio = ([funcName]_value_struct *)data;
     
     napi_value result = nullptr;
-    [valuePackage]
     
+    [valuePackage]
+
+    napi_value errCodeResult = nullptr;
+    napi_value napiErrCode = nullptr;
+    napiErrCode = NUMBER_C_2_JS(pxt, vio->outErrCode);
+    pxt->SetValueProperty(errCodeResult, "code", napiErrCode);
     {
-        napi_value args[1] = {result};
-        pxt->FinishAsync(1, args);
+        napi_value args[2] = {errCodeResult, result};
+        pxt->FinishAsync(2, args);
     }
 
     [optionalParamDestory]

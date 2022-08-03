@@ -81,7 +81,11 @@ function generateFunctionDirect(func, data, className) {
     }
 
     let returnInfo = {type: func.ret, optional: false}
-    returnGenerate(returnInfo, param, data)
+    if (func.ret == 'void') {
+        param.valuePackage = "result = pxt->UndefinedValue();";
+    } else {
+        returnGenerate(returnInfo, param, data)
+    }
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
     middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
