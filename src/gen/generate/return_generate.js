@@ -316,7 +316,12 @@ function returnGenerateMap(returnInfo, param) {
 
 function returnGenerate(returnInfo, param, data) {
     let type = returnInfo.type
-    param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")
+    let valueFillStr = "%svio->out"
+    if (returnInfo.isAsync) {
+        valueFillStr = "%svio->outErrCode, vio->out"
+        param.valueDefine += "%suint32_t& outErrCode".format(param.valueDefine.length > 0 ? ", " : "")
+    }
+    param.valueFill += valueFillStr.format(param.valueFill.length > 0 ? ", " : "")
     let outParam = returnInfo.optional ? "(*vio->out)" : "vio->out"
     let modifiers = returnInfo.optional ? "*" : "&"
     if (returnInfo.optional) {

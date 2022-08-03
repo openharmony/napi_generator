@@ -543,7 +543,8 @@ function paramGenerateCallBack(data, funcValue, param, p) {
     param.callback = {
         type: regType,
         offset: p,
-        optional: funcValue.optional
+        optional: funcValue.optional,
+        isAsync: type.indexOf("AsyncCallback") >= 0
     }
 }
 
