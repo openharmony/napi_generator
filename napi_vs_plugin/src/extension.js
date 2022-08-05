@@ -20,6 +20,7 @@ const fs = require('fs');
 const re = require("./gen/tools/VsPluginRe");
 const { VsPluginLog } = require("./gen/tools/VsPluginLog");
 const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
+const path = require('path');
 var exeFilePath = null;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -59,7 +60,7 @@ function executor(name, genDir, mode) {
 
 function genCommand(name, genDir, mode) {
 	var genFileMode = mode == 0 ? " -f " : " -d ";
-	if (genDir == "") {
+	if (genDir == ""){
 		return exeFilePath + genFileMode + name;
 	}
 	return exeFilePath + genFileMode + name + " -o " + genDir;
@@ -79,28 +80,71 @@ function register(context, command) {
 		const panel = vscode.window.createWebviewPanel(
 			'generate', // Identifies the type of WebView
 			'Generate Napi Frame', // Title of the panel displayed to the user
-			vscode.ViewColumn.One, // Display the WebView panel in the form of new columns in the editor
+			vscode.ViewColumn.Two, // Display the WebView panel in the form of new columns in the editor
 			{
 				enableScripts: true, // Enable or disable JS, default is Enable
 				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
 			}
 		);
-		panel.webview.html = getWebviewContent();
+		panel.webview.html = getWebviewContent(context);
 		panel.webview.onDidReceiveMessage(message => {
-			if (message == "cancel") {
+			let msg = message.msg;
+			if (msg == "cancel") {
 				panel.dispose();
-			} else {
+			} else if(msg == "param") {
 				let mode = message.mode;
 				let name = message.fileNames;
 				let genDir = message.genDir;
 				checkMode(name, genDir, mode);
+			} else {
+				selectPath(panel, message);
 			}
 		}, undefined, context.subscriptions);
 		let fn = re.getFileInPath(uri.fsPath);
 		let tt = re.match("@ohos.[a-zA-Z_0-9]+.d.ts", fn);
-		panel.webview.postMessage(tt ? uri.fsPath : "");
+		var result = {
+			msg: "selectInterPath",
+			path: tt ? uri.fsPath : ""
+			}
+	    panel.webview.postMessage(result);
 	});
 	return disposable;
+}
+
+/**
+* 选择本地目录/文件夹
+*/
+ function selectPath(panel, message) {
+	let mode = 1;
+	if (message.mode != undefined) {
+		mode = message.mode;
+	}
+	const options = {
+		canSelectMany: mode == 0 ? true : false,//是否可以选择多个
+		openLabel: mode == 0 ? '选择文件' : '选择文件夹',//打开选择的右下角按钮label
+		canSelectFiles: mode == 0 ? true : false,//是否选择文件
+		canSelectFolders: mode == 0 ? false : true,//是否选择文件夹
+		defaultUri:vscode.Uri.file(''),//默认打开本地路径
+		filters: { 
+			'Text files': ['d.ts']
+		}
+	};
+   
+	return vscode.window.showOpenDialog(options).then(fileUri => {
+	   if (fileUri && fileUri[0]) {
+		   console.log('Selected file: ' + fileUri[0].fsPath);
+		   let filePath = "";
+		   for (let index = 0; index < fileUri.length; index++) {
+				filePath += fileUri[index].fsPath.concat(",");
+		   }
+		   var result = {
+				msg: message.msg,
+				path: filePath.length > 0 ? filePath.substring(0, filePath.length - 1) : filePath
+				}
+		   panel.webview.postMessage(result);
+		   return fileUri[0].fsPath
+	   }
+   });
 }
 
 function checkMode(name, genDir, mode) {
@@ -110,13 +154,13 @@ function checkMode(name, genDir, mode) {
 		return;
 	}
 	if (mode == 0) {
-		if (name.indexOf(".") < 0) {
+		if (name.indexOf(".") < 0 || !fs.lstatSync(name).isFile()) {
 			vscode.window.showErrorMessage("Please enter the correct file path!");
 			return;
 		}
 	} else {
-		if (name.indexOf(".") > 0) {
-			vscode.window.showErrorMessage("Please enter the correct folder path!");
+		if (name.indexOf(".") > 0 || !fs.lstatSync(name).isDirectory()) {
+			vscode.window.showErrorMessage("Please enter the correct folder folder!");
 			return;
 		}
 	}
@@ -130,9 +174,21 @@ function checkMode(name, genDir, mode) {
 // this method is called when your extension is deactivated
 function deactivate() { }
 
-function getWebviewContent() {
+function getWebviewContent(context) {
 	let data = readFile(__dirname + '/vs_plugin_view.html');
+	data = getWebViewContent(context, '/vs_plugin_view.html');
 	return data.toString();
+}
+
+function getWebViewContent(context, templatePath) {
+    const resourcePath = path.join(context.extensionPath, templatePath);
+    const dirPath = path.dirname(resourcePath);
+    let html = fs.readFileSync(resourcePath, 'utf-8');
+    html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
+        if($2.indexOf("https://")<0)return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({ scheme: 'vscode-resource' }).toString() + '"';
+        else return $1 + $2+'"';
+    });
+    return html;
 }
 
 module.exports = {
