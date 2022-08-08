@@ -41,12 +41,16 @@ struct [funcName]_value_struct {[valueIn]
 
     [callFunc]
 
+    napi_value result = nullptr;
     [valuePackage]
+
+    [optionalParamDestory]
 
     delete vio;
     if (pxt->IsFailed()) {
         result = pxt->GetError();
     }
+    
     delete pxt; // release
     return result;
 }`
@@ -68,15 +72,20 @@ function generateFunctionDirect(func, data, className) {
         valueCheckout: "",//解析
         valueFill: "",//填充到函数内
         valuePackage: "",//输出参数打包
-        valueDefine: ""//impl参数定义
+        valueDefine: "",//impl参数定义
+        optionalParamDestory: ""//可选参数内存释放
     }
 
     for (let i in func.value) {
-        let v = func.value[i]
-        paramGenerate(i, v.name, v.type, param, data)
+        paramGenerate(i, func.value[i], param, data)
     }
 
-    returnGenerate(func.ret, param, data)
+    let returnInfo = {type: func.ret, optional: false}
+    if (func.ret == 'void') {
+        param.valuePackage = "result = pxt->UndefinedValue();";
+    } else {
+        returnGenerate(returnInfo, param, data)
+    }
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
     middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
@@ -87,6 +96,7 @@ function generateFunctionDirect(func, data, className) {
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc)//执行
 
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
+    middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory)//可选参数内存释放
 
     let implH = "\nbool %s(%s);".format(func.name, param.valueDefine)
     let implCpp = `

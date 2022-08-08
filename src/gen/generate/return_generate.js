@@ -287,7 +287,8 @@ function mapTempleteArray(mapType, tnvdef, lt) {
     return ret
 }
 
-function returnGenerateMap(type, param) {
+function returnGenerateMap(returnInfo, param) {
+    let type = returnInfo.type
     let mapType = getMapType(type)
     let mapTypeString
     if (mapType[1] != undefined && mapType[2] == undefined) {
@@ -306,36 +307,49 @@ function returnGenerateMap(type, param) {
         else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = "std::vector<"+mapType[3]+">" }
         else if (mapType[3] == "boolean") { mapTypeString = "std::vector<bool>" }
     }
-    param.valueOut = "std::map<std::string,%s> out;".format(mapTypeString)
-        param.valueDefine += "%sstd::map<std::string,%s> &out"
-            .format(param.valueDefine.length > 0 ? ", " : "", mapTypeString)
+    let modifiers = returnInfo.optional ? "*" : "&"
+    param.valueOut = returnInfo.optional ? "std::map<std::string,%s>* out = nullptr;".format(mapTypeString)
+                                         : "std::map<std::string,%s> out;".format(mapTypeString)
+        param.valueDefine += "%sstd::map<std::string,%s>%s out"
+            .format(param.valueDefine.length > 0 ? ", " : "", mapTypeString, modifiers)
 }
 
-function returnGenerate(type, param, data) {
-    param.valueFill += "%svio->out".format(param.valueFill.length > 0 ? ", " : "")
+function returnGenerate(returnInfo, param, data) {
+    let type = returnInfo.type
+    let valueFillStr = "%svio->out"
+    if (returnInfo.isAsync) {
+        valueFillStr = "%svio->outErrCode, vio->out"
+        param.valueDefine += "%suint32_t& outErrCode".format(param.valueDefine.length > 0 ? ", " : "")
+    }
+    param.valueFill += valueFillStr.format(param.valueFill.length > 0 ? ", " : "")
+    let outParam = returnInfo.optional ? "(*vio->out)" : "vio->out"
+    let modifiers = returnInfo.optional ? "*" : "&"
+    if (returnInfo.optional) {
+        param.optionalParamDestory += "C_DELETE(vio->out);\n    "
+    }
     if (!isEnum(type, data)) {
-        param.valuePackage = "napi_value result = nullptr;\n    " + cToJs("vio->out", type, "result")
+        param.valuePackage = cToJs(outParam, type, "result")
     }
     if (type == "string") {
-        param.valueOut = "std::string out;"
-        param.valueDefine += "%sstd::string &out".format(param.valueDefine.length > 0 ? ", " : "")
+        param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
+        param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     }
     else if (type == "void") {
         NapiLog.logInfo("The current void type don't need generate");
     }
     else if (type == "boolean") {
-        param.valueOut = "bool out;"
-        param.valueDefine += "%sbool &out".format(param.valueDefine.length > 0 ? ", " : "")
+        param.valueOut = returnInfo.optional ? "bool* out = nullptr;" : "bool out;"
+        param.valueDefine += "%sbool%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     }
     else if (isEnum(type, data)) {
-        returnGenerateEnum(data, type, param)
+        returnGenerateEnum(data, returnInfo, param)
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
-        param.valueOut = type + " out;"
-        param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
+        param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
+        param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
     }
     else if(generateType(type)){
-        returnGenerate2(type, param, data)
+        returnGenerate2(returnInfo, param, data)
     }
     else {
         NapiLog.logError("function returnGenerate:The current version do not support this type return %s".format(type));
@@ -360,30 +374,39 @@ function generateType(type){
     }
 }
 
-function returnGenerate2(type, param, data){
+function returnGenerate2(returnInfo, param, data){
+    let type = returnInfo.type
+    let modifiers = returnInfo.optional ? "*" : "&"
+
     if (InterfaceList.getValue(type)) {
-        param.valueOut = type + " out;"
-        param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
+        param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
+        param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
     }
     else if (type.substring(0, 6) == "Array<") {
         let arrayType = getArrayType(type)
         if (arrayType == "string") arrayType = "std::string"
-        param.valueOut = "std::vector<%s> out;".format(arrayType)
-        param.valueDefine += "%sstd::vector<%s> &out".format(param.valueDefine.length > 0 ? ", " : "", arrayType)
+        param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
+                                             : "std::vector<%s> out;".format(arrayType)
+        param.valueDefine += "%sstd::vector<%s>%s out".format(
+            param.valueDefine.length > 0 ? ", ": "", arrayType, modifiers)
     }
     else if (type.substring(type.length - 2) == "[]") {
         let arrayType = getArrayTypeTwo(type)
         if (arrayType == "string") arrayType = "std::string"
-        param.valueOut = "std::vector<%s> out;".format(arrayType)
-        param.valueDefine += "%sstd::vector<%s> &out".format(param.valueDefine.length > 0 ? ", " : "", arrayType)
+        param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
+                                             : "std::vector<%s> out;".format(arrayType)
+        param.valueDefine += "%sstd::vector<%s>%s out".format(
+            param.valueDefine.length > 0 ? ", " : "", arrayType, modifiers)
     }
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
-        returnGenerateMap(type, param)
+        returnGenerateMap(returnInfo, param)
     }
 }
 
-function returnGenerateEnum(data, type, param) {
+function returnGenerateEnum(data, returnInfo, param) {
+    let type = returnInfo.type
     let index = enumIndex(type, data)
+    let modifiers = returnInfo.optional ? "*" : "&"
     if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
         type = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
     } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
@@ -392,14 +415,14 @@ function returnGenerateEnum(data, type, param) {
         NapiLog.logError(`function returnGenerateEnum:this type is not support %s`.format(type));
         return
     }
-    param.valuePackage = "napi_value result = nullptr;\n    " + cToJs("vio->out", type, "result")
+    param.valuePackage = cToJs("vio->out", type, "result")
     if (type == "string") {
-        param.valueOut = "std::string out;"
-        param.valueDefine += "%sstd::string &out".format(param.valueDefine.length > 0 ? ", " : "")
+        param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
+        param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         param.valueOut = type + " out;"
-        param.valueDefine += "%s%s &out".format(param.valueDefine.length > 0 ? ", " : "", type)
+        param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
     }
 }
 
