@@ -527,8 +527,8 @@ napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFuncti
 void XNapiTool::FinishAsync(size_t argc, napi_value *args)
 {
     if (asyncMode_ == AsyncMode::PROMISE) {
-        if (argc > 0) {
-            napi_resolve_deferred(env_, deferred_, args[0]);
+        if (argc > 1) {
+            napi_resolve_deferred(env_, deferred_, args[1]);
         } else {
             napi_reject_deferred(env_, deferred_, SwapC2JsUtf8("promise fail"));
         }

@@ -39,16 +39,21 @@ struct [funcName]_value_struct {[valueIn]
     
     [valueCheckout]
 
+    [optionalCallbackInit]
     [callFunc]
 
-    [valuePackage]
+    napi_value result = nullptr;
+    if (pxt->GetArgc() > [callback_param_offset]) {
+        [valuePackage]
 
-    {
-        napi_value args[1] = {result};
-        pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]), 1, args);
+        {
+            napi_value args[1] = {result};
+            pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]), 1, args);
+        }
     }
     result = pxt->UndefinedValue();
 
+    [optionalParamDestory]
     delete vio;
     if (pxt->IsFailed()) {
         result = pxt->GetError();
@@ -56,6 +61,14 @@ struct [funcName]_value_struct {[valueIn]
     delete pxt; // release
     return result;
 }`
+
+function getOptionalCallbackInit(param) {
+    if (!param.callback.optional) {
+        return ""
+    }
+    let cType = param.valueOut.substr(0, param.valueOut.indexOf("*"))
+    return "if (pxt->GetArgc() > %s) {\n        vio->out = new %s;\n    }".format(param.callback.offset, cType)
+}
 
 function generateFunctionSync(func, data, className) {
     let middleFunc = replaceAll(funcSyncTemplete, "[funcName]", func.name)
@@ -71,19 +84,18 @@ function generateFunctionSync(func, data, className) {
     let param = {
         valueIn: "",//定义输入
         valueOut: "",//定义输出
-
         valueCheckout: "",//解析
         valueFill: "",//填充到函数内
         valuePackage: "",//输出参数打包
-        valueDefine: ""//impl参数定义
+        valueDefine: "",//impl参数定义
+        optionalParamDestory: ""//可选参数内存释放
     }
 
     for (let i in func.value) {
-        let v = func.value[i]
-        paramGenerate(i, v.name, v.type, param, data)
+        paramGenerate(i, func.value[i], param, data)
     }
 
-    returnGenerate(param.callback.type, param)
+    returnGenerate(param.callback, param)
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
     middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
@@ -93,7 +105,11 @@ function generateFunctionSync(func, data, className) {
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc)//执行
 
+    let optionalCallback = getOptionalCallbackInit(param)
+    middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback)//可选callback参数初始化
+    
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
+    middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory)//可选参数内存释放
 
     middleFunc = middleFunc.replaceAll("[callback_param_offset]", param.callback.offset);//呼叫回调
 
