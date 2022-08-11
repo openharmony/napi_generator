@@ -1,7 +1,7 @@
 # NAPI框架生成工具集成测试
 
 ## 简介
-  本文主要介绍如何将NAPI框架生成代码集成NAPI到OpenHarmony系统，进而进行集成测试。
+  本文主要介绍如何将NAPI框架生成代码集成到OpenHarmony系统，进而进行集成测试。
 
 ## 准备
 
@@ -11,14 +11,61 @@
 
   系统镜像的具体生成方法，可以左键单击以下链接了解：
 
-  [生成代码集成到OpenHarmony的方法](https://gitee.com/openharmony/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
+  [生成代码集成到OpenHarmony](https://gitee.com/openharmony/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
 
   3.应用hap包：hap包及源码路径如下：
 
-```
+```	
 napi_generator/examples/app
 ```
 
+  hap包的具体生成方法，可参考OpenHarmony/docs/zh-cn/application-dev文档中使用JS语言开发（FA模型）。其中修改index.js文件内容如下：
+  
+
+```	
+
+	import router from '@ohos.router';
+	import napitest from '@ohos.napitest';
+	export default {
+    	data: {
+        	title: ""
+    	},
+    	onInit(){
+        	this.title = this.$t('strings.world');
+    	},
+    	onclick: function () {
+        	router.push({
+            	url: "pages/second/second"
+        	})
+    	},
+    	ontest: function () {
+        	console.log("napitest  begin AAAAAAAAAAAAAAAAAA")
+        	var  Entity = {
+            	ENTITY_DEFAULT : "entity.system.default",
+            	ENTITY_HOME : "entity.system.home",
+            	ENTITY_VOICE : "entity.system.voice",
+            	ENTITY_BROWSABLE : "entity.system.browsable",
+            	ENTITY_VIDEO : "entity.system.video"
+        	}
+        	napitest.Space3.fun1("ggggg",Entity.ENTITY_DEFAULT);
+        	console.log("napitest  end AAAAAAAAAAAAAAAAAA")
+    		}
+	}
+```
+  修改index.html文件内容如下：
+
+```
+
+	<!--index.hml-->
+	<div class="container">
+    	<text class="title">
+        	Hello World
+    	</text>
+	<!-- 添加按钮，值为Next，并绑定onclick方法-->
+    	<input class="btn" type="button" value="Next" onclick="onclick"></input>
+    	<input class="btn" type="button" value="napitest" onclick="ontest"></input>
+	</div>
+```
 
 ## 使用说明
 步骤一：安装镜像环境。
@@ -44,12 +91,14 @@ napi_generator/examples/app
   然后单击设备中安装的APP，进入APP后单击测试按钮，执行完成后会在hdc安装目录下出现log.txt文件。
 
 ## 查看结果
-log.txt中包含“===isScreenOn===”日志表示接口调用成功。如下所示：
+log.txt中包含“======fun1(name: string, flags: Entity): number======”日志表示接口调用成功。如下所示：
 
-    03-01 19:48:19.594   916   940 I 00000/power_interface: ===isScreenOn===
-    03-01 19:48:19.594   916   925 I 00000/ProducerEglSurface: <342>AddEglData: bufferImpl is reused return.
-    03-01 19:48:19.594   916   925 I 00000/ProducerEglSurface: (Window)<217>WaitForReleaseFence: releaseFence 39.
-    03-01 19:48:19.594   916   923 I 03b00/JSApp: app Log: power_is_screen_on_promise_test screenOn is 0
+    01-01 00:13:10.355  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:93 *******fun1_middle begin**********
+	01-01 00:13:10.357  2020  2038 D 01400/OHOS::ROSEN: RSRenderThread ProcessCommands size: 2
+	01-01 00:13:10.358  2020  2038 D 01400/OHOS::ROSEN: RSRenderThread DrawFrame(790351535051) in GPU
+	01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:107 *****fun1_middle xxxxx**********
+	01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1:28 ======fun1(name: string, flags: Entity): number======
+	01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:113 *******fun1_middle   end*********
 
 ## 相关仓
 
