@@ -102,18 +102,34 @@ function getArrayType(type) {
     let tt = re.match("Array<([a-zA-Z_0-9]+)>", type)
     if (tt != null) {
         return re.getReg(type, tt.regs[1])
-    } else {
-        tt = re.match("Array<{([[a-z:]+)([a-z:]]+)([a-zA-Z_1-9:]+)", type)
-        if (tt != null) {
-            let res = ''
-            let len = tt.regs.length
-            for (let i=1; i<len; i++) {
-                let regs1 = re.getReg(type, tt.regs[i])
-                res += regs1
-            }          
-            return res
-        }
+    } 
+    
+    tt = re.match("Array<{([[a-z:]+)([a-z:]]+)([a-zA-Z_1-9:]+)", type)
+    if (tt != null) {
+        let res = ''
+        let len = tt.regs.length
+        for (let i=1; i<len; i++) {
+            let regs1 = re.getReg(type, tt.regs[i])
+            res += regs1
+        }          
+        return res
     }
+    
+    tt = re.match("Array<map<string", type)
+    if (tt != null) {
+        let preStr = 'Array<'
+        let preStrLen = preStr.length        
+        let res = type.substring(preStrLen, type.length-1)              
+        return res
+    }
+
+    tt = re.match("Array<Map<string", type)
+    if (tt != null) {
+        let preStr = 'Array<'
+        let preStrLen = preStr.length        
+        let res = type.substring(preStrLen, type.length-1)              
+        return res
+    } 
     return null
 }
 

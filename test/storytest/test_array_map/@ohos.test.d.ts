@@ -14,10 +14,38 @@
 */
 import { AsyncCallback, Callback } from './../basic';
 
-declare namespace napitest {  
+declare namespace napitest {      
+    /*    
+    export interface testInerface {
+        code: number;
+        data: string;
+    }
+    export interface testMapInerface {
+        tset1: map<string, Array<testInerface>>; -- 待实现    }
+
+    function fun7(v: Array<{[key: string]:testInerface}>): number; -- 待实现
+    function fun10(v: Array<map<string, testInerface>>): number; -- 待实现
+    function fun11(v: Array<map<string, testInerface>>): number; -- 待实现
+    function fun17(v: Array<map<string, Array<testInerface>>>): number; -- 待实现
+
+    --not support--
+    function fun4(v: Array<{[key: string]:Object}>): number; -- 参数、返回值暂时不支持
+    function fun5(v: Array<{[key: string]:[]}>): number; -- ohos中无此类用法，暂不实现
+    function fun6(v: Array<{[key: string]:any}>): number; -- 依赖于参数、返回值any类型
+
+    function fun13(v: {[key: string]:any}[]): number; --ohos中无此类用法，暂不实现
+    function fun14(v: {[key: string]:any}[]): number; --ohos中无此类用法，暂不实现
+    function fun15(v: map<string, string>[]): number; --ohos中无此类用法，暂不实现
+    function fun15(v: string): map<string, string>[]; --ohos中返回值类型为 map数组，无此类用法，暂不实现
+    */
+   
     function fun1(v: Array<{[key: string]:string}>): number;
     function fun2(v: Array<{[key: string]:number}>): number;
     function fun3(v: Array<{[key: string]:boolean}>): number;
+
+    function fun8(v: Array<Map<string, string>>): number;
+    function fun9(v: Array<Map<string, number>>): number;
+    function fun10(v: Array<Map<string, boolean>>): number;    
 }
 
 export default napitest;
