@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { fun1, fun2, fun3 } = require("./out/build/Release/napitest")
+const { fun1, fun2, fun3, fun8, fun9, fun10} = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('array_map', function () {    
@@ -30,4 +30,37 @@ describe('array_map', function () {
         let ret = fun3([{"age":true}, {"name":false}]);
         assert.strictEqual(ret, 0);
     });
+    
+    it('test fun8', function () {
+        let ret = fun8([{"age":"a"}, {"name":"b"}]);
+        assert.strictEqual(ret, 0);
+    });
+
+     it('test fun9', function () {
+        let ret = fun9([{"age":1}, {"name":2}]);
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test fun10', function () {
+        let ret = fun10([{"age":true}, {"name":false}]);
+        assert.strictEqual(ret, 0);
+    });
+
+    /*
+    it('test fun7', function () {
+        let ret = fun7([{"key":'{"code":0,"data":"code0"}'}, {"name":'{"code":1,"data":"code1"}'}]);
+        assert.strictEqual(ret, 0);
+    }); 
+    */  
+
+    /*it('test fun12', function () {
+        let ret = fun12([{"key1":'code1'}, {"key2":'code2'}]);
+        assert.strictEqual(ret, 0);
+    });
+    
+    it('test fun10', function () {
+        let ret = fun12([{"key1":'{"code":0,"data":"code0"}'}, {"key2":'{"code":1,"data":"code1"}'}]);
+        assert.strictEqual(ret, 0);
+    });
+    */
 });

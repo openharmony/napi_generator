@@ -103,14 +103,21 @@ function getArrayTypeTemplete(type) {
         arrayType = "std::string"
     } else if (arrayType == "boolean") {
         arrayType = "bool"
-    } else if (arrayType == "[key:string]:string") {
+    } else if (arrayType == "[key:string]:string" || arrayType == "Map<string,string>") {
         arrayType = "std::map<std::string, std::string>"
-    } else if (arrayType.substring(0, arrayType.length-1) == "[key:string]:NUMBER_TYPE_") {       
+    } else if (arrayType.substring(0, arrayType.length-1) == "[key:string]:NUMBER_TYPE_" || 
+        arrayType.substring(0, arrayType.length-1) == "Map<string,NUMBER_TYPE_>") {       
         let len = arrayType.length
         let num = arrayType.substring(len-1, len)
         arrayType = "std::map<std::string, NUMBER_TYPE_%s>".format(num)
-    } else if (arrayType == "[key:string]:boolean") {
+    } else if (arrayType == "[key:string]:boolean" || arrayType == "Map<string,boolean>") {
         arrayType = "std::map<std::string, bool>"
+    } else if (arrayType.substring(0, 14) == "[key:string]:") {
+        let valueType = arrayType.substring(14, arrayType.length)
+        arrayType = "std::map<std::string, %s>".format(valueType)
+    } else if (arrayType.substring(0, 11) == "Map<string,") {
+        let valueType = arrayType.substring(11, arrayType.length-1)
+        arrayType = "std::map<std::string, %s>".format(valueType)
     }
     return arrayType
 }
@@ -199,6 +206,34 @@ function getArrTempletereplaceSwap(arrTemplete, arrayType, napiVn, lt) {
     }
     return arrTemplete
 }
+function getMapValueType(strLen, keyType, arrayType){
+    let valueTypeIn
+    if (keyType == "[key:string]:"){
+        valueTypeIn = arrayType.substring(strLen, arrayType.length)
+    } else if (keyType == "Map<string,"){
+        valueTypeIn = arrayType.substring(strLen, arrayType.length - 1)
+    }            
+    
+    let mapValueType
+    if (valueTypeIn == "string") {
+        mapValueType = "std::string"
+    } else if (valueTypeIn == "boolean") {
+        mapValueType = "bool"
+    } else {
+        mapValueType = valueTypeIn
+    }
+    return mapValueType
+}
+
+function getMapKeyLen(arrayType) {
+    let strLen
+    if (arrayType.substring(0,13) == "[key:string]:") {
+        strLen = "[key:string]:".length
+    }else if (arrayType.substring(0,10) == "Map<string") {
+        strLen = "Map<string,".length
+    }
+    return strLen
+}
 
 function paramGenerateArray(p, funcValue, param) {
     let type = funcValue.type
@@ -215,23 +250,20 @@ function paramGenerateArray(p, funcValue, param) {
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sstd::vector<%s> %s%s".format(param.valueDefine.length > 0 ? ", " 
                             : "", arrayType, modifiers, name)
-    } else if (type.substring(0, 6) == "Array<") {
-        let str = "[key:string]:"
-        let strLen = str.length
+    } else if (type.substring(0, 6) == "Array<") {        
         let arrayType = getArrayType(type)
-        if (arrayType == "string") arrayType = "std::string"
-        if (arrayType == "boolean") arrayType = "bool"
-        if (arrayType.substring(0, strLen) == "[key:string]:") {
-            let valueTypeIn = arrayType.substring(strLen, arrayType.length)
-            let valueTypeOut
-            if (valueTypeIn == "string") {
-                valueTypeOut = "std::string"
-            } else if (valueTypeIn == "boolean") {
-                valueTypeOut = "bool"
-            } else { 
-                valueTypeOut = valueTypeIn
-            }
-            arrayType = "std::map<std::string, %s>".format(valueTypeOut)
+        let strLen =  getMapKeyLen(arrayType)
+        let keyType = arrayType.substring(0, strLen)
+
+        if (arrayType == "string") {
+            arrayType = "std::string"
+        } else if (arrayType == "boolean") {
+            arrayType = "bool"
+        } else if (keyType == "[key:string]:"|| keyType == "Map<string,") {
+            let mapValueType = getMapValueType(strLen, keyType, arrayType);             
+            arrayType = "std::map<std::string, %s>".format(mapValueType)
+        } else {
+            NapiLog.logError("The current version do not support this array type:", name, "type :", arrayType);
         }
         param.valueIn += funcValue.optional ? "\n    std::vector<%s>* in%d = nullptr;".format(arrayType, p) 
                                             : "\n    std::vector<%s> in%d;".format(arrayType, p)
