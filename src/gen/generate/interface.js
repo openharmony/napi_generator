@@ -20,30 +20,30 @@ const { jsToC } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
-const { print } = require("../tools/tool");
+const { addUniqFunc2List, addUniqObj2List } = require("../tools/tool");
 
 let middleBodyTmplete = `
 class [className]_middle {
 public:
-static napi_value constructor(napi_env env, napi_callback_info info)
-{
-    XNapiTool *pxt = new XNapiTool(env, info);
+    static napi_value constructor(napi_env env, napi_callback_info info)
+    {
+        XNapiTool *pxt = new XNapiTool(env, info);
 
-    [className] *p = new [className]();
+        [className] *p = new [className]();
 
-    napi_value thisvar = pxt->WrapInstance(p, release);
+        napi_value thisvar = pxt->WrapInstance(p, release);
 
-    return thisvar;
-}
-static void release(void *p)
-{
-    [className] *p2 = ([className] *)p;
-    delete p2;
-}
-[static_funcs]
+        return thisvar;
+    }
+    static void release(void *p)
+    {
+        [className] *p2 = ([className] *)p;
+        delete p2;
+    }
+    [static_funcs]
 };`
 
-function generateVariable(name, type, variable, className) {
+function getHDefineOfVariable(name, type, variable) {
     if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
     else if (type.substring(0, 12) == "NUMBER_TYPE_") variable.hDefine += "\n    %s %s;".format(type, name)
     else if (InterfaceList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
@@ -65,6 +65,16 @@ function generateVariable(name, type, variable, className) {
         ---- generateVariable fail %s,%s ----
         `.format(name, type));
     }
+}
+
+function generateVariable(value, variable, className) {
+    let name = value.name
+    let type = value.type
+    if (!value.isParentMember) {
+        // 只有类/接口自己的成员属性需要在.h中定义， 父类/父接口不需要
+        getHDefineOfVariable(name, type, variable)
+    }
+
     variable.middleValue += `
     static napi_value getvalue_%s(napi_env env, napi_callback_info info)
     {
@@ -129,17 +139,34 @@ function generateInterface(name, data, inNamespace) {
     }
     middleInit += `\n    pxt->DefineClass("%s", %s%s_middle::constructor, valueList ,funcList%s);\n}\n`
         .format(name, inNamespace, name, selfNs)
+    let extendsStr = (data.parentNameList && data.parentNameList.length > 0) ?
+        " : public %s".format(data.parentNameList.join(", public ")) : ""
     let result = {
         implH: `
-class %s {
+class %s%s {
 public:%s
-};`.format(name, implH),
+};\n`.format(name, extendsStr, implH),
         implCpp: implCpp,
         middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc),
         middleInit: middleInit
     }
     return result
 }
+
+// 递归获取接口及接口父类的所有成员属性和方法
+function getAllPropties(interfaceBody, properties, isParentClass) {
+    for (let i in interfaceBody.value) {
+        interfaceBody.value[i].isParentMember = isParentClass
+        addUniqObj2List(interfaceBody.value[i], properties.values)
+    }
+    for (let i in interfaceBody.function) {
+        interfaceBody.function[i].isParentMember = isParentClass
+        addUniqFunc2List(interfaceBody.function[i], properties.functions)
+    }
+    if (!isParentClass && interfaceBody.parentNameList.length > 0) {
+        getAllPropties(interfaceBody.parentBody, properties, true)
+    }
+} 
 
 function connectResult(data, inNamespace, name) {
     let implH = ""
@@ -151,9 +178,11 @@ function connectResult(data, inNamespace, name) {
         middleValue: "",
     }
     middleInit = `{\n    std::map<const char *,std::map<const char *,napi_callback>> valueList;`
-    for (let i in data.value) {
-        let v = data.value[i]
-        generateVariable(v.name, v.type, variable, name)
+    data.allProperties = {values:[], functions:[]}
+    getAllPropties(data, data.allProperties, false)
+    for (let i in data.allProperties.values) {
+        let v = data.allProperties.values[i]
+        generateVariable(v, variable, name)
         middleInit += `
     valueList["%s"]["getvalue"]=%s%s_middle::getvalue_%s;
     valueList["%s"]["setvalue"]=%s%s_middle::setvalue_%s;`
@@ -162,8 +191,8 @@ function connectResult(data, inNamespace, name) {
     implH += variable.hDefine
     middleFunc += variable.middleValue
     middleInit += `\n    std::map<const char *, napi_callback> funcList;`
-    for (let i in data.function) {
-        let func = data.function[i]
+    for (let i in data.allProperties.functions) {
+        let func = data.allProperties.functions[i]
         let tmp;
         switch (func.type) {
             case FuncType.DIRECT:
@@ -183,6 +212,10 @@ function connectResult(data, inNamespace, name) {
         implH += tmp[1]
         implCpp += tmp[2]
         middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name, inNamespace, name, func.name)
+    }
+    if (data.childList.length > 0) {
+        // 如果是父类，增加虚析构函数使其具备泛型特征 (基类必须有虚函数才能正确使用dynamic_cast和typeinfo等方法)
+        implH += "\n    virtual ~%s(){};".format(name)
     }
     return [middleFunc, implH, implCpp, middleInit]
 }
