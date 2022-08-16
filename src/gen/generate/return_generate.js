@@ -352,7 +352,7 @@ function returnGenerate(returnInfo, param, data) {
         returnGenerate2(returnInfo, param, data)
     }
     else {
-        NapiLog.logError("function returnGenerate:The current version do not support this type return %s".format(type));
+        NapiLog.logError("Do not support returning the type [%s].".format(type));
     }
 }
 

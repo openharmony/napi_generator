@@ -20,6 +20,79 @@ const { generateClass } = require("./class");
 const { FuncType, InterfaceList, EnumList } = require("../tools/common");
 const { generateEnum } = require("./enum");
 const { generateFunctionOnOff } = require("./function_onoff");
+const { NapiLog } = require("../tools/NapiLog");
+const { addUniqFunc2List, addUniqObj2List } = require("../tools/tool");
+
+function findParentByName(parentName, data) {
+    for (let i in data.interface) {
+        if (parentName == data.interface[i].name) {
+            return data.interface[i]
+        }
+    }
+
+    for (let i in data.class) {
+        if (parentName == data.class[i].name) {
+            return data.class[i]
+        }
+    }
+    return null
+}
+
+/**
+ * 生成父类的成员变量和方法
+ * @param currentObj 当前类
+ * @param data 全局数据上下文
+ * @param parentBody 输出参数，保存父类的成员变量和方法
+ * @returns void
+ */
+function genParentPropties(currentObj, data, parentBody) {
+    for (let i in currentObj.body.parentNameList) {
+        let parentName = currentObj.body.parentNameList[i]
+        let parentObj = findParentByName(parentName, data)
+        if (!parentObj) {
+            NapiLog.logError("Failed to find %s's parent by name [%s]".format(currentObj.body.name, parentName))
+            return
+        }
+    
+        // 为父类添加子类的对象信息
+        addUniqObj2List(currentObj, parentObj.body.childList)
+    
+        // 为当前类添加父类对象信息
+        addUniqObj2List(parentObj, currentObj.body.parentList)
+    
+        for (let i in parentObj.body.value) {
+            // 添加父类的所有成员属性到parentBody
+            addUniqObj2List(parentObj.body.value[i], parentBody.value)
+        }
+        for (let i in parentObj.body.function) {
+            // 添加父类的所有成员方法到parentBody
+            addUniqFunc2List(parentObj.body.function[i], parentBody.function)
+        }
+        if (parentObj.body.parentNameList.length > 0) {
+            // 递归查找父类的父类
+            genParentPropties(parentObj, data, parentBody)
+        }
+    }
+} 
+
+// 为有继承关系的interface和class类型建立父子类关系信息
+function genExtendsRelation(data) {
+    for (let i in data.interface) {
+        let ifObj = data.interface[i]
+        if (ifObj.body.parentNameList.length > 0) {
+            ifObj.body.parentBody = {value:[], function:[]}
+            genParentPropties(ifObj, data, ifObj.body.parentBody)
+        }
+    }
+
+    for (let i in data.class) {
+        let classObj = data.class[i]
+        if (classObj.body.parentName) {
+            classObj.body.parentBody = {value:[], function:[]}
+            genParentPropties(classObj, data, classObj.body.parentBody)
+        }
+    }
+}
 
 //生成module_middle.cpp、module.h、module.cpp
 function generateNamespace(name, data, inNamespace = "") {
@@ -31,6 +104,7 @@ function generateNamespace(name, data, inNamespace = "") {
     }
 
     namespaceResult.middleInit += formatMiddleInit(inNamespace, name)
+    genExtendsRelation(data)
     InterfaceList.push(data.interface)
     EnumList.push(data.enum)
     let result = generateEnumResult(data);

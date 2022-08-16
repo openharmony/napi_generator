@@ -24,7 +24,10 @@ function analyzeSubInterface(data) {
     let body = re.replaceAll(data, "\n", "").split(";")//  # replace(" ", "").
     let result = {
         value: [],
-        function: []
+        function: [],
+        parentNameList: [],
+        childList: [],
+        parentList: []
     }
     for (let i in body) {
         let t = body[i]
@@ -83,7 +86,7 @@ function getFuncParaType(v, interfaceName, data) {
 }
 
 /**函数解析 */
-function analyzeFunction(data, name, values, ret) {
+function analyzeFunction(data, isStatic, name, values, ret) {
     values = re.replaceAll(re.replaceAll(values, " ", ""), "\n", "")
     let matchs = re.match("([a-zA-Z_0-9]*)\\?*:{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", values)
     let interfaceName = ''
@@ -126,6 +129,7 @@ function analyzeFunction(data, name, values, ret) {
         type: funcType,
         value: values,
         ret: ret,
+        isStatic: isStatic
     }
     return result
 }

@@ -90,19 +90,12 @@ function parseNamespace(matchs, data, result) {
 }
 
 function parseClass(matchs, data, result) {
-    matchs = re.match("(export )*class ([a-zA-Z]+) (extends [a-zA-Z]+ )*(implements [a-zA-Z]+ )*({)", data)
+    matchs = re.match(
+        "(export )*class ([A-Za-z_0-9]+)(<T>)* *(extends [a-zA-Z_0-9, ]+)* *(implements [a-zA-Z_0-9, ]+)* *({)"
+        , data)
     if (matchs) {
-        let className = re.getReg(data, matchs.regs[2])
-        let classBody = checkOutBody(data, matchs.regs[5][0], null, true)
-        result.class.push({
-            name: className,
-            body: analyzeClass(classBody.substring(1, classBody.length - 1)),
-            functiontType: classBody.indexOf('static') > 0 ? 'static' : ''
-        })
-        data = data.substring(matchs.regs[5][0] + classBody.length + 2, data.length)
-        if (matchs.regs[1][0] != -1) {
-            result.exports.push(className)
-        }
+        // class类型也解析成interface结构，该结构在后面生成C++代码时会按napi_define_class处理成C++的class
+        return createInterfaceData(matchs, data, result)
     }
     return data
 }
@@ -190,7 +183,8 @@ function parseFunction(matchs, data, result) {
         else {
             funcRet = "void"
         }
-        let funcDetail = analyzeFunction(result, funcName, funcValue.substring(1, funcValue.length - 1), funcRet)
+        let funcDetail = analyzeFunction(
+            result, false, funcName, funcValue.substring(1, funcValue.length - 1), funcRet)
         if (funcDetail != null)
             result.function.push(funcDetail)
         if (matchs.regs[1][0] != -1) {
@@ -200,19 +194,87 @@ function parseFunction(matchs, data, result) {
     return data
 }
 
-function parseInterface(matchs, data, result) {
-    matchs = re.match("(export )*interface ([A-Za-z_0-9]+)(<T>)* (extends [a-zA-Z]+ )*({)", data)
-    if (matchs) {
-        let interfaceName = re.getReg(data, matchs.regs[2])
-        let interfaceBody = checkOutBody(data, matchs.regs[5][0], null, null)
-        result.interface.push({
-            name: interfaceName,
-            body: analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1))
-        })
-        data = data.substring(matchs.regs[5][0] + interfaceBody.length, data.length)
-        if (matchs.regs[1][0] != -1) {
-            result.exports.push(interfaceName)
+/**
+ * 提取当前类继承或实现的父类名称列表
+ * @param firstKey 继承/实现关键字 (extends或implements)
+ * @param secondKey 继承/实现关键字 (extends或implements)
+ * @param parentStr 正则匹配到的继承语句 (如 extends xx1, xx2 implements yy1, yy2)
+ * @returns 继承的名称列表 ([xx1, xx2, yy1, yy2])
+ */
+function getParentNameList(firstKey, secondKey, parentStr) {
+    if (parentStr == '') {
+        return []
+    }
+
+    let firstParents = ''
+    let secondParents = ''
+    if (parentStr.indexOf(secondKey) > 0) {
+        // 同时出现extends和implements关键字的情况 (如 extends xx1, xx2 implements yy1, yy2)
+        firstParents = parentStr.split(secondKey)[0].split(firstKey)[1]
+        secondParents = parentStr.split(secondKey)[1].trim()
+    } else {
+        // 只有extends或implements一种关键字的情况 (如 extends xx1, xx2 或者 implements yy1, yy2)
+        firstParents = parentStr.split(firstKey)[1]
+    }
+
+    let nameList = firstParents.split(",")
+    if (secondParents != '') {
+        let secondList = secondParents.split(",")
+        nameList.push(...secondList)
+    }
+
+    return nameList
+}
+
+/**
+ * 创建interface数据结构
+ * @param matchs 正则匹配对象
+ * @param data 原始ts文件内容
+ * @param result 解析后的ts数据结构
+ * @returns data 原始ts文件内容中剩余未解析的部分
+ */
+function createInterfaceData (matchs, data, result) {
+    let interfaceName = re.getReg(data, matchs.regs[2])
+    let interfaceBody = checkOutBody(data, matchs.regs[6][0], null, null)
+    let bodyObj = analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1))
+    let extendsParent = re.getReg(data, matchs.regs[4])
+    let implementParent = re.getReg(data, matchs.regs[5])
+    bodyObj.parentNameList = []
+    if(extendsParent != '') {
+        bodyObj.parentNameList = getParentNameList("extends", "implements", extendsParent)
+    }
+    if(implementParent != '') {
+        bodyObj.parentNameList = getParentNameList("implements", "extends", implementParent)
+    }
+    for (let i in bodyObj.parentNameList) {
+        bodyObj.parentNameList[i] = bodyObj.parentNameList[i].trim()
+        if (bodyObj.parentNameList[i] == interfaceName) {
+            // 接口不能自己继承自己
+            NapiLog.logError("The interface [%s] can not extends with itself.".format(interfaceName))
+            return data
         }
+    }
+
+    bodyObj.parentList = [] //该接口继承的父类型列表
+    bodyObj.childList = [] //继承自该接口的子类型列表
+    
+    result.interface.push({
+        name: interfaceName,
+        body: bodyObj
+    })
+    data = data.substring(matchs.regs[6][0] + interfaceBody.length, data.length)
+    if (matchs.regs[1][0] != -1) {
+        result.exports.push(interfaceName)
+    }
+    return data
+}
+
+function parseInterface(matchs, data, result) {
+    matchs = re.match(
+        "(export )*interface ([A-Za-z_0-9]+)(<T>)* *(extends [a-zA-Z_0-9, ]+)* *(implements [a-zA-Z_0-9, ]+)* *({)"
+        , data)
+    if (matchs) {
+        return createInterfaceData (matchs, data, result)
     }
     return data
 }

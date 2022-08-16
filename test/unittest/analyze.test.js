@@ -120,28 +120,28 @@ function partOfFunction(correctResult){
 
     it('test gen/analyze/function analyzeDirectFunction', function () {
         let data = "if_direct(v1: string, v2: boolean): string;";
-        let ret = analyzeFunction(data, `if_direct`, "v1: string, v2: boolean", "asdfgh");
+        let ret = analyzeFunction(data, false, `if_direct`, "v1: string, v2: boolean", "asdfgh");
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeDirectFunction']);
     });
 
     it('test gen/analyze/function analyzeAsyncFunction', function () {
         let data = "if_async(v1: string, cb: AsyncCallback<string>): string;";
-        let ret = analyzeFunction(data, `if_async`, "v1: string, cb: AsyncCallback<string>", "qwerty");
+        let ret = analyzeFunction(data, false, `if_async`, "v1: string, cb: AsyncCallback<string>", "qwerty");
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeAsyncFunction']);
     });
 
     it('test gen/analyze/function analyzeSyncFunction', function () {
         let data = "if_callback(v1: string, cb: Callback<Array<string>>): string;";
-        let ret = analyzeFunction(data, `if_callback`, "v1: string, cb: Callback<Array<string>>", "zxcvbn");
+        let ret = analyzeFunction(data, false, `if_callback`, "v1: string, cb: Callback<Array<string>>", "zxcvbn");
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, correctResult['Analyze']['analyzeSyncFunction']);
     });
 
     it('test gen/analyze/function analyzePromiseFunction', function () {
         let data = "if_promise(v1: Array<number>): Promise<boolean>;";
-        let ret = analyzeFunction(data, `if_promise`, "v1: Array<number>", "Promise<boolean>");
+        let ret = analyzeFunction(data, false, `if_promise`, "v1: Array<number>", "Promise<boolean>");
         assert.strictEqual(ret, null);
     });
 }

@@ -37,10 +37,10 @@ function analyzeClass(data) {
         }
         // 如果t为空直接返回
         if (classBody == "") break
-        let matchNameAndType = re.match(" *([a-zA-Z0-9_]+) *: *([a-zA-Z_0-9<>]+)", classBody)
-        if (matchNameAndType) {
-            let valueName = re.getReg(classBody, matchNameAndType.regs[1])
-            let valueType = re.getReg(classBody, matchNameAndType.regs[2])
+        let matcher = re.match(" *([a-zA-Z0-9_]+) *: *([a-zA-Z_0-9<>]+)", classBody)
+        if (matcher) {
+            let valueName = re.getReg(classBody, matcher.regs[1])
+            let valueType = re.getReg(classBody, matcher.regs[2])
             if (valueType.indexOf("number") >= 0) {
                 valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
             }
@@ -49,11 +49,12 @@ function analyzeClass(data) {
                 type: valueType
             })
         }
-        let rules = "(static)? *([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+)";
-        matchNameAndType = re.match(rules, classBody)
-        if (matchNameAndType) {
-            let funcDetail = analyzeFunction(data, re.getReg(classBody, matchNameAndType.regs[2]),
-                re.getReg(classBody, matchNameAndType.regs[3]), re.getReg(classBody, matchNameAndType.regs[4]))
+        let rules = "(static )? *([A-Za-z0-9_]+)\\(([\n a-zA-Z:;=,_0-9?<>{}|]*)\\) *: *([A-Za-z0-9_<>{}:, .]+)";
+        matcher = re.match(rules, classBody)
+        if (matcher) {
+            let funcDetail = analyzeFunction(data, 
+                re.getReg(classBody, matcher.regs[1]) != '', re.getReg(classBody, matcher.regs[2]),
+                re.getReg(classBody, matcher.regs[3]), re.getReg(classBody, matcher.regs[4]))
             if (funcDetail != null)
                 result.function.push(funcDetail)
         }
