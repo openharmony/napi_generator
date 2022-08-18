@@ -3,7 +3,7 @@
 
 NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。可执行文件、IntelliJ插件、VS Code插件下载路径如下，选择napi_generator_outputs.zip下载。
 
-[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/GGsW3B68u/generator_outputs)
+[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/GGsW3B68u/generator_outputs)
 
 下载文件说明如下：
 
