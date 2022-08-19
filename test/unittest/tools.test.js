@@ -71,13 +71,7 @@ describe('Tools', function () {
 
 });
 
-function partOfReTest(){
-    it('test gen/tools/re print', function () {
-        let lib = rewire(genDir+'tools/re.js');
-        let print = lib.__get__("print");
-        print("re test print");
-    });
-    
+function partOfReTest(){   
     it('test gen/tools/re removeReg', function () {
         let ret = removeReg('export default napitest;',[4, 22]);
     
