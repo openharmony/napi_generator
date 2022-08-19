@@ -12,49 +12,74 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-let genDir="../../src/gen/"
-const { generateGYP } = require(genDir+"extend/binding_gyp");
-const { generateGN } = require(genDir+"extend/build_gn");
-const { generateBase } = require(genDir+"extend/x_napi_tool");
-const rewire = require("rewire");
-String.prototype.replaceAll = function (...args) {
-    let result = this;
-    while (result.indexOf(args[0]) >= 0) {
-        result = result.replace(args[0], args[1])
-    }
-    return result;
-}
+let genDir = "../../src/gen/"
+const { generateGYP } = require(genDir + "extend/binding_gyp");
+const { generateGN } = require(genDir + "extend/build_gn");
+const { generateBase } = require(genDir + "extend/x_napi_tool");
+var assert = require("assert");
+const { readFile } = require("../../src/gen/tools/FileRW");
 
 describe('Extend', function () {
-    
+
     it('test gen/extend/binding_gyp generateGYP', function () {
-        let ret = generateGYP('test/unittest','napitest');
-        let retJson = JSON.stringify(ret);
-        let lib = rewire(genDir+'tools/re.js');
-        let print = lib.__get__("print");
-        if(typeof(retJson)=="undefined"){
-            print("type is undefined") 
-        }
+        generateGYP('test/unittest', 'napitest', '/*\n* Copyright (c) 2022 Shenzhen Kaihong\n*/');
+        let data = readFile("test/unittest/binding.gyp")
+        let retJson = JSON.stringify(data)
+        let copyRight = retJson.substring(1, retJson.indexOf("Kaihong"))
+        assert.strictEqual(copyRight, "# Copyright (c) 2022 Shenzhen ")
+        let dataTest = readFile("test/unittest/test.sh")
+        let retTest = JSON.stringify(dataTest)
+        assert.strictEqual(retTest, "\"node-gyp configure build && sleep 0.5 && node --expose-gc test.js\"")
+
     });
 
     it('test gen/extend/build_gn generateGN', function () {
-        let ret = generateGN('test/unittest','napitest');
-        let retJson = JSON.stringify(ret);  
-        let lib = rewire(genDir+'tools/re.js');
-        let print = lib.__get__("print");
-        if(typeof(retJson)=="undefined"){
-            print("type is undefined")
+        var fs = require("fs");
+        if (fs.existsSync('test/unittest/BUILD.gn')) {
+            fs.unlink('test/unittest/BUILD.gn', function (err) {
+                if (err) {
+                    return console.error(err);
+                }
+            });
         }
+        let Copyright = '/*\n* Copyright (c) 2022 Shenzhen Kaihong\n*/';
+        generateGN('test/unittest', 'napitest', Copyright, 'input_sample');
+        let data = readFile("test/unittest/BUILD.gn")
+        let retJson = JSON.stringify(data)
+        let copyRight = retJson.substring(1, retJson.indexOf("Kaihong"))
+        assert.strictEqual(copyRight, "# Copyright (c) 2022 Shenzhen ")
     });
 
-    it('test gen/extend/x_napi_tool generateBase', function () {
-        let ret = generateBase('test/unittest');
-        let retJson = JSON.stringify(ret);
-        let lib = rewire(genDir+'tools/re.js');
-        let print = lib.__get__("print");
-        if(typeof(retJson)=="undefined"){
-            print("type is undefined")
-        }
-    });
-
+    partGenerateBase();
 });
+
+function partGenerateBase(){
+    it('test gen/extend/x_napi_tool generateBase', function () {
+        var fs = require("fs");
+        if (fs.existsSync('test/unittest/x_napi_tool.cpp')) {
+            fs.unlink('test/unittest/x_napi_tool.cpp', function (err) {
+                if (err) {
+                    return console.error(err);
+                }
+            });
+        }
+        if (fs.existsSync('test/unittest/x_napi_tool.h')) {
+            fs.unlink('test/unittest/x_napi_tool.h', function (err) {
+                if (err) {
+                    return console.error(err);
+                }
+            });
+        }
+        generateBase('test/unittest', '/*\n* Copyright (c) 2022 Shenzhen Kaihong\n*/');
+        let data = readFile("test/unittest/x_napi_tool.cpp")
+        let retJson = JSON.stringify(data)
+        let copyRight = retJson.substring(1, retJson.indexOf("Kaihong"))
+        assert.strictEqual(copyRight, "/*\\n* Copyright (c) 2022 Shenzhen ")
+
+        let data1 = readFile("test/unittest/x_napi_tool.h")
+        let retJson1 = JSON.stringify(data1)
+        let copyRight1 = retJson.substring(1, retJson1.indexOf("Kaihong"))
+        assert.strictEqual(copyRight1, "/*\\n* Copyright (c) 2022 Shenzhen ")
+    });
+
+}
