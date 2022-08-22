@@ -170,6 +170,82 @@ function replaceAll(s, sfrom, sto) {
     return s;
 }
 
+/**
+ * 比较两个方法是否完全相同
+ * @param func1 方法1
+ * @param func2 方法2
+ * @returns 方法名称与形参是否完全相同
+ */
+ function isSameFunc(func1, func2) {
+    if (func1.name != func2.name) { // 判断方法名称是否相同
+        return false;
+    }
+
+    let func1ParamCount = func1.value.length
+    if (func1ParamCount != func2.value.length) { // 判断方法形参个数是否一样
+        return false;
+    }
+
+    for (let i in func1.value) { // 判断方法每个形参数据类型是否相同
+        if (func1.value[i].type != func2.value[i].type) { 
+            if (!(func1.value[i].type.indexOf("NUMBER_TYPE_") >= 0 &&
+                func2.value[i].type.indexOf("NUMBER_TYPE_") >= 0)) {
+                return false;
+            }
+        }
+    }
+
+    // 以上全部相同，判定为相同方法
+    return true;
+}
+
+/**
+ * 将方法对象插入列表（重复的方法对象不插入）
+ * @param obj 待插入的方法对象
+ * @param list 目标列表
+ * @returns void
+ */
+ function addUniqFunc2List(obj, list) {
+    for (let i in list) {
+        if (isSameFunc(obj, list[i])) {
+            return
+        }
+    }
+    list.push(obj)
+}
+
+/**
+ * 将对象插入列表（名称重复的属性对象不插入）
+ * @param obj 待插入的对象
+ * @param list 目标列表
+ * @returns void
+ */
+ function addUniqObj2List(obj, list) {
+    for (let i in list) {
+        if (list[i].name === obj.name) {
+            return
+        }
+    }
+    list.push(obj)
+}
+
+/**
+ * 如果方法所在的类为基类，生成的c++函数定义为虚函数
+ * @param data 方法所在的类信息
+ * @param isStatic ts方法是否定义为静态方法
+ * return tabStr 缩进，staticStr 静态函数关键词，virtualStr 虚函数关键词
+ */
+ function getPrefix(data, isStatic) {
+    let tabStr = ""
+    let virtualStr = ""
+    let staticStr = isStatic ? "static " : ""
+    if (data.childList) {
+        tabStr = "    " // 类中的方法增加一个缩进
+        virtualStr = (data.childList.length > 0 && !isStatic) ? "virtual " : "" //如果是基类中的非静态方法，定义为虚函数
+    }
+    return [tabStr, staticStr, virtualStr]
+}
+
 module.exports = {
     checkOutBody,
     removeExplains,
@@ -178,5 +254,8 @@ module.exports = {
     replaceAll,
     print,
     getLicense,
-    replaceTab
+    replaceTab,
+    addUniqObj2List,
+    addUniqFunc2List,
+    getPrefix
 }

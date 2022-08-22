@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { replaceAll } = require("../tools/tool");
+const { replaceAll, getPrefix } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 
@@ -55,6 +55,13 @@ struct [funcName]_value_struct {[valueIn]
     return result;
 }`
 
+let cppTemplate = `
+bool %s%s(%s)
+{
+    return true;
+}
+`
+
 function generateFunctionDirect(func, data, className) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
     if (className == null) {
@@ -79,33 +86,28 @@ function generateFunctionDirect(func, data, className) {
     for (let i in func.value) {
         paramGenerate(i, func.value[i], param, data)
     }
-
     let returnInfo = {type: func.ret, optional: false}
     if (func.ret == 'void') {
         param.valuePackage = "result = pxt->UndefinedValue();";
     } else {
         returnGenerate(returnInfo, param, data)
     }
-
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
     middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
-
     middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
-
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc)//执行
-
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
     middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory)//可选参数内存释放
-
-    let implH = "\nbool %s(%s);".format(func.name, param.valueDefine)
-    let implCpp = `
-bool %s%s(%s)
-{
-    return true;
-}
-`.format(className == null ? "" : className + "::", func.name, param.valueDefine)
-
+    let prefixArr = getPrefix(data, func.isStatic)
+    let implH = ""
+    let implCpp = ""
+    if (!func.isParentMember) {
+        // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
+        implH = "\n%s%s%sbool %s(%s);".format(
+            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine)
+        implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
+    }
     return [middleFunc, implH, implCpp]
 }
 
