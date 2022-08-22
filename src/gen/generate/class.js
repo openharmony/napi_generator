@@ -24,22 +24,22 @@ const { NapiLog } = require("../tools/NapiLog");
 let middleBodyTmplete = `
 class [className]_middle {
 public:
-static napi_value constructor(napi_env env, napi_callback_info info)
-{
-    XNapiTool *pxt = new XNapiTool(env, info);
+    static napi_value constructor(napi_env env, napi_callback_info info)
+    {
+        XNapiTool *pxt = new XNapiTool(env, info);
 
-    [className] *p = new [className]();
+        [className] *p = new [className]();
 
-    napi_value thisvar = pxt->WrapInstance(p, release);
+        napi_value thisvar = pxt->WrapInstance(p, release);
 
-    return thisvar;
-}
-static void release(void *p)
-{
-    [className] *p2 = ([className] *)p;
-    delete p2;
-}
-[static_funcs]
+        return thisvar;
+    }
+    static void release(void *p)
+    {
+        [className] *p2 = ([className] *)p;
+        delete p2;
+    }
+    [static_funcs]
 };`
 
 function generateVariable(name, type, variable, className) {

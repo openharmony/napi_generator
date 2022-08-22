@@ -74,7 +74,7 @@ InterfaceList.getValue = function (name) {
     let ifs = InterfaceList.interfacess_[InterfaceList.interfacess_.length - 1]
     for (let i in ifs) {
         if (ifs[i].name == name) {
-            return ifs[i].body.value;
+            return ifs[i].body.allProperties.values;
         }
     }
     return null;
