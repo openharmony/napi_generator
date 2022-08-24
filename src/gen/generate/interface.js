@@ -15,7 +15,8 @@
 const { generateFunctionDirect } = require("./function_direct");
 const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
-const { FuncType, InterfaceList, getArrayType, getMapType, EnumList } = require("../tools/common");
+const { FuncType, InterfaceList, getArrayType, getArrayTypeTwo, getMapType, EnumList, jsType2CType } 
+    = require("../tools/common");
 const { jsToC } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
@@ -45,20 +46,23 @@ public:
 
 function getHDefineOfVariable(name, type, variable) {
     if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
-    else if (type.substring(0, 12) == "NUMBER_TYPE_") variable.hDefine += "\n    %s %s;".format(type, name)
     else if (InterfaceList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (EnumList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (type.indexOf("Array<") == 0) {
-        let type2 = getArrayType(type)
-        if (type2 == "string") type2 = "std::string"
-        if (type2 == "boolean") type2 = "bool"
-        variable.hDefine += "\n    std::vector<%s> %s;".format(type2, name)
+        let arrayType = getArrayType(type)
+        let cType = jsType2CType(arrayType)
+        variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
     } else if (type == "boolean") {
         variable.hDefine += "\n    bool %s;".format(name)
-    } else if (type.indexOf("[]") == 0) {
-        variable.hDefine += "\n    std::vector<%s> %s;".format(type, name)
+    } else if (type.substring(type.length - 2) == "[]") {
+        let arrayType = getArrayTypeTwo(type)
+        let cType = jsType2CType(arrayType)
+        variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
     } else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         variable.hDefine += mapTypeString(type, name)
+    }
+    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+        variable.hDefine += "\n    %s %s;".format(type, name)
     }
     else {
         NapiLog.logError(`
