@@ -138,6 +138,16 @@ function getArrayTypeTwo(type) {
     return re.getReg(type, tt.regs[1])
 }
 
+function jsType2CType(jsTypeName) {
+    if (jsTypeName == "string") {
+        return "std::string"
+    } else if (jsTypeName == "boolean") {
+        return "bool"
+    } else {
+        return jsTypeName
+    }
+}
+
 class EnumValueType { }
 EnumValueType.ENUM_VALUE_TYPE_NUMBER = 0
 EnumValueType.ENUM_VALUE_TYPE_STRING = 1
@@ -216,5 +226,6 @@ module.exports = {
     isEnum,
     enumIndex,
     getMapType,
-    EnumList
+    EnumList,
+    jsType2CType
 }

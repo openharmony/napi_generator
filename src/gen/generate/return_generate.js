@@ -65,8 +65,6 @@ function cToJs(value, type, dest, deep = 1) {
         return "%s = pxt->SwapC2JsBool(%s);".format(dest, value);
     else if (type == "string")
         return `%s = pxt->SwapC2JsUtf8(%s.c_str());`.format(dest, value)
-    else if (type.substring(0, 12) == "NUMBER_TYPE_")
-        return `%s = NUMBER_C_2_JS(pxt, %s);`.format(dest, value)
     else if (InterfaceList.getValue(type)) {
         return cToJsForInterface(value, type, dest, deep);
     }
@@ -88,6 +86,9 @@ function cToJs(value, type, dest, deep = 1) {
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         return mapTempleteFunc(type, deep, dest, value)
     }
+    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+        return `%s = NUMBER_C_2_JS(pxt, %s);`.format(dest, value)
+    }
     else {
         NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest));
     }
@@ -107,8 +108,8 @@ function checkArrayParamType(type) {
 function arrayTempleteFunc(arrayType, deep, dest, value) {
     let lt = deep
     let tnv = dest
-    let tnvdef = `uint32_t len%d=%s.size();
-    for(uint32_t i=0;i<len%d;i++) {
+    let tnvdef = `uint32_t outLen%d = %s.size();
+    for(uint32_t i = 0; i < outLen%d; i++) {
         napi_value tnv%d = nullptr;
         [calc_out]
         pxt->SetArrayElement(%s, i, tnv%d);
@@ -119,6 +120,9 @@ function arrayTempleteFunc(arrayType, deep, dest, value) {
     }
     else if (arrayType == "string") {
         ret = tnvdef.replaceAll("[calc_out]", `tnv%d = pxt->SwapC2JsUtf8(%s[i].c_str());`.format(lt, value))
+    }
+    else if (arrayType == "boolean") {
+        ret = tnvdef.replaceAll("[calc_out]", `tnv%d = pxt->SwapC2JsBool(%s[i]);`.format(lt, value))
     }
     else if (InterfaceList.getValue(arrayType)) {
         ret = tnvdef.replaceAll("[calc_out]", cToJs(value + "[i]", arrayType, "tnv" + lt, deep + 1))
@@ -314,14 +318,35 @@ function returnGenerateMap(returnInfo, param) {
             .format(param.valueDefine.length > 0 ? ", " : "", mapTypeString, modifiers)
 }
 
+/**
+ * 获取方法返回参数的填充代码
+ * @param returnInfo 方法的返回参数信息
+ * @param param 方法的所有参数信息
+ * @returns 返回参数的填充代码
+ */
+function getReturnFill(returnInfo, param) {
+    let type = returnInfo.type
+    let valueFillStr = ""
+    if (param.callback) { // callback方法的返回参数处理
+        if (param.callback.isAsync) {
+            // 异步callback方法返回的是一个结构体，包含errcode和data两部分， 详见basic.d.ts中AsyncCallback的定义
+            valueFillStr = "vio->outErrCode"
+            param.valueDefine += "%suint32_t& outErrCode".format(param.valueDefine.length > 0 ? ", " : "")
+        }
+
+        if (type != "void") {
+            // callback<xxx> 中的xxx不是void时，生成的capp代码才需要用户填充out参数
+            valueFillStr += "%svio->out".format(valueFillStr.length > 0 ? ", " : "")
+        }
+    } else {  // 普通方法的返回参数处理
+        valueFillStr = "vio->out"
+    }
+    return valueFillStr
+}
 function returnGenerate(returnInfo, param, data) {
     let type = returnInfo.type
-    let valueFillStr = "%svio->out"
-    if (returnInfo.isAsync) {
-        valueFillStr = "%svio->outErrCode, vio->out"
-        param.valueDefine += "%suint32_t& outErrCode".format(param.valueDefine.length > 0 ? ", " : "")
-    }
-    param.valueFill += valueFillStr.format(param.valueFill.length > 0 ? ", " : "")
+    let valueFillStr = getReturnFill(returnInfo, param)
+    param.valueFill += ("%s" + valueFillStr).format(param.valueFill.length > 0 ? ", " : "")
     let outParam = returnInfo.optional ? "(*vio->out)" : "vio->out"
     let modifiers = returnInfo.optional ? "*" : "&"
     if (returnInfo.optional) {
@@ -344,12 +369,12 @@ function returnGenerate(returnInfo, param, data) {
     else if (isEnum(type, data)) {
         returnGenerateEnum(data, returnInfo, param)
     }
+    else if(generateType(type)){
+        returnGenerate2(returnInfo, param, data)
+    }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
         param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
-    }
-    else if(generateType(type)){
-        returnGenerate2(returnInfo, param, data)
     }
     else {
         NapiLog.logError("Do not support returning the type [%s].".format(type));
@@ -393,6 +418,7 @@ function returnGenerate2(returnInfo, param, data){
     else if (type.substring(type.length - 2) == "[]") {
         let arrayType = getArrayTypeTwo(type)
         if (arrayType == "string") arrayType = "std::string"
+        if (arrayType == "boolean") arrayType = "bool"
         param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
                                              : "std::vector<%s> out;".format(arrayType)
         param.valueDefine += "%sstd::vector<%s>%s out".format(

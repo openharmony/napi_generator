@@ -69,7 +69,7 @@ let moduleCppTmplete = `\
         delete p;    \\
     }
 
-static napi_value number_c_to_js(XNapiTool *pxt, const std::type_info &n, void *num)
+__attribute__((unused)) static napi_value number_c_to_js(XNapiTool *pxt, const std::type_info &n, void *num)
 {
     if (n == typeid(int32_t))
         return pxt->SwapC2JsInt32(*(int32_t *)num);
