@@ -40,8 +40,8 @@ function analyzeEnum(data) {
 }
 
 function analyzeEnumResult(result, bodyContent, index) {
-    let regString = re.match(" *([a-zA-Z0-9_]+) * = *\"([a-zA-Z_0-9<>-]+)*\"", bodyContent)
-    let regSingleQuotes = re.match(" *([a-zA-Z0-9_]+) * = *'([a-zA-Z_0-9<>-]+)*'", bodyContent)
+    let regString       = re.match(" *([a-zA-Z0-9_]+) * = *\"([\x21-\x7e]+)*\"", bodyContent)
+    let regSingleQuotes = re.match(" *([a-zA-Z0-9_]+) * = *'([\x21-\x7e]+)*'", bodyContent)
     let regNumber = re.match(" *([a-zA-Z0-9_]+) * = *([a-zA-Z_0-9<>-]+)", bodyContent)
     let reg = re.match(" *([a-zA-Z0-9_]+) *", bodyContent)
     if (regString) {
