@@ -88,6 +88,9 @@ function cToJs(value, type, dest, deep = 1) {
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         return `%s = NUMBER_C_2_JS(pxt, %s);`.format(dest, value)
+    } 
+    else if (type == "any") {
+        return anyTempleteFunc(type, deep, dest, value)
     }
     else {
         NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest));
@@ -153,6 +156,14 @@ function mapTempleteFunc(type, deep, dest, value) {
         ret = mapTempleteArray(mapType, tnvdef, lt)
     }
     return ret
+}
+
+function anyTempleteFunc(type, deep, dest, value) {
+
+    let anyTemplete = `pxt->GetAnyValue(%s_type, result, %s);`
+        .format(value, value)
+    
+    return anyTemplete
 }
 
 function mapInterface(value, lt, tnv, mapType) {
@@ -319,26 +330,26 @@ function returnGenerateMap(returnInfo, param) {
 }
 
 /**
- * »ñÈ¡·½·¨·µ»Ø²ÎÊıµÄÌî³ä´úÂë
- * @param returnInfo ·½·¨µÄ·µ»Ø²ÎÊıĞÅÏ¢
- * @param param ·½·¨µÄËùÓĞ²ÎÊıĞÅÏ¢
- * @returns ·µ»Ø²ÎÊıµÄÌî³ä´úÂë
+ * è·å–æ–¹æ³•è¿”å›å‚æ•°çš„å¡«å……ä»£ç 
+ * @param returnInfo æ–¹æ³•çš„è¿”å›å‚æ•°ä¿¡æ¯
+ * @param param æ–¹æ³•çš„æ‰€æœ‰å‚æ•°ä¿¡æ¯
+ * @returns è¿”å›å‚æ•°çš„å¡«å……ä»£ç 
  */
 function getReturnFill(returnInfo, param) {
     let type = returnInfo.type
     let valueFillStr = ""
-    if (param.callback) { // callback·½·¨µÄ·µ»Ø²ÎÊı´¦Àí
+    if (param.callback) { // callbackæ–¹æ³•çš„è¿”å›å‚æ•°å¤„ç†
         if (param.callback.isAsync) {
-            // Òì²½callback·½·¨·µ»ØµÄÊÇÒ»¸ö½á¹¹Ìå£¬°üº¬errcodeºÍdataÁ½²¿·Ö£¬ Ïê¼ûbasic.d.tsÖĞAsyncCallbackµÄ¶¨Òå
+            // å¼‚æ­¥callbackæ–¹æ³•è¿”å›çš„æ˜¯ä¸€ä¸ªç»“æ„ä½“ï¼ŒåŒ…å«errcodeå’Œdataä¸¤éƒ¨åˆ†ï¼Œ è¯¦è§basic.d.tsä¸­AsyncCallbackçš„å®šä¹‰
             valueFillStr = "vio->outErrCode"
             param.valueDefine += "%suint32_t& outErrCode".format(param.valueDefine.length > 0 ? ", " : "")
         }
 
         if (type != "void") {
-            // callback<xxx> ÖĞµÄxxx²»ÊÇvoidÊ±£¬Éú³ÉµÄcapp´úÂë²ÅĞèÒªÓÃ»§Ìî³äout²ÎÊı
+            // callback<xxx> ä¸­çš„xxxä¸æ˜¯voidæ—¶ï¼Œç”Ÿæˆçš„cappä»£ç æ‰éœ€è¦ç”¨æˆ·å¡«å……outå‚æ•°
             valueFillStr += "%svio->out".format(valueFillStr.length > 0 ? ", " : "")
         }
-    } else {  // ÆÕÍ¨·½·¨µÄ·µ»Ø²ÎÊı´¦Àí
+    } else {  // æ™®é€šæ–¹æ³•çš„è¿”å›å‚æ•°å¤„ç†
         valueFillStr = "vio->out"
     }
     return valueFillStr
@@ -394,6 +405,9 @@ function generateType(type){
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         return true
     }
+    else if (type == "any") {
+        return true
+    }
     else {
         return false
     }
@@ -426,6 +440,11 @@ function returnGenerate2(returnInfo, param, data){
     }
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
         returnGenerateMap(returnInfo, param)
+    }
+    else if (type == "any") {
+        param.valueOut = `std::any out;
+            std::string out_type;`
+        param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
     }
 }
 
