@@ -402,7 +402,7 @@ size_t XNapiTool::SwapJs2CUtf8(napi_value value, std::string &str)
 napi_value XNapiTool::SwapC2JsBool(bool value)
 {
     napi_value result;
-    napi_status result_status = napi_create_int32(env_, value, &result);
+    napi_status result_status = napi_get_boolean(env_, value, &result);
     CC_ASSERT(result_status == napi_ok);
     return result;
 }
