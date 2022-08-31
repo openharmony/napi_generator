@@ -172,7 +172,7 @@ function parseFunction(matchs, data, result) {
             matchs.regs[4][0] : matchs.regs[3][0] + funcValue.length), 0, ["", "\n"], null)
         data = data.substring(matchs.regs.length == 5 ?
             matchs.regs[4][0] : matchs.regs[3][0] + funcValue.length + funcRet.length)
-        let matchFunc = re.match(" *: *([A-Za-z0-9_<>{}:, .=]+);*", funcRet)
+        let matchFunc = re.match(" *: *([A-Za-z0-9_<>{}:;, .=]+);*", funcRet)
         let matchFuncArray = re.match(" *: *([A-Za-z0-9]+)(\\[]);*", funcRet)
         if (matchFuncArray) {
             funcRet = re.getReg(funcRet, [matchFuncArray.regs[1][0], matchFuncArray.regs[2][1]])
@@ -182,6 +182,11 @@ function parseFunction(matchs, data, result) {
         }
         else {
             funcRet = "void"
+        }
+        funcRet = re.replaceAll(re.replaceAll(funcRet, " ", ""), "\n", "")        
+
+        if(funcRet[funcRet.length-1] == ";"){
+            funcRet = funcRet.substring(0, funcRet.length-1)
         }
         let funcDetail = analyzeFunction(
             result, false, funcName, funcValue.substring(1, funcValue.length - 1), funcRet)
@@ -236,7 +241,7 @@ function getParentNameList(firstKey, secondKey, parentStr) {
 function createInterfaceData (matchs, data, result) {
     let interfaceName = re.getReg(data, matchs.regs[2])
     let interfaceBody = checkOutBody(data, matchs.regs[6][0], null, null)
-    let bodyObj = analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1))
+    let bodyObj = analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1), result.interface)
     let extendsParent = re.getReg(data, matchs.regs[4])
     let implementParent = re.getReg(data, matchs.regs[5])
     bodyObj.parentNameList = []
@@ -262,6 +267,9 @@ function createInterfaceData (matchs, data, result) {
         name: interfaceName,
         body: bodyObj
     })
+    let rr = matchs.regs[6][0]
+    rr = matchs.regs[6][0] + interfaceBody.length
+    let tmp = data[rr]
     data = data.substring(matchs.regs[6][0] + interfaceBody.length, data.length)
     if (matchs.regs[1][0] != -1) {
         result.exports.push(interfaceName)

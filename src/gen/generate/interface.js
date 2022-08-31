@@ -58,7 +58,7 @@ function getHDefineOfVariable(name, type, variable) {
         let arrayType = getArrayTypeTwo(type)
         let cType = jsType2CType(arrayType)
         variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
-    } else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
+    } else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
         variable.hDefine += mapTypeString(type, name)
     } else if (type == "any") {
         variable.hDefine += anyTypeString(type, name)
@@ -176,7 +176,7 @@ function getAllPropties(interfaceBody, properties, isParentClass) {
         interfaceBody.function[i].isParentMember = isParentClass
         addUniqFunc2List(interfaceBody.function[i], properties.functions)
     }
-    if (!isParentClass && interfaceBody.parentNameList.length > 0) {
+    if (!isParentClass && interfaceBody.parentNameList && interfaceBody.parentNameList.length > 0) {
         getAllPropties(interfaceBody.parentBody, properties, true)
     }
 } 
@@ -226,7 +226,7 @@ function connectResult(data, inNamespace, name) {
         implCpp += tmp[2]
         middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name, inNamespace, name, func.name)
     }
-    if (data.childList.length > 0) {
+    if (data.childList && data.childList.length > 0) {
         // 如果是父类，增加虚析构函数使其具备泛型特征 (基类必须有虚函数才能正确使用dynamic_cast和typeinfo等方法)
         implH += "\n    virtual ~%s(){};".format(name)
     }
