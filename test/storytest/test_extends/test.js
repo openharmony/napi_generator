@@ -75,7 +75,7 @@ describe('Multi extends', function () {
     });
 });
 
-describe('Function test', function () {
+describe('Function test1', function () {
     it('test parameter and return', function () {
         let juliya = new Juliya();
         let ret = test.findJuliya(juliya);
@@ -87,7 +87,9 @@ describe('Function test', function () {
         assert.strictEqual(ret.size, 0);
         assert.strictEqual(ret.juliyaSkill, '');
     });
+});
 
+describe('Function test2', function () {   
     it('test sync callback', function () {
         function getSyncCallback (juliya) {
             // parent properties
@@ -116,29 +118,25 @@ describe('Function test', function () {
 
         test.findJuliyaAsync("juli", getAsyncCallback);
     });
+    
 });
 
 describe('Interface member test', function () {
-    it('test member', function () {
-        
+    it('test member', function () {        
         let tomObj1 = {
             name: 'tom1',
             friends: { // Cat object
                 catName: 'tomcat1',
-                // parent properties
                 aniName: 'ani1',
-                size: 101
-                
+                size: 101                
             }
         };
         let tomObj2 = {
             name: 'tom2',
             friends: { // Cat object
                 catName: 'tomcat1',
-                // parent properties
                 aniName: 'ani2',
-                size: 102
-                
+                size: 102                
             }
         };
         let tomArray = [tomObj1, tomObj2];
@@ -150,8 +148,8 @@ describe('Interface member test', function () {
         assert.strictEqual(retTom.friends.aniName, '');
         assert.strictEqual(retTom.friends.size, 0);
     });
+    
 });
-
 
 
 

@@ -24,8 +24,10 @@ declare namespace napitest {
     interface TestClass1 {
 		interFun1(v0?:string, v1?: string, v2?: number, v3?: boolean): number;
     }
+    
 	function fun1(v0:string, v1?: string, v2?: number, v3?: boolean): number;
 	
+    
     // test array
 	function fun21(v0: string, v1?: Array<string>): number;
 	interface TestClass2 {
@@ -39,11 +41,13 @@ declare namespace napitest {
         PERMISSION_GRANTED = "2",
         PERMISSION_PASS = "3",
     }
+    
     export enum HttpStatus {
         STATUS0 = 0,
         STATUS1 = 500,
         STATUS2 = 503,
     }
+    
     function fun31(v0?: HttpStatus, v1?: GrantStatus): number;
     function fun32(reason: string, callback?: Callback<HttpStatus>): void;
     
@@ -51,10 +55,11 @@ declare namespace napitest {
     interface TestClass4 {
         interFun41(v0?: Human, v1?: Human, v2?: Human): number;
     }
+    
     function fun41(v0?: Human, v1?: Human, v2?: Human): number;
     function fun42(v0?: Human, v2?: Array<Human>): number;
-    function fun43(v0?: Human, callback?: Callback<Human>): void;
-    function fun44(v0?: {name: string, age: number}): number;
+    function fun43(v0?: Human, callback?: Callback<Human>): void;    
+    function fun44(v0?: {name: string, age: number}): number;    
 }
 
 export default napitest;

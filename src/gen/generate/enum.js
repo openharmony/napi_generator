@@ -13,18 +13,23 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
+const { EnumValueType } = require("../tools/common");
+const { NapiLog } = require("../tools/NapiLog");
 function generateEnum(name, data) {
     let implH = ""
     let implCpp = ""
 
-    if (re.match("[a-zA-Z]", data.element[0].value)) {
+    if (data.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
         implH = `\nclass %s {\npublic:\n`.format(name, implH)
-    } else {
+    } else if (data.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER){
         implH = `\nenum %s {\n`.format(name, implH)
+    } else {
+        NapiLog.logError(`The enum type[%s] is not support`.format(data.enumValueType));
+        return {implH: "", implCpp: ""}
     }
     for (let i in data.element) {
         let v = data.element[i]
-        if (re.match("[a-zA-Z]", v.value)) {
+        if (data.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
             implH += `    static const std::string %s;\n`.format(v.name)
             implCpp += `\nconst std::string %s::%s = "%s";\n`.format(name, v.name, v.value)
         } else {

@@ -83,7 +83,7 @@ describe('Optional2', function () {
         assert.strictEqual(ret, 0);
         ret = test.fun32('1');
         ret = test.fun32('1', cb3);
-    });
+    });    
 });
 
 describe('Optional3', function () {
@@ -124,5 +124,6 @@ describe('Optional3', function () {
         ret = tc.interFun41({ name: 'n1', age: 20 }, { name: 'n2', age: 30 }, { name: 'n3', age: 40 });
         assert.strictEqual(ret, 0);
     });
+
 });
 

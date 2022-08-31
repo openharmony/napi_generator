@@ -83,7 +83,7 @@ function cToJs(value, type, dest, deep = 1) {
         let arrayType = checkArrayParamType(type)
         return arrayTempleteFunc(arrayType, deep, dest, value)
     }
-    else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
+    else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
         return mapTempleteFunc(type, deep, dest, value)
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
@@ -333,7 +333,7 @@ function returnGenerateMap(returnInfo, param) {
  * 获取方法返回参数的填充代码
  * @param returnInfo 方法的返回参数信息
  * @param param 方法的所有参数信息
- * @returns 返回参数的填充代码
+ * @returns 返回参数的填充代码123 返回测试的值
  */
 function getReturnFill(returnInfo, param) {
     let type = returnInfo.type
@@ -402,7 +402,7 @@ function generateType(type){
     else if (type.substring(type.length - 2) == "[]") {
         return true
     }
-    else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
+    else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
         return true
     }
     else if (type == "any") {
@@ -438,7 +438,7 @@ function returnGenerate2(returnInfo, param, data){
         param.valueDefine += "%sstd::vector<%s>%s out".format(
             param.valueDefine.length > 0 ? ", " : "", arrayType, modifiers)
     }
-    else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
+    else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
         returnGenerateMap(returnInfo, param)
     }
     else if (type == "any") {
