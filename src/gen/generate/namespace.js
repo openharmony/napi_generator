@@ -79,7 +79,7 @@ function genParentPropties(currentObj, data, parentBody) {
 function genExtendsRelation(data) {
     for (let i in data.interface) {
         let ifObj = data.interface[i]
-        if (ifObj.body.parentNameList.length > 0) {
+        if (ifObj && ifObj.body.parentNameList && ifObj.body.parentNameList.length > 0) {
             ifObj.body.parentBody = {value:[], function:[]}
             genParentPropties(ifObj, data, ifObj.body.parentBody)
         }
