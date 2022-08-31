@@ -18,7 +18,7 @@ var assert = require("assert");
 describe('boolean', function () {
     it('test fun1', function () {
         let ret = fun1(true);
-        assert.strictEqual(ret, 0);
+        assert.strictEqual(ret, false);
     });
 
 });
