@@ -88,6 +88,9 @@ function cToJs(value, type, dest, deep = 1) {
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         return `%s = NUMBER_C_2_JS(pxt, %s);`.format(dest, value)
+    } 
+    else if (type == "any") {
+        return anyTempleteFunc(type, deep, dest, value)
     }
     else {
         NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest));
@@ -154,6 +157,14 @@ function mapTempleteFunc(type, deep, dest, value) {
         ret = mapTempleteArray(mapType, tnvdef, lt)
     }
     return ret
+}
+
+function anyTempleteFunc(type, deep, dest, value) {
+
+    let anyTemplete = `pxt->GetAnyValue(%s_type, result, %s);`
+        .format(value, value)
+    
+    return anyTemplete
 }
 
 function mapInterface(value, lt, tnv, mapType) {
@@ -398,6 +409,9 @@ function generateType(type){
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
         return true
     }
+    else if (type == "any") {
+        return true
+    }
     else {
         return false
     }
@@ -429,6 +443,11 @@ function returnGenerate2(returnInfo, param, data){
     }
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
         returnGenerateMap(returnInfo, param)
+    }
+    else if (type == "any") {
+        param.valueOut = `std::any out;
+            std::string out_type;`
+        param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
     }
 }
 
