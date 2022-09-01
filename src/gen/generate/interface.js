@@ -60,6 +60,8 @@ function getHDefineOfVariable(name, type, variable) {
         variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
     } else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
         variable.hDefine += mapTypeString(type, name)
+    } else if (type == "any") {
+        variable.hDefine += anyTypeString(type, name)
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         variable.hDefine += "\n    %s %s;".format(type, name)
@@ -125,6 +127,13 @@ function mapTypeString(type, name) {
         }
     }
     return "\n    std::map<%s> %s;".format(mapTypeString, name);
+}
+
+function anyTypeString (type, name) {
+    let anyType = `\n    std::string %s_type;
+    std::any %s;`
+
+    return anyType.format(name, name)
 }
 
 function generateInterface(name, data, inNamespace) {
