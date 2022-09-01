@@ -77,6 +77,7 @@ public:
     napi_value GetValueProperty(napi_value value, const char *propertyName);
     napi_value SetValueProperty(napi_value &value, const char *propertyName, napi_value property);
 
+    napi_value CreateArray(napi_value &value);
     uint32_t GetArrayLength(napi_value value);
     napi_value GetArrayElement(napi_value value, uint32_t p);
     napi_value SetArrayElement(napi_value &value, uint32_t p, napi_value ele);
@@ -260,6 +261,15 @@ napi_value XNapiTool::SetValueProperty(napi_value &value, const char *propertyNa
     }
     result_status = napi_set_named_property(env_, value, propertyName, property);
     CC_ASSERT(result_status == napi_ok);
+    return value;
+}
+
+napi_value XNapiTool::CreateArray(napi_value &value)
+{
+    if (value == nullptr) {
+        napi_status result_status = napi_create_array(env_, &value);
+        CC_ASSERT(result_status == napi_ok);
+    }
     return value;
 }
 
