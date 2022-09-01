@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
-    isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList } = require("../tools/common");
+    isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList, jsType2CType } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 const { print } = require("../tools/tool");
 
@@ -108,12 +108,13 @@ function checkArrayParamType(type) {
 function arrayTempleteFunc(arrayType, deep, dest, value) {
     let lt = deep
     let tnv = dest
-    let tnvdef = `uint32_t outLen%d = %s.size();
+    let tnvdef = `pxt->CreateArray(%s);
+    uint32_t outLen%d = %s.size();
     for(uint32_t i = 0; i < outLen%d; i++) {
         napi_value tnv%d = nullptr;
         [calc_out]
         pxt->SetArrayElement(%s, i, tnv%d);
-    }`.format(lt, value, lt, lt, tnv, lt)
+    }`.format(tnv, lt, value, lt, lt, tnv, lt)
     let ret = ""
     if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
         ret = tnvdef.replaceAll("[calc_out]", `tnv%d = NUMBER_C_2_JS(pxt,%s[i]);`.format(lt, value))
@@ -265,28 +266,31 @@ function mapTempleteArray(mapType, tnvdef, lt) {
     let ret
     if (mapType[3] == "string") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
+        pxt->CreateArray(tnv%d);
         tnv%d = (i -> first).c_str();
         uint32_t len%d = i->second.size();
         for(uint32_t j=0;j<len%d;j++) {
             tnv%d = pxt->SwapC2JsUtf8(i->second[j].c_str());
             pxt->SetArrayElement(tnv%d, j, tnv%d);
-        }`.format(lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
+        }`.format(lt + 2, lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
     } else if (mapType[3] == "boolean") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
+        pxt->CreateArray(tnv%d);
         tnv%d = (i -> first).c_str();
         uint32_t len%d = i->second.size();
         for(uint32_t j=0;j<len%d;j++) {
             tnv%d = pxt->SwapC2JsBool(i->second[j]);
             pxt->SetArrayElement(tnv%d, j, tnv%d);
-        }`.format(lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
+        }`.format(lt + 2, lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
     } else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
+        pxt->CreateArray(tnv%d);
         tnv%d = (i -> first).c_str();
         uint32_t len%d = i->second.size();
         for(uint32_t j=0;j<len%d;j++) {
             tnv%d = NUMBER_C_2_JS(pxt,i->second[j]);
             pxt->SetArrayElement(tnv%d, j, tnv%d);
-        }`.format(lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
+        }`.format(lt + 2, lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
     }
     return ret
 }
@@ -409,7 +413,7 @@ function returnGenerate2(returnInfo, param, data){
     }
     else if (type.substring(0, 6) == "Array<") {
         let arrayType = getArrayType(type)
-        if (arrayType == "string") arrayType = "std::string"
+        arrayType = jsType2CType(arrayType)
         param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
                                              : "std::vector<%s> out;".format(arrayType)
         param.valueDefine += "%sstd::vector<%s>%s out".format(
@@ -417,8 +421,7 @@ function returnGenerate2(returnInfo, param, data){
     }
     else if (type.substring(type.length - 2) == "[]") {
         let arrayType = getArrayTypeTwo(type)
-        if (arrayType == "string") arrayType = "std::string"
-        if (arrayType == "boolean") arrayType = "bool"
+        arrayType = jsType2CType(arrayType)
         param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
                                              : "std::vector<%s> out;".format(arrayType)
         param.valueDefine += "%sstd::vector<%s>%s out".format(
