@@ -15,11 +15,31 @@
 const { fun1 } = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('boolean', function () {
+describe('Any', function () {
+
+    it('test fun1', function () {
+        let ret = fun1("1");
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test fun1', function () {
+        let ret = fun1(45678);
+        assert.strictEqual(ret, 0);
+    });
+
     it('test fun1', function () {
         let ret = fun1(true);
-        assert.strictEqual(ret, false);
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test fun1', function () {
+        let ret = fun1([1,2,3,4,5,6,7,8,9]);
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test fun1', function () {
+        let ret = fun1({"test":"okay","test1":"res"});
+        assert.strictEqual(ret, 0);
     });
 
 });
-

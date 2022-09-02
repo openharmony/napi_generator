@@ -35,8 +35,7 @@ describe('Interface', function () {
     it('test TestClass1 fun3', function () {
         let tc = new TestClass1();
         let ret = tc.fun3(2);
-        let retJson = JSON.stringify(ret);
-        assert.strictEqual(retJson, '0');
+        assert.strictEqual(ret, false);
     });
 
     it('test TestClass1 fun4', function () {
