@@ -14,7 +14,7 @@
 */
 const re = require("../tools/re");
 const { NumberIncrease } = require("../tools/common");
-
+const { addUniqFunc2List } = require("../tools/tool");
 const { analyzeFunction } = require("./function");
 
 /**interface解析 */
@@ -51,8 +51,10 @@ function analyzeInterface(data) {//same as class
         if (tt) {//函数
             let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) != '', re.getReg(t, tt.regs[2]),
                 re.getReg(t, tt.regs[3]), re.getReg(t, tt.regs[4]))
-            if (funcDetail != null)
-                result.function.push(funcDetail)
+            if (funcDetail != null) {
+                // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
+                addUniqFunc2List(funcDetail, result.function)
+            }
         }
     }
     return result

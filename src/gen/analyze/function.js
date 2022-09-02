@@ -107,12 +107,12 @@ function analyzeFunction(data, isStatic, name, values, ret) {
     let funcType = tmp[1]
     tmp = analyzeReturn(ret)
     ret = tmp[0]
-    if (tmp[1])
-        funcType = FuncType.PROMISE
-    if (funcType == FuncType.ASYNC || funcType == FuncType.PROMISE) {
-        // 查看是否有同名的函数，async_callback和promise，
-        // 只需要保留一个，这里简单处理，忽略所有promise
-        if (funcType == FuncType.PROMISE) return null;
+    if (tmp[1]) { // 返回类型为 Promise, 解析成等价的AsyncCallback方法
+        funcType = FuncType.ASYNC
+        // 将Promise<type>改为AsyncCallback<type>，作为方法的最后一个入参
+        let paramType = ret.replace("Promise", "AsyncCallback")
+        values.push({name: "promise", optional: false, type: paramType})
+        ret = "void"
     }
     for (let j in values) {
         let v = values[j]
