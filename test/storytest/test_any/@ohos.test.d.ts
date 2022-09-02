@@ -12,14 +12,12 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { fun1 } = require("./out/build/Release/napitest")
-var assert = require("assert");
+declare namespace napitest {
+    interface TestClass1 {
+        any1: any;
+    }
 
-describe('boolean', function () {
-    it('test fun1', function () {
-        let ret = fun1(true);
-        assert.strictEqual(ret, false);
-    });
+    function fun1(v: any): number;
+}
 
-});
-
+export default napitest;

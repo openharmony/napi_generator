@@ -43,23 +43,7 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     } else if (type.substring(type.length - 2) == "[]") {
         return arrTemplete(dest, napiVn, type);
     } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
-        if (enumType) {
-            if (napiVn.indexOf("GetValueProperty") >= 0) {
-                let lt = LenIncrease.getAndIncrease()
-                return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C_ENUM(tnv%d,%s,%s,%s);}`
-                .format(lt, napiVn, lt, lt, type, dest, enumType)
-            } else {
-                return `NUMBER_JS_2_C_ENUM(%s,%s,%s,%s);`.format(napiVn, type, dest, enumType)
-            } 
-        } else {
-            if (napiVn.indexOf("GetValueProperty") >= 0) {
-                let lt = LenIncrease.getAndIncrease()
-                return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C(tnv%d,%s,%s);}`
-                .format(lt, napiVn, lt, lt, type, dest)
-            } else {
-                return `NUMBER_JS_2_C(%s,%s,%s);`.format(napiVn, type, dest)
-            } 
-       }
+        return numTempleteFunc (enumType, napiVn, type, dest);
     } else if (InterfaceList.getValue(type)) {
         let tt = ""
         let ifl = InterfaceList.getValue(type)
@@ -75,8 +59,10 @@ function jsToC(dest, napiVn, type, enumType = 0) {
         return arrTemplete(dest, napiVn, type);
     } else if (type == "boolean") {
         return `BOOLEAN_JS_2_C(%s,%s,%s);`.format(napiVn, "bool", dest)
-    } else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
+    } else if (type.substring(0, 4) == "Map<" || type.substring(0, 6) == "{[key:") {
         return mapTempleteFunc(dest, napiVn, type);
+    } else if (type == "any") {
+        return anyTempleteFunc(dest, napiVn, type);
     } else {
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type));
     }        
@@ -170,6 +156,26 @@ function arrTemplete(dest, napiVn, type) {
     return arrTemplete
 }
 
+function numTempleteFunc(enumType, napiVn, type, dest) {
+    if (enumType) {
+        if (napiVn.indexOf("GetValueProperty") >= 0) {
+            let lt = LenIncrease.getAndIncrease()
+            return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C_ENUM(tnv%d,%s,%s,%s);}`
+            .format(lt, napiVn, lt, lt, type, dest, enumType)
+        } else {
+            return `NUMBER_JS_2_C_ENUM(%s,%s,%s,%s);`.format(napiVn, type, dest, enumType)
+        } 
+    } else {
+        if (napiVn.indexOf("GetValueProperty") >= 0) {
+            let lt = LenIncrease.getAndIncrease()
+            return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C(tnv%d,%s,%s);}`
+            .format(lt, napiVn, lt, lt, type, dest)
+        } else {
+            return `NUMBER_JS_2_C(%s,%s,%s);`.format(napiVn, type, dest)
+        } 
+   }
+}
+
 function getMapValueCode(arrayType) {
     let valueTypeOut = arrayType.substring(22, arrayType.length-1)
     let strTypeOut = "%s".format(valueTypeOut)
@@ -255,6 +261,7 @@ function paramGenerateArray(p, funcValue, param) {
         let strLen =  getMapKeyLen(arrayType)
         let keyType = arrayType.substring(0, strLen)
 
+        let suType = arrayType.substring(0,12)
         if (arrayType == "string") {
             arrayType = "std::string"
         } else if (arrayType == "boolean") {
@@ -262,8 +269,6 @@ function paramGenerateArray(p, funcValue, param) {
         } else if (keyType == "[key:string]:"|| keyType == "Map<string,") {
             let mapValueType = getMapValueType(strLen, keyType, arrayType);             
             arrayType = "std::map<std::string, %s>".format(mapValueType)
-        } else {
-            NapiLog.logError("The current version do not support this array type:", name, "type :", arrayType);
         }
         param.valueIn += funcValue.optional ? "\n    std::vector<%s>* in%d = nullptr;".format(arrayType, p) 
                                             : "\n    std::vector<%s> in%d;".format(arrayType, p)
@@ -280,6 +285,14 @@ function paramGenerateArray(p, funcValue, param) {
     } else {
         NapiLog.logError("The current version do not support to this param to generate :", name, "type :", type);
     }
+}
+
+function paramGenerateAny(p, name, type, param) {
+    param.valueIn += `\n    std::any in%d; 
+        std::string in%d_type;`.format(p, p)
+    param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+    param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
+    param.valueDefine += "%sstd::any &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
 }
 
 function paramGenerateEnum(data, funcValue, param, p) {
@@ -341,6 +354,15 @@ function mapTempleteFunc(dest, napiVn, type) {
         mapTemplete = mapArray(mapType, napiVn, dest, lt)
     }
     return mapTemplete
+}
+
+function anyTempleteFunc(dest, napiVn, type) {
+
+    let anyTemplete = `%s_type = pxt->GetAnyType(pxt->GetArgv(0));
+    pxt->SetAnyValue(%s_type, pxt->GetArgv(0), %s);`
+    .format(dest, dest, dest)
+    
+    return anyTemplete
 }
 
 let mapValueTemplete = `\
@@ -636,10 +658,12 @@ function paramGenerate(p, funcValue, param, data) {
     else if (isEnum(type, data)) {
         paramGenerateEnum(data, funcValue, param, p)
     }
-    else if (type.substring(0, 4) == "Map<" || type.indexOf("{") == 0) {
+    else if (type.substring(0, 4) == "Map<" || type.substring(0, 6) == "{[key:") {
         paramGenerateMap(funcValue, param, p)
     } else if (isArrayType(type)) {
         paramGenerateArray(p, funcValue, param);
+    } else if (type == "any") {
+        paramGenerateAny(p, name, type, param);
     } else {
         NapiLog.logError("function paramGenerate: The current version do not support to this param to generate :"
         , name, "type :", type);
