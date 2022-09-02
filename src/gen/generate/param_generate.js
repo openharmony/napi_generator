@@ -579,6 +579,12 @@ function paramGenerateCallBack(data, funcValue, param, p) {
     if (arrayType) {
         regType = re.getReg(type, arrayType.regs[2])
     }
+
+    let arrayType2 = re.match("(Async)*Callback<(([a-zA-Z_0-9]+)\\[\\])>", type)
+    if (arrayType2) {
+        regType = re.getReg(type, arrayType2.regs[2])
+    }
+
     let tt = re.match("(Async)*Callback<([a-zA-Z_0-9]+)>", type)
     if (tt) {
         regType = re.getReg(type, tt.regs[2])
