@@ -13,7 +13,8 @@
 * limitations under the License. 
 */
 const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
-    isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList, jsType2CType } = require("../tools/common");
+    isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList,
+    jsType2CType, getUnionType } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 const { print } = require("../tools/tool");
 
@@ -59,7 +60,9 @@ function cToJsForInterface(value, type, dest, deep) {
 
 function cToJs(value, type, dest, deep = 1) {
     var propertyName = delPrefix(value);
-    if (type == "void")
+    if (type.indexOf("|") >= 0) {
+        return unionTempleteFunc(value, type, dest);
+    } else if (type == "void")
         return "%s = pxt->UndefinedValue();".format(dest);
     else if (type == "boolean")
         return "%s = pxt->SwapC2JsBool(%s);".format(dest, value);
@@ -95,6 +98,33 @@ function cToJs(value, type, dest, deep = 1) {
     else {
         NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest));
     }
+}
+
+function unionTempleteFunc(value, type, dest){
+    let unionType = getUnionType(type)
+    let unionTypeString = ''
+    for (let i = 0; i < unionType.length; i++) {
+        if (unionType[i] == "string") {
+            unionTypeString += `if (%s_type == "string"){
+                %s
+                %s
+            }\n`.format(value, "std::string union_string = std::any_cast<std::string>("+value+");",
+            cToJs("union_string", unionType[i], dest))
+        } else if (unionType[i].substring(0, 12) == "NUMBER_TYPE_") {
+            unionTypeString += `if (%s_type == "number"){
+                %s
+                %s
+            }\n`.format(value, "std::uint32_t union_number = std::any_cast<std::uint32_t>("+value+");",
+            cToJs("union_number", unionType[i], dest))
+        } else if (unionType[i] == "boolean") {
+            unionTypeString += `if (%s_type == "boolean"){
+                %s
+                %s
+            }\n`.format(value, "bool union_boolean = std::any_cast<bool>("+value+");",
+            cToJs("union_boolean", unionType[i], dest))
+        }
+    }
+    return unionTypeString
 }
 
 function checkArrayParamType(type) {
@@ -333,6 +363,12 @@ function returnGenerateMap(returnInfo, param) {
             .format(param.valueDefine.length > 0 ? ", " : "", mapTypeString, modifiers)
 }
 
+function returnGenerateUnion (param) {
+    param.valueOut = `std::any out;
+            std::string out_type;`
+    param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
+}
+
 /**
  * 获取方法返回参数的填充代码
  * @param returnInfo 方法的返回参数信息
@@ -369,6 +405,8 @@ function returnGenerate(returnInfo, param, data) {
     }
     if (!isEnum(type, data)) {
         param.valuePackage = cToJs(outParam, type, "result")
+    } else if (type.indexOf("|") >= 0) {
+        returnGenerateUnion (param)
     }
     if (type == "string") {
         param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
