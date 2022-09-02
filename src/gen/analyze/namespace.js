@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { removeEmptyLine, checkOutBody } = require("../tools/tool");
+const { removeEmptyLine, checkOutBody, addUniqFunc2List } = require("../tools/tool");
 const { analyzeFunction } = require("./function");
 const { analyzeInterface } = require("./interface");
 const { analyzeClass } = require("./class");
@@ -101,7 +101,7 @@ function parseClass(matchs, data, result) {
 }
 
 function parseEnum(matchs, data, result) {
-    matchs = re.match("(export )*enum *([A-Za-z]+) *({)", data)
+    matchs = re.match("(export )*enum *([A-Za-z_0-9]+) *({)", data)
     if (matchs != null) {
         let enumName = re.getReg(data, matchs.regs[2]);
         let enumBody = checkOutBody(data, matchs.regs[3][0], null, null)
@@ -114,7 +114,7 @@ function parseEnum(matchs, data, result) {
             result.exports.push(enumName)
         }
     }
-    matchs = re.match("(export )*const ([a-zA-Z_]+) *[:=]{1} ([a-zA-Z0-9]+);", data)
+    matchs = re.match("(export )*const ([A-Za-z_0-9]+) *[:=]{1} ([A-Za-z_0-9]+);", data)
     if (matchs) {
         let constName = re.getReg(data, matchs.regs[1])
         result.const.push({
@@ -190,8 +190,10 @@ function parseFunction(matchs, data, result) {
         }
         let funcDetail = analyzeFunction(
             result, false, funcName, funcValue.substring(1, funcValue.length - 1), funcRet)
-        if (funcDetail != null)
-            result.function.push(funcDetail)
+        if (funcDetail != null) {
+            // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
+            addUniqFunc2List(funcDetail, result.function)
+        }
         if (matchs.regs[1][0] != -1) {
             result.exports.push(funcName)
         }
