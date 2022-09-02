@@ -27,7 +27,7 @@ function analyzeParams(funcName, values) {
         if (v == null)
             v = values
         values = values.substring(v.length, values.length)
-        let matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *([a-zA-Z<,>_0-9\\[\\]\\(\\):='{}]+)", v)
+        let matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *([a-zA-Z<,>|_0-9\\[\\]\\(\\):='{}]+)", v)
         if (matchs != null) {
             let type = re.getReg(v, matchs.regs[3])
             if (type.indexOf("Map") < 0) {
