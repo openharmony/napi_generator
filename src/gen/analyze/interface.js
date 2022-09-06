@@ -65,7 +65,7 @@ function analyzeInterface(data, rsltInterface = null) {//same as class
             })
         }
         tt = re.match(
-            "(static )* *([A-Za-z0-9_]+)\\(([\n 'a-zA-Z:;=,_0-9?<>{}|[\\]]*)\\) *: *([A-Za-z0-9_<>{}:, .[\\]]+)", t)
+            "(static )* *(\\$*[A-Za-z0-9_]+)\\(([\n 'a-zA-Z:;=,_0-9?<>{}|[\\]]*)\\) *: *([A-Za-z0-9_<>{}:, .[\\]]+)", t)
         if (tt) {//函数
             let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) != '', re.getReg(t, tt.regs[2]),
                 re.getReg(t, tt.regs[3]), re.getReg(t, tt.regs[4]))
