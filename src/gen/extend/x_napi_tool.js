@@ -88,6 +88,8 @@ public:
     napi_value GetMapElementValue(napi_value value, const char * p);
     napi_value SetMapElement(napi_value &value, const char * ele_key, napi_value ele_value);
 
+    std::string GetUnionType(napi_value object);
+
     std::string GetAnyType(napi_value object);
     void SetAnyValue(std::string &any_type, napi_value argv, std::any &any);
     void GetAnyValue (std::string any_type, napi_value &result, std::any any);
@@ -605,6 +607,20 @@ void XNapiTool::GetAnyValue (std::string any_type, napi_value &result, std::any 
         return;
     }
     return;
+}
+
+std::string XNapiTool::GetUnionType(napi_value object){
+    napi_valuetype result;
+    napi_typeof(env_, object, &result);
+    if (result == napi_string) {
+        return "string";
+    } else if (result == napi_number) {
+        return "number";
+    } else if (result == napi_boolean) {
+        return "boolean";
+    } else {
+        return nullptr;
+    }
 }
 
 bool XNapiTool::CheckFailed(bool b, const char *errStr)
