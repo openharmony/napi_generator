@@ -45,7 +45,9 @@ public:
 };`
 
 function getHDefineOfVariable(name, type, variable) {
-    if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
+    if (type.indexOf("|") >= 0) {
+        unionTypeString(name, type, variable)
+    } else if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
     else if (InterfaceList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (EnumList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (type.indexOf("Array<") == 0) {
@@ -99,6 +101,11 @@ function generateVariable(value, variable, className) {
         return nullptr;
     }
 `
+}
+
+function unionTypeString(name, type, variable) {
+    variable.hDefine += `std::string %s_type;\n
+    std::any %s;`.format(name, name)
 }
 
 function mapTypeString(type, name) {

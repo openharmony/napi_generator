@@ -215,6 +215,14 @@ function getMapType(type) {
     return [re.getReg(type, ttKey.regs[1]), valueType, valueMapType, valueArrayType]
 }
 
+function getUnionType(type) {
+    type = type.replace(/\s*/g,"")
+    var typeArr = new Array()
+    typeArr = type.split("|")
+    return typeArr
+}
+
+
 module.exports = {
     FuncType,
     EnumValueType,
@@ -227,5 +235,6 @@ module.exports = {
     enumIndex,
     getMapType,
     EnumList,
-    jsType2CType
+    jsType2CType,
+    getUnionType
 }

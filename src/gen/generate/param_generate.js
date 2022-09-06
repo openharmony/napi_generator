@@ -13,7 +13,8 @@
 * limitations under the License. 
 */
 const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease,
-    enumIndex, isEnum, EnumValueType, getMapType, EnumList } = require("../tools/common");
+    enumIndex, isEnum, EnumValueType, getMapType,
+    EnumList, getUnionType } = require("../tools/common");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
 const { print } = require("../tools/tool");
@@ -32,7 +33,9 @@ function getValueProperty(napiVn, name) {
 }
 
 function jsToC(dest, napiVn, type, enumType = 0) {
-    if (type == "string") {
+    if (type.indexOf("|") >= 0) {
+        return unionTempleteFunc(dest, napiVn, type)
+    } else if (type == "string") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
             return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){pxt->SwapJs2CUtf8(tnv%d,%s);}`
@@ -66,6 +69,34 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     } else {
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type));
     }        
+}
+
+function unionTempleteFunc(dest, napiVn, type) {
+    let unionType = getUnionType(type)
+    let unionTypeString = ''
+    unionTypeString += '%s_type = pxt->GetUnionType(pxt->GetArgv(0));\n'.format(dest)
+    for (let i = 0; i < unionType.length; i++) {
+        if (unionType[i] == "string") {
+            unionTypeString += `if (%s_type == "string"){
+                std::string union_string;
+                %s
+                %s
+            }\n`.format(dest, jsToC("union_string", napiVn, unionType[i]), dest+" = union_string;")
+        } else if (unionType[i].substring(0, 12) == "NUMBER_TYPE_") {
+            unionTypeString += `if (%s_type == "number"){
+                std::uint32_t union_number;
+                %s
+                %s
+            }\n`.format(dest, jsToC("union_number", napiVn, unionType[i]), dest+" = union_number;")
+        } else if (unionType[i] == "boolean") {
+            unionTypeString += `if (%s_type == "boolean"){
+                bool union_boolean;
+                %s
+                %s
+            }\n`.format(dest, jsToC("union_boolean", napiVn, unionType[i]), dest+" = union_boolean;")
+        }
+    }
+    return unionTypeString
 }
 
 function jsToCEnum(type, dest, napiVn) {
@@ -625,6 +656,14 @@ function getValueCheckout(funcValue, param, inParamName, p, cType) {
     return valueCheckout; 
 }
 
+function paramGenerateUnion(type, param, p, name) {
+    param.valueIn += `\n    std::any in%d; 
+        std::string in%d_type;`.format(p, p)
+    param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+    param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
+    param.valueDefine += "%sstd::any &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
+}
+
 function paramGenerateCommon(p, cType, funcValue, param, modifiers, inParamName) {
     param.valueIn += funcValue.optional ? "\n    %s* in%d = nullptr;".format(cType, p)
                                             : "\n    %s in%d;".format(cType, p)
@@ -640,7 +679,10 @@ function paramGenerate(p, funcValue, param, data) {
     let name = funcValue.name
     let inParamName = funcValue.optional ? "(*vio->in" + p + ")" : "vio->in" + p
     let modifiers = funcValue.optional ? "*" : "&"
-    if (type == "string") {
+    if (type.indexOf("|") >= 0) {
+        return paramGenerateUnion(type, param, p, name)
+    }
+    else if (type == "string") {
         paramGenerateCommon(p, "std::string", funcValue, param, modifiers, inParamName)
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_" && type.indexOf("[]") < 0) {
