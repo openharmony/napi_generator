@@ -52,14 +52,22 @@ function getHDefineOfVariable(name, type, variable) {
     else if (EnumList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (type.indexOf("Array<") == 0) {
         let arrayType = getArrayType(type)
-        let cType = jsType2CType(arrayType)
-        variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
+        if (arrayType == "any") {
+            variable.hDefine += "\n    std::string %s_type; \n    std::any %s;".format(name,name)
+        } else {
+            let cType = jsType2CType(arrayType)
+            variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
+        }
     } else if (type == "boolean") {
         variable.hDefine += "\n    bool %s;".format(name)
     } else if (type.substring(type.length - 2) == "[]") {
         let arrayType = getArrayTypeTwo(type)
-        let cType = jsType2CType(arrayType)
-        variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
+        if (arrayType == "any") {
+            variable.hDefine += "\n    std::string %s_type; \n    std::any %s;".format(name,name)
+        } else {
+            let cType = jsType2CType(arrayType)
+            variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
+        }
     } else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
         variable.hDefine += mapTypeString(type, name)
     } else if (type == "any") {
