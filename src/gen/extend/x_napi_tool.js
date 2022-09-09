@@ -94,6 +94,7 @@ public:
     std::string GetAnyArrayType(napi_value object);
     void SetAnyValue(std::string &any_type, napi_value argv, std::any &any);
     void GetAnyValue (std::string any_type, napi_value &result, std::any any);
+    void GetObjectValue(napi_value &result, std::map<std::string, std::any> valueIn);
 
     napi_value SyncCallBack(napi_value func, size_t argc, napi_value *args);
 
@@ -648,6 +649,46 @@ std::string XNapiTool::GetUnionType(napi_value object){
     } else {
         return nullptr;
     }
+}
+
+void XNapiTool::GetObjectValue(napi_value &result, std::map<std::string, std::any> valueIn)
+{
+    //napi_value result = nullptr;
+    napi_create_object(env_, &result);
+
+    /*std::map<std::string,std::uint32_t> any_map_number = 
+    std::any_cast<std::map<std::string, std::uint32_t>>(valueIn);
+    */
+    
+    for (auto i = valueIn.begin(); i != valueIn.end(); i++)
+    {
+        const char * tnv1;
+        std::any anyValue;
+        napi_value tnv2 = nullptr;
+        tnv1 = (i -> first).c_str();        
+
+        if (typeid(i->second) == typeid(int32_t)){
+            tnv2 = SwapC2JsInt32(std::any_cast<int32_t>(i->second));
+        }
+        else if (typeid(i->second) == typeid(uint32_t)){
+            tnv2 = SwapC2JsUint32(std::any_cast<uint32_t>(i->second));
+        }
+        else if (typeid(i->second) == typeid(int64_t)){
+            tnv2 = SwapC2JsInt64(std::any_cast<int64_t>(i->second));
+        }
+        else if (typeid(i->second) == typeid(double_t)){
+            tnv2 = SwapC2JsDouble(std::any_cast<double_t>(i->second));
+        }
+        else if (typeid(i->second) == typeid(char *)){
+            tnv2 = SwapC2JsUtf8(std::any_cast<char *>(i->second));
+        }
+        else if (typeid(i->second) == typeid(bool)){
+            tnv2 = SwapC2JsBool(std::any_cast<bool>(i->second));
+        }
+        
+        SetMapElement(result, tnv1, tnv2);
+    }
+    return;
 }
 
 bool XNapiTool::CheckFailed(bool b, const char *errStr)

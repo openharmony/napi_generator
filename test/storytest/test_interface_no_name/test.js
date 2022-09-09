@@ -41,7 +41,7 @@ describe('interface_no_name', function () {
         //assert.strictEqual(ret, '');
     });    
     
-   it('test interface_no_name fun3', function () {        
+    it('test interface_no_name fun3', function () {        
         let ret = fun3("fun3p1", {nm:"abc",age:20});
         //assert.strictEqual(ret, '');
     });
