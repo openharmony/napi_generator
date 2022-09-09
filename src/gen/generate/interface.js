@@ -72,9 +72,10 @@ function getHDefineOfVariable(name, type, variable) {
         variable.hDefine += mapTypeString(type, name)
     } else if (type == "any") {
         variable.hDefine += anyTypeString(type, name)
-    }
-    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+    } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         variable.hDefine += "\n    %s %s;".format(type, name)
+    } else if (type == "Object" || type == "object") {
+        variable.hDefine += "\n    std::map<std::string, std::any> %s;".format(name)
     }
     else {
         NapiLog.logError(`

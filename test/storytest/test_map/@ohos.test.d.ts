@@ -22,6 +22,9 @@ declare namespace napitest {
     interface TestClass1 {
         map1 : {[key: string]: {[key: string]: string}} ;
         map2 : Map<string,Human> ;
+        //map3: {[key: string]: Object} // to support
+        //map3: {[key: string]: object} // to support
+        
     }
 
     interface TestClass2 {
