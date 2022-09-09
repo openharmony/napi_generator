@@ -44,6 +44,13 @@ describe('Interface', function () {
         let retJson = JSON.stringify(ret);
         assert.strictEqual(retJson, '{"name":"","age":0}');
     });
+
+    it('test TestClass1 fun5', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun5([{ name: 'haha', age: 20 }, { name: 'houhou', age: 23 }]);
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '{"name":"","age":0}');
+    });
 });
 
 

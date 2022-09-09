@@ -90,10 +90,11 @@ function checkOutBody(body, off, flag, binside) {
                 if (body[i] in csr) csr[body[i]] += 1;
             }
             if (body[i] in csr) {
-                csr[body[i]] += 1;
+                if (!(body[i] == '>' && body[i-1] == '=')) { // 尖括号匹配时忽略关键字 "=>"
+                    csr[body[i]] += 1;
+                }
             }
         }
-
     }
 
     return null;
