@@ -732,8 +732,8 @@ function paramGenerate(p, funcValue, param, data) {
     } else if (type == "any") {
         paramGenerateAny(p, name, type, param);
     } else {
-        NapiLog.logError("function paramGenerate: The current version do not support to this param to generate :"
-        , name, "type :", type);
+        NapiLog.logError(
+            "The current version does not support generating parameter [%s] with type [%s]".format(name, type));
     }
 }
 
