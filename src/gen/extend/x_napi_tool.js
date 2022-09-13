@@ -91,6 +91,7 @@ public:
     std::string GetUnionType(napi_value object);
 
     std::string GetAnyType(napi_value object);
+    std::string GetAnyArrayType(napi_value object);
     void SetAnyValue(std::string &any_type, napi_value argv, std::any &any);
     void GetAnyValue (std::string any_type, napi_value &result, std::any any);
 
@@ -402,6 +403,32 @@ std::string XNapiTool::GetAnyType(napi_value object){
     } else {
         return nullptr;
     }
+}
+
+std::string XNapiTool::GetAnyArrayType(napi_value object){
+    napi_valuetype result;
+    napi_typeof(env_, object, &result);
+    if (result == napi_object) {
+        bool is_array;
+        napi_is_array(env_, object, &is_array);
+        if (is_array) {
+            napi_value arr_value_result;
+            napi_valuetype arr_type_result;
+            napi_get_element (env_, object, 0, &arr_value_result);
+            napi_typeof(env_, arr_value_result, &arr_type_result);
+            if (arr_type_result == napi_string) {
+                return "arr_string";
+            } else if (arr_type_result == napi_number) {
+                return "arr_number";
+            } else if (arr_type_result == napi_boolean) {
+                return "arr_boolean";
+            } else {
+                return nullptr;
+            }
+        }
+        return nullptr;
+    }
+    return nullptr;
 }
 
 void XNapiTool::SetAnyValue(std::string &any_type, napi_value argv, std::any &any)
