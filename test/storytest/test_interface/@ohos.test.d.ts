@@ -27,6 +27,7 @@ declare namespace napitest {
         fun2(numcc: Array<number>, mancc: Human): Human;
         fun3(v: number): boolean;
         fun4(v2: string, mancc: Array<Human>): Human;
+        fun5: (data: Array<Human>) => Human;
     }
 }
 
