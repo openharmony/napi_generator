@@ -17,6 +17,7 @@ const { generateAll } = require("./generate");
 const { NapiLog } = require("./tools/NapiLog");
 const re = require("./tools/re");
 const { print } = require("./tools/tool");
+var fs = require('fs');
 
 function doGenerate(ifname, destdir) {
     let structOfTs = analyzeFile(ifname);
@@ -24,9 +25,46 @@ function doGenerate(ifname, destdir) {
     let tt = re.match('@ohos.([.a-z_A-Z0-9]+).d.ts', fn);
     if (tt) {
         let moduleName = re.getReg(fn, tt.regs[1]);
+        imports(structOfTs.imports, destdir, ifname);
         generateAll(structOfTs, destdir, moduleName);
     } else {
         NapiLog.logError('file name ' + fn + ' format invalid, @ohos.input_sample.d.ts');
+    }
+    return structOfTs.declareNamespace[0].name
+}
+
+function imports (imports, destDir, ifname) {
+    for (let i = 0; i < imports.length; i++) {
+        let importSearch = re.search("([.,/a-zA-Z {}']+from)", imports[i])
+        let importPath = re.removeReg(imports[i], importSearch.regs[0])
+        importPath = importPath.replace
+        (/[`:~!#$%^&*() \+ =<>?"{}|,  ;' [ \] ·~！#￥%……&*（）—— \+ ={}|《》？：“”【】、；‘’，。、]/g,'')
+        importPath = importPath.split('/')
+
+        let ifnameSearch = re.search("(@[./a-zA-Z]+d.ts)", ifname)
+        let ifnamePath = re.removeReg(ifname, ifnameSearch.regs[0])
+        let filePath = ifnamePath+importPath[importPath.length-1]+'.d.ts'
+
+        let ifnameFile = fs.readFileSync(ifname,'utf-8')
+        let importFile 
+        try {
+            importFile = fs.readFileSync(ifnamePath+importPath[importPath.length-1]+'.d.ts','utf-8')
+        } catch (err) {
+            imports[i] = ''
+            return
+        }
+        
+        if (ifnameFile == importFile) {
+            return
+        } else {
+            try {
+                fs.accessSync(destDir+'/'+importPath[importPath.length-1], fs.constants.R_OK | fs.constants.W_OK);
+            } catch (err) {
+                fs.mkdirSync(destDir+'/'+importPath[importPath.length-1]);
+            }
+            imports[i] = '#include '+'"'+importPath[importPath.length-1]+'/'+
+            doGenerate(filePath,destDir+'/'+importPath[importPath.length-1])+'.h"\n'
+        }
     }
 }
 
