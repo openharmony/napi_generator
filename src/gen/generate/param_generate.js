@@ -65,7 +65,7 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     } else if (type.substring(0, 4) == "Map<" || type.substring(0, 6) == "{[key:") {
         return mapTempleteFunc(dest, napiVn, type);
     } else if (type == "any") {
-        return anyTempleteFunc(dest, napiVn, type);
+        return anyTempleteFunc(dest)
     } else {
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type));
     }        
@@ -120,6 +120,8 @@ function getArrayTypeTemplete(type) {
         arrayType = "std::string"
     } else if (arrayType == "boolean") {
         arrayType = "bool"
+    } else if (arrayType == "any") {
+        arrayType = "any"
     } else if (arrayType == "[key:string]:string" || arrayType == "Map<string,string>") {
         arrayType = "std::map<std::string, std::string>"
     } else if (arrayType.substring(0, arrayType.length-1) == "[key:string]:NUMBER_TYPE_" || 
@@ -142,6 +144,9 @@ function getArrayTypeTemplete(type) {
 function arrTemplete(dest, napiVn, type) {  
     let lt = LenIncrease.getAndIncrease()
     let arrayType = getArrayTypeTemplete(type)
+    if (arrayType == "any") {
+        return anyArrayTempleteFunc(dest);
+    }
     let arrTemplete = `\
     uint32_t len[replace_lt]=pxt->GetArrayLength(%s);
     for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
@@ -281,6 +286,9 @@ function paramGenerateArray(p, funcValue, param) {
         let arrayType = getArrayTypeTwo(type)
         if (arrayType == "string") arrayType = "std::string"
         if (arrayType == "boolean") arrayType = "bool"
+        if (arrayType == "any") {
+            return paramGenerateAnyArray(p, name, type, param)
+        }
         param.valueIn += funcValue.optional ? "\n    std::vector<%s>* in%d = nullptr;".format(arrayType, p) 
                                             : "\n    std::vector<%s> in%d;".format(arrayType, p)
         param.valueCheckout += jsToC(inParamName, "pxt->GetArgv(%d)".format(p), type)
@@ -291,13 +299,15 @@ function paramGenerateArray(p, funcValue, param) {
         let arrayType = getArrayType(type)
         let strLen =  getMapKeyLen(arrayType)
         let keyType = arrayType.substring(0, strLen)
-
         let suType = arrayType.substring(0,12)
         if (arrayType == "string") {
             arrayType = "std::string"
         } else if (arrayType == "boolean") {
             arrayType = "bool"
-        } else if (keyType == "[key:string]:"|| keyType == "Map<string,") {
+        } else if (arrayType == "any") {
+            return paramGenerateAnyArray(p, name, type, param)
+        }
+        else if (keyType == "[key:string]:"|| keyType == "Map<string,") {
             let mapValueType = getMapValueType(strLen, keyType, arrayType);             
             arrayType = "std::map<std::string, %s>".format(mapValueType)
         }
@@ -319,6 +329,14 @@ function paramGenerateArray(p, funcValue, param) {
 }
 
 function paramGenerateAny(p, name, type, param) {
+    param.valueIn += `\n    std::any in%d; 
+        std::string in%d_type;`.format(p, p)
+    param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+    param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
+    param.valueDefine += "%sstd::any &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
+}
+
+function paramGenerateAnyArray(p, name, type, param) {
     param.valueIn += `\n    std::any in%d; 
         std::string in%d_type;`.format(p, p)
     param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
@@ -387,9 +405,16 @@ function mapTempleteFunc(dest, napiVn, type) {
     return mapTemplete
 }
 
-function anyTempleteFunc(dest, napiVn, type) {
-
+function anyTempleteFunc(dest) {
     let anyTemplete = `%s_type = pxt->GetAnyType(pxt->GetArgv(0));
+    pxt->SetAnyValue(%s_type, pxt->GetArgv(0), %s);`
+    .format(dest, dest, dest)
+    
+    return anyTemplete
+}
+
+function anyArrayTempleteFunc(dest) {
+    let anyTemplete = `%s_type = pxt->GetAnyArrayType(pxt->GetArgv(0));
     pxt->SetAnyValue(%s_type, pxt->GetArgv(0), %s);`
     .format(dest, dest, dest)
     

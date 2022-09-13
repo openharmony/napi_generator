@@ -93,7 +93,7 @@ function cToJs(value, type, dest, deep = 1) {
         return `%s = NUMBER_C_2_JS(pxt, %s);`.format(dest, value)
     } 
     else if (type == "any") {
-        return anyTempleteFunc(type, deep, dest, value)
+        return anyTempleteFunc(value)
     }
     else {
         NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest));
@@ -158,6 +158,9 @@ function arrayTempleteFunc(arrayType, deep, dest, value) {
     else if (arrayType == "boolean") {
         ret = tnvdef.replaceAll("[calc_out]", `tnv%d = pxt->SwapC2JsBool(%s[i]);`.format(lt, value))
     }
+    else if (arrayType == "any") {
+        return anyArrayTempleteFunc(value)
+    }
     else if (InterfaceList.getValue(arrayType)) {
         ret = tnvdef.replaceAll("[calc_out]", cToJs(value + "[i]", arrayType, "tnv" + lt, deep + 1))
     }
@@ -189,8 +192,14 @@ function mapTempleteFunc(type, deep, dest, value) {
     return ret
 }
 
-function anyTempleteFunc(type, deep, dest, value) {
+function anyTempleteFunc(value) {
+    let anyTemplete = `pxt->GetAnyValue(%s_type, result, %s);`
+        .format(value, value)
+    
+    return anyTemplete
+}
 
+function anyArrayTempleteFunc(value) {
     let anyTemplete = `pxt->GetAnyValue(%s_type, result, %s);`
         .format(value, value)
     
@@ -466,18 +475,30 @@ function returnGenerate2(returnInfo, param, data){
     else if (type.substring(0, 6) == "Array<") {
         let arrayType = getArrayType(type)
         arrayType = jsType2CType(arrayType)
-        param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
+        if (arrayType == "any") {
+            param.valueOut = `std::any out;
+            std::string out_type;`
+            param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
+        } else {
+            param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
                                              : "std::vector<%s> out;".format(arrayType)
-        param.valueDefine += "%sstd::vector<%s>%s out".format(
+            param.valueDefine += "%sstd::vector<%s>%s out".format(
             param.valueDefine.length > 0 ? ", ": "", arrayType, modifiers)
+        }
     }
     else if (type.substring(type.length - 2) == "[]") {
         let arrayType = getArrayTypeTwo(type)
         arrayType = jsType2CType(arrayType)
-        param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
+        if (arrayType == "any") {
+            param.valueOut = `std::any out;
+            std::string out_type;`
+            param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
+        } else {
+            param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
                                              : "std::vector<%s> out;".format(arrayType)
-        param.valueDefine += "%sstd::vector<%s>%s out".format(
+            param.valueDefine += "%sstd::vector<%s>%s out".format(
             param.valueDefine.length > 0 ? ", " : "", arrayType, modifiers)
+        }
     }
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
         returnGenerateMap(returnInfo, param)
