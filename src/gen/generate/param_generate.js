@@ -433,12 +433,10 @@ for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
 function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
     let interfaceValue = InterfaceList.getValue(mapTypeString)
     let interfaceVarName = ""
-    let interfaceVar = ""
     let interfaceFun = ""
     for (let i = 0; i < interfaceValue.length; i++) {
         if (interfaceValue[i].type == 'string') {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
-            interfaceVar += `std::string %s;`.format(interfaceValue[i].name)
             interfaceFun +=
                 `pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0),tt%d.c_str()),%sName.c_str()),tt%d.%s);`
                     .format("SwapJs2CUtf8", "GetMapElementValue",
@@ -446,7 +444,6 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
         }
         else if (interfaceValue[i].type.substring(0, 12) == "NUMBER_TYPE_") {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
-            interfaceVar += `std::string %s;\n`.format(interfaceValue[i].name)
             interfaceFun +=
                 `%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0),tt%d.c_str()),%sName.c_str()),%s,tt%d.%s);\n`
                     .format("NUMBER_JS_2_C", "GetMapElementValue", lt, interfaceValue[i].name,
@@ -454,7 +451,6 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
         }
         else if (interfaceValue[i].type == 'boolean') {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
-            interfaceVar += `std::string %s;\n`.format(interfaceValue[i].name)
             interfaceFun +=
                 `tt%d.%s = pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0),tt%d.c_str()),%sName.c_str()));\n`
                     .format(lt + 1, interfaceValue[i].name, "SwapJs2CBool", "GetMapElementValue",
@@ -464,8 +460,7 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
     mapTemplete = mapTemplete.replaceAll("[replace_swap]",
         `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
         %d
-        %d
-        %d`.format(napiVn, lt, lt, interfaceVarName, interfaceVar, interfaceFun))
+        %d`.format(napiVn, lt, lt, interfaceVarName, interfaceFun))
     return mapTemplete
 }
 

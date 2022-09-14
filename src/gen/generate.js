@@ -22,6 +22,7 @@ const { generateGYP } = require("./extend/binding_gyp");
 const { generateGN } = require("./extend/build_gn");
 const { generateBase } = require("./extend/x_napi_tool");
 const { NumberIncrease } = require("./tools/common");
+var fs = require('fs');
 
 let moduleCppTmplete = `\
 #include <cstring>
@@ -121,6 +122,7 @@ let implHTemplete = `\
 #include <cmath>
 #include <map>
 #include <any>
+[importTs]
 
 [numberUsing]
 
@@ -153,6 +155,11 @@ function generateAll(structOfTs, destDir, moduleName) {
     let implH = replaceAll(implHTemplete, "[impl_name_upper]", ns0.name.toUpperCase())
     implH = implH.replaceAll("[numberUsing]", numberUsing);
     implH = replaceAll(implH, "[implH_detail]", result.implH)
+    let imports = ''
+    for (let i = 0; i < structOfTs.imports.length; i++){
+        imports += structOfTs.imports[i]
+    }
+    implH = replaceAll(implH, "[importTs]", imports)
     writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), null != license ? (license + "\n" + implH) : implH)
 
     let implCpp = implCppTemplete.replaceAll("[implName]", ns0.name)
