@@ -30,20 +30,24 @@ function analyzeFile(fn) {
     data = removeEmptyLine(data)
     // 去除Tab
     data = replaceTab(data)
-    while (true) {
-        // 去除import
-        let matchImport = re.search("import ([{}A-Za-z ,]+) from [\"']{1}([@./a-zA-Z]+)[\"']{1};*", data);
-        if (matchImport != null) data = re.removeReg(data, matchImport.regs[0]);
-        else break;
-    }
     let result = {
         exportDefault: [],
         exports: [],
+        imports:[],
         declareType: [],
         declareFunction: [],
         declareNamespace: [],
         declareInterface: [],
         declareLicense: [],
+    }
+    while (true) {
+        // import
+        let matchImport = re.search("import ([{}A-Za-z ,]+) from [\"']{1}([@_./a-zA-Z]+)[\"']{1};*", data);
+        if (matchImport != null) {
+            result.imports.push(re.getReg(data, matchImport.regs[0]))
+            data = re.removeReg(data, matchImport.regs[0]);
+        }
+        else break;
     }
 
     if (null != licenseData) {
