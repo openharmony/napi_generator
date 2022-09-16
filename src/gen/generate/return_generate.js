@@ -12,6 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
+const { isMappedTypeNode } = require("typescript");
 const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
     isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList,
     jsType2CType, getUnionType } = require("../tools/common");
@@ -95,9 +96,18 @@ function cToJs(value, type, dest, deep = 1) {
     else if (type == "any") {
         return anyTempleteFunc(value)
     }
+    else if (type == "Object" || type == "object") { 
+        return objectTempleteFuncReturn(value)
+    }
     else {
         NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest));
     }
+}
+
+function objectTempleteFuncReturn(value) {
+    let objectTemplete = `pxt->GetObjectValue(result, %s);`
+        .format(value)
+        return objectTemplete
 }
 
 function unionTempleteFunc(value, type, dest){
@@ -378,6 +388,12 @@ function returnGenerateUnion (param) {
     param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
 }
 
+function returnGenerateObject(returnInfo, param, data) {
+    param.valueOut = `std::map<std::string, std::any> out;`            
+    param.valueDefine += "%sstd::map<std::string, std::any> &out".format(param.valueDefine.length > 0 ? ", " : "")
+   
+}
+
 /**
  * 获取方法返回参数的填充代码
  * @param returnInfo 方法的返回参数信息
@@ -403,6 +419,14 @@ function getReturnFill(returnInfo, param) {
     }
     return valueFillStr
 }
+
+function isObjectType(type) {
+    if(type == "Object" || type == "object") {
+        return true;
+    }
+    return false;
+}
+
 function returnGenerate(returnInfo, param, data) {
     let type = returnInfo.type
     let valueFillStr = getReturnFill(returnInfo, param)
@@ -412,11 +436,13 @@ function returnGenerate(returnInfo, param, data) {
     if (returnInfo.optional) {
         param.optionalParamDestory += "C_DELETE(vio->out);\n    "
     }
+
     if (!isEnum(type, data)) {
         param.valuePackage = cToJs(outParam, type, "result")
     } else if (type.indexOf("|") >= 0) {
-        returnGenerateUnion (param)
+        returnGenerateUnion(param)
     }
+
     if (type == "string") {
         param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
         param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
@@ -438,6 +464,9 @@ function returnGenerate(returnInfo, param, data) {
         param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
         param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
     }
+    else if (isObjectType(type)) {
+        returnGenerateObject(returnInfo, param, data)
+    }
     else {
         NapiLog.logError("Do not support returning the type [%s].".format(type));
     }
@@ -456,12 +485,18 @@ function generateType(type){
     else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
         return true
     }
-    else if (type == "any") {
+    else if (type == "any" || type == "Object" || type == "object") {
         return true
     }
     else {
         return false
     }
+}
+function isMapType(type) {
+    if(type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
+        return true;
+    }
+    return false;
 }
 
 function returnGenerate2(returnInfo, param, data){
@@ -500,13 +535,17 @@ function returnGenerate2(returnInfo, param, data){
             param.valueDefine.length > 0 ? ", " : "", arrayType, modifiers)
         }
     }
-    else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
+    else if (isMapType(type)) {
         returnGenerateMap(returnInfo, param)
     }
     else if (type == "any") {
         param.valueOut = `std::any out;
             std::string out_type;`
         param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
+    }
+    else if (isObjectType(type)) {
+        param.valueOut = `std::map<std::string, std::any> out;`
+        param.valueDefine += "%sstd::map<std::string, std::any> &out".format(param.valueDefine.length > 0 ? ", " : "")
     }
 }
 

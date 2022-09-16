@@ -30,6 +30,7 @@ let moduleCppTmplete = `\
 #include <memory>
 #include <vector>
 #include <node_api.h>
+#include <any>
 #include "x_napi_tool.h"
 #include "[implName].h"
 

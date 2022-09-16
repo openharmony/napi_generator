@@ -37,7 +37,17 @@ function analyzeNoNameInterface(valueType, valueName, rsltInterface) {
 
 /**interface解析 */
 function analyzeInterface(data, rsltInterface = null) {//same as class
-    let body = re.replaceAll(data, "\n", "").split(";")//  # replace(" ", "").
+    let body = data
+
+    let notes = data.substring(data.indexOf("//"), data.length);
+    notes = notes.substring(0, notes.indexOf("\n"));    
+    while(notes != "") {
+        body = body.replace(notes, "");
+        notes = body.substring(body.indexOf("//"), body.length);
+        notes = notes.substring(0, notes.indexOf("\n"));
+    }  
+    
+    body = re.replaceAll(body, "\n", "").split(";")
     let result = {
         value: [],
         function: []

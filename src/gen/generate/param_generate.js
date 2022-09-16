@@ -65,8 +65,10 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     } else if (type.substring(0, 4) == "Map<" || type.substring(0, 6) == "{[key:") {
         return mapTempleteFunc(dest, napiVn, type);
     } else if (type == "any") {
-        return anyTempleteFunc(dest)
-    } else {
+        return anyTempleteFunc(dest, napiVn, type);
+    } else if (type == "Object" || type == "object") {
+        return objectTempleteFunc(dest, napiVn);
+    }else {
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type));
     }        
 }
@@ -693,6 +695,61 @@ function paramGenerateCommon(p, cType, funcValue, param, modifiers, inParamName)
         param.valueDefine.length > 0 ? ", " : "", cType, modifiers, funcValue.name)
 }
 
+let objectTemplete = `\
+    uint32_t len[replace_lt]=pxt->GetMapLength(%s);
+    for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
+        std::string tt[replace_lt];
+        std::any tt[replace_lt+1];
+
+        pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i[replace_lt]), tt[replace_lt]);
+        napi_value valueObj = pxt->GetMapElementValue(%s,tt[replace_lt].c_str());
+        std::string valueObjType = pxt->GetAnyType(valueObj);
+
+        [replace_swap]
+        %s.insert(std::make_pair(tt[replace_lt], tt[replace_lt+1]));
+    }`
+
+function objectTempleteFunc(dest, napiVn) {
+    let lt = LenIncrease.getAndIncrease()
+    let objTemplete = objectTemplete.format(napiVn, napiVn, napiVn, dest)
+
+    objTemplete = objTemplete.replaceAll("[replace_swap]",
+        `
+        if (valueObjType == "string") {
+            std::string tt[replace_lt+2];
+            pxt->SwapJs2CUtf8(valueObj, tt[replace_lt+2]);
+            tt[replace_lt+1] = tt[replace_lt+2];
+        } else if (valueObjType == "boolean") {
+            bool tt[replace_lt+2];
+            tt[replace_lt+2] = pxt->SwapJs2CBool(valueObj);
+            tt[replace_lt+1] = tt[replace_lt+2];
+        } else if (valueObjType == "number") {
+            NUMBER_JS_2_C(valueObj, NUMBER_TYPE_%d, tt[replace_lt+1]);
+        }            
+        `).format(lt)
+    objTemplete = objTemplete.replaceAll("[replace_lt]", lt)
+    objTemplete = objTemplete.replaceAll("[replace_lt+1]", lt + 1)
+    objTemplete = objTemplete.replaceAll("[replace_lt+2]", lt + 2)
+    return objTemplete
+}
+
+function paramGenerateObject(p, funcValue, param) {
+    let type = funcValue.type
+    let name = funcValue.name
+    let inParamName = funcValue.optional ? "(*vio->in" + p + ")" : "vio->in" + p
+    let modifiers = funcValue.optional ? "* " : "&"
+       
+        let arrayType = "std::map<std::string, std::any>"
+        param.valueIn += funcValue.optional ? "\n    %s* in%d = nullptr;".format(arrayType, p) 
+                                            : "\n    %s in%d;".format(arrayType, p)
+        
+        let arrValueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(p), type)                                 
+        param.valueCheckout += arrValueCheckout
+        param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
+        param.valueDefine += "%s%s %s%s".format(param.valueDefine.length > 0 ? ", "
+            : "", arrayType, modifiers, name)
+}
+
 // 函数的参数处理
 function paramGenerate(p, funcValue, param, data) {
     let type = funcValue.type
@@ -726,6 +783,8 @@ function paramGenerate(p, funcValue, param, data) {
         paramGenerateArray(p, funcValue, param);
     } else if (type == "any") {
         paramGenerateAny(p, name, type, param);
+    }  else if (type == "object" || type == "Object") {
+        paramGenerateObject(p, funcValue, param);
     } else {
         NapiLog.logError(
             "The current version does not support generating parameter [%s] with type [%s]".format(name, type));
