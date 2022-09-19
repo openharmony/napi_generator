@@ -54,6 +54,10 @@ public:
         std::map<const char *, std::map<const char *, napi_callback>> &valueList, std::map<const char *,
         napi_callback> &funcList, napi_value dest = nullptr);
 
+
+    void SetEnumProperty(napi_value dstObj, const char *propName, const std::any objValue);
+    void CreateEnumObject(const char *enumName, std::map<const char *, std::any> enumMap);
+
     XNapiTool(napi_env env, napi_callback_info info);
     XNapiTool(napi_env env, napi_value exports);
     ~XNapiTool();
@@ -937,6 +941,44 @@ void XNapiTool::DefineFunction(const char *funcName, napi_callback callback, nap
         {funcName, 0, callback, 0, 0, 0, napi_default, 0}};
 
     napi_status result_status = napi_define_properties(env_, dest, 1, descriptor);
+    CC_ASSERT(result_status == napi_ok);
+}
+
+void XNapiTool::SetEnumProperty(napi_value dstObj, const char *propName, std::any objValue)
+{
+    napi_value prop = nullptr;
+    napi_status result_status;
+
+    if (objValue.type() == typeid(int32_t)) {
+        result_status = napi_create_int32(env_, std::any_cast<int32_t>(objValue), &prop);
+    } else if (objValue.type() == typeid(uint32_t)) { 
+        result_status = napi_create_uint32(env_, std::any_cast<uint32_t>(objValue), &prop);
+    } else if (objValue.type() == typeid(int64_t)) {
+        result_status = napi_create_int64(env_, std::any_cast<int64_t>(objValue), &prop);
+    } else if (objValue.type() == typeid(double_t)) {
+        result_status = napi_create_double(env_, std::any_cast<double_t>(objValue), &prop);
+    } else if (objValue.type() == typeid(const char *)){        
+        result_status = napi_create_string_utf8(env_, std::any_cast<const char *>(objValue), NAPI_AUTO_LENGTH, &prop);
+    }
+
+    CC_ASSERT(result_status == napi_ok);
+    result_status = napi_set_named_property(env_, dstObj, propName, prop);
+    CC_ASSERT(result_status == napi_ok);
+}
+
+void XNapiTool::CreateEnumObject(const char *enumName, std::map<const char *, std::any> enumMap)
+{
+    napi_value enumObj = nullptr;
+    napi_create_object(env_, &enumObj);
+
+    for (auto it = enumMap.begin(); it != enumMap.end(); it++) {
+        SetEnumProperty(enumObj, it->first, it->second);
+    }
+
+    napi_property_descriptor exportEnum[] = {
+        {enumName, 0, 0, 0, 0, enumObj, napi_enumerable, 0}
+    };
+    napi_status result_status = napi_define_properties(env_, exports_, 1, exportEnum);
     CC_ASSERT(result_status == napi_ok);
 }
 
