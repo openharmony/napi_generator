@@ -109,7 +109,8 @@ function generateNamespace(name, data, inNamespace = "") {
     EnumList.push(data.enum)
     let result = generateEnumResult(data);
     namespaceResult.implH += result.implH
-    namespaceResult.implCpp += result.implCpp    
+    namespaceResult.implCpp += result.implCpp  
+    namespaceResult.middleInit += result.middleInit  
     for (let i in data.interface) {
         let ii = data.interface[i]
         let result = generateInterface(ii.name, ii.body, inNamespace + name + "::")
@@ -155,7 +156,8 @@ function getNamespaceResult(subResult, returnResult) {
 function generateEnumResult(data) {
     let resultEnum = {
         implH: "",
-        implCpp: ""
+        implCpp: "",
+        middleInit: ""
     }
 
     for (let i in data.enum) {
@@ -163,6 +165,7 @@ function generateEnumResult(data) {
         let result = generateEnum(enumm.name, enumm.body)
         resultEnum.implH += result.implH
         resultEnum.implCpp += result.implCpp
+        resultEnum.middleInit += result.midInitEnum
     }
     return resultEnum
 }
