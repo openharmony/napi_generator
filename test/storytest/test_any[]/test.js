@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { fun1, fun2, TestClass1 } = require("./out/build/Release/napitest")
+const { fun1, fun2, fun4, fun5, fun6, TestClass1 } = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('any[]', function () {
@@ -28,6 +28,21 @@ describe('any[]', function () {
 
     it('test fun2', function () {
         let ret = fun2([true, true, false, false]);
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test fun4', function () {
+        let ret = fun4(['a', 'b', 'c', 'd'], 0);
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test fun4_1', function () {
+        let ret = fun4([1, 2, 3, 4], 0);
+        assert.strictEqual(ret, 0);
+    });
+   
+    it('test fun5', function () {
+        let ret = fun5(0, ['a', 'b', 'c', 'd']);
         assert.strictEqual(ret, 0);
     });
 });
