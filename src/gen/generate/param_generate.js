@@ -147,7 +147,7 @@ function arrTemplete(dest, napiVn, type) {
     let lt = LenIncrease.getAndIncrease()
     let arrayType = getArrayTypeTemplete(type)
     if (arrayType == "any") {
-        return anyArrayTempleteFunc(dest);
+        return anyArrayTempleteFunc(dest, napiVn);
     }
     let arrTemplete = `\
     uint32_t len[replace_lt]=pxt->GetArrayLength(%s);
@@ -415,12 +415,12 @@ function anyTempleteFunc(dest) {
     return anyTemplete
 }
 
-function anyArrayTempleteFunc(dest) {
-    let anyTemplete = `%s_type = pxt->GetAnyArrayType(pxt->GetArgv(0));
-    pxt->SetAnyValue(%s_type, pxt->GetArgv(0), %s);`
-    .format(dest, dest, dest)
+function anyArrayTempleteFunc(dest, napiVn) {
+    let anyArrayTemplete = `%s_type = pxt->GetAnyArrayType(%s);
+    pxt->SetAnyValue(%s_type, %s, %s);`
+    .format(dest, napiVn, dest, napiVn, dest)
     
-    return anyTemplete
+    return anyArrayTemplete
 }
 
 let mapValueTemplete = `\
