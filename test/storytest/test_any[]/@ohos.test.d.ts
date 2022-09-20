@@ -19,6 +19,10 @@ declare namespace napitest {
 
     function fun1(v1: any[]): number;
     function fun2(v1: Array<any>): number;
+    
+    function fun4(v1: Array<any>, v: number): number;    
+    function fun5(v: number, v1: Array<any>): number;
+    function fun6(v: number, v1: any): number;
 }
 
 export default napitest;
