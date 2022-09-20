@@ -169,7 +169,7 @@ function arrayTempleteFunc(arrayType, deep, dest, value) {
         ret = tnvdef.replaceAll("[calc_out]", `tnv%d = pxt->SwapC2JsBool(%s[i]);`.format(lt, value))
     }
     else if (arrayType == "any") {
-        return anyArrayTempleteFunc(value)
+        return anyArrayTempleteFuncReturn(value)
     }
     else if (InterfaceList.getValue(arrayType)) {
         ret = tnvdef.replaceAll("[calc_out]", cToJs(value + "[i]", arrayType, "tnv" + lt, deep + 1))
@@ -209,7 +209,7 @@ function anyTempleteFunc(value) {
     return anyTemplete
 }
 
-function anyArrayTempleteFunc(value) {
+function anyArrayTempleteFuncReturn(value) {
     let anyTemplete = `pxt->GetAnyValue(%s_type, result, %s);`
         .format(value, value)
     
