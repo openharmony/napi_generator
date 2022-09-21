@@ -178,7 +178,7 @@ private:
 
 let xNapiToolCpp = `
 
-#include "x_napi_tool.h"
+#include "tool_utility.h"
 #include <cassert>
 #include <cstring>
 #include <uv.h>
@@ -710,7 +710,7 @@ bool XNapiTool::CheckFailed(bool b, const char *errStr)
     napi_create_string_utf8(env_, "x_tool", strlen("x_tool"), &errCode);
     napi_create_string_utf8(env_, errStr, strlen(errStr), &errMessage);
     napi_create_error(env_, errCode, errMessage, &error_);
-    printf("x_napi_tool err : %s\\n", errStr);
+    printf("tool_utility err : %s\\n", errStr);
 
     bFailed_ = true;
     return true;
@@ -877,7 +877,7 @@ napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFuncti
     valueData_ = data;
 
     napi_value resourceName = nullptr;
-    result_status = napi_create_string_utf8(env_, "x_napi_tool", NAPI_AUTO_LENGTH, &resourceName);
+    result_status = napi_create_string_utf8(env_, "tool_utility", NAPI_AUTO_LENGTH, &resourceName);
     CC_ASSERT(result_status == napi_ok);
     result_status = napi_create_async_work(env_, nullptr, resourceName, XNapiTool::AsyncExecute,
         XNapiTool::AsyncComplete, this, &work_);
@@ -1128,8 +1128,8 @@ void XNapiTool::CallAsyncFunc(AsyncFunc * pAsyncFuncs, napi_value ret)
 `
 
 function generateBase(destDir, license) {
-    writeFile(re.pathJoin(destDir, "x_napi_tool.h"), null != license ? (license + "\n" + xNapiToolH) : xNapiToolH)
-    writeFile(re.pathJoin(destDir, "x_napi_tool.cpp"), null != license ? (license + "\n" + xNapiToolCpp) : xNapiToolCpp)
+    writeFile(re.pathJoin(destDir, "tool_utility.h"), null != license ? (license + "\n" + xNapiToolH) : xNapiToolH)
+    writeFile(re.pathJoin(destDir, "tool_utility.cpp"), null != license ? (license + "\n" + xNapiToolCpp):xNapiToolCpp)
 }
 
 module.exports = {

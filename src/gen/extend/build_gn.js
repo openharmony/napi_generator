@@ -23,7 +23,7 @@ ohos_shared_library("[implName]")
     sources = [
         "[implName]_middle.cpp",
         "[implName].cpp",
-        "x_napi_tool.cpp",
+        "tool_utility.cpp",
     ]
     include_dirs = [
         ".",

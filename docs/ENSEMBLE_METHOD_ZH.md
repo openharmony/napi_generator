@@ -18,8 +18,8 @@
     |-- napitest.h
     |-- napitest_middle.cpp
     |-- test.sh
-    |-- x_napi_tool.cpp
-    |-- x_napi_tool.h
+    |-- tool_utility.cpp
+    |-- tool_utility.h
 
 ### 编译修改点
 
@@ -34,7 +34,7 @@
     	sources = [
         	"napitest_middle.cpp",
         	"napitest.cpp",
-        	"x_napi_tool.cpp",
+        	"tool_utility.cpp",
     	]
     	include_dirs = [
         	".",
@@ -137,8 +137,8 @@
     |-- napitest.h
     |-- napitest_middle.cpp
     |-- test.sh
-    |-- x_napi_tool.cpp
-    |-- x_napi_tool.h
+    |-- tool_utility.cpp
+    |-- tool_utility.h
 
 ### 编译修改点
 
@@ -154,7 +154,7 @@
     	sources = [
         	"napitest_middle.cpp",
         	"napitest.cpp",
-        	"x_napi_tool.cpp",
+        	"tool_utility.cpp",
     	]
     	include_dirs = [
         	".",
@@ -224,7 +224,7 @@
           "header": {
             "header_base": "//foundation/napitest",
             "header_files": [
-              "x_napi_tool.h",
+              "tool_utility.h",
               "napitest.h"
             ]
           },
