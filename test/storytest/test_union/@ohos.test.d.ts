@@ -12,12 +12,14 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-declare namespace napitest {
+declare namespace napitest {    
     interface TestClass1 {
         union1: string | number | boolean;
     }
-
-    function fun1(v: number | string | boolean): string;
+    
+    function fun1(v: number | string | boolean): string;    
+    function fun2(v0: string, v: number | string | boolean): string;
+    function fun3(v0: string, v: number | string | boolean, no: number): string;
 }
 
 export default napitest;
