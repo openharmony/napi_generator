@@ -23,7 +23,7 @@ let gypTemplete = `
           "sources": [
               "./[implName].cpp",
               "./[implName]_middle.cpp",
-              "./x_napi_tool.cpp"],
+              "./tool_utility.cpp"],
           "include_dirs": ["."],
           "cflags_cc": [ "-frtti","-std=c++17" ]
         }

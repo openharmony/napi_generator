@@ -58,7 +58,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen$ cd out/
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen/out$ ls
-	binding.gyp  BUILD.gn  napi_gen.log  napitest.cpp  napitest.h  napitest_middle.cpp  test.sh  x_napi_tool.cpp  x_napi_tool.h
+	binding.gyp  BUILD.gn  napi_gen.log  napitest.cpp  napitest.h  napitest_middle.cpp  test.sh  tool_utility.cpp  tool_utility.h
 
 4.此外，工具还支持指定路径下.d.ts文件转换、同一目录下多个.d.ts文件同时转换、多级模块.d.ts文件转换等场景。
 
@@ -67,21 +67,21 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen$ ./napi_generator-linux -d '../ts' -o out
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen$ cd out/
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen/out$ ls
-	binding.gyp  BUILD.gn  napi_gen.log  power.cpp  power.h  power_middle.cpp  test.sh  x_napi_tool.cpp  x_napi_tool.h
+	binding.gyp  BUILD.gn  napi_gen.log  power.cpp  power.h  power_middle.cpp  test.sh  tool_utility.cpp  tool_utility.h
 
 2）同一目录下多个.d.ts文件同时转换。.../gen目录下存在两个.d.ts文件，分别为@ohos.napitest.d.ts和@ohos.power.d.ts，多个文件中间以“，”隔开，注意文件中namespace后的名称不可相同。框架代码转换过程如下：
 
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen$ ./napi_generator-linux -f @ohos.napitest.d.ts,@ohos.power.d.ts -o out 
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen$ cd out/
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen/out$ ls
-	binding.gyp  BUILD.gn  napi_gen.log  napitest.cpp  napitest.h  napitest_middle.cpp  power.cpp  power.h  power_middle.cpp  test.sh  x_napi_tool.cpp  x_napi_tool.h
+	binding.gyp  BUILD.gn  napi_gen.log  napitest.cpp  napitest.h  napitest_middle.cpp  power.cpp  power.h  power_middle.cpp  test.sh  tool_utility.cpp  tool_utility.h
 
 3）多级模块.d.ts文件转换。.../gen目录下存在@ohos.napi_.test.A.d.ts文件，转换过程如下：
 
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen$ ./napi_generator-linux -f @ohos.napi_.test.A.d.ts -o out
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen$ cd out/
 	harmony@Ubuntu-64:~/napi/napi_generator_5/examples/gen/out$ ls
-	binding.gyp  BUILD.gn  napi_gen.log  napitest.cpp  napitest.h  napitest_middle.cpp  test.sh  x_napi_tool.cpp  x_napi_tool.h
+	binding.gyp  BUILD.gn  napi_gen.log  napitest.cpp  napitest.h  napitest_middle.cpp  test.sh  tool_utility.cpp  tool_utility.h
 
 #### Windows
 

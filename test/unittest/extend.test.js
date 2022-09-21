@@ -15,7 +15,7 @@
 let genDir = "../../src/gen/"
 const { generateGYP } = require(genDir + "extend/binding_gyp");
 const { generateGN } = require(genDir + "extend/build_gn");
-const { generateBase } = require(genDir + "extend/x_napi_tool");
+const { generateBase } = require(genDir + "extend/tool_utility");
 var assert = require("assert");
 const { readFile } = require("../../src/gen/tools/FileRW");
 
@@ -54,29 +54,29 @@ describe('Extend', function () {
 });
 
 function partGenerateBase(){
-    it('test gen/extend/x_napi_tool generateBase', function () {
+    it('test gen/extend/tool_utility generateBase', function () {
         var fs = require("fs");
-        if (fs.existsSync('test/unittest/x_napi_tool.cpp')) {
-            fs.unlink('test/unittest/x_napi_tool.cpp', function (err) {
+        if (fs.existsSync('test/unittest/tool_utility.cpp')) {
+            fs.unlink('test/unittest/tool_utility.cpp', function (err) {
                 if (err) {
                     return console.error(err);
                 }
             });
         }
-        if (fs.existsSync('test/unittest/x_napi_tool.h')) {
-            fs.unlink('test/unittest/x_napi_tool.h', function (err) {
+        if (fs.existsSync('test/unittest/tool_utility.h')) {
+            fs.unlink('test/unittest/tool_utility.h', function (err) {
                 if (err) {
                     return console.error(err);
                 }
             });
         }
         generateBase('test/unittest', '/*\n* Copyright (c) 2022 Shenzhen Kaihong\n*/');
-        let data = readFile("test/unittest/x_napi_tool.cpp")
+        let data = readFile("test/unittest/tool_utility.cpp")
         let retJson = JSON.stringify(data)
         let copyRight = retJson.substring(1, retJson.indexOf("Kaihong"))
         assert.strictEqual(copyRight, "/*\\n* Copyright (c) 2022 Shenzhen ")
 
-        let data1 = readFile("test/unittest/x_napi_tool.h")
+        let data1 = readFile("test/unittest/tool_utility.h")
         let retJson1 = JSON.stringify(data1)
         let copyRight1 = retJson.substring(1, retJson1.indexOf("Kaihong"))
         assert.strictEqual(copyRight1, "/*\\n* Copyright (c) 2022 Shenzhen ")
