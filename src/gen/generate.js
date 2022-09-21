@@ -13,14 +13,14 @@
 * limitations under the License. 
 */
 //生成BUILD.gn
-//生成x_napi_tool.h，生成x_napi_tool.cpp
+//生成tool_utility.h，生成tool_utility.cpp
 const { replaceAll } = require("./tools/tool");
 const { generateNamespace } = require("./generate/namespace");
 const { writeFile } = require("./tools/FileRW");
 const re = require("./tools/re");
 const { generateGYP } = require("./extend/binding_gyp");
 const { generateGN } = require("./extend/build_gn");
-const { generateBase } = require("./extend/x_napi_tool");
+const { generateBase } = require("./extend/tool_utility");
 const { NumberIncrease } = require("./tools/common");
 var fs = require('fs');
 
@@ -31,7 +31,7 @@ let moduleCppTmplete = `\
 #include <vector>
 #include <node_api.h>
 #include <any>
-#include "x_napi_tool.h"
+#include "tool_utility.h"
 #include "[implName].h"
 
 #define NUMBER_JS_2_C(napi_v, type, dest)      \\
@@ -170,7 +170,7 @@ function generateAll(structOfTs, destDir, moduleName) {
     let partName = moduleName.replace('.', '_')
     generateGYP(destDir, ns0.name, license)//生成ubuntu下测试的编译脚本
     generateGN(destDir, ns0.name, license, partName)//生成BUILD.gn for ohos
-    generateBase(destDir, license)//x_napi_tool.h/cpp
+    generateBase(destDir, license)//tool_utility.h/cpp
 }
 
 module.exports = {
