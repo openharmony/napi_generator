@@ -97,7 +97,7 @@ function generateVariable(value, variable, className) {
     {
         XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
         %s *p = (%s *)pxt->UnWarpInstance();
-        napi_value result;
+        napi_value result = nullptr;
         `.format(name, className, className) + cToJs("p->" + name, type, "result") + `
         delete pxt;
         return result;

@@ -76,7 +76,7 @@ function jsToC(dest, napiVn, type, enumType = 0) {
 function unionTempleteFunc(dest, napiVn, type) {
     let unionType = getUnionType(type)
     let unionTypeString = ''
-    unionTypeString += '%s_type = pxt->GetUnionType(pxt->GetArgv(0));\n'.format(dest)
+    unionTypeString += '%s_type = pxt->GetUnionType(%s);\n'.format(dest, napiVn)
     for (let i = 0; i < unionType.length; i++) {
         if (unionType[i] == "string") {
             unionTypeString += `if (%s_type == "string"){
