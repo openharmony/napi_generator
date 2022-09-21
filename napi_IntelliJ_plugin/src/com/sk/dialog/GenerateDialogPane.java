@@ -56,7 +56,7 @@ import java.util.regex.Pattern;
  */
 public class GenerateDialogPane extends JDialog {
     private static final Logger LOG = Logger.getInstance(GenerateDialogPane.class);
-    private static final String COMMAND_STATEMENT = "add_library(napitest SHARED x_napi_tool.cpp napitest.cpp "
+    private static final String COMMAND_STATEMENT = "add_library(napitest SHARED tool_utility.cpp napitest.cpp "
             + "napitest_middle.cpp)" + FileUtil.getNewline() + "target_link_libraries(napitest libace_napi.z.so)";
     private static final String REGEX = "napitest";
     private static final Pattern LF_PATTERN = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
