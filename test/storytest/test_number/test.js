@@ -12,43 +12,88 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { fun1, fun2, fun3, fun4, fun5 } = require("./out/build/Release/napitest")
+const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('Number', function () {
-
+describe('number', function () {
     it('test fun1', function () {
-        let ret = fun1(1);
-        assert.strictEqual(ret, 0);
+        let ret = test.fun1(18);
+        assert.deepStrictEqual(ret, 0);
     });
-
-    function abc(ret) {
-        assert.strictEqual(ret, 0);
-    }
 
     it('test fun2', function () {
-        fun2([1, 2, 3, 4], abc);
+        let ret = test.fun2(18, [18, 20]);
+        assert.deepStrictEqual(ret, []);
     });
 
-    // it('test fun2', function () {
-    //     fun2([1, 2, 3, 4]).then(abc);
-    // });
-
     it('test fun3', function () {
-        fun3({ num1: 3 }).then(abc);
+        let ret = test.fun3([18, 20], 20);
+        assert.deepStrictEqual(ret, []);
     });
 
     it('test fun4', function () {
-        fun4('aaa', abc);
+        let ret = test.fun4({ 'isTrue': 18, 'isExit': 20 });
+        assert.deepStrictEqual(ret, 0);
     });
 
-    function def(ret) {
-        assert.strictEqual(ret, '');
+    it('test fun5', function () {
+        let ret = test.fun5({ 'isTrue': 18, 'isExit': 20 }, 18);
+        assert.deepStrictEqual(ret, 0);
+    });
+
+    function asynFun1(err, ret) {
+        assert.strictEqual(err.code, 0)
+        assert.deepStrictEqual(ret, 0)
     }
 
-	it('test fun5', function () {
-        let promiseObj = fun5(12);
-        promiseObj.then(ret => {def(ret)});
+    function def1(ret) {
+        assert.deepStrictEqual(ret, 0);
+    }
+
+    it('test fun6', function () {
+        test.fun6(15, asynFun1);
+        test.fun6(15).then(def1);
+    });
+
+    it('test fun6', function () {
+        let promiseObj = test.fun6(15);
+        promiseObj.then(ret => { def1(ret) });
     });
 });
 
+describe('number', function () {
+    function asynFun2(err, ret) {
+        assert.deepStrictEqual(err.code, 0)
+        assert.deepStrictEqual(ret, [])
+    }
+
+    function def2(ret) {
+        assert.deepStrictEqual(ret, []);
+    }
+
+    it('test fun7', function () {
+        test.fun7(15, asynFun2);
+        test.fun7(15).then(def2);
+    });
+
+    it('test fun7', function () {
+        let promiseObj = test.fun7(15);
+        promiseObj.then(ret => { def2(ret) });
+    }); 
+
+    function cb1(ret) {
+        assert.deepStrictEqual(ret, 0)
+    }
+
+    it('test fun9', function () {
+        test.fun9(15, cb1);
+    });
+
+    it('test fun10', function () {
+        let ret = test.fun10({ age: 18, height: [20, 20], width: [18, 18] });
+        assert.deepStrictEqual(typeof ret, 'object');
+        assert.strictEqual(ret.age,0)
+        assert.deepStrictEqual(ret.height,[])
+        assert.deepStrictEqual(ret.width,[])
+    });
+});

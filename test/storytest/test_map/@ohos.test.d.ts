@@ -24,11 +24,10 @@ declare namespace napitest {
         map2 : Map<string,Human> ;
         //map3: {[key: string]: Object} // to support
         //map3: {[key: string]: object} // to support
-        
     }
 
     interface TestClass2 {
-        fun1(v: {[key: string]: string}):  number;
+        fun1(v: {[key: string]: string},v1:string):  number;
         fun2(v: {[key: string]: number}):  number;
         fun3(v: {[key: string]: boolean}):  number;
         fun4(v: {[key: string]: Array<string>}):  number;

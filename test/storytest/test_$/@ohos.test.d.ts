@@ -12,10 +12,17 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-import { AsyncCallback, Callback } from './../basic';
-
 declare namespace napitest {
-    function $fun1(v: string): string;
+    interface Test {
+        $name: string;
+        $listInputMethod(V: string): void;
+    }
+    class Person {
+        static $getMaxAge(v1: string): number;
+    }
+    function $fun2(v: string): string;
+    function fun3(v: Test): number;
 }
 
 export default napitest;
+
