@@ -15,10 +15,30 @@
 declare namespace napitest {
     interface TestClass1 {
         any1: any;
+        focused?: any;
+        $def?: any;
+        arr?: Array<any>;
+        arr1?: any[];
+        extraInfo?: { [key: string]: any };
+        test?: (data: any, code: number) => void;
     }
 
-    function fun1(v: any): number;
-    function fun2(v: number): any;
+    export class Want {
+        parameters?: { [key: string]: any };
+        static Prop(propName: string): any;
+    }
+
+    function fun1(v: any, v1: string): number;
+    function fun2(v: number, v1: TestClass1): number;
+    function fun4(v: number, v1: Array<any>): number;
+    function fun5(v: string, v1: any[]): number;
+    function $fun6(v: boolean, param: Array<any>): number;
+    function fun8(v1: string[], v?: any): number;
+    
+    /*function fun10(v: string, v1?: number | Array<any>): string;
+    function fun7(v: string, v1: { [key: string]: any }): number;
+    function fun3(v: string): any;
+    function fun9(v: string, v1: { name: Array<any>, age: number }): number;*/
 }
 
 export default napitest;

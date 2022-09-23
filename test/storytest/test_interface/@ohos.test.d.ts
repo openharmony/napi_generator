@@ -20,14 +20,23 @@ declare namespace napitest {
         age: number;
     }
 
+    export enum LaunchReason {
+        UNKNOWN = 0,
+        START_ABILITY = 1,
+        CALL = 2,
+        CONTINUATION = 3,
+    }
+
     interface TestClass1 {
         ahuman: Human;
-        num1: number;
         fun1(v: number): number;
         fun2(numcc: Array<number>, mancc: Human): Human;
-        fun3(v: number): boolean;
-        fun4(v2: string, mancc: Array<Human>): Human;
+        fun3: (v: number, v1: string, v2: boolean) => boolean;
+        fun4: (mancc: Map<string, string>,v?: string) => Array<number>;
         fun5: (data: Array<Human>) => Human;
+        fun6: (v: string[], v1: { [key: string]: boolean }) => string[];
+        fun8: () => void;
+        /*fun7: (v: string, v1: LaunchReason) => LaunchReason;  --待支持*/        
     }
 }
 

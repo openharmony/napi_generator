@@ -18,7 +18,6 @@ var assert = require("assert");
 const { consumers } = require("stream");
 
 describe('Interface', function () {
-
     it('test TestClass1 fun1', function () {
         let tc1 = new TestClass1();
         let ret = tc1.fun1(1);
@@ -34,26 +33,43 @@ describe('Interface', function () {
 
     it('test TestClass1 fun3', function () {
         let tc = new TestClass1();
-        let ret = tc.fun3(2);
+        let ret = tc.fun3(2,'aaa',true);
         assert.strictEqual(ret, false);
     });
 
     it('test TestClass1 fun4', function () {
         let tc = new test.TestClass1();
-        let ret = tc.fun4('aaa', [{ name: 'haha', age: 20 }, { name: 'houhou', age: 23 }]);
+        let ret = tc.fun4({ 'name': 'haha', 'age': '20' });
         let retJson = JSON.stringify(ret);
-        assert.strictEqual(retJson, '{"name":"","age":0}');
-    });
-
-    it('test TestClass1 fun5', function () {
-        let tc = new test.TestClass1();
-        let ret = tc.fun5([{ name: 'haha', age: 20 }, { name: 'houhou', age: 23 }]);
-        let retJson = JSON.stringify(ret);
-        assert.strictEqual(retJson, '{"name":"","age":0}');
+        assert.strictEqual(retJson, '[]');
+        ret = tc.fun4({ 'name': 'haha', 'age': '20' },'aaa');
+        retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '[]');
     });
 });
 
+describe('Interface', function () {
+    it('test TestClass1 fun5', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun5(
+            [{ name: 'haha', age: 20 }, { name: 'houhou', age: 23 }]);
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '{"name":"","age":0}');
+    });
 
+    it('test TestClass1 fun6', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun6(['11','22','33'],{'isExit':true,'isTrue':false});
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '[]');
+    });
+
+    it('test TestClass1 fun8', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun8();
+        assert.deepStrictEqual(typeof ret, 'undefined');
+    });
+});
 
 
 

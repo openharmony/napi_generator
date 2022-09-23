@@ -16,10 +16,9 @@ const { TestClass1 ,TestClass2 } = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('Map', function () {
-
     it('test TestClass2 fun1', function () {
         let tc2 = new TestClass2();
-        let ret = tc2.fun1({"age":"ageValue","name":"nameValue"});
+        let ret = tc2.fun1({"age":"ageValue","name":"nameValue"},'aaaa');
         assert.strictEqual(ret, 0);
     });
     
@@ -40,7 +39,7 @@ describe('Map', function () {
         let ret = tc2.fun4({"age":["1","12","145"],"name":["21","22","23"]});
         assert.strictEqual(ret, 0);
     });
-    
+        
     it('test TestClass2 fun5', function () {
         let tc2 = new TestClass2();
         let ret = tc2.fun5({"age":[122,222,322],"name":[422,522,622]});
@@ -49,7 +48,6 @@ describe('Map', function () {
 });
 
 describe('Map', function () {
-
     it('test TestClass2 fun6', function () {
         let tc2 = new TestClass2();
         let ret = tc2.fun6({"age":[true,true,true],"name":[false,false,false]});
@@ -65,24 +63,24 @@ describe('Map', function () {
     it('test TestClass2 fun8', function () {
         let tc2 = new TestClass2();
         let ret = tc2.fun8(
-            {"peter":{"age":"ageValue","name":"nameValue"},"jane":{"age":"ageValue","name":"nameValue"}}
-        );
+            {"peter":{"age":"ageValue","name":"nameValue"},
+            "jane":{"age":"ageValue","name":"nameValue"}});
         assert.strictEqual(ret, 0);
     });
 
     it('test TestClass2 fun9', function () {
         let tc2 = new TestClass2();
         let ret = tc2.fun9(
-            {"peter":{"age":666,"name":"peter","isTrue":true},"jane":{"age":666,"name":"jane","isTrue":false}}
-        );
+            {"peter":{"age":666,"name":"peter","isTrue":true},
+            "jane":{"age":666,"name":"jane","isTrue":false}});
         assert.strictEqual(ret, 0);
     });
 
     it('test TestClass2 fun10', function () {
         let tc2 = new TestClass2();
         let ret = tc2.fun10(
-            {"peter":{"age":666,"name":"peter","isTrue":true},"jane":{"age":666,"name":"jane","isTrue":false}}
-        );
+            {"peter":{"age":666,"name":"peter","isTrue":true},
+            "jane":{"age":666,"name":"jane","isTrue":false}});
         assert.strictEqual(ret, 0);
     });
 });
