@@ -19,13 +19,17 @@ const re = require("./tools/re");
 const { print } = require("./tools/tool");
 var fs = require('fs');
 
-function doGenerate(ifname, destdir) {
+function doGenerate(ifname, destdir, imports) {
     let structOfTs = analyzeFile(ifname);
     let fn = re.getFileInPath(ifname);
     let tt = re.match('@ohos.([.a-z_A-Z0-9]+).d.ts', fn);
     if (tt) {
         let moduleName = re.getReg(fn, tt.regs[1]);
-        imports(structOfTs.imports, destdir, ifname);
+        if (imports) {
+            importsFun(structOfTs.imports, destdir, ifname);
+        } else {
+            structOfTs.imports = [];
+        }
         generateAll(structOfTs, destdir, moduleName);
     } else {
         NapiLog.logError('file name ' + fn + ' format invalid, @ohos.input_sample.d.ts');
@@ -33,7 +37,7 @@ function doGenerate(ifname, destdir) {
     return structOfTs.declareNamespace[0].name
 }
 
-function imports (imports, destDir, ifname) {
+function importsFun(imports, destDir, ifname) {
     for (let i = 0; i < imports.length; i++) {
         let importSearch = re.search("([.,/a-zA-Z {}']+from)", imports[i])
         let importPath = re.removeReg(imports[i], importSearch.regs[0])
