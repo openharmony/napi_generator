@@ -96,7 +96,7 @@ function checkGenerate(fileName) {
 
     }
     else {
-        NapiLog.logError('file name ' + fn + ' format invalid, @ohos.input_sample.d.ts');
+        NapiLog.logError('file name ' + fn + ' format invalid in function of checkGenerate!');
     }
 }
 

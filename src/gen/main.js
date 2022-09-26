@@ -32,7 +32,7 @@ function doGenerate(ifname, destdir, imports) {
         }
         generateAll(structOfTs, destdir, moduleName);
     } else {
-        NapiLog.logError('file name ' + fn + ' format invalid, @ohos.input_sample.d.ts');
+        NapiLog.logError('file name ' + fn + ' format invalid in function of doGenerate!');
     }
     return structOfTs.declareNamespace[0].name
 }
