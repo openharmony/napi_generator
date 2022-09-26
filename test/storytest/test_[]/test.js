@@ -12,28 +12,48 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { fun1, fun2, fun3, fun4 } = require("./out/build/Release/napitest")
+const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('String', function () {
-    var GrantStatus = {
-        PERMISSION_DENIED: -1,
-        PERMISSION_GRANTED: 2,
-        PERMISSION_PASS: 3
-    }
-    it('test fun1', function () {
-        let ret = fun1(['a', 'b', 'c', 'd']);
-        assert.strictEqual(ret, 0);
+describe('[]', function () {
+    it('test testArray', function () {
+        let ret = test.testArray(['kkk', 'hhh']);
+        assert.deepStrictEqual(ret, []);
     });
 
-    it('test fun2', function () {
-        let ret = fun2([1, 2, 3, 4]);
-        assert.strictEqual(ret, 0);
+    it('test testArray1', function () {
+        let ret = test.testArray1([15, 18]);
+        assert.deepStrictEqual(ret, []);
     });
 
-    it('test fun3', function () {
-        let ret = fun3([true, true, false, false]);
-        assert.strictEqual(ret, 0);
+    it('test testArray2', function () {
+        let ret = test.testArray2([true, false]);
+        assert.deepStrictEqual(ret, []);
+    });
+
+    it('test fun4', function () {
+        let ret = test.fun4(
+            ['kkk', 'hhh'], [{ 'name': 'kkk', 'age': 18 }, 
+            { 'name': 'kkk', 'age': 18 }]);
+        assert.strictEqual(JSON.stringify(ret), '[]');
+    });
+
+    it('test fun5', function () {
+        let ret = test.fun5([12, 18], 
+            [{ 'name': 'kkk', 'age': 18 }, { 'name': 'kkk', 'age': 18 }]);
+        assert.strictEqual(JSON.stringify(ret), '[]');
+    });
+
+    it('test fun6', function () {
+        let ret = test.fun6([true, false], 
+            [{ 'name': 'kkk', 'age': 18 }, { 'name': 'kkk', 'age': 18 }]);
+        assert.strictEqual(JSON.stringify(ret), '[]');
+    });
+
+    it('test fun21', function () {
+        let ret = test.fun21('sdfghjk',
+            [{ key: [11,12],value: ['aa','bb'],isExit: [true,true]},
+            { key: [13,14],value: ['cc','dd'],isExit: [false,false]}]);
+        assert.strictEqual(JSON.stringify(ret),'[]');
     });
 });
-

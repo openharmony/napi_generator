@@ -13,37 +13,56 @@
 * limitations under the License. 
 */
 const { fun1, fun2, fun3 } = require("./out/build/Release/napitest")
+const { fun4, fun5, fun6 } = require("./out/build/Release/napitest")
+const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('String', function () {
-    var GrantStatus = {
-        PERMISSION_DEFAULT: "",
-        PERMISSION_DENIED: "-1",
-        PERMISSION_GRANTED: "2",
-        PERMISSION_PASS: "3",
-    }
-    var HttpStatus = {
-        STATUS0: 0,
-        STATUS1: 500,
-        STATUS2: 503,
-    }
-
+describe('enum', function () {
     it('test fun1', function () {
-        let ret = fun1(GrantStatus.PERMISSION_DENIED);
-        assert.strictEqual(ret, HttpStatus.STATUS0);
+        let ret = fun1('aaaa', test.GrantStatus.PERMISSION_DENIED);
+        assert.strictEqual(ret, test.GrantStatus.PERMISSION_DEFAULT);
     });
 
     it('test fun2', function () {
-        let ret = fun2(HttpStatus.STATUS1);
-        assert.strictEqual(ret, GrantStatus.PERMISSION_DEFAULT);
+        let ret = fun2(18, test.LaunchReason.START_ABILITY);
+        assert.strictEqual(ret, test.LaunchReason.UNKNOWN);
+    });
+
+    it('test fun3', function () {
+        let ret = fun3('ggg', test.Action.ACTION_DIAL);
+        assert.strictEqual(ret, '');
+    });
+
+    it('test fun4', function () {
+        let ret = fun4(18, test.PlayingState.STATE_PLAYING);
+        assert.strictEqual(ret, 0);
     });
 
     function abc(ret) {
-        assert.strictEqual(ret, 0);
+        assert.deepStrictEqual(ret, test.LaunchReason.UNKNOWN);
     }
 
-    it('test fun3', function () {
-        fun3('1', abc);
+    it('test fun5', function () {
+        fun5('aaa', abc);
+    });
+
+    function asynFun1(err, ret) {
+        assert.deepStrictEqual(err.code, 0)
+        assert.deepStrictEqual(ret, '')
+    }
+
+    it('test fun6', function () {
+        fun6('hhh', asynFun1);
+        fun6('hhh').then(def1);
+    });
+
+    function def1(ret) {
+        assert.deepStrictEqual(ret, '');
+    }
+
+    it('test fun6', function () {
+        let promiseObj = fun6('hhh');
+        promiseObj.then(ret => { def1(ret) });
     });
 });
 

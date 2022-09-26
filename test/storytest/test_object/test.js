@@ -12,14 +12,30 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { TestClass1, fun5, fun6, fun7, fun8} = require("./out/build/Release/napitest")
+const { TestClass1, fun5} = require("./out/build/Release/napitest")
+const { fun6, fun7, fun8} = require("./out/build/Release/napitest")
+const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('Object', function () { 
+    var Radio = {
+        RADIO_UNKNOWN : 0,
+        RADIO_GSM : 1,
+        RADIO_1XRTT : 2,
+    }
+
     let tc1 = new TestClass1(); 
     it('test TestClass1 fun1', function () {
         let ret = tc1.fun1({"age":10,"name":"nameValue"});
         assert.strictEqual(ret, 0);
+        ret = tc1.fun1({"age":[10,15],"name":"nameValue"});
+        assert.strictEqual(ret,0)
+        ret = tc1.fun1({"age":10,"name":{'test':'"nameValue"'}});
+        assert.strictEqual(ret,0)
+        ret = tc1.fun1({"age":10,"name":{'test':'nameValue','test1':15}});
+        assert.strictEqual(ret,0)
+        ret = tc1.fun1({"age":10,"name": Radio.RADIO_GSM});
+        assert.strictEqual(ret,0)
     });
 
     it('test TestClass1 fun2', function () {
@@ -32,9 +48,9 @@ describe('Object', function () {
         assert.strictEqual(ret, 0);
     });
 
-    it('test TestClass1 fun4', function () {        
+    it('test TestClass1 fun4', function () {      
         let ret = tc1.fun4(2);
-        //assert.strictEqual(ret, 0);
+        assert.deepStrictEqual(typeof ret, 'object');
     });
 
     it('test TestClass1 fun9', function () {
@@ -42,8 +58,25 @@ describe('Object', function () {
         assert.strictEqual(ret, 0);
     });
 
+});
+
+describe('Object', function () { 
+    var Radio = {
+        RADIO_UNKNOWN : 0,
+        RADIO_GSM : 1,
+        RADIO_1XRTT : 2,
+    }
+    
     it('test fun5', function () {        
         let ret = fun5({"name":"sam","age":10});
+        assert.strictEqual(ret, 0);
+        ret = fun5({"name":['Sam','Peter'],"age":10});
+        assert.strictEqual(ret, 0);
+        ret = fun5({"name":{'test': '11'},"age":10});
+        assert.strictEqual(ret, 0);
+        ret = fun5({"name":{'test': '11','test1':true},"age":10});
+        assert.strictEqual(ret, 0);
+        ret = fun5({"name":Radio.RADIO_GSM,"age":10});
         assert.strictEqual(ret, 0);
     });
 
@@ -58,13 +91,7 @@ describe('Object', function () {
     });
 
     it('test fun8', function () {
-        fun8(2);
-        //assert.strictEqual(ret, 0);
+        let ret = fun8(2);
+        assert.deepStrictEqual(typeof ret, 'object');
     });
-
 });
-
-
-
-
-

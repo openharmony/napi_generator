@@ -12,15 +12,31 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { $fun1 } = require("./out/build/Release/napitest")
+const test = require("./out/build/Release/napitest")
+const { Test, Person } = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('String', function () {
+describe('$', function () {
+    it('test $listInputMethod', function () {
+        let te = new Test();
+        let ret = te.$listInputMethod("1");
+        assert.deepStrictEqual(typeof ret, 'undefined');
+    });
 
-    it('test $fun1', function () {
-        let ret = $fun1("1");
+    it('test $getMaxAge', function () {
+        let pe = new Person();
+        let ret = pe.$getMaxAge("1");
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test $fun2', function () {
+        let ret = test.$fun2("1");
         assert.strictEqual(ret, '');
     });
 
+    it('test fun3', function () {
+        let ret = test.fun3('aaaaa');
+        assert.strictEqual(ret, 0);
+    });
 });
 

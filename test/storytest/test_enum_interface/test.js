@@ -18,7 +18,6 @@ var assert = require("assert");
 const { consumers } = require("stream");
 
 describe('test_Interface', function () {
-
     function abc(ret) {
         assert.strictEqual(ret, '');
     }
