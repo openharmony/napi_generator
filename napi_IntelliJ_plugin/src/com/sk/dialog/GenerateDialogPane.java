@@ -215,23 +215,21 @@ public class GenerateDialogPane extends JDialog {
             tmpDirFile += "napi_generator-macos";
         }
         File file = new File(tmpDirFile);
-        if (!file.exists()) {
-            try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(execFn)) {
-                if (inputStream == null) {
-                    throw new IOException("exec File InputStream is Null");
-                }
-                byte[] bs = inputStream.readAllBytes();
-                writeTmpFile(tmpDirFile, bs);
-                if (sysName.contains("LINUX") || sysName.contains("MAC OS")) {
-                    executable(tmpDirFile);
-                }
-            } catch (IOException | InterruptedException e) {
-                GenNotification.notifyMessage(this.project, e.getMessage(), "Can not Find File:" + execFn,
-                        NotificationType.ERROR);
-                LOG.error(e);
-
-                return "";
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(execFn)) {
+            if (inputStream == null) {
+                throw new IOException("exec File InputStream is Null");
             }
+            byte[] bs = inputStream.readAllBytes();
+            writeTmpFile(tmpDirFile, bs);
+            if (sysName.contains("LINUX") || sysName.contains("MAC OS")) {
+                executable(tmpDirFile);
+            }
+        } catch (IOException | InterruptedException e) {
+            GenNotification.notifyMessage(this.project, e.getMessage(), "Can not Find File:" + execFn,
+                    NotificationType.ERROR);
+            LOG.error(e);
+
+            return "";
         }
         String command = file.toString();
         String inArgs = genInArgs();
