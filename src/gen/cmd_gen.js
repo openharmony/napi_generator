@@ -24,6 +24,7 @@ const { print } = require("./tools/tool");
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: ".d.ts file", default: "" },
     'directory': { key: 'd', args: 1, description: ".d.ts directory", default: "" },
+    'imports': { key: 'i', args: 1, description: "enable or disable support imports self-define file", default: false },
     'out': { key: 'o', args: 1, description: "output directory", default: "." },
     'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" }
 });
@@ -32,6 +33,7 @@ NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"))
 
 let fileNames = ops.filename;
 var pathDir = ops.directory;
+var imports = ops.imports;
 if (fileNames == null && pathDir == null) {
     NapiLog.logInfo("fileNames and pathDir both cannot be empty at the same time");
 } else if (pathDir != '') {
@@ -86,7 +88,7 @@ function checkGenerate(fileName) {
     if (tt) {
         let result = checkFileError(fileName);
         if (result[0]) {
-            main.doGenerate(fileName, ops.out);
+            main.doGenerate(fileName, ops.out, imports);
         }
         else {
             NapiLog.logError(result[1]);
