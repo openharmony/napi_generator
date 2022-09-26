@@ -38,5 +38,15 @@ declare namespace napitest {
         fun9(v: {[key: string]: Human}):  number;
         fun10(v: Map<string,Human>):  number;
     }
+    
+   function fun13(v: {[key: string]: string[]}):  number;   
+   function fun18(v: Map<string,string[]>):  number;
+
+   
+   /*
+   function fun14(v: number): {[key: string]: string[]}; --暂时不支持
+   function fun15(v: number):Map<string,string[]> --暂时不支持
+   */
+   
 }
 export default napitest;
