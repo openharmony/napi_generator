@@ -947,7 +947,7 @@ void XNapiTool::DefineFunction(const char *funcName, napi_callback callback, nap
 void XNapiTool::SetEnumProperty(napi_value dstObj, const char *propName, std::any objValue)
 {
     napi_value prop = nullptr;
-    napi_status result_status;
+    napi_status result_status = napi_invalid_arg;
 
     if (objValue.type() == typeid(int32_t)) {
         result_status = napi_create_int32(env_, std::any_cast<int32_t>(objValue), &prop);
