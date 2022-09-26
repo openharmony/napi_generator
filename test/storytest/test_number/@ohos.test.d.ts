@@ -15,16 +15,30 @@
 import { AsyncCallback, Callback } from './../basic';
 
 declare namespace napitest {
-    interface TestClass1 {
-        num1: number;
+    function fun1(v: number): number;
+    function fun2(v1: number, v2: number[]): number[];
+    function fun3(v1: Array<number>, v2: number): Array<number>;
+    function fun4(v: { [key: string]: number }): number;
+    function fun5(v1: Map<string, number>, v2: number): number;
+    function fun6(v1: number, callback: AsyncCallback<number>): void;
+    function fun6(v1: number): Promise<number>;
+    function fun7(v: number, v1: AsyncCallback<Array<number>>): void;
+    function fun7(v: number): Promise<Array<number>>;
+    function fun9(v1: number, callback: Callback<number>): void;
+    function fun10(v1: Test): Test;
+    interface Test {
+        age: number;
+        height: number[];
+        width: Array<number>;
     }
 
-    function fun1(v: number): number;
-    function fun2(v: Array<number>, cb: Callback<number>): void;
-    function fun3(v: TestClass1, cb: AsyncCallback<number>): void;
-    function fun4(v: string): number;
-    function fun5(v: number, cb: AsyncCallback<string>): void;
-    function fun5(v: number): Promise<string>;
+    /*function fun11(v1: Test1): Test;
+    interface Test1 {
+        address: { [key: string]: number };
+        long: Map<string, number>;
+    }
+    function fun8(v1: number, callback: AsyncCallback<number[]>): void;
+    function fun8(v1: number): Promise<number[]>;*/
 }
 
 export default napitest;

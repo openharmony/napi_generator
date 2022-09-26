@@ -15,7 +15,7 @@
 const { fun1, fun2, fun3 } = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('Union', function () {    
+describe('Union', function () {
     it('test fun1_0', function () {
         let ret = fun1("1");
         assert.strictEqual(ret, '');
@@ -30,7 +30,7 @@ describe('Union', function () {
         let ret = fun1(true);
         assert.strictEqual(ret, '');
     });
-    
+
     it('test fun2', function () {
         let ret = fun2('0', true);
         assert.strictEqual(ret, '');
