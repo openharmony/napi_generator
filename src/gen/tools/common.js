@@ -186,6 +186,10 @@ function getMapType(type) {
     let ttValue = re.search(",([a-zA-Z_0-9<>]+)>", type)
     let ttMap = re.search(",([a-zA-Z_0-9]+)>>", type)
     let ttArray = re.search("Array<([a-zA-Z_0-9]+)>", type)
+
+    if(ttArray == null) {
+        ttArray = re.search("([a-zA-Z_0-9]+)\\[\\]>", type)
+    }
     
     let valueType
     let valueMapType
@@ -195,7 +199,11 @@ function getMapType(type) {
         ttValue = re.search(":([a-zA-Z_0-9]+)}", type)
         ttMap = re.search(":([a-zA-Z_0-9]+)}}", type)
         ttArray = re.search("Array<([a-zA-Z_0-9]+)>", type)
+        if (ttArray == null) {
+            ttArray = re.search(":([a-zA-Z_0-9]+)\\[\\]}", type)
+        }        
     }
+    
     if (ttValue != null) {
         valueType = re.getReg(type, ttValue.regs[1])
         if (valueType.indexOf("Array<") == 0) {

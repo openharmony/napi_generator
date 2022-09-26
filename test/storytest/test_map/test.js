@@ -82,5 +82,5 @@ describe('Map', function () {
             {"peter":{"age":666,"name":"peter","isTrue":true},
             "jane":{"age":666,"name":"jane","isTrue":false}});
         assert.strictEqual(ret, 0);
-    });
+    });    
 });
