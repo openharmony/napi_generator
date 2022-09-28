@@ -233,7 +233,7 @@ public class GenerateDialogPane extends JDialog {
         }
         String command = file.toString();
         String inArgs = genInArgs();
-        command += inArgs + " -o " + genOutDir;
+        command += inArgs + " -o " + genOutDir + " -i " + radioButton.isSelected();
         return command;
     }
 
