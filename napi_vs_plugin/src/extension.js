@@ -46,9 +46,9 @@ function activate(context) {
 	}
 }
 
-function executor(name, genDir, mode) {
+function executor(name, genDir, mode, importIsCheck) {
 	var exec = require('child_process').exec;
-	exec(genCommand(name, genDir, mode), function (error, stdout, stderr) {
+	exec(genCommand(name, genDir, mode, importIsCheck), function (error, stdout, stderr) {
 		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
 		if (error || stdout.indexOf("success") < 0) {
 			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
@@ -58,12 +58,12 @@ function executor(name, genDir, mode) {
 	});
 }
 
-function genCommand(name, genDir, mode) {
+function genCommand(name, genDir, mode, importIsCheck) {
 	var genFileMode = mode == 0 ? " -f " : " -d ";
 	if (genDir == ""){
 		return exeFilePath + genFileMode + name;
 	}
-	return exeFilePath + genFileMode + name + " -o " + genDir;
+	return exeFilePath + genFileMode + name + " -o " + genDir + " -i " + importIsCheck;
 }
 
 function exeFileExit() {
@@ -95,7 +95,8 @@ function register(context, command) {
 				let mode = message.mode;
 				let name = message.fileNames;
 				let genDir = message.genDir;
-				checkMode(name, genDir, mode);
+				let importIsCheck = message.importIsCheck;
+				checkMode(name, genDir, mode, importIsCheck);
 			} else {
 				selectPath(panel, message);
 			}
@@ -147,7 +148,7 @@ function register(context, command) {
    });
 }
 
-function checkMode(name, genDir, mode) {
+function checkMode(name, genDir, mode, importIsCheck) {
 	name = re.replaceAll(name, " ", "");
 	if ("" == name) {
 		vscode.window.showErrorMessage("Please enter the path!");
@@ -165,7 +166,7 @@ function checkMode(name, genDir, mode) {
 		}
 	}
 	if (exeFileExit()) {
-		executor(name, genDir, mode);
+		executor(name, genDir, mode, importIsCheck);
 	} else {
 		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
 	}

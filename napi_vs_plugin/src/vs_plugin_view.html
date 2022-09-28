@@ -72,6 +72,7 @@
 	<script type="text/javascript">
 		var mode = 0;
 		let vscode = acquireVsCodeApi();
+		let importCheck = false;
 		window.onload = function () {
 			document.getElementById("selectMode").addEventListener("change", function (e) {
 				if (e.target.value == 1) {
@@ -90,6 +91,7 @@
 				mode: mode,
 				fileNames: fileNames,
 				genDir: genDir,
+				importIsCheck: importCheck,
 			}
 			vscode.postMessage(result);
 		}
@@ -114,6 +116,10 @@
 				msg: "cancel"
 			}
 			vscode.postMessage(result);
+		}
+
+		function checkbox(obj) {
+			importCheck = obj.checked;
 		}
 
 		window.addEventListener('message', event => {
@@ -179,6 +185,9 @@
 		编译脚本路径：
 		<input class="text" style="width: 250px; height: 18px;" type="text" id="buildFile">
 		<img src="./images/path.png" width="16px" height="16px" onclick="selectPath('selectBuildPath')">
+	</div>
+	<div>
+		<input id= "importCheck" type="checkbox" name="import" onclick="checkbox(this)">启用import功能
 	</div>
 	<div style="margin-top: 10px; text-align: right;">
 		<button type="button" class="button" onclick="cancel()" style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>
