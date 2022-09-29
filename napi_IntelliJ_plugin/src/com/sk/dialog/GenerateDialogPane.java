@@ -26,12 +26,13 @@ import com.sk.utils.GenNotification;
 import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -71,6 +72,7 @@ public class GenerateDialogPane extends JDialog {
     private JLabel interText;
     private JLabel genText;
     private JLabel scriptText;
+    private JRadioButton radioButton;
     private boolean generateSuccess = true;
     private String sErrorMessage = "";
     private String interFileOrDir;
@@ -318,7 +320,7 @@ public class GenerateDialogPane extends JDialog {
      * 赋值可执行文件权限。
      *
      * @param execFn 可执行命令
-     * @throws IOException 打开文件异常
+     * @throws IOException          打开文件异常
      * @throws InterruptedException 中断异常
      */
     private void executable(String execFn) throws IOException, InterruptedException {
