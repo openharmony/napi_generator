@@ -20,7 +20,7 @@ napi_generator/examples/app
 ```
 
   hap包的具体生成方法，可参考OpenHarmony/docs/zh-cn/application-dev文档中使用JS语言开发（FA模型）。其中修改index.js文件内容如下：
-  
+
 
 ```	
 
@@ -68,11 +68,14 @@ napi_generator/examples/app
 ```
 
 ## 使用说明
+
 步骤一：安装镜像环境。
 
-    |-- system.img
-    |-- userdata.img
-    |-- vendor.img
+	 harmony@Ubuntu-64:~/OpenHarmony/out/rk3568-khdvk/packages/phone/images/pack$ ll
+	 总用量 3329884
+	 drwxrwxr-x 2 harmony harmony       4096 9月  27 14:14  ./
+	 drwxrwxr-x 3 harmony harmony       4096 9月  27 15:30  ../
+	 -rw-rw-r-- 1 harmony harmony 3409787466 9月  27 14:14 RK3568-KHDVK-RAMDISK-GPT-20220929-1817.img
 
 步骤二：安装hap包。
 
@@ -94,11 +97,11 @@ napi_generator/examples/app
 log.txt中包含“======fun1(name: string, flags: Entity): number======”日志表示接口调用成功。如下所示：
 
     01-01 00:13:10.355  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:93 *******fun1_middle begin**********
-	01-01 00:13:10.357  2020  2038 D 01400/OHOS::ROSEN: RSRenderThread ProcessCommands size: 2
-	01-01 00:13:10.358  2020  2038 D 01400/OHOS::ROSEN: RSRenderThread DrawFrame(790351535051) in GPU
-	01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:107 *****fun1_middle xxxxx**********
-	01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1:28 ======fun1(name: string, flags: Entity): number======
-	01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:113 *******fun1_middle   end*********
+    01-01 00:13:10.357  2020  2038 D 01400/OHOS::ROSEN: RSRenderThread ProcessCommands size: 2
+    01-01 00:13:10.358  2020  2038 D 01400/OHOS::ROSEN: RSRenderThread DrawFrame(790351535051) in GPU
+    01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:107 *****fun1_middle xxxxx**********
+    01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1:28 ======fun1(name: string, flags: Entity): number======
+    01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:113 *******fun1_middle   end*********
 
 ## 相关仓
 
