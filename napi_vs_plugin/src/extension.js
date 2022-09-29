@@ -155,7 +155,7 @@ function checkMode(name, genDir, mode, importIsCheck) {
 		return;
 	}
 	if (mode == 0) {
-		if (name.indexOf(".") < 0 || !fs.lstatSync(name).isFile()) {
+		if (name.indexOf(".") < 0) {
 			vscode.window.showErrorMessage("Please enter the correct file path!");
 			return;
 		}
