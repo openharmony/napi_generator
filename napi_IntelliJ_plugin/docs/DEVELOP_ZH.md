@@ -14,8 +14,9 @@
 
 1.将napi_generator目录下的可执行文件分别放置在napi_generator/napi_IntelliJ_plugin/resources/cmds目录下对应系统的文件夹下。
 
-2.下载IDEA Community 与 JDK11 配置好环境。
-点击 https://www.jetbrains.com/idea/download/ 下载Community版本，并完成安装。
+2.下载并安装IDEA Community、JDK11配置好环境。IDEA Community版本可以左键单击以下链接下载。
+
+[下载链接](https://www.jetbrains.com/idea/download/)
 
 3.打开IDEA Community应用程序。
 依次点击项目File>Open 选择napi_generator/napi_IntelliJ_plugin项目文件夹。
@@ -30,17 +31,17 @@ Project Settings > Modules 新建Modules。点击上方“-”删除原有的Mod
 ![](../../figures/IntelliJ_env_Proj_Module.png)
 
 6.配置Module SDK.
-在New Module对话框中，选择IntelliJ Platform Plugin。若为首次环境配置，请在Module SDK 下拉框中点击 Add IntelliJ Platform Plugin SDK 选择IDEA Community安装目录，点击OK,在Select Internal Java Platform 选择 JAVA SDK 11（213版本只支持 11)，点击New Module对话框中Next。
+在New Module对话框中，选择IntelliJ Platform Plugin。若Module SDK中无可选SDK，请在Module SDK 下拉框中点击 Add IntelliJ Platform Plugin SDK 选择IDEA Community安装目录，点击OK,在Select Internal Java Platform 选择 JAVA SDK 11（213版本只支持 11)，点击New Module对话框中Next。
 ![](../../figures/IntelliJ_env_Proj_Module_New.png)
 
 7.配置Content root.
-Content root选择napi_generator/src/generator文件夹，module name会自动变为generator。点击Finish，若出现提示已存在是否覆盖的提示，请点“Yes”完成配置。
+Content root选择~/napi_generator/napi_IntelliJ_plugin文件夹，module name填写generator。点击Finish，若出现提示已存在是否覆盖的提示，请点“Yes”完成配置。
 ![](../../figures/IntelliJ_env_module_root.png)
 
 8.Modules配置完成后，若在SDKs中无相应JDK和Plugin SDK,请点击+号分别添加 Add Java JDK和Add Intellij PlantForm Plugin SDK,Java JDK为java11的安装目录，Plugin SDK为 IDEA Community 2021.3.3的安装目录。
 ![](../../figures/IntelliJ_env_config_SDKs.png)
 
-9.若完成步骤7配置，点击OK完成配置。Rebuild项目，若IDEA不能点击右上角的运行，点击Plugin后下三角选择Edit Configurations...选项，Run/Debug Configurations框中Use classpath of moudle选择generator，点击ok，等待安装完成，即可点击运行按钮。若IDEA依然不能点击右上角的运行，请重复以上全部操作。
+9.若完成以上步骤配置，点击OK完成配置。Rebuild项目，若IDEA不能点击右上角的运行，点击Plugin后下三角选择Edit Configurations...选项，Run/Debug Configurations框中Use classpath of moudle选择generator，点击ok，等待安装完成。
 
 ![](../../figures/IntelliJ_env_configurations.png)
 

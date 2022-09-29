@@ -50,19 +50,25 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../../figures/DevEco_step_generateSuccess.png)
 
-6.此外，工具还支持指定路径下.d.ts文件转换、同一目录下多个.d.ts文件同时转换等场景。
+6.此外工具还支持指定路径下d.ts文件转换、同一目录下多个d.ts文件同时转换、多级模块d.ts文件转换、d.ts接口import多个文件等场景。
 
-1）指定路径下.d.ts文件转换（可转换路径下所有.d.ts文件）。Generate Napi Frame窗口中，接口文件文本框中填写待转换.d.ts文件路径，此处为E:\demo；生成框架路径填写生成文件所放路径，此处为E:\deveco_project\entry\src\out；编译脚本路径为E:\deveco_project\entry\src写，然后点击ok。Generate Napi Frame窗口填写与生成文件如下图所示：
+1）指定路径下.d.ts文件转换（可转换路径下所有.d.ts文件）。Generate Napi Frame窗口填写与生成文件如下图所示：
 
 ![](../../figures/DevEco_converse_dir.png)
 
 ![](../../figures/DevEco_converse_dir_succ.png)
 
-2）同一目录下多个.d.ts文件同时转换。项目中存在@ohos.napitest.d.ts和@ohos.power.d.ts两个文件，且声明了import的d.ts文件。Generate Napi Frame窗口中，接口文件文本框中填写待转换.d.ts文件夹，此处为“E:\deveco_project\entry\src”；生成框架路径填写生成文件所放路径，此处为E:\deveco_project\entry\src\out；编译脚本路径为E:\deveco_project\entry\src写，然后点击ok。Generate Napi Frame窗口填写与生成文件如下图所示：
+2）同一目录下多个.d.ts文件同时转换。项目中存在@ohos.napitest.d.ts和@ohos.power.d.ts两个文件，且声明了import的d.ts文件。Generate Napi Frame窗口填写与生成文件如下图所示：
 
 ![](../../figures/DevEco_converse_file.png)
 
 ![](../../figures/DevEco_converse_file_succ.png)
+
+3）将待转换的d.ts文件与被引用的d.ts文件放在同一目录下，basic.d.ts文件放在待转换的d.ts文件上一级目录下。Generate Napi Frame窗口中选中启用import功能，其他选项填写参考以上步骤，点击ok。Generate Napi Frame窗口填写与生成文件如下图所示：
+
+![](../../figures/DevEco_converse_import.png)
+
+![](../../figures/DevEco_converse_import_succ.png)
 
 ## 注意
 

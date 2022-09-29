@@ -22,7 +22,6 @@
 	│   │   |   |── extend            # 扩展模块，包括gn文件生成、linux环境适配代码等
 	│   │   |   |── generate          # 生成器
 	│   │   |   └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等  
-	│   │   └── generator             #IntelliJ IDEA插件代码
 	│   ├── test                      # UT、ST测试
 	│   ├── FAQ                       # NAPI框架工具问题反馈
 	│   └── README                    # 工具使用指导     
