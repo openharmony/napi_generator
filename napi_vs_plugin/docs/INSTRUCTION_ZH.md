@@ -29,29 +29,33 @@ visual studio code 版本需1.62.0及以上。
 
 ![](../../figures/pic-plug-in-select-d-ts.png)
 
-5.鼠标在.d.ts上单击右键，选择“ Generate Napi Frame”选项，工具打开 Generate Napi Frame窗口。选择方式有.d.ts文件、文件夹两种方式，此处以.d.ts文件为例；选择接口文件文本框中默认填写.d.ts文件路径，此处不修改；生成框架路径文本框填写生成文件所放文件夹绝对路径；编译脚本路径文本框选填，此处不填写，然后点击ok。
+5.鼠标在.d.ts上单击右键，选择“ Generate Napi Frame”选项，工具打开 Generate Napi Frame窗口。选择方式有.d.ts文件、文件夹两种方式，此处以.d.ts文件为例；选择接口文件文本框中默认填写.d.ts文件路径，此处不修改；生成框架路径文本框填写生成文件所放文件夹绝对路径；编译脚本路径文本框选填，然后点击ok。
 
 ![](../../figures/pic-plug-in-gen-c++.png)
 
 ![](../../figures/pic-generator-napi-frame.png)
 
-6.转换成功工具右下角就会提示“Generated successfully”的信息，并且在.d.ts文件当前目录下生成对应文件，例如：
+6.转换成功后，工具右下角就会提示“Generated successfully”的信息，并且在.d.ts文件当前目录下生成对应文件，如下所示：
 
 ![](../../figures/pic-plug-in-gen-sucess.png)
 
 7.此外，工具还支持指定路径下.d.ts文件转换、同一目录下多个.d.ts文件同时转换、多级模块.d.ts文件转换等场景。
 
-1）指定路径下.d.ts文件转换（可转换路径下所有.d.ts文件）。Generate Napi Frame窗口中，选择方式修改为文件夹；选择接口文件文本框中填写待转换.d.ts文件路径，此处为E:\demo；生成框架路径填写生成文件所放路径，此处为项目当前路径；编译脚本路径选填，此处不填写，然后点击ok。Generate Napi Frame窗口填写与生成文件如下图所示：
+1）指定路径下.d.ts文件转换（可转换路径下所有.d.ts文件）。Generate Napi Frame窗口中，选择方式修改为文件夹，其他选项参考以上步骤，然后点击ok。Generate Napi Frame窗口填写与生成文件如下图所示：
 
 ![](../../figures/pic-plug-in-gen-dir-sucess.png)
 
-2）同一目录下多个.d.ts文件同时转换。项目中存在@ohos.napitest.d.ts和@ohos.power.d.ts两个文件，且声明了import的d.ts文件。Generate Napi Frame窗口中，选择方式修改为.d.ts文件；选择接口文件文本框中填写待转换.d.ts文件，此处为“E:\napi_tool_new\@ohos.napitest.d.ts,E:\napi_tool_new\@ohos.power.d.ts”；生成框架路径填写生成文件所放路径，此处为项目当前路径；编译脚本路径选填，此处不填写，然后点击ok。Generate Napi Frame窗口填写与生成文件如下图所示：
+2）同一目录下多个.d.ts文件同时转换。项目中存在@ohos.napitest.d.ts和@ohos.power.d.ts两个文件，且声明了import的d.ts文件。Generate Napi Frame窗口中，选择生成方式修改为.d.ts文件，选择接口文件文本框中填写“E:\napi_tool_new\@ohos.napitest.d.ts,E:\napi_tool_new\@ohos.power.d.ts”,其他选项参考以上步骤，然后点击ok。
 
 ![](../../figures/pic-plug-in-gen-files-sucess.png)
 
-3)多级模块.d.ts文件转换。项目中存在@ohos.napi_.test.A.d.ts文件，Generate Napi Frame窗口中，选择方为.d.ts文件；选择接口文件文本框中填写待转换.d.ts文件，此处为“E:\napi_tool_new\@ohos.napi_.test.A.d.ts”；生成框架路径填写生成文件所放路径，此处为项目当前路径；编译脚本路径选填，此处不填写，然后点击ok。Generate Napi Frame窗口填写与生成文件如下图所示：
+3)多级模块.d.ts文件转换。项目中存在@ohos.napi_.test.A.d.ts文件，Generate Napi Frame窗口填写与生成文件如下图所示：
 
 ![](../../figures/pic-plug-in-gen-module-sucess.png)
+
+4）将待转换的d.ts文件与被引用的d.ts文件放在同一目录下，basic.d.ts文件放在待转换的d.ts文件上一级目录下。Generate Napi Frame窗口中选中启用import功能，其他选项填写参考以上步骤，点击ok。Generate Napi Frame窗口填写与生成文件如下图所示：
+
+![](../../figures/pic-plug-in-gen-import-sucess.png)
 
 ## 注意
 
