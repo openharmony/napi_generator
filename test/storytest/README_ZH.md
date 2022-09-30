@@ -13,18 +13,29 @@
 	│   |   ├── storytest                    # story测试代码
 	│   |   |   ├── test_$                   # ts文件输入以$开头的函数测试用例
 	│   |   |   ├── test_[]                  # ts文件输入[]格式数组测试用例
+	│   |   |   ├── test_any                 # ts文件输入any测试用例
+	│   |   |   ├── test_any[]               # ts文件输入any数组测试用例
 	│   |   |   ├── test_array               # ts文件输入array<>格式数组测试用例
+	│   |   |   ├── test_test_array_map      # ts文件输入map数组测试用例
 	│   |   |   ├── test_bool                # ts文件输入boolean测试用例
+	│   |   |   ├── test_callback            # ts文件输入callback测试用例
 	│   |   |   ├── test_direct              # 同步直接返回函数用例
 	│   |   |   ├── test_enum                # ts文件输入enum测试用例
 	│   |   |   ├── test_enum_interface      # ts文件输入interface嵌套enum测试用例
+	│   |   |   ├── test_enum_js             # ts文件输入enum测试用例
+	│   |   |   ├── test_extends             # ts文件输入继承测试用例
 	│   |   |   ├── test_interface           # ts文件输入interface测试用例
+	│   |   |   ├── test_import              # ts文件输入import测试用例
 	│   |   |   ├── test_interface_no_name   # ts文件输入interface测试用例
 	│   |   |   ├── test_map                 # ts文件输入map测试用例
 	│   |   |   ├── test_namespace           # ts文件输入namespace测试用例
 	│   |   |   ├── test_number              # ts文件输入number测试用例
+	│   |   |   ├── test_object              # ts文件输入object测试用例
 	│   |   |   ├── test_static              # ts文件输入static的函数测试用例
+	│   |   |   ├── test_optional            # ts文件输入可选参数的函数测试用例
+	│   |   |   ├── test_promise             # ts文件输入promise的函数测试用例
 	│   |   |   ├── test_string              # ts文件输入string测试用例
+	│   |   |   ├── test_union               # ts文件输入联合参数测试用例
 	│   |   |   ├── basic.d.ts               # 基础函数模板
 	│   |   |   ├── README_ZH.md             # 测试用例使用指导
 	│   |   |   └── test.py                  # 用例执行脚本
