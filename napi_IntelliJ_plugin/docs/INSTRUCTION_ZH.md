@@ -4,7 +4,7 @@
 
 IntelliJ插件下载路径如下，选择napi_generator_outputs.zip中generator.jar下载。
 
-[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/GGsW3B68u/generator_outputs)               
+[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/mKjfCmPjk/generator_outputs_NAPI_0930)               
 
 ## IntelliJ插件使用方法
 
