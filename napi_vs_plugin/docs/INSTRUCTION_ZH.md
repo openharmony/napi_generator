@@ -3,7 +3,7 @@
 
 VS Code插件下载路径如下，选择napi_generator_outputs.zip中gnapi-0.0.1.vsix下载。
 
-[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/GGsW3B68u/generator_outputs)               
+[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/mKjfCmPjk/generator_outputs_NAPI_0930)               
 
 ## VS Code插件使用方法
 
