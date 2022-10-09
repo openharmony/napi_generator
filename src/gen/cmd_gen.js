@@ -13,6 +13,7 @@
 * limitations under the License. 
 */
 const main = require("./main");
+const tsMain = require("../tsGen/tsMain");
 const re = require("./tools/re");
 const { checkFileError } = require("./tools/common");
 const { NapiLog } = require("./tools/NapiLog");
@@ -83,6 +84,13 @@ function readDirFiles() {
 }
 
 function checkGenerate(fileName) {
+    NapiLog.logInfo("check file []".format(fileName))
+    let suffix = fileName.split('.').pop().toLowerCase();
+    if (suffix === 'h') {
+        NapiLog.logInfo("convert .h file to .ts file...")
+        tsMain.doGenerate(fileName, ops.out);
+        return;
+    }
     let fn = re.getFileInPath(fileName);
     let tt = re.match('@ohos([.a-z_A-Z0-9]+).d.ts', fn);
     if (tt) {
