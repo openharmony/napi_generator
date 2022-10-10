@@ -28,7 +28,9 @@ function parseFileAll(hFilePath) {
     } else {
         // call exe file (for real runtime)
         let sysInfo = os.platform()
-        let exeFile = sysInfo === 'win32' ? "header_parser.exe" : "./header_parser"
+        let execPath = path.dirname(process.execPath)
+        let exeFile = sysInfo === 'win32' ? path.join(execPath, "header_parser.exe") : 
+                                            path.join(execPath, "header_parser")
         cmd = exeFile + " " + hFilePath
     }
 
@@ -233,9 +235,6 @@ function analyzeClasses(rootInfo, parseResult) {
     }
 }
 
-let tsTemplate = `import { AsyncCallback, Callback } from './../basic';
-[content]
-`
 function getTab(tabLv) {
     let tab = ""
     for(var i = 0; i < tabLv; ++i) {
@@ -244,7 +243,7 @@ function getTab(tabLv) {
     return tab
 }
 
-function genFunction(func, tabLv) {
+function genFunction(func, tabLv, needDeclare = false) {
     let tab = getTab(tabLv)
     let funcPrefix = func.isClassFunc ? "" : "function "
     let funcParams = ""
@@ -252,12 +251,14 @@ function genFunction(func, tabLv) {
         funcParams += i > 0 ? ", " : ""
         funcParams += func.params[i].name + ": " + func.params[i].type
     }
-    return "%s%s%s(%s): %s\n".format(tab, funcPrefix, func.name, funcParams, func.retType)
+    let declareStr = needDeclare ? "declare " : ""
+    return "%s%s%s%s(%s): %s;\n".format(tab, declareStr, funcPrefix, func.name, funcParams, func.retType)
 }
 
-function genClass(classInfo, tabLv) {
+function genClass(classInfo, tabLv, needDeclare = false) {
     let tab = getTab(tabLv)
-    let tsClass = tab + "class " + classInfo.name + " {\n"
+    let declareStr = needDeclare ? "declare " : ""
+    let tsClass = tab + declareStr + "class " + classInfo.name + " {\n"
     let tab1 = getTab(tabLv+1)
     for (var i = 0; i < classInfo.properties.length; ++i) {
         tsClass += "%s%s: %s;\n".format(tab1, classInfo.properties[i].name, classInfo.properties[i].type)
@@ -283,10 +284,10 @@ function genNamespace(namespace, tabLv) {
 }
 
 function genTsContent(rootInfo) {
-    let tsContent = "import { AsyncCallback, Callback } from './../basic';\n\n"
+    let tsContent = rootInfo.needCallback ? "import { AsyncCallback, Callback } from './../basic';\n\n" : ""
 
     for(var i = 0; i < rootInfo.classes.length; ++i) {
-        tsContent += genClass(rootInfo.classes[i], 0)
+        tsContent += genClass(rootInfo.classes[i], 0, true)
     }
 
     for(var i = 0; i < rootInfo.namespaces.length; ++i) {
@@ -294,7 +295,7 @@ function genTsContent(rootInfo) {
     }
 
     for(var i = 0; i < rootInfo.functions.length; ++i) {
-        tsContent += genFunction(rootInfo.functions[i], 0)
+        tsContent += genFunction(rootInfo.functions[i], 0, true)
     }
 
     if (rootInfo.namespaces.length > 0) {
@@ -310,7 +311,8 @@ function doGenerate(hFilePath, destDir) {
     let rootInfo = {
         "namespaces": [],
         "classes": [],
-        "functions": []
+        "functions": [],
+        "needCallback": false
     }
     analyzeNameSpace(rootInfo, parseResult)
     analyzeRootFunction(rootInfo, parseResult)
