@@ -368,6 +368,7 @@ function paramGenerateMap(funcValue, param, p) {
         if (mapType[1] == "string") { mapTypeString = "std::string" }
         else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = mapType[1] }
         else if (mapType[1] == "boolean") { mapTypeString = "bool" }
+        else if (mapType[1] == "any") { mapTypeString = "std::any" }
         else { mapTypeString = mapType[1] }
     }
     else if (mapType[2] != undefined) {
@@ -380,10 +381,21 @@ function paramGenerateMap(funcValue, param, p) {
         else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = "std::vector<"+mapType[3]+">" }
         else if (mapType[3] == "boolean") { mapTypeString = "std::vector<bool>" }
     }
+    paramGenerateMap2(funcValue, param, p, mapType, mapTypeString, name)
+}
+
+function paramGenerateMap2(funcValue, param, p, mapType, mapTypeString, name) {
     let inParamName = funcValue.optional ? "(*vio->in" + p + ")" : "vio->in" + p
     let modifiers = funcValue.optional ? "*" : "&"
-    param.valueIn += funcValue.optional ? "\n    std::map<std::string,%s>* in%d = nullptr;".format(mapTypeString, p)
+    if (mapType[1] == "any") {
+        param.valueIn += funcValue.optional ? `\n    std::map<std::string,%s>* in%d = nullptr;
+                                                std::string in%d_type;`.format(mapTypeString, p, p)
+                                            : `\n    std::map<std::string,%s> in%d;
+                                                std::string in%d_type;`.format(mapTypeString, p, p)
+    } else {
+        param.valueIn += funcValue.optional ? "\n    std::map<std::string,%s>* in%d = nullptr;".format(mapTypeString, p)
                                         : "\n    std::map<std::string,%s> in%d;".format(mapTypeString, p)
+    }
     param.valueCheckout += getValueCheckout(funcValue, param, inParamName, p,
         "std::map<std::string,%s>".format(mapTypeString))
     param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
@@ -471,6 +483,7 @@ function mapValue(mapType, napiVn, dest, lt) {
     if (mapType[1] == "string") { mapTypeString = "std::string" }
     else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = mapType[1] }
     else if (mapType[1] == "boolean") { mapTypeString = "bool" }
+    else if (mapType[1] == "any") { mapTypeString = "std::any" }
     else if (mapType[1] != null) { mapTypeString = mapType[1] }
     let mapTemplete = mapValueTemplete.format(napiVn, mapTypeString, dest)
     mapTemplete = mapTemplete.replaceAll("[replace_lt]", lt)
@@ -492,6 +505,15 @@ function mapValue(mapType, napiVn, dest, lt) {
             `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
         tt%d = pxt->SwapJs2CBool(pxt->GetMapElementValue(%s,tt%d.c_str()));`
                 .format(napiVn, lt, lt, lt + 1, napiVn, lt))
+    }
+    if (mapTypeString == "std::any") {
+        mapTemplete = mapTemplete.replaceAll("[replace_swap]",
+            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
+            if (i%d == 0){
+                %s_type = pxt->GetAnyType(pxt->GetMapElementValue(%s,tt%d.c_str()));
+            }
+            pxt->SetAnyValue(%s_type, pxt->GetMapElementValue(%s,tt%d.c_str()), tt%d);`
+                .format(napiVn, lt, lt, lt, dest, napiVn, lt, dest, napiVn, lt, lt + 1))
     }
     else if (InterfaceList.getValue(mapTypeString)) {
         mapTemplete = mapInterface(mapTypeString, mapTemplete, napiVn, lt)

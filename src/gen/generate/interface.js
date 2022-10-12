@@ -126,6 +126,11 @@ function mapTypeString(type, name) {
         else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") {
             mapTypeString = "std::string,%s".format(mapType[1])
         }
+        else if (mapType[1].substring(0, 12) == "any") {
+            mapTypeString = `std::string,std::any`.format(mapType[1])
+            return `\n    std::map<%s> %s;
+            std::string %s_type;`.format(mapTypeString, name, name)
+        }
         else if (InterfaceList.getValue(mapType[1])) mapTypeString = "std::string,%s".format(mapType[1])
     }
     if (mapType[2] != undefined) {

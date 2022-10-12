@@ -84,3 +84,36 @@ describe('Map', function () {
         assert.strictEqual(ret, 0);
     });    
 });
+
+describe('Map_Any', function () {
+    it('test TestClass2 fun11', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun11({"age":"ageValue","name":"nameValue"});
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test TestClass2 fun11', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun11({"age":1234,"name":5678});
+        assert.strictEqual(ret, 0);
+    });
+    
+    it('test TestClass2 fun11', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun11({"age":true,"name":false});
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test TestClass2 fun11', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun11({"age":[1,23,456],"name":[7,89,101112]});
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test TestClass2 fun11', function () {
+        let tc2 = new TestClass2();
+        let ret = tc2.fun11({"peter":{"age":"ageValue","name":"nameValue"},
+                            "jane":{"age":"ageValue","name":"nameValue"}});
+        assert.strictEqual(ret, 0);
+    });
+});
