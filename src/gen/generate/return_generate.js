@@ -278,6 +278,9 @@ function mapTempleteValue(mapType, tnvdef, lt, value, tnv) {
     } else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") {
         ret = tnvdef.replaceAll("[calc_out]", `tnv%d = (i -> first).c_str();
         tnv%d = NUMBER_C_2_JS(pxt,i->second);`.format(lt, lt + 1))
+    } else if (mapType[1] == "any") {
+        ret = tnvdef.replaceAll("[calc_out]", `tnv%d = (i -> first).c_str();
+        pxt->GetAnyValue(%s_type, tnv%d, i->second);`.format(lt, value, lt + 1))
     }
     else if (InterfaceList.getValue(mapType[1])) {
         ret = mapInterface(value, lt, tnv, mapType)
@@ -363,6 +366,7 @@ function returnGenerateMap(returnInfo, param) {
         if (mapType[1] == "string") { mapTypeString = "std::string" }
         else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = mapType[1] }
         else if (mapType[1] == "boolean") { mapTypeString = "bool" }
+        else if (mapType[1] == "any") { mapTypeString = "std::any" }
         else { mapTypeString = mapType[1] }
     }
     else if (mapType[2] != undefined) {
