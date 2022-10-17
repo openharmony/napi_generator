@@ -14,19 +14,23 @@
  */
 package com.sk.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
-import org.apache.commons.lang3.StringUtils;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 import org.apache.http.util.TextUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.FileInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -44,18 +48,57 @@ public class FileUtil {
 
     private static final int COMPILE_SDK_VERSION = 5;
 
+    private static final String LF = getNewline(); // 换行符
+
+    private static final String BUILD_OPTION = "{" + LF
+                    + "    \"externalNativeOptions\": {" + LF
+                    + "      \"path\": \"\"," + LF
+                    + "      \"arguments\": \"-v\"," + LF
+                    + "      \"abiFilters\": [" + LF
+                    + "        \"armeabi-v7a\"," + LF
+                    + "        \"arm64-v8a\"" + LF
+                    + "      ]," + LF
+                    + "      \"cppFlags\": \"\"," + LF
+                    + "    }" + LF
+                    + "  }";
+
     /**
-     * 将错误信息输入到txt中
+     * 改写build-profile.json5文件
      *
-     * @param path    路径
-     * @param content 内容
+     * @param buildJsonFilePath build-profile.json5 文件路径
+     * @param cmakeFilePath CMakeList.txt 文件路径
      */
-    public void writeErrorToTxt(String path, String content) {
+    public void writeBuildJsonFile(String buildJsonFilePath, String cmakeFilePath) {
+        try {
+            String buildStr = readWholeFile(buildJsonFilePath);
+            JSONParser jsParser = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
+            JSONObject buildObj = (JSONObject) jsParser.parse(buildStr);
+            JSONObject buildOptionObj = (JSONObject) jsParser.parse(BUILD_OPTION);
+            ((JSONObject) buildOptionObj.get("externalNativeOptions")).put("path", cmakeFilePath);
+            buildObj.put("buildOption", buildOptionObj);
+            ObjectMapper mapper=new ObjectMapper();
+            buildStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildObj);
+
+            writeContentToFile(buildJsonFilePath, buildStr);
+        } catch (ParseException parseException) {
+            LOG.error("Failed to parse file [" + buildJsonFilePath + "], error: " + parseException);
+        } catch (JsonProcessingException jsonProcessingEx) {
+            LOG.error("Failed to write file [" + buildJsonFilePath + "], error: " + jsonProcessingEx);
+        }
+    }
+
+    /**
+     * 将数据写入到指定文件中
+     *
+     * @param path    文件路径
+     * @param content 数据内容
+     */
+    public void writeContentToFile(String path, String content) {
         File file = new File(path);
-        try (FileWriter fw = new FileWriter(file, true)) {
+        try (FileWriter fw = new FileWriter(file, false)) {
             fw.write(content + FileUtil.getNewline());
         } catch (IOException ioException) {
-            LOG.error("writeErrorToTxt io error" + ioException);
+            LOG.error("Failed to write file [" + path + "], error: " + ioException);
         }
     }
 
@@ -91,18 +134,18 @@ public class FileUtil {
      */
     public boolean findStringInFile(String path, String content) throws IOException {
         File file = new File(path);
-        String[] command = content.split(StringUtils.LF);
+        String[] command = content.split(FileUtil.getNewline());
 
         try (InputStreamReader read = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
-    BufferedReader bufferedReader = new BufferedReader(read)) {
-            return isContainString(bufferedReader, command);
+            BufferedReader bufferedReader = new BufferedReader(read)) {
+            return isContainString(bufferedReader, command[1]);
         } catch (FileNotFoundException foundException) {
             LOG.error("file not found" + foundException);
             return false;
         }
     }
 
-    private boolean isContainString(BufferedReader bufferedReader, String[] command) {
+    private boolean isContainString(BufferedReader bufferedReader, String command) {
         String line = null;
         while (true) {
             try {
@@ -112,8 +155,8 @@ public class FileUtil {
             } catch (IOException ioException) {
                 LOG.error("findStringInFile IOException" + ioException);
             }
-            line += line;
-            if (line.contains(command[0])) {
+
+            if (line.contains(command)) {
                 return true;
             }
         }
@@ -183,5 +226,19 @@ public class FileUtil {
             return true;
         }
         return false;
+    }
+
+    private String readWholeFile(String fileName) {
+        File file = new File(fileName);
+        byte[] rdBuf = new byte[(int) file.length()];
+        try(FileInputStream in = new FileInputStream(file)) {
+            in.read(rdBuf);
+            return new String(rdBuf, "UTF-8");
+        } catch (FileNotFoundException foundException) {
+            LOG.error(String.format("File %s does not exist.", fileName));
+        } catch (IOException ioException) {
+            LOG.error(String.format("Failed to read file %s. Error: %s", fileName, ioException));
+        }
+        return "";
     }
 }
