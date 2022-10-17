@@ -21,8 +21,9 @@ import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.ValidationInfo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import javax.swing.JComponent;
+
 import javax.swing.Action;
+import javax.swing.JComponent;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -32,30 +33,30 @@ import java.net.URISyntaxException;
 /**
  * 主界面对话框Wrapper
  *
- * @author: liulongc  digitalchina.com
+ * @author: xudong
  * @see: tool conversion plug-in
  * @version: v1.0.0
  * @since 2022-05-27
  */
 public class GenerateDialog extends DialogWrapper {
     private static final Logger LOG = Logger.getInstance(GenerateDialog.class);
-    private static final String TITLE = "Generate Napi Frame";
-    private static final String URL = "https://gitee.com/openharmony/napi_generator";
+    private static final String FRAME_TITLE = "Generate Napi Frame";
+    private static final String CODE_URL = "https://gitee.com/openharmony/napi_generator";
 
     private final GenerateDialogPane genDiag;
 
     /**
      * 构造函数
      *
-     * @param project projectid
-     * @param destPath 目录文件
+     * @param project       projectId
+     * @param destPath      目录文件
      * @param directoryPath 文件夹目录
-     * @param fileName 文件名
+     * @param fileName      文件名
      */
     public GenerateDialog(Project project, String destPath, String directoryPath, String fileName) {
         super(true);
         this.setResizable(false);
-        setTitle(TITLE);
+        setTitle(FRAME_TITLE);
         setModal(true);
         genDiag = new GenerateDialogPane(project, destPath, directoryPath, fileName);
         init();
@@ -124,8 +125,14 @@ public class GenerateDialog extends DialogWrapper {
             if (validationInfo != null) {
                 LOG.info(validationInfo.message);
             } else {
-                if (genDiag.runFun()) {
-                    close(CANCEL_EXIT_CODE);
+                if (genDiag.getSelectedIndex() == 0) {
+                    if (genDiag.runFun()) {
+                        close(CANCEL_EXIT_CODE);
+                    }
+                } else {
+                    if (genDiag.runFunH2ts()) {
+                        close(CANCEL_EXIT_CODE);
+                    }
                 }
             }
         }
@@ -143,7 +150,7 @@ public class GenerateDialog extends DialogWrapper {
         @Override
         protected void doAction(ActionEvent actionEvent) {
             try {
-                Desktop.getDesktop().browse(new URI(URL));
+                Desktop.getDesktop().browse(new URI(CODE_URL));
             } catch (URISyntaxException | IOException e) {
                 LOG.error("Open help error:" + e);
             }
