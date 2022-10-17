@@ -15,8 +15,15 @@
 const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
+const stdio = require("stdio");
 
-let distDir = process.argv[process.argv.length-1];
+let ops = stdio.getopt({
+    'directory': { key: 'd', args: 1, description: "scan directory" },
+    'output': { key: 'o', args: 1, description: "output directory", default: "." },
+});
+
+let distDir = ops.directory;
+let outDir = ops.output;
 
 function union(a, b) {
     let ret = new Set();
@@ -159,4 +166,6 @@ xlsx.utils.book_append_sheet(workbook, sheet2, 'sheet2');
 
 let wbout = xlsx.write(workbook, wopts);
 let ddd = string2u8buff(wbout);
-fs.writeFileSync("result.xlsx", ddd);
+let outPath = path.join(outDir, "result.xlsx");
+console.log("output:", outPath);
+fs.writeFileSync(outPath, ddd);
