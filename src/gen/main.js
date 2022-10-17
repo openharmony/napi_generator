@@ -19,7 +19,7 @@ const re = require("./tools/re");
 const { print } = require("./tools/tool");
 var fs = require('fs');
 
-function doGenerate(ifname, destdir, imports) {
+function doGenerate(ifname, destdir, imports,numberType) {
     let structOfTs = analyzeFile(ifname);
     let fn = re.getFileInPath(ifname);
     let tt = re.match('@ohos.([.a-z_A-Z0-9]+).d.ts', fn);
@@ -31,7 +31,7 @@ function doGenerate(ifname, destdir, imports) {
         } else {
             structOfTs.imports = [];
         }
-        generateAll(structOfTs, destdir, moduleName);
+        generateAll(structOfTs, destdir, moduleName, numberType);
     } else {
         NapiLog.logError('file name ' + fn + ' format invalid in function of doGenerate!');
     }
