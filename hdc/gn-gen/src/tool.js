@@ -39,10 +39,21 @@ class Tool {
                 return "";
         }
     }
+    static getMakeRaw() {
+        switch (process.platform) {
+            case 'win32':
+                return path.join(Tool.CURRENT_TOOL_PATH, "res/win64/bin/make_raw.exe");
+            case 'linux':
+                return path.join(Tool.CURRENT_TOOL_PATH, "res/linux/bin/make_raw");
+            default:
+                Logger.err("不支持 %s 平台".format(process.platform));
+                return "";
+        }
+    }
     static getMake() {
         switch (process.platform) {
             case 'win32':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/win64/bin/gnumake.exe");
+                return path.join(Tool.CURRENT_TOOL_PATH, "res/win64/bin/make.exe");
             case 'linux':
                 return path.join(Tool.CURRENT_TOOL_PATH, "res/linux/bin/make");
             default:
@@ -50,18 +61,21 @@ class Tool {
                 return "";
         }
     }
+    static getCMake() {
+        switch (process.platform) {
+            case 'win32':
+                return path.join(Tool.OHOS_PROJECT_PATH, "prebuilts/cmake/windows-x86/bin/cmake.exe");
+            case 'linux':
+                return path.join(Tool.OHOS_PROJECT_PATH, "prebuilts/cmake/linux-x86/bin/cmake");
+            default:
+                Logger.err("不支持 %s 平台".format(process.platform));
+                return "";
+        }
+        
+    }
     static swapPath(p, swapd) {
-        if (process.platform == 'win32') {
-            if (swapd) {// 把c:/xxx...转换成/c/xxx...
-                if (p[1] == ':') {
-                    return "/" + p[0] + p.substring(2);
-                }
-            }
-            else {// 把/c/xxx...转换成c:/xxx...
-                if (p[0] == '/') {
-                    return p[1] + ":" + p.substring(2);
-                }
-            }
+        while (p.indexOf("\\") >= 0) {
+            p = p.replace("\\", "/");
         }
         return p;
     }
