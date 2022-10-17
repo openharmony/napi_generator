@@ -41,7 +41,7 @@ class AnalyzeCommand {
     static getCompileCmdId(cmd) {
         let cmdName = cmd.split(" ")[0];
         for (let c in AnalyzeCommand.COMPILE_CMDS) {
-            if (cmdName.endsWith(c)) {
+            if (cmdName.endsWith(c) || cmdName.endsWith(c+".exe")) {
                 return AnalyzeCommand.COMPILE_CMDS[c];//返回命令ID
             }
         }
@@ -190,7 +190,7 @@ class AnalyzeCommand {
 
     static mockTarget(t) {
         const childProcess = require("child_process");
-        childProcess.execSync("touch " + t.target);
+        childProcess.execSync("echo a >" + t.target);
     }
     static clangCheck1(e) {
         if (e.startsWith("--sysroot=") ||
@@ -278,6 +278,20 @@ class AnalyzeCommand {
         }
         return false;
     }
+
+    static clangCheck7(local, e) {
+        if (e.endsWith(".c") ||
+            e.endsWith(".o") ||
+            e.endsWith('.o"') ||
+            e.endsWith(".a") ||
+            e.endsWith(".S") ||
+            e.endsWith(".so")) {
+                local.ret.inputs.push(e);
+            return true;
+        }
+        return false;
+    }
+
     static analyzeCcClang(cmd) {
         let local = {
             ret: AnalyzeCommand.resultTemplete(),
@@ -286,7 +300,7 @@ class AnalyzeCommand {
         }
         while (local.p < local.eles.length) {
             let e = local.eles[local.p++];
-            if (e.endsWith("clang")) {
+            if (e.endsWith("clang") || e.endsWith("clang.exe")) {
                 local.ret.command = e;
             }
             else if (AnalyzeCommand.clangCheck1(e)) { }
@@ -309,12 +323,7 @@ class AnalyzeCommand {
             else if (e == "-c") {//编译
                 local.ret.isLink = false;
             }
-            else if (e.endsWith(".c") ||
-                e.endsWith(".o") ||
-                e.endsWith(".a") ||
-                e.endsWith(".so")) {
-                local.ret.inputs.push(e);
-            }
+            else if (AnalyzeCommand.clangCheck7(local, e)) { }
             else {
                 Logger.err(cmd + "\nclang未解析参数 " + e);
                 process.exit();
@@ -426,6 +435,7 @@ class AnalyzeCommand {
             e.startsWith("-mfloat-abi=") ||
             e.startsWith("-mfpu=") ||
             e.startsWith("-fsigned-char") ||
+            e.startsWith("-ffast-math") ||
             e.startsWith("-fdiagnostics-show-option")) {//需要记录到flags里面的参数
             local.ret.cflags.push(e);
             return true;
@@ -474,6 +484,8 @@ class AnalyzeCommand {
             e.endsWith(".cxx") ||
             e.endsWith(".cc") ||
             e.endsWith(".o") ||
+            e.endsWith(".z") ||
+            e.endsWith(".so") ||
             e.indexOf(".so.") > 0 ||
             e.endsWith(".a")) {
             local.ret.inputs.push(e);

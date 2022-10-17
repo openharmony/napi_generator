@@ -50,13 +50,18 @@ class AnalyzeCMake {
         ohosToolchainCmake = path.join(buildTmp, "ohos.toolchain.cmake");
         fs.writeFileSync(ohosToolchainCmake, ohosToolchainCmakeData);
 
+        ohosToolchainCmake=Tool.swapPath(ohosToolchainCmake);
         let args = ["..",
             "-DCMAKE_TOOLCHAIN_FILE=%s".format(ohosToolchainCmake),
+            "-G",
+            "Unix Makefiles",
+            "-DCMAKE_MAKE_PROGRAM=%s".format(Tool.swapPath(Tool.getMakeRaw())),
         ];
         if (cmakeArgs.length > 0) {
             args.push(...cmakeArgs.split(","));
         }
-        let ret = childProcess.spawn("cmake", args);
+
+        let ret = childProcess.spawn(Tool.swapPath(Tool.getCMake()), args);
         ret.stdout.on('data', (data) => {
             Logger.info(data.toString());
         });
