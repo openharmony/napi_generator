@@ -8,7 +8,8 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "xlsx": "^0.18.5"
+  "dependencies": {
+    "xlsx": "^0.18.5",
+    "stdio": "^2.1.1"
   }
 }
