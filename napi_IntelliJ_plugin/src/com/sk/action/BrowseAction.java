@@ -58,14 +58,13 @@ public class BrowseAction implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(button)) {
             Preferences preferences = Preferences.userRoot();
-            JFileChooser fcDlg = new JFileChooser();
-
-            // 获取上次打开文件的路径。
-
-            String pathRecord = preferences.get("interPathRecord", "");
-            if (!pathRecord.equals("")) {
-                fcDlg = new JFileChooser(pathRecord);
+            // 弹窗默认路径为上次选中的文件/目录路径
+            String tsFilePath = interField.getText().split(",")[0];
+            if (tsFilePath.isBlank()) {
+                // 如果上次选中路径为空，则取历史记录中上次打开的路径
+                tsFilePath = preferences.get("interPathRecord", "");
             }
+            JFileChooser fcDlg = new JFileChooser(tsFilePath);
             fcDlg.setDialogTitle("请选择接口文件...");
             fcDlg.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("文本文件(*.ts)", "ts");

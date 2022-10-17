@@ -40,7 +40,7 @@ public class ScriptAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(button)) {
-            JFileChooser fcDlg = new JFileChooser();
+            JFileChooser fcDlg = new JFileChooser(textField.getText());
             fcDlg.setDialogTitle("请选择编译脚本路径...");
             fcDlg.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int returnVal = fcDlg.showOpenDialog(null);
