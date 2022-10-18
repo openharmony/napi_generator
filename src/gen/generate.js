@@ -138,13 +138,17 @@ let implCppTemplete = `\
 [implCpp_detail]
 `
 
-function generateAll(structOfTs, destDir, moduleName) {
+function generateAll(structOfTs, destDir, moduleName, numberType) {
     let ns0 = structOfTs.declareNamespace[0];
     let license = structOfTs.declareLicense[0];
     let result = generateNamespace(ns0.name, ns0.body)
     let numberUsing = ""
+    var numbertype = "uint32_t";
+    if(numberType != ""){
+        numbertype = numberType;
+    }
     for (let i = 1; i < NumberIncrease.get(); i++) {
-        numberUsing += "using NUMBER_TYPE_%d = uint32_t;\n".format(i)
+        numberUsing += "using NUMBER_TYPE_%d = ".format(i) + numbertype + ";\n"
     }
     let middleCpp = replaceAll(moduleCppTmplete, "[body_replace]", result.middleBody);
     middleCpp = replaceAll(middleCpp, "[init_replace]", result.middleInit);
