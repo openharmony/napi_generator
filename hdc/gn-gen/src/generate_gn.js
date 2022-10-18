@@ -202,7 +202,7 @@ group("all_targets") {
             targetStr = `config("%s_config") {%s}
 
 %s
-removeConfigs = [
+remove_configs = [
 %s    ]
 configs = [ ":%s_config" ]
 `.format(targetName[1], configDetail, targetStr, removeConfigs, targetName[1]);
