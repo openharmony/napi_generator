@@ -21,6 +21,8 @@ import com.intellij.openapi.ui.ValidationInfo;
 import com.sk.action.BrowseAction;
 import com.sk.action.GenAction;
 import com.sk.action.ScriptAction;
+import com.sk.action.SelectHAction;
+import com.sk.action.SelectOutPathAction;
 import com.sk.utils.FileUtil;
 import com.sk.utils.GenNotification;
 import org.apache.http.util.TextUtils;
@@ -29,9 +31,9 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
@@ -40,62 +42,48 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * GenerateDialogPane生成工具主界面
+ * 配置对话框
  *
  * @author: xudong
- * @see: select generate dialog
+ * @see: generator dialog
  * @version: v1.0.0
  * @since 2022-02-21
  */
 public class GenerateDialogPane extends JDialog {
     private static final Logger LOG = Logger.getInstance(GenerateDialogPane.class);
+    private static final String COMMAND_STATEMENT = "add_library(napitest SHARED x_napi_tool.cpp napitest.cpp "
+            + "napitest_middle.cpp)" + FileUtil.getNewline() + "target_link_libraries(napitest libace_napi.z.so)";
+    private static final String REGEX = "napitest";
+    private static final Pattern LF_PATTERN = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 
-    private static final String FILE_NAME_REGEX = "(\\@ohos\\.)(.*?)(\\.d\\.ts)";
-    private static final Pattern FILE_NAME_PATTERN = Pattern.compile(FILE_NAME_REGEX, Pattern.CASE_INSENSITIVE);
-    private static final String NAMESPACE_REGEX = "declare namespace ([a-zA-Z_0-9]+) *(\\{)";
-    private static final Pattern NAMESPACE_PATTERN = Pattern.compile(NAMESPACE_REGEX, Pattern.CASE_INSENSITIVE);
-    private static final String CMAKE_SETCXX_TEMPLATE = "set(CMAKE_CXX_STANDARD 17)" + FileUtil.getNewline();
-    private static final String CMAKE_ADD_LIB_TEMPLATE =
-            "add_library(LIBNAME SHARED PATH/tool_utility.cpp PATH/FILE_PREFIX.cpp PATH/FILE_PREFIX_middle.cpp)";
-    private static final String CMAKE_LINK_TEMPLATE =
-            "target_link_libraries(LIBNAME PUBLIC libace_napi.z.so libuv.so)";
-
+    private final Project project;
     private JPanel contentPane;
-    private JTextField interPath;
-    private JTextField genPath;
-    private JTextField scriptPath;
-    private JButton selectInter;
-    private JButton selectGenPath;
-    private JButton selectScriptPath;
-    private JLabel interText;
-    private JLabel genText;
-    private JLabel scriptText;
+    private JTabbedPane tabbedPane;
+    private JTextField textFieldSelectH;
+    private JTextField textFieldSelectOutPath;
+    private JTextField textFieldInterPath;
+    private JTextField textFieldGenPath;
+    private JTextField textFieldScriptPath;
     private JRadioButton radioButton;
+    private JButton buttonSelectInter;
+    private JButton buttonSelectGenPath;
+    private JButton buttonSelectScriptPath;
+    private JButton buttonSelectH;
+    private JButton buttonSelectOutPath;
     private boolean generateSuccess = true;
     private String sErrorMessage = "";
     private String interFileOrDir;
     private String genOutDir;
     private String scriptOutDir;
-    private final Project project;
-    private List<String> tsFileList = new ArrayList<>();
-
+    private int selectedIndex;
 
     /**
      * 构造函数
@@ -106,27 +94,34 @@ public class GenerateDialogPane extends JDialog {
      * @param scriptDir     脚本目录
      */
     public GenerateDialogPane(Project project, String interFilePath, String genDir, String scriptDir) {
+        setContentPane(contentPane);
+        setModal(true);
         this.project = project;
         this.interFileOrDir = interFilePath;
         this.genOutDir = genDir;
         this.scriptOutDir = scriptDir;
-
-        interText.setText("接口文件:");
-        genText.setText("生成框架路径:");
-        scriptText.setText("编译脚本路径:");
-
-        interPath.setText(interFileOrDir);
-        genPath.setText(genOutDir);
-        scriptPath.setText(genOutDir);
-
+        if (FileUtil.patternFileNameH(scriptDir)) {
+            textFieldSelectH.setText(interFileOrDir);
+            textFieldSelectOutPath.setText(genOutDir);
+            tabbedPane.setSelectedIndex(1);
+            selectedIndex = 1;
+        } else {
+            textFieldInterPath.setText(interFileOrDir);
+            textFieldGenPath.setText(genOutDir);
+            textFieldScriptPath.setText(genOutDir);
+        }
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(actionEvent -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        BrowseAction browseAction = new BrowseAction(project, selectInter, interPath, genPath, scriptPath);
-        selectInter.addActionListener(browseAction);
-        selectGenPath.addActionListener(new GenAction(selectGenPath, genPath));
-        selectScriptPath.addActionListener(new ScriptAction(selectScriptPath, scriptPath));
+        BrowseAction browseAction = new BrowseAction(project, buttonSelectInter, textFieldInterPath,
+                textFieldGenPath, textFieldScriptPath);
+        buttonSelectInter.addActionListener(browseAction);
+        buttonSelectGenPath.addActionListener(new GenAction(buttonSelectGenPath, textFieldGenPath));
+        buttonSelectScriptPath.addActionListener(new ScriptAction(buttonSelectScriptPath, textFieldScriptPath));
+        buttonSelectH.addActionListener(new SelectHAction(buttonSelectH, textFieldSelectH));
+        buttonSelectOutPath.addActionListener(new SelectOutPathAction(buttonSelectOutPath, textFieldSelectOutPath));
+        tabbedPane.addChangeListener(changeEvent -> selectedIndex = tabbedPane.getSelectedIndex());
     }
 
     @Override
@@ -152,26 +147,35 @@ public class GenerateDialogPane extends JDialog {
      */
     @Nullable
     public ValidationInfo validationInfo() {
-        String fileInter = interPath.getText();
-        String scriptDir = scriptPath.getText();
-        String filegypDir = genPath.getText();
-        boolean isEmptyFile = TextUtils.isEmpty(fileInter)
-                || TextUtils.isEmpty(scriptDir)
-                || TextUtils.isEmpty(filegypDir);
-
         ValidationInfo validationInfo = null;
-        if (isEmptyFile) {
-            String warnMsg = "接口文件、框架、编译脚本路径不能为空";
-            warningMessage(warnMsg);
-            validationInfo = new ValidationInfo(warnMsg);
-            return validationInfo;
-        }
-
-        File file = new File(filegypDir + "/binding.gyp");
-        if (file.exists()) {
-            ConfirmDialog confirmDialog = new ConfirmDialog("是否替换已存在的编译脚本?");
-            if (!confirmDialog.showAndGet()) {
-                validationInfo = new ValidationInfo(String.format("不替换现有编译脚本：%s", file));
+        if (selectedIndex == 0) {
+            String fileInter = textFieldInterPath.getText();
+            String scriptDir = textFieldScriptPath.getText();
+            String filegypDir = textFieldGenPath.getText();
+            boolean isEmptyFile =
+                    TextUtils.isEmpty(fileInter) || TextUtils.isEmpty(scriptDir) || TextUtils.isEmpty(filegypDir);
+            if (isEmptyFile) {
+                String warnMsg = "接口文件、框架、编译脚本路径不能为空";
+                warningMessage(warnMsg);
+                validationInfo = new ValidationInfo(warnMsg);
+                return validationInfo;
+            }
+            File file = new File(filegypDir + "/binding.gyp");
+            if (file.exists()) {
+                ConfirmDialog confirmDialog = new ConfirmDialog("是否替换已存在的编译脚本?");
+                if (!confirmDialog.showAndGet()) {
+                    validationInfo = new ValidationInfo(String.format("不替换现有编译脚本：%s", file));
+                    return validationInfo;
+                }
+            }
+        } else {
+            String hFile = textFieldSelectH.getText();
+            String outPutDir = textFieldSelectOutPath.getText();
+            boolean isEmptyFile = TextUtils.isEmpty(hFile) || TextUtils.isEmpty(outPutDir);
+            if (isEmptyFile) {
+                String warnMsg = "文件路径、输出路径不能为空";
+                warningMessage(warnMsg);
+                validationInfo = new ValidationInfo(warnMsg);
                 return validationInfo;
             }
         }
@@ -183,8 +187,8 @@ public class GenerateDialogPane extends JDialog {
     }
 
     private void warningMessage(String title) {
-        String notiContent = "请选择接口文件或文件夹，生成框架路径，编译脚本路径";
-        GenNotification.notifyMessage(this.project, notiContent, title, NotificationType.WARNING);
+        String notifyContent = "请选择接口文件或文件夹，生成框架路径，编译脚本路径";
+        GenNotification.notifyMessage(this.project, notifyContent, title, NotificationType.WARNING);
     }
 
     /**
@@ -194,20 +198,22 @@ public class GenerateDialogPane extends JDialog {
      */
     public boolean runFun() {
         GenNotification.notifyMessage(this.project, "", "正在生成", NotificationType.INFORMATION);
-        interFileOrDir = interPath.getText();
-        genOutDir = genPath.getText();
-        scriptOutDir = scriptPath.getText();
-
+        interFileOrDir = textFieldInterPath.getText();
+        genOutDir = textFieldGenPath.getText();
+        scriptOutDir = textFieldScriptPath.getText();
+        copyFileToLocalPath("header_parser");
         String command;
         command = genCommand();
 
         try {
             if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
-                GenNotification.notifyMessage(project, genPath.getText(), "提示", NotificationType.INFORMATION, true);
+                GenNotification.notifyMessage(project, textFieldGenPath.getText(), "提示",
+                        NotificationType.INFORMATION, true);
                 return true;
             }
         } catch (IOException | InterruptedException ex) {
-            GenNotification.notifyMessage(project, genPath.getText(), "Command exec error", NotificationType.ERROR);
+            GenNotification.notifyMessage(project, textFieldGenPath.getText(), "Command exec error",
+                    NotificationType.ERROR);
             LOG.error(ex);
         }
         return false;
@@ -221,18 +227,42 @@ public class GenerateDialogPane extends JDialog {
     private String genCommand() {
         String sysName = System.getProperties().getProperty("os.name").toUpperCase();
         String tmpDirFile = System.getProperty("java.io.tmpdir");
-        String execFn;
         if (sysName.contains("WIN")) {
-            execFn = "cmds/win/napi_generator-win.exe";
+            copyFileToLocalPath("napi_generator-win");
             tmpDirFile += "napi_generator-win.exe";
         } else if (sysName.contains("LINUX")) {
-            execFn = "cmds/linux/napi_generator-linux";
+            copyFileToLocalPath("napi_generator-linux");
             tmpDirFile += "napi_generator-linux";
         } else {
-            execFn = "cmds/mac/napi_generator-macos";
+            copyFileToLocalPath("napi_generator-macos");
             tmpDirFile += "napi_generator-macos";
         }
         File file = new File(tmpDirFile);
+        String command = file.toString();
+        String inArgs = genInArgs();
+        command += inArgs + " -o " + genOutDir + " -i " + radioButton.isSelected();
+        return command;
+    }
+
+    /**
+     * 拷贝文件到本地临时目录
+     *
+     * @param fileName 文件名
+     */
+    private void copyFileToLocalPath(String fileName) {
+        String sysName = System.getProperties().getProperty("os.name").toUpperCase();
+        String tmpDirFile = System.getProperty("java.io.tmpdir");
+        String execFn;
+        if (sysName.contains("WIN")) {
+            execFn = "cmds/win/" + fileName + ".exe";
+            tmpDirFile += fileName + ".exe";
+        } else if (sysName.contains("LINUX")) {
+            execFn = "cmds/linux/" + fileName;
+            tmpDirFile += fileName;
+        } else {
+            execFn = "cmds/mac/" + fileName;
+            tmpDirFile += fileName;
+        }
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(execFn)) {
             if (inputStream == null) {
                 throw new IOException("exec File InputStream is Null");
@@ -246,13 +276,7 @@ public class GenerateDialogPane extends JDialog {
             GenNotification.notifyMessage(this.project, e.getMessage(), "Can not Find File:" + execFn,
                     NotificationType.ERROR);
             LOG.error(e);
-
-            return "";
         }
-        String command = file.toString();
-        String inArgs = genInArgs();
-        command += inArgs + " -o " + genOutDir + " -i " + radioButton.isSelected();
-        return command;
     }
 
     /**
@@ -261,7 +285,6 @@ public class GenerateDialogPane extends JDialog {
      * @return 生成后的值-f -d的值
      */
     private String genInArgs() {
-        tsFileList.clear();
         String[] interArr = interFileOrDir.split(",");
         StringBuilder tsParam = new StringBuilder(" -f ");
         StringBuilder dirParam = new StringBuilder(" -d ");
@@ -271,19 +294,16 @@ public class GenerateDialogPane extends JDialog {
                 File interFile = new File(interStr);
                 if (interFile.isDirectory()) {
                     dirParam.append(interStr).append(" ");
-                    for (File tsFile : interFile.listFiles()) {
-                        tsFileList.add(tsFile.getPath());
-                    }
-
                 } else {
                     tsParam.append(interStr).append(",");
-                    tsFileList.add(interStr);
                 }
             }
-            if (!TextUtils.isBlank(tsParam.toString().replaceAll("-f", ""))) {
+            if (!TextUtils.isEmpty(tsParam.toString().replaceAll("-f", ""))
+                    && !TextUtils.isBlank(tsParam.toString().replaceAll("-f", ""))) {
                 inputCommand += tsParam.substring(0, tsParam.length() - 1);
             }
-            if (!TextUtils.isBlank(dirParam.toString().replace("-d", ""))) {
+            if (!TextUtils.isEmpty(dirParam.toString().replace("-d", ""))
+                    && !TextUtils.isBlank(dirParam.toString().replace("-d", ""))) {
                 inputCommand += dirParam.substring(0, dirParam.length() - 1);
             }
         }
@@ -304,7 +324,7 @@ public class GenerateDialogPane extends JDialog {
         outputConsumer.start();
 
         if (generateSuccess) {
-            writeCompileCfg();
+            writeCommand();
         } else {
             GenNotification.notifyMessage(project, sErrorMessage, "提示", NotificationType.ERROR);
             return false;
@@ -315,127 +335,21 @@ public class GenerateDialogPane extends JDialog {
     }
 
     /**
-     * 获得 pathA 相对于 pathB的相对路径
-     *
-     * @param pathA 路径A，如 D:\xx\yy\zz\a1\a2
-     * @param pathB 路径B, 如 D:\xx\yy\zz\b1\b2\b3
-     * @return pathA 相对于 pathB的相对路径: ../../../a1/a2/
+     * 写makeFile.txt文件
      */
-    private String getRelativePath(String pathA, String pathB) {
-        String separatorStr = File.separator.equals("\\") ? "\\\\" : File.separator;
-        String[] pathAList = pathA.split(separatorStr);
-        String[] pathBList = pathB.split(separatorStr);
-
-        int pos = 0;
-        for (; pos < pathAList.length && pos < pathBList.length; ++pos) {
-            if (!pathAList[pos].equals(pathBList[pos])) {
-                // 找到两个path路径存在差异的位置
-                break;
-            }
-        }
-        // 截取pathA和pathB路径字符串的差异部分
-        String[] diffPathAList = Arrays.copyOfRange(pathAList, pos, pathAList.length);
-        String[] diffPathBList = Arrays.copyOfRange(pathBList, pos, pathBList.length);
-
-        // pathA的差异字符串作为相对路径的结尾部分
-        String pathAStr = String.join("/", diffPathAList);
-        pathAStr = pathAStr.isBlank() ? "" : pathAStr + "/";
-
-        // 根据pathB的差异目录层级生成向上跳转字符串
-        String rollbackPath = "";
-        for (int i = 0; i < diffPathBList.length; ++i) {
-            rollbackPath += "../";
-        }
-        rollbackPath = rollbackPath.isEmpty() ? "./" : rollbackPath;
-
-        // 相对路径 = 向上跳转部分 + pathA的差异部分
-        return rollbackPath + pathAStr;
-    }
-
-    /**
-     * 获取NAPI工具生成的cpp文件前缀
-     *
-     * @param tsFilePath ts接口文件名
-     * @return cpp文件前缀
-     */
-    private String getCppNamePrefix(String tsFilePath) {
-        File tsFile = new File(tsFilePath);
-
-        // NAPI工具中cpp前缀名取的是ts文件中声明的首个namespace的名称，插件这里按同样方法获取。
-        try (InputStreamReader read = new InputStreamReader(new FileInputStream(tsFile), StandardCharsets.UTF_8);
-            BufferedReader bufferedReader = new BufferedReader(read)) {
-            String line = "";
-            while ((line = bufferedReader.readLine()) != null) {
-                // 找到 "declare namespace" 这一行并将 namespace名称作为cpp文件前缀名返回。
-                Matcher tsNamespaceMatcher = NAMESPACE_PATTERN.matcher(line);
-                if (tsNamespaceMatcher.find()) {
-                    return tsNamespaceMatcher.group(1);
-                }
-            }
-        } catch (FileNotFoundException foundException) {
-            LOG.error("The ts file " + tsFilePath + " does not exist.");
-        } catch (IOException ioException) {
-            LOG.error("Failed to read file, error: " + ioException);
-        }
-        return "";
-    }
-
-    /**
-     * 使用 ts文件@ohos.xxx.d.ts中的xxx作为编译c++lib库的名字
-     *
-     * @param tsFileName ts文件名
-     * @return 解析出的lib库名称
-     */
-    private String getLibNameFromTsFile(String tsFileName) {
-        Matcher tsFileNameMatcher = FILE_NAME_PATTERN.matcher(tsFileName);
-        if (!tsFileNameMatcher.find()) {
-            LOG.warn("Invalid ts file name format, should be @ohos.xxx.d.ts.");
-            return tsFileName;
-        }
-        return tsFileNameMatcher.group(2);
-    }
-
-    /**
-     * 生成编译文件
-     */
-    private void writeCompileCfg() {
+    private void writeCommand() {
         FileUtil fileUtil = new FileUtil();
-        String cmakeFilePath = fileUtil.makeFile(scriptOutDir + "/CMakeLists.txt");
-        if (TextUtils.isEmpty(cmakeFilePath)) {
+        String filePath = fileUtil.makeFile(genOutDir + "/makeFile.txt");
+        if (TextUtils.isEmpty(filePath)) {
             LOG.info("makeFile is fail");
             return;
         }
-
+        Matcher matcher = LF_PATTERN.matcher(COMMAND_STATEMENT);
+        String statement = matcher.replaceAll(scriptOutDir);
         try {
-            // 获取cpp文件相对于CMakeList.txt文件的路径
-            String cppRelativePath = getRelativePath(new File(genOutDir).getPath(), new File(scriptOutDir).getPath());
-
-            // 生成 CMakeList.txt文件内容
-            StringBuilder cmakeBuilder = new StringBuilder(CMAKE_SETCXX_TEMPLATE);
-            for (String tsFilePath : tsFileList) {
-                String cppNamePrefix = getCppNamePrefix(tsFilePath);
-                String libName = getLibNameFromTsFile(new File(tsFilePath).getName());
-                String libStr = CMAKE_ADD_LIB_TEMPLATE.replaceAll("LIBNAME", libName)
-                        .replaceAll("PATH/", cppRelativePath).replaceAll("FILE_PREFIX", cppNamePrefix);
-                cmakeBuilder.append(libStr).append(FileUtil.getNewline());
-
-                cmakeBuilder.append(CMAKE_LINK_TEMPLATE.replaceAll("LIBNAME", libName))
-                        .append(FileUtil.getNewline());
+            if (!fileUtil.findStringInFile(filePath, statement)) {
+                fileUtil.writeErrorToTxt(filePath, statement);
             }
-            fileUtil.writeContentToFile(cmakeFilePath, cmakeBuilder.toString());
-
-            // 需要在main文件夹下创建cpp目录, 如果没有此目录，DevEco 3.0版本编译时不会编译任何目录中的c++代码。
-            Path path = Paths.get(project.getBasePath() + "/entry/src/main/cpp");
-            Files.createDirectories(path);
-
-            // 在{ProjectRoot}/entry/build-profile.json5 中增加 externalNativeOptions 配置
-            String buildJsonFilePath = project.getBasePath() + "/entry/build-profile.json5";
-
-            // 获取CMakeLists.txt相对于build-profile.json5构建文件的相对路径
-            String cmakeRelativePath = getRelativePath(new File(cmakeFilePath).getParent(),
-                    new File(buildJsonFilePath).getParent());
-
-            fileUtil.writeBuildJsonFile(buildJsonFilePath, cmakeRelativePath + "CMakeLists.txt");
         } catch (IOException ioException) {
             LOG.error("writeCommand io error" + ioException);
         }
@@ -566,7 +480,59 @@ public class GenerateDialogPane extends JDialog {
         }
     }
 
+    /**
+     * 执行主程序入口
+     *
+     * @return 执行状态
+     */
+    public boolean runFunH2ts() {
+        GenNotification.notifyMessage(this.project, "", "正在生成", NotificationType.INFORMATION);
+        copyFileToLocalPath("header_parser");
+        String command;
+        command = genCommandH2ts();
+        try {
+            if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
+                GenNotification.notifyMessage(project, textFieldSelectOutPath.getText(), "提示",
+                        NotificationType.INFORMATION, true);
+                return true;
+            }
+        } catch (IOException | InterruptedException ex) {
+            GenNotification.notifyMessage(project, textFieldSelectOutPath.getText(), "Command exec error",
+                    NotificationType.ERROR);
+            LOG.error(ex);
+        }
+        return false;
+    }
+
+    /**
+     * 生成命令行指令
+     *
+     * @return 返回命令行执行内容
+     */
+    private String genCommandH2ts() {
+        String sysName = System.getProperties().getProperty("os.name").toUpperCase();
+        String tmpDirFile = System.getProperty("java.io.tmpdir");
+        if (sysName.contains("WIN")) {
+            copyFileToLocalPath("napi_generator-win");
+            tmpDirFile += "napi_generator-win.exe";
+        } else if (sysName.contains("LINUX")) {
+            copyFileToLocalPath("napi_generator-linux");
+            tmpDirFile += "napi_generator-linux";
+        } else {
+            copyFileToLocalPath("napi_generator-macos");
+            tmpDirFile += "napi_generator-macos";
+        }
+        File file = new File(tmpDirFile);
+        String command = file.toString();
+        command += " -f " + textFieldSelectH.getText() + " -o " + textFieldSelectOutPath.getText();
+        return command;
+    }
+
     JPanel getContentPanel() {
         return contentPane;
+    }
+
+    public int getSelectedIndex() {
+        return selectedIndex;
     }
 }

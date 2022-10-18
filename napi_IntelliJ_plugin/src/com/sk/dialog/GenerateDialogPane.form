@@ -14,190 +14,282 @@
      limitations under the License.
 -->
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.sk.dialog.GenerateDialogPane">
-  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="0">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="48" y="54" width="540" height="123"/>
+      <xy x="48" y="54" width="800" height="400"/>
     </constraints>
     <properties>
-      <enabled value="false"/>
-      <focusCycleRoot value="false"/>
-      <focusTraversalPolicyProvider value="false"/>
-      <maximumSize width="-1" height="-1"/>
-      <minimumSize width="-1" height="-1"/>
-      <preferredSize width="530" height="125"/>
-      <requestFocusEnabled value="true"/>
+      <maximumSize width="800" height="300"/>
+      <minimumSize width="800" height="300"/>
+      <preferredSize width="800" height="300"/>
     </properties>
     <border type="none"/>
     <children>
-      <grid id="64844" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="b2411" class="javax.swing.JTextField" binding="interPath">
-            <constraints/>
-            <properties>
-              <editable value="false"/>
-              <margin top="2" left="6" bottom="2" right="6"/>
-              <maximumSize width="500" height="30"/>
-              <minimumSize width="300" height="30"/>
-              <preferredSize width="400" height="30"/>
-            </properties>
-          </component>
-          <component id="610fd" class="javax.swing.JButton" binding="selectInter">
-            <constraints/>
-            <properties>
-              <icon value="images/text.png"/>
-              <inheritsPopupMenu value="false"/>
-              <maximumSize width="30" height="30"/>
-              <minimumSize width="30" height="30"/>
-              <preferredSize width="30" height="30"/>
-              <text value=""/>
-              <toolTipText value="选择接口文件"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
-      <grid id="fcb65" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="c4c1b" class="javax.swing.JTextField" binding="genPath">
-            <constraints/>
-            <properties>
-              <editable value="false"/>
-              <maximumSize width="500" height="30"/>
-              <minimumSize width="300" height="30"/>
-              <preferredSize width="400" height="30"/>
-            </properties>
-          </component>
-          <component id="f1fbc" class="javax.swing.JButton" binding="selectGenPath">
-            <constraints/>
-            <properties>
-              <icon value="images/openDisk.png"/>
-              <maximumSize width="30" height="30"/>
-              <minimumSize width="30" height="30"/>
-              <preferredSize width="30" height="30"/>
-              <selected value="true"/>
-              <text value=""/>
-              <toolTipText value="选择框架生成保存路径"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
-      <grid id="6fb92" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <doubleBuffered value="false"/>
-          <enabled value="true"/>
-        </properties>
-        <border type="none"/>
-        <children>
-          <component id="7194f" class="javax.swing.JTextField" binding="scriptPath">
-            <constraints/>
-            <properties>
-              <editable value="false"/>
-              <maximumSize width="500" height="30"/>
-              <minimumSize width="300" height="30"/>
-              <preferredSize width="400" height="30"/>
-              <requestFocusEnabled value="true"/>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="b9580" class="javax.swing.JButton" binding="selectScriptPath">
-            <constraints/>
-            <properties>
-              <horizontalAlignment value="0"/>
-              <horizontalTextPosition value="11"/>
-              <icon value="images/openDisk.png"/>
-              <maximumSize width="30" height="30"/>
-              <minimumSize width="30" height="30"/>
-              <preferredSize width="30" height="30"/>
-              <requestFocusEnabled value="true"/>
-              <rolloverEnabled value="false"/>
-              <selected value="true"/>
-              <text value=""/>
-              <toolTipText value="选择编译脚本保存路径"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
-      <component id="415a9" class="javax.swing.JLabel" binding="scriptText">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <maximumSize width="91" height="18"/>
-          <minimumSize width="91" height="18"/>
-          <opaque value="true"/>
-          <preferredSize width="91" height="18"/>
-          <text value="编译脚本路径:"/>
-        </properties>
-      </component>
-      <component id="3661f" class="javax.swing.JLabel" binding="genText">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <maximumSize width="91" height="18"/>
-          <minimumSize width="91" height="18"/>
-          <preferredSize width="91" height="18"/>
-          <text value="生成框架路径:"/>
-        </properties>
-      </component>
-      <component id="502f" class="javax.swing.JLabel" binding="interText">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <maximumSize width="91" height="18"/>
-          <minimumSize width="91" height="18"/>
-          <preferredSize width="91" height="18"/>
-          <text value="接口文件:"/>
-        </properties>
-      </component>
-      <hspacer id="f0139">
-        <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </hspacer>
-      <component id="9ad6d" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="启用import功能:"/>
-        </properties>
-      </component>
-      <grid id="799e5" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="94766" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="279e5" class="javax.swing.JRadioButton" binding="radioButton">
+          <grid id="9538f" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
-          <hspacer id="2686c">
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </grid>
+      <grid id="e3588" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <tabbedpane id="d2aa1" binding="tabbedPane">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="200" height="200"/>
+              </grid>
             </constraints>
-          </hspacer>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="8b135" layout-manager="FlowLayout" hgap="5" vgap="30" flow-align="1">
+                <constraints>
+                  <tabbedpane title="Napi-Gen"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="dbee5" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
+                    <constraints/>
+                    <properties>
+                      <maximumSize width="800" height="30"/>
+                      <minimumSize width="100" height="30"/>
+                      <preferredSize width="750" height="30"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="b8274" class="javax.swing.JLabel">
+                        <constraints/>
+                        <properties>
+                          <text value="选择接口文件:"/>
+                        </properties>
+                      </component>
+                      <component id="4afba" class="javax.swing.JTextField" binding="textFieldInterPath">
+                        <constraints/>
+                        <properties>
+                          <background color="-12828863"/>
+                          <maximumSize width="700" height="30"/>
+                          <minimumSize width="400" height="30"/>
+                          <preferredSize width="600" height="30"/>
+                        </properties>
+                      </component>
+                      <component id="96b8" class="javax.swing.JButton" binding="buttonSelectInter">
+                        <constraints/>
+                        <properties>
+                          <icon value="images/openDisk.png"/>
+                          <maximumSize width="30" height="30"/>
+                          <minimumSize width="30" height="30"/>
+                          <preferredSize width="30" height="30"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="8f60e" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
+                    <constraints/>
+                    <properties>
+                      <maximumSize width="800" height="30"/>
+                      <minimumSize width="100" height="30"/>
+                      <preferredSize width="750" height="30"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="a8735" class="javax.swing.JLabel">
+                        <constraints/>
+                        <properties>
+                          <text value="生成框架路径:"/>
+                        </properties>
+                      </component>
+                      <component id="5369a" class="javax.swing.JTextField" binding="textFieldGenPath">
+                        <constraints/>
+                        <properties>
+                          <background color="-12828863"/>
+                          <maximumSize width="700" height="30"/>
+                          <minimumSize width="400" height="30"/>
+                          <preferredSize width="600" height="30"/>
+                        </properties>
+                      </component>
+                      <component id="b6a58" class="javax.swing.JButton" binding="buttonSelectGenPath">
+                        <constraints/>
+                        <properties>
+                          <icon value="images/text.png"/>
+                          <maximumSize width="30" height="30"/>
+                          <minimumSize width="30" height="30"/>
+                          <preferredSize width="30" height="30"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="9072c" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
+                    <constraints/>
+                    <properties>
+                      <maximumSize width="800" height="30"/>
+                      <minimumSize width="100" height="30"/>
+                      <preferredSize width="750" height="30"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="19e9c" class="javax.swing.JLabel">
+                        <constraints/>
+                        <properties>
+                          <text value="编译脚本路径:"/>
+                        </properties>
+                      </component>
+                      <component id="92c94" class="javax.swing.JTextField" binding="textFieldScriptPath">
+                        <constraints/>
+                        <properties>
+                          <background color="-12828863"/>
+                          <maximumSize width="700" height="30"/>
+                          <minimumSize width="400" height="30"/>
+                          <preferredSize width="600" height="30"/>
+                        </properties>
+                      </component>
+                      <component id="534d7" class="javax.swing.JButton" binding="buttonSelectScriptPath">
+                        <constraints/>
+                        <properties>
+                          <icon value="images/text.png"/>
+                          <maximumSize width="30" height="38"/>
+                          <minimumSize width="30" height="38"/>
+                          <preferredSize width="30" height="38"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="87aa3" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints/>
+                    <properties>
+                      <maximumSize width="800" height="30"/>
+                      <minimumSize width="100" height="30"/>
+                      <preferredSize width="750" height="30"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="fd4c8" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="启用import功能:"/>
+                        </properties>
+                      </component>
+                      <component id="bbe9f" class="javax.swing.JRadioButton" binding="radioButton">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+              <grid id="b6443" layout-manager="FlowLayout" hgap="5" vgap="50" flow-align="1">
+                <constraints>
+                  <tabbedpane title="Ts-Gen"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="4cb93" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
+                    <constraints/>
+                    <properties>
+                      <maximumSize width="800" height="30"/>
+                      <minimumSize width="100" height="30"/>
+                      <preferredSize width="750" height="30"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="4c431" class="javax.swing.JLabel">
+                        <constraints/>
+                        <properties>
+                          <text value="文件路径选择:"/>
+                        </properties>
+                      </component>
+                      <component id="37474" class="javax.swing.JTextField" binding="textFieldSelectH">
+                        <constraints/>
+                        <properties>
+                          <background color="-12828863"/>
+                          <maximumSize width="700" height="30"/>
+                          <minimumSize width="400" height="30"/>
+                          <preferredSize width="600" height="30"/>
+                        </properties>
+                      </component>
+                      <component id="4a991" class="javax.swing.JButton" binding="buttonSelectH">
+                        <constraints/>
+                        <properties>
+                          <icon value="images/text.png"/>
+                          <maximumSize width="30" height="30"/>
+                          <minimumSize width="30" height="30"/>
+                          <preferredSize width="30" height="30"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="feeb1" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
+                    <constraints/>
+                    <properties>
+                      <maximumSize width="800" height="30"/>
+                      <minimumSize width="100" height="30"/>
+                      <preferredSize width="750" height="30"/>
+                    </properties>
+                    <border type="none"/>
+                    <children>
+                      <component id="61ff0" class="javax.swing.JLabel">
+                        <constraints/>
+                        <properties>
+                          <text value="输出目录选择:"/>
+                        </properties>
+                      </component>
+                      <component id="e7c65" class="javax.swing.JTextField" binding="textFieldSelectOutPath">
+                        <constraints/>
+                        <properties>
+                          <background color="-12828863"/>
+                          <maximumSize width="700" height="30"/>
+                          <minimumSize width="400" height="30"/>
+                          <preferredSize width="600" height="30"/>
+                        </properties>
+                      </component>
+                      <component id="4268b" class="javax.swing.JButton" binding="buttonSelectOutPath">
+                        <constraints/>
+                        <properties>
+                          <icon value="images/openDisk.png"/>
+                          <maximumSize width="30" height="30"/>
+                          <minimumSize width="30" height="30"/>
+                          <preferredSize width="30" height="30"/>
+                          <text value=""/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+            </children>
+          </tabbedpane>
         </children>
       </grid>
     </children>
