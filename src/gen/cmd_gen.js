@@ -27,7 +27,9 @@ let ops = stdio.getopt({
     'directory': { key: 'd', args: 1, description: ".d.ts directory", default: "" },
     'imports': { key: 'i', args: 1, description: "enable or disable support imports self-define file", default: false },
     'out': { key: 'o', args: 1, description: "output directory", default: "." },
-    'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" }
+    'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" },
+    // 新增控制number类型转C++类型参数
+    'numbertype':{key: 'n', args: 1, description: "optional elemtype: basic cpp elemtype", default: "uint32_t"}
 });
 
 NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"))
@@ -96,7 +98,7 @@ function checkGenerate(fileName) {
     if (tt) {
         let result = checkFileError(fileName);
         if (result[0]) {
-            main.doGenerate(fileName, ops.out, imports);
+            main.doGenerate(fileName, ops.out, imports, ops.numbertype);
         }
         else {
             NapiLog.logError(result[1]);
