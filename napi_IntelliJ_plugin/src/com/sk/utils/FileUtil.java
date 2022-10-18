@@ -26,11 +26,11 @@ import org.apache.http.util.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -125,6 +125,21 @@ public class FileUtil {
     }
 
     /**
+     * 将错误信息输入到txt中
+     *
+     * @param path    路径
+     * @param content 内容
+     */
+    public void writeErrorToTxt(String path, String content) {
+        File file = new File(path);
+        try (FileWriter fw = new FileWriter(file, true)) {
+            fw.write(content + FileUtil.getNewline());
+        } catch (IOException ioException) {
+            LOG.error("writeErrorToTxt io error" + ioException);
+        }
+    }
+
+    /**
      * 判断文件是否包含指定字符串
      *
      * @param path    文件路径
@@ -178,7 +193,18 @@ public class FileUtil {
      * @return boolean 是否匹配
      */
     public static boolean patternFileName(String fileName) {
-        String pattern = "@ohos.([.a-z_A-Z0-9]+).d.ts";
+        String pattern = "(@ohos.([.a-z_A-Z0-9]+).d.ts|([.a-z_A-Z0-9]+).h)";
+        return Pattern.matches(pattern, fileName);
+    }
+
+    /**
+     * 正则匹配所选文件名是否符合规范
+     *
+     * @param fileName 文件名
+     * @return boolean 是否匹配
+     */
+    public static boolean patternFileNameH(String fileName) {
+        String pattern = "([.a-z_A-Z0-9]+).h";
         return Pattern.matches(pattern, fileName);
     }
 

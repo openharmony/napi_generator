@@ -22,7 +22,7 @@ import javax.swing.JComponent;
 /**
  * 自定义确认对话框Wrapper
  *
- * @author: liulongc  digitalchina.com
+ * @author: xudong
  * @see: tool conversion plug-in
  * @version: v1.0.0
  * @since 2022-02-21
