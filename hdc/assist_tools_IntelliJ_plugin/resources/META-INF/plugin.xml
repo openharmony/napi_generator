@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>com.kh.tools.ng</id>
+    <name>Assist Tools</name>
+    <version>1.0</version>
+    <vendor email="zhaojunxia@kaihong.com" url="http://kaihong.com/">深圳开鸿数字产业发展有限公司</vendor>
+
+    <idea-version since-build="113.0"/>
+
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.sk.ng</depends>
+    <depends>com.sk.gn</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="AssistTools" text="Assist Tools" >
+            <add-to-group group-id="ToolsMenu" anchor="last" />
+        </group>
+
+        <action class="com.kh.tools.ng.AssistCenterMenu" id="assisttoolsGen" text="Assist Tools">
+            <add-to-group group-id="AssistTools" anchor="last" />
+            <keyboard-shortcut keymap="$default" first-keystroke="shift alt A"/>
+        </action>
+
+    </actions>
+
+</idea-plugin>
