@@ -1,0 +1,32 @@
+<idea-plugin>
+    <id>com.sk.service.ng</id>
+    <name>Service Generator</name>
+    <version>1.0.0</version>
+    <vendor email="zhaojunxia@kaihong.com" url="http://kaihong.com/">深圳开鸿数字产业发展有限公司</vendor>
+
+
+    <idea-version since-build="113.0"/>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="ServiceGenerate.gen" class="com.sk.service.ng.GenService" text="Generate Service Frame">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+        </action>
+
+        <group id="ServiceGenerate.menuGen" text="Generate Service">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </group>
+
+        <action class="com.sk.service.ng.GenMenuService" id="ServiceToolsGen" text="Generate Service Frame">
+            <add-to-group group-id="ServiceGenerate.menuGen" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift alt I"/>
+        </action>
+
+    </actions>
+
+</idea-plugin>
