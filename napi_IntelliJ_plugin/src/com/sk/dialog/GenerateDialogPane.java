@@ -28,13 +28,15 @@ import com.sk.utils.GenNotification;
 import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
+
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -78,11 +80,13 @@ public class GenerateDialogPane extends JDialog {
     private JButton buttonSelectScriptPath;
     private JButton buttonSelectH;
     private JButton buttonSelectOutPath;
+    private JComboBox comboBox;
     private boolean generateSuccess = true;
     private String sErrorMessage = "";
     private String interFileOrDir;
     private String genOutDir;
     private String scriptOutDir;
+    private String numberType;
     private int selectedIndex;
 
     /**
@@ -201,6 +205,7 @@ public class GenerateDialogPane extends JDialog {
         interFileOrDir = textFieldInterPath.getText();
         genOutDir = textFieldGenPath.getText();
         scriptOutDir = textFieldScriptPath.getText();
+        numberType = comboBox.getSelectedItem().toString();
         copyFileToLocalPath("header_parser");
         String command;
         command = genCommand();
@@ -240,8 +245,21 @@ public class GenerateDialogPane extends JDialog {
         File file = new File(tmpDirFile);
         String command = file.toString();
         String inArgs = genInArgs();
-        command += inArgs + " -o " + genOutDir + " -i " + radioButton.isSelected();
+        command += inArgs + " -o " + genOutDir + " -i " + radioButton.isSelected() + " -n " + genNumbertypeArgs();
         return command;
+    }
+
+    /**
+     * 生成 -n 输入参数。
+     *
+     * @return 生成后的值-n的值
+     */
+    private String genNumbertypeArgs() {
+        String type = "uint32_t";
+        if (numberType != "") {
+            type = numberType;
+        }
+        return type;
     }
 
     /**
