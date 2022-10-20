@@ -31,9 +31,11 @@ class Tool {
     static getCMakeToolchain() {
         switch (process.platform) {
             case 'win32':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/win64/ohos.toolchain.cmake");
+                return path.join(Tool.CURRENT_TOOL_PATH, "res/win/ohos.toolchain.cmake");
             case 'linux':
                 return path.join(Tool.CURRENT_TOOL_PATH, "res/linux/ohos.toolchain.cmake");
+            case 'darwin':
+                return path.join(Tool.CURRENT_TOOL_PATH, "res/mac/ohos.toolchain.cmake");
             default:
                 Logger.err("不支持 %s 平台".format(process.platform));
                 return "";
@@ -42,9 +44,11 @@ class Tool {
     static getMakeRaw() {
         switch (process.platform) {
             case 'win32':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/win64/bin/make_raw.exe");
+                return path.join(Tool.CURRENT_TOOL_PATH, "res/win/bin/make_raw.exe");
             case 'linux':
                 return path.join(Tool.CURRENT_TOOL_PATH, "res/linux/bin/make_raw");
+            case 'darwin':
+                return path.join(Tool.CURRENT_TOOL_PATH, "res/mac/bin/make_raw");
             default:
                 Logger.err("不支持 %s 平台".format(process.platform));
                 return "";
@@ -53,9 +57,11 @@ class Tool {
     static getMake() {
         switch (process.platform) {
             case 'win32':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/win64/bin/make.exe");
+                return path.join(Tool.CURRENT_TOOL_PATH, "res/win/bin/make.exe");
             case 'linux':
                 return path.join(Tool.CURRENT_TOOL_PATH, "res/linux/bin/make");
+            case 'darwin':
+                return path.join(Tool.CURRENT_TOOL_PATH, "res/mac/bin/make");
             default:
                 Logger.err("不支持 %s 平台".format(process.platform));
                 return "";
@@ -66,12 +72,13 @@ class Tool {
             case 'win32':
                 return path.join(Tool.OHOS_PROJECT_PATH, "prebuilts/cmake/windows-x86/bin/cmake.exe");
             case 'linux':
+            case 'darwin':
                 return path.join(Tool.OHOS_PROJECT_PATH, "prebuilts/cmake/linux-x86/bin/cmake");
             default:
                 Logger.err("不支持 %s 平台".format(process.platform));
                 return "";
         }
-        
+
     }
     static swapPath(p, swapd) {
         while (p.indexOf("\\") >= 0) {
