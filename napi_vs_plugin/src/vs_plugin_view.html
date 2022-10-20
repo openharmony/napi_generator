@@ -1,24 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" style="width: 100%; height: 100%; text-align: center;">
-
+<html lang="en" style="width: 100%; height: 100%;">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Napi</title>
 </head>
-
-<body>
-	<style type="text/css">
-		body {
+<style type="text/css">
+        body {
 			background-color: #000000;
 			margin:0 auto;
-			position:absolute;
-			left:35%;
-			top:30%;
 			font-family: Consolas, sans-serif;
 		}
-
-		a {
+        a  {
 			text-decoration: none;
 		}
 
@@ -54,148 +47,257 @@
 			outline: 2px solid #C4C4C4;
 			border: 0px;
 		}
-
-		input.radio {
-			outline: none;
+    .tabs{
+        position: relative;
+        height: 800px;
+        min-height: 800px;
+        max-height: 800px;
+        clear: both;
+        margin: 25px 0;
+        overflow: hidden;
+    }
+    .tab{
+        float: left;
+        margin: 25px 0;
+    }
+    .tab label{
+        background: #eee;
+        padding: 10px 20px;
+        position: relative;
+        left: 1px;
+        border: 0px solid;
+        margin-left: -1px;
+        z-index: 2;
+        color: #333333;
+        background: white;
+    }
+    input.text {
+		width: 250px;
+        height: 18px; 
+        vertical-align:middle;
 		}
+    .content{
+        position: absolute;
+        top: 61px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: black;
+        padding: 20px 20px;
+        border: 0px solid #ccc;
+        max-height: 800px;
+        overflow: scroll;
+    }
+    [type=radio]:checked ~ label{
+        color: white;
+        background: #3288e9;
+        border: 0px solid #ccc;
+        z-index: 3;
+    }
+    [type=radio]:checked ~ label ~ .content{
+        z-index: 1;
+    }
+</style>
+<script type="text/javascript">
+    var mode = 0;
+    let vscode = acquireVsCodeApi();
+    let importCheck = false;
+    window.onload = function () {
+        document.getElementById("selectMode").addEventListener("change", function (e) {
+            if (e.target.value == 1) {
+                mode = 1;
+            } else {
+                mode = 0;
+            }
+        });
+    }
 
-		div {
-			font-size: 16px;
-			color: #ffffff;
-			/* font-weight: bold; */
-			width: 400px;
-			height: 50px;
-			text-align: left;
+    function sendParamMsg() {
+        var fileNames = document.getElementById("interfaceFile").value;
+        var genDir = document.getElementById("genFile").value;
+        var result = {
+            msg: "param",
+            mode: mode,
+            fileNames: fileNames,
+            genDir: genDir,
+            importIsCheck: importCheck,
+        }
+        vscode.postMessage(result);
+    }
+
+    function sendH2TsParamMsg() {
+		var fileNames = document.getElementById("hFilePath").value;
+		var genDir = document.getElementById("genHResultDir").value;
+		var result = {
+			msg: "h2ts",
+			fileNames: fileNames,
+			genDir: genDir,
 		}
+		vscode.postMessage(result);
+	}
 
-	</style>
-	<script type="text/javascript">
-		var mode = 0;
-		let vscode = acquireVsCodeApi();
-		let importCheck = false;
-		window.onload = function () {
-			document.getElementById("selectMode").addEventListener("change", function (e) {
-				if (e.target.value == 1) {
-					mode = 1;
-				} else {
-					mode = 0;
-				}
-			});
-		}
+    function selectInterPath() {
+        var result = {
+            msg: "selectInterPath",
+            mode: mode
+        }
+        vscode.postMessage(result);
+    }
 
-		function sendParamMsg() {
-			var fileNames = document.getElementById("interfaceFile").value;
-			var genDir = document.getElementById("genFile").value;
-			var result = {
-				msg: "param",
-				mode: mode,
-				fileNames: fileNames,
-				genDir: genDir,
-				importIsCheck: importCheck,
-			}
-			vscode.postMessage(result);
-		}
+    function selectHFilePath() {
+        var result = {
+            msg: "selectHFilePath",
+            mode: "0"
+        }
+        vscode.postMessage(result);
+    }
 
-		function selectInterPath() {
-			var result = {
-				msg: "selectInterPath",
-				mode: mode
-			}
-			vscode.postMessage(result);
-		}
+    function selectPath(message) {
+        var result = {
+            msg: message
+        }
+        vscode.postMessage(result);
+    }
 
-		function selectPath(message) {
-			var result = {
-				msg: message
-			}
-			vscode.postMessage(result);
-		}
+    function cancel() {
+        var result = {
+            msg: "cancel"
+        }
+        vscode.postMessage(result);
+    }
 
-		function cancel() {
-			var result = {
-				msg: "cancel"
-			}
-			vscode.postMessage(result);
-		}
+    function checkbox(obj) {
+        importCheck = obj.checked;
+    }
 
-		function checkbox(obj) {
-			importCheck = obj.checked;
-		}
+    window.addEventListener('message', event => {
+        
+        const message = event.data.msg;
+        const path = event.data.path;
+        if(message == "selectInterPath") {
+            let regex = new RegExp("[a-zA-Z_0-9]+.h");
+            if(regex.exec(path)){
+                document.getElementById("tab2").checked = true;
+                document.getElementById("hFilePath").value = path;
+            }else{
+                document.getElementById("interfaceFile").value = path;
+            }
+            fillInputDir(path, message);
+        } else if(message == "selectGenPath") {
+            document.getElementById("genFile").value = path;
+        } else if(message == "selectBuildPath") {
+            document.getElementById("buildFile").value = path;
+        } else if(message == "selectHFilePath") {
+            document.getElementById("hFilePath").value = path;
+            fillInputDir(path, message);
+        } else if(message == "selectHResultDir") {
+            document.getElementById("genHResultDir").value = dir;
+        }
+        else {
+            console.log("param is error");
+        }
+    })
 
-		window.addEventListener('message', event => {
-			const message = event.data.msg;
-			const path = event.data.path;
-			if(message == "selectInterPath") {
-				document.getElementById("interfaceFile").value = path;
-				fillInputDir(path);
-			} else if(message == "selectGenPath") {
-				document.getElementById("genFile").value = path;
-			} else if(message == "selectBuildPath") {
-				document.getElementById("buildFile").value = path;
-			}
-			else {
-				console.log("param is error");
-			}
-		})
+    function inputChange() {
+        var fileNames = document.getElementById("interfaceFile").value;
+        fillInputDir(fileNames);
+    }
 
-		function inputChange() {
-			var fileNames = document.getElementById("interfaceFile").value;
-			fillInputDir(fileNames);
-		}
+    function fillInputDir(fileNames, message) {
+        var dir;
+        var fileName;
+        if (mode == 0) {
+            if (fileNames.indexOf(",") != -1) {
+                fileName = fileNames.substring(0, fileNames.indexOf(","));
+            } else {
+                fileName = fileNames;
+            }
+            dir = fileName.substring(0, fileName.lastIndexOf("\\"));
+        } else {
+            dir = fileNames;
+        }
+        if(message == "selectInterPath") {
+            let regex = new RegExp("[a-zA-Z_0-9]+.h");
+            if(regex.exec(fileNames)){
+                document.getElementById("genHResultDir").value = dir;
+            }else{
+                document.getElementById("genFile").value = dir;
+                document.getElementById("buildFile").value = dir;
+            }
+        }else{
+            document.getElementById("genHResultDir").value = dir;
+        }
+    }
 
-		function fillInputDir(fileNames) {
-			var dir;
-			var fileName;
-			if (mode == 0) {
-				if (fileNames.indexOf(",") != -1) {
-					fileName = fileNames.substring(0, fileNames.indexOf(","));
-				} else {
-					fileName = fileNames;
-				}
-				dir = fileName.substring(0, fileName.lastIndexOf("\\"));
-			} else {
-				dir = fileNames;
-			}
-			document.getElementById("genFile").value = dir;
-			document.getElementById("buildFile").value = dir;
-		}
+</script>
+<body>
+<div class="tabs">
+    <div class="tab">
+        <input type="radio" style="display: none;" id="tab1" name="group-1" checked>
+        <label for="tab1">Napi-Gen</label>
+        <div class="content">
+            <div id="selectMode">
+                选择生成方式：
+                <div style="margin-left: 110px; margin-top: -20px;">
+                    <input class="radio" type="radio" name="mode" value="0" id="files" checked="checked"> .d.ts文件</input>
+                    <input class="radio" type="radio" name="mode" value="1" id="dir"> 文件夹</input>
+                </div>
+            </div>
+            </br>
+            <div id="interface" style="margin-top: 10px;">
+                选择接口文件：
+                <input class="text" type="text" id="interfaceFile" onchange="inputChange()" onporpertychange="inputChange() ">
+                <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectInterPath()">
+            </div>
+        
+            <div style="margin-top: 10px;">
+                生成框架路径：
+                <input class="text" accept="text" id="genFile">
+                <img src="./images/path.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectPath('selectGenPath')">
+            </div>
+            <div style="margin-top: 10px;">
+                编译脚本路径：
+                <input class="text" type="text" id="buildFile">
+                <img src="./images/path.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectPath('selectBuildPath')">
+            </div>
+            <div style="margin-top: 10px;">
+                启用import功能:
+                <input id= "importCheck" type="checkbox" name="import" onclick="checkbox(this)">
+            </div>
+            <div style="margin-top: 10px; text-align: left;">
+                <button type="button" class="button" onclick="cancel()" style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>
+                <button type="button" class="button" onclick="sendParamMsg()" style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
+                <a href="https://gitee.com/openharmony/napi_generator" target="_blank">
+                    <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input type="radio" style="display: none;" id="tab2" name="group-1">
+        <label for="tab2">Ts-Gen</label>
+        <div class="content">
+            <div id="interface" style="margin-top: 10px;">
+                文件路径选择:
+                <input class="text" type="text" id="hFilePath" onchange="inputChange()" onporpertychange="inputChange() ">
+                <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectHFilePath()">
+            </div>
+        
+            <div style="margin-top: 10px;">
+                输出目录选择:
+                <input class="text" accept="text" id="genHResultDir">
+                <img src="./images/path.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectPath('selectHResultDir')">
+            </div>
 
-	</script>
-	<div id="selectMode">
-		选择生成方式：
-		<div style="margin-left: 110px; margin-top: -20px;">
-			<input class="radio" type="radio" name="mode" value="0" id="files" checked="checked"> .d.ts文件(多个文件之间用,号分割)</input><br>
-			<br>
-			<input class="radio" type="radio" name="mode" value="1" id="dir"> 文件夹</input>
-		</div>
-	</div>
-	</br>
-	<div id="interface" style="margin-top: 10px;">
-		选择接口文件：
-		<input class="text" style="width: 250px; height: 18px;" type="text" id="interfaceFile" onchange="inputChange()" onporpertychange="inputChange() ">
-		<img src="./images/file.png" width="16px" height="16px" onclick="selectInterPath()">
-	</div>
-
-	<div style="margin-top: 10px;">
-		生成框架路径：
-		<input class="text" style="width: 250px; height: 18px;" accept="text" id="genFile">
-		<img src="./images/path.png" width="16px" height="16px" onclick="selectPath('selectGenPath')">
-	</div>
-	<div style="margin-top: 10px;">
-		编译脚本路径：
-		<input class="text" style="width: 250px; height: 18px;" type="text" id="buildFile">
-		<img src="./images/path.png" width="16px" height="16px" onclick="selectPath('selectBuildPath')">
-	</div>
-	<div>
-		<input id= "importCheck" type="checkbox" name="import" onclick="checkbox(this)">启用import功能
-	</div>
-	<div style="margin-top: 10px; text-align: right;">
-		<button type="button" class="button" onclick="cancel()" style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>
-		<button type="button" class="button" onclick="sendParamMsg()" style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
-		<a href="https://gitee.com/openharmony/napi_generator" target="_blank">
-			<button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
-		</a>
-	</div>
+            <div style="margin-top: 20px; text-align: left;">
+                <button type="button" class="button" onclick="cancel()" style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>
+                <button type="button" class="button" onclick="sendH2TsParamMsg()" style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
+                <a href="https://gitee.com/openharmony/napi_generator" target="_blank">
+                    <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
-
 </html>
