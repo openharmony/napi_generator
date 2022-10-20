@@ -58,6 +58,19 @@ function executor(name, genDir, mode, importIsCheck) {
 	});
 }
 
+function executorH2Ts(name, genDir) {
+	var command = exeFilePath + " -f " + name + " -o " + genDir;
+	var exec = require('child_process').exec;
+	exec(command, function (error, stdout, stderr) {
+		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
+		if (error || stdout.indexOf("success") < 0) {
+			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
+			return VsPluginLog.logError("VsPlugin:" + error + stdout);
+		}
+		vscode.window.showInformationMessage("Generated successfully");
+	});
+}
+
 function genCommand(name, genDir, mode, importIsCheck) {
 	var genFileMode = mode == 0 ? " -f " : " -d ";
 	if (genDir == ""){
@@ -87,8 +100,9 @@ function register(context, command) {
 			}
 		);
 		panel.webview.html = getWebviewContent(context);
+		let msg;
 		panel.webview.onDidReceiveMessage(message => {
-			let msg = message.msg;
+			msg = message.msg;
 			if (msg == "cancel") {
 				panel.dispose();
 			} else if(msg == "param") {
@@ -97,12 +111,25 @@ function register(context, command) {
 				let genDir = message.genDir;
 				let importIsCheck = message.importIsCheck;
 				checkMode(name, genDir, mode, importIsCheck);
-			} else {
+			} else if(msg == "h2ts") {
+				let name = message.fileNames;
+				let genDir = message.genDir;
+				name = re.replaceAll(name, " ", "");
+				if ("" == name) {
+					vscode.window.showErrorMessage("Please enter the path!");
+					return;
+				}
+				if (exeFileExit()) {
+					executorH2Ts(name, genDir);
+				} else {
+					vscode.window.showInformationMessage("Copy executable program to " + __dirname);
+				}
+			}else {
 				selectPath(panel, message);
 			}
 		}, undefined, context.subscriptions);
 		let fn = re.getFileInPath(uri.fsPath);
-		let tt = re.match("@ohos.[a-zA-Z_0-9]+.d.ts", fn);
+		let tt = re.match("(@ohos.[a-zA-Z_0-9]+.d.ts)|([a-zA-Z_0-9]+.h)", fn);
 		var result = {
 			msg: "selectInterPath",
 			path: tt ? uri.fsPath : ""
@@ -116,6 +143,7 @@ function register(context, command) {
 * 选择本地目录/文件夹
 */
  function selectPath(panel, message) {
+	let msg = message.msg;
 	let mode = 1;
 	if (message.mode != undefined) {
 		mode = message.mode;
@@ -126,7 +154,9 @@ function register(context, command) {
 		canSelectFiles: mode == 0 ? true : false,//是否选择文件
 		canSelectFolders: mode == 0 ? false : true,//是否选择文件夹
 		defaultUri:vscode.Uri.file(''),//默认打开本地路径
-		filters: { 
+		filters: msg == "selectHFilePath" ? { 
+			'Text files': ['h']
+		} : { 
 			'Text files': ['d.ts']
 		}
 	};
