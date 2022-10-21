@@ -88,15 +88,18 @@ class Tool {
     }
 
     static DIRECTORY_STACK = [];
+    static CURRENT_DIR = null;
     static pushd(path) {
         path = Tool.swapPath(path, false);
         Tool.DIRECTORY_STACK.push(process.cwd());
         process.chdir(path);
+        Tool.CURRENT_DIR = path;
     }
     static popd() {
         let d = Tool.DIRECTORY_STACK.pop();
         if (d) {
             process.chdir(d);
+            Tool.CURRENT_DIR = d;
         }
     }
     static BACKUP_DIRECTORY = [];

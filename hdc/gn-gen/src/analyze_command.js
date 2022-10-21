@@ -41,7 +41,7 @@ class AnalyzeCommand {
     static getCompileCmdId(cmd) {
         let cmdName = cmd.split(" ")[0];
         for (let c in AnalyzeCommand.COMPILE_CMDS) {
-            if (cmdName.endsWith(c) || cmdName.endsWith(c+".exe")) {
+            if (cmdName.endsWith(c) || cmdName.endsWith(c + ".exe")) {
                 return AnalyzeCommand.COMPILE_CMDS[c];//返回命令ID
             }
         }
@@ -189,8 +189,7 @@ class AnalyzeCommand {
     }
 
     static mockTarget(t) {
-        const childProcess = require("child_process");
-        childProcess.execSync("echo a >" + t.target);
+        fs.writeFileSync(t.target, " ");
     }
     static clangCheck1(e) {
         if (e.startsWith("--sysroot=") ||
@@ -286,7 +285,27 @@ class AnalyzeCommand {
             e.endsWith(".a") ||
             e.endsWith(".S") ||
             e.endsWith(".so")) {
-                local.ret.inputs.push(e);
+            local.ret.inputs.push(e);
+            return true;
+        }
+        if (e.endsWith(".rsp")) {
+            console.log(Tool.CURRENT_DIR);
+            let rspth = path.join(Tool.CURRENT_DIR, e.substring(1));
+            let data = fs.readFileSync(rspth, { encoding: "utf8" });
+            if (data.endsWith("\r\n")) {
+                data = data.substring(0, data.length - 2);
+            }
+            let datas = data.split(" ");
+            for (let d of datas) {
+                if (d.endsWith(".c") ||
+                    d.endsWith(".o") ||
+                    d.endsWith('.o"') ||
+                    d.endsWith(".a") ||
+                    d.endsWith(".S") ||
+                    d.endsWith(".so")) {
+                    local.ret.inputs.push(d);
+                }
+            }
             return true;
         }
         return false;
@@ -340,7 +359,7 @@ class AnalyzeCommand {
         let p = 0;
         while (p < eles.length) {
             let e = eles[p++];
-            if (e.endsWith("ar")) {
+            if (e.endsWith("ar") || e.endsWith("ar.exe")) {
                 ret.command = e;
             }
             else if (e.endsWith(".a")) {
@@ -491,6 +510,26 @@ class AnalyzeCommand {
             local.ret.inputs.push(e);
             return true;
         }
+        if (e.endsWith(".rsp")) {
+            console.log(Tool.CURRENT_DIR);
+            let rspth = path.join(Tool.CURRENT_DIR, e.substring(1));
+            let data = fs.readFileSync(rspth, { encoding: "utf8" });
+            if (data.endsWith("\r\n")) {
+                data = data.substring(0, data.length - 2);
+            }
+            let datas = data.split(" ");
+            for (let d of datas) {
+                if (d.endsWith(".c") ||
+                    d.endsWith(".o") ||
+                    d.endsWith('.o"') ||
+                    d.endsWith(".a") ||
+                    d.endsWith(".S") ||
+                    d.endsWith(".so")) {
+                    local.ret.inputs.push(d);
+                }
+            }
+            return true;
+        }
         return false;
     }
     static analyzeCcClangxx(cmd) {
@@ -501,7 +540,7 @@ class AnalyzeCommand {
         }
         while (local.p < local.eles.length) {
             let e = local.eles[local.p++];
-            if (e.endsWith("clang++")) {
+            if (e.endsWith("clang++") || e.endsWith("clang++.exe")) {
                 local.ret.command = e;
             }
             else if (AnalyzeCommand.clangxxCheck1(e)) { }
