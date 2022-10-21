@@ -30,12 +30,23 @@ import java.io.File;
  * @since 2022-09-21
  */
 public class SelectOutDirAction implements ActionListener {
+    private static final String SYS_NAME = System.getProperties().getProperty("os.name").toUpperCase();
+
     private final JButton button;
     private final JTextField textField;
 
+    /**
+     * 构造函数
+     *
+     * @param button    按钮
+     * @param textField 输入框
+     */
     public SelectOutDirAction(JButton button, JTextField textField) {
         this.button = button;
         this.textField = textField;
+        if (SYS_NAME.contains("WIN")) {
+            textField.setText("out\\rk3568");
+        }
     }
 
     @Override
@@ -47,15 +58,21 @@ public class SelectOutDirAction implements ActionListener {
             int returnVal = fcDlg.showOpenDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 String filepath = fcDlg.getSelectedFile().getPath();
+                String fieldShowPath;
                 if (filepath.contains(File.separator)) {
                     String path = filepath.substring(0, filepath.lastIndexOf(File.separator));
                     if (path.contains(File.separator)) {
-                        textField.setText(filepath.substring(path.lastIndexOf(File.separator) + 1));
+                        fieldShowPath = filepath.substring(path.lastIndexOf(File.separator) + 1);
                     } else {
-                        textField.setText(filepath.substring(filepath.lastIndexOf(File.separator) + 1));
+                        fieldShowPath = filepath.substring(filepath.lastIndexOf(File.separator) + 1);
                     }
                 } else {
-                    textField.setText(filepath);
+                    fieldShowPath = filepath;
+                }
+                if (SYS_NAME.contains("WIN")) {
+                    textField.setText(fieldShowPath.replaceAll("/", "\""));
+                } else {
+                    textField.setText(fieldShowPath);
                 }
             }
         }
