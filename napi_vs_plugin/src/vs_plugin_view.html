@@ -115,11 +115,13 @@
     function sendParamMsg() {
         var fileNames = document.getElementById("interfaceFile").value;
         var genDir = document.getElementById("genFile").value;
+        var numberType = document.getElementById("numberTypeid").value;
         var result = {
             msg: "param",
             mode: mode,
             fileNames: fileNames,
             genDir: genDir,
+            numberType: numberType,
             importIsCheck: importCheck,
         }
         vscode.postMessage(result);
@@ -259,6 +261,19 @@
                 编译脚本路径：
                 <input class="text" type="text" id="buildFile">
                 <img src="./images/path.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectPath('selectBuildPath')">
+            </div>
+            <div style="margin-top: 10px;">
+                number目的类型:
+                <select id="numberTypeid" name = "numberType" style="width: 100px; height: 23px;">
+                    <option selected value = "uint32_t">uint32_t</option>
+                    <option value = "int">int</option>
+                    <option value = "double">double</option>
+                    <option value = "float">float</option>
+                    <option value = "char">char</option>
+                    <option value = "bool">bool</option>
+                    <option value = "void">void</option>
+                    <option value = "wchar_t">wchar_t</option>
+                  </select>
             </div>
             <div style="margin-top: 10px;">
                 启用import功能:
