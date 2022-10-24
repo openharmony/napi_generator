@@ -81,6 +81,9 @@
                       <component id="b8274" class="javax.swing.JLabel">
                         <constraints/>
                         <properties>
+                          <maximumSize width="97" height="17"/>
+                          <minimumSize width="97" height="17"/>
+                          <preferredSize width="97" height="17"/>
                           <text value="选择接口文件:"/>
                         </properties>
                       </component>
@@ -117,6 +120,9 @@
                       <component id="a8735" class="javax.swing.JLabel">
                         <constraints/>
                         <properties>
+                          <maximumSize width="97" height="17"/>
+                          <minimumSize width="97" height="17"/>
+                          <preferredSize width="97" height="17"/>
                           <text value="生成框架路径:"/>
                         </properties>
                       </component>
@@ -153,6 +159,9 @@
                       <component id="19e9c" class="javax.swing.JLabel">
                         <constraints/>
                         <properties>
+                          <maximumSize width="97" height="17"/>
+                          <minimumSize width="97" height="17"/>
+                          <preferredSize width="97" height="17"/>
                           <text value="编译脚本路径:"/>
                         </properties>
                       </component>
@@ -192,7 +201,7 @@
                           <maximumSize width="97" height="17"/>
                           <minimumSize width="97" height="17"/>
                           <preferredSize width="97" height="17"/>
-                          <text value="number参数类型:"/>
+                          <text value="number目的类型:"/>
                         </properties>
                       </component>
                       <component id="8af61" class="javax.swing.JComboBox" binding="comboBox">
