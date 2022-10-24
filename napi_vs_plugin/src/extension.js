@@ -46,9 +46,9 @@ function activate(context) {
 	}
 }
 
-function executor(name, genDir, mode, importIsCheck) {
+function executor(name, genDir, mode,numberType, importIsCheck) {
 	var exec = require('child_process').exec;
-	exec(genCommand(name, genDir, mode, importIsCheck), function (error, stdout, stderr) {
+	exec(genCommand(name, genDir, mode,numberType, importIsCheck), function (error, stdout, stderr) {
 		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
 		if (error || stdout.indexOf("success") < 0) {
 			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
@@ -71,12 +71,12 @@ function executorH2Ts(name, genDir) {
 	});
 }
 
-function genCommand(name, genDir, mode, importIsCheck) {
+function genCommand(name, genDir, mode,numberType, importIsCheck) {
 	var genFileMode = mode == 0 ? " -f " : " -d ";
 	if (genDir == ""){
 		return exeFilePath + genFileMode + name;
 	}
-	return exeFilePath + genFileMode + name + " -o " + genDir + " -i " + importIsCheck;
+	return exeFilePath + genFileMode + name + " -o " + genDir + " -n " + numberType + " -i " + importIsCheck;
 }
 
 function exeFileExit() {
@@ -106,11 +106,7 @@ function register(context, command) {
 			if (msg == "cancel") {
 				panel.dispose();
 			} else if(msg == "param") {
-				let mode = message.mode;
-				let name = message.fileNames;
-				let genDir = message.genDir;
-				let importIsCheck = message.importIsCheck;
-				checkMode(name, genDir, mode, importIsCheck);
+				checkReceiveMsg(message);
 			} else if(msg == "h2ts") {
 				let name = message.fileNames;
 				let genDir = message.genDir;
@@ -137,6 +133,15 @@ function register(context, command) {
 	    panel.webview.postMessage(result);
 	});
 	return disposable;
+}
+
+function checkReceiveMsg(message) {
+	let mode = message.mode;
+	let name = message.fileNames;
+	let genDir = message.genDir;
+	let numberType = message.numberType;
+	let importIsCheck = message.importIsCheck;
+	checkMode(name, genDir, mode, numberType, importIsCheck);
 }
 
 /**
@@ -178,7 +183,7 @@ function register(context, command) {
    });
 }
 
-function checkMode(name, genDir, mode, importIsCheck) {
+function checkMode(name, genDir, mode,numberType, importIsCheck) {
 	name = re.replaceAll(name, " ", "");
 	if ("" == name) {
 		vscode.window.showErrorMessage("Please enter the path!");
@@ -196,7 +201,7 @@ function checkMode(name, genDir, mode, importIsCheck) {
 		}
 	}
 	if (exeFileExit()) {
-		executor(name, genDir, mode, importIsCheck);
+		executor(name, genDir, mode,numberType, importIsCheck);
 	} else {
 		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
 	}

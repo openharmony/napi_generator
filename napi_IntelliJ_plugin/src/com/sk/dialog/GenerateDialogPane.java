@@ -44,10 +44,19 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,12 +70,20 @@ import java.util.regex.Pattern;
  */
 public class GenerateDialogPane extends JDialog {
     private static final Logger LOG = Logger.getInstance(GenerateDialogPane.class);
-    private static final String COMMAND_STATEMENT = "add_library(napitest SHARED x_napi_tool.cpp napitest.cpp "
-            + "napitest_middle.cpp)" + FileUtil.getNewline() + "target_link_libraries(napitest libace_napi.z.so)";
-    private static final String REGEX = "napitest";
-    private static final Pattern LF_PATTERN = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final String FILE_NAME_REGEX = "(\\@ohos\\.)(.*?)(\\.d\\.ts)";
+    private static final Pattern FILE_NAME_PATTERN = Pattern.compile(FILE_NAME_REGEX, Pattern.CASE_INSENSITIVE);
+    private static final String NAMESPACE_REGEX = "declare namespace ([a-zA-Z_0-9]+) *(\\{)";
+    private static final Pattern NAMESPACE_PATTERN = Pattern.compile(NAMESPACE_REGEX, Pattern.CASE_INSENSITIVE);
+    private static final String CMAKE_SETCXX_TEMPLATE = "cmake_minimum_required(VERSION 3.4.1)"
+            + FileUtil.getNewline() + "project(napi_lib)" + FileUtil.getNewline() + "set(CMAKE_CXX_STANDARD 17)"
+            + FileUtil.getNewline() + FileUtil.getNewline();
+    private static final String CMAKE_ADD_LIB_TEMPLATE =
+            "add_library(LIBNAME SHARED PATH/tool_utility.cpp PATH/FILE_PREFIX.cpp PATH/FILE_PREFIX_middle.cpp)";
+    private static final String CMAKE_LINK_TEMPLATE =
+            "target_link_libraries(LIBNAME PUBLIC libace_napi.z.so libuv.so)";
 
     private final Project project;
+    private List<String> tsFileList = new ArrayList<>();
     private JPanel contentPane;
     private JTabbedPane tabbedPane;
     private JTextField textFieldSelectH;
@@ -303,6 +320,7 @@ public class GenerateDialogPane extends JDialog {
      * @return 生成后的值-f -d的值
      */
     private String genInArgs() {
+        tsFileList.clear();
         String[] interArr = interFileOrDir.split(",");
         StringBuilder tsParam = new StringBuilder(" -f ");
         StringBuilder dirParam = new StringBuilder(" -d ");
@@ -312,16 +330,18 @@ public class GenerateDialogPane extends JDialog {
                 File interFile = new File(interStr);
                 if (interFile.isDirectory()) {
                     dirParam.append(interStr).append(" ");
+                    for (File tsFile : interFile.listFiles()) {
+                        tsFileList.add(tsFile.getPath());
+                    }
                 } else {
                     tsParam.append(interStr).append(",");
+                    tsFileList.add(interStr);
                 }
             }
-            if (!TextUtils.isEmpty(tsParam.toString().replaceAll("-f", ""))
-                    && !TextUtils.isBlank(tsParam.toString().replaceAll("-f", ""))) {
+            if (!TextUtils.isBlank(tsParam.toString().replaceAll("-f", ""))) {
                 inputCommand += tsParam.substring(0, tsParam.length() - 1);
             }
-            if (!TextUtils.isEmpty(dirParam.toString().replace("-d", ""))
-                    && !TextUtils.isBlank(dirParam.toString().replace("-d", ""))) {
+            if (!TextUtils.isBlank(dirParam.toString().replace("-d", ""))) {
                 inputCommand += dirParam.substring(0, dirParam.length() - 1);
             }
         }
@@ -342,7 +362,7 @@ public class GenerateDialogPane extends JDialog {
         outputConsumer.start();
 
         if (generateSuccess) {
-            writeCommand();
+            writeCompileCfg();
         } else {
             GenNotification.notifyMessage(project, sErrorMessage, "提示", NotificationType.ERROR);
             return false;
@@ -353,21 +373,127 @@ public class GenerateDialogPane extends JDialog {
     }
 
     /**
-     * 写makeFile.txt文件
+     * 获得 pathA 相对于 pathB的相对路径
+     *
+     * @param pathA 路径A，如 D:\xx\yy\zz\a1\a2
+     * @param pathB 路径B, 如 D:\xx\yy\zz\b1\b2\b3
+     * @return pathA 相对于 pathB的相对路径: ../../../a1/a2/
      */
-    private void writeCommand() {
+    private String getRelativePath(String pathA, String pathB) {
+        String separatorStr = File.separator.equals("\\") ? "\\\\" : File.separator;
+        String[] pathAList = pathA.split(separatorStr);
+        String[] pathBList = pathB.split(separatorStr);
+
+        int pos = 0;
+        for (; pos < pathAList.length && pos < pathBList.length; ++pos) {
+            if (!pathAList[pos].equals(pathBList[pos])) {
+                // 找到两个path路径存在差异的位置
+                break;
+            }
+        }
+        // 截取pathA和pathB路径字符串的差异部分
+        String[] diffPathAList = Arrays.copyOfRange(pathAList, pos, pathAList.length);
+        String[] diffPathBList = Arrays.copyOfRange(pathBList, pos, pathBList.length);
+
+        // pathA的差异字符串作为相对路径的结尾部分
+        String pathAStr = String.join("/", diffPathAList);
+        pathAStr = pathAStr.isBlank() ? "" : pathAStr + "/";
+
+        // 根据pathB的差异目录层级生成向上跳转字符串
+        String rollbackPath = "";
+        for (int i = 0; i < diffPathBList.length; ++i) {
+            rollbackPath += "../";
+        }
+        rollbackPath = rollbackPath.isEmpty() ? "./" : rollbackPath;
+
+        // 相对路径 = 向上跳转部分 + pathA的差异部分
+        return rollbackPath + pathAStr;
+    }
+
+    /**
+     * 获取NAPI工具生成的cpp文件前缀
+     *
+     * @param tsFilePath ts接口文件名
+     * @return cpp文件前缀
+     */
+    private String getCppNamePrefix(String tsFilePath) {
+        File tsFile = new File(tsFilePath);
+
+        // NAPI工具中cpp前缀名取的是ts文件中声明的首个namespace的名称，插件这里按同样方法获取。
+        try (InputStreamReader read = new InputStreamReader(new FileInputStream(tsFile), StandardCharsets.UTF_8);
+            BufferedReader bufferedReader = new BufferedReader(read)) {
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                // 找到 "declare namespace" 这一行并将 namespace名称作为cpp文件前缀名返回。
+                Matcher tsNamespaceMatcher = NAMESPACE_PATTERN.matcher(line);
+                if (tsNamespaceMatcher.find()) {
+                    return tsNamespaceMatcher.group(1);
+                }
+            }
+        } catch (FileNotFoundException foundException) {
+            LOG.error("The ts file " + tsFilePath + " does not exist.");
+        } catch (IOException ioException) {
+            LOG.error("Failed to read file, error: " + ioException);
+        }
+        return "";
+    }
+
+    /**
+     * 使用 ts文件@ohos.xxx.d.ts中的xxx作为编译c++lib库的名字
+     *
+     * @param tsFileName ts文件名
+     * @return 解析出的lib库名称
+     */
+    private String getLibNameFromTsFile(String tsFileName) {
+        Matcher tsFileNameMatcher = FILE_NAME_PATTERN.matcher(tsFileName);
+        if (!tsFileNameMatcher.find()) {
+            LOG.warn("Invalid ts file name format, should be @ohos.xxx.d.ts.");
+            return tsFileName;
+        }
+        return tsFileNameMatcher.group(2);
+    }
+
+    /**
+     * 生成编译文件
+     */
+    private void writeCompileCfg() {
         FileUtil fileUtil = new FileUtil();
-        String filePath = fileUtil.makeFile(genOutDir + "/makeFile.txt");
-        if (TextUtils.isEmpty(filePath)) {
+        String cmakeFilePath = fileUtil.makeFile(scriptOutDir + "/CMakeLists.txt");
+        if (TextUtils.isEmpty(cmakeFilePath)) {
             LOG.info("makeFile is fail");
             return;
         }
-        Matcher matcher = LF_PATTERN.matcher(COMMAND_STATEMENT);
-        String statement = matcher.replaceAll(scriptOutDir);
+
         try {
-            if (!fileUtil.findStringInFile(filePath, statement)) {
-                fileUtil.writeErrorToTxt(filePath, statement);
+            // 获取cpp文件相对于CMakeList.txt文件的路径
+            String cppRelativePath = getRelativePath(new File(genOutDir).getPath(), new File(scriptOutDir).getPath());
+
+            // 生成 CMakeList.txt文件内容
+            StringBuilder cmakeBuilder = new StringBuilder(CMAKE_SETCXX_TEMPLATE);
+            for (String tsFilePath : tsFileList) {
+                String cppNamePrefix = getCppNamePrefix(tsFilePath);
+                String libName = getLibNameFromTsFile(new File(tsFilePath).getName());
+                String libStr = CMAKE_ADD_LIB_TEMPLATE.replaceAll("LIBNAME", libName)
+                        .replaceAll("PATH/", cppRelativePath).replaceAll("FILE_PREFIX", cppNamePrefix);
+                cmakeBuilder.append(libStr).append(FileUtil.getNewline());
+
+                cmakeBuilder.append(CMAKE_LINK_TEMPLATE.replaceAll("LIBNAME", libName))
+                        .append(FileUtil.getNewline());
             }
+            fileUtil.writeContentToFile(cmakeFilePath, cmakeBuilder.toString());
+
+            // 需要在main文件夹下创建cpp目录, 如果没有此目录，DevEco 3.0版本编译时不会编译任何目录中的c++代码。
+            Path path = Paths.get(project.getBasePath() + "/entry/src/main/cpp");
+            Files.createDirectories(path);
+
+            // 在{ProjectRoot}/entry/build-profile.json5 中增加 externalNativeOptions 配置
+            String buildJsonFilePath = project.getBasePath() + "/entry/build-profile.json5";
+
+            // 获取CMakeLists.txt相对于build-profile.json5构建文件的相对路径
+            String cmakeRelativePath = getRelativePath(new File(cmakeFilePath).getParent(),
+                    new File(buildJsonFilePath).getParent());
+
+            fileUtil.writeBuildJsonFile(buildJsonFilePath, cmakeRelativePath + "CMakeLists.txt");
         } catch (IOException ioException) {
             LOG.error("writeCommand io error" + ioException);
         }
