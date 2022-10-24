@@ -244,6 +244,7 @@ public class GenDialogPane extends JDialog {
      */
     public boolean runFun() {
         createCopyResMakeFile();
+        createCopyResMakeRawFile();
         createCopyResToolChainFile();
         GenNotification.notifyMessage(this.project, "", "正在生成", NotificationType.INFORMATION);
         String command;
@@ -297,13 +298,16 @@ public class GenDialogPane extends JDialog {
         if (!TextUtils.isEmpty(compileTextField.getText().trim())) {
             command += " -a " + "\"" + compileOptions + "\"";
         }
+        if (SYS_NAME.contains("WIN")) {
+            return command.replaceAll("\\\\", "/");
+        }
         return command;
     }
 
     private void createCopyResMakeFile() {
         String makeFilePath = "cmds/res/linux/bin/make";
         if (SYS_NAME.contains("WIN")) {
-            makeFilePath = "cmds/res/win64/bin/gnumake.exe";
+            makeFilePath = "cmds/res/win/bin/gnumake.exe";
         }
         String tmpDirFile = System.getProperty("java.io.tmpdir") + "/res/linux/bin/";
         File file = new File(tmpDirFile);
@@ -312,19 +316,44 @@ public class GenDialogPane extends JDialog {
         }
         String tmp = SYS_NAME.contains("WIN") ? file.getPath() + "/gnumake.exe" : file.getPath() + "/make";
         writeTmpFile(tmp, makeFilePath, project);
-        try {
-            executable(tmp);
-        } catch (IOException | InterruptedException e) {
-            GenNotification.notifyMessage(this.project, e.getMessage(), "Can not Find File:" + makeFilePath,
+        if (SYS_NAME.contains("LINUX") || SYS_NAME.contains("MAC OS")) {
+            try {
+                executable(tmp);
+            } catch (IOException | InterruptedException e) {
+                GenNotification.notifyMessage(this.project, e.getMessage(), "Can not Find File:" + makeFilePath,
                     NotificationType.ERROR);
-            LOG.error(e);
+                LOG.error(e);
+            }
+        }
+    }
+
+    private void createCopyResMakeRawFile() {
+        String makeFilePath = "cmds/res/linux/bin/make_raw";
+        if (SYS_NAME.contains("WIN")) {
+            makeFilePath = "cmds/res/win/bin/make_raw.exe";
+        }
+        String tmpDirFile = System.getProperty("java.io.tmpdir") + "/res/linux/bin/";
+        File file = new File(tmpDirFile);
+        if (file.mkdirs()) {
+            LOG.info("create dir success");
+        }
+        String tmp = SYS_NAME.contains("WIN") ? file.getPath() + "/make_raw.exe" : file.getPath() + "/make_raw";
+        writeTmpFile(tmp, makeFilePath, project);
+        if (SYS_NAME.contains("LINUX") || SYS_NAME.contains("MAC OS")) {
+            try {
+                executable(tmp);
+            } catch (IOException | InterruptedException e) {
+                GenNotification.notifyMessage(this.project, e.getMessage(), "Can not Find File:" + makeFilePath,
+                    NotificationType.ERROR);
+                LOG.error(e);
+            }
         }
     }
 
     private void createCopyResToolChainFile() {
         String toolchainFileDir = "cmds/res/linux/ohos.toolchain.cmake";
         if (SYS_NAME.contains("WIN")) {
-            toolchainFileDir = "cmds/res/win64/ohos.toolchain.cmake";
+            toolchainFileDir = "cmds/res/win/ohos.toolchain.cmake";
         }
         String tmpDirFile = System.getProperty("java.io.tmpdir") + "/res/linux/";
         File file = new File(tmpDirFile);
@@ -333,12 +362,14 @@ public class GenDialogPane extends JDialog {
         }
         String tmp = file.getPath() + "/ohos.toolchain.cmake";
         writeTmpFile(tmp, toolchainFileDir, project);
-        try {
-            executable(tmp);
-        } catch (IOException | InterruptedException e) {
-            GenNotification.notifyMessage(this.project, e.getMessage(), "Can not Find File:" + toolchainFileDir,
+        if (SYS_NAME.contains("LINUX") || SYS_NAME.contains("MAC OS")) {
+            try {
+                executable(tmp);
+            } catch (IOException | InterruptedException e) {
+                GenNotification.notifyMessage(this.project, e.getMessage(), "Can not Find File:" + toolchainFileDir,
                     NotificationType.ERROR);
-            LOG.error(e);
+                LOG.error(e);
+            }
         }
     }
 
