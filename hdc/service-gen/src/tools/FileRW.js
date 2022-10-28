@@ -135,6 +135,9 @@ function writeFile(fn, str) {
 }
 
 function createFolder(path) {
+  if (fs.existsSync(path)) {
+    return;
+  }
   fs.mkdirSync(path)
 }
 

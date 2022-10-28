@@ -15,9 +15,6 @@
 const fs = require("fs");
 const os = require("os");
 const { NapiLog } = require("../tools/NapiLog");
-const { writeFile, createFolder } = require("../tools/FileRW");
-const re = require("../tools/re");
-const gen =  require("./generate");
 const path = require('path');
 
 function parseFileAll(hFilePath) {
@@ -120,13 +117,7 @@ function analyzeClasses(rootInfo, parseClasses) {
     }
 }
 
-function wirte2Disk(fileInfo, destDir) {
-    let filePath = re.pathJoin(destDir, fileInfo.name);
-    writeFile(filePath, fileInfo.content);
-}
-
 function doAnalyze(hFilePath, cmdParam) {
-    let destDir = cmdParam.out;
     let parseResult = parseFileAll(hFilePath);
     let rootInfo = {
         "serviceName": "",
@@ -135,39 +126,11 @@ function doAnalyze(hFilePath, cmdParam) {
         "includes": [],
         "serviceId": cmdParam.serviceId == null ? "9002" : cmdParam.serviceId
     }
-    // 1. h文件解析保存为结构体
+
     analyzeNameSpace(rootInfo, parseResult);
     analyzeClasses(rootInfo, parseResult.classes);
     rootInfo.includes = parseResult.includes;
-
-    // 2. 根据结构体生成代码
-    let fileContent = gen.doGenerate(rootInfo);
-
-    // 3. 创建service工程目录
-    let serviceFolder = rootInfo.serviceName.toLowerCase() + "service";
-    let outputPath = destDir + "/" + serviceFolder;
-    createFolder(re.pathJoin(destDir, serviceFolder));
-    createFolder(re.pathJoin(outputPath, "include"));
-    createFolder(re.pathJoin(outputPath, "interface"));
-    createFolder(re.pathJoin(outputPath, "sa_profile"));
-    createFolder(re.pathJoin(outputPath, "etc"));
-    createFolder(re.pathJoin(outputPath, "src"));
-
-    // 4. 生成代码保存为文件
-    wirte2Disk(fileContent.iServiceHFile, outputPath + "/interface");
-    wirte2Disk(fileContent.proxyHFile, outputPath + "/include");
-    wirte2Disk(fileContent.stubHFile, outputPath + "/include");
-    wirte2Disk(fileContent.serviceHFile, outputPath + "/include");
-    wirte2Disk(fileContent.proxyCppFile, outputPath + "/src");
-    wirte2Disk(fileContent.stubCppFile, outputPath + "/src");
-    wirte2Disk(fileContent.serviceCppFile, outputPath + "/src");
-    wirte2Disk(fileContent.clientCppFile, outputPath + "/src");
-    wirte2Disk(fileContent.buildGnFile, outputPath);
-    wirte2Disk(fileContent.bundleJsonFile, outputPath);
-    wirte2Disk(fileContent.profileGnFile, outputPath + "/sa_profile");
-    wirte2Disk(fileContent.profileXmlFile, outputPath + "/sa_profile");
-    wirte2Disk(fileContent.serviceCfgFile, outputPath + "/etc");
-    wirte2Disk(fileContent.serviceCfgGnFile, outputPath + "/etc");
+    return rootInfo;
 }
 
 module.exports = {
