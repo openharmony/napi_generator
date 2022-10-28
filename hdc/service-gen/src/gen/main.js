@@ -15,10 +15,13 @@
 const path = require("path");
 const stdio = require("stdio");
 const fs = require('fs');
+const re = require("../tools/re");
 
 const { NapiLog } = require("../tools/NapiLog");
 const { print } = require("../tools/tool");
 const analyze = require("./analyze");
+const gen =  require("./generate");
+const { writeFile, createFolder } = require("../tools/FileRW");
 
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: ".d.ts file", default: "" },
@@ -80,12 +83,55 @@ function readDirFiles() {
     });
 }
 
+function wirte2Disk(fileInfo, destDir) {
+    let filePath = re.pathJoin(destDir, fileInfo.name);
+    writeFile(filePath, fileInfo.content);
+}
+
+function genServiceFile(fileName) {
+    // 1. h文件解析保存为结构体
+    let rootInfo = analyze.doAnalyze(fileName, ops);
+
+    // 2. 根据结构体生成代码
+    let fileContent = gen.doGenerate(rootInfo);
+
+    // 3. 创建service工程目录
+    let servicePath = re.pathJoin(ops.out, rootInfo.serviceName.toLowerCase() + "service");
+    let etcPath = re.pathJoin(servicePath, "etc");
+    let includePath = re.pathJoin(servicePath, "include");
+    let interfacePath = re.pathJoin(servicePath, "interface");
+    let profilePath = re.pathJoin(servicePath, "sa_profile");
+    let srcPath = re.pathJoin(servicePath, "src");
+    createFolder(servicePath);
+    createFolder(etcPath);
+    createFolder(includePath);
+    createFolder(interfacePath);
+    createFolder(profilePath);
+    createFolder(srcPath);
+
+    // 4. 生成代码保存为文件
+    wirte2Disk(fileContent.serviceCfgFile, etcPath);
+    wirte2Disk(fileContent.serviceCfgGnFile, etcPath);
+    wirte2Disk(fileContent.proxyHFile, includePath);
+    wirte2Disk(fileContent.stubHFile, includePath);
+    wirte2Disk(fileContent.serviceHFile, includePath);
+    wirte2Disk(fileContent.iServiceHFile, interfacePath);
+    wirte2Disk(fileContent.profileGnFile, profilePath);
+    wirte2Disk(fileContent.profileXmlFile, profilePath);
+    wirte2Disk(fileContent.proxyCppFile, srcPath);
+    wirte2Disk(fileContent.stubCppFile, srcPath);
+    wirte2Disk(fileContent.serviceCppFile, srcPath);
+    wirte2Disk(fileContent.clientCppFile, srcPath);
+    wirte2Disk(fileContent.buildGnFile, servicePath);
+    wirte2Disk(fileContent.bundleJsonFile, servicePath);
+}
+
 function checkGenerate(fileName) {
     NapiLog.logInfo("check file []".format(fileName));
     let suffix = fileName.split('.').pop().toLowerCase();
     if (suffix === 'h') {
         NapiLog.logInfo("Generating service code from file " + fileName);
-        analyze.doAnalyze(fileName, ops);
+        genServiceFile(fileName);
     } else {
         NapiLog.logError('Only .h file is supported.');
     }
