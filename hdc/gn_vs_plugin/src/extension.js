@@ -49,9 +49,11 @@ function activate(context) {
 	}
 }
 
-function gnexecutor(outputCodeDir, originCodeDir, inputScriptDir, scriptType, transplantDir, subsystemName, componentName, compileOptions) {
+function gnexecutor(outputCodeDir, originCodeDir, inputScriptDir, scriptType, transplantDir, 
+	subsystemName, componentName, compileOptions) {
 	var exec = require('child_process').exec;
-	exec(genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType, transplantDir, subsystemName, componentName, compileOptions), function (error, stdout, stderr) {
+	exec(genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType, transplantDir, 
+		subsystemName, componentName, compileOptions), function (error, stdout, stderr) {
 		 VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
 		if (error || stdout.indexOf("generate gn ok") < 0) {
 			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
@@ -61,9 +63,10 @@ function gnexecutor(outputCodeDir, originCodeDir, inputScriptDir, scriptType, tr
 	});
 }
 
-function genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType, transplantDir, subsystemName, componentName, compileOptions) {
-	var command = exeFilePath + " -o " + outputCodeDir + " -p " + originCodeDir + " -f " + inputScriptDir + " -t " + scriptType
-		+ " -s " + subsystemName + " -m " + componentName + " -d " + transplantDir;
+function genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
+	transplantDir, subsystemName, componentName, compileOptions) {
+	var command = exeFilePath + " -o " + outputCodeDir + " -p " + originCodeDir + " -f " + inputScriptDir 
+	+ " -t " + scriptType + " -s " + subsystemName + " -m " + componentName + " -d " + transplantDir;
 	if (compileOptions != "") {
 		command += " -a " + "\"" + compileOptions + "\"";
 	}
@@ -109,7 +112,8 @@ function register(context, command) {
 				let subsystemName = message.subsystemName;
 				let componentName = message.componentName;
 				let compileOptions = message.compileOptions;
-				checkMode(outputCodeDir, originCodeDir, inputScriptDir, scriptType, transplantDir, subsystemName, componentName, compileOptions);
+				checkMode(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
+					transplantDir, subsystemName, componentName, compileOptions);
 			} else {
 				selectPath(panel, message);
 			}
@@ -168,7 +172,8 @@ function register(context, command) {
    });
 }
 
-function checkMode(outputCodeDir, originCodeDir, inputScriptDir, scriptType, transplantDir, subsystemName, componentName, compileOptions) {
+function checkMode(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
+	transplantDir, subsystemName, componentName, compileOptions) {
 	outputCodeDir = re.replaceAll(outputCodeDir, " ", "");
 	if ("" == outputCodeDir) {
 		vscode.window.showErrorMessage("Please enter the outputCodeDir path!");
@@ -204,7 +209,8 @@ function checkMode(outputCodeDir, originCodeDir, inputScriptDir, scriptType, tra
 		return;
 	}
 	if (exeFileExit()) {
-		gnexecutor(outputCodeDir, originCodeDir, inputScriptDir, scriptType, transplantDir, subsystemName, componentName, compileOptions);
+		gnexecutor(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
+			transplantDir, subsystemName, componentName, compileOptions);
 	} else {
 		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
 	}
