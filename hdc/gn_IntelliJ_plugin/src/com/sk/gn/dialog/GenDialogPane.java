@@ -43,6 +43,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.sk.gn.utils.FileUtil.writeTmpFile;
 
@@ -54,7 +58,7 @@ import static com.sk.gn.utils.FileUtil.writeTmpFile;
  * @version: v1.0.0
  * @since 2022-02-21
  */
-public class GenDialogPane extends JDialog {
+public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectPathInterface {
     private static final Logger LOG = Logger.getInstance(GenDialogPane.class);
     private static final String SYS_NAME = System.getProperties().getProperty("os.name").toUpperCase();
 
@@ -115,6 +119,10 @@ public class GenDialogPane extends JDialog {
     private String compileOptions;
 
     private final Project project;
+    private BlockingQueue blockingQueue = new LinkedBlockingQueue(100);
+    private ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 64, 60L,
+            TimeUnit.SECONDS, blockingQueue,
+            new ThreadPoolExecutor.AbortPolicy());
 
     /**
      * 构造函数
@@ -128,11 +136,12 @@ public class GenDialogPane extends JDialog {
         contentPane.registerKeyboardAction(actionEvent -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        selectOPOutButton.addActionListener(new SelectOutDirAction(selectOPOutButton, opOutPathTextField));
-        selectOPOriginButton.addActionListener(new SelectOriginCodeAction(selectOPOriginButton, opOriginTextField));
+        selectOPOutButton.addActionListener(new SelectOutDirAction(selectOPOutButton, opOutPathTextField, this));
+        selectOPOriginButton.addActionListener(new SelectOriginCodeAction(selectOPOriginButton, opOriginTextField,
+                opOutPathTextField));
         selectTransplantButton.addActionListener(new SelectBankAction(selectTransplantButton, transplantTextField));
-        selectScriptButton.addActionListener(new InputScriptAction(selectScriptButton, inputScriptTextField,
-                comboBox, transplantTextField));
+        selectScriptButton.addActionListener(new InputScriptAction(selectScriptButton, inputScriptTextField, comboBox,
+                transplantTextField));
         inputScriptTextField.setText(filePath);
     }
 
@@ -294,7 +303,7 @@ public class GenDialogPane extends JDialog {
         }
         String command = file.toString();
         command += " -o " + outputCodeDir + " -p " + originCodeDir + " -f " + inputScriptDir + " -t " + scriptType
-                + " -s " + subsystemName + " -m " + componentName + " -d " + transplantDir;
+            + " -s " + subsystemName + " -m " + componentName + " -d " + transplantDir;
         if (!TextUtils.isEmpty(compileTextField.getText().trim())) {
             command += " -a " + "\"" + compileOptions + "\"";
         }
@@ -307,14 +316,14 @@ public class GenDialogPane extends JDialog {
     private void createCopyResMakeFile() {
         String makeFilePath = "cmds/res/linux/bin/make";
         if (SYS_NAME.contains("WIN")) {
-            makeFilePath = "cmds/res/win/bin/gnumake.exe";
+            makeFilePath = "cmds/res/win/bin/make.exe";
         }
         String tmpDirFile = System.getProperty("java.io.tmpdir") + "/res/linux/bin/";
         File file = new File(tmpDirFile);
         if (file.mkdirs()) {
             LOG.info("create dir success");
         }
-        String tmp = SYS_NAME.contains("WIN") ? file.getPath() + "/gnumake.exe" : file.getPath() + "/make";
+        String tmp = SYS_NAME.contains("WIN") ? file.getPath() + "/make.exe" : file.getPath() + "/make";
         writeTmpFile(tmp, makeFilePath, project);
         if (SYS_NAME.contains("LINUX") || SYS_NAME.contains("MAC OS")) {
             try {
@@ -378,8 +387,8 @@ public class GenDialogPane extends JDialog {
             GenNotification.notifyMessage(this.project, "执行命令文件为空", "空命令行提示", NotificationType.ERROR);
             return false;
         }
-        Process process = Runtime.getRuntime().exec(command);
-        genResultLog(process);
+        final Process process = Runtime.getRuntime().exec(command);
+        threadPool.execute(new BlockThread(process));
         StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
         StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
         errConsumer.start();
@@ -392,6 +401,7 @@ public class GenDialogPane extends JDialog {
         }
         errConsumer.join();
         outputConsumer.join();
+        process.destroy();
         return true;
     }
 
@@ -477,6 +487,14 @@ public class GenDialogPane extends JDialog {
         return sOut.toString();
     }
 
+    @Override
+    public void getFilePath(File pathFile) {
+        if (pathFile.getParentFile() != null && pathFile.getParentFile().getParent() != null) {
+            opOriginTextField.setText(pathFile.getParentFile().getParent());
+            inputScriptTextField.setText(pathFile.getParentFile().getParent());
+        }
+    }
+
     static class StreamConsumer extends Thread {
         InputStream is;
 
@@ -502,5 +520,27 @@ public class GenDialogPane extends JDialog {
 
     JPanel getContentPanel() {
         return contentPane;
+    }
+
+    class BlockThread extends Thread {
+        Process process;
+
+        BlockThread(Process process) {
+            super.setName("BlockThread");
+            this.process = process;
+        }
+
+        @Override
+        public void run() {
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            genResultLog(process);
+            try {
+                while (br.readLine() != null) {
+                    LOG.info(" callExtProcess ");
+                }
+            } catch (IOException ioException) {
+                LOG.error(" callExtProcess error" + ioException);
+            }
+        }
     }
 }

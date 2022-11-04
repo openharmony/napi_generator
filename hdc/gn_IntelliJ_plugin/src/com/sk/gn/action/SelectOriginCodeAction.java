@@ -31,10 +31,12 @@ import java.awt.event.ActionListener;
 public class SelectOriginCodeAction implements ActionListener {
     private final JButton button;
     private final JTextField textField;
+    private final JTextField opOutPathTextField;
 
-    public SelectOriginCodeAction(JButton button, JTextField textField) {
+    public SelectOriginCodeAction(JButton button, JTextField textField, JTextField opOutPathTextField) {
         this.button = button;
         this.textField = textField;
+        this.opOutPathTextField = opOutPathTextField;
     }
 
     @Override
