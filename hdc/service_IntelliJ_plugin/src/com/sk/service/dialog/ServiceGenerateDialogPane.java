@@ -60,6 +60,7 @@ public class ServiceGenerateDialogPane extends JDialog {
     private JTextField textFieldOutPath;
     private JButton buttonOutPath;
     private JButton buttonSelectH;
+    private JTextField textFieldServiceId;
     private boolean generateSuccess = true;
     private String sErrorMessage = "";
     private String dirPath;
@@ -199,7 +200,8 @@ public class ServiceGenerateDialogPane extends JDialog {
         String command = file.toString();
         String hFile = textFieldH.getText();
         String outPath = textFieldOutPath.getText();
-        command += " -f " + hFile + " -o " + outPath + " -s 9001";
+        String serviceId = textFieldServiceId.getText();
+        command += " -f " + hFile + " -o " + outPath + (TextUtils.isEmpty(serviceId) ? " -s 9001" : " -s " + serviceId);
         return command;
     }
 

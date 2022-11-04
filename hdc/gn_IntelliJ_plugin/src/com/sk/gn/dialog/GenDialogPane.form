@@ -303,7 +303,7 @@
                 <item value="cmake"/>
                 <item value="scons"/>
               </model>
-              <selectedIndex value="0"/>
+              <selectedIndex value="1"/>
             </properties>
           </component>
         </children>
