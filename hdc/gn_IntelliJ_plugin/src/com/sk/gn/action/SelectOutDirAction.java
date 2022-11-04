@@ -34,16 +34,19 @@ public class SelectOutDirAction implements ActionListener {
 
     private final JButton button;
     private final JTextField textField;
+    private SelectPathInterface selectPathInterface;
 
     /**
      * 构造函数
      *
      * @param button    按钮
      * @param textField 输入框
+     * @param selectPathInterface 接口
      */
-    public SelectOutDirAction(JButton button, JTextField textField) {
+    public SelectOutDirAction(JButton button, JTextField textField, SelectPathInterface selectPathInterface) {
         this.button = button;
         this.textField = textField;
+        this.selectPathInterface = selectPathInterface;
         if (SYS_NAME.contains("WIN")) {
             textField.setText("out\\rk3568");
         }
@@ -58,6 +61,7 @@ public class SelectOutDirAction implements ActionListener {
             int returnVal = fcDlg.showOpenDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 String filepath = fcDlg.getSelectedFile().getPath();
+                selectPathInterface.getFilePath(fcDlg.getSelectedFile());
                 String fieldShowPath;
                 if (filepath.contains(File.separator)) {
                     String path = filepath.substring(0, filepath.lastIndexOf(File.separator));
@@ -76,5 +80,17 @@ public class SelectOutDirAction implements ActionListener {
                 }
             }
         }
+    }
+
+    /**
+     * 文件选择接口
+     */
+    public interface SelectPathInterface {
+        /**
+         * 选择文件路径
+         *
+         * @param pathFile 文件路径
+         */
+        void getFilePath(File pathFile);
     }
 }

@@ -31,10 +31,12 @@ import java.awt.event.ActionListener;
 public class ScanDirAction implements ActionListener {
     private final JButton button;
     private final JTextField textField;
+    private final JTextField outScanResultPathTextField;
 
-    public ScanDirAction(JButton button, JTextField textField) {
+    public ScanDirAction(JButton button, JTextField textField, JTextField outScanResultPathTextField) {
         this.button = button;
         this.textField = textField;
+        this.outScanResultPathTextField = outScanResultPathTextField;
     }
 
     @Override
@@ -47,6 +49,7 @@ public class ScanDirAction implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 String filepath = fcDlg.getSelectedFile().getPath();
                 textField.setText(filepath);
+                outScanResultPathTextField.setText(filepath);
             }
         }
     }

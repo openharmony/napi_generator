@@ -29,6 +29,10 @@
 				{
 					"when": "resourceExtname == .ts",
 					"command": "generate_napi"
+				},
+				{
+					"when": "resourceExtname == .h",
+					"command": "generate_napi"
 				}
 			],
 			"editor/context": [

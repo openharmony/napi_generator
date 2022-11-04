@@ -41,6 +41,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * GenerateDialogPane生成工具主界面
@@ -63,6 +67,10 @@ public class ApiScanDialogPane extends JDialog {
     private String scanDir;
     private String scanResultDir;
     private final Project project;
+    private BlockingQueue blockingQueue = new LinkedBlockingQueue(100);
+    private ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 64, 60L,
+            TimeUnit.SECONDS, blockingQueue,
+            new ThreadPoolExecutor.AbortPolicy());
 
 
     /**
@@ -74,7 +82,8 @@ public class ApiScanDialogPane extends JDialog {
         this.project = project;
         contentPane.registerKeyboardAction(actionEvent -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        selectScanPath.addActionListener(new ScanDirAction(selectScanPath, scanDirPathTextField));
+        selectScanPath.addActionListener(new ScanDirAction(selectScanPath, scanDirPathTextField,
+                outScanResultPathTextField));
         outSelectPath.addActionListener(new ScanResultDirAction(outSelectPath, outScanResultPathTextField));
     }
 
@@ -142,12 +151,11 @@ public class ApiScanDialogPane extends JDialog {
         GenNotification.notifyMessage(this.project, "", "正在生成", NotificationType.INFORMATION);
         scanDir = scanDirPathTextField.getText();
         scanResultDir = outScanResultPathTextField.getText();
-        copyFileToTmpPath();
         String command;
         command = genCommand();
         try {
             if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
-                GenNotification.notifyMessage(project, scanDirPathTextField.getText(), "提示",
+                GenNotification.notifyMessage(project, scanResultDir, "提示",
                         NotificationType.INFORMATION, true);
                 return true;
             }
@@ -168,8 +176,16 @@ public class ApiScanDialogPane extends JDialog {
         String sysName = System.getProperties().getProperty("os.name").toUpperCase();
         String tmpDirFile = System.getProperty("java.io.tmpdir");
         String execFn;
-        execFn = "cmds/scan.py";
-        tmpDirFile += "scan.py";
+        if (sysName.contains("WIN")) {
+            execFn = "cmds/win/search-win.exe";
+            tmpDirFile += "search-win.exe";
+        } else if (sysName.contains("LINUX")) {
+            execFn = "cmds/linux/search-linux";
+            tmpDirFile += "/search-linux";
+        } else {
+            execFn = "cmds/mac/search-macos";
+            tmpDirFile += "/search-macos";
+        }
         File file = new File(tmpDirFile);
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(execFn)) {
             if (inputStream == null) {
@@ -188,29 +204,8 @@ public class ApiScanDialogPane extends JDialog {
             return "";
         }
         String command = file.toString();
-        command = "python " + command + " " + scanDir;
+        command = command + " -d " + scanDir + " -o " + scanResultDir;
         return command;
-    }
-
-    private void copyFileToTmpPath() {
-        String sysName = System.getProperties().getProperty("os.name").toUpperCase();
-        String tmpDirFile = System.getProperty("java.io.tmpdir");
-        String execFn = "cmds/scan_api.xlsx";
-        tmpDirFile += "scan_api.xlsx";
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(execFn)) {
-            if (inputStream == null) {
-                throw new IOException("exec File InputStream is Null");
-            }
-            byte[] bs = inputStream.readAllBytes();
-            writeTmpFile(tmpDirFile, bs);
-            if (sysName.contains("LINUX") || sysName.contains("MAC OS")) {
-                executable(tmpDirFile);
-            }
-        } catch (IOException | InterruptedException e) {
-            GenNotification.notifyMessage(this.project, e.getMessage(), "Can not Find File:" + execFn,
-                    NotificationType.ERROR);
-            LOG.error(e);
-        }
     }
 
     private boolean callExtProcess(String command) throws IOException, InterruptedException {
@@ -218,21 +213,22 @@ public class ApiScanDialogPane extends JDialog {
             GenNotification.notifyMessage(this.project, "执行命令文件为空", "空命令行提示", NotificationType.ERROR);
             return false;
         }
-        // 安装openpyxl依赖
-        Runtime.getRuntime().exec("pip install openpyxl");
         String tmpDirFile = System.getProperty("java.io.tmpdir");
         Process process = Runtime.getRuntime().exec(command, null, new File(tmpDirFile));
-        genResultLog(process);
+        threadPool.execute(new BlockThread(process));
         StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
         StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
         errConsumer.start();
         outputConsumer.start();
-        if (!generateSuccess) {
+        if (generateSuccess) {
+            GenNotification.notifyMessage(project, "执行成功", "提示", NotificationType.INFORMATION);
+        } else {
             GenNotification.notifyMessage(project, sErrorMessage, "提示", NotificationType.ERROR);
             return false;
         }
         errConsumer.join();
         outputConsumer.join();
+        process.destroy();
         return true;
     }
 
@@ -363,5 +359,27 @@ public class ApiScanDialogPane extends JDialog {
 
     JPanel getContentPanel() {
         return contentPane;
+    }
+
+    class BlockThread extends Thread {
+        Process process;
+
+        BlockThread(Process process) {
+            super.setName("BlockThread");
+            this.process = process;
+        }
+
+        @Override
+        public void run() {
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            genResultLog(process);
+            try {
+                while (br.readLine() != null) {
+                    LOG.info(" callExtProcess ");
+                }
+            } catch (IOException ioException) {
+                LOG.error(" callExtProcess error" + ioException);
+            }
+        }
     }
 }

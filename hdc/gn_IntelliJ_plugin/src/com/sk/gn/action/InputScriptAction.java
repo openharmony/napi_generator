@@ -31,6 +31,8 @@ import java.io.File;
  * @since 2022-09-21
  */
 public class InputScriptAction implements ActionListener {
+    private static final String SYS_NAME = System.getProperties().getProperty("os.name").toUpperCase();
+
     private final JButton button;
     private final JTextField textField;
     private final JComboBox comboBox;
@@ -54,17 +56,22 @@ public class InputScriptAction implements ActionListener {
                 String filepath = fcDlg.getSelectedFile().getPath();
                 if (filepath.contains(File.separator)) {
                     textField.setText(filepath.substring(filepath.lastIndexOf("third_party")));
-                    transplantTextField.setText(filepath.substring(filepath.lastIndexOf("/")));
+                    String parentFilePath = fcDlg.getSelectedFile().getParent();
+                    if (SYS_NAME.contains("WIN")) {
+                        transplantTextField.setText(parentFilePath.substring(parentFilePath.lastIndexOf("\\")));
+                    } else {
+                        transplantTextField.setText(filepath.substring(filepath.lastIndexOf("/")));
+                    }
                 } else {
                     textField.setText(filepath);
                     transplantTextField.setText(filepath);
                 }
-                if (filepath.contains("Makefile")) {
-                    comboBox.setSelectedIndex(0);
-                } else if (filepath.contains("scons")) {
-                    comboBox.setSelectedIndex(2);
-                } else {
+                if (filepath.contains("CMake")) {
                     comboBox.setSelectedIndex(1);
+                } else if (filepath.contains("Make")) {
+                    comboBox.setSelectedIndex(0);
+                } else {
+                    comboBox.setSelectedIndex(2);
                 }
             }
         }
