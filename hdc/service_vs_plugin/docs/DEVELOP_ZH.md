@@ -1,0 +1,82 @@
+# NAPI框架生成工具VSCode插件开发说明
+
+若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的VS Code插件。
+
+## VS Code插件打包说明
+
+### Linux
+
+1.在napi_generator目录下，将service-gen-linux下可执行文件复制到napi_generator/hdc/service_vs_plugin/src/目录下，执行命令如下：
+
+	cp service-gen-linux hdc/service_vs_plugin/src/
+
+2.在napi_generator/hdc/service_vs_plugin/src目录下执行命令：
+
+	npm i
+
+3.在napi_generator/hdc/service_vs_plugin/src目录下执行命令：
+
+	npm i typescript
+
+4.在napi_generator/hdc/service_vs_plugin/src目录下执行命令：
+
+	npm i vsce
+
+5.在napi_generator/hdc/service_vs_plugin/src目录下执行命令：
+
+	npx vsce package
+
+  每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
+
+	kaihong1@ubuntu:~/napi_generator_gjj/hdc/service_vs_plugin/src$ npx vsce package
+    WARNING  A 'repository' field is missing from the 'package.json' manifest file.
+    Do you want to continue? [y/N] y
+    WARNING  Using '*' activation is usually a bad idea as it impacts performance.
+    More info: https://code.visualstudio.com/api/references/activation-events#Start-up
+    Do you want to continue? [y/N] y
+    WARNING  LICENSE.md, LICENSE.txt or LICENSE not found
+    Do you want to continue? [y/N] y
+    This extension consists of 3282 files, out of which 1547 are JavaScript files. For performance reasons, you should bundle your extension: https://aka.ms/vscode-bundle-extension . You should also exclude unnecessary files by adding them to your .vscodeignore: https://aka.ms/vscode-vscodeignore
+    DONE  Packaged: /home/kaihong1/napi_generator_gjj/hdc/service_vs_plugin/src/service-0.0.1.vsix (3282 files, 60.4MB)
+
+### Windows
+
+1.将napi_generator目录下的service-gen-win.exe可执行文件复制到napi_generator/hdc/service_vs_plugin/src/目录下。
+
+2.在napi_generator/hdc/service_vs_plugin/src目录下执行命令：
+
+	npm i
+
+3.在napi_generator/hdc/service_vs_plugin/src目录下执行命令：
+
+	npm i typescript
+
+4.在napi_generator/hdc/service_vs_plugin/src目录下执行命令：
+
+	npm i vsce
+
+5.在napi_generator/hdc/service_vs_plugin/src目录下执行命令：
+
+	npx vsce package
+
+  每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件service-0.0.1.vsix。结果如下：
+
+	C:\napi_generator_GJJ\hdc\service_vs_plugin\src>npx vsce package
+    WARNING  A 'repository' field is missing from the 'package.json' manifest file.
+    Do you want to continue? [y/N] y
+    WARNING  Using '*' activation is usually a bad idea as it impacts performance.
+    More info: https://code.visualstudio.com/api/references/activation-events#Start-up
+    Do you want to continue? [y/N] y
+    WARNING  LICENSE.md, LICENSE.txt or LICENSE not found
+    Do you want to continue? [y/N] y
+    This extension consists of 3281 files, out of which 1547 are JavaScript files. For performance reasons, you should bundle your extension: https://aka.ms/vscode-bundle-extension . You should also exclude unnecessary files by adding them to your .vscodeignore: https://aka.ms/vscode-vscodeignore
+    DONE  Packaged: C:\napi_generator_GJJ\hdc\service_vs_plugin\src\service-0.0.1.vsix (3281 files, 39.92MB)
+
+## 工具测试
+
+  进行工具二次开发后，本地可进行单元测试、story特性测试确保工具的可用性。左键单击以下链接了解详情：
+
+  [单元测试]暂无
+
+  [story测试]暂无
+

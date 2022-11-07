@@ -64,7 +64,7 @@ function collectFromSheet(sheet) {
     }
     return [collectInclude, collectFunction]
 }
-let wb = xlsx.readFile("Andr_N_Games_api.xlsx");
+let wb = xlsx.readFile(path.join(__dirname, "Andr_N_Games_api.xlsx"));
 
 let c1 = collectFromSheet(wb.Sheets.Games);
 let c2 = collectFromSheet(wb.Sheets.N);
