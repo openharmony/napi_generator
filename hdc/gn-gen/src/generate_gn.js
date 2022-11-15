@@ -16,6 +16,7 @@ const path = require("path");
 const fs = require("fs");
 const { Logger } = require("./logger");
 const { Tool } = require("./tool");
+const { exit } = require("process");
 
 function saveMockData(projectPath, analyzeResult) {
     let ss = JSON.stringify({
@@ -29,16 +30,25 @@ function saveMockData(projectPath, analyzeResult) {
 function preProcessResult(analyzeResult) {//把所有路径搞成绝对路径
     for (let r of analyzeResult) {
         if (!r.target.startsWith("/")) {
-            r.target = path.join(r.workDir, r.target);
+            if (!path.isAbsolute(r.target)) {
+                r.target = path.join(r.workDir, r.target);
+            }
         }
         for (let i = 0; i < r.inputs.length; i++) {
+            if (r.inputs[i].startsWith('"') && r.inputs[i].endsWith('"')) {
+                r.inputs[i] = r.inputs[i].substring(1, r.inputs[i].length - 1);
+            }
             if (!r.inputs[i].startsWith("/")) {
-                r.inputs[i] = path.join(r.workDir, r.inputs[i]);
+                if (!path.isAbsolute(r.inputs[i])) {
+                    r.inputs[i] = path.join(r.workDir, r.inputs[i]);
+                }
             }
         }
         for (let i = 0; i < r.includes.length; i++) {
             if (!r.includes[i].startsWith("/")) {
-                r.includes[i] = path.join(r.workDir, r.includes[i]);
+                if (!path.isAbsolute(r.includes[i])) {
+                    r.includes[i] = path.join(r.workDir, r.includes[i]);
+                }
             }
         }
     }
@@ -118,15 +128,15 @@ class GenerateGn {
 
         let staticTargets = [];
         for (let t of GenerateGn.COLLECT_TARGET.static) {
-            staticTargets.push(t.path + ":" + t.name);
+            staticTargets.push(Tool.swapPath(t.path) + ":" + t.name);
         }
         let dynamicTargets = [];
         for (let t of GenerateGn.COLLECT_TARGET.dynamic) {
-            dynamicTargets.push(t.path + ":" + t.name);
+            dynamicTargets.push(Tool.swapPath(t.path) + ":" + t.name);
         }
         let executableTargets = [];
         for (let t of GenerateGn.COLLECT_TARGET.executable) {
-            executableTargets.push(t.path + ":" + t.name);
+            executableTargets.push(Tool.swapPath(t.path) + ":" + t.name);
         }
 
         gnStr += `
@@ -265,6 +275,7 @@ subsystem_name = "%s"
     static genDetail(name, detail) {
         let ss = ""
         for (let s of detail) {
+            s=Tool.swapPath(s);
             if (ss.length > 0) ss += '",\n        "';
             ss += s;
         }

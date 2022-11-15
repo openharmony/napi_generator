@@ -46,7 +46,7 @@ let ops = stdio.getopt({
     'cmake_args': { key: 'a', args: 1, description: "like: (-DABC,-DQWE)", default: "" },
     'subsystem_name': { key: 's', args: 1, description: "subsystem", default: "test_subsystem" },
     'part_name': { key: 'm', args: 1, description: "part", default: "test_part" },
-    'porting_to': { key: 'd', args: 1, description: "porting to", default: "third_party/project_name" },
+    'porting_to': { key: 'd', args: 1, description: "porting to", default: "" },
 });
 
 Tool.OHOS_PROJECT_PATH = ops.ohos_project_path;
