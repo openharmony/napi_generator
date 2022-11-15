@@ -189,7 +189,9 @@ class AnalyzeCommand {
     }
 
     static mockTarget(t) {
-        fs.writeFileSync(t.target, " ");
+        if(t.target){
+            fs.writeFileSync(t.target, " ");
+        }  
     }
     static clangCheck1(e) {
         if (e.startsWith("--sysroot=") ||
@@ -351,8 +353,10 @@ class AnalyzeCommand {
         Logger.info("----clang-----" + local.ret.workDir + "\n\t" + local.ret.isLink + "," + local.ret.target)
         return local.ret;
     }
-
     static analyzeCcAr(cmd) {
+        if (cmd.endsWith("\r")) {
+            cmd = cmd.substring(0, cmd.length - 1);
+        }
         let ret = AnalyzeCommand.resultTemplete();
         let eles = AnalyzeCommand.splitString(cmd);
         ret.isLink = true;
@@ -455,6 +459,7 @@ class AnalyzeCommand {
             e.startsWith("-mfpu=") ||
             e.startsWith("-fsigned-char") ||
             e.startsWith("-ffast-math") ||
+            e.startsWith("-rdynamic") ||  
             e.startsWith("-fdiagnostics-show-option")) {//需要记录到flags里面的参数
             local.ret.cflags.push(e);
             return true;
@@ -533,6 +538,9 @@ class AnalyzeCommand {
         return false;
     }
     static analyzeCcClangxx(cmd) {
+        if(cmd.indexOf("\"")){
+            cmd = cmd.replace(/\"/g,"");
+        }
         let local = {
             ret: AnalyzeCommand.resultTemplete(),
             eles: AnalyzeCommand.splitString(cmd),

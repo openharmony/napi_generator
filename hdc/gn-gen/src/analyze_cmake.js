@@ -23,20 +23,28 @@ class AnalyzeCMake {
     constructor() {
 
     }
+    static mkdirBuildTemp(compileFile){
+        let buildTmp;
+        if(Tool.OHOS_PORTING_TO==""){
+            buildTmp = path.join(compileFile.dir, "build_tmp");//cmake编译的临时目录
+        }
+        else{
+            buildTmp = path.join(Tool.OHOS_PROJECT_PATH,Tool.OHOS_PORTING_TO, "build_tmp");//cmake编译的临时目录
+        }
+        if (fs.existsSync(buildTmp)) {
+            fs.rmSync(buildTmp, { recursive: true, force: true });//🌻
+        }
+        return buildTmp;
+    }
 
     static analyze(compileFile, cmakeArgs) {//在工程目录创建一个buildTmp目录，执行cmake初始化工程，执行make得到命令行序列
         if (!fs.existsSync(path.join(Tool.OHOS_PROJECT_PATH, Tool.OHOS_PRODUCT_OUTPUT_PATH, "build.ninja"))) {
             Logger.err("param ohos need to looks like out/rk3568");
             return;
         }
-
-        let buildTmp = path.join(compileFile.dir, "build_tmp");//cmake编译的临时目录
-        if (fs.existsSync(buildTmp)) {
-            fs.rmSync(buildTmp, { recursive: true, force: true });//🌻
-        }
+        let buildTmp = AnalyzeCMake.mkdirBuildTemp(compileFile);
         fs.mkdirSync(buildTmp);
         Tool.pushd(buildTmp);
-
         let ohosToolchainCmake = Tool.getCMakeToolchain();
         let ohosToolchainCmakeData = fs.readFileSync(ohosToolchainCmake, { encoding: "utf8" });
         while (ohosToolchainCmakeData.indexOf("CC_REPLACE_OHOS_ROOT") >= 0) {
@@ -49,18 +57,14 @@ class AnalyzeCMake {
         }
         ohosToolchainCmake = path.join(buildTmp, "ohos.toolchain.cmake");
         fs.writeFileSync(ohosToolchainCmake, ohosToolchainCmakeData);
-
         ohosToolchainCmake=Tool.swapPath(ohosToolchainCmake);
-        let args = ["..",
-            "-DCMAKE_TOOLCHAIN_FILE=%s".format(ohosToolchainCmake),
-            "-G",
-            "Unix Makefiles",
+        let args = [compileFile.dir,
+            "-DCMAKE_TOOLCHAIN_FILE=%s".format(ohosToolchainCmake),"-G","Unix Makefiles",
             "-DCMAKE_MAKE_PROGRAM=%s".format(Tool.swapPath(Tool.getMakeRaw())),
         ];
         if (cmakeArgs.length > 0) {
             args.push(...cmakeArgs.split(","));
         }
-
         let ret = childProcess.spawn(Tool.swapPath(Tool.getCMake()), args);
         ret.stdout.on('data', (data) => {
             Logger.info(data.toString());
@@ -71,8 +75,7 @@ class AnalyzeCMake {
         ret.on('close', (code) => {
             if (code == 0) {
                 Logger.info("------------------------cmake ok");
-                //调用make生成命令行
-                AnalyzeMake.analyze(path.join(buildTmp, "Makefile"));
+                AnalyzeMake.analyze(path.join(buildTmp, "Makefile")); //调用make生成命令行
             }
             else Logger.err("cmake fail");
         })
