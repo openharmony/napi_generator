@@ -239,7 +239,7 @@
         <label for="tab1">Napi-Gen</label>
         <div class="content">
             <div id="selectMode">
-                选择生成方式：
+                选择生成方式：&emsp;&ensp;
                 <div style="margin-left: 110px; margin-top: -20px;">
                     <input class="radio" type="radio" name="mode" value="0" id="files" checked="checked"> .d.ts文件</input>
                     <input class="radio" type="radio" name="mode" value="1" id="dir"> 文件夹</input>
@@ -247,24 +247,24 @@
             </div>
             </br>
             <div id="interface" style="margin-top: 10px;">
-                选择接口文件：
-                <input class="text" type="text" id="interfaceFile" onchange="inputChange()" onporpertychange="inputChange() ">
+                选择接口文件：&emsp;&ensp;
+                <input class="text" type="text" id="interfaceFile" onchange="inputChange()" onporpertychange="inputChange() " style="margin-left: 2px;">
                 <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectInterPath()">
             </div>
         
             <div style="margin-top: 10px;">
-                生成框架路径：
-                <input class="text" accept="text" id="genFile">
+                生成框架路径：&emsp;&ensp;
+                <input class="text" accept="text" id="genFile" style="margin-left: 2px;">
                 <img src="./images/path.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectPath('selectGenPath')">
             </div>
             <div style="margin-top: 10px;">
-                编译脚本路径：
-                <input class="text" type="text" id="buildFile">
+                编译脚本路径：&emsp;&ensp;
+                <input class="text" type="text" id="buildFile" style="margin-left: 2px;">
                 <img src="./images/path.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectPath('selectBuildPath')">
             </div>
             <div style="margin-top: 10px;">
                 number目的类型:
-                <select id="numberTypeid" name = "numberType" style="width: 100px; height: 23px;">
+                <select id="numberTypeid" name = "numberType" style="width: 100px; height: 23px; margin-left: 3px;">
                     <option selected value = "uint32_t">uint32_t</option>
                     <option value = "int">int</option>
                     <option value = "double">double</option>
@@ -277,7 +277,7 @@
             </div>
             <div style="margin-top: 10px;">
                 启用import功能:
-                <input id= "importCheck" type="checkbox" name="import" onclick="checkbox(this)">
+                <input id= "importCheck" type="checkbox" name="import" style="vertical-align:middle; width: 20px; height: 20px;" onclick="checkbox(this)">
             </div>
             <div style="margin-top: 10px; text-align: left;">
                 <button type="button" class="button" onclick="cancel()" style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>

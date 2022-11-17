@@ -13,15 +13,17 @@
 	│   ├── docs                      # 工具说明、版本规划
 	│   ├── examples                  # 工具需要的文件样例 
 	│   ├── figures                   # 图片资源文件
+	│   ├── hdc                       # hdc相关工具
 	│   ├── napi_IntelliJ_plugin      # Intellij IDEA插件代码
 	│   ├── napi_vs_plugin            # VS Code插件代码
 	│   ├── release-notes             # 发布说明
 	│   ├── src                       # 工具源码
-	│   │   ├── gen                  
+	│   │   ├── gen                   # napi工具源码                 
 	│   │   |   ├── analyze           # 解析器
 	│   │   |   |── extend            # 扩展模块，包括gn文件生成、linux环境适配代码等
 	│   │   |   |── generate          # 生成器
-	│   │   |   └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等  
+	│   │   |   └── tools             # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等
+	│   │   ├── tsGen                 # TS工具源码
 	│   ├── test                      # UT、ST测试
 	│   ├── FAQ                       # NAPI框架工具问题反馈
 	│   └── README                    # 工具使用指导     
@@ -70,23 +72,19 @@ napi_generator/examples/ts
 
 
 ```c++
-#include "napitest.h"
 
-
-namespace napitest {
-
-bool TestClass1::if_direct(std::string &v1, std::string &out) {
-    // TODO
-    return true;
-}
-
-bool TestClass1::if_callback(std::string &v1, std::string &out) {
-    // TODO
-    return true;
-}
-
-......
-}
+	#include "napitest.h"
+	namespace napitest {
+		bool TestClass1::if_direct(std::string &v1, std::string &out) {
+    		// TODO
+    		return true;
+		}
+		bool TestClass1::if_callback(std::string &v1, std::string &out) {
+    		// TODO
+    		return true;
+		}
+		......
+	}
 ```
 
 ### 代码集成
