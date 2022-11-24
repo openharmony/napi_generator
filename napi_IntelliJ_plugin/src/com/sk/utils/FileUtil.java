@@ -76,7 +76,7 @@ public class FileUtil {
             JSONObject buildOptionObj = (JSONObject) jsParser.parse(BUILD_OPTION);
             ((JSONObject) buildOptionObj.get("externalNativeOptions")).put("path", cmakeFilePath);
             buildObj.put("buildOption", buildOptionObj);
-            ObjectMapper mapper=new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper();
             buildStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildObj);
 
             writeContentToFile(buildJsonFilePath, buildStr);
