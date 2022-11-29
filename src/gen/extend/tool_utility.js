@@ -671,24 +671,24 @@ void XNapiTool::GetObjectValue(napi_value &result, std::map<std::string, std::an
         napi_value tnv2 = nullptr;
         tnv1 = (i -> first).c_str();        
 
-        if (typeid(i->second) == typeid(int32_t)){
+        if ((i->second).type() == typeid(int32_t)) {
             tnv2 = SwapC2JsInt32(std::any_cast<int32_t>(i->second));
-        }
-        else if (typeid(i->second) == typeid(uint32_t)){
+      	} 
+        else if ((i->second).type() == typeid(uint32_t)) {
             tnv2 = SwapC2JsUint32(std::any_cast<uint32_t>(i->second));
-        }
-        else if (typeid(i->second) == typeid(int64_t)){
+	    } 
+        else if ((i->second).type() == typeid(int64_t)) {
             tnv2 = SwapC2JsInt64(std::any_cast<int64_t>(i->second));
-        }
-        else if (typeid(i->second) == typeid(double_t)){
+	    } 
+        else if ((i->second).type() == typeid(double_t)) {
             tnv2 = SwapC2JsDouble(std::any_cast<double_t>(i->second));
-        }
-        else if (typeid(i->second) == typeid(char *)){
-            tnv2 = SwapC2JsUtf8(std::any_cast<char *>(i->second));
-        }
-        else if (typeid(i->second) == typeid(bool)){
+        } 
+        else if((i->second).type() == typeid(const char *)) {
+            tnv2 = SwapC2JsUtf8(std::any_cast<const char *>(i->second));
+        } 
+        else if ((i->second).type() == typeid(bool)) {
             tnv2 = SwapC2JsBool(std::any_cast<bool>(i->second));
-        }
+        } 
         
         SetMapElement(result, tnv1, tnv2);
     }
