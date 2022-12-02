@@ -4,7 +4,7 @@
 
 1、使用工具转换.h文件时报错，显示header_parser.exe文件有误。
 
-![](./figures/header_parser_not_exist.png)
+![](../../figures/header_parser_not_exist.png)
 
 问题定位：使用可执行程序转换.h文件时，当前路径下没有header_parser.exe文件，导致转换失败。
 
