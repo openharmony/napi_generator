@@ -152,6 +152,7 @@ private:
     static void AsyncComplete(napi_env env, napi_status status, void *p);
     void AsyncCompleteFunction();
     napi_ref callbackFunc_;
+    napi_ref asyncThisVar_;
     napi_async_work work_;
     bool asyncNeedRelease_;
     CallbackFunction executeFunction_;
@@ -226,6 +227,7 @@ XNapiTool::~XNapiTool()
     if (asyncMode_ == AsyncMode::CALLBACK) {
         napi_status result_status = napi_delete_reference(env_, callbackFunc_);
         CC_ASSERT(result_status == napi_ok);
+        napi_delete_reference(env_, asyncThisVar_);
         result_status = napi_delete_async_work(env_, work_);
         CC_ASSERT(result_status == napi_ok);
     }
@@ -867,6 +869,7 @@ napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFuncti
         // callback
         result_status = napi_create_reference(env_, func, 1, &callbackFunc_);
         CC_ASSERT(result_status == napi_ok);
+        napi_create_reference(env_, thisVar_, 1, &asyncThisVar_);
         asyncMode_ = AsyncMode::CALLBACK;
         result = UndefinedValue(env_);
     }
@@ -903,7 +906,9 @@ void XNapiTool::FinishAsync(size_t argc, napi_value *args)
 
     napi_status result_status = napi_get_reference_value(env_, callbackFunc_, &cb);
     CC_ASSERT(result_status == napi_ok);
-    result_status = napi_call_function(env_, thisVar_, cb, argc, args, &result);
+    napi_value asyncThis = 0;
+    napi_get_reference_value(env_, asyncThisVar_, &asyncThis);
+    result_status = napi_call_function(env_, asyncThis, cb, argc, args, &result);
     CC_ASSERT(result_status == napi_ok);
 }
 
