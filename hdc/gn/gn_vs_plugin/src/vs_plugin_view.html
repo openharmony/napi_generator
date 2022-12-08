@@ -180,7 +180,7 @@
     }
 
     function gettransplantDirPath(filepath) {
-        let pos = filepath.lastIndexOf('\\');
+        let pos = filepath.lastIndexOf('/');
         filepath = filepath.substr(pos);
         return filepath;
     }
@@ -225,7 +225,7 @@
         let fileTempName = "third_party";
         let pos = fileName.indexOf(fileTempName);
         fileName = fileName.substr(pos);
-        getDir = fileName.substring(0,fileName.lastIndexOf('\\'));
+        getDir = fileName.substring(0,fileName.lastIndexOf('/'));
         document.getElementById("transplantDirid").value = getDir;
     }
 
