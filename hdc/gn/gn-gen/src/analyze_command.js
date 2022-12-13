@@ -249,14 +249,16 @@ class AnalyzeCommand {
         }
         return false;
     }
+    static validCFlag(cflag, allowedFlag) {
+        for (let i = 0; i < allowedFlag.length; ++i) {
+            if (cflag.startsWith(allowedFlag[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
     static clangCheck5(local, e) {
-        if (e.startsWith("--target=") ||
-            e == "-D__clang__" ||
-            e.startsWith("-march=") ||
-            e.startsWith("-mfloat-abi=") ||
-            e.startsWith("-mfpu=") ||
-            e.startsWith("-fsigned-char") ||
-            e.startsWith("-fdiagnostics-show-option")) {//需要记录到flags里面的参数
+        if (this.validCFlag(e, Tool.getAllowedC().compileflag) || (e == "-D__clang__")) {
             local.ret.cflags.push(e);
             return true;
         }
@@ -281,12 +283,7 @@ class AnalyzeCommand {
     }
 
     static clangCheck7(local, e) {
-        if (e.endsWith(".c") ||
-            e.endsWith(".o") ||
-            e.endsWith('.o"') ||
-            e.endsWith(".a") ||
-            e.endsWith(".S") ||
-            e.endsWith(".so")) {
+        if (this.validSuffix(e, Tool.getAllowedC().fileSuffix)) {
             local.ret.inputs.push(e);
             return true;
         }
@@ -453,15 +450,8 @@ class AnalyzeCommand {
         return false;
     }
     static clangxxCheck5(local, e) {
-        if (e.startsWith("--target=") ||
-            e.startsWith("-march=") ||
-            e.startsWith("-mfloat-abi=") ||
-            e.startsWith("-mfpu=") ||
-            e.startsWith("-fsigned-char") ||
-            e.startsWith("-ffast-math") ||
-            e.startsWith("-rdynamic") ||  
-            e.startsWith("-fdiagnostics-show-option")) {//需要记录到flags里面的参数
-            local.ret.cflags.push(e);
+        if (this.validCFlag(e, Tool.getAllowedCxx().compileflag)) {
+            local.ret.cflags.push(e); //需要记录到flags里面的参数
             return true;
         }
         return false;
@@ -503,15 +493,16 @@ class AnalyzeCommand {
         }
         return false;
     }
+    static validSuffix(filePath, allowedSuffix) {
+        for (let i = 0; i < allowedSuffix.length; ++i) {
+            if (filePath.endsWith(allowedSuffix[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
     static clangxxCheck9(local, e) {
-        if (e.endsWith(".cpp") ||
-            e.endsWith(".cxx") ||
-            e.endsWith(".cc") ||
-            e.endsWith(".o") ||
-            e.endsWith(".z") ||
-            e.endsWith(".so") ||
-            e.indexOf(".so.") > 0 ||
-            e.endsWith(".a")) {
+        if (this.validSuffix(e, Tool.getAllowedCxx().fileSuffix) || (e.indexOf(".so.") > 0)) {
             local.ret.inputs.push(e);
             return true;
         }
