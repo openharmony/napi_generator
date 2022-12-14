@@ -75,10 +75,9 @@ function genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType,
 	if (compileOptions != "") {
 		command += " -a " + "\"" + compileOptions + "\"";
 	}
-	var platform = detectPlatform();
-	if (platform == 'win') {
-		command = re.replaceAll(command, '\\\\', '/');
-	}
+
+	command = re.replaceAll(command, '\\\\', '/');
+	
 	console.log("command = " + command)
 	return command;
 }
@@ -159,7 +158,7 @@ function register(context, command) {
 			console.log('Selected file: ' + fileUri[0].fsPath);
 			var filePath = "";
 			filePath = fileUri[0].fsPath.concat(',');
-			filePath = re.replaceAll(filePath, '/', '\\');
+			filePath = re.replaceAll(filePath, '\\\\', '/');
 			if (filePath.substring(1,2) == ":") {
 				let filePathTemp = filePath.substring(0,1).toUpperCase()
 				filePath = filePathTemp + filePath.substring(1,filePath.length)
