@@ -144,7 +144,7 @@ function generateAll(structOfTs, destDir, moduleName, numberType) {
     let result = generateNamespace(ns0.name, ns0.body)
     let numberUsing = ""
     var numbertype = "uint32_t";
-    if(numberType != ""){
+    if(numberType != undefined && numberType != ""){
         numbertype = numberType;
     }
     for (let i = 1; i < NumberIncrease.get(); i++) {
