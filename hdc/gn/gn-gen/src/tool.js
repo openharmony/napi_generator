@@ -13,6 +13,7 @@
 * limitations under the License. 
 */
 const path = require('path');
+const fs = require("fs");
 
 class Tool {
     constructor() {
@@ -24,6 +25,10 @@ class Tool {
     static OHOS_PRODUCT_OUTPUT_PATH = "out/rk3568-khdvk";//输出目录
     static OHOS_SUBSYSTEM_NAME = "common";
     static OHOS_PART_NAME = "common";
+    static globalJsonCfg = null; // cfg.json 配置文件
+    static allowedCxx = null; // cxx编译中允许处理的文件后缀列表
+    static allowedC = null; // c编译中允许处理的文件后缀列表
+    
 
     static getResAbsPath(respath) {
         return path.join(Tool.CURRENT_TOOL_PATH, respath);
@@ -144,6 +149,59 @@ class Tool {
         MOCK_RUN: 3,
     };
     static MOCK_TYPE = Tool.MOCK_ENUM.NO_MOCK;
+
+    /**
+     * 获取Json配置文件内容
+     * @returns 
+     */
+    static getJsonCfg() {
+        if (this.globalJsonCfg == null) {
+            let jsonFilePath = path.join(Tool.CURRENT_TOOL_PATH, "cfg.json");
+            let jsonFile = fs.readFileSync(jsonFilePath, { encoding: "utf8" });
+            this.globalJsonCfg = JSON.parse(jsonFile);
+            this.globalJsonCfg.fileSuffix = this.globalJsonCfg.fileSuffix ? "," + this.globalJsonCfg.fileSuffix : "";
+            this.globalJsonCfg.compileflag = this.globalJsonCfg.compileflag ? "," + this.globalJsonCfg.compileflag : "";
+        }
+
+        return this.globalJsonCfg;
+    }
+
+    /**
+     * 获取cxx编译中允许处理的文件后缀名列表
+     * @returns cxx编译中允许处理的文件后缀名列表
+     */
+     static getAllowedCxx() {
+        if (this.allowedCxx == null) {
+            this.allowedCxx = {};
+            let jsonCfg = this.getJsonCfg();
+            let allowedCxxSuffix = ".cpp, .cxx, .cc, .o, .z, .so, .a" + jsonCfg.fileSuffix;
+            this.allowedCxx.fileSuffix = allowedCxxSuffix.split(",").map(item => item.trim());
+            let allowedFlag = "--target=, -march=, -mfloat-abi=, -mfpu=, -fsigned-char, -ffast-math, -rdynamic, "
+                + "-UNDEBUG, -fno-threadsafe-statics, -fno-common, -fno-strict-aliasing, -fcolor-diagnostics, "
+                + "-fstrict-aliasing, -fdiagnostics-show-option" + jsonCfg.compileflag;
+            this.allowedCxx.compileflag = allowedFlag.split(",").map(item => item.trim());
+        }
+        return this.allowedCxx;
+    }
+
+    /**
+     * 获取c编译中允许处理的文件后缀名列表
+     * @returns c编译中允许处理的文件后缀名列表
+     */
+     static getAllowedC() {
+        if (this.allowedC == null) {
+            this.allowedC = {};
+            let jsonCfg = this.getJsonCfg();
+            let allowedCSuffix = '.c, .o, .o", .a, .S, .so' + jsonCfg.fileSuffix;
+            this.allowedC.fileSuffix = allowedCSuffix.split(",").map(item => item.trim());
+            let allowedFlag = "--target=, -march=, -mfloat-abi=, -mfpu=, -fno-common, -fcolor-diagnostics, -ggdb, "
+                + "-fno-strict-aliasing, -ldl, -flto, -fno-builtin, -fno-stack-protector, -fvisibility=default, "
+                + "-fsigned-char, -fstack-protector-strong, -fdiagnostics-show-option"
+                + jsonCfg.compileflag;
+            this.allowedC.compileflag = allowedFlag.split(",").map(item => item.trim());
+        }
+        return this.allowedC;
+    }
 }
 
 String.prototype.format = function (...args) {
@@ -167,6 +225,5 @@ catch (err) {
 module.exports = {
     Tool
 }
-
 
 const Logger = require('./logger');

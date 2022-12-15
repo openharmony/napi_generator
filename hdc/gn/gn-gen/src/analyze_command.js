@@ -265,32 +265,19 @@ class AnalyzeCommand {
         }
         return false;
     }
-    static clangCheck5(local, e) {
-        let ss = ["--target=",
-            "-march=",
-            "-mfloat-abi=",
-            "-mfpu=",
-            "-fno-common",
-            "-fcolor-diagnostics",
-            "-ggdb",
-            "-fno-strict-aliasing",
-            "-ldl",
-            "-flto",
-            "-fno-builtin",
-            "-fno-stack-protector",
-            "-fno-stack-protector",
-            "-fsigned-char",
-            "-fvisibility=default",
-            "-fstack-protector-strong",
-            "-fdiagnostics-show-option"
-        ];
-        for (let s of ss) {
-            if (e.startsWith(s) || e == "-D__clang__") {//需要记录到flags里面的参数
-                local.ret.cflags.push(e);
+    static validCFlag(cflag, allowedFlag) {
+        for (let i = 0; i < allowedFlag.length; ++i) {
+            if (cflag.startsWith(allowedFlag[i])) {
                 return true;
             }
         }
-
+        return false;
+    }
+    static clangCheck5(local, e) {
+        if (this.validCFlag(e, Tool.getAllowedC().compileflag) || (e == "-D__clang__")) {
+            local.ret.cflags.push(e); //需要记录到flags里面的参数
+            return true;
+        }
         return false;
     }
     static clangCheck6(local, e) {
@@ -312,18 +299,9 @@ class AnalyzeCommand {
     }
 
     static clangCheck7(local, e) {
-        let ss = [/\.c$/,
-            /\.o$/,
-            /\.o"$/,
-            /\.a$/,
-            /\.S$/,
-            /\.so[\d\.]*$/
-        ];
-        for (let s of ss) {
-            if (e.search(s)) {
-                local.ret.inputs.push(e);
-                return true;
-            }
+        if (this.validSuffix(e, Tool.getAllowedC().fileSuffix)) {
+            local.ret.inputs.push(e);
+            return true;
         }
         if (e.endsWith(".rsp")) {
             console.log(Tool.CURRENT_DIR);
@@ -485,26 +463,9 @@ class AnalyzeCommand {
         return false;
     }
     static clangxxCheck5(local, e) {
-        let ss = ["--target=",
-            "-mfloat-abi=",
-            "-march=",
-            "-mfpu=",
-            "-fsigned-char",
-            "-ffast-math",
-            "-rdynamic",
-            "-UNDEBUG",
-            "-fno-threadsafe-statics",
-            "-fno-common",
-            "-fno-strict-aliasing",
-            "-fcolor-diagnostics",
-            "-fstrict-aliasing",
-            "-fdiagnostics-show-option"
-        ];
-        for (let s of ss) {
-            if (e.startsWith(s)) {//需要记录到flags里面的参数
-                local.ret.cflags.push(e);
-                return true;
-            }
+        if (this.validCFlag(e, Tool.getAllowedCxx().compileflag)) {
+            local.ret.cflags.push(e); //需要记录到flags里面的参数
+            return true;
         }
         return false;
     }
@@ -545,20 +506,21 @@ class AnalyzeCommand {
         }
         return false;
     }
-    static clangxxCheck9(local, e) {
-        let ss = [".cpp",
-            ".cxx",
-            ".cc",
-            ".o",
-            ".z",
-            ".so",
-            ".a"
-        ];
-        for (let s of ss) {
-            if (e.indexOf(".so.") > 0 || e.endsWith(s)) {
-                local.ret.inputs.push(e);
+    static validSuffix(filePath, allowedSuffix) {
+        for (let i = 0; i < allowedSuffix.length; ++i) {
+            if (filePath.endsWith(allowedSuffix[i])) {
                 return true;
             }
+        }
+        if (filePath.search(/\.so[\d\.]*$/) > 0) {
+            return ture;
+        }
+        return false;
+    }
+    static clangxxCheck9(local, e) {
+        if (this.validSuffix(e, Tool.getAllowedCxx().fileSuffix) || (e.indexOf(".so.") > 0)) {
+            local.ret.inputs.push(e);
+            return true;
         }
         if (e.endsWith(".rsp")) {
             console.log(Tool.CURRENT_DIR);

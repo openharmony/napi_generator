@@ -1,0 +1,4 @@
+{
+    "fileSuffix": ".cpp, .cxx, .cc, .hpp",
+    "compileflag": "--target=, -march="
+}
