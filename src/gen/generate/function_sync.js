@@ -20,9 +20,7 @@ const { returnGenerate } = require("./return_generate");
  * 结果通过同步回调(CallBack)返回
  */
 let funcSyncTemplete = `
-struct [funcName]_value_struct {[valueIn]
-    
-    [valueOut]
+struct [funcName]_value_struct {[valueIn][valueOut]
 };
 
 [static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info)
@@ -34,25 +32,19 @@ struct [funcName]_value_struct {[valueIn]
         return err;
     }
     [unwarp_instance]
-
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
-    
     [valueCheckout]
-
     [optionalCallbackInit]
     [callFunc]
-
     napi_value result = nullptr;
     if (pxt->GetArgc() > [callback_param_offset]) {
         [valuePackage]
-
         {
             napi_value args[1] = {result};
             pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]), 1, args);
         }
     }
     result = pxt->UndefinedValue();
-
     [optionalParamDestory]
     delete vio;
     if (pxt->IsFailed()) {
@@ -104,7 +96,11 @@ function generateFunctionSync(func, data, className) {
     returnGenerate(param.callback, param)
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
-    middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
+    if (param.valueOut == "") {
+        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
+    } else {
+        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut)//  # 输出参数定义
+    } 
     middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc)//执行
