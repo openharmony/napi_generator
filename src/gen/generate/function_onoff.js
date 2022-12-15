@@ -34,16 +34,11 @@ struct [funcName]_value_struct {
         return err;
     }
     [unwarp_instance]
-
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     pxt->SwapJs2CUtf8(pxt->GetArgv(0), vio->eventName);
-
     [handleRegist]
-
     [instance][funcName](vio->eventName);
-
     napi_value result = pxt->UndefinedValue();
-
     delete vio;
     if (pxt->IsFailed()) {
         result = pxt->GetError();
@@ -63,7 +58,6 @@ void AsyncCallback(const std::string &eventName, [callback_param_type] &ret)
 	napi_value exports = nullptr;
 	XNapiTool *pxt = std::make_unique<XNapiTool>(pAsyncFuncs->env_, exports).release();
     [native_return]
-
 	XNapiTool::CallAsyncFunc(pAsyncFuncs, napiRet);
 	delete pxt;
 }

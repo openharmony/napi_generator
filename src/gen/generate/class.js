@@ -27,11 +27,8 @@ public:
     static napi_value constructor(napi_env env, napi_callback_info info)
     {
         XNapiTool *pxt = new XNapiTool(env, info);
-
         [className] *p = new [className]();
-
         napi_value thisvar = pxt->WrapInstance(p, release);
-
         return thisvar;
     }
     static void release(void *p)
@@ -95,7 +92,7 @@ function generateClass(name, data, inNamespace, functiontType) {
             selfNs = ", " + nsl[nsl.length - 1]
         }
     }
-    middleInit += `\n    pxt->DefineClass("%s", %s%s_middle::constructor, valueList ,funcList%s);\n}\n`
+    middleInit += `\n    pxt->DefineClass("%s", %s%s_middle::constructor, valueList, funcList%s);\n}\n`
         .format(name, inNamespace, name, selfNs)
     let result = {
         implH: `
@@ -118,13 +115,13 @@ function connectResult(data, inNamespace, name) {
         hDefine: "",
         middleValue: "",
     }
-    middleInit = `{\n    std::map<const char *,std::map<const char *,napi_callback>> valueList;`
+    middleInit = `{\n    std::map<const char *, std::map<const char *, napi_callback>> valueList;`
     for (let i in data.value) {
         let v = data.value[i]
         generateVariable(v.name, v.type, variable, name)
         middleInit += `
-    valueList["%s"]["getvalue"]=%s%s_middle::getvalue_%s;
-    valueList["%s"]["setvalue"]=%s%s_middle::setvalue_%s;`
+    valueList["%s"]["getvalue"] = %s%s_middle::getvalue_%s;
+    valueList["%s"]["setvalue"] = %s%s_middle::setvalue_%s;`
             .format(v.name, inNamespace, name, v.name, v.name, inNamespace, name, v.name)
     }
     implH += variable.hDefine
