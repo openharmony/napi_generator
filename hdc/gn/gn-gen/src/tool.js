@@ -177,7 +177,8 @@ class Tool {
             let allowedCxxSuffix = ".cpp, .cxx, .cc, .o, .z, .so, .a" + jsonCfg.fileSuffix;
             this.allowedCxx.fileSuffix = allowedCxxSuffix.split(",").map(item => item.trim());
             let allowedFlag = "--target=, -march=, -mfloat-abi=, -mfpu=, -fsigned-char, -ffast-math, -rdynamic, "
-                + "-fdiagnostics-show-option" + jsonCfg.compileflag;
+                + "-UNDEBUG, -fno-threadsafe-statics, -fno-common, -fno-strict-aliasing, -fcolor-diagnostics, "
+                + "-fstrict-aliasing, -fdiagnostics-show-option" + jsonCfg.compileflag;
             this.allowedCxx.compileflag = allowedFlag.split(",").map(item => item.trim());
         }
         return this.allowedCxx;
@@ -193,8 +194,10 @@ class Tool {
             let jsonCfg = this.getJsonCfg();
             let allowedCSuffix = '.c, .o, .o", .a, .S, .so' + jsonCfg.fileSuffix;
             this.allowedC.fileSuffix = allowedCSuffix.split(",").map(item => item.trim());
-            let allowedFlag = "--target=, -march=, -mfloat-abi=, -mfpu=, -fsigned-char, "
-                + "-fdiagnostics-show-option" + jsonCfg.compileflag;
+            let allowedFlag = "--target=, -march=, -mfloat-abi=, -mfpu=, -fno-common, -fcolor-diagnostics, -ggdb, "
+                + "-fno-strict-aliasing, -ldl, -flto, -fno-builtin, -fno-stack-protector, -fvisibility=default, "
+                + "-fsigned-char, -fstack-protector-strong, -fdiagnostics-show-option"
+                + jsonCfg.compileflag;
             this.allowedC.compileflag = allowedFlag.split(",").map(item => item.trim());
         }
         return this.allowedC;

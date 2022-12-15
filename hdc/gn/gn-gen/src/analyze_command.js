@@ -24,7 +24,9 @@ class AnalyzeCommand {
 
     static isCmd(cmd, name) {
         let cmdName = cmd.split(" ")[0];
-        return cmdName.endsWith(name) || cmdName.endsWith(name + ".exe");
+        let v1 = cmdName.endsWith(name);
+        let v2 = cmdName.endsWith(name + ".exe");
+        return v1 || v2;
     }
 
     static COMPILE_CMDS = {
@@ -96,6 +98,13 @@ class AnalyzeCommand {
         }
         return false;
     }
+    static isCmdScriptWithVersion(cmd, cmdType) {
+        let cmdName = cmd.split(" ")[0];
+        let pos = cmdName.lastIndexOf("/");
+        let scrType = cmdName.substring(pos + 1, cmdName.length);
+        return scrType.startsWith(cmdType)
+    }
+
     static analyzeOneCmd(cmd) {
         while (cmd.startsWith("\n") || cmd.startsWith(" ")) {
             cmd = cmd.substring(1);
@@ -127,7 +136,9 @@ class AnalyzeCommand {
             AnalyzeCommand.COLLECT_COMMANDS.push(cmd);
             return [AnalyzeCommand.analyzeCompileCommand(cmd)];
         }
-        if (AnalyzeCommand.isCmd(cmd, "python3")) {
+        if (AnalyzeCommand.isCmd(cmd, "perl") ||
+            AnalyzeCommand.isCmd(cmd, "autoreconf") ||
+            AnalyzeCommand.isCmdScriptWithVersion(cmd, "python")) {
             // 需要即时执行（可能会生成依赖源文件），如果不执行，后续编译命令可能会报错，找不到源文件
             Logger.info(cmd);
             const childProcess = require("child_process");
@@ -189,29 +200,34 @@ class AnalyzeCommand {
     }
 
     static mockTarget(t) {
-        if(t.target){
+        if (t.target) {
             fs.writeFileSync(t.target, " ");
-        }  
+        }
     }
     static clangCheck1(e) {
-        if (e.startsWith("--sysroot=") ||
-            e.startsWith("-pthread") ||
-            e.startsWith("-Qunused-arguments") ||
-            e.startsWith("-ffunction-sections") ||
-            e.startsWith("-fdata-sections") ||
-            e.startsWith("-fvisibility=hidden") ||
-            e.startsWith("-fvisibility-inlines-hidden") ||
-            e.startsWith("-O3") ||
-            e.startsWith("-fPIC") ||
-            e.startsWith("-pedantic") ||
-            e.startsWith("-fwrapv") ||
-            e.startsWith("-lm") ||
-            e.startsWith("-lpthread") ||
-            e.startsWith("-shared") ||
-            e.startsWith("-lz") ||
-            e.startsWith("-MD") ||
-            e == "-w") {//-----直接忽略的编译参数(和链接参数)
-            return true;
+        let ss = ["--sysroot=",
+            "-pthread",
+            "-Qunused-arguments",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fvisibility=hidden",
+            "-fvisibility-inlines-hidden",
+            "-O3",
+            "-Os",
+            "-fPIC",
+            "-pedantic",
+            "-fwrapv",
+            "-shared",
+            "-lm",
+            "-lpthread",
+            "-lz",
+            "-MD",
+            "-isystem"
+        ];
+        for (let s of ss) {
+            if (e.startsWith(s) || e == "-w") {
+                return true;
+            }
         }
         return false;
     }
@@ -259,7 +275,7 @@ class AnalyzeCommand {
     }
     static clangCheck5(local, e) {
         if (this.validCFlag(e, Tool.getAllowedC().compileflag) || (e == "-D__clang__")) {
-            local.ret.cflags.push(e);
+            local.ret.cflags.push(e); //需要记录到flags里面的参数
             return true;
         }
         return false;
@@ -296,13 +312,10 @@ class AnalyzeCommand {
             }
             let datas = data.split(" ");
             for (let d of datas) {
-                if (d.endsWith(".c") ||
-                    d.endsWith(".o") ||
-                    d.endsWith('.o"') ||
-                    d.endsWith(".a") ||
-                    d.endsWith(".S") ||
-                    d.endsWith(".so")) {
-                    local.ret.inputs.push(d);
+                for (let s of ss) {
+                    if (d.endsWith(s)) {
+                        local.ret.inputs.push(d);
+                    }
                 }
             }
             return true;
@@ -499,6 +512,9 @@ class AnalyzeCommand {
                 return true;
             }
         }
+        if (filePath.search(/\.so[\d\.]*$/) > 0) {
+            return ture;
+        }
         return false;
     }
     static clangxxCheck9(local, e) {
@@ -514,14 +530,18 @@ class AnalyzeCommand {
                 data = data.substring(0, data.length - 2);
             }
             let datas = data.split(" ");
+            let pp = [".c",
+                ".o",
+                '.o"',
+                ".a",
+                ".S",
+                ".so"
+            ];
             for (let d of datas) {
-                if (d.endsWith(".c") ||
-                    d.endsWith(".o") ||
-                    d.endsWith('.o"') ||
-                    d.endsWith(".a") ||
-                    d.endsWith(".S") ||
-                    d.endsWith(".so")) {
-                    local.ret.inputs.push(d);
+                for (let p of pp) {
+                    if (d.endsWith(p)) {
+                        local.ret.inputs.push(d);
+                    }
                 }
             }
             return true;
@@ -529,8 +549,8 @@ class AnalyzeCommand {
         return false;
     }
     static analyzeCcClangxx(cmd) {
-        if(cmd.indexOf("\"")){
-            cmd = cmd.replace(/\"/g,"");
+        if (cmd.indexOf("\"")) {
+            cmd = cmd.replace(/\"/g, "");
         }
         let local = {
             ret: AnalyzeCommand.resultTemplete(),
