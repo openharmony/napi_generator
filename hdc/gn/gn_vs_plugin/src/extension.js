@@ -19,7 +19,7 @@ const vscode = require('vscode');
 const fs = require('fs');
 const re = require("./gen/tools/VsPluginRe");
 const { VsPluginLog } = require("./gen/tools/VsPluginLog");
-const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
+const { detectPlatform, readFile, writeFile } = require('./gen/tools/VsPluginTool');
 const path = require('path');
 const os = require('os');
 var exeFilePath = null;
@@ -82,6 +82,21 @@ function genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType,
 	return command;
 }
 
+/**
+ * 将插件界面读取的扩展配置更新到cfg.json文件中
+ * @param extFile 用户自定义的支持文件类型
+ * @param extFlag 用户自定义的支持编译选项
+ */
+function refreshJsonCfg(extFile, extFlag) {
+	let cfgFilePath = __dirname + '/cfg.json';
+	let jsonCfg = readFile(cfgFilePath);
+	let cfgObj = JSON.parse(jsonCfg.toString());
+	cfgObj.fileSuffix = extFile;
+	cfgObj.compileflag = extFlag;
+	let cfgStr = JSON.stringify(cfgObj);
+	writeFile(cfgFilePath, cfgStr);
+}
+
 function exeFileExit() {
 	if (fs.existsSync(exeFilePath)) {
 		return true;
@@ -117,6 +132,7 @@ function register(context, command) {
 				let subsystemName = message.subsystemName;
 				let componentName = message.componentName;
 				let compileOptions = message.compileOptions;
+				refreshJsonCfg(message.extFile, message.extFlag);
 				checkMode(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
 					transplantDir, subsystemName, componentName, compileOptions);
 			} else {
