@@ -104,9 +104,17 @@ function utf8ArrayToStr(array) {
     return data;
   }
 
+  function writeFile(fn, content) {
+    if (!fs.existsSync(fn)) {
+      return "";
+    }
+    fs.writeFileSync(fn, content);
+  }
+
 module.exports = {
     replaceAll,
     detectPlatform,
     checkFileError,
-    readFile
+    readFile,
+    writeFile
 }
