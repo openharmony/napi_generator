@@ -21,7 +21,6 @@ const { returnGenerate } = require("./return_generate");
  */
 let funcDirectTemplete = `
 struct [funcName]_value_struct {[valueIn]
-    
     [valueOut]
 };
 
@@ -34,23 +33,16 @@ struct [funcName]_value_struct {[valueIn]
         return err;
     }
     [unwarp_instance]
-
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
-    
     [valueCheckout]
-
     [callFunc]
-
     napi_value result = nullptr;
     [valuePackage]
-
     [optionalParamDestory]
-
     delete vio;
     if (pxt->IsFailed()) {
         result = pxt->GetError();
     }
-    
     delete pxt; // release
     return result;
 }`
@@ -61,6 +53,19 @@ bool %s%s(%s)
     return true;
 }
 `
+
+function removeEndlineEnter(value) {
+    for (var i = value.length; i > 0; i--) {
+        let len = value.length
+        if (value.substring(len - 1, len) == "\n" || value.substring(len - 1, len) == ' ') {
+            value = value.substring(0, len - 1)
+        } else {
+            value = '    ' + value + "\n"
+            break
+        }
+    }
+    return value
+}
 
 function generateFunctionDirect(func, data, className) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
@@ -94,6 +99,7 @@ function generateFunctionDirect(func, data, className) {
     }
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
     middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
+    param.valueCheckout = removeEndlineEnter(param.valueCheckout)
     middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc)//执行

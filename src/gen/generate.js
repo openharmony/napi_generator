@@ -34,41 +34,41 @@ let moduleCppTmplete = `\
 #include "tool_utility.h"
 #include "[implName].h"
 
-#define NUMBER_JS_2_C(napi_v, type, dest)      \\
-    if (typeid(type) == typeid(int32_t))  {    \\
-        dest = pxt->SwapJs2CInt32(napi_v);     \\
-    }                                          \\
-    else if (typeid(type) == typeid(uint32_t)){\\
-        dest = pxt->SwapJs2CUint32(napi_v);    \\
-    }                                          \\
-    else if (typeid(type) == typeid(int64_t)){ \\
-        dest = pxt->SwapJs2CInt64(napi_v);     \\
-    }                                          \\
-    else if (typeid(type) == typeid(double_t)){\\
-        dest = pxt->SwapJs2CDouble(napi_v);    \\
+#define NUMBER_JS_2_C(napi_v, type, dest)        \\
+    if (typeid(type) == typeid(int32_t)) {       \\
+        dest = pxt->SwapJs2CInt32(napi_v);       \\
+    }                                            \\
+    else if (typeid(type) == typeid(uint32_t)) { \\
+        dest = pxt->SwapJs2CUint32(napi_v);      \\
+    }                                            \\
+    else if (typeid(type) == typeid(int64_t)) {  \\
+        dest = pxt->SwapJs2CInt64(napi_v);       \\
+    }                                            \\
+    else if (typeid(type) == typeid(double_t)) { \\
+        dest = pxt->SwapJs2CDouble(napi_v);      \\
     } 
 
 #define NUMBER_JS_2_C_ENUM(napi_v, type, dest, enum_type)      \\
     if (typeid(type) == typeid(int32_t))  {    \\
         dest = static_cast<enum_type>(pxt->SwapJs2CInt32(napi_v));     \\
-    }                                          \\
-    else if (typeid(type) == typeid(uint32_t)){\\
+    }                                           \\
+    else if (typeid(type) == typeid(uint32_t)) { \\
         dest = static_cast<enum_type>(pxt->SwapJs2CUint32(napi_v));    \\
     }                                          \\
-    else if (typeid(type) == typeid(int64_t)){ \\
+    else if (typeid(type) == typeid(int64_t)) { \\
         dest = static_cast<enum_type>(pxt->SwapJs2CInt64(napi_v));     \\
-    }                                          \\
-    else if (typeid(type) == typeid(double_t)){\\
+    }                                           \\
+    else if (typeid(type) == typeid(double_t)) { \\
         dest = static_cast<enum_type>(pxt->SwapJs2CDouble(napi_v));    \\
     } 
     
-#define BOOLEAN_JS_2_C(napi_v, type, dest){    \\
+#define BOOLEAN_JS_2_C(napi_v, type, dest) {    \\
     dest = pxt->SwapC2JsBool(napi_v);          \\
 }
 
-#define C_DELETE(p)  \\
-    if (p) {         \\
-        delete p;    \\
+#define C_DELETE((p))  \\
+    if ((p)) {         \\
+        delete (p);    \\
     }
 
 __attribute__((unused)) static napi_value number_c_to_js(XNapiTool *pxt, const std::type_info &n, void *num)
@@ -83,17 +83,13 @@ __attribute__((unused)) static napi_value number_c_to_js(XNapiTool *pxt, const s
         return pxt->SwapC2JsDouble(*(double_t *)num);
     return nullptr;
 }
-#define NUMBER_C_2_JS(pxt, n) \\
-    number_c_to_js(pxt, typeid(n), &n)
-
+#define NUMBER_C_2_JS(pxt, (n)) \\
+    number_c_to_js(pxt, typeid((n)), &(n))
 [body_replace]
-
 static napi_value init(napi_env env, napi_value exports)
 {
     std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, exports);
-
     [init_replace]
-
     return exports;
 }
 
@@ -124,17 +120,13 @@ let implHTemplete = `\
 #include <map>
 #include <any>
 [importTs]
-
 [numberUsing]
-
 [implH_detail]
-
 #endif // IMPL_[impl_name_upper]_H
 `
 
 let implCppTemplete = `\
 #include "[implName].h"
-
 [implCpp_detail]
 `
 
@@ -144,7 +136,7 @@ function generateAll(structOfTs, destDir, moduleName, numberType) {
     let result = generateNamespace(ns0.name, ns0.body)
     let numberUsing = ""
     var numbertype = "uint32_t";
-    if(numberType != undefined && numberType != ""){
+    if(numberType != "" && numberType != undefined){
         numbertype = numberType;
     }
     for (let i = 1; i < NumberIncrease.get(); i++) {

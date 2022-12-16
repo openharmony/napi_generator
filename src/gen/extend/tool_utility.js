@@ -27,20 +27,18 @@ let xNapiToolH = `\
 #include <vector>
 #include <cmath>
 
-struct AsyncFunc
-{
+struct AsyncFunc {
     napi_env env_;
     napi_ref funcRef_;
     napi_ref thisVarRef_;
 };
 
-class XNapiTool
-{
+class XNapiTool {
 public:
     void RegistAsyncFunc(std::string name, napi_value func);
     void UnregistAsyncFunc(std::string name);
     static std::map<std::string, AsyncFunc> asyncFuncs_;
-    static void CallAsyncFunc(AsyncFunc * pAsyncFuncs, napi_value ret);
+    static void CallAsyncFunc(AsyncFunc *pAsyncFuncs, napi_value ret);
 
     using CallbackFunction = void (*)(XNapiTool *pxt, void *data);
     using RELEASE_INSTANCE = void (*)(void *p);
@@ -53,7 +51,6 @@ public:
     void DefineClass(const char *className, napi_callback constructorFunc,
         std::map<const char *, std::map<const char *, napi_callback>> &valueList, std::map<const char *,
         napi_callback> &funcList, napi_value dest = nullptr);
-
 
     void SetEnumProperty(napi_value dstObj, const char *propName, const std::any objValue);
     void CreateEnumObject(const char *enumName, std::map<const char *, std::any> enumMap);
@@ -89,15 +86,15 @@ public:
     
     uint32_t GetMapLength(napi_value value);
     napi_value GetMapElementName(napi_value value, uint32_t p);
-    napi_value GetMapElementValue(napi_value value, const char * p);
-    napi_value SetMapElement(napi_value &value, const char * ele_key, napi_value ele_value);
+    napi_value GetMapElementValue(napi_value value, const char *p);
+    napi_value SetMapElement(napi_value &value, const char *ele_key, napi_value ele_value);
 
     std::string GetUnionType(napi_value object);
 
     std::string GetAnyType(napi_value object);
     std::string GetAnyArrayType(napi_value object);
     void SetAnyValue(std::string &any_type, napi_value argv, std::any &any);
-    void GetAnyValue (std::string any_type, napi_value &result, std::any any);
+    void GetAnyValue(std::string any_type, napi_value &result, std::any any);
     void GetObjectValue(napi_value &result, std::map<std::string, std::any> valueIn);
 
     napi_value SyncCallBack(napi_value func, size_t argc, napi_value *args);
@@ -159,8 +156,7 @@ private:
     CallbackFunction completeFunction_;
     void *valueData_;
     napi_deferred deferred_;
-    enum class AsyncMode
-    {
+    enum class AsyncMode {
         NONE,
         CALLBACK,
         PROMISE,
@@ -188,7 +184,7 @@ let xNapiToolCpp = `
     if (!(btrue)) {      \\
                          \\
     }                    \\
-    assert(btrue);
+    assert(btrue)
 
 XNapiTool::XNapiTool(napi_env env, napi_callback_info info)
 {
@@ -336,7 +332,7 @@ napi_value XNapiTool::GetMapElementName(napi_value value, uint32_t p)
     return result;
 }
 
-napi_value XNapiTool::GetMapElementValue(napi_value value, const char * utf8Name)
+napi_value XNapiTool::GetMapElementValue(napi_value value, const char *utf8Name)
 {
     napi_value result;
     napi_status result_status = napi_get_named_property(env_, value, utf8Name, &result);
@@ -344,7 +340,7 @@ napi_value XNapiTool::GetMapElementValue(napi_value value, const char * utf8Name
     return result;
 }
 
-napi_value XNapiTool::SetMapElement(napi_value &value, const char * ele_key, napi_value ele_value)
+napi_value XNapiTool::SetMapElement(napi_value &value, const char *ele_key, napi_value ele_value)
 {
     napi_status result_status;
     if (value == nullptr) {
@@ -356,7 +352,8 @@ napi_value XNapiTool::SetMapElement(napi_value &value, const char * ele_key, nap
     return value;
 }
 
-std::string XNapiTool::GetAnyType(napi_value object){
+std::string XNapiTool::GetAnyType(napi_value object) 
+{
     napi_valuetype result;
     napi_typeof(env_, object, &result);
     if (result == napi_string) {
@@ -412,7 +409,8 @@ std::string XNapiTool::GetAnyType(napi_value object){
     }
 }
 
-std::string XNapiTool::GetAnyArrayType(napi_value object){
+std::string XNapiTool::GetAnyArrayType(napi_value object) 
+{
     napi_valuetype result;
     napi_typeof(env_, object, &result);
     if (result == napi_object) {
@@ -440,6 +438,7 @@ std::string XNapiTool::GetAnyArrayType(napi_value object){
 
 void XNapiTool::SetAnyValue(std::string &any_type, napi_value argv, std::any &any)
 {
+    std::string get_any_type = any_type.substr(0,3);
     if (any_type == "string") {
         std::string any_string;
         SwapJs2CUtf8(argv, any_string);
@@ -455,11 +454,11 @@ void XNapiTool::SetAnyValue(std::string &any_type, napi_value argv, std::any &an
         any_number = SwapJs2CInt32(argv);
         any = any_number;
         return;
-    } else if (any_type.substr(0,3) == "arr") {
+    } else if (get_any_type == "arr") {
         uint32_t len=GetArrayLength(argv);
         if (any_type == "arr_string") {
             std::vector<std::string> any_arr_string;
-            for(uint32_t i=0;i<len;i++) {
+            for (uint32_t i = 0; i < len; i++) {
                 std::string tt;
                 SwapJs2CUtf8(GetArrayElement(argv, i), tt);
                 any_arr_string.push_back(tt);
@@ -468,7 +467,7 @@ void XNapiTool::SetAnyValue(std::string &any_type, napi_value argv, std::any &an
             return;
         } else if (any_type == "arr_number") {
             std::vector<std::uint32_t> any_arr_number;
-            for(uint32_t i=0;i<len;i++) {
+            for (uint32_t i = 0; i < len; i++) {
                 uint32_t tt;
                 tt = SwapJs2CInt32(GetArrayElement(argv, i));
                 any_arr_number.push_back(tt);
@@ -477,46 +476,46 @@ void XNapiTool::SetAnyValue(std::string &any_type, napi_value argv, std::any &an
             return;
         } else if (any_type == "arr_boolean") {
             std::vector<bool> any_arr_boolean;
-            for(uint32_t i=0;i<len;i++) {
+            for (uint32_t i = 0; i < len; i++) {
                 bool tt;
-                tt = SwapJs2CBool(GetArrayElement(argv,i));
+                tt = SwapJs2CBool(GetArrayElement(argv, i));
                 any_arr_boolean.push_back(tt);
             }
             any = any_arr_boolean;
             return;
         }
         return;
-    }  else if (any_type.substr(0,3) == "map") {
+    }  else if (get_any_type == "map") {
         uint32_t len = GetMapLength(argv);
         if (any_type == "map_string") {
-            std::map<std::string,std::string> any_map_string;
-            for(uint32_t i=0;i<len;i++) {
+            std::map<std::string, std::string> any_map_string;
+            for (uint32_t i = 0; i < len; i++) {
                 std::string tt1;
                 std::string tt2;
-                SwapJs2CUtf8(GetMapElementName(argv,i), tt1);
-                SwapJs2CUtf8(GetMapElementValue(argv,tt1.c_str()), tt2);
+                SwapJs2CUtf8(GetMapElementName(argv, i), tt1);
+                SwapJs2CUtf8(GetMapElementValue(argv, tt1.c_str()), tt2);
                 any_map_string.insert(std::make_pair(tt1, tt2));
             }
             any = any_map_string;
             return;
         } else if (any_type == "map_number") {
-            std::map<std::string,std::uint32_t> any_map_number;
-            for(uint32_t i=0;i<len;i++) {
+            std::map<std::string, std::uint32_t> any_map_number;
+            for (uint32_t i = 0; i < len; i++) {
                 std::string tt1;
                 uint32_t tt2;
-                SwapJs2CUtf8(GetMapElementName(argv,i), tt1);
-                tt2 = SwapJs2CInt32(GetMapElementValue(argv,tt1.c_str()));
+                SwapJs2CUtf8(GetMapElementName(argv, i), tt1);
+                tt2 = SwapJs2CInt32(GetMapElementValue(argv, tt1.c_str()));
                 any_map_number.insert(std::make_pair(tt1, tt2));
             }
             any = any_map_number;
             return;
         } else if (any_type == "map_boolean") {
-            std::map<std::string,bool> any_map_boolean;
-            for(uint32_t i=0;i<len;i++) {
+            std::map<std::string, bool> any_map_boolean;
+            for (uint32_t i = 0; i < len; i++) {
                 std::string tt1;
                 bool tt2;
-                SwapJs2CUtf8(GetMapElementName(argv,i), tt1);
-                tt2 = SwapJs2CBool(GetMapElementValue(argv,tt1.c_str()));
+                SwapJs2CUtf8(GetMapElementName(argv, i), tt1);
+                tt2 = SwapJs2CBool(GetMapElementValue(argv, tt1.c_str()));
                 any_map_boolean.insert(std::make_pair(tt1, tt2));
             }
             any = any_map_boolean;
@@ -530,6 +529,7 @@ void XNapiTool::SetAnyValue(std::string &any_type, napi_value argv, std::any &an
 void XNapiTool::GetAnyValue (std::string any_type, napi_value &result, std::any any)
 {
     result = nullptr;
+    std::string get_any_type = any_type.substr(0,3);
     if (any_type == "string") {
         std::string any_string = std::any_cast<std::string>(any);
         result = SwapC2JsUtf8(any_string.c_str());
@@ -549,12 +549,12 @@ void XNapiTool::GetAnyValue (std::string any_type, napi_value &result, std::any 
         else if (typeid(any_number) == typeid(double_t))
             result = SwapC2JsDouble(any_number);
         return;
-    } else if (any_type.substr(0,3) == "arr") {
+    } else if (get_any_type == "arr") {
         result = nullptr;
         if (any_type == "arr_string") {
             std::vector<std::string> any_arr_string = std::any_cast<std::vector<std::string>>(any);
             uint32_t len=any_arr_string.size();
-            for(uint32_t i=0;i<len;i++) {
+            for (uint32_t i = 0; i < len; i++) {
                 napi_value tnv = nullptr;
                 tnv = SwapC2JsUtf8(any_arr_string[i].c_str());
                 SetArrayElement(result, i, tnv);
@@ -563,18 +563,15 @@ void XNapiTool::GetAnyValue (std::string any_type, napi_value &result, std::any 
         } else if (any_type == "arr_number") {
             std::vector<std::uint32_t> any_arr_number = std::any_cast<std::vector<std::uint32_t>>(any);
             uint32_t len=any_arr_number.size();
-            for(uint32_t i=0;i<len;i++) {
+            for (uint32_t i = 0; i < len; i++) {
                 napi_value tnv = nullptr;
-                if (typeid(any_arr_number[i]) == typeid(int32_t)){
+                if (typeid(any_arr_number[i]) == typeid(int32_t)) {
                     tnv = SwapC2JsInt32(any_arr_number[i]);
-                }
-                else if (typeid(any_arr_number[i]) == typeid(uint32_t)){
+                } else if (typeid(any_arr_number[i]) == typeid(uint32_t)) {
                     tnv = SwapC2JsUint32(any_arr_number[i]);
-                }
-                else if (typeid(any_arr_number[i]) == typeid(int64_t)){
+                } else if (typeid(any_arr_number[i]) == typeid(int64_t)) {
                     tnv = SwapC2JsInt64(any_arr_number[i]);
-                }
-                else if (typeid(any_arr_number[i]) == typeid(double_t)){
+                } else if (typeid(any_arr_number[i]) == typeid(double_t)) {
                     tnv = SwapC2JsDouble(any_arr_number[i]);
                 }
                 SetArrayElement(result, i, tnv);
@@ -583,7 +580,7 @@ void XNapiTool::GetAnyValue (std::string any_type, napi_value &result, std::any 
         } else if (any_type == "arr_boolean") {
             std::vector<bool> any_arr_boolean = std::any_cast<std::vector<bool>>(any);
             uint32_t len=any_arr_boolean.size();
-            for(uint32_t i=0;i<len;i++) {
+            for (uint32_t i = 0; i < len; i++) {
                 napi_value tnv = nullptr;
                 tnv = SwapC2JsBool(any_arr_boolean[i]);
                 SetArrayElement(result, i, tnv);
@@ -591,12 +588,12 @@ void XNapiTool::GetAnyValue (std::string any_type, napi_value &result, std::any 
             return;
         }
         return;
-    } else if (any_type.substr(0,3) == "map") {
+    } else if (get_any_type == "map") {
         if (any_type == "map_string") {
-            std::map<std::string,std::string> any_map_string = std::any_cast<std::map<std::string,std::string>>(any);
-            for (auto i = any_map_string.begin(); i != any_map_string.end(); i++)
-            {
-                const char * tnv1;
+            std::map<std::string, std::string> any_map_string = 
+            std::any_cast<std::map<std::string, std::string>>(any);
+            for (auto i = any_map_string.begin(); i != any_map_string.end(); i++) {
+                const char *tnv1;
                 napi_value tnv2 = nullptr;
                 tnv1 = (i -> first).c_str();
                 tnv2 = SwapC2JsUtf8(i->second.c_str());
@@ -604,33 +601,28 @@ void XNapiTool::GetAnyValue (std::string any_type, napi_value &result, std::any 
             }
             return;
         } else if (any_type == "map_number") {
-            std::map<std::string,std::uint32_t> any_map_number = 
-            std::any_cast<std::map<std::string,std::uint32_t>>(any);
-            for (auto i = any_map_number.begin(); i != any_map_number.end(); i++)
-            {
-                const char * tnv1;
+            std::map<std::string, std::uint32_t> any_map_number = 
+            std::any_cast<std::map<std::string, std::uint32_t>>(any);
+            for (auto i = any_map_number.begin(); i != any_map_number.end(); i++) {
+                const char *tnv1;
                 napi_value tnv2 = nullptr;
                 tnv1 = (i -> first).c_str();
-                if (typeid(i->second) == typeid(int32_t)){
+                if (typeid(i->second) == typeid(int32_t)) {
                     tnv2 = SwapC2JsInt32(i->second);
-                }
-                else if (typeid(i->second) == typeid(uint32_t)){
+                } else if (typeid(i->second) == typeid(uint32_t)) {
                     tnv2 = SwapC2JsUint32(i->second);
-                }
-                else if (typeid(i->second) == typeid(int64_t)){
+                } else if (typeid(i->second) == typeid(int64_t)) {
                     tnv2 = SwapC2JsInt64(i->second);
-                }
-                else if (typeid(i->second) == typeid(double_t)){
+                } else if (typeid(i->second) == typeid(double_t)) {
                     tnv2 = SwapC2JsDouble(i->second);
                 }
                 SetMapElement(result, tnv1, tnv2);
             }
             return;
         } else if (any_type == "map_boolean") {
-            std::map<std::string,bool> any_map_boolean = std::any_cast<std::map<std::string,bool>>(any);
-            for (auto i = any_map_boolean.begin(); i != any_map_boolean.end(); i++)
-            {
-                const char * tnv1;
+            std::map<std::string, bool> any_map_boolean = std::any_cast<std::map<std::string, bool>>(any);
+            for (auto i = any_map_boolean.begin(); i != any_map_boolean.end(); i++) {
+                const char *tnv1;
                 napi_value tnv2 = nullptr;
                 tnv1 = (i -> first).c_str();
                 tnv2 = SwapC2JsBool(i->second);
@@ -643,7 +635,8 @@ void XNapiTool::GetAnyValue (std::string any_type, napi_value &result, std::any 
     return;
 }
 
-std::string XNapiTool::GetUnionType(napi_value object){
+std::string XNapiTool::GetUnionType(napi_value object)
+{
     napi_valuetype result;
     napi_typeof(env_, object, &result);
     if (result == napi_string) {
@@ -659,37 +652,26 @@ std::string XNapiTool::GetUnionType(napi_value object){
 
 void XNapiTool::GetObjectValue(napi_value &result, std::map<std::string, std::any> valueIn)
 {
-    //napi_value result = nullptr;
     napi_create_object(env_, &result);
 
-    /*std::map<std::string,std::uint32_t> any_map_number = 
-    std::any_cast<std::map<std::string, std::uint32_t>>(valueIn);
-    */
-    
-    for (auto i = valueIn.begin(); i != valueIn.end(); i++)
-    {
-        const char * tnv1;
+    for (auto i = valueIn.begin(); i != valueIn.end(); i++) {
+        const char *tnv1;
         std::any anyValue;
         napi_value tnv2 = nullptr;
         tnv1 = (i -> first).c_str();        
-
-        if ((i->second).type() == typeid(int32_t)) {
-            tnv2 = SwapC2JsInt32(std::any_cast<int32_t>(i->second));
-      	} 
-        else if ((i->second).type() == typeid(uint32_t)) {
-            tnv2 = SwapC2JsUint32(std::any_cast<uint32_t>(i->second));
-	    } 
-        else if ((i->second).type() == typeid(int64_t)) {
-            tnv2 = SwapC2JsInt64(std::any_cast<int64_t>(i->second));
-	    } 
-        else if ((i->second).type() == typeid(double_t)) {
-            tnv2 = SwapC2JsDouble(std::any_cast<double_t>(i->second));
-        } 
-        else if((i->second).type() == typeid(const char *)) {
-            tnv2 = SwapC2JsUtf8(std::any_cast<const char *>(i->second));
-        } 
-        else if ((i->second).type() == typeid(bool)) {
-            tnv2 = SwapC2JsBool(std::any_cast<bool>(i->second));
+        auto temp = i->second;
+        if (temp.type() == typeid(int32_t)) {
+            tnv2 = SwapC2JsInt32(std::any_cast<int32_t>(temp));
+        } else if (temp.type() == typeid(uint32_t)) {
+            tnv2 = SwapC2JsUint32(std::any_cast<uint32_t>(temp));
+        } else if (temp.type() == typeid(int64_t)) {
+            tnv2 = SwapC2JsInt64(std::any_cast<int64_t>(temp));
+        } else if (temp.type() == typeid(double_t)) {
+            tnv2 = SwapC2JsDouble(std::any_cast<double_t>(temp));
+        } else if(temp.type() == typeid(const char *)) {
+            tnv2 = SwapC2JsUtf8(std::any_cast<const char *>(temp));
+        } else if ((temp).type() == typeid(bool)) {
+            tnv2 = SwapC2JsBool(std::any_cast<bool>(temp));
         } 
         
         SetMapElement(result, tnv1, tnv2);
@@ -962,7 +944,7 @@ void XNapiTool::SetEnumProperty(napi_value dstObj, const char *propName, std::an
         result_status = napi_create_int64(env_, std::any_cast<int64_t>(objValue), &prop);
     } else if (objValue.type() == typeid(double_t)) {
         result_status = napi_create_double(env_, std::any_cast<double_t>(objValue), &prop);
-    } else if (objValue.type() == typeid(const char *)){        
+    } else if (objValue.type() == typeid(const char *)) {        
         result_status = napi_create_string_utf8(env_, std::any_cast<const char *>(objValue), NAPI_AUTO_LENGTH, &prop);
     }
 
@@ -1078,14 +1060,13 @@ void XNapiTool::UnregistAsyncFunc(std::string name)
     XNapiTool::asyncFuncs_.erase(name);
 }
 
-void XNapiTool::CallAsyncFunc(AsyncFunc * pAsyncFuncs, napi_value ret)
+void XNapiTool::CallAsyncFunc(AsyncFunc *pAsyncFuncs, napi_value ret)
 {
     uv_loop_s *loop = nullptr;
     napi_get_uv_event_loop(pAsyncFuncs->env_, &loop);
     uv_work_t *work = new uv_work_t;
 
-    struct AsyncCallData
-    {
+    struct AsyncCallData {
         napi_ref resultRef;
         AsyncFunc *p;
     };
@@ -1098,8 +1079,7 @@ void XNapiTool::CallAsyncFunc(AsyncFunc * pAsyncFuncs, napi_value ret)
         loop,
         work,
         [](uv_work_t *) {},
-        [](uv_work_t *work, int status)
-        {
+        [](uv_work_t *work, int status) {
             AsyncCallData *data = (AsyncCallData *)work->data;
             AsyncFunc *paf = data->p;
             napi_handle_scope scope = nullptr;
