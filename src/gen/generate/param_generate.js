@@ -38,10 +38,10 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     } else if (type == "string") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){pxt->SwapJs2CUtf8(tnv%d,%s);}`
+            return `napi_value tnv%d = %s;\n    if (tnv%d != nullptr) {pxt->SwapJs2CUtf8(tnv%d, %s);}\n`
                 .format(lt, napiVn, lt, lt, dest)
         } else {
-            return "pxt->SwapJs2CUtf8(%s, %s);".format(napiVn, dest)
+            return "pxt->SwapJs2CUtf8(%s, %s);\n".format(napiVn, dest)
         }           
     } else if (type.substring(type.length - 2) == "[]") {
         return arrTemplete(dest, napiVn, type);
@@ -61,7 +61,7 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     } else if (type.indexOf("Array<") == 0) {
         return arrTemplete(dest, napiVn, type);
     } else if (type == "boolean") {
-        return `BOOLEAN_JS_2_C(%s,%s,%s);`.format(napiVn, "bool", dest)
+        return `BOOLEAN_JS_2_C(%s, %s, %s);`.format(napiVn, "bool", dest)
     } else if (type.substring(0, 4) == "Map<" || type.substring(0, 6) == "{[key:") {
         return mapTempleteFunc(dest, napiVn, type);
     } else if (type == "any") {
@@ -79,19 +79,19 @@ function unionTempleteFunc(dest, napiVn, type) {
     unionTypeString += '%s_type = pxt->GetUnionType(%s);\n'.format(dest, napiVn)
     for (let i = 0; i < unionType.length; i++) {
         if (unionType[i] == "string") {
-            unionTypeString += `if (%s_type == "string"){
+            unionTypeString += `if (%s_type == "string") {
                 std::string union_string;
                 %s
                 %s
             }\n`.format(dest, jsToC("union_string", napiVn, unionType[i]), dest+" = union_string;")
         } else if (unionType[i].substring(0, 12) == "NUMBER_TYPE_") {
-            unionTypeString += `if (%s_type == "number"){
+            unionTypeString += `if (%s_type == "number") {
                 std::uint32_t union_number;
                 %s
                 %s
             }\n`.format(dest, jsToC("union_number", napiVn, unionType[i]), dest+" = union_number;")
         } else if (unionType[i] == "boolean") {
-            unionTypeString += `if (%s_type == "boolean"){
+            unionTypeString += `if (%s_type == "boolean") {
                 bool union_boolean;
                 %s
                 %s
@@ -150,31 +150,27 @@ function arrTemplete(dest, napiVn, type) {
         return anyArrayTempleteFunc(dest, napiVn);
     }
     let arrTemplete = `\
-    uint32_t len[replace_lt]=pxt->GetArrayLength(%s);
-    for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
+    uint32_t len[replace_lt] = pxt->GetArrayLength(%s);
+    for (uint32_t i[replace_lt] = 0; i[replace_lt] < len[replace_lt]; i[replace_lt]++) {
         %s tt[replace_lt];
         [replace_swap]
         %s.push_back(tt[replace_lt]);
-
     }\n`.format(napiVn, arrayType == "boolean" ? "bool" : arrayType, dest)
    
     let arrMapTemplete = `\
-    uint32_t len[replace_lt]=pxt->GetArrayLength(%s);
-    for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
+    uint32_t len[replace_lt] = pxt->GetArrayLength(%s);
+    for (uint32_t i[replace_lt] = 0; i[replace_lt] < len[replace_lt]; i[replace_lt]++) {
         %s tt[replace_lt];        
-        
-        napi_value mapPara = pxt->GetArrayElement(pxt->GetArgv(0),i[replace_lt]);
-        uint32_t len2=pxt->GetMapLength(mapPara);
-        for(uint32_t i2=0;i2<len2;i2++) {           
+        napi_value mapPara = pxt->GetArrayElement(pxt->GetArgv(0), i[replace_lt]);
+        uint32_t len2 = pxt->GetMapLength(mapPara);
+        for (uint32_t i2 = 0; i2 < len2; i2++) {           
             std::string ttName;          
             pxt->SwapJs2CUtf8(pxt->GetMapElementName(mapPara, i2), ttName);
-            napi_value mapValue = pxt->GetMapElementValue(mapPara,ttName.c_str());
+            napi_value mapValue = pxt->GetMapElementValue(mapPara, ttName.c_str());
             [code_gen]
-            
             tt[replace_lt].insert(std::make_pair(ttName, ttValue));             
         }
         %s.push_back(tt[replace_lt]);
-
     }\n`.format(napiVn, arrayType, dest)
     arrTemplete = arrTemplete.replaceAll("[replace_lt]", lt)    
 
@@ -198,18 +194,18 @@ function numTempleteFunc(enumType, napiVn, type, dest) {
     if (enumType) {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C_ENUM(tnv%d,%s,%s,%s);}`
+            return `napi_value tnv%d = %s;\n    if (tnv%d != nullptr) {NUMBER_JS_2_C_ENUM(tnv%d, %s, %s, %s);}\n`
             .format(lt, napiVn, lt, lt, type, dest, enumType)
         } else {
-            return `NUMBER_JS_2_C_ENUM(%s,%s,%s,%s);`.format(napiVn, type, dest, enumType)
+            return `NUMBER_JS_2_C_ENUM(%s, %s, %s, %s);\n`.format(napiVn, type, dest, enumType)
         } 
     } else {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if(tnv%d!=nullptr){NUMBER_JS_2_C(tnv%d,%s,%s);}`
+            return `napi_value tnv%d = %s;\n    if (tnv%d != nullptr) {NUMBER_JS_2_C(tnv%d, %s, %s);}\n`
             .format(lt, napiVn, lt, lt, type, dest)
         } else {
-            return `NUMBER_JS_2_C(%s,%s,%s);`.format(napiVn, type, dest)
+            return `NUMBER_JS_2_C(%s, %s, %s);\n`.format(napiVn, type, dest)
         } 
    }
 }
@@ -229,7 +225,7 @@ function getMapValueCode(arrayType) {
     } else if (strTypeOut.substr(0, 12) == "NUMBER_TYPE_") {            
         codegen = '\
         %s ttValue;\
-        NUMBER_JS_2_C(mapValue,%s,ttValue);'.format(strTypeOut, strTypeOut)
+        NUMBER_JS_2_C(mapValue, %s, ttValue);'.format(strTypeOut, strTypeOut)
     }
     return codegen
 }
@@ -237,16 +233,16 @@ function getMapValueCode(arrayType) {
 function getArrTempletereplaceSwap(arrTemplete, arrayType, napiVn, lt) { 
     if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
-            "NUMBER_JS_2_C(pxt->GetArrayElement(%s,i%d),%s,tt%d);".format(napiVn, lt, arrayType, lt))
+            "NUMBER_JS_2_C(pxt->GetArrayElement(%s, i%d), %s, tt%d);".format(napiVn, lt, arrayType, lt))
     } else if (arrayType == "std::string") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
-            "pxt->SwapJs2CUtf8(pxt->GetArrayElement(%s,i%d), tt%d);".format(napiVn, lt, lt))
+            "pxt->SwapJs2CUtf8(pxt->GetArrayElement(%s, i%d), tt%d);".format(napiVn, lt, lt))
     } else if (InterfaceList.getValue(arrayType)) {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
-            jsToC("tt" + lt, "pxt->GetArrayElement(%s,i%d)".format(napiVn, lt), arrayType))
+            jsToC("tt" + lt, "pxt->GetArrayElement(%s, i%d)".format(napiVn, lt), arrayType))
     } else if (arrayType == "bool") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
-            "tt%d = pxt->SwapJs2CBool(pxt->GetArrayElement(%s,i%d));".format(lt, napiVn, lt))
+            "tt%d = pxt->SwapJs2CBool(pxt->GetArrayElement(%s, i%d));".format(lt, napiVn, lt))
     }
     return arrTemplete
 }
@@ -372,9 +368,9 @@ function paramGenerateMap(funcValue, param, p) {
         else { mapTypeString = mapType[1] }
     }
     else if (mapType[2] != undefined) {
-        if (mapType[2] == "string") { mapTypeString = "std::map<std::string,std::string>" }
-        else if (mapType[2].substring(0, 12) == "NUMBER_TYPE_") { "std::map<std::string,"+mapType[2]+">" }
-        else if (mapType[2] == "boolean") { mapTypeString = "std::map<std::string,bool>" }
+        if (mapType[2] == "string") { mapTypeString = "std::map<std::string, std::string>" }
+        else if (mapType[2].substring(0, 12) == "NUMBER_TYPE_") { "std::map<std::string, "+mapType[2]+">" }
+        else if (mapType[2] == "boolean") { mapTypeString = "std::map<std::string, bool>" }
     }
     else if (mapType[3] != undefined) {
         if (mapType[3] == "string") { mapTypeString = "std::vector<std::string>" }
@@ -388,18 +384,19 @@ function paramGenerateMap2(funcValue, param, p, mapType, mapTypeString, name) {
     let inParamName = funcValue.optional ? "(*vio->in" + p + ")" : "vio->in" + p
     let modifiers = funcValue.optional ? "*" : "&"
     if (mapType[1] == "any") {
-        param.valueIn += funcValue.optional ? `\n    std::map<std::string,%s>* in%d = nullptr;
+        param.valueIn += funcValue.optional ? `\n    std::map<std::string, %s>* in%d = nullptr;
                                                 std::string in%d_type;`.format(mapTypeString, p, p)
-                                            : `\n    std::map<std::string,%s> in%d;
+                                            : `\n    std::map<std::string, %s> in%d;
                                                 std::string in%d_type;`.format(mapTypeString, p, p)
     } else {
-        param.valueIn += funcValue.optional ? "\n    std::map<std::string,%s>* in%d = nullptr;".format(mapTypeString, p)
-                                        : "\n    std::map<std::string,%s> in%d;".format(mapTypeString, p)
+        param.valueIn += funcValue.optional ? "\n    std::map<std::string, %s>* in%d = nullptr;"
+                                            .format(mapTypeString, p)
+                                        : "\n    std::map<std::string, %s> in%d;".format(mapTypeString, p)
     }
     param.valueCheckout += getValueCheckout(funcValue, param, inParamName, p,
-        "std::map<std::string,%s>".format(mapTypeString))
+        "std::map<std::string, %s>".format(mapTypeString))
     param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
-    param.valueDefine += "%sstd::map<std::string,%s>%s %s"
+    param.valueDefine += "%sstd::map<std::string, %s>%s %s"
             .format(param.valueDefine.length > 0 ? ", " : "", mapTypeString, modifiers, name)
 }
 
@@ -436,8 +433,8 @@ function anyArrayTempleteFunc(dest, napiVn) {
 }
 
 let mapValueTemplete = `\
-uint32_t len[replace_lt]=pxt->GetMapLength(%s);
-for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
+uint32_t len[replace_lt] = pxt->GetMapLength(%s);
+for (uint32_t i[replace_lt] = 0; i[replace_lt] < len[replace_lt]; i[replace_lt]++) {
     std::string tt[replace_lt];
     %s tt[replace_lt+1];
     [replace_swap]
@@ -452,27 +449,28 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
         if (interfaceValue[i].type == 'string') {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
             interfaceFun +=
-                `pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0),tt%d.c_str()),%sName.c_str()),tt%d.%s);`
+                `pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0), \ntt%d.c_str()), %sName.c_str()), tt%d.%s);`
                     .format("SwapJs2CUtf8", "GetMapElementValue",
                         lt, interfaceValue[i].name, lt+1, interfaceValue[i].name)
         }
         else if (interfaceValue[i].type.substring(0, 12) == "NUMBER_TYPE_") {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
             interfaceFun +=
-                `%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0),tt%d.c_str()),%sName.c_str()),%s,tt%d.%s);\n`
+                `%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0), \ntt%d.c_str()), %sName.c_str()), %s, tt%d.%s);\n`
                     .format("NUMBER_JS_2_C", "GetMapElementValue", lt, interfaceValue[i].name,
                         interfaceValue[i].type, lt + 1, interfaceValue[i].name)
         }
         else if (interfaceValue[i].type == 'boolean') {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
             interfaceFun +=
-                `tt%d.%s = pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0),tt%d.c_str()),%sName.c_str()));\n`
+                `tt%d.%s = pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0), 
+                tt%d.c_str()), %sName.c_str()));\n`
                     .format(lt + 1, interfaceValue[i].name, "SwapJs2CBool", "GetMapElementValue",
                         lt, interfaceValue[i].name)
         }
     }
     mapTemplete = mapTemplete.replaceAll("[replace_swap]",
-        `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
+        `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
         %d
         %d`.format(napiVn, lt, lt, interfaceVarName, interfaceFun))
     return mapTemplete
@@ -490,29 +488,29 @@ function mapValue(mapType, napiVn, dest, lt) {
     mapTemplete = mapTemplete.replaceAll("[replace_lt+1]", lt + 1)
     if (mapTypeString == "std::string") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
-            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
-        pxt->SwapJs2CUtf8(pxt->GetMapElementValue(%s,tt%d.c_str()), tt%d);`
+            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
+        pxt->SwapJs2CUtf8(pxt->GetMapElementValue(%s, tt%d.c_str()), tt%d);`
                 .format(napiVn, lt, lt, napiVn, lt, lt + 1))
     }
     else if (mapTypeString.substring(0, 12) == "NUMBER_TYPE_") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
-            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
-        NUMBER_JS_2_C(pxt->GetMapElementValue(%s,tt%d.c_str()),%s,tt%d);`
+            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
+        NUMBER_JS_2_C(pxt->GetMapElementValue(%s, tt%d.c_str()), %s, tt%d);`
                 .format(napiVn, lt, lt, napiVn, lt, mapTypeString, lt + 1))
     }
     else if (mapTypeString == "bool") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
-            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
-        tt%d = pxt->SwapJs2CBool(pxt->GetMapElementValue(%s,tt%d.c_str()));`
+            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
+        tt%d = pxt->SwapJs2CBool(pxt->GetMapElementValue(%s, tt%d.c_str()));`
                 .format(napiVn, lt, lt, lt + 1, napiVn, lt))
     }
     if (mapTypeString == "std::any") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
-            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
-            if (i%d == 0){
-                %s_type = pxt->GetAnyType(pxt->GetMapElementValue(%s,tt%d.c_str()));
+            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
+            if (i%d == 0) {
+                %s_type = pxt->GetAnyType(pxt->GetMapElementValue(%s, tt%d.c_str()));
             }
-            pxt->SetAnyValue(%s_type, pxt->GetMapElementValue(%s,tt%d.c_str()), tt%d);`
+            pxt->SetAnyValue(%s_type, pxt->GetMapElementValue(%s, tt%d.c_str()), tt%d);`
                 .format(napiVn, lt, lt, lt, dest, napiVn, lt, dest, napiVn, lt, lt + 1))
     }
     else if (InterfaceList.getValue(mapTypeString)) {
@@ -522,52 +520,52 @@ function mapValue(mapType, napiVn, dest, lt) {
 }
 
 let mapMapTemplete = `\
-uint32_t len[replace_lt]=pxt->GetMapLength(%s);
-for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
+uint32_t len[replace_lt] = pxt->GetMapLength(%s);
+for (uint32_t i[replace_lt] = 0; i[replace_lt] < len[replace_lt]; i[replace_lt]++) {
     std::string tt[replace_lt];
-    std::map<std::string,%s> tt[replace_lt+1];
+    std::map<std::string, %s> tt[replace_lt+1];
     [replace_swap]
     %s.insert(std::make_pair(tt[replace_lt], tt[replace_lt+1]));
 }`
 
-function mapMapString (mapTemplete, napiVn, lt) {
+function mapMapString(mapTemplete, napiVn, lt) {
     return mapTemplete.replaceAll("[replace_swap]",
-    `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
-    uint32_t len%d=pxt->GetMapLength(pxt->GetMapElementValue(%s,tt%d.c_str()));
-    for(uint32_t i%d=0;i%d<len%d;i%d++){
+    `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
+    uint32_t len%d = pxt->GetMapLength(pxt->GetMapElementValue(%s, tt%d.c_str()));
+    for (uint32_t i%d = 0; i%d < len%d; i%d++) {
         std::string tt%d;
         std::string tt%d;
-        pxt->SwapJs2CUtf8(pxt->GetMapElementName(pxt->GetMapElementValue(%s,tt%d.c_str()), i%d),tt%d);
-        pxt->SwapJs2CUtf8(pxt->GetMapElementValue(pxt->GetMapElementValue(%s,tt%d.c_str()),tt%d.c_str()),tt%d);
+        pxt->SwapJs2CUtf8(pxt->GetMapElementName(pxt->GetMapElementValue(%s, tt%d.c_str()), i%d), tt%d);
+        pxt->SwapJs2CUtf8(pxt->GetMapElementValue(pxt->GetMapElementValue(%s, tt%d.c_str()), tt%d.c_str()), tt%d);
         tt%d.insert(std::make_pair(tt%d, tt%d));
     }`.format(napiVn, lt, lt, lt + 1, napiVn, lt, lt + 1, lt + 1, lt + 1, lt + 1,
         lt + 2, lt + 3, napiVn, lt, lt + 1, lt + 2, napiVn, lt, lt + 2, lt + 3, lt + 1, lt + 2, lt + 3))
 }
 
-function mapMapBoolean (mapTemplete, napiVn, lt) {
+function mapMapBoolean(mapTemplete, napiVn, lt) {
     return mapTemplete.replaceAll("[replace_swap]",
-    `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
-    uint32_t len%d=pxt->GetMapLength(pxt->GetMapElementValue(%s,tt%d.c_str()));
-    for(uint32_t i%d=0;i%d<len%d;i%d++){
+    `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
+    uint32_t len%d = pxt->GetMapLength(pxt->GetMapElementValue(%s, tt%d.c_str()));
+    for (uint32_t i%d = 0; i%d < len%d; i%d++) {
         std::string tt%d;
         bool tt%d;
-        pxt->SwapJs2CUtf8(pxt->GetMapElementName(pxt->GetMapElementValue(%s,tt%d.c_str()), i%d),tt%d);
-        tt%d = pxt->%s(pxt->GetMapElementValue(pxt->GetMapElementValue(%s,tt%d.c_str()),tt%d.c_str()));
+        pxt->SwapJs2CUtf8(pxt->GetMapElementName(pxt->GetMapElementValue(%s, tt%d.c_str()), i%d), tt%d);
+        tt%d = pxt->%s(pxt->GetMapElementValue(pxt->GetMapElementValue(%s, tt%d.c_str()), tt%d.c_str()));
         tt%d.insert(std::make_pair(tt%d, tt%d));
     }`.format(napiVn, lt, lt, lt + 1, napiVn, lt, lt + 1, lt + 1, lt + 1, lt + 1,
         lt + 2, lt + 3, napiVn, lt, lt + 1, lt + 2, lt + 3, "SwapJs2CBool"
         ,napiVn, lt, lt + 2, lt + 1, lt + 2, lt + 3))
 }
 
-function mapMapNumber (mapTemplete, napiVn, lt, mapTypeString) {
+function mapMapNumber(mapTemplete, napiVn, lt, mapTypeString) {
     return mapTemplete.replaceAll("[replace_swap]",
-    `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%d), tt%d);
-    uint32_t len%d=pxt->GetMapLength(pxt->GetMapElementValue(%s,tt%d.c_str()));
-    for(uint32_t i%d=0;i%d<len%d;i%d++){
+    `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
+    uint32_t len%d = pxt->GetMapLength(pxt->GetMapElementValue(%s, tt%d.c_str()));
+    for (uint32_t i%d = 0; i%d < len%d; i%d++) {
         std::string tt%d;
         %s tt%d;
-        pxt->SwapJs2CUtf8(pxt->GetMapElementName(pxt->GetMapElementValue(%s,tt%d.c_str()), i%d),tt%d);
-        NUMBER_JS_2_C(pxt->GetMapElementValue(pxt->GetMapElementValue(%s,tt%d.c_str()),tt%d.c_str()),%s,tt%d);
+        pxt->SwapJs2CUtf8(pxt->GetMapElementName(pxt->GetMapElementValue(%s, tt%d.c_str()), i%d), tt%d);
+        NUMBER_JS_2_C(pxt->GetMapElementValue(pxt->GetMapElementValue(%s, tt%d.c_str()), tt%d.c_str()), %s, tt%d);
         tt%d.insert(std::make_pair(tt%d, tt%d));
     }`.format(napiVn, lt, lt, lt + 1, napiVn, lt, lt + 1, lt + 1, lt + 1, lt + 1,
         lt + 2, mapTypeString, lt + 3, napiVn, lt, lt + 1, lt + 2, napiVn, lt, lt + 2,
@@ -595,8 +593,8 @@ function mapMap(mapType, napiVn, dest, lt) {
 }
 
 let mapArrayTemplete = `\
-uint32_t len[replace_lt]=pxt->GetMapLength(%s);
-for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
+uint32_t len[replace_lt] = pxt->GetMapLength(%s);
+for (uint32_t i[replace_lt] = 0; i[replace_lt] < len[replace_lt]; i[replace_lt]++) {
     std::string tt[replace_lt];
     std::vector<%s> tt[replace_lt+1];
     [replace_swap]
@@ -613,33 +611,36 @@ function mapArray(mapType, napiVn, dest, lt) {
     mapTemplete = mapTemplete.replaceAll("[replace_lt+1]", lt + 1)
     if (mapType[3] == "string") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
-            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%s), tt%d);
-            uint32_t len%s=pxt->GetArrayLength(pxt->GetMapElementValue(%s,tt%d.c_str()));
-            for(uint32_t i%d=0;i%d<len%d;i%d++){
+            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%s), tt%d);
+            uint32_t len%s = pxt->GetArrayLength(pxt->GetMapElementValue(%s, tt%d.c_str()));
+            for (uint32_t i%d = 0; i%d < len%d; i%d++) {
                 std::string tt%d;
-                pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetMapElementValue(%s,tt%d.c_str()),i%d), tt%d);
+                pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetMapElementValue(%s,
+                                                     tt%d.c_str()), i%d), tt%d);
                 tt%d.push_back(tt%d);
             }`.format(napiVn, lt, lt, lt + 1, napiVn, lt, lt + 1, lt + 1, lt + 1,
                 lt + 1, lt + 2, napiVn, lt, lt + 1, lt + 2, lt + 1, lt + 2))
     }
     else if (mapType[3] == "boolean") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
-            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%s), tt%d);
-            uint32_t len%s=pxt->GetArrayLength(pxt->GetMapElementValue(%s,tt%d.c_str()));
-            for(uint32_t i%d=0;i%d<len%d;i%d++){
+            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%s), tt%d);
+            uint32_t len%s = pxt->GetArrayLength(pxt->GetMapElementValue(%s, tt%d.c_str()));
+            for (uint32_t i%d = 0; i%d < len%d; i%d++) {
                 bool tt%d;
-                tt%d = pxt->SwapJs2CBool(pxt->GetArrayElement(pxt->GetMapElementValue(%s,tt%d.c_str()),i%d));
+                tt%d = pxt->SwapJs2CBool(pxt->GetArrayElement(pxt->GetMapElementValue(%s,
+                                                            tt%d.c_str()), i%d));
                 tt%d.push_back(tt%d);
             }`.format(napiVn, lt, lt, lt + 1, napiVn, lt, lt + 1, lt + 1, lt + 1,
                 lt + 1, lt + 2, lt + 2, napiVn, lt, lt, lt + 1, lt + 2))
     }
     else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
-            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i%s), tt%d);
-            uint32_t len%s=pxt->GetArrayLength(pxt->GetMapElementValue(%s,tt%d.c_str()));
-            for(uint32_t i%d=0;i%d<len%d;i%d++){
+            `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%s), tt%d);
+            uint32_t len%s = pxt->GetArrayLength(pxt->GetMapElementValue(%s, tt%d.c_str()));
+            for (uint32_t i%d = 0; i%d < len%d; i%d++) {
                 %s tt%d;
-                NUMBER_JS_2_C(pxt->GetArrayElement(pxt->GetMapElementValue(%s,tt%d.c_str()),i%d), %s, tt%d);
+                NUMBER_JS_2_C(pxt->GetArrayElement(pxt->GetMapElementValue(%s,
+                                                    tt%d.c_str()), i%d), %s, tt%d);
                 tt%d.push_back(tt%d);
             }`.format(napiVn, lt, lt, lt + 1, napiVn, lt, lt + 1, lt + 1, lt + 1,
                 lt + 1, mapTypeString, lt + 2, napiVn, lt, lt + 1, mapTypeString, lt + 2, lt + 1, lt + 2))
@@ -718,15 +719,13 @@ function paramGenerateCommon(p, cType, funcValue, param, modifiers, inParamName)
 }
 
 let objectTemplete = `\
-    uint32_t len[replace_lt]=pxt->GetMapLength(%s);
-    for(uint32_t i[replace_lt]=0;i[replace_lt]<len[replace_lt];i[replace_lt]++) {
+    uint32_t len[replace_lt] = pxt->GetMapLength(%s);
+    for (uint32_t i[replace_lt] = 0; i[replace_lt] < len[replace_lt]; i[replace_lt]++) {
         std::string tt[replace_lt];
         std::any tt[replace_lt+1];
-
-        pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s,i[replace_lt]), tt[replace_lt]);
-        napi_value valueObj = pxt->GetMapElementValue(%s,tt[replace_lt].c_str());
+        pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i[replace_lt]), tt[replace_lt]);
+        napi_value valueObj = pxt->GetMapElementValue(%s, tt[replace_lt].c_str());
         std::string valueObjType = pxt->GetAnyType(valueObj);
-
         [replace_swap]
         %s.insert(std::make_pair(tt[replace_lt], tt[replace_lt+1]));
     }`

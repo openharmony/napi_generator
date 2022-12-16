@@ -21,26 +21,21 @@ const { returnGenerate } = require("./return_generate");
  */
 let funcAsyncTemplete = `
 struct [funcName]_value_struct {[valueIn]
-    uint32_t outErrCode = 0;
-    [valueOut]
+    uint32_t outErrCode = 0;[valueOut]
 };
 
 [static_define]void [funcName]_execute(XNapiTool *pxt, void *data)
 {
     [funcName]_value_struct *vio = ([funcName]_value_struct *)data;
     [checkout_async_instance]
-
     [callFunc]
 }
 
 [static_define]void [funcName]_complete(XNapiTool *pxt, void *data)
 {
     [funcName]_value_struct *vio = ([funcName]_value_struct *)data;
-    
     napi_value result = nullptr;
-    
     [valuePackage]
-
     napi_value errCodeResult = nullptr;
     napi_value napiErrCode = nullptr;
     napiErrCode = NUMBER_C_2_JS(pxt, vio->outErrCode);
@@ -49,7 +44,6 @@ struct [funcName]_value_struct {[valueIn]
         napi_value args[2] = {errCodeResult, result};
         pxt->FinishAsync(2, args);
     }
-
     [optionalParamDestory]
     delete vio;
 }
@@ -63,15 +57,10 @@ struct [funcName]_value_struct {[valueIn]
         return err;
     }
     [unwarp_instance]
-
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
-    
     [valueCheckout]
-
     [optionalCallbackInit]
-
     [start_async]
-
     if (pxt->IsFailed()) {
         result = pxt->GetError();
     }
@@ -128,14 +117,18 @@ function generateFunctionAsync(func, data, className) {
     returnGenerate(param.callback, param, data)
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
-    middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
+    if (param.valueOut == "") {
+        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
+    } else {
+        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut)//  # 输出参数定义
+    } 
     middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
     let optionalCallback = getOptionalCallbackInit(param)
     middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback)//可选callback参数初始化
     middleFunc = replaceAll(middleFunc, "[start_async]", `
-    napi_value result = \
-pxt->StartAsync(%s_execute, vio, %s_complete, pxt->GetArgc() == %s ? pxt->GetArgv(%d) : nullptr);`.format(func.name,
-        func.name, parseInt(param.callback.offset) + 1, param.callback.offset))// 注册异步调用
+    napi_value result = pxt->StartAsync(%s_execute, vio, %s_complete,
+    pxt->GetArgc() == %s? pxt->GetArgv(%d) : nullptr);`
+        .format(func.name, func.name, parseInt(param.callback.offset) + 1, param.callback.offset))// 注册异步调用
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc)//执行
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
