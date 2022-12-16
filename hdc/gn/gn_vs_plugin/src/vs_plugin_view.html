@@ -97,6 +97,26 @@
     [type=radio]:checked ~ label ~ .content{
         z-index: 1;
     }
+    .simtextarea{
+        background: white;
+        color: #000000;
+        width: 250px;
+        min-height: 16px;
+        max-height: 300px;
+        outline: 2px solid #C4C4C4;
+        border: 0px;
+        margin-left: 102px;
+        margin-top: -15px;
+        line-height: 16px;
+        padding: 2px;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .simtextarea:focus {
+        outline: 2px solid #4B97D9;
+        border: 0px;
+    }
 </style>
 <script type="text/javascript">
     var mode = 0;
@@ -110,7 +130,7 @@
         var transplantDir = document.getElementById("transplantDirid").value;
         var subsystemName = document.getElementById("test_subsystemid").value;
         var componentName = document.getElementById("test_partid").value;
-        var compileOptions = document.getElementById("compileOptionsid").value;
+        var compileOptions = document.getElementById("compileOptionsid").innerText.replaceAll("\n", "");
         var extFileRadio = document.getElementById("extFileRadio");
         var extFlagRadio = document.getElementById("extFlagRadio");
         var extFileInput = document.getElementById("extFileInput");
@@ -285,8 +305,7 @@
                 <input class="text" type="text" id="test_partid" value="test_part">
             </div>
             <div style="margin-top: 10px;">
-                编译选项:&emsp;&emsp;&emsp;&emsp;&emsp;    
-                <input class="text" type="text" id="compileOptionsid">
+                编译选项:&emsp;&emsp;&emsp;&emsp;&emsp;<div class="simtextarea" id="compileOptionsid" contenteditable="true"><br /></div>
             </div>
             <div style="margin-top: 10px;">
                 扩展文件类型:
