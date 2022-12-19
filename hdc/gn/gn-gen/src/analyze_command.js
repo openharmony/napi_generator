@@ -182,9 +182,13 @@ class AnalyzeCommand {
     static splitString(s) {//按空格分割字符串
         let ret = [];
         let startp = -1;
+        let isContinuChar = 0;
         for (let p = 0; p < s.length; p++) {
+            if (s[p] == "\"" && s[p-1] != "\\") {
+                isContinuChar = 1 - isContinuChar;
+            }
             if (startp >= 0) {
-                if (s[p] == ' ') {
+                if (s[p] == ' ' && isContinuChar == 0) {
                     ret.push(s.substring(startp, p));
                     startp = -1;
                 }
@@ -234,6 +238,13 @@ class AnalyzeCommand {
     static clangCheck2(local, e) {
         if (e.startsWith("-MT") || e.startsWith("-MF")) {
             if (e.length == 3) {
+                local.p++;
+            }
+            return true;
+        }
+
+        if (e.startsWith("-s")) {
+            if (e.length == 2) {
                 local.p++;
             }
             return true;
@@ -329,6 +340,7 @@ class AnalyzeCommand {
             eles: AnalyzeCommand.splitString(cmd),
             p: 0,
         }
+
         while (local.p < local.eles.length) {
             let e = local.eles[local.p++];
             if (e.endsWith("clang") || e.endsWith("clang.exe")) {
@@ -513,7 +525,7 @@ class AnalyzeCommand {
             }
         }
         if (filePath.search(/\.so[\d\.]*$/) > 0) {
-            return ture;
+            return true;
         }
         return false;
     }
