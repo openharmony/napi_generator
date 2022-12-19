@@ -58,9 +58,7 @@ struct [funcName]_value_struct {[valueIn]
     }
     [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
-    [valueCheckout]
-    [optionalCallbackInit]
-    [start_async]
+    [valueCheckout][optionalCallbackInit][start_async]
     if (pxt->IsFailed()) {
         result = pxt->GetError();
     }
@@ -73,6 +71,19 @@ bool %s%s(%s)
     return true;
 }
 `
+
+function removeEndlineEnter(value) {
+    for (var i = value.length; i > 0; i--) {
+        let len = value.length
+        if (value.substring(len - 1, len) == "\n" || value.substring(len - 1, len) == ' ') {
+            value = value.substring(0, len - 1)
+        } else {
+            value = '    ' + value + "\n"
+            break
+        }
+    }
+    return value
+}
 
 function getOptionalCallbackInit(param) {
     if (!param.callback.optional) {
@@ -101,38 +112,41 @@ function generateFunctionAsync(func, data, className) {
     let middleFunc = replaceAll(funcAsyncTemplete, "[funcName]", func.name)
     middleFunc = replaceBasicInfo(middleFunc, className)
 
-    let param = {
-        valueIn: "",//定义输入
-        valueOut: "",//定义输出
-        valueCheckout: "",//解析
-        valueFill: "",//填充到函数内
-        valuePackage: "",//输出参数打包
-        valueDefine: "",//impl参数定义
-        optionalParamDestory: ""//可选参数内存释放
-    }
+    // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
+    let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
+        valuePackage: "", valueDefine: "", optionalParamDestory: "" }
 
     for (let i in func.value) {
         paramGenerate(i, func.value[i], param, data)
     }
     returnGenerate(param.callback, param, data)
 
-    middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
+    middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
     if (param.valueOut == "") {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
+        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
     } else {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut)//  # 输出参数定义
+        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
     } 
-    middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
+    if (param.valueCheckout == "") {
+        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
+    } else {
+        param.valueCheckout = removeEndlineEnter(param.valueCheckout)
+        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
+    }
     let optionalCallback = getOptionalCallbackInit(param)
-    middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback)//可选callback参数初始化
+    if (optionalCallback == "") {
+        middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback) // 可选callback参数初始化
+    } else {
+        middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback + "\n    ") // 可选callback参数初始化
+    }
     middleFunc = replaceAll(middleFunc, "[start_async]", `
     napi_value result = pxt->StartAsync(%s_execute, vio, %s_complete,
     pxt->GetArgc() == %s? pxt->GetArgv(%d) : nullptr);`
-        .format(func.name, func.name, parseInt(param.callback.offset) + 1, param.callback.offset))// 注册异步调用
+        .format(func.name, func.name, parseInt(param.callback.offset) + 1, param.callback.offset)) // 注册异步调用
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
-    middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc)//执行
-    middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
-    middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory)//可选参数内存释放
+    middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
+    middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
+    middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
 
     let prefixArr = getPrefix(data, func.isStatic)
     let implH = ""
