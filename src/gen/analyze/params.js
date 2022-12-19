@@ -21,7 +21,7 @@ const { NapiLog } = require("../tools/NapiLog");
 function analyzeParams(funcName, values) {
     let result = []
     let funcType = FuncType.DIRECT
-    let optionalParamCount = 0; //可选参数的个数
+    let optionalParamCount = 0; // 可选参数的个数
     while (values.length > 0) {
         let v = checkOutBody(values, 0, ["", ","])
         if (v == null)
