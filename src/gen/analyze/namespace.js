@@ -262,8 +262,8 @@ function createInterfaceData (matchs, data, result) {
         }
     }
 
-    bodyObj.parentList = [] //该接口继承的父类型列表
-    bodyObj.childList = [] //继承自该接口的子类型列表
+    bodyObj.parentList = [] // 该接口继承的父类型列表
+    bodyObj.childList = [] // 继承自该接口的子类型列表
     
     result.interface.push({
         name: interfaceName,

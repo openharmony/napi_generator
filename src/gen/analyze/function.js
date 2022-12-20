@@ -21,7 +21,7 @@ const { randomInt } = require("crypto");
 const { print } = require("../tools/tool");
 
 function analyzeSubInterface(data) {
-    let body = re.replaceAll(data, "\n", "").split(";")//  # replace(" ", "").
+    let body = re.replaceAll(data, "\n", "").split(";") //  # replace(" ", "").
     let result = {
         value: [],
         function: [],
@@ -31,13 +31,13 @@ function analyzeSubInterface(data) {
     }
     for (let i in body) {
         let t = body[i]
-        while (t.length > 0 && t[0] == ' ')//去除前面的空格
+        while (t.length > 0 && t[0] == ' ') // 去除前面的空格
             t = t.substring(1, t.length)
-        while (t.length > 0 && t[-1] == ' ')//去除后面的空格
+        while (t.length > 0 && t[-1] == ' ') // 去除后面的空格
             t = t.substring(0, t.length - 1)
-        if (t == "") break//如果t为空直接返回
+        if (t == "") break // 如果t为空直接返回
         let tt = re.match(" *([a-zA-Z0-9_]+) *: *([a-zA-Z_0-9<>,:{}[\\] ]+)", t)
-        if (tt) {//变量
+        if (tt) { // 变量
 
             let valueName = re.getReg(t, tt.regs[1])
             let valueType = re.getReg(t, tt.regs[2])
@@ -120,7 +120,7 @@ function analyzeFuncNoNameInterface(data, values) {
 }
 
 function analyseSubReturn(ret, data) {
-    //匿名interface返回值 function fun4(input: string): { read: number; written: number }; 
+    // 匿名interface返回值 function fun4(input: string): { read: number; written: number }; 
     ret = re.replaceAll(re.replaceAll(ret, " ", ""), "\n", "")
     let tt = re.match("{([A-Za-z0-9_]+:[A-Za-z0-9_,;]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}", ret)
     if (tt) {
