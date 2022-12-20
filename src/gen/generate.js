@@ -12,8 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-//生成BUILD.gn
-//生成tool_utility.h，生成tool_utility.cpp
+// 生成BUILD.gn
+// 生成tool_utility.h，生成tool_utility.cpp
 const { replaceAll } = require("./tools/tool");
 const { generateNamespace } = require("./generate/namespace");
 const { writeFile } = require("./tools/FileRW");
@@ -46,7 +46,7 @@ let moduleCppTmplete = `\
     }                                            \\
     else if (typeid(type) == typeid(double_t)) { \\
         dest = pxt->SwapJs2CDouble(napi_v);      \\
-    } 
+    }
 
 #define NUMBER_JS_2_C_ENUM(napi_v, type, dest, enum_type)      \\
     if (typeid(type) == typeid(int32_t))  {    \\
@@ -60,7 +60,7 @@ let moduleCppTmplete = `\
     }                                           \\
     else if (typeid(type) == typeid(double_t)) { \\
         dest = static_cast<enum_type>(pxt->SwapJs2CDouble(napi_v));    \\
-    } 
+    }
     
 #define BOOLEAN_JS_2_C(napi_v, type, dest) {    \\
     dest = pxt->SwapC2JsBool(napi_v);          \\
@@ -164,9 +164,9 @@ function generateAll(structOfTs, destDir, moduleName, numberType) {
     writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), null != license ? (license + "\n" + implCpp) : implCpp)
 
     let partName = moduleName.replace('.', '_')
-    generateGYP(destDir, ns0.name, license)//生成ubuntu下测试的编译脚本
-    generateGN(destDir, ns0.name, license, partName)//生成BUILD.gn for ohos
-    generateBase(destDir, license)//tool_utility.h/cpp
+    generateGYP(destDir, ns0.name, license) // 生成ubuntu下测试的编译脚本
+    generateGN(destDir, ns0.name, license, partName) // 生成BUILD.gn for ohos
+    generateBase(destDir, license) // tool_utility.h/cpp
 }
 
 module.exports = {

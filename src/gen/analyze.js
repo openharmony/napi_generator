@@ -61,7 +61,7 @@ function analyze(data, result) {
         let oldData = data
         data = removeEmptyLine(data)
         let matchs = re.match(" *\n*", data)
-        //只剩下空格和回车时，解析完成
+        // 只剩下空格和回车时，解析完成
         if (matchs && matchs.regs[0][1] == data.length) break
         matchs = re.match("export default ([a-zA-Z_]+);", data);
         if (matchs != null) {

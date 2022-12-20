@@ -20,8 +20,7 @@ const { returnGenerate } = require("./return_generate");
  * 结果直接返回
  */
 let funcDirectTemplete = `
-struct [funcName]_value_struct {[valueIn]
-    [valueOut]
+struct [funcName]_value_struct {[valueIn][valueOut]
 };
 
 [static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info)
@@ -37,8 +36,7 @@ struct [funcName]_value_struct {[valueIn]
     [valueCheckout]
     [callFunc]
     napi_value result = nullptr;
-    [valuePackage]
-    [optionalParamDestory]
+    [valuePackage][optionalParamDestory]
     delete vio;
     if (pxt->IsFailed()) {
         result = pxt->GetError();
@@ -60,7 +58,7 @@ function removeEndlineEnter(value) {
         if (value.substring(len - 1, len) == "\n" || value.substring(len - 1, len) == ' ') {
             value = value.substring(0, len - 1)
         } else {
-            value = '    ' + value + "\n"
+            value = '    ' + value
             break
         }
     }
@@ -78,15 +76,9 @@ function generateFunctionDirect(func, data, className) {
         middleFunc = middleFunc.replaceAll("[unwarp_instance]",
             "%s *pInstance = (%s *)pxt->UnWarpInstance();".format(className, className))
     }
-    let param = {
-        valueIn: "",//定义输入
-        valueOut: "",//定义输出
-        valueCheckout: "",//解析
-        valueFill: "",//填充到函数内
-        valuePackage: "",//输出参数打包
-        valueDefine: "",//impl参数定义
-        optionalParamDestory: ""//可选参数内存释放
-    }
+    // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
+    let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
+        valuePackage: "", valueDefine: "", optionalParamDestory: "" }
 
     for (let i in func.value) {
         paramGenerate(i, func.value[i], param, data)
@@ -97,14 +89,22 @@ function generateFunctionDirect(func, data, className) {
     } else {
         returnGenerate(returnInfo, param, data)
     }
-    middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn)//  # 输入参数定义
-    middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut)//  # 输出参数定义
+    middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
+    if (param.valueOut == "") {
+        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
+    } else {
+        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
+    } 
     param.valueCheckout = removeEndlineEnter(param.valueCheckout)
-    middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout)//  # 输入参数解析
+    middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
-    middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc)//执行
-    middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage)//输出参数打包
-    middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory)//可选参数内存释放
+    middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
+    middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
+    if (param.optionalParamDestory == "") {
+        middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
+    } else {
+        middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", "\n    " + param.optionalParamDestory) // 可选参数内存释放
+    }
     let prefixArr = getPrefix(data, func.isStatic)
     let implH = ""
     let implCpp = ""

@@ -54,7 +54,7 @@ void AsyncCallback(const std::string &eventName, [callback_param_type] &ret)
 	if(XNapiTool::asyncFuncs_.count(eventName) <= 0) {
         return;
     }
-	AsyncFunc * pAsyncFuncs = &XNapiTool::asyncFuncs_[eventName];
+	AsyncFunc *pAsyncFuncs = &XNapiTool::asyncFuncs_[eventName];
 	napi_value exports = nullptr;
 	XNapiTool *pxt = std::make_unique<XNapiTool>(pAsyncFuncs->env_, exports).release();
     [native_return]
@@ -116,11 +116,11 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
             "%s *pInstance = (%s *)pxt->UnWarpInstance();".format(className, className))
     }
     let instancePtr = "%s".format(className == null ? "" : "pInstance->")
-    codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr)//执行
+    codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
 
     let registLine = func.name == 'on' ? "pxt->RegistAsyncFunc(vio->eventName, pxt->GetArgv(1));" 
         : "pxt->UnregistAsyncFunc(vio->eventName);"
-        codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine)//注册/去注册event
+        codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
 
         codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
         codeContext.implCpp += `
@@ -159,14 +159,14 @@ function gennerateEventCallback(codeContext, data, param) {
 
 function generateFunctionOnOff(func, data, className) {
     let param = {
-        valueIn: "",//定义输入
-        valueOut: "",//定义输出
-        valueCheckout: "",//解析
-        valueFill: "",//填充到函数内
-        valuePackage: "",//输出参数打包
-        valueDefine: "",//impl参数定义
-        eventName:"",//注册/去注册事件名称
-        optionalParamDestory: ""//可选参数内存释放
+        valueIn: "", // 定义输入
+        valueOut: "", // 定义输出
+        valueCheckout: "", // 解析
+        valueFill: "", // 填充到函数内
+        valuePackage: "", // 输出参数打包
+        valueDefine: "", // impl参数定义
+        eventName:"", // 注册/去注册事件名称
+        optionalParamDestory: "" // 可选参数内存释放
     }
 
     for (let i in func.value) {

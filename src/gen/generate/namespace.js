@@ -172,9 +172,9 @@ function generateEnumResult(data) {
 
 function generateResult(name, implH, implCpp, middleFunc, middleInit) {
     let result = {
-        implH: `namespace %s {%s\n}`.format(name, implH),
-        implCpp: `namespace %s {%s}`.format(name, implCpp),
-        middleBody: `namespace %s {%s}`.format(name, middleFunc),
+        implH: `\nnamespace %s {%s\n}`.format(name, implH),
+        implCpp: `\nnamespace %s {%s}`.format(name, implCpp),
+        middleBody: `\nnamespace %s {%s}`.format(name, middleFunc),
         middleInit: middleInit
     }
     return result;
@@ -208,7 +208,7 @@ function formatMiddleInit(inNamespace, name) {
         let nsl = inNamespace.split("::")
         nsl.pop()
         let parentNs = nsl[nsl.length - 1]
-        middleInit = `{\nnapi_value %s=pxt->CreateSubObject(%s,"%s");\n`
+        middleInit = `{\nnapi_value %s = pxt->CreateSubObject(%s, "%s");\n`
             .format(name, nsl.length == 1 ? "exports" : parentNs, name)
     }
     return middleInit

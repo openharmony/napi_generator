@@ -21,7 +21,7 @@ function analyzeEnum(data) {
     let result = {
         element: [],
         function: [],
-        enumValueType: 0// 0代表数字，1代表字符串
+        enumValueType: 0 // 0代表数字，1代表字符串
     }
     for (let i in body) {
         let bodyContent = body[i]

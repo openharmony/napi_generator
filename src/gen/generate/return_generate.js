@@ -186,13 +186,12 @@ function mapTempleteFunc(type, deep, dest, value) {
     let lt = deep
     let tnv = dest
     let tnvdef = `result = nullptr;
-    for (auto i = %s.begin(); i != %s.end(); i++)
-        {
-            const char *tnv%d;
-            napi_value tnv%d = nullptr;
-            [calc_out]
-            pxt->SetMapElement(%s, tnv%d, tnv%d);
-        }`.format(value, value, lt, lt + 1, tnv, lt, lt + 1)
+    for (auto i = %s.begin(); i != %s.end(); i++) {
+        const char * tnv%d;
+        napi_value tnv%d = nullptr;
+        [calc_out]
+        pxt->SetMapElement(%s, tnv%d, tnv%d);
+    }`.format(value, value, lt, lt + 1, tnv, lt, lt + 1)
     let ret = ""
     if (mapType[1] != undefined && mapType[2] == undefined) {
         ret = mapTempleteValue(mapType, tnvdef, lt, value, tnv)
