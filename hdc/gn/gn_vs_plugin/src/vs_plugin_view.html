@@ -105,8 +105,6 @@
         max-height: 300px;
         outline: 2px solid #C4C4C4;
         border: 0px;
-        margin-left: 102px;
-        margin-top: -15px;
         line-height: 16px;
         padding: 2px;
         word-wrap: break-word;
@@ -267,78 +265,105 @@
 <div class="tabs">
     <div class="tab">
         <label for="tab1">Gn-Gen</label>
-        <div class="content">
-            <div style="margin-top: 10px;">
-                工程输出路径*:
-                <input class="text" accept="text" id="outputCodeDirid" value="out\rk3568" style="margin-left: 3px;">
-                <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectoutputCodePath('selectoutputCodeDir')">
-            </div>
-            <div style="margin-top: 10px;">
-                工程源码路径*:
-                <input class="text" type="text" id="originCodeDirid" style="margin-left: 3px;">
-                <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectoriginCodePath('selectoriginCodeDir')">
-            </div>
-            <div id="interface" style="margin-top: 10px;">
-                输入脚本路径*:
-                <input class="text" type="text" id="inputScriptDirid" onchange="inputChange()" onporpertychange="inputChange() " style="margin-left: 3px;">
-                <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectinputScriptDir()">
-            </div>
-            <div style="margin-top: 10px;">
-                输入脚本类型*:
-                <select id="scriptTypeid" style="width: 100px; height: 23px;">
-                    <option value = "make">make</option>
-                    <option selected value = "cmake">cmake</option>
-                    <option value = "scons">scons</option>
-                </select>
-            </div>
-            <div style="margin-top: 10px;">
-                GN生成路径*:&emsp;&emsp; 
-                <input class="text" type="text" id="transplantDirid" value="third_party">
-                <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selecttransplantPath('selecttransplantDir')">
-            </div>
-            <div style="margin-top: 10px;">
-                子系统名称*:&emsp;&emsp; 
-                <input class="text" type="text" id="test_subsystemid" value="test_subsystem" style="margin-left: 1px;">
-            </div>
-            <div style="margin-top: 10px;">
-                组件名称*:&emsp;&emsp;&emsp;&emsp;    
-                <input class="text" type="text" id="test_partid" value="test_part">
-            </div>
-            <div style="margin-top: 10px;">
-                编译选项:&emsp;&emsp;&emsp;&emsp;&emsp;<div class="simtextarea" id="compileOptionsid" contenteditable="true"><br /></div>
-            </div>
-            <div style="margin-top: 10px;">
-                扩展文件类型:
-                <input type="radio" id="extFileRadio" name="extFileRadio" onClick="showElement('extFileDiv')" style="margin-left: 8px;">是</input> 
-                <input type="radio" name="extFileRadio" onClick="hideElement('extFileDiv')" checked>否</input>
-                <a href="" target="_blank" title="添加编译脚本需要支持的特殊文件类型，&#10;多个类型之间用英文逗号分隔。&#10;例如：.cc, .hpp">
-                    <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
-                </a>
-            </div>
-            <div id="extFileDiv" style="margin-top: 10px; margin-bottom: 25px; display: none;">
-                扩展文件后缀:&emsp;
-                <input class="text" type="text" id="extFileInput" placeholder="文件后缀名，如：.cc, .hpp" style="margin-left: 3px;"/>
-            </div>
-            <div style="margin-top: 10px;">
-                扩展编译选项:
-                <input type="radio" id="extFlagRadio" name="extFlagRadio" onClick="showElement('extFlagDiv')" style="margin-left: 8px;">是</input> 
-                <input type="radio" name="extFlagRadio" onClick="hideElement('extFlagDiv')" checked>否</input>
-                <a href="" target="_blank" title="添加编译脚本需要支持的特殊编译选项，&#10;多个选项之间用英文逗号分隔。&#10;例如：--target=, -march=">
-                    <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
-                </a>
-            </div>
-            <div id="extFlagDiv" style="margin-top: 10px; margin-bottom: 25px; display: none;">
-                扩展选项名称:&emsp;
-                <input class="text" type="text" id="extFlagInput" placeholder="编译选项，如：--target=, -march=" style="margin-left: 3px;"/>
-            </div>
-            <div style="margin-top: 10px; text-align: left;">
-                <button type="button" class="button" onclick="cancel()" style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>
-                <button type="button" class="button" onclick="sendGnParamMsg()" style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
-                <a href="https://gitee.com/openharmony/napi_generator" target="_blank">
-                    <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
-                </a>
-            </div>
-        </div>
+        <table style="border-spacing:0px 10px; margin-left: 20px; margin-top: 38px; width: 500px;">
+            <tr>
+                <td width="110px">工程输出路径*:</td>
+                <td width="340px">
+                    <input class="text" accept="text" id="outputCodeDirid" value="out\rk3568">
+                    <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectoutputCodePath('selectoutputCodeDir')">
+                </td>
+            </tr>
+            <tr>
+                <td>工程源码路径*:</td>
+                <td>
+                    <input class="text" type="text" id="originCodeDirid">
+                    <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectoriginCodePath('selectoriginCodeDir')">
+                </td>
+            </tr>
+            <tr>
+                <td>输入脚本路径*:</td>
+                <td>
+                    <input class="text" type="text" id="inputScriptDirid" onchange="inputChange()" onporpertychange="inputChange() ">
+                    <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectinputScriptDir()">
+                </td>
+            </tr>
+            <tr>
+                <td>输入脚本类型*:</td>
+                <td>
+                    <select id="scriptTypeid" style="width: 100px; height: 23px; margin-left: -3px;">
+                        <option value = "make">make</option>
+                        <option selected value = "cmake">cmake</option>
+                        <option value = "scons">scons</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>GN生成路径*:</td>
+                <td>
+                    <input class="text" type="text" id="transplantDirid" value="third_party">
+                    <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selecttransplantPath('selecttransplantDir')">
+                </td>
+            </tr>
+            <tr>
+                <td>子系统名称*:</td>
+                <td>
+                    <input class="text" type="text" id="test_subsystemid" value="test_subsystem">
+                </td>
+            </tr>
+            <tr>
+                <td>组件名称*:</td>
+                <td>
+                    <input class="text" type="text" id="test_partid" value="test_part">
+                </td>
+            </tr>
+            <tr>
+                <td>编译选项:</td>
+                <td>
+                    <div class="simtextarea" id="compileOptionsid" contenteditable="true"><br /></div>
+                </td>
+            </tr>
+            <tr>
+                <td>扩展文件类型:</td>
+                <td>
+                    <input type="radio" id="extFileRadio" name="extFileRadio" onClick="showElement('extFileTr')" style="margin-left: 8px;">是</input> 
+                    <input type="radio" name="extFileRadio" onClick="hideElement('extFileTr')" checked>否</input>
+                    <a href="" target="_blank" title="添加编译脚本需要支持的特殊文件类型，&#10;多个类型之间用英文逗号分隔。&#10;例如：.cc, .hpp">
+                        <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
+                    </a>
+                </td>
+            </tr>
+            <tr id="extFileTr" style="display: none;">
+                <td style="padding-bottom: 15px;">扩展文件后缀:</td>
+                <td style="padding-bottom: 15px;">
+                    <input class="text" type="text" id="extFileInput" placeholder="文件后缀名，如：.cc, .hpp"/>
+                </td>
+            </tr>
+            <tr>
+                <td>扩展编译选项:</td>
+                <td>
+                    <input type="radio" id="extFlagRadio" name="extFlagRadio" onClick="showElement('extFlagTr')" style="margin-left: 8px;">是</input> 
+                    <input type="radio" name="extFlagRadio" onClick="hideElement('extFlagTr')" checked>否</input>
+                    <a href="" target="_blank" title="添加编译脚本需要支持的特殊编译选项，&#10;多个选项之间用英文逗号分隔。&#10;例如：--target=, -march=">
+                        <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
+                    </a>
+                </td>
+            </tr>
+            <tr id="extFlagTr" style="display: none;">
+                <td style="padding-bottom: 15px;">扩展选项名称:</td>
+                <td style="padding-bottom: 15px;">
+                    <input class="text" type="text" id="extFlagInput" placeholder="编译选项，如：--target=, -march="/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="button" onclick="cancel()" style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>
+                    <button type="button" class="button" onclick="sendGnParamMsg()" style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
+                    <a href="https://gitee.com/openharmony/napi_generator" target="_blank">
+                        <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
+                    </a>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 </body>
