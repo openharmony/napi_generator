@@ -819,16 +819,18 @@ function paramGenerate(p, funcValue, param, data) {
     }
 }
 
-// on/off 接口的event名称参数处理
+// on/off 接口的参数处理
 function eventParamGenerate(p, funcValue, param, data) {
     let name = funcValue.name;
     let type = funcValue.type;
-    let regName = re.match("'([a-zA-Z_0-9]+)'", type)
-    if (regName) {
+    let regName = re.match("([a-zA-Z_0-9]+)", type)
+    if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
+        // callback参数处理
+        paramGenerateCallBack(data, funcValue, param, p)
+    } else if (regName) {
+        // event type参数处理
         param.eventName = re.getReg(type, regName.regs[1])
         param.valueDefine += "%sstd::string &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
-    } else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
-        paramGenerateCallBack(data, funcValue, param, p)
     } else {
         NapiLog.logError("function eventParamGenerate:The current version do not support to this param to generate :"
         , name, "type :", type);

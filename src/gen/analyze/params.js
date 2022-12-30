@@ -28,6 +28,10 @@ function analyzeParams(funcName, values) {
             v = values
         values = values.substring(v.length, values.length)
         let matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *([a-zA-Z<,>|_0-9\\[\\]\\(\\):='{}]+)", v)
+        if (matchs == null && (funcName == "on" || funcName == "off")) {
+            // on和off的第一个参数的类型可以是一串字符
+            matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *\"([a-zA-Z|_0-9\\[\\]\\(\\):='{}]+)\"", v)
+        }
         if (matchs != null) {
             let type = re.getReg(v, matchs.regs[3])
             if (type.indexOf("Map") < 0) {
