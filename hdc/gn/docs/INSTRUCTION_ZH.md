@@ -1,123 +1,172 @@
-# GN脚本转换工具使用说明
+# GN脚本转换工具可执行程序使用说明
 ## 简介
 
-gn-gen工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。可执行文件、IntelliJ插件、VS Code插件下载路径如下：
+gn脚本生成工具目前支持两种入口，分别是可执行程序、VS Code插件，推荐使用VSCode插件。可执行文件、VS Code插件下载路径如下：
 
-[下载链接](暂无)
+[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/1OjtRhtGf/gn-gen-0.0.1)
 
 下载文件说明如下：
 
-	│   │   |── gn_IntelliJ_plugin.jar        # IntelliJ插件
-	│   │   |── gn-0.0.1.vsix                 # VS Code插件
 	│   │   |── res                           # 工具所需make文件
+	│   │   |── gn-0.0.1.vsix                 # VS Code插件
 	│   │   |── gn-gen-linux                  # Linux可执行程序 
 	│   │   |── gn-gen-win.exe                # Windows可执行程序    
 	│   │   └── gn-gen-macos                  # Mac可执行程序                
 
 ## 工具介绍
 
-通过gn-gen生成工具，使用者可以基于OpenHarmony源码，将三方库项目解析并生成BUILD.gn编译脚本，以便将三方库项目集成到OpenHarmony源码中。
+通过gn-gen生成工具，使用者可以基于OpenHarmony源码、已有编译脚本（目前支持cmake、make两种类型），生成OpenHarmony编译所需BUILD.gn脚本，实现将三方库移植到OpenHarmony上。
 
-## 生成BUILD.gn编译脚本
+## 可执行程序使用方法
 
-### 可执行程序使用方法
-#### Linux
+### 环境说明
 
-1、Ubuntu中下载OpenHarmony源码，并编译成功一个产品的镜像包，此处以RK3568A为例。
+1、安装cmake，安装命令如下：
 
-2、将待转换的三方库项目放置在third_party文件夹下，如下所示：
+	sudo apt-get install cmake
 
-	harmony@Ubuntu-64:~/OpenHarmony/third_party/test_project$ ls
-	CMakeLists.txt  main.c
+### 生成ohos.toolchain.cmake
 
-3、将下载的可执行程序gn-gen-linux与文件夹res放置在任意同一文件夹下。如下所示：
+1、Ubuntu中下载OpenHarmony源码，并编译成功一个产品的镜像包，此处以RK3568为例。源码如下所示：
 
-	harmony@Ubuntu-64:~/service/napi_generator_8/hdc/gn-gen/example$ ls
-	gn-gen-linux  res
+![](./../figures/pic-openharmony.png)
+
+2、将待转换的三方库项目（路径：https://gitee.com/openharmony/third_party_mbedtls）放置在third_party文件夹下，如下所示：
+
+![](./../figures/pic-mbedtls-development.png)
+
+3、将下载的可执行程序gn-gen-linux与文件夹res放置在任意同一文件夹下。并将gn-gen-linux文件与res/linux/bin下文件赋可执行权限，如下所示：
+
+	 harmony@Ubuntu-64:~/service/example$ ls
+	 gn-gen-linux  res
+	 harmony@Ubuntu-64:~/service/example$ sudo chmod -R 777 ./*
+	 harmony@Ubuntu-64:~/service/example$ ll -A
+	 总用量 116572
+	 -rwxrwxrwx 1 harmony harmony 119361984 12月 15 09:41 gn-gen-linux*
+	 drwxrwxrwx 5 harmony harmony      4096 12月 14 15:33 res/
 
 4、在终端中进入到可执行程序gn-gen-linux所在的目录，并运行gn-gen-linux，命令如下：
 
-	harmony@Ubuntu-64:~/service/napi_generator_8/hdc/gn-gen/example$ ./gn-gen-linux -o /out/rk3568-khdvk  -p /home/harmony/OpenHarmony -f /third_party/test_project/CMakeLists.txt
-	INFO (1) -- The C compiler identification is Clang 10.0.1
-	INFO (2) -- The CXX compiler identification is Clang 10.0.1
-	......
-	INFO (24) -------------------generate gn ok
-	harmony@Ubuntu-64:~/service/napi_generator_8/hdc/gn-gen/example$
+	harmony@Ubuntu-64:~/service/example$ ./gn-gen-linux -o out/khdvk_rk3568_a -p /home/harmony/OpenHarmony -f third_party/mbedtls-development/CMakeLists.txt -t cmake -s test_subsystem -m mbedtls-development
+
+![](./../figures/pic-generate-command.png)
 
 其中,参数详情如下：
-  -f, 待转换三方库项目CMakeLists.txt文件所在OpenHarmony相对路径(例如：third_party/opencv/CMakeLists.txt)；
-  -o, OpenHarmony源码RK3568A所在相对路径(例如：/out/rk3568-khdvk)；
-  -p, OpenHarmony源码所在路径；
-  -t, 可选参数，待转换三方库项目编译模式，默认为cmake(当前只支持cmake项目)；
-  -a, 可选参数，项目转换所需cmake参数；
-  -s, 可选参数，子系统名称；
-  -m, 可选参数，项目名称；
-  -d, 可选参数，工具转换成功后生成build_tmp文件存在路径。
 
-5.运行成功后会在/OpenHarmony/third_party/test_project目录下生成build_tmp文件夹，build_tmp文件夹中包含BUILD.gn、可执行程序hello等文件，如下所示：
+  -o：必填参数，ohos产品输出相对路径(例如：out/khdvk_rk3568_a)；
 
-	harmony@Ubuntu-64:~/OpenHarmony/third_party/test_project/build_tmp$ ls
-	BUILD.gn  CMakeCache.txt  CMakeFiles  cmake_install.cmake  hello  Makefile  ohos.toolchain.cmake
+  -p：必填参数，ohos项目路径(例如：/home/harmony/OpenHarmony)；
 
-#### Windows
+  -f：必选参数，待转换三方库cmake文件相对路径(例如：third_party/mbedtls-development/CMakeLists.txt);
 
-1、windows中下载OpenHarmony源码，并编译成功一个产品的镜像包，此处以RK3568A为例。
+  -t：可选参数，默认为cmake;
 
-2、将待转换三方库项目放置在third_party文件夹下，如下所示：
+  -s：可选参数，默认填写“test_subsystem”，使用者可根据实际情况修改子系统名称；
 
-	E:\OpenHarmony\third_party\test_project>dir /B
-	CMakeLists.txt
-	main.c
+  -m：可选参数，工具默认填写“test_part”，使用者可根据实际情况修改组件名称；
 
-3、将下载的可执行程序gn-gen-win.exe与文件夹res放置在任意同一文件夹下。如下所示：
+  -d：可选参数，工具默认填写待转换三方库cmake文件所在文件夹相对路径，使用者可根据实际情况修改路径；
 
-	E:\demo\gn>dir /B
-	gn-gen-win.exe
-	res
+  -a：可选参数，待转换三方库中引用其它三方库时需填写该选项，具体填写方法可参考FAQ中libcoap转换时问题解决方法，详细FAQ内容可左键单击以下链接了解：[FAQ](https://gitee.com/openharmony/napi_generator/blob/master/hdc/gn/FAQ.md)；
 
-4、在终端中进入到可执行程序gn-gen-win.exe所在的目录，并运行gn-gen-win.exe，命令如下：
+5、运行完成后，进入/OpenHarmony/third_party/mbedtls-development/build_tmp目录下，查看是否存在ohos.toolchain.cmake文件，如下所示：
 
-	E:\demo\gn>gn-gen-win.exe -o out/rk3568-khdvk -p E:/OpenHarmony -f third_party/test_project/CMakeLists.txt
+	 harmony@Ubuntu-64:~/service/example$ cd /home/harmony/OpenHarmony/third_party/mbedtls-development/build_tmp/
+	 harmony@Ubuntu-64:~/OpenHarmony/third_party/mbedtls-development/build_tmp$ ll -A
+	 总用量 228
+	 drwxrwxr-x  3 harmony harmony   4096 12月 16 11:54 3rdparty/
+	 -rw-rw-r--  1 harmony harmony  14658 12月 16 11:55 BUILD.gn
+	 drwxrwxr-x  2 harmony harmony   4096 12月 16 11:54 cmake/
+	 -rw-rw-r--  1 harmony harmony  17144 12月 16 11:54 CMakeCache.txt
+	 drwxrwxr-x 10 harmony harmony   4096 12月 16 11:54 CMakeFiles/
+	 -rw-rw-r--  1 harmony harmony   3879 12月 16 11:54 cmake_install.cmake
+	 -rw-rw-r--  1 harmony harmony    432 12月 16 11:54 CTestTestfile.cmake
+	 -rwxr--r--  1 harmony harmony    110 12月 16 11:54 DartConfiguration.tcl*
+	 drwxrwxr-x  3 harmony harmony   4096 12月 16 11:54 include/
+	 drwxrwxr-x  3 harmony harmony   4096 12月 16 11:55 library/
+	 -rw-rw-r--  1 harmony harmony 122917 12月 16 11:54 Makefile
+	 -rw-rw-r--  1 harmony harmony   1851 12月 16 11:54 ohos.toolchain.cmake
+	 drwxrwxr-x 14 harmony harmony   4096 12月 16 11:54 programs/
+	 lrwxrwxrwx  1 harmony harmony     65 12月 16 11:54 scripts -> /home/harmony/OpenHarmony/third_party/mbedtls-development/scripts/
+	 drwxrwxr-x  4 harmony harmony  20480 12月 16 11:55 tests/
+
+### 运行make脚本
+
+1、在终端中进入ohos.toolchain.cmake所在的build_tmp目录下，运行make，查看cmake环境是否可以正常使用，命令如下：
+
+	 harmony@Ubuntu-64:~/OpenHarmony/third_party/mbedtls-development/build_tmp$ cmake .. -DCMAKE_TOOLCHAIN_FILE=ohos.toolchain.cmake
+	 -- The C compiler identification is Clang 10.0.1
+	 -- Check for working C compiler: /home/harmony/OpenHarmony/prebuilts/clang/ohos/linux-x86_64/llvm/bin/clang
+	 -- Check for working C compiler: /home/harmony/OpenHarmony/prebuilts/clang/ohos/linux-x86_64/llvm/bin/clang -- works
+	 -- Detecting C compiler ABI info
+	 -- Detecting C compiler ABI info - done
+	 -- Detecting C compile features
+	 -- Detecting C compile features - done
+	 -- Configuring done
+	 -- Generating done
+	 -- Build files have been written to: /home/harmony/OpenHarmony/third_party/mbedtls-development/build_tmp
+
+根据以上日志可发现make运行成功，环境正常使用。若运行make失败，则根据报错信息修改，直到make运行成功，环境正常使用为止。
+
+### 生成gn脚本
+
+1、在终端中进入到可执行程序gn-gen-linux所在的目录，并运行gn-gen-linux，命令如下：
+
+	harmony@Ubuntu-64:~/service/example$ ./gn-gen-linux -o out/khdvk_rk3568_a -p /home/harmony/OpenHarmony -f  third_party/mbedtls-development/CMakeLists.txt -s test_subsystem -m mbedtls-development
 	INFO (1) -- The C compiler identification is Clang 10.0.1
-	INFO (2) -- The CXX compiler identification is Clang 10.0.1
+	
+	INFO (2) -- Check for working C compiler: /home/harmony/OpenHarmony/prebuilts/clang/ohos/linux-x86_64/llvm/bin/clang
+	
+	INFO (3) -- Check for working C compiler: /home/harmony/OpenHarmony/prebuilts/clang/ohos/linux-x86_64/llvm/bin/clang -- works
+	
 	......
-	INFO (24) -------------------generate gn ok
-	E:\demo\gn>
+	
+	INFO (647) -------------------generate gn ok
 
-其中,参数详情如下：
-  -f, 待转换三方库项目CMakeLists.txt文件所在OpenHarmony相对路径(例如：third_party/opencv/CMakeLists.txt)；
-  -o, OpenHarmony源码RK3568A所在相对路径(例如：/out/rk3568-khdvk)；
-  -p, OpenHarmony源码所在路径；
-  -t, 可选参数，待转换三方库项目编译模式，默认为cmake(当前只支持cmake项目)；
-  -a, 可选参数，项目转换所需cmake参数；
-  -s, 可选参数，子系统名称；
-  -m, 可选参数，项目名称；
-  -d, 可选参数，工具转换成功后生成build_tmp文件存在路径。
+其中,参数详情如生成ohos.toolchain.cmake中步骤4。
 
-5.运行成功后会在E:\OpenHarmony\third_party\test_project目录下生成build_tmp文件夹，build_tmp文件夹中包含BUILD.gn、可执行程序hello等文件，如下所示：
+2.运行成功后会在/OpenHarmony/third_party/mbedtls-development目录下生成build_tmp文件夹，build_tmp文件夹中包含BUILD.gn文件，如下所示：
 
-	E:\OpenHarmony\third_party\test_project\build_tmp>dir /B
-	BUILD.gn
-	CMakeCache.txt
-	CMakeFiles
-	cmake_install.cmake
-	hello
-	Makefile
-	ohos.toolchain.cmake
+![](./../figures/pic-build-tmp.png)
 
-#### Mac
-
-方法步骤参考windows、Linux的使用方法。
-
-### VS Code插件使用方法
+## VS Code插件使用方法
 
 具体的插件使用步骤，可以左键单击以下链接了解：
 
 [VS插件使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/gn/gn_vs_plugin/docs/INSTRUCTION_ZH.md)
 
-### IntelliJ插件使用方法
+## 将三方库集成到OpenHarmony
 
-具体的插件使用步骤，可以左键单击以下链接了解：
+### 通过其它子系统调用
 
-[IntelliJ插件使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/gn/gn_IntelliJ_plugin/docs/INSTRUCTION_ZH.md)
+1、此处以OpenHarmony/foundation/multimodalinput组件调用mbedtls-development组件为例。在~/multimodalinput/input/BUILD.gn文件中添加mbedtls-development依赖，其中“//third_party/mbedtls-development/build_tmp”为mbedtls-development组件BUILD.gn文件所在相对路径；“all_targets”为mbedtls-development组件BUILD.gn文件中group名称。具体书写如下所示：
 
+```
+harmony@Ubuntu-64:~$ cd /home/harmony/OpenHarmony/foundation/multimodalinput/input/
+	harmony@Ubuntu-64:~/OpenHarmony/foundation/multimodalinput/input$ cat BUILD.gn 
+	......
+	ohos_shared_library("mmi_uinject") {
+	......
+  	  deps = [
+    	"//drivers/peripheral/input/hal:hdi_input",
+    	"//utils/native/base:utils",
+    	"//third_party/mbedtls-development/build_tmp:all_targets",
+  	  ]
+	......
+```
+
+2、进入~/OpenHarmony目录下，通过ninja形式编译，编译命令及编译结果如下：
+
+```
+ninja -C out/khdvk_rk3568_a all_targets
+```
+
+![](./../figures/ninja_build_success.png)
+
+3、编译成功后，会生成mbedtls-development相关库文件或可执行程序，生成文件及路径如下所示：
+
+![](./../figures/generate_file.png)
+
+### 总结
+
+根据以上操作，即可将三方库集成到OpenHarmony源码中。
