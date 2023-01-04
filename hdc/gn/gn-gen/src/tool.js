@@ -156,7 +156,7 @@ class Tool {
      */
     static getJsonCfg() {
         if (this.globalJsonCfg == null) {
-            let jsonFilePath = path.join(Tool.CURRENT_TOOL_PATH, "cfg.json");
+            let jsonFilePath = path.join(Tool.CURRENT_TOOL_PATH, "res/cfg.json");
             let jsonFile = fs.readFileSync(jsonFilePath, { encoding: "utf8" });
             this.globalJsonCfg = JSON.parse(jsonFile);
             this.globalJsonCfg.fileSuffix = this.globalJsonCfg.fileSuffix ? "," + this.globalJsonCfg.fileSuffix : "";
