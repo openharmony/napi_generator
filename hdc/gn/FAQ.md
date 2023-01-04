@@ -104,7 +104,7 @@
 
 问题定位：当前工具源码不支持解析参数-g，导致转换失败。
 
-问题解决：在cfg.json文件的compileflag参数中添加-g，如下所示：
+问题解决：在res/cfg.json文件的compileflag参数中添加-g，如下所示：
 
 	{
     "fileSuffix": ".cpp, .cxx, .cc, .hpp",
@@ -117,7 +117,7 @@
 
 问题定位：当前工具源码不支持解析参数-lMBEDX509_LIBRARY-NOTFOUND，导致转换失败。
 
-问题解决：在cfg.json文件的compileflag参数中添加-lMBEDX509_LIBRARY-NOTFOUND，如下所示：
+问题解决：在res/cfg.json文件的compileflag参数中添加-lMBEDX509_LIBRARY-NOTFOUND，如下所示：
 
 	{
     "fileSuffix": ".cpp, .cxx, .cc, .hpp",
@@ -130,7 +130,7 @@
 
 问题定位：当前工具源码不支持解析参数-lMBEDCRYPTO_LIBRARY-NOTFOUND，导致转换失败。
 
-问题解决：在cfg.json文件的compileflag参数中添加-lMBEDCRYPTO_LIBRARY-NOTFOUND，如下所示：
+问题解决：在res/cfg.json文件的compileflag参数中添加-lMBEDCRYPTO_LIBRARY-NOTFOUND，如下所示：
 
 	{
     "fileSuffix": ".cpp, .cxx, .cc, .hpp",

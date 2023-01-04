@@ -38,21 +38,14 @@ gn脚本生成工具目前支持两种入口，分别是可执行程序、VS Cod
 3、将下载的可执行程序gn-gen-linux与文件夹res放置在任意同一文件夹下。并将gn-gen-linux文件与res/linux/bin下文件赋可执行权限，如下所示：
 
 	 harmony@Ubuntu-64:~/service/example$ ls
-	 cfg.json  gn-gen-linux  res
+	 gn-gen-linux  res
 	 harmony@Ubuntu-64:~/service/example$ sudo chmod -R 777 ./*
 	 harmony@Ubuntu-64:~/service/example$ ll -A
 	 总用量 116572
 	 -rwxrwxrwx 1 harmony harmony 119361984 12月 15 09:41 gn-gen-linux*
 	 drwxrwxrwx 5 harmony harmony      4096 12月 14 15:33 res/
 
-4、在gn-gen-linux目录下新增cfg.json文件，文件中添加以下内容：
-
-	{
-	"fileSuffix": ".cpp, .cxx, .cc, .hpp",
-	"compileflag": "--target=, -march="
-	}
-
-5、在终端中进入到可执行程序gn-gen-linux所在的目录，并运行gn-gen-linux，命令如下：
+4、在终端中进入到可执行程序gn-gen-linux所在的目录，并运行gn-gen-linux，命令如下：
 
 	harmony@Ubuntu-64:~/service/example$ ./gn-gen-linux -o out/khdvk_rk3568_a -p /home/harmony/OpenHarmony -f third_party/mbedtls-development/CMakeLists.txt -t cmake -s test_subsystem -m mbedtls-development
 
@@ -76,7 +69,7 @@ gn脚本生成工具目前支持两种入口，分别是可执行程序、VS Cod
 
   -a：可选参数，待转换三方库中引用其它三方库时需填写该选项，具体填写方法可参考FAQ中libcoap转换时问题解决方法，详细FAQ内容可左键单击以下链接了解：[FAQ](https://gitee.com/openharmony/napi_generator/blob/master/hdc/gn/FAQ.md)；
 
-6、运行完成后，进入/OpenHarmony/third_party/mbedtls-development/build_tmp目录下，查看是否存在ohos.toolchain.cmake文件，如下所示：
+5、运行完成后，进入/OpenHarmony/third_party/mbedtls-development/build_tmp目录下，查看是否存在ohos.toolchain.cmake文件，如下所示：
 
 	 harmony@Ubuntu-64:~/service/example$ cd /home/harmony/OpenHarmony/third_party/mbedtls-development/build_tmp/
 	 harmony@Ubuntu-64:~/OpenHarmony/third_party/mbedtls-development/build_tmp$ ll -A

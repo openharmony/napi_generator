@@ -88,7 +88,7 @@ function genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType,
  * @param extFlag 用户自定义的支持编译选项
  */
 function refreshJsonCfg(extFile, extFlag) {
-	let cfgFilePath = __dirname + '/cfg.json';
+	let cfgFilePath = __dirname + '/res/cfg.json';
 	let jsonCfg = readFile(cfgFilePath);
 	let cfgObj = JSON.parse(jsonCfg.toString());
 	cfgObj.fileSuffix = extFile;
