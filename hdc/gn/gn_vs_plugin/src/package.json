@@ -1,7 +1,7 @@
 {
-	"name": "gn",
-	"displayName": "gn",
-	"description": "test",
+	"name": "gn-gen",
+	"displayName": "gn-gen",
+	"description": "gn generate tool",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.62.0"
@@ -13,6 +13,7 @@
 		"*"
 	],
 	"main": "./extension.js",
+	"publisher": "Kaihong",
 	"contributes": {
 		"commands": [
 			{
@@ -61,5 +62,9 @@
 		"stdio": "^2.1.1",
 		"typescript": "^4.8.4",
 		"vsce": "^2.11.0"
-	}
+	},
+    "repository": {
+        "type": "gitee",
+        "url": "https://gitee.com/openharmony/napi_generator/tree/master/hdc/gn"
+  }
 }

@@ -15,7 +15,9 @@ gn脚本生成工具目前支持两种入口，分别是可执行程序、VS Cod
 
 ## 工具介绍
 
-通过gn-gen生成工具，使用者可以基于OpenHarmony源码、已有编译脚本（目前支持cmake、make两种类型），生成OpenHarmony编译所需BUILD.gn脚本，实现将三方库移植到OpenHarmony上。
+通过gn-gen生成工具，使用者可以基于OpenHarmony源码、已有编译脚本（目前支持cmake、make两种类型），生成OpenHarmony编译所需BUILD.gn脚本，实现将三方库移植到OpenHarmony上。gn-gen生成工具的软件架构如下：
+
+![](./../figures/gn_framework.png)
 
 ## 可执行程序使用方法
 
@@ -31,7 +33,7 @@ gn脚本生成工具目前支持两种入口，分别是可执行程序、VS Cod
 
 ![](./../figures/pic-openharmony.png)
 
-2、将待转换的三方库项目（路径：https://gitee.com/openharmony/third_party_mbedtls）放置在third_party文件夹下，如下所示：
+2、将待转换的三方库项目（路径：[三方库项目](https://gitee.com/openharmony/third_party_mbedtls)）放置在third_party文件夹下，如下所示：
 
 ![](./../figures/pic-mbedtls-development.png)
 
