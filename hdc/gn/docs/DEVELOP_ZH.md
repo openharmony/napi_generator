@@ -16,7 +16,7 @@
 
 1.下载res文件夹，并放置到napi_generator/hdc/gn/gn-gen目录下，下载链接如下：
 
-[下载链接](暂无)
+[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/1OjtRhtGf/gn-gen-0.0.1)
 
 2.安装typescript：在napi_generator/hdc/gn/gn-gen/src目录下执行命令：
 
@@ -57,7 +57,7 @@
 
 1.下载res文件夹，并放置到napi_generator/hdc/gn/gn-gen目录下，下载链接如下：
 
-[下载链接](暂无)
+[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/1OjtRhtGf/gn-gen-0.0.1)
 
 2.安装typescript：使用管理员身份在napi_generator/hdc/gn/gn-gen/src目录下执行命令：
 
@@ -96,10 +96,4 @@
 具体的插件开发步骤，可以左键单击以下链接了解：
 
 [VS插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/hdc/gn/gn_vs_plugin/docs/DEVELOP_ZH.md)
-
-### IntelliJ插件开发说明
-
-具体的插件开发步骤，可以左键单击以下链接了解：
-
-[IntelliJ插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/hdc/gn/gn_IntelliJ_plugin/docs/DEVELOP_ZH.md)
 
