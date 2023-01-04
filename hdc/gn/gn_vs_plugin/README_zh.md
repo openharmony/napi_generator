@@ -259,7 +259,7 @@ group("all_targets") {
 若当前工具的功能已经不能满足开发者的全部需求，则开发者可以基于已有的源码对工具进行二次开发，来增强工具的能力，编译打包生成自定义的可执行文件和插件。  
 ### 开发步骤
 
-开发者可以根据如下的步骤来完成对工具VsCode插件的开发：
+开发者可以根据如下的步骤来完成对工具VSCode插件的开发：
 
 [工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/gn/gn_vs_plugin/docs/DEVELOP_ZH.md)
 
