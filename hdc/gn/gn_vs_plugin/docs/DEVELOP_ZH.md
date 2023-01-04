@@ -8,7 +8,7 @@
 
 1.将下载的gn-gen-linux可执行程序、res文件夹放置到napi_generator/hdc/gn/gn_vs_plugin/src/目录下，下载链接如下：
 
-[下载链接](暂无)
+[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/1OjtRhtGf/gn-gen-0.0.1)
 
 2.在napi_generator/hdc/gn/gn_vs_plugin/src目录下执行命令：
 
@@ -43,7 +43,7 @@
 
 1.将下载的gn-gen-win.exe可执行程序、res文件夹放置到napi_generator/hdc/gn/gn_vs_plugin/src/目录下，下载链接如下：
 
-[下载链接]()
+[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/1OjtRhtGf/gn-gen-0.0.1)
 
 2.在napi_generator/hdc/gn/gn_vs_plugin/src目录下执行命令：
 
