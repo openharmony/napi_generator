@@ -74,7 +74,8 @@ function generateFunctionDirect(func, data, className) {
     else {
         middleFunc = middleFunc.replaceAll("[static_define]", "static ")
         middleFunc = middleFunc.replaceAll("[unwarp_instance]",
-            "%s *pInstance = (%s *)pxt->UnWarpInstance();".format(className, className))
+            `void *instPtr = pxt->UnWarpInstance();
+    %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className))
     }
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
     let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
@@ -105,13 +106,13 @@ function generateFunctionDirect(func, data, className) {
     } else {
         middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", "\n    " + param.optionalParamDestory) // 可选参数内存释放
     }
-    let prefixArr = getPrefix(data, func.isStatic)
+    let prefixArr = getPrefix(data, func)
     let implH = ""
     let implCpp = ""
     if (!func.isParentMember) {
         // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
-        implH = "\n%s%s%sbool %s(%s);".format(
-            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine)
+        implH = "\n%s%s%sbool %s(%s)%s;".format(
+            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
         implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
     }
     return [middleFunc, implH, implCpp]

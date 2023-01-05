@@ -21,7 +21,7 @@ const { jsToC } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
-const { addUniqFunc2List, addUniqObj2List } = require("../tools/tool");
+const { addUniqFunc2List, addUniqObj2List, setOverrideFunc } = require("../tools/tool");
 
 let middleBodyTmplete = `
 class [className]_middle {
@@ -30,12 +30,13 @@ public:
     {
         XNapiTool *pxt = new XNapiTool(env, info);
         [className] *p = new [className]();
-        napi_value thisvar = pxt->WrapInstance(p, release);
+        napi_value thisvar = pxt->WrapInstance(reinterpret_cast<DataPtr>(p), release);
         return thisvar;
     }
-    static void release(void *p)
+    static void release(DataPtr p)
     {
-        [className] *p2 = ([className] *)p;
+        void *dataPtr = p;
+        [className] *p2 = static_cast<[className] *>(dataPtr);
         delete p2;
     }
     [static_funcs]
@@ -93,7 +94,8 @@ function generateVariable(value, variable, className) {
     static napi_value getvalue_%s(napi_env env, napi_callback_info info)
     {
         XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
-        %s *p = (%s *)pxt->UnWarpInstance();
+        void *instPtr = pxt->UnWarpInstance();
+        %s *p = static_cast<%s *>(instPtr);
         napi_value result = nullptr;
         `.format(name, className, className) + cToJs("p->" + name, type, "result") + `
         delete pxt;
@@ -102,8 +104,9 @@ function generateVariable(value, variable, className) {
     static napi_value setvalue_%s(napi_env env, napi_callback_info info)
     {
         std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);
-        %s *p = (%s *)pxt->UnWarpInstance();
-        `.format(name, className, className) + jsToC("p->" + name, "pxt->GetArgv(0)", type) + `
+        void *instPtr = pxt->UnWarpInstance();
+        %s *p = static_cast<%s *>(instPtr);
+        `.format(name, className, className) + jsToC("p->" + name, "pxt->GetArgv(XNapiTool::ZERO)", type) + `
         return nullptr;
     }`
 }
@@ -192,12 +195,30 @@ function getAllPropties(interfaceBody, properties, isParentClass) {
     }
     for (let i in interfaceBody.function) {
         interfaceBody.function[i].isParentMember = isParentClass
-        addUniqFunc2List(interfaceBody.function[i], properties.functions)
+        if(!addUniqFunc2List(interfaceBody.function[i], properties.functions)) {
+            if (isParentClass) {
+                // 没添加到列表，说明子类方法properties.functions重写了父类方法interfaceBody.function[i]
+                // 找到该子类方法并将其设置为override (生成的重写函数如果没有override关键字会触发门禁告警)
+                setOverrideFunc(interfaceBody.function[i], properties.functions)
+            }
+        }
     }
     if (!isParentClass && interfaceBody.parentNameList && interfaceBody.parentNameList.length > 0) {
         getAllPropties(interfaceBody.parentBody, properties, true)
     }
 } 
+
+function addVirtualKeywords(data, implH, name) {
+    if (data.childList && data.childList.length > 0) {
+        // 如果该类是其它类的父类，增加虚析构函数使其具备泛型特征 (基类必须有虚函数才能正确使用dynamic_cast和typeinfo等方法)
+        // 如果该类自己也有父类，虚析构函数需要加上override关键字(否则C++门禁会有告警)
+        let ovrrideStr = (data.parentList && data.parentList.length > 0) ? " override" : "";
+        // 如果虚析构函数已经有override关键字，就不需要再加virtual关键字了(否则C++门禁会有告警)
+        let virtualStr = (data.parentList && data.parentList.length > 0) ? "" : "virtual ";
+        implH += "\n    %s~%s()%s {};".format(virtualStr, name, ovrrideStr);
+    }
+    return implH;
+}
 
 function connectResult(data, inNamespace, name) {
     let implH = ""
@@ -244,10 +265,7 @@ function connectResult(data, inNamespace, name) {
         implCpp += tmp[2]
         middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name, inNamespace, name, func.name)
     }
-    if (data.childList && data.childList.length > 0) {
-        // 如果是父类，增加虚析构函数使其具备泛型特征 (基类必须有虚函数才能正确使用dynamic_cast和typeinfo等方法)
-        implH += "\n    virtual ~%s() {};".format(name)
-    }
+    implH = addVirtualKeywords(data, implH, name);
     return [middleFunc, implH, implCpp, middleInit]
 }
 
@@ -257,3 +275,5 @@ module.exports = {
     generateVariable,
     mapTypeString
 }
+
+
