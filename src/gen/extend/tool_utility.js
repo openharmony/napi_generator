@@ -27,6 +27,8 @@ let xNapiToolH = `\
 #include <vector>
 #include <cmath>
 
+using DataPtr = struct DumyData*;
+
 struct AsyncFunc {
     napi_env env_;
     napi_ref funcRef_;
@@ -35,12 +37,22 @@ struct AsyncFunc {
 
 class XNapiTool {
 public:
+    static const int ZERO = 0;
+    static const int ONE = 1;
+    static const int TWO = 2;
+    static const int THREE = 3;
+    static const int FOUE = 4;
+    static const int FIVE = 5;
+    static const int SIX = 6;
+    static const int SEVEN = 7;
+    static const int EIGHT = 8;
+    static const int NINE = 9;
     void RegistAsyncFunc(std::string name, napi_value func);
     void UnregistAsyncFunc(std::string name);
     static void CallAsyncFunc(AsyncFunc *pAsyncFuncs, napi_value ret);
 
-    using CallbackFunction = void (*)(XNapiTool *pxt, void *data);
-    using RELEASE_INSTANCE = void (*)(void *p);
+    using CallbackFunction = void (*)(XNapiTool *pxt, DataPtr data);
+    using RELEASE_INSTANCE = void (*)(DataPtr p);
     static napi_value UndefinedValue(napi_env env);
     const uint32_t DEFAULT_ARG_COUNT = 8;
     napi_value UndefinedValue();
@@ -98,7 +110,7 @@ public:
 
     napi_value SyncCallBack(napi_value func, size_t argc, napi_value *args);
 
-    napi_value StartAsync(CallbackFunction pe, void *data, CallbackFunction pc, napi_value func = nullptr);
+    napi_value StartAsync(CallbackFunction pe, DataPtr data, CallbackFunction pc, napi_value func = nullptr);
     void FinishAsync(size_t argc, napi_value *args);
 
     bool IsFailed()
@@ -118,13 +130,13 @@ public:
 
     // create code related class
 public:
-    static void WrapFinalize(napi_env env, void *data, void *hint);
+    static void WrapFinalize(napi_env env, XNapiTool *data, DataPtr hint);
     void ReleaseInstance();
-    napi_value WrapInstance(void *instance, RELEASE_INSTANCE ri);
-    void *UnWarpInstance();
+    napi_value WrapInstance(DataPtr instance, RELEASE_INSTANCE ri);
+    DataPtr UnWarpInstance();
     
-    void SetAsyncInstance(void *p);
-    void *GetAsyncInstance();
+    void SetAsyncInstance(DataPtr p);
+    void* GetAsyncInstance();
 
 private:
     napi_env env_;
@@ -145,9 +157,9 @@ private:
     bool CheckValueType(napi_value value, napi_valuetype type);
 
     // asynchronous call related code
-    static void AsyncExecute(napi_env env, void *p);
+    static void AsyncExecute(napi_env env, XNapiTool *p);
     void AsyncExecuteFunction();
-    static void AsyncComplete(napi_env env, napi_status status, void *p);
+    static void AsyncComplete(napi_env env, napi_status status, XNapiTool *p);
     void AsyncCompleteFunction();
     napi_ref callbackFunc_;
     napi_ref asyncThisVar_;
@@ -155,7 +167,7 @@ private:
     bool asyncNeedRelease_;
     CallbackFunction executeFunction_;
     CallbackFunction completeFunction_;
-    void *valueData_;
+    DataPtr valueData_;
     napi_deferred deferred_;
     enum class AsyncMode {
         NONE,
@@ -166,9 +178,9 @@ private:
 
 private:
     napi_ref wrapper_;
-    void *pInstance_;
+    DataPtr pInstance_;
     RELEASE_INSTANCE releaseInstance_;
-    void *asyncInstance_;
+    DataPtr asyncInstance_;
 };
 
 #endif
@@ -820,9 +832,9 @@ void XNapiTool::AsyncExecuteFunction()
         executeFunction_(this, valueData_);
     }
 }
-void XNapiTool::AsyncExecute(napi_env env, void *p)
+void XNapiTool::AsyncExecute(napi_env env, XNapiTool *p)
 {
-    XNapiTool *pxt = (XNapiTool *)p;
+    XNapiTool *pxt = p;
     pxt->AsyncExecuteFunction();
 }
 void XNapiTool::AsyncCompleteFunction()
@@ -831,14 +843,14 @@ void XNapiTool::AsyncCompleteFunction()
         completeFunction_(this, valueData_);
     }
 }
-void XNapiTool::AsyncComplete(napi_env env, napi_status status, void *p)
+void XNapiTool::AsyncComplete(napi_env env, napi_status status, XNapiTool *p)
 {
-    XNapiTool *pxt = (XNapiTool *)p;
+    XNapiTool *pxt = p;
     pxt->AsyncCompleteFunction();
     delete pxt;
 }
 
-napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFunction pc, napi_value func)
+napi_value XNapiTool::StartAsync(CallbackFunction pe, DataPtr data, CallbackFunction pc, napi_value func)
 {
     napi_value result;
     napi_status result_status;
@@ -865,8 +877,9 @@ napi_value XNapiTool::StartAsync(CallbackFunction pe, void *data, CallbackFuncti
     napi_value resourceName = nullptr;
     result_status = napi_create_string_utf8(env_, "tool_utility", NAPI_AUTO_LENGTH, &resourceName);
     CC_ASSERT(result_status == napi_ok);
-    result_status = napi_create_async_work(env_, nullptr, resourceName, XNapiTool::AsyncExecute,
-        XNapiTool::AsyncComplete, this, &work_);
+    result_status = napi_create_async_work(env_, nullptr, resourceName,
+        (napi_async_execute_callback)XNapiTool::AsyncExecute,
+        (napi_async_complete_callback)XNapiTool::AsyncComplete, this, &work_);
     CC_ASSERT(result_status == napi_ok);
     result_status = napi_queue_async_work(env_, work_);
     CC_ASSERT(result_status == napi_ok);
@@ -995,9 +1008,9 @@ void XNapiTool::DefineClass(const char *className, napi_callback constructorFunc
     CC_ASSERT(result_status == napi_ok);
 }
 
-void XNapiTool::WrapFinalize(napi_env env, void *data, void *hint)
+void XNapiTool::WrapFinalize(napi_env env, XNapiTool *data, DataPtr hint)
 {
-    XNapiTool *pxt = (XNapiTool *)data;
+    XNapiTool *pxt = data;
     pxt->ReleaseInstance();
     delete pxt;
 }
@@ -1009,16 +1022,16 @@ void XNapiTool::ReleaseInstance()
     }
 }
 
-napi_value XNapiTool::WrapInstance(void *instance, RELEASE_INSTANCE ri)
+napi_value XNapiTool::WrapInstance(DataPtr instance, RELEASE_INSTANCE ri)
 {
     pInstance_ = instance;
     releaseInstance_ = ri;
-    napi_status result_status = napi_wrap(env_, thisVar_, this, WrapFinalize, nullptr, &wrapper_);
+    napi_status result_status = napi_wrap(env_, thisVar_, this, (napi_finalize)WrapFinalize, nullptr, &wrapper_);
     CC_ASSERT(result_status == napi_ok);
     return thisVar_;
 }
 
-void *XNapiTool::UnWarpInstance()
+DataPtr XNapiTool::UnWarpInstance()
 {
     XNapiTool *p;
     napi_status result_status = napi_unwrap(env_, thisVar_, (void **)&p);
@@ -1026,12 +1039,12 @@ void *XNapiTool::UnWarpInstance()
     return p->pInstance_;
 }
 
-void XNapiTool::SetAsyncInstance(void *p)
+void XNapiTool::SetAsyncInstance(DataPtr p)
 {
     asyncInstance_ = p;
 }
 
-void *XNapiTool::GetAsyncInstance()
+void* XNapiTool::GetAsyncInstance()
 {
     return asyncInstance_;
 }

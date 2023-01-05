@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { replaceAll, getPrefix } = require("../tools/tool");
+const { replaceAll, getPrefix, getConstNum } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 
@@ -40,7 +40,7 @@ struct [funcName]_value_struct {[valueIn][valueOut]
         [valuePackage]
         {
             napi_value args[1] = {result};
-            pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]), 1, args);
+            pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]), XNapiTool::ONE, args);
         }
     }
     result = pxt->UndefinedValue();
@@ -78,7 +78,8 @@ function getOptionalCallbackInit(param) {
         return ""
     }
     let cType = param.valueOut.substr(0, param.valueOut.indexOf("*"))
-    return "if (pxt->GetArgc() > %s) {\n        vio->out = new %s;\n    }".format(param.callback.offset, cType)
+    return "if (pxt->GetArgc() > %s) {\n        vio->out = new %s;\n    }"
+        .format(getConstNum(param.callback.offset), cType)
 }
 
 function generateFunctionSync(func, data, className) {
@@ -90,7 +91,8 @@ function generateFunctionSync(func, data, className) {
     else {
         middleFunc = middleFunc.replaceAll("[static_define]", "static ")
         middleFunc = middleFunc.replaceAll("[unwarp_instance]",
-            "%s *pInstance = (%s *)pxt->UnWarpInstance();".format(className, className))
+            `void *instPtr = pxt->UnWarpInstance();
+    %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className))
     }
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
     let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
@@ -121,13 +123,13 @@ function generateFunctionSync(func, data, className) {
     middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
     middleFunc = middleFunc.replaceAll("[callback_param_offset]", param.callback.offset); // 呼叫回调
 
-    let prefixArr = getPrefix(data, func.isStatic)
+    let prefixArr = getPrefix(data, func)
     let implH = ""
     let implCpp = ""
     if (!func.isParentMember) {
         // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
-        implH = "\n%s%s%sbool %s(%s);".format(
-            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine)
+        implH = "\n%s%s%sbool %s(%s)%s;".format(
+            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
         implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
     }
     return [middleFunc, implH, implCpp]
