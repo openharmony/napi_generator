@@ -258,15 +258,17 @@ function getWebviewContent(context) {
 }
 
 function getWebViewContent(context, templatePath) {
-    const reoriginCodeDir = path.join(context.extensionPath, templatePath);
-    const dirPath = path.dirname(reoriginCodeDir);
-    let html = fs.readFileSync(reoriginCodeDir, 'utf-8');
-    html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
-        if($2.indexOf("https://")<0)return $1 + vscode.Uri.file(path.resolve(dirPath, $2))
-		.with({ scheme: 'vscode-resource' }).toString() + '"';
-        else return $1 + $2+'"';
-    });
-    return html;
+	const reoriginCodeDir = path.join(context.extensionPath, templatePath);
+	const dirPath = path.dirname(reoriginCodeDir);
+	let html = fs.readFileSync(reoriginCodeDir, 'utf-8');
+	html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
+		if ($2.indexOf("https://") < 0) {
+			return $1 + globalPanel.webview.asWebviewUri(vscode.Uri.file(path.resolve(dirPath, $2))) + '"';
+		} else {
+			return $1 + $2+'"';
+		}
+	});
+	return html;
 }
 
 module.exports = {
