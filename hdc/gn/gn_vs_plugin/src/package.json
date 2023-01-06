@@ -2,7 +2,11 @@
 	"name": "gn-gen",
 	"displayName": "gn-gen",
 	"description": "gn generate tool",
-	"version": "0.0.1",
+	"version": "0.0.2",
+	"keywords": [
+		"gn",
+		"gn-gen"
+	],
 	"engines": {
 		"vscode": "^1.62.0"
 	},
@@ -10,10 +14,10 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"onStartupFinished"
 	],
 	"main": "./extension.js",
-	"publisher": "Kaihong",
+	"publisher": "kaihong",
 	"contributes": {
 		"commands": [
 			{
