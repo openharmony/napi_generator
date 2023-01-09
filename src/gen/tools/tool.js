@@ -21,6 +21,12 @@ catch (err) {
     vscode = null;
 }
 
+const NUM_CONST_MAP = new Map([
+    [0, "XNapiTool::ZERO"], [1, "XNapiTool::ONE"], [2, "XNapiTool::TWO"], [3, "XNapiTool::THREE"],
+    [4, "XNapiTool::FOUE"], [5, "XNapiTool::FIVE"], [6, "XNapiTool::SIX"], [7, "XNapiTool::SEVEN"],
+    [8, "XNapiTool::EIGHT"], [9, "XNapiTool::NINE"]
+]);
+
 function print(...args) {
     if (vscode) {
         vscode.window.showInformationMessage(...args);
@@ -204,15 +210,31 @@ function replaceAll(s, sfrom, sto) {
  * 将方法对象插入列表（重复的方法对象不插入）
  * @param obj 待插入的方法对象
  * @param list 目标列表
- * @returns void
+ * @returns 是否成功插入列表
  */
  function addUniqFunc2List(obj, list) {
     for (let i in list) {
         if (isSameFunc(obj, list[i])) {
-            return
+            return false
         }
     }
     list.push(obj)
+    return true
+}
+
+/**
+ * 找到子类中重写父类的方法并将它设置为override
+ * @param parentFunc 父类被重写的方法名
+ * @param childFunclist 子类全部方法列表
+ * @returns void
+ */
+ function setOverrideFunc(parentFunc, childFunclist) {
+    for (let i in childFunclist) {
+        if (isSameFunc(parentFunc, childFunclist[i])) {
+            childFunclist[i].isOverride = true
+            return
+        }
+    }
 }
 
 /**
@@ -233,10 +255,11 @@ function replaceAll(s, sfrom, sto) {
 /**
  * 如果方法所在的类为基类，生成的c++函数定义为虚函数
  * @param data 方法所在的类信息
- * @param isStatic ts方法是否定义为静态方法
- * return tabStr 缩进，staticStr 静态函数关键词，virtualStr 虚函数关键词
+ * @param funcInfo 方法信息
+ * return tabStr 缩进，staticStr 静态函数关键词，virtualStr 虚函数关键词, overrideStr 重写关键词
  */
- function getPrefix(data, isStatic) {
+ function getPrefix(data, funcInfo) {
+    let isStatic = funcInfo.isStatic
     let tabStr = ""
     let virtualStr = ""
     let staticStr = isStatic ? "static " : ""
@@ -244,7 +267,12 @@ function replaceAll(s, sfrom, sto) {
         tabStr = "    " // 类中的方法增加一个缩进
         virtualStr = (data.childList.length > 0 && !isStatic) ? "virtual " : "" //如果是基类中的非静态方法，定义为虚函数
     }
-    return [tabStr, staticStr, virtualStr]
+    let overrideStr = funcInfo.isOverride ? " override" : "" // 重写了父类方法，需要加上override关键字，否则触发c++门禁告警
+    return [tabStr, staticStr, virtualStr, overrideStr]
+}
+
+function getConstNum(num) {
+    return NUM_CONST_MAP.get(parseInt(num));
 }
 
 module.exports = {
@@ -258,5 +286,7 @@ module.exports = {
     replaceTab,
     addUniqObj2List,
     addUniqFunc2List,
-    getPrefix
+    getPrefix,
+    getConstNum,
+    setOverrideFunc
 }

@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { replaceAll, getPrefix } = require("../tools/tool");
+const { replaceAll, getPrefix, getConstNum } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 
@@ -24,16 +24,18 @@ struct [funcName]_value_struct {[valueIn]
     uint32_t outErrCode = 0;[valueOut]
 };
 
-[static_define]void [funcName]_execute(XNapiTool *pxt, void *data)
+[static_define]void [funcName]_execute(XNapiTool *pxt, DataPtr data)
 {
-    [funcName]_value_struct *vio = ([funcName]_value_struct *)data;
+    void *data_ptr = data;
+    [funcName]_value_struct *vio = static_cast<[funcName]_value_struct *>(data_ptr);
     [checkout_async_instance]
     [callFunc]
 }
 
-[static_define]void [funcName]_complete(XNapiTool *pxt, void *data)
+[static_define]void [funcName]_complete(XNapiTool *pxt, DataPtr data)
 {
-    [funcName]_value_struct *vio = ([funcName]_value_struct *)data;
+    void *data_ptr = data;
+    [funcName]_value_struct *vio = static_cast<[funcName]_value_struct *>(data_ptr);
     napi_value result = nullptr;
     [valuePackage]
     napi_value errCodeResult = nullptr;
@@ -41,8 +43,8 @@ struct [funcName]_value_struct {[valueIn]
     napiErrCode = NUMBER_C_2_JS(pxt, vio->outErrCode);
     pxt->SetValueProperty(errCodeResult, "code", napiErrCode);
     {
-        napi_value args[2] = {errCodeResult, result};
-        pxt->FinishAsync(2, args);
+        napi_value args[XNapiTool::TWO] = {errCodeResult, result};
+        pxt->FinishAsync(XNapiTool::TWO, args);
     }
     [optionalParamDestory]
     delete vio;
@@ -140,21 +142,22 @@ function generateFunctionAsync(func, data, className) {
         middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback + "\n    ") // 可选callback参数初始化
     }
     middleFunc = replaceAll(middleFunc, "[start_async]", `
-    napi_value result = pxt->StartAsync(%s_execute, vio, %s_complete,
+    napi_value result = pxt->StartAsync(%s_execute, reinterpret_cast<DataPtr>(vio), %s_complete,
     pxt->GetArgc() == %s? pxt->GetArgv(%d) : nullptr);`
-        .format(func.name, func.name, parseInt(param.callback.offset) + 1, param.callback.offset)) // 注册异步调用
+        .format(func.name, func.name, getConstNum(parseInt(param.callback.offset) + 1),
+        getConstNum(param.callback.offset))) // 注册异步调用
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
     middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
 
-    let prefixArr = getPrefix(data, func.isStatic)
+    let prefixArr = getPrefix(data, func)
     let implH = ""
     let implCpp = ""
     if (!func.isParentMember) {
         // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
-        implH = "\n%s%s%sbool %s(%s);".format(
-            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine)
+        implH = "\n%s%s%sbool %s(%s)%s;".format(
+            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
         implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
     }
     return [middleFunc, implH, implCpp]

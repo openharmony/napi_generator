@@ -35,7 +35,7 @@ struct [funcName]_value_struct {
     }
     [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
-    pxt->SwapJs2CUtf8(pxt->GetArgv(0), vio->eventName);
+    pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);
     [handleRegist]
     [instance][funcName](vio->eventName);
     napi_value result = pxt->UndefinedValue();
@@ -113,12 +113,13 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     else {
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[static_define]", "static ")
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[unwarp_instance]",
-            "%s *pInstance = (%s *)pxt->UnWarpInstance();".format(className, className))
+            `void *instPtr = pxt->UnWarpInstance();
+    %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className))
     }
     let instancePtr = "%s".format(className == null ? "" : "pInstance->")
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
 
-    let registLine = func.name == 'on' ? "pxt->RegistAsyncFunc(vio->eventName, pxt->GetArgv(1));" 
+    let registLine = func.name == 'on' ? "pxt->RegistAsyncFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));" 
         : "pxt->UnregistAsyncFunc(vio->eventName);"
         codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
 

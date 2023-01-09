@@ -28,12 +28,13 @@ public:
     {
         XNapiTool *pxt = new XNapiTool(env, info);
         [className] *p = new [className]();
-        napi_value thisvar = pxt->WrapInstance(p, release);
+        napi_value thisvar = pxt->WrapInstance(reinterpret_cast<DataPtr>(p), release);
         return thisvar;
     }
-    static void release(void *p)
+    static void release(DataPtr p)
     {
-        [className] *p2 = ([className] *)p;
+        void *dataPtr = p;
+        [className] *p2 = static_cast<[className] *>(dataPtr);
         delete p2;
     }
     [static_funcs]
@@ -61,7 +62,8 @@ function generateVariable(name, type, variable, className) {
     static napi_value getvalue_%s(napi_env env, napi_callback_info info)
     {
         XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
-        %s *p = (%s *)pxt->UnWarpInstance();
+        void *instPtr = pxt->UnWarpInstance();
+        %s *p = static_cast<%s *>(instPtr);
         napi_value result = nullptr;
         `.format(name, className, className) + cToJs("p->" + name, type, "result") + `
         delete pxt;
@@ -70,8 +72,9 @@ function generateVariable(name, type, variable, className) {
     static napi_value setvalue_%s(napi_env env, napi_callback_info info)
     {
         std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);
-        %s *p = (%s *)pxt->UnWarpInstance();
-        `.format(name, className, className) + jsToC("p->" + name, "pxt->GetArgv(0)", type) + `
+        void *instPtr = pxt->UnWarpInstance();
+        %s *p = static_cast<%s *>(instPtr);
+        `.format(name, className, className) + jsToC("p->" + name, "pxt->GetArgv(XNapiTool::ZERO)", type) + `
         return nullptr;
     }
 `
