@@ -17,7 +17,7 @@ const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease,
     EnumList, getUnionType } = require("../tools/common");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
-const { print } = require("../tools/tool");
+const { getConstNum } = require("../tools/tool");
 
 class LenIncrease { }
 LenIncrease.LEN_TO = 1;
@@ -126,10 +126,10 @@ function getArrayTypeTemplete(type) {
         arrayType = "any"
     } else if (arrayType == "[key:string]:string" || arrayType == "Map<string,string>") {
         arrayType = "std::map<std::string, std::string>"
-    } else if (arrayType.substring(0, arrayType.length-1) == "[key:string]:NUMBER_TYPE_" || 
-        arrayType.substring(0, arrayType.length-1) == "Map<string,NUMBER_TYPE_>") {       
+    } else if (arrayType.substring(0, arrayType.lastIndexOf("_") + 1) == "[key:string]:NUMBER_TYPE_" || 
+        arrayType.substring(0, arrayType.lastIndexOf("_") + 1) == "Map<string,NUMBER_TYPE_>") {       
         let len = arrayType.length
-        let num = arrayType.substring(len-1, len)
+        let num = arrayType.substring(arrayType.lastIndexOf("_") + 1, len)
         arrayType = "std::map<std::string, NUMBER_TYPE_%s>".format(num)
     } else if (arrayType == "[key:string]:boolean" || arrayType == "Map<string,boolean>") {
         arrayType = "std::map<std::string, bool>"
@@ -161,7 +161,7 @@ function arrTemplete(dest, napiVn, type) {
     uint32_t len[replace_lt] = pxt->GetArrayLength(%s);
     for (uint32_t i[replace_lt] = 0; i[replace_lt] < len[replace_lt]; i[replace_lt]++) {
         %s tt[replace_lt];
-        napi_value mapPara = pxt->GetArrayElement(pxt->GetArgv(0), i[replace_lt]);
+        napi_value mapPara = pxt->GetArrayElement(pxt->GetArgv(XNapiTool::ZERO), i[replace_lt]);
         uint32_t len2 = pxt->GetMapLength(mapPara);
         for (uint32_t i2 = 0; i2 < len2; i2++) {
             std::string ttName;
@@ -289,7 +289,7 @@ function paramGenerateArray(p, funcValue, param) {
         }
         param.valueIn += funcValue.optional ? "\n    std::vector<%s>* in%d = nullptr;".format(arrayType, p) 
                                             : "\n    std::vector<%s> in%d;".format(arrayType, p)
-        param.valueCheckout += jsToC(inParamName, "pxt->GetArgv(%d)".format(p), type)
+        param.valueCheckout += jsToC(inParamName, "pxt->GetArgv(%d)".format(getConstNum(p)), type)
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sstd::vector<%s>%s%s".format(param.valueDefine.length > 0 ? ", " 
                             : "", arrayType, modifiers, name)
@@ -311,10 +311,10 @@ function paramGenerateArray(p, funcValue, param) {
         }
         param.valueIn += funcValue.optional ? "\n    std::vector<%s>* in%d = nullptr;".format(arrayType, p) 
                                             : "\n    std::vector<%s> in%d;".format(arrayType, p)
-        let arrValueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(p), type)
+        let arrValueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(getConstNum(p)), type)
         if (funcValue.optional) {
             arrValueCheckout = "if (pxt->GetArgc() > %s) {\n        vio->in%d = new std::vector<%s>;\n"
-                .format(p, p, arrayType) + arrValueCheckout + "    }\n"
+                .format(getConstNum(p), p, arrayType) + arrValueCheckout + "    }\n"
             param.optionalParamDestory += "C_DELETE(vio->in%d);\n    ".format(p)
         }                                   
         param.valueCheckout += arrValueCheckout
@@ -329,7 +329,7 @@ function paramGenerateArray(p, funcValue, param) {
 function paramGenerateAny(p, name, type, param) {
     param.valueIn += `\n    std::any in%d;
         std::string in%d_type;`.format(p, p)
-    param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+    param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(getConstNum(p)), type)
     param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
     param.valueDefine += "%sstd::any &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
 }
@@ -337,7 +337,7 @@ function paramGenerateAny(p, name, type, param) {
 function paramGenerateAnyArray(p, name, type, param) {
     param.valueIn += `\n    std::any in%d;
         std::string in%d_type;`.format(p, p)
-    param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+    param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(getConstNum(p)), type)
     param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
     param.valueDefine += "%sstd::any &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
 }
@@ -417,8 +417,8 @@ function mapTempleteFunc(dest, napiVn, type) {
 }
 
 function anyTempleteFunc(dest) {
-    let anyTemplete = `%s_type = pxt->GetAnyType(pxt->GetArgv(0));
-    pxt->SetAnyValue(%s_type, pxt->GetArgv(0), %s);\n`
+    let anyTemplete = `%s_type = pxt->GetAnyType(pxt->GetArgv(XNapiTool::ZERO));
+    pxt->SetAnyValue(%s_type, pxt->GetArgv(XNapiTool::ZERO), %s);\n`
     .format(dest, dest, dest)
     
     return anyTemplete
@@ -449,7 +449,7 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
         if (interfaceValue[i].type == 'string') {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
             interfaceFun +=
-                `pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0),
+                `pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(XNapiTool::ZERO),
             tt%d.c_str()), %sName.c_str()), tt%d.%s);\n`
                     .format("SwapJs2CUtf8", "GetMapElementValue",
                         lt, interfaceValue[i].name, lt+1, interfaceValue[i].name)
@@ -457,7 +457,7 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
         else if (interfaceValue[i].type.substring(0, 12) == "NUMBER_TYPE_") {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
             interfaceFun +=
-                `%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0),
+                `%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(XNapiTool::ZERO),
             tt%d.c_str()), %sName.c_str()), %s, tt%d.%s);\n`
                     .format("NUMBER_JS_2_C", "GetMapElementValue", lt, interfaceValue[i].name,
                         interfaceValue[i].type, lt + 1, interfaceValue[i].name)
@@ -465,7 +465,7 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
         else if (interfaceValue[i].type == 'boolean') {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
             interfaceFun +=
-                `tt%d.%s = pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(0),
+                `tt%d.%s = pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(XNapiTool::ZERO),
             tt%d.c_str()), %sName.c_str()));\n`
                     .format(lt + 1, interfaceValue[i].name, "SwapJs2CBool", "GetMapElementValue",
                         lt, interfaceValue[i].name)
@@ -700,10 +700,10 @@ function isArrayType(type) {
 }
 
 function getValueCheckout(funcValue, param, inParamName, p, cType) {
-    let valueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(p), funcValue.type) + "\n    "
+    let valueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(getConstNum(p)), funcValue.type) + "\n    "
     if (funcValue.optional) {
-        valueCheckout = "if (pxt->GetArgc() > %d) {\n        vio->in%d = new %s;\n        ".format(p, p, cType)
-            + valueCheckout + "}\n    "
+        valueCheckout = "if (pxt->GetArgc() > %d) {\n        vio->in%d = new %s;\n        "
+            .format(getConstNum(p), p, cType) + valueCheckout + "}\n    "
         param.optionalParamDestory += "C_DELETE(vio->in%d);\n    ".format(p)
     }  
     return valueCheckout; 
@@ -712,7 +712,7 @@ function getValueCheckout(funcValue, param, inParamName, p, cType) {
 function paramGenerateUnion(type, param, p, name) {
     param.valueIn += `\n    std::any in%d;
         std::string in%d_type;`.format(p, p)
-    param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(p), type)
+    param.valueCheckout += jsToC("vio->in" + p, "pxt->GetArgv(%d)".format(getConstNum(p)), type)
     param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
     param.valueDefine += "%sstd::any &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
 }
@@ -771,7 +771,7 @@ function paramGenerateObject(p, funcValue, param) {
         param.valueIn += funcValue.optional ? "\n    %s* in%d = nullptr;".format(arrayType, p) 
                                             : "\n    %s in%d;".format(arrayType, p)
         
-        let arrValueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(p), type)                                 
+        let arrValueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(getConstNum(p)), type)
         param.valueCheckout += arrValueCheckout
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%s%s %s%s".format(param.valueDefine.length > 0 ? ", "

@@ -66,12 +66,12 @@ let moduleCppTmplete = `\
     dest = pxt->SwapC2JsBool(napi_v);          \\
 }
 
-#define C_DELETE((p))  \\
+#define C_DELETE(p)  \\
     if ((p)) {         \\
         delete (p);    \\
     }
 
-__attribute__((unused)) static napi_value number_c_to_js(XNapiTool *pxt, const std::type_info &n, void *num)
+__attribute__((unused)) static napi_value number_c_to_js(XNapiTool *pxt, const std::type_info &n, DataPtr num)
 {
     if (n == typeid(int32_t))
         return pxt->SwapC2JsInt32(*(int32_t *)num);
@@ -83,8 +83,8 @@ __attribute__((unused)) static napi_value number_c_to_js(XNapiTool *pxt, const s
         return pxt->SwapC2JsDouble(*(double_t *)num);
     return nullptr;
 }
-#define NUMBER_C_2_JS(pxt, (n)) \\
-    number_c_to_js(pxt, typeid((n)), &(n))
+#define NUMBER_C_2_JS(pxt, n) \\
+    number_c_to_js(pxt, typeid((n)), reinterpret_cast<DataPtr>(&(n)))
 [body_replace]
 static napi_value init(napi_env env, napi_value exports)
 {
