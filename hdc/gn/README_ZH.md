@@ -275,7 +275,7 @@ group("all_targets") {
 
 ## 版本说明
 
-暂无  
+[版本说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/gn/docs/gn-gen-release-notes-0.0.2.md)  
 
 ## FAQ
 
