@@ -26,7 +26,15 @@
 
 	sudo npm i -g pkg
 
-4.打包三个版本 : 执行命令：
+4.集成clang-format（可选步骤）：
+
+  如果需要工具自动格式化生成的C++代码，可执行此步骤。
+  将windows版的clang-format.exe程序和linux版的clang-format程序拷贝到napi_generator目录下。
+  clang-format程序可从OpenHarmony编译环境获取：
+  windows版：OpenHarmony/prebuilts/clang/ohos/windows-x86_64/llvm/bin/clang-format.exe
+  Linux版：OpenHarmony/prebuilts/mingw-w64/ohos/linux-x86_64/clang-mingw/bin/clang-format
+
+5.打包三个版本 : 执行命令：
 
 	pkg .
 
@@ -34,7 +42,7 @@
 
 	napi_generator-win.exe、napi_generator-linux、napi_generator-macos
 
-5.根据需求打包指定系统下的可执行文件。若想只打包windows系统下可执行文件，可执行命令：
+6.根据需求打包指定系统下的可执行文件。若想只打包windows系统下可执行文件，可执行命令：
 
 	pkg -t node14-win . -o napi_generator-win.exe
 
@@ -63,7 +71,15 @@
 
 	npm i -g pkg
 
-4.打包三个版本 : 使用管理员身份执行命令：
+4.集成clang-format（可选步骤）：
+
+  如果需要工具自动格式化生成的C++代码，可执行此步骤。
+  将windows版的clang-format.exe程序和linux版的clang-format程序拷贝到napi_generator目录下。
+  clang-format程序可从OpenHarmony编译环境获取：
+  windows版：OpenHarmony/prebuilts/clang/ohos/windows-x86_64/llvm/bin/clang-format.exe
+  Linux版：OpenHarmony/prebuilts/mingw-w64/ohos/linux-x86_64/clang-mingw/bin/clang-format
+
+5.打包三个版本 : 使用管理员身份执行命令：
 
 	pkg .
 
@@ -71,7 +87,7 @@
 
 	napi_generator-win.exe、napi_generator-linux、napi_generator-macos
 
-5.根据需求打包指定系统下的可执行文件。若想只打包windows系统下可执行文件，可执行命令：
+6.根据需求打包指定系统下的可执行文件。若想只打包windows系统下可执行文件，可执行命令：
 
 	pkg -t node14-win . -o napi_generator-win.exe
 
