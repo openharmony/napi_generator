@@ -22,6 +22,9 @@ const { generateGYP } = require("./extend/binding_gyp");
 const { generateGN } = require("./extend/build_gn");
 const { generateBase } = require("./extend/tool_utility");
 const { NumberIncrease } = require("./tools/common");
+const os = require("os");
+const path = require('path')
+const { NapiLog } = require("./tools/NapiLog");
 var fs = require('fs');
 
 let moduleCppTmplete = `\
@@ -129,6 +132,60 @@ let implCppTemplete = `\
 #include "[implName].h"
 [implCpp_detail]
 `
+var genFileList = []
+
+function deleteFolder(folderPath) {
+    if (fs.existsSync(folderPath)) {
+        fs.rmSync(folderPath, {"recursive": true})
+    }
+}
+
+function createFolder(folderPath) {
+    if (!fs.existsSync(folderPath)) {
+        fs.mkdirSync(folderPath)
+    }
+}
+
+function formatCode(destDir) {
+    let sysInfo = os.platform()
+    let clangFmtName = sysInfo === 'win32' ? "clang-format.exe" : "clang-format"
+    let callPath = NapiLog.getCallPath();
+    callPath = callPath.substring(callPath.indexOf("[") + 1, callPath.indexOf("src"));
+    let dumyClangFmtFile = path.join(callPath, clangFmtName)
+    let dumyFmtCfgFile = path.join(callPath, ".clang-format")
+
+    if(!fs.existsSync(dumyClangFmtFile)) {
+        NapiLog.logInfo("Warning: clang-format does not exist, can not format cpp file.");
+        return
+    }
+
+    // 使用pkg打包的napi_generator工具，其中的clang-format程序在运行时是解压到一个名为snapshot的虚拟目录中的，如C:\snapshot\napi_generator\
+    // 虚拟目录中的clang-format程序不能直接运行，必须先将它拷贝到本地硬盘的真实目录下。
+    createFolder(path.resolve("./tmpLocal"))
+    let localClangFmtFile = path.resolve("./tmpLocal/" + clangFmtName) // clang-format可执行程序
+    let localFmtCfgFile = path.resolve("./tmpLocal/.clang-format") // clang-format格式化配置文件
+    fs.copyFileSync(dumyClangFmtFile, localClangFmtFile)
+    fs.copyFileSync(dumyFmtCfgFile, localFmtCfgFile)
+
+    let execSync = require("child_process").execSync
+    if (sysInfo != 'win32') {
+        // linux系统下需要为临时复制的clang-format程序增加可执行权限
+        execSync("chmod +x " + "\"" + localClangFmtFile + "\"")
+    }
+
+    for (let i = 0; i < genFileList.length; ++i) {
+        // 文件路径前后要用引号包含，防止因为路径中存在空格而导致命令执行失败 (windows的文件夹允许有空格)
+        let cmd = "\"" + localClangFmtFile + "\" -style=file -i \"" + path.resolve(path.join(destDir, genFileList[i]))
+            + "\""
+        try {
+            execSync(cmd) // C++文件格式化
+        } catch (err) {
+            NapiLog.logError("Failed to format code, exception: " + err.stderr)
+        }
+    }
+    // 格式化结束后，删除临时目录文件
+    deleteFolder(path.resolve("./tmpLocal"))
+}
 
 function generateAll(structOfTs, destDir, moduleName, numberType) {
     let ns0 = structOfTs.declareNamespace[0];
@@ -146,8 +203,10 @@ function generateAll(structOfTs, destDir, moduleName, numberType) {
     middleCpp = replaceAll(middleCpp, "[init_replace]", result.middleInit);
     middleCpp = replaceAll(middleCpp, "[implName]", ns0.name);
     middleCpp = replaceAll(middleCpp, "[modulename]", moduleName);
+    genFileList.splice(0, genFileList.length);
     writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)),
         null != license ? (license + "\n" + middleCpp) : middleCpp)
+    genFileList.push("%s_middle.cpp".format(ns0.name));
 
     let implH = replaceAll(implHTemplete, "[impl_name_upper]", ns0.name.toUpperCase())
     implH = implH.replaceAll("[numberUsing]", numberUsing);
@@ -158,15 +217,20 @@ function generateAll(structOfTs, destDir, moduleName, numberType) {
     }
     implH = replaceAll(implH, "[importTs]", imports)
     writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), null != license ? (license + "\n" + implH) : implH)
+    genFileList.push("%s.h".format(ns0.name));
 
     let implCpp = implCppTemplete.replaceAll("[implName]", ns0.name)
     implCpp = implCpp.replaceAll("[implCpp_detail]", result.implCpp)
     writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), null != license ? (license + "\n" + implCpp) : implCpp)
+    genFileList.push("%s.cpp".format(ns0.name));
 
     let partName = moduleName.replace('.', '_')
     generateGYP(destDir, ns0.name, license) // 生成ubuntu下测试的编译脚本
     generateGN(destDir, ns0.name, license, partName) // 生成BUILD.gn for ohos
     generateBase(destDir, license) // tool_utility.h/cpp
+    genFileList.push("tool_utility.h");
+    genFileList.push("tool_utility.cpp");
+    formatCode(destDir);
 }
 
 module.exports = {

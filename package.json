@@ -27,7 +27,10 @@
   "bin": "./src/gen/cmd_gen.js",
   "pkg": {
     "assets": [
-      "src/node_modules/typescript/**/*"
+      "src/node_modules/typescript/**/*",
+      "clang-format.exe",
+      "clang-format",
+      ".clang-format"
     ]
   }
 }
