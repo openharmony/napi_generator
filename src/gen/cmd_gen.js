@@ -29,7 +29,8 @@ let ops = stdio.getopt({
     'out': { key: 'o', args: 1, description: "output directory", default: "." },
     'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" },
     // 新增控制number类型转C++类型参数
-    'numbertype':{key: 'n', args: 1, description: "optional elemtype: basic cpp elemtype", default: "uint32_t"}
+    'numbertype':{key: 'n', args: 1, description: "optional elemtype: basic cpp elemtype", default: "uint32_t"},
+    'tsGen':{key: 't', args: 1, description: "enable or disable generate typescript file", default: false }
 });
 
 NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"))
@@ -63,7 +64,11 @@ function readFiles() {
 function readDirFiles() {
     fs.readdir(pathDir + '', function (err, files) {
         if (err) {
-            NapiLog.logError('readdir file error' + err);
+            NapiLog.logError('readdir file error ' + err);
+            return;
+        }
+        if (0 === files.length) {
+            NapiLog.logInfo('[Func: readDirFiles] No files in path  %s!'.format(pathDir));
             return;
         }
         (function iterator(i) {
@@ -88,7 +93,7 @@ function readDirFiles() {
 function checkGenerate(fileName) {
     NapiLog.logInfo("check file []".format(fileName))
     let suffix = fileName.split('.').pop().toLowerCase();
-    if (suffix === 'h') {
+    if (ops.tsGen == 'true' && suffix === 'h') {
         NapiLog.logInfo("convert .h file to .ts file...")
         tsMain.doGenerate(fileName, ops.out);
         return;
