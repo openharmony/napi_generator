@@ -16,7 +16,6 @@ const { analyzeFile } = require("./analyze");
 const { generateAll } = require("./generate");
 const { NapiLog } = require("./tools/NapiLog");
 const re = require("./tools/re");
-const { print } = require("./tools/tool");
 var fs = require('fs');
 
 function doGenerate(ifname, destdir, imports,numberType) {

@@ -23,7 +23,7 @@ function generateEnum(name, data) {
     if (data.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
         implH = `\nclass %s {\npublic:\n`.format(name, implH)
     } else if (data.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER){
-        implH = `\nenum %s {\n`.format(name, implH)
+        implH = `\nenum class %s {\n`.format(name, implH)
     } else {
         NapiLog.logError(`The enum type[%s] is not support`.format(data.enumValueType));
         return {implH: "", implCpp: ""}

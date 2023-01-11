@@ -54,11 +54,24 @@ NapiLog.init = function (level, fileName) {
     logFileName = fileName ? fileName : "napi_generator.log";
 }
 
-function getCallPath() {
+/**
+ * 通过调用栈获取当前正在执行的方法名，代码行数及文件路径
+ * @param {} callerFuncName 指定取调用栈中哪个方法名所在的帧作为目标帧
+ * @returns 
+ */
+NapiLog.getCallPath = function(callerFuncName = null) {
     let callPath = ""
     let stackArray = new Error().stack.split('\n');
+
+    // 如果没有指定目标方法，默认在调用栈中查找当前方法"getCallPath"所在的帧
+    let destFuncName = callerFuncName != null ? callerFuncName : "getCallPath"
+
     for (let i = stackArray.length -1; i >=0 ; --i) {
-        if (stackArray[i].indexOf("NapiLog.log") > 0 || stackArray[i].indexOf("Function.log") > 0) {
+        // debug模式和打包后的可执行程序调用栈函数名不同， 以NapiLog.log()方法为例：
+        // vscode debug模式下调用栈打印的方法名为NapiLog.log，而可执行程序的调用栈中显示为Function.log()
+        let callerMatch = (stackArray[i].indexOf("NapiLog." + destFuncName) > 0 
+            || stackArray[i].indexOf("Function." + destFuncName) > 0)
+        if (callerMatch) {
             let stackMsg = stackArray[i+1].trim()
             let leftIndex = stackMsg.indexOf("(")
             let rightIndex = stackMsg.indexOf(")")
@@ -90,7 +103,7 @@ function print(...args) {
 
 function recordLog(lev, ...args) {
     let origMsgInfo = args;
-    let callPath = getCallPath();
+    let callPath = NapiLog.getCallPath("log");
     let dataStr = getDateString();
     let detail = args.join(" ");
     saveLog(dataStr  + " " + callPath, LEV_STR[lev], detail);
