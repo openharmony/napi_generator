@@ -58,20 +58,29 @@ function analyzeNameSpace(rootInfo, parseResult) {
     }
 }
 
-function basicC2js(cType) {
-    let jsType = ""
-    switch (cType) {
+function isStringType(cType) {
+    switch(cType) {
         case 'string':
         case 'std::string':
         case 'char':
         case 'wchar_t':
         case 'char16_t':
         case 'char32_t':
-            jsType = 'string'
-            break;
-        case 'bool':
-            jsType = 'boolean'
-            break
+            return true
+        default:
+            return false
+    }
+}
+
+function isBoolType(cType) {
+    if (cType == 'bool') {
+        return true
+    }
+    return false
+}
+
+function isNumberType(cType) {
+    switch(cType) {
         case 'short':
         case 'int':
         case 'uint32_t':
@@ -81,11 +90,29 @@ function basicC2js(cType) {
         case 'float':
         case 'double':
         case 'long double':
-            jsType = 'number'
-            break
+        case 'int16_t':
+        case 'uint16_t':
+        case 'int32_t':
+        case 'int64_t':
+        case 'uint64_t':
+        case 'double_t':
+        case 'float_t':
+            return true
         default:
-            jsType = cType
-            break
+            return false
+    }
+}
+
+function basicC2js(cType) {
+    let jsType = ""
+    if (isStringType(cType)) {
+        jsType = 'string'
+    } else if (isBoolType(cType)) {
+        jsType = 'boolean'
+    } else if (isNumberType(cType)) {
+        jsType = 'number'
+    } else {
+        jsType = cType
     }
     return jsType
 }
@@ -127,7 +154,8 @@ function createFuncInfo(parseFuncInfo) {
         "name": "",
         "params": [],
         "namespace": "",
-        "retType": ""
+        "retType": "",
+        "static":""
     }
     funcInfo.name = parseFuncInfo.name
     funcInfo.namespace = parseFuncInfo.namespace
@@ -143,9 +171,11 @@ function createFuncInfo(parseFuncInfo) {
         funcInfo.params.push(param)
     }
 
+    if (parseFuncInfo.rtnType.indexOf("static") >= 0) {
+        funcInfo.static = "static "
+    } 
     let retType = parseFuncInfo.returns === '' ? parseFuncInfo.rtnType : parseFuncInfo.returns
     funcInfo.retType = getJsTypeFromC(retType, parseFuncInfo)
-
     return funcInfo
 }
 
@@ -252,7 +282,7 @@ function genFunction(func, tabLv, needDeclare = false) {
         funcParams += func.params[i].name + ": " + func.params[i].type
     }
     let declareStr = needDeclare ? "declare " : ""
-    return "%s%s%s%s(%s): %s;\n".format(tab, declareStr, funcPrefix, func.name, funcParams, func.retType)
+    return "%s%s%s%s%s(%s): %s;\n".format(tab, declareStr, funcPrefix, func.static, func.name, funcParams, func.retType)
 }
 
 function genClass(classInfo, tabLv, needDeclare = false) {
