@@ -668,7 +668,7 @@ public class GenerateDialogPane extends JDialog {
         }
         File file = new File(tmpDirFile);
         String command = file.toString();
-        command += " -f " + textFieldSelectH.getText() + " -o " + textFieldSelectOutPath.getText();
+        command += " -f " + textFieldSelectH.getText() + " -o " + textFieldSelectOutPath.getText() + " -t " + true;
         return command;
     }
 
