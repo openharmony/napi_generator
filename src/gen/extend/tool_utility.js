@@ -106,6 +106,19 @@ public:
     std::string GetAnyArrayType(napi_value object);
     void SetAnyValue(std::string &any_type, napi_value argv, std::any &any);
     void GetAnyValue(std::string any_type, napi_value &result, std::any any);
+    void GetObjectValVecUint32(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValVecInt32(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValVecInt64(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValVecDouble(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValVecBool(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValVecConstchar(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValMapString(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValMapUint32(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValMapInt32(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValMapInt64(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValMapDouble(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValMapBool(std::any &anyVal, napi_value &tnv2);
+    void GetObjectValMapAny(std::any &anyVal, napi_value &tnv2);
     void GetObjectValue(napi_value &result, std::map<std::string, std::any> valueIn);
 
     napi_value SyncCallBack(napi_value func, size_t argc, napi_value *args);
@@ -663,6 +676,172 @@ std::string XNapiTool::GetUnionType(napi_value object)
     }
 }
 
+void XNapiTool::GetObjectValVecUint32 (std::any &anyVal, napi_value &tnv2)
+{
+    std::vector<uint32_t> arr = std::any_cast<std::vector<uint32_t>>(anyVal);
+    for (size_t j = 0; j < arr.size(); j++) {
+        uint32_t tt = arr[j] ;
+        napi_value tnv3 = SwapC2JsUint32(tt);
+        SetArrayElement(tnv2, j, tnv3);
+    }
+}
+
+void XNapiTool::GetObjectValVecInt32 (std::any &anyVal, napi_value &tnv2)
+{
+    std::vector<int32_t> arr = std::any_cast<std::vector<int32_t>>(anyVal);
+    for (size_t j = 0; j < arr.size(); j++) {
+        int32_t tt = arr[j] ;
+        napi_value tnv3 = SwapC2JsInt32(tt);
+        SetArrayElement(tnv2, j, tnv3);
+    }
+}
+
+void XNapiTool::GetObjectValVecInt64 (std::any &anyVal, napi_value &tnv2)
+{
+    std::vector<int64_t> arr = std::any_cast<std::vector<int64_t>>(anyVal);
+    for (size_t j = 0; j < arr.size(); j++) {
+        int64_t tt = arr[j] ;
+        napi_value tnv3 = SwapC2JsInt64(tt);
+        SetArrayElement(tnv2, j, tnv3);
+    }
+}
+
+void XNapiTool::GetObjectValVecDouble (std::any &anyVal, napi_value &tnv2)
+{
+    std::vector<double_t> arr = std::any_cast<std::vector<double_t>>(anyVal);
+    for (size_t j = 0; j < arr.size(); j++) {
+        double_t tt = arr[j] ;
+        napi_value tnv3 = SwapC2JsDouble(tt);
+        SetArrayElement(tnv2, j, tnv3);
+    }
+}
+
+void XNapiTool::GetObjectValVecBool (std::any &anyVal, napi_value &tnv2)
+{
+    std::vector<bool> arr = std::any_cast<std::vector<bool>>(anyVal);
+    for (size_t j = 0; j < arr.size(); j++) {
+        bool tt = arr[j] ;
+        napi_value tnv3 = SwapC2JsBool(tt);
+        SetArrayElement(tnv2, j, tnv3);
+    }
+}
+
+void XNapiTool::GetObjectValVecConstchar (std::any &anyVal, napi_value &tnv2)
+{
+    std::vector<const char *> arr = std::any_cast<std::vector<const char *>>(anyVal);
+    for (size_t j = 0; j < arr.size(); j++) {
+        const char *tt = arr[j] ;
+        napi_value tnv3 = SwapC2JsUtf8(tt);
+        SetArrayElement(tnv2, j, tnv3);
+    }
+}
+
+void XNapiTool::GetObjectValMapString (std::any &anyVal, napi_value &tnv2)
+{
+    std::map<std::string, std::string> a = std::any_cast<std::map<std::string, std::string>>(anyVal);
+    std::map<std::string, std::string>::iterator iter;
+    for (iter = a.begin(); iter != a.end(); iter++) {
+        const char *key = iter->first.c_str();
+        napi_value value = SwapC2JsUtf8(iter->second.c_str());
+        SetMapElement(tnv2, key, value);
+    }
+}
+
+void XNapiTool::GetObjectValMapUint32 (std::any &anyVal, napi_value &tnv2)
+{
+    std::map<std::string, uint32_t> a = std::any_cast<std::map<std::string, uint32_t>>(anyVal);
+    std::map<std::string, uint32_t>::iterator iter;
+    for (iter = a.begin(); iter != a.end(); iter++) {
+        const char *key = iter->first.c_str();
+        napi_value value =  SwapC2JsUint32(iter->second);
+        SetMapElement(tnv2, key, value);
+    }
+}
+
+void XNapiTool::GetObjectValMapInt32 (std::any &anyVal, napi_value &tnv2)
+{
+    std::map<std::string, int32_t> a = std::any_cast<std::map<std::string, int32_t>>(anyVal);
+    std::map<std::string, int32_t>::iterator iter;
+    for (iter = a.begin(); iter != a.end(); iter++) {
+        const char *key = iter->first.c_str();
+        napi_value value =  SwapC2JsInt32(iter->second);
+        SetMapElement(tnv2, key, value);
+    }
+}
+
+void XNapiTool::GetObjectValMapInt64 (std::any &anyVal, napi_value &tnv2)
+{
+    std::map<std::string, int64_t> a = std::any_cast<std::map<std::string, int64_t>>(anyVal);
+    std::map<std::string, int64_t>::iterator iter;
+    for (iter = a.begin(); iter != a.end(); iter++) {
+        const char *key = iter->first.c_str();
+        napi_value value =  SwapC2JsInt64(iter->second);
+        SetMapElement(tnv2, key, value);
+    }
+}
+
+void XNapiTool::GetObjectValMapDouble (std::any &anyVal, napi_value &tnv2)
+{
+    std::map<std::string, double_t> a = std::any_cast<std::map<std::string, double_t>>(anyVal);
+    std::map<std::string, double_t>::iterator iter;
+    for (iter = a.begin(); iter != a.end(); iter++) {
+        const char *key = iter->first.c_str();
+        napi_value value =  SwapC2JsDouble(iter->second);
+        SetMapElement(tnv2, key, value);
+    }
+}
+
+void XNapiTool::GetObjectValMapBool (std::any &anyVal, napi_value &tnv2)
+{
+    std::map<std::string, bool> a = std::any_cast<std::map<std::string, bool>>(anyVal);
+    std::map<std::string, bool>::iterator iter;
+    for (iter = a.begin(); iter != a.end(); iter++) {
+        const char *key = iter->first.c_str();
+        napi_value value = SwapC2JsBool(iter->second);  
+        SetMapElement(tnv2, key, value);
+    }
+}
+
+void XNapiTool::GetObjectValMapAny (std::any &anyVal, napi_value &tnv2)
+{
+    std::map<std::string, std::any> a = std::any_cast<std::map<std::string, std::any>>(anyVal);
+    std::map<std::string, std::any>::iterator iter;
+    for (iter = a.begin(); iter != a.end(); iter++) {
+        auto c = iter->second;
+        if (c.type() == typeid(uint32_t)) {
+            const char *key = iter->first.c_str();     
+            uint32_t val = std::any_cast<uint32_t>(iter->second);
+            napi_value value = SwapC2JsUint32(val);
+            SetMapElement(tnv2, key, value); 
+        } else if (c.type() == typeid(int32_t)) {
+            const char *key = iter->first.c_str();     
+            int32_t val = std::any_cast<int32_t>(iter->second);
+            napi_value value = SwapC2JsInt32(val);
+            SetMapElement(tnv2, key, value);
+        } else if (c.type() == typeid(int64_t)) {
+            const char *key = iter->first.c_str();     
+            int64_t val = std::any_cast<int64_t>(iter->second);
+            napi_value value = SwapC2JsInt64(val);
+            SetMapElement(tnv2, key, value);
+        } else if (c.type() == typeid(double_t)) {
+            const char *key = iter->first.c_str();     
+            double_t val = std::any_cast<double_t>(iter->second);
+            napi_value value = SwapC2JsDouble(val);
+            SetMapElement(tnv2, key, value);
+        } else if (c.type() == typeid(const char *)) {
+            const char *key = iter->first.c_str();
+            const char *val = std::any_cast<const char *>(iter->second);
+            napi_value value = SwapC2JsUtf8(val);
+            SetMapElement(tnv2, key, value);
+        } else if (c.type() == typeid(bool)) {
+            const char *key = iter->first.c_str();
+            bool val = std::any_cast<bool>(iter->second);
+            napi_value value = SwapC2JsBool(val);
+            SetMapElement(tnv2, key, value);
+        }         
+    }
+}
+
 void XNapiTool::GetObjectValue(napi_value &result, std::map<std::string, std::any> valueIn)
 {
     napi_create_object(env_, &result);
@@ -683,8 +862,34 @@ void XNapiTool::GetObjectValue(napi_value &result, std::map<std::string, std::an
             tnv2 = SwapC2JsDouble(std::any_cast<double_t>(temp));
         } else if (temp.type() == typeid(const char *)) {
             tnv2 = SwapC2JsUtf8(std::any_cast<const char *>(temp));
-        } else if ((temp).type() == typeid(bool)) {
+        } else if (temp.type() == typeid(bool)) {
             tnv2 = SwapC2JsBool(std::any_cast<bool>(temp));
+        } else if (temp.type() == typeid(std::vector<uint32_t>)) {
+            GetObjectValVecUint32(i->second, tnv2);
+        } else if (temp.type() == typeid(std::vector<int32_t>)) {
+            GetObjectValVecInt32(i->second, tnv2);
+        } else if (temp.type() == typeid(std::vector<int64_t>)) {
+            GetObjectValVecInt64(i->second, tnv2);
+        } else if (temp.type() == typeid(std::vector<double_t>)) {
+            GetObjectValVecDouble(i->second, tnv2);
+        } else if (temp.type() == typeid(std::vector<bool>)) {
+            GetObjectValVecBool(i->second, tnv2);
+        } else if (temp.type() == typeid(std::vector<const char *>)) {
+            GetObjectValVecConstchar(i->second, tnv2);
+        } else if (temp.type() == typeid(std::map<std::string, std::string>)) {
+            GetObjectValMapString(i->second, tnv2);
+        } else if (temp.type() == typeid(std::map<std::string, uint32_t>)) {
+            GetObjectValMapUint32(i->second, tnv2);  
+        } else if (temp.type() == typeid(std::map<std::string, int32_t>)) {
+            GetObjectValMapInt32(i->second, tnv2);
+        } else if (temp.type() == typeid(std::map<std::string, int64_t>)) {
+            GetObjectValMapInt64(i->second, tnv2);
+        } else if (temp.type() == typeid(std::map<std::string, double_t>)) {
+            GetObjectValMapDouble(i->second, tnv2);  
+        } else if (temp.type() == typeid(std::map<std::string, bool>)) {
+            GetObjectValMapBool(i->second, tnv2);
+        } else if (temp.type() == typeid(std::map<std::string, std::any>)) {
+            GetObjectValMapAny(i->second, tnv2);
         }
         
         SetMapElement(result, tnv1, tnv2);
