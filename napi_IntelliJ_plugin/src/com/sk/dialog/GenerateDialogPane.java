@@ -199,6 +199,17 @@ public class GenerateDialogPane extends JDialog {
                 validationInfo = new ValidationInfo(warnMsg);
                 return validationInfo;
             }
+
+            String hFileName = (new File(hFile)).getName();
+            String tsFileName = hFileName.substring(0, hFileName.lastIndexOf(".")) + ".d.ts";
+            File tsFile = new File(outPutDir + "/" + tsFileName);
+            if (tsFile.exists()) {
+                ConfirmDialog confirmDialog = new ConfirmDialog(String.format("是否替换已存在的文件：%s ?", tsFile));
+                if (!confirmDialog.showAndGet()) {
+                    validationInfo = new ValidationInfo(String.format("不替换现有文件：%s", tsFile));
+                    return validationInfo;
+                }
+            }
         }
         return validationInfo;
     }
