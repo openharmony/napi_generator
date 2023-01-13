@@ -140,7 +140,8 @@ public class GenerateDialogPane extends JDialog {
         buttonSelectInter.addActionListener(browseAction);
         buttonSelectGenPath.addActionListener(new GenAction(buttonSelectGenPath, textFieldGenPath));
         buttonSelectScriptPath.addActionListener(new ScriptAction(buttonSelectScriptPath, textFieldScriptPath));
-        buttonSelectH.addActionListener(new SelectHAction(buttonSelectH, textFieldSelectH));
+        buttonSelectH.addActionListener(new SelectHAction(buttonSelectH, textFieldSelectH,
+                textFieldSelectOutPath, project));
         buttonSelectOutPath.addActionListener(new SelectOutPathAction(buttonSelectOutPath, textFieldSelectOutPath));
         tabbedPane.addChangeListener(changeEvent -> selectedIndex = tabbedPane.getSelectedIndex());
     }
@@ -361,11 +362,14 @@ public class GenerateDialogPane extends JDialog {
         errConsumer.start();
         outputConsumer.start();
 
-        if (generateSuccess) {
-            writeCompileCfg();
-        } else {
-            GenNotification.notifyMessage(project, sErrorMessage, "提示", NotificationType.ERROR);
-            return false;
+        boolean status = command.contains("-t true");
+        if (!status) {
+            if (generateSuccess) {
+                writeCompileCfg();
+            } else {
+                GenNotification.notifyMessage(project, sErrorMessage, "提示", NotificationType.ERROR);
+                return false;
+            }
         }
         errConsumer.join();
         outputConsumer.join();
