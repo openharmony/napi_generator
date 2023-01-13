@@ -219,7 +219,7 @@ public class GenerateDialogPane extends JDialog {
      * @return 执行状态
      */
     public boolean runFun() {
-        GenNotification.notifyMessage(this.project, "", "正在生成", NotificationType.INFORMATION);
+        GenNotification.notifyMessage(this.project, "", "Generating", NotificationType.INFORMATION);
         interFileOrDir = textFieldInterPath.getText();
         genOutDir = textFieldGenPath.getText();
         scriptOutDir = textFieldScriptPath.getText();
@@ -230,7 +230,7 @@ public class GenerateDialogPane extends JDialog {
 
         try {
             if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
-                GenNotification.notifyMessage(project, textFieldGenPath.getText(), "提示",
+                GenNotification.notifyMessage(project, textFieldGenPath.getText(), "Generate Successfully",
                         NotificationType.INFORMATION, true);
                 return true;
             }
@@ -634,13 +634,13 @@ public class GenerateDialogPane extends JDialog {
      * @return 执行状态
      */
     public boolean runFunH2ts() {
-        GenNotification.notifyMessage(this.project, "", "正在生成", NotificationType.INFORMATION);
+        GenNotification.notifyMessage(this.project, "", "Generating", NotificationType.INFORMATION);
         copyFileToLocalPath("header_parser");
         String command;
         command = genCommandH2ts();
         try {
             if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
-                GenNotification.notifyMessage(project, textFieldSelectOutPath.getText(), "提示",
+                GenNotification.notifyMessage(project, textFieldSelectOutPath.getText(), "Generate Successfully",
                         NotificationType.INFORMATION, true);
                 return true;
             }
