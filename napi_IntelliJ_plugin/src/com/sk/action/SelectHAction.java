@@ -14,12 +14,19 @@
  */
 package com.sk.action;
 
+import com.intellij.notification.NotificationType;
+import com.intellij.openapi.project.Project;
+import com.sk.utils.FileUtil;
+import com.sk.utils.GenNotification;
+import org.apache.http.util.TextUtils;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.prefs.Preferences;
 
 /**
  * 编译文件夹选择框
@@ -32,16 +39,27 @@ import java.awt.event.ActionListener;
 public class SelectHAction implements ActionListener {
     private final JButton button;
     private final JTextField textField;
+    private final JTextField outPath;
+    private final Project project;
 
-    public SelectHAction(JButton button, JTextField textField) {
+    public SelectHAction(JButton button, JTextField textField, JTextField outPath, Project project) {
         this.button = button;
         this.textField = textField;
+        this.outPath = outPath;
+        this.project = project;
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(button)) {
-            JFileChooser fcDlg = new JFileChooser(textField.getText());
+            Preferences preferences = Preferences.userRoot();
+            // 弹窗默认路径为上次选中的文件/目录路径
+            String hFilePath = textField.getText().split(",")[0];
+            if (hFilePath.isBlank()) {
+                // 如果上次选中路径为空，则取历史记录中上次打开的路径
+                hFilePath = preferences.get("interPathRecord", "");
+            }
+            JFileChooser fcDlg = new JFileChooser(hFilePath);
             fcDlg.setDialogTitle("请选择.h文件路径...");
             fcDlg.setFileSelectionMode(JFileChooser.FILES_ONLY);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("文本文件(*.h)", "h");
@@ -49,9 +67,34 @@ public class SelectHAction implements ActionListener {
             fcDlg.setFileFilter(filter);
             int returnVal = fcDlg.showOpenDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                String filepath = fcDlg.getSelectedFile().getPath();
-                textField.setText(filepath);
+                String upPath = fcDlg.getSelectedFile().getParent();
+                File[] files = fcDlg.getSelectedFiles();
+                String interFile = setSelectFile(files);
+                if (TextUtils.isBlank(interFile)) {
+                    return;
+                }
+                // 设置默认打开路径；
+                preferences.put("interPathRecord", upPath);
+                textField.setText(interFile.substring(0, interFile.length() - 1));
+                outPath.setText(upPath);
             }
         }
+    }
+
+    private String setSelectFile(File[] files) {
+        StringBuilder interFile = new StringBuilder();
+        boolean existFile = false;
+        for (File file : files) {
+            if (!FileUtil.patternFileName(file.getName())) {
+                GenNotification.notifyMessage(project,
+                        file.getPath(),
+                        file.getName() + "文件名不符合",
+                        NotificationType.WARNING);
+                return "";
+            }
+            existFile = true;
+            interFile.append(file.getPath()).append(",");
+        }
+        return interFile.toString();
     }
 }
