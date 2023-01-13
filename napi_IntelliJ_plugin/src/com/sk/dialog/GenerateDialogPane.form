@@ -90,7 +90,6 @@
                       <component id="4afba" class="javax.swing.JTextField" binding="textFieldInterPath">
                         <constraints/>
                         <properties>
-                          <background color="-12828863"/>
                           <maximumSize width="700" height="30"/>
                           <minimumSize width="400" height="30"/>
                           <preferredSize width="600" height="30"/>
@@ -129,7 +128,6 @@
                       <component id="5369a" class="javax.swing.JTextField" binding="textFieldGenPath">
                         <constraints/>
                         <properties>
-                          <background color="-12828863"/>
                           <maximumSize width="700" height="30"/>
                           <minimumSize width="400" height="30"/>
                           <preferredSize width="600" height="30"/>
@@ -168,7 +166,6 @@
                       <component id="92c94" class="javax.swing.JTextField" binding="textFieldScriptPath">
                         <constraints/>
                         <properties>
-                          <background color="-12828863"/>
                           <maximumSize width="700" height="30"/>
                           <minimumSize width="400" height="30"/>
                           <preferredSize width="600" height="30"/>
@@ -178,9 +175,9 @@
                         <constraints/>
                         <properties>
                           <icon value="images/text.png"/>
-                          <maximumSize width="30" height="38"/>
-                          <minimumSize width="30" height="38"/>
-                          <preferredSize width="30" height="38"/>
+                          <maximumSize width="30" height="30"/>
+                          <minimumSize width="30" height="30"/>
+                          <preferredSize width="30" height="30"/>
                           <text value=""/>
                         </properties>
                       </component>
@@ -279,7 +276,6 @@
                       <component id="37474" class="javax.swing.JTextField" binding="textFieldSelectH">
                         <constraints/>
                         <properties>
-                          <background color="-12828863"/>
                           <maximumSize width="700" height="30"/>
                           <minimumSize width="400" height="30"/>
                           <preferredSize width="600" height="30"/>
@@ -315,7 +311,6 @@
                       <component id="e7c65" class="javax.swing.JTextField" binding="textFieldSelectOutPath">
                         <constraints/>
                         <properties>
-                          <background color="-12828863"/>
                           <maximumSize width="700" height="30"/>
                           <minimumSize width="400" height="30"/>
                           <preferredSize width="600" height="30"/>
