@@ -738,6 +738,60 @@ let objectTemplete = `\
         %s.insert(std::make_pair(tt[replace_lt], tt[replace_lt+1]));
     }\n`
 
+// To avoid function that exceed 50 lines
+let objectTempleteArrnum = `\
+            uint32_t len[replace_lt+1] = pxt->GetArrayLength(valueObj);
+            std::vector<NUMBER_TYPE_%d> arr;
+            for(uint32_t i[replace_lt+1] = 0; i[replace_lt+1] < len[replace_lt+1]; i[replace_lt+1]++) {
+                napi_value arr_value_result;
+                NUMBER_TYPE_%d tt[replace_lt+2];
+                napi_get_element(env, valueObj, i[replace_lt+1], &arr_value_result);
+                NUMBER_JS_2_C(arr_value_result, NUMBER_TYPE_%d, tt[replace_lt+2]);
+                arr.push_back(tt[replace_lt+2]);
+            }
+            tt[replace_lt+1] = arr;
+`
+
+let objectTempleteMap = `\
+            napi_value obj_name_value;
+            napi_value obj_name_result;
+            napi_valuetype obj_name_type;
+            napi_get_property_names (env, valueObj, &obj_name_value);
+            uint32_t ret;
+            napi_get_array_length(env, obj_name_value, &ret);
+            std::vector<std::any> anyValue;
+            for(uint32_t i[replace_lt+1] = 0; i[replace_lt+1] < ret; i[replace_lt+1]++) {
+                napi_get_element (env, obj_name_value, i[replace_lt+1], &obj_name_result);
+                napi_typeof(env, obj_name_result, &obj_name_type);
+                if (obj_name_type == napi_string) {
+                    napi_value obj_value;
+                    napi_valuetype obj_value_type;
+                    std::string obj_name_string;
+                    pxt->SwapJs2CUtf8(obj_name_result, obj_name_string);
+                    napi_get_named_property (env, valueObj, obj_name_string.c_str(), &obj_value);
+                    napi_typeof(env, obj_value, &obj_value_type);
+                    std::map<std::string, std::any> anyValueMap;
+                    if (obj_value_type == napi_string) {
+                        std::string tt[replace_lt+2];
+                        pxt->SwapJs2CUtf8(obj_value, tt[replace_lt+2]);
+                        anyValueMap.insert(std::make_pair(obj_name_string, tt[replace_lt+2]));
+                        anyValue.push_back(anyValueMap);
+                    } else if (obj_value_type == napi_number) {
+                        NUMBER_TYPE_%d tt[replace_lt+2];
+                        NUMBER_JS_2_C(obj_value, NUMBER_TYPE_%d, tt[replace_lt+2] );
+                        anyValueMap.insert(std::make_pair(obj_name_string, tt[replace_lt+2]));
+                        anyValue.push_back(anyValueMap);
+                    } else if (obj_value_type == napi_boolean) {
+                        bool tt[replace_lt+2];
+                        tt[replace_lt+2] = pxt->SwapJs2CBool(obj_value);
+                        anyValueMap.insert(std::make_pair(obj_name_string, tt[replace_lt+2]));
+                        anyValue.push_back(anyValueMap);
+                    }
+                }
+            }
+            tt[replace_lt+1] = anyValue;
+`
+
 function objectTempleteFunc(dest, napiVn) {
     let lt = LenIncrease.getAndIncrease()
     let objTemplete = objectTemplete.format(napiVn, napiVn, napiVn, dest)
@@ -753,8 +807,36 @@ function objectTempleteFunc(dest, napiVn) {
             tt[replace_lt+1] = tt[replace_lt+2];
         } else if (valueObjType == "number") {
             NUMBER_JS_2_C(valueObj, NUMBER_TYPE_%d, tt[replace_lt+1]);
+        } else if (valueObjType == "arr_string") {
+            uint32_t len[replace_lt+1] = pxt->GetArrayLength(valueObj);
+            std::vector<std::string> arr;
+            for(uint32_t i[replace_lt+1] = 0; i[replace_lt+1] < len[replace_lt+1]; i[replace_lt+1]++) {
+                napi_value arr_value_result;
+                napi_get_element(env, valueObj, i[replace_lt+1], &arr_value_result);
+                std::string tt[replace_lt+2];
+                pxt->SwapJs2CUtf8(arr_value_result, tt[replace_lt+2]);
+                arr.push_back(tt[replace_lt+2]);
+            }
+            tt[replace_lt+1] = arr;
+        } else if (valueObjType == "arr_boolean") {
+            uint32_t len[replace_lt+1] = pxt->GetArrayLength(valueObj);
+            std::vector<bool> arr;
+            for(uint32_t i[replace_lt+1] = 0; i[replace_lt+1] < len[replace_lt+1]; i[replace_lt+1]++) {
+                napi_value arr_value_result;
+                napi_get_element(env, valueObj, i[replace_lt+1], &arr_value_result);
+                bool tt[replace_lt+2];
+                tt[replace_lt+2] = pxt->SwapJs2CBool(arr_value_result);
+                arr.push_back(tt[replace_lt+2]);
+            }
+            tt[replace_lt+1] = arr;
+        } else if (valueObjType == "arr_number") {
+            [replace_objectTemplete_arrnum]
+        } else if (valueObjType == "map_string" || valueObjType == "map_number" || valueObjType == "map_boolean") {
+            [replace_objectTemplete_map]
         }
         `).format(lt)
+    objTemplete = objTemplete.replaceAll("[replace_objectTemplete_arrnum]", objectTempleteArrnum.format(lt, lt, lt))
+    objTemplete = objTemplete.replaceAll("[replace_objectTemplete_map]", objectTempleteMap.format(lt, lt))
     objTemplete = objTemplete.replaceAll("[replace_lt]", lt)
     objTemplete = objTemplete.replaceAll("[replace_lt+1]", lt + 1)
     objTemplete = objTemplete.replaceAll("[replace_lt+2]", lt + 2)
