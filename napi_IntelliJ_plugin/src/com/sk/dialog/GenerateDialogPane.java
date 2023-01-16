@@ -163,6 +163,47 @@ public class GenerateDialogPane extends JDialog {
     }
 
     /**
+     * 检查输入的.h文件转换后的同名.d.ts文件是否在输出目录中已存在
+     *
+     * @param fileObj .h文件对象
+     * @param outPutDir 输出目录
+     * @return 如果ts文件已存在，返回文件名；否则返回空字符串
+     */
+    private String getExistFileName(File fileObj, String outPutDir) {
+        if (fileObj.isDirectory()) {
+            // 遇到文件夹直接跳过不检查，只检查普通.h文件是否存在对应的.ts
+            return "";
+        }
+        String hFileName = fileObj.getName();
+        String tsFileName = hFileName.substring(0, hFileName.lastIndexOf(".")) + ".d.ts";
+        File tsFile = new File(outPutDir + "/" + tsFileName);
+        return tsFile.exists() ? tsFile.toString() : "";
+    }
+
+    /**
+     * 检查待生成的ts文件在输出目录中是否已存在
+     *
+     * @param hFilePath 待转换的.h文件/目录路径
+     * @param outPutDir 输出目录路径
+     * @return 如果ts文件已存在，返回文件名；否则返回空字符串
+     */
+    private String checkTsFileExist(String hFilePath, String outPutDir) {
+        File hFileObj = new File(hFilePath);
+        if (!hFileObj.isDirectory()) {
+            return getExistFileName(hFileObj, outPutDir);
+        } else {
+            File[] fileList = hFileObj.listFiles();
+            for (File fileObj : fileList) {
+                String existFileName = getExistFileName(fileObj, outPutDir);
+                if (!existFileName.equals("")) {
+                    return existFileName;
+                }
+            }
+        }
+        return "";
+    }
+
+    /**
      * 验证文本选择框是否空。是否替换已存在的内容
      *
      * @return ValidationInfo 返回不符要求的信息。
@@ -201,13 +242,12 @@ public class GenerateDialogPane extends JDialog {
                 return validationInfo;
             }
 
-            String hFileName = (new File(hFile)).getName();
-            String tsFileName = hFileName.substring(0, hFileName.lastIndexOf(".")) + ".d.ts";
-            File tsFile = new File(outPutDir + "/" + tsFileName);
-            if (tsFile.exists()) {
-                ConfirmDialog confirmDialog = new ConfirmDialog(String.format("是否替换已存在的文件：%s ?", tsFile));
+            String existFileName = checkTsFileExist(hFile, outPutDir);
+            if (!existFileName.equals("")) {
+                ConfirmDialog confirmDialog = new ConfirmDialog(
+                        String.format("是否替换已存在的文件：%s ?", existFileName));
                 if (!confirmDialog.showAndGet()) {
-                    validationInfo = new ValidationInfo(String.format("不替换现有文件：%s", tsFile));
+                    validationInfo = new ValidationInfo(String.format("不替换现有文件：%s", existFileName));
                     return validationInfo;
                 }
             }
@@ -273,7 +313,7 @@ public class GenerateDialogPane extends JDialog {
         }
         File file = new File(tmpDirFile);
         String command = file.toString();
-        String inArgs = genInArgs();
+        String inArgs = genInArgs(interFileOrDir);
         command += inArgs + " -o " + genOutDir + " -i " + radioButton.isSelected() + " -n " + genNumbertypeArgs();
         return command;
     }
@@ -329,11 +369,12 @@ public class GenerateDialogPane extends JDialog {
     /**
      * 生成 -f -d 输入参数。
      *
-     * @return 生成后的值-f -d的值
+     * @param fileOrDir 选中的文件或文件夹路径
+     * @return 生成后的 -f -d的值
      */
-    private String genInArgs() {
+    private String genInArgs(String fileOrDir) {
         tsFileList.clear();
-        String[] interArr = interFileOrDir.split(",");
+        String[] interArr = fileOrDir.split(",");
         StringBuilder tsParam = new StringBuilder(" -f ");
         StringBuilder dirParam = new StringBuilder(" -d ");
         String inputCommand = "";
@@ -681,9 +722,11 @@ public class GenerateDialogPane extends JDialog {
             copyFileToLocalPath("napi_generator-macos");
             tmpDirFile += "napi_generator-macos";
         }
+
         File file = new File(tmpDirFile);
         String command = file.toString();
-        command += " -f " + textFieldSelectH.getText() + " -o " + textFieldSelectOutPath.getText() + " -t " + true;
+        String inArgs = genInArgs(textFieldSelectH.getText());
+        command += inArgs + " -o " + textFieldSelectOutPath.getText() + " -t " + true;
         return command;
     }
 

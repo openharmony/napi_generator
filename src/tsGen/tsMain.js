@@ -171,7 +171,7 @@ function createFuncInfo(parseFuncInfo) {
         funcInfo.params.push(param)
     }
 
-    if (parseFuncInfo.rtnType.indexOf("static") >= 0) {
+    if (parseFuncInfo.static) {
         funcInfo.static = "static "
     } 
     let retType = parseFuncInfo.returns === '' ? parseFuncInfo.rtnType : parseFuncInfo.returns
