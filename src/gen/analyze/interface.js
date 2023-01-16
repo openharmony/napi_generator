@@ -35,18 +35,25 @@ function analyzeNoNameInterface(valueType, valueName, rsltInterface) {
     return valueType
 }
 
+/* 去除单行注释// */
+function parseNotes(data) {
+    let notes = data.indexOf("//") >= 0 ? data.substring(data.indexOf("//"), data.length) : "";          
+    while(notes != "") {
+        notes = notes.substring(0, notes.indexOf("\n")); 
+        data = data.replace(notes, "");
+        notes = ""
+        let st = data.indexOf("//");
+        if(st >= 0) {
+            notes = data.substring(st, data.length);
+        }
+    }
+    return data
+}
+
 /**interface解析 */
 function analyzeInterface(data, rsltInterface = null) { // same as class
     let body = data
-
-    let notes = data.substring(data.indexOf("//"), data.length);
-    notes = notes.substring(0, notes.indexOf("\n"));    
-    while(notes != "") {
-        body = body.replace(notes, "");
-        notes = body.substring(body.indexOf("//"), body.length);
-        notes = notes.substring(0, notes.indexOf("\n"));
-    }  
-    
+    body = body.indexOf("//") < 0 ? body : parseNotes(body)
     body = re.replaceAll(body, "\n", "").split(";")
     let result = {
         value: [],
@@ -89,5 +96,6 @@ function analyzeInterface(data, rsltInterface = null) { // same as class
 }
 
 module.exports = {
-    analyzeInterface
+    analyzeInterface,
+    parseNotes
 }
