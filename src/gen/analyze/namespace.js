@@ -15,7 +15,7 @@
 const re = require("../tools/re");
 const { removeEmptyLine, checkOutBody, addUniqFunc2List } = require("../tools/tool");
 const { analyzeFunction } = require("./function");
-const { analyzeInterface } = require("./interface");
+const { analyzeInterface, parseNotes } = require("./interface");
 const { analyzeClass } = require("./class");
 const { analyzeEnum } = require("./enum");
 const { NapiLog } = require("../tools/NapiLog");
@@ -35,7 +35,8 @@ function analyzeNamespace(data) {
     while (data != '\n') {
         let oldData = data
         data = removeEmptyLine(data)
-        let matchs = re.match(" *\n*", data)
+        let matchs = re.match(" *\n*", data)   
+        data = data.indexOf("//") < 0 ? data : parseNotes(data);   
         // 只剩下空格和回车时，解析完成
         if (matchs && matchs.regs[0][1] == data.length) break
         let parseEnumResult = parseEnum(matchs, data, result)
@@ -61,7 +62,7 @@ function analyzeNamespace(data) {
         let parseNamespaceResult = parseNamespace(matchs, data, result)
         if (parseNamespaceResult != null) {
             data = parseNamespaceResult
-        }
+        } 
         data = removeReg(matchs, data, result)
         if (oldData == data) {
             NapiLog.logError("解析Namespace失败");
