@@ -61,7 +61,7 @@ public class SelectHAction implements ActionListener {
             }
             JFileChooser fcDlg = new JFileChooser(hFilePath);
             fcDlg.setDialogTitle("请选择.h文件路径...");
-            fcDlg.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            fcDlg.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("文本文件(*.h)", "h");
             fcDlg.setMultiSelectionEnabled(true);
             fcDlg.setFileFilter(filter);
@@ -84,16 +84,39 @@ public class SelectHAction implements ActionListener {
     private String setSelectFile(File[] files) {
         StringBuilder interFile = new StringBuilder();
         boolean existFile = false;
+        boolean existDir = false;
         for (File file : files) {
-            if (!FileUtil.patternFileName(file.getName())) {
-                GenNotification.notifyMessage(project,
-                        file.getPath(),
-                        file.getName() + "文件名不符合",
-                        NotificationType.WARNING);
-                return "";
+            if (file.isDirectory()) {
+                if (!existDir) {
+                    existDir = true;
+                    interFile.append(file.getPath()).append(",");
+                } else {
+                    GenNotification.notifyMessage(project,
+                            "目前只支持单个文件夹转换",
+                            "选择不符合要求",
+                            NotificationType.WARNING);
+                    textField.setText("");
+                    return "";
+                }
+            } else {
+                if (!FileUtil.patternFileName(file.getName())) {
+                    GenNotification.notifyMessage(project,
+                            file.getPath(),
+                            file.getName() + "文件名不符合",
+                            NotificationType.WARNING);
+                    return "";
+                }
+                existFile = true;
+                interFile.append(file.getPath()).append(",");
             }
-            existFile = true;
-            interFile.append(file.getPath()).append(",");
+        }
+        if (existDir && existFile) {
+            GenNotification.notifyMessage(project,
+                    "不能同时转换文件和文件夹",
+                    "选择不符合要求",
+                    NotificationType.WARNING);
+            textField.setText("");
+            return "";
         }
         return interFile.toString();
     }
