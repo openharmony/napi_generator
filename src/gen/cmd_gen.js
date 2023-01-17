@@ -61,33 +61,34 @@ function readFiles() {
     }
 }
 
+function handleDirFiles(files) {
+    if (0 === files.length) {
+        NapiLog.logInfo('[Func: readDirFiles] No files in path  %s!'.format(pathDir));
+        return;
+    }
+    (function iterator(i) {
+        if (i === files.length) {
+            return;
+        }
+        let data = fs.statSync(path.join(pathDir + '', files[i]))
+        if (data.isFile()) {
+            let fileName = files[i];
+            checkGenerate(pathDir + '/' + fileName);
+        }
+        iterator(i + 1);
+    })(0);
+}
+
 function readDirFiles() {
-    fs.readdir(pathDir + '', function (err, files) {
-        if (err) {
-            NapiLog.logError('readdir file error ' + err);
-            return;
-        }
-        if (0 === files.length) {
-            NapiLog.logInfo('[Func: readDirFiles] No files in path  %s!'.format(pathDir));
-            return;
-        }
-        (function iterator(i) {
-            if (i === files.length) {
-                return;
-            }
-            fs.stat(path.join(pathDir + '', files[i]), function (err, data) {
-                if (err) {
-                    NapiLog.logError('read file error' + err);
-                    return;
-                }
-                if (data.isFile()) {
-                    let fileName = files[i];
-                    checkGenerate(pathDir + '/' + fileName);
-                }
-                iterator(i + 1);
-            });
-        })(0);
-    });
+    let fileList;
+    try {
+        fileList = fs.readdirSync(pathDir + '');
+    } catch (err) {
+        NapiLog.logError('readdir file error ' + err);
+        return;
+    }
+
+    handleDirFiles(fileList);
 }
 
 function checkGenerate(fileName) {
