@@ -177,7 +177,7 @@
         const message = event.data.msg;
         const path = event.data.path;
         if(message == "selectInterPath") {
-            let regex = new RegExp("[a-zA-Z_0-9]+.h");
+            let regex = new RegExp("[a-zA-Z_0-9]+\.h$");
             if(regex.exec(path)){
                 document.getElementById("tab2").checked = true;
                 document.getElementById("hFilePath").value = path;
