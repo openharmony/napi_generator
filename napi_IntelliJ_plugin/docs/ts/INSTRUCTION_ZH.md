@@ -10,9 +10,9 @@ IntelliJ插件下载路径如下，选择napi_generator_outputs.zip中generator.
 
 ### 依赖
 
-系统：不限
+系统：建议Windows 10
 
-开发工具：DevEco stdio
+开发工具：DevEco Studio
 
 ### 使用指导
 
@@ -42,7 +42,7 @@ Ability Template选择Empty Ability,单击Next。
 
 4.选择.h文件,点击右键选择Generate Napi Frame，工具弹出Generate Napi Frame弹窗,选择Ts-Gen页签。文件路径文本框填写.h文件路径；输出目录选择文本框填写生成.d.ts文件存放路径，点击ok。
 
-![](../../../figures/DevEco_step_napiGenerate.png)
+![](../../../figures/DevEco_step_tsGenerate.png)
 
 ![](../../../figures/DevEco_step_ts_ok.png)
 
