@@ -12,7 +12,7 @@
 
 #### 环境准备
 
-1.下载napi_generator-win.exe可执行程序与header_parser可执行程序，放置在napi_generator/napi_IntelliJ_plugin/resources/cmds/win目录下。其中下载地址如下：
+1.下载napi_generator-win.exe可执行程序与header_parser.exe可执行程序，放置在napi_generator/napi_IntelliJ_plugin/resources/cmds/win目录下。其中下载地址如下：
 
 [下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/mKjfCmPjk/generator_outputs_NAPI_0930)
 
@@ -25,7 +25,7 @@
 
 ![](../../../figures/IntelliJ_env_config_open_proj.png)
 
-4.项目打开完成，点击File>Project Structure,在出现的界面中点击Project,下图的SDK选择JDK 11，选择或者新建complier output目录为项目文件下的out目录。
+4.项目打开完成，点击File>Project Structure,在出现的界面中点击Project,下图的SDK选择JDK 11，Language level也选择版本11，选择或者新建complier output目录为项目文件下的out目录。
 ![](../../../figures/IntelliJ_env_proj_structure.png)
 
 5.Project Settings > Modules 新建Modules。点击上方“-”删除原有的Modules，然后点击“+”选择 New Module。
