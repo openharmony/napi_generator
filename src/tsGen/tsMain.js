@@ -149,7 +149,7 @@ function createParam(parseParamInfo) {
     return param
 }
 
-function createFuncInfo(parseFuncInfo) {
+function createFuncInfo(parseFuncInfo, isClassFunc) {
     let funcInfo = {
         "name": "",
         "params": [],
@@ -171,7 +171,9 @@ function createFuncInfo(parseFuncInfo) {
         funcInfo.params.push(param)
     }
 
-    if (parseFuncInfo.static) {
+    funcInfo.isClassFunc = isClassFunc
+
+    if (parseFuncInfo.static && isClassFunc) {
         funcInfo.static = "static "
     } 
     let retType = parseFuncInfo.returns === '' ? parseFuncInfo.rtnType : parseFuncInfo.returns
@@ -192,7 +194,7 @@ function putFuncIntoNamespace(funcInfo, namespaces) {
 function analyzeRootFunction(rootInfo, parseResult) {
     let parseFunctions = parseResult.functions
     for(var i = 0; i < parseFunctions.length; ++i) {
-        let funcInfo = createFuncInfo(parseFunctions[i])
+        let funcInfo = createFuncInfo(parseFunctions[i], false)
         if (parseFunctions[i].namespace != '') {
             // function in namespace
             putFuncIntoNamespace(funcInfo, rootInfo.namespaces)
@@ -217,8 +219,7 @@ function createProperties(parseProperties) {
 function createClassFunctions(parseFuncs) {
     let funcList = []
     for(var i = 0; i < parseFuncs.length; ++i) {
-        let funcInfo = createFuncInfo(parseFuncs[i])
-        funcInfo.isClassFunc = true
+        let funcInfo = createFuncInfo(parseFuncs[i], true)
         funcList.push(funcInfo)
     }
     return funcList
