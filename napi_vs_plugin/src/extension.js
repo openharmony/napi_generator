@@ -159,7 +159,7 @@ function checkReceiveMsg(message) {
 		canSelectFiles: mode == 0 ? true : false,//是否选择文件
 		canSelectFolders: mode == 0 ? false : true,//是否选择文件夹
 		defaultUri:vscode.Uri.file(''),//默认打开本地路径
-		filters: msg == "selectHFilePath" ? { 
+		filters: mode == 1 ? {} : msg == "selectHFilePath" ? { // 文件过滤选项，在文件夹选择模式下不可设置此配置，否则ubuntu系统下无法选择文件夹
 			'Text files': ['h']
 		} : { 
 			'Text files': ['d.ts']
