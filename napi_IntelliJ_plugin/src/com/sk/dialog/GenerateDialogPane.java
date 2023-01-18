@@ -271,7 +271,7 @@ public class GenerateDialogPane extends JDialog {
      * @return 执行状态
      */
     public boolean runFun() {
-        GenNotification.notifyMessage(this.project, "", "Generating", NotificationType.INFORMATION);
+        GenNotification.notifyMessage(this.project, "", "Generating Napi", NotificationType.INFORMATION);
         interFileOrDir = textFieldInterPath.getText();
         genOutDir = textFieldGenPath.getText();
         scriptOutDir = textFieldScriptPath.getText();
@@ -287,7 +287,7 @@ public class GenerateDialogPane extends JDialog {
                 List<FileInfo> newFileList = getFileInfoList(outPath);
                 newFileList.removeAll(oldFileList);
 
-                GenNotification.notifyGenResult(project, newFileList, "Generate Successfully",
+                GenNotification.notifyGenResult(project, newFileList, "Generate Napi Successfully",
                         NotificationType.INFORMATION);
                 return true;
             }
@@ -707,7 +707,7 @@ public class GenerateDialogPane extends JDialog {
      * @return 执行状态
      */
     public boolean runFunH2ts() {
-        GenNotification.notifyMessage(this.project, "", "Generating", NotificationType.INFORMATION);
+        GenNotification.notifyMessage(this.project, "", "Generating Ts", NotificationType.INFORMATION);
         copyFileToLocalPath("header_parser");
         String command;
         command = genCommandH2ts();
@@ -718,7 +718,7 @@ public class GenerateDialogPane extends JDialog {
             if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
                 List<FileInfo> newFileList = getFileInfoList(outPath);
                 newFileList.removeAll(oldFileList); // 对比命令执行前后的文件列表差异，得到新生成的文件列表
-                GenNotification.notifyGenResult(project, newFileList, "Generate Successfully",
+                GenNotification.notifyGenResult(project, newFileList, "Generate Ts Successfully",
                         NotificationType.INFORMATION);
                 return true;
             }
