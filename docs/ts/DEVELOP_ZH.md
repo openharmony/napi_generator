@@ -54,9 +54,9 @@ ts工具框架由C++语法解释器和代码生成器两部分组成。C++语法
 
 **2 生成header_parser程序**
 
-2.1 安装python库 CppHeaderParser
+2.1 安装python库 CppHeaderParser，在以下链接中下载CppHeaderParser并替换本地Python文件夹中CppHeaderParser(/usr/local/lib/python3.8/dist-packages/CppHeaderParser)目录下的全部文件
 
-	sudo pip install CppHeaderParser
+[CppHeaderParser]()
 
 2.2 安装 pyinstaller
 
@@ -108,9 +108,9 @@ ts工具框架由C++语法解释器和代码生成器两部分组成。C++语法
 
 **2.生成header_parser程序**
 
-2.1 安装python库 CppHeaderParser
+2.1 安装python库 CppHeaderParser，在以下链接中下载CppHeaderParser并替换本地Python文件夹中CppHeaderParser(C:\Python310\Lib\site-packages\CppHeaderParser)目录下的全部文件
 
-	pip install CppHeaderParser
+[CppHeaderParser]()
 
 2.2 安装 pyinstaller
 
@@ -123,3 +123,9 @@ ts工具框架由C++语法解释器和代码生成器两部分组成。C++语法
 
 打包后的可执行文件header_parser.exe在dist目录中
 ./src/tsGen/dist/header_parser.exe
+
+### IntelliJ 插件开发说明
+
+具体的插件开发步骤，可以左键单击以下链接了解：
+
+[IntelliJ插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/ts/DEVELOP__ZH .md)
