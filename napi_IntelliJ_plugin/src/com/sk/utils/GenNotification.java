@@ -26,7 +26,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
+import java.util.List;
 
 /**
  * 通知框
@@ -44,7 +44,7 @@ public class GenNotification {
     }
 
     /**
-     * 无action 通知
+     * 消息通知
      *
      * @param project projectid
      * @param content 提示内容
@@ -55,23 +55,6 @@ public class GenNotification {
         String content,
         String title,
         NotificationType type) {
-        notifyMessage(project, content, title, type, false);
-    }
-
-    /**
-     * 消息通知
-     *
-     * @param project projectid
-     * @param content 提示内容
-     * @param title   提示栏内容
-     * @param type    提示类型 Error,Waring,info
-     * @param addAct  是否添加action
-     */
-    public static void notifyMessage(@javax.annotation.Nullable Project project,
-        String content,
-        String title,
-        NotificationType type,
-        boolean addAct) {
 
         NotificationGroup notificationGroup = new NotificationGroup("Generate.Result.Group",
                 NotificationDisplayType.STICKY_BALLOON);
@@ -86,40 +69,42 @@ public class GenNotification {
         } else {
             LOG.info(content);
         }
-
-        if (addAct) {
-            notification.setContent(null);
-            addAction(project, content, notification);
-        }
         Notifications.Bus.notify(notification, project);
 
     }
 
-    private static void addAction(Project project, String dirPath, Notification notification) {
-        File genResultPath = new File(dirPath);
-        if (!genResultPath.exists()) {
-            LOG.info(String.format("%s not exist", genResultPath.getPath()));
-        }
-        LOG.info("generated file list log:");
+    /**
+     * 消息通知
+     *
+     * @param project projectid
+     * @param newFileList 新增文件列表
+     * @param title   提示栏内容
+     * @param type    提示类型 Error,Waring,info
+     */
+    public static void notifyGenResult(@javax.annotation.Nullable Project project, List<FileInfo> newFileList,
+        String title, NotificationType type) {
+        NotificationGroup notificationGroup = new NotificationGroup("Generate.Result.Group",
+            NotificationDisplayType.STICKY_BALLOON);
+        Notification notification = notificationGroup.createNotification("", type);
+        notification.setTitle(title);
+        notification.setContent(null);
+        addAction(project, newFileList, notification);
+        Notifications.Bus.notify(notification, project);
+    }
 
-        File[] fa = genResultPath.listFiles();
-        for (int i = 0; i < fa.length; i++) {
-            File fs = fa[i];
-            String fileName = fs.getName();
-            boolean dissFile = !fileName.endsWith(".log") || !fileName.endsWith(".txt") || !fileName.endsWith(".ts");
-            if (!fs.isDirectory() && dissFile) {
-                String filePath = fs.getPath();
-                NotificationAction action = new NotificationAction(filePath) {
-                    @Override
-                    public void actionPerformed(@NotNull AnActionEvent anActionEvent,
-                                                @NotNull Notification notification) {
-                        OpenFileAction.openFile(filePath, project);
-                    }
-                };
-                notification.addAction(action);
-            } else {
-                LOG.info(String.format("%s is Directory", fs.getPath()));
-            }
+    private static void addAction(Project project, List<FileInfo> newFileList, Notification notification) {
+        LOG.info("generated file list log:");
+        for (FileInfo fs : newFileList) {
+            String filePath = fs.getPath();
+            NotificationAction action = new NotificationAction(filePath) {
+                @Override
+                public void actionPerformed(@NotNull AnActionEvent anActionEvent,
+                                            @NotNull Notification notification) {
+                    OpenFileAction.openFile(filePath, project);
+                }
+            };
+            notification.addAction(action);
+
         }
     }
 }
