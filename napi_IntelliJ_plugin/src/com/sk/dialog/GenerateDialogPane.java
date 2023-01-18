@@ -23,6 +23,7 @@ import com.sk.action.GenAction;
 import com.sk.action.ScriptAction;
 import com.sk.action.SelectHAction;
 import com.sk.action.SelectOutPathAction;
+import com.sk.utils.FileInfo;
 import com.sk.utils.FileUtil;
 import com.sk.utils.GenNotification;
 import org.apache.http.util.TextUtils;
@@ -279,10 +280,15 @@ public class GenerateDialogPane extends JDialog {
         String command;
         command = genCommand();
 
+        File outPath = new File(textFieldGenPath.getText());
+        List<FileInfo> oldFileList = getFileInfoList(outPath);
         try {
             if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
-                GenNotification.notifyMessage(project, textFieldGenPath.getText(), "Generate Napi Successfully",
-                        NotificationType.INFORMATION, true);
+                List<FileInfo> newFileList = getFileInfoList(outPath);
+                newFileList.removeAll(oldFileList);
+
+                GenNotification.notifyGenResult(project, newFileList, "Generate Napi Successfully",
+                        NotificationType.INFORMATION);
                 return true;
             }
         } catch (IOException | InterruptedException ex) {
@@ -681,6 +687,21 @@ public class GenerateDialogPane extends JDialog {
     }
 
     /**
+     * 获取指定输出目录下的文件列表
+     *
+     * @param outPath 输出目录
+     * @return 文件信息列表
+     */
+    public List<FileInfo> getFileInfoList(File outPath) {
+        List<FileInfo> fileInfoList = new ArrayList<>();
+        File[] files = outPath.listFiles();
+        for (File file : files) {
+            fileInfoList.add(new FileInfo(file));
+        }
+        return fileInfoList;
+    }
+
+    /**
      * 执行主程序入口
      *
      * @return 执行状态
@@ -690,10 +711,15 @@ public class GenerateDialogPane extends JDialog {
         copyFileToLocalPath("header_parser");
         String command;
         command = genCommandH2ts();
+
+        File outPath = new File(textFieldSelectOutPath.getText());
+        List<FileInfo> oldFileList = getFileInfoList(outPath);
         try {
             if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
-                GenNotification.notifyMessage(project, textFieldSelectOutPath.getText(), "Generate Ts Successfully",
-                        NotificationType.INFORMATION, true);
+                List<FileInfo> newFileList = getFileInfoList(outPath);
+                newFileList.removeAll(oldFileList); // 对比命令执行前后的文件列表差异，得到新生成的文件列表
+                GenNotification.notifyGenResult(project, newFileList, "Generate Ts Successfully",
+                        NotificationType.INFORMATION);
                 return true;
             }
         } catch (IOException | InterruptedException ex) {
