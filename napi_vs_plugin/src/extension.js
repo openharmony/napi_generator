@@ -60,7 +60,7 @@ function executor(name, genDir, mode,numberType, importIsCheck) {
 }
 
 function executorH2Ts(name, genDir) {
-	var command = exeFilePath + " -f " + name + " -o " + genDir;
+	var command = exeFilePath + " -f " + name + " -o " + genDir + " -t true";
 	var exec = require('child_process').exec;
 	exec(command, function (error, stdout, stderr) {
 		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
