@@ -130,4 +130,4 @@ napi_generator/examples/ts
 
 ## 相关仓
 
-暂无
+[ts生成工具README_zh](https://gitee.com/openharmony/napi_generator/blob/master/docs/ts/README_ZH.md)

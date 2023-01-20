@@ -10,9 +10,9 @@ IntelliJ插件下载路径如下，选择napi_generator_outputs.zip中generator.
 
 ### 依赖
 
-系统：不限
+系统：建议Windows 10
 
-开发工具：DevEco stdio
+开发工具：DevEco Studio
 
 ### 使用指导
 
@@ -48,8 +48,8 @@ Ability Template选择Empty Ability,单击Next。
 
 5.执行结束后会在out目录下生成napi框架代码文件。
 
-## 集成测试
-NAPI框架代码生成后，系统框架开发者进行二次开发后，即可集成到OpenHarmony编译系统，生成对应的库文件，供应用开发者调用接口。工具集成测试的具体操作步骤可以左键单击以下链接了解：
+## DevEco Studio编译打包说明
+NAPI框架代码生成后，系统框架开发者进行二次开发后，可在DevEco Studio进行编译打包生成对应的库文件，供应用开发者调用接口。DevEco Studio编译打包说明的具体操作步骤可以左键单击以下链接了解：
 
-[工具集成测试](https://gitee.com/openharmony/napi_generator/blob/master/docs/INTEGRATION_TESTING_ZH.md)
+[DevEco Studio编译打包说明](https://gitee.com/openharmony/napi_generator/blob/master/docs/napi/INSTRUCTION_BUILD_ZH.md)
 
