@@ -2,9 +2,9 @@
 
 ## 版本规划
 
-2023.01.30提供1.4版本 基本完善工具C++支持能力，2023.01.30前完成迭代并提交代码，具体特性见表1。
+2023.06.30提供1.4版本 基本完善工具C++支持能力,具体特性见表1。
 
-**表 1**  2023.01.30待支持特性
+**表 1**  2023.06.30待支持特性
 
 <a name="table143385853320"></a>
 
@@ -25,7 +25,7 @@
 </td>
 <tr id="row119944512385"><td class="cellrowborder" valign="top" width="25.77%" headers="mcps1.2.3.1.1 "><p id="p919862210573"><a name="p919862210573"></a><a name="p919862210573"></a>文件</p>
 </td>
-<td class="cellrowborder" valign="top" width="74.22999999999999%" headers="mcps1.2.3.1.2 "><a name="ul12374158862"></a><a name="ul12374158862"></a><ul id="ul12374158862"><li>支持适配命令行*.h生成*.d.ts文件的VSCode插件</li><li>支持Ubuntu环境下适配命令行ts接口文件名格式如下ohos.A.B.C.d.ts文件转换的VSCode插件选择接口文件后自适应填入生成文件路径</li><li>支持适配命令行的VSCode插件自适应浅色背景</li><li>支持适配命令行的VSCode插件UX界面对齐hcs可视化工具</li></ul>
+<td class="cellrowborder" valign="top" width="74.22999999999999%" headers="mcps1.2.3.1.2 "><a name="ul12374158862"></a><a name="ul12374158862"></a><ul id="ul12374158862">><li>优化VSCode插件用户界面</li></ul>
 </td>
 </tr>
 </tr>
