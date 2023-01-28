@@ -20,7 +20,7 @@
 
 [下载链接](https://www.jetbrains.com/idea/download/)
 
-3.打开IDEA Community应用程序。
+3.打开IDEA Community应用程序
 依次点击项目File>Open 选择napi_generator/napi_IntelliJ_plugin项目文件夹。
 ![](../../../figures/IntelliJ_env_config_open_proj.png)
 
@@ -32,11 +32,11 @@
 Project Settings > Modules 新建Modules。点击上方“-”删除原有的Modules，然后点击“+”选择 New Module。
 ![](../../../figures/IntelliJ_env_Proj_Module.png)
 
-6.配置Module SDK.
+6.配置Module SDK
 在New Module对话框中，选择IntelliJ Platform Plugin。若Module SDK中无可选SDK，请在Module SDK 下拉框中点击 Add IntelliJ Platform Plugin SDK 选择IDEA Community安装目录，点击OK,在Select Internal Java Platform 选择 JAVA SDK 11（213版本只支持 11)，点击New Module对话框中Next。
 ![](../../../figures/IntelliJ_env_Proj_Module_New.png)
 
-7.配置Content root.
+7.配置Content root
 Content root选择~/napi_generator/napi_IntelliJ_plugin文件夹，module name填写generator。点击Finish，若出现提示已存在是否覆盖的提示，请点“Yes”完成配置。
 ![](../../../figures/IntelliJ_env_module_root.png)
 
