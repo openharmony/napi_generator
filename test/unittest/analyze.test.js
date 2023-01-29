@@ -66,7 +66,7 @@ describe('Analyze', function () {
         let asyncArray = retJson.substring(retJson.lastIndexOf("\[") + 1, retJson.lastIndexOf("\]")).split("}");
         assert.strictEqual(asyncArray[0], "{\"name\":\"v1\",\"type\":\"string\",\"optional\":false");
         assert.strictEqual(asyncArray[1], ",{\"name\":\"cb\",\"type\":\"AsyncCallback<string>\",\"optional\":false");
-        assert.strictEqual(asyncArray[2], "],\"ret\":\"string\"");
+        assert.strictEqual(asyncArray[2], "],\"ret\":\"string\",\"isStatic\":false");
     });
 
     partOfNamespace(correctResult);
@@ -186,7 +186,11 @@ function partOfFunctionTwo() {
     it('test gen/analyze/function analyzePromiseFunction', function () {
         let data = "if_promise(v1: Array<number>): Promise<boolean>;";
         let ret = analyzeFunction(data, false, `if_promise`, "v1: Array<number>", "Promise<boolean>");
-        assert.strictEqual(ret, null);
+        let retJson = JSON.stringify(ret)
+        let retType = retJson.search("\"type\":4")
+        assert.strictEqual(retType > 0, true);
+        let retReturn = retJson.search('\"ret\":\"void\"')
+        assert.strictEqual(retReturn > 0, true);
     });
 }
 
@@ -200,24 +204,27 @@ function partOfNamespace(correctResult) {
         assert.strictEqual(exportResult, "\"exports\":[\"Entity\"]")
         let enumResult = nameResult.substring(nameResult.search("\"enum\""), nameResult.indexOf("\"const\"") - 1);
         assert.strictEqual(enumResult.search("\"name\":\"Entity\"") > 0, true);
-        assert.strictEqual(enumResult.search("\"enumValueType\":0") > 0, true);
+        assert.strictEqual(enumResult.search("\"enumValueType\":1") > 0, true);
         let searchInte = nameResult.indexOf("\"interface\"")
         let interResult = nameResult.substring(searchInte, nameResult.indexOf("\"class\"") - 1);
         assert.strictEqual(interResult.search("{\"name\":\"animal\",\"type\":\"string\"}") > 0, true);
-        let interFun = interResult.substring(interResult.search("function") - 1, interResult.length - 3);
+        let qiePianStart = interResult.lastIndexOf("function") - 1;
+        let qiepianEnd = interResult.lastIndexOf("parentNameList")-2;
+        let interFun = interResult.substring(qiePianStart, qiepianEnd);
         let interValue = "\"value\":[{\"name\":\"v1\",\"type\":\"string\",\"optional\":false}],";
-        let interRet = "\"ret\":\"string\"}]"
-        assert.strictEqual(interFun, "\"function\":[{\"name\":\"fix\",\"type\":1," + interValue + interRet);
-
+        let interRet = "\"ret\":\"string\","
+        let interIsStatic = "\"isStatic\":false\}]"
+        let funcResult = "\"function\":[{\"name\":\"fix\",\"type\":1," + interValue + interRet + interIsStatic;
+        assert.strictEqual(interFun, funcResult);
     });
     
     it('test gen/analyze/namespace analyzeNamespaceClass', function () {
         let ret = analyzeNamespace('\nnamespace Space3 {\nclass TestClass {\nstatic $fun1(v:string):boolean;\n}\n}\n');
         let retJson = JSON.stringify(ret);
         let nameResult = retJson.substring(retJson.search("namespace"), retJson.length - 2)
-        let qiePianStart = nameResult.lastIndexOf("\"class\"") - 1
-        let classResult = nameResult.substring(qiePianStart, nameResult.lastIndexOf("\"namespace\"") - 2)
-        assert.strictEqual(classResult.search("\"functiontType\":\"static\"") > 0, true)
+        let interResult = nameResult.substring(nameResult.search("\"interface\"") - 1,nameResult.length)
+        let classResult = interResult.substring(interResult.search("\"function\"") - 1, interResult.length)
+        assert.strictEqual(classResult.search("\"isStatic\":true") > 0, true)
     });
 
     it('test gen/analyze/namespace analyzeNamespaceFunction', function () {

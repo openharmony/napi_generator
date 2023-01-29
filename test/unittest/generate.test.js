@@ -57,8 +57,10 @@ describe('Generate', function () {
         }
         let ret = generateEnum('GrantStatus', data);
         let retJson = JSON.stringify(ret);
-        let result = { "implH": "\nenum GrantStatus {\n    STATUS0 = 0,\n};\n", "implCpp": "" };
-        assert.strictEqual(retJson, JSON.stringify(result));
+        let qiepianEnd = retJson.search('\"implCpp\":\"\"') - 1;
+        let actualResult = retJson.substring(1, qiepianEnd);
+        let expectresult = '"implH":"\\nenum class GrantStatus {\\n    STATUS0 = 0,\\n};\\n"'; 
+        assert.strictEqual(actualResult, expectresult);
     });
 
     it('test gen/generate/function_async generateFunctionAsync', function () {
@@ -66,9 +68,9 @@ describe('Generate', function () {
         let struct = retJson.substring(retJson.indexOf("{"),retJson.indexOf("}")+1)
         assert.strictEqual(struct,"{\\n    std::string in0;\\n    uint32_t outErrCode = 0;\\n    std::string out;\\n}")
         let execute = retJson.substring(retJson.indexOf("if_async_execute"),retJson.indexOf("*data")+6)
-        assert.strictEqual(execute,"if_async_execute(XNapiTool *pxt, void *data)")
+        assert.strictEqual(execute,"if_async_execute(XNapiTool *pxt, DataPtr data)\\n{\\n    void *data_")
         let complete = retJson.substring(retJson.indexOf("if_async_complete"),retJson.lastIndexOf("*data")+6)
-        assert.strictEqual(complete,"if_async_complete(XNapiTool *pxt, void *data)")
+        assert.strictEqual(complete,"if_async_complete(XNapiTool *pxt, DataPtr data)\\n{\\n    void *data_")
         let middle = retJson.substring(retJson.indexOf("if_async_middle"),retJson.indexOf("info)")+5)
         assert.strictEqual(middle,"if_async_middle(napi_env env, napi_callback_info info)")
     });
@@ -76,7 +78,7 @@ describe('Generate', function () {
     it('test gen/generate/function_direct generateFunctionDirect', function () {
         let retJson = funcDirectAssert();
         let struct = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1)
-        assert.strictEqual(struct, "{\\n    std::string in0;\\n    \\n    std::string out;\\n}")
+        assert.strictEqual(struct, "{\\n    std::string in0;\\n    std::string out;\\n}")
         let middle = retJson.substring(retJson.indexOf("if_direct_middle"), retJson.indexOf("info)") + 5)
         assert.strictEqual(middle, "if_direct_middle(napi_env env, napi_callback_info info)")
     });
@@ -84,7 +86,7 @@ describe('Generate', function () {
     it('test gen/generate/function_sync generateFunctionSync', function () {
         let retJson = funcSyncAssert();
         let struct = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1)
-        assert.strictEqual(struct, "{\\n    std::string in0;\\n    \\n    std::string out;\\n}")
+        assert.strictEqual(struct, "{\\n    std::string in0;\\n    std::string out;\\n}")
         let middle = retJson.substring(retJson.indexOf("if_callback_middle"), retJson.indexOf("info)") + 5)
         assert.strictEqual(middle, "if_callback_middle(napi_env env, napi_callback_info info)")
     });
@@ -159,17 +161,21 @@ function funcSyncAssert() {
 function partOfInterface() {
 
     it('test gen/generate/interface generateVariable', function () {
-        variable = {
-            hDefine: '',
-            middleValue: ''
+        let variable = {
+            hDefine: "",
+            middleValue: "",
         };
-        let ret = generateVariable('disable', 'boolean', variable, 'ConfigOption');
+        let value = {
+            name: "disable",
+            type: "boolean",
+        }
+        let ret = generateVariable(value, variable, 'ConfigOption');
         assert.strictEqual(JSON.stringify(ret), undefined);
     });
 
     it('test gen/generate/interface mapTypeString', function () {
         let ret = mapTypeString("Map<string,string>", "map1");
-        let result = "\n    std::map<std::string,std::string> map1;";
+        let result = "\n    std::map<std::string, std::string> map1;";
         assert.strictEqual(JSON.stringify(ret), JSON.stringify(result));
     });
 
@@ -181,7 +187,7 @@ function partOfInterface() {
         let ret = generateInterface('ConfigOption', data, 'napitest::');
         let retJson = JSON.stringify(ret).substring(1, JSON.stringify(ret).length);
         let configOption = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1);
-        let configResult = "{\\npublic:\\n    bool disable;\\n    std::map<std::string,std::string> map1;\\n}";
+        let configResult = "{\\npublic:\\n    bool disable;\\n    std::map<std::string, std::string> map1;\\n}";
         assert.strictEqual(configOption, configResult);
         assert.strictEqual(retJson.search("ConfigOption_middle") > 0, true)
         assert.strictEqual(retJson.search("middleInit") > 0, true)
@@ -210,9 +216,9 @@ function partOfTest() {
     it('test gen/generate/param_generate jsToC', function () {
         assert.strictEqual(jsToC("a", "b", "string"), "pxt->SwapJs2CUtf8(b, a);");
 
-        assert.strictEqual(jsToC("a", "b", "NUMBER_TYPE_1"), "NUMBER_JS_2_C(b,NUMBER_TYPE_1,a);");
+        assert.strictEqual(jsToC("a", "b", "NUMBER_TYPE_1"), "NUMBER_JS_2_C(b, NUMBER_TYPE_1, a);");
 
-        assert.strictEqual(jsToC("a", "b", "boolean"), "BOOLEAN_JS_2_C(b,bool,a);");
+        assert.strictEqual(jsToC("a", "b", "boolean"), "BOOLEAN_JS_2_C(b, bool, a);\n");
 
         let retJsToC = JSON.stringify(jsToC("a", "b", "Array<string>"));
         retJsToC = re.replaceAll(retJsToC, "len[0-9]*", "len");
@@ -267,7 +273,7 @@ function partOfTestTwo(){
         retcToJs = re.replaceAll(retcToJs, "len[0-9]*", "len")
         retcToJs = re.replaceAll(retcToJs, "i[0-9]*", "i")
         retcToJs = re.replaceAll(retcToJs, "tnv[0-9]*", "tnv")
-        assert.strictEqual(retcToJs, JSON.stringify(cToJsParam()))
+        assert.strictEqual(retcToJs, JSON.stringify(cToJsParamArray()))
 
         let retcToJs1 = JSON.stringify(cToJs("a", "string[]", "b", 1))
         retcToJs1 = re.replaceAll(retcToJs1, "len[0-9]*", "len")
@@ -308,78 +314,76 @@ function cToJsParam() {
 }
 
 function cToJsParamArray() {
-    let value = 'uint32_t len=a.size();\n' +
-        '    for(uint32_t i=0;i<len;i++) {\n' +
-        '        napi_value tnv = nullptr;\n' +
-        '        tnv = pxt->SwapC2JsUtf8(a[i].c_str());\n' +
-        '        pxt->SetArrayElement(b, i, tnv);\n' +
-        '    }'
+    let value = 'pxt->CreateArray(b);\n' +
+    '    uint32_t outLen1 = a.size();\n' +
+    '    for (uint32_t i = 0; i < outLen1; i++) {\n' +
+    '        napi_value tnv = nullptr;\n' +
+    '        tnv = pxt->SwapC2JsUtf8(a[i].c_str());\n' +
+    '        pxt->SetArrayElement(b, i, tnv);\n' +
+    '    }'
     return value
 }
 
 function cToJsParamMap() {
     let value = 'result = nullptr;\n' +
-        '    for (auto i = a.begin(); i != a.end(); i++)\n' +
-        '        {\n' +
-        '            const char * tnv;\n' +
-        '            napi_value tnv1 = nullptr;\n' +
-        '            tnv = (i -> first).c_str();\n' +
+        '    for (auto i = a.begin(); i != a.end(); i++) {\n' +
+        '        const char * tnv;\n' +
+        '        napi_value tnv1 = nullptr;\n' +
+        '        tnv = (i -> first).c_str();\n' +
         '        tnv1 = pxt->SwapC2JsUtf8(i->second.c_str());\n' +
-        '            pxt->SetMapElement(b, tnv, tnv1);\n' +
-        '        }'
+        '        pxt->SetMapElement(b, tnv, tnv1);\n' +
+        '    }'
     return value
 }
 
 function cToJsParamMap1() {
     let value = 'result = nullptr;\n' +
-        '    for (auto i = a.begin(); i != a.end(); i++)\n' +
-        '        {\n' +
-        '            const char * tnv;\n' +
-        '            napi_value tnv1 = nullptr;\n' +
-        '            tnv = (i -> first).c_str();\n' +
+        '    for (auto i = a.begin(); i != a.end(); i++) {\n' +
+        '        const char * tnv;\n' +
+        '        napi_value tnv1 = nullptr;\n' +
+        '        tnv = (i -> first).c_str();\n' +
         '        tnv1 = pxt->SwapC2JsUtf8(i->second.c_str());\n' +
-        '            pxt->SetMapElement(b, tnv, tnv1);\n' +
-        '        }'
+        '        pxt->SetMapElement(b, tnv, tnv1);\n' +
+        '    }'
     return value
 }
 
 function jsToCParam() {
-    let value = '    uint32_t len=pxt->GetArrayLength(b);\n' +
-        '    for(uint32_t i=0;i<len;i++) {\n' +
+    let value = '    uint32_t len = pxt->GetArrayLength(b);\n' +
+        '    for (uint32_t i = 0; i < len; i++) {\n' +
         '        std::string tt;\n' +
-        '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i), tt);\n' +
+        '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b, i), tt);\n' +
         '        a.push_back(tt);\n' +
-        '\n' +
         '    }\n'
     return value
 }
 
 function jsToCParamArray() {
-    let value = '    uint32_t len=pxt->GetArrayLength(b);\n' +
-        '    for(uint32_t i=0;i<len;i++) {\n' +
+    let value = '    uint32_t len = pxt->GetArrayLength(b);\n' +
+        '    for (uint32_t i = 0; i < len; i++) {\n' +
         '        std::string tt;\n' +
-        '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b,i), tt);\n' +
+        '        pxt->SwapJs2CUtf8(pxt->GetArrayElement(b, i), tt);\n' +
         '        a.push_back(tt);\n' +
-        '\n' +
         '    }\n'
     return value
 }
 
 function jsToCParamMap() {
-    let value = 'uint32_t len=pxt->GetMapLength(b);\n' +
-        'for(uint32_t i=0;i<len;i++) {\n' +
+    let value = 'uint32_t len = pxt->GetMapLength(b);\n' +
+        'for (uint32_t i = 0; i < len; i++) {\n' +
         '    std::string tt;\n' +
         '    bool tt1;\n' +
-        '    pxt->SwapJs2CUtf8(pxt->GetMapElementName(b,i), tt);\n' +
-        '        tt1 = pxt->SwapJs2CBool(pxt->GetMapElementValue(b,tt.c_str()));\n' +
+        '    pxt->SwapJs2CUtf8(pxt->GetMapElementName(b, i), tt);\n' +
+        '        tt1 = pxt->SwapJs2CBool(pxt->GetMapElementValue(b, tt.c_str()));\n' +
+        '\n' +
         '    a.insert(std::make_pair(tt, tt1));\n' +
         '}'
     return value
 }
 
 function jsToCParamMap1() {
-    let value = 'uint32_t len=pxt->GetMapLength(b);\n' +
-        'for(uint32_t i=0;i<len;i++) {\n' +
+    let value = 'uint32_t len = pxt->GetMapLength(b);\n' +
+        'for (uint32_t i = 0; i < len; i++) {\n' +
         '    std::string tt;\n' +
         '    number tt1;\n' +
         '    [replace_swap]\n' +
@@ -428,8 +432,10 @@ function partOfNamespace(correctResult) {
             "namespace": []
         };
         let retJson = JSON.stringify(generateEnumResult(data));
-        let result = "{\"implH\":\"\\nenum GrantStatus {\\n    PERMISSION_DEFAULT = 0,\\n};\\n\",\"implCpp\":\"\"}";
-        assert.strictEqual(retJson, result);
+        let actualResult = retJson.substring(1,retJson.indexOf("implCpp") - 2);
+        let expectresult1 = "\"implH\":\"\\nclass GrantStatus {\\npublic:\\n    ";
+        let expectresult2 = "static const std::string PERMISSION_DEFAULT;\\n};\\n\"";
+        assert.strictEqual(actualResult, expectresult1 + expectresult2);
     });
 
     partOfNamespaceTwo();
