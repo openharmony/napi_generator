@@ -19,9 +19,11 @@ let iServiceHTemplate = `#ifndef I_[marcoName]_SERVICE_H
 [includes]
 #include "iremote_broker.h"
 #include "iremote_proxy.h"
+[using]
 
 namespace OHOS {
 namespace [serviceName] {
+[dependClasses]
 class I[className]Service : public OHOS::IRemoteBroker {
 public:
     enum {
@@ -32,6 +34,7 @@ public:
 public:
     [functions]
 };
+[marshallFunctions]
 } // namespace [serviceName]
 } // namespace OHOS
 #endif // I_[marcoName]_SERVICE_H
@@ -303,6 +306,7 @@ let buildGnTemplate = `import("//build/ohos.gni")
 
 ohos_shared_library("[lowServiceName]service") {
   sources = [
+    "//[lowServiceName]service/src/[iServiceCppFile]",
     "//[lowServiceName]service/src/[stubCppFile]",
     "//[lowServiceName]service/src/[serviceCppFile]"
   ]
@@ -331,6 +335,7 @@ ohos_shared_library("[lowServiceName]service") {
 
 ohos_executable("[lowServiceName]client") {
     sources = [
+    "//[lowServiceName]service/src/[iServiceCppFile]",
     "//[lowServiceName]service/src/[proxyCppFile]",
     "//[lowServiceName]service/src/[clientCppFile]"
   ]
@@ -447,6 +452,9 @@ ohos_prebuilt_etc("[lowServiceName]_service_init") {
 }
 `;
 
+let iServiceCppTemplate = `#include "[iServiceHInclude]"
+`;
+
 module.exports = {
     iServiceHTemplate,
     proxyHTemplate,
@@ -464,5 +472,6 @@ module.exports = {
     profileGnTemplate,
     profileXmlTemplate,
     serviceCfgTemplate,
-    serviceCfgGnTemplate
+    serviceCfgGnTemplate,
+    iServiceCppTemplate
 }

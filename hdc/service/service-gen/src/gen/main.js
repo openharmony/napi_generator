@@ -24,8 +24,7 @@ const gen =  require("./generate");
 const { writeFile, createFolder } = require("../tools/FileRW");
 
 let ops = stdio.getopt({
-    'filename': { key: 'f', args: 1, description: ".d.ts file", default: "" },
-    'directory': { key: 'd', args: 1, description: ".d.ts directory", default: "" },
+    'filename': { key: 'f', args: 1, description: ".h file", default: "" },
     'out': { key: 'o', args: 1, description: "output directory", default: "." },
     'loglevel': { key: 'l', args: 1, description: "Log Level: 0~3", default: "1" },
     'serviceId': { key: 's', args: 1, description: "service register id: 9000~16777214", default: "9000" }
@@ -37,9 +36,9 @@ let fileNames = ops.filename;
 var pathDir = ops.directory;
 if (fileNames == null && pathDir == null) {
     NapiLog.logInfo("fileNames and pathDir both cannot be empty at the same time");
-} else if (pathDir != '') {
+} else if (pathDir && pathDir != '') {
     readDirFiles();
-} else if (fileNames != '') {
+} else if (fileNames && fileNames != '') {
     readFiles();
 }
 
@@ -122,6 +121,7 @@ function genServiceFile(fileName) {
     wirte2Disk(fileContent.stubCppFile, srcPath);
     wirte2Disk(fileContent.serviceCppFile, srcPath);
     wirte2Disk(fileContent.clientCppFile, srcPath);
+    wirte2Disk(fileContent.iServiceCppFile, srcPath);
     wirte2Disk(fileContent.buildGnFile, servicePath);
     wirte2Disk(fileContent.bundleJsonFile, servicePath);
 }

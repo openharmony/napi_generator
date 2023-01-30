@@ -12,9 +12,10 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
+const { NapiLog } = require("../tools/NapiLog");
 const fs = require("fs");
 const os = require("os");
-const { NapiLog } = require("../tools/NapiLog");
+const { AllParseFileList } = require("../tools/common");
 const path = require('path');
 
 function parseFileAll(hFilePath) {
@@ -35,6 +36,7 @@ function parseFileAll(hFilePath) {
     let parseResult = null;
     let stdout = execSync(cmd);
     parseResult = JSON.parse(stdout.toString()).result;
+    parseResult.rawContent = fs.readFileSync(hFilePath, 'UTF-8');
     return parseResult;
 }
 
@@ -49,7 +51,7 @@ function analyzeNameSpace(rootInfo, parseResult) {
 function createParam(parseParamInfo) {
     let param = {};
     param.name = parseParamInfo.name;
-    param.type = parseParamInfo.type;
+    param.type = parseParamInfo.reference ? parseParamInfo.type.replace("&", "").trim(): parseParamInfo.type
     param.rawType = parseParamInfo.raw_type;
     param.isPointer = (parseParamInfo.pointer == 1);
     param.isReference = (parseParamInfo.reference == 1);
@@ -106,30 +108,60 @@ function createClassInfo(parseClassInfo) {
 
 function analyzeClasses(rootInfo, parseClasses) {
     if (parseClasses.length == 0) {
+        NapiLog.logError("Can not find any class.");
         return;
     }
 
+    let firstClassName = null; // JSON集合中第一个class名称
+    let serviceClassName = null;// JSON集合中带“@ServiceClass”注解的class名称
+    let i = 0;
     for(var className in parseClasses) {
-        rootInfo.serviceName = className;
-        let classInfo = createClassInfo(parseClasses[className]);
+        if (++i == 1) {
+            firstClassName = className;
+        }
+
+        let doxygen = parseClasses[className].doxygen;
+        if (doxygen && doxygen.includes("@ServiceClass")) {
+            serviceClassName = className;
+            break;
+        }
+    }
+
+    if (parseClasses.length == 1) {
+        // h文件中只有唯一的一个类，基于该类的接口定义生成service
+        rootInfo.serviceName = firstClassName;
+        let classInfo = createClassInfo(parseClasses[firstClassName]);
         rootInfo.class.push(classInfo);
-        break; // 只取首个class（每个接口文件中应该只包含一个service class）
+    } else {
+        // h文件中有多个类，基于带@ServiceClass注解的类生成service
+        if (serviceClassName == null) {
+            NapiLog.logError("There must be one class that contains @ServiceClass annotations.");
+            return;
+        }
+        rootInfo.serviceName = serviceClassName;
+        let classInfo = createClassInfo(parseClasses[serviceClassName]);
+        rootInfo.class.push(classInfo);
     }
 }
 
 function doAnalyze(hFilePath, cmdParam) {
     let parseResult = parseFileAll(hFilePath);
+    parseResult.isInclude = false;
+    AllParseFileList.push(parseResult);
     let rootInfo = {
         "serviceName": "",
         "nameSpace": [],
         "class": [],
         "includes": [],
-        "serviceId": cmdParam.serviceId == null ? "9002" : cmdParam.serviceId
+        "using": [],
+        "serviceId": cmdParam.serviceId == null ? "9002" : cmdParam.serviceId,
+        "rawContent": parseResult.rawContent
     }
 
     analyzeNameSpace(rootInfo, parseResult);
     analyzeClasses(rootInfo, parseResult.classes);
     rootInfo.includes = parseResult.includes;
+    rootInfo.using = parseResult.using;
     return rootInfo;
 }
 
