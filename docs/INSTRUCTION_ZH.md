@@ -1,15 +1,18 @@
 # NAPI框架生成工具使用说明
 ## 简介
 
-NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。可执行文件、IntelliJ插件、VS Code插件下载路径如下，选择napi_generator_outputs.zip下载。
+NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。可执行文件、IntelliJ插件、VS Code插件下载路径如下：
 
-[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/mKjfCmPjk/generator_outputs_NAPI_0930)
+[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
+
+[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
+
+[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
 
 下载文件说明如下：
 
 	│   │   |── generator.jar           # IntelliJ插件
 	│   │   |── gnapi-0.0.1.vsix        # VS Code插件
-	│   │   |── header_parser.exe       # python脚本可执行程序
 	│   │   |── napi_generator-linux    # Linux可执行程序 
 	│   │   |── napi_generator-win.exe  # Windows可执行程序    
 	│   │   └── napi_generator-macos    # Mac可执行程序                
@@ -45,7 +48,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 
 #### Linux
 
-1.将待转换的.d.ts文件、napi_generator-linux放在同级目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件上一级目录；若除此之外还声明其他.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。此处新建out文件夹，用于存放生成框架代码。整体目录文件如下：
+1.将待转换的.d.ts文件、napi_generator-linux放在同级目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件上一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。此处新建out文件夹，用于存放生成框架代码。整体目录文件如下：
 
 	harmony@Ubuntu-64:~/service$ ls
 	napi_generator-linux  @ohos.napitest.d.ts  out
@@ -60,7 +63,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
   -i, 可选参数，默认false，待转换.d.ts文件中引用非basic.d.ts的ts文件时打开开关；
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径；
   -n, 可选参数，默认为uint32_t，指定生成框架代码中number类型全部为指定类型。
-  
+
   备注：-f与-d两个参数只选其中一个参数即可。
 
 3.运行成功后会在out目录下生成框架代码文件，如下所示：
@@ -70,7 +73,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 
 #### Windows
 
-1.将待转换的.d.ts文件、napi_generator-win.exe放在同级目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件上一级目录；若除此之外还声明其他.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。此处新建out文件夹，用于存放生成框架代码。整体目录文件如下：
+1.将待转换的.d.ts文件、napi_generator-win.exe放在同级目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件上一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。此处新建out文件夹，用于存放生成框架代码。整体目录文件如下：
 
 	E:\demo\napi>dir /B
 	@ohos.napitest.d.ts
@@ -87,7 +90,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
   -i, 可选参数，默认false，待转换.d.ts文件中引用非basic.d.ts的ts文件时打开开关；
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径；
   -n, 可选参数，默认为uint32_t，指定生成框架代码中number类型全部为指定类型。
-  
+
   备注：-f与-d两个参数只选其中一个参数即可。
 
 3.运行成功后会在out目录下生成框架代码文件，如下所示：

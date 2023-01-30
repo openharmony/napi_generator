@@ -2,9 +2,13 @@
 
 ## 简介
 
-IntelliJ插件下载路径如下，选择napi_generator_outputs.zip中generator.jar下载。
+IntelliJ插件下载路径如下，选择generator.jar下载。
 
-[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/mKjfCmPjk/generator_outputs_NAPI_0930)               
+[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
+
+[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
+
+[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
 
 ## IntelliJ插件使用方法
 
@@ -26,7 +30,7 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../../../figures/DevEco_step_firstNext.png)
 
-填写Project name、Save location,其他选项可不修改，单击Finish,新的工程就创建好了。
+填写Project name、Save location,其它选项可不修改，单击Finish,新的工程就创建好了。
 
 ![](../../../figures/DevEco_step_finish.png)
 

@@ -1,9 +1,13 @@
 # NAPI框架生成工具VSCode插件使用说明
 ## 简介
 
-VS Code插件下载路径如下，选择napi_generator_outputs.zip中gnapi-0.0.1.vsix下载。
+VS Code插件下载路径如下，选择gnapi-0.0.1.vsix下载。
 
-[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/mKjfCmPjk/generator_outputs_NAPI_0930)               
+[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
+
+[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
+
+[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
 
 ## VS Code插件使用方法
 
@@ -25,11 +29,11 @@ visual studio code 版本需1.62.0及以上。
 
 ![](../../../figures/pic-plug-in-gnapi.png)
 
-4.在VS Code中找到需要转换的.d.ts文件，若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件上一级目录；若除此之外还声明其他.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。例如：
+4.在VS Code中找到需要转换的.d.ts文件，若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件上一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。例如：
 
 ![](../../../figures/pic-plug-in-select-d-ts.png)
 
-5.选择.d.ts文件,点击右键选择 Generate Napi Frame，工具弹出Generate Napi Frame弹窗，选择Napi-Gen页签。接口文件文本框填写.d.ts文件路径；生成框架路径文本框填写生成框架存放路径；编译脚本路径默认填写；number目的类型此处选择float；启用import功能不选择（待转换.d.ts文件未引用其他文件）；点击ok。
+5.选择.d.ts文件,点击右键选择 Generate Napi Frame，工具弹出Generate Napi Frame弹窗，选择Napi-Gen页签。接口文件文本框填写.d.ts文件路径；生成框架路径文本框填写生成框架存放路径；编译脚本路径默认填写；number目的类型此处选择float；启用import功能不选择（待转换.d.ts文件未引用其它文件）；点击ok。
 
 ![](../../../figures/pic-plug-in-gen-c++.png)
 

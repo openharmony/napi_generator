@@ -35,9 +35,13 @@ NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescr
 
 ### 工具使用
 
-插件下载路径如下，选择napi_generator_outputs.zip下载。
+插件下载路径如下，选择napi_generator.jar下载。
 
-[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/mKjfCmPjk/generator_outputs_NAPI_0930)
+[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
+
+[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
+
+[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
@@ -79,7 +83,7 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 ......
 }
 ```
-      
+
 ### 集成方法
 
 为了实现工具生成的接口被其他子系统或者应用调用，需将生成的代码编译集成到OpenHarmony系统中，编译生成动态库。
