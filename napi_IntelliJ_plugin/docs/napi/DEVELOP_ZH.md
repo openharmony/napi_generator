@@ -14,7 +14,11 @@
 
 1.下载napi工具可执行程序，并放置在napi_generator/napi_IntelliJ_plugin/resources/cmds目录下对应系统的文件夹下，下载链接如下：
 
-[下载链接](暂无)
+[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
+
+[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
+
+[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
 
 2.下载并安装IDEA Community、JDK11配置好环境。IDEA Community版本可以左键单击以下链接下载。
 

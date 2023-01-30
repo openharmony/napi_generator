@@ -1,17 +1,28 @@
 # Ts接口生成工具使用说明
 ## 简介
 
-Ts接口生成工具支持两种入口，分别是可执行程序、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。可执行文件、IntelliJ插件下载路径如下，选择napi_generator_outputs.zip下载。
+Ts接口生成工具支持两种入口，分别是可执行程序、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。可执行文件、IntelliJ插件下载路径如下。
 
-[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/mKjfCmPjk/generator_outputs_NAPI_0930)
+[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
+
+[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
+
+[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
 
 下载文件说明如下：
 
-	│   │   |── generator.jar           # IntelliJ插件
-	│   │   |── header_parser.exe       # python脚本可执行程序
-	│   │   |── napi_generator-linux    # Linux可执行程序 
-	│   │   |── napi_generator-win.exe  # Windows可执行程序    
-	│   │   └── napi_generator-macos    # Mac可执行程序                
+	│   │   |── generator.jar                   # IntelliJ插件
+	│   │   |── header_parser       
+	│   │   |── |── linux
+	│   │   |── |── |── header_parser           # Linux下python脚本可执行程序
+	│   │   |── |── windows
+	│   │   |── |── |── header_parser.exe       # Windows下python脚本可执行程序
+	│   │   |── |── src_code
+	│   │   |── |── |── CppHeaderParser.zip     # CppHeaderParser源码
+	│   │   |── |── readme.txt                  # readme.txt
+	│   │   |── napi_generator-linux            # Linux可执行程序 
+	│   │   |── napi_generator-win.exe          # Windows可执行程序    
+	│   │   └── napi_generator-macos            # Mac可执行程序                
 
 ## 工具介绍
 

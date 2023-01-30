@@ -54,9 +54,13 @@ ts工具框架由C++语法解释器和代码生成器两部分组成。C++语法
 
 **2 生成header_parser程序**
 
-2.1 安装python库 CppHeaderParser，在以下链接中下载CppHeaderParser并替换本地Python文件夹中CppHeaderParser(/usr/local/lib/python3.8/dist-packages/CppHeaderParser)目录下的全部文件
+2.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 /usr/local/lib/python3.8/dist-packages/CppHeaderParser)目录下的全部文件
 
-[CppHeaderParser]()
+[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
+
+[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
+
+[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
 
 2.2 安装 pyinstaller
 
@@ -108,9 +112,13 @@ ts工具框架由C++语法解释器和代码生成器两部分组成。C++语法
 
 **2.生成header_parser程序**
 
-2.1 安装python库 CppHeaderParser，在以下链接中下载CppHeaderParser并替换本地Python文件夹中CppHeaderParser(C:\Python310\Lib\site-packages\CppHeaderParser)目录下的全部文件
+2.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 C:\Python310\Lib\site-packages\CppHeaderParser)目录下的全部文件
 
-[CppHeaderParser]()
+[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
+
+[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
+
+[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
 
 2.2 安装 pyinstaller
 
