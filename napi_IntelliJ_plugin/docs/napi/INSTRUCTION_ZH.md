@@ -2,9 +2,13 @@
 
 ## 简介
 
-IntelliJ插件下载路径如下，选择napi_generator_outputs.zip中generator.jar下载。
+IntelliJ插件下载路径如下，选择napi_generator.jar下载。
 
-[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/mKjfCmPjk/generator_outputs_NAPI_0930)               
+[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
+
+[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
+
+[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)    
 
 ## IntelliJ插件使用方法
 
@@ -26,7 +30,7 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../../../figures/DevEco_step_firstNext.png)
 
-填写Project name、Save location,其他选项可不修改，单击Finish,新的工程就创建好了。
+填写Project name、Save location,其它选项可不修改，单击Finish,新的工程就创建好了。
 
 ![](../../../figures/DevEco_step_finish.png)
 
@@ -36,11 +40,11 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../../../figures/DevEco_step_applyPlugins.png)
 
-3.把待转换的.d.ts文件放在DevEco stdio新建项目的src目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件上一级目录；若除此之外还声明其他.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
+3.把待转换的.d.ts文件放在DevEco stdio新建项目的src目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件上一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
 
 ![](../../../figures/DevEco_step_napi.png)
 
-4.选择.d.ts文件,点击右键选择 Generate Napi Frame，工具弹出Generate Napi Frame弹窗，选择Napi-Gen页签。接口文件文本框填写.d.ts文件路径；生成框架路径文本框填写生成框架存放路径；编译脚本路径填写生成CMakeList.txt文件输出路径；number目的类型此处选择char；启用import功能不选择（待转换.d.ts文件未引用其他文件）；点击ok。
+4.选择.d.ts文件,点击右键选择 Generate Napi Frame，工具弹出Generate Napi Frame弹窗，选择Napi-Gen页签。接口文件文本框填写.d.ts文件路径；生成框架路径文本框填写生成框架存放路径；编译脚本路径填写生成CMakeList.txt文件输出路径；number目的类型此处选择char；启用import功能不选择（待转换.d.ts文件未引用其它文件）；点击ok。
 
 ![](../../../figures/DevEco_step_napiGenerate.png)
 
