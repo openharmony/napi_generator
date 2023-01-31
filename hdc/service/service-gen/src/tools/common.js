@@ -44,6 +44,66 @@ function getParcelType(srcType) {
     return parcelType === undefined ? srcType : parcelType;
 }
 
-module.exports = {
-    DATA_W_MAP, DATA_R_MAP, getParcelType
+class MarshallInfo {
+    constructor(className) {
+        this.className = className;
+        this.marshallFuncName = "";
+        this.marshallFuncStr = "";
+        this.unmarshallFuncName = "";
+        this.unmarshallFuncStr = "";
+    }
 }
+
+class AllParseFileList { }
+AllParseFileList.parseFile_ = [];
+AllParseFileList.push = function (ifs) {
+    AllParseFileList.parseFile_.push(ifs)
+}
+AllParseFileList.pop = function () {
+    AllParseFileList.parseFile_.pop()
+}
+AllParseFileList.clearAll = function () {
+    AllParseFileList.parseFile_.splice(0, AllParseFileList.parseFile_.length)
+}
+AllParseFileList.findClassByName = function (destClassName) {
+    for (let i = 0; i < AllParseFileList.parseFile_.length; ++i) {
+        let classes = AllParseFileList.parseFile_[i].classes;
+        for (let className in classes) {
+            if (className == destClassName) {
+                classes[className].isInclude = AllParseFileList.parseFile_[i].isInclude;
+                return classes[className];
+            }
+        }
+    }
+    return null;
+}
+
+
+/**
+ * 记录正在生成序列化代码的类名，防止嵌套循环
+ */
+class ProcessingClassList { }
+ProcessingClassList.classes_ = [];
+ProcessingClassList.push = function (classObj) {
+    if (this.findByName(classObj.className) != null) {
+        // 已存在的class不重复添加
+        return;
+    }
+    ProcessingClassList.classes_.push(classObj)
+}
+ProcessingClassList.clearAll = function () {
+    ProcessingClassList.classes_.splice(0, ProcessingClassList.classes_.length)
+}
+ProcessingClassList.findByName = function (className) {
+    for (let i = 0; i < ProcessingClassList.classes_.length; ++i) {
+        if (ProcessingClassList.classes_[i].className == className) {
+            return ProcessingClassList.classes_[i];
+        }
+    }
+    return null;
+}
+
+module.exports = {
+    DATA_W_MAP, DATA_R_MAP, getParcelType, AllParseFileList, MarshallInfo, ProcessingClassList
+}
+
