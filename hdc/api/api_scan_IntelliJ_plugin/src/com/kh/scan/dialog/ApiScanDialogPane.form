@@ -40,7 +40,8 @@
           <component id="c4c1b" class="javax.swing.JTextField" binding="scanDirPathTextField">
             <constraints/>
             <properties>
-              <editable value="false"/>
+              <editable value="true"/>
+              <enabled value="true"/>
               <maximumSize width="500" height="30"/>
               <minimumSize width="300" height="30"/>
               <preferredSize width="400" height="30"/>
@@ -73,7 +74,8 @@
           <component id="7194f" class="javax.swing.JTextField" binding="outScanResultPathTextField">
             <constraints/>
             <properties>
-              <editable value="false"/>
+              <editable value="true"/>
+              <enabled value="true"/>
               <maximumSize width="500" height="30"/>
               <minimumSize width="300" height="30"/>
               <preferredSize width="400" height="30"/>

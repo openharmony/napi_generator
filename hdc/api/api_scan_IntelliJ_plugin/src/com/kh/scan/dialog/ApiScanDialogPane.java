@@ -20,6 +20,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ValidationInfo;
 import com.kh.scan.action.ScanDirAction;
 import com.kh.scan.action.ScanResultDirAction;
+import com.kh.scan.utils.FileInfo;
 import com.kh.scan.utils.FileUtil;
 import com.kh.scan.utils.GenNotification;
 import org.apache.http.util.TextUtils;
@@ -41,6 +42,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -143,6 +146,21 @@ public class ApiScanDialogPane extends JDialog {
     }
 
     /**
+     * 获取指定输出目录下的文件列表
+     *
+     * @param outPath 输出目录
+     * @return 文件信息列表
+     */
+    public List<FileInfo> getFileInfoList(File outPath) {
+        List<FileInfo> fileInfoList = new ArrayList<>();
+        File[] files = outPath.listFiles();
+            for (File file : files) {
+                fileInfoList.add(new FileInfo(file));
+            }
+        return fileInfoList;
+    }
+
+    /**
      * 执行主程序入口
      *
      * @return 执行状态
@@ -153,11 +171,22 @@ public class ApiScanDialogPane extends JDialog {
         scanResultDir = outScanResultPathTextField.getText();
         String command;
         command = genCommand();
+
+        File outPath = new File(outScanResultPathTextField.getText());
+        List<FileInfo> oldFileList = getFileInfoList(outPath);
+
         try {
             if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
-                GenNotification.notifyMessage(project, scanResultDir, "提示",
-                        NotificationType.INFORMATION, true);
-                return true;
+                List<FileInfo> newFileList = getFileInfoList(outPath);
+                newFileList.removeAll(oldFileList);
+                if (generateSuccess) {
+                    GenNotification.notifyGenResult(project, newFileList, "Generate ApiScan Successfully",
+                            NotificationType.INFORMATION);
+                    return true;
+                } else {
+                    GenNotification.notifyMessage(project, sErrorMessage, "提示", NotificationType.ERROR);
+                    return false;
+                }
             }
         } catch (IOException | InterruptedException ex) {
             GenNotification.notifyMessage(project, scanDirPathTextField.getText(), "Command exec error",
@@ -216,17 +245,8 @@ public class ApiScanDialogPane extends JDialog {
         String tmpDirFile = System.getProperty("java.io.tmpdir");
         Process process = Runtime.getRuntime().exec(command, null, new File(tmpDirFile));
         threadPool.execute(new BlockThread(process));
-        StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
         StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
-        errConsumer.start();
         outputConsumer.start();
-        if (generateSuccess) {
-            GenNotification.notifyMessage(project, "执行成功", "提示", NotificationType.INFORMATION);
-        } else {
-            GenNotification.notifyMessage(project, sErrorMessage, "提示", NotificationType.ERROR);
-            return false;
-        }
-        errConsumer.join();
         outputConsumer.join();
         process.destroy();
         return true;
@@ -349,7 +369,7 @@ public class ApiScanDialogPane extends JDialog {
                 BufferedReader br = new BufferedReader(isr);
                 String line;
                 while ((line = br.readLine()) != null) {
-                    LOG.error("StreamConsumer" + line);
+                    LOG.info(line);
                 }
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
