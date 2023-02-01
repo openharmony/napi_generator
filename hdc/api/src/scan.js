@@ -93,7 +93,7 @@ function collectFromFile(fn) {
         projectFeature["function"].add(ss[1]);
     }
 
-    for (let ss of data.matchAll(/# *include *(<|") *([A-Za-z_][A-Za-z0-9_/]*(.h(pp)*)*) *(>|")/g)) {
+    for (let ss of data.matchAll(/# *include *(<|") *([A-Za-z_][A-Za-z0-9_\-/]*(.h(pp)*)*) *(>|")/g)) {
         let s = ss[2].split("/");
         s = s[s.length - 1];
         projectFeature["include"].add(s);
