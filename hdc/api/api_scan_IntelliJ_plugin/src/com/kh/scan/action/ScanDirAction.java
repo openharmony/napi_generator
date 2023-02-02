@@ -19,6 +19,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.prefs.Preferences;
 
 /**
  * 编译文件夹选择框
@@ -42,12 +43,18 @@ public class ScanDirAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(button)) {
-            JFileChooser fcDlg = new JFileChooser(textField.getText());
+            Preferences preferences = Preferences.userRoot();
+            String filePath = textField.getText();
+            if (filePath.isBlank()) {
+                filePath = preferences.get("interPathRecord", "");
+            }
+            JFileChooser fcDlg = new JFileChooser(filePath);
             fcDlg.setDialogTitle("请选择扫描项目路径...");
             fcDlg.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int returnVal = fcDlg.showOpenDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 String filepath = fcDlg.getSelectedFile().getPath();
+                preferences.put("interPathRecord", filepath);
                 textField.setText(filepath);
                 outScanResultPathTextField.setText(filepath);
             }
