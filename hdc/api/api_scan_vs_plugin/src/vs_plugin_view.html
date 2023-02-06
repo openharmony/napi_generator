@@ -122,15 +122,19 @@
     }
 
     function selectASFilePath() {
+        var fileNames = document.getElementById("asFilePath").value;     
         var result = {
             msg: "selectASFilePath",
+            filePath: fileNames,
         }
         vscode.postMessage(result);
     }
 
     function selectPath(message) {
+        var genDir = document.getElementById("genASResultDir").value;
         var result = {
-            msg: message
+            msg: message,
+            filePath: genDir
         }
         vscode.postMessage(result);
     }

@@ -126,7 +126,7 @@ function selectPath(panel, message) {
 	const options = {
 		canSelectMany: false,//是否可以选择多个
 		canSelectFolders: true,//是否选择文件夹
-		defaultUri:vscode.Uri.file('')//默认打开本地路径
+		defaultUri:vscode.Uri.file(message.filePath)//默认打开本地路径		
 	};
    
 	return vscode.window.showOpenDialog(options).then(fileUri => {
