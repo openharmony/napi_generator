@@ -100,30 +100,39 @@ function collectFromFile(fn) {
     }
 }
 
+function collectFile (pth, f) {
+    let fn = path.join(pth, f);
+    let st;
+    try {
+        st = fs.statSync(fn);
+    } catch(err){
+        return;
+    }
+    if (st.isDirectory()) {
+        collectFeature(fn);
+    }
+    else if (st.isFile()) {
+        if (f.endsWith(".h")) {
+            projectFiles.h.push(fn);
+            collectFromFile(fn);
+        }
+        else if (f.endsWith(".cpp")) {
+            projectFiles.cpp.push(fn);
+            collectFromFile(fn);
+        }
+        else if (f.endsWith(".c")) {
+            projectFiles.c.push(fn);
+            collectFromFile(fn);
+        }
+    }
+} 
+
 function collectFeature(pth) {
     let files = fs.readdirSync(pth);
 
     for (let f of files) {
-        let fn = path.join(pth, f);
-        let st = fs.statSync(fn);
-        if (st.isDirectory()) {
-            collectFeature(fn);
-        }
-        else if (st.isFile()) {
-            if (f.endsWith(".h")) {
-                projectFiles.h.push(fn);
-                collectFromFile(fn);
-            }
-            else if (f.endsWith(".cpp")) {
-                projectFiles.cpp.push(fn);
-                collectFromFile(fn);
-            }
-            else if (f.endsWith(".c")) {
-                projectFiles.c.push(fn);
-                collectFromFile(fn);
-            }
-        }
-    }
+        collectFile(pth, f);
+    }   
 }
 
 collectFeature(distDir)
