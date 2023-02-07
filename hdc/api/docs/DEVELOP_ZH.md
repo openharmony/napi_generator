@@ -21,19 +21,19 @@
 
 	npm i typescript
 
-3.安装stdio：在napi_generator/hdc/api目录下执行命令：
+3.安装stdio：在napi_generator/hdc/api/src目录下执行命令：
 
 	npm i stdio
 
-4.安装pkg : 在napi_generator/hdc/api目录下执行命令：
+4.安装pkg : 在napi_generator/hdc/api/src目录下执行命令：
 
 	sudo npm i -g pkg
 
-5.打包三个版本 : 执行命令：
+5.打包三个版本 : 在napi_generator/hdc/api/src目录下执行命令：
 
 	pkg .
 
-执行以上步骤后，即可在napi_generator/hdc/api目录下生成Windows、linux、mac系统下的可执行程序:
+执行以上步骤后，即可在napi_generator/hdc/api/src目录下生成Windows、linux、mac系统下的可执行程序:
 
 	search-win.exe、search-linux、search-macos
 
@@ -58,19 +58,23 @@
 
 [下载链接](暂无)
 
-2.安装typescript：使用管理员身份在napi_generator/hdc/api/src目录下执行命令：
+2.使用管理员身份进入终端：
+
+![](../figures/pic_admin.png)
+
+3.安装typescript：使用管理员身份在napi_generator/hdc/api/src目录下执行命令：
 
 	npm i typescript
 
-3.安装stdio：使用管理员身份在napi_generator/hdc/api目录下执行命令：
+4.安装stdio：使用管理员身份在napi_generator/hdc/api/src目录下执行命令：
 
 	npm i stdio
 
-4.安装pkg : 使用管理员身份在napi_generator/hdc/api目录下执行命令：
+5.安装pkg : 使用管理员身份在napi_generator/hdc/api/src目录下执行命令：
 
 	npm i -g pkg
 
-5.打包三个版本 : 使用管理员身份执行命令：
+6.打包三个版本 : 使用管理员身份在napi_generator/hdc/api/src目录下执行命令：
 
 	pkg .
 
@@ -78,7 +82,7 @@
 
 	search-win.exe、search-linux、search-macos
 
-6.根据需求打包指定系统下的可执行文件。若想只打包windows系统下可执行文件，可执行命令：
+7.根据需求打包指定系统下的可执行文件。若想只打包windows系统下可执行文件，可执行命令：
 
 	pkg -t node14-win . -o search-win.exe
 
