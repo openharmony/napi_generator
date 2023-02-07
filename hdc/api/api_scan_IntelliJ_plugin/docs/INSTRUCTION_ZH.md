@@ -2,7 +2,7 @@
 
 ## 简介
 
-IntelliJ插件下载路径如下：
+API扫描工具目前支持三种入口，分别是可执行程序、IntelliJ插件、VS Code插件，本文主要介绍IntelliJ插件使用说明。IntelliJ插件下载路径如下：
 
 [下载链接](暂无)               
 
@@ -10,9 +10,9 @@ IntelliJ插件下载路径如下：
 
 ### 依赖
 
-系统：不限
+系统：建议Windows 10
 
-开发工具：DevEco stdio
+开发工具：DevEco Studio
 
 ### 使用指导
 
@@ -44,4 +44,4 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../../figures/DevEco_step_api_ok.png)
 
-5、执行结束后会在结果输出路径下生成result文件。
+5、执行结束后会在结果输出路径下生成result.xlsx文件。

@@ -9,14 +9,14 @@ API扫描工具支持三种入口，分别是可执行程序、VS Code插件、I
 
 	│   │   |── api_scan_IntelliJ_plugin.jar       # IntelliJ插件
 	│   │   |── ApiScan-0.0.1.vsix                 # VS Code插件
-	│   │   |── Andr_N_Games_api.xlsx              # 风险接口与.h头文件
+	│   │   |── Andr_N_Games_api.xlsx              # 风险接口
 	│   │   |── search-linux                       # Linux可执行程序 
 	│   │   |── search-win.exe                     # Windows可执行程序    
 	│   │   └── search-macos                       # Mac可执行程序                
 
 ## 工具介绍
 
-通过API扫描工具，开发者可以扫描输出三方库中存在，而OpenHarmony源码中不存在的风险接口以及.h头文件，移植之前预知风险，降低移植难度，提高开发效率。
+通过API扫描工具，开发者可以扫描输出三方库中存在，而OpenHarmony源码中不存在的风险接口，移植之前预知风险，降低移植难度，提高开发效率。
 
 ## 生成result文件
 
@@ -51,7 +51,7 @@ API扫描工具支持三种入口，分别是可执行程序、VS Code插件、I
 	-d, 被扫描项目的路径；
 	-o, 可选参数，默认为当前路径下，输出结果存放路径。
 
-4.运行成功后会在当前目录下生成result.xlsx文件，如下所示：
+4、运行成功后会在当前目录下生成result.xlsx文件，如下所示：
 
 	harmony@Ubuntu-64:~/service$ ls
 	result.xlsx  search-linux
@@ -65,7 +65,7 @@ API扫描工具支持三种入口，分别是可执行程序、VS Code插件、I
 	E:\demo\api>dir /B
 	search-win.exe
 
-1、进入search-win.exe可执行程序路径下，并执行可执行程序，执行过程如下：
+3、进入search-win.exe可执行程序路径下，并执行可执行程序，执行过程如下：
 
 	E:\demo\api>search-win.exe -d E:\workspace\杂七杂八\service\opencv -o ./
 	{
@@ -82,7 +82,7 @@ API扫描工具支持三种入口，分别是可执行程序、VS Code插件、I
 	-d, 被扫描项目的路径
 	-o, 可选参数，默认为当前路径下，输出结果存放路径。
 
-2.运行成功后会在当前目录下生成result.xlsx文件，如下所示：
+4、运行成功后会在当前目录下生成result.xlsx文件，如下所示：
 
 	E:\demo\api>dir /B
 	result.xlsx

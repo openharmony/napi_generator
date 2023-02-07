@@ -15,11 +15,11 @@ API扫描工具，它可以根据用户给定三方库项目扫描输出风险�
 
 ## 约束 
 
-系统：不限
+系统：建议Windows 10
 
 依赖版本：JDK 11
 
-开发工具：DevEco stdio、IDEA Community 2021.3.3
+开发工具：DevEco Studio、IDEA Community 2021.3.3
 
 ## 使用方法 
 
@@ -47,11 +47,11 @@ API扫描工具，它可以根据用户给定三方库项目扫描输出风险�
 
 ![](../figures/opencv.png)
 
-在window环境下的，根据输入三方库项目,生成的输出文件result.txt，如下所示：
+在window环境下的，根据输入三方库项目,生成的输出文件result.xlsx，如下所示：
 
 ![](../figures/opencv_result.png)
 
-其中生成的result.txt文件，sheet1为风险接口，如下所示：
+其中生成的result.xlsx文件，sheet1为风险接口，如下所示：
 
 ![](../figures/opencv_include.png)
 
