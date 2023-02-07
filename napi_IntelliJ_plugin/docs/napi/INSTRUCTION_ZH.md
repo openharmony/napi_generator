@@ -2,7 +2,7 @@
 
 ## 简介
 
-IntelliJ插件下载路径如下，选择napi_generator.jar下载。
+NAPI框架生成工具目前支持三种入口，分别是可执行程序、IntelliJ插件、VS Code插件，本文主要介绍IntelliJ插件使用说明。IntelliJ插件下载路径如下，选择napi_generator.jar下载。
 
 [下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
 
