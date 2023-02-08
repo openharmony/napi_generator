@@ -180,7 +180,7 @@ public class ApiScanDialogPane extends JDialog {
                 List<FileInfo> newFileList = getFileInfoList(outPath);
                 newFileList.removeAll(oldFileList);
                 if (generateSuccess) {
-                    GenNotification.notifyGenResult(project, newFileList, "Generate ApiScan Successfully",
+                    GenNotification.notifyGenResult(project, newFileList, "Api Scan Successfully",
                             NotificationType.INFORMATION);
                     return true;
                 } else {
