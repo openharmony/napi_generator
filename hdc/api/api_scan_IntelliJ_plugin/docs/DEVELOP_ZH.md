@@ -12,7 +12,7 @@
 
 #### 环境准备
 
-1.将下载的cmds文件夹放置在napi_generator/hdc/gn_IntelliJ_plugin/resources/目录下，下载链接如下：
+1.下载API扫描工具可执行程序，并放置在napi_generator/hdc/api_scan_IntelliJ_plugin/resources/cmds目录下对应系统的文件夹下，下载链接如下：
 
 [下载链接](暂无) 
 

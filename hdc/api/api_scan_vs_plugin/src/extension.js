@@ -60,7 +60,7 @@ function executorApiscan(name, genDir) {
 			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
 			return VsPluginLog.logError("VsPlugin:" + error + stdout);
 		}
-		vscode.window.showInformationMessage("api scan successfully");
+		vscode.window.showInformationMessage("Api Scan Successfully");
 	});
 }
 
