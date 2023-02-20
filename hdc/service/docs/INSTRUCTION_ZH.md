@@ -18,6 +18,8 @@ SERVICE框架生成工具支持三种入口，分别是可执行程序、VS Code
 
 通过SERVICE框架生成工具，使用者只需提供一个定义远程方法的.h头文件，一键生成SERVICE框架代码，主要包含Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及开机自启动相关配置文件。
 
+![](../figures/pic-service-frm.png)
+
 ## 生成框架
 
 ### 可执行程序使用方法
