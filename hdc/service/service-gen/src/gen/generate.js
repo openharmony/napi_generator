@@ -20,15 +20,12 @@ const { iServiceHTemplate, proxyHTemplate, stubHTemplate, serviceHTemplate, prox
     proxyFuncTemplate, stubCppTemplate, stubInnerFuncTemplate, serviceCppTemplate, serviceFuncImplTemplate,
     clientCppTemplate, buildGnTemplate, bundleJsonTemplate, profileGnTemplate, profileXmlTemplate, serviceCfgTemplate,
     serviceCfgGnTemplate, iServiceCppTemplate } = require("./fileTemplate");
-const { DATA_W_MAP, DATA_R_MAP, getParcelType, AllParseFileList, MarshallInfo, ProcessingClassList}
-    = require("../tools/common");
-const { get } = require("http");
+const { DATA_W_MAP, DATA_R_MAP, VECTOR_W_MAP, VECTOR_R_MAP, getParcelType, AllParseFileList, MarshallInfo, 
+    ProcessingClassList} = require("../tools/common");
 
 let rootHFileSrc = ""; // .h文件的源码
 let dependSrcList = []; //在.h文件中定义并被接口使用到的class/struct类定义源码集合(接口没用到的class定义就不需要了)
 let marshallFuncList = []; // class类的消息序列化方法代码集合
-
-let fullNamespace = "";
 
 let fileContent = {
     "iServiceHFile": {},
@@ -323,6 +320,7 @@ function genClassWriteString(objName, parcelName, marshallInfo, classInfo) {
 
 /**
  * 生成vector集合写入remote消息buffer(parcel data)的代码段
+ *
  * @param vectorName 待写入的vector变量名
  * @param parcelName 写入目标(parcel data)变量的名称
  * @param vecType vector变量类型
@@ -330,15 +328,14 @@ function genClassWriteString(objName, parcelName, marshallInfo, classInfo) {
  * @returns 生成的vector变量序列化打包代码段
  */
  function genVectorWrite(vectorName, parcelName, vecType, matchs) {
-    let rowType = re.getReg(vecType, matchs.regs[2]);
-    let parcelType = getParcelType(rowType);
-    let wFunc = DATA_W_MAP.get(parcelType);
+    let rawType = re.getReg(vecType, matchs.regs[2]);
+    let parcelType = getParcelType(rawType);
+    let wFunc = VECTOR_W_MAP.get(parcelType);
     if (!wFunc) {
         NapiLog.logError("Unsupport writing with type: " + vecType);
         return "";
     }
-    // use function Parcel::WriteVector(const std::vector<T1> &val, bool (Parcel::*Write)(T2))
-    return "%s.WriteVector(%s, &(%s.%s));".format(parcelName, vectorName, parcelName, wFunc);
+    return "%s.%s(%s);".format(parcelName, wFunc, vectorName);
 }
 
 /**
@@ -349,7 +346,7 @@ function genClassWriteString(objName, parcelName, marshallInfo, classInfo) {
  * @returns 生成的代码段
  */
 function genWrite(srcName, parcelName, vType) {
-    let matchs = re.match("(std::)?vector<([\x21-\x7e]+)>", vType);
+    let matchs = re.match("(std::)?vector<([\x21-\x7e]+)[ ]?>", vType);
     if (matchs) {
         // vector类型变量包装成parcel data
         return genVectorWrite(srcName, parcelName, vType, matchs);
@@ -374,6 +371,7 @@ function genWrite(srcName, parcelName, vType) {
 
 /**
  * 生成从remote消息buffer(parcel data)中读取vector集合的代码段
+ *
  * @param parcelName 待读取的消息buffer(parcel data)变量的名称
  * @param vectorName 待写入的vector变量名
  * @param vecType vector变量类型
@@ -381,15 +379,14 @@ function genWrite(srcName, parcelName, vType) {
  * @returns 生成的vector变量反序列化读取码段
  */
  function genVectorRead(parcelName, vectorName, vecType, matchs) {
-    let rowType = re.getReg(vecType, matchs.regs[2]);
-    let parcelType = getParcelType(rowType);
-    let rFunc = DATA_R_MAP.get(parcelType);
+    let rawType = re.getReg(vecType, matchs.regs[2]);
+    let parcelType = getParcelType(rawType);
+    let rFunc = VECTOR_R_MAP.get(parcelType);
     if (!rFunc) {
         NapiLog.logError("Unsupport reading with type: " + vecType);
         return "";
     }
-    // use function Parcel::ReadVector(std::vector<T> *val, bool (Parcel::*Read)(T &))
-    return "%s.ReadVector(&(%s), &(%s.%s));".format(parcelName, vectorName, parcelName, rFunc);
+    return "%s.%s(&(%s));".format(parcelName, rFunc, vectorName);
 }
 
 /**
@@ -399,7 +396,7 @@ function genWrite(srcName, parcelName, vType) {
  * @returns 生成的代码段
  */
 function genRead(parcelName, destObj) {
-    let matchs = re.match("(std::)?vector<([\x21-\x7e]+)>", destObj.type);
+    let matchs = re.match("(std::)?vector<([\x21-\x7e]+)[ ]?>", destObj.type);
     if (matchs) {
         // 从parcel data中读取vector类型变量
         return genVectorRead(parcelName, destObj.name, destObj.type, matchs);
@@ -565,7 +562,6 @@ function replaceClassName(files, classInfo) {
 }
 
 function replaceServiceName(files, rootInfo) {
-    fullNamespace = "OHOS::" + rootInfo.serviceName;
     files.iServiceH = replaceAll(files.iServiceH, "[serviceName]", rootInfo.serviceName);
     files.proxyH = replaceAll(files.proxyH, "[serviceName]", rootInfo.serviceName);
     files.stubH = replaceAll(files.stubH, "[serviceName]", rootInfo.serviceName);

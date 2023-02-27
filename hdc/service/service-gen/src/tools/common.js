@@ -14,8 +14,8 @@
 */
 // remote消息中变量类型名(key)与对应的写parcel方法名(value)的映射（参考parcel.h）
 const DATA_W_MAP = new Map(
-    [["bool", "WriteBoolUnaligned"], ["int8_t", "WriteInt8Unaligned"], ["uint8_t", "ReadUint8Unaligned"],
-     ["int16_t", "WriteInt16Unaligned"], ["uint16_t", "WriteUint16Unaligned"],
+    [["bool", "WriteBoolUnaligned"], ["int8_t", "WriteInt8"], ["uint8_t", "ReadUint8"],
+     ["int16_t", "WriteInt16"], ["uint16_t", "WriteUint16"],
      ["int32_t", "WriteInt32"], ["uint32_t", "WriteUint32"], ["int64_t", "WriteInt64"], ["uint64_t", "WriteUint64"],
      ["float", "WriteFloat"], ["double", "WriteDouble"], ["char *", "WriteCString"], ["std::string", "WriteString"],
      ["string", "WriteString"]
@@ -23,8 +23,8 @@ const DATA_W_MAP = new Map(
 
 // remote消息中变量类型名(key)与对应的读parcel方法名(value)的映射（参考parcel.h）
 const DATA_R_MAP = new Map(
-    [["bool", "ReadBoolUnaligned"], ["int8_t", "ReadInt8Unaligned"], ["uint8_t", "ReadUint8Unaligned"],
-     ["int16_t", "ReadInt16Unaligned"], ["uint16_t", "ReadUint16Unaligned"],
+    [["bool", "ReadBoolUnaligned"], ["int8_t", "ReadInt8"], ["uint8_t", "ReadUint8"],
+     ["int16_t", "ReadInt16"], ["uint16_t", "ReadUint16"],
      ["int32_t", "ReadInt32"], ["uint32_t", "ReadUint32"], ["int64_t", "ReadInt64"], ["uint64_t", "ReadUint64"],
      ["float", "ReadFloat"], ["double", "ReadDouble"], ["char *", "ReadCString"], ["std::string", "ReadString"],
      ["string", "ReadString"]
@@ -37,6 +37,24 @@ const TYPE_DEF_MAP = new Map(
     [["ErrCode", "int32_t"], ["char", "int8_t"], ["short", "int16_t"], ["int", "int32_t"], ["long", "int64_t"],
     ["unsigned char", "uint8_t"], ["unsigned short", "uint16_t"], ["unsigned int", "uint32_t"], 
     ["unsigned long", "uint64_t"]
+]);
+
+// remote消息中vector变量类型名(key)与对应的写parcel方法名(value)的映射（参考parcel.h）
+const VECTOR_W_MAP = new Map(
+    [["bool", "WriteBoolVector"], ["int8_t", "WriteInt8Vector"], ["uint8_t", "WriteUInt8Vector"],
+     ["int16_t", "WriteInt16Vector"], ["uint16_t", "WriteUInt16Vector"], ["int32_t", "WriteInt32Vector"], 
+     ["uint32_t", "WriteUInt32Vector"], ["int64_t", "WriteInt64Vector"], ["uint64_t", "WriteUInt64Vector"],
+     ["float", "WriteFloatVector"], ["double", "WriteDoubleVector"], ["u16string", "WriteString16Vector"], 
+     ["std::string", "WriteStringVector"], ["string", "WriteStringVector"]
+]);
+
+// remote消息中vector变量类型名(key)与对应的读parcel方法名(value)的映射（参考parcel.h）
+const VECTOR_R_MAP = new Map(
+    [["bool", "ReadBoolVector"], ["int8_t", "ReadInt8Vector"], ["uint8_t", "ReadUInt8Vector"],
+     ["int16_t", "ReadInt16Vector"], ["uint16_t", "ReadUInt16Vector"], ["int32_t", "ReadInt32Vector"], 
+     ["uint32_t", "ReadUInt32Vector"], ["int64_t", "ReadInt64Vector"], ["uint64_t", "ReadUInt64Vector"],
+     ["float", "ReadFloatVector"], ["double", "ReadDoubleVector"], ["u16string", "ReadString16Vector"],
+     ["std::string", "ReadStringVector"], ["string", "ReadStringVector"]
 ]);
 
 function getParcelType(srcType) {
@@ -104,6 +122,7 @@ ProcessingClassList.findByName = function (className) {
 }
 
 module.exports = {
-    DATA_W_MAP, DATA_R_MAP, getParcelType, AllParseFileList, MarshallInfo, ProcessingClassList
+    DATA_W_MAP, DATA_R_MAP, VECTOR_W_MAP, VECTOR_R_MAP, getParcelType, AllParseFileList, MarshallInfo,
+    ProcessingClassList
 }
 
