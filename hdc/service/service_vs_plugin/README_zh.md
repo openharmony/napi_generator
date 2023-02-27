@@ -2,24 +2,23 @@
 
 ## 简介
 
-SERVICE框架生成工具，根据用户提供的.h头文件，工具会自动生成整个Service框架的代码。目前工具支持可执行文件、VS Code插件、IntelliJ插件三种入口，本文主要介绍VS Code插件使用说明。
+SERVICE框架生成工具，根据用户提供的.h头文件，工具会自动生成整个Service框架的代码。目前工具支持可执行文件、VS Code插件两种入口，本文主要介绍VS Code插件使用说明。
 
 ## 目录 
 
 	├── service                       # SERVICE框架生成工具
 	│   ├── ...                       # 其他文件
-	│   ├── service_IntelliJ_plugin   # VS Code插件代码
+	│   ├── service_vsJ_plugin        # VS Code插件代码
 	│   │   ├── docs                  # VS Code插件说明
 	│   │   ├── src    				  # VS Code插件源码
-	│   │   └── README_zh             # VS Code插件说明
+	│   │   ├── package.json    	  # package.json 文件
+	│   │   └── README_zh.md          # VS Code插件说明
 
 ## 约束 
 
-系统：不限
+系统：建议Ubuntu 20.04或者Windows 10
 
-依赖版本：JDK 11
-
-开发工具：DevEco stdio、IDEA Community 2021.3.3
+依赖版本：VS Code 1.62.0
 
 ## 使用方法 
 
@@ -29,7 +28,7 @@ SERVICE框架生成工具，根据用户提供的.h头文件，工具会自动�
 
 ### 使用场景
 
-1)移植CMakeLists.txt编译方式的三方库到OpenHarmony源码中。
+开发者为OpenHarmony系统框架开发某些功能，并将该功能包装成一个独立的服务进程运行在系统中。
 
 ### 工具使用
 
@@ -79,7 +78,7 @@ SERVICE框架生成工具，根据用户提供的.h头文件，工具会自动�
        
 ### 开发步骤
 
-开发者可以根据如下的步骤来完成对工具IntelliJ插件的开发：
+开发者可以根据如下的步骤来完成对工具VS Code插件的开发：
 
 [工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/service/service_vs_plugin/docs/DEVELOP_ZH.md)
 

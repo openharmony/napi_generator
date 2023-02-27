@@ -8,18 +8,17 @@ API扫描工具，它可以根据用户给定三方库项目扫描输出风险�
 
 	├── api                           # API扫描工具
 	│   ├── ...                       # 其他文件
-	│   ├── api_scan_IntelliJ_plugin  # VS Code插件代码
+	│   ├── api_scan_vs_plugin        # VS Code插件代码
 	│   │   ├── docs                  # VS Code插件说明
 	│   │   ├── src    				  # VS Code插件源码
-	│   │   └── README_zh             # VS Code插件说明
+	│   │   ├── package.json    	  # package.json 文件
+	│   │   └── README_zh.md          # VS Code插件说明
 
 ## 约束 
 
-系统：建议Windows 10
+系统：建议Ubuntu 20.04或者Windows 10
 
-依赖版本：JDK 11
-
-开发工具：DevEco Studio、IDEA Community 2021.3.3
+依赖版本：VS Code 1.62.0
 
 ## 使用方法 
 
