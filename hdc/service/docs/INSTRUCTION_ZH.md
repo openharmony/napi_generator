@@ -91,71 +91,9 @@ SERVICE框架生成工具支持三种入口，分别是可执行程序、VS Code
 
 [VS插件使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/service/service_vs_plugin/docs/INSTRUCTION_ZH.md)
 
-## 编译
+## 集成
 
-将生成的整个xxxservice目录复制到OpenHarmony源码根目录下（与base、foundation目录平级）
+Service框架代码生成后，系统框架开发者进行二次开发后，即可集成到OpenHarmony编译系统，生成对应的库文件，供应用开发者调用接口。工具集成到OpenHarmony的具体操作步骤可以左键单击以下链接了解：
 
-### 修改3个系统公共文件
+ [工具集成](https://gitee.com/openharmony/napi_generator/blob/master/hdc/service/docs/INTEGRATION_TESTING_ZH.md)
 
-1.服务配置
-
-foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include/system_ability_definition.h中增加以下两行(其中SERVICE_ID与sa_profile目录下的xml文件名保持一致)
-
-  ```
-XXX_SERVICE_ID                                = 9001,
-{XXX_SERVICE_ID, "xxxservice" },
-  ```
-
-2.子系统配置
-build/subsystem_config.json中增加以下内容
-
-```
-"xxxservice": {
-"path":"xxxservice",
-"name": "xxxservice"
- }
-```
-
-3.产品配置
-productdefine/common/products/Hi3516DV300.json
-
-```
- "xxxservice:xxxservice_part":{}
-```
-
-### 补充 服务端/客户端 业务逻辑实现
-
-**服务端**
-xxx_service.cpp
-在注释“// TODO: Invoke the business implementation”处添加各个接口的服务端实现代码；远程方法的参数包装已在生成代码xxx_service_stub.cpp中统一处理，开发人员无需关注
-
-**客户端**
-xxx_client.cpp 为自动生成的客户端样例代码。编译烧录后，会在/system/bin/目录下生成可执行程序xxx_client
-在main中使用proxy对象进行远程方法调用，参考注释示例。远程方法的参数包装已在生成代码xxx_service_proxy.cpp中统一处理，开发人员无需关注
-
-编码完成后，执行镜像编译命令，如
-
-```
-./build.sh --product-name Hi3516DV300
-```
-
-
-## 运行
-
-将编译好的镜像烧录到开发板后，使用hdc_std shell登录开发板。
-查看服务端进程是否已正常启动
-
-```
-ps -ef | grep xxxservice
-system         288     1 0 00:02:13 ?     00:00:00 xxxservice_sa  --- 服务进程已正常运行
-```
-
-
-运行客户端
-
-```
-/system/bin/xxxclient 
-```
-
-
- (客户端具体执行哪些远程调用方法请在xxx_client.cpp的main方法中实现)
