@@ -180,6 +180,21 @@
         document.getElementById("genHResultDir").value = dir;
     }
 
+    function onInput(event) {
+        var value = event.target.value;
+        checkServiceId(value);
+    }
+    
+    function checkServiceId(value) {
+        if (value<1 || value>16777215) {
+            document.getElementById("error").style.display="";
+            document.getElementById("error").innerHTML="serviceID范围错误, 请输入0-16777215之间的数字"
+        } else {
+            document.getElementById("error").style.display="none";
+            document.getElementById("error").innerHTML="";
+        }
+    }
+
 </script>
 
 <body>
@@ -210,7 +225,18 @@
                     <tr>
                         <td>serviceID:</td>
                         <td>
-                            <input class="text" type="text" id="serviceID" value="9000">
+                            <input class="text" type="number" id="serviceID" placeholder="1-16777215" oninput="onInput(event)" onpropertychange="onInput(event)"/>
+                            <a href="" target="_blank" title="Please refer to system_ability_definition.h&#10;(OpenHarmony source code),&#10;and do not use the occupied serviceID.">
+                                <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
+                            </a>
+                          
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td>
+                            <span id="error" style="color:red; display: none; background-color: transparent;"></span>
                         </td>
                     </tr>
             

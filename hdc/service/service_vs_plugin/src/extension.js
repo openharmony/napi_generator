@@ -73,7 +73,7 @@ function register(context, command) {
 		// Display a message box to the user
 		globalPanel = vscode.window.createWebviewPanel(
 			'generate', // Identifies the type of WebView
-			'Generate Service Frame', // Title of the panel displayed to the user
+			'Service Generate Frame', // Title of the panel displayed to the user
 			vscode.ViewColumn.Two, // Display the WebView panel in the form of new columns in the editor
 			{
 				enableScripts: true, // Enable or disable JS, default is Enable
