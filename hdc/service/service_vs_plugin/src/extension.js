@@ -22,6 +22,7 @@ const { VsPluginLog } = require("./gen/tools/VsPluginLog");
 const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
 const path = require('path');
 var exeFilePath = null;
+var globalPanel = null;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -70,7 +71,7 @@ function register(context, command) {
 	let disposable = vscode.commands.registerCommand(command, function (uri) {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
-		const panel = vscode.window.createWebviewPanel(
+		globalPanel = vscode.window.createWebviewPanel(
 			'generate', // Identifies the type of WebView
 			'Generate Service Frame', // Title of the panel displayed to the user
 			vscode.ViewColumn.Two, // Display the WebView panel in the form of new columns in the editor
@@ -79,12 +80,12 @@ function register(context, command) {
 				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
 			}
 		);
-		panel.webview.html = getWebviewContent(context);
+		globalPanel.webview.html = getWebviewContent(context);
 		let msg;
-		panel.webview.onDidReceiveMessage(message => {
+		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
 			if (msg == "cancel") {
-				panel.dispose();
+				globalPanel.dispose();
 			} else if(msg == "param") {
 				let name = message.fileNames;
 				let genDir = message.genDir;
@@ -100,7 +101,7 @@ function register(context, command) {
 					vscode.window.showInformationMessage("Copy executable program to " + __dirname);
 				}
 			}else {
-				selectPath(panel, message);
+				selectPath(globalPanel, message);
 			}
 		}, undefined, context.subscriptions);
 		let fn = re.getFileInPath(uri.fsPath);
@@ -109,7 +110,7 @@ function register(context, command) {
 			msg: "selectHFilePath",
 			path: tt ? uri.fsPath : ""
 			}
-	    panel.webview.postMessage(result);
+			globalPanel.webview.postMessage(result);
 	});
 	return disposable;
 }
@@ -125,10 +126,10 @@ function register(context, command) {
 	const options = {
 		canSelectFiles: mode == 0 ? true : false,//是否选择文件
 		canSelectFolders: mode == 0 ? false : true,//是否选择文件夹
-		defaultUri:vscode.Uri.file(''),//默认打开本地路径
-		filters: { 
+		defaultUri:vscode.Uri.file(message.filePath),//默认打开本地路径
+		filters: mode == 0 ? { 
 			'All files': ['h']
-		}
+		} : {}
 	};
    
 	return vscode.window.showOpenDialog(options).then(fileUri => {
@@ -162,9 +163,11 @@ function getWebViewContent(context, templatePath) {
     const dirPath = path.dirname(resourcePath);
     let html = fs.readFileSync(resourcePath, 'utf-8');
     html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
-        if($2.indexOf("https://")<0)return $1 + vscode.Uri.file(path.resolve(dirPath, $2))
-		.with({ scheme: 'vscode-resource' }).toString() + '"';
-        else return $1 + $2+'"';
+        if($2.indexOf("https://")<0) {
+			return $1 + globalPanel.webview.asWebviewUri(vscode.Uri.file(path.resolve(dirPath, $2))) + '"';
+		} else {
+			return $1 + $2+'"';
+		}
     });
     return html;
 }
