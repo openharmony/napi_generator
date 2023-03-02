@@ -3,6 +3,10 @@
 	"displayName": "service",
 	"description": "test",
 	"version": "0.0.1",
+	"keywords": [
+		"service",
+		"service-gen"
+	],
 	"engines": {
 		"vscode": "^1.62.0"
 	},
@@ -10,18 +14,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"onStartupFinished"
 	],
 	"main": "./extension.js",
+	"publisher": "kaihong",
 	"contributes": {
 		"commands": [
 			{
 				"command": "generate_service",
-				"title": "Generate Service Frame"
+				"title": "Service Generate Frame"
 			},
 			{
 				"command": "generate_service_menu",
-				"title": "Generate Service Frame"
+				"title": "Service Generate Frame"
 			}
 		],
 		"menus": {
@@ -61,5 +66,9 @@
 		"stdio": "^2.1.1",
 		"typescript": "^4.8.4",
 		"vsce": "^2.11.0"
-	}
+	},
+	"repository": {
+        "type": "gitee",
+        "url": "https://gitee.com/openharmony/napi_generator/tree/master/hdc/service"
+    }
 }
