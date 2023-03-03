@@ -45,6 +45,12 @@ function activate(context) {
 	} else if (platform == 'Linux') {
 		exeFilePath = __dirname + "/service-gen-linux";
 	}
+	vscode.window.onDidChangeActiveColorTheme(colorTheme => {
+		var result = {
+			msg: "colorThemeChanged"
+		}
+		globalPanel.webview.postMessage(result);
+	});
 }
 
 function executorService(name, genDir, serviceId) {
