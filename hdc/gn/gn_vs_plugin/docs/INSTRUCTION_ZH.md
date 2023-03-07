@@ -139,38 +139,8 @@ GN生成路径: 可选参数，工具默认填写待转换三方库cmake文件�
 
 [可执行程序使用说明](https://gitee.com/openharmony/napi_generator/blob/master/hdc/gn/docs/INSTRUCTION_ZH.md)
 
-## 将三方库集成到OpenHarmony源码
+## 将三方库集成到OpenHarmony的方法
 
-### 通过其它子系统调用
+具体的将三方库集成到OpenHarmony的步骤，可以左键单击以下链接了解：
 
-1、此处以OpenHarmony/foundation/multimodalinput组件调用mbedtls-development组件为例。在~/multimodalinput/input/BUILD.gn文件中添加mbedtls-development依赖，其中“//third_party/mbedtls-development/build_tmp”为mbedtls-development组件BUILD.gn文件所在相对路径；“all_targets”为mbedtls-development组件BUILD.gn文件中group名称。具体书写如下所示：
-
-```
-	harmony@Ubuntu-64:~$ cd /home/harmony/OpenHarmony/foundation/multimodalinput/input/
-	harmony@Ubuntu-64:~/OpenHarmony/foundation/multimodalinput/input$ cat BUILD.gn 
-	......
-	ohos_shared_library("mmi_uinject") {
-	......
-  	  deps = [
-    	"//drivers/peripheral/input/hal:hdi_input",
-    	"//utils/native/base:utils",
-    	"//third_party/mbedtls-development/build_tmp:all_targets",
-  	  ]
-	......
-```
-
-
-2、进入~/OpenHarmony目录下，通过ninja形式编译，编译命令及编译结果如下：
-
-	ninja -C out/khdvk_rk3568_a all_targets
-
-![](./../../figures/ninja_build_success.png)
-
-3、编译成功后，会生成mbedtls-development相关库文件或可执行程序，生成文件及路径如下所示：
-
-![](./../../figures/generate_file.png)
-
-### 总结    
-
-根据以上操作，即可将三方库集成到OpenHarmony源码中。
-
+[将三方库集成到OpenHarmony的方法](https://gitee.com/openharmony/napi_generator/tree/master/hdc/gn/docs/ENSEMBLE_METHOD_ZH.md)
