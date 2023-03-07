@@ -36,7 +36,8 @@ const DATA_R_MAP = new Map(
 const TYPE_DEF_MAP = new Map(
     [["ErrCode", "int32_t"], ["char", "int8_t"], ["short", "int16_t"], ["int", "int32_t"], ["long", "int64_t"],
     ["unsigned char", "uint8_t"], ["unsigned short", "uint16_t"], ["unsigned int", "uint32_t"], 
-    ["unsigned long", "uint64_t"]
+    ["unsigned long", "uint64_t"], ["double_t", "double"], ["float_t", "float"], ["size_t", "double"],
+    ["long long", "double"], ["long double", "double"]
 ]);
 
 // remote消息中vector变量类型名(key)与对应的写parcel方法名(value)的映射（参考parcel.h）
