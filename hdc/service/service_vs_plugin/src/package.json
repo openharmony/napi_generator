@@ -1,12 +1,13 @@
 {
-	"name": "service",
-	"displayName": "service",
-	"description": "test",
+	"name": "service-gen",
+	"displayName": "service-gen",
+	"description": "Generate IPC service framework code for OpenHarmony",
 	"version": "0.0.1",
 	"keywords": [
 		"service",
 		"service-gen"
 	],
+	"icon": "images/service.png",
 	"engines": {
 		"vscode": "^1.62.0"
 	},
