@@ -1,7 +1,12 @@
 {
-	"name": "gnapi",
-	"displayName": "gnapi",
-	"description": "test",
+	"name": "napi-gen",
+	"displayName": "napi-gen",
+	"description": "Generate NAPI definition code and framework code for OpenHarmony",
+	"keywords": [
+		"napi",
+		"napi_generator"
+	],
+	"icon": "images/napi.png",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.62.0"
@@ -10,9 +15,10 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"onStartupFinished"
 	],
 	"main": "./extension.js",
+	"publisher": "kaihong",
 	"contributes": {
 		"commands": [
 			{
@@ -65,5 +71,9 @@
 		"stdio": "^2.1.1",
 		"typescript": "^4.7.3",
 		"vsce": "^2.9.1"
-	}
+	},
+	"repository": {
+        "type": "gitee",
+        "url": "https://gitee.com/openharmony/napi_generator/tree/master"
+    }
 }
