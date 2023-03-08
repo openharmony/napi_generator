@@ -1,7 +1,12 @@
 {
 	"name": "ApiScan",
 	"displayName": "API Scan",
-	"description": "test",
+	"description": "This tool can scan the Android APIs in OpenHarmony Projects",
+	"keywords": [
+		"api_scan",
+		"api"
+	],
+	"icon": "images/APIScan.png",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.62.0"
@@ -10,8 +15,9 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"onStartupFinished"
 	],
+	"publisher": "kaihong",
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
@@ -61,5 +67,9 @@
 		"stdio": "^2.1.1",
 		"typescript": "^4.8.4",
 		"vsce": "^2.11.0"
-	}
+	},
+	"repository": {
+        "type": "gitee",
+        "url": "https://gitee.com/openharmony/napi_generator/tree/master/hdc/api"
+    }
 }
