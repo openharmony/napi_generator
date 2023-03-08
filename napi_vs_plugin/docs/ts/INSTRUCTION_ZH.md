@@ -17,11 +17,11 @@ visual studio code 版本需1.62.0及以上。
 
 ![](../../../figures/pic-plug-in-search.png)
 
-2.单击上面三个点的按钮，选择从VSIX安装选项，然后选择刚才生成的gnapi-0.0.1.vsix插件文件，再单击安装。
+2.在应用商店搜索NAPI插件，再单击安装。
 
 ![](../../../figures/pic-plug-in-select.png)
 
-3.安装完成后就会在VS Code的插件管理器中能看到gnapi这个插件了。
+3.安装完成后就会在VS Code的插件管理器中能看到napi-gen这个插件了。
 
 ![](../../../figures/pic-plug-in-gnapi.png)
 
@@ -34,5 +34,4 @@ visual studio code 版本需1.62.0及以上。
 ![](../../../figures/pic-plug-in-h-c++.png)
 
 6.执行结束后会在out目录下生成.d.ts代码文件。
-
 
