@@ -17,11 +17,11 @@ visual studio code 版本需1.62.0及以上。
 
 ![](../../figures/pic-plug-in-search.png)
 
-2、 单击上面三个点的按钮，选择从VSIX安装选项，然后选择刚才生成的service-0.0.1.vsix插件文件，再单击安装。
+2、 在应用商店搜索service-gen插件，再单击安装。
 
 ![](../../figures/pic-plug-in-select.png)
 
-3、 安装完成后就会在VS Code的插件管理器中能看到service这个插件了。
+3、 安装完成后就会在VS Code的插件管理器中能看到service-gen这个插件了。
 
 ![](../../figures/pic-plug-in-service.png)
 
@@ -29,11 +29,11 @@ visual studio code 版本需1.62.0及以上。
 
 ![](../../figures/pic-plug-in-select-h.png)
 
-5、 右键单击.h文件，选择“ Generate Service Frame”选项。
+5、 右键单击.h文件，选择“ Service Generate Frame”选项。
 
 ![](../../figures/pic-plug-in-gen-c++.png)
 
-6、 工具打开 Generate Service Frame窗口，.h文件选择框默认填写被操作的.h文件的绝对路径；输出路径选择框默认填写.h文件所在文件夹路径，可修改为任意路径；serviceID默认填写9000，可修改为其他id，然后点击ok。
+6、 工具打开 Service Generate Frame窗口，.h文件选择框默认填写被操作的.h文件的绝对路径；输出路径选择框默认填写.h文件所在文件夹路径，可修改为任意路径；serviceID范围是1-16777215之间的整数，超出范围会提示错误，填入正确的serviceID，然后点击ok。
 
 ![](../../figures/pic-service-frame.png)
 
