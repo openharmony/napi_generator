@@ -17,3 +17,7 @@ visual studio code 版本需1.62.0及以上。
 3.在窗口中填写相应参数。
 
 详细说明见[工具使用说明](https://gitee.com/openharmony/napi_generator/blob/master/hdc/gn/gn_vs_plugin/docs/INSTRUCTION_ZH.md)
+
+## 合作共建
+
+[联系方式](https://www.kaihong.com/)
