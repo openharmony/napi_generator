@@ -17,10 +17,10 @@ package com.sk.utils;
 import com.intellij.ide.actions.OpenFileAction;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationGroupManager;
 import com.intellij.notification.NotificationGroup;
 import com.intellij.notification.NotificationAction;
 import com.intellij.notification.Notifications;
-import com.intellij.notification.NotificationDisplayType;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
@@ -56,8 +56,8 @@ public class GenNotification {
         String title,
         NotificationType type) {
 
-        NotificationGroup notificationGroup = new NotificationGroup("Generate.Result.Group",
-                NotificationDisplayType.STICKY_BALLOON);
+        NotificationGroupManager manager = NotificationGroupManager.getInstance();
+        NotificationGroup notificationGroup = manager.getNotificationGroup("Generate.Result.Group");
         Notification notification = notificationGroup.createNotification(content, type);
         notification.setTitle(title);
         notification.setContent(content);
@@ -83,8 +83,8 @@ public class GenNotification {
      */
     public static void notifyGenResult(@javax.annotation.Nullable Project project, List<FileInfo> newFileList,
         String title, NotificationType type) {
-        NotificationGroup notificationGroup = new NotificationGroup("Generate.Result.Group",
-            NotificationDisplayType.STICKY_BALLOON);
+        NotificationGroupManager manager = NotificationGroupManager.getInstance();
+        NotificationGroup notificationGroup = manager.getNotificationGroup("Generate.Result.Group");
         Notification notification = notificationGroup.createNotification("", type);
         notification.setTitle(title);
         notification.setContent(null);
