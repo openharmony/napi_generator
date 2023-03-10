@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.sk.ng</id>
   <name>Napi Generator</name>
-  <version>1.0</version>
+  <version>1.0.1</version>
   <vendor email="zhaojunxia@kaihong.com" url="http://kaihong.com/">深圳开鸿数字产业发展有限公司</vendor>
 
   <description><![CDATA[
@@ -17,7 +17,7 @@
     ]]>
   </change-notes>
 
-  <idea-version since-build="173.0"/>
+  <idea-version since-build="211.0"/>
 
   <depends>com.intellij.modules.platform</depends>
 
@@ -25,6 +25,8 @@
     <!-- Add your extensions here -->
 <!--    <notificationGroup displayType="BALLOON" id="Generate.Result.Group"/>-->
 <!--    <toolWindow id="Generator window" anchor="right" factoryClass="com.sk.dialog.ResutlToolWindowFactory" secondary="true"/>-->
+    <notificationGroup id="Generate.Result.Group"
+                       displayType="STICKY_BALLOON"/>
   </extensions>
 
   <actions>
