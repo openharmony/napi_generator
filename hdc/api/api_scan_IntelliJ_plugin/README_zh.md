@@ -1,4 +1,4 @@
-# API扫描工具IntelliJ插件说明
+# API扫描工具IntelliJ插件说明(暂不支持)
 
 ## 简介
 
