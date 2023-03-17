@@ -1,4 +1,4 @@
-# SERVICE框架生成工具IntelliJ插件说明
+# SERVICE框架生成工具IntelliJ插件说明(暂不支持)
 
 ## 简介
 
