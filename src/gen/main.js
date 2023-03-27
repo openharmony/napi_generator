@@ -21,7 +21,7 @@ var fs = require('fs');
 function doGenerate(ifname, destdir, imports,numberType) {
     let structOfTs = analyzeFile(ifname);
     let fn = re.getFileInPath(ifname);
-    let tt = re.match('@ohos.([.a-z_A-Z0-9]+).d.ts', fn);
+    let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
     if (tt) {
         let moduleName = re.getReg(fn, tt.regs[1]);
         let importsStr = '' + imports
