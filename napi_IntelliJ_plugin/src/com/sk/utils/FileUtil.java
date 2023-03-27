@@ -193,7 +193,7 @@ public class FileUtil {
      * @return boolean 是否匹配
      */
     public static boolean patternFileName(String fileName) {
-        String pattern = "(@ohos.([.a-z_A-Z0-9]+).d.ts|([.a-z_A-Z0-9]+).h)";
+        String pattern = "((@ohos\\.)*([.a-z_A-Z0-9]+).d.ts|([.a-z_A-Z0-9]+).h)";
         return Pattern.matches(pattern, fileName);
     }
 

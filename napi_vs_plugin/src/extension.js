@@ -126,7 +126,7 @@ function register(context, command) {
 			}
 		}, undefined, context.subscriptions);
 		let fn = re.getFileInPath(uri.fsPath);
-		let tt = re.match("(@ohos.[a-zA-Z_0-9]+.d.ts)|([a-zA-Z_0-9]+.h)", fn);
+		let tt = re.match("((@ohos\.)*[a-zA-Z_0-9]+.d.ts)|([a-zA-Z_0-9]+.h)", fn);
 		var result = {
 			msg: "selectInterPath",
 			path: tt ? uri.fsPath : ""
