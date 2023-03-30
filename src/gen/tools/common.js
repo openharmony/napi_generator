@@ -74,7 +74,11 @@ InterfaceList.getValue = function (name) {
     let ifs = InterfaceList.interfacess_[InterfaceList.interfacess_.length - 1]
     for (let i in ifs) {
         if (ifs[i].name == name) {
-            return ifs[i].body.allProperties.values;
+            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, "allProperties")
+            if (hasProperty) {
+                return ifs[i].body.allProperties.values;
+            }
+            return null;
         }
     }
     return null;
