@@ -28,6 +28,8 @@ import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -53,12 +55,16 @@ public class ToolCenterPanel extends JDialog {
     private JLabel toolDescLabel;
     private JButton buttonNapi;
     private JButton buttonNapiName;
-    private JButton gnButton;
-    private JButton buttonGn;
+    private JButton tsButton;
+    private JButton buttonTs;
     private JButton buttonClose;
     private JPanel napiPanel;
     private JPanel servicePanel;
     private String isSelectButton = "Napi";
+    private JRadioButton selectToolchain;
+    private JCheckBox checkNAPI;
+    private JCheckBox checkH2Ts;
+    private JLabel selectToolchainLabel;
 
     /**
      * 构造函数
@@ -86,6 +92,9 @@ public class ToolCenterPanel extends JDialog {
                 }
             }
         });
+        setSelectToolChainVisible(false);
+        setNapiCheckBoxVisible(false);
+        setH2tsCheckBoxVisible(false);
         searchTextField.setForeground(Color.white);
         searchTextField.setBackground(Color.decode("#3c3f41"));
         searchTextField.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -102,8 +111,8 @@ public class ToolCenterPanel extends JDialog {
         buttonClose.setBorder(new EmptyBorder(0, 0, 0, 0));
         buttonNapiName.setContentAreaFilled(false);
         buttonNapiName.setBorder(new EmptyBorder(0, 0, 0, 0));
-        gnButton.setContentAreaFilled(false);
-        gnButton.setBorder(new EmptyBorder(0, 0, 0, 0));
+        tsButton.setContentAreaFilled(false);
+        tsButton.setBorder(new EmptyBorder(0, 0, 0, 0));
     }
 
     private void textFieldAction() {
@@ -118,7 +127,7 @@ public class ToolCenterPanel extends JDialog {
                 } else {
                     napiPanel.setVisible(false);
                 }
-                if (result.containsKey(buttonGn.getToolTipText())) {
+                if (result.containsKey(buttonTs.getToolTipText())) {
                     servicePanel.setVisible(true);
                 } else {
                     servicePanel.setVisible(false);
@@ -133,7 +142,7 @@ public class ToolCenterPanel extends JDialog {
                 } else {
                     napiPanel.setVisible(false);
                 }
-                if (result.containsKey(buttonGn.getToolTipText())) {
+                if (result.containsKey(buttonTs.getToolTipText())) {
                     servicePanel.setVisible(true);
                 } else {
                     servicePanel.setVisible(false);
@@ -152,15 +161,40 @@ public class ToolCenterPanel extends JDialog {
             isSelectButton = "Napi";
             toolSecondNameLabel.setText(buttonNapi.getToolTipText());
             toolDescLabel.setText(PluginUtils.TOOLS.get(buttonNapi.getToolTipText()));
+            setSelectToolChainVisible(false);
+            setNapiCheckBoxVisible(false);
+            setH2tsCheckBoxVisible(false);
+            setButtonVisible(true);
             buttonNapiName.setForeground(Color.white);
-            gnButton.setForeground(Color.decode("#BBBBBB"));
+            tsButton.setForeground(Color.decode("#BBBBBB"));
         });
-        buttonGn.addActionListener(e -> {
-            isSelectButton = "Gn";
-            toolSecondNameLabel.setText(buttonGn.getToolTipText());
-            toolDescLabel.setText(PluginUtils.TOOLS.get(buttonGn.getToolTipText()));
-            gnButton.setForeground(Color.white);
+        buttonTs.addActionListener(e -> {
+            isSelectButton = "H2Ts";
+            toolSecondNameLabel.setText(buttonTs.getToolTipText());
+            toolDescLabel.setText(PluginUtils.TOOLS.get(buttonTs.getToolTipText()));
+            setSelectToolChainVisible(true);
+            if (selectToolchain.isSelected()) {
+                setButtonVisible(false);
+                setNapiCheckBoxVisible(true);
+                setH2tsCheckBoxVisible(true);
+            } else {
+                tsButton.setForeground(Color.white);
+                buttonNapiName.setForeground(Color.decode("#BBBBBB"));
+            }
+            tsButton.setForeground(Color.white);
             buttonNapiName.setForeground(Color.decode("#BBBBBB"));
+        });
+        selectToolchain.addActionListener(e -> {
+            if (selectToolchain.isSelected()) {
+                checkH2Ts.setForeground(Color.white);
+                setButtonVisible(false);
+                setNapiCheckBoxVisible(true);
+                setH2tsCheckBoxVisible(true);
+            } else {
+                setNapiCheckBoxVisible(false);
+                setH2tsCheckBoxVisible(false);
+                setButtonVisible(true);
+            }
         });
     }
 
@@ -179,6 +213,79 @@ public class ToolCenterPanel extends JDialog {
 
     public String isSelectButton() {
         return isSelectButton;
+    }
+
+    /**
+     * 功能描述 get radiobutton
+     *
+     * @return 是否选中
+     */
+    public boolean getSelectToolChain() {
+        return selectToolchain.isSelected();
+    }
+
+    /**
+     * 功能描述 set button visible or not
+     *
+     * @param isTrue 是否可见标志
+     * @return null
+     */
+    public void setSelectToolChainVisible(boolean isTrue) {
+        selectToolchain.setVisible(isTrue);
+        selectToolchainLabel.setVisible(isTrue);
+        repaint();
+
+    }
+
+    /**
+     * 功能描述 get napi checkbox
+     *
+     * @return 是否选中
+     */
+    public boolean getSelectNapiCheckBox() {
+        return checkNAPI.isSelected();
+    }
+
+    /**
+     * 功能描述 get h2ts checkbox
+     *
+     * @return 是否选中
+     */
+    public boolean getSelectH2tsCheckBox() {
+        return checkH2Ts.isSelected();
+    }
+
+    /**
+     * 功能描述 set napi checkbox visible or not
+     *
+     * @param isTrue 是否可见标志
+     * @return null
+     */
+    public void setNapiCheckBoxVisible(boolean isTrue) {
+        checkNAPI.setVisible(isTrue);
+        repaint();
+    }
+
+    /**
+     * 功能描述 set h2ts checkbox visible or not
+     *
+     * @param isTrue 是否可见标志
+     * @return null
+     */
+    public void setH2tsCheckBoxVisible(boolean isTrue) {
+        checkH2Ts.setVisible(isTrue);
+        repaint();
+    }
+
+    /**
+     * 功能描述 set checkbox visible or not
+     *
+     * @param isTrue 是否可见标志
+     * @return null
+     */
+    public void setButtonVisible(boolean isTrue) {
+        buttonNapiName.setVisible(isTrue);
+        tsButton.setVisible(isTrue);
     }
 
     /**
