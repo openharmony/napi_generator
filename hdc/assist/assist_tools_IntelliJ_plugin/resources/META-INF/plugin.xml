@@ -8,7 +8,7 @@
 
     <depends>com.intellij.modules.lang</depends>
     <depends>com.sk.ng</depends>
-    <depends>com.sk.gn</depends>
+    <depends>com.sk.ts</depends>
 
     <extensions defaultExtensionNs="com.intellij">
     </extensions>

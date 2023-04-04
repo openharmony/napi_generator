@@ -32,12 +32,13 @@ public class PluginUtils {
     /**
      * 项目代码路径
      */
-    public static final String URL = "";
+    public static final String URL = "https://gitee.com/openharmony/napi_generator/"
+            + "tree/master/hdc/assist/assist_tools_IntelliJ_plugin/README.md";
 
     /**
      * 应用名称
      */
-    public static final String TITLE = "App dev Tools";
+    public static final String TITLE = "Kaihong Assist Tools";
 
     /**
      * 获取焦点色值
@@ -52,11 +53,10 @@ public class PluginUtils {
     /**
      * 工具描述
      */
-    public static final HashMap<String, String> TOOLS = new HashMap() {
+    public static final HashMap<String, String> TOOLS = new HashMap<String, String>() {
         {
             put("NAPI Generator", "NAPI tool generates NAPI framework code by typescript file.");
-            put("Gn Generator", "The Gn generation tool generates gn scripts by other script type files, or perform "
-            + "reverse conversion.");
+            put("H2Ts Generator", "H2Ts tool generates ts framework code by .h file");
         }
     };
 }
