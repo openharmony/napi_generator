@@ -12,12 +12,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sk.action;
+package com.sk.ts.action;
 
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.project.Project;
-import com.sk.utils.FileUtil;
-import com.sk.utils.GenNotification;
+import com.sk.ts.utils.FileUtil;
+import com.sk.ts.utils.GenNotification;
 import org.apache.http.util.TextUtils;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;

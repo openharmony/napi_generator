@@ -119,20 +119,12 @@ public class GenerateDialog extends DialogWrapper {
 
         @Override
         protected void doAction(ActionEvent actionEvent) {
-
-
             ValidationInfo validationInfo = doValidate();
             if (validationInfo != null) {
                 LOG.info(validationInfo.message);
             } else {
-                if (genDiag.getSelectedIndex() == 0) {
-                    if (genDiag.runFun()) {
-                        close(CANCEL_EXIT_CODE);
-                    }
-                } else {
-                    if (genDiag.runFunH2ts()) {
-                        close(CANCEL_EXIT_CODE);
-                    }
+                if (genDiag.runFun()) {
+                    close(CANCEL_EXIT_CODE);
                 }
             }
         }

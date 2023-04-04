@@ -21,8 +21,6 @@ import com.intellij.openapi.ui.ValidationInfo;
 import com.sk.action.BrowseAction;
 import com.sk.action.GenAction;
 import com.sk.action.ScriptAction;
-import com.sk.action.SelectHAction;
-import com.sk.action.SelectOutPathAction;
 import com.sk.utils.FileInfo;
 import com.sk.utils.FileUtil;
 import com.sk.utils.GenNotification;
@@ -32,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
@@ -86,9 +83,7 @@ public class GenerateDialogPane extends JDialog {
     private final Project project;
     private List<String> tsFileList = new ArrayList<>();
     private JPanel contentPane;
-    private JTabbedPane tabbedPane;
-    private JTextField textFieldSelectH;
-    private JTextField textFieldSelectOutPath;
+
     private JTextField textFieldInterPath;
     private JTextField textFieldGenPath;
     private JTextField textFieldScriptPath;
@@ -96,8 +91,6 @@ public class GenerateDialogPane extends JDialog {
     private JButton buttonSelectInter;
     private JButton buttonSelectGenPath;
     private JButton buttonSelectScriptPath;
-    private JButton buttonSelectH;
-    private JButton buttonSelectOutPath;
     private JComboBox comboBox;
     private boolean generateSuccess = true;
     private String sErrorMessage = "";
@@ -105,7 +98,7 @@ public class GenerateDialogPane extends JDialog {
     private String genOutDir;
     private String scriptOutDir;
     private String numberType;
-    private int selectedIndex;
+
 
     /**
      * 构造函数
@@ -122,16 +115,11 @@ public class GenerateDialogPane extends JDialog {
         this.interFileOrDir = interFilePath;
         this.genOutDir = genDir;
         this.scriptOutDir = scriptDir;
-        if (FileUtil.patternFileNameH(scriptDir)) {
-            textFieldSelectH.setText(interFileOrDir);
-            textFieldSelectOutPath.setText(genOutDir);
-            tabbedPane.setSelectedIndex(1);
-            selectedIndex = 1;
-        } else {
-            textFieldInterPath.setText(interFileOrDir);
-            textFieldGenPath.setText(genOutDir);
-            textFieldScriptPath.setText(genOutDir);
-        }
+
+        textFieldInterPath.setText(interFileOrDir);
+        textFieldGenPath.setText(genOutDir);
+        textFieldScriptPath.setText(genOutDir);
+
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(actionEvent -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -141,10 +129,7 @@ public class GenerateDialogPane extends JDialog {
         buttonSelectInter.addActionListener(browseAction);
         buttonSelectGenPath.addActionListener(new GenAction(buttonSelectGenPath, textFieldGenPath));
         buttonSelectScriptPath.addActionListener(new ScriptAction(buttonSelectScriptPath, textFieldScriptPath));
-        buttonSelectH.addActionListener(new SelectHAction(buttonSelectH, textFieldSelectH,
-                textFieldSelectOutPath, project));
-        buttonSelectOutPath.addActionListener(new SelectOutPathAction(buttonSelectOutPath, textFieldSelectOutPath));
-        tabbedPane.addChangeListener(changeEvent -> selectedIndex = tabbedPane.getSelectedIndex());
+
     }
 
     @Override
@@ -164,47 +149,6 @@ public class GenerateDialogPane extends JDialog {
     }
 
     /**
-     * 检查输入的.h文件转换后的同名.d.ts文件是否在输出目录中已存在
-     *
-     * @param fileObj .h文件对象
-     * @param outPutDir 输出目录
-     * @return 如果ts文件已存在，返回文件名；否则返回空字符串
-     */
-    private String getExistFileName(File fileObj, String outPutDir) {
-        if (fileObj.isDirectory()) {
-            // 遇到文件夹直接跳过不检查，只检查普通.h文件是否存在对应的.ts
-            return "";
-        }
-        String hFileName = fileObj.getName();
-        String tsFileName = hFileName.substring(0, hFileName.lastIndexOf(".")) + ".d.ts";
-        File tsFile = new File(outPutDir + "/" + tsFileName);
-        return tsFile.exists() ? tsFile.toString() : "";
-    }
-
-    /**
-     * 检查待生成的ts文件在输出目录中是否已存在
-     *
-     * @param hFilePath 待转换的.h文件/目录路径
-     * @param outPutDir 输出目录路径
-     * @return 如果ts文件已存在，返回文件名；否则返回空字符串
-     */
-    private String checkTsFileExist(String hFilePath, String outPutDir) {
-        File hFileObj = new File(hFilePath);
-        if (!hFileObj.isDirectory()) {
-            return getExistFileName(hFileObj, outPutDir);
-        } else {
-            File[] fileList = hFileObj.listFiles();
-            for (File fileObj : fileList) {
-                String existFileName = getExistFileName(fileObj, outPutDir);
-                if (!existFileName.equals("")) {
-                    return existFileName;
-                }
-            }
-        }
-        return "";
-    }
-
-    /**
      * 验证文本选择框是否空。是否替换已存在的内容
      *
      * @return ValidationInfo 返回不符要求的信息。
@@ -212,45 +156,23 @@ public class GenerateDialogPane extends JDialog {
     @Nullable
     public ValidationInfo validationInfo() {
         ValidationInfo validationInfo = null;
-        if (selectedIndex == 0) {
-            String fileInter = textFieldInterPath.getText();
-            String scriptDir = textFieldScriptPath.getText();
-            String filegypDir = textFieldGenPath.getText();
-            boolean isEmptyFile =
-                    TextUtils.isEmpty(fileInter) || TextUtils.isEmpty(scriptDir) || TextUtils.isEmpty(filegypDir);
-            if (isEmptyFile) {
-                String warnMsg = "接口文件、框架、编译脚本路径不能为空";
-                warningMessage(warnMsg);
-                validationInfo = new ValidationInfo(warnMsg);
+        String fileInter = textFieldInterPath.getText();
+        String scriptDir = textFieldScriptPath.getText();
+        String filegypDir = textFieldGenPath.getText();
+        boolean isEmptyFile =
+                TextUtils.isEmpty(fileInter) || TextUtils.isEmpty(scriptDir) || TextUtils.isEmpty(filegypDir);
+        if (isEmptyFile) {
+            String warnMsg = "接口文件、框架、编译脚本路径不能为空";
+            warningMessage(warnMsg);
+            validationInfo = new ValidationInfo(warnMsg);
+            return validationInfo;
+        }
+        File file = new File(filegypDir + "/binding.gyp");
+        if (file.exists()) {
+            ConfirmDialog confirmDialog = new ConfirmDialog("是否替换已存在的编译脚本?");
+            if (!confirmDialog.showAndGet()) {
+                validationInfo = new ValidationInfo(String.format("不替换现有编译脚本：%s", file));
                 return validationInfo;
-            }
-            File file = new File(filegypDir + "/binding.gyp");
-            if (file.exists()) {
-                ConfirmDialog confirmDialog = new ConfirmDialog("是否替换已存在的编译脚本?");
-                if (!confirmDialog.showAndGet()) {
-                    validationInfo = new ValidationInfo(String.format("不替换现有编译脚本：%s", file));
-                    return validationInfo;
-                }
-            }
-        } else {
-            String hFile = textFieldSelectH.getText();
-            String outPutDir = textFieldSelectOutPath.getText();
-            boolean isEmptyFile = TextUtils.isEmpty(hFile) || TextUtils.isEmpty(outPutDir);
-            if (isEmptyFile) {
-                String warnMsg = "文件路径、输出路径不能为空";
-                warningMessage(warnMsg);
-                validationInfo = new ValidationInfo(warnMsg);
-                return validationInfo;
-            }
-
-            String existFileName = checkTsFileExist(hFile, outPutDir);
-            if (!existFileName.equals("")) {
-                ConfirmDialog confirmDialog = new ConfirmDialog(
-                        String.format("是否替换已存在的文件：%s ?", existFileName));
-                if (!confirmDialog.showAndGet()) {
-                    validationInfo = new ValidationInfo(String.format("不替换现有文件：%s", existFileName));
-                    return validationInfo;
-                }
             }
         }
         return validationInfo;
@@ -276,7 +198,6 @@ public class GenerateDialogPane extends JDialog {
         genOutDir = textFieldGenPath.getText();
         scriptOutDir = textFieldScriptPath.getText();
         numberType = comboBox.getSelectedItem().toString();
-        copyFileToLocalPath("header_parser");
         String command;
         command = genCommand();
 
@@ -420,15 +341,14 @@ public class GenerateDialogPane extends JDialog {
         errConsumer.start();
         outputConsumer.start();
 
-        boolean status = command.contains("-t true");
-        if (!status) {
-            if (generateSuccess) {
-                writeCompileCfg();
-            } else {
-                GenNotification.notifyMessage(project, sErrorMessage, "提示", NotificationType.ERROR);
-                return false;
-            }
+
+        if (generateSuccess) {
+            writeCompileCfg();
+        } else {
+            GenNotification.notifyMessage(project, sErrorMessage, "提示", NotificationType.ERROR);
+            return false;
         }
+
         errConsumer.join();
         outputConsumer.join();
         return true;
@@ -701,66 +621,9 @@ public class GenerateDialogPane extends JDialog {
         return fileInfoList;
     }
 
-    /**
-     * 执行主程序入口
-     *
-     * @return 执行状态
-     */
-    public boolean runFunH2ts() {
-        GenNotification.notifyMessage(this.project, "", "Generating Ts", NotificationType.INFORMATION);
-        copyFileToLocalPath("header_parser");
-        String command;
-        command = genCommandH2ts();
-
-        File outPath = new File(textFieldSelectOutPath.getText());
-        List<FileInfo> oldFileList = getFileInfoList(outPath);
-        try {
-            if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
-                List<FileInfo> newFileList = getFileInfoList(outPath);
-                newFileList.removeAll(oldFileList); // 对比命令执行前后的文件列表差异，得到新生成的文件列表
-                GenNotification.notifyGenResult(project, newFileList, "Generate Ts Successfully",
-                        NotificationType.INFORMATION);
-                return true;
-            }
-        } catch (IOException | InterruptedException ex) {
-            GenNotification.notifyMessage(project, textFieldSelectOutPath.getText(), "Command exec error",
-                    NotificationType.ERROR);
-            LOG.error(ex);
-        }
-        return false;
-    }
-
-    /**
-     * 生成命令行指令
-     *
-     * @return 返回命令行执行内容
-     */
-    private String genCommandH2ts() {
-        String sysName = System.getProperties().getProperty("os.name").toUpperCase();
-        String tmpDirFile = System.getProperty("java.io.tmpdir");
-        if (sysName.contains("WIN")) {
-            copyFileToLocalPath("napi_generator-win");
-            tmpDirFile += "napi_generator-win.exe";
-        } else if (sysName.contains("LINUX")) {
-            copyFileToLocalPath("napi_generator-linux");
-            tmpDirFile += "napi_generator-linux";
-        } else {
-            copyFileToLocalPath("napi_generator-macos");
-            tmpDirFile += "napi_generator-macos";
-        }
-
-        File file = new File(tmpDirFile);
-        String command = file.toString();
-        String inArgs = genInArgs(textFieldSelectH.getText());
-        command += inArgs + " -o " + textFieldSelectOutPath.getText() + " -t " + true;
-        return command;
-    }
 
     JPanel getContentPanel() {
         return contentPane;
     }
 
-    public int getSelectedIndex() {
-        return selectedIndex;
-    }
 }
