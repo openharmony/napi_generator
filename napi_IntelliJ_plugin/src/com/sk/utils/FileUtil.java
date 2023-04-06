@@ -193,18 +193,7 @@ public class FileUtil {
      * @return boolean 是否匹配
      */
     public static boolean patternFileName(String fileName) {
-        String pattern = "((@ohos\\.)*([.a-z_A-Z0-9]+).d.ts|([.a-z_A-Z0-9]+).h)";
-        return Pattern.matches(pattern, fileName);
-    }
-
-    /**
-     * 正则匹配所选文件名是否符合规范
-     *
-     * @param fileName 文件名
-     * @return boolean 是否匹配
-     */
-    public static boolean patternFileNameH(String fileName) {
-        String pattern = "([.a-z_A-Z0-9]+).h";
+        String pattern = "((@ohos\\.)*([.a-z_A-Z0-9]+).d.ts)";
         return Pattern.matches(pattern, fileName);
     }
 

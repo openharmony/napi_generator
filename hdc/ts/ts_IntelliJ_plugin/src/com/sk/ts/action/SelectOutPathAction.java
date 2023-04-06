@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sk.action;
+package com.sk.ts.action;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
