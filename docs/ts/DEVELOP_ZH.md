@@ -136,4 +136,4 @@ ts工具框架由C++语法解释器和代码生成器两部分组成。C++语法
 
 具体的插件开发步骤，可以左键单击以下链接了解：
 
-[IntelliJ插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/ts/DEVELOP_ZH.md)
+[IntelliJ插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/hdc/ts/ts_IntelliJ_plugin/docs/ts/DEVELOP_ZH.md)
