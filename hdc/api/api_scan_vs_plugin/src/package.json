@@ -69,7 +69,7 @@
 		"vsce": "^2.11.0"
 	},
 	"repository": {
-        "type": "gitee",
-        "url": "https://gitee.com/openharmony/napi_generator/tree/master/hdc/api"
-    }
+		"type": "gitee",
+		"url": "https://gitee.com/openharmony/napi_generator/tree/master/hdc/api"
+	}
 }
