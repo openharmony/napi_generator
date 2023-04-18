@@ -88,11 +88,13 @@
         var fileNames = document.getElementById("hFilePath").value;
         var genDir = document.getElementById("genHResultDir").value;
         var serviceId = document.getElementById("serviceID").value;
+        var buttonName = document.getElementById("okButton").textContent;
         var result = {
             msg: "param",
             fileNames: fileNames,
             genDir: genDir,
             serviceId: serviceId,
+            buttonName: buttonName,
         }
         vscode.postMessage(result);
     }
@@ -178,6 +180,7 @@
             document.getElementById("error").innerHTML="";
         }
     }
+    
     function isDarkColor(colorArr) {
         let grayLevel = colorArr[0] * 0.299 + colorArr[1] * 0.587 + colorArr[2] * 0.114;
         return grayLevel < 192;
@@ -248,7 +251,7 @@
                         <td colspan="2">
                             <button type="button" class="button" onclick="cancel()"
                                 style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>
-                            <button type="button" class="button" onclick="sendParamMsg()"
+                            <button id="okButton" type="button" class="button" onclick="sendParamMsg()"
                                 style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
                             <a href="https://gitee.com/openharmony/napi_generator" target="_blank">
                                 <button type="button"

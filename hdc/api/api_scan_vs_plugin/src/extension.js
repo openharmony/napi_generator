@@ -24,6 +24,10 @@ const path = require('path');
 var exeFilePath = null;
 const dirCache={};
 var globalPanel = null;
+
+var importToolChain = false;
+var extensionIds = [];
+var nextPluginId = null;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -33,7 +37,7 @@ var globalPanel = null;
 function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "gnapi" is now active!');
+	console.log('Congratulations, your extension "ApiScan" is now active!');
 	let disposable = register(context, 'api_scan');
 	let disposableMenu = register(context, 'api_scan_menu');
 	context.subscriptions.push(disposable);
@@ -72,7 +76,7 @@ function exeFileExit() {
 }
 
 function register(context, command) {
-	let disposable = vscode.commands.registerCommand(command, function (uri) {
+	let disposable = vscode.commands.registerCommand(command, function (uri, boolValue, items) {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		globalPanel = vscode.window.createWebviewPanel(
@@ -84,7 +88,24 @@ function register(context, command) {
 				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
 			}
 		);
-		globalPanel.webview.html = getWebviewContent(context);
+
+		if (typeof(boolValue) == 'boolean' && Array.isArray(items)) {
+			if (boolValue == true) {
+				//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
+				let myExtensionId = 'kaihong.ApiScan';
+				for (let i = 0; i < items.length; i++) {
+					if (myExtensionId == items[i] && (i == items.length - 1)) {
+						importToolChain = false;
+					} else if (myExtensionId == items[i] && (i != items.length - 1)) {
+						importToolChain = boolValue;
+						nextPluginId = items[i + 1];
+					}
+					extensionIds.push(items[i]);
+				}
+			}
+		}
+		
+		globalPanel.webview.html = getWebviewContent(context, importToolChain);
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
@@ -92,19 +113,8 @@ function register(context, command) {
 				globalPanel.dispose();
 			}
 			else if (msg == "api_scan") {
-				let name = message.fileNames;
-				let genDir = message.genDir;
-				name = re.replaceAll(name, " ", "");
-				if ("" == name) {
-					vscode.window.showErrorMessage("Please enter the path!");
-					return;
-				}
-				if (exeFileExit()) {
-					executorApiscan(name, genDir);
-				} else {
-					vscode.window.showInformationMessage("Copy executable program to " + __dirname);
-				}
-			}else {
+				checkReceiveMsg(message);
+			} else {
 				selectPath(globalPanel, message);
 			}
 		}, undefined, context.subscriptions);
@@ -117,6 +127,59 @@ function register(context, command) {
 		globalPanel.webview.postMessage(result);
 	});
 	return disposable;
+}
+
+function checkReceiveMsg(message) {
+	let name = message.fileNames;
+	let genDir = message.genDir;
+	let buttonName = message.buttonName;
+	name = re.replaceAll(name, " ", "");
+	if ("" == name) {
+		vscode.window.showErrorMessage("Please enter the path!");
+		return;
+	}
+	if (exeFileExit()) {
+		executorApiscan(name, genDir);
+		if (buttonName == 'Next') {
+			startNextPlugin();
+		}
+	} else {
+		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
+	}
+}
+
+/**
+* 获取插件执行命令
+*/
+function nextPluginExeCommand(nextPluginId) {
+    if (nextPluginId == "kaihong.ApiScan") {
+		return 'api_scan';
+	} else if (nextPluginId == "kaihong.gn-gen") {
+		return 'generate_gn';
+	} else if (nextPluginId == "kaihong.service-gen") {
+		return 'generate_service';
+	} else if (nextPluginId == "kaihong.ts-gen") {
+		return 'generate_ts';
+	} else if (nextPluginId == "kaihong.napi-gen") {
+		return 'generate_napi';
+	} else {
+		return null;
+	}
+}
+
+/**
+* 执行完毕后开启工具链中下一个插件
+*/
+function startNextPlugin() {
+	const extension = vscode.extensions.getExtension(nextPluginId);
+	if (extension) {
+		let startNextPlugin = nextPluginExeCommand(nextPluginId);
+		try {
+			vscode.commands.executeCommand(startNextPlugin, '', importToolChain, extensionIds);
+		} catch (error) {
+			console.error(error);
+		}
+	}
 }
 
 /**
@@ -149,10 +212,14 @@ function selectPath(panel, message) {
 // this method is called when your extension is deactivated
 function deactivate() { }
 
-function getWebviewContent(context) {
+function getWebviewContent(context, importToolChain) {
 	let data = readFile(__dirname + '/vs_plugin_view.html');
 	data = getWebViewContent(context, '/vs_plugin_view.html');
-	return data.toString();
+  let content = data.toString();
+	if (importToolChain) {
+		content = content.replace('Ok', 'Next');
+	}
+	return content;
 }
 
 function getWebViewContent(context, templatePath) {

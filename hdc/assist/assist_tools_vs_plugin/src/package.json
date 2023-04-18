@@ -1,0 +1,61 @@
+{
+  "name": "AssistTools",
+  "displayName": "Kaihong Assist Tools",
+  "description": "This is the Kaihong assistance tools unified entrance for OpenHarmony OS developer.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.70.3"
+  },
+  "publisher": "kaihong",
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "assist_tools",
+        "title": "Kaihong Assist Tools"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceScheme == file",
+          "command": "assist_tools"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "assist_tools"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.70.3",
+    "@vscode/test-electron": "^2.2.3",
+    "eslint": "^8.34.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "vsce": "^2.15.0"
+  },
+  "repository": {
+	"type": "gitee",
+	"url": "https://gitee.com/openharmony/napi_generator/tree/master/hdc/assist"
+  }
+}
