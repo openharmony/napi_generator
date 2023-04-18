@@ -113,10 +113,12 @@
     function sendApiscanParamMsg() {
         var fileNames = document.getElementById("asFilePath").value;
         var genDir = document.getElementById("genASResultDir").value;
+        var buttonName = document.getElementById("okButton").textContent;
         var result = {
             msg: "api_scan",
             fileNames: fileNames,
             genDir: genDir,
+            buttonName: buttonName,
         }
         vscode.postMessage(result);
     }
@@ -186,7 +188,7 @@
                 <div style="margin-top: 20px; text-align: left;">
                     <button type="button" class="button" onclick="cancel()"
                         style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>
-                    <button type="button" class="button" onclick="sendApiscanParamMsg()"
+                    <button id="okButton" type="button" class="button" onclick="sendApiscanParamMsg()"
                         style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
                     <a href="https://gitee.com/openharmony/napi_generator" target="_blank">
                         <button type="button"

@@ -68,8 +68,8 @@
 		"typescript": "^4.8.4",
 		"vsce": "^2.11.0"
 	},
-    "repository": {
-        "type": "gitee",
-        "url": "https://gitee.com/openharmony/napi_generator/tree/master/hdc/gn"
-  }
+	"repository": {
+		"type": "gitee",
+		"url": "https://gitee.com/openharmony/napi_generator/tree/master/hdc/gn"
+	}
 }

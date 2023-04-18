@@ -163,6 +163,7 @@
         var extFlagRadio = document.getElementById("extFlagRadio");
         var extFileInput = document.getElementById("extFileInput");
         var extFlagInput = document.getElementById("extFlagInput");
+        var buttonName = document.getElementById("okButton").textContent;
 
         var result = {
             msg: "gn",
@@ -175,7 +176,8 @@
             componentName: componentName,
             compileOptions: compileOptions,
             extFile: extFileRadio.checked ? extFileInput.value : "",
-            extFlag: extFlagRadio.checked ? extFlagInput.value : ""
+            extFlag: extFlagRadio.checked ? extFlagInput.value : "",
+            buttonName: buttonName,
         }
         vscode.postMessage(result);
     }
@@ -430,7 +432,7 @@
             <tr>
                 <td colspan="2">
                     <button type="button" class="button" onclick="cancel()" style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>
-                    <button type="button" class="button" onclick="sendGnParamMsg()" style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
+                    <button id="okButton" type="button" class="button" onclick="sendGnParamMsg()" style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
                     <a href="https://gitee.com/openharmony/napi_generator" target="_blank">
                         <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
                     </a>
