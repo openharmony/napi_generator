@@ -1,10 +1,10 @@
 {
-	"name": "napi-gen",
-	"displayName": "napi-gen",
-	"description": "Generate NAPI definition code and framework code for OpenHarmony",
+	"name": "ts-gen",
+	"displayName": "ts-gen",
+	"description": "Generate TS interface file for OpenHarmony",
 	"keywords": [
-		"napi",
-		"napi_generator"
+		"ts",
+		"ts_generator"
 	],
 	"icon": "images/napi.png",
 	"version": "0.0.1",
@@ -22,24 +22,24 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "generate_napi",
-				"title": "Generate Napi Frame"
+				"command": "generate_ts",
+				"title": "Generate Ts Frame"
 			},
 			{
-				"command": "generate_napi_menu",
-				"title": "Generate Napi Frame"
+				"command": "generate_ts_menu",
+				"title": "Generate Ts Frame"
 			}
 		],
 		"menus": {
 			"explorer/context": [
 				{
-					"when": "resourceExtname == .ts",
-					"command": "generate_napi"
+					"when": "resourceExtname == .h",
+					"command": "generate_ts"
 				}
 			],
 			"editor/context": [
 				{
-					"command": "generate_napi_menu"
+					"command": "generate_ts_menu"
 				}
 			]
 		}
@@ -65,11 +65,11 @@
 		"compressing": "^1.5.1",
 		"node-gyp": "^9.0.0",
 		"stdio": "^2.1.1",
-		"typescript": "^4.7.3",
-		"vsce": "^2.9.1"
+		"typescript": "^4.9.5",
+		"vsce": "^2.15.0"
 	},
 	"repository": {
 		"type": "gitee",
-		"url": "https://gitee.com/openharmony/napi_generator/tree/master"
+		"url": "https://gitee.com/openharmony/napi_generator/tree/master/hdc/ts"
 	}
 }

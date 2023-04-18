@@ -36,11 +36,12 @@ var nextPluginId = null;
 function activate(context) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "napi-gen" is now active!');
-	let disposable = register(context, 'generate_napi');
-	let disposableMenu = register(context, 'generate_napi_menu');
+	console.log('Congratulations, your extension "ts-gen" is now active!');
+	let disposable = register(context, 'generate_ts');
+	let disposableMenu = register(context, 'generate_ts_menu');
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposableMenu);
+	
 	var platform = detectPlatform();
 	if (platform == 'win') {
 		exeFilePath = __dirname + "/napi_generator-win.exe";
@@ -51,9 +52,10 @@ function activate(context) {
 	}
 }
 
-function executor(name, genDir, mode,numberType, importIsCheck) {
+function executorH2Ts(name, genDir) {
+	var command = exeFilePath + " -f " + name + " -o " + genDir + " -t true";
 	var exec = require('child_process').exec;
-	exec(genCommand(name, genDir, mode,numberType, importIsCheck), function (error, stdout, stderr) {
+	exec(command, function (error, stdout, stderr) {
 		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
 		if (error || stdout.indexOf("success") < 0) {
 			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
@@ -61,14 +63,6 @@ function executor(name, genDir, mode,numberType, importIsCheck) {
 		}
 		vscode.window.showInformationMessage("Generated successfully");
 	});
-}
-
-function genCommand(name, genDir, mode,numberType, importIsCheck) {
-	var genFileMode = mode == 0 ? " -f " : " -d ";
-	if (genDir == ""){
-		return exeFilePath + genFileMode + name;
-	}
-	return exeFilePath + genFileMode + name + " -o " + genDir + " -n " + numberType + " -i " + importIsCheck;
 }
 
 function exeFileExit() {
@@ -84,18 +78,17 @@ function register(context, command) {
 		// Display a message box to the user
 		globalPanel = vscode.window.createWebviewPanel(
 			'generate', // Identifies the type of WebView
-			'Generate Napi Frame', // Title of the panel displayed to the user
+			'Generate Ts Frame', // Title of the panel displayed to the user
 			vscode.ViewColumn.Two, // Display the WebView panel in the form of new columns in the editor
 			{
 				enableScripts: true, // Enable or disable JS, default is Enable
 				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
 			}
 		);
-
 		if (typeof(boolValue) == 'boolean' && Array.isArray(items)) {
 			if (boolValue == true) {
 				//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
-				let myExtensionId = 'kaihong.napi-gen';
+				let myExtensionId = 'kaihong.ts-gen';
 				for (let i = 0; i < items.length; i++) {
 					if (myExtensionId == items[i] && (i == items.length - 1)) {
 						importToolChain = false;
@@ -113,14 +106,15 @@ function register(context, command) {
 			msg = message.msg;
 			if (msg == "cancel") {
 				globalPanel.dispose();
-			} else if(msg == "param") {
+			} 
+			else if(msg == "h2ts") {
 				checkReceiveMsg(message);
-			} else {
+			}else {
 				selectPath(globalPanel, message);
 			}
 		}, undefined, context.subscriptions);
 		let fn = re.getFileInPath(uri.fsPath);
-		let tt = re.match("((@ohos\.)*[a-zA-Z_0-9]+.d.ts)", fn);
+		let tt = re.match("([a-zA-Z_0-9]+.h)", fn);
 		var result = {
 			msg: "selectInterPath",
 			path: tt ? uri.fsPath : ""
@@ -131,15 +125,21 @@ function register(context, command) {
 }
 
 function checkReceiveMsg(message) {
-	let mode = message.mode;
 	let name = message.fileNames;
 	let genDir = message.genDir;
-	let numberType = message.numberType;
-	let importIsCheck = message.importIsCheck;
 	let buttonName = message.buttonName;
-	checkMode(name, genDir, mode, numberType, importIsCheck);
-	if (buttonName == 'Next') {
-		startNextPlugin();
+	name = re.replaceAll(name, " ", "");
+	if ("" == name) {
+		vscode.window.showErrorMessage("Please enter the path!");
+		return;
+	}
+	if (exeFileExit()) {
+		executorH2Ts(name, genDir);
+		if (buttonName == 'Next') {
+			startNextPlugin();
+		}
+	} else {
+		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
 	}
 }
 
@@ -157,8 +157,7 @@ function nextPluginExeCommand(nextPluginId) {
 		return 'generate_ts';
 	} else if (nextPluginId == "kaihong.napi-gen") {
 		return 'generate_napi';
-	} 
-	else {
+	} else {
 		return null;
 	}
 }
@@ -173,7 +172,7 @@ function startNextPlugin() {
 		try {
 			vscode.commands.executeCommand(startNextPlugin, '', importToolChain, extensionIds);
 		} catch (error) {
-			console.error(error)
+			console.error(error);
 		}
 	}
 }
@@ -182,7 +181,6 @@ function startNextPlugin() {
 * 选择本地目录/文件夹
 */
  function selectPath(panel, message) {
-	let msg = message.msg;
 	let mode = 1;
 	if (message.mode != undefined) {
 		mode = message.mode;
@@ -193,9 +191,9 @@ function startNextPlugin() {
 		canSelectFiles: mode == 0 ? true : false,//是否选择文件
 		canSelectFolders: mode == 0 ? false : true,//是否选择文件夹
 		defaultUri:vscode.Uri.file(''),//默认打开本地路径
-		// 文件过滤选项，在文件夹选择模式下不可设置此配置，否则ubuntu系统下无法选择文件夹
-		filters: mode == 1 ? {} : { 'Text files': ['d.ts'] }
-		
+		filters: mode == 1 ? {} : { // 文件过滤选项，在文件夹选择模式下不可设置此配置，否则ubuntu系统下无法选择文件夹
+			'Text files': ['h']
+		} 
 	};
    
 	return vscode.window.showOpenDialog(options).then(fileUri => {
@@ -213,30 +211,6 @@ function startNextPlugin() {
 		   return fileUri[0].fsPath
 	   }
    });
-}
-
-function checkMode(name, genDir, mode,numberType, importIsCheck) {
-	name = re.replaceAll(name, " ", "");
-	if ("" == name) {
-		vscode.window.showErrorMessage("Please enter the path!");
-		return;
-	}
-	if (mode == 0) {
-		if (name.indexOf(".") < 0) {
-			vscode.window.showErrorMessage("Please enter the correct file path!");
-			return;
-		}
-	} else {
-		if (name.indexOf(".") > 0 || !fs.lstatSync(name).isDirectory()) {
-			vscode.window.showErrorMessage("Please enter the correct folder folder!");
-			return;
-		}
-	}
-	if (exeFileExit()) {
-		executor(name, genDir, mode,numberType, importIsCheck);
-	} else {
-		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
-	}
 }
 
 // this method is called when your extension is deactivated

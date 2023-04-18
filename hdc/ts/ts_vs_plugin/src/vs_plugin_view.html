@@ -102,48 +102,24 @@
     var mode = 0;
     let vscode = acquireVsCodeApi();
     let importCheck = false;
-    window.onload = function () {
-        document.getElementById("selectMode").addEventListener("change", function (e) {
-            if (e.target.value == 1) {
-                mode = 1;
-            } else {
-                mode = 0;
-            }
-        });
-    }
-
-    function sendParamMsg() {
-        var fileNames = document.getElementById("interfaceFile").value;
-        var genDir = document.getElementById("genFile").value;
-        var numberType = document.getElementById("numberTypeid").value;
-        var buttonName = document.getElementById("okButton").textContent;
-        var result = {
-            msg: "param",
-            mode: mode,
-            fileNames: fileNames,
-            genDir: genDir,
-            numberType: numberType,
-            importIsCheck: importCheck,
-            buttonName: buttonName,
-        }
-        vscode.postMessage(result);
-    }
 
     function sendH2TsParamMsg() {
 		var fileNames = document.getElementById("hFilePath").value;
 		var genDir = document.getElementById("genHResultDir").value;
+        var buttonName = document.getElementById("okButton").textContent;
 		var result = {
 			msg: "h2ts",
 			fileNames: fileNames,
 			genDir: genDir,
+            buttonName: buttonName,
 		}
 		vscode.postMessage(result);
 	}
 
-    function selectInterPath() {
+    function selectHFilePath() {
         var result = {
-            msg: "selectInterPath",
-            mode: mode
+            msg: "selectHFilePath",
+            mode: "0"
         }
         vscode.postMessage(result);
     }
@@ -160,10 +136,6 @@
             msg: "cancel"
         }
         vscode.postMessage(result);
-    }
-
-    function checkbox(obj) {
-        importCheck = obj.checked;
     }
 
     window.addEventListener('message', event => {
@@ -212,8 +184,17 @@
         } else {
             dir = fileNames;
         }
-        document.getElementById("genFile").value = dir;
-        document.getElementById("buildFile").value = dir;
+        if(message == "selectInterPath") {
+            let regex = new RegExp("[a-zA-Z_0-9]+.h");
+            if(regex.exec(fileNames)){
+                document.getElementById("genHResultDir").value = dir;
+            }else{
+                document.getElementById("genFile").value = dir;
+                document.getElementById("buildFile").value = dir;
+            }
+        }else{
+            document.getElementById("genHResultDir").value = dir;
+        }
     }
 
 </script>
@@ -221,63 +202,28 @@
 <div class="tabs">
     <div class="tab">
         <input type="radio" style="display: none;" id="tab" name="group-1">
-        <label for="tab">Napi-Gen</label>
+        <label for="tab">Ts-Gen</label>
         <div class="content">
             <table style="border-spacing:0px 5px; margin-left: 20px; margin-top: 38px; width: 500px;">
-                <tr id="selectMode">
-                    <td width="110px">选择生成方式:</td>
+                <tr>
+                    <td width="110px">文件路径选择:</td>
                     <td width="340px">
-                        <input class="radio" type="radio" name="mode" value="0" id="files" checked="checked"> .d.ts文件</input>
-                        <input class="radio" type="radio" name="mode" value="1" id="dir"> 文件夹</input>
+                        <input class="text" type="text" id="hFilePath" onchange="inputChange()" onporpertychange="inputChange() ">
+                        <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectHFilePath()">
                     </td>
                 </tr>
-               <tr>
-                    <td>选择接口文件:</td>
-                    <td>
-                        <input class="text" type="text" id="interfaceFile" onchange="inputChange()" onporpertychange="inputChange() ">
-                        <img src="./images/file.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectInterPath()">
-                    </td>
-                </tr>
-            
+
                 <tr>
-                    <td>生成框架路径:</td>
+                    <td>输出目录选择:</td>
                     <td>
-                        <input class="text" accept="text" id="genFile">
-                        <img src="./images/path.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectPath('selectGenPath')">
-                    </td>
-                </tr>
-                <tr>
-                    <td>编译脚本路径:</td>
-                    <td>
-                        <input class="text" type="text" id="buildFile">
-                        <img src="./images/path.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectPath('selectBuildPath')">    
-                    </td>
-                </tr>
-                <tr>
-                    <td>number目的类型:</td>
-                    <td>
-                        <select id="numberTypeid" name = "numberType" style="width: 100px; height: 23px; margin-left: -1px;">
-                            <option selected value = "uint32_t">uint32_t</option>
-                            <option value = "int">int</option>
-                            <option value = "double">double</option>
-                            <option value = "float">float</option>
-                            <option value = "char">char</option>
-                            <option value = "bool">bool</option>
-                            <option value = "void">void</option>
-                            <option value = "wchar_t">wchar_t</option>
-                          </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>启用import功能:</td>
-                    <td>
-                        <input id= "importCheck" type="checkbox" name="import" style="vertical-align:middle; width: 20px; height: 20px; margin-left: -1px;" onclick="checkbox(this)">
+                        <input class="text" accept="text" id="genHResultDir">
+                        <img src="./images/path.png" width="20px" height="20px" style="vertical-align:middle;" onclick="selectPath('selectHResultDir')">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <button type="button" class="button" onclick="cancel()" style="background-color: #333333; border: 1px solid #333333; color: #fff;">Cancel</button>
-                        <button id="okButton" type="button" class="button" onclick="sendParamMsg()" style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
+                        <button id="okButton" type="button" class="button" onclick="sendH2TsParamMsg()" style="background-color: #4B97D9; border: 1px solid #4B97D9; color: #fff;">Ok</button>
                         <a href="https://gitee.com/openharmony/napi_generator" target="_blank">
                             <button type="button" style="background-color: #333333; width: 20px; height: 20px; border-radius: 50%;border: none; color: #fff;">?</button>
                         </a>
