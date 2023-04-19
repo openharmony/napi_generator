@@ -116,7 +116,7 @@ function register(context, command) {
 		let fn = re.getFileInPath(uri.fsPath);
 		let tt = re.match("([a-zA-Z_0-9]+.h)", fn);
 		var result = {
-			msg: "selectInterPath",
+			msg: "selectHFilePath",
 			path: tt ? uri.fsPath : ""
 			}
 	    globalPanel.webview.postMessage(result);
