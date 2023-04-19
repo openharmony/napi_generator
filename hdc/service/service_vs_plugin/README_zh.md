@@ -8,7 +8,7 @@ SERVICE框架生成工具，根据用户提供的.h头文件，工具会自动�
 
 	├── service                       # SERVICE框架生成工具
 	│   ├── ...                       # 其他文件
-	│   ├── service_vsJ_plugin        # VS Code插件代码
+	│   ├── service_vs_plugin         # VS Code插件代码
 	│   │   ├── docs                  # VS Code插件说明
 	│   │   ├── src    				  # VS Code插件源码
 	│   │   ├── package.json    	  # package.json 文件

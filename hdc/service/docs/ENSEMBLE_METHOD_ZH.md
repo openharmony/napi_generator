@@ -1,4 +1,4 @@
-# Service框架生成代码集成到OpenHarmony的方法
+# Service框架生成代码集成到OpenHarmony的方法（OpenHarmony源码3.1版本）
 
 ## 场景说明
 
