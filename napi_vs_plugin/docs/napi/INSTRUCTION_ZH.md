@@ -33,7 +33,7 @@ visual studio code 版本需1.62.0及以上。
 
 ![](../../../figures/pic-plug-in-select-d-ts.png)
 
-5.选择.d.ts文件,点击右键选择 Generate Napi Frame，工具弹出Generate Napi Frame弹窗，选择Napi-Gen页签。接口文件文本框填写.d.ts文件路径；生成框架路径文本框填写生成框架存放路径；编译脚本路径默认填写；number目的类型此处选择float；启用import功能不选择（待转换.d.ts文件未引用其它文件）；点击ok。
+5.选择.d.ts文件,点击右键选择 Generate Napi Frame，工具弹出Generate Napi Frame弹窗。接口文件文本框填写.d.ts文件路径；生成框架路径文本框填写生成框架存放路径；编译脚本路径默认填写；number目的类型此处选择float；启用import功能不选择（待转换.d.ts文件未引用其它文件）；点击ok。
 
 ![](../../../figures/pic-plug-in-gen-c++.png)
 

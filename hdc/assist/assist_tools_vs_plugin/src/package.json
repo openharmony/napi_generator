@@ -3,6 +3,10 @@
   "displayName": "Kaihong Assist Tools",
   "description": "This is the Kaihong assistance tools unified entrance for OpenHarmony OS developer.",
   "version": "0.0.1",
+  "keywords": [
+		"assist_tools",
+		"assist"
+	],
   "engines": {
     "vscode": "^1.70.3"
   },
