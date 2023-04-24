@@ -55,5 +55,4 @@ Ability Template选择Empty Ability,单击Next。
 ## DevEco Studio编译打包说明
 NAPI框架代码生成后，系统框架开发者进行二次开发后，可在DevEco Studio进行编译打包生成对应的库文件，供应用开发者调用接口。DevEco Studio编译打包说明的具体操作步骤可以左键单击以下链接了解：
 
-[DevEco Studio编译打包说明](https://gitee.com/openharmony/napi_generator/blob/master/docs/INSTRUCTION_BUILD_ZH.md)
-
+[DevEco Studio编译打包说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/INSTRUCTION_BUILD_ZH.md)
