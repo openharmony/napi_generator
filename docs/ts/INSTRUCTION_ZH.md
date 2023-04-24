@@ -95,4 +95,4 @@ Ts接口生成工具支持两种入口，分别是可执行程序、IntelliJ插�
 
 具体的插件使用步骤，可以左键单击以下链接了解：
 
-[IntelliJ插件使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/ts/ts_IntelliJ_plugin/docs/ts/INSTRUCTION_ZH.md)
+[IntelliJ插件使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/ts/ts_IntelliJ_plugin/docs/INSTRUCTION_ZH.md)

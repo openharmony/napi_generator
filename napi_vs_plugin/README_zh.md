@@ -42,7 +42,7 @@ NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescr
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
-[工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/napi_vs_plugin/docs/INSTRUCTION_ZH.md)
+[工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/napi_vs_plugin/docs/napi/INSTRUCTION_ZH.md)
 
 ### 工具输出
 
@@ -103,7 +103,7 @@ bool TestClass1::if_callback(std::string &v1, std::string &out) {
 
 开发者可以根据如下的步骤来完成对工具VS Code插件的开发：
 
- [工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/napi_vs_plugin/docs/DEVELOP_ZH.md)
+ [工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/napi_vs_plugin/docs/napi/DEVELOP_ZH.md)
     
 ## 版本说明 
 
