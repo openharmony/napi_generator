@@ -111,7 +111,7 @@
 
 ## 版本说明
 
- [版本说明](https://gitee.com/openharmony/napi_generator/blob/master/release-notes/ts_Gen-1.0.md)
+ [版本说明](https://gitee.com/openharmony/napi_generator/blob/master/docs/ts/ts_Gen-1.0.md)
 
 ## FAQ
 
