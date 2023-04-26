@@ -20,7 +20,7 @@ const { iServiceHTemplate, proxyHTemplate, stubHTemplate, serviceHTemplate, prox
     proxyFuncTemplate, stubCppTemplate, stubInnerFuncTemplate, serviceCppTemplate, serviceFuncImplTemplate,
     clientCppTemplate, buildGnTemplate, bundleJsonTemplate, profileGnTemplate, profileXmlTemplate, serviceCfgTemplate,
     serviceCfgGnTemplate } = require("./fileTemplate");
-const { DATA_W_MAP, DATA_R_MAP, getParcelType } = require("../tools/common");
+const { DATA_WRITE_MAP, DATA_READ_MAP, getParcelType } = require("../tools/common");
 
 let fileContent = {
     "iServiceHFile": {},
@@ -68,7 +68,7 @@ function genWriteString(srcName, destName, vType) {
     if (matchs) { // write data of std::vector
         let rowType = re.getReg(vType, matchs.regs[2]);
         let parcelType = getParcelType(rowType);
-        let wFunc = DATA_W_MAP.get(parcelType);
+        let wFunc = DATA_WRITE_MAP.get(parcelType);
         if (!wFunc) {
             NapiLog.logError("Unsupport writing with type: " + vType);
             return "";
@@ -78,7 +78,7 @@ function genWriteString(srcName, destName, vType) {
     }
 
     let parcelType = getParcelType(vType);
-    let wFunc = DATA_W_MAP.get(parcelType);
+    let wFunc = DATA_WRITE_MAP.get(parcelType);
     if (!wFunc) {
         NapiLog.logError("Unsupport writing with type: " + vType);
         return "";
@@ -98,7 +98,7 @@ function genReadString(srcName, destName, vType) {
     if (matchs) { // write data of std::vector
         let rowType = re.getReg(vType, matchs.regs[2]);
         let parcelType = getParcelType(rowType);
-        let rFunc = DATA_R_MAP.get(parcelType);
+        let rFunc = DATA_READ_MAP.get(parcelType);
         if (!rFunc) {
             NapiLog.logError("Unsupport reading with type: " + vType);
             return "";
@@ -108,7 +108,7 @@ function genReadString(srcName, destName, vType) {
     }
 
     let parcelType = getParcelType(vType);
-    let rFunc = DATA_R_MAP.get(parcelType);
+    let rFunc = DATA_READ_MAP.get(parcelType);
     if (!rFunc) {
         NapiLog.logError("Unsupport reading with type: " + vType);
         return "";
