@@ -12,27 +12,27 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-// remote消息中变量类型名(key)与对应的写parcel方法名(value)的映射（参考parcel.h）
-const DATA_W_MAP = new Map(
-    [["bool", "WriteBoolUnaligned"], ["int8_t", "WriteInt8Unaligned"], ["uint8_t", "ReadUint8Unaligned"],
-     ["int16_t", "WriteInt16Unaligned"], ["uint16_t", "WriteUint16Unaligned"],
-     ["int32_t", "WriteInt32"], ["uint32_t", "WriteUint32"], ["int64_t", "WriteInt64"], ["uint64_t", "WriteUint64"],
-     ["float", "WriteFloat"], ["double", "WriteDouble"], ["char *", "WriteCString"], ["std::string", "WriteString"],
-     ["string", "WriteString"]
-]);
-
 // remote消息中变量类型名(key)与对应的读parcel方法名(value)的映射（参考parcel.h）
-const DATA_R_MAP = new Map(
-    [["bool", "ReadBoolUnaligned"], ["int8_t", "ReadInt8Unaligned"], ["uint8_t", "ReadUint8Unaligned"],
+const DATA_READ_MAP = new Map(
+    [["int8_t", "ReadInt8Unaligned"], ["uint8_t", "ReadUint8Unaligned"],
      ["int16_t", "ReadInt16Unaligned"], ["uint16_t", "ReadUint16Unaligned"],
      ["int32_t", "ReadInt32"], ["uint32_t", "ReadUint32"], ["int64_t", "ReadInt64"], ["uint64_t", "ReadUint64"],
      ["float", "ReadFloat"], ["double", "ReadDouble"], ["char *", "ReadCString"], ["std::string", "ReadString"],
-     ["string", "ReadString"]
+     ["string", "ReadString"], ["bool", "ReadBoolUnaligned"]
+]);
+
+// remote消息中变量类型名(key)与对应的写parcel方法名(value)的映射（参考parcel.h）
+const DATA_WRITE_MAP = new Map(
+    [["int8_t", "WriteInt8Unaligned"], ["uint8_t", "ReadUint8Unaligned"],
+     ["int16_t", "WriteInt16Unaligned"], ["uint16_t", "WriteUint16Unaligned"],
+     ["int32_t", "WriteInt32"], ["uint32_t", "WriteUint32"], ["int64_t", "WriteInt64"], ["uint64_t", "WriteUint64"],
+     ["float", "WriteFloat"], ["double", "WriteDouble"], ["char *", "WriteCString"], ["std::string", "WriteString"],
+     ["string", "WriteString"], ["bool", "WriteBoolUnaligned"]
 ]);
 
 // 常用类型转换表, 将C语言常见类型(key)转换为remote data读写函数使用的类型(value)
 // 例如 ErrCode 类型在框架中的系统原型为int类型，这里映射成int32_t，
-// 因为int32_t类型在 DATA_W_MAP/DATA_R_MAP 表中有对应的读写数据方法(WriteInt32/ReadInt32)
+// 因为int32_t类型在 DATA_WRITE_MAP/DATA_READ_MAP 表中有对应的读写数据方法(WriteInt32/ReadInt32)
 const TYPE_DEF_MAP = new Map(
     [["ErrCode", "int32_t"], ["char", "int8_t"], ["short", "int16_t"], ["int", "int32_t"], ["long", "int64_t"],
     ["unsigned char", "uint8_t"], ["unsigned short", "uint16_t"], ["unsigned int", "uint32_t"], 
@@ -45,5 +45,5 @@ function getParcelType(srcType) {
 }
 
 module.exports = {
-    DATA_W_MAP, DATA_R_MAP, getParcelType
+    DATA_WRITE_MAP, DATA_READ_MAP, getParcelType
 }
