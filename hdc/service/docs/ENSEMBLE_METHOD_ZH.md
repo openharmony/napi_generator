@@ -1,4 +1,4 @@
-# Service框架生成代码集成到OpenHarmony的方法（OpenHarmony源码3.1版本）
+# Service框架生成代码集成到OpenHarmony的方法
 
 ## 场景说明
 
@@ -8,15 +8,17 @@
 
 将生成的整个xxxservice目录复制到OpenHarmony源码根目录下（与base、foundation目录平级）
 
-### 修改3个系统公共文件
+### 修改系统公共文件
+
+#### OpenHarmony 3.1 release
 
 1. 服务配置
    foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include/system_ability_definition.h增加以下两行(其中SERVICE_ID与sa_profile目录下的xml文件名保持一致)
-
-  ```
-XXX_SERVICE_ID                                = 9001,
-{XXX_SERVICE_ID, "xxxservice" },
-  ```
+   
+   ```
+   XXX_SERVICE_ID                                = 9001,
+   {XXX_SERVICE_ID, "xxxservice" },
+   ```
 
 2. 子系统配置
    build/subsystem_config.json
@@ -29,12 +31,78 @@ XXX_SERVICE_ID                                = 9001,
     }
    ```
 
-3. 产品配置
+3. 产品配置，如Hi3516DV300
    productdefine/common/products/Hi3516DV300.json
 
 ```
  "xxxservice:xxxservice_part":{}
 ```
+
+#### OpenHarmony 3.2 release
+
+1. 服务配置
+
+   foundation/systemabilitymgr/samgr/interfaces/innerkits/samgr_proxy/include/system_ability_definition.h增加以下两行(其中SERVICE_ID与sa_profile目录下的xml文件名保持一致)
+
+   ```
+   XXX_SERVICE_ID                                = 9001,
+   {XXX_SERVICE_ID, "xxxservice" },
+   ```
+
+2. 子系统配置
+
+   build/subsystem_config.json
+
+   增加以下内容
+
+   ```
+   "xxxservice": {
+   "path":"xxxservice",
+   "name": "xxxservice"
+    }
+   ```
+
+3. 产品配置，如rk3568
+
+   vendor/hihope/rk3568/config.json
+
+   将"build_selinux"属性改为false
+
+   ```
+   "build_selinux": false,
+   ```
+
+   增加以下内容
+
+   ```
+   {
+     "subsystem": "xxxservice",
+     "components": [
+       {
+         "component": "xxxservice_part",
+         "features": []
+       }
+     ]
+   }
+   ```
+
+   注意：若用户需要配置selinux相关配置，则将开关改为true，再根据自身需求进行相关配置
+
+4. 权限配置
+
+   在相应产品目录下
+
+   vendor/hihope/rk3568/security_config/high_privilege_process_list.json
+
+   增加以下内容
+
+   ```
+   {
+       "name": "xxxservice",
+       "uid": "system",
+       "gid": ["root", "system"]
+   }
+   ```
 
 ### 补充 服务端/客户端 业务逻辑实现
 
@@ -48,12 +116,23 @@ xxx_client.cpp 为自动生成的客户端样例代码。编译烧录后，会�
 在main中使用proxy对象进行远程方法调用，参考注释示例。
 远程方法的参数包装已在生成代码xxx_service_proxy.cpp中统一处理，开发人员无需关注
 
-编码完成后，执行镜像编译命令，如
+编码完成后，执行镜像编译命令
+
+```
+./build.sh --product-name 产品名
+```
+
+如：若编译Hi3516DV300开发板，则执行
 
 ```
 ./build.sh --product-name Hi3516DV300
 ```
 
+若编译rk3568开发板，则执行
+
+```
+./build.sh --product-name rk3568
+```
 
 ## 运行
 
