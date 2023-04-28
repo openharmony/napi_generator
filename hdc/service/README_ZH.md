@@ -14,7 +14,6 @@
 	│   │   ├── ...                                  # 其他工具
 	│   │   ├── service                              # service框架代码生成工具
 	│   │   |   ├── service_vs_plugin                # VS Code插件源码
-	│   │   |   ├── service_IntelliJ_plugin          # Intellij插件源码
 	│   │   |   ├── service-gen
 	│   │   |   |   ├── src
 	│   │   |   |   |   ├── gen
@@ -67,6 +66,10 @@
 
 	namespace OHOS{
     	namespace Example{
+    	    /**
+            * @brief service服务，提供IPC调用接口
+            * @ServiceClass
+            */
         	class Exam{
         	public:
             	std::string getServName();
@@ -99,7 +102,9 @@
 
 ## 版本说明
 
-暂无
+[已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/hdc/service/docs/Service-1.0.md)
+
+[待开发特性](https://gitee.com/openharmony/napi_generator/blob/master/hdc/service/docs/ROADMAP_ZH.md)
 
 ## FAQ
 

@@ -44,13 +44,13 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../../../figures/DevEco_step_napi.png)
 
-4.选择.d.ts文件,点击右键选择 Generate Napi Frame，工具弹出Generate Napi Frame弹窗，选择Napi-Gen页签。接口文件文本框填写.d.ts文件路径；生成框架路径文本框填写生成框架存放路径；编译脚本路径填写生成CMakeList.txt文件输出路径；number目的类型此处选择char；启用import功能不选择（待转换.d.ts文件未引用其它文件）；点击ok。
+4.选择.d.ts文件,点击右键选择 Generate Napi Frame，工具弹出Generate Napi Frame弹窗。接口文件文本框填写.d.ts文件路径；生成框架路径文本框填写生成框架存放路径；编译脚本路径填写生成CMakeList.txt文件输出路径；number目的类型此处选择char；启用import功能不选择（待转换.d.ts文件未引用其它文件）；点击ok。
 
 ![](../../../figures/DevEco_step_napiGenerate.png)
 
 ![](../../../figures/DevEco_step_napi_ok.png)
 
-5.执行结束后会在out目录下生成napi框架代码文件。
+5.执行结束后会在对应生成框架路径目录下生成napi框架代码文件。
 
 ## DevEco Studio编译打包说明
 NAPI框架代码生成后，系统框架开发者进行二次开发后，可在DevEco Studio进行编译打包生成对应的库文件，供应用开发者调用接口。DevEco Studio编译打包说明的具体操作步骤可以左键单击以下链接了解：
