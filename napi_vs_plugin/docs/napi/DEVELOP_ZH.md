@@ -26,16 +26,9 @@
 
 	npx vsce package
 
-  每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
+  每个选项都选择y，然后回车，之后会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
 
 	harmony@Ubuntu-64:~/napi/napi_generator_5/napi_vs_plugin/src$ npx vsce package
-	WARNING  A 'repository' field is missing from the 'package.json' manifest file.
-	Do you want to continue? [y/N] y
-	WARNING  Using '*' activation is usually a bad idea as it impacts performance.
-	More info: https://code.visualstudio.com/api/references/activation-events#Start-up
-	Do you want to continue? [y/N] y
-	WARNING  LICENSE.md, LICENSE.txt or LICENSE not found
-	Do you want to continue? [y/N] y
 	This extension consists of 3370 files, out of which 1627 are JavaScript files. For performance reasons, you should bundle your extension: https://aka.ms/vscode-bundle-extension . You should also exclude unnecessary files by adding them to your .vscodeignore: https://aka.ms/vscode-vscodeignore
 	DONE  Packaged: /home/harmony/napi/napi_generator_5/napi_vs_plugin/src/gnapi-0.0.1.vsix (3370 files, 44.42MB)
 
@@ -59,16 +52,9 @@
 
 	npx vsce package
 
-  每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
+  每个选项都选择y，然后回车，之后会在当前目录下打包生成一个插件gnapi-0.0.1.vsix。结果如下：
 
 	E:\napi_generator\napi_generator-master\napi_vs_plugin\src>npx vsce package
-	WARNING  A 'repository' field is missing from the 'package.json' manifest file.
-	Do you want to continue? [y/N] y
-	WARNING  Using '*' activation is usually a bad idea as it impacts performance.
-	More info: https://code.visualstudio.com/api/references/activation-events#Start-up
-	Do you want to continue? [y/N] y
-	WARNING  LICENSE.md, LICENSE.txt or LICENSE not found
-	Do you want to continue? [y/N] y
 	This extension consists of 3467 files, out of which 1692 are JavaScript files. For performance reasons, you should bundle your extension: https://aka.ms/vscode-bundle-extension . You should also exclude unnecessary files by adding them to your .vscodeignore: https://aka.ms/vscode-vscodeignore
 	DONE  Packaged: E:\napi_generator\napi_generator-master\napi_vs_plugin\src\gnapi-0.0.1.vsix (3467 files, 42.3MB)
 
