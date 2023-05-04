@@ -63,36 +63,35 @@ function checkFileError(ifname) {
 }
 
 function utf8ArrayToStr(array) {
-    var out, i, len, c;
-    var char2, char3;
+    var res, i, arrLen;
+    var ch1, ch2, ch3;
   
-    out = "";
-    len = array.length;
+    res = "";
+    arrLen = array.length;
     i = 0;
-    while (i < len) {
-      c = array[i++];
-      switch (c >> 4) {
-        case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
-          // 0xxxxxxx
-          out += String.fromCharCode(c);
+    while (i < arrLen) {
+      ch1 = array[i++];
+      switch (ch1 >> 4) {
+        // 0xxxxxxx
+        case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:         
+          res += String.fromCharCode(ch1);
           break;
+        // 110x xxxx   10xx xxxx
         case 12: case 13:
-          // 110x xxxx   10xx xxxx
-          char2 = array[i++];
-          out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
+          ch2 = array[i++];
+          res += String.fromCharCode(((ch1 & 0x1F) << 6) | (ch2 & 0x3F));
           break;
+        // 1110 xxxx  10xx xxxx  10xx xxxx
         case 14:
-          // 1110 xxxx  10xx xxxx  10xx xxxx
-          char2 = array[i++];
-          char3 = array[i++];
-          out += String.fromCharCode(((c & 0x0F) << 12) |
-            ((char2 & 0x3F) << 6) |
-            ((char3 & 0x3F) << 0));
+          ch2 = array[i++];
+          ch3 = array[i++];
+          res += String.fromCharCode(((ch1 & 0x0F) << 12) |
+            ((ch2 & 0x3F) << 6) |
+            ((ch3 & 0x3F) << 0));
           break;
       }
-    }
-  
-    return out;
+    }  
+    return res;
   }
   
   function readFile(fn) {

@@ -458,21 +458,21 @@ public class GenerateDialogPane extends JDialog {
     }
 
     static class StreamConsumer extends Thread {
-        InputStream is;
+        InputStream inS;
 
-        StreamConsumer(InputStream is) {
+        StreamConsumer(InputStream in) {
             super.setName("StreamConsumer");
-            this.is = is;
+            this.is = in;
         }
 
         @Override
         public void run() {
             try {
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
-                String line;
-                while ((line = br.readLine()) != null) {
-                    LOG.error("StreamConsumer" + line);
+                InputStreamReader inStr = new InputStreamReader(in);
+                BufferedReader bufR = new BufferedReader(inStr);
+                String lineStr;
+                while ((lineStr = bufR.readLine()) != null) {
+                    LOG.error("StreamConsumer" + lineStr);
                 }
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
