@@ -162,7 +162,8 @@
     	]
     	# 指定编译依赖，如果依赖第三方库，需要在此添加
     	deps=[
-        	"//foundation/ace/napi:ace_napi",
+    	    # 3.1及之前的版本中，napi在foundation/ace/目录下，3.2 release版本中，napi在foundation/arkui/目录下
+        	"//foundation/arkui/napi:ace_napi",
         	"//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
     	]
     	remove_configs = [ "//build/config/compiler:no_rtti" ]
@@ -271,13 +272,42 @@
 ```
 
 ### 添加功能模块
+
+#### 3.1 版本
+
 在产品配置中添加上述子系统的功能模块，编译到产品产出文件中，例如在源码/productdefine/common/products/rk3566.json中增加part选项，其中napitest就是上面填的subsystem_name，napitest_interface就是上面填的part_name。
 
     "napitest:napitest_interface":{}
 
+#### 3.2 版本
+
+在产品配置中添加上述子系统的功能模块，编译到产品产出文件中，例如在源码vendor/hihope/rk3568/config.json中增加part选项，其中napitest就是上面填的subsystem_name，napitest_interface就是上面填的part_name。
+
+```
+{
+      "subsystem": "napitest",
+      "components": [
+        {
+          "component": "napitest_interface",
+          "features": []
+        }
+      ]
+}
+```
+
+在vendor/hihope/rk3568/security_config/high_privilege_process_list.json中增加以下配置
+
+```
+  {
+            "name": "napitest",
+            "uid": "system",
+            "gid": ["root", "system"]
+  }
+```
+
 ### 编译验证
 
-编译成功后，就会生成libnapitest.z.so，目录如下所示：
+编译成功后，就会在 /out/产品名/packages/phone/system/lib/module/ 生成libnapitest.z.so，如下所示：
 
     /out/ohos-arm-release/packages/phone/system/lib/module
 
