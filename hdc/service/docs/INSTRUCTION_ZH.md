@@ -7,7 +7,7 @@ SERVICE框架生成工具支持三种入口，分别是可执行程序、VS Code
 
 下载文件说明如下：
 
-	│   │   |── service-gen-0.0.1.vsix                 # VS Code插件
+	│   │   |── service-gen-0.0.1.vsix             # VS Code插件
 	│   │   |── header_parser.exe                  # python脚本独立程序
 	│   │   |── header_parser                      # python脚本独立程序
 	│   │   |── service-gen-linux                  # Linux可执行程序 
@@ -32,11 +32,11 @@ SERVICE框架生成工具支持三种入口，分别是可执行程序、VS Code
 2.将待转换的.h文件放到任意目录下，建议放到可执行程序service-gen-linux与header_parser同级目录下，如下所示：
 
 	harmony@Ubuntu-64:~/service/napi_generator_8/hdc/service-gen/examples$ ls
-	exam.h  header_parser  service-gen-linux
+	test.h  header_parser  service-gen-linux
 
 3.在终端中进入到可执行程序service-gen-linux所在的目录，并运行service-gen-linux，命令如下：
 
-	harmony@Ubuntu-64:~/service/napi_generator_8/hdc/service-gen/examples$ ./service-gen-linux -f exam.h -o ./ -s 9001 
+	harmony@Ubuntu-64:~/service/napi_generator_8/hdc/service-gen/examples$ ./service-gen-linux -f test.h -o ./ -s 9016 
 
 其中,参数详情如下：
   -f，定义远程服务的.h文件；
@@ -47,24 +47,24 @@ SERVICE框架生成工具支持三种入口，分别是可执行程序、VS Code
 4.运行成功后会在当前目录下生成对应的文件，如下所示：
 
 	harmony@Ubuntu-64:~/service/napi_generator_8/hdc/service-gen/examples$ ls
-	exam.h  header_parser  napi_gen.log  service-gen-linux  testaservice
+	test.h  header_parser  napi_gen.log  service-gen-linux  testservice
 
 #### Windows
 
-1.下载python脚本可执行程序header_parser.exe与linux可执行程序service-gen-win.exe，下载链接如下：
+1.下载python脚本可执行程序header_parser.exe与windows可执行程序service-gen-win.exe，下载链接如下：
 
 [下载链接](暂无)
 
 2.将要转换的.h文件放到任意目录下，建议放到可执行程序service-gen-win.exe与header_parser.exe同级目录下，如下所示：
 
 	E:\demo\service>dir /B
-	exam.h
+	test.h
 	header_parser.exe
 	service-gen-win.exe
 
 3.在终端中进入到可执行程序service-gen-win.exe所在的目录，并运行service-gen-win.exe，命令如下：
 
-	E:\demo\service>service-gen-win.exe -f exam.h -o ./ -s 9001 
+	E:\demo\service>service-gen-win.exe -f test.h -o ./ -s 9016 
 
 其中,参数详情如下：
   -f，定义远程服务的.h文件；
@@ -75,11 +75,11 @@ SERVICE框架生成工具支持三种入口，分别是可执行程序、VS Code
 4.运行成功后会在当前目录下生成对应的文件，如下所示：
 
 	E:\demo\service>dir /B
-	exam.h
+	test.h
 	header_parser.exe
 	napi_gen.log
 	service-gen-win.exe
-	testaservice
+	testservice
 
 #### Mac
 
