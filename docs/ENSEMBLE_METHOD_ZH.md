@@ -295,16 +295,6 @@
 }
 ```
 
-在vendor/hihope/rk3568/security_config/high_privilege_process_list.json中增加以下配置
-
-```
-  {
-            "name": "napitest",
-            "uid": "system",
-            "gid": ["root", "system"]
-  }
-```
-
 ### 编译验证
 
 编译成功后，就会在 /out/产品名/packages/phone/system/lib/module/ 生成libnapitest.z.so，如下所示：
