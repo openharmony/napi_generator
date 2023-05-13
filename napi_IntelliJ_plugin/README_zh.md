@@ -35,13 +35,15 @@ NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescr
 
 ### 工具使用
 
-插件下载路径如下，选择napi_generator.jar下载。
+插件下载路径如下，选择新版本下载。
 
-[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
+[IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
 
-[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
+![](../figures/pic-napi_jar_download.png)
 
-[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
+使用谷歌浏览器时：
+
+![](../figures/picGoogle-napi_jar_download.png)
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
@@ -67,20 +69,12 @@ napi_IntelliJ_plugin
 ```c++
 #include "napitest.h"
 
-
 namespace napitest {
-
-bool TestClass1::if_direct(std::string &v1, std::string &out) {
+bool func1(std::string& v1, std::string& out)
+{
     // TODO
     return true;
 }
-
-bool TestClass1::if_callback(std::string &v1, std::string &out) {
-    // TODO
-    return true;
-}
-
-......
 }
 ```
 
