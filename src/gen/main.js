@@ -23,7 +23,7 @@ function doGenerate(ifname, destdir, imports,numberType) {
     let fn = re.getFileInPath(ifname);
     let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
     if (tt) {
-        let moduleName = re.getReg(fn, tt.regs[1]);
+        let moduleName = re.getReg(fn, tt.regs[2]);
         let importsStr = '' + imports
         if (importsStr == 'true') {
             importsFun(structOfTs.imports, destdir, ifname);

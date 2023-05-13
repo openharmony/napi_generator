@@ -29,7 +29,7 @@ visual studio code 版本需1.62.0及以上。
 
 ![](../../../figures/pic-plug-in-gnapi.png)
 
-4.在VS Code中找到需要转换的.d.ts文件，若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件上一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。例如：
+4.在VS Code中找到需要转换的.d.ts文件，若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。例如：
 
 ![](../../../figures/pic-plug-in-select-d-ts.png)
 

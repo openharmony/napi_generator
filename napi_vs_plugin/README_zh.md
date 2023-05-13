@@ -64,20 +64,12 @@ napi_vs_plugin
 ```c++
 #include "napitest.h"
 
-
 namespace napitest {
-
-bool TestClass1::if_direct(std::string &v1, std::string &out) {
+bool func1(std::string& v1, std::string& out)
+{
     // TODO
     return true;
 }
-
-bool TestClass1::if_callback(std::string &v1, std::string &out) {
-    // TODO
-    return true;
-}
-
-......
 }
 ```
 
