@@ -56,28 +56,17 @@
 
 ### 工具输出
 
-根据使用者指定的.h头文件，工具会输出SERVICE框架代码。为了方便使用者快速上手工具，可供测试的.h文件内容如下所示：
+根据使用者指定的.h头文件，工具会输出SERVICE框架代码。为了方便使用者快速上手工具，可供测试的.h文件如下所示：
+
+[test.h](https://gitee.com/openharmony/napi_generator/tree/master/hdc/service/examples/test.h)
+
+注意：.h文件中待生成的主class必须加注释：@brief service服务，提供IPC调用接口 ，如下所示：
 
 ```
-
-	#ifndef EXAM_H
-	#define EXAM_H
-	using namespace std;
-
-	namespace OHOS{
-    	namespace Example{
-    	    /**
-            * @brief service服务，提供IPC调用接口
-            * @ServiceClass
-            */
-        	class Exam{
-        	public:
-            	std::string getServName();
-            	int32_t doSum(int32_t num1, int32_t num2);
-        	};
-    	}
-	} 
-	#endif
+/**
+ * @brief service服务，提供IPC调用接口
+ * @ServiceClass
+ */
 ```
 
 在window环境下的，根据输入.h文件生成的输出文件，如下所示：
