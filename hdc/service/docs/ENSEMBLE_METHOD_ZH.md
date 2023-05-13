@@ -6,18 +6,18 @@
 
 ## 编译
 
-将生成的整个xxxservice目录复制到OpenHarmony源码根目录下（与base、foundation目录平级）
+将生成的整个testservice目录复制到OpenHarmony源码根目录下（与base、foundation目录平级）
 
-### 修改系统公共文件
+### OpenHarmony 3.1 release
 
-#### OpenHarmony 3.1 release
+#### 修改系统公共文件
 
 1. 服务配置
-   foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include/system_ability_definition.h增加以下两行(其中SERVICE_ID与sa_profile目录下的xml文件名保持一致)
+   foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include/system_ability_definition.h增加以下两行(ID说明： TEST_SERVICE_ID值与用户指定的ID一致；TEST_SERVICE_ID宏值定义必须为这个，因为代码中使用的就是这个)
    
    ```
-   XXX_SERVICE_ID                                = 9001,
-   {XXX_SERVICE_ID, "xxxservice" },
+   TEST_SERVICE_ID                                = 9016,
+   {TEST_SERVICE_ID, "testservice" },
    ```
 
 2. 子系统配置
@@ -25,9 +25,9 @@
    增加以下内容
 
    ```
-   "xxxservice": {
-   "path":"xxxservice",
-   "name": "xxxservice"
+   "testservice": {
+   "path":"testservice",
+   "name": "testservice"
     }
    ```
 
@@ -35,18 +35,136 @@
    productdefine/common/products/Hi3516DV300.json
 
 ```
- "xxxservice:xxxservice_part":{}
+ "testservice:testservice_part":{}
 ```
 
-#### OpenHarmony 3.2 release
+### OpenHarmony 3.2 release
+
+#### 修改编译文件
+
+1. 修改testservice/BUILD.gn文件，将utils/native 改为 commonlibrary/c_utils，将samgr_standard改为samgr。修改后的BUILD.gn文件内容如下所示：
+
+   ```
+   import("//build/ohos.gni")
+   
+   ohos_shared_library("testservice") {
+     sources = [
+       "//testservice/src/i_test_service.cpp",
+       "//testservice/src/test_service_stub.cpp",
+       "//testservice/src/test_service.cpp"
+     ]
+     include_dirs = [
+       "//testservice/include",
+       "//testservice/interface",
+       "//commonlibrary/c_utils/base/include"
+     ]
+   
+     deps = [
+       "//base/startup/syspara_lite/interfaces/innerkits/native/syspara:syspara",
+       "//commonlibrary/c_utils/base:utils",
+     ]
+   
+     external_deps = [
+       "hiviewdfx_hilog_native:libhilog",
+       "ipc:ipc_core",
+       "safwk:system_ability_fwk",
+       "samgr:samgr_proxy",
+       "startup_l2:syspara",
+     ]
+   
+     part_name = "testservice_part"
+     subsystem_name = "testservice"
+   }
+   
+   ohos_executable("testclient") {
+       sources = [
+       "//testservice/src/i_test_service.cpp",
+       "//testservice/src/test_service_proxy.cpp",
+       "//testservice/src/test_client.cpp"
+     ]
+   
+     include_dirs = [
+       "//testservice/include",
+       "//testservice/interface",
+       "//commonlibrary/c_utils/base/include"
+     ]
+   
+     deps = [
+       "//commonlibrary/c_utils/base:utils",
+     ]
+   
+     external_deps = [
+       "hiviewdfx_hilog_native:libhilog",
+       "ipc:ipc_core",
+       "samgr:samgr_proxy",
+     ]
+   
+     part_name = "testservice_part"
+     subsystem_name = "testservice"
+   }
+   
+   ```
+
+2. 修改testservice/bundle.json文件，将"name": "@ohos/testservice"修改为 "name": "@ohos/testservice_part"；将"samgr_standard"改为"samgr"，"utils_base"修改为"c_utils"；修改后的bundle.json文件内容如下所示：
+
+   ```
+   {
+       "name": "@ohos/testservice_part",
+       "description": "system ability framework test",
+       "homePage": "https://gitee.com/",
+       "version": "3.1",
+       "license": "Apache License 2.0",
+       "repository": "",
+       "publishAs": "code-segment",
+       "segment": {
+           "destPath": "testservice"
+       },
+       "dirs": {},
+       "scripts": {},
+       "component": {
+           "name": "testservice_part",
+           "subsystem": "testservice",
+           "adapted_system_type": [
+               "standard"
+           ],
+           "rom": "2048KB",
+           "ram": "~4096KB",
+           "deps": {
+               "components": [
+                   "hiviewdfx_hilog_native",
+                   "ipc",
+                   "samgr",
+                   "c_utils",
+                   "safwk",
+                   "startup_l2"
+               ],
+               "third_party": [ "libxml2" ]
+           },
+           "build": {
+               "sub_component": [
+                   "//testservice:testservice",
+                   "//testservice/sa_profile:testservice_sa_profile",
+                   "//testservice:testclient",
+                   "//testservice/etc:test_service_init"
+               ],
+               "inner_kits": [
+               ],
+               "test": [
+               ]
+           }
+       }
+   }
+   ```
+
+#### 修改系统公共文件
 
 1. 服务配置
 
-   foundation/systemabilitymgr/samgr/interfaces/innerkits/samgr_proxy/include/system_ability_definition.h增加以下两行(其中SERVICE_ID与sa_profile目录下的xml文件名保持一致)
+   foundation/systemabilitymgr/samgr/interfaces/innerkits/samgr_proxy/include/system_ability_definition.h增加以下两行(ID说明： TEST_SERVICE_ID值与用户指定的ID一致；TEST_SERVICE_ID宏值定义必须为这个，因为代码中使用的就是这个)
 
    ```
-   XXX_SERVICE_ID                                = 9001,
-   {XXX_SERVICE_ID, "xxxservice" },
+   TEST_SERVICE_ID                                = 9016,
+   {TEST_SERVICE_ID, "testservice" },
    ```
 
 2. 子系统配置
@@ -56,9 +174,9 @@
    增加以下内容
 
    ```
-   "xxxservice": {
-   "path":"xxxservice",
-   "name": "xxxservice"
+   "testservice": {
+   "path":"testservice",
+   "name": "testservice"
     }
    ```
 
@@ -76,10 +194,10 @@
 
    ```
    {
-     "subsystem": "xxxservice",
+     "subsystem": "testservice",
      "components": [
        {
-         "component": "xxxservice_part",
+         "component": "testservice_part",
          "features": []
        }
      ]
@@ -98,7 +216,7 @@
 
    ```
    {
-       "name": "xxxservice",
+       "name": "testservice",
        "uid": "system",
        "gid": ["root", "system"]
    }
@@ -107,14 +225,20 @@
 ### 补充 服务端/客户端 业务逻辑实现
 
 **服务端**
-xxx_service.cpp
-在注释“// TODO: Invoke the business implementation”处添加各个接口的服务端实现代码
-远程方法的参数包装已在生成代码xxx_service_stub.cpp中统一处理，开发人员无需关注
+test_service.cpp
+在testservice/src/test_service.cpp注释“// TODO: Invoke the business implementation”处添加各个接口的服务端实现代码，当前版本生成服务端代码需要用户先初始化，给int ret值赋初值0，如下所示：
+
+![](./../figures/service_init_example.png)
+
+远程方法的参数包装已在生成代码test_service_stub.cpp中统一处理，开发人员无需关注
 
 **客户端**
-xxx_client.cpp 为自动生成的客户端样例代码。编译烧录后，会在/system/bin/目录下生成可执行程序xxx_client
-在main中使用proxy对象进行远程方法调用，参考注释示例。
-远程方法的参数包装已在生成代码xxx_service_proxy.cpp中统一处理，开发人员无需关注
+test_client.cpp 为自动生成的客户端样例代码。编译烧录后，会在/system/bin/目录下生成可执行程序test_client
+在testservice/src/test_client.cpp的main函数中使用proxy对象进行远程方法调用，参考注释示例。如下图：
+
+![](./../figures/service_client_proxy_example.png)
+
+远程方法的参数包装已在生成代码test_service_proxy.cpp中统一处理，开发人员无需关注
 
 编码完成后，执行镜像编译命令
 
@@ -140,17 +264,20 @@ xxx_client.cpp 为自动生成的客户端样例代码。编译烧录后，会�
 查看服务端进程是否已正常启动
 
 ```
-ps -ef | grep xxxservice
-system         288     1 0 00:02:13 ?     00:00:00 xxxservice_sa  --- 服务进程已正常运行
+ps -ef | grep testservice
+system         288     1 0 00:02:13 ?     00:00:00 testservice_sa  --- 服务进程已正常运行
 ```
 
+如下图所示:
+
+![](./../figures/service_init_success.png)
 
 运行客户端
 
 ```
-/system/bin/xxxclient 
+/system/bin/testclient 
 ```
 
 
- (客户端具体执行哪些远程调用方法请在xxx_client.cpp的main方法中实现)
+ (客户端具体执行哪些远程调用方法请在test_client.cpp的main方法中实现)
 
