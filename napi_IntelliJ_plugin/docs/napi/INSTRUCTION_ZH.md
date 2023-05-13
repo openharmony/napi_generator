@@ -2,13 +2,15 @@
 
 ## 简介
 
-NAPI框架生成工具目前支持三种入口，分别是可执行程序、IntelliJ插件、VS Code插件，本文主要介绍IntelliJ插件使用说明。IntelliJ插件下载路径如下，选择napi_generator.jar下载。
+NAPI框架生成工具目前支持三种入口，分别是可执行程序、IntelliJ插件、VS Code插件，本文主要介绍IntelliJ插件使用说明。IntelliJ插件下载路径如下，选择新版本下载。
 
-[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
+[IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
 
-[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
+![](../../../figures/pic-napi_jar_download.png)
 
-[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)    
+使用谷歌浏览器时：
+
+![](../../../figures/picGoogle-napi_jar_download.png)
 
 ## IntelliJ插件使用方法
 
@@ -34,13 +36,13 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../../../figures/DevEco_step_finish.png)
 
-2.安装插件，File->Settings->Plugins->Installed->Install Plugin from Disk...，选择下载的generator.jar，安装成功之后重启IDE。
+2.安装插件，File->Settings->Plugins->Installed->Install Plugin from Disk...，选择下载的napi_generator.jar，安装成功之后重启IDE。
 
 ![](../../../figures/DevEco_step_pluginsOk.png)
 
 ![](../../../figures/DevEco_step_applyPlugins.png)
 
-3.把待转换的.d.ts文件放在DevEco stdio新建项目的src目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件上一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
+3.把待转换的.d.ts文件放在DevEco stdio新建项目的src目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
 
 ![](../../../figures/DevEco_step_napi.png)
 
