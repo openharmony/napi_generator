@@ -46,13 +46,17 @@
 
 ### 工具使用
 
-工具有三种类型，分别是可执行文件、VS Code插件、IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。可执行文件、IntelliJ插件、VS Code插件下载路径如下。
+工具有三种类型，分别是可执行文件、VS Code插件、IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。可执行文件、VS Code插件下载路径如下。
 
 [下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
 
 [下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
 
 [下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
+
+IntelliJ插件下载路径如下:
+
+[IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
@@ -76,19 +80,15 @@ napi_generator/examples/ts
 
 
 ```c++
+#include "napitest.h"
 
-	#include "napitest.h"
-	namespace napitest {
-		bool TestClass1::if_direct(std::string &v1, std::string &out) {
-    		// TODO
-    		return true;
-		}
-		bool TestClass1::if_callback(std::string &v1, std::string &out) {
-    		// TODO
-    		return true;
-		}
-		......
-	}
+namespace napitest {
+bool func1(std::string& v1, std::string& out)
+{
+    // TODO
+    return true;
+}
+}
 ```
 
 ### 代码集成
