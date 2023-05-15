@@ -19,53 +19,56 @@
 napi_generator/examples/app
 ```
 
-  hap包的具体生成方法，可参考OpenHarmony/docs/zh-cn/application-dev文档中使用JS语言开发（FA模型）。其中修改index.js文件内容如下：
+  hap包的具体生成方法，可参考OpenHarmony/docs/zh-cn/application-dev文档中使用ArkTS语言开发（Stage模型）。
+### 修改点1：扩展SDK接口
+  将@ohos.napitest.d.ts文件拷贝到sdk目录下的ets\api，SDK目录可在DevEco Studio <File> -> <Settings> -> <Sdks> 中查看。
+### 修改点2：增加新接口调用
+其中修改index.ets文件内容如下：
 
 
 ```	
 
-	import router from '@ohos.router';
+	import hilog from '@ohos.hilog';
 	import napitest from '@ohos.napitest';
-	export default {
-    	data: {
-        	title: ""
-    	},
-    	onInit(){
-        	this.title = this.$t('strings.world');
-    	},
-    	onclick: function () {
-        	router.push({
-            	url: "pages/second/second"
-        	})
-    	},
-    	ontest: function () {
-        	console.log("napitest  begin AAAAAAAAAAAAAAAAAA")
-        	var  Entity = {
-            	ENTITY_DEFAULT : "entity.system.default",
-            	ENTITY_HOME : "entity.system.home",
-            	ENTITY_VOICE : "entity.system.voice",
-            	ENTITY_BROWSABLE : "entity.system.browsable",
-            	ENTITY_VIDEO : "entity.system.video"
-        	}
-        	napitest.Space3.fun1("ggggg",Entity.ENTITY_DEFAULT);
-        	console.log("napitest  end AAAAAAAAAAAAAAAAAA")
-    		}
+	
+	@Entry
+	@Component
+	struct Index {
+	  @State message: string = 'Hello World'
+	
+	  build() {
+	    Row() {
+	      Column() {
+	        Text(this.message)
+	          .fontSize(50)
+	          .fontWeight(FontWeight.Bold)
+	        // 添加按钮，以响应用户点击
+	        Button() {
+	          Text('TEST')
+	            .fontSize(30)
+	            .fontWeight(FontWeight.Bold)
+	        }
+	        .type(ButtonType.Capsule)
+	        .margin({
+	          top: 20
+	        })
+	        .backgroundColor('#0D9FFB')
+	        .width('40%')
+	        .height('5%')
+	        // 跳转按钮响应
+	        .onClick(() => {
+	          var out = napitest.func1("abcf");
+	          hilog.info(0x0000, 'testTag', '%{public}s', out+'AAAAAAAA napi testprint');
+	        })
+	      }
+	      .width('100%')
+	    }
+	    .height('100%')
+	  }
 	}
 ```
-  修改index.html文件内容如下：
+  
 
-```
-
-	<!--index.hml-->
-	<div class="container">
-    	<text class="title">
-        	Hello World
-    	</text>
-	<!-- 添加按钮，值为Next，并绑定onclick方法-->
-    	<input class="btn" type="button" value="Next" onclick="onclick"></input>
-    	<input class="btn" type="button" value="napitest" onclick="ontest"></input>
-	</div>
-```
 
 ## 使用说明
 
@@ -79,9 +82,7 @@ napi_generator/examples/app
 
 步骤二：安装hap包。
 
-  hdc中输入命令安装hap包：
-
-	.\hdc.exe install -r E:\dingding\napihap\entry-release-standard-ark-signed.hap
+  Build Haps通过后，通过Run按钮将hap包安装到板子上。
 
   执行完成后，设备中会出现安装的APP。
 
@@ -94,14 +95,10 @@ napi_generator/examples/app
   然后单击设备中安装的APP，进入APP后单击测试按钮，执行完成后会在hdc安装目录下出现log.txt文件。
 
 ## 查看结果
-log.txt中包含“======fun1(name: string, flags: Entity): number======”日志表示接口调用成功。如下所示：
+log.txt中包含“AAAAAAAA napi testprint testzzz”日志表示接口调用成功。如下所示：
 
-    01-01 00:13:10.355  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:93 *******fun1_middle begin**********
-    01-01 00:13:10.357  2020  2038 D 01400/OHOS::ROSEN: RSRenderThread ProcessCommands size: 2
-    01-01 00:13:10.358  2020  2038 D 01400/OHOS::ROSEN: RSRenderThread DrawFrame(790351535051) in GPU
-    01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:107 *****fun1_middle xxxxx**********
-    01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1:28 ======fun1(name: string, flags: Entity): number======
-    01-01 00:13:10.360  2020  2027 I 00000/NAPITESTNAPILayer: fun1_middle:113 *******fun1_middle   end*********
+	01-01 08:10:55.571  2291  2311 D C01400/OHOS::ROSEN: RSSurfaceOhosGl: FlushFrame, SwapBuffers eglsurface is 0x2c21570
+	01-01 08:10:55.571  2291  2291 I A00000/testTag: AAAAAAAA napi testprint testzzz
 
 ## 相关仓
 
