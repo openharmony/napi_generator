@@ -5,11 +5,13 @@
 
 ## 准备
 
-1. 待转换的@napitest.test.d.ts文件如下：
+1. 待转换的@ohos.napitest.d.ts文件如下：
 
 ```
+import {AsyncCallback} from './basic';
+
 declare namespace napitest {
-    function fun1(v1: number): number;
+    function fun1(v1: string): string;
 }
 
 export default napitest;
@@ -18,40 +20,15 @@ export default napitest;
 2. 生成的napitest.cpp给out赋初值：
 
 ```
-out = 23;
+out = "NapiOut";
 ```
 
-3. 生成的CmakeLists.txt中引入hilog库libhilog_ndk.z.so：
-
-```
-target_link_libraries(test PUBLIC libace_napi.z.so libuv.so libhilog_ndk.z.so)
-```
-
-4. 在生成的napitest_middle.cpp中打印hilog日志：
-
-```
-#include "hilog/log.h"
-// LOG
-static unsigned int logDomain = 0xD001234;
-static const char* APP_TAG = "napitest";
-#define MYAPP_LOGERR(type, ...) ((void)OH_LOG_Print((type), LOG_ERROR, logDomain, APP_TAG, __VA_ARGS__));
-
-...
-
-//在需要的地方打印日志
-MYAPP_LOGERR(LOG_APP, "==========test fun1_middle begin==========");
-...
-MYAPP_LOGERR(LOG_APP, "----------test fun1_middle result = %{public}d ----------", vio->out);
-...
-MYAPP_LOGERR(LOG_APP, "==========test fun1_middle end==========");
-```
-
-5. 在DevEco Studio中增加调用napi方法的测试用例。其中修改index.js文件内容如下：
+3. 在DevEco Studio中增加调用napi方法的测试用例。其中修改index.js文件内容如下：
 
 
 ```	
 import router from '@ohos.router';
-import napitest from 'libtest.so';
+import napitest from 'libnapitest.so';
 export default {
     data: {
         title: ""
@@ -66,8 +43,8 @@ export default {
     },
     ontest: function () {
         console.log("napitest  begin AAAAAAAAAAAAAAAAAA")
-        let testNum = napitest.fun1(1);
-        console.info("napitest testNum = " + testNum);
+        let testOut = napitest.func1("NapiIn");
+        console.info("napitest testOut = " + testOut);
         console.log("napitest  end AAAAAAAAAAAAAAAAAA")
     }
 }
@@ -99,16 +76,12 @@ export default {
 4. 执行成功后，设备中会出现安装的APP并进入APP测试页面，点击测试按钮DevEco Studio控制台中Log->OpenLog中会出现以下结果：
 
     ```
-    01-01 04:34:40.862 5993-6003/com.example.myapplication D 03b00/JSApp: app Log: napitest  begin AAAAAAAAAAAAAAAAAA
-    01-01 04:34:40.862 5993-6003/com.example.myapplication E 01234/napi: ==========test fun1_middle begin==========
-    01-01 04:34:40.862 5993-6003/com.example.myapplication E 01234/napi: ----------test fun1_middle result = 23 ----------
-    01-01 04:34:40.862 5993-6003/com.example.myapplication E 01234/napi: ==========test fun1_middle end==========
-    01-01 04:34:40.862 5993-6003/com.example.myapplication I 03b00/JSApp: app Log: napitest testNum = 23
-    01-01 04:34:40.862 5993-6003/com.example.myapplication D 03b00/JSApp: app Log: napitest  end AAAAAAAAAAAAAAAAAA
-    01-01 04:35:26.914 370-890/foundation D 01120/BundleMgrService: [inner_bundle_info.cpp(GetBundleWithAbilities):1733] bundleName:com.example.callbacktest userid:100
+    01-01 09:05:46.719 3225-3237/com.example.myapplication I A0c0d0/JSApp: app Log: napitest  begin AAAAAAAAAAAAAAAAAA
+    01-01 09:05:46.719 3225-3237/com.example.myapplication I A0c0d0/JSApp: app Log: napitest testOut = NapiOut
+    01-01 09:05:46.719 3225-3237/com.example.myapplication I A0c0d0/JSApp: app Log: napitest  end AAAAAAAAAAAAAAAAAA
     ```
     
-    
+    ![](../../../figures/DevEco_run_result.png)
 
 ## 相关仓
 

@@ -21,36 +21,7 @@ import {AsyncCallback} from './basic';
  * @since 7
  */
 declare namespace napitest {
-  /**
-   * Shuts down the system.
-   *
-   * <p>This method requires the ohos.permission.SHUTDOWN permission.
-   *
-   * @param reason Indicates the shutdown reason.
-   * @systemapi
-   * @since 7
-   */
-  function shutdownDevice(reason: string): void;
-
-  /**
-   * Restarts the system.
-   *
-   * <p>This method requires the ohos.permission.REBOOT permission.
-   *
-   * @param reason Indicates the restart reason. For example, "updater" indicates entering the updater mode
-   * after the restart. If the parameter is not specified, the system enters the normal mode after the restart.
-   * @since 7
-   */
-  function rebootDevice(reason: string): void;
-
-  /**
-   * Checks whether the screen of a device is on or off.
-   *
-   * @return Returns true if the screen is on; returns false otherwise.
-   * @since 7
-   */
-  function isScreenOn(callback: AsyncCallback<boolean>): void;
-  function isScreenOn(): Promise<boolean>;
+    function func1(v1: string): string;
 }
 export default napitest;
 
