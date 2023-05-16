@@ -356,31 +356,14 @@ ohos_shared_library("napitest")
 
 ```
 	#include "napitest.h"
-	#include <hilog/log.h>
-	using namespace OHOS;
-	namespace {
-	constexpr HiviewDFX::HiLogLabel LABEL = { LOG_CORE, 0, "NAPITESTNAPILayer" };
-	#define NAPITEST_LOG(fmt, ...) HiviewDFX::HiLog::Info(LABEL, \
-    	"%{public}s:%{public}d " fmt, __func__, __LINE__, ##__VA_ARGS__)
-	}
+
 	namespace napitest {
 		bool func1(std::string &v, std::string &out)
 		{
-    		NAPITEST_LOG("napitest fun1 begin!!!!!!!!!!!!!!");
+    		out = "testzzz";
     		return true;
 		}
 	}
-```
-
-并在BUILD.gn文件deps依赖中增加依赖libhilog，如下所示：
-
-```
-...
-deps=[
-        "//foundation/arkui/napi:ace_napi",
-        "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
-     ]
-...
 ```
 
 #### 增加子系统

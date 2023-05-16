@@ -7,7 +7,7 @@
 问题描述：在Linux命令行入口安装辅助工具过程中，按文档步骤，在使用pkg命令打包生成.exe文件时，发生报错。
 
 	~/workspace/assist_tool/assist_tools/napi_tool/code/tool_code/gen$ pkg cmd_gen.js
-
+	
 	> pkg@5.5.2
 	> Targets not specified. Assuming:
 	> node10-linux-x64, node10-macos-x64, node10-win-x64
@@ -101,6 +101,22 @@
 问题定位：代码中后缀为gyp的文件中包含/*，但工具不能解析，只能解析#后面的注释，导致执行用例失败。
 
 问题解决：修改代码。
+
+### 6.VS Code 1.76.0以上版本下载napi-gen VS Code插件报错
+
+问题描述：VS Code 1.76.0以上版本下载VS Code插件’napi-gen‘时报错，如下所示：
+
+![](./figures/napi_vs_plugin_download_err.png)
+
+问题解决：
+
+(1)关闭vscode
+
+(2)按WIN + R，输入cmd，打开终端，然后输入命令
+
+code --no-sandbox
+
+(3)再重启vscode，就可以正常使用了。
 
 ## 已知Bug
 
