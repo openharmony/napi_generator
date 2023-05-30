@@ -158,6 +158,8 @@
 
 #### 修改系统公共文件
 
+##### 基础配置
+
 1. 服务配置
 
    foundation/systemabilitymgr/samgr/interfaces/innerkits/samgr_proxy/include/system_ability_definition.h增加以下两行(ID说明： TEST_SERVICE_ID值与用户指定的ID一致；TEST_SERVICE_ID宏值定义必须为这个，因为代码中使用的就是这个)
@@ -184,7 +186,7 @@
 
    vendor/hihope/rk3568/config.json
 
-   将"build_selinux"属性改为false
+   若用户不需要配置selinux，则将"build_selinux"属性改为false
 
    ```
    "build_selinux": false,
@@ -220,6 +222,47 @@
        "uid": "system",
        "gid": ["root", "system"]
    }
+   ```
+
+##### selinux权限配置
+
+若要配置selinux权限，首先应将vendor/hihope/rk3568/config.json中"build_selinux"属性改为true，然后修改以下文件：
+
+1. testservice/etc/sample_service.cfg
+
+   ```
+   "secon" : "u:r:testservice:s0"
+   ```
+
+2. base/security/selinux/sepolicy/base/public/service_contexts 
+
+   ```
+   9016                 u:object_r:sa_testservice:s0
+   ```
+
+3. base/security/selinux/sepolicy/base/public/service.te 
+
+   ```
+   type sa_testservice, sa_service_attr;
+   ```
+
+4. base/security/selinux/sepolicy/base/te/init.te
+
+   ```
+   allow init testservice:process { getattr rlimitinh siginh transition };
+   ```
+
+5. base/security/selinux/sepolicy/base/public/type.te
+
+   ```
+   type testservice, sadomain, domain;
+   ```
+
+6. /base/security/selinux/sepolicy/base/te目录下增加新service的te文件，新增文件名即为服务名，例如：testservice
+
+   ```
+   allow testservice init_param:file { map open read };
+   allow testservice sa_testservice:samgr_class { add get };
    ```
 
 ### 补充 服务端/客户端 业务逻辑实现
