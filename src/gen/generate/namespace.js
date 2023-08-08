@@ -17,7 +17,8 @@ const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
 const { generateInterface } = require("./interface");
 const { generateClass } = require("./class");
-const { FuncType, InterfaceList, EnumList } = require("../tools/common");
+const { generateType } = require("./type");
+const { FuncType, InterfaceList, EnumList, TypeList } = require("../tools/common");
 const { generateEnum } = require("./enum");
 const { generateFunctionOnOff } = require("./function_onoff");
 const { NapiLog } = require("../tools/NapiLog");
@@ -96,27 +97,23 @@ function genExtendsRelation(data) {
 
 //生成module_middle.cpp、module.h、module.cpp
 function generateNamespace(name, data, inNamespace = "") {
-    let namespaceResult = {
-        implH: "",
-        implCpp: "",
-        middleFunc: "",
-        middleInit: ""
-    }
-
+    let namespaceResult = { implH: "", implCpp: "", middleFunc: "", middleInit: "" }
     namespaceResult.middleInit += formatMiddleInit(inNamespace, name)
     genExtendsRelation(data)
     InterfaceList.push(data.interface)
+    TypeList.push(data.type)
     EnumList.push(data.enum)
-    let result = generateEnumResult(data);
-    namespaceResult.implH += result.implH
-    namespaceResult.implCpp += result.implCpp  
-    namespaceResult.middleInit += result.middleInit  
+    enumNamespaceFunction(data, namespaceResult);  
+    for (let i in data.type) {
+      let ii = data.type[i]
+      let result = generateType(ii.name, ii.body, inNamespace + name + "::")
+      namespaceResult = getNamespaceResult(result, namespaceResult)   
+    }
     for (let i in data.interface) {
         let ii = data.interface[i]
         let result = generateInterface(ii.name, ii.body, inNamespace + name + "::")
-        namespaceResult = getNamespaceResult(result, namespaceResult)      
+        namespaceResult = getNamespaceResult(result, namespaceResult)   
     }
-
     for (let i in data.class) {
         let ii = data.class[i]
         let result = generateClass(ii.name, ii.body, inNamespace + name + "::", ii.functiontType)
@@ -137,12 +134,20 @@ function generateNamespace(name, data, inNamespace = "") {
         namespaceResult = getNamespaceResult(result, namespaceResult)
     }
     InterfaceList.pop();
+    TypeList.pop();
     EnumList.pop();
     if (inNamespace.length > 0) {
         namespaceResult.middleInit += "}"
     }
     return generateResult(name, namespaceResult.implH, namespaceResult.implCpp, namespaceResult.middleFunc,
         namespaceResult.middleInit)
+}
+
+function enumNamespaceFunction(data, namespaceResult) {
+  let result = generateEnumResult(data);
+  namespaceResult.implH += result.implH;
+  namespaceResult.implCpp += result.implCpp;
+  namespaceResult.middleInit += result.middleInit;
 }
 
 function getNamespaceResult(subResult, returnResult) {    

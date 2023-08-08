@@ -15,7 +15,7 @@
 const { isMappedTypeNode } = require("typescript");
 const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
     isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList,
-    jsType2CType, getUnionType } = require("../tools/common");
+    jsType2CType, getUnionType, TypeList } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 const { print } = require("../tools/tool");
 
@@ -35,6 +35,32 @@ function delPrefix(valueName) {
     }
     // Without special prefix, nothing is changed.
     return valueName;
+}
+
+function cToJsForType(value, type, dest, deep) {
+  let lt = deep
+  let result = ""
+  let ifl = TypeList.getValue(type)
+  if (typeof(ifl) == 'object') {
+    for (let i in ifl) {
+      let name2 = ifl[i].name
+      let type2 = ifl[i].type
+      let isSubEnum = EnumList.getValue(type2) ? true : false;
+      let subDest = isSubEnum ? dest : "tnv%d".format(lt)
+
+      let typeType = cToJs("%s.%s".format(value, name2), type2, subDest, deep + 1)
+      if (isSubEnum) {
+          result += typeType 
+      } else {
+          result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
+          typeType + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
+              .format(dest, name2, lt)
+      }
+    }
+  } else {
+    result += cToJs(value, ifl, dest, deep)
+  }
+  return result
 }
 
 function cToJsForInterface(value, type, dest, deep) {
@@ -72,6 +98,9 @@ function cToJs(value, type, dest, deep = 1) {
         return `%s = pxt->SwapC2JsUtf8(%s.c_str());`.format(dest, value.replace("[replace]", deep - 2))
     else if (InterfaceList.getValue(type)) {
         return cToJsForInterface(value, type, dest, deep);
+    }
+    else if (TypeList.getValue(type)) {
+        return cToJsForType(value, type, dest, deep);
     }
     else if(EnumList.getValue(type)){
         let lt = deep
@@ -482,6 +511,9 @@ function generateType(type){
     if (InterfaceList.getValue(type)) {
         return true
     }
+    else if (TypeList.getValue(type)) {
+        return true
+    }
     else if (type.substring(0, 6) == "Array<") {
         return true
     }
@@ -509,25 +541,13 @@ function returnGenerate2(returnInfo, param, data){
     let type = returnInfo.type
     let modifiers = returnInfo.optional ? "*" : "&"
 
-    if (InterfaceList.getValue(type)) {
+    let flag = InterfaceList.getValue(type) || TypeList.getValue(type)
+    if (flag) {
         param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
         param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
-    }
-    else if (type.substring(0, 6) == "Array<") {
-        let arrayType = getArrayType(type)
-        arrayType = jsType2CType(arrayType)
-        if (arrayType == "any") {
-            param.valueOut = `std::any out;
-            std::string out_type;`
-            param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
-        } else {
-            param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
-                                             : "std::vector<%s> out;".format(arrayType)
-            param.valueDefine += "%sstd::vector<%s>%s out".format(
-            param.valueDefine.length > 0 ? ", ": "", arrayType, modifiers)
-        }
-    }
-    else if (type.substring(type.length - 2) == "[]") {
+    } else if (type.substring(0, 6) == "Array<") {
+        returnArrayGen(type, param, returnInfo, modifiers);
+    } else if (type.substring(type.length - 2) == "[]") {
         let arrayType = getArrayTypeTwo(type)
         arrayType = jsType2CType(arrayType)
         if (arrayType == "any") {
@@ -540,19 +560,31 @@ function returnGenerate2(returnInfo, param, data){
             param.valueDefine += "%sstd::vector<%s>%s out".format(
             param.valueDefine.length > 0 ? ", " : "", arrayType, modifiers)
         }
-    }
-    else if (isMapType(type)) {
+    } else if (isMapType(type)) {
         returnGenerateMap(returnInfo, param)
-    }
-    else if (type == "any") {
+    } else if (type == "any") {
         param.valueOut = `std::any out;
             std::string out_type;`
         param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
-    }
-    else if (isObjectType(type)) {
+    } else if (isObjectType(type)) {
         param.valueOut = `std::map<std::string, std::any> out;`
         param.valueDefine += "%sstd::map<std::string, std::any> &out".format(param.valueDefine.length > 0 ? ", " : "")
     }
+}
+
+function returnArrayGen(type, param, returnInfo, modifiers) {
+  let arrayType = getArrayType(type);
+  arrayType = jsType2CType(arrayType);
+  if (arrayType == "any") {
+    param.valueOut = `std::any out;
+            std::string out_type;`;
+    param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "");
+  } else {
+    param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
+      : "std::vector<%s> out;".format(arrayType);
+    param.valueDefine += "%sstd::vector<%s>%s out".format(
+      param.valueDefine.length > 0 ? ", " : "", arrayType, modifiers);
+  }
 }
 
 function returnGenerateEnum(data, returnInfo, param) {
