@@ -19,6 +19,8 @@ const { analyzeInterface, parseNotes } = require("./interface");
 const { analyzeClass } = require("./class");
 const { analyzeEnum } = require("./enum");
 const { NapiLog } = require("../tools/NapiLog");
+const { analyzeType, analyzeType2, analyzeType2Result } = require("./type");
+const { NumberIncrease } = require("../tools/common");
 
 /**namespace解析 */
 function analyzeNamespace(data) {
@@ -131,25 +133,49 @@ function parseEnum(matchs, data, result) {
 }
 
 function parseType(matchs, data, result) {
-    matchs = re.match("(export )*type ([a-zA-Z]+) = *([\\(\\):=a-zA-Z<> |\n']+);", data)
+    matchs = re.match("(export )*type ([a-zA-Z]+) = *([\\(\\):=a-zA-Z<> |]+);", data)
     if (matchs) {
         let typeName = re.getReg(data, matchs.regs[2]);
+        let typeType = re.getReg(data, matchs.regs[3]);
+        let index = typeType.indexOf("number")
+        if (index !== -1) {
+          typeType = typeType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
+        } 
         result.type.push({
             name: typeName,
-            body: re.getReg(data, matchs.regs[3])
+            body: typeType,
+            isEnum: false
         })
         data = re.removeReg(data, matchs.regs[0])
         if (matchs.regs[1][0] != -1) {
             result.exports.push(typeName)
         }
     }
+
+    matchs = re.match("(export )*type ([a-zA-Z]+) = *([\\(\\):=a-zA-Z<> |\n']+);", data)
+    if (matchs) {
+        let typeName = re.getReg(data, matchs.regs[2]);
+        let typeBody = re.getReg(data, matchs.regs[3]);
+        result.type.push({
+            name: typeName,
+            body: analyzeType2(typeBody.substring(1, typeBody.length - 1)),
+            isEnum: true
+        })
+        data = re.removeReg(data, matchs.regs[0])
+        if (matchs.regs[1][0] != -1) {
+            result.exports.push(typeName)
+        }
+    }
+
     matchs = re.match("(export )*type ([a-zA-Z]+) = ({)", data)
     if (matchs) {
         let typeName = re.getReg(data, matchs.regs[2]);
         let typeBody = checkOutBody(data, matchs.regs[3][0], null, true)
+        let bodyObj = analyzeType(typeBody.substring(1, typeBody.length - 1), result.type)
         result.type.push({
             name: typeName,
-            body: typeBody
+            body: bodyObj,
+            isEnum: false
         })
         data = data.substring(matchs.regs[3][0] + typeBody.length + 2, data.length)
         if (matchs.regs[1][0] != -1) {

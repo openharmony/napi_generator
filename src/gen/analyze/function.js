@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex } = require("../tools/common");
+const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex, isType, typeIndex } = require("../tools/common");
 const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
 const { NapiLog } = require("../tools/NapiLog");
@@ -81,6 +81,14 @@ function getFuncParaType(v, interfaceName, data) {
 
     if (parameter.indexOf("number") >= 0) {
         v["type"] = v["type"].replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
+    }
+
+    // type的处理
+    if (isType(parameter, data)) {
+      let index = typeIndex(parameter, data)
+      if (data.type[index].isEnum) {
+        v["type"] = v["type"].replace(parameter, "string")
+      }
     }
     return v
 }
