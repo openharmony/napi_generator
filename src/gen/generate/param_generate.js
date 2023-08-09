@@ -14,7 +14,7 @@
 */
 const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease,
     enumIndex, isEnum, EnumValueType, getMapType,
-    EnumList, getUnionType } = require("../tools/common");
+    EnumList, getUnionType, TypeList } = require("../tools/common");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
 const { getConstNum } = require("../tools/tool");
@@ -56,6 +56,8 @@ function jsToC(dest, napiVn, type, enumType = 0) {
             tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2)
         }
         return tt
+    } else if (TypeList.getValue(type)) {
+        return typeTempleteFunc(type, dest, napiVn);
     } else if (EnumList.getValue(type)) {
         return jsToCEnum(type, dest, napiVn)
     } else if (type.indexOf("Array<") == 0) {
@@ -71,6 +73,21 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     }else {
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type));
     }        
+}
+
+function typeTempleteFunc(type, dest, napiVn) {
+  let tt = "";
+  let ifl = TypeList.getValue(type);
+  if (typeof (ifl) == 'object') {
+    for (let i in ifl) {
+      let name2 = ifl[i].name;
+      let type2 = ifl[i].type;
+      tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2);
+    }
+  } else {
+    tt += jsToC(dest, napiVn, ifl);
+  }
+  return tt;
 }
 
 function unionTempleteFunc(dest, napiVn, type) {
@@ -720,6 +737,12 @@ function paramGenerateUnion(type, param, p, name) {
 function paramGenerateCommon(p, cType, funcValue, param, modifiers, inParamName) {
     param.valueIn += funcValue.optional ? "\n    %s* in%d = nullptr;".format(cType, p)
                                             : "\n    %s in%d;".format(cType, p)
+    if (TypeList.getValue(cType)) {
+      let realType = TypeList.getValue(cType)
+      if (realType.indexOf('|') > 0) {
+        param.valueIn += `\n    std::string in%d_type;`.format(p, p)
+      }
+    }
     param.valueCheckout += getValueCheckout(funcValue, param, inParamName, p, cType)
     param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
     param.valueDefine += "%s%s%s %s".format(
@@ -876,6 +899,9 @@ function paramGenerate(p, funcValue, param, data) {
         paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
     }
     else if (InterfaceList.getValue(type)) {
+        paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
+    }
+    else if (TypeList.getValue(type)) {
         paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
     }
     else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
