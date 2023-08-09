@@ -84,6 +84,30 @@ InterfaceList.getValue = function (name) {
     return null;
 }
 
+class TypeList { }
+TypeList.types = [];
+TypeList.push = function (ifs) {
+  TypeList.types.push(ifs)
+}
+TypeList.pop = function () {
+  TypeList.types.pop()
+}
+TypeList.getValue = function (name) {
+    let ifs = TypeList.types[TypeList.types.length - 1]
+    for (let i in ifs) {
+        if (ifs[i].name == name) {
+            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, "allProperties")
+            if (hasProperty) {
+                return ifs[i].body.allProperties.values;
+            } else {
+                return ifs[i].body;
+            }
+            return null;
+        }
+    }
+    return null;
+}
+
 class EnumList { }
 EnumList.enum_ = [];
 EnumList.push = function (ifs) {
@@ -184,6 +208,34 @@ function enumIndex(type, data) {
     return index
 }
 
+function isType(type, data) {
+  let isType = false
+  if (null == data) {
+    return isType
+  }
+  for (let i in data.type) {
+    let typee = data.type[i]
+    if (type == typee.name) {
+      isType = true
+    }
+  }
+  return isType
+}
+
+function typeIndex(type, data) {
+  let index;
+  if (null == data) {
+      return index
+  }
+  for (let i in data.type) {
+      let typee = data.type[i]
+      if (type == typee.name) {
+          index = i
+      }
+  }
+  return index
+}
+
 function getMapType(type) {
     type = type.replace(/\s*/g,"")
     let ttKey = re.search("Map<([a-zA-Z_0-9]+),", type)
@@ -240,6 +292,9 @@ module.exports = {
     EnumValueType,
     NumberIncrease,
     InterfaceList,
+    TypeList,
+    isType,
+    typeIndex,
     getArrayType,
     getArrayTypeTwo,
     checkFileError,
