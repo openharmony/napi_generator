@@ -55,7 +55,7 @@ function analyzeSubInterface(data) {
     return result
 }
 
-function getFuncParaType(v, interfaceName, data) {
+function getFuncParaType(v, interfaceName, data, results) {
     let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", v["type"])
     let parameter = v["type"]
     if (arrayType) {
@@ -72,6 +72,18 @@ function getFuncParaType(v, interfaceName, data) {
                 .format(data.enum[index].body.enumValueType));
             return null
         }
+    }
+     else if (isEnum(parameter, results)) {   // interface & class中的方法参数类型是enum的情况
+        let index = enumIndex(parameter, results)
+        if (results.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+          v["type"] = v["type"].replace(parameter, "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
+        } else if (results.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+          v["type"] = v["type"].replace(parameter, "string")
+        } else {
+          NapiLog.logError("analyzeFunction getFuncParaType is not support this type %s"
+              .format(results.enum[index].body.enumValueType));
+          return null
+      }
     }
 
     let interfaceType = re.match("{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", v["type"])
@@ -160,7 +172,7 @@ function analyseSubReturn(ret, data) {
 }
 
 /**函数解析 */
-function analyzeFunction(data, isStatic, name, values, ret) {
+function analyzeFunction(data, isStatic, name, values, ret, results) {
     let res = analyzeFuncNoNameInterface(data, values)
     let tmp
     let funcType
@@ -181,7 +193,7 @@ function analyzeFunction(data, isStatic, name, values, ret) {
     }
     for (let j in values) {
         let v = values[j]
-        v = getFuncParaType(v, res.interfaceName, data)
+        v = getFuncParaType(v, res.interfaceName, data, results)
         if (v == null) {
             NapiLog.logError("analyzeFunction is not support this type %s".format(v));
         }

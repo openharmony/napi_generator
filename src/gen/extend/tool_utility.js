@@ -144,6 +144,7 @@ public:
     // create code related class
 public:
     static void WrapFinalize(napi_env env, XNapiTool *data, DataPtr hint);
+    static std::map<std::string, AsyncFunc> asyncFuncs_;
     void ReleaseInstance();
     napi_value WrapInstance(DataPtr instance, RELEASE_INSTANCE ri);
     DataPtr UnWarpInstance();
@@ -154,8 +155,6 @@ public:
 private:
     napi_env env_;
     napi_value exports_;
-
-    static std::map<std::string, AsyncFunc> asyncFuncs_;
 
     // analyze params
     napi_value argv_[8];
