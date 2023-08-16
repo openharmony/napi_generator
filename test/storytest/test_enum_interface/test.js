@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { getProperties } = require("./out/build/Release/napitest")
+const { getProperties, enumParamFunc, NodeSayHello, NodeSayHi } = require("./out/build/Release/napitest")
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 const { consumers } = require("stream");
@@ -27,5 +27,27 @@ describe('test_Interface', function () {
     });
 });
 
+describe('test_Interface2', function () {
+    let tc = new NodeSayHello()
+    it('test interfaceFunc', function () {
+        let ret = tc.interfaceFunc('hello', 5);
+        assert.strictEqual(ret, false);
+    });
+});
+
+describe('test_Class', function () {
+    let tc1 = new NodeSayHi()
+    it('test classFunc', function () {
+        let ret = tc1.classFunc(6, 8);
+        assert.strictEqual(ret, '');
+    });
+});
+
+describe('test_Function', function () {
+    it('test enumParamFunc', function () {
+        let ret = enumParamFunc(true, 12);
+        assert.strictEqual(ret, 0);
+    });
+});
 
 

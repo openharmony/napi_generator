@@ -12,18 +12,20 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { TestClass1} = require("./out/build/Release/napitest")
+const { TestClass1, on} = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('on', function () {     
-    function onAsyncCallback (err, ret) {
-        assert.strictEqual(err.code, 0);
-        assert.strictEqual(ret, 0);
+describe('on', function () {  
+    let ret = false;
+    function onAsyncCallback (err) {
+        ret = true;
+        console.info('onAsyncCallback err = ' + err)
+        console.info('onAsyncCallback ret = ' + ret)
     }
 
     let tc1 = new TestClass1(); 
     it('test TestClass1 fun1', function () {
-        let ret = tc1.on('OnEvent',onAsyncCallback);
-        assert.strictEqual(ret, 0);
+        tc1.on('OnEvent', onAsyncCallback);
+        assert.strictEqual(ret, true);
     });
 });

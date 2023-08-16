@@ -108,7 +108,7 @@ function cToJs(value, type, dest, deep = 1) {
         let ifl = EnumList.getValue(type)
         let type2 = ifl[0].type
         let enumCtoJsStr = cToJs("enumInt%d".format(lt), type2, "tnv%d".format(lt), deep + 1)
-        result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) + "int enumInt%d = %s;\n".format(lt, value) + 
+        result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) + "int enumInt%d = (int)(%s);\n".format(lt, value) + 
                 enumCtoJsStr + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
                     .format(dest, propertyName, lt)
         return result

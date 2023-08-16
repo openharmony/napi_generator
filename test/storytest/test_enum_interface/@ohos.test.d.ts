@@ -23,6 +23,16 @@ declare namespace napitest {
     interface WindowProperties {
         type: WindowType;
     }
+
+    interface NodeSayHello {
+        interfaceFunc(v0: string, v1: WindowType): boolean;   // interface中的方法参数是枚举
+    }
+
+    export class NodeSayHi {
+        classFunc(v0: WindowType, v1: number): string;   // Class中的方法参数是枚举
+    }
+
+    function enumParamFunc(v0: boolean, v1: WindowType): number;   // 方法参数是枚举
     function getProperties(callback: AsyncCallback<WindowProperties>): void;
 }
 
