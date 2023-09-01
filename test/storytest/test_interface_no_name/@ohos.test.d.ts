@@ -34,7 +34,8 @@ declare namespace napitest {
     function fun5(value: {xOffset: number, animation: { duration: number, curve: string}});//函数单参数嵌套场景 
     function fun6(nm: string, value: {xOffset: number, animation: { duration: number, curve: string}}); //函数多参数嵌套场景
     function fun7(nm: string, value: {xOffset: number; animation: { duration: number; curve: string}}); //暂不支持 分号场景
-   
+
+    function fun8(from: string): Promise<{result: number; errMsg: string; isT: boolean}>; // Promise匿名interface返回值场景
 }
 
 export default napitest;
