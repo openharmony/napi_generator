@@ -27,17 +27,21 @@ declare namespace napitest {
     function fun9(v1: string, callback: Callback<string>): void;
     function fun10(v1: Test): Test;
     function fun11(v: string, v1: string, v2: string): void;
+    function fun13(v: number, v1: string, v2: string): void;
+    function fun14(v: string, v1: string, v2: number): void;
     interface Test {
         age: string;
         height: string[];
         width: Array<string>;
     }
+    
+    // interface Test1 {
+    //     address: { [key: string]: string };
+    //     lon: Map<string, string>;
+    // }
+    // function fun12(v1: Test1): Test1; 
+
     /*
-    function fun11(v1: Test1): Test;
-    interface Test1 {
-        address: { [key: string]: string };
-        long: Map<string, string>;
-    }
     function fun8(v1: string, callback: AsyncCallback<string[]>): void;
     function fun8(v1: string): Promise<string[]>;*/
 }
