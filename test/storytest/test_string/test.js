@@ -104,13 +104,11 @@ describe('string', function () {
     });
 
     // function fun13(v: number, v1: string, v2: string): void;
-    // TypeError: test.fun13 is not a function
     it('test fun13', function () {
         test.fun13(15, 'bb', 'cc');
     });
 
     // function fun14(v: string, v1: string, v2: number): void;
-    // TypeError: test.fun13 is not a function
     it('test fun14', function () {
         test.fun14('aa', 'bb', 10);
     });
