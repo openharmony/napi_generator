@@ -190,6 +190,11 @@ function formatCode(destDir) {
 function generateAll(structOfTs, destDir, moduleName, numberType) {
     let ns0 = structOfTs.declareNamespace[0];
     let license = structOfTs.declareLicense[0];
+    if (ns0 === undefined) {
+        NapiLog.logError('generateAll error:get namespace fail!');
+        return;
+    }
+
     let result = generateNamespace(ns0.name, ns0.body)
     let numberUsing = ""
     var numbertype = "uint32_t";

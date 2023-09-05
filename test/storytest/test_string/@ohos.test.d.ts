@@ -16,6 +16,7 @@ import { AsyncCallback, Callback } from './../basic';
 
 declare namespace napitest {
     function fun1(v: string): string;
+    function fun12(v1: Test1): void;  
     function fun2(v1: string, v2: string[]): string[];
     function fun3(v1: Array<string>, v2: string): Array<string>;
     function fun4(v: { [key: string]: string }): string;
@@ -35,13 +36,11 @@ declare namespace napitest {
         width: Array<string>;
     }
     
-    // interface Test1 {
-    //     address: { [key: string]: string };
-    //     lon: Map<string, string>;
-    // }
-    // function fun12(v1: Test1): Test1; 
-
-    /*
+    interface Test1 {
+        address: {[key: string]: string};
+        lon: Map<string, string>;
+    }
+/*
     function fun8(v1: string, callback: AsyncCallback<string[]>): void;
     function fun8(v1: string): Promise<string[]>;*/
 }
