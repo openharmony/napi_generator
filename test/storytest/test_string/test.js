@@ -112,4 +112,9 @@ describe('string', function () {
     it('test fun14', function () {
         test.fun14('aa', 'bb', 10);
     });
+
+    //function fun12(v1: Test1): void;
+    it('test fun12', function () {
+        let ff = test.fun12({lon: {'isTrue': '18', 'isExit': '20' }, address: {'kvkey': 'valuetest'}});
+    });    
 });
