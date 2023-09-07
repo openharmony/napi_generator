@@ -40,9 +40,9 @@ declare namespace napitest {
         address: {[key: string]: string};
         lon: Map<string, string>;
     }
-/*
+
     function fun8(v1: string, callback: AsyncCallback<string[]>): void;
-    function fun8(v1: string): Promise<string[]>;*/
+    function fun8(v1: string): Promise<string[]>;
 }
 
 export default napitest;
