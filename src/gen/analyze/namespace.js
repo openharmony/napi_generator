@@ -199,7 +199,7 @@ function parseFunction(matchs, data, result) {
             matchs.regs[4][0] : matchs.regs[3][0] + funcValue.length), 0, ["", "\n"], null)
         data = data.substring(matchs.regs.length == 5 ?
             matchs.regs[4][0] : matchs.regs[3][0] + funcValue.length + funcRet.length)
-        let matchFunc = re.match(" *: *([A-Za-z0-9_<>{}:;, .=]+);*", funcRet)
+        let matchFunc = re.match(" *: *([A-Za-z0-9_<>{}\\[\\]:;, .=]+);*", funcRet)
         let matchFuncArray = re.match(" *: *([A-Za-z0-9]+)(\\[]);*", funcRet)
         if (matchFuncArray) {
             funcRet = re.getReg(funcRet, [matchFuncArray.regs[1][0], matchFuncArray.regs[2][1]])
