@@ -219,5 +219,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results) {
 module.exports = {
     analyzeFunction,
     analyzeSubInterface,
-    getFuncParaType
+    getFuncParaType,
+    analyzeFuncNoNameInterface,
+    analyseSubReturn
 }

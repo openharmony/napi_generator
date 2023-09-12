@@ -338,5 +338,7 @@ module.exports = {
     parseNamespace,
     parseEnum,
     parseFunction,
-    parseInterface
+    parseInterface,
+    parseClass,
+    parseType
 }
