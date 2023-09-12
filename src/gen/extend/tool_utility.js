@@ -104,7 +104,55 @@ public:
 
     std::string GetAnyType(napi_value object);
     std::string GetAnyArrayType(napi_value object);
+    /**
+     * @brief Get any type when function param is any and any type is Array<map<string, string/number/boolean>>.
+     *
+     * @param object Indicates data to be parsed.
+     * @return Returns specific return value type if this function is successfully called such as arr_map_string.
+     */
+    std::string GetAnyTypeArrMap(napi_value object);
+    /**
+     * @brief Get any type when function param is any and any type is map<string, Array<string/number/boolean>>.
+     *
+     * @param object Indicates data to be parsed.
+     * @return Returns specific return value type if this function is successfully called such as map_arr_string.
+     */
+    std::string GetAnyTypeMapArr(napi_value object);
+    /**
+     * @brief Set any value when function param is any and any type is Array<map<string, string/number/boolean>>.
+     *
+     * @param any_type Indicates the type of the param any.
+     * @param argv Indicates data to be parsed.
+     * @param any Indicates parsed data of the param any.
+     * @param len Indicates the length of Array.
+     */
+    void SetAnyValueArrMap(std::string &any_type, napi_value argv, std::any &any, uint32_t len);
+    /**
+     * @brief Set any value when function param is any and any type is map<string, Array<string/number/boolean>>.
+     *
+     * @param any_type Indicates the type of the param any.
+     * @param argv Indicates data to be parsed.
+     * @param any Indicates parsed data of the param any.
+     * @param len Indicates the length of map.
+     */
+    void SetAnyValueMapArr(std::string &any_type, napi_value argv, std::any &any, uint32_t len);
     void SetAnyValue(std::string &any_type, napi_value argv, std::any &any);
+    /**
+     * @brief Get any value when function param is any and any type is Array<map<string, string/number/boolean>>.
+     *
+     * @param any_type Indicates the type of the param any.
+    * @param result Indicates parsed data of the param any.
+    * @param any Indicates data to be parsed.
+     */
+    void GetAnyValueArrMap(std::string any_type, napi_value &result, std::any any);
+    /**
+     * @brief Get any value when function param is any and any type is map<string, Array<string/number/boolean>>.
+     *
+     * @param any_type Indicates the type of the param any.
+     * @param result Indicates parsed data of the param any.
+     * @param any Indicates data to be parsed.
+     */
+    void GetAnyValueMapArr(std::string any_type, napi_value &result, std::any any);
     void GetAnyValue(std::string any_type, napi_value &result, std::any any);
     void GetObjectValVecUint32(std::any &anyVal, napi_value &tnv2);
     void GetObjectValVecInt32(std::any &anyVal, napi_value &tnv2);
@@ -401,6 +449,8 @@ std::string XNapiTool::GetAnyType(napi_value object)
                 return "arr_number";
             } else if (arr_type_result == napi_boolean) {
                 return "arr_boolean";
+            } else if (arr_type_result == napi_object) {
+                return GetAnyTypeArrMap(arr_value_result);
             } else {
                 return nullptr;
             }
@@ -424,6 +474,8 @@ std::string XNapiTool::GetAnyType(napi_value object)
                 return "map_number";
             } else if (obj_value_type == napi_boolean) {
                 return "map_boolean";
+            } else if (obj_value_type == napi_object) {
+                return GetAnyTypeMapArr(obj_value);
             } else {
                 return nullptr;
             }
@@ -459,6 +511,159 @@ std::string XNapiTool::GetAnyArrayType(napi_value object)
         return nullptr;
     }
     return nullptr;
+}
+
+std::string XNapiTool::GetAnyTypeArrMap(napi_value object) {
+    napi_value obj_name_value;
+    napi_value obj_name_result;
+    napi_valuetype obj_name_type;
+    std::string obj_name_string;
+    napi_get_property_names (env_, object, &obj_name_value);
+    napi_get_element (env_, obj_name_value, 0, &obj_name_result);
+    napi_typeof(env_, obj_name_result, &obj_name_type);
+    if (obj_name_type == napi_string) {
+        napi_value obj_value;
+        napi_valuetype obj_value_type;
+        SwapJs2CUtf8(obj_name_result, obj_name_string);
+        napi_get_named_property (env_, object, obj_name_string.c_str(), &obj_value);
+        napi_typeof(env_, obj_value, &obj_value_type);
+        if (obj_value_type == napi_string) {
+            return "arr_map_string";
+        } else if (obj_value_type == napi_number) {
+            return "arr_map_number";
+        } else if (obj_value_type == napi_boolean) {
+            return "arr_map_boolean";
+        } else {
+            return nullptr;
+        }
+    }
+    return nullptr;
+}
+
+std::string XNapiTool::GetAnyTypeMapArr(napi_value object) {
+    bool is_map_array;
+    napi_is_array(env_, object, &is_map_array);
+    if (is_map_array) {
+        napi_value map_arr_value_result;
+        napi_valuetype map_arr_type_result;
+        napi_get_element (env_, object, 0, &map_arr_value_result);
+        napi_typeof(env_, map_arr_value_result, &map_arr_type_result);
+        if (map_arr_type_result == napi_string) {
+            return "map_arr_string";
+        } else if (map_arr_type_result == napi_number) {
+            return "map_arr_number";
+        } else if (map_arr_type_result == napi_boolean) {
+            return "map_arr_boolean";
+        } else {
+            return nullptr;
+        }
+    }
+    return nullptr;
+}
+
+void XNapiTool::SetAnyValueArrMap(std::string &any_type, napi_value argv, std::any &any, uint32_t len)
+{
+    if (any_type == "arr_map_string") {
+        std::vector<std::map<std::string, std::string>> any_arr_map_string;
+        for (uint32_t i = 0; i < len; i++) {
+            std::map<std::string, std::string> arr_map_string;
+            uint32_t len2 = GetMapLength(GetArrayElement(argv, i));
+            for (uint32_t j = 0; j < len2; j++) {
+                std::string tt1;
+                std::string tt2;
+                SwapJs2CUtf8(GetMapElementName(GetArrayElement(argv, i), j), tt1);
+                SwapJs2CUtf8(GetMapElementValue(GetArrayElement(argv, i), tt1.c_str()), tt2);
+                arr_map_string.insert(std::make_pair(tt1, tt2));
+            }
+            any_arr_map_string.push_back(arr_map_string);
+        }
+        any = any_arr_map_string;
+    } else if (any_type == "arr_map_number") {
+        std::vector<std::map<std::string, std::uint32_t>> any_arr_map_number;
+        for (uint32_t i = 0; i < len; i++) {
+            std::map<std::string, std::uint32_t> arr_map_number;
+            uint32_t len2 = GetMapLength(GetArrayElement(argv, i));
+            for (uint32_t j = 0; j < len2; j++) {
+                std::string tt1;
+                uint32_t tt2;
+                SwapJs2CUtf8(GetMapElementName(GetArrayElement(argv, i), i), tt1);
+                tt2 = SwapJs2CInt32(GetMapElementValue(GetArrayElement(argv, i), tt1.c_str()));
+                arr_map_number.insert(std::make_pair(tt1, tt2));
+            }
+            any_arr_map_number.push_back(arr_map_number);
+        }
+        any = any_arr_map_number;
+    } else if (any_type == "arr_map_boolean") {
+        std::vector<std::map<std::string, bool>> any_arr_map_bool;
+        for (uint32_t i = 0; i < len; i++) {
+            std::map<std::string, bool> arr_map_bool;
+            uint32_t len2 = GetMapLength(GetArrayElement(argv, i));
+            for (uint32_t j = 0; j < len2; j++) {
+                std::string tt1;
+                bool tt2;
+                SwapJs2CUtf8(GetMapElementName(GetArrayElement(argv, i), i), tt1);
+                tt2 = SwapJs2CBool(GetMapElementValue(GetArrayElement(argv, i), tt1.c_str()));
+                arr_map_bool.insert(std::make_pair(tt1, tt2));
+            }
+            any_arr_map_bool.push_back(arr_map_bool);
+        }
+        any = any_arr_map_bool;
+    } 
+    return;
+}
+
+void XNapiTool::SetAnyValueMapArr(std::string &any_type, napi_value argv, std::any &any, uint32_t len)
+{
+    if (any_type == "map_arr_string") {
+        std::map<std::string, std::vector<std::string>> any_map_arr_string;
+        for (uint32_t i = 0; i < len; i++) {
+            std::string tt1;
+            std::vector<std::string> map_arr_string;
+            SwapJs2CUtf8(GetMapElementName(argv, i), tt1);
+            uint32_t len2 = GetArrayLength(GetMapElementValue(argv, tt1.c_str()));
+            for (uint32_t j = 0; j < len2; j++) {
+                std::string tt;
+                SwapJs2CUtf8(GetArrayElement(GetMapElementValue(argv, tt1.c_str()), j), tt);
+                map_arr_string.push_back(tt);
+            }
+            any_map_arr_string.insert(std::make_pair(tt1, map_arr_string));
+        }
+        any = any_map_arr_string;
+        return;
+    } else if (any_type == "map_arr_number") {
+        std::map<std::string, std::vector<std::uint32_t>> any_map_arr_number;
+        for (uint32_t i = 0; i < len; i++) {
+            std::string tt1;
+            std::vector<std::uint32_t> map_arr_number;
+            SwapJs2CUtf8(GetMapElementName(argv, i), tt1);
+            uint32_t len2 = GetArrayLength(GetMapElementValue(argv, tt1.c_str()));
+            for (uint32_t j = 0; j < len2; j++) {
+                uint32_t tt;
+                tt = SwapJs2CInt32(GetArrayElement(GetMapElementValue(argv, tt1.c_str()), j));
+                map_arr_number.push_back(tt);
+            }
+            any_map_arr_number.insert(std::make_pair(tt1, map_arr_number));
+        }
+        any = any_map_arr_number;
+        return;
+    } else if (any_type == "map_arr_boolean") {
+        std::map<std::string, std::vector<bool>> any_map_arr_bool;
+        for (uint32_t i = 0; i < len; i++) {
+            std::string tt1;
+            std::vector<bool> map_arr_bool;
+            SwapJs2CUtf8(GetMapElementName(argv, i), tt1);
+            uint32_t len2 = GetArrayLength(GetMapElementValue(argv, tt1.c_str()));
+            for (uint32_t j = 0; j < len2; j++) {
+                bool tt;
+                tt = SwapJs2CBool(GetArrayElement(GetMapElementValue(argv, tt1.c_str()), j));
+                map_arr_bool.push_back(tt);
+            }
+            any_map_arr_bool.insert(std::make_pair(tt1, map_arr_bool));
+        }
+        any = any_map_arr_bool;
+        return;
+    }
+    return;
 }
 
 void XNapiTool::SetAnyValue(std::string &any_type, napi_value argv, std::any &any)
@@ -508,8 +713,11 @@ void XNapiTool::SetAnyValue(std::string &any_type, napi_value argv, std::any &an
             }
             any = any_arr_boolean;
             return;
-        }
-        return;
+        } else if (any_type.substr(0, 7) == "arr_map") {
+            SetAnyValueArrMap(any_type, argv, any, len);
+            return;
+        }  
+        return;   
     }  else if (get_any_type == "map") {
         uint32_t len = GetMapLength(argv);
         if (any_type == "map_string") {
@@ -545,6 +753,139 @@ void XNapiTool::SetAnyValue(std::string &any_type, napi_value argv, std::any &an
             }
             any = any_map_boolean;
             return;
+        } else if (any_type.substr(0, 7) == "map_arr") {
+            SetAnyValueMapArr(any_type, argv, any, len);
+            return;
+        } 
+        return;
+    }
+    return;
+}
+
+void XNapiTool::GetAnyValueArrMap (std::string any_type, napi_value &result, std::any any)
+{
+    if (any_type == "arr_map_number") {
+        std::vector<std::map<std::string, std::uint32_t>> any_arr_map_number =
+        std::any_cast<std::vector<std::map<std::string, std::uint32_t>>>(any);
+        uint32_t len = any_arr_map_number.size();
+        for (uint32_t i = 0; i < len; i++) {
+            napi_value tnv = nullptr;
+            std::map<std::string, std::uint32_t> any_map_number = any_arr_map_number[i];
+            for (auto j = any_map_number.begin(); j != any_map_number.end(); j++) {
+                const char *tnv1;
+                napi_value tnv2 = nullptr;
+                tnv1 = (j->first).c_str();
+                if (typeid(j->second) == typeid(int32_t)) {
+                    tnv2 = SwapC2JsInt32(j->second);
+                } else if (typeid(j->second) == typeid(uint32_t)) {
+                    tnv2 = SwapC2JsUint32(j->second);
+                } else if (typeid(j->second) == typeid(int64_t)) {
+                    tnv2 = SwapC2JsInt64(j->second);
+                } else if (typeid(j->second) == typeid(double_t)) {
+                    tnv2 = SwapC2JsDouble(j->second);
+                }
+                SetMapElement(tnv, tnv1, tnv2);
+            }
+            SetArrayElement(result, i, tnv);
+        }
+        return;
+    } else if (any_type == "arr_map_string") {
+        std::vector<std::map<std::string, std::string>> any_arr_map_string =
+        std::any_cast<std::vector<std::map<std::string, std::string>>>(any);
+        uint32_t len = any_arr_map_string.size();
+        for (uint32_t i = 0; i < len; i++) {
+            napi_value tnv = nullptr;
+            std::map<std::string, std::string> any_map_string = any_arr_map_string[i];
+            for (auto j = any_map_string.begin(); j != any_map_string.end(); j++) {
+                const char *tnv1;
+                napi_value tnv2 = nullptr;
+                tnv1 = (j->first).c_str();
+                tnv2 = SwapC2JsUtf8(j->second.c_str());
+                SetMapElement(tnv, tnv1, tnv2);
+            }
+            SetArrayElement(result, i, tnv);
+        }
+        return;
+    } else if (any_type == "arr_map_boolean") {
+        std::vector<std::map<std::string, bool>> any_arr_map_bool =
+        std::any_cast<std::vector<std::map<std::string, bool>>>(any);
+        uint32_t len = any_arr_map_bool.size();
+        for (uint32_t i = 0; i < len; i++) {
+            napi_value tnv = nullptr;
+            std::map<std::string, bool> any_map_bool= any_arr_map_bool[i];
+            for (auto j = any_map_bool.begin(); j != any_map_bool.end(); j++) {
+                const char *tnv1;
+                napi_value tnv2 = nullptr;
+                tnv1 = (j->first).c_str();
+                tnv2 = SwapC2JsBool(j->second);
+                SetMapElement(tnv, tnv1, tnv2);
+            }
+            SetArrayElement(result, i, tnv);
+        }
+        return;
+    } 
+    return;
+}
+
+void XNapiTool::GetAnyValueMapArr (std::string any_type, napi_value &result, std::any any)
+{
+    if (any_type == "map_arr_string") {
+        std::map<std::string, std::vector<std::string>> any_map_arr_string =
+        std::any_cast<std::map<std::string, std::vector<std::string>>>(any);
+        for (auto i = any_map_arr_string.begin(); i != any_map_arr_string.end(); i++) {
+            const char *tnv1;
+            napi_value tnv2 = nullptr;
+            tnv1 = (i->first).c_str();
+            std::vector<std::string> map_arr_string = i->second;
+            uint32_t len2 = map_arr_string.size();
+            for (uint32_t j = 0; j < len2; j++) {
+                napi_value tnv = nullptr;
+                tnv = SwapC2JsUtf8(map_arr_string[j].c_str());
+                SetArrayElement(tnv2, j, tnv);
+            }
+            SetMapElement(result, tnv1, tnv2);
+        }
+        return;
+    } else if (any_type == "map_arr_number") {
+        std::map<std::string, std::vector<std::uint32_t>> any_map_arr_number =
+        std::any_cast<std::map<std::string, std::vector<std::uint32_t>>>(any);
+        for (auto i = any_map_arr_number.begin(); i != any_map_arr_number.end(); i++) {
+            const char *tnv1;
+            napi_value tnv2 = nullptr;
+            tnv1 = (i->first).c_str();
+            std::vector<std::uint32_t> map_arr_number = i->second;
+            uint32_t len2 = map_arr_number.size();
+            for (uint32_t j = 0; j < len2; j++) {
+                napi_value tnv = nullptr;
+                if (typeid(map_arr_number[j]) == typeid(int32_t)) {
+                    tnv = SwapC2JsInt32(map_arr_number[j]);
+                } else if (typeid(map_arr_number[j]) == typeid(uint32_t)) {
+                    tnv = SwapC2JsUint32(map_arr_number[j]);
+                } else if (typeid(map_arr_number[j]) == typeid(int64_t)) {
+                    tnv = SwapC2JsInt64(map_arr_number[j]);
+                } else if (typeid(map_arr_number[j]) == typeid(double_t)) {
+                    tnv = SwapC2JsDouble(map_arr_number[j]);
+                }
+                SetArrayElement(tnv2, j, tnv);
+            }
+            SetMapElement(result, tnv1, tnv2);
+        }
+        return;
+    } else if (any_type == "map_arr_boolean") {
+        std::map<std::string, std::vector<bool>> any_map_arr_bool =
+        std::any_cast<std::map<std::string, std::vector<bool>>>(any);
+        for (auto i = any_map_arr_bool.begin(); i != any_map_arr_bool.end(); i++) {
+            const char *tnv1;
+            napi_value tnv2 = nullptr;
+            tnv1 = (i->first).c_str();
+            std::vector<bool> map_arr_bool = i->second;
+            uint32_t len2 = map_arr_bool.size();
+            for (uint32_t j = 0; j < len2; j++) {
+                napi_value tnv = nullptr;
+                tnv = SwapC2JsBool(map_arr_bool[j]);
+                SetArrayElement(result, j, tnv);
+            }
+            SetMapElement(result, tnv1, tnv2);
         }
         return;
     }
@@ -611,6 +952,9 @@ void XNapiTool::GetAnyValue (std::string any_type, napi_value &result, std::any 
                 SetArrayElement(result, i, tnv);
             }
             return;
+        } else if (any_type.substr(0, 7) == "arr_map") {
+            GetAnyValueArrMap(any_type, result, any);
+            return;
         }
         return;
     } else if (get_any_type == "map") {
@@ -653,6 +997,9 @@ void XNapiTool::GetAnyValue (std::string any_type, napi_value &result, std::any 
                 tnv2 = SwapC2JsBool(i->second);
                 SetMapElement(result, tnv1, tnv2);
             }
+            return;
+        } else if (any_type.substr(0, 7) == "map_arr") {
+            GetAnyValueMapArr(any_type, result, any);
             return;
         }
         return;
