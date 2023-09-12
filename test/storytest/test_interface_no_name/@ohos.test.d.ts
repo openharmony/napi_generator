@@ -15,7 +15,8 @@
 import { AsyncCallback, Callback } from './../basic';
 
 declare namespace napitest {
-    function fun1(mancc: {name: string, age: number}): string; //函数单参数非嵌套场景
+    // 函数单参数非嵌套场景
+    function fun1(mancc: {name: string, age: number}): string;
 
     interface TestInterfaceAA {
         an: string;
@@ -23,17 +24,27 @@ declare namespace napitest {
     }  
     interface TestInterface {
         anchor: string;
-        align: string;        
-        left: { test1: string, test2: string };//interface域变量场景      
+        align: string;
+        // interface域变量场景        
+        left: { test1: string, test2: string };      
     } 
 
-    function fun2(fp2: TestInterface): string;      
-    function fun3(name : string, fp3: {nm: string, age: number}): string; //函数多参数非嵌套场景
-    function fun4(input: string): { read: number; written: number };//函数返回值场景
+    function fun2(fp2: TestInterface): string;
     
-    function fun5(value: {xOffset: number, animation: { duration: number, curve: string}});//函数单参数嵌套场景 
-    function fun6(nm: string, value: {xOffset: number, animation: { duration: number, curve: string}}); //函数多参数嵌套场景
-    function fun7(nm: string, value: {xOffset: number; animation: { duration: number; curve: string}}); //暂不支持 分号场景
+    // 函数多参数非嵌套场景   
+    function fun3(name : string, fp3: {nm: string, age: number}): string;
+
+    // 函数返回值场景
+    function fun4(input: string): { read: number; written: number };
+    
+    // 函数单参数嵌套场景
+    function fun5(value: {xOffset: number, animation: { duration: number, curve: string}});
+
+    // 函数多参数嵌套场景
+    function fun6(nm: string, value: {xOffset: number, animation: { duration: number, curve: string}});
+
+    // 暂不支持 分号场景
+    function fun7(nm: string, value: {xOffset: number; animation: { duration: number; curve: string}});
    
 }
 

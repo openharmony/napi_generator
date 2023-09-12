@@ -16,26 +16,31 @@ const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('string case', function () {
+    // function fun1(v: string): string;
     it('test fun1', function () {
         let ret = test.fun1('18');
         assert.deepStrictEqual(ret, '');
     });
 
+    // function fun2(v1: string, v2: string[]): string[];
     it('test fun2', function () {
         let ret = test.fun2('18', ['18', '20']);
         assert.deepStrictEqual(ret, []);
     });
 
+    // function fun3(v1: Array<string>, v2: string): Array<string>;
     it('test fun3', function () {
         let ret = test.fun3(['18', '20'], '20');
         assert.deepStrictEqual(ret, []);
     });
 
+    // function fun4(v: { [key: string]: string }): string;
     it('test fun4', function () {
         let ret = test.fun4({ 'isTrue': '18', 'isExit': '20' });
         assert.deepStrictEqual(ret, '');
     });
 
+    // function fun5(v1: Map<string, string>, v2: string): string;
     it('test fun5', function () {
         let ret = test.fun5({ 'isTrue': '18', 'isExit': '20' }, '18');
         assert.deepStrictEqual(ret, '');
@@ -50,11 +55,13 @@ describe('string case', function () {
         assert.deepStrictEqual(ret, '');
     }
 
+    // function fun6(v1: string, callback: AsyncCallback<string>): void;
     it('test fun6_callback', function () {
         test.fun6('15', asynFun1);
         test.fun6('15').then(def1);
     });
 
+    // function fun6(v1: string): Promise<string>;
     it('test fun6_promise', function () {
         let promiseObj = test.fun6('15');
         promiseObj.then(ret => { def1(ret) });
@@ -69,11 +76,13 @@ describe('string case', function () {
         assert.deepStrictEqual(ret, []);
     }
 
+    // function fun7(v: string, v1: AsyncCallback<Array<string>>): void;
     it('test fun7_callback', function () {
         test.fun7('15', asynFun2);
         test.fun7('15').then(def2);
     });
 
+    // function fun7(v: string): Promise<Array<string>>;
     it('test fun7_promise', function () {
         let promiseObj = test.fun7('15');
         promiseObj.then(ret => { def2(ret) });
@@ -105,10 +114,12 @@ describe('string case', function () {
         assert.deepStrictEqual(ret, '')
     }
 
+    // function fun9(v1: string, callback: Callback<string>): void;
     it('test fun9', function () {
         test.fun9('15', cb1);
     });
 
+    // function fun10(v1: Test): Test;
     it('test fun10', function () {
         let ret = test.fun10(
             { age: '18', height: ['20', '20'], width: ['18', '18'] });

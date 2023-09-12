@@ -32,34 +32,44 @@ describe('interface_no_name', function () {
         }
     }
 
+    // function fun1(mancc: {name: string, age: number}): string;
     it('test interface_no_name fun1', function () {        
         let ret = fun1({"name":"abc","age":20});
         assert.strictEqual(ret, '');
     });
+
+    // function fun2(fp2: TestInterface): string;
     it('test interface_no_name fun2', function () {        
         let ret = fun2(fp2);
         //assert.strictEqual(ret, '');
     });    
     
+    // function fun3(name : string, fp3: {nm: string, age: number}): string;
     it('test interface_no_name fun3', function () {        
         let ret = fun3("fun3p1", {nm:"abc",age:20});
         //assert.strictEqual(ret, '');
     });
     
+    // function fun4(input: string): { read: number; written: number };
     it('test interface_no_name fun4', function () {        
         let ret = fun4("name");
         //assert.strictEqual(ret.read, 0);
     });
     
+    // function fun5(value: {xOffset: number, animation: { duration: number, curve: string}});
     it('test interface_no_name fun5', function () {
         fun5(value);   
         //let ret = fun5(value);
         //assert.strictEqual(ret, void);
     });
+
+    // function fun6(nm: string, value: {xOffset: number, animation: { duration: number, curve: string}});
     it('test interface_no_name fun6', function () {     
         fun6("name", value);
 
     });
+
+    // function fun7(nm: string, value: {xOffset: number; animation: { duration: number; curve: string}});
     it('test interface_no_name fun7', function () {
         fun7("name", value);
     });
