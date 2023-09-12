@@ -45,7 +45,9 @@ declare namespace napitest {
 
     // 暂不支持 分号场景
     function fun7(nm: string, value: {xOffset: number; animation: { duration: number; curve: string}});
-   
+    
+    // Promise匿名interface返回值场景
+    function fun8(from: string): Promise<{result: number; errMsg: string; isT: boolean}>;
 }
 
 export default napitest;
