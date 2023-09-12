@@ -20,13 +20,14 @@ describe('Number', function () {
         assert.strictEqual(ret, 0);
     }
 
+    // fun1(v: number): number;    
     it('test TestClass1 fun1', function () {
         let tc1 = new TestClass1();
         let ret = tc1.fun1(1);
         assert.strictEqual(ret, 0);
     });
 
-    
+    // fun2(v: string): Result;
     it('test TestClass1 fun2', function () {
         let tc1 = new TestClass1();
         let ret = tc1.fun2('aaa');

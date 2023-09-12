@@ -35,19 +35,51 @@ function onVoidAsyncCallback (err, ret) {
 }
 
 describe('Test callback', function () {
-    it('test callback in interface', function () {
+    // fun11(cb: Callback<number>): void;
+    it('test callback in interface fun11', function () {
         let testClass = new TestClass1();
         testClass.fun11(onCallback);
+    });
+
+    // fun12(cb: Callback<void>): void;
+    it('test callback in interface fun12', function () {
+        let testClass = new TestClass1();
         testClass.fun12(onVoidCallback);
+    });
+
+    // fun13(cb: AsyncCallback<number>): void;
+    it('test callback in interface fun13', function () {
+        let testClass = new TestClass1();
         testClass.fun13(onAsyncCallback);
+    });
+
+    // fun14(cb: AsyncCallback<void>): void; 
+    it('test callback in interface fun14', function () {
+        let testClass = new TestClass1();
         testClass.fun14(onVoidAsyncCallback);
     });
 
-    it('test common func callback', function () {
+    // function fun1(cb: Callback<number>): void;
+    it('test common func callback fun1', function () {
         let testClass = new TestClass1();
         testObj.fun1(onCallback);
+    });
+
+    // function fun2(cb: Callback<void>): void;
+    it('test common func callback fun2', function () {
+        let testClass = new TestClass1();
         testObj.fun2(onVoidCallback);
+    });
+
+    // function fun3(cb: AsyncCallback<number>): void;
+    it('test common func callback fun3', function () {
+        let testClass = new TestClass1();
         testObj.fun3(onAsyncCallback);
+    });
+
+    // function fun4(cb: AsyncCallback<void>): void;
+    it('test common func callback fun4', function () {
+        let testClass = new TestClass1();
         testObj.fun4(onVoidAsyncCallback);
     });
 });
