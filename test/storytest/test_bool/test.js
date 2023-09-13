@@ -16,26 +16,32 @@ const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('boolean', function () {
+
+    // function fun1(v: boolean): boolean;
     it('test fun1', function () {
         let ret = test.fun1(true);
         assert.deepStrictEqual(ret, false);
     });
 
+    // function fun2(v1: boolean, v2: boolean[]): boolean[];
     it('test fun2', function () {
         let ret = test.fun2(true, [true, false]);
         assert.deepStrictEqual(ret, []);
     });
 
+    // function fun3(v1: Array<boolean>, v2: boolean): Array<boolean>;
     it('test fun3', function () {
         let ret = test.fun3([true, false], false);
         assert.deepStrictEqual(ret, []);
     });
 
+    // function fun4(v: { [key: string]: boolean }): boolean;
     it('test fun4', function () {
         let ret = test.fun4({ 'isTrue': true, 'isExit': false });
         assert.deepStrictEqual(ret, false);
     });
 
+    // function fun5(v1: Map<string, boolean>, v2: boolean): boolean;
     it('test fun5', function () {
         let ret = test.fun5({ 'isTrue': true, 'isExit': false }, true);
         assert.deepStrictEqual(ret, false);
@@ -50,12 +56,14 @@ describe('boolean', function () {
         assert.deepStrictEqual(ret, false);
     }
 
-    it('test fun6', function () {
+    // function fun6(v1: number, callback: AsyncCallback<boolean>): void; 
+    it('test fun6_callback', function () {
         test.fun6(15, asynFun1);
         test.fun6(15).then(def1);
     });
 
-    it('test fun6', function () {
+    // function fun6(v1: number): Promise<boolean>;
+    it('test fun6_promise', function () {
         let promiseObj = test.fun6(15);
         promiseObj.then(ret => { def1(ret) });
     });
@@ -72,12 +80,14 @@ describe('boolean', function () {
         assert.deepStrictEqual(ret, []);
     }
 
-    it('test fun7', function () {
+    // function fun7(v: number, v1: AsyncCallback<Array<boolean>>): void;
+    it('test fun7_callback', function () {
         test.fun7(15, asynFun2);
         test.fun7(15).then(def2);
     });
 
-    it('test fun7', function () {
+    // function fun7(v: number): Promise<Array<boolean>>;
+    it('test fun7_promise', function () {
         let promiseObj = test.fun7(15);
         promiseObj.then(ret => { def2(ret) });
     });
@@ -86,10 +96,12 @@ describe('boolean', function () {
         assert.deepStrictEqual(ret, false)
     }
 
+    // function fun9(v1: number, callback: Callback<boolean>): void;
     it('test fun9', function () {
         test.fun9(15, cb1);
     });
 
+    // function fun10(v1: Test): Test;
     it('test fun10', function () {
         let ret = test.fun10(
             { age: true, height: [false, false], width: [true, true] });
