@@ -62,6 +62,10 @@ describe('Any fun1', function () {
         let ret = test.fun1('guding', 'aaa');
         assert.strictEqual(ret, 0);
     });
+ 
+});
+
+describe('Any fun1 array map part', function () {
     it('test fun1 Array<map<string>>', function () {
         let ret = test.fun1([{ "test": "okay", "test1": "res" }, { "test2": "okay2", "test3": "res3" }], 'aaa');
         assert.strictEqual(ret, 0);

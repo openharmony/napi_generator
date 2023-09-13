@@ -50,66 +50,61 @@ describe('string case', function () {
         assert.strictEqual(err.code, 0)
         assert.deepStrictEqual(ret, '')
     }
-
     function def1(ret) {
         assert.deepStrictEqual(ret, '');
     }
-
     // function fun6(v1: string, callback: AsyncCallback<string>): void;
     it('test fun6_callback', function () {
         test.fun6('15', asynFun1);
         test.fun6('15').then(def1);
     });
-
     // function fun6(v1: string): Promise<string>;
     it('test fun6_promise', function () {
         let promiseObj = test.fun6('15');
         promiseObj.then(ret => { def1(ret) });
     });
+});
 
+describe('string case part2', function () {
     function asynFun2(err, ret) {
         assert.deepStrictEqual(err.code, 0)
         assert.deepStrictEqual(ret, [])
     }
-
     function def2(ret) {
         assert.deepStrictEqual(ret, []);
     }
-
     // function fun7(v: string, v1: AsyncCallback<Array<string>>): void;
     it('test fun7_callback', function () {
         test.fun7('15', asynFun2);
         test.fun7('15').then(def2);
     });
-
     // function fun7(v: string): Promise<Array<string>>;
     it('test fun7_promise', function () {
         let promiseObj = test.fun7('15');
         promiseObj.then(ret => { def2(ret) });
     });
-
     // define callback for fun8
     function asynFun8(err, ret) {
         assert.deepStrictEqual(err.code, 0)
         assert.deepStrictEqual(ret, [])
     }
-
     function def8(ret) {
         assert.deepStrictEqual(ret, []);
     }
-
     // function fun8(v1: string, callback: AsyncCallback<string[]>): void;
     it('test fun8_AsyncCallback', function () {
         test.fun8('funTest', asynFun8);
         test.fun8('funTest').then(def8);
     });
-
     // function fun8(v1: string): Promise<string[]>;
     it('test fun8_promise', function () {
         let promiseObj = test.fun8('funTest');
         promiseObj.then(ret => { def8(ret) });
     });
-        
+});
+
+describe('string case part3', function () {
+            
     function cb1(ret) {
         assert.deepStrictEqual(ret, '')
     }
