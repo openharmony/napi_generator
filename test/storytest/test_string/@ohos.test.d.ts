@@ -16,7 +16,6 @@ import { AsyncCallback, Callback } from './../basic';
 
 declare namespace napitest {
     function fun1(v: string): string;
-    function fun12(v1: Test1): void;  
     function fun2(v1: string, v2: string[]): string[];
     function fun3(v1: Array<string>, v2: string): Array<string>;
     function fun4(v: { [key: string]: string }): string;
@@ -28,6 +27,7 @@ declare namespace napitest {
     function fun9(v1: string, callback: Callback<string>): void;
     function fun10(v1: Test): Test;
     function fun11(v: string, v1: string, v2: string): void;
+    function fun12(v1: Test1): void;
     function fun13(v: number, v1: string, v2: string): void;
     function fun14(v: string, v1: string, v2: number): void;
     interface Test {
@@ -46,4 +46,3 @@ declare namespace napitest {
 }
 
 export default napitest;
-

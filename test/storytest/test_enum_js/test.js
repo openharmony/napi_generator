@@ -16,13 +16,15 @@
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('String', function () {    
+describe('String', function () {
+    
+    // function fun1(v1: HttpStatus): number;
     it('test fun1', function () {
         let ret = test.fun1(test.HttpStatus.STATUS0);
         assert.strictEqual(ret, 0);
     });
     
-    
+    // function fun2(v1: GrantStatus): number;
     it('test fun2', function () {
         let ret = test.fun2(test.GrantStatus.PERMISSION_DEFAULT);
         assert.strictEqual(ret, 0);

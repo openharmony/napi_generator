@@ -15,27 +15,32 @@
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('number', function () {
+describe('number first cases', function () {
+    // function fun1(v: number): number;
     it('test fun1', function () {
         let ret = test.fun1(18);
         assert.deepStrictEqual(ret, 0);
     });
 
+    // function fun2(v1: number, v2: number[]): number[];
     it('test fun2', function () {
         let ret = test.fun2(18, [18, 20]);
         assert.deepStrictEqual(ret, []);
     });
 
+    // function fun3(v1: Array<number>, v2: number): Array<number>;
     it('test fun3', function () {
         let ret = test.fun3([18, 20], 20);
         assert.deepStrictEqual(ret, []);
     });
 
+    // function fun4(v: { [key: string]: number }): number;
     it('test fun4', function () {
         let ret = test.fun4({ 'isTrue': 18, 'isExit': 20 });
         assert.deepStrictEqual(ret, 0);
     });
 
+    // function fun5(v1: Map<string, number>, v2: number): number;
     it('test fun5', function () {
         let ret = test.fun5({ 'isTrue': 18, 'isExit': 20 }, 18);
         assert.deepStrictEqual(ret, 0);
@@ -50,18 +55,20 @@ describe('number', function () {
         assert.deepStrictEqual(ret, 0);
     }
 
-    it('test fun6', function () {
+    // function fun6(v1: number, callback: AsyncCallback<number>): void;
+    it('test fun6_callback', function () {
         test.fun6(15, asynFun1);
         test.fun6(15).then(def1);
     });
 
-    it('test fun6', function () {
+    // function fun6(v1: number): Promise<number>;
+    it('test fun6_promise', function () {
         let promiseObj = test.fun6(15);
         promiseObj.then(ret => { def1(ret) });
     });
 });
 
-describe('number', function () {
+describe('number second cases', function () {
     function asynFun2(err, ret) {
         assert.deepStrictEqual(err.code, 0)
         assert.deepStrictEqual(ret, [])
@@ -71,12 +78,14 @@ describe('number', function () {
         assert.deepStrictEqual(ret, []);
     }
 
-    it('test fun7', function () {
+    // function fun7(v: number, v1: AsyncCallback<Array<number>>): void;
+    it('test fun7_callback', function () {
         test.fun7(15, asynFun2);
         test.fun7(15).then(def2);
     });
-
-    it('test fun7', function () {
+    
+    // function fun7(v: number): Promise<Array<number>>;
+    it('test fun7_promise', function () {
         let promiseObj = test.fun7(15);
         promiseObj.then(ret => { def2(ret) });
     }); 
@@ -85,10 +94,12 @@ describe('number', function () {
         assert.deepStrictEqual(ret, 0)
     }
 
+    // function fun9(v1: number, callback: Callback<number>): void;
     it('test fun9', function () {
         test.fun9(15, cb1);
     });
 
+    // function fun10(v1: Test): Test;
     it('test fun10', function () {
         let ret = test.fun10({ age: 18, height: [20, 20], width: [18, 18] });
         assert.deepStrictEqual(typeof ret, 'object');

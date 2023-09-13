@@ -16,27 +16,50 @@ const { fun1 } = require("./out/build/Release/napitest")
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('Any', function () {
-    it('test fun1', function () {
+// function fun1(v: any, v1: string): number;
+describe('Any fun1', function () {    
+    it('test fun1 any num string', function () {
         let ret = test.fun1("1", "aa");
         assert.strictEqual(ret, 0);
-        ret = test.fun1(45678, "aa");
+    });
+
+    it('test fun1 any number', function () {
+        let ret = test.fun1(45678, "aa");
         assert.strictEqual(ret, 0);
-        ret = test.fun1(true, "aa");
+    });
+
+    it('test fun1 any boolean', function () {
+        let ret = test.fun1(true, "aa");
         assert.strictEqual(ret, 0);
-        ret = test.fun1(['11', '22', '33'], "aa");
+    });
+
+    it('test fun1 any string array', function () {
+        let ret = test.fun1(['11', '22', '33'], "aa");
         assert.strictEqual(ret, 0);
-        ret = test.fun1([1, 2, 3], "aa");
+    });
+
+    it('test fun1 any number array', function () {
+        let ret = test.fun1([1, 2, 3], "aa");
         assert.strictEqual(ret, 0);
-        ret = test.fun1([true, true, false], "aa");
+    });
+
+    it('test fun1 any boolean array', function () {
+        let ret = test.fun1({ "test": "okay", "test1": "res" }, "aa");
         assert.strictEqual(ret, 0);
-        ret = test.fun1({ "test": "okay", "test1": "res" }, "aa");
+    });
+
+    it('test fun1 any map number', function () {
+        let ret = test.fun1({ "test": 15, "test1": 18 }, "aa");
         assert.strictEqual(ret, 0);
-        ret = test.fun1({ "test": 15, "test1": 18 }, "aa");
+    });
+
+    it('test fun1 any map number', function () {
+        let ret = test.fun1({ "test": true, "test1": false }, "aa");
         assert.strictEqual(ret, 0);
-        ret = test.fun1({ "test": true, "test1": false }, "aa");
-        assert.strictEqual(ret, 0);
-        ret = test.fun1('guding', 'aaa');
+    });
+
+    it('test fun1 string', function () {
+        let ret = test.fun1('guding', 'aaa');
         assert.strictEqual(ret, 0);
     });
     it('test fun1 Array<map<string>>', function () {
@@ -66,87 +89,167 @@ describe('Any', function () {
     });
 });
 
-describe('Any', function () {
-    it('test fun2', function () {
+// function fun2(v: number, v1: TestClass1): number;
+describe('Any fun2', function () {
+    it('test fun2 interface any string', function () {
         let ret = test.fun2(15, { 'any1': 'aaa', 'focused': 'aaa' });
         assert.strictEqual(ret, 0);
-        ret = test.fun2(15, { 'any1': 11, 'def': 15 });
+    });
+
+    it('test fun2 interface any number', function () {
+        let ret = test.fun2(15, { 'any1': 11, 'def': 15 });
         assert.strictEqual(ret, 0);
-        ret = test.fun2(15, { 'any1': true, 'arr': [15, 20] });
+    });
+
+    it('test fun2 interface any boolean', function () {
+        let ret = test.fun2(15, { 'any1': true, 'arr': [15, 20] });
         assert.strictEqual(ret, 0);
-        ret = test.fun2(15, { 'any1': ['222', '333'], 'arr1': ['aaa', 'bbb'] });
+    });
+
+    it('test fun2 interface any string array', function () {
+        let ret = test.fun2(15, { 'any1': ['222', '333'], 'arr1': ['aaa', 'bbb'] });
         assert.strictEqual(ret, 0);
-        ret = test.fun2(15,{'any1':[11,12],'extraInfo':{'name':'zhangsan','name1':'lisi'}});
+    });
+
+    it('test fun2 interface any number array', function () {
+        let ret = test.fun2(15,{'any1':[11,12],'extraInfo':{'name':'zhangsan','name1':'lisi'}});
         assert.strictEqual(ret, 0);
-        ret = test.fun2(15, { 'any1': [true, true], 'focused': true });
+    });
+
+    it('test fun2 interface any boolean array', function () {
+        let ret = test.fun2(15, { 'any1': [true, true], 'focused': true });
         assert.strictEqual(ret, 0);
+    });
+
+    it('test fun2 interface any map string', function () {
         ret = test.fun2(15, { 'any1': { 'test': '666' }, 'def': ['12', '15'] });
         assert.strictEqual(ret, 0);
-        ret = test.fun2(15, { 'any1': { 'test': 88 }, 'arr': [true, false] });
+    });
+
+    it('test fun2 interface any map number', function () {
+        let ret = test.fun2(15, { 'any1': { 'test': 88 }, 'arr': [true, false] });
         assert.strictEqual(ret, 0);
-        ret = test.fun2(15,{'any1':{'test':true},'arr1':[{'name':'hhh'},{'name':'lisi'}]});
+    });
+
+    it('test fun2 interface any map boolean', function () {
+        let ret = test.fun2(15,{'any1':{'test':true},'arr1':[{'name':'hhh'},{'name':'lisi'}]});
         assert.strictEqual(ret, 0);
+    });
+
+    it('test fun2 interface any string number array', function () {
         ret = test.fun2(15,{'any1':'guding','extraInfo':{'name':[11, 15],'name1':[15, 18]}});
         assert.strictEqual(ret, 0);
     });
 });
 
-describe('Any', function () {
-    it('test fun4', function () {
+// function fun4(v: number, v1: Array<any>): number;
+describe('Any fun4', function () {
+    it('test fun4 Array string', function () {
         let ret = test.fun4(15,['aaa', 'bbb']);
         assert.strictEqual(ret, 0);
-        ret = test.fun4(15, [15, 18]);
+    });
+
+    it('test fun4 Array number', function () {
+        let ret = test.fun4(15, [15, 18]);
         assert.strictEqual(ret, 0);
-        ret = test.fun4(15, [true, true]);
+    });
+
+    it('test fun4 Array boolean', function () {        
+        let ret = test.fun4(15, [true, true]);
         assert.strictEqual(ret, 0);
     });
 });
 
-describe('Any', function () {
-    it('test fun5', function () {
+// function fun5(v: string, v1: any[]): number;
+describe('Any fun5', function () {
+    it('test fun5 any string', function () {
         let ret = test.fun5('aaa',['aaa', 'bbb']);
         assert.strictEqual(ret, 0);
-        ret = test.fun5('aaa',[15, 18]);
+    });
+
+    it('test fun5 any number', function () {
+        let ret = test.fun5('aaa',[15, 18]);
         assert.strictEqual(ret, 0);
-        ret = test.fun5('aaa',[true, true]);
+    });
+
+    it('test fun5 any boolean', function () {
+        let ret = test.fun5('aaa',[true, true]);
         assert.strictEqual(ret, 0);
     });
 });
 
-describe('Any', function () {
-    it('test fun6', function () {
+// function $fun6(v: boolean, param: Array<any>): number;
+describe('Any fun6', function () {
+    it('test fun6 array string', function () {
         let ret = test.$fun6(true,['aaa', 'bbb']);
         assert.strictEqual(ret, 0);
-        ret = test.$fun6(true,[15, 18]);
-        assert.strictEqual(ret, 0);
-        ret = test.$fun6(true,[true, true]);
+    });
+
+    it('test fun6 array number', function () {
+        let ret = test.$fun6(true,[15, 18]);
         assert.strictEqual(ret, 0);
     });
+    
+    it('test fun6 array boolean', function () {
+        let ret = test.$fun6(true,[true, true]);
+        assert.strictEqual(ret, 0);
+    });    
 });
 
-describe('Any', function () {
-    it('test fun8', function () {
+// function fun8(v1: string[], v?: any): number;
+describe('Any fun8', function () {
+    it('test fun8 option any null', function () {
         let ret = test.fun8(['aaa','bbb']);
         assert.strictEqual(ret, 0);
-        ret = test.fun8(['aaa','bbb'],"1");
+    });
+
+    it('test fun8 option any number string', function () {
+        let ret = test.fun8(['aaa','bbb'],"1");
         assert.strictEqual(ret, 0);
-        ret = test.fun8(['aaa','bbb'],45678);
+    });
+
+    it('test fun8 option any number', function () {
+        let ret = test.fun8(['aaa','bbb'],45678);
         assert.strictEqual(ret, 0);
-        ret = test.fun8(['aaa','bbb'],true);
+    });
+
+    it('test fun8 option any boolean', function () {
+        let ret = test.fun8(['aaa','bbb'],true);
         assert.strictEqual(ret, 0);
-        ret = test.fun8(['aaa','bbb'],['11', '22', '33']);
+    });
+
+    it('test fun8 option any array string', function () {
+        let ret = test.fun8(['aaa','bbb'],['11', '22', '33']);
         assert.strictEqual(ret, 0);
-        ret = test.fun8(['aaa','bbb'],[1, 2, 3]);
+    });
+
+    it('test fun8 option any array number', function () {
+        let ret = test.fun8(['aaa','bbb'],[1, 2, 3]);
         assert.strictEqual(ret, 0);
-        ret = test.fun8(['aaa','bbb'],[true, true, false]);
+    });
+
+    it('test fun8 option any array boolean', function () {
+        let ret = test.fun8(['aaa','bbb'],[true, true, false]);
         assert.strictEqual(ret, 0);
-        ret = test.fun8(['aaa','bbb'],{ "test": "okay", "test1": "res" });
+    });
+
+    it('test fun8 option any map string', function () {
+        let ret = test.fun8(['aaa','bbb'],{ "test": "okay", "test1": "res" });
         assert.strictEqual(ret, 0);
-        ret = test.fun8(['aaa','bbb'],{ "test": 15, "test1": 18 });
+    });
+
+    it('test fun8 option any map number', function () {
+        let ret = test.fun8(['aaa','bbb'],{ "test": 15, "test1": 18 });
         assert.strictEqual(ret, 0);
-        ret = test.fun8(['aaa','bbb'],{ "test": true, "test1": false });
+    });
+
+    it('test fun8 option any map boolean', function () {
+        let ret = test.fun8(['aaa','bbb'],{ "test": true, "test1": false });
         assert.strictEqual(ret, 0);
-        ret = test.fun8(['aaa','bbb'],'guding');
+    });
+
+    it('test fun8  option any string', function () {  
+        let ret = test.fun8(['aaa','bbb'],'guding');
         assert.strictEqual(ret, 0);
     });
 });

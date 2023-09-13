@@ -18,12 +18,15 @@ var assert = require("assert");
 const { consumers } = require("stream");
 
 describe('Interface', function () {
+
+    // fun1(v: number): number;
     it('test TestClass1 fun1', function () {
         let tc1 = new TestClass1();
         let ret = tc1.fun1(1);
         assert.strictEqual(ret, 0);
     });
 
+    // fun2(numcc: Array<number>, mancc: Human): Human;
     it('test TestClass1 fun2', function () {
         let tc = new TestClass1();
         let ret = tc.fun2([1, 2, 3], { name: 'haha', age: 20 });
@@ -31,12 +34,14 @@ describe('Interface', function () {
         assert.strictEqual(retJson, '{"name":"","age":0}');
     });
 
+    // fun3: (v: number, v1: string, v2: boolean) => boolean;
     it('test TestClass1 fun3', function () {
         let tc = new TestClass1();
         let ret = tc.fun3(2,'aaa',true);
         assert.strictEqual(ret, false);
     });
 
+    // fun4: (mancc: Map<string, string>,v?: string) => Array<number>;
     it('test TestClass1 fun4', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun4({ 'name': 'haha', 'age': '20' });
@@ -49,6 +54,8 @@ describe('Interface', function () {
 });
 
 describe('Interface', function () {
+
+    // fun5: (data: Array<Human>) => Human;
     it('test TestClass1 fun5', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun5(
@@ -57,6 +64,7 @@ describe('Interface', function () {
         assert.strictEqual(retJson, '{"name":"","age":0}');
     });
 
+    // fun6: (v: string[], v1: { [key: string]: boolean }) => string[];
     it('test TestClass1 fun6', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun6(['11','22','33'],{'isExit':true,'isTrue':false});
@@ -64,6 +72,7 @@ describe('Interface', function () {
         assert.strictEqual(retJson, '[]');
     });
 
+    // fun8: () => void;
     it('test TestClass1 fun8', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun8();
