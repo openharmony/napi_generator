@@ -953,5 +953,8 @@ module.exports = {
     paramGenerateArray,
     paramGenerateMap,
     mapTempleteFunc,
-    eventParamGenerate
+    eventParamGenerate,
+    anyTempleteFunc,
+    objectTempleteFunc,
+    unionTempleteFunc
 }
