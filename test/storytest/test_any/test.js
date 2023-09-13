@@ -62,6 +62,31 @@ describe('Any fun1', function () {
         let ret = test.fun1('guding', 'aaa');
         assert.strictEqual(ret, 0);
     });
+    it('test fun1 Array<map<string>>', function () {
+        let ret = test.fun1([{ "test": "okay", "test1": "res" }, { "test2": "okay2", "test3": "res3" }], 'aaa');
+        assert.strictEqual(ret, 0);
+    });
+    it('test fun1 Array<map<number>>', function () {
+        let ret = test.fun1([{ "test": 17, "test1": 18 }, { "test2": 20, "test3": 22 }], 'aaa');
+        assert.strictEqual(ret, 0);
+    });
+    it('test fun1 Array<map<boolean>>', function () {
+        let ret = test.fun1([{ "test": true, "test1": false }, { "test2": true, "test3": false }], 'aaa');
+        assert.strictEqual(ret, 0);
+    });
+
+    it('test fun1 map<Array<string>>', function () {
+        let ret = test.fun1({ "test": ["okay", "okay1"], "test1": ["res", "res1"] }, 'aaa');
+        assert.strictEqual(ret, 0);
+    });
+    it('test fun1 Array<map<number>>', function () {
+        let ret = test.fun1({ "test": [15, 18], "test1": [18, 20] }, 'aaa');
+        assert.strictEqual(ret, 0);
+    });
+    it('test fun1 Array<map<boolean>>', function () {
+        let ret = test.fun1({ "test": [true, true], "test1": [false, false] }, 'aaa');
+        assert.strictEqual(ret, 0);
+    });
 });
 
 // function fun2(v: number, v1: TestClass1): number;

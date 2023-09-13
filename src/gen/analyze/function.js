@@ -142,7 +142,7 @@ function analyzeFuncNoNameInterface(data, values) {
 function analyseSubReturn(ret, data) {
     // 匿名interface返回值 function fun4(input: string): { read: number; written: number }; 
     ret = re.replaceAll(re.replaceAll(ret, " ", ""), "\n", "")
-    let tt = re.match("{([A-Za-z0-9_]+:[A-Za-z0-9_,;]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}", ret)
+    let tt = re.match("{(([A-Za-z0-9_]+:[A-Za-z0-9_,]+;)*)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}", ret)
     if (tt) {
         let len = tt.regs.length
         let res = ""
@@ -186,8 +186,15 @@ function analyzeFunction(data, isStatic, name, values, ret, results) {
     ret = tmp[0]
     if (tmp[1]) { // 返回类型为 Promise, 解析成等价的AsyncCallback方法
         funcType = FuncType.ASYNC
+        // 返回值是Promise的匿名interface
+        let paramTypeVal = analyseSubReturn(ret.substring(8, ret.length - 1), data);
         // 将返回值Promise<type>改为AsyncCallback<type>，作为方法的入参
         let paramType = ret.replace("Promise", "AsyncCallback")
+        if (paramTypeVal) {
+          // 匿名interface处理
+          let paramAsync = paramType.substring(14, paramType.length - 1)
+          paramType = paramType.replace(paramAsync, paramTypeVal);
+        }
         values.push({name: "promise", optional: false, type: paramType})
         ret = "void" // 返回值由Promise改为void，与AsyncCallback接口保持一致
     }
@@ -212,5 +219,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results) {
 module.exports = {
     analyzeFunction,
     analyzeSubInterface,
-    getFuncParaType
+    getFuncParaType,
+    analyzeFuncNoNameInterface,
+    analyseSubReturn
 }

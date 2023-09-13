@@ -21,10 +21,11 @@ const { info, Console } = require("console");
 const { JsxEmit } = require("typescript");
 const { readFile } = require(genDir + "tools/FileRW");
 const { generateEnum } = require(genDir + "generate/enum");
-const { jsToC, jsToCEnum, paramGenerate, paramGenerateArray } = require(genDir + "generate/param_generate");
+const { jsToC, jsToCEnum, paramGenerate, paramGenerateArray, anyTempleteFunc,
+   objectTempleteFunc, unionTempleteFunc } = require(genDir + "generate/param_generate");
 const { paramGenerateMap, mapTempleteFunc } = require(genDir + "generate/param_generate");
 const { cToJs, cToJsForInterface, returnGenerate } = require(genDir + "generate/return_generate");
-const { generateInterface, generateVariable } = require(genDir + "generate/interface");
+const { generateInterface, generateVariable, anyTypeString } = require(genDir + "generate/interface");
 const { mapTypeString, connectResult } = require(genDir + "generate/interface");
 const { generateNamespace, formatMiddleInit } = require(genDir + "generate/namespace");
 const { generateEnumResult, generateFunction } = require(genDir + "generate/namespace");
@@ -49,19 +50,7 @@ describe('Generate', function () {
         before()
     });
 
-    it('test gen/generate/enum generateEnum', function () {
-        let data = {
-            element: [{ name: "STATUS0", value: "0", type: "NUMBER_TYPE_1" }],
-            function: [],
-            enumValueType: 0
-        }
-        let ret = generateEnum('GrantStatus', data);
-        let retJson = JSON.stringify(ret);
-        let qiepianEnd = retJson.search('\"implCpp\":\"\"') - 1;
-        let actualResult = retJson.substring(1, qiepianEnd);
-        let expectresult = '"implH":"\\nenum class GrantStatus {\\n    STATUS0 = 0,\\n};\\n"'; 
-        assert.strictEqual(actualResult, expectresult);
-    });
+    partOfEnum();
 
     it('test gen/generate/function_async generateFunctionAsync', function () {
         let retJson = funcAsyncAssert();
@@ -78,9 +67,19 @@ describe('Generate', function () {
     it('test gen/generate/function_direct generateFunctionDirect', function () {
         let retJson = funcDirectAssert();
         let struct = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1)
-        assert.strictEqual(struct, "{\\n    std::string in0;\\n    std::string out;\\n}")
+        assert.strictEqual(struct, "{\\n    std::string in0;\\n    bool* in1 = nullptr;\\n    std::string out;\\n}")
         let middle = retJson.substring(retJson.indexOf("if_direct_middle"), retJson.indexOf("info)") + 5)
         assert.strictEqual(middle, "if_direct_middle(napi_env env, napi_callback_info info)")
+    }); 
+
+    it('test gen/generate/function_direct generateFunctionStaticDirect', function () {
+        let retJson = funcStaticDirectAssert();
+        let struct = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1);
+        assert.strictEqual(struct, "{\\n    std::string in0;\\n    std::string out;\\n}");
+        let middle = retJson.substring(retJson.indexOf("if_direct_middle"), retJson.indexOf("info)") + 5);
+        assert.strictEqual(middle, "if_direct_middle(napi_env env, napi_callback_info info)");
+        let implH = retJson.search("static bool if_direct");
+        assert.strictEqual(implH > 0, true);
     });
 
     it('test gen/generate/function_sync generateFunctionSync', function () {
@@ -120,16 +119,15 @@ function funcAsyncAssert() {
     return retJson
 }
 
-
 function funcDirectAssert() {
-    let valueFi = { name: 'v1', type: 'string' };
-    let funParam = { name: 'if_direct', type: 1, value: [valueFi], ret: 'string' };
+    let valueFi = [{ name: 'v1', type: 'string', optional: false }, {name: 'v2', type: 'boolean', optional: true}];
+    let funParam = { name: 'if_direct', type: 1, value: valueFi, ret: 'string', isStatic: false };
     let data = {
         class: [],
         const: [],
         enum: [],
         exports: [],
-        function: [{ name: 'if_direct', type: 1, value: [valueFi], ret: 'string' }],
+        function: [{ name: 'if_direct', type: 1, value: [valueFi], ret: 'string', isStatic: false }],
         interface: [],
         namespace: [],
         type: [],
@@ -137,6 +135,24 @@ function funcDirectAssert() {
     let ret = generateFunctionDirect(funParam, data, 'TestClass1');
     let retJson = JSON.stringify(ret);
     return retJson
+}
+
+function funcStaticDirectAssert() {
+  let valueFi = { name: 'v1', type: 'string', optional: false };
+  let funParam = { name: 'if_direct', type: 1, value: [valueFi], ret: 'string', isStatic: true };
+  let data = {
+      class: [],
+      const: [],
+      enum: [],
+      exports: [],
+      function: [{ name: 'if_direct', type: 1, value: [valueFi], ret: 'string', isStatic: true }],
+      interface: [],
+      namespace: [],
+      type: [],
+  }
+  let ret = generateFunctionDirect(funParam, data, 'TestClass1');
+  let retJson = JSON.stringify(ret);
+  return retJson
 }
 
 function funcSyncAssert() {
@@ -158,8 +174,36 @@ function funcSyncAssert() {
     return retJson
 }
 
-function partOfInterface() {
+function partOfEnum() {
+    it('test gen/generate/enum generateEnum', function () {
+        let data = {
+            element: [{ name: "STATUS0", value: "0", type: "NUMBER_TYPE_1" }],
+            function: [],
+            enumValueType: 0
+        }
+        let ret = generateEnum('GrantStatus', data);
+        let retJson = JSON.stringify(ret);
+        let qiepianEnd = retJson.search('\"implCpp\":\"\"') - 1;
+        let actualResult = retJson.substring(1, qiepianEnd);
+        let expectresult = '"implH":"\\nenum class GrantStatus {\\n    STATUS0 = 0,\\n};\\n"'; 
+        assert.strictEqual(actualResult, expectresult);
 
+        let data2 = {
+            element: [{ name: "ACTION_HOME", value: "ohos.want.action.home", type: "string" }],
+            function: [],
+            enumValueType: 1
+        }
+        let ret2 = generateEnum('Action', data2);
+        let retJson2 = JSON.stringify(ret2);
+        let qiepianEnd2 = retJson2.search('\"implCpp\":') - 1;
+        let actualResult2 = retJson2.substring(1, qiepianEnd2);
+        let expectresult2 =
+          '"implH":"\\nclass Action {\\npublic:\\n    static const std::string ACTION_HOME;\\n};\\n"'; 
+        assert.strictEqual(actualResult2, expectresult2);
+    });
+}
+
+function partOfInterface() {
     it('test gen/generate/interface generateVariable', function () {
         let variable = {
             hDefine: "",
@@ -171,6 +215,12 @@ function partOfInterface() {
         }
         let ret = generateVariable(value, variable, 'ConfigOption');
         assert.strictEqual(JSON.stringify(ret), undefined);
+    });
+
+    it('test gen/generate/interface anyTypeString', function () {
+      let ret = anyTypeString("any", "v");
+      let result = "\n    std::string v_type;\n    std::any v;";
+      assert.strictEqual(JSON.stringify(ret), JSON.stringify(result));
     });
 
     it('test gen/generate/interface mapTypeString', function () {
@@ -193,7 +243,10 @@ function partOfInterface() {
         assert.strictEqual(retJson.search("middleInit") > 0, true)
     });
 
+    partOfInterfaceTwo();
+}
 
+function partOfInterfaceTwo() {
     it('test gen/generate/interface connectResult', function () {
         let data = {
             function: [],
@@ -465,25 +518,7 @@ function partOfNamespaceTwo(){
 }
 
 function partofParamGenerate(correctResult) {
-
-    it('test gen/generate/param_generate paramGenerateArray', function () {
-        let param = {
-            valueCheckout: '',
-            valueDefine: '',
-            valueFill: '',
-            valueIn: '',
-            valueOut: '',
-            valuePackage: ''
-        }
-        let funcValue = { name: 'v', type: 'Array<string>' }
-        paramGenerateArray('0', funcValue, param);
-        let retParam = JSON.stringify(param);
-        retParam = re.replaceAll(retParam,"  ","");
-        retParam = re.replaceAll(retParam,"len[0-9]+","len")  
-        retParam = re.replaceAll(retParam,"i[0-9]+","i") 
-        retParam = re.replaceAll(retParam,"tt[0-9]+","tt")
-        assert.strictEqual(retParam, correctResult['Generate']['paramGenerateArray'])
-    });
+    partofParamGenerateArr(correctResult);
 
     it('test gen/generate/param_generate paramGenerateMap', function () {
         let param1 = {
@@ -509,6 +544,12 @@ function partofParamGenerate(correctResult) {
 
     partmapTempleteFunc()
 
+    partunionTempleteFunc()
+
+    partanyTempleteFunc()
+
+    partobjectTempleteFunc()
+
     it('test gen/generate/param_generate ParamGenerate', function () {
         paramGenerateResult(correctResult);
     });
@@ -517,7 +558,29 @@ function partofParamGenerate(correctResult) {
         returnGenerateParam(correctResult);
     });
 }
-function partmapTempleteFunc(){
+
+function partofParamGenerateArr() {
+    it('test gen/generate/param_generate paramGenerateArray', function () {
+        let param = {
+            valueCheckout: '',
+            valueDefine: '',
+            valueFill: '',
+            valueIn: '',
+            valueOut: '',
+            valuePackage: ''
+        }
+        let funcValue = { name: 'v', type: 'Array<string>' }
+        paramGenerateArray('0', funcValue, param);
+        let retParam = JSON.stringify(param);
+        retParam = re.replaceAll(retParam,"  ","");
+        retParam = re.replaceAll(retParam,"len[0-9]+","len")  
+        retParam = re.replaceAll(retParam,"i[0-9]+","i") 
+        retParam = re.replaceAll(retParam,"tt[0-9]+","tt")
+        assert.strictEqual(retParam, correctResult['Generate']['paramGenerateArray'])
+    });
+}
+
+function partmapTempleteFunc() {
     it('test gen/generate/param_generate mapTempleteFunc', function () {
         let ret = mapTempleteFunc('vio->in0', 'pxt->GetArgv(0)', '{[key:string]:string}')
         let retJson = JSON.stringify(ret)
@@ -530,6 +593,40 @@ function partmapTempleteFunc(){
         retJson = re.replaceAll(retJson,"\n","")
         assert.strictEqual(retJson, correctResult['Generate']['mapTempleteFunc'])
     })
+}
+
+function partunionTempleteFunc(){
+  it('test gen/generate/param_generate unionTempleteFunc', function () {
+      let ret = unionTempleteFunc('vio->in0', 'pxt->GetArgv(XNapiTool::ZERO)', 'string|NUMBER_TYPE_1|boolean')
+      let retJson = JSON.stringify(ret)
+      retJson = re.replaceAll(retJson,"  ","");
+      retJson = re.replaceAll(retJson,"\n","")
+      assert.strictEqual(retJson, correctResult['Generate']['unionTempleteFunc'])
+  })
+}
+
+function partanyTempleteFunc(){
+  it('test gen/generate/param_generate anyTempleteFunc', function () {
+      let ret = anyTempleteFunc('vio->in0');
+      let retJson = JSON.stringify(ret);
+      retJson = re.replaceAll(retJson,"  ","");
+      retJson = re.replaceAll(retJson,"\n","");
+      assert.strictEqual(retJson, correctResult['Generate']['anyTempleteFunc']);
+  })
+}
+
+function partobjectTempleteFunc(){
+  it('test gen/generate/param_generate objectTempleteFunc', function () {
+      let ret = objectTempleteFunc('vio->in0', 'pxt->GetArgv(XNapiTool::ZERO)')
+      let retJson = JSON.stringify(ret)
+      retJson = re.replaceAll(retJson,"  ","");
+      retJson = re.replaceAll(retJson,"len[0-9]+","len");
+      retJson = re.replaceAll(retJson,"i[0-9]+","i"); 
+      retJson = re.replaceAll(retJson,"tt[0-9]+","tt");
+      retJson = re.replaceAll(retJson,"NUMBER_TYPE_[0-9]+","NUMBER_TYPE_");
+      retJson = re.replaceAll(retJson,"\n","")
+      assert.strictEqual(retJson, correctResult['Generate']['objectTempleteFunc'])
+  })
 }
 
 function returnGenerateParam(correctResult) {
@@ -570,10 +667,11 @@ function returnGenerateParam(correctResult) {
     assert.strictEqual(retJson5, correctResult['Generate']['returnGenerate5'])   
 
     returnGenerateParamTwo(correctResult);
+
+    returnGenerateParamThree(correctResult);
 }
 
 function returnGenerateParamTwo(correctResult){
-
     let retJson6 = returnGenerateAndAssert("string[]")
     retJson6 = re.replaceAll(retJson6,"  ","")
     retJson6 = re.replaceAll(retJson6,"len[0-9]*","len")
@@ -594,6 +692,50 @@ function returnGenerateParamTwo(correctResult){
     retJson8 = re.replaceAll(retJson8,"i[0-9]*","i")
     retJson8 = re.replaceAll(retJson8,"tnv[0-9]*","tnv")
     assert.strictEqual(retJson8, correctResult['Generate']['returnGenerate8'])
+}
+
+function returnGenerateParamThree(correctResult){
+  let retJson9 = returnGenerateAndAssert("Map<string, string>")
+  retJson9 = re.replaceAll(retJson9,"  ","")
+  retJson9 = re.replaceAll(retJson9,"len[0-9]*","len")
+  retJson9 = re.replaceAll(retJson9,"i[0-9]*","i")
+  retJson9 = re.replaceAll(retJson9,"tnv[0-9]*","tnv")
+  assert.strictEqual(retJson9, correctResult['Generate']['returnGenerate9'])
+
+  let retJson10 = returnGenerateAndAssert("{[key:string]: string}")
+  retJson10 = re.replaceAll(retJson10,"  ","")
+  retJson10 = re.replaceAll(retJson10,"len[0-9]*","len")
+  retJson10 = re.replaceAll(retJson10,"i[0-9]*","i")
+  retJson10 = re.replaceAll(retJson10,"tnv[0-9]*","tnv")
+  assert.strictEqual(retJson10, correctResult['Generate']['returnGenerate9'])
+
+  let retJson11 = returnGenerateAndAssert("Map<string, NUMBER_TYPE_1>")
+  retJson11 = re.replaceAll(retJson11,"  ","")
+  retJson11 = re.replaceAll(retJson11,"len[0-9]*","len")
+  retJson11 = re.replaceAll(retJson11,"i[0-9]*","i")
+  retJson11 = re.replaceAll(retJson11,"tnv[0-9]*","tnv")
+  assert.strictEqual(retJson11, correctResult['Generate']['returnGenerate10'])
+
+  let retJson12 = returnGenerateAndAssert("{[key:string]: NUMBER_TYPE_1}")
+  retJson12 = re.replaceAll(retJson12,"  ","")
+  retJson12 = re.replaceAll(retJson12,"len[0-9]*","len")
+  retJson12 = re.replaceAll(retJson12,"i[0-9]*","i")
+  retJson12 = re.replaceAll(retJson12,"tnv[0-9]*","tnv")
+  assert.strictEqual(retJson12, correctResult['Generate']['returnGenerate10'])
+
+  let retJson13 = returnGenerateAndAssert("Map<string, boolean>")
+  retJson13 = re.replaceAll(retJson13,"  ","")
+  retJson13 = re.replaceAll(retJson13,"len[0-9]*","len")
+  retJson13 = re.replaceAll(retJson13,"i[0-9]*","i")
+  retJson13 = re.replaceAll(retJson13,"tnv[0-9]*","tnv")
+  assert.strictEqual(retJson13, correctResult['Generate']['returnGenerate11'])
+
+  let retJson14 = returnGenerateAndAssert("{[key:string]: boolean}")
+  retJson14 = re.replaceAll(retJson14,"  ","")
+  retJson14 = re.replaceAll(retJson14,"len[0-9]*","len")
+  retJson14 = re.replaceAll(retJson14,"i[0-9]*","i")
+  retJson14 = re.replaceAll(retJson14,"tnv[0-9]*","tnv")
+  assert.strictEqual(retJson14, correctResult['Generate']['returnGenerate11'])
 }
 
 function returnGenerateAndAssert(dataType) {
@@ -654,6 +796,8 @@ function paramGenerateResult(correctResult) {
     assert.strictEqual(retJson4, correctResult['Generate']['ParamGenerate4'])
 
     paramGenerateResultTwo(correctResult)
+
+    paramGenerateResultThree(correctResult)
 }
 
 function paramGenerateResultTwo(correctResult){
@@ -684,6 +828,50 @@ function paramGenerateResultTwo(correctResult){
     retJson8 = re.replaceAll(retJson8,"len[0-9]+","len")
     retJson8 = re.replaceAll(retJson8,"tt[0-9]+","tt")
     assert.strictEqual(retJson8, correctResult['Generate']['ParamGenerate8'])
+}
+
+function paramGenerateResultThree(correctResult){
+    let retJson9 = paramGenerateAndAssert("Map<string, string>")
+    retJson9 = re.replaceAll(retJson9,"  ","")
+    retJson9 = re.replaceAll(retJson9,"len[0-9]*","len")
+    retJson9 = re.replaceAll(retJson9,"i[0-9]*","i")
+    retJson9 = re.replaceAll(retJson9,"tt[0-9]+","tt")
+    assert.strictEqual(retJson9, correctResult['Generate']['ParamGenerate9'])
+
+    let retJson10 = paramGenerateAndAssert("{[key:string]: string}")
+    retJson10 = re.replaceAll(retJson10,"  ","")
+    retJson10 = re.replaceAll(retJson10,"len[0-9]*","len")
+    retJson10 = re.replaceAll(retJson10,"i[0-9]*","i")
+    retJson10 = re.replaceAll(retJson10,"tt[0-9]+","tt")
+    assert.strictEqual(retJson10, correctResult['Generate']['ParamGenerate9'])
+
+    let retJson11 = paramGenerateAndAssert("Map<string, NUMBER_TYPE_1>")
+    retJson11 = re.replaceAll(retJson11,"  ","")
+    retJson11 = re.replaceAll(retJson11,"len[0-9]*","len")
+    retJson11 = re.replaceAll(retJson11,"i[0-9]*","i")
+    retJson11 = re.replaceAll(retJson11,"tt[0-9]+","tt")
+    assert.strictEqual(retJson11, correctResult['Generate']['ParamGenerate10'])
+
+    let retJson12 = paramGenerateAndAssert("{[key:string]: NUMBER_TYPE_1}")
+    retJson12 = re.replaceAll(retJson12,"  ","")
+    retJson12 = re.replaceAll(retJson12,"len[0-9]*","len")
+    retJson12 = re.replaceAll(retJson12,"i[0-9]*","i")
+    retJson12 = re.replaceAll(retJson12,"tt[0-9]+","tt")
+    assert.strictEqual(retJson12, correctResult['Generate']['ParamGenerate10'])
+
+    let retJson13 = paramGenerateAndAssert("Map<string, boolean>")
+    retJson13 = re.replaceAll(retJson13,"  ","")
+    retJson13 = re.replaceAll(retJson13,"len[0-9]*","len")
+    retJson13 = re.replaceAll(retJson13,"i[0-9]*","i")
+    retJson13 = re.replaceAll(retJson13,"tt[0-9]+","tt")
+    assert.strictEqual(retJson13, correctResult['Generate']['ParamGenerate11'])
+
+    let retJson14 = paramGenerateAndAssert("{[key:string]: boolean}")
+    retJson14 = re.replaceAll(retJson14,"  ","")
+    retJson14 = re.replaceAll(retJson14,"len[0-9]*","len")
+    retJson14 = re.replaceAll(retJson14,"i[0-9]*","i")
+    retJson14 = re.replaceAll(retJson14,"tt[0-9]+","tt")
+    assert.strictEqual(retJson14, correctResult['Generate']['ParamGenerate11'])
 }
 
 function paramGenerateAndAssert(dataType) {
