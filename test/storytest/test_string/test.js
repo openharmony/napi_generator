@@ -66,7 +66,6 @@ describe('string case', function () {
 });
 
 describe('string case part2', function () {
-
     function asynFun2(err, ret) {
         assert.deepStrictEqual(err.code, 0)
         assert.deepStrictEqual(ret, [])
