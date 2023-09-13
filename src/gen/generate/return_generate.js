@@ -614,5 +614,7 @@ module.exports = {
     cToJs,
     cToJsForInterface,
     returnGenerate,
-    returnGenerateEnum
+    returnGenerateEnum,
+    objectTempleteFuncReturn,
+    cToJsForType
 }

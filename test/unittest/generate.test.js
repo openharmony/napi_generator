@@ -22,10 +22,13 @@ const { JsxEmit } = require("typescript");
 const { readFile } = require(genDir + "tools/FileRW");
 const { generateEnum } = require(genDir + "generate/enum");
 const { jsToC, jsToCEnum, paramGenerate, paramGenerateArray, anyTempleteFunc,
-   objectTempleteFunc, unionTempleteFunc } = require(genDir + "generate/param_generate");
-const { paramGenerateMap, mapTempleteFunc } = require(genDir + "generate/param_generate");
-const { cToJs, cToJsForInterface, returnGenerate } = require(genDir + "generate/return_generate");
-const { generateInterface, generateVariable, anyTypeString } = require(genDir + "generate/interface");
+  objectTempleteFunc, unionTempleteFunc } = require(genDir + "generate/param_generate");
+const { paramGenerateMap, mapTempleteFunc, paramGenerateCommon, paramGenerateUnion, paramGenerateCallBack,
+  paramGenerateAny, paramGenerateObject } = require(genDir + "generate/param_generate");
+const { cToJs, cToJsForInterface, cToJsForType, returnGenerate,
+  objectTempleteFuncReturn } = require(genDir + "generate/return_generate");
+const { generateInterface, generateVariable, anyTypeString,
+  getHDefineOfVariable } = require(genDir + "generate/interface");
 const { mapTypeString, connectResult } = require(genDir + "generate/interface");
 const { generateNamespace, formatMiddleInit } = require(genDir + "generate/namespace");
 const { generateEnumResult, generateFunction } = require(genDir + "generate/namespace");
@@ -204,18 +207,7 @@ function partOfEnum() {
 }
 
 function partOfInterface() {
-    it('test gen/generate/interface generateVariable', function () {
-        let variable = {
-            hDefine: "",
-            middleValue: "",
-        };
-        let value = {
-            name: "disable",
-            type: "boolean",
-        }
-        let ret = generateVariable(value, variable, 'ConfigOption');
-        assert.strictEqual(JSON.stringify(ret), undefined);
-    });
+    partOfInterfaceOne();
 
     it('test gen/generate/interface anyTypeString', function () {
       let ret = anyTypeString("any", "v");
@@ -244,6 +236,110 @@ function partOfInterface() {
     });
 
     partOfInterfaceTwo();
+    partOfInterfaceThree();
+}
+
+function partOfInterfaceOne() {
+    it('test gen/generate/interface generateVariable', function () {
+        // test basic type
+        let retBool = generateVariableAsset("boolean");
+        assert.strictEqual(retBool, JSON.stringify(variableMiddleBoolValue()));
+
+        // test Array
+        let retArrStr = generateVariableAsset("Array<string>");
+        retArrStr = re.replaceAll(retArrStr, "tt[0-9]+", "tt");
+        retArrStr = re.replaceAll(retArrStr, "tnv[0-9]+", "tnv");
+        retArrStr = re.replaceAll(retArrStr, "outLen[0-9]+", "outLen");
+        retArrStr = re.replaceAll(retArrStr, "len[0-9]+", "len");
+        retArrStr = re.replaceAll(retArrStr, "i[0-9]+", "i");
+        let resultArrStr = JSON.stringify(variableMiddleArrStrValue());
+        assert.strictEqual(retArrStr, resultArrStr);
+
+        let retArrStr2 = generateVariableAsset("string[]");
+        retArrStr2 = re.replaceAll(retArrStr2, "tt[0-9]+", "tt");
+        retArrStr2 = re.replaceAll(retArrStr2, "tnv[0-9]+", "tnv");
+        retArrStr2 = re.replaceAll(retArrStr2, "outLen[0-9]+", "outLen");
+        retArrStr2 = re.replaceAll(retArrStr2, "len[0-9]+", "len");
+        retArrStr2 = re.replaceAll(retArrStr2, "i[0-9]+", "i");
+        assert.strictEqual(retArrStr2, resultArrStr);
+
+        // test Map
+        let retMapStr = generateVariableAsset("Map<string, string>");
+        let resultMapStr = JSON.stringify(variableMiddleMapStrValue());
+        retMapStr = re.replaceAll(retMapStr, "tt[0-9]+", "tt");
+        retMapStr = re.replaceAll(retMapStr, "tnv[0-9]+", "tnv");
+        retMapStr = re.replaceAll(retMapStr, "len[0-9]+", "len");
+        retMapStr = re.replaceAll(retMapStr, "i[0-9]+", "i");
+        assert.strictEqual(retMapStr, resultMapStr);
+
+        let retMapStr2 = generateVariableAsset("{[key:string]: string}");
+        let resultMapStr2 = JSON.stringify(variableMiddleMapStrValue());
+        retMapStr2 = re.replaceAll(retMapStr2, "tt[0-9]+", "tt");
+        retMapStr2 = re.replaceAll(retMapStr2, "tnv[0-9]+", "tnv");
+        retMapStr2 = re.replaceAll(retMapStr2, "len[0-9]+", "len");
+        retMapStr2 = re.replaceAll(retMapStr2, "i[0-9]+", "i");
+        assert.strictEqual(retMapStr2, resultMapStr2);
+    });
+}
+
+function generateVariableAsset(valType) {
+    let variable = {
+        hDefine: "",
+        middleValue: "",
+    };
+    let value = {
+        name: "disable",
+        type: valType,
+    }
+    generateVariable(value, variable, 'ConfigOption');
+    let ret = JSON.stringify(variable.middleValue);
+    return ret;
+}
+
+function partOfInterfaceThree() {
+    it('test gen/generate/interface getHDefineOfVariable', function () {
+        let retStr = getHDefineOfVariableAsset("string");
+        let resultStr = "\"\\n    std::string vName;\"";
+        assert.strictEqual(retStr, resultStr);
+
+        let retBool = getHDefineOfVariableAsset("boolean");
+        let resultBool = "\"\\n    bool vName;\"";
+        assert.strictEqual(retBool, resultBool);
+
+        let retNum = getHDefineOfVariableAsset("NUMBER_TYPE_1");
+        let resultNum = "\"\\n    NUMBER_TYPE_1 vName;\"";
+        assert.strictEqual(retNum, resultNum);
+
+        let retArrStr1 = getHDefineOfVariableAsset("Array<string>");
+        let resultArrStr1 = "\"\\n    std::vector<std::string> vName;\"";
+        assert.strictEqual(retArrStr1, resultArrStr1);
+
+        let retArrAny1 = getHDefineOfVariableAsset("Array<any>");
+        let resultArrAny1 = "\"\\n    std::string vName_type; \\n    std::any vName;\"";
+        assert.strictEqual(retArrAny1, resultArrAny1);
+
+        let retArrStr2 = getHDefineOfVariableAsset("string[]");
+        let resultArrStr2 = "\"\\n    std::vector<std::string> vName;\"";
+        assert.strictEqual(retArrStr2, resultArrStr2);
+
+        let retArrAny2 = getHDefineOfVariableAsset("any[]");
+        let resultArrAny2 = "\"\\n    std::string vName_type;\\n    std::any vName;\"";
+        assert.strictEqual(retArrAny2, resultArrAny2);
+
+        let retObject = getHDefineOfVariableAsset("Object");
+        let resultObject= "\"\\n    std::map<std::string, std::any> vName;\"";
+        assert.strictEqual(retObject, resultObject);
+    });
+}
+
+function getHDefineOfVariableAsset(valType) {
+    let variable = {
+        hDefine: "",
+        middleValue: ""
+    }
+    getHDefineOfVariable("vName", valType, variable);
+    let ret = variable.hDefine;
+    return JSON.stringify(ret);
 }
 
 function partOfInterfaceTwo() {
@@ -298,7 +394,7 @@ function partOfTest() {
         retJsToC3 = re.replaceAll(retJsToC3, "i[0-9]*", "i");
         retQiepian = retJsToC3.substring(retJsToC3.indexOf("tt"), retJsToC3.indexOf("tt") + 3)
         retJsToC3 = re.replaceAll(retJsToC3, retQiepian, "tt");
-        retJsToC3 = re.replaceAll(retJsToC3, "tt[0-9]+", "tt1");
+        retJsToC3 = re.replaceAll(retJsToC3, "tt[1-9]+", "tt1");
         assert.strictEqual(retJsToC3, JSON.stringify(jsToCParamMap1()));
     });
 
@@ -312,7 +408,6 @@ function partOfTest() {
 }
 
 function partOfTestTwo(){
-
     it('test gen/generate/return_generate cToJs', function () {
         assert.strictEqual(cToJs("a", "string", "b", 1), "b = pxt->SwapC2JsUtf8(a.c_str());")
 
@@ -321,6 +416,12 @@ function partOfTestTwo(){
 
         ret1 = cToJs("a", "boolean", "b", 1)
         assert.strictEqual(ret1, "b = pxt->SwapC2JsBool(a);")
+
+        ret2 = cToJs("a", "void", "b", 1)
+        assert.strictEqual(ret2, "b = pxt->UndefinedValue();")
+
+        ret3 = cToJs("a", "any", "b", 1)
+        assert.strictEqual(ret3, "pxt->GetAnyValue(a_type, result, a);")
 
         let retcToJs = JSON.stringify(cToJs("a", "Array<string>", "b", 1))
         retcToJs = re.replaceAll(retcToJs, "len[0-9]*", "len")
@@ -349,21 +450,113 @@ function partOfTestTwo(){
         assert.strictEqual(retcToJs3, JSON.stringify(cToJsParamMap1()))
     });
 
+    partOfTestTwo2();
+}
+
+function partOfTestTwo2() {
     it('test gen/generate/return_generate cToJsForInterface', function () {
         let ret = cToJsForInterface('vio->out', 'ConfigOption', 'result', 1)
         let retJson = JSON.stringify(ret)
         assert.strictEqual(retJson, '""')
     });
+
+    it('test gen/generate/return_generate cToJsForType', function () {
+        let ret = cToJsForType('vio->out', 'ConfigOption', 'result', 1)
+        let retJson = JSON.stringify(ret)
+        assert.strictEqual(retJson, '""')
+    });
+
+    it('test gen/generate/return_generate objectTempleteFuncReturn', function () {
+        let ret = objectTempleteFuncReturn('vio->out');
+        let retJson = JSON.stringify(ret)
+        assert.strictEqual(retJson, '"pxt->GetObjectValue(result, vio->out);"')
+    });
 }
 
-function cToJsParam() {
-    let value = 'uint32_t len=a.size();\n' +
-        '    for(uint32_t i=0;i<len;i++) {\n' +
-        '        napi_value tnv = nullptr;\n' +
-        '        tnv = pxt->SwapC2JsUtf8(a[i].c_str());\n' +
-        '        pxt->SetArrayElement(b, i, tnv);\n' +
-        '    }'
-    return value
+function variableMiddleBoolValue() {
+    let variableMidVal = '\n' +
+        '    static napi_value getvalue_disable(napi_env env, napi_callback_info info)\n' +
+        '    {\n    ' +
+        '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n    ' +
+        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
+        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
+        '    napi_value result = nullptr;\n    ' +
+        '    result = pxt->SwapC2JsBool(p->disable);\n    ' +
+        '    delete pxt;\n    ' +
+        '    return result;\n' +
+        '    }\n' +
+        '    static napi_value setvalue_disable(napi_env env, napi_callback_info info)\n' +
+        '    {\n    ' +
+        '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n    ' +
+        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
+        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
+        '    BOOLEAN_JS_2_C(pxt->GetArgv(XNapiTool::ZERO), bool, p->disable);\n\n    ' +
+        '    return nullptr;\n' +
+        '    }'    
+    return variableMidVal;
+}
+
+function variableMiddleArrStrValue() {
+    let variableMidVal = '\n' +
+        '    static napi_value getvalue_disable(napi_env env, napi_callback_info info)\n' +
+        '    {\n    ' +
+        '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n    ' +
+        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
+        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
+        '    napi_value result = nullptr;\n    ' +
+        '    pxt->CreateArray(result);\n' +
+        '    uint32_t outLen = p->disable.size();\n' +
+        '    for (uint32_t i = 0; i < outLen; i++) {\n    ' +
+        '    napi_value tnv = nullptr;\n    ' +
+        '    tnv = pxt->SwapC2JsUtf8(p->disable[i].c_str());\n    ' +
+        '    pxt->SetArrayElement(result, i, tnv);\n    }\n    ' +
+        '    delete pxt;\n    ' +
+        '    return result;\n' +
+        '    }\n' +
+        '    static napi_value setvalue_disable(napi_env env, napi_callback_info info)\n' +
+        '    {\n    ' +
+        '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n    ' +
+        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
+        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n        ' +
+        '    uint32_t len = pxt->GetArrayLength(pxt->GetArgv(XNapiTool::ZERO));\n' +
+        '    for (uint32_t i = 0; i < len; i++) {\n    ' +
+        '    std::string tt;\n    ' +
+        '    pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetArgv(XNapiTool::ZERO), i), tt);\n    ' +
+        '    p->disable.push_back(tt);\n    }\n\n    ' +
+        '    return nullptr;\n' +
+        '    }'    
+    return variableMidVal;
+}
+
+function variableMiddleMapStrValue() {
+    let variableMidVal = '\n' +
+        '    static napi_value getvalue_disable(napi_env env, napi_callback_info info)\n    {\n    ' +
+        '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n    ' +
+        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
+        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
+        '    napi_value result = nullptr;\n    ' +
+        '    result = nullptr;\n' +
+        '    for (auto i = p->disable.begin(); i != p->disable.end(); i++) {\n    ' +
+        '    const char * tnv;\n    ' +
+        '    napi_value tnv = nullptr;\n    ' +
+        '    tnv = (i -> first).c_str();\n    ' +
+        '    tnv = pxt->SwapC2JsUtf8(i->second.c_str());\n    ' +
+        '    pxt->SetMapElement(result, tnv, tnv);\n    }\n    ' +
+        '    delete pxt;\n    ' +
+        '    return result;\n    }\n' +
+        '    static napi_value setvalue_disable(napi_env env, napi_callback_info info)\n    {\n    ' +
+        '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n    ' +
+        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
+        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
+        '    uint32_t len = pxt->GetMapLength(pxt->GetArgv(XNapiTool::ZERO));\n' +
+        'for (uint32_t i = 0; i < len; i++) {\n' +
+        '    std::string tt;\n' +
+        '    std::string tt;\n' +
+        '    pxt->SwapJs2CUtf8(pxt->GetMapElementName(pxt->GetArgv(XNapiTool::ZERO), i), tt);\n    ' +
+        '    pxt->SwapJs2CUtf8(pxt->GetMapElementValue(pxt->GetArgv(XNapiTool::ZERO), tt.c_str()), tt);\n\n' +
+        '    p->disable.insert(std::make_pair(tt, tt));\n}\n    ' +
+        '    return nullptr;\n    }'
+    return variableMidVal;
 }
 
 function cToJsParamArray() {
@@ -437,16 +630,15 @@ function jsToCParamMap() {
 function jsToCParamMap1() {
     let value = 'uint32_t len = pxt->GetMapLength(b);\n' +
         'for (uint32_t i = 0; i < len; i++) {\n' +
-        '    std::string tt;\n' +
+        '    std::string tt0;\n' +
         '    number tt1;\n' +
         '    [replace_swap]\n' +
-        '    a.insert(std::make_pair(tt, tt1));\n' +
+        '    a.insert(std::make_pair(tt0, tt1));\n' +
         '}'
     return value
 }
 
 function partOfNamespace(correctResult) {
-
     it('test gen/generate/namespace generateNamespace', function () {
         let enumElement = [{ name: "name", value: "", type: "string" }];
         let interfaceBody = { function: [], value: [{ name: "age", type: "NUMBER_TYPE_1" }] }
@@ -462,6 +654,9 @@ function partOfNamespace(correctResult) {
         let retJson = JSON.stringify(generateNamespace('napitest', data, inNamespace = ""));
         retJson = re.replaceAll(retJson, " ", "")
         retJson = re.replaceAll(retJson, "\\n", "")
+        retJson = re.replaceAll(retJson, "len[0-9]+", "len")
+        retJson = re.replaceAll(retJson, "i[0-9]+", "i")
+        retJson = re.replaceAll(retJson, "tt[0-9]+", "tt")
         assert.strictEqual(retJson, correctResult['Generate']['generateNamespace']);
     });
 
@@ -520,27 +715,17 @@ function partOfNamespaceTwo(){
 function partofParamGenerate(correctResult) {
     partofParamGenerateArr(correctResult);
 
-    it('test gen/generate/param_generate paramGenerateMap', function () {
-        let param1 = {
-            optionalParamDestory: '',
-            valueCheckout: '',
-            valueDefine: '',
-            valueFill: '',
-            valueIn: '',
-            valueOut: '',
-            valuePackage: ''
-        }
-        let funcVlaue = { name: 'v', type: '{[key:string]:string}', optional: false };
-        paramGenerateMap(funcVlaue, param1, '0');
-        let retParam1 = JSON.stringify(param1);
-        retParam1 = re.replaceAll(retParam1,"  ","");
-        retParam1 = re.replaceAll(retParam1,"len[0-9]+","len")  
-        retParam1 = re.replaceAll(retParam1,"i[0-9]+","i") 
-        let parmQiepian = retParam1.substring(retParam1.indexOf("tt"),retParam1.indexOf("tt")+3)
-        retParam1 = re.replaceAll(retParam1,parmQiepian,"tt")
-        retParam1 = re.replaceAll(retParam1,"tt[0-9]+","tt1")
-        assert.strictEqual(retParam1, correctResult['Generate']['paramGenerateMap'])
-    });
+    partofParamGenerateMap(correctResult);
+
+    partofParamGenerateCommon(correctResult);
+
+    partofParamGenerateUnion(correctResult);
+
+    partofParamGenerateCallBack(correctResult);
+
+    partofParamGenerateAny(correctResult);
+
+    partofParamGenerateObject(correctResult);
 
     partmapTempleteFunc()
 
@@ -559,7 +744,7 @@ function partofParamGenerate(correctResult) {
     });
 }
 
-function partofParamGenerateArr() {
+function partofParamGenerateArr(correctResult) {
     it('test gen/generate/param_generate paramGenerateArray', function () {
         let param = {
             valueCheckout: '',
@@ -577,6 +762,145 @@ function partofParamGenerateArr() {
         retParam = re.replaceAll(retParam,"i[0-9]+","i") 
         retParam = re.replaceAll(retParam,"tt[0-9]+","tt")
         assert.strictEqual(retParam, correctResult['Generate']['paramGenerateArray'])
+    });
+}
+
+function partofParamGenerateMap(correctResult) {
+    it('test gen/generate/param_generate paramGenerateMap', function () {
+        let param1 = {
+            optionalParamDestory: '',
+            valueCheckout: '',
+            valueDefine: '',
+            valueFill: '',
+            valueIn: '',
+            valueOut: '',
+            valuePackage: ''
+        }
+        let funcVlaue = { name: 'v', type: '{[key:string]:string}', optional: false };
+        paramGenerateMap(funcVlaue, param1, '0');
+        let retParam1 = JSON.stringify(param1);
+        retParam1 = re.replaceAll(retParam1,"  ","");
+        retParam1 = re.replaceAll(retParam1,"len[0-9]+","len")  
+        retParam1 = re.replaceAll(retParam1,"i[0-9]+","i") 
+        let parmQiepian = retParam1.substring(retParam1.indexOf("tt"),retParam1.indexOf("tt")+3)
+        retParam1 = re.replaceAll(retParam1,parmQiepian,"tt")
+        retParam1 = re.replaceAll(retParam1,"tt[0-9]+","tt")
+        assert.strictEqual(retParam1, correctResult['Generate']['paramGenerateMap'])
+    });
+}
+
+function partofParamGenerateCommon(correctResult) {
+    it('test gen/generate/param_generate paramGenerateCommon', function () {
+        let param1 = {
+            optionalParamDestory: '',
+            valueCheckout: '',
+            valueDefine: '',
+            valueFill: '',
+            valueIn: '',
+            valueOut: '',
+            valuePackage: ''
+        }
+        let funcVlaue = { name: 'v', type: 'string', optional: false };
+        paramGenerateCommon('0', 'std::string', funcVlaue, param1, '&', 'vio->in0');
+        let retParam1 = JSON.stringify(param1);
+        retParam1 = re.replaceAll(retParam1,"  ","");
+        retParam1 = re.replaceAll(retParam1,"len[0-9]+","len")  
+        retParam1 = re.replaceAll(retParam1,"i[0-9]+","i") 
+        retParam1 = re.replaceAll(retParam1,"tt[0-9]+","tt")
+        assert.strictEqual(retParam1, correctResult['Generate']['paramGenerateCommon'])
+    });
+}
+
+function partofParamGenerateUnion(correctResult) {
+    it('test gen/generate/param_generate paramGenerateUnion', function () {
+        let param1 = {
+            optionalParamDestory: '',
+            valueCheckout: '',
+            valueDefine: '',
+            valueFill: '',
+            valueIn: '',
+            valueOut: '',
+            valuePackage: ''
+        }
+        paramGenerateUnion('string|NUMBER_TYPE_1|boolean', param1, '0', 'v');
+        let retParam1 = JSON.stringify(param1);
+        retParam1 = re.replaceAll(retParam1,"  ","");
+        assert.strictEqual(retParam1, correctResult['Generate']['paramGenerateUnion'])
+    });
+}
+
+function partofParamGenerateCallBack(correctResult) {
+    it('test gen/generate/param_generate paramGenerateCallBack', function () {
+        let data = {
+            class: [],
+            const: [],
+            enum:  [],
+            exports: [],
+            function: [
+                {isStatic: false,
+                name: 't1', 
+                type: 2, 
+                value: [{name: 'v1', type: 'string', optional: false},
+                        {name: 'cb', type: 'Callback<string>', optional: false}],
+                ret: 'void'}],
+            interface: [],
+            namespace: []
+        }
+        let param1 = {
+            optionalParamDestory: '',
+            valueCheckout: '',
+            valueDefine: '',
+            valueFill: '',
+            valueIn: '',
+            valueOut: '',
+            valuePackage: ''
+        }
+        let funcVlaue = { name: 'cb', type: 'Callback<string>', optional: false };
+        paramGenerateCallBack(data, funcVlaue, param1, '1');
+        let retParam1 = JSON.stringify(param1);
+        retParam1 = re.replaceAll(retParam1,"  ","");
+        assert.strictEqual(retParam1, correctResult['Generate']['paramGenerateCallBack'])
+    });
+}
+
+function partofParamGenerateAny(correctResult) {
+    it('test gen/generate/param_generate paramGenerateAny', function () {
+        let param1 = {
+            optionalParamDestory: '',
+            valueCheckout: '',
+            valueDefine: '',
+            valueFill: '',
+            valueIn: '',
+            valueOut: '',
+            valuePackage: ''
+        }
+        paramGenerateAny('0', 'v', 'any', param1);
+        let retParam1 = JSON.stringify(param1);
+        retParam1 = re.replaceAll(retParam1,"  ","");
+        assert.strictEqual(retParam1, correctResult['Generate']['paramGenerateAny'])
+    });
+}
+
+function partofParamGenerateObject(correctResult) {
+    it('test gen/generate/param_generate paramGenerateObject', function () {
+        let param1 = {
+            optionalParamDestory: '',
+            valueCheckout: '',
+            valueDefine: '',
+            valueFill: '',
+            valueIn: '',
+            valueOut: '',
+            valuePackage: ''
+        }
+        let funcVlaue = { name: 'v', type: 'Object', optional: false };
+        paramGenerateObject('0', funcVlaue, param1);
+        let retParam1 = JSON.stringify(param1);
+        retParam1 = re.replaceAll(retParam1,"  ","");
+        retParam1 = re.replaceAll(retParam1,"len[0-9]+","len");  
+        retParam1 = re.replaceAll(retParam1,"i[0-9]+","i"); 
+        retParam1 = re.replaceAll(retParam1,"tt[0-9]+","tt");
+        retParam1 = re.replaceAll(retParam1,"NUMBER_TYPE_[0-9]+","NUMBER_TYPE_");
+        assert.strictEqual(retParam1, correctResult['Generate']['paramGenerateObject'])
     });
 }
 
@@ -766,6 +1090,7 @@ function returnGenerateAndAssert(dataType) {
     let result = JSON.stringify(param);
     return result
 }
+
 function paramGenerateResult(correctResult) {
     let retJson = JSON.stringify(paramGenerateAndAssert("string"))
     retJson = re.replaceAll(retJson,"  ", "")
