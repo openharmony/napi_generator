@@ -273,7 +273,8 @@ module.exports = {
     generateInterface,
     connectResult,
     generateVariable,
-    mapTypeString
+    mapTypeString,
+    anyTypeString
 }
 
 

@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { fun1,fun2, fun3, fun4, fun5, fun6, fun7} = require("./out/build/Release/napitest")
+const { fun1,fun2, fun3, fun4, fun5, fun6, fun7, fun8} = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('interface_no_name', function () {    
@@ -72,6 +72,11 @@ describe('interface_no_name', function () {
     // function fun7(nm: string, value: {xOffset: number; animation: { duration: number; curve: string}});
     it('test interface_no_name fun7', function () {
         fun7("name", value);
+    });
+
+    it('test interface_no_name fun8', function () {        
+      let ret = fun8("name");
+      //assert.strictEqual(ret.read, 0);
     });
 });
 
