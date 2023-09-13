@@ -274,7 +274,8 @@ module.exports = {
     connectResult,
     generateVariable,
     mapTypeString,
-    anyTypeString
+    anyTypeString,
+    getHDefineOfVariable
 }
 
 
