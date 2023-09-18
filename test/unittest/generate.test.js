@@ -35,6 +35,7 @@ const { generateEnumResult, generateFunction } = require(genDir + "generate/name
 const { generateFunctionAsync } = require(genDir + "generate/function_async");
 const { generateFunctionDirect } = require(genDir + "generate/function_direct");
 const { generateFunctionSync } = require(genDir + "generate/function_sync");
+const { generateFunctionOnOff } = require(genDir + "generate/function_onoff");
 
 var correctResult
 
@@ -92,6 +93,8 @@ describe('Generate', function () {
         let middle = retJson.substring(retJson.indexOf("if_callback_middle"), retJson.indexOf("info)") + 5)
         assert.strictEqual(middle, "if_callback_middle(napi_env env, napi_callback_info info)")
     });
+
+    partOfFuncOnOff();
 
     partOfInterface(correctResult);
 
@@ -177,6 +180,25 @@ function funcSyncAssert() {
     return retJson
 }
 
+function funcOnOffAssert(funcName) {
+  let valueFi = { name: 'v1', type: 'string', optional: false };
+  let value1Se = { name: 'cb', type: 'Callback<string>', optional: false };
+  let funParam = { name: funcName, type: 2, value: [valueFi, value1Se], ret: 'void' };
+  let data = {
+      class: [],
+      const: [],
+      enum: [],
+      exports: [],
+      function: [{ name: funcName, type: 2, value: [valueFi, value1Se], ret: 'string' }],
+      interface: [],
+      namespace: [],
+      type: [],
+  }
+  let ret = generateFunctionOnOff(funParam, data, 'TestClass1');
+  let retJson = JSON.stringify(ret);
+  return retJson;
+}
+
 function partOfEnum() {
     it('test gen/generate/enum generateEnum', function () {
         let data = {
@@ -206,6 +228,22 @@ function partOfEnum() {
     });
 }
 
+function partOfFuncOnOff() {
+    it('test gen/generate/function_onoff generateFunctionOnOff', function () {
+        let retJson = funcOnOffAssert('on');
+        let struct = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1)
+        assert.strictEqual(struct, "{\\n    std::string eventName;\\n}")
+        let middle = retJson.substring(retJson.indexOf("on_middle"), retJson.indexOf("info)") + 5)
+        assert.strictEqual(middle, "on_middle(napi_env env, napi_callback_info info)")
+
+        let retJson2 = funcOnOffAssert('off');
+        let struct2 = retJson2.substring(retJson2.indexOf("{"), retJson2.indexOf("}") + 1)
+        assert.strictEqual(struct2, "{\\n    std::string eventName;\\n}")
+        let middle2 = retJson2.substring(retJson2.indexOf("off_middle"), retJson2.indexOf("info)") + 5)
+        assert.strictEqual(middle2, "off_middle(napi_env env, napi_callback_info info)")
+    });
+}
+
 function partOfInterface() {
     partOfInterfaceOne();
 
@@ -215,11 +253,7 @@ function partOfInterface() {
       assert.strictEqual(JSON.stringify(ret), JSON.stringify(result));
     });
 
-    it('test gen/generate/interface mapTypeString', function () {
-        let ret = mapTypeString("Map<string,string>", "map1");
-        let result = "\n    std::map<std::string, std::string> map1;";
-        assert.strictEqual(JSON.stringify(ret), JSON.stringify(result));
-    });
+    partOfInterfaceFour();
 
     it('test gen/generate/interface generateInterface', function () {
         let data = {
@@ -237,6 +271,50 @@ function partOfInterface() {
 
     partOfInterfaceTwo();
     partOfInterfaceThree();
+}
+
+function partOfInterfaceFour() {
+    it('test gen/generate/interface mapTypeString', function () {
+        let ret = mapTypeString("Map<string,string>", "map1");
+        let result = "\n    std::map<std::string, std::string> map1;";
+        assert.strictEqual(JSON.stringify(ret), JSON.stringify(result));
+
+        let ret2 = mapTypeString("Map<string,NUMBER_TYPE_1>", "map1");
+        let result2 = "\n    std::map<std::string, NUMBER_TYPE_1> map1;";
+        assert.strictEqual(JSON.stringify(ret2), JSON.stringify(result2));
+
+        let ret3 = mapTypeString("Map<string,boolean>", "map1");
+        let result3 = "\n    std::map<std::string, bool> map1;";
+        assert.strictEqual(JSON.stringify(ret3), JSON.stringify(result3));
+
+        let ret4 = mapTypeString("{[key:string]:string}", "map1");
+        let result4 = "\n    std::map<std::string, std::string> map1;";
+        assert.strictEqual(JSON.stringify(ret4), JSON.stringify(result4));
+
+        let ret5 = mapTypeString("{[key:string]:NUMBER_TYPE_1}", "map1");
+        let result5 = "\n    std::map<std::string, NUMBER_TYPE_1> map1;";
+        assert.strictEqual(JSON.stringify(ret5), JSON.stringify(result5));
+
+        let ret6 = mapTypeString("{[key:string]:boolean}", "map1");
+        let result6 = "\n    std::map<std::string, bool> map1;";
+        assert.strictEqual(JSON.stringify(ret6), JSON.stringify(result6));
+
+        let ret7 = mapTypeString("Map<string,Map<string,string>>", "map1");
+        let result7 = "\n    std::map<std::string, std::map<std::string, std::string>> map1;";
+        assert.strictEqual(JSON.stringify(ret7), JSON.stringify(result7));
+
+        let ret8 = mapTypeString("{[key:string]:{[key:string]:string}}", "map1");
+        let result8 = "\n    std::map<std::string, std::map<std::string, std::string>> map1;";
+        assert.strictEqual(JSON.stringify(ret8), JSON.stringify(result8));
+
+        let ret9 = mapTypeString("Map<string,string[]>", "map1");
+        let result9 = "\n    std::map<std::string, std::vector<std::string>> map1;";
+        assert.strictEqual(JSON.stringify(ret9), JSON.stringify(result9));
+
+        let ret10 = mapTypeString("Map<string,Array<string>>", "map1");
+        let result10 = "\n    std::map<std::string, std::vector<std::string>> map1;";
+        assert.strictEqual(JSON.stringify(ret10), JSON.stringify(result10));
+    });
 }
 
 function partOfInterfaceOne() {
