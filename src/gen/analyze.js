@@ -69,10 +69,13 @@ function analyze(data, result) {
             data = re.removeReg(data, matchs.regs[0]);
             result.exportDefault.push(exportName)
         }
+        data = re.replaceAll(data, "\n{", "{");
         let matchType = analyzeMatchType(matchs, data, result)
         if (matchType != null) {
             data = matchType[0]
-            result = matchType[1]
+            if (matchType[1] != null) {
+                result = matchType[1]
+            }            
         }
         let namespace = analyzeMatchNamespace(matchs, data, result)
         if (namespace != null) {

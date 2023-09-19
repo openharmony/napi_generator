@@ -39,6 +39,7 @@ function analyzeNamespace(data) {
         data = removeEmptyLine(data)
         let matchs = re.match(" *\n*", data)   
         data = data.indexOf("//") < 0 ? data : parseNotes(data);   
+        data = re.replaceAll(data, "\n{", "{");
         // 只剩下空格和回车时，解析完成
         if (matchs && matchs.regs[0][1] == data.length) break
         let parseEnumResult = parseEnum(matchs, data, result)

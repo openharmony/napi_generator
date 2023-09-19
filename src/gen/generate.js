@@ -217,7 +217,7 @@ function generateAll(structOfTs, destDir, moduleName, numberType) {
     implH = implH.replaceAll("[numberUsing]", numberUsing);
     implH = replaceAll(implH, "[implH_detail]", result.implH)
     let imports = ''
-    for (let i = 0; i < structOfTs.imports.length; i++){
+    for (let i = 0; i < structOfTs.imports.length; i++) {
         imports += structOfTs.imports[i]
     }
     implH = replaceAll(implH, "[importTs]", imports)
