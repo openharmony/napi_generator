@@ -20,6 +20,13 @@ declare namespace napitest {
         age: number;
     }
 
+    // 变换括号位置
+    interface Man 
+    {
+        name: string;
+        age: number;
+    }
+
     export enum LaunchReason {
         UNKNOWN = 0,
         START_ABILITY = 1,
@@ -36,9 +43,8 @@ declare namespace napitest {
         fun5: (data: Array<Human>) => Human;
         fun6: (v: string[], v1: { [key: string]: boolean }) => string[];
         fun8: () => void;
-        /* --待支持
-        fun7: (v: string, v1: LaunchReason) => LaunchReason; 
-        */        
+        fun9(manA: Man): Man;
+        /*fun7: (v: string, v1: LaunchReason) => LaunchReason;  --待支持*/        
     }
 }
 
