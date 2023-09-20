@@ -74,6 +74,22 @@ describe('type function', function () {
   });
 });
 
+describe('type function part2', function () {
+  // function fun9(v: Flower): string;
+  // type Flower = 
+  // {
+  //   name: string;
+  //   Id: number;
+  //   isMoreFlower: boolean;
+  // }
+  it('test fun9', function () {
+    let ret = test.fun9({ name: 'mudan', Id: 10, isMoreFlower: true });
+    assert.deepStrictEqual(ret, '');
+    let ret2 = test.fun8({ name: 'gouweicao', Id: 20, isMoreFlower: false });
+    assert.deepStrictEqual(ret2, '');
+  });
+});
+
 describe('Interface', function () {
   // catFunc1(v: MyString): MyString;
   it('test Animal catFunc1', function () {

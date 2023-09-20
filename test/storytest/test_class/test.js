@@ -17,7 +17,7 @@ const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 const { consumers } = require("stream");
 
-describe('Interface', function () {
+describe('Class', function () {
     it('test TestClass1 fun1', function () {
         let tc1 = new TestClass1();
         let ret = tc1.fun1(1);
@@ -69,6 +69,31 @@ describe('Interface', function () {
         let ret = tc.fun8();
         assert.deepStrictEqual(typeof ret, 'undefined');
     });
+
+    // fun9(manA: Man): Man;
+    // class Man 
+    // {
+    //     name: string;
+    //     age: number;
+    // }
+    it('test TestClass1 fun9', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun9({ name: "testaa", age: 10});
+        assert.deepStrictEqual(typeof ret, 'undefined');
+    });
+
+    // fun10(manA: Image): Image;
+    // export class Image {
+    //     width: number;
+    //     height: number;
+    //     toDataURL(type?: string, quality?: number): string;
+    // }
+    it('test TestClass1 fun10', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun10();
+        assert.deepStrictEqual(typeof ret, 'undefined');
+    });
+    
 });
 
 
