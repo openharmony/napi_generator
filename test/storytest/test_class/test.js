@@ -48,7 +48,7 @@ describe('Class', function () {
     });
 });
 
-describe('Interface', function () {
+describe('Class part2', function () {
     it('test TestClass1 fun5', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun5(
@@ -70,7 +70,7 @@ describe('Interface', function () {
         assert.deepStrictEqual(typeof ret, 'undefined');
     });
 
-    // fun9(manA: Man): Man;
+    // fun9(manA: Man): string;
     // class Man 
     // {
     //     name: string;
@@ -79,7 +79,7 @@ describe('Interface', function () {
     it('test TestClass1 fun9', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun9({ name: "testaa", age: 10});
-        assert.deepStrictEqual(typeof ret, 'undefined');
+        assert.strictEqual(ret, '');
     });
 
     // fun10(manA: Image): Image;
@@ -90,8 +90,8 @@ describe('Interface', function () {
     // }
     it('test TestClass1 fun10', function () {
         let tc = new test.TestClass1();
-        let ret = tc.fun10();
-        assert.deepStrictEqual(typeof ret, 'undefined');
+        let ret = tc.fun10({ width: 5, height: 10});
+        assert.strictEqual(ret, '');
     });
     
 });

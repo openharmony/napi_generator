@@ -49,8 +49,8 @@ declare namespace napitest {
         fun5: (data: Array<Human>) => Human;
         fun6: (v: string[], v1: { [key: string]: boolean }) => string[];
         fun8: () => void;
-        fun9(manA: Man): Man;
-        fun10(manA: Image): Image;
+        fun9(manA: Man): string;
+        fun10(manA: Image): string;
         /*fun7: (v: string, v1: LaunchReason) => LaunchReason;  --待支持*/        
     }
 }
