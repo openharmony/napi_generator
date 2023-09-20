@@ -40,7 +40,7 @@ declare namespace napitest {
         STATE_PLAYING,
     }
 
-    // ±ä»»À¨ºÅÎ»ÖÃ
+    // å˜æ¢æ‹¬å· { ä½ç½®
     export enum PlayingTest 
     {
         STATE_TEST_START,

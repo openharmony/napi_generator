@@ -71,5 +71,15 @@ describe('enum', function () {
         let promiseObj = fun6('hhh');
         promiseObj.then(ret => { def1(ret) });
     });
+
+    function def2(ret) {
+        assert.deepStrictEqual(ret, 0);
+    }
+
+    // function fun8(v0: string): Promise<PlayingTest>;
+    it('test fun8_promise', function () {
+        let promiseObj = fun8('test');
+        promiseObj.then(ret => { def2(ret) });
+    });
 });
 
