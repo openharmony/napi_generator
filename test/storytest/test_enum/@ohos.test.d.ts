@@ -40,8 +40,7 @@ declare namespace napitest {
         STATE_PLAYING,
     }
 
-    // 变换括号 { 位置
-    export enum PlayingTest 
+    export enum PlayingTest
     {
         STATE_TEST_START,
         STATE_TEST_END,
@@ -55,8 +54,8 @@ declare namespace napitest {
     function fun6(v0: string, callback: AsyncCallback<GrantStatus>): void;
     function fun6(v0: string): Promise<GrantStatus>;
     function fun8(v0: string): Promise<PlayingTest>;
+    function fun9(v0: PlayingTest): string;    
     /*function fun7(v0: LaunchReason[], v1: LaunchReason): number;*/
-
 }
 
 export default napitest;
