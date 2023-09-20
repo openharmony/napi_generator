@@ -78,8 +78,13 @@ describe('enum', function () {
 
     // function fun8(v0: string): Promise<PlayingTest>;
     it('test fun8_promise', function () {
-        let promiseObj = fun8('test');
+        let promiseObj = test.fun8('test');
         promiseObj.then(ret => { def2(ret) });
     });
-});
 
+    // function fun9(v0: PlayingTest): string;
+    it('test fun9_promise', function () {
+        let ret = test.fun9(test.PlayingTest.STATE_TEST_START);
+        assert.strictEqual(ret, '');
+    });
+});

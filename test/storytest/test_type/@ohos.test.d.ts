@@ -24,7 +24,6 @@ declare namespace napitest {
     // isPotato?: boolean;
   }
 
-  // 变换括号 { 位置
   type Flower = 
   {
     name: string;

@@ -72,9 +72,7 @@ describe('type function', function () {
     let ret2 = test.fun8('keydown');
     assert.deepStrictEqual(ret2, '');
   });
-});
 
-describe('type function part2', function () {
   // function fun9(v: Flower): string;
   // type Flower = 
   // {
@@ -85,9 +83,10 @@ describe('type function part2', function () {
   it('test fun9', function () {
     let ret = test.fun9({ name: 'mudan', Id: 10, isMoreFlower: true });
     assert.deepStrictEqual(ret, '');
-    let ret2 = test.fun8({ name: 'gouweicao', Id: 20, isMoreFlower: false });
+    let ret2 = test.fun9({ name: 'gouweicao', Id: 20, isMoreFlower: false });
     assert.deepStrictEqual(ret2, '');
   });
+
 });
 
 describe('Interface', function () {
