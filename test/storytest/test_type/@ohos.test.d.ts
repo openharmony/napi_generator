@@ -24,6 +24,14 @@ declare namespace napitest {
     // isPotato?: boolean;
   }
 
+  // 变换括号 { 位置
+  type Flower = 
+  {
+    name: string;
+    Id: number;
+    isMoreFlower: boolean;
+  }
+
   type MyString = string;
   type MyNumberType = number;
   type MyBool = boolean;
@@ -49,6 +57,7 @@ declare namespace napitest {
   function fun6(v: boolean): MyBool;
   function fun7(v: MyUnion): number;
   function fun8(v: MyEnumType): string;
+  function fun9(v: Flower): string;
 }
 
 export default napitest;
