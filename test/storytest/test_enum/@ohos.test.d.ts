@@ -39,6 +39,13 @@ declare namespace napitest {
         STATE_NOT_PLAYING,
         STATE_PLAYING,
     }
+
+    export enum PlayingTest
+    {
+        STATE_TEST_START,
+        STATE_TEST_END,
+    }
+
     function fun1(v0: string, v1: GrantStatus): GrantStatus;
     function fun2(v0: number, v1: LaunchReason): LaunchReason;
     function fun3(v0: string, v1: Action): Action;
@@ -46,8 +53,9 @@ declare namespace napitest {
     function fun5(V0: string, callback: Callback<LaunchReason>): void;
     function fun6(v0: string, callback: AsyncCallback<GrantStatus>): void;
     function fun6(v0: string): Promise<GrantStatus>;
+    function fun8(v0: string): Promise<PlayingTest>;
+    function fun9(v0: PlayingTest): string;    
     /*function fun7(v0: LaunchReason[], v1: LaunchReason): number;*/
-
 }
 
 export default napitest;

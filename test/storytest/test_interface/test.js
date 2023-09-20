@@ -78,6 +78,18 @@ describe('Interface', function () {
         let ret = tc.fun8();
         assert.deepStrictEqual(typeof ret, 'undefined');
     });
+
+    //  fun9(manA: Man): Man;
+    // interface Man 
+    // {
+    //     name: string;
+    //     age: number;
+    // }
+    it('test TestClass1 fun9', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun9({name: 'asa', age: 3});
+        assert.deepStrictEqual(typeof ret, 'undefined');
+    });
 });
 
 
