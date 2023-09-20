@@ -22,6 +22,12 @@ const { NapiLog } = require("../tools/NapiLog");
 const { analyzeType, analyzeType2, analyzeType2Result } = require("./type");
 const { NumberIncrease } = require("../tools/common");
 
+function PreProcessData(data) {
+    data = data.indexOf("//") < 0 ? data : parseNotes(data);   
+    data = re.replaceAll(data, "\n{", "{");
+    return data;
+}
+
 /**namespace解析 */
 function analyzeNamespace(data) {
     let result = {
@@ -38,8 +44,7 @@ function analyzeNamespace(data) {
         let oldData = data
         data = removeEmptyLine(data)
         let matchs = re.match(" *\n*", data)   
-        data = data.indexOf("//") < 0 ? data : parseNotes(data);   
-        data = re.replaceAll(data, "\n{", "{");
+        data = PreProcessData(data);
         // 只剩下空格和回车时，解析完成
         if (matchs && matchs.regs[0][1] == data.length) break
         let parseEnumResult = parseEnum(matchs, data, result)
@@ -133,6 +138,24 @@ function parseEnum(matchs, data, result) {
     return data
 }
 
+function IsValidValue(value) {
+    if (value === null || value === undefined) {
+      return false;
+    }
+    return true;
+}
+
+function getTypeInfo(result, typeName, typeType, isEnum) {
+    if (!IsValidValue(result) || !IsValidValue(result.type)) {
+        NapiLog.logError("getTypeInfo: result or result.type is invalid!");
+    }
+    result.type.push({
+        name: typeName,
+        body: typeType,
+        isEnum: isEnum
+    })
+}
+
 function parseType(matchs, data, result) {
     matchs = re.match("(export )*type ([a-zA-Z]+) *= *([\\(\\):=a-zA-Z<> |]+);", data)
     if (matchs) {
@@ -141,12 +164,8 @@ function parseType(matchs, data, result) {
         let index = typeType.indexOf("number")
         if (index !== -1) {
           typeType = typeType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
-        } 
-        result.type.push({
-            name: typeName,
-            body: typeType,
-            isEnum: false
-        })
+        }
+        getTypeInfo(result, typeName, typeType, false);
         data = re.removeReg(data, matchs.regs[0])
         if (matchs.regs[1][0] != -1) {
             result.exports.push(typeName)
@@ -157,11 +176,8 @@ function parseType(matchs, data, result) {
     if (matchs) {
         let typeName = re.getReg(data, matchs.regs[2]);
         let typeBody = re.getReg(data, matchs.regs[3]);
-        result.type.push({
-            name: typeName,
-            body: analyzeType2(typeBody.substring(1, typeBody.length - 1)),
-            isEnum: true
-        })
+
+        getTypeInfo(result, typeName, analyzeType2(typeBody.substring(1, typeBody.length - 1)), true);
         data = re.removeReg(data, matchs.regs[0])
         if (matchs.regs[1][0] != -1) {
             result.exports.push(typeName)
@@ -176,11 +192,7 @@ function parseType(matchs, data, result) {
             NapiLog.logError("ParseType typeBody is null!");
         }
         let bodyObj = analyzeType(typeBody.substring(1, typeBody.length - 1), result.type)
-        result.type.push({
-            name: typeName,
-            body: bodyObj,
-            isEnum: false
-        })
+        getTypeInfo(result, typeName, bodyObj, false);
         data = data.substring(matchs.regs[3][0] + typeBody.length + 2, data.length)
         if (matchs.regs[1][0] != -1) {
             result.exports.push(typeName)
