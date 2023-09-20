@@ -146,7 +146,7 @@ function analyzeMatchFunction(matchs, data, result) {
 }
 
 function analyzeMatchType(matchs, data, result) {
-    matchs = re.match("(export )*type ([a-zA-Z]+) = ([()a-zA-Z :=>,\"| ]+);", data)
+    matchs = re.match("(export )*type ([a-zA-Z]+) *= *([()a-zA-Z :=>,\"| ]+);", data)
     if (matchs) {
         let exportName = re.getReg(data, matchs.regs[2])
         let exportBody = re.getReg(data, matchs.regs[3])
@@ -160,7 +160,7 @@ function analyzeMatchType(matchs, data, result) {
         }
     }
 
-    matchs = re.match("(export )*type ([a-zA-Z]+) = ({)", data)
+    matchs = re.match("(export )*type ([a-zA-Z]+) *= *(\n{)", data)
     if (matchs) {
         let exportName = re.getReg(data, matchs.regs[2])
         let exportBody = checkOutBody(data, matchs.regs[3][0], null, true)

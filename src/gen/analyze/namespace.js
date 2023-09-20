@@ -134,7 +134,7 @@ function parseEnum(matchs, data, result) {
 }
 
 function parseType(matchs, data, result) {
-    matchs = re.match("(export )*type ([a-zA-Z]+) = *([\\(\\):=a-zA-Z<> |]+);", data)
+    matchs = re.match("(export )*type ([a-zA-Z]+) *= *([\\(\\):=a-zA-Z<> |]+);", data)
     if (matchs) {
         let typeName = re.getReg(data, matchs.regs[2]);
         let typeType = re.getReg(data, matchs.regs[3]);
@@ -153,7 +153,7 @@ function parseType(matchs, data, result) {
         }
     }
 
-    matchs = re.match("(export )*type ([a-zA-Z]+) = *([\\(\\):=a-zA-Z<> |\n']+);", data)
+    matchs = re.match("(export )*type ([a-zA-Z]+) *= *([\\(\\):=a-zA-Z<> |\n']+);", data)
     if (matchs) {
         let typeName = re.getReg(data, matchs.regs[2]);
         let typeBody = re.getReg(data, matchs.regs[3]);
@@ -168,10 +168,13 @@ function parseType(matchs, data, result) {
         }
     }
 
-    matchs = re.match("(export )*type ([a-zA-Z]+) = ({)", data)
+    matchs = re.match("(export )*type ([a-zA-Z]+) *= *({)", data)
     if (matchs) {
         let typeName = re.getReg(data, matchs.regs[2]);
         let typeBody = checkOutBody(data, matchs.regs[3][0], null, true)
+        if (typeBody === null) {
+            NapiLog.logError("ParseType typeBody is null!");
+        }
         let bodyObj = analyzeType(typeBody.substring(1, typeBody.length - 1), result.type)
         result.type.push({
             name: typeName,
