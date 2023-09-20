@@ -22,7 +22,7 @@ const { NapiLog } = require("../tools/NapiLog");
 const { analyzeType, analyzeType2, analyzeType2Result } = require("./type");
 const { NumberIncrease } = require("../tools/common");
 
-function PreProcessData(data) {
+function preProcessData(data) {
     data = data.indexOf("//") < 0 ? data : parseNotes(data);   
     data = re.replaceAll(data, "\n{", "{");
     return data;
@@ -44,7 +44,7 @@ function analyzeNamespace(data) {
         let oldData = data
         data = removeEmptyLine(data)
         let matchs = re.match(" *\n*", data)   
-        data = PreProcessData(data);
+        data = preProcessData(data);
         // 只剩下空格和回车时，解析完成
         if (matchs && matchs.regs[0][1] == data.length) break
         let parseEnumResult = parseEnum(matchs, data, result)
@@ -138,7 +138,7 @@ function parseEnum(matchs, data, result) {
     return data
 }
 
-function IsValidValue(value) {
+function isValidValue(value) {
     if (value === null || value === undefined) {
       return false;
     }
@@ -146,7 +146,7 @@ function IsValidValue(value) {
 }
 
 function getTypeInfo(result, typeName, typeType, isEnum) {
-    if (!IsValidValue(result) || !IsValidValue(result.type)) {
+    if (!isValidValue(result) || !isValidValue(result.type)) {
         NapiLog.logError("getTypeInfo: result or result.type is invalid!");
     }
     result.type.push({
