@@ -86,7 +86,52 @@ describe('type function', function () {
     let ret2 = test.fun9({ name: 'gouweicao', Id: 20, isMoreFlower: false });
     assert.deepStrictEqual(ret2, '');
   });
+});
 
+describe('Type Function', function () {
+    // type OptionalTest = 
+    // {
+    //   ttt: number;
+    //   param1?: string;
+    //   param2?: number;
+    //   param3?: boolean;
+    //   param4?: Array<number>;
+    //   param5?: string[];
+    //   param6: Array<boolean>;
+    //   param7?: Map<string, string>;
+    //   param8?: {[key: string]: number};
+    //   param9: Map<string, boolean>;
+    //   param10?: boolean | number | string;
+    // }
+    // function fun10(v: OptionalTest): string;
+    it('test fun10', function () {
+        let ret = test.fun10(
+            { ttt: 11, param1: "param", param2: 20, param3: false,
+              param6: [true, false], param9: {'map': false}});
+        assert.deepStrictEqual(ret, '');
+        let ret2 = test.fun10(
+            { ttt: 11, param1: "param", param3: false,
+              param6: [true, false], param9: {'map': false}});
+        assert.deepStrictEqual(ret2, '');
+        let ret3 = test.fun10(
+            { ttt: 11, param1: "param",
+              param6: [true, false], param9: {'map': false}});
+        assert.deepStrictEqual(ret3, '');
+        let ret4 = test.fun10({ ttt: 11, param6: [true, false], param9: {'map': false}});
+        assert.deepStrictEqual(ret4, '');
+        let ret5 = test.fun10(
+            { ttt: 11, param6: [true, false], param9: {'map': false},
+              param4: [1,2,3], param5: ["aa", "bb", "cc"]});
+        assert.deepStrictEqual(ret5, '');
+        let ret6 = test.fun10(
+            { ttt: 11, param6: [true, false], param9: {'map': false},
+              param7: {'map7': 'value7'}, param8: {'map': 8}});
+        assert.deepStrictEqual(ret6, '');
+        let ret7 = test.fun10(
+            { ttt: 11, param6: [true, false], param9: {'map': false},
+              param10: 54});
+        assert.deepStrictEqual(ret7, '');
+    });
 });
 
 describe('Interface', function () {
