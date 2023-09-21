@@ -46,6 +46,46 @@ declare namespace napitest {
         fun9(manA: Man): void;
         /*fun7: (v: string, v1: LaunchReason) => LaunchReason;  --待支持*/        
     }
+
+    interface Test {
+        aa: string;
+        bb?: boolean;
+        cc: number;
+        dd?: string;
+        ee?: number;
+        /* ff?: any; --待支持*/  
+        /* gg?: object; --待支持*/ 
+        /* hh?: LaunchReason; --待支持*/  
+    }
+
+    function func1 (v1: Test, v2?: number): string;
+
+    interface ComplexTest {
+        a1: Map<string, number>;
+        b1?: Map<string, string>;
+        c1: Array<number>;
+        d1?: Array<string>;
+        e1?: number | string | boolean;
+        g1?: Test;
+    }
+
+    function func2 (v: ComplexTest): string;
+
+    interface testInterface {
+        a1: number;
+        b1?: string;
+        aa: boolean;
+        bb?: Array<number>;
+        cc?: Map<string, string>;
+        dd: Array<boolean>;
+        ee: Map<string, number>;
+    }
+
+    interface testInterface22 {
+        test: testInterface;
+    }
+
+    function func3(fp1: testInterface22): string; 
 }
 
 export default napitest;
