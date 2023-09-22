@@ -14,7 +14,6 @@
 */
 const re = require("./re");
 const tsc = require("../../node_modules/typescript");
-const { IndexKind } = require("../../node_modules/typescript");
 
 function checkFileError(ifname) {
     let program = tsc.createProgram([ifname], {target: tsc.ScriptTarget.Latest,})
@@ -194,13 +193,6 @@ function isEnum(type, data) {
     }
     return isEnum
 }
-
-// function isEnumDefinedLater(type, data) { 
-//     if (data.indexOf("\nenum ") !== -1) {
-//         return true;
-//     }
-//     return false;
-// }
 
 function enumIndex(type, data) {
     let index;

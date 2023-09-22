@@ -82,7 +82,7 @@ describe('Class part2', function () {
         assert.strictEqual(ret, '');
     });
 
-    // fun10(manA: Image): Image;
+    // fun10(v: Image): Image;
     // export class Image {
     //     width: number;
     //     height: number;
@@ -93,8 +93,41 @@ describe('Class part2', function () {
         let ret = tc.fun10({ width: 5, height: 10});
         assert.strictEqual(ret, '');
     });
-    
+
+    // fun11(v: LaunchReason): string;
+    it('test TestClass1 fun11', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun11(test.LaunchReason.START_ABILITY);
+        assert.strictEqual(ret, '');
+    });
+
+    // fun12(v: TestStatus): number;
+    // export enum TestStatus {
+    //     UNKNOWN = 0,
+    //     START_ABILITY = 1,
+    //     CALL = 2,
+    //     CONTINUATION = 3,
+    // }
+    it('test TestClass1 fun12', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun12(test.TestStatus.CALL);
+        assert.strictEqual(ret, '');
+    });
+
+    // fun13(v: TestEnumString): number;
+    // export enum TestEnumString {
+    //     ACTION_HOME = 'ohos.want.action.home',
+    //     ACTION_DIAL = 'ohos.want.action.dial',
+    //     ACTION_SEARCH = 'ohos.want.action.search',
+    //     ACTION_WIRELESS_SETTINGS = 'ohos.settings.wireless',
+    // }    
+    it('test TestClass1 fun13', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun13(test.TestEnumString.ACTION_DIAL);
+        assert.strictEqual(ret, '');
+    });
 });
+
 
 
 
