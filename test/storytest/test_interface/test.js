@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { TestClass1 } = require("./out/build/Release/napitest")
+const { TestClass1, func1, func2, func3 } = require("./out/build/Release/napitest")
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 const { consumers } = require("stream");
@@ -118,5 +118,75 @@ describe('Interface', function () {
     });
 });
 
+describe('Interface Optional Param func1', function () {
+    it('test Function func1 test1', function () {
+        let ret = func1({aa: 'aa', bb: false, cc: 7, dd: 'dd', ee: 27}, 17);
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '""');
+    });
 
+    it('test Function func1 test2', function () {
+        let ret = func1({aa: 'aa', bb: false, cc: 7, dd: 'dd', ee: 27});
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '""');
+    });
 
+    it('test Function func1 test3', function () {
+        let ret = func1({aa: 'aa', dd: 'dd', bb: false, cc: 7,ee: 27});
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '""');
+    });
+
+    it('test Function func1 test4', function () {
+        let ret = func1({aa: 'aa', bb: false, cc: 7}, 17);
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '""');
+    });
+
+    it('test Function func1 test5', function () {
+        let ret = func1({aa: 'aa', cc: 7}, 17);
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '""');
+    });
+
+    it('test Function func1 test6', function () {
+        let ret = func1({aa: 'aa', dd: 'ababab', cc: 7}, 17);
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '""');
+    });
+});
+
+describe('Interface Optional Param func2', function () {
+    it('test Function func2 test1', function () {
+        let ret = func2({
+            a1: { 'name': 999, 'age': 20 }, 
+            c1: [1, 2, 3],
+        });
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '""');
+    });
+
+    it('test Function func2 test2', function () {
+        let ret = func2({
+            a1: { 'name': 999, 'age': 20 }, 
+            b1: { 'name': 'ahah', 'age': '02' }, 
+            c1: [1, 2, 3],
+            d1: ['a', 'b', 'c'],
+            e1: 999,
+            g1: {aa: 'aa', dd: 'ababab', cc: 7}
+        });
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '""');
+    });
+
+    it('test Function func3 test1', function () {
+        let ret = func3({
+            test: {a1: 23,
+            bb: [1,2,3], cc:{'map': 'value'}, 
+            aa: false, dd: [true, false], ee: {'map2': 25}, 
+            gg: 23}
+        });
+        let retJson = JSON.stringify(ret);
+        assert.strictEqual(retJson, '""');
+    });
+});

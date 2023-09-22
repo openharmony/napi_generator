@@ -32,9 +32,49 @@ function getValueProperty(napiVn, name) {
     return 'pxt->GetValueProperty(%s, "%s")'.format(napiVn, name)
 }
 
-function jsToC(dest, napiVn, type, enumType = 0) {
+function getCType(type) {
+    if (type == "boolean") {
+        return "bool"
+    } else if (type == "string") {
+        return "std::string"
+    } else if (type.substring(0, 6) == "Array<" || type.substring(type.length - 2) == "[]") {
+       return "std::vector<%s>".format(getArrayTypeTemplete(type));
+    } else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
+        return getMapCType(type);
+    } else {
+        return type
+    }
+}
+
+function getMapCType(type) {
+    let mapType = getMapType(type)
+    let mapTypeString = ""
+
+    if (mapType[1] != undefined && mapType[2] == undefined) {
+        if (mapType[1] == "string") { mapTypeString = "std::string" }
+        else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = mapType[1] }
+        else if (mapType[1] == "boolean") { mapTypeString = "bool" }
+        else if (mapType[1] == "any") { mapTypeString = "std::any" }
+        else if (mapType[1] != null) { mapTypeString = mapType[1] }
+    } else if (mapType[2] != undefined) {
+        if (mapType[2] == "string") { mapTypeString = "std::map<std::string, std::string>" }
+        else if (mapType[2].substring(0, 12) == "NUMBER_TYPE_") { 
+            mapTypeString = "std::map<std::string, %s>".format(mapType[2])
+        }
+        else if (mapType[2] == "boolean") { mapTypeString = "std::map<std::string, bool>" }
+    } else if (mapType[3] != undefined) {
+        if (mapType[3] == "string") { mapTypeString = "std::vector<std::string>" }
+        else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") {
+            mapTypeString = "std::vector<%s>".format(mapType[3])
+        }
+        else if (mapType[3] == "boolean") { mapTypeString = "std::vector<bool>" }
+    }
+    return "std::map<std::string, %s>".format(mapTypeString)
+}
+
+function jsToC(dest, napiVn, type, enumType = 0, optional) {
     if (type.indexOf("|") >= 0) {
-        return unionTempleteFunc(dest, napiVn, type)
+        return unionTempleteFunc(dest, napiVn, type, optional)
     } else if (type == "string") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
@@ -48,14 +88,7 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         return numTempleteFunc (enumType, napiVn, type, dest);
     } else if (InterfaceList.getValue(type)) {
-        let tt = ""
-        let ifl = InterfaceList.getValue(type)
-        for (let i in ifl) {
-            let name2 = ifl[i].name
-            let type2 = ifl[i].type
-            tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2)
-        }
-        return tt
+        return interfaceTempleteFunc(type, napiVn, dest);
     } else if (TypeList.getValue(type)) {
         return typeTempleteFunc(type, dest, napiVn);
     } else if (EnumList.getValue(type)) {
@@ -75,6 +108,31 @@ function jsToC(dest, napiVn, type, enumType = 0) {
     }        
 }
 
+function interfaceTempleteFunc(type, napiVn, dest) {
+    let tt = "";
+    let ifl = InterfaceList.getValue(type);
+    for (let i in ifl) {
+        let name2 = ifl[i].name;
+        let type2 = ifl[i].type;
+        let optional2 = ifl[i].optional;
+        if (optional2 && type2.indexOf("|") < 0) {
+            let optType2 = getCType(type2);
+            tt += `    if (pxt->GetProperty(%s, "%s")) {\n `.format(napiVn, name2);
+            tt += `        %s %s_tmp;\n`.format(optType2, name2);
+            tt += jsToC("%s".format('%s_tmp'.format(name2)), getValueProperty(napiVn, name2), type2);
+            tt += `        %s.%s.emplace(%s_tmp);\n`.format(dest, name2, name2);
+            tt += `    }\n`;
+        } else if (optional2 && type2.indexOf("|") >= 0) {
+            tt += `    if (pxt->GetProperty(%s, "%s")) {\n `.format(napiVn, name2);
+            tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2, 0, optional2);
+            tt += `    }\n`;
+        } else {
+            tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2);
+        }
+    }
+    return tt;
+}
+
 function typeTempleteFunc(type, dest, napiVn) {
   let tt = "";
   let ifl = TypeList.getValue(type);
@@ -82,7 +140,21 @@ function typeTempleteFunc(type, dest, napiVn) {
     for (let i in ifl) {
       let name2 = ifl[i].name;
       let type2 = ifl[i].type;
-      tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2);
+      let optional2 = ifl[i].optional;
+      if (optional2 && type2.indexOf("|") < 0) {
+          let optType2 = getCType(type2)
+          tt += `    if (pxt->GetProperty(%s, "%s")) {\n `.format(napiVn, name2)
+          tt += `        %s %s_tmp;\n`.format(optType2, name2)
+          tt += jsToC("%s".format('%s_tmp'.format(name2)), getValueProperty(napiVn, name2), type2)
+          tt += `        %s.%s.emplace(%s_tmp);\n`.format(dest, name2, name2)
+          tt += `    }\n`
+      } else if (optional2 && type2.indexOf("|") >= 0) {
+          tt += `    if (pxt->GetProperty(%s, "%s")) {\n `.format(napiVn, name2)
+          tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2, 0, optional2)
+          tt += `    }\n`
+      } else {
+          tt += jsToC("%s.%s".format(dest, name2), getValueProperty(napiVn, name2), type2);
+      }
     }
   } else {
     tt += jsToC(dest, napiVn, ifl);
@@ -90,29 +162,38 @@ function typeTempleteFunc(type, dest, napiVn) {
   return tt;
 }
 
-function unionTempleteFunc(dest, napiVn, type) {
+function unionTempleteFunc(dest, napiVn, type, optional) {
     let unionType = getUnionType(type)
     let unionTypeString = ''
-    unionTypeString += '%s_type = pxt->GetUnionType(%s);\n'.format(dest, napiVn)
+    let typeStr = 'type'
+    if (optional) {
+        typeStr = 'type.value()'
+        unionTypeString += '%s_type.emplace(pxt->GetUnionType(%s));\n'.format(dest, napiVn)
+    } else {
+        unionTypeString += '%s_type = pxt->GetUnionType(%s);\n'.format(dest, napiVn)
+    }
     for (let i = 0; i < unionType.length; i++) {
         if (unionType[i] == "string") {
-            unionTypeString += `if (%s_type == "string") {
+            unionTypeString += `if (%s_%s == "string") {
                 std::string union_string;
                 %s
                 %s
-            }\n`.format(dest, jsToC("union_string", napiVn, unionType[i]), dest+" = union_string;")
+            }\n`.format(dest, typeStr, jsToC("union_string", napiVn, unionType[i]),
+            optional? dest+".emplace(union_string);":dest+" = union_string;")
         } else if (unionType[i].substring(0, 12) == "NUMBER_TYPE_") {
-            unionTypeString += `if (%s_type == "number") {
+            unionTypeString += `if (%s_%s == "number") {
                 std::uint32_t union_number;
                 %s
                 %s
-            }\n`.format(dest, jsToC("union_number", napiVn, unionType[i]), dest+" = union_number;")
+            }\n`.format(dest, typeStr, jsToC("union_number", napiVn, unionType[i]),
+            optional? dest+".emplace(union_number);":dest+" = union_number;")
         } else if (unionType[i] == "boolean") {
-            unionTypeString += `if (%s_type == "boolean") {
+            unionTypeString += `if (%s_%s == "boolean") {
                 bool union_boolean;
                 %s
                 %s
-            }\n`.format(dest, jsToC("union_boolean", napiVn, unionType[i]), dest+" = union_boolean;")
+            }\n`.format(dest, typeStr, jsToC("union_boolean", napiVn, unionType[i]),
+            optional? dest+".emplace(union_boolean);":dest+" = union_boolean;")
         }
     }
     return unionTypeString
@@ -947,6 +1028,7 @@ function eventParamGenerate(p, funcValue, param, data) {
 
 module.exports = {
     jsToC,
+    getCType,
     jsToCEnum,
     arrTemplete,
     paramGenerate,
