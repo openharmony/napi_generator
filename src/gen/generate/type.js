@@ -68,36 +68,38 @@ function generateTypeEnum(name, data) {
   return result
 }
 
-function getHDefineOfVariable(name, type, variable) {
+function getHDefineOfVariable(name, type, variable, optional) {
     if (type.indexOf("|") >= 0) {
-        unionTypeString(name, type, variable)
-    } else if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
+        unionTypeString(name, type, variable, optional)
+    } else if (type == "string") {
+        if (optional) {
+            variable.hDefine += "\n    std::optional<std::string> %s;".format(name)
+        } else {
+            variable.hDefine += "\n    std::string %s;".format(name)
+        }
+    }
     else if (TypeList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (EnumList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (type.indexOf("Array<") == 0) {
-        let arrayType = getArrayType(type)
-        if (arrayType == "any") {
-            variable.hDefine += "\n    std::string %s_type; \n    std::any %s;".format(name,name)
-        } else {
-            let cType = jsType2CType(arrayType)
-            variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
-        }
+        typeArrFunctionOne(type, variable, name, optional);
     } else if (type == "boolean") {
-        variable.hDefine += "\n    bool %s;".format(name)
-    } else if (type.substring(type.length - 2) == "[]") {
-        let arrayType = getArrayTypeTwo(type)
-        if (arrayType == "any") {
-            variable.hDefine += "\n    std::string %s_type;\n    std::any %s;".format(name,name)
+        if (optional) {
+            variable.hDefine += "\n    std::optional<bool> %s;".format(name)
         } else {
-            let cType = jsType2CType(arrayType)
-            variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
+            variable.hDefine += "\n    bool %s;".format(name)
         }
+    } else if (type.substring(type.length - 2) == "[]") {
+        typeArrFunctionTwo(type, variable, name, optional);
     } else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
-        variable.hDefine += mapTypeString(type, name)
+        variable.hDefine += mapTypeString(type, name, optional)
     } else if (type == "any") {
         variable.hDefine += anyTypeString(type, name)
     } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
-        variable.hDefine += "\n    %s %s;".format(type, name)
+        if (optional) {
+            variable.hDefine += "\n    std::optional<%s> %s;".format(type, name)
+        } else {
+            variable.hDefine += "\n    %s %s;".format(type, name)
+        }
     } else if (type == "Object" || type == "object") {
         variable.hDefine += "\n    std::map<std::string, std::any> %s;".format(name)
     }
@@ -108,18 +110,53 @@ function getHDefineOfVariable(name, type, variable) {
     }
 }
 
+function typeArrFunctionTwo(type, variable, name, optional) {
+    let arrayType = getArrayTypeTwo(type);
+    if (arrayType == "any") {
+        variable.hDefine += "\n    std::string %s_type;\n    std::any %s;".format(name, name);
+    } else {
+        let cType = jsType2CType(arrayType);
+        if (optional) {
+            variable.hDefine += "\n    std::optional<std::vector<%s>> %s;".format(cType, name);
+        } else {
+            variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name);
+        }
+    }
+}
+
+function typeArrFunctionOne(type, variable, name, optional) {
+    let arrayType = getArrayType(type);
+    if (arrayType == "any") {
+        variable.hDefine += "\n    std::string %s_type; \n    std::any %s;".format(name, name);
+    } else {
+        let cType = jsType2CType(arrayType);
+        if (optional) {
+            variable.hDefine += "\n    std::optional<std::vector<%s>> %s;".format(cType, name);
+        } else {
+            variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name);
+        }
+    }
+}
+
 function generateVariable(value, variable) {
     let name = value.name
     let type = value.type
-    getHDefineOfVariable(name, type, variable)
+    let optional = value.optional
+    getHDefineOfVariable(name, type, variable, optional)
 }
 
-function unionTypeString(name, type, variable) {
-    variable.hDefine += `std::string %s_type;\n
-    std::any %s;`.format(name, name)
+function unionTypeString(name, type, variable, optional) {
+    if (optional) {
+        variable.hDefine += `std::optional<std::string> %s_type;\n
+        std::optional<std::any> %s;`.format(name, name)
+    } else {
+        variable.hDefine += `std::string %s_type;\n
+        std::any %s;`.format(name, name)
+    }
+    
 }
 
-function mapTypeString(type, name) {
+function mapTypeString(type, name, optional) {
     let mapType = getMapType(type)
     let mapTypeString
     if (mapType[1] != undefined && mapType[2] == undefined) {
@@ -149,7 +186,11 @@ function mapTypeString(type, name) {
             mapTypeString = "std::string, std::vector<%s>".format(mapType[3])
         }
     }
-    return "\n    std::map<%s> %s;".format(mapTypeString, name);
+    if (optional) {
+        return "\n    std::optional<std::map<%s>> %s;".format(mapTypeString, name);
+    } else {
+        return "\n    std::map<%s> %s;".format(mapTypeString, name);
+    }
 }
 
 function anyTypeString (type, name) {
