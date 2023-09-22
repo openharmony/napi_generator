@@ -70,10 +70,16 @@ function cToJsForInterface(value, type, dest, deep) {
     for (let i in ifl) {
         let name2 = ifl[i].name
         let type2 = ifl[i].type
+        let optional2 = ifl[i].optional
         let isSubEnum = EnumList.getValue(type2) ? true : false;
         let subDest = isSubEnum ? dest : "tnv%d".format(lt)
-
-        let interfaceType = cToJs("%s.%s".format(value, name2), type2, subDest, deep + 1)
+        let interfaceType = null;
+        if (optional2) {
+            interfaceType = cToJs("%s.%s".format(value, "%s.value()".format(name2)), type2, subDest, deep + 1)
+        } else {
+            interfaceType = cToJs("%s.%s".format(value, name2), type2, subDest, deep + 1)
+        }
+        
         if (isSubEnum) {
             // interface include enum properties
             result += interfaceType 
@@ -86,10 +92,10 @@ function cToJsForInterface(value, type, dest, deep) {
     return result
 }
 
-function cToJs(value, type, dest, deep = 1) {
+function cToJs(value, type, dest, deep = 1, optional) {
     var propertyName = delPrefix(value);
     if (type.indexOf("|") >= 0) {
-        return unionTempleteFunc(value, type, dest);
+        return unionTempleteFunc(value, type, dest, optional);
     } else if (type == "void")
         return "%s = pxt->UndefinedValue();".format(dest);
     else if (type == "boolean")
@@ -140,31 +146,45 @@ function objectTempleteFuncReturn(value) {
         return objectTemplete
 }
 
-function unionTempleteFunc(value, type, dest){
+function unionTempleteFunc(value, type, dest, optional){
     let unionType = getUnionType(type)
     let unionTypeString = ''
+    let typeStr = 'type'
+    let valueTmp = value + '.value()'
+    if (optional) {
+        typeStr = 'type.value()'
+    }
+    let value2 = optional? valueTmp: value
     for (let i = 0; i < unionType.length; i++) {
         if (unionType[i] == "string") {
-            unionTypeString += `if (%s_type == "string") {
+            unionTypeString += `if (%s_%s == "string") {
                 %s
                 %s
-            }\n`.format(value, "std::string union_string = std::any_cast<std::string>("+value+");",
+            }\n`.format(value, typeStr, "std::string union_string = std::any_cast<std::string>("+value2+");",
             cToJs("union_string", unionType[i], dest))
         } else if (unionType[i].substring(0, 12) == "NUMBER_TYPE_") {
-            unionTypeString += `if (%s_type == "number") {
+            unionTypeString += `if (%s_%s == "number") {
                 %s
                 %s
-            }\n`.format(value, "std::uint32_t union_number = std::any_cast<std::uint32_t>("+value+");",
+            }\n`.format(value, typeStr, "std::uint32_t union_number = std::any_cast<std::uint32_t>("+value2+");",
             cToJs("union_number", unionType[i], dest))
         } else if (unionType[i] == "boolean") {
-            unionTypeString += `if (%s_type == "boolean") {
+            unionTypeString += `if (%s_%s == "boolean") {
                 %s
                 %s
-            }\n`.format(value, "bool union_boolean = std::any_cast<bool>("+value+");",
+            }\n`.format(value, typeStr, "bool union_boolean = std::any_cast<bool>("+value2+");",
             cToJs("union_boolean", unionType[i], dest))
         }
     }
-    return unionTypeString
+    if (optional) {
+        let result =
+        `if (%s.has_value()) {
+             %s
+        }\n`.format(value, unionTypeString)
+        return result
+    } else {
+        return unionTypeString
+    }
 }
 
 function checkArrayParamType(type) {

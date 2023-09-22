@@ -24,6 +24,7 @@ let xNapiToolH = `\
 #include <memory>
 #include <map>
 #include <any>
+#include <optional>
 #include <vector>
 #include <cmath>
 
@@ -87,6 +88,7 @@ public:
     napi_value GetArgv(uint32_t p);
     uint32_t GetArgc();
 
+    bool GetProperty(napi_value value, const char *propertyName);
     napi_value GetValueProperty(napi_value value, const char *propertyName);
     napi_value SetValueProperty(napi_value &value, const char *propertyName, napi_value property);
 
@@ -326,6 +328,27 @@ napi_value XNapiTool::GetArgv(uint32_t p)
 uint32_t XNapiTool::GetArgc()
 {
     return argc_size;
+}
+
+bool XNapiTool::GetProperty(napi_value value, const char *propertyName)
+{
+    napi_value result;
+    bool hasProperty = false;
+    bool isNull = false; 
+    bool isUndefined = false;
+    napi_has_named_property(env_, value, propertyName, &hasProperty);
+    if (hasProperty) {
+        napi_get_named_property(env_, value, propertyName, &result);
+        napi_strict_equals(env_, result, nullptr, &isNull);
+        napi_strict_equals(env_, result, nullptr, &isUndefined);
+        if (isNull || isUndefined) {
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        return false;
+    }
 }
 
 napi_value XNapiTool::GetValueProperty(napi_value value, const char *propertyName)

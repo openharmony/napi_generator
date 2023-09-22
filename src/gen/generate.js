@@ -34,6 +34,7 @@ let moduleCppTmplete = `\
 #include <vector>
 #include <node_api.h>
 #include <any>
+#include <optional>
 #include "tool_utility.h"
 #include "[implName].h"
 
@@ -122,6 +123,7 @@ let implHTemplete = `\
 #include <cmath>
 #include <map>
 #include <any>
+#include <optional>
 [importTs]
 [numberUsing]
 [implH_detail]

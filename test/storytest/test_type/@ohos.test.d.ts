@@ -57,6 +57,23 @@ declare namespace napitest {
   function fun7(v: MyUnion): number;
   function fun8(v: MyEnumType): string;
   function fun9(v: Flower): string;
+
+  type OptionalTest = 
+  {
+    ttt: number;
+    param1?: string;
+    param2?: number;
+    param3?: boolean;
+    param4?: Array<number>;
+    param5?: string[];
+    param6: Array<boolean>;
+    param7?: Map<string, string>;
+    param8?: {[key: string]: number};
+    param9: Map<string, boolean>;
+    param10?: boolean | number | string;
+  }
+
+  function fun10(v: OptionalTest): string;
 }
 
 export default napitest;
