@@ -15,16 +15,20 @@
 declare namespace napitest {
     interface TestClass1 {
         any1: any;
+        /*  any类型的可选参数，暂不支持
         focused?: any;
         $def?: any;
         arr?: Array<any>;
         arr1?: any[];
         extraInfo?: { [key: string]: any };
         test?: (data: any, code: number) => void;
+        */
     }
 
     export class Want {
+        /*  any类型的可选参数，暂不支持
         parameters?: { [key: string]: any };
+        */
         static Prop(propName: string): any;
     }
 
