@@ -90,6 +90,32 @@ describe('Interface', function () {
         let ret = tc.fun9({name: 'asa', age: 3});
         assert.deepStrictEqual(typeof ret, 'undefined');
     });
+
+    // fun12(v: TestStatus): string;
+    // export enum TestStatus {
+    //     UNKNOWN = 0,
+    //     START_ABILITY = 1,
+    //     CALL = 2,
+    //     CONTINUATION = 3,
+    // }    
+    it('test TestClass1 fun12', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun12(test.TestStatus.CONTINUATION);
+        assert.strictEqual(ret, 0);
+    });
+
+    // fun13(v: TestEnumString): string;
+    // export enum TestEnumString {
+    //     ACTION_HOME = 'ohos.want.action.home',
+    //     ACTION_DIAL = 'ohos.want.action.dial',
+    //     ACTION_SEARCH = 'ohos.want.action.search',
+    //     ACTION_WIRELESS_SETTINGS = 'ohos.settings.wireless',
+    // }    
+    it('test TestClass1 fun13', function () {
+        let tc = new test.TestClass1();
+        let ret = tc.fun13(test.TestEnumString.ACTION_SEARCH);
+        assert.strictEqual(ret, 0);
+    });
 });
 
 

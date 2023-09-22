@@ -44,7 +44,49 @@ declare namespace napitest {
         fun6: (v: string[], v1: { [key: string]: boolean }) => string[];
         fun8: () => void;
         fun9(manA: Man): void;
+
+        //参数为enum
+        fun12(v: TestStatus): number;
+        fun13(v: TestEnumString): number;
+
+        // return value is enum type of defined later
+        // to support
+        // fun14(v: string): ReturnStatus; 
+        // fun15(v: string): ReturnEnumString;
+
         /*fun7: (v: string, v1: LaunchReason) => LaunchReason;  --待支持*/        
+    }
+
+    // 数值型枚举
+    export enum TestStatus {
+        UNKNOWN = 0,
+        START_ABILITY = 1,
+        CALL = 2,
+        CONTINUATION = 3,
+    }
+
+    // 字符型枚举
+    export enum TestEnumString {
+        ACTION_HOME = 'ohos.want.action.home',
+        ACTION_DIAL = 'ohos.want.action.dial',
+        ACTION_SEARCH = 'ohos.want.action.search',
+        ACTION_WIRELESS_SETTINGS = 'ohos.settings.wireless',
+    }
+
+    // 数值型枚举
+    export enum ReturnStatus {
+        UNKNOWN = 0,
+        START_RETURN = 1,
+        MIDDLE_RETURN = 2,
+        END_RETURN = 3,
+    }
+
+    // 字符型枚举
+    export enum ReturnEnumString {
+        RETURN_HOME = 'ohos.want.return.home',
+        RETURN_DIAL = 'ohos.want.return.dial',
+        RETURN_SEARCH = 'ohos.want.return.search',
+        RETURN_WIRELESS_SETTINGS = 'ohos.settings.return.wireless',
     }
 }
 
