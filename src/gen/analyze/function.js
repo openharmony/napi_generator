@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex, isType, typeIndex } = require("../tools/common"); // , isEnumDefinedLater 
+const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex, isType, typeIndex } = require("../tools/common"); 
 const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
 const { NapiLog } = require("../tools/NapiLog");
@@ -73,7 +73,8 @@ function getFuncParaType(v, interfaceName, data, results) {
             return null
         }
     }
-     else if (isEnum(parameter, results)) {   // interface & class中的方法参数类型是enum的情况
+    // interface & class中的方法参数类型是enum的情况
+     else if (isEnum(parameter, results)) {
         let index = enumIndex(parameter, results)
         if (results.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
           v["type"] = v["type"].replace(parameter, "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
@@ -85,9 +86,6 @@ function getFuncParaType(v, interfaceName, data, results) {
           return null
       }
     }
-    // else if (isEnumDefinedLater(parameter, data)) {
-    //     NapiLog.logInfo("hhhhhhhh");
-    // }
 
     let interfaceType = re.match("{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", v["type"])
     if (interfaceType) {
