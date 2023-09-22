@@ -79,7 +79,7 @@ describe('Interface', function () {
         assert.deepStrictEqual(typeof ret, 'undefined');
     });
 
-    //  fun9(manA: Man): Man;
+    //  fun9(manA: Man): void;
     // interface Man 
     // {
     //     name: string;

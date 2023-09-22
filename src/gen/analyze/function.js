@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex, isType, typeIndex } = require("../tools/common");
+const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex, isType, typeIndex } = require("../tools/common"); // , isEnumDefinedLater 
 const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
 const { NapiLog } = require("../tools/NapiLog");
@@ -85,6 +85,9 @@ function getFuncParaType(v, interfaceName, data, results) {
           return null
       }
     }
+    // else if (isEnumDefinedLater(parameter, data)) {
+    //     NapiLog.logInfo("hhhhhhhh");
+    // }
 
     let interfaceType = re.match("{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$", v["type"])
     if (interfaceType) {

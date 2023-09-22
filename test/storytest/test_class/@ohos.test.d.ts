@@ -51,7 +51,16 @@ declare namespace napitest {
         fun8: () => void;
         fun9(manA: Man): string;
         fun10(manA: Image): string;
-        /*fun7: (v: string, v1: LaunchReason) => LaunchReason;  --待支持*/        
+        fun11(manA: LaunchReason): string;
+        fun12(v: TestStatus): string;
+        /*fun7: (v: string, v1: LaunchReason) => LaunchReason;  --待支持*/
+    }
+
+    export enum TestStatus {
+        UNKNOWN = 0,
+        START_ABILITY = 1,
+        CALL = 2,
+        CONTINUATION = 3,
     }
 }
 
