@@ -17,7 +17,7 @@ const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
 const { FuncType, InterfaceList, getArrayType, getArrayTypeTwo, getMapType, EnumList, jsType2CType } 
     = require("../tools/common");
-const { jsToC } = require("./param_generate");
+const { jsToC, getCType } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
@@ -42,36 +42,43 @@ public:
     [static_funcs]
 };`
 
-function getHDefineOfVariable(name, type, variable) {
+function getHDefineOfVariable(name, type, variable, optional) {
     if (type.indexOf("|") >= 0) {
-        unionTypeString(name, type, variable)
-    } else if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
-    else if (InterfaceList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
-    else if (EnumList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
-    else if (type.indexOf("Array<") == 0) {
-        let arrayType = getArrayType(type)
-        if (arrayType == "any") {
-            variable.hDefine += "\n    std::string %s_type; \n    std::any %s;".format(name,name)
+        unionTypeString(name, type, variable, optional)
+    } else if (type == "string") {
+        if (optional) {
+            variable.hDefine += "\n    std::optional<std::string> %s;".format(name)
         } else {
-            let cType = jsType2CType(arrayType)
-            variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
+            variable.hDefine += "\n    std::string %s;".format(name)
         }
+    } else if (InterfaceList.getValue(type)) {
+        if (optional) {
+            variable.hDefine += "\n    std::optional<%s> %s;".format(type, name)
+        } else {
+            variable.hDefine += "\n    %s %s;".format(type, name)
+        }
+    } else if (EnumList.getValue(type)) {
+        variable.hDefine += "\n    %s %s;".format(type, name)
+    } else if (type.indexOf("Array<") == 0) {
+        typeArrFunctionOne(type, variable, name, optional);
     } else if (type == "boolean") {
-        variable.hDefine += "\n    bool %s;".format(name)
-    } else if (type.substring(type.length - 2) == "[]") {
-        let arrayType = getArrayTypeTwo(type)
-        if (arrayType == "any") {
-            variable.hDefine += "\n    std::string %s_type;\n    std::any %s;".format(name,name)
+        if (optional) {
+            variable.hDefine += "\n    std::optional<bool> %s;".format(name)
         } else {
-            let cType = jsType2CType(arrayType)
-            variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name)
+            variable.hDefine += "\n    bool %s;".format(name)
         }
-    } else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
-        variable.hDefine += mapTypeString(type, name)
+    } else if (type.substring(type.length - 2) == "[]") {
+        typeArrFunctionTwo(type, variable, name, optional);
+    } else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {  // 支持可选参数？
+        variable.hDefine += mapTypeString(type, name, optional)
     } else if (type == "any") {
         variable.hDefine += anyTypeString(type, name)
     } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
-        variable.hDefine += "\n    %s %s;".format(type, name)
+        if (optional) {
+            variable.hDefine += "\n    std::optional<%s> %s;".format(type, name)
+        } else {
+            variable.hDefine += "\n    %s %s;".format(type, name)
+        }
     } else if (type == "Object" || type == "object") {
         variable.hDefine += "\n    std::map<std::string, std::any> %s;".format(name)
     }
@@ -82,41 +89,109 @@ function getHDefineOfVariable(name, type, variable) {
     }
 }
 
+function typeArrFunctionTwo(type, variable, name, optional) {
+    let arrayType = getArrayTypeTwo(type);
+    if (arrayType == "any") {
+        variable.hDefine += "\n    std::string %s_type;\n    std::any %s;".format(name, name);
+    } else {
+        let cType = jsType2CType(arrayType);
+        if (optional) {
+            variable.hDefine += "\n    std::optional<std::vector<%s>> %s;".format(cType, name);
+        } else {
+            variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name);
+        }
+    }
+}
+
+function typeArrFunctionOne(type, variable, name, optional) {
+    let arrayType = getArrayType(type);
+    if (arrayType == "any") {
+        variable.hDefine += "\n    std::string %s_type; \n    std::any %s;".format(name, name);
+    } else {
+        let cType = jsType2CType(arrayType);
+        if (optional) {
+            variable.hDefine += "\n    std::optional<std::vector<%s>> %s;".format(cType, name);
+        } else {
+            variable.hDefine += "\n    std::vector<%s> %s;".format(cType, name);
+        }
+    }
+}
+
 function generateVariable(value, variable, className) {
     let name = value.name
     let type = value.type
+    let optional = value.optional
     if (!value.isParentMember) {
         // 只有类/接口自己的成员属性需要在.h中定义， 父类/父接口不需要
-        getHDefineOfVariable(name, type, variable)
+        getHDefineOfVariable(name, type, variable, optional)
     }
+    if (optional && type.indexOf("|") < 0) {
+        optionalParamGetSet(type, variable, name, className);
+    } else {
+        variable.middleValue += `
+        static napi_value getvalue_%s(napi_env env, napi_callback_info info)
+        {
+            XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
+            void *instPtr = pxt->UnWarpInstance();
+            %s *p = static_cast<%s *>(instPtr);
+            napi_value result = nullptr;
+            `.format(name, className, className) + cToJs("p->" + name, type, "result", 1, optional) + `
+            delete pxt;
+            return result;
+        }
+        static napi_value setvalue_%s(napi_env env, napi_callback_info info)
+        {
+            std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);
+            void *instPtr = pxt->UnWarpInstance();
+            %s *p = static_cast<%s *>(instPtr);
+            `.format(name, className, className) + jsToC("p->" + name, "pxt->GetArgv(XNapiTool::ZERO)",
+            type, 0, optional) + `
+            return nullptr;
+        }`
+    }
+}
 
+function optionalParamGetSet(type, variable, name, className) {
+    let optType = getCType(type);
     variable.middleValue += `
-    static napi_value getvalue_%s(napi_env env, napi_callback_info info)
-    {
-        XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
-        void *instPtr = pxt->UnWarpInstance();
-        %s *p = static_cast<%s *>(instPtr);
-        napi_value result = nullptr;
-        `.format(name, className, className) + cToJs("p->" + name, type, "result") + `
-        delete pxt;
-        return result;
+        static napi_value getvalue_%s(napi_env env, napi_callback_info info)
+        {
+            XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
+            void *instPtr = pxt->UnWarpInstance();
+            %s *p = static_cast<%s *>(instPtr);
+            napi_value result = nullptr;
+            if(p->%s.has_value()) {
+                `.format(name, className, className, name) + cToJs("p->%s.value()".format(name), type, "result") + `
+            }
+            delete pxt;
+            return result;
+        }
+        static napi_value setvalue_%s(napi_env env, napi_callback_info info)
+        {
+            std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);
+            void *instPtr = pxt->UnWarpInstance();
+            %s *p = static_cast<%s *>(instPtr);
+            if (pxt->GetProperty(pxt->GetArgv(XNapiTool::ZERO), "%s")) {
+                %s %s_tmp;
+                `.format(name, className, className, name, optType, name) +
+                jsToC("%s_tmp".format(name), "pxt->GetArgv(XNapiTool::ZERO)", type) + `
+                p->%s.emplace(%s_tmp);`.format(name, name) + `
+            }
+            return nullptr;
+        }`;
+}
+
+function unionTypeString(name, type, variable, optional) {
+    if (optional) {
+        variable.hDefine += `\n    std::optional<std::string> %s_type;
+        std::optional<std::any> %s;`.format(name, name)
+    } else {
+        variable.hDefine += `\n    std::string %s_type;
+        std::any %s;`.format(name, name)
     }
-    static napi_value setvalue_%s(napi_env env, napi_callback_info info)
-    {
-        std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);
-        void *instPtr = pxt->UnWarpInstance();
-        %s *p = static_cast<%s *>(instPtr);
-        `.format(name, className, className) + jsToC("p->" + name, "pxt->GetArgv(XNapiTool::ZERO)", type) + `
-        return nullptr;
-    }`
 }
 
-function unionTypeString(name, type, variable) {
-    variable.hDefine += `std::string %s_type;\n
-    std::any %s;`.format(name, name)
-}
-
-function mapTypeString(type, name) {
+function mapTypeString(type, name, optional) {
     let mapType = getMapType(type)
     let mapTypeString
     if (mapType[1] != undefined && mapType[2] == undefined) {
@@ -146,13 +221,16 @@ function mapTypeString(type, name) {
             mapTypeString = "std::string, std::vector<%s>".format(mapType[3])
         }
     }
-    return "\n    std::map<%s> %s;".format(mapTypeString, name);
+    if (optional) {
+        return "\n    std::optional<std::map<%s>> %s;".format(mapTypeString, name);
+    } else {
+        return "\n    std::map<%s> %s;".format(mapTypeString, name);
+    }
 }
 
 function anyTypeString (type, name) {
     let anyType = `\n    std::string %s_type;
     std::any %s;`
-
     return anyType.format(name, name)
 }
 
