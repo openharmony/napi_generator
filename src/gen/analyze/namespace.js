@@ -20,7 +20,7 @@ const { analyzeClass } = require("./class");
 const { analyzeEnum } = require("./enum");
 const { NapiLog } = require("../tools/NapiLog");
 const { analyzeType, analyzeType2, analyzeType2Result } = require("./type");
-const { NumberIncrease } = require("../tools/common");
+const { NumberIncrease, EnumValueType } = require("../tools/common");
 
 function preProcessData(data) {
     data = data.indexOf("//") < 0 ? data : parseNotes(data);   
@@ -51,6 +51,9 @@ function analyzeNamespace(data) {
         if (parseEnumResult != null) {
             data = parseEnumResult
         }
+
+        result = parseEnumType(result);
+
         let parseInterResult = parseInterface(matchs, data, result)
         if (parseInterResult != null) {
             data = parseInterResult
@@ -76,6 +79,57 @@ function analyzeNamespace(data) {
             NapiLog.logError("解析Namespace失败");
             NapiLog.logError("[", data.substring(0, data.length > 128 ? 128 : data.length), "]");
             break;
+        }
+    }
+    return result
+}
+
+function parseEnumType(result) {
+    if (null === result) {
+        return null;
+    }
+
+    for (let i in result.enum) {
+        let enumm = result.enum[i]
+
+        // interface 匹配           
+        for (let i in result.interface) {
+          let interf = result.interface[i]
+          if(!isValidValue(interf)) {
+            NapiLog.logError("parseEnumType func.value is null!");
+            return null;
+          }
+
+          // function 匹配
+          for (let j in interf.body.function) {
+            let func = interf.body.function[j];
+            if(!isValidValue(func)) {
+                NapiLog.logError("parseEnumType func.value is null!");
+                return null;
+            }
+            
+            // 参数匹配
+            for (let k in func.value) {
+                let v = func.value[k];
+                if(!isValidValue(v)) {
+                    NapiLog.logError("parseEnumType func.value is null!");
+                    return null;
+                }
+
+                if (v.type ===  enumm.name) {
+                    if (enumm.body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+                        v.type = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease();
+                    } else if (enumm.body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+                        v.type = "string";
+                    } else {
+                        NapiLog.logError("parseEnumType for interface function value is not support this type %s"
+                            .format(enumm.body.enumValueType));
+                        return null;
+                    }
+                    result.interface[i].body.function[j].value[k].type = v.type;                    
+                }                
+            }
+          }          
         }
     }
     return result
