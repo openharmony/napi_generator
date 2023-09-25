@@ -54,8 +54,31 @@ declare namespace napitest {
     function fun6(v0: string, callback: AsyncCallback<GrantStatus>): void;
     function fun6(v0: string): Promise<GrantStatus>;
     function fun8(v0: string): Promise<PlayingTest>;
-    function fun9(v0: PlayingTest): string;    
+    function fun9(v0: PlayingTest): string;
+    function fun10(v: TestStatus): string;    
+    function fun11(v: EnumString): string;
+
+    //function fun10(v: TestStatus): string;
     /*function fun7(v0: LaunchReason[], v1: LaunchReason): number;*/
+
+    // 数值型枚举
+    export enum TestStatus
+    {
+        STATE_TEST_PERIOD_ONE,
+        STATE_TEST_PERIOD_TWO,
+        STATE_TEST_PERIOD_THREE,
+        STATE_TEST_PERIOD_FOUR,
+        STATE_TEST_PERIOD_FIVE,
+        STATE_TEST_PERIOD_SIX,
+    }
+
+    // 字符型枚举
+    export enum EnumString {
+        ENUM_HOME = 'ohos.want.enum.home',
+        ENUM_DIAL = 'ohos.want.enum.dial',
+        ENUM_SEARCH = 'ohos.want.enum.search',
+        ENUM_WIRELESS_SETTINGS = 'ohos.settings.enum.wireless',
+    }
 }
 
 export default napitest;
