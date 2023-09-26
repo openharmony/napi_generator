@@ -96,6 +96,20 @@ declare namespace napitest {
         RETURN_SEARCH = 'ohos.want.return.search',
         RETURN_WIRELESS_SETTINGS = 'ohos.settings.return.wireless',
     }
+
+    export class TestClass2 {
+        // 函数多参数非嵌套场景
+        func1(name : string, fp3: {nm: string, age: number, flag: boolean}): string;
+
+        // 函数返回值场景
+        func2(input: string): { read: number; written: number; flag: boolean };
+
+        // Promise返回值逗号场景
+        func3(from: string, to: string): Promise<{result: number, errMsg: string, isT: boolean}>;
+
+        // Promise返回值分号场景
+        func4(from: string, to: string): Promise<{result: number; errMsg: string; isT: boolean}>;
+    }
 }
 
 export default napitest;

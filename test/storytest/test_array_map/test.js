@@ -15,14 +15,6 @@
 const { fun1, fun2, fun3, fun8, fun9, fun10} = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-function fun1(v: Array<{[key: string]:string}>): number;
-function fun2(v: Array<{[key: string]:number}>): number;
-function fun3(v: Array<{[key: string]:boolean}>): number;
-
-function fun8(v: Array<Map<string, string>>): number;
-function fun9(v: Array<Map<string, number>>): number;
-function fun10(v: Array<Map<string, boolean>>): number; 
-
 describe('array_map', function () {
     
     // function fun1(v: Array<{[key: string]:string}>): number;
