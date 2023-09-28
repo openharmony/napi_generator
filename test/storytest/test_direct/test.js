@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { TestClass1 } = require("./out/build/Release/napitest")
+const { TestClass1, func1 } = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('Number', function () {
@@ -34,6 +34,12 @@ describe('Number', function () {
         let retJson = JSON.stringify(ret);
         assert.strictEqual(retJson, '{"code":0,"data":""}');
     });
+});
 
+describe('Direct', function () {
+  // function func1(v1: string, v2: number, v3: boolean);
+  it('test func1', function () {
+      func1('aaa', 10, true);
+  });
 });
 
