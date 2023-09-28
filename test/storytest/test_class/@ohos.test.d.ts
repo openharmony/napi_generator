@@ -109,6 +109,9 @@ declare namespace napitest {
 
         // Promise返回值分号场景
         func4(from: string, to: string): Promise<{result: number; errMsg: string; isT: boolean}>;
+
+        // class成员方法隐式推导返回值
+        func5(v1: string, v2: number, v3: boolean);
     }
 }
 
