@@ -156,4 +156,10 @@ describe('TestClass2', function () {
         let ret = tc.func4("responeFrom", "responseTo");
         //assert.strictEqual(ret.read, 0);
     });
+
+    // func5(v1: string, v2: number, v3: boolean);
+    it('test TestClass2 func5', function () {
+      let tc = new TestClass2()
+      tc.func5("func5", 5, false);
+    });
 });
