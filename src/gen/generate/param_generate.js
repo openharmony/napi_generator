@@ -115,7 +115,10 @@ function interfaceTempleteFunc(type, napiVn, dest) {
         let name2 = ifl[i].name;
         let type2 = ifl[i].type;
         let optional2 = ifl[i].optional;
-        if (optional2 && type2.indexOf("|") < 0) {
+        if (name2 === undefined || type2 === undefined) {
+            NapiLog.logError(`interfaceTempleteFunc: name2 or type2 is undefined!`);
+            return tt;
+        } else if (optional2 && type2.indexOf("|") < 0) {
             let optType2 = getCType(type2);
             tt += `    if (pxt->GetProperty(%s, "%s")) {\n `.format(napiVn, name2);
             tt += `        %s %s_tmp;\n`.format(optType2, name2);

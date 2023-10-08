@@ -260,7 +260,9 @@ public:%s
 };\n`.format(name, extendsStr, implH),
         implCpp: implCpp,
         middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc),
-        middleInit: middleInit
+        middleInit: middleInit,
+        declarationH: `
+class %s;\r`.format(name),
     }
     return result
 }

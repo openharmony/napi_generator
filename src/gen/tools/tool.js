@@ -137,6 +137,9 @@ function removeEmptyLine(data) {
     while (data.indexOf("\r") >= 0) {
         data = data.replace("\r", "")
     }
+    while (data.indexOf("\t") >= 0) {
+        data = data.replace("\t", "")
+    }
     while (data.indexOf(" \n") >= 0) {
         data = data.replace(" \n", "\n")
     }

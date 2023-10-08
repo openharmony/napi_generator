@@ -24,8 +24,10 @@ function analyzeParams(funcName, values) {
     let optionalParamCount = 0; // 可选参数的个数
     while (values.length > 0) {
         let v = checkOutBody(values, 0, ["", ","])
-        if (v == null)
+        if (v == null) {
             v = values
+        }
+            
         values = values.substring(v.length, values.length)
         let matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *([a-zA-Z<,>|_0-9\\[\\]\\(\\):='{}]+)", v)
         if (matchs == null && (funcName == "on" || funcName == "off")) {
