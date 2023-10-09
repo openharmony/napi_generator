@@ -73,12 +73,14 @@ InterfaceList.pop = function () {
 InterfaceList.getValue = function (name) {
     let ifs = InterfaceList.interfacess_[InterfaceList.interfacess_.length - 1]
     for (let i in ifs) {
+        let vv = ifs[i];
         if (ifs[i].name == name) {
             var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, "allProperties")
             if (hasProperty) {
                 return ifs[i].body.allProperties.values;
+            } else {
+                return ifs[i].body.value;
             }
-            return null;
         }
     }
     return null;
@@ -102,7 +104,6 @@ TypeList.getValue = function (name) {
             } else {
                 return ifs[i].body;
             }
-            return null;
         }
     }
     return null;
