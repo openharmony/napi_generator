@@ -65,6 +65,22 @@ declare namespace napitest {
         /*fun7: (v: string, v1: LaunchReason) => LaunchReason;  --待支持*/
     }
 
+    // class 定义在使用之后 begin
+    function func4(v: TestClassLater): string;
+
+    export class TestClassUse {
+        v0: string;
+        // v1: testClassLater;
+        funceUse(n0: TestClassLater): string;
+    }
+
+    export class TestClassLater {
+        v0: string;
+        v1: number;
+        funcLater(n0: number): string;
+    }
+    // class 定义在使用之后 end
+
     // 数值型枚举
     export enum TestStatus {
         UNKNOWN = 0,

@@ -13,6 +13,7 @@
 * limitations under the License. 
 */
 const { analyzeFile } = require("./analyze");
+const { analyzeFileRaw } = require("./analyzeRaw");
 const { generateAll } = require("./generate");
 const { NapiLog } = require("./tools/NapiLog");
 const re = require("./tools/re");
@@ -21,6 +22,7 @@ var fs = require('fs');
 function doGenerate(ifname, destdir, imports,numberType) {
     // step1: analyze file
     let structOfTs = analyzeFile(ifname);
+    // to repace analyzeFile bythe below: let structOfTsRaw = analyzeFileRaw(ifname);
     let fn = re.getFileInPath(ifname);
     let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
     if (structOfTs === undefined || structOfTs.declareNamespace.length == 0 || 

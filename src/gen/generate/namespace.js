@@ -97,7 +97,7 @@ function genExtendsRelation(data) {
 
 //生成module_middle.cpp、module.h、module.cpp
 function generateNamespace(name, data, inNamespace = "") {
-    let namespaceResult = { implH: "", implCpp: "", middleFunc: "", middleInit: "" }
+    let namespaceResult = { implH: "", implCpp: "", middleFunc: "", middleInit: "", declarationH: "" }
     namespaceResult.middleInit += formatMiddleInit(inNamespace, name)
     genExtendsRelation(data)
     InterfaceList.push(data.interface)
@@ -118,7 +118,8 @@ function generateNamespace(name, data, inNamespace = "") {
         let ii = data.class[i]
         let result = generateClass(ii.name, ii.body, inNamespace + name + "::", ii.functiontType)
         namespaceResult = getNamespaceResult(result, namespaceResult)
-    }    
+    }
+    namespaceResult.implH = namespaceResult.declarationH + namespaceResult.implH 
     for (let i in data.function) {
         let func = data.function[i]
         let tmp = generateFunction(func, data)
@@ -155,6 +156,8 @@ function getNamespaceResult(subResult, returnResult) {
     returnResult.implH += subResult.implH
     returnResult.implCpp += subResult.implCpp
     returnResult.middleInit += subResult.middleInit
+    returnResult.declarationH += subResult.declarationH
+
     return returnResult
 }
 
