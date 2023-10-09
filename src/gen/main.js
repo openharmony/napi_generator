@@ -22,7 +22,7 @@ var fs = require('fs');
 function doGenerate(ifname, destdir, imports,numberType) {
     // step1: analyze file
     let structOfTs = analyzeFile(ifname);
-    // let structOfTsRaw = analyzeFileRaw(ifname);
+    // to repace analyzeFile bythe below: let structOfTsRaw = analyzeFileRaw(ifname);
     let fn = re.getFileInPath(ifname);
     let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
     if (structOfTs === undefined || structOfTs.declareNamespace.length == 0 || 

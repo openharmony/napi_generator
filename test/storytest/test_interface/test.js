@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const { TestClass1, func1, func2, func3 } = require("./out/build/Release/napitest")
-const { testInterfaceUse, testInterfaceLater} = require("./out/build/Release/napitest")
+const { TestInterfaceUse, TestInterfaceLater} = require("./out/build/Release/napitest")
 
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
@@ -199,9 +199,9 @@ describe('Interface Optional Param func2', function () {
     //     // funceUse(n0: number): string;
     //     funceUse(n0: testInterfaceLater): string;
     // }
-    it('test testInterfaceUse funceUse', function () {
-        let testLater = new testInterfaceLater();
-        let tUse = new testInterfaceUse();
+    it('test TestInterfaceUse funceUse', function () {
+        let testLater = new TestInterfaceLater();
+        let tUse = new TestInterfaceUse();
         let ret = tUse.funceUse(testLater);
         assert.strictEqual(ret, "");
     });
