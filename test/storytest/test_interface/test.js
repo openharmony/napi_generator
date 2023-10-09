@@ -120,6 +120,14 @@ describe('Interface', function () {
     });
 });
 
+describe('Interface', function () {
+    // fun16(v1: number, v2: string, v3: boolean);
+    it('test TestClass1 fun16', function () {
+        let tc = new TestClass1()
+        tc.fun16(5, "fun16",false);
+    });
+});
+
 describe('Interface Optional Param func1', function () {
     it('test Function func1 test1', function () {
         let ret = func1({aa: 'aa', bb: false, cc: 7, dd: 'dd', ee: 27}, 17);

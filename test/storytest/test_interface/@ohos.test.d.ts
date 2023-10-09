@@ -48,6 +48,7 @@ declare namespace napitest {
         //参数为enum
         fun12(v: TestStatus): number;
         fun13(v: TestEnumString): number;
+        fun16(v1: number, v2: string, v3: boolean);
 
         // return value is enum type of defined later
         // to support

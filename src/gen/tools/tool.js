@@ -102,16 +102,38 @@ function checkOutBody(body, off, flag, binside) {
             }
         }
     }
-
     return null;
 }
 
 function removeExplains(data) {
+    // 去除 /** */ 类型的注释
     while (data.indexOf("/*") >= 0) {
         let i1 = data.indexOf("/*")
         let i2 = data.indexOf("*/") + 2
         data = data.substring(0, i1) + data.substring(i2, data.length)
     }
+
+    // 去除 namespace 域外 // 类型的注释
+    while (data.indexOf("//") >= 0) {
+        let i1 = data.indexOf("//")
+        let i2 = data.indexOf("\r\n")
+        let end = data.indexOf("declare namespace ")
+        while (i2 < end && i1 < end) {
+            while (i1 > i2) {
+                data =  data.substring(0, i2) + data.substring(i2 + 2, data.length)
+                i2 = data.indexOf("\r\n")
+                i1 = data.indexOf("//")
+            } 
+            data = data.substring(0, i1) + data.substring(i2 + 2, data.length)
+            i1 = data.indexOf("//")
+            i2 = data.indexOf("\r\n")
+           end = data.indexOf("declare namespace ")
+        }
+        if (i2 > end || i1 > end) {
+            break;
+        }
+    }
+
     while (true) {
         let tt = re.search("\n *//([a-zA-Z .]+)\n", data)
         if (tt != null) {
@@ -127,8 +149,10 @@ function getLicense(data) {
         let i1 = data.indexOf("/*")
         let i2 = data.indexOf("*/") + 2
         let licenseData = data.substring(i1, i2)
-        if (licenseData.search("Copyright")) {
+        if (licenseData.search("Copyright") != -1) {
             return licenseData
+        } else {
+            return null
         }
     }
 }
