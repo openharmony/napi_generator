@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { TestClass1, TestClassUse, TestClassLater } = require("./out/build/Release/napitest")
+const { TestClass1, TestClass2, testClassUse, testClassLater } = require("./out/build/Release/napitest")
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 const { consumers } = require("stream");
@@ -144,6 +144,38 @@ describe('Class part2', function () {
     // }
 });
 
+describe('TestClass2', function () {    
+    // func1(name : string, fp3: {nm: string, age: number}): string;
+    it('test TestClass2 func1', function () {
+        let tc = new TestClass2()
+        let ret = tc.func1("func1p1", {nm:"aaa",age:18,flag:false});
+        //assert.strictEqual(ret.read, 0);
+    });
 
+    // func2(input: string): { read: number; written: number; flag: boolean };
+    it('test TestClass2 func2', function () {
+        let tc = new TestClass2()
+        let ret = tc.func2("name");
+        //assert.strictEqual(ret.read, 0);
+    });
 
+    // func3(from: string, to: string): Promise<{result: number, errMsg: string, isT: boolean}>;
+    it('test TestClass2 func3', function () {
+        let tc = new TestClass2()
+        let ret = tc.func3("from", "to");
+        //assert.strictEqual(ret.read, 0);
+    });
 
+    // func4(from: string, to: string): Promise<{result: number; errMsg: string; isT: boolean}>;
+    it('test TestClass2 func4', function () {
+        let tc = new TestClass2()
+        let ret = tc.func4("responeFrom", "responseTo");
+        //assert.strictEqual(ret.read, 0);
+    });
+
+    // func5(v1: string, v2: number, v3: boolean);
+    it('test TestClass2 func5', function () {
+      let tc = new TestClass2()
+      tc.func5("func5", 5, false);
+    });
+});
