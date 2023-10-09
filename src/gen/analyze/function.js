@@ -106,11 +106,11 @@ function getFuncParaType(v, interfaceName, data, results) {
     return v
 }
 
-function analyzeFuncNoNameInterface(data, values) {
+function analyzeFuncNoNameInterface(data, values, results) {
     values = re.replaceAll(re.replaceAll(values, " ", ""), "\n", "")    
     let interfaceName = ""    
-    let matchNoName = "([:{,;a-zA-Z_0-9]*)\\?*(:[A-Za-z0-9_,;]*)?:{([A-Za-z0-9_]+:"+
-    "[A-Za-z0-9_,;]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}(}|,|;)?$"
+    let matchNoName = "([:{,;a-zA-Z_0-9]*)\\?*(:[A-Za-z0-9_,;]*)?:{(([A-Za-z0-9_]+:"+
+    "[A-Za-z0-9_,;]+)*)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}(}|,|;)?$"
     let matchs = re.match(matchNoName, values)
     if (matchs) {
         let st = values.lastIndexOf("{")        
@@ -121,10 +121,17 @@ function analyzeFuncNoNameInterface(data, values) {
         let typeInterface = "{%s}".format(interfaceBody)
         values = re.replaceAll(values, typeInterface, interfaceName)
         interfaceBody = re.replaceAll(interfaceBody, ",", ";")
-        data.interface.push({
-            name: interfaceName,
-            body: analyzeSubInterface(interfaceBody)
-        })
+        if (Object.prototype.hasOwnProperty.call(data, "interface")) {
+            data.interface.push({
+                name: interfaceName,
+                body: analyzeSubInterface(interfaceBody)
+            })
+        } else if (Object.prototype.hasOwnProperty.call(results, "interface")) {
+            results.interface.push({
+                name: interfaceName,
+                body: analyzeSubInterface(interfaceBody)
+            })
+        } 
     }
 
     matchs = re.match(matchNoName, values)    
@@ -140,20 +147,23 @@ function analyzeFuncNoNameInterface(data, values) {
     return result
 }
 
-function analyseSubReturn(ret, data) {
+function analyseSubReturn(ret, data, results) {
     // 匿名interface返回值 function fun4(input: string): { read: number; written: number }; 
-    ret = re.replaceAll(re.replaceAll(ret, " ", ""), "\n", "")
-    let tt = re.match("{(([A-Za-z0-9_]+:[A-Za-z0-9_,]+;)*)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}", ret)
+    let tt = null
+    if (ret.indexOf(":") > 0) {
+        ret = re.replaceAll(re.replaceAll(ret, " ", ""), "\n", "")
+        ret = re.replaceAll(ret, ",", ";")
+        ret = ret.substring(1, ret.length - 1)
+        tt = ret.split(";")
+    }
     if (tt) {
-        let len = tt.regs.length
-        let res = ""
-        let interfaceName = ""
-        for (let i=1; i<len; i++) {
-            let regs1 = re.getReg(ret, tt.regs[i])
-            if (regs1 != "}" && regs1 != ",") {
-                res += regs1
-            }         
-        }  
+         let len = tt.length
+         let res = ""
+         let interfaceName = ""
+         for (let i=0; i<len; i++) {
+             let regs1 = tt[i] + ";"
+             res += regs1       
+         }  
 
         let number = NumberIncrease.getAndIncrease();
         interfaceName = "AUTO_INTERFACE_%s".format(number)
@@ -161,10 +171,17 @@ function analyseSubReturn(ret, data) {
         ret = interfaceName
 
         interfaceBody = re.replaceAll(interfaceBody, ",", ";")
-        data.interface.push({
-            name: interfaceName,
-            body: analyzeSubInterface(interfaceBody)
-        })
+        if (Object.prototype.hasOwnProperty.call(data, "interface")) {
+            data.interface.push({
+                name: interfaceName,
+                body: analyzeSubInterface(interfaceBody)
+            })
+        } else if (Object.prototype.hasOwnProperty.call(results,"interface")) {
+            results.interface.push({
+                name: interfaceName,
+                body: analyzeSubInterface(interfaceBody)
+            })
+        }
     }
     if (ret.indexOf("number") >= 0) {
         ret = ret.replaceAll("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
@@ -174,7 +191,7 @@ function analyseSubReturn(ret, data) {
 
 /**函数解析 */
 function analyzeFunction(data, isStatic, name, values, ret, results) {
-    let res = analyzeFuncNoNameInterface(data, values)
+    let res = analyzeFuncNoNameInterface(data, values, results)
     let tmp
     let funcType
     if (res) {
@@ -188,7 +205,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results) {
     if (tmp[1]) { // 返回类型为 Promise, 解析成等价的AsyncCallback方法
         funcType = FuncType.ASYNC
         // 返回值是Promise的匿名interface
-        let paramTypeVal = analyseSubReturn(ret.substring(8, ret.length - 1), data);
+        let paramTypeVal = analyseSubReturn(ret.substring(8, ret.length - 1), data, results);
         // 将返回值Promise<type>改为AsyncCallback<type>，作为方法的入参
         let paramType = ret.replace("Promise", "AsyncCallback")
         if (paramTypeVal) {
@@ -206,7 +223,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results) {
             NapiLog.logError("analyzeFunction is not support this type %s".format(v));
         }
     }
-    ret = analyseSubReturn(ret, data)
+    ret = analyseSubReturn(ret, data, results)
     let result = {
         name: name,
         type: funcType,

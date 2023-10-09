@@ -25,6 +25,8 @@ declare namespace napitest {
         fun1(v: number): number;
         fun2(v: string): Result;
     }
+
+    function func1(v1: string, v2: number, v3: boolean);
 }
 
 export default napitest;

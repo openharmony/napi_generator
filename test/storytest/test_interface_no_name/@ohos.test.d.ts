@@ -29,6 +29,20 @@ declare namespace napitest {
         left: { test1: string, test2: string };      
     } 
 
+    interface TestInterfaceBB{
+        // 函数多参数非嵌套场景
+        func1(name : string, fp3: {nm: string, age: number, flag: boolean}): string;
+
+        // 函数返回值场景
+        func2(input: string): { read: number; written: number; flag: boolean };
+
+        // Promise返回值逗号场景
+        func3(from: string, to: string): Promise<{result: number, errMsg: string, isT: boolean}>;
+
+        // Promise返回值分号场景
+        func4(from: string, to: string): Promise<{result: number; errMsg: string; isT: boolean}>;
+    }
+
     function fun2(fp2: TestInterface): string;
     
     // 函数多参数非嵌套场景   
@@ -46,8 +60,11 @@ declare namespace napitest {
     // 暂不支持 分号场景
     function fun7(nm: string, value: {xOffset: number; animation: { duration: number; curve: string}});
     
-    // Promise匿名interface返回值场景
+    // Promise匿名interface返回值场景， 分号场景
     function fun8(from: string): Promise<{result: number; errMsg: string; isT: boolean}>;
+
+    // Promise匿名interface返回值场景, 逗号场景
+    function fun9(from: string): Promise<{result: number, errMsg: string, isT: boolean}>;
 }
 
 export default napitest;
