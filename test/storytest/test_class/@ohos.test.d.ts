@@ -66,15 +66,15 @@ declare namespace napitest {
     }
 
     // class 定义在使用之后 begin
-    function func4(v: testClassLater): string;
+    function func4(v: TestClassLater): string;
 
-    export class testClassUse {
+    export class TestClassUse {
         v0: string;
         // v1: testClassLater;
-        funceUse(n0: testClassLater): string;
+        funceUse(n0: TestClassLater): string;
     }
 
-    export class testClassLater {
+    export class TestClassLater {
         v0: string;
         v1: number;
         funcLater(n0: number): string;
