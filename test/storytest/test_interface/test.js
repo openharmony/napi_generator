@@ -13,6 +13,8 @@
 * limitations under the License. 
 */
 const { TestClass1, func1, func2, func3 } = require("./out/build/Release/napitest")
+const { testInterfaceUse, testInterfaceLater} = require("./out/build/Release/napitest")
+
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 const { consumers } = require("stream");
@@ -188,5 +190,19 @@ describe('Interface Optional Param func2', function () {
         });
         let retJson = JSON.stringify(ret);
         assert.strictEqual(retJson, '""');
+    });
+
+    // fun1(v: number): number;
+    // interface testInterfaceUse {
+    //     v0: string;
+    //     //v1: testInterfaceLater;
+    //     // funceUse(n0: number): string;
+    //     funceUse(n0: testInterfaceLater): string;
+    // }
+    it('test testInterfaceUse funceUse', function () {
+        let testLater = new testInterfaceLater();
+        let tUse = new testInterfaceUse();
+        let ret = tUse.funceUse(testLater);
+        assert.strictEqual(ret, "");
     });
 });

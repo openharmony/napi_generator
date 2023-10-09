@@ -104,7 +104,9 @@ public:%s
 };`.format(name, implH),
         implCpp: implCpp,
         middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc),
-        middleInit: middleInit
+        middleInit: middleInit,
+        declarationH: `
+class %s;\r`.format(name),    
     }
     return result
 }

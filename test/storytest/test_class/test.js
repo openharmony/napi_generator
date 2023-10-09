@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { TestClass1 } = require("./out/build/Release/napitest")
+const { TestClass1, testClassUse, testClassLater } = require("./out/build/Release/napitest")
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 const { consumers } = require("stream");
@@ -125,6 +125,19 @@ describe('Class part2', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun13(test.TestEnumString.ACTION_DIAL);
         assert.strictEqual(ret, '');
+    });
+
+    // interface testClassUse {
+    //     v0: string;
+    //     //v1: testClassLater;
+    //     // funceUse(n0: number): string;
+    //     funceUse(n0: testClassLater): string;
+    // }
+    it('test testClassUse funceUse', function () {
+        let testLater = new testClassLater();
+        let tUse = new testClassUse();
+        let ret = tUse.funceUse(testLater);
+        assert.strictEqual(ret, "");
     });
 });
 

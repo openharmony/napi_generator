@@ -133,15 +133,14 @@ declare namespace napitest {
 
     interface testInterfaceUse {
         v0: string;
-        //v1: testInterfaceLater;
-        // funceUse(n0: number): string;
+        // v1: testInterfaceLater;
         funceUse(n0: testInterfaceLater): string;
     }
 
     interface testInterfaceLater {
         v0: string;
-        // v1: number;
-        // funcLater(n0: number): string;
+        v1: number;
+        funcLater(n0: number): string;
     }
     // interface定义在使用之后 end
 }
