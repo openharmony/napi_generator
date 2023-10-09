@@ -204,7 +204,11 @@ function jsToCEnum(type, dest, napiVn) {
     let ifl = EnumList.getValue(type)
     for (let i in ifl) {
         let type2 = ifl[i].type
-        tt += jsToC("%s".format(dest), getValueProperty(napiVn, dest), type2, type)
+        if (dest.indexOf("p->") < 0) {
+            tt += jsToC("%s".format(dest), napiVn, type2, type)
+        } else {
+            tt += jsToC("%s".format(dest), getValueProperty(napiVn, dest), type2, type)
+        }
     }
     return tt
 }
