@@ -54,17 +54,21 @@ function parseNotes(data) {
 function analyzeInterface(data, rsltInterface = null, results) { // same as class
     let body = data
     body = body.indexOf("//") < 0 ? body : parseNotes(body)
-    body = re.replaceAll(body, "\n", "").split(";")
+    let arr  =  [...body.matchAll(/;\s*\n+/g)]
+    for (let i = 0; i < arr.length; i++) {
+        let result = arr[i]
+        body = re.replaceAll(body, result[0], ";\n")
+    }
+    body = body.split(";\n")
     let result = {
         value: [],
         function: []
     }
     for (let i in body) {
         let t = body[i]
-        while (t.length > 0 && t[0] == ' ') // 去除前面的空格
-            t = t.substring(1, t.length)
-        while (t.length > 0 && t[-1] == ' ') // 去除后面的空格
-            t = t.substring(0, t.length - 1)
+        t = re.replaceAll(t, "\n", "")
+        while (t.length > 0 && t[0] == ' ') t = t.substring(1, t.length) // 去除前面的空格
+        while (t.length > 0 && t[-1] == ' ') t = t.substring(0, t.length - 1) // 去除后面的空格   
         if (t == "") break // 如果t为空直接返回
         let tt = re.match(" *([a-zA-Z0-9_]+)(\\?*)*: *([a-zA-Z_0-9<>,:{}[\\]| ]+)", t)
         if (tt && t.indexOf("=>") < 0) { // 接口成员变量, 但不包括带'=>'的成员，带'=>'的接口成员需要按函数处理
@@ -84,10 +88,11 @@ function analyzeInterface(data, rsltInterface = null, results) { // same as clas
             })
         }
         tt = re.match("(static )* *(\\$*[A-Za-z0-9_]+) *[:]? *\\(([\n 'a-zA-Z:;=,_0-9?<>{}|[\\]]*)\\)"
-            + " *(:|=>) *([A-Za-z0-9_<>{}:, .[\\]]+)", t)
+            + " *(:|=>)? *([A-Za-z0-9_<>{}:;, .[\\]]+)?", t)
         if (tt) { // 接口函数成员
+            let ret = re.getReg(t, tt.regs[5]) == ''? 'void': re.getReg(t, tt.regs[5])
             let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) != '', re.getReg(t, tt.regs[2]),
-                re.getReg(t, tt.regs[3]), re.getReg(t, tt.regs[5]), results)
+                re.getReg(t, tt.regs[3]), ret, results)
             if (funcDetail != null) {
                 // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
                 addUniqFunc2List(funcDetail, result.function)
