@@ -65,7 +65,8 @@ function cToJsForType(value, type, dest, deep) {
 
 function cToJsForInterface(value, type, dest, deep) {
     let lt = deep
-    let result = ""
+    let result = "";
+    // let result = "napi_value napiRet = nullptr;\n"
     let ifl = InterfaceList.getValue(type)
     for (let i in ifl) {
         let name2 = ifl[i].name
@@ -84,6 +85,7 @@ function cToJsForInterface(value, type, dest, deep) {
             // interface include enum properties
             result += interfaceType 
         } else {
+            //dest = 'napiRet';
             result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
             interfaceType + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
                 .format(dest, name2, lt)
@@ -484,6 +486,11 @@ function isObjectType(type) {
 
 function returnGenerate(returnInfo, param, data) {
     let type = returnInfo.type
+    if (type === undefined) {
+        NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
+        return;
+    }
+
     let valueFillStr = getReturnFill(returnInfo, param)
     param.valueFill += ("%s" + valueFillStr).format(param.valueFill.length > 0 ? ", " : "")
     let outParam = returnInfo.optional ? "(*vio->out)" : "vio->out"

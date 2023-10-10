@@ -57,8 +57,9 @@ void AsyncCallback(const std::string &eventName, [callback_param_type] &ret)
 	AsyncFunc *pAsyncFuncs = &XNapiTool::asyncFuncs_[eventName];
 	napi_value exports = nullptr;
 	XNapiTool *pxt = std::make_unique<XNapiTool>(pAsyncFuncs->env_, exports).release();
+    napi_value result = nullptr;
     [native_return]
-	XNapiTool::CallAsyncFunc(pAsyncFuncs, napiRet);
+	XNapiTool::CallAsyncFunc(pAsyncFuncs, result);
 	delete pxt;
 }
 `
@@ -135,12 +136,12 @@ return true;
 }
 
 function gennerateEventCallback(codeContext, data, param) {
-    returnGenerate(param.callback, param)
+    returnGenerate(param.callback, param, data)
     let paramType = param.valueOut.substring(0, param.valueOut.length - "out;".length)
     let realParamType = paramType.substring(0, 12) == "NUMBER_TYPE_" ? "uint32_t" : paramType
     if (!isOnTypeExist(data.onTypeList, realParamType)) {
         // 为每种callback参数类型的on方法生成一个统一回调方法
-        let nativeReturn = cToJs("ret", param.callback.type, "napi_value napiRet")
+        let nativeReturn = cToJs("ret", param.callback.type, "result")
         let callbackFunc = replaceAll(middleAsyncCallbackTemplate, "[callback_param_type]", realParamType)
         callbackFunc = replaceAll(callbackFunc, "[native_return]", nativeReturn)
         codeContext.middleFunc += callbackFunc
