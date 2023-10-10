@@ -65,6 +65,22 @@ declare namespace napitest {
         /*fun7: (v: string, v1: LaunchReason) => LaunchReason;  --待支持*/
     }
 
+    // class 定义在使用之后 begin
+    function func4(v: TestClassLater): string;
+
+    export class TestClassUse {
+        v0: string;
+        // v1: testClassLater;
+        funceUse(n0: TestClassLater): string;
+    }
+
+    export class TestClassLater {
+        v0: string;
+        v1: number;
+        funcLater(n0: number): string;
+    }
+    // class 定义在使用之后 end
+
     // 数值型枚举
     export enum TestStatus {
         UNKNOWN = 0,
@@ -113,6 +129,38 @@ declare namespace napitest {
         // class成员方法隐式推导返回值
         func5(v1: string, v2: number, v3: boolean);
     }
+
+    // class 成员变量包含enum类型，且class成员方法自引用
+    export enum Type
+    {
+        typeA,
+        typeB,
+        typeC
+    }
+  
+    class Test {
+        type: Type;
+        func(param: Type): boolean;
+    }
+  
+    interface aa {
+        abc: string;
+        def: number;
+    }
+  
+    class Demo {
+        equals(other: Demo): boolean;
+        handleCallback(): void;
+  
+        intPro: number;
+        strPro: string;
+        boolPro: boolean;
+        inter: aa;
+        type: Type;
+    }
+  
+    function funcTest(v: Type): boolean; // enum为参数
+    function funcTest2(v: Test): boolean;  // 包含enum成员变量的 class 为参数
 }
 
 export default napitest;
