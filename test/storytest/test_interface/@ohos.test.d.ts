@@ -127,7 +127,23 @@ declare namespace napitest {
         test: testInterface;
     }
 
-    function func3(fp1: testInterface22): string; 
+    function func3(fp1: testInterface22): string;
+
+    // interface定义在使用之后 begin
+    function func4(v: TestInterfaceLater): string;
+
+    interface TestInterfaceUse {
+        v0: string;
+        // v1: TestInterfaceLater;
+        funceUse(n0: TestInterfaceLater): string;
+    }
+
+    interface TestInterfaceLater {
+        v0: string;
+        v1: number;
+        funcLater(n0: number): string;
+    }
+    // interface定义在使用之后 end
 }
 
 export default napitest;
