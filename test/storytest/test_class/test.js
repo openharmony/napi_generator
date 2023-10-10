@@ -179,3 +179,50 @@ describe('TestClass2', function () {
       tc.func5("func5", 5, false);
     });
 });
+
+describe('Class Nest', function () {
+  // class Demo {
+  //     equals(other: Demo): boolean;
+  //     handleCallback(): void;
+  //     intPro: number;
+  //     strPro: string;
+  //     boolPro: boolean;
+  //     inter: aa;
+  //     type: Type;
+  // }
+  it('test Demo equals', function () {
+      let tc1 = new Demo();
+      let ret = tc1.equals({
+          intPro: 1,
+          strPro: "string",
+          boolPro: true,
+          inter: {abc: "abc", def: 7},
+          type: test.Type.typeA,
+      });
+      assert.strictEqual(ret, false);
+  });
+
+    // class Test {
+    //     type: Type;
+    //     func(param: Type): boolean;
+    // }
+    it('test Test func', function () {
+        let tc1 = new Test();
+        let ret = tc1.func(test.Type.typeB);
+        assert.strictEqual(ret, false);
+    });
+
+    // function funcTest(v: Type): boolean;
+    it('test funcTest', function () {
+        let ret = funcTest(test.Type.typeA);
+        assert.strictEqual(ret, false);
+    });
+
+    // function funcTest2(v: Test): boolean;
+    it('test funcTest2', function () {
+        let ret = funcTest2({type: test.Type.typeB});
+        assert.strictEqual(ret, false);
+    });
+});
+
+
