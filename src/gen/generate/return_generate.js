@@ -64,9 +64,8 @@ function cToJsForType(value, type, dest, deep) {
 }
 
 function cToJsForInterface(value, type, dest, deep) {
-    let lt = deep
+    let lt = deep;
     let result = "";
-    // let result = "napi_value napiRet = nullptr;\n"
     let ifl = InterfaceList.getValue(type)
     for (let i in ifl) {
         let name2 = ifl[i].name
@@ -85,7 +84,6 @@ function cToJsForInterface(value, type, dest, deep) {
             // interface include enum properties
             result += interfaceType 
         } else {
-            //dest = 'napiRet';
             result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
             interfaceType + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
                 .format(dest, name2, lt)
