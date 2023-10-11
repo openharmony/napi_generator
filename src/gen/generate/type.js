@@ -199,6 +199,17 @@ function anyTypeString (type, name) {
 
     return anyType.format(name, name)
 }
+function getSelfNs(inNamespace) {
+    let selfNs = ''
+    if (inNamespace.length > 0) {
+        let nsl = inNamespace.split("::")
+        nsl.pop()
+        if (nsl.length >= 2) {
+            selfNs = ", " + nsl[nsl.length - 1]
+        }
+    }
+    return selfNs    
+}
 
 function generateType(name, data, inNamespace) {
     let result = {
@@ -207,21 +218,20 @@ function generateType(name, data, inNamespace) {
       middleBody: '',
       middleInit: '',
       declarationH:''
-
     }
     let resultConnect = connectResult(name, data)
     let implH = resultConnect[1]
     let implCpp = resultConnect[2]
     let middleInit = resultConnect[3]
     let selfNs = ""
-    if (inNamespace.length > 0) {
-        let nsl = inNamespace.split("::")
-        nsl.pop()
-        if (nsl.length >= 2) {
-            selfNs = ", " + nsl[nsl.length - 1]
-        }
-    }
-
+    // if (inNamespace.length > 0) {
+    //     let nsl = inNamespace.split("::")
+    //     nsl.pop()
+    //     if (nsl.length >= 2) {
+    //         selfNs = ", " + nsl[nsl.length - 1]
+    //     }
+    // }
+    selfNs = getSelfNs(inNamespace);
     if (implH.indexOf("typedef") > 0) {
       result = {
         implH: implH,
