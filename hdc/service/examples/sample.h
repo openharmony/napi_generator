@@ -25,37 +25,37 @@ using std::string;
 namespace OHOS {
 namespace Example {
 class Basic {
-    public:
+public:
     std::string basicName;
 
-    int getBasicId() 
+    int getBasicId () 
     {
         return this->basicId;
     }
-    void setBasicId(int id) 
+    void setBasicId (int id) 
     {
         this->basicId = id;
     }
 
-    private:
+private:
     int basicId;
 };
 
 class Human : public Basic {
 public:
-    bool getOpFlag() 
+    bool getOpFlag () 
     {
         return this->opFlag;
     };
-    void setOpFlag(bool flag) 
+    void setOpFlag (bool flag) 
     { 
         this->opFlag = flag;
     };
-    std::string getOpDesc() 
+    std::string getOpDesc () 
     {
         return this->opDesc;
     };
-    void setOpDesc(std::string desc) 
+    void setOpDesc (std::string desc) 
     { 
         this->opDesc = desc;
     };
@@ -112,7 +112,6 @@ public:
     int fun1 (Book v1);
     int fun2 (Basic& basic, Human& human);
 };
-
 }  // namespace Example
 }  // namespace OHOS
 #endif  // EXAM_H
