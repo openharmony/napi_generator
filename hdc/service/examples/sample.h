@@ -48,7 +48,7 @@ public:
         return this->opFlag;
     };
     void setOpFlag (bool flag)
-    { 
+    {
         this->opFlag = flag;
     };
     std::string getOpDesc()
@@ -56,7 +56,7 @@ public:
         return this->opDesc;
     };
     void setOpDesc(std::string desc)
-    { 
+    {
         this->opDesc = desc;
     };
     int getOpSeqId()
