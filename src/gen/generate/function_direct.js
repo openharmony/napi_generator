@@ -65,18 +65,9 @@ function removeEndlineEnter(value) {
     return value
 }
 
-function generateFunctionDirect(func, data, className) {
+function generateFunctionDirect(func, data, className, implHVariable) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
-    if (className == null) {
-        middleFunc = middleFunc.replaceAll("[static_define]", "")
-        middleFunc = middleFunc.replaceAll("[unwarp_instance]", "")
-    }
-    else {
-        middleFunc = middleFunc.replaceAll("[static_define]", "static ")
-        middleFunc = middleFunc.replaceAll("[unwarp_instance]",
-            `void *instPtr = pxt->UnWarpInstance();
-    %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className))
-    }
+    middleFunc = isClassFunc(className, middleFunc);
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
     let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
         valuePackage: "", valueDefine: "", optionalParamDestory: "" }
@@ -110,12 +101,78 @@ function generateFunctionDirect(func, data, className) {
     let implH = ""
     let implCpp = ""
     if (!func.isParentMember) {
-        // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
-        implH = "\n%s%s%sbool %s(%s)%s;".format(
-            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
-        implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
+        if (func.name == 'constructor') {
+            // 构造函数去掉&或* (在内部去掉较麻烦，生成后统一去除)
+            implH = constructorFunc(param, implHVariable, implH, prefixArr, className);
+            middleFunc = ""
+        } else {
+            // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
+            implH = "\n%s%s%sbool %s(%s)%s;".format(
+              prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
+            implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
+        }   
     }
     return [middleFunc, implH, implCpp]
+}
+
+function isClassFunc(className, middleFunc) {
+    if (className == null) {
+        middleFunc = middleFunc.replaceAll("[static_define]", "");
+        middleFunc = middleFunc.replaceAll("[unwarp_instance]", "");
+    }
+    else {
+        middleFunc = middleFunc.replaceAll("[static_define]", "static ");
+        middleFunc = middleFunc.replaceAll("[unwarp_instance]",
+      `void *instPtr = pxt->UnWarpInstance();
+    %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className));
+  }
+  return middleFunc;
+}
+
+function constructorFunc(param, implHVariable, implH, prefixArr, className) {
+    let valueDef = param.valueDefine;
+    if (valueDef.indexOf('&') > 0 || valueDef.indexOf('*') > 0) {
+        let index = valueDef.indexOf('&');
+        while (index > 0) {
+            valueDef = valueDef.substring(0, index) + valueDef.substring(index + 1, valueDef.length);
+            index = valueDef.indexOf('&');
+        }
+        index = valueDef.indexOf('*');
+        while (index > 0) {
+            valueDef = valueDef.substring(0, index) + valueDef.substring(index + 1, valueDef.length);
+            index = valueDef.indexOf('*');
+        }
+    }
+    let body = valueDef.split(',');
+    let result = [];
+    let body2 = implHVariable.split(';');
+    let result2 = [];
+    for (let i = 0; i < body.length; i++) {
+        let ii = body[i].lastIndexOf(' ');
+        result[i] = body[i].substring(ii + 1, body[i].length);
+    }
+    for (let k = 0; k < body2.length; k++) {
+        let kk = body2[k].lastIndexOf(' ');
+        result2[k] = body2[k].substring(kk + 1, body2[k].length);
+    }
+    let len = result.length;
+    let costructorStr = '';
+    for (let m = 0; m < len - 1; m++) {
+        costructorStr += "%s(%s), ".format(result2[m], result[m]);
+    }
+    costructorStr += "%s(%s)".format(result2[len - 1], result[len - 1]);
+
+    // 构造函数只在h文件中，cpp文件中不包含
+    if (len > 0) {
+        implH = "\n%s%s%s%s() {};".format(
+          prefixArr[0], prefixArr[1], prefixArr[2], className);
+        implH += "\n%s%s%s%s(%s) : %s {};".format(
+          prefixArr[0], prefixArr[1], prefixArr[2], className, valueDef, costructorStr);
+    } else {
+        implH = "\n%s%s%s%s() {};".format(
+          prefixArr[0], prefixArr[1], prefixArr[2], className);
+    }
+    return implH;
 }
 
 module.exports = {
