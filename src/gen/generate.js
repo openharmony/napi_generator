@@ -67,7 +67,7 @@ let moduleCppTmplete = `\
     }
     
 #define BOOLEAN_JS_2_C(napi_v, type, dest) {    \\
-    dest = pxt->SwapC2JsBool(napi_v);          \\
+    dest = pxt->SwapJs2CBool(napi_v);          \\
 }
 
 #define C_DELETE(p)  \\

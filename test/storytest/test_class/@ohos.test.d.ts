@@ -33,6 +33,14 @@ declare namespace napitest {
         age: number;
     }
 
+    // 有参构造函数的转换
+    export class Woman {
+      constructor(name_: string, age_: number, isMarried_: boolean);
+      w_name: string;
+      w_age: number;
+      w_isMarried: boolean;
+    }
+
     export enum LaunchReason {
         UNKNOWN = 0,
         START_ABILITY = 1,
@@ -138,17 +146,17 @@ declare namespace napitest {
         typeC
     }
   
-    class Test {
+    export class Test {
         type: Type;
         func(param: Type): boolean;
     }
   
-    interface aa {
+    export interface aa {
         abc: string;
         def: number;
     }
   
-    class Demo {
+    export class Demo {
         equals(other: Demo): boolean;
         handleCallback(): void;
   
