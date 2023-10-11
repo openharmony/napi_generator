@@ -205,7 +205,9 @@ function generateType(name, data, inNamespace) {
       implH: '',
       implCpp: '',
       middleBody: '',
-      middleInit: ''
+      middleInit: '',
+      declarationH:''
+
     }
     let resultConnect = connectResult(name, data)
     let implH = resultConnect[1]
@@ -225,14 +227,16 @@ function generateType(name, data, inNamespace) {
         implH: implH,
         implCpp: implCpp,
         middleBody: '',
-        middleInit: middleInit
+        middleInit: middleInit,
+        declarationH:''
       }
     } else if (implCpp !== '' && middleInit !== '') {
       result = {
         implH: implH,
         implCpp: implCpp,
         middleBody: '',
-        middleInit: middleInit
+        middleInit: middleInit,
+        declarationH:''
       }
     } else {
       result = {
@@ -242,7 +246,9 @@ function generateType(name, data, inNamespace) {
   };\n`.format(name, implH),
         implCpp: implCpp,
         middleBody: '',
-        middleInit: middleInit
+        middleInit: middleInit,
+        declarationH: `
+        class %s;\r`.format(name),
       }
     }
     return result
