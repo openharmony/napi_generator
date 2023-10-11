@@ -13,7 +13,6 @@
 * limitations under the License. 
 */
 const { TestClass1, TestClass2, TestClassUse, TestClassLater } = require("./out/build/Release/napitest")
-const { Demo, Test, funcTest, funcTest2 } = require("./out/build/Release/napitest")
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 const { consumers } = require("stream");

@@ -18,7 +18,27 @@ declare namespace napitest {
     interface TestClass1 {
         on(type: string, callback: Callback<boolean>): void; 
     }
-    function on(type: string, callback: Callback<string>): void; 
+    interface ModelEvent{
+        topic: string;
+        message: string;
+    }
+    // function on(type: string, callback: Callback<ModelEvent>): void; // Callback为interface
+    // function on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
+    function on(type: string, callback: Callback<string>): void; // Callback为string
+    
+    interface TestClass2 {
+        on(type: string, callback: Callback<ModelEvent>): void; // Callback为interface
+    }
+
+    interface TestClass3 {
+        on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
+    }
+    
+
+    
+
+
+    // function on(type: "heartbeat", callback: Callback<ModelEvent>): void; // 待测试
 }
 
 export default napitest;
