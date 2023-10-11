@@ -199,19 +199,8 @@ function anyTypeString (type, name) {
 
     return anyType.format(name, name)
 }
-
-function generateType(name, data, inNamespace) {
-    let result = {
-      implH: '',
-      implCpp: '',
-      middleBody: '',
-      middleInit: ''
-    }
-    let resultConnect = connectResult(name, data)
-    let implH = resultConnect[1]
-    let implCpp = resultConnect[2]
-    let middleInit = resultConnect[3]
-    let selfNs = ""
+function getSelfNs(inNamespace) {
+    let selfNs = ''
     if (inNamespace.length > 0) {
         let nsl = inNamespace.split("::")
         nsl.pop()
@@ -219,20 +208,38 @@ function generateType(name, data, inNamespace) {
             selfNs = ", " + nsl[nsl.length - 1]
         }
     }
+    return selfNs    
+}
 
+function generateType(name, data, inNamespace) {
+    let result = {
+      implH: '',
+      implCpp: '',
+      middleBody: '',
+      middleInit: '',
+      declarationH:''
+    }
+    let resultConnect = connectResult(name, data)
+    let implH = resultConnect[1]
+    let implCpp = resultConnect[2]
+    let middleInit = resultConnect[3]
+    let selfNs = ""
+    selfNs = getSelfNs(inNamespace);
     if (implH.indexOf("typedef") > 0) {
       result = {
         implH: implH,
         implCpp: implCpp,
         middleBody: '',
-        middleInit: middleInit
+        middleInit: middleInit,
+        declarationH:''
       }
     } else if (implCpp !== '' && middleInit !== '') {
       result = {
         implH: implH,
         implCpp: implCpp,
         middleBody: '',
-        middleInit: middleInit
+        middleInit: middleInit,
+        declarationH:''
       }
     } else {
       result = {
@@ -242,7 +249,9 @@ function generateType(name, data, inNamespace) {
   };\n`.format(name, implH),
         implCpp: implCpp,
         middleBody: '',
-        middleInit: middleInit
+        middleInit: middleInit,
+        declarationH: `
+        class %s;\r`.format(name),
       }
     }
     return result
