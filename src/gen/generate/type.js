@@ -224,13 +224,6 @@ function generateType(name, data, inNamespace) {
     let implCpp = resultConnect[2]
     let middleInit = resultConnect[3]
     let selfNs = ""
-    // if (inNamespace.length > 0) {
-    //     let nsl = inNamespace.split("::")
-    //     nsl.pop()
-    //     if (nsl.length >= 2) {
-    //         selfNs = ", " + nsl[nsl.length - 1]
-    //     }
-    // }
     selfNs = getSelfNs(inNamespace);
     if (implH.indexOf("typedef") > 0) {
       result = {
