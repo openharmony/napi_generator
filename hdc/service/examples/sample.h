@@ -28,11 +28,11 @@ class Basic {
 public:
     std::string basicName;
 
-    int getBasicId () 
+    int getBasicId()
     {
         return this->basicId;
     }
-    void setBasicId (int id) 
+    void setBasicId (int id)
     {
         this->basicId = id;
     }
@@ -43,27 +43,27 @@ private:
 
 class Human : public Basic {
 public:
-    bool getOpFlag () 
+    bool getOpFlag()
     {
         return this->opFlag;
     };
-    void setOpFlag (bool flag) 
+    void setOpFlag (bool flag)
     { 
         this->opFlag = flag;
     };
-    std::string getOpDesc () 
+    std::string getOpDesc()
     {
         return this->opDesc;
     };
-    void setOpDesc (std::string desc) 
+    void setOpDesc(std::string desc)
     { 
         this->opDesc = desc;
     };
-    int getOpSeqId() 
+    int getOpSeqId()
     {
         return this->opSeqId;
     };
-    void setOpSeqId(int id) 
+    void setOpSeqId(int id)
     {
         opSeqId = id;
     };
@@ -77,19 +77,19 @@ private:
 }
 
 struct Book {
-    int getCc() 
+    int getCc()
     {
         return this->cc;
     };
-    void setCc(int cc) 
+    void setCc(int cc)
     {
         this->cc = cc;
     };
-    Basic getBasicObj() 
+    Basic getBasicObj()
     {
         return this->basicObj;
     };
-    void setBasicObj(Basic obj) 
+    void setBasicObj(Basic obj)
     {
         this->basicObj = obj;
     };
