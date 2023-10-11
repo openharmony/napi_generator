@@ -512,15 +512,6 @@ function returnGenerate(returnInfo, param, data) {
     let outParam = returnInfo.optional ? "(*vio->out)" : "vio->out"
     let modifiers = returnInfo.optional ? "*" : "&"
     generateOptionalAndUnion(returnInfo, param, data, outParam);
-    // if (returnInfo.optional) {
-    //     param.optionalParamDestory += "C_DELETE(vio->out);\n    "
-    // }
-
-    // if (!isEnum(type, data)) {
-    //     param.valuePackage = cToJs(outParam, type, "result")
-    // } else if (type.indexOf("|") >= 0) {
-    //     returnGenerateUnion(param)
-    // }
 
     if (type == "string") {
         param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
