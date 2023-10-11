@@ -64,8 +64,8 @@ function cToJsForType(value, type, dest, deep) {
 }
 
 function cToJsForInterface(value, type, dest, deep) {
-    let lt = deep
-    let result = ""
+    let lt = deep;
+    let result = "";
     let ifl = InterfaceList.getValue(type)
     for (let i in ifl) {
         let name2 = ifl[i].name
@@ -482,12 +482,13 @@ function isObjectType(type) {
     return false;
 }
 
-function returnGenerate(returnInfo, param, data) {
+function generateOptionalAndUnion(returnInfo, param, data, outParam) {
     let type = returnInfo.type
-    let valueFillStr = getReturnFill(returnInfo, param)
-    param.valueFill += ("%s" + valueFillStr).format(param.valueFill.length > 0 ? ", " : "")
-    let outParam = returnInfo.optional ? "(*vio->out)" : "vio->out"
-    let modifiers = returnInfo.optional ? "*" : "&"
+    if (type === undefined) {
+        NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
+        return;
+    }
+
     if (returnInfo.optional) {
         param.optionalParamDestory += "C_DELETE(vio->out);\n    "
     }
@@ -497,6 +498,20 @@ function returnGenerate(returnInfo, param, data) {
     } else if (type.indexOf("|") >= 0) {
         returnGenerateUnion(param)
     }
+}
+
+function returnGenerate(returnInfo, param, data) {
+    let type = returnInfo.type
+    if (type === undefined) {
+        NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
+        return;
+    }
+
+    let valueFillStr = getReturnFill(returnInfo, param)
+    param.valueFill += ("%s" + valueFillStr).format(param.valueFill.length > 0 ? ", " : "")
+    let outParam = returnInfo.optional ? "(*vio->out)" : "vio->out"
+    let modifiers = returnInfo.optional ? "*" : "&"
+    generateOptionalAndUnion(returnInfo, param, data, outParam);
 
     if (type == "string") {
         param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"

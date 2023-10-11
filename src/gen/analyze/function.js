@@ -109,8 +109,8 @@ function getFuncParaType(v, interfaceName, data, results) {
 function analyzeFuncNoNameInterface(data, values, results) {
     values = re.replaceAll(re.replaceAll(values, " ", ""), "\n", "")    
     let interfaceName = ""    
-    let matchNoName = "([:{,;a-zA-Z_0-9]*)\\?*(:[A-Za-z0-9_,;]*)?:{(([A-Za-z0-9_]+:"+
-    "[A-Za-z0-9_,;]+)*)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}(}|,|;)?$"
+    let matchNoName = "([:{<}>,;a-zA-Z_0-9]*)\\?*(:[A-Za-z0-9_,;]*)?:((Async)*Callback<)?{(([A-Za-z0-9_]+:"+
+    "[A-Za-z0-9_,;]+)*)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}(}|,|;|>)?$"
     let matchs = re.match(matchNoName, values)
     if (matchs) {
         let st = values.lastIndexOf("{")        
