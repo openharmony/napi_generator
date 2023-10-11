@@ -13,6 +13,7 @@
 * limitations under the License. 
 */
 const { TestClass1, TestClass2, TestClassUse, TestClassLater } = require("./out/build/Release/napitest")
+const { Demo, Test, funcTest, funcTest2, Woman } = require("./out/build/Release/napitest")
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 const { consumers } = require("stream");
@@ -45,6 +46,19 @@ describe('Class', function () {
         ret = tc.fun4({ 'name': 'haha', 'age': '20' },'aaa');
         retJson = JSON.stringify(ret);
         assert.strictEqual(retJson, '[]');
+    });
+
+    // export class Woman {
+    //   constructor(name_: string, age_: number, isMarried_: boolean);
+    //   w_name: string;
+    //   w_age: number;
+    //   w_isMarried: boolean;
+    // }
+    it('test Woman constructor', function () {
+      let tc = new Woman("haha", 22, true);
+      console.info("w_name is " + tc.w_name);
+      console.info("w_age is " + tc.w_age);
+      console.info("w_isMarried is " + tc.w_isMarried);
     });
 });
 
