@@ -17,7 +17,7 @@ var assert = require("assert");
 
 describe('on', function () {  
     let ret = false;
-    // let inter = new ModelEvent({topic:'aa', message:'sit down'});
+    let inter = new ModelEvent({topic:'aa', message:'sit down'});
     function onAsyncCallback(err) {
         ret = true;
         console.info('onAsyncCallback err = ' + err)
