@@ -22,10 +22,24 @@ declare namespace napitest {
         fun14(cb: AsyncCallback<void>): void;
     }
 
+    interface TestClass2 {
+        str: string;
+
+    }
     function fun1(cb: Callback<number>): void;
     function fun2(cb: Callback<void>): void;
     function fun3(cb: AsyncCallback<number>): void;
     function fun4(cb: AsyncCallback<void>): void;
+ 
+    // 以下测试用例待支持
+    // function fun5(cb: Callback<number>): string; // to add testcase for return type is not void
+    // function fun6(cb: (wid: boolean) => void): string; // to add testcase cb type is arrow function
+    // function fun7(cb: (wid: boolean) => string): string; // to support return type of cbfunction is not void
+    // function fun8(cb: (wid: boolean) => string): string; // to support return type of cbfunction is not void 
+    // function fun9(cb: (wid: boolean, str: string, tc2:TestClass2) => string): string; // 回调函数参数个数大于1，待支持
+
+    // function registerCbFunc7(cb: Function): void; // 待支持
+    // function registerCbFunc8(cb: Function): string; // 待支持
 }
 
 export default napitest;
