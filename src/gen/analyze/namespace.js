@@ -28,6 +28,14 @@ function preProcessData(data) {
     return data;
 }
 
+function getDataByResult(result) {
+    let data = null
+    if (result != null) {
+        data = result
+    }
+    return data
+}
+
 /**namespace解析 */
 function analyzeNamespace(data) {
     let result = {
@@ -48,32 +56,25 @@ function analyzeNamespace(data) {
         // 只剩下空格和回车时，解析完成
         if (matchs && matchs.regs[0][1] == data.length) break
         let parseEnumResult = parseEnum(matchs, data, result)
-        if (parseEnumResult != null) {
-            data = parseEnumResult
-        }
-
+        data = getDataByResult(parseEnumResult)
+        
         result = parseEnumType(result);
 
         let parseInterResult = parseInterface(matchs, data, result)
-        if (parseInterResult != null) {
-            data = parseInterResult
-        }
+        data = getDataByResult(parseInterResult)
+
         let parseFunctionResult = parseFunction(matchs, data, result)
-        if (parseFunctionResult != null) {
-            data = parseFunctionResult
-        }
+        data = getDataByResult(parseFunctionResult)
+        
         let parseTypeResult = parseType(matchs, data, result)
-        if (parseTypeResult != null) {
-            data = parseTypeResult
-        }
+        data = getDataByResult(parseTypeResult)
+
         let parseClassResult = parseClass(matchs, data, result)
-        if (parseClassResult != null) {
-            data = parseClassResult
-        }
+        data = getDataByResult(parseClassResult)
+
         let parseNamespaceResult = parseNamespace(matchs, data, result)
-        if (parseNamespaceResult != null) {
-            data = parseNamespaceResult
-        } 
+        data = getDataByResult(parseNamespaceResult)
+
         data = removeReg(matchs, data, result)
         if (oldData == data) {
             NapiLog.logError("解析Namespace失败");
