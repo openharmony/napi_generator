@@ -76,6 +76,38 @@ describe('enum', function () {
         assert.deepStrictEqual(ret, 0);
     }
 
+    // // function fun8(v0: string): Promise<PlayingTest>;
+    // it('test fun8_promise', function () {
+    //     let promiseObj = test.fun8('test');
+    //     promiseObj.then(ret => { def2(ret) });
+    // });
+
+    // // function fun9(v0: PlayingTest): string;
+    // it('test fun9', function () {
+    //     let ret = test.fun9(test.PlayingTest.STATE_TEST_START);
+    //     assert.strictEqual(ret, '');
+    // });
+
+    // // function fun10(v: TestStatus): string;
+    // it('test fun10', function () {
+    //     let ret = test.fun10(test.PlayingTest.STATE_TEST_START);
+    //     assert.strictEqual(ret, '');
+    // })
+
+    // // function fun11(v: EnumString): string;
+    // // export enum EnumString {
+    // //     ENUM_HOME = 'ohos.want.enum.home',
+    // //     ENUM_DIAL = 'ohos.want.enum.dial',
+    // //     ENUM_SEARCH = 'ohos.want.enum.search',
+    // //     ENUM_WIRELESS_SETTINGS = 'ohos.settings.enum.wireless',
+    // // }    
+    // it('test fun11', function () {
+    //     let ret = test.fun11(test.EnumString.ENUM_SEARCH);
+    //     assert.strictEqual(ret, '');
+    // })
+});
+
+describe('enum second part', function () {
     // function fun8(v0: string): Promise<PlayingTest>;
     it('test fun8_promise', function () {
         let promiseObj = test.fun8('test');
