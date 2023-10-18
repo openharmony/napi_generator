@@ -97,7 +97,7 @@ function parseEnumType(result) {
         for (let i in result.interface) {
           let interf = result.interface[i]
           if(!isValidValue(interf)) {
-            NapiLog.logError("parseEnumType func.value is null!");
+            NapiLog.logError("parseEnumType interf is null!");
             return null;
           }
 
@@ -105,7 +105,7 @@ function parseEnumType(result) {
           for (let j in interf.body.function) {
             let func = interf.body.function[j];
             if(!isValidValue(func)) {
-                NapiLog.logError("parseEnumType func.value is null!");
+                NapiLog.logError("parseEnumType func is null!");
                 return null;
             }
             
