@@ -205,7 +205,7 @@ describe('Class Nest', function () {
   //     type: Type;
   // }
   it('test Demo equals', function () {
-      let tc1 = new Demo();
+      let tc1 = new test.Demo();
       let ret = tc1.equals({
           intPro: 1,
           strPro: "string",
@@ -221,20 +221,20 @@ describe('Class Nest', function () {
     //     func(param: Type): boolean;
     // }
     it('test Test func', function () {
-        let tc1 = new Test();
+        let tc1 = new test.Test();
         let ret = tc1.func(test.Type.typeB);
         assert.strictEqual(ret, false);
     });
 
     // function funcTest(v: Type): boolean;
     it('test funcTest', function () {
-        let ret = funcTest(test.Type.typeA);
+        let ret = test.funcTest(test.Type.typeA);
         assert.strictEqual(ret, false);
     });
 
     // function funcTest2(v: Test): boolean;
     it('test funcTest2', function () {
-        let ret = funcTest2({type: test.Type.typeB});
+        let ret = test.funcTest2({type: test.Type.typeB});
         assert.strictEqual(ret, false);
     });
 });

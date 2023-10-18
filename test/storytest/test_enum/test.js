@@ -71,7 +71,9 @@ describe('enum', function () {
         let promiseObj = fun6('hhh');
         promiseObj.then(ret => { def1(ret) });
     });
+});
 
+describe('enum second part', function () {
     function def2(ret) {
         assert.deepStrictEqual(ret, 0);
     }
