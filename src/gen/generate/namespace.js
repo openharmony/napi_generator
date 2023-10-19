@@ -18,7 +18,7 @@ const { generateFunctionAsync } = require("./function_async");
 const { generateInterface } = require("./interface");
 const { generateClass } = require("./class");
 const { generateType } = require("./type");
-const { FuncType, InterfaceList, EnumList, TypeList } = require("../tools/common");
+const { FuncType, InterfaceList, EnumList, TypeList, CallFunctionList } = require("../tools/common");
 const { generateEnum } = require("./enum");
 const { generateFunctionOnOff } = require("./function_onoff");
 const { NapiLog } = require("../tools/NapiLog");
@@ -103,6 +103,7 @@ function generateNamespace(name, data, inNamespace = "") {
     InterfaceList.push(data.interface)
     TypeList.push(data.type)
     EnumList.push(data.enum)
+    CallFunctionList.push(data.callFunction)
     enumNamespaceFunction(data, namespaceResult);  
     for (let i in data.type) {
       let ii = data.type[i]
@@ -137,6 +138,7 @@ function generateNamespace(name, data, inNamespace = "") {
     InterfaceList.pop();
     TypeList.pop();
     EnumList.pop();
+    CallFunctionList.pop();
     if (inNamespace.length > 0) {
         namespaceResult.middleInit += "}"
     }
