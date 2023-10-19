@@ -1673,27 +1673,39 @@ void XNapiTool::CallAsyncFunc(AsyncFunc *pAsyncFuncs, napi_value ret)
             napi_handle_scope scope = nullptr;
             napi_open_handle_scope(paf->env_, &scope);
 
-            napi_value cb = 0;
+            napi_value cb;
             napi_status result_status = napi_get_reference_value(paf->env_, paf->funcRef_, &cb);
             CC_ASSERT(result_status == napi_ok);
 
-            napi_value thisvar = 0;
+            napi_value thisvar;
             result_status = napi_get_reference_value(paf->env_, paf->thisVarRef_, &thisvar);
             CC_ASSERT(result_status == napi_ok);
 
-            napi_value retValue = 0;
+            napi_value retValue;
             result_status = napi_get_reference_value(paf->env_, data->resultRef, &retValue);
             CC_ASSERT(result_status == napi_ok);
-            napi_value args[1] = {retValue};
-
+            uint32_t length = 0;
+            napi_value element;
+            napi_get_array_length(paf->env_, retValue, &length);
+            napi_value* args = reinterpret_cast<napi_value*>(malloc(sizeof(napi_value) * length));
+            if (args == NULL) {
+                // 内存分配失败的处理
+                return;
+            }
+            for (uint32_t i = 0; i < length; i++) {
+                napi_get_element(paf->env_, retValue, i, &element);
+                napi_set_element(paf->env_, *args, i, element);
+            }
+  
             napi_value cb_result;
-            result_status = napi_call_function(paf->env_, thisvar, cb, 1, args, &cb_result);
+            result_status = napi_call_function(paf->env_, thisvar, cb, length, args, &cb_result);
             CC_ASSERT(result_status == napi_ok);
 
             result_status = napi_delete_reference(paf->env_, data->resultRef);
             CC_ASSERT(result_status == napi_ok);
 
             napi_close_handle_scope(paf->env_, scope);
+            free(args);
             free(data);
             delete work;
         });

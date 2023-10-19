@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { TestClass1, TestClass2, ModelEvent, TestClass3, on} = require("./out/build/Release/napitest")
+const { TestClass1, TestClass2, ModelEvent, TestClass3, on, TestClass4} = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('on', function () {  
@@ -59,12 +59,34 @@ describe('on', function () {
         assert.strictEqual(ret, true);
     });
 
-    // interface TestClass3 {
-    //     on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
-    // }
-    let tc3 = new TestClass3(); 
-    it('test TestClass3 on', function () {
-        tc3.on('OnEvent', onCallbackTest3);
+    // // interface TestClass3 {
+    // //     on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
+    // // }
+    // let tc3 = new TestClass3(); 
+    // it('test TestClass3 on', function () {
+    //     tc3.on('OnEvent', onCallbackTest3);
+    //     assert.strictEqual(ret, true);
+    // });
+
+  //   interface TestClass4 {
+  //     on(type: "heartbeat", callback: Callback<boolean>): void; // 固定事件，回调参数为boolean待支持
+  //     on(type: "heartbeat2", callback: Callback<ModelEvent>): void; // 固定事件，回调参数为ModelEvent待支持
+  //     on(type: string, callback: (wid: boolean) => void): void; // 箭头函数待支持
+  //     // // on(type: string, callback: (wid: boolean) => string): void; // 返回值待支持
+  //     on(type: "inputStart", callback: (wid: boolean, modeEv: ModelEvent) => void): void // 回调函数参数个数大于1，待支持
+  // }
+    let tc4 = new TestClass4(); 
+    it('test TestClass4 on', function () {
+        tc4.on('heartbeat', onCallback);
+        assert.strictEqual(ret, true);
+        ret = false;
+        tc4.on('heartbeat2', onCallback);
+        assert.strictEqual(ret, true);
+        ret = false;
+        tc4.on('test', onCallback);
+        assert.strictEqual(ret, true);
+        ret = false;
+        tc4.on('inputStart', onCallback);
         assert.strictEqual(ret, true);
     });
 });
