@@ -34,7 +34,16 @@ function onVoidAsyncCallback (err, ret) {
     assert.strictEqual(ret, undefined);
 }
 
-describe('Test callback', function () {
+function onCallbackNumStr(num) {
+    assert.strictEqual(num, 0);
+    return '' + num
+}
+
+function onCallbackVoid () {
+
+}
+
+describe('Test interface callback', function () {
     // fun11(cb: Callback<number>): void;
     it('test callback in interface fun11', function () {
         let testClass = new TestClass1();
@@ -59,28 +68,60 @@ describe('Test callback', function () {
         testClass.fun14(onVoidAsyncCallback);
     });
 
+    // function fun15(cb: Callback<number>): string;
+    it('test common func callback fun15', function () {
+        let testClass = new TestClass1();
+        testClass.fun15(onCallbackNumStr);
+    });
+
+    // fun16(tt: function): void;
+    it('test common func callback fun16', function () {
+        let testClass = new TestClass1();       
+        testClass.fun16(onCallbackVoid);
+    });
+
+    // fun17(tt: Function): string;
+    it('test common func callback fun17', function () { 
+        let testClass = new TestClass1();       
+        let ret = testClass.fun17(onCallbackVoid);
+            assert.strictEqual(ret, '');
+        });
+});
+
+describe('Test callback', function () {
     // function fun1(cb: Callback<number>): void;
     it('test common func callback fun1', function () {
-        let testClass = new TestClass1();
         testObj.fun1(onCallback);
     });
 
     // function fun2(cb: Callback<void>): void;
     it('test common func callback fun2', function () {
-        let testClass = new TestClass1();
         testObj.fun2(onVoidCallback);
     });
 
     // function fun3(cb: AsyncCallback<number>): void;
     it('test common func callback fun3', function () {
-        let testClass = new TestClass1();
         testObj.fun3(onAsyncCallback);
     });
 
     // function fun4(cb: AsyncCallback<void>): void;
     it('test common func callback fun4', function () {
-        let testClass = new TestClass1();
         testObj.fun4(onVoidAsyncCallback);
     });
-});
 
+    // function fun5(cb: Callback<number>): string;
+    it('test common func callback fun5', function () {        
+        testObj.fun5(onCallbackNumStr);
+    });
+
+    // function fun6(tt: function): void;
+    it('test common func callback fun6', function () {        
+        testObj.fun5(onCallbackVoid);
+    });
+    
+    // fun7(tt: Function): string;
+    it('test common func callback fun7', function () {        
+       let ret = testObj.fun7(onCallbackVoid);
+        assert.strictEqual(ret, '');
+    });
+});
