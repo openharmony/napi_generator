@@ -762,9 +762,14 @@ function mapArray(mapType, napiVn, dest, lt) {
 }
 
 function paramGenerateCallBack(data, funcValue, param, p) {
-    let type = funcValue.type
-    let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", type)
     let regType
+    let type = funcValue.type
+    if (isFuncType(type)) {
+        regType = 'void';
+    }
+    
+    let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", type)
+    
     if (arrayType) {
         regType = re.getReg(type, arrayType.regs[2])
     }
@@ -789,6 +794,8 @@ function paramGenerateCallBack(data, funcValue, param, p) {
             return
         }
     }
+    
+    // function类型参数，按照空参数、空返回值回调处理 () => void {}
     param.callback = {
         type: regType,
         offset: p,
@@ -971,6 +978,18 @@ function paramGenerateObject(p, funcValue, param) {
             : "", arrayType, modifiers, name)
 }
 
+function isFuncType(type) {
+    let isFunction = false; 
+    if (type === null || type === undefined) {
+        return isFunction;
+    }
+    
+    if (type === 'function' || type === 'Function') {
+        isFunction = true;
+        return isFunction;
+    }
+
+}
 // 函数的参数处理
 function paramGenerate(p, funcValue, param, data) {
     let type = funcValue.type
@@ -992,7 +1011,7 @@ function paramGenerate(p, funcValue, param, data) {
     else if (TypeList.getValue(type)) {
         paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
     }
-    else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
+    else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<" || isFuncType(type)) {
         paramGenerateCallBack(data, funcValue, param, p)
     }
     else if (type == "boolean") {
