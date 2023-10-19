@@ -20,6 +20,8 @@ declare namespace napitest {
         fun12(cb: Callback<void>): void;
         fun13(cb: AsyncCallback<number>): void;
         fun14(cb: AsyncCallback<void>): void;
+        fun15(cb: Callback<number>): string;
+        fun16(tt: Function): void;
     }
 
     interface TestClass2 {
@@ -30,9 +32,10 @@ declare namespace napitest {
     function fun2(cb: Callback<void>): void;
     function fun3(cb: AsyncCallback<number>): void;
     function fun4(cb: AsyncCallback<void>): void;
+    function fun6(tt: Function): void;
  
     // 以下测试用例待支持
-    // function fun5(cb: Callback<number>): string; // to add testcase for return type is not void
+    function fun5(cb: Callback<number>): string; // to add testcase for return type is not void
     // function fun6(cb: (wid: boolean) => void): string; // to add testcase cb type is arrow function
     // function fun7(cb: (wid: boolean) => string): string; // to support return type of cbfunction is not void
     // function fun8(cb: (wid: boolean) => string): string; // to support return type of cbfunction is not void 
