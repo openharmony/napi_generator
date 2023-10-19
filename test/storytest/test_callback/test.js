@@ -79,6 +79,13 @@ describe('Test interface callback', function () {
         let testClass = new TestClass1();       
         testClass.fun16(onCallbackVoid);
     });
+
+    // fun17(tt: Function): string;
+    it('test common func callback fun17', function () { 
+        let testClass = new TestClass1();       
+        let ret = testClass.fun17(onCallbackVoid);
+            assert.strictEqual(ret, '');
+        });
 });
 
 describe('Test callback', function () {
@@ -110,5 +117,11 @@ describe('Test callback', function () {
     // function fun6(tt: function): void;
     it('test common func callback fun6', function () {        
         testObj.fun5(onCallbackVoid);
+    });
+    
+    // fun7(tt: Function): string;
+    it('test common func callback fun7', function () {        
+       let ret = testObj.fun7(onCallbackVoid);
+        assert.strictEqual(ret, '');
     });
 });
