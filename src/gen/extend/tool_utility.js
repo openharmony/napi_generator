@@ -1687,16 +1687,12 @@ void XNapiTool::CallAsyncFunc(AsyncFunc *pAsyncFuncs, napi_value ret)
             uint32_t length = 0;
             napi_value element;
             napi_get_array_length(paf->env_, retValue, &length);
-            napi_value* args = reinterpret_cast<napi_value*>(malloc(sizeof(napi_value) * length));
-            if (args == NULL) {
-                // 内存分配失败的处理
-                return;
-            }
+            const static uint32_t LENGHTH = length;
+            napi_value args[LENGHTH] = {};
             for (uint32_t i = 0; i < length; i++) {
                 napi_get_element(paf->env_, retValue, i, &element);
-                napi_set_element(paf->env_, *args, i, element);
+                args[i] = element;
             }
-  
             napi_value cb_result;
             result_status = napi_call_function(paf->env_, thisvar, cb, length, args, &cb_result);
             CC_ASSERT(result_status == napi_ok);
@@ -1705,7 +1701,6 @@ void XNapiTool::CallAsyncFunc(AsyncFunc *pAsyncFuncs, napi_value ret)
             CC_ASSERT(result_status == napi_ok);
 
             napi_close_handle_scope(paf->env_, scope);
-            free(args);
             free(data);
             delete work;
         });
