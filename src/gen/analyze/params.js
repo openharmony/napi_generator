@@ -14,7 +14,7 @@
 */
 const re = require("../tools/re");
 const { checkOutBody, print } = require("../tools/tool");
-const { FuncType, NumberIncrease } = require("../tools/common");
+const { FuncType, NumberIncrease, isArrowFunc } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 
 /**
@@ -68,7 +68,7 @@ function analyzeParams(funcName, values) {
         }
         if (matchs != null) {
             let type = re.getReg(v, matchs.regs[3])
-            if (type.indexOf("Map") < 0 && type.indexOf("=>") < 0) {
+            if (type.indexOf("Map") < 0 && !isArrowFunc(type)) {
                 type = type.replace(/,/g, "")
             }
 
@@ -89,7 +89,7 @@ function analyzeParams(funcName, values) {
                 if (type.indexOf("AsyncCallback") >= 0)
                     funcType = FuncType.ASYNC
                 if (funcType == FuncType.DIRECT && type.indexOf("Callback") >= 0 && type.indexOf("AsyncCallback") < 0 ||
-                    type.indexOf("AsyncCallback") < 0 && type.indexOf("=>") > 0)
+                    isArrowFunc(type))
                     funcType = FuncType.SYNC
             }
         }

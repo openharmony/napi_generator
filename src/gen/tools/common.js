@@ -308,6 +308,13 @@ function getUnionType(type) {
     return typeArr
 }
 
+function isArrowFunc(type) {
+  let arrowFunc = false;
+  if (type.indexOf('=>') >= 0) {
+      arrowFunc = true;
+  }
+  return arrowFunc
+}
 
 module.exports = {
     FuncType,
@@ -326,5 +333,6 @@ module.exports = {
     getMapType,
     EnumList,
     jsType2CType,
-    getUnionType
+    getUnionType,
+    isArrowFunc
 }

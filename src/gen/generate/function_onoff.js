@@ -63,8 +63,8 @@ void [eventNames]AsyncCallback(const std::string &eventName, [callback_param_typ
     if (status != napi_ok) {
       return;  // napi数组创建失败
     }
-    [native_return_define]
-    [native_return]
+    [cb_params_define]
+    [cb_params]
     [value_set_array]
 	XNapiTool::CallAsyncFunc(pAsyncFuncs, result);
 	delete pxt;
@@ -72,14 +72,13 @@ void [eventNames]AsyncCallback(const std::string &eventName, [callback_param_typ
 `
 
 let middleEventCallbakTemplate = `
-void [eventName]Callback([callback_param_type]) {
-  struct on_value_struct *vio = new on_value_struct();
-	[eventName]AsyncCallback(vio->eventName, [callback_param_name]);
-  delete vio;
+void [eventName]Callback(std::string &eventName, [callback_param_type]) {
+	[eventName]AsyncCallback(eventName, [callback_param_name]);
 }
 `
 let implHEventCallbakTemplate = `
-void [eventName]Callback([callback_param_type]);
+// 提供给业务代码的接口：回调函数
+void [eventName]Callback(std::string &eventName, [callback_param_type]);
 `
 
 function isOnTypeExist(onTypeList, newType) {
@@ -147,31 +146,29 @@ return true;
 function gennerateEventCallback(codeContext, data, param) {
     let params = '';        // 回调的一个或者多个参数
     let useParams = '';     // 使用回调的一个或者多个参数
-    let nativeReturn = ''
+    let cbParams = ''
     let resultDefine = ''
     let valueSetArray = ''
     for (let i = 0; i < param.callback.length; i++) {
         returnGenerate(param.callback[i], param, data, i)
-        let paramType = param.valueOut.substring(0, param.valueOut.length - "out;".length)  // 待修改
+        let paramType = param.valueOut.substring(0, param.valueOut.length - "out;".length)
         paramType = re.replaceAll(paramType, " ", "")
-        let realParamType = paramType.substring(0, 12) == "NUMBER_TYPE_" ? "uint32_t" : paramType  // 待修改
+        let realParamType = paramType.substring(0, 12) == "NUMBER_TYPE_" ? "uint32_t" : paramType
         let tag = i == param.callback.length - 1? '' : ', '
         params += realParamType + ' &valueIn' + i + tag   // 定义回调函数输入的参数
         useParams += 'valueIn' + i + tag  // 使用回调函数输入的参数
         
-       // if (!isOnTypeExist(data.onTypeList, realParamType)) {
-            // 为每种callback参数类型的on方法生成一个统一回调方法
-            resultDefine +=  'napi_value result%d = nullptr;\n    '.format(i)
-            nativeReturn += cToJs("valueIn" + i, param.callback[i].type, "result" + i) + '\n'   // 待修改
-            valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, result%d);\n    '.format(i, i)
-            addOnTypeToList(data, realParamType)
-       // }
+        // 为每种callback参数类型的on方法生成回调方法
+        resultDefine +=  'napi_value result%d = nullptr;\n    '.format(i)
+        cbParams += cToJs("valueIn" + i, param.callback[i].type, "result" + i) + '\n'
+        valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, result%d);\n    '.format(i, i)
+        addOnTypeToList(data, realParamType)
     }
     let callbackFunc = middleAsyncCallbackTemplate
     callbackFunc = replaceAll(middleAsyncCallbackTemplate, "[eventNames]", param.eventName)
     callbackFunc = replaceAll(callbackFunc, "[callback_param_type]", params)
-    callbackFunc = replaceAll(callbackFunc, "[native_return_define]", resultDefine)
-    callbackFunc = replaceAll(callbackFunc, "[native_return]", nativeReturn)
+    callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", resultDefine)
+    callbackFunc = replaceAll(callbackFunc, "[cb_params]", cbParams)
     callbackFunc = replaceAll(callbackFunc, "[callback_param_length]", param.callback.length)
     callbackFunc = replaceAll(callbackFunc, "[value_set_array]", valueSetArray)
     codeContext.middleFunc += callbackFunc

@@ -24,17 +24,17 @@ declare namespace napitest {
         topic: string;
         message: string;
     }
-    // function on(type: string, callback: Callback<ModelEvent>): void; // Callback为interface
-    // function on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
-    // function on(type: string, callback: Callback<string>): void; // Callback为string
+    function on(type: string, callback: Callback<ModelEvent>): void; // Callback为interface
+    function on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
+    function on(type: string, callback: Callback<string>): void; // Callback为string
     
     interface TestClass2 {
         on(type: string, callback: Callback<ModelEvent>): void; // Callback为interface
     }
 
-    // interface TestClass3 {
-    //     on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
-    // }
+    interface TestClass3 {
+        on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
+    }
 
     interface TestClass4 {
         on(type: "heartbeat", callback: Callback<boolean>): void; // 固定事件，回调参数为boolean待支持
