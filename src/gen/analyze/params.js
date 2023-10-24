@@ -14,8 +14,22 @@
 */
 const re = require("../tools/re");
 const { checkOutBody, print } = require("../tools/tool");
-const { FuncType } = require("../tools/common");
+const { FuncType, isFuncType, isArrowFunc } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
+
+// 解析参数类型为箭头函数，如funTest(cb: (wid: boolean) => void): string;
+function arrowFunctionParams() {
+
+}
+
+function isSyncFuncType(type, funcType) {
+    let isSync = false;
+    if (funcType == FuncType.DIRECT && type.indexOf("Callback") >= 0 && type.indexOf("AsyncCallback") < 0 ||
+    isFuncType(type) || isArrowFunc(type)) {
+        isSync = true;
+    }
+    return isSync;
+}
 
 /**函数参数解析 */
 function analyzeParams(funcName, values) {
@@ -36,7 +50,7 @@ function analyzeParams(funcName, values) {
         }
         if (matchs != null) {
             let type = re.getReg(v, matchs.regs[3])
-            if (type.indexOf("Map") < 0) {
+            if (type.indexOf("Map") < 0 && !isArrowFunc(type)) {
                 type = type.replace(/,/g, "")
             }
 
@@ -52,10 +66,13 @@ function analyzeParams(funcName, values) {
             } 
             if (checkParamOk) {
                 result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type , "optional": optionalFlag})
-                if (type.indexOf("AsyncCallback") >= 0)
+                if (type.indexOf("AsyncCallback") >= 0) {
                     funcType = FuncType.ASYNC
-                if (funcType == FuncType.DIRECT && type.indexOf("Callback") >= 0 && type.indexOf("AsyncCallback") < 0)
+                }
+                    
+                if (isSyncFuncType(type, funcType)) {
                     funcType = FuncType.SYNC
+                }             
             }
         }
         else {
