@@ -457,8 +457,6 @@ function returnGenerateObject(returnInfo, param, data) {
  */
 function getReturnFill(returnInfo, param) {
     let type = returnInfo.type
-    // let multiTypes = {}
-    // let len
     let valueFillStr = ""
     if (param.callback) { // callback方法的返回参数处理
         if (param.callback.isAsync) {
