@@ -779,11 +779,10 @@ function paramGenerateCallBack(data, funcValue, param, p) {
             cbParamType = 'void';
         }
 
-        if (callbackParams.indexOf(",") >= 0 /*|| callbackParams.indexOf(";") >= 0*/) { // 多个参数，进行分割            
+        if (callbackParams.indexOf(",") >= 0) { // 多个参数，进行分割            
             callbackParams = callbackParams.split(",")
             for(let i=0; i<callbackParams.length; i++) {
-                // let params = callbackParams[i].split(':', 2);
-                // cbMultiParamTypes[i] = params[1]; // 冒号后的是参数类型
+                NapiLog.logInfo("muilti paramets")
             }
         } else { // 一个参数
             let params = callbackParams.split(':', 2);
