@@ -18,7 +18,7 @@ const { generateFunctionAsync } = require("./function_async");
 const { generateInterface } = require("./interface");
 const { generateClass } = require("./class");
 const { generateType } = require("./type");
-const { FuncType, InterfaceList, EnumList, TypeList } = require("../tools/common");
+const { FuncType, InterfaceList, EnumList, TypeList, CallFunctionList } = require("../tools/common");
 const { generateEnum } = require("./enum");
 const { generateFunctionOnOff } = require("./function_onoff");
 const { NapiLog } = require("../tools/NapiLog");
@@ -103,6 +103,7 @@ function generateNamespace(name, data, inNamespace = "") {
     InterfaceList.push(data.interface)
     TypeList.push(data.type)
     EnumList.push(data.enum)
+    CallFunctionList.push(data.callFunction)
     enumNamespaceFunction(data, namespaceResult);  
     for (let i in data.type) {
       let ii = data.type[i]
@@ -121,13 +122,7 @@ function generateNamespace(name, data, inNamespace = "") {
     }
     namespaceResult.implH = namespaceResult.declarationH + namespaceResult.implH 
     for (let i in data.function) {
-        let func = data.function[i]
-        let tmp = generateFunction(func, data)
-        namespaceResult.middleFunc += tmp[0]
-        namespaceResult.implH += tmp[1]
-        namespaceResult.implCpp += tmp[2]
-        namespaceResult.middleInit += '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'
-            .format(func.name, inNamespace, name, func.name, inNamespace.length > 0 ? ", " + name : "")
+        genNamespaceFunc(data, i, namespaceResult, inNamespace, name);
     }
     for (let i in data.namespace) {
         let ns = data.namespace[i]
@@ -137,11 +132,25 @@ function generateNamespace(name, data, inNamespace = "") {
     InterfaceList.pop();
     TypeList.pop();
     EnumList.pop();
+    CallFunctionList.pop();
     if (inNamespace.length > 0) {
         namespaceResult.middleInit += "}"
     }
     return generateResult(name, namespaceResult.implH, namespaceResult.implCpp, namespaceResult.middleFunc,
         namespaceResult.middleInit)
+}
+
+function genNamespaceFunc(data, i, namespaceResult, inNamespace, name) {
+    let func = data.function[i];
+    let tmp = generateFunction(func, data);
+    namespaceResult.middleFunc += tmp[0];
+    namespaceResult.implH += tmp[1];
+    namespaceResult.implCpp += tmp[2];
+    let middleTmp = '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'
+      .format(func.name, inNamespace, name, func.name, inNamespace.length > 0 ? ", " + name : "");
+    if (namespaceResult.middleInit.indexOf(middleTmp) < 0) { // on方法不需要重复定义
+      namespaceResult.middleInit += middleTmp;
+    }
 }
 
 function enumNamespaceFunction(data, namespaceResult) {

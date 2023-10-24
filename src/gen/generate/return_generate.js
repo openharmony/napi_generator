@@ -455,11 +455,13 @@ function returnGenerateObject(returnInfo, param, data) {
  * @param param 方法的所有参数信息
  * @returns 返回参数的填充代码123 返回测试的值
  */
-function getReturnFill(returnInfo, param) {
+function getReturnFill(returnInfo, param, i) {
     let type = returnInfo.type
     let valueFillStr = ""
-    if (param.callback) { // callback方法的返回参数处理
-        if (param.callback.isAsync) {
+    let isCallback = i == undefined? param.callback : param.callback[i]
+    if (isCallback) { // callback方法的返回参数处理
+        let isCallbackAsync = i == undefined? param.callback.isAsync : param.callback[i].isAsync
+        if (isCallbackAsync) {
             // 异步callback方法返回的是一个结构体，包含errcode和data两部分， 详见basic.d.ts中AsyncCallback的定义
             valueFillStr = "vio->outErrCode"
             param.valueDefine += "%suint32_t& outErrCode".format(param.valueDefine.length > 0 ? ", " : "")
@@ -482,7 +484,7 @@ function isObjectType(type) {
     return false;
 }
 
-function generateOptionalAndUnion(returnInfo, param, data, outParam) {
+function generateOptionalAndUnion(returnInfo, param, data, outParam, i) {
     let type = returnInfo.type
     if (type === undefined) {
         NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
@@ -494,24 +496,28 @@ function generateOptionalAndUnion(returnInfo, param, data, outParam) {
     }
 
     if (!isEnum(type, data)) {
-        param.valuePackage = cToJs(outParam, type, "result")
+        if (i != undefined) {
+            param.valuePackage = cToJs(outParam, type, "result" + i)
+        } else {
+            param.valuePackage = cToJs(outParam, type, "result")
+        }
     } else if (type.indexOf("|") >= 0) {
         returnGenerateUnion(param)
     }
 }
 
-function returnGenerate(returnInfo, param, data) {
+function returnGenerate(returnInfo, param, data, i) {
     let type = returnInfo.type
     if (type === undefined) {
         NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
         return;
     }
 
-    let valueFillStr = getReturnFill(returnInfo, param)
+    let valueFillStr = getReturnFill(returnInfo, param, i)
     param.valueFill += ("%s" + valueFillStr).format(param.valueFill.length > 0 ? ", " : "")
     let outParam = returnInfo.optional ? "(*vio->out)" : "vio->out"
     let modifiers = returnInfo.optional ? "*" : "&"
-    generateOptionalAndUnion(returnInfo, param, data, outParam);
+    generateOptionalAndUnion(returnInfo, param, data, outParam, i);
 
     if (type == "string") {
         param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"

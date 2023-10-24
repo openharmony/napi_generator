@@ -14,7 +14,7 @@
 */
 const re = require("../tools/re");
 const { checkOutBody, print } = require("../tools/tool");
-const { FuncType, isFuncType, isArrowFunc } = require("../tools/common");
+const { FuncType, NumberIncrease,isFuncType, isArrowFunc } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 
 function isSyncFuncType(type, funcType) {
@@ -24,11 +24,42 @@ function isSyncFuncType(type, funcType) {
         isSync = true;
     }
     return isSync;
+
+/**
+ * on方法中回调方法的解析
+ * @param {*} valueType 回调方法体
+ * @param {*} valueName 参数名
+ * @param {*} rsltCallFunction 解析结果
+ */
+function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
+    
+    if (valueType.indexOf('=>') > 0) {
+        valueType = re.replaceAll(valueType, ' ', '')
+    }
+    let matchs = re.match("\\(([a-zA-Z_0-9:,]+)*\\)=>([a-zA-Z_0-9]+)", valueType)
+   
+    if (matchs) {
+      let number = NumberIncrease.getAndIncrease();
+      let functionTypeName = 'AUTO_CALLFUNCTION_%s_%s'.format(valueName, number)
+     
+      let functionRet = re.getReg(valueType, matchs.regs[2]);
+      let functionBody = re.getReg(valueType, matchs.regs[1]);
+     
+      let tmp = analyzeParams(functionTypeName, functionBody)
+      rsltCallFunction.push({
+          "name": functionTypeName,
+          "body": tmp[0],
+          "ret": functionRet                  // 返回值
+      })                
+      valueType = functionTypeName
+  }
+  return valueType
 }
 
 /**函数参数解析 */
 function analyzeParams(funcName, values) {
     let result = []
+    let rsltCallFunction = []
     let funcType = FuncType.DIRECT
     let optionalParamCount = 0; // 可选参数的个数
     while (values.length > 0) {
@@ -49,6 +80,8 @@ function analyzeParams(funcName, values) {
                 type = type.replace(/,/g, "")
             }
 
+            let valueName = re.getReg(v, matchs.regs[1])
+            type = analyzeCallbackFunction(type, valueName, rsltCallFunction)
             let optionalFlag = re.getReg(v, matchs.regs[2]) == '?' ? true : false;
             let checkParamOk = true;
             if (optionalFlag) {
@@ -75,7 +108,7 @@ function analyzeParams(funcName, values) {
             NapiLog.logError("Failed to analyse parameter [%s] of function [%s].".format(v, funcName));
         }
     }
-    return [result, funcType]
+    return [result, funcType, rsltCallFunction]
 }
 
 module.exports = {
