@@ -763,7 +763,7 @@ function mapArray(mapType, napiVn, dest, lt) {
 
 function paramGenerateCallBack(data, funcValue, param, p) {
     let cbParamType
-    let cbMultiParamTypes = {}
+    // let cbMultiParamTypes = {}
     let returnType = 'void'
     let type = funcValue.type
     if (isFuncType(type)) {
@@ -782,8 +782,8 @@ function paramGenerateCallBack(data, funcValue, param, p) {
         if (callbackParams.indexOf(",") >= 0 /*|| callbackParams.indexOf(";") >= 0*/) { // 多个参数，进行分割            
             callbackParams = callbackParams.split(",")
             for(let i=0; i<callbackParams.length; i++) {
-                let params = callbackParams[i].split(':', 2);
-                cbMultiParamTypes[i] = params[1]; // 冒号后的是参数类型
+                // let params = callbackParams[i].split(':', 2);
+                // cbMultiParamTypes[i] = params[1]; // 冒号后的是参数类型
             }
         } else { // 一个参数
             let params = callbackParams.split(':', 2);
@@ -824,7 +824,7 @@ function paramGenerateCallBack(data, funcValue, param, p) {
         offset: p,
         returnType: returnType,
         optional: funcValue.optional,
-        cbMultiParamTypes:cbMultiParamTypes,
+        // cbMultiParamTypes:cbMultiParamTypes,
         isAsync: type.indexOf("AsyncCallback") >= 0
     }
 }
