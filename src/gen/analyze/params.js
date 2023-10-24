@@ -17,11 +17,6 @@ const { checkOutBody, print } = require("../tools/tool");
 const { FuncType, isFuncType, isArrowFunc } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 
-// 解析参数类型为箭头函数，如funTest(cb: (wid: boolean) => void): string;
-function arrowFunctionParams() {
-
-}
-
 function isSyncFuncType(type, funcType) {
     let isSync = false;
     if (funcType == FuncType.DIRECT && type.indexOf("Callback") >= 0 && type.indexOf("AsyncCallback") < 0 ||

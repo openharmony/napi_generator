@@ -26,7 +26,6 @@ struct [funcName]_value_struct {[valueIn][valueOut]
 [static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
-    std::map<std::string, std::string> cbParamTypes;
     if (pxt->IsFailed()) {
         napi_value err = pxt->GetError();
         delete pxt;
@@ -35,7 +34,6 @@ struct [funcName]_value_struct {[valueIn][valueOut]
     [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     [valueCheckout][optionalCallbackInit]
-    // [callbackParamTypes]
     [callFunc]
     napi_value result = nullptr;
     napi_value retVal = nullptr;
@@ -203,7 +201,6 @@ function generateFunctionSync(func, data, className) {
         fillCbRetValueStruct(func.ret, param, 'out')  
     }
 
-    // middleFunc = replaceAll(middleFunc, "[paramSize]", param.cbParamSize) // # 输入参数定义
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
     if (param.valueOut == "") {
         middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
@@ -216,13 +213,6 @@ function generateFunctionSync(func, data, className) {
         param.valueCheckout = removeEndlineEnter(param.valueCheckout)
         middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
     }
-
-    // if (param.callbackParamTypes == "") {
-    //     / middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
-    // } else {
-        // param.valueCheckout = removeEndlineEnter(param.valueCheckout)
-        // middleFunc = replaceAll(middleFunc, "[callbackParamTypes]", param.callbackParamTypes) // # 输入参数解析
-    // }
 
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
