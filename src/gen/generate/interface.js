@@ -15,6 +15,7 @@
 const { generateFunctionDirect } = require("./function_direct");
 const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
+const { generateFunctionOnOff } = require("./function_onoff");
 const { FuncType, InterfaceList, getArrayType, getArrayTypeTwo, getMapType, EnumList, jsType2CType } 
     = require("../tools/common");
 const { jsToC, getCType, paramGenerate } = require("./param_generate");
@@ -366,19 +367,24 @@ function connectResult(data, inNamespace, name) {
     for (let i in data.allProperties.functions) {
         let func = data.allProperties.functions[i]
         let tmp;
-        switch (func.type) {
-            case FuncType.DIRECT:
-                tmp = generateFunctionDirect(func, data, name, implH)
-                break;
-            case FuncType.SYNC:
-                tmp = generateFunctionSync(func, data, name)
-                break
-            case FuncType.ASYNC:
-            case FuncType.PROMISE:
-                tmp = generateFunctionAsync(func, data, name)
-                break
-            default:
-                return
+        if (func.name == 'on' || func.name == 'off' ) {
+            tmp = generateFunctionOnOff(func, data, name)
+        }
+        if (!tmp) {
+            switch (func.type) {
+                case FuncType.DIRECT:
+                    tmp = generateFunctionDirect(func, data, name, implH)
+                    break;
+                case FuncType.SYNC:
+                    tmp = generateFunctionSync(func, data, name)
+                    break
+                case FuncType.ASYNC:
+                case FuncType.PROMISE:
+                    tmp = generateFunctionAsync(func, data, name)
+                    break
+                default:
+                    return
+            }
         }
         middleFunc += tmp[0]
         implH += tmp[1]

@@ -86,6 +86,27 @@ InterfaceList.getValue = function (name) {
     return null;
 }
 
+class CallFunctionList { }
+CallFunctionList.callFuncs = [];
+CallFunctionList.push = function (ifs) {
+    CallFunctionList.callFuncs.push(ifs)
+}
+CallFunctionList.pop = function () {
+    CallFunctionList.callFuncs.pop()
+}
+CallFunctionList.getValue = function (name) {
+    let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
+    for (let i = 0; i < cfs.length; i++) {
+      let len = cfs[i].length
+      for (let j = 0; j < len; j++) {
+        if (cfs[i][j].name == name) {
+          return [cfs[i][j].body, cfs[i][j].ret]
+        }
+      }  
+    }
+    return null
+}
+
 class TypeList { }
 TypeList.types = [];
 TypeList.push = function (ifs) {
@@ -287,6 +308,13 @@ function getUnionType(type) {
     return typeArr
 }
 
+function isArrowFunc(type) {
+  let arrowFunc = false;
+  if (type.indexOf('=>') >= 0) {
+      arrowFunc = true;
+  }
+  return arrowFunc
+}
 
 module.exports = {
     FuncType,
@@ -294,6 +322,7 @@ module.exports = {
     NumberIncrease,
     InterfaceList,
     TypeList,
+    CallFunctionList,
     isType,
     typeIndex,
     getArrayType,
@@ -304,5 +333,6 @@ module.exports = {
     getMapType,
     EnumList,
     jsType2CType,
-    getUnionType
+    getUnionType,
+    isArrowFunc
 }

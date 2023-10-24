@@ -47,6 +47,7 @@ function analyzeNamespace(data) {
         interface: [],
         class: [],
         namespace: [],
+        callFunction: [],
     }
     while (data != '\n') {
         let oldData = data
