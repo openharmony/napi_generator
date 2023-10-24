@@ -15,9 +15,10 @@
 const { generateFunctionDirect } = require("./function_direct");
 const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
+const { generateFunctionOnOff } = require("./function_onoff");
 const { FuncType, InterfaceList, getArrayType, getArrayTypeTwo, getMapType, EnumList, jsType2CType } 
     = require("../tools/common");
-const { jsToC, getCType } = require("./param_generate");
+const { jsToC, getCType, paramGenerate } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
@@ -26,12 +27,31 @@ const { addUniqFunc2List, addUniqObj2List, setOverrideFunc } = require("../tools
 let middleBodyTmplete = `
 class [className]_middle {
 public:
+    struct constructor_value_struct {[contructorValueIn]
+    };
     static napi_value constructor(napi_env env, napi_callback_info info)
     {
         XNapiTool *pxt = new XNapiTool(env, info);
-        [className] *p = new [className]();
-        napi_value thisvar = pxt->WrapInstance(reinterpret_cast<DataPtr>(p), release);
-        return thisvar;
+        napi_status status;
+        size_t argc;
+        status = napi_get_cb_info(env, info, &argc, nullptr, nullptr, nullptr);
+        if (argc > 0) {
+            napi_value args[argc];
+            status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+            if (status != napi_ok) {
+                return nullptr;
+            }
+            struct constructor_value_struct *vio = new constructor_value_struct();
+            [getConstructorParam]
+            [className] *p = new [className]([constructorParam]);
+            napi_value thisvar = pxt->WrapInstance(reinterpret_cast<DataPtr>(p), release);
+            delete vio;
+            return thisvar;
+        } else {
+            [className] *p = new [className]();
+            napi_value thisvar = pxt->WrapInstance(reinterpret_cast<DataPtr>(p), release);
+            return thisvar;
+        }  
     }
     static void release(DataPtr p)
     {
@@ -235,6 +255,9 @@ function anyTypeString (type, name) {
 }
 
 function generateInterface(name, data, inNamespace) {
+    let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
+    valuePackage: "", valueDefine: "", optionalParamDestory: "" }
+    let getConParam = getConstructorFunc(data, param);
     let resultConnect = connectResult(data, inNamespace, name)
     let middleFunc = resultConnect[0]
     let implH = resultConnect[1]
@@ -259,12 +282,40 @@ class %s%s {
 public:%s
 };\n`.format(name, extendsStr, implH),
         implCpp: implCpp,
-        middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc),
+        middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc)
+        .replaceAll("[contructorValueIn]", param.valueIn).replaceAll("[getConstructorParam]", getConParam)
+        .replaceAll("[constructorParam]", param.valueFill),
         middleInit: middleInit,
         declarationH: `
 class %s;\r`.format(name),
     }
     return result
+}
+
+function getConstructorFunc(data, param) {
+    let funcValues = null;
+    if (data.function != null) {
+        for (let i = 0; i < data.function.length; i++) {
+            if (data.function[i].name == "constructor") {
+                funcValues = data.function[i].value;
+            }
+        }
+    }
+    for (let j in funcValues) {
+        paramGenerate(j, funcValues[j], param, data);
+    }
+    let tmpBody = param.valueCheckout.split(';\n');
+    let getConParam = "";
+    for (let i in tmpBody) {
+        tmpBody[i] = tmpBody[i].replaceAll(' ', '').replaceAll('\n', '');
+        if (tmpBody[i] != '') {
+            tmpBody[i] = tmpBody[i].replaceAll("pxt->GetArgv(", "args[");
+            let index = tmpBody[i].indexOf(")");
+            tmpBody[i] = tmpBody[i].substring(0, index) + "]" + tmpBody[i].substring(index + 1, tmpBody[i].length);
+            getConParam += tmpBody[i] + ";\n";
+        }
+    }
+    return getConParam;
 }
 
 // 递归获取接口及接口父类的所有成员属性和方法
@@ -309,44 +360,57 @@ function connectResult(data, inNamespace, name) {
         hDefine: "",
         middleValue: "",
     }
-    middleInit = `{\n    std::map<const char *, std::map<const char *, napi_callback>> valueList;`
-    data.allProperties = {values:[], functions:[]}
-    getAllPropties(data, data.allProperties, false)
-    for (let i in data.allProperties.values) {
-        let v = data.allProperties.values[i]
-        generateVariable(v, variable, name)
-        middleInit += `
-    valueList["%s"]["getvalue"] = %s%s_middle::getvalue_%s;
-    valueList["%s"]["setvalue"] = %s%s_middle::setvalue_%s;`
-            .format(v.name, inNamespace, name, v.name, v.name, inNamespace, name, v.name)
-    }
+    middleInit = getMiddleInitFunc(middleInit, data, variable, name, inNamespace);
     implH += variable.hDefine
     middleFunc += variable.middleValue
     middleInit += `\n    std::map<const char *, napi_callback> funcList;`
     for (let i in data.allProperties.functions) {
         let func = data.allProperties.functions[i]
         let tmp;
-        switch (func.type) {
-            case FuncType.DIRECT:
-                tmp = generateFunctionDirect(func, data, name)
-                break;
-            case FuncType.SYNC:
-                tmp = generateFunctionSync(func, data, name)
-                break
-            case FuncType.ASYNC:
-            case FuncType.PROMISE:
-                tmp = generateFunctionAsync(func, data, name)
-                break
-            default:
-                return
+        if (func.name == 'on' || func.name == 'off' ) {
+            tmp = generateFunctionOnOff(func, data, name)
+        }
+        if (!tmp) {
+            switch (func.type) {
+                case FuncType.DIRECT:
+                    tmp = generateFunctionDirect(func, data, name, implH)
+                    break;
+                case FuncType.SYNC:
+                    tmp = generateFunctionSync(func, data, name)
+                    break
+                case FuncType.ASYNC:
+                case FuncType.PROMISE:
+                    tmp = generateFunctionAsync(func, data, name)
+                    break
+                default:
+                    return
+            }
         }
         middleFunc += tmp[0]
         implH += tmp[1]
         implCpp += tmp[2]
-        middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name, inNamespace, name, func.name)
+        if (func.name != "constructor") {
+            middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name,
+              inNamespace, name, func.name)
+        }
     }
     implH = addVirtualKeywords(data, implH, name);
     return [middleFunc, implH, implCpp, middleInit]
+}
+
+function getMiddleInitFunc(middleInit, data, variable, name, inNamespace) {
+    middleInit = `{\n    std::map<const char *, std::map<const char *, napi_callback>> valueList;`;
+    data.allProperties = { values: [], functions: [] };
+    getAllPropties(data, data.allProperties, false);
+    for (let i in data.allProperties.values) {
+        let v = data.allProperties.values[i];
+        generateVariable(v, variable, name);
+        middleInit += `
+        valueList["%s"]["getvalue"] = %s%s_middle::getvalue_%s;
+        valueList["%s"]["setvalue"] = %s%s_middle::setvalue_%s;`
+        .format(v.name, inNamespace, name, v.name, v.name, inNamespace, name, v.name);
+    }
+    return middleInit;
 }
 
 module.exports = {
@@ -357,5 +421,3 @@ module.exports = {
     anyTypeString,
     getHDefineOfVariable
 }
-
-
