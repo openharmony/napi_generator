@@ -559,7 +559,7 @@ function returnGenerate(returnInfo, param, data) {
 
     // 判断箭头函数参数是否为多个
     if (len > 0) {
-        param.cbParamSize = len;
+        // param.cbParamSize = len;
         for(let i=0; i<len; i++) {
             let sbType= multiTypes[i];
 

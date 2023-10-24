@@ -40,7 +40,7 @@ declare namespace napitest {
     // 以下测试用例待支持
     
     function fun8(cb: (wid: boolean) => void): string; // to add testcase cb type is arrow function
-    function fun9(cb: (wid: boolean, str: string, tc2:number) => string): string;
+    // function fun9(cb: (wid: boolean, str: string, tc2:number) => string): string;
     function fun10(cb: (wid: boolean) => string): string; // to support return type of cbfunction is not void
     // function fun9(cb: (wid: boolean, str: string, tc2:TestClass2) => string): string; // 回调函数参数个数大于1，待支持
 
