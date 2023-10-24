@@ -559,19 +559,22 @@ function returnGenerate(returnInfo, param, data) {
 
     // 判断箭头函数参数是否为多个
     if (len > 0) {
+        param.cbParamSize = len;
         for(let i=0; i<len; i++) {
             let sbType= multiTypes[i];
 
             if (sbType == "string") {
-                param.valueOut += returnInfo.optional ? "std::string* out%s = nullptr;" : "std::string out%s;".format(i, i)
-                param.valueDefine += "%sstd::string%s out%s".format(param.valueDefine.length > 0 ? ", " : "", modifiers, i)
+                param.valueOut += returnInfo.optional ? "std::string* out%s = nullptr;" : "std::string out%s;\n".format(i, i)
+                param.valueDefine += "%sstd::string%s out%s".format(param.valueDefine.length > 0 ? ", " : "", modifiers, i)  
+                // param.callbackParamTypes += "cbParamTypes[vio->out%s] = 'std::string';\n".format(i)
             }
             else if (sbType == "void") {
                 NapiLog.logInfo("The current void type don't need generate");
             }
             else if (sbType == "boolean") {
-                param.valueOut += returnInfo.optional ? "bool* out%s = nullptr;" : "bool out%s;".format(i, i)
+                param.valueOut += returnInfo.optional ? "bool* out%s = nullptr;" : "bool out%s;\n".format(i, i)
                 param.valueDefine += "%sbool%s out%s".format(param.valueDefine.length > 0 ? ", " : "", modifiers, i)
+                // param.callbackParamTypes += "cbParamTypes[vio->out%s] = 'bool';\n".format(i)
             }
             // else if (isEnum(sbType, data)) {
             //     // returnGenerateEnum(data, returnInfo, param)
@@ -580,8 +583,9 @@ function returnGenerate(returnInfo, param, data) {
             //     // returnGenerate2(returnInfo, param, data)
             // }
             else if (sbType.substring(0, 12) == "NUMBER_TYPE_") {
-                param.valueOut += sbType + (returnInfo.optional ? "* out%s = nullptr;" : " out%s;").format(i, i)
+                param.valueOut += sbType + (returnInfo.optional ? "* out%s = nullptr;" : " out%s;\n").format(i, i)
                 param.valueDefine += "%s%s%s out%s".format(param.valueDefine.length > 0 ? ", " : "", sbType, modifiers, i)
+                // param.callbackParamTypes += "cbParamTypes[vio->out%s] = 'NUMBER_TYPE_';\n".format(i)
             }
             // else if (isObjectType(sbType)) {
             //     // returnGenerateObject(returnInfo, param, data)
