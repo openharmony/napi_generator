@@ -16,6 +16,7 @@ const { replaceAll, getPrefix, getConstNum } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { NapiLog } = require("../tools/NapiLog");
+
 /**
  * 结果通过同步回调(CallBack)返回
  */
