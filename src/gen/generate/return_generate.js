@@ -457,6 +457,8 @@ function returnGenerateObject(returnInfo, param, data) {
  */
 function getReturnFill(returnInfo, param) {
     let type = returnInfo.type
+    let multiTypes = {}
+    let len
     let valueFillStr = ""
     if (param.callback) { // callback方法的返回参数处理
         if (param.callback.isAsync) {
@@ -465,10 +467,24 @@ function getReturnFill(returnInfo, param) {
             param.valueDefine += "%suint32_t& outErrCode".format(param.valueDefine.length > 0 ? ", " : "")
         }
 
-        if (type != "void") {
-            // callback<xxx> 中的xxx不是void时，生成的capp代码才需要用户填充out参数
-            valueFillStr += "%svio->out".format(valueFillStr.length > 0 ? ", " : "")
+        len = Object.keys(param.callback.cbMultiParamTypes).length
+        if (len > 0) {
+            multiTypes = param.callback.cbMultiParamTypes;
+
+            for(let i=0; i<len; i++) {
+                let sbType= multiTypes[i];
+                if (sbType != "void") {
+                    // callback<xxx> 中的xxx不是void时，生成的capp代码才需要用户填充out参数
+                    valueFillStr += "%svio->out%s".format(valueFillStr.length > 0 ? ", " : "", i)
+                }
+            }
+        } else {
+            if (type != "void") {
+                // callback<xxx> 中的xxx不是void时，生成的capp代码才需要用户填充out参数
+                valueFillStr += "%svio->out".format(valueFillStr.length > 0 ? ", " : "")
+            }
         }
+
     } else {  // 普通方法的返回参数处理
         valueFillStr = "vio->out"
     }
@@ -484,27 +500,55 @@ function isObjectType(type) {
 
 function generateOptionalAndUnion(returnInfo, param, data, outParam) {
     let type = returnInfo.type
+    let len
+    let multiTypes
     if (type === undefined) {
-        NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
-        return;
+        len = Object.keys(param.callback.cbMultiParamTypes).length
+        if (len > 0) {
+            multiTypes = param.callback.cbMultiParamTypes;
+        }
+        else {
+            NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
+            return;
+        }
     }
 
     if (returnInfo.optional) {
         param.optionalParamDestory += "C_DELETE(vio->out);\n    "
     }
 
-    if (!isEnum(type, data)) {
-        param.valuePackage = cToJs(outParam, type, "result")
-    } else if (type.indexOf("|") >= 0) {
-        returnGenerateUnion(param)
+    if (len > 0) {
+        for(let i=0; i<len; i++) {
+            let sbType= multiTypes[i];
+
+            if (!isEnum(sbType, data)) {
+                param.valuePackage = cToJs(outParam, sbType, "result")
+            } else if (sbType.indexOf("|") >= 0) {
+                returnGenerateUnion(param)
+            }
+        }
+    } else {
+        if (!isEnum(type, data)) {
+            param.valuePackage = cToJs(outParam, type, "result")
+        } else if (type.indexOf("|") >= 0) {
+            returnGenerateUnion(param)
+        }
     }
+
 }
 
 function returnGenerate(returnInfo, param, data) {
     let type = returnInfo.type
+    let multiTypes = {}
+    let len
     if (type === undefined) {
-        NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
-        return;
+        len = Object.keys(param.callback.cbMultiParamTypes).length
+        if (len > 0) {
+            multiTypes = param.callback.cbMultiParamTypes;
+        } else {
+            NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
+            return;
+        }
     }
 
     let valueFillStr = getReturnFill(returnInfo, param)
@@ -513,33 +557,98 @@ function returnGenerate(returnInfo, param, data) {
     let modifiers = returnInfo.optional ? "*" : "&"
     generateOptionalAndUnion(returnInfo, param, data, outParam);
 
-    if (type == "string") {
-        param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
-        param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
+    // 判断箭头函数参数是否为多个
+    if (len > 0) {
+        for(let i=0; i<len; i++) {
+            let sbType= multiTypes[i];
+
+            if (sbType == "string") {
+                param.valueOut += returnInfo.optional ? "std::string* out%s = nullptr;" : "std::string out%s;".format(i, i)
+                param.valueDefine += "%sstd::string%s out%s".format(param.valueDefine.length > 0 ? ", " : "", modifiers, i)
+            }
+            else if (sbType == "void") {
+                NapiLog.logInfo("The current void type don't need generate");
+            }
+            else if (sbType == "boolean") {
+                param.valueOut += returnInfo.optional ? "bool* out%s = nullptr;" : "bool out%s;".format(i, i)
+                param.valueDefine += "%sbool%s out%s".format(param.valueDefine.length > 0 ? ", " : "", modifiers, i)
+            }
+            // else if (isEnum(sbType, data)) {
+            //     // returnGenerateEnum(data, returnInfo, param)
+            // }
+            // else if(generateType(sbType)){
+            //     // returnGenerate2(returnInfo, param, data)
+            // }
+            else if (sbType.substring(0, 12) == "NUMBER_TYPE_") {
+                param.valueOut += sbType + (returnInfo.optional ? "* out%s = nullptr;" : " out%s;").format(i, i)
+                param.valueDefine += "%s%s%s out%s".format(param.valueDefine.length > 0 ? ", " : "", sbType, modifiers, i)
+            }
+            // else if (isObjectType(sbType)) {
+            //     // returnGenerateObject(returnInfo, param, data)
+            // }
+            else {
+                NapiLog.logError("Do not support returning the type [%s].".format(sbType));
+            }
+        }
+        
+
+    } else {
+        if (type == "string") {
+            param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
+            param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
+        }
+        else if (type == "void") {
+            NapiLog.logInfo("The current void type don't need generate");
+        }
+        else if (type == "boolean") {
+            param.valueOut = returnInfo.optional ? "bool* out = nullptr;" : "bool out;"
+            param.valueDefine += "%sbool%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
+        }
+        else if (isEnum(type, data)) {
+            returnGenerateEnum(data, returnInfo, param)
+        }
+        else if(generateType(type)){
+            returnGenerate2(returnInfo, param, data)
+        }
+        else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+            param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
+            param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
+        }
+        else if (isObjectType(type)) {
+            returnGenerateObject(returnInfo, param, data)
+        }
+        else {
+            NapiLog.logError("Do not support returning the type [%s].".format(type));
+        }
     }
-    else if (type == "void") {
-        NapiLog.logInfo("The current void type don't need generate");
-    }
-    else if (type == "boolean") {
-        param.valueOut = returnInfo.optional ? "bool* out = nullptr;" : "bool out;"
-        param.valueDefine += "%sbool%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
-    }
-    else if (isEnum(type, data)) {
-        returnGenerateEnum(data, returnInfo, param)
-    }
-    else if(generateType(type)){
-        returnGenerate2(returnInfo, param, data)
-    }
-    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
-        param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
-        param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
-    }
-    else if (isObjectType(type)) {
-        returnGenerateObject(returnInfo, param, data)
-    }
-    else {
-        NapiLog.logError("Do not support returning the type [%s].".format(type));
-    }
+
+    // if (type == "string") {
+    //     param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
+    //     param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
+    // }
+    // else if (type == "void") {
+    //     NapiLog.logInfo("The current void type don't need generate");
+    // }
+    // else if (type == "boolean") {
+    //     param.valueOut = returnInfo.optional ? "bool* out = nullptr;" : "bool out;"
+    //     param.valueDefine += "%sbool%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
+    // }
+    // else if (isEnum(type, data)) {
+    //     returnGenerateEnum(data, returnInfo, param)
+    // }
+    // else if(generateType(type)){
+    //     returnGenerate2(returnInfo, param, data)
+    // }
+    // else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+    //     param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
+    //     param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
+    // }
+    // else if (isObjectType(type)) {
+    //     returnGenerateObject(returnInfo, param, data)
+    // }
+    // else {
+    //     NapiLog.logError("Do not support returning the type [%s].".format(type));
+    // }
 }
 
 function generateType(type){
