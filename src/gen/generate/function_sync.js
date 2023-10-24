@@ -26,7 +26,6 @@ struct [funcName]_value_struct {[valueIn][valueOut]
 [static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
-    // std::string cbParamTypes[] = {};
     std::map<std::string, std::string> cbParamTypes;
     if (pxt->IsFailed()) {
         napi_value err = pxt->GetError();
@@ -36,31 +35,16 @@ struct [funcName]_value_struct {[valueIn][valueOut]
     [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     [valueCheckout][optionalCallbackInit]
-    [callbackParamTypes]
+    // [callbackParamTypes]
     [callFunc]
     napi_value result = nullptr;
     napi_value retVal = nullptr;
     if (pxt->GetArgc() > [callback_param_offset]) {
-
-        const int PARAM_SIZE = [paramSize];
-        result = pxt->SwapC2JsUtf8(vio->out.c_str());
-        napi_value args[1] = {result};
-        // int i =0;
-        // for (auto [key, value]: cbParamTypes) {
-        //     // System.out.println("Key: " + key + ", Value: " + map.get(key));
-        //     // if (cbParamTypes[key] == 'bool') {
-        //     //     // result = pxt->SwapC2JsBool(key);
-        //     // }
-        //     //  else if (cbParamTypes.get(key) == "std::string") {
-        //     //     result = pxt->SwapC2JsUtf8(vio->out%s.c_str());
-        //     // } else if (cbParamTypes.get(key) == "void") {
-        //     //     result = pxt->UndefinedValue();
-        //     // }
-        //     //  [valuePackage]
-        //     // args[0] = result;
-        // }
-
-        retVal = pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]), PARAM_SIZE, args);
+        [valuePackage]
+        {
+            napi_value args[1] = {result};
+            retVal = pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]), XNapiTool::ONE, args);
+        }
     }
 
     if (retVal != nullptr) {
@@ -191,8 +175,7 @@ function generateFunctionSync(func, data, className) {
     }
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
     let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
-        valuePackage: "", valueDefine: "", optionalParamDestory: "", cbRetvalueDefine: "", callbackParamTypes: "",
-        cbParamSize: 0 }
+        valuePackage: "", valueDefine: "", optionalParamDestory: "", cbRetvalueDefine: ""}
 
     for (let i in func.value) {
         paramGenerate(i, func.value[i], param, data)
@@ -220,7 +203,7 @@ function generateFunctionSync(func, data, className) {
         fillCbRetValueStruct(func.ret, param, 'out')  
     }
 
-    middleFunc = replaceAll(middleFunc, "[paramSize]", param.cbParamSize) // # 输入参数定义
+    // middleFunc = replaceAll(middleFunc, "[paramSize]", param.cbParamSize) // # 输入参数定义
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
     if (param.valueOut == "") {
         middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
@@ -238,7 +221,7 @@ function generateFunctionSync(func, data, className) {
     //     / middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
     // } else {
         // param.valueCheckout = removeEndlineEnter(param.valueCheckout)
-        middleFunc = replaceAll(middleFunc, "[callbackParamTypes]", param.callbackParamTypes) // # 输入参数解析
+        // middleFunc = replaceAll(middleFunc, "[callbackParamTypes]", param.callbackParamTypes) // # 输入参数解析
     // }
 
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
