@@ -761,13 +761,13 @@ function mapArray(mapType, napiVn, dest, lt) {
     return mapTemplete
 }
 
-function paramGenerateCallBack(data, funcValue, param, p) {
+function paramGenerateCallBack(data, funcValue, param, p, isArrowType) {
     let cbParamType
     let returnType = 'void'
 
     let type = funcValue.type
 
-    if (isArrowFunc(type)) {
+    if (isArrowType) {
         cbParamType = type;
     }
     if (isFuncType(type)) {
@@ -823,7 +823,6 @@ function paramGenerateCallBack(data, funcValue, param, p) {
     let paramCallback = {    
     // function类型参数，按照空参数、空返回值回调处理 () => void {}
         type: cbParamType,
-        type: regType,
         offset: p,
         returnType: returnType,
         optional: funcValue.optional,
@@ -1078,7 +1077,7 @@ function eventParamGenerate(p, funcValue, param, data) {
         let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数
         let isArrowType = true
         for (let i in funcBody) {
-            paramGenerateCallBack(data, funcBody[i], param, p)
+            paramGenerateCallBack(data, funcBody[i], param, p, isArrowType)
         }
     } else if (regName) {
         // event type参数处理

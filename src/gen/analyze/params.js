@@ -24,6 +24,7 @@ function isSyncFuncType(type, funcType) {
         isSync = true;
     }
     return isSync;
+}
 
 /**
  * on方法中回调方法的解析
@@ -97,7 +98,7 @@ function analyzeParams(funcName, values) {
                 if (type.indexOf("AsyncCallback") >= 0) {
                     funcType = FuncType.ASYNC
                 }
-                    
+                                    
                 if (isSyncFuncType(type, funcType)) {
                     funcType = FuncType.SYNC
                 }             

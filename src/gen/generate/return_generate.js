@@ -94,6 +94,10 @@ function cToJsForInterface(value, type, dest, deep) {
 
 function cToJs(value, type, dest, deep = 1, optional) {
     var propertyName = delPrefix(value);
+    if (type == null || type == undefined) {
+        NapiLog.logError("type is invalid!")
+        return
+    }
     if (type.indexOf("|") >= 0) {
         return unionTempleteFunc(value, type, dest, optional);
     } else if (type == "void")
