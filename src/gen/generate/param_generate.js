@@ -14,7 +14,7 @@
 */
 const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease,
     enumIndex, isEnum, EnumValueType, getMapType,
-    EnumList, getUnionType, TypeList } = require("../tools/common");
+    EnumList, getUnionType, TypeList, CallFunctionList } = require("../tools/common");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
 const { getConstNum } = require("../tools/tool");
@@ -761,15 +761,17 @@ function mapArray(mapType, napiVn, dest, lt) {
     return mapTemplete
 }
 
-function paramGenerateCallBack(data, funcValue, param, p) {
-    let regType
+function paramGenerateCallBack(data, funcValue, param, p, isArrowType) {
     let type = funcValue.type
+    let regType
+    if (isArrowType) {
+        regType = type;
+    }
     if (isFuncType(type)) {
         regType = 'void';
     }
     
     let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", type)
-    
     if (arrayType) {
         regType = re.getReg(type, arrayType.regs[2])
     }
@@ -794,14 +796,20 @@ function paramGenerateCallBack(data, funcValue, param, p) {
             return
         }
     }
+
+    let paramCallback = {
     
     // function类型参数，按照空参数、空返回值回调处理 () => void {}
-    param.callback = {
         type: regType,
         offset: p,
         optional: funcValue.optional,
         isAsync: type.indexOf("AsyncCallback") >= 0
     }
+    if (param.callback) {
+      param.callback.push(paramCallback)
+    } else {
+      param.callback = paramCallback
+    }  
 }
 
 function isArrayType(type) {    
@@ -1042,9 +1050,19 @@ function eventParamGenerate(p, funcValue, param, data) {
     if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
         // callback参数处理
         paramGenerateCallBack(data, funcValue, param, p)
+    } else if (CallFunctionList.getValue(type)) {  // 判断条件
+        // callFunction => 函数参数处理
+        let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数
+        let isArrowType = true
+        for (let i in funcBody) {
+            paramGenerateCallBack(data, funcBody[i], param, p, isArrowType)
+        }
     } else if (regName) {
         // event type参数处理
-        param.eventName = re.getReg(type, regName.regs[1])
+        param.eventName = re.getReg(type, regName.regs[1])  // string类型如何处理？
+        if (param.eventName == "string") {
+            param.eventName = "string%d".format(NumberIncrease.getAndIncrease())
+        }
         param.valueDefine += "%sstd::string &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
     } else {
         NapiLog.logError("function eventParamGenerate:The current version do not support to this param to generate :"

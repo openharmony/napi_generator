@@ -87,7 +87,7 @@ function analyzeInterface(data, rsltInterface = null, results) { // same as clas
                 optional: optionalFlag
             })
         }
-        tt = re.match("(static )* *(\\$*[A-Za-z0-9_]+) *[:]? *\\(([\n 'a-zA-Z:;=,_0-9?<>{}|[\\]]*)\\)"
+        tt = re.match("(static )* *(\\$*[A-Za-z0-9_]+) *[:]? *\\(([\n 'a-zA-Z\'\'\"\":;=,_0-9?<>{}()=>|[\\]]*)\\)"
             + " *(:|=>)? *([A-Za-z0-9_<>{}:;, .[\\]]+)?", t)
         if (tt) { // 接口函数成员
             let ret = re.getReg(t, tt.regs[5]) == ''? 'void': re.getReg(t, tt.regs[5])
