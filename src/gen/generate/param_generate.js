@@ -823,20 +823,7 @@ function paramGenerateCallBack(data, funcValue, param, p, isArrowFuncFlag = fals
         cbParamType = 'void';
     }
     cbParamType = matchCBParamType(cbParamType, type)
-    // let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", type)
-    // if (arrayType) {
-    //     cbParamType = re.getReg(type, arrayType.regs[2])
-    // }
 
-    // let arrayType2 = re.match("(Async)*Callback<(([a-zA-Z_0-9]+)\\[\\])>", type)
-    // if (arrayType2) {
-    //     cbParamType = re.getReg(type, arrayType2.regs[2])
-    // }
-
-    // let tt = re.match("(Async)*Callback<([a-zA-Z_0-9]+)>", type)
-    // if (tt) {
-    //     cbParamType = re.getReg(type, tt.regs[2])
-    // }
     if (isEnum(cbParamType, data)) {
         let index = enumIndex(cbParamType, data)
         if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
