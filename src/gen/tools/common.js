@@ -308,12 +308,25 @@ function getUnionType(type) {
     return typeArr
 }
 
+function isFuncType(type) {
+    let isFunction = false; 
+    if (type === null || type === undefined) {
+        return isFunction;
+    }
+    
+    if (type === 'function' || type === 'Function') {
+        isFunction = true;
+        return isFunction;
+    }
+}
+
+// 箭头函数，如funTest(cb: (wid: boolean) => void): string;
 function isArrowFunc(type) {
-  let arrowFunc = false;
-  if (type.indexOf('=>') >= 0) {
-      arrowFunc = true;
-  }
-  return arrowFunc
+    let arrowFunc = false;
+    if (type.indexOf('AUTO_CALLFUNCTION') >= 0 || type.indexOf('=>') > 0) {
+        arrowFunc = true;
+    }
+    return arrowFunc
 }
 
 module.exports = {
@@ -334,5 +347,6 @@ module.exports = {
     EnumList,
     jsType2CType,
     getUnionType,
+    isFuncType,
     isArrowFunc
 }

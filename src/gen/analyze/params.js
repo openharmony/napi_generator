@@ -14,8 +14,17 @@
 */
 const re = require("../tools/re");
 const { checkOutBody, print } = require("../tools/tool");
-const { FuncType, NumberIncrease, isArrowFunc } = require("../tools/common");
+const { FuncType, NumberIncrease,isFuncType, isArrowFunc } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
+
+function isSyncFuncType(type, funcType) {
+    let isSync = false;
+    if (funcType == FuncType.DIRECT && type.indexOf("Callback") >= 0 && type.indexOf("AsyncCallback") < 0 ||
+    isFuncType(type) || isArrowFunc(type)) {
+        isSync = true;
+    }
+    return isSync;
+}
 
 /**
  * on方法中回调方法的解析
@@ -41,7 +50,7 @@ function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
       rsltCallFunction.push({
           "name": functionTypeName,
           "body": tmp[0],
-          "ret": functionRet                  // 返回值
+          "ret": functionRet             // 返回值
       })                
       valueType = functionTypeName
   }
@@ -85,12 +94,14 @@ function analyzeParams(funcName, values) {
                 checkParamOk = false;
             } 
             if (checkParamOk) {
-                result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type , "optional": optionalFlag})
-                if (type.indexOf("AsyncCallback") >= 0)
+                result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type, "optional": optionalFlag})
+                if (type.indexOf("AsyncCallback") >= 0) {
                     funcType = FuncType.ASYNC
-                if (funcType == FuncType.DIRECT && type.indexOf("Callback") >= 0 && type.indexOf("AsyncCallback") < 0 ||
-                    isArrowFunc(type))
+                }
+
+                if (isSyncFuncType(type, funcType)) {
                     funcType = FuncType.SYNC
+                }             
             }
         }
         else {

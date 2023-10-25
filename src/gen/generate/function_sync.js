@@ -15,6 +15,7 @@
 const { replaceAll, getPrefix, getConstNum } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
+const { NapiLog } = require("../tools/NapiLog");
 
 /**
  * 结果通过同步回调(CallBack)返回
@@ -36,14 +37,20 @@ struct [funcName]_value_struct {[valueIn][valueOut]
     [valueCheckout][optionalCallbackInit]
     [callFunc]
     napi_value result = nullptr;
+    napi_value retVal = nullptr;
     if (pxt->GetArgc() > [callback_param_offset]) {
         [valuePackage]
         {
             napi_value args[1] = {result};
-            pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]), XNapiTool::ONE, args);
+            retVal = pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]), XNapiTool::ONE, args);
         }
     }
-    result = pxt->UndefinedValue();
+
+    if (retVal != nullptr) {
+        [cbRetValJs2C]        
+        [funcRetC2Js]
+    }
+
     [optionalParamDestory]
     delete vio;
     if (pxt->IsFailed()) {
@@ -55,6 +62,12 @@ struct [funcName]_value_struct {[valueIn][valueOut]
 
 let cppTemplate = `
 bool %s%s(%s)
+{
+    return true;
+}
+`
+let cppFuncReturnTemplate = `
+bool %s%sReturn(%s)
 {
     return true;
 }
@@ -82,6 +95,130 @@ function getOptionalCallbackInit(param) {
         .format(getConstNum(param.callback.offset), cType)
 }
 
+function callBackReturnValJs2C(funcName, callbackRetType) {
+    let cbRetJs2CTrans = ''
+    if (callbackRetType === 'void') {
+        cbRetJs2CTrans = '';
+    } else if (callbackRetType === 'string') {
+        cbRetJs2CTrans = 'pxt->SwapJs2CUtf8(retVal, vio->cbOut);\n' + 
+        '%sReturn(vio->cbOut, vio->retOut);\n'.format(funcName);
+    } else if (callbackRetType === 'boolean') {
+        cbRetJs2CTrans = 'vio->in0 = pxt->SwapJs2CBool(retVal);\n';
+    } else if (callbackRetType === 'number') {
+        cbRetJs2CTrans = 'vio->in0 = pxt->SwapJs2CInt32(retVal);\n';
+    } else {
+
+    }
+    return cbRetJs2CTrans;
+}
+
+function returnProcRetC2Js(funRetType) {
+    let retC2JsCode = '';
+    if (funRetType === 'void') {
+
+    } else if (funRetType === 'string') {
+        retC2JsCode = 'result = pxt->SwapC2JsUtf8(vio->retOut.c_str());'
+    } else if (funRetType === 'boolean') {
+        retC2JsCode = 'result = pxt->SwapC2JsUtf8(vio->retOut);'
+    } else {
+
+    }
+    return retC2JsCode;
+}
+
+function fillCbRetValueStruct(type, param, outName) {
+    if (type === null || param === null || param.valueOut === null || param.valueDefine === null) {
+        return;
+    }
+
+    if (type === 'void') {
+       NapiLog.logInfo("The current void type don't need generate");
+    } else if (type === 'string') {       
+        param.cbRetvalueDefine += "%sstd::string& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "", outName)
+    } else if (type === 'boolean') {
+        
+    } else {
+
+    }
+}
+
+function fillValueStruct(type, param, outName) {
+    if (type === null || param === null || param.valueOut === null || param.valueDefine === null) {
+        return;
+    }
+
+    if (type === 'void') {
+        NapiLog.logInfo("The current void type don't need generate");
+    } else if (type === 'string') {
+        param.valueOut += 'std::string %s;\n'.format(outName)
+        if (param.callback.returnType === 'void') {
+            param.valueDefine += "%sstd::string& %s".format(param.valueDefine.length > 0 ? ", " : "", outName)
+        }        
+    } else if (type === 'boolean') {
+        
+    } else {
+
+    }
+}
+
+function callbackReturnProc(param, func) {    
+    fillValueStruct(param.callback.returnType, param, 'cbOut')
+    fillValueStruct(func.ret, param, 'retOut')
+
+    // 回调返回值非空，业务代码分两部分，一部分填写JS回调需要的参数(对应funcname函数)，一部分根据回调返回值进行后续业务处理(对应funcnameReturn函数)，
+    // 回调返回值为空，则业务代码处理是一个整体，对应funcname函数，统一处理填写参数、函数返回值赋值处理。
+    if (param.callback.returnType === 'void') {
+        if (func.ret == "string" || func.ret == "boolean") {
+            param.valueFill += param.valueFill.length > 0 ? ", vio->retOut" : "vio->retOut"
+        }
+        else if (func.ret == "void") {
+           NapiLog.logInfo("The current void type don't need generate");
+        }
+        else{
+            NapiLog.logError("not support returnType:%s!".format(param.callback.returnType))
+        }
+    } else{
+        // param.cbRetvalueDefine赋值，传递给funcnameReturn函数
+        fillCbRetValueStruct(param.callback.returnType, param, 'in')
+        fillCbRetValueStruct(func.ret, param, 'out')  
+    }
+}
+
+function getImplHAndCpp(className, param, func, implH, implCpp, prefixArr) {
+    if (!func.isParentMember) {
+        // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
+        implH = "\n%s%s%sbool %s(%s)%s;".format(
+            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
+        implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
+
+        if (param.callback.returnType != 'void' && param.callback.returnType != undefined) {
+            implH += "\n%s%s%sbool %sReturn(%s)%s;".format(
+                prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.cbRetvalueDefine, prefixArr[3])
+            implCpp += cppFuncReturnTemplate.format(className == null ? "" : className + "::", 
+            func.name, param.cbRetvalueDefine)
+        }
+    }
+}
+
+function replaceValueOut(param, middleFunc) {
+    if (param.valueOut == "") {
+        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
+    } else {
+        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
+    }
+    return middleFunc
+}
+
+function replaceValueCheckout(param, middleFunc) {
+    if (param.valueCheckout == "") {
+        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
+    } else {
+        param.valueCheckout = removeEndlineEnter(param.valueCheckout)
+        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
+    }
+    return middleFunc
+}
+
 function generateFunctionSync(func, data, className) {
     let middleFunc = replaceAll(funcSyncTemplete, "[funcName]", func.name)
     if (className == null) {
@@ -96,25 +233,18 @@ function generateFunctionSync(func, data, className) {
     }
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
     let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
-        valuePackage: "", valueDefine: "", optionalParamDestory: "" }
+        valuePackage: "", valueDefine: "", optionalParamDestory: "", cbRetvalueDefine: ""}
 
     for (let i in func.value) {
         paramGenerate(i, func.value[i], param, data)
     }
     returnGenerate(param.callback, param)
+    callbackReturnProc(param, func);
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
-    if (param.valueOut == "") {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
-    } else {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
-    } 
-    if (param.valueCheckout == "") {
-        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
-    } else {
-        param.valueCheckout = removeEndlineEnter(param.valueCheckout)
-        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
-    }
+    middleFunc = replaceValueOut(param, middleFunc)
+    middleFunc = replaceValueCheckout(param, middleFunc)
+
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
     let optionalCallback = getOptionalCallbackInit(param)
@@ -122,15 +252,32 @@ function generateFunctionSync(func, data, className) {
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
     middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
     middleFunc = middleFunc.replaceAll("[callback_param_offset]", param.callback.offset); // 呼叫回调
+    
+    // callback返回值处理，回调成功后根据js返回值，业务进行后续处理
+    let callBackReturnProc = callBackReturnValJs2C(func.name, param.callback.returnType)
+    middleFunc = middleFunc.replaceAll("[cbRetValJs2C]", callBackReturnProc);
+
+    // 同步函数返回值处理
+    let retTrans = returnProcRetC2Js(func.ret)
+    middleFunc = middleFunc.replaceAll("[funcRetC2Js]", retTrans);
 
     let prefixArr = getPrefix(data, func)
     let implH = ""
     let implCpp = ""
+
+    // getImplHAndCpp(className, param, func, implH, implCpp, prefixArr)
     if (!func.isParentMember) {
         // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
         implH = "\n%s%s%sbool %s(%s)%s;".format(
             prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
         implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
+
+        if (param.callback.returnType != 'void' && param.callback.returnType != undefined) {
+            implH += "\n%s%s%sbool %sReturn(%s)%s;".format(
+                prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.cbRetvalueDefine, prefixArr[3])
+            implCpp += cppFuncReturnTemplate.format(className == null ? "" : className + "::", 
+            func.name, param.cbRetvalueDefine)
+        }
     }
     return [middleFunc, implH, implCpp]
 }
