@@ -323,7 +323,7 @@ function isFuncType(type) {
 // 箭头函数，如funTest(cb: (wid: boolean) => void): string;
 function isArrowFunc(type) {
     let arrowFunc = false;
-    if (type.indexOf('=>') >= 0) {
+    if (type.indexOf('AUTO_CALLFUNCTION') >= 0 || type.indexOf('=>') > 0) {
         arrowFunc = true;
     }
     return arrowFunc
