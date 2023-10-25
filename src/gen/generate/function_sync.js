@@ -205,7 +205,8 @@ function replaceValueOut(param, middleFunc) {
         middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
     } else {
         middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
-    } 
+    }
+    return middleFunc
 }
 
 function replaceValueCheckout(param, middleFunc) {
@@ -215,6 +216,7 @@ function replaceValueCheckout(param, middleFunc) {
         param.valueCheckout = removeEndlineEnter(param.valueCheckout)
         middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
     }
+    return middleFunc
 }
 
 function generateFunctionSync(func, data, className) {
@@ -240,19 +242,8 @@ function generateFunctionSync(func, data, className) {
     callbackReturnProc(param, func);
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
-    // replaceValueOut(param, middleFunc)
-    // replaceValueCheckout(param, middleFunc)
-    if (param.valueOut == "") {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
-    } else {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
-    }
-    if (param.valueCheckout == "") {
-        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
-    } else {
-        param.valueCheckout = removeEndlineEnter(param.valueCheckout)
-        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
-    }
+    middleFunc = replaceValueOut(param, middleFunc)
+    middleFunc = replaceValueCheckout(param, middleFunc)
 
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
