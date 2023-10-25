@@ -288,7 +288,7 @@ function parseFunction(matchs, data, result) {
             funcRet = funcRet.substring(0, funcRet.length-1)
         }
         let funcDetail = analyzeFunction(
-            result, false, funcName, funcValue.substring(1, funcValue.length - 1), funcRet)
+            result, false, funcName, funcValue.substring(1, funcValue.length - 1), funcRet, result)
         if (funcDetail != null) {
             // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
             addUniqFunc2List(funcDetail, result.function)

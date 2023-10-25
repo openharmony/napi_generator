@@ -92,8 +92,24 @@ function cToJsForInterface(value, type, dest, deep) {
     return result
 }
 
+function c2JsForEnum(deep, type, value, dest, propertyName) {
+    let lt = deep
+    let result = ""
+    let ifl = EnumList.getValue(type)
+    let type2 = ifl[0].type
+    let enumCtoJsStr = cToJs("enumInt%d".format(lt), type2, "tnv%d".format(lt), deep + 1)
+    result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) + "int enumInt%d = (int)(%s);\n".format(lt, value) + 
+            enumCtoJsStr + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
+                .format(dest, propertyName, lt)
+    return result
+}
+
 function cToJs(value, type, dest, deep = 1, optional) {
     var propertyName = delPrefix(value);
+    if (type == null || type == undefined) {
+        NapiLog.logError("type is invalid!")
+        return
+    }
     if (type.indexOf("|") >= 0) {
         return unionTempleteFunc(value, type, dest, optional);
     } else if (type == "void")
@@ -109,15 +125,7 @@ function cToJs(value, type, dest, deep = 1, optional) {
         return cToJsForType(value, type, dest, deep);
     }
     else if(EnumList.getValue(type)){
-        let lt = deep
-        let result = ""
-        let ifl = EnumList.getValue(type)
-        let type2 = ifl[0].type
-        let enumCtoJsStr = cToJs("enumInt%d".format(lt), type2, "tnv%d".format(lt), deep + 1)
-        result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) + "int enumInt%d = (int)(%s);\n".format(lt, value) + 
-                enumCtoJsStr + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
-                    .format(dest, propertyName, lt)
-        return result
+        return c2JsForEnum(deep, type, value, dest, propertyName);
     }
     else if (type.substring(0, 6) == "Array<" || type.substring(type.length - 2) == "[]") {
         let arrayType = checkArrayParamType(type)
@@ -439,12 +447,12 @@ function returnGenerateMap(returnInfo, param) {
 
 function returnGenerateUnion (param) {
     param.valueOut = `std::any out;
-            std::string out_type;`
+            std::string out_type;\n`
     param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
 }
 
 function returnGenerateObject(returnInfo, param, data) {
-    param.valueOut = `std::map<std::string, std::any> out;`            
+    param.valueOut = `std::map<std::string, std::any> out;\n`            
     param.valueDefine += "%sstd::map<std::string, std::any> &out".format(param.valueDefine.length > 0 ? ", " : "")
    
 }
@@ -509,7 +517,7 @@ function generateOptionalAndUnion(returnInfo, param, data, outParam, i) {
 function returnGenerate(returnInfo, param, data, i) {
     let type = returnInfo.type
     if (type === undefined) {
-        NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
+        NapiLog.logError("returnGenerate: type of %s is undefined!".format(returnInfo));
         return;
     }
 
@@ -520,14 +528,14 @@ function returnGenerate(returnInfo, param, data, i) {
     generateOptionalAndUnion(returnInfo, param, data, outParam, i);
 
     if (type == "string") {
-        param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
+        param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;\n"
         param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     }
     else if (type == "void") {
         NapiLog.logInfo("The current void type don't need generate");
     }
     else if (type == "boolean") {
-        param.valueOut = returnInfo.optional ? "bool* out = nullptr;" : "bool out;"
+        param.valueOut = returnInfo.optional ? "bool* out = nullptr;" : "bool out;\n"
         param.valueDefine += "%sbool%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     }
     else if (isEnum(type, data)) {
@@ -537,7 +545,7 @@ function returnGenerate(returnInfo, param, data, i) {
         returnGenerate2(returnInfo, param, data)
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
-        param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
+        param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;\n")
         param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
     }
     else if (isObjectType(type)) {
@@ -546,6 +554,7 @@ function returnGenerate(returnInfo, param, data, i) {
     else {
         NapiLog.logError("Do not support returning the type [%s].".format(type));
     }
+  
 }
 
 function generateType(type){
@@ -584,7 +593,7 @@ function returnGenerate2(returnInfo, param, data){
 
     let flag = InterfaceList.getValue(type) || TypeList.getValue(type)
     if (flag) {
-        param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
+        param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;\n")
         param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
     } else if (type.substring(0, 6) == "Array<") {
         returnArrayGen(type, param, returnInfo, modifiers);
@@ -592,11 +601,11 @@ function returnGenerate2(returnInfo, param, data){
         let arrayType = getArrayTypeTwo(type)
         arrayType = jsType2CType(arrayType)
         if (arrayType == "any") {
-            param.valueOut = `std::any out;
+            param.valueOut = `std::any out;\n
             std::string out_type;`
             param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
         } else {
-            param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;".format(arrayType)
+            param.valueOut = returnInfo.optional ? "std::vector<%s>* out = nullptr;\n".format(arrayType)
                                              : "std::vector<%s> out;".format(arrayType)
             param.valueDefine += "%sstd::vector<%s>%s out".format(
             param.valueDefine.length > 0 ? ", " : "", arrayType, modifiers)
@@ -608,7 +617,7 @@ function returnGenerate2(returnInfo, param, data){
             std::string out_type;`
         param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
     } else if (isObjectType(type)) {
-        param.valueOut = `std::map<std::string, std::any> out;`
+        param.valueOut = `std::map<std::string, std::any> out;\n`
         param.valueDefine += "%sstd::map<std::string, std::any> &out".format(param.valueDefine.length > 0 ? ", " : "")
     }
 }
@@ -642,11 +651,11 @@ function returnGenerateEnum(data, returnInfo, param) {
     }
     param.valuePackage = cToJs("vio->out", type, "result")
     if (type == "string") {
-        param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
+        param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;\n"
         param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
-        param.valueOut = type + " out;"
+        param.valueOut = type + " out;\n"
         param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
     }
 }
