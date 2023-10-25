@@ -50,7 +50,7 @@ function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
       rsltCallFunction.push({
           "name": functionTypeName,
           "body": tmp[0],
-          "ret": functionRet                  // 返回值
+          "ret": functionRet             // 返回值
       })                
       valueType = functionTypeName
   }
@@ -94,11 +94,11 @@ function analyzeParams(funcName, values) {
                 checkParamOk = false;
             } 
             if (checkParamOk) {
-                result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type , "optional": optionalFlag})
+                result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type, "optional": optionalFlag})
                 if (type.indexOf("AsyncCallback") >= 0) {
                     funcType = FuncType.ASYNC
                 }
-                                    
+
                 if (isSyncFuncType(type, funcType)) {
                     funcType = FuncType.SYNC
                 }             

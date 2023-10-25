@@ -761,37 +761,49 @@ function mapArray(mapType, napiVn, dest, lt) {
     return mapTemplete
 }
 
-function paramGenerateCallBack(data, funcValue, param, p, isArrowType) {
+function getCBparaTypeForArrow(type) {
+    let cbParamType
+    const typeSplits = type.split("=>", 2);
+    let callbackParams = typeSplits[0];
+    let returnType = typeSplits[1];
+    callbackParams = callbackParams.substring(1, callbackParams.length-1); // 去掉参数列表两侧的小括号
+    if (callbackParams.length <= 0) { //无参
+        cbParamType = 'void';
+    }
+
+    if (callbackParams.indexOf(",") >= 0) { // 多个参数，进行分割            
+        callbackParams = callbackParams.split(",")
+        for(let i=0; i<callbackParams.length; i++) {
+            NapiLog.logInfo("muilti paramets")
+        }
+    } else { // 一个参数
+        let params = callbackParams.split(':', 2);
+        cbParamType = params[1]
+    }
+    return [cbParamType, returnType]
+}
+
+function paramGenerateCallBack(data, funcValue, param, p, isArrowFuncFlag = false) {
     let cbParamType
     let returnType = 'void'
 
     let type = funcValue.type
 
-    if (isArrowType) {
+    if (isArrowFuncFlag) {
         cbParamType = type;
-    }
-    if (isFuncType(type)) {
-        cbParamType = 'void';
     }
 
     if (isArrowFunc(type)) {
-        const typeSplits = type.split("=>", 2);
-        let callbackParams = typeSplits[0];
-        returnType = typeSplits[1];
-        callbackParams = callbackParams.substring(1, callbackParams.length-1); // 去掉参数列表两侧的小括号
-        if (callbackParams.length <= 0) { //无参
-            cbParamType = 'void';
+        if (CallFunctionList.getValue(type)) {
+            // callFunction => 函数参数处理
+            let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数
+            cbParamType = funcBody[0].type
+            returnType = CallFunctionList.getValue(type)[1]
         }
+    }
 
-        if (callbackParams.indexOf(",") >= 0) { // 多个参数，进行分割            
-            callbackParams = callbackParams.split(",")
-            for(let i=0; i<callbackParams.length; i++) {
-                NapiLog.logInfo("muilti paramets")
-            }
-        } else { // 一个参数
-            let params = callbackParams.split(':', 2);
-            cbParamType = params[1]
-        }
+    if (isFuncType(type)) {
+        cbParamType = 'void';
     }
 
     let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", type)
@@ -821,12 +833,11 @@ function paramGenerateCallBack(data, funcValue, param, p, isArrowType) {
     }
 
     let paramCallback = {    
-    // function类型参数，按照空参数、空返回值回调处理 () => void {}
+        // function类型参数，按照空参数、空返回值回调处理 () => void {}
         type: cbParamType,
         offset: p,
         returnType: returnType,
         optional: funcValue.optional,
-        // cbMultiParamTypes:cbMultiParamTypes,
         isAsync: type.indexOf("AsyncCallback") >= 0
     }
     if (param.callback) {
