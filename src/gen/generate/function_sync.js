@@ -95,27 +95,24 @@ function getOptionalCallbackInit(param) {
         .format(getConstNum(param.callback.offset), cType)
 }
 
-function callBackReturnValJs2C(funcName, callbackRetType) {
+function callBackReturnValJs2C(className, funcName, callbackRetType) {
     let cbRetJs2CTrans = ''
     if (callbackRetType === 'void') {
         cbRetJs2CTrans = '';
     } else if (callbackRetType === 'string') {
         cbRetJs2CTrans = 'pxt->SwapJs2CUtf8(retVal, vio->cbOut);\n' + 
-        '%sReturn(vio->cbOut, vio->retOut);\n'.format(funcName);
+        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName);
     } else if (callbackRetType === 'boolean') {
         cbRetJs2CTrans = 'vio->cbOut = pxt->SwapJs2CBool(retVal);\n' + 
-        '%sReturn(vio->cbOut, vio->retOut);\n'.format(funcName);
+        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName);
     } else if (callbackRetType.substring(0, 12) == "NUMBER_TYPE_") {
         let lt = NumberIncrease.getAndIncrease()
         cbRetJs2CTrans = 'NUMBER_JS_2_C(retVal, NUMBER_TYPE_%d, vio->cbOut);\n'.format(lt) + 
-        '%sReturn(vio->cbOut, vio->retOut);\n'.format(funcName);;
-    // } else if (InterfaceList.getValue(callbackRetType)) {
-        
+        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName); 
     } else if (callbackRetType === 'number') {       
         cbRetJs2CTrans = 'NUMBER_JS_2_C(retVal, NUMBER_TYPE_1, vio->cbOut);\n' + 
-        '%sReturn(vio->cbOut, vio->retOut);\n'.format(funcName);;
-    }
-    else {
+        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName);
+    } else {
         NapiLog.logError("callBackReturnValJs2C not surpport callbackRetType:%s".format(callbackRetType));
     }
     return cbRetJs2CTrans;
@@ -270,7 +267,7 @@ function generateFunctionSync(func, data, className) {
     middleFunc = middleFunc.replaceAll("[callback_param_offset]", param.callback.offset); // 呼叫回调
     
     // callback返回值处理，回调成功后根据js返回值，业务进行后续处理
-    let callBackReturnProc = callBackReturnValJs2C(func.name, param.callback.returnType)
+    let callBackReturnProc = callBackReturnValJs2C(className, func.name, param.callback.returnType)
     middleFunc = middleFunc.replaceAll("[cbRetValJs2C]", callBackReturnProc);
 
     // 同步函数返回值处理

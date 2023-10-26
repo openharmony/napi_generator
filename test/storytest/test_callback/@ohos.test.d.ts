@@ -25,16 +25,16 @@ declare namespace napitest {
         fun17(tt: Function): string;
 
         // 针对不同返回值类型测试
-        // fun110(cb: (wid: boolean) => string): string;
-        // fun111(cb: (wid: boolean) => string): boolean;
-        // fun112(cb: (wid: boolean) => string): number;
-        // fun113(cb: (wid: boolean) => string): TestClass2;
-        // fun114(cb: (wid: boolean) => string): Human;
+        fun110(cb: (wid: boolean) => string): string;
+        fun111(cb: (wid: boolean) => string): boolean;
+        fun112(cb: (wid: boolean) => string): number;
+        // fun113(cb: (wid: boolean) => string): TestClass2; // 待支持
+        // fun114(cb: (wid: boolean) => string): Human; // 待支持
 
         // 针对回调返回值类型测试
-        // fun210(cb: (wid: boolean) => string): boolean;
-        // fun211(cb: (wid: boolean) => boolean): string;
-        // fun212(cb: (wid: boolean) => number): string;
+        fun210(cb: (wid: boolean) => string): boolean;
+        fun211(cb: (wid: boolean) => boolean): string;
+        fun212(cb: (wid: boolean) => number): string;
         // fun213(cb: (wid: boolean) => TestClass2): string;
         // fun214(cb: (wid: boolean) => Human): string;
     }
