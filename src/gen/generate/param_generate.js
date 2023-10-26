@@ -1079,27 +1079,6 @@ function paramGenerate(p, funcValue, param, data) {
     }
 }
 
-// function callBackReturnValJs2C(funcName, callbackRetType) {
-//     let cbRetJs2CTrans = ''
-//     if (callbackRetType === 'void') {
-//         cbRetJs2CTrans = '';
-//     } else if (callbackRetType === 'string') {
-//         cbRetJs2CTrans = 'pxt->SwapJs2CUtf8(retVal, vio->cbOut);\n' + 
-//         '        %sReturn(vio->cbOut, vio->retOut);\n'.format(funcName);
-//     } else if (callbackRetType === 'boolean') {
-//         cbRetJs2CTrans = 'vio->in0 = pxt->SwapJs2CBool(retVal);\n';
-//     } else if (callbackRetType === 'number') {
-//         let lt = NumberIncrease.getAndIncrease()
-//         cbRetJs2CTrans = 'NUMBER_JS_2_C(retVal, NUMBER_TYPE_%d, vio->in0);\n'.format(lt);
-//     } else if (InterfaceList.getValue(callbackRetType)) {
-        
-//     }
-//     else {
-//         NapiLog.logError("callBackReturnValJs2C not surpport callbackRetType:%s".format(callbackRetType));
-//     }
-//     return cbRetJs2CTrans;
-// }
-
 // on/off 接口的参数处理
 function eventParamGenerate(p, funcValue, param, data) {
     let name = funcValue.name;
