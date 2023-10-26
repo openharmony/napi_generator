@@ -17,6 +17,7 @@ const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { NapiLog } = require("../tools/NapiLog");
 const { NumberIncrease }= require("../tools/common");
+
 /**
  * 结果通过同步回调(CallBack)返回
  */
@@ -149,7 +150,8 @@ function fillCbRetValueStruct(type, param, outName) {
     } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         param.cbRetvalueDefine += "%s%s& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "", type, outName)
     } else if ( type === 'number') {
-        param.cbRetvalueDefine += "%sNUMBER_TYPE_1& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "", type, outName)
+        param.cbRetvalueDefine += "%sNUMBER_TYPE_1& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "",
+        type, outName)
     }
     else {
         NapiLog.logError("[fillCbRetValueStruct] The current type:%s don't support".format(type));
