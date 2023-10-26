@@ -163,7 +163,7 @@ function gennerateEventCallback(codeContext, data, param) {
     for (let i = 0; i < param.callback.length; i++) {
         paramIsAsync = param.callback[i].isAsync
         returnGenerate(param.callback[i], param, data, i)
-        let paramType = param.valueOut.substring(0, param.valueOut.length - "out;".length)
+        let paramType = param.valueOut.substring(0, param.valueOut.length - "out;\n".length)
         paramType = re.replaceAll(paramType, " ", "")
         let realParamType = paramType.substring(0, 12) == "NUMBER_TYPE_" ? "uint32_t" : paramType
         let tag = i == param.callback.length - 1? '' : ', '
