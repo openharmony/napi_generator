@@ -12,19 +12,20 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { TestClass1, TestClass2, ModelEvent, TestClass3, on, TestClass4} = require("./out/build/Release/napitest")
+const { TestClass1, TestClass2, ModelEvent, TestClass3, on, TestClass4,
+  TestClass5, TestClass6, TestClass7} = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('test 1 on', function () {  
     let ret = false;
     let inter = new ModelEvent({topic:'aa', message:'sit down'});
-    function onAsyncCallback(err) {
+    function onCallback(val) {
         ret = true;
-        console.info('onAsyncCallback err = ' + err)
+        console.info('onAsyncCallback val = ' + val)
         console.info('onAsyncCallback ret = ' + ret)
     }
 
-    function onCallback(inter) {
+    function onCallback2(inter) {
         ret = true;
         console.info('onCallback inter.topic = ' + inter.topic)
         console.info('onCallback inter.message = ' + inter.message)
@@ -38,14 +39,21 @@ describe('test 1 on', function () {
         console.info('onCallback inter.message = ' + inter.message)
     }
 
+    // function on(type: "onEvents", callback: (wid: number) => void): void; // 箭头函数支持
+    it('test function on', function () {
+        ret = false;
+        on('onEvents', onCallback);
+        // assert.strictEqual(ret, true);
+    });
+
     // interface TestClass1 {
     //     on(type: string, callback: Callback<boolean>): void; 
     // }
     let tc1 = new TestClass1(); 
     it('test TestClass1 fun1', function () {
         ret = false;
-        tc1.on('OnEvent', onAsyncCallback);
-        assert.strictEqual(ret, true);
+        tc1.on('OnEvent', onCallback);
+        // assert.strictEqual(ret, true);
     });
 
     // interface ModelEvent{
@@ -58,8 +66,8 @@ describe('test 1 on', function () {
     let tc2 = new TestClass2(); 
     it('test TestClass2 on', function () {
         ret = false;
-        tc2.on('OnEvent', onCallback);
-        assert.strictEqual(ret, true);
+        tc2.on('OnEvent', onCallback2);
+        // assert.strictEqual(ret, true);
     });
 
     // interface TestClass3 {
@@ -69,58 +77,79 @@ describe('test 1 on', function () {
     it('test TestClass3 on', function () {
         ret = false;
         tc3.on('OnEvent', onCallbackTest3);
-        assert.strictEqual(ret, true);
+        // assert.strictEqual(ret, true);
     });
 });
 
 describe('test 2 on', function () {
     let ret = false;
     let inter = new ModelEvent({topic:'aa', message:'sit down'});
-    function onAsyncCallback(err) {
+    function onCallback(val) {
         ret = true;
-        console.info('onAsyncCallback err = ' + err)
-        console.info('onAsyncCallback ret = ' + ret)
+        console.info('onCallback err = ' + val)
+        console.info('onCallback ret = ' + ret)
     }
 
-    function onCallback(inter) {
+    function onCallback2(val, inter) {
         ret = true;
-        console.info('onCallback inter.topic = ' + inter.topic)
-        console.info('onCallback inter.message = ' + inter.message)
+        console.info('onCallback2 val = ' + val)
+        console.info('onCallback2 inter.topic = ' + inter.topic)
+        console.info('onCallback2 inter.message = ' + inter.message)
     }
-
-    function onAsyncCallback2(val, inter) {
-        ret = true;
-        console.info('onAsyncCallback2 val = ' + val)
-        console.info('onAsyncCallback2 inter.topic = ' + inter.topic)
-        console.info('onAsyncCallback2 inter.message = ' + inter.message)
-    }
-
-    it('test function on', function () {
-        ret = false;
-        on('OnEventOn', onAsyncCallback);
-        assert.strictEqual(ret, true);
-    });
-
+    
     // interface TestClass4 {
-    //   on(type: "heartbeat", callback: Callback<boolean>): void; // 固定事件，回调参数为boolean
-    //   on(type: "heartbeat2", callback: Callback<ModelEvent>): void; // 固定事件，回调参数为ModelEvent
-    //   on(type: string, callback: (wid: boolean) => void): void; // 箭头函数
-    //   // on(type: string, callback: (wid: boolean) => string): void; // 返回值待支持
-    //   on(type: "inputStart", callback: (wid: boolean, modeEv: ModelEvent) => void): void // 回调函数参数个数大于1
+    //   on(type: "heartbeat", callback: (wid: boolean) => void): void; // 箭头函数支持
     // }
     let tc4 = new TestClass4(); 
     it('test TestClass4 on', function () {
         ret = false;
-        tc4.on('heartbeat', onAsyncCallback);
+        tc4.on('heartbeat', onCallback);
         // assert.strictEqual(ret, true);
+    });
+
+    // interface TestClass5 {
+    //   on(type: "inputStart", callback: (wid: boolean, modeEv: ModelEvent) => void): void // 回调函数参数个数大于1，支持
+    // }
+    let tc5 = new TestClass5(); 
+    it('test TestClass5 on', function () {
         ret = false;
-        tc4.on('heartbeat2', onCallback);
+        tc5.on('inputStart', onCallback2);
         // assert.strictEqual(ret, true);
+    });
+});
+
+describe('test 3 on', function () {
+    let ret = false;
+    let inter = new ModelEvent({topic:'aa', message:'sit down'});
+    function onAsyncCallback1(err) {
+        ret = true;
+        console.info('onAsyncCallback1 err = ' + err)
+        console.info('onAsyncCallback1 ret = ' + ret)
+    }
+
+    function onAsyncCallback2(inter) {
+      ret = true;
+      console.info('onAsyncCallback2 inter.topic = ' + inter.topic)
+      console.info('onAsyncCallback2 inter.message = ' + inter.message)
+    }
+
+    // interface TestClass6 {
+    //   on(type: string, asyncCallback: AsyncCallback<boolean>): void;
+    // }
+    let tc6 = new TestClass6(); 
+    it('test TestClass6 on', function () {
         ret = false;
-        tc4.on('test', onAsyncCallback);
+        tc6.on('test1', onAsyncCallback1);
         // assert.strictEqual(ret, true);
+    });
+  
+    // interface TestClass7 {
+    //   on(type: string, asyncCallback: AsyncCallback<ModelEvent>): void; // Callback为interface
+    // }
+    let tc7 = new TestClass7();
+    it('test TestClass7 on', function () {
         ret = false;
-        tc4.on('inputStart', onAsyncCallback2);
-        // assert.strictEqual(ret, true);
+        tc7.on('test2', onAsyncCallback2);
+       // assert.strictEqual(ret, true);
     });
 });

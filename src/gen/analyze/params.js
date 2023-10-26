@@ -47,10 +47,18 @@ function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
       let functionBody = re.getReg(valueType, matchs.regs[1]);
      
       let tmp = analyzeParams(functionTypeName, functionBody)
+      let bodyRes = tmp[0]
+      for (let i in bodyRes) {
+        let hasProperty = Object.prototype.hasOwnProperty.call(bodyRes[i], "type")
+        if (hasProperty && bodyRes[i].type == "number") {
+          bodyRes[i].type = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease();
+        }
+      }
+
       rsltCallFunction.push({
           "name": functionTypeName,
-          "body": tmp[0],
-          "ret": functionRet             // 返回值
+          "body": bodyRes,
+          "ret": functionRet                  // 返回值
       })                
       valueType = functionTypeName
   }

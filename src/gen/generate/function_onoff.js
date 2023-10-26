@@ -52,10 +52,10 @@ struct [funcName]_value_struct {
 let middleAsyncCallbackTemplate = `
 void [eventNames]AsyncCallback(const std::string &eventName, [callback_param_type])
 {
-	if(XNapiTool::asyncFuncs_.count(eventName) <= 0) {
+	if(XNapiTool::callFuncs_.count(eventName) <= 0) {
         return;
     }
-	AsyncFunc *pAsyncFuncs = &XNapiTool::asyncFuncs_[eventName];
+  CallFunc *pAsyncFuncs = &XNapiTool::callFuncs_[eventName];
 	napi_value exports = nullptr;
 	XNapiTool *pxt = std::make_unique<XNapiTool>(pAsyncFuncs->env_, exports).release();
     napi_value result = nullptr;
@@ -66,14 +66,24 @@ void [eventNames]AsyncCallback(const std::string &eventName, [callback_param_typ
     [cb_params_define]
     [cb_params]
     [value_set_array]
-	XNapiTool::CallAsyncFunc(pAsyncFuncs, result);
+  XNapiTool::[call_function_name](pAsyncFuncs, result);
 	delete pxt;
 }
 `
 
 let middleEventCallbakTemplate = `
 void [eventName]Callback(std::string &eventName, [callback_param_type]) {
-	[eventName]AsyncCallback(eventName, [callback_param_name]);
+  bool isStringType = [is_string_type];
+  if (!isStringType) {
+    if (eventName != "[eventName]") { // on方法注册字段为固定值时,判断ts文件中注册的字段与使用字段是否一样
+      printf("eventName Err !");
+      return;
+    } else {
+      [eventName]AsyncCallback(eventName, [callback_param_name]);
+    }
+  } else {
+    [eventName]AsyncCallback(eventName, [callback_param_name]);
+  }
 }
 `
 let implHEventCallbakTemplate = `
@@ -128,8 +138,8 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     let instancePtr = "%s".format(className == null ? "" : "pInstance->")
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
 
-    let registLine = func.name == 'on' ? "pxt->RegistAsyncFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));" 
-        : "pxt->UnregistAsyncFunc(vio->eventName);"
+    let registLine = func.name == 'on' ? "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));" 
+        : "pxt->UnregistOnOffFunc(vio->eventName);"
         codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
 
         codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
@@ -149,7 +159,9 @@ function gennerateEventCallback(codeContext, data, param) {
     let cbParams = ''
     let resultDefine = ''
     let valueSetArray = ''
+    let paramIsAsync = false
     for (let i = 0; i < param.callback.length; i++) {
+        paramIsAsync = param.callback[i].isAsync
         returnGenerate(param.callback[i], param, data, i)
         let paramType = param.valueOut.substring(0, param.valueOut.length - "out;\n".length)
         paramType = re.replaceAll(paramType, " ", "")
@@ -164,6 +176,7 @@ function gennerateEventCallback(codeContext, data, param) {
         valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, result%d);\n    '.format(i, i)
         addOnTypeToList(data, realParamType)
     }
+    let callFunctionName = paramIsAsync? "CallAsyncFunc" : "CallSyncFunc"
     let callbackFunc = middleAsyncCallbackTemplate
     callbackFunc = replaceAll(middleAsyncCallbackTemplate, "[eventNames]", param.eventName)
     callbackFunc = replaceAll(callbackFunc, "[callback_param_type]", params)
@@ -171,12 +184,15 @@ function gennerateEventCallback(codeContext, data, param) {
     callbackFunc = replaceAll(callbackFunc, "[cb_params]", cbParams)
     callbackFunc = replaceAll(callbackFunc, "[callback_param_length]", param.callback.length)
     callbackFunc = replaceAll(callbackFunc, "[value_set_array]", valueSetArray)
+    callbackFunc = replaceAll(callbackFunc, "[call_function_name]", callFunctionName)
     codeContext.middleFunc += callbackFunc
 
      // 为每个on的event事件生成回调方法
      let middleEventCallBack = replaceAll(middleEventCallbakTemplate, "[eventName]", param.eventName)
      middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_name]", useParams)
      middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_type]", params)
+     let isStrType = param.eventNameIsStr? "true": "false"
+     middleEventCallBack = replaceAll(middleEventCallBack, "[is_string_type]", isStrType)
      codeContext.middleFunc += middleEventCallBack;
 
      // 为每个on的event事件生成回调接口供用户侧使用
@@ -194,6 +210,7 @@ function generateFunctionOnOff(func, data, className) {
         valuePackage: "", // 输出参数打包
         valueDefine: "", // impl参数定义
         eventName:"", // 注册/去注册事件名称
+        eventNameIsStr:false, // 注册/去注册事件名称是否在ts中为string类型
         optionalParamDestory: "", // 可选参数内存释放
         callback: []  // 回调函数参数
     }

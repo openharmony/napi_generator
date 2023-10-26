@@ -30,7 +30,7 @@ let xNapiToolH = `\
 
 using DataPtr = struct DumyData*;
 
-struct AsyncFunc {
+struct CallFunc {
     napi_env env_;
     napi_ref funcRef_;
     napi_ref thisVarRef_;
@@ -48,9 +48,10 @@ public:
     static const int SEVEN = 7;
     static const int EIGHT = 8;
     static const int NINE = 9;
-    void RegistAsyncFunc(std::string name, napi_value func);
-    void UnregistAsyncFunc(std::string name);
-    static void CallAsyncFunc(AsyncFunc *pAsyncFuncs, napi_value ret);
+    void RegistOnOffFunc(std::string name, napi_value func);
+    void UnregistOnOffFunc(std::string name);
+    static void CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret);
+    static void CallAsyncFunc(CallFunc *pAsyncFuncs, napi_value ret);
 
     using CallbackFunction = void (*)(XNapiTool *pxt, DataPtr data);
     using RELEASE_INSTANCE = void (*)(DataPtr p);
@@ -194,7 +195,7 @@ public:
     // create code related class
 public:
     static void WrapFinalize(napi_env env, XNapiTool *data, DataPtr hint);
-    static std::map<std::string, AsyncFunc> asyncFuncs_;
+    static std::map<std::string, CallFunc> callFuncs_;
     void ReleaseInstance();
     napi_value WrapInstance(DataPtr instance, RELEASE_INSTANCE ri);
     DataPtr UnWarpInstance();
@@ -1623,32 +1624,66 @@ void* XNapiTool::GetAsyncInstance()
     return asyncInstance_;
 }
 
-std::map<std::string, AsyncFunc> XNapiTool::asyncFuncs_;
-void XNapiTool::RegistAsyncFunc(std::string name, napi_value func)
+std::map<std::string, CallFunc> XNapiTool::callFuncs_;
+void XNapiTool::RegistOnOffFunc(std::string name, napi_value func)
 {
-    if (XNapiTool::asyncFuncs_.count(name) > 0) {
-        UnregistAsyncFunc(name);
+    if (XNapiTool::callFuncs_.count(name) > 0) {
+        UnregistOnOffFunc(name);
     }
-    XNapiTool::asyncFuncs_[name].env_ = env_;
-    napi_status result_status = napi_create_reference(env_, func, 1, &XNapiTool::asyncFuncs_[name].funcRef_);
+    XNapiTool::callFuncs_[name].env_ = env_;
+    napi_status result_status = napi_create_reference(env_, func, 1, &XNapiTool::callFuncs_[name].funcRef_);
     CC_ASSERT(result_status == napi_ok);
-    result_status = napi_create_reference(env_, thisVar_, 1, &XNapiTool::asyncFuncs_[name].thisVarRef_);
+    result_status = napi_create_reference(env_, thisVar_, 1, &XNapiTool::callFuncs_[name].thisVarRef_);
     CC_ASSERT(result_status == napi_ok);
 }
 
-void XNapiTool::UnregistAsyncFunc(std::string name)
+void XNapiTool::UnregistOnOffFunc(std::string name)
 {
-    if (XNapiTool::asyncFuncs_.count(name) <= 0) {
+    if (XNapiTool::callFuncs_.count(name) <= 0) {
         return;
     }
-    napi_status result_status = napi_delete_reference(env_, XNapiTool::asyncFuncs_[name].funcRef_);
+    napi_status result_status = napi_delete_reference(env_, XNapiTool::callFuncs_[name].funcRef_);
     CC_ASSERT(result_status == napi_ok);
-    result_status = napi_delete_reference(env_, XNapiTool::asyncFuncs_[name].thisVarRef_);
+    result_status = napi_delete_reference(env_, XNapiTool::callFuncs_[name].thisVarRef_);
     CC_ASSERT(result_status == napi_ok);
-    XNapiTool::asyncFuncs_.erase(name);
+    XNapiTool::callFuncs_.erase(name);
 }
 
-void XNapiTool::CallAsyncFunc(AsyncFunc *pAsyncFuncs, napi_value ret)
+void XNapiTool::CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret)
+{
+    napi_handle_scope scope = nullptr;
+    napi_open_handle_scope(pSyncFuncs->env_, &scope);
+
+    napi_value cb;
+    napi_status result_status = napi_get_reference_value(pSyncFuncs->env_, pSyncFuncs->funcRef_, &cb);
+    CC_ASSERT(result_status == napi_ok);
+
+    napi_value thisvar;
+    result_status = napi_get_reference_value(pSyncFuncs->env_, pSyncFuncs->thisVarRef_, &thisvar);
+    CC_ASSERT(result_status == napi_ok);
+
+    uint32_t length = 0;
+    napi_value element;
+    napi_get_array_length(pSyncFuncs->env_, ret, &length);
+           
+    const uint32_t LENGHTH = length;
+    napi_value args[LENGHTH] = {};
+    for (uint32_t i = 0; i < length; i++) {
+        napi_get_element(pSyncFuncs->env_, ret, i, &element);
+        args[i] = element;
+    }
+  
+    napi_value cb_result;
+          
+    result_status = napi_call_function(pSyncFuncs->env_, thisvar, cb, length, args, &cb_result);
+       
+    CC_ASSERT(result_status == napi_ok);
+
+    result_status = napi_close_handle_scope(pSyncFuncs->env_, scope);
+    CC_ASSERT(result_status == napi_ok);
+}
+
+void XNapiTool::CallAsyncFunc(CallFunc *pAsyncFuncs, napi_value ret)
 {
     uv_loop_s *loop = nullptr;
     napi_get_uv_event_loop(pAsyncFuncs->env_, &loop);
@@ -1656,7 +1691,7 @@ void XNapiTool::CallAsyncFunc(AsyncFunc *pAsyncFuncs, napi_value ret)
 
     struct AsyncCallData {
         napi_ref resultRef;
-        AsyncFunc *p;
+        CallFunc *p;
     };
     AsyncCallData *data = (AsyncCallData *)malloc(sizeof(AsyncCallData));
     napi_create_reference(pAsyncFuncs->env_, ret, 1, &data->resultRef);
@@ -1669,7 +1704,7 @@ void XNapiTool::CallAsyncFunc(AsyncFunc *pAsyncFuncs, napi_value ret)
         [](uv_work_t *) {},
         [](uv_work_t *work, int status) {
             AsyncCallData *data = (AsyncCallData *)work->data;
-            AsyncFunc *paf = data->p;
+            CallFunc *paf = data->p;
             napi_handle_scope scope = nullptr;
             napi_open_handle_scope(paf->env_, &scope);
 
