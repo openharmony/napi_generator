@@ -16,6 +16,7 @@ const { replaceAll, getPrefix, getConstNum } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { NapiLog } = require("../tools/NapiLog");
+const { NumberIncrease }= require("../tools/common");
 
 /**
  * 结果通过同步回调(CallBack)返回
@@ -95,19 +96,25 @@ function getOptionalCallbackInit(param) {
         .format(getConstNum(param.callback.offset), cType)
 }
 
-function callBackReturnValJs2C(funcName, callbackRetType) {
+function callBackReturnValJs2C(className, funcName, callbackRetType) {
     let cbRetJs2CTrans = ''
     if (callbackRetType === 'void') {
         cbRetJs2CTrans = '';
     } else if (callbackRetType === 'string') {
         cbRetJs2CTrans = 'pxt->SwapJs2CUtf8(retVal, vio->cbOut);\n' + 
-        '%sReturn(vio->cbOut, vio->retOut);\n'.format(funcName);
+        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName);
     } else if (callbackRetType === 'boolean') {
-        cbRetJs2CTrans = 'vio->in0 = pxt->SwapJs2CBool(retVal);\n';
-    } else if (callbackRetType === 'number') {
-        cbRetJs2CTrans = 'vio->in0 = pxt->SwapJs2CInt32(retVal);\n';
+        cbRetJs2CTrans = 'vio->cbOut = pxt->SwapJs2CBool(retVal);\n' + 
+        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName);
+    } else if (callbackRetType.substring(0, 12) == "NUMBER_TYPE_") {
+        let lt = NumberIncrease.getAndIncrease()
+        cbRetJs2CTrans = 'NUMBER_JS_2_C(retVal, NUMBER_TYPE_%d, vio->cbOut);\n'.format(lt) + 
+        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName); 
+    } else if (callbackRetType === 'number') {       
+        cbRetJs2CTrans = 'NUMBER_JS_2_C(retVal, NUMBER_TYPE_1, vio->cbOut);\n' + 
+        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName);
     } else {
-
+        NapiLog.logError("callBackReturnValJs2C not surpport callbackRetType:%s".format(callbackRetType));
     }
     return cbRetJs2CTrans;
 }
@@ -115,19 +122,22 @@ function callBackReturnValJs2C(funcName, callbackRetType) {
 function returnProcRetC2Js(funRetType) {
     let retC2JsCode = '';
     if (funRetType === 'void') {
-
+        NapiLog.logInfo("returnProcRetC2Js void type do nothing!");
     } else if (funRetType === 'string') {
         retC2JsCode = 'result = pxt->SwapC2JsUtf8(vio->retOut.c_str());'
     } else if (funRetType === 'boolean') {
-        retC2JsCode = 'result = pxt->SwapC2JsUtf8(vio->retOut);'
+        retC2JsCode = 'result = pxt->SwapC2JsBool(vio->retOut);'
+    } else if (funRetType.substring(0, 12) == "NUMBER_TYPE_") {
+        retC2JsCode = 'result = NUMBER_C_2_JS(pxt, vio->retOut);'
     } else {
-
+        NapiLog.logError("returnProcRetC2Js not surpport funRetType:%s".format(funRetType));
     }
     return retC2JsCode;
 }
 
 function fillCbRetValueStruct(type, param, outName) {
     if (type === null || param === null || param.valueOut === null || param.valueDefine === null) {
+        NapiLog.logError("[fillCbRetValueStruct] param in is null!");
         return;
     }
 
@@ -136,14 +146,21 @@ function fillCbRetValueStruct(type, param, outName) {
     } else if (type === 'string') {       
         param.cbRetvalueDefine += "%sstd::string& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "", outName)
     } else if (type === 'boolean') {
-        
-    } else {
-
+        param.cbRetvalueDefine += "%sbool& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "", outName)
+    } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+        param.cbRetvalueDefine += "%s%s& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "", type, outName)
+    } else if ( type === 'number') {
+        param.cbRetvalueDefine += "%sNUMBER_TYPE_1& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "",
+        type, outName)
+    }
+    else {
+        NapiLog.logError("[fillCbRetValueStruct] The current type:%s don't support".format(type));
     }
 }
 
 function fillValueStruct(type, param, outName) {
     if (type === null || param === null || param.valueOut === null || param.valueDefine === null) {
+        NapiLog.logError("[fillValueStruct] Param in is null!");
         return;
     }
 
@@ -155,9 +172,23 @@ function fillValueStruct(type, param, outName) {
             param.valueDefine += "%sstd::string& %s".format(param.valueDefine.length > 0 ? ", " : "", outName)
         }        
     } else if (type === 'boolean') {
-        
-    } else {
-
+        param.valueOut += 'bool %s;\n'.format(outName)
+        if (param.callback.returnType === 'void') {
+            param.valueDefine += "%sbool& %s".format(param.valueDefine.length > 0 ? ", " : "", outName)
+        }  
+    } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+        param.valueOut += '%s %s;\n'.format(type, outName)
+        if (param.callback.returnType === 'void') {
+            param.valueDefine += "%s%s& %s".format(param.valueDefine.length > 0 ? ", " : "", type, outName)
+        }  
+    } else if (type === 'number') {
+        param.valueOut += 'NUMBER_TYPE_1 %s;\n'.format(outName)
+        if (param.callback.returnType === 'void') {
+            param.valueDefine += "%sNUMBER_TYPE_1& %s".format(param.valueDefine.length > 0 ? ", " : "", outName)
+        } 
+    }
+    else {
+        NapiLog.logError("[fillValueStruct] The current type:%s don't support".format(type));
     }
 }
 
@@ -181,22 +212,6 @@ function callbackReturnProc(param, func) {
         // param.cbRetvalueDefine赋值，传递给funcnameReturn函数
         fillCbRetValueStruct(param.callback.returnType, param, 'in')
         fillCbRetValueStruct(func.ret, param, 'out')  
-    }
-}
-
-function getImplHAndCpp(className, param, func, implH, implCpp, prefixArr) {
-    if (!func.isParentMember) {
-        // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
-        implH = "\n%s%s%sbool %s(%s)%s;".format(
-            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
-        implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
-
-        if (param.callback.returnType != 'void' && param.callback.returnType != undefined) {
-            implH += "\n%s%s%sbool %sReturn(%s)%s;".format(
-                prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.cbRetvalueDefine, prefixArr[3])
-            implCpp += cppFuncReturnTemplate.format(className == null ? "" : className + "::", 
-            func.name, param.cbRetvalueDefine)
-        }
     }
 }
 
@@ -254,7 +269,7 @@ function generateFunctionSync(func, data, className) {
     middleFunc = middleFunc.replaceAll("[callback_param_offset]", param.callback.offset); // 呼叫回调
     
     // callback返回值处理，回调成功后根据js返回值，业务进行后续处理
-    let callBackReturnProc = callBackReturnValJs2C(func.name, param.callback.returnType)
+    let callBackReturnProc = callBackReturnValJs2C(className, func.name, param.callback.returnType)
     middleFunc = middleFunc.replaceAll("[cbRetValJs2C]", callBackReturnProc);
 
     // 同步函数返回值处理
@@ -265,7 +280,6 @@ function generateFunctionSync(func, data, className) {
     let implH = ""
     let implCpp = ""
 
-    // getImplHAndCpp(className, param, func, implH, implCpp, prefixArr)
     if (!func.isParentMember) {
         // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
         implH = "\n%s%s%sbool %s(%s)%s;".format(
