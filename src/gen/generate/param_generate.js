@@ -14,7 +14,7 @@
 */
 const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease,
     enumIndex, isEnum, EnumValueType, getMapType,
-    EnumList, getUnionType, TypeList, CallFunctionList } = require("../tools/common");
+    EnumList, getUnionType, TypeList, CallFunctionList, isFuncType, isArrowFunc } = require("../tools/common");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
 const { getConstNum } = require("../tools/tool");
@@ -761,36 +761,75 @@ function mapArray(mapType, napiVn, dest, lt) {
     return mapTemplete
 }
 
-function paramGenerateCallBack(data, funcValue, param, p, isArrowType) {
-    let type = funcValue.type
-    let regType
-    if (isArrowType) {
-        regType = type;
+function getCBparaTypeForArrow(type) {
+    let cbParamType
+    const typeSplits = type.split("=>", 2);
+    let callbackParams = typeSplits[0];
+    let returnType = typeSplits[1];
+    callbackParams = callbackParams.substring(1, callbackParams.length-1); // 去掉参数列表两侧的小括号
+    if (callbackParams.length <= 0) { //无参
+        cbParamType = 'void';
     }
-    if (isFuncType(type)) {
-        regType = 'void';
+
+    if (callbackParams.indexOf(",") >= 0) { // 多个参数，进行分割            
+        callbackParams = callbackParams.split(",")
+        for(let i=0; i<callbackParams.length; i++) {
+            NapiLog.logInfo("muilti paramets")
+        }
+    } else { // 一个参数
+        let params = callbackParams.split(':', 2);
+        cbParamType = params[1]
     }
-    
+    return [cbParamType, returnType]
+}
+
+function matchCBParamType(cbParamType, type) {
     let arrayType = re.match("(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>", type)
     if (arrayType) {
-        regType = re.getReg(type, arrayType.regs[2])
+        cbParamType = re.getReg(type, arrayType.regs[2])
     }
 
     let arrayType2 = re.match("(Async)*Callback<(([a-zA-Z_0-9]+)\\[\\])>", type)
     if (arrayType2) {
-        regType = re.getReg(type, arrayType2.regs[2])
+        cbParamType = re.getReg(type, arrayType2.regs[2])
     }
 
     let tt = re.match("(Async)*Callback<([a-zA-Z_0-9]+)>", type)
     if (tt) {
-        regType = re.getReg(type, tt.regs[2])
+        cbParamType = re.getReg(type, tt.regs[2])
     }
-    if (isEnum(regType, data)) {
-        let index = enumIndex(regType, data)
+    return cbParamType
+}
+function paramGenerateCallBack(data, funcValue, param, p, isArrowFuncFlag = false) {
+    let cbParamType
+    let returnType = 'void'
+
+    let type = funcValue.type
+
+    if (isArrowFuncFlag) {
+        cbParamType = type;
+    }
+
+    if (isArrowFunc(type)) {
+        if (CallFunctionList.getValue(type)) {
+            // callFunction => 函数参数处理
+            let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数
+            cbParamType = funcBody[0].type
+            returnType = CallFunctionList.getValue(type)[1]
+        }
+    }
+
+    if (isFuncType(type)) {
+        cbParamType = 'void';
+    }
+    cbParamType = matchCBParamType(cbParamType, type)
+
+    if (isEnum(cbParamType, data)) {
+        let index = enumIndex(cbParamType, data)
         if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-            regType = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
+            cbParamType = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
         } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
-            regType = "string"
+            cbParamType = "string"
         } else {
             NapiLog.logError(`paramGenerate is not support`);
             return
@@ -798,10 +837,10 @@ function paramGenerateCallBack(data, funcValue, param, p, isArrowType) {
     }
 
     let paramCallback = {
-    
-    // function类型参数，按照空参数、空返回值回调处理 () => void {}
-        type: regType,
+        // function类型参数，按照空参数、空返回值回调处理 () => void {}
+        type: cbParamType,
         offset: p,
+        returnType: returnType,
         optional: funcValue.optional,
         isAsync: type.indexOf("AsyncCallback") >= 0
     }
@@ -986,18 +1025,16 @@ function paramGenerateObject(p, funcValue, param) {
             : "", arrayType, modifiers, name)
 }
 
-function isFuncType(type) {
-    let isFunction = false; 
-    if (type === null || type === undefined) {
-        return isFunction;
+function isCallbackFunc(type) {
+    let callbackFunc = false;
+    if (type.substring(0, 9) == "Callback<" || 
+    type.substring(0, 14) == "AsyncCallback<" ||
+    isFuncType(type) || isArrowFunc(type)) {
+        callbackFunc = true;
     }
-    
-    if (type === 'function' || type === 'Function') {
-        isFunction = true;
-        return isFunction;
-    }
-
+    return callbackFunc;
 }
+
 // 函数的参数处理
 function paramGenerate(p, funcValue, param, data) {
     let type = funcValue.type
@@ -1019,7 +1056,7 @@ function paramGenerate(p, funcValue, param, data) {
     else if (TypeList.getValue(type)) {
         paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
     }
-    else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<" || isFuncType(type)) {
+    else if (isCallbackFunc(type)) {
         paramGenerateCallBack(data, funcValue, param, p)
     }
     else if (type == "boolean") {
