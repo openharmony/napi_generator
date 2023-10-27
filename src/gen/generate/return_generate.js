@@ -15,7 +15,7 @@
 const { isMappedTypeNode } = require("typescript");
 const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
     isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList,
-    jsType2CType, getUnionType, TypeList } = require("../tools/common");
+    jsType2CType, getUnionType, TypeList, isArrowFunc } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 const { print } = require("../tools/tool");
 
@@ -463,13 +463,11 @@ function returnGenerateObject(returnInfo, param, data) {
  * @param param 方法的所有参数信息
  * @returns 返回参数的填充代码123 返回测试的值
  */
-function getReturnFill(returnInfo, param, i) {
+function getReturnFill(returnInfo, param) {
     let type = returnInfo.type
     let valueFillStr = ""
-    let isCallback = i == undefined? param.callback : param.callback[i]
-    if (isCallback) { // callback方法的返回参数处理
-        let isCallbackAsync = i == undefined? param.callback.isAsync : param.callback[i].isAsync
-        if (isCallbackAsync) {
+    if (param.callback) { // callback方法的返回参数处理
+        if (param.callback.isAsync) {
             // 异步callback方法返回的是一个结构体，包含errcode和data两部分， 详见basic.d.ts中AsyncCallback的定义
             valueFillStr = "vio->outErrCode"
             param.valueDefine += "%suint32_t& outErrCode".format(param.valueDefine.length > 0 ? ", " : "")
@@ -492,7 +490,7 @@ function isObjectType(type) {
     return false;
 }
 
-function generateOptionalAndUnion(returnInfo, param, data, outParam, i) {
+function generateOptionalAndUnion(returnInfo, param, data, outParam) {
     let type = returnInfo.type
     if (type === undefined) {
         NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
@@ -504,32 +502,61 @@ function generateOptionalAndUnion(returnInfo, param, data, outParam, i) {
     }
 
     if (!isEnum(type, data)) {
-        if (i != undefined) {
-            param.valuePackage = cToJs(outParam, type, "result" + i)
-        } else {
-            param.valuePackage = cToJs(outParam, type, "result")
-        }
+        param.valuePackage = cToJs(outParam, type, "result")
     } else if (type.indexOf("|") >= 0) {
         returnGenerateUnion(param)
     }
 }
 
-function returnGenerate(returnInfo, param, data, i) {
+function returnGenerateForMultiPara(paramInfo, param) {
+    let type = paramInfo.type
+    if (type === undefined) {
+        NapiLog.logError("returnGenerate: type of %s is undefined!".format(paramInfo));
+        return;
+    }
+    let modifiers = paramInfo.optional ? "*" : "&"
+    if (type == "string") {
+        param.valueOut += paramInfo.optional ? "std::string* %s = nullptr;" : "std::string %s;\n"
+        .format(paramInfo.name, paramInfo.name)
+        param.valueDefine += "%sstd::string%s %s".format(param.valueDefine.length > 0 ? ", " : "", modifiers,
+        paramInfo.name)
+    }
+    else if (type == "void") {
+        NapiLog.logInfo("The current void type don't need generate");
+    }
+    else if (type == "boolean") {
+        param.valueOut += paramInfo.optional ? "bool* %s = nullptr;" : "bool %s;\n"
+        .format(paramInfo.name, paramInfo.name)
+        param.valueDefine += "%sbool%s %s".format(param.valueDefine.length > 0 ? ", " : "", modifiers, paramInfo.name)
+    }
+    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+        param.valueOut += type + (paramInfo.optional ? "* %s = nullptr;" : " %s;\n")
+        .format(paramInfo.name, paramInfo.name)
+        param.valueDefine += "%s%s%s %s".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers,
+        paramInfo.name)
+    }
+    else {
+        NapiLog.logError("Do not support returning the type [%s].".format(type));
+    }
+}
+
+function returnGenerate(returnInfo, param, data) {
     let type = returnInfo.type
     if (type === undefined) {
         NapiLog.logError("returnGenerate: type of %s is undefined!".format(returnInfo));
         return;
     }
 
-    let valueFillStr = getReturnFill(returnInfo, param, i)
+    let valueFillStr = getReturnFill(returnInfo, param)
     param.valueFill += ("%s" + valueFillStr).format(param.valueFill.length > 0 ? ", " : "")
     let outParam = returnInfo.optional ? "(*vio->out)" : "vio->out"
     let modifiers = returnInfo.optional ? "*" : "&"
-    generateOptionalAndUnion(returnInfo, param, data, outParam, i);
+    generateOptionalAndUnion(returnInfo, param, data, outParam);
 
     if (type == "string") {
-        param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;\n"
-        param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
+        param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;\n"        
+        param.valueDefine += "%sstd::string%s %s".format(param.valueDefine.length > 0 ? ", " : "", modifiers, 
+        returnInfo.name)
     }
     else if (type == "void") {
         NapiLog.logInfo("The current void type don't need generate");
@@ -550,6 +577,15 @@ function returnGenerate(returnInfo, param, data, i) {
     }
     else if (isObjectType(type)) {
         returnGenerateObject(returnInfo, param, data)
+    } else if (isArrowFunc(type)) {
+        for(const [paramName, paramType] of returnInfo.arrowFuncParamList) {
+            let paramInfo = {
+                name: paramName,
+                type: paramType,
+                optional: returnInfo.optional
+            }
+            returnGenerateForMultiPara(paramInfo, param)
+        }
     }
     else {
         NapiLog.logError("Do not support returning the type [%s].".format(type));

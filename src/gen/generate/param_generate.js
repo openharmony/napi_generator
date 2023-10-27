@@ -800,24 +800,11 @@ function matchCBParamType(cbParamType, type) {
     }
     return cbParamType
 }
-function paramGenerateCallBack(data, funcValue, param, p, isArrowFuncFlag = false) {
+function paramGenerateCallBack(data, funcValue, param, p) {
     let cbParamType
     let returnType = 'void'
 
     let type = funcValue.type
-
-    if (isArrowFuncFlag) {
-        cbParamType = type;
-    }
-
-    if (isArrowFunc(type)) {
-        if (CallFunctionList.getValue(type)) {
-            // callFunction => 函数参数处理
-            let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数
-            cbParamType = funcBody[0].type
-            returnType = CallFunctionList.getValue(type)[1]
-        }
-    }
 
     if (isFuncType(type)) {
         cbParamType = 'void';
@@ -836,7 +823,7 @@ function paramGenerateCallBack(data, funcValue, param, p, isArrowFuncFlag = fals
         }
     }
 
-    let paramCallback = {
+    param.callback = {
         // function类型参数，按照空参数、空返回值回调处理 () => void {}
         type: cbParamType,
         offset: p,
@@ -844,11 +831,35 @@ function paramGenerateCallBack(data, funcValue, param, p, isArrowFuncFlag = fals
         optional: funcValue.optional,
         isAsync: type.indexOf("AsyncCallback") >= 0
     }
-    if (param.callback) {
-      param.callback.push(paramCallback)
-    } else {
-      param.callback = paramCallback
-    }  
+}
+
+function paramGenerateArrowCallBack(funcValue, param, p) {
+    let cbParamType
+    let returnType = 'void'
+
+    let type = funcValue.type
+    let cbParamList = []
+
+    if (CallFunctionList.getValue(type)) {
+        // callFunction => 函数参数处理
+        let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数            
+        returnType = CallFunctionList.getValue(type)[1]
+        cbParamType = type
+        for (let i in funcBody) {            
+            cbParamList[funcBody[i].name] = funcBody[i].type
+        }
+    }
+
+    param.callback = {
+        // function类型参数，按照空参数、空返回值回调处理 () => void {}
+        type: cbParamType,
+        offset: p,
+        returnType: returnType,
+        optional: funcValue.optional,
+        isArrowFuncFlag: true,
+        arrowFuncParamList:cbParamList,
+        isAsync: type.indexOf("AsyncCallback") >= 0
+    } 
 }
 
 function isArrayType(type) {    
@@ -1029,7 +1040,7 @@ function isCallbackFunc(type) {
     let callbackFunc = false;
     if (type.substring(0, 9) == "Callback<" || 
     type.substring(0, 14) == "AsyncCallback<" ||
-    isFuncType(type) || isArrowFunc(type)) {
+    isFuncType(type)) {
         callbackFunc = true;
     }
     return callbackFunc;
@@ -1058,6 +1069,9 @@ function paramGenerate(p, funcValue, param, data) {
     }
     else if (isCallbackFunc(type)) {
         paramGenerateCallBack(data, funcValue, param, p)
+    }
+    else if (CallFunctionList.getValue(type)) {
+        paramGenerateArrowCallBack(funcValue, param, p)
     }
     else if (type == "boolean") {
         paramGenerateCommon(p, "bool", funcValue, param, modifiers, inParamName)
@@ -1089,11 +1103,12 @@ function eventParamGenerate(p, funcValue, param, data) {
         paramGenerateCallBack(data, funcValue, param, p)
     } else if (CallFunctionList.getValue(type)) {  // 判断条件
         // callFunction => 函数参数处理
-        let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数
-        let isArrowType = true
-        for (let i in funcBody) {
-            paramGenerateCallBack(data, funcBody[i], param, p, isArrowType)
-        }
+        // let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数
+        paramGenerateArrowCallBack(funcValue, param, p)
+        // let isArrowType = true
+        // for (let i in funcBody) {
+        //     paramGenerateCallBack(data, funcBody[i], param, p, isArrowType)
+        // }
     } else if (regName) {
         // event type参数处理
         param.eventName = re.getReg(type, regName.regs[1])  // string类型如何处理？
