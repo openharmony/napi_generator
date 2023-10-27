@@ -149,8 +149,8 @@ function gennerateEventCallback(codeContext, data, param) {
     let cbParams = ''
     let resultDefine = ''
     let valueSetArray = ''
-    for (let i = 0; i < param.callback.length; i++) {
-        returnGenerate(param.callback[i], param, data, i)
+    for (let i = 0; i < param.callback.arrowFuncParamList.length; i++) {
+        returnGenerate(param.callback.arrowFuncParamList[i], param, data, i)
         let paramType = param.valueOut.substring(0, param.valueOut.length - "out;\n".length)
         paramType = re.replaceAll(paramType, " ", "")
         let realParamType = paramType.substring(0, 12) == "NUMBER_TYPE_" ? "uint32_t" : paramType
@@ -195,7 +195,7 @@ function generateFunctionOnOff(func, data, className) {
         valueDefine: "", // impl参数定义
         eventName:"", // 注册/去注册事件名称
         optionalParamDestory: "", // 可选参数内存释放
-        callback: []  // 回调函数参数
+        // callback: []  // 回调函数参数
     }
 
     for (let i in func.value) {
