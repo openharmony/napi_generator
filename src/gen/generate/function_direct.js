@@ -19,11 +19,15 @@ const { returnGenerate } = require("./return_generate");
 /**
  * 结果直接返回
  */
-let funcDirectTemplete = `
+let funcDirectMiddleHTemplete = `
 struct [funcName]_value_struct {[valueIn][valueOut]
 };
 
-[static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info)
+[static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info);
+`
+
+let funcDirectTemplete = `
+napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
     if (pxt->IsFailed()) {
@@ -67,7 +71,14 @@ function removeEndlineEnter(value) {
 
 function generateFunctionDirect(func, data, className, implHVariable) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
-    middleFunc = isClassFunc(className, middleFunc);
+    let middleH = ""
+    if (func.name != "constructor") {
+      middleH = replaceAll(funcDirectMiddleHTemplete, "[funcName]", func.name)
+    }
+
+    let isClassresult = isClassFunc(className, middleFunc, middleH);
+    middleFunc = isClassresult[0]
+    middleH = isClassresult[1]
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
     let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
         valuePackage: "", valueDefine: "", optionalParamDestory: "" }
@@ -81,12 +92,8 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     } else {
         returnGenerate(returnInfo, param, data)
     }
-    middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
-    if (param.valueOut == "") {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
-    } else {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
-    } 
+    middleH = replaceValueOut(middleH, param);
+
     param.valueCheckout = removeEndlineEnter(param.valueCheckout)
     middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
@@ -112,21 +119,33 @@ function generateFunctionDirect(func, data, className, implHVariable) {
             implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
         }   
     }
-    return [middleFunc, implH, implCpp]
+    return [middleFunc, implH, implCpp, middleH]
 }
 
-function isClassFunc(className, middleFunc) {
+function replaceValueOut(middleH, param) {
+    middleH = replaceAll(middleH, "[valueIn]", param.valueIn); // # 输入参数定义
+    if (param.valueOut == "") {
+        middleH = replaceAll(middleH, "[valueOut]", param.valueOut); // # 输出参数定义
+    } else {
+        middleH = replaceAll(middleH, "[valueOut]", "\n    " + param.valueOut); // # 输出参数定义
+    }
+    return middleH;
+}
+
+function isClassFunc(className, middleFunc, middleH) {
     if (className == null) {
-        middleFunc = middleFunc.replaceAll("[static_define]", "");
+        middleH = middleH.replaceAll("[static_define]", "");
         middleFunc = middleFunc.replaceAll("[unwarp_instance]", "");
+        middleFunc = middleFunc.replaceAll("[middleClassName]", "");
     }
     else {
-        middleFunc = middleFunc.replaceAll("[static_define]", "static ");
+        middleH = middleH.replaceAll("[static_define]", "static ");
         middleFunc = middleFunc.replaceAll("[unwarp_instance]",
       `void *instPtr = pxt->UnWarpInstance();
     %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className));
+        middleFunc = middleFunc.replaceAll("[middleClassName]", className + "_middle" + "::");
   }
-  return middleFunc;
+  return [middleFunc, middleH];
 }
 
 function constructorFunc(param, implHVariable, implH, prefixArr, className) {

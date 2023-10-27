@@ -21,11 +21,15 @@ const { NumberIncrease }= require("../tools/common");
 /**
  * 结果通过同步回调(CallBack)返回
  */
-let funcSyncTemplete = `
+let funcSyncMiddleHTemplete = `
 struct [funcName]_value_struct {[valueIn][valueOut]
 };
 
-[static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info)
+[static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info);
+`
+
+let funcSyncTemplete = `
+napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
     if (pxt->IsFailed()) {
@@ -215,13 +219,13 @@ function callbackReturnProc(param, func) {
     }
 }
 
-function replaceValueOut(param, middleFunc) {
+function replaceValueOut(param, middleH) {
     if (param.valueOut == "") {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
+        middleH = replaceAll(middleH, "[valueOut]", param.valueOut) // # 输出参数定义
     } else {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
+        middleH = replaceAll(middleH, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
     }
-    return middleFunc
+    return middleH
 }
 
 function replaceValueCheckout(param, middleFunc) {
@@ -236,16 +240,14 @@ function replaceValueCheckout(param, middleFunc) {
 
 function generateFunctionSync(func, data, className) {
     let middleFunc = replaceAll(funcSyncTemplete, "[funcName]", func.name)
-    if (className == null) {
-        middleFunc = middleFunc.replaceAll("[static_define]", "")
-        middleFunc = middleFunc.replaceAll("[unwarp_instance]", "")
+    let middleH = ""
+    if (func.name != "constructor") {
+      middleH = replaceAll(funcSyncMiddleHTemplete, "[funcName]", func.name)
     }
-    else {
-        middleFunc = middleFunc.replaceAll("[static_define]", "static ")
-        middleFunc = middleFunc.replaceAll("[unwarp_instance]",
-            `void *instPtr = pxt->UnWarpInstance();
-    %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className))
-    }
+    let isClassresult = isClassFunc(className, middleH, middleFunc);
+    middleH = isClassresult[0]
+    middleFunc = isClassresult[1]
+    
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
     let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
         valuePackage: "", valueDefine: "", optionalParamDestory: "", cbRetvalueDefine: ""}
@@ -256,8 +258,8 @@ function generateFunctionSync(func, data, className) {
     returnGenerate(param.callback, param)
     callbackReturnProc(param, func);
 
-    middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
-    middleFunc = replaceValueOut(param, middleFunc)
+    middleH = replaceAll(middleH, "[valueIn]", param.valueIn) // # 输入参数定义
+    middleH = replaceValueOut(param, middleH)
     middleFunc = replaceValueCheckout(param, middleFunc)
 
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
@@ -293,7 +295,23 @@ function generateFunctionSync(func, data, className) {
             func.name, param.cbRetvalueDefine)
         }
     }
-    return [middleFunc, implH, implCpp]
+    return [middleFunc, implH, implCpp, middleH]
+}
+
+function isClassFunc(className, middleH, middleFunc) {
+    if (className == null) {
+        middleH = middleH.replaceAll("[static_define]", "");
+        middleFunc = middleFunc.replaceAll("[unwarp_instance]", "");
+        middleFunc = middleFunc.replaceAll("[middleClassName]", "");
+    }
+    else {
+        middleH = middleH.replaceAll("[static_define]", "static ");
+        middleFunc = middleFunc.replaceAll("[unwarp_instance]",
+          `void *instPtr = pxt->UnWarpInstance();
+        %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className));
+        middleFunc = middleFunc.replaceAll("[middleClassName]", className + "_middle" + "::");
+    }
+    return [middleH, middleFunc];
 }
 
 module.exports = {
