@@ -27,7 +27,10 @@ const path = require('path')
 const { NapiLog } = require("./tools/NapiLog");
 var fs = require('fs');
 
-let moduleCppTmplete = `\
+let moduleHTemplete = `\
+#ifndef IMPL_[impl_name_upper]_H
+#define IMPL_[impl_name_upper]_H
+
 #include <cstring>
 #include <string>
 #include <memory>
@@ -37,6 +40,21 @@ let moduleCppTmplete = `\
 #include <optional>
 #include "tool_utility.h"
 #include "[implName].h"
+
+[implH_detail]
+#endif // IMPL_[impl_name_upper]_H
+`
+
+let moduleCppTmplete = `\
+#include <cstring>
+#include <string>
+#include <memory>
+#include <vector>
+#include <node_api.h>
+#include <any>
+#include <optional>
+#include "tool_utility.h"
+#include "[implName]_middle.h"
 
 #define NUMBER_JS_2_C(napi_v, type, dest)        \\
     if (typeid(type) == typeid(int32_t)) {       \\
@@ -132,6 +150,7 @@ let implHTemplete = `\
 
 let implCppTemplete = `\
 #include "[implName].h"
+#include "[implName]_middle.h"
 [implCpp_detail]
 `
 var genFileList = []
@@ -206,6 +225,8 @@ function generateAll(structOfTs, destDir, moduleName, numberType) {
     for (let i = 1; i < NumberIncrease.get(); i++) {
         numberUsing += "using NUMBER_TYPE_%d = ".format(i) + numbertype + ";\n"
     }
+    generateMiddleH(ns0, result, destDir, license);
+
     let middleCpp = replaceAll(moduleCppTmplete, "[body_replace]", result.middleBody);
     middleCpp = replaceAll(middleCpp, "[init_replace]", result.middleInit);
     middleCpp = replaceAll(middleCpp, "[implName]", ns0.name);
@@ -238,6 +259,16 @@ function generateAll(structOfTs, destDir, moduleName, numberType) {
     genFileList.push("tool_utility.h");
     genFileList.push("tool_utility.cpp");
     formatCode(destDir);
+}
+
+function generateMiddleH(ns0, result, destDir, license) {
+    let implName = ns0.name + "_middle";
+    let middleH = replaceAll(moduleHTemplete, "[impl_name_upper]", implName.toUpperCase());
+    middleH = replaceAll(middleH, "[implName]", ns0.name);
+    middleH = replaceAll(middleH, "[implH_detail]", result.middleH);
+    writeFile(re.pathJoin(destDir, "%s_middle.h".format(ns0.name)),
+        null != license ? (license + "\n" + middleH) : middleH);
+    genFileList.push("%s_middle.h".format(ns0.name));
 }
 
 module.exports = {

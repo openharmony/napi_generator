@@ -24,12 +24,19 @@ const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
 const { addUniqFunc2List, addUniqObj2List, setOverrideFunc } = require("../tools/tool");
 
-let middleBodyTmplete = `
+let middleHTmplete = `
 class [className]_middle {
 public:
     struct constructor_value_struct {[contructorValueIn]
     };
-    static napi_value constructor(napi_env env, napi_callback_info info)
+    static napi_value constructor(napi_env env, napi_callback_info info);
+    static void release(DataPtr p);
+    [static_funcs]
+};
+`
+
+let middleBodyTmplete = `
+    napi_value [className]_middle::constructor(napi_env env, napi_callback_info info)
     {
         XNapiTool *pxt = new XNapiTool(env, info);
         napi_status status;
@@ -44,23 +51,23 @@ public:
             struct constructor_value_struct *vio = new constructor_value_struct();
             [getConstructorParam]
             [className] *p = new [className]([constructorParam]);
-            napi_value thisvar = pxt->WrapInstance(reinterpret_cast<DataPtr>(p), release);
+            napi_value thisvar = pxt->WrapInstance(reinterpret_cast<DataPtr>(p), [className]_middle::release);
             delete vio;
             return thisvar;
         } else {
             [className] *p = new [className]();
-            napi_value thisvar = pxt->WrapInstance(reinterpret_cast<DataPtr>(p), release);
+            napi_value thisvar = pxt->WrapInstance(reinterpret_cast<DataPtr>(p), [className]_middle::release);
             return thisvar;
         }  
     }
-    static void release(DataPtr p)
+    void [className]_middle::release(DataPtr p)
     {
         void *dataPtr = p;
         [className] *p2 = static_cast<[className] *>(dataPtr);
         delete p2;
     }
     [static_funcs]
-};`
+`
 
 function getHDefineOfVariable(name, type, variable, optional) {
     if (type.indexOf("|") >= 0) {
@@ -148,23 +155,28 @@ function generateVariable(value, variable, className) {
     if (optional && type.indexOf("|") < 0) {
         optionalParamGetSet(type, variable, name, className);
     } else {
+          variable.middleH += `
+          static napi_value getvalue_%s(napi_env env, napi_callback_info info);
+          static napi_value setvalue_%s(napi_env env, napi_callback_info info);\n`.format(name, name)
         variable.middleValue += `
-        static napi_value getvalue_%s(napi_env env, napi_callback_info info)
+          napi_value %s::getvalue_%s(napi_env env, napi_callback_info info)
         {
             XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
             void *instPtr = pxt->UnWarpInstance();
             %s *p = static_cast<%s *>(instPtr);
             napi_value result = nullptr;
-            `.format(name, className, className) + cToJs("p->" + name, type, "result", 1, optional) + `
+              `.format(className + "_middle", name, className, className) +
+              cToJs("p->" + name, type, "result", 1, optional) + `
             delete pxt;
             return result;
         }
-        static napi_value setvalue_%s(napi_env env, napi_callback_info info)
+          napi_value %s::setvalue_%s(napi_env env, napi_callback_info info)
         {
             std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);
             void *instPtr = pxt->UnWarpInstance();
             %s *p = static_cast<%s *>(instPtr);
-            `.format(name, className, className) + jsToC("p->" + name, "pxt->GetArgv(XNapiTool::ZERO)",
+              `.format(className + "_middle", name, className, className) +
+              jsToC("p->" + name, "pxt->GetArgv(XNapiTool::ZERO)",
             type, 0, optional) + `
             return nullptr;
         }`
@@ -173,27 +185,31 @@ function generateVariable(value, variable, className) {
 
 function optionalParamGetSet(type, variable, name, className) {
     let optType = getCType(type);
+    variable.middleH += `
+        static napi_value getvalue_%s(napi_env env, napi_callback_info info);
+        static napi_value setvalue_%s(napi_env env, napi_callback_info info);\n`.format(name, name)
     variable.middleValue += `
-        static napi_value getvalue_%s(napi_env env, napi_callback_info info)
+        napi_value %s::getvalue_%s(napi_env env, napi_callback_info info)
         {
             XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
             void *instPtr = pxt->UnWarpInstance();
             %s *p = static_cast<%s *>(instPtr);
             napi_value result = nullptr;
             if(p->%s.has_value()) {
-                `.format(name, className, className, name) + cToJs("p->%s.value()".format(name), type, "result") + `
+                `.format(className + "_middle", name, className, className, name) +
+                cToJs("p->%s.value()".format(name), type, "result") + `
             }
             delete pxt;
             return result;
         }
-        static napi_value setvalue_%s(napi_env env, napi_callback_info info)
+        napi_value %s::setvalue_%s(napi_env env, napi_callback_info info)
         {
             std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);
             void *instPtr = pxt->UnWarpInstance();
             %s *p = static_cast<%s *>(instPtr);
             if (pxt->GetProperty(pxt->GetArgv(XNapiTool::ZERO), "%s")) {
                 %s %s_tmp;
-                `.format(name, className, className, name, optType, name) +
+                `.format(className + "_middle", name, className, className, name, optType, name) +
                 jsToC("%s_tmp".format(name), "pxt->GetArgv(XNapiTool::ZERO)", type) + `
                 p->%s.emplace(%s_tmp);`.format(name, name) + `
             }
@@ -263,6 +279,7 @@ function generateInterface(name, data, inNamespace) {
     let implH = resultConnect[1]
     let implCpp = resultConnect[2]
     let middleInit = resultConnect[3]
+    let middleH = resultConnect[4]
     let selfNs = ""
     if (inNamespace.length > 0) {
         let nsl = inNamespace.split("::")
@@ -283,11 +300,13 @@ public:%s
 };\n`.format(name, extendsStr, implH),
         implCpp: implCpp,
         middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc)
-        .replaceAll("[contructorValueIn]", param.valueIn).replaceAll("[getConstructorParam]", getConParam)
+        .replaceAll("[getConstructorParam]", getConParam)
         .replaceAll("[constructorParam]", param.valueFill),
         middleInit: middleInit,
         declarationH: `
 class %s;\r`.format(name),
+        middleH: middleHTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleH)
+        .replaceAll("[contructorValueIn]", param.valueIn)
     }
     return result
 }
@@ -356,14 +375,17 @@ function connectResult(data, inNamespace, name) {
     let implCpp = ""
     let middleFunc = ""
     let middleInit = ""
+    let middleH = ""
     let variable = {
         hDefine: "",
         middleValue: "",
+        middleH: ""
     }
     middleInit = getMiddleInitFunc(middleInit, data, variable, name, inNamespace);
     implH += variable.hDefine
     middleFunc += variable.middleValue
     middleInit += `\n    std::map<const char *, napi_callback> funcList;`
+    middleH += variable.middleH
     for (let i in data.allProperties.functions) {
         let func = data.allProperties.functions[i]
         let tmp;
@@ -389,13 +411,14 @@ function connectResult(data, inNamespace, name) {
         middleFunc += tmp[0]
         implH += tmp[1]
         implCpp += tmp[2]
+        middleH += tmp[3]
         if (func.name != "constructor") {
             middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name,
               inNamespace, name, func.name)
         }
     }
     implH = addVirtualKeywords(data, implH, name);
-    return [middleFunc, implH, implCpp, middleInit]
+    return [middleFunc, implH, implCpp, middleInit, middleH]
 }
 
 function getMiddleInitFunc(middleInit, data, variable, name, inNamespace) {

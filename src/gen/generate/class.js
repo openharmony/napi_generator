@@ -87,6 +87,7 @@ function generateClass(name, data, inNamespace, functiontType) {
         resultConnect[1].substring(1, resultConnect[1].length) : resultConnect[1]
     let implCpp = resultConnect[2]
     let middleInit = resultConnect[3]
+    let middleH = resultConnect[4]
     let selfNs = ""
     if (inNamespace.length > 0) {
         let nsl = inNamespace.split("::")
@@ -106,7 +107,8 @@ public:%s
         middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc),
         middleInit: middleInit,
         declarationH: `
-class %s;\r`.format(name),    
+class %s;\r`.format(name), 
+        middleH: middleH   
     }
     return result
 }
@@ -116,6 +118,7 @@ function connectResult(data, inNamespace, name) {
     let implCpp = ""
     let middleFunc = ""
     let middleInit = ""
+    let middleH = ""
     let variable = {
         hDefine: "",
         middleValue: "",
@@ -152,9 +155,10 @@ function connectResult(data, inNamespace, name) {
         middleFunc += tmp[0]
         implH += tmp[1]
         implCpp += tmp[2]
+        middleH += tmp[3]
         middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name, inNamespace, name, func.name)
     }
-    return [middleFunc, implH, implCpp, middleInit]
+    return [middleFunc, implH, implCpp, middleInit, middleH]
 }
 
 module.exports = {
