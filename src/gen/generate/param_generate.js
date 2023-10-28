@@ -833,7 +833,7 @@ function paramGenerateCallBack(data, funcValue, param, p) {
     }
 }
 
-function paramGenerateArrowCallBack(funcValue, param, p) {
+function paramGenerateArrowCallBack(funcValue, param, p, onFlag = false) {
     let cbParamType
     let returnType = 'void'
 
@@ -862,6 +862,7 @@ function paramGenerateArrowCallBack(funcValue, param, p) {
         optional: funcValue.optional,
         isArrowFuncFlag: true,
         arrowFuncParamList:cbParamList,
+        onFlag: onFlag,
         isAsync: type.indexOf("AsyncCallback") >= 0
     } 
 }
@@ -1108,7 +1109,8 @@ function eventParamGenerate(p, funcValue, param, data) {
     } else if (CallFunctionList.getValue(type)) {  // 判断条件
         // callFunction => 函数参数处理
         // let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数
-        paramGenerateArrowCallBack(funcValue, param, p)
+        let onFlag = true;
+        paramGenerateArrowCallBack(funcValue, param, p, onFlag)
         // let isArrowType = true
         // for (let i in funcBody) {
         //     paramGenerateCallBack(data, funcBody[i], param, p, isArrowType)
