@@ -154,50 +154,44 @@ return true;
 }
 
 function gennerateEventCallback(codeContext, data, param) {
-    let params = '';        // 回调的一个或者多个参数
-    let useParams = '';     // 使用回调的一个或者多个参数
-    let cbParams = ''
-    let resultDefine = ''
-    let valueSetArray = ''
     let paramIsAsync = false
-    for (let i = 0; i < param.callback.length; i++) {
-        paramIsAsync = param.callback[i].isAsync
-        returnGenerate(param.callback[i], param, data, i)
+
+    param.resultDefine = ''
+    param.cbParams = ''
+    param.valueSetArray = '' 
+    param.useParams = ''
+    param.params = ''
+
+    returnGenerate(param.callback, param, data)
+    if (param.params === '') {
         let paramType = param.valueOut.substring(0, param.valueOut.length - "out;\n".length)
-        paramType = re.replaceAll(paramType, " ", "")
-        let realParamType = paramType.substring(0, 12) == "NUMBER_TYPE_" ? "uint32_t" : paramType
-        let tag = i == param.callback.length - 1? '' : ', '
-        params += realParamType + ' &valueIn' + i + tag   // 定义回调函数输入的参数
-        useParams += 'valueIn' + i + tag  // 使用回调函数输入的参数
-        
-        // 为每种callback参数类型的on方法生成回调方法
-        resultDefine +=  'napi_value result%d = nullptr;\n    '.format(i)
-        cbParams += cToJs("valueIn" + i, param.callback[i].type, "result" + i) + '\n'
-        valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, result%d);\n    '.format(i, i)
-        addOnTypeToList(data, realParamType)
+        param.params = paramType + '&valueIn'
     }
+    if (param.useParams === '') {
+        param.useParams = 'valueIn'
+    }
+     
     let callFunctionName = paramIsAsync? "CallAsyncFunc" : "CallSyncFunc"
     let callbackFunc = middleAsyncCallbackTemplate
     callbackFunc = replaceAll(middleAsyncCallbackTemplate, "[eventNames]", param.eventName)
-    callbackFunc = replaceAll(callbackFunc, "[callback_param_type]", params)
-    callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", resultDefine)
-    callbackFunc = replaceAll(callbackFunc, "[cb_params]", cbParams)
-    callbackFunc = replaceAll(callbackFunc, "[callback_param_length]", param.callback.length)
-    callbackFunc = replaceAll(callbackFunc, "[value_set_array]", valueSetArray)
+    callbackFunc = replaceAll(callbackFunc, "[callback_param_type]", param.params)
+    callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", param.resultDefine)
+    callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.cbParams)
+    callbackFunc = replaceAll(callbackFunc, "[value_set_array]", param.valueSetArray)
     callbackFunc = replaceAll(callbackFunc, "[call_function_name]", callFunctionName)
     codeContext.middleFunc += callbackFunc
 
      // 为每个on的event事件生成回调方法
      let middleEventCallBack = replaceAll(middleEventCallbakTemplate, "[eventName]", param.eventName)
-     middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_name]", useParams)
-     middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_type]", params)
+     middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_name]", param.useParams)
+     middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_type]", param.params)
      let isStrType = param.eventNameIsStr? "true": "false"
      middleEventCallBack = replaceAll(middleEventCallBack, "[is_string_type]", isStrType)
      codeContext.middleFunc += middleEventCallBack;
 
      // 为每个on的event事件生成回调接口供用户侧使用
      let implHCallBack = replaceAll(implHEventCallbakTemplate, "[eventName]", param.eventName)
-     implHCallBack = replaceAll(implHCallBack, "[callback_param_type]", params)
+     implHCallBack = replaceAll(implHCallBack, "[callback_param_type]", param.params)
      codeContext.implH += implHCallBack
 }
 
@@ -211,8 +205,7 @@ function generateFunctionOnOff(func, data, className) {
         valueDefine: "", // impl参数定义
         eventName:"", // 注册/去注册事件名称
         eventNameIsStr:false, // 注册/去注册事件名称是否在ts中为string类型
-        optionalParamDestory: "", // 可选参数内存释放
-        callback: []  // 回调函数参数
+        optionalParamDestory: "" // 可选参数内存释放
     }
 
     for (let i in func.value) {
