@@ -154,7 +154,7 @@ return true;
 }
 
 function gennerateEventCallback(codeContext, data, param) {
-    let params = '';        // 回调的一个或者多个参数
+    // let params = '';        // 回调的一个或者多个参数
     let paramIsAsync = false
 
     param.resultDefine = ''
