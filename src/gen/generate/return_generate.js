@@ -653,23 +653,10 @@ function returnGenerate(returnInfo, param, data) {
             }
             
         }
-
-
-            // console.log(`Key: ${key}, Value: ${value}`);
-         
-        // for(const [paramName, paramType] of returnInfo.arrowFuncParamList) {
-        //     let paramInfo = {
-        //         name: paramName,
-        //         type: paramType,
-        //         optional: returnInfo.optional
-        //     }
-        //     returnGenerateForMultiPara(paramInfo, param, data)
-        // }
     }
     else {
         NapiLog.logError("Do not support returning the type [%s].".format(type));
-    }
-  
+    }  
 }
 
 function generateType(type){

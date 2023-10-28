@@ -1108,13 +1108,8 @@ function eventParamGenerate(p, funcValue, param, data) {
         paramGenerateCallBack(data, funcValue, param, p)
     } else if (CallFunctionList.getValue(type)) {  // 判断条件
         // callFunction => 函数参数处理
-        // let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数
         let onFlag = true;
         paramGenerateArrowCallBack(funcValue, param, p, onFlag)
-        // let isArrowType = true
-        // for (let i in funcBody) {
-        //     paramGenerateCallBack(data, funcBody[i], param, p, isArrowType)
-        // }
     } else if (regName) {
         // event type参数处理
         param.eventName = re.getReg(type, regName.regs[1])  // string类型如何处理？

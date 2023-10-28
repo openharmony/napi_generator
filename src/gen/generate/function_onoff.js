@@ -154,7 +154,6 @@ return true;
 }
 
 function gennerateEventCallback(codeContext, data, param) {
-    // let params = '';        // 回调的一个或者多个参数
     let paramIsAsync = false
 
     param.resultDefine = ''
@@ -178,7 +177,6 @@ function gennerateEventCallback(codeContext, data, param) {
     callbackFunc = replaceAll(callbackFunc, "[callback_param_type]", param.params)
     callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", param.resultDefine)
     callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.cbParams)
-    // callbackFunc = replaceAll(callbackFunc, "[callback_param_length]", param.callback.length)
     callbackFunc = replaceAll(callbackFunc, "[value_set_array]", param.valueSetArray)
     callbackFunc = replaceAll(callbackFunc, "[call_function_name]", callFunctionName)
     codeContext.middleFunc += callbackFunc
@@ -207,8 +205,7 @@ function generateFunctionOnOff(func, data, className) {
         valueDefine: "", // impl参数定义
         eventName:"", // 注册/去注册事件名称
         eventNameIsStr:false, // 注册/去注册事件名称是否在ts中为string类型
-        optionalParamDestory: "", // 可选参数内存释放
-        // callback: []  // 回调函数参数
+        optionalParamDestory: "" // 可选参数内存释放
     }
 
     for (let i in func.value) {
