@@ -466,6 +466,10 @@ function returnGenerateObject(returnInfo, param, data) {
 function getReturnFill(returnInfo, param) {
     let type = returnInfo.type
     let valueFillStr = ""
+    if (isArrowFunc(type)) {
+        return valueFillStr;
+    }
+
     if (param.callback) { // callback方法的返回参数处理
         if (param.callback.isAsync) {
             // 异步callback方法返回的是一个结构体，包含errcode和data两部分， 详见basic.d.ts中AsyncCallback的定义
@@ -475,7 +479,11 @@ function getReturnFill(returnInfo, param) {
 
         if (type != "void") {
             // callback<xxx> 中的xxx不是void时，生成的capp代码才需要用户填充out参数
-            valueFillStr += "%svio->out".format(valueFillStr.length > 0 ? ", " : "")
+            if (param.callback.isArrowFuncFlag) {
+                valueFillStr += "%svio->%s".format(valueFillStr.length > 0 ? ", " : "", returnInfo.name)
+            } else {
+                valueFillStr += "%svio->out".format(valueFillStr.length > 0 ? ", " : "")
+            }            
         }
     } else {  // 普通方法的返回参数处理
         valueFillStr = "vio->out"
@@ -501,19 +509,25 @@ function generateOptionalAndUnion(returnInfo, param, data, outParam) {
         param.optionalParamDestory += "C_DELETE(vio->out);\n    "
     }
 
-    if (!isEnum(type, data)) {
+    if (!isEnum(type, data) && !isArrowFunc(type)) {
         param.valuePackage = cToJs(outParam, type, "result")
     } else if (type.indexOf("|") >= 0) {
         returnGenerateUnion(param)
     }
 }
 
-function returnGenerateForMultiPara(paramInfo, param) {
+function returnGenerateForMultiPara(paramInfo, param, data) {
     let type = paramInfo.type
     if (type === undefined) {
         NapiLog.logError("returnGenerate: type of %s is undefined!".format(paramInfo));
         return;
     }
+    let valueFillStr = getReturnFill(paramInfo, param)
+    param.valueFill += ("%s" + valueFillStr).format(param.valueFill.length > 0 ? ", " : "")
+    let outParam = paramInfo.optional ? "(*vio->%s)" : "vio->%s".format(paramInfo.name, paramInfo.name)
+
+    generateOptionalAndUnion(paramInfo, param, data, outParam);
+
     let modifiers = paramInfo.optional ? "*" : "&"
     if (type == "string") {
         param.valueOut += paramInfo.optional ? "std::string* %s = nullptr;" : "std::string %s;\n"
@@ -578,14 +592,26 @@ function returnGenerate(returnInfo, param, data) {
     else if (isObjectType(type)) {
         returnGenerateObject(returnInfo, param, data)
     } else if (isArrowFunc(type)) {
-        for(const [paramName, paramType] of returnInfo.arrowFuncParamList) {
+        for(let i=0; i<returnInfo.arrowFuncParamList.length; i++) {           
             let paramInfo = {
-                name: paramName,
-                type: paramType,
+                name: returnInfo.arrowFuncParamList[i].name,
+                type: returnInfo.arrowFuncParamList[i].type,
                 optional: returnInfo.optional
-            }
-            returnGenerateForMultiPara(paramInfo, param)
+            }        
+            returnGenerateForMultiPara(paramInfo, param, data)
         }
+
+
+            // console.log(`Key: ${key}, Value: ${value}`);
+         
+        // for(const [paramName, paramType] of returnInfo.arrowFuncParamList) {
+        //     let paramInfo = {
+        //         name: paramName,
+        //         type: paramType,
+        //         optional: returnInfo.optional
+        //     }
+        //     returnGenerateForMultiPara(paramInfo, param, data)
+        // }
     }
     else {
         NapiLog.logError("Do not support returning the type [%s].".format(type));

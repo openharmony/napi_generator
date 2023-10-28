@@ -845,8 +845,12 @@ function paramGenerateArrowCallBack(funcValue, param, p) {
         let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数            
         returnType = CallFunctionList.getValue(type)[1]
         cbParamType = type
-        for (let i in funcBody) {            
-            cbParamList[funcBody[i].name] = funcBody[i].type
+        for (let i in funcBody) { 
+            let cbParam = {
+                name: funcBody[i].name,
+                type: funcBody[i].type
+            }  
+            cbParamList[i] = cbParam
         }
     }
 
