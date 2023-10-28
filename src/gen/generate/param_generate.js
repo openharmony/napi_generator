@@ -1117,6 +1117,7 @@ function eventParamGenerate(p, funcValue, param, data) {
         // event type参数处理
         param.eventName = re.getReg(type, regName.regs[1])  // string类型如何处理？
         if (param.eventName == "string") {
+            param.eventNameIsStr = true
             param.eventName = "string%d".format(NumberIncrease.getAndIncrease())
         }
         param.valueDefine += "%sstd::string &%s".format(param.valueDefine.length > 0 ? ", " : "", name)

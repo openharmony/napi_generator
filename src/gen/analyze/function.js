@@ -202,7 +202,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results) {
         callbackFunc = tmp[2]  // 当方法的参数是回调方法，并且回调方法写法为=>函数
         if (results != undefined && callbackFunc) {
           results.callFunction.push(callbackFunc)
-        }  
+        }
     }
 
     tmp = analyzeReturn(ret)
