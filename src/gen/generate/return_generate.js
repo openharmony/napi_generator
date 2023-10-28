@@ -554,6 +554,53 @@ function returnGenerateForMultiPara(paramInfo, param, data) {
     }
 }
 
+function returnGenerateForOnOffMultiPara(paramInfo, param, data) {
+    let type = paramInfo.type
+    if (type === undefined) {
+        NapiLog.logError("returnGenerate: type of %s is undefined!".format(paramInfo));
+        return;
+    }
+    let valueFillStr = getReturnFill(paramInfo, param)
+    param.valueFill += ("%s" + valueFillStr).format(param.valueFill.length > 0 ? ", " : "")
+    let outParam = paramInfo.optional ? "(*vio->%s)" : "vio->%s".format(paramInfo.name, paramInfo.name)
+
+    generateOptionalAndUnion(paramInfo, param, data, outParam);
+
+    param.useParams += "%s %s".format(param.useParams.length > 0 ? ", " : "", paramInfo.name)
+    param.resultDefine +=  'napi_value %sNapi = nullptr;\n    '.format(paramInfo.name)
+    param.cbParams += cToJs(paramInfo.name, paramInfo.type, paramInfo.name + "Napi") + '\n';
+    
+    let modifiers = paramInfo.optional ? "*" : "&"
+    if (type == "string") {
+        param.valueOut += paramInfo.optional ? "std::string* %s = nullptr;" : "std::string %s;\n"
+        .format(paramInfo.name, paramInfo.name)
+        param.params += "%sstd::string%s %s".format(param.params.length > 0 ? ", " : "", modifiers,
+        paramInfo.name)        
+    }
+    else if (type == "void") {
+        NapiLog.logInfo("The current void type don't need generate");
+    }
+    else if (type == "boolean") {
+        param.valueOut += paramInfo.optional ? "bool* %s = nullptr;" : "bool %s;\n"
+        .format(paramInfo.name, paramInfo.name)
+        param.params += "%sbool%s %s".format(param.params.length > 0 ? ", " : "", modifiers, paramInfo.name)
+    }
+    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+        param.valueOut += type + (paramInfo.optional ? "* %s = nullptr;" : " %s;\n")
+        .format(paramInfo.name, paramInfo.name)
+        param.params += "%s%s%s %s".format(param.params.length > 0 ? ", " : "", type, modifiers,
+        paramInfo.name)
+    }
+    else if(generateType(type)) {
+        returnGenerate2(paramInfo, param, data)
+        param.params += "%s%s%s %s".format(param.params.length > 0 ? ", " : "", type, modifiers,  paramInfo.name)
+    }
+    else {
+        NapiLog.logError("Do not support returning the type [%s].".format(type));
+    }
+}
+
+
 function returnGenerate(returnInfo, param, data) {
     let type = returnInfo.type
     if (type === undefined) {
@@ -597,8 +644,14 @@ function returnGenerate(returnInfo, param, data) {
                 name: returnInfo.arrowFuncParamList[i].name,
                 type: returnInfo.arrowFuncParamList[i].type,
                 optional: returnInfo.optional
-            }        
-            returnGenerateForMultiPara(paramInfo, param, data)
+            }
+            if (returnInfo.onFlag) { //on/off处理
+                returnGenerateForOnOffMultiPara(paramInfo, param, data)
+                param.valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, %sNapi);\n    '.format(i, paramInfo.name)
+            } else {
+                returnGenerateForMultiPara(paramInfo, param, data)
+            }
+            
         }
 
 
