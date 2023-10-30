@@ -44,6 +44,8 @@ struct [funcName]_value_struct {[valueIn][valueOut]
         napi_value args[ARGS_SIZE];
         [valuePackage]  
         {
+            // 回调为，参数个数为1，其转换结果保存在result中
+            // 回调给箭头函数，支持参数个数大于1，参数转换结果保存在args[i]
             if (ARGS_SIZE ==  XNapiTool::ONE) {
                 args[0] = result;
             }            
