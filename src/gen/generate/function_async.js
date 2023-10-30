@@ -19,12 +19,18 @@ const { returnGenerate } = require("./return_generate");
 /**
  * 结果异步返回Async|Promise
  */
-let funcAsyncTemplete = `
+let funcAsyncMiddleHTemplete = `
 struct [funcName]_value_struct {[valueIn]
     uint32_t outErrCode = 0;[valueOut]
 };
 
-[static_define]void [funcName]_execute(XNapiTool *pxt, DataPtr data)
+[static_define]void [funcName]_execute(XNapiTool *pxt, DataPtr data);
+[static_define]void [funcName]_complete(XNapiTool *pxt, DataPtr data);
+[static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info);
+`
+
+let funcAsyncTemplete = `
+void [middleClassName][funcName]_execute(XNapiTool *pxt, DataPtr data)
 {
     void *data_ptr = data;
     [funcName]_value_struct *vio = static_cast<[funcName]_value_struct *>(data_ptr);
@@ -32,7 +38,7 @@ struct [funcName]_value_struct {[valueIn]
     [callFunc]
 }
 
-[static_define]void [funcName]_complete(XNapiTool *pxt, DataPtr data)
+void [middleClassName][funcName]_complete(XNapiTool *pxt, DataPtr data)
 {
     void *data_ptr = data;
     [funcName]_value_struct *vio = static_cast<[funcName]_value_struct *>(data_ptr);
@@ -50,7 +56,7 @@ struct [funcName]_value_struct {[valueIn]
     delete vio;
 }
 
-[static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info)
+napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
     if (pxt->IsFailed()) {
@@ -95,24 +101,32 @@ function getOptionalCallbackInit(param) {
     return "vio->out = new %s;".format(cType)
 }
 
-function replaceBasicInfo(middleFunc, className) {
+function replaceBasicInfo(middleFunc, middleH, className) {
     if (className == null) {
-        middleFunc = middleFunc.replaceAll("[static_define]", "")
+        middleH = middleH.replaceAll("[static_define]", "")
         middleFunc = middleFunc.replaceAll("[unwarp_instance]", "")
         middleFunc = middleFunc.replaceAll("[checkout_async_instance]", "")
+        middleFunc = middleFunc.replaceAll("[middleClassName]", "")
     }
     else {
-        middleFunc = middleFunc.replaceAll("[static_define]", "static ")
+        middleH = middleH.replaceAll("[static_define]", "static ")
         middleFunc = middleFunc.replaceAll("[unwarp_instance]",
             `pxt->SetAsyncInstance(pxt->UnWarpInstance());`)
         middleFunc = middleFunc.replaceAll("[checkout_async_instance]",
             "%s *pInstance = (%s *)pxt->GetAsyncInstance();".format(className, className))
+        middleFunc = middleFunc.replaceAll("[middleClassName]", className + "_middle" + "::")
     }
-    return middleFunc
+    return [middleFunc, middleH]
 }
 function generateFunctionAsync(func, data, className) {
     let middleFunc = replaceAll(funcAsyncTemplete, "[funcName]", func.name)
-    middleFunc = replaceBasicInfo(middleFunc, className)
+    let middleH = ""
+    if (func.name != "constructor") {
+      middleH = replaceAll(funcAsyncMiddleHTemplete, "[funcName]", func.name)
+    }
+    let basicInfoRes = replaceBasicInfo(middleFunc, middleH, className)
+    middleFunc = basicInfoRes[0]
+    middleH = basicInfoRes[1]
 
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
     let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
@@ -122,13 +136,8 @@ function generateFunctionAsync(func, data, className) {
         paramGenerate(i, func.value[i], param, data)
     }
     returnGenerate(param.callback, param, data)
+    middleH = replaceValueOut(middleH, param); 
 
-    middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
-    if (param.valueOut == "") {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
-    } else {
-        middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
-    } 
     if (param.valueCheckout == "") {
         middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
     } else {
@@ -160,7 +169,17 @@ function generateFunctionAsync(func, data, className) {
             prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
         implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
     }
-    return [middleFunc, implH, implCpp]
+    return [middleFunc, implH, implCpp, middleH]
+}
+
+function replaceValueOut(middleH, param) {
+    middleH = replaceAll(middleH, "[valueIn]", param.valueIn); // # 输入参数定义
+    if (param.valueOut == "") {
+        middleH = replaceAll(middleH, "[valueOut]", param.valueOut); // # 输出参数定义
+    } else {
+        middleH = replaceAll(middleH, "[valueOut]", "\n    " + param.valueOut); // # 输出参数定义
+    }
+    return middleH;
 }
 
 module.exports = {

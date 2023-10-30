@@ -1102,6 +1102,7 @@ function paramGenerate(p, funcValue, param, data) {
 function eventParamGenerate(p, funcValue, param, data) {
     let name = funcValue.name;
     let type = funcValue.type;
+    type = type.replaceAll("'", "")
     let regName = re.match("([a-zA-Z_0-9]+)", type)
     if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
         // callback参数处理
