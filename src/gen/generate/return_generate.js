@@ -509,7 +509,14 @@ function generateOptionalAndUnion(returnInfo, param, data, outParam, c2JsresultN
         param.optionalParamDestory += "C_DELETE(vio->out);\n    "
     }
 
-    if (!isEnum(type, data) && !isArrowFunc(type) && !param.callback.isArrowFuncFlag) {
+    // 判断callback是否有效，若无效，则为普通函数
+    let paramCallbackFlag = param.callback != undefined? true: false
+    let paramCallbackIsArrow 
+    if (paramCallbackFlag) { // 若callback有效， 判断是否是箭头函数
+        paramCallbackIsArrow = param.callback.isArrowFuncFlag
+    }
+    // 普通函数 paramCallbackFlag == undefined
+    if (!isEnum(type, data) && !isArrowFunc(type) && !paramCallbackIsArrow) {
         param.valuePackage = cToJs(outParam, type, c2JsresultName)
     } else if (type.indexOf("|") >= 0) {
         returnGenerateUnion(param)
@@ -638,23 +645,28 @@ function returnGenerate(returnInfo, param, data, isOnFuncFlag = false) {
     } else if (isObjectType(type)) {
         returnGenerateObject(returnInfo, param, data)
     } else if (isArrowFunc(type)) {
-        param.paramSize = returnInfo.arrowFuncParamList.length
-        for(let i=0; i<returnInfo.arrowFuncParamList.length; i++) {           
-            let paramInfo = {
-                name: returnInfo.arrowFuncParamList[i].name,
-                type: returnInfo.arrowFuncParamList[i].type,
-                optional: returnInfo.optional
-            }
-            if (returnInfo.onFlag) { //on/off处理
-                returnGenerateForOnOffMultiPara(paramInfo, param, data)
-                param.valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, %sNapi);\n    '.format(i, paramInfo.name)
-            } else {
-                returnGenerateForArrowCbMultiPara(paramInfo, param, data, i)
-            }
-        }
+        genArrowFuncParam(param, returnInfo, data);
     } else {
         NapiLog.logError("Do not support returning the type [%s].".format(type));
     }  
+}
+
+function genArrowFuncParam(param, returnInfo, data) {
+    param.paramSize = returnInfo.arrowFuncParamList.length;
+    for (let i = 0; i < returnInfo.arrowFuncParamList.length; i++) {
+        let paramInfo = {
+            name: returnInfo.arrowFuncParamList[i].name,
+            type: returnInfo.arrowFuncParamList[i].type,
+            optional: returnInfo.optional
+        };
+        if (returnInfo.onFlag) { //on/off处理
+            returnGenerateForOnOffMultiPara(paramInfo, param, data);
+            param.valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, %sNapi);\n    '
+              .format(i, paramInfo.name);
+        } else {
+            returnGenerateForArrowCbMultiPara(paramInfo, param, data, i);
+        }
+    }
 }
 
 function onCallbackC2JsResName(isOnFuncFlag, type, outParam) {
