@@ -204,14 +204,9 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
     callbackFunc = replaceAll(middleAsyncCallbackTemplate, "[eventNames]", param.eventName)
     callbackFunc = replaceAll(callbackFunc, "[callback_param_type]", param.params)
     if (param.callback.isArrowFuncFlag) {  // 回调是箭头函数
-        callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", param.resultDefine)
-        callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.cbParams + '\n')
-        callbackFunc = replaceAll(callbackFunc, "[value_set_array]", param.valueSetArray)
+        callbackFunc = getArrowCallbackC2JsParam(callbackFunc, param);
     } else { // 回调是普通callback
-        callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", `napi_value resultTmp = nullptr; `)
-        callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.valuePackage)
-        callbackFunc = replaceAll(callbackFunc, "[value_set_array]",
-            `napi_set_element(pAsyncFuncs->env_, result, 0, resultTmp);`)
+        callbackFunc = getCallbackC2JsParam(callbackFunc, param);
     }
     callbackFunc = replaceAll(callbackFunc, "[call_function_name]", callFunctionName)
     if (className != null) {
@@ -234,6 +229,21 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
 
     // 为每个on的event事件生成回调接口的实现供用户侧使用
     genCallbackMethod(param, className, middleClassName, codeContext);
+}
+
+function getArrowCallbackC2JsParam(callbackFunc, param) {
+    callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", param.resultDefine);
+    callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.cbParams + '\n');
+    callbackFunc = replaceAll(callbackFunc, "[value_set_array]", param.valueSetArray);
+    return callbackFunc;
+}
+
+function getCallbackC2JsParam(callbackFunc, param) {
+    callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", `napi_value resultTmp = nullptr; `);
+    callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.valuePackage);
+    callbackFunc = replaceAll(callbackFunc, "[value_set_array]",
+      `napi_set_element(pAsyncFuncs->env_, result, 0, resultTmp);`);
+    return callbackFunc;
 }
 
 function genCallbackMiddleMethod(param, className, middleClassName, codeContext) {
