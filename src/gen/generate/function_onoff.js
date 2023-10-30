@@ -176,112 +176,113 @@ return true;
     addOnOffFunc(data, func.name)
 }
 
-function gennerateEventCallback(codeContext, data, param, className = null) {
-    let params = '';        // 回调的一个或者多个参数
-    let useParams = '';     // 使用回调的一个或者多个参数
-    let cbParams = ''
-    let resultDefine = ''
-    let valueSetArray = ''
+function gennerateEventCallback(codeContext, data, param, className = null, isOnFuncFlag = false) {
     let paramIsAsync = false
     let middleClassName = ""
-    for (let i = 0; i < param.callback.length; i++) {
-        paramIsAsync = param.callback[i].isAsync
-        returnGenerate(param.callback[i], param, data, i)
-        let paramType = param.valueOut.substring(0, param.valueOut.length - "out;\n".length)
-        paramType = re.replaceAll(paramType, " ", "")
-        let realParamType = paramType.substring(0, 12) == "NUMBER_TYPE_" ? "uint32_t" : paramType
-        let tag = i == param.callback.length - 1? '' : ', '
-        params += realParamType + ' &valueIn' + i + tag   // 定义回调函数输入的参数
-        useParams += 'valueIn' + i + tag  // 使用回调函数输入的参数
-        
-        // 为每种callback参数类型的on方法生成回调方法
-        resultDefine +=  'napi_value result%d = nullptr;\n    '.format(i)
-        cbParams += cToJs("valueIn" + i, param.callback[i].type, "result" + i) + '\n'
-        valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, result%d);\n    '.format(i, i)
-        addOnTypeToList(data, realParamType)
-    }
 
-    if (className != null) {
-      middleClassName = className + "_middle"
+    param.resultDefine = ''
+    param.cbParams = ''
+    param.valueSetArray = '' 
+    param.useParams = ''
+    param.params = ''
+
+    returnGenerate(param.callback, param, data, isOnFuncFlag)
+    if (param.params === '') {
+        let paramType = param.valueOut.substring(0, param.valueOut.length - "out;\n".length)
+        param.params = paramType + '&valueIn'
     }
+    if (param.useParams === '') {
+        param.useParams = 'valueIn'
+    }
+     
+    if (className != null) {
+        middleClassName = className + "_middle"
+    }
+    
     let callFunctionName = paramIsAsync? "CallAsyncFunc" : "CallSyncFunc"
     let callbackFunc = middleAsyncCallbackTemplate
     callbackFunc = replaceAll(middleAsyncCallbackTemplate, "[eventNames]", param.eventName)
-    callbackFunc = replaceAll(callbackFunc, "[callback_param_type]", params)
-    callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", resultDefine)
-    callbackFunc = replaceAll(callbackFunc, "[cb_params]", cbParams)
-    callbackFunc = replaceAll(callbackFunc, "[callback_param_length]", param.callback.length)
-    callbackFunc = replaceAll(callbackFunc, "[value_set_array]", valueSetArray)
+    callbackFunc = replaceAll(callbackFunc, "[callback_param_type]", param.params)
+    if (param.callback.isArrowFuncFlag) {  // 回调是箭头函数
+        callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", param.resultDefine)
+        callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.cbParams + '\n')
+        callbackFunc = replaceAll(callbackFunc, "[value_set_array]", param.valueSetArray)
+    } else { // 回调是普通callback
+        callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", `napi_value resultTmp = nullptr; `)
+        callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.valuePackage)
+        callbackFunc = replaceAll(callbackFunc, "[value_set_array]",
+            `napi_set_element(pAsyncFuncs->env_, result, 0, resultTmp);`)
+    }
     callbackFunc = replaceAll(callbackFunc, "[call_function_name]", callFunctionName)
     if (className != null) {
-      callbackFunc = replaceAll(callbackFunc, "[middleClassName]", middleClassName + "::")
+        callbackFunc = replaceAll(callbackFunc, "[middleClassName]", middleClassName + "::")
     } else {
-      callbackFunc = replaceAll(callbackFunc, "[middleClassName]", "")
+        callbackFunc = replaceAll(callbackFunc, "[middleClassName]", "")
     }
     codeContext.middleFunc += callbackFunc
 
-    // 为每个on的event事件生成回调方法
-    genCallbackMiddleEvent(param, useParams, params, className, middleClassName, codeContext);
+     // 为每个on的event事件生成回调方法
+    genCallbackMiddleMethod(param, className, middleClassName, codeContext);
+
+    // 为每个on的event事件生成回调接口供用户侧使用
+    genCallbackMethodH(param, codeContext);
 
     // 为每个on的event事件生成回调接口在工具代码中声明
     let middleHCallback = replaceAll(middleHCallbackTemplate, "[eventName]", param.eventName)
-    middleHCallback = replaceAll(middleHCallback, "[callback_param_type]", params)
+    middleHCallback = replaceAll(middleHCallback, "[callback_param_type]", param.params)
     codeContext.middleH += middleHCallback
 
-    // 为每个on的event事件生成回调接口声明供用户侧使用
-    genCallbackH(param, params, codeContext);
-
     // 为每个on的event事件生成回调接口的实现供用户侧使用
-    genCallbackMethod(param, params, className, useParams, middleClassName, codeContext);
+    genCallbackMethod(param, className, middleClassName, codeContext);
 }
 
-function genCallbackH(param, params, codeContext) {
-    let eventNameDefine = param.eventNameIsStr ? "std::string &eventName, " : "";
-    let implHCallBack = replaceAll(implHEventCallbakTemplate, "[eventName]", param.eventName);
-    implHCallBack = replaceAll(implHCallBack, "[callback_param_type]", params);
-    implHCallBack = replaceAll(implHCallBack, "[callback_eventName]", eventNameDefine);
-    codeContext.implH += implHCallBack;
-}
-
-function genCallbackMiddleEvent(param, useParams, params, className, middleClassName, codeContext) {
+function genCallbackMiddleMethod(param, className, middleClassName, codeContext) {
     let middleEventCallBack = replaceAll(middleEventCallbakTemplate, "[eventName]", param.eventName);
-    middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_name]", useParams);
-    middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_type]", params);
+    middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_name]", param.useParams);
+    middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_type]", param.params);
     let isStrType = param.eventNameIsStr ? "true" : "false";
     middleEventCallBack = replaceAll(middleEventCallBack, "[is_string_type]", isStrType);
     if (className != null) {
-        middleEventCallBack = replaceAll(middleEventCallBack, "[middleClassName]", middleClassName + "::");
+      middleEventCallBack = replaceAll(middleEventCallBack, "[middleClassName]", middleClassName + "::");
     } else {
-        middleEventCallBack = replaceAll(middleEventCallBack, "[middleClassName]", "");
+      middleEventCallBack = replaceAll(middleEventCallBack, "[middleClassName]", "");
     }
     codeContext.middleFunc += middleEventCallBack;
 }
 
-function genCallbackMethod(param, params, className, useParams, middleClassName, codeContext) {
+function genCallbackMethodH(param, codeContext) {
+    let eventNameDefine = param.eventNameIsStr ? "std::string &eventName, " : "";
+    let implHCallBack = replaceAll(implHEventCallbakTemplate, "[eventName]", param.eventName);
+    implHCallBack = replaceAll(implHCallBack, "[callback_param_type]", param.params);
+    implHCallBack = replaceAll(implHCallBack, "[callback_eventName]", eventNameDefine);
+    codeContext.implH += implHCallBack;
+}
+
+function genCallbackMethod(param, className, middleClassName, codeContext) {
     let isStrType = param.eventNameIsStr ? "" : `std::string eventName = "[fixed_eventName]";`;
-    isStrType = replaceAll(isStrType, "[fixed_eventName]", param.eventName)
+    isStrType = replaceAll(isStrType, "[fixed_eventName]", param.eventName);
     let implCppCallBack = replaceAll(implCppEventCallbakTemplate, "[eventName]", param.eventName);
-    implCppCallBack = replaceAll(implCppCallBack, "[callback_param_type]", params);
+    implCppCallBack = replaceAll(implCppCallBack, "[callback_param_type]", param.params);
     implCppCallBack = replaceAll(implCppCallBack, "[eventName_is_string]", isStrType);
     let eventNameDefine = param.eventNameIsStr ? "std::string &eventName, " : "";
-    implCppCallBack = replaceAll(implCppCallBack, "[callback_eventName]", eventNameDefine)
+    implCppCallBack = replaceAll(implCppCallBack, "[callback_eventName]", eventNameDefine);
 
     let callbackNoClass = `[eventName]CallbackMiddle(eventName, [callback_param_name]);`;
     let callbackClass = `  [middleClassName] *ptr = new [middleClassName]();
-      ptr->[eventName]CallbackMiddle(eventName, [callback_param_name]);
-      delete ptr;`;
+        ptr->[eventName]CallbackMiddle(eventName, [callback_param_name]);
+        delete ptr;`;
 
     if (className == null) {
-        let callbackNoClassRes = replaceAll(callbackNoClass, "[eventName]", param.eventName);
-        callbackNoClassRes = replaceAll(callbackNoClassRes, "[callback_param_name]", useParams);
-        implCppCallBack = replaceAll(implCppCallBack, "[use_callback_func]", callbackNoClassRes);
-        implCppCallBack = replaceAll(implCppCallBack, "[className]", "");
+      let callbackNoClassRes = replaceAll(callbackNoClass, "[eventName]", param.eventName);
+      callbackNoClassRes = replaceAll(callbackNoClassRes, "[callback_param_name]", param.useParams);
+      implCppCallBack = replaceAll(implCppCallBack, "[use_callback_func]", callbackNoClassRes);
+      implCppCallBack = replaceAll(implCppCallBack, "[className]", "");
     } else {
-        let callbackClassRes = replaceAll(callbackClass, "[eventName]", param.eventName);
-        callbackClassRes = replaceAll(callbackClassRes, "[callback_param_name]", useParams);
-        callbackClassRes = replaceAll(callbackClassRes, "[middleClassName]", middleClassName);
-        implCppCallBack = replaceAll(implCppCallBack, "[use_callback_func]", callbackClassRes);
-        implCppCallBack = replaceAll(implCppCallBack, "[className]", className + "::");
+      let callbackClassRes = replaceAll(callbackClass, "[eventName]", param.eventName);
+      callbackClassRes = replaceAll(callbackClassRes, "[callback_param_name]", param.useParams);
+      callbackClassRes = replaceAll(callbackClassRes, "[middleClassName]", middleClassName);
+      implCppCallBack = replaceAll(implCppCallBack, "[use_callback_func]", callbackClassRes);
+      implCppCallBack = replaceAll(implCppCallBack, "[className]", className + "::");
     }
     codeContext.implCpp += implCppCallBack;
 }
@@ -296,8 +297,7 @@ function generateFunctionOnOff(func, data, className) {
         valueDefine: "", // impl参数定义
         eventName:"", // 注册/去注册事件名称
         eventNameIsStr:false, // 注册/去注册事件名称是否在ts中为string类型
-        optionalParamDestory: "", // 可选参数内存释放
-        callback: []  // 回调函数参数
+        optionalParamDestory: "" // 可选参数内存释放
     }
 
     for (let i in func.value) {
@@ -317,7 +317,8 @@ function generateFunctionOnOff(func, data, className) {
 
     if (func.name == 'on') {
         // 为每个on接口同步生成eventCallback方法供用户回调使用
-        gennerateEventCallback(codeContext, data, param, className)
+        let isOnFuncFlag = true;
+        gennerateEventCallback(codeContext, data, param, className, isOnFuncFlag)
     }
 
     return [codeContext.middleFunc, codeContext.implH, codeContext.implCpp, codeContext.middleH]

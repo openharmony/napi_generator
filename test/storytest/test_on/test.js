@@ -36,7 +36,7 @@ describe('test 1 on', function () {
     function onCallbackTest3({topic, message}) {
         ret = true;
         console.info('onCallback topic = ' + topic)
-        console.info('onCallback inter.message = ' + inter.message)
+        console.info('onCallback message = ' + message)
     }
 
     // interface TestClass1 {
