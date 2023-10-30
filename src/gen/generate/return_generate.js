@@ -113,11 +113,11 @@ function cToJs(value, type, dest, deep = 1, optional) {
     if (type.indexOf("|") >= 0) {
         return unionTempleteFunc(value, type, dest, optional);
     } else if (type == "void")
-        return "%s = pxt->UndefinedValue();".format(dest);
+        return "%s = pxt->UndefinedValue();\n".format(dest);
     else if (type == "boolean")
-        return "%s = pxt->SwapC2JsBool(%s);".format(dest, value.replace("[replace]", deep - 2));
+        return "%s = pxt->SwapC2JsBool(%s);\n".format(dest, value.replace("[replace]", deep - 2));
     else if (type == "string")
-        return `%s = pxt->SwapC2JsUtf8(%s.c_str());`.format(dest, value.replace("[replace]", deep - 2))
+        return `%s = pxt->SwapC2JsUtf8(%s.c_str());\n`.format(dest, value.replace("[replace]", deep - 2))
     else if (InterfaceList.getValue(type)) {
         return cToJsForInterface(value, type, dest, deep);
     }
@@ -135,7 +135,7 @@ function cToJs(value, type, dest, deep = 1, optional) {
         return mapTempleteFunc(type, deep, dest, value)
     }
     else if (type.substring(0, 12) == "NUMBER_TYPE_") {
-        return `%s = NUMBER_C_2_JS(pxt, %s);`.format(dest, value.replace("[replace]", deep - 2))  
+        return `%s = NUMBER_C_2_JS(pxt, %s);\n`.format(dest, value.replace("[replace]", deep - 2))  
     } 
     else if (type == "any") {
         return anyTempleteFunc(value)
@@ -509,14 +509,14 @@ function generateOptionalAndUnion(returnInfo, param, data, outParam) {
         param.optionalParamDestory += "C_DELETE(vio->out);\n    "
     }
 
-    if (!isEnum(type, data) && !isArrowFunc(type)) {
+    if (!isEnum(type, data) && !isArrowFunc(type) && !param.callback.isArrowFuncFlag) {
         param.valuePackage = cToJs(outParam, type, "result")
     } else if (type.indexOf("|") >= 0) {
         returnGenerateUnion(param)
     }
 }
 
-function returnGenerateForMultiPara(paramInfo, param, data) {
+function returnGenerateForArrowCbMultiPara(paramInfo, param, data, i) {
     let type = paramInfo.type
     if (type === undefined) {
         NapiLog.logError("returnGenerate: type of %s is undefined!".format(paramInfo));
@@ -527,6 +527,8 @@ function returnGenerateForMultiPara(paramInfo, param, data) {
     let outParam = paramInfo.optional ? "(*vio->%s)" : "vio->%s".format(paramInfo.name, paramInfo.name)
 
     generateOptionalAndUnion(paramInfo, param, data, outParam);
+    // param.valuePackage += cToJs(outParam, type, "result")
+    param.valuePackage += cToJs(outParam, type, "args[%s]".format(i))
 
     let modifiers = paramInfo.optional ? "*" : "&"
     if (type == "string") {
@@ -639,6 +641,7 @@ function returnGenerate(returnInfo, param, data) {
     else if (isObjectType(type)) {
         returnGenerateObject(returnInfo, param, data)
     } else if (isArrowFunc(type)) {
+        param.paramSize = returnInfo.arrowFuncParamList.length
         for(let i=0; i<returnInfo.arrowFuncParamList.length; i++) {           
             let paramInfo = {
                 name: returnInfo.arrowFuncParamList[i].name,
@@ -649,7 +652,7 @@ function returnGenerate(returnInfo, param, data) {
                 returnGenerateForOnOffMultiPara(paramInfo, param, data)
                 param.valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, %sNapi);\n    '.format(i, paramInfo.name)
             } else {
-                returnGenerateForMultiPara(paramInfo, param, data)
+                returnGenerateForArrowCbMultiPara(paramInfo, param, data, i)
             }
             
         }
