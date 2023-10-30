@@ -526,8 +526,9 @@ function returnGenerateForArrowCbMultiPara(paramInfo, param, data, i) {
     param.valueFill += ("%s" + valueFillStr).format(param.valueFill.length > 0 ? ", " : "")
     let outParam = paramInfo.optional ? "(*vio->%s)" : "vio->%s".format(paramInfo.name, paramInfo.name)
 
+    // 回调为，参数个数为1，其转换结果保存在result中
+    // 回调给箭头函数，支持参数个数大于1，参数转换结果保存在args[i]
     generateOptionalAndUnion(paramInfo, param, data, outParam);
-    // param.valuePackage += cToJs(outParam, type, "result")
     param.valuePackage += cToJs(outParam, type, "args[%s]".format(i))
 
     let modifiers = paramInfo.optional ? "*" : "&"
