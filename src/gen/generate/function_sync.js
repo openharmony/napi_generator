@@ -40,11 +40,19 @@ struct [funcName]_value_struct {[valueIn][valueOut]
     napi_value result = nullptr;
     napi_value retVal = nullptr;
     if (pxt->GetArgc() > [callback_param_offset]) {
-        [valuePackage]
+        static const int ARGS_SIZE = [agrs_size];
+        napi_value args[ARGS_SIZE];
+        [valuePackage]  
         {
-            napi_value args[1] = {result};
-            retVal = pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]), XNapiTool::ONE, args);
+            // 回调为，参数个数为1，其转换结果保存在result中
+            // 回调给箭头函数，支持参数个数大于1，参数转换结果保存在args[i]
+            if (ARGS_SIZE ==  XNapiTool::ONE) {
+                args[0] = result;
+            }            
+            retVal = pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]),  ARGS_SIZE, args);
         }
+
+        
     }
 
     if (retVal != nullptr) {
@@ -96,23 +104,28 @@ function getOptionalCallbackInit(param) {
         .format(getConstNum(param.callback.offset), cType)
 }
 
-function callBackReturnValJs2C(className, funcName, callbackRetType) {
+function callBackReturnValJs2C(className, funcName, callbackRetType, funcRetType) {
     let cbRetJs2CTrans = ''
+    let retOutFill = ''
+    if (funcRetType !== 'void') {
+        retOutFill = ', vio->retOut'
+    }
+
     if (callbackRetType === 'void') {
         cbRetJs2CTrans = '';
     } else if (callbackRetType === 'string') {
         cbRetJs2CTrans = 'pxt->SwapJs2CUtf8(retVal, vio->cbOut);\n' + 
-        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName);
+        '%s%sReturn(vio->cbOut%s);\n'.format(className == null ? "" : "pInstance->", funcName, retOutFill);
     } else if (callbackRetType === 'boolean') {
         cbRetJs2CTrans = 'vio->cbOut = pxt->SwapJs2CBool(retVal);\n' + 
-        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName);
+        '%s%sReturn(vio->cbOut%s);\n'.format(className == null ? "" : "pInstance->", funcName, retOutFill);
     } else if (callbackRetType.substring(0, 12) == "NUMBER_TYPE_") {
         let lt = NumberIncrease.getAndIncrease()
         cbRetJs2CTrans = 'NUMBER_JS_2_C(retVal, NUMBER_TYPE_%d, vio->cbOut);\n'.format(lt) + 
-        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName); 
+        '%s%sReturn(vio->cbOut%s);\n'.format(className == null ? "" : "pInstance->", funcName, retOutFill); 
     } else if (callbackRetType === 'number') {       
         cbRetJs2CTrans = 'NUMBER_JS_2_C(retVal, NUMBER_TYPE_1, vio->cbOut);\n' + 
-        '%s%sReturn(vio->cbOut, vio->retOut);\n'.format(className == null ? "" : "pInstance->", funcName);
+        '%s%sReturn(vio->cbOut%s);\n'.format(className == null ? "" : "pInstance->", funcName, retOutFill);
     } else {
         NapiLog.logError("callBackReturnValJs2C not surpport callbackRetType:%s".format(callbackRetType));
     }
@@ -248,7 +261,7 @@ function generateFunctionSync(func, data, className) {
     }
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
     let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
-        valuePackage: "", valueDefine: "", optionalParamDestory: "", cbRetvalueDefine: ""}
+        valuePackage: "", valueDefine: "", optionalParamDestory: "", cbRetvalueDefine: "", paramSize: 1}
 
     for (let i in func.value) {
         paramGenerate(i, func.value[i], param, data)
@@ -266,10 +279,12 @@ function generateFunctionSync(func, data, className) {
     middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback) // 可选callback参数初始化
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
     middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
+    middleFunc = replaceAll(middleFunc, "[agrs_size]", param.paramSize)
+    
     middleFunc = middleFunc.replaceAll("[callback_param_offset]", param.callback.offset); // 呼叫回调
     
     // callback返回值处理，回调成功后根据js返回值，业务进行后续处理
-    let callBackReturnProc = callBackReturnValJs2C(className, func.name, param.callback.returnType)
+    let callBackReturnProc = callBackReturnValJs2C(className, func.name, param.callback.returnType, func.ret)
     middleFunc = middleFunc.replaceAll("[cbRetValJs2C]", callBackReturnProc);
 
     // 同步函数返回值处理
