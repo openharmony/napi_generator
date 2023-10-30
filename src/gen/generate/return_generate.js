@@ -498,7 +498,7 @@ function isObjectType(type) {
     return false;
 }
 
-function generateOptionalAndUnion(returnInfo, param, data, outParam) {
+function generateOptionalAndUnion(returnInfo, param, data, outParam, c2JsresultName = "result") {
     let type = returnInfo.type
     if (type === undefined) {
         NapiLog.logError("returnGenerate: type of returnInfo is undefined!");
@@ -509,8 +509,15 @@ function generateOptionalAndUnion(returnInfo, param, data, outParam) {
         param.optionalParamDestory += "C_DELETE(vio->out);\n    "
     }
 
-    if (!isEnum(type, data) && !isArrowFunc(type) && !param.callback.isArrowFuncFlag) {
-        param.valuePackage = cToJs(outParam, type, "result")
+    // 判断callback是否有效，若无效，则为普通函数
+    let paramCallbackFlag = param.callback != undefined? true: false
+    let paramCallbackIsArrow 
+    if (paramCallbackFlag) { // 若callback有效， 判断是否是箭头函数
+        paramCallbackIsArrow = param.callback.isArrowFuncFlag
+    }
+    // 普通函数 paramCallbackFlag == undefined
+    if (!isEnum(type, data) && !isArrowFunc(type) && !paramCallbackIsArrow) {
+        param.valuePackage = cToJs(outParam, type, c2JsresultName)
     } else if (type.indexOf("|") >= 0) {
         returnGenerateUnion(param)
     }
@@ -603,64 +610,72 @@ function returnGenerateForOnOffMultiPara(paramInfo, param, data) {
     }
 }
 
-
-function returnGenerate(returnInfo, param, data) {
+function returnGenerate(returnInfo, param, data, isOnFuncFlag = false) {
     let type = returnInfo.type
     if (type === undefined) {
         NapiLog.logError("returnGenerate: type of %s is undefined!".format(returnInfo));
         return;
     }
-
     let valueFillStr = getReturnFill(returnInfo, param)
     param.valueFill += ("%s" + valueFillStr).format(param.valueFill.length > 0 ? ", " : "")
     let outParam = returnInfo.optional ? "(*vio->out)" : "vio->out"
     let modifiers = returnInfo.optional ? "*" : "&"
-    generateOptionalAndUnion(returnInfo, param, data, outParam);
+
+    let result = onCallbackC2JsResName(isOnFuncFlag, type, outParam);
+    let c2JsresultName = result[0]
+    outParam = result[1]
+    generateOptionalAndUnion(returnInfo, param, data, outParam, c2JsresultName);
 
     if (type == "string") {
         param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;\n"        
         param.valueDefine += "%sstd::string%s %s".format(param.valueDefine.length > 0 ? ", " : "", modifiers, 
         returnInfo.name)
-    }
-    else if (type == "void") {
+    } else if (type == "void") {
         NapiLog.logInfo("The current void type don't need generate");
-    }
-    else if (type == "boolean") {
+    } else if (type == "boolean") {
         param.valueOut = returnInfo.optional ? "bool* out = nullptr;" : "bool out;\n"
         param.valueDefine += "%sbool%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
-    }
-    else if (isEnum(type, data)) {
+    } else if (isEnum(type, data)) {
         returnGenerateEnum(data, returnInfo, param)
-    }
-    else if(generateType(type)){
+    } else if(generateType(type)){
         returnGenerate2(returnInfo, param, data)
-    }
-    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+    } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
         param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;\n")
         param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
-    }
-    else if (isObjectType(type)) {
+    } else if (isObjectType(type)) {
         returnGenerateObject(returnInfo, param, data)
     } else if (isArrowFunc(type)) {
-        param.paramSize = returnInfo.arrowFuncParamList.length
-        for(let i=0; i<returnInfo.arrowFuncParamList.length; i++) {           
-            let paramInfo = {
-                name: returnInfo.arrowFuncParamList[i].name,
-                type: returnInfo.arrowFuncParamList[i].type,
-                optional: returnInfo.optional
-            }
-            if (returnInfo.onFlag) { //on/off处理
-                returnGenerateForOnOffMultiPara(paramInfo, param, data)
-                param.valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, %sNapi);\n    '.format(i, paramInfo.name)
-            } else {
-                returnGenerateForArrowCbMultiPara(paramInfo, param, data, i)
-            }
-            
-        }
-    }
-    else {
+        genArrowFuncParam(param, returnInfo, data);
+    } else {
         NapiLog.logError("Do not support returning the type [%s].".format(type));
     }  
+}
+
+function genArrowFuncParam(param, returnInfo, data) {
+    param.paramSize = returnInfo.arrowFuncParamList.length;
+    for (let i = 0; i < returnInfo.arrowFuncParamList.length; i++) {
+        let paramInfo = {
+            name: returnInfo.arrowFuncParamList[i].name,
+            type: returnInfo.arrowFuncParamList[i].type,
+            optional: returnInfo.optional
+        };
+        if (returnInfo.onFlag) { //on/off处理
+            returnGenerateForOnOffMultiPara(paramInfo, param, data);
+            param.valueSetArray += 'napi_set_element(pAsyncFuncs->env_, result, %d, %sNapi);\n    '
+              .format(i, paramInfo.name);
+        } else {
+            returnGenerateForArrowCbMultiPara(paramInfo, param, data, i);
+        }
+    }
+}
+
+function onCallbackC2JsResName(isOnFuncFlag, type, outParam) {
+    let c2JsresultName = "result";
+    if (isOnFuncFlag && !isArrowFunc(type)) { // on事件普通回调方法的参数
+        outParam = "valueIn";
+        c2JsresultName = "resultTmp";
+    }
+    return [c2JsresultName, outParam];
 }
 
 function generateType(type){

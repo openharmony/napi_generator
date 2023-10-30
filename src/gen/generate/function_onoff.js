@@ -18,15 +18,23 @@ const { eventParamGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { cToJs } = require("./return_generate");
 
-/**
- * on和off接口生成模板
- */
-let funcOnOffTemplete = `
+let middleHOnOffTemplate = `
 struct [funcName]_value_struct {
     std::string eventName;
 };
 
-[static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info)
+[static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info);
+`
+let middleHCallbackTemplate = `
+  void [eventName]CallbackMiddle(std::string &eventName, [callback_param_type]);
+  void [eventName]AsyncCallbackMiddle(const std::string &eventName, [callback_param_type]);
+`
+
+/**
+ * on和off接口生成模板
+ */
+let funcOnOffTemplete = `
+napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
     if (pxt->IsFailed()) {
@@ -50,7 +58,7 @@ struct [funcName]_value_struct {
 `
 
 let middleAsyncCallbackTemplate = `
-void [eventNames]AsyncCallback(const std::string &eventName, [callback_param_type])
+void [middleClassName][eventNames]AsyncCallbackMiddle(const std::string &eventName, [callback_param_type])
 {
 	if(XNapiTool::callFuncs_.count(eventName) <= 0) {
         return;
@@ -72,23 +80,31 @@ void [eventNames]AsyncCallback(const std::string &eventName, [callback_param_typ
 `
 
 let middleEventCallbakTemplate = `
-void [eventName]Callback(std::string &eventName, [callback_param_type]) {
+void [middleClassName][eventName]CallbackMiddle(std::string &eventName, [callback_param_type]) {
   bool isStringType = [is_string_type];
   if (!isStringType) {
     if (eventName != "[eventName]") { // on方法注册字段为固定值时,判断ts文件中注册的字段与使用字段是否一样
       printf("eventName Err !");
       return;
     } else {
-      [eventName]AsyncCallback(eventName, [callback_param_name]);
+      [middleClassName][eventName]AsyncCallbackMiddle(eventName, [callback_param_name]);
     }
   } else {
-    [eventName]AsyncCallback(eventName, [callback_param_name]);
+    [middleClassName][eventName]AsyncCallbackMiddle(eventName, [callback_param_name]);
   }
 }
 `
+
 let implHEventCallbakTemplate = `
-// 提供给业务代码的接口：回调函数
-void [eventName]Callback(std::string &eventName, [callback_param_type]);
+void [eventName]Callback([callback_eventName][callback_param_type]);
+`
+
+let implCppEventCallbakTemplate = `
+void [className][eventName]Callback([callback_eventName][callback_param_type])
+{
+  [eventName_is_string]
+  [use_callback_func]
+}
 `
 
 function isOnTypeExist(onTypeList, newType) {
@@ -125,15 +141,22 @@ function addOnOffFunc(data, funcName) {
 
 function gennerateOnOffContext(codeContext, func, data, className, param) {
     codeContext.middleFunc = replaceAll(funcOnOffTemplete, "[funcName]", func.name)
+    if (func.name != "constructor") {
+      codeContext.middleH = replaceAll(middleHOnOffTemplate, "[funcName]", func.name)
+    }
+    let middleClassName = ""
     if (className == null) {
-        codeContext.middleFunc = codeContext.middleFunc.replaceAll("[static_define]", "")
+        codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[unwarp_instance]", "")
+        codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", "")
     }
     else {
-        codeContext.middleFunc = codeContext.middleFunc.replaceAll("[static_define]", "static ")
+        middleClassName = className + "_middle"
+        codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "static ")
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[unwarp_instance]",
             `void *instPtr = pxt->UnWarpInstance();
     %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className))
+        codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", middleClassName + "::")
     }
     let instancePtr = "%s".format(className == null ? "" : "pInstance->")
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
@@ -153,8 +176,9 @@ return true;
     addOnOffFunc(data, func.name)
 }
 
-function gennerateEventCallback(codeContext, data, param) {
+function gennerateEventCallback(codeContext, data, param, className = null, isOnFuncFlag = false) {
     let paramIsAsync = false
+    let middleClassName = ""
 
     param.resultDefine = ''
     param.cbParams = ''
@@ -162,7 +186,7 @@ function gennerateEventCallback(codeContext, data, param) {
     param.useParams = ''
     param.params = ''
 
-    returnGenerate(param.callback, param, data)
+    returnGenerate(param.callback, param, data, isOnFuncFlag)
     if (param.params === '') {
         let paramType = param.valueOut.substring(0, param.valueOut.length - "out;\n".length)
         param.params = paramType + '&valueIn'
@@ -171,28 +195,106 @@ function gennerateEventCallback(codeContext, data, param) {
         param.useParams = 'valueIn'
     }
      
+    if (className != null) {
+        middleClassName = className + "_middle"
+    }
+    
     let callFunctionName = paramIsAsync? "CallAsyncFunc" : "CallSyncFunc"
     let callbackFunc = middleAsyncCallbackTemplate
     callbackFunc = replaceAll(middleAsyncCallbackTemplate, "[eventNames]", param.eventName)
     callbackFunc = replaceAll(callbackFunc, "[callback_param_type]", param.params)
-    callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", param.resultDefine)
-    callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.cbParams)
-    callbackFunc = replaceAll(callbackFunc, "[value_set_array]", param.valueSetArray)
+    if (param.callback.isArrowFuncFlag) {  // 回调是箭头函数
+        callbackFunc = getArrowCallbackC2JsParam(callbackFunc, param);
+    } else { // 回调是普通callback
+        callbackFunc = getCallbackC2JsParam(callbackFunc, param);
+    }
     callbackFunc = replaceAll(callbackFunc, "[call_function_name]", callFunctionName)
+    if (className != null) {
+        callbackFunc = replaceAll(callbackFunc, "[middleClassName]", middleClassName + "::")
+    } else {
+        callbackFunc = replaceAll(callbackFunc, "[middleClassName]", "")
+    }
     codeContext.middleFunc += callbackFunc
 
      // 为每个on的event事件生成回调方法
-     let middleEventCallBack = replaceAll(middleEventCallbakTemplate, "[eventName]", param.eventName)
-     middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_name]", param.useParams)
-     middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_type]", param.params)
-     let isStrType = param.eventNameIsStr? "true": "false"
-     middleEventCallBack = replaceAll(middleEventCallBack, "[is_string_type]", isStrType)
-     codeContext.middleFunc += middleEventCallBack;
+    genCallbackMiddleMethod(param, className, middleClassName, codeContext);
 
-     // 为每个on的event事件生成回调接口供用户侧使用
-     let implHCallBack = replaceAll(implHEventCallbakTemplate, "[eventName]", param.eventName)
-     implHCallBack = replaceAll(implHCallBack, "[callback_param_type]", param.params)
-     codeContext.implH += implHCallBack
+    // 为每个on的event事件生成回调接口供用户侧使用
+    genCallbackMethodH(param, codeContext);
+
+    // 为每个on的event事件生成回调接口在工具代码中声明
+    let middleHCallback = replaceAll(middleHCallbackTemplate, "[eventName]", param.eventName)
+    middleHCallback = replaceAll(middleHCallback, "[callback_param_type]", param.params)
+    codeContext.middleH += middleHCallback
+
+    // 为每个on的event事件生成回调接口的实现供用户侧使用
+    genCallbackMethod(param, className, middleClassName, codeContext);
+}
+
+function getArrowCallbackC2JsParam(callbackFunc, param) {
+    callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", param.resultDefine);
+    callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.cbParams + '\n');
+    callbackFunc = replaceAll(callbackFunc, "[value_set_array]", param.valueSetArray);
+    return callbackFunc;
+}
+
+function getCallbackC2JsParam(callbackFunc, param) {
+    callbackFunc = replaceAll(callbackFunc, "[cb_params_define]", `napi_value resultTmp = nullptr; `);
+    callbackFunc = replaceAll(callbackFunc, "[cb_params]", param.valuePackage);
+    callbackFunc = replaceAll(callbackFunc, "[value_set_array]",
+      `napi_set_element(pAsyncFuncs->env_, result, 0, resultTmp);`);
+    return callbackFunc;
+}
+
+function genCallbackMiddleMethod(param, className, middleClassName, codeContext) {
+    let middleEventCallBack = replaceAll(middleEventCallbakTemplate, "[eventName]", param.eventName);
+    middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_name]", param.useParams);
+    middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_type]", param.params);
+    let isStrType = param.eventNameIsStr ? "true" : "false";
+    middleEventCallBack = replaceAll(middleEventCallBack, "[is_string_type]", isStrType);
+    if (className != null) {
+      middleEventCallBack = replaceAll(middleEventCallBack, "[middleClassName]", middleClassName + "::");
+    } else {
+      middleEventCallBack = replaceAll(middleEventCallBack, "[middleClassName]", "");
+    }
+    codeContext.middleFunc += middleEventCallBack;
+}
+
+function genCallbackMethodH(param, codeContext) {
+    let eventNameDefine = param.eventNameIsStr ? "std::string &eventName, " : "";
+    let implHCallBack = replaceAll(implHEventCallbakTemplate, "[eventName]", param.eventName);
+    implHCallBack = replaceAll(implHCallBack, "[callback_param_type]", param.params);
+    implHCallBack = replaceAll(implHCallBack, "[callback_eventName]", eventNameDefine);
+    codeContext.implH += implHCallBack;
+}
+
+function genCallbackMethod(param, className, middleClassName, codeContext) {
+    let isStrType = param.eventNameIsStr ? "" : `std::string eventName = "[fixed_eventName]";`;
+    isStrType = replaceAll(isStrType, "[fixed_eventName]", param.eventName);
+    let implCppCallBack = replaceAll(implCppEventCallbakTemplate, "[eventName]", param.eventName);
+    implCppCallBack = replaceAll(implCppCallBack, "[callback_param_type]", param.params);
+    implCppCallBack = replaceAll(implCppCallBack, "[eventName_is_string]", isStrType);
+    let eventNameDefine = param.eventNameIsStr ? "std::string &eventName, " : "";
+    implCppCallBack = replaceAll(implCppCallBack, "[callback_eventName]", eventNameDefine);
+
+    let callbackNoClass = `[eventName]CallbackMiddle(eventName, [callback_param_name]);`;
+    let callbackClass = `  [middleClassName] *ptr = new [middleClassName]();
+        ptr->[eventName]CallbackMiddle(eventName, [callback_param_name]);
+        delete ptr;`;
+
+    if (className == null) {
+      let callbackNoClassRes = replaceAll(callbackNoClass, "[eventName]", param.eventName);
+      callbackNoClassRes = replaceAll(callbackNoClassRes, "[callback_param_name]", param.useParams);
+      implCppCallBack = replaceAll(implCppCallBack, "[use_callback_func]", callbackNoClassRes);
+      implCppCallBack = replaceAll(implCppCallBack, "[className]", "");
+    } else {
+      let callbackClassRes = replaceAll(callbackClass, "[eventName]", param.eventName);
+      callbackClassRes = replaceAll(callbackClassRes, "[callback_param_name]", param.useParams);
+      callbackClassRes = replaceAll(callbackClassRes, "[middleClassName]", middleClassName);
+      implCppCallBack = replaceAll(implCppCallBack, "[use_callback_func]", callbackClassRes);
+      implCppCallBack = replaceAll(implCppCallBack, "[className]", className + "::");
+    }
+    codeContext.implCpp += implCppCallBack;
 }
 
 function generateFunctionOnOff(func, data, className) {
@@ -215,7 +317,8 @@ function generateFunctionOnOff(func, data, className) {
     let codeContext = {
         middleFunc: "",
         implH: "",
-        implCpp: ""
+        implCpp: "",
+        middleH: ""
     }
     if (!isOnOffFuncExist(data, func.name)) {
         // 同一个ts文件中所有的on和off 接口只需要生成一份公共的native方法
@@ -224,10 +327,11 @@ function generateFunctionOnOff(func, data, className) {
 
     if (func.name == 'on') {
         // 为每个on接口同步生成eventCallback方法供用户回调使用
-        gennerateEventCallback(codeContext, data, param)
+        let isOnFuncFlag = true;
+        gennerateEventCallback(codeContext, data, param, className, isOnFuncFlag)
     }
 
-    return [codeContext.middleFunc, codeContext.implH, codeContext.implCpp]
+    return [codeContext.middleFunc, codeContext.implH, codeContext.implCpp, codeContext.middleH]
 }
 
 module.exports = {

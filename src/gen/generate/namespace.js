@@ -97,7 +97,7 @@ function genExtendsRelation(data) {
 
 //生成module_middle.cpp、module.h、module.cpp
 function generateNamespace(name, data, inNamespace = "") {
-    let namespaceResult = { implH: "", implCpp: "", middleFunc: "", middleInit: "", declarationH: "" }
+    let namespaceResult = { implH: "", implCpp: "", middleFunc: "", middleInit: "", declarationH: "", middleH: "" }
     namespaceResult.middleInit += formatMiddleInit(inNamespace, name)
     genExtendsRelation(data)
     InterfaceList.push(data.interface)
@@ -137,7 +137,7 @@ function generateNamespace(name, data, inNamespace = "") {
         namespaceResult.middleInit += "}"
     }
     return generateResult(name, namespaceResult.implH, namespaceResult.implCpp, namespaceResult.middleFunc,
-        namespaceResult.middleInit)
+        namespaceResult.middleInit, namespaceResult.middleH)
 }
 
 function genNamespaceFunc(data, i, namespaceResult, inNamespace, name) {
@@ -146,6 +146,7 @@ function genNamespaceFunc(data, i, namespaceResult, inNamespace, name) {
     namespaceResult.middleFunc += tmp[0];
     namespaceResult.implH += tmp[1];
     namespaceResult.implCpp += tmp[2];
+    namespaceResult.middleH += tmp[3];
     let middleTmp = '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'
       .format(func.name, inNamespace, name, func.name, inNamespace.length > 0 ? ", " + name : "");
     if (namespaceResult.middleInit.indexOf(middleTmp) < 0) { // on方法不需要重复定义
@@ -166,6 +167,7 @@ function getNamespaceResult(subResult, returnResult) {
     returnResult.implCpp += subResult.implCpp
     returnResult.middleInit += subResult.middleInit
     returnResult.declarationH += subResult.declarationH
+    returnResult.middleH += subResult.middleH
 
     return returnResult
 }
@@ -187,12 +189,13 @@ function generateEnumResult(data) {
     return resultEnum
 }
 
-function generateResult(name, implH, implCpp, middleFunc, middleInit) {
+function generateResult(name, implH, implCpp, middleFunc, middleInit, middleH) {
     let result = {
         implH: `\nnamespace %s {%s\n}`.format(name, implH),
         implCpp: `\nnamespace %s {%s}`.format(name, implCpp),
         middleBody: `\nnamespace %s {%s}`.format(name, middleFunc),
-        middleInit: middleInit
+        middleInit: middleInit,
+        middleH: `\nnamespace %s {%s\n}`.format(name, middleH)
     }
     return result;
 }
