@@ -55,8 +55,6 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
             }            
             retVal = pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]),  ARGS_SIZE, args);
         }
-
-        
     }
 
     if (retVal != nullptr) {
