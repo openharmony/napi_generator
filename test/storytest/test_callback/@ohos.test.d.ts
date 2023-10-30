@@ -76,7 +76,7 @@ declare namespace napitest {
 
     // 以下测试用例待支持 
     
-    // function fun9(cb: (wid: boolean, str: string, tc2:number) => string): string;
+    function fun9(cb: (wid: boolean, str: string, tc2:number) => string): string;
     
     // function fun9(cb: (wid: boolean, str: string, tc2:TestClass2) => string): string; // 回调函数参数个数大于1，待支持
 }
