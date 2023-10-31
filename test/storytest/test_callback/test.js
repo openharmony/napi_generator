@@ -43,6 +43,14 @@ function onCallbackVoid () {
 
 }
 
+function onCallbackBooleanVStr (isOK) {
+    let str
+    if (isOK) {
+        str = 'a' + 'b'
+    }
+    // return 'test aaa'
+}
+
 describe('Test interface callback', function () {
     // fun11(cb: Callback<number>): void;
     it('test callback in interface fun11', function () {
@@ -122,6 +130,13 @@ describe('Test callback', function () {
     // fun7(tt: Function): string;
     it('test common func callback fun7', function () {        
        let ret = testObj.fun7(onCallbackVoid);
+        assert.strictEqual(ret, '');
+    });
+
+    // function fun8(cb: (wid: boolean) => void): string;
+    it('test common func callback fun8', function () {
+        let ret = ''   
+        ret = testObj.fun8(onCallbackBooleanVStr);
         assert.strictEqual(ret, '');
     });
 });

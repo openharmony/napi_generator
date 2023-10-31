@@ -48,9 +48,9 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
         napi_value args[ARGS_SIZE];
         [valuePackage]  
         {
-            // 回调为，参数个数为1，其转换结果保存在result中
-            // 回调给箭头函数，支持参数个数大于1，参数转换结果保存在args[i]
-            if (ARGS_SIZE ==  XNapiTool::ONE) {
+            // 回调为Callback<XX>，参数个数为1，其转换结果保存在result中
+            // 回调为箭头函数，支持参数个数大于1，参数转换结果保存在args[i]
+            if (ARGS_SIZE ==  XNapiTool::ONE && result !=  nullptr) {
                 args[0] = result;
             }            
             retVal = pxt->SyncCallBack(pxt->GetArgv([callback_param_offset]),  ARGS_SIZE, args);
