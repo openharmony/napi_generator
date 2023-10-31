@@ -74,7 +74,7 @@ declare namespace napitest {
     // function fun23nm(cb: (wid: boolean) => TestClass2): string; // 待支持
     // function fun24nm(cb: (wid: boolean) => Human): string; // 待支持
 
-    // 以下测试用例待支持 
+    // // 以下测试用例待支持 
     
     function fun9(cb: (wid: boolean, str: string, tc2:number) => string): string;
     
