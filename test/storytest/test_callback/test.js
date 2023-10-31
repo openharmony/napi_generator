@@ -192,61 +192,63 @@ describe('Test callback', function () {
        let ret = testObj.fun7(onCallbackVoid);
         assert.strictEqual(ret, '');
     });
+});
 
+describe('Test namespace arrow callback ', function () {
     // function fun8(cb: (wid: boolean) => void): string;
-    it('test common func callback fun8', function () {
-        let ret = ''   
-        ret = testObj.fun8(onCallbackBooleanVStr);
-        assert.strictEqual(ret, '');
-    });
+it('test common func callback fun8', function () {
+let ret = ''   
+ret = testObj.fun8(onCallbackBooleanVStr);
+assert.strictEqual(ret, '');
+});
 
-    // function fun9(cb: (wid: boolean, str: string, tc2:number) => string): string;
-    it('test common func callback fun9', function () {
-        let ret = ''   
-        ret = testObj.fun9(onCallbackfun9);
-        assert.strictEqual(ret, '');
-    });
+// function fun9(cb: (wid: boolean, str: string, tc2:number) => string): string;
+it('test common func callback fun9', function () {
+let ret = ''   
+ret = testObj.fun9(onCallbackfun9);
+assert.strictEqual(ret, '');
+});
 
-    // function fun10nm(cb: (wid: boolean) => string): string;
-    it('test common func callback fun10nm', function () {
-        let ret = ''   
-        ret = testObj.fun10nm(onCallbackfun10nm);
-        assert.strictEqual(ret, '');
-    });
+// function fun10nm(cb: (wid: boolean) => string): string;
+it('test common func callback fun10nm', function () {
+let ret = ''   
+ret = testObj.fun10nm(onCallbackfun10nm);
+assert.strictEqual(ret, '');
+});
 
-    // function fun11nm(cb: (wid: boolean) => string): boolean;
-    it('test common func callback fun11nm', function () {
-        let ret = ''   
-        ret = testObj.fun11nm(onCallbackfun10nm);
-        assert.strictEqual(ret, false);
-    });
+// function fun11nm(cb: (wid: boolean) => string): boolean;
+it('test common func callback fun11nm', function () {
+let ret = ''   
+ret = testObj.fun11nm(onCallbackfun10nm);
+assert.strictEqual(ret, false);
+});
 
-    // function fun12nm(cb: (wid: boolean) => string): number;
-    it('test common func callback fun12nm', function () {
-        let ret = ''   
-        ret = testObj.fun12nm(onCallbackfun10nm);
-        assert.strictEqual(ret, 0);
-    });
+// function fun12nm(cb: (wid: boolean) => string): number;
+it('test common func callback fun12nm', function () {
+let ret = ''   
+ret = testObj.fun12nm(onCallbackfun10nm);
+assert.strictEqual(ret, 0);
+});
 
-    // function fun20nm(cb: (wid: boolean) => string): boolean;
-    it('test common func callback fun20nm', function () {
-        let ret = ''   
-        ret = testObj.fun20nm(onCallbackBooleanVStrRet);
-        assert.strictEqual(ret, false);
-    });
+// function fun20nm(cb: (wid: boolean) => string): boolean;
+it('test common func callback fun20nm', function () {
+let ret = ''   
+ret = testObj.fun20nm(onCallbackBooleanVStrRet);
+assert.strictEqual(ret, false);
+});
 
-    // function fun21nm(cb: (wid: boolean) => boolean): string;
-    it('test common func callback fun21nm', function () {
-        let ret = ''   
-        ret = testObj.fun21nm(onCallbackfun21nm);
-        assert.strictEqual(ret, '');
-    });
+// function fun21nm(cb: (wid: boolean) => boolean): string;
+it('test common func callback fun21nm', function () {
+let ret = ''   
+ret = testObj.fun21nm(onCallbackfun21nm);
+assert.strictEqual(ret, '');
+});
 
-    // function fun22nm(cb: (wid: boolean) => number): string;
-    it('test common func callback fun22nm', function () {
-        let ret = ''   
-        ret = testObj.fun22nm(onCallbackfun22nm);
-        assert.strictEqual(ret, '');
-    });
+// function fun22nm(cb: (wid: boolean) => number): string;
+it('test common func callback fun22nm', function () {
+let ret = ''   
+ret = testObj.fun22nm(onCallbackfun22nm);
+assert.strictEqual(ret, '');
+});
 
 });
