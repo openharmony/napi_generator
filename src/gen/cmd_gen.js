@@ -109,14 +109,6 @@ function getJsonCfg(currentPath) {
     let jsonFilePath = path.join(currentPath);
     let jsonFile = fs.readFileSync(jsonFilePath, { encoding: "utf8" });
     jsonCfg = JSON.parse(jsonFile);
-    // jsonCfg是一个数组，其中数组中的元素为 
-    // {
-    //   "includeName": "aaa.h",
-    //   "includeName": "aaa.cpp",
-    //   "interfaceName": "functest",
-    //   "serviceCode": "out = codeTestFunc(v);",
-    //   "description": "注释"
-    // }
     return jsonCfg;
 }
 
