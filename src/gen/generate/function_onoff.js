@@ -17,6 +17,7 @@ const re = require("../tools/re");
 const { eventParamGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { cToJs } = require("./return_generate");
+const { jsonCfgList } = require("../tools/common");
 
 let middleHOnOffTemplate = `
 struct [funcName]_value_struct {
@@ -166,12 +167,15 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
         codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
 
         codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
+        let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
         codeContext.implCpp += `
 bool %s%s(%s)
 {
-return true;
+    %s
+    return true;
 }
-`.format(className == null ? "" : className + "::", func.name, param.valueDefine)
+`.format(className == null ? "" : className + "::", func.name, param.valueDefine,
+   callStatement == null? "": callStatement)
 
     addOnOffFunc(data, func.name)
 }
