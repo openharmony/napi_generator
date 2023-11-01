@@ -21,7 +21,7 @@ const re = require("./tools/re");
 const { generateGYP } = require("./extend/binding_gyp");
 const { generateGN } = require("./extend/build_gn");
 const { generateBase } = require("./extend/tool_utility");
-const { NumberIncrease } = require("./tools/common");
+const { NumberIncrease, jsonCfgList } = require("./tools/common");
 const os = require("os");
 const path = require('path')
 const { NapiLog } = require("./tools/NapiLog");
@@ -151,6 +151,7 @@ let implHTemplete = `\
 let implCppTemplete = `\
 #include "[implName].h"
 #include "[implName]_middle.h"
+[include_configure_hCode]
 [implCpp_detail]
 `
 var genFileList = []
@@ -208,15 +209,50 @@ function formatCode(destDir) {
     deleteFolder(path.resolve("./tmpLocal"))
 }
 
-function generateAll(structOfTs, destDir, moduleName, numberType) {
+function analyzeJsonCfg(jsonCfg) {
+    let len = jsonCfg.length;
+    let jsonConfig = []
+    // 将json文件的数据存入jsonCfgList中
+    for (let i = 0; i < len; i++) {
+        let interfaceBody = null
+        if (jsonCfg[i].interfaceName.indexOf("::") > 0) {
+            let tt = jsonCfg[i].interfaceName.split("::")
+            interfaceBody = {
+              className: tt[0],
+              funcName: tt[1],
+            }
+        } else {
+            interfaceBody = {
+                className: "",
+                funcName: jsonCfg[i].interfaceName,
+            }
+        }
+        jsonConfig.push({
+            includeName: jsonCfg[i].includeName,
+            interfaceName: interfaceBody,
+            cppName: jsonCfg[i].cppName,
+            serviceCode: jsonCfg[i].serviceCode,
+        })
+    }
+    jsonCfgList.push(jsonConfig)
+}
+
+function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
     let ns0 = structOfTs.declareNamespace[0];
     let license = structOfTs.declareLicense[0];
     if (ns0 === undefined) {
         NapiLog.logError('generateAll error:get namespace fail!');
         return;
     }
+    // 分析业务配置代码的调用代码: 分析Json文件
+    if (jsonCfg) {
+        analyzeJsonCfg(jsonCfg);
+    }
 
     let result = generateNamespace(ns0.name, ns0.body)
+
+    jsonCfgList.pop()
+    
     let numberUsing = ""
     var numbertype = "uint32_t";
     if(numberType != "" && numberType != undefined){
@@ -226,39 +262,73 @@ function generateAll(structOfTs, destDir, moduleName, numberType) {
         numberUsing += "using NUMBER_TYPE_%d = ".format(i) + numbertype + ";\n"
     }
     generateMiddleH(ns0, result, destDir, license);
+    generateMiddleCpp(result, ns0, moduleName, destDir, license);
 
+    generateImplH(ns0, numberUsing, result, structOfTs, destDir, license);
+
+    let implCpp = implCppTemplete.replaceAll("[implName]", ns0.name)
+    let bindingCpp = ''
+    let includeH = ''
+    if (jsonCfg) {
+        let includeHCppRes = includeHCppFunc(jsonCfg, includeH, bindingCpp);
+        bindingCpp = includeHCppRes[0];
+        includeH = includeHCppRes[1];
+    }
+    implCpp = implCpp.replaceAll("[include_configure_hCode]", includeH);
+    implCpp = implCpp.replaceAll("[implCpp_detail]", result.implCpp)
+    writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), null != license ? (license + "\n" + implCpp) : implCpp)
+    genFileList.push("%s.cpp".format(ns0.name));
+
+    let partName = moduleName.replace('.', '_')
+    generateGYP(destDir, ns0.name, license, bindingCpp) // 生成ubuntu下测试的编译脚本
+    generateGN(destDir, ns0.name, license, partName) // 生成BUILD.gn for ohos
+    generateBase(destDir, license) // tool_utility.h/cpp
+    genFileList.push("tool_utility.h");
+    genFileList.push("tool_utility.cpp");
+    formatCode(destDir);
+}
+
+function generateImplH(ns0, numberUsing, result, structOfTs, destDir, license) {
+    let implH = replaceAll(implHTemplete, "[impl_name_upper]", ns0.name.toUpperCase());
+    implH = implH.replaceAll("[numberUsing]", numberUsing);
+    implH = replaceAll(implH, "[implH_detail]", result.implH);
+    let imports = '';
+    for (let i = 0; i < structOfTs.imports.length; i++) {
+      imports += structOfTs.imports[i];
+    }
+    implH = replaceAll(implH, "[importTs]", imports);
+    writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), null != license ? (license + "\n" + implH) : implH);
+    genFileList.push("%s.h".format(ns0.name));
+}
+
+function generateMiddleCpp(result, ns0, moduleName, destDir, license) {
     let middleCpp = replaceAll(moduleCppTmplete, "[body_replace]", result.middleBody);
     middleCpp = replaceAll(middleCpp, "[init_replace]", result.middleInit);
     middleCpp = replaceAll(middleCpp, "[implName]", ns0.name);
     middleCpp = replaceAll(middleCpp, "[modulename]", moduleName);
     genFileList.splice(0, genFileList.length);
     writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)),
-        null != license ? (license + "\n" + middleCpp) : middleCpp)
+      null != license ? (license + "\n" + middleCpp) : middleCpp);
     genFileList.push("%s_middle.cpp".format(ns0.name));
+}
 
-    let implH = replaceAll(implHTemplete, "[impl_name_upper]", ns0.name.toUpperCase())
-    implH = implH.replaceAll("[numberUsing]", numberUsing);
-    implH = replaceAll(implH, "[implH_detail]", result.implH)
-    let imports = ''
-    for (let i = 0; i < structOfTs.imports.length; i++) {
-        imports += structOfTs.imports[i]
+// 将业务代码的头文件导入，若重复则跳过
+function includeHCppFunc(jsonCfg, includeH, bindingCpp) {;
+    for (let i = 0; i < jsonCfg.length; i++) {
+        if (jsonCfg[i].includeName != "") {
+            let tmp = '#include "%s"\n'.format(jsonCfg[i].includeName);
+            if (includeH.indexOf(tmp) < 0) {
+                includeH += tmp;
+            }
+        }
+        if (jsonCfg[i].cppName != "") {
+            let tmpCpp = '\n              "%s",'.format(jsonCfg[i].cppName);
+            if (bindingCpp.indexOf(tmpCpp) < 0) {
+                bindingCpp += tmpCpp;
+            }
+        }
     }
-    implH = replaceAll(implH, "[importTs]", imports)
-    writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), null != license ? (license + "\n" + implH) : implH)
-    genFileList.push("%s.h".format(ns0.name));
-
-    let implCpp = implCppTemplete.replaceAll("[implName]", ns0.name)
-    implCpp = implCpp.replaceAll("[implCpp_detail]", result.implCpp)
-    writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), null != license ? (license + "\n" + implCpp) : implCpp)
-    genFileList.push("%s.cpp".format(ns0.name));
-
-    let partName = moduleName.replace('.', '_')
-    generateGYP(destDir, ns0.name, license) // 生成ubuntu下测试的编译脚本
-    generateGN(destDir, ns0.name, license, partName) // 生成BUILD.gn for ohos
-    generateBase(destDir, license) // tool_utility.h/cpp
-    genFileList.push("tool_utility.h");
-    genFileList.push("tool_utility.cpp");
-    formatCode(destDir);
+    return [bindingCpp, includeH];
 }
 
 function generateMiddleH(ns0, result, destDir, license) {

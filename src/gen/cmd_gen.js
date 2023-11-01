@@ -30,7 +30,15 @@ let ops = stdio.getopt({
     'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" },
     // 新增控制number类型转C++类型参数
     'numbertype':{key: 'n', args: 1, description: "optional elemtype: basic cpp elemtype", default: "uint32_t"},
-    'tsGen':{key: 't', args: 1, description: "enable or disable generate typescript file", default: false }
+    'tsGen':{key: 't', args: 1, description: "enable or disable generate typescript file", default: false },
+
+    /* 新增业务代码可配置参数：写在json文件里:
+     * [{"includeName":"xxx.h", "cppName":"xxx.cpp","interfaceName": "functest", 
+     * "serviceCode":"out = codeTestFunc(v);"}]
+     * 配置cfg.json文件路径
+     */
+    'serviceCode': {key: 's', args: 1, description: "configure the service code", default: ""}
+
 });
 
 NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"))
@@ -91,6 +99,27 @@ function readDirFiles() {
     handleDirFiles(fileList);
 }
 
+/**
+ * 获取Json配置文件内容
+ * @returns 
+ */
+function getJsonCfg(currentPath) { 
+    let jsonCfg = null; // cfg.json 配置文件
+    currentPath = currentPath.replace(/(^\s*)|(\s*$)/g, ''); // trim before and after espace
+    let jsonFilePath = path.join(currentPath);
+    let jsonFile = fs.readFileSync(jsonFilePath, { encoding: "utf8" });
+    jsonCfg = JSON.parse(jsonFile);
+    // jsonCfg是一个数组，其中数组中的元素为 
+    // {
+    //   "includeName": "aaa.h",
+    //   "includeName": "aaa.cpp",
+    //   "interfaceName": "functest",
+    //   "serviceCode": "out = codeTestFunc(v);",
+    //   "description": "注释"
+    // }
+    return jsonCfg;
+}
+
 function checkGenerate(fileName) {
     NapiLog.logInfo("check file []".format(fileName))
     let suffix = fileName.split('.').pop().toLowerCase();
@@ -103,8 +132,12 @@ function checkGenerate(fileName) {
     let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
     if (tt) {
         let result = checkFileError(fileName);
+        let jsonConfig
+        if (ops.serviceCode) {
+            jsonConfig = getJsonCfg(ops.serviceCode);
+        }
         if (result[0]) {
-            main.doGenerate(fileName, ops.out, imports, ops.numbertype);
+            main.doGenerate(fileName, ops.out, imports, ops.numbertype, jsonConfig);
         }
         else {
             NapiLog.logError(result[1]);

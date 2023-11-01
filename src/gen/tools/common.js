@@ -328,6 +328,23 @@ function isArrowFunc(type) {
     }
     return arrowFunc
 }
+class jsonCfgList { }
+jsonCfgList.jsonCfg = [];
+jsonCfgList.push = function (ifs) {
+  jsonCfgList.jsonCfg.push(ifs)
+}
+jsonCfgList.pop = function () {
+  jsonCfgList.jsonCfg.pop()
+}
+jsonCfgList.getValue = function (className, inter) {
+    let ifs = jsonCfgList.jsonCfg[jsonCfgList.jsonCfg.length - 1]
+    for (let i in ifs) {
+        if (ifs[i].interfaceName.className == className && ifs[i].interfaceName.funcName == inter) {
+            return ifs[i].serviceCode
+        }
+    }
+    return null;
+}
 
 module.exports = {
     FuncType,
@@ -348,5 +365,6 @@ module.exports = {
     jsType2CType,
     getUnionType,
     isFuncType,
-    isArrowFunc
+    isArrowFunc,
+    jsonCfgList
 }
