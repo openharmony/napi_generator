@@ -15,6 +15,7 @@
 const { replaceAll, getPrefix, getConstNum } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
+const { jsonCfgList }= require("../tools/common");
 
 /**
  * 结果异步返回Async|Promise
@@ -76,6 +77,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 let cppTemplate = `
 bool %s%s(%s)
 {
+    %s
     return true;
 }
 `
@@ -167,7 +169,9 @@ function generateFunctionAsync(func, data, className) {
         // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
         implH = "\n%s%s%sbool %s(%s)%s;".format(
             prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
-        implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine)
+        let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
+        implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine,
+            callStatement == null? "": callStatement)
     }
     return [middleFunc, implH, implCpp, middleH]
 }
