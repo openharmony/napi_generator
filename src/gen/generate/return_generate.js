@@ -628,8 +628,7 @@ function returnGenerate(returnInfo, param, data, isOnFuncFlag = false) {
 
     if (type == "string") {
         param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;\n"        
-        param.valueDefine += "%sstd::string%s %s".format(param.valueDefine.length > 0 ? ", " : "", modifiers, 
-        returnInfo.name)
+        param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     } else if (type == "void") {
         NapiLog.logInfo("The current void type don't need generate");
     } else if (type == "boolean") {

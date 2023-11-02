@@ -326,12 +326,19 @@ function getConstructorFunc(data, param) {
     let tmpBody = param.valueCheckout.split(';\n');
     let getConParam = "";
     for (let i in tmpBody) {
-        tmpBody[i] = tmpBody[i].replaceAll(' ', '').replaceAll('\n', '');
-        if (tmpBody[i] != '') {
-            tmpBody[i] = tmpBody[i].replaceAll("pxt->GetArgv(", "args[");
-            let index = tmpBody[i].indexOf(")");
-            tmpBody[i] = tmpBody[i].substring(0, index) + "]" + tmpBody[i].substring(index + 1, tmpBody[i].length);
-            getConParam += tmpBody[i] + ";\n";
+        let flag = tmpBody[i].replaceAll('\n', '').replaceAll(' ', '')
+        if (flag != '') {
+            let indexBegin = tmpBody[i].indexOf("pxt->GetArgv(");
+            if (indexBegin > 0 && tmpBody[i].indexOf("\n") < 0) {
+              tmpBody[i] = tmpBody[i].replaceAll("pxt->GetArgv(", "args[");
+              let index = tmpBody[i].indexOf(")");
+              tmpBody[i] = tmpBody[i].substring(0, index) + "]" + tmpBody[i].substring(index + 1, tmpBody[i].length);  
+            } else if (indexBegin > 0 && tmpBody[i].indexOf("\n") >= 0) {
+              tmpBody[i] = tmpBody[i].replaceAll("pxt->GetArgv(", "args[");
+              let index = tmpBody[i].indexOf("),");
+              tmpBody[i] = tmpBody[i].substring(0, index) + "]" + tmpBody[i].substring(index + 1, tmpBody[i].length); 
+            }
+           getConParam += tmpBody[i] + ";\n";
         }
     }
     return getConParam;

@@ -19,7 +19,7 @@ const { NapiLog } = require("./tools/NapiLog");
 const re = require("./tools/re");
 var fs = require('fs');
 
-function doGenerate(ifname, destdir, imports,numberType) {
+function doGenerate(ifname, destdir, imports, numberType, jsonCfg) {
     // step1: analyze file
     let structOfTs = analyzeFile(ifname);
     // to repace analyzeFile bythe below: let structOfTsRaw = analyzeFileRaw(ifname);
@@ -40,7 +40,7 @@ function doGenerate(ifname, destdir, imports,numberType) {
         } else {
             structOfTs.imports = [];
         }
-        generateAll(structOfTs, destdir, moduleName, numberType);
+        generateAll(structOfTs, destdir, moduleName, numberType, jsonCfg);
     } else {
         NapiLog.logError('file name ' + fn + ' format invalid in function of doGenerate!');
     }
