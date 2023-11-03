@@ -17,7 +17,7 @@ const re = require("../tools/re");
 const { eventParamGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { cToJs } = require("./return_generate");
-const { jsonCfgList } = require("../tools/common");
+const { jsonCfgList, isRegisterFunc, isUnRegisterFunc } = require("../tools/common");
 
 let middleHOnOffTemplate = `
 struct [funcName]_value_struct {
@@ -28,7 +28,7 @@ struct [funcName]_value_struct {
 `
 let middleHCallbackTemplate = `
   void [eventName]CallbackMiddle(std::string &eventName, [callback_param_type]);
-  void [eventName]AsyncCallbackMiddle(const std::string &eventName, [callback_param_type]);
+  void [eventName]AsyncOrSyncCallbackMiddle(const std::string &eventName, [callback_param_type]);
 `
 
 /**
@@ -45,7 +45,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
     }
     [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
-    pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);
+    [getEventName]    
     [handleRegist]
     [instance][funcName](vio->eventName);
     napi_value result = pxt->UndefinedValue();
@@ -59,7 +59,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 `
 
 let middleAsyncCallbackTemplate = `
-void [middleClassName][eventNames]AsyncCallbackMiddle(const std::string &eventName, [callback_param_type])
+void [middleClassName][eventNames]AsyncOrSyncCallbackMiddle(const std::string &eventName, [callback_param_type])
 {
 	if(XNapiTool::callFuncs_.count(eventName) <= 0) {
         return;
@@ -88,19 +88,21 @@ void [middleClassName][eventName]CallbackMiddle(std::string &eventName, [callbac
       printf("eventName Err !");
       return;
     } else {
-      [middleClassName][eventName]AsyncCallbackMiddle(eventName, [callback_param_name]);
+      [middleClassName][eventName]AsyncOrSyncCallbackMiddle(eventName, [callback_param_name]);
     }
   } else {
-    [middleClassName][eventName]AsyncCallbackMiddle(eventName, [callback_param_name]);
+    [middleClassName][eventName]AsyncOrSyncCallbackMiddle(eventName, [callback_param_name]);
   }
 }
 `
 
 let implHEventCallbakTemplate = `
+//供业务调用的回调接口
 void [eventName]Callback([callback_eventName][callback_param_type]);
 `
 
 let implCppEventCallbakTemplate = `
+//供业务调用的回调接口
 void [className][eventName]Callback([callback_eventName][callback_param_type])
 {
   [eventName_is_string]
@@ -140,11 +142,48 @@ function addOnOffFunc(data, funcName) {
     data.onOffList.push(funcName)
 }
 
+function getregistLine(name) {
+    let registLine = ''
+    if (isRegisterFunc(name)) {
+        registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ZERO));"
+    } else if (name == 'on') {
+        registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"    
+    } else { // off/unRegister处理
+        registLine = "pxt->UnregistOnOffFunc(vio->eventName);"
+    }
+    return registLine
+}
+
+function getPrefix(isRegister) {
+    let prefix = ''
+    if (isRegister) {
+        prefix = "register"
+    } else {
+        prefix = "unRegister" 
+    }
+}
+
 function gennerateOnOffContext(codeContext, func, data, className, param) {
+    let isRegister = isRegisterFunc(func.name);
+    let isUnRegister = isUnRegisterFunc(func.name)
+    let getEventName = ''
+    let registLine = getregistLine(func.name)
+
+    if (isRegister || isUnRegister) {
+        let prefix = getPrefix(getPrefix)
+        func.name = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀
+        param.eventName = func.name       
+        getEventName = 'vio->eventName = "%s"'.format(param.eventName)       
+    } else {
+        getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);'
+    }
+
     codeContext.middleFunc = replaceAll(funcOnOffTemplete, "[funcName]", func.name)
     if (func.name != "constructor") {
       codeContext.middleH = replaceAll(middleHOnOffTemplate, "[funcName]", func.name)
     }
+    codeContext.middleFunc = codeContext.middleFunc.replaceAll("[getEventName]", getEventName)
+
     let middleClassName = ""
     if (className == null) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
@@ -162,12 +201,10 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     let instancePtr = "%s".format(className == null ? "" : "pInstance->")
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
 
-    let registLine = func.name == 'on' ? "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));" 
-        : "pxt->UnregistOnOffFunc(vio->eventName);"
-        codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
+    codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
 
-        codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
-        let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
+    codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
+    let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
         codeContext.implCpp += `
 bool %s%s(%s)
 {
@@ -314,6 +351,7 @@ function generateFunctionOnOff(func, data, className) {
         optionalParamDestory: "" // 可选参数内存释放
     }
 
+    let isRegister = isRegisterFunc(func.name)
     for (let i in func.value) {
         eventParamGenerate(i, func.value[i], param, data)
     }
@@ -329,7 +367,7 @@ function generateFunctionOnOff(func, data, className) {
         gennerateOnOffContext(codeContext, func, data, className, param)
     }
 
-    if (func.name == 'on') {
+    if (func.name == 'on' || isRegister) {
         // 为每个on接口同步生成eventCallback方法供用户回调使用
         let isOnFuncFlag = true;
         gennerateEventCallback(codeContext, data, param, className, isOnFuncFlag)
