@@ -262,6 +262,9 @@ function parseFunction(matchs, data, result) {
     if (null == matchs) {
         matchs = re.match("(export )*function (static )*(\\$*[A-Za-z0-9_]+) *(\\()", data)
     }
+    if (null == matchs) {
+        matchs = re.match("(export )*function (static )*(register\\$*[A-Za-z0-9_]+) *(\\()", data)
+    }
     if (matchs) {
         let funcName = re.getReg(data,
             matchs.regs.length == 5 ? [matchs.regs[2][0], matchs.regs[3][1]] : matchs.regs[2])
