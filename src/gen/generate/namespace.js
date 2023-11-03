@@ -124,6 +124,10 @@ function generateNamespace(name, data, inNamespace = "") {
     for (let i in data.function) {
         genNamespaceFunc(data, i, namespaceResult, inNamespace, name);
     }
+    let flag = true;
+    if (data.namespace.length !== 0) {
+      flag = false;
+    }
     for (let i in data.namespace) {
         let ns = data.namespace[i]
         let result = generateNamespace(ns.name, ns.body, inNamespace + name + "::")
@@ -135,9 +139,10 @@ function generateNamespace(name, data, inNamespace = "") {
     CallFunctionList.pop();
     if (inNamespace.length > 0) {
         namespaceResult.middleInit += "}"
+        flag = true;
     }
     return generateResult(name, namespaceResult.implH, namespaceResult.implCpp, namespaceResult.middleFunc,
-        namespaceResult.middleInit, namespaceResult.middleH)
+        namespaceResult.middleInit, namespaceResult.middleH, flag)
 }
 
 function genNamespaceFunc(data, i, namespaceResult, inNamespace, name) {
@@ -147,11 +152,29 @@ function genNamespaceFunc(data, i, namespaceResult, inNamespace, name) {
     namespaceResult.implH += tmp[1];
     namespaceResult.implCpp += tmp[2];
     namespaceResult.middleH += tmp[3];
-    let middleTmp = '    pxt->DefineFunction("%s", %s%s::%s_middle%s);\n'
-      .format(func.name, inNamespace, name, func.name, inNamespace.length > 0 ? ", " + name : "");
+    let toolNamespace = getToolNamespaceFunc(inNamespace, name);
+    let middleTmp = '    pxt->DefineFunction("%s", %s%s::%s%s_middle%s);\n'
+      .format(func.name, inNamespace, name, toolNamespace, func.name, inNamespace.length > 0 ? ", " + name : "");
     if (namespaceResult.middleInit.indexOf(middleTmp) < 0) { // on方法不需要重复定义
       namespaceResult.middleInit += middleTmp;
     }
+}
+
+function getToolNamespaceFunc(inNamespace, name) {
+    let toolNamespace;
+    if (inNamespace != '') {
+        let index = inNamespace.lastIndexOf('::');
+        let bodyTmp = inNamespace.substring(0, index);
+        let index2 = bodyTmp.lastIndexOf('::');
+        if (index2 > 0 && index2 < index) {
+            toolNamespace = inNamespace.substring(index2 + 2, index) + '_interface::';
+        } else {
+            toolNamespace = name + '_interface::';
+        }
+    } else {
+        toolNamespace = name + '_interface::';
+    }
+    return toolNamespace;
 }
 
 function enumNamespaceFunction(data, namespaceResult) {
@@ -189,15 +212,26 @@ function generateEnumResult(data) {
     return resultEnum
 }
 
-function generateResult(name, implH, implCpp, middleFunc, middleInit, middleH) {
-    let result = {
+function generateResult(name, implH, implCpp, middleFunc, middleInit, middleH, flag) {
+  let result
+  if (flag) {
+    result = {
+      implH: `\nnamespace %s {\nnamespace %s_interface {%s\n}\n}`.format(name, name, implH),
+      implCpp: `\nnamespace %s {\nnamespace %s_interface {%s\n}\n}`.format(name, name, implCpp),
+      middleBody: `\nnamespace %s {\nnamespace %s_interface {%s\n}\n}`.format(name, name, middleFunc),
+      middleInit: middleInit,
+      middleH: `\nnamespace %s {\nnamespace %s_interface {%s\n}\n}`.format(name, name, middleH)
+    }
+  } else {
+        result = {
         implH: `\nnamespace %s {%s\n}`.format(name, implH),
         implCpp: `\nnamespace %s {%s}`.format(name, implCpp),
         middleBody: `\nnamespace %s {%s}`.format(name, middleFunc),
         middleInit: middleInit,
         middleH: `\nnamespace %s {%s\n}`.format(name, middleH)
     }
-    return result;
+  }
+  return result;
 }
 
 function generateFunction(func, data) {
