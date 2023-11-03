@@ -17,7 +17,7 @@ const re = require("../tools/re");
 const { eventParamGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { cToJs } = require("./return_generate");
-const { jsonCfgList } = require("../tools/common");
+const { jsonCfgList, isRegisterFunc, isUnRegisterFunc } = require("../tools/common");
 
 let middleHOnOffTemplate = `
 struct [funcName]_value_struct {
@@ -45,7 +45,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
     }
     [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
-    pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);
+    [getEventName]    
     [handleRegist]
     [instance][funcName](vio->eventName);
     napi_value result = pxt->UndefinedValue();
@@ -140,11 +140,44 @@ function addOnOffFunc(data, funcName) {
     data.onOffList.push(funcName)
 }
 
+function getregistLine(name) {
+    let registLine = ''
+    if (isRegisterFunc(name)) {
+        registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ZERO));"
+    } else if (name == 'on') {
+        registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"    
+    } else { // off/unRegister处理
+        registLine = "pxt->UnregistOnOffFunc(vio->eventName);"
+    }
+    return registLine
+}
+
 function gennerateOnOffContext(codeContext, func, data, className, param) {
+    let isRegister = isRegisterFunc(func.name);
+    let isUnRegister = isUnRegisterFunc(func.name)
+    let getEventName = ''
+    let registLine = getregistLine(func.name)
+
+    if (isRegister || isUnRegister) {
+        let prefix = ''
+        if (isRegister) {
+            prefix = "register"
+        } else {
+            prefix = "unRegister" 
+        }
+        func.name = func.name.replaceAll(prefix, "")
+        param.eventName = func.name       
+        getEventName = 'vio->eventName = "%s"'.format(param.eventName)       
+    } else {
+        getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);'
+    }
+
     codeContext.middleFunc = replaceAll(funcOnOffTemplete, "[funcName]", func.name)
     if (func.name != "constructor") {
       codeContext.middleH = replaceAll(middleHOnOffTemplate, "[funcName]", func.name)
     }
+    codeContext.middleFunc = codeContext.middleFunc.replaceAll("[getEventName]", getEventName)
+
     let middleClassName = ""
     if (className == null) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
@@ -162,13 +195,11 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     let instancePtr = "%s".format(className == null ? "" : "pInstance->")
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
 
-    let registLine = func.name == 'on' ? "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));" 
-        : "pxt->UnregistOnOffFunc(vio->eventName);"
-        codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
+    codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
 
-        codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
-        let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
-        codeContext.implCpp += `
+    codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
+    let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
+    codeContext.implCpp += `
 bool %s%s(%s)
 {
     %s

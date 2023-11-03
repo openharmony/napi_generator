@@ -320,6 +320,24 @@ function isFuncType(type) {
     }
 }
 
+function isRegisterFunc(name) {
+    let regIndex = name.indexOf('register');
+    let isRegister = false
+    if (regIndex === 0) {
+        isRegister = true
+    }
+    return isRegister
+}
+
+function isUnRegisterFunc(name) {
+    let unRegIndex = name.indexOf('unRegister');
+    let isRegister = false
+    if (unRegIndex === 0) {
+        isRegister = true
+    }
+    return isRegister
+}
+
 // 箭头函数，如funTest(cb: (wid: boolean) => void): string;
 function isArrowFunc(type) {
     let arrowFunc = false;
@@ -366,5 +384,7 @@ module.exports = {
     getUnionType,
     isFuncType,
     isArrowFunc,
-    jsonCfgList
+    jsonCfgList,
+    isRegisterFunc,
+    isUnRegisterFunc
 }

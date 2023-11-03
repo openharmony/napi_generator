@@ -1102,9 +1102,14 @@ function paramGenerate(p, funcValue, param, data) {
 function eventParamGenerate(p, funcValue, param, data) {
     let name = funcValue.name;
     let type = funcValue.type;
-    type = type.replaceAll("'", "")
+    if (type.indexOf("'") >= 0) {
+        type = type.replaceAll("'", "")
+    }
+
     let regName = re.match("([a-zA-Z_0-9]+)", type)
-    if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
+    if(isFuncType(type)) {
+        paramGenerateCallBack(data, funcValue, param, p)
+    } else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
         // callback参数处理
         paramGenerateCallBack(data, funcValue, param, p)
     } else if (CallFunctionList.getValue(type)) {  // 判断条件
