@@ -16,8 +16,8 @@ const { generateFunctionDirect } = require("./function_direct");
 const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
 const { generateFunctionOnOff } = require("./function_onoff");
-const { FuncType, InterfaceList, getArrayType, getArrayTypeTwo, getMapType, EnumList, jsType2CType, isRegisterFunc, isUnRegisterFunc }
-    = require("../tools/common");
+const { FuncType, InterfaceList, getArrayType, getArrayTypeTwo, getMapType, EnumList, jsType2CType, 
+    isRegisterFunc, isUnRegisterFunc } = require("../tools/common");
 const { jsToC, getCType, paramGenerate } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
