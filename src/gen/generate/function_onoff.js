@@ -28,7 +28,7 @@ struct [funcName]_value_struct {
 `
 let middleHCallbackTemplate = `
   void [eventName]CallbackMiddle(std::string &eventName, [callback_param_type]);
-  void [eventName]AsyncCallbackMiddle(const std::string &eventName, [callback_param_type]);
+  void [eventName]AsyncOrSyncCallbackMiddle(const std::string &eventName, [callback_param_type]);
 `
 
 /**
@@ -59,7 +59,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 `
 
 let middleAsyncCallbackTemplate = `
-void [middleClassName][eventNames]AsyncCallbackMiddle(const std::string &eventName, [callback_param_type])
+void [middleClassName][eventNames]AsyncOrSyncCallbackMiddle(const std::string &eventName, [callback_param_type])
 {
 	if(XNapiTool::callFuncs_.count(eventName) <= 0) {
         return;
@@ -88,10 +88,10 @@ void [middleClassName][eventName]CallbackMiddle(std::string &eventName, [callbac
       printf("eventName Err !");
       return;
     } else {
-      [middleClassName][eventName]AsyncCallbackMiddle(eventName, [callback_param_name]);
+      [middleClassName][eventName]AsyncOrSyncCallbackMiddle(eventName, [callback_param_name]);
     }
   } else {
-    [middleClassName][eventName]AsyncCallbackMiddle(eventName, [callback_param_name]);
+    [middleClassName][eventName]AsyncOrSyncCallbackMiddle(eventName, [callback_param_name]);
   }
 }
 `
@@ -199,7 +199,7 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
 
     codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
     let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
-    codeContext.implCpp += `
+        codeContext.implCpp += `
 bool %s%s(%s)
 {
     %s
@@ -345,6 +345,7 @@ function generateFunctionOnOff(func, data, className) {
         optionalParamDestory: "" // 可选参数内存释放
     }
 
+    let isRegister = isRegisterFunc(func.name)
     for (let i in func.value) {
         eventParamGenerate(i, func.value[i], param, data)
     }
@@ -360,7 +361,7 @@ function generateFunctionOnOff(func, data, className) {
         gennerateOnOffContext(codeContext, func, data, className, param)
     }
 
-    if (func.name == 'on') {
+    if (func.name == 'on' || isRegister) {
         // 为每个on接口同步生成eventCallback方法供用户回调使用
         let isOnFuncFlag = true;
         gennerateEventCallback(codeContext, data, param, className, isOnFuncFlag)
