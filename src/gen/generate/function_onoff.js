@@ -97,10 +97,12 @@ void [middleClassName][eventName]CallbackMiddle(std::string &eventName, [callbac
 `
 
 let implHEventCallbakTemplate = `
+//供业务调用的回调接口
 void [eventName]Callback([callback_eventName][callback_param_type]);
 `
 
 let implCppEventCallbakTemplate = `
+//供业务调用的回调接口
 void [className][eventName]Callback([callback_eventName][callback_param_type])
 {
   [eventName_is_string]
@@ -152,6 +154,15 @@ function getregistLine(name) {
     return registLine
 }
 
+function getPrefix(isRegister) {
+    let prefix = ''
+    if (isRegister) {
+        prefix = "register"
+    } else {
+        prefix = "unRegister" 
+    }
+}
+
 function gennerateOnOffContext(codeContext, func, data, className, param) {
     let isRegister = isRegisterFunc(func.name);
     let isUnRegister = isUnRegisterFunc(func.name)
@@ -159,13 +170,8 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     let registLine = getregistLine(func.name)
 
     if (isRegister || isUnRegister) {
-        let prefix = ''
-        if (isRegister) {
-            prefix = "register"
-        } else {
-            prefix = "unRegister" 
-        }
-        func.name = func.name.replaceAll(prefix, "")
+        let prefix = getPrefix(getPrefix)
+        func.name = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀
         param.eventName = func.name       
         getEventName = 'vio->eventName = "%s"'.format(param.eventName)       
     } else {

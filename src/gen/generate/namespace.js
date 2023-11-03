@@ -18,7 +18,8 @@ const { generateFunctionAsync } = require("./function_async");
 const { generateInterface } = require("./interface");
 const { generateClass } = require("./class");
 const { generateType } = require("./type");
-const { FuncType, InterfaceList, EnumList, TypeList, CallFunctionList, isRegisterFunc, isUnRegisterFunc } = require("../tools/common");
+const { FuncType, InterfaceList, EnumList, TypeList, CallFunctionList, isRegisterFunc, isUnRegisterFunc } = 
+require("../tools/common");
 const { generateEnum } = require("./enum");
 const { generateFunctionOnOff } = require("./function_onoff");
 const { NapiLog } = require("../tools/NapiLog");
