@@ -85,19 +85,19 @@ declare namespace napitest {
         registerTestfunc11(cb: Function);
         // unRegisterTestfunc11(cb: Function);
 
-        // registerTestfunc12(cb : (wid: number) => string);
+        registerTestfunc12(cb : (wid: number) => string);
         // unRegisterTestfunc12(cb : (wid: number) => string);
 
-        // registerTestfunc13(cb : Callback<boolean>);
+        registerTestfunc13(cb : Callback<boolean>);
         // unRegisterTestfunc13(cb : Callback<boolean>);
     }
-    // function registerNamespacefunc20(cb: Function);
+    function registerNamespacefunc20(cb: Function);
     // function unRegisterNamespacefunc20(cb: Function);
 
-    // function registerNamespacefunc21(cb : (wid: number) => string);
+    function registerNamespacefunc21(cb : (wid: number) => string);
     // function unRegisterNamespacefunc21(cb : (wid: number) => string);
 
-    // function registerNamespacefunc22(cb : Callback<boolean>);
+    function registerNamespacefunc22(cb : Callback<boolean>);
     // function unRegisterNamespacefunc22(cb : Callback<boolean>);    
 }
 
