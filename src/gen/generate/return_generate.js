@@ -670,7 +670,7 @@ function genArrowFuncParam(param, returnInfo, data) {
 
 function onCallbackC2JsResName(isOnFuncFlag, type, outParam) {
     let c2JsresultName = "result";
-    if (isOnFuncFlag && !isArrowFunc(type)) { // on事件普通回调方法的参数
+    if (isOnFuncFlag && !isArrowFunc(type) && type != 'void') { // on事件普通回调方法的参数
         outParam = "valueIn";
         c2JsresultName = "resultTmp";
     }
