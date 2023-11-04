@@ -161,6 +161,7 @@ function getPrefix(isRegister) {
     } else {
         prefix = "unRegister" 
     }
+    return prefix;
 }
 
 function gennerateOnOffContext(codeContext, func, data, className, param) {
@@ -170,12 +171,12 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     let registLine = getregistLine(func.name)
 
     if (isRegister || isUnRegister) {
-        let prefix = getPrefix(getPrefix)
+        let prefix = getPrefix(isRegister)
         func.name = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀
         param.eventName = func.name       
-        getEventName = 'vio->eventName = "%s"'.format(param.eventName)       
+        getEventName = 'vio->eventName = "%s";\n'.format(param.eventName) 
     } else {
-        getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);'
+        getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);\n'
     }
 
     codeContext.middleFunc = replaceAll(funcOnOffTemplete, "[funcName]", func.name)
@@ -202,7 +203,10 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
 
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
-
+   
+    if(isRegister) {
+        codeContext.middleFunc = replaceAll(codeContext.middleFunc, "(vio->eventName)", "()")
+    }
     codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
     let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
         codeContext.implCpp += `
@@ -230,9 +234,11 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
     returnGenerate(param.callback, param, data, isOnFuncFlag)
     if (param.params === '') {
         let paramType = param.valueOut.substring(0, param.valueOut.length - "out;\n".length)
-        param.params = paramType + '&valueIn'
+        if (paramType != null && paramType != undefined && paramType != '') {
+            param.params = paramType + '&valueIn'  
+        }        
     }
-    if (param.useParams === '') {
+    if (param.useParams === '' && param.params != '') {
         param.useParams = 'valueIn'
     }
      
@@ -244,6 +250,9 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
     let callbackFunc = middleAsyncCallbackTemplate
     callbackFunc = replaceAll(middleAsyncCallbackTemplate, "[eventNames]", param.eventName)
     callbackFunc = replaceAll(callbackFunc, "[callback_param_type]", param.params)
+    if (param.params === '') {
+        callbackFunc = replaceAll(callbackFunc, "&eventName, ", "&eventName")
+    }
     if (param.callback.isArrowFuncFlag) {  // 回调是箭头函数
         callbackFunc = getArrowCallbackC2JsParam(callbackFunc, param);
     } else { // 回调是普通callback
@@ -266,6 +275,9 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
     // 为每个on的event事件生成回调接口在工具代码中声明
     let middleHCallback = replaceAll(middleHCallbackTemplate, "[eventName]", param.eventName)
     middleHCallback = replaceAll(middleHCallback, "[callback_param_type]", param.params)
+    if (param.params === '') {
+        middleHCallback = replaceAll(middleHCallback, "&eventName,", "&eventName")
+    }
     codeContext.middleH += middleHCallback
 
     // 为每个on的event事件生成回调接口的实现供用户侧使用
@@ -291,6 +303,9 @@ function genCallbackMiddleMethod(param, className, middleClassName, codeContext)
     let middleEventCallBack = replaceAll(middleEventCallbakTemplate, "[eventName]", param.eventName);
     middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_name]", param.useParams);
     middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_type]", param.params);
+    if (param.params === '') {
+        middleEventCallBack = replaceAll(middleEventCallBack, "eventName, ", "eventName")
+    }
     let isStrType = param.eventNameIsStr ? "true" : "false";
     middleEventCallBack = replaceAll(middleEventCallBack, "[is_string_type]", isStrType);
     if (className != null) {
@@ -303,6 +318,9 @@ function genCallbackMiddleMethod(param, className, middleClassName, codeContext)
 
 function genCallbackMethodH(param, codeContext) {
     let eventNameDefine = param.eventNameIsStr ? "std::string &eventName, " : "";
+    if (param.params === '' && eventNameDefine != '') {
+        eventNameDefine = "std::string &eventName"
+    }
     let implHCallBack = replaceAll(implHEventCallbakTemplate, "[eventName]", param.eventName);
     implHCallBack = replaceAll(implHCallBack, "[callback_param_type]", param.params);
     implHCallBack = replaceAll(implHCallBack, "[callback_eventName]", eventNameDefine);
@@ -316,6 +334,10 @@ function genCallbackMethod(param, className, middleClassName, codeContext) {
     implCppCallBack = replaceAll(implCppCallBack, "[callback_param_type]", param.params);
     implCppCallBack = replaceAll(implCppCallBack, "[eventName_is_string]", isStrType);
     let eventNameDefine = param.eventNameIsStr ? "std::string &eventName, " : "";
+    if (param.params === '' && eventNameDefine != "") {
+        eventNameDefine = replaceAll(eventNameDefine, "&eventName,", "&eventName")
+    }
+
     implCppCallBack = replaceAll(implCppCallBack, "[callback_eventName]", eventNameDefine);
 
     let callbackNoClass = `[eventName]CallbackMiddle(eventName, [callback_param_name]);`;
@@ -326,15 +348,22 @@ function genCallbackMethod(param, className, middleClassName, codeContext) {
     if (className == null) {
       let callbackNoClassRes = replaceAll(callbackNoClass, "[eventName]", param.eventName);
       callbackNoClassRes = replaceAll(callbackNoClassRes, "[callback_param_name]", param.useParams);
+      if (param.useParams === '') {
+        callbackNoClassRes = replaceAll(callbackNoClassRes, "eventName, ", "eventName")
+      }
       implCppCallBack = replaceAll(implCppCallBack, "[use_callback_func]", callbackNoClassRes);
       implCppCallBack = replaceAll(implCppCallBack, "[className]", "");
     } else {
       let callbackClassRes = replaceAll(callbackClass, "[eventName]", param.eventName);
       callbackClassRes = replaceAll(callbackClassRes, "[callback_param_name]", param.useParams);
       callbackClassRes = replaceAll(callbackClassRes, "[middleClassName]", middleClassName);
+      if (param.useParams === '') {
+        callbackClassRes = replaceAll(callbackClassRes, "eventName, ", "eventName")
+      }
       implCppCallBack = replaceAll(implCppCallBack, "[use_callback_func]", callbackClassRes);
       implCppCallBack = replaceAll(implCppCallBack, "[className]", className + "::");
     }
+
     codeContext.implCpp += implCppCallBack;
 }
 
