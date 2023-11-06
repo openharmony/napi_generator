@@ -13,7 +13,8 @@
 * limitations under the License. 
 */
 const { TestClass1, TestClass2, ModelEvent, TestClass3, on, off, TestClass4,
-  TestClass5, TestClass6, TestClass7, TestClass10 } = require("./out/build/Release/napitest")
+  TestClass5, TestClass6, TestClass7, TestClass10, TestClass11 } = require("./out/build/Release/napitest")
+const testObj = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('test 1 on', function () {  
@@ -207,3 +208,44 @@ describe('test 3 on', function () {
         // assert.strictEqual(ret, true);
     });
 });
+
+describe('test register/unRegister', function () {
+    // function registerNamespacefunc20(cb: Function);
+    // function unRegisterNamespacefunc20(cb: Function);
+
+    // function registerNamespacefunc21(cb : (wid: number) => string);
+    // function unRegisterNamespacefunc21(cb : (wid: number) => string);
+
+    // function registerNamespacefunc22(cb : Callback<boolean>);
+    // function unRegisterNamespacefunc22(cb : Callback<boolean>);   
+
+    // cb: (wid: number) => string
+    function onCallbackfun10nm(wid) {
+        return 'fun10nm'
+    }
+
+    it('test registerNamespacefunc20', function () {        
+        testObj.registerNamespacefunc21(onCallbackfun10nm);
+    });
+
+    it('test unRegisterNamespacefunc21', function () {        
+        testObj.unRegisterNamespacefunc21(onCallbackfun10nm);
+    });
+
+    it('test TestClass11 registerTestfunc12', function () {
+        let tc11 = new TestClass11();       
+        tc11.registerTestfunc12(onCallbackfun10nm);
+    });
+    
+});
+
+// interface TestClass11 {
+//     registerTestfunc11(cb: Function);
+//     unRegisterTestfunc11(cb: Function);
+
+//     registerTestfunc12(cb : (wid: number) => string);
+//     unRegisterTestfunc12(cb : (wid: number) => string);
+
+//     registerTestfunc13(cb : Callback<boolean>);
+//     unRegisterTestfunc13(cb : Callback<boolean>);
+// }
