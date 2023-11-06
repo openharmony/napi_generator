@@ -47,7 +47,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     [getEventName]    
     [handleRegist]
-    [instance][funcName](vio->eventName);
+    // [instance][funcName](vio->eventName);
     napi_value result = pxt->UndefinedValue();
     delete vio;
     if (pxt->IsFailed()) {
@@ -172,15 +172,18 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
 
     if (isRegister || isUnRegister) {
         let prefix = getPrefix(isRegister)
-        func.name = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀
-        param.eventName = func.name       
+        // func.name = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀
+        param.eventName = func.name.replaceAll(prefix, "") // func.name       
         getEventName = 'vio->eventName = "%s";\n'.format(param.eventName) 
     } else {
         getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);\n'
     }
 
-    codeContext.middleFunc = replaceAll(funcOnOffTemplete, "[funcName]", func.name)
-    if (func.name != "constructor") {
+    if (/* !isUnRegister */true) {
+        codeContext.middleFunc = replaceAll(funcOnOffTemplete, "[funcName]", func.name)
+    }
+
+    if (func.name != "constructor" /* && !isUnRegister */) {
       codeContext.middleH = replaceAll(middleHOnOffTemplate, "[funcName]", func.name)
     }
     codeContext.middleFunc = codeContext.middleFunc.replaceAll("[getEventName]", getEventName)
@@ -204,11 +207,12 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
 
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
    
-    if(isRegister) {
+    if (isRegister) { //  || isUnRegister
         codeContext.middleFunc = replaceAll(codeContext.middleFunc, "(vio->eventName)", "()")
     }
-    codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
-    let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
+    if (/* !isUnRegister */ true) {
+        codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
+        let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
         codeContext.implCpp += `
 bool %s%s(%s)
 {
@@ -217,6 +221,8 @@ bool %s%s(%s)
 }
 `.format(className == null ? "" : className + "::", func.name, param.valueDefine,
    callStatement == null? "": callStatement)
+    }  
+
 
     addOnOffFunc(data, func.name)
 }
