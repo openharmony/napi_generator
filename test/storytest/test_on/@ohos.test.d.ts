@@ -86,7 +86,7 @@ declare namespace napitest {
         unRegisterTestfunc11(cb: Function);
 
         registerTestfunc12(cb : (wid: number) => string);
-        // unRegisterTestfunc12(cb : (wid: number) => string);
+        unRegisterTestfunc12(cb : (wid: number) => string);
 
         registerTestfunc13(cb : Callback<boolean>);
         // unRegisterTestfunc13(cb : Callback<boolean>);
