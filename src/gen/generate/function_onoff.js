@@ -178,12 +178,9 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     } else {
         getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);\n'
     }
+    codeContext.middleFunc = replaceAll(funcOnOffTemplete, "[funcName]", func.name)
 
-    if (/* !isUnRegister */true) {
-        codeContext.middleFunc = replaceAll(funcOnOffTemplete, "[funcName]", func.name)
-    }
-
-    if (func.name != "constructor" /* && !isUnRegister */) {
+    if (func.name != "constructor") {
       codeContext.middleH = replaceAll(middleHOnOffTemplate, "[funcName]", func.name)
     }
     codeContext.middleFunc = codeContext.middleFunc.replaceAll("[getEventName]", getEventName)
@@ -207,13 +204,13 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
 
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
    
-    if (isRegister) { //  || isUnRegister
+    if (isRegister) {
         codeContext.middleFunc = replaceAll(codeContext.middleFunc, "(vio->eventName)", "()")
     }
-    if (/* !isUnRegister */ true) {
-        codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
-        let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
-        codeContext.implCpp += `
+
+    codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
+    let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
+    codeContext.implCpp += `
 bool %s%s(%s)
 {
     %s
@@ -221,9 +218,6 @@ bool %s%s(%s)
 }
 `.format(className == null ? "" : className + "::", func.name, param.valueDefine,
    callStatement == null? "": callStatement)
-    }  
-
-
     addOnOffFunc(data, func.name)
 }
 
