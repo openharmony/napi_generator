@@ -43,7 +43,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
         delete pxt;
         return err;
     }
-    [unwarp_instance]
+    // [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     [getEventName]    
     [handleRegist]
@@ -188,15 +188,14 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     let middleClassName = ""
     if (className == null) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
-        codeContext.middleFunc = codeContext.middleFunc.replaceAll("[unwarp_instance]", "")
+        // codeContext.middleFunc = codeContext.middleFunc.replaceAll("[unwarp_instance]", "")
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", "")
     }
     else {
         middleClassName = className + "_middle"
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "static ")
-        codeContext.middleFunc = codeContext.middleFunc.replaceAll("[unwarp_instance]",
-            `void *instPtr = pxt->UnWarpInstance();
-    %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className))
+        // codeContext.middleFunc = codeContext.middleFunc.replaceAll("[unwarp_instance]", `void *instPtr = pxt->UnWarpInstance();`)
+    // %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className))
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", middleClassName + "::")
     }
     let instancePtr = "%s".format(className == null ? "" : "pInstance->")
