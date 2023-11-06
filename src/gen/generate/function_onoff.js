@@ -43,11 +43,10 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
         delete pxt;
         return err;
     }
-    // [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     [getEventName]    
     [handleRegist]
-    // [instance][funcName](vio->eventName);
+
     napi_value result = pxt->UndefinedValue();
     delete vio;
     if (pxt->IsFailed()) {
@@ -172,8 +171,7 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
 
     if (isRegister || isUnRegister) {
         let prefix = getPrefix(isRegister)
-        // func.name = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀
-        param.eventName = func.name.replaceAll(prefix, "") // func.name       
+        param.eventName = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀       
         getEventName = 'vio->eventName = "%s";\n'.format(param.eventName) 
     } else {
         getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);\n'
@@ -188,14 +186,11 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     let middleClassName = ""
     if (className == null) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
-        // codeContext.middleFunc = codeContext.middleFunc.replaceAll("[unwarp_instance]", "")
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", "")
     }
     else {
         middleClassName = className + "_middle"
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "static ")
-        // codeContext.middleFunc = codeContext.middleFunc.replaceAll("[unwarp_instance]", `void *instPtr = pxt->UnWarpInstance();`)
-    // %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className))
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", middleClassName + "::")
     }
     let instancePtr = "%s".format(className == null ? "" : "pInstance->")
