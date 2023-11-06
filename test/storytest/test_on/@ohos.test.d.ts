@@ -83,7 +83,7 @@ declare namespace napitest {
 
     interface TestClass11 {
         registerTestfunc11(cb: Function);
-        // unRegisterTestfunc11(cb: Function);
+        unRegisterTestfunc11(cb: Function);
 
         registerTestfunc12(cb : (wid: number) => string);
         // unRegisterTestfunc12(cb : (wid: number) => string);
