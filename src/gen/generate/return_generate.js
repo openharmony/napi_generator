@@ -45,14 +45,21 @@ function cToJsForType(value, type, dest, deep) {
     for (let i in ifl) {
       let name2 = ifl[i].name
       let type2 = ifl[i].type
+      let optional2 = ifl[i].optional
       let isSubEnum = EnumList.getValue(type2) ? true : false;
       let subDest = isSubEnum ? dest : "tnv%d".format(lt)
-
-      let typeType = cToJs("%s.%s".format(value, name2), type2, subDest, deep + 1)
+      let typeType = null
+      let ifOptional = ''  // 如果是可选参数则需要增加可选参数是否有值的判断
+      if (optional2) {
+        ifOptional = 'if (%s.%s.has_value())\n'.format(value, name2)
+        typeType = cToJs("%s.%s".format(value, "%s.value()".format(name2)), type2, subDest, deep + 1)
+      } else {
+        typeType = cToJs("%s.%s".format(value, name2), type2, subDest, deep + 1)
+      }
       if (isSubEnum) {
           result += typeType 
       } else {
-          result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
+          result += "%s{\nnapi_value tnv%d = nullptr;\n".format(ifOptional, lt) +
           typeType + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
               .format(dest, name2, lt)
       }
@@ -74,7 +81,9 @@ function cToJsForInterface(value, type, dest, deep) {
         let isSubEnum = EnumList.getValue(type2) ? true : false;
         let subDest = isSubEnum ? dest : "tnv%d".format(lt)
         let interfaceType = null;
+        let ifOptional = ''
         if (optional2) {
+            ifOptional = 'if (%s.%s.has_value())\n'.format(value, name2)
             interfaceType = cToJs("%s.%s".format(value, "%s.value()".format(name2)), type2, subDest, deep + 1)
         } else {
             interfaceType = cToJs("%s.%s".format(value, name2), type2, subDest, deep + 1)
@@ -84,7 +93,7 @@ function cToJsForInterface(value, type, dest, deep) {
             // interface include enum properties
             result += interfaceType 
         } else {
-            result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) +
+            result += "%s{\nnapi_value tnv%d = nullptr;\n".format(ifOptional, lt) +
             interfaceType + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
                 .format(dest, name2, lt)
         }

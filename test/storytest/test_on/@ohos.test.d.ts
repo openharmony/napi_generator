@@ -98,7 +98,32 @@ declare namespace napitest {
     function unRegisterNamespacefunc21(cb : (wid: number) => string);
 
     function registerNamespacefunc22(cb : Callback<boolean>);
-    function unRegisterNamespacefunc22(cb : Callback<boolean>);    
+    function unRegisterNamespacefunc22(cb : Callback<boolean>);
+
+    interface TestClass12 {
+        registerTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
+        unRegisterTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
+    }
+    function registerNamespacefunc23(cb: (wid: SayInfo, test: TestOptional) => void);
+    function unRegisterNamespacefunc23(cb: (wid: SayInfo, test: TestOptional) => void);
+    
+    export type SayInfo =
+    {
+        from: string;
+        fromId?: number;
+        content: string;
+        saidTime?: string;
+        isEnd?: boolean;
+    }
+
+    export interface TestOptional
+    {
+        v1: string;
+        v2?: boolean;
+        v3: number;
+        v4?: string;
+        v5?: number;
+    }
 }
 
 export default napitest;

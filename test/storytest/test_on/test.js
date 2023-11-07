@@ -12,8 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { TestClass1, TestClass2, ModelEvent, TestClass3, on, off, TestClass4,
-  TestClass5, TestClass6, TestClass7, TestClass10, TestClass11 } = require("./out/build/Release/napitest")
+const { TestClass1, TestClass2, ModelEvent, TestClass3, on, off, TestClass4, TestClass5,
+  TestClass6, TestClass7, TestClass10, TestClass11, TestClass12 } = require("./out/build/Release/napitest")
 const testObj = require("./out/build/Release/napitest")
 var assert = require("assert");
 
@@ -224,7 +224,7 @@ describe('test register/unRegister', function () {
         return 'fun10nm'
     }
 
-    it('test registerNamespacefunc20', function () {        
+    it('test registerNamespacefunc21', function () {        
         testObj.registerNamespacefunc21(onCallbackfun10nm);
     });
 
@@ -249,3 +249,43 @@ describe('test register/unRegister', function () {
 //     registerTestfunc13(cb : Callback<boolean>);
 //     unRegisterTestfunc13(cb : Callback<boolean>);
 // }
+
+function callbackTest14(ret1, ret2) {
+    console.info("SayInfo.from = " + ret1.from)
+    console.info("SayInfo.fromId = " + ret1.fromId)
+    console.info("SayInfo.content = " + ret1.content)
+    console.info("SayInfo.saidTime = " + ret1.saidTime)
+    console.info("SayInfo.isEnd = " + ret1.isEnd)
+    console.info("TestOptional.v1 = " + ret2.v1)
+    console.info("TestOptional.v2 = " + ret2.v2)
+    console.info("TestOptional.v3 = " + ret2.v3)
+    console.info("TestOptional.v4 = " + ret2.v4)
+    console.info("TestOptional.v5 = " + ret2.v5)
+}
+
+// interface TestClass12 {
+//   registerTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
+//   unRegisterTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
+// }
+// function registerNamespacefunc23(cb: (wid: SayInfo, test: TestOptional) => void);
+// function unRegisterNamespacefunc23(cb: (wid: SayInfo, test: TestOptional) => void);
+describe('test register/unRegister callback interface/type param is optional', function () {
+    let tc12 = new TestClass12();      
+    it('test TestClass12 registerTestfunc14', function () {
+        tc12.registerTestfunc14(callbackTest14);
+    });
+
+    it('test TestClass12 unRegisterTestfunc14', function () {
+        tc12.unRegisterTestfunc14(callbackTest14);
+    });
+
+    it('test function registerNamespacefunc23', function () {
+        testObj.registerNamespacefunc23(callbackTest14);
+    });
+
+    it('test function unRegisterNamespacefunc23', function () {
+        testObj.unRegisterNamespacefunc23(callbackTest14);
+    });
+    
+});
+
