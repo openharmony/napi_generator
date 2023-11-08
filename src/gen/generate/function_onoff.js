@@ -17,7 +17,8 @@ const re = require("../tools/re");
 const { eventParamGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { cToJs } = require("./return_generate");
-const { jsonCfgList, isRegisterFunc, isUnRegisterFunc } = require("../tools/common");
+const { jsonCfgList, isRegisterFunc, isUnRegisterFunc, InterfaceList } = require("../tools/common");
+const { NapiLog } = require("../tools/NapiLog");
 
 let middleHOnOffTemplate = `
 struct [funcName]_value_struct {
@@ -141,13 +142,16 @@ function addOnOffFunc(data, funcName) {
     data.onOffList.push(funcName)
 }
 
-function getregistLine(name) {
+function getregistLine(func) {
     let registLine = ''
-    if (isRegisterFunc(name)) {
+    if (isRegisterFunc(func.name)) {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ZERO));"
-    } else if (name == 'on') {
+    } else if (func.name == 'on') {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"    
-    } else { // off/unRegister处理
+    } else if (func.isObjCbFuncs) {
+        registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"
+    }
+    else { // off/unRegister处理
         registLine = "pxt->UnregistOnOffFunc(vio->eventName);"
     }
     return registLine
@@ -173,7 +177,11 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
         let prefix = getPrefix(isRegister)
         param.eventName = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀       
         getEventName = 'vio->eventName = "%s";\n'.format(param.eventName) 
-    } else {
+    } else if (func.isObjCbFuncs) {
+        // isRegister = true
+        let eventRegister = func.cbTypeName.replaceAll("AUTO_CALLFUNCTION_", "")
+        getEventName = 'vio->eventName = "%s";\n'.format(eventRegister)
+    }else {
         getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);\n'
     }
     codeContext.middleFunc = replaceAll(funcOnOffTemplete, "[funcName]", func.name)
@@ -247,7 +255,7 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
     if (param.params === '') {
         callbackFunc = replaceAll(callbackFunc, "&eventName, ", "&eventName")
     }
-    if (param.callback.isArrowFuncFlag) {  // 回调是箭头函数
+    if (param.callback != null && param.callback.isArrowFuncFlag != undefined && param.callback.isArrowFuncFlag) { // 回调是箭头函数
         callbackFunc = getArrowCallbackC2JsParam(callbackFunc, param);
     } else { // 回调是普通callback
         callbackFunc = getCallbackC2JsParam(callbackFunc, param);
@@ -375,8 +383,24 @@ function generateFunctionOnOff(func, data, className) {
     }
 
     let isRegister = isRegisterFunc(func.name)
-    for (let i in func.value) {
-        eventParamGenerate(i, func.value[i], param, data)
+    let funcValue
+    if (func.isObjCbFuncs) {        
+        funcValue = {
+            type: func.cbTypeName,
+            optional: false
+        }
+        eventParamGenerate(0, funcValue, param, data)
+    }
+    else {
+        for (let i in func.value) {
+            let funcValue = func.value[i];
+            let inerBody = InterfaceList.getBody(funcValue.type)
+            if (inerBody != null && inerBody.isCallbackObj) {
+                NapiLog.logInfo("no need to trans!");
+                return;
+            }
+            eventParamGenerate(i, funcValue, param, data)
+        }
     }
 
     let codeContext = {
@@ -390,7 +414,7 @@ function generateFunctionOnOff(func, data, className) {
         gennerateOnOffContext(codeContext, func, data, className, param)
     }
 
-    if (func.name == 'on' || isRegister) {
+    if (func.name == 'on' || isRegister || func.isObjCbFuncs) {
         // 为每个on接口同步生成eventCallback方法供用户回调使用
         let isOnFuncFlag = true;
         gennerateEventCallback(codeContext, data, param, className, isOnFuncFlag)

@@ -18,6 +18,7 @@ const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease,
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
 const { getConstNum } = require("../tools/tool");
+const { Interface } = require("readline/promises");
 
 class LenIncrease { }
 LenIncrease.LEN_TO = 1;
@@ -867,6 +868,40 @@ function paramGenerateArrowCallBack(funcValue, param, p, onFlag = false) {
     } 
 }
 
+// function paramGenerateObjectCallBack(func, param, p, onFlag = false) {
+//     let cbParamType
+//     let returnType = 'void'
+
+//     let type = funcValue.type
+//     let cbParamList = []
+
+//     if (CallFunctionList.getValue(type)) {
+//         // callFunction => 函数参数处理
+//         let funcBody = CallFunctionList.getValue(type)[0]  // 取出回调方法参数            
+//         returnType = CallFunctionList.getValue(type)[1]
+//         cbParamType = type
+//         for (let i in funcBody) { 
+//             let cbParam = {
+//                 name: funcBody[i].name,
+//                 type: funcBody[i].type
+//             }  
+//             cbParamList[i] = cbParam
+//         }
+//     }
+
+//     param.callback = {
+//         // function类型参数，按照空参数、空返回值回调处理 () => void {}
+//         type: cbParamType,
+//         offset: p,
+//         returnType: returnType,
+//         optional: funcValue.optional,
+//         isArrowFuncFlag: true,
+//         arrowFuncParamList:cbParamList,
+//         onFlag: onFlag,
+//         isAsync: type.indexOf("AsyncCallback") >= 0
+//     } 
+// }
+
 function isArrayType(type) {    
     if (type.substring(type.length - 2) == "[]" || type.substring(0, 6) == "Array<") {
         return true;
@@ -1106,6 +1141,12 @@ function eventParamGenerate(p, funcValue, param, data) {
         type = type.replaceAll("'", "")
     }
 
+    let inerBody = InterfaceList.getBody(type)
+    if (inerBody != null && inerBody.isCallbackObj) {
+        NapiLog.logInfo("no need to trans!");
+        return
+    }
+
     let regName = re.match("([a-zA-Z_0-9]+)", type)
     if(isFuncType(type)) {
         paramGenerateCallBack(data, funcValue, param, p)
@@ -1116,7 +1157,15 @@ function eventParamGenerate(p, funcValue, param, data) {
         // callFunction => 函数参数处理
         let onFlag = true;
         paramGenerateArrowCallBack(funcValue, param, p, onFlag)
-    } else if (regName) {
+    } 
+    // else if (funcs != null) {
+    //     // 标记interface中的接口走注册流程，不需要进行普通napi接口转换
+    //     for (let i in funcs) {
+    //         let onFlag = true;
+    //         paramGenerateArrowCallBack(funcs[i], param, p, onFlag)
+    //     }
+    // } 
+    else if (regName) {
         // event type参数处理
         param.eventName = re.getReg(type, regName.regs[1])  // string类型如何处理？
         if (param.eventName == "string") {

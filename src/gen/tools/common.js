@@ -86,6 +86,32 @@ InterfaceList.getValue = function (name) {
     return null;
 }
 
+InterfaceList.getBody = function (name) {
+    let ifs = InterfaceList.interfacess_[InterfaceList.interfacess_.length - 1]
+    for (let i in ifs) {
+        if (ifs[i].name == name) {
+            return ifs[i].body;
+        }
+    }
+    return null;
+}
+
+InterfaceList.getFuncs = function (name) {
+    let ifs = InterfaceList.interfacess_[InterfaceList.interfacess_.length - 1]
+    for (let i in ifs) {
+        let vv = ifs[i];
+        if (ifs[i].name == name) {
+            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, "allProperties")
+            if (hasProperty) {
+                return ifs[i].body.allProperties.functions;
+            } else {
+                return ifs[i].body.function;
+            }
+        }
+    }
+    return null;
+}
+
 class CallFunctionList { }
 CallFunctionList.callFuncs = [];
 CallFunctionList.push = function (ifs) {
