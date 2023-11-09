@@ -288,9 +288,10 @@ function generateInterface(name, data, inNamespace) {
             selfNs = ", " + nsl[nsl.length - 1]
         }
     }
-    middleInit += `\n    pxt->DefineClass("%s", %s%s_middle::constructor,
+    let toolNamespace = getToolNamespace(inNamespace);
+    middleInit += `\n    pxt->DefineClass("%s", %s%s%s_middle::constructor,
         valueList, funcList%s);\n}\n`
-        .format(name, inNamespace, name, selfNs)
+        .format(name, inNamespace, toolNamespace, name, selfNs)
     let extendsStr = (data.parentNameList && data.parentNameList.length > 0) ?
         " : public %s".format(data.parentNameList.join(", public ")) : ""
     let result = {
@@ -429,28 +430,52 @@ function connectResult(data, inNamespace, name) {
         implH += tmp[1]
         implCpp += tmp[2]
         middleH += tmp[3]
-        if (func.name != "constructor") {
-            middleInit += `\n    funcList["%s"] = %s%s_middle::%s_middle;`.format(func.name,
-              inNamespace, name, func.name)
-        }
+        middleInit = generateMiddleInitFunc(func, inNamespace, middleInit, name);
     }
     implH = addVirtualKeywords(data, implH, name);
     return [middleFunc, implH, implCpp, middleInit, middleH]
+}
+
+function generateMiddleInitFunc(func, inNamespace, middleInit, name) {
+    if (func.name != "constructor") {
+        let toolNamespace = getToolNamespace(inNamespace);
+        middleInit += `\n    funcList["%s"] = %s%s%s_middle::%s_middle;`.format(func.name,
+            inNamespace, toolNamespace, name, func.name);
+    }
+    return middleInit;
 }
 
 function getMiddleInitFunc(middleInit, data, variable, name, inNamespace) {
     middleInit = `{\n    std::map<const char *, std::map<const char *, napi_callback>> valueList;`;
     data.allProperties = { values: [], functions: [] };
     getAllPropties(data, data.allProperties, false);
+    let toolNamespace = getToolNamespace(inNamespace);
     for (let i in data.allProperties.values) {
         let v = data.allProperties.values[i];
         generateVariable(v, variable, name);
         middleInit += `
-        valueList["%s"]["getvalue"] = %s%s_middle::getvalue_%s;
-        valueList["%s"]["setvalue"] = %s%s_middle::setvalue_%s;`
-        .format(v.name, inNamespace, name, v.name, v.name, inNamespace, name, v.name);
+        valueList["%s"]["getvalue"] = %s%s%s_middle::getvalue_%s;
+        valueList["%s"]["setvalue"] = %s%s%s_middle::setvalue_%s;`
+        .format(v.name, inNamespace, toolNamespace, name, v.name, v.name, inNamespace, toolNamespace, name, v.name);
     }
     return middleInit;
+}
+
+function getToolNamespace(inNamespace) {
+    let index = inNamespace.lastIndexOf("::");
+    let toolNamespace;
+    if (index > 0) {
+      let bodyTmp = inNamespace.substring(0, index)
+      let index2 = bodyTmp.lastIndexOf('::')
+      if (index2 > 0 && index2 < index) {
+          toolNamespace =  inNamespace.substring(index2 + 2, index) + '_interface::'
+      } else {
+          toolNamespace = bodyTmp + "_interface::";
+      }
+    } else {
+        toolNamespace = inNamespace + "_interface::";
+    }
+    return toolNamespace;
 }
 
 module.exports = {
