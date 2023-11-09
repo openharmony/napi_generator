@@ -96,22 +96,6 @@ InterfaceList.getBody = function (name) {
     return null;
 }
 
-InterfaceList.getFuncs = function (name) {
-    let ifs = InterfaceList.interfacess_[InterfaceList.interfacess_.length - 1]
-    for (let i in ifs) {
-        let vv = ifs[i];
-        if (ifs[i].name == name) {
-            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, "allProperties")
-            if (hasProperty) {
-                return ifs[i].body.allProperties.functions;
-            } else {
-                return ifs[i].body.function;
-            }
-        }
-    }
-    return null;
-}
-
 class CallFunctionList { }
 CallFunctionList.callFuncs = [];
 CallFunctionList.push = function (ifs) {
@@ -123,7 +107,7 @@ CallFunctionList.pop = function () {
 CallFunctionList.getValue = function (name) {
     let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
     for (let i = 0; i < cfs.length; i++) {
-      let len = cfs[i].length
+    //   let len = cfs[i].length
     //   for (let j = 0; j < len; j++) {
         if (cfs[i].name == name) {
           return [cfs[i].body, cfs[i].ret]
@@ -383,7 +367,7 @@ function isArrowFunc(type) {
     return arrowFunc;
 }
 
-function isOnOffReisterFunc(name) {
+function isOnOffRegisterFunc(name) {
     let flag = false;
     if (name == 'on' || name == 'off' || isRegisterFunc(name) || isUnRegisterFunc(name) ||
       isOnObjCallback(name)) {
@@ -444,6 +428,6 @@ module.exports = {
     isRegisterFunc,
     isUnRegisterFunc,
     isOnObjCallback,
-    isOnOffReisterFunc,
+    isOnOffRegisterFunc,
     getOnObjCallbackType
 }

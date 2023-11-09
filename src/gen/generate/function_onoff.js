@@ -178,7 +178,7 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
         param.eventName = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀       
         getEventName = 'vio->eventName = "%s";\n'.format(param.eventName) 
     } else if (onObjFlag) {
-        param.eventName = className + '_' +func.name // 去掉注册、注销关键字前缀       
+        param.eventName = className + '_' +func.name      
         getEventName = 'vio->eventName = "%s";\n'.format(param.eventName)
     } else {
         getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);\n'

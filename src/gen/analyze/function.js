@@ -189,15 +189,6 @@ function analyseSubReturn(ret, data, results) {
     return ret
 }
 
-function getOnObjCallback(funcName, values, functionRet, rsltCallFunction) {
-
-    rsltCallFunction.push({
-        "name": funcName + '_'+ NumberIncrease.getAndIncrease(),
-        "body": values,
-        "ret": functionRet
-    })
-}
-
 /**函数解析 */
 function analyzeFunction(data, isStatic, name, values, ret, results, interfaceName = '') {
     let res = analyzeFuncNoNameInterface(data, values, results)

@@ -18,7 +18,6 @@ const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease,
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
 const { getConstNum } = require("../tools/tool");
-const { Interface } = require("readline/promises");
 
 class LenIncrease { }
 LenIncrease.LEN_TO = 1;
@@ -1112,12 +1111,6 @@ function eventParamGenerate(p, funcValue, param, data) {
         type = type.replaceAll("'", "")
     }
 
-    let inerBody = InterfaceList.getBody(type)
-    if (inerBody != null && inerBody.isCallbackObj) {
-        NapiLog.logInfo("no need to trans!");
-        return
-    }
-
     let regName = re.match("([a-zA-Z_0-9]+)", type)
     if(isFuncType(type)) {
         paramGenerateCallBack(data, funcValue, param, p)
@@ -1128,14 +1121,7 @@ function eventParamGenerate(p, funcValue, param, data) {
         // callFunction => 函数参数处理
         let onFlag = true;
         paramGenerateArrowCallBack(funcValue, param, p, onFlag)
-    } 
-    // else if (funcs != null) {
-    //     // 标记interface中的接口走注册流程，不需要进行普通napi接口转换
-    //     for (let i in funcs) {
-    //         let onFlag = true;
-    //         paramGenerateArrowCallBack(funcs[i], param, p, onFlag)
-    //     }
-    // } 
+    }
     else if (regName) {
         // event type参数处理
         param.eventName = re.getReg(type, regName.regs[1])  // string类型如何处理？
