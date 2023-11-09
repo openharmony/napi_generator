@@ -14,8 +14,9 @@
 */
 const re = require("../tools/re");
 const { checkOutBody, print } = require("../tools/tool");
-const { FuncType, NumberIncrease,isFuncType, isArrowFunc } = require("../tools/common");
+const { FuncType, InterfaceList, NumberIncrease,isFuncType, isArrowFunc,isRegisterFunc } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
+const { interfaces } = require("mocha");
 
 function isSyncFuncType(type, funcType) {
     let isSync = false;
@@ -38,7 +39,7 @@ function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
         valueType = re.replaceAll(valueType, ' ', '')
     }
     let matchs = re.match("\\(([a-zA-Z_0-9:,]+)*\\)=>([a-zA-Z_0-9]+)", valueType)
-   
+
     if (matchs) {
       let number = NumberIncrease.getAndIncrease();
       let functionTypeName = 'AUTO_CALLFUNCTION_%s_%s'.format(valueName, number)
@@ -65,9 +66,41 @@ function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
   return valueType
 }
 
+function analyzeInerfaceCallbackFunction(functionTypeName, functionRet, functionBody, rsltCallFunction) {
+    
+    // let tmp = analyzeParams(functionTypeName, functionBody)
+    // let bodyRes = tmp[0]
+
+
+      rsltCallFunction.push({
+          "name": functionTypeName,
+          "body": functionBody,
+          "ret": functionRet                  // 返回值
+      })                
+      let valueType = functionTypeName
+
+  return valueType
+}
+
+// 判断 注册的 type 的是否为interface
+function getCallbackInterface(type, results) {
+    let allInterfaces = results.interface
+    if (allInterfaces === null || allInterfaces === undefined || results.interface === null) {
+        NapiLog.logError("Invalid param: allInterfaces")
+        return;
+    }
+
+    for (let i in allInterfaces) {
+        if (allInterfaces[i].name == type) {
+            return allInterfaces[i];
+        }
+    }
+    return null;
+}
+
 /**函数参数解析 */
-function analyzeParams(funcName, values) {
-    let result = []
+function analyzeParams(funcName, values, results = null) {
+    let result =  []
     let rsltCallFunction = []
     let funcType = FuncType.DIRECT
     let optionalParamCount = 0; // 可选参数的个数
@@ -90,7 +123,33 @@ function analyzeParams(funcName, values) {
             }
 
             let valueName = re.getReg(v, matchs.regs[1])
-            type = analyzeCallbackFunction(type, valueName, rsltCallFunction)
+            let isRegister = isRegisterFunc(funcName);
+
+            if (isRegister) {
+                // 判断 注册的 type 的是否为interface
+                let inter = getCallbackInterface(type, results)
+                if (inter != null) {
+                    for(let i=0; i<inter.body.function.length; i++) {
+                        let cbFunc = inter.body.function[i];
+                        let cbTypeName = "AUTO_CALLFUNCTION_" + inter.name + "_" + cbFunc.name;
+
+                        // 对于包含回调函数集合的interface、class,根据此标记后续不需要进行转换
+                        inter.isCallbackObj = true; 
+                        
+                        // 对于包含回调函数集合的interface、class,根据此标记直接解析，
+                        // 后续无需对interface、class中的回调进行转换
+                        inter.body.function[i].isObjCbFuncs = true 
+                        inter.body.function[i].cbTypeName = cbTypeName
+
+                        analyzeInerfaceCallbackFunction(cbTypeName, cbFunc.ret, cbFunc.value, rsltCallFunction)
+                    }
+                } else {
+                    type = analyzeCallbackFunction(type, valueName, rsltCallFunction)
+                }
+            } else {
+                type = analyzeCallbackFunction(type, valueName, rsltCallFunction)
+            }
+
             let optionalFlag = re.getReg(v, matchs.regs[2]) == '?' ? true : false;
             let checkParamOk = true;
             if (optionalFlag) {
