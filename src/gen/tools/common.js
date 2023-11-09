@@ -98,11 +98,11 @@ CallFunctionList.getValue = function (name) {
     let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
     for (let i = 0; i < cfs.length; i++) {
       let len = cfs[i].length
-      for (let j = 0; j < len; j++) {
-        if (cfs[i][j].name == name) {
-          return [cfs[i][j].body, cfs[i][j].ret]
+    //   for (let j = 0; j < len; j++) {
+        if (cfs[i].name == name) {
+          return [cfs[i].body, cfs[i].ret]
         }
-      }  
+    //   }  
     }
     return null
 }
@@ -338,14 +338,44 @@ function isUnRegisterFunc(name) {
     return isRegister
 }
 
+function isOnObjCallback(name) {
+    let regIndex = name.indexOf('on');
+    let flag = false
+    let onLen = 2;
+    if (regIndex === 0 && name.length > onLen) {
+        flag = true
+    }
+    return flag
+}
+
 // 箭头函数，如funTest(cb: (wid: boolean) => void): string;
 function isArrowFunc(type) {
     let arrowFunc = false;
     if (type.indexOf('AUTO_CALLFUNCTION') >= 0 || type.indexOf('=>') > 0) {
         arrowFunc = true;
     }
-    return arrowFunc
+    return arrowFunc;
 }
+
+function isOnOffReisterFunc(name) {
+    let flag = false;
+    if (name == 'on' || name == 'off' || isRegisterFunc(name) || isUnRegisterFunc(name) ||
+      isOnObjCallback(name)) {
+        flag = true;
+    }
+    return flag;
+}
+
+function getOnObjCallbackType(funcName, interName) {
+    let onObjCbType = ''
+    if (interName != '') {
+        onObjCbType = interName + '_' + funcName
+    } else {
+        onObjCbType = funcName
+    }
+    return 'AUTO_CALLFUNCTION_' + onObjCbType
+}
+
 class jsonCfgList { }
 jsonCfgList.jsonCfg = [];
 jsonCfgList.push = function (ifs) {
@@ -386,5 +416,8 @@ module.exports = {
     isArrowFunc,
     jsonCfgList,
     isRegisterFunc,
-    isUnRegisterFunc
+    isUnRegisterFunc,
+    isOnObjCallback,
+    isOnOffReisterFunc,
+    getOnObjCallbackType
 }

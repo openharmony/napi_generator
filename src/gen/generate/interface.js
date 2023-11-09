@@ -17,7 +17,7 @@ const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
 const { generateFunctionOnOff } = require("./function_onoff");
 const { FuncType, InterfaceList, getArrayType, getArrayTypeTwo, getMapType, EnumList, jsType2CType, 
-    isRegisterFunc, isUnRegisterFunc } = require("../tools/common");
+    isOnOffReisterFunc,isRegisterFunc, isUnRegisterFunc } = require("../tools/common");
 const { jsToC, getCType, paramGenerate } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
@@ -396,7 +396,8 @@ function connectResult(data, inNamespace, name) {
     for (let i in data.allProperties.functions) {
         let func = data.allProperties.functions[i]
         let tmp;
-        if (func.name == 'on' || func.name == 'off' || isRegisterFunc(func.name) || isUnRegisterFunc(func.name)) {
+        // func.name == 'on' || func.name == 'off' || isRegisterFunc(func.name) || isUnRegisterFunc(func.name)
+        if (isOnOffReisterFunc(func.name)) {
             tmp = generateFunctionOnOff(func, data, name)
         }
         if (!tmp) {

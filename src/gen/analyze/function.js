@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex, isType, typeIndex } = require("../tools/common"); 
+const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex, isType, typeIndex, isOnObjCallback, getOnObjCallbackType } = require("../tools/common"); 
 const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
 const { NapiLog } = require("../tools/NapiLog");
@@ -189,8 +189,17 @@ function analyseSubReturn(ret, data, results) {
     return ret
 }
 
+function getOnObjCallback(funcName, values, functionRet, rsltCallFunction) {
+
+    rsltCallFunction.push({
+        "name": funcName + '_'+ NumberIncrease.getAndIncrease(),
+        "body": values,
+        "ret": functionRet
+    })
+}
+
 /**函数解析 */
-function analyzeFunction(data, isStatic, name, values, ret, results) {
+function analyzeFunction(data, isStatic, name, values, ret, results, interfaceName = '') {
     let res = analyzeFuncNoNameInterface(data, values, results)
     let tmp
     let funcType
@@ -199,7 +208,10 @@ function analyzeFunction(data, isStatic, name, values, ret, results) {
         tmp = analyzeParams(name, res.values)
         values = tmp[0]
         funcType = tmp[1]
-        callbackFunc = tmp[2]  // 当方法的参数是回调方法，并且回调方法写法为=>函数
+        if (tmp[2][0] != undefined) {
+            callbackFunc = tmp[2][0] // 当方法的参数是回调方法，并且回调方法写法为=>函数时s
+        }
+        // callbackFunc = tmp[2]  // 当方法的参数是回调方法，并且回调方法写法为=>函数
         if (results != undefined && callbackFunc) {
           results.callFunction.push(callbackFunc)
         }
@@ -236,6 +248,26 @@ function analyzeFunction(data, isStatic, name, values, ret, results) {
         ret: ret,
         isStatic: isStatic
     }
+    if (isOnObjCallback(name)) {
+        // getOnObjCallback(name, values, ret, callbackFunc)
+        // let onObjCbType = ''
+        // if (interfaceName != '') {
+        //     onObjCbType = interfaceName + '_' + name
+        // } else {
+        //     onObjCbType = name
+        // }
+
+        let onObjCbType = getOnObjCallbackType(name, interfaceName)
+        if (results != undefined) {
+            results.callFunction.push({
+                "name": onObjCbType,
+                "body": values,
+                "ret": ret
+            })
+            // results.callFunction.push(callbackFunc)
+        }
+
+    }    
     return result
 }
 

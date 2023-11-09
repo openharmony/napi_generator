@@ -17,7 +17,7 @@ const re = require("../tools/re");
 const { eventParamGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { cToJs } = require("./return_generate");
-const { jsonCfgList, isRegisterFunc, isUnRegisterFunc } = require("../tools/common");
+const { jsonCfgList, isRegisterFunc, isUnRegisterFunc, getOnObjCallbackType, isOnObjCallback } = require("../tools/common");
 
 let middleHOnOffTemplate = `
 struct [funcName]_value_struct {
@@ -147,7 +147,10 @@ function getregistLine(name) {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ZERO));"
     } else if (name == 'on') {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"    
-    } else { // off/unRegister处理
+    } else if (isOnObjCallback(name)) {
+        registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"
+        // registLine = "pxt->RegistOnOffFunc(vio->eventName, %s);".format(name)
+    }else { // off/unRegister处理
         registLine = "pxt->UnregistOnOffFunc(vio->eventName);"
     }
     return registLine
@@ -168,11 +171,15 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     let isUnRegister = isUnRegisterFunc(func.name)
     let getEventName = ''
     let registLine = getregistLine(func.name)
+    let onObjFlag = isOnObjCallback(func.name)
 
     if (isRegister || isUnRegister) {
         let prefix = getPrefix(isRegister)
         param.eventName = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀       
         getEventName = 'vio->eventName = "%s";\n'.format(param.eventName) 
+    } else if (onObjFlag) {
+        param.eventName = className + '_' +func.name // 去掉注册、注销关键字前缀       
+        getEventName = 'vio->eventName = "%s";\n'.format(param.eventName)
     } else {
         getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);\n'
     }
@@ -375,8 +382,19 @@ function generateFunctionOnOff(func, data, className) {
     }
 
     let isRegister = isRegisterFunc(func.name)
-    for (let i in func.value) {
-        eventParamGenerate(i, func.value[i], param, data)
+    let onObjFlag = isOnObjCallback(func.name)
+    if (onObjFlag) {
+        let cbType = getOnObjCallbackType(func.name, className)
+        let funcValue = {
+            type: cbType,
+            optional: false
+        }
+        eventParamGenerate(0, funcValue, param, data)
+
+    } else {
+        for (let i in func.value) {
+            eventParamGenerate(i, func.value[i], param, data)
+        }    
     }
 
     let codeContext = {
@@ -390,7 +408,7 @@ function generateFunctionOnOff(func, data, className) {
         gennerateOnOffContext(codeContext, func, data, className, param)
     }
 
-    if (func.name == 'on' || isRegister) {
+    if (func.name == 'on' || isRegister || onObjFlag) {
         // 为每个on接口同步生成eventCallback方法供用户回调使用
         let isOnFuncFlag = true;
         gennerateEventCallback(codeContext, data, param, className, isOnFuncFlag)

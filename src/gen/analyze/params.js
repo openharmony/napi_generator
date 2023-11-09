@@ -59,7 +59,7 @@ function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
           "name": functionTypeName,
           "body": bodyRes,
           "ret": functionRet                  // 返回值
-      })                
+      })               
       valueType = functionTypeName
   }
   return valueType
