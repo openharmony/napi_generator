@@ -141,11 +141,11 @@ function addOnOffFunc(data, funcName) {
     data.onOffList.push(funcName)
 }
 
-function getregistLine(func) {
+function getregistLine(name) {
     let registLine = ''
-    if (isRegisterFunc(func.name)) {
+    if (isRegisterFunc(name)) {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ZERO));"
-    } else if (func.name == 'on') {
+    } else if (name == 'on') {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"    
     } else if (isOnObjCallback(name)) {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"

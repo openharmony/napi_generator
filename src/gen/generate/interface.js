@@ -377,15 +377,6 @@ function addVirtualKeywords(data, implH, name) {
     return implH;
 }
 
-function isOnOffReisterFunc(func) {
-    let flag = false;
-    if (func.name == 'on' || func.name == 'off' || isRegisterFunc(func.name) || isUnRegisterFunc(func.name) ||
-      func.isObjCbFuncs) {
-        flag = true;
-    }
-    return flag;
-}
-
 function connectResult(data, inNamespace, name) {
     let implH = ""
     let implCpp = ""
