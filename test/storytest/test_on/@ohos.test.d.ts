@@ -98,7 +98,7 @@ declare namespace napitest {
     function unRegisterNamespacefunc21(cb : (wid: number) => string);
 
     function registerNamespacefunc22(cb : Callback<boolean>);
-    // function unRegisterNamespacefunc22(cb : Callback<boolean>);
+    function unRegisterNamespacefunc22(cb : Callback<boolean>);
     
     export class NodeISayHelloListener
     {
