@@ -800,6 +800,7 @@ function matchCBParamType(cbParamType, type) {
     }
     return cbParamType
 }
+
 function paramGenerateCallBack(data, funcValue, param, p) {
     let cbParamType
     let returnType = 'void'
@@ -866,6 +867,20 @@ function paramGenerateArrowCallBack(funcValue, param, p, onFlag = false) {
         isAsync: type.indexOf("AsyncCallback") >= 0
     } 
 }
+
+// function paramGenerateOnObjCallBack(funcValue, param, p, onFlag = false) {
+//     param.callback = {
+//         // function类型参数，按照空参数、空返回值回调处理 () => void {}
+//         type: cbParamType,
+//         offset: p,
+//         returnType: returnType,
+//         optional: funcValue.optional,
+//         isArrowFuncFlag: true,
+//         arrowFuncParamList:cbParamList,
+//         onFlag: onFlag,
+//         isAsync: type.indexOf("AsyncCallback") >= 0
+//     } 
+// }
 
 function isArrayType(type) {    
     if (type.substring(type.length - 2) == "[]" || type.substring(0, 6) == "Array<") {
@@ -1102,6 +1117,10 @@ function paramGenerate(p, funcValue, param, data) {
 function eventParamGenerate(p, funcValue, param, data) {
     let name = funcValue.name;
     let type = funcValue.type;
+    if (type === undefined) {
+        NapiLog.logError("eventParamGenerate param error: funcValue.type is null")
+        return
+    }
     if (type.indexOf("'") >= 0) {
         type = type.replaceAll("'", "")
     }

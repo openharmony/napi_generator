@@ -51,7 +51,7 @@ function parseNotes(data) {
 }
 
 /**interface解析 */
-function analyzeInterface(data, rsltInterface = null, results) { // same as class
+function analyzeInterface(data, rsltInterface = null, results, interfaceName = '') { // same as class
     let body = data
     body = body.indexOf("//") < 0 ? body : parseNotes(body)
     let arr  =  [...body.matchAll(/;\s*\n+/g)]
@@ -92,7 +92,7 @@ function analyzeInterface(data, rsltInterface = null, results) { // same as clas
         if (tt) { // 接口函数成员
             let ret = re.getReg(t, tt.regs[5]) == ''? 'void': re.getReg(t, tt.regs[5])
             let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) != '', re.getReg(t, tt.regs[2]),
-                re.getReg(t, tt.regs[3]), ret, results)
+                re.getReg(t, tt.regs[3]), ret, results, interfaceName)
             if (funcDetail != null) {
                 // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
                 addUniqFunc2List(funcDetail, result.function)

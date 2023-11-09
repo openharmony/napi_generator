@@ -345,7 +345,7 @@ function getParentNameList(firstKey, secondKey, parentStr) {
 function createInterfaceData (matchs, data, result) {
     let interfaceName = re.getReg(data, matchs.regs[2])
     let interfaceBody = checkOutBody(data, matchs.regs[6][0], null, null)
-    let bodyObj = analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1), result.interface, result)
+    let bodyObj = analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1), result.interface, result, interfaceName)
     let extendsParent = re.getReg(data, matchs.regs[4])
     let implementParent = re.getReg(data, matchs.regs[5])
     bodyObj.parentNameList = []

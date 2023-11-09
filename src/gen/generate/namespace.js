@@ -18,7 +18,7 @@ const { generateFunctionAsync } = require("./function_async");
 const { generateInterface } = require("./interface");
 const { generateClass } = require("./class");
 const { generateType } = require("./type");
-const { FuncType, InterfaceList, EnumList, TypeList, CallFunctionList, isRegisterFunc, isUnRegisterFunc } = 
+const { FuncType, InterfaceList, EnumList, TypeList, CallFunctionList, isRegisterFunc, isUnRegisterFunc, isOnOffReisterFunc } = 
 require("../tools/common");
 const { generateEnum } = require("./enum");
 const { generateFunctionOnOff } = require("./function_onoff");
@@ -203,7 +203,7 @@ function generateResult(name, implH, implCpp, middleFunc, middleInit, middleH) {
 
 function generateFunction(func, data) {
     let tmp;
-    if (func.name == 'on' || func.name == 'off' || isRegisterFunc(func.name) || isUnRegisterFunc(func.name)) {
+    if (isOnOffReisterFunc(func.name)) {
         return generateFunctionOnOff(func, data)
     }
     switch (func.type) {
