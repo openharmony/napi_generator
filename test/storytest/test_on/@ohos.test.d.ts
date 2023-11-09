@@ -101,8 +101,8 @@ declare namespace napitest {
 
     function unRegisterNamespacefunc22(cb : Callback<boolean>); 
     
-    function registerNamespacefunc23(cb : (wid: ModelEvent) => string);
-    function unRegisterNamespacefunc23(cb : (wid: ModelEvent) => string);
+    function registerNamespacefunc24(cb : (wid: ModelEvent) => string);
+    function unRegisterNamespacefunc24(cb : (wid: ModelEvent) => string);
 
     export class NodeISayHelloListener
     {
@@ -112,21 +112,30 @@ declare namespace napitest {
 
     // function registerSayHelloListener(listener: NodeISayHelloListener);
 
-
-    export type SayInfo = 
+    interface TestClass12 {
+        registerTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
+        unRegisterTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
+    }
+    function registerNamespacefunc23(cb: (wid: SayInfo, test: TestOptional) => void);
+    function unRegisterNamespacefunc23(cb: (wid: SayInfo, test: TestOptional) => void);
+    
+    export type SayInfo =
     {
         from: string;
-        // fromId?: number;
-        to: string;
-        // toId?: number;
+        fromId?: number;
         content: string;
-        saidTime: string;
-        isEnd: boolean;
+        saidTime?: string;
+        isEnd?: boolean;
     }
 
-    // function registerSayHelloStart(info: SayInfo);
-    // function registerNamespacefunc25(cb : onSayHelloStart);
-    // function registerNamespacefunc24(cb : NodeISayHelloListener);
+    export interface TestOptional
+    {
+        v1: string;
+        v2?: boolean;
+        v3: number;
+        v4?: string;
+        v5?: number;
+    }
 }
 
 export default napitest;
