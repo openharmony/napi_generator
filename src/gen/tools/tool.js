@@ -114,20 +114,24 @@ function removeExplains(data) {
     }
 
     // 去除 namespace 域外 // 类型的注释
+    // 如果换行格式是\r\n, 去除\r, 统一成\n格式
+    while (data.indexOf("\r") >= 0) {
+      data = data.replace("\r", "")
+    }
     while (data.indexOf("//") >= 0) {
         let i1 = data.indexOf("//")
-        let i2 = data.indexOf("\r\n")
+        let i2 = data.indexOf("\n")
         let end = data.indexOf("declare namespace ")
         while (i2 < end && i1 < end) {
             while (i1 > i2) {
                 data =  data.substring(0, i2) + data.substring(i2 + 2, data.length)
-                i2 = data.indexOf("\r\n")
+                i2 = data.indexOf("\n")
                 i1 = data.indexOf("//")
             } 
-            data = data.substring(0, i1) + data.substring(i2 + 2, data.length)
+            data = data.substring(0, i1) + data.substring(i2 + 1, data.length)
             i1 = data.indexOf("//")
-            i2 = data.indexOf("\r\n")
-           end = data.indexOf("declare namespace ")
+            i2 = data.indexOf("\n")
+            end = data.indexOf("declare namespace ")
         }
         if (i2 > end || i1 > end) {
             break;
