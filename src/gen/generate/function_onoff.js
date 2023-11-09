@@ -141,11 +141,11 @@ function addOnOffFunc(data, funcName) {
     data.onOffList.push(funcName)
 }
 
-function getregistLine(name) {
+function getregistLine(func) {
     let registLine = ''
-    if (isRegisterFunc(name)) {
+    if (isRegisterFunc(func.name)) {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ZERO));"
-    } else if (name == 'on') {
+    } else if (func.name == 'on') {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"    
     } else if (isOnObjCallback(name)) {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"
@@ -254,7 +254,7 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
     if (param.params === '') {
         callbackFunc = replaceAll(callbackFunc, "&eventName, ", "&eventName")
     }
-    if (param.callback.isArrowFuncFlag) {  // 回调是箭头函数
+    if (param.callback != null && param.callback.isArrowFuncFlag != undefined && param.callback.isArrowFuncFlag) { // 回调是箭头函数
         callbackFunc = getArrowCallbackC2JsParam(callbackFunc, param);
     } else { // 回调是普通callback
         callbackFunc = getCallbackC2JsParam(callbackFunc, param);

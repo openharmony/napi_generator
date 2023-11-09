@@ -205,14 +205,14 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
     let funcType
     let callbackFunc = null
     if (res) {
-        tmp = analyzeParams(name, res.values)
+        tmp = analyzeParams(name, res.values, results)
         values = tmp[0]
         funcType = tmp[1]
         if (tmp[2][0] != undefined) {
             callbackFunc = tmp[2][0] // 当方法的参数是回调方法，并且回调方法写法为=>函数时s
         }
         // callbackFunc = tmp[2]  // 当方法的参数是回调方法，并且回调方法写法为=>函数
-        if (results != undefined && callbackFunc) {
+        if (results != undefined && callbackFunc != null) {
           results.callFunction.push(callbackFunc)
         }
     }

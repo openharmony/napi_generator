@@ -98,8 +98,12 @@ declare namespace napitest {
     function unRegisterNamespacefunc21(cb : (wid: number) => string);
 
     function registerNamespacefunc22(cb : Callback<boolean>);
-    function unRegisterNamespacefunc22(cb : Callback<boolean>);
+
+    function unRegisterNamespacefunc22(cb : Callback<boolean>); 
     
+    function registerNamespacefunc23(cb : (wid: ModelEvent) => string);
+    function unRegisterNamespacefunc23(cb : (wid: ModelEvent) => string);
+
     export class NodeISayHelloListener
     {
         onSayHelloStart(info: SayInfo);
@@ -107,6 +111,7 @@ declare namespace napitest {
     }
 
     // function registerSayHelloListener(listener: NodeISayHelloListener);
+
 
     export type SayInfo = 
     {
@@ -118,6 +123,10 @@ declare namespace napitest {
         saidTime: string;
         isEnd: boolean;
     }
+
+    // function registerSayHelloStart(info: SayInfo);
+    // function registerNamespacefunc25(cb : onSayHelloStart);
+    // function registerNamespacefunc24(cb : NodeISayHelloListener);
 }
 
 export default napitest;
