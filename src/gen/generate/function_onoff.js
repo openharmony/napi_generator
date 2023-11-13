@@ -79,19 +79,21 @@ void [middleClassName][eventNames]AsyncOrSyncCallbackMiddle(const std::string &e
 }
 `
 
+// on方法注册字段为string时,不需要判断ts文件中注册的字段与使用字段是否一样
+let stringTypeMiddleTemplate = 
+`[middleClassName][eventName]AsyncOrSyncCallbackMiddle(eventName, [callback_param_name]);`
+
+let fixedTypeMiddleTemplate = 
+`if (eventName != "[eventName]") { // on方法注册字段为固定值时,判断ts文件中注册的字段与使用字段是否一样
+        printf("eventName Err !");
+        return;
+    } else {
+        [middleClassName][eventName]AsyncOrSyncCallbackMiddle(eventName, [callback_param_name]);
+    }`
+
 let middleEventCallbakTemplate = `
 void [middleClassName][eventName]CallbackMiddle(std::string &eventName, [callback_param_type]) {
-  bool isStringType = [is_string_type];
-  if (!isStringType) {
-    if (eventName != "[eventName]") { // on方法注册字段为固定值时,判断ts文件中注册的字段与使用字段是否一样
-      printf("eventName Err !");
-      return;
-    } else {
-      [middleClassName][eventName]AsyncOrSyncCallbackMiddle(eventName, [callback_param_name]);
-    }
-  } else {
-    [middleClassName][eventName]AsyncOrSyncCallbackMiddle(eventName, [callback_param_name]);
-  }
+    [replace_onTypeMiddle]
 }
 `
 
@@ -295,17 +297,23 @@ function getCallbackC2JsParam(callbackFunc, param) {
 
 function genCallbackMiddleMethod(param, className, middleClassName, codeContext) {
     let middleEventCallBack = replaceAll(middleEventCallbakTemplate, "[eventName]", param.eventName);
-    middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_name]", param.useParams);
     middleEventCallBack = replaceAll(middleEventCallBack, "[callback_param_type]", param.params);
+    let middleEventTypeTemplate
+    if (param.eventNameIsStr) {
+        middleEventTypeTemplate = replaceAll(stringTypeMiddleTemplate, "[eventName]", param.eventName);
+    } else {
+        middleEventTypeTemplate = replaceAll(fixedTypeMiddleTemplate, "[eventName]", param.eventName);
+    }
+    middleEventTypeTemplate = replaceAll(middleEventTypeTemplate, "[callback_param_name]", param.useParams);
+    middleEventCallBack = replaceAll(middleEventCallBack, "[replace_onTypeMiddle]", middleEventTypeTemplate);
+
+    if (className != null) {
+        middleEventCallBack = replaceAll(middleEventCallBack, "[middleClassName]", middleClassName + "::");
+    } else {
+        middleEventCallBack = replaceAll(middleEventCallBack, "[middleClassName]", "");
+    }
     if (param.params === '') {
         middleEventCallBack = replaceAll(middleEventCallBack, "eventName, ", "eventName")
-    }
-    let isStrType = param.eventNameIsStr ? "true" : "false";
-    middleEventCallBack = replaceAll(middleEventCallBack, "[is_string_type]", isStrType);
-    if (className != null) {
-      middleEventCallBack = replaceAll(middleEventCallBack, "[middleClassName]", middleClassName + "::");
-    } else {
-      middleEventCallBack = replaceAll(middleEventCallBack, "[middleClassName]", "");
     }
     codeContext.middleFunc += middleEventCallBack;
 }
