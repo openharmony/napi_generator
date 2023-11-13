@@ -17,7 +17,8 @@ const re = require("../tools/re");
 const { eventParamGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { cToJs } = require("./return_generate");
-const { jsonCfgList, isRegisterFunc, isUnRegisterFunc, getOnObjCallbackType, isOnObjCallback } = require("../tools/common");
+const { jsonCfgList, isRegisterFunc, isUnRegisterFunc, getOnObjCallbackType, isOnObjCallback } = 
+require("../tools/common");
 
 let middleHOnOffTemplate = `
 struct [funcName]_value_struct {
@@ -167,6 +168,21 @@ function getPrefix(isRegister) {
     return prefix;
 }
 
+function  getrefCbCont() {
+    let refCbCont = 
+    `    std::string proName = "onSayHelloStart";
+        bool hasProperty = false;
+        napi_value cbFunc = nullptr;
+        napi_value callbackObj = pxt->GetArgv(XNapiTool::ZERO);
+        napi_has_named_property(env, callbackObj, proName.c_str(), &hasProperty);
+        if (hasProperty) {
+            napi_value propKey = nullptr;
+            napi_create_string_utf8(env, proName.c_str(), proName.length(), &propKey);
+            napi_get_property(env, callbackObj, propKey, &cbFunc);      
+        }`
+    return refCbCont;    
+}
+
 function gennerateOnOffContext(codeContext, func, data, className, param) {
     let isRegister = isRegisterFunc(func.name);
     let isUnRegister = isUnRegisterFunc(func.name)
@@ -183,18 +199,8 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     } else if (onObjFlag) {
         param.eventName = className + '_' +func.name      
         getEventName = 'vio->eventName = "%s";\n'.format(param.eventName)
-        refDefineCont = 'napi_ref NodeISayHelloListener_middle::ref_ = nullptr;'
-        
-        refCb = `    std::string proName = "onSayHelloStart";
-        bool hasProperty = false;
-        napi_value cbFunc = nullptr;
-        napi_value callbackObj = pxt->GetArgv(XNapiTool::ZERO);
-        napi_has_named_property(env, callbackObj, proName.c_str(), &hasProperty);
-        if (hasProperty) {
-            napi_value propKey = nullptr;
-            napi_create_string_utf8(env, proName.c_str(), proName.length(), &propKey);
-            napi_get_property(env, callbackObj, propKey, &cbFunc);      
-        }`
+        refDefineCont = 'napi_ref NodeISayHelloListener_middle::ref_ = nullptr;'        
+        refCb = getrefCbCont()
     } else {
         getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);\n'
     }
@@ -270,7 +276,9 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
     if (param.params === '') {
         callbackFunc = replaceAll(callbackFunc, "&eventName, ", "&eventName")
     }
-    if (param.callback != null && param.callback.isArrowFuncFlag != undefined && param.callback.isArrowFuncFlag) { // 回调是箭头函数
+
+    // 回调是箭头函数
+    if (param.callback != null && param.callback.isArrowFuncFlag != undefined && param.callback.isArrowFuncFlag) {
         callbackFunc = getArrowCallbackC2JsParam(callbackFunc, param);
     } else { // 回调是普通callback
         callbackFunc = getCallbackC2JsParam(callbackFunc, param);
