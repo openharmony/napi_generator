@@ -148,7 +148,7 @@ function generateNamespace(name, data, inNamespace = "") {
 
 function genNamespaceFunc(data, i, namespaceResult, inNamespace, name) {
     let func = data.function[i];
-    let tmp = generateFunction(func, data);
+    let tmp = generateFunction(func, data, namespaceResult.implH);
     namespaceResult.middleFunc += tmp[0];
     namespaceResult.implH += tmp[1];
     namespaceResult.implCpp += tmp[2];
@@ -235,7 +235,7 @@ function generateResult(name, implH, implCpp, middleFunc, middleInit, middleH, f
   return result;
 }
 
-function generateFunction(func, data) {
+function generateFunction(func, data, implH = null) {
     let tmp;
     if (isOnOffRegisterFunc(func.name)) {
         return generateFunctionOnOff(func, data)
@@ -249,7 +249,7 @@ function generateFunction(func, data) {
             break
         case FuncType.ASYNC:
         case FuncType.PROMISE:
-            tmp = generateFunctionAsync(func, data)
+            tmp = generateFunctionAsync(func, data, className, implH)
             break
         default:
             return
