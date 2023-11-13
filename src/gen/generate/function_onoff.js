@@ -151,7 +151,6 @@ function getregistLine(name) {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"    
     } else if (isOnObjCallback(name)) {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, cbFunc);"
-        // registLine = "pxt->RegistOnOffFunc(vio->eventName, %s);".format(name)
     }else { // off/unRegister处理
         registLine = "pxt->UnregistOnOffFunc(vio->eventName);"
     }
