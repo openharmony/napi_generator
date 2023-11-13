@@ -39,6 +39,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
     [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     [valueCheckout]
+    [addListener]
     [callFunc]
     napi_value result = nullptr;
     [valuePackage][optionalParamDestory]
@@ -51,6 +52,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 }`
 
 let cppTemplate = `
+%s
 bool %s%s(%s)
 {
     %s
@@ -71,12 +73,38 @@ function removeEndlineEnter(value) {
     return value
 }
 
+function isAddFunc(name) {
+    let regIndex = name.indexOf('add');
+    let flag = false
+    if (regIndex === 0) {
+        flag = true
+    }
+    return flag
+}
+
 function generateFunctionDirect(func, data, className, implHVariable) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
     let middleH = ""
     if (func.name != "constructor") {
       middleH = replaceAll(funcDirectMiddleHTemplete, "[funcName]", func.name)
     }
+    let addListenerCont = ''
+    let isAddReg = isAddFunc(func.name)
+    if (isAddReg) {
+        addListenerCont = `napi_value para = pxt->GetArgv(XNapiTool::ZERO);
+        napi_valuetype valueType = napi_undefined;
+        napi_status status = napi_typeof(env, para, &valueType);
+        if (status != napi_ok) {
+            return nullptr;
+        }
+        if (valueType !=  napi_object) {
+           printf("valueType is Err, not napi_object !");
+           return nullptr;
+        }
+        napi_create_reference(env, para, 1, &NodeISayHelloListener_middle::ref_); `
+    }
+    middleFunc = replaceAll(middleFunc, "[addListener]", addListenerCont)
+
 
     let isClassresult = isClassFunc(className, middleFunc, middleH);
     middleFunc = isClassresult[0]
@@ -109,6 +137,10 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     let prefixArr = getPrefix(data, func)
     let implH = ""
     let implCpp = ""
+    let initListener = ''
+
+    
+
     if (!func.isParentMember) {
         if (func.name == 'constructor') {
             // 构造函数去掉&或* (在内部去掉较麻烦，生成后统一去除)
@@ -119,7 +151,13 @@ function generateFunctionDirect(func, data, className, implHVariable) {
             implH = "\n%s%s%sbool %s(%s)%s;".format(
               prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
             let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
-            implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine,
+
+            if (isAddReg) {
+                initListener = 'NodeISayHelloListener NodeISayHello::listener_ = {};'
+                callStatement = 'NodeISayHello::listener_ = listener;'
+            }
+
+            implCpp = cppTemplate.format(initListener, className == null ? "" : className + "::", func.name, param.valueDefine,
               callStatement == null? "": callStatement)
         }   
     }

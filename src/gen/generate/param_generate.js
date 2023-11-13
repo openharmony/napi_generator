@@ -1121,6 +1121,8 @@ function eventParamGenerate(p, funcValue, param, data) {
         // callFunction => 函数参数处理
         let onFlag = true;
         paramGenerateArrowCallBack(funcValue, param, p, onFlag)
+    } else if (InterfaceList.getValue(type)) {
+        let aaOnFlag = true;
     }
     else if (regName) {
         // event type参数处理

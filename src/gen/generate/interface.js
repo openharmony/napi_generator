@@ -32,6 +32,7 @@ public:
     static napi_value constructor(napi_env env, napi_callback_info info);
     static void release(DataPtr p);
     [static_funcs]
+    static napi_ref ref_;
 };
 `
 
@@ -297,8 +298,8 @@ function generateInterface(name, data, inNamespace) {
     let result = {
         implH: `
 class %s%s {
-public:%s
-};\n`.format(name, extendsStr, implH),
+public:%s\n
+static NodeISayHelloListener listener_;\n};\n`.format(name, extendsStr, implH),
         implCpp: implCpp,
         middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc)
         .replaceAll("[getConstructorParam]", getConParam)
