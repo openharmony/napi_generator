@@ -183,16 +183,6 @@ function generateFunctionAsync(func, data, className, implHCbVariable) {
     return [middleFunc, implH, implCpp, middleH]
 }
 
-function replaceValueCheckout(param, middleFunc) {
-    if (param.valueCheckout == "") {
-        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout); // # 输入参数解析
-    } else {
-        param.valueCheckout = removeEndlineEnter(param.valueCheckout);
-        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout); // # 输入参数解析
-    }
-    return middleFunc;
-}
-
 function generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable, implCpp, implH) {
     let cbInterfaceRes = "";
     let outInterfaceDefine = param.valueDefine.substring(param.valueDefine.lastIndexOf(",") + 1,
@@ -212,10 +202,11 @@ function generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable
                 outInterfaceName.toLocaleLowerCase(), interBody[i].name, interBody[i].name);
         }
         defineParams = defineParams.substring(0, defineParams.length - 2);
-        let cbOutDefine = "\n%s %s%sOutRes = {};".format(outInterfaceName, 
-            className == null ? "" : className + "::", outInterfaceName.toLocaleLowerCase())
-        cbInterfaceRes = cppCbResultTemplate.format(className == null ? "" : className + "::", 
-            outInterfaceName.toLocaleLowerCase(), defineParams, useParams);
+        let cbOutDefine = "\n%s %s%sOutRes = {};".format(outInterfaceName, className == null ? "" : className + "::",
+        outInterfaceName.toLocaleLowerCase())
+        cbInterfaceRes = cppCbResultTemplate.format(className == null ? "" : className + "::", outInterfaceName.toLocaleLowerCase(),
+            defineParams, useParams);
+
         if (className != null) {
             cbInterfaceRes = replaceAll(cbInterfaceRes, '[replace_outDefine]', cbOutDefine)
         } else {
