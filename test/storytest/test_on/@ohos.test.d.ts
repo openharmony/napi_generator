@@ -104,13 +104,26 @@ declare namespace napitest {
     function registerNamespacefunc24(cb : (wid: ModelEvent) => string);
     function unRegisterNamespacefunc24(cb : (wid: ModelEvent) => string);
 
-    export class NodeISayHelloListener
+    export class NodeISayHello
     {
-        onSayHelloStart(info: SayInfo);
-        // registerSayHelloEnd(info: SayInfo);
+        addSayHelloListener(listener: NodeISayHelloListener);
+        sayHello(from: string, to: string, sayType: SayType);
     }
 
-    // function registerSayHelloListener(listener: NodeISayHelloListener);
+    export class NodeISayHelloListener
+    {
+        onSayHelloStart(info: SayInfo);        
+    }
+
+    export enum SayType
+    {
+        /** 0  主动说话 */
+        kInitiative,
+        /** 1  回应对方 */
+        kResponse,
+    }
+
+
 
     interface TestClass12 {
         registerTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
