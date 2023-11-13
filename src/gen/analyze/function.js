@@ -13,7 +13,8 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex, isType, typeIndex, isOnObjCallback, getOnObjCallbackType } = require("../tools/common"); 
+const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex, isType, typeIndex, isOnObjCallback, 
+    getOnObjCallbackType } = require("../tools/common"); 
 const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
 const { NapiLog } = require("../tools/NapiLog");
@@ -196,7 +197,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
     let funcType
     let callbackFunc = null
     if (res) {
-        tmp = analyzeParams(name, res.values, results)
+        tmp = analyzeParams(name, res.values)
         values = tmp[0]
         funcType = tmp[1]
         if (tmp[2][0] != undefined) {
@@ -247,7 +248,6 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
                 "ret": ret
             })
         }
-
     }    
     return result
 }

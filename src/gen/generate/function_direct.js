@@ -82,6 +82,21 @@ function isAddFunc(name) {
     return flag
 }
 
+function getaddListenerCont() {
+    let addListenerCont = `napi_value para = pxt->GetArgv(XNapiTool::ZERO);
+    napi_valuetype valueType = napi_undefined;
+    napi_status status = napi_typeof(env, para, &valueType);
+    if (status != napi_ok) {
+        return nullptr;
+    }
+    if (valueType !=  napi_object) {
+       printf("valueType is Err, not napi_object !");
+       return nullptr;
+    }
+    napi_create_reference(env, para, 1, &NodeISayHelloListener_middle::ref_); `
+    return addListenerCont
+}
+
 function generateFunctionDirect(func, data, className, implHVariable) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
     let middleH = ""
@@ -91,17 +106,7 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     let addListenerCont = ''
     let isAddReg = isAddFunc(func.name)
     if (isAddReg) {
-        addListenerCont = `napi_value para = pxt->GetArgv(XNapiTool::ZERO);
-        napi_valuetype valueType = napi_undefined;
-        napi_status status = napi_typeof(env, para, &valueType);
-        if (status != napi_ok) {
-            return nullptr;
-        }
-        if (valueType !=  napi_object) {
-           printf("valueType is Err, not napi_object !");
-           return nullptr;
-        }
-        napi_create_reference(env, para, 1, &NodeISayHelloListener_middle::ref_); `
+        addListenerCont = getaddListenerCont()
     }
     middleFunc = replaceAll(middleFunc, "[addListener]", addListenerCont)
 
@@ -155,8 +160,8 @@ function generateFunctionDirect(func, data, className, implHVariable) {
                 callStatement = 'NodeISayHello::listener_ = listener;'
             }
 
-            implCpp = cppTemplate.format(initListener, className == null ? "" : className + "::", func.name, param.valueDefine,
-              callStatement == null? "": callStatement)
+            implCpp = cppTemplate.format(initListener, className == null ? "" : className + "::", func.name, 
+            param.valueDefine, callStatement == null? "": callStatement)
         }   
     }
     return [middleFunc, implH, implCpp, middleH]
