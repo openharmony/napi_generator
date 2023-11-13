@@ -147,8 +147,14 @@ function generateFunctionAsync(func, data, className, implHCbVariable) {
         paramGenerate(i, func.value[i], param, data)
     }
     returnGenerate(param.callback, param, data)
-    middleH = replaceValueOut(middleH, param); 
-    middleFunc = replaceValueCheckout(param, middleFunc);
+    middleH = replaceValueOut(middleH, param);
+
+    if (param.valueCheckout == "") {
+        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
+    } else {
+        param.valueCheckout = removeEndlineEnter(param.valueCheckout)
+        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
+    }
     let optionalCallback = getOptionalCallbackInit(param)
     if (optionalCallback == "") {
         middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback) // 可选callback参数初始化
@@ -206,7 +212,6 @@ function generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable
         outInterfaceName.toLocaleLowerCase())
         cbInterfaceRes = cppCbResultTemplate.format(className == null ? "" : className + "::", outInterfaceName.toLocaleLowerCase(),
             defineParams, useParams);
-
         if (className != null) {
             cbInterfaceRes = replaceAll(cbInterfaceRes, '[replace_outDefine]', cbOutDefine)
         } else {
