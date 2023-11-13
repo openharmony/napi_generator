@@ -107,12 +107,9 @@ CallFunctionList.pop = function () {
 CallFunctionList.getValue = function (name) {
     let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
     for (let i = 0; i < cfs.length; i++) {
-    //   let len = cfs[i].length
-    //   for (let j = 0; j < len; j++) {
         if (cfs[i].name == name) {
-          return [cfs[i].body, cfs[i].ret]
-        }
-    //   }  
+            return [cfs[i].body, cfs[i].ret]
+        } 
     }
     return null
 }

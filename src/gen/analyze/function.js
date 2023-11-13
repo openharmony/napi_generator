@@ -201,8 +201,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
         funcType = tmp[1]
         if (tmp[2][0] != undefined) {
             callbackFunc = tmp[2][0] // 当方法的参数是回调方法，并且回调方法写法为=>函数时s
-        }
-        // callbackFunc = tmp[2]  // 当方法的参数是回调方法，并且回调方法写法为=>函数
+        }  
         if (results != undefined && callbackFunc != null) {
           results.callFunction.push(callbackFunc)
         }
@@ -240,14 +239,6 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
         isStatic: isStatic
     }
     if (isOnObjCallback(name)) {
-        // getOnObjCallback(name, values, ret, callbackFunc)
-        // let onObjCbType = ''
-        // if (interfaceName != '') {
-        //     onObjCbType = interfaceName + '_' + name
-        // } else {
-        //     onObjCbType = name
-        // }
-
         let onObjCbType = getOnObjCallbackType(name, interfaceName)
         if (results != undefined) {
             results.callFunction.push({
@@ -255,7 +246,6 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
                 "body": values,
                 "ret": ret
             })
-            // results.callFunction.push(callbackFunc)
         }
 
     }    

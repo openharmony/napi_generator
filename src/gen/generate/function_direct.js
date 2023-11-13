@@ -137,9 +137,7 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     let prefixArr = getPrefix(data, func)
     let implH = ""
     let implCpp = ""
-    let initListener = ''
-
-    
+    let initListener = ''    
 
     if (!func.isParentMember) {
         if (func.name == 'constructor') {
