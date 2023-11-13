@@ -412,7 +412,7 @@ function connectResult(data, inNamespace, name) {
                     break
                 case FuncType.ASYNC:
                 case FuncType.PROMISE:
-                    tmp = generateFunctionAsync(func, data, name)
+                    tmp = generateFunctionAsync(func, data, name, implH)
                     break
                 default:
                     return
