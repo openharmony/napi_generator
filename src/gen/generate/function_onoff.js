@@ -63,6 +63,8 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 let middleAsyncCallbackTemplate = `
 void [middleClassName][eventNames]AsyncOrSyncCallbackMiddle(const std::string &eventName, [callback_param_type])
 {
+    // printf("eventName is %s", eventName);
+    printf("onSayHelloStartAsyncOrSyncCallbackMiddle callFuncs_.count %ld  ", XNapiTool::callFuncs_.count(eventName));
 	if(XNapiTool::callFuncs_.count(eventName) <= 0) {
         return;
     }
@@ -87,7 +89,7 @@ void [middleClassName][eventName]CallbackMiddle(std::string &eventName, [callbac
   bool isStringType = [is_string_type];
   if (!isStringType) {
     if (eventName != "[eventName]") { // on方法注册字段为固定值时,判断ts文件中注册的字段与使用字段是否一样
-      printf("eventName Err !");
+      printf("eventName Err ! ");
       return;
     } else {
       [middleClassName][eventName]AsyncOrSyncCallbackMiddle(eventName, [callback_param_name]);
@@ -170,16 +172,25 @@ function getPrefix(isRegister) {
 
 function  getrefCbCont() {
     let refCbCont = 
-    `    std::string proName = "onSayHelloStart";
+       `
+       printf("onSayHelloStart_middle begin ");
+       napi_value callbackObj = nullptr;
+        napi_status status = napi_get_reference_value(env, NodeISayHelloListener_middle::ref_ , &callbackObj);
+        if (status != napi_ok) {
+          printf("napi_get_reference_value error! ");
+        }
+        
+        std::string proName = "onSayHelloStart";
         bool hasProperty = false;
         napi_value cbFunc = nullptr;
-        napi_value callbackObj = pxt->GetArgv(XNapiTool::ZERO);
         napi_has_named_property(env, callbackObj, proName.c_str(), &hasProperty);
         if (hasProperty) {
+            printf("onSayHelloStart_middle hasProperty is ok! "); 
             napi_value propKey = nullptr;
             napi_create_string_utf8(env, proName.c_str(), proName.length(), &propKey);
             napi_get_property(env, callbackObj, propKey, &cbFunc);      
-        }`
+        }
+        printf("onSayHelloStart_middle RegistOnOffFunc cbFunc ");`
     return refCbCont;    
 }
 

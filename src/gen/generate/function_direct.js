@@ -93,6 +93,24 @@ function getaddListenerCont() {
        printf("valueType is Err, not napi_object !");
        return nullptr;
     }
+    
+    // registe onSayHelloStart begin
+    printf("onSayHelloStart_middle begin ");
+     
+     std::string proName = "onSayHelloStart";
+     bool hasProperty = false;
+     napi_value cbFunc = nullptr;
+     napi_has_named_property(env, para, proName.c_str(), &hasProperty);
+     if (hasProperty) {
+         printf("onSayHelloStart_middle hasProperty is ok! "); 
+         napi_value propKey = nullptr;
+         napi_create_string_utf8(env, proName.c_str(), proName.length(), &propKey);
+         napi_get_property(env, para, propKey, &cbFunc);      
+     }
+     printf("onSayHelloStart_middle RegistOnOffFunc cbFunc ");
+     pxt->RegistOnOffFunc("NodeISayHelloListener_onSayHelloStart", cbFunc);
+// registe onSayHelloStart end
+
     napi_create_reference(env, para, 1, &NodeISayHelloListener_middle::ref_); `
     return addListenerCont
 }
