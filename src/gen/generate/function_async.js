@@ -147,7 +147,7 @@ function generateFunctionAsync(func, data, className, implHCbVariable) {
         paramGenerate(i, func.value[i], param, data)
     }
     returnGenerate(param.callback, param, data)
-    middleH = replaceValueOut(middleH, param); 
+    middleH = replaceValueOut(middleH, param);
 
     if (param.valueCheckout == "") {
         middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
