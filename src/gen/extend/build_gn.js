@@ -20,7 +20,7 @@ import("//build/ohos.gni")
 
 ohos_shared_library("[implName]")
 {
-    sources = [
+    sources = [[businessCodeCpp]
         "[implName]_middle.cpp",
         "[implName].cpp",
         "tool_utility.cpp",
@@ -48,9 +48,10 @@ ohos_shared_library("[implName]")
 `
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
-function generateGN(destDir, implName, license, partName) {
+function generateGN(destDir, implName, license, partName, buildCpp) {
     let subsystemName = implName;
     let gnFile = gnTemplete.replaceAll("[implName]", implName);
+    gnFile = gnFile.replaceAll("[businessCodeCpp]", buildCpp)
     gnFile = gnFile.replaceAll("[subsystemName]", subsystemName);
     gnFile = gnFile.replaceAll("[partName]", partName);
     if (license) {
