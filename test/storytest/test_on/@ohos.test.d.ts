@@ -112,7 +112,8 @@ declare namespace napitest {
 
     export class NodeISayHelloListener
     {
-        onSayHelloStart(info: SayInfo);        
+        onSayHelloStart(info: SayInfo);
+        onSayHelloEnd(info: SayInfo);
     }
 
     export enum SayType
@@ -122,8 +123,6 @@ declare namespace napitest {
         /** 1  回应对方 */
         kResponse,
     }
-
-
 
     interface TestClass12 {
         registerTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);

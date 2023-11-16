@@ -36,7 +36,6 @@ let middleHCallbackTemplate = `
  * on和off接口生成模板
  */
 let funcOnOffTemplete = `
-[ref_define]
 napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
@@ -47,7 +46,6 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
     }
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     [getEventName]
-    [getRefCallback]
     [handleRegist]
 
     napi_value result = pxt->UndefinedValue();
@@ -153,7 +151,7 @@ function getregistLine(name) {
     } else if (name == 'on') {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"    
     } else if (isOnObjCallback(name)) {
-        registLine = "pxt->RegistOnOffFunc(vio->eventName, cbFunc);"
+        // registLine = "pxt->RegistOnOffFunc(vio->eventName, cbFunc);"
     }else { // off/unRegister处理
         registLine = "pxt->UnregistOnOffFunc(vio->eventName);"
     }
@@ -170,39 +168,13 @@ function getPrefix(isRegister) {
     return prefix;
 }
 
-function  getrefCbCont() {
-    let refCbCont = 
-       `
-       printf("onSayHelloStart_middle begin ");
-       napi_value callbackObj = nullptr;
-        napi_status status = napi_get_reference_value(env, NodeISayHelloListener_middle::ref_ , &callbackObj);
-        if (status != napi_ok) {
-          printf("napi_get_reference_value error! ");
-        }
-        
-        std::string proName = "onSayHelloStart";
-        bool hasProperty = false;
-        napi_value cbFunc = nullptr;
-        napi_has_named_property(env, callbackObj, proName.c_str(), &hasProperty);
-        if (hasProperty) {
-            printf("onSayHelloStart_middle hasProperty is ok! "); 
-            napi_value propKey = nullptr;
-            napi_create_string_utf8(env, proName.c_str(), proName.length(), &propKey);
-            napi_get_property(env, callbackObj, propKey, &cbFunc);      
-        }
-        printf("onSayHelloStart_middle RegistOnOffFunc cbFunc ");`
-    return refCbCont;    
-}
-
 function gennerateOnOffContext(codeContext, func, data, className, param) {
     let isRegister = isRegisterFunc(func.name);
     let isUnRegister = isUnRegisterFunc(func.name)
     let getEventName = ''
     let registLine = getregistLine(func.name)
     let onObjFlag = isOnObjCallback(func.name)
-    let refCb = ''
 
-    let refDefineCont = ''
     if (isRegister || isUnRegister) {
         let prefix = getPrefix(isRegister)
         param.eventName = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀       
@@ -210,8 +182,6 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     } else if (onObjFlag) {
         param.eventName = className + '_' +func.name      
         getEventName = 'vio->eventName = "%s";\n'.format(param.eventName)
-        refDefineCont = 'napi_ref NodeISayHelloListener_middle::ref_ = nullptr;'        
-        refCb = getrefCbCont()
     } else {
         getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);\n'
     }
@@ -221,7 +191,6 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
       codeContext.middleH = replaceAll(middleHOnOffTemplate, "[funcName]", func.name)
     }
     codeContext.middleFunc = codeContext.middleFunc.replaceAll("[getEventName]", getEventName)
-    codeContext.middleFunc = codeContext.middleFunc.replaceAll("[ref_define]", refDefineCont)
     let middleClassName = ""
     if (className == null) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
@@ -234,7 +203,6 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     }
     let instancePtr = "%s".format(className == null ? "" : "pInstance->")
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
-    codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[getRefCallback]", refCb)
     
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
    

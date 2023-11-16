@@ -32,7 +32,6 @@ public:
     static napi_value constructor(napi_env env, napi_callback_info info);
     static void release(DataPtr p);
     [static_funcs]
-    static napi_ref ref_;
 };
 `
 

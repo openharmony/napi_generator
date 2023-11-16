@@ -114,6 +114,18 @@ CallFunctionList.getValue = function (name) {
     return null
 }
 
+CallFunctionList.getObjOnFuncName = function (interfaceName) {
+    let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
+    let funNames = []
+    for (let i = 0; i < cfs.length; i++) {
+        if (cfs[i].name.indexOf(interfaceName) == 0) {
+            let funName = cfs[i].name.substring(interfaceName.length+1, cfs[i].name.length)
+            funNames.push(funName)
+        } 
+    }
+    return funNames
+}
+
 class TypeList { }
 TypeList.types = [];
 TypeList.push = function (ifs) {
@@ -383,6 +395,14 @@ function getOnObjCallbackType(funcName, interName) {
     return 'AUTO_CALLFUNCTION_' + onObjCbType
 }
 
+function getOnCallbackFunAndInterName(CallbackType) {
+    CallbackType = CallbackType.replaceAll('AUTO_CALLFUNCTION_', '')
+    let CallbackTypes = CallbackType.split('_')
+    let funcName = CallbackTypes[1];
+    let interName = CallbackTypes[0];
+    return [interName, funcName]
+}
+
 class jsonCfgList { }
 jsonCfgList.jsonCfg = [];
 jsonCfgList.push = function (ifs) {
@@ -426,5 +446,5 @@ module.exports = {
     isUnRegisterFunc,
     isOnObjCallback,
     isOnOffRegisterFunc,
-    getOnObjCallbackType
+    getOnObjCallbackType    
 }

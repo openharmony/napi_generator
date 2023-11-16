@@ -1651,20 +1651,20 @@ void XNapiTool::UnregistOnOffFunc(std::string name)
 
 void XNapiTool::CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret)
 {
-    printf("CallSyncFunc napi_call_function begin");
+    printf("CallSyncFunc napi_call_function begin  ");
     napi_handle_scope scope = nullptr;
     napi_open_handle_scope(pSyncFuncs->env_, &scope);
 
     napi_value cb;
     napi_status result_status = napi_get_reference_value(pSyncFuncs->env_, pSyncFuncs->funcRef_, &cb);
-    printf("CallSyncFunc napi_get_reference_value funcRef_"); 
+    printf("CallSyncFunc napi_get_reference_value funcRef_  "); 
     CC_ASSERT(result_status == napi_ok);
 
     napi_value thisvar;
     result_status = napi_get_reference_value(pSyncFuncs->env_, pSyncFuncs->thisVarRef_, &thisvar);
     CC_ASSERT(result_status == napi_ok);
 
-    printf("CallSyncFunc napi_get_reference_value thisVarRef_");
+    printf("CallSyncFunc napi_get_reference_value thisVarRef_  ");
 
     uint32_t length = 0;
     napi_value element;
@@ -1681,7 +1681,7 @@ void XNapiTool::CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret)
 
     
     result_status = napi_call_function(pSyncFuncs->env_, thisvar, cb, length, args, &cb_result);
-    printf("CallSyncFunc napi_call_function end");   
+    printf("CallSyncFunc napi_call_function end  ");   
     CC_ASSERT(result_status == napi_ok);
 
     result_status = napi_close_handle_scope(pSyncFuncs->env_, scope);
