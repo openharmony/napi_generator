@@ -15,7 +15,8 @@
 const { replaceAll, getPrefix } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
-const { jsonCfgList } = require("../tools/common");
+const { jsonCfgList, InterfaceList, CallFunctionList } = require("../tools/common");
+const { NapiLog } = require("../tools/NapiLog");
 
 /**
  * 结果直接返回
@@ -39,6 +40,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
     [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     [valueCheckout]
+    [addListener]
     [callFunc]
     napi_value result = nullptr;
     [valuePackage][optionalParamDestory]
@@ -51,6 +53,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 }`
 
 let cppTemplate = `
+%s
 bool %s%s(%s)
 {
     %s
@@ -71,12 +74,121 @@ function removeEndlineEnter(value) {
     return value
 }
 
+function isAddFunc(name) {
+    let regIndex = name.indexOf('add');
+    let flag = false
+    if (regIndex === 0) {
+        flag = true
+    }
+    return flag
+}
+
+function isRemoveFunc(name) {
+    let regIndex = name.indexOf('remove');
+    let flag = false
+    if (regIndex === 0) {
+        flag = true
+    }
+    return flag
+}
+
+function getaddListenerCont() {
+    let addListenerCont = `napi_value para = pxt->GetArgv(XNapiTool::ZERO);
+    napi_valuetype valueType = napi_undefined;
+    napi_status status = napi_typeof(env, para, &valueType);
+    if (status != napi_ok) {
+        return nullptr;
+    }
+    if (valueType !=  napi_object) {
+       printf("valueType is Err, not napi_object !");
+       return nullptr;
+    }    
+
+    std::vector<std::string> proNames;
+    std::string prefixName = "%s";
+    std::string proNameReg = "";
+    std::string proName = "";
+    [getProNames]
+    for(size_t i=0; i<proNames.size(); i++) {    
+    proName = proNames[i];
+    printf("proName is: %s! ", proName.c_str());
+     bool hasProperty = false;
+     napi_value cbFunc = nullptr;
+     napi_has_named_property(env, para, proName.c_str(), &hasProperty);
+     if (hasProperty) {
+         printf("hasProperty is true! ");
+         napi_value propKey = nullptr;
+         napi_create_string_utf8(env, proName.c_str(), proName.length(), &propKey);
+         napi_get_property(env, para, propKey, &cbFunc);
+         if (cbFunc != nullptr) {
+            proNameReg = prefixName + "_" + proName;
+            printf("proNameReg is %s  ", proNameReg.c_str());
+            [RegistOrUnregistFunc]
+         }
+     }
+    }`
+    return addListenerCont
+}
+
+//(InterfaceList.getValue(type)) 判断func value是否为interface
+//是的话，读callfunction 根据 interfaceName过滤得到所有回调的名称，填到Add处理中
+// add处理根据名称集检查当前实例对象是否存在此回调，存在则注册，否则不处理
+function getAddOrRemoveReg(func, isAddReg) {
+    let addListenerCont = ''
+    const  addParaSize = 1;
+    if (func.value.length != addParaSize) {
+        NapiLog.logError(`AddReg param do not support param number not 1!`);
+        return
+    }
+
+    let ValueType = func.value[0].type
+    let funNames = []
+    if (InterfaceList.getValue(ValueType)) {
+        let cbFuncTypePrefix = 'AUTO_CALLFUNCTION_' + ValueType;
+        funNames = CallFunctionList.getObjOnFuncName(cbFuncTypePrefix)                    
+    }
+
+    addListenerCont = getaddListenerCont()
+    let proNamesValues = ""
+    for (let i=0; i<funNames.length; i++) {
+        proNamesValues += 'proNames.push_back("%s");\r\n'.format(funNames[i])        
+    }
+    addListenerCont = replaceAll(addListenerCont, "[getProNames]", proNamesValues)  
+    addListenerCont = addListenerCont.format(ValueType)
+
+    let registOrUnregis = ""
+    if (isAddReg) {
+        registOrUnregis = "pxt->RegistOnOffFunc(proNameReg, cbFunc);"            
+    } else {
+        registOrUnregis = "pxt->UnregistOnOffFunc(proNameReg);"
+    }
+    addListenerCont = replaceAll(addListenerCont, "[RegistOrUnregistFunc]", registOrUnregis)
+    return addListenerCont
+}
+
+function replaceOptionalParamDestory(middleFunc, param) {
+    if (param.optionalParamDestory == "") {
+        middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
+    } else {
+        middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", "\n    " + param.optionalParamDestory) // 可选参数内存释放
+    }
+    return middleFunc
+}
+
 function generateFunctionDirect(func, data, className, implHVariable) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
     let middleH = ""
     if (func.name != "constructor") {
       middleH = replaceAll(funcDirectMiddleHTemplete, "[funcName]", func.name)
     }
+    
+    let isAddReg = isAddFunc(func.name)
+    let isRemoveReg = isRemoveFunc(func.name)
+    let addListenerCont = ''
+    if (isAddReg || isRemoveReg) {
+        addListenerCont = getAddOrRemoveReg(func, isAddReg)
+    }
+    middleFunc = replaceAll(middleFunc, "[addListener]", addListenerCont)
 
     let isClassresult = isClassFunc(className, middleFunc, middleH);
     middleFunc = isClassresult[0]
@@ -101,14 +213,11 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
-    if (param.optionalParamDestory == "") {
-        middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
-    } else {
-        middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", "\n    " + param.optionalParamDestory) // 可选参数内存释放
-    }
+    middleFunc = replaceOptionalParamDestory(middleFunc, param)
     let prefixArr = getPrefix(data, func)
     let implH = ""
-    let implCpp = ""
+    let implCpp = ""   
+
     if (!func.isParentMember) {
         if (func.name == 'constructor') {
             // 构造函数去掉&或* (在内部去掉较麻烦，生成后统一去除)
@@ -116,14 +225,36 @@ function generateFunctionDirect(func, data, className, implHVariable) {
             middleFunc = ""
         } else {
             // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
-            implH = "\n%s%s%sbool %s(%s)%s;".format(
-              prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
-            let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
-            implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine,
-              callStatement == null? "": callStatement)
-        }   
+            implH = getimplHForForComClassValue(isAddReg, param, prefixArr, func)
+            implCpp = getimplCppForComClassValue(isAddReg, param, className, func)
+        }
     }
     return [middleFunc, implH, implCpp, middleH]
+}
+
+function getimplHForForComClassValue(isAddReg, param, prefixArr, func) {
+    let implH = "\n%s%s%sbool %s(%s)%s;".format(
+        prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
+
+    if (isAddReg) {
+        implH += "\n    static NodeISayHelloListener listener_;"
+    }
+    return implH
+}
+
+function getimplCppForComClassValue(isAddReg, param, className, func) {
+    let implCpp = ""
+    let initListener = ''
+    let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
+
+    if (isAddReg) {
+        initListener = 'NodeISayHelloListener NodeISayHello::listener_ = {};'
+        callStatement = 'NodeISayHello::listener_ = listener;'
+    }
+
+    implCpp = cppTemplate.format(initListener, className == null ? "" : className + "::", func.name, 
+    param.valueDefine, callStatement == null? "": callStatement)
+    return implCpp
 }
 
 function replaceValueOut(middleH, param) {

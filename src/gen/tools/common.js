@@ -86,6 +86,16 @@ InterfaceList.getValue = function (name) {
     return null;
 }
 
+InterfaceList.getBody = function (name) {
+    let ifs = InterfaceList.interfacess_[InterfaceList.interfacess_.length - 1]
+    for (let i in ifs) {
+        if (ifs[i].name == name) {
+            return ifs[i].body;
+        }
+    }
+    return null;
+}
+
 class CallFunctionList { }
 CallFunctionList.callFuncs = [];
 CallFunctionList.push = function (ifs) {
@@ -97,14 +107,23 @@ CallFunctionList.pop = function () {
 CallFunctionList.getValue = function (name) {
     let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
     for (let i = 0; i < cfs.length; i++) {
-      let len = cfs[i].length
-      for (let j = 0; j < len; j++) {
-        if (cfs[i][j].name == name) {
-          return [cfs[i][j].body, cfs[i][j].ret]
-        }
-      }  
+        if (cfs[i].name == name) {
+            return [cfs[i].body, cfs[i].ret]
+        } 
     }
     return null
+}
+
+CallFunctionList.getObjOnFuncName = function (interfaceName) {
+    let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
+    let funNames = []
+    for (let i = 0; i < cfs.length; i++) {
+        if (cfs[i].name.indexOf(interfaceName) == 0) {
+            let funName = cfs[i].name.substring(interfaceName.length+1, cfs[i].name.length)
+            funNames.push(funName)
+        } 
+    }
+    return funNames
 }
 
 class TypeList { }
@@ -338,14 +357,52 @@ function isUnRegisterFunc(name) {
     return isRegister
 }
 
+function isOnObjCallback(name) {
+    let regIndex = name.indexOf('on');
+    let flag = false
+    let onLen = 2;
+    if (regIndex === 0 && name.length > onLen) {
+        flag = true
+    }
+    return flag
+}
+
 // 箭头函数，如funTest(cb: (wid: boolean) => void): string;
 function isArrowFunc(type) {
     let arrowFunc = false;
     if (type.indexOf('AUTO_CALLFUNCTION') >= 0 || type.indexOf('=>') > 0) {
         arrowFunc = true;
     }
-    return arrowFunc
+    return arrowFunc;
 }
+
+function isOnOffRegisterFunc(name) {
+    let flag = false;
+    if (name == 'on' || name == 'off' || isRegisterFunc(name) || isUnRegisterFunc(name) ||
+      isOnObjCallback(name)) {
+        flag = true;
+    }
+    return flag;
+}
+
+function getOnObjCallbackType(funcName, interName) {
+    let onObjCbType = ''
+    if (interName != '') {
+        onObjCbType = interName + '_' + funcName
+    } else {
+        onObjCbType = funcName
+    }
+    return 'AUTO_CALLFUNCTION_' + onObjCbType
+}
+
+function getOnCallbackFunAndInterName(CallbackType) {
+    CallbackType = CallbackType.replaceAll('AUTO_CALLFUNCTION_', '')
+    let CallbackTypes = CallbackType.split('_')
+    let funcName = CallbackTypes[1];
+    let interName = CallbackTypes[0];
+    return [interName, funcName]
+}
+
 class jsonCfgList { }
 jsonCfgList.jsonCfg = [];
 jsonCfgList.push = function (ifs) {
@@ -386,5 +443,8 @@ module.exports = {
     isArrowFunc,
     jsonCfgList,
     isRegisterFunc,
-    isUnRegisterFunc
+    isUnRegisterFunc,
+    isOnObjCallback,
+    isOnOffRegisterFunc,
+    getOnObjCallbackType    
 }

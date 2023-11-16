@@ -17,7 +17,8 @@ const re = require("../tools/re");
 const { eventParamGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { cToJs } = require("./return_generate");
-const { jsonCfgList, isRegisterFunc, isUnRegisterFunc } = require("../tools/common");
+const { jsonCfgList, isRegisterFunc, isUnRegisterFunc, getOnObjCallbackType, isOnObjCallback } = 
+require("../tools/common");
 
 let middleHOnOffTemplate = `
 struct [funcName]_value_struct {
@@ -44,7 +45,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
         return err;
     }
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
-    [getEventName]    
+    [getEventName]
     [handleRegist]
 
     napi_value result = pxt->UndefinedValue();
@@ -60,6 +61,8 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 let middleAsyncCallbackTemplate = `
 void [middleClassName][eventNames]AsyncOrSyncCallbackMiddle(const std::string &eventName, [callback_param_type])
 {
+    // printf("eventName is %s", eventName);
+    printf("onSayHelloStartAsyncOrSyncCallbackMiddle callFuncs_.count %ld  ", XNapiTool::callFuncs_.count(eventName));
 	if(XNapiTool::callFuncs_.count(eventName) <= 0) {
         return;
     }
@@ -144,7 +147,9 @@ function getregistLine(name) {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ZERO));"
     } else if (name == 'on') {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"    
-    } else { // off/unRegister处理
+    } else if (isOnObjCallback(name)) {
+        // registLine = "pxt->RegistOnOffFunc(vio->eventName, cbFunc);"
+    }else { // off/unRegister处理
         registLine = "pxt->UnregistOnOffFunc(vio->eventName);"
     }
     return registLine
@@ -165,11 +170,15 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     let isUnRegister = isUnRegisterFunc(func.name)
     let getEventName = ''
     let registLine = getregistLine(func.name)
+    let onObjFlag = isOnObjCallback(func.name)
 
     if (isRegister || isUnRegister) {
         let prefix = getPrefix(isRegister)
         param.eventName = func.name.replaceAll(prefix, "") // 去掉注册、注销关键字前缀       
         getEventName = 'vio->eventName = "%s";\n'.format(param.eventName) 
+    } else if (onObjFlag) {
+        param.eventName = className + '_' +func.name      
+        getEventName = 'vio->eventName = "%s";\n'.format(param.eventName)
     } else {
         getEventName = 'pxt->SwapJs2CUtf8(pxt->GetArgv(XNapiTool::ZERO), vio->eventName);\n'
     }
@@ -179,7 +188,6 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
       codeContext.middleH = replaceAll(middleHOnOffTemplate, "[funcName]", func.name)
     }
     codeContext.middleFunc = codeContext.middleFunc.replaceAll("[getEventName]", getEventName)
-
     let middleClassName = ""
     if (className == null) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
@@ -192,7 +200,7 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     }
     let instancePtr = "%s".format(className == null ? "" : "pInstance->")
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
-
+    
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
    
     if (isRegister) {
@@ -244,7 +252,9 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
     if (param.params === '') {
         callbackFunc = replaceAll(callbackFunc, "&eventName, ", "&eventName")
     }
-    if (param.callback.isArrowFuncFlag) {  // 回调是箭头函数
+
+    // 回调是箭头函数
+    if (param.callback != null && param.callback.isArrowFuncFlag != undefined && param.callback.isArrowFuncFlag) {
         callbackFunc = getArrowCallbackC2JsParam(callbackFunc, param);
     } else { // 回调是普通callback
         callbackFunc = getCallbackC2JsParam(callbackFunc, param);
@@ -376,8 +386,19 @@ function generateFunctionOnOff(func, data, className) {
     }
 
     let isRegister = isRegisterFunc(func.name)
-    for (let i in func.value) {
-        eventParamGenerate(i, func.value[i], param, data)
+    let onObjFlag = isOnObjCallback(func.name)
+    if (onObjFlag) {
+        let cbType = getOnObjCallbackType(func.name, className)
+        let funcValue = {
+            type: cbType,
+            optional: false
+        }
+        eventParamGenerate(0, funcValue, param, data)
+
+    } else {
+        for (let i in func.value) {
+            eventParamGenerate(i, func.value[i], param, data)
+        }    
     }
 
     let codeContext = {
@@ -391,7 +412,7 @@ function generateFunctionOnOff(func, data, className) {
         gennerateOnOffContext(codeContext, func, data, className, param)
     }
 
-    if (func.name == 'on' || isRegister) {
+    if (func.name == 'on' || isRegister || onObjFlag) {
         // 为每个on接口同步生成eventCallback方法供用户回调使用
         let isOnFuncFlag = true;
         gennerateEventCallback(codeContext, data, param, className, isOnFuncFlag)

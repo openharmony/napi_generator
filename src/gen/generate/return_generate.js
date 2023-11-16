@@ -487,7 +487,7 @@ function getReturnFill(returnInfo, param) {
         }
 
         if (type != "void") {
-            // callback<xxx> 中的xxx不是void时，生成的capp代码才需要用户填充out参数
+            // callback<xxx> 中的xxx不是void时，生成的cpp代码才需要用户填充out参数
             if (param.callback.isArrowFuncFlag) {
                 valueFillStr += "%svio->%s".format(valueFillStr.length > 0 ? ", " : "", returnInfo.name)
             } else {
@@ -620,6 +620,10 @@ function returnGenerateForOnOffMultiPara(paramInfo, param, data) {
 }
 
 function returnGenerate(returnInfo, param, data, isOnFuncFlag = false) {
+    if (returnInfo === undefined) {
+        NapiLog.logError("returnGenerate: returnInfo is undefined!");
+        return;   
+    }
     let type = returnInfo.type
     if (type === undefined) {
         NapiLog.logError("returnGenerate: type of %s is undefined!".format(returnInfo));
