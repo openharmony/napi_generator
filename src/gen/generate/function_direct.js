@@ -15,7 +15,8 @@
 const { replaceAll, getPrefix } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
-const { jsonCfgList } = require("../tools/common");
+const { jsonCfgList, InterfaceList, CallFunctionList } = require("../tools/common");
+const { NapiLog } = require("../tools/NapiLog");
 
 /**
  * 结果直接返回
@@ -96,22 +97,32 @@ function getaddListenerCont() {
     
     // registe onSayHelloStart begin
     printf("onSayHelloStart_middle begin ");
-     
-     std::string proName = "onSayHelloStart";
+    std::vector<std::string> proNames;
+    std::string prefixName = "%s";
+    std::string proNameReg = "";
+    std::string proName = "";
+    [getProNames]
+    for(int i=0; i<proNames.size(); i++) {    
+    proName = proNames[i];
+    printf("proName is: %s! ", proName.c_str());
      bool hasProperty = false;
      napi_value cbFunc = nullptr;
      napi_has_named_property(env, para, proName.c_str(), &hasProperty);
      if (hasProperty) {
-         printf("onSayHelloStart_middle hasProperty is ok! "); 
+         printf("onSayHelloStart_middle hasProperty is ok! ");
          napi_value propKey = nullptr;
          napi_create_string_utf8(env, proName.c_str(), proName.length(), &propKey);
-         napi_get_property(env, para, propKey, &cbFunc);      
+         napi_get_property(env, para, propKey, &cbFunc);
+         if (cbFunc != nullptr) {
+            proNameReg = prefixName + "_" + proName;
+            printf("proNameReg is %s  ", proNameReg.c_str());
+            pxt->RegistOnOffFunc(proNameReg, cbFunc);
+         }
      }
-     printf("onSayHelloStart_middle RegistOnOffFunc cbFunc ");
-     pxt->RegistOnOffFunc("NodeISayHelloListener_onSayHelloStart", cbFunc);
-// registe onSayHelloStart end
+      printf("onSayHelloStart_middle RegistOnOffFunc end!");
+    }
 
-    napi_create_reference(env, para, 1, &NodeISayHelloListener_middle::ref_); `
+    // registe onSayHelloStart end`
     return addListenerCont
 }
 
@@ -121,10 +132,33 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     if (func.name != "constructor") {
       middleH = replaceAll(funcDirectMiddleHTemplete, "[funcName]", func.name)
     }
+
+    //(InterfaceList.getValue(type)) 判断func value是否为interface 且待onflag
+    //是的话，读callfunction 根据 interfaceName过滤得到所有回调的名称，填到Add处理中
+    // add处理根据名称集检查当前实例对象是否存在此回调，存在则注册，否则不处理
     let addListenerCont = ''
     let isAddReg = isAddFunc(func.name)
     if (isAddReg) {
+        const  addParaSize = 1;
+        if (func.value.length != addParaSize) {
+            NapiLog.logError(`AddReg param do not support param number not 1!`);
+            return
+        }
+
+        let ValueType = func.value[0].type
+        let funNames = []
+        if (InterfaceList.getValue(ValueType)) {
+            let cbFuncTypePrefix = 'AUTO_CALLFUNCTION_' + ValueType;
+            funNames = CallFunctionList.getObjOnFuncName(cbFuncTypePrefix)                    
+        }
+
         addListenerCont = getaddListenerCont()
+        let proNamesValues = ""
+        for (let i=0; i<funNames.length; i++) {
+            proNamesValues += 'proNames.push_back("%s");\r\n'.format(funNames[i])        
+        }
+        addListenerCont = replaceAll(addListenerCont, "[getProNames]", proNamesValues)  
+        addListenerCont = addListenerCont.format(ValueType) 
     }
     middleFunc = replaceAll(middleFunc, "[addListener]", addListenerCont)
 
