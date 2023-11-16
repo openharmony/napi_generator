@@ -268,11 +268,13 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
 
     let implCpp = implCppTemplete.replaceAll("[implName]", ns0.name)
     let bindingCpp = ''
+    let buildCpp = ''
     let includeH = ''
     if (jsonCfg) {
-        let includeHCppRes = includeHCppFunc(jsonCfg, includeH, bindingCpp);
+        let includeHCppRes = includeHCppFunc(jsonCfg, includeH, bindingCpp, buildCpp);
         bindingCpp = includeHCppRes[0];
         includeH = includeHCppRes[1];
+        buildCpp = includeHCppRes[2];
     }
     implCpp = implCpp.replaceAll("[include_configure_hCode]", includeH);
     implCpp = implCpp.replaceAll("[implCpp_detail]", result.implCpp)
@@ -281,7 +283,7 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
 
     let partName = moduleName.replace('.', '_')
     generateGYP(destDir, ns0.name, license, bindingCpp) // 生成ubuntu下测试的编译脚本
-    generateGN(destDir, ns0.name, license, partName) // 生成BUILD.gn for ohos
+    generateGN(destDir, ns0.name, license, partName, buildCpp) // 生成BUILD.gn for ohos
     generateBase(destDir, license) // tool_utility.h/cpp
     genFileList.push("tool_utility.h");
     genFileList.push("tool_utility.cpp");
@@ -313,7 +315,7 @@ function generateMiddleCpp(result, ns0, moduleName, destDir, license) {
 }
 
 // 将业务代码的头文件导入，若重复则跳过
-function includeHCppFunc(jsonCfg, includeH, bindingCpp) {;
+function includeHCppFunc(jsonCfg, includeH, bindingCpp, buildCpp) {;
     for (let i = 0; i < jsonCfg.length; i++) {
         if (jsonCfg[i].includeName != "") {
             let tmp = '#include "%s"\n'.format(jsonCfg[i].includeName);
@@ -323,12 +325,14 @@ function includeHCppFunc(jsonCfg, includeH, bindingCpp) {;
         }
         if (jsonCfg[i].cppName != "") {
             let tmpCpp = '\n              "%s",'.format(jsonCfg[i].cppName);
+            let tmpBuildCpp = '\n        "%s",'.format(jsonCfg[i].cppName);
             if (bindingCpp.indexOf(tmpCpp) < 0) {
                 bindingCpp += tmpCpp;
+                buildCpp += tmpBuildCpp;
             }
         }
     }
-    return [bindingCpp, includeH];
+    return [bindingCpp, includeH, buildCpp];
 }
 
 function generateMiddleH(ns0, result, destDir, license) {
