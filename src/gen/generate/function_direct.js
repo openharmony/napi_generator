@@ -83,6 +83,15 @@ function isAddFunc(name) {
     return flag
 }
 
+function isRemoveFunc(name) {
+    let regIndex = name.indexOf('remove');
+    let flag = false
+    if (regIndex === 0) {
+        flag = true
+    }
+    return flag
+}
+
 function getaddListenerCont() {
     let addListenerCont = `napi_value para = pxt->GetArgv(XNapiTool::ZERO);
     napi_valuetype valueType = napi_undefined;
@@ -93,36 +102,31 @@ function getaddListenerCont() {
     if (valueType !=  napi_object) {
        printf("valueType is Err, not napi_object !");
        return nullptr;
-    }
-    
-    // registe onSayHelloStart begin
-    printf("onSayHelloStart_middle begin ");
+    }    
+
     std::vector<std::string> proNames;
     std::string prefixName = "%s";
     std::string proNameReg = "";
     std::string proName = "";
     [getProNames]
-    for(int i=0; i<proNames.size(); i++) {    
+    for(size_t i=0; i<proNames.size(); i++) {    
     proName = proNames[i];
     printf("proName is: %s! ", proName.c_str());
      bool hasProperty = false;
      napi_value cbFunc = nullptr;
      napi_has_named_property(env, para, proName.c_str(), &hasProperty);
      if (hasProperty) {
-         printf("onSayHelloStart_middle hasProperty is ok! ");
+         printf("hasProperty is true! ");
          napi_value propKey = nullptr;
          napi_create_string_utf8(env, proName.c_str(), proName.length(), &propKey);
          napi_get_property(env, para, propKey, &cbFunc);
          if (cbFunc != nullptr) {
             proNameReg = prefixName + "_" + proName;
             printf("proNameReg is %s  ", proNameReg.c_str());
-            pxt->RegistOnOffFunc(proNameReg, cbFunc);
+            [RegistOrUnregistFunc]
          }
      }
-      printf("onSayHelloStart_middle RegistOnOffFunc end!");
-    }
-
-    // registe onSayHelloStart end`
+    }`
     return addListenerCont
 }
 
@@ -138,7 +142,8 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     // add处理根据名称集检查当前实例对象是否存在此回调，存在则注册，否则不处理
     let addListenerCont = ''
     let isAddReg = isAddFunc(func.name)
-    if (isAddReg) {
+    let isRemoveReg = isRemoveFunc(func.name)
+    if (isAddReg || isRemoveReg) {
         const  addParaSize = 1;
         if (func.value.length != addParaSize) {
             NapiLog.logError(`AddReg param do not support param number not 1!`);
@@ -158,7 +163,15 @@ function generateFunctionDirect(func, data, className, implHVariable) {
             proNamesValues += 'proNames.push_back("%s");\r\n'.format(funNames[i])        
         }
         addListenerCont = replaceAll(addListenerCont, "[getProNames]", proNamesValues)  
-        addListenerCont = addListenerCont.format(ValueType) 
+        addListenerCont = addListenerCont.format(ValueType)
+
+        let registOrUnregis = ""
+        if (isAddReg) {
+            registOrUnregis = "pxt->RegistOnOffFunc(proNameReg, cbFunc);"
+        } else {
+            registOrUnregis = "pxt->UnregistOnOffFunc(proNameReg);"
+        }
+        addListenerCont = replaceAll(addListenerCont, "[RegistOrUnregistFunc]", registOrUnregis)
     }
     middleFunc = replaceAll(middleFunc, "[addListener]", addListenerCont)
 
