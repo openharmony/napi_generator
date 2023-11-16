@@ -108,6 +108,7 @@ declare namespace napitest {
     {
         addSayHelloListener(listener: NodeISayHelloListener);
         sayHello(from: string, to: string, sayType: SayType);
+        removeSayHelloListener(listener: NodeISayHelloListener);
     }
 
     export class NodeISayHelloListener

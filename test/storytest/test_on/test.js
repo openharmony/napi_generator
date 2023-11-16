@@ -309,13 +309,22 @@ function onSayHelloStart(info) {
 
 describe('test Obj callback', function () {
     let nis = new testObj.NodeISayHello();
+    let lis = new NodeISayHelloListenerImpl();
     // 注册回调
     it('test NodeISayHello addSayHelloListener', function () {
-        nis.addSayHelloListener(new NodeISayHelloListenerImpl());
+        nis.addSayHelloListener(lis);
     });
 
     it('test NodeISayHello sayHello', function () {
         nis.sayHello("js", "native", testObj.SayType.kInitiative);
     });
+
+    it('test NodeISayHello removeSayHelloListener', function () {
+        nis.removeSayHelloListener(lis);
+    });
+
+    it('test NodeISayHello sayHello not reg', function () {
+        nis.sayHello("js", "native", testObj.SayType.kInitiative);
+    });    
 });
 
