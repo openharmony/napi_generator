@@ -130,51 +130,56 @@ function getaddListenerCont() {
     return addListenerCont
 }
 
+//(InterfaceList.getValue(type)) 判断func value是否为interface
+//是的话，读callfunction 根据 interfaceName过滤得到所有回调的名称，填到Add处理中
+// add处理根据名称集检查当前实例对象是否存在此回调，存在则注册，否则不处理
+function getAddOrRemoveReg(func, isAddReg) {
+    let addListenerCont = ''
+    const  addParaSize = 1;
+    if (func.value.length != addParaSize) {
+        NapiLog.logError(`AddReg param do not support param number not 1!`);
+        return
+    }
+
+    let ValueType = func.value[0].type
+    let funNames = []
+    if (InterfaceList.getValue(ValueType)) {
+        let cbFuncTypePrefix = 'AUTO_CALLFUNCTION_' + ValueType;
+        funNames = CallFunctionList.getObjOnFuncName(cbFuncTypePrefix)                    
+    }
+
+    addListenerCont = getaddListenerCont()
+    let proNamesValues = ""
+    for (let i=0; i<funNames.length; i++) {
+        proNamesValues += 'proNames.push_back("%s");\r\n'.format(funNames[i])        
+    }
+    addListenerCont = replaceAll(addListenerCont, "[getProNames]", proNamesValues)  
+    addListenerCont = addListenerCont.format(ValueType)
+
+    let registOrUnregis = ""
+    if (isAddReg) {
+        registOrUnregis = "pxt->RegistOnOffFunc(proNameReg, cbFunc);"            
+    } else {
+        registOrUnregis = "pxt->UnregistOnOffFunc(proNameReg);"
+    }
+    addListenerCont = replaceAll(addListenerCont, "[RegistOrUnregistFunc]", registOrUnregis)
+    return addListenerCont
+}
+
 function generateFunctionDirect(func, data, className, implHVariable) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
     let middleH = ""
     if (func.name != "constructor") {
       middleH = replaceAll(funcDirectMiddleHTemplete, "[funcName]", func.name)
     }
-
-    //(InterfaceList.getValue(type)) 判断func value是否为interface 且待onflag
-    //是的话，读callfunction 根据 interfaceName过滤得到所有回调的名称，填到Add处理中
-    // add处理根据名称集检查当前实例对象是否存在此回调，存在则注册，否则不处理
-    let addListenerCont = ''
+    
     let isAddReg = isAddFunc(func.name)
     let isRemoveReg = isRemoveFunc(func.name)
+    let addListenerCont = ''
     if (isAddReg || isRemoveReg) {
-        const  addParaSize = 1;
-        if (func.value.length != addParaSize) {
-            NapiLog.logError(`AddReg param do not support param number not 1!`);
-            return
-        }
-
-        let ValueType = func.value[0].type
-        let funNames = []
-        if (InterfaceList.getValue(ValueType)) {
-            let cbFuncTypePrefix = 'AUTO_CALLFUNCTION_' + ValueType;
-            funNames = CallFunctionList.getObjOnFuncName(cbFuncTypePrefix)                    
-        }
-
-        addListenerCont = getaddListenerCont()
-        let proNamesValues = ""
-        for (let i=0; i<funNames.length; i++) {
-            proNamesValues += 'proNames.push_back("%s");\r\n'.format(funNames[i])        
-        }
-        addListenerCont = replaceAll(addListenerCont, "[getProNames]", proNamesValues)  
-        addListenerCont = addListenerCont.format(ValueType)
-
-        let registOrUnregis = ""
-        if (isAddReg) {
-            registOrUnregis = "pxt->RegistOnOffFunc(proNameReg, cbFunc);"            
-        } else {
-            registOrUnregis = "pxt->UnregistOnOffFunc(proNameReg);"
-        }
-        addListenerCont = replaceAll(addListenerCont, "[RegistOrUnregistFunc]", registOrUnregis)
+        addListenerCont = getAddOrRemoveReg(func, isAddReg)
     }
     middleFunc = replaceAll(middleFunc, "[addListener]", addListenerCont)
-
 
     let isClassresult = isClassFunc(className, middleFunc, middleH);
     middleFunc = isClassresult[0]
@@ -206,8 +211,7 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     }
     let prefixArr = getPrefix(data, func)
     let implH = ""
-    let implCpp = ""
-    let initListener = ''    
+    let implCpp = ""   
 
     if (!func.isParentMember) {
         if (func.name == 'constructor') {
@@ -216,23 +220,36 @@ function generateFunctionDirect(func, data, className, implHVariable) {
             middleFunc = ""
         } else {
             // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
-            implH = "\n%s%s%sbool %s(%s)%s;".format(
-              prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
-            let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
-
-            if (isAddReg) {
-                initListener = 'NodeISayHelloListener NodeISayHello::listener_ = {};'
-                callStatement = 'NodeISayHello::listener_ = listener;'
-            }
-
-            implCpp = cppTemplate.format(initListener, className == null ? "" : className + "::", func.name, 
-            param.valueDefine, callStatement == null? "": callStatement)
-        }   
-    }
-    if (isAddReg) {
-        implH += "\nstatic NodeISayHelloListener listener_;"
+            implH = getimplHForForComClassValue(isAddReg, param, prefixArr, func)
+            implCpp = getimplCppForComClassValue(isAddReg, param, className, func)
+        }
     }
     return [middleFunc, implH, implCpp, middleH]
+}
+
+function getimplHForForComClassValue(isAddReg, param, prefixArr, func) {
+    let implH = "\n%s%s%sbool %s(%s)%s;".format(
+        prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
+
+    if (isAddReg) {
+        implH += "\n    static NodeISayHelloListener listener_;"
+    }
+    return implH
+}
+
+function getimplCppForComClassValue(isAddReg, param, className, func) {
+    let implCpp = ""
+    let initListener = ''
+    let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
+
+    if (isAddReg) {
+        initListener = 'NodeISayHelloListener NodeISayHello::listener_ = {};'
+        callStatement = 'NodeISayHello::listener_ = listener;'
+    }
+
+    implCpp = cppTemplate.format(initListener, className == null ? "" : className + "::", func.name, 
+    param.valueDefine, callStatement == null? "": callStatement)
+    return implCpp
 }
 
 function replaceValueOut(middleH, param) {
