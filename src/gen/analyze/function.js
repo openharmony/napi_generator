@@ -190,21 +190,49 @@ function analyseSubReturn(ret, data, results) {
     return ret
 }
 
+function getObjCallFunc(results, onObjCbType, values, ret) {
+    if (results != undefined) {
+        results.callFunction.push({
+            "name": onObjCbType,
+            "body": values,
+            "ret": ret
+        })
+    }
+}
+function getFuncResult(name, funcType, values, ret, isStatic) {
+    let result = {
+        name: name,
+        type: funcType,
+        value: values,
+        ret: ret,
+        isStatic: isStatic
+    }
+    return result
+}
+
+function getArrowCallFunc(tmp, results) {
+    let callbackFunc = null 
+
+    if (tmp[2][0] != undefined) {
+        callbackFunc = tmp[2][0] // 当方法的参数是回调方法，并且回调方法写法为=>函数
+    }  
+    if (results != undefined && callbackFunc != null) {
+      results.callFunction.push(callbackFunc)
+    }
+}
+
 /**函数解析 */
 function analyzeFunction(data, isStatic, name, values, ret, results, interfaceName = '') {
     let res = analyzeFuncNoNameInterface(data, values, results)
     let tmp
     let funcType
-    let callbackFunc = null
+    
     if (res) {
         tmp = analyzeParams(name, res.values)
-        values = tmp[0]
-        funcType = tmp[1]
-        if (tmp[2][0] != undefined) {
-            callbackFunc = tmp[2][0] // 当方法的参数是回调方法，并且回调方法写法为=>函数时s
-        }  
-        if (results != undefined && callbackFunc != null) {
-          results.callFunction.push(callbackFunc)
+        if (tmp != null) {
+            values = tmp[0]
+            funcType = tmp[1]
+            getArrowCallFunc(tmp, results)
         }
     }
 
@@ -232,22 +260,10 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
         }
     }
     ret = analyseSubReturn(ret, data, results)
-    let result = {
-        name: name,
-        type: funcType,
-        value: values,
-        ret: ret,
-        isStatic: isStatic
-    }
+    let result = getFuncResult(name, funcType, values, ret, isStatic)
     if (isOnObjCallback(name)) {
         let onObjCbType = getOnObjCallbackType(name, interfaceName)
-        if (results != undefined) {
-            results.callFunction.push({
-                "name": onObjCbType,
-                "body": values,
-                "ret": ret
-            })
-        }
+        getObjCallFunc(results, onObjCbType, values, ret)
     }    
     return result
 }
