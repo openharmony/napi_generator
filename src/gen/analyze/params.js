@@ -14,7 +14,7 @@
 */
 const re = require("../tools/re");
 const { checkOutBody, print } = require("../tools/tool");
-const { FuncType, NumberIncrease,isFuncType, isArrowFunc } = require("../tools/common");
+const { FuncType, NumberIncrease,isFuncType, isArrowFunc,isRegisterFunc } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 
 function isSyncFuncType(type, funcType) {
@@ -38,7 +38,7 @@ function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
         valueType = re.replaceAll(valueType, ' ', '')
     }
     let matchs = re.match("\\(([a-zA-Z_0-9:,]+)*\\)=>([a-zA-Z_0-9]+)", valueType)
-   
+
     if (matchs) {
       let number = NumberIncrease.getAndIncrease();
       let functionTypeName = 'AUTO_CALLFUNCTION_%s_%s'.format(valueName, number)
@@ -58,8 +58,8 @@ function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
       rsltCallFunction.push({
           "name": functionTypeName,
           "body": bodyRes,
-          "ret": functionRet                  // 返回值
-      })                
+          "ret": functionRet
+      })               
       valueType = functionTypeName
   }
   return valueType
@@ -67,7 +67,7 @@ function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
 
 /**函数参数解析 */
 function analyzeParams(funcName, values) {
-    let result = []
+    let result =  []
     let rsltCallFunction = []
     let funcType = FuncType.DIRECT
     let optionalParamCount = 0; // 可选参数的个数
@@ -91,6 +91,7 @@ function analyzeParams(funcName, values) {
 
             let valueName = re.getReg(v, matchs.regs[1])
             type = analyzeCallbackFunction(type, valueName, rsltCallFunction)
+
             let optionalFlag = re.getReg(v, matchs.regs[2]) == '?' ? true : false;
             let checkParamOk = true;
             if (optionalFlag) {

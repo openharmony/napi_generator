@@ -800,6 +800,7 @@ function matchCBParamType(cbParamType, type) {
     }
     return cbParamType
 }
+
 function paramGenerateCallBack(data, funcValue, param, p) {
     let cbParamType
     let returnType = 'void'
@@ -1102,6 +1103,10 @@ function paramGenerate(p, funcValue, param, data) {
 function eventParamGenerate(p, funcValue, param, data) {
     let name = funcValue.name;
     let type = funcValue.type;
+    if (type === undefined) {
+        NapiLog.logError("eventParamGenerate param error: funcValue.type is null")
+        return
+    }
     if (type.indexOf("'") >= 0) {
         type = type.replaceAll("'", "")
     }
@@ -1116,7 +1121,10 @@ function eventParamGenerate(p, funcValue, param, data) {
         // callFunction => 函数参数处理
         let onFlag = true;
         paramGenerateArrowCallBack(funcValue, param, p, onFlag)
-    } else if (regName) {
+    } else if (InterfaceList.getValue(type)) {
+        let aaOnFlag = true;
+    }
+    else if (regName) {
         // event type参数处理
         param.eventName = re.getReg(type, regName.regs[1])  // string类型如何处理？
         if (param.eventName == "string") {
