@@ -237,6 +237,7 @@ function generateResult(name, implH, implCpp, middleFunc, middleInit, middleH, f
 
 function generateFunction(func, data, implH = null) {
     let tmp;
+    let className;
     if (isOnOffRegisterFunc(func.name)) {
         return generateFunctionOnOff(func, data)
     }

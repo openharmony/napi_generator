@@ -167,7 +167,7 @@ function generateFunctionDirect(func, data, className, implHVariable) {
 
         let registOrUnregis = ""
         if (isAddReg) {
-            registOrUnregis = "pxt->RegistOnOffFunc(proNameReg, cbFunc);"
+            registOrUnregis = "pxt->RegistOnOffFunc(proNameReg, cbFunc);"            
         } else {
             registOrUnregis = "pxt->UnregistOnOffFunc(proNameReg);"
         }
@@ -228,6 +228,9 @@ function generateFunctionDirect(func, data, className, implHVariable) {
             implCpp = cppTemplate.format(initListener, className == null ? "" : className + "::", func.name, 
             param.valueDefine, callStatement == null? "": callStatement)
         }   
+    }
+    if (isAddReg) {
+        implH += "\nstatic NodeISayHelloListener listener_;"
     }
     return [middleFunc, implH, implCpp, middleH]
 }
