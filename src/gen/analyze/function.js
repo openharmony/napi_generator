@@ -190,22 +190,6 @@ function analyseSubReturn(ret, data, results) {
     return ret
 }
 
-// 判断 注册的 type 的是否为interface
-function getCallbackInterface(type, results) {
-    let allInterfaces = results.interface
-    if (allInterfaces === null || allInterfaces === undefined || results.interface === null) {
-        NapiLog.logError("Invalid param: allInterfaces")
-        return null;
-    }
-
-    for (let i in allInterfaces) {
-        if (allInterfaces[i].name == type) {
-            return allInterfaces[i];
-        }
-    }
-    return null;
-}
-
 /**函数解析 */
 function analyzeFunction(data, isStatic, name, values, ret, results, interfaceName = '') {
     let res = analyzeFuncNoNameInterface(data, values, results)
@@ -263,13 +247,6 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
                 "body": values,
                 "ret": ret
             })
-        }
-
-        // results中的interfaceName打标记标识为isOnCb
-        // 获取注册关联的interface
-        let interCb = getCallbackInterface(interfaceName, results);
-        if (interCb) {
-            interCb.isOnCb = true;
         }
     }    
     return result

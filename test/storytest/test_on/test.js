@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const { TestClass1, TestClass2, ModelEvent, TestClass3, on, off, TestClass4, TestClass5,
-  TestClass6, TestClass7, TestClass10, TestClass11, TestClass12 } = require("./out/build/Release/napitest")
+  TestClass6, TestClass7, TestClass10, TestClass11, TestClass12} = require("./out/build/Release/napitest")
 const testObj = require("./out/build/Release/napitest")
 var assert = require("assert");
 
@@ -287,5 +287,35 @@ describe('test register/unRegister callback interface/type param is optional', f
         testObj.unRegisterNamespacefunc23(callbackTest14);
     });
     
+});
+
+class NodeISayHelloListenerImpl {
+    listener = null;
+    bb = "d";
+    constructor(listener) {
+      this.listener = listener;
+    }
+  
+    onSayHelloStart(info) {
+      console.log('----onSayHelloStart XXX', info);
+    }
+    onSayHelloEnd(info) {
+      console.log('----onSayHelloEnd abc.', info);
+    }
+  }
+function onSayHelloStart(info) {
+    console.log('----aaa bbb ccc onSayHelloStart xxx', info);
+}
+
+describe('test Obj callback', function () {
+    let nis = new testObj.NodeISayHello();
+    // 注册回调
+    it('test NodeISayHello addSayHelloListener', function () {
+        nis.addSayHelloListener(new NodeISayHelloListenerImpl());
+    });
+
+    it('test NodeISayHello sayHello', function () {
+        nis.sayHello("js", "native", testObj.SayType.kInitiative);
+    });
 });
 
