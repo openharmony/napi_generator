@@ -298,7 +298,7 @@ function generateInterface(name, data, inNamespace) {
         implH: `
 class %s%s {
 public:%s\n
-static NodeISayHelloListener listener_;\n};\n`.format(name, extendsStr, implH),
+};\n`.format(name, extendsStr, implH),
         implCpp: implCpp,
         middleBody: middleBodyTmplete.replaceAll("[className]", name).replaceAll("[static_funcs]", middleFunc)
         .replaceAll("[getConstructorParam]", getConParam)
