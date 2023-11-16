@@ -166,6 +166,15 @@ function getAddOrRemoveReg(func, isAddReg) {
     return addListenerCont
 }
 
+function replaceOptionalParamDestory(middleFunc, param) {
+    if (param.optionalParamDestory == "") {
+        middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
+    } else {
+        middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", "\n    " + param.optionalParamDestory) // 可选参数内存释放
+    }
+    return middleFunc
+}
+
 function generateFunctionDirect(func, data, className, implHVariable) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
     let middleH = ""
@@ -204,11 +213,7 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
-    if (param.optionalParamDestory == "") {
-        middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
-    } else {
-        middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", "\n    " + param.optionalParamDestory) // 可选参数内存释放
-    }
+    middleFunc = replaceOptionalParamDestory(middleFunc, param)
     let prefixArr = getPrefix(data, func)
     let implH = ""
     let implCpp = ""   
