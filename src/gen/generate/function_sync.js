@@ -217,17 +217,12 @@ function callbackReturnProc(param, func) {
     if (param.callback.returnType === 'void') {
         if (func.ret == "string" || func.ret == "boolean" || func.ret.substring(0, 12) == "NUMBER_TYPE_") {
             param.valueFill += param.valueFill.length > 0 ? ", vio->retOut" : "vio->retOut"
-        }
-        // else if (func.ret == "void") {
-        //    NapiLog.logInfo("The current void type don't need generate");
-        // }
-        else if (func.ret == "void") {
+        } else if (func.ret == "void") {
             NapiLog.logInfo("The current void type don't need generate");
-        }        
-        else{
+        } else{
             NapiLog.logError("not support func.ret:%s!".format(func.ret))
         }
-    } else{
+    } else {
         // param.cbRetvalueDefine赋值，传递给funcnameReturn函数
         fillCbRetValueStruct(param.callback.returnType, param, 'in')
         fillCbRetValueStruct(func.ret, param, 'out')  
