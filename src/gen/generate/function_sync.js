@@ -215,14 +215,17 @@ function callbackReturnProc(param, func) {
     // 回调返回值非空，业务代码分两部分，一部分填写JS回调需要的参数(对应funcname函数)，一部分根据回调返回值进行后续业务处理(对应funcnameReturn函数)，
     // 回调返回值为空，则业务代码处理是一个整体，对应funcname函数，统一处理填写参数、函数返回值赋值处理。
     if (param.callback.returnType === 'void') {
-        if (func.ret == "string" || func.ret == "boolean") {
+        if (func.ret == "string" || func.ret == "boolean" || func.ret.substring(0, 12) == "NUMBER_TYPE_") {
             param.valueFill += param.valueFill.length > 0 ? ", vio->retOut" : "vio->retOut"
         }
+        // else if (func.ret == "void") {
+        //    NapiLog.logInfo("The current void type don't need generate");
+        // }
         else if (func.ret == "void") {
-           NapiLog.logInfo("The current void type don't need generate");
-        }
+            NapiLog.logInfo("The current void type don't need generate");
+        }        
         else{
-            NapiLog.logError("not support returnType:%s!".format(param.callback.returnType))
+            NapiLog.logError("not support func.ret:%s!".format(func.ret))
         }
     } else{
         // param.cbRetvalueDefine赋值，传递给funcnameReturn函数
