@@ -1651,27 +1651,23 @@ void XNapiTool::UnregistOnOffFunc(std::string name)
 
 void XNapiTool::CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret)
 {
-    printf("CallSyncFunc napi_call_function begin  ");
     napi_handle_scope scope = nullptr;
     napi_open_handle_scope(pSyncFuncs->env_, &scope);
 
     napi_value cb;
     napi_status result_status = napi_get_reference_value(pSyncFuncs->env_, pSyncFuncs->funcRef_, &cb);
-    printf("CallSyncFunc napi_get_reference_value funcRef_  "); 
     CC_ASSERT(result_status == napi_ok);
 
     napi_value thisvar;
     result_status = napi_get_reference_value(pSyncFuncs->env_, pSyncFuncs->thisVarRef_, &thisvar);
     CC_ASSERT(result_status == napi_ok);
 
-    printf("CallSyncFunc napi_get_reference_value thisVarRef_  ");
-
     uint32_t length = 0;
     napi_value element;
     napi_get_array_length(pSyncFuncs->env_, ret, &length);
            
-    const uint32_t LENGHTH = length;
-    napi_value args[LENGHTH] = {};
+    const uint32_t LENGTH = length;
+    std::vector<napi_value> args(LENGTH);
     for (uint32_t i = 0; i < length; i++) {
         napi_get_element(pSyncFuncs->env_, ret, i, &element);
         args[i] = element;
@@ -1679,9 +1675,7 @@ void XNapiTool::CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret)
   
     napi_value cb_result;
 
-    
-    result_status = napi_call_function(pSyncFuncs->env_, thisvar, cb, length, args, &cb_result);
-    printf("CallSyncFunc napi_call_function end  ");   
+    result_status = napi_call_function(pSyncFuncs->env_, thisvar, cb, length, args.data(), &cb_result);
     CC_ASSERT(result_status == napi_ok);
 
     result_status = napi_close_handle_scope(pSyncFuncs->env_, scope);
@@ -1727,14 +1721,14 @@ void XNapiTool::CallAsyncFunc(CallFunc *pAsyncFuncs, napi_value ret)
             uint32_t length = 0;
             napi_value element;
             napi_get_array_length(paf->env_, retValue, &length);
-            const static uint32_t LENGHTH = length;
-            napi_value args[LENGHTH] = {};
+            const static uint32_t LENGTH = length;
+            std::vector<napi_value> args(LENGTH);
             for (uint32_t i = 0; i < length; i++) {
                 napi_get_element(paf->env_, retValue, i, &element);
                 args[i] = element;
             }
             napi_value cb_result;
-            result_status = napi_call_function(paf->env_, thisvar, cb, length, args, &cb_result);
+            result_status = napi_call_function(paf->env_, thisvar, cb, length, args.data(), &cb_result);
             CC_ASSERT(result_status == napi_ok);
 
             result_status = napi_delete_reference(paf->env_, data->resultRef);

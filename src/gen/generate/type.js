@@ -254,7 +254,7 @@ function generateType(name, data, inNamespace) {
         middleBody: '',
         middleInit: middleInit,
         declarationH: `
-        class %s;\r`.format(name),
+        struct %s;\r`.format(name),
         middleH: ''
       }
     }
