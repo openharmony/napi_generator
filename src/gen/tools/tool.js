@@ -138,13 +138,6 @@ function removeExplains(data) {
         }
     }
 
-    while (true) {
-        let tt = re.search("\n *//([a-zA-Z .]+)\n", data)
-        if (tt != null) {
-            data = data.substring(0, tt.regs[0][0]) + data.substring(tt.regs[0][1], data.length)
-        }
-        else break;
-    }
     return data
 }
 
