@@ -61,8 +61,8 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 let middleAsyncCallbackTemplate = `
 void [middleClassName][eventNames]AsyncOrSyncCallbackMiddle(const std::string &eventName, [callback_param_type])
 {
-    // printf("eventName is %s", eventName);
-    printf("onSayHelloStartAsyncOrSyncCallbackMiddle callFuncs_.count %ld  ", XNapiTool::callFuncs_.count(eventName));
+  printf("onSayHelloStartAsyncOrSyncCallbackMiddle callFuncs_.count %u  ",
+  (unsigned int)XNapiTool::callFuncs_.count(eventName));
 	if(XNapiTool::callFuncs_.count(eventName) <= 0) {
         return;
     }
