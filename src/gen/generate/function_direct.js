@@ -237,7 +237,8 @@ function getimplHForForComClassValue(isAddReg, param, prefixArr, func) {
         prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
 
     if (isAddReg) {
-        implH += "\n    static NodeISayHelloListener listener_;"
+        let ValueType = func.value[0].type
+        implH += "\n    static %s listener_;".format(ValueType)
     }
     return implH
 }
@@ -248,8 +249,8 @@ function getimplCppForComClassValue(isAddReg, param, className, func) {
     let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
 
     if (isAddReg) {
-        initListener = 'NodeISayHelloListener NodeISayHello::listener_ = {};'
-        callStatement = 'NodeISayHello::listener_ = listener;'
+        initListener = '%s %s::listener_ = {};'.format(func.value[0].type, className)
+        callStatement = '%s::listener_ = listener;'.format(className)
     }
 
     implCpp = cppTemplate.format(initListener, className == null ? "" : className + "::", func.name, 
