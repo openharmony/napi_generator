@@ -16,7 +16,6 @@ const re = require("../tools/re");
 const { removeEmptyLine, checkOutBody, addUniqFunc2List } = require("../tools/tool");
 const { analyzeFunction } = require("./function");
 const { analyzeInterface, parseNotes } = require("./interface");
-const { analyzeClass } = require("./class");
 const { analyzeEnum } = require("./enum");
 const { NapiLog } = require("../tools/NapiLog");
 const { analyzeType, analyzeType2, analyzeType2Result } = require("./type");
