@@ -1,7 +1,17 @@
 # NAPI框架生成工具使用说明
 ## 简介
 
-NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。可执行文件、VS Code插件下载路径如下：
+NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。
+
+1.可执行文件下载链接如下：
+
+[可执行文件下载链接](http://ftpkaihongdigi.i234.me:5000/sharing/TRNwP6whE)
+
+访问密码：kaihong
+
+压缩包解压密码：kaihong20231121
+
+2.VS Code插件下载路径如下：
 
 [下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
 
@@ -50,18 +60,84 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 
 ## 生成框架
 
+### 自动配置业务代码用例
+
+1.ts文件用例
+
+ [@ohos.napitest.d.ts](https://gitee.com/openharmony/napi_generator/blob/master/examples/ts/@ohos.napitest.d.ts)
+
+注册关键字说明
+
+(1) registerXXX/unRegisterXXX
+
+register与unRegister成对使用, registerXXX用于注册回调，其参数即为注册的回调函数，注册之后在其它普通方法中即可在C++层调用registerXXX注册的回调函数；unRegisterXXX用于注销回调，其参数即为需要注销的回调函数，注销之后将无法再在C++层调用注销的回调函数。如：
+
+```
+export class NodeISayHello
+{ 
+    ...
+    // register注册回调
+    registerCallbackfunc(cb : (wid: number) => string);
+    // unRegister注销回调
+    unRegisterCallbackfunc(cb : (wid: number) => string);
+    ...
+}
+```
+
+其中注册/注销的回调方法为箭头函数 (wid: number) => string。注册回调之后，工具会生成回调方法CallbackfuncCallback，业务代码中用户自行定义回调时机进而通过回调接口调用回调，若回调被注销，则业务代码无法触发该回调。
+
+(2) addXXX/removeXXX   onXXX
+
+addXXX与removeXXX成对使用，addXXX用于注册回调，其参数为class对象, 将需要注册的回调函数放于class中，其写法为onXXX，class中可以有多个onXXX回调函数；removeXXX用于注销回调，其参数为class对象，用于注销addXXX注册的回调。如：
+
+```
+export class NodeISayHello
+{ 
+    ...
+    // 注册object回调
+    addSayHelloListener(listener: NodeISayHelloListener);
+    // 注销object回调
+    removeSayHelloListener(listener: NodeISayHelloListener);
+    ...
+}
+...
+export class NodeISayHelloListener
+{   // 定义回调
+    onSayHelloStart(info: SayInfo);
+    onSayHelloEnd(info: SayInfo);
+}
+```
+
+其中注册/注销的回调方法为onSayHelloStart(info: SayInfo); onSayHelloEnd(info: SayInfo); 注册回调之后，工具会生成两个回调接口供用户调用，业务代码中用户自行定义回调时机进而通过回调接口调用回调，若回调被注销，则业务代码无法触发回调。
+
+2.自动配置业务代码用例使用的cfg.json
+
+ [配置文件cfg.json用例](https://gitee.com/openharmony/napi_generator/blob/master/examples/cfg.json)
+
+3.自动配置业务代码使用的业务代码用例
+
+业务代码用例如下：
+
+serviceCode/say_hello.h
+
+[say_hello.h](https://gitee.com/openharmony/napi_generator/blob/master/examples/serviceCode/say_hello.h)
+
+serviceCode/say_hello.cpp
+
+[say_hello.cpp](https://gitee.com/openharmony/napi_generator/blob/master/examples/serviceCode/say_hello.cpp)
+
 ### 可执行程序使用方法
 
 #### Linux
 
-1.将待转换的.d.ts文件、napi_generator-linux放在同级目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。此处新建out文件夹，用于存放生成框架代码。整体目录文件如下：
+1.将待转换的.d.ts文件、napi_generator-linux、 配置文件cfg.json、业务代码文件夹serviceCode（其中serviceCode目录下放置业务代码的.h文件和.cpp文件）放在同级目录下。此处新建generatorCode文件夹，用于存放生成框架代码。整体目录文件如下：
 
 	harmony@Ubuntu-64:~/service$ ls
-	napi_generator-linux  @ohos.napitest.d.ts  out basic.d.ts
+	napi_generator-linux  @ohos.napitest.d.ts  generatorCode  cfg.json  serviceCode
 
 2.在终端中进入到之前可执行程序napi_generator-linux所在的目录，并运行napi_generator-linux，命令如下：
 
-	harmony@Ubuntu-64:~/service$ ./napi_generator-linux -f @ohos.napitest.d.ts -o out -i false -n int
+	harmony@Ubuntu-64:~/service$ ./napi_generator-linux -f @ohos.napitest.d.ts -o generatorCode -i false -n int -s cfg.json
 
 其中，参数详情如下：
    -f, 待转换的.d.ts文件，若同时转换多个文件，文件之间用“,”隔开；
@@ -69,44 +145,100 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
   -i, 可选参数，默认false，待转换.d.ts文件中引用非basic.d.ts的ts文件时打开开关；
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径；
   -n, 可选参数，默认为uint32_t，指定生成框架代码中number类型全部为指定类型。
+  -s, 可选参数，默认为不配置业务代码，指定生成框架代码的业务配置文件，用于粘合工具代码和业务代码的配置。
 
-  备注：-f与-d两个参数只选其中一个参数即可。
+  备注：-f与-d两个参数只选其中一个参数即可。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
 
-3.运行成功后会在out目录下生成框架代码文件，如下所示：
+其中，cfg.json内容如下：
 
-	harmony@Ubuntu-64:~/linshi/napi_generator_8/examples/ts/out$ ls
-	binding.gyp  BUILD.gn  napi_gen.log  napitest.cpp  napitest.h  napitest_middle.cpp  test.sh  tool_utility.cpp  tool_utility.h
+```
+[
+ {
+  "includeName": "../serviceCode/say_hello.h",
+  "cppName": "../serviceCode/say_hello.cpp",
+  "interfaceName": "funcTest",
+  "serviceCode": "out = napitest::funcTest(v);"
+  "description": "includeName: 引入的业务代码.h文件相对路径, cppName: 引入的业务代码.cpp文件相对路径, interfaceName: ts文件中的使用接口名,业务代码就在该接口中调用;格式为：类名::方法名(如: TestClass::funcTest1)，若无类名，则格式为：方法名(如： funcTest), serviceCode: 在接口中调用业务代码的调用语句。（该属性只做注释使用）"
+ }
+]
+```
+
+cfg.json是一个数组，每一项配置对应一个方法的调用，需要对多少方法进行调用就配置多少项；其中
+
+"includeName": 引入的业务代码.h文件相对路径, 如："../serviceCode/say_hello.h",
+
+"cppName": 引入的业务代码.cpp文件相对路径,  如："../serviceCode/say_hello.cpp",
+
+"interfaceName": ts文件中的使用接口名,业务代码就在该接口中调用;格式为：类名::方法名(如: TestClass::funcTest1)，若无类名，则格式为：方法名(如： funcTest), 
+
+"serviceCode": 在接口中调用业务代码的调用语句。此处调用的是实现该接口的业务代码， 如："out = napitest::funcTest(v);",
+
+"description": 仅作为cfg.json文件中描述其它字段含义的属性，用户配置时，可以不用填写这个字段
+
+3.运行成功后会在generatorCode目录下生成框架代码文件，如下所示：
+
+	harmony@Ubuntu-64:~/linshi/napi_generator_8/examples/ts/generatorCode$ ls
+	binding.gyp  BUILD.gn  napi_gen.log  napitest.cpp  napitest.h  napitest_middle.h napitest_middle.cpp  test.sh  tool_utility.cpp  tool_utility.h
 
 #### Windows
 
-1.将待转换的.d.ts文件、napi_generator-win.exe放在同级目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。此处新建out文件夹，用于存放生成框架代码。整体目录文件如下：
+1.将待转换的.d.ts文件、napi_generator-win.exe、 配置文件cfg.json、业务代码文件夹serviceCode（其中serviceCode目录下放置业务代码的.h文件和.cpp文件）放在同级目录下。此处新建generatorCode文件夹，用于存放生成框架代码。整体目录文件如下：
 
 	E:\demo\napi>dir /B
 	@ohos.napitest.d.ts
-	basic.d.ts
 	napi_generator-win.exe
-	out
+	generatorCode
+	cfg.json
+	serviceCode
 
 2.在终端中进入到之前可执行程序napi_generator-win.exe所在的目录，并运行napi_generator-win.exe，命令如下：
 
-	E:\demo\napi>napi_generator-win.exe -f @ohos.napitest.d.ts -o out -i false -n double
+	E:\demo\napi>napi_generator-win.exe -f @ohos.napitest.d.ts -o generatorCode -i false -n double -s cfg.json
 
 其中，参数详情如下：
    -f, 待转换的.d.ts文件，若同时转换多个文件，文件之间用“,”隔开；
   -d, 根据指定路径转换该文件夹中所有.d.ts文件；
   -i, 可选参数，默认false，待转换.d.ts文件中引用非basic.d.ts的ts文件时打开开关；
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径；
-  -n, 可选参数，默认为uint32_t，指定生成框架代码中number类型全部为指定类型。
+   -n, 可选参数，默认为uint32_t，指定生成框架代码中number类型全部为指定类型。
+  -s, 可选参数，默认为不配置业务代码，指定生成框架代码的业务配置文件，用于粘合工具代码和业务代码的配置。
 
-  备注：-f与-d两个参数只选其中一个参数即可。
+  备注：-f与-d两个参数只选其中一个参数即可。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
 
-3.运行成功后会在out目录下生成框架代码文件，如下所示：
+其中，cfg.json内容如下：
 
-	E:\demo\napi\out>dir /B
+```
+[
+ {
+  "includeName": "../serviceCode/say_hello.h",
+  "cppName": "../serviceCode/say_hello.cpp",
+  "interfaceName": "funcTest",
+  "serviceCode": "out = napitest::funcTest(v);"
+  "description": "includeName: 引入的业务代码.h文件相对路径, cppName: 引入的业务代码.cpp文件相对路径, interfaceName: ts文件中的使用接口名,业务代码就在该接口中调用;格式为：类名::方法名(如: TestClass::funcTest1)，若无类名，则格式为：方法名(如： funcTest), serviceCode: 在接口中调用业务代码的调用语句。（该属性只做注释使用）"
+ }
+]
+```
+
+cfg.json是一个数组，每一项配置对应一个方法的调用，需要对多少方法进行调用就配置多少项；其中
+
+"includeName": 引入的业务代码.h文件相对路径, 如："../serviceCode/say_hello.h",
+
+"cppName": 引入的业务代码.cpp文件相对路径,  如："../serviceCode/say_hello.cpp",
+
+"interfaceName": ts文件中的使用接口名,业务代码就在该接口中调用;格式为：类名::方法名(如: TestClass::funcTest1)，若无类名，则格式为：方法名(如： funcTest), 
+
+"serviceCode": 在接口中调用业务代码的调用语句。此处调用的是实现该接口的业务代码， 如："out = napitest::funcTest(v);",
+
+"description": 仅作为cfg.json文件中描述其它字段含义的属性，用户配置时，可以不用填写这个字段
+
+3.运行成功后会在generatorCode目录下生成框架代码文件，如下所示：
+
+	E:\demo\napi\generatorCode>dir /B
 	binding.gyp
 	BUILD.gn
 	napitest.cpp
 	napitest.h
+	napitest_middle.h
 	napitest_middle.cpp
 	napi_gen.log
 	test.sh
@@ -116,6 +248,12 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 #### Mac
 
 方法步骤参考windows、Linux的使用方法。
+
+### 不配置cfg.json文件生成框架代码
+
+若用户想手动配置业务代码，可不配置cfg.json文件生成框架代码之后手动增加业务代码，不配置cfg.json文件生成框架代码说明如下：
+
+[不配置cfg.json生成框架代码说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_vs_plugin/docs/napi/ADD_SERVICECODE_INSTRUCTION.md)
 
 ### VS Code插件使用方法
 
