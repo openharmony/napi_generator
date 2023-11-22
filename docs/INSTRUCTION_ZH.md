@@ -132,19 +132,25 @@ serviceCode/say_hello.cpp
 
 1.将待转换的.d.ts文件、napi_generator-linux、 配置文件cfg.json、业务代码文件夹serviceCode（其中serviceCode目录下放置业务代码的.h文件和.cpp文件）放在同级目录下。此处新建generatorCode文件夹，用于存放生成框架代码。整体目录文件如下：
 
-	harmony@Ubuntu-64:~/service$ ls
+	OpenHarmony@Ubuntu-64:~/service$ ls
 	napi_generator-linux  @ohos.napitest.d.ts  generatorCode  cfg.json  serviceCode
 
 2.在终端中进入到之前可执行程序napi_generator-linux所在的目录，并运行napi_generator-linux，命令如下：
 
-	harmony@Ubuntu-64:~/service$ ./napi_generator-linux -f @ohos.napitest.d.ts -o generatorCode -i false -n int -s cfg.json
+	OpenHarmony@Ubuntu-64:~/service$ ./napi_generator-linux -f @ohos.napitest.d.ts -o generatorCode -i false -n int -s cfg.json
 
 其中，参数详情如下：
+
    -f, 待转换的.d.ts文件，若同时转换多个文件，文件之间用“,”隔开；
+
   -d, 根据指定路径转换该文件夹中所有.d.ts文件；
+
   -i, 可选参数，默认false，待转换.d.ts文件中引用非basic.d.ts的ts文件时打开开关；
+
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径；
-  -n, 可选参数，默认为uint32_t，指定生成框架代码中number类型全部为指定类型。
+
+  -n, 可选参数，默认为uint32_t，指定生成框架代码中number类型全部为指定类型；
+
   -s, 可选参数，默认为不配置业务代码，指定生成框架代码的业务配置文件，用于粘合工具代码和业务代码的配置。
 
   备注：-f与-d两个参数只选其中一个参数即可。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
@@ -177,7 +183,7 @@ cfg.json是一个数组，每一项配置对应一个方法的调用，需要对
 
 3.运行成功后会在generatorCode目录下生成框架代码文件，如下所示：
 
-	harmony@Ubuntu-64:~/linshi/napi_generator_8/examples/ts/generatorCode$ ls
+	OpenHarmony@Ubuntu-64:~/linshi/napi_generator_8/examples/ts/generatorCode$ ls
 	binding.gyp  BUILD.gn  napi_gen.log  napitest.cpp  napitest.h  napitest_middle.h napitest_middle.cpp  test.sh  tool_utility.cpp  tool_utility.h
 
 #### Windows
@@ -196,11 +202,17 @@ cfg.json是一个数组，每一项配置对应一个方法的调用，需要对
 	E:\demo\napi>napi_generator-win.exe -f @ohos.napitest.d.ts -o generatorCode -i false -n double -s cfg.json
 
 其中，参数详情如下：
+
    -f, 待转换的.d.ts文件，若同时转换多个文件，文件之间用“,”隔开；
+
   -d, 根据指定路径转换该文件夹中所有.d.ts文件；
+
   -i, 可选参数，默认false，待转换.d.ts文件中引用非basic.d.ts的ts文件时打开开关；
+
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径；
-   -n, 可选参数，默认为uint32_t，指定生成框架代码中number类型全部为指定类型。
+
+   -n, 可选参数，默认为uint32_t，指定生成框架代码中number类型全部为指定类型；
+
   -s, 可选参数，默认为不配置业务代码，指定生成框架代码的业务配置文件，用于粘合工具代码和业务代码的配置。
 
   备注：-f与-d两个参数只选其中一个参数即可。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。

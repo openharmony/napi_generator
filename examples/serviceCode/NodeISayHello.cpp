@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-#include "say_hello.h"
+#include "NodeISayHello.h"
 #include "../generatorCode/napitest.h"
 #include "hilog/log.h"
 static constexpr OHOS::HiviewDFX::HiLogLabel LABEL = {LOG_CORE, 0XD002E00, "NAPITESTNAPILayer"};
