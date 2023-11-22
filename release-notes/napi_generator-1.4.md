@@ -1,4 +1,4 @@
-# napi_generator-1.4（2023-11-30）
+# napi_generator-1.4
 
 ## 版本概述<a name="section249611124916"></a>
 
@@ -21,8 +21,8 @@
 </td>
 <td class="cellrowborder" valign="top" width="70%" headers="mcps1.2.3.1.2 "><a name="ul9264132010"></a><a name="ul9264132010"></a><ul id="ul9264132010"><li>支持ts语言中type复合类型的变量/函数入参自动转换为C++类型</li><li>支持interface/type成员变量为基本类型时，成员变量为可选的,如：
 interface Test {
-    aa: string;
-    bb?: boolean;
+    v1: string;
+    v2?: boolean;
 }</li></ul>
 </td>
 <td class="cellrowborder" valign="top" width="12%" headers="mcps1.2.3.1.3 "><p id="p2142111345715"><a name="p2142111345715"></a><a name="p2142111345715"></a><ul>V1.4</ul></p>
