@@ -20,7 +20,6 @@
 #include <thread>
 #include <unordered_map>
 
-
 namespace OHOS {
 class TsGenTest {
 public:
@@ -29,6 +28,5 @@ public:
     int32_t doSum(int32_t num1, int32_t num2);
     double addCount(double newNum);
 };
-
 }
 #endif
