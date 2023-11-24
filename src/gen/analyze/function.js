@@ -14,7 +14,7 @@
 */
 const re = require("../tools/re");
 const { FuncType, NumberIncrease, isEnum, EnumValueType, enumIndex, isType, typeIndex, isOnObjCallback, 
-    getOnObjCallbackType } = require("../tools/common"); 
+    getOnObjCallbackType, getLogErrInfo } = require("../tools/common"); 
 const { analyzeParams } = require("./params");
 const { analyzeReturn } = require("./return");
 const { NapiLog } = require("../tools/NapiLog");
@@ -69,8 +69,8 @@ function getFuncParaType(v, interfaceName, data, results) {
         } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
             v["type"] = v["type"].replace(parameter, "string")
         } else {
-            NapiLog.logError("analyzeFunction getFuncParaType is not support this type %s"
-                .format(data.enum[index].body.enumValueType));
+            NapiLog.logError("analyzeFunction getFuncParaType is not support this type %s."
+                .format(data.enum[index].body.enumValueType), getLogErrInfo);
             return null
         }
     }
@@ -82,8 +82,8 @@ function getFuncParaType(v, interfaceName, data, results) {
         } else if (results.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
           v["type"] = v["type"].replace(parameter, "string")
         } else {
-          NapiLog.logError("analyzeFunction getFuncParaType is not support this type %s"
-              .format(results.enum[index].body.enumValueType));
+          NapiLog.logError("analyzeFunction getFuncParaType is not support this type %s."
+              .format(results.enum[index].body.enumValueType), getLogErrInfo());
           return null
       }
     }
@@ -256,7 +256,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
         let v = values[j]
         v = getFuncParaType(v, res.interfaceName, data, results)
         if (v == null) {
-            NapiLog.logError("analyzeFunction is not support this type %s".format(v));
+            NapiLog.logError("analyzeFunction is not support this type %s.".format(v), getLogErrInfo());
         }
     }
     ret = analyseSubReturn(ret, data, results)

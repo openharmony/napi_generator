@@ -16,7 +16,7 @@ const { replaceAll, getPrefix, getConstNum } = require("../tools/tool");
 const { paramGenerate } = require("./param_generate");
 const { returnGenerate } = require("./return_generate");
 const { NapiLog } = require("../tools/NapiLog");
-const { NumberIncrease, jsonCfgList }= require("../tools/common");
+const { NumberIncrease, jsonCfgList, getLogErrInfo }= require("../tools/common");
 
 /**
  * 结果通过同步回调(CallBack)返回
@@ -130,7 +130,8 @@ function callBackReturnValJs2C(className, funcName, callbackRetType, funcRetType
         cbRetJs2CTrans = 'NUMBER_JS_2_C(retVal, NUMBER_TYPE_1, vio->cbOut);\n' + 
         '%s%sReturn(vio->cbOut%s);\n'.format(className == null ? "" : "pInstance->", funcName, retOutFill);
     } else {
-        NapiLog.logError("callBackReturnValJs2C not surpport callbackRetType:%s".format(callbackRetType));
+        NapiLog.logError("callBackReturnValJs2C not surpport callbackRetType:%s."
+            .format(callbackRetType), getLogErrInfo());
     }
     return cbRetJs2CTrans;
 }
@@ -170,7 +171,8 @@ function fillCbRetValueStruct(type, param, outName) {
         type, outName)
     }
     else {
-        NapiLog.logError("[fillCbRetValueStruct] The current type:%s don't support".format(type));
+        NapiLog.logError("[fillCbRetValueStruct] The current type:%s don't support."
+            .format(type), getLogErrInfo());
     }
 }
 
@@ -204,7 +206,8 @@ function fillValueStruct(type, param, outName) {
         } 
     }
     else {
-        NapiLog.logError("[fillValueStruct] The current type:%s don't support".format(type));
+        NapiLog.logError("[fillValueStruct] The current type:%s don't support."
+            .format(type), getLogErrInfo());
     }
 }
 
@@ -220,7 +223,8 @@ function callbackReturnProc(param, func) {
         } else if (func.ret == "void") {
             NapiLog.logInfo("The current void type don't need generate");
         } else{
-            NapiLog.logError("not support func.ret:%s!".format(func.ret))
+            NapiLog.logError("not support returnType:%s!".format(param.callback.returnType),
+                getLogErrInfo())
         }
     } else {
         // param.cbRetvalueDefine赋值，传递给funcnameReturn函数
