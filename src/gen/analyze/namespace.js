@@ -19,7 +19,7 @@ const { analyzeInterface, parseNotes } = require("./interface");
 const { analyzeEnum } = require("./enum");
 const { NapiLog } = require("../tools/NapiLog");
 const { analyzeType, analyzeType2, analyzeType2Result } = require("./type");
-const { NumberIncrease, EnumValueType } = require("../tools/common");
+const { NumberIncrease, EnumValueType, getLogErrInfo } = require("../tools/common");
 
 function preProcessData(data) {
     data = data.indexOf("//") < 0 ? data : parseNotes(data);   
@@ -123,8 +123,8 @@ function parseEnumType(result) {
                     } else if (enumm.body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
                         v.type = "string";
                     } else {
-                        NapiLog.logError("parseEnumType for interface function value is not support this type %s"
-                            .format(enumm.body.enumValueType));
+                        NapiLog.logError("parseEnumType for interface function value is not support this type %s."
+                            .format(enumm.body.enumValueType), getLogErrInfo());
                         return null;
                     }
                     result.interface[i].body.function[j].value[k].type = v.type;                    

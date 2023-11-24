@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const re = require("../tools/re");
-const { EnumValueType } = require("../tools/common");
+const { EnumValueType, getLogErrInfo } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 function generateEnum(name, data) {
     let implH = ""
@@ -25,7 +25,7 @@ function generateEnum(name, data) {
     } else if (data.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER){
         implH = `\nenum class %s {\n`.format(name, implH)
     } else {
-        NapiLog.logError(`The enum type[%s] is not support`.format(data.enumValueType));
+        NapiLog.logError(`The enum type[%s] is not support.`.format(data.enumValueType), getLogErrInfo());
         return {implH: "", implCpp: ""}
     }
     for (let i in data.element) {

@@ -15,7 +15,7 @@
 const { isMappedTypeNode } = require("typescript");
 const { InterfaceList, getArrayType, NumberIncrease, enumIndex,
     isEnum, EnumValueType, getArrayTypeTwo, getMapType, EnumList,
-    jsType2CType, getUnionType, TypeList, isArrowFunc } = require("../tools/common");
+    jsType2CType, getUnionType, TypeList, isArrowFunc, getLogErrInfo } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 const { print } = require("../tools/tool");
 
@@ -153,7 +153,8 @@ function cToJs(value, type, dest, deep = 1, optional) {
         return objectTempleteFuncReturn(value)
     }
     else {
-        NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n`.format(value, type, dest));
+        NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n. `
+            .format(value, type, dest), getLogErrInfo());
     }
 }
 
@@ -354,7 +355,8 @@ function mapTempleteValue(mapType, tnvdef, lt, value, tnv) {
         ret = mapInterface(value, lt, tnv, mapType)
     }
     else
-        NapiLog.logError(`This type do not generate cToJs %s,%s,%s`.format(value, type, dest));
+        NapiLog.logError(`This type do not generate cToJs %s,%s,%s`
+            .format(value, type, dest), getLogErrInfo());
     return ret
 }
 
@@ -569,7 +571,8 @@ function returnGenerateForArrowCbMultiPara(paramInfo, param, data, i) {
         paramInfo.name)
     }
     else {
-        NapiLog.logError("Do not support returning the type [%s].".format(type));
+        NapiLog.logError("Do not support returning the type [%s]."
+            .format(type), getLogErrInfo());
     }
 }
 
@@ -615,7 +618,8 @@ function returnGenerateForOnOffMultiPara(paramInfo, param, data) {
         param.params += "%s%s%s %s".format(param.params.length > 0 ? ", " : "", type, modifiers,  paramInfo.name)
     }
     else {
-        NapiLog.logError("Do not support returning the type [%s].".format(type));
+        NapiLog.logError("Do not support returning the type [%s]."
+            .format(type), getLogErrInfo());
     }
 }
 
@@ -659,7 +663,8 @@ function returnGenerate(returnInfo, param, data, isOnFuncFlag = false) {
     } else if (isArrowFunc(type)) {
         genArrowFuncParam(param, returnInfo, data);
     } else {
-        NapiLog.logError("Do not support returning the type [%s].".format(type));
+        NapiLog.logError("Do not support returning the type [%s]."
+            .format(type), getLogErrInfo());
     }  
 }
 
@@ -779,7 +784,8 @@ function returnGenerateEnum(data, returnInfo, param) {
     } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
         type = "string"
     } else {
-        NapiLog.logError(`function returnGenerateEnum:this type is not support %s`.format(type));
+        NapiLog.logError(`function returnGenerateEnum:this type is not support %s`
+            .format(type), getLogErrInfo());
         return
     }
     param.valuePackage = cToJs("vio->out", type, "result")

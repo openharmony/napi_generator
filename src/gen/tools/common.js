@@ -421,6 +421,12 @@ jsonCfgList.getValue = function (className, inter) {
     return null;
 }
 
+function getLogErrInfo() {
+  let errInfo = " Please refer to for support capacity:"
+      + "https://gitee.com/openharmony/napi_generator/tree/master/release-notes"
+  return errInfo
+}
+
 module.exports = {
     FuncType,
     EnumValueType,
@@ -446,5 +452,6 @@ module.exports = {
     isUnRegisterFunc,
     isOnObjCallback,
     isOnOffRegisterFunc,
-    getOnObjCallbackType    
+    getOnObjCallbackType,
+    getLogErrInfo
 }
