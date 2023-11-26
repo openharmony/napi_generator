@@ -7,6 +7,10 @@
 ## 版本特性<a name="section249611124917"></a>
 **表 1**  已支持特性
 
+当前已知不支持写法的适配工具的推荐方案：
+
+[当前已知不支持的推荐方案](https://gitee.com/openharmony/napi_generator/blob/master/docs/SOLUTION.md)
+
 <a name="table143385853320"></a>
 
 <table><thead align="left"><tr id="row53375863312"><th class="cellrowborder" valign="top" width="18%" id="mcps1.2.3.1.1"><p id="p20331858193317"><a name="p20331858193317"></a><a name="p20331858193317"></a><ul>类别</ul></p>
@@ -30,7 +34,7 @@ interface Test {
 </tr>
 <tr id="row334175803317"><td class="cellrowborder" valign="top" width="18%" headers="mcps1.2.3.1.1 "><p id="p382391145710"><a name="p382391145710"></a><a name="p382391145710"></a><ul>函数类型</ul></p>
 </td>
-<td class="cellrowborder" valign="top" width="70%" headers="mcps1.2.3.1.2 "><a name="ul334485413318"></a><a name="ul334485413318"></a><ul id="ul334485413318"><li>支持ts接口文件中namespace域中的registerXXX注册、unRegisterXXX去注册函数</li><li>支持ts语言中callback、promise类型的异步函数自动转换为C++类型</li><li>支持ts接口文件中namespace域中的addXXX注册、removeXXX去注册、onXXX定义回调的函数</li><li>支持on注册类型为固定值,注册回调为箭头函数：如function on(type: 'onEvents', callback: (wid: number) => void): void; </li><li>支持文件中定义多个on注册函数</li><li>支持callback方法为箭头函数：如function fun1(cb: (wid: boolean) => string): string;</li><li>支持callback方法为Function关键字：如function fun2(tt: Function): void;</li><li>支持Promise类型是匿名interface的函数</li></ul>
+<td class="cellrowborder" valign="top" width="70%" headers="mcps1.2.3.1.2 "><a name="ul334485413318"></a><a name="ul334485413318"></a><ul id="ul334485413318"><li>支持ts接口文件中namespace域中的registerXXX注册、unRegisterXXX去注册函数（注：当前注册回调支持单个参数，不支持多个参数。如registerCallbackfunc(cb : (wid: number) => string);或者fun11(cb: Callback<number>): void;或者fun17(tt: Function): string;）</li><li>支持ts语言中callback、promise类型的异步函数自动转换为C++类型</li><li>支持ts接口文件中namespace域中的addXXX注册、removeXXX去注册、onXXX定义回调的函数（注：（1）当前注册回调支持单个参数，不支持多个参数；支持类型写法：addSayHelloListener(listener: NodeISayHelloListener);（2）注册的object回调函数写法不支持箭头函数写法, 只支持onSayHelloStart(info1: SayInfo, info2: string);这样的写法）</li><li>支持on注册类型为固定值,注册回调为箭头函数：如function on(type: 'onEvents', callback: (wid: number) => void): void; </li><li>支持文件中定义多个on注册函数</li><li>支持callback方法为箭头函数：如function fun1(cb: (wid: boolean) => string): string;</li><li>支持callback方法为Function关键字：如function fun2(tt: Function): void;</li><li>支持Promise类型是匿名interface的函数。如：sayHelloWithResponse(from: string, to: string, sayType: SayType): Promise<{result: number, errMsg: string, response: string}>; </li></ul>
 </td>
 <td class="cellrowborder" valign="top" width="12%" headers="mcps1.2.3.1.3 "><p id="p2142111345716"><a name="p2142111345716"></a><a name="p2142111345716"></a><ul>V1.4</ul></p>
 </td>
@@ -61,7 +65,11 @@ interface Test {
 
 
 
+
+
 **表 2** 
 
 [待开发特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ROADMAP_ZH.md)
+
+
 

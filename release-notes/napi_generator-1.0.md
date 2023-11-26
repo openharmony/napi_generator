@@ -7,6 +7,10 @@
 ## 版本特性<a name="section249611124917"></a>
 **表 1**  已支持特性
 
+当前已知不支持写法的适配工具的推荐方案：
+
+[当前已知不支持的推荐方案](https://gitee.com/openharmony/napi_generator/blob/master/docs/SOLUTION.md)
+
 <a name="table143385853320"></a>
 
 <table><thead align="left"><tr id="row53375863312"><th class="cellrowborder" valign="top" width="18%" id="mcps1.2.3.1.1"><p id="p20331858193317"><a name="p20331858193317"></a><a name="p20331858193317"></a><ul>类别</ul></p>

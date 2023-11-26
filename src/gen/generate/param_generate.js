@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const { InterfaceList, getArrayType, getArrayTypeTwo, NumberIncrease,
-    enumIndex, isEnum, EnumValueType, getMapType,
+    enumIndex, isEnum, EnumValueType, getMapType, getLogErrInfo,
     EnumList, getUnionType, TypeList, CallFunctionList, isFuncType, isArrowFunc } = require("../tools/common");
 const re = require("../tools/re");
 const { NapiLog } = require("../tools/NapiLog");
@@ -104,7 +104,8 @@ function jsToC(dest, napiVn, type, enumType = 0, optional) {
     } else if (type == "Object" || type == "object") {
         return objectTempleteFunc(dest, napiVn);
     }else {
-        NapiLog.logError(`do not support to generate jsToC %s,%s,%s`.format(dest, napiVn, type));
+        NapiLog.logError(`do not support to generate jsToC %s,%s,%s`
+            .format(dest, napiVn, type), getLogErrInfo());
     }        
 }
 
@@ -402,7 +403,6 @@ function paramGenerateArray(p, funcValue, param) {
         let arrayType = getArrayType(type)
         let strLen =  getMapKeyLen(arrayType)
         let keyType = arrayType.substring(0, strLen)
-        let suType = arrayType.substring(0,12)
         if (arrayType == "string") {
             arrayType = "std::string"
         } else if (arrayType == "boolean") {
@@ -427,7 +427,8 @@ function paramGenerateArray(p, funcValue, param) {
         param.valueDefine += "%sstd::vector<%s>%s%s".format(param.valueDefine.length > 0 ? ", "
             : "", arrayType, modifiers, name)
     } else {
-        NapiLog.logError("The current version do not support to this param to generate :", name, "type :", type);
+        NapiLog.logError("The current version do not support to this param to generate :", name,
+            "type :", type, getLogErrInfo());
     }
 }
 
@@ -454,7 +455,7 @@ function paramGenerateEnum(data, funcValue, param, p) {
     } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
         funcValue.type = "string"
     } else {
-        NapiLog.logError(`paramGenerate is not support`);
+        NapiLog.logError(`paramGenerate is not support`, getLogErrInfo());
         return
     }
     paramGenerate(p, funcValue, param, data)
@@ -819,7 +820,7 @@ function paramGenerateCallBack(data, funcValue, param, p) {
         } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
             cbParamType = "string"
         } else {
-            NapiLog.logError(`paramGenerate is not support`);
+            NapiLog.logError(`paramGenerate is not support`, getLogErrInfo());
             return
         }
     }
@@ -1060,32 +1061,23 @@ function paramGenerate(p, funcValue, param, data) {
     let modifiers = funcValue.optional ? "*" : "&"
     if (type.indexOf("|") >= 0) {
         return paramGenerateUnion(type, param, p, name)
-    }
-    else if (type == "string") {
+    } else if (type == "string") {
         paramGenerateCommon(p, "std::string", funcValue, param, modifiers, inParamName)
-    }
-    else if (type.substring(0, 12) == "NUMBER_TYPE_" && type.indexOf("[]") < 0) {
+    }  else if (type.substring(0, 12) == "NUMBER_TYPE_" && type.indexOf("[]") < 0) {
         paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
-    }
-    else if (InterfaceList.getValue(type)) {
+    } else if (InterfaceList.getValue(type)) {
         paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
-    }
-    else if (TypeList.getValue(type)) {
+    } else if (TypeList.getValue(type)) {
         paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
-    }
-    else if (isCallbackFunc(type)) {
+    } else if (isCallbackFunc(type)) {
         paramGenerateCallBack(data, funcValue, param, p)
-    }
-    else if (CallFunctionList.getValue(type)) {
+    } else if (CallFunctionList.getValue(type)) {
         paramGenerateArrowCallBack(funcValue, param, p)
-    }
-    else if (type == "boolean") {
+    } else if (type == "boolean") {
         paramGenerateCommon(p, "bool", funcValue, param, modifiers, inParamName)
-    }
-    else if (isEnum(type, data)) {
+    } else if (isEnum(type, data)) {
         paramGenerateEnum(data, funcValue, param, p)
-    }
-    else if (type.substring(0, 4) == "Map<" || type.substring(0, 6) == "{[key:") {
+    } else if (type.substring(0, 4) == "Map<" || type.substring(0, 6) == "{[key:") {
         paramGenerateMap(funcValue, param, p)
     } else if (isArrayType(type)) {
         paramGenerateArray(p, funcValue, param);
@@ -1094,8 +1086,8 @@ function paramGenerate(p, funcValue, param, data) {
     }  else if (type == "object" || type == "Object") {
         paramGenerateObject(p, funcValue, param);
     } else {
-        NapiLog.logError(
-            "The current version does not support generating parameter [%s] with type [%s]".format(name, type));
+        NapiLog.logError("The current version does not support generating parameter [%s] with type [%s]."
+            .format(name, type), getLogErrInfo());
     }
 }
 
@@ -1133,8 +1125,8 @@ function eventParamGenerate(p, funcValue, param, data) {
         }
         param.valueDefine += "%sstd::string &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
     } else {
-        NapiLog.logError("function eventParamGenerate:The current version do not support to this param to generate :"
-        , name, "type :", type);
+        NapiLog.logError("function eventParamGenerate:The current version do not support to this param to generate :",
+            name, "type :", type, getLogErrInfo());
     }
 }
 
