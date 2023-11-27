@@ -27,7 +27,11 @@
 </td>
 <td class="cellrowborder" valign="top" width="45%" headers="mcps1.2.3.1.2 "><a name="ul9264132010"></a><a name="ul9264132010"></a><ul id="ul9264132010"><li>支持ts语言中string、number、boolean基础类型的变量/函数入参自动转换为C++类型</li><li>支持ts语言中interface及匿名interface复合类型的变量/函数入参自动转换为C++类型</li><li>支持ts语言中enum复合类型变量/函数入参自动转换为C++类型</li><li>支持ts语言中string、number、boolean、enum、interface、map数组类型的变量/函数入参自动转换为C++类型，且数组书写方式可以为array<>或[]两种</li><li>支持ts语言中string、number、boolean、array、map、interface的map类型的变量/函数入参自动转换为C++类型，且map书写方式可以为{[key:string]:any}或Map<>两种</li>  <li>支持ts接口文件中namespace域的any类型变量或函数参数转换为对应C++类型变量</li><li>支持ts接口文件中namespace域的object变量 转换为对应C++变量</li><li>支持ts接口文件中namespace域的可选变量 转换为对应的C++变量</li><li>支持ts接口文件中namespace域的多类型合并成新类型的变量转换为对应C++类型变量</li></ul>
 </td>
-<td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 "><li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_string">string用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_number">number用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a></li>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
+<ul id="ul94024441879">
+<li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_string">string用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_number">number用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a>
+</li>
+</ul>
 <li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_interface">interface用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_interface_no_name">匿名interface用例</a></li>
 </td>
 <td class="cellrowborder" valign="top" width="12%" headers="mcps1.2.3.1.4 "><p id="p2142111345715"><a name="p2142111345715"></a><a name="p2142111345715"></a><ul>V1.2</ul></p>
@@ -73,10 +77,14 @@
 </td>
 <td class="cellrowborder" valign="top" width="45%" headers="mcps1.2.3.1.2 "><a name="ul94024441879"></a><a name="ul94024441879"></a><ul id="ul94024441879"><li>支持ts文件中namespace数据类型转换为C++类型</li><li>支持ts接口文件名格式如下ohos.A.B.C.d.ts的文件转换</li><li>支持命令行方式转换时参数为多个文件路径，相互之间用英文逗号分开</li><li>支持命令行方式转换时指定文件夹路径方式转换</li><li>支持ts文件中import自定义文件</li></ul>
 </td>
-<td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 "><li>
+<td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
+<ul id="ul94024441879">
+<li>
 <a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_string">string用例</a>、
 <a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_number">number用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a></li>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a>
+</li>
+</ul>
 </td>
 <td class="cellrowborder" valign="top" width="12%" headers="mcps1.2.3.1.4 "><p id="p2142111345718"><a name="p2142111345718"></a><a name="p2142111345718"></a><ul>V1.2</ul></p>
 </td>
