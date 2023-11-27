@@ -33,6 +33,20 @@
 </li>
 <li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_interface">interface用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_interface_no_name">匿名interface用例</a>
 </li>
+<li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_enum">enum用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_enum_interface">enum_interface用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_enum_js">enum_JS用例</a>
+</li>
+<li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_[]">[]数组用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_array">array数组用例</a>
+</li>
+<li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_map">map用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_array_map">array map用例</a>
+</li>
+<li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_any">any用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_any[]">any[]用例</a>
+</li>
+<li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_object">object用例</a>
+</li>
+<li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_optional">可选变量用例</a>
+</li>
+<li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_union">union用例</a>
+</li>
 </ul>
 </td>
 <td class="cellrowborder" valign="top" width="12%" headers="mcps1.2.3.1.4 "><p id="p2142111345715"><a name="p2142111345715"></a><a name="p2142111345715"></a><ul>V1.2</ul></p>
@@ -45,9 +59,22 @@
 <td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
 <ul id="ult940244418002">
 <li>
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_string">string用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_number">number用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_callback">callback用例</a>
+</li>
+<li>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_promise">promise用例</a>
+</li>
+<li>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_static">static用例</a>
+</li>
+<li>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_$">$用例</a>
+</li>
+<li>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_on">on/off用例</a>
+</li>
+<li>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_on">arrow func用例</a>
 </li>
 </ul>
 </td>
@@ -61,9 +88,10 @@
 <td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
 <ul id="ult940244418003">
 <li>
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_string">string用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_number">number用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_interface">interface用例</a>
+</li>
+<li>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_extends">extends用例</a>
 </li>
 </ul>
 </td>
@@ -77,9 +105,7 @@
 <td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
 <ul id="ult940244418004">
 <li>
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_string">string用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_number">number用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_namespace">namespace用例</a>
 </li>
 </ul>
 </td>
@@ -91,12 +117,9 @@
 <td class="cellrowborder" valign="top" width="45%" headers="mcps1.2.3.1.2 "><a name="ul94024441879"></a><a name="ul94024441879"></a><ul id="ul94024441879"><li>支持ts文件中namespace数据类型转换为C++类型</li><li>支持ts接口文件名格式如下ohos.A.B.C.d.ts的文件转换</li><li>支持命令行方式转换时参数为多个文件路径，相互之间用英文逗号分开</li><li>支持命令行方式转换时指定文件夹路径方式转换</li><li>支持ts文件中import自定义文件</li></ul>
 </td>
 <td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
-<ul id="ul94024441879">
 <ul id="ult940244418005">
 <li>
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_string">string用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_number">number用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a>
+<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_import">import用例</a>
 </li>
 </ul>
 </td>
@@ -109,9 +132,7 @@
 <td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
 <ul id="ult940244418006">
 <li>
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_string">string用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_number">number用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a>
+<a>插件界面适配暂无用例</a>
 </li>
 </ul>
 </td>
@@ -125,9 +146,7 @@
 <td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
 <ul id="ult940244418007">
 <li>
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_string">string用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_number">number用例</a>、
-<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a>
+<a>代码规范暂无用例</a>
 </li>
 </ul>
 </td>
