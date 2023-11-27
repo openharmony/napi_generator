@@ -17,7 +17,7 @@
 </th>
 <th class="cellrowborder" valign="top" width="45%" id="mcps1.2.3.1.2"><p id="p1133115820331"><a name="p1133115820331"></a><a name="p1133115820331"></a><ul>支持特性</ul></p>
 </th>
-<th class="cellrowborder" valign="top" width="25%" id="mcps1.2.3.1.3"><p id="p1133115820331"><a name="p1133115820333"></a><a name="p1133115820333"></a><ul>测试用例</ul></p>
+<th class="cellrowborder" valign="top" width="25%" id="mcps1.2.3.1.3"><p id="p1133115820331"><a name="p1133115820333"></a><a name="p1133115820333"></a><ul>用例</ul></p>
 </th>
 <th class="cellrowborder" valign="top" width="12%" id="mcps1.2.3.1.4"><p id="p1133115820332"><a name="p1133115820332"></a><a name="p1133115820332"></a><ul>版本号</ul></p>
 </th>
