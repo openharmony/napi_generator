@@ -31,8 +31,10 @@
 <ul id="ul94024441879">
 <li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_string">string用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_number">number用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_bool">boolean用例</a>
 </li>
+
+<li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_interface">interface用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_interface_no_name">匿名interface用例</a>
+</li>
 </ul>
-<li><a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_interface">interface用例</a>、<a href="https://gitee.com/openharmony/napi_generator/tree/master/test/storytest/test_interface_no_name">匿名interface用例</a></li>
 </td>
 <td class="cellrowborder" valign="top" width="12%" headers="mcps1.2.3.1.4 "><p id="p2142111345715"><a name="p2142111345715"></a><a name="p2142111345715"></a><ul>V1.2</ul></p>
 </td>
