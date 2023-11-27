@@ -118,22 +118,22 @@ export class NodeISayHelloListener
 
 业务代码用例如下：
 
-serviceCode/say_hello.h
+serviceCode/NodeISayHello.h
 
-[say_hello.h](https://gitee.com/openharmony/napi_generator/blob/master/examples/serviceCode/say_hello.h)
+[NodeISayHello.h](https://gitee.com/openharmony/napi_generator/blob/master/examples/serviceCode/NodeISayHello.h)
 
-serviceCode/say_hello.cpp
+serviceCode/NodeISayHello.cpp
 
-[say_hello.cpp](https://gitee.com/openharmony/napi_generator/blob/master/examples/serviceCode/say_hello.cpp)
+[NodeISayHello.cpp](https://gitee.com/openharmony/napi_generator/blob/master/examples/serviceCode/NodeISayHello.cpp)
 
 ### 可执行程序使用方法
 
 #### Linux
 
-1.将待转换的.d.ts文件、napi_generator-linux、 配置文件cfg.json、业务代码文件夹serviceCode（其中serviceCode目录下放置业务代码的.h文件和.cpp文件）放在同级目录下。此处新建generatorCode文件夹，用于存放生成框架代码。整体目录文件如下：
+1.将待转换的.d.ts文件、napi_generator-linux、依赖文件basic.d.ts、 配置文件cfg.json、业务代码文件夹serviceCode（其中serviceCode目录下放置业务代码的.h文件和.cpp文件）放在同级目录下。此处新建generatorCode文件夹，用于存放生成框架代码。整体目录文件如下：
 
 	OpenHarmony@Ubuntu-64:~/service$ ls
-	napi_generator-linux  @ohos.napitest.d.ts  generatorCode  cfg.json  serviceCode
+	napi_generator-linux  @ohos.napitest.d.ts  basic.d.ts  generatorCode  cfg.json  serviceCode
 
 2.在终端中进入到之前可执行程序napi_generator-linux所在的目录，并运行napi_generator-linux，命令如下：
 
@@ -153,7 +153,9 @@ serviceCode/say_hello.cpp
 
   -s, 可选参数，默认为不配置业务代码，指定生成框架代码的业务配置文件，用于粘合工具代码和业务代码的配置。
 
-  备注：-f与-d两个参数只选其中一个参数即可。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
+  备注1：-f与-d两个参数只选其中一个参数即可。
+
+  备注2：若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
 
 其中，cfg.json内容如下：
 
@@ -188,10 +190,11 @@ cfg.json是一个数组，每一项配置对应一个方法的调用，需要对
 
 #### Windows
 
-1.将待转换的.d.ts文件、napi_generator-win.exe、 配置文件cfg.json、业务代码文件夹serviceCode（其中serviceCode目录下放置业务代码的.h文件和.cpp文件）放在同级目录下。此处新建generatorCode文件夹，用于存放生成框架代码。整体目录文件如下：
+1.将待转换的.d.ts文件、napi_generator-win.exe、 配置文件cfg.json、依赖文件basic.d.ts、业务代码文件夹serviceCode（其中serviceCode目录下放置业务代码的.h文件和.cpp文件）放在同级目录下。此处新建generatorCode文件夹，用于存放生成框架代码。整体目录文件如下：
 
 	E:\demo\napi>dir /B
 	@ohos.napitest.d.ts
+	basic.d.ts
 	napi_generator-win.exe
 	generatorCode
 	cfg.json
@@ -215,7 +218,9 @@ cfg.json是一个数组，每一项配置对应一个方法的调用，需要对
 
   -s, 可选参数，默认为不配置业务代码，指定生成框架代码的业务配置文件，用于粘合工具代码和业务代码的配置。
 
-  备注：-f与-d两个参数只选其中一个参数即可。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
+  备注1：-f与-d两个参数只选其中一个参数即可。
+
+  备注2：若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
 
 其中，cfg.json内容如下：
 
@@ -265,7 +270,7 @@ cfg.json是一个数组，每一项配置对应一个方法的调用，需要对
 
 若用户想手动配置业务代码，可不配置cfg.json文件生成框架代码之后手动增加业务代码，不配置cfg.json文件生成框架代码说明如下：
 
-[不配置cfg.json生成框架代码说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_vs_plugin/docs/napi/ADD_SERVICECODE_INSTRUCTION.md)
+[不配置cfg.json生成框架代码说明](https://gitee.com/openharmony/napi_generator/blob/master/docs/ADD_SERVICECODE_INSTRUCTION.md)
 
 ### VS Code插件使用方法
 

@@ -164,7 +164,7 @@ ohos_shared_library("napitest")
 
 若自动配置业务代码不能满足业务场景，用户可以手动配置业务代码，以下为用户手动配置业务代码并集成到OpenHarmony上的方法：
 
-[4.0版本手动配置业务代码集成方法](https://gitee.com/openharmony/napi_generator/blob/master/napi_vs_plugin/docs/napi/ENSEMBLE_METHOD_4.0CFGCODE.md)
+[4.0版本手动配置业务代码集成方法](https://gitee.com/openharmony/napi_generator/blob/master/docs/ENSEMBLE_METHOD_4.0CFGCODE.md)
 
 ## 3.2 版本
 
@@ -367,7 +367,7 @@ if (v) {
 
 ## 3.1 版本
 
-[3.1版本集成方法](https://gitee.com/openharmony/napi_generator/blob/master/napi_vs_plugin/docs/napi/ENSEMBLE_METHOD_3.1VERSION.md)
+[3.1版本集成方法](https://gitee.com/openharmony/napi_generator/blob/master/docs/ENSEMBLE_METHOD_3.1VERSION.md)
 
 ## 总结
 
