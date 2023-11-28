@@ -207,16 +207,6 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
         codeContext.middleFunc = replaceAll(codeContext.middleFunc, "(vio->eventName)", "()")
     }
 
-    codeContext.implH += "\nbool %s(%s);".format(func.name, param.valueDefine)
-    let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
-    codeContext.implCpp += `
-bool %s%s(%s)
-{
-    %s
-    return true;
-}
-`.format(className == null ? "" : className + "::", func.name, param.valueDefine,
-   callStatement == null? "": callStatement)
     addOnOffFunc(data, func.name)
 }
 
