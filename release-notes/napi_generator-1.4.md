@@ -7,8 +7,6 @@
 ## 版本特性<a name="section249611124917"></a>
 **表 1**  已支持特性
 
-当前已知不支持写法的适配工具的推荐方案：
-
 [当前已知不支持的推荐方案](https://gitee.com/openharmony/napi_generator/blob/master/docs/SOLUTION.md)
 
 <a name="table143385853321"></a>
