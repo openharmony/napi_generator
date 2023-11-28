@@ -25,7 +25,7 @@ function analyzeNoNameInterface(valueType, valueName, rsltInterface) {
         let number = NumberIncrease.getAndIncrease();
         let interfaceTypeName = 'AUTO_INTERFACE_%s_%s'.format(valueName, number)
         let interfaceBody = valueType.substring(1, valueType.length-1)
-        interfaceBody = re.replaceAll(interfaceBody, ",", ";")                
+        interfaceBody = re.replaceAll(interfaceBody, ",", ";\n")                
         rsltInterface.push({
             name: interfaceTypeName,
             body: analyzeInterface(interfaceBody, rsltInterface)
