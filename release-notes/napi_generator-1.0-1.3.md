@@ -54,7 +54,7 @@
 </tr>
 <tr id="row334175803317"><td class="cellrowborder" valign="top" width="18%" headers="mcps1.2.3.1.1 "><p id="p382391145710"><a name="p382391145710"></a><a name="p382391145710"></a><ul>函数类型</ul></p>
 </td>
-<td class="cellrowborder" valign="top" width="45%" headers="mcps1.2.3.1.2 "><a name="ul334485413318"></a><a name="ul334485413318"></a><ul id="ul334485413318"><li>支持ts语言中返回值、callback类型的同步函数自动转换为C++类型</li><li>支持ts语言中callback、promise类型的异步函数自动转换为C++类型</li><li>支持ts接口文件中namespace域的static函数自动转换为对应C++的函数</li><li>支持ts接口文件中namespace域的以$开头的函数自动转换为对应C++的自动函数</li><li>支持ts接口文件中namespace域的new函数</li><li>支持ts接口文件中namespace域的on注册、off去注册函数</li><li>支持ts接口文件中namespace域的箭头函数转换为对应C++的函数</li></ul>
+<td class="cellrowborder" valign="top" width="45%" headers="mcps1.2.3.1.2 "><a name="ul334485413318"></a><a name="ul334485413318"></a><ul id="ul334485413318"><li>支持ts语言中返回值、callback类型的同步函数自动转换为C++类型</li><li>支持ts语言中callback、promise类型的异步函数自动转换为C++类型</li><li>支持ts接口文件中namespace域的static函数自动转换为对应C++的函数</li><li>支持ts接口文件中namespace域的以$开头的函数自动转换为对应C++的自动函数</li><li>支持ts接口文件中namespace域的on注册、off去注册函数</li><li>支持ts接口文件中namespace域的箭头函数转换为对应C++的函数</li></ul>
 </td>
 <td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
 <ul id="ult940244418002">
