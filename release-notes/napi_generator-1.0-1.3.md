@@ -130,11 +130,7 @@
 <td class="cellrowborder" valign="top" width="45%" headers="mcps1.2.3.1.2 "><a name="ul94024441880"></a><a name="ul94024441880"></a><ul id="ul94024441880"><li>支持Windows环境下适配命令行ts接口文件名格式如下ohos.A.B.C.d.ts文件转换的IntelliJ插件</li><li>支持适配命令行ts接口文件名格式如下ohos.A.B.C.d.ts文件转换的VSCode插件</li><li>支持根据*.h生成*.d.ts文件</li><li>支持命令行方式转换时参数为多个文件路径，相互之间用英文逗号分开</li><li>支持命令行方式转换时指定文件夹路径方式转换</li><li>支持Windows环境下适配命令行*.h生成*.d.ts文件的IntelliJ插件</li></ul>
 </td>
 <td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
-<ul id="ult940244418006">
-<li>
-<a>插件界面适配暂无用例</a>
-</li>
-</ul>
+插件界面适配暂无用例
 </td>
 <td class="cellrowborder" valign="top" width="12%" headers="mcps1.2.3.1.4 "><p id="p2142111345719"><a name="p2142111345719"></a><a name="p2142111345719"></a><ul>V1.3</ul></p>
 </td>
@@ -144,11 +140,7 @@
 <td class="cellrowborder" valign="top" width="45%" headers="mcps1.2.3.1.2 "><a name="ul12374158863"></a><a name="ul12374158863"></a><ul id="ul12374158863"><li>整改生成代码规范</li> </ul>
 </td>
 <td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
-<ul id="ult940244418007">
-<li>
-<a>代码规范暂无用例</a>
-</li>
-</ul>
+代码规范暂无用例
 </td>
 <td class="cellrowborder" valign="top" width="12%" headers="mcps1.2.3.1.4 "><p id="p2142111345720"><a name="p2142111345720"></a><a name="p2142111345720"></a><ul>V1.3</ul></p>
 </td>
