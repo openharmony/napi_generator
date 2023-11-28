@@ -129,7 +129,7 @@
 </td>
 </tr>
 <tr id="row18711154213389">
-<td class="cellrowborder" valign="top" width="45%" headers="mcps1.2.3.1.2 "><a name="ul94024441880"></a><a name="ul94024441880"></a><ul id="ul94024441880"><li>支持Windows环境下适配命令行ts接口文件名格式如下ohos.A.B.C.d.ts文件转换的IntelliJ插件</li><li>支持适配命令行ts接口文件名格式如下ohos.A.B.C.d.ts文件转换的VSCode插件</li><li>支持根据*.h生成*.d.ts文件</li><li>支持命令行方式转换时参数为多个文件路径，相互之间用英文逗号分开</li><li>支持命令行方式转换时指定文件夹路径方式转换</li><li>支持Windows环境下适配命令行*.h生成*.d.ts文件的IntelliJ插件</li></ul>
+<td class="cellrowborder" valign="top" width="45%" headers="mcps1.2.3.1.2 "><a name="ul94024441880"></a><a name="ul94024441880"></a><ul id="ul94024441880"><li>DevEco Studio 上的IntelliJ插件支持如下文件名格式文件ohos.A.B.C.d.ts</li><li>VSCode插件支持如下文件名格式文件ohos.A.B.C.d.ts</li><li>命令行方式支持同时转换多个文件，相互之间用英文逗号分开</li><li>命令行方式支持文件夹转换</li></ul>
 </td>
 <td class="cellrowborder" valign="top" width="25%" headers="mcps1.2.3.1.3 ">
 插件界面适配暂无用例
