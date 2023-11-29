@@ -1,8 +1,8 @@
 # NAPI框架生成工具IntelliJ插件开发说明
 
-若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的IntelliJ插件。
+若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的DevEco Studio上使用的IntelliJ插件。
 
-## IntelliJ插件打包说明
+## DevEco Studio上使用的IntelliJ插件打包说明
 
 ### 环境说明
 
@@ -12,13 +12,17 @@
 
 #### 环境准备
 
-1.下载napi工具可执行程序，并放置在napi_generator/napi_IntelliJ_plugin/resources/cmds目录下对应系统的文件夹下，下载链接如下：
+1.下载napi工具可执行程序，并放置在napi_generator/napi_IntelliJ_plugin/resources/cmds目录下对应系统的文件夹下，可执行文件下载路径如下(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接):
 
-[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
+[可执行文件下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/TRNwP6whE)
 
-[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
+[可执行文件下载链接2](http://ftp.kaihong.com:5000/fsdownload/TRNwP6whE/)
 
-[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
+[可执行文件下载链接3](http://ftp.kaihongdigi.com:5000/fsdownload/TRNwP6whE/)
+
+访问密码：kaihong
+
+压缩包解压密码：kaihong20231121
 
 2.下载并安装IDEA Community、JDK11配置好环境。IDEA Community版本可以左键单击以下链接下载。
 

@@ -1,7 +1,7 @@
 # NAPI框架生成工具
 
 ## 简介
-本文主要介绍NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。在开发JS应用与NAPI间接口时，底层框架开发者无需关注Nodejs语法、C++与JS之间的数据类型转换等上层应用转换逻辑，只关注底层业务逻辑即可，专业的人做专业的事，从而可以大大提高开发效率。目前工具支持可执行文件、VS Code插件、IntelliJ插件三种入口。
+本文主要介绍NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。在开发JS应用与NAPI间接口时，底层框架开发者无需关注Nodejs语法、C++与JS之间的数据类型转换等上层应用转换逻辑，只关注底层业务逻辑即可，专业的人做专业的事，从而可以大大提高开发效率。目前工具支持可执行文件、VS Code插件、DevEco Studio上使用的IntelliJ插件三种入口。
 
 更多工具的架构和实现原理详情，可以左键单击以下链接了解：
 
@@ -46,17 +46,21 @@
 
 ### 工具使用
 
-工具有三种类型，分别是可执行文件、VS Code插件、IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。可执行文件、VS Code插件下载路径如下。
+工具有三种类型，分别是可执行文件、VS Code插件、DevEco Studio上使用的IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。可执行文件下载路径如下(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接):
 
-[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
+[可执行文件下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/TRNwP6whE)
 
-[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
+[可执行文件下载链接2](http://ftp.kaihong.com:5000/fsdownload/TRNwP6whE/)
 
-[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
+[可执行文件下载链接3](http://ftp.kaihongdigi.com:5000/fsdownload/TRNwP6whE/)
 
-IntelliJ插件下载路径如下:
+访问密码：kaihong
 
-[IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
+压缩包解压密码：kaihong20231121
+
+DevEco Studio上使用的IntelliJ插件下载路径如下:
+
+[DevEco Studio上使用的IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
@@ -76,19 +80,27 @@ napi_generator/examples/ts
 
 ![](./figures/pic-d-ts-transition.png)
 
-其中生成的"napitest.h"文件，定义了框架代码的接口，如下所示：
+其中生成的"napitest.h"文件，定义了框架代码的接口，生成的部分接口如下所示：
 
+```
+...
+class NodeISayHello {
+public:
+    bool addSayHelloListener(NodeISayHelloListener& listener);
+    static NodeISayHelloListener listener_;
+    bool removeSayHelloListener(NodeISayHelloListener& listener);
+    bool registerCallbackfunc();
+    // 供业务调用的回调接口
+    void CallbackfuncCallback(NUMBER_TYPE_2& wid);
 
-```c++
-#include "napitest.h"
-
-namespace napitest {
-bool func1(std::string& v1, std::string& out)
-{
-    // TODO
-    return true;
-}
-}
+    bool unRegisterCallbackfunc();
+    bool sayHello(std::string& from, std::string& to, NUMBER_TYPE_9& sayType);
+    bool sayHi(std::string& from, std::string& to, NUMBER_TYPE_10& sayType);
+    bool sayHelloWithResponse(std::string& from, std::string& to, NUMBER_TYPE_11& sayType, uint32_t& outErrCode, AUTO_INTERFACE_5& out);
+    static AUTO_INTERFACE_5 auto_interface_5OutRes;
+    void auto_interface_5SetCbValue(NUMBER_TYPE_6 result, std::string errMsg, std::string response);
+};
+...
 ```
 
 ### 代码集成
@@ -119,7 +131,7 @@ bool func1(std::string& v1, std::string& out)
 
  当前版本已支持的特性和待开发的特性，如下所示：
 
- [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/release-notes/napi_generator-1.0.md)
+ [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/release-notes)
 
  [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ROADMAP_ZH.md)
 
