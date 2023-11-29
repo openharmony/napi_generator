@@ -2,7 +2,7 @@
 
 ## 简介
 
-NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。目前工具支持可执行文件、VS Code插件、IntelliJ插件三种入口，本文主要介绍IntelliJ插件使用说明。
+NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。目前工具支持可执行文件、VS Code插件、DevEco Studio上使用的IntelliJ插件三种入口，本文主要介绍IntelliJ插件使用说明。
 
 ## 目录 
 
@@ -37,7 +37,7 @@ NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescr
 
 插件下载路径如下，选择新版本下载。
 
-[IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
+[DevEco Studio上使用的IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
 
 ![](../figures/pic-napi_jar_download.png)
 
@@ -98,7 +98,7 @@ bool func1(std::string& v1, std::string& out)
        
 ### 开发步骤
 
-开发者可以根据如下的步骤来完成对工具IntelliJ插件的开发：
+开发者可以根据如下的步骤来完成对DevEco Studio上使用的工具IntelliJ插件的开发：
 
  [工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/napi_IntelliJ_plugin/docs/napi/DEVELOP_ZH.md)
     
@@ -106,7 +106,7 @@ bool func1(std::string& v1, std::string& out)
 
 当前版本已支持的特性和待开发的特性，如下所示：
 
- [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/release-notes/napi_generator-1.0.md)
+ [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/release-notes)
 
  [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ROADMAP_ZH.md)
 

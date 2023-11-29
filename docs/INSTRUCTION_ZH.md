@@ -1,35 +1,23 @@
 # NAPI框架生成工具使用说明
 ## 简介
 
-NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。
+NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插件、DevEco Studio上使用的IntelliJ插件，使用者可以根据自己的需要选择合适的工具。
 
-1.可执行文件下载链接如下：
+1.可执行文件下载路径如下(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接):
 
-[可执行文件下载链接](http://ftpkaihongdigi.i234.me:5000/sharing/TRNwP6whE)
+[可执行文件下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/TRNwP6whE)
+
+[可执行文件下载链接2](http://ftp.kaihong.com:5000/fsdownload/TRNwP6whE/)
+
+[可执行文件下载链接3](http://ftp.kaihongdigi.com:5000/fsdownload/TRNwP6whE/)
 
 访问密码：kaihong
 
-压缩包解压密码：kaihong20231121
+压缩包解压密码：kaihong20231121   
 
-2.VS Code插件下载路径如下：
+DevEco Studio上使用的IntelliJ插件下载路径如下：
 
-[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
-
-[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
-
-[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
-
-下载文件说明如下：
-
-	│   │   |── generator.jar           # IntelliJ插件
-	│   │   |── gnapi-0.0.1.vsix        # VS Code插件
-	│   │   |── napi_generator-linux    # Linux可执行程序 
-	│   │   |── napi_generator-win.exe  # Windows可执行程序    
-	│   │   └── napi_generator-macos    # Mac可执行程序                
-
-IntelliJ插件下载路径如下：
-
-[IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
+[DevEco Studio上使用的IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
 
 ## 工具介绍
 
@@ -278,11 +266,11 @@ cfg.json是一个数组，每一项配置对应一个方法的调用，需要对
 
 [VS插件使用说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_vs_plugin/docs/napi/INSTRUCTION_ZH.md)
 
-### IntelliJ插件使用方法
+### DevEco Studio上使用的IntelliJ插件使用方法
 
 具体的插件使用步骤，可以左键单击以下链接了解：
 
-[IntelliJ插件使用说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/INSTRUCTION_ZH.md)
+[DevEco Studio上使用的IntelliJ插件使用说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/INSTRUCTION_ZH.md)
 
 ## 集成测试
 NAPI框架代码生成后，系统框架开发者进行二次开发后，即可集成到OpenHarmony编译系统，生成对应的库文件，供应用开发者调用接口。工具集成测试的具体操作步骤可以左键单击以下链接了解：

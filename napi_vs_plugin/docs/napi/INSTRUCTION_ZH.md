@@ -1,13 +1,7 @@
 # NAPI框架生成工具VSCode插件使用说明
 ## 简介
 
-NAPI框架生成工具目前支持三种入口，分别是可执行程序、IntelliJ插件、VS Code插件，本文主要介绍VS Code插件使用说明。VS Code插件下载路径如下，选择gnapi-0.0.1.vsix下载。
-
-[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
-
-[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
-
-[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
+NAPI框架生成工具目前支持三种入口，分别是可执行程序、DevEco Studio上使用的IntelliJ插件、VS Code插件，本文主要介绍VS Code插件使用说明。
 
 ## VS Code插件使用方法
 

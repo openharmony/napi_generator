@@ -105,11 +105,11 @@
 
 [VS插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_vs_plugin/docs/napi/DEVELOP_ZH.md)
 
-### IntelliJ插件开发说明
+### DevEco Studio上使用的IntelliJ插件开发说明
 
 具体的插件开发步骤，可以左键单击以下链接了解：
 
-[IntelliJ插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/DEVELOP_ZH.md)
+[DevEco Studio上使用的IntelliJ插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/DEVELOP_ZH.md)
 
 ## 工具测试
   进行工具二次开发后，本地可进行单元测试、story特性测试确保工具的可用性。左键单击以下链接了解详情：
