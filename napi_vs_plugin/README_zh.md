@@ -32,14 +32,6 @@ NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescr
 
 ### 工具使用
 
-插件下载路径如下，选择gnapi-0.0.1.vsix下载。
-
-[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
-
-[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
-
-[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
-
 具体的工具使用步骤，可以左键单击以下链接了解：
 
 [工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/napi_vs_plugin/docs/napi/INSTRUCTION_ZH.md)
@@ -101,7 +93,7 @@ bool func1(std::string& v1, std::string& out)
 
 当前版本已支持的特性和待开发的特性，如下所示：
 
- [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/release-notes/napi_generator-1.0.md)
+ [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/release-notes)
 
  [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ROADMAP_ZH.md)
 

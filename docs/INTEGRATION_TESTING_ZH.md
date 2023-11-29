@@ -210,13 +210,26 @@ Text('普通方法funcTest返回值： returnVal = ' + this.returnVal).margin({ 
 
 ## 使用说明
 
-步骤一：安装镜像环境。
+步骤一：安装镜像环境：将out/rk3568/packages/phone目录下的images镜像文件下载并烧录到开发板上。
 
-	 harmony@Ubuntu-64:~/OpenHarmony/out/rk3568-khdvk/packages/phone/images/pack$ ll
-	 总用量 3329884
-	 drwxrwxr-x 2 harmony harmony       4096 9月  27 14:14  ./
-	 drwxrwxr-x 3 harmony harmony       4096 9月  27 15:30  ../
-	 -rw-rw-r-- 1 harmony harmony 3409787466 9月  27 14:14 RK3568-KHDVK-RAMDISK-GPT-20220929-1817.img
+	 OpenHarmony@Ubuntu-64:~/OpenHarmony/out/rk3568/packages/phone/images$ ll
+	 total 767452
+	 drwxrwxrwx  2 root root       4096 Nov 21 05:32 ./
+	 drwxrwxrwx 15 root root       4096 Nov 21 05:32 ../
+	 -rwxrwxrwx  1 root root   67108864 Nov 21 05:04 boot_linux.img*
+	 -rw-r--r--  1 root root   52428800 Nov 21 05:32 chip_prod.img
+	 -rwxrwxrwx  1 root root       8569 Nov 21 05:04 config.cfg*
+	 -rw-r--r--  1 root root   12582912 Nov 21 05:32 eng_system.img
+	 -rwxrwxrwx  1 root root     455104 Nov 21 05:04 MiniLoaderAll.bin*
+	 -rwxrwxrwx  1 root root        756 Nov 21 05:04 parameter.txt*
+	 -rw-rw-r--  1 root root    2507625 Nov 21 05:32 ramdisk.img
+	 -rwxrwxrwx  1 root root    5639680 Nov 21 05:04 resource.img*
+	 -rw-r--r--  1 root root   52428800 Nov 21 05:32 sys_prod.img
+	 -rw-r--r--  1 root root 1610608640 Nov 21 05:32 system.img
+	 -rwxrwxrwx  1 root root    4194304 Nov 21 05:04 uboot.img*
+	 -rw-rw-r--  1 root root   15806303 Nov 21 05:32 updater.img
+	 -rw-r--r--  1 root root 1468006400 Nov 21 05:32 userdata.img
+	 -rw-r--r--  1 root root  268431360 Nov 21 05:32 vendor.img
 
 步骤二：安装hap包。
 
