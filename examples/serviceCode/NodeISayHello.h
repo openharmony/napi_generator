@@ -12,8 +12,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-#ifndef IMPL_SAYHELLO_H
-#define IMPL_SAYHELLO_H
+#ifndef IMPL_NODEISAYHELLO_H
+#define IMPL_NODEISAYHELLO_H
 
 #include <string>
 #include <memory>
@@ -28,5 +28,5 @@ public:
 };
 std::string funcTest(bool& v);
 }
-#endif // IMPL_SAYHELLO_H
+#endif // IMPL_NODEISAYHELLO_H
 
