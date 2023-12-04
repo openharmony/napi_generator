@@ -5,15 +5,15 @@ NAPI框架生成工具支持三种入口，分别是可执行程序、VS Code插
 
 1.可执行文件下载路径如下(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接):
 
-[可执行文件下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/TRNwP6whE)
+[可执行文件下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/yaRiKSjBI)
 
-[可执行文件下载链接2](http://ftp.kaihong.com:5000/fsdownload/TRNwP6whE/)
+[可执行文件下载链接2](http://ftp.kaihong.com:5000/fsdownload/yaRiKSjBI/)
 
-[可执行文件下载链接3](http://ftp.kaihongdigi.com:5000/fsdownload/TRNwP6whE/)
+[可执行文件下载链接3](http://ftp.kaihongdigi.com:5000/fsdownload/yaRiKSjBI/)
 
 访问密码：kaihong
 
-压缩包解压密码：kaihong20231121   
+压缩包解压密码：kaihong20231121
 
 DevEco Studio上使用的IntelliJ插件下载路径如下：
 

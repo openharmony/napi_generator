@@ -14,11 +14,11 @@
 
 1.下载napi工具可执行程序，并放置在napi_generator/napi_IntelliJ_plugin/resources/cmds目录下对应系统的文件夹下，可执行文件下载路径如下(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接):
 
-[可执行文件下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/TRNwP6whE)
+[可执行文件下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/yaRiKSjBI)
 
-[可执行文件下载链接2](http://ftp.kaihong.com:5000/fsdownload/TRNwP6whE/)
+[可执行文件下载链接2](http://ftp.kaihong.com:5000/fsdownload/yaRiKSjBI/)
 
-[可执行文件下载链接3](http://ftp.kaihongdigi.com:5000/fsdownload/TRNwP6whE/)
+[可执行文件下载链接3](http://ftp.kaihongdigi.com:5000/fsdownload/yaRiKSjBI/)
 
 访问密码：kaihong
 
