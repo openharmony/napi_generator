@@ -20,7 +20,7 @@ struct createThreadSafeFunc[funcName]_value_struct {
     std::string eventName;
 };
 
-napi_value createThreadSafeFunc[funcName]_middle(napi_env env, napi_callback_info info);
+[static_define] napi_value createThreadSafeFunc[funcName]_middle(napi_env env, napi_callback_info info);
 `
 
 /**
@@ -31,7 +31,7 @@ void threadSafeFuncCallJs[funcName](napi_env env, napi_value jsCallback, void *c
 {
     // to add user CallJs code
 }
-napi_value createThreadSafeFunc[funcName]_middle(napi_env env, napi_callback_info info)
+napi_value  [middleClassName]createThreadSafeFunc[funcName]_middle(napi_env env, napi_callback_info info)
 {
     XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();
     if (pxt->IsFailed()) {
@@ -89,7 +89,17 @@ function generateThreadsafeFunc(func, data, className) {
     let postFix = name.substring(preFix.length, name.length)
     codeContext.middleFunc = replaceAll(threadsafeFuncTemplete, "[funcName]", postFix)
     codeContext.middleH = replaceAll(middleHTdSafeFuncTemplate, "[funcName]", postFix)
-    
+    let middleClassName = ""
+    if (className == null) {
+        codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
+        codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", "")
+    }
+    else {
+        middleClassName = className + "_middle"
+        codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "static ")
+        codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", middleClassName + "::")
+    }
+
     return [codeContext.middleFunc, codeContext.implH, codeContext.implCpp, codeContext.middleH]
 }
 
