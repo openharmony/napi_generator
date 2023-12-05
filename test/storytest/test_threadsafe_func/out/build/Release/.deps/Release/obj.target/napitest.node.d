@@ -1,1 +1,0 @@
-cmd_Release/obj.target/napitest.node := g++ -o Release/obj.target/napitest.node -shared -pthread -rdynamic -m64  -Wl,-soname=napitest.node -Wl,--start-group Release/obj.target/napitest/napitest.o Release/obj.target/napitest/napitest_middle.o Release/obj.target/napitest/tool_utility.o -Wl,--end-group 
