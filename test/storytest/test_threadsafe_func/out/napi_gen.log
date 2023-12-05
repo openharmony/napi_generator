@@ -1,0 +1,38 @@
+11/26/2023, 11:49:37 PM at checkGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(116:13)] [INF] check file []
+11/26/2023, 11:49:42 PM at checkGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(135:21)] [ERR] File '@ohos.test.d.ts' not found.
+  The file is in the program because:
+    Root file specified for compilation
+
+11/26/2023, 11:49:42 PM at Object.<anonymous> [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(151:13)] [INF] fail
+File '@ohos.test.d.ts' not found.
+  The file is in the program because:
+    Root file specified for compilation
+
+11/26/2023, 11:50:21 PM at checkGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(116:13)] [INF] check file []
+11/26/2023, 11:50:26 PM at formatCode [/home/zhaojunxia/napi/napi_generator_0824/src/gen/generate.js(180:17)] [INF] Warning: clang-format does not exist, can not format cpp file.
+11/26/2023, 11:50:26 PM at Object.<anonymous> [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(147:13)] [INF] success
+11/30/2023, 11:54:51 PM at checkGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(116:13)] [INF] check file []
+11/30/2023, 11:54:54 PM at paramGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/generate/param_generate.js(1089:17)] [ERR] The current version does not support generating parameter [callback] with type [(value]., Please refer to for support capacity:https://gitee.com/openharmony/napi_generator/tree/master/release-notes
+11/30/2023, 11:54:54 PM at formatCode [/home/zhaojunxia/napi/napi_generator_0824/src/gen/generate.js(180:17)] [INF] Warning: clang-format does not exist, can not format cpp file.
+11/30/2023, 11:54:54 PM at Object.<anonymous> [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(151:13)] [INF] fail
+The current version does not support generating parameter [callback] with type [(value]., Please refer to for support capacity:https://gitee.com/openharmony/napi_generator/tree/master/release-notes
+12/4/2023, 10:46:05 PM at checkGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(116:13)] [INF] check file []
+12/4/2023, 10:46:08 PM at formatCode [/home/zhaojunxia/napi/napi_generator_0824/src/gen/generate.js(180:17)] [INF] Warning: clang-format does not exist, can not format cpp file.
+12/4/2023, 10:46:08 PM at Object.<anonymous> [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(147:13)] [INF] success
+12/4/2023, 10:49:22 PM at checkGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(116:13)] [INF] check file []
+12/4/2023, 10:49:24 PM at formatCode [/home/zhaojunxia/napi/napi_generator_0824/src/gen/generate.js(180:17)] [INF] Warning: clang-format does not exist, can not format cpp file.
+12/4/2023, 10:49:24 PM at Object.<anonymous> [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(147:13)] [INF] success
+12/4/2023, 10:53:08 PM at checkGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(116:13)] [INF] check file []
+12/4/2023, 10:53:11 PM at paramGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/generate/param_generate.js(1089:17)] [ERR] The current version does not support generating parameter [callback] with type [(value]., Please refer to for support capacity:https://gitee.com/openharmony/napi_generator/tree/master/release-notes
+12/4/2023, 10:53:11 PM at formatCode [/home/zhaojunxia/napi/napi_generator_0824/src/gen/generate.js(180:17)] [INF] Warning: clang-format does not exist, can not format cpp file.
+12/4/2023, 10:53:11 PM at Object.<anonymous> [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(151:13)] [INF] fail
+The current version does not support generating parameter [callback] with type [(value]., Please refer to for support capacity:https://gitee.com/openharmony/napi_generator/tree/master/release-notes
+12/4/2023, 10:56:18 PM at checkGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(116:13)] [INF] check file []
+12/4/2023, 10:56:21 PM at formatCode [/home/zhaojunxia/napi/napi_generator_0824/src/gen/generate.js(180:17)] [INF] Warning: clang-format does not exist, can not format cpp file.
+12/4/2023, 10:56:21 PM at Object.<anonymous> [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(147:13)] [INF] success
+12/4/2023, 10:58:43 PM at checkGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(116:13)] [INF] check file []
+12/4/2023, 10:58:46 PM at formatCode [/home/zhaojunxia/napi/napi_generator_0824/src/gen/generate.js(180:17)] [INF] Warning: clang-format does not exist, can not format cpp file.
+12/4/2023, 10:58:46 PM at Object.<anonymous> [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(147:13)] [INF] success
+12/4/2023, 10:59:45 PM at checkGenerate [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(116:13)] [INF] check file []
+12/4/2023, 10:59:47 PM at formatCode [/home/zhaojunxia/napi/napi_generator_0824/src/gen/generate.js(180:17)] [INF] Warning: clang-format does not exist, can not format cpp file.
+12/4/2023, 10:59:47 PM at Object.<anonymous> [/home/zhaojunxia/napi/napi_generator_0824/src/gen/cmd_gen.js(147:13)] [INF] success
