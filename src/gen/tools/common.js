@@ -385,6 +385,15 @@ function isOnOffRegisterFunc(name) {
     return flag;
 }
 
+function isCreateThreadsafeFunc(name) {
+    let index = name.indexOf('createThreadSafeFunc');
+    let isTdSafeFunc = false
+    if (index === 0) {
+        isTdSafeFunc = true
+    }
+    return isTdSafeFunc
+}
+
 function getOnObjCallbackType(funcName, interName) {
     let onObjCbType = ''
     if (interName != '') {
@@ -453,5 +462,6 @@ module.exports = {
     isOnObjCallback,
     isOnOffRegisterFunc,
     getOnObjCallbackType,
-    getLogErrInfo
+    getLogErrInfo,
+    isCreateThreadsafeFunc
 }

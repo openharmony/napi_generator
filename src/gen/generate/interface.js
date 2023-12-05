@@ -16,8 +16,9 @@ const { generateFunctionDirect } = require("./function_direct");
 const { generateFunctionSync } = require("./function_sync");
 const { generateFunctionAsync } = require("./function_async");
 const { generateFunctionOnOff } = require("./function_onoff");
+const { generateThreadsafeFunc } = require("./function_threadsafe");
 const { FuncType, InterfaceList, getArrayType, getArrayTypeTwo, getMapType, EnumList, jsType2CType, 
-    isOnOffRegisterFunc } = require("../tools/common");
+    isOnOffRegisterFunc, isCreateThreadsafeFunc } = require("../tools/common");
 const { jsToC, getCType, paramGenerate } = require("./param_generate");
 const { cToJs } = require("./return_generate");
 const re = require("../tools/re");
@@ -397,9 +398,10 @@ function connectResult(data, inNamespace, name) {
     for (let i in data.allProperties.functions) {
         let func = data.allProperties.functions[i]
         let tmp;
-        // func.name == 'on' || func.name == 'off' || isRegisterFunc(func.name) || isUnRegisterFunc(func.name)
         if (isOnOffRegisterFunc(func.name)) {
             tmp = generateFunctionOnOff(func, data, name)
+        } else if (isCreateThreadsafeFunc(func.name)) {
+            tmp = generateThreadsafeFunc(func, data, name)
         }
         if (!tmp) {
             switch (func.type) {
