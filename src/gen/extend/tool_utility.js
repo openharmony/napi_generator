@@ -1660,9 +1660,6 @@ void RegistThreadsafeFunc(napi_env env, std::string name, napi_threadsafe_functi
 {
     XNapiTool::threadsafeCallFuncs_[name].env_ = env;
     XNapiTool::threadsafeCallFuncs_[name].threadsafefunc_ = thraedsafeFunc;
-
-    // result_status = napi_create_reference(env_, thisVar_, 1, &XNapiTool::threadsafeCallFuncs_[name].thisVarRef_);
-    // CC_ASSERT(result_status == napi_ok);
 }
 
 void XNapiTool::CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret)
