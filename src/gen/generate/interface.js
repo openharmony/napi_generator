@@ -401,7 +401,7 @@ function connectResult(data, inNamespace, name) {
         if (isOnOffRegisterFunc(func.name)) {
             tmp = generateFunctionOnOff(func, data, name)
         } else if (isCreateThreadsafeFunc(func.name)) {
-            tmp = generateThreadsafeFunc(func, data)
+            tmp = generateThreadsafeFunc(func, data, name)
         }
         if (!tmp) {
             switch (func.type) {
