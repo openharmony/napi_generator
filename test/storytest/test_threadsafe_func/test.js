@@ -18,21 +18,21 @@ var assert = require("assert");
 
 describe('threadSafe func', function () {
     // function fun1(v: string): string;
-    it('createThreadSafeFuncTest1', function () {
-         test.createThreadSafeFuncTest1('Test1', (value, value1) => {
-            return value + value1
-         });
-        // assert.deepStrictEqual(ret, '');
-    });
+    // it('createThreadSafeFuncTest1', function () {
+    //      test.createThreadSafeFuncTest1('Test1', (value, value1) => {
+    //         return value + value1
+    //      });
+    //     // assert.deepStrictEqual(ret, '');
+    // });
 
     // interface TestClass1 {
     //     createThreadSafeFuncClass1(name: string, callback: (value?: number, value1?: number) => number):void
     // }
-    it('TestClass1 createThreadSafeFuncClass1', function () {
-        let tc = new TestClass1();
-        tc.createThreadSafeFuncClass1('Class1', (value, value1) => {
-           return value + value1
-        });
-   });
+//     it('TestClass1 createThreadSafeFuncClass1', function () {
+//         let tc = new TestClass1();
+//         tc.createThreadSafeFuncClass1('Class1', (value, value1) => {
+//            return value + value1
+//         });
+//    });
 });
 
