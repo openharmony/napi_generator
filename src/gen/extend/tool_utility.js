@@ -35,7 +35,11 @@ struct CallFunc {
     napi_ref funcRef_;
     napi_ref thisVarRef_;
 };
-
+struct ThreadsafeFunc {
+    napi_env env_;    
+    napi_ref thisVarRef_;
+    napi_threadsafe_function threadsafefunc_;
+};
 class XNapiTool {
 public:
     static const int ZERO = 0;
@@ -50,6 +54,7 @@ public:
     static const int NINE = 9;
     void RegistOnOffFunc(std::string name, napi_value func);
     void UnregistOnOffFunc(std::string name);
+    void RegistThreadsafeFunc(napi_env env, std::string name, napi_threadsafe_function thraedsafeFunc);
     static void CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret);
     static void CallAsyncFunc(CallFunc *pAsyncFuncs, napi_value ret);
 
@@ -196,6 +201,7 @@ public:
 public:
     static void WrapFinalize(napi_env env, XNapiTool *data, DataPtr hint);
     static std::map<std::string, CallFunc> callFuncs_;
+    static std::map<std::string, ThreadsafeFunc> threadsafeCallFuncs_;
     void ReleaseInstance();
     napi_value WrapInstance(DataPtr instance, RELEASE_INSTANCE ri);
     DataPtr UnWarpInstance();
@@ -1647,6 +1653,13 @@ void XNapiTool::UnregistOnOffFunc(std::string name)
     result_status = napi_delete_reference(env_, XNapiTool::callFuncs_[name].thisVarRef_);
     CC_ASSERT(result_status == napi_ok);
     XNapiTool::callFuncs_.erase(name);
+}
+
+std::map<std::string, ThreadsafeFunc> XNapiTool::threadsafeCallFuncs_;
+void RegistThreadsafeFunc(napi_env env, std::string name, napi_threadsafe_function thraedsafeFunc)
+{
+    XNapiTool::threadsafeCallFuncs_[name].env_ = env;
+    XNapiTool::threadsafeCallFuncs_[name].threadsafefunc_ = thraedsafeFunc;
 }
 
 void XNapiTool::CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret)
