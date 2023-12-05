@@ -243,7 +243,6 @@ function generateFunction(func, data, implH = null) {
     if (isOnOffRegisterFunc(func.name)) {
         return generateFunctionOnOff(func, data)
     } else if (isCreateThreadsafeFunc(func.name)) {
-        console.log('CreateThreadsafeFunc begin')
         return generateThreadsafeFunc(func, data)
     }
     switch (func.type) {
