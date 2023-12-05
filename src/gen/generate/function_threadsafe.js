@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd. 
+* Copyright (c) 2023 Shenzhen Kaihong Digital Industry Development Co., Ltd. 
 * Licensed under the Apache License, Version 2.0 (the "License"); 
 * you may not use this file except in compliance with the License. 
 * You may obtain a copy of the License at 
@@ -14,11 +14,6 @@
 */
 const { replaceAll } = require("../tools/tool");
 const re = require("../tools/re");
-const { eventParamGenerate } = require("./param_generate");
-const { returnGenerate } = require("./return_generate");
-const { cToJs } = require("./return_generate");
-const { jsonCfgList, isRegisterFunc, isUnRegisterFunc, getOnObjCallbackType, isOnObjCallback } = 
-require("../tools/common");
 
 let middleHTdSafeFuncTemplate = `
 struct createThreadSafeFunc[funcName]_value_struct {
@@ -26,9 +21,6 @@ struct createThreadSafeFunc[funcName]_value_struct {
 };
 
 napi_value createThreadSafeFunc[funcName]_middle(napi_env env, napi_callback_info info);
-`
-let middleHCallJsTemplate = `
-
 `
 
 /**
@@ -84,29 +76,13 @@ napi_value createThreadSafeFunc[funcName]_middle(napi_env env, napi_callback_inf
 `
 
 function generateThreadsafeFunc(func, data, className) {
-    let param = {
-        valueIn: "", // 定义输入
-        valueOut: "", // 定义输出
-        valueCheckout: "", // 解析
-        valueFill: "", // 填充到函数内
-        valuePackage: "", // 输出参数打包
-        valueDefine: "", // impl参数定义
-        eventName:"", // 注册/去注册事件名称
-        eventNameIsStr:false, // 注册/去注册事件名称是否在ts中为string类型
-        optionalParamDestory: "" // 可选参数内存释放
-    }
-
-
     let codeContext = {
         middleFunc: "",
         implH: "",
         implCpp: "",
         middleH: ""
     }
-    // if (!isOnOffFuncExist(data, func.name)) {
-    //     // 同一个ts文件中所有的on和off 接口只需要生成一份公共的native方法
-    //     gennerateOnOffContext(codeContext, func, data, className, param)
-    // }
+
     let name = func.name
     let preFix = 'createThreadSafeFunc'
 

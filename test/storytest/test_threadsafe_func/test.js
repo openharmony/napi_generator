@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd. 
+* Copyright (c) 2023 Shenzhen Kaihong Digital Industry Development Co., Ltd. 
 * Licensed under the Apache License, Version 2.0 (the "License"); 
 * you may not use this file except in compliance with the License. 
 * You may obtain a copy of the License at 
@@ -15,29 +15,21 @@
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-describe('string case', function () {
+describe('threadSafe func', function () {
     // function fun1(v: string): string;
-    // it('test fun1', function () {
-    //     let ret = test.fun1('18');
-    //     assert.deepStrictEqual(ret, '');
-    // });
+    function onCallbackBooleanVStrRet (isOK) {
+        let str = ''
+        if (isOK) {
+            str = 'onCallbackBooleanVStr' + 'a' + 'b' + 'isOK'
+        }
+        return str
+    }
 
-    // // function fun2(v1: string, v2: string[]): string[];
-    // it('test fun2', function () {
-    //     let ret = test.fun2('18', ['18', '20']);
-    //     assert.deepStrictEqual(ret, []);
-    // });
-
-    // // function fun3(v1: Array<string>, v2: string): Array<string>;
-    // it('test fun3', function () {
-    //     let ret = test.fun3(['18', '20'], '20');
-    //     assert.deepStrictEqual(ret, []);
-    // });
-
-    // // function fun4(v: { [key: string]: string }): string;
-    // it('test fun4', function () {
-    //     let ret = test.fun4({ 'isTrue': '18', 'isExit': '20' });
-    //     assert.deepStrictEqual(ret, '');
-    // });
+    it('createThreadSafeFuncTest1', function () {
+         test.createThreadSafeFuncTest1('Test1', (value, value1) => {
+            return value + value1
+         });
+        // assert.deepStrictEqual(ret, '');
+    });
 });
 
