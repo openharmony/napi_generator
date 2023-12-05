@@ -18,10 +18,12 @@ const { generateFunctionAsync } = require("./function_async");
 const { generateInterface } = require("./interface");
 const { generateClass } = require("./class");
 const { generateType } = require("./type");
-const { FuncType, InterfaceList, EnumList, TypeList, CallFunctionList, isOnOffRegisterFunc } = 
+const { FuncType, InterfaceList, EnumList, TypeList, CallFunctionList, isOnOffRegisterFunc, isCreateThreadsafeFunc } = 
 require("../tools/common");
 const { generateEnum } = require("./enum");
 const { generateFunctionOnOff } = require("./function_onoff");
+const { generateThreadsafeFunc } = require("./function_threadsafe");
+
 const { NapiLog } = require("../tools/NapiLog");
 const { addUniqFunc2List, addUniqObj2List } = require("../tools/tool");
 
@@ -240,6 +242,9 @@ function generateFunction(func, data, implH = null) {
     let className;
     if (isOnOffRegisterFunc(func.name)) {
         return generateFunctionOnOff(func, data)
+    } else if (isCreateThreadsafeFunc(func.name)) {
+        console.log('CreateThreadsafeFunc begin')
+        return generateThreadsafeFunc(func, data)
     }
     switch (func.type) {
         case FuncType.DIRECT:
