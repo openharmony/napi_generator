@@ -58,13 +58,13 @@ napi_value  [middleClassName]createThreadSafeFunc[funcName]_middle(napi_env env,
     } 
 
    // create ThreadSafeFunc
-    napi_threadsafe_function thraedsafeFunc;
+    napi_threadsafe_function threadsafeFunc;
     const size_t maxQueueSize = 0;  // 0 means no limited
     const size_t initialThreadCount = 1;
     napi_value name = pxt->GetArgv(XNapiTool::ZERO); //资源名称复用线程安全函数名称
     napi_create_threadsafe_function(env, pxt->GetArgv(argc - 1), nullptr,
-    name, maxQueueSize, initialThreadCount, nullptr, nullptr, nullptr, threadSafeFuncCallJs[funcName], &thraedsafeFunc);
-    pxt->RegistThreadsafeFunc(env, vio->eventName, thraedsafeFunc);
+    name, maxQueueSize, initialThreadCount, nullptr, nullptr, nullptr, threadSafeFuncCallJs[funcName], &threadsafeFunc);
+    pxt->RegistThreadsafeFunc(vio->eventName, threadsafeFunc);
     napi_value result = pxt->UndefinedValue();
     delete vio;
     if (pxt->IsFailed()) {
