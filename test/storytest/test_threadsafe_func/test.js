@@ -29,10 +29,12 @@ describe('threadSafe func', function () {
     //     createThreadSafeFuncClass1(name: string, callback: (value?: number, value1?: number) => number):void
     // }
     it('TestClass1 createThreadSafeFuncClass1', function () {
+        let ret = ''
         let tc = new TestClass1();
         tc.createThreadSafeFuncClass1('Class1', (value, value1) => {
            return value + value1
         });
+        assert.deepStrictEqual(ret, '');
    });
 });
 
