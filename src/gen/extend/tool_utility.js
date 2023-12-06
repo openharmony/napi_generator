@@ -54,7 +54,7 @@ public:
     static const int NINE = 9;
     void RegistOnOffFunc(std::string name, napi_value func);
     void UnregistOnOffFunc(std::string name);
-    void RegistThreadsafeFunc(napi_env env, std::string name, napi_threadsafe_function thraedsafeFunc);
+    void RegistThreadsafeFunc(std::string name, napi_threadsafe_function thraedsafeFunc);
     static void CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret);
     static void CallAsyncFunc(CallFunc *pAsyncFuncs, napi_value ret);
 
@@ -1656,9 +1656,9 @@ void XNapiTool::UnregistOnOffFunc(std::string name)
 }
 
 std::map<std::string, ThreadsafeFunc> XNapiTool::threadsafeCallFuncs_;
-void RegistThreadsafeFunc(napi_env env, std::string name, napi_threadsafe_function thraedsafeFunc)
+void XNapiTool::RegistThreadsafeFunc(std::string name, napi_threadsafe_function thraedsafeFunc)
 {
-    XNapiTool::threadsafeCallFuncs_[name].env_ = env;
+    XNapiTool::threadsafeCallFuncs_[name].env_ = env_;
     XNapiTool::threadsafeCallFuncs_[name].threadsafefunc_ = thraedsafeFunc;
 }
 
