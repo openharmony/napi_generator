@@ -21,6 +21,9 @@ struct createThreadSafeFunc[funcName]_value_struct {
 };
 
 [static_define] napi_value createThreadSafeFunc[funcName]_middle(napi_env env, napi_callback_info info);
+
+//供业务线程调用安全函数的接口
+void callThreadSafeFunc[funcName]_middle(const std::string &eventName);
 `
 
 /**
@@ -72,6 +75,11 @@ napi_value  [middleClassName]createThreadSafeFunc[funcName]_middle(napi_env env,
     }
     delete pxt; // release
     return result;
+}
+
+//供业务线程调用安全函数的接口
+void callThreadSafeFunc[funcName]_middle(const std::string &eventName) {
+    XNapiTool::CallThreadSafeFunc(eventName);	
 }
 `
 
