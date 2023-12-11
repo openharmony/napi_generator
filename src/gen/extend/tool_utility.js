@@ -57,6 +57,7 @@ public:
     void RegistThreadsafeFunc(std::string name, napi_threadsafe_function thraedsafeFunc);
     static void CallSyncFunc(CallFunc *pSyncFuncs, napi_value ret);
     static void CallAsyncFunc(CallFunc *pAsyncFuncs, napi_value ret);
+    static void CallThreadSafeFunc(std::string eventName);
 
     using CallbackFunction = void (*)(XNapiTool *pxt, DataPtr data);
     using RELEASE_INSTANCE = void (*)(DataPtr p);
@@ -1751,6 +1752,30 @@ void XNapiTool::CallAsyncFunc(CallFunc *pAsyncFuncs, napi_value ret)
             free(data);
             delete work;
         });
+}
+
+//供业务线程调用安全函数的接口
+void XNapiTool::CallThreadSafeFunc(std::string eventName) {
+	if(XNapiTool::threadsafeCallFuncs_.count(eventName) <= 0) {
+        return;
+    }
+    ThreadsafeFunc *pThreadSafeFunc = &XNapiTool::threadsafeCallFuncs_[eventName];
+
+    auto status = napi_acquire_threadsafe_function(pThreadSafeFunc->threadsafefunc_);
+    if (status != napi_ok) {
+        return;
+    }
+
+    status = napi_call_threadsafe_function(
+        pThreadSafeFunc->threadsafefunc_, nullptr, napi_tsfn_blocking);
+    if (status != napi_ok) {
+        return;
+    }
+
+    status = napi_release_threadsafe_function(pThreadSafeFunc->threadsafefunc_, napi_tsfn_release);
+    if (status != napi_ok) {
+        return;
+    }
 }
 `
 
