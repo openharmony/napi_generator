@@ -1772,7 +1772,7 @@ void XNapiTool::CallThreadSafeFunc(std::string eventName) {
         return;
     }
 
-    status = napi_release_threadsafe_function(pThreadSafeFunc->threadsafefunc_, napi_tsfn_release);
+    status = napi_release_threadsafe_function(pThreadSafeFunc->threadsafefunc_, napi_tsfn_abort);
     if (status != napi_ok) {
         return;
     }
