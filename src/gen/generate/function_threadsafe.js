@@ -21,9 +21,6 @@ struct createThreadSafeFunc[funcName]_value_struct {
 };
 
 [static_define] napi_value createThreadSafeFunc[funcName]_middle(napi_env env, napi_callback_info info);
-
-//供业务线程调用安全函数的接口
-void callThreadSafeFunc[funcName]_middle(const std::string &eventName);
 `
 
 /**
@@ -65,9 +62,13 @@ napi_value  [middleClassName]createThreadSafeFunc[funcName]_middle(napi_env env,
     const size_t maxQueueSize = 0;  // 0 means no limited
     const size_t initialThreadCount = 1;
     napi_value name = pxt->GetArgv(XNapiTool::ZERO); //资源名称复用线程安全函数名称
-    napi_create_threadsafe_function(env, pxt->GetArgv(argc - 1), nullptr,
+    status = napi_create_threadsafe_function(env, pxt->GetArgv(argc - 1), nullptr,
     name, maxQueueSize, initialThreadCount, nullptr, nullptr, nullptr, threadSafeFuncCallJs[funcName], &threadsafeFunc);
+    if (status != napi_ok) {
+        return nullptr;
+    }
     pxt->RegistThreadsafeFunc(vio->eventName, threadsafeFunc);
+    XNapiTool::CallThreadSafeFunc(vio->eventName);
     napi_value result = pxt->UndefinedValue();
     delete vio;
     if (pxt->IsFailed()) {
@@ -75,11 +76,6 @@ napi_value  [middleClassName]createThreadSafeFunc[funcName]_middle(napi_env env,
     }
     delete pxt; // release
     return result;
-}
-
-//供业务线程调用安全函数的接口
-void callThreadSafeFunc[funcName]_middle(const std::string &eventName) {
-    XNapiTool::CallThreadSafeFunc(eventName);	
 }
 `
 
