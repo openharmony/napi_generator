@@ -32,7 +32,9 @@ describe('threadSafe func', function () {
         let ret = ''
         let tc = new TestClass1();
         tc.createThreadSafeFuncClass1('Class1', (value, value1) => {
-           return value + value1
+         let res = value + value1
+         console.log('value + value1 is: ' + res)
+           return res
         });
         assert.deepStrictEqual(ret, '');
    });
