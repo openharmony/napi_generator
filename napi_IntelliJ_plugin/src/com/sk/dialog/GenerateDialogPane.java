@@ -14,6 +14,8 @@
  */
 package com.sk.dialog;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
@@ -24,6 +26,8 @@ import com.sk.action.ScriptAction;
 import com.sk.utils.FileInfo;
 import com.sk.utils.FileUtil;
 import com.sk.utils.GenNotification;
+import com.sk.utils.Data;
+import com.sk.utils.DataList;
 import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,6 +44,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -76,12 +82,14 @@ public class GenerateDialogPane extends JDialog {
             + FileUtil.getNewline() + "project(napi_lib)" + FileUtil.getNewline() + "set(CMAKE_CXX_STANDARD 17)"
             + FileUtil.getNewline() + FileUtil.getNewline();
     private static final String CMAKE_ADD_LIB_TEMPLATE =
-            "add_library(LIBNAME SHARED PATH/tool_utility.cpp PATH/FILE_PREFIX.cpp PATH/FILE_PREFIX_middle.cpp)";
+            "add_library(LIBNAME SHARED PATH/tool_utility.cpp PATH/FILE_PREFIX.cpp PATH/FILE_PREFIX_middle.cpp"
+                    + " SERVICECODE)";
     private static final String CMAKE_LINK_TEMPLATE =
             "target_link_libraries(LIBNAME PUBLIC libace_napi.z.so libuv.so)";
 
     private final Project project;
     private List<String> tsFileList = new ArrayList<>();
+    private List<Data> dataList = new ArrayList<>();
     private JPanel contentPane;
 
     private JTextField textFieldInterPath;
@@ -92,13 +100,14 @@ public class GenerateDialogPane extends JDialog {
     private JButton buttonSelectGenPath;
     private JButton buttonSelectScriptPath;
     private JComboBox comboBox;
-    private boolean generateSuccess = true;
-    private String sErrorMessage = "";
+    private JButton buttonCfg;
     private String interFileOrDir;
     private String genOutDir;
     private String scriptOutDir;
     private String numberType;
-
+    private boolean generateSuccess = true;
+    private String sErrorMessage = "";
+    private DataList list = new DataList(dataList);
 
     /**
      * 构造函数
@@ -129,7 +138,13 @@ public class GenerateDialogPane extends JDialog {
         buttonSelectInter.addActionListener(browseAction);
         buttonSelectGenPath.addActionListener(new GenAction(buttonSelectGenPath, textFieldGenPath));
         buttonSelectScriptPath.addActionListener(new ScriptAction(buttonSelectScriptPath, textFieldScriptPath));
-
+        buttonCfg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ConfigDialog cfgDialog = new ConfigDialog(list);
+                cfgDialog.showAndGet();
+            }
+        });
     }
 
     @Override
@@ -193,6 +208,12 @@ public class GenerateDialogPane extends JDialog {
      * @return 执行状态
      */
     public boolean runFun() {
+        // 获取dataList数据
+        dataList = list.getDataList();
+        // 写入cfg.json文件
+        if (dataList.size() > 0) {
+            writeJsonFile(dataList);
+        }
         GenNotification.notifyMessage(this.project, "", "Generating Napi", NotificationType.INFORMATION);
         interFileOrDir = textFieldInterPath.getText();
         genOutDir = textFieldGenPath.getText();
@@ -242,6 +263,12 @@ public class GenerateDialogPane extends JDialog {
         String command = file.toString();
         String inArgs = genInArgs(interFileOrDir);
         command += inArgs + " -o " + genOutDir + " -i " + radioButton.isSelected() + " -n " + genNumbertypeArgs();
+        // 用户未配置业务代码则不加 -s 参数
+        String cfgFilePath = textFieldScriptPath.getText().trim() + "/cfg.json";
+        File fileExist = new File(cfgFilePath);
+        if (fileExist.exists()) {
+            command += " -s " + cfgFilePath;
+        }
         return command;
     }
 
@@ -341,7 +368,6 @@ public class GenerateDialogPane extends JDialog {
         errConsumer.start();
         outputConsumer.start();
 
-
         if (generateSuccess) {
             writeCompileCfg();
         } else {
@@ -436,6 +462,34 @@ public class GenerateDialogPane extends JDialog {
     }
 
     /**
+     * 创建路径，将业务配置数据dataList写入Json文件,Json文件路径与Cmake路径一致
+     * @param dataList 用户配置的数据
+     * @throws IOException e
+     */
+    private void writeJsonFile(List<Data> dataList) {
+        FileUtil fileUtil = new FileUtil();
+        String cfgFilePath = fileUtil.makeFile(textFieldScriptPath.getText().trim() + "/cfg.json");
+
+        if (TextUtils.isEmpty(cfgFilePath)) {
+            LOG.info("cfgFile is fail");
+            return;
+        }
+        try {
+            // 创建 ObjectMapper 对象
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+            // 将数据转换为 JSON 字符串
+            String json = mapper.writeValueAsString(dataList);
+            StringBuilder cfgJson = new StringBuilder(json);
+            // 将 JSON 字符串写入文件
+            fileUtil.writeContentToFile(cfgFilePath, cfgJson.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 生成编译文件
      */
     private void writeCompileCfg() {
@@ -450,13 +504,22 @@ public class GenerateDialogPane extends JDialog {
             // 获取cpp文件相对于CMakeList.txt文件的路径
             String cppRelativePath = getRelativePath(new File(genOutDir).getPath(), new File(scriptOutDir).getPath());
 
+            String serviceCodeCfg = "";
+            // 获取用户配置的业务cpp相对路径
+            for (Data data : dataList) {
+                String cppName = data.getCppName();
+                if (serviceCodeCfg.indexOf(cppName) < 0) {
+                    serviceCodeCfg += cppName + " ";
+                }
+            }
             // 生成 CMakeList.txt文件内容
             StringBuilder cmakeBuilder = new StringBuilder(CMAKE_SETCXX_TEMPLATE);
             for (String tsFilePath : tsFileList) {
                 String cppNamePrefix = getCppNamePrefix(tsFilePath);
                 String libName = getLibNameFromTsFile(new File(tsFilePath).getName());
                 String libStr = CMAKE_ADD_LIB_TEMPLATE.replaceAll("LIBNAME", libName)
-                        .replaceAll("PATH/", cppRelativePath).replaceAll("FILE_PREFIX", cppNamePrefix);
+                        .replaceAll("PATH/", cppRelativePath).replaceAll("FILE_PREFIX", cppNamePrefix)
+                                .replaceAll("SERVICECODE", serviceCodeCfg);
                 cmakeBuilder.append(libStr).append(FileUtil.getNewline());
 
                 cmakeBuilder.append(CMAKE_LINK_TEMPLATE.replaceAll("LIBNAME", libName))
