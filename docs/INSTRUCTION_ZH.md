@@ -150,8 +150,8 @@ serviceCode/NodeISayHello.cpp
 ```
 [
  {
-  "includeName": "../serviceCode/say_hello.h",
-  "cppName": "../serviceCode/say_hello.cpp",
+  "includeName": "../serviceCode/NodeISayHello.h",
+  "cppName": "../serviceCode/NodeISayHello.cpp",
   "interfaceName": "funcTest",
   "serviceCode": "out = napitest::funcTest(v);"
   "description": "includeName: 引入的业务代码.h文件相对路径, cppName: 引入的业务代码.cpp文件相对路径, interfaceName: ts文件中的使用接口名,业务代码就在该接口中调用;格式为：类名::方法名(如: TestClass::funcTest1)，若无类名，则格式为：方法名(如： funcTest), serviceCode: 在接口中调用业务代码的调用语句。（该属性只做注释使用）"
@@ -161,9 +161,9 @@ serviceCode/NodeISayHello.cpp
 
 cfg.json是一个数组，每一项配置对应一个方法的调用，需要对多少方法进行调用就配置多少项；其中
 
-"includeName": 引入的业务代码.h文件相对路径, 如："../serviceCode/say_hello.h",
+"includeName": 引入的业务代码.h文件相对路径, 如："../serviceCode/NodeISayHello.h",
 
-"cppName": 引入的业务代码.cpp文件相对路径,  如："../serviceCode/say_hello.cpp",
+"cppName": 引入的业务代码.cpp文件相对路径,  如："../serviceCode/NodeISayHello.cpp",
 
 "interfaceName": ts文件中的使用接口名,业务代码就在该接口中调用;格式为：类名::方法名(如: TestClass::funcTest1)，若无类名，则格式为：方法名(如： funcTest), 
 
@@ -215,8 +215,8 @@ cfg.json是一个数组，每一项配置对应一个方法的调用，需要对
 ```
 [
  {
-  "includeName": "../serviceCode/say_hello.h",
-  "cppName": "../serviceCode/say_hello.cpp",
+  "includeName": "../serviceCode/NodeISayHello.h",
+  "cppName": "../serviceCode/NodeISayHello.cpp",
   "interfaceName": "funcTest",
   "serviceCode": "out = napitest::funcTest(v);"
   "description": "includeName: 引入的业务代码.h文件相对路径, cppName: 引入的业务代码.cpp文件相对路径, interfaceName: ts文件中的使用接口名,业务代码就在该接口中调用;格式为：类名::方法名(如: TestClass::funcTest1)，若无类名，则格式为：方法名(如： funcTest), serviceCode: 在接口中调用业务代码的调用语句。（该属性只做注释使用）"
@@ -226,9 +226,9 @@ cfg.json是一个数组，每一项配置对应一个方法的调用，需要对
 
 cfg.json是一个数组，每一项配置对应一个方法的调用，需要对多少方法进行调用就配置多少项；其中
 
-"includeName": 引入的业务代码.h文件相对路径, 如："../serviceCode/say_hello.h",
+"includeName": 引入的业务代码.h文件相对路径, 如："../serviceCode/NodeISayHello.h",
 
-"cppName": 引入的业务代码.cpp文件相对路径,  如："../serviceCode/say_hello.cpp",
+"cppName": 引入的业务代码.cpp文件相对路径,  如："../serviceCode/NodeISayHello.cpp",
 
 "interfaceName": ts文件中的使用接口名,业务代码就在该接口中调用;格式为：类名::方法名(如: TestClass::funcTest1)，若无类名，则格式为：方法名(如： funcTest), 
 

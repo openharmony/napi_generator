@@ -78,7 +78,7 @@ public class GenerateDialogPane extends JDialog {
     private static final String CMAKE_ADD_LIB_TEMPLATE =
             "add_library(LIBNAME SHARED PATH/tool_utility.cpp PATH/FILE_PREFIX.cpp PATH/FILE_PREFIX_middle.cpp)";
     private static final String CMAKE_LINK_TEMPLATE =
-            "target_link_libraries(LIBNAME PUBLIC libace_napi.z.so libuv.so)";
+            "target_link_libraries(LIBNAME PUBLIC libace_napi.z.so libuv.so libhilog_ndk.z.so)";
 
     private final Project project;
     private List<String> tsFileList = new ArrayList<>();

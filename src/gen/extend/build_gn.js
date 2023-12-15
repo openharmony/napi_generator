@@ -30,7 +30,8 @@ ohos_shared_library("[implName]")
         "//third_party/node/src",
     ]
     deps=[
-        "//foundation/ace/napi:ace_napi",
+        "//foundation/arkui/napi:ace_napi",
+        "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
     ]
     remove_configs = [ "//build/config/compiler:no_rtti" ]
     cflags=[
