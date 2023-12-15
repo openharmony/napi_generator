@@ -133,8 +133,9 @@ public class TsGenerateDialog extends DialogWrapper {
 
     /**
      * help button监听事件
-     *
-     * @return void
+     * @param void 空
+     * @return void 空
+     * @throws log 输出异常
      */
     public void buttonHelpListener() {
         buttonHelp.addActionListener(e -> {
@@ -149,7 +150,9 @@ public class TsGenerateDialog extends DialogWrapper {
     /**
      * cancel button监听事件
      *
-     * @return void
+     * @param void 空
+     * @return void 空
+     * @throws log 输出异常
      */
     public void buttonCancelListener() {
         buttonCancel.addActionListener(e -> {
@@ -159,8 +162,9 @@ public class TsGenerateDialog extends DialogWrapper {
 
     /**
      * OK button监听事件
-     *
-     * @return void
+     * @param void 空
+     * @return void 空
+     * @throws log 输出异常
      */
     public void buttonOKListener() {
         buttonOK.addActionListener(e -> {
