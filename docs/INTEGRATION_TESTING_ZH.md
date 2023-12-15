@@ -93,9 +93,9 @@ ns.sayHello("js1", "native1", napitest.SayType.kInitiative);
 调用成功后，打印传入的参数
 
 ```
-I C02e00/NAPITESTNAPILayer: [say_hello.cpp:37] NAPITEST_LOGI sayHello from = js1
-I C02e00/NAPITESTNAPILayer: [say_hello.cpp:38] NAPITEST_LOGI sayHello to = native1
-I C02e00/NAPITESTNAPILayer: [say_hello.cpp:39] NAPITEST_LOGI sayHello sayType = 0
+I C02e00/NAPITESTNAPILayer: [NodeISayHello.cpp:37] NAPITEST_LOGI sayHello from = js1
+I C02e00/NAPITESTNAPILayer: [NodeISayHello.cpp:38] NAPITEST_LOGI sayHello to = native1
+I C02e00/NAPITESTNAPILayer: [NodeISayHello.cpp:39] NAPITEST_LOGI sayHello sayType = 0
 ```
 
 js层打印回调数据
@@ -258,11 +258,11 @@ hilog -p off
  log.txt中包含"NAPITEST_LOGI..."相关日志即为接口调用成功，如：
 
 ```
-I C02e00/NAPITESTNAPILayer: [say_hello.cpp:37] NAPITEST_LOGI sayHello from = js1
-I C02e00/NAPITESTNAPILayer: [say_hello.cpp:38] NAPITEST_LOGI sayHello to = native1
-I C02e00/NAPITESTNAPILayer: [say_hello.cpp:39] NAPITEST_LOGI sayHello sayType = 0
-I C02e00/NAPITESTNAPILayer: [say_hello.cpp:64] NAPITEST_LOGI NodeISayHelloListener_onSayHelloStartCallback begin
-I C02e00/NAPITESTNAPILayer: [say_hello.cpp:66] NAPITEST_LOGI NodeISayHelloListener_onSayHelloStartCallback end
+I C02e00/NAPITESTNAPILayer: [NodeISayHello.cpp:37] NAPITEST_LOGI sayHello from = js1
+I C02e00/NAPITESTNAPILayer: [NodeISayHello.cpp:38] NAPITEST_LOGI sayHello to = native1
+I C02e00/NAPITESTNAPILayer: [NodeISayHello.cpp:39] NAPITEST_LOGI sayHello sayType = 0
+I C02e00/NAPITESTNAPILayer: [NodeISayHello.cpp:64] NAPITEST_LOGI NodeISayHelloListener_onSayHelloStartCallback begin
+I C02e00/NAPITESTNAPILayer: [NodeISayHello.cpp:66] NAPITEST_LOGI NodeISayHelloListener_onSayHelloStartCallback end
 ...
 ```
 
