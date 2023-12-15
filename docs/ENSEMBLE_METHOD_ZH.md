@@ -9,11 +9,9 @@
 
 ### 建立模块位置
 
-模块目录理论上可以建立在OpenHarmony代码库的任何地方，假设OpenHarmony代码库的目录为`OHOS_SRC`，在`OHOS_SRC/foundation`目录下，例如建立此次测试模块目录：napitest。此时，`OHOS_SRC/foundation`目录下应该有aafwk,arkui,ai, …, napitest等目录，其中napitest就是刚刚建立的，在napitest目录下，把之前用可执行文件或者插件转换出来的文件全部拷贝到该目录下，并且在工具生成代码目录下新建一个文件bundle.json。例如napitest目录下有以下文件：
+模块目录理论上可在OpenHarmony工程的任一位置，假设OpenHarmony代码库的目录为OHOS_SRC，在OHOS_SRC/foundation目录下，建测试模块目录：napitest。napitest目录结构如下：
 
-将业务代码文件放在serviceCode目录下
-
-    foundation/napitest
+    napitest
     |-- generatorCode // 工具代码部分
     |-- |-- binding.gyp
     |-- |-- BUILD.gn
@@ -27,48 +25,12 @@
     |-- |-- tool_utility.h
     |-- |-- napi_gen.log
     |-- serviceCode  // 放置业务代码部分
-    |-- |-- say_hello.h
-    |-- |-- say_hello.cpp  
+    |-- |-- NodeISayHello.h
+    |-- |-- NodeISayHello.cpp  
+
+其中generatorCode为工具生成的代码，serviceCode 为用户配置的业务代码， bundle.json 为新增的编译配置文件。
 
 ### 编译修改点
-
-#### 修改BUILD.gn文件
-
-将deps中的"//foundation/ace/napi:ace_napi"修改为"//foundation/arkui/napi:ace_napi"，并在deps依赖中增加依赖libhilog，修改后的BUILD.gn文件内容如下所示：
-
-```
-import("//build/ohos.gni")
-
-ohos_shared_library("napitest")
-{
-    sources = [
-        "napitest_middle.cpp",
-        "../serviceCode/say_hello.cpp",     # 将业务代码编译进去
-        "napitest.cpp",
-        "tool_utility.cpp",
-    ]
-    include_dirs = [
-        ".",
-        "//third_party/node/src",
-    ]
-    deps=[
-        "//foundation/arkui/napi:ace_napi",
-        "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
-    ]
-    remove_configs = [ "//build/config/compiler:no_rtti" ]
-    cflags=[
-    ]
-    cflags_cc=[
-        "-frtti",
-    ]
-    ldflags = [
-    ]
-    
-    relative_install_dir = "module"
-    part_name = "napitest"
-    subsystem_name = "napitest"
-}
-```
 
 #### 修改bundle.json文件
 
@@ -170,9 +132,9 @@ ohos_shared_library("napitest")
 
 ### 建立模块位置
 
-模块目录理论上可以建立在OpenHarmony代码库的任何地方，假设OpenHarmony代码库的目录为`OHOS_SRC`，在`OHOS_SRC/foundation`目录下，例如建立此次测试模块目录：napitest。此时，`OHOS_SRC/foundation`目录下应该有aafwk,arkui,ai, …, napitest等目录，其中napitest就是刚刚建立的，在napitest目录下，把之前用可执行文件或者插件转换出来的文件全部拷贝到该目录下，并且在该目录下新建一个文件bundle.json。例如napitest目录下有以下文件：
+模块目录理论上可在OpenHarmony工程的任一位置，假设OpenHarmony代码库的目录为OHOS_SRC，在OHOS_SRC/foundation目录下，建测试模块目录：napitest。napitest目录结构如下：
 
-    foundation/napitest
+    napitest
     |-- binding.gyp
     |-- BUILD.gn
     |-- bundle.json
@@ -184,44 +146,9 @@ ohos_shared_library("napitest")
     |-- tool_utility.cpp
     |-- tool_utility.h
 
+其中bundle.json为新建的编译配置文件，其它为工具生成的代码。
+
 ### 编译修改点
-
-#### 修改BUILD.gn文件
-
-将deps中的"//foundation/ace/napi:ace_napi"修改为"//foundation/arkui/napi:ace_napi"，并在deps依赖中增加依赖libhilog，修改后的BUILD.gn文件内容如下所示：
-
-```
-import("//build/ohos.gni")
-
-ohos_shared_library("napitest")
-{
-    sources = [
-        "napitest_middle.cpp",
-        "napitest.cpp",
-        "tool_utility.cpp",
-    ]
-    include_dirs = [
-        ".",
-        "//third_party/node/src",
-    ]
-    deps=[
-        "//foundation/arkui/napi:ace_napi",
-        "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
-    ]
-    remove_configs = [ "//build/config/compiler:no_rtti" ]
-    cflags=[
-    ]
-    cflags_cc=[
-        "-frtti",
-    ]
-    ldflags = [
-    ]
-    
-    relative_install_dir = "module"
-    part_name = "napitest"
-    subsystem_name = "napitest"
-}
-```
 
 #### 修改bundle.json文件
 

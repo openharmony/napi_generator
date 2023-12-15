@@ -11,9 +11,9 @@
 
 #### 建立模块位置
 
-模块目录理论上可以建立在OpenHarmony代码库的任何地方，假设OpenHarmony代码库的目录为`OHOS_SRC`，在`OHOS_SRC/foundation`目录下，例如建立此次测试模块目录：napitest。此时，`OHOS_SRC/foundation`目录下应该有aafwk,ace,ai, …, napitest等目录，其中napitest就是刚刚建立的，在napitest目录下，把之前用可执行文件或者插件转换出来的文件全部拷贝到该目录下，并且在该目录下新建一个文件bundle.json。例如napitest目录下有以下文件：
+模块目录理论上可在OpenHarmony工程的任一位置，假设OpenHarmony代码库的目录为OHOS_SRC，在OHOS_SRC/foundation目录下，建测试模块目录：napitest。napitest目录结构如下：
 
-    foundation/napitest
+    napitest
     |-- binding.gyp
     |-- BUILD.gn
     |-- bundle.json
@@ -25,11 +25,49 @@
     |-- tool_utility.cpp
     |-- tool_utility.h
 
-#### 编译修改点（可选）
+其中bundle.json为新增的编译配置文件，其它为工具生成的代码。
 
-##### 修改BUILD.gn文件（可选）
+#### 编译修改点
 
-正常生成代码之后不需要修改，若用户需要修改子系统和部件名称，则根据自身需求修改BUILD.gn文件和bundle.json文件中子系统与部件名称即可。
+##### 修改BUILD.gn文件
+
+将deps中"//foundation/arkui/napi:ace_napi"的修改为"//foundation/ace/napi:ace_napi"，修改后的BUILD.gn文件内容如下所示：
+
+```
+import("//build/ohos.gni")
+
+ohos_shared_library("napitest")
+{
+    sources = [
+        "napitest_middle.cpp",
+        "../serviceCode/NodeISayHello.cpp",     # 将业务代码编译进去
+        "napitest.cpp",
+        "tool_utility.cpp",
+    ]
+    include_dirs = [
+        ".",
+        "//third_party/node/src",
+    ]
+    deps=[
+        "//foundation/ace/napi:ace_napi",
+        "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
+    ]
+    remove_configs = [ "//build/config/compiler:no_rtti" ]
+    cflags=[
+    ]
+    cflags_cc=[
+        "-frtti",
+    ]
+    ldflags = [
+    ]
+    
+    relative_install_dir = "module"
+    part_name = "napitest"
+    subsystem_name = "napitest"
+}
+```
+
+若用户需要修改子系统和部件名称，则根据自身需求修改BUILD.gn文件和bundle.json文件中子系统与部件名称即可。
 
 ##### 修改bundle.json文件
 
@@ -140,17 +178,6 @@ if (v) {
 
 [napitest.cpp](https://gitee.com/openharmony/napi_generator/blob/master/examples/napitest.cpp)
 
-并在BUILD.gn文件deps依赖中增加依赖libhilog，如下所示：
-
-```
-...
-deps=[
-        "//foundation/ace/napi:ace_napi",
-        "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
-     ]
-...
-```
-
 ##### 增加子系统
 
 在源码/build/subsystem_config.json中增加子系统选项。如下所示：
@@ -180,9 +207,9 @@ deps=[
 
 #### 建立模块位置
 
-模块目录理论上可以建立在OpenHarmony代码库的任何地方，假设OpenHarmony代码库的目录为`OHOS_SRC`，在`OHOS_SRC/foundation`目录下，例如建立此次测试模块目录：napitest。此时，`OHOS_SRC/foundation`目录下应该有aafwk,ace,ai, …, napitest等目录，其中napitest就是刚刚建立的，在napitest目录下，把之前用可执行文件或者插件转换出来的文件全部拷贝到该目录下，并且在该目录下新建一个文件ohos.build。例如napitest目录下有以下文件：
+模块目录理论上可在OpenHarmony工程的任一位置，假设OpenHarmony代码库的目录为OHOS_SRC，在OHOS_SRC/foundation目录下，建测试模块目录：napitest。napitest目录结构如下：
 
-    foundation/napitest
+    napitest
     |-- binding.gyp
     |-- BUILD.gn
     |-- ohos.build
@@ -194,11 +221,49 @@ deps=[
     |-- tool_utility.cpp
     |-- tool_utility.h
 
+其中ohos.build为新增的编译配置文件，其它为工具生成的代码。
+
 #### 编译修改点
 
-##### 修改BUILD.gn文件（可选）
+##### 修改BUILD.gn文件
 
-正常生成代码之后不需要修改，若用户需要修改子系统和部件名称，则根据自身需求修改BUILD.gn文件和ohos.build文件中子系统与部件名称即可。
+将deps中"//foundation/arkui/napi:ace_napi"的修改为"//foundation/ace/napi:ace_napi"，修改后的BUILD.gn文件内容如下所示：
+
+```
+import("//build/ohos.gni")
+
+ohos_shared_library("napitest")
+{
+    sources = [
+        "napitest_middle.cpp",
+        "../serviceCode/NodeISayHello.cpp",     # 将业务代码编译进去
+        "napitest.cpp",
+        "tool_utility.cpp",
+    ]
+    include_dirs = [
+        ".",
+        "//third_party/node/src",
+    ]
+    deps=[
+        "//foundation/ace/napi:ace_napi",
+        "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
+    ]
+    remove_configs = [ "//build/config/compiler:no_rtti" ]
+    cflags=[
+    ]
+    cflags_cc=[
+        "-frtti",
+    ]
+    ldflags = [
+    ]
+    
+    relative_install_dir = "module"
+    part_name = "napitest"
+    subsystem_name = "napitest"
+}
+```
+
+若用户需要修改子系统和部件名称，则根据自身需求修改BUILD.gn文件和ohos.build文件中子系统与部件名称即可。
 
 ##### 修改ohos.build文件
 
@@ -269,17 +334,6 @@ if (v) {
 增加业务代码之后的文件如下所示：
 
 [napitest.cpp](https://gitee.com/openharmony/napi_generator/blob/master/examples/napitest.cpp)
-
-并在BUILD.gn文件deps依赖中增加依赖libhilog，如下所示：
-
-```
-...
-deps=[
-        "//foundation/ace/napi:ace_napi",
-        "//base/hiviewdfx/hilog/interfaces/native/innerkits:libhilog",
-     ]
-...
-```
 
 ##### 增加子系统
 
