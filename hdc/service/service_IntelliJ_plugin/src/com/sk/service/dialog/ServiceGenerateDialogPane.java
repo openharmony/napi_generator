@@ -205,11 +205,6 @@ public class ServiceGenerateDialogPane extends JDialog {
         return command;
     }
 
-    /**
-     * 生成命令行指令
-     *
-     * @return 返回命令行执行内容
-     */
     private void copyServiceHeader() {
         String sysName = System.getProperties().getProperty("os.name").toUpperCase();
         String tmpDirFile = System.getProperty("java.io.tmpdir");
