@@ -42,26 +42,22 @@ napi_generator/examples/app
 
 ```
 class NodeISayHelloListenerImpl {
-    listener = null;
-    constructor(listener) {
-        this.listener = listener;
-    }
-    onSayHelloStart(info) {
+    onSayHelloStart(info: object) {
         console.log('napiTestDemo ----onSayHelloStart', info);
         AppStorage.SetOrCreate("textInfoStart", JSON.stringify(info))
     }
-    onSayHelloEnd(info) {
+    onSayHelloEnd(info: object) {
         console.log('napiTestDemo ----onSayHelloEnd.', info);
         AppStorage.SetOrCreate("textInfoEnd", JSON.stringify(info))
     }
 }
-let listener = new NodeISayHelloListenerImpl()
+let listener: NodeISayHelloListenerImpl = new NodeISayHelloListenerImpl()
 ```
 
 1.2 定义register注册的回调
 
 ```
-function onCallbackfunnm(wid) {
+function onCallbackfunnm(wid: number) {
     AppStorage.SetOrCreate("callBackNum", JSON.stringify(wid))
     console.info("wid = " + wid)
     return "ocCallbackfuncnm";
@@ -155,14 +151,10 @@ ns.sayHi("js4", "native4", napitest.SayType.kResponse);
 5.调用Promise回调
 
 ```
- await ns.sayHelloWithResponse("response from", "response to", napitest.SayType.kResponse).then(ret => {
-     this.textErrMsg = ret.errMsg
-     this.textResult = JSON.stringify(ret.result)
-     this.textResponse = ret.response
-     console.info("napiTestDemo ----sayHelloWithResponse ret.errMsg = " + ret.errMsg)
-     console.info("napiTestDemo ----sayHelloWithResponse ret.result = " + ret.result)
-     console.info("napiTestDemo ----sayHelloWithResponse ret.response = " + ret.response)
-});
+ await ns.sayHelloWithResponse("response from", "response to", napitest.SayType.kResponse).then((ret: object) => {
+     this.promiseRes = JSON.stringify(ret);
+     console.info("napiTestDemo ----sayHelloWithResponse ret = " + JSON.stringify(ret));
+ });
 ```
 
 调用成功后，打印传入的参数
@@ -176,9 +168,7 @@ I C02e00/NAPITESTNAPILayer: sayHelloWithResponse:109 NAPITEST_LOGI sayHelloWithR
 js层打印promise回调数据
 
 ```
-I A03d00/JSAPP: napiTestDemo ----sayHelloWithResponse ret.result = 0
-I A03d00/JSAPP: napiTestDemo ----sayHelloWithResponse ret.errMsg = 
-I A03d00/JSAPP: napiTestDemo ----sayHelloWithResponse ret.response = recv hello.
+I A03d00/JSAPP: napiTestDemo ----sayHelloWithResponse ret = {"result":0,"errMsg":"","response":""}
 ```
 
 6.调用普通方法funcTest
@@ -199,7 +189,8 @@ I A03d00/JSAPP: napiTestDemo ----funcTest returnVal = "ret is false"
 
 ```	
 // 调用sayHelloWithResponse后保存promise回调数据
-Text('promise回调: errMsg = ' + this.textErrMsg + ', result = ' + this.textResult + ', response = ' + this.textResponse           // 调用sayHello方法后保留addXXX注册的回调方法数据
+Text('promise回调: promiseResult = ' + this.promiseRes).margin({ top: 10 })
+// 调用sayHello方法后保留addXXX注册的回调方法数据
 Text('sayHelloStart回调: info = ' + this.textInfoStart).margin({ top: 10 })
 Text('sayHelloEnd回调: info = ' + this.textInfoEnd).margin({ top: 10 })
 // 调用sayHi方法后保留registerXXX注册的回调方法数据
