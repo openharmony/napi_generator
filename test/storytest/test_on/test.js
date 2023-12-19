@@ -290,19 +290,14 @@ describe('test register/unRegister callback interface/type param is optional', f
 });
 
 class NodeISayHelloListenerImpl {
-    listener = null;
-    bb = "d";
-    constructor(listener) {
-      this.listener = listener;
-    }
-  
     onSayHelloStart(info) {
       console.log('----onSayHelloStart XXX', info);
     }
     onSayHelloEnd(info) {
       console.log('----onSayHelloEnd abc.', info);
     }
-  }
+}
+
 function onSayHelloStart(info) {
     console.log('----aaa bbb ccc onSayHelloStart xxx', info);
 }
