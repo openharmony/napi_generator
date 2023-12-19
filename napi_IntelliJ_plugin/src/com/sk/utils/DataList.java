@@ -14,6 +14,8 @@
  */
 package com.sk.utils;
 
+import com.intellij.notification.NotificationType;
+
 import java.util.List;
 
 /**
@@ -51,8 +53,34 @@ public class DataList {
      * @param  data  用户输入的配置业务代码相关数据
      * @throws log 输出异常
      */
-    public void setDataListInfo(Data data) {
+    public void addDataListInfo(Data data) {
         this.dataList.add(data);
+        GenNotification.notifyMessage(null, "", "添加成功", NotificationType.INFORMATION);
+    }
+
+    /**
+     * 修改数据，将用户输入的Data数据加入List中保存
+     * @param  index 用户要修改的那一项数据
+     * @param  data  用户输入的配置业务代码相关数据
+     * @throws log 输出异常
+     */
+    public void modifyDataListInfo(int index, Data data) {
+        this.dataList.set(index, data);
+        GenNotification.notifyMessage(null, "", "修改成功", NotificationType.INFORMATION);
+    }
+
+    /**
+     * 删除数据，删除一项配置数据
+     * @param  index  用户要删除的那一项数据的索引
+     * @throws log 输出异常
+     */
+    public void deleteDataListInfo(int index) {
+        if (index >= 0 && index < this.dataList.size()) {
+            this.dataList.remove(index);
+            GenNotification.notifyMessage(null, "", "删除成功", NotificationType.INFORMATION);
+        } else {
+            GenNotification.notifyMessage(null, "", "删除失败", NotificationType.INFORMATION);
+        }
     }
 
 }

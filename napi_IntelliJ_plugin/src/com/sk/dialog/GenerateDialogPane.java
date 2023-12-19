@@ -138,11 +138,12 @@ public class GenerateDialogPane extends JDialog {
         buttonSelectInter.addActionListener(browseAction);
         buttonSelectGenPath.addActionListener(new GenAction(buttonSelectGenPath, textFieldGenPath));
         buttonSelectScriptPath.addActionListener(new ScriptAction(buttonSelectScriptPath, textFieldScriptPath));
+
         buttonCfg.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ConfigDialog cfgDialog = new ConfigDialog(list);
-                cfgDialog.showAndGet();
+                ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list);
+                showCfgInfoDialog.showAndGet();
             }
         });
     }
@@ -501,15 +502,19 @@ public class GenerateDialogPane extends JDialog {
         }
 
         try {
-            // 获取cpp文件相对于CMakeList.txt文件的路径
+            // 获取工具代码cpp文件相对于CMakeList.txt文件的路径
             String cppRelativePath = getRelativePath(new File(genOutDir).getPath(), new File(scriptOutDir).getPath());
 
             String serviceCodeCfg = "";
             // 获取用户配置的业务cpp相对路径
             for (Data data : dataList) {
-                String cppName = data.getCppName();
-                if (serviceCodeCfg.indexOf(cppName) < 0) {
-                    serviceCodeCfg += cppName + " ";
+                String cppNamePath = data.getCppName();
+                if (serviceCodeCfg.indexOf(cppNamePath) < 0) {
+                    // 获取业务代码cpp文件相对于CMakeLists.txt的路径
+                    String codeRelativePath = getRelativePath(new File(cppNamePath).getPath(), new File(scriptOutDir).getPath());
+                    // 去掉最后的斜杠"/"
+                    codeRelativePath = codeRelativePath.substring(0, codeRelativePath.length() -1);
+                    serviceCodeCfg += codeRelativePath + " ";
                 }
             }
             // 生成 CMakeList.txt文件内容

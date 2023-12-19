@@ -20,9 +20,9 @@
       <xy x="48" y="54" width="800" height="350"/>
     </constraints>
     <properties>
-      <maximumSize width="700" height="350"/>
-      <minimumSize width="700" height="350"/>
-      <preferredSize width="700" height="350"/>
+      <maximumSize width="800" height="350"/>
+      <minimumSize width="800" height="350"/>
+      <preferredSize width="800" height="350"/>
     </properties>
     <border type="none"/>
     <children>
@@ -90,9 +90,19 @@
                   <component id="f4932" class="javax.swing.JTextField" binding="textFieldIncludeName">
                     <constraints/>
                     <properties>
-                      <maximumSize width="650" height="30"/>
-                      <minimumSize width="350" height="30"/>
-                      <preferredSize width="550" height="30"/>
+                      <maximumSize width="700" height="30"/>
+                      <minimumSize width="400" height="30"/>
+                      <preferredSize width="600" height="30"/>
+                    </properties>
+                  </component>
+                  <component id="accc4" class="javax.swing.JButton" binding="buttonIncludeName">
+                    <constraints/>
+                    <properties>
+                      <icon value="images/openDisk.png"/>
+                      <maximumSize width="30" height="30"/>
+                      <minimumSize width="30" height="30"/>
+                      <preferredSize width="30" height="30"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -120,9 +130,19 @@
                   <component id="f0a27" class="javax.swing.JTextField" binding="textFieldCppName">
                     <constraints/>
                     <properties>
-                      <maximumSize width="650" height="30"/>
-                      <minimumSize width="350" height="30"/>
-                      <preferredSize width="550" height="30"/>
+                      <maximumSize width="700" height="30"/>
+                      <minimumSize width="400" height="30"/>
+                      <preferredSize width="600" height="30"/>
+                    </properties>
+                  </component>
+                  <component id="147f8" class="javax.swing.JButton" binding="buttonCppName">
+                    <constraints/>
+                    <properties>
+                      <icon value="images/openDisk.png"/>
+                      <maximumSize width="30" height="30"/>
+                      <minimumSize width="30" height="30"/>
+                      <preferredSize width="30" height="30"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -150,9 +170,9 @@
                   <component id="20c4c" class="javax.swing.JTextField" binding="textFieldInterName">
                     <constraints/>
                     <properties>
-                      <maximumSize width="650" height="30"/>
-                      <minimumSize width="350" height="30"/>
-                      <preferredSize width="550" height="30"/>
+                      <maximumSize width="700" height="30"/>
+                      <minimumSize width="400" height="30"/>
+                      <preferredSize width="600" height="30"/>
                     </properties>
                   </component>
                 </children>
@@ -180,9 +200,9 @@
                   <component id="53f49" class="javax.swing.JTextField" binding="textFieldServiceCode">
                     <constraints/>
                     <properties>
-                      <maximumSize width="650" height="30"/>
-                      <minimumSize width="350" height="30"/>
-                      <preferredSize width="550" height="30"/>
+                      <maximumSize width="700" height="30"/>
+                      <minimumSize width="400" height="30"/>
+                      <preferredSize width="600" height="30"/>
                     </properties>
                   </component>
                 </children>
