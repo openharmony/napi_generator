@@ -33,6 +33,7 @@ public class ConfirmDialog extends DialogWrapper {
     /**
      * 构造函数
      * @param message 弹出框信息内容
+     * @throws log 输出异常
      */
     public ConfirmDialog(String message) {
         super(true);
@@ -44,6 +45,12 @@ public class ConfirmDialog extends DialogWrapper {
         init();
     }
 
+    /**
+     * 创建视图
+     * @param void 空
+     * @return 组件内容
+     * @throws log 输出异常
+     */
     @Override
     @Nullable
     protected JComponent createCenterPanel() {

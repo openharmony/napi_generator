@@ -1,11 +1,10 @@
 /*
- * Copyright (c) 2022 Guangzhou Digitalchina Information Technology Co., Ltd.
- * All rights reserved.
+ * Copyright (c) 2023 Shenzhen Kaihong Digital Industry Development Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,9 +15,9 @@
 package com.sk.dialog;
 
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.ValidationInfo;
+import com.sk.utils.DataList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,35 +30,32 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * 主界面对话框Wrapper
+ * 配置config文件对话框Wrapper
  *
- * @author: xudong
+ * @author: goujingjing
  * @see: tool conversion plug-in
- * @version: v1.0.0
- * @since 2022-05-27
+ * @version: v1.0.3
+ * @since 2023-12-14
  */
-public class GenerateDialog extends DialogWrapper {
+public class ConfigDialog extends DialogWrapper {
     private static final Logger LOG = Logger.getInstance(GenerateDialog.class);
-    private static final String FRAME_TITLE = "Generate Napi Frame";
-    private static final String CODE_URL = "https://gitee.com/openharmony/napi_generator";
+    private static final String FRAME_TITLE = "Config";
+    private static final String CODE_URL =
+            "https://gitee.com/openharmony/napi_generator/blob/master/docs/INSTRUCTION_ZH.md";
 
-    private final GenerateDialogPane genDiag;
+    private final ConfigDialogPane genDiag;
 
     /**
      * 构造函数
-     *
-     * @param project       projectId
-     * @param destPath      目录文件
-     * @param directoryPath 文件夹目录
-     * @param fileName      文件名
+     * @param list   配置文件数据列表
      * @throws log 输出异常
      */
-    public GenerateDialog(Project project, String destPath, String directoryPath, String fileName) {
+    public ConfigDialog(DataList list) {
         super(true);
         this.setResizable(false);
         setTitle(FRAME_TITLE);
         setModal(true);
-        genDiag = new GenerateDialogPane(project, destPath, directoryPath, fileName);
+        genDiag = new ConfigDialogPane(list);
         init();
     }
 
@@ -79,7 +75,7 @@ public class GenerateDialog extends DialogWrapper {
     /**
      * 校验数据
      * @param void 空
-     * @return 检测文本框架是否有目录。
+     * @return 错误信息 检测用户是否填入配置信息。
      * @throws log 输出异常
      */
     @Nullable
@@ -98,7 +94,7 @@ public class GenerateDialog extends DialogWrapper {
     @Override
     protected Action[] createActions() {
         DialogWrapperExitAction exitAction = new DialogWrapperExitAction("Cancel", CANCEL_EXIT_CODE);
-        CustomOKAction okAction = new CustomOKAction();
+        CustomOkAction okAction = new CustomOkAction();
 
         // 设置默认的焦点按钮
         okAction.putValue(DialogWrapper.DEFAULT_ACTION, true);
@@ -121,9 +117,9 @@ public class GenerateDialog extends DialogWrapper {
     /**
      * 自定义 ok Action
      */
-    protected class CustomOKAction extends DialogWrapperAction {
+    protected class CustomOkAction extends DialogWrapperAction {
 
-        protected CustomOKAction() {
+        protected CustomOkAction() {
             super("OK");
         }
 
@@ -133,9 +129,9 @@ public class GenerateDialog extends DialogWrapper {
             if (validationInfo != null) {
                 LOG.info(validationInfo.message);
             } else {
-                if (genDiag.runFun()) {
-                    close(CANCEL_EXIT_CODE);
-                }
+                // 将配置数据存起来
+                genDiag.setDataInfo();
+                close(CANCEL_EXIT_CODE);
             }
         }
     }
