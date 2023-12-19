@@ -16,6 +16,8 @@ package com.sk.dialog;
 
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.ui.ValidationInfo;
+import com.sk.action.SelectCppAction;
+import com.sk.action.SelectHAction;
 import com.sk.utils.Data;
 import com.sk.utils.DataList;
 import com.sk.utils.GenNotification;
@@ -44,19 +46,52 @@ public class ConfigDialogPane extends JDialog {
     private JTextField textFieldCppName;
     private JTextField textFieldInterName;
     private JTextField textFieldServiceCode;
+    private JButton buttonIncludeName;
+    private JButton buttonCppName;
     private DataList list = new DataList(new ArrayList<>());
+    private int index;
 
     /**
      * 构造函数
      * @param list  配置文件数据列表
+     * @param index  用户选择的列表行索引
+     * @param data   用户选择的列表行数据
      * @throws log 输出异常
      */
-    public ConfigDialogPane(DataList list) {
+    public ConfigDialogPane(DataList list, int index, Data data) {
         this.list = list;
+        this.index = index;
+        if (data != null) {
+            textFieldIncludeName.setText(data.getIncludeName());
+            textFieldCppName.setText(data.getCppName());
+            textFieldInterName.setText(data.getCppName());
+            textFieldServiceCode.setText(data.getServiceCode());
+        } else {
+            textFieldIncludeName.setText("");
+            textFieldCppName.setText("");
+            textFieldInterName.setText("");
+            textFieldServiceCode.setText("");
+        }
+        buttonIncludeName.addActionListener(new SelectHAction(buttonIncludeName, textFieldIncludeName));
+        buttonCppName.addActionListener(new SelectCppAction(buttonCppName, textFieldCppName));
+
         setContentPane(contentPane);
         setModal(true);
         contentPane.registerKeyboardAction(actionEvent -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    }
+
+    /**
+     * 修改dataList数据，将用户输入的文本选择框数据存入dataList列表
+     *
+     */
+    public void modifyDataInfo() {
+        String includeNameText = textFieldIncludeName.getText();
+        String cppNameText = textFieldCppName.getText();
+        String interNameText = textFieldInterName.getText();
+        String serviceCodeText = textFieldServiceCode.getText();
+        Data data = new Data(includeNameText, cppNameText, interNameText, serviceCodeText);
+        list.modifyDataListInfo(index, data);
     }
 
     /**
@@ -70,7 +105,7 @@ public class ConfigDialogPane extends JDialog {
         String interNameText = textFieldInterName.getText();
         String serviceCodeText = textFieldServiceCode.getText();
         Data data = new Data(includeNameText, cppNameText, interNameText, serviceCodeText);
-        list.setDataListInfo(data);
+        list.addDataListInfo(data);
     }
 
     /**
