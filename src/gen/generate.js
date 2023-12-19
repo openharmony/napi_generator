@@ -231,7 +231,7 @@ function analyzeJsonCfg(jsonCfg) {
             includeName: jsonCfg[i].includeName,
             interfaceName: interfaceBody,
             cppName: jsonCfg[i].cppName,
-            serviceCode: jsonCfg[i].serviceCode,
+            serviceCode: jsonCfg[i].serviceCode.replaceAll('\\n', '\n'),
         })
     }
     jsonCfgList.push(jsonConfig)
