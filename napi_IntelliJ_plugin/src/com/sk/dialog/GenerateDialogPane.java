@@ -511,9 +511,10 @@ public class GenerateDialogPane extends JDialog {
                 String cppNamePath = data.getCppName();
                 if (serviceCodeCfg.indexOf(cppNamePath) < 0) {
                     // 获取业务代码cpp文件相对于CMakeLists.txt的路径
-                    String codeRelativePath = getRelativePath(new File(cppNamePath).getPath(), new File(scriptOutDir).getPath());
+                    String codeRelativePath = getRelativePath(new File(cppNamePath).getPath(),
+                            new File(scriptOutDir).getPath());
                     // 去掉最后的斜杠"/"
-                    codeRelativePath = codeRelativePath.substring(0, codeRelativePath.length() -1);
+                    codeRelativePath = codeRelativePath.substring(0, codeRelativePath.length() - 1);
                     serviceCodeCfg += codeRelativePath + " ";
                 }
             }

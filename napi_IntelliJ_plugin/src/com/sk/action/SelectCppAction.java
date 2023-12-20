@@ -64,7 +64,7 @@ public class SelectCppAction implements ActionListener {
             fcDlg.setDialogTitle("请选择cppName路径...");
             fcDlg.setFileSelectionMode(JFileChooser.FILES_ONLY);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("cpp文件(*.cpp, *.cc, *.C, *.cxx, *.c++)",
-                    "cpp","cc","C","cxx","c++");
+                    "cpp", "cc", "C", "cxx", "c++");
             fcDlg.setMultiSelectionEnabled(false);
             fcDlg.setFileFilter(filter);
             int returnVal = fcDlg.showOpenDialog(null);
