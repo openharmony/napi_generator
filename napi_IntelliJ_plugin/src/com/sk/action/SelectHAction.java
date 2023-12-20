@@ -63,7 +63,7 @@ public class SelectHAction implements ActionListener {
             JFileChooser fcDlg = new JFileChooser(hFilePath);
             fcDlg.setDialogTitle("请选择includeName路径...");
             fcDlg.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("h文件(*.h, *.hpp, *.hxx)", "h","hpp","hxx");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("h文件(*.h, *.hpp, *.hxx)", "h", "hpp", "hxx");
             fcDlg.setMultiSelectionEnabled(false);
             fcDlg.setFileFilter(filter);
             int returnVal = fcDlg.showOpenDialog(null);
