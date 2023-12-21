@@ -79,7 +79,7 @@ public class FileUtil {
             ObjectMapper mapper = new ObjectMapper();
             buildStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildObj);
 
-            writeContentToFile(buildJsonFilePath, buildStr);
+            writeContentToFile(buildJsonFilePath, buildStr, false);
         } catch (ParseException parseException) {
             LOG.error("Failed to parse file [" + buildJsonFilePath + "], error: " + parseException);
         } catch (JsonProcessingException jsonProcessingEx) {
@@ -92,11 +92,12 @@ public class FileUtil {
      *
      * @param path    文件路径
      * @param content 数据内容
+     * @param isAppend 文件是否追加写入
      */
-    public void writeContentToFile(String path, String content) {
+    public void writeContentToFile(String path, String content, boolean isAppend) {
         File file = new File(path);
-        try (FileWriter fw = new FileWriter(file, false)) {
-            fw.write(content + FileUtil.getNewline());
+        try (FileWriter fw = new FileWriter(file, isAppend)) {
+            fw.write(FileUtil.getNewline() + content + FileUtil.getNewline());
         } catch (IOException ioException) {
             LOG.error("Failed to write file [" + path + "], error: " + ioException);
         }
