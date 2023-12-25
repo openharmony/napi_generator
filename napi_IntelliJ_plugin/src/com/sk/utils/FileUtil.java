@@ -15,13 +15,12 @@
 package com.sk.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.parser.ParseException;
 import org.apache.http.util.TextUtils;
 
 import java.io.BufferedReader;
@@ -51,16 +50,12 @@ public class FileUtil {
     private static final String LF = getNewline(); // 换行符
 
     private static final String BUILD_OPTION = "{" + LF
-                    + "    \"externalNativeOptions\": {" + LF
-                    + "      \"path\": \"\"," + LF
-                    + "      \"arguments\": \"-v\"," + LF
-                    + "      \"abiFilters\": [" + LF
-                    + "        \"armeabi-v7a\"," + LF
-                    + "        \"arm64-v8a\"" + LF
-                    + "      ]," + LF
-                    + "      \"cppFlags\": \"\"," + LF
-                    + "    }" + LF
-                    + "  }";
+            + "    \"externalNativeOptions\": {" + LF
+            + "      \"path\": \"\"," + LF
+            + "      \"arguments\": \"\"," + LF
+            + "      \"cppFlags\": \"\"," + LF
+            + "    }" + LF
+            + "  }";
 
     /**
      * 改写build-profile.json5文件
@@ -71,17 +66,14 @@ public class FileUtil {
     public void writeBuildJsonFile(String buildJsonFilePath, String cmakeFilePath) {
         try {
             String buildStr = readWholeFile(buildJsonFilePath);
-            JSONParser jsParser = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
-            JSONObject buildObj = (JSONObject) jsParser.parse(buildStr);
-            JSONObject buildOptionObj = (JSONObject) jsParser.parse(BUILD_OPTION);
+            JSONObject buildObj = (JSONObject) JSON.parse(buildStr);
+            JSONObject buildOptionObj = (JSONObject) JSON.parse(BUILD_OPTION);
             ((JSONObject) buildOptionObj.get("externalNativeOptions")).put("path", cmakeFilePath);
             buildObj.put("buildOption", buildOptionObj);
             ObjectMapper mapper = new ObjectMapper();
             buildStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildObj);
 
             writeContentToFile(buildJsonFilePath, buildStr, false);
-        } catch (ParseException parseException) {
-            LOG.error("Failed to parse file [" + buildJsonFilePath + "], error: " + parseException);
         } catch (JsonProcessingException jsonProcessingEx) {
             LOG.error("Failed to write file [" + buildJsonFilePath + "], error: " + jsonProcessingEx);
         }
