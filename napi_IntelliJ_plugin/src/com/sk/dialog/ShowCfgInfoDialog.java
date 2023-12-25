@@ -16,7 +16,6 @@ package com.sk.dialog;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.ui.ValidationInfo;
 import com.sk.utils.Data;
 import com.sk.utils.DataList;
 import org.jetbrains.annotations.NotNull;
@@ -38,32 +37,27 @@ import java.net.URISyntaxException;
  * @version: v1.0.3
  * @since 2023-12-14
  */
-public class ConfigDialog extends DialogWrapper {
+public class ShowCfgInfoDialog extends DialogWrapper {
     private static final Logger LOG = Logger.getInstance(GenerateDialog.class);
     private static final String FRAME_TITLE = "Config";
     private static final String CODE_URL =
             "https://gitee.com/openharmony/napi_generator/blob/master/docs/INSTRUCTION_ZH.md";
 
+    private final ShowCfgInfoDialogPane genDiag;
     private DataList list = null;
-    private final ConfigDialogPane genDiag;
-    private boolean isAddFlag;
 
     /**
      * 构造函数
-     * @param list   配置文件数据列表
-     * @param index  用户选择的列表行索引
-     * @param data   用户选择的列表行数据
-     * @param isAddFlag  增加数据或者修改数据的标志位
+     * @param list  配置文件数据列表
      * @throws log 输出异常
      */
-    public ConfigDialog(DataList list, int index, Data data, boolean isAddFlag) {
+    public ShowCfgInfoDialog(DataList list) {
         super(true);
         this.setResizable(false);
         this.list = list;
-        this.isAddFlag = isAddFlag;
         setTitle(FRAME_TITLE);
         setModal(true);
-        genDiag = new ConfigDialogPane(list, index, data);
+        genDiag = new ShowCfgInfoDialogPane(list);
         init();
     }
 
@@ -79,19 +73,6 @@ public class ConfigDialog extends DialogWrapper {
         return genDiag.getContentPanel();
     }
 
-
-    /**
-     * 校验数据
-     * @param void 空
-     * @return 错误信息 检测用户是否填入配置信息。
-     * @throws log 输出异常
-     */
-    @Nullable
-    @Override
-    protected ValidationInfo doValidate() {
-        return genDiag.validationInfo();
-    }
-
     /**
      * ok/cancel按钮
      * @param void 空
@@ -103,10 +84,10 @@ public class ConfigDialog extends DialogWrapper {
     protected Action[] createActions() {
         DialogWrapperExitAction exitAction = new DialogWrapperExitAction("Cancel", CANCEL_EXIT_CODE);
         CustomOkAction okAction = new CustomOkAction();
+        CustomDelAction delAction = new CustomDelAction();
+        CustomUpdateAction updateAction = new CustomUpdateAction();
 
-        // 设置默认的焦点按钮
-        okAction.putValue(DialogWrapper.DEFAULT_ACTION, true);
-        return new Action[]{exitAction, okAction};
+        return new Action[]{exitAction, okAction, delAction, updateAction};
     }
 
     /**
@@ -123,35 +104,57 @@ public class ConfigDialog extends DialogWrapper {
     }
 
     /**
-     * 自定义 ok Action
+     * 自定义 ok Action 增加配置数据
      */
     protected class CustomOkAction extends DialogWrapperAction {
 
         protected CustomOkAction() {
-            super("OK");
+            super("Add");
         }
 
         @Override
         protected void doAction(ActionEvent actionEvent) {
-            ValidationInfo validationInfo = doValidate();
-            if (validationInfo != null) {
-                LOG.info(validationInfo.message);
-            } else {
-                if (isAddFlag) {
-                    // 增加数据
-                    genDiag.setDataInfo();
-                    close(CANCEL_EXIT_CODE);
-                    ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list);
-                    showCfgInfoDialog.showAndGet();
-                } else {
-                    // 修改数据
-                    genDiag.modifyDataInfo();
-                    close(CANCEL_EXIT_CODE);
-                    ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list);
-                    showCfgInfoDialog.showAndGet();
-                }
+            close(CANCEL_EXIT_CODE);
+            ConfigDialog cfgDialog = new ConfigDialog(list, 0, null, true);
+            cfgDialog.showAndGet();
+        }
+    }
 
-            }
+    /**
+     * 自定义 Delete Action 增加配置数据
+     */
+    protected class CustomDelAction extends DialogWrapperAction {
+
+        protected CustomDelAction() {
+            super("Delete");
+        }
+
+        @Override
+        protected void doAction(ActionEvent actionEvent) {
+            close(CANCEL_EXIT_CODE);
+            int index = genDiag.getSelectedIndex();
+            list.deleteDataListInfo(index);
+            ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list);
+            showCfgInfoDialog.showAndGet();
+        }
+    }
+
+    /**
+     * 自定义 Update Action 增加配置数据
+     */
+    protected class CustomUpdateAction extends DialogWrapperAction {
+
+        protected CustomUpdateAction() {
+            super("Update");
+        }
+
+        @Override
+        protected void doAction(ActionEvent actionEvent) {
+            close(CANCEL_EXIT_CODE);
+            int index = genDiag.getSelectedIndex();
+            Data data = genDiag.getSelectedData();
+            ConfigDialog cfgDialog = new ConfigDialog(list, index, data, false);
+            cfgDialog.showAndGet();
         }
     }
 
