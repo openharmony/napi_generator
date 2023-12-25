@@ -81,6 +81,8 @@ public class GenerateDialogPane extends JDialog {
     private static final String CMAKE_SETCXX_TEMPLATE = "cmake_minimum_required(VERSION 3.4.1)"
             + FileUtil.getNewline() + "project(napi_lib)" + FileUtil.getNewline() + "set(CMAKE_CXX_STANDARD 17)"
             + FileUtil.getNewline() + FileUtil.getNewline();
+    private static final String CMAKE_SETCXX_HASCMAKEFILE_TEMPLATE = FileUtil.getNewline()
+            + "set(CMAKE_CXX_STANDARD 17)" + FileUtil.getNewline() + FileUtil.getNewline();
     private static final String CMAKE_ADD_LIB_TEMPLATE =
             "add_library(LIBNAME SHARED PATH/tool_utility.cpp PATH/FILE_PREFIX.cpp PATH/FILE_PREFIX_middle.cpp"
                     + " SERVICECODE)";
@@ -107,6 +109,7 @@ public class GenerateDialogPane extends JDialog {
     private String numberType;
     private boolean generateSuccess = true;
     private String sErrorMessage = "";
+    private boolean isExistCmakeFile = false;
     private DataList list = new DataList(dataList);
 
     /**
@@ -138,11 +141,12 @@ public class GenerateDialogPane extends JDialog {
         buttonSelectInter.addActionListener(browseAction);
         buttonSelectGenPath.addActionListener(new GenAction(buttonSelectGenPath, textFieldGenPath));
         buttonSelectScriptPath.addActionListener(new ScriptAction(buttonSelectScriptPath, textFieldScriptPath));
+
         buttonCfg.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ConfigDialog cfgDialog = new ConfigDialog(list);
-                cfgDialog.showAndGet();
+                ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list);
+                showCfgInfoDialog.showAndGet();
             }
         });
     }
@@ -483,7 +487,7 @@ public class GenerateDialogPane extends JDialog {
             String json = mapper.writeValueAsString(dataList);
             StringBuilder cfgJson = new StringBuilder(json);
             // 将 JSON 字符串写入文件
-            fileUtil.writeContentToFile(cfgFilePath, cfgJson.toString());
+            fileUtil.writeContentToFile(cfgFilePath, cfgJson.toString(), false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -494,6 +498,12 @@ public class GenerateDialogPane extends JDialog {
      */
     private void writeCompileCfg() {
         FileUtil fileUtil = new FileUtil();
+        String cmakePath = scriptOutDir + "/CMakeLists.txt";
+        File fileTmp = new File(cmakePath);
+        if (fileTmp.exists()) {
+            isExistCmakeFile = true;
+        }
+        // 若没有，则创建CMakeLists.txt文件
         String cmakeFilePath = fileUtil.makeFile(scriptOutDir + "/CMakeLists.txt");
         if (TextUtils.isEmpty(cmakeFilePath)) {
             LOG.info("makeFile is fail");
@@ -501,19 +511,28 @@ public class GenerateDialogPane extends JDialog {
         }
 
         try {
-            // 获取cpp文件相对于CMakeList.txt文件的路径
+            // 获取工具代码cpp文件相对于CMakeList.txt文件的路径
             String cppRelativePath = getRelativePath(new File(genOutDir).getPath(), new File(scriptOutDir).getPath());
 
             String serviceCodeCfg = "";
             // 获取用户配置的业务cpp相对路径
             for (Data data : dataList) {
-                String cppName = data.getCppName();
-                if (serviceCodeCfg.indexOf(cppName) < 0) {
-                    serviceCodeCfg += cppName + " ";
+                String cppNamePath = data.getCppName();
+                if (serviceCodeCfg.indexOf(cppNamePath) < 0) {
+                    // 获取业务代码cpp文件相对于CMakeLists.txt的路径
+                    String codeRelativePath = getRelativePath(new File(cppNamePath).getPath(),
+                            new File(scriptOutDir).getPath());
+                    // 去掉最后的斜杠"/"
+                    codeRelativePath = codeRelativePath.substring(0, codeRelativePath.length() - 1);
+                    serviceCodeCfg += codeRelativePath + " ";
                 }
             }
             // 生成 CMakeList.txt文件内容
             StringBuilder cmakeBuilder = new StringBuilder(CMAKE_SETCXX_TEMPLATE);
+            // 若工程目录存在CMakeLists.txt文件
+            if (isExistCmakeFile) {
+                cmakeBuilder = new StringBuilder(CMAKE_SETCXX_HASCMAKEFILE_TEMPLATE);
+            }
             for (String tsFilePath : tsFileList) {
                 String cppNamePrefix = getCppNamePrefix(tsFilePath);
                 String libName = getLibNameFromTsFile(new File(tsFilePath).getName());
@@ -525,7 +544,7 @@ public class GenerateDialogPane extends JDialog {
                 cmakeBuilder.append(CMAKE_LINK_TEMPLATE.replaceAll("LIBNAME", libName))
                         .append(FileUtil.getNewline());
             }
-            fileUtil.writeContentToFile(cmakeFilePath, cmakeBuilder.toString());
+            fileUtil.writeContentToFile(cmakeFilePath, cmakeBuilder.toString(), true);
 
             // 需要在main文件夹下创建cpp目录, 如果没有此目录，DevEco 3.0版本编译时不会编译任何目录中的c++代码。
             Path path = Paths.get(project.getBasePath() + "/entry/src/main/cpp");

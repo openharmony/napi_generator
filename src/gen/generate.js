@@ -209,7 +209,7 @@ function formatCode(destDir) {
     deleteFolder(path.resolve("./tmpLocal"))
 }
 
-function analyzeJsonCfg(jsonCfg) {
+function analyzeJsonCfg(destDir, jsonCfg) {
     let len = jsonCfg.length;
     let jsonConfig = []
     // 将json文件的数据存入jsonCfgList中
@@ -227,10 +227,16 @@ function analyzeJsonCfg(jsonCfg) {
                 funcName: jsonCfg[i].interfaceName,
             }
         }
+        // 业务代码文件绝对路径
+        let includeNamePath = jsonCfg[i].includeName;
+        let cppNamePath = jsonCfg[i].cppName;
+        // 获取业务代码.h文件相对于生成框架代码的路径
+        let hRelativePath = path.relative(destDir, includeNamePath).replaceAll('\\', '/');
+        let cppRelativePath = path.relative(destDir, cppNamePath).replaceAll('\\', '/');
         jsonConfig.push({
-            includeName: jsonCfg[i].includeName,
+            includeName: hRelativePath,
+            cppName: cppRelativePath,
             interfaceName: interfaceBody,
-            cppName: jsonCfg[i].cppName,
             serviceCode: jsonCfg[i].serviceCode.replaceAll('\\n', '\n'),
         })
     }
@@ -246,7 +252,7 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
     }
     // 分析业务配置代码的调用代码: 分析Json文件
     if (jsonCfg) {
-        analyzeJsonCfg(jsonCfg);
+        analyzeJsonCfg(destDir, jsonCfg);
     }
 
     let result = generateNamespace(ns0.name, ns0.body)
@@ -271,7 +277,7 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
     let buildCpp = ''
     let includeH = ''
     if (jsonCfg) {
-        let includeHCppRes = includeHCppFunc(jsonCfg, includeH, bindingCpp, buildCpp);
+        let includeHCppRes = includeHCppFunc(jsonCfg, includeH, bindingCpp, buildCpp, destDir);
         bindingCpp = includeHCppRes[0];
         includeH = includeHCppRes[1];
         buildCpp = includeHCppRes[2];
@@ -315,17 +321,21 @@ function generateMiddleCpp(result, ns0, moduleName, destDir, license) {
 }
 
 // 将业务代码的头文件导入，若重复则跳过
-function includeHCppFunc(jsonCfg, includeH, bindingCpp, buildCpp) {;
+function includeHCppFunc(jsonCfg, includeH, bindingCpp, buildCpp, destDir) {;
     for (let i = 0; i < jsonCfg.length; i++) {
         if (jsonCfg[i].includeName != "") {
-            let tmp = '#include "%s"\n'.format(jsonCfg[i].includeName);
+            let includeNamePath = jsonCfg[i].includeName;
+            let hRelativePath = path.relative(destDir, includeNamePath).replaceAll('\\', '/');   
+            let tmp = '#include "%s"\n'.format(hRelativePath);
             if (includeH.indexOf(tmp) < 0) {
                 includeH += tmp;
             }
         }
         if (jsonCfg[i].cppName != "") {
-            let tmpCpp = '\n              "%s",'.format(jsonCfg[i].cppName);
-            let tmpBuildCpp = '\n        "%s",'.format(jsonCfg[i].cppName);
+            let cppNamePath = jsonCfg[i].cppName;
+            let cppRelativePath = path.relative(destDir, cppNamePath).replaceAll('\\', '/');
+            let tmpCpp = '\n              "%s",'.format(cppRelativePath);
+            let tmpBuildCpp = '\n        "%s",'.format(cppRelativePath);
             if (bindingCpp.indexOf(tmpCpp) < 0) {
                 bindingCpp += tmpCpp;
                 buildCpp += tmpBuildCpp;
