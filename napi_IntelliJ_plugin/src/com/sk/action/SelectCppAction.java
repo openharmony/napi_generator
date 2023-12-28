@@ -21,6 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.prefs.Preferences;
+import com.sk.utils.FileUtil;
 
 /**
  * 脚本选择对话框
@@ -33,16 +34,19 @@ import java.util.prefs.Preferences;
 public class SelectCppAction implements ActionListener {
     private final JButton button;
     private final JTextField textField;
+    private String generatorCodePath;
 
     /**
      * 构造函数
      * @param button .cpp文件选择按钮
      * @param textField .cpp文件文本选择框
+     * @param generatorCodePath 生成框架路径
      * @throws log 输出异常
      */
-    public SelectCppAction(JButton button, JTextField textField) {
+    public SelectCppAction(JButton button, JTextField textField, String generatorCodePath) {
         this.button = button;
         this.textField = textField;
+        this.generatorCodePath = generatorCodePath;
     }
 
     /**
@@ -71,7 +75,10 @@ public class SelectCppAction implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 String filepath = fcDlg.getSelectedFile().getPath();
                 preferences.put("cppPathRecord", filepath);
-                textField.setText(filepath);
+                FileUtil fileUtil = new FileUtil();
+                String relativeCppName = fileUtil.getRelativePath(filepath, generatorCodePath);
+                relativeCppName = relativeCppName.substring(0, relativeCppName.length() - 1);
+                textField.setText(relativeCppName);
             }
         }
     }

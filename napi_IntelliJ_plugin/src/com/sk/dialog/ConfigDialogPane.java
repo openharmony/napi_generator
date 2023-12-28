@@ -30,7 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import javax.swing.JButton;
-import java.awt.event.KeyEvent;;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -49,8 +49,10 @@ public class ConfigDialogPane extends JDialog {
     private JTextField textFieldServiceCode;
     private JButton buttonIncludeName;
     private JButton buttonCppName;
+    private JTextField textFieldRootPath;
     private DataList list = new DataList(new ArrayList<>());
     private int index;
+    private String generatorCodePath;
 
     /**
      * 构造函数
@@ -59,9 +61,12 @@ public class ConfigDialogPane extends JDialog {
      * @param data   用户选择的列表行数据
      * @throws log 输出异常
      */
-    public ConfigDialogPane(DataList list, int index, Data data) {
+    public ConfigDialogPane(DataList list, int index, Data data, String generatorCodePath) {
         this.list = list;
         this.index = index;
+        this.generatorCodePath = generatorCodePath;
+        textFieldRootPath.setText(generatorCodePath);
+        textFieldRootPath.setEditable(false);
         if (data != null) {
             textFieldIncludeName.setText(data.getIncludeName());
             textFieldCppName.setText(data.getCppName());
@@ -73,8 +78,8 @@ public class ConfigDialogPane extends JDialog {
             textFieldInterName.setText("");
             textFieldServiceCode.setText("");
         }
-        buttonIncludeName.addActionListener(new SelectHAction(buttonIncludeName, textFieldIncludeName));
-        buttonCppName.addActionListener(new SelectCppAction(buttonCppName, textFieldCppName));
+        buttonIncludeName.addActionListener(new SelectHAction(buttonIncludeName, textFieldIncludeName, generatorCodePath));
+        buttonCppName.addActionListener(new SelectCppAction(buttonCppName, textFieldCppName, generatorCodePath));
 
         setContentPane(contentPane);
         setModal(true);
@@ -91,7 +96,7 @@ public class ConfigDialogPane extends JDialog {
         String cppNameText = textFieldCppName.getText();
         String interNameText = textFieldInterName.getText();
         String serviceCodeText = textFieldServiceCode.getText();
-        Data data = new Data(includeNameText, cppNameText, interNameText, serviceCodeText);
+        Data data = new Data(generatorCodePath, includeNameText, cppNameText, interNameText, serviceCodeText);
         list.modifyDataListInfo(index, data);
     }
 
@@ -105,7 +110,7 @@ public class ConfigDialogPane extends JDialog {
         String cppNameText = textFieldCppName.getText();
         String interNameText = textFieldInterName.getText();
         String serviceCodeText = textFieldServiceCode.getText();
-        Data data = new Data(includeNameText, cppNameText, interNameText, serviceCodeText);
+        Data data = new Data(generatorCodePath, includeNameText, cppNameText, interNameText, serviceCodeText);
         list.addDataListInfo(data);
     }
 
