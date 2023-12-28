@@ -45,16 +45,18 @@ public class ShowCfgInfoDialogPane extends JDialog {
     private JTable table;
     private JScrollPane scrollPane;
     private DefaultTableModel tableModel;
+    private String generatorCodePath;
 
     /**
      * 构造函数
      * @param list  配置文件数据列表
      * @throws log 输出异常
      */
-    public ShowCfgInfoDialogPane(DataList list) {
+    public ShowCfgInfoDialogPane(DataList list, String generatorCodePath) {
         String[] tableColNames = new String[] {"includeName", "cppName", "interfaceName", "serviceCode"};
         // 初始化table: 获取List中的数据并展示在表格中
         List<Data> dataList = list.getDataList();
+        this.generatorCodePath = generatorCodePath;
         tableModel = new DefaultTableModel(tableColNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -98,7 +100,7 @@ public class ShowCfgInfoDialogPane extends JDialog {
             String oldInterfaceName = valueInterfaceName.toString();
             Object valueServiceCode = table.getValueAt(index, 3);
             String oldServiceCode = valueServiceCode.toString();
-            data = new Data(oldIncludeName, oldCppName, oldInterfaceName, oldServiceCode);
+            data = new Data(generatorCodePath, oldIncludeName, oldCppName, oldInterfaceName, oldServiceCode);
         } else {
             LOG.error("Please select a row of data that you want to modify!");
         }

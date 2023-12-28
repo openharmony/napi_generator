@@ -14,12 +14,15 @@
  */
 package com.sk.action;
 
+import com.sk.utils.FileUtil;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Arrays;
 import java.util.prefs.Preferences;
 
 /**
@@ -33,16 +36,19 @@ import java.util.prefs.Preferences;
 public class SelectHAction implements ActionListener {
     private final JButton button;
     private final JTextField textField;
+    private String generatorCodePath;
 
     /**
      * 构造函数
      * @param button .h文件选择按钮
      * @param textField .h文件文本选择框
+     * @param generatorCodePath 生成框架路径
      * @throws log 输出异常
      */
-    public SelectHAction(JButton button, JTextField textField) {
+    public SelectHAction(JButton button, JTextField textField, String generatorCodePath) {
         this.button = button;
         this.textField = textField;
+        this.generatorCodePath = generatorCodePath;
     }
 
     /**
@@ -70,7 +76,10 @@ public class SelectHAction implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 String filepath = fcDlg.getSelectedFile().getPath();
                 preferences.put("hPathRecord", filepath);
-                textField.setText(filepath);
+                FileUtil fileUtil = new FileUtil();
+                String relativeIncludeName = fileUtil.getRelativePath(filepath, generatorCodePath);
+                relativeIncludeName = relativeIncludeName.substring(0, relativeIncludeName.length() - 1);
+                textField.setText(relativeIncludeName);
             }
         }
     }

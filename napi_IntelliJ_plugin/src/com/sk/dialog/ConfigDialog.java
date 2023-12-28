@@ -47,6 +47,7 @@ public class ConfigDialog extends DialogWrapper {
     private DataList list = null;
     private final ConfigDialogPane genDiag;
     private boolean isAddFlag;
+    private String generatorCodePath;
 
     /**
      * 构造函数
@@ -56,14 +57,15 @@ public class ConfigDialog extends DialogWrapper {
      * @param isAddFlag  增加数据或者修改数据的标志位
      * @throws log 输出异常
      */
-    public ConfigDialog(DataList list, int index, Data data, boolean isAddFlag) {
+    public ConfigDialog(DataList list, int index, Data data, boolean isAddFlag, String generatorCodePath) {
         super(true);
         this.setResizable(false);
         this.list = list;
         this.isAddFlag = isAddFlag;
+        this.generatorCodePath = generatorCodePath;
         setTitle(FRAME_TITLE);
         setModal(true);
-        genDiag = new ConfigDialogPane(list, index, data);
+        genDiag = new ConfigDialogPane(list, index, data, generatorCodePath);
         init();
     }
 
@@ -141,13 +143,13 @@ public class ConfigDialog extends DialogWrapper {
                     // 增加数据
                     genDiag.setDataInfo();
                     close(CANCEL_EXIT_CODE);
-                    ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list);
+                    ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list, generatorCodePath);
                     showCfgInfoDialog.showAndGet();
                 } else {
                     // 修改数据
                     genDiag.modifyDataInfo();
                     close(CANCEL_EXIT_CODE);
-                    ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list);
+                    ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list, generatorCodePath);
                     showCfgInfoDialog.showAndGet();
                 }
 
