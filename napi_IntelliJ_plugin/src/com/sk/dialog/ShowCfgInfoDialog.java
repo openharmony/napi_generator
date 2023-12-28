@@ -50,6 +50,7 @@ public class ShowCfgInfoDialog extends DialogWrapper {
     /**
      * 构造函数
      * @param list  配置文件数据列表
+     * @param generatorCodePath  生成框架文件路径
      * @throws log 输出异常
      */
     public ShowCfgInfoDialog(DataList list, String generatorCodePath) {

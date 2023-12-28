@@ -59,12 +59,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * 配置对话框
@@ -150,7 +147,8 @@ public class GenerateDialogPane extends JDialog {
                 String generatorCodePath = textFieldGenPath.getText().trim();
                 if (generatorCodePath.isEmpty()) {
                     // 提醒用户填写生成框架路径
-                    GenNotification.notifyMessage(project, "请填写生成框架路径...", "生成框架路径不能为空", NotificationType.WARNING);
+                    GenNotification.notifyMessage(project, "请填写生成框架路径...", "生成框架路径不能为空",
+                            NotificationType.WARNING);
                 } else {
                     ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list, generatorCodePath);
                     showCfgInfoDialog.showAndGet();
@@ -457,7 +455,8 @@ public class GenerateDialogPane extends JDialog {
             String json = mapper.writeValueAsString(dataList);
             StringBuilder cfgJson = new StringBuilder(json);
             // 将 JSON 字符串写入文件
-            fileUtil.writeContentToFile(cfgFilePath, cfgJson.toString(), false);
+            String content = cfgJson.toString().replaceAll("\\\\n", "\\n");
+            fileUtil.writeContentToFile(cfgFilePath, content, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -481,33 +480,16 @@ public class GenerateDialogPane extends JDialog {
         }
 
         try {
-            // 获取工具代码cpp文件相对于CMakeList.txt文件的路径
-            String cppRelativePath = fileUtil.getRelativePath(new File(genOutDir).getPath(), new File(scriptOutDir).getPath());
-
-            String serviceCodeCfg = "";
-            // 获取用户配置的业务cpp相对路径
-            for (Data data : dataList) {
-                String cppNamePath = data.getCppName();
-                if (serviceCodeCfg.indexOf(cppNamePath) < 0) {
-                    // 获取cppNamePath的绝对路径
-                    Path absGenPath = Paths.get(new File(scriptOutDir).getPath());
-                    Path relativePath = Paths.get(cppNamePath);
-                    Path resolvedPath = absGenPath.resolveSibling(relativePath).normalize();
-                    String absCppNamePath = resolvedPath.toAbsolutePath().toString();
-                    // 获取业务代码cpp文件相对于CMakeLists.txt的路径
-                    String codeRelativePath = fileUtil.getRelativePath(new File(absCppNamePath).getPath(),
-                            new File(scriptOutDir).getPath());
-                    // 去掉最后的斜杠"/"
-                    codeRelativePath = codeRelativePath.substring(0, codeRelativePath.length() - 1);
-                    serviceCodeCfg += codeRelativePath + " ";
-                }
-            }
             // 生成 CMakeList.txt文件内容
             StringBuilder cmakeBuilder = new StringBuilder(CMAKE_SETCXX_TEMPLATE);
             // 若工程目录存在CMakeLists.txt文件
             if (isExistCmakeFile) {
                 cmakeBuilder = new StringBuilder(CMAKE_SETCXX_HASCMAKEFILE_TEMPLATE);
             }
+            // 获取工具代码cpp文件相对于CMakeList.txt文件的路径
+            String cppRelativePath = fileUtil.getRelativePath(new File(genOutDir).getPath(),
+                    new File(scriptOutDir).getPath());
+            String serviceCodeCfg = getCmakeLib();
             for (String tsFilePath : tsFileList) {
                 String cppNamePrefix = getCppNamePrefix(tsFilePath);
                 String libName = getLibNameFromTsFile(new File(tsFilePath).getName());
@@ -536,6 +518,34 @@ public class GenerateDialogPane extends JDialog {
         } catch (IOException ioException) {
             LOG.error("writeCommand io error" + ioException);
         }
+    }
+
+    /**
+     * 获取业务代码相对于CMakeLists.txt的相对路径。
+     *
+     * @return 业务代码相对于CMakeLists.txt的相对路径
+     */
+    private String getCmakeLib() {
+        FileUtil fileUtil = new FileUtil();
+        String serviceCodeCfg = "";
+        // 获取用户配置的业务cpp相对路径
+        for (Data data : dataList) {
+            String cppNamePath = data.getCppName();
+            if (serviceCodeCfg.indexOf(cppNamePath) < 0) {
+                // 获取cppNamePath的绝对路径
+                Path absGenPath = Paths.get(new File(scriptOutDir).getPath());
+                Path relativePath = Paths.get(cppNamePath);
+                Path resolvedPath = absGenPath.resolveSibling(relativePath).normalize();
+                String absCppNamePath = resolvedPath.toAbsolutePath().toString();
+                // 获取业务代码cpp文件相对于CMakeLists.txt的路径
+                String codeRelativePath = fileUtil.getRelativePath(new File(absCppNamePath).getPath(),
+                        new File(scriptOutDir).getPath());
+                // 去掉最后的斜杠"/"
+                codeRelativePath = codeRelativePath.substring(0, codeRelativePath.length() - 1);
+                serviceCodeCfg += codeRelativePath + " ";
+            }
+        }
+        return serviceCodeCfg;
     }
 
     /**

@@ -318,14 +318,14 @@ function generateMiddleCpp(result, ns0, moduleName, destDir, license) {
 // 将业务代码的头文件导入，若重复则跳过
 function includeHCppFunc(jsonCfg, includeH, bindingCpp, buildCpp) {;
     for (let i = 0; i < jsonCfg.length; i++) {
-        if (jsonCfg[i].includeName != "") {
+        if (jsonCfg[i].includeName !== "") {
             let includeNamePath = jsonCfg[i].includeName;
             let tmp = '#include "%s"\n'.format(includeNamePath);
             if (includeH.indexOf(tmp) < 0) {
                 includeH += tmp;
             }
         }
-        if (jsonCfg[i].cppName != "") {
+        if (jsonCfg[i].cppName !== "") {
             let cppNamePath = jsonCfg[i].cppName;
             let tmpCpp = '\n              "%s",'.format(cppNamePath);
             let tmpBuildCpp = '\n        "%s",'.format(cppNamePath);

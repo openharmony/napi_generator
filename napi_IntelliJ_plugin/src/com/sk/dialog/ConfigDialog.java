@@ -55,6 +55,7 @@ public class ConfigDialog extends DialogWrapper {
      * @param index  用户选择的列表行索引
      * @param data   用户选择的列表行数据
      * @param isAddFlag  增加数据或者修改数据的标志位
+     * @param generatorCodePath  生成框架路径
      * @throws log 输出异常
      */
     public ConfigDialog(DataList list, int index, Data data, boolean isAddFlag, String generatorCodePath) {
