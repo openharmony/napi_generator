@@ -31,6 +31,7 @@ public class Data {
 
     /**
      * 构造函数
+     *
      * @param generatorCodePath   用户配置的生成框架路径
      * @param includeName   用户配置的业务代码头文件相对路径
      * @param cppName       用户配置的业务代码cpp文件相对路径
@@ -38,7 +39,8 @@ public class Data {
      * @param serviceCode   用户配置的调用业务代码的代码
      * @throws log 输出异常
      */
-    public Data(String generatorCodePath, String includeName, String cppName, String interfaceName, String serviceCode) {
+    public Data(String generatorCodePath, String includeName, String cppName, String interfaceName,
+                String serviceCode) {
         this.generatorCodePath = generatorCodePath;
         this.includeName = includeName;
         this.cppName = cppName;
@@ -58,7 +60,8 @@ public class Data {
 
     /**
      * set函数
-     * @param generatorCodePath 用户配置的业务代码根路径
+     *
+     * @param generatorCodePath   用户配置的业务代码根路径
      * @throws log 输出异常
      */
     public void setGeneratorCodePath(String generatorCodePath) {

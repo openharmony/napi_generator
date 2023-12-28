@@ -59,6 +59,7 @@ public class ConfigDialogPane extends JDialog {
      * @param list  配置文件数据列表
      * @param index  用户选择的列表行索引
      * @param data   用户选择的列表行数据
+     * @param generatorCodePath  生成框架路径
      * @throws log 输出异常
      */
     public ConfigDialogPane(DataList list, int index, Data data, String generatorCodePath) {
@@ -78,8 +79,10 @@ public class ConfigDialogPane extends JDialog {
             textFieldInterName.setText("");
             textFieldServiceCode.setText("");
         }
-        buttonIncludeName.addActionListener(new SelectHAction(buttonIncludeName, textFieldIncludeName, generatorCodePath));
-        buttonCppName.addActionListener(new SelectCppAction(buttonCppName, textFieldCppName, generatorCodePath));
+        buttonIncludeName.addActionListener(new SelectHAction(buttonIncludeName, textFieldIncludeName,
+                generatorCodePath));
+        buttonCppName.addActionListener(new SelectCppAction(buttonCppName, textFieldCppName,
+                generatorCodePath));
 
         setContentPane(contentPane);
         setModal(true);
