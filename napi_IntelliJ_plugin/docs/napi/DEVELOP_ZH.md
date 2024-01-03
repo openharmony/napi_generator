@@ -45,13 +45,28 @@ Project Settings > Modules 新建Modules。点击上方“-”删除原有的Mod
 ![](../../../figures/IntelliJ_env_Proj_Module_New.png)
 
 7.配置Content root
-Content root选择~/napi_generator/napi_IntelliJ_plugin文件夹，module name填写generator。点击Finish，若出现提示已存在是否覆盖的提示，请点“Yes”完成配置。
+Content root选择~/napi_generator/napi_IntelliJ_plugin文件夹，module name填写napi_generator。点击Finish，若出现提示已存在是否覆盖的提示，请点“Yes”完成配置。
+
 ![](../../../figures/IntelliJ_env_module_root.png)
 
 8.Modules配置完成后，若在SDKs中无相应JDK和Plugin SDK,请点击+号分别添加 Add Java JDK和Add Intellij PlantForm Plugin SDK,Java JDK为java11的安装目录，Plugin SDK为 IDEA Community 2021.3.3的安装目录。
 ![](../../../figures/IntelliJ_env_config_SDKs.png)
 
-9.若完成以上步骤配置，点击OK完成配置。Rebuild项目，若IDEA不能点击右上角的运行，点击Plugin后下三角选择Edit Configurations...选项，Run/Debug Configurations框中Use classpath of moudle选择generator，点击ok，等待安装完成。
+9.配置Libraries（napi 1.0.3版本以及之后版本才需要配置依赖，之前的版本可跳过此步骤）
+
+配置依赖原因：由于IntellIj插件市场兼容性问题，原使用的json库与新版本的IDE不兼容，因此使用新的json库解决兼容性问题，新的json库需要从Maven仓库下载并将依赖配置到工程中。
+
+步骤：点击"+"，选择"From Maven..."；在搜索框搜索依赖的jar包：com.alibaba.fastjson2:fastjson2:2.0.42，勾选"Download to"并点击OK，将依赖下载至工程目录下的lib文件夹；点击"Choose Modules"中的OK。
+
+![](../../../figures/IntelliJ_env_config_libs.png)
+
+![](../../../figures/IntelliJ_env_config_libs_download.png)
+
+![](../../../figures/IntelliJ_env_config_libs_choose_module.png)
+
+![](../../../figures/IntelliJ_env_config_libs_check.png)
+
+10.若完成以上步骤配置，点击OK完成配置。Rebuild项目，若IDEA不能点击右上角的运行，点击Plugin后下三角选择Edit Configurations...选项，Run/Debug Configurations框中Use classpath of moudle选择napi_generator，点击ok，等待安装完成。
 
 ![](../../../figures/IntelliJ_env_configurations.png)
 
@@ -61,13 +76,19 @@ Content root选择~/napi_generator/napi_IntelliJ_plugin文件夹，module name�
 
 ![](../../../figures/IntelliJ_env_built_pro.png)
 
-11.在IDEA Community中依次点击Build>Prepare All Plugin Modules for development"，然后在Select Modules框中点击ok，jar包生成完成后在工具右下角提示jar包生成成功，且包含jar包存放位置。
+11.在IDEA Community中依次点击Build>Prepare All Plugin Modules for development"，然后在Select Modules框中点击ok，jar/zip包生成完成后在工具右下角提示jar/zip包生成成功，且包含jar/zip包存放位置。
 
 ![](../../../figures/IntelliJ_env_built_jar.png)
 
 ![](../../../figures/IntelliJ_env_select_moudles.png)
 
+1.0.3版本之前生成的包为.jar格式，1.0.3以及之后版本生成的版本为.zip格式(由于新增了lib依赖：com.alibaba.fastjson2:fastjson2:2.0.42，因此最终的插件包为.zip格式)。
+
 ![](../../../figures/IntelliJ_env_built_jar_success.png)
+
+![](../../../figures/IntelliJ_env_built_zip_success.png)
+
+
 
 ## 工具测试
 

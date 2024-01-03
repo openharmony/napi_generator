@@ -150,6 +150,7 @@ serviceCode/NodeISayHello.cpp
 ```
 [
  {
+  "genPath": "/home/kaihong1/napi/myCommitNapiTest/generatorCode",
   "includeName": "../serviceCode/NodeISayHello.h",
   "cppName": "../serviceCode/NodeISayHello.cpp",
   "interfaceName": "funcTest",
@@ -160,6 +161,8 @@ serviceCode/NodeISayHello.cpp
 ```
 
 cfg.json是一个数组，每一项配置对应一个方法的调用，需要对多少方法进行调用就配置多少项；其中
+
+"genPath": 生成框架代码路径，用户的业务代码相对于该路径配置，如："/home/kaihong1/napi/myCommitNapiTest/generatorCode"
 
 "includeName": 引入的业务代码.h文件相对路径, 如："../serviceCode/NodeISayHello.h",
 
@@ -215,6 +218,7 @@ cfg.json是一个数组，每一项配置对应一个方法的调用，需要对
 ```
 [
  {
+  "genPath": "E:\\napi_aboutTest\\testcase_napi_intellijPlugin\\generatorCode",
   "includeName": "../serviceCode/NodeISayHello.h",
   "cppName": "../serviceCode/NodeISayHello.cpp",
   "interfaceName": "funcTest",
@@ -225,6 +229,8 @@ cfg.json是一个数组，每一项配置对应一个方法的调用，需要对
 ```
 
 cfg.json是一个数组，每一项配置对应一个方法的调用，需要对多少方法进行调用就配置多少项；其中
+
+"genPath": 生成框架代码路径，用户的业务代码相对于该路径配置，如："E:\\napi_aboutTest\\testcase_napi_intellijPlugin\\generatorCode"
 
 "includeName": 引入的业务代码.h文件相对路径, 如："../serviceCode/NodeISayHello.h",
 
