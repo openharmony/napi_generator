@@ -45,22 +45,22 @@ public class ShowCfgInfoDialog extends DialogWrapper {
 
     private final ShowCfgInfoDialogPane genDiag;
     private DataList list = null;
-    private String generatorCodePath;
+    private String genPath;
 
     /**
      * 构造函数
      * @param list  配置文件数据列表
-     * @param generatorCodePath  生成框架文件路径
+     * @param genPath  生成框架文件路径
      * @throws log 输出异常
      */
-    public ShowCfgInfoDialog(DataList list, String generatorCodePath) {
+    public ShowCfgInfoDialog(DataList list, String genPath) {
         super(true);
         this.setResizable(false);
         this.list = list;
-        this.generatorCodePath = generatorCodePath;
+        this.genPath = genPath;
         setTitle(FRAME_TITLE);
         setModal(true);
-        genDiag = new ShowCfgInfoDialogPane(list, generatorCodePath);
+        genDiag = new ShowCfgInfoDialogPane(list, genPath);
         init();
     }
 
@@ -118,7 +118,7 @@ public class ShowCfgInfoDialog extends DialogWrapper {
         @Override
         protected void doAction(ActionEvent actionEvent) {
             close(CANCEL_EXIT_CODE);
-            ConfigDialog cfgDialog = new ConfigDialog(list, 0, null, true, generatorCodePath);
+            ConfigDialog cfgDialog = new ConfigDialog(list, 0, null, true, genPath);
             cfgDialog.showAndGet();
         }
     }
@@ -137,7 +137,7 @@ public class ShowCfgInfoDialog extends DialogWrapper {
             close(CANCEL_EXIT_CODE);
             int index = genDiag.getSelectedIndex();
             list.deleteDataListInfo(index);
-            ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list, generatorCodePath);
+            ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list, genPath);
             showCfgInfoDialog.showAndGet();
         }
     }
@@ -156,7 +156,7 @@ public class ShowCfgInfoDialog extends DialogWrapper {
             close(CANCEL_EXIT_CODE);
             int index = genDiag.getSelectedIndex();
             Data data = genDiag.getSelectedData();
-            ConfigDialog cfgDialog = new ConfigDialog(list, index, data, false, generatorCodePath);
+            ConfigDialog cfgDialog = new ConfigDialog(list, index, data, false, genPath);
             cfgDialog.showAndGet();
         }
     }

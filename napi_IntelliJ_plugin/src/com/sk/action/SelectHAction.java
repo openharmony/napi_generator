@@ -34,19 +34,19 @@ import java.util.prefs.Preferences;
 public class SelectHAction implements ActionListener {
     private final JButton button;
     private final JTextField textField;
-    private String generatorCodePath;
+    private String genPath;
 
     /**
      * 构造函数
      * @param button .h文件选择按钮
      * @param textField .h文件文本选择框
-     * @param generatorCodePath 生成框架路径
+     * @param genPath 生成框架路径
      * @throws log 输出异常
      */
-    public SelectHAction(JButton button, JTextField textField, String generatorCodePath) {
+    public SelectHAction(JButton button, JTextField textField, String genPath) {
         this.button = button;
         this.textField = textField;
-        this.generatorCodePath = generatorCodePath;
+        this.genPath = genPath;
     }
 
     /**
@@ -75,7 +75,7 @@ public class SelectHAction implements ActionListener {
                 String filepath = fcDlg.getSelectedFile().getPath();
                 preferences.put("hPathRecord", filepath);
                 FileUtil fileUtil = new FileUtil();
-                String relativeIncludeName = fileUtil.getRelativePath(filepath, generatorCodePath);
+                String relativeIncludeName = fileUtil.getRelativePath(filepath, genPath);
                 relativeIncludeName = relativeIncludeName.substring(0, relativeIncludeName.length() - 1);
                 textField.setText(relativeIncludeName);
             }
