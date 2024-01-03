@@ -14,6 +14,7 @@
  */
 package com.sk.action;
 
+import com.sk.utils.FileUtil;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
@@ -33,16 +34,19 @@ import java.util.prefs.Preferences;
 public class SelectHAction implements ActionListener {
     private final JButton button;
     private final JTextField textField;
+    private String genPath;
 
     /**
      * 构造函数
      * @param button .h文件选择按钮
      * @param textField .h文件文本选择框
+     * @param genPath 生成框架路径
      * @throws log 输出异常
      */
-    public SelectHAction(JButton button, JTextField textField) {
+    public SelectHAction(JButton button, JTextField textField, String genPath) {
         this.button = button;
         this.textField = textField;
+        this.genPath = genPath;
     }
 
     /**
@@ -70,7 +74,10 @@ public class SelectHAction implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 String filepath = fcDlg.getSelectedFile().getPath();
                 preferences.put("hPathRecord", filepath);
-                textField.setText(filepath);
+                FileUtil fileUtil = new FileUtil();
+                String relativeIncludeName = fileUtil.getRelativePath(filepath, genPath);
+                relativeIncludeName = relativeIncludeName.substring(0, relativeIncludeName.length() - 1);
+                textField.setText(relativeIncludeName);
             }
         }
     }
