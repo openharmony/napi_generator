@@ -20,9 +20,9 @@
       <xy x="48" y="54" width="800" height="350"/>
     </constraints>
     <properties>
-      <maximumSize width="700" height="350"/>
-      <minimumSize width="700" height="350"/>
-      <preferredSize width="700" height="350"/>
+      <maximumSize width="800" height="350"/>
+      <minimumSize width="800" height="350"/>
+      <preferredSize width="800" height="350"/>
     </properties>
     <border type="none"/>
     <children>
@@ -55,7 +55,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="a98e5" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="a98e5" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -69,7 +69,7 @@
             <children>
               <grid id="e8770" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <maximumSize width="800" height="30"/>
@@ -90,16 +90,26 @@
                   <component id="f4932" class="javax.swing.JTextField" binding="textFieldIncludeName">
                     <constraints/>
                     <properties>
-                      <maximumSize width="650" height="30"/>
-                      <minimumSize width="350" height="30"/>
-                      <preferredSize width="550" height="30"/>
+                      <maximumSize width="700" height="30"/>
+                      <minimumSize width="400" height="30"/>
+                      <preferredSize width="600" height="30"/>
+                    </properties>
+                  </component>
+                  <component id="accc4" class="javax.swing.JButton" binding="buttonIncludeName">
+                    <constraints/>
+                    <properties>
+                      <icon value="images/openDisk.png"/>
+                      <maximumSize width="30" height="30"/>
+                      <minimumSize width="30" height="30"/>
+                      <preferredSize width="30" height="30"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
               </grid>
               <grid id="80cd7" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <maximumSize width="800" height="30"/>
@@ -120,16 +130,26 @@
                   <component id="f0a27" class="javax.swing.JTextField" binding="textFieldCppName">
                     <constraints/>
                     <properties>
-                      <maximumSize width="650" height="30"/>
-                      <minimumSize width="350" height="30"/>
-                      <preferredSize width="550" height="30"/>
+                      <maximumSize width="700" height="30"/>
+                      <minimumSize width="400" height="30"/>
+                      <preferredSize width="600" height="30"/>
+                    </properties>
+                  </component>
+                  <component id="147f8" class="javax.swing.JButton" binding="buttonCppName">
+                    <constraints/>
+                    <properties>
+                      <icon value="images/openDisk.png"/>
+                      <maximumSize width="30" height="30"/>
+                      <minimumSize width="30" height="30"/>
+                      <preferredSize width="30" height="30"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
               </grid>
               <grid id="9b44" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <maximumSize width="800" height="30"/>
@@ -150,16 +170,16 @@
                   <component id="20c4c" class="javax.swing.JTextField" binding="textFieldInterName">
                     <constraints/>
                     <properties>
-                      <maximumSize width="650" height="30"/>
-                      <minimumSize width="350" height="30"/>
-                      <preferredSize width="550" height="30"/>
+                      <maximumSize width="700" height="30"/>
+                      <minimumSize width="400" height="30"/>
+                      <preferredSize width="600" height="30"/>
                     </properties>
                   </component>
                 </children>
               </grid>
               <grid id="edf83" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <maximumSize width="800" height="30"/>
@@ -180,9 +200,43 @@
                   <component id="53f49" class="javax.swing.JTextField" binding="textFieldServiceCode">
                     <constraints/>
                     <properties>
-                      <maximumSize width="650" height="30"/>
-                      <minimumSize width="350" height="30"/>
-                      <preferredSize width="550" height="30"/>
+                      <maximumSize width="700" height="30"/>
+                      <minimumSize width="400" height="30"/>
+                      <preferredSize width="600" height="30"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="87361" layout-manager="FlowLayout" hgap="-1" vgap="-1" flow-align="0">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <maximumSize width="800" height="30"/>
+                  <minimumSize width="100" height="30"/>
+                  <preferredSize width="750" height="30"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="2ccd8" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <maximumSize width="97" height="17"/>
+                      <minimumSize width="97" height="17"/>
+                      <preferredSize width="97" height="17"/>
+                      <text value=" genPath："/>
+                    </properties>
+                  </component>
+                  <component id="fc59e" class="javax.swing.JTextField" binding="textFieldRootPath">
+                    <constraints/>
+                    <properties>
+                      <disabledTextColor color="-8618626"/>
+                      <doubleBuffered value="false"/>
+                      <editable value="false"/>
+                      <enabled value="false"/>
+                      <maximumSize width="700" height="30"/>
+                      <minimumSize width="400" height="30"/>
+                      <preferredSize width="600" height="30"/>
                     </properties>
                   </component>
                 </children>

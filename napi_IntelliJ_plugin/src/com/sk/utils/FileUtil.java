@@ -15,13 +15,12 @@
 package com.sk.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.parser.ParseException;
 import org.apache.http.util.TextUtils;
 
 import java.io.BufferedReader;
@@ -32,6 +31,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -51,16 +51,12 @@ public class FileUtil {
     private static final String LF = getNewline(); // 换行符
 
     private static final String BUILD_OPTION = "{" + LF
-                    + "    \"externalNativeOptions\": {" + LF
-                    + "      \"path\": \"\"," + LF
-                    + "      \"arguments\": \"-v\"," + LF
-                    + "      \"abiFilters\": [" + LF
-                    + "        \"armeabi-v7a\"," + LF
-                    + "        \"arm64-v8a\"" + LF
-                    + "      ]," + LF
-                    + "      \"cppFlags\": \"\"," + LF
-                    + "    }" + LF
-                    + "  }";
+            + "    \"externalNativeOptions\": {" + LF
+            + "      \"path\": \"\"," + LF
+            + "      \"arguments\": \"\"," + LF
+            + "      \"cppFlags\": \"\"," + LF
+            + "    }" + LF
+            + "  }";
 
     /**
      * 改写build-profile.json5文件
@@ -71,17 +67,14 @@ public class FileUtil {
     public void writeBuildJsonFile(String buildJsonFilePath, String cmakeFilePath) {
         try {
             String buildStr = readWholeFile(buildJsonFilePath);
-            JSONParser jsParser = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
-            JSONObject buildObj = (JSONObject) jsParser.parse(buildStr);
-            JSONObject buildOptionObj = (JSONObject) jsParser.parse(BUILD_OPTION);
+            JSONObject buildObj = (JSONObject) JSON.parse(buildStr);
+            JSONObject buildOptionObj = (JSONObject) JSON.parse(BUILD_OPTION);
             ((JSONObject) buildOptionObj.get("externalNativeOptions")).put("path", cmakeFilePath);
             buildObj.put("buildOption", buildOptionObj);
             ObjectMapper mapper = new ObjectMapper();
             buildStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildObj);
 
-            writeContentToFile(buildJsonFilePath, buildStr);
-        } catch (ParseException parseException) {
-            LOG.error("Failed to parse file [" + buildJsonFilePath + "], error: " + parseException);
+            writeContentToFile(buildJsonFilePath, buildStr, false);
         } catch (JsonProcessingException jsonProcessingEx) {
             LOG.error("Failed to write file [" + buildJsonFilePath + "], error: " + jsonProcessingEx);
         }
@@ -92,11 +85,12 @@ public class FileUtil {
      *
      * @param path    文件路径
      * @param content 数据内容
+     * @param isAppend 文件是否追加写入
      */
-    public void writeContentToFile(String path, String content) {
+    public void writeContentToFile(String path, String content, boolean isAppend) {
         File file = new File(path);
-        try (FileWriter fw = new FileWriter(file, false)) {
-            fw.write(content + FileUtil.getNewline());
+        try (FileWriter fw = new FileWriter(file, isAppend)) {
+            fw.write(FileUtil.getNewline() + content + FileUtil.getNewline());
         } catch (IOException ioException) {
             LOG.error("Failed to write file [" + path + "], error: " + ioException);
         }
@@ -122,6 +116,44 @@ public class FileUtil {
             }
         }
         return file.getPath();
+    }
+
+    /**
+     * 获得 pathA 相对于 pathB的相对路径
+     *
+     * @param pathA 路径A，如 D:\xx\yy\zz\a1\a2
+     * @param pathB 路径B, 如 D:\xx\yy\zz\b1\b2\b3
+     * @return pathA 相对于 pathB的相对路径: ../../../a1/a2/
+     */
+    public String getRelativePath(String pathA, String pathB) {
+        String separatorStr = File.separator.equals("\\") ? "\\\\" : File.separator;
+        String[] pathAList = pathA.split(separatorStr);
+        String[] pathBList = pathB.split(separatorStr);
+
+        int pos = 0;
+        for (; pos < pathAList.length && pos < pathBList.length; ++pos) {
+            if (!pathAList[pos].equals(pathBList[pos])) {
+                // 找到两个path路径存在差异的位置
+                break;
+            }
+        }
+        // 截取pathA和pathB路径字符串的差异部分
+        String[] diffPathAList = Arrays.copyOfRange(pathAList, pos, pathAList.length);
+        String[] diffPathBList = Arrays.copyOfRange(pathBList, pos, pathBList.length);
+
+        // pathA的差异字符串作为相对路径的结尾部分
+        String pathAStr = String.join("/", diffPathAList);
+        pathAStr = pathAStr.isBlank() ? "" : pathAStr + "/";
+
+        // 根据pathB的差异目录层级生成向上跳转字符串
+        String rollbackPath = "";
+        for (int i = 0; i < diffPathBList.length; ++i) {
+            rollbackPath += "../";
+        }
+        rollbackPath = rollbackPath.isEmpty() ? "./" : rollbackPath;
+
+        // 相对路径 = 向上跳转部分 + pathA的差异部分
+        return rollbackPath + pathAStr;
     }
 
     /**
