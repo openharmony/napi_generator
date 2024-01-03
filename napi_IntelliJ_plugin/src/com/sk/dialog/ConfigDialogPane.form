@@ -224,7 +224,7 @@
                       <maximumSize width="97" height="17"/>
                       <minimumSize width="97" height="17"/>
                       <preferredSize width="97" height="17"/>
-                      <text value=" 根路径："/>
+                      <text value=" genPath："/>
                     </properties>
                   </component>
                   <component id="fc59e" class="javax.swing.JTextField" binding="textFieldRootPath">

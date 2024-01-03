@@ -34,19 +34,19 @@ import com.sk.utils.FileUtil;
 public class SelectCppAction implements ActionListener {
     private final JButton button;
     private final JTextField textField;
-    private String generatorCodePath;
+    private String genPath;
 
     /**
      * 构造函数
      * @param button .cpp文件选择按钮
      * @param textField .cpp文件文本选择框
-     * @param generatorCodePath 生成框架路径
+     * @param genPath 生成框架路径
      * @throws log 输出异常
      */
-    public SelectCppAction(JButton button, JTextField textField, String generatorCodePath) {
+    public SelectCppAction(JButton button, JTextField textField, String genPath) {
         this.button = button;
         this.textField = textField;
-        this.generatorCodePath = generatorCodePath;
+        this.genPath = genPath;
     }
 
     /**
@@ -76,7 +76,7 @@ public class SelectCppAction implements ActionListener {
                 String filepath = fcDlg.getSelectedFile().getPath();
                 preferences.put("cppPathRecord", filepath);
                 FileUtil fileUtil = new FileUtil();
-                String relativeCppName = fileUtil.getRelativePath(filepath, generatorCodePath);
+                String relativeCppName = fileUtil.getRelativePath(filepath, genPath);
                 relativeCppName = relativeCppName.substring(0, relativeCppName.length() - 1);
                 textField.setText(relativeCppName);
             }

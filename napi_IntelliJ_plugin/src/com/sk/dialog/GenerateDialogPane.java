@@ -144,13 +144,13 @@ public class GenerateDialogPane extends JDialog {
         buttonCfg.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String generatorCodePath = textFieldGenPath.getText().trim();
-                if (generatorCodePath.isEmpty()) {
+                String genPath = textFieldGenPath.getText().trim();
+                if (genPath.isEmpty()) {
                     // 提醒用户填写生成框架路径
                     GenNotification.notifyMessage(project, "请填写生成框架路径...", "生成框架路径不能为空",
                             NotificationType.WARNING);
                 } else {
-                    ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list, generatorCodePath);
+                    ShowCfgInfoDialog showCfgInfoDialog = new ShowCfgInfoDialog(list, genPath);
                     showCfgInfoDialog.showAndGet();
                 }
             }
@@ -531,17 +531,17 @@ public class GenerateDialogPane extends JDialog {
         // 获取用户配置的业务cpp相对路径
         for (Data data : dataList) {
             String cppNamePath = data.getCppName();
-            if (serviceCodeCfg.indexOf(cppNamePath) < 0) {
-                // 获取cppNamePath的绝对路径
-                Path absGenPath = Paths.get(new File(scriptOutDir).getPath());
-                Path relativePath = Paths.get(cppNamePath);
-                Path resolvedPath = absGenPath.resolveSibling(relativePath).normalize();
-                String absCppNamePath = resolvedPath.toAbsolutePath().toString();
-                // 获取业务代码cpp文件相对于CMakeLists.txt的路径
-                String codeRelativePath = fileUtil.getRelativePath(new File(absCppNamePath).getPath(),
-                        new File(scriptOutDir).getPath());
-                // 去掉最后的斜杠"/"
-                codeRelativePath = codeRelativePath.substring(0, codeRelativePath.length() - 1);
+            // 获取cppNamePath的绝对路径
+            Path absGenPath = Paths.get(new File(scriptOutDir).getPath());
+            Path relativePath = Paths.get(cppNamePath);
+            Path resolvedPath = absGenPath.resolveSibling(relativePath).normalize();
+            String absCppNamePath = resolvedPath.toAbsolutePath().toString();
+            // 获取业务代码cpp文件相对于CMakeLists.txt的路径
+            String codeRelativePath = fileUtil.getRelativePath(new File(absCppNamePath).getPath(),
+                    new File(scriptOutDir).getPath());
+            // 去掉最后的斜杠"/"
+            codeRelativePath = codeRelativePath.substring(0, codeRelativePath.length() - 1);
+            if (serviceCodeCfg.indexOf(codeRelativePath) < 0) {
                 serviceCodeCfg += codeRelativePath + " ";
             }
         }
