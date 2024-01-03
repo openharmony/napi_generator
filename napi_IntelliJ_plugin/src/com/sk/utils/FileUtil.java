@@ -31,6 +31,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -115,6 +116,44 @@ public class FileUtil {
             }
         }
         return file.getPath();
+    }
+
+    /**
+     * 获得 pathA 相对于 pathB的相对路径
+     *
+     * @param pathA 路径A，如 D:\xx\yy\zz\a1\a2
+     * @param pathB 路径B, 如 D:\xx\yy\zz\b1\b2\b3
+     * @return pathA 相对于 pathB的相对路径: ../../../a1/a2/
+     */
+    public String getRelativePath(String pathA, String pathB) {
+        String separatorStr = File.separator.equals("\\") ? "\\\\" : File.separator;
+        String[] pathAList = pathA.split(separatorStr);
+        String[] pathBList = pathB.split(separatorStr);
+
+        int pos = 0;
+        for (; pos < pathAList.length && pos < pathBList.length; ++pos) {
+            if (!pathAList[pos].equals(pathBList[pos])) {
+                // 找到两个path路径存在差异的位置
+                break;
+            }
+        }
+        // 截取pathA和pathB路径字符串的差异部分
+        String[] diffPathAList = Arrays.copyOfRange(pathAList, pos, pathAList.length);
+        String[] diffPathBList = Arrays.copyOfRange(pathBList, pos, pathBList.length);
+
+        // pathA的差异字符串作为相对路径的结尾部分
+        String pathAStr = String.join("/", diffPathAList);
+        pathAStr = pathAStr.isBlank() ? "" : pathAStr + "/";
+
+        // 根据pathB的差异目录层级生成向上跳转字符串
+        String rollbackPath = "";
+        for (int i = 0; i < diffPathBList.length; ++i) {
+            rollbackPath += "../";
+        }
+        rollbackPath = rollbackPath.isEmpty() ? "./" : rollbackPath;
+
+        // 相对路径 = 向上跳转部分 + pathA的差异部分
+        return rollbackPath + pathAStr;
     }
 
     /**
