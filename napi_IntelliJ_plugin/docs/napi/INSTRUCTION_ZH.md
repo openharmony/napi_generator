@@ -6,10 +6,6 @@ NAPI框架生成工具目前支持三种入口，分别是可执行程序、DevE
 
 [DevEco Studio上使用的IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
 
-![](../../../figures/pic-napi_jar_download.png)
-
-使用谷歌浏览器时：
-
 ![](../../../figures/picGoogle-napi_jar_download.png)
 
 ## DevEco Studio上使用的IntelliJ插件使用方法

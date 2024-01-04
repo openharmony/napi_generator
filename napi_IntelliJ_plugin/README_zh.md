@@ -39,18 +39,6 @@ NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescr
 
 [DevEco Studio上使用的IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
 
-
-
-// 此处更新1.0.3版本图片
-
-![](../figures/pic-napi_jar_download.png)
-
-使用谷歌浏览器时：
-
-// 更新图片
-
-
-
 ![](../figures/picGoogle-napi_jar_download.png)
 
 具体的工具使用步骤，可以左键单击以下链接了解：
