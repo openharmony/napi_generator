@@ -82,7 +82,7 @@ Content root选择~/napi_generator/napi_IntelliJ_plugin文件夹，module name�
 
 ![](../../../figures/IntelliJ_env_select_moudles.png)
 
-1.0.3版本之前生成的包为.jar格式，1.0.3以及之后版本生成的版本为.zip格式(由于新增了lib依赖：com.alibaba.fastjson2:fastjson2:2.0.42，因此最终的插件包为.zip格式)。
+1.0.3版本之前生成的包为.jar格式，1.0.3以及之后版本生成的版本为.zip格式(由于新增了lib依赖：com.alibaba.fastjson2:fastjson2:2.0.42，因此插件包为.zip格式)。
 
 ![](../../../figures/IntelliJ_env_built_jar_success.png)
 

@@ -177,7 +177,7 @@ console.info("napiTestDemo ----funcTest returnVal = " + this.returnVal)
 I A03d00/JSAPP: napiTestDemo ----funcTest returnVal = "ret is false"
 ```
 
-7.调用其他模块：entry模块的方法add
+7.调用其它模块：entry模块的方法add
 
 ```
 this.addResult = testEntry.add(2, 3).toString();
@@ -203,7 +203,7 @@ Text('sayHelloEnd回调: info = ' + this.textInfoEnd).margin({ top: 10 })
 Text('register注册的回调： wid = ' + this.callBackNum).margin({ top: 10 })
 // 调用工具模块napitest中的fucnTest方法后保存返回值
 Text('普通方法funcTest返回值： returnVal = ' + this.returnVal).margin({ top: 10 })
-// 调用其他模块entry中的add方法后保存返回值
+// 调用其它模块entry中的add方法后保存返回值
 Text('libentry模块: 2 + 3 = ' + this.addResult).margin({ top: 10 })
 ```
 
