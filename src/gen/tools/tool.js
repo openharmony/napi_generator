@@ -71,21 +71,21 @@ function checkOutBody(body, off, flag, binside) {
         csr[idx[f]] = 0
     }
     let cs1 = 0
-    if (flag[0].length > 0 && body.substring(off, off + flag[0].length) != flag[0]) {
+    if (flag[0].length > 0 && body.substring(off, off + flag[0].length) !== flag[0]) {
         return null;
     }
 
     for (let i = off + flag[0].length; i < body.length; i++) {
-        if (body[i] == '"') cs1 += 1
-        if (cs1 % 2 == 0) {
+        if (body[i] === '"') cs1 += 1
+        if (cs1 % 2 === 0) {
             let tb1 = true;
             for (let k in csl) {
-                if (csl[k] != csr[idx[k]]) {
+                if (csl[k] !== csr[idx[k]]) {
                     tb1 = false;
                     break;
                 }
             }
-            if (tb1 && body.substring(i, i + flag[1].length) == flag[1]) {
+            if (tb1 && body.substring(i, i + flag[1].length) === flag[1]) {
                 if (binside)
                     return body.substring(off + flag[0].length, i);
                 return body.substring(off, i + flag[1].length);
@@ -96,7 +96,7 @@ function checkOutBody(body, off, flag, binside) {
                 if (body[i] in csr) csr[body[i]] += 1;
             }
             if (body[i] in csr) {
-                if (!(body[i] == '>' && body[i-1] == '=')) { // 尖括号匹配时忽略关键字 "=>"
+                if (!(body[i] === '>' && body[i-1] === '=')) { // 尖括号匹配时忽略关键字 "=>"
                     csr[body[i]] += 1;
                 }
             }
@@ -146,7 +146,7 @@ function getLicense(data) {
         let i1 = data.indexOf("/*")
         let i2 = data.indexOf("*/") + 2
         let licenseData = data.substring(i1, i2)
-        if (licenseData.search("Copyright") != -1) {
+        if (licenseData.search("Copyright") !== -1) {
             return licenseData
         } else {
             return null
@@ -170,10 +170,10 @@ function removeEmptyLine(data) {
     while (data.indexOf("\n\n") >= 0) {
         data = data.replace("\n\n", "\n")
     }
-    while (data.indexOf("\n") == 0) {
+    while (data.indexOf("\n") === 0) {
         data = data.substring(1, data.length)
     }
-    while (data.indexOf(" ") == 0) {
+    while (data.indexOf(" ") === 0) {
         data = data.substring(1, data.length)
     }
     return data
@@ -208,17 +208,17 @@ function replaceAll(s, sfrom, sto) {
  * @returns 方法名称与形参是否完全相同
  */
  function isSameFunc(func1, func2) {
-    if (func1.name != func2.name) { // 判断方法名称是否相同
+    if (func1.name !== func2.name) { // 判断方法名称是否相同
         return false;
     }
 
     let func1ParamCount = func1.value.length
-    if (func1ParamCount != func2.value.length) { // 判断方法形参个数是否一样
+    if (func1ParamCount !== func2.value.length) { // 判断方法形参个数是否一样
         return false;
     }
 
     for (let i in func1.value) { // 判断方法每个形参数据类型是否相同
-        if (func1.value[i].type != func2.value[i].type) { 
+        if (func1.value[i].type !== func2.value[i].type) { 
             if (!(func1.value[i].type.indexOf("NUMBER_TYPE_") >= 0 &&
                 func2.value[i].type.indexOf("NUMBER_TYPE_") >= 0)) {
                 return false;

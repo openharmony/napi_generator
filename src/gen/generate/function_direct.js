@@ -64,7 +64,7 @@ bool %s%s(%s)
 function removeEndlineEnter(value) {
     for (var i = value.length; i > 0; i--) {
         let len = value.length
-        if (value.substring(len - 1, len) == "\n" || value.substring(len - 1, len) == ' ') {
+        if (value.substring(len - 1, len) ===  "\n" || value.substring(len - 1, len) ===  ' ') {
             value = value.substring(0, len - 1)
         } else {
             value = '    ' + value
@@ -136,7 +136,7 @@ function getaddListenerCont() {
 function getAddOrRemoveReg(func, isAddReg) {
     let addListenerCont = ''
     const  addParaSize = 1;
-    if (func.value.length != addParaSize) {
+    if (func.value.length !== addParaSize) {
         NapiLog.logError(`AddReg param do not support param number not 1!`);
         return
     }
@@ -167,7 +167,7 @@ function getAddOrRemoveReg(func, isAddReg) {
 }
 
 function replaceOptionalParamDestory(middleFunc, param) {
-    if (param.optionalParamDestory == "") {
+    if (param.optionalParamDestory ===  "") {
         middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
     } else {
         middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", "\n    " + param.optionalParamDestory) // 可选参数内存释放
@@ -178,7 +178,7 @@ function replaceOptionalParamDestory(middleFunc, param) {
 function generateFunctionDirect(func, data, className, implHVariable) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
     let middleH = ""
-    if (func.name != "constructor") {
+    if (func.name !== "constructor") {
       middleH = replaceAll(funcDirectMiddleHTemplete, "[funcName]", func.name)
     }
     
@@ -201,7 +201,7 @@ function generateFunctionDirect(func, data, className, implHVariable) {
         paramGenerate(i, func.value[i], param, data)
     }
     let returnInfo = {type: func.ret, optional: false}
-    if (func.ret == 'void') {
+    if (func.ret ===  'void') {
         param.valuePackage = "result = pxt->UndefinedValue();";
     } else {
         returnGenerate(returnInfo, param, data)
@@ -210,7 +210,7 @@ function generateFunctionDirect(func, data, className, implHVariable) {
 
     param.valueCheckout = removeEndlineEnter(param.valueCheckout)
     middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
-    let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
+    let callFunc = "%s%s(%s);".format(className ===  null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
     middleFunc = replaceOptionalParamDestory(middleFunc, param)
@@ -219,7 +219,7 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     let implCpp = ""   
 
     if (!func.isParentMember) {
-        if (func.name == 'constructor') {
+        if (func.name ===  'constructor') {
             // 构造函数去掉&或* (在内部去掉较麻烦，生成后统一去除)
             implH = constructorFunc(param, implHVariable, implH, prefixArr, className);
             middleFunc = ""
@@ -246,21 +246,21 @@ function getimplHForForComClassValue(isAddReg, param, prefixArr, func) {
 function getimplCppForComClassValue(isAddReg, param, className, func) {
     let implCpp = ""
     let initListener = ''
-    let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
+    let callStatement = jsonCfgList.getValue(className ===  null? "": className, func.name);
 
     if (isAddReg) {
         initListener = '%s %s::listener_ = {};'.format(func.value[0].type, className)
         callStatement = '%s::listener_ = listener;'.format(className)
     }
 
-    implCpp = cppTemplate.format(initListener, className == null ? "" : className + "::", func.name, 
-    param.valueDefine, callStatement == null? "": callStatement)
+    implCpp = cppTemplate.format(initListener, className ===  null ? "" : className + "::", func.name, 
+    param.valueDefine, callStatement ===  null? "": callStatement)
     return implCpp
 }
 
 function replaceValueOut(middleH, param) {
     middleH = replaceAll(middleH, "[valueIn]", param.valueIn); // # 输入参数定义
-    if (param.valueOut == "") {
+    if (param.valueOut ===  "") {
         middleH = replaceAll(middleH, "[valueOut]", param.valueOut); // # 输出参数定义
     } else {
         middleH = replaceAll(middleH, "[valueOut]", "\n    " + param.valueOut); // # 输出参数定义
@@ -269,7 +269,7 @@ function replaceValueOut(middleH, param) {
 }
 
 function isClassFunc(className, middleFunc, middleH) {
-    if (className == null) {
+    if (className ===  null) {
         middleH = middleH.replaceAll("[static_define]", "");
         middleFunc = middleFunc.replaceAll("[unwarp_instance]", "");
         middleFunc = middleFunc.replaceAll("[middleClassName]", "");
