@@ -33,13 +33,13 @@ function getValueProperty(napiVn, name) {
 }
 
 function getCType(type) {
-    if (type == "boolean") {
+    if (type ===  "boolean") {
         return "bool"
-    } else if (type == "string") {
+    } else if (type ===  "string") {
         return "std::string"
-    } else if (type.substring(0, 6) == "Array<" || type.substring(type.length - 2) == "[]") {
+    } else if (type.substring(0, 6) ===  "Array<" || type.substring(type.length - 2) ===  "[]") {
        return "std::vector<%s>".format(getArrayTypeTemplete(type));
-    } else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
+    } else if (type.substring(0, 4) ===  "Map<" || type.indexOf("{[key:") ===  0) {
         return getMapCType(type);
     } else {
         return type
@@ -50,24 +50,24 @@ function getMapCType(type) {
     let mapType = getMapType(type)
     let mapTypeString = ""
 
-    if (mapType[1] != undefined && mapType[2] == undefined) {
-        if (mapType[1] == "string") { mapTypeString = "std::string" }
-        else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = mapType[1] }
-        else if (mapType[1] == "boolean") { mapTypeString = "bool" }
-        else if (mapType[1] == "any") { mapTypeString = "std::any" }
-        else if (mapType[1] != null) { mapTypeString = mapType[1] }
-    } else if (mapType[2] != undefined) {
-        if (mapType[2] == "string") { mapTypeString = "std::map<std::string, std::string>" }
-        else if (mapType[2].substring(0, 12) == "NUMBER_TYPE_") { 
+    if (mapType[1] !==  undefined && mapType[2] ===  undefined) {
+        if (mapType[1] ===  "string") { mapTypeString = "std::string" }
+        else if (mapType[1].substring(0, 12) ===  "NUMBER_TYPE_") { mapTypeString = mapType[1] }
+        else if (mapType[1] ===  "boolean") { mapTypeString = "bool" }
+        else if (mapType[1] ===  "any") { mapTypeString = "std::any" }
+        else if (mapType[1] !==  null) { mapTypeString = mapType[1] }
+    } else if (mapType[2] !==  undefined) {
+        if (mapType[2] ===  "string") { mapTypeString = "std::map<std::string, std::string>" }
+        else if (mapType[2].substring(0, 12) ===  "NUMBER_TYPE_") { 
             mapTypeString = "std::map<std::string, %s>".format(mapType[2])
         }
-        else if (mapType[2] == "boolean") { mapTypeString = "std::map<std::string, bool>" }
-    } else if (mapType[3] != undefined) {
-        if (mapType[3] == "string") { mapTypeString = "std::vector<std::string>" }
-        else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") {
+        else if (mapType[2] ===  "boolean") { mapTypeString = "std::map<std::string, bool>" }
+    } else if (mapType[3] !==  undefined) {
+        if (mapType[3] ===  "string") { mapTypeString = "std::vector<std::string>" }
+        else if (mapType[3].substring(0, 12) ===  "NUMBER_TYPE_") {
             mapTypeString = "std::vector<%s>".format(mapType[3])
         }
-        else if (mapType[3] == "boolean") { mapTypeString = "std::vector<bool>" }
+        else if (mapType[3] ===  "boolean") { mapTypeString = "std::vector<bool>" }
     }
     return "std::map<std::string, %s>".format(mapTypeString)
 }
@@ -75,17 +75,17 @@ function getMapCType(type) {
 function jsToC(dest, napiVn, type, enumType = 0, optional) {
     if (type.indexOf("|") >= 0) {
         return unionTempleteFunc(dest, napiVn, type, optional)
-    } else if (type == "string") {
+    } else if (type ===  "string") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if (tnv%d != nullptr) {pxt->SwapJs2CUtf8(tnv%d, %s);}\n`
+            return `napi_value tnv%d = %s;\n    if (tnv%d !==  nullptr) {pxt->SwapJs2CUtf8(tnv%d, %s);}\n`
                 .format(lt, napiVn, lt, lt, dest)
         } else {
             return "pxt->SwapJs2CUtf8(%s, %s);".format(napiVn, dest)
         }           
-    } else if (type.substring(type.length - 2) == "[]") {
+    } else if (type.substring(type.length - 2) ===  "[]") {
         return arrTemplete(dest, napiVn, type);
-    } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+    } else if (type.substring(0, 12) === "NUMBER_TYPE_") {
         return numTempleteFunc (enumType, napiVn, type, dest);
     } else if (InterfaceList.getValue(type)) {
         return interfaceTempleteFunc(type, napiVn, dest);
@@ -93,15 +93,15 @@ function jsToC(dest, napiVn, type, enumType = 0, optional) {
         return typeTempleteFunc(type, dest, napiVn);
     } else if (EnumList.getValue(type)) {
         return jsToCEnum(type, dest, napiVn)
-    } else if (type.indexOf("Array<") == 0) {
+    } else if (type.indexOf("Array<") === 0) {
         return arrTemplete(dest, napiVn, type);
-    } else if (type == "boolean") {
+    } else if (type === "boolean") {
         return `BOOLEAN_JS_2_C(%s, %s, %s);\n`.format(napiVn, "bool", dest)
-    } else if (type.substring(0, 4) == "Map<" || type.substring(0, 6) == "{[key:") {
+    } else if (type.substring(0, 4) ===  "Map<" || type.substring(0, 6) ===  "{[key:") {
         return mapTempleteFunc(dest, napiVn, type);
-    } else if (type == "any") {
+    } else if (type === "any") {
         return anyTempleteFunc(dest, napiVn, type);
-    } else if (type == "Object" || type == "object") {
+    } else if (type === "Object" || type === "object") {
         return objectTempleteFunc(dest, napiVn);
     }else {
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`
@@ -140,7 +140,7 @@ function interfaceTempleteFunc(type, napiVn, dest) {
 function typeTempleteFunc(type, dest, napiVn) {
   let tt = "";
   let ifl = TypeList.getValue(type);
-  if (typeof (ifl) == 'object') {
+  if (typeof (ifl) ===  'object') {
     for (let i in ifl) {
       let name2 = ifl[i].name;
       let type2 = ifl[i].type;
@@ -177,22 +177,22 @@ function unionTempleteFunc(dest, napiVn, type, optional) {
         unionTypeString += '%s_type = pxt->GetUnionType(%s);\n'.format(dest, napiVn)
     }
     for (let i = 0; i < unionType.length; i++) {
-        if (unionType[i] == "string") {
-            unionTypeString += `if (%s_%s == "string") {
+        if (unionType[i] ===  "string") {
+            unionTypeString += `if (%s_%s ===  "string") {
                 std::string union_string;
                 %s
                 %s
             }\n`.format(dest, typeStr, jsToC("union_string", napiVn, unionType[i]),
             optional? dest+".emplace(union_string);":dest+" = union_string;")
-        } else if (unionType[i].substring(0, 12) == "NUMBER_TYPE_") {
-            unionTypeString += `if (%s_%s == "number") {
+        } else if (unionType[i].substring(0, 12) ===  "NUMBER_TYPE_") {
+            unionTypeString += `if (%s_%s ===  "number") {
                 std::uint32_t union_number;
                 %s
                 %s
             }\n`.format(dest, typeStr, jsToC("union_number", napiVn, unionType[i]),
             optional? dest+".emplace(union_number);":dest+" = union_number;")
-        } else if (unionType[i] == "boolean") {
-            unionTypeString += `if (%s_%s == "boolean") {
+        } else if (unionType[i] ===  "boolean") {
+            unionTypeString += `if (%s_%s ===  "boolean") {
                 bool union_boolean;
                 %s
                 %s
@@ -219,30 +219,30 @@ function jsToCEnum(type, dest, napiVn) {
 
 function getArrayTypeTemplete(type) {
     let arrayType
-    if (type.substring(type.length - 2) == "[]") {
+    if (type.substring(type.length - 2) === "[]") {
         arrayType = getArrayTypeTwo(type)
     } else {
         arrayType = getArrayType(type)
     }    
-    if (arrayType == "string") {
+    if (arrayType === "string") {
         arrayType = "std::string"
-    } else if (arrayType == "boolean") {
+    } else if (arrayType === "boolean") {
         arrayType = "bool"
-    } else if (arrayType == "any") {
+    } else if (arrayType === "any") {
         arrayType = "any"
-    } else if (arrayType == "[key:string]:string" || arrayType == "Map<string,string>") {
+    } else if (arrayType === "[key:string]:string" || arrayType === "Map<string,string>") {
         arrayType = "std::map<std::string, std::string>"
-    } else if (arrayType.substring(0, arrayType.lastIndexOf("_") + 1) == "[key:string]:NUMBER_TYPE_" || 
-        arrayType.substring(0, arrayType.lastIndexOf("_") + 1) == "Map<string,NUMBER_TYPE_>") {       
+    } else if (arrayType.substring(0, arrayType.lastIndexOf("_") + 1) === "[key:string]:NUMBER_TYPE_" || 
+        arrayType.substring(0, arrayType.lastIndexOf("_") + 1) === "Map<string,NUMBER_TYPE_>") {       
         let len = arrayType.length
         let num = arrayType.substring(arrayType.lastIndexOf("_") + 1, len)
         arrayType = "std::map<std::string, NUMBER_TYPE_%s>".format(num)
-    } else if (arrayType == "[key:string]:boolean" || arrayType == "Map<string,boolean>") {
+    } else if (arrayType === "[key:string]:boolean" || arrayType === "Map<string,boolean>") {
         arrayType = "std::map<std::string, bool>"
-    } else if (arrayType.substring(0, 14) == "[key:string]:") {
+    } else if (arrayType.substring(0, 14) === "[key:string]:") {
         let valueType = arrayType.substring(14, arrayType.length)
         arrayType = "std::map<std::string, %s>".format(valueType)
-    } else if (arrayType.substring(0, 11) == "Map<string,") {
+    } else if (arrayType.substring(0, 11) === "Map<string,") {
         let valueType = arrayType.substring(11, arrayType.length-1)
         arrayType = "std::map<std::string, %s>".format(valueType)
     }
@@ -252,7 +252,7 @@ function getArrayTypeTemplete(type) {
 function arrTemplete(dest, napiVn, type) {  
     let lt = LenIncrease.getAndIncrease()
     let arrayType = getArrayTypeTemplete(type)
-    if (arrayType == "any") {
+    if (arrayType === "any") {
         return anyArrayTempleteFunc(dest, napiVn);
     }
     let arrTemplete = `\
@@ -261,7 +261,7 @@ function arrTemplete(dest, napiVn, type) {
         %s tt[replace_lt];
         [replace_swap]
         %s.push_back(tt[replace_lt]);
-    }\n`.format(napiVn, arrayType == "boolean" ? "bool" : arrayType, dest)
+    }\n`.format(napiVn, arrayType === "boolean" ? "bool" : arrayType, dest)
    
     let arrMapTemplete = `\
     uint32_t len[replace_lt] = pxt->GetArrayLength(%s);
@@ -282,9 +282,9 @@ function arrTemplete(dest, napiVn, type) {
 
     let str = "std::map<std::string,"
     let strLen = str.length    
-    if (arrayType.substring(0, strLen) == "std::map<std::string,") {  
+    if (arrayType.substring(0, strLen) === "std::map<std::string,") {  
         let codegen = getMapValueCode(arrayType)
-        if (codegen == null) {
+        if (codegen ===  null) {
             return arrMapTemplete
         }     
         arrMapTemplete = arrMapTemplete.replaceAll("[replace_lt]", lt)
@@ -300,7 +300,7 @@ function numTempleteFunc(enumType, napiVn, type, dest) {
     if (enumType) {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if (tnv%d != nullptr) {NUMBER_JS_2_C_ENUM(tnv%d, %s, %s, %s);}\n`
+            return `napi_value tnv%d = %s;\n    if (tnv%d !==  nullptr) {NUMBER_JS_2_C_ENUM(tnv%d, %s, %s, %s);}\n`
             .format(lt, napiVn, lt, lt, type, dest, enumType)
         } else {
             return `NUMBER_JS_2_C_ENUM(%s, %s, %s, %s);`.format(napiVn, type, dest, enumType)
@@ -308,7 +308,7 @@ function numTempleteFunc(enumType, napiVn, type, dest) {
     } else {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if (tnv%d != nullptr) {NUMBER_JS_2_C(tnv%d, %s, %s);}\n`
+            return `napi_value tnv%d = %s;\n    if (tnv%d !==  nullptr) {NUMBER_JS_2_C(tnv%d, %s, %s);}\n`
             .format(lt, napiVn, lt, lt, type, dest)
         } else {
             return `NUMBER_JS_2_C(%s, %s, %s);`.format(napiVn, type, dest)
@@ -320,15 +320,15 @@ function getMapValueCode(arrayType) {
     let valueTypeOut = arrayType.substring(22, arrayType.length-1)
     let strTypeOut = "%s".format(valueTypeOut)
     let codegen
-    if (strTypeOut == "std::string") {                 
+    if (strTypeOut === "std::string") {                 
         codegen = '\
         std::string ttValue;\n\
         pxt->SwapJs2CUtf8(mapValue, ttValue);'
-    } else if (strTypeOut == "bool") {               
+    } else if (strTypeOut === "bool") {               
         codegen = '\
         bool ttValue;\n\
         ttValue = pxt->SwapJs2CBool(mapValue);'
-    } else if (strTypeOut.substr(0, 12) == "NUMBER_TYPE_") {            
+    } else if (strTypeOut.substr(0, 12) === "NUMBER_TYPE_") {            
         codegen = '\
         %s ttValue;\n\
         NUMBER_JS_2_C(mapValue, %s, ttValue);'.format(strTypeOut, strTypeOut)
@@ -337,16 +337,16 @@ function getMapValueCode(arrayType) {
 }
 
 function getArrTempletereplaceSwap(arrTemplete, arrayType, napiVn, lt) { 
-    if (arrayType.substring(0, 12) == "NUMBER_TYPE_") {
+    if (arrayType.substring(0, 12) === "NUMBER_TYPE_") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             "NUMBER_JS_2_C(pxt->GetArrayElement(%s, i%d), %s, tt%d);".format(napiVn, lt, arrayType, lt))
-    } else if (arrayType == "std::string") {
+    } else if (arrayType === "std::string") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             "pxt->SwapJs2CUtf8(pxt->GetArrayElement(%s, i%d), tt%d);".format(napiVn, lt, lt))
     } else if (InterfaceList.getValue(arrayType)) {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             jsToC("tt" + lt, "pxt->GetArrayElement(%s, i%d)".format(napiVn, lt), arrayType))
-    } else if (arrayType == "bool") {
+    } else if (arrayType === "bool") {
         arrTemplete = arrTemplete.replaceAll("[replace_swap]",
             "tt%d = pxt->SwapJs2CBool(pxt->GetArrayElement(%s, i%d));".format(lt, napiVn, lt))
     }
@@ -354,16 +354,16 @@ function getArrTempletereplaceSwap(arrTemplete, arrayType, napiVn, lt) {
 }
 function getMapValueType(strLen, keyType, arrayType){
     let valueTypeIn
-    if (keyType == "[key:string]:"){
+    if (keyType === "[key:string]:"){
         valueTypeIn = arrayType.substring(strLen, arrayType.length)
-    } else if (keyType == "Map<string,"){
+    } else if (keyType === "Map<string,"){
         valueTypeIn = arrayType.substring(strLen, arrayType.length - 1)
     }            
     
     let mapValueType
-    if (valueTypeIn == "string") {
+    if (valueTypeIn === "string") {
         mapValueType = "std::string"
-    } else if (valueTypeIn == "boolean") {
+    } else if (valueTypeIn === "boolean") {
         mapValueType = "bool"
     } else {
         mapValueType = valueTypeIn
@@ -373,9 +373,9 @@ function getMapValueType(strLen, keyType, arrayType){
 
 function getMapKeyLen(arrayType) {
     let strLen
-    if (arrayType.substring(0,13) == "[key:string]:") {
+    if (arrayType.substring(0,13) === "[key:string]:") {
         strLen = "[key:string]:".length
-    }else if (arrayType.substring(0,10) == "Map<string") {
+    }else if (arrayType.substring(0,10) === "Map<string") {
         strLen = "Map<string,".length
     }
     return strLen
@@ -386,11 +386,11 @@ function paramGenerateArray(p, funcValue, param) {
     let name = funcValue.name
     let inParamName = funcValue.optional ? "(*vio->in" + p + ")" : "vio->in" + p
     let modifiers = funcValue.optional ? "* " : "&"
-    if (type.substring(type.length - 2) == "[]") {
+    if (type.substring(type.length - 2) === "[]") {
         let arrayType = getArrayTypeTwo(type)
-        if (arrayType == "string") arrayType = "std::string"
-        if (arrayType == "boolean") arrayType = "bool"
-        if (arrayType == "any") {
+        if (arrayType === "string") arrayType = "std::string"
+        if (arrayType === "boolean") arrayType = "bool"
+        if (arrayType === "any") {
             return paramGenerateAnyArray(p, name, type, param)
         }
         param.valueIn += funcValue.optional ? "\n    std::vector<%s>* in%d = nullptr;".format(arrayType, p) 
@@ -399,18 +399,18 @@ function paramGenerateArray(p, funcValue, param) {
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sstd::vector<%s>%s%s".format(param.valueDefine.length > 0 ? ", " 
                             : "", arrayType, modifiers, name)
-    } else if (type.substring(0, 6) == "Array<") {        
+    } else if (type.substring(0, 6) === "Array<") {        
         let arrayType = getArrayType(type)
         let strLen =  getMapKeyLen(arrayType)
         let keyType = arrayType.substring(0, strLen)
-        if (arrayType == "string") {
+        if (arrayType === "string") {
             arrayType = "std::string"
-        } else if (arrayType == "boolean") {
+        } else if (arrayType === "boolean") {
             arrayType = "bool"
-        } else if (arrayType == "any") {
+        } else if (arrayType === "any") {
             return paramGenerateAnyArray(p, name, type, param)
         }
-        else if (keyType == "[key:string]:"|| keyType == "Map<string,") {
+        else if (keyType === "[key:string]:"|| keyType === "Map<string,") {
             let mapValueType = getMapValueType(strLen, keyType, arrayType);             
             arrayType = "std::map<std::string, %s>".format(mapValueType)
         }
@@ -450,9 +450,9 @@ function paramGenerateAnyArray(p, name, type, param) {
 
 function paramGenerateEnum(data, funcValue, param, p) {
     let index = enumIndex(funcValue.type, data)
-    if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+    if (data.enum[index].body.enumValueType ===  EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
         funcValue.type = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
-    } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+    } else if (data.enum[index].body.enumValueType ===  EnumValueType.ENUM_VALUE_TYPE_STRING) {
         funcValue.type = "string"
     } else {
         NapiLog.logError(`paramGenerate is not support`, getLogErrInfo());
@@ -466,22 +466,22 @@ function paramGenerateMap(funcValue, param, p) {
     let name = funcValue.name
     let mapType = getMapType(type)
     let mapTypeString
-    if (mapType[1] != undefined && mapType[2] == undefined) {
-        if (mapType[1] == "string") { mapTypeString = "std::string" }
-        else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = mapType[1] }
-        else if (mapType[1] == "boolean") { mapTypeString = "bool" }
-        else if (mapType[1] == "any") { mapTypeString = "std::any" }
+    if (mapType[1] !==  undefined && mapType[2] ===  undefined) {
+        if (mapType[1] ===  "string") { mapTypeString = "std::string" }
+        else if (mapType[1].substring(0, 12) ===  "NUMBER_TYPE_") { mapTypeString = mapType[1] }
+        else if (mapType[1] ===  "boolean") { mapTypeString = "bool" }
+        else if (mapType[1] ===  "any") { mapTypeString = "std::any" }
         else { mapTypeString = mapType[1] }
     }
-    else if (mapType[2] != undefined) {
-        if (mapType[2] == "string") { mapTypeString = "std::map<std::string, std::string>" }
-        else if (mapType[2].substring(0, 12) == "NUMBER_TYPE_") { "std::map<std::string, "+mapType[2]+">" }
-        else if (mapType[2] == "boolean") { mapTypeString = "std::map<std::string, bool>" }
+    else if (mapType[2] !==  undefined) {
+        if (mapType[2] ===  "string") { mapTypeString = "std::map<std::string, std::string>" }
+        else if (mapType[2].substring(0, 12) ===  "NUMBER_TYPE_") { "std::map<std::string, "+mapType[2]+">" }
+        else if (mapType[2] ===  "boolean") { mapTypeString = "std::map<std::string, bool>" }
     }
-    else if (mapType[3] != undefined) {
-        if (mapType[3] == "string") { mapTypeString = "std::vector<std::string>" }
-        else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = "std::vector<"+mapType[3]+">" }
-        else if (mapType[3] == "boolean") { mapTypeString = "std::vector<bool>" }
+    else if (mapType[3] !==  undefined) {
+        if (mapType[3] ===  "string") { mapTypeString = "std::vector<std::string>" }
+        else if (mapType[3].substring(0, 12) ===  "NUMBER_TYPE_") { mapTypeString = "std::vector<"+mapType[3]+">" }
+        else if (mapType[3] ===  "boolean") { mapTypeString = "std::vector<bool>" }
     }
     paramGenerateMap2(funcValue, param, p, mapType, mapTypeString, name)
 }
@@ -489,7 +489,7 @@ function paramGenerateMap(funcValue, param, p) {
 function paramGenerateMap2(funcValue, param, p, mapType, mapTypeString, name) {
     let inParamName = funcValue.optional ? "(*vio->in" + p + ")" : "vio->in" + p
     let modifiers = funcValue.optional ? "*" : "&"
-    if (mapType[1] == "any") {
+    if (mapType[1] ===  "any") {
         param.valueIn += funcValue.optional ? `\n    std::map<std::string, %s>* in%d = nullptr;
                                                 std::string in%d_type;`.format(mapTypeString, p, p)
                                             : `\n    std::map<std::string, %s> in%d;
@@ -510,13 +510,13 @@ function mapTempleteFunc(dest, napiVn, type) {
     let mapType = getMapType(type)
     let lt = LenIncrease.getAndIncrease()
     let mapTemplete = ""
-    if (mapType[1] != undefined && mapType[2] == undefined) {
+    if (mapType[1] !==  undefined && mapType[2] ===  undefined) {
         mapTemplete = mapValue(mapType, napiVn, dest, lt)
     }
-    else if (mapType[2] != undefined) {
+    else if (mapType[2] !==  undefined) {
         mapTemplete = mapMap(mapType, napiVn, dest, lt)
     }
-    else if (mapType[3] != undefined) {
+    else if (mapType[3] !==  undefined) {
         mapTemplete = mapArray(mapType, napiVn, dest, lt)
     }
     return mapTemplete
@@ -552,7 +552,7 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
     let interfaceVarName = ""
     let interfaceFun = ""
     for (let i = 0; i < interfaceValue.length; i++) {
-        if (interfaceValue[i].type == 'string') {
+        if (interfaceValue[i].type ===  'string') {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
             interfaceFun +=
                 `pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(XNapiTool::ZERO),
@@ -560,7 +560,7 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
                     .format("SwapJs2CUtf8", "GetMapElementValue",
                         lt, interfaceValue[i].name, lt+1, interfaceValue[i].name)
         }
-        else if (interfaceValue[i].type.substring(0, 12) == "NUMBER_TYPE_") {
+        else if (interfaceValue[i].type.substring(0, 12) ===  "NUMBER_TYPE_") {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
             interfaceFun +=
                 `%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(XNapiTool::ZERO),
@@ -568,7 +568,7 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
                     .format("NUMBER_JS_2_C", "GetMapElementValue", lt, interfaceValue[i].name,
                         interfaceValue[i].type, lt + 1, interfaceValue[i].name)
         }
-        else if (interfaceValue[i].type == 'boolean') {
+        else if (interfaceValue[i].type ===  'boolean') {
             interfaceVarName += `std::string %dName = "%d";\n`.format(interfaceValue[i].name, interfaceValue[i].name)
             interfaceFun +=
                 `tt%d.%s = pxt->%s(pxt->%s(pxt->GetMapElementValue(pxt->GetArgv(XNapiTool::ZERO),
@@ -586,36 +586,36 @@ function mapInterface(mapTypeString, mapTemplete, napiVn, lt) {
 
 function mapValue(mapType, napiVn, dest, lt) {
     let mapTypeString
-    if (mapType[1] == "string") { mapTypeString = "std::string" }
-    else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = mapType[1] }
-    else if (mapType[1] == "boolean") { mapTypeString = "bool" }
-    else if (mapType[1] == "any") { mapTypeString = "std::any" }
-    else if (mapType[1] != null) { mapTypeString = mapType[1] }
+    if (mapType[1] ===  "string") { mapTypeString = "std::string" }
+    else if (mapType[1].substring(0, 12) ===  "NUMBER_TYPE_") { mapTypeString = mapType[1] }
+    else if (mapType[1] ===  "boolean") { mapTypeString = "bool" }
+    else if (mapType[1] ===  "any") { mapTypeString = "std::any" }
+    else if (mapType[1] !==  null) { mapTypeString = mapType[1] }
     let mapTemplete = mapValueTemplete.format(napiVn, mapTypeString, dest)
     mapTemplete = mapTemplete.replaceAll("[replace_lt]", lt)
     mapTemplete = mapTemplete.replaceAll("[replace_lt+1]", lt + 1)
-    if (mapTypeString == "std::string") {
+    if (mapTypeString ===  "std::string") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
             `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
         pxt->SwapJs2CUtf8(pxt->GetMapElementValue(%s, tt%d.c_str()), tt%d);\n`
                 .format(napiVn, lt, lt, napiVn, lt, lt + 1))
     }
-    else if (mapTypeString.substring(0, 12) == "NUMBER_TYPE_") {
+    else if (mapTypeString.substring(0, 12) ===  "NUMBER_TYPE_") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
             `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
         NUMBER_JS_2_C(pxt->GetMapElementValue(%s, tt%d.c_str()), %s, tt%d);\n`
                 .format(napiVn, lt, lt, napiVn, lt, mapTypeString, lt + 1))
     }
-    else if (mapTypeString == "bool") {
+    else if (mapTypeString ===  "bool") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
             `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
         tt%d = pxt->SwapJs2CBool(pxt->GetMapElementValue(%s, tt%d.c_str()));\n`
                 .format(napiVn, lt, lt, lt + 1, napiVn, lt))
     }
-    if (mapTypeString == "std::any") {
+    if (mapTypeString ===  "std::any") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
             `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%d), tt%d);
-            if (i%d == 0) {
+            if (i%d ===  0) {
                 %s_type = pxt->GetAnyType(pxt->GetMapElementValue(%s, tt%d.c_str()));
             }
             pxt->SetAnyValue(%s_type, pxt->GetMapElementValue(%s, tt%d.c_str()), tt%d);\n`
@@ -688,19 +688,19 @@ function mapMapNumber(mapTemplete, napiVn, lt, mapTypeString) {
 
 function mapMap(mapType, napiVn, dest, lt) {
     let mapTypeString
-    if (mapType[2] == "string") { mapTypeString = "std::string" }
-    else if (mapType[2].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = mapType[2] }
-    else if (mapType[2] == "boolean") { mapTypeString = "bool" }
+    if (mapType[2] ===  "string") { mapTypeString = "std::string" }
+    else if (mapType[2].substring(0, 12) ===  "NUMBER_TYPE_") { mapTypeString = mapType[2] }
+    else if (mapType[2] ===  "boolean") { mapTypeString = "bool" }
     let mapTemplete = mapMapTemplete.format(napiVn, mapTypeString, dest)
     mapTemplete = mapTemplete.replaceAll("[replace_lt]", lt)
     mapTemplete = mapTemplete.replaceAll("[replace_lt+1]", lt + 1)
-    if (mapType[2] == "string") {
+    if (mapType[2] ===  "string") {
         mapTemplete = mapMapString (mapTemplete, napiVn, lt)
     }
-    else if (mapType[2] == "boolean") {
+    else if (mapType[2] ===  "boolean") {
         mapTemplete = mapMapBoolean (mapTemplete, napiVn, lt)
     }
-    else if (mapType[2].substring(0, 12) == "NUMBER_TYPE_") {
+    else if (mapType[2].substring(0, 12) ===  "NUMBER_TYPE_") {
         mapTemplete = mapMapNumber (mapTemplete, napiVn, lt, mapTypeString)
     }
     return mapTemplete
@@ -717,13 +717,13 @@ for (uint32_t i[replace_lt] = 0; i[replace_lt] < len[replace_lt]; i[replace_lt]+
 
 function mapArray(mapType, napiVn, dest, lt) {
     let mapTypeString
-    if (mapType[3] == "string") { mapTypeString = "std::string" }
-    else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") { mapTypeString = mapType[3] }
-    else if (mapType[3] == "boolean") { mapTypeString = "bool" }
+    if (mapType[3] ===  "string") { mapTypeString = "std::string" }
+    else if (mapType[3].substring(0, 12) ===  "NUMBER_TYPE_") { mapTypeString = mapType[3] }
+    else if (mapType[3] ===  "boolean") { mapTypeString = "bool" }
     let mapTemplete = mapArrayTemplete.format(napiVn, mapTypeString, dest)
     mapTemplete = mapTemplete.replaceAll("[replace_lt]", lt)
     mapTemplete = mapTemplete.replaceAll("[replace_lt+1]", lt + 1)
-    if (mapType[3] == "string") {
+    if (mapType[3] ===  "string") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
             `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%s), tt%d);
             uint32_t len%s = pxt->GetArrayLength(pxt->GetMapElementValue(%s, tt%d.c_str()));
@@ -735,7 +735,7 @@ function mapArray(mapType, napiVn, dest, lt) {
             }`.format(napiVn, lt, lt, lt + 1, napiVn, lt, lt + 1, lt + 1, lt + 1,
                 lt + 1, lt + 2, napiVn, lt, lt + 1, lt + 2, lt + 1, lt + 2))
     }
-    else if (mapType[3] == "boolean") {
+    else if (mapType[3] ===  "boolean") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
             `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%s), tt%d);
             uint32_t len%s = pxt->GetArrayLength(pxt->GetMapElementValue(%s, tt%d.c_str()));
@@ -747,7 +747,7 @@ function mapArray(mapType, napiVn, dest, lt) {
             }`.format(napiVn, lt, lt, lt + 1, napiVn, lt, lt + 1, lt + 1, lt + 1,
                 lt + 1, lt + 2, lt + 2, napiVn, lt, lt, lt + 1, lt + 2))
     }
-    else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") {
+    else if (mapType[3].substring(0, 12) ===  "NUMBER_TYPE_") {
         mapTemplete = mapTemplete.replaceAll("[replace_swap]",
             `pxt->SwapJs2CUtf8(pxt->GetMapElementName(%s, i%s), tt%d);
             uint32_t len%s = pxt->GetArrayLength(pxt->GetMapElementValue(%s, tt%d.c_str()));
@@ -815,9 +815,9 @@ function paramGenerateCallBack(data, funcValue, param, p) {
 
     if (isEnum(cbParamType, data)) {
         let index = enumIndex(cbParamType, data)
-        if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+        if (data.enum[index].body.enumValueType ===  EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
             cbParamType = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
-        } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+        } else if (data.enum[index].body.enumValueType ===  EnumValueType.ENUM_VALUE_TYPE_STRING) {
             cbParamType = "string"
         } else {
             NapiLog.logError(`paramGenerate is not support`, getLogErrInfo());
@@ -870,7 +870,7 @@ function paramGenerateArrowCallBack(funcValue, param, p, onFlag = false) {
 }
 
 function isArrayType(type) {    
-    if (type.substring(type.length - 2) == "[]" || type.substring(0, 6) == "Array<") {
+    if (type.substring(type.length - 2) ===  "[]" || type.substring(0, 6) ===  "Array<") {
         return true;
     }
     return false;
@@ -946,7 +946,7 @@ let objectTempleteMap = `\
             for(uint32_t i[replace_lt+1] = 0; i[replace_lt+1] < ret; i[replace_lt+1]++) {
                 napi_get_element (env, obj_name_value, i[replace_lt+1], &obj_name_result);
                 napi_typeof(env, obj_name_result, &obj_name_type);
-                if (obj_name_type == napi_string) {
+                if (obj_name_type ===  napi_string) {
                     napi_value obj_value;
                     napi_valuetype obj_value_type;
                     std::string obj_name_string;
@@ -954,17 +954,17 @@ let objectTempleteMap = `\
                     napi_get_named_property (env, valueObj, obj_name_string.c_str(), &obj_value);
                     napi_typeof(env, obj_value, &obj_value_type);
                     std::map<std::string, std::any> anyValueMap;
-                    if (obj_value_type == napi_string) {
+                    if (obj_value_type ===  napi_string) {
                         std::string tt[replace_lt+2];
                         pxt->SwapJs2CUtf8(obj_value, tt[replace_lt+2]);
                         anyValueMap.insert(std::make_pair(obj_name_string, tt[replace_lt+2]));
                         anyValue.push_back(anyValueMap);
-                    } else if (obj_value_type == napi_number) {
+                    } else if (obj_value_type ===  napi_number) {
                         NUMBER_TYPE_%d tt[replace_lt+2];
                         NUMBER_JS_2_C(obj_value, NUMBER_TYPE_%d, tt[replace_lt+2] );
                         anyValueMap.insert(std::make_pair(obj_name_string, tt[replace_lt+2]));
                         anyValue.push_back(anyValueMap);
-                    } else if (obj_value_type == napi_boolean) {
+                    } else if (obj_value_type ===  napi_boolean) {
                         bool tt[replace_lt+2];
                         tt[replace_lt+2] = pxt->SwapJs2CBool(obj_value);
                         anyValueMap.insert(std::make_pair(obj_name_string, tt[replace_lt+2]));
@@ -980,17 +980,17 @@ function objectTempleteFunc(dest, napiVn) {
     let objTemplete = objectTemplete.format(napiVn, napiVn, napiVn, dest)
 
     objTemplete = objTemplete.replaceAll("[replace_swap]",
-        `if (valueObjType == "string") {
+        `if (valueObjType ===  "string") {
             std::string tt[replace_lt+2];
             pxt->SwapJs2CUtf8(valueObj, tt[replace_lt+2]);
             tt[replace_lt+1] = tt[replace_lt+2];
-        } else if (valueObjType == "boolean") {
+        } else if (valueObjType ===  "boolean") {
             bool tt[replace_lt+2];
             tt[replace_lt+2] = pxt->SwapJs2CBool(valueObj);
             tt[replace_lt+1] = tt[replace_lt+2];
-        } else if (valueObjType == "number") {
+        } else if (valueObjType ===  "number") {
             NUMBER_JS_2_C(valueObj, NUMBER_TYPE_%d, tt[replace_lt+1]);
-        } else if (valueObjType == "arr_string") {
+        } else if (valueObjType ===  "arr_string") {
             uint32_t len[replace_lt+1] = pxt->GetArrayLength(valueObj);
             std::vector<std::string> arr;
             for(uint32_t i[replace_lt+1] = 0; i[replace_lt+1] < len[replace_lt+1]; i[replace_lt+1]++) {
@@ -1001,7 +1001,7 @@ function objectTempleteFunc(dest, napiVn) {
                 arr.push_back(tt[replace_lt+2]);
             }
             tt[replace_lt+1] = arr;
-        } else if (valueObjType == "arr_boolean") {
+        } else if (valueObjType ===  "arr_boolean") {
             uint32_t len[replace_lt+1] = pxt->GetArrayLength(valueObj);
             std::vector<bool> arr;
             for(uint32_t i[replace_lt+1] = 0; i[replace_lt+1] < len[replace_lt+1]; i[replace_lt+1]++) {
@@ -1012,9 +1012,9 @@ function objectTempleteFunc(dest, napiVn) {
                 arr.push_back(tt[replace_lt+2]);
             }
             tt[replace_lt+1] = arr;
-        } else if (valueObjType == "arr_number") {
+        } else if (valueObjType ===  "arr_number") {
             [replace_objectTemplete_arrnum]
-        } else if (valueObjType == "map_string" || valueObjType == "map_number" || valueObjType == "map_boolean") {
+        } else if (valueObjType ===  "map_string" || valueObjType ===  "map_number" || valueObjType ===  "map_boolean") {
             [replace_objectTemplete_map]
         }
         `).format(lt)
@@ -1045,8 +1045,8 @@ function paramGenerateObject(p, funcValue, param) {
 
 function isCallbackFunc(type) {
     let callbackFunc = false;
-    if (type.substring(0, 9) == "Callback<" || 
-    type.substring(0, 14) == "AsyncCallback<" ||
+    if (type.substring(0, 9) ===  "Callback<" || 
+    type.substring(0, 14) ===  "AsyncCallback<" ||
     isFuncType(type)) {
         callbackFunc = true;
     }
@@ -1061,9 +1061,9 @@ function paramGenerate(p, funcValue, param, data) {
     let modifiers = funcValue.optional ? "*" : "&"
     if (type.indexOf("|") >= 0) {
         return paramGenerateUnion(type, param, p, name)
-    } else if (type == "string") {
+    } else if (type ===  "string") {
         paramGenerateCommon(p, "std::string", funcValue, param, modifiers, inParamName)
-    }  else if (type.substring(0, 12) == "NUMBER_TYPE_" && type.indexOf("[]") < 0) {
+    }  else if (type.substring(0, 12) ===  "NUMBER_TYPE_" && type.indexOf("[]") < 0) {
         paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
     } else if (InterfaceList.getValue(type)) {
         paramGenerateCommon(p, funcValue.type, funcValue, param, modifiers, inParamName)
@@ -1073,17 +1073,17 @@ function paramGenerate(p, funcValue, param, data) {
         paramGenerateCallBack(data, funcValue, param, p)
     } else if (CallFunctionList.getValue(type)) {
         paramGenerateArrowCallBack(funcValue, param, p)
-    } else if (type == "boolean") {
+    } else if (type ===  "boolean") {
         paramGenerateCommon(p, "bool", funcValue, param, modifiers, inParamName)
     } else if (isEnum(type, data)) {
         paramGenerateEnum(data, funcValue, param, p)
-    } else if (type.substring(0, 4) == "Map<" || type.substring(0, 6) == "{[key:") {
+    } else if (type.substring(0, 4) ===  "Map<" || type.substring(0, 6) ===  "{[key:") {
         paramGenerateMap(funcValue, param, p)
     } else if (isArrayType(type)) {
         paramGenerateArray(p, funcValue, param);
-    } else if (type == "any") {
+    } else if (type ===  "any") {
         paramGenerateAny(p, name, type, param);
-    }  else if (type == "object" || type == "Object") {
+    }  else if (type ===  "object" || type ===  "Object") {
         paramGenerateObject(p, funcValue, param);
     } else {
         NapiLog.logError("The current version does not support generating parameter [%s] with type [%s]."
@@ -1106,7 +1106,7 @@ function eventParamGenerate(p, funcValue, param, data) {
     let regName = re.match("([a-zA-Z_0-9]+)", type)
     if(isFuncType(type)) {
         paramGenerateCallBack(data, funcValue, param, p)
-    } else if (type.substring(0, 9) == "Callback<" || type.substring(0, 14) == "AsyncCallback<") {
+    } else if (type.substring(0, 9) ===  "Callback<" || type.substring(0, 14) ===  "AsyncCallback<") {
         // callback参数处理
         paramGenerateCallBack(data, funcValue, param, p)
     } else if (CallFunctionList.getValue(type)) {  // 判断条件
@@ -1119,7 +1119,7 @@ function eventParamGenerate(p, funcValue, param, data) {
     else if (regName) {
         // event type参数处理
         param.eventName = re.getReg(type, regName.regs[1])  // string类型如何处理？
-        if (param.eventName == "string") {
+        if (param.eventName ===  "string") {
             param.eventNameIsStr = true
             param.eventName = "string%d".format(NumberIncrease.getAndIncrease())
         }

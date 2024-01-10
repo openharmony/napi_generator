@@ -43,10 +43,10 @@ FuncType.SYNC = 2
 FuncType.ASYNC = 4
 FuncType.PROMISE = 8
 FuncType.ToString = function (type) {
-    if (type == FuncType.DIRECT) return "DIRECT";
-    else if (type == FuncType.SYNC) return "SYNC";
-    else if (type == FuncType.ASYNC) return "ASYNC";
-    else if (type == FuncType.PROMISE) return "PROMISE";
+    if (type === FuncType.DIRECT) return "DIRECT";
+    else if (type === FuncType.SYNC) return "SYNC";
+    else if (type === FuncType.ASYNC) return "ASYNC";
+    else if (type === FuncType.PROMISE) return "PROMISE";
     return "UNKNOW";
 }
 
@@ -74,7 +74,7 @@ InterfaceList.getValue = function (name) {
     let ifs = InterfaceList.interfacess_[InterfaceList.interfacess_.length - 1]
     for (let i in ifs) {
         let vv = ifs[i];
-        if (ifs[i].name == name) {
+        if (ifs[i].name === name) {
             var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, "allProperties")
             if (hasProperty) {
                 return ifs[i].body.allProperties.values;
@@ -89,7 +89,7 @@ InterfaceList.getValue = function (name) {
 InterfaceList.getBody = function (name) {
     let ifs = InterfaceList.interfacess_[InterfaceList.interfacess_.length - 1]
     for (let i in ifs) {
-        if (ifs[i].name == name) {
+        if (ifs[i].name === name) {
             return ifs[i].body;
         }
     }
@@ -107,7 +107,7 @@ CallFunctionList.pop = function () {
 CallFunctionList.getValue = function (name) {
     let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
     for (let i = 0; i < cfs.length; i++) {
-        if (cfs[i].name == name) {
+        if (cfs[i].name === name) {
             return [cfs[i].body, cfs[i].ret]
         } 
     }
@@ -118,7 +118,7 @@ CallFunctionList.getObjOnFuncName = function (interfaceName) {
     let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
     let funNames = []
     for (let i = 0; i < cfs.length; i++) {
-        if (cfs[i].name.indexOf(interfaceName) == 0) {
+        if (cfs[i].name.indexOf(interfaceName) === 0) {
             let funName = cfs[i].name.substring(interfaceName.length+1, cfs[i].name.length)
             funNames.push(funName)
         } 
@@ -137,7 +137,7 @@ TypeList.pop = function () {
 TypeList.getValue = function (name) {
     let ifs = TypeList.types[TypeList.types.length - 1]
     for (let i in ifs) {
-        if (ifs[i].name == name) {
+        if (ifs[i].name === name) {
             var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, "allProperties")
             if (hasProperty) {
                 return ifs[i].body.allProperties.values;
@@ -160,7 +160,7 @@ EnumList.pop = function () {
 EnumList.getValue = function (name) {
     let ifs = EnumList.enum_[EnumList.enum_.length - 1]
     for (let i in ifs) {
-        if (ifs[i].name == name) {
+        if (ifs[i].name === name) {
             return ifs[i].body.element;
         }
     }
@@ -169,12 +169,12 @@ EnumList.getValue = function (name) {
 
 function getArrayType(type) {
     let tt = re.match("Array<([a-zA-Z_0-9]+)>", type)
-    if (tt != null) {
+    if (tt !== null) {
         return re.getReg(type, tt.regs[1])
     } 
     
     tt = re.match("Array<{([[a-z:]+)([a-z:]]+)([a-zA-Z_1-9:]+)", type)
-    if (tt != null) {
+    if (tt !== null) {
         let res = ''
         let len = tt.regs.length
         for (let i=1; i<len; i++) {
@@ -185,7 +185,7 @@ function getArrayType(type) {
     }
     
     tt = re.match("Array<map<string", type)
-    if (tt != null) {
+    if (tt !== null) {
         let preStr = 'Array<'
         let preStrLen = preStr.length        
         let res = type.substring(preStrLen, type.length-1)              
@@ -193,7 +193,7 @@ function getArrayType(type) {
     }
 
     tt = re.match("Array<Map<string", type)
-    if (tt != null) {
+    if (tt !== null) {
         let preStr = 'Array<'
         let preStrLen = preStr.length        
         let res = type.substring(preStrLen, type.length-1)              
@@ -208,9 +208,9 @@ function getArrayTypeTwo(type) {
 }
 
 function jsType2CType(jsTypeName) {
-    if (jsTypeName == "string") {
+    if (jsTypeName === "string") {
         return "std::string"
-    } else if (jsTypeName == "boolean") {
+    } else if (jsTypeName === "boolean") {
         return "bool"
     } else {
         return jsTypeName
@@ -223,12 +223,12 @@ EnumValueType.ENUM_VALUE_TYPE_STRING = 1
 
 function isEnum(type, data) {
     let isEnum = false
-    if (null == data) {
+    if (null === data) {
         return isEnum
     }
     for (let i in data.enum) {
         let enumm = data.enum[i]
-        if (type == enumm.name) {
+        if (type === enumm.name) {
             isEnum = true
         }
     }
@@ -237,12 +237,12 @@ function isEnum(type, data) {
 
 function enumIndex(type, data) {
     let index;
-    if (null == data) {
+    if (null === data) {
         return index
     }
     for (let i in data.enum) {
         let enumm = data.enum[i]
-        if (type == enumm.name) {
+        if (type === enumm.name) {
             index = i
         }
     }
@@ -251,12 +251,12 @@ function enumIndex(type, data) {
 
 function isType(type, data) {
   let isType = false
-  if (null == data) {
+  if (null === data) {
     return isType
   }
   for (let i in data.type) {
     let typee = data.type[i]
-    if (type == typee.name) {
+    if (type === typee.name) {
       isType = true
     }
   }
@@ -265,12 +265,12 @@ function isType(type, data) {
 
 function typeIndex(type, data) {
   let index;
-  if (null == data) {
+  if (null === data) {
       return index
   }
   for (let i in data.type) {
       let typee = data.type[i]
-      if (type == typee.name) {
+      if (type === typee.name) {
           index = i
       }
   }
@@ -284,37 +284,37 @@ function getMapType(type) {
     let ttMap = re.search(",([a-zA-Z_0-9]+)>>", type)
     let ttArray = re.search("Array<([a-zA-Z_0-9]+)>", type)
 
-    if(ttArray == null) {
+    if(ttArray === null) {
         ttArray = re.search("([a-zA-Z_0-9]+)\\[\\]>", type)
     }
     
     let valueType
     let valueMapType
     let valueArrayType
-    if (ttKey == null && ttValue == null && ttMap == null) {
+    if (ttKey === null && ttValue === null && ttMap === null) {
         ttKey = re.search("key:([a-zA-Z_0-9]+)", type)
         ttValue = re.search(":([a-zA-Z_0-9]+)}", type)
         ttMap = re.search(":([a-zA-Z_0-9]+)}}", type)
         ttArray = re.search("Array<([a-zA-Z_0-9]+)>", type)
-        if (ttArray == null) {
+        if (ttArray === null) {
             ttArray = re.search(":([a-zA-Z_0-9]+)\\[\\]}", type)
         }        
     }
     
-    if (ttValue != null) {
+    if (ttValue !== null) {
         valueType = re.getReg(type, ttValue.regs[1])
-        if (valueType.indexOf("Array<") == 0) {
+        if (valueType.indexOf("Array<") === 0) {
             valueArrayType = re.getReg(valueType, ttArray.regs[1])
             valueType = undefined
-        } else if (ttMap != undefined) {
+        } else if (ttMap !== undefined) {
             valueMapType = re.getReg(type, ttMap.regs[1])
             valueType = undefined
         }
     }
-    if (ttMap != null) {
+    if (ttMap !== null) {
         valueMapType = re.getReg(type, ttMap.regs[1])
     }
-    if (ttArray != null) {
+    if (ttArray !== null) {
         valueArrayType = re.getReg(type, ttArray.regs[1])
     }
     return [re.getReg(type, ttKey.regs[1]), valueType, valueMapType, valueArrayType]
@@ -378,7 +378,7 @@ function isArrowFunc(type) {
 
 function isOnOffRegisterFunc(name) {
     let flag = false;
-    if (name == 'on' || name == 'off' || isRegisterFunc(name) || isUnRegisterFunc(name) ||
+    if (name === 'on' || name === 'off' || isRegisterFunc(name) || isUnRegisterFunc(name) ||
       isOnObjCallback(name)) {
         flag = true;
     }
@@ -396,7 +396,7 @@ function isCreateThreadsafeFunc(name) {
 
 function getOnObjCallbackType(funcName, interName) {
     let onObjCbType = ''
-    if (interName != '') {
+    if (interName !== '') {
         onObjCbType = interName + '_' + funcName
     } else {
         onObjCbType = funcName
@@ -423,7 +423,7 @@ jsonCfgList.pop = function () {
 jsonCfgList.getValue = function (className, inter) {
     let ifs = jsonCfgList.jsonCfg[jsonCfgList.jsonCfg.length - 1]
     for (let i in ifs) {
-        if (ifs[i].interfaceName.className == className && ifs[i].interfaceName.funcName == inter) {
+        if (ifs[i].interfaceName.className === className && ifs[i].interfaceName.funcName === inter) {
             return ifs[i].serviceCode
         }
     }
