@@ -32,23 +32,29 @@ Ability Template选择Native C++,单击Next。
 
 ![](../../../figures/DevEco_step_finish.png)
 
-2.安装插件，File->Settings->Plugins->Installed->Install Plugin from Disk...，选择下载的napi_generator包（1.0.3版本及之后的是.zip包，之前的是.jar包），安装成功之后重启IDE。
+2.安装插件，File->Settings->Plugins->Installed->Install Plugin from Disk...，选择下载的napi_generator包，安装成功之后重启IDE。
 
 ![](../../../figures/DevEco_step_pluginsOk.png)
 
-安装jar包，v1.0.3之前
+v1.0.3之前版本，安装jar包
 
 ![](../../../figures/DevEco_step_applyPlugins.png)
 
-安装zip包，v1.0.3及之后
+v1.0.3及之后版本，安装zip包
 
 ![](../../../figures/DevEco_step_applyPlugins_zip.png)
 
-3.把待转换的.d.ts文件放在DevEco stdio新建项目的src目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
+
+
+3.使用工具之前，需要做以下准备工作，链接如下：
+
+[PRAPERATION_ZH](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/PRAPERATION_ZH.md)
+
+新建项目的src目录，把待转换的.d.ts文件放在DevEco Studio新建项目的src目录下；新建生成框架路径generatorCode；将业务代码放在./src/main/cpp目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其他.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
 
 ![](../../../figures/DevEco_step_napi.png)
 
-4.选择.d.ts文件,点击右键选择 Generate Napi Frame，工具弹出Generate Napi Frame弹窗。接口文件文本框填写.d.ts文件路径；生成框架路径文本框填写生成框架存放路径；编译脚本路径填写生成CMakeList.txt文件输出路径；number目的类型此处选择char；启用import功能不选择（待转换.d.ts文件未引用其它文件）；配置业务代码按钮可用于配置接口的业务代码，框架根据配置自动粘合工具代码与业务代码；若用户想手动配置业务代码，则不点击配置按钮配置。点击ok。
+4.配置工具参数：选择.d.ts文件,点击右键选择 "Generate Napi Frame"，工具弹出"Generate Napi Frame"弹窗。接口文件文本框填写.d.ts文件路径；"生成框架路径"填写生成框架存放路径；"编译脚本路径"填写生成CMakeList.txt文件输出路径；"number目的类型"此处选择uint32_t；因待转换.d.ts文件未引用其它文件，"启用import功能"不选择；"配置业务代码"按钮用于配置接口的业务代码，框架根据配置自动粘合工具代码与业务代码；若用户想手动配置业务代码，则不点击配置按钮配置。点击ok。
 
 ![](../../../figures/DevEco_step_napiGenerate.png)
 
@@ -62,7 +68,7 @@ Ability Template选择Native C++,单击Next。
 
 [cfg.json](https://gitee.com/openharmony/napi_generator/blob/master/examples/pluginCase/cfg.json)
 
-## DevEco Studio编译打包说明
-NAPI框架代码生成后，系统框架开发者进行二次开发后，可在DevEco Studio进行编译打包生成对应的库文件，供应用开发者调用接口。DevEco Studio编译打包说明的具体操作步骤可以左键单击以下链接了解：
+## 集成应用Native工程说明
+NAPI框架代码生成后，系统框架开发者进行二次开发后，可在DevEco Studio将生成代码集成到应用Native工程中，并进行编译打包生成对应的库文件，供应用开发者调用接口。集成应用Native工程说明的具体操作步骤可以左键单击以下链接了解：
 
-[DevEco Studio编译打包说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/INSTRUCTION_BUILD_ZH.md)
+[集成应用Native工程说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/INSTRUCTION_BUILD_ZH.md)

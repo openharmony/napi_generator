@@ -1,29 +1,11 @@
-# DevEco Studio编译打包说明
+# 集成应用Native工程说明
 
 ## 简介
-  本文主要介绍使用IntelliJ插件将ts接口文件名格式如下ohos.A.B.C.d.ts文件转换后如何在DevEco Studio进行编译打包。
+  本文主要介绍使用Intellij插件将ts接口文件名格式如下ohos.A.B.C.d.ts文件转换后如何集成到应用Native工程中并编译打包，最终对接口进行测试。
 
 ## 准备
 
-### 待转换的ts文件用例
-
-待转换的@ohos.napitest.d.ts文件如下：
-
-[@ohos.napitest.d.ts](https://gitee.com/openharmony/napi_generator/blob/master/examples/ts/@ohos.napitest.d.ts)
-
-### 业务代码用例
-
-业务代码用例如下：
-
-serviceCode/NodeISayHello.h
-
-[NodeISayHello.h](https://gitee.com/openharmony/napi_generator/blob/master/examples/pluginCase/serviceCode/NodeISayHello.h)
-
-serviceCode/NodeISayHello.cpp
-
-[NodeISayHello.cpp](https://gitee.com/openharmony/napi_generator/blob/master/examples/pluginCase/serviceCode/NodeISayHello.cpp)
-
-### 测试应用用例
+### 接口测试相关的应用
 
 在DevEco Studio中增加调用napi方法的测试用例。其中修改index.js文件内容如下：
 
@@ -177,7 +159,7 @@ console.info("napiTestDemo ----funcTest returnVal = " + this.returnVal)
 I A03d00/JSAPP: napiTestDemo ----funcTest returnVal = "ret is false"
 ```
 
-7.调用其它模块：entry模块的方法add
+7.工具生成代码集成到应用Native工程之后，该应用Native工程中已有模块的接口不影响使用，如：entry模块的方法add
 
 ```
 this.addResult = testEntry.add(2, 3).toString();
@@ -207,7 +189,7 @@ Text('普通方法funcTest返回值： returnVal = ' + this.returnVal).margin({ 
 Text('libentry模块: 2 + 3 = ' + this.addResult).margin({ top: 10 })
 ```
 
-## 使用说明
+## 打包说明
 
 1. 在File->Project Structure->Project->Signing Configs自动签名，点击OK即可。
 
@@ -225,8 +207,10 @@ Text('libentry模块: 2 + 3 = ' + this.addResult).margin({ top: 10 })
 
 3. 执行成功后，设备中会出现安装的APP并进入APP测试页面
 
-    点击"注册object回调后SayHello调用回调"按钮，APP页面中sayHelloStart回调info和sayHelloEnd回调info会显示出C++传到js层的回调数据；DevEco Studio控制台中Log->HiLog中会出现以下结果:
+    3.1 注册object回调后SayHello调用回调
 
+    点击"注册object回调后SayHello调用回调"按钮，APP页面中sayHelloStart回调info和sayHelloEnd回调info会显示出C++传到js层的回调数据；DevEco Studio控制台中Log->HiLog中会出现以下结果:
+    
     ```
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHello from=js1
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHello to=native1
@@ -234,28 +218,34 @@ Text('libentry模块: 2 + 3 = ' + this.addResult).margin({ top: 10 })
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloStartCallback begin
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloStartCallback end
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloEndCallback begin
-    A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloEndCallback end
+A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloEndCallback end
     ```
 
+    3.2 注销object回调后SayHello调用回调
+    
     点击“注销object回调后SayHello调用回调”按钮，sayHelloStart回调info和sayHelloEnd回调info会显示出数据为空，即该回调已注销，C++无法调用回调，显示的为应用赋的空值；DevEco Studio控制台中Log->HiLog中会出现以下结果:
-
+    
     ```
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHello from=js2
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHello to=native2
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHello sayType=0
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloStartCallback begin
-    A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloStartCallback end
+A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloStartCallback end
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloEndCallback begin
-    A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloEndCallback end
+A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI NodeISayHelloListener_onSayHelloEndCallback end
     ```
-
+    
+    3.3 Promise 回调
+    
     点击“Promise 回调”按钮，Promise回调的errMsg, result, response会出现C++传到js层的回调数据；DevEco Studio控制台中Log->HiLog中会出现以下结果:
 
     ```
-    A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHelloWithResponse from=response from
+A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHelloWithResponse from=response from
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHelloWithResponse to=response to
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHelloWithResponse sayType=1
     ```
+    
+    3.4 register回调后SayHi调用回调
 
     点击“register回调后SayHi调用回调”按钮，register注册的回调会显示出wid = 50, wid值为C++传到js的回调数据；DevEco Studio控制台中Log->HiLog中会出现以下结果:
 
@@ -265,6 +255,8 @@ Text('libentry模块: 2 + 3 = ' + this.addResult).margin({ top: 10 })
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHi sayType=1
     ```
 
+    3.5 unRegister回调后SayHi调用回调
+
     点击“unRegister回调后SayHi调用回调”按钮，register注册的回调会显示出wid 为空，即该回调已注销，C++无法调用回调，显示的为应用赋的空值；DevEco Studio控制台中Log->HiLog中会出现以下结果:
 
     ```
@@ -272,11 +264,15 @@ Text('libentry模块: 2 + 3 = ' + this.addResult).margin({ top: 10 })
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHi to=native4
     A03200/MY_TAG    com.example.napitestdemo    I  NAPITEST_LOGI sayHi sayType=1
     ```
-
+    
+    3.6 调用funcTest方法
+    
     点击”调用funcTest方法“按钮，普通方法funcTest返回值显示出 returnVal = ret is false。
-
+    
+    3.7 调用entry模块的方法
+    
     点击“调用entry模块的方法”按钮，libentry模块：2 + 3 = 5。
-
+    
     ![](../../../figures/DevEco_run_result.png)
 
 ## 相关仓
