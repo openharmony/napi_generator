@@ -52,9 +52,9 @@ Content root选择~/napi_generator/napi_IntelliJ_plugin文件夹，module name�
 8.Modules配置完成后，若在SDKs中无相应JDK和Plugin SDK,请点击+号分别添加 Add Java JDK和Add Intellij PlantForm Plugin SDK,Java JDK为java11的安装目录，Plugin SDK为 IDEA Community 2021.3.3的安装目录。
 ![](../../../figures/IntelliJ_env_config_SDKs.png)
 
-9.配置Libraries（napi 1.0.3版本以及之后版本才需要配置依赖，之前的版本跳过此步骤）
+9.配置Libraries
 
-由于IntellIj插件市场兼容性问题，原使用的json库与新版本的IDE不兼容，因此使用新的json库解决兼容性问题，新的json库需要从Maven仓库下载并将依赖配置到工程中。
+由于IntellIj插件市场兼容性问题，原使用的json库与新版本的IDE不兼容，因此使用新的json库解决兼容性问题，新的json库需要从Maven仓库下载并将依赖配置到工程中（napi 1.0.3版本以及之后版本才需要配置依赖，之前的版本跳过此步骤 ）。
 
 步骤：点击"+"，选择"From Maven..."；在搜索框搜索依赖的jar包：com.alibaba.fastjson2:fastjson2:2.0.42，勾选"Download to"并点击OK，将依赖下载至工程目录下的lib文件夹；点击"Choose Modules"中的OK。
 
