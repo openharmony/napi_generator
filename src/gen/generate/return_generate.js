@@ -175,19 +175,19 @@ function unionTempleteFunc(value, type, dest, optional){
     let value2 = optional? valueTmp: value
     for (let i = 0; i < unionType.length; i++) {
         if (unionType[i] === "string") {
-            unionTypeString += `if (%s_%s === "string") {
+            unionTypeString += `if (%s_%s == "string") {
                 %s
                 %s
             }\n`.format(value, typeStr, "std::string union_string = std::any_cast<std::string>("+value2+");",
             cToJs("union_string", unionType[i], dest))
         } else if (unionType[i].substring(0, 12) === "NUMBER_TYPE_") {
-            unionTypeString += `if (%s_%s === "number") {
+            unionTypeString += `if (%s_%s == "number") {
                 %s
                 %s
             }\n`.format(value, typeStr, "std::uint32_t union_number = std::any_cast<std::uint32_t>("+value2+");",
             cToJs("union_number", unionType[i], dest))
         } else if (unionType[i] === "boolean") {
-            unionTypeString += `if (%s_%s === "boolean") {
+            unionTypeString += `if (%s_%s == "boolean") {
                 %s
                 %s
             }\n`.format(value, typeStr, "bool union_boolean = std::any_cast<bool>("+value2+");",
