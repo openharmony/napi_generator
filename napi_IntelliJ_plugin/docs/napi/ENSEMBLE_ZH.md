@@ -1,7 +1,7 @@
 # 集成应用Native工程说明
 
 ## 简介
-  本文主要介绍使用Intellij插件将ts接口文件名格式如下ohos.A.B.C.d.ts文件转换后如何集成到应用Native工程中并编译打包，最终对接口进行测试。
+  本文主要介绍使用Intellij插件将ts接口文件名格式如下ohos.A.B.C.d.ts文件转换后如何集成到应用Native工程中并编译打包，再对接口进行测试。
 
 ## 准备
 
@@ -189,7 +189,7 @@ Text('普通方法funcTest返回值： returnVal = ' + this.returnVal).margin({ 
 Text('libentry模块: 2 + 3 = ' + this.addResult).margin({ top: 10 })
 ```
 
-## 打包说明
+## 集成说明
 
 1. 在File->Project Structure->Project->Signing Configs自动签名，点击OK即可。
 

@@ -46,11 +46,11 @@ v1.0.3及之后版本，安装zip包
 
 
 
-3.使用工具之前，需要做以下准备工作，链接如下：
+3.使用工具的准备工作：使用工具之前，需要做以下准备工作，链接如下：
 
-[PRAPERATION_ZH](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/PRAPERATION_ZH.md)
+[PREPERATION_ZH](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/PREPERATION_ZH.md)
 
-新建项目的src目录，把待转换的.d.ts文件放在DevEco Studio新建项目的src目录下；新建生成框架路径generatorCode；将业务代码放在./src/main/cpp目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其他.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
+新建项目的src目录，把待转换的.d.ts文件放在DevEco Studio新建项目的src目录下；新建生成框架路径generatorCode；将业务代码放在./src/main/cpp目录下。若.d.ts文件中声明了basic.d.ts文件，将basic.d.ts文件放置在待转换.d.ts文件同一级目录；若除此之外还声明其它.d.ts文件，将此类文件放置在待转换.d.ts文件同级目录。
 
 ![](../../../figures/DevEco_step_napi.png)
 
@@ -71,4 +71,5 @@ v1.0.3及之后版本，安装zip包
 ## 集成应用Native工程说明
 NAPI框架代码生成后，系统框架开发者进行二次开发后，可在DevEco Studio将生成代码集成到应用Native工程中，并进行编译打包生成对应的库文件，供应用开发者调用接口。集成应用Native工程说明的具体操作步骤可以左键单击以下链接了解：
 
-[集成应用Native工程说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/INSTRUCTION_BUILD_ZH.md)
+[集成应用Native工程说明](https://gitee.com/openharmony/napi_generator/blob/master/napi_IntelliJ_plugin/docs/napi/ENSEMBLE_ZH.md)
+
