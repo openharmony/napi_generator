@@ -115,7 +115,7 @@ function isOnTypeExist(onTypeList, newType) {
     }
 
     for (var i in onTypeList) {
-        if (onTypeList[i] ===  newType) {
+        if (onTypeList[i] === newType) {
             return true
         }
     }
@@ -145,7 +145,7 @@ function getregistLine(name) {
     let registLine = ''
     if (isRegisterFunc(name)) {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ZERO));"
-    } else if (name ===  'on') {
+    } else if (name === 'on') {
         registLine = "pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ONE));"    
     } else if (isOnObjCallback(name)) {
         // registLine = "pxt->RegistOnOffFunc(vio->eventName, cbFunc);"
@@ -189,7 +189,7 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     }
     codeContext.middleFunc = codeContext.middleFunc.replaceAll("[getEventName]", getEventName)
     let middleClassName = ""
-    if (className ===  null) {
+    if (className === null) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", "")
     }
@@ -198,7 +198,7 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "static ")
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", middleClassName + "::")
     }
-    let instancePtr = "%s".format(className ===  null ? "" : "pInstance->")
+    let instancePtr = "%s".format(className === null ? "" : "pInstance->")
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
     
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event
@@ -340,7 +340,7 @@ function genCallbackMethod(param, className, middleClassName, codeContext) {
         ptr->[eventName]CallbackMiddle(eventName, [callback_param_name]);
         delete ptr;`;
 
-    if (className ===  null) {
+    if (className === null) {
       let callbackNoClassRes = replaceAll(callbackNoClass, "[eventName]", param.eventName);
       callbackNoClassRes = replaceAll(callbackNoClassRes, "[callback_param_name]", param.useParams);
       if (param.useParams === '') {
@@ -402,7 +402,7 @@ function generateFunctionOnOff(func, data, className) {
         gennerateOnOffContext(codeContext, func, data, className, param)
     }
 
-    if (func.name ===  'on' || isRegister || onObjFlag) {
+    if (func.name === 'on' || isRegister || onObjFlag) {
         // 为每个on接口同步生成eventCallback方法供用户回调使用
         let isOnFuncFlag = true;
         gennerateEventCallback(codeContext, data, param, className, isOnFuncFlag)
