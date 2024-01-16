@@ -39,10 +39,6 @@ NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescr
 
 [DevEco Studio上使用的IntelliJ插件下载链接](https://plugins.jetbrains.com/plugin/19593-napi-generator/versions)
 
-![](../figures/pic-napi_jar_download.png)
-
-使用谷歌浏览器时：
-
 ![](../figures/picGoogle-napi_jar_download.png)
 
 具体的工具使用步骤，可以左键单击以下链接了解：
@@ -53,38 +49,40 @@ NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescr
 
 根据使用者指定的typescript文件，工具会输出NAPI框架代码、业务代码框架、GN脚本等文件。
 
-为了方便使用者快速上手工具，可供测试的typescript文件存放在以下路径：
+为了方便使用者快速上手工具，可供测试的typescript文件存放在DevEco Studio中以下路径：
 
 ```
-napi_IntelliJ_plugin
+entry/src
 ```
 
 在window环境下的，根据输入文件@ohos.napitest.d.ts和basic.d.ts生成的输出文件，如下所示：
 
-![](../figures/pic-d-ts-transition.png)
-
-其中生成的"napitest.h"文件，定义了框架代码的接口，如下所示：
+![](../figures/pic-d-ts-dev_transition.png)
 
 
-```c++
-#include "napitest.h"
 
-namespace napitest {
-bool func1(std::string& v1, std::string& out)
-{
-    // TODO
-    return true;
-}
-}
+其中CMakeLists.txt为编译构建需要的文件，cfg.json为生成的业务代码配置文件，若用户不进行业务代码配置，则不会生成该文件；生成的"napitest.h"文件，定义了框架代码的接口，生成的部分接口如下所示：
+
 ```
+...
+class NodeISayHello {
+public:
+    bool addSayHelloListener(NodeISayHelloListener& listener);
+    static NodeISayHelloListener listener_;
+    bool removeSayHelloListener(NodeISayHelloListener& listener);
+    bool registerCallbackfunc();
+    // 供业务调用的回调接口
+    void CallbackfuncCallback(NUMBER_TYPE_2& wid);
 
-### 集成方法
-
-为了实现工具生成的接口被其他子系统或者应用调用，需将生成的代码编译集成到OpenHarmony系统中，编译生成动态库。
-
-把工具的生成代码集成到OpenHarmony的具体操作步骤，可以左键单击以下链接了解：
-
-[生成代码集成到OpenHarmony的方法](https://gitee.com/openharmony/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
+    bool unRegisterCallbackfunc();
+    bool sayHello(std::string& from, std::string& to, NUMBER_TYPE_9& sayType);
+    bool sayHi(std::string& from, std::string& to, NUMBER_TYPE_10& sayType);
+    bool sayHelloWithResponse(std::string& from, std::string& to, NUMBER_TYPE_11& sayType, uint32_t& outErrCode, AUTO_INTERFACE_5& out);
+    static AUTO_INTERFACE_5 auto_interface_5OutRes;
+    void auto_interface_5SetCbValue(NUMBER_TYPE_6 result, std::string errMsg, std::string response);
+};
+...
+```
 
 ## 开发说明
 
