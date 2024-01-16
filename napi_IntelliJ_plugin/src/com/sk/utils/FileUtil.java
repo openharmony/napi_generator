@@ -14,7 +14,6 @@
  */
 package com.sk.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -75,8 +74,8 @@ public class FileUtil {
             buildStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildObj);
 
             writeContentToFile(buildJsonFilePath, buildStr, false);
-        } catch (JsonProcessingException jsonProcessingEx) {
-            LOG.error("Failed to write file [" + buildJsonFilePath + "], error: " + jsonProcessingEx);
+        } catch (IOException ioException) {
+            LOG.error("Failed to write file [" + buildJsonFilePath + "], error: " + ioException);
         }
     }
 
