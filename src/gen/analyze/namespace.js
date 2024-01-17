@@ -258,10 +258,10 @@ function parseType(matchs, data, result) {
 
 function parseFunction(matchs, data, result) {
     matchs = re.match("(export )*function (\\$*[A-Za-z0-9_]+) *(\\()", data)
-    if (null === matchs) {
+    if (null == matchs) {
         matchs = re.match("(export )*function (static )*(\\$*[A-Za-z0-9_]+) *(\\()", data)
     }
-    if (null === matchs) {
+    if (null == matchs) {
         matchs = re.match("(export )*function (static )*(register\\$*[A-Za-z0-9_]+) *(\\()", data)
     }
     if (matchs) {

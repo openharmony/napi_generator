@@ -189,7 +189,7 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
     }
     codeContext.middleFunc = codeContext.middleFunc.replaceAll("[getEventName]", getEventName)
     let middleClassName = ""
-    if (className === null) {
+    if (className == null) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", "")
     }
@@ -198,7 +198,7 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "static ")
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", middleClassName + "::")
     }
-    let instancePtr = "%s".format(className === null ? "" : "pInstance->")
+    let instancePtr = "%s".format(className == null ? "" : "pInstance->")
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[instance]", instancePtr) //执行
     
     codeContext.middleFunc = replaceAll(codeContext.middleFunc, "[handleRegist]", registLine) //注册/去注册event

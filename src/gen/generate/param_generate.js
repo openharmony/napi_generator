@@ -78,7 +78,7 @@ function jsToC(dest, napiVn, type, enumType = 0, optional) {
     } else if (type === "string") {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if (tnv%d !==  nullptr) {pxt->SwapJs2CUtf8(tnv%d, %s);}\n`
+            return `napi_value tnv%d = %s;\n    if (tnv%d !=  nullptr) {pxt->SwapJs2CUtf8(tnv%d, %s);}\n`
                 .format(lt, napiVn, lt, lt, dest)
         } else {
             return "pxt->SwapJs2CUtf8(%s, %s);".format(napiVn, dest)
@@ -300,7 +300,7 @@ function numTempleteFunc(enumType, napiVn, type, dest) {
     if (enumType) {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if (tnv%d !==  nullptr) {NUMBER_JS_2_C_ENUM(tnv%d, %s, %s, %s);}\n`
+            return `napi_value tnv%d = %s;\n    if (tnv%d !=  nullptr) {NUMBER_JS_2_C_ENUM(tnv%d, %s, %s, %s);}\n`
             .format(lt, napiVn, lt, lt, type, dest, enumType)
         } else {
             return `NUMBER_JS_2_C_ENUM(%s, %s, %s, %s);`.format(napiVn, type, dest, enumType)
@@ -308,7 +308,7 @@ function numTempleteFunc(enumType, napiVn, type, dest) {
     } else {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if (tnv%d !==  nullptr) {NUMBER_JS_2_C(tnv%d, %s, %s);}\n`
+            return `napi_value tnv%d = %s;\n    if (tnv%d !=  nullptr) {NUMBER_JS_2_C(tnv%d, %s, %s);}\n`
             .format(lt, napiVn, lt, lt, type, dest)
         } else {
             return `NUMBER_JS_2_C(%s, %s, %s);`.format(napiVn, type, dest)
