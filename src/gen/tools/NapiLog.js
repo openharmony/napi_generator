@@ -107,7 +107,7 @@ function recordLog(lev, ...args) {
     let dataStr = getDateString();
     let detail = args.join(" ");
     saveLog(dataStr  + " " + callPath, LEV_STR[lev], detail);
-    if (lev == NapiLog.LEV_ERROR) {
+    if (lev === NapiLog.LEV_ERROR) {
         logResultMessage = [false, detail];
     }
     let logStr = callPath + " " + detail;

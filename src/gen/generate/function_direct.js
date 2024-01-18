@@ -64,7 +64,7 @@ bool %s%s(%s)
 function removeEndlineEnter(value) {
     for (var i = value.length; i > 0; i--) {
         let len = value.length
-        if (value.substring(len - 1, len) == "\n" || value.substring(len - 1, len) == ' ') {
+        if (value.substring(len - 1, len) === "\n" || value.substring(len - 1, len) === ' ') {
             value = value.substring(0, len - 1)
         } else {
             value = '    ' + value
@@ -136,7 +136,7 @@ function getaddListenerCont() {
 function getAddOrRemoveReg(func, isAddReg) {
     let addListenerCont = ''
     const  addParaSize = 1;
-    if (func.value.length != addParaSize) {
+    if (func.value.length !== addParaSize) {
         NapiLog.logError(`AddReg param do not support param number not 1!`);
         return
     }
@@ -167,7 +167,7 @@ function getAddOrRemoveReg(func, isAddReg) {
 }
 
 function replaceOptionalParamDestory(middleFunc, param) {
-    if (param.optionalParamDestory == "") {
+    if (param.optionalParamDestory === "") {
         middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
     } else {
         middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", "\n    " + param.optionalParamDestory) // 可选参数内存释放
@@ -219,7 +219,7 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     let implCpp = ""   
 
     if (!func.isParentMember) {
-        if (func.name == 'constructor') {
+        if (func.name === 'constructor') {
             // 构造函数去掉&或* (在内部去掉较麻烦，生成后统一去除)
             implH = constructorFunc(param, implHVariable, implH, prefixArr, className);
             middleFunc = ""

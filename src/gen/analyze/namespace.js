@@ -29,7 +29,7 @@ function preProcessData(data) {
 
 function getDataByResult(result) {
     let data = null
-    if (result != null) {
+    if (result !== null) {
         data = result
     }
     return data
@@ -48,13 +48,13 @@ function analyzeNamespace(data) {
         namespace: [],
         callFunction: [],
     }
-    while (data != '\n') {
+    while (data !== '\n') {
         let oldData = data
         data = removeEmptyLine(data)
         let matchs = re.match(" *\n*", data)   
         data = preProcessData(data);
         // 只剩下空格和回车时，解析完成
-        if (matchs && matchs.regs[0][1] == data.length) break
+        if (matchs && matchs.regs[0][1] === data.length) break
         let parseEnumResult = parseEnum(matchs, data, result)
         data = getDataByResult(parseEnumResult)
         
@@ -76,7 +76,7 @@ function analyzeNamespace(data) {
         data = getDataByResult(parseNamespaceResult)
 
         data = removeReg(matchs, data, result)
-        if (oldData == data) {
+        if (oldData === data) {
             NapiLog.logError("解析Namespace失败");
             NapiLog.logError("[", data.substring(0, data.length > 128 ? 128 : data.length), "]");
             break;
@@ -118,9 +118,9 @@ function parseEnumType(result) {
                 }
 
                 if (v.type ===  enumm.name) {
-                    if (enumm.body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+                    if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
                         v.type = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease();
-                    } else if (enumm.body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+                    } else if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
                         v.type = "string";
                     } else {
                         NapiLog.logError("parseEnumType for interface function value is not support this type %s."
@@ -146,7 +146,7 @@ function parseNamespace(matchs, data, result) {
             body: analyzeNamespace(namespaceBody)
         })
         data = data.substring(matchs.regs[3][0] + namespaceBody.length + 2, data.length)
-        if (matchs.regs[1][0] != -1) {
+        if (matchs.regs[1][0] !== -1) {
             result.exports.push(namespaceName)
         }
     }
@@ -166,7 +166,7 @@ function parseClass(matchs, data, result) {
 
 function parseEnum(matchs, data, result) {
     matchs = re.match("(export )*enum *([A-Za-z_0-9]+) *({)", data)
-    if (matchs != null) {
+    if (matchs !== null) {
         let enumName = re.getReg(data, matchs.regs[2]);
         let enumBody = checkOutBody(data, matchs.regs[3][0], null, null)
         result.enum.push({
@@ -174,7 +174,7 @@ function parseEnum(matchs, data, result) {
             body: analyzeEnum(enumBody.substring(1, enumBody.length - 1))
         })
         data = data.substring(matchs.regs[3][0] + enumBody.length)
-        if (matchs.regs[1][0] != -1) {
+        if (matchs.regs[1][0] !== -1) {
             result.exports.push(enumName)
         }
     }
@@ -186,7 +186,7 @@ function parseEnum(matchs, data, result) {
             body: re.getReg(data, matchs.regs[2])
         })
         data = re.removeReg(data, matchs.regs[0])
-        if (matchs.regs[1][0] != -1) {
+        if (matchs.regs[1][0] !== -1) {
             result.exports.push(constName)
         }
     }
@@ -222,7 +222,7 @@ function parseType(matchs, data, result) {
         }
         getTypeInfo(result, typeName, typeType, false);
         data = re.removeReg(data, matchs.regs[0])
-        if (matchs.regs[1][0] != -1) {
+        if (matchs.regs[1][0] !== -1) {
             result.exports.push(typeName)
         }
     }
@@ -234,7 +234,7 @@ function parseType(matchs, data, result) {
 
         getTypeInfo(result, typeName, analyzeType2(typeBody.substring(1, typeBody.length - 1)), true);
         data = re.removeReg(data, matchs.regs[0])
-        if (matchs.regs[1][0] != -1) {
+        if (matchs.regs[1][0] !== -1) {
             result.exports.push(typeName)
         }
     }
@@ -249,7 +249,7 @@ function parseType(matchs, data, result) {
         let bodyObj = analyzeType(typeBody.substring(1, typeBody.length - 1), result.type)
         getTypeInfo(result, typeName, bodyObj, false);
         data = data.substring(matchs.regs[3][0] + typeBody.length + 2, data.length)
-        if (matchs.regs[1][0] != -1) {
+        if (matchs.regs[1][0] !== -1) {
             result.exports.push(typeName)
         }
     }
@@ -266,12 +266,12 @@ function parseFunction(matchs, data, result) {
     }
     if (matchs) {
         let funcName = re.getReg(data,
-            matchs.regs.length == 5 ? [matchs.regs[2][0], matchs.regs[3][1]] : matchs.regs[2])
+            matchs.regs.length === 5 ? [matchs.regs[2][0], matchs.regs[3][1]] : matchs.regs[2])
         let funcValue = checkOutBody(data,
-            matchs.regs.length == 5 ? matchs.regs[4][0] : matchs.regs[3][0], ["(", ")"], null)
-        let funcRet = checkOutBody(data.substring(matchs.regs.length == 5 ?
+            matchs.regs.length === 5 ? matchs.regs[4][0] : matchs.regs[3][0], ["(", ")"], null)
+        let funcRet = checkOutBody(data.substring(matchs.regs.length === 5 ?
             matchs.regs[4][0] : matchs.regs[3][0] + funcValue.length), 0, ["", "\n"], null)
-        data = data.substring(matchs.regs.length == 5 ?
+        data = data.substring(matchs.regs.length === 5 ?
             matchs.regs[4][0] : matchs.regs[3][0] + funcValue.length + funcRet.length)
         let matchFunc = re.match(" *: *([A-Za-z0-9_<>{}\\[\\]:;, .=]+);*", funcRet)
         let matchFuncArray = re.match(" *: *([A-Za-z0-9]+)(\\[]);*", funcRet)
@@ -286,16 +286,16 @@ function parseFunction(matchs, data, result) {
         }
         funcRet = re.replaceAll(re.replaceAll(funcRet, " ", ""), "\n", "")        
 
-        if(funcRet[funcRet.length-1] == ";"){
+        if(funcRet[funcRet.length-1] === ";"){
             funcRet = funcRet.substring(0, funcRet.length-1)
         }
         let funcDetail = analyzeFunction(
             result, false, funcName, funcValue.substring(1, funcValue.length - 1), funcRet, result)
-        if (funcDetail != null) {
+        if (funcDetail !== null) {
             // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
             addUniqFunc2List(funcDetail, result.function)
         }
-        if (matchs.regs[1][0] != -1) {
+        if (matchs.regs[1][0] !== -1) {
             result.exports.push(funcName)
         }
     }
@@ -310,7 +310,7 @@ function parseFunction(matchs, data, result) {
  * @returns 继承的名称列表 ([xx1, xx2, yy1, yy2])
  */
 function getParentNameList(firstKey, secondKey, parentStr) {
-    if (parentStr == '') {
+    if (parentStr === '') {
         return []
     }
 
@@ -326,7 +326,7 @@ function getParentNameList(firstKey, secondKey, parentStr) {
     }
 
     let nameList = firstParents.split(",")
-    if (secondParents != '') {
+    if (secondParents !== '') {
         let secondList = secondParents.split(",")
         nameList.push(...secondList)
     }
@@ -349,15 +349,15 @@ function createInterfaceData (matchs, data, result) {
     let extendsParent = re.getReg(data, matchs.regs[4])
     let implementParent = re.getReg(data, matchs.regs[5])
     bodyObj.parentNameList = []
-    if(extendsParent != '') {
+    if(extendsParent !== '') {
         bodyObj.parentNameList = getParentNameList("extends", "implements", extendsParent)
     }
-    if(implementParent != '') {
+    if(implementParent !== '') {
         bodyObj.parentNameList = getParentNameList("implements", "extends", implementParent)
     }
     for (let i in bodyObj.parentNameList) {
         bodyObj.parentNameList[i] = bodyObj.parentNameList[i].trim()
-        if (bodyObj.parentNameList[i] == interfaceName) {
+        if (bodyObj.parentNameList[i] === interfaceName) {
             // 接口不能自己继承自己
             NapiLog.logError("The interface [%s] can not extends with itself.".format(interfaceName))
             return data
@@ -375,7 +375,7 @@ function createInterfaceData (matchs, data, result) {
     rr = matchs.regs[6][0] + interfaceBody.length
     let tmp = data[rr]
     data = data.substring(matchs.regs[6][0] + interfaceBody.length, data.length)
-    if (matchs.regs[1][0] != -1) {
+    if (matchs.regs[1][0] !== -1) {
         result.exports.push(interfaceName)
     }
     return data
