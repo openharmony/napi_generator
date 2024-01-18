@@ -29,13 +29,13 @@ const { addUniqFunc2List, addUniqObj2List } = require("../tools/tool");
 
 function findParentByName(parentName, data) {
     for (let i in data.interface) {
-        if (parentName == data.interface[i].name) {
+        if (parentName === data.interface[i].name) {
             return data.interface[i]
         }
     }
 
     for (let i in data.class) {
-        if (parentName == data.class[i].name) {
+        if (parentName === data.class[i].name) {
             return data.class[i]
         }
     }
@@ -269,7 +269,7 @@ function formatMiddleInit(inNamespace, name) {
         nsl.pop()
         let parentNs = nsl[nsl.length - 1]
         middleInit = `{\nnapi_value %s = pxt->CreateSubObject(%s, "%s");\n`
-            .format(name, nsl.length == 1 ? "exports" : parentNs, name)
+            .format(name, nsl.length === 1 ? "exports" : parentNs, name)
     }
     return middleInit
 }

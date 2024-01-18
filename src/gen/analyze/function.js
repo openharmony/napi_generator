@@ -32,11 +32,11 @@ function analyzeSubInterface(data) {
     }
     for (let i in body) {
         let t = body[i]
-        while (t.length > 0 && t[0] == ' ') // 去除前面的空格
+        while (t.length > 0 && t[0] === ' ') // 去除前面的空格
             t = t.substring(1, t.length)
-        while (t.length > 0 && t[-1] == ' ') // 去除后面的空格
+        while (t.length > 0 && t[-1] === ' ') // 去除后面的空格
             t = t.substring(0, t.length - 1)
-        if (t == "") break // 如果t为空直接返回
+        if (t === "") break // 如果t为空直接返回
         let tt = re.match(" *([a-zA-Z0-9_]+) *: *([a-zA-Z_0-9<>,:{}[\\] ]+)", t)
         if (tt) { // 变量
 
@@ -64,9 +64,9 @@ function getFuncParaType(v, interfaceName, data, results) {
     }
     if (isEnum(parameter, data)) {
         let index = enumIndex(parameter, data)
-        if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+        if (data.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
             v["type"] = v["type"].replace(parameter, "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
-        } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+        } else if (data.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
             v["type"] = v["type"].replace(parameter, "string")
         } else {
             NapiLog.logError("analyzeFunction getFuncParaType is not support this type %s."
@@ -77,9 +77,9 @@ function getFuncParaType(v, interfaceName, data, results) {
     // interface & class中的方法参数类型是enum的情况
      else if (isEnum(parameter, results)) {
         let index = enumIndex(parameter, results)
-        if (results.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+        if (results.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
           v["type"] = v["type"].replace(parameter, "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
-        } else if (results.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+        } else if (results.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
           v["type"] = v["type"].replace(parameter, "string")
         } else {
           NapiLog.logError("analyzeFunction getFuncParaType is not support this type %s."
@@ -191,7 +191,7 @@ function analyseSubReturn(ret, data, results) {
 }
 
 function getObjCallFunc(results, onObjCbType, values, ret) {
-    if (results != undefined) {
+    if (results !== undefined) {
         results.callFunction.push({
             "name": onObjCbType,
             "body": values,
@@ -213,10 +213,10 @@ function getFuncResult(name, funcType, values, ret, isStatic) {
 function getArrowCallFunc(tmp, results) {
     let callbackFunc = null 
 
-    if (tmp[2][0] != undefined) {
+    if (tmp[2][0] !== undefined) {
         callbackFunc = tmp[2][0] // 当方法的参数是回调方法，并且回调方法写法为=>函数
     }  
-    if (results != undefined && callbackFunc != null) {
+    if (results !== undefined && callbackFunc !== null) {
       results.callFunction.push(callbackFunc)
     }
 }
@@ -229,7 +229,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
     
     if (res) {
         tmp = analyzeParams(name, res.values)
-        if (tmp != null) {
+        if (tmp !== null) {
             values = tmp[0]
             funcType = tmp[1]
             getArrowCallFunc(tmp, results)
@@ -255,7 +255,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
     for (let j in values) {
         let v = values[j]
         v = getFuncParaType(v, res.interfaceName, data, results)
-        if (v == null) {
+        if (v === null) {
             NapiLog.logError("analyzeFunction is not support this type %s.".format(v), getLogErrInfo());
         }
     }
