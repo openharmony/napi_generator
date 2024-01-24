@@ -97,7 +97,7 @@ function analyzeParams(funcName, values) {
             if (optionalFlag) {
                 optionalParamCount++;
             } else if (optionalParamCount > 0) {
-                // 可选参数之后不能再有必选参数，必选都是可选参数。
+                // 可选参数之后不能再有必选参数，须是可选参数。
                 NapiLog.logError("Invalid parameter [%s] of function [%s],".format(v, funcName) 
                         + " the required parameter cannot follow an optional parameter.");
                 checkParamOk = false;
@@ -114,7 +114,6 @@ function analyzeParams(funcName, values) {
             }
         }
         else {
-            NapiLog.logError("方法[%s]的参数列表[%s]解析失败。".format(funcName, v));
             NapiLog.logError("Failed to analyse parameter [%s] of function [%s].".format(v, funcName));
         }
     }
