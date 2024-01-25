@@ -21,7 +21,7 @@ declare namespace napitest {
             name: string;
             age: number;
         }
-        interface TestClass2 {
+        class TestClass2 {
             animal: Animal;
             fix(v1: string): string;
             fun2(numcc: Array<number>, animalcc: Animal): Animal;

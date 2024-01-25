@@ -21,20 +21,20 @@ declare namespace napitest {
     }
 
     function fun1(v0:string, v1?: string, v2?: number, v3?: boolean): number;
-    interface TestClass1 {
+    class TestClass1 {
 		interFun1(v0?:string, v1?: string, v2?: number, v3?: boolean): number;
     }
 	function fun21(v0: string, v1?: Array<string>,v2?:Array<number>,v3?:Array<boolean>): number;
     function fun22(v0: string, v1?: string[],v2?:number[],v3?:boolean[]): number;
     function fun23(v0: string, v1?: AsyncCallback<string>): number;
     function fun23(v0: string): Promise<string>;
-	interface TestClass2 {
+	class TestClass2 {
         interFun21(v0?: Array<number>, v1?: Array<string>, v2?: Array<boolean>): number; 
         interFun22(v0?: number[], v1?: string[], v2?: boolean[]): number;
     }
 	function fun31(v0: string, v1?: {[key:string]:number}): number;
     function fun32(v0: string, v1?: Map<string,string>): number;
-    interface TestClass3 {
+    class TestClass3 {
         interFun31(v0:string, v1?: {[key:string]:number}): number;
         interFun32(v0:string, v1?: Map<string,boolean>): number;
     }  
@@ -54,7 +54,7 @@ declare namespace napitest {
     function fun51(v0?: Human, v1?: Human, v2?: Human): number;
     function fun52(v0?: Human, v2?: Array<Human>): number;
     function fun53(v0?: Human, callback?: Callback<Human>): void; 
-    interface TestClass4 {
+    class TestClass4 {
         interFun51(v0?: Human, v1?: Human, v2?: Human): number;
     }   
     function fun61(v0?: {name: string, age: number}): number;    
