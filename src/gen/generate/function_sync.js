@@ -64,9 +64,6 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 
     [optionalParamDestory]
     delete vio;
-    if (pxt->IsFailed()) {
-        result = pxt->GetError();
-    }
     delete pxt; // release
     return result;
 }`

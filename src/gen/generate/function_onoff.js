@@ -50,9 +50,6 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 
     napi_value result = pxt->UndefinedValue();
     delete vio;
-    if (pxt->IsFailed()) {
-        result = pxt->GetError();
-    }
     delete pxt; // release
     return result;
 }
