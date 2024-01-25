@@ -64,9 +64,6 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
 
     [optionalParamDestory]
     delete vio;
-    if (pxt->IsFailed()) {
-        result = pxt->GetError();
-    }
     delete pxt; // release
     return result;
 }`
@@ -194,7 +191,7 @@ function fillValueStruct(type, param, outName) {
         if (param.callback.returnType === 'void') {
             param.valueDefine += "%sbool& %s".format(param.valueDefine.length > 0 ? ", " : "", outName)
         }  
-    } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+    } else if (type.substring(0, 12) === "NUMBER_TYPE_") {
         param.valueOut += '%s %s;\n'.format(type, outName)
         if (param.callback.returnType === 'void') {
             param.valueDefine += "%s%s& %s".format(param.valueDefine.length > 0 ? ", " : "", type, outName)

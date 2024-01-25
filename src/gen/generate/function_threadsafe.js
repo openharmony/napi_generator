@@ -71,9 +71,6 @@ napi_value  [middleClassName]createThreadSafeFunc[funcName]_middle(napi_env env,
     XNapiTool::CallThreadSafeFunc(vio->eventName);
     napi_value result = pxt->UndefinedValue();
     delete vio;
-    if (pxt->IsFailed()) {
-        result = pxt->GetError();
-    }
     delete pxt; // release
     return result;
 }

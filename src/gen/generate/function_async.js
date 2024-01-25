@@ -68,9 +68,6 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
     [unwarp_instance]
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     [valueCheckout][optionalCallbackInit][start_async]
-    if (pxt->IsFailed()) {
-        result = pxt->GetError();
-    }
     return result;
 }`
 
