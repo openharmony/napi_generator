@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 declare namespace napitest {
-    interface Test {
+    class Test { // interface
         $name: string;
         $listInputMethod(V: string): void;
     }

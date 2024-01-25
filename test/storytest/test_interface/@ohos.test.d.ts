@@ -34,7 +34,7 @@ declare namespace napitest {
         CONTINUATION = 3,
     }
 
-    interface TestClass1 {
+    class TestClass1 {
         ahuman: Human;
         fun1(v: number): number;
         fun2(numcc: Array<number>, mancc: Human): Human;
@@ -132,13 +132,13 @@ declare namespace napitest {
     // interface定义在使用之后 begin
     function func4(v: TestInterfaceLater): string;
 
-    interface TestInterfaceUse {
+    class TestInterfaceUse {
         v0: string;
         // v1: TestInterfaceLater;
         funceUse(n0: TestInterfaceLater): string;
     }
 
-    interface TestInterfaceLater {
+    class TestInterfaceLater {
         v0: string;
         v1: number;
         funcLater(n0: number): string;

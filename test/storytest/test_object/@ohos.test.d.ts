@@ -15,7 +15,7 @@
 import { AsyncCallback, Callback } from './../basic';
 
 declare namespace napitest {
-    interface TestClass1 {
+    class TestClass1 {
         fun1(v: Object): number; //Interface func para1        
         fun2(num: number, v: Object): number; //Interface func para2
         fun3(num: number, v: Object, Sam: string): number; //Interface func para3

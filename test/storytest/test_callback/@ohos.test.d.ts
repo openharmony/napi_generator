@@ -15,7 +15,7 @@
 import { AsyncCallback, Callback } from './../basic';
 
 declare namespace napitest {
-    interface TestClass1 {
+    class TestClass1 { // interface
         fun11(cb: Callback<number>): void;
         fun12(cb: Callback<void>): void;
         fun13(cb: AsyncCallback<number>): void;

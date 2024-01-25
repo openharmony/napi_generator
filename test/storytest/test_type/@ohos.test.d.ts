@@ -37,7 +37,7 @@ declare namespace napitest {
   type MyUnion = string | number | boolean;
   type MyEnumType = 'keyup' | 'keydown';
 
-  interface Animal {
+  class Animal {
     cat: string;
     isCat: boolean;
 
