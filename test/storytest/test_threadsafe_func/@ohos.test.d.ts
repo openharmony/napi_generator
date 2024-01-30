@@ -16,7 +16,7 @@
 declare namespace napitest {
     function createThreadSafeFuncTest1(name: string, callback: (value?: number, value1?: number) => number):void
 
-    interface TestClass1 {
+    class TestClass1 {
         createThreadSafeFuncClass1(name: string, callback: (value?: number, value1?: number) => number):void
     }
 

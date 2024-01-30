@@ -20,7 +20,7 @@ declare namespace napitest {
         data: string;
     }
 
-    interface TestClass1 {
+    class TestClass1 {
         num1: number;
         fun1(v: number): number;
         fun2(v: string): Result;

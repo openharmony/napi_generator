@@ -24,7 +24,7 @@ declare namespace napitest {
         type: WindowType;
     }
 
-    interface NodeSayHello {
+    class NodeSayHello {
         interfaceFunc(v0: string, v1: WindowType): boolean;   // interface中的方法参数是枚举
     }
 

@@ -26,7 +26,7 @@ declare namespace napitest {
         OPTION2 = 503,
     }
 
-    interface TestClass1 {
+    class TestClass1 {
         fun10(): Promise<void>;
         fun11(): Promise<number>;
         fun12(): Promise<boolean>;
