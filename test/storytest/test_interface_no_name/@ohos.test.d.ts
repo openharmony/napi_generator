@@ -29,7 +29,7 @@ declare namespace napitest {
         left: { test1: string, test2: string };      
     } 
 
-    interface TestInterfaceBB{
+    class TestInterfaceBB{
         // 函数多参数非嵌套场景
         func1(name : string, fp3: {nm: string, age: number, flag: boolean}): string;
 

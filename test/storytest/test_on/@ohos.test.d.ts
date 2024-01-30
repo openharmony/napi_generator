@@ -15,7 +15,7 @@
 import { AsyncCallback, Callback } from './../basic';
 
 declare namespace napitest {
-    interface ModelEvent{
+    class ModelEvent{
         topic: string;
         message: string;
     }
@@ -32,42 +32,42 @@ declare namespace napitest {
     function on(type: 'onEventFunc', callback: (wid: number, mol: ModelEvent) => void): void; // 箭头函数支持
     function off(type: 'onEventFunc', callback?: (wid: number, mol: ModelEvent) => void): void;
 
-    interface TestClass1 {
+    class TestClass1 {
         on(type: string, callback: Callback<boolean>): void;
         off(type: string, callback?: Callback<boolean>): void;
     }
 
-    interface TestClass2 {
+    class TestClass2 {
         on(type: string, callback: Callback<ModelEvent>): void; // Callback为interface
         off(type: string, callback?: Callback<ModelEvent>): void;
     }
 
-    interface TestClass3 {
+    class TestClass3 {
         on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
         off(type: string, callback?: Callback<{topic:string,message:string}>): void;
     }
 
-    interface TestClass4 {
+    class TestClass4 {
         on(type: 'heartbeat', callback: (wid: boolean) => void): void; // 箭头函数支持
         off(type: 'heartbeat', callback?: (wid: boolean) => void): void; // 固定事件，去注册事件
     }
 
-    interface TestClass5 {
+    class TestClass5 {
         on(type: 'inputStart', callback: (wid: boolean, modeEv: ModelEvent) => void): void; // 回调函数参数个数大于1，支持
         off(type: 'inputStart', callback?: (wid: boolean, modeEv: ModelEvent) => void): void;
     }
 
-    interface TestClass6 {
+    class TestClass6 {
         on(type: string, asyncCallback: AsyncCallback<boolean>): void;
         off(type: string, asyncCallback?: AsyncCallback<boolean>): void;
     }
 
-    interface TestClass7 {
+    class TestClass7 {
         on(type: string, asyncCallback: AsyncCallback<ModelEvent>): void; // Callback为interface
         off(type: string, asyncCallback?: AsyncCallback<ModelEvent>): void;
     }
 
-    interface TestClass10 {
+    class TestClass10 {
         on(type: "heartbeat", callback: Callback<boolean>): void; // 固定事件，回调参数为boolean支持
         off(type: "hearbeat", callback?: Callback<boolean>): void;
         on(type: "enableChange", callback: Callback<ModelEvent>): void; // 固定事件，回调参数为ModelEvent支持
@@ -125,7 +125,7 @@ declare namespace napitest {
         kResponse,
     }
 
-    interface TestClass12 {
+    class TestClass12 {
         registerTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
         unRegisterTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
     }

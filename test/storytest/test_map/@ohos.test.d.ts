@@ -26,7 +26,7 @@ declare namespace napitest {
         //map3: {[key: string]: object} // to support
     }
 
-    interface TestClass2 {
+    class TestClass2 {
         fun1(v: {[key: string]: string},v1:string):  number;
         fun2(v: {[key: string]: number}):  number;
         fun3(v: {[key: string]: boolean}):  number;
