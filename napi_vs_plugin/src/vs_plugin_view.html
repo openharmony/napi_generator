@@ -104,7 +104,7 @@
     let importCheck = false;
     window.onload = function () {
         document.getElementById("selectMode").addEventListener("change", function (e) {
-            if (e.target.value == 1) {
+            if (e.target.value === '1') {
                 mode = 1;
             } else {
                 mode = 0;
@@ -129,17 +129,6 @@
         vscode.postMessage(result);
     }
 
-    function sendH2TsParamMsg() {
-		var fileNames = document.getElementById("hFilePath").value;
-		var genDir = document.getElementById("genHResultDir").value;
-		var result = {
-			msg: "h2ts",
-			fileNames: fileNames,
-			genDir: genDir,
-		}
-		vscode.postMessage(result);
-	}
-
     function selectInterPath() {
         var result = {
             msg: "selectInterPath",
@@ -162,6 +151,19 @@
         vscode.postMessage(result);
     }
 
+    // 只能在单个文件时配置
+    function config() {
+      // 配置业务代码之前需要获取生成框架代码的路径
+      var genDir = document.getElementById("genFile").value;
+      var result = {
+        msg: "config",
+        genDir: genDir,
+        mode: mode,
+        interFile: document.getElementById("interfaceFile").value
+      }
+      vscode.postMessage(result);
+    }
+
     function checkbox(obj) {
         importCheck = obj.checked;
     }
@@ -171,25 +173,13 @@
         const message = event.data.msg;
         const path = event.data.path;
         if(message == "selectInterPath") {
-            let regex = new RegExp("[a-zA-Z_0-9]+\.h$");
-            if(regex.exec(path)){
-                document.getElementById("tab2").checked = true;
-                document.getElementById("hFilePath").value = path;
-            }else{
-                document.getElementById("interfaceFile").value = path;
-            }
+            document.getElementById("interfaceFile").value = path;
             fillInputDir(path, message);
         } else if(message == "selectGenPath") {
             document.getElementById("genFile").value = path;
         } else if(message == "selectBuildPath") {
             document.getElementById("buildFile").value = path;
-        } else if(message == "selectHFilePath") {
-            document.getElementById("hFilePath").value = path;
-            fillInputDir(path, message);
-        } else if(message == "selectHResultDir") {
-            document.getElementById("genHResultDir").value = path;
-        }
-        else {
+        } else {
             console.log("param is error");
         }
     })
@@ -268,6 +258,14 @@
                           </select>
                     </td>
                 </tr>
+
+                <tr>
+                  <td>配置业务代码:</td>
+                  <td>
+                    <button type="button" class="button" onclick="config()" style="background-color: #333333; border: 1px solid #333333; color: #fff;">配置</button>
+                  </td>
+                </tr>
+
                 <tr>
                     <td>启用import功能:</td>
                     <td>
