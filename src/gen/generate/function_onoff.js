@@ -219,7 +219,7 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
 
     returnGenerate(param.callback, param, data, isOnFuncFlag)
     if (param.params === '') {
-        let paramType = param.valueOut.substring(0, param.valueOut.length - "out;\n".length)
+        let paramType = param.valueOut.substring(0, param.valueOut.lastIndexOf(' ') + 1)
         if (paramType != null && paramType != undefined && paramType != '') {
             param.params = paramType + '&valueIn'  
         }        
