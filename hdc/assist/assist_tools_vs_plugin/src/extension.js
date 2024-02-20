@@ -94,19 +94,19 @@ function installExtensions(message) {
 		if (extensionIds.length != 0) {
 			extensionIds.length = 0;
 		}
-		if (checkApi == 'true') {
+		if (checkApi == true) {
 			extensionIds.push('kaihong.ApiScan')
 		}
-		if (checkGn == 'true') {
+		if (checkGn == true) {
 			extensionIds.push('kaihong.gn-gen')
 		}
-		if (checkService == 'true') {
+		if (checkService == true) {
 			extensionIds.push('kaihong.service-gen')
 		}
-		if (checkTs == 'true') {
+		if (checkTs == true) {
 			extensionIds.push('kaihong.ts-gen')
 		}
-		if (checkNapi == 'true') {
+		if (checkNapi == true) {
 			extensionIds.push('kaihong.napi-gen')
 		}
 	}
