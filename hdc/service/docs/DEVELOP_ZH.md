@@ -50,7 +50,7 @@
 
 6.编译生成 header_parser.exe
 
-6.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 /usr/local/lib/python3.8/dist-packages/CppHeaderParser)目录下的全部文件
+6.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 /usr/local/lib/python3.8/dist-packages/CppHeaderParser)目录下的全部文件(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接)
 
 ```
 sudo pip install CppHeaderParser
@@ -119,7 +119,7 @@ pyinstaller -F header_parser.py
 
 6.编译生成 header_parser.exe
 
-6.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 C:\Python310\Lib\site-packages\CppHeaderParser)目录下的全部文件
+6.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 C:\Python310\Lib\site-packages\CppHeaderParser)目录下的全部文件(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接)
 
 ```
 pip install CppHeaderParser

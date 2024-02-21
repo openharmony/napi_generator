@@ -6,9 +6,19 @@
 
 ### Linux
 
-1.下载service-gen-linux可执行程序与header_parser可执行程序，并放置到到napi_generator/hdc/service/service_vs_plugin/src/目录下，下载链接如下：
+1.下载service-gen-linux可执行程序与header_parser可执行程序，并放置到到napi_generator/hdc/service/service_vs_plugin/src/目录下。
 
-[下载链接](暂无)
+header_parser可执行程序下载链接如下(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接)：
+
+[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
+
+[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
+
+[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
+
+进入header_parser/linux目录下载header_parser。
+
+service-gen-linux可执行程序暂未对外发布，后续将对外发布。
 
 2.在napi_generator/hdc/service/service_vs_plugin/src目录下执行命令：
 
@@ -34,9 +44,19 @@
 
 ### Windows
 
-1.下载service-gen-win.exe可执行程序与header_parser.exe可执行程序，并放置到到napi_generator/hdc/service/service_vs_plugin/src/目录下，下载链接如下：
+1.下载service-gen-win.exe可执行程序与header_parser.exe可执行程序，并放置到到napi_generator/hdc/service/service_vs_plugin/src/目录下。
 
-[下载链接](暂无)
+header_parser.exe可执行程序下载链接如下(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接)：
+
+[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
+
+[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
+
+[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
+
+进入header_parser/windows目录下载header_parser.exe。
+
+service-gen-win.exe可执行程序暂未对外发布，后续将对外发布。
 
 2.在napi_generator/hdc/service/service_vs_plugin/src目录下执行命令：
 
