@@ -1,13 +1,12 @@
 # SERVICE框架生成工具使用说明
 ## 简介
 
-SERVICE框架生成工具支持三种入口，分别是可执行程序、VS Code插件，使用者可以根据自己的需要选择合适的工具。可执行文件、VS Code插件下载路径如下：
+SERVICE框架生成工具支持两种入口，分别是可执行程序、VS Code插件，使用者可以根据自己的需要选择合适的工具。可执行文件下载路径如下：
 
 [下载链接](暂无)
 
 下载文件说明如下：
 
-	│   │   |── service-gen-0.0.1.vsix             # VS Code插件
 	│   │   |── header_parser.exe                  # python脚本独立程序
 	│   │   |── header_parser                      # python脚本独立程序
 	│   │   |── service-gen-linux                  # Linux可执行程序 

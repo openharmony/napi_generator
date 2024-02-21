@@ -4,10 +4,6 @@
 
 当开发者为OpenHarmony系统框架开发某些功能时，有时需要将这个功能包装成一个独立的服务进程运行在系统中，为了其它应用进程能够调用此服务，开发人员需要基于系统IPC通信框架编写一套远程接口调用实现。实现Service远程调用接口需要开发人员熟悉IPC通信框架，了解proxy/stub的继承与实现方式，掌握C++类型转为MessageParcel数据包的各种API方法，有一定的学习成本。而Service代码生成工具能够帮助使用者生成框架代码，提升开发效率。用户只需提供一个定义远程方法的.h头文件，工具会自动生成整个Service框架的代码，包含Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及开机自启动相关配置文件。目前工具支持可执行文件、VS Code插件两种入口。
 
-更多工具的架构和实现原理详情，可以左键单击以下链接了解：
-
-[工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/service/docs/INSTRUCTION_ZH.md)
-
 	├── napi_generator                               # NAPI框架代码生成工具
 	│   ├── ...                                      # 其他文档
 	│   ├── hdc
@@ -38,21 +34,18 @@
 
 ### 使用对象
 
-系统开发者
-       
+系统开发者 
 ### 使用场景
 
 1) 开发者为OpenHarmony系统框架开发某些功能，并将该功能包装成一个独立的服务进程运行在系统中。
 
 ### 工具使用
 
-工具有两种类型，分别是可执行文件、VS Code插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。可执行文件、VS Code插件下载路径如下：
+#### VS Code插件使用方法
 
-[下载链接](暂无)
+具体的插件使用步骤，可以左键单击以下链接了解：
 
-具体的工具使用步骤，可以左键单击以下链接了解：
-
-[工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/service/docs/INSTRUCTION_ZH.md)
+[VS插件使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/service/service_vs_plugin/docs/INSTRUCTION_ZH.md)
 
 ### 工具输出
 
@@ -72,6 +65,12 @@
 在window环境下的，根据输入.h文件生成的输出文件，如下所示：
 
 ![](./figures/service_framework.png)
+
+### 工具集成
+
+Service框架代码生成后，系统框架开发者进行二次开发后，即可集成到OpenHarmony编译系统，生成对应的库文件，供应用开发者调用接口。工具集成到OpenHarmony的具体操作步骤可以左键单击以下链接了解：
+
+ [工具集成](https://gitee.com/openharmony/napi_generator/blob/master/hdc/service/docs/ENSEMBLE_METHOD_ZH.md)
 
 ## 工具开发说明
 
