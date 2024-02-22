@@ -32,10 +32,6 @@ API扫描工具，它可以根据用户给定三方库项目扫描输出风险�
 
 ### 工具使用
 
-插件下载路径如下:
-
-[下载链接](暂无)
-
 具体的工具使用步骤，可以左键单击以下链接了解：
 
 [工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/api/api_scan_vs_plugin/docs/INSTRUCTION_ZH.md)
