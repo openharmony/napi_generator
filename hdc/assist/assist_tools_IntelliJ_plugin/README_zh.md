@@ -29,13 +29,9 @@ ASSIST统一入口工具，可以将各北向工具统一起来，用户只需�
 
 ### 工具使用
 
-插件下载路径如下，选择assist_tool.jar下载。
+插件下载路径如下，点击download下载。
 
-[下载链接1]( 暂无)
-
-[下载链接2](暂无)
-
-[下载链接3]( 暂无)
+[下载链接](https://plugins.jetbrains.com/plugin/21430-assist-tools/edit/versions)
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
