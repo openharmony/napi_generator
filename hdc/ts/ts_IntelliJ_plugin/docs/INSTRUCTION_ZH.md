@@ -2,13 +2,9 @@
 
 ## 简介
 
-Ts接口生成工具目前支持两种入口，分别是可执行程序、IntelliJ插件，本文主要介绍IntelliJ插件使用说明。IntelliJ插件下载路径如下，选择generator.jar下载。
+Ts接口生成工具目前支持两种入口，分别是可执行程序、IntelliJ插件，本文主要介绍IntelliJ插件使用说明。IntelliJ插件下载路径如下，点击download下载。
 
-[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
-
-[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
-
-[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
+[下载链接](https://plugins.jetbrains.com/plugin/21420-ts-generator/edit/versions)
 
 ## IntelliJ插件使用方法
 
