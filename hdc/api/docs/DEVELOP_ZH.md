@@ -13,9 +13,9 @@
 #### 开发步骤
 
 ##### Linux
-1.下载Andr_N_Games_api.xlsx文件，并放置在napi_generator/hdc/api/src文件夹下，下载链接如下：
+1.下载Andr_N_Games_api.xlsx文件，并放置在napi_generator/hdc/api/src文件夹下。
 
-[下载链接](暂无)
+Andr_N_Games_api.xlsx文件暂未上传，后续会上传。
 
 2.安装typescript：在napi_generator/hdc/api/src目录下执行命令：
 
@@ -54,9 +54,9 @@
 
 ##### Windows
 
-1.下载Andr_N_Games_api.xlsx文件，并放置在napi_generator/hdc/api/src文件夹下，下载链接如下：
+1.下载Andr_N_Games_api.xlsx文件，并放置在napi_generator/hdc/api/src文件夹下。
 
-[下载链接](暂无)
+Andr_N_Games_api.xlsx文件暂未上传，后续会上传。
 
 2.使用管理员身份进入终端：
 
