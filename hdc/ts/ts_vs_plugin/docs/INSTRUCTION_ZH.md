@@ -1,9 +1,7 @@
 # Ts接口生成工具VSCode插件使用说明
 ## 简介
 
-VS Code插件下载路径如下，选择napi_generator_outputs.zip中ts-gen-0.0.1.vsix下载。
-
-[下载链接](暂无)               
+Ts接口生成工具可以根据定义在c++头文件中的接口，生成type-script语言的ts接口文件，工具支持三种入口，分别是可执行程序、IntelliJ插件、VS Code插件，使用者可以根据自己的需要选择合适的工具。本文主要介绍VS Code插件使用说明。           
 
 ## VS Code插件使用方法
 
