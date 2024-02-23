@@ -6,9 +6,9 @@
 
 ### Linux
 
-1.下载search-linux可执行程序，并放置在napi_generator/hdc/api/api_scan_vs_plugin/src/目录下。
+1.下载search-linux可执行程序，并放置在napi_generator/hdc/api/api_scan_vs_plugin/src/目录下，下载链接如下：
 
-search-linux可执行程序暂未对外发布，后续将对外发布。
+待增加链接
 
 2.在napi_generator/hdc/api/api_scan_vs_plugin/src/目录下执行命令：
 
@@ -42,9 +42,9 @@ search-linux可执行程序暂未对外发布，后续将对外发布。
 
 ### Windows
 
-1.下载search-win.exe可执行程序，并放置在napi_generator/hdc/api/api_scan_vs_plugin/src/目录下。
+1.下载search-win.exe可执行程序，并放置在napi_generator/hdc/api/api_scan_vs_plugin/src/目录下，下载链接如下：
 
-search-win.exe可执行程序暂未对外发布，后续将对外发布。
+待增加链接
 
 2.在napi_generator/hdc/api/api_scan_vs_plugin/src/目录下执行命令：
 

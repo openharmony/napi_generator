@@ -1,17 +1,7 @@
 # SERVICE框架生成工具使用说明
 ## 简介
 
-SERVICE框架生成工具支持两种入口，分别是可执行程序、VS Code插件，使用者可以根据自己的需要选择合适的工具。可执行文件下载路径如下：
-
-[下载链接](暂无)
-
-下载文件说明如下：
-
-	│   │   |── header_parser.exe                  # python脚本独立程序
-	│   │   |── header_parser                      # python脚本独立程序
-	│   │   |── service-gen-linux                  # Linux可执行程序 
-	│   │   |── service-gen-win.exe                # Windows可执行程序    
-	│   │   └── service-gen-macos                  # Mac可执行程序                
+SERVICE框架生成工具支持一种入口，即VS Code插件，使用者可以根据自己的需要下载工具使用。
 
 ## 工具介绍
 
@@ -20,69 +10,6 @@ SERVICE框架生成工具支持两种入口，分别是可执行程序、VS Code
 ![](../figures/pic-service-frm.png)
 
 ## 生成框架
-
-### 可执行程序使用方法
-#### Linux
-
-1.下载python脚本可执行程序header_parser与linux可执行程序service-gen-linux，下载链接如下：
-
-[下载链接](暂无)
-
-2.将待转换的.h文件放到任意目录下，建议放到可执行程序service-gen-linux与header_parser同级目录下，如下所示：
-
-	harmony@Ubuntu-64:~/service/napi_generator_8/hdc/service-gen/examples$ ls
-	test.h  header_parser  service-gen-linux
-
-3.在终端中进入到可执行程序service-gen-linux所在的目录，并运行service-gen-linux，命令如下：
-
-	harmony@Ubuntu-64:~/service/napi_generator_8/hdc/service-gen/examples$ ./service-gen-linux -f test.h -o ./ -s 9016 
-
-其中,参数详情如下：
-  -f，定义远程服务的.h文件；
-  -l, 日志级别（0-3），默认为1；
-  -o, 生成框架代码输入到指定路径下；
-  -s, 指定serviceID。
-
-4.运行成功后会在当前目录下生成对应的文件，如下所示：
-
-	harmony@Ubuntu-64:~/service/napi_generator_8/hdc/service-gen/examples$ ls
-	test.h  header_parser  napi_gen.log  service-gen-linux  testservice
-
-#### Windows
-
-1.下载python脚本可执行程序header_parser.exe与windows可执行程序service-gen-win.exe，下载链接如下：
-
-[下载链接](暂无)
-
-2.将要转换的.h文件放到任意目录下，建议放到可执行程序service-gen-win.exe与header_parser.exe同级目录下，如下所示：
-
-	E:\demo\service>dir /B
-	test.h
-	header_parser.exe
-	service-gen-win.exe
-
-3.在终端中进入到可执行程序service-gen-win.exe所在的目录，并运行service-gen-win.exe，命令如下：
-
-	E:\demo\service>service-gen-win.exe -f test.h -o ./ -s 9016 
-
-其中,参数详情如下：
-  -f，定义远程服务的.h文件；
-  -l, 日志级别（0-3），默认为1；
-  -o,生成框架代码输入到指定路径下；
-  -s,指定serviceID。
-
-4.运行成功后会在当前目录下生成对应的文件，如下所示：
-
-	E:\demo\service>dir /B
-	test.h
-	header_parser.exe
-	napi_gen.log
-	service-gen-win.exe
-	testservice
-
-#### Mac
-
-方法步骤参考windows、Linux的使用方法。
 
 ### VS Code插件使用方法
 
