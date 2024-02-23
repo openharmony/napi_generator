@@ -150,9 +150,3 @@ pyinstaller -F header_parser.py
 ```
 ./src/tsGen/dist/header_parser.exe
 ```
-
-### VS插件开发说明
-
-具体的插件开发步骤，可以左键单击以下链接了解：
-
-[VS插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/hdc/service/service_vs_plugin/docs/DEVELOP_ZH.md)

@@ -1,7 +1,7 @@
 # API扫描工具VSCode插件使用说明
 ## 简介
 
-API扫描工具目前支持三种入口，分别是可执行程序、IntelliJ插件、VS Code插件，本文主要介绍VS Code插件使用说明。
+API扫描工具目前支持一种入口，即VS Code插件，本文主要介绍VS Code插件使用说明。
 
 ## VS Code插件使用方法
 

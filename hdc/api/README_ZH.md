@@ -2,7 +2,7 @@
 
 ## 简介
 
-本文主要介绍API扫描工具，它可以扫描三方库中包含OpenHarmony源码不包含的接口，并输出result.xlsx文档。开发者移植三方库到OpenHarmony源码中，若三方库中包含一些OpenHarmony中不存在的接口，便会增加移植难度。此时可使用API扫描工具，提前预知风险接口，降低移植难度，提高开发效率。目前工具支持可执行文件、VS Code插件、IntelliJ插件三种入口。
+本文主要介绍API扫描工具，它可以扫描三方库中包含OpenHarmony源码不包含的接口，并输出result.xlsx文档。开发者移植三方库到OpenHarmony源码中，若三方库中包含一些OpenHarmony中不存在的接口，便会增加移植难度。此时可使用API扫描工具，提前预知风险接口，降低移植难度，提高开发效率。目前工具支持VS Code插件一种入口。
 
 更多工具的架构和实现原理详情，可以左键单击以下链接了解：
 
@@ -14,10 +14,7 @@
 	│   │   ├── ...                              # 其他工具
 	│   │   ├── api                              # api扫描工具
 	│   │   |   ├── api_scan_vs_plugin           # VS Code插件源码
-	│   │   |   ├── api_scan_IntelliJ_plugin     # Intellij插件源码
-	│   │   |   ├── src                          # 工具源码
-	│   │   |   |   ├── scan.js                  # 工具源码入口
-	│   │   |   |   ├── package.json             # package.json文件
+	│   │   |   ├── ...
 
 ## 约束
 系统：建议Ubuntu 20.04或者Windows 10
@@ -36,15 +33,11 @@
 
 ### 工具使用
 
-工具有三种类型，分别是可执行文件、VS Code插件、IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。
-
-可执行文件和IntelliJ插件暂未对外发布，后续将对外发布；
-
-VS Code插件可在VS Code插件市场直接下载。
+工具支持VS Code插件，可在VS Code插件市场直接下载。
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
-[工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/api/docs/INSTRUCTION_ZH.md)
+[工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/api/api_scan_vs_plugin/docs/INSTRUCTION_ZH.md)
 
 ### 工具输出
 
@@ -61,22 +54,6 @@ VS Code插件可在VS Code插件市场直接下载。
 ![](./figures/opencv_include.png)
 
 ![](./figures/opencv_h.png)
-
-## 工具开发说明
-
-### 对象
-
-工具的开发者
-
-### 开发场景
-
-若当前工具的功能已经不能满足开发者的全部需求，则开发者可以基于已有的源码对工具进行二次开发，来增强工具的能力，编译打包生成自定义的可执行文件和插件。
-
-### 开发步骤
-
-开发者可以根据如下的步骤来完成对工具的开发：
-
- [工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/api/docs/DEVELOP_ZH.md)
 
 ## 版本说明
 
