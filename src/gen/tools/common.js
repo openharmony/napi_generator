@@ -105,7 +105,15 @@ CallFunctionList.pop = function () {
     CallFunctionList.callFuncs.pop()
 }
 CallFunctionList.getValue = function (name) {
+    if (CallFunctionList.callFuncs.length === 0) {
+        return null
+    }
+
     let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
+    if (cfs === undefined) {
+        return null
+    }
+
     for (let i = 0; i < cfs.length; i++) {
         if (cfs[i].name === name) {
             return [cfs[i].body, cfs[i].ret]
@@ -228,7 +236,7 @@ function isEnum(type, data) {
     }
     for (let i in data.enum) {
         let enumm = data.enum[i]
-        if (type == enumm.name) {
+        if (type === enumm.name) {
             isEnum = true
         }
     }
