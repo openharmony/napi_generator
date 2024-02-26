@@ -2,13 +2,9 @@
 
 ## 简介
 
-Assist_tools工具目前支持一种入口，即IntelliJ插件，本文主要介绍IntelliJ插件使用说明。IntelliJ插件下载路径如下，选择generator.jar下载。
+Assist_tools工具目前支持一种入口，即IntelliJ插件，本文主要介绍IntelliJ插件使用说明。IntelliJ插件下载路径如下，点击download下载。
 
-[下载链接1](暂无)
-
-[下载链接2](暂无)
-
-[下载链接3](暂无)
+[下载链接](https://plugins.jetbrains.com/plugin/21430-assist-tools/edit/versions)
 
 ## IntelliJ插件使用方法
 

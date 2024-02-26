@@ -12,7 +12,7 @@
 
 #### 环境准备
 
-1.下载napi_generator-win.exe可执行程序与header_parser.exe可执行程序，放置在napi_generator/napi_IntelliJ_plugin/resources/cmds/win目录下。其中header_parser.exe在header_parser/windows/下，下载地址如下：
+1.下载napi_generator-win.exe可执行程序与header_parser.exe可执行程序，放置在napi_generator/napi_IntelliJ_plugin/resources/cmds/win目录下。其中header_parser.exe在header_parser/windows/下，下载地址如下(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接)：
 
 [下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
 

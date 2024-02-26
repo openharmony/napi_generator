@@ -2,7 +2,7 @@
 
 ## 简介
 
-API扫描工具，它可以根据用户给定三方库项目扫描输出风险接口以及.h头文件。目前工具支持可执行文件、VS Code插件、IntelliJ插件三种入口，本文主要介绍VS Code插件使用说明。
+API扫描工具，它可以根据用户给定三方库项目扫描输出风险接口以及.h头文件。目前工具支持VS Code插件一种入口，本文主要介绍VS Code插件使用说明。
 
 ## 目录 
 
@@ -32,10 +32,6 @@ API扫描工具，它可以根据用户给定三方库项目扫描输出风险�
 
 ### 工具使用
 
-插件下载路径如下:
-
-[下载链接](暂无)
-
 具体的工具使用步骤，可以左键单击以下链接了解：
 
 [工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/api/api_scan_vs_plugin/docs/INSTRUCTION_ZH.md)
@@ -57,22 +53,6 @@ API扫描工具，它可以根据用户给定三方库项目扫描输出风险�
 sheet2为风险.h头文件，如下所示：
 
 ![](../figures/opencv_h.png)
-
-## 开发说明
-
-### 对象
-
-工具的开发者
-
-### 开发场景
-
-若当前工具的功能已经不能满足开发者的全部需求，则开发者可以基于已有的源码对工具进行二次开发，来增强工具的能力，编译打包生成自定义的可执行文件和插件。
-       
-### 开发步骤
-
-开发者可以根据如下的步骤来完成对工具VS Code插件的开发：
-
-[工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/api/api_scan_vs_plugin/docs/DEVELOP_ZH.md)
 
 ## FAQ
 
