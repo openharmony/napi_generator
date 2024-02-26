@@ -34,14 +34,6 @@ TS(type-script)接口生成工具，它可以根据定义在c++头文件中的�
 
 ### 工具使用
 
-插件下载路径如下，选择ts-gen-0.0.1.vsix下载。
-
-[下载链接1](暂无)
-
-[下载链接2](暂无)
-
-[下载链接3](暂无)
-
 具体的工具使用步骤，可以左键单击以下链接了解：
 
 [工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/ts/ts_vs_plugin/docs/INSTRUCTION_ZH.md)

@@ -27,14 +27,6 @@ ASSIST统一入口工具，可以将各南向工具统一起来，用户只需�
 
 ### 工具使用
 
-插件下载路径如下，选择AssistTools-0.0.1.vsix下载。
-
-[下载链接1]( 暂无)
-
-[下载链接2](暂无)
-
-[下载链接3]( 暂无)
-
 具体的工具使用步骤，可以左键单击以下链接了解：
 
 [工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/assist/assist_tools_vs_plugin/docs/INSTRUCTION_ZH.md)

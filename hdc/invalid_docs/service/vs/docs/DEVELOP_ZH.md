@@ -8,7 +8,7 @@
 
 1.下载service-gen-linux可执行程序与header_parser可执行程序，并放置到到napi_generator/hdc/service/service_vs_plugin/src/目录下，下载链接如下：
 
-[下载链接](暂无)
+待增加链接
 
 2.在napi_generator/hdc/service/service_vs_plugin/src目录下执行命令：
 
@@ -36,7 +36,7 @@
 
 1.下载service-gen-win.exe可执行程序与header_parser.exe可执行程序，并放置到到napi_generator/hdc/service/service_vs_plugin/src/目录下，下载链接如下：
 
-[下载链接](暂无)
+待增加链接
 
 2.在napi_generator/hdc/service/service_vs_plugin/src目录下执行命令：
 

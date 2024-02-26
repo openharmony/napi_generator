@@ -2,7 +2,7 @@
 
 ## 简介
 
-SERVICE框架生成工具，根据用户提供的.h头文件，工具会自动生成整个Service框架的代码。目前工具支持可执行文件、VS Code插件两种入口，本文主要介绍VS Code插件使用说明。
+SERVICE框架生成工具，根据用户提供的.h头文件，工具会自动生成整个Service框架的代码。目前工具支持VS Code插件一种入口，本文主要介绍VS Code插件说明。
 
 ## 目录 
 
@@ -32,13 +32,11 @@ SERVICE框架生成工具，根据用户提供的.h头文件，工具会自动�
 
 ### 工具使用
 
-插件下载路径如下:
+#### VS Code插件使用方法
 
-[下载链接](暂无)
+具体的插件使用步骤，可以左键单击以下链接了解：
 
-具体的工具使用步骤，可以左键单击以下链接了解：
-
-[工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/service/service_vs_plugin/docs/INSTRUCTION_ZH.md)
+[VS插件使用说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/service/service_vs_plugin/docs/INSTRUCTION_ZH.md)
 
 ### 工具输出
 
@@ -58,22 +56,6 @@ SERVICE框架生成工具，根据用户提供的.h头文件，工具会自动�
 在window环境下的，根据输入.h文件生成的输出文件，如下所示：
 
 ![](../figures/service_framework.png)
-
-## 开发说明
-
-### 对象
-
-工具的开发者
-
-### 开发场景
-
-若当前工具的功能已经不能满足开发者的全部需求，则开发者可以基于已有的源码对工具进行二次开发，来增强工具的能力，编译打包生成自定义的可执行文件和插件。
-       
-### 开发步骤
-
-开发者可以根据如下的步骤来完成对工具VS Code插件的开发：
-
-[工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/hdc/service/service_vs_plugin/docs/DEVELOP_ZH.md)
 
 ## FAQ
 

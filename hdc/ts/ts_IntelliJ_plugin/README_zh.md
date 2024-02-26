@@ -36,13 +36,9 @@ ts(type-script)接口生成工具，它可以根据定义在c++头文件中的�
 
 ### 工具使用
 
-插件下载路径如下，选择generator.jar下载。
+插件下载路径如下，点击download下载。
 
-[下载链接1]( http://ftpkaihongdigi.i234.me:5000/sharing/PC6uOorrM)
-
-[下载链接2]( http://ftp.kaihong.com:5000/sharing/PC6uOorrM)
-
-[下载链接3]( http://ftp.kaihongdigi.com:5000/sharing/PC6uOorrM)
+[下载链接](https://plugins.jetbrains.com/plugin/21420-ts-generator/edit/versions)
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 
