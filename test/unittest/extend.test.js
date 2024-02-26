@@ -74,6 +74,7 @@ function partGenerateBase(){
         let data = readFile("test/unittest/tool_utility.cpp")
         let retJson = JSON.stringify(data)
         let copyRight = retJson.substring(1, retJson.indexOf("Kaihong"))
+        // console.log("copyRight is \n" + copyRight)
         assert.strictEqual(copyRight, "/*\\n* Copyright (c) 2022 Shenzhen ")
 
         let data1 = readFile("test/unittest/tool_utility.h")
