@@ -236,7 +236,7 @@ function isEnum(type, data) {
     }
     for (let i in data.enum) {
         let enumm = data.enum[i]
-        if (type == enumm.name) {
+        if (type === enumm.name) {
             isEnum = true
         }
     }

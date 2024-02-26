@@ -60,9 +60,6 @@ describe('Generate', function () {
         let retJson = funcAsyncAssert();
         let struct = retJson.substring(retJson.indexOf("{"),retJson.indexOf("}")+1)
         assert.strictEqual(struct,"{\\n    void *data_ptr = data;\\n    if_async_value_struct *vio = static_cast<if_async_value_struct *>(data_ptr);\\n    TestClass1 *pInstance = (TestClass1 *)pxt->GetAsyncInstance();\\n    pInstance->if_async(vio->in0, vio->outErrCode, vio->out);\\n}")
-        
-        // {\\n    std::string in0;\\n    uint32_t outErrCode = 0;\\n    std::string out;\\n} 
-        // {\n    std::string in0;\n    uint32_t outErrCode = 0;\n    std::string out;\n}
 
         let execute = retJson.substring(retJson.indexOf("if_async_execute"),retJson.indexOf("*data")+6)
         assert.strictEqual(execute,"if_async_execute(XNapiTool *pxt, DataPtr data)\\n{\\n    void *data_")
@@ -327,12 +324,7 @@ function partOfInterfaceOne() {
         let retBool = generateVariableAsset("boolean");
         let ex = JSON.stringify(variableMiddleBoolValue())
         assert.strictEqual(retBool, ex);
-        // assert.strictEqual(JSON.stringify(variableMiddleBoolValue()), ex);
-
-        // console.log("generateVariable:\n" + variableMiddleBoolValue())
-    
-        
-
+ 
         // test Array
         let retArrStr = generateVariableAsset("Array<string>");
         retArrStr = re.replaceAll(retArrStr, "tt[0-9]+", "tt");
@@ -342,8 +334,6 @@ function partOfInterfaceOne() {
         retArrStr = re.replaceAll(retArrStr, "i[0-9]+", "i");
         let resultArrStr = JSON.stringify(variableMiddleArrStrValue());
         assert.strictEqual(retArrStr, resultArrStr);
-
-
 
         let retArrStr2 = generateVariableAsset("string[]");
         retArrStr2 = re.replaceAll(retArrStr2, "tt[0-9]+", "tt");
@@ -564,25 +554,6 @@ function partOfTestTwo2() {
 }
 
 function variableMiddleBoolValue() {
-    // let variableMidVal = '\n' +
-    //     '    static napi_value getvalue_disable(napi_env env, napi_callback_info info)\n' +
-    //     '    {\n    ' +
-    //     '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n    ' +
-    //     '    void *instPtr = pxt->UnWarpInstance();\n    ' +
-    //     '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
-    //     '    napi_value result = nullptr;\n    ' +
-    //     '    result = pxt->SwapC2JsBool(p->disable);\n    ' +
-    //     '    delete pxt;\n    ' +
-    //     '    return result;\n' +
-    //     '    }\n' +
-    //     '    static napi_value setvalue_disable(napi_env env, napi_callback_info info)\n' +
-    //     '    {\n    ' +
-    //     '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n    ' +
-    //     '    void *instPtr = pxt->UnWarpInstance();\n    ' +
-    //     '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
-    //     '    BOOLEAN_JS_2_C(pxt->GetArgv(XNapiTool::ZERO), bool, p->disable);\n\n    ' +
-    //     '    return nullptr;\n' +
-    //     '    }'
     let variableMidVal = '\n      ' +
     '    napi_value ConfigOption_middle::getvalue_disable(napi_env env, napi_callback_info info)\n    ' +
     '    {\n        ' +
@@ -602,7 +573,6 @@ function variableMiddleBoolValue() {
     '    BOOLEAN_JS_2_C(pxt->GetArgv(XNapiTool::ZERO), bool, p->disable);\n\n        ' +
     '    return nullptr;\n    ' +
     '    }'
-    // let variableMidVal = '\n          napi_value ConfigOption_middle::getvalue_disable(napi_env env, napi_callback_info info)\n        {\n            XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n            void *instPtr = pxt->UnWarpInstance();\n            ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n            napi_value result = nullptr;\n              result = pxt->SwapC2JsBool(p->disable);\n\n            delete pxt;\n            return result;\n        }\n          napi_value ConfigOption_middle::setvalue_disable(napi_env env, napi_callback_info info)\n        {\n            std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n            void *instPtr = pxt->UnWarpInstance();\n            ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n              BOOLEAN_JS_2_C(pxt->GetArgv(XNapiTool::ZERO), bool, p->disable);\n\n            return nullptr;\n        }';
     return  variableMidVal
 }
 
