@@ -317,7 +317,6 @@ function partOfNamespace(correctResult) {
         assert.strictEqual(enumResult.search("\"enumValueType\":1") > 0, true);
         let searchInte = nameResult.indexOf("\"interface\"")
         let interResult = nameResult.substring(searchInte, nameResult.indexOf("\"class\"") - 1);
-        // assert.strictEqual(interResult.search("{\"name\":\"animal\",\"type\":\"string\"}") > 0, true);
         assert.strictEqual(interResult.search("{\"name\":\"animal\",\"type\":\"string\"}") > 0, false);
         let qiePianStart = interResult.lastIndexOf("function") - 1;
         let qiepianEnd = interResult.lastIndexOf("parentNameList")-2;
