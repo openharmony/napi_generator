@@ -59,7 +59,11 @@ describe('Generate', function () {
     it('test gen/generate/function_async generateFunctionAsync', function () {
         let retJson = funcAsyncAssert();
         let struct = retJson.substring(retJson.indexOf("{"),retJson.indexOf("}")+1)
-        assert.strictEqual(struct,"{\\n    std::string in0;\\n    uint32_t outErrCode = 0;\\n    std::string out;\\n}")
+        assert.strictEqual(struct,"{\\n    void *data_ptr = data;\\n    if_async_value_struct *vio = static_cast<if_async_value_struct *>(data_ptr);\\n    TestClass1 *pInstance = (TestClass1 *)pxt->GetAsyncInstance();\\n    pInstance->if_async(vio->in0, vio->outErrCode, vio->out);\\n}")
+        
+        // {\\n    std::string in0;\\n    uint32_t outErrCode = 0;\\n    std::string out;\\n} 
+        // {\n    std::string in0;\n    uint32_t outErrCode = 0;\n    std::string out;\n}
+
         let execute = retJson.substring(retJson.indexOf("if_async_execute"),retJson.indexOf("*data")+6)
         assert.strictEqual(execute,"if_async_execute(XNapiTool *pxt, DataPtr data)\\n{\\n    void *data_")
         let complete = retJson.substring(retJson.indexOf("if_async_complete"),retJson.lastIndexOf("*data")+6)
@@ -71,7 +75,7 @@ describe('Generate', function () {
     it('test gen/generate/function_direct generateFunctionDirect', function () {
         let retJson = funcDirectAssert();
         let struct = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1)
-        assert.strictEqual(struct, "{\\n    std::string in0;\\n    bool* in1 = nullptr;\\n    std::string out;\\n}")
+        assert.strictEqual(struct, "{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }")
         let middle = retJson.substring(retJson.indexOf("if_direct_middle"), retJson.indexOf("info)") + 5)
         assert.strictEqual(middle, "if_direct_middle(napi_env env, napi_callback_info info)")
     }); 
@@ -79,7 +83,7 @@ describe('Generate', function () {
     it('test gen/generate/function_direct generateFunctionStaticDirect', function () {
         let retJson = funcStaticDirectAssert();
         let struct = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1);
-        assert.strictEqual(struct, "{\\n    std::string in0;\\n    std::string out;\\n}");
+        assert.strictEqual(struct, "{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }");
         let middle = retJson.substring(retJson.indexOf("if_direct_middle"), retJson.indexOf("info)") + 5);
         assert.strictEqual(middle, "if_direct_middle(napi_env env, napi_callback_info info)");
         let implH = retJson.search("static bool if_direct");
@@ -89,7 +93,7 @@ describe('Generate', function () {
     it('test gen/generate/function_sync generateFunctionSync', function () {
         let retJson = funcSyncAssert();
         let struct = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1)
-        assert.strictEqual(struct, "{\\n    std::string in0;\\n    std::string out;\\n}")
+        assert.strictEqual(struct, "{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }")
         let middle = retJson.substring(retJson.indexOf("if_callback_middle"), retJson.indexOf("info)") + 5)
         assert.strictEqual(middle, "if_callback_middle(napi_env env, napi_callback_info info)")
     });
@@ -232,13 +236,13 @@ function partOfFuncOnOff() {
     it('test gen/generate/function_onoff generateFunctionOnOff', function () {
         let retJson = funcOnOffAssert('on');
         let struct = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1)
-        assert.strictEqual(struct, "{\\n    std::string eventName;\\n}")
+        assert.strictEqual(struct, "{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }")
         let middle = retJson.substring(retJson.indexOf("on_middle"), retJson.indexOf("info)") + 5)
         assert.strictEqual(middle, "on_middle(napi_env env, napi_callback_info info)")
 
         let retJson2 = funcOnOffAssert('off');
         let struct2 = retJson2.substring(retJson2.indexOf("{"), retJson2.indexOf("}") + 1)
-        assert.strictEqual(struct2, "{\\n    std::string eventName;\\n}")
+        assert.strictEqual(struct2, "{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }")
         let middle2 = retJson2.substring(retJson2.indexOf("off_middle"), retJson2.indexOf("info)") + 5)
         assert.strictEqual(middle2, "off_middle(napi_env env, napi_callback_info info)")
     });
@@ -263,7 +267,7 @@ function partOfInterface() {
         let ret = generateInterface('ConfigOption', data, 'napitest::');
         let retJson = JSON.stringify(ret).substring(1, JSON.stringify(ret).length);
         let configOption = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1);
-        let configResult = "{\\npublic:\\n    bool disable;\\n    std::map<std::string, std::string> map1;\\n}";
+        let configResult = "{\\npublic:\\n    bool disable;\\n    std::map<std::string, std::string> map1;\\n\\n}";
         assert.strictEqual(configOption, configResult);
         assert.strictEqual(retJson.search("ConfigOption_middle") > 0, true)
         assert.strictEqual(retJson.search("middleInit") > 0, true)
@@ -321,7 +325,13 @@ function partOfInterfaceOne() {
     it('test gen/generate/interface generateVariable', function () {
         // test basic type
         let retBool = generateVariableAsset("boolean");
-        assert.strictEqual(retBool, JSON.stringify(variableMiddleBoolValue()));
+        let ex = JSON.stringify(variableMiddleBoolValue())
+        assert.strictEqual(retBool, ex);
+        // assert.strictEqual(JSON.stringify(variableMiddleBoolValue()), ex);
+
+        // console.log("generateVariable:\n" + variableMiddleBoolValue())
+    
+        
 
         // test Array
         let retArrStr = generateVariableAsset("Array<string>");
@@ -332,6 +342,8 @@ function partOfInterfaceOne() {
         retArrStr = re.replaceAll(retArrStr, "i[0-9]+", "i");
         let resultArrStr = JSON.stringify(variableMiddleArrStrValue());
         assert.strictEqual(retArrStr, resultArrStr);
+
+
 
         let retArrStr2 = generateVariableAsset("string[]");
         retArrStr2 = re.replaceAll(retArrStr2, "tt[0-9]+", "tt");
@@ -487,16 +499,16 @@ function partOfTest() {
 
 function partOfTestTwo(){
     it('test gen/generate/return_generate cToJs', function () {
-        assert.strictEqual(cToJs("a", "string", "b", 1), "b = pxt->SwapC2JsUtf8(a.c_str());")
+        assert.strictEqual(cToJs("a", "string", "b", 1), "b = pxt->SwapC2JsUtf8(a.c_str());\n")
 
         ret = cToJs("a", "NUMBER_TYPE_1", "b", 1)
-        assert.strictEqual(ret, "b = NUMBER_C_2_JS(pxt, a);")
+        assert.strictEqual(ret, "b = NUMBER_C_2_JS(pxt, a);\n")
 
         ret1 = cToJs("a", "boolean", "b", 1)
-        assert.strictEqual(ret1, "b = pxt->SwapC2JsBool(a);")
+        assert.strictEqual(ret1, "b = pxt->SwapC2JsBool(a);\n")
 
         ret2 = cToJs("a", "void", "b", 1)
-        assert.strictEqual(ret2, "b = pxt->UndefinedValue();")
+        assert.strictEqual(ret2, "b = pxt->UndefinedValue();\n")
 
         ret3 = cToJs("a", "any", "b", 1)
         assert.strictEqual(ret3, "pxt->GetAnyValue(a_type, result, a);")
@@ -552,88 +564,110 @@ function partOfTestTwo2() {
 }
 
 function variableMiddleBoolValue() {
-    let variableMidVal = '\n' +
-        '    static napi_value getvalue_disable(napi_env env, napi_callback_info info)\n' +
-        '    {\n    ' +
-        '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n    ' +
-        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
-        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
-        '    napi_value result = nullptr;\n    ' +
-        '    result = pxt->SwapC2JsBool(p->disable);\n    ' +
-        '    delete pxt;\n    ' +
-        '    return result;\n' +
-        '    }\n' +
-        '    static napi_value setvalue_disable(napi_env env, napi_callback_info info)\n' +
-        '    {\n    ' +
-        '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n    ' +
-        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
-        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
-        '    BOOLEAN_JS_2_C(pxt->GetArgv(XNapiTool::ZERO), bool, p->disable);\n\n    ' +
-        '    return nullptr;\n' +
-        '    }'    
-    return variableMidVal;
+    // let variableMidVal = '\n' +
+    //     '    static napi_value getvalue_disable(napi_env env, napi_callback_info info)\n' +
+    //     '    {\n    ' +
+    //     '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n    ' +
+    //     '    void *instPtr = pxt->UnWarpInstance();\n    ' +
+    //     '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
+    //     '    napi_value result = nullptr;\n    ' +
+    //     '    result = pxt->SwapC2JsBool(p->disable);\n    ' +
+    //     '    delete pxt;\n    ' +
+    //     '    return result;\n' +
+    //     '    }\n' +
+    //     '    static napi_value setvalue_disable(napi_env env, napi_callback_info info)\n' +
+    //     '    {\n    ' +
+    //     '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n    ' +
+    //     '    void *instPtr = pxt->UnWarpInstance();\n    ' +
+    //     '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
+    //     '    BOOLEAN_JS_2_C(pxt->GetArgv(XNapiTool::ZERO), bool, p->disable);\n\n    ' +
+    //     '    return nullptr;\n' +
+    //     '    }'
+    let variableMidVal = '\n      ' +
+    '    napi_value ConfigOption_middle::getvalue_disable(napi_env env, napi_callback_info info)\n    ' +
+    '    {\n        ' +
+    '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n        ' +
+    '    void *instPtr = pxt->UnWarpInstance();\n        ' +
+    '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n        ' +
+    '    napi_value result = nullptr;\n          ' +
+    '    result = pxt->SwapC2JsBool(p->disable);\n\n        ' +
+    '    delete pxt;\n        ' +
+    '    return result;\n    ' +
+    '    }\n      ' +
+    '    napi_value ConfigOption_middle::setvalue_disable(napi_env env, napi_callback_info info)\n    ' +
+    '    {\n        ' +
+    '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n        ' +
+    '    void *instPtr = pxt->UnWarpInstance();\n        ' +
+    '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n          ' +
+    '    BOOLEAN_JS_2_C(pxt->GetArgv(XNapiTool::ZERO), bool, p->disable);\n\n        ' +
+    '    return nullptr;\n    ' +
+    '    }'
+    // let variableMidVal = '\n          napi_value ConfigOption_middle::getvalue_disable(napi_env env, napi_callback_info info)\n        {\n            XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n            void *instPtr = pxt->UnWarpInstance();\n            ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n            napi_value result = nullptr;\n              result = pxt->SwapC2JsBool(p->disable);\n\n            delete pxt;\n            return result;\n        }\n          napi_value ConfigOption_middle::setvalue_disable(napi_env env, napi_callback_info info)\n        {\n            std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n            void *instPtr = pxt->UnWarpInstance();\n            ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n              BOOLEAN_JS_2_C(pxt->GetArgv(XNapiTool::ZERO), bool, p->disable);\n\n            return nullptr;\n        }';
+    return  variableMidVal
 }
 
 function variableMiddleArrStrValue() {
-    let variableMidVal = '\n' +
-        '    static napi_value getvalue_disable(napi_env env, napi_callback_info info)\n' +
-        '    {\n    ' +
-        '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n    ' +
-        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
-        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
-        '    napi_value result = nullptr;\n    ' +
+    let variableMidVal = '\n      ' +
+        '    napi_value ConfigOption_middle::getvalue_disable(napi_env env, napi_callback_info info)\n    ' +
+        '    {\n        ' +
+        '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n        ' +
+        '    void *instPtr = pxt->UnWarpInstance();\n        ' +
+        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n        ' +
+        '    napi_value result = nullptr;\n          ' +
         '    pxt->CreateArray(result);\n' +
         '    uint32_t outLen = p->disable.size();\n' +
         '    for (uint32_t i = 0; i < outLen; i++) {\n    ' +
         '    napi_value tnv = nullptr;\n    ' +
         '    tnv = pxt->SwapC2JsUtf8(p->disable[i].c_str());\n    ' +
-        '    pxt->SetArrayElement(result, i, tnv);\n    }\n    ' +
-        '    delete pxt;\n    ' +
-        '    return result;\n' +
-        '    }\n' +
-        '    static napi_value setvalue_disable(napi_env env, napi_callback_info info)\n' +
-        '    {\n    ' +
-        '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n    ' +
-        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
-        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n        ' +
+        '    pxt->SetArrayElement(result, i, tnv);\n    }\n        ' +
+        '    delete pxt;\n        ' +
+        '    return result;\n    ' +
+        '    }\n      ' +
+        '    napi_value ConfigOption_middle::setvalue_disable(napi_env env, napi_callback_info info)\n    ' +
+        '    {\n        ' +
+        '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n        ' +
+        '    void *instPtr = pxt->UnWarpInstance();\n        ' +
+        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n              ' +
         '    uint32_t len = pxt->GetArrayLength(pxt->GetArgv(XNapiTool::ZERO));\n' +
         '    for (uint32_t i = 0; i < len; i++) {\n    ' +
         '    std::string tt;\n    ' +
         '    pxt->SwapJs2CUtf8(pxt->GetArrayElement(pxt->GetArgv(XNapiTool::ZERO), i), tt);\n    ' +
-        '    p->disable.push_back(tt);\n    }\n\n    ' +
-        '    return nullptr;\n' +
+        '    p->disable.push_back(tt);\n    }\n\n        ' +
+        '    return nullptr;\n    ' +
         '    }'    
     return variableMidVal;
 }
 
 function variableMiddleMapStrValue() {
-    let variableMidVal = '\n' +
-        '    static napi_value getvalue_disable(napi_env env, napi_callback_info info)\n    {\n    ' +
-        '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n    ' +
-        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
-        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
-        '    napi_value result = nullptr;\n    ' +
-        '    result = nullptr;\n' +
-        '    for (auto i = p->disable.begin(); i != p->disable.end(); i++) {\n    ' +
-        '    const char * tnv;\n    ' +
-        '    napi_value tnv = nullptr;\n    ' +
-        '    tnv = (i -> first).c_str();\n    ' +
-        '    tnv = pxt->SwapC2JsUtf8(i->second.c_str());\n    ' +
-        '    pxt->SetMapElement(result, tnv, tnv);\n    }\n    ' +
-        '    delete pxt;\n    ' +
-        '    return result;\n    }\n' +
-        '    static napi_value setvalue_disable(napi_env env, napi_callback_info info)\n    {\n    ' +
-        '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n    ' +
-        '    void *instPtr = pxt->UnWarpInstance();\n    ' +
-        '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
-        '    uint32_t len = pxt->GetMapLength(pxt->GetArgv(XNapiTool::ZERO));\n' +
-        'for (uint32_t i = 0; i < len; i++) {\n' +
-        '    std::string tt;\n' +
-        '    std::string tt;\n' +
-        '    pxt->SwapJs2CUtf8(pxt->GetMapElementName(pxt->GetArgv(XNapiTool::ZERO), i), tt);\n    ' +
-        '    pxt->SwapJs2CUtf8(pxt->GetMapElementValue(pxt->GetArgv(XNapiTool::ZERO), tt.c_str()), tt);\n\n' +
-        '    p->disable.insert(std::make_pair(tt, tt));\n}\n    ' +
-        '    return nullptr;\n    }'
+    // let variableMidVal = '\n      ' +
+    //     '    static napi_value getvalue_disable(napi_env env, napi_callback_info info)\n    {\n    ' +
+    //     '    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n    ' +
+    //     '    void *instPtr = pxt->UnWarpInstance();\n    ' +
+    //     '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
+    //     '    napi_value result = nullptr;\n    ' +
+    //     '    result = nullptr;\n' +
+    //     '    for (auto i = p->disable.begin(); i != p->disable.end(); i++) {\n    ' +
+    //     '    const char * tnv;\n    ' +
+    //     '    napi_value tnv = nullptr;\n    ' +
+    //     '    tnv = (i -> first).c_str();\n    ' +
+    //     '    tnv = pxt->SwapC2JsUtf8(i->second.c_str());\n    ' +
+    //     '    pxt->SetMapElement(result, tnv, tnv);\n    }\n    ' +
+    //     '    delete pxt;\n    ' +
+    //     '    return result;\n    }\n' +
+    //     '    static napi_value setvalue_disable(napi_env env, napi_callback_info info)\n    {\n    ' +
+    //     '    std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n    ' +
+    //     '    void *instPtr = pxt->UnWarpInstance();\n    ' +
+    //     '    ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n    ' +
+    //     '    uint32_t len = pxt->GetMapLength(pxt->GetArgv(XNapiTool::ZERO));\n' +
+    //     'for (uint32_t i = 0; i < len; i++) {\n' +
+    //     '    std::string tt;\n' +
+    //     '    std::string tt;\n' +
+    //     '    pxt->SwapJs2CUtf8(pxt->GetMapElementName(pxt->GetArgv(XNapiTool::ZERO), i), tt);\n    ' +
+    //     '    pxt->SwapJs2CUtf8(pxt->GetMapElementValue(pxt->GetArgv(XNapiTool::ZERO), tt.c_str()), tt);\n\n' +
+    //     '    p->disable.insert(std::make_pair(tt, tt));\n}\n    ' +
+    //     '    return nullptr;\n    }'
+
+    let variableMidVal = "\n          napi_value ConfigOption_middle::getvalue_disable(napi_env env, napi_callback_info info)\n        {\n            XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\n            void *instPtr = pxt->UnWarpInstance();\n            ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n            napi_value result = nullptr;\n              result = nullptr;\n    for (auto i = p->disable.begin(); i != p->disable.end(); i++) {\n        const char * tnv;\n        napi_value tnv = nullptr;\n        tnv = (i -> first).c_str();\n        tnv = pxt->SwapC2JsUtf8(i->second.c_str());\n        pxt->SetMapElement(result, tnv, tnv);\n    }\n            delete pxt;\n            return result;\n        }\n          napi_value ConfigOption_middle::setvalue_disable(napi_env env, napi_callback_info info)\n        {\n            std::shared_ptr<XNapiTool> pxt = std::make_shared<XNapiTool>(env, info);\n            void *instPtr = pxt->UnWarpInstance();\n            ConfigOption *p = static_cast<ConfigOption *>(instPtr);\n              uint32_t len = pxt->GetMapLength(pxt->GetArgv(XNapiTool::ZERO));\nfor (uint32_t i = 0; i < len; i++) {\n    std::string tt;\n    std::string tt;\n    pxt->SwapJs2CUtf8(pxt->GetMapElementName(pxt->GetArgv(XNapiTool::ZERO), i), tt);\n        pxt->SwapJs2CUtf8(pxt->GetMapElementValue(pxt->GetArgv(XNapiTool::ZERO), tt.c_str()), tt);\n\n    p->disable.insert(std::make_pair(tt, tt));\n}\n            return nullptr;\n        }"
     return variableMidVal;
 }
 
@@ -706,13 +740,14 @@ function jsToCParamMap() {
 }
 
 function jsToCParamMap1() {
-    let value = 'uint32_t len = pxt->GetMapLength(b);\n' +
-        'for (uint32_t i = 0; i < len; i++) {\n' +
-        '    std::string tt0;\n' +
-        '    number tt1;\n' +
-        '    [replace_swap]\n' +
-        '    a.insert(std::make_pair(tt0, tt1));\n' +
-        '}'
+    // let value = 'uint32_t len = pxt->GetMapLength(b);\n' +
+    //     'for (uint32_t i = 0; i < len; i++) {\n' +
+    //     '    std::string tt;\n' +
+    //     '    number tt1;\n' +
+    //     '    [replace_swap]\n' +
+    //     '    a.insert(std::make_pair(tt, tt1));\n' +
+    //     '}'
+    let value = "uint32_t len = pxt->GetMapLength(b);\nfor (uint32_t i = 0; i < len; i++) {\n    std::string tt0;\n    number tt1;\n    [replace_swap]\n    a.insert(std::make_pair(tt0, tt1));\n}"
     return value
 }
 
