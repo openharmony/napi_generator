@@ -155,13 +155,16 @@ function register(context, command) {
 				selectPath(globalPanel, message);
 			}
 		}, undefined, context.subscriptions);
-		let fn = re.getFileInPath(uri.fsPath);
-		let tt = re.match("([a-zA-Z_0-9]+.[a-zA-Z_0-9])", fn);
-		var result = {
-			msg: "selectinputScriptDir",
-			path: tt ? uri.fsPath : ""
-			}
-	    globalPanel.webview.postMessage(result);
+    // 路径有效性判断
+    if (uri.fsPath !== undefined) {
+      let fn = re.getFileInPath(uri.fsPath);
+      let tt = re.match("([a-zA-Z_0-9]+.[a-zA-Z_0-9])", fn);
+      var result = {
+        msg: "selectinputScriptDir",
+        path: tt ? uri.fsPath : ""
+      }
+      globalPanel.webview.postMessage(result);
+    }
 	});
 	return disposable;
 }
