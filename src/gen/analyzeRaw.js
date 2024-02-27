@@ -17,6 +17,7 @@ const fs = require('fs');
 const re = require("./tools/re");
 const { getLicense, checkOutBody } = require("./tools/tool");
 const { analyzeNamespace } = require("./analyze/namespace");
+const { NapiLog } = require("./tools/NapiLog");
 
 // 读取和解析.d.ts文件
 const filePath = '@ohos.test.d.ts';
@@ -72,13 +73,13 @@ function analyzeFileRaw(fn) {
         result.declareLicense.push(licenseData)
     }
 
-    let impordts = statements[1].getText();
+    // let impordts = statements[1].getText();
 
-    let ff = statements[1].getChildren();
-    let ffa = statements[1].getChildAt(1);
-    let ffb = statements[1].getChildCount();
-    let ffc = statements[1].getLastToken();
-    let xx = statements[1].getEnd();
+    // let ff = statements[1].getChildren();
+    // let ffa = statements[1].getChildAt(1);
+    // let ffb = statements[1].getChildCount();
+    // let ffc = statements[1].getLastToken();
+    // let xx = statements[1].getEnd();
 
     // let exportsInfo = statements[2].getText();
 
@@ -120,17 +121,20 @@ function analyzeRaw(statements, result) {
             data = interface[0]
             result = interface[1]
         }
-        return result;
-        // let functionMatch = analyzeMatchFunction(matchs, data, result)
-        // if (functionMatch != null) {
-        //     data = functionMatch[0]
-        //     result = functionMatch[1]
-        // }
+
+        let functionMatch = analyzeMatchFunction(matchs, data, result)
+        if (functionMatch != null) {
+            data = functionMatch[0]
+            result = functionMatch[1]
+        }
+        
         // if (oldData == data) {
-        //     NapiLog.logError("\nvvv 解析文件失败 vvv");
-        //     NapiLog.logError("[", data.substring(0, data.length > 64 ? 64 : data.length), "]");
+        //   NapiLog.logError("\nvvv 解析文件失败 vvv");
+        //   NapiLog.logError("[", data.substring(0, data.length > 64 ? 64 : data.length), "]");
         //     break;
         // }
+        return result;
+
     }
    return result
 }
