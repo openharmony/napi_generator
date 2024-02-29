@@ -15,10 +15,11 @@
 const re = require("../tools/re");
 const { EnumValueType, getLogErrInfo } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
-function generateEnum(name, data) {
+function generateEnum(name, data, inNamespace, nameSpaceName, toolNamespace) {
     let implH = ""
     let implCpp = ""
     let midInitEnum = ""
+    let midInitEnumDefine = ""
 
     if (data.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
         implH = `\nclass %s {\npublic:\n`.format(name, implH)
@@ -30,28 +31,29 @@ function generateEnum(name, data) {
     }
     for (let i in data.element) {
         let v = data.element[i]
-        if(midInitEnum == "") {                
-            midInitEnum += '    std::map<const char *, std::any> enumMap%s;\n'.format(name)
+        if(midInitEnumDefine == "") {                
+          midInitEnumDefine += 'std::map<const char *, std::any> enumMap%s;\n'.format(name)
         }
         
         if (data.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
             implH += `    static const std::string %s;\n`.format(v.name)
             implCpp += `\nconst std::string %s::%s = "%s";\n`.format(name, v.name, v.value)            
-            midInitEnum += '    enumMap%s["%s"] = "%s";\n'.format(name, v.name, v.value)
+           midInitEnum += '    %s%s::%senumMap%s["%s"] = "%s";\n'.format(inNamespace, nameSpaceName, toolNamespace, name, v.name, v.value)
         } else {
             if (v.value == '') {
                 v.value = 0
             }
             implH += `    %s = %s,\n`.format(v.name, v.value)
-            midInitEnum += '    enumMap%s["%s"] = %s;\n'.format(name, v.name, v.value)            
+            midInitEnum += '    %s%s::%senumMap%s["%s"] = %s;\n'.format(inNamespace, nameSpaceName, toolNamespace, name, v.name, v.value)        
         }
     }
-    midInitEnum += '    pxt->CreateEnumObject("%s", enumMap%s);\n'.format(name, name)
+    midInitEnum += '    pxt->CreateEnumObject("%s", %s%s::%senumMap%s);\n'.format(name, inNamespace, nameSpaceName, toolNamespace, name)
     implH += `};\n`
     let result = {
         implH: implH,
         implCpp: implCpp,
-        midInitEnum: midInitEnum
+        midInitEnum: midInitEnum,
+        midInitEnumDefine: midInitEnumDefine
     }
     return result
 }

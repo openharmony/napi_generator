@@ -103,7 +103,7 @@ function analyzeParams(funcName, values) {
                 checkParamOk = false;
             } 
             if (checkParamOk) {
-                result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type, "optional": optionalFlag})
+                result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type, "optional": optionalFlag, "realType": type})
                 if (type.indexOf("AsyncCallback") >= 0) {
                     funcType = FuncType.ASYNC
                 }

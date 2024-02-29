@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { getProperties, enumParamFunc, NodeSayHello, NodeSayHi } = require("./out/build/Release/napitest")
+const { getProperties, enumParamFunc, NodeSayHello, NodeSayHi, WindowType } = require("./out/build/Release/napitest")
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 const { consumers } = require("stream");
@@ -54,7 +54,7 @@ describe('test_Class', function () {
 describe('test_Function', function () {
     it('test enumParamFunc', function () {
         // function enumParamFunc(v0: boolean, v1: WindowType): number;
-        let ret = enumParamFunc(true, 12);
+        let ret = enumParamFunc(true, WindowType.TYPE_APP);
         assert.strictEqual(ret, 0);
     });
 });

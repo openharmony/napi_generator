@@ -100,17 +100,18 @@ function genExtendsRelation(data) {
 
 //生成module_middle.cpp、module.h、module.cpp
 function generateNamespace(name, data, inNamespace = "") {
-    let namespaceResult = { implH: "", implCpp: "", middleFunc: "", middleInit: "", declarationH: "", middleH: "" }
+    let namespaceResult = { implH: "", implCpp: "", middleFunc: "", middleInit: "", declarationH: "", middleH: "", middleInitEnumDef: "" }
     namespaceResult.middleInit += formatMiddleInit(inNamespace, name)
     genExtendsRelation(data)
     InterfaceList.push(data.interface)
     TypeList.push(data.type)
     EnumList.push(data.enum)
     CallFunctionList.push(data.callFunction)
-    enumNamespaceFunction(data, namespaceResult);  
+    let toolNamespace = getToolNamespaceFunc(inNamespace, name);  
+    enumNamespaceFunction(data, namespaceResult, inNamespace, name, toolNamespace); 
     for (let i in data.type) {
       let ii = data.type[i]
-      let result = generateType(ii.name, ii.body, inNamespace + name + "::")
+      let result = generateType(ii.name, ii.body, inNamespace + name + "::",inNamespace, name, toolNamespace)
       namespaceResult = getNamespaceResult(result, namespaceResult)   
     }
     for (let i in data.interface) {
@@ -145,7 +146,7 @@ function generateNamespace(name, data, inNamespace = "") {
         flag = true;
     }
     return generateResult(name, namespaceResult.implH, namespaceResult.implCpp, namespaceResult.middleFunc,
-        namespaceResult.middleInit, namespaceResult.middleH, flag)
+        namespaceResult.middleInit, namespaceResult.middleH, namespaceResult.middleInitEnumDef, flag)
 }
 
 function genNamespaceFunc(data, i, namespaceResult, inNamespace, name) {
@@ -180,11 +181,12 @@ function getToolNamespaceFunc(inNamespace, name) {
     return toolNamespace;
 }
 
-function enumNamespaceFunction(data, namespaceResult) {
-  let result = generateEnumResult(data);
+function enumNamespaceFunction(data, namespaceResult, inNamespace, nameSpaceName, toolNamespace) {
+  let result = generateEnumResult(data, inNamespace, nameSpaceName, toolNamespace);
   namespaceResult.implH += result.implH;
   namespaceResult.implCpp += result.implCpp;
   namespaceResult.middleInit += result.middleInit;
+  namespaceResult.middleInitEnumDef += result.midInitEnumDefine
 }
 
 function getNamespaceResult(subResult, returnResult) {    
@@ -195,33 +197,40 @@ function getNamespaceResult(subResult, returnResult) {
     returnResult.declarationH += subResult.declarationH
     returnResult.middleH += subResult.middleH
 
+    if (subResult.midInitEnumDefine !== undefined) {
+      returnResult.middleInitEnumDef += subResult.midInitEnumDefine
+    }
+  
     return returnResult
 }
 
-function generateEnumResult(data) {
+  function generateEnumResult(data, inNamespace, nameSpaceName, toolNamespace) {
     let resultEnum = {
         implH: "",
         implCpp: "",
-        middleInit: ""
+        middleInit: "",
+        midInitEnumDefine: ""
     }
 
     for (let i in data.enum) {
         let enumm = data.enum[i]
-        let result = generateEnum(enumm.name, enumm.body)
+        let result = generateEnum(enumm.name, enumm.body, inNamespace, nameSpaceName, toolNamespace)
         resultEnum.implH += result.implH
         resultEnum.implCpp += result.implCpp
         resultEnum.middleInit += result.midInitEnum
+        resultEnum.midInitEnumDefine += result.midInitEnumDefine
     }
     return resultEnum
 }
 
-function generateResult(name, implH, implCpp, middleFunc, middleInit, middleH, flag) {
+function generateResult(name, implH, implCpp, middleFunc, middleInit, middleH, middleInitEnumDef, flag) {
   let result
+  let middleEnumDefine = middleInitEnumDef.indexOf('undefined') >= 0? '' : middleInitEnumDef
   if (flag) {
     result = {
       implH: `\nnamespace %s {\nnamespace %s_interface {%s\n}\n}`.format(name, name, implH),
       implCpp: `\nnamespace %s {\nnamespace %s_interface {%s\n}\n}`.format(name, name, implCpp),
-      middleBody: `\nnamespace %s {\nnamespace %s_interface {%s\n}\n}`.format(name, name, middleFunc),
+      middleBody: `\nnamespace %s {\nnamespace %s_interface {\n%s%s\n}\n}`.format(name, name, middleEnumDefine, middleFunc),
       middleInit: middleInit,
       middleH: `\nnamespace %s {\nnamespace %s_interface {%s\n}\n}`.format(name, name, middleH)
     }
@@ -229,7 +238,7 @@ function generateResult(name, implH, implCpp, middleFunc, middleInit, middleH, f
         result = {
         implH: `\nnamespace %s {%s\n}`.format(name, implH),
         implCpp: `\nnamespace %s {%s}`.format(name, implCpp),
-        middleBody: `\nnamespace %s {%s}`.format(name, middleFunc),
+        middleBody: `\nnamespace %s {\n%s%s}`.format(name, middleEnumDefine, middleFunc),
         middleInit: middleInit,
         middleH: `\nnamespace %s {%s\n}`.format(name, middleH)
     }
