@@ -18,13 +18,14 @@ const { NapiLog } = require("../tools/NapiLog");
 const { addUniqObj2List } = require("../tools/tool");
 const re = require("../tools/re");
 
-function getHDefineOfType(data, name, type, variable) {
+function getHDefineOfType(data, name, type, variable, inNamespace, nameSpaceName, toolNamespace) {
   if (typeof(type) === 'object') {
       // 字符常量转化
-      let result = generateTypeEnum(name, data)
+      let result = generateTypeEnum(name, data, inNamespace, nameSpaceName, toolNamespace)
       variable.hDefine += result.implH
       variable.cppDefine += result.implCpp
       variable.middleInitDefine += result.midInitEnum
+      variable.midInitEnumDefine += result.midInitEnumDefine
   } else  if (type.indexOf("|") >= 0) {
     variable.hDefine += "\n   typedef std::any %s;".format(name)
   } else if (type == "string") {
@@ -43,27 +44,29 @@ function getHDefineOfType(data, name, type, variable) {
   }
 }
 
-function generateTypeEnum(name, data) {
+function generateTypeEnum(name, data, inNamespace, nameSpaceName, toolNamespace) {
   let implH = ""
   let implCpp = ""
   let midInitEnum = ""
+  let midInitEnumDefine = ""
 
   implH = `\nclass %s {\npublic:\n`.format(name, implH)
   for (let i in data.element) {
       let v = data.element[i]
-      if(midInitEnum == "") {                
-          midInitEnum += '    std::map<const char *, std::any> enumMap%s;\n'.format(name)
+      if(midInitEnumDefine == "") {                
+        midInitEnumDefine += 'std::map<const char *, std::any> enumMap%s;\n'.format(name)
       }
       implH += `    static const std::string %s;\n`.format(v.name)
-      implCpp += `\nconst std::string %s::%s = "%s";\n`.format(name, v.name, v.value)            
-      midInitEnum += '    enumMap%s["%s"] = "%s";\n'.format(name, v.name, v.value)
+      implCpp += `\nconst std::string %s::%s = "%s";\n`.format(name, v.name, v.value)
+      midInitEnum += '    %s%s::%senumMap%s["%s"] = "%s";\n'.format(inNamespace, nameSpaceName, toolNamespace, name, v.name, v.value)
   }
-  midInitEnum += '    pxt->CreateEnumObject("%s", enumMap%s);\n'.format(name, name)
+  midInitEnum += '    pxt->CreateEnumObject("%s", %s%s::%senumMap%s);\n'.format(name, inNamespace, nameSpaceName, toolNamespace, name)
   implH += `};\n`
   let result = {
       implH: implH,
       implCpp: implCpp,
-      midInitEnum: midInitEnum
+      midInitEnum: midInitEnum,
+      midInitEnumDefine: midInitEnumDefine
   }
   return result
 }
@@ -211,19 +214,21 @@ function getSelfNs(inNamespace) {
     return selfNs    
 }
 
-function generateType(name, data, inNamespace) {
+function generateType(name, data, inNamespace, inNameSpaceEnum, nameSpaceName, toolNamespace) {
     let result = {
       implH: '',
       implCpp: '',
       middleBody: '',
       middleInit: '',
       declarationH:'',
-      middleH: ''
+      middleH: '',
+      midInitEnumDefine: ''
     }
-    let resultConnect = connectResult(name, data)
+    let resultConnect = connectResult(name, data, inNameSpaceEnum, nameSpaceName, toolNamespace)
     let implH = resultConnect[1]
     let implCpp = resultConnect[2]
     let middleInit = resultConnect[3]
+    let midInitEnumDefine = resultConnect[4]
     let selfNs = ""
     selfNs = getSelfNs(inNamespace);
     if (implH.indexOf("typedef") > 0) {
@@ -233,7 +238,8 @@ function generateType(name, data, inNamespace) {
         middleBody: '',
         middleInit: middleInit,
         declarationH:'',
-        middleH: ''
+        middleH: '',
+        midInitEnumDefine: midInitEnumDefine
       }
     } else if (implCpp !== '' && middleInit !== '') {
       result = {
@@ -242,7 +248,8 @@ function generateType(name, data, inNamespace) {
         middleBody: '',
         middleInit: middleInit,
         declarationH:'',
-        middleH: ''
+        middleH: '',
+        midInitEnumDefine: midInitEnumDefine
       }
     } else {
       result = {
@@ -255,7 +262,8 @@ function generateType(name, data, inNamespace) {
         middleInit: middleInit,
         declarationH: `
         struct %s;\r`.format(name),
-        middleH: ''
+        middleH: '',
+        midInitEnumDefine: ''
       }
     }
     return result
@@ -268,15 +276,17 @@ function getAllPropties(interfaceBody, properties) {
     }
 } 
 
-function connectResult(name, data) {
+function connectResult(name, data, inNamespace, nameSpaceName, toolNamespace) {
     let implH = ""
     let implCpp = ""
     let middleFunc = ""
     let middleInit = ""
+    let midInitEnumDefine = ""
     let variable = {
         hDefine: "",
         cppDefine: "",
-        middleInitDefine: ""
+        middleInitDefine: "",
+        midInitEnumDefine: ""
     }
     if (Object.prototype.hasOwnProperty.call(data, "value")) {
       data.allProperties = {values:[]}
@@ -287,12 +297,13 @@ function connectResult(name, data) {
       }
     } else {
       let type = data
-      getHDefineOfType(data, name, type, variable)
+      getHDefineOfType(data, name, type, variable, inNamespace, nameSpaceName, toolNamespace)
     }
     implH += variable.hDefine
     implCpp += variable.cppDefine
     middleInit += variable.middleInitDefine
-    return [middleFunc, implH, implCpp, middleInit]
+    midInitEnumDefine += variable.midInitEnumDefine
+    return [middleFunc, implH, implCpp, middleInit, midInitEnumDefine]
 }
 
 module.exports = {

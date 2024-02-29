@@ -79,6 +79,7 @@ function getFuncParaType(v, interfaceName, data, results) {
         let index = enumIndex(parameter, results)
         if (results.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
           v["type"] = v["type"].replace(parameter, "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
+          v["realType"] = v["type"]
         } else if (results.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
           v["type"] = v["type"].replace(parameter, "string")
         } else {
@@ -95,6 +96,7 @@ function getFuncParaType(v, interfaceName, data, results) {
 
     if (parameter.indexOf("number") >= 0) {
         v["type"] = v["type"].replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
+        v["realType"] = v["type"]
     }
 
     // type的处理
@@ -249,7 +251,7 @@ function analyzeFunction(data, isStatic, name, values, ret, results, interfaceNa
           let paramAsync = paramType.substring(14, paramType.length - 1)
           paramType = paramType.replace(paramAsync, paramTypeVal);
         }
-        values.push({name: "promise", optional: false, type: paramType})
+        values.push({name: "promise", optional: false, type: paramType, realType: paramType})
         ret = "void" // 返回值由Promise改为void，与AsyncCallback接口保持一致
     }
     for (let j in values) {

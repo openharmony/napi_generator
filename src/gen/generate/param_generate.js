@@ -76,14 +76,34 @@ function jsToC(dest, napiVn, type, enumType = 0, optional) {
     if (type.indexOf("|") >= 0) {
         return unionTempleteFunc(dest, napiVn, type, optional)
     } else if (type === "string") {
-        if (napiVn.indexOf("GetValueProperty") >= 0) {
-            let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if (tnv%d !=  nullptr) {pxt->SwapJs2CUtf8(tnv%d, %s);}\n`
-                .format(lt, napiVn, lt, lt, dest)
-        } else {
-            return "pxt->SwapJs2CUtf8(%s, %s);".format(napiVn, dest)
-        }           
-    } else if (type.substring(type.length - 2) === "[]") {
+      let verifyEnumValue = '';
+      let strlt = LenIncrease.getAndIncrease()
+      if (enumType) {
+        // 对枚举是string的值做校验
+        verifyEnumValue = `
+    bool isStrValueInMap%s = false;
+    for (const auto& pair : enumMap%s) {
+      const char* charPtr = std::any_cast<const char*>(pair.second);
+      std::string value = charPtr;
+      if (value == %s) {
+        isStrValueInMap%s = true;
+        break;
+      }
+    }
+    if (!isStrValueInMap%s) {
+      napi_throw_error(env, nullptr, "enum value is wrong!");
+      return nullptr;
+    }`.format(strlt, enumType, dest, strlt, strlt)
+      } 
+
+      if (napiVn.indexOf("GetValueProperty") >= 0) {
+        let lt = LenIncrease.getAndIncrease()
+        return `napi_value tnv%d = %s;\n    if (tnv%d !=  nullptr) {pxt->SwapJs2CUtf8(tnv%d, %s);}\n`
+            .format(lt, napiVn, lt, lt, dest)
+      } else {
+        return "pxt->SwapJs2CUtf8(%s, %s);".format(napiVn, dest) + verifyEnumValue
+      }         
+   } else if (type.substring(type.length - 2) === "[]") {
         return arrTemplete(dest, napiVn, type);
     } else if (type.substring(0, 12) === "NUMBER_TYPE_") {
         return numTempleteFunc (enumType, napiVn, type, dest);
@@ -298,13 +318,29 @@ function arrTemplete(dest, napiVn, type) {
 
 function numTempleteFunc(enumType, napiVn, type, dest) {
     if (enumType) {
+      let strlt = LenIncrease.getAndIncrease()
+        // 对传入的枚举值做校验
+        let verifyEnumValue = `
+    bool isValueInMap%s = false;
+    for (const auto& pair : enumMap%s) {
+      int value = std::any_cast<int>(pair.second);
+      if (value == (int)%s) {
+        isValueInMap%s = true;
+        break;
+      }
+    }
+    if (!isValueInMap%s) {
+      napi_throw_error(env, nullptr, "enum value is wrong!");
+      return nullptr;
+    }`.format(strlt, enumType, dest, strlt, strlt)
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
-            return `napi_value tnv%d = %s;\n    if (tnv%d !=  nullptr) {NUMBER_JS_2_C_ENUM(tnv%d, %s, %s, %s);}\n`
-            .format(lt, napiVn, lt, lt, type, dest, enumType)
+            return `napi_value tnv%d = %s;\n    if (tnv%d !=  nullptr) {NUMBER_JS_2_C_ENUM(tnv%d, %s, %s, %s);}\n` 
+            .format(lt, napiVn, lt, lt, type, dest, enumType) + verifyEnumValue
         } else {
-            return `NUMBER_JS_2_C_ENUM(%s, %s, %s, %s);`.format(napiVn, type, dest, enumType)
-        } 
+            return `NUMBER_JS_2_C_ENUM(%s, %s, %s, %s);`.format(napiVn, type, dest, enumType) + verifyEnumValue
+        }
+     
     } else {
         if (napiVn.indexOf("GetValueProperty") >= 0) {
             let lt = LenIncrease.getAndIncrease()
@@ -877,7 +913,11 @@ function isArrayType(type) {
 }
 
 function getValueCheckout(funcValue, param, inParamName, p, cType) {
-    let valueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(getConstNum(p)), funcValue.type) + "\n    "
+    let enumType = 0;
+    if (funcValue.type !== funcValue.realType) {
+      enumType = funcValue.realType;
+    }
+    let valueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(getConstNum(p)), funcValue.type, enumType) + "\n    "
     if (funcValue.optional) {
         valueCheckout = "if (pxt->GetArgc() > %d) {\n        vio->in%d = new %s;\n        "
             .format(getConstNum(p), p, cType) + valueCheckout + "}\n    "
@@ -894,7 +934,21 @@ function paramGenerateUnion(type, param, p, name) {
     param.valueDefine += "%sstd::any &%s".format(param.valueDefine.length > 0 ? ", " : "", name)
 }
 
+function isEnumTypeFunc(cType, funcValue) {
+    if (cType !== funcValue.realType && funcValue.type !== funcValue.realType && funcValue.type !== "string") {
+      return true;
+    } else {
+      return false;
+    }
+}
+
+
 function paramGenerateCommon(p, cType, funcValue, param, modifiers, inParamName) {
+    // string类型和number类型枚举处理时才走该分支
+    if (isEnumTypeFunc(cType, funcValue)) {
+      cType = funcValue.realType
+    }
+ 
     param.valueIn += funcValue.optional ? "\n    %s* in%d = nullptr;".format(cType, p)
                                             : "\n    %s in%d;".format(cType, p)
     if (TypeList.getValue(cType)) {

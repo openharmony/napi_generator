@@ -84,6 +84,7 @@ function analyzeInterface(data, rsltInterface = null, results, interfaceName = '
             result.value.push({
                 name: valueName,
                 type: valueType,
+                realType: valueType,
                 optional: optionalFlag
             })
         }
