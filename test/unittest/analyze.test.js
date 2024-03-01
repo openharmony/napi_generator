@@ -207,8 +207,8 @@ function partOfFunctionTwo() {
         let data = "if_direct(v1: string, v2: boolean): string;";
         let ret = analyzeFunction(data, false, `if_direct`, "v1: string, v2: boolean", "asdfgh");
         let retJson = JSON.stringify(ret);
-        let str1 = "{\"name\":\"v1\",\"type\":\"string\",\"optional\":false},";
-        let str2 = "{\"name\":\"v2\",\"type\":\"boolean\",\"optional\":false}";
+        let str1 = "{\"name\":\"v1\",\"type\":\"string\",\"optional\":false,\"realType\":\"string\"},";
+        let str2 = "{\"name\":\"v2\",\"type\":\"boolean\",\"optional\":false,\"realType\":\"boolean\"}";
         let retValue = retJson.search(str1 + str2)
         assert.strictEqual(retValue > 0, true);
         let retName = retJson.search("\"name\":\"if_direct\"");
@@ -221,8 +221,8 @@ function partOfFunctionTwo() {
         let data = "if_async(v1: string, cb: AsyncCallback<string>): string;";
         let ret = analyzeFunction(data, false, `if_async`, "v1: string, cb: AsyncCallback<string>", "qwerty");
         let retJson = JSON.stringify(ret)
-        let str1 = "{\"name\":\"v1\",\"type\":\"string\",\"optional\":false},";
-        let str2 = "{\"name\":\"cb\",\"type\":\"AsyncCallback<string>\",\"optional\":false}";
+        let str1 = "{\"name\":\"v1\",\"type\":\"string\",\"optional\":false,\"realType\":\"string\"},";
+        let str2 = "{\"name\":\"cb\",\"type\":\"AsyncCallback<string>\",\"optional\":false,\"realType\":\"AsyncCallback<string>\"}";
         let retValue = retJson.search(str1 + str2)
         assert.strictEqual(retValue > 0, true);
         let retName = retJson.search("\"name\":\"if_async\"")
@@ -258,15 +258,15 @@ function partOfInterface(correctResult) {
         let valueArray = retJson.substring(retJson.indexOf("\[") + 1, retJson.indexOf("\]")).split("}");
         let numContain = valueArray[0].indexOf("\"name\":\"num1\",\"type\":\"NUMBER_TYPE_");
         assert.strictEqual(numContain > 0, true);
-        assert.strictEqual(valueArray[1], ",{\"name\":\"str1\",\"type\":\"string\",\"optional\":false");
-        assert.strictEqual(valueArray[2], ",{\"name\":\"bool1\",\"type\":\"boolean\",\"optional\":false");
+        assert.strictEqual(valueArray[1], ",{\"name\":\"str1\",\"type\":\"string\",\"realType\":\"string\",\"optional\":false");
+        assert.strictEqual(valueArray[2], ",{\"name\":\"bool1\",\"type\":\"boolean\",\"realType\":\"boolean\",\"optional\":false");
         let numArrayCon = valueArray[3].indexOf("\"name\":\"nums\",\"type\":\"Array<NUMBER_TYPE_");
         assert.strictEqual(numArrayCon > 0, true);
-        assert.strictEqual(valueArray[4], ",{\"name\":\"strs\",\"type\":\"Array<string>\",\"optional\":false");
-        assert.strictEqual(valueArray[5], ",{\"name\":\"bools\",\"type\":\"Array<boolean>\",\"optional\":false");
+        assert.strictEqual(valueArray[4], ",{\"name\":\"strs\",\"type\":\"Array<string>\",\"realType\":\"Array<string>\",\"optional\":false");
+        assert.strictEqual(valueArray[5], ",{\"name\":\"bools\",\"type\":\"Array<boolean>\",\"realType\":\"Array<boolean>\",\"optional\":false");
         let numMapCon = valueArray[6].indexOf("\"name\":\"mapNum\",\"type\":\"Map<string,NUMBER_TYPE_");
         assert.strictEqual(numMapCon > 0, true);
-        assert.strictEqual(valueArray[7], ",{\"name\":\"mapStr\",\"type\":\"Map<string,string>\",\"optional\":false");
+        assert.strictEqual(valueArray[7], ",{\"name\":\"mapStr\",\"type\":\"Map<string,string>\",\"realType\":\"Map<string,string>\",\"optional\":false");
         let mapNumCon = retJson.indexOf("\"name\":\"mapNum2\",\"type\":\"{[key:string]:NUMBER_TYPE_");
         assert.strictEqual(mapNumCon > 0, true);
         let mapStrCon = retJson.indexOf("\"name\":\"mapStr2\",\"type\":\"{[key:string]:string}");
@@ -276,8 +276,8 @@ function partOfInterface(correctResult) {
         let asyncExit = retJson.search("\"name\":\"if_async\",\"type\":4")
         assert.strictEqual(asyncExit > 0, true);
         let asyncArray = retJson.substring(retJson.lastIndexOf("\[") + 1, retJson.lastIndexOf("\]")).split("}");
-        assert.strictEqual(asyncArray[0], "{\"name\":\"v1\",\"type\":\"string\",\"optional\":false");
-        assert.strictEqual(asyncArray[1], ",{\"name\":\"cb\",\"type\":\"AsyncCallback<string>\",\"optional\":false");
+        assert.strictEqual(asyncArray[0], "{\"name\":\"v1\",\"type\":\"string\",\"optional\":false,\"realType\":\"string\"");
+        assert.strictEqual(asyncArray[1], ",{\"name\":\"cb\",\"type\":\"AsyncCallback<string>\",\"optional\":false,\"realType\":\"AsyncCallback<string>\"");
         assert.strictEqual(asyncArray[2], "],\"ret\":\"string\",\"isStatic\":false");
     });
 }
@@ -321,7 +321,7 @@ function partOfNamespace(correctResult) {
         let qiePianStart = interResult.lastIndexOf("function") - 1;
         let qiepianEnd = interResult.lastIndexOf("parentNameList")-2;
         let interFun = interResult.substring(qiePianStart, qiepianEnd);
-        let interValue = "\"value\":[{\"name\":\"v1\",\"type\":\"string\",\"optional\":false}],";
+        let interValue = "\"value\":[{\"name\":\"v1\",\"type\":\"string\",\"optional\":false,\"realType\":\"string\"}],";
         let interRet = "\"ret\":\"string\","
         let interIsStatic = "\"isStatic\":false\}]"
         let funcResult = "\"function\":[{\"name\":\"fix\",\"type\":1," + interValue + interRet + interIsStatic;
@@ -344,7 +344,7 @@ function partOfNamespace(correctResult) {
         let qiePianStart = nameResult.lastIndexOf("\"function\"");
         let funcResult = nameResult.substring(qiePianStart, nameResult.lastIndexOf("\"interface\"") - 2);
         assert.strictEqual(funcResult.search("\"name\":\"fun1\",\"type\":1") > 0, true)
-        assert.strictEqual(funcResult.search("{\"name\":\"v\",\"type\":\"string\",\"optional\":false}") > 0, true)
+        assert.strictEqual(funcResult.search("{\"name\":\"v\",\"type\":\"string\",\"optional\":false,\"realType\":\"string\"}") > 0, true)
     });
 
     partOfNamespaceTwo(correctResult);

@@ -46,6 +46,12 @@ declare namespace napitest {
         STATE_TEST_END,
     }
 
+    export enum HttpStatus {
+        STATUS0 = 0,
+        STATUS1 = 500,
+        STATUS2 = 503,
+    }
+
     function fun1(v0: string, v1: GrantStatus): GrantStatus;
     function fun2(v0: number, v1: LaunchReason): LaunchReason;
     function fun3(v0: string, v1: Action): Action;
@@ -57,6 +63,7 @@ declare namespace napitest {
     function fun9(v0: PlayingTest): string;
     function fun10(v: TestStatus): string;    
     function fun11(v: EnumString): string;
+    function fun12(v: HttpStatus): number;
 
     //function fun10(v: TestStatus): string;
     /*function fun7(v0: LaunchReason[], v1: LaunchReason): number;*/

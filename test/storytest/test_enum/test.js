@@ -107,4 +107,75 @@ describe('enum second part', function () {
         let ret = test.fun11(test.EnumString.ENUM_SEARCH);
         assert.strictEqual(ret, '');
     })
+
+    // function fun12(v: HttpStatus): number;
+    it('test fun12', function () {
+        let ret = test.fun12(test.HttpStatus.STATUS0);
+        assert.strictEqual(ret, 0);
+    });
 });
+
+// Input exception testing
+describe('enum third part', function () {
+    // function fun1(v0: string, v1: GrantStatus): GrantStatus;
+    it('test fun1 exception ', function () {
+        let ret2 = false;
+        try {
+            let ret = fun1('aaaa', "bbbb");
+        } catch (err) {
+            ret2 = true;
+            console.info("err: "+ err)
+        }
+        assert.strictEqual(ret2, true)
+    });
+
+    // function fun2(v0: number, v1: LaunchReason): LaunchReason;
+    it('test fun2 exception', function () {
+        let ret3 = false;
+        try {
+            let ret = fun2(18, 9);
+        } catch (err) {
+            ret3 = true;
+            console.info("err: "+ err)
+        }
+        assert.strictEqual(ret3, true)
+    });
+
+    // function fun3(v0: string, v1: Action): Action;
+    it('test fun3 exception', function () {
+        let ret2 = false;
+        try {
+            let ret = fun3('ggg', 'ccc');
+        } catch (err) {
+            ret2 = true;
+            console.info("err: "+ err)
+        }
+        assert.strictEqual(ret2, true)
+    });
+
+    // function fun4(v0: number, v1: PlayingState): PlayingState;
+    it('test fun4 exception', function () {
+        let ret3 = false;
+        try {
+            let ret = fun4(18, 8);
+        } catch (err) {
+            ret3 = true;
+            console.info("err: "+ err)
+        }
+        assert.strictEqual(ret3, true)
+    });
+
+    // function fun12(v: HttpStatus): number;
+    it('test fun12 exception', function () {
+        let ret3 = false;
+        try {
+            let ret = test.fun12(2);
+        } catch (err) {
+            ret3 = true;
+            console.info("err: "+ err)
+        }
+        assert.strictEqual(ret3, true)
+    });
+
+})
+

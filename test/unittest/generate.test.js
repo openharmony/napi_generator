@@ -699,12 +699,12 @@ function jsToCParamArray() {
 function jsToCParamMap() {
     let value = 'uint32_t len = pxt->GetMapLength(b);\n' +
         'for (uint32_t i = 0; i < len; i++) {\n' +
-        '    std::string tt;\n' +
+        '    std::string tt1;\n' +
         '    bool tt1;\n' +
-        '    pxt->SwapJs2CUtf8(pxt->GetMapElementName(b, i), tt);\n' +
-        '        tt1 = pxt->SwapJs2CBool(pxt->GetMapElementValue(b, tt.c_str()));\n' +
+        '    pxt->SwapJs2CUtf8(pxt->GetMapElementName(b, i), tt1);\n' +
+        '        tt1 = pxt->SwapJs2CBool(pxt->GetMapElementValue(b, tt1.c_str()));\n' +
         '\n' +
-        '    a.insert(std::make_pair(tt, tt1));\n' +
+        '    a.insert(std::make_pair(tt1, tt1));\n' +
         '}'
     return value
 }
@@ -717,7 +717,8 @@ function jsToCParamMap1() {
     //     '    [replace_swap]\n' +
     //     '    a.insert(std::make_pair(tt, tt1));\n' +
     //     '}'
-    let value = "uint32_t len = pxt->GetMapLength(b);\nfor (uint32_t i = 0; i < len; i++) {\n    std::string tt0;\n    number tt1;\n    [replace_swap]\n    a.insert(std::make_pair(tt0, tt1));\n}"
+    // let value = "uint32_t len = pxt->GetMapLength(b);\nfor (uint32_t i = 0; i < len; i++) {\n    std::string tt0;\n    number tt1;\n    [replace_swap]\n    a.insert(std::make_pair(tt0, tt1));\n}"
+    let value = "uint32_t len = pxt->GetMapLength(b);\nfor (uint32_t i = 0; i < len; i++) {\n    std::string tt1;\n    number tt1;\n    [replace_swap]\n    a.insert(std::make_pair(tt1, tt1));\n}"
     return value
 }
 
@@ -1305,7 +1306,7 @@ function paramGenerateAndAssert(dataType) {
         interface: [],
         namespace: []
     }
-    let funcValue = { name: "v", type: dataType, optional: false }
+    let funcValue = { name: "v", type: dataType, optional: false, realType: dataType }
     if (null != data) {
         paramGenerate(0, funcValue, param, data)
     } else {
