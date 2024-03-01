@@ -115,7 +115,7 @@ describe('enum second part', function () {
     });
 });
 
-// »Î≤Œ“Ï≥£≤‚ ‘
+// Input exception testing
 describe('enum third part', function () {
     // function fun1(v0: string, v1: GrantStatus): GrantStatus;
     it('test fun1 exception ', function () {
@@ -176,6 +176,6 @@ describe('enum third part', function () {
         }
         assert.strictEqual(ret3, true)
     });
-    
+
 })
 
