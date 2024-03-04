@@ -65,8 +65,7 @@ declare namespace napitest {
     function fun11(v: EnumString): string;
     function fun12(v: HttpStatus): number;
 
-    //function fun10(v: TestStatus): string;
-    /*function fun7(v0: LaunchReason[], v1: LaunchReason): number;*/
+    /*function fun7(v0: LaunchReason[], v1: LaunchReason): number;  待支持*/
 
     // 数值型枚举
     export enum TestStatus
