@@ -113,7 +113,7 @@ function c2JsForEnum(deep, type, value, dest, propertyName) {
     return result
 }
 
-function cToJs(value, type, dest, deep = 1, optional) {
+function cToJs(value, type, dest, deep = 1, optional, enumType = 0) {
     var propertyName = delPrefix(value);
     if (type === null || type === undefined) {
         NapiLog.logError("type is invalid!")
@@ -144,7 +144,11 @@ function cToJs(value, type, dest, deep = 1, optional) {
         return mapTempleteFunc(type, deep, dest, value)
     }
     else if (type.substring(0, 12) === "NUMBER_TYPE_") {
-        return `%s = NUMBER_C_2_JS(pxt, %s);\n`.format(dest, value.replace("[replace]", deep - 2))  
+        if (enumType) {
+            return c2JsForRetEnum(enumType, value, deep, dest);
+        } else {
+            return `%s = NUMBER_C_2_JS(pxt, %s);\n`.format(dest, value.replace("[replace]", deep - 2))
+        }  
     } 
     else if (type === "any") {
         return anyTempleteFunc(value)
@@ -156,6 +160,28 @@ function cToJs(value, type, dest, deep = 1, optional) {
         NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n. `
             .format(value, type, dest), getLogErrInfo());
     }
+}
+
+function c2JsForRetEnum(enumType, value, deep, dest) {
+    let retEnum = `std::underlying_type<%s>::type enumType;
+    if (typeid(enumType) == typeid(uint32_t)) {
+        uint32_t uintValue = static_cast<uint32_t>(%s);
+        %s = NUMBER_C_2_JS(pxt, uintValue);
+    } else if (typeid(enumType) == typeid(int32_t)) {
+        int32_t intValue = static_cast<int32_t>(%s);
+        %s = NUMBER_C_2_JS(pxt, intValue);
+    } else if (typeid(enumType) == typeid(int64_t)) {
+        int64_t intValue = static_cast<int64_t>(%s);
+        %s = NUMBER_C_2_JS(pxt, intValue);
+    } else if (typeid(enumType) == typeid(double_t)) {
+        double_t doubleValue = static_cast<double_t>(%s);
+        %s = NUMBER_C_2_JS(pxt, doubleValue);
+    } else {
+        napi_throw_error(env, nullptr, "enum return value is wrong!");
+        return nullptr;
+    }`.format(enumType, value.replace("[replace]", deep - 2), dest, value.replace("[replace]", deep - 2), dest,
+        value.replace("[replace]", deep - 2), dest, value.replace("[replace]", deep - 2), dest);
+    return retEnum;
 }
 
 function objectTempleteFuncReturn(value) {
@@ -777,6 +803,7 @@ function returnArrayGen(type, param, returnInfo, modifiers) {
 
 function returnGenerateEnum(data, returnInfo, param) {
     let type = returnInfo.type
+    let enumType = returnInfo.type
     let index = enumIndex(type, data)
     let modifiers = returnInfo.optional ? "*" : "&"
     if (data.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
@@ -788,14 +815,14 @@ function returnGenerateEnum(data, returnInfo, param) {
             .format(type), getLogErrInfo());
         return
     }
-    param.valuePackage = cToJs("vio->out", type, "result")
+    param.valuePackage = cToJs("vio->out", type, "result", 1, returnInfo.optional, enumType)
     if (type === "string") {
         param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;\n"
         param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     }
     else if (type.substring(0, 12) === "NUMBER_TYPE_") {
-        param.valueOut = type + " out;\n"
-        param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
+        param.valueOut = enumType + " out;\n"
+        param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", enumType, modifiers)
     }
 }
 
