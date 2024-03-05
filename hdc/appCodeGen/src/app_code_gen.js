@@ -45,7 +45,7 @@ let fileNames = ops.filename;
 // var imports = ops.imports;
 if (fileNames == null) {
     NapiLog.logInfo("fileNames cannot be empty!");
-} else if (fileNames != '') {
+} else if (fileNames !== '') {
     readFiles();
 }
 
