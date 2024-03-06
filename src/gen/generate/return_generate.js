@@ -108,7 +108,7 @@ function cToJs(value, type, dest, deep = 1) {
         let ifl = EnumList.getValue(type)
         let type2 = ifl[0].type
         let enumCtoJsStr = cToJs("enumInt%d".format(lt), type2, "tnv%d".format(lt), deep + 1)
-        result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) + "int enumInt%d = %s;\n".format(lt, value) + 
+        result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) + "int enumInt%d = (int)%s;\n".format(lt, value) + 
                 enumCtoJsStr + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
                     .format(dest, propertyName, lt)
         return result
@@ -169,7 +169,7 @@ function unionTempleteFunc(value, type, dest){
 
 function checkArrayParamType(type) {
     let arrayType
-    if (type.substring(type.length - 2) == "[]") {
+    if (type.substring(type.length - 2) === "[]") {
         arrayType = getArrayTypeTwo(type)
     }
     else {
@@ -278,7 +278,7 @@ function mapInterface(value, lt, tnv, mapType) {
             interfaceFun += `pxt->SetMapElement(result_obj, tnv_%s_name, tnv_%s);\n`
                 .format(interfaceValue[i].name, interfaceValue[i].name, interfaceValue[i].name)
         }
-        else if (interfaceValue[i].type == 'boolean') {
+        else if (interfaceValue[i].type === 'boolean') {
             interfaceVarName += `const char *tnv_%s_name;
                 napi_value tnv_%s = nullptr;\n`.format(interfaceValue[i].name, interfaceValue[i].name)
             interfaceVar += `tnv_%s_name = "%s";
@@ -333,7 +333,7 @@ function mapTempleteMap(mapType, tnvdef, lt) {
             pxt->SetMapElement(tnv%d, tt%d, tt%d);
         }`.format(lt, lt + 2, lt + 3, lt + 2, lt + 3, lt + 1, lt + 2, lt + 3))
     }
-    else if (mapType[2] == "boolean") {
+    else if (mapType[2] === "boolean") {
         ret = tnvdef.replaceAll("[calc_out]", `tnv%d = i->first.c_str();
         for (auto j = i->second.begin(); j != i->second.end(); j++) {
             const char *tt%d;
@@ -343,7 +343,7 @@ function mapTempleteMap(mapType, tnvdef, lt) {
             pxt->SetMapElement(tnv%d, tt%d, tt%d);
         }`.format(lt, lt + 2, lt + 3, lt + 2, lt + 3, lt + 1, lt + 2, lt + 3))
     }
-    if (mapType[2].substring(0, 12) == "NUMBER_TYPE_") {
+    if (mapType[2].substring(0, 12) === "NUMBER_TYPE_") {
         ret = tnvdef.replaceAll("[calc_out]", `tnv%d = i->first.c_str();
         for (auto j = i->second.begin(); j != i->second.end(); j++) {
             const char *tt%d;
@@ -358,7 +358,7 @@ function mapTempleteMap(mapType, tnvdef, lt) {
 
 function mapTempleteArray(mapType, tnvdef, lt) {
     let ret
-    if (mapType[3] == "string") {
+    if (mapType[3] === "string") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
         pxt->CreateArray(tnv%d);
         tnv%d = (i -> first).c_str();
@@ -367,7 +367,7 @@ function mapTempleteArray(mapType, tnvdef, lt) {
             tnv%d = pxt->SwapC2JsUtf8(i->second[j].c_str());
             pxt->SetArrayElement(tnv%d, j, tnv%d);
         }`.format(lt + 2, lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
-    } else if (mapType[3] == "boolean") {
+    } else if (mapType[3] === "boolean") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
         pxt->CreateArray(tnv%d);
         tnv%d = (i -> first).c_str();
@@ -376,7 +376,7 @@ function mapTempleteArray(mapType, tnvdef, lt) {
             tnv%d = pxt->SwapC2JsBool(i->second[j]);
             pxt->SetArrayElement(tnv%d, j, tnv%d);
         }`.format(lt + 2, lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2))
-    } else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") {
+    } else if (mapType[3].substring(0, 12) === "NUMBER_TYPE_") {
         ret = tnvdef.replaceAll("[calc_out]", `napi_value tnv%d = nullptr;
         pxt->CreateArray(tnv%d);
         tnv%d = (i -> first).c_str();
@@ -445,7 +445,7 @@ function getReturnFill(returnInfo, param) {
             param.valueDefine += "%suint32_t& outErrCode".format(param.valueDefine.length > 0 ? ", " : "")
         }
 
-        if (type != "void") {
+        if (type !== "void") {
             // callback<xxx> 中的xxx不是void时，生成的capp代码才需要用户填充out参数
             valueFillStr += "%svio->out".format(valueFillStr.length > 0 ? ", " : "")
         }
@@ -478,14 +478,14 @@ function returnGenerate(returnInfo, param, data) {
         returnGenerateUnion(param)
     }
 
-    if (type == "string") {
+    if (type === "string") {
         param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
         param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     }
-    else if (type == "void") {
+    else if (type === "void") {
         NapiLog.logInfo("The current void type don't need generate");
     }
-    else if (type == "boolean") {
+    else if (type === "boolean") {
         param.valueOut = returnInfo.optional ? "bool* out = nullptr;" : "bool out;"
         param.valueDefine += "%sbool%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     }
@@ -495,7 +495,7 @@ function returnGenerate(returnInfo, param, data) {
     else if(generateType(type)){
         returnGenerate2(returnInfo, param, data)
     }
-    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+    else if (type.substring(0, 12) === "NUMBER_TYPE_") {
         param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
         param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
     }
@@ -514,16 +514,16 @@ function generateType(type){
     else if (TypeList.getValue(type)) {
         return true
     }
-    else if (type.substring(0, 6) == "Array<") {
+    else if (type.substring(0, 6) === "Array<") {
         return true
     }
-    else if (type.substring(type.length - 2) == "[]") {
+    else if (type.substring(type.length - 2) === "[]") {
         return true
     }
-    else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
+    else if (type.substring(0, 4) === "Map<" || type.indexOf("{[key:") === 0) {
         return true
     }
-    else if (type == "any" || type == "Object" || type == "object") {
+    else if (type === "any" || type === "Object" || type === "object") {
         return true
     }
     else {
@@ -531,7 +531,7 @@ function generateType(type){
     }
 }
 function isMapType(type) {
-    if(type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {
+    if(type.substring(0, 4) === "Map<" || type.indexOf("{[key:") === 0) {
         return true;
     }
     return false;
@@ -545,12 +545,12 @@ function returnGenerate2(returnInfo, param, data){
     if (flag) {
         param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;")
         param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
-    } else if (type.substring(0, 6) == "Array<") {
+    } else if (type.substring(0, 6) === "Array<") {
         returnArrayGen(type, param, returnInfo, modifiers);
-    } else if (type.substring(type.length - 2) == "[]") {
+    } else if (type.substring(type.length - 2) === "[]") {
         let arrayType = getArrayTypeTwo(type)
         arrayType = jsType2CType(arrayType)
-        if (arrayType == "any") {
+        if (arrayType === "any") {
             param.valueOut = `std::any out;
             std::string out_type;`
             param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
@@ -562,7 +562,7 @@ function returnGenerate2(returnInfo, param, data){
         }
     } else if (isMapType(type)) {
         returnGenerateMap(returnInfo, param)
-    } else if (type == "any") {
+    } else if (type === "any") {
         param.valueOut = `std::any out;
             std::string out_type;`
         param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "")
@@ -575,7 +575,7 @@ function returnGenerate2(returnInfo, param, data){
 function returnArrayGen(type, param, returnInfo, modifiers) {
   let arrayType = getArrayType(type);
   arrayType = jsType2CType(arrayType);
-  if (arrayType == "any") {
+  if (arrayType === "any") {
     param.valueOut = `std::any out;
             std::string out_type;`;
     param.valueDefine += "%sstd::any &out".format(param.valueDefine.length > 0 ? ", " : "");
@@ -591,20 +591,20 @@ function returnGenerateEnum(data, returnInfo, param) {
     let type = returnInfo.type
     let index = enumIndex(type, data)
     let modifiers = returnInfo.optional ? "*" : "&"
-    if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+    if (data.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
         type = "NUMBER_TYPE_" + NumberIncrease.getAndIncrease()
-    } else if (data.enum[index].body.enumValueType == EnumValueType.ENUM_VALUE_TYPE_STRING) {
+    } else if (data.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
         type = "string"
     } else {
         NapiLog.logError(`function returnGenerateEnum:this type is not support %s`.format(type));
         return
     }
     param.valuePackage = cToJs("vio->out", type, "result")
-    if (type == "string") {
+    if (type === "string") {
         param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;"
         param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
     }
-    else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+    else if (type.substring(0, 12) === "NUMBER_TYPE_") {
         param.valueOut = type + " out;"
         param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
     }

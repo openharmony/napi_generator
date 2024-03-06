@@ -137,7 +137,7 @@ function analyseSubReturn(ret, data) {
         let interfaceName = ""
         for (let i=1; i<len; i++) {
             let regs1 = re.getReg(ret, tt.regs[i])
-            if (regs1 != "}" && regs1 != ",") {
+            if (regs1 !== "}" && regs1 !== ",") {
                 res += regs1
             }         
         }  

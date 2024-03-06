@@ -78,7 +78,7 @@ function isOnTypeExist(onTypeList, newType) {
     }
 
     for (var i in onTypeList) {
-        if (onTypeList[i] == newType) {
+        if (onTypeList[i] === newType) {
             return true
         }
     }
