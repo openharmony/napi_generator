@@ -85,13 +85,13 @@ function generateFunctionDirect(func, data, className) {
         paramGenerate(i, func.value[i], param, data)
     }
     let returnInfo = {type: func.ret, optional: false}
-    if (func.ret == 'void') {
+    if (func.ret === 'void') {
         param.valuePackage = "result = pxt->UndefinedValue();";
     } else {
         returnGenerate(returnInfo, param, data)
     }
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
-    if (param.valueOut == "") {
+    if (param.valueOut === "") {
         middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
     } else {
         middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
@@ -101,7 +101,7 @@ function generateFunctionDirect(func, data, className) {
     let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
     middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
-    if (param.optionalParamDestory == "") {
+    if (param.optionalParamDestory === "") {
         middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
     } else {
         middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", "\n    " + param.optionalParamDestory) // 可选参数内存释放
