@@ -187,7 +187,7 @@ function generateResult(name, implH, implCpp, middleFunc, middleInit) {
 
 function generateFunction(func, data) {
     let tmp;
-    if (func.name == 'on' || func.name == 'off' ) {
+    if (func.name === 'on' || func.name === 'off' ) {
         return generateFunctionOnOff(func, data)
     }
     switch (func.type) {
