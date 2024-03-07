@@ -72,13 +72,16 @@ public class FileUtil {
         try {
             String buildStr = readWholeFile(buildJsonFilePath);
             JSONParser jsParser = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
-            JSONObject buildObj = (JSONObject) jsParser.parse(buildStr);
-            JSONObject buildOptionObj = (JSONObject) jsParser.parse(BUILD_OPTION);
-            ((JSONObject) buildOptionObj.get("externalNativeOptions")).put("path", cmakeFilePath);
-            buildObj.put("buildOption", buildOptionObj);
-            ObjectMapper mapper = new ObjectMapper();
-            buildStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildObj);
-
+            Object buildObjTest = jsParser.parse(buildStr);
+            Object buildOptionObjTest = jsParser.parse(BUILD_OPTION);
+            if (buildObjTest instanceof JSONObject && buildOptionObjTest instanceof JSONObject) {
+                JSONObject buildObj = (JSONObject) buildObjTest;
+                JSONObject buildOptionObj = (JSONObject) buildOptionObjTest;
+                ((JSONObject) buildOptionObj.get("externalNativeOptions")).put("path", cmakeFilePath);
+                buildObj.put("buildOption", buildOptionObj);
+                ObjectMapper mapper = new ObjectMapper();
+                buildStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildObj);
+            }
             writeContentToFile(buildJsonFilePath, buildStr);
         } catch (ParseException parseException) {
             LOG.error("Failed to parse file [" + buildJsonFilePath + "], error: " + parseException);

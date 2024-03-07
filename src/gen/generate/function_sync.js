@@ -104,12 +104,12 @@ function generateFunctionSync(func, data, className) {
     returnGenerate(param.callback, param)
 
     middleFunc = replaceAll(middleFunc, "[valueIn]", param.valueIn) // # 输入参数定义
-    if (param.valueOut == "") {
+    if (param.valueOut === "") {
         middleFunc = replaceAll(middleFunc, "[valueOut]", param.valueOut) // # 输出参数定义
     } else {
         middleFunc = replaceAll(middleFunc, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
     } 
-    if (param.valueCheckout == "") {
+    if (param.valueCheckout === "") {
         middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
     } else {
         param.valueCheckout = removeEndlineEnter(param.valueCheckout)

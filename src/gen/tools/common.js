@@ -167,9 +167,9 @@ function getArrayTypeTwo(type) {
 }
 
 function jsType2CType(jsTypeName) {
-    if (jsTypeName == "string") {
+    if (jsTypeName === "string") {
         return "std::string"
-    } else if (jsTypeName == "boolean") {
+    } else if (jsTypeName === "boolean") {
         return "bool"
     } else {
         return jsTypeName
@@ -201,7 +201,7 @@ function enumIndex(type, data) {
     }
     for (let i in data.enum) {
         let enumm = data.enum[i]
-        if (type == enumm.name) {
+        if (type === enumm.name) {
             index = i
         }
     }
@@ -215,7 +215,7 @@ function isType(type, data) {
   }
   for (let i in data.type) {
     let typee = data.type[i]
-    if (type == typee.name) {
+    if (type === typee.name) {
       isType = true
     }
   }
@@ -262,10 +262,10 @@ function getMapType(type) {
     
     if (ttValue != null) {
         valueType = re.getReg(type, ttValue.regs[1])
-        if (valueType.indexOf("Array<") == 0) {
+        if (valueType.indexOf("Array<") === 0) {
             valueArrayType = re.getReg(valueType, ttArray.regs[1])
             valueType = undefined
-        } else if (ttMap != undefined) {
+        } else if (ttMap !== undefined && ttMap !== null) {
             valueMapType = re.getReg(type, ttMap.regs[1])
             valueType = undefined
         }

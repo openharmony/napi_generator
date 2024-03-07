@@ -28,15 +28,15 @@ function analyzeClass(data) {
     for (let i in body) {
         let classBody = body[i]
         // 去除前面的空格
-        while (classBody.length > 0 && classBody[0] == ' ') {
+        while (classBody.length > 0 && classBody[0] === ' ') {
             classBody = classBody.substring(1, classBody.length)
         }
         // 去除后面的空格
-        while (classBody.length > 0 && classBody[-1] == ' ') {
+        while (classBody.length > 0 && classBody[-1] === ' ') {
             classBody = classBody.substring(0, classBody.length - 1)
         }
         // 如果t为空直接返回
-        if (classBody == "") break
+        if (classBody === "") break
         let matcher = re.match(" *([a-zA-Z0-9_]+) *: *([a-zA-Z_0-9<>]+)", classBody)
         if (matcher) {
             let valueName = re.getReg(classBody, matcher.regs[1])
@@ -53,7 +53,7 @@ function analyzeClass(data) {
         matcher = re.match(rules, classBody)
         if (matcher) {
             let funcDetail = analyzeFunction(data, 
-                re.getReg(classBody, matcher.regs[1]) != '', re.getReg(classBody, matcher.regs[2]),
+                re.getReg(classBody, matcher.regs[1]) !== '', re.getReg(classBody, matcher.regs[2]),
                 re.getReg(classBody, matcher.regs[3]), re.getReg(classBody, matcher.regs[4]))
             if (funcDetail != null)
                 result.function.push(funcDetail)

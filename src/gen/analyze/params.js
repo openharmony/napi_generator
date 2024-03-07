@@ -28,7 +28,7 @@ function analyzeParams(funcName, values) {
             v = values
         values = values.substring(v.length, values.length)
         let matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *([a-zA-Z<,>|_0-9\\[\\]\\(\\):='{}]+)", v)
-        if (matchs == null && (funcName == "on" || funcName == "off")) {
+        if (matchs === null && (funcName === "on" || funcName === "off")) {
             // on和off的第一个参数的类型可以是一串字符
             matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *\"([a-zA-Z|_0-9\\[\\]\\(\\):='{}]+)\"", v)
         }
@@ -38,7 +38,7 @@ function analyzeParams(funcName, values) {
                 type = type.replace(/,/g, "")
             }
 
-            let optionalFlag = re.getReg(v, matchs.regs[2]) == '?' ? true : false;
+            let optionalFlag = re.getReg(v, matchs.regs[2]) === '?' ? true : false;
             let checkParamOk = true;
             if (optionalFlag) {
                 optionalParamCount++;
@@ -52,7 +52,7 @@ function analyzeParams(funcName, values) {
                 result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type , "optional": optionalFlag})
                 if (type.indexOf("AsyncCallback") >= 0)
                     funcType = FuncType.ASYNC
-                if (funcType == FuncType.DIRECT && type.indexOf("Callback") >= 0 && type.indexOf("AsyncCallback") < 0)
+                if (funcType === FuncType.DIRECT && type.indexOf("Callback") >= 0 && type.indexOf("AsyncCallback") < 0)
                     funcType = FuncType.SYNC
             }
         }
