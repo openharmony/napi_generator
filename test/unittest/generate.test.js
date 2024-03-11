@@ -36,6 +36,7 @@ const { generateFunctionAsync } = require(genDir + "generate/function_async");
 const { generateFunctionDirect } = require(genDir + "generate/function_direct");
 const { generateFunctionSync } = require(genDir + "generate/function_sync");
 const { generateFunctionOnOff } = require(genDir + "generate/function_onoff");
+const { generateThreadsafeFunc } = require(genDir + "generate/function_threadsafe");
 
 var correctResult
 
@@ -97,6 +98,8 @@ describe('Generate', function () {
 
     partOfFuncOnOff();
 
+    partOfFuncThread();
+    
     partOfInterface(correctResult);
 
     partOfTest();
@@ -200,6 +203,32 @@ function funcOnOffAssert(funcName) {
   return retJson;
 }
 
+function funcRegistUnregistAssert(funcName, type, retVal) {
+  let funParam = {
+    isParentMember: false,
+    isStatic: false,
+    name: funcName,
+    ret: retVal,
+    value: [{name: 'cb', optional: false, realType: type, type: type}]
+  }
+  let data = {
+    allProperties: {
+      functions: [{isParentMember: false, isStatic: false, name: funcName, ret: retVal, type: 2,
+        value: [{name: 'cb', optional: false, realType: type, type: type}]}],
+      values: []
+    },
+    childList: [],
+    function: [{isParentMember: false, isStatic: false, name: funcName, ret: retVal, type: 2,
+      value: [{name: 'cb', optional: false, realType: type, type: type}]}],
+    parentList: [],
+    parentNameList: [],
+    value: []
+  }
+  let ret = generateFunctionOnOff(funParam, data, 'TestClass1');
+
+  return ret
+}
+
 function partOfEnum() {
     it('test gen/generate/enum generateEnum', function () {
         let data = {
@@ -229,8 +258,68 @@ function partOfEnum() {
     });
 }
 
+function funcThreadsafeAssert(funcName) {
+  let func = {
+    isParentMember: false,
+    isStatic: false,
+    name: funcName,
+    ret: 'void',
+    type: 1,
+    value: [{name: 'name', optional: false, realType: 'string', type: 'string'},
+      {name: 'callback', optional: false, realType: '(value', type: '(value'}]
+  }
+
+  let data = {
+    allProperties: {
+      functions: [{
+        isParentMember: false,
+        isStatic: false,
+        name: funcName,
+        ret: 'void',
+        type: 1,
+        value: [{name: 'name', optional: false, realType: 'string', type: 'string'},
+          {name: 'callback', optionalz: false, realType: 'string', type: 'string'}]
+      }],
+      values: [],
+    },
+    childList: [],
+    function: [{
+      isParentMember: false,
+      isStatic: false,
+      name: funcName,
+      ret: 'void',
+      type: 1,
+      value: [{name: 'name', optional: false, realType: 'string', type: 'string'},
+        {name: 'callback', optional: false, realType: 'string', type: 'string'}]
+    }],
+    parentList: [],
+    parentNameList: [],
+    value: []
+  }
+  let ret = generateThreadsafeFunc(func, data, 'TestClass1');
+  return ret;
+}
+
+function partOfFuncThread() {
+  it('test gen/generate/function_threadsafe generateThreadsafeFunc', function () {
+    let ret = funcThreadsafeAssert('createThreadSafeFuncClass1');
+    let middleCppRet = JSON.stringify(ret[0]);
+    let implHRet = JSON.stringify(ret[1]);
+    let implCppRet = JSON.stringify(ret[2]);
+    let middleHRet = JSON.stringify(ret[3]);
+    assert.strictEqual(implHRet, '""');
+    assert.strictEqual(implCppRet, '""');
+    assert.strictEqual(middleHRet, '"\\nstruct createThreadSafeFuncClass1_value_struct {\\n    std::string eventName;\\n};\\n\\nstatic  napi_value createThreadSafeFuncClass1_middle(napi_env env, napi_callback_info info);\\n"')
+    let index = middleCppRet.indexOf('status = napi_create_threadsafe_function(env, pxt->GetArgv(argc - 1), nullptr,')
+    assert.strictEqual(index > 0, true);
+    let indexRegisterFunc = middleCppRet.indexOf('pxt->RegistThreadsafeFunc(vio->eventName, threadsafeFunc);')
+    assert.strictEqual(indexRegisterFunc > 0, true);
+  });
+}
+
 function partOfFuncOnOff() {
-    it('test gen/generate/function_onoff generateFunctionOnOff', function () {
+    // on/off test
+    it('test gen/generate/function_onoff generateFunctionOnOff on/off', function () {
         let retJson = funcOnOffAssert('on');
         let struct = retJson.substring(retJson.indexOf("{"), retJson.indexOf("}") + 1)
         assert.strictEqual(struct, "{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }")
@@ -242,6 +331,74 @@ function partOfFuncOnOff() {
         assert.strictEqual(struct2, "{\\n    XNapiTool *pxt = std::make_unique<XNapiTool>(env, info).release();\\n    if (pxt->IsFailed()) {\\n        napi_value err = pxt->GetError();\\n        delete pxt;\\n        return err;\\n    }")
         let middle2 = retJson2.substring(retJson2.indexOf("off_middle"), retJson2.indexOf("info)") + 5)
         assert.strictEqual(middle2, "off_middle(napi_env env, napi_callback_info info)")
+    });
+
+    // registerXXX/UnregisterXXX test
+    partOfFuncRegistUnregist();
+}
+function partOfFuncRegistUnregist() {
+    // registerXXX test Function
+    it('test gen/generate/function_onoff generateFunctionOnOff registerXXX', function () {
+        let ret = funcRegistUnregistAssert('registerTestfunc11', 'Function', 'void');
+        let middleCppRet = ret[0];
+        let implHRet = ret[1];
+        let implCppRet = ret[2];
+        let middleHRet = ret[3];
+        let indexImplH = implHRet.indexOf('void Testfunc11Callback();');
+        assert.strictEqual(indexImplH >= 0, true);
+        let indexImplCpp = implCppRet.indexOf('ptr->Testfunc11CallbackMiddle(eventName);');
+        assert.strictEqual(indexImplCpp > 0, true);
+        let indexMiddleH = middleHRet.indexOf('struct registerTestfunc11_value_struct {');
+        assert.strictEqual(indexMiddleH >= 0, true);
+        let indexMiddleCpp = middleCppRet.indexOf('pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ZERO));');
+        assert.strictEqual(indexMiddleCpp > 0, true);
+    });
+
+    // unRegisterXXX test Function
+    it('test gen/generate/function_onoff generateFunctionOnOff unRegisterXXX', function () {
+        let ret = funcRegistUnregistAssert('unRegisterTestfunc11', 'Function', 'void');
+        let middleCppRet = ret[0];
+        let implHRet = ret[1];
+        let implCppRet = ret[2];
+        let middleHRet = ret[3];
+        assert.strictEqual(JSON.stringify(implHRet), '""');
+        assert.strictEqual(JSON.stringify(implCppRet), '""');
+        let indexMiddleH = middleHRet.indexOf('struct unRegisterTestfunc11_value_struct {');
+        assert.strictEqual(indexMiddleH >= 0, true);
+        let indexMiddleCpp = middleCppRet.indexOf('pxt->UnregistOnOffFunc(vio->eventName);');
+        assert.strictEqual(indexMiddleCpp > 0, true);
+    });
+
+    // registerXXX test Callback<boolean>
+    it('test gen/generate/function_onoff generateFunctionOnOff registerXXX', function () {
+        let ret = funcRegistUnregistAssert('registerTestfunc13', 'Callback<boolean>', 'void');
+        let middleCppRet = ret[0];
+        let implHRet = ret[1];
+        let implCppRet = ret[2];
+        let middleHRet = ret[3];
+        let indexImplH = implHRet.indexOf('void Testfunc13Callback(bool &valueIn);');
+        assert.strictEqual(indexImplH >= 0, true);
+        let indexImplCpp = implCppRet.indexOf('ptr->Testfunc13CallbackMiddle(eventName, valueIn);');
+        assert.strictEqual(indexImplCpp > 0, true);
+        let indexMiddleH = middleHRet.indexOf('struct registerTestfunc13_value_struct {');
+        assert.strictEqual(indexMiddleH >= 0, true);
+        let indexMiddleCpp = middleCppRet.indexOf('pxt->RegistOnOffFunc(vio->eventName, pxt->GetArgv(XNapiTool::ZERO));');
+        assert.strictEqual(indexMiddleCpp > 0, true);
+    });
+
+    // unRegisterXXX test Callback<boolean>
+    it('test gen/generate/function_onoff generateFunctionOnOff unRegisterXXX', function () {
+        let ret = funcRegistUnregistAssert('unRegisterTestfunc13', 'Callback<boolean>', 'void');
+        let middleCppRet = ret[0];
+        let implHRet = ret[1];
+        let implCppRet = ret[2];
+        let middleHRet = ret[3];
+        assert.strictEqual(JSON.stringify(implHRet), '""');
+        assert.strictEqual(JSON.stringify(implCppRet), '""');
+        let indexMiddleH = middleHRet.indexOf('struct unRegisterTestfunc13_value_struct {');
+        assert.strictEqual(indexMiddleH >= 0, true);
+        let indexMiddleCpp = middleCppRet.indexOf('pxt->UnregistOnOffFunc(vio->eventName);');
+        assert.strictEqual(indexMiddleCpp > 0, true);
     });
 }
 
