@@ -105,11 +105,33 @@ function c2JsForEnum(deep, type, value, dest, propertyName) {
     let lt = deep
     let result = ""
     let ifl = EnumList.getValue(type)
-    let type2 = ifl[0].type
-    let enumCtoJsStr = cToJs("enumInt%d".format(lt), type2, "tnv%d".format(lt), deep + 1)
-    result += "{\nnapi_value tnv%d = nullptr;\n".format(lt) + "int enumInt%d = (int)(%s);\n".format(lt, value) + 
-            enumCtoJsStr + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
-                .format(dest, propertyName, lt)
+    let type2 = ""
+    if (ifl && ifl.length > 0) {
+      type2 = ifl[0].type
+    }
+    let enumCtoJsStr = cToJs("enumC2Js%d".format(lt), type2, dest, deep)
+    if (type2 === 'string') {
+      // string型枚举的getvalue函数
+      result += "{\nstd::string enumC2Js%d = %s;\n".format(lt, value) + enumCtoJsStr + "}\n"
+    } else {
+      // number型枚举的getvalue函数
+      result += `
+            std::underlying_type<%s>::type enumType;
+            if (typeid(enumType) == typeid(uint32_t)) {
+              uint32_t enumC2Js%d = static_cast<uint32_t>(%s);
+              %s
+            } else if (typeid(enumType) == typeid(int32_t)) {
+              int32_t enumC2Js%d = static_cast<int32_t>(%s);
+              %s
+            } else if (typeid(enumType) == typeid(int64_t)) {
+              int64_t enumC2Js%d = static_cast<int64_t>(%s);
+              %s
+            } else if (typeid(enumType) == typeid(double_t)) {
+              double_t enumC2Js%d = static_cast<double_t>(%s);
+              %s
+            }`.format(type, lt, value, enumCtoJsStr, lt, value, enumCtoJsStr, lt, value, enumCtoJsStr,
+            lt, value, enumCtoJsStr,)
+    }
     return result
 }
 

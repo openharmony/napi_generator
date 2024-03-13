@@ -33,12 +33,21 @@ declare namespace napitest {
         age: number;
     }
 
-    // 有参构造函数的转换
+    // 有参构造函数的转换,成员变量包含数值型枚举
     export class Woman {
-      constructor(name_: string, age_: number, isMarried_: boolean);
+      constructor(name_: string, age_: number, isMarried_: boolean, status_: TestStatus);
       w_name: string;
       w_age: number;
       w_isMarried: boolean;
+      w_status: TestStatus;
+    }
+
+    // 有参构造函数的转换，成员变量包含字符型枚举
+    export class Child {
+      constructor(name_: string, age_: number, status_: TestEnumString);
+      w_name: string;
+      w_age: number;
+      w_status: TestEnumString;
     }
 
     export enum LaunchReason {

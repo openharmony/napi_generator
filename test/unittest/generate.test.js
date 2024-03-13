@@ -638,7 +638,7 @@ function partOfTest() {
     it('test gen/generate/param_generate jsToCEnum', function () {
         let ret = jsToCEnum('string', 'vio->in0', 'pxt->GetArgv(0)')
         let retJson = JSON.stringify(ret)
-        assert.strictEqual(retJson, '""')
+        assert.strictEqual(retJson, 'null')
     });
 
     partOfTestTwo()
