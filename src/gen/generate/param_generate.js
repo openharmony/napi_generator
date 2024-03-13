@@ -226,14 +226,13 @@ function unionTempleteFunc(dest, napiVn, type, optional) {
 function jsToCEnum(type, dest, napiVn) {
     let tt = ""
     let ifl = EnumList.getValue(type)
-    for (let i in ifl) {
-        let type2 = ifl[i].type
-        if (dest.indexOf("p->") < 0) {
-            tt += jsToC("%s".format(dest), napiVn, type2, type)
-        } else {
-            tt += jsToC("%s".format(dest), getValueProperty(napiVn, dest), type2, type)
-        }
+    let type2 = ""
+    if (ifl && ifl.length > 0) {
+      type2 = ifl[0].type
+    } else {
+      return null;
     }
+    tt += jsToC("%s".format(dest), napiVn, type2, type)
     return tt
 }
 

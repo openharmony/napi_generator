@@ -86,7 +86,13 @@ function getHDefineOfVariable(name, type, variable, optional) {
             variable.hDefine += "\n    %s %s;".format(type, name)
         }
     } else if (EnumList.getValue(type)) {
+      // 如果是枚举string类型，需要将其转换为std::string类型
+      let enumBasicType = EnumList.getValue(type)[0].type
+      if (enumBasicType === 'string') {
+        variable.hDefine += "\n    %s %s;".format('std::string', name)
+      } else {
         variable.hDefine += "\n    %s %s;".format(type, name)
+      }
     } else if (type.indexOf("Array<") == 0) {
         typeArrFunctionOne(type, variable, name, optional);
     } else if (type == "boolean") {
@@ -342,6 +348,10 @@ function getConstructorFunc(data, param) {
             }
            getConParam += tmpBody[i] + ";\n";
         }
+    }
+    let index = getConParam.lastIndexOf(';\n')
+    if (getConParam.substring(index-1, index) === ' ') {
+      getConParam = getConParam.substring(0, index -1)
     }
     return getConParam;
 }

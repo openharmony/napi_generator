@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const { TestClass1, TestClass2, TestClassUse, TestClassLater } = require("./out/build/Release/napitest")
-const { Demo, Test, funcTest, funcTest2, Woman } = require("./out/build/Release/napitest")
+const { Demo, Test, funcTest, funcTest2, Woman, Child } = require("./out/build/Release/napitest")
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 const { consumers } = require("stream");
@@ -49,17 +49,66 @@ describe('Class', function () {
     });
 
     // export class Woman {
-    //   constructor(name_: string, age_: number, isMarried_: boolean);
+    //   constructor(name_: string, age_: number, isMarried_: boolean, status_: TestStatus;);
     //   w_name: string;
     //   w_age: number;
     //   w_isMarried: boolean;
+    //   w_status: TestStatus;
     // }
     it('test Woman constructor', function () {
-      let tc = new Woman("haha", 22, true);
-      console.info("w_name is " + tc.w_name);
-      console.info("w_age is " + tc.w_age);
-      console.info("w_isMarried is " + tc.w_isMarried);
+        let tc = new Woman("haha", 22, true, test.TestStatus.START_ABILITY);
+        console.info("w_name is " + tc.w_name);
+        console.info("w_age is " + tc.w_age);
+        console.info("w_isMarried is " + tc.w_isMarried);
+        console.info("w_status is " + tc.w_status);
     });
+
+    // export class Child {
+    //   constructor(name_: string, age_: number, status_: TestEnumString);
+    //   w_name: string;
+    //   w_age: number;
+    //   w_status: TestEnumString;
+    // }
+    it('test Child constructor', function () {
+        let tc = new Child("xixi", 10, test.TestEnumString.ACTION_SEARCH);
+        console.info("w_name is " + tc.w_name);
+        console.info("w_age is " + tc.w_age);
+        console.info("w_status is " + tc.w_status);
+    });
+});
+
+describe('Class Exception Test', function () {
+    // 异常测试：class构造函数包含数值型枚举的异常测试
+    it('test Woman constructor exception', function () {
+        let ret = false;
+        try {
+            let tc = new Woman("hhh", 23, true, 5);
+            console.info("w_name is " + tc.w_name);
+            console.info("w_age is " + tc.w_age);
+            console.info("w_isMarried is " + tc.w_isMarried);
+            console.info("w_status is " + tc.w_status);
+        } catch(err) {
+            ret = true;
+            console.error("error: " + err);
+        }
+        assert.strictEqual(ret, true);
+    });
+
+    // 异常测试：class构造函数包含字符型枚举的异常测试
+    it('test Child constructor exception', function () {
+        let ret = false;
+        try {
+            let tc = new Child("xixi", 10, "ggg");
+            console.info("w_name is " + tc.w_name);
+            console.info("w_age is " + tc.w_age);
+            console.info("w_status is " + tc.w_status);
+        } catch(err) {
+            ret = true;
+            console.error("error: " + err);
+        }
+        assert.strictEqual(ret, true);
+    });
+    
 });
 
 describe('Class defined later', function () {
