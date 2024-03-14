@@ -116,3 +116,8 @@ else {
     print('fail\n' + ret[1]);
     NapiLog.logInfo('fail\n' + ret[1]);
 }
+
+
+module.exports = {
+    getJsonCfg
+}
