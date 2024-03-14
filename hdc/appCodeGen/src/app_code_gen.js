@@ -24,10 +24,17 @@ const { print } = require("./tools/tool");
 
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: ".d.ts file", default: "@ohos.napitest.d.ts" },
+    // 'interfname': { key: 'i', args: 1, description: "interface name", default: "" },
     'out': { key: 'o', args: 1, description: "output directory", default: "." },
-    'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" }
-});
+    'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" },
 
+    /* 新增业务代码可配置参数：写在json文件里:
+     * [{"includeName":"xxx.h", "cppName":"xxx.cpp","interfaceName": "functest", 
+     * "serviceCode":"out = codeTestFunc(v);"}]
+     * 配置cfg.json文件路径
+     */
+    'functionsCfg': {key: 'c', args: 1, description: "configured file including the functions for test", default: ""}
+});
 
     /* 新增业务代码可配置参数：写在json文件里:
      * [{"includeName":"xxx.h", "cppName":"xxx.cpp","interfaceName": "functest", 
@@ -64,7 +71,6 @@ function readFiles() {
     }
 }
 
-
 /**
  * 获取Json配置文件内容
  * @returns 
@@ -85,12 +91,12 @@ function checkGenerate(fileName) {
     let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
     if (tt) {
         let result = checkFileError(fileName);
-        let jsonConfig
-        // if (ops.serviceCode) {
-        //     jsonConfig = getJsonCfg(ops.serviceCode);
-        // }
+        let funcConfig
+        if (ops.functionsCfg) {
+            funcConfig = getJsonCfg(ops.functionsCfg);
+        }
         if (result[0]) {
-            main.doGenerate(fileName, ops.out, jsonConfig);
+            main.doGenerate(fileName, ops.out, funcConfig);
         }
         else {
             NapiLog.logError(result[1]);
