@@ -33,7 +33,7 @@ function doGenerate(ifname, destdir, jsonCfg) {
     if (tt) {
         let moduleName = re.getReg(fn, tt.regs[2]);
 
-        structOfTs.imports = [];        
+        structOfTs.imports = [];
         generateAppCode(structOfTs, destdir, moduleName, jsonCfg);
     } else {
         NapiLog.logError('file name ' + fn + ' format invalid in function of doGenerate!');

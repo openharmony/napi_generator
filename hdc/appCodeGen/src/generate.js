@@ -138,25 +138,9 @@ function analyzeJsonCfg(jsonCfg) {
     let jsonConfig = []
     // 将json文件的数据存入jsonCfgList中
     for (let i = 0; i < len; i++) {
-        let interfaceBody = null
-        if (jsonCfg[i].interfaceName.indexOf("::") > 0) {
-            let tt = jsonCfg[i].interfaceName.split("::")
-            interfaceBody = {
-              className: tt[0],
-              funcName: tt[1],
-            }
-        } else {
-            interfaceBody = {
-                className: "",
-                funcName: jsonCfg[i].interfaceName,
-            }
-        }
-
         jsonConfig.push({
-            includeName: jsonCfg[i].includeName,
-            cppName: jsonCfg[i].cppName,
-            interfaceName: interfaceBody,
-            serviceCode: jsonCfg[i].serviceCode.replaceAll('\\n', '\n'),
+          classOrInterfName: jsonCfg[i].classOrInterfName,
+          funtionName: jsonCfg[i].funtionName
         })
     }
     jsonCfgList.push(jsonConfig)
@@ -182,6 +166,67 @@ function generateRandomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// 生成index.ets文件中测试接口相关的ETS代码
+function genIndexETSCode(testFunc, funcName) {
+  //  // 测试namespace域中的方法
+  //  for (let i in ns0.body.function) {
+  //   let ii = ns0.body.function[i];
+  //   let funcName = ii.name
+  //   let funcType = ii.type
+  //   let funcValue = ii.value
+  //   let retValue = ii.ret
+  //   // index.ets文件中测试接口button代码生成
+  //   if (funcType === DIRECT) {
+  //     // direct function
+  //     indexEts = callDirectFunction(funcName, funcValue, retValue, indexEts);
+  //   } else if (funcType === SYNC) {
+  //     // sync function
+  //     console.error('Currently not supported.');
+  //   } else if (funcType === ASYNC) {
+  //     // async function
+  //     console.error('Currently not supported.');
+  //   } else if (funcType === PROMISE) {
+  //     // promise function
+  //     console.error('Currently not supported.');
+  //   } else {
+  //     // 其他: on/off方法
+  //     console.error('Currently not supported.');
+  //   }
+  // }
+
+  // for (let j = 0; j < interfaceBody.function.length; j++) {
+  //   let funcName = interfaceBody.function[j].name;
+
+    // 判断接口函数是否是要测试的接口函数
+    if (testFunc === funcName) {
+      let funcType = interfaceBody.function[j].type;
+      let funcValue = interfaceBody.function[j].value;
+      let retValue = interfaceBody.function[j].ret;
+
+      // index.ets文件中测试接口button代码生成
+      if (funcType === DIRECT) {
+        // direct function
+        indexEts = callDirectFunction(funcName, funcValue, retValue, indexEts, className);
+      } else if (funcType === SYNC) {
+        // sync function
+        NapiLog.logInfo('SYNC type of function is not supported!');
+      } else if (funcType === ASYNC) {
+        // async function
+        NapiLog.logInfo('ASYNC type of function is not supported!');
+      } else if (funcType === PROMISE) {
+        // promise function
+        NapiLog.logInfo('PROMISE type of function is not supported!');
+      } else {
+        // 其他: on/off方法
+        NapiLog.logInfo('This type of function(%s) is not supported!'.format(funcType));
+      }
+    } else {
+      NapiLog.logInfo("test function(%s) is not current function(%s)!".format(testFunc, funcName));
+    }
+  // }
+  return indexEts;
+}
+
 function generateAppCode(structOfTs, destDir, moduleName, jsonCfg) {
     let ns0 = structOfTs.declareNamespace[0];
     let license = structOfTs.declareLicense[0];
@@ -189,11 +234,12 @@ function generateAppCode(structOfTs, destDir, moduleName, jsonCfg) {
         NapiLog.logError('generateAll error:get namespace fail!');
         return;
     }
-    // 分析业务配置代码的调用代码: 分析Json文件
-    // if (jsonCfg) {
-    //     analyzeJsonCfg(jsonCfg);
-    // }
-    // jsonCfgList.pop()
+
+    // 分析配置测试接口的Json文件
+    if (jsonCfg) {
+        analyzeJsonCfg(jsonCfg);
+    }
+    let testFunc = jsonCfgList.pop() //取测试接口配置数组中最后一个元素
 
     // let result = generateNamespace(ns0.name, ns0.body)
 
@@ -203,13 +249,15 @@ function generateAppCode(structOfTs, destDir, moduleName, jsonCfg) {
     // 测试interface中的方法
     for (let i in ns0.body.interface) {
         let ii = ns0.body.interface[i]
-        indexEts = genInterClassFunc(ii, indexEts);
+        indexEts = genInterClassFunc(ii, indexEts, testFunc.classOrInterfName, testFunc.funtionName);
     }
+
     // 测试class中的方法
     for (let i in ns0.body.class) {
         let ii = ns0.body.class[i]
-        indexEts = genInterClassFunc(ii, indexEts);
+        indexEts = genInterClassFunc(ii, indexEts, testFunc.classOrInterfName, testFunc.funtionName);
     }
+
     // 测试namespace域中的方法
     for (let i in ns0.body.function) {
         let ii = ns0.body.function[i];
@@ -241,31 +289,44 @@ function generateAppCode(structOfTs, destDir, moduleName, jsonCfg) {
 }
 
 // 遍历 interface/class 中的function,生成对interface/class中的接口测试的代码
-function genInterClassFunc(ii, indexEts) {
+function genInterClassFunc(ii, indexEts, testClass = null, testFunc) {
+    if (testClass !== className) {
+      NapiLog.logInfo("test class(%s) is not current class(%s)!".format(testClass, className));
+      return indexEts;
+    }
+
   let className = ii.name;
   let interfaceBody = ii.body;
   // 遍历interface中的成员方法 
   for (let j = 0; j < interfaceBody.function.length; j++) {
     let funcName = interfaceBody.function[j].name;
+
+    // 判断接口函数是否是要测试的接口函数
+    if (testFunc !== funcName) {
+      NapiLog.logInfo("test function(%s) is not current function(%s)!".format(testFunc, funcName));
+      continue;
+    }
+
     let funcType = interfaceBody.function[j].type;
     let funcValue = interfaceBody.function[j].value;
     let retValue = interfaceBody.function[j].ret;
+
     // index.ets文件中测试接口button代码生成
     if (funcType === DIRECT) {
       // direct function
       indexEts = callDirectFunction(funcName, funcValue, retValue, indexEts, className);
     } else if (funcType === SYNC) {
       // sync function
-      console.error('Currently not supported.');
+      NapiLog.logInfo('SYNC type of function is not supported!');
     } else if (funcType === ASYNC) {
       // async function
-      console.error('Currently not supported.');
+      NapiLog.logInfo('ASYNC type of function is not supported!');
     } else if (funcType === PROMISE) {
       // promise function
-      console.error('Currently not supported.');
+      NapiLog.logInfo('PROMISE type of function is not supported!');
     } else {
       // 其他: on/off方法
-      console.error('Currently not supported.');
+      NapiLog.logInfo('This type of function(%s) is not supported!'.format(funcType));
     }
   }
   return indexEts;
