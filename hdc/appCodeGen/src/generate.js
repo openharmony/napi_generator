@@ -143,7 +143,6 @@ function analyzeJsonCfg(jsonCfg) {
           functionName: jsonCfg[i].functionName
         })
     }
-    // jsonCfgList.push(jsonConfig)
 }
 
 // 随机生成字符串
@@ -176,19 +175,14 @@ function genIndexETSCode(indexEts, testFuncName, funcInfo, className = null) {
 
       // index.ets文件中测试接口button代码生成
       if (funcType === DIRECT) {
-        // direct function
         indexEts = callDirectFunction(testFuncName, funcValue, retValue, indexEts, className);
       } else if (funcType === SYNC) {
-        // sync function
         NapiLog.logInfo('SYNC type of function is not supported!');
       } else if (funcType === ASYNC) {
-        // async function
         NapiLog.logInfo('ASYNC type of function is not supported!');
       } else if (funcType === PROMISE) {
-        // promise function
         NapiLog.logInfo('PROMISE type of function is not supported!');
       } else {
-        // 其他: on/off方法
         NapiLog.logInfo('This type of function(%s) is not supported!'.format(funcType));
       }
     } else {
@@ -210,10 +204,8 @@ function generateAppCode(structOfTs, destDir, moduleName, jsonCfg) {
         analyzeJsonCfg(jsonCfg);
     }
 
-    // 取测试接口配置数组中最后一个元素FuncCfg
-
     // 从文件分析的数据中拿到接口名，接口参数类型与个数，读取出来以此给接口参数赋初值。
-    // 当前只支持一个接口的测试代码生成，若有多个接口，后面的方法会将前面的方法覆盖。
+    // 当前只支持一个接口的测试代码生成
     let indexEts = ''
     // 测试interface中的方法
     for (let i in ns0.body.interface) {

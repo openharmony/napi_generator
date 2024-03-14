@@ -24,32 +24,22 @@ const { print } = require("./tools/tool");
 
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: ".d.ts file", default: "@ohos.napitest.d.ts" },
-    // 'interfname': { key: 'i', args: 1, description: "interface name", default: "" },
     'out': { key: 'o', args: 1, description: "output directory", default: "." },
     'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" },
 
-    /* 新增业务代码可配置参数：写在json文件里:
-     * [{"includeName":"xxx.h", "cppName":"xxx.cpp","interfaceName": "functest", 
-     * "serviceCode":"out = codeTestFunc(v);"}]
+    /* 需要测试的接口函数可配置：写在json文件里:
+     * [{
+     * "classOrInterfName": "",
+     * "functionName": "funNum"
+     * }]     
      * 配置cfg.json文件路径
      */
     'functionsCfg': {key: 'c', args: 1, description: "configured file including the functions for test", default: ""}
 });
-
-    /* 新增业务代码可配置参数：写在json文件里:
-     * [{"includeName":"xxx.h", "cppName":"xxx.cpp","interfaceName": "functest", 
-     * "serviceCode":"out = codeTestFunc(v);"}]
-     * 配置cfg.json文件路径
-     */
-    // 'serviceCode': {key: 's', args: 1, description: "configure the service code", default: ""},
-    // 'directory': { key: 'd', args: 1, description: ".d.ts directory", default: "" },
-    // 'imports': { key: 'i', args: 1, description: "enable or disable support imports self-define file", default: false },
     
 NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"))
 
 let fileNames = ops.filename;
-// var pathDir = ops.directory;
-// var imports = ops.imports;
 if (fileNames == null) {
     NapiLog.logInfo("fileNames cannot be empty!");
 } else if (fileNames !== '') {
