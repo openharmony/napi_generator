@@ -12,7 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const main = require("./main");
+const main = require("../../hdc/appCodeGen/src/main");
+const { getJsonCfg } = require("../../hdc/appCodeGen/src/app_code_gen");
 const { NapiLog } = require("./tools/NapiLog");
 const re = require("./tools/re");
 
@@ -32,13 +33,16 @@ const re = require("./tools/re");
 
 // let file_path = `D:\\DOC\\NAPI\\feature\\supported\\@ohos.napitestsupportSingle.d.ts`
 //  let file_path = './test/storytest/test_type/@ohos.test.d.ts'
- let file_path = `./@ohos.test.d.ts` // @ohos.test.d.ts\ QQNT_doc.d.ts
-// let file_path = 'D:\\Code\\napi_generator_0824\\@ohos.test.d.ts'
+let file_path = 'D:\\Code\\debugAppCodeGen\\napi1109\\napi_generator_0824\\@ohos.napitest.d.ts'
 let fn = re. getFileInPath(file_path)
+let jsonCfg = `D:\\Code\\debugAppCodeGen\\napi1109\\napi_generator_0824\\funTestCfg.json`
 NapiLog.init(NapiLog.LEV_INFO, "napi_gen.log")
 NapiLog.logError("Begin to test.");
+let funcConfig
+if (jsonCfg) {
+    funcConfig = getJsonCfg(jsonCfg);
+}
 let tt = re.match("(@ohos\.)*([.a-z_A-Z0-9]+).d.ts", fn) // @ohos\.[a-zA-Z0-9]+\.d\.ts  
 if (tt) {
-    main.doGenerate(file_path, ".\\out")
-    //main.doGenerate(file_path, "D:\\DOC\\NAPI\\demo\\power\\out")
+    main.doGenerate(file_path, "D:\\Code\\debugAppCodeGen\\napi1109\\napi_generator_0824\\appOut", funcConfig)
 }

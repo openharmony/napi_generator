@@ -25,24 +25,21 @@ const { print } = require("./tools/tool");
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: ".d.ts file", default: "@ohos.napitest.d.ts" },
     'out': { key: 'o', args: 1, description: "output directory", default: "." },
-    'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" }
-});
+    'loglevel': { key: 'l', args: 1, description: "Log Level : 0~3", default: "1" },
 
-
-    /* 新增业务代码可配置参数：写在json文件里:
-     * [{"includeName":"xxx.h", "cppName":"xxx.cpp","interfaceName": "functest", 
-     * "serviceCode":"out = codeTestFunc(v);"}]
+    /* 需要测试的接口函数可配置：写在json文件里:
+     * [{
+     * "classOrInterfName": "",
+     * "functionName": "funNum"
+     * }]     
      * 配置cfg.json文件路径
      */
-    // 'serviceCode': {key: 's', args: 1, description: "configure the service code", default: ""},
-    // 'directory': { key: 'd', args: 1, description: ".d.ts directory", default: "" },
-    // 'imports': { key: 'i', args: 1, description: "enable or disable support imports self-define file", default: false },
+    'functionsCfg': {key: 'c', args: 1, description: "configured file including the functions for test", default: ""}
+});
     
 NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"))
 
 let fileNames = ops.filename;
-// var pathDir = ops.directory;
-// var imports = ops.imports;
 if (fileNames == null) {
     NapiLog.logInfo("fileNames cannot be empty!");
 } else if (fileNames !== '') {
@@ -64,7 +61,6 @@ function readFiles() {
     }
 }
 
-
 /**
  * 获取Json配置文件内容
  * @returns 
@@ -85,12 +81,12 @@ function checkGenerate(fileName) {
     let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
     if (tt) {
         let result = checkFileError(fileName);
-        let jsonConfig
-        // if (ops.serviceCode) {
-        //     jsonConfig = getJsonCfg(ops.serviceCode);
-        // }
+        let funcConfig
+        if (ops.functionsCfg) {
+            funcConfig = getJsonCfg(ops.functionsCfg);
+        }
         if (result[0]) {
-            main.doGenerate(fileName, ops.out, jsonConfig);
+            main.doGenerate(fileName, ops.out, funcConfig);
         }
         else {
             NapiLog.logError(result[1]);
@@ -109,4 +105,9 @@ if (ret[0]) {
 else {
     print('fail\n' + ret[1]);
     NapiLog.logInfo('fail\n' + ret[1]);
+}
+
+
+module.exports = {
+    getJsonCfg
 }
