@@ -126,7 +126,7 @@ Native-C++ 教程的目的包括：
 
      
 
-完成上述步骤后，您就可以在 OpenHarmony 设备上体验 Native API 的能力，并按照 [Node-API]([Node-API | ’Node‘.js v20 文档 (nodejs.cn)](api/n-api.html)) 教程进行进一步的学习和实践了。
+完成上述步骤后，您就可以在 OpenHarmony 设备上体验 Native API 的能力，并按照 [Node-API]([Node-API | ’Node‘.js v20 文档](api/n-api.html)) 教程进行进一步的学习和实践了。
 
 
 

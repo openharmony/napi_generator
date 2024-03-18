@@ -20,15 +20,31 @@ import testNapi from 'libentry.so';
 import { TitleBar } from '../../../common/TitleBar'
 import hilog from '@ohos.hilog';
 
-const TAG: string = 'napi_padding';
+const TAG: string = 'napi_roi';
 
 @Entry
 @Component
 struct napigetinstancedata {
   private btnFontColor: Resource = $r('app.color.white');
   private pixelMapFormat: image.PixelMapFormat = 3;
-  @State isPadding: Boolean = false;
+  @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
+  @State textcont: string = '一个 Node.js 环境对应一个 ECMAScript Agent。在主进程中，启动时创建一个环境，'
+    + '可以在单独的线程上创建额外的环境作为 工作线程。当 Node.js 嵌入到另一个应用中时，应用的主线程也可能在应用的生命周期'
+    + '中多次构造和销毁 Node.js 环境，使得应用创建的每个 Node.js 环境可能，在 反过来，在其生命周期中创建和销毁额外的环境作为工作线程。'
+    + '从原生插件的角度来看，这意味着它提供的绑定可以从多个上下文中多次调用，甚至可以同时从多个线程中调用。'
+    + '原生插件可能需要分配它们在 Node.js 环境的生命周期中使用的全局状态，以便该状态对于插件的每个实例都是唯一的。'
+    + '为此，Node-API 提供了一种关联数据的方法，使其生命周期与 Node.js 环境的生命周期相关联。'
+  @State testcont: string = ' // 获取导出的 N-API 实例对象 \n'
+    + ' const instance = addon.instance; \n'
+    + ' // 使用实例对象进行操作 \n'
+    + ' console.log(instance); // 输出 N-API 实例对象 \n'
+    + ' // 获取与实例对象关联的自定义数据 \n'
+    + '  const myData = addon.getInstanceData(instance); \n'
+    + ' // 使用获取的自定义数据 \n'
+    + ' console.log(myData); // 输出自定义数据 \n';
+
+  controller: TextAreaController = new TextAreaController()
 
   build() {
     Column() {
@@ -37,81 +53,53 @@ struct napigetinstancedata {
 
       Column() {
         Column() {
-          if (this.isPadding == false) {
-            Image($rawfile('lena.jpg'))
-              .margin({ left: 24, right: 24 })
-              .objectFit(ImageFit.Contain)
-              .id('backBtn')
-          } else {
-            Image(this.imagePixelMap)
-              .margin({ left: 24, right: 24 })
-              .objectFit(ImageFit.Contain)
-              .id('backBtn')
-          }
+          TextArea({
+            text: this.textcont,
+            placeholder: '',
+          })
+            .placeholderFont({ size: 16, weight: 400 })
+            .width('90%')
+            .margin(10)
+            .fontSize(16)
+            .fontColor('#182431')
+            .backgroundColor('#FFFFFF')
+            .enabled(false)
+
+          TextArea({
+            text: this.testcont,
+            placeholder: '',
+          })
+            .placeholderFont({ size: 16, weight: 400 })
+            .width('90%')
+            .margin(10)
+            .fontSize(16)
+            .fontColor('#ff400336')
+            .backgroundColor('#ff985307')
+            .enabled(false)
         }
         .width('100%')
-        .height(480)
         .alignItems(HorizontalAlign.Center)
         .justifyContent(FlexAlign.Start)
 
         Row() {
-          if (this.isPadding) {
-            Button($r('app.string.enum_napi_valuetype'), { type: ButtonType.Capsule })
-              .backgroundColor(Color.Gray)
-              .width(120)
-              .height(48)
-              .fontSize(16)
-              .fontWeight(500)
-              .fontColor(this.btnFontColor)
-              .margin({ left: 24 })
-              .id('imageGray')
-              .enabled(false)
 
-          } else {
-            Button($r('app.string.enum_napi_valuetype'), { type: ButtonType.Capsule })
-              .backgroundColor(Color.Blue)
-              .width(120)
-              .height(48)
-              .fontSize(16)
-              .fontWeight(500)
-              .fontColor(this.btnFontColor)
-              .margin({ left: 24 })
-              .id('imageGray')
-              .onClick(() => {
-                getContext().resourceManager.getRawFileContent('lena.jpg')
-                  .then((value: Uint8Array) => {
-                    hilog.info(0x0000, 'testTag', `getRawFileContent ${value.length} `);
-                    testNapi.padding(value).then((res:testNapi.PixelInfo) => {
-                      hilog.info(0x0000, 'testTag', 'Test asyncRescont = %{public}d', res.buffSize);
-                      let opts: image.InitializationOptions = {
-                        editable: true,
-                        pixelFormat: this.pixelMapFormat,
-                        size: { height: res.rows, width: res.cols }
-                      }
-                      image.createPixelMap(res.byteBuffer, opts, (error, pixelmap) => {
-                        if (error) {
-                          Logger.error(TAG, `Failed to create pixelmap error_code ${error.code}`);
-                        } else {
-                          Logger.info(TAG, 'Succeeded in creating pixelmap.');
-                          this.imagePixelMap = pixelmap;
-                          this.isPadding = true;
-                        }
-                      })
-                    })
-                  })
-              })
-          }
-          Button($r('app.string.image_recover'), { type: ButtonType.Capsule })
+          Button($r('app.string.enum_napi_valuetype'), { type: ButtonType.Capsule })
             .backgroundColor(Color.Blue)
-            .width(120)
+            .width('80%')
             .height(48)
             .fontSize(16)
             .fontWeight(500)
             .fontColor(this.btnFontColor)
-            .margin({ right: 24 })
-            .id('imageRecover')
+            .margin({ left: 24 })
+            .id('imageGray')
             .onClick(() => {
-              this.isPadding = false;
+              let instanceobj = testNapi.instance;
+              let ret1 = `instance ${instanceobj} `
+              let ret2 = ' ld.lld: error: undefined symbol: napi_get_instance_data '
+              hilog.info(0x0000, 'testTag', ret1);
+              hilog.info(0x0000, 'testTag', `instance ${instanceobj.testint32} `);
+              this.testcont = this.testcont.replace('log(instance)', 'log(## '+ret1+' ##)');
+              this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret2+' ##)');
             })
         }
         .width('100%')
