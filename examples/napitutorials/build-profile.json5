@@ -1,0 +1,48 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "material": {
+          "certpath": "C:\\Users\\Administrator\\.ohos\\config\\openharmony\\auto_ohos_default_napitutorials_com.example.napitutorials.cer",
+          "storePassword": "00000019113BEA8A162B3F7F49C6FDC76B00433657510CE951F938C2C93DF162B26EDF103D500F7EA0",
+          "keyAlias": "debugKey",
+          "keyPassword": "00000019151AB41B42D74D7267DD11E8CAE3CCE64E310A92160984B23C669ED50912DFFD6F9E6B4EA4",
+          "profile": "C:\\Users\\Administrator\\.ohos\\config\\openharmony\\auto_ohos_default_napitutorials_com.example.napitutorials.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\Administrator\\.ohos\\config\\openharmony\\auto_ohos_default_napitutorials_com.example.napitutorials.p12"
+        }
+      }
+    ],
+    "compileSdkVersion": 9,
+    "compatibleSdkVersion": 9,
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}
