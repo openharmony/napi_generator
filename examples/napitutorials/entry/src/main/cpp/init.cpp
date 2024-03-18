@@ -19,7 +19,8 @@
 #include <iostream>
 #include <fstream>
 
-static napi_value Add(napi_env env, napi_callback_info info) {
+static napi_value Add(napi_env env, napi_callback_info info)
+{
     size_t requireArgc = 2;
     size_t argc = 2;
     napi_value args[2] = {nullptr};
@@ -47,7 +48,8 @@ static napi_value Add(napi_env env, napi_callback_info info) {
 
 
 EXTERN_C_START
-static napi_value Init(napi_env env, napi_value exports) {
+static napi_value Init(napi_env env, napi_value exports)
+{
     // 对应nodeapi/envlifecycleapis/napisetinstancedata
     setInstancedata(env, exports);
 
