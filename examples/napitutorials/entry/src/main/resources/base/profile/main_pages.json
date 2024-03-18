@@ -1,0 +1,7 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/nodeapi/envlifecycleapis/napisetinstancedata",
+    "pages/nodeapi/envlifecycleapis/napigetinstancedata"
+  ]
+}
