@@ -13,8 +13,8 @@
  * limitations under the License.
  */
 
-#ifndef napitutorials_common.h_H
-#define napitutorials_common.h_H
+#ifndef NAPITUTORIALS_COMMON_H
+#define NAPITUTORIALS_COMMON_H
 
 #include <string>
 #include <stdio.h>
@@ -78,27 +78,12 @@ template <typename T> void FreeMemoryArray(T *p) {
     p = nullptr;
 }
 #define NAPI_RETVAL_NOTHING
-#define NAPI_CALL_BASE(env, theCall, retVal)                                                                           \
-    do {                                                                                                               \
-        if ((theCall) != 0) {                                                                                          \
-            \ 
-            return retVal;                                                                                             \
-        }                                                                                                              \
-    } while (0)
 
-#define NAPI_CALL(env, theCall) NAPI_CALL_BASE(env, theCall, nullptr)
-#define NAPI_CALL_RETURN_VOID(env, theCall) NAPI_CALL_BASE(env, theCall, NAPI_RETVAL_NOTHING)
-//
-//extern bool GetMatFromRawFile(napi_env env, napi_value jsResMgr, const std::string &rawfileDir,
-//                              const std::string &fileName, cv::Mat &srcImage);
-//extern bool cvtMat2Pixel(cv::InputArray _src, cv::OutputArray &_dst, int code);
-//extern napi_value NapiGetNull(napi_env env);
-//extern uint32_t GetMatDataBuffSize(const cv::Mat &mat);
 extern bool CreateArrayBuffer(napi_env env, uint8_t *src, size_t srcLen, napi_value *res);
 extern napi_value NapiGetUndefined(napi_env env);
 extern napi_value GetCallbackErrorValue(napi_env env, int32_t errCode);
 extern napi_value NapiGetBoolean(napi_env env, const bool &isValue);
-//extern uint32_t GetMatDataBuffSize(const cv::Mat &mat);
+
 extern void SetCallback(const napi_env &env, const napi_ref &callbackIn, const int32_t &errorCode,
                         const napi_value &result);
 extern void SetPromise(const napi_env &env, const napi_deferred &deferred, const int32_t &errorCode,
@@ -107,7 +92,6 @@ extern void ReturnCallbackPromise(const napi_env &env, const CallbackPromiseInfo
 extern napi_value JSParaError(const napi_env &env, const napi_ref &callback);
 extern void PaddingCallbackPromiseInfo(const napi_env &env, const napi_ref &callback, CallbackPromiseInfo &info,
                                        napi_value &promise);
-//extern bool WrapJsPixelInfoInfo(napi_env env, cv::Mat &outMat, napi_value &result);
 
 
-#endif //napitutorials_common.h_H
+#endif //NAPITUTORIALS_COMMON_H
