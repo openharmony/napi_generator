@@ -4,9 +4,9 @@
 
 #### Node-API 介绍
 
-Node-API（以前称为 N-API）是用于构建原生插件的 API。它独立于底层 JavaScript 运行时（例如 V8），并作为 Node.js 本身的一部分进行维护。此 API 将在 Node.js 的各个版本中保持稳定的应用二进制接口 (ABI)。它旨在将插件与底层 JavaScript 引擎的变化隔离开来，并允许为一个主要版本编译的模块无需重新编译即可在以后的 Node.js 主要版本上运行。[ABI 稳定性](docs/guides/abi-stability/) 指南提供了更深入的解释。
+Node-API（以前称为 N-API）是用于构建原生插件的 API。它独立于底层 JavaScript 运行时，并作为 ’Node‘.js 本身的一部分进行维护。此 API 将在 ’Node‘.js 的各个版本中保持稳定的应用二进制接口 (ABI)。它旨在将插件与底层 JavaScript 引擎的变化隔离开来，并允许为一个主要版本编译的模块无需重新编译即可在以后的 ’Node‘.js 主要版本上运行。[ABI 稳定性](docs/guides/abi-stability/) 指南提供了更深入的解释。
 
-插件是使用标头为 [C++ 插件](api/addons.html) 的部分中概述的相同方法/工具构建/打包的。唯一的区别是原生代码使用的 API 集。不使用 V8 或 [Node.js 的原生抽象](https://github.com/nodejs/nan) API，而是使用 Node-API 中可用的函数。
+插件是使用标头为 [C++ 插件](api/addons.html) 的部分中概述的相同方法/工具构建/打包的。唯一的区别是原生代码使用的 API 集。
 
 Node-API 公开的 API 通常用于创建和操作 JavaScript 值。概念和操作通常映射到 ECMA-262 语言规范中指定的想法。API 具有以下属性：
 
@@ -19,7 +19,7 @@ Node-API 公开的 API 通常用于创建和操作 JavaScript 值。概念和操
 - 如果出现错误状态代码，可以使用 `napi_get_last_error_info` 获取附加信息。可以在错误处理部分 [错误处理](api/n-api.html#error-handling) 中找到更多信息。
 
 
-Node-API 是一种 C API，可确保跨 Node.js 版本和不同编译器级别的 ABI 稳定性。C++ API 可以更容易使用。为了支持使用 C++，该项目维护了一个名为 [`node-addon-api`](https://github.com/nodejs/node-addon-api) 的 C++ 封装器模块。这个封装器提供了一个可内联的 C++ API。使用 `node-addon-api` 构建的二进制文件将取决于 Node.js 导出的基于 Node-API C 的函数的符号。`node-addon-api` 是编写调用 Node-API 的代码的更有效方式。
+Node-API 是一种 C API，可确保跨版本和不同编译器级别的 ABI 稳定性。C++ API 可以更容易使用。为了支持使用 C++，该项目维护了一个名为 `node-addon-api` 的 C++ 封装器模块。这个封装器提供了一个可内联的 C++ API。使用 `node-addon-api` 构建的二进制文件将取决于 导出的基于 Node-API C 的函数的符号。`node-addon-api` 是编写调用 Node-API 的代码的更有效方式。
 
 
 
@@ -40,7 +40,7 @@ Native API是OpenHarmony SDK上提供的一组native开发接口与工具集合�
 | Native API | OHOS SDK里面native包提供的，面向三方应用开发的Native 接口以及相应编译脚本，编译工具链。包括C运行时基础库libc，3D图形库opengl，面向JS与C跨语言的接口Node-API等，具体内容详见下表。 |
 | NDK        | Native Develop Kit的缩写，在OHOS上就是Native API；Native API是官方名字，NDK指代相同意思。 |
 | SDK CAPI   | OHOS Native API中的C语言接口，以及工具链部分，当前OHOS的Native API里面只包含C语言接口，因此Native API与CAPI意思一样，建议交流的时候使用CAPI，防止Native API与napi缩写混用。 |
-| Node-API   | 曾用名napi，是OHOS中提供JS与C跨语言调用的接口，是Native API接口中的一部分. 该接口在Node.js提供的Node-API基础上扩展而来，但不完全与Node.js中的Node-API完全兼容。 |
+| Node-API   | 曾用名napi，是OHOS中提供JS与C跨语言调用的接口，是Native API接口中的一部分. 该接口在’Node‘.js提供的Node-API基础上扩展而来，但不完全与’Node‘.js中的Node-API完全兼容。 |
 | napi       | Node-API的曾用名，当前Node-API头文件中的接口仍然以napi_开头，不建议使用。 |
 
 
@@ -56,7 +56,6 @@ Native API是OpenHarmony SDK上提供的一组native开发接口与工具集合�
   | build       | 应用中编译动态库的toolchain cmake脚本；这个目录下ohos.toolchain.cmake文件定义了给OHOS交叉编译选项 |
   | build-tools | 放置编译构建的工具，如cmake                                  |
   | docs        | Native API接口参考文档，通过doxgen从头文件中提取出来         |
-  | llvm        | 支持OHOS ABI的llvm交叉编译器                                 |
   | sysroot     | 放置编译链接的依赖文件目录，包含头文件，动态库等             |
 
 * API接口
@@ -127,7 +126,7 @@ OpenCV 教程的目的包括：
 
      
 
-完成上述步骤后，您就可以在 OpenHarmony 设备上体验 Native API 的能力，并按照 [Node-API]([Node-API | Node.js v20 文档 (nodejs.cn)](api/n-api.html)) 教程进行进一步的学习和实践了。
+完成上述步骤后，您就可以在 OpenHarmony 设备上体验 Native API 的能力，并按照 [Node-API]([Node-API | ’Node‘.js v20 文档 (nodejs.cn)](api/n-api.html)) 教程进行进一步的学习和实践了。
 
 
 
@@ -194,11 +193,11 @@ OpenCV 教程的目的包括：
 |                                  | [`napi_reference_unref`](api/v18/n-api.html#napi_reference_unref) |          |            |
 |                                  | [`napi_get_reference_value`](api/v18/n-api.html#napi_get_reference_value) |          |            |
 |                                  |                                                              |          |            |
-| 当前 Node.js 环境退出时的清理    | [`napi_add_env_cleanup_hook`](api/v18/n-api.html#napi_add_env_cleanup_hook) |          |            |
+| 当前 ’Node‘.js 环境退出时的清理    | [`napi_add_env_cleanup_hook`](api/v18/n-api.html#napi_add_env_cleanup_hook) |          |            |
 |                                  | [`napi_remove_env_cleanup_hook`](api/v18/n-api.html#napi_remove_env_cleanup_hook) |          |            |
 |                                  | [`napi_add_async_cleanup_hook`](api/v18/n-api.html#napi_add_async_cleanup_hook) |          |            |
 |                                  | [`napi_remove_async_cleanup_hook`](api/v18/n-api.html#napi_remove_async_cleanup_hook) |          |            |
-| 在Node.js环境退出时完成          |                                                              |          |            |
+| 在’Node‘.js环境退出时完成          |                                                              |          |            |
 |                                  |                                                              |          |            |
 | 模块注册                         |                                                              |          |            |
 |                                  |                                                              |          |            |
@@ -350,5 +349,5 @@ OpenCV 教程的目的包括：
 |                                  | [`napi_ref_threadsafe_function`](api/v18/n-api.html#napi_ref_threadsafe_function) |          |            |
 |                                  | [`napi_unref_threadsafe_function`](api/v18/n-api.html#napi_unref_threadsafe_function) |          |            |
 |                                  |                                                              |          |            |
-| 其他使用工具                     | [`node_api_get_module_file_name`](api/v18/n-api.html#node_api_get_module_file_name) |          |            |
+| 使用工具                     | [`node_api_get_module_file_name`](api/v18/n-api.html#node_api_get_module_file_name) |          |            |
 |                                  |                                                              |          |            |

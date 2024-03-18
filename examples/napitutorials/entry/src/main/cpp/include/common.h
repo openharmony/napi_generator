@@ -62,7 +62,8 @@ struct CallbackPromiseInfo {
     int32_t errorCode = 0;
 };
 
-template <typename T> void FreeMemory(T *p) {
+template <typename T> void FreeMemory(T *p)
+{
     if (p == nullptr) {
         return;
     }
@@ -70,7 +71,8 @@ template <typename T> void FreeMemory(T *p) {
     p = nullptr;
 }
 
-template <typename T> void FreeMemoryArray(T *p) {
+template <typename T> void FreeMemoryArray(T *p)
+{
     if (p == nullptr) {
         return;
     }
