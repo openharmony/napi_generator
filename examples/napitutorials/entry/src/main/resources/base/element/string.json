@@ -1,0 +1,1996 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "entry_desc",
+      "value": "Component Collection"
+    },
+    {
+      "name": "MainAbility_desc",
+      "value": "ArkUI components, common attributes, common methods, etc. to classify and describe applications"
+    },
+    {
+      "name": "node_api",
+      "value": "Node Api"
+    },
+    {
+      "name": "javascript_api",
+      "value": "Javascript Api"
+    },
+    {
+      "name": "async_mgr",
+      "value": "Async Mgr"
+    },
+    {
+      "name": "other_mgr",
+      "value": "Other Mgr"
+    },
+    {
+      "name": "napi_object_detection",
+      "value": "Object Detection"
+    },
+    {
+      "name": "napi_dnn",
+      "value": "Deep Neural Networks"
+    },
+    {
+      "name": "animation",
+      "value": "Animation"
+    },
+    {
+      "name": "component",
+      "value": "Component"
+    },
+    {
+      "name": "universal",
+      "value": "Universal"
+    },
+    {
+      "name": "global_method",
+      "value": "Global Method"
+    },
+    {
+      "name": "auxiliary",
+      "value": "Auxiliary"
+    },
+    {
+      "name": "common_properties",
+      "value": "Common properties"
+    },
+    {
+      "name": "prop_background",
+      "value": "Background"
+    },
+    {
+      "name": "prop_foreground",
+      "value": "Foreground"
+    },
+    {
+      "name": "prop_border",
+      "value": "Border"
+    },
+    {
+      "name": "prop_font",
+      "value": "Font"
+    },
+    {
+      "name": "prop_bluefont",
+      "value": "#409EFF"
+    },
+    {
+      "name": "prop_orangefont",
+      "value": "#E6A23C"
+    },
+    {
+      "name": "prop_pinkfont",
+      "value": "#F56C6C"
+    },
+    {
+      "name": "prop_size",
+      "value": "Size"
+    },
+    {
+      "name": "graphic_transformation",
+      "value": "Graphics Transform"
+    },
+    {
+      "name": "common_events",
+      "value": "Common events"
+    },
+    {
+      "name": "click_event",
+      "value": "Click event"
+    },
+    {
+      "name": "touch_event",
+      "value": "Touch event"
+    },
+    {
+      "name": "show_hide_event",
+      "value": "Show/Hide Event"
+    },
+    {
+      "name": "drag_drop_event",
+      "value": "Drag/Drop Event"
+    },
+    {
+      "name": "key_event",
+      "value": "Key Event"
+    },
+    {
+      "name": "focus_event",
+      "value": "Focus Event"
+    },
+    {
+      "name": "mouse_event",
+      "value": "Mouse Event"
+    },
+    {
+      "name": "component_area_change_event",
+      "value": "Component Area Change Event"
+    },
+    {
+      "name": "gesture_processing",
+      "value": "Gesture Processing"
+    },
+    {
+      "name": "basic_gestures",
+      "value": "Basic Gestures"
+    },
+    {
+      "name": "tap_gesture",
+      "value": "TapGesture"
+    },
+    {
+      "name": "long_press_gesture",
+      "value": "LongPressGesture"
+    },
+    {
+      "name": "pan_gesture",
+      "value": "PanGesture"
+    },
+    {
+      "name": "pinch_gesture",
+      "value": "PinchGesture"
+    },
+    {
+      "name": "rotation_gesture",
+      "value": "RotationGesture"
+    },
+    {
+      "name": "swipe_gesture",
+      "value": "SwipeGesture"
+    },
+    {
+      "name": "combined_gestures",
+      "value": "Combined Gestures"
+    },
+    {
+      "name": "transition_animation",
+      "value": "Transition animation"
+    },
+    {
+      "name": "interpolation_calculation",
+      "value": "Interpolation calculation"
+    },
+    {
+      "name": "dialog",
+      "value": "Dialog"
+    },
+    {
+      "name": "environment_life_cycle_apis",
+      "value": "Environment Life Cycle Apis"
+    },
+    {
+      "name": "napi_set_instance_data",
+      "value": "Napi Set Instance Data"
+    },
+    {
+      "name": "napi_get_instance_data",
+      "value": "Napi Get Instance Data"
+    },
+    {
+      "name": "basic_node_api_data_types",
+      "value": "Basic Node Api Data Types"
+    },
+    {
+      "name": "napi_status",
+      "value": "Napi Status"
+    },
+    {
+      "name": "napi_extended_error_info",
+      "value": "napi_extended_error_info"
+    },
+    {
+      "name": "napi_env",
+      "value": "napi_env"
+    },
+    {
+      "name": "napi_value",
+      "value": "napi_value"
+    },
+    {
+      "name": "napi_threadsafe_function",
+      "value": "napi_threadsafe_function"
+    },
+    {
+      "name": "napi_threadsafe_function_release_mode",
+      "value": "napi_threadsafe_function_release_mode"
+    },
+    {
+      "name": "napi_threadsafe_function_call_mode",
+      "value": "napi_threadsafe_function_call_mode"
+    },
+    {
+      "name": "node_api_memory_management_types",
+      "value": "node_api_memory_management_types"
+    },
+    {
+      "name": "napi_handle_scope",
+      "value": "napi_handle_scope"
+    },
+    {
+      "name": "napi_escapable_handle_scope",
+      "value": "napi_escapable_handle_scope"
+    },
+    {
+      "name": "napi_ref",
+      "value": "napi_ref"
+    },
+    {
+      "name": "napi_type_tag",
+      "value": "napi_type_tag"
+    },
+    {
+      "name": "napi_async_cleanup_hook_handle",
+      "value": "napi_async_cleanup_hook_handle"
+    },
+    {
+      "name": "node_api_callback_types",
+      "value": "node_api_callback_types"
+    },
+    {
+      "name": "napi_callback_info",
+      "value": "napi_callback_info"
+    },
+    {
+      "name": "napi_callback",
+      "value": "napi_callback"
+    },
+    {
+      "name": "napi_finalize",
+      "value": "napi_finalize"
+    },
+    {
+      "name": "napi_async_execute_callback",
+      "value": "napi_async_execute_callback"
+    },
+    {
+      "name": "napi_async_complete_callback",
+      "value": "napi_async_complete_callback"
+    },
+    {
+      "name": "napi_threadsafe_function_call_js",
+      "value": "napi_threadsafe_function_call_js"
+    },
+    {
+      "name": "napi_cleanup_hook",
+      "value": "napi_cleanup_hook"
+    },
+    {
+      "name": "napi_async_cleanup_hook",
+      "value": "napi_async_cleanup_hook"
+    },
+    {
+      "name": "node_api_error_handling_return_values",
+      "value": "node_api_error_handling_return_values"
+    },
+    {
+      "name": "napi_get_last_error_info",
+      "value": "napi_get_last_error_info"
+    },
+    {
+      "name": "node_api_error_handling_exception",
+      "value": "node_api_error_handling_exception"
+    },
+    {
+      "name": "napi_throw",
+      "value": "napi_throw"
+    },
+    {
+      "name": "napi_throw_error",
+      "value": "napi_throw_error"
+    },
+    {
+      "name": "napi_throw_type_error",
+      "value": "napi_throw_type_error"
+    },
+    {
+      "name": "napi_throw_range_error",
+      "value": "napi_throw_range_error"
+    },
+    {
+      "name": "node_api_throw_syntax_error",
+      "value": "node_api_throw_syntax_error"
+    },
+    {
+      "name": "napi_is_error",
+      "value": "napi_is_error"
+    },
+    {
+      "name": "napi_create_error",
+      "value": "napi_create_error"
+    },
+    {
+      "name": "napi_create_type_error",
+      "value": "napi_create_type_error"
+    },
+    {
+      "name": "napi_create_range_error",
+      "value": "napi_create_range_error"
+    },
+    {
+      "name": "node_api_create_syntax_error",
+      "value": "node_api_create_syntax_error"
+    },
+    {
+      "name": "napi_get_and_clear_last_exception",
+      "value": "napi_get_and_clear_last_exception"
+    },
+    {
+      "name": "napi_is_exception_pending",
+      "value": "napi_is_exception_pending"
+    },
+    {
+      "name": "napi_fatal_exception",
+      "value": "napi_fatal_exception"
+    },
+    {
+      "name": "node_api_error_handling_fatal_errors",
+      "value": "node_api_error_handling_fatal_errors"
+    },
+    {
+      "name": "napi_fatal_error",
+      "value": "napi_fatal_error"
+    },
+    {
+      "name": "node_api_object_lifetime_management",
+      "value": "node_api_object_lifetime_management"
+    },
+    {
+      "name": "Making_handle_lifespan_shorter_than_that_of_the_native_method",
+      "value": "Making_handle_lifespan_shorter_than_that_of_the_native_method"
+    },
+    {
+      "name": "napi_open_handle_scope",
+      "value": "napi_open_handle_scope"
+    },
+    {
+      "name": "napi_close_handle_scope",
+      "value": "napi_close_handle_scope"
+    },
+    {
+      "name": "napi_open_escapable_handle_scope",
+      "value": "napi_open_escapable_handle_scope"
+    },
+    {
+      "name": "napi_close_escapable_handle_scope",
+      "value": "napi_close_escapable_handle_scope"
+    },
+    {
+      "name": "napi_escape_handle",
+      "value": "napi_escape_handle"
+    },
+    {
+      "name": "references_to_values_with_a_lifespan_longer_than_that_of_the_native_method",
+      "value": "references_to_values_with_a_lifespan_longer_than_that_of_the_native_method"
+    },
+    {
+      "name": "napi_create_reference",
+      "value": "napi_create_reference"
+    },
+    {
+      "name": "napi_delete_reference",
+      "value": "napi_delete_reference"
+    },
+    {
+      "name": "napi_reference_ref",
+      "value": "napi_reference_ref"
+    },
+    {
+      "name": "napi_reference_unref",
+      "value": "napi_reference_unref"
+    },
+    {
+      "name": "napi_get_reference_value",
+      "value": "napi_get_reference_value"
+    },
+    {
+      "name": "cleanup_on_exit_of_the_current_nodejs_environment",
+      "value": "cleanup_on_exit_of_the_current_nodejs_environment"
+    },
+    {
+      "name": "napi_add_env_cleanup_hook",
+      "value": "napi_add_env_cleanup_hook"
+    },
+    {
+      "name": "napi_remove_env_cleanup_hook",
+      "value": "napi_remove_env_cleanup_hook"
+    },
+    {
+      "name": "napi_add_async_cleanup_hook",
+      "value": "napi_add_async_cleanup_hook"
+    },
+    {
+      "name": "napi_remove_async_cleanup_hook",
+      "value": "napi_remove_async_cleanup_hook"
+    },
+    {
+      "name": "finalization_on_the_exit_of_the_nodejs_environment",
+      "value": "finalization_on_the_exit_of_the_nodejs_environment"
+    },
+    {
+      "name": "node_api_module_registration",
+      "value": "node_api_module_registration"
+    },
+    {
+      "name": "work_with_javascript_values",
+      "value": "work_with_javascript_values"
+    },
+    {
+      "name": "enum_napi_key_collection_mode",
+      "value": "enum_napi_key_collection_mode"
+    },
+    {
+      "name": "enum_napi_key_filter",
+      "value": "enum_napi_key_filter"
+    },
+    {
+      "name": "enum_napi_key_conversion",
+      "value": "enum_napi_key_conversion"
+    },
+    {
+      "name": "enum_napi_valuetype",
+      "value": "enum_napi_valuetype"
+    },
+    {
+      "name": "enum_napi_typedarray_type",
+      "value": "enum_napi_typedarray_type"
+    },
+    {
+      "name": "napi_create_array",
+      "value": "napi_create_array"
+    },
+    {
+      "name": "napi_create_array_with_length",
+      "value": "napi_create_array_with_length"
+    },
+    {
+      "name": "napi_create_arraybuffer",
+      "value": "napi_create_arraybuffer"
+    },
+    {
+      "name": "napi_create_buffer",
+      "value": "napi_create_buffer"
+    },
+    {
+      "name": "napi_create_buffer_copy",
+      "value": "napi_create_buffer_copy"
+    },
+    {
+      "name": "napi_create_date",
+      "value": "napi_create_date"
+    },
+    {
+      "name": "napi_create_external",
+      "value": "napi_create_external"
+    },
+    {
+      "name": "napi_create_external_arraybuffer",
+      "value": "napi_create_external_arraybuffer"
+    },
+    {
+      "name": "napi_create_external_buffer",
+      "value": "napi_create_external_buffer"
+    },
+    {
+      "name": "napi_create_object",
+      "value": "napi_create_object"
+    },
+    {
+      "name": "napi_create_symbol",
+      "value": "napi_create_symbol"
+    },
+    {
+      "name": "node_api_symbol_for",
+      "value": "node_api_symbol_for"
+    },
+    {
+      "name": "napi_create_typedarray",
+      "value": "napi_create_typedarray"
+    },
+    {
+      "name": "napi_create_dataview",
+      "value": "napi_create_dataview"
+    },
+    {
+      "name": "napi_create_int32",
+      "value": "napi_create_int32"
+    },
+    {
+      "name": "napi_create_uint32",
+      "value": "napi_create_uint32"
+    },
+    {
+      "name": "napi_create_int64",
+      "value": "napi_create_int64"
+    },
+    {
+      "name": "napi_create_double",
+      "value": "napi_create_double"
+    },
+    {
+      "name": "napi_create_bigint_int64",
+      "value": "napi_create_bigint_int64"
+    },
+    {
+      "name": "napi_create_bigint_uint64",
+      "value": "napi_create_bigint_uint64"
+    },
+    {
+      "name": "napi_create_bigint_words",
+      "value": "napi_create_bigint_words"
+    },
+    {
+      "name": "napi_create_string_latin1",
+      "value": "napi_create_string_latin1"
+    },
+    {
+      "name": "node_api_create_external_string_latin1",
+      "value": "node_api_create_external_string_latin1"
+    },
+    {
+      "name": "napi_create_string_utf16",
+      "value": "napi_create_string_utf16"
+    },
+    {
+      "name": "node_api_create_external_string_utf16",
+      "value": "node_api_create_external_string_utf16"
+    },
+    {
+      "name": "napi_create_string_utf8",
+      "value": "napi_create_string_utf8"
+    },
+    {
+      "name": "napi_get_array_length",
+      "value": "napi_get_array_length"
+    },
+    {
+      "name": "napi_get_arraybuffer_info",
+      "value": "napi_get_arraybuffer_info"
+    },
+    {
+      "name": "napi_get_buffer_info",
+      "value": "napi_get_buffer_info"
+    },
+    {
+      "name": "napi_get_prototype",
+      "value": "napi_get_prototype"
+    },
+    {
+      "name": "napi_get_typedarray_info",
+      "value": "napi_get_typedarray_info"
+    },
+    {
+      "name": "napi_get_dataview_info",
+      "value": "napi_get_dataview_info"
+    },
+    {
+      "name": "napi_get_date_value",
+      "value": "napi_get_date_value"
+    },
+    {
+      "name": "napi_get_value_bool",
+      "value": "napi_get_value_bool"
+    },
+    {
+      "name": "napi_get_value_double",
+      "value": "napi_get_value_double"
+    },
+    {
+      "name": "napi_get_value_bigint_int64",
+      "value": "napi_get_value_bigint_int64"
+    },
+    {
+      "name": "napi_get_value_bigint_uint64",
+      "value": "napi_get_value_bigint_uint64"
+    },
+    {
+      "name": "napi_get_value_bigint_words",
+      "value": "napi_get_value_bigint_words"
+    },
+    {
+      "name": "napi_get_value_external",
+      "value": "napi_get_value_external"
+    },
+    {
+      "name": "napi_get_value_int32",
+      "value": "napi_get_value_int32"
+    },
+    {
+      "name": "napi_get_value_int64",
+      "value": "napi_get_value_int64"
+    },
+    {
+      "name": "napi_get_value_string_latin1",
+      "value": "napi_get_value_string_latin1"
+    },
+    {
+      "name": "napi_get_value_string_utf8",
+      "value": "napi_get_value_string_utf8"
+    },
+    {
+      "name": "napi_get_value_string_utf16",
+      "value": "napi_get_value_string_utf16"
+    },
+    {
+      "name": "napi_get_value_uint32",
+      "value": "napi_get_value_uint32"
+    },
+    {
+      "name": "napi_get_boolean",
+      "value": "napi_get_boolean"
+    },
+    {
+      "name": "napi_get_global",
+      "value": "napi_get_global"
+    },
+    {
+      "name": "napi_get_null",
+      "value": "napi_get_null"
+    },
+    {
+      "name": "napi_get_undefined",
+      "value": "napi_get_undefined"
+    },
+    {
+      "name": "work_with_javascript_values_and_abstract_operations",
+      "value": "work_with_javascript_values_and_abstract_operations"
+    },
+    {
+      "name": "napi_coerce_to_bool",
+      "value": "napi_coerce_to_bool"
+    },
+    {
+      "name": "napi_coerce_to_number",
+      "value": "napi_coerce_to_number"
+    },
+    {
+      "name": "napi_coerce_to_object",
+      "value": "napi_coerce_to_object"
+    },
+    {
+      "name": "napi_coerce_to_string",
+      "value": "napi_coerce_to_string"
+    },
+    {
+      "name": "napi_typeof",
+      "value": "napi_typeof"
+    },
+    {
+      "name": "napi_instanceof",
+      "value": "napi_instanceof"
+    },
+    {
+      "name": "napi_is_array",
+      "value": "napi_is_array"
+    },
+    {
+      "name": "napi_is_arraybuffer",
+      "value": "napi_is_arraybuffer"
+    },
+    {
+      "name": "napi_is_buffer",
+      "value": "napi_is_buffer"
+    },
+    {
+      "name": "napi_is_date",
+      "value": "napi_is_date"
+    },
+    {
+      "name": "napi_is_typedarray",
+      "value": "napi_is_typedarray"
+    },
+    {
+      "name": "napi_is_dataview",
+      "value": "napi_is_dataview"
+    },
+    {
+      "name": "napi_strict_equals",
+      "value": "napi_strict_equals"
+    },
+    {
+      "name": "napi_detach_arraybuffer",
+      "value": "napi_detach_arraybuffer"
+    },
+    {
+      "name": "napi_is_detached_arraybuffer",
+      "value": "napi_is_detached_arraybuffer"
+    },
+    {
+      "name": "work_with_javascript_properties",
+      "value": "work_with_javascript_properties"
+    },
+    {
+      "name": "napi_property_attributes",
+      "value": "napi_property_attributes"
+    },
+    {
+      "name": "napi_property_descriptor",
+      "value": "napi_property_descriptor"
+    },
+    {
+      "name": "napi_get_property_names",
+      "value": "napi_get_property_names"
+    },
+    {
+      "name": "napi_get_all_property_names",
+      "value": "napi_get_all_property_names"
+    },
+    {
+      "name": "napi_set_property",
+      "value": "napi_set_property"
+    },
+    {
+      "name": "napi_get_property",
+      "value": "napi_get_property"
+    },
+    {
+      "name": "napi_has_property",
+      "value": "napi_has_property"
+    },
+    {
+      "name": "napi_delete_property",
+      "value": "napi_delete_property"
+    },
+    {
+      "name": "napi_has_own_property",
+      "value": "napi_has_own_property"
+    },
+    {
+      "name": "napi_set_named_property",
+      "value": "napi_set_named_property"
+    },
+    {
+      "name": "napi_get_named_property",
+      "value": "napi_get_named_property"
+    },
+    {
+      "name": "napi_has_named_property",
+      "value": "napi_has_named_property"
+    },
+    {
+      "name": "napi_set_element",
+      "value": "napi_set_element"
+    },
+    {
+      "name": "napi_get_element",
+      "value": "napi_get_element"
+    },
+    {
+      "name": "napi_has_element",
+      "value": "napi_has_element"
+    },
+    {
+      "name": "napi_delete_element",
+      "value": "napi_delete_element"
+    },
+    {
+      "name": "napi_define_properties",
+      "value": "napi_define_properties"
+    },
+    {
+      "name": "napi_object_freeze",
+      "value": "napi_object_freeze"
+    },
+    {
+      "name": "napi_object_seal",
+      "value": "napi_object_seal"
+    },
+    {
+      "name": "work_with_javasript_functions",
+      "value": "work_with_javasript_functions"
+    },
+    {
+      "name": "napi_call_function",
+      "value": "napi_call_function"
+    },
+    {
+      "name": "napi_create_function",
+      "value": "napi_create_function"
+    },
+    {
+      "name": "napi_get_cb_info",
+      "value": "napi_get_cb_info"
+    },
+    {
+      "name": "napi_get_new_target",
+      "value": "napi_get_new_target"
+    },
+    {
+      "name": "napi_new_instance",
+      "value": "napi_new_instance"
+    },
+    {
+      "name": "object_wrap",
+      "value": "object_wrap"
+    },
+    {
+      "name": "napi_define_class",
+      "value": "napi_define_class"
+    },
+    {
+      "name": "napi_wrap",
+      "value": "napi_wrap"
+    },
+    {
+      "name": "napi_unwrap",
+      "value": "napi_unwrap"
+    },
+    {
+      "name": "napi_remove_wrap",
+      "value": "napi_remove_wrap"
+    },
+    {
+      "name": "napi_type_tag_object",
+      "value": "napi_type_tag_object"
+    },
+    {
+      "name": "napi_check_object_type_tag",
+      "value": "napi_check_object_type_tag"
+    },
+    {
+      "name": "napi_add_finalizer",
+      "value": "napi_add_finalizer"
+    },
+    {
+      "name": "node_api_post_finalizer",
+      "value": "node_api_post_finalizer"
+    },
+    {
+      "name": "simple_asyncronous_operations",
+      "value": "simple_asyncronous_operations"
+    },
+    {
+      "name": "napi_create_async_work",
+      "value": "napi_create_async_work"
+    },
+    {
+      "name": "napi_delete_async_work",
+      "value": "napi_delete_async_work"
+    },
+    {
+      "name": "napi_queue_async_work",
+      "value": "napi_queue_async_work"
+    },
+    {
+      "name": "napi_cancel_async_work",
+      "value": "napi_cancel_async_work"
+    },
+    {
+      "name": "custom_asyncronous_operations",
+      "value": "custom_asyncronous_operations"
+    },
+    {
+      "name": "napi_async_init",
+      "value": "napi_async_init"
+    },
+    {
+      "name": "napi_async_destroy",
+      "value": "napi_async_destroy"
+    },
+    {
+      "name": "napi_make_callback",
+      "value": "napi_make_callback"
+    },
+    {
+      "name": "napi_open_callback_scope",
+      "value": "napi_open_callback_scope"
+    },
+    {
+      "name": "napi_close_callback_scope",
+      "value": "napi_close_callback_scope"
+    },
+    {
+      "name": "version_management",
+      "value": "version_management"
+    },
+    {
+      "name": "napi_get_node_version",
+      "value": "napi_get_node_version"
+    },
+    {
+      "name": "napi_get_version",
+      "value": "napi_get_version"
+    },
+    {
+      "name": "memory_management",
+      "value": "memory_management"
+    },
+    {
+      "name": "napi_adjust_external_memory",
+      "value": "napi_adjust_external_memory"
+    },
+    {
+      "name": "promise",
+      "value": "promise"
+    },
+    {
+      "name": "napi_create_promise",
+      "value": "napi_create_promise"
+    },
+    {
+      "name": "napi_resolve_deferred",
+      "value": "napi_resolve_deferred"
+    },
+    {
+      "name": "napi_reject_deferred",
+      "value": "napi_reject_deferred"
+    },
+    {
+      "name": "napi_is_promise",
+      "value": "napi_is_promise"
+    },
+    {
+      "name": "script_execution",
+      "value": "script_execution"
+    },
+    {
+      "name": "napi_run_script",
+      "value": "napi_run_script"
+    },
+    {
+      "name": "libuv_event_loop",
+      "value": "libuv_event_loop"
+    },
+    {
+      "name": "napi_get_uv_event_loop",
+      "value": "napi_get_uv_event_loop"
+    },
+    {
+      "name": "asyncronous_thread_safe_function_call",
+      "value": "asyncronous_thread_safe_function_call"
+    },
+    {
+      "name": "calling_a_thread_safe_function",
+      "value": "calling_a_thread_safe_function"
+    },
+    {
+      "name": "refrence_counting_of_thread_safe_functions",
+      "value": "refrence_counting_of_thread_safe_functions"
+    },
+    {
+      "name": "deciding_whether_to_keep_the_process_running",
+      "value": "deciding_whether_to_keep_the_process_running"
+    },
+    {
+      "name": "napi_create_threadsafe_function",
+      "value": "napi_create_threadsafe_function"
+    },
+    {
+      "name": "napi_get_threadsafe_function_context",
+      "value": "napi_get_threadsafe_function_context"
+    },
+    {
+      "name": "napi_call_threadsafe_function",
+      "value": "napi_call_threadsafe_function"
+    },
+    {
+      "name": "napi_acquire_threadsafe_function",
+      "value": "napi_acquire_threadsafe_function"
+    },
+    {
+      "name": "napi_release_threadsafe_function",
+      "value": "napi_release_threadsafe_function"
+    },
+    {
+      "name": "napi_ref_threadsafe_function",
+      "value": "napi_ref_threadsafe_function"
+    },
+    {
+      "name": "napi_unref_threadsafe_function",
+      "value": "napi_unref_threadsafe_function"
+    },
+    {
+      "name": "miscellaneous_utilities",
+      "value": "miscellaneous_utilities"
+    },
+    {
+      "name": "node_api_get_module_file_name",
+      "value": "node_api_get_module_file_name"
+    },
+    {
+      "name": "median_blur",
+      "value": "Median Blur"
+    },
+    {
+      "name": "bilateral_filter",
+      "value": "Bilateral Filter"
+    },
+    {
+      "name": "morphological_transformations",
+      "value": "Morphological Transformations"
+    },
+    {
+      "name": "image_erode",
+      "value": "Image Erode"
+    },
+    {
+      "name": "image_dilate",
+      "value": "Image Dilate"
+    },
+    {
+      "name": "image_opening",
+      "value": "Image Opening"
+    },
+    {
+      "name": "image_closing",
+      "value": "Image Closing"
+    },
+    {
+      "name": "image_gradient",
+      "value": "Image Gradient"
+    },
+    {
+      "name": "top_hat",
+      "value": "Top Hat"
+    },
+    {
+      "name": "black_hat",
+      "value": "Black Hat"
+    },
+    {
+      "name": "get_structuring_element",
+      "value": "Get Structuring Element"
+    },
+    {
+      "name": "image_gradients",
+      "value": "Image Gradients"
+    },
+    {
+      "name": "image_sobel",
+      "value": "Image Sobel"
+    },
+    {
+      "name": "image_laplacian",
+      "value": "Image Laplacian"
+    },
+    {
+      "name": "image_abssobel",
+      "value": "Image Abssobel"
+    },
+    {
+      "name": "canny_edge_detection",
+      "value": "Canny Edge Detection"
+    },
+    {
+      "name": "image_canny",
+      "value": "Image Canny"
+    },
+    {
+      "name": "image_pyramids",
+      "value": "Image Pyramids"
+    },
+    {
+      "name": "image_pyrdown",
+      "value": "Image Pyrdown"
+    },
+    {
+      "name": "image_pyrup",
+      "value": "Image Pyrup"
+    },
+    {
+      "name": "contours",
+      "value": "Contours"
+    },
+    {
+      "name": "contours_basic",
+      "value": "Contours Basic"
+    },
+    {
+      "name": "contours_features",
+      "value": "Contours Features"
+    },
+    {
+      "name": "contours_properties",
+      "value": "Contours Properties"
+    },
+    {
+      "name": "contours_more_functions",
+      "value": "Contours More Functions"
+    },
+    {
+      "name": "contours_hierarchy",
+      "value": "Contours Hierarchy"
+    },
+    {
+      "name": "histograms",
+      "value": "Histograms"
+    },
+    {
+      "name": "find_plot_analyze",
+      "value": "Find Plot Analyze"
+    },
+    {
+      "name": "equalization",
+      "value": "Equalization"
+    },
+    {
+      "name": "backprojection",
+      "value": "Backprojection"
+    },
+    {
+      "name": "image_transforms",
+      "value": "Image Transforms"
+    },
+    {
+      "name": "fourier_transform",
+      "value": "Fourier Transform"
+    },
+    {
+      "name": "template_matching",
+      "value": "Template Matching"
+    },
+    {
+      "name": "template_match_example",
+      "value": "Template Match Example"
+    },
+    {
+      "name": "hough_line_transform",
+      "value": "Hough Rine Transform"
+    },
+    {
+      "name": "hough_lines",
+      "value": "Hough Lines"
+    },
+    {
+      "name": "hough_linesp",
+      "value": "Hough Linesp"
+    },
+    {
+      "name": "hough_circle_transform",
+      "value": "Hough Circle Transform"
+    },
+    {
+      "name": "hough_circle",
+      "value": "Hough Circle"
+    },
+    {
+      "name": "image_segmentation_with_watershed",
+      "value": "Image Segmentation With Watershed"
+    },
+    {
+      "name": "image_threshold",
+      "value": "Image Threshold"
+    },
+    {
+      "name": "image_background",
+      "value": "Image Background"
+    },
+    {
+      "name": "distance_transform",
+      "value": "Distance Transform"
+    },
+    {
+      "name": "image_foreground",
+      "value": "Image Foreground"
+    },
+    {
+      "name": "image_watershed",
+      "value": "Image Watershed"
+    },
+    {
+      "name": "forground_extraction_using_grabcut",
+      "value": "Forground Extraction Using Grabcut"
+    },
+    {
+      "name": "image_grabcut",
+      "value": "Image Grabcut"
+    },
+    {
+      "name": "image_processing_for_video_capture",
+      "value": "Image Processing For Video Capture"
+    },
+    {
+      "name": "image_processing_video_example",
+      "value": "Image Processing Video Example"
+    },
+    {
+      "name": "intelligent_scissors",
+      "value": "Intelligent Scissors"
+    },
+    {
+      "name": "meanshift_camshift",
+      "value": "Meanshift Camshift"
+    },
+    {
+      "name": "meanshift",
+      "value": "Meanshift"
+    },
+    {
+      "name": "camshift",
+      "value": "Camshift"
+    },
+    {
+      "name": "optical_flow",
+      "value": "Optical Flow"
+    },
+    {
+      "name": "lucas_kanade_optical_flow",
+      "value": "Lucas Kanade Optical Flow"
+    },
+    {
+      "name": "dense_optical_flow",
+      "value": "Dense Optical Flow"
+    },
+    {
+      "name": "background_subtraction",
+      "value": "Background Subtraction"
+    },
+    {
+      "name": "face_detection_using_haar_cascades",
+      "value": "Face Detection Using Haar Cascades"
+    },
+    {
+      "name": "face_detection",
+      "value": "Face Detection"
+    },
+    {
+      "name": "face_detection_in_video_capture",
+      "value": "Face Detection In Video Capture"
+    },
+    {
+      "name": "image_classification",
+      "value": "Image Classification"
+    },
+    {
+      "name": "image_classification_with_camera",
+      "value": "Image Classification With Camera"
+    },
+    {
+      "name": "object_detection",
+      "value": "Object Detection"
+    },
+    {
+      "name": "object_detection_with_camera",
+      "value": "Object Detection With Camera"
+    },
+    {
+      "name": "semantic_segmentation",
+      "value": "Semantic Segmentation"
+    },
+    {
+      "name": "style_transfer",
+      "value": "Style Transfer"
+    },
+    {
+      "name": "pose_estimation",
+      "value": "Pose Estimation"
+    },
+
+    {
+      "name": "image_basic_title",
+      "value": "Image Basic Opertor"
+    },
+    {
+      "name": "image_histogram_title",
+      "value": "image histogram"
+    },
+    {
+      "name": "image_filter_title",
+      "value": "image filter"
+    },
+    {
+      "name": "image_morphology_title",
+      "value": "image morphology"
+    },
+    {
+      "name": "image_objdetect_title",
+      "value": "image objdetect"
+    },
+    {
+      "name": "information_presentation_and_dynamic_effects",
+      "value": "Information presentation and dynamic effects"
+    },
+    {
+      "name": "blank_and_divider",
+      "value": "Blank and divider"
+    },
+    {
+      "name": "text_and_input",
+      "value": "Text and input"
+    },
+    {
+      "name": "rows_and_columns",
+      "value": "Rows and columns"
+    },
+    {
+      "name": "stack_flex_and_grid",
+      "value": "Stack, flex and grid"
+    },
+    {
+      "name": "list_and_grid",
+      "value": "List and grid"
+    },
+    {
+      "name": "navigation",
+      "value": "Navigation"
+    },
+    {
+      "name": "canvas_and_graphic_drawing",
+      "value": "Canvas and graphic drawing"
+    },
+    // layout Animation
+    {
+      "name": "layout_animation_expansion",
+      "value": "Layout animation"
+    },
+    {
+      "name": "layout_animation_expansion_align",
+      "value": "Align animation"
+    },
+    {
+      "name": "layout_animation_expansion_size",
+      "value": "Size animation"
+    },
+    {
+      "name": "layout_animation_expansion_padding",
+      "value": "Padding animation"
+    },
+    {
+      "name": "layout_animation_expansion_margin",
+      "value": "Margin animation"
+    },
+    {
+      "name": "layout_animation_expansion_offset",
+      "value": "Offset animation"
+    },
+    {
+      "name": "layout_animation_expansion_position",
+      "value": "Position animation"
+    },
+    {
+      "name": "layout_animation_expansion_markAnchor",
+      "value": "MarkAnchor animation"
+    },
+    {
+      "name": "layout_animation_expansion_alignRules",
+      "value": "AlignRules animation"
+    },
+    {
+      "name": "layout_animation_expansion_direction",
+      "value": "Direction animation"
+    },
+    // size transition
+    {
+      "name": "size_transition_expansion",
+      "value": "Size transition"
+    },
+    {
+      "name": "size_transition_flex",
+      "value": "Flex"
+    },
+    {
+      "name": "size_transition_grid_item",
+      "value": "GridItem"
+    },
+    {
+      "name": "size_transition_list_item",
+      "value": "ListItem"
+    },
+    {
+      "name": "size_transition_swiper_item",
+      "value": "SwiperItem"
+    },
+    {
+      "name": "size_transition_font_size",
+      "value": "FontSize"
+    },
+    {
+      "name": "size_transition_expansion_tabContent",
+      "value": "TabContent"
+    },
+    // AlertDialog
+    {
+      "name": "alert_dialog",
+      "value": "Alert dialog"
+    },
+    {
+      "name": "alert_dialog_type_one",
+      "value": "One button alert dialog"
+    },
+    {
+      "name": "alert_dialog_type_two",
+      "value": "Two button alert dialog"
+    },
+    {
+      "name": "alert_dialog_type_two_button_one",
+      "value": "This is button one"
+    },
+    {
+      "name": "alert_dialog_type_two_button_two",
+      "value": "This is button two"
+    },
+    {
+      "name": "alert_dialog_prompt",
+      "value": "Hint"
+    },
+    {
+      "name": "alert_dialog_warning",
+      "value": "Warning"
+    },
+    {
+      "name": "alert_dialog_info",
+      "value": "You are performing an action"
+    },
+    {
+      "name": "alert_dialog_confirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "alert_dialog_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "alert_dialog_type",
+      "value": "Dialog type"
+    },
+    {
+      "name": "alert_dialog_location",
+      "value": "Dialog position"
+    },
+    {
+      "name": "alert_dialog_auto_cancel",
+      "value": "Click on the mask layer to close the dialog"
+    },
+    {
+      "name": "alert_dialog_true",
+      "value": "Closeable"
+    },
+    {
+      "name": "alert_dialog_false",
+      "value": "Non-closing"
+    },
+    {
+      "name": "alert_dialog_top",
+      "value": "Vertical top"
+    },
+    {
+      "name": "alert_dialog_center",
+      "value": "Vertical center"
+    },
+    {
+      "name": "alert_dialog_bottom",
+      "value": "Vertical bottom"
+    },
+    {
+      "name": "alert_dialog_offset",
+      "value": "Relative position offset dialog"
+    },
+    {
+      "name": "alert_dialog_left",
+      "value": "Upper left offset"
+    },
+    {
+      "name": "alert_dialog_right",
+      "value": "Lower right offset"
+    },
+    {
+      "name": "alert_dialog_grid",
+      "value": "Different grid width dialog"
+    },
+    {
+      "name": "alert_dialog_grid_two",
+      "value": "2 grid width"
+    },
+    {
+      "name": "alert_dialog_grid_three",
+      "value": "3 grid width"
+    },
+    {
+      "name": "alert_dialog_grid_four",
+      "value": "4 grid width"
+    },
+    // Foreground
+    {
+      "name": "foreground_color",
+      "value": "Set foreground color"
+    },
+    // Background
+    {
+      "name": "background_color",
+      "value": "Set background color"
+    },
+    {
+      "name": "background_gradient",
+      "value": "Set background gradient"
+    },
+    {
+      "name": "background_gradient_linear",
+      "value": "linear gradient"
+    },
+    {
+      "name": "background_gradient_sweep",
+      "value": "angle gradient"
+    },
+    {
+      "name": "background_gradient_radial",
+      "value": "Radial gradient"
+    },
+    {
+      "name": "background_image_transformation_effect",
+      "value": "Background image transformation effect"
+    },
+    {
+      "name": "set_background_image_size",
+      "value": "Set background image size"
+    },
+    {
+      "name": "set_background_image_position",
+      "value": "Set background image position"
+    },
+    {
+      "name": "set_background_blur_style_color_mode",
+      "value": "Set background blur style color mode"
+    },
+    {
+      "name": "set_background_blur_style_adaptive_color",
+      "value": "Set background blur style adaptive color"
+    },
+    {
+      "name": "blur_style_system",
+      "value": "System"
+    },
+    {
+      "name": "blur_style_light",
+      "value": "Light"
+    },
+    {
+      "name": "blur_style_dark",
+      "value": "Dark"
+    },
+    {
+      "name": "blur_style_default",
+      "value": "Default"
+    },
+    {
+      "name": "set_shadow_type",
+      "value": "Set shadow type"
+    },
+    {
+      "name": "shadow_type_color",
+      "value": "COLOR"
+    },
+    {
+      "name": "shadow_type_blur",
+      "value": "BLUR"
+    },
+    {
+      "name": "blur_style_average",
+      "value": "Average"
+    },
+    {
+      "name": "background_image_size_cover",
+      "value": "Cover"
+    },
+    {
+      "name": "background_image_size_contain",
+      "value": "Contain"
+    },
+
+    {
+      "name": "background_image_position_top_start",
+      "value": "TopStart"
+    },
+    {
+      "name": "background_image_position_top",
+      "value": "Top"
+    },
+    {
+      "name": "background_image_position_top_end",
+      "value": "TopEnd"
+    },
+    {
+      "name": "background_image_position_start",
+      "value": "Top"
+    },
+    {
+      "name": "background_image_position_center",
+      "value": "Center"
+    },
+    {
+      "name": "background_image_position_end",
+      "value": "End"
+    },
+    {
+      "name": "background_image_position_bottom_start",
+      "value": "BottomStart"
+    },
+    {
+      "name": "background_image_position_bottom",
+      "value": "Bottom"
+    },
+
+    {
+      "name": "background_image_position_bottom_end",
+      "value": "BottomEnd"
+    },
+
+    {
+      "name": "background_image",
+      "value": "Set background image"
+    },
+    {
+      "name": "background_image_default",
+      "value": "default"
+    },
+    {
+      "name": "background_image_repeat",
+      "value": "XY axis repeat plot"
+    },
+    {
+      "name": "background_image_size",
+      "value": "Image size 50% wide and 100% high"
+    },
+    {
+      "name": "background_image_offset",
+      "value": "Picture position offset to the right and down"
+    },
+    // Badge
+    {
+      "name": "auxiliary_badge",
+      "value": "Badge"
+    },
+    {
+      "name": "badge_type",
+      "value": "Tag type"
+    },
+    {
+      "name": "badge_number",
+      "value": "Number marker"
+    },
+    {
+      "name": "badge_string",
+      "value": "Text tag"
+    },
+    {
+      "name": "badge_max",
+      "value": "Number tag maximum number of messages"
+    },
+    {
+      "name": "badge_number_normal",
+      "value": "Normal badge"
+    },
+    {
+      "name": "badge_number_max",
+      "value": "Maximum Badge"
+    },
+    {
+      "name": "badge_location",
+      "value": "Mark position"
+    },
+    {
+      "name": "badge_left",
+      "value": "Left marker"
+    },
+    {
+      "name": "badge_top",
+      "value": "Top right tag"
+    },
+    {
+      "name": "badge_right",
+      "value": "Right marker"
+    },
+    {
+      "name": "badge_style",
+      "value": "Marker style"
+    },
+    {
+      "name": "badge_blue",
+      "value": "Large blue marker"
+    },
+    {
+      "name": "badge_green",
+      "value": "Small green marker"
+    },
+    // Border
+    {
+      "name": "border_type",
+      "value": "Border type"
+    },
+    {
+      "name": "border_type_dashed",
+      "value": "Dotted line"
+    },
+    {
+      "name": "border_type_dotted",
+      "value": "Dot"
+    },
+    {
+      "name": "border_type_solid",
+      "value": "Solid line"
+    },
+    {
+      "name": "border_border_style",
+      "value": "Border width, color, rounded corners"
+    },
+    {
+      "name": "border_border_width",
+      "value": "Width"
+    },
+    {
+      "name": "border_border_color",
+      "value": "Color"
+    },
+    {
+      "name": "border_border_radius",
+      "value": "Rounded corners"
+    },
+    {
+      "name": "border_edge_style",
+      "value": "Set the border and style and properties separately"
+    },
+    {
+      "name": "border_style_top",
+      "value": "Top border"
+    },
+    {
+      "name": "border_style_bottom",
+      "value": "Bottom border"
+    },
+    {
+      "name": "border_style_left",
+      "value": "Left border"
+    },
+    {
+      "name": "border_style_right",
+      "value": "Right border"
+    },
+    {
+      "name": "border_radius",
+      "value": "Set the rounded corners of each of the four corners"
+    },
+    {
+      "name": "border_3D",
+      "value": "Set the border 3D"
+    },
+    {
+      "name": "border_radius_left_top",
+      "value": "Top left border"
+    },
+    {
+      "name": "border_radius_left_bottom",
+      "value": "Bottom left border"
+    },
+    {
+      "name": "border_radius_right_top",
+      "value": "Top right border"
+    },
+    {
+      "name": "border_radius_right_bottom",
+      "value": "Bottom right border"
+    },
+    // Button
+    {
+      "name": "button_title",
+      "value": "Button"
+    },
+    {
+      "name": "button_type",
+      "value": "Type"
+    },
+    {
+      "name": "button_confirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "button_type_capsule",
+      "value": "Capsule"
+    },
+    {
+      "name": "button_type_normal",
+      "value": "Normal"
+    },
+    {
+      "name": "button_type_circle",
+      "value": "Circle"
+    },
+    {
+      "name": "button_state_effect",
+      "value": "State effect"
+    },
+    {
+      "name": "button_state_effect_true",
+      "value": "Has effect"
+    },
+    {
+      "name": "button_state_effect_false",
+      "value": "No effect"
+    },
+    {
+      "name": "button_disable_style",
+      "value": "Disable"
+    },
+    {
+      "name": "button_custom_style",
+      "value": "Custom style"
+    },
+    {
+      "name": "button_border_radius",
+      "value": " Rounded button"
+    },
+    {
+      "name": "button_with_icon",
+      "value": "Icon button"
+    },
+    {
+      "name": "button_custom_bg_color",
+      "value": "Custom color"
+    },
+    {
+      "name": "button_click",
+      "value": "Button is clicked"
+    },
+    // Click Event
+    {
+      "name": "click_action_tips",
+      "value": "Click the gray area to change the crosshair position"
+    },
+    {
+      "name": "touch_action_tips",
+      "value": "Touch the gray area and move to change the crosshair position"
+    },
+    {
+      "name": "component_area_change_action_tips",
+      "value": "Slide to change the gray area size or position for controlling the ball motion area"
+    },
+    {
+      "name": "get_click_event_detail",
+      "value": "Click location information"
+    },
+    // Drag Event
+    {
+      "name": "drag_drop_action_tips",
+      "value": "Long press the application icon and drag to different areas"
+    },
+    {
+      "name": "component_drag_and_drop",
+      "value": "Component drag and drop"
+    },
+    {
+      "name": "griditem",
+      "value": "GridItem"
+    },
+    {
+      "name": "listitem",
+      "value": "ListItem"
+    },
+    {
+      "name": "hyperlink",
+      "value": "Hyperlink"
+    },
+    {
+      "name": "text",
+      "value": "Text"
+    },
+    {
+      "name": "image",
+      "value": "Image"
+    },
+    {
+      "name": "video",
+      "value": "Video"
+    },
+    {
+      "name": "formcomponent",
+      "value": "FormComponent"
+    },
+    // CustomDialog
+    {
+      "name": "custom_dialog",
+      "value": "Custom dialog"
+    },
+    {
+      "name": "custom_dialog_style_custom",
+      "value": "Whether the dialog style is customized"
+    },
+    {
+      "name": "custom_dialog_style_custom_true",
+      "value": "Custom"
+    },
+    {
+      "name": "custom_dialog_style_custom_false",
+      "value": "Non-custom"
+    },
+    {
+      "name": "custom_dialog_title",
+      "value": "The component collection requests to enable the following permissions"
+    },
+    {
+      "name": "custom_dialog_permission_microphone",
+      "value": "Microphone permission"
+    },
+    {
+      "name": "custom_dialog_permission_microphone_info",
+      "value": "Microphone permission is required for voice calls"
+    },
+    {
+      "name": "custom_dialog_permission_location",
+      "value": "Location permissions"
+    },
+    {
+      "name": "custom_dialog_permission_location_info",
+      "value": "Location permission is required for navigation"
+    },
+    {
+      "name": "custom_dialog_start",
+      "value": "One-click opening"
+    },
+    // DatePickerDialog
+    {
+      "name": "date_picker_dialog",
+      "value": "DatePickerDialog"
+    },
+    {
+      "name": "date_picker_dialog_date",
+      "value": "Show date dialog"
+    },
+    {
+      "name": "date_picker_dialog_date_lunar",
+      "value": "Lunar date:"
+    },
+    {
+      "name": "date_picker_dialog_date_gregorian",
+      "value": "Gregorian calendar date:"
+    },
+    {
+      "name": "date_picker_dialog_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "date_picker_toast_date",
+      "value": "Selected time:"
+    },
+    {
+      "name": "date_picker_dialog_datetimeone",
+      "value": "2022-10-01"
+    },
+    {
+      "name": "date_picker_dialog_datetimetwo",
+      "value": "1970-1-1"
+    },
+    {
+      "name": "date_picker_dialog_datetimethree",
+      "value": "2100-12-31"
+    },
+    // DatePicker
+    {
+      "name": "date_picker_title",
+      "value": "DatePicker"
+    },
+    {
+      "name": "date_picker_lunar",
+      "value": "Is lunar"
+    },
+    
