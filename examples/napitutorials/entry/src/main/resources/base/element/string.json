@@ -5812,4 +5812,753 @@
       "name": "navigation_third_page_back",
       "value": "Go back to the first page"
     },
-    
+    // Tabs
+    {
+      "name": "tabs_title",
+      "value": "Tabs"
+    },
+    {
+      "name": "tabs_introduction_arguments",
+      "value": "Modify the parameters of Tabs"
+    },
+    {
+      "name": "tabs_introduction_properties",
+      "value": "Modify the properties of Tabs"
+    },
+    {
+      "name": "tabs_arguments_bar_position",
+      "value": "barPosition"
+    },
+    {
+      "name": "tabs_arguments_bar_position_start",
+      "value": "Start"
+    },
+    {
+      "name": "tabs_arguments_bar_position_end",
+      "value": "End"
+    },
+    {
+      "name": "tabs_properties_vertical",
+      "value": "vertical"
+    },
+    {
+      "name": "tabs_properties_bar_mode",
+      "value": "barMode"
+    },
+    {
+      "name": "tabs_properties_bar_mode_fixed",
+      "value": "Fixed"
+    },
+    {
+      "name": "tabs_properties_bar_scrollable",
+      "value": "Scrollable"
+    },
+    {
+      "name": "tabs_properties_is_scrollable",
+      "value": "scrollable"
+    },
+    {
+      "name": "tabs_properties_animation_duration",
+      "value": "animationDuration(ms)"
+    },
+    {
+      "name": "tabs_arguments_controller",
+      "value": "Switches to the specified index"
+    },
+    // TabsContent
+    {
+      "name": "tab_content_title",
+      "value": "TabContent"
+    },
+    {
+      "name": "tab_content_introduction",
+      "value": "Subtab/Bottom tab switcher"
+    },
+    {
+      "name": "tab_content_side",
+      "value": "Switch sidebar"
+    },
+    // Stepper
+    {
+      "name": "stepper_title",
+      "value": "Stepper&StepperItem"
+    },
+    {
+      "name": "canvas_title",
+      "value": "Canvas"
+    },
+    {
+      "name": "circle_title",
+      "value": "Circle"
+    },
+    {
+      "name": "ellipse_title",
+      "value": "Ellipse"
+    },
+    {
+      "name": "line_title",
+      "value": "Line"
+    },
+    {
+      "name": "polyline_title",
+      "value": "Polyline"
+    },
+    {
+      "name": "path_title",
+      "value": "Path"
+    },
+    {
+      "name": "polygon_title",
+      "value": "Polygon"
+    },
+    {
+      "name": "rect_title",
+      "value": "Rect"
+    },
+    {
+      "name": "shape_title",
+      "value": "shape"
+    },
+    {
+      "name": "circle_change",
+      "value": "CircleChange"
+    },
+    {
+      "name": "circle_change_fill",
+      "value": "CircleChangeFill"
+    },
+    {
+      "name": "circle_change_radius",
+      "value": "CircleRadius"
+    },
+    {
+      "name": "circle_change_fillopacity",
+      "value": "CircleChangeFillOpacity"
+    },
+    {
+      "name": "circle_change_strokewidth",
+      "value": "CircleStrokeWidth"
+    },
+    {
+      "name": "circle_stroke_dash",
+      "value": "CircleStrokeDash"
+    },
+    {
+      "name": "circle_stroke_color",
+      "value": "CircleStokeColor"
+    },
+    {
+      "name": "circle_stroke_opacity",
+      "value": "CircleStrokeOpacity"
+    },
+    {
+      "name": "ellipse_fill",
+      "value": "EllipseFill"
+    },
+    {
+      "name": "ellipse_stroke_color",
+      "value": "EllipseStrokeColor"
+    },
+    {
+      "name": "ellipse_stroke_width",
+      "value": "EllipseStrokeWidth"
+    },
+    {
+      "name": "ellipse_width",
+      "value": "EllipseWidth"
+    },
+    {
+      "name": "ellipse_height",
+      "value": "EllipseHeight"
+    },
+    {
+      "name": "ellipse_fill_opacity",
+      "value": "EllipseFillOpacity"
+    },
+    {
+      "name": "ellipse_stroke_opacity",
+      "value": "EllipseStrokeOpacity"
+    },
+    {
+      "name": "ellipse_stroke_dash",
+      "value": "EllipseStrokeDash"
+    },
+    {
+      "name": "line_start_point_x",
+      "value": "LineStartPointX"
+    },
+    {
+      "name": "line_start_point_y",
+      "value": "LineStartPointY"
+    },
+    {
+      "name": "line_end_point_x",
+      "value": "LineEndPointY"
+    },
+    {
+      "name": "line_end_point_y",
+      "value": "LineEndPointY"
+    },
+    {
+      "name": "line_stroke_width",
+      "value": "LineSrokeWidth"
+    },
+    {
+      "name": "line_stroke_color",
+      "value": "LineStrokeColor"
+    },
+    {
+      "name": "line_stroke_opacity",
+      "value": "LineStrokeOpacity"
+    },
+    {
+      "name": "line_stroke_dash",
+      "value": "LineStrokeDash"
+    },
+    {
+      "name": "polygon_fill",
+      "value": "PolygonFill"
+    },
+    {
+      "name": "polygon_fill_opacity",
+      "value": "PolygonFillOpacity"
+    },
+    {
+      "name": "polygon_stroke_color",
+      "value": "PolygonStrokeColor"
+    },
+    {
+      "name": "polygon_stroke_opacity",
+      "value": "PolygonStrokeOpacity"
+    },
+    {
+      "name": "polygon_stroke_width",
+      "value": "PolygonStrokeWidth"
+    },
+    {
+      "name": "polygon_stroke_dash",
+      "value": "PolygonStrokeDash"
+    },
+    {
+      "name": "polyline_first_x",
+      "value": "PolylineFirstX"
+    },
+    {
+      "name": "polyline_first_y",
+      "value": "PolylineFirstY"
+    },
+    {
+      "name": "polyline_second_x",
+      "value": "PolylineSecondX"
+    },
+    {
+      "name": "polyline_second_y",
+      "value": "PolylineSecondY"
+    },
+    {
+      "name": "polyline_third_x",
+      "value": "PolylineThirdX"
+    },
+    {
+      "name": "polyline_third_y",
+      "value": "PolylineThirdY"
+    },
+    {
+      "name": "polyline_stroke_width",
+      "value": "PolylineStrokeWidth"
+    },
+    {
+      "name": "polyline_stroke_color",
+      "value": "PolylineStrokeColor"
+    },
+    {
+      "name": "polyline_stroke_dash",
+      "value": "PolylineStrokeDash"
+    },
+    {
+      "name": "polyline_stroke_opacity",
+      "value": "PolylineStrokeOpacity"
+    },
+    {
+      "name": "rect_height",
+      "value": "RectHeight"
+    },
+    {
+      "name": "rect_width",
+      "value": "RectWidth"
+    },
+    {
+      "name": "rect_radius_width",
+      "value": "RectRadiusWidth"
+    },
+    {
+      "name": "rect_radius_height",
+      "value": "RectRadiusHeight"
+    },
+    {
+      "name": "rect_fill_opacity",
+      "value": "RectFillOpacity"
+    },
+    {
+      "name": "rect_stroke",
+      "value": "RectStroke"
+    },
+    {
+      "name": "rect_stroke_width",
+      "value": "RectStrokeWidth"
+    },
+    {
+      "name": "rect_stroke_dash",
+      "value": "RectSrokeDash"
+    },
+    {
+      "name": "rect_stroke_opacity",
+      "value": "RectStrokeOpacity"
+    },
+    {
+      "name": "rect_fill",
+      "value": "RectFill"
+    },
+    {
+      "name": "path_line",
+      "value": "PathLine"
+    },
+    {
+      "name": "path_triangle",
+      "value": "PathTriangle"
+    },
+    {
+      "name": "path_square",
+      "value": "PathSquare"
+    },
+    {
+      "name": "path_polygon",
+      "value": "PathPolygon"
+    },
+    {
+      "name": "path_camber_first",
+      "value": "PathCamberFirst"
+    },
+    {
+      "name": "path_camber_second",
+      "value": "PathCamberSecond"
+    },
+    {
+      "name": "path_camber_third",
+      "value": "PathCamberThird"
+    },
+    {
+      "name": "path_commands_select",
+      "value": "PathCommandsSelect"
+    },
+    {
+      "name": "path_fill",
+      "value": "PathFill"
+    },
+    {
+      "name": "path_fill_opacity",
+      "value": "PathFillOpacity"
+    },
+    {
+      "name": "path_stroke_color",
+      "value": "PathStrokeColor"
+    },
+    {
+      "name": "path_stroke_opacity",
+      "value": "PathStrokeOpacity"
+    },
+    {
+      "name": "path_stroke_dash",
+      "value": "PathStrokeDash"
+    },
+    {
+      "name": "path_stroke_width",
+      "value": "PathStrokeWidth"
+    },
+    {
+      "name": "shape_fill",
+      "value": "ShapeFill"
+    },
+    {
+      "name": "shape_stroke_color",
+      "value": "ShapeStrokeColor"
+    },
+    {
+      "name": "shape_view_port_x",
+      "value": "ShapeViewPortX"
+    },
+    {
+      "name": "shape_view_port_y",
+      "value": "ShapeViewPortY"
+    },
+    {
+      "name": "shape_view_port_width",
+      "value": "ShapeViewPortWidth"
+    },
+    {
+      "name": "shape_view_port_height",
+      "value": "ShapeViewPortHeight"
+    },
+    {
+      "name": "shape_stroke_opacity",
+      "value": "ShapeStrokeOpacity"
+    },
+    {
+      "name": "shape_fill_opacity",
+      "value": "ShapeFillOpacity"
+    },
+    {
+      "name": "shape_stroke_width",
+      "value": "ShapeStrokeWidth"
+    },
+    {
+      "name": "shape_stroke_dash",
+      "value": "ShapeStrokeDash"
+    },
+    {
+      "name": "web",
+      "value": "Web"
+    },
+    {
+      "name": "canvas_components",
+      "value": "Canvas components"
+    },
+    {
+      "name": "canvas_component_attributes",
+      "value": "Base attributes"
+    },
+    {
+      "name": "canvas_component_transform",
+      "value": "Transform"
+    },
+    {
+      "name": "canvas_component_gradient",
+      "value": "CanvasGradient"
+    },
+    {
+      "name": "canvas_component_path_2d",
+      "value": "Path2D"
+    },
+    {
+      "name": "canvas_component_image_bitmap",
+      "value": "ImageBitmap"
+    },
+    {
+      "name": "canvas_component_method",
+      "value": "Base methods"
+    },
+    {
+      "name": "canvas_fillStyle",
+      "value": "fillStyle"
+    },
+    {
+      "name": "canvas_lineWidth",
+      "value": "lineWidth"
+    },
+    {
+      "name": "canvas_strokeStyle",
+      "value": "strokeStyle"
+    },
+    {
+      "name": "canvas_lineCap",
+      "value": "lineCap"
+    },
+    {
+      "name": "canvas_lineJoin",
+      "value": "lineJoin"
+    },
+    {
+      "name": "canvas_miterLimit",
+      "value": "miterLimit"
+    },
+    {
+      "name": "canvas_font",
+      "value": "font"
+    },
+    {
+      "name": "canvas_textAlign",
+      "value": "textAlign"
+    },
+    {
+      "name": "canvas_textBaseline",
+      "value": "textBaseline"
+    },
+    {
+      "name": "canvas_globalAlpha",
+      "value": "globalAlpha"
+    },
+    {
+      "name": "canvas_lineDashOffset",
+      "value": "lineDashOffset"
+    },
+    {
+      "name": "canvas_globalCompositeOperation",
+      "value": "globalCompositeOperation"
+    },
+    {
+      "name": "canvas_imageSmoothingEnabled",
+      "value": "imageSmoothingEnabled"
+    },
+    {
+      "name": "canvas_createLinearGradient",
+      "value": "createLinearGradient"
+    },
+    {
+      "name": "cavas_createRadialGradient",
+      "value": "createRadialGradient"
+    },
+    {
+      "name": "canvas_createRadialGradient",
+      "value": "createRadialGradient"
+    },
+    {
+      "name": "canvas_fillRect",
+      "value": "fillRect"
+    },
+    {
+      "name": "canvas_strokeRect",
+      "value": "strokeRect"
+    },
+    {
+      "name": "canvas_fillText",
+      "value": "fillText"
+    },
+    {
+      "name": "canvas_strokeText",
+      "value": "strokeText"
+    },
+    {
+      "name": "canvas_measureText",
+      "value": "measureText"
+    },
+    {
+      "name": "canvas_stroke",
+      "value": "stroke"
+    },
+    {
+      "name": "canvas_createPattern",
+      "value": "createPattern"
+    },
+    {
+      "name": "canvas_fill",
+      "value": "fill"
+    },
+    {
+      "name": "canvas_clip",
+      "value": "clip"
+    },
+    {
+      "name": "canvas_rotate",
+      "value": "rotate"
+    },
+    {
+      "name": "canvas_scale",
+      "value": "scale"
+    },
+    {
+      "name": "canvas_drawImage",
+      "value": "drawImage"
+    },
+    {
+      "name": "canvas_getImageData",
+      "value": "getImageData"
+    },
+    {
+      "name": "canvas_putImageData",
+      "value": "putImageData"
+    },
+    {
+      "name": "canvas_setLineDash",
+      "value": "setLineDash"
+    },
+    {
+      "name": "canvas_getLineDash",
+      "value": "getLineDash"
+    },
+    {
+      "name": "canvas_transferFromImageBitmap",
+      "value": "transferFromImageBitmap"
+    },
+    {
+      "name": "canvas_toDataURL",
+      "value": "toDataURL"
+    },
+    {
+      "name": "canvas_canvasZone",
+      "value": "Canvas Zone"
+    },
+    {
+      "name": "canvas_attributesOperations",
+      "value": "Attributes Operations"
+    },
+    {
+      "name": "canvas_clearEffects",
+      "value": "Clear Effects"
+    },
+    {
+      "name": "cavnas_clearRect",
+      "value": "clearRect"
+    },
+    {
+      "name": "canvas_clearRect",
+      "value": "clearRect"
+    },
+    {
+      "name": "canvas_shadowBlur",
+      "value": "shadowBlur"
+    },
+    {
+      "name": "canvas_shadowColor",
+      "value": "shadowColor"
+    },
+    {
+      "name": "canvas_shadowOffsetX",
+      "value": "shadowOffsetX"
+    },
+    {
+      "name": "canvas_shadowOffsetY",
+      "value": "shadowOffsetY"
+    },
+    {
+      "name": "canvas_addColorStop",
+      "value": "addColorStop"
+    },
+    {
+      "name": "canvas_beginPath",
+      "value": "beginPath"
+    },
+    {
+      "name": "canvas_moveTo",
+      "value": "moveTo"
+    },
+    {
+      "name": "canvas_lineTo",
+      "value": "lineTo"
+    },
+    {
+      "name": "canvas_closePath",
+      "value": "closePath"
+    },
+    {
+      "name": "canvas_bezierCurveTo",
+      "value": "bezierCurveTo"
+    },
+    {
+      "name": "canvas_quadraticCurveTo",
+      "value": "quadraticCurveTo"
+    },
+    {
+      "name": "canvas_arc",
+      "value": "arc"
+    },
+    {
+      "name": "canvas_arcTo",
+      "value": "arcTo"
+    },
+    {
+      "name": "canvas_ellipse",
+      "value": "ellipse"
+    },
+    {
+      "name": "canvas_rect",
+      "value": "rect"
+    },
+    {
+      "name": "canvas_show_message",
+      "value": "Printed to the console"
+    },
+    {
+      "name": "canvas_transform",
+      "value": "transform"
+    },
+    {
+      "name": "canvas_setTransform",
+      "value": "setTransform"
+    },
+    {
+      "name": "canvas_translate",
+      "value": "translate"
+    },
+    {
+      "name": "canvas_imageSmoothingQuality",
+      "value": "imageSmoothingQuality"
+    },
+    // scrollTo 动效增强
+    {
+      "name": "scroll_To_effect",
+      "value": "ScrollTo effect"
+    },
+    {
+      "name": "scroller",
+      "value": "Scroller"
+    },
+    {
+      "name": "list",
+      "value": "List"
+    },
+    {
+      "name": "grid",
+      "value": "Grid"
+    },
+    {
+      "name": "waterFlow",
+      "value": "WaterFlow"
+    },
+    {
+      "name": "tabs_switch_effect",
+      "value": "Tabs switch effect"
+    },
+    {
+      "name": "image_fit_Full_effect",
+      "value": "Image fit/full effect"
+    },
+    {
+      "name": "particle_effect",
+      "value": "Particle Effect"
+    },
+    {
+      "name": "particle_spawn",
+      "value": "Spawn"
+    },
+    {
+      "name": "particle_spawn_stop",
+      "value": "Stop"
+    },
+    {
+      "name": "navigator_title",
+      "value": "Navigator"
+    },
+    {
+      "name": "navigator_first_page",
+      "value": "First page of Navigaor"
+    },
+    {
+      "name": "navigator_second_page",
+      "value": "Second page of Navigator"
+    },
+    {
+      "name": "navigator_third_page",
+      "value": "Third page of Navigator"
+    },
+    {
+      "name": "navigator_first_page_push",
+      "value": "Go to the second page"
+    },
+    {
+      "name": "navigator_first_page_active",
+      "value": "Click to toggle activate status"
+    },
+    {
+      "name": "navigator_second_page_push",
+      "value": "Go to the third page"
+    },
+    {
+      "name": "navigator_third_page_back",
+      "value": "Go back to the first page"
+    },
+    {
+      "name": "navigator_return_message",
+      "value": "hello! This is a param form the first page"
+    }
+  ]
+}
