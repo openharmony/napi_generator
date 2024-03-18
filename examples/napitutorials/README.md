@@ -27,9 +27,9 @@ Node-API 是一种 C API，可确保跨版本和不同编译器级别的 ABI 稳
 
 
 
-#### Native API（NDK）
+#### Native API（NativeDevelopKit）
 
-Native API是OpenHarmony SDK上提供的一组native开发接口与工具集合（也称为NDK），方便开发者使用C或者C++语言实现应用的关键功能。Native API只覆盖了OHOS基础的一些底层能力，如libc，图形库，窗口系统，多媒体，压缩库等，并没有完全提供类似于JS API上的完整的OHOS 平台能力。在应用中使用Native API会编译成动态库打包到应用中。
+Native API是OpenHarmony SDK上提供的一组native开发接口与工具集合（也称为NativeDevelopKit），方便开发者使用C或者C++语言实现应用的关键功能。Native API只覆盖了OHOS基础的一些底层能力，如libc，图形库，窗口系统，多媒体，压缩库等，并没有完全提供类似于JS API上的完整的OHOS 平台能力。在应用中使用Native API会编译成动态库打包到应用中。
 
 
 
@@ -38,7 +38,7 @@ Native API是OpenHarmony SDK上提供的一组native开发接口与工具集合�
 | 名词       | 名词解释                                                     |
 | :--------- | :----------------------------------------------------------- |
 | Native API | OHOS SDK里面native包提供的，面向三方应用开发的Native 接口以及相应编译脚本，编译工具链。包括C运行时基础库libc，3D图形库opengl，面向JS与C跨语言的接口Node-API等，具体内容详见下表。 |
-| NDK        | Native Develop Kit的缩写，在OHOS上就是Native API；Native API是官方名字，NDK指代相同意思。 |
+| NativeDevelopKit        | Native Develop Kit的缩写，在OHOS上就是Native API；Native API是官方名字，NativeDevelopKit指代相同意思。 |
 | SDK CAPI   | OHOS Native API中的C语言接口，以及工具链部分，当前OHOS的Native API里面只包含C语言接口，因此Native API与CAPI意思一样，建议交流的时候使用CAPI，防止Native API与napi缩写混用。 |
 | Node-API   | 曾用名napi，是OHOS中提供JS与C跨语言调用的接口，是Native API接口中的一部分. 该接口在’Node‘.js提供的Node-API基础上扩展而来，但不完全与’Node‘.js中的Node-API完全兼容。 |
 | napi       | Node-API的曾用名，当前Node-API头文件中的接口仍然以napi_开头，不建议使用。 |
@@ -62,8 +62,8 @@ Native API是OpenHarmony SDK上提供的一组native开发接口与工具集合�
 
   | 接口分类                                                     | 接口功能                                                     | 引入版本 |
   | :----------------------------------------------------------- | :----------------------------------------------------------- | :------- |
-  | [标准C库](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/reference/native-lib/third_party_libc/musl.md) | 以musl为基础提供的标准c库接口，当前提供了1500+的接口         | 8        |
-  | [标准C++库](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/reference/native-lib/third_party_libc/cpp.md) | c++运行时库libc++_shared，此库在打包的时候需要打包或者静态链接到应用中 | 8        |
+  | [标准C库](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/reference/native-lib/third_party_libc/muslc.md) | 以muslc为基础提供的标准c库接口，当前提供了1500+的接口         | 8        |
+  | [标准C++库](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/reference/native-lib/third_party_libc/cpp.md) | c++运行时库libcpp_shared，此库在打包的时候需要打包或者静态链接到应用中 | 8        |
   | 日志                                                         | 打印日志到系统的hilog接口                                    | 8        |
   | Node-API                                                     | ArkUI提供的，方便应用开发接入JS应用环境的一组类Node-API（也叫napi），是属于Native API的一部分 | 8        |
   | XComponent                                                   | ArkUI XComponent组件中的界面与触屏事件接口，方便开发者开发高性能图形应用 | 8        |
@@ -79,9 +79,9 @@ Native API是OpenHarmony SDK上提供的一组native开发接口与工具集合�
 * 相关资料
 
   - [Native API参考](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/reference/native-apis/_o_h___native_x_component.md)，介绍各个API参考手册
-  - [Native API中支持的标准库](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/reference/native-lib/third_party_libc/musl.md)，介绍Native API支持的开源标准库
+  - [Native API中支持的标准库](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/reference/native-lib/third_party_libc/muslc.md)，介绍Native API支持的开源标准库
   - [Native API开发指南](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/napi/napi-guidelines.md)，结合具体的例子，场景介绍各类接口的使用
-  - [如何在Cmake工程中使用NDK](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/faqs/cmake-with-ndk.md)，介绍如何使用使用NDK开发一个CMake工程
+  - [如何在Cmake工程中使用NativeDevelopKit](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/faqs/cmake-with-nativedevkit.md)，介绍如何使用使用NativeDevelopKit开发一个CMake工程
   - [Node-API在应用工程中的使用指导](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/napi/napi-guidelines.md), 如何使用Node-API接口
 
 
@@ -92,15 +92,15 @@ Native API是OpenHarmony SDK上提供的一组native开发接口与工具集合�
 
 #### 教程介绍
 
-此教程是 OpenCV 的 Native C++ 版本，展示了如何引入OpenCV的lib库和头文件，然后通过ArkUI进行展示和直接在 OpenHarmony 设备中运行。它为开发人员提供了在 DevEco Studio 开发中使用 OpenCV 的能力，并且通过一系列教程来引导用户了解 OpenCV 中提供的各种功能。这些教程主要关注于 OpenCV 4.5.5 版本。
+此教程是 Node-API 和 ArkTS 的联合使用版本，展示了如何引入Native-C++的lib库和头文件，然后通过ArkUI进行展示和直接在 OpenHarmony 设备中运行。它为开发人员提供了在 DevEco Studio 开发中使用 lib库和Native-C++ 的能力，并且通过一系列教程来引导用户了解 Native-C++ 中提供的各种功能。
 
-OpenCV 教程的目的包括：
+Native-C++ 教程的目的包括：
 
-- 帮助将 OpenCV 应用于 OpenHarmony 应用开发中
-- 帮助 OpenHarmony 社区、开发人员和计算机视觉研究人员交互式地访问各种基于 OpenHarmony 的 OpenCV 示例，以帮助他们理解特定的视觉算法
-- 由于 OpenCV 能够直接在 OpenHarmony 设备中运行，教程页面具有直观和交互式的特点。例如，利用 ArkUI 和 评估 ArkTS 代码，开发人员可以更改 CV 函数的参数，并在 OpenHarmony 上进行实时的 CV 编程，以实时查看结果。
+- 帮助将 Native-C++ 应用于 OpenHarmony 应用开发中
+- 帮助 OpenHarmony 社区、开发人员和三方库尤其是C/C++研究人员交互式地访问各种基于 OpenHarmony 的 C/C++ 示例，以帮助理解特定的视觉算法
+- 由于 Native-C++ 能够直接在 OpenHarmony 设备中运行，教程页面具有直观和交互式的特点。例如，利用 ArkUI 和 评估 ArkTS 代码，开发人员可以更改 Native-C++ 函数的参数，并在 OpenHarmony 上进行实时的 C/C++ 编程，以实时查看结果。
 
-为了更好地理解这些教程，建议具备一定的 ArkUI，NAPI 和 C++ 应用程序开发知识。通过学习 OpenCV 教程，开发人员可以更好地利用 OpenCV 在 OpenHarmony 开发中的优势，并通过交互式的方式进行实时的视觉算法处理，从而加深对 OpenCV 的理解和应用能力。
+为了更好地理解这些教程，建议具备一定的 ArkUI，NAPI 和 C++ 应用程序开发知识。通过学习 Native-C++ 教程，开发人员可以更好地利用 Native-C++ 在 OpenHarmony 开发中的优势，并通过交互式的方式进行实时的算法处理，从而加深对 Native-C++和Node-API 的理解和应用能力。
 
 
 
@@ -120,9 +120,9 @@ OpenCV 教程的目的包括：
 
      
 
-2. 自行开发ndk应用：
+2. 自行开发nativedevkit应用：
 
-   - 按照 [创建NDK工程]([创建NDK工程 (openharmony.cn)](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/napi/create-with-ndk.md)) 教程中的步骤，配置和构建 native C++ 工程。
+   - 按照 [创建NativeDevelopKit工程]([创建NativeDevelopKit工程 (openharmony.cn)](https://docs.openharmony.cn/pages/v4.0/zh-cn/application-dev/napi/create-with-nativedevkit.md)) 教程中的步骤，配置和构建 native C++ 工程。
 
      
 
