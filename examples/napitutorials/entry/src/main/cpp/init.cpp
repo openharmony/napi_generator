@@ -45,8 +45,6 @@ static napi_value Add(napi_env env, napi_callback_info info)
     return sum;
 }
 
-
-
 EXTERN_C_START
 static napi_value Init(napi_env env, napi_value exports)
 {
