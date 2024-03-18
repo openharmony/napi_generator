@@ -102,7 +102,6 @@ struct napisetinstancedata {
                 this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret2+' ##)');
               })
           }
-        }
         .width('100%')
         .height(48)
         .alignItems(VerticalAlign.Center)

@@ -13,6 +13,6 @@ add_library(entry SHARED
 
 target_link_libraries(entry PUBLIC
     libace_napi.z.so
-    libace_nativedevkit.z.so
+    libace_ndk.z.so
     librawfile.z.so
-    libhilog_nativedevkit.z.so)
+    libhilog_ndk.z.so)
