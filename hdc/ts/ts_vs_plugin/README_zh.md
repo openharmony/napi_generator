@@ -109,7 +109,7 @@ TS(type-script)接口生成工具，它可以根据定义在c++头文件中的�
 
  [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ts/ts_Gen-1.0.md)
 
- [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ts/ROADMAP_ZH.md)
+ [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/guide/ts/ROADMAP_ZH.md)
 
 ## FAQ
 
