@@ -114,7 +114,7 @@ export default Space;
 
  [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ts/ts_Gen-1.0.md)
 
- [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ts/ROADMAP_ZH.md)
+ [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/guide/ts/ROADMAP_ZH.md)
 
 ## FAQ
 
