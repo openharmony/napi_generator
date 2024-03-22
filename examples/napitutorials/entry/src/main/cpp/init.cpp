@@ -52,7 +52,15 @@ static napi_value Init(napi_env env, napi_value exports)
     setInstancedata(env, exports);
 
     napi_property_descriptor desc[] = {
-        {"add", nullptr, Add, nullptr, nullptr, nullptr, napi_default, nullptr}};
+        {"add", nullptr, Add, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiStatus", nullptr, testNapiStatus, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testExterrinfo", nullptr, testNapiExterrinfo, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiEnv", nullptr, testNapiEnv, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiValue", nullptr, testNapiValue, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiThreadsafefunc", nullptr, setThreadsafefunc, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiThreadsafefuncrel", nullptr, setThreadsafefuncrel, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiThreadsafefuncall", nullptr, setThreadsafefuncall, nullptr, nullptr, nullptr, napi_default, nullptr},
+    };
     napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     return exports;
 }

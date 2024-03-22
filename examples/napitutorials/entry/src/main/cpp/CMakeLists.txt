@@ -9,6 +9,13 @@ include_directories(${NATIVERENDER_ROOT_PATH}
 
 add_library(entry SHARED
     nodeapi/envlifecycleapis/napiinstancedata.cpp
+    nodeapi/datatypes/napistatus.cpp
+    nodeapi/datatypes/napienv.cpp
+    nodeapi/datatypes/napivalue.cpp
+    nodeapi/datatypes/napithreadsafefunc.cpp
+    nodeapi/datatypes/napithreadsafefuncrel.cpp
+    nodeapi/datatypes/napithreadsafefuncall.cpp
+    nodeapi/datatypes/napiextendederrorinfo.cpp
     init.cpp)
 
 target_link_libraries(entry PUBLIC

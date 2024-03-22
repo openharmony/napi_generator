@@ -18,6 +18,17 @@
 
 #include "common.h"
 
+extern napi_threadsafe_function g_threadsafeFunction;
+extern napi_threadsafe_function g_threadsafeFunction_call;
+extern napi_threadsafe_function g_threadsafeFunction_rel;
+
 napi_value setInstancedata(napi_env env, napi_value exports);
+napi_value testNapiStatus(napi_env env, napi_callback_info info);
+napi_value testNapiExterrinfo(napi_env env, napi_callback_info info);
+napi_value testNapiEnv(napi_env env, napi_callback_info info);
+napi_value testNapiValue(napi_env env, napi_callback_info info);
+napi_value setThreadsafefunc(napi_env env, napi_callback_info info);
+napi_value setThreadsafefuncrel(napi_env env, napi_callback_info info);
+napi_value setThreadsafefuncall(napi_env env, napi_callback_info info);
 
 #endif //NAPITUTORIALS_NODEAPI_H

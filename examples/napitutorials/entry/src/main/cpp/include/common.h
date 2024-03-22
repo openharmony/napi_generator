@@ -49,6 +49,7 @@ constexpr uint8_t PARAM9 = 9;
 constexpr uint8_t PARAM10 = 10;
 constexpr uint8_t PARAM11 = 11;
 constexpr uint8_t PARAM12 = 12;
+constexpr uint8_t PARAM100 = 100;
 
 constexpr int32_t ARGS_ONE = 1;
 constexpr int32_t ARGS_TWO = 2;
