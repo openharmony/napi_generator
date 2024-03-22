@@ -83,7 +83,7 @@ struct napisetinstancedata {
 
         Row() {
 
-            Button($r('app.string.enum_napi_valuetype'), { type: ButtonType.Capsule })
+            Button($r('app.string.napi_set_instance_data'), { type: ButtonType.Capsule })
               .backgroundColor(Color.Blue)
               .width('80%')
               .height(48)
@@ -91,7 +91,7 @@ struct napisetinstancedata {
               .fontWeight(500)
               .fontColor(this.btnFontColor)
               .margin({ left: 24 })
-              .id('imageGray')
+              .id('napi_set_instance_data')
               .onClick(() => {
                 let instanceobj = testNapi.instance;
                 let ret1 = `instance ${instanceobj} `
