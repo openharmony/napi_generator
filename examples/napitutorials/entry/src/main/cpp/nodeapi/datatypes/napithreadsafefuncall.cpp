@@ -70,7 +70,7 @@ napi_value setThreadsafefuncall(napi_env env, napi_callback_info info)
         if (status == napi_ok && extended_error_info != NULL) {
             const char *errorMessage =
                 extended_error_info->error_message != NULL ? extended_error_info->error_message : "Unknown error";
-            OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "error_message %{public}s!., engine_error_code %{public}d!.",
+            OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "err_msg %{public}s!, engine_err_code %{public}d!.",
                 extended_error_info->engine_error_code, extended_error_info->error_code);
             std::string res = "Failed to create threadsafe function em = " + extended_error_info->engine_error_code +
                 ", eec = " + std::to_string(extended_error_info->engine_error_code) +
