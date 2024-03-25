@@ -58,4 +58,4 @@
 
 **表 2** 
 
-[待开发特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ts/ROADMAP_ZH.md)
+[待开发特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/guide/ts/ROADMAP_ZH.md)
