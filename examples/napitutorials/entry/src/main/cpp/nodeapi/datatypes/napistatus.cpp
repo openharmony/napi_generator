@@ -32,12 +32,13 @@ napi_value testNapiStatus(napi_env env, napi_callback_info info)
     }
 
     // 检查参数数量
-    if (argc < 2) {
+    if (argc < PARAM2) {
         napi_throw_error(env, NULL, "Expected 2 arguments");
         return NULL;
     }
 
-    int32_t num1, num2;
+    int32_t num1 = 0;
+    int32_t num2 = 0;
     status = napi_get_value_int32(env, argv[0], &num1);
     if (status != napi_ok) {
         napi_throw_error(env, NULL, "Invalid first argument");

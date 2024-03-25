@@ -18,7 +18,8 @@
 
 static const char *TAG = "[nodeapi_env]";
 
-napi_value testNapiEnv(napi_env env, napi_callback_info info) {
+napi_value testNapiEnv(napi_env env, napi_callback_info info)
+{
     // pages/nodeapi/datatypes/napienv
     size_t argc = 2;
     napi_value argv[2];
