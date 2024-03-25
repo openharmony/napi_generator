@@ -22,7 +22,8 @@ static const char *TAG = "[nodeapi_threadsafefunc]";
 napi_threadsafe_function g_threadsafeFunction_call;
 
 // JavaScript 回调函数
-static void CallbackFunction(napi_env env, napi_value jsCallback, void *context, void *data) {
+static void CallbackFunction(napi_env env, napi_value jsCallback, void *context, void *data)
+{
     // 在 JavaScript 环境中执行回调函数
     size_t argc = 1;
     napi_value argv[1];
@@ -31,13 +32,14 @@ static void CallbackFunction(napi_env env, napi_value jsCallback, void *context,
 }
 
 // 线程函数，在这里异步调用 JavaScript 函数
-static void ThreadFunction(void *data) {
-
+static void ThreadFunction(void *data)
+{
     // 在另一个线程中异步调用 JavaScript 函数
     napi_call_threadsafe_function(g_threadsafeFunction_call, nullptr, napi_tsfn_nonblocking);
 }
 
-napi_value setThreadsafefuncall(napi_env env, napi_callback_info info) {
+napi_value setThreadsafefuncall(napi_env env, napi_callback_info info)
+{
     // pages/nodeapi/envlifecycleapis/napithreadsafefunc
     // 创建线程安全的 JavaScript 函数对象
 
@@ -61,7 +63,7 @@ napi_value setThreadsafefuncall(napi_env env, napi_callback_info info) {
     }
     napi_value name;
     napi_create_string_utf8(env, "testThreadsafefunc", NAPI_AUTO_LENGTH, &name);
-    status = napi_create_threadsafe_function(env, argv[0], nullptr, name, 0, 1, 
+    status = napi_create_threadsafe_function(env, argv[0], nullptr, name, 0, 1,
         nullptr, nullptr, nullptr, CallbackFunction, &g_threadsafeFunction_call);
     if (status != napi_ok) {
         status = napi_get_last_error_info(env, &extended_error_info);
@@ -73,7 +75,7 @@ napi_value setThreadsafefuncall(napi_env env, napi_callback_info info) {
                          extended_error_info->engine_error_code);
             OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "error_code %{public}d!.",
                          extended_error_info->error_code);
-            sprintf(buffer, "Failed to create threadsafe function em = %s, eec = %d, ec = %d", error_message,
+            snprintf(buffer, PARAM100, "Failed to create threadsafe function em = %s, eec = %d, ec = %d", error_message,
                     extended_error_info->engine_error_code, extended_error_info->error_code);
             napi_throw_error(env, NULL, buffer);
             return NULL;

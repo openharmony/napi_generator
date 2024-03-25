@@ -38,7 +38,8 @@ napi_value testNapiExterrinfo(napi_env env, napi_callback_info info) {
         return NULL;
     }
 
-    int32_t num1, num2;
+    int32_t num1 = 0;
+    int32_t num2 = 0;
     status = napi_get_value_int32(env, argv[0], &num1);
     if (status != napi_ok) {
         napi_throw_error(env, NULL, "Invalid first argument");
