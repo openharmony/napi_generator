@@ -4695,6 +4695,838 @@
     {
       "name": "navigator_return_message",
       "value": "hello! 这是第一个页面传过来的参数"
+    },
+    {
+      "name": "environment_life_cycle_apis",
+      "value": "环境生命周期接口"
+    },
+    {
+      "name": "napi_set_instance_data",
+      "value": "设置实例数据"
+    },
+    {
+      "name": "napi_get_instance_data",
+      "value": "获取实例数据"
+    },
+    {
+      "name": "basic_node_api_data_types",
+      "value": "基础数据类型"
+    },
+    {
+      "name": "napi_status",
+      "value": "状态"
+    },
+    {
+      "name": "napi_extended_error_info",
+      "value": "扩展错误类型"
+    },
+    {
+      "name": "napi_env",
+      "value": "环境"
+    },
+    {
+      "name": "napi_value",
+      "value": "值"
+    },
+    {
+      "name": "napi_threadsafe_function",
+      "value": "线程安全函数"
+    },
+    {
+      "name": "napi_threadsafe_function_release_mode",
+      "value": "线程安全函数释放类型"
+    },
+    {
+      "name": "napi_threadsafe_function_call_mode",
+      "value": "线程安全函数调用类型"
+    },
+    {
+      "name": "node_api_memory_management_types",
+      "value": "内存管理类型"
+    },
+    {
+      "name": "napi_handle_scope",
+      "value": "句柄作用域"
+    },
+    {
+      "name": "napi_escapable_handle_scope",
+      "value": "Escapable句柄作用域"
+    },
+    {
+      "name": "napi_ref",
+      "value": "引用"
+    },
+    {
+      "name": "napi_type_tag",
+      "value": "类型标志"
+    },
+    {
+      "name": "napi_async_cleanup_hook_handle",
+      "value": "异步清理钩子句柄"
+    },
+    {
+      "name": "node_api_callback_types",
+      "value": "回调类型"
+    },
+    {
+      "name": "napi_callback_info",
+      "value": "回调信息"
+    },
+    {
+      "name": "napi_callback",
+      "value": "回调"
+    },
+    {
+      "name": "napi_finalize",
+      "value": "终结器"
+    },
+    {
+      "name": "napi_async_execute_callback",
+      "value": "异步执行回调"
+    },
+    {
+      "name": "napi_async_complete_callback",
+      "value": "异步完成回调"
+    },
+    {
+      "name": "napi_threadsafe_function_call_js",
+      "value": "调用JS线程安全函数"
+    },
+    {
+      "name": "napi_cleanup_hook",
+      "value": "清理钩子"
+    },
+    {
+      "name": "napi_async_cleanup_hook",
+      "value": "异步清理钩子"
+    },
+    {
+      "name": "node_api_error_handling_return_values",
+      "value": "错误处理和返回值"
+    },
+    {
+      "name": "napi_get_last_error_info",
+      "value": "最后错误信息"
+    },
+    {
+      "name": "node_api_error_handling_exception",
+      "value": "异常处理"
+    },
+    {
+      "name": "napi_throw",
+      "value": "Throw"
+    },
+    {
+      "name": "napi_throw_error",
+      "value": "抛出错误"
+    },
+    {
+      "name": "napi_throw_type_error",
+      "value": "抛出类型错误"
+    },
+    {
+      "name": "napi_throw_range_error",
+      "value": "抛出范围错误"
+    },
+    {
+      "name": "node_api_throw_syntax_error",
+      "value": "抛出语法错误"
+    },
+    {
+      "name": "napi_is_error",
+      "value": "是否错误"
+    },
+    {
+      "name": "napi_create_error",
+      "value": "创建错误"
+    },
+    {
+      "name": "napi_create_type_error",
+      "value": "创建类型错误"
+    },
+    {
+      "name": "napi_create_range_error",
+      "value": "创建范围错误"
+    },
+    {
+      "name": "node_api_create_syntax_error",
+      "value": "创建语法错误"
+    },
+    {
+      "name": "napi_get_and_clear_last_exception",
+      "value": "获取和清除最后异常"
+    },
+    {
+      "name": "napi_is_exception_pending",
+      "value": "是否异常挂起"
+    },
+    {
+      "name": "napi_fatal_exception",
+      "value": "致命异常"
+    },
+    {
+      "name": "node_api_error_handling_fatal_errors",
+      "value": "致命错误处理"
+    },
+    {
+      "name": "napi_fatal_error",
+      "value": "致命错误"
+    },
+    {
+      "name": "node_api_object_lifetime_management",
+      "value": "对象生命周期管理"
+    },
+    {
+      "name": "Making_handle_lifespan_shorter_than_that_of_the_native_method",
+      "value": "使句柄寿命短于本地方法"
+    },
+    {
+      "name": "napi_open_handle_scope",
+      "value": "打开Handle作用域"
+    },
+    {
+      "name": "napi_close_handle_scope",
+      "value": "关闭Handle作用域"
+    },
+    {
+      "name": "napi_open_escapable_handle_scope",
+      "value": "打开Escape处理作用域"
+    },
+    {
+      "name": "napi_close_escapable_handle_scope",
+      "value": "关闭Escape处理作用域"
+    },
+    {
+      "name": "napi_escape_handle",
+      "value": "Escape处理"
+    },
+    {
+      "name": "references_to_values_with_a_lifespan_longer_than_that_of_the_native_method",
+      "value": "对生命周期比原生方法长的值的引用"
+    },
+    {
+      "name": "napi_create_reference",
+      "value": "创建引用"
+    },
+    {
+      "name": "napi_delete_reference",
+      "value": "删除引用"
+    },
+    {
+      "name": "napi_reference_ref",
+      "value": "添加引用"
+    },
+    {
+      "name": "napi_reference_unref",
+      "value": "减少引用"
+    },
+    {
+      "name": "napi_get_reference_value",
+      "value": "获取引用值"
+    },
+    {
+      "name": "cleanup_on_exit_of_the_current_nodejs_environment",
+      "value": "Nodejs环境退出清理器"
+    },
+    {
+      "name": "napi_add_env_cleanup_hook",
+      "value": "增加环境清理钩子"
+    },
+    {
+      "name": "napi_remove_env_cleanup_hook",
+      "value": "移出环境清理钩子"
+    },
+    {
+      "name": "napi_add_async_cleanup_hook",
+      "value": "添加异步清理钩子"
+    },
+    {
+      "name": "napi_remove_async_cleanup_hook",
+      "value": "移出异步清理钩子"
+    },
+    {
+      "name": "finalization_on_the_exit_of_the_nodejs_environment",
+      "value": "Nodejs环境退出终结器"
+    },
+    {
+      "name": "node_api_module_registration",
+      "value": "模块注册"
+    },
+    {
+      "name": "work_with_javascript_values",
+      "value": "使用JavaScript值"
+    },
+    {
+      "name": "enum_napi_key_collection_mode",
+      "value": "键值集合"
+    },
+    {
+      "name": "enum_napi_key_filter",
+      "value": "键值过滤"
+    },
+    {
+      "name": "enum_napi_key_conversion",
+      "value": "键值转换"
+    },
+    {
+      "name": "enum_napi_valuetype",
+      "value": "Value类型"
+    },
+    {
+      "name": "enum_napi_typedarray_type",
+      "value": "TypeArray类型"
+    },
+    {
+      "name": "napi_create_array",
+      "value": "创建Array"
+    },
+    {
+      "name": "napi_create_array_with_length",
+      "value": "创建定长Array"
+    },
+    {
+      "name": "napi_create_arraybuffer",
+      "value": "创建ArrayBuffer"
+    },
+    {
+      "name": "napi_create_buffer",
+      "value": "创建Buffer"
+    },
+    {
+      "name": "napi_create_buffer_copy",
+      "value": "创建Buffer备份"
+    },
+    {
+      "name": "napi_create_date",
+      "value": "创建Date"
+    },
+    {
+      "name": "napi_create_external",
+      "value": "创建外部值"
+    },
+    {
+      "name": "napi_create_external_arraybuffer",
+      "value": "创建外部ArrayBuffer"
+    },
+    {
+      "name": "napi_create_external_buffer",
+      "value": "创建外部Buffer"
+    },
+    {
+      "name": "napi_create_object",
+      "value": "创建对象"
+    },
+    {
+      "name": "napi_create_symbol",
+      "value": "创建符号"
+    },
+    {
+      "name": "node_api_symbol_for",
+      "value": "全局符号"
+    },
+    {
+      "name": "napi_create_typedarray",
+      "value": "创建TypeArray"
+    },
+    {
+      "name": "napi_create_dataview",
+      "value": "创建DataView"
+    },
+    {
+      "name": "napi_create_int32",
+      "value": "创建int32"
+    },
+    {
+      "name": "napi_create_uint32",
+      "value": "创建uint32"
+    },
+    {
+      "name": "napi_create_int64",
+      "value": "创建int64"
+    },
+    {
+      "name": "napi_create_double",
+      "value": "创建double"
+    },
+    {
+      "name": "napi_create_bigint_int64",
+      "value": "创建bigint int64"
+    },
+    {
+      "name": "napi_create_bigint_uint64",
+      "value": "创建bigint uint64"
+    },
+    {
+      "name": "napi_create_bigint_words",
+      "value": "创建bigint字符串"
+    },
+    {
+      "name": "napi_create_string_latin1",
+      "value": "创建latin1字符串"
+    },
+    {
+      "name": "node_api_create_external_string_latin1",
+      "value": "创建外部latin1字符串"
+    },
+    {
+      "name": "napi_create_string_utf16",
+      "value": "创建utf16字符串"
+    },
+    {
+      "name": "node_api_create_external_string_utf16",
+      "value": "创建外部utf16字符串"
+    },
+    {
+      "name": "napi_create_string_utf8",
+      "value": "创建utf8字符串"
+    },
+    {
+      "name": "napi_get_array_length",
+      "value": "获取Array长度"
+    },
+    {
+      "name": "napi_get_arraybuffer_info",
+      "value": "获取ArrayBuffer信息"
+    },
+    {
+      "name": "napi_get_buffer_info",
+      "value": "获取Buffer信息"
+    },
+    {
+      "name": "napi_get_prototype",
+      "value": "获取原型"
+    },
+    {
+      "name": "napi_get_typedarray_info",
+      "value": "获取TypeArrary信息"
+    },
+    {
+      "name": "napi_get_dataview_info",
+      "value": "获取DataView信息"
+    },
+    {
+      "name": "napi_get_date_value",
+      "value": "获取date值"
+    },
+    {
+      "name": "napi_get_value_bool",
+      "value": "获取bool值"
+    },
+    {
+      "name": "napi_get_value_double",
+      "value": "获取double值"
+    },
+    {
+      "name": "napi_get_value_bigint_int64",
+      "value": "获取bigint int64值"
+    },
+    {
+      "name": "napi_get_value_bigint_uint64",
+      "value": "获取bigint uint64值"
+    },
+    {
+      "name": "napi_get_value_bigint_words",
+      "value": "获取bigint words值"
+    },
+    {
+      "name": "napi_get_value_external",
+      "value": "获取External值"
+    },
+    {
+      "name": "napi_get_value_int32",
+      "value": "获取int32值"
+    },
+    {
+      "name": "napi_get_value_int64",
+      "value": "获取int64值"
+    },
+    {
+      "name": "napi_get_value_string_latin1",
+      "value": "获取latin1值"
+    },
+    {
+      "name": "napi_get_value_string_utf8",
+      "value": "获取utf8值"
+    },
+    {
+      "name": "napi_get_value_string_utf16",
+      "value": "获取utf16值"
+    },
+    {
+      "name": "napi_get_value_uint32",
+      "value": "获取uint32值"
+    },
+    {
+      "name": "napi_get_boolean",
+      "value": "获取布尔"
+    },
+    {
+      "name": "napi_get_global",
+      "value": "获取Global"
+    },
+    {
+      "name": "napi_get_null",
+      "value": "获取Null"
+    },
+    {
+      "name": "napi_get_undefined",
+      "value": "获取Undefined"
+    },
+    {
+      "name": "work_with_javascript_values_and_abstract_operations",
+      "value": "使用JavaScript值和抽象操作"
+    },
+    {
+      "name": "napi_coerce_to_bool",
+      "value": "强制转换布尔"
+    },
+    {
+      "name": "napi_coerce_to_number",
+      "value": "强制转换数字"
+    },
+    {
+      "name": "napi_coerce_to_object",
+      "value": "强制转换对象"
+    },
+    {
+      "name": "napi_coerce_to_string",
+      "value": "强制转换字符串"
+    },
+    {
+      "name": "napi_typeof",
+      "value": "类型"
+    },
+    {
+      "name": "napi_instanceof",
+      "value": "实例"
+    },
+    {
+      "name": "napi_is_array",
+      "value": "是否是Array"
+    },
+    {
+      "name": "napi_is_arraybuffer",
+      "value": "是否是ArrayBUffer"
+    },
+    {
+      "name": "napi_is_buffer",
+      "value": "是否是Buffer"
+    },
+    {
+      "name": "napi_is_date",
+      "value": "是否是Date"
+    },
+    {
+      "name": "napi_is_typedarray",
+      "value": "是否是TypeArray"
+    },
+    {
+      "name": "napi_is_dataview",
+      "value": "是否是DataView"
+    },
+    {
+      "name": "napi_strict_equals",
+      "value": "严格相等"
+    },
+    {
+      "name": "napi_detach_arraybuffer",
+      "value": "分离ArrayBuffer"
+    },
+    {
+      "name": "napi_is_detached_arraybuffer",
+      "value": "是否分离ArrayBuffer"
+    },
+    {
+      "name": "work_with_javascript_properties",
+      "value": "使用JavaScript属性"
+    },
+    {
+      "name": "napi_property_attributes",
+      "value": "属性特性"
+    },
+    {
+      "name": "napi_property_descriptor",
+      "value": "获取属性描述"
+    },
+    {
+      "name": "napi_get_property_names",
+      "value": "获取属性名称"
+    },
+    {
+      "name": "napi_get_all_property_names",
+      "value": "获取所有属性名称"
+    },
+    {
+      "name": "napi_set_property",
+      "value": "设置属性"
+    },
+    {
+      "name": "napi_get_property",
+      "value": "获取属性"
+    },
+    {
+      "name": "napi_has_property",
+      "value": "是否有属性"
+    },
+    {
+      "name": "napi_delete_property",
+      "value": "删除属性"
+    },
+    {
+      "name": "napi_has_own_property",
+      "value": "是否拥有属性"
+    },
+    {
+      "name": "napi_set_named_property",
+      "value": "设置命名属性"
+    },
+    {
+      "name": "napi_get_named_property",
+      "value": "获取命名属性"
+    },
+    {
+      "name": "napi_has_named_property",
+      "value": "是否有命名属性"
+    },
+    {
+      "name": "napi_set_element",
+      "value": "设置元素"
+    },
+    {
+      "name": "napi_get_element",
+      "value": "获取元素"
+    },
+    {
+      "name": "napi_has_element",
+      "value": "是否有元素"
+    },
+    {
+      "name": "napi_delete_element",
+      "value": "删除元素"
+    },
+    {
+      "name": "napi_define_properties",
+      "value": "定义属性"
+    },
+    {
+      "name": "napi_object_freeze",
+      "value": "对象冻结"
+    },
+    {
+      "name": "napi_object_seal",
+      "value": "对象密封"
+    },
+    {
+      "name": "work_with_javasript_functions",
+      "value": "使用JavaScript函数"
+    },
+    {
+      "name": "napi_call_function",
+      "value": "调用函数"
+    },
+    {
+      "name": "napi_create_function",
+      "value": "创建函数"
+    },
+    {
+      "name": "napi_get_cb_info",
+      "value": "获取回调信息"
+    },
+    {
+      "name": "napi_get_new_target",
+      "value": "获取新目标"
+    },
+    {
+      "name": "napi_new_instance",
+      "value": "新实例"
+    },
+    {
+      "name": "object_wrap",
+      "value": "对象包装"
+    },
+    {
+      "name": "napi_define_class",
+      "value": "定义Class"
+    },
+    {
+      "name": "napi_wrap",
+      "value": "包装"
+    },
+    {
+      "name": "napi_unwrap",
+      "value": "解除包装"
+    },
+    {
+      "name": "napi_remove_wrap",
+      "value": "移除包装"
+    },
+    {
+      "name": "napi_type_tag_object",
+      "value": "类型标记"
+    },
+    {
+      "name": "napi_check_object_type_tag",
+      "value": "检查对象类型和标签"
+    },
+    {
+      "name": "napi_add_finalizer",
+      "value": "添加终结器"
+    },
+    {
+      "name": "node_api_post_finalizer",
+      "value": "传递终结器"
+    },
+    {
+      "name": "simple_asyncronous_operations",
+      "value": "简单异步操作"
+    },
+    {
+      "name": "napi_create_async_work",
+      "value": "创建异步工作任务"
+    },
+    {
+      "name": "napi_delete_async_work",
+      "value": "删除异步工作任务"
+    },
+    {
+      "name": "napi_queue_async_work",
+      "value": "队列化异步工作任务"
+    },
+    {
+      "name": "napi_cancel_async_work",
+      "value": "取消异步工作任务"
+    },
+    {
+      "name": "custom_asyncronous_operations",
+      "value": "自定义异步操作"
+    },
+    {
+      "name": "napi_async_init",
+      "value": "异步初始化"
+    },
+    {
+      "name": "napi_async_destroy",
+      "value": "异步销毁"
+    },
+    {
+      "name": "napi_make_callback",
+      "value": "创建回调"
+    },
+    {
+      "name": "napi_open_callback_scope",
+      "value": "打开回调作用域"
+    },
+    {
+      "name": "napi_close_callback_scope",
+      "value": "关闭回调作用域"
+    },
+    {
+      "name": "version_management",
+      "value": "版本管理"
+    },
+    {
+      "name": "napi_get_node_version",
+      "value": "获取Node版本"
+    },
+    {
+      "name": "napi_get_version",
+      "value": "获取版本"
+    },
+    {
+      "name": "memory_management",
+      "value": "内部管理"
+    },
+    {
+      "name": "napi_adjust_external_memory",
+      "value": "通知运行时外部资源内存使用情况"
+    },
+    {
+      "name": "promise",
+      "value": "Promise"
+    },
+    {
+      "name": "napi_create_promise",
+      "value": "创建Promise"
+    },
+    {
+      "name": "napi_resolve_deferred",
+      "value": "解决延迟对象"
+    },
+    {
+      "name": "napi_reject_deferred",
+      "value": "拒绝延迟对象"
+    },
+    {
+      "name": "napi_is_promise",
+      "value": "是否为Promise"
+    },
+    {
+      "name": "script_execution",
+      "value": "脚本运行"
+    },
+    {
+      "name": "napi_run_script",
+      "value": "运行脚本"
+    },
+    {
+      "name": "libuv_event_loop",
+      "value": "uv事件轮询"
+    },
+    {
+      "name": "napi_get_uv_event_loop",
+      "value": "获取uv事件轮询"
+    },
+    {
+      "name": "asyncronous_thread_safe_function_call",
+      "value": "异步调用线程安全函数"
+    },
+    {
+      "name": "calling_a_thread_safe_function",
+      "value": "调用线程安全函数"
+    },
+    {
+      "name": "refrence_counting_of_thread_safe_functions",
+      "value": "线程安全函数引用计数"
+    },
+    {
+      "name": "deciding_whether_to_keep_the_process_running",
+      "value": "声明是否保持进程运行"
+    },
+    {
+      "name": "napi_create_threadsafe_function",
+      "value": "创建线程安全函数对象"
+    },
+    {
+      "name": "napi_get_threadsafe_function_context",
+      "value": "获取线程安全函数对象上下文"
+    },
+    {
+      "name": "napi_call_threadsafe_function",
+      "value": "调用线程安全函数对象"
+    },
+    {
+      "name": "napi_acquire_threadsafe_function",
+      "value": "获取线程安全函数对象"
+    },
+    {
+      "name": "napi_release_threadsafe_function",
+      "value": "释放线程安全函数对象"
+    },
+    {
+      "name": "napi_ref_threadsafe_function",
+      "value": "线程安全函数对象的引用计数"
+    },
+    {
+      "name": "napi_unref_threadsafe_function",
+      "value": "取消线程安全函数对象的引用计数"
+    },
+    {
+      "name": "miscellaneous_utilities",
+      "value": "杂项实用工具函数"
+    },
+    {
+      "name": "node_api_get_module_file_name",
+      "value": "获取当前文件名"
     }
   ]
 }

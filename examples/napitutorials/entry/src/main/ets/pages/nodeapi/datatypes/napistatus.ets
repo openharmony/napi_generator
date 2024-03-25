@@ -24,32 +24,32 @@ const TAG: string = 'napi_roi';
 
 @Entry
 @Component
-struct napigetinstancedata {
+struct napistatus {
   private btnFontColor: Resource = $r('app.color.white');
   private pixelMapFormat: image.PixelMapFormat = 3;
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State textcont: string = '一个 Node.js 环境对应一个 ECMAScript Agent。在主进程中，启动时创建一个环境，'
-    + '可以在单独的线程上创建额外的环境作为 工作线程。当 Node.js 嵌入到另一个应用中时，应用的主线程也可能在应用的生命周期'
-    + '中多次构造和销毁 Node.js 环境，使得应用创建的每个 Node.js 环境可能，在 反过来，在其生命周期中创建和销毁额外的环境作为工作线程。'
-    + '从原生插件的角度来看，这意味着它提供的绑定可以从多个上下文中多次调用，甚至可以同时从多个线程中调用。'
-    + '原生插件可能需要分配它们在 Node.js 环境的生命周期中使用的全局状态，以便该状态对于插件的每个实例都是唯一的。'
-    + '为此，Node-API 提供了一种关联数据的方法，使其生命周期与 Node.js 环境的生命周期相关联。'
+  @State textcont: string = '指示 Node-API 调用成功或失败的完整状态代码。目前支持以下状态码。'
+    + '如果 API 返回失败状态时需要额外的信息，可以通过调用 napi_get_last_error_info 获取。'
   @State testcont: string = ' // 获取导出的 N-API 实例对象 \n'
-    + ' const instance = addon.instance; \n'
+    + " const addon = require('./build/Release/module_name'); \n"
     + ' // 使用实例对象进行操作 \n'
-    + ' console.log(instance); // 输出 N-API 实例对象 \n'
-    + ' // 获取与实例对象关联的自定义数据 \n'
-    + '  const myData = addon.getInstanceData(instance); \n'
-    + ' // 使用获取的自定义数据 \n'
-    + ' console.log(myData); // 输出自定义数据 \n';
+    + ' const result = addon.add(5, 1); \n'
+    + ' // 成功案例 \n'
+    + ' console.log(`The result of the addition is: ${result}`); \n'
+    + ' // 失败案例，设置 > 10 报错 \n'
+    + ' try { \n'
+    + '   const result = addon.add(5, 10); \n'
+    + ' } catch (error) { \n'
+    + "   console.error('An error occurred in the addon:', error.message); \n"
+    + ' } \n';
 
   controller: TextAreaController = new TextAreaController()
 
   build() {
     Column() {
       // 标题
-      TitleBar({ title: $r('app.string.napi_get_instance_data') })
+      TitleBar({ title: $r('app.string.napi_status') })
 
       Column() {
         Column() {
@@ -83,7 +83,7 @@ struct napigetinstancedata {
 
         Row() {
 
-          Button($r('app.string.napi_get_instance_data'), { type: ButtonType.Capsule })
+          Button($r('app.string.napi_status'), { type: ButtonType.Capsule })
             .backgroundColor(Color.Blue)
             .width('80%')
             .height(48)
@@ -91,15 +91,17 @@ struct napigetinstancedata {
             .fontWeight(500)
             .fontColor(this.btnFontColor)
             .margin({ left: 24 })
-            .id('napi_get_instance_data')
+            .id('napstatus')
             .onClick(() => {
-              let instanceobj = testNapi.instance;
-              let ret1 = `instance ${instanceobj} `
-              let ret2 = ' ld.lld: error: undefined symbol: napi_get_instance_data '
-              hilog.info(0x0000, 'testTag', ret1);
-              hilog.info(0x0000, 'testTag', `instance ${instanceobj.testint32} `);
-              this.testcont = this.testcont.replace('log(instance)', 'log(## '+ret1+' ##)');
-              this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret2+' ##)');
+              let result = testNapi.testNapiStatus(5, 1);
+              console.log(`The result of the testNapiStatus is: ${result}`);
+              this.testcont = this.testcont.replace('${result}', 'log(## '+result+' ##)');
+              try {
+                let result1 = testNapi.testNapiStatus(5, 10);
+              } catch (error) {
+                console.log(`Catch eror of testNapiStatus is: ${error.message}`);
+                this.testcont = this.testcont.replace('error.message', 'log(## '+error.message+' ##)');
+              }
             })
         }
         .width('100%')

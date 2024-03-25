@@ -17,5 +17,16 @@ export interface InstanceData {
   testint32: number;
 }
 
+export interface Callback<T> {
+  (data: T): void;
+}
+
 export const add: (a: number, b: number) => number;
+export const testNapiStatus: (a: number, b: number) => number;
+export const testExterrinfo: (a: number, b: string) => number;
+export const testNapiEnv: () => string;
+export const testNapiValue: () => string;
+export const testNapiThreadsafefunc: (callback: Callback<string>) => number;
+export const testNapiThreadsafefuncrel: (callback: Callback<string>) => number;
+export const testNapiThreadsafefuncall: (callback: Callback<string>) => number;
 export const instance;
