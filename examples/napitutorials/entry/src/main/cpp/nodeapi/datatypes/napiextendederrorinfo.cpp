@@ -17,7 +17,8 @@
 
 static const char *TAG = "[nodeapi_exterrinfo]";
 
-napi_value testNapiExterrinfo(napi_env env, napi_callback_info info) {
+napi_value testNapiExterrinfo(napi_env env, napi_callback_info info)
+{
     // pages/nodeapi/datatypes/napiextendederrorinfo
     char buffer[PARAM100];
     size_t argc = 2;
@@ -33,7 +34,7 @@ napi_value testNapiExterrinfo(napi_env env, napi_callback_info info) {
     }
 
     // 检查参数数量
-    if (argc < 2) {
+    if (argc < PARAM2) {
         napi_throw_error(env, NULL, "Expected 2 arguments");
         return NULL;
     }
@@ -50,16 +51,14 @@ napi_value testNapiExterrinfo(napi_env env, napi_callback_info info) {
     if (status != napi_ok) {
         status = napi_get_last_error_info(env, &extended_error_info);
         if (status == napi_ok && extended_error_info != NULL) {
-            const char *error_message =
+            const char *errorMessage =
                 extended_error_info->error_message != NULL ? extended_error_info->error_message : "Unknown error";
-            OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "error_message %{public}s!.", error_message);
-            OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "engine_error_code %{public}d!.", 
-                extended_error_info->engine_error_code);
-            OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "error_code %{public}d!.",
-                extended_error_info->error_code);
-            sprintf(buffer, "Invalid second argument em = %s, eec = %d, ec = %d", error_message, 
+            OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "errorMessage %{public}s!, engine_error_code %{public}d!.",
                 extended_error_info->engine_error_code, extended_error_info->error_code);
-            napi_throw_error(env, NULL, buffer);
+            std::string res = "Failed to create threadsafe function em = " + extended_error_info->engine_error_code +
+                ", eec = " + std::to_string(extended_error_info->engine_error_code) +
+                ", ec = " + extended_error_info->error_code;
+            napi_throw_error(env, NULL, res.c_str());
         }
         
         return NULL;
