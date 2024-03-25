@@ -11,7 +11,7 @@
 
   系统镜像的具体生成方法，可以左键单击以下链接了解：
 
-  [生成代码集成到OpenHarmony](https://gitee.com/openharmony/napi_generator/blob/master/docs/ENSEMBLE_METHOD_ZH.md)
+  [生成代码集成到OpenHarmony](https://gitee.com/openharmony/napi_generator/blob/master/docs/guide/ENSEMBLE_METHOD_ZH.md)
 
   3.应用hap包：hap包及源码路径如下：
 
@@ -23,11 +23,11 @@ napi_generator/examples/app
 ### 修改点1：扩展SDK接口
 1. 查看SDK目录：打开DevEco Studio ，点击 Tools -> SDK Manager -> SDK 
 
-   ![](../figures/DevEco_SDK_path.png)
+   ![](../../figures/DevEco_SDK_path.png)
 
 2. 将@ohos.napitest.d.ts文件拷贝到应用所使用的sdk目录下 的ets\api
 
-   ![](../figures/DevEco_add_interface.png)
+   ![](../../figures/DevEco_add_interface.png)
 
 ### 修改点2：增加新接口调用
 其中修改index.ets文件内容如下：

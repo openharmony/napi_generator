@@ -106,7 +106,7 @@ public:
 
  [已支持特性](https://gitee.com/openharmony/napi_generator/blob/master/release-notes)
 
- [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/ROADMAP_ZH.md)
+ [待支持特性](https://gitee.com/openharmony/napi_generator/blob/master/docs/guide/ROADMAP_ZH.md)
 
 ## FAQ
 
