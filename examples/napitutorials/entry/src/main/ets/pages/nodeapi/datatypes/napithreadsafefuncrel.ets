@@ -16,40 +16,47 @@
 import router from '@ohos.router';
 import image from '@ohos.multimedia.image';
 import Logger from '../../../util/Logger';
-import testNapi from 'libentry.so';
+import testNapi, { testNapiEnv } from 'libentry.so';
 import { TitleBar } from '../../../common/TitleBar'
 import hilog from '@ohos.hilog';
 
-const TAG: string = 'napi_roi';
+const TAG: string = 'napi_threadsafefuncrel';
 
 @Entry
 @Component
-struct napigetinstancedata {
+struct napithreadsafefuncrel {
   private btnFontColor: Resource = $r('app.color.white');
   private pixelMapFormat: image.PixelMapFormat = 3;
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State textcont: string = '一个 Node.js 环境对应一个 ECMAScript Agent。在主进程中，启动时创建一个环境，'
-    + '可以在单独的线程上创建额外的环境作为 工作线程。当 Node.js 嵌入到另一个应用中时，应用的主线程也可能在应用的生命周期'
-    + '中多次构造和销毁 Node.js 环境，使得应用创建的每个 Node.js 环境可能，在 反过来，在其生命周期中创建和销毁额外的环境作为工作线程。'
-    + '从原生插件的角度来看，这意味着它提供的绑定可以从多个上下文中多次调用，甚至可以同时从多个线程中调用。'
-    + '原生插件可能需要分配它们在 Node.js 环境的生命周期中使用的全局状态，以便该状态对于插件的每个实例都是唯一的。'
-    + '为此，Node-API 提供了一种关联数据的方法，使其生命周期与 Node.js 环境的生命周期相关联。'
-  @State testcont: string = ' // 获取导出的 N-API 实例对象 \n'
-    + ' const instance = addon.instance; \n'
-    + ' // 使用实例对象进行操作 \n'
-    + ' console.log(instance); // 输出 N-API 实例对象 \n'
-    + ' // 获取与实例对象关联的自定义数据 \n'
-    + '  const myData = addon.getInstanceData(instance); \n'
-    + ' // 使用获取的自定义数据 \n'
-    + ' console.log(myData); // 输出自定义数据 \n';
+  @State textcont: string = 'napi_threadsafe_function_release_mode 是 N-API 中的一个函数，'
+    + '用于指定线程安全函数对象的释放模式。该函数用于设置线程安全函数对象在何时释放内存。'
+    + 'napi_threadsafe_function_release_mode 函数有以下几种释放模式：\n'
+    + 'NAPI_TSFN_RELEASE：在调用线程安全函数对象的 release 方法时释放内存。\n'
+    + 'NAPI_TSFN_ABORT：不要释放内存，当调用 abort 方法时调用错误回调函数。\n'
+    + '通过选择适当的释放模式，可以确保线程安全函数对象在适当的时间释放内存，从而避免内存泄漏或访问已释放内存的情况。'
+    + '需要注意的是，具体如何使用这些释放模式取决于你的具体应用场景和需求。在使用 napi_threadsafe_function_release_mode 函数时，'
+    + '请确保理解每种模式的含义，并根据实际情况进行选择。'
+  @State testcont: string = ' // napi_threadsafe_function_release_mode 调用 JS 回调 \n'
+    + "try { \n"
+    + ' const instance = addon.testNapiThreadsafefunc((res: string) => { \n'
+    + '   this.callback(res) \n'
+    + "   this.testcont = this.testcont.replace('log(myData)', 'log(## '+res+' ##)'); \n"
+    + '  }) \n'
+    + "} catch (error) { \n"
+    + "  console.log(`Catch eror of testNapiThreadsafefunc is: ${error.message}`); \n"
+    + "}; \n";
 
   controller: TextAreaController = new TextAreaController()
+
+  callback(res: string) {
+    hilog.info(0x0000, 'testTag', `callback input param ${res} `);
+  }
 
   build() {
     Column() {
       // 标题
-      TitleBar({ title: $r('app.string.napi_get_instance_data') })
+      TitleBar({ title: $r('app.string.napi_threadsafe_function_release_mode') })
 
       Column() {
         Column() {
@@ -83,7 +90,7 @@ struct napigetinstancedata {
 
         Row() {
 
-          Button($r('app.string.napi_get_instance_data'), { type: ButtonType.Capsule })
+          Button($r('app.string.napi_threadsafe_function_release_mode'), { type: ButtonType.Capsule })
             .backgroundColor(Color.Blue)
             .width('80%')
             .height(48)
@@ -91,15 +98,17 @@ struct napigetinstancedata {
             .fontWeight(500)
             .fontColor(this.btnFontColor)
             .margin({ left: 24 })
-            .id('napi_get_instance_data')
+            .id('napi_threadsafe_function_release_mode')
             .onClick(() => {
-              let instanceobj = testNapi.instance;
-              let ret1 = `instance ${instanceobj} `
-              let ret2 = ' ld.lld: error: undefined symbol: napi_get_instance_data '
-              hilog.info(0x0000, 'testTag', ret1);
-              hilog.info(0x0000, 'testTag', `instance ${instanceobj.testint32} `);
-              this.testcont = this.testcont.replace('log(instance)', 'log(## '+ret1+' ##)');
-              this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret2+' ##)');
+              try {
+                testNapi.testNapiThreadsafefuncrel((res: string) => {
+                  this.callback(res)
+                  this.testcont = this.testcont.replace('log(myData)', 'log(## ' + res + ' ##)');
+                })
+              } catch (error) {
+                console.log(`Catch eror of testNapiThreadsafefunc is: ${error.message}`);
+                this.testcont = this.testcont.replace('${error.message}', '(## '+error.message+' ##)');
+              }
             })
         }
         .width('100%')
