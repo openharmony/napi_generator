@@ -3,9 +3,11 @@ cmake_minimum_required(VERSION 3.4.1)
 project(NapiSample)
 
 set(NATIVERENDER_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+set(CJSON_LIB_PATH ${NATIVERENDER_ROOT_PATH}/../../../libs/${OHOS_ARCH})
 
 include_directories(${NATIVERENDER_ROOT_PATH}
-                    ${NATIVERENDER_ROOT_PATH}/include)
+                    ${NATIVERENDER_ROOT_PATH}/include
+                    ${NATIVERENDER_ROOT_PATH}/thirdparty/cJSON/${OHOS_ARCH}/include)
 
 add_library(entry SHARED
     nodeapi/envlifecycleapis/napiinstancedata.cpp
@@ -16,10 +18,12 @@ add_library(entry SHARED
     nodeapi/datatypes/napithreadsafefuncrel.cpp
     nodeapi/datatypes/napithreadsafefuncall.cpp
     nodeapi/datatypes/napiextendederrorinfo.cpp
+    ncpp/cjsoncase/cjsoncase.cpp
     init.cpp)
 
 target_link_libraries(entry PUBLIC
     libace_napi.z.so
     libace_ndk.z.so
     librawfile.z.so
-    libhilog_ndk.z.so)
+    libhilog_ndk.z.so
+    ${CJSON_LIB_PATH}/libcjson.so)

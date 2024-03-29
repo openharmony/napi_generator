@@ -30,3 +30,5 @@ export const testNapiThreadsafefunc: (callback: Callback<string>) => number;
 export const testNapiThreadsafefuncrel: (callback: Callback<string>) => number;
 export const testNapiThreadsafefuncall: (callback: Callback<string>) => number;
 export const instance;
+
+export const cjson_version: () => string;
