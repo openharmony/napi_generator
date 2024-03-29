@@ -189,6 +189,10 @@
       "value": "Dialog"
     },
     {
+      "name": "cjson_management",
+      "value": "CJSON Test Case"
+    },
+    {
       "name": "environment_life_cycle_apis",
       "value": "Environment Life Cycle Apis"
     },
