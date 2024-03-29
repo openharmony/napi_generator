@@ -20,7 +20,7 @@
 
 static const char *TAG = "[nodeapi_env]";
 
-napi_value cJSONVersion(napi_env env, napi_callback_info info) 
+napi_value cJSONVersion(napi_env env, napi_callback_info info)
 {
     char *content = "[\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"]";
     OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "content %{public}s.", content);
