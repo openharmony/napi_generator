@@ -256,6 +256,10 @@
       "value": "Interpolation Calculation 插值计算"
     },
     {
+      "name": "cjson_management",
+      "value": "CJSON 测试集"
+    },
+    {
       "name": "dialog",
       "value": "弹窗"
     },

@@ -15,6 +15,7 @@
 import { NODE_API_CATEGORIES } from '../pages/nodeapi/NodeApi'
 import { JAVASCRIPT_API_CATEGORIES } from '../pages/javascript/JavaScriptApi'
 import { OTHER_CATEGORIES } from '../pages/other/OtherMgr'
+import { NCPP_CATEGORIES } from '../pages/ncpp/NcppMgr'
 import { FirstLevelCategory } from '../model/CategoricalDataType'
 import { ASYNC_CATEGORIES } from '../pages/async/AsyncMgr'
 
@@ -44,6 +45,12 @@ export const NAPI_SAMPLE_CATEGORIES: FirstLevelCategory[] =
       selectedImage: $r('app.media.ic_select_animation'),
       unselectedImage: $r('app.media.ic_unselect_animation'),
       tabBarName: $r('app.string.other_mgr')
+    },
+    {
+      childNodes: NCPP_CATEGORIES,
+      selectedImage: $r('app.media.ic_select_component'),
+      unselectedImage: $r('app.media.ic_unselect_component'),
+      tabBarName: $r('app.string.cjson_management')
     }
   ]
 

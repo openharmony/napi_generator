@@ -15,23 +15,21 @@
 
 #include "common.h"
 #include "nodeapi.h"
+#include "hilog/log.h"
+#include "cjson/cJSON.h"
 
 static const char *TAG = "[nodeapi_env]";
 
-napi_value testNapiEnv(napi_env env, napi_callback_info info)
+napi_value cJSONVersion(napi_env env, napi_callback_info info)
 {
-    // pages/nodeapi/datatypes/napienv
-    size_t argc = PARAM2;
-    napi_value argv[PARAM2];
-    napi_status status;
+    char *content = "[\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"]";
+    OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "content %{public}s.", content);
 
-    // 返回结果
-    napi_value resultValue;
-    status = napi_create_string_utf8(env, "test_napi_env", NAPI_AUTO_LENGTH, &resultValue);
-    if (status != napi_ok) {
-        napi_throw_error(env, NULL, "Failed to create result value");
-        return NULL;
-    }
+    const char *version = cJSON_Version();
+    OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "version %{public}s.", version);
 
-    return resultValue;
+    napi_value res;
+    napi_create_string_utf8(env, version, strlen(version), &res);
+
+    return res;
 }

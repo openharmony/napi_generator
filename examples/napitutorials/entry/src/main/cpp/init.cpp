@@ -60,6 +60,7 @@ static napi_value Init(napi_env env, napi_value exports)
         {"testNapiThreadsafefunc", nullptr, setThreadsafefunc, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiThreadsafefuncrel", nullptr, setThreadsafefuncrel, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiThreadsafefuncall", nullptr, setThreadsafefuncall, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"cjson_version", nullptr, cJSONVersion, nullptr, nullptr, nullptr, napi_default, nullptr},
     };
     napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     return exports;
