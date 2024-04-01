@@ -189,6 +189,10 @@
       "value": "Dialog"
     },
     {
+      "name": "cjson_management",
+      "value": "CJSON Test Case"
+    },
+    {
       "name": "environment_life_cycle_apis",
       "value": "Environment Life Cycle Apis"
     },
@@ -2070,7 +2074,7 @@
     // Interpolation Calculation
     {
       "name": "interpolation_calculation_cubic_bezier_curve",
-      "value": "Third-order B��zier curve object"
+      "value": "Third-order Bezier curve object"
     },
     {
       "name": "interpolation_calculation_spring",
@@ -2195,7 +2199,7 @@
     },
     {
       "name": "rotate_image_angle",
-      "value": "Rotate 15��"
+      "value": "Rotate 15°"
     },
     // SaveArea
     {
@@ -3307,7 +3311,7 @@
       "name": "status_select",
       "value": "Status selection"
     },
-    // �����
+    // 侧边栏
     {
       "name": "side_bar_effects_title",
       "value": "SideBar effects"
@@ -3340,7 +3344,7 @@
       "name": "side_bar_type_auto",
       "value": "Auto"
     },
-    // ����
+    // 辅助
     {
       "name": "scroll_bar",
       "value": "ScrollBar"
@@ -3353,7 +3357,7 @@
       "name": "scroll_horizontal_title",
       "value": "horizontal scroll"
     },
-    // ˢ��
+    // 刷新
     {
       "name": "auxiliary_refresh",
       "value": "Refresh"
@@ -3924,11 +3928,11 @@
     },
     {
       "name": "action_sheet_dialog_click_content",
-      "value": "�������"
+      "value": "Click Content"
     },
     {
       "name": "text_picker_click_text",
-      "value": "�������"
+      "value": "Click Text"
     },
     {
       "name": "global_menu",
@@ -3936,47 +3940,47 @@
     },
     {
       "name": "global_menu_create_way",
-      "value": "������ʽ"
+      "value": "Create"
     },
     {
       "name": "global_menu_click_right",
-      "value": "�һ�"
+      "value": "Right Click"
     },
     {
       "name": "global_menu_long_press",
-      "value": "����"
+      "value": "Long Press"
     },
     {
       "name": "global_menu_close",
-      "value": "����رղ˵�"
+      "value": "Click Menu Close"
     },
     {
       "name": "general_mount",
-      "value": "����ж���¼�"
+      "value": "Mount"
     },
     {
       "name": "general_mount_toast",
-      "value": "����ͼƬ"
+      "value": "Mount Pic"
     },
     {
       "name": "general_unmount_toast",
-      "value": "ж��ͼƬ"
+      "value": "Unmount"
     },
     {
       "name": "general_mount_text",
-      "value": "����ҹ���ж��ͼƬ"
+      "value": "Click Mount"
     },
     {
       "name": "general_drag",
-      "value": "��ק�¼�"
+      "value": "Drag"
     },
     {
       "name": "general_drag_text_one",
-      "value": "�����������ı�Ԫ��,�����ı��ϵ��·��б���"
+      "value": "Drag Text One"
     },
     {
       "name": "general_drag_text_two",
-      "value": "����һ���б�Ԫ��"
+      "value": "Drag Text Two"
     },
     {
       "name": "drag_list_one",
@@ -3996,99 +4000,99 @@
     },
     {
       "name": "size_size",
-      "value": "��С"
+      "value": "Size"
     },
     {
       "name": "size_padding",
-      "value": "�ڱ߾�"
+      "value": "Padding"
     },
     {
       "name": "size_margin",
-      "value": "��߾�"
+      "value": "Margin"
     },
     {
       "name": "size_constraintSize",
-      "value": "Լ����С"
+      "value": "Constraint Size"
     },
     {
       "name": "size_size_description_one",
-      "value": "����Ϊ100vp"
+      "value": "Size 100vp"
     },
     {
       "name": "size_size_description_two",
-      "value": "����Ϊ100%"
+      "value": "Size 100%"
     },
     {
       "name": "size_size_padding_one",
-      "value": "���������ڱ߾�10vp"
+      "value": "Padding 10vp"
     },
     {
       "name": "size_size_padding_two",
-      "value": "���ڱ߾�20%"
+      "value": "Padding 20%"
     },
     {
       "name": "size_size_margin_one",
-      "value": "����������߾�10vp"
+      "value": "Margin 10vp"
     },
     {
       "name": "size_size_margin_two",
-      "value": "�����20%"
+      "value": "Margin 20%"
     },
     {
       "name": "size_size_constraintSize_one",
-      "value": "Լ��������90vp"
+      "value": "Constraint Size 90vp"
     },
     {
       "name": "size_size_constraintSize_two",
-      "value": "Լ����С����80vp"
+      "value": "Constraint Size 80vp"
     },
     {
       "name": "keyPress_event",
-      "value": "��ѹ�¼�"
+      "value": "Press"
     },
     {
       "name": "focus_event_description",
-      "value": "��ѹ��Ӽ���Tab����ȡ���㣬�ٰ����¼��л�����"
+      "value": "Focus"
     },
     {
       "name": "focus_event_button_one",
-      "value": "��һ����ť"
+      "value": "Button One"
     },
     {
       "name": "focus_event_button_two",
-      "value": "�ڶ�����ť"
+      "value": "Button Two"
     },
     {
       "name": "focus_event_button_three",
-      "value": "��������ť"
+      "value": "Button Three"
     },
     {
       "name": "focus_event_toast_text",
-      "value": "��������"
+      "value": "Focus"
     },
     {
       "name": "press_event_toast_text",
-      "value": "���������¼�"
+      "value": "Press"
     },
     {
       "name": "press_event_toast_description",
-      "value": "��ѹ��Ӽ����κμ�"
+      "value": "Keyboard Press"
     },
     {
       "name": "mouse_event_move_description",
-      "value": "ʹ�����������밴ť"
+      "value": "Mouse Move"
     },
     {
       "name": "mouse_event_click_description",
-      "value": "ʹ������������ť"
+      "value": "Mouse Click"
     },
     {
       "name": "mouse_event_hover_description",
-      "value": "�������"
+      "value": "Mouse Hover"
     },
     {
       "name": "mouse_event_onHover_description",
-      "value": "���δ����"
+      "value": "Mouse onHover"
     },
     {
       "name": "mouse_event_onMouse_text",
@@ -4136,19 +4140,19 @@
     },
     {
       "name": "scroll_event",
-      "value": "����ɼ�����仯�¼�"
+      "value": "Scroll"
     },
     {
       "name": "scroll_event_description",
-      "value": "�����б�ʹͼƬ��ʧ����ʾ"
+      "value": "scroll_event_description"
     },
     {
       "name": "scroll_event_toast_visible",
-      "value": "����ͼƬ��ȫ�ɼ�"
+      "value": "scroll_event_toast_visible"
     },
     {
       "name": "scroll_event_toast_invisible",
-      "value": "����ͼƬ��ȫ��ʧ"
+      "value": "scroll_event_toast_invisible"
     },
     {
       "name": "location_settings",
@@ -4156,27 +4160,27 @@
     },
     {
       "name": "location_settings_align",
-      "value": "���뷽ʽ"
+      "value": "location_settings_align"
     },
     {
       "name": "location_settings_direction",
-      "value": "ˮƽ����"
+      "value": "location_settings_direction"
     },
     {
       "name": "location_settings_position",
-      "value": "���Զ�λ"
+      "value": "location_settings_position"
     },
     {
       "name": "location_settings_markAnchor",
-      "value": "����ê��"
+      "value": "location_settings_markAnchor"
     },
     {
       "name": "location_settings_offset",
-      "value": "��Զ�λ"
+      "value": "location_settings_offset"
     },
     {
       "name": "location_settings_alignRules",
-      "value": "�������"
+      "value": "location_settings_alignRules"
     },
     {
       "name": "location_settings_bottom_end",
@@ -4200,27 +4204,27 @@
     },
     {
       "name": "layout_constrain",
-      "value": "����Լ��"
+      "value": "layout_constrain"
     },
     {
       "name": "layout_constrain_aspectRatio",
-      "value": "������߱�"
+      "value": "layout_constrain_aspectRatio"
     },
     {
       "name": "layout_constrain_displayPriority",
-      "value": "������ȼ�"
+      "value": "layout_constrain_displayPriority"
     },
     {
       "name": "layout_constrain_big_container",
-      "value": "��������"
+      "value": "layout_constrain_big_container"
     },
     {
       "name": "layout_constrain_middle_container",
-      "value": "��������"
+      "value": "layout_constrain_middle_container"
     },
     {
       "name": "layout_constrain_small_container",
-      "value": "С������"
+      "value": "layout_constrain_small_container"
     },
     {
       "name": "layout_constrain_children_one",
@@ -4324,7 +4328,7 @@
     },
     {
       "name": "picture_border",
-      "value": "ͼƬ�߿�����"
+      "value": "图片边框设置"
     },
     {
       "name": "scale",
@@ -4344,87 +4348,87 @@
     },
     {
       "name": "transform_init",
-      "value": "�����Ľ׾���"
+      "value": "transform_init"
     },
     {
       "name": "transform_copy",
-      "value": "������"
+      "value": "transform_copy"
     },
     {
       "name": "transform_combine",
-      "value": "����Ч������"
+      "value": "transform_combine"
     },
     {
       "name": "transform_invert",
-      "value": "����Ч����ת"
+      "value": "transform_invert"
     },
     {
       "name": "transform_translate",
-      "value": "����ƽ��Ч��"
+      "value": "transform_translate"
     },
     {
       "name": "transform_scale",
-      "value": "��������Ч��"
+      "value": "transform_scale"
     },
     {
       "name": "transform_rotate",
-      "value": "������תЧ��"
+      "value": "transform_rotate"
     },
     {
       "name": "transform_transformPoint",
-      "value": "���������ת��Ч��"
+      "value": "transform_transformPoint"
     },
     {
       "name": "transform_combine_text",
-      "value": "xƽ��20��x�Ŵ�����"
+      "value": "transform_combine_text"
     },
     {
       "name": "transform_translate_text",
-      "value": "ƽ�� x: 40, y: 40, z: 20"
+      "value": "transform_translate_text"
     },
     {
       "name": "transform_scale_text",
-      "value": "������Сһ��"
+      "value": "transform_scale_text"
     },
     {
       "name": "transform_rotate_text",
-      "value": "��ת30��"
+      "value": "transform_rotate_text"
     },
     {
       "name": "transform_transformPoint_before",
-      "value": "����任������꣺[50,50]"
+      "value": "transform_transformPoint_before：[50,50]"
     },
     {
       "name": "transform_transformPoint_after",
-      "value": "����任������꣺[100,0]"
+      "value": "transform_transformPoint_after：[100,0]"
     },
     {
       "name": "shape_crop",
-      "value": "��״�ü�"
+      "value": "shape_crop"
     },
     {
       "name": "shape_crop_clip",
-      "value": "�ü�"
+      "value": "shape_crop_clip"
     },
     {
       "name": "shape_crop_mask",
-      "value": "�ڸ�"
+      "value": "shape_crop_mask"
     },
     {
       "name": "grid_settings",
-      "value": "դ������"
+      "value": "grid_settings"
     },
     {
       "name": "grid_settings_sm",
-      "value": "�豸����ΪSM"
+      "value": "grid_settings_sm"
     },
     {
       "name": "grid_settings_md",
-      "value": "�豸����ΪMD"
+      "value": "grid_settings_md"
     },
     {
       "name": "grid_settings_lg",
-      "value": "�豸����ΪLG"
+      "value": "grid_settings_lg"
     },
     {
       "name": "grid_settings_useSize",
@@ -4440,11 +4444,11 @@
     },
     {
       "name": "focus_control",
-      "value": "�������"
+      "value": "focus_control"
     },
     {
       "name": "focus_control_tab",
-      "value": "����Ӽ���Tab���л�����"
+      "value": "focus_control_tab"
     },
     {
       "name": "focus_control_lastPageId",
@@ -4452,11 +4456,11 @@
     },
     {
       "name": "focus_control_success",
-      "value": "����ɹ�"
+      "value": "focus_control_success"
     },
     {
       "name": "focus_control_failed",
-      "value": "����ʧ��"
+      "value": "focus_control_failed"
     },
     {
       "name": "focus_control_group1",
@@ -4476,11 +4480,11 @@
     },
     {
       "name": "focus_control_request_focus",
-      "value": "ѡ��ˮ������۽�"
+      "value": "focus_control_request_focus"
     },
     {
       "name": "component_id",
-      "value": "�����ʶ"
+      "value": "component_id"
     },
     {
       "name": "component_id_onKeyTab",
@@ -4520,31 +4524,31 @@
     },
     {
       "name": "component_blurred",
-      "value": "�������ģ��"
+      "value": "component_blurred"
     },
     {
       "name": "component_blurred_thin",
-      "value": "������"
+      "value": "component_blurred_thin"
     },
     {
       "name": "restore_id",
-      "value": "�ֲ�ʽǨ�Ʊ�ʶ"
+      "value": "restore_id"
     },
     {
       "name": "gesture_process",
-      "value": "���ƴ���"
+      "value": "gesture_process"
     },
     {
       "name": "bind_gesture_methods",
-      "value": "�����Ʒ���"
+      "value": "bind_gesture_methods"
     },
     {
       "name": "bind_gesture_priorityGesture",
-      "value": "priorityGesture�����text,����ʶ�����column"
+      "value": "bind_gesture_priorityGesture"
     },
     {
       "name": "bind_gesture_parallelGesture",
-      "value": "parallelGestureʶ�������column��text"
+      "value": "bind_gesture_parallelGesture"
     },
     {
       "name": "bind_gesture_tapGesture",
@@ -4560,7 +4564,7 @@
     },
     {
       "name": "double_click",
-      "value": "��ָ˫������"
+      "value": "double_click"
     },
     {
       "name": "onAction",
@@ -4568,23 +4572,23 @@
     },
     {
       "name": "long_press",
-      "value": "��ָ�����ı�"
+      "value": "long_press"
     },
     {
       "name": "long_press_cancel",
-      "value": "ȡ���¼�"
+      "value": "long_press_cancel"
     },
     {
       "name": "long_press_text",
-      "value": "�뵥ָ������"
+      "value": "long_press_text"
     },
     {
       "name": "pan_text",
-      "value": "˫ָ���ⷽʽ�϶���ɫ��"
+      "value": "pan_text"
     },
     {
       "name": "pan_text_one",
-      "value": "��ָ�����϶���ɫ��"
+      "value": "pan_text_one"
     },
     {
       "name": "pan_start",
@@ -4680,11 +4684,11 @@
     },
     {
       "name": "transform_translate_invert",
-      "value": "�Ŵ�������ת(��С����)"
+      "value": "transform_translate_invert"
     },
     {
       "name": "key_press_description",
-      "value": "��ѹ��Ӽ���Tab�����ٰ�ѹ�����"
+      "value": "key_press_description"
     },
     {
       "name": "key_press_keyType",
@@ -4728,7 +4732,7 @@
     },
     {
       "name": "bind_click",
-      "value": "�����"
+      "value": "bind_click"
     },
     // ActionSheetDialog
     {
@@ -4737,7 +4741,7 @@
     },
     {
       "name": "action_sheet_click_sheets",
-      "value": "���ѡ������"
+      "value": "action_sheet_click_sheets"
     },
     // TextPickerDialog
     {
@@ -4762,11 +4766,11 @@
     },
     {
       "name": "text_picker_dialog",
-      "value": "TextPickerDialog �ı�����ѡ��������"
+      "value": "TextPickerDialog 文本滑动选择器弹窗"
     },
     {
       "name": "text_picker_show",
-      "value": "��ʾ�ı�����"
+      "value": "显示文本弹窗"
     },
     //Row
     {
@@ -5654,7 +5658,7 @@
     },
     {
       "name": "list_item_introduction_properties",
-      "value": "�޸� ListItem ������"
+      "value": "修改 ListItem 的属性"
     },
     // Grid
     {
