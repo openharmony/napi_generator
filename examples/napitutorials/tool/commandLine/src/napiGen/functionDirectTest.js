@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+* Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
@@ -16,51 +16,11 @@ const { NapiLog } = require("../tools/NapiLog");
 const util = require('util');
 const { writeFile, generateRandomInteger } = require("../tools/tool");
 const path = require('path')
+const fs = require("fs");
 const LENGTH = 10;
 const TWO_DECIMAL = 2;
-
-let abilityTestTemplete = `
-import hilog from '@ohos.hilog';
-import testNapi from 'libentry.so';
-import { describe, beforeAll, beforeEach, afterEach, afterAll, it, expect } from '@ohos/hypium';
-
-export default function abilityTest() {
-  describe('ActsAbilityTest', () => {
-    // Defines a test suite. Two parameters are supported: test suite name and test suite function.
-    beforeAll(() => {
-      // Presets an action, which is performed only once before all test cases of the test suite start.
-      // This API supports only one parameter: preset action function.
-    })
-    beforeEach(() => {
-      // Presets an action, which is performed before each unit test case starts.
-      // The number of execution times is the same as the number of test cases defined by **it**.
-      // This API supports only one parameter: preset action function.
-    })
-    afterEach(() => {
-      // Presets a clear action, which is performed after each unit test case ends.
-      // The number of execution times is the same as the number of test cases defined by **it**.
-      // This API supports only one parameter: clear action function.
-    })
-    afterAll(() => {
-      // Presets a clear action, which is performed after all test cases of the test suite end.
-      // This API supports only one parameter: clear action function.
-    })
-    it('assertContain', 0, () => {
-      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
-      let a = 'abc';
-      let b = 'b';
-
-      [func_direct_testCase]
-
-      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
-      expect(a).assertContain(b);
-      expect(a).assertEqual(a);
-      // 断言 如：expect(result).assertEqual(2+3)
-    })
-  })
-}
-`
+const SERIAL = 5;
+const MODTWO = 2;
 
 // 随机生成浮点数值
 function generateRandomArbitrary(min, max, fixed) {
@@ -77,7 +37,20 @@ function generateRandomBoolValue() {
     return randomBool;
 }
 
-function generateFuncTestCase(params, tsFuncName, indexPath) {
+// 随机生成字符串
+function generateRandomString(length) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
+
+function generateFuncTestCase(params, tsFuncName, testFilePath, directFuncJson) {
     let funcInfo = {
         "name": "",
         "params": [],
@@ -92,7 +65,6 @@ function generateFuncTestCase(params, tsFuncName, indexPath) {
     funcInfo.retType = params.functions[0].rtnType
     let funcParamDefine = ''
     let funcParamUse = ''
-    // let funcParamExpect = ''
     // 判断函数有几个参数，依次给参数赋值
     for(let i = 0; i < funcInfo.params.length; i++) {
         if (getTestType(funcInfo.params[i].type) === 'int') {
@@ -104,6 +76,9 @@ function generateFuncTestCase(params, tsFuncName, indexPath) {
         } else if (getTestType(funcInfo.params[i].type) === 'bool') {
             funcParamDefine += util.format('let %s = %s\n', funcInfo.params[i].name, generateRandomBoolValue())
             funcParamUse += funcInfo.params[i].name + ', '
+        } else if (getTestType(funcInfo.params[i].type) === 'string') {
+            funcParamDefine += util.format('let %s = "%s"\n', funcInfo.params[i].name, generateRandomString(LENGTH))
+            funcParamUse += funcInfo.params[i].name + ', '
         }
     }
     // 去除调用参数的最后一个','
@@ -114,17 +89,39 @@ function generateFuncTestCase(params, tsFuncName, indexPath) {
     // 加 hilog 打印
     let hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI  %s: ", result);', tsFuncName)
     let func_test_replace = funcParamDefine + callFunc + hilogContent
+    let abilityTestTemplete = directFuncJson.abilityTestTemplete
+    // 替换random_number
+     let serialNum = tsFuncName.substring(0,SERIAL)
+     console.info("serialNum: " + serialNum)
     let funcTestContent =  replaceAll(abilityTestTemplete,'[func_direct_testCase]', func_test_replace)
-
-   // let filePath = './entry/src/ohosTest/ets/test/Ability.test.ets'
+     funcTestContent = replaceAll(funcTestContent, '[random_number]', serialNum)
+     //console.info("funcTestContent: " + funcTestContent)
     // 将内容写入Ability.test.ets文件
-    // __dirname  //当前文件的绝对路径
-    // ../
-    // let relativeFilePath = './entry/src/ohosTest/ets/test/Ability.test.ets'
-    let rootPath = path.resolve(indexPath, '..', '..', '..', '..', '..');
-    let filePath = path.join(rootPath, 'ohosTest/ets/test/Ability.test.ets');
-    // console.info("filePath: " + filePath)
-    writeFile(filePath, funcTestContent)
+    // 1.追加写入import模块 写在第一个import之前
+    // 2.追加写入测试用例
+
+    // writeFile(testFilePath, funcTestContent)
+
+    const importContent = "import testNapi from 'libentry.so';"
+    writeTestFile(testFilePath, importContent, funcTestContent)
+}
+
+function writeTestFile(filePath, importContent, funcTestContent) {
+    // 读取原本文件内容
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const importPosition = fileContent.indexOf('import ');
+    let newFileContent = fileContent;
+    // 判断是否有该import语句,没有则添加
+    if (fileContent.indexOf(importContent) < 0) {
+        const newImportStatement = importContent + '\n';
+        newFileContent = fileContent.slice(0, importPosition) + newImportStatement + fileContent.slice(importPosition);
+    }
+    // 追加写入测试用例
+    let testCasePosition = newFileContent.lastIndexOf('})\n}')
+    //console.info("testCasePosition: " + testCasePosition)
+    newFileContent = newFileContent.slice(0, testCasePosition) + funcTestContent + newFileContent.slice(testCasePosition);
+
+    writeFile(filePath, newFileContent)
 }
 
 function replaceAll(s, sfrom, sto) {
@@ -135,20 +132,23 @@ function replaceAll(s, sfrom, sto) {
 }
 
 function getTestType(type) {
-    if (type === 'uint32_t' || type === 'int32_t' || type === 'int16_t' || type === 'int64_t' || type === 'int') {
+    if (type === 'uint32_t' || type === 'int32_t' || type === 'int16_t' ||
+        type === 'int64_t' || type === 'int' || type === 'size_t') {
         return 'int'
     } else if (type === 'double_t' || type === 'double' || type === 'float') {
         return 'float'
     } else if (type === 'bool') {
         return 'bool'
+    } else if (type === 'std::string' || type.substring(0,10) === 'const char') {
+        return 'string'
     }
 }
 
 function getJsType(type) {
     if (type === 'uint32_t' || type === 'int32_t' || type === 'int16_t' || type === 'int64_t' ||
-        type === 'int' || type === 'double_t' || type === 'double' || type === 'float') {
+        type === 'int' || type === 'double_t' || type === 'double' || type === 'float' || type === 'size_t') {
         return 'number'
-    } else if (type === 'const char *' || type === 'std::string') {
+    } else if (type.substring(0,10) === 'const char' || type === 'std::string') {
         return 'string'
     } else if (type === 'bool') {
         return 'boolean'

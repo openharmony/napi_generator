@@ -31,6 +31,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.regex.Pattern;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 项目文件入口
@@ -40,8 +42,9 @@ import java.io.InputStreamReader;
  * @version: v1.0.0
  * @since 2024-03-29
  */
-public class GenDTS extends AnAction {
-    private static final Logger LOG = Logger.getInstance(GenDTS.class);
+public class GenDts extends AnAction {
+    private static final Logger LOG = Logger.getInstance(GenDts.class);
+
     private boolean generateSuccess = true;
     private String sErrorMessage = "";
 
@@ -58,8 +61,133 @@ public class GenDTS extends AnAction {
             return;
         }
         String destPath = file.getPath();
-        // 异步执行
         runFun(destPath);
+    }
+
+    @Override
+    public void update(AnActionEvent event) {
+        // 根据所选文件名，判断是否显示生成菜单项
+        VirtualFile file = event.getData(PlatformDataKeys.VIRTUAL_FILE);
+        if (file == null) {
+            event.getPresentation().setEnabledAndVisible(false);
+        } else {
+            event.getPresentation().setEnabledAndVisible(patternFileName(file.getName()));
+        }
+    }
+
+    /**
+     * 正则匹配所选文件名是否符合规范
+     *
+     * @param fileName 文件名
+     * @return boolean 是否匹配
+     */
+    public static boolean patternFileName(String fileName) {
+        String pattern = "(([a-z_A-Z0-9]+).h)";
+        return Pattern.matches(pattern, fileName);
+    }
+
+    /**
+     * 获取生成成功结果文件。
+     *
+     * @param process 进程ID
+     */
+    private void genResultLog(Process process) {
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getErrorStream(),
+                StandardCharsets.UTF_8));
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
+                StandardCharsets.UTF_8));
+        String sErr = getErrorResult(stdError);
+        String sOut;
+        if (TextUtils.isEmpty(sErr)) {
+            sOut = genInputLog(stdInput);
+            if (!generateIsSuccess(sOut)) {
+                sErrorMessage = sOut;
+            }
+            return;
+        }
+        generateSuccess = false;
+        sErrorMessage = sErr;
+    }
+
+    /**
+     * 获取生成文本内容。
+     *
+     * @param stdInput input buff
+     * @return 返回当前输入框内容
+     */
+    private String genInputLog(BufferedReader stdInput) {
+        StringBuilder sOut = new StringBuilder();
+        while (true) {
+            String sTmp;
+            try {
+                if ((sTmp = stdInput.readLine()) == null) {
+                    break;
+                }
+                sOut.append(sTmp).append(getNewline());
+            } catch (IOException ioException) {
+                LOG.error(" genResultLog stdInput error" + ioException);
+            }
+        }
+        return sOut.toString();
+    }
+
+    /**
+     * 获取生成失败结果文件。
+     *
+     * @param stdError error buff
+     * @return ErrorResult
+     */
+    private String getErrorResult(BufferedReader stdError) {
+        StringBuilder sErr = new StringBuilder();
+        while (true) {
+            String sTmp;
+            try {
+                if ((sTmp = stdError.readLine()) == null) {
+                    break;
+                }
+                sErr.append(sTmp).append(getNewline());
+            } catch (IOException ioException) {
+                LOG.error(" genResultLog stdInput error" + ioException);
+            }
+        }
+        return sErr.toString();
+    }
+
+    /**
+     * 获取换行符
+     *
+     * @return 换行符
+     */
+    public static String getNewline() {
+        return System.getProperty("line.separator");
+    }
+
+    private boolean generateIsSuccess(String sOut) {
+        generateSuccess = sOut.contains("success") || TextUtils.isEmpty(sOut);
+        return generateSuccess;
+    }
+
+    static class StreamConsumer extends Thread {
+        InputStream is;
+
+        StreamConsumer(InputStream is) {
+            super.setName("StreamConsumer");
+            this.is = is;
+        }
+
+        @Override
+        public void run() {
+            try {
+                InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
+                BufferedReader br = new BufferedReader(isr);
+                String line;
+                while ((line = br.readLine()) != null) {
+                    LOG.error("StreamConsumer" + line);
+                }
+            } catch (IOException ioException) {
+                LOG.error("StreamConsumer io error" + ioException);
+            }
+        }
     }
 
     private boolean callExtProcess(String command) throws IOException, InterruptedException {
@@ -69,39 +197,19 @@ public class GenDTS extends AnAction {
             return false;
         }
         Process process = Runtime.getRuntime().exec(command);
-
-        // 读取输出流（正常输出）
-        new Thread(() -> {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-
-       // 读取错误流（错误输出）
-        new Thread(() -> {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.err.println(line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-
-        // 等待进程结束
-        int exitCode = process.waitFor();
-        System.out.println("Process exited with code: " + exitCode);
+        genResultLog(process);
+        StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
+        StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
+        errConsumer.start();
+        outputConsumer.start();
 
         if (!generateSuccess) {
             GenNotification.notifyMessage(null, sErrorMessage, "提示", NotificationType.ERROR);
             return false;
         }
+
+        errConsumer.join();
+        outputConsumer.join();
 
         return true;
     }
@@ -129,7 +237,7 @@ public class GenDTS extends AnAction {
         if (!file.exists()) {
             boolean isNewFile = file.createNewFile();
             if (!isNewFile) {
-                 LOG.info("writeTmpFile createNewFile error");
+                LOG.info("writeTmpFile createNewFile error");
             }
         }
         FileOutputStream fw = new FileOutputStream(file);
@@ -175,6 +283,7 @@ public class GenDTS extends AnAction {
     /**
      * 生成命令行指令
      *
+     * @param hFilePath .h文件路径
      * @return 返回命令行执行内容
      */
     private String genCommand(String hFilePath) {
@@ -193,13 +302,15 @@ public class GenDTS extends AnAction {
 
         File file = new File(tmpDirFile);
         String command = file.toString();
-        command += " " + hFilePath;
+        command += " -f " + hFilePath;
+        // 判断用户是否输入了 "-o"+cpp文件路径， "-i"+dts文件路径，"-t"+test文件路径 从界面获取
         return command;
     }
 
     /**
      * 执行主程序入口
      *
+     * @param hFilePath .h文件路径
      * @return 执行状态
      */
     public boolean runFun(String hFilePath) {

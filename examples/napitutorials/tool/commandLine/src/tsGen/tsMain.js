@@ -13,12 +13,13 @@
 * limitations under the License.
 */
 const { NapiLog } = require("../tools/NapiLog");
-const { writeFile, appendWriteFile, generateRandomInteger } = require("../tools/Tool");
+const { writeFile, appendWriteFile, generateRandomInteger, getJsonCfg } = require("../tools/Tool");
 const path = require('path')
 const re = require("../tools/re");
 const fs = require("fs");
 const os = require("os");
 const util = require('util');
+const readline = require('readline');
 const { generateDirectFunction } = require('../napiGen/functionDirect')
 const { generateFuncTestCase } = require('../napiGen/functionDirectTest')
 
@@ -62,7 +63,7 @@ function isStringType(cType) {
 }
 
 function isBoolType(cType) {
-    if (cType == 'bool') {
+    if (cType === 'bool') {
         return true
     }
     return false
@@ -121,7 +122,6 @@ function getJsTypeFromC(cType, typeInfo) {
     }
     let jsType = basicC2js(basicCtype)
     if (typeInfo.array) {
-        // 替换原先的无用format
         jsType = util.format("Array<%s>", jsType)
     }
     return jsType
@@ -176,8 +176,8 @@ function analyzeRootFunction(rootInfo, parseResult) {
     let parseFunctions = parseResult.functions
    // console.info("parseFunctions:  " +   JSON.stringify(parseFunctions))
     for(var i = 0; i < parseFunctions.length; ++i) {
+        // 普通方法生成模板
         let funcInfo = createFuncInfo(parseFunctions[i], false)
-
         rootInfo.functions.push(funcInfo)
     }
 }
@@ -190,50 +190,119 @@ function getTab(tabLv) {
     return tab
 }
 
-function genFunction(func, tabLv, needDeclare = false) {
-    let tab = getTab(tabLv)
+function genFunction(func, funcJson) {
     let funcPrefix = func.isClassFunc ? "" : "function "
     let funcParams = ""
     for (var i = 0; i < func.params.length; ++i) {
         funcParams += i > 0 ? ", " : ""
         funcParams += func.params[i].name + ": " + func.params[i].type
     }
-    let declareStr = needDeclare ? "declare " : ""
+
+    let indexTemplete = funcJson.directFunction.indexTemplete
     tsFuncName = 'KH' + generateRandomInteger(MIN_RANDOM, MAX_RANDOM) + '_' + func.name
-    return util.format("export const %s:(%s) => %s;\n", tsFuncName, funcParams, func.retType)
+    return util.format(indexTemplete, tsFuncName, funcParams, func.retType)
 }
 
-function genTsContent(rootInfo) {
+function genTsContent(rootInfo, funcJson) {
     let tsContent = rootInfo.needCallback ? "import { AsyncCallback, Callback } from './../basic';\n\n" : ""
 
     for(var i = 0; i < rootInfo.functions.length; ++i) {
-        tsContent += genFunction(rootInfo.functions[i], 0, true)
+        tsContent += genFunction(rootInfo.functions[i], funcJson)
     }
 
     return tsContent
 }
 
-function doGenerate(hFilePath, destDir) {
-    let parseResult = parseFileAll(hFilePath)
-    // console.info("parseResult:  " +   JSON.stringify(parseResult))
+function removeMarco(hFilePath, tempFilePath) {
+    // 创建读取文件的流
+    const fileStream = fs.createReadStream(hFilePath);
+    // 创建逐行读取的接口
+    const rl = readline.createInterface({
+        input: fileStream,
+        crlfDelay: Infinity
+    });
+    // 存储处理后的文件内容
+    let processedContent = '';
+    // 逐行读取文件内容并处理
+    rl.on('line', (line) => {
+        let tt = re.match('[A-Z_]+\([A-Za-z_ *]+\)', line)
+        console.info("tt: " + JSON.stringify(tt))
+        if (tt) {
+            console.info("before line: " + line)
+            let removeContent = re.getReg(line, tt.regs[0])
+            line = line.substring(removeContent.length + 1, line.length)
+            let index = line.indexOf(') ')
+            console.info("index: " + index)
+            if (index >= 0) {
+                line = line.substring(0, index) + line.substring(index + 1, line.length)
+            }
+        }
+        processedContent += line + '\n';
+    });
+
+    // 完成读取操作
+    rl.on('close', () => {
+        console.log("processedContent: " + processedContent);
+        writeFile(tempFilePath, processedContent)
+    });
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath) {
+    let random = generateRandomInteger(MIN_RANDOM, MAX_RANDOM)
+    let tempFileName = '../temp_' + random + '.h'
+    let tempFilePath = path.join(hFilePath, tempFileName)
+    removeMarco(hFilePath, tempFilePath)
+
+    while(!fs.existsSync(tempFilePath)) {
+        await sleep(20); // 延迟 20 毫秒
+    }
+    const fileContent = fs.readFileSync(tempFilePath, 'utf8');
+    console.info("fileContent: " + fileContent)
+
+    let parseResult = parseFileAll(tempFilePath)
+    console.info("parseResult.functions: " + JSON.stringify(parseResult.functions))
+
     let rootInfo = {
         "functions": [],
         "needCallback": false
     }
+    // 普通方法生成一个模板模板
     analyzeRootFunction(rootInfo, parseResult)
+    // 如果是class生成一个模板
+    // analyzeRootClass()
+
+    // 读取Json文件
+    let funcJsonPath = path.join(__dirname, '../function.json');
+    console.info("funcJsonPath: " + funcJsonPath)
+    let funcJson = getJsonCfg(funcJsonPath);
+
     let hfileName = path.basename(hFilePath, ".h")
-    let tsFilePath = destDir
-    let tsContent = genTsContent(rootInfo)
+    let tsContent = genTsContent(rootInfo, funcJson)
     console.info("tsContent: " + tsContent)
     appendWriteFile(tsFilePath, '\n' + tsContent)
 
     // 调用napi转换的方法
-    generateDirectFunction(parseResult, tsFuncName, destDir)
+    generateDirectFunction(parseResult, tsFuncName, cppFilePath, funcJson.directFunction)
 
     // 生成测试用例
-    generateFuncTestCase(parseResult, tsFuncName, destDir)
+    generateFuncTestCase(parseResult, tsFuncName, testFilePath, funcJson.directFunction)
+
+    // 删除生成的中间文件
+    clearTmpFile(tempFilePath)
 
     console.info('Generate success')
+}
+
+function clearTmpFile(filePath) {
+    try {
+        fs.unlinkSync(filePath);
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 module.exports = {

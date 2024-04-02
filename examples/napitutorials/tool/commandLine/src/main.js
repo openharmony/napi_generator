@@ -14,11 +14,47 @@
 */
 const fs = require('fs');
 const path = require('path')
+const stdio = require("stdio");
 const main = require("./TsGen/tsMain");
 
+let ops = stdio.getopt({
+    // 输入的.h文件路径，必填
+    'filename': { key: 'f', args: 1, description: ".h file", default: "" },
+    // 可选参数，可设置默认值
+    'testFilename': { key: 't', args: 1, description: "Ability.test.ets file", default: "" },
+    'indexFilename': { key: 'i', args: 1, description: "index.d.ts file", default: "" },
+    'outCppPath': { key: 'o', args: 1, description: ".cpp dir path", default: "" },
+});
+
 // 获取命令行参数 .h文件路径
-const filePath = process.argv[2] || '';
-let out = './entry/src/main/cpp/types/libentry/'
+let filePath = ops.filename
+let testFilePath = ops.testFilename
+let tsFilePath = ops.indexFilename
+let cppFilePath = ops.outCppPath
+// 读取文件内容 判断参数是否为空
+if (filePath !== '') {
+    let fileDir = path.resolve(filePath, '..');
+    let indexFile = findIndexDTS(fileDir);
+    // 若用户没有提供路径 则程序提供默认路径
+    if (!tsFilePath) {
+        tsFilePath = indexFile
+    }
+    if (!testFilePath) {
+        let rootPath = path.resolve(indexFile, '..', '..', '..', '..', '..');
+        testFilePath = path.join(rootPath, 'ohosTest/ets/test/Ability.test.ets');
+    }
+    if(!cppFilePath) {
+        let rootPath = path.resolve(indexFile, '..', '..', '..');
+        cppFilePath = path.join(rootPath, 'test.cpp');
+    }
+
+    console.info("filePath: " + filePath)
+    console.info("testFilePath: " + testFilePath)
+    console.info("tsFilePath: " + tsFilePath)
+    console.info("cppFilePath: " + cppFilePath)
+    main.doGenerate(filePath, testFilePath, tsFilePath, cppFilePath);
+}
+
 
 // 这个函数接收一个目录的绝对路径作为参数
 function findIndexDTS(currentDir) {
@@ -46,13 +82,4 @@ function findIndexDTS(currentDir) {
     // 没有找到 index.d.ts 文件
     console.log('index.d.ts not found in any checked directory.');
     return null;
-}
-
-// 读取文件内容
-if (filePath !== '') {
-    let fileDir = path.resolve(filePath, '..');
-    let out = findIndexDTS(fileDir);
-    if (out !== null) {
-        main.doGenerate(filePath, out);
-    }
 }
