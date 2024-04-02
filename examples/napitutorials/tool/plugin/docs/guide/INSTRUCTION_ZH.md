@@ -50,7 +50,7 @@ res = value0 + value1;
 在Ability.test.ets文件中增加断言：
 
 ```
-expect(result).assertEqual(2.3+3.2)
+expect(result).assertEqual(2+3)
 ```
 
 连接开发板，运行Ability.test.ets中的测试用例：
