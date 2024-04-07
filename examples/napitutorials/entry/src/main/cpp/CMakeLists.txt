@@ -19,6 +19,9 @@ add_library(entry SHARED
     nodeapi/datatypes/napithreadsafefuncall.cpp
     nodeapi/datatypes/napiextendederrorinfo.cpp
     ncpp/cjsoncase/cjsoncase.cpp
+    javascriptapi/jsproperty/napigetpropertynames.cpp
+    javascriptapi/jsproperty/jsPropertyInit.cpp
+    javascriptapi/common.cpp
     init.cpp)
 
 target_link_libraries(entry PUBLIC

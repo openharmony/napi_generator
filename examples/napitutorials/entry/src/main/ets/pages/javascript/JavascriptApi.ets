@@ -325,7 +325,7 @@ const WORK_WITH_JAVASCRIPT_PROPERTIES: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_get_property_names'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napigetpropertynames'
       },
       {
         title: $r('app.string.napi_get_all_property_names'),

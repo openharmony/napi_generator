@@ -16,6 +16,7 @@
 #include "napi/native_api.h"
 #include <bits/alltypes.h>
 #include "nodeapi.h"
+#include "javascriptapi.h"
 #include <iostream>
 #include <fstream>
 
@@ -50,6 +51,9 @@ static napi_value Init(napi_env env, napi_value exports)
 {
     // 对应nodeapi/envlifecycleapis/napisetinstancedata
     setInstancedata(env, exports);
+
+    // 对应 javascriptapi/jsproperty/jsPropertyInit.cpp
+    jsPropertyInit(env, exports);
 
     napi_property_descriptor desc[] = {
         {"add", nullptr, Add, nullptr, nullptr, nullptr, napi_default, nullptr},
