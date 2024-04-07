@@ -14,7 +14,9 @@
 */
 
 import abilityTest from './Ability.test';
+import abilityTestJsProperty from './JsProperty/JsProperty.test';
 
 export default function testsuite() {
   abilityTest();
+  abilityTestJsProperty();
 }

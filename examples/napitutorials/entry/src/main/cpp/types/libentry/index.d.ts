@@ -32,3 +32,4 @@ export const testNapiThreadsafefuncall: (callback: Callback<string>) => number;
 export const instance;
 
 export const cjson_version: () => string;
+export const testNapiGetPropertyNames: (a: {[key: string]: number}) => string;
