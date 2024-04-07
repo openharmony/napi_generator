@@ -26,24 +26,39 @@ napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info)
     napi_status status;
     napi_value result;
     napi_value args[1] = {nullptr};
+    const napi_extended_error_info *extended_error_info;
 
     // Get args
-    napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+    status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+    if (status != napi_ok) {
+        napi_throw_error(env, NULL, "Failed to parse arguments");
+        return NULL;
+    }
 
     // Call napi_coerce_to_bool(), any -> bool
     status = napi_coerce_to_bool(env, args[0], &result);
     if (status != napi_ok) {
-        napi_throw_error(env, NULL, "Failed to coerce to bool");
-        return NULL;
+        status = napi_get_last_error_info(env, &extended_error_info);
+        if (status == napi_ok && extended_error_info != NULL) {
+            const char *errorMessage =
+                extended_error_info->error_message != NULL ? extended_error_info->error_message : "Unknown error";
+
+            OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, TAG, "errmsg %{public}s!, engine_err_code %{public}d!.",
+                         errorMessage, extended_error_info->engine_error_code);
+            std::string res = "Failed to coerce to bool. em = " + std::string(errorMessage) +
+                              ", eec = " + std::to_string(extended_error_info->engine_error_code) +
+                              ", ec = " + std::to_string(extended_error_info->error_code);
+            napi_throw_error(env, NULL, res.c_str());
+            return NULL;
+        }
     }
 
     // Check if the result is a boolean
     napi_valuetype resultType;
     napi_typeof(env, result, &resultType);
     if (resultType != napi_boolean) {
-        char errmsg[64];
-        snprintf_s(errmsg, sizeof(errmsg), sizeof(errmsg), "Expected a boolean, got %d", resultType);
-        napi_throw_error(env, NULL, errmsg);
+        std::string res = "Expected a boolean, got " + std::to_string(resultType);
+        napi_throw_error(env, NULL, res.c_str());
         return NULL;
     }
 
