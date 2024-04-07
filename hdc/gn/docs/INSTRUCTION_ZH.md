@@ -92,9 +92,9 @@ gn脚本生成工具目前支持两种入口，分别是可执行程序、VS Cod
 	 lrwxrwxrwx  1 harmony harmony     65 12月 16 11:54 scripts -> /home/harmony/OpenHarmony/third_party/mbedtls-development/scripts/
 	 drwxrwxr-x  4 harmony harmony  20480 12月 16 11:55 tests/
 
-### 运行make脚本
+### 运行cmake脚本
 
-1、在终端中进入ohos.toolchain.cmake所在的build_tmp目录下，运行make，查看cmake环境是否可以正常使用，命令如下：
+1、在终端中进入ohos.toolchain.cmake所在的build_tmp目录下，运行cmake，查看cmake环境是否可以正常使用，命令如下：
 
 	 harmony@Ubuntu-64:~/OpenHarmony/third_party/mbedtls-development/build_tmp$ cmake .. -DCMAKE_TOOLCHAIN_FILE=ohos.toolchain.cmake
 	 -- The C compiler identification is Clang 10.0.1
@@ -108,7 +108,7 @@ gn脚本生成工具目前支持两种入口，分别是可执行程序、VS Cod
 	 -- Generating done
 	 -- Build files have been written to: /home/harmony/OpenHarmony/third_party/mbedtls-development/build_tmp
 
-根据以上日志可发现make运行成功，环境正常使用。若运行make失败，则根据报错信息修改，直到make运行成功，环境正常使用为止。
+根据以上日志可发现cmake运行成功，环境正常使用。若运行cmake失败，则根据报错信息修改，直到cmake运行成功，环境正常使用为止。
 
 ### 生成gn脚本
 
