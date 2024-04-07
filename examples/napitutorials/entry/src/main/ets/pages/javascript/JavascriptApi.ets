@@ -246,7 +246,7 @@ const WORK_WITH_JAVASCRIPT_VALUES_AND_ABSTRACT_OPERATIONS: ThirdLevelCategory =
     childNodes: [
       {
         title: $r('app.string.napi_coerce_to_bool'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsabstractops/napicoercetobool'
       },
       {
         title: $r('app.string.napi_coerce_to_number'),
