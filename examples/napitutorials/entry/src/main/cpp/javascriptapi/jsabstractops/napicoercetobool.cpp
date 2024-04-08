@@ -14,12 +14,10 @@
  */
 
 #include "common.h"
-#include "nodeapi.h"
 
 static const char *TAG = "[jsapi_coercetobool]";
 
-napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info)
-{
+napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info) {
     // pages/javascript/jsabstractops/napicoercetobool
     size_t requireArgc = 1;
     size_t argc = 1;

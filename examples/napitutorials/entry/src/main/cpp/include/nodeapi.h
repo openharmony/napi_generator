@@ -33,7 +33,4 @@ napi_value setThreadsafefuncall(napi_env env, napi_callback_info info);
 
 napi_value cJSONVersion(napi_env env, napi_callback_info info);
 
-/* work_with_javascript_values_and_abstract_operations */
-napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info);
-
 #endif //NAPITUTORIALS_NODEAPI_H

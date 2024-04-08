@@ -14,9 +14,9 @@
 */
 
 import abilityTest from './Ability.test';
-import napicoercetoboolTest from './napicoercetobool.test';
+import jsAbstractOpsTest from './javascriptapi/jsabstractops.test';
 
 export default function testsuite() {
   abilityTest();
-  napicoercetoboolTest();
+  jsAbstractOpsTest();
 }
