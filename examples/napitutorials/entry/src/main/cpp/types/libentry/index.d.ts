@@ -35,3 +35,4 @@ export const cjson_version: () => string;
 
 /* work_with_javascript_values_and_abstract_operations */
 export const testNapiCoerceToBool: (a: any) => boolean;
+export const testNapiCoerceToNumber: (a: any) => number;
