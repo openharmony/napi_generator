@@ -38,36 +38,51 @@ export default function jsAbstractOpsTest() {
       // Presets a clear action, which is performed after all test cases of the test suite end.
       // This API supports only one parameter: clear action function.
     })
+
+    /**
+     * cpp/javascriptapi/jsabstractops/napicoercetobool.cpp
+     * pages/javascript/jsabstractops/napicoercetobool.ets
+     */
     it('napiCoerceToBool', 0, () => {
       hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToBool begin');
 
-      // Test coercing string/number values to boolean
+      // Test coercing string/number/null/undefined values to boolean
       const testStr: string = 'test';
       const testEmptyStr: string = '';
       const testNum: number = 123;
       const testZeroNum: number = 0;
-      let testStr2BoolResult = testNapi.testNapiCoerceToBool(testStr);
-      let testEmptyStr2BoolResult = testNapi.testNapiCoerceToBool(testEmptyStr);
-      let testNum2BoolResult = testNapi.testNapiCoerceToBool(testNum);
-      let testZeroNum2BoolResult = testNapi.testNapiCoerceToBool(testZeroNum);
+      const testNull: null = null;
+      const testUndef: undefined = undefined;
+      const testStr2BoolResult = testNapi.testNapiCoerceToBool(testStr);
+      const testEmptyStr2BoolResult = testNapi.testNapiCoerceToBool(testEmptyStr);
+      const testNum2BoolResult = testNapi.testNapiCoerceToBool(testNum);
+      const testZeroNum2BoolResult = testNapi.testNapiCoerceToBool(testZeroNum);
+      const testNull2BoolResult = testNapi.testNapiCoerceToBool(testNull);
+      const testUndef2BoolResult = testNapi.testNapiCoerceToBool(testUndef);
 
       // Print the results
       hilog.info(0x0000, 'testTag', `napi_coerce_to_bool(${testStr}) = ${testStr2BoolResult}`);
       hilog.info(0x0000, 'testTag', `napi_coerce_to_bool(${testEmptyStr}) = ${testEmptyStr2BoolResult}`);
       hilog.info(0x0000, 'testTag', `napi_coerce_to_bool(${testNum}) = ${testNum2BoolResult}`);
       hilog.info(0x0000, 'testTag', `napi_coerce_to_bool(${testZeroNum}) = ${testZeroNum2BoolResult}`);
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_bool(${testNull}) = ${testNull2BoolResult}`);
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_bool(${testUndef}) = ${testUndef2BoolResult}`);
 
       // Define assertion methods for type checking
       expect(testStr2BoolResult).assertInstanceOf('Boolean');
       expect(testEmptyStr2BoolResult).assertInstanceOf('Boolean');
       expect(testNum2BoolResult).assertInstanceOf('Boolean');
       expect(testZeroNum2BoolResult).assertInstanceOf('Boolean');
+      expect(testNull2BoolResult).assertInstanceOf('Boolean');
+      expect(testUndef2BoolResult).assertInstanceOf('Boolean');
 
       // Define assertion methods for value checking
       expect(testStr2BoolResult).assertTrue();
       expect(testEmptyStr2BoolResult).assertFalse();
       expect(testNum2BoolResult).assertTrue();
       expect(testZeroNum2BoolResult).assertFalse();
+      expect(testNull2BoolResult).assertFalse();
+      expect(testUndef2BoolResult).assertFalse();
       hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToBool  end');
     })
   })
