@@ -92,24 +92,24 @@ struct napicoercetobool {
             .onClick(() => {
               try {
                 // Test coercing string/number values to boolean
-                let testValue1: string = 'test';
-                let testValue2: string = '';
-                let testValue3: number = 123;
-                let testValue4: number = 0;
-                let result1 = testNapi.testNapiCoerceToBool(testValue1);
-                let result2 = testNapi.testNapiCoerceToBool(testValue2);
-                let result3 = testNapi.testNapiCoerceToBool(testValue3);
-                let result4 = testNapi.testNapiCoerceToBool(testValue4);
+                const testStr: string = 'test';
+                const testEmptyStr: string = '';
+                const testNum: number = 123;
+                const testZeroNum: number = 0;
+                let testStr2BoolResult = testNapi.testNapiCoerceToBool(testStr);
+                let testEmptyStr2BoolResult = testNapi.testNapiCoerceToBool(testEmptyStr);
+                let testNum2BoolResult = testNapi.testNapiCoerceToBool(testNum);
+                let testZeroNum2BoolResult = testNapi.testNapiCoerceToBool(testZeroNum);
                 // Replace result in testcont
-                this.testcont = this.testcont.replace('${result1}', `## ${result1} ##`);
-                this.testcont = this.testcont.replace('${result2}', `## ${result2} ##`);
-                this.testcont = this.testcont.replace('${result3}', `## ${result3} ##`);
-                this.testcont = this.testcont.replace('${result4}', `## ${result4} ##`);
+                this.testcont = this.testcont.replace('${result1}', `## ${testStr2BoolResult} ##`);
+                this.testcont = this.testcont.replace('${result2}', `## ${testEmptyStr2BoolResult} ##`);
+                this.testcont = this.testcont.replace('${result3}', `## ${testNum2BoolResult} ##`);
+                this.testcont = this.testcont.replace('${result4}', `## ${testZeroNum2BoolResult} ##`);
                 // Print the results
-                hilog.info(0x0000, TAG, `(${typeof (testValue1)})${testValue1} -> ${result1}`);
-                hilog.info(0x0000, TAG, `(${typeof (testValue2)})${testValue2} -> ${result2}`);
-                hilog.info(0x0000, TAG, `(${typeof (testValue3)})${testValue3} -> ${result3}`);
-                hilog.info(0x0000, TAG, `(${typeof (testValue4)})${testValue4} -> ${result4}`);
+                hilog.info(0x0000, TAG, `(${typeof (testStr)})${testStr} -> ${testStr2BoolResult}`);
+                hilog.info(0x0000, TAG, `(${typeof (testEmptyStr)})${testEmptyStr} -> ${testEmptyStr2BoolResult}`);
+                hilog.info(0x0000, TAG, `(${typeof (testNum)})${testNum} -> ${testNum2BoolResult}`);
+                hilog.info(0x0000, TAG, `(${typeof (testZeroNum)})${testZeroNum} -> ${testZeroNum2BoolResult}`);
               } catch (error) {
                 hilog.error(0x0000, TAG, `Catch error testNapiCoerceToBool: ${error.message}}`)
               }
