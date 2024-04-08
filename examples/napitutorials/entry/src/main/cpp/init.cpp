@@ -16,6 +16,7 @@
 #include "napi/native_api.h"
 #include <bits/alltypes.h>
 #include "nodeapi.h"
+#include "javascriptapi.h"
 #include <iostream>
 #include <fstream>
 
@@ -48,6 +49,9 @@ static napi_value Add(napi_env env, napi_callback_info info)
 EXTERN_C_START
 static napi_value Init(napi_env env, napi_value exports)
 {
+    // Initialization of functions in `javascriptapi/jsabstractops`
+    jsAbstractOpsInit(env, exports);
+
     // 对应nodeapi/envlifecycleapis/napisetinstancedata
     setInstancedata(env, exports);
 
@@ -61,7 +65,6 @@ static napi_value Init(napi_env env, napi_value exports)
         {"testNapiThreadsafefuncrel", nullptr, setThreadsafefuncrel, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiThreadsafefuncall", nullptr, setThreadsafefuncall, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"cjson_version", nullptr, cJSONVersion, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"testNapiCoerceToBool", nullptr, testNapiCoerceToBool, nullptr, nullptr, nullptr, napi_default, nullptr},
     };
     napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     return exports;

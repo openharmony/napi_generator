@@ -17,8 +17,8 @@ import hilog from '@ohos.hilog';
 import testNapi from 'libentry.so';
 import { describe, beforeAll, beforeEach, afterEach, afterAll, it, expect } from '@ohos/hypium';
 
-export default function napicoercetoboolTest() {
-  describe('napicoercetoboolTest', () => {
+export default function jsAbstractOpsTest() {
+  describe('jsAbstractOpsTest', () => {
     // Defines a test suite. Two parameters are supported: test suite name and test suite function.
     beforeAll(() => {
       // Presets an action, which is performed only once before all test cases of the test suite start.
@@ -38,8 +38,8 @@ export default function napicoercetoboolTest() {
       // Presets a clear action, which is performed after all test cases of the test suite end.
       // This API supports only one parameter: clear action function.
     })
-    it('testNapiCoerceToBool', 0, () => {
-      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+    it('napiCoerceToBool', 0, () => {
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToBool begin');
 
       // Test coercing string/number values to boolean
       const testStr: string = 'test';
@@ -68,7 +68,7 @@ export default function napicoercetoboolTest() {
       expect(testEmptyStr2BoolResult).assertFalse();
       expect(testNum2BoolResult).assertTrue();
       expect(testZeroNum2BoolResult).assertFalse();
-      hilog.info(0x0000, 'testTag', '%{public}s', 'it end');
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToBool  end');
     })
   })
 }
