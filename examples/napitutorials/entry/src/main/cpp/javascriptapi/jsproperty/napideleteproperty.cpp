@@ -17,12 +17,13 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
-napi_value testNapiGetPropertyNames(napi_env env, napi_callback_info info)
+napi_value testNapiDeleteProperty(napi_env env, napi_callback_info info)
 {
-    // pages/javascript/jsproperties/napigetpropertynames
+    // pages/javascript/jsproperties/napideleteproperty
     size_t argc = PARAM1;
     napi_value argv[PARAM1];
     napi_status status;
+    napi_value obj;
     const napi_extended_error_info *extended_error_info;
 
     // 解析传入的参数
@@ -37,22 +38,31 @@ napi_value testNapiGetPropertyNames(napi_env env, napi_callback_info info)
         napi_throw_error(env, NULL, "Expected 1 arguments");
         return NULL;
     }
+    obj = argv[0];
 
-    napi_value propertyNames;
-    status = napi_get_property_names(env, argv[0], &propertyNames);
+    // 创建一个 JavaScript 字符串作为要删除的属性名
+    napi_value prop_key;
+    status = napi_create_string_utf8(env, "key", NAPI_AUTO_LENGTH, &prop_key);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get property names", TAG);
+        getErrMsg(status, env, extended_error_info, "create string utf8", TAG);
         return NULL;
     }
 
-    uint32_t length = 0;
-    status = napi_get_array_length(env, propertyNames, &length);
+    // 删除属性
+    bool result = false;
+    status = napi_delete_property(env, obj, prop_key, &result);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get array length", TAG);
+        getErrMsg(status, env, extended_error_info, "delete property", TAG);
         return NULL;
     }
-    // 打印属性个数
-    OH_LOG_INFO(LOG_APP, "napi_get_array_length success! propertyNames length: %i", length);
+
+    // 返回删除操作的结果
+    napi_value delete_result;
+    status = napi_get_boolean(env, result, &delete_result);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get boolean", TAG);
+        return NULL;
+    }
     
-    return propertyNames;
+    return delete_result;
 }

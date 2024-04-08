@@ -20,7 +20,7 @@ import testNapi, { testNapiValue } from 'libentry.so';
 import { TitleBar } from '../../../common/TitleBar'
 import hilog from '@ohos.hilog';
 
-const TAG: string = 'napi_get_property_names';
+const TAG: string = 'napi_has_property';
 
 @Entry
 @Component
@@ -29,18 +29,23 @@ struct napiGetPropertyNames {
   private pixelMapFormat: image.PixelMapFormat = 3;
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State textcont: string = 'napi_get_property_names 是 Node.js 的 N-API 接口之一，用于获取给定对象的所有可枚举属性的名称。'
-  @State testcont: string = ' // 测试 N-API napi_get_property_names \n'
-    + '  const myData = testNapi.testNapiGetPropertyNames({"myAge":7}); \n'
+  @State textcont: string = 'napi_has_property 是一个 N-API 函数，用于检查 JavaScript 对象及其原型链中是否具有指定的属性。'
+  @State testcont: string = ' // 测试 N-API napi_has_property \n'
+    + '包含key的情况测试：\n'
+    + '  const myData = testNapi.testNapiHasProperty({key:"val"}); \n'
     + ' // 使用获取的自定义数据 \n'
-    + ' console.log(myData); // 输出自定义数据 \n';
+    + ' console.log(myData); // 输出自定义数据 \n'
+    + '不包含key的情况测试：\n'
+    + '  const myExcData = testNapi.testNapiGetProperty({differentKey:"another val"}); \n'
+    + ' // 使用获取的自定义数据 \n'
+    + ' console.log(myExcData); // 输出自定义数据 \n';
 
   controller: TextAreaController = new TextAreaController()
 
   build() {
     Column() {
       // 标题
-      TitleBar({ title: $r('app.string.napi_get_property_names') })
+      TitleBar({ title: $r('app.string.napi_has_property') })
 
       Column() {
         Column() {
@@ -74,7 +79,7 @@ struct napiGetPropertyNames {
 
         Row() {
 
-          Button($r('app.string.napi_get_property_names'), { type: ButtonType.Capsule })
+          Button($r('app.string.napi_has_property'), { type: ButtonType.Capsule })
             .backgroundColor(Color.Blue)
             .width('80%')
             .height(48)
@@ -82,10 +87,14 @@ struct napiGetPropertyNames {
             .fontWeight(500)
             .fontColor(this.btnFontColor)
             .margin({ left: 24 })
-            .id('napi_get_property_names')
+            .id('napi_has_property')
             .onClick(() => {
-              let ret = testNapi.testNapiGetPropertyNames({"myAge":7, "myName": 17});
+              let ret = testNapi.testNapiHasProperty({key:"val"});
+              console.info("ret = " + ret)
               this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret+' ##)');
+              let ret2 = testNapi.testNapiHasProperty({differentKey:"another val"});
+              console.info("ret = " + ret)
+              this.testcont = this.testcont.replace('log(myExcData)', 'log(## '+ret2+' ##)');
             })
         }
         .width('100%')

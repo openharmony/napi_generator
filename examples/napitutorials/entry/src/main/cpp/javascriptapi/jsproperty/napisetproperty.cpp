@@ -17,12 +17,13 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
-napi_value testNapiGetPropertyNames(napi_env env, napi_callback_info info)
+napi_value testNapiSetProperty(napi_env env, napi_callback_info info)
 {
-    // pages/javascript/jsproperties/napigetpropertynames
+    // pages/javascript/jsproperties/napisetproperty
     size_t argc = PARAM1;
     napi_value argv[PARAM1];
     napi_status status;
+    napi_value obj;
     const napi_extended_error_info *extended_error_info;
 
     // 解析传入的参数
@@ -38,21 +39,30 @@ napi_value testNapiGetPropertyNames(napi_env env, napi_callback_info info)
         return NULL;
     }
 
-    napi_value propertyNames;
-    status = napi_get_property_names(env, argv[0], &propertyNames);
+    obj = argv[0];
+
+    // 创建一个新的JavaScript字符串作为属性名
+    napi_value prop_name;
+    status = napi_create_string_utf8(env, "key", NAPI_AUTO_LENGTH, &prop_name);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get property names", TAG);
+        getErrMsg(status, env, extended_error_info, "create string utf8", TAG);
         return NULL;
     }
 
-    uint32_t length = 0;
-    status = napi_get_array_length(env, propertyNames, &length);
+    // 创建一个新的JavaScript字符串作为属性值
+    napi_value prop_value;
+    status = napi_create_string_utf8(env, "value", NAPI_AUTO_LENGTH, &prop_value);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get array length", TAG);
+        getErrMsg(status, env, extended_error_info, "create string utf8", TAG);
         return NULL;
     }
-    // 打印属性个数
-    OH_LOG_INFO(LOG_APP, "napi_get_array_length success! propertyNames length: %i", length);
-    
-    return propertyNames;
+
+    // 设置对象的属性
+    status = napi_set_property(env, obj, prop_name, prop_value);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "set property", TAG);
+        return NULL;
+    }
+    // 可以返回新设置的属性值或任何其它值
+    return prop_value;
 }

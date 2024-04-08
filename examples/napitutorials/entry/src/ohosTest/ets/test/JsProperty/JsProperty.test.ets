@@ -46,5 +46,40 @@ export default function abilityTestJsProperty() {
       // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
       expect(result).assertContain("name");
     })
+
+    it('testNapiGetProperty', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      let result = testNapi.testNapiGetProperty({key: "val"});
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      expect(result).assertContain("val");
+    })
+
+    it('testNapiSetProperty', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      let result = testNapi.testNapiSetProperty({});
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      expect(result).assertContain("value");
+    })
+
+    it('testNapiHasProperty', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      let result = testNapi.testNapiHasProperty({key: "val"});
+      let result2 = testNapi.testNapiHasProperty({differentKey: "anotherVal"});
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      expect(result.toString()).assertContain('true');
+      expect(result2.toString()).assertContain('false');
+    })
+
+    it('testNapiDeleteProperty', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      let result = testNapi.testNapiDeleteProperty({key: "val", differentKey: "anotherVal"});
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      expect(result.toString()).assertContain('true');
+    })
+
   })
 }
