@@ -18,7 +18,8 @@
 
 napi_value jsAbstractOpsInit(napi_env env, napi_value exports) {
     napi_property_descriptor desc[] = {
-        {"testNapiCoerceToBool", nullptr, testNapiCoerceToBool, nullptr, nullptr, nullptr, napi_default, nullptr}};
+        {"testNapiCoerceToBool", nullptr, testNapiCoerceToBool, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiCoerceToNumber", nullptr, testNapiCoerceToNumber, nullptr, nullptr, nullptr, napi_default, nullptr}};
     napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
     return exports;
 }

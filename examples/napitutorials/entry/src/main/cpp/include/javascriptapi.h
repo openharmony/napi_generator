@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,6 +19,7 @@
 #include "common.h"
 
 napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info);
+napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info);
 
 napi_value jsAbstractOpsInit(napi_env env, napi_value exports);
 
