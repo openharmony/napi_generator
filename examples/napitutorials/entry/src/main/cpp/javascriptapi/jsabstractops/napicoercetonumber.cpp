@@ -17,7 +17,8 @@
 
 static const char *TAG = "[jsapi_coercetonumber]";
 
-napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info) {
+napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info)
+{
     // pages/javascript/jsabstractops/napicoercetonumber
     size_t requireArgc = 1;
     size_t argc = 1;

@@ -13,8 +13,8 @@
  * limitations under the License.
  */
 
-#ifndef napitutorials_javascriptapi_H
-#define napitutorials_javascriptapi_H
+#ifndef NAPITUTORIALS_JAVASCRIPTAPI_H
+#define NAPITUTORIALS_JAVASCRIPTAPI_H
 
 #include "common.h"
 
@@ -23,4 +23,4 @@ napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info);
 
 napi_value jsAbstractOpsInit(napi_env env, napi_value exports);
 
-#endif //napitutorials_javascriptapi_H
+#endif //NAPITUTORIALS_JAVASCRIPTAPI_H

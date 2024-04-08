@@ -16,7 +16,8 @@
 #include "common.h"
 #include "javascriptapi.h"
 
-napi_value jsAbstractOpsInit(napi_env env, napi_value exports) {
+napi_value jsAbstractOpsInit(napi_env env, napi_value exports)
+{
     napi_property_descriptor desc[] = {
         {"testNapiCoerceToBool", nullptr, testNapiCoerceToBool, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiCoerceToNumber", nullptr, testNapiCoerceToNumber, nullptr, nullptr, nullptr, napi_default, nullptr}};
