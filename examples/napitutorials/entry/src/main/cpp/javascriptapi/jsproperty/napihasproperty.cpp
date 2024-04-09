@@ -20,10 +20,10 @@ static const char *TAG = "[javascriptapi_property]";
 napi_value testNapiHasProperty(napi_env env, napi_callback_info info)
 {
     // pages/javascript/jsproperties/napihasproperty
-    size_t argc = PARAM1;
-    napi_value argv[PARAM1];
+    size_t argc = PARAM2;
+    napi_value argv[PARAM2];
     napi_status status;
-    napi_value obj;
+    napi_value obj, propName;
     const napi_extended_error_info *extended_error_info;
 
     // 解析传入的参数
@@ -34,23 +34,29 @@ napi_value testNapiHasProperty(napi_env env, napi_callback_info info)
     }
 
     // 检查参数数量
-    if (argc < PARAM1) {
-        napi_throw_error(env, NULL, "Expected 1 arguments");
+    if (argc < PARAM2) {
+        napi_throw_error(env, NULL, "Expected 2 arguments");
         return NULL;
     }
-    obj = argv[0];
+    obj = argv[PARAM0];
+    propName = argv[PARAM1];
 
-    // 创建一个 JavaScript 字符串作为要检查的属性名
-    napi_value prop_key;
-    status = napi_create_string_utf8(env, "key", NAPI_AUTO_LENGTH, &prop_key);
+    napi_valuetype valuetype0;
+
+    // 确认第一个参数是个对象
+    status = napi_typeof(env, obj, &valuetype0);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "create string utf8", TAG);
+        getErrMsg(status, env, extended_error_info, "get obj type", TAG);
+        return NULL;
+    }
+    if (valuetype0 != napi_object) {
+        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
         return NULL;
     }
 
     // 检查属性是否存在
     bool hasProperty = false;
-    status = napi_has_property(env, obj, prop_key, &hasProperty);
+    status = napi_has_property(env, obj, propName, &hasProperty);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "has property", TAG);
         return NULL;
