@@ -96,5 +96,7 @@ extern napi_value JSParaError(const napi_env &env, const napi_ref &callback);
 extern void PaddingCallbackPromiseInfo(const napi_env &env, const napi_ref &callback, CallbackPromiseInfo &info,
                                        napi_value &promise);
 
+void getErrMsg(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
+               const char *info, const char *tag);
 
 #endif //NAPITUTORIALS_COMMON_H

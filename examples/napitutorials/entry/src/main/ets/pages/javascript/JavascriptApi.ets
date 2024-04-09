@@ -325,7 +325,7 @@ const WORK_WITH_JAVASCRIPT_PROPERTIES: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_get_property_names'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napigetpropertynames'
       },
       {
         title: $r('app.string.napi_get_all_property_names'),
@@ -333,19 +333,19 @@ const WORK_WITH_JAVASCRIPT_PROPERTIES: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_set_property'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napisetproperty'
       },
       {
         title: $r('app.string.napi_get_property'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napigetproperty'
       },
       {
         title: $r('app.string.napi_has_property'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napihasproperty'
       },
       {
         title: $r('app.string.napi_delete_property'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napideleteproperty'
       },
       {
         title: $r('app.string.napi_has_own_property'),

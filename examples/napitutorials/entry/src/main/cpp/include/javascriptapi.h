@@ -18,6 +18,20 @@
 
 #include "common.h"
 
+#include "hilog/log.h"
+#undef LOG_DOMAIN
+#undef LOG_TAG
+#define LOG_DOMAIN 0x3200
+#define LOG_TAG "[javascriptapi_property]"
+#define OH_LOG_INFO(type, ...) ((void)OH_LOG_Print((type), LOG_INFO, LOG_DOMAIN, LOG_TAG, __VA_ARGS__))
+
+napi_value jsPropertyInit(napi_env env, napi_value exports);
+napi_value testNapiGetPropertyNames(napi_env env, napi_callback_info info);
+napi_value testNapiSetProperty(napi_env env, napi_callback_info info);
+napi_value testNapiGetProperty(napi_env env, napi_callback_info info);
+napi_value testNapiHasProperty(napi_env env, napi_callback_info info);
+napi_value testNapiDeleteProperty(napi_env env, napi_callback_info info);
+
 napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info);
 napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info);
 
