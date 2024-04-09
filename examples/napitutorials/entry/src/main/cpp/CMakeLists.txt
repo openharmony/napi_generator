@@ -19,6 +19,13 @@ add_library(entry SHARED
     nodeapi/datatypes/napithreadsafefuncall.cpp
     nodeapi/datatypes/napiextendederrorinfo.cpp
     ncpp/cjsoncase/cjsoncase.cpp
+    javascriptapi/jsproperty/napigetpropertynames.cpp
+    javascriptapi/jsproperty/napigetproperty.cpp
+    javascriptapi/jsproperty/napisetproperty.cpp
+    javascriptapi/jsproperty/napihasproperty.cpp
+    javascriptapi/jsproperty/napideleteproperty.cpp
+    javascriptapi/jsproperty/jsPropertyInit.cpp
+    javascriptapi/common.cpp
     javascriptapi/jsabstractops/napicoercetobool.cpp
     javascriptapi/jsabstractops/napicoercetonumber.cpp
     javascriptapi/jsabstractops/init.cpp
