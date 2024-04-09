@@ -20,7 +20,10 @@ void jsAbstractOpsInit(napi_property_descriptor **origDescPtr, size_t *len)
 {
     napi_property_descriptor descToBeAppended[] = {
         {"testNapiCoerceToBool", nullptr, testNapiCoerceToBool, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"testNapiCoerceToNumber", nullptr, testNapiCoerceToNumber, nullptr, nullptr, nullptr, napi_default, nullptr}};
+        {"testNapiCoerceToNumber", nullptr, testNapiCoerceToNumber, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiCoerceToObject", nullptr, testNapiCoerceToObject, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiCoerceToString", nullptr, testNapiCoerceToString, nullptr, nullptr, nullptr, napi_default, nullptr}
+    };
 
     // Allocate memory
     napi_property_descriptor *newDesc =
