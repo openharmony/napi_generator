@@ -54,7 +54,7 @@ napi_value testNapiCoerceToObject(napi_env env, napi_callback_info info)
 
     // Check if the result is a object
     napi_valuetype resultType;
-    napi_typeof(env, result, &resultType); 
+    napi_typeof(env, result, &resultType);
     if (resultType != napi_object && resultType != napi_undefined) {
         std::string res = "Expected an object, got " + std::to_string(resultType);
         napi_throw_error(env, NULL, res.c_str());

@@ -28,9 +28,15 @@ void jsAbstractOpsInit(napi_property_descriptor **origDescPtr, size_t *len)
     // Allocate memory
     napi_property_descriptor *newDesc =
         (napi_property_descriptor *)malloc(sizeof(napi_property_descriptor) * *len + sizeof(descToBeAppended));
+    if (newDesc == nullptr) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, "jsAbstractOpsInit", "Failed to allocated memory");
+        return;
+    }
 
     // Copy old properties & free memory
-    memcpy(newDesc, *origDescPtr, sizeof(napi_property_descriptor) * *len);
+    for (size_t i = 0; i < *len; ++i) {
+        newDesc[i] = (*origDescPtr)[i];
+    }
     free(*origDescPtr);
     *origDescPtr = newDesc;
 
