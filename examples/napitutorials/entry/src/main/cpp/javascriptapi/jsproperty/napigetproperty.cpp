@@ -23,7 +23,8 @@ napi_value testNapiGetProperty(napi_env env, napi_callback_info info)
     size_t argc = PARAM2;
     napi_value argv[PARAM2];
     napi_status status;
-    napi_value obj, propName;
+    napi_value obj;
+    napi_value propName;
     const napi_extended_error_info *extended_error_info;
 
     // 解析传入的参数
