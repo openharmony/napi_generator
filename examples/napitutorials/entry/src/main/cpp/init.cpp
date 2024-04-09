@@ -67,8 +67,16 @@ static napi_value Init(napi_env env, napi_value exports)
         {"cjson_version", nullptr, cJSONVersion, nullptr, nullptr, nullptr, napi_default, nullptr},
     };
     size_t len = sizeof(descArr) / sizeof(napi_property_descriptor);
+
+    // Allocate memory & copy
     napi_property_descriptor *desc = (napi_property_descriptor *)malloc(sizeof(descArr));
-    memcpy(desc, descArr, sizeof(descArr));
+    if (desc == nullptr) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, "jsAbstractOpsInit", "Failed to allocated memory");
+        napi_throw_error(env, NULL, "Failed to allocate memory");
+    }
+    for (size_t i = 0; i < len; ++i) {
+        desc[i] = descArr[i];
+    }
 
     // Initialization of functions in `javascriptapi/jsabstractops`
     jsAbstractOpsInit(&desc, &len);
