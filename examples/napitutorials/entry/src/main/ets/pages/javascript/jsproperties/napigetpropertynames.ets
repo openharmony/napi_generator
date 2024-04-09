@@ -27,12 +27,13 @@ const TAG: string = 'napi_get_property_names';
 struct napiGetPropertyNames {
   private btnFontColor: Resource = $r('app.color.white');
   private pixelMapFormat: image.PixelMapFormat = 3;
+  private textcont: Resource = $r('app.string.napi_get_property_names_description');
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State textcont: string = 'napi_get_property_names 是 Node.js 的 N-API 接口之一，用于获取给定对象的所有可枚举属性的名称。'
-  @State testcont: string = ' // 测试 N-API napi_get_property_names \n'
-    + '  const myData = testNapi.testNapiGetPropertyNames({"myAge":7}); \n'
-    + ' // 使用获取的自定义数据 \n'
+  @State testcont: string = ' // 测试 N-API napi_get_property_names: js输入一个对象，值可以是标量、函数、数组、对象等 \n'
+    + '  let obj = { key1: "aa", key2: 1, key3: false, key4: ["a", "b", "c"],key5: function () { console.info("This is a function") }}\n'
+    + '  const myData = testNapi.testNapiGetPropertyNames(obj); \n'
+    + ' // 使用获取的自定义数据：输出对象所有属性值 \n'
     + ' console.log(myData); // 输出自定义数据 \n';
 
   controller: TextAreaController = new TextAreaController()
@@ -52,8 +53,8 @@ struct napiGetPropertyNames {
             .width('90%')
             .margin(10)
             .fontSize(16)
-            .fontColor('#182431')
-            .backgroundColor('#FFFFFF')
+            .fontColor($r('app.color.sub_title_color'))
+            .backgroundColor($r('app.color.white'))
             .enabled(false)
 
           TextArea({
@@ -64,8 +65,8 @@ struct napiGetPropertyNames {
             .width('90%')
             .margin(10)
             .fontSize(16)
-            .fontColor('#ff400336')
-            .backgroundColor('#ff985307')
+            .fontColor($r('app.color.textarea_font_color'))
+            .backgroundColor($r('app.color.textarea_background_color'))
             .enabled(false)
         }
         .width('100%')
@@ -84,7 +85,14 @@ struct napiGetPropertyNames {
             .margin({ left: 24 })
             .id('napi_get_property_names')
             .onClick(() => {
-              let ret = testNapi.testNapiGetPropertyNames({"myAge":7, "myName": 17});
+              let obj = {
+                key1: "value",
+                key2: 1,
+                key3: false,
+                key4: ["a", "b", "c"],
+                key5: function () { console.info("This is a function") }
+              }
+              let ret = testNapi.testNapiGetPropertyNames(obj);
               this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret+' ##)');
             })
         }
