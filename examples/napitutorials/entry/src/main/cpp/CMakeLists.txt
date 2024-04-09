@@ -19,6 +19,9 @@ add_library(entry SHARED
     nodeapi/datatypes/napithreadsafefuncall.cpp
     nodeapi/datatypes/napiextendederrorinfo.cpp
     ncpp/cjsoncase/cjsoncase.cpp
+    javascriptapi/jsabstractops/napicoercetobool.cpp
+    javascriptapi/jsabstractops/napicoercetonumber.cpp
+    javascriptapi/jsabstractops/init.cpp
     init.cpp)
 
 target_link_libraries(entry PUBLIC

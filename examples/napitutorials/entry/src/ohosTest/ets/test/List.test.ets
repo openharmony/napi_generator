@@ -14,7 +14,9 @@
 */
 
 import abilityTest from './Ability.test';
+import jsAbstractOpsTest from './javascriptapi/jsabstractops.test';
 
 export default function testsuite() {
   abilityTest();
+  jsAbstractOpsTest();
 }
