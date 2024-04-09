@@ -58,5 +58,8 @@
     "pages/nodeapi/objlifetimemgr/napiaddasynccleanuphook",
     "pages/nodeapi/objlifetimemgr/napiremoveasynccleanuphook",
     "pages/javascript/jsproperties/napigetpropertynames"
+    "pages/ncpp/cjsonfuncs/cjsonfuncs",
+    "pages/javascript/jsabstractops/napicoercetobool",
+    "pages/javascript/jsabstractops/napicoercetonumber"
   ]
 }
