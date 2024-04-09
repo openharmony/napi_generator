@@ -32,4 +32,9 @@ napi_value testNapiGetProperty(napi_env env, napi_callback_info info);
 napi_value testNapiHasProperty(napi_env env, napi_callback_info info);
 napi_value testNapiDeleteProperty(napi_env env, napi_callback_info info);
 
-#endif // NAPITUTORIALS_JAVASCRIPTAPI_H
+napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info);
+napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info);
+
+napi_value jsAbstractOpsInit(napi_env env, napi_value exports);
+
+#endif //NAPITUTORIALS_JAVASCRIPTAPI_H

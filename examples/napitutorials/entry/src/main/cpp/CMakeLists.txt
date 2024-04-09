@@ -26,6 +26,9 @@ add_library(entry SHARED
     javascriptapi/jsproperty/napideleteproperty.cpp
     javascriptapi/jsproperty/jsPropertyInit.cpp
     javascriptapi/common.cpp
+    javascriptapi/jsabstractops/napicoercetobool.cpp
+    javascriptapi/jsabstractops/napicoercetonumber.cpp
+    javascriptapi/jsabstractops/init.cpp
     init.cpp)
 
 target_link_libraries(entry PUBLIC
