@@ -37,8 +37,13 @@ export const testNapiSetProperty: (a: object, b: any, c: any) => string;
 export const testNapiGetProperty: (a: object, b: any) => string;
 export const testNapiHasProperty: (a: object, b: any) => boolean;
 export const testNapiDeleteProperty: (a: object, b: any) => string;
-/* work_with_javascript_values_and_abstract_operations */
-export const testNapiCoerceToBool: (a: any) => boolean;
 export const testNapiGetNamedProperty: (a: object, b: string) => string;
 export const testNapiSetNamedProperty: (a: object, b: string, c: any) => string;
 export const testNapiHasNamedProperty: (a: object, b: string) => string;
+
+/* work_with_javascript_values_and_abstract_operations */
+export const testNapiCoerceToBool: (a: any) => boolean;
+export const testNapiCoerceToNumber: (a: any) => number;
+export const testNapiCoerceToObject: (a: any) => object;
+export const testNapiCoerceToString: (a: any) => string;
+
