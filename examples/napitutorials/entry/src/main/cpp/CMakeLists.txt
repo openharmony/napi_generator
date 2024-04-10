@@ -28,6 +28,8 @@ add_library(entry SHARED
     javascriptapi/common.cpp
     javascriptapi/jsabstractops/napicoercetobool.cpp
     javascriptapi/jsabstractops/napicoercetonumber.cpp
+    javascriptapi/jsabstractops/napicoercetoobject.cpp
+    javascriptapi/jsabstractops/napicoercetostring.cpp
     javascriptapi/jsabstractops/init.cpp
     init.cpp)
 
