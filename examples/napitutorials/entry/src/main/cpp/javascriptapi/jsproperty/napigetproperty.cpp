@@ -17,6 +17,32 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
+napi_value callFunctionIfTypeIsFunction(napi_env &env, napi_value &obj, napi_value &propValue) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    napi_valuetype valuetype;
+
+    status = napi_typeof(env, propValue, &valuetype);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get type", TAG);
+        return NULL;
+    }
+
+    // propValue 是一个函数，我们可以尝试调用它
+    if (valuetype == napi_function) {
+        napi_value result;
+        status = napi_call_function(env, obj, propValue, 0, NULL, &result);
+        if (status != napi_ok) {
+            getErrMsg(status, env, extended_error_info, "call function", TAG);
+            return NULL;
+        }
+        // 函数被调用，其结果存储在 result 中,返回函数调用结果
+        return result;
+    }
+
+    return propValue;
+}
+
 napi_value testNapiGetProperty(napi_env env, napi_callback_info info)
 {
     // pages/javascript/jsproperties/napigetproperty
@@ -62,24 +88,10 @@ napi_value testNapiGetProperty(napi_env env, napi_callback_info info)
         getErrMsg(status, env, extended_error_info, "get property", TAG);
         return NULL;
     }
-    
-    // 检查 propValue是否是一个函数
-    napi_valuetype valuetype;
-    status = napi_typeof(env, propValue, &valuetype);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get type", TAG);
-        return NULL;
-    }
 
-    if (valuetype == napi_function) {
-        // propValue 是一个函数，我们可以尝试调用它
-        napi_value result;
-        status = napi_call_function(env, obj, propValue, 0, NULL, &result);
-        if (status != napi_ok) {
-            getErrMsg(status, env, extended_error_info, "call function", TAG);
-            return NULL;
-        }
-        // 函数被调用，其结果存储在 result 中
+    // 检查 propValue是否是一个函数
+    napi_value result = callFunctionIfTypeIsFunction(env, obj, propValue);
+    if (result != NULL) {
         return result;
     }
 
