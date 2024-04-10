@@ -42,3 +42,4 @@ export const testNapiCoerceToBool: (a: any) => boolean;
 export const testNapiCoerceToNumber: (a: any) => number;
 export const testNapiCoerceToObject: (a: any) => object;
 export const testNapiCoerceToString: (a: any) => string;
+export const testNapiTypeof: (a: any) => string;

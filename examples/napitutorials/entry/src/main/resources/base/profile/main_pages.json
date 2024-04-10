@@ -66,6 +66,7 @@
     "pages/javascript/jsabstractops/napicoercetobool",
     "pages/javascript/jsabstractops/napicoercetonumber",
     "pages/javascript/jsabstractops/napicoercetoobject",
-    "pages/javascript/jsabstractops/napicoercetostring"
+    "pages/javascript/jsabstractops/napicoercetostring",
+    "pages/javascript/jsabstractops/napitypeof"
   ]
 }
