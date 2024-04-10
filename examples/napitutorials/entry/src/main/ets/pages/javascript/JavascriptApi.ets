@@ -254,11 +254,11 @@ const WORK_WITH_JAVASCRIPT_VALUES_AND_ABSTRACT_OPERATIONS: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_coerce_to_object'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsabstractops/napicoercetoobject'
       },
       {
         title: $r('app.string.napi_coerce_to_string'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsabstractops/napicoercetostring'
       },
       {
         title: $r('app.string.napi_typeof'),
