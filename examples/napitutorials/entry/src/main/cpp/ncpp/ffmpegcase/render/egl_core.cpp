@@ -29,6 +29,14 @@
 namespace NativeXComponentSample {
 namespace {
 constexpr int32_t NUM_4 = 4;
+constexpr int32_t NUM_3 = 3;
+constexpr int32_t NUM_2 = 2;
+constexpr int32_t NUM_1 = 1;
+constexpr int32_t NUM_1024 = 1024;
+constexpr int32_t NUM_180 = 180;
+constexpr int32_t NUM_72 = 72;
+constexpr int32_t NUM_54 = 54;
+constexpr int32_t NUM_18 = 18;
 /**
  * Vertex shader.
  */
@@ -321,21 +329,6 @@ bool EGLCore::CreateEnvironment()
 
 void EGLCore::TRBackground()
 {
-    // GLint position = PrepareDraw();
-    // if (position == POSITION_ERROR) {
-    //     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "Background get position failed");
-    //     return;
-    // }
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
-//    float vertices[] = {
-//        // positions          // colors           // texture coords
-//         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-//         0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-//        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-//        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-//    };
-
     float vertices[] = {
         // positions          // colors           // texture coords
          0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
@@ -382,8 +375,6 @@ void EGLCore::TRBackground()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    int width, height, nrChannels;
-
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -396,16 +387,6 @@ void EGLCore::TRBackground()
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     eglSwapBuffers(eglDisplay_, eglSurface_);
-    // if (!ExecuteDrawBG(position, SLH_BACKGROUND_COLOR,
-    //                  BACKGROUND_RECTANGLE_VERTICES, sizeof(BACKGROUND_RECTANGLE_VERTICES))) {
-    //     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "Background execute draw failed");
-    //     return;
-    // }
-
-    // if (!FinishDraw()) {
-    //     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "Background FinishDraw failed");
-    //     return;
-    // }
 }
 
 void EGLCore::Background()
@@ -430,10 +411,10 @@ void EGLCore::Background()
 
 GLuint EGLCore::loadTexture()
 {
-    uint32_t bmp_width = 0;
-    uint32_t bmp_height = 0;
-    uint32_t bmp_size = 0;
-    uint8_t bmp_bit = 0;
+    uint32_t bmpWidth = 0;
+    uint32_t bmpHeight = 0;
+    uint32_t bmpSize = 0;
+    uint8_t bmpBit = 0;
     
     //------------------------------------------------------------
     // 读文件
@@ -449,33 +430,40 @@ GLuint EGLCore::loadTexture()
         return false;
     }
 
-    fread(&bmp_width, 4, 1, file);
-    fread(&bmp_height, 4, 1, file);
-    fread(&bmp_bit, 1, 1, file);
-    fread(&bmp_bit, 1, 1, file);
-    fread(&bmp_bit, 1, 1, file);
-    bmp_size = flen_ - 54;
+    fread(&bmpWidth, NUM_4, NUM_1, file);
+    fread(&bmpHeight, NUM_4, NUM_1, file);
+    fread(&bmpBit, NUM_1, NUM_1, file);
+    fread(&bmpBit, NUM_1, NUM_1, file);
+    fread(&bmpBit, NUM_1, NUM_1, file);
+    bmpSize = flen_ - NUM_54;
 
-    unsigned char *bmp_data = (unsigned char *)malloc(bmp_size);
-    fseek(file, foff_ + 54, SEEK_SET);
-    size_t read_cnt = fread(bmp_data, bmp_size, 1, file);
-    fclose(file);
+    unsigned char *bmpData = (unsigned char *)malloc(bmpSize);
+    if (fseek(file, foff_ + NUM_54, SEEK_SET) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fseek failed!");
+        return false;
+    }
+    size_t readCnt = fread(bmpData, bmpSize, NUM_1, file);
+    if (readCnt == 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB read_cnt is 0!");
+    }
 
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_width: %{public}d", bmp_width);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_height: %{public}d", bmp_height);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_size: %{public}d", bmp_size);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_bit: %{public}d", bmp_bit);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "read_cnt: %{public}zu", read_cnt);
+    if (fclose(file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fclose failed!");
+        return false;
+    }
+
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_width: %{public}d", bmpWidth);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_height: %{public}d", bmpHeight);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_size: %{public}d", bmpSize);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_bit: %{public}d", bmpBit);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "read_cnt: %{public}zu", readCnt);
 
     //------------------------------------------------------------
-
-
     GLuint textureID;
-    GLuint last_texture_ID = 0;
-    GLuint texture_ID = 0;
+    GLuint lastTextureID = 0;
     glGenTextures(1, &textureID);
 
-    GLint lastTestureID = last_texture_ID;
+    GLint lastTestureID = lastTextureID;
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTestureID);
 
     glBindTexture(GL_TEXTURE_2D, textureID);
@@ -488,11 +476,11 @@ GLuint EGLCore::loadTexture()
 
     //    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bmp_width, bmp_height, 0, GL_RGB, GL_UNSIGNED_BYTE, bmp_data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bmpWidth, bmpHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bmpData);
     glGenerateMipmap(GL_TEXTURE_2D);
     //    glBindTexture(GL_TEXTURE_BINDING_2D, last_texture_ID);
 
-    free(bmp_data);
+    free(bmpData);
     return textureID;
 }
 
@@ -515,8 +503,8 @@ void EGLCore::display(GLuint texGround) {
     glEnableVertexAttribArray(aTexCoordLocation);
 
     // 设置顶点属性指针
-    glVertexAttribPointer(aPositionLocation, 3, GL_FLOAT, GL_FALSE, 0, BACKGROUND_RECTANGLE_VERTICES);
-    glVertexAttribPointer(aTexCoordLocation, 2, GL_FLOAT, GL_FALSE, 0, BACKGROUND_RECTANGLE_VERTICES);
+    glVertexAttribPointer(aPositionLocation, NUM_3, GL_FLOAT, GL_FALSE, 0, BACKGROUND_RECTANGLE_VERTICES);
+    glVertexAttribPointer(aTexCoordLocation, NUM_2, GL_FLOAT, GL_FALSE, 0, BACKGROUND_RECTANGLE_VERTICES);
 
     // 绘制矩形
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -528,7 +516,8 @@ void EGLCore::display(GLuint texGround) {
     eglSwapBuffers(eglDisplay_, eglSurface_);
 }
 
-void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen) {
+void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen)
+{
     flag_ = false;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "Drawbmp");
 
@@ -544,38 +533,33 @@ void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen) {
     }
     
     unsigned char *mediaData = new unsigned char[flen];
-    size_t read_cnt = fread(mediaData, sizeof(unsigned char), flen, file);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "readcnt: %{public}zu", read_cnt);
+    size_t readCnt = fread(mediaData, sizeof(unsigned char), flen, file);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "readcnt: %{public}zu", readCnt);
 
-    int width, height, nrChannels;
-    
+    int width = 0;
+    int height = 0;
     unsigned char *pdata = mediaData + 18;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "width: %{public}d", *((uint32_t *)pdata));
     width = *((uint32_t *)pdata);
     pdata = mediaData + 18 + 4;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "height: %{public}d", *((uint32_t *)pdata));
     height = *((uint32_t *)pdata);
-//    float vertices[] = {
-//        // positions          // colors           // texture coords
-//         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-//         0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-//        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-//        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-//    };
 
-        float vertices[] = {
-            // positions          // colors           // texture coords
-             1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f, // top right
-             1.0f,  -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, -1.0f, // bottom right
-             -1.0f,  -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   -1.0f, -1.0f, // bottom left
-             -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   -1.0f, 2.0f  // top left
-        };
+    float vertices[] = {
+        // positions          // colors           // texture coords
+         1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f, // top right
+         1.0f,  -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, -1.0f, // bottom right
+         -1.0f,  -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   -1.0f, -1.0f, // bottom left
+         -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   -1.0f, 2.0f  // top left
+    };
 
     unsigned int indices[] = {  
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
-    unsigned int VBO, VAO, EBO;
+    unsigned int VBO = 0;
+    unsigned int VAO = 0;
+    unsigned int EBO = 0;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -603,9 +587,11 @@ void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen) {
     // -------------------------
     unsigned int texture;
     glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+    glBindTexture(GL_TEXTURE_2D, texture); 
+    // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
     // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_CLAMP_TO_EDGE (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+    // set texture wrapping to GL_CLAMP_TO_EDGE (default wrapping method)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -646,7 +632,6 @@ void EGLCore::Draw(int& hasDraw)
         return;
     }
 
-
     // Divided into five quadrilaterals and calculate one of the quadrilateral's Vertices
     GLfloat rotateX = 0;
     GLfloat rotateY = FIFTY_PERCENT * height_;
@@ -667,23 +652,6 @@ void EGLCore::Draw(int& hasDraw)
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "Draw execute draw shape failed");
         return;
     }
-
-    // // Convert DEG(72°) to RAD
-    // GLfloat rad = M_PI / 180 * 72;
-    // // Rotate four times
-    // for (int i = 0; i < NUM_4; ++i) {
-    //     Rotate2d(centerX, centerY, &rotateX, &rotateY, rad);
-    //     Rotate2d(centerX, centerY, &leftX, &leftY, rad);
-    //     Rotate2d(centerX, centerY, &rightX, &rightY, rad);
-
-    //     const GLfloat shapeVertices[] = { centerX / width_, centerY / height_, leftX / width_, leftY / height_,
-    //         rotateX / width_, rotateY / height_, rightX / width_, rightY / height_ };
-
-    //     if (!ExecuteDrawStar(position, DRAW_COLOR, shapeVertices, sizeof(shapeVertices))) {
-    //         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "Draw execute draw shape failed");
-    //         return;
-    //     }
-    // }
 
     if (!FinishDraw()) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "Draw FinishDraw failed");
@@ -717,12 +685,12 @@ void EGLCore::ChangeColor(int& hasChangeColor)
     GLfloat rotateY = FIFTY_PERCENT * height_;
     GLfloat centerX = 0;
     // Convert DEG(54° & 18°) to RAD
-    GLfloat centerY = -rotateY * (M_PI / 180 * 54) * (M_PI / 180 * 18);
+    GLfloat centerY = -rotateY * (M_PI / NUM_180 * NUM_54) * (M_PI / NUM_180 * NUM_18);
     // Convert DEG(18°) to RAD
-    GLfloat leftX = -rotateY * (M_PI / 180 * 18);
+    GLfloat leftX = -rotateY * (M_PI / NUM_180 * NUM_18);
     GLfloat leftY = 0;
     // Convert DEG(18°) to RAD
-    GLfloat rightX = rotateY * (M_PI / 180 * 18);
+    GLfloat rightX = rotateY * (M_PI / NUM_180 * NUM_18);
     GLfloat rightY = 0;
 
     const GLfloat shapeVertices[] = { centerX / width_, centerY / height_, leftX / width_, leftY / height_,
@@ -734,7 +702,7 @@ void EGLCore::ChangeColor(int& hasChangeColor)
     }
 
     // Convert DEG(72°) to RAD
-    GLfloat rad = M_PI / 180 * 72;
+    GLfloat rad = M_PI / NUM_180 * NUM_72;
     // Rotate four times
     for (int i = 0; i < NUM_4; ++i) {
         Rotate2d(centerX, centerY, &rotateX, &rotateY, rad);
@@ -889,16 +857,15 @@ GLuint EGLCore::LoadShader(GLenum type, const char* shaderSrc)
 void EGLCore::checkCompileErrors(unsigned int shader, std::string type)
 {
     int success;
-    char infoLog[1024];
+    char infoLog[NUM_1024];
     if (type != "PROGRAM")
     {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (!success)
         {
-            glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+            glGetShaderInfoLog(shader, NUM_1024, NULL, infoLog);
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore",
                      "ERROR::SHADER_COMPILATION_ERROR of type: %{public}s", type.c_str());
-            // std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
         }
     }
     else
@@ -906,10 +873,9 @@ void EGLCore::checkCompileErrors(unsigned int shader, std::string type)
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
         if (!success)
         {
-            glGetProgramInfoLog(shader, 1024, NULL, infoLog);
+            glGetProgramInfoLog(shader, NUM_1024, NULL, infoLog);
              OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore",
                      "ERROR::PROGRAM_LINKING_ERROR of type: %{public}s", type.c_str());
-            // std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
         }
     }
 }
@@ -922,12 +888,6 @@ GLuint EGLCore::TRCreateProgram(const char *vertexShader, const char *fragShader
         return PROGRAM_ERROR;
     }
 
-    // GLuint vertex = LoadShader(GL_VERTEX_SHADER, vertexShader);
-    // if (vertex == PROGRAM_ERROR) {
-    //     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "createProgram vertex error");
-    //     return PROGRAM_ERROR;
-    // }
-
     unsigned int vertex, fragment;
     // vertex shader
     vertex = glCreateShader(GL_VERTEX_SHADER);
@@ -939,12 +899,6 @@ GLuint EGLCore::TRCreateProgram(const char *vertexShader, const char *fragShader
     glShaderSource(fragment, 1, &fragShader, NULL);
     glCompileShader(fragment);
     checkCompileErrors(fragment, "FRAGMENT");
-
-    // GLuint fragment = LoadShader(GL_FRAGMENT_SHADER, fragShader);
-    // if (fragment == PROGRAM_ERROR) {
-    //     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "createProgram fragment error");
-    //     return PROGRAM_ERROR;
-    // }
 
     GLuint program = glCreateProgram();
     if (program == PROGRAM_ERROR) {

@@ -305,7 +305,6 @@ napi_value PluginRender::NapiDrawPattern(napi_env env, napi_callback_info info)
         render->eglCore_->fd_ = fd;
         render->eglCore_->foff_ = foff;
         render->eglCore_->flen_ = flen;
-        // render->eglCore_->Draw(hasDraw_);
         render->eglCore_->Drawbmp(fd, foff, flen);
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "render->eglCore_->Draw() executed");
     }
