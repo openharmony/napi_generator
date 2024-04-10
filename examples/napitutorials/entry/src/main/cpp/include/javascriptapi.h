@@ -33,8 +33,9 @@ napi_value testNapiHasProperty(napi_env env, napi_callback_info info);
 napi_value testNapiDeleteProperty(napi_env env, napi_callback_info info);
 
 napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info);
-napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info);
-
-napi_value jsAbstractOpsInit(napi_env env, napi_value exports);
+bool validateObjectProperty(napi_env &env, napi_value &obj, napi_value &propName, const char *tag);
+napi_value testNapiSetNamedProperty(napi_env env, napi_callback_info info);
+napi_value testNapiGetNamedProperty(napi_env env, napi_callback_info info);
+napi_value testNapiHasNamedProperty(napi_env env, napi_callback_info info);
 
 #endif //NAPITUTORIALS_JAVASCRIPTAPI_H
