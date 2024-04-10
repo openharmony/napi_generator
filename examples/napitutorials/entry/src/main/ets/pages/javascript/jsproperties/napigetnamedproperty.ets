@@ -31,9 +31,6 @@ struct napiGetPropertyNames {
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
   @State testcont: string = ' // 测试 N-API napi_get_named_property \n'
-    // + '  const myData = testNapi.testNapiGetNamedProperty(obj, "myProperty"); \n'
-    // + ' // 使用获取的自定义数据 \n'
-    // + ' console.log(myData); // 输出自定义数据 \n';
     + 'let obj = {key1: "value",key2: 1,key3: false,key4: ["a", "b", "c"],key5: function () { return "function" },key6: {key: "value"}} \n'
     + '  const myData = testNapi.testNapiGetNamedProperty(obj, "key1"); \n'
     + ' // 使用获取的自定义数据 \n'
