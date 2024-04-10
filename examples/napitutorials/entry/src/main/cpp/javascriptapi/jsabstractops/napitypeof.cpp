@@ -48,46 +48,11 @@ napi_value testNapiTypeof(napi_env env, napi_callback_info info)
     }
 
     // napi_valuetype -> string
-    switch (result) {
-    case napi_undefined:
-        status = napi_create_string_utf8(env, "undefined", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    case napi_null:
-        status = napi_create_string_utf8(env, "null", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    case napi_boolean:
-        status = napi_create_string_utf8(env, "boolean", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    case napi_number:
-        status = napi_create_string_utf8(env, "number", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    case napi_string:
-        status = napi_create_string_utf8(env, "string", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    case napi_symbol:
-        status = napi_create_string_utf8(env, "symbol", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    case napi_object:
-        status = napi_create_string_utf8(env, "object", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    case napi_function:
-        status = napi_create_string_utf8(env, "function", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    case napi_external:
-        status = napi_create_string_utf8(env, "external", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    case napi_bigint:
-        status = napi_create_string_utf8(env, "bigint", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    default:
-        status = napi_create_string_utf8(env, "unknown", NAPI_AUTO_LENGTH, &resultStr);
-        break;
-    }
+    status = napiValueType2Str(env, result, &resultStr);
     if (status != napi_ok) {
         std::string errMsg = "Failed to convert napi_valuetype " + std::to_string(status) + " to string";
         napi_throw_error(env, NULL, errMsg.c_str());
         return NULL;
     }
-
     return resultStr;
 }
