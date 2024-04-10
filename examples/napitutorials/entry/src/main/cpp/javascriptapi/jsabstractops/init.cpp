@@ -16,11 +16,34 @@
 #include "common.h"
 #include "javascriptapi.h"
 
-napi_value jsAbstractOpsInit(napi_env env, napi_value exports)
+void jsAbstractOpsInit(napi_property_descriptor **origDescPtr, size_t *len)
 {
-    napi_property_descriptor desc[] = {
+    napi_property_descriptor descToBeAppended[] = {
         {"testNapiCoerceToBool", nullptr, testNapiCoerceToBool, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"testNapiCoerceToNumber", nullptr, testNapiCoerceToNumber, nullptr, nullptr, nullptr, napi_default, nullptr}};
-    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
-    return exports;
+        {"testNapiCoerceToNumber", nullptr, testNapiCoerceToNumber, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiCoerceToObject", nullptr, testNapiCoerceToObject, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiCoerceToString", nullptr, testNapiCoerceToString, nullptr, nullptr, nullptr, napi_default, nullptr}
+    };
+
+    // Allocate memory
+    napi_property_descriptor *newDesc =
+        (napi_property_descriptor *)malloc(sizeof(napi_property_descriptor) * *len + sizeof(descToBeAppended));
+    if (newDesc == nullptr) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, "jsAbstractOpsInit", "Failed to allocated memory");
+        return;
+    }
+
+    // Copy old properties & free memory
+    for (size_t i = 0; i < *len; ++i) {
+        newDesc[i] = (*origDescPtr)[i];
+    }
+    free(*origDescPtr);
+    *origDescPtr = newDesc;
+
+    // Copy new properties
+    for (size_t i = 0; i < sizeof(descToBeAppended) / sizeof(napi_property_descriptor); ++i) {
+        newDesc[*len + i] = descToBeAppended[i];
+    }
+
+    *len += sizeof(descToBeAppended) / sizeof(napi_property_descriptor);
 }
