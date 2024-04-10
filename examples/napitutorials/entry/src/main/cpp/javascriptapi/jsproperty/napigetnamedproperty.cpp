@@ -44,7 +44,8 @@ napi_value callFunctionIfPropertyTypeIsFunction(napi_env &env, napi_value &obj, 
     return propValue;
 }
 
-napi_value testNapiGetNamedProperty(napi_env env, napi_callback_info info) {
+napi_value testNapiGetNamedProperty(napi_env env, napi_callback_info info)
+{
     // pages/javascript/jsproperties/napigetnamedproperty
     size_t argc = PARAM2;
     napi_value argv[PARAM2];
@@ -68,26 +69,27 @@ napi_value testNapiGetNamedProperty(napi_env env, napi_callback_info info) {
     if (resValid == false) {
         return NULL;
     }
-    // 将第二个参数从napi_value转换为C字符串
-    size_t str_size = 0;
+    size_t str_size = 0; // 将第二个参数从napi_value转换为C字符串
     status = napi_get_value_string_utf8(env, propName, NULL, 0, &str_size);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get value string", TAG);
         return NULL;
     }
-    char *propertyName = (char *)malloc(str_size + 1);
+    char *propertyName = new char[str_size + 1];
     status = napi_get_value_string_utf8(env, propName, propertyName, str_size + 1, &str_size);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get value string", TAG);
+        delete[] propertyName;
         return NULL;
     }
     napi_value propValue;
     status = napi_get_named_property(env, obj, propertyName, &propValue); // 读取属性
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get named property", TAG);
+        delete[] propertyName;
         return NULL;
     }
-    free(propertyName);
+    delete[] propertyName;
     // 检查 propValue是否是一个函数
     napi_value result = callFunctionIfPropertyTypeIsFunction(env, obj, propValue);
     if (result != NULL) {

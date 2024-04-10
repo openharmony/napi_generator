@@ -17,7 +17,7 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
-char * getSecondParamStr(napi_env &env, napi_value &propName)
+char *getSecondParamStr(napi_env &env, napi_value &propName)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
