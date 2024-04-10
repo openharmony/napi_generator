@@ -67,29 +67,3 @@ napi_value testNapiSetNamedProperty(napi_env env, napi_callback_info info)
     // 返回新设置对象
     return obj;
 }
-
-
-//    napi_valuetype valuetype0;
-//    napi_valuetype valuetype1;
-//
-//    // 确认第一个参数是个对象
-//    status = napi_typeof(env, obj, &valuetype0);
-//    if (status != napi_ok) {
-//        getErrMsg(status, env, extended_error_info, "get obj type", TAG);
-//        return NULL;
-//    }
-//    if (valuetype0 != napi_object) {
-//        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
-//        return NULL;
-//    }
-//
-//    // 确认第二个参数是个字符串
-//    status = napi_typeof(env, propName, &valuetype1);
-//    if (status != napi_ok) {
-//        getErrMsg(status, env, extended_error_info, "get propName type", TAG);
-//        return NULL;
-//    }
-//    if (valuetype1 != napi_string) {
-//        napi_throw_type_error(env, NULL, "Wrong argument type, expected a string");
-//        return NULL;
-//    }
