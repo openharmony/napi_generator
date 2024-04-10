@@ -6582,6 +6582,18 @@
     {
       "name": "napi_delete_property_description",
       "value": "napi_delete_property is an N-API function used to delete a specified property from a JavaScript object."
+    },
+    {
+      "name": "napi_get_named_property_description",
+      "value": "The napi_get_named_property function is used to retrieve the value of a named property from a JavaScript object. It allows you to access the value associated with a specified property name on the given object."
+    },
+    {
+      "name": "napi_set_named_property_description",
+      "value": "The napi_set_named_property function is used to set a named property on a JavaScript object. It associates a value with a specified property name on the given object. This function allows you to add or modify properties on an object dynamically during runtime."
+    },
+    {
+      "name": "napi_has_named_property_description",
+      "value": "The napi_has_named_property function is used to check if a JavaScript object has a named property. It allows you to determine whether the given object has a specified property name. "
     }
   ]
 }

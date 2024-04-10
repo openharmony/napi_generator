@@ -14,6 +14,7 @@
  */
 
 #include "common.h"
+#include "javascriptapi.h"
 
 void getErrMsg(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
     const char *info, const char *tag)
@@ -30,4 +31,35 @@ void getErrMsg(napi_status &status, napi_env &env, const napi_extended_error_inf
                           ", ec = " + std::to_string(extended_error_info->error_code);
         napi_throw_error(env, NULL, res.c_str());
     }
+}
+
+bool validateObjectProperty(napi_env &env, napi_value &obj, napi_value &propName, const char *tag)
+{
+    napi_status status;
+    napi_valuetype valuetype0;
+    napi_valuetype valuetype1;
+    const napi_extended_error_info *extended_error_info;
+
+    // 确认第一个参数是个对象
+    status = napi_typeof(env, obj, &valuetype0);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get obj type", tag);
+        return false;
+    }
+    if (valuetype0 != napi_object) {
+        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
+        return false;
+    }
+
+    // 确认第二个参数是个字符串
+    status = napi_typeof(env, propName, &valuetype1);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get propName type", tag);
+        return false;
+    }
+    if (valuetype1 != napi_string) {
+        napi_throw_type_error(env, NULL, "Wrong argument type, expected a string");
+        return false;
+    }
+    return true;
 }

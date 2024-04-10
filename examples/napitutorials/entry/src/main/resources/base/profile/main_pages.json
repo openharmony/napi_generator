@@ -62,6 +62,9 @@
     "pages/javascript/jsproperties/napigetproperty",
     "pages/javascript/jsproperties/napihasproperty",
     "pages/javascript/jsproperties/napideleteproperty",
+    "pages/javascript/jsproperties/napisetnamedproperty",
+    "pages/javascript/jsproperties/napigetnamedproperty",
+    "pages/javascript/jsproperties/napihasnamedproperty",
     "pages/ncpp/cjsonfuncs/cjsonfuncs",
     "pages/javascript/jsabstractops/napicoercetobool",
     "pages/javascript/jsabstractops/napicoercetonumber"

@@ -353,15 +353,15 @@ const WORK_WITH_JAVASCRIPT_PROPERTIES: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_set_named_property'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napisetnamedproperty'
       },
       {
         title: $r('app.string.napi_get_named_property'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napigetnamedproperty'
       },
       {
         title: $r('app.string.napi_has_named_property'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napihasnamedproperty'
       },
       {
         title: $r('app.string.napi_set_element'),
