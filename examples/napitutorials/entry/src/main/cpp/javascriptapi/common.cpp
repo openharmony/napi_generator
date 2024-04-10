@@ -40,7 +40,7 @@ bool validateObjectProperty(napi_env &env, napi_value &obj, napi_value &propName
     napi_valuetype valuetype1;
     const napi_extended_error_info *extended_error_info;
 
-    // È·ÈÏµÚÒ»¸ö²ÎÊıÊÇ¸ö¶ÔÏó
+    // ç¡®è®¤ç¬¬ä¸€ä¸ªå‚æ•°æ˜¯ä¸ªå¯¹è±¡
     status = napi_typeof(env, obj, &valuetype0);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get obj type", tag);
@@ -51,7 +51,7 @@ bool validateObjectProperty(napi_env &env, napi_value &obj, napi_value &propName
         return false;
     }
 
-    // È·ÈÏµÚ¶ş¸ö²ÎÊıÊÇ¸ö×Ö·û´®
+    // ç¡®è®¤ç¬¬äºŒä¸ªå‚æ•°æ˜¯ä¸ªå­—ç¬¦ä¸²
     status = napi_typeof(env, propName, &valuetype1);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get propName type", tag);

@@ -51,19 +51,20 @@ napi_value testNapiSetNamedProperty(napi_env env, napi_callback_info info)
         getErrMsg(status, env, extended_error_info, "get value string", TAG);
         return NULL;
     }
-    char *propertyName = (char *)malloc(str_size + 1);
+    char *propertyName = new char[str_size + 1];
     status = napi_get_value_string_utf8(env, propName, propertyName, str_size + 1, &str_size);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get value string", TAG);
+        delete[] propertyName;
         return NULL;
     }
     // 设置对象的属性
     status = napi_set_named_property(env, obj, propertyName, propValue);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "set named property", TAG);
+        delete[] propertyName;
         return NULL;
     }
-    free(propertyName);
-    // 返回新设置对象
-    return obj;
+    delete[] propertyName;
+    return obj;  // 返回新设置对象
 }
