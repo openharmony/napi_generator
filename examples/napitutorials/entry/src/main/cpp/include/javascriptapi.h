@@ -36,6 +36,7 @@ napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info);
 napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info);
 napi_value testNapiCoerceToObject(napi_env env, napi_callback_info info);
 napi_value testNapiCoerceToString(napi_env env, napi_callback_info info);
+napi_value testNapiTypeof(napi_env env, napi_callback_info info);
 
 void jsAbstractOpsInit(napi_property_descriptor **origDescPtr, size_t *len);
 
