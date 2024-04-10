@@ -31,12 +31,13 @@ struct napiGetPropertyNames {
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
   @State testcont: string = ' // 测试 N-API napi_get_property \n'
+    + 'let obj = {key1: "value",true: 1,0: false,key4: ["a", "b", "c"],key5: function () { return "function" },key6: {key: "value"}} \n'
     + '  const myData = testNapi.testNapiGetProperty(obj, "key1"); \n'
     + ' // 使用获取的自定义数据 \n'
     + ' console.log(myData); // 输出自定义数据 \n'
-    + ' const myData2 = testNapi.testNapiGetProperty(obj, "key2"); \n'
+    + ' const myData2 = testNapi.testNapiGetProperty(obj, true); \n'
     + ' console.log(myData2); // 输出自定义数据 \n'
-    + ' const myData3 = testNapi.testNapiGetProperty(obj, "key3"); \n'
+    + ' const myData3 = testNapi.testNapiGetProperty(obj, 0); \n'
     + ' console.log(myData3); // 输出自定义数据 \n'
     + ' const myData4 = testNapi.testNapiGetProperty(obj, "key4"); \n'
     + ' console.log(myData4); // 输出自定义数据 \n'

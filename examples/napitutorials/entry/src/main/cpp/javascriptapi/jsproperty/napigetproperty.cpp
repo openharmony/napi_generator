@@ -17,7 +17,8 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
-napi_value callFunctionIfTypeIsFunction(napi_env &env, napi_value &obj, napi_value &propValue) {
+napi_value callFunctionIfTypeIsFunction(napi_env &env, napi_value &obj, napi_value &propValue)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     napi_valuetype valuetype;
