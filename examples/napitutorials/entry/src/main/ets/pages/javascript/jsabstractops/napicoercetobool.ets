@@ -140,6 +140,7 @@ struct napicoercetobool {
     }
     .height('100%')
     .width('100%')
+    .align(Alignment.Top)
     .backgroundColor($r('app.color.background_shallow_grey'))
   }
 }
