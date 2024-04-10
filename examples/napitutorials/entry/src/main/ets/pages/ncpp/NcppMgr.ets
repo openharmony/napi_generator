@@ -27,8 +27,34 @@ const CJSON_MANAGEMENT: ThirdLevelCategory =
     ]
   }
 
+const FFMPEG_MANAGEMENT: ThirdLevelCategory =
+  {
+    image: $r('app.media.ic_list_and_grid'),
+    title: $r('app.string.ffmpeg_management'),
+    childNodes: [
+      {
+        title: $r('app.string.napi_egl_texture_bmp'),
+        url: 'pages/ncpp/ffmpegfuncs/ffmpegfuncs'
+      }
+    ]
+  }
+
+const OPENCV_MANAGEMENT: ThirdLevelCategory =
+  {
+    image: $r('app.media.ic_list_and_grid'),
+    title: $r('app.string.opencv_management'),
+    childNodes: [
+      {
+        title: $r('app.string.napi_opencv_gray'),
+        url: 'pages/ncpp/opencvfuncs/opencvfuncs'
+      }
+    ]
+  }
+
 
 export const NCPP_CATEGORIES: ThirdLevelCategory[] =
   [
-    CJSON_MANAGEMENT
+    CJSON_MANAGEMENT,
+    FFMPEG_MANAGEMENT,
+    OPENCV_MANAGEMENT
   ]
