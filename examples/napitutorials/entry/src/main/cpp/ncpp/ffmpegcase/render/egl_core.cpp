@@ -396,7 +396,7 @@ void EGLCore::Background()
     }
 
     if (!ExecuteDrawBG(position, SLH_BACKGROUND_COLOR,
-                     BACKGROUND_RECTANGLE_VERTICES, sizeof(BACKGROUND_RECTANGLE_VERTICES))) {
+        BACKGROUND_RECTANGLE_VERTICES, sizeof(BACKGROUND_RECTANGLE_VERTICES))) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "Background execute draw failed");
         return;
     }
@@ -680,7 +680,7 @@ void EGLCore::ChangeColor(int& hasChangeColor)
     }
 
     if (!ExecuteDrawBG(position, SLH_BACKGROUND_COLOR,
-                     BACKGROUND_RECTANGLE_VERTICES, sizeof(BACKGROUND_RECTANGLE_VERTICES))) {
+        BACKGROUND_RECTANGLE_VERTICES, sizeof(BACKGROUND_RECTANGLE_VERTICES))) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ChangeColor execute draw background failed");
         return;
     }
