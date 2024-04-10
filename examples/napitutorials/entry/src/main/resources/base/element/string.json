@@ -189,8 +189,20 @@
       "value": "Dialog"
     },
     {
+      "name": "thirdparty_management",
+      "value": "Third Party"
+    },
+    {
       "name": "cjson_management",
       "value": "CJSON Test Case"
+    },
+    {
+      "name": "ffmpeg_management",
+      "value": "FFmpeg Test Case"
+    },
+    {
+      "name": "opencv_management",
+      "value": "OpenCV Test Case"
     },
     {
       "name": "environment_life_cycle_apis",
@@ -919,6 +931,14 @@
     {
       "name": "version_management",
       "value": "version_management"
+    },
+    {
+      "name": "napi_egl_texture_bmp",
+      "value": "EGL Texture Render"
+    },
+    {
+      "name": "napi_opencv_gray",
+      "value": "OpenCV Convert Color"
     },
     {
       "name": "napi_get_node_version",

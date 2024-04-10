@@ -17,6 +17,7 @@
 #include <bits/alltypes.h>
 #include "nodeapi.h"
 #include "javascriptapi.h"
+#include "ncpp/ffmpegcase/manager/plugin_manager.h"
 #include <iostream>
 #include <fstream>
 
@@ -65,7 +66,12 @@ static napi_value Init(napi_env env, napi_value exports)
         {"testNapiThreadsafefuncrel", nullptr, setThreadsafefuncrel, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiThreadsafefuncall", nullptr, setThreadsafefuncall, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"cjson_version", nullptr, cJSONVersion, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"getContext", nullptr, NativeXComponentSample::PluginManager::GetContext,
+            nullptr, nullptr, nullptr, napi_default, nullptr}
     };
+    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
+
+    NativeXComponentSample::PluginManager::GetInstance()->Export(env, exports);
     size_t len = sizeof(descArr) / sizeof(napi_property_descriptor);
 
     // Allocate memory & copy

@@ -50,7 +50,7 @@ export const NAPI_SAMPLE_CATEGORIES: FirstLevelCategory[] =
       childNodes: NCPP_CATEGORIES,
       selectedImage: $r('app.media.ic_select_component'),
       unselectedImage: $r('app.media.ic_unselect_component'),
-      tabBarName: $r('app.string.cjson_management')
+      tabBarName: $r('app.string.thirdparty_management')
     }
   ]
 

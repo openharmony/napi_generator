@@ -29,20 +29,12 @@
         }
       }
     ],
-    "compileSdkVersion": 9,
-    "compatibleSdkVersion": 9,
     "products": [
       {
         "name": "default",
         "signingConfig": "default",
-      }
-    ],
-    "buildModeSet": [
-      {
-        "name": "debug",
-      },
-      {
-        "name": "release"
+        "compileSdkVersion": 10,
+        "compatibleSdkVersion": 10
       }
     ]
   },
