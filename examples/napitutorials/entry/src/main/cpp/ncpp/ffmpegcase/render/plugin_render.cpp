@@ -25,33 +25,46 @@
 
 namespace NativeXComponentSample {
 namespace {
-void OnSurfaceCreatedCB(OH_NativeXComponent* component, void* window)
-{
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "Callback", "OnSurfaceCreatedCB");
-    if ((component == nullptr) || (window == nullptr)) {
-        OH_LOG_Print(
-            LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "Callback", "OnSurfaceCreatedCB: component or window is null");
-        return;
-    }
-
-    char idStr[OH_XCOMPONENT_ID_LEN_MAX + 1] = { '\0' };
-    uint64_t idSize = OH_XCOMPONENT_ID_LEN_MAX + 1;
-    if (OH_NativeXComponent_GetXComponentId(component, idStr, &idSize) != OH_NATIVEXCOMPONENT_RESULT_SUCCESS) {
-        OH_LOG_Print(
-            LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "Callback", "OnSurfaceCreatedCB: Unable to get XComponent id");
-        return;
-    }
-
-    std::string id(idStr);
-    auto render = PluginRender::GetInstance(id);
-    uint64_t width;
-    uint64_t height;
-    int32_t xSize = OH_NativeXComponent_GetXComponentSize(component, window, &width, &height);
-    if ((xSize == OH_NATIVEXCOMPONENT_RESULT_SUCCESS) && (render != nullptr)) {
-        if (render->eglCore_->EglContextInit(window, width, height)) {
-            render->eglCore_->Background();
+    constexpr int32_t NUM_9 = 9;
+    constexpr int32_t NUM_8 = 8;
+    constexpr int32_t NUM_7 = 7;
+    constexpr int32_t NUM_6 = 6;
+    constexpr int32_t NUM_5 = 5;
+    constexpr int32_t NUM_4 = 4;
+    constexpr int32_t NUM_3 = 3;
+    constexpr int32_t NUM_2 = 2;
+    constexpr int32_t NUM_1 = 1;
+    constexpr int32_t NUM_1024 = 1024;
+    constexpr int32_t NUM_180 = 180;
+    constexpr int32_t NUM_72 = 72;
+    constexpr int32_t NUM_54 = 54;
+    constexpr int32_t NUM_18 = 18;
+    void OnSurfaceCreatedCB(OH_NativeXComponent *component, void *window) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "Callback", "OnSurfaceCreatedCB");
+        if ((component == nullptr) || (window == nullptr)) {
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "Callback",
+                         "OnSurfaceCreatedCB: component or window is null");
+            return;
         }
-    }
+
+        char idStr[OH_XCOMPONENT_ID_LEN_MAX + 1] = {'\0'};
+        uint64_t idSize = OH_XCOMPONENT_ID_LEN_MAX + 1;
+        if (OH_NativeXComponent_GetXComponentId(component, idStr, &idSize) != OH_NATIVEXCOMPONENT_RESULT_SUCCESS) {
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "Callback",
+                         "OnSurfaceCreatedCB: Unable to get XComponent id");
+            return;
+        }
+
+        std::string id(idStr);
+        auto render = PluginRender::GetInstance(id);
+        uint64_t width;
+        uint64_t height;
+        int32_t xSize = OH_NativeXComponent_GetXComponentSize(component, window, &width, &height);
+        if ((xSize == OH_NATIVEXCOMPONENT_RESULT_SUCCESS) && (render != nullptr)) {
+            if (render->eglCore_->EglContextInit(window, width, height)) {
+                render->eglCore_->Background();
+            }
+        }
 }
 
 void OnSurfaceChangedCB(OH_NativeXComponent* component, void* window)
@@ -255,8 +268,8 @@ void PluginRender::Export(napi_env env, napi_value exports)
 // NAPI registration method type napi_callback. If no value is returned, nullptr is returned.
 napi_value PluginRender::NapiDrawPattern(napi_env env, napi_callback_info info)
 {
-    size_t argc = 3;
-    napi_value args[3];
+    size_t argc = NUM_3;
+    napi_value args[NUM_3];
     uint32_t fd = 0;
     uint32_t foff = 0;
     uint32_t flen = 0;
@@ -275,7 +288,7 @@ napi_value PluginRender::NapiDrawPattern(napi_env env, napi_callback_info info)
 
     napi_get_value_uint32(env, args[0], &fd);
     napi_get_value_uint32(env, args[1], &foff);
-    napi_get_value_uint32(env, args[2], &flen);
+    napi_get_value_uint32(env, args[NUM_2], &flen);
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "fd:%{public}d, foff:%{public}d, flen:%{public}d!", fd, foff, flen);
 
     napi_value exportInstance;

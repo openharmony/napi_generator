@@ -28,225 +28,221 @@
 
 namespace NativeXComponentSample {
 namespace {
-constexpr int32_t NUM_4 = 4;
-constexpr int32_t NUM_3 = 3;
-constexpr int32_t NUM_2 = 2;
-constexpr int32_t NUM_1 = 1;
-constexpr int32_t NUM_1024 = 1024;
-constexpr int32_t NUM_180 = 180;
-constexpr int32_t NUM_72 = 72;
-constexpr int32_t NUM_54 = 54;
-constexpr int32_t NUM_18 = 18;
-/**
- * Vertex shader.
- */
-const char EGLDRAW_VERTEX_SHADER[] = "#version 300 es\n"
-                             "layout(location = 0) in vec4 a_position;\n"
-                             "layout(location = 1) in vec4 a_color;   \n"
-                             "out vec4 v_color;                       \n"
-                             "void main()                             \n"
-                             "{                                       \n"
-                             "   gl_Position = a_position;            \n"
-                             "   v_color = a_color;                   \n"
-                             "}                                       \n";
+    constexpr int32_t NUM_9 = 9;
+    constexpr int32_t NUM_8 = 8;
+    constexpr int32_t NUM_7 = 7;
+    constexpr int32_t NUM_6 = 6;
+    constexpr int32_t NUM_5 = 5;
+    constexpr int32_t NUM_4 = 4;
+    constexpr int32_t NUM_3 = 3;
+    constexpr int32_t NUM_2 = 2;
+    constexpr int32_t NUM_1 = 1;
+    constexpr int32_t NUM_1024 = 1024;
+    constexpr int32_t NUM_180 = 180;
+    constexpr int32_t NUM_72 = 72;
+    constexpr int32_t NUM_54 = 54;
+    constexpr int32_t NUM_18 = 18;
+    /**
+     * Vertex shader.
+     */
+    const char EGLDRAW_VERTEX_SHADER[] = "#version 300 es\n"
+                                         "layout(location = 0) in vec4 a_position;\n"
+                                         "layout(location = 1) in vec4 a_color;   \n"
+                                         "out vec4 v_color;                       \n"
+                                         "void main()                             \n"
+                                         "{                                       \n"
+                                         "   gl_Position = a_position;            \n"
+                                         "   v_color = a_color;                   \n"
+                                         "}                                       \n";
 
-/**
- * Fragment shader.
- */
-const char EGLDRAW_FRAGMENT_SHADER[] = "#version 300 es\n"
-                               "precision mediump float;                  \n"
-                               "in vec4 v_color;                          \n"
-                               "out vec4 fragColor;                       \n"
-                               "void main()                               \n"
-                               "{                                         \n"
-                               "   fragColor = v_color;                   \n"
-                               "}                                         \n";
+    /**
+     * Fragment shader.
+     */
+    const char EGLDRAW_FRAGMENT_SHADER[] = "#version 300 es\n"
+                                           "precision mediump float;                  \n"
+                                           "in vec4 v_color;                          \n"
+                                           "out vec4 fragColor;                       \n"
+                                           "void main()                               \n"
+                                           "{                                         \n"
+                                           "   fragColor = v_color;                   \n"
+                                           "}                                         \n";
 
-/**
- * Texture Render Vertex shader.
- */
-const char EGLTR_VERTEX_SHADER[] = "#version 300 es\n"
-                                "layout (location = 0) in vec3 aPos;                  \n"
-                                "layout (location = 1) in vec3 aColor;                \n"
-                                "layout (location = 2) in vec2 aTexCoord;             \n"
-                                "out vec3 ourColor;                                     \n"
-                                "out vec2 TexCoord;                                     \n"
-                                "void main()                                            \n"
-                                "{                                                      \n"
-                                "    gl_Position = vec4(aPos, 1.0);                     \n"
-                                "    ourColor = aColor;                                 \n"
-                                "    TexCoord = vec2(aTexCoord.x, aTexCoord.y);         \n"
-                                "}                                                      \n";
+    /**
+     * Texture Render Vertex shader.
+     */
+    const char EGLTR_VERTEX_SHADER[] = "#version 300 es\n"
+                                       "layout (location = 0) in vec3 aPos;                  \n"
+                                       "layout (location = 1) in vec3 aColor;                \n"
+                                       "layout (location = 2) in vec2 aTexCoord;             \n"
+                                       "out vec3 ourColor;                                     \n"
+                                       "out vec2 TexCoord;                                     \n"
+                                       "void main()                                            \n"
+                                       "{                                                      \n"
+                                       "    gl_Position = vec4(aPos, 1.0);                     \n"
+                                       "    ourColor = aColor;                                 \n"
+                                       "    TexCoord = vec2(aTexCoord.x, aTexCoord.y);         \n"
+                                       "}                                                      \n";
 
-/**
- * Texture Render Fragment shader.
- */
-const char EGLTR_FRAGMENT_SHADER[] = "#version 300 es   \n"
-                                "precision mediump float;                           \n"
-                                "in vec3 ourColor;                                  \n"
-                                "in vec2 TexCoord;                                  \n"
-                                "uniform lowp sampler2D texture1;                   \n"
-                                "out vec4 FragColor;                                \n"
-                                "void main()                                        \n"
-                                "{                                                  \n"
-                                "    FragColor = texture(texture1, TexCoord);       \n"
-                                "}                                                \n";
+    /**
+     * Texture Render Fragment shader.
+     */
+    const char EGLTR_FRAGMENT_SHADER[] = "#version 300 es   \n"
+                                         "precision mediump float;                           \n"
+                                         "in vec3 ourColor;                                  \n"
+                                         "in vec2 TexCoord;                                  \n"
+                                         "uniform lowp sampler2D texture1;                   \n"
+                                         "out vec4 FragColor;                                \n"
+                                         "void main()                                        \n"
+                                         "{                                                  \n"
+                                         "    FragColor = texture(texture1, TexCoord);       \n"
+                                         "}                                                \n";
 
-/**
- * Background color #801dae 青莲.
- */
-const GLfloat QL_BACKGROUND_COLOR[] = {128.0f / 255, 29.0f / 255, 174.0f / 255, 1.0f};
+    /**
+     * Background color #801dae 青莲.
+     */
+    const GLfloat QL_BACKGROUND_COLOR[] = {128.0f / 255, 29.0f / 255, 174.0f / 255, 1.0f};
 
-/**
- * Background color #f20c00 石榴红.
- */
-const GLfloat SLH_BACKGROUND_COLOR[] = {242.0f / 255, 12.0f / 255, 00.0f / 255, 1.0f};
+    /**
+     * Background color #f20c00 石榴红.
+     */
+    const GLfloat SLH_BACKGROUND_COLOR[] = {242.0f / 255, 12.0f / 255, 00.0f / 255, 1.0f};
 
-/**
- * Background color #f20c00 花青.
- */
-const GLfloat HQ_BACKGROUND_COLOR[] = {00.0f / 255, 52.0f / 255, 114.0f / 255, 1.0f};
+    /**
+     * Background color #f20c00 花青.
+     */
+    const GLfloat HQ_BACKGROUND_COLOR[] = {00.0f / 255, 52.0f / 255, 114.0f / 255, 1.0f};
 
-/**
- * Draw color #7E8FFB.
- */
-const GLfloat DRAW_COLOR[] = {126.0f / 255, 143.0f / 255, 251.0f / 255, 1.0f};
+    /**
+     * Draw color #7E8FFB.
+     */
+    const GLfloat DRAW_COLOR[] = {126.0f / 255, 143.0f / 255, 251.0f / 255, 1.0f};
 
-/**
- * Draw color #a3d900.
- */
-const GLfloat CH_DRAW_COLOR[] = {126.0f / 255, 143.0f / 255, 251.0f / 255, 1.0f};
+    /**
+     * Draw color #a3d900.
+     */
+    const GLfloat CH_DRAW_COLOR[] = {126.0f / 255, 143.0f / 255, 251.0f / 255, 1.0f};
 
-/**
- * Draw color #057748.
- */
-const GLfloat SHL_DRAW_COLOR[] = {5.0f / 255, 119.0f / 255, 72.0f / 255, 1.0f};
+    /**
+     * Draw color #057748.
+     */
+    const GLfloat SHL_DRAW_COLOR[] = {5.0f / 255, 119.0f / 255, 72.0f / 255, 1.0f};
 
 
-/**
- * Change color #92D6CC.
- */
-const GLfloat CHANGE_COLOR[] = {146.0f / 255, 214.0f / 255, 204.0f / 255, 1.0f};
+    /**
+     * Change color #92D6CC.
+     */
+    const GLfloat CHANGE_COLOR[] = {146.0f / 255, 214.0f / 255, 204.0f / 255, 1.0f};
 
-/**
- * Background area.
- */
-const GLfloat BACKGROUND_RECTANGLE_VERTICES[] = {
-    -1.0f, 1.0f,
-    1.0f, 1.0f,
-    1.0f, -1.0f,
-    -1.0f, -1.0f};
+    /**
+     * Background area.
+     */
+    const GLfloat BACKGROUND_RECTANGLE_VERTICES[] = {-1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, -1.0f, -1.0f};
 
-/**
- * Get context parameter count.
- */
-const size_t GET_CONTEXT_PARAM_CNT = 1;
+    /**
+     * Get context parameter count.
+     */
+    const size_t GET_CONTEXT_PARAM_CNT = 1;
 
-/**
- * Fifty percent.
- */
-const float FIFTY_PERCENT = 0.5;
+    /**
+     * Fifty percent.
+     */
+    const float FIFTY_PERCENT = 0.5;
 
-/**
- * Pointer size.
- */
-const GLint POINTER_SIZE = 2;
+    /**
+     * Pointer size.
+     */
+    const GLint POINTER_SIZE = 2;
 
-/**
- * Triangle fan size.
- */
-const GLsizei TRIANGLE_FAN_SIZE = 4;
+    /**
+     * Triangle fan size.
+     */
+    const GLsizei TRIANGLE_FAN_SIZE = 4;
 
-/**
- * Egl red size default.
- */
-const int EGL_RED_SIZE_DEFAULT = 8;
+    /**
+     * Egl red size default.
+     */
+    const int EGL_RED_SIZE_DEFAULT = 8;
 
-/**
- * Egl green size default.
- */
-const int EGL_GREEN_SIZE_DEFAULT = 8;
+    /**
+     * Egl green size default.
+     */
+    const int EGL_GREEN_SIZE_DEFAULT = 8;
 
-/**
- * Egl blue size default.
- */
-const int EGL_BLUE_SIZE_DEFAULT = 8;
+    /**
+     * Egl blue size default.
+     */
+    const int EGL_BLUE_SIZE_DEFAULT = 8;
 
-/**
- * Egl alpha size default.
- */
-const int EGL_ALPHA_SIZE_DEFAULT = 8;
+    /**
+     * Egl alpha size default.
+     */
+    const int EGL_ALPHA_SIZE_DEFAULT = 8;
 
-/**
- * Default x position.
- */
-const int DEFAULT_X_POSITION = 0;
+    /**
+     * Default x position.
+     */
+    const int DEFAULT_X_POSITION = 0;
 
-/**
- * Default y position.
- */
-const int DEFAULT_Y_POSITION = 0;
+    /**
+     * Default y position.
+     */
+    const int DEFAULT_Y_POSITION = 0;
 
-/**
- * Gl red default.
- */
-const GLfloat GL_RED_DEFAULT = 0.0;
+    /**
+     * Gl red default.
+     */
+    const GLfloat GL_RED_DEFAULT = 0.0;
 
-/**
- * Gl green default.
- */
-const GLfloat GL_GREEN_DEFAULT = 0.0;
+    /**
+     * Gl green default.
+     */
+    const GLfloat GL_GREEN_DEFAULT = 0.0;
 
-/**
- * Gl blue default.
- */
-const GLfloat GL_BLUE_DEFAULT = 0.0;
+    /**
+     * Gl blue default.
+     */
+    const GLfloat GL_BLUE_DEFAULT = 0.0;
 
-/**
- * Gl alpha default.
- */
-const GLfloat GL_ALPHA_DEFAULT = 1.0;
+    /**
+     * Gl alpha default.
+     */
+    const GLfloat GL_ALPHA_DEFAULT = 1.0;
 
-/**
- * Program error.
- */
-const GLuint PROGRAM_ERROR = 0;
+    /**
+     * Program error.
+     */
+    const GLuint PROGRAM_ERROR = 0;
 
-/**
- * Shape vertices size.
- */
-const int SHAPE_VERTICES_SIZE = 8;
+    /**
+     * Shape vertices size.
+     */
+    const int SHAPE_VERTICES_SIZE = 8;
 
-/**
- * Position handle name.
- */
-const char POSITION_NAME[] = "a_position";
+    /**
+     * Position handle name.
+     */
+    const char POSITION_NAME[] = "a_position";
 
-/**
- * Position error.
- */
-const GLint POSITION_ERROR = -1;
+    /**
+     * Position error.
+     */
+    const GLint POSITION_ERROR = -1;
 
-/**
- * Config attribute list.
- */
-const EGLint ATTRIB_LIST[] = {
-    // Key,value.
-    EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-    EGL_RED_SIZE, EGL_RED_SIZE_DEFAULT,
-    EGL_GREEN_SIZE, EGL_GREEN_SIZE_DEFAULT,
-    EGL_BLUE_SIZE, EGL_BLUE_SIZE_DEFAULT,
-    EGL_ALPHA_SIZE, EGL_ALPHA_SIZE_DEFAULT,
-    EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
-    // End.
-    EGL_NONE};
+    /**
+     * Config attribute list.
+     */
+    const EGLint ATTRIB_LIST[] = {
+        // Key,value.
+        EGL_SURFACE_TYPE, EGL_WINDOW_BIT, EGL_RED_SIZE, EGL_RED_SIZE_DEFAULT, EGL_GREEN_SIZE, EGL_GREEN_SIZE_DEFAULT,
+        EGL_BLUE_SIZE, EGL_BLUE_SIZE_DEFAULT, EGL_ALPHA_SIZE, EGL_ALPHA_SIZE_DEFAULT, EGL_RENDERABLE_TYPE,
+        EGL_OPENGL_ES2_BIT,
+        // End.
+        EGL_NONE};
 
-/**
- * Context attributes.
- */
-const EGLint CONTEXT_ATTRIBS[] = {
-    EGL_CONTEXT_CLIENT_VERSION, 2,
-    EGL_NONE};
+    /**
+     * Context attributes.
+     */
+    const EGLint CONTEXT_ATTRIBS[] = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE};
 } // namespace
 bool EGLCore::EglContextInit(void* window, int width, int height)
 {
@@ -353,14 +349,14 @@ void EGLCore::TRBackground()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, NUM_3, GL_FLOAT, GL_FALSE, NUM_8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, NUM_3, GL_FLOAT, GL_FALSE, NUM_8 * sizeof(float), (void*)(NUM_3 * sizeof(float)));
     glEnableVertexAttribArray(1);
     // texture coord attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(NUM_2, NUM_2, GL_FLOAT, GL_FALSE, NUM_8 * sizeof(float), (void*)(NUM_6 * sizeof(float)));
+    glEnableVertexAttribArray(NUM_2);
 
 
     // load and create a texture
@@ -384,7 +380,7 @@ void EGLCore::TRBackground()
     glUseProgram(program_);
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, NUM_6, GL_UNSIGNED_INT, 0);
 
     eglSwapBuffers(eglDisplay_, eglSurface_);
 }
@@ -425,7 +421,7 @@ GLuint EGLCore::loadTexture()
     }
 
     // 取文件
-    if (fseek(file, foff_ + 18, SEEK_SET) != 0) {
+    if (fseek(file, foff_ + NUM_18, SEEK_SET) != 0) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fseek failed!");
         return false;
     }
@@ -507,7 +503,7 @@ void EGLCore::display(GLuint texGround) {
     glVertexAttribPointer(aTexCoordLocation, NUM_2, GL_FLOAT, GL_FALSE, 0, BACKGROUND_RECTANGLE_VERTICES);
 
     // 绘制矩形
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 0, NUM_6);
 
     // 禁用顶点属性数组
     glDisableVertexAttribArray(aPositionLocation);
@@ -533,15 +529,20 @@ void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen)
     }
     
     unsigned char *mediaData = new unsigned char[flen];
+    if (mediaData == NULL) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "new buffer failed!");
+        fclose(file);
+        return;
+    }
     size_t readCnt = fread(mediaData, sizeof(unsigned char), flen, file);
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "readcnt: %{public}zu", readCnt);
 
     int width = 0;
     int height = 0;
-    unsigned char *pdata = mediaData + 18;
+    unsigned char *pdata = mediaData + NUM_18;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "width: %{public}d", *((uint32_t *)pdata));
     width = *((uint32_t *)pdata);
-    pdata = mediaData + 18 + 4;
+    pdata = mediaData + NUM_18 + NUM_4;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "height: %{public}d", *((uint32_t *)pdata));
     height = *((uint32_t *)pdata);
 
@@ -573,14 +574,14 @@ void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, NUM_3, GL_FLOAT, GL_FALSE, NUM_8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, NUM_3, GL_FLOAT, GL_FALSE, NUM_8 * sizeof(float), (void*)(NUM_3 * sizeof(float)));
     glEnableVertexAttribArray(1);
     // texture coord attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(NUM_2, NUM_2, GL_FLOAT, GL_FALSE, NUM_8 * sizeof(float), (void*)(NUM_6 * sizeof(float)));
+    glEnableVertexAttribArray(NUM_2);
 
 
     // load and create a texture
@@ -609,7 +610,7 @@ void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen)
     glUseProgram(program_);
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, NUM_6, GL_UNSIGNED_INT, 0);
 
     eglSwapBuffers(eglDisplay_, eglSurface_);
 
@@ -637,12 +638,12 @@ void EGLCore::Draw(int& hasDraw)
     GLfloat rotateY = FIFTY_PERCENT * height_;
     GLfloat centerX = 0;
     // Convert DEG(54° & 18°) to RAD
-    GLfloat centerY = -rotateY * (M_PI / 180 * 54) * (M_PI / 180 * 54);
+    GLfloat centerY = -rotateY * (M_PI / NUM_180 * NUM_54) * (M_PI / NUM_180 * NUM_54);
     // Convert DEG(18°) to RAD
-    GLfloat leftX = -rotateY * (M_PI / 180 * 18);
+    GLfloat leftX = -rotateY * (M_PI / NUM_180 * NUM_18);
     GLfloat leftY = 0;
     // Convert DEG(18°) to RAD
-    GLfloat rightX = rotateY * (M_PI / 180 * 18);
+    GLfloat rightX = rotateY * (M_PI / NUM_180 * NUM_18);
     GLfloat rightY = 0;
 
     const GLfloat shapeVertices[] = { centerX / width_, centerY / height_, leftX / width_, leftY / height_,
