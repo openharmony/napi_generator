@@ -49,6 +49,22 @@
       "value": "ArkUI各组件、通用属性、通用方法等分类及描述应用"
     },
     {
+      "name": "node_api",
+      "value": "Node 接口"
+    },
+    {
+      "name": "javascript_api",
+      "value": "Javascript 接口"
+    },
+    {
+      "name": "async_mgr",
+      "value": "异步管理"
+    },
+    {
+      "name": "other_mgr",
+      "value": "其他管理"
+    },
+    {
       "name": "napi_machine",
       "value": "机器学习"
     },
@@ -256,8 +272,20 @@
       "value": "Interpolation Calculation 插值计算"
     },
     {
+      "name": "thirdparty_management",
+      "value": "C/C++ 三方库"
+    },
+    {
       "name": "cjson_management",
       "value": "CJSON 测试集"
+    },
+    {
+      "name": "opencv_management",
+      "value": "OpenCV 测试集"
+    },
+    {
+      "name": "ffmpeg_management",
+      "value": "FFmpeg 测试集"
     },
     {
       "name": "dialog",
@@ -5427,6 +5455,14 @@
     {
       "name": "version_management",
       "value": "版本管理"
+    },
+    {
+      "name": "napi_egl_texture_bmp",
+      "value": "EGL材质渲染"
+    },
+    {
+      "name": "napi_opencv_gray",
+      "value": "灰度化相片"
     },
     {
       "name": "napi_get_node_version",
