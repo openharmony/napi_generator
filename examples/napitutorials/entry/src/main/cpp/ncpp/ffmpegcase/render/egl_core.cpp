@@ -291,7 +291,7 @@ bool EGLCore::CreateEnvironment()
     eglSurface_ = eglCreateWindowSurface(eglDisplay_, eglConfig_, eglWindow_, NULL);
     if (eglSurface_ == nullptr) {
         OH_LOG_Print(
-            LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglCreateWindowSurface: unable to create surface");
+            LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglCreateWindowSurface: unable to create");
         eglTerminate(eglDisplay_);
         return false;
     }
@@ -299,7 +299,7 @@ bool EGLCore::CreateEnvironment()
     eglContext_ = eglCreateContext(eglDisplay_, eglConfig_, EGL_NO_CONTEXT, CONTEXT_ATTRIBS);
     if (eglContext_ == nullptr) {
         OH_LOG_Print(
-            LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglCreateWindowSurface: unable to create surface");
+            LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglCreateWindowSurface: unable to create");
         eglDestroySurface(eglDisplay_, eglSurface_);
         eglTerminate(eglDisplay_);
         return false;
@@ -314,7 +314,6 @@ bool EGLCore::CreateEnvironment()
     }
     // Create program.
     program_ = TRCreateProgram(EGLTR_VERTEX_SHADER, EGLTR_FRAGMENT_SHADER);
-    //    program_ = CreateProgram(EGLDRAW_VERTEX_SHADER, EGLDRAW_FRAGMENT_SHADER);
     if (program_ == PROGRAM_ERROR) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "CreateProgram: unable to create program");
         return false;
@@ -331,11 +330,13 @@ void EGLCore::TRBackground()
          0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
         -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f // bottom left
     };
-    unsigned int indices[] = {  
+    unsigned int indices[] = {
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
-    unsigned int VBO, VAO, EBO;
+    unsigned int VBO = 0;
+    unsigned int VAO = 0;
+    unsigned int EBO = 0;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -357,15 +358,16 @@ void EGLCore::TRBackground()
     // texture coord attribute
     glVertexAttribPointer(NUM_2, NUM_2, GL_FLOAT, GL_FALSE, NUM_8 * sizeof(float), (void*)(NUM_6 * sizeof(float)));
     glEnableVertexAttribArray(NUM_2);
-
-
+    
     // load and create a texture
     // -------------------------
     unsigned int texture;
     glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+    // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+    glBindTexture(GL_TEXTURE_2D, texture);
     // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	// set texture wrapping to GL_CLAMP_TO_EDGE (default wrapping method)
+    // set texture wrapping to GL_CLAMP_TO_EDGE (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -425,15 +427,31 @@ GLuint EGLCore::loadTexture()
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fseek failed!");
         return false;
     }
-
-    fread(&bmpWidth, NUM_4, NUM_1, file);
-    fread(&bmpHeight, NUM_4, NUM_1, file);
-    fread(&bmpBit, NUM_1, NUM_1, file);
-    fread(&bmpBit, NUM_1, NUM_1, file);
-    fread(&bmpBit, NUM_1, NUM_1, file);
+    
+    if (fread(&bmpWidth, NUM_4, NUM_1, file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
+    }
+    
+    if (fread(&bmpHeight, NUM_4, NUM_1, file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
+    }
+    if (fread(&bmpBit, NUM_1, NUM_1, file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
+    }
+    if (fread(&bmpBit, NUM_1, NUM_1, file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
+    }
+    if (fread(&bmpBit, NUM_1, NUM_1, file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
+    }
     bmpSize = flen_ - NUM_54;
 
     unsigned char *bmpData = (unsigned char *)malloc(bmpSize);
+    if (bmpData == NULL) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB malloc failed!");
+        fclose(file);
+        return false;
+    }
     if (fseek(file, foff_ + NUM_54, SEEK_SET) != 0) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fseek failed!");
         return false;
@@ -454,33 +472,12 @@ GLuint EGLCore::loadTexture()
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_bit: %{public}d", bmpBit);
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "read_cnt: %{public}zu", readCnt);
 
-    //------------------------------------------------------------
-    GLuint textureID;
-    GLuint lastTextureID = 0;
-    glGenTextures(1, &textureID);
-
-    GLint lastTestureID = lastTextureID;
-    glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTestureID);
-
-    glBindTexture(GL_TEXTURE_2D, textureID);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-
-    //    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bmpWidth, bmpHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bmpData);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    //    glBindTexture(GL_TEXTURE_BINDING_2D, last_texture_ID);
-
     free(bmpData);
-    return textureID;
+    return 0;
 }
 
-void EGLCore::display(GLuint texGround) {
+void EGLCore::display(GLuint texGround)
+{
     // 清空颜色缓冲区
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -512,7 +509,7 @@ void EGLCore::display(GLuint texGround) {
     eglSwapBuffers(eglDisplay_, eglSurface_);
 }
 
-void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen)
+void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen)
 {
     flag_ = false;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "Drawbmp");
@@ -525,9 +522,15 @@ void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen)
     
     if (fseek(file, foff, SEEK_SET) != 0) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fseek failed!");
+        fclose(file);
         return;
     }
     
+    if (flen <= 0) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fseek failed!");
+        fclose(file);
+        return;
+    }
     unsigned char *mediaData = new unsigned char[flen];
     if (mediaData == NULL) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "new buffer failed!");
@@ -535,7 +538,9 @@ void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen)
         return;
     }
     size_t readCnt = fread(mediaData, sizeof(unsigned char), flen, file);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "readcnt: %{public}zu", readCnt);
+    if (readCnt > 0) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "readcnt: %{public}zu", readCnt);
+    }
 
     int width = 0;
     int height = 0;
@@ -554,7 +559,7 @@ void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen)
          -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   -1.0f, 2.0f  // top left
     };
 
-    unsigned int indices[] = {  
+    unsigned int indices[] = {
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
@@ -591,7 +596,7 @@ void EGLCore::Drawbmp(uint32_t fd, uint32_t foff, uint32_t flen)
     glBindTexture(GL_TEXTURE_2D, texture); 
     // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
     // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     // set texture wrapping to GL_CLAMP_TO_EDGE (default wrapping method)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     // set texture filtering parameters
@@ -628,7 +633,7 @@ void EGLCore::Draw(int& hasDraw)
     }
 
     if (!ExecuteDrawBG(position, QL_BACKGROUND_COLOR,
-                     BACKGROUND_RECTANGLE_VERTICES, sizeof(BACKGROUND_RECTANGLE_VERTICES))) {
+        BACKGROUND_RECTANGLE_VERTICES, sizeof(BACKGROUND_RECTANGLE_VERTICES))) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "Draw execute draw background failed");
         return;
     }
@@ -845,7 +850,6 @@ GLuint EGLCore::LoadShader(GLenum type, const char* shaderSrc)
 
     char* infoLog = (char*)malloc(sizeof(char) * (infoLen + 1));
     if (infoLog != nullptr) {
-        memset(infoLog, 0, infoLen + 1);
         glGetShaderInfoLog(shader, infoLen, nullptr, infoLog);
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "glCompileShader error = %s", infoLog);
         free(infoLog);
@@ -866,17 +870,15 @@ void EGLCore::checkCompileErrors(unsigned int shader, std::string type)
         {
             glGetShaderInfoLog(shader, NUM_1024, NULL, infoLog);
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore",
-                     "ERROR::SHADER_COMPILATION_ERROR of type: %{public}s", type.c_str());
+                "ERROR::SHADER_COMPILATION_ERROR of type: %{public}s", type.c_str());
         }
-    }
-    else
-    {
+    } else {
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
         if (!success)
         {
             glGetProgramInfoLog(shader, NUM_1024, NULL, infoLog);
-             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore",
-                     "ERROR::PROGRAM_LINKING_ERROR of type: %{public}s", type.c_str());
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore",
+                "ERROR::PROGRAM_LINKING_ERROR of type: %{public}s", type.c_str());
         }
     }
 }
@@ -927,7 +929,6 @@ GLuint EGLCore::TRCreateProgram(const char *vertexShader, const char *fragShader
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLen);
     if (infoLen > 1) {
         char *infoLog = (char *)malloc(sizeof(char) * (infoLen + 1));
-        memset(infoLog, 0, infoLen + 1);
         glGetProgramInfoLog(program, infoLen, nullptr, infoLog);
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "glLinkProgram error = %{public}s", infoLog);
         free(infoLog);
@@ -985,7 +986,6 @@ GLuint EGLCore::CreateProgram(const char* vertexShader, const char* fragShader)
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLen);
     if (infoLen > 1) {
         char* infoLog = (char*)malloc(sizeof(char) * (infoLen + 1));
-        memset(infoLog, 0, infoLen + 1);
         glGetProgramInfoLog(program, infoLen, nullptr, infoLog);
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "glLinkProgram error = %s", infoLog);
         free(infoLog);

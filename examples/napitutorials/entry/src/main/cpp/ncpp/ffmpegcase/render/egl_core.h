@@ -28,7 +28,7 @@ public:
     bool EglContextInit(void* window, int width, int height);
     bool CreateEnvironment();
     void Draw(int& hasDraw);
-    void Drawbmp(uint32_t fd, uint32_t off, uint32_t len);
+    void DrawBmp(uint32_t fd, uint32_t off, uint32_t len);
     void Background();
     void TRBackground();
     void ChangeColor(int& hasChangeColor);

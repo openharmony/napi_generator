@@ -39,7 +39,8 @@ namespace {
     constexpr int32_t NUM_72 = 72;
     constexpr int32_t NUM_54 = 54;
     constexpr int32_t NUM_18 = 18;
-    void OnSurfaceCreatedCB(OH_NativeXComponent *component, void *window) {
+    void OnSurfaceCreatedCB(OH_NativeXComponent *component, void *window)
+    {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "Callback", "OnSurfaceCreatedCB");
         if ((component == nullptr) || (window == nullptr)) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "Callback",
@@ -65,7 +66,7 @@ namespace {
                 render->eglCore_->Background();
             }
         }
-}
+    }
 
 void OnSurfaceChangedCB(OH_NativeXComponent* component, void* window)
 {
@@ -289,12 +290,14 @@ napi_value PluginRender::NapiDrawPattern(napi_env env, napi_callback_info info)
     napi_get_value_uint32(env, args[0], &fd);
     napi_get_value_uint32(env, args[1], &foff);
     napi_get_value_uint32(env, args[NUM_2], &flen);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "fd:%{public}d, foff:%{public}d, flen:%{public}d!", fd, foff, flen);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN,
+        "PluginRender", "fd:%{public}d, foff:%{public}d, flen:%{public}d!", fd, foff, flen);
 
     napi_value exportInstance;
     if (napi_get_named_property(env, thisArg, OH_NATIVE_XCOMPONENT_OBJ, &exportInstance) != napi_ok) {
         OH_LOG_Print(
-            LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiDrawPattern: napi_get_named_property fail");
+            LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender",
+            "NapiDrawPattern: napi_get_named_property fail");
         return nullptr;
     }
 
@@ -318,7 +321,7 @@ napi_value PluginRender::NapiDrawPattern(napi_env env, napi_callback_info info)
         render->eglCore_->fd_ = fd;
         render->eglCore_->foff_ = foff;
         render->eglCore_->flen_ = flen;
-        render->eglCore_->Drawbmp(fd, foff, flen);
+        render->eglCore_->DrawBmp(fd, foff, flen);
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "render->eglCore_->Draw() executed");
     }
     return nullptr;
