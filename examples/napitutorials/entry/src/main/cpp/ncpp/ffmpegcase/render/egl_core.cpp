@@ -588,12 +588,11 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen)
     glVertexAttribPointer(NUM_2, NUM_2, GL_FLOAT, GL_FALSE, NUM_8 * sizeof(float), (void*)(NUM_6 * sizeof(float)));
     glEnableVertexAttribArray(NUM_2);
 
-
     // load and create a texture
     // -------------------------
     unsigned int texture;
     glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture); 
+    glBindTexture(GL_TEXTURE_2D, texture);
     // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
     // set the texture wrapping parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -863,19 +862,16 @@ void EGLCore::checkCompileErrors(unsigned int shader, std::string type)
 {
     int success;
     char infoLog[NUM_1024];
-    if (type != "PROGRAM")
-    {
+    if (type != "PROGRAM") {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-        if (!success)
-        {
+        if (!success) {
             glGetShaderInfoLog(shader, NUM_1024, NULL, infoLog);
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore",
                 "ERROR::SHADER_COMPILATION_ERROR of type: %{public}s", type.c_str());
         }
     } else {
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
-        if (!success)
-        {
+        if (!success) {
             glGetProgramInfoLog(shader, NUM_1024, NULL, infoLog);
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore",
                 "ERROR::PROGRAM_LINKING_ERROR of type: %{public}s", type.c_str());
@@ -891,7 +887,8 @@ GLuint EGLCore::TRCreateProgram(const char *vertexShader, const char *fragShader
         return PROGRAM_ERROR;
     }
 
-    unsigned int vertex, fragment;
+    unsigned int vertex = 0;
+    unsigned int fragment = 0;
     // vertex shader
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &vertexShader, NULL);
