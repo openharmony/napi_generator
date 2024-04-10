@@ -67,5 +67,7 @@
     "pages/ncpp/cjsonfuncs/cjsonfuncs",
     "pages/ncpp/ffmpegfuncs/ffmpegfuncs",
     "pages/ncpp/opencvfuncs/opencvfuncs"
+    "pages/javascript/jsabstractops/napicoercetoobject",
+    "pages/javascript/jsabstractops/napicoercetostring"
   ]
 }
