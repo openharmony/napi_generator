@@ -6563,6 +6563,26 @@
     {
       "name": "navigator_return_message",
       "value": "hello! This is a param form the first page"
+    },
+    {
+      "name": "napi_get_property_names_description",
+      "value": "napi_get_property_names is one of the N-API interfaces in Node.js, used to retrieve the names of all enumerable properties of a given object."
+    },
+    {
+      "name": "napi_get_property_description",
+      "value": "napi_get_property is an N-API function used to retrieve the value of a specific property of a JavaScript object."
+    },
+    {
+      "name": "napi_set_property_description",
+      "value": "napi_set_property is an N-API function used to set properties on a JavaScript object."
+    },
+    {
+      "name": "napi_has_property_description",
+      "value": "napi_has_property is an N-API function used to check if a specified property exists in a JavaScript object and its prototype chain."
+    },
+    {
+      "name": "napi_delete_property_description",
+      "value": "napi_delete_property is an N-API function used to delete a specified property from a JavaScript object."
     }
   ]
 }

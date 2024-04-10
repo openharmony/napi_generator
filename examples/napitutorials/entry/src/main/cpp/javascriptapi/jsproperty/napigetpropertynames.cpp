@@ -23,6 +23,7 @@ napi_value testNapiGetPropertyNames(napi_env env, napi_callback_info info)
     size_t argc = PARAM1;
     napi_value argv[PARAM1];
     napi_status status;
+    napi_value obj;
     const napi_extended_error_info *extended_error_info;
 
     // 解析传入的参数
@@ -38,8 +39,9 @@ napi_value testNapiGetPropertyNames(napi_env env, napi_callback_info info)
         return NULL;
     }
 
+    obj = argv[PARAM0];
     napi_value propertyNames;
-    status = napi_get_property_names(env, argv[0], &propertyNames);
+    status = napi_get_property_names(env, obj, &propertyNames);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get property names", TAG);
         return NULL;

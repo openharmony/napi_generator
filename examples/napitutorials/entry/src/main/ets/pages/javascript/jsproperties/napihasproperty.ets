@@ -27,17 +27,26 @@ const TAG: string = 'napi_has_property';
 struct napiGetPropertyNames {
   private btnFontColor: Resource = $r('app.color.white');
   private pixelMapFormat: image.PixelMapFormat = 3;
+  private textcont: Resource = $r('app.string.napi_has_property_description');
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State textcont: string = 'napi_has_property 是一个 N-API 函数，用于检查 JavaScript 对象及其原型链中是否具有指定的属性。'
   @State testcont: string = ' // 测试 N-API napi_has_property \n'
-    + '包含key的情况测试：\n'
-    + '  const myData = testNapi.testNapiHasProperty({key:"val"}); \n'
-    + ' // 使用获取的自定义数据 \n'
+    + 'let obj = {key1: "value",true: 1,0: false,key4: ["a", "b", "c"],key5: function () { return "function" },key6: {key: "value"}} \n'
+    + '包含key的情况测试：包含该属性，返回true \n'
+    + ' const myData = testNapi.testNapiHasProperty(obj, "key1"); \n'
     + ' console.log(myData); // 输出自定义数据 \n'
-    + '不包含key的情况测试：\n'
-    + '  const myExcData = testNapi.testNapiGetProperty({differentKey:"another val"}); \n'
-    + ' // 使用获取的自定义数据 \n'
+    + ' const myData2 = testNapi.testNapiHasProperty(obj, true); \n'
+    + ' console.log(myData2); // 输出自定义数据 \n'
+    + ' const myData3 = testNapi.testNapiHasProperty(obj, 0); \n'
+    + ' console.log(myData3); // 输出自定义数据 \n'
+    + ' const myData4 = testNapi.testNapiHasProperty(obj, "key4"); \n'
+    + ' console.log(myData4); // 输出自定义数据 \n'
+    + ' const myData5 = testNapi.testNapiHasProperty(obj, "key5"); \n'
+    + ' console.log(myData5); // 输出自定义数据 \n'
+    + ' const myData6 = testNapi.testNapiHasProperty(obj, "key6"); \n'
+    + ' console.log(myData6); // 输出自定义数据 \n'
+    + '不包含key的情况测试：不包含该属性，返回false \n'
+    + ' const myExcData = testNapi.testNapiGetProperty(obj, "key7"); \n'
     + ' console.log(myExcData); // 输出自定义数据 \n';
 
   controller: TextAreaController = new TextAreaController()
@@ -57,8 +66,8 @@ struct napiGetPropertyNames {
             .width('90%')
             .margin(10)
             .fontSize(16)
-            .fontColor('#182431')
-            .backgroundColor('#FFFFFF')
+            .fontColor($r('app.color.sub_title_color'))
+            .backgroundColor($r('app.color.white'))
             .enabled(false)
 
           TextArea({
@@ -69,8 +78,8 @@ struct napiGetPropertyNames {
             .width('90%')
             .margin(10)
             .fontSize(16)
-            .fontColor('#ff400336')
-            .backgroundColor('#ff985307')
+            .fontColor($r('app.color.textarea_font_color'))
+            .backgroundColor($r('app.color.textarea_background_color'))
             .enabled(false)
         }
         .width('100%')
@@ -89,12 +98,28 @@ struct napiGetPropertyNames {
             .margin({ left: 24 })
             .id('napi_has_property')
             .onClick(() => {
-              let ret = testNapi.testNapiHasProperty({key:"val"});
-              console.info("ret = " + ret)
+              let obj = {
+                key1: "value",
+                true: 1,
+                0: false,
+                key4: ["a", "b", "c"],
+                key5: function () { return "function" },
+                key6: {key: "value"}
+              }
+              let ret = testNapi.testNapiHasProperty(obj, "key1");
               this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret+' ##)');
-              let ret2 = testNapi.testNapiHasProperty({differentKey:"another val"});
-              console.info("ret = " + ret)
-              this.testcont = this.testcont.replace('log(myExcData)', 'log(## '+ret2+' ##)');
+              let ret2 = testNapi.testNapiHasProperty(obj, true);
+              this.testcont = this.testcont.replace('log(myData2)', 'log(## '+ret2+' ##)');
+              let ret3 = testNapi.testNapiHasProperty(obj, 0);
+              this.testcont = this.testcont.replace('log(myData3)', 'log(## '+ret3+' ##)');
+              let ret4 = testNapi.testNapiHasProperty(obj, "key4");
+              this.testcont = this.testcont.replace('log(myData4)', 'log(## '+ret4+' ##)');
+              let ret5 = testNapi.testNapiHasProperty(obj, "key5");
+              this.testcont = this.testcont.replace('log(myData5)', 'log(## '+ret5+' ##)');
+              let ret6 = testNapi.testNapiHasProperty(obj, "key6");
+              this.testcont = this.testcont.replace('log(myData6)', 'log(## '+ret6+' ##)');
+              let ret7 = testNapi.testNapiHasProperty(obj, "key7");
+              this.testcont = this.testcont.replace('log(myExcData)', 'log(## '+ret7+' ##)');
             })
         }
         .width('100%')

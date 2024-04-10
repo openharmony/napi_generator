@@ -20,10 +20,11 @@ static const char *TAG = "[javascriptapi_property]";
 napi_value testNapiDeleteProperty(napi_env env, napi_callback_info info)
 {
     // pages/javascript/jsproperties/napideleteproperty
-    size_t argc = PARAM1;
-    napi_value argv[PARAM1];
+    size_t argc = PARAM2;
+    napi_value argv[PARAM2];
     napi_status status;
     napi_value obj;
+    napi_value propName;
     const napi_extended_error_info *extended_error_info;
 
     // 解析传入的参数
@@ -34,35 +35,41 @@ napi_value testNapiDeleteProperty(napi_env env, napi_callback_info info)
     }
 
     // 检查参数数量
-    if (argc < PARAM1) {
-        napi_throw_error(env, NULL, "Expected 1 arguments");
+    if (argc < PARAM2) {
+        napi_throw_error(env, NULL, "Expected 2 arguments");
         return NULL;
     }
-    obj = argv[0];
+    obj = argv[PARAM0];
+    propName = argv[PARAM1];
 
-    // 创建一个 JavaScript 字符串作为要删除的属性名
-    napi_value prop_key;
-    status = napi_create_string_utf8(env, "key", NAPI_AUTO_LENGTH, &prop_key);
+    napi_valuetype valuetype0;
+
+    // 确认第一个参数是个对象
+    status = napi_typeof(env, obj, &valuetype0);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "create string utf8", TAG);
+        getErrMsg(status, env, extended_error_info, "get obj type", TAG);
+        return NULL;
+    }
+    if (valuetype0 != napi_object) {
+        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
         return NULL;
     }
 
     // 删除属性
     bool result = false;
-    status = napi_delete_property(env, obj, prop_key, &result);
+    status = napi_delete_property(env, obj, propName, &result);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "delete property", TAG);
         return NULL;
     }
-
-    // 返回删除操作的结果
-    napi_value delete_result;
-    status = napi_get_boolean(env, result, &delete_result);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get boolean", TAG);
-        return NULL;
+    
+    if (result) {
+        // 删除成功
+        OH_LOG_INFO(LOG_APP, "Delete property successfully!");
+    } else {
+        OH_LOG_INFO(LOG_APP, "Fail to delete property!");
     }
     
-    return delete_result;
+    // 返回删除属性之后的对象
+    return obj;
 }

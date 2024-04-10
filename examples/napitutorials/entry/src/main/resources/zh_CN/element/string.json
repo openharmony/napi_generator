@@ -5531,6 +5531,26 @@
     {
       "name": "node_api_get_module_file_name",
       "value": "获取当前文件名"
+    },
+    {
+      "name": "napi_get_property_names_description",
+      "value": "napi_get_property_names 是 Node.js 的 N-API 接口之一，用于获取给定对象的所有可枚举属性的名称。"
+    },
+    {
+      "name": "napi_get_property_description",
+      "value": "napi_get_property 是一个 N-API 函数，用于获取 JavaScript 对象的指定属性的值。"
+    },
+    {
+      "name": "napi_set_property_description",
+      "value": "napi_set_property 是一个 N-API 函数，用于向 JavaScript 对象设置属性。"
+    },
+    {
+      "name": "napi_has_property_description",
+      "value": "napi_has_property 是一个 N-API 函数，用于检查 JavaScript 对象及其原型链中是否具有指定的属性。"
+    },
+    {
+      "name": "napi_delete_property_description",
+      "value": "napi_delete_property 是一个 N-API 函数，用于删除 JavaScript 对象的指定属性。"
     }
   ]
 }
