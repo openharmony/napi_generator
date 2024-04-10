@@ -43,7 +43,7 @@ export default function jsAbstractOpsTest() {
      * cpp/javascriptapi/jsabstractops/napicoercetobool.cpp
      * pages/javascript/jsabstractops/napicoercetobool.ets
      */
-    it('napiCoerceToBool', 0, () => {
+    it('napiCoerceToBoolTest', 0, () => {
       hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToBool begin');
 
       // Test coercing string/number/null/undefined values to boolean
@@ -90,7 +90,7 @@ export default function jsAbstractOpsTest() {
      * cpp/javascriptapi/jsabstractops/napicoercetonumber.cpp
      * pages/javascript/jsabstractops/napicoercetonumber.ets
      */
-    it('napiCoerceToNumber', 0, () => {
+    it('napiCoerceToNumberTest', 0, () => {
       hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToNumber begin');
 
       // Test coercing string/boolean/null/undefined values to number
@@ -136,6 +136,78 @@ export default function jsAbstractOpsTest() {
       expect(testNull2NumberResult).assertEqual(0);
       expect(testUndef2NumberResult).assertNaN();
       hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToNumber  end');
+    })
+
+    /**
+     * cpp/javascriptapi/jsabstractops/napicoercetoobject.cpp
+     * pages/javascript/jsabstractops/napicoercetoobject.ets
+     */
+    it('napiCoerceToObjectTest', 0, () => {
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToObject begin');
+
+      // Test coercing boolean/number/string/null/undefined values to object
+      const testBool: boolean = true;
+      const testNum: number = -123.456;
+      const testStr: string = 'test'
+      const testNull: null = null;
+      const testUndef: undefined = undefined;
+      const testBool2ObjResult = testNapi.testNapiCoerceToObject(testBool);
+      const testNum2ObjResult = testNapi.testNapiCoerceToObject(testNum);
+      const testStr2ObjResult = testNapi.testNapiCoerceToObject(testStr);
+      const testNull2ObjResult = testNapi.testNapiCoerceToObject(testNull);
+      const testUndef2ObjResult = testNapi.testNapiCoerceToObject(testUndef);
+
+      // Print the results
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_object(${testBool}) = ${testBool2ObjResult}`);
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_object(${testNum}) = ${testNum2ObjResult}`);
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_object(${testStr}) = ${testStr2ObjResult}`);
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_object(${testNull}) = ${testNull2ObjResult}`);
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_object(${testUndef}) = ${testUndef2ObjResult}`);
+
+      // Define assertion methods for type checking
+      expect(typeof testBool2ObjResult).assertEqual('object');
+      expect(typeof testNum2ObjResult).assertEqual('object');
+      expect(typeof testStr2ObjResult).assertEqual('object');
+      expect(typeof testNull2ObjResult).assertEqual('undefined');
+      expect(typeof testUndef2ObjResult).assertEqual('undefined');
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToObject  end');
+    })
+
+    /**
+     * cpp/javascriptapi/jsabstractops/napicoercetostring.cpp
+     * pages/javascript/jsabstractops/napicoercetostring.ets
+     */
+    it('napiCoerceToStringTest', 0, () => {
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToString begin');
+
+      // Test coercing boolean/number/string/null/undefined values to string
+      const testBool: boolean = true;
+      const testNum: number = -123.456;
+      const testNull: null = null;
+      const testUndef: undefined = undefined;
+      const testBool2StrResult = testNapi.testNapiCoerceToString(testBool);
+      const testNum2StrResult = testNapi.testNapiCoerceToString(testNum);
+      const testNull2StrResult = testNapi.testNapiCoerceToString(testNull);
+      const testUndef2StrResult = testNapi.testNapiCoerceToString(testUndef);
+
+      // Print the results
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_string(${testBool}) = ${testBool2StrResult}`);
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_string(${testNum}) = ${testNum2StrResult}`);
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_string(${testNull}) = ${testNull2StrResult}`);
+      hilog.info(0x0000, 'testTag', `napi_coerce_to_string(${testUndef}) = ${testUndef2StrResult}`);
+
+      // Define assertion methods for type checking
+      expect(testBool2StrResult).assertInstanceOf('String');
+      expect(testNum2StrResult).assertInstanceOf('String');
+      expect(testNull2StrResult).assertInstanceOf('String');
+      expect(testUndef2StrResult).assertInstanceOf('String');
+
+      // Define assertion methods for value checking
+      expect(testBool2StrResult).assertEqual('true');
+      expect(testNum2StrResult).assertEqual('-123.456');
+      expect(testNull2StrResult).assertEqual('null');
+      expect(testUndef2StrResult).assertEqual('undefined');
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToString  end');
     })
   })
 }

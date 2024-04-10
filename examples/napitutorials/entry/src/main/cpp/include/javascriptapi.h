@@ -34,7 +34,9 @@ napi_value testNapiDeleteProperty(napi_env env, napi_callback_info info);
 
 napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info);
 napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info);
+napi_value testNapiCoerceToObject(napi_env env, napi_callback_info info);
+napi_value testNapiCoerceToString(napi_env env, napi_callback_info info);
 
-napi_value jsAbstractOpsInit(napi_env env, napi_value exports);
+void jsAbstractOpsInit(napi_property_descriptor **origDescPtr, size_t *len);
 
 #endif //NAPITUTORIALS_JAVASCRIPTAPI_H
