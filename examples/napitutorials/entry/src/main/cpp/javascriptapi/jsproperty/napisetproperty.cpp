@@ -20,10 +20,12 @@ static const char *TAG = "[javascriptapi_property]";
 napi_value testNapiSetProperty(napi_env env, napi_callback_info info)
 {
     // pages/javascript/jsproperties/napisetproperty
-    size_t argc = PARAM1;
-    napi_value argv[PARAM1];
+    size_t argc = PARAM3;
+    napi_value argv[PARAM3];
     napi_status status;
     napi_value obj;
+    napi_value propName;
+    napi_value propValue;
     const napi_extended_error_info *extended_error_info;
 
     // 解析传入的参数
@@ -34,35 +36,34 @@ napi_value testNapiSetProperty(napi_env env, napi_callback_info info)
     }
 
     // 检查参数数量
-    if (argc < PARAM1) {
-        napi_throw_error(env, NULL, "Expected 1 arguments");
+    if (argc < PARAM3) {
+        napi_throw_error(env, NULL, "Expected 3 arguments");
         return NULL;
     }
+    obj = argv[PARAM0];
+    propName = argv[PARAM1];
+    propValue = argv[PARAM2];
 
-    obj = argv[0];
+    napi_valuetype valuetype0;
 
-    // 创建一个新的JavaScript字符串作为属性名
-    napi_value prop_name;
-    status = napi_create_string_utf8(env, "key", NAPI_AUTO_LENGTH, &prop_name);
+    // 确认第一个参数是个对象
+    status = napi_typeof(env, obj, &valuetype0);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "create string utf8", TAG);
+        getErrMsg(status, env, extended_error_info, "get obj type", TAG);
         return NULL;
     }
-
-    // 创建一个新的JavaScript字符串作为属性值
-    napi_value prop_value;
-    status = napi_create_string_utf8(env, "value", NAPI_AUTO_LENGTH, &prop_value);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "create string utf8", TAG);
+    if (valuetype0 != napi_object) {
+        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
         return NULL;
     }
-
+    
     // 设置对象的属性
-    status = napi_set_property(env, obj, prop_name, prop_value);
+    status = napi_set_property(env, obj, propName, propValue);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "set property", TAG);
         return NULL;
     }
-    // 可以返回新设置的属性值或任何其它值
-    return prop_value;
+
+    // 可以返回新设置对象
+    return obj;
 }

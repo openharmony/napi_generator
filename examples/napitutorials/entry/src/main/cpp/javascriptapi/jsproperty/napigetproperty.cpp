@@ -17,13 +17,41 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
+napi_value callFunctionIfTypeIsFunction(napi_env &env, napi_value &obj, napi_value &propValue)
+{
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    napi_valuetype valuetype;
+
+    status = napi_typeof(env, propValue, &valuetype);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get type", TAG);
+        return NULL;
+    }
+
+    // propValue 是一个函数，我们可以尝试调用它
+    if (valuetype == napi_function) {
+        napi_value result;
+        status = napi_call_function(env, obj, propValue, 0, NULL, &result);
+        if (status != napi_ok) {
+            getErrMsg(status, env, extended_error_info, "call function", TAG);
+            return NULL;
+        }
+        // 函数被调用，其结果存储在 result 中,返回函数调用结果
+        return result;
+    }
+
+    return propValue;
+}
+
 napi_value testNapiGetProperty(napi_env env, napi_callback_info info)
 {
     // pages/javascript/jsproperties/napigetproperty
-    size_t argc = PARAM1;
-    napi_value argv[PARAM1];
+    size_t argc = PARAM2;
+    napi_value argv[PARAM2];
     napi_status status;
     napi_value obj;
+    napi_value propName;
     const napi_extended_error_info *extended_error_info;
 
     // 解析传入的参数
@@ -34,28 +62,40 @@ napi_value testNapiGetProperty(napi_env env, napi_callback_info info)
     }
 
     // 检查参数数量
-    if (argc < PARAM1) {
-        napi_throw_error(env, NULL, "Expected 1 arguments");
+    if (argc < PARAM2) {
+        napi_throw_error(env, NULL, "Expected 2 arguments");
         return NULL;
     }
-    obj = argv[0];
+    obj = argv[PARAM0];
+    propName = argv[PARAM1];
 
-    // 创建一个 JavaScript 字符串作为要读取的属性名
-    napi_value prop_key;
-    status = napi_create_string_utf8(env, "key", NAPI_AUTO_LENGTH, &prop_key);
+    napi_valuetype valuetype0;
+
+    // 确认第一个参数是个对象
+    status = napi_typeof(env, obj, &valuetype0);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "create string utf8", TAG);
+        getErrMsg(status, env, extended_error_info, "get obj type", TAG);
         return NULL;
     }
-    
+    if (valuetype0 != napi_object) {
+        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
+        return NULL;
+    }
+
     // 读取属性
-    napi_value prop_value;
-    status = napi_get_property(env, obj, prop_key, &prop_value);
+    napi_value propValue;
+    status = napi_get_property(env, obj, propName, &propValue);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get property", TAG);
         return NULL;
     }
-    
+
+    // 检查 propValue是否是一个函数
+    napi_value result = callFunctionIfTypeIsFunction(env, obj, propValue);
+    if (result != NULL) {
+        return result;
+    }
+
     // 返回属性值
-    return prop_value;
+    return propValue;
 }
