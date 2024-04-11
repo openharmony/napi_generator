@@ -16,7 +16,7 @@
 #include "common.h"
 #include "javascriptapi.h"
 
-napi_value jsValuesInit(napi_env env, napi_value exports) 
+napi_value jsValuesInit(napi_env env, napi_value exports)
 {
     napi_property_descriptor desc[] = {
         {"testNapiCreateInt32", nullptr, testNapiCreateInt32, nullptr, nullptr, nullptr, napi_default, nullptr},

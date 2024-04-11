@@ -19,7 +19,7 @@
 
 static const char *TAG = "[javascriptapi_values";
 
-napi_value testNapiCreateUInt32(napi_env env, napi_callback_info info) 
+napi_value testNapiCreateUInt32(napi_env env, napi_callback_info info)
 {
     // pages/javascript/jsvalues/napicreateuint32
     // 获取参数数量
