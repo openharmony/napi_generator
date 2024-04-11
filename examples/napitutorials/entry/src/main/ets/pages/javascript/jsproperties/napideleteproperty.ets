@@ -22,6 +22,19 @@ import hilog from '@ohos.hilog';
 
 const TAG: string = 'napi_delete_property';
 
+interface myObjVal {
+  key: string
+}
+
+interface myObj {
+  key1: string;
+  true: number;
+  key3: boolean;
+  key4: Array<string>;
+  key5: Function;
+  key6: myObjVal;
+}
+
 @Entry
 @Component
 struct napiGetPropertyNames {
@@ -31,12 +44,12 @@ struct napiGetPropertyNames {
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
   @State testcont: string = ' // 测试 N-API napi_delete_property \n'
-    + 'let obj = {key1: "value",true: 1,0: false,key4: ["a", "b", "c"],key5: function () { return "function" },key6: {key: "value"}} \n'
+    + 'let obj = {key1: "value",true: 1,key3: false,key4: ["a", "b", "c"],key5: function () { return "function" },key6: {key: "value"}} \n'
     + ' const myData = testNapi.testNapiDeleteProperty(obj, "key1"); \n'
     + ' console.log(myData); // 输出自定义数据 \n'
     + ' const myData2 = testNapi.testNapiDeleteProperty(obj, true); \n'
     + ' console.log(myData2); // 输出自定义数据 \n'
-    + ' const myData3 = testNapi.testNapiDeleteProperty(obj, 0); \n'
+    + ' const myData3 = testNapi.testNapiDeleteProperty(obj, "key3"); \n'
     + ' console.log(myData3); // 输出自定义数据 \n'
     + ' const myData4 = testNapi.testNapiDeleteProperty(obj, "key4"); \n'
     + ' console.log(myData4); // 输出自定义数据 \n'
@@ -93,19 +106,21 @@ struct napiGetPropertyNames {
             .margin({ left: 24 })
             .id('napi_delete_property')
             .onClick(() => {
-              let obj = {
+              let obj: myObj = {
                 key1: "value",
                 true: 1,
-                0: false,
+                key3: false,
                 key4: ["a", "b", "c"],
-                key5: function () { return "function" },
+                key5: () => {
+                  return "function";
+                },
                 key6: {key: "value"}
               }
               let ret = testNapi.testNapiDeleteProperty(obj, "key1");
               this.testcont = this.testcont.replace('log(myData)', 'log(## '+JSON.stringify(ret)+' ##)');
               let ret2 = testNapi.testNapiDeleteProperty(obj, true);
               this.testcont = this.testcont.replace('log(myData2)', 'log(## '+JSON.stringify(ret2)+' ##)');
-              let ret3 = testNapi.testNapiDeleteProperty(obj, 0);
+              let ret3 = testNapi.testNapiDeleteProperty(obj, "key3");
               this.testcont = this.testcont.replace('log(myData3)', 'log(## '+JSON.stringify(ret3)+' ##)');
               let ret4 = testNapi.testNapiDeleteProperty(obj, "key4");
               this.testcont = this.testcont.replace('log(myData4)', 'log(## '+JSON.stringify(ret4)+' ##)');

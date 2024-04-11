@@ -22,6 +22,19 @@ import hilog from '@ohos.hilog';
 
 const TAG: string = 'napi_get_property';
 
+interface myObjVal {
+  key: string
+}
+
+interface myObj {
+  key1: string;
+  true: number;
+  key3: boolean;
+  key4: Array<string>;
+  key5: Function;
+  key6: myObjVal;
+}
+
 @Entry
 @Component
 struct napiGetPropertyNames {
@@ -31,13 +44,13 @@ struct napiGetPropertyNames {
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
   @State testcont: string = ' // 测试 N-API napi_get_property \n'
-    + 'let obj = {key1: "value",true: 1,0: false,key4: ["a", "b", "c"],key5: function () { return "function" },key6: {key: "value"}} \n'
+    + 'let obj = {key1: "value",true: 1,key3: false,key4: ["a", "b", "c"],key5: function () { return "function" },key6: {key: "value"}} \n'
     + '  const myData = testNapi.testNapiGetProperty(obj, "key1"); \n'
     + ' // 使用获取的自定义数据 \n'
     + ' console.log(myData); // 输出自定义数据 \n'
     + ' const myData2 = testNapi.testNapiGetProperty(obj, true); \n'
     + ' console.log(myData2); // 输出自定义数据 \n'
-    + ' const myData3 = testNapi.testNapiGetProperty(obj, 0); \n'
+    + ' const myData3 = testNapi.testNapiGetProperty(obj, key3); \n'
     + ' console.log(myData3); // 输出自定义数据 \n'
     + ' const myData4 = testNapi.testNapiGetProperty(obj, "key4"); \n'
     + ' console.log(myData4); // 输出自定义数据 \n'
@@ -95,19 +108,21 @@ struct napiGetPropertyNames {
             .margin({ left: 24 })
             .id('napi_get_property')
             .onClick(() => {
-              let obj = {
+              let obj: myObj = {
                 key1: "value",
                 true: 1,
-                0: false,
+                key3: false,
                 key4: ["a", "b", "c"],
-                key5: function () { return "function" },
+                key5: () => {
+                  return "function";
+                },
                 key6: {key: "value"}
               }
               let ret = testNapi.testNapiGetProperty(obj, "key1");
               this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret+' ##)');
               let ret2 = testNapi.testNapiGetProperty(obj, true);
               this.testcont = this.testcont.replace('log(myData2)', 'log(## '+ret2+' ##)');
-              let ret3 = testNapi.testNapiGetProperty(obj, 0);
+              let ret3 = testNapi.testNapiGetProperty(obj, "key3");
               this.testcont = this.testcont.replace('log(myData3)', 'log(## '+ret3+' ##)');
               let ret4 = testNapi.testNapiGetProperty(obj, "key4");
               this.testcont = this.testcont.replace('log(myData4)', 'log(## '+ret4+' ##)');

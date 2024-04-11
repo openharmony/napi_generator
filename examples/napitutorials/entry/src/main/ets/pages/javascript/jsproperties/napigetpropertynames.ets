@@ -22,6 +22,14 @@ import hilog from '@ohos.hilog';
 
 const TAG: string = 'napi_get_property_names';
 
+interface myObj {
+  key1: string;
+  key2: number;
+  key3: boolean;
+  key4: Array<string>;
+  key5: Function;
+}
+
 @Entry
 @Component
 struct napiGetPropertyNames {
@@ -85,12 +93,14 @@ struct napiGetPropertyNames {
             .margin({ left: 24 })
             .id('napi_get_property_names')
             .onClick(() => {
-              let obj = {
+              let obj: myObj = {
                 key1: "value",
                 key2: 1,
                 key3: false,
                 key4: ["a", "b", "c"],
-                key5: function () { console.info("This is a function") }
+                key5: () => {
+                  console.info("This is a function");
+                }
               }
               let ret = testNapi.testNapiGetPropertyNames(obj);
               this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret+' ##)');
