@@ -46,6 +46,7 @@ export const testNapiCoerceToBool: (a: any) => boolean;
 export const testNapiCoerceToNumber: (a: any) => number;
 export const testNapiCoerceToObject: (a: any) => object;
 export const testNapiCoerceToString: (a: any) => string;
+export const testNapiTypeof: (a: any) => string;
 
 /* work_with_javascript_values */
 export const testNapiCreateInt32: (number) => number;
