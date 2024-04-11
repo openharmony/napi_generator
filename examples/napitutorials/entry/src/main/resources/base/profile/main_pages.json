@@ -75,6 +75,7 @@
     "pages/ncpp/ffmpegfuncs/ffmpegfuncs",
     "pages/ncpp/opencvfuncs/opencvfuncs",
     "pages/javascript/jsabstractops/napicoercetoobject",
-    "pages/javascript/jsabstractops/napicoercetostring"
+    "pages/javascript/jsabstractops/napicoercetostring",
+    "pages/javascript/jsabstractops/napitypeof"
   ]
 }
