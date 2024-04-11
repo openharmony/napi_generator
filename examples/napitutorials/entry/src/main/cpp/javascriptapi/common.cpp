@@ -32,7 +32,8 @@ void getErrMsg(napi_status &status, napi_env &env, const napi_extended_error_inf
     }
 }
 
-napi_status napiValueType2Str(const napi_env &env, const napi_valuetype type, napi_value *result) {
+napi_status napiValueType2Str(const napi_env &env, const napi_valuetype type, napi_value *result)
+{
     const char *typeStr = "";
     napi_status status;
     // napi_valuetype -> const char *
