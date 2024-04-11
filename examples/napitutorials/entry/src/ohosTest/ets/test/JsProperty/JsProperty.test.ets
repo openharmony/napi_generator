@@ -109,7 +109,7 @@ export default function abilityTestJsProperty() {
 
       hilog.info(0x0000, 'testTag', `napi_set_property(obj.key1) = ${JSON.stringify(result)}`);
       hilog.info(0x0000, 'testTag', `napi_set_property(obj.0) = ${JSON.stringify(result2)}`);
-      hilog.info(0x0000, 'testTag', `napi_set_property(obj.true) = ${JSON.stringify(result3}`);
+      hilog.info(0x0000, 'testTag', `napi_set_property(obj.true) = ${JSON.stringify(result3)}`);
       hilog.info(0x0000, 'testTag', `napi_set_property(obj.key4) = ${JSON.stringify(result4)}`);
       hilog.info(0x0000, 'testTag', `napi_set_property(obj.key5) = ${JSON.stringify(typeof result5.key5)}`);
       hilog.info(0x0000, 'testTag', `napi_set_property(obj.key6) = ${JSON.stringify(result6)}`);
@@ -179,7 +179,7 @@ export default function abilityTestJsProperty() {
       expect(JSON.stringify(result2)).assertContain('{"0":false,"key4":["a","b","c"],"key6":{"key":"value"}}');
 
       let result3 = testNapi.testNapiDeleteProperty(obj, 0);
-      hilog.info(0x0000, 'testTag', `napi_delete_property(obj.true) = ${JSON.stringify(result3}`);
+      hilog.info(0x0000, 'testTag', `napi_delete_property(obj.true) = ${JSON.stringify(result3)}`);
       expect(JSON.stringify(result3)).assertContain('{"key4":["a","b","c"],"key6":{"key":"value"}}');
 
       let result4 = testNapi.testNapiDeleteProperty(obj, "key4");
@@ -216,7 +216,7 @@ export default function abilityTestJsProperty() {
 
       hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key1) = ${JSON.stringify(result)}`);
       hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key2) = ${JSON.stringify(result2)}`);
-      hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key3) = ${JSON.stringify(result3}`);
+      hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key3) = ${JSON.stringify(result3)}`);
       hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key4) = ${JSON.stringify(result4)}`);
       hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key5) = ${JSON.stringify(typeof result5.key5)}`);
       hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key6) = ${JSON.stringify(result6)}`);
@@ -299,5 +299,85 @@ export default function abilityTestJsProperty() {
       expect(result6.toString()).assertContain('true');
       expect(result7.toString()).assertContain('false');
     })
+
+    it('testNapiSetElement', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiSetElement begin');
+      let obj1 = [1,2,3];
+      let result = testNapi.testNapiSetElement(obj1, 1, 5);
+      let obj2 = ["a", "b", "c"];
+      let result2 = testNapi.testNapiSetElement(obj2, 4, "d");
+      let obj3 = [true, false];
+      let result3 = testNapi.testNapiSetElement(obj3, 2, true);
+      let obj4 = [0, false, "zz"];
+      let result4 = testNapi.testNapiSetElement(obj4, 1, "kk");
+
+      hilog.info(0x0000, 'testTag', `napi_set_element(obj, 1, 5) = ${JSON.stringify(result)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_element(obj, 4, "d") = ${JSON.stringify(result2)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_element(obj, 2, true) = ${JSON.stringify(result3)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_element(obj, 1, "kk") = ${JSON.stringify(result4)}`);
+
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      expect(result.toString()).assertContain('1,5,3');
+      expect(result2.toString()).assertContain('a,b,c,,d');
+      expect(result3.toString()).assertContain('true,false,true');
+      expect(result4.toString()).assertContain('0,kk,zz');
+    })
+
+    it('testNapiGetElement', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiGetElement begin');
+      let obj1 = [1,2,3];
+      let result = testNapi.testNapiGetElement(obj1, 1);
+      let obj2 = ["a", "b", "c"];
+      let result2 = testNapi.testNapiGetElement(obj2, 2);
+      let obj3 = [true, false];
+      let result3 = testNapi.testNapiGetElement(obj3, 1);
+      let obj4 = [0, false, "zz"];
+      let result4 = testNapi.testNapiGetElement(obj4, 2);
+
+      hilog.info(0x0000, 'testTag', `napi_get_element(obj, 1) = ${result}`);
+      hilog.info(0x0000, 'testTag', `napi_get_element(obj, 2) = ${result2}`);
+      hilog.info(0x0000, 'testTag', `napi_get_element(obj, 1) = ${result3}`);
+      hilog.info(0x0000, 'testTag', `napi_get_element(obj, 2) = ${result4}`);
+
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      expect(result.toString()).assertContain('2');
+      expect(result2.toString()).assertContain('c');
+      expect(result3.toString()).assertContain('false');
+      expect(result4.toString()).assertContain('zz');
+    })
+
+    it('testNapiHasElement', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiHasElement begin');
+      let obj = [0, false, "zz"];
+      let result = testNapi.testNapiHasElement(obj, 2);
+      let result2 = testNapi.testNapiHasElement(obj, 4);
+
+      hilog.info(0x0000, 'testTag', `napi_has_element(obj, 2) = ${result}`);
+      hilog.info(0x0000, 'testTag', `napi_has_element(obj, 4) = ${result2}`);
+
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      expect(result.toString()).assertContain('true');
+      expect(result2.toString()).assertContain('false');
+    })
+
+    it('testNapiDeleteElement', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiDeleteElement begin');
+      let obj = [0, false, "zz"];
+      let result = testNapi.testNapiDeleteElement(obj, 1);
+      hilog.info(0x0000, 'testTag', `napi_delete_element(obj, 1) = ${JSON.stringify(result)}`);
+      expect(result.toString()).assertContain('0,,zz');
+      let result2 = testNapi.testNapiDeleteElement(obj, 0);
+      hilog.info(0x0000, 'testTag', `napi_delete_element(obj, 0) = ${JSON.stringify(result2)}`);
+      expect(result2.toString()).assertContain(',,zz');
+      let result3 = testNapi.testNapiDeleteElement(obj, 2);
+      hilog.info(0x0000, 'testTag', `napi_delete_element(obj, 2) = ${JSON.stringify(result3)}`);
+      expect(result3.toString()).assertContain(',,');
+    })
+
+
   })
 }

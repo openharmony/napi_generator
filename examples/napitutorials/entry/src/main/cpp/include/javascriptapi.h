@@ -35,6 +35,11 @@ bool validateObjectProperty(napi_env &env, napi_value &obj, napi_value &propName
 napi_value testNapiSetNamedProperty(napi_env env, napi_callback_info info);
 napi_value testNapiGetNamedProperty(napi_env env, napi_callback_info info);
 napi_value testNapiHasNamedProperty(napi_env env, napi_callback_info info);
+bool validateArrayObjProperty(napi_env &env, napi_value &obj, napi_value &propName, const char *tag);
+napi_value testNapiSetElement(napi_env env, napi_callback_info info);
+napi_value testNapiGetElement(napi_env env, napi_callback_info info);
+napi_value testNapiHasElement(napi_env env, napi_callback_info info);
+napi_value testNapiDeleteElement(napi_env env, napi_callback_info info);
 
 napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info);
 napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info);
