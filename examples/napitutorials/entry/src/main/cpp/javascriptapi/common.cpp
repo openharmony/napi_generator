@@ -63,3 +63,48 @@ bool validateObjectProperty(napi_env &env, napi_value &obj, napi_value &propName
     }
     return true;
 }
+
+napi_status napiValueType2Str(const napi_env &env, const napi_valuetype type, napi_value *result)
+{
+    const char *typeStr = "";
+    napi_status status;
+    // napi_valuetype -> const char *
+    switch (type) {
+        case napi_undefined:
+            typeStr = "undefined";
+            break;
+        case napi_null:
+            typeStr = "null";
+            break;
+        case napi_boolean:
+            typeStr = "boolean";
+            break;
+        case napi_number:
+            typeStr = "number";
+            break;
+        case napi_string:
+            typeStr = "string";
+            break;
+        case napi_symbol:
+            typeStr = "symbol";
+            break;
+        case napi_object:
+            typeStr = "object";
+            break;
+        case napi_function:
+            typeStr = "function";
+            break;
+        case napi_external:
+            typeStr = "external";
+            break;
+        case napi_bigint:
+            typeStr = "bigint";
+            break;
+        default:
+            typeStr = "unknown";
+            break;
+    }
+    // const char * -> napi_value
+    status = napi_create_string_utf8(env, typeStr, NAPI_AUTO_LENGTH, result);
+    return status;
+}
