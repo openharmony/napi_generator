@@ -209,5 +209,63 @@ export default function jsAbstractOpsTest() {
       expect(testUndef2StrResult).assertEqual('undefined');
       hilog.info(0x0000, 'testTag', '%{public}s', 'it napiCoerceToString  end');
     })
+
+    /**
+     * cpp/javascriptapi/jsabstractops/napitypeof.cpp
+     * pages/javascript/jsabstractops/napitypeof.ets
+     */
+    it('napiTypeof', 0, () => {
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiTypeof begin');
+
+      // Test querying types
+      const testUndef: undefined = undefined;
+      const testNull: null = null;
+      const testBool: boolean = true;
+      const testNum: number = -123.456;
+      const testStr: string = 'test';
+      const testSym: symbol = Symbol();
+      const testObj = {};
+      const testFunc = () => {
+      };
+      const testUndefResult = testNapi.testNapiTypeof(testUndef);
+      const testNullResult = testNapi.testNapiTypeof(testNull);
+      const testBoolResult = testNapi.testNapiTypeof(testBool);
+      const testNumResult = testNapi.testNapiTypeof(testNum);
+      const testStrResult = testNapi.testNapiTypeof(testStr);
+      const testSymResult = testNapi.testNapiTypeof(testSym);
+      const testObjResult = testNapi.testNapiTypeof(testObj);
+      const testFuncResult = testNapi.testNapiTypeof(testFunc);
+
+      // Print the results
+      hilog.info(0x0000, 'testTag', `napi_typeof(${testUndef}) = ${testUndefResult}`);
+      hilog.info(0x0000, 'testTag', `napi_typeof(${testNull}) = ${testNullResult}`);
+      hilog.info(0x0000, 'testTag', `napi_typeof(${testBool}) = ${testBoolResult}`);
+      hilog.info(0x0000, 'testTag', `napi_typeof(${testNum}) = ${testNumResult}`);
+      hilog.info(0x0000, 'testTag', `napi_typeof(${testStr}) = ${testStrResult}`);
+      hilog.info(0x0000, 'testTag', `napi_typeof(${String(testSym)}) = ${testSymResult}`);
+      hilog.info(0x0000, 'testTag', `napi_typeof(${testObj}) = ${testObjResult}`);
+      hilog.info(0x0000, 'testTag', `napi_typeof(${testFunc}) = ${testFuncResult}`);
+
+      // Define assertion methods for type checking
+      expect(testUndefResult).assertInstanceOf('String');
+      expect(testNullResult).assertInstanceOf('String');
+      expect(testBoolResult).assertInstanceOf('String');
+      expect(testNumResult).assertInstanceOf('String');
+      expect(testStrResult).assertInstanceOf('String');
+      expect(testSymResult).assertInstanceOf('String');
+      expect(testObjResult).assertInstanceOf('String');
+      expect(testFuncResult).assertInstanceOf('String');
+
+      // Define assertion methods for value checking
+      expect(testUndefResult).assertEqual('undefined');
+      expect(testNullResult).assertEqual('null');
+      expect(testBoolResult).assertEqual('boolean');
+      expect(testNumResult).assertEqual('number');
+      expect(testStrResult).assertEqual('string');
+      expect(testSymResult).assertEqual('symbol');
+      expect(testObjResult).assertEqual('object');
+      expect(testFuncResult).assertEqual('function');
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiTypeof  end');
+    })
   })
 }
