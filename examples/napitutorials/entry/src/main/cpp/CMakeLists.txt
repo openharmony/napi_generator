@@ -39,6 +39,7 @@ add_library(entry SHARED
     javascriptapi/jsabstractops/napicoercetonumber.cpp
     javascriptapi/jsabstractops/napicoercetoobject.cpp
     javascriptapi/jsabstractops/napicoercetostring.cpp
+    javascriptapi/jsabstractops/napitypeof.cpp
     javascriptapi/jsabstractops/init.cpp
     ncpp/ffmpegcase/render/egl_core.cpp
     ncpp/ffmpegcase/render/plugin_render.cpp
