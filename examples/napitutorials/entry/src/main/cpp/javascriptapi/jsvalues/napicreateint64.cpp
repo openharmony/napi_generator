@@ -25,7 +25,7 @@ napi_value testNapiCreateInt64(napi_env env, napi_callback_info info)
     size_t argc = 1;
     // 准备接收参数的变量
     napi_value argv[1];
-    int32_t intValue;
+    int64_t intValue;
     napi_value result;
     napi_status status;
     const napi_extended_error_info *extended_error_info;

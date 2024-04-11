@@ -35,6 +35,7 @@ add_library(entry SHARED
     javascriptapi/jsabstractops/napicoercetonumber.cpp
     javascriptapi/jsabstractops/napicoercetoobject.cpp
     javascriptapi/jsabstractops/napicoercetostring.cpp
+    javascriptapi/jsabstractops/napitypeof.cpp
     javascriptapi/jsabstractops/init.cpp
     javascriptapi/jsvalues/jsValuesInit.cpp
     javascriptapi/jsvalues/napicreateint32.cpp
