@@ -49,6 +49,22 @@
       "value": "ArkUI各组件、通用属性、通用方法等分类及描述应用"
     },
     {
+      "name": "node_api",
+      "value": "Node 接口"
+    },
+    {
+      "name": "javascript_api",
+      "value": "Javascript 接口"
+    },
+    {
+      "name": "async_mgr",
+      "value": "异步管理"
+    },
+    {
+      "name": "other_mgr",
+      "value": "其他管理"
+    },
+    {
       "name": "napi_machine",
       "value": "机器学习"
     },
@@ -256,8 +272,20 @@
       "value": "Interpolation Calculation 插值计算"
     },
     {
+      "name": "thirdparty_management",
+      "value": "C/C++ 三方库"
+    },
+    {
       "name": "cjson_management",
       "value": "CJSON 测试集"
+    },
+    {
+      "name": "opencv_management",
+      "value": "OpenCV 测试集"
+    },
+    {
+      "name": "ffmpeg_management",
+      "value": "FFmpeg 测试集"
     },
     {
       "name": "dialog",
@@ -5429,6 +5457,14 @@
       "value": "版本管理"
     },
     {
+      "name": "napi_egl_texture_bmp",
+      "value": "EGL材质渲染"
+    },
+    {
+      "name": "napi_opencv_gray",
+      "value": "灰度化相片"
+    },
+    {
       "name": "napi_get_node_version",
       "value": "获取Node版本"
     },
@@ -5551,6 +5587,18 @@
     {
       "name": "napi_delete_property_description",
       "value": "napi_delete_property 是一个 N-API 函数，用于删除 JavaScript 对象的指定属性。"
+    },
+    {
+      "name": "napi_get_named_property_description",
+      "value": "napi_get_named_property 函数用于从 JavaScript 对象中检索命名属性的值。它允许访问给定对象上与指定属性名称关联的值。"
+    },
+    {
+      "name": "napi_set_named_property_description",
+      "value": "napi_set_named_property 函数用于在 JavaScript 对象上设置一个命名属性。它将给定对象上的指定属性名称与一个值关联起来。该函数允许在运行时动态地添加或修改对象的属性。",
+    },
+    {
+      "name": "napi_has_named_property_description",
+      "value": "napi_has_named_property 函数用于检查 JavaScript 对象是否具有命名属性。它允许确定给定对象是否具有指定的属性名称。"
     }
   ]
 }
