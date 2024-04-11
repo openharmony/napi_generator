@@ -26,6 +26,9 @@ add_library(entry SHARED
     javascriptapi/jsproperty/napisetproperty.cpp
     javascriptapi/jsproperty/napihasproperty.cpp
     javascriptapi/jsproperty/napideleteproperty.cpp
+    javascriptapi/jsproperty/napigetnamedproperty.cpp
+    javascriptapi/jsproperty/napisetnamedproperty.cpp
+    javascriptapi/jsproperty/napihasnamedproperty.cpp
     javascriptapi/jsproperty/jsPropertyInit.cpp
     javascriptapi/common.cpp
     javascriptapi/jsabstractops/napicoercetobool.cpp
