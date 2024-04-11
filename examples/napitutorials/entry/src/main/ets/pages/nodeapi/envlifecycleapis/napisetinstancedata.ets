@@ -93,11 +93,11 @@ struct napisetinstancedata {
               .margin({ left: 24 })
               .id('napi_set_instance_data')
               .onClick(() => {
-                let instanceobj = testNapi.instance;
+                let instanceobj: Object = testNapi.instance;
                 let ret1 = `instance ${instanceobj} `
                 let ret2 = ' ld.lld: error: undefined symbol: napi_set_instance_data '
                 hilog.info(0x0000, 'testTag', ret1);
-                hilog.info(0x0000, 'testTag', `instance ${instanceobj.testint32} `);
+                // hilog.info(0x0000, 'testTag', `instance ${instanceobj.testint32} `);
                 this.testcont = this.testcont.replace('log(instance)', 'log(## '+ret1+' ##)');
                 this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret2+' ##)');
               })
