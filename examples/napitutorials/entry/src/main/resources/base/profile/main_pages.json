@@ -76,5 +76,6 @@
     "pages/javascript/jsvalues/napicreateint32",
     "pages/javascript/jsvalues/napicreateuint32",
     "pages/javascript/jsvalues/napicreateint64"
+    "pages/javascript/jsabstractops/napitypeof"
   ]
 }
