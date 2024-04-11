@@ -24,6 +24,12 @@ napi_value jsPropertyInit(napi_env env, napi_value exports)
         {"testNapiGetProperty", nullptr, testNapiGetProperty, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiHasProperty", nullptr, testNapiHasProperty, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiDeleteProperty", nullptr, testNapiDeleteProperty, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiGetNamedProperty", nullptr, testNapiGetNamedProperty, nullptr, nullptr, nullptr, napi_default,
+         nullptr},
+        {"testNapiSetNamedProperty", nullptr, testNapiSetNamedProperty, nullptr, nullptr, nullptr, napi_default,
+         nullptr},
+        {"testNapiHasNamedProperty", nullptr, testNapiHasNamedProperty, nullptr, nullptr, nullptr, napi_default,
+         nullptr},
     };
     napi_define_properties(env, exports, sizeof(desc) / sizeof(napi_property_descriptor), desc);
     return exports;

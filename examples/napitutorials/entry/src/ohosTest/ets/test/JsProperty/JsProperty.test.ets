@@ -41,7 +41,7 @@ export default function abilityTestJsProperty() {
 
     it('testNapiGetPropertyNames', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiGetPropertyNames begin');
       let obj = {
         key1: "aa",
         key2: 1,
@@ -50,13 +50,14 @@ export default function abilityTestJsProperty() {
         key5: function () { console.info("This is a function") }
       }
       let result = testNapi.testNapiGetPropertyNames(obj);
+      hilog.info(0x0000, 'testTag', `napi_get_property_names(${obj}) = ${result}`);
       // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
       expect(JSON.stringify(result)).assertContain('["key1","key2","key3","key4","key5"]');
     })
 
     it('testNapiGetProperty', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiGetProperty begin');
       let obj = {
         key1: "value",
         true: 1,
@@ -72,6 +73,13 @@ export default function abilityTestJsProperty() {
       let result5 = testNapi.testNapiGetProperty(obj, "key5");
       let result6 = testNapi.testNapiGetProperty(obj, "key6");
 
+      hilog.info(0x0000, 'testTag', `napi_get_property(obj.key1) = ${result}`);
+      hilog.info(0x0000, 'testTag', `napi_get_property(obj.true) = ${result2}`);
+      hilog.info(0x0000, 'testTag', `napi_get_property(obj.0) = ${result3}`);
+      hilog.info(0x0000, 'testTag', `napi_get_property(obj.key4) = ${result4}`);
+      hilog.info(0x0000, 'testTag', `napi_get_property(obj.key5) = ${result5}`);
+      hilog.info(0x0000, 'testTag', `napi_get_property(obj.key6) = ${result6}`);
+
       // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
       expect(JSON.stringify(result)).assertContain('value');
       expect(JSON.stringify(result2)).assertContain('1');
@@ -83,7 +91,7 @@ export default function abilityTestJsProperty() {
 
     it('testNapiSetProperty', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiSetProperty begin');
       let obj1 = {};
       let result = testNapi.testNapiSetProperty(obj1, "key1", "value");
       let obj2 = {};
@@ -98,6 +106,14 @@ export default function abilityTestJsProperty() {
       let obj6 = {};
       let objVal = {key: "value"};
       let result6 = testNapi.testNapiSetProperty(obj6, "key6", objVal);
+
+      hilog.info(0x0000, 'testTag', `napi_set_property(obj.key1) = ${JSON.stringify(result)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_property(obj.0) = ${JSON.stringify(result2)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_property(obj.true) = ${JSON.stringify(result3}`);
+      hilog.info(0x0000, 'testTag', `napi_set_property(obj.key4) = ${JSON.stringify(result4)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_property(obj.key5) = ${JSON.stringify(typeof result5.key5)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_property(obj.key6) = ${JSON.stringify(result6)}`);
+
       // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
       expect(JSON.stringify(result)).assertContain('"key1":"value"');
       expect(JSON.stringify(result2)).assertContain('"0":false');
@@ -109,7 +125,7 @@ export default function abilityTestJsProperty() {
 
     it('testNapiHasProperty', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiHasProperty begin');
       let obj = {
         key1: "value",
         true: 1,
@@ -126,6 +142,13 @@ export default function abilityTestJsProperty() {
       let result6 = testNapi.testNapiHasProperty(obj, "key6");
       let result7 = testNapi.testNapiHasProperty(obj, "key7");
 
+      hilog.info(0x0000, 'testTag', `napi_has_property(obj.key1) = ${result}`);
+      hilog.info(0x0000, 'testTag', `napi_has_property(obj.true) = ${result2}`);
+      hilog.info(0x0000, 'testTag', `napi_has_property(obj.0) = ${result3}`);
+      hilog.info(0x0000, 'testTag', `napi_has_property(obj.key4) = ${result4}`);
+      hilog.info(0x0000, 'testTag', `napi_has_property(obj.key5) = ${result5}`);
+      hilog.info(0x0000, 'testTag', `napi_has_property(obj.key6) = ${result6}`);
+      hilog.info(0x0000, 'testTag', `napi_has_property(obj.key7) = ${result7}`);
       // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
       expect(result.toString()).assertContain('true');
       expect(result2.toString()).assertContain('true');
@@ -138,7 +161,7 @@ export default function abilityTestJsProperty() {
 
     it('testNapiDeleteProperty', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiDeleteProperty begin');
       let obj = {
         key1: "value",
         true: 1,
@@ -148,80 +171,133 @@ export default function abilityTestJsProperty() {
         key6: {key: "value"}
       }
       let result = testNapi.testNapiDeleteProperty(obj, "key1");
-      console.info("testNapiDeletePropertyTest result = " + JSON.stringify(result))
+      hilog.info(0x0000, 'testTag', `napi_delete_property(obj.key1) = ${JSON.stringify(result)}`);
       expect(JSON.stringify(result)).assertContain('{"0":false,"true":1,"key4":["a","b","c"],"key6":{"key":"value"}}');
+
       let result2 = testNapi.testNapiDeleteProperty(obj, true);
+      hilog.info(0x0000, 'testTag', `napi_delete_property(obj.0) = ${JSON.stringify(result2)}`);
       expect(JSON.stringify(result2)).assertContain('{"0":false,"key4":["a","b","c"],"key6":{"key":"value"}}');
+
       let result3 = testNapi.testNapiDeleteProperty(obj, 0);
+      hilog.info(0x0000, 'testTag', `napi_delete_property(obj.true) = ${JSON.stringify(result3}`);
       expect(JSON.stringify(result3)).assertContain('{"key4":["a","b","c"],"key6":{"key":"value"}}');
+
       let result4 = testNapi.testNapiDeleteProperty(obj, "key4");
+      hilog.info(0x0000, 'testTag', `napi_delete_property(obj.key4) = ${JSON.stringify(result4)}`);
       expect(JSON.stringify(result4)).assertContain('{"key6":{"key":"value"}}');
+
       let result5 = testNapi.testNapiDeleteProperty(obj, "key5");
+      hilog.info(0x0000, 'testTag', `napi_delete_property(obj.key5) = ${JSON.stringify(result5)}`);
       expect(JSON.stringify(result5)).assertContain('{"key6":{"key":"value"}}');
+
       let result6 = testNapi.testNapiDeleteProperty(obj, "key6");
+      hilog.info(0x0000, 'testTag', `napi_delete_property(obj.key6) = ${JSON.stringify(result6)}`);
       expect(JSON.stringify(result6)).assertContain('{}');
     })
 
-    // it('testNapiHasOwnProperty', 0, () => {
-    //   // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-    //   hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
-    //   let myObj = {
-    //     ownKey: "value"
-    //   }
-    //   let result = testNapi.testNapiHasOwnProperty(myObj, "ownKey");
-    //   let parentObj = {
-    //     inheritedKey: 'value'
-    //   };
-    //   Object.setPrototypeOf(myObj, parentObj);
-    //   let result2 = testNapi.testNapiHasOwnProperty(myObj, "inheritedKey");
-    //   let result3 = testNapi.testNapiHasOwnProperty(myObj, "noPropName");
-    //   console.info("AbilityJsTest Has inheritedKey (JS):", myObj.hasOwnProperty('inheritedKey'));
-    //   // 预期值为false, 实际为true 暂时找不到原因
-    //   console.info("AbilityJsTest Has inheritedKey result2 :", result2);
-    //   // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
-    //   expect(result.toString()).assertContain('true');
-    //   // expect(result2.toString()).assertContain('false');
-    //   expect(result3.toString()).assertContain('false');
-    // })
-    //
-    // it('testNapiPropertyAttributes', 0, () => {
-    //   // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-    //   hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
-    //   let result = testNapi.testNapiPropertyAttributes();
-    //   // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
-    //   expect(result).assertContain('napi_default');
-    // })
-    //
-    // it('testNapiPropertyDescriptor', 0, () => {
-    //   // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-    //   hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
-    //   let result = testNapi.testNapiPropertyDescriptorFunc();
-    //   let result2 = testNapi.testNapiPropertyDescriptorMyReadOnlyProperty;
-    //   // // @ts-ignore
-    //   // testNapi.testNapiPropertyDescriptorMyProperty = 'newValue';        // 打印：Setter Called
-    //   // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
-    //   expect(result).assertContain('Function Called');
-    //   expect(result2).assertContain('Getter Called');
-    // })
-    //
-    // it('testNapiSetNamedProperty', 0, () => {
-    //   // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-    //   hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
-    //   let result = testNapi.testNapiSetNamedProperty();
-    //   // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
-    //   expect(result).assertContain('Hello World!');
-    // })
-    //
-    // it('testNapiGetNamedProperty', 0, () => {
-    //   // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-    //   hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
-    //   let obj = {
-    //     myProperty: 'value'
-    //   }
-    //   let result = testNapi.testNapiGetNamedProperty(obj, 'myProperty');
-    //   // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
-    //   expect(result).assertContain('value');
-    // })
 
+    it('testNapiSetNamedProperty', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiSetNamedProperty begin');
+      let obj1 = {};
+      let result = testNapi.testNapiSetNamedProperty(obj1, "key1", "value");
+      let obj2 = {};
+      let result2 = testNapi.testNapiSetNamedProperty(obj2, "key2", false);
+      let obj3 = {};
+      let result3 = testNapi.testNapiSetNamedProperty(obj3, "key3", 1);
+      let obj4 = {};
+      let result4 = testNapi.testNapiSetNamedProperty(obj4, "key4", ["a","b","c"]);
+      let obj5 = {};
+      let func = function () {return "this is a function"};
+      let result5 = testNapi.testNapiSetNamedProperty(obj5, "key5", func);
+      let obj6 = {};
+      let objVal = {key: "value"};
+      let result6 = testNapi.testNapiSetNamedProperty(obj6, "key6", objVal);
+
+      hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key1) = ${JSON.stringify(result)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key2) = ${JSON.stringify(result2)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key3) = ${JSON.stringify(result3}`);
+      hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key4) = ${JSON.stringify(result4)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key5) = ${JSON.stringify(typeof result5.key5)}`);
+      hilog.info(0x0000, 'testTag', `napi_set_named_property(obj.key6) = ${JSON.stringify(result6)}`);
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      expect(JSON.stringify(result)).assertContain('"key1":"value"');
+      expect(JSON.stringify(result2)).assertContain('"key2":false');
+      expect(JSON.stringify(result3)).assertContain('"key3":1');
+      expect(JSON.stringify(result4)).assertContain('"key4":["a","b","c"]');
+      expect(JSON.stringify(typeof result5.key5)).assertContain('function');
+      expect(JSON.stringify(result6)).assertContain('"key6":{"key":"value"}');
+    })
+
+    it('testNapiGetNamedProperty', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiGetNamedProperty begin');
+      let obj = {
+        key1: "value",
+        key2: 1,
+        key3: false,
+        key4: ["a", "b", "c"],
+        key5: function () { return "function" },
+        key6: {key: "value"}
+      }
+      let result = testNapi.testNapiGetNamedProperty(obj, "key1");
+      let result2 = testNapi.testNapiGetNamedProperty(obj, "key2");
+      let result3 = testNapi.testNapiGetNamedProperty(obj, "key3");
+      let result4 = testNapi.testNapiGetNamedProperty(obj, "key4");
+      let result5 = testNapi.testNapiGetNamedProperty(obj, "key5");
+      let result6 = testNapi.testNapiGetNamedProperty(obj, "key6");
+
+      hilog.info(0x0000, 'testTag', `napi_get_named_property(obj.key1) = ${result}`);
+      hilog.info(0x0000, 'testTag', `napi_get_named_property(obj.key2) = ${result2}`);
+      hilog.info(0x0000, 'testTag', `napi_get_named_property(obj.key3) = ${result3}`);
+      hilog.info(0x0000, 'testTag', `napi_get_named_property(obj.key4) = ${result4}`);
+      hilog.info(0x0000, 'testTag', `napi_get_named_property(obj.key5) = ${result5}`);
+      hilog.info(0x0000, 'testTag', `napi_get_named_property(obj.key6) = ${result6}`);
+
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      expect(JSON.stringify(result)).assertContain('value');
+      expect(JSON.stringify(result2)).assertContain('1');
+      expect(JSON.stringify(result3)).assertContain('false');
+      expect(JSON.stringify(result4)).assertContain('["a","b","c"]');
+      expect(JSON.stringify(result5)).assertContain('function');
+      expect(JSON.stringify(result6)).assertContain('{"key":"value"}');
+    })
+
+    it('testNapiHasNamedProperty', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiHasNamedProperty begin');
+      let obj = {
+        key1: "value",
+        key2: 1,
+        key3: false,
+        key4: ["a", "b", "c"],
+        key5: function () { return "function" },
+        key6: {key: "value"}
+      }
+      let result = testNapi.testNapiHasNamedProperty(obj, "key1");
+      let result2 = testNapi.testNapiHasNamedProperty(obj, "key2");
+      let result3 = testNapi.testNapiHasNamedProperty(obj, "key3");
+      let result4 = testNapi.testNapiHasNamedProperty(obj, "key4");
+      let result5 = testNapi.testNapiHasNamedProperty(obj, "key5");
+      let result6 = testNapi.testNapiHasNamedProperty(obj, "key6");
+      let result7 = testNapi.testNapiHasNamedProperty(obj, "key7");
+
+      hilog.info(0x0000, 'testTag', `napi_has_named_property(obj.key1) = ${result}`);
+      hilog.info(0x0000, 'testTag', `napi_has_named_property(obj.key2) = ${result2}`);
+      hilog.info(0x0000, 'testTag', `napi_has_named_property(obj.key3) = ${result3}`);
+      hilog.info(0x0000, 'testTag', `napi_has_named_property(obj.key4) = ${result4}`);
+      hilog.info(0x0000, 'testTag', `napi_has_named_property(obj.key5) = ${result5}`);
+      hilog.info(0x0000, 'testTag', `napi_has_named_property(obj.key6) = ${result6}`);
+      hilog.info(0x0000, 'testTag', `napi_has_named_property(obj.key7) = ${result7}`);
+
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      expect(result.toString()).assertContain('true');
+      expect(result2.toString()).assertContain('true');
+      expect(result3.toString()).assertContain('true');
+      expect(result4.toString()).assertContain('true');
+      expect(result5.toString()).assertContain('true');
+      expect(result6.toString()).assertContain('true');
+      expect(result7.toString()).assertContain('false');
+    })
   })
 }

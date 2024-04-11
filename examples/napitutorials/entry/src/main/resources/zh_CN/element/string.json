@@ -5587,6 +5587,18 @@
     {
       "name": "napi_delete_property_description",
       "value": "napi_delete_property 是一个 N-API 函数，用于删除 JavaScript 对象的指定属性。"
+    },
+    {
+      "name": "napi_get_named_property_description",
+      "value": "napi_get_named_property 函数用于从 JavaScript 对象中检索命名属性的值。它允许访问给定对象上与指定属性名称关联的值。"
+    },
+    {
+      "name": "napi_set_named_property_description",
+      "value": "napi_set_named_property 函数用于在 JavaScript 对象上设置一个命名属性。它将给定对象上的指定属性名称与一个值关联起来。该函数允许在运行时动态地添加或修改对象的属性。",
+    },
+    {
+      "name": "napi_has_named_property_description",
+      "value": "napi_has_named_property 函数用于检查 JavaScript 对象是否具有命名属性。它允许确定给定对象是否具有指定的属性名称。"
     }
   ]
 }
