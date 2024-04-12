@@ -33,13 +33,17 @@ export const instance;
 
 export const cjson_version: () => string;
 export const testNapiGetPropertyNames: (a: object) => string;
-export const testNapiSetProperty: (a: object, b: any, c: any) => string;
+export const testNapiSetProperty: (a: object, b: any, c: any) => object;
 export const testNapiGetProperty: (a: object, b: any) => string;
 export const testNapiHasProperty: (a: object, b: any) => boolean;
 export const testNapiDeleteProperty: (a: object, b: any) => string;
 export const testNapiGetNamedProperty: (a: object, b: string) => string;
-export const testNapiSetNamedProperty: (a: object, b: string, c: any) => string;
+export const testNapiSetNamedProperty: (a: object, b: string, c: any) => object;
 export const testNapiHasNamedProperty: (a: object, b: string) => string;
+export const testNapiSetElement: (a: object, b: number, c: any) => string;
+export const testNapiGetElement: (a: object, b: number) => string;
+export const testNapiHasElement: (a: object, b: number) => string;
+export const testNapiDeleteElement: (a: object, b: number) => string;
 
 /* work_with_javascript_values_and_abstract_operations */
 export const testNapiCoerceToBool: (a: any) => boolean;

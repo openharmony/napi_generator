@@ -22,6 +22,19 @@ import hilog from '@ohos.hilog';
 
 const TAG: string = 'napi_set_named_property';
 
+interface myObjVal {
+  key: string
+}
+
+interface myObj {
+  key1?: string;
+  key2?: number;
+  key3?: boolean;
+  key4?: Array<string>;
+  key5?: Function;
+  key6?: myObjVal;
+}
+
 @Entry
 @Component
 struct napiGetPropertyNames {
@@ -99,7 +112,7 @@ struct napiGetPropertyNames {
               .margin({ left: 24 })
               .id('napi_set_named_property')
               .onClick(() => {
-                let obj = {};
+                let obj: myObj = {};
                 let ret = testNapi.testNapiSetNamedProperty(obj, "key1", "value");
                 this.testcont = this.testcont.replace('log(myData)', 'log(## ' + JSON.stringify(ret) + ' ##)');
                 let ret2 = testNapi.testNapiSetNamedProperty(obj, "key2", false);
@@ -108,12 +121,12 @@ struct napiGetPropertyNames {
                 this.testcont = this.testcont.replace('log(myData3)', 'log(## ' + JSON.stringify(ret3) + ' ##)');
                 let ret4 = testNapi.testNapiSetNamedProperty(obj, "key4", ["a", "b", "c"]);
                 this.testcont = this.testcont.replace('log(myData4)', 'log(## ' + JSON.stringify(ret4) + ' ##)');
-                let func = function () {
-                  return "this is a function"
+                let func = () => {
+                  return "this is a function";
                 };
-                let ret5 = testNapi.testNapiSetNamedProperty(obj, "key5", func);
+                let ret5: myObj = testNapi.testNapiSetNamedProperty(obj, "key5", func);
                 this.testcont = this.testcont.replace('log(myData5)', 'log(## ' + JSON.stringify(typeof ret5.key5) + ' ##)');
-                let objVal = { key: "value" };
+                let objVal: myObjVal = { key: "value" };
                 let ret6 = testNapi.testNapiSetNamedProperty(obj, "key6", objVal);
                 this.testcont = this.testcont.replace('log(myData6)', 'log(## ' + JSON.stringify(ret6) + ' ##)');
               })
