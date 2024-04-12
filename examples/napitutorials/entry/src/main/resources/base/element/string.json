@@ -6615,6 +6615,18 @@
     {
       "name": "napi_has_named_property_description",
       "value": "The napi_has_named_property function is used to check if a JavaScript object has a named property. It allows you to determine whether the given object has a specified property name. "
+    },
+    {
+      "name": "napi_create_int32_description",
+      "value": "Napi_create.int32 is one of the N-API interfaces of Node.js, used to create int32"
+    },
+    {
+      "name": "napi_create_uint32_description",
+      "value": "Napi_create.uint32 is one of the N-API interfaces of Node.js, used to create uint32"
+    },
+    {
+      "name": "napi_create_int64_description",
+      "value": "Napi_create.int64 is one of the N-API interfaces of Node.js, used to create int64"
     }
   ]
 }
