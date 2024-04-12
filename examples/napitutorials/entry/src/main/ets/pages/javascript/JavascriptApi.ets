@@ -98,15 +98,15 @@ const WORK_WITH_JAVASCRIPT_VALUES: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_create_int32'),
-        url: 'pages/image/basicSample/edgeDetection'
+        url: 'pages/javascript/jsvalues/napicreateint32'
       },
       {
         title: $r('app.string.napi_create_uint32'),
-        url: 'pages/image/basicSample/edgeDetection'
+        url: 'pages/javascript/jsvalues/napicreateuint32'
       },
       {
         title: $r('app.string.napi_create_int64'),
-        url: 'pages/image/basicSample/edgeDetection'
+        url: 'pages/javascript/jsvalues/napicreateint64'
       },
       {
         title: $r('app.string.napi_create_double'),
