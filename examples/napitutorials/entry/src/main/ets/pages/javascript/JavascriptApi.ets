@@ -365,19 +365,19 @@ const WORK_WITH_JAVASCRIPT_PROPERTIES: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_set_element'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napisetelement'
       },
       {
         title: $r('app.string.napi_get_element'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napigetelement'
       },
       {
         title: $r('app.string.napi_has_element'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napihaselement'
       },
       {
         title: $r('app.string.napi_delete_element'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napideleteelement'
       },
       {
         title: $r('app.string.napi_define_properties'),

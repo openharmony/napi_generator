@@ -64,6 +64,37 @@ bool validateObjectProperty(napi_env &env, napi_value &obj, napi_value &propName
     return true;
 }
 
+bool validateArrayObjProperty(napi_env &env, napi_value &obj, napi_value &propName, const char *tag)
+{
+    napi_status status;
+    napi_valuetype valuetype0;
+    napi_valuetype valuetype1;
+    const napi_extended_error_info *extended_error_info;
+
+    // 确认第一个参数是个对象
+    status = napi_typeof(env, obj, &valuetype0);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get obj type", tag);
+        return false;
+    }
+    if (valuetype0 != napi_object) {
+        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
+        return false;
+    }
+
+    // 确认第二个参数是个数字
+    status = napi_typeof(env, propName, &valuetype1);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get propName type", tag);
+        return false;
+    }
+    if (valuetype1 != napi_number) {
+        napi_throw_type_error(env, NULL, "Wrong argument type, expected a number");
+        return false;
+    }
+    return true;
+}
+
 napi_status napiValueType2Str(const napi_env &env, const napi_valuetype type, napi_value *result)
 {
     const char *typeStr = "";
