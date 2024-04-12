@@ -5594,11 +5594,23 @@
     },
     {
       "name": "napi_set_named_property_description",
-      "value": "napi_set_named_property 函数用于在 JavaScript 对象上设置一个命名属性。它将给定对象上的指定属性名称与一个值关联起来。该函数允许在运行时动态地添加或修改对象的属性。",
+      "value": "napi_set_named_property 函数用于在 JavaScript 对象上设置一个命名属性。它将给定对象上的指定属性名称与一个值关联起来。该函数允许在运行时动态地添加或修改对象的属性。"
     },
     {
       "name": "napi_has_named_property_description",
       "value": "napi_has_named_property 函数用于检查 JavaScript 对象是否具有命名属性。它允许确定给定对象是否具有指定的属性名称。"
+    },
+    {
+      "name": "napi_create_int32_description",
+      "value": "napi_create_int32 是 Node.js 的 N-API 接口之一，用于创建int32"
+    },
+    {
+      "name": "napi_create_uint32_description",
+      "value": "napi_create_uint32 是 Node.js 的 N-API 接口之一，用于创建uint32"
+    },
+    {
+      "name": "napi_create_int64_description",
+      "value": "napi_create_int64 是 Node.js 的 N-API 接口之一，用于创建int64"
     }
   ]
 }

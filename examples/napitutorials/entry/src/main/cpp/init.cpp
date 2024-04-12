@@ -52,6 +52,9 @@ static napi_value Init(napi_env env, napi_value exports)
 {
     // 对应nodeapi/envlifecycleapis/napisetinstancedata
     setInstancedata(env, exports);
+	
+	// 对应 javascriptapi/jsvalues/jsValuesInit.cpp
+    jsValuesInit(env, exports);
 
     // 对应 javascriptapi/jsproperty/jsPropertyInit.cpp
     jsPropertyInit(env, exports);
