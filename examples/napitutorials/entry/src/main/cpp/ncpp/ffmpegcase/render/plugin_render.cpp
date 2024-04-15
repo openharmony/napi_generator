@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include <complex.h>
+#include <complex>
 #include <cstdint>
 #include <hilog/log.h>
 #include <js_native_api.h>
@@ -28,7 +28,8 @@ extern "C" {
     #include "libavcodec/avcodec.h"
 
     // 自定义 avio_read_packet 函数
-    int custom_avio_read_packet(void *opaque, uint8_t *buf, int buf_size) {
+    int custom_avio_read_packet(void *opaque, uint8_t *buf, int buf_size)
+    {
         FILE *file = ((FILE *)opaque); // 将 void 指针转换为 int 指针，并取得文件描述符
         if (!file) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "custom_avio_read_packet file is null");
@@ -57,8 +58,10 @@ extern "C" {
     }
 
     int open_codec_context(int *stream_idx, AVCodecContext **dec_ctx, AVFormatContext *fmt_ctx,
-                                  enum AVMediaType type) {
-        int ret, stream_index;
+            enum AVMediaType type)
+    {
+        int ret = 0;
+        int stream_index = 0;
         AVStream *st;
         const AVCodec *dec = NULL;
 
@@ -350,7 +353,8 @@ void PluginRender::Export(napi_env env, napi_value exports)
 }
 
 // NAPI registration method type napi_callback. If no value is returned, nullptr is returned.
-napi_value PluginRender::NapiPlay(napi_env env, napi_callback_info info) {
+napi_value PluginRender::NapiPlay(napi_env env, napi_callback_info info)
+{
     size_t argc = NUM_3;
     napi_value args[NUM_3];
     uint32_t fd = 0;
@@ -409,7 +413,8 @@ napi_value PluginRender::NapiPlay(napi_env env, napi_callback_info info) {
 }
 
 // NAPI registration method type napi_callback. If no value is returned, nullptr is returned.
-napi_value PluginRender::NapiStop(napi_env env, napi_callback_info info) {
+napi_value PluginRender::NapiStop(napi_env env, napi_callback_info info)
+{
     size_t argc = NUM_3;
     napi_value args[NUM_3];
     uint32_t fd = 0;
@@ -471,18 +476,18 @@ struct RescontCallbackData {
     napi_async_work asyncWork = nullptr;
     napi_deferred deferred = nullptr;
     napi_ref callback = nullptr;
-    unsigned char *buffer = 0;
+    unsigned char *buffer = nullptr;
     uint32_t fd = 0;
     uint32_t foff = 0;
     uint32_t flen = 0;
     uint32_t blen = 0;
     napi_value result = nullptr;
-    
 };
 
-static void RescontExecuteCB(napi_env env, void *data) {
+static void RescontExecuteCB(napi_env env, void *data)
+{
     RescontCallbackData *callbackData = reinterpret_cast<RescontCallbackData *>(data);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", 
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
         "RescontExecuteCB blen：%{public}d", callbackData->fd);
 
     int ret = 0;
@@ -496,15 +501,15 @@ static void RescontExecuteCB(napi_env env, void *data) {
     
     AVFormatContext *formatContext = NULL;
     AVIOContext *avioContext = nullptr;
-    AVCodecContext *video_dec_ctx = NULL;
-    AVCodecContext *audio_dec_ctx = NULL;
+    AVCodecContext *videoDecCtx = NULL;
+    AVCodecContext *audioDecCtx = NULL;
     AVFrame *frame = NULL;
     AVPacket *pkt = NULL;
-    int video_frame_count = 0;
-    int audio_frame_count = 0;
+    int videoFrameCount = 0;
+    int audioFrameCount = 0;
     
-    int video_stream_idx = -1;
-    int audio_stream_idx = -1;
+    int videoStreamIdx = -1;
+    int audioStreamIdx = -1;
     
     FILE *file = fdopen(fd, "r");
     if (file == NULL) {
@@ -563,13 +568,13 @@ static void RescontExecuteCB(napi_env env, void *data) {
     
     napi_value videoRes;
     napi_value audioRes;
-    if (open_codec_context(&video_stream_idx, &video_dec_ctx, formatContext, AVMEDIA_TYPE_VIDEO) >= 0) {
-        avcodec_string(dumpBuf, sizeof(dumpBuf), video_dec_ctx, 0);
+    if (open_codec_context(&videoStreamIdx, &videoDecCtx, formatContext, AVMEDIA_TYPE_VIDEO) >= 0) {
+        avcodec_string(dumpBuf, sizeof(dumpBuf), videoDecCtx, 0);
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "video[%{public}s]", dumpBuf);
         napi_create_string_utf8(env, dumpBuf, strlen(dumpBuf), &videoRes);
     }
-    if (open_codec_context(&audio_stream_idx, &audio_dec_ctx, formatContext, AVMEDIA_TYPE_AUDIO) >= 0) {
-        avcodec_string(dumpBuf, sizeof(dumpBuf), audio_dec_ctx, 0);
+    if (open_codec_context(&audioStreamIdx, &audioDecCtx, formatContext, AVMEDIA_TYPE_AUDIO) >= 0) {
+        avcodec_string(dumpBuf, sizeof(dumpBuf), audioDecCtx, 0);
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "audio[%{public}s]", dumpBuf);
         napi_create_string_utf8(env, dumpBuf, strlen(dumpBuf), &audioRes);
     }
@@ -581,7 +586,8 @@ static void RescontExecuteCB(napi_env env, void *data) {
     callbackData->result = instance;
 }
 
-static void RescontCompleteCB(napi_env env, napi_status status, void *data) {
+static void RescontCompleteCB(napi_env env, napi_status status, void *data)
+{
     RescontCallbackData *callbackData = reinterpret_cast<RescontCallbackData *>(data);
     napi_value result = callbackData->result;
     if (callbackData->result != nullptr) {
@@ -595,7 +601,8 @@ static void RescontCompleteCB(napi_env env, napi_status status, void *data) {
 }
 
 // NAPI registration method type napi_callback. If no value is returned, nullptr is returned.
-napi_value PluginRender::NapiGetInfo(napi_env env, napi_callback_info info) {
+napi_value PluginRender::NapiGetInfo(napi_env env, napi_callback_info info)
+{
     size_t argc = NUM_3;
     napi_value args[NUM_3];
     uint32_t fd = 0;
