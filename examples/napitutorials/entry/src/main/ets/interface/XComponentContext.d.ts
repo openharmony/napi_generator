@@ -13,13 +13,21 @@
  * limitations under the License.
  */
 
-export default interface XComponentContext {
-  drawPattern(a: number, b: number, c: number): void;
-
-  getStatus(): XComponentContextStatus;
-};
-
 type XComponentContextStatus = {
   hasDraw: boolean,
   hasChangeColor: boolean,
 };
+
+type FFmpegDes = {
+  videoDec: string;
+  audioDec: string;
+};
+
+export interface XComponentContext {
+  drawPattern(a: number, b: number, c: number): void;
+  play(a: number, b: number, c: number): void;
+  stop(a: number, b: number, c: number): void;
+  getInfo(a: number, b: number, c: number): Promise<FFmpegDes>;
+  getStatus(): XComponentContextStatus;
+};
+
