@@ -4,11 +4,13 @@ project(NapiSample)
 
 set(NATIVERENDER_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 set(CJSON_LIB_PATH ${NATIVERENDER_ROOT_PATH}/../../../libs/${OHOS_ARCH})
+set(FFMPEG_LIB_PATH ${NATIVERENDER_ROOT_PATH}/../../../libs/${OHOS_ARCH})
 add_definitions(-DOHOS_PLATFORM)
 
 include_directories(${NATIVERENDER_ROOT_PATH}
                     ${NATIVERENDER_ROOT_PATH}/include
                     ${NATIVERENDER_ROOT_PATH}/thirdparty/cJSON/${OHOS_ARCH}/include
+                    ${NATIVERENDER_ROOT_PATH}/thirdparty/FFmpeg/${OHOS_ARCH}/include
                     ${NATIVERENDER_ROOT_PATH}/ncpp/ffmpegcase)
 
 add_library(entry SHARED
@@ -99,12 +101,20 @@ find_library(
     uv
 )
 
+#    ${FFMPEG_LIB_PATH}/libavcodec.so
+#    ${FFMPEG_LIB_PATH}/libavformat.so
+#    ${FFMPEG_LIB_PATH}/libavdevice.so
+#    ${FFMPEG_LIB_PATH}/libavfilter.so
+#    ${FFMPEG_LIB_PATH}/libavutil.so
 target_link_libraries(entry PUBLIC
     libace_napi.z.so
     libace_ndk.z.so
     librawfile.z.so
     libhilog_ndk.z.so
     ${CJSON_LIB_PATH}/libcjson.so
+    ${FFMPEG_LIB_PATH}/libavformat.so
+    ${FFMPEG_LIB_PATH}/libavcodec.so
+    ${FFMPEG_LIB_PATH}/libavutil.so
     ${EGL-lib}
     ${GLES-lib}
     ${hilog-lib}

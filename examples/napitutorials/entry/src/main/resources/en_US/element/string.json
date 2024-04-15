@@ -937,6 +937,10 @@
       "value": "EGL Texture Render"
     },
     {
+      "name": "napi_ffmpeg_decode",
+      "value": "FFmpeg Decode"
+    },
+    {
       "name": "napi_opencv_gray",
       "value": "OpenCV Convert Color"
     },

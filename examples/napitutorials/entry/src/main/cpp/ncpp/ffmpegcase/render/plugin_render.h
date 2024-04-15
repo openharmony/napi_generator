@@ -37,6 +37,9 @@ public:
     static PluginRender* GetInstance(std::string& id);
     static void Release(std::string& id);
     static napi_value NapiDrawPattern(napi_env env, napi_callback_info info);
+    static napi_value NapiStop(napi_env env, napi_callback_info info);
+    static napi_value NapiPlay(napi_env env, napi_callback_info info);
+    static napi_value NapiGetInfo(napi_env env, napi_callback_info info);
     static napi_value TestGetXComponentStatus(napi_env env, napi_callback_info info);
     void Export(napi_env env, napi_value exports);
     void OnSurfaceChanged(OH_NativeXComponent* component, void* window);

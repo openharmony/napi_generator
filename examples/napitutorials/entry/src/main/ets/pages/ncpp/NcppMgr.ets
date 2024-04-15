@@ -34,6 +34,10 @@ const FFMPEG_MANAGEMENT: ThirdLevelCategory =
     childNodes: [
       {
         title: $r('app.string.napi_egl_texture_bmp'),
+        url: 'pages/ncpp/ffmpegfuncs/eglfuncs'
+      },
+      {
+        title: $r('app.string.napi_ffmpeg_decode'),
         url: 'pages/ncpp/ffmpegfuncs/ffmpegfuncs'
       }
     ]
