@@ -26,11 +26,12 @@ const { generateFuncTestCase } = require('../napiGen/functionDirectTest')
 const MIN_RANDOM = 100
 const MAX_RANDOM = 999
 let tsFuncName = ''
+
 function parseFileAll(hFilePath) {
     let execSync = require("child_process").execSync
     let cmd = ""
     // node命令直接执行
-    if(fs.existsSync("tool/commandLine/src/tsGen/header_parser.py")) {
+    if (fs.existsSync("tool/commandLine/src/tsGen/header_parser.py")) {
         cmd = "python tool/commandLine/src/tsGen/header_parser.py " + hFilePath
     } else {
         // call exe file (for real runtime)
@@ -48,14 +49,33 @@ function parseFileAll(hFilePath) {
     return parseResult
 }
 
+function createNameSpaceInfo(parseNameSpaceInfo) {
+    let nameSpaceInfo = {
+        "name": "",
+        "classes": [],
+        "functions": []
+    }
+    nameSpaceInfo.name = parseNameSpaceInfo
+    return nameSpaceInfo
+}
+
+function analyzeNameSpace(rootInfo, parseResult) {
+    let parseNameSpaces = parseResult.namespaces
+    for (var i = 0; i < parseNameSpaces.length; ++i) {
+        let nameSpaceInfo = createNameSpaceInfo(parseNameSpaces[i])
+        rootInfo.namespaces.push(nameSpaceInfo)
+    }
+}
+
 function isStringType(cType) {
-    switch(cType) {
+    switch (cType) {
         case 'string':
         case 'std::string':
         case 'char':
         case 'wchar_t':
         case 'char16_t':
         case 'char32_t':
+        case 'char *':
             return true
         default:
             return false
@@ -70,7 +90,7 @@ function isBoolType(cType) {
 }
 
 function isNumberType(cType) {
-    switch(cType) {
+    switch (cType) {
         case 'short':
         case 'int':
         case 'uint32_t':
@@ -116,13 +136,20 @@ function getJsTypeFromC(cType, typeInfo) {
     }
 
     let unsignedIdx = basicCtype.indexOf('unsigned')
-    if ( unsignedIdx >= 0) {
+    if (unsignedIdx >= 0) {
         // cut off the keywords 'unsigned'
         basicCtype = basicCtype.substring(unsignedIdx + 8, basicCtype.length).trim()
     }
     let jsType = basicC2js(basicCtype)
     if (typeInfo.array) {
         jsType = util.format("Array<%s>", jsType)
+    }
+    // struct cJson * 的情况
+    let matchStruct = re.match("struct[A-Z_a-z0-9 *]+", basicCtype);
+    if (matchStruct) {
+        let index = basicCtype.indexOf('struct')
+        // 去掉struct和*
+        jsType = jsType.substring(index + 6, basicCtype.length).replace('*', '').trim()
     }
     return jsType
 }
@@ -145,7 +172,7 @@ function createFuncInfo(parseFuncInfo, isClassFunc) {
         "params": [],
         "namespace": "",
         "retType": "",
-        "static":""
+        "static": ""
     }
     funcInfo.name = parseFuncInfo.name
     funcInfo.namespace = parseFuncInfo.namespace
@@ -157,7 +184,7 @@ function createFuncInfo(parseFuncInfo, isClassFunc) {
 
     let parseParams = parseFuncInfo.parameters
     // console.info("parseParams:  " +   JSON.stringify(parseParams))
-    for(var i = 0; i < parseParams.length; ++i) {
+    for (var i = 0; i < parseParams.length; ++i) {
         let param = createParam(parseParams[i])
         funcInfo.params.push(param)
     }
@@ -172,19 +199,97 @@ function createFuncInfo(parseFuncInfo, isClassFunc) {
     return funcInfo
 }
 
+function putFuncIntoNamespace(funcInfo, namespaces) {
+    for (var i = 0; i < namespaces.length; ++i) {
+        if (namespaces[i].name === funcInfo.namespace) {
+            namespaces[i].functions.push(funcInfo)
+            return
+        }
+    }
+    // NapiLog.logError('The namespace [%s] of function %s is not found.'.format(funcInfo.namespace, funcInfo.name));
+}
+
 function analyzeRootFunction(rootInfo, parseResult) {
     let parseFunctions = parseResult.functions
-   // console.info("parseFunctions:  " +   JSON.stringify(parseFunctions))
-    for(var i = 0; i < parseFunctions.length; ++i) {
+    // console.info("parseFunctions:  " +   JSON.stringify(parseFunctions))
+    for (var i = 0; i < parseFunctions.length; ++i) {
         // 普通方法生成模板
         let funcInfo = createFuncInfo(parseFunctions[i], false)
-        rootInfo.functions.push(funcInfo)
+        //rootInfo.functions.push(funcInfo)
+        if (parseFunctions[i].namespace != '') {
+            // function in namespace
+            putFuncIntoNamespace(funcInfo, rootInfo.namespaces)
+        } else {
+            // function without namespace, put on root
+            rootInfo.functions.push(funcInfo)
+        }
+    }
+}
+
+function createProperties(parseProperties) {
+    let propertyList = []
+    for (var i = 0; i < parseProperties.length; ++i) {
+        let property = {}
+        property.name = parseProperties[i].name
+        property.type = getJsTypeFromC(parseProperties[i].type, parseProperties[i])
+        propertyList.push(property)
+    }
+    return propertyList
+}
+
+function createClassFunctions(parseFuncs) {
+    let funcList = []
+    for (var i = 0; i < parseFuncs.length; ++i) {
+        let funcInfo = createFuncInfo(parseFuncs[i], true)
+        funcList.push(funcInfo)
+    }
+    return funcList
+}
+
+function createClassInfo(parseClassInfo) {
+    let classInfo = {
+        "name": "",
+        "namespace": "",
+        "properties": [],
+        "functions": [],
+        "extends": []
+    }
+    classInfo.name = parseClassInfo.name
+    classInfo.namespace = parseClassInfo.namespace
+    classInfo.properties = createProperties(parseClassInfo.properties.public)
+    classInfo.functions = createClassFunctions(parseClassInfo.methods.public)
+
+    return classInfo
+}
+
+function putClassIntoNamespace(classInfo, namespaces) {
+    for (var i = 0; i < namespaces.length; ++i) {
+        if (namespaces[i].name === classInfo.namespace) {
+            namespaces[i].classes.push(classInfo)
+            return
+        }
+    }
+    // NapiLog.logError('The namespace [%s] of class %s is not found.'.format(classInfo.namespace, classInfo.name));
+}
+
+function analyzeClasses(rootInfo, parseResult) {
+    let parseClasses = parseResult.classes;
+
+    for (var className in parseClasses) {
+        let classInfo = createClassInfo(parseClasses[className])
+        if (classInfo.namespace != '') {
+            // class in namespace
+            putClassIntoNamespace(classInfo, rootInfo.namespaces)
+        } else {
+            // class without namespace, put on root
+            rootInfo.classes.push(classInfo)
+        }
     }
 }
 
 function getTab(tabLv) {
     let tab = ""
-    for(var i = 0; i < tabLv; ++i) {
+    for (var i = 0; i < tabLv; ++i) {
         tab += "    "
     }
     return tab
@@ -197,16 +302,47 @@ function genFunction(func, funcJson) {
         funcParams += i > 0 ? ", " : ""
         funcParams += func.params[i].name + ": " + func.params[i].type
     }
-
     let indexTemplete = funcJson.directFunction.indexTemplete
     tsFuncName = 'KH' + generateRandomInteger(MIN_RANDOM, MAX_RANDOM) + '_' + func.name
     return util.format(indexTemplete, tsFuncName, funcParams, func.retType)
 }
 
+function genClass(classInfo, tabLv, needDeclare = false) {
+    let tab = getTab(tabLv)
+    let tsClass = tab + 'export ' + "interface " + classInfo.name + " {\n"
+    let tab1 = getTab(tabLv + 1)
+    for (var i = 0; i < classInfo.properties.length; ++i) {
+        tsClass += util.format("%s%s: %s;\n", tab1, classInfo.properties[i].name, classInfo.properties[i].type)
+    }
+    tsClass += tab + "}\n"
+    return tsClass
+}
+
+function genNamespace(namespace, tabLv) {
+    let tab = getTab(tabLv)
+    let tsNamespace = tab + util.format("declare namespace %s {\n", namespace.name)
+    for (var i = 0; i < namespace.functions.length; ++i) {
+        tsNamespace += genFunction(namespace.functions[i], tabLv + 1)
+    }
+    for (var i = 0; i < namespace.classes.length; ++i) {
+        tsNamespace += genClass(namespace.classes[i], tabLv + 1)
+    }
+    tsNamespace += tab + "}\n"
+    return tsNamespace
+}
+
 function genTsContent(rootInfo, funcJson) {
     let tsContent = rootInfo.needCallback ? "import { AsyncCallback, Callback } from './../basic';\n\n" : ""
 
-    for(var i = 0; i < rootInfo.functions.length; ++i) {
+    for (var i = 0; i < rootInfo.classes.length; ++i) {
+        tsContent += genClass(rootInfo.classes[i], 0, true)
+    }
+
+    for (var i = 0; i < rootInfo.namespaces.length; ++i) {
+        tsContent += genNamespace(rootInfo.namespaces[i], 0)
+    }
+
+    for (var i = 0; i < rootInfo.functions.length; ++i) {
         tsContent += genFunction(rootInfo.functions[i], funcJson)
     }
 
@@ -226,13 +362,10 @@ function removeMarco(hFilePath, tempFilePath) {
     // 逐行读取文件内容并处理
     rl.on('line', (line) => {
         let tt = re.match('[A-Z_]+\([A-Za-z_ *]+\)', line)
-        console.info("tt: " + JSON.stringify(tt))
         if (tt) {
-            console.info("before line: " + line)
             let removeContent = re.getReg(line, tt.regs[0])
             line = line.substring(removeContent.length + 1, line.length)
             let index = line.indexOf(') ')
-            console.info("index: " + index)
             if (index >= 0) {
                 line = line.substring(0, index) + line.substring(index + 1, line.length)
             }
@@ -242,7 +375,6 @@ function removeMarco(hFilePath, tempFilePath) {
 
     // 完成读取操作
     rl.on('close', () => {
-        console.log("processedContent: " + processedContent);
         writeFile(tempFilePath, processedContent)
     });
 }
@@ -257,7 +389,7 @@ async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath) {
     let tempFilePath = path.join(hFilePath, tempFileName)
     removeMarco(hFilePath, tempFilePath)
 
-    while(!fs.existsSync(tempFilePath)) {
+    while (!fs.existsSync(tempFilePath)) {
         await sleep(20); // 延迟 20 毫秒
     }
     const fileContent = fs.readFileSync(tempFilePath, 'utf8');
@@ -267,20 +399,20 @@ async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath) {
     console.info("parseResult.functions: " + JSON.stringify(parseResult.functions))
 
     let rootInfo = {
+        "namespaces": [],
+        "classes": [],
         "functions": [],
         "needCallback": false
     }
-    // 普通方法生成一个模板模板
+
+    analyzeNameSpace(rootInfo, parseResult)
     analyzeRootFunction(rootInfo, parseResult)
-    // 如果是class生成一个模板
-    // analyzeRootClass()
+    analyzeClasses(rootInfo, parseResult)
 
     // 读取Json文件
     let funcJsonPath = path.join(__dirname, '../function.json');
-    console.info("funcJsonPath: " + funcJsonPath)
     let funcJson = getJsonCfg(funcJsonPath);
 
-    let hfileName = path.basename(hFilePath, ".h")
     let tsContent = genTsContent(rootInfo, funcJson)
     console.info("tsContent: " + tsContent)
     appendWriteFile(tsFilePath, '\n' + tsContent)
