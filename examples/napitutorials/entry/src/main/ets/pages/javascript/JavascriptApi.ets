@@ -98,15 +98,15 @@ const WORK_WITH_JAVASCRIPT_VALUES: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_create_int32'),
-        url: 'pages/image/basicSample/edgeDetection'
+        url: 'pages/javascript/jsvalues/napicreateint32'
       },
       {
         title: $r('app.string.napi_create_uint32'),
-        url: 'pages/image/basicSample/edgeDetection'
+        url: 'pages/javascript/jsvalues/napicreateuint32'
       },
       {
         title: $r('app.string.napi_create_int64'),
-        url: 'pages/image/basicSample/edgeDetection'
+        url: 'pages/javascript/jsvalues/napicreateint64'
       },
       {
         title: $r('app.string.napi_create_double'),
@@ -262,7 +262,7 @@ const WORK_WITH_JAVASCRIPT_VALUES_AND_ABSTRACT_OPERATIONS: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_typeof'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsabstractops/napitypeof'
       },
       {
         title: $r('app.string.napi_instanceof'),
@@ -353,31 +353,31 @@ const WORK_WITH_JAVASCRIPT_PROPERTIES: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_set_named_property'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napisetnamedproperty'
       },
       {
         title: $r('app.string.napi_get_named_property'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napigetnamedproperty'
       },
       {
         title: $r('app.string.napi_has_named_property'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napihasnamedproperty'
       },
       {
         title: $r('app.string.napi_set_element'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napisetelement'
       },
       {
         title: $r('app.string.napi_get_element'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napigetelement'
       },
       {
         title: $r('app.string.napi_has_element'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napihaselement'
       },
       {
         title: $r('app.string.napi_delete_element'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napideleteelement'
       },
       {
         title: $r('app.string.napi_define_properties'),

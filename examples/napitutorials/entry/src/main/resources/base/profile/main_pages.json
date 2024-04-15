@@ -57,11 +57,21 @@
     "pages/nodeapi/objlifetimemgr/napiremoveenvcleanuphook",
     "pages/nodeapi/objlifetimemgr/napiaddasynccleanuphook",
     "pages/nodeapi/objlifetimemgr/napiremoveasynccleanuphook",
+    "pages/ncpp/cjsonfuncs/cjsonfuncs",
+    "pages/ncpp/ffmpegfuncs/ffmpegfuncs",
+    "pages/ncpp/opencvfuncs/opencvfuncs",
     "pages/javascript/jsproperties/napigetpropertynames",
     "pages/javascript/jsproperties/napisetproperty",
     "pages/javascript/jsproperties/napigetproperty",
     "pages/javascript/jsproperties/napihasproperty",
     "pages/javascript/jsproperties/napideleteproperty",
+    "pages/javascript/jsproperties/napisetnamedproperty",
+    "pages/javascript/jsproperties/napigetnamedproperty",
+    "pages/javascript/jsproperties/napihasnamedproperty",
+    "pages/javascript/jsproperties/napisetelement",
+    "pages/javascript/jsproperties/napigetelement",
+    "pages/javascript/jsproperties/napihaselement",
+    "pages/javascript/jsproperties/napideleteelement",
     "pages/javascript/jsabstractops/napicoercetobool",
     "pages/javascript/jsabstractops/napicoercetonumber",
     "pages/ncpp/cjsonfuncs/cjsonfuncs",
@@ -69,6 +79,10 @@
     "pages/ncpp/ffmpegfuncs/ffmpegfuncs",
     "pages/ncpp/opencvfuncs/opencvfuncs",
     "pages/javascript/jsabstractops/napicoercetoobject",
-    "pages/javascript/jsabstractops/napicoercetostring"
+    "pages/javascript/jsabstractops/napicoercetostring",
+    "pages/javascript/jsabstractops/napitypeof",
+    "pages/javascript/jsvalues/napicreateint32",
+    "pages/javascript/jsvalues/napicreateuint32",
+    "pages/javascript/jsvalues/napicreateint64"
   ]
 }

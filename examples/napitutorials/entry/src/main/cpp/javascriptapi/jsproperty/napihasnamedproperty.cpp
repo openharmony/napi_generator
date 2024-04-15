@@ -17,23 +17,42 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
-napi_value testNapiHasProperty(napi_env env, napi_callback_info info)
+char *getSecondParamStr(napi_env &env, napi_value &propName)
 {
-    // pages/javascript/jsproperties/napihasproperty
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    size_t str_size = 0;
+    status = napi_get_value_string_utf8(env, propName, NULL, 0, &str_size);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get value string", TAG);
+        return NULL;
+    }
+
+    char *propertyName = new char[str_size + 1];
+    status = napi_get_value_string_utf8(env, propName, propertyName, str_size + 1, &str_size);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get value string", TAG);
+        delete[] propertyName;
+        return NULL;
+    }
+    return propertyName;
+}
+
+napi_value testNapiHasNamedProperty(napi_env env, napi_callback_info info)
+{
+    // pages/javascript/jsproperties/napihasnamedproperty
     size_t argc = PARAM2;
     napi_value argv[PARAM2];
     napi_status status;
     napi_value obj;
     napi_value propName;
     const napi_extended_error_info *extended_error_info;
-
     // 解析传入的参数
     status = napi_get_cb_info(env, info, &argc, argv, NULL, NULL);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get cb info", TAG);
         return NULL;
     }
-
     // 检查参数数量
     if (argc < PARAM2) {
         napi_throw_error(env, NULL, "Expected 2 arguments");
@@ -41,28 +60,24 @@ napi_value testNapiHasProperty(napi_env env, napi_callback_info info)
     }
     obj = argv[PARAM0];
     propName = argv[PARAM1];
-
-    napi_valuetype valuetype0;
-
-    // 确认第一个参数是个对象
-    status = napi_typeof(env, obj, &valuetype0);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get obj type", TAG);
+    // 判断参数有效性
+    bool resValid = validateObjectProperty(env, obj, propName, TAG);
+    if (resValid == false) {
         return NULL;
     }
-    if (valuetype0 != napi_object) {
-        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
-        return NULL;
-    }
-
-    // 检查属性是否存在
+    // 将第二个参数从napi_value转换为C字符串
+    char *propertyName = getSecondParamStr(env, propName);
+    // 获取对象上指定名称的属性
     bool hasProperty = false;
-    status = napi_has_property(env, obj, propName, &hasProperty);
+    status = napi_has_named_property(env, obj, propertyName, &hasProperty);
+    free(propertyName);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "has property", TAG);
+        if (status != napi_ok) {
+            getErrMsg(status, env, extended_error_info, "has named property", TAG);
+            return NULL;
+        }
         return NULL;
     }
-
     // 返回属性是否存在的布尔值
     napi_value result;
     status = napi_get_boolean(env, hasProperty, &result);
@@ -70,6 +85,5 @@ napi_value testNapiHasProperty(napi_env env, napi_callback_info info)
         getErrMsg(status, env, extended_error_info, "get boolean", TAG);
         return NULL;
     }
-
     return result;
 }

@@ -5571,6 +5571,66 @@
     {
       "name": "node_api_get_module_file_name",
       "value": "获取当前文件名"
+    },
+    {
+      "name": "napi_get_property_names_description",
+      "value": "napi_get_property_names 是 Node.js 的 N-API 接口之一，用于获取给定对象的所有可枚举属性的名称。"
+    },
+    {
+      "name": "napi_get_property_description",
+      "value": "napi_get_property 是一个 N-API 函数，用于获取 JavaScript 对象的指定属性的值。"
+    },
+    {
+      "name": "napi_set_property_description",
+      "value": "napi_set_property 是一个 N-API 函数，用于向 JavaScript 对象设置属性。"
+    },
+    {
+      "name": "napi_has_property_description",
+      "value": "napi_has_property 是一个 N-API 函数，用于检查 JavaScript 对象及其原型链中是否具有指定的属性。"
+    },
+    {
+      "name": "napi_delete_property_description",
+      "value": "napi_delete_property 是一个 N-API 函数，用于删除 JavaScript 对象的指定属性。"
+    },
+    {
+      "name": "napi_get_named_property_description",
+      "value": "napi_get_named_property 函数用于从 JavaScript 对象中检索命名属性的值。它允许访问给定对象上与指定属性名称关联的值。"
+    },
+    {
+      "name": "napi_set_named_property_description",
+      "value": "napi_set_named_property 函数用于在 JavaScript 对象上设置一个命名属性。它将给定对象上的指定属性名称与一个值关联起来。该函数允许在运行时动态地添加或修改对象的属性。"
+    },
+    {
+      "name": "napi_has_named_property_description",
+      "value": "napi_has_named_property 函数用于检查 JavaScript 对象是否具有命名属性。它允许确定给定对象是否具有指定的属性名称。"
+    },
+    {
+      "name": "napi_get_element_description",
+      "value": "napi_get_element是Node.js N-API中的一个函数，它允许本地插件通过索引从JavaScript数组中检索元素。此函数为本地代码提供了一种访问数组元素的机制，使得可以直接从C或C++代码操作或检查JavaScript数组。"
+    },
+    {
+      "name": "napi_set_element_description",
+      "value": "napi_set_element 是 Node.js N-API 中的一个函数，它允许本地插件在指定索引处设置 JavaScript 数组的元素。通过这个函数，C 或 C++ 编写的本地代码可以直接修改或为 JavaScript 数组中的元素赋值。"
+    },
+    {
+      "name": "napi_has_element_description",
+      "value": "napi_has_element 是 Node.js N-API 中的一个函数，用于检查 JavaScript 数组中是否存在指定索引的元素。这个函数使得 C 或 C++ 编写的本地代码能够轻松查询 JavaScript 数组，以判断数组中是否包含特定索引位置的元素。这为本地插件与 JavaScript 数组的交互提供了便利，允许本地代码更好地集成并操作 JavaScript 环境中的数据。"
+    },
+    {
+      "name": "napi_delete_element_description",
+      "value": "napi_delete_element 是 Node.js N-API 中的一个函数，用于删除 JavaScript 数组中指定索引位置的元素。这个函数使得 C 或 C++ 编写的本地代码能够直接操作 JavaScript 数组，提供了一种移除数组元素的简便方法。"
+    },
+    {
+      "name": "napi_create_int32_description",
+      "value": "napi_create_int32 是 Node.js 的 N-API 接口之一，用于创建int32"
+    },
+    {
+      "name": "napi_create_uint32_description",
+      "value": "napi_create_uint32 是 Node.js 的 N-API 接口之一，用于创建uint32"
+    },
+    {
+      "name": "napi_create_int64_description",
+      "value": "napi_create_int64 是 Node.js 的 N-API 接口之一，用于创建int64"
     }
   ]
 }
