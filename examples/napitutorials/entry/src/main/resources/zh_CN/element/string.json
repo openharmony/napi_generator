@@ -5461,6 +5461,10 @@
       "value": "EGL材质渲染"
     },
     {
+      "name": "napi_ffmpeg_decode",
+      "value": "FFmpeg解码"
+    },
+    {
       "name": "napi_opencv_gray",
       "value": "灰度化相片"
     },

@@ -69,7 +69,7 @@ static napi_value Init(napi_env env, napi_value exports)
         {"getContext", nullptr, NativeXComponentSample::PluginManager::GetContext,
             nullptr, nullptr, nullptr, napi_default, nullptr}
     };
-    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
+    napi_define_properties(env, exports, sizeof(descArr) / sizeof(descArr[0]), descArr);
 
     NativeXComponentSample::PluginManager::GetInstance()->Export(env, exports);
     size_t len = sizeof(descArr) / sizeof(napi_property_descriptor);
