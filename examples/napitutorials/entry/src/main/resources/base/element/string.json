@@ -6587,6 +6587,66 @@
     {
       "name": "navigator_return_message",
       "value": "hello! This is a param form the first page"
+    },
+    {
+      "name": "napi_get_property_names_description",
+      "value": "napi_get_property_names is one of the N-API interfaces in Node.js, used to retrieve the names of all enumerable properties of a given object."
+    },
+    {
+      "name": "napi_get_property_description",
+      "value": "napi_get_property is an N-API function used to retrieve the value of a specific property of a JavaScript object."
+    },
+    {
+      "name": "napi_set_property_description",
+      "value": "napi_set_property is an N-API function used to set properties on a JavaScript object."
+    },
+    {
+      "name": "napi_has_property_description",
+      "value": "napi_has_property is an N-API function used to check if a specified property exists in a JavaScript object and its prototype chain."
+    },
+    {
+      "name": "napi_delete_property_description",
+      "value": "napi_delete_property is an N-API function used to delete a specified property from a JavaScript object."
+    },
+    {
+      "name": "napi_get_named_property_description",
+      "value": "The napi_get_named_property function is used to retrieve the value of a named property from a JavaScript object. It allows you to access the value associated with a specified property name on the given object."
+    },
+    {
+      "name": "napi_set_named_property_description",
+      "value": "The napi_set_named_property function is used to set a named property on a JavaScript object. It associates a value with a specified property name on the given object. This function allows you to add or modify properties on an object dynamically during runtime."
+    },
+    {
+      "name": "napi_has_named_property_description",
+      "value": "The napi_has_named_property function is used to check if a JavaScript object has a named property. It allows you to determine whether the given object has a specified property name. "
+    },
+    {
+      "name": "napi_get_element_description",
+      "value": "napi_get_element is a function in Node.js N-API that allows native addons to retrieve an element from a JavaScript array by its index. The function provides a mechanism for native code to access array elements, enabling manipulation or inspection of JavaScript arrays directly from C or C++ code."
+    },
+    {
+      "name": "napi_set_element_description",
+      "value": "napi_set_element is a function in the Node.js N-API that allows native addons to set an element in a JavaScript array at a specified index. This function enables native code, written in C or C++, to modify or assign values to elements within JavaScript arrays directly."
+    },
+    {
+      "name": "napi_has_element_description",
+      "value": "napi_has_element is a function in Node.js N-API that checks if an element exists at a specified index in a JavaScript array. This function allows native code written in C or C++ to easily query JavaScript arrays to determine the presence of an element at a given index. It facilitates interaction between native plugins and JavaScript arrays, allowing native code to better integrate with and manipulate data within the JavaScript environment."
+    },
+    {
+      "name": "napi_delete_element_description",
+      "value": "napi_delete_element is a function in the Node.js N-API that enables the removal of an element at a specified index within a JavaScript array. This function allows native code, written in C or C++, to directly manipulate JavaScript arrays by providing a straightforward mechanism to delete elements. "
+    },
+    {
+      "name": "napi_create_int32_description",
+      "value": "Napi_create.int32 is one of the N-API interfaces of Node.js, used to create int32"
+    },
+    {
+      "name": "napi_create_uint32_description",
+      "value": "Napi_create.uint32 is one of the N-API interfaces of Node.js, used to create uint32"
+    },
+    {
+      "name": "napi_create_int64_description",
+      "value": "Napi_create.int64 is one of the N-API interfaces of Node.js, used to create int64"
     }
   ]
 }

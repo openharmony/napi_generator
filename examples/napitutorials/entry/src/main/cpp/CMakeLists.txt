@@ -28,13 +28,25 @@ add_library(entry SHARED
     javascriptapi/jsproperty/napisetproperty.cpp
     javascriptapi/jsproperty/napihasproperty.cpp
     javascriptapi/jsproperty/napideleteproperty.cpp
+    javascriptapi/jsproperty/napigetnamedproperty.cpp
+    javascriptapi/jsproperty/napisetnamedproperty.cpp
+    javascriptapi/jsproperty/napihasnamedproperty.cpp
+    javascriptapi/jsproperty/napisetelement.cpp
+    javascriptapi/jsproperty/napigetelement.cpp
+    javascriptapi/jsproperty/napihaselement.cpp
+    javascriptapi/jsproperty/napideleteelement.cpp
     javascriptapi/jsproperty/jsPropertyInit.cpp
     javascriptapi/common.cpp
     javascriptapi/jsabstractops/napicoercetobool.cpp
     javascriptapi/jsabstractops/napicoercetonumber.cpp
     javascriptapi/jsabstractops/napicoercetoobject.cpp
     javascriptapi/jsabstractops/napicoercetostring.cpp
+    javascriptapi/jsabstractops/napitypeof.cpp
     javascriptapi/jsabstractops/init.cpp
+    javascriptapi/jsvalues/jsValuesInit.cpp
+    javascriptapi/jsvalues/napicreateint32.cpp
+    javascriptapi/jsvalues/napicreateuint32.cpp
+    javascriptapi/jsvalues/napicreateint64.cpp
     ncpp/ffmpegcase/render/egl_core.cpp
     ncpp/ffmpegcase/render/plugin_render.cpp
     ncpp/ffmpegcase/manager/plugin_manager.cpp

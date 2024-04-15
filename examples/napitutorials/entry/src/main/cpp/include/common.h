@@ -98,5 +98,6 @@ extern void PaddingCallbackPromiseInfo(const napi_env &env, const napi_ref &call
 
 void getErrMsg(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
                const char *info, const char *tag);
+napi_status napiValueType2Str(const napi_env &env, const napi_valuetype type, napi_value *result);
 
 #endif //NAPITUTORIALS_COMMON_H

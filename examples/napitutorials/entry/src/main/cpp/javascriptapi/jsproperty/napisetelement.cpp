@@ -17,14 +17,15 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
-napi_value testNapiDeleteProperty(napi_env env, napi_callback_info info)
+napi_value testNapiSetElement(napi_env env, napi_callback_info info)
 {
-    // pages/javascript/jsproperties/napideleteproperty
-    size_t argc = PARAM2;
-    napi_value argv[PARAM2];
+    // pages/javascript/jsproperties/napisetelement
+    size_t argc = PARAM3;
+    napi_value argv[PARAM3];
     napi_status status;
-    napi_value obj;
-    napi_value propName;
+    napi_value arrayObj;
+    napi_value elementIndex;
+    napi_value valueToSet;
     const napi_extended_error_info *extended_error_info;
 
     // 解析传入的参数
@@ -35,41 +36,35 @@ napi_value testNapiDeleteProperty(napi_env env, napi_callback_info info)
     }
 
     // 检查参数数量
-    if (argc < PARAM2) {
-        napi_throw_error(env, NULL, "Expected 2 arguments");
+    if (argc < PARAM3) {
+        napi_throw_error(env, NULL, "Expected 3 arguments");
         return NULL;
     }
-    obj = argv[PARAM0];
-    propName = argv[PARAM1];
+    arrayObj = argv[PARAM0];
+    elementIndex = argv[PARAM1];
+    valueToSet = argv[PARAM2];
 
-    napi_valuetype valuetype0;
-
-    // 确认第一个参数是个对象
-    status = napi_typeof(env, obj, &valuetype0);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get obj type", TAG);
-        return NULL;
-    }
-    if (valuetype0 != napi_object) {
-        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
-        return NULL;
-    }
-
-    // 删除属性
-    bool result = false;
-    status = napi_delete_property(env, obj, propName, &result);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "delete property", TAG);
+    // 判断参数有效性
+    bool resValid = validateArrayObjProperty(env, arrayObj, elementIndex, TAG);
+    if (resValid == false) {
         return NULL;
     }
     
-    if (result) {
-        // 删除成功
-        OH_LOG_INFO(LOG_APP, "Delete property successfully!");
-    } else {
-        OH_LOG_INFO(LOG_APP, "Fail to delete property!");
+    uint32_t index = 0;
+    // 将第二个参数（索引）转换为本地 uint32_t
+    status = napi_get_value_uint32(env, elementIndex, &index);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get value uint32", TAG);
+        return NULL;
     }
-    
-    // 返回删除属性之后的对象
-    return obj;
+
+    // 设置数组元素
+    status = napi_set_element(env, arrayObj, index, valueToSet);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "set element", TAG);
+        return NULL;
+    }
+
+    // 可以返回新设置对象
+    return arrayObj;
 }
