@@ -49,4 +49,9 @@ napi_value testNapiTypeof(napi_env env, napi_callback_info info);
 
 void jsAbstractOpsInit(napi_property_descriptor **origDescPtr, size_t *len);
 
+napi_value jsValuesInit(napi_env env, napi_value exports);
+napi_value testNapiCreateInt32(napi_env env, napi_callback_info info);
+napi_value testNapiCreateUInt32(napi_env env, napi_callback_info info);
+napi_value testNapiCreateInt64(napi_env env, napi_callback_info info);
+
 #endif //NAPITUTORIALS_JAVASCRIPTAPI_H

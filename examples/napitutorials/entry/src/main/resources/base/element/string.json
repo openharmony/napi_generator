@@ -6631,6 +6631,18 @@
     {
       "name": "napi_delete_element_description",
       "value": "napi_delete_element is a function in the Node.js N-API that enables the removal of an element at a specified index within a JavaScript array. This function allows native code, written in C or C++, to directly manipulate JavaScript arrays by providing a straightforward mechanism to delete elements. "
+    },
+    {
+      "name": "napi_create_int32_description",
+      "value": "Napi_create.int32 is one of the N-API interfaces of Node.js, used to create int32"
+    },
+    {
+      "name": "napi_create_uint32_description",
+      "value": "Napi_create.uint32 is one of the N-API interfaces of Node.js, used to create uint32"
+    },
+    {
+      "name": "napi_create_int64_description",
+      "value": "Napi_create.int64 is one of the N-API interfaces of Node.js, used to create int64"
     }
   ]
 }

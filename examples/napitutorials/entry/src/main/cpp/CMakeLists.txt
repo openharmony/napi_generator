@@ -42,6 +42,10 @@ add_library(entry SHARED
     javascriptapi/jsabstractops/napicoercetostring.cpp
     javascriptapi/jsabstractops/napitypeof.cpp
     javascriptapi/jsabstractops/init.cpp
+    javascriptapi/jsvalues/jsValuesInit.cpp
+    javascriptapi/jsvalues/napicreateint32.cpp
+    javascriptapi/jsvalues/napicreateuint32.cpp
+    javascriptapi/jsvalues/napicreateint64.cpp
     ncpp/ffmpegcase/render/egl_core.cpp
     ncpp/ffmpegcase/render/plugin_render.cpp
     ncpp/ffmpegcase/manager/plugin_manager.cpp

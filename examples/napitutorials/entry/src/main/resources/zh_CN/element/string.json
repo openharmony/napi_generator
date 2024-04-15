@@ -5594,7 +5594,7 @@
     },
     {
       "name": "napi_set_named_property_description",
-      "value": "napi_set_named_property 函数用于在 JavaScript 对象上设置一个命名属性。它将给定对象上的指定属性名称与一个值关联起来。该函数允许在运行时动态地添加或修改对象的属性。",
+      "value": "napi_set_named_property 函数用于在 JavaScript 对象上设置一个命名属性。它将给定对象上的指定属性名称与一个值关联起来。该函数允许在运行时动态地添加或修改对象的属性。"
     },
     {
       "name": "napi_has_named_property_description",
@@ -5615,6 +5615,18 @@
     {
       "name": "napi_delete_element_description",
       "value": "napi_delete_element 是 Node.js N-API 中的一个函数，用于删除 JavaScript 数组中指定索引位置的元素。这个函数使得 C 或 C++ 编写的本地代码能够直接操作 JavaScript 数组，提供了一种移除数组元素的简便方法。"
+    },
+    {
+      "name": "napi_create_int32_description",
+      "value": "napi_create_int32 是 Node.js 的 N-API 接口之一，用于创建int32"
+    },
+    {
+      "name": "napi_create_uint32_description",
+      "value": "napi_create_uint32 是 Node.js 的 N-API 接口之一，用于创建uint32"
+    },
+    {
+      "name": "napi_create_int64_description",
+      "value": "napi_create_int64 是 Node.js 的 N-API 接口之一，用于创建int64"
     }
   ]
 }
