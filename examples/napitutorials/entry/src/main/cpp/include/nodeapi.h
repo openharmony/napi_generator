@@ -32,5 +32,6 @@ napi_value setThreadsafefuncrel(napi_env env, napi_callback_info info);
 napi_value setThreadsafefuncall(napi_env env, napi_callback_info info);
 
 napi_value cJSONVersion(napi_env env, napi_callback_info info);
+napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info);
 
 #endif //NAPITUTORIALS_NODEAPI_H

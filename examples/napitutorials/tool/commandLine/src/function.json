@@ -1,13 +1,13 @@
 {
   "directFunction": {
     "indexTemplete": "export const %s:(%s) => %s;\n",
-    "cppFuncTemplete": "#include \"napi/native_api.h\"\n[include_replace]\n\n[body_replace]\n\nEXTERN_C_START\nstatic napi_value Init(napi_env env, napi_value exports)\n{\n    napi_property_descriptor desc[] = {\n         [init_replace]\n};\nnapi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);\nreturn exports;\n}\nEXTERN_C_END\n\nstatic napi_module demoModule = {\n    .nm_version = 1,\n    .nm_flags = 0,\n    .nm_filename = nullptr,\n    .nm_register_func = Init,\n    .nm_modname = \"entry\",\n    .nm_priv = ((void*)0),\n    .reserved = { 0 },\n};\n\nextern \"C\" __attribute__((constructor)) void RegisterEntryModule(void)\n{\n    napi_module_register(&demoModule);\n}",
+    "cppFuncTemplete": "#include \"napi/native_api.h\"\n#include <hilog/log.h>\n#include <string>\n[include_replace]\n#define GLOBAL_RESMGR (0xFFEE)\nconstexpr int32_t STR_MAX_SIZE = 200;\nconstexpr int32_t LONG_STR_MAX_SIZE = 1024;\nconstexpr int32_t ERR_OK = 0;\nconstexpr int8_t NO_ERROR = 0;\nconstexpr int8_t ERROR = -1;\nconstexpr uint8_t PARAM0 = 0;\nconstexpr uint8_t PARAM1 = 1;\nconstexpr uint8_t PARAM2 = 2;\nconstexpr uint8_t PARAM3 = 3;\nconstexpr uint8_t PARAM4 = 4;\nconstexpr uint8_t PARAM5 = 5;\nconstexpr uint8_t PARAM6 = 6;\nconstexpr uint8_t PARAM7 = 7;\nconstexpr uint8_t PARAM8 = 8;\nconstexpr uint8_t PARAM9 = 9;\nconstexpr uint8_t PARAM10 = 10;\nconstexpr uint8_t PARAM11 = 11;\nconstexpr uint8_t PARAM12 = 12;\nconstexpr uint8_t PARAM100 = 100;\n\nvoid getErrMessage(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,\n               const char *info, const char *tag) {\n    status = napi_get_last_error_info(env, &extended_error_info);\n    if (status == napi_ok && extended_error_info != NULL) {\n        const char *errorMessage =\n            extended_error_info->error_message != NULL ? extended_error_info->error_message : \"Unknown error\";\n        OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, tag, \"errmsg %{public}s!, engine_err_code %{public}d!.\",\n                     std::to_string(extended_error_info->engine_error_code).c_str(), extended_error_info->error_code);\n        std::string myInfo = info;\n        std::string res = \"Failed to \" + myInfo + \" em = \" + errorMessage +\n                          \", eec = \" + std::to_string(extended_error_info->engine_error_code) +\n                          \", ec = \" + std::to_string(extended_error_info->error_code);\n        napi_throw_error(env, NULL, res.c_str());\n    }\n}\n\n[body_replace]\n\nEXTERN_C_START\nstatic napi_value Init(napi_env env, napi_value exports)\n{\n    napi_property_descriptor desc[] = {\n         [init_replace]\n};\nnapi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);\nreturn exports;\n}\nEXTERN_C_END\n\nstatic napi_module demoModule = {\n    .nm_version = 1,\n    .nm_flags = 0,\n    .nm_filename = nullptr,\n    .nm_register_func = Init,\n    .nm_modname = \"entry\",\n    .nm_priv = ((void*)0),\n    .reserved = { 0 },\n};\n\nextern \"C\" __attribute__((constructor)) void RegisterEntryModule(void)\n{\n    napi_module_register(&demoModule);\n}",
     "cppFuncDetails": {
       "funcInitTemplete": "{ \"%s\" , nullptr, %s, nullptr, nullptr, nullptr, napi_default, nullptr },",
-      "funcBodyTemplete": "static napi_value [funcName](napi_env env, napi_callback_info info)\n{\n[func_getParam_replace]\n    [func_return_replace]\n }\n",
-      "funcGetParamTemplete" : "size_t requireArgc = [param_length];\n   size_t argc = [param_length];\n   napi_value args[[param_length]] = {nullptr};\n   napi_get_cb_info(env, info, &argc, args , nullptr, nullptr);\n   [getParam_replace]\n   ",
-      "funcReturnTemplete" : "[return_type_define]\n   // Todo\n   // eg. res = value0 + value1;\n   napi_value result;\n   [return_replace]\n   return result;\n",
-      "paramGenTemplete": " napi_valuetype valuetype%s;\n   napi_typeof(env, args[%s], &valuetype%s);\n   %s value%s;\n   [getParam_replace]",
+      "funcBodyTemplete": "// [NAPI_GEN]: introduce function\nnapi_value [funcName](napi_env env, napi_callback_info info)\n{\n    // [NAPI_GEN]: get function param in\n[func_getParam_replace]\n     [func_return_replace]\n}\n",
+      "funcGetParamTemplete" : "    size_t argc = [param_length];\n    napi_value args[[param_length]] = {nullptr};\n    napi_status status;\n    const napi_extended_error_info *extended_error_info;\n    const char * tag = \"[[get_error_msg_tag]]\";\n    status = napi_get_cb_info(env, info, &argc, args , nullptr, nullptr);\n    if(status != napi_ok) {\n        getErrMessage(status, env,extended_error_info, \"napi_get_cb_info\",tag);\n        return nullptr;\n    }\n    [getParam_replace]\n    ",
+      "funcReturnTemplete" : "// Todo: add business logic.\n\n    // [NAPI_GEN]: function return value\n   [return_replace]\n   return [return_name]Out;\n",
+      "paramGenTemplete": "napi_valuetype valuetype%s;\n    status = napi_typeof(env, args[%s], &valuetype%s);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"napi_typeof\", tag);\n        return nullptr;\n    }\n    [getParam_replace]",
       "funcParamType": {
         "int32_t": "napi_get_value_int32(env, args[%s], &value%s);\n",
         "int64_t": "napi_get_value_int64(env, args[%s], &value%s);\n",
@@ -15,20 +15,23 @@
         "int": "",
         "double": "napi_get_value_double(env, args[%s], &value%s);\n",
         "bool": "napi_get_value_bool(env, args[%s], &value%s);\n",
-        "string": "char buf[1024];\n    size_t results;\n    napi_get_value_string_utf8(env, args[%s], buf, 1024, &results);\n    value%s = buf;\n"
+        "string": "size_t str_size%s = 0;\n    status = napi_get_value_string_utf8(env, args[%s], NULL, 0, &str_size%s);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"get value string\", tag);\n        return NULL;\n    }\n    char *%sIn%s = new char[str_size%s + 1];\n    status = napi_get_value_string_utf8(env, args[0], %sIn%s, str_size%s + 1, &str_size%s);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"get value string\", tag);\n        delete[] %sIn%s;\n        return NULL;\n    }\n    // delete[] %sIn%s; // remember to delete memory \n"
       },
       "funcReturnType": {
-        "int32_t": "napi_create_int32(env, res, &result);\n",
-        "int64_t": "napi_create_int64(env, res, &result);\n",
-        "uint32_t": "napi_create_uint32(env, res, &result);\n",
+        "int32_t": "    napi_value %sOut;\n    status = napi_create_int32(env, 1, &%sOut);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"napi_create_int32\", tag);\n        return nullptr;\n    }\n",
+        "int64_t": "    napi_value %sOut;\n    status = napi_create_int64(env, 1, &%sOut);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"napi_create_int64\", tag);\n        return nullptr;\n    }\n",
+        "uint32_t": "    napi_value %sOut;\n    status = napi_create_uint32(env, 1, &%sOut);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"napi_create_uint32\", tag);\n        return nullptr;\n    }\n",
         "int": "",
         "size_t": "",
-        "double": "napi_create_double(env, res, &result);\n",
-        "bool": "napi_get_boolean(env, res, &result);\n",
-        "string": "napi_create_string_utf8(env, res, NAPI_AUTO_LENGTH, &result);\n"
-      }
+        "double": "    napi_value %sOut;\n    status = napi_create_double(env, 1.0, &%sOut);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"napi_create_double\", tag);\n        return nullptr;\n    }\n",
+        "bool": "    napi_value %sOut;\n    status = napi_get_boolean(env, true, &%sOut);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"napi_get_boolean\", tag);\n        return nullptr;\n    }\n",
+        "string": "    napi_value %sOut;\n    status = napi_create_string_utf8(env, \"%s\", NAPI_AUTO_LENGTH, &%sOut);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"napi_create_string_utf8\", tag);\n        return nullptr;\n    }\n",
+        "object": "    napi_value %sOut;\n    status = napi_create_object(env, &%sOut);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"napi_create_object\", tag);\n        return nullptr;\n    }\n"
+      },
+      "funcReturnObjectToSet": "    status = napi_set_named_property(env, %sOut, \"%s\", %sOut);\n    if (status != napi_ok) {\n        getErrMessage(status, env, extended_error_info, \"napi_set_named_property\", tag);\n        return nullptr;\n    }\n",
+      "funcParamObjectToGet": ""
     },
-    "abilityTestTemplete": "it('assertContain_[random_number]', 0, () => {\n      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.\n      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');\n\n      [func_direct_testCase]\n\n      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.\n      // 断言 如：expect(result).assertEqual(2+3)\n    })\n"
+    "abilityTestTemplete": "    it('[test_case_name]', 0, () => {\n      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.\n      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');\n\n      [func_direct_testCase]\n\n      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.\n      // 断言 如：expect(result).assertEqual(2+3)\n    })\n"
   },
   "asyncFunction": {
   }
