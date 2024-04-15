@@ -33,7 +33,7 @@ napi_value setThreadsafefuncall(napi_env env, napi_callback_info info);
 
 napi_value cJSONVersion(napi_env env, napi_callback_info info);
 
-// cJSON.hÖĞ: CJSON_PUBLIC(cJSON *) cJSON_Parse(const char *value); ·½·¨µÄnapi¿ò¼Ü´úÂëÓÃÀı
+// cJSON.hä¸­: CJSON_PUBLIC(cJSON *) cJSON_Parse(const char *value); æ–¹æ³•çš„napiæ¡†æ¶ä»£ç ç”¨ä¾‹
 napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info);
 
 #endif //NAPITUTORIALS_NODEAPI_H
