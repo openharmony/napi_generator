@@ -20,51 +20,36 @@ import testNapi, { testNapiValue } from 'libentry.so';
 import { TitleBar } from '../../../common/TitleBar'
 import hilog from '@ohos.hilog';
 
-const TAG: string = 'napi_get_property';
-
-interface myObjVal {
-  key: string
-}
-
-interface myObj {
-  key1: string;
-  true: number;
-  key3: boolean;
-  key4: Array<string>;
-  key5: Function;
-  key6: myObjVal;
-}
+const TAG: string = 'napi_set_element';
 
 @Entry
 @Component
 struct napiGetPropertyNames {
   private btnFontColor: Resource = $r('app.color.white');
   private pixelMapFormat: image.PixelMapFormat = 3;
-  private textcont: Resource = $r('app.string.napi_get_property_description');
+  private textcont: Resource = $r('app.string.napi_set_element_description');
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State testcont: string = ' // 测试 N-API napi_get_property \n'
-    + 'let obj = {key1: "value",true: 1,key3: false,key4: ["a", "b", "c"],key5: function () { return "function" },key6: {key: "value"}} \n'
-    + '  const myData = testNapi.testNapiGetProperty(obj, "key1"); \n'
-    + ' // 使用获取的自定义数据 \n'
-    + ' console.log(myData); // 输出自定义数据 \n'
-    + ' const myData2 = testNapi.testNapiGetProperty(obj, true); \n'
+  @State testcont: string = ' // 测试 N-API napi_set_element \n'
+    + ' let obj1 = [1,2,3]; \n'
+    + ' const myData1 = testNapi.testNapiSetElement(obj1, 1, 5); \n'
+    + ' console.log(myData1); // 输出自定义数据 \n'
+    + ' let obj2 = ["a", "b", "c"]'
+    + ' const myData2 = testNapi.testNapiSetElement(obj2, 4, "d"); \n'
     + ' console.log(myData2); // 输出自定义数据 \n'
-    + ' const myData3 = testNapi.testNapiGetProperty(obj, key3); \n'
+    + ' let obj3 = [true, false]; \n'
+    + ' const myData3 = testNapi.testNapiSetElement(obj3, 2, true); \n'
     + ' console.log(myData3); // 输出自定义数据 \n'
-    + ' const myData4 = testNapi.testNapiGetProperty(obj, "key4"); \n'
+    + ' let obj4 = [0, false, "zz"]; \n'
+    + ' const myData4 = testNapi.testNapiSetElement(obj4, 1, "kk"); \n'
     + ' console.log(myData4); // 输出自定义数据 \n'
-    + ' const myData5 = testNapi.testNapiGetProperty(obj, "key5"); \n'
-    + ' console.log(myData5); // 输出自定义数据 \n'
-    + ' const myData6 = testNapi.testNapiGetProperty(obj, "key6"); \n'
-    + ' console.log(myData6); // 输出自定义数据 \n';
 
   controller: TextAreaController = new TextAreaController()
 
   build() {
     Column() {
       // 标题
-      TitleBar({ title: $r('app.string.napi_get_property') })
+      TitleBar({ title: $r('app.string.napi_set_element') })
 
       Column() {
         Column() {
@@ -98,7 +83,7 @@ struct napiGetPropertyNames {
 
         Row() {
 
-          Button($r('app.string.napi_get_property'), { type: ButtonType.Capsule })
+          Button($r('app.string.napi_set_element'), { type: ButtonType.Capsule })
             .backgroundColor(Color.Blue)
             .width('80%')
             .height(48)
@@ -106,30 +91,21 @@ struct napiGetPropertyNames {
             .fontWeight(500)
             .fontColor(this.btnFontColor)
             .margin({ left: 24 })
-            .id('napi_get_property')
+            .id('napi_set_element')
             .onClick(() => {
-              let obj: myObj = {
-                key1: "value",
-                true: 1,
-                key3: false,
-                key4: ["a", "b", "c"],
-                key5: () => {
-                  return "function";
-                },
-                key6: {key: "value"}
-              }
-              let ret = testNapi.testNapiGetProperty(obj, "key1");
-              this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret+' ##)');
-              let ret2 = testNapi.testNapiGetProperty(obj, true);
-              this.testcont = this.testcont.replace('log(myData2)', 'log(## '+ret2+' ##)');
-              let ret3 = testNapi.testNapiGetProperty(obj, "key3");
-              this.testcont = this.testcont.replace('log(myData3)', 'log(## '+ret3+' ##)');
-              let ret4 = testNapi.testNapiGetProperty(obj, "key4");
-              this.testcont = this.testcont.replace('log(myData4)', 'log(## '+ret4+' ##)');
-              let ret5 = testNapi.testNapiGetProperty(obj, "key5");
-              this.testcont = this.testcont.replace('log(myData5)', 'log(## '+ret5+' ##)');
-              let ret6 = testNapi.testNapiGetProperty(obj, "key6");
-              this.testcont = this.testcont.replace('log(myData6)', 'log(## '+JSON.stringify(ret6)+' ##)');
+              let obj1 = [1,2,3];
+              let ret = testNapi.testNapiSetElement(obj1, 1, 5);
+              this.testcont = this.testcont.replace('log(myData1)', 'log(## '+JSON.stringify(ret)+' ##)');
+              let obj2 = ["a", "b", "c"];
+              let ret2 = testNapi.testNapiSetElement(obj2, 4, "d");
+              this.testcont = this.testcont.replace('log(myData2)', 'log(## '+JSON.stringify(ret2)+' ##)');
+              let obj3 = [true, false];
+              let ret3 = testNapi.testNapiSetElement(obj3, 2, true);
+              this.testcont = this.testcont.replace('log(myData3)', 'log(## '+JSON.stringify(ret3)+' ##)');
+              let obj4 = [0, false, "zz"];
+              let ret4 = testNapi.testNapiSetElement(obj4, 1, "kk");
+              this.testcont = this.testcont.replace('log(myData4)', 'log(## '+JSON.stringify(ret4)+' ##)');
+
             })
         }
         .width('100%')

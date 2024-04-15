@@ -17,9 +17,9 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
-napi_value testNapiSetProperty(napi_env env, napi_callback_info info)
+napi_value testNapiSetNamedProperty(napi_env env, napi_callback_info info)
 {
-    // pages/javascript/jsproperties/napisetproperty
+    // pages/javascript/jsproperties/napisetnamedproperty
     size_t argc = PARAM3;
     napi_value argv[PARAM3];
     napi_status status;
@@ -27,43 +27,44 @@ napi_value testNapiSetProperty(napi_env env, napi_callback_info info)
     napi_value propName;
     napi_value propValue;
     const napi_extended_error_info *extended_error_info;
-
-    // 解析传入的参数
-    status = napi_get_cb_info(env, info, &argc, argv, NULL, NULL);
+    status = napi_get_cb_info(env, info, &argc, argv, NULL, NULL);    // 解析传入的参数
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get cb info", TAG);
         return NULL;
     }
-
-    // 检查参数数量
-    if (argc < PARAM3) {
-        napi_throw_error(env, NULL, "Expected 3 arguments");
+    if (argc < PARAM3) { // 检查参数数量
+        napi_throw_error(env, NULL, "Expected 2 arguments");
         return NULL;
     }
     obj = argv[PARAM0];
     propName = argv[PARAM1];
     propValue = argv[PARAM2];
-
-    napi_valuetype valuetype0;
-
-    // 确认第一个参数是个对象
-    status = napi_typeof(env, obj, &valuetype0);
+    // 判断参数有效性
+    bool resValid = validateObjectProperty(env, obj, propName, TAG);
+    if (resValid == false) {
+        return NULL;
+    }
+    // 将第二个参数从napi_value转换为C字符串
+    size_t str_size = 0;
+    status = napi_get_value_string_utf8(env, propName, NULL, 0, &str_size);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get obj type", TAG);
+        getErrMsg(status, env, extended_error_info, "get value string", TAG);
         return NULL;
     }
-    if (valuetype0 != napi_object) {
-        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
+    char *propertyName = new char[str_size + 1];
+    status = napi_get_value_string_utf8(env, propName, propertyName, str_size + 1, &str_size);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get value string", TAG);
+        delete[] propertyName;
         return NULL;
     }
-    
     // 设置对象的属性
-    status = napi_set_property(env, obj, propName, propValue);
+    status = napi_set_named_property(env, obj, propertyName, propValue);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "set property", TAG);
+        getErrMsg(status, env, extended_error_info, "set named property", TAG);
+        delete[] propertyName;
         return NULL;
     }
-
-    // 可以返回新设置对象
-    return obj;
+    delete[] propertyName;
+    return obj;  // 返回新设置对象
 }

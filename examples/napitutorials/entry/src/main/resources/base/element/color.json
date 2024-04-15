@@ -232,6 +232,14 @@
     {
       "name": "scroll_grid_item_color",
       "value": "#F9CF93"
+    },
+    {
+      "name": "textarea_font_color",
+      "value": "#ff400336"
+    },
+    {
+      "name": "textarea_background_color",
+      "value": "#ff985307"
     }
   ]
 }
