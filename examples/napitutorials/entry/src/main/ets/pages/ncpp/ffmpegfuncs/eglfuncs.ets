@@ -18,19 +18,17 @@ import image from '@ohos.multimedia.image';
 import Logger from '../../../util/Logger';
 import { TitleBar } from '../../../common/TitleBar'
 import hilog from '@ohos.hilog';
-import {XComponentContext, FFmpegDes} from "../../../interface/XComponentContext.d"
+import {XComponentContext} from "../../../interface/XComponentContext.d"
 import resourceManager from '@ohos.resourceManager';
 
 const TAG: string = 'napi_ffmpegcase';
 
 @Entry
 @Component
-struct ffmpegfuncs {
+struct eglfuncs {
   private btnFontColor: Resource = $r('app.color.white');
   @State isSetInstance: Boolean = false;
   @State currentStatus: string = "init";
-  @State videoDec: string = "";
-  @State audioDec: string = "";
   private xComponentContext: XComponentContext | undefined = undefined;
   private resfname: string = 'tj.bmp'
   private mp4fname: string = 'test1.mp4'
@@ -38,7 +36,7 @@ struct ffmpegfuncs {
   build() {
     Column() {
       Row() {
-        Text('FFmpeg Sample')
+        Text('Native XComponent Sample')
           .fontSize('24fp')
           .fontWeight(500)
           .margin({
@@ -68,16 +66,6 @@ struct ffmpegfuncs {
         Text(this.currentStatus)
           .fontSize('24fp')
           .fontWeight(500)
-        TextArea({text: this.videoDec})
-          .fontSize('18fp')
-          .fontWeight(500)
-          .height(120)
-          .enabled(false)
-        TextArea({text:this.audioDec})
-          .fontSize('18fp')
-          .fontWeight(500)
-          .height(120)
-          .enabled(false)
       }
       .onClick(() => {
         let hasChangeColor: boolean = false;
@@ -98,12 +86,12 @@ struct ffmpegfuncs {
 
       Row() {
         Column() {
-          Button('OpenMp4')
+          Button('Draw Img')
             .fontSize('16fp')
             .fontWeight(500)
             .margin({ bottom: 24 })
             .onClick(() => {
-              getContext().resourceManager.getRawFd(this.mp4fname)
+              getContext().resourceManager.getRawFd(this.resfname)
                 .then((value: resourceManager.RawFileDescriptor) => {
                   let fd = value.fd;
                   let offset = value.offset;
@@ -111,14 +99,15 @@ struct ffmpegfuncs {
                   hilog.info(0x0000, 'testTag', `getRawFd ${fd} ${offset} ${length}`);
 
                   if (this.xComponentContext) {
-                    this.xComponentContext.getInfo(fd, offset, length).then((des: FFmpegDes) => {
-                      hilog.info(0x0000, 'testTag', `getInfo ${JSON.stringify(des)}`);
-                      hilog.info(0x0000, 'testTag', `video ${des.videoDec}`);
-                      hilog.info(0x0000, 'testTag', `audio ${des.audioDec}`);
-                      this.currentStatus = "getInfo";
-                      this.videoDec = des.videoDec;
-                      this.audioDec = des.audioDec;
-                    });
+                    this.xComponentContext.drawPattern(fd, offset, length);
+
+                    let hasDraw: boolean = false;
+                    if (this.xComponentContext.getStatus()) {
+                      hasDraw = this.xComponentContext.getStatus().hasDraw;
+                    }
+                    if (hasDraw) {
+                      this.currentStatus = "draw star";
+                    }
                   }
                 })
 

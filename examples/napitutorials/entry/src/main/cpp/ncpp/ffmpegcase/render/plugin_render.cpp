@@ -13,15 +13,96 @@
  * limitations under the License.
  */
 
+#include <complex.h>
 #include <cstdint>
 #include <hilog/log.h>
 #include <js_native_api.h>
 #include <js_native_api_types.h>
 #include <string>
-
 #include "../common/common.h"
 #include "../manager/plugin_manager.h"
 #include "plugin_render.h"
+
+extern "C" {
+    #include "libavformat/avformat.h"
+    #include "libavcodec/avcodec.h"
+
+    // 自定义 avio_read_packet 函数
+    int custom_avio_read_packet(void *opaque, uint8_t *buf, int buf_size) {
+        FILE *file = ((FILE *)opaque); // 将 void 指针转换为 int 指针，并取得文件描述符
+        if (!file) {
+            OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "custom_avio_read_packet file is null");
+            return AVERROR_EOF;
+        }
+        OH_LOG_Print(LOG_APP, LOG_INFO, 0xFF00, "PluginRender", "read_packet %{public}d", buf_size);
+        size_t bytes_read = fread(buf, 1, buf_size, file); // 从文件描述符中读取数据
+        if (bytes_read <= 0) {
+            if (feof(file)) {
+                OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "custom_avio_read_packet file eof %{public}zu",
+                             bytes_read);
+                return AVERROR_EOF;
+            } else {
+                OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "custom_avio_read_packet file eio");
+                return AVERROR_EOF;
+            }
+        }
+    
+        if (buf_size > bytes_read) {
+            OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "read end %{public}zu", bytes_read);
+            return 0;
+        }
+        OH_LOG_Print(LOG_APP, LOG_INFO, 0xFF00, "PluginRender", "read_packet bytes[%{public}zu],bufsize[%{public}d]",
+                     bytes_read, buf_size);
+        return (int)bytes_read;
+    }
+
+    int open_codec_context(int *stream_idx, AVCodecContext **dec_ctx, AVFormatContext *fmt_ctx,
+                                  enum AVMediaType type) {
+        int ret, stream_index;
+        AVStream *st;
+        const AVCodec *dec = NULL;
+
+        ret = av_find_best_stream(fmt_ctx, type, -1, -1, NULL, 0);
+        if (ret < 0) {
+            fprintf(stderr, "Could not find %s stream in input file '%s'\n", av_get_media_type_string(type),
+                    "srcfile");
+            return ret;
+        } else {
+            stream_index = ret;
+            st = fmt_ctx->streams[stream_index];
+
+            /* find decoder for the stream */
+            dec = avcodec_find_decoder(st->codecpar->codec_id);
+            if (!dec) {
+                fprintf(stderr, "Failed to find %s codec\n", av_get_media_type_string(type));
+                return AVERROR(EINVAL);
+            }
+
+            /* Allocate a codec context for the decoder */
+            *dec_ctx = avcodec_alloc_context3(dec);
+            if (!*dec_ctx) {
+                fprintf(stderr, "Failed to allocate the %s codec context\n", av_get_media_type_string(type));
+                return AVERROR(ENOMEM);
+            }
+
+            /* Copy codec parameters from input stream to output codec context */
+            if ((ret = avcodec_parameters_to_context(*dec_ctx, st->codecpar)) < 0) {
+                fprintf(stderr, "Failed to copy %s codec parameters to decoder context\n",
+                        av_get_media_type_string(type));
+                return ret;
+            }
+
+            /* Init the decoders */
+            if ((ret = avcodec_open2(*dec_ctx, dec, NULL)) < 0) {
+                fprintf(stderr, "Failed to open %s codec\n", av_get_media_type_string(type));
+                return ret;
+            }
+            *stream_idx = stream_index;
+        }
+
+        return 0;
+    }
+}
 
 namespace NativeXComponentSample {
 namespace {
@@ -41,7 +122,7 @@ namespace {
     constexpr int32_t NUM_18 = 18;
     void OnSurfaceCreatedCB(OH_NativeXComponent *component, void *window)
     {
-        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "Callback", "OnSurfaceCreatedCB");
+        OH_LOG_Print(LOG_APP, LOG_INFO, 0xFF00, "Callback", "OnSurfaceCreatedCB");
         if ((component == nullptr) || (window == nullptr)) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "Callback",
                          "OnSurfaceCreatedCB: component or window is null");
@@ -257,13 +338,355 @@ void PluginRender::Export(napi_env env, napi_value exports)
     }
 
     napi_property_descriptor desc[] = {
-        {"drawPattern", nullptr, PluginRender::NapiDrawPattern, nullptr, nullptr,
-         nullptr, napi_default, nullptr},
-        {"getStatus", nullptr, PluginRender::TestGetXComponentStatus, nullptr, nullptr,
-         nullptr, napi_default, nullptr}};
+        {"drawPattern", nullptr, PluginRender::NapiDrawPattern, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"getStatus", nullptr, PluginRender::TestGetXComponentStatus, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"play", nullptr, PluginRender::NapiPlay, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"stop", nullptr, PluginRender::NapiStop, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"getInfo", nullptr, PluginRender::NapiGetInfo, nullptr, nullptr, nullptr, napi_default, nullptr},
+    };
     if (napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc) != napi_ok) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "Export: napi_define_properties failed");
     }
+}
+
+// NAPI registration method type napi_callback. If no value is returned, nullptr is returned.
+napi_value PluginRender::NapiPlay(napi_env env, napi_callback_info info) {
+    size_t argc = NUM_3;
+    napi_value args[NUM_3];
+    uint32_t fd = 0;
+    uint32_t foff = 0;
+    uint32_t flen = 0;
+
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "NapiDrawPattern");
+    if ((env == nullptr) || (info == nullptr)) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiDrawPattern: env or info is null");
+        return nullptr;
+    }
+
+    napi_value thisArg;
+    if (napi_get_cb_info(env, info, &argc, args, &thisArg, nullptr) != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiDrawPattern: napi_get_cb_info fail");
+        return nullptr;
+    }
+
+    napi_get_value_uint32(env, args[0], &fd);
+    napi_get_value_uint32(env, args[1], &foff);
+    napi_get_value_uint32(env, args[NUM_2], &flen);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
+                 "fd:%{public}d, foff:%{public}d, flen:%{public}d!", fd, foff, flen);
+
+    napi_value exportInstance;
+    if (napi_get_named_property(env, thisArg, OH_NATIVE_XCOMPONENT_OBJ, &exportInstance) != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender",
+                     "NapiDrawPattern: napi_get_named_property fail");
+        return nullptr;
+    }
+
+    OH_NativeXComponent *nativeXComponent = nullptr;
+    if (napi_unwrap(env, exportInstance, reinterpret_cast<void **>(&nativeXComponent)) != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiDrawPattern: napi_unwrap fail");
+        return nullptr;
+    }
+
+    char idStr[OH_XCOMPONENT_ID_LEN_MAX + 1] = {'\0'};
+    uint64_t idSize = OH_XCOMPONENT_ID_LEN_MAX + 1;
+    if (OH_NativeXComponent_GetXComponentId(nativeXComponent, idStr, &idSize) != OH_NATIVEXCOMPONENT_RESULT_SUCCESS) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender",
+                     "NapiDrawPattern: Unable to get XComponent id");
+        return nullptr;
+    }
+
+    std::string id(idStr);
+    PluginRender *render = PluginRender::GetInstance(id);
+    if (render != nullptr) {
+        render->eglCore_->fd_ = fd;
+        render->eglCore_->foff_ = foff;
+        render->eglCore_->flen_ = flen;
+        render->eglCore_->DrawBmp(fd, foff, flen);
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "render->eglCore_->Draw() executed");
+    }
+    return nullptr;
+}
+
+// NAPI registration method type napi_callback. If no value is returned, nullptr is returned.
+napi_value PluginRender::NapiStop(napi_env env, napi_callback_info info) {
+    size_t argc = NUM_3;
+    napi_value args[NUM_3];
+    uint32_t fd = 0;
+    uint32_t foff = 0;
+    uint32_t flen = 0;
+
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "NapiDrawPattern");
+    if ((env == nullptr) || (info == nullptr)) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiDrawPattern: env or info is null");
+        return nullptr;
+    }
+
+    napi_value thisArg;
+    if (napi_get_cb_info(env, info, &argc, args, &thisArg, nullptr) != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiDrawPattern: napi_get_cb_info fail");
+        return nullptr;
+    }
+
+    napi_get_value_uint32(env, args[0], &fd);
+    napi_get_value_uint32(env, args[1], &foff);
+    napi_get_value_uint32(env, args[NUM_2], &flen);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
+                 "fd:%{public}d, foff:%{public}d, flen:%{public}d!", fd, foff, flen);
+
+    napi_value exportInstance;
+    if (napi_get_named_property(env, thisArg, OH_NATIVE_XCOMPONENT_OBJ, &exportInstance) != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender",
+                     "NapiDrawPattern: napi_get_named_property fail");
+        return nullptr;
+    }
+
+    OH_NativeXComponent *nativeXComponent = nullptr;
+    if (napi_unwrap(env, exportInstance, reinterpret_cast<void **>(&nativeXComponent)) != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiDrawPattern: napi_unwrap fail");
+        return nullptr;
+    }
+
+    char idStr[OH_XCOMPONENT_ID_LEN_MAX + 1] = {'\0'};
+    uint64_t idSize = OH_XCOMPONENT_ID_LEN_MAX + 1;
+    if (OH_NativeXComponent_GetXComponentId(nativeXComponent, idStr, &idSize) != OH_NATIVEXCOMPONENT_RESULT_SUCCESS) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender",
+                     "NapiDrawPattern: Unable to get XComponent id");
+        return nullptr;
+    }
+
+    std::string id(idStr);
+    PluginRender *render = PluginRender::GetInstance(id);
+    if (render != nullptr) {
+        render->eglCore_->fd_ = fd;
+        render->eglCore_->foff_ = foff;
+        render->eglCore_->flen_ = flen;
+        render->eglCore_->DrawBmp(fd, foff, flen);
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "render->eglCore_->Draw() executed");
+    }
+    return nullptr;
+}
+
+struct RescontCallbackData {
+    napi_async_work asyncWork = nullptr;
+    napi_deferred deferred = nullptr;
+    napi_ref callback = nullptr;
+    unsigned char *buffer = 0;
+    uint32_t fd = 0;
+    uint32_t foff = 0;
+    uint32_t flen = 0;
+    uint32_t blen = 0;
+    napi_value result = nullptr;
+    
+};
+
+static void RescontExecuteCB(napi_env env, void *data) {
+    RescontCallbackData *callbackData = reinterpret_cast<RescontCallbackData *>(data);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", 
+        "RescontExecuteCB blen：%{public}d", callbackData->fd);
+
+    int ret = 0;
+    uint32_t fbufLen = 8192;
+    unsigned char *fbuf = (unsigned char *)av_malloc(fbufLen);
+    char dumpBuf[256];
+
+    uint32_t fd = callbackData->fd;
+    uint32_t foff = callbackData->foff;
+    uint32_t flen = callbackData->flen;
+    
+    AVFormatContext *formatContext = NULL;
+    AVIOContext *avioContext = nullptr;
+    AVCodecContext *video_dec_ctx = NULL;
+    AVCodecContext *audio_dec_ctx = NULL;
+    AVFrame *frame = NULL;
+    AVPacket *pkt = NULL;
+    int video_frame_count = 0;
+    int audio_frame_count = 0;
+    
+    int video_stream_idx = -1;
+    int audio_stream_idx = -1;
+    
+    FILE *file = fdopen(fd, "r");
+    if (file == NULL) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "NapiGetInfo fdopen failed!");
+        free(fbuf);
+        return;
+    }
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "fdopen ");
+    // 取文件
+    if (fseek(file, foff, SEEK_SET) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiGetInfo fseek failed!");
+        fclose(file);
+        free(fbuf);
+        return;
+    }
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "fseek %{public}ld", foff);
+    avioContext = avio_alloc_context(fbuf, fbufLen, 0, (void *)file, &custom_avio_read_packet, NULL, NULL);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avio_alloc_context");
+    if (!avioContext) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avio_alloc_context failed");
+        av_free(avioContext->buffer);
+        avio_context_free(&avioContext);
+        fclose(file);
+        return;
+    }
+    
+    formatContext = avformat_alloc_context();
+    if (!formatContext) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avformat_alloc_context failed");
+        av_free(avioContext->buffer);
+        avio_context_free(&avioContext);
+        fclose(file);
+        return;
+    }
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avformat_alloc_context");
+    formatContext->pb = avioContext;
+    ret = avformat_open_input(&formatContext, NULL, NULL, NULL);
+    if (ret < 0) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avformat_open_input err %{public}d", ret);
+        avformat_free_context(formatContext);
+        av_free(avioContext->buffer);
+        avio_context_free(&avioContext);
+        fclose(file);
+        return;
+    }
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avformat_open_input");
+    // 获取流信息
+    ret = avformat_find_stream_info(formatContext, NULL);
+    if (ret < 0) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avformat_find_stream_info err  %{public}d",
+                     ret);
+        avformat_close_input(&formatContext);
+        fclose(file);
+        return;
+    }
+    
+    napi_value videoRes;
+    napi_value audioRes;
+    if (open_codec_context(&video_stream_idx, &video_dec_ctx, formatContext, AVMEDIA_TYPE_VIDEO) >= 0) {
+        avcodec_string(dumpBuf, sizeof(dumpBuf), video_dec_ctx, 0);
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "video[%{public}s]", dumpBuf);
+        napi_create_string_utf8(env, dumpBuf, strlen(dumpBuf), &videoRes);
+    }
+    if (open_codec_context(&audio_stream_idx, &audio_dec_ctx, formatContext, AVMEDIA_TYPE_AUDIO) >= 0) {
+        avcodec_string(dumpBuf, sizeof(dumpBuf), audio_dec_ctx, 0);
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "audio[%{public}s]", dumpBuf);
+        napi_create_string_utf8(env, dumpBuf, strlen(dumpBuf), &audioRes);
+    }
+
+    napi_value instance;
+    napi_create_object(env, &instance);
+    napi_set_named_property(env, instance, "videoDec", videoRes);
+    napi_set_named_property(env, instance, "audioDec", audioRes);
+    callbackData->result = instance;
+}
+
+static void RescontCompleteCB(napi_env env, napi_status status, void *data) {
+    RescontCallbackData *callbackData = reinterpret_cast<RescontCallbackData *>(data);
+    napi_value result = callbackData->result;
+    if (callbackData->result != nullptr) {
+        napi_resolve_deferred(env, callbackData->deferred, result);
+    } else {
+        napi_reject_deferred(env, callbackData->deferred, result);
+    }
+
+    napi_delete_async_work(env, callbackData->asyncWork);
+    delete callbackData;
+}
+
+// NAPI registration method type napi_callback. If no value is returned, nullptr is returned.
+napi_value PluginRender::NapiGetInfo(napi_env env, napi_callback_info info) {
+    size_t argc = NUM_3;
+    napi_value args[NUM_3];
+    uint32_t fd = 0;
+    uint32_t foff = 0;
+    uint32_t flen = 0;
+
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "NapiGetInfo");
+    if ((env == nullptr) || (info == nullptr)) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiGetInfo: env or info is null");
+        return nullptr;
+    }
+
+    napi_value thisArg;
+    if (napi_get_cb_info(env, info, &argc, args, &thisArg, nullptr) != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiGetInfo: napi_get_cb_info fail");
+        return nullptr;
+    }
+
+    napi_get_value_uint32(env, args[0], &fd);
+    napi_get_value_uint32(env, args[1], &foff);
+    napi_get_value_uint32(env, args[NUM_2], &flen);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
+                 "fd:%{public}d, foff:%{public}d, flen:%{public}d!", fd, foff, flen);
+
+    napi_value exportInstance;
+    if (napi_get_named_property(env, thisArg, OH_NATIVE_XCOMPONENT_OBJ, &exportInstance) != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender",
+                     "NapiGetInfo: napi_get_named_property fail");
+        return nullptr;
+    }
+
+    OH_NativeXComponent *nativeXComponent = nullptr;
+    if (napi_unwrap(env, exportInstance, reinterpret_cast<void **>(&nativeXComponent)) != napi_ok) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender", "NapiGetInfo: napi_unwrap fail");
+        return nullptr;
+    }
+
+    char idStr[OH_XCOMPONENT_ID_LEN_MAX + 1] = {'\0'};
+    uint64_t idSize = OH_XCOMPONENT_ID_LEN_MAX + 1;
+    if (OH_NativeXComponent_GetXComponentId(nativeXComponent, idStr, &idSize) != OH_NATIVEXCOMPONENT_RESULT_SUCCESS) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "PluginRender",
+                     "NapiGetInfo: Unable to get XComponent id");
+        return nullptr;
+    }
+
+    std::string id(idStr);
+    PluginRender *render = PluginRender::GetInstance(id);
+    if (render != nullptr) {
+        render->eglCore_->fd_ = fd;
+        render->eglCore_->foff_ = foff;
+        render->eglCore_->flen_ = flen;
+        
+        napi_value promise = nullptr;
+        napi_deferred deferred = nullptr;
+        napi_create_promise(env, &deferred, &promise);
+
+        auto callbackData = new RescontCallbackData();
+        callbackData->deferred = deferred;
+
+        void *arrayData = nullptr;
+        size_t length = 0;
+        napi_valuetype result = napi_undefined;
+        napi_typeof(env, args[0], &result);
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "napi_valuetype ：%{public}d", result);
+        napi_typedarray_type type = napi_int8_array;
+
+        napi_value arraybuffer = nullptr;
+        size_t byteOffset = 0;
+        napi_get_typedarray_info(env, args[0], &type, &length, &arrayData, &arraybuffer, &byteOffset);
+
+        callbackData->buffer = (unsigned char *)arrayData;
+        callbackData->fd = fd;
+        callbackData->foff = foff;
+        callbackData->flen = flen;
+        callbackData->blen = length;
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
+            "AsyncRescont buffer：%{public}p", callbackData->buffer);
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
+            "AsyncRescont blen：%{public}d", callbackData->blen);
+
+        napi_value resourceName = nullptr;
+        napi_create_string_utf8(env, "RescontAsyncCallback", NAPI_AUTO_LENGTH, &resourceName);
+        // 创建异步任务
+        napi_create_async_work(env, nullptr, resourceName, RescontExecuteCB, RescontCompleteCB, callbackData,
+            &callbackData->asyncWork);
+        // 将异步任务加入队列
+        napi_queue_async_work(env, callbackData->asyncWork);
+
+        return promise;
+    }
+    return nullptr;
 }
 
 // NAPI registration method type napi_callback. If no value is returned, nullptr is returned.
