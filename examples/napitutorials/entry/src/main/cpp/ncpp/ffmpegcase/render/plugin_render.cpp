@@ -28,19 +28,19 @@ extern "C" {
     #include "libavcodec/avcodec.h"
 
     // 自定义 avio_read_packet 函数
-    int custom_avio_read_packet(void *opaque, uint8_t *buf, int buf_size)
+    int custom_avio_read_packet(void *opaque, uint8_t *buf, int bufSize)
     {
         FILE *file = ((FILE *)opaque); // 将 void 指针转换为 int 指针，并取得文件描述符
         if (!file) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "custom_avio_read_packet file is null");
             return AVERROR_EOF;
         }
-        OH_LOG_Print(LOG_APP, LOG_INFO, 0xFF00, "PluginRender", "read_packet %{public}d", buf_size);
-        size_t bytes_read = fread(buf, 1, buf_size, file); // 从文件描述符中读取数据
-        if (bytes_read <= 0) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, 0xFF00, "PluginRender", "read_packet %{public}d", bufSize);
+        size_t bytesRead = fread(buf, 1, bufSize, file); // 从文件描述符中读取数据
+        if (bytesRead <= 0) {
             if (feof(file)) {
                 OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "custom_avio_read_packet file eof %{public}zu",
-                             bytes_read);
+                             bytesRead);
                 return AVERROR_EOF;
             } else {
                 OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "custom_avio_read_packet file eio");
@@ -48,31 +48,31 @@ extern "C" {
             }
         }
     
-        if (buf_size > bytes_read) {
-            OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "read end %{public}zu", bytes_read);
+        if (bufSize > bytesRead) {
+            OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "read end %{public}zu", bytesRead);
             return 0;
         }
         OH_LOG_Print(LOG_APP, LOG_INFO, 0xFF00, "PluginRender", "read_packet bytes[%{public}zu],bufsize[%{public}d]",
-                     bytes_read, buf_size);
-        return (int)bytes_read;
+                     bytesRead, bufSize);
+        return (int)bytesRead;
     }
 
-    int open_codec_context(int *stream_idx, AVCodecContext **dec_ctx, AVFormatContext *fmt_ctx,
-            enum AVMediaType type)
+    int open_codec_context(int *streamIdx, AVCodecContext **decCtx, AVFormatContext *fmtCtx,
+        enum AVMediaType type)
     {
         int ret = 0;
-        int stream_index = 0;
+        int streamIndex = 0;
         AVStream *st;
         const AVCodec *dec = NULL;
 
-        ret = av_find_best_stream(fmt_ctx, type, -1, -1, NULL, 0);
+        ret = av_find_best_stream(fmtCtx, type, -1, -1, NULL, 0);
         if (ret < 0) {
             fprintf(stderr, "Could not find %s stream in input file '%s'\n", av_get_media_type_string(type),
                     "srcfile");
             return ret;
         } else {
-            stream_index = ret;
-            st = fmt_ctx->streams[stream_index];
+            streamIndex = ret;
+            st = fmtCtx->streams[streamIndex];
 
             /* find decoder for the stream */
             dec = avcodec_find_decoder(st->codecpar->codec_id);
@@ -82,25 +82,25 @@ extern "C" {
             }
 
             /* Allocate a codec context for the decoder */
-            *dec_ctx = avcodec_alloc_context3(dec);
-            if (!*dec_ctx) {
+            *decCtx = avcodec_alloc_context3(dec);
+            if (!*decCtx) {
                 fprintf(stderr, "Failed to allocate the %s codec context\n", av_get_media_type_string(type));
                 return AVERROR(ENOMEM);
             }
 
             /* Copy codec parameters from input stream to output codec context */
-            if ((ret = avcodec_parameters_to_context(*dec_ctx, st->codecpar)) < 0) {
+            if ((ret = avcodec_parameters_to_context(*decCtx, st->codecpar)) < 0) {
                 fprintf(stderr, "Failed to copy %s codec parameters to decoder context\n",
                         av_get_media_type_string(type));
                 return ret;
             }
 
             /* Init the decoders */
-            if ((ret = avcodec_open2(*dec_ctx, dec, NULL)) < 0) {
+            if ((ret = avcodec_open2(*decCtx, dec, NULL)) < 0) {
                 fprintf(stderr, "Failed to open %s codec\n", av_get_media_type_string(type));
                 return ret;
             }
-            *stream_idx = stream_index;
+            *streamIdx = streamIndex;
         }
 
         return 0;
