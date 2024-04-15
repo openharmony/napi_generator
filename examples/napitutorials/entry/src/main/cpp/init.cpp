@@ -71,7 +71,7 @@ static napi_value Init(napi_env env, napi_value exports)
         {"cjson_version", nullptr, cJSONVersion, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"getContext", nullptr, NativeXComponentSample::PluginManager::GetContext,
             nullptr, nullptr, nullptr, napi_default, nullptr},
-		{"KH418_cJSON_Parse", nullptr, KH418_CJSON_Parse, nullptr, nullptr, nullptr, napi_default, nullptr},	
+        {"KH418_cJSON_Parse", nullptr, KH418_CJSON_Parse, nullptr, nullptr, nullptr, napi_default, nullptr},
     };
     napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
 
