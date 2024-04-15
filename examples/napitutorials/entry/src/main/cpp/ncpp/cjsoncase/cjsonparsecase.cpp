@@ -310,7 +310,8 @@ napi_value getReturnObj2(napi_env env, napi_value cJSON_ParseOut, char *valuestr
     return cJSON_ParseOut;
 }
 
-napi_value getReturnObj3(napi_env env, napi_value cJSON_ParseOut, int32_t myInt32Valueint,double myValueDouble, char *string2)
+napi_value getReturnObj3(napi_env env, napi_value cJSON_ParseOut, int32_t myInt32Valueint,
+    double myValueDouble, char *string2)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -352,8 +353,9 @@ napi_value getReturnObj3(napi_env env, napi_value cJSON_ParseOut, int32_t myInt3
     return cJSON_ParseOut;
 }
 
-    // [NAPI_GEN]: introduce function
-    napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info) {
+// [NAPI_GEN]: introduce function
+napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
+{
     // [NAPI_GEN]: get function param in
     size_t argc = 1;
     napi_value args[1] = {nullptr};
