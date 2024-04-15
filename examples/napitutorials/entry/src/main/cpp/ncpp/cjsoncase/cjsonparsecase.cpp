@@ -42,7 +42,7 @@ constexpr uint8_t PARAM100 = 100;
 static const char *TAG = "[KH418_CJSON_Parse]";
 
 void getErrMsgCJSon(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
-               const char *info, const char *tag)
+    const char *info, const char *tag)
 {
     status = napi_get_last_error_info(env, &extended_error_info);
     if (status == napi_ok && extended_error_info != NULL) {
@@ -101,7 +101,7 @@ napi_value getChildTypeOut(napi_env env, napi_value childOut, cJSON *jsonChild)
     return childOut;
 }
 
-napi_value getChildStringOut(napi_env env, napi_value childOut, char *stringChild) 
+napi_value getChildStringOut(napi_env env, napi_value childOut, char *stringChild)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -137,7 +137,7 @@ napi_value getChildValueStringOut(napi_env env, napi_value childOut, char *value
     return childOut;
 }
 
-napi_value getChildValueIntOut(napi_env env, napi_value childOut, cJSON *jsonChild) 
+napi_value getChildValueIntOut(napi_env env, napi_value childOut, cJSON *jsonChild)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -156,7 +156,7 @@ napi_value getChildValueIntOut(napi_env env, napi_value childOut, cJSON *jsonChi
     return childOut;
 }
 
-napi_value getChildValueDoubleOut(napi_env env, napi_value childOut, cJSON *jsonChild) 
+napi_value getChildValueDoubleOut(napi_env env, napi_value childOut, cJSON *jsonChild)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -203,7 +203,7 @@ napi_value cJsonParseChildOut(napi_env env, cJSON *json)
     return childOut;
 }
 
-napi_value cJsonParseNextOut(napi_env env, cJSON *json) 
+napi_value cJsonParseNextOut(napi_env env, cJSON *json)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -257,8 +257,8 @@ char *getInfo(napi_env env, napi_value param0)
     return valueIn0;
 }
 
-napi_value getReturnObj(napi_env env, napi_value cJSON_ParseOut, napi_value nextOut, napi_value prevOut, 
-    napi_value childOut, int32_t myInt32Type)
+napi_value getReturnObj(napi_env env, napi_value cJSON_ParseOut, napi_value nextOut, napi_value prevOut,
+    napi_value childOut)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -277,6 +277,14 @@ napi_value getReturnObj(napi_env env, napi_value cJSON_ParseOut, napi_value next
         getErrMsgCJSon(status, env, extended_error_info, "napi_set_named_property", TAG);
         return nullptr;
     }
+   
+    return cJSON_ParseOut;
+}
+
+napi_value getReturnObj2(napi_env env, napi_value cJSON_ParseOut, char *valuestring, int32_t myInt32Type)
+{
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
     napi_value typeOut;
     status = napi_create_int32(env, myInt32Type, &typeOut);
     if (status != napi_ok) {
@@ -288,14 +296,6 @@ napi_value getReturnObj(napi_env env, napi_value cJSON_ParseOut, napi_value next
         getErrMsgCJSon(status, env, extended_error_info, "napi_set_named_property", TAG);
         return nullptr;
     }
-    return cJSON_ParseOut;
-}
-
-napi_value getReturnObj2(napi_env env, napi_value cJSON_ParseOut, char *valuestring, int32_t myInt32Valueint,
-    double myValueDouble, char *string2) 
-{
-    napi_status status;
-    const napi_extended_error_info *extended_error_info;
     napi_value valuestringOut;
     status = napi_create_string_utf8(env, valuestring, NAPI_AUTO_LENGTH, &valuestringOut);
     if (status != napi_ok) {
@@ -307,7 +307,13 @@ napi_value getReturnObj2(napi_env env, napi_value cJSON_ParseOut, char *valuestr
         getErrMsgCJSon(status, env, extended_error_info, "napi_set_named_property", TAG);
         return nullptr;
     }
+    return cJSON_ParseOut;
+}
 
+napi_value getReturnObj3(napi_env env, napi_value cJSON_ParseOut, int32_t myInt32Valueint,double myValueDouble, char *string2)
+{
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
     napi_value valueintOut;
     status = napi_create_int32(env, myInt32Valueint, &valueintOut);
     if (status != napi_ok) {
@@ -346,9 +352,8 @@ napi_value getReturnObj2(napi_env env, napi_value cJSON_ParseOut, char *valuestr
     return cJSON_ParseOut;
 }
 
-// [NAPI_GEN]: introduce function
-napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
-{
+    // [NAPI_GEN]: introduce function
+    napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info) {
     // [NAPI_GEN]: get function param in
     size_t argc = 1;
     napi_value args[1] = {nullptr};
@@ -387,8 +392,9 @@ napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
         getErrMsgCJSon(status, env, extended_error_info, "napi_create_object", TAG);
         return nullptr;
     }
-    cJSON_ParseOut = getReturnObj(env, cJSON_ParseOut, nextOut,prevOut,childOut, myInt32Type);
-    cJSON_ParseOut = getReturnObj2(env, cJSON_ParseOut, valuestring, myInt32Valueint, myValueDouble, string2);
+    cJSON_ParseOut = getReturnObj(env, cJSON_ParseOut, nextOut, prevOut, childOut);
+    cJSON_ParseOut = getReturnObj2(env, cJSON_ParseOut, valuestring, myInt32Type);
+    cJSON_ParseOut = getReturnObj3(env, cJSON_ParseOut, myInt32Valueint, myValueDouble, string2);
 
     return cJSON_ParseOut;
 }
