@@ -32,6 +32,8 @@ napi_value setThreadsafefuncrel(napi_env env, napi_callback_info info);
 napi_value setThreadsafefuncall(napi_env env, napi_callback_info info);
 
 napi_value cJSONVersion(napi_env env, napi_callback_info info);
+
+// cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_Parse(const char *value); 方法的napi框架代码用例
 napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info);
 
 #endif //NAPITUTORIALS_NODEAPI_H

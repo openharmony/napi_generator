@@ -13,6 +13,8 @@
 * limitations under the License.
 */
 
+import {cJSON, KH418_cJSON_Parse} from './cjson'
+
 export interface InstanceData {
   testint32: number;
 }
@@ -45,17 +47,6 @@ export const testNapiGetElement: (a: object, b: number) => string;
 export const testNapiHasElement: (a: object, b: number) => string;
 export const testNapiDeleteElement: (a: object, b: number) => string;
 
-export interface cJSON {
-    next: cJSON;
-    prev: cJSON;
-    child: cJSON;
-    type: number;
-    valuestring: string;
-    valueint: number;
-    valuedouble: number;
-    string: string;
-}
-export const KH418_cJSON_Parse:(value: string) => cJSON;
 
 /* work_with_javascript_values_and_abstract_operations */
 export const testNapiCoerceToBool: (a: any) => boolean;
