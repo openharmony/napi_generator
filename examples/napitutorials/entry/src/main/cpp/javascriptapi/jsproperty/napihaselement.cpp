@@ -17,59 +17,53 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
-napi_value testNapiDeleteProperty(napi_env env, napi_callback_info info)
+napi_value testNapiHasElement(napi_env env, napi_callback_info info)
 {
-    // pages/javascript/jsproperties/napideleteproperty
+    // pages/javascript/jsproperties/napihaselement
     size_t argc = PARAM2;
     napi_value argv[PARAM2];
     napi_status status;
-    napi_value obj;
-    napi_value propName;
+    napi_value arrayObj;
+    napi_value elementIndex;
     const napi_extended_error_info *extended_error_info;
-
     // 解析传入的参数
     status = napi_get_cb_info(env, info, &argc, argv, NULL, NULL);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get cb info", TAG);
         return NULL;
     }
-
     // 检查参数数量
     if (argc < PARAM2) {
         napi_throw_error(env, NULL, "Expected 2 arguments");
         return NULL;
     }
-    obj = argv[PARAM0];
-    propName = argv[PARAM1];
-
-    napi_valuetype valuetype0;
-
-    // 确认第一个参数是个对象
-    status = napi_typeof(env, obj, &valuetype0);
+    arrayObj = argv[PARAM0];
+    elementIndex = argv[PARAM1];
+    // 判断参数有效性
+    bool resValid = validateArrayObjProperty(env, arrayObj, elementIndex, TAG);
+    if (resValid == false) {
+        return NULL;
+    }
+    uint32_t index = 0;
+    // 将第二个参数（索引）转换为本地 uint32_t
+    status = napi_get_value_uint32(env, elementIndex, &index);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get obj type", TAG);
+        getErrMsg(status, env, extended_error_info, "get value uint32", TAG);
         return NULL;
     }
-    if (valuetype0 != napi_object) {
-        napi_throw_type_error(env, NULL, "Wrong argument type, expected an object");
-        return NULL;
-    }
-
-    // 删除属性
-    bool result = false;
-    status = napi_delete_property(env, obj, propName, &result);
+    bool hasElement = false;
+    // 设置数组元素
+    status = napi_has_element(env, arrayObj, index, &hasElement);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "delete property", TAG);
+        getErrMsg(status, env, extended_error_info, "has element", TAG);
         return NULL;
     }
-    
-    if (result) {
-        // 删除成功
-        OH_LOG_INFO(LOG_APP, "Delete property successfully!");
-    } else {
-        OH_LOG_INFO(LOG_APP, "Fail to delete property!");
+    // 返回属性是否存在的布尔值
+    napi_value result;
+    status = napi_get_boolean(env, hasElement, &result);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get boolean", TAG);
+        return NULL;
     }
-    
-    // 返回删除属性之后的对象
-    return obj;
+    return result;
 }

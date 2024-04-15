@@ -13,48 +13,46 @@
  * limitations under the License.
  */
 
-#include "javascriptapi.h"
+#include "common.h"
 
-static const char *TAG = "[javascriptapi_property]";
+static const char *TAG = "[jsapi_typeof]";
 
-napi_value testNapiGetPropertyNames(napi_env env, napi_callback_info info)
+napi_value testNapiTypeof(napi_env env, napi_callback_info info)
 {
-    // pages/javascript/jsproperties/napigetpropertynames
+    // pages/javascript/jsabstractops/typeof
+    size_t requireArgc = PARAM1;
     size_t argc = PARAM1;
-    napi_value argv[PARAM1];
     napi_status status;
-    napi_value obj;
+    napi_valuetype result;
+    napi_value resultStr;
+    napi_value args[PARAM1] = {nullptr};
     const napi_extended_error_info *extended_error_info;
 
-    // 解析传入的参数
-    status = napi_get_cb_info(env, info, &argc, argv, NULL, NULL);
+    // Get args
+    status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get cb info", TAG);
         return NULL;
     }
-
-    // 检查参数数量
-    if (argc < PARAM1) {
-        napi_throw_error(env, NULL, "Expected 1 arguments");
+    if (argc < requireArgc) {
+        std::string errMsg = "Expected " + std::to_string(requireArgc) + " arguments";
+        napi_throw_error(env, NULL, errMsg.c_str());
         return NULL;
     }
 
-    obj = argv[PARAM0];
-    napi_value propertyNames;
-    status = napi_get_property_names(env, obj, &propertyNames);
+    // Call napi_typeof(), any -> napi_valuetype
+    status = napi_typeof(env, args[PARAM0], &result);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get property names", TAG);
+        getErrMsg(status, env, extended_error_info, "call napi_typeof()", TAG);
         return NULL;
     }
 
-    uint32_t length = 0;
-    status = napi_get_array_length(env, propertyNames, &length);
+    // napi_valuetype -> string
+    status = napiValueType2Str(env, result, &resultStr);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get array length", TAG);
+        std::string errMsg = "Failed to convert napi_valuetype " + std::to_string(status) + " to string";
+        napi_throw_error(env, NULL, errMsg.c_str());
         return NULL;
     }
-    // 打印属性个数
-    OH_LOG_INFO(LOG_APP, "napi_get_array_length success! propertyNames length: %i", length);
-    
-    return propertyNames;
+    return resultStr;
 }
