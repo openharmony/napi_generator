@@ -70,7 +70,8 @@ static napi_value Init(napi_env env, napi_value exports)
         {"testNapiThreadsafefuncall", nullptr, setThreadsafefuncall, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"cjson_version", nullptr, cJSONVersion, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"getContext", nullptr, NativeXComponentSample::PluginManager::GetContext,
-            nullptr, nullptr, nullptr, napi_default, nullptr}
+            nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"KH418_cJSON_Parse", nullptr, KH418_CJSON_Parse, nullptr, nullptr, nullptr, napi_default, nullptr},
     };
     napi_define_properties(env, exports, sizeof(descArr) / sizeof(descArr[0]), descArr);
 

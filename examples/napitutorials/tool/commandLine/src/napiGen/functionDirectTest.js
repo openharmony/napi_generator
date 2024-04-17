@@ -19,7 +19,6 @@ const path = require('path')
 const fs = require("fs");
 const LENGTH = 10;
 const TWO_DECIMAL = 2;
-const SERIAL = 5;
 const MODTWO = 2;
 
 // 随机生成浮点数值
@@ -85,17 +84,15 @@ function generateFuncTestCase(params, tsFuncName, testFilePath, directFuncJson) 
     let index = funcParamUse.lastIndexOf(', ');
     funcParamUse = funcParamUse.substring(0, index);
     // 调用函数
-    let callFunc = util.format('let result: %s = testNapi.%s(%s)\n', getJsType(funcInfo.retType), tsFuncName, funcParamUse)
+    let callFunc = util.format('      let result: %s = testNapi.%s(%s)\n', getJsType(funcInfo.retType), tsFuncName, funcParamUse)
     // 加 hilog 打印
-    let hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI  %s: ", result);', tsFuncName)
+    let hilogContent = util.format('      hilog.info(0x0000, "testTag", "Test NAPI  %s: ", result);', tsFuncName)
     let func_test_replace = funcParamDefine + callFunc + hilogContent
     let abilityTestTemplete = directFuncJson.abilityTestTemplete
-    // 替换random_number
-     let serialNum = tsFuncName.substring(0,SERIAL)
-     console.info("serialNum: " + serialNum)
+    // 替换test_case_name
     let funcTestContent =  replaceAll(abilityTestTemplete,'[func_direct_testCase]', func_test_replace)
-     funcTestContent = replaceAll(funcTestContent, '[random_number]', serialNum)
-     //console.info("funcTestContent: " + funcTestContent)
+    funcTestContent = replaceAll(funcTestContent, '[test_case_name]', tsFuncName)
+    //console.info("funcTestContent: " + funcTestContent)
     // 将内容写入Ability.test.ets文件
     // 1.追加写入import模块 写在第一个import之前
     // 2.追加写入测试用例
@@ -152,6 +149,9 @@ function getJsType(type) {
         return 'string'
     } else if (type === 'bool') {
         return 'boolean'
+    } else {
+        // 对象，在ts中定义为interface
+        return 'testNapi.' + type.replace('*', '').trim()
     }
 }
 
