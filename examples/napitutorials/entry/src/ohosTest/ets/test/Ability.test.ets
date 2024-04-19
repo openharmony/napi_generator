@@ -64,4 +64,72 @@ export default function abilityTest() {
       console.info("Test NAPI KH418_cJSON_Parse result3: ", JSON.stringify(result3))
       console.info("Test NAPI KH418_cJSON_Parse result4: ", JSON.stringify(result4))
     })
+
+    // [NAPI_GEN]:输出测试方法，加注释
+    it('KH373_cJSON_GetArraySize', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      let value: testNapi.cJSON = {
+        next: null,
+        prev: null,
+        child: null,
+        type: 0,
+        valuestring: '["apple","banana","cherry","pear","strawberry"]',
+        valueint: 0,
+        valuedouble: 0,
+        string: ''
+      }
+      let result: number = testNapi.KH373_cJSON_GetArraySize(value);
+      hilog.info(0x0000, "testTag", "Test NAPI KH734_CJSON_GetArraySize: ", result);
+      console.info("Test NAPI KH734_CJSON_GetArraySize result: ", JSON.stringify(result))
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+    })
+
+    // [NAPI_GEN]:输出测试方法，加注释
+    it('KH735_cJSON_Print', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      let paramIn: testNapi.cJSON = {
+        next: null,
+        prev: null,
+        child: null,
+        type: 16,
+        valuestring: 'JohnDoe',
+        valueint: 0,
+        valuedouble: 0,
+        string: 'name'
+      }
+      let result: string = testNapi.KH735_cJSON_Print(paramIn)
+      hilog.info(0x0000, "testTag", "Test NAPI  KH735_cJSON_Print: ", result);
+      console.info("Test NAPI KH735_cJSON_Print result: ", JSON.stringify(result))
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      // e.g. expect(result).assertEqual(2+3)
+    })
+
+    // [NAPI_GEN]:输出测试方法，加注释
+    it('KH361_cJSON_CreateObject', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+
+      let result: testNapi.cJSON = testNapi.KH361_cJSON_CreateObject()
+      hilog.info(0x0000, "testTag", "Test NAPI  KH735_cJSON_Print: ", result);
+      console.info("Test NAPI KH361_cJSON_CreateObject result: ", JSON.stringify(result))
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      // e.g. expect(result).assertEqual(2+3)
+    })
+
+    // [NAPI_GEN]:输出测试方法，加注释
+    it('KH515_cJSON_CreateString', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+
+      let string = "gOtkqDFR0z"
+      let result: testNapi.cJSON = testNapi.KH515_cJSON_CreateString(string)
+      hilog.info(0x0000, "testTag", "Test NAPI KH515_cJSON_CreateString: ", JSON.stringify(result));
+      console.info("Test NAPI KH515_cJSON_CreateString result: ", JSON.stringify(result))
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      // e.g. expect(result).assertEqual(2+3)
+    })
+
+})
 }
