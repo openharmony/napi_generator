@@ -51,19 +51,17 @@ export default function abilityTest() {
     it('KH418_cJSON_Parse', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
       hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
-      let value = '{"name":"JohnDoe"}'
+      let value = '"helloworld"'
       let result: testNapi.cJSON = testNapi.KH418_cJSON_Parse(value);
-      let value2 = '{"age":18}'
+      let value2 = '1.8'
       let result2: testNapi.cJSON = testNapi.KH418_cJSON_Parse(value2);
-      let value3 = '{"is_student":true}'
+      let value3 = '["a","b"]'
       let result3: testNapi.cJSON = testNapi.KH418_cJSON_Parse(value3);
-      let value4 = '{"arrayTest":["a", "b"]}'
+      let value4 = '{"name":"JohnDoe","age":18}'
       let result4: testNapi.cJSON = testNapi.KH418_cJSON_Parse(value4);
       console.info("Test NAPI KH418_cJSON_Parse result1: ", JSON.stringify(result))
-      console.info("Test NAPI KH418_cJSON_Parse result1: ", JSON.stringify(result2))
-      console.info("Test NAPI KH418_cJSON_Parse result1: ", JSON.stringify(result3))
-      console.info("Test NAPI KH418_cJSON_Parse result1: ", JSON.stringify(result4))
-      // hilog.info(0x0000, "testTag", "Test NAPI KH418_cJSON_Parse result2: ", JSON.stringify(result));
-      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
-  })
+      console.info("Test NAPI KH418_cJSON_Parse result2: ", JSON.stringify(result2))
+      console.info("Test NAPI KH418_cJSON_Parse result3: ", JSON.stringify(result3))
+      console.info("Test NAPI KH418_cJSON_Parse result4: ", JSON.stringify(result4))
+    })
 }
