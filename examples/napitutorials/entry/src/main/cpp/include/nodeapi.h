@@ -33,7 +33,34 @@ napi_value setThreadsafefuncall(napi_env env, napi_callback_info info);
 
 napi_value cJSONVersion(napi_env env, napi_callback_info info);
 
-// cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_Parse(const char *value); 方法的napi框架代码用例
+/* [NAPI_GEN]: 对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_Parse(const char *value);的napi方法，
+ * 输入一个待转换的字符串
+ * 输出cJSON序列化之后的字符串
+ */
 napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info);
+
+/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(int) cJSON_GetArraySize(const cJSON *array);的napi方法，
+ * 输入一个cJSON数组
+ * 输出数组长度
+ */
+napi_value KH373_cJSON_GetArraySize(napi_env env, napi_callback_info info);
+
+/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(char *) cJSON_Print(const cJSON *item);的napi方法，
+ * 输入一个cJSON对象
+ * 输出该对象序列化之后的字符串
+ */
+napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info);
+
+/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_CreateObject(void);的napi方法，
+ * 输入为空
+ * 输出创建的cJSON对象
+ */
+napi_value KH361_cJSON_CreateObject(napi_env env, napi_callback_info info);
+
+/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_CreateString(const char *string);的napi方法，
+ * 输入一个字符串
+ * 输出根据字符串创建的cJSON对象
+ */
+napi_value KH515_cJSON_CreateString(napi_env env, napi_callback_info info);
 
 #endif //NAPITUTORIALS_NODEAPI_H
