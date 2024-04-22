@@ -16,11 +16,70 @@
 #include "cjson/cJSON.h"
 #include "common.h"
 
+char *getInfoString(napi_env env, napi_value obj)
+{
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    /* [NAPI_GEN]: tag: 日志打印标签*/
+    const char *tag = "[KH735_cJSON_Print]";
+    // 拿到string属性的值
+    napi_value propValue;
+    status = napi_get_named_property(env, obj, "string", &propValue); // 读取属性
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get named property", tag);
+        return NULL;
+    }
+    size_t strSize0 = 0;
+    status = napi_get_value_string_utf8(env, propValue, NULL, 0, &strSize0);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        return NULL;
+    }
+    char *propertyString = new char[strSize0 + 1];
+    status = napi_get_value_string_utf8(env, propValue, propertyString, strSize0 + 1, &strSize0);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        delete[] propertyString;
+        return NULL;
+    }
+    return propertyString;
+}
+
+char *getInfoValuestring(napi_env env, napi_value obj)
+{
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    /* [NAPI_GEN]: tag: 日志打印标签*/
+    const char *tag = "[KH735_cJSON_Print]";
+    // 拿到valuestring属性的值
+    napi_value propValue2;
+    status = napi_get_named_property(env, obj, "valuestring", &propValue2); // 读取属性
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get named property", tag);
+        return NULL;
+    }
+    size_t strSize1 = 0;
+    status = napi_get_value_string_utf8(env, propValue2, NULL, 0, &strSize1);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        return NULL;
+    }
+    char *propertyValueString = new char[strSize1 + 1];
+    status = napi_get_value_string_utf8(env, propValue2, propertyValueString, strSize1 + 1, &strSize1);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        delete[] propertyValueString;
+        return NULL;
+    }
+    return propertyValueString;
+}
+
 /* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(char *) cJSON_Print(const cJSON *item);的napi方法，
  * 输入一个cJSON对象
  * 输出该对象序列化之后的字符串
  */
-napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info) {
+napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
+{
     napi_status status;
     /* [NAPI_GEN]: Node.js在其N-API中用来提供错误的扩展信息的结构体,结构体包含以下字段
      * error_message: 一个指向错误详细字符串的指针，提供了关于错误的文本描述
@@ -56,47 +115,8 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info) {
     // Todo: add business logic. 在这之前代码为框架所生成
     // 拿到cJSON 对象
     napi_value obj = args[0];
-    // 拿到string属性的值
-    napi_value propValue;
-    status = napi_get_named_property(env, obj, "string", &propValue); // 读取属性
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get named property", tag);
-        return NULL;
-    }
-    size_t strSize0 = 0;
-    status = napi_get_value_string_utf8(env, propValue, NULL, 0, &strSize0);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
-        return NULL;
-    }
-    char *propertyString = new char[strSize0 + 1];
-    status = napi_get_value_string_utf8(env, propValue, propertyString, strSize0 + 1, &strSize0);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
-        delete[] propertyString;
-        return NULL;
-    }
-    // 拿到valuestring属性的值
-    napi_value propValue2;
-    status = napi_get_named_property(env, obj, "valuestring", &propValue2); // 读取属性
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get named property", tag);
-        return NULL;
-    }
-    size_t strSize1 = 0;
-    status = napi_get_value_string_utf8(env, propValue2, NULL, 0, &strSize1);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
-        return NULL;
-    }
-    char *propertyValueString = new char[strSize1 + 1];
-    status = napi_get_value_string_utf8(env, propValue2, propertyValueString, strSize1 + 1, &strSize1);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
-        delete[] propertyString;
-        return NULL;
-    }
-
+    char *propertyString = getInfoString(env, obj);
+    char *propertyValueString = getInfoValuestring(env, obj);
     // 创建一个JSON对象
     cJSON *jsonObject = cJSON_CreateObject();
     // 向JSON对象添加一个键值对

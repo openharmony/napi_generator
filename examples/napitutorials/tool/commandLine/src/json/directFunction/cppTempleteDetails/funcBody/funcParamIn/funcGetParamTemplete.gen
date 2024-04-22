@@ -10,10 +10,10 @@
      * this_arg: 如果不是NULL,则返回js回调中this的值
      * data: 如果不是NULL,则返回与回调函数关联的任何可选数据。通常用于传递在创建函数时指定的静态数据
      */
-    status = napi_get_cb_info(env, info, &argc, args , nullptr, nullptr);
+    status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     if(status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env,extended_error_info, "napi_get_cb_info",tag);
+        getErrMsg(status, env,extended_error_info, "napi_get_cb_info", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 从args数组中获取入参 */

@@ -1,4 +1,4 @@
-/* [NAPI_GEN]: introduce function: [func_introduce_replace]*/ 
+/* [NAPI_GEN]: introduce function: [func_introduce_replace]*/
 napi_value [funcName](napi_env env, napi_callback_info info)
 {
     napi_status status;
@@ -11,8 +11,8 @@ napi_value [funcName](napi_env env, napi_callback_info info)
      */
     const napi_extended_error_info *extended_error_info;
     /* [NAPI_GEN]: tag: 日志打印标签*/
-    const char * tag = "[[get_error_msg_tag]]";
-    /* [NAPI_GEN]: get function param in*/ 
+    const char *tag = "[[get_error_msg_tag]]";
+    /* [NAPI_GEN]: get function param in*/
 [func_getParam_replace]
 [func_return_replace]
 }

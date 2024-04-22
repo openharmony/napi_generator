@@ -315,7 +315,8 @@ char *getCreateStringParamIn(napi_env env, napi_value paramIn)
  * 输入一个字符串
  * 输出根据字符串创建的cJSON对象
  */
-napi_value KH515_cJSON_CreateString(napi_env env, napi_callback_info info) {
+napi_value KH515_cJSON_CreateString(napi_env env, napi_callback_info info)
+{
     napi_status status;
     /* [NAPI_GEN]: Node.js在其N-API中用来提供错误的扩展信息的结构体,结构体包含以下字段
      * error_message: 一个指向错误详细字符串的指针，提供了关于错误的文本描述
@@ -350,7 +351,6 @@ napi_value KH515_cJSON_CreateString(napi_env env, napi_callback_info info) {
     char *stringIn = getCreateStringParamIn(env, paramIn);
     // Todo: add business logic. 在这前后代码为框架所生成
     cJSON *jsonObject = cJSON_CreateString(stringIn);
-    
     /* [NAPI_GEN]: function return value*/
     napi_value cJSON_CreateStringOut;
     /* [NAPI_GEN]: 返回值是对象时，需要使用napi_create_object创建一个js的对象与js代码交互
