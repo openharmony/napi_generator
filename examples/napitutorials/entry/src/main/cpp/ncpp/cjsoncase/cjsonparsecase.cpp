@@ -62,7 +62,7 @@ napi_value getCjsonChildOut(napi_env env, napi_value childOut, cJSON *jsonChild)
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH418_CJSON_Parse]";
-    // ½«Êı¾İÈûÈëchild
+    // å°†æ•°æ®å¡å…¥child
     if (jsonChild != nullptr) {
         napi_value childValuestringOut;
         status = napi_create_string_utf8(env, jsonChild->valuestring == nullptr ? "" : jsonChild->valuestring,
@@ -139,7 +139,7 @@ napi_value getCjsonNextOut(napi_env env, napi_value nextOut, cJSON *jsonNext)
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH418_CJSON_Parse]";
-    // ½«Êı¾İÈûÈënext
+    // å°†æ•°æ®å¡å…¥next
     if (jsonNext != nullptr) {
         napi_value nextValuestringOut;
         status = napi_create_string_utf8(env, jsonNext->valuestring == nullptr ? "" : jsonNext->valuestring,
@@ -175,12 +175,12 @@ char *getCjsonparseInfo(napi_env env, napi_value objIn)
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH418_CJSON_Parse]";
-    /* [NAPI_GEN]: ´ÓargsÊı×éÖĞ»ñÈ¡Èë²Î */
+    /* [NAPI_GEN]: ä»argsæ•°ç»„ä¸­è·å–å…¥å‚ */
     napi_valuetype valuetypevalue;
-    /* [NAPI_GEN]: »ñÈ¡Èë²ÎÀàĞÍ£¬µÚ0¸öÈë²Î
-     * env: N-API»·¾³µÄ¾ä±ú£¬±íÊ¾µ±Ç°µÄÉÏÏÂÎÄ
-     * value: Òª¼ì²éÀàĞÍµÄjsÖµ
-     * result: ÊÇÒ»¸öÖ¸Õë£¬Ö¸Ïònapi_valuetypeÃ¶¾ÙµÄÖµ£¬º¯Êı»á½«½á¹û´æ´¢ÔÚÕâÀï
+    /* [NAPI_GEN]: è·å–å…¥å‚ç±»å‹ï¼Œç¬¬0ä¸ªå…¥å‚
+     * env: N-APIç¯å¢ƒçš„å¥æŸ„ï¼Œè¡¨ç¤ºå½“å‰çš„ä¸Šä¸‹æ–‡
+     * value: è¦æ£€æŸ¥ç±»å‹çš„jså€¼
+     * result: æ˜¯ä¸€ä¸ªæŒ‡é’ˆï¼ŒæŒ‡å‘napi_valuetypeæšä¸¾çš„å€¼ï¼Œå‡½æ•°ä¼šå°†ç»“æœå­˜å‚¨åœ¨è¿™é‡Œ
      */
     status = napi_typeof(env, objIn, &valuetypevalue);
     if (status != napi_ok) {
@@ -188,21 +188,21 @@ char *getCjsonparseInfo(napi_env env, napi_value objIn)
         return nullptr;
     }
     size_t strSize0 = 0;
-    /* [NAPI_GEN]: napi_get_value_string_utf8ÓÃÓÚ½«Js×Ö·û´®×ª»»ÎªUTF-8±àÂëµÄC×Ö·û´®
-     * env: N-API»·¾³µÄ¾ä±ú£¬±íÊ¾µ±Ç°µÄÉÏÏÂÎÄ
-     * value: Òª×ª»»µÄJavaScript×Ö·û´®
-     * buf: ÓÃÓÚ´æ´¢½á¹ûµÄ×Ö·ûÊı×éµÄÖ¸Õë
-     * bufsize: »º³åÇø´óĞ¡£¬ÒÔ×Ö½ÚÎªµ¥Î»
-     * result: ×ª»»ºóµÄ×Ö·û´®µÄ×Ö½Ú³¤¶È(²»°üÀ¨¿ÕÖÕÖ¹·û)¡£Èô¸ÉbufÊÇNULL,Ôò·µ»ØËùĞèµÄ»º³åÇø´óĞ¡(°üÀ¨¿ÕÖÕÖ¹·û)
+    /* [NAPI_GEN]: napi_get_value_string_utf8ç”¨äºå°†Jså­—ç¬¦ä¸²è½¬æ¢ä¸ºUTF-8ç¼–ç çš„Cå­—ç¬¦ä¸²
+     * env: N-APIç¯å¢ƒçš„å¥æŸ„ï¼Œè¡¨ç¤ºå½“å‰çš„ä¸Šä¸‹æ–‡
+     * value: è¦è½¬æ¢çš„JavaScriptå­—ç¬¦ä¸²
+     * buf: ç”¨äºå­˜å‚¨ç»“æœçš„å­—ç¬¦æ•°ç»„çš„æŒ‡é’ˆ
+     * bufsize: ç¼“å†²åŒºå¤§å°ï¼Œä»¥å­—èŠ‚ä¸ºå•ä½
+     * result: è½¬æ¢åçš„å­—ç¬¦ä¸²çš„å­—èŠ‚é•¿åº¦(ä¸åŒ…æ‹¬ç©ºç»ˆæ­¢ç¬¦)ã€‚è‹¥å¹²bufæ˜¯NULL,åˆ™è¿”å›æ‰€éœ€çš„ç¼“å†²åŒºå¤§å°(åŒ…æ‹¬ç©ºç»ˆæ­¢ç¬¦)
      */
-    /* [NAPI_GEN]: buf²ÎÊıÊÇNULLÊ±£¬ÓÃÓÚ»ñÈ¡ËùĞè»º³åÇø´óĞ¡*/
+    /* [NAPI_GEN]: bufå‚æ•°æ˜¯NULLæ—¶ï¼Œç”¨äºè·å–æ‰€éœ€ç¼“å†²åŒºå¤§å°*/
     status = napi_get_value_string_utf8(env, objIn, NULL, 0, &strSize0);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get value string", tag);
         return nullptr;
     }
     char *valueIn = new char[strSize0 + 1];
-    /* [NAPI_GEN]: ÓÃÓÚ»ñÈ¡×Ö·û´®*/
+    /* [NAPI_GEN]: ç”¨äºè·å–å­—ç¬¦ä¸²*/
     status = napi_get_value_string_utf8(env, objIn, valueIn, strSize0 + 1, &strSize0);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "get value string", tag);
@@ -218,9 +218,9 @@ napi_value getCjsonparseOut1(napi_env env, cJSON *jsonNext, napi_value cJSON_Par
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH418_CJSON_Parse]";
     napi_value nextOut;
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬ĞèÒªÊ¹ÓÃnapi_create_object´´½¨Ò»¸öjsµÄ¶ÔÏóÓëjs´úÂë½»»¥
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * result: Ò»¸önapi_valueµÄÖ¸Õë£¬¸ÃÖ¸Õë½«±»ÉèÖÃÎªĞÂ´´½¨µÄjs¶ÔÏó
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œéœ€è¦ä½¿ç”¨napi_create_objectåˆ›å»ºä¸€ä¸ªjsçš„å¯¹è±¡ä¸jsä»£ç äº¤äº’
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * result: ä¸€ä¸ªnapi_valueçš„æŒ‡é’ˆï¼Œè¯¥æŒ‡é’ˆå°†è¢«è®¾ç½®ä¸ºæ–°åˆ›å»ºçš„jså¯¹è±¡
      */
     status = napi_create_object(env, &nextOut);
     if (status != napi_ok) {
@@ -228,37 +228,37 @@ napi_value getCjsonparseOut1(napi_env env, cJSON *jsonNext, napi_value cJSON_Par
         return nullptr;
     }
     nextOut = getCjsonNextOut(env, nextOut, jsonNext);
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬½«native²àµÄ¶ÔÏóµÄÊôĞÔºÍÖµÒÀ´ÎÈûÈënapi_create_object´´½¨³öµÄ¶ÔÏó£¬×îÖÕ½«¸Ã¶ÔÏó·µ»Øjs
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * object: ÒªÉèÖÃÊôĞÔµÄjs¶ÔÏó£¬¸Ã¶ÔÏóÊÇÓÉÉÏÎÄnapi_create_object´´½¨µÄ
-     * utf8name: ÊôĞÔµÄÃû³Æ£¬ÊÇÒ»¸öÒÔUTF-8±àÂëµÄ×Ö·û´®
-     * value: ÓëÊôĞÔÃû³Æ¹ØÁªµÄÖµ£¬Õâ¸öÖµ¿ÉÒÔÊÇÈÎºÎjsÀàĞÍ£¨ÈçÒ»¸öÊıÖµ¡¢×Ö·û´®¡¢ÁíÒ»¸ö¶ÔÏóµÈ£©
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œå°†nativeä¾§çš„å¯¹è±¡çš„å±æ€§å’Œå€¼ä¾æ¬¡å¡å…¥napi_create_objectåˆ›å»ºå‡ºçš„å¯¹è±¡ï¼Œæœ€ç»ˆå°†è¯¥å¯¹è±¡è¿”å›js
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * object: è¦è®¾ç½®å±æ€§çš„jså¯¹è±¡ï¼Œè¯¥å¯¹è±¡æ˜¯ç”±ä¸Šæ–‡napi_create_objectåˆ›å»ºçš„
+     * utf8name: å±æ€§çš„åç§°ï¼Œæ˜¯ä¸€ä¸ªä»¥UTF-8ç¼–ç çš„å­—ç¬¦ä¸²
+     * value: ä¸å±æ€§åç§°å…³è”çš„å€¼ï¼Œè¿™ä¸ªå€¼å¯ä»¥æ˜¯ä»»ä½•jsç±»å‹ï¼ˆå¦‚ä¸€ä¸ªæ•°å€¼ã€å­—ç¬¦ä¸²ã€å¦ä¸€ä¸ªå¯¹è±¡ç­‰ï¼‰
      */
     status = napi_set_named_property(env, cJSON_ParseOut, "next", nextOut);
     if (status != napi_ok) {
-        /* [NAPI_GEN]: ´íÎó´¦Àí*/
+        /* [NAPI_GEN]: é”™è¯¯å¤„ç†*/
         getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value prevOut;
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬ĞèÒªÊ¹ÓÃnapi_create_object´´½¨Ò»¸öjsµÄ¶ÔÏóÓëjs´úÂë½»»¥
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * result: Ò»¸önapi_valueµÄÖ¸Õë£¬¸ÃÖ¸Õë½«±»ÉèÖÃÎªĞÂ´´½¨µÄjs¶ÔÏó
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œéœ€è¦ä½¿ç”¨napi_create_objectåˆ›å»ºä¸€ä¸ªjsçš„å¯¹è±¡ä¸jsä»£ç äº¤äº’
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * result: ä¸€ä¸ªnapi_valueçš„æŒ‡é’ˆï¼Œè¯¥æŒ‡é’ˆå°†è¢«è®¾ç½®ä¸ºæ–°åˆ›å»ºçš„jså¯¹è±¡
      */
     status = napi_create_object(env, &prevOut);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬½«native²àµÄ¶ÔÏóµÄÊôĞÔºÍÖµÒÀ´ÎÈûÈënapi_create_object´´½¨³öµÄ¶ÔÏó£¬×îÖÕ½«¸Ã¶ÔÏó·µ»Øjs
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * object: ÒªÉèÖÃÊôĞÔµÄjs¶ÔÏó£¬¸Ã¶ÔÏóÊÇÓÉÉÏÎÄnapi_create_object´´½¨µÄ
-     * utf8name: ÊôĞÔµÄÃû³Æ£¬ÊÇÒ»¸öÒÔUTF-8±àÂëµÄ×Ö·û´®
-     * value: ÓëÊôĞÔÃû³Æ¹ØÁªµÄÖµ£¬Õâ¸öÖµ¿ÉÒÔÊÇÈÎºÎjsÀàĞÍ£¨ÈçÒ»¸öÊıÖµ¡¢×Ö·û´®¡¢ÁíÒ»¸ö¶ÔÏóµÈ£©
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œå°†nativeä¾§çš„å¯¹è±¡çš„å±æ€§å’Œå€¼ä¾æ¬¡å¡å…¥napi_create_objectåˆ›å»ºå‡ºçš„å¯¹è±¡ï¼Œæœ€ç»ˆå°†è¯¥å¯¹è±¡è¿”å›js
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * object: è¦è®¾ç½®å±æ€§çš„jså¯¹è±¡ï¼Œè¯¥å¯¹è±¡æ˜¯ç”±ä¸Šæ–‡napi_create_objectåˆ›å»ºçš„
+     * utf8name: å±æ€§çš„åç§°ï¼Œæ˜¯ä¸€ä¸ªä»¥UTF-8ç¼–ç çš„å­—ç¬¦ä¸²
+     * value: ä¸å±æ€§åç§°å…³è”çš„å€¼ï¼Œè¿™ä¸ªå€¼å¯ä»¥æ˜¯ä»»ä½•jsç±»å‹ï¼ˆå¦‚ä¸€ä¸ªæ•°å€¼ã€å­—ç¬¦ä¸²ã€å¦ä¸€ä¸ªå¯¹è±¡ç­‰ï¼‰
      */
     status = napi_set_named_property(env, cJSON_ParseOut, "prev", prevOut);
     if (status != napi_ok) {
-        /* [NAPI_GEN]: ´íÎó´¦Àí*/
+        /* [NAPI_GEN]: é”™è¯¯å¤„ç†*/
         getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
@@ -271,9 +271,9 @@ napi_value getCjsonparseOut2(napi_env env, cJSON *json, cJSON *jsonChild, napi_v
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH418_CJSON_Parse]";
     napi_value childOut;
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬ĞèÒªÊ¹ÓÃnapi_create_object´´½¨Ò»¸öjsµÄ¶ÔÏóÓëjs´úÂë½»»¥
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * result: Ò»¸önapi_valueµÄÖ¸Õë£¬¸ÃÖ¸Õë½«±»ÉèÖÃÎªĞÂ´´½¨µÄjs¶ÔÏó
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œéœ€è¦ä½¿ç”¨napi_create_objectåˆ›å»ºä¸€ä¸ªjsçš„å¯¹è±¡ä¸jsä»£ç äº¤äº’
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * result: ä¸€ä¸ªnapi_valueçš„æŒ‡é’ˆï¼Œè¯¥æŒ‡é’ˆå°†è¢«è®¾ç½®ä¸ºæ–°åˆ›å»ºçš„jså¯¹è±¡
      */
     status = napi_create_object(env, &childOut);
     if (status != napi_ok) {
@@ -282,37 +282,37 @@ napi_value getCjsonparseOut2(napi_env env, cJSON *json, cJSON *jsonChild, napi_v
     }
     childOut = getCjsonChildOut(env, childOut, jsonChild);
     /* [NAPI_GEN]:
-     * ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬½«native²àµÄ¶ÔÏóµÄÊôĞÔºÍÖµÒÀ´ÎÈûÈënapi_create_object´´½¨³öµÄ¶ÔÏó£¬×îÖÕ½«¸Ã¶ÔÏó·µ»Øjs env:
-     * µ±Ç°»·¾³µÄ¾ä±ú object: ÒªÉèÖÃÊôĞÔµÄjs¶ÔÏó£¬¸Ã¶ÔÏóÊÇÓÉÉÏÎÄnapi_create_object´´½¨µÄ utf8name:
-     * ÊôĞÔµÄÃû³Æ£¬ÊÇÒ»¸öÒÔUTF-8±àÂëµÄ×Ö·û´® value:
-     * ÓëÊôĞÔÃû³Æ¹ØÁªµÄÖµ£¬Õâ¸öÖµ¿ÉÒÔÊÇÈÎºÎjsÀàĞÍ£¨ÈçÒ»¸öÊıÖµ¡¢×Ö·û´®¡¢ÁíÒ»¸ö¶ÔÏóµÈ£©
+     * è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œå°†nativeä¾§çš„å¯¹è±¡çš„å±æ€§å’Œå€¼ä¾æ¬¡å¡å…¥napi_create_objectåˆ›å»ºå‡ºçš„å¯¹è±¡ï¼Œæœ€ç»ˆå°†è¯¥å¯¹è±¡è¿”å›js env:
+     * å½“å‰ç¯å¢ƒçš„å¥æŸ„ object: è¦è®¾ç½®å±æ€§çš„jså¯¹è±¡ï¼Œè¯¥å¯¹è±¡æ˜¯ç”±ä¸Šæ–‡napi_create_objectåˆ›å»ºçš„ utf8name:
+     * å±æ€§çš„åç§°ï¼Œæ˜¯ä¸€ä¸ªä»¥UTF-8ç¼–ç çš„å­—ç¬¦ä¸² value:
+     * ä¸å±æ€§åç§°å…³è”çš„å€¼ï¼Œè¿™ä¸ªå€¼å¯ä»¥æ˜¯ä»»ä½•jsç±»å‹ï¼ˆå¦‚ä¸€ä¸ªæ•°å€¼ã€å­—ç¬¦ä¸²ã€å¦ä¸€ä¸ªå¯¹è±¡ç­‰ï¼‰
      */
     status = napi_set_named_property(env, cJSON_ParseOut, "child", childOut);
     if (status != napi_ok) {
-        /* [NAPI_GEN]: ´íÎó´¦Àí*/
+        /* [NAPI_GEN]: é”™è¯¯å¤„ç†*/
         getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value typeOut;
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇint32_tÀàĞÍÊ±£¬napi_create_int32 ´´½¨Ò»¸ö°üº¬32Î»ÕûÊı(int32_t)µÄjsÊıÖµ£¨Number£©¶ÔÏó
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * value: Òª×¼»»³ÉjsÊıÖµµÄint32_tµÄÖµ,ÕâÀïÒÔ´«Èë1ÎªÀı,ÓÃÀıĞÂÔöÒµÎñ´úÂëÊ±¿É¸ù¾İ×ÔÉíĞèÇóĞŞ¸Ä
-     * result: Ö¸Ïònapi_valueµÄÖ¸Õë£¬Õâ¸öÖ¸Õë»á±»ÉèÖÃÎªĞÂ´´½¨µÄjsÊıÖµ¶ÔÏó
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯int32_tç±»å‹æ—¶ï¼Œnapi_create_int32 åˆ›å»ºä¸€ä¸ªåŒ…å«32ä½æ•´æ•°(int32_t)çš„jsæ•°å€¼ï¼ˆNumberï¼‰å¯¹è±¡
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * value: è¦å‡†æ¢æˆjsæ•°å€¼çš„int32_tçš„å€¼,è¿™é‡Œä»¥ä¼ å…¥1ä¸ºä¾‹,ç”¨ä¾‹æ–°å¢ä¸šåŠ¡ä»£ç æ—¶å¯æ ¹æ®è‡ªèº«éœ€æ±‚ä¿®æ”¹
+     * result: æŒ‡å‘napi_valueçš„æŒ‡é’ˆï¼Œè¿™ä¸ªæŒ‡é’ˆä¼šè¢«è®¾ç½®ä¸ºæ–°åˆ›å»ºçš„jsæ•°å€¼å¯¹è±¡
      */
     status = napi_create_int32(env, json == nullptr ? 0 : json->type, &typeOut);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬½«native²àµÄ¶ÔÏóµÄÊôĞÔºÍÖµÒÀ´ÎÈûÈënapi_create_object´´½¨³öµÄ¶ÔÏó£¬×îÖÕ½«¸Ã¶ÔÏó·µ»Øjs
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * object: ÒªÉèÖÃÊôĞÔµÄjs¶ÔÏó£¬¸Ã¶ÔÏóÊÇÓÉÉÏÎÄnapi_create_object´´½¨µÄ
-     * utf8name: ÊôĞÔµÄÃû³Æ£¬ÊÇÒ»¸öÒÔUTF-8±àÂëµÄ×Ö·û´®
-     * value: ÓëÊôĞÔÃû³Æ¹ØÁªµÄÖµ£¬Õâ¸öÖµ¿ÉÒÔÊÇÈÎºÎjsÀàĞÍ£¨ÈçÒ»¸öÊıÖµ¡¢×Ö·û´®¡¢ÁíÒ»¸ö¶ÔÏóµÈ£©
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œå°†nativeä¾§çš„å¯¹è±¡çš„å±æ€§å’Œå€¼ä¾æ¬¡å¡å…¥napi_create_objectåˆ›å»ºå‡ºçš„å¯¹è±¡ï¼Œæœ€ç»ˆå°†è¯¥å¯¹è±¡è¿”å›js
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * object: è¦è®¾ç½®å±æ€§çš„jså¯¹è±¡ï¼Œè¯¥å¯¹è±¡æ˜¯ç”±ä¸Šæ–‡napi_create_objectåˆ›å»ºçš„
+     * utf8name: å±æ€§çš„åç§°ï¼Œæ˜¯ä¸€ä¸ªä»¥UTF-8ç¼–ç çš„å­—ç¬¦ä¸²
+     * value: ä¸å±æ€§åç§°å…³è”çš„å€¼ï¼Œè¿™ä¸ªå€¼å¯ä»¥æ˜¯ä»»ä½•jsç±»å‹ï¼ˆå¦‚ä¸€ä¸ªæ•°å€¼ã€å­—ç¬¦ä¸²ã€å¦ä¸€ä¸ªå¯¹è±¡ç­‰ï¼‰
      */
     status = napi_set_named_property(env, cJSON_ParseOut, "type", typeOut);
     if (status != napi_ok) {
-        /* [NAPI_GEN]: ´íÎó´¦Àí*/
+        /* [NAPI_GEN]: é”™è¯¯å¤„ç†*/
         getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
@@ -326,53 +326,53 @@ napi_value getCjsonparseOut3(napi_env env, cJSON *json, napi_value cJSON_ParseOu
     const char *tag = "[KH418_CJSON_Parse]";
     napi_value valuestringOut;
     /* [NAPI_GEN]:
-     * ·µ»ØÖµÊÇ×Ö·û´®Ê±£¬napi_create_string_utf8ÓÃÓÚÔÚÔ­Éú´úÂëÖĞ´´½¨Ò»¸öĞÂµÄjs×Ö·û´®¡£Õâ¸öº¯Êı»á¸ù¾İÌá¹©µÄUTF-8±àÂëµÄ×Ö·û´®´´½¨Ò»¸öµÈ¼ÛµÄjs×Ö·û´®
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * str: Ö¸ÏòÒÔnull½áÎ²µÄUTF-8±àÂëµÄC×Ö·û´®µÄÖ¸Õë£¬ÕâÀïÒÔvaluestring¾ÙÀı£¬ÓÃ»§¿É¸ù¾İĞèÇóĞŞ¸Ä
+     * è¿”å›å€¼æ˜¯å­—ç¬¦ä¸²æ—¶ï¼Œnapi_create_string_utf8ç”¨äºåœ¨åŸç”Ÿä»£ç ä¸­åˆ›å»ºä¸€ä¸ªæ–°çš„jså­—ç¬¦ä¸²ã€‚è¿™ä¸ªå‡½æ•°ä¼šæ ¹æ®æä¾›çš„UTF-8ç¼–ç çš„å­—ç¬¦ä¸²åˆ›å»ºä¸€ä¸ªç­‰ä»·çš„jså­—ç¬¦ä¸²
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * str: æŒ‡å‘ä»¥nullç»“å°¾çš„UTF-8ç¼–ç çš„Cå­—ç¬¦ä¸²çš„æŒ‡é’ˆï¼Œè¿™é‡Œä»¥valuestringä¸¾ä¾‹ï¼Œç”¨æˆ·å¯æ ¹æ®éœ€æ±‚ä¿®æ”¹
      * length:
-     * ×Ö·û´®µÄ³¤¶È£¬¿ÉÒÔÊÇ¾ßÌåµÄ×Ö½ÚÊı£¬»òÕßÊ¹ÓÃÌØÊâµÄÖµNAPI_AUTO_LENGTHÀ´ÈÃº¯Êı×Ô¼º¼ÆËã³¤¶È(¼Ù¶¨×Ö·û´®ÒÔnull½áÎ²)
-     * result: Ö¸Ïònapi_valueµÄÖ¸Õë£¬º¯ÊıÖ´ĞĞ³É¹¦ºóÕâ¸öÖ¸Õë½«Ö¸ÏòĞÂ´´½¨µÄjs×Ö·û´®
+     * å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œå¯ä»¥æ˜¯å…·ä½“çš„å­—èŠ‚æ•°ï¼Œæˆ–è€…ä½¿ç”¨ç‰¹æ®Šçš„å€¼NAPI_AUTO_LENGTHæ¥è®©å‡½æ•°è‡ªå·±è®¡ç®—é•¿åº¦(å‡å®šå­—ç¬¦ä¸²ä»¥nullç»“å°¾)
+     * result: æŒ‡å‘napi_valueçš„æŒ‡é’ˆï¼Œå‡½æ•°æ‰§è¡ŒæˆåŠŸåè¿™ä¸ªæŒ‡é’ˆå°†æŒ‡å‘æ–°åˆ›å»ºçš„jså­—ç¬¦ä¸²
      */
     status =
         napi_create_string_utf8(env, json == nullptr ? "" : (json->valuestring == nullptr ? "" : json->valuestring),
                                 NAPI_AUTO_LENGTH, &valuestringOut);
     if (status != napi_ok) {
-        /*´íÎó´¦Àí*/
+        /*é”™è¯¯å¤„ç†*/
         getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬½«native²àµÄ¶ÔÏóµÄÊôĞÔºÍÖµÒÀ´ÎÈûÈënapi_create_object´´½¨³öµÄ¶ÔÏó£¬×îÖÕ½«¸Ã¶ÔÏó·µ»Øjs
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * object: ÒªÉèÖÃÊôĞÔµÄjs¶ÔÏó£¬¸Ã¶ÔÏóÊÇÓÉÉÏÎÄnapi_create_object´´½¨µÄ
-     * utf8name: ÊôĞÔµÄÃû³Æ£¬ÊÇÒ»¸öÒÔUTF-8±àÂëµÄ×Ö·û´®
-     * value: ÓëÊôĞÔÃû³Æ¹ØÁªµÄÖµ£¬Õâ¸öÖµ¿ÉÒÔÊÇÈÎºÎjsÀàĞÍ£¨ÈçÒ»¸öÊıÖµ¡¢×Ö·û´®¡¢ÁíÒ»¸ö¶ÔÏóµÈ£©
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œå°†nativeä¾§çš„å¯¹è±¡çš„å±æ€§å’Œå€¼ä¾æ¬¡å¡å…¥napi_create_objectåˆ›å»ºå‡ºçš„å¯¹è±¡ï¼Œæœ€ç»ˆå°†è¯¥å¯¹è±¡è¿”å›js
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * object: è¦è®¾ç½®å±æ€§çš„jså¯¹è±¡ï¼Œè¯¥å¯¹è±¡æ˜¯ç”±ä¸Šæ–‡napi_create_objectåˆ›å»ºçš„
+     * utf8name: å±æ€§çš„åç§°ï¼Œæ˜¯ä¸€ä¸ªä»¥UTF-8ç¼–ç çš„å­—ç¬¦ä¸²
+     * value: ä¸å±æ€§åç§°å…³è”çš„å€¼ï¼Œè¿™ä¸ªå€¼å¯ä»¥æ˜¯ä»»ä½•jsç±»å‹ï¼ˆå¦‚ä¸€ä¸ªæ•°å€¼ã€å­—ç¬¦ä¸²ã€å¦ä¸€ä¸ªå¯¹è±¡ç­‰ï¼‰
      */
     status = napi_set_named_property(env, cJSON_ParseOut, "valuestring", valuestringOut);
     if (status != napi_ok) {
-        /* [NAPI_GEN]: ´íÎó´¦Àí*/
+        /* [NAPI_GEN]: é”™è¯¯å¤„ç†*/
         getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value valueintOut;
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇint32_tÀàĞÍÊ±£¬napi_create_int32 ´´½¨Ò»¸ö°üº¬32Î»ÕûÊı(int32_t)µÄjsÊıÖµ£¨Number£©¶ÔÏó
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * value: Òª×¼»»³ÉjsÊıÖµµÄint32_tµÄÖµ,ÕâÀïÒÔ´«Èë1ÎªÀı,ÓÃÀıĞÂÔöÒµÎñ´úÂëÊ±¿É¸ù¾İ×ÔÉíĞèÇóĞŞ¸Ä
-     * result: Ö¸Ïònapi_valueµÄÖ¸Õë£¬Õâ¸öÖ¸Õë»á±»ÉèÖÃÎªĞÂ´´½¨µÄjsÊıÖµ¶ÔÏó
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯int32_tç±»å‹æ—¶ï¼Œnapi_create_int32 åˆ›å»ºä¸€ä¸ªåŒ…å«32ä½æ•´æ•°(int32_t)çš„jsæ•°å€¼ï¼ˆNumberï¼‰å¯¹è±¡
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * value: è¦å‡†æ¢æˆjsæ•°å€¼çš„int32_tçš„å€¼,è¿™é‡Œä»¥ä¼ å…¥1ä¸ºä¾‹,ç”¨ä¾‹æ–°å¢ä¸šåŠ¡ä»£ç æ—¶å¯æ ¹æ®è‡ªèº«éœ€æ±‚ä¿®æ”¹
+     * result: æŒ‡å‘napi_valueçš„æŒ‡é’ˆï¼Œè¿™ä¸ªæŒ‡é’ˆä¼šè¢«è®¾ç½®ä¸ºæ–°åˆ›å»ºçš„jsæ•°å€¼å¯¹è±¡
      */
     status = napi_create_int32(env, json == nullptr ? 0 : json->valueint, &valueintOut);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬½«native²àµÄ¶ÔÏóµÄÊôĞÔºÍÖµÒÀ´ÎÈûÈënapi_create_object´´½¨³öµÄ¶ÔÏó£¬×îÖÕ½«¸Ã¶ÔÏó·µ»Øjs
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * object: ÒªÉèÖÃÊôĞÔµÄjs¶ÔÏó£¬¸Ã¶ÔÏóÊÇÓÉÉÏÎÄnapi_create_object´´½¨µÄ
-     * utf8name: ÊôĞÔµÄÃû³Æ£¬ÊÇÒ»¸öÒÔUTF-8±àÂëµÄ×Ö·û´®
-     * value: ÓëÊôĞÔÃû³Æ¹ØÁªµÄÖµ£¬Õâ¸öÖµ¿ÉÒÔÊÇÈÎºÎjsÀàĞÍ£¨ÈçÒ»¸öÊıÖµ¡¢×Ö·û´®¡¢ÁíÒ»¸ö¶ÔÏóµÈ£©
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œå°†nativeä¾§çš„å¯¹è±¡çš„å±æ€§å’Œå€¼ä¾æ¬¡å¡å…¥napi_create_objectåˆ›å»ºå‡ºçš„å¯¹è±¡ï¼Œæœ€ç»ˆå°†è¯¥å¯¹è±¡è¿”å›js
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * object: è¦è®¾ç½®å±æ€§çš„jså¯¹è±¡ï¼Œè¯¥å¯¹è±¡æ˜¯ç”±ä¸Šæ–‡napi_create_objectåˆ›å»ºçš„
+     * utf8name: å±æ€§çš„åç§°ï¼Œæ˜¯ä¸€ä¸ªä»¥UTF-8ç¼–ç çš„å­—ç¬¦ä¸²
+     * value: ä¸å±æ€§åç§°å…³è”çš„å€¼ï¼Œè¿™ä¸ªå€¼å¯ä»¥æ˜¯ä»»ä½•jsç±»å‹ï¼ˆå¦‚ä¸€ä¸ªæ•°å€¼ã€å­—ç¬¦ä¸²ã€å¦ä¸€ä¸ªå¯¹è±¡ç­‰ï¼‰
      */
     status = napi_set_named_property(env, cJSON_ParseOut, "valueint", valueintOut);
     if (status != napi_ok) {
-        /* [NAPI_GEN]: ´íÎó´¦Àí*/
+        /* [NAPI_GEN]: é”™è¯¯å¤„ç†*/
         getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
@@ -385,98 +385,98 @@ napi_value getCjsonparseOut4(napi_env env, cJSON *json, napi_value cJSON_ParseOu
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH418_CJSON_Parse]";
     napi_value valuedoubleOut;
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇdoubleÀàĞÍÊ±£¬napi_create_double ´´½¨Ò»¸ö°üº¬Ë«¾«¶È¸¡µãÊıµÄjsÊıÖµ£¨Number£©¶ÔÏó
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * value: Òª´«µİ¸øjsµÄË«¾«¶È¸¡µãÊıÖµ,ÕâÀïÒÔ´«Èë1.0ÎªÀı£¬ÓÃÀıĞÂÔöÒµÎñ´úÂëÊ±¿É¸ù¾İ×ÔÉíĞèÇóĞŞ¸Ä
-     * result: Ö¸Ïònapi_valueµÄÖ¸Õë£¬Õâ¸öÖ¸Õë»á±»ÉèÖÃÎªĞÂ´´½¨µÄjsÊıÖµ¶ÔÏó
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯doubleç±»å‹æ—¶ï¼Œnapi_create_double åˆ›å»ºä¸€ä¸ªåŒ…å«åŒç²¾åº¦æµ®ç‚¹æ•°çš„jsæ•°å€¼ï¼ˆNumberï¼‰å¯¹è±¡
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * value: è¦ä¼ é€’ç»™jsçš„åŒç²¾åº¦æµ®ç‚¹æ•°å€¼,è¿™é‡Œä»¥ä¼ å…¥1.0ä¸ºä¾‹ï¼Œç”¨ä¾‹æ–°å¢ä¸šåŠ¡ä»£ç æ—¶å¯æ ¹æ®è‡ªèº«éœ€æ±‚ä¿®æ”¹
+     * result: æŒ‡å‘napi_valueçš„æŒ‡é’ˆï¼Œè¿™ä¸ªæŒ‡é’ˆä¼šè¢«è®¾ç½®ä¸ºæ–°åˆ›å»ºçš„jsæ•°å€¼å¯¹è±¡
      */
     status = napi_create_double(env, json == nullptr ? 0 : json->valuedouble, &valuedoubleOut);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_create_double", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬½«native²àµÄ¶ÔÏóµÄÊôĞÔºÍÖµÒÀ´ÎÈûÈënapi_create_object´´½¨³öµÄ¶ÔÏó£¬×îÖÕ½«¸Ã¶ÔÏó·µ»Øjs
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * object: ÒªÉèÖÃÊôĞÔµÄjs¶ÔÏó£¬¸Ã¶ÔÏóÊÇÓÉÉÏÎÄnapi_create_object´´½¨µÄ
-     * utf8name: ÊôĞÔµÄÃû³Æ£¬ÊÇÒ»¸öÒÔUTF-8±àÂëµÄ×Ö·û´®
-     * value: ÓëÊôĞÔÃû³Æ¹ØÁªµÄÖµ£¬Õâ¸öÖµ¿ÉÒÔÊÇÈÎºÎjsÀàĞÍ£¨ÈçÒ»¸öÊıÖµ¡¢×Ö·û´®¡¢ÁíÒ»¸ö¶ÔÏóµÈ£©
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œå°†nativeä¾§çš„å¯¹è±¡çš„å±æ€§å’Œå€¼ä¾æ¬¡å¡å…¥napi_create_objectåˆ›å»ºå‡ºçš„å¯¹è±¡ï¼Œæœ€ç»ˆå°†è¯¥å¯¹è±¡è¿”å›js
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * object: è¦è®¾ç½®å±æ€§çš„jså¯¹è±¡ï¼Œè¯¥å¯¹è±¡æ˜¯ç”±ä¸Šæ–‡napi_create_objectåˆ›å»ºçš„
+     * utf8name: å±æ€§çš„åç§°ï¼Œæ˜¯ä¸€ä¸ªä»¥UTF-8ç¼–ç çš„å­—ç¬¦ä¸²
+     * value: ä¸å±æ€§åç§°å…³è”çš„å€¼ï¼Œè¿™ä¸ªå€¼å¯ä»¥æ˜¯ä»»ä½•jsç±»å‹ï¼ˆå¦‚ä¸€ä¸ªæ•°å€¼ã€å­—ç¬¦ä¸²ã€å¦ä¸€ä¸ªå¯¹è±¡ç­‰ï¼‰
      */
     status = napi_set_named_property(env, cJSON_ParseOut, "valuedouble", valuedoubleOut);
     if (status != napi_ok) {
-        /* [NAPI_GEN]: ´íÎó´¦Àí*/
+        /* [NAPI_GEN]: é”™è¯¯å¤„ç†*/
         getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value stringOut;
     /* [NAPI_GEN]:
-     * ·µ»ØÖµÊÇ×Ö·û´®Ê±£¬napi_create_string_utf8ÓÃÓÚÔÚÔ­Éú´úÂëÖĞ´´½¨Ò»¸öĞÂµÄjs×Ö·û´®¡£Õâ¸öº¯Êı»á¸ù¾İÌá¹©µÄUTF-8±àÂëµÄ×Ö·û´®´´½¨Ò»¸öµÈ¼ÛµÄjs×Ö·û´®
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * str: Ö¸ÏòÒÔnull½áÎ²µÄUTF-8±àÂëµÄC×Ö·û´®µÄÖ¸Õë£¬ÕâÀïÒÔstring¾ÙÀı£¬ÓÃ»§¿É¸ù¾İĞèÇóĞŞ¸Ä
+     * è¿”å›å€¼æ˜¯å­—ç¬¦ä¸²æ—¶ï¼Œnapi_create_string_utf8ç”¨äºåœ¨åŸç”Ÿä»£ç ä¸­åˆ›å»ºä¸€ä¸ªæ–°çš„jså­—ç¬¦ä¸²ã€‚è¿™ä¸ªå‡½æ•°ä¼šæ ¹æ®æä¾›çš„UTF-8ç¼–ç çš„å­—ç¬¦ä¸²åˆ›å»ºä¸€ä¸ªç­‰ä»·çš„jså­—ç¬¦ä¸²
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * str: æŒ‡å‘ä»¥nullç»“å°¾çš„UTF-8ç¼–ç çš„Cå­—ç¬¦ä¸²çš„æŒ‡é’ˆï¼Œè¿™é‡Œä»¥stringä¸¾ä¾‹ï¼Œç”¨æˆ·å¯æ ¹æ®éœ€æ±‚ä¿®æ”¹
      * length:
-     * ×Ö·û´®µÄ³¤¶È£¬¿ÉÒÔÊÇ¾ßÌåµÄ×Ö½ÚÊı£¬»òÕßÊ¹ÓÃÌØÊâµÄÖµNAPI_AUTO_LENGTHÀ´ÈÃº¯Êı×Ô¼º¼ÆËã³¤¶È(¼Ù¶¨×Ö·û´®ÒÔnull½áÎ²)
-     * result: Ö¸Ïònapi_valueµÄÖ¸Õë£¬º¯ÊıÖ´ĞĞ³É¹¦ºóÕâ¸öÖ¸Õë½«Ö¸ÏòĞÂ´´½¨µÄjs×Ö·û´®
+     * å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œå¯ä»¥æ˜¯å…·ä½“çš„å­—èŠ‚æ•°ï¼Œæˆ–è€…ä½¿ç”¨ç‰¹æ®Šçš„å€¼NAPI_AUTO_LENGTHæ¥è®©å‡½æ•°è‡ªå·±è®¡ç®—é•¿åº¦(å‡å®šå­—ç¬¦ä¸²ä»¥nullç»“å°¾)
+     * result: æŒ‡å‘napi_valueçš„æŒ‡é’ˆï¼Œå‡½æ•°æ‰§è¡ŒæˆåŠŸåè¿™ä¸ªæŒ‡é’ˆå°†æŒ‡å‘æ–°åˆ›å»ºçš„jså­—ç¬¦ä¸²
      */
     status = napi_create_string_utf8(env, json == nullptr ? "" : (json->string == nullptr ? "" : json->string),
                                      NAPI_AUTO_LENGTH, &stringOut);
     if (status != napi_ok) {
-        /*´íÎó´¦Àí*/
+        /*é”™è¯¯å¤„ç†*/
         getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬½«native²àµÄ¶ÔÏóµÄÊôĞÔºÍÖµÒÀ´ÎÈûÈënapi_create_object´´½¨³öµÄ¶ÔÏó£¬×îÖÕ½«¸Ã¶ÔÏó·µ»Øjs
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * object: ÒªÉèÖÃÊôĞÔµÄjs¶ÔÏó£¬¸Ã¶ÔÏóÊÇÓÉÉÏÎÄnapi_create_object´´½¨µÄ
-     * utf8name: ÊôĞÔµÄÃû³Æ£¬ÊÇÒ»¸öÒÔUTF-8±àÂëµÄ×Ö·û´®
-     * value: ÓëÊôĞÔÃû³Æ¹ØÁªµÄÖµ£¬Õâ¸öÖµ¿ÉÒÔÊÇÈÎºÎjsÀàĞÍ£¨ÈçÒ»¸öÊıÖµ¡¢×Ö·û´®¡¢ÁíÒ»¸ö¶ÔÏóµÈ£©
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œå°†nativeä¾§çš„å¯¹è±¡çš„å±æ€§å’Œå€¼ä¾æ¬¡å¡å…¥napi_create_objectåˆ›å»ºå‡ºçš„å¯¹è±¡ï¼Œæœ€ç»ˆå°†è¯¥å¯¹è±¡è¿”å›js
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * object: è¦è®¾ç½®å±æ€§çš„jså¯¹è±¡ï¼Œè¯¥å¯¹è±¡æ˜¯ç”±ä¸Šæ–‡napi_create_objectåˆ›å»ºçš„
+     * utf8name: å±æ€§çš„åç§°ï¼Œæ˜¯ä¸€ä¸ªä»¥UTF-8ç¼–ç çš„å­—ç¬¦ä¸²
+     * value: ä¸å±æ€§åç§°å…³è”çš„å€¼ï¼Œè¿™ä¸ªå€¼å¯ä»¥æ˜¯ä»»ä½•jsç±»å‹ï¼ˆå¦‚ä¸€ä¸ªæ•°å€¼ã€å­—ç¬¦ä¸²ã€å¦ä¸€ä¸ªå¯¹è±¡ç­‰ï¼‰
      */
     status = napi_set_named_property(env, cJSON_ParseOut, "string", stringOut);
     if (status != napi_ok) {
-        /* [NAPI_GEN]: ´íÎó´¦Àí*/
+        /* [NAPI_GEN]: é”™è¯¯å¤„ç†*/
         getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     return cJSON_ParseOut;
 }
 
-/* [NAPI_GEN]: ¶ÔÓ¦cJSON.hÖĞ: CJSON_PUBLIC(cJSON *) cJSON_Parse(const char *value);µÄnapi·½·¨£¬
- * param: name: string; type: const char * ÊäÈëÒ»¸ö´ı×ª»»µÄ×Ö·û´®
- * out: Êä³öcJSONĞòÁĞ»¯Ö®ºóµÄ×Ö·û´®
+/* [NAPI_GEN]: å¯¹åº”cJSON.hä¸­: CJSON_PUBLIC(cJSON *) cJSON_Parse(const char *value);çš„napiæ–¹æ³•ï¼Œ
+ * param: name: string; type: const char * è¾“å…¥ä¸€ä¸ªå¾…è½¬æ¢çš„å­—ç¬¦ä¸²
+ * out: è¾“å‡ºcJSONåºåˆ—åŒ–ä¹‹åçš„å­—ç¬¦ä¸²
  */
 napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
 {
     napi_status status;
-    /* [NAPI_GEN]: Node.jsÔÚÆäN-APIÖĞÓÃÀ´Ìá¹©´íÎóµÄÀ©Õ¹ĞÅÏ¢µÄ½á¹¹Ìå,½á¹¹Ìå°üº¬ÒÔÏÂ×Ö¶Î
-     * error_message: Ò»¸öÖ¸Ïò´íÎóÏêÏ¸×Ö·û´®µÄÖ¸Õë£¬Ìá¹©ÁË¹ØÓÚ´íÎóµÄÎÄ±¾ÃèÊö
-     * engin_reserved: Ò»¸ö±£Áô¸øJsÒıÇæÊ¹ÓÃµÄÖ¸Õë
-     * error_code: ´íÎóÂë£¬Ö¸Ê¾ÁË´íÎóµÄÖÖÀà£¬±ÈÈçnapi_pending_exception±íÊ¾ÓĞÒ»¸öJavaScriptÒì³£Î´±»ÇåÀí¡£
-     * engine_error_code£ºÒ»¸öÒıÇæÌØ¶¨µÄ´íÎóÂë£¬ÎªÒıÇæÊµÏÖ±£Áô£¬¾ßÌåº¬ÒåÒÀÀµÓÚÊ¹ÓÃµÄJavaScriptÒıÇæ¡£
-     * error_message_len£º´íÎóÏûÏ¢×Ö·û´®µÄ³¤¶È¡£
+    /* [NAPI_GEN]: Node.jsåœ¨å…¶N-APIä¸­ç”¨æ¥æä¾›é”™è¯¯çš„æ‰©å±•ä¿¡æ¯çš„ç»“æ„ä½“,ç»“æ„ä½“åŒ…å«ä»¥ä¸‹å­—æ®µ
+     * error_message: ä¸€ä¸ªæŒ‡å‘é”™è¯¯è¯¦ç»†å­—ç¬¦ä¸²çš„æŒ‡é’ˆï¼Œæä¾›äº†å…³äºé”™è¯¯çš„æ–‡æœ¬æè¿°
+     * engin_reserved: ä¸€ä¸ªä¿ç•™ç»™Jså¼•æ“ä½¿ç”¨çš„æŒ‡é’ˆ
+     * error_code: é”™è¯¯ç ï¼ŒæŒ‡ç¤ºäº†é”™è¯¯çš„ç§ç±»ï¼Œæ¯”å¦‚napi_pending_exceptionè¡¨ç¤ºæœ‰ä¸€ä¸ªJavaScriptå¼‚å¸¸æœªè¢«æ¸…ç†ã€‚
+     * engine_error_codeï¼šä¸€ä¸ªå¼•æ“ç‰¹å®šçš„é”™è¯¯ç ï¼Œä¸ºå¼•æ“å®ç°ä¿ç•™ï¼Œå…·ä½“å«ä¹‰ä¾èµ–äºä½¿ç”¨çš„JavaScriptå¼•æ“ã€‚
+     * error_message_lenï¼šé”™è¯¯æ¶ˆæ¯å­—ç¬¦ä¸²çš„é•¿åº¦ã€‚
      */
     const napi_extended_error_info *extended_error_info;
-    /* [NAPI_GEN]: tag: ÈÕÖ¾´òÓ¡±êÇ©*/
+    /* [NAPI_GEN]: tag: æ—¥å¿—æ‰“å°æ ‡ç­¾*/
     const char *tag = "[KH418_CJSON_Parse]";
     /* [NAPI_GEN]: get function param in*/
-    /* [NAPI_GEN]: argc£ºjs´«ÈëµÄ²ÎÊı¸öÊı */
+    /* [NAPI_GEN]: argcï¼šjsä¼ å…¥çš„å‚æ•°ä¸ªæ•° */
     size_t argc = 1;
-    /* [NAPI_GEN]: args: Ò»¸öÊı×é,±£´æjs´«ÈëµÄ²ÎÊı */
+    /* [NAPI_GEN]: args: ä¸€ä¸ªæ•°ç»„,ä¿å­˜jsä¼ å…¥çš„å‚æ•° */
     napi_value args[1] = {nullptr};
-    /* [NAPI_GEN]: napi_get_cb_infoÓÃÓÚ»ñÈ¡JSµ÷ÓÃ¸Ãº¯ÊıÊ±Ëù´«µİµÄ²ÎÊı¡¢½ÓÊÕ²ÎÊıµÄ¸öÊıÒÔ¼°'this'µÄÖµ
-     * env: µ±Ç°»·¾³µÄ¾ä±ú£¬´ú±íµ±Ç°µÄNode.js»·¾³
-     * info: »Øµ÷ĞÅÏ¢¾ä±ú£¬´ú±íµ±Ç°»Øµ÷µÄÉÏÏÂÎÄ
-     * argc: Ö¸Ïòsize_tµÄÖ¸Õë£¬×î³õÓ¦°üº¬¿É½ÓÊÜµÄ×î´ó²ÎÊıÊıÁ¿£¬º¯Êı·µ»ØÊ±£¬Ëü½«°üº¬Êµ¼Ê´«µİµÄ²ÎÊıÊıÁ¿
-     * args: Ò»¸ö×ã¹»´óµÄÊı×é£¬ÓÃÓÚ½ÓÊÕ´«µİ¸ø»Øµ÷º¯ÊıµÄËùÓĞjs²ÎÊı¡£Êı×éµÄ´óĞ¡Ó¦ÖÁÉÙÓëargc´«ÈëµÄÖµÒ»Ñù´ó¡£
-     * this_arg: Èç¹û²»ÊÇNULL,Ôò·µ»Øjs»Øµ÷ÖĞthisµÄÖµ
-     * data: Èç¹û²»ÊÇNULL,Ôò·µ»ØÓë»Øµ÷º¯Êı¹ØÁªµÄÈÎºÎ¿ÉÑ¡Êı¾İ¡£Í¨³£ÓÃÓÚ´«µİÔÚ´´½¨º¯ÊıÊ±Ö¸¶¨µÄ¾²Ì¬Êı¾İ
+    /* [NAPI_GEN]: napi_get_cb_infoç”¨äºè·å–JSè°ƒç”¨è¯¥å‡½æ•°æ—¶æ‰€ä¼ é€’çš„å‚æ•°ã€æ¥æ”¶å‚æ•°çš„ä¸ªæ•°ä»¥åŠ'this'çš„å€¼
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„ï¼Œä»£è¡¨å½“å‰çš„Node.jsç¯å¢ƒ
+     * info: å›è°ƒä¿¡æ¯å¥æŸ„ï¼Œä»£è¡¨å½“å‰å›è°ƒçš„ä¸Šä¸‹æ–‡
+     * argc: æŒ‡å‘size_tçš„æŒ‡é’ˆï¼Œæœ€åˆåº”åŒ…å«å¯æ¥å—çš„æœ€å¤§å‚æ•°æ•°é‡ï¼Œå‡½æ•°è¿”å›æ—¶ï¼Œå®ƒå°†åŒ…å«å®é™…ä¼ é€’çš„å‚æ•°æ•°é‡
+     * args: ä¸€ä¸ªè¶³å¤Ÿå¤§çš„æ•°ç»„ï¼Œç”¨äºæ¥æ”¶ä¼ é€’ç»™å›è°ƒå‡½æ•°çš„æ‰€æœ‰jså‚æ•°ã€‚æ•°ç»„çš„å¤§å°åº”è‡³å°‘ä¸argcä¼ å…¥çš„å€¼ä¸€æ ·å¤§ã€‚
+     * this_arg: å¦‚æœä¸æ˜¯NULL,åˆ™è¿”å›jså›è°ƒä¸­thisçš„å€¼
+     * data: å¦‚æœä¸æ˜¯NULL,åˆ™è¿”å›ä¸å›è°ƒå‡½æ•°å…³è”çš„ä»»ä½•å¯é€‰æ•°æ®ã€‚é€šå¸¸ç”¨äºä¼ é€’åœ¨åˆ›å»ºå‡½æ•°æ—¶æŒ‡å®šçš„é™æ€æ•°æ®
      */
     status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     if (status != napi_ok) {
-        /* [NAPI_GEN]: ´íÎó´¦Àí*/
-        getErrMsg(status, env,extended_error_info, "napi_get_cb_info", tag);
+        /* [NAPI_GEN]: é”™è¯¯å¤„ç†*/
+        getErrMsg(status, env, extended_error_info, "napi_get_cb_info", tag);
         return nullptr;
     }
     napi_value obj = args[0];
     char *valueIn = getCjsonparseInfo(env, obj);
-    // Todo: add business logic. ÔÚÕâÇ°ºó´úÂëÎª¿ò¼ÜËùÉú³É
+    // Todo: add business logic. åœ¨è¿™å‰åä»£ç ä¸ºæ¡†æ¶æ‰€ç”Ÿæˆ
     cJSON *json = cJSON_Parse(valueIn);
     if (json == nullptr) {
         return nullptr;
@@ -492,9 +492,9 @@ napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
 
     /* [NAPI_GEN]: function return value*/
     napi_value cJSON_ParseOut;
-    /* [NAPI_GEN]: ·µ»ØÖµÊÇ¶ÔÏóÊ±£¬ĞèÒªÊ¹ÓÃnapi_create_object´´½¨Ò»¸öjsµÄ¶ÔÏóÓëjs´úÂë½»»¥
-     * env: µ±Ç°»·¾³µÄ¾ä±ú
-     * result: Ò»¸önapi_valueµÄÖ¸Õë£¬¸ÃÖ¸Õë½«±»ÉèÖÃÎªĞÂ´´½¨µÄjs¶ÔÏó
+    /* [NAPI_GEN]: è¿”å›å€¼æ˜¯å¯¹è±¡æ—¶ï¼Œéœ€è¦ä½¿ç”¨napi_create_objectåˆ›å»ºä¸€ä¸ªjsçš„å¯¹è±¡ä¸jsä»£ç äº¤äº’
+     * env: å½“å‰ç¯å¢ƒçš„å¥æŸ„
+     * result: ä¸€ä¸ªnapi_valueçš„æŒ‡é’ˆï¼Œè¯¥æŒ‡é’ˆå°†è¢«è®¾ç½®ä¸ºæ–°åˆ›å»ºçš„jså¯¹è±¡
      */
     status = napi_create_object(env, &cJSON_ParseOut);
     if (status != napi_ok) {
