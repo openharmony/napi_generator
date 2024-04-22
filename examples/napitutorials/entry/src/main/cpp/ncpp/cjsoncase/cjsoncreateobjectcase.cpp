@@ -375,7 +375,7 @@ napi_value KH361_cJSON_CreateObject(napi_env env, napi_callback_info info)
         getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
-    cJSON_CreateObjectOut = getNextOut(env, ageItem,cJSON_CreateObjectOut);
+    cJSON_CreateObjectOut = getNextOut(env, ageItem, cJSON_CreateObjectOut);
     cJSON_CreateObjectOut = getPrevOut(env, cJSON_CreateObjectOut);
     cJSON_CreateObjectOut = getChildOut(env, nameItem, cJSON_CreateObjectOut);
     cJSON_CreateObjectOut = getTypeOut(env, cJSON_CreateObjectOut);
