@@ -14,73 +14,9 @@
  */
 
 #include "cjson/cJSON.h"
-#include "common.h"
+#include "nodeapi.h"
 
-constexpr uint8_t AGE = 12;
-
-napi_value getAgeItemOut(napi_env env, napi_value nextOut, cJSON *ageItem)
-{
-    napi_status status;
-    const napi_extended_error_info *extended_error_info;
-    const char *tag = "[KH361_cJSON_CreateObject]";
-    // 往next里面塞数据
-    napi_value ageItemStringOut;
-    status = napi_create_string_utf8(env, ageItem->string, NAPI_AUTO_LENGTH, &ageItemStringOut);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_string_utf8 ageItem->string", tag);
-        return nullptr;
-    }
-    status = napi_set_named_property(env, nextOut, "string", ageItemStringOut);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property ageItemStringOut", tag);
-        return nullptr;
-    }
-    napi_value ageItemValueintOut;
-    status = napi_create_double(env, ageItem->valueint, &ageItemValueintOut);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_double ageItem->valueint", tag);
-        return nullptr;
-    }
-    status = napi_set_named_property(env, nextOut, "valueint", ageItemValueintOut);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property ageItemValueintOut", tag);
-        return nullptr;
-    }
-    return nextOut;
-}
-
-napi_value getNameItemOut(napi_env env, napi_value childOut, cJSON *nameItem)
-{
-    napi_status status;
-    const napi_extended_error_info *extended_error_info;
-    const char *tag = "[KH361_cJSON_CreateObject]";
-    // 往child里面塞数据
-    napi_value nameItemStringOut;
-    status = napi_create_string_utf8(env, nameItem->string, NAPI_AUTO_LENGTH, &nameItemStringOut);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_string_utf8 nameItem->string", tag);
-        return nullptr;
-    }
-    status = napi_set_named_property(env, childOut, "string", nameItemStringOut);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property nameItemStringOut", tag);
-        return nullptr;
-    }
-    napi_value nameItemValuestringOut;
-    status = napi_create_string_utf8(env, nameItem->valuestring, NAPI_AUTO_LENGTH, &nameItemValuestringOut);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_string_utf8 nameItem->valuestring", tag);
-        return nullptr;
-    }
-    status = napi_set_named_property(env, childOut, "valuestring", nameItemValuestringOut);
-    if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property nameItemValuestringOut", tag);
-        return nullptr;
-    }
-    return childOut;
-}
-
-napi_value getNextOut(napi_env env, cJSON *ageItem, napi_value cJSON_CreateObjectOut)
+napi_value getSampleCreateObjNextOut(napi_env env, napi_value cJSON_CreateObjectOut)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -95,7 +31,6 @@ napi_value getNextOut(napi_env env, cJSON *ageItem, napi_value cJSON_CreateObjec
         getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
-    nextOut = getAgeItemOut(env, nextOut, ageItem);
     /* [NAPI_GEN]:
      * 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js env:
      * 当前环境的句柄 object: 要设置属性的js对象，该对象是由上文napi_create_object创建的 utf8name:
@@ -111,7 +46,7 @@ napi_value getNextOut(napi_env env, cJSON *ageItem, napi_value cJSON_CreateObjec
     return cJSON_CreateObjectOut;
 }
 
-napi_value getPrevOut(napi_env env, napi_value cJSON_CreateObjectOut)
+napi_value getSampleCreateObjPrevOut(napi_env env, napi_value cJSON_CreateObjectOut)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -141,7 +76,7 @@ napi_value getPrevOut(napi_env env, napi_value cJSON_CreateObjectOut)
     return cJSON_CreateObjectOut;
 }
 
-napi_value getChildOut(napi_env env, cJSON *nameItem, napi_value cJSON_CreateObjectOut)
+napi_value getSampleCreateObjChildOut(napi_env env, napi_value cJSON_CreateObjectOut)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -156,7 +91,6 @@ napi_value getChildOut(napi_env env, cJSON *nameItem, napi_value cJSON_CreateObj
         getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
-    childOut = getNameItemOut(env, childOut, nameItem);
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
      * env: 当前环境的句柄
      * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
@@ -172,7 +106,7 @@ napi_value getChildOut(napi_env env, cJSON *nameItem, napi_value cJSON_CreateObj
     return cJSON_CreateObjectOut;
 }
 
-napi_value getTypeOut(napi_env env, napi_value cJSON_CreateObjectOut)
+napi_value getSampleCreateObjTypeOut(napi_env env, napi_value cJSON_CreateObjectOut, cJSON *jsonObject)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -183,7 +117,7 @@ napi_value getTypeOut(napi_env env, napi_value cJSON_CreateObjectOut)
      * value: 要准换成js数值的int32_t的值,这里以传入1为例,用例新增业务代码时可根据自身需求修改
      * result: 指向napi_value的指针，这个指针会被设置为新创建的js数值对象
      */
-    status = napi_create_int32(env, 1, &typeOut);
+    status = napi_create_int32(env, jsonObject == NULL ? 0 : jsonObject->type, &typeOut);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
@@ -203,12 +137,15 @@ napi_value getTypeOut(napi_env env, napi_value cJSON_CreateObjectOut)
     return cJSON_CreateObjectOut;
 }
 
-napi_value getValuestringOut(napi_env env, napi_value cJSON_CreateObjectOut)
+napi_value getSampleCreateObjValuestringOut(napi_env env, napi_value cJSON_CreateObjectOut, cJSON *jsonObject)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH361_cJSON_CreateObject]";
     napi_value valuestringOut;
+    const char *valuestringVal = jsonObject == NULL                ? ""
+                                 : jsonObject->valuestring == NULL ? ""
+                                                                   : jsonObject->valuestring;
     /* [NAPI_GEN]:
      * 返回值是字符串时，napi_create_string_utf8用于在原生代码中创建一个新的js字符串。这个函数会根据提供的UTF-8编码的字符串创建一个等价的js字符串
      * env: 当前环境的句柄
@@ -217,7 +154,7 @@ napi_value getValuestringOut(napi_env env, napi_value cJSON_CreateObjectOut)
      * 字符串的长度，可以是具体的字节数，或者使用特殊的值NAPI_AUTO_LENGTH来让函数自己计算长度(假定字符串以null结尾)
      * result: 指向napi_value的指针，函数执行成功后这个指针将指向新创建的js字符串
      */
-    status = napi_create_string_utf8(env, "", NAPI_AUTO_LENGTH, &valuestringOut);
+    status = napi_create_string_utf8(env, valuestringVal, NAPI_AUTO_LENGTH, &valuestringOut);
     if (status != napi_ok) {
         /*错误处理*/
         getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
@@ -238,7 +175,7 @@ napi_value getValuestringOut(napi_env env, napi_value cJSON_CreateObjectOut)
     return cJSON_CreateObjectOut;
 }
 
-napi_value getValueintOut(napi_env env, napi_value cJSON_CreateObjectOut)
+napi_value getSampleCreateObjValueintOut(napi_env env, napi_value cJSON_CreateObjectOut, cJSON *jsonObject)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -249,7 +186,7 @@ napi_value getValueintOut(napi_env env, napi_value cJSON_CreateObjectOut)
      * value: 要准换成js数值的int32_t的值,这里以传入1为例,用例新增业务代码时可根据自身需求修改
      * result: 指向napi_value的指针，这个指针会被设置为新创建的js数值对象
      */
-    status = napi_create_int32(env, 1, &valueintOut);
+    status = napi_create_int32(env, jsonObject == NULL ? 0 : jsonObject->valueint, &valueintOut);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
@@ -269,7 +206,7 @@ napi_value getValueintOut(napi_env env, napi_value cJSON_CreateObjectOut)
     return cJSON_CreateObjectOut;
 }
 
-napi_value getValuedoubleOut(napi_env env, napi_value cJSON_CreateObjectOut)
+napi_value getSampleCreateObjValuedoubleOut(napi_env env, napi_value cJSON_CreateObjectOut, cJSON *jsonObject)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -280,7 +217,7 @@ napi_value getValuedoubleOut(napi_env env, napi_value cJSON_CreateObjectOut)
      * value: 要传递给js的双精度浮点数值,这里以传入1.0为例，用例新增业务代码时可根据自身需求修改
      * result: 指向napi_value的指针，这个指针会被设置为新创建的js数值对象
      */
-    status = napi_create_double(env, 1.0, &valuedoubleOut);
+    status = napi_create_double(env, jsonObject == NULL ?0 : jsonObject->valuedouble, &valuedoubleOut);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_create_double", tag);
         return nullptr;
@@ -300,12 +237,13 @@ napi_value getValuedoubleOut(napi_env env, napi_value cJSON_CreateObjectOut)
     return cJSON_CreateObjectOut;
 }
 
-napi_value getStringOut(napi_env env, napi_value cJSON_CreateObjectOut)
+napi_value getSampleCreateObjStringOut(napi_env env, napi_value cJSON_CreateObjectOut, cJSON *jsonObject)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH361_cJSON_CreateObject]";
     napi_value stringOut;
+    const char *stringVal = jsonObject == NULL ?"" :jsonObject->string == NULL ?"" :jsonObject->string;
     /* [NAPI_GEN]:
      * 返回值是字符串时，napi_create_string_utf8用于在原生代码中创建一个新的js字符串。这个函数会根据提供的UTF-8编码的字符串创建一个等价的js字符串
      * env: 当前环境的句柄
@@ -314,7 +252,7 @@ napi_value getStringOut(napi_env env, napi_value cJSON_CreateObjectOut)
      * 字符串的长度，可以是具体的字节数，或者使用特殊的值NAPI_AUTO_LENGTH来让函数自己计算长度(假定字符串以null结尾)
      * result: 指向napi_value的指针，函数执行成功后这个指针将指向新创建的js字符串
      */
-    status = napi_create_string_utf8(env, "", NAPI_AUTO_LENGTH, &stringOut);
+    status = napi_create_string_utf8(env, stringVal, NAPI_AUTO_LENGTH, &stringOut);
     if (status != napi_ok) {
         /*错误处理*/
         getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
@@ -355,15 +293,10 @@ napi_value KH361_cJSON_CreateObject(napi_env env, napi_callback_info info)
 
     // Todo: add business logic. 在这前后代码为框架所生成
     cJSON *jsonObject = cJSON_CreateObject();
-    // 向JSON对象添加一个键值对
-    cJSON_AddStringToObject(jsonObject, "name", "may");
-    cJSON_AddNumberToObject(jsonObject, "age", AGE);
-    cJSON *nameItem = jsonObject->child;
-    cJSON *ageItem = nameItem->next;
-    if (jsonObject == NULL) {
+    if (jsonObject == NULL) {        
         return NULL;
     }
-    
+
     /* [NAPI_GEN]: function return value*/
     napi_value cJSON_CreateObjectOut;
     /* [NAPI_GEN]: 返回值是对象时，需要使用napi_create_object创建一个js的对象与js代码交互
@@ -375,14 +308,16 @@ napi_value KH361_cJSON_CreateObject(napi_env env, napi_callback_info info)
         getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
-    cJSON_CreateObjectOut = getNextOut(env, ageItem, cJSON_CreateObjectOut);
-    cJSON_CreateObjectOut = getPrevOut(env, cJSON_CreateObjectOut);
-    cJSON_CreateObjectOut = getChildOut(env, nameItem, cJSON_CreateObjectOut);
-    cJSON_CreateObjectOut = getTypeOut(env, cJSON_CreateObjectOut);
-    cJSON_CreateObjectOut = getValuestringOut(env, cJSON_CreateObjectOut);
-    cJSON_CreateObjectOut = getValueintOut(env, cJSON_CreateObjectOut);
-    cJSON_CreateObjectOut = getValuedoubleOut(env, cJSON_CreateObjectOut);
-    cJSON_CreateObjectOut = getStringOut(env, cJSON_CreateObjectOut);
-    
+    cJSON_CreateObjectOut = getSampleCreateObjNextOut(env, cJSON_CreateObjectOut);
+    cJSON_CreateObjectOut = getSampleCreateObjPrevOut(env, cJSON_CreateObjectOut);
+    cJSON_CreateObjectOut = getSampleCreateObjChildOut(env, cJSON_CreateObjectOut);
+    cJSON_CreateObjectOut = getSampleCreateObjTypeOut(env, cJSON_CreateObjectOut, jsonObject);
+    cJSON_CreateObjectOut = getSampleCreateObjValuestringOut(env, cJSON_CreateObjectOut, jsonObject);
+    cJSON_CreateObjectOut = getSampleCreateObjValueintOut(env, cJSON_CreateObjectOut, jsonObject);
+    cJSON_CreateObjectOut = getSampleCreateObjValuedoubleOut(env, cJSON_CreateObjectOut, jsonObject);
+    cJSON_CreateObjectOut = getSampleCreateObjStringOut(env, cJSON_CreateObjectOut, jsonObject);
+
+    // 释放cJSON内存
+    cJSON_Delete(jsonObject);
     return cJSON_CreateObjectOut;
 }

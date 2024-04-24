@@ -65,7 +65,6 @@ export default function abilityTest() {
       console.info("Test NAPI KH418_cJSON_Parse result4: ", JSON.stringify(result4))
     })
 
-    // [NAPI_GEN]:输出测试方法，加注释
     it('KH373_cJSON_GetArraySize', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
       hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
@@ -85,7 +84,6 @@ export default function abilityTest() {
       // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
     })
 
-    // [NAPI_GEN]:输出测试方法，加注释
     it('KH735_cJSON_Print', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
       hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
@@ -106,7 +104,6 @@ export default function abilityTest() {
       // e.g. expect(result).assertEqual(2+3)
     })
 
-    // [NAPI_GEN]:输出测试方法，加注释
     it('KH361_cJSON_CreateObject', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
       hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
@@ -118,7 +115,6 @@ export default function abilityTest() {
       // e.g. expect(result).assertEqual(2+3)
     })
 
-    // [NAPI_GEN]:输出测试方法，加注释
     it('KH515_cJSON_CreateString', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
       hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
@@ -129,6 +125,96 @@ export default function abilityTest() {
       console.info("Test NAPI KH515_cJSON_CreateString result: ", JSON.stringify(result))
       // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
       // e.g. expect(result).assertEqual(2+3)
+    })
+
+    it('KH526_cJSON_AddStringToObject', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+
+      let valueObj: testNapi.cJSON = {
+        next: null,
+        prev: null,
+        child: null,
+        type: 0,
+        valuestring: '',
+        valueint: 0,
+        valuedouble: 0,
+        string: ''
+      }
+      // let name = "KReo699Gch"
+      // let string = "1RqeB65OeI"
+      let name = "name"
+      let string = "Anna"
+      let result: testNapi.cJSON = testNapi.KH526_cJSON_AddStringToObject(valueObj, name, string)
+      hilog.info(0x0000, "testTag", "Test NAPI KH526_cJSON_AddStringToObject: ", result);
+      console.info("Test NAPI KH526_cJSON_AddStringToObject result: ", JSON.stringify(result))
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      // e.g. expect(result).assertEqual(2+3)
+    })
+
+    it('KH206_cJSON_AddNumberToObject', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+
+      let valueObj: testNapi.cJSON = {
+        next: null,
+        prev: null,
+        child: null,
+        type: 0,
+        valuestring: '',
+        valueint: 0,
+        valuedouble: 0,
+        string: ''
+      }
+      // let name = "yMRdqT44d1"
+      let name = "age"
+      let numberIn = 12
+      let result: testNapi.cJSON = testNapi.KH206_cJSON_AddNumberToObject(valueObj, name, numberIn)
+      hilog.info(0x0000, "testTag", "Test NAPI KH206_cJSON_AddNumberToObject: ", result);
+      console.info("Test NAPI KH206_cJSON_AddNumberToObject result: ", JSON.stringify(result))
+
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      // e.g. expect(result).assertEqual(2+3)
+    })
+
+    it('KH545_cJSON_AddFalseToObject', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+      let valueObj: testNapi.cJSON = {
+        next: null,
+        prev: null,
+        child: null,
+        type: 0,
+        valuestring: '',
+        valueint: 0,
+        valuedouble: 0,
+        string: ''
+      }
+      // let name = "72QAqnlUXL"
+      let name = "is_student"
+      let result: testNapi.cJSON = testNapi.KH545_cJSON_AddFalseToObject(valueObj, name)
+      hilog.info(0x0000, "testTag", "Test NAPI KH545_cJSON_AddFalseToObject: ", result);
+      console.info("Test NAPI KH545_cJSON_AddFalseToObject result: ", JSON.stringify(result))
+
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      // e.g. expect(result).assertEqual(2+3)
+    })
+    it('cJSON_Sample_test1', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it cJSON_Sample_test1 begin');
+      // 鍒涘缓涓�涓┖瀵硅薄
+      let cjsonObjNext: testNapi.cJSON = testNapi.KH361_cJSON_CreateObject();
+      // 鍚戝璞′腑娣诲姞鍏冪礌
+      cjsonObjNext = testNapi.KH526_cJSON_AddStringToObject(cjsonObjNext, "type", "rect");
+      cjsonObjNext = testNapi.KH206_cJSON_AddNumberToObject(cjsonObjNext, "height", 1080);
+      cjsonObjNext = testNapi.KH206_cJSON_AddNumberToObject(cjsonObjNext, "width", 1920);
+      cjsonObjNext = testNapi.KH545_cJSON_AddFalseToObject(cjsonObjNext, "interface");
+      cjsonObjNext = testNapi.KH206_cJSON_AddNumberToObject(cjsonObjNext, "frame rate", 24);
+      console.info("Test NAPI cJSON_Sample_test1 cjsonObjNext: " + JSON.stringify(cjsonObjNext));
+      // 鎵撳嵃
+      let cjsonResStr: string = testNapi.KH735_cJSON_Print(cjsonObjNext);
+      console.info("Test NAPI cJSON_Sample_test1 cjsonResStr: " + JSON.stringify(cjsonResStr));
+      hilog.info(0x0000, "testTag", "Test NAPI cJSON_Sample_test1 cjsonResStr: ", JSON.stringify(cjsonResStr));
     })
 
 })

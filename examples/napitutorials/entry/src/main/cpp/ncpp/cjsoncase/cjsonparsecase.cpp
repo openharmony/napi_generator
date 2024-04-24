@@ -14,7 +14,7 @@
  */
 
 #include "cjson/cJSON.h"
-#include "common.h"
+#include "nodeapi.h"
 
 napi_value getCjsonChildOut2(napi_env env, napi_value childOut, cJSON *jsonChild)
 {
@@ -490,6 +490,8 @@ napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
         jsonNext = jsonChild->next;
     }
 
+    delete[] valueIn;
+    cJSON_Delete(json);
     /* [NAPI_GEN]: function return value*/
     napi_value cJSON_ParseOut;
     /* [NAPI_GEN]: 返回值是对象时，需要使用napi_create_object创建一个js的对象与js代码交互
@@ -507,6 +509,5 @@ napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
     cJSON_ParseOut = getCjsonparseOut3(env, json, cJSON_ParseOut);
     cJSON_ParseOut = getCjsonparseOut4(env, json, cJSON_ParseOut);
 
-    cJSON_Delete(json);
     return cJSON_ParseOut;
 }

@@ -91,7 +91,7 @@ function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete
       callFunc = util.format('      testNapi.%s(%s)\n', tsFuncName, funcParamUse)
     }
     // 加 hilog 打印
-    let hilogContent = util.format('      hilog.info(0x0000, "testTag", "Test NAPI  %s: ", result);', tsFuncName)
+    let hilogContent = util.format('      hilog.info(0x0000, "testTag", "Test NAPI %s: ", result);', tsFuncName)
     let func_test_replace = funcParamDefine + callFunc + hilogContent
     // 替换test_case_name
     let funcTestContent =  replaceAll(abilityTestTemplete,'[func_direct_testCase]', func_test_replace)
