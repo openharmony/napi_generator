@@ -448,7 +448,7 @@ napi_value KH526_cJSON_AddStringToObject(napi_env env, napi_callback_info info)
     char *jsonResStr = cJSON_Print(jsonObj);
     if (jsonResStr != NULL) {
         std::string testaaa = jsonResStr;
-        removeNewlines(testaaa);
+        RemoveNewlines(testaaa);
         OH_LOG_INFOS(LOG_APP, "KH526_cJSON_AddStringToObject success! 11. jsonResStr: %s", testaaa.c_str());
     }
 

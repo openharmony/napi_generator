@@ -21,7 +21,7 @@ constexpr uint8_t TYPE2 = 2;
 /* 去除字符串中的换行符，便于查找打印, 公共方法
  * str: 待去除\n的字符串
  */
-void removeNewlines(std::string &str)
+void RemoveNewlines(std::string &str)
 {
     std::string::size_type pos = 0;
     while ((pos = str.find("\n", pos)) != std::string::npos) {

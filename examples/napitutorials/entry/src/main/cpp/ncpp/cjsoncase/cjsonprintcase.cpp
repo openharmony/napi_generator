@@ -66,7 +66,7 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
     char *genResString = cJSON_Print(jsonObject);
     if (genResString != NULL) {
         std::string genResStringPrint = genResString;
-        removeNewlines(genResStringPrint);
+        RemoveNewlines(genResStringPrint);
         OH_LOG_INFOS(LOG_APP, "KH735_cJSON_Print success! genResString: %s", genResStringPrint.c_str());
     }
     
