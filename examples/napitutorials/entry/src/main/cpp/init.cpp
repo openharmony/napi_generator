@@ -79,6 +79,12 @@ static napi_value Init(napi_env env, napi_value exports)
          nullptr},
         {"KH515_cJSON_CreateString", nullptr, KH515_cJSON_CreateString, nullptr, nullptr, nullptr, napi_default,
          nullptr},
+        {"KH526_cJSON_AddStringToObject", nullptr, KH526_cJSON_AddStringToObject, nullptr, nullptr, nullptr,
+         napi_default, nullptr},
+        {"KH206_cJSON_AddNumberToObject", nullptr, KH206_cJSON_AddNumberToObject, nullptr, nullptr, nullptr,
+         napi_default, nullptr},
+        {"KH545_cJSON_AddFalseToObject", nullptr, KH545_cJSON_AddFalseToObject, nullptr, nullptr, nullptr, napi_default,
+         nullptr},
     };
     napi_define_properties(env, exports, sizeof(descArr) / sizeof(descArr[0]), descArr);
 

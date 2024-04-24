@@ -14,7 +14,7 @@
  */
 
 #include "cjson/cJSON.h"
-#include "common.h"
+#include "nodeapi.h"
 
 /* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(int) cJSON_GetArraySize(const cJSON *array);的napi方法，
  * 输入一个cJSON数组
@@ -87,6 +87,8 @@ napi_value KH373_cJSON_GetArraySize(napi_env env, napi_callback_info info)
     cJSON *stringArray = cJSON_Parse(stringArrayIn);
     int32_t arrayLenOut = cJSON_GetArraySize(stringArray);
     
+    delete[] stringArrayIn;
+    cJSON_Delete(stringArray);
     /* [NAPI_GEN]: function return value*/
     napi_value cJSON_GetArraySizeOut;
     /* [NAPI_GEN]: 返回值是int32_t类型时，napi_create_int32 创建一个包含32位整数(int32_t)的js数值（Number）对象
