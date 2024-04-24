@@ -13,11 +13,12 @@
 * limitations under the License.
 */
 
+type cJSON_bool = number;
 // 对应cJSON.h中: typedef struct cJSON {}
 export interface cJSON {
-  next: cJSON;
-  prev: cJSON;
-  child: cJSON;
+  next: cJSON | null;
+  prev: cJSON | null;
+  child: cJSON | null;
   type: number;
   valuestring: string;
   valueint: number;
@@ -26,3 +27,17 @@ export interface cJSON {
 }
 // 对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_Parse(const char *value); 方法的dts接口
 export const KH418_cJSON_Parse:(value: string) => cJSON;
+// 对应cJSON.h中: CJSON_PUBLIC(int) cJSON_GetArraySize(const cJSON *array); 方法的dts接口
+export const KH373_cJSON_GetArraySize:(array: cJSON) => number;
+// 对应cJSON.h中: CJSON_PUBLIC(char *) cJSON_Print(const cJSON *item); 方法的dts接口
+export const KH735_cJSON_Print:(item: cJSON) => string;
+// 对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_CreateObject(void); 方法的dts接口
+export const KH361_cJSON_CreateObject:() => cJSON;
+// 对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_CreateString(const char *string); 方法的dts接口
+export const KH515_cJSON_CreateString:(string: string) => cJSON;
+// 对应cJSON.h中:CJSON_PUBLIC(cJSON*) cJSON_AddStringToObject(cJSON * const object, const char * const name, const char * const string); 方法的dts接口
+export const KH526_cJSON_AddStringToObject:(object: cJSON, name: string, string: string) => cJSON;
+// 对应cJSON.h中: CJSON_PUBLIC(cJSON*) cJSON_AddNumberToObject(cJSON * const object, const char * const name, const double number); 方法的dts接口
+export const KH206_cJSON_AddNumberToObject:(object: cJSON, name: string, number: number) => cJSON;
+// 对应cJSON.h中: CJSON_PUBLIC(cJSON*) cJSON_AddFalseToObject(cJSON * const object, const char * const name); 方法的dts接口
+export const KH545_cJSON_AddFalseToObject:(object: cJSON, name: string) => cJSON;

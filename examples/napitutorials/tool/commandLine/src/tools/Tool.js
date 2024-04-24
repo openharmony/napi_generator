@@ -136,8 +136,7 @@ function readFile(fn) {
 }
 
 function writeFile(fn, str) {
-  let data = stringToUint8Array(str);
-  fs.writeFileSync(fn, data);
+  fs.writeFileSync(fn, str, { encoding: 'utf8' });
 }
 
 function appendWriteFile(fn, str) {

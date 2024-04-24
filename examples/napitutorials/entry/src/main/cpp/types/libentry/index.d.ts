@@ -13,7 +13,8 @@
 * limitations under the License.
 */
 
-import {cJSON, KH418_cJSON_Parse} from './cjson'
+import {cJSON, KH418_cJSON_Parse, KH373_cJSON_GetArraySize, KH735_cJSON_Print,
+  KH361_cJSON_CreateObject, KH515_cJSON_CreateString} from './cjson'
 
 export interface InstanceData {
   testint32: number;

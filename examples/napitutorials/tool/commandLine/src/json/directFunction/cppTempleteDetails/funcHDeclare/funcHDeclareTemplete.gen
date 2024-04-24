@@ -1,0 +1,8 @@
+#ifndef NAPI_[h_file_name_replace]_H
+#define NAPI_[h_file_name_replace]_H
+
+#include "common.h"
+
+[func_declare_replace]
+
+#endif //NAPI_[h_file_name_replace]_H
