@@ -46,7 +46,7 @@ napi_value cJSONVersion(napi_env env, napi_callback_info info);
 /* 去除字符串中的换行符，便于查找打印, 公共方法
  * str: 待去除\n的字符串
  */
-void removeNewlines(std::string &str);
+void RemoveNewlines(std::string &str);
 
 /* 检查JavaScript对象是否为空（不含自己的属性），公共方法
  * env: 当前环境的句柄，代表当前的Node.js环境
