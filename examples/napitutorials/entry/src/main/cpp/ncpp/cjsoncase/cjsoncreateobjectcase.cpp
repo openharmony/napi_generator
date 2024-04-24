@@ -293,7 +293,7 @@ napi_value KH361_cJSON_CreateObject(napi_env env, napi_callback_info info)
 
     // Todo: add business logic. 在这前后代码为框架所生成
     cJSON *jsonObject = cJSON_CreateObject();
-    if (jsonObject == NULL) {        
+    if (jsonObject == NULL) {
         return NULL;
     }
 

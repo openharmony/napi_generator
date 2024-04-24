@@ -125,7 +125,8 @@ napi_value getAddfalsetoobjValuestringOut(napi_env env, napi_value cJSON_AddFals
      * 字符串的长度，可以是具体的字节数，或者使用特殊的值NAPI_AUTO_LENGTH来让函数自己计算长度(假定字符串以null结尾)
      * result: 指向napi_value的指针，函数执行成功后这个指针将指向新创建的js字符串
      */
-    status = napi_create_string_utf8(env, jsonObj->valuestring == NULL ? "" : jsonObj->valuestring, NAPI_AUTO_LENGTH, &valuestringOut);
+    status = napi_create_string_utf8(env, jsonObj->valuestring == NULL ? "" : jsonObj->valuestring,
+        NAPI_AUTO_LENGTH, &valuestringOut);
     if (status != napi_ok) {
         /*错误处理*/
         getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
@@ -197,19 +198,20 @@ napi_value getAddfalsetoobjNextOut(napi_env env, napi_value cJSON_AddFalseToObje
         return nullptr;
     }
     
-    // 给jsonObj->prev赋值
-    if (jsonObj != NULL) {
-        if (jsonObj->next != NULL) {
-            nextOut = getAddfalsetoobjTypeOut(env, nextOut, jsonObj->next);
-            nextOut = getAddfalsetoobjValuesdoubleOut(env, nextOut, jsonObj->next);
-            nextOut = getAddfalsetoobjValuesintOut(env, nextOut, jsonObj->next);
-            nextOut = getAddfalsetoobjValuestringOut(env, nextOut, jsonObj->next);
-            nextOut = getAddfalsetoobjStringOut(env, nextOut, jsonObj->next);
-            if (jsonObj->next->next != NULL) {
-                cJSON *nextNext = jsonObj->next->next;
-                if (nextNext != NULL) {
-                    nextOut = getAddfalsetoobjNextOut(env, nextOut, jsonObj->next);
-                }
+    // 给jsonObj->next赋值
+    if (jsonObj == NULL) {
+        return NULL;
+    }
+    if (jsonObj->next != NULL) {
+        nextOut = getAddfalsetoobjTypeOut(env, nextOut, jsonObj->next);
+        nextOut = getAddfalsetoobjValuesdoubleOut(env, nextOut, jsonObj->next);
+        nextOut = getAddfalsetoobjValuesintOut(env, nextOut, jsonObj->next);
+        nextOut = getAddfalsetoobjValuestringOut(env, nextOut, jsonObj->next);
+        nextOut = getAddfalsetoobjStringOut(env, nextOut, jsonObj->next);
+        if (jsonObj->next->next != NULL) {
+            cJSON *nextNext = jsonObj->next->next;
+            if (nextNext != NULL) {
+                nextOut = getAddfalsetoobjNextOut(env, nextOut, jsonObj->next);
             }
         }
     }
@@ -229,6 +231,24 @@ napi_value getAddfalsetoobjNextOut(napi_env env, napi_value cJSON_AddFalseToObje
     return cJSON_AddFalseToObjectOut;
 }
 
+napi_value getJsonobjfalseChildOut(napi_env env, napi_value childOut, cJSON *jsonObj)
+{
+    if (jsonObj->child != NULL) {
+        childOut = getAddfalsetoobjTypeOut(env, childOut, jsonObj->child);
+        childOut = getAddfalsetoobjValuesdoubleOut(env, childOut, jsonObj->child);
+        childOut = getAddfalsetoobjValuesintOut(env, childOut, jsonObj->child);
+        childOut = getAddfalsetoobjValuestringOut(env, childOut, jsonObj->child);
+        childOut = getAddfalsetoobjStringOut(env, childOut, jsonObj->child);
+        if (jsonObj->child->next != NULL) {
+            cJSON *childNext = jsonObj->child->next;
+            if (childNext != NULL) {
+                childOut = getAddfalsetoobjNextOut(env, childOut, jsonObj->child);
+            }
+        }
+    }
+    return childOut;
+}
+
 napi_value getAddfalsetoobjChildOut(napi_env env, napi_value cJSON_AddFalseToObjectOut, cJSON *jsonObj)
 {
     napi_status status;
@@ -246,19 +266,7 @@ napi_value getAddfalsetoobjChildOut(napi_env env, napi_value cJSON_AddFalseToObj
     }
     // 给jsonObj->child赋值
     if (jsonObj != NULL) {
-        if (jsonObj->child != NULL) {
-            childOut = getAddfalsetoobjTypeOut(env, childOut, jsonObj->child);
-            childOut = getAddfalsetoobjValuesdoubleOut(env, childOut, jsonObj->child);
-            childOut = getAddfalsetoobjValuesintOut(env, childOut, jsonObj->child);
-            childOut = getAddfalsetoobjValuestringOut(env, childOut, jsonObj->child);
-            childOut = getAddfalsetoobjStringOut(env, childOut, jsonObj->child);
-            if (jsonObj->child->next != NULL) {
-                cJSON *childNext = jsonObj->child->next;
-                if (childNext != NULL) {
-                    childOut = getAddfalsetoobjNextOut(env, childOut, jsonObj->child);
-                }
-            }
-        }
+        childOut = getJsonobjfalseChildOut(env, childOut, jsonObj);
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
      * env: 当前环境的句柄
