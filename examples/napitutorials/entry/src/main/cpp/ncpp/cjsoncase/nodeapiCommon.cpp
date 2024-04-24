@@ -1,4 +1,22 @@
+/*
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "nodeapi.h"
+
+constexpr uint8_t TYPE1 = 1;
+constexpr uint8_t TYPE2 = 2;
 
 /* 去除字符串中的换行符，便于查找打印, 公共方法
  * str: 待去除\n的字符串
@@ -230,14 +248,14 @@ cJSON *initCJSON_Object(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const
         if (objValueStrIn != NULL && objValueStrIn[0] != '\0') {
             jsonOut = cJSON_AddStringToObject(jsonObj, objStrIn, objValueStrIn);
         }
-        double objValueDoubleIn = getNapiCjsonValuedouble(env,cjsonObj, tag);
+        double objValueDoubleIn = getNapiCjsonValuedouble(env, cjsonObj, tag);
         if (objValueDoubleIn != 0) {
             jsonOut = cJSON_AddNumberToObject(jsonObj, objStrIn, objValueDoubleIn);
         }
         int objValueTypeIn = getNapiCjsonType(env, cjsonObj, tag);
-        if (objValueTypeIn == 1) {
+        if (objValueTypeIn == TYPE1) {
             jsonOut = cJSON_AddFalseToObject(jsonObj, objStrIn);
-        } else if (objValueTypeIn == 2) {
+        } else if (objValueTypeIn == TYPE2) {
             jsonOut = cJSON_AddTrueToObject(jsonObj, objStrIn);
         }
     }

@@ -197,20 +197,21 @@ napi_value getAddstrtoobjNextOut(napi_env env, napi_value cJSON_AddStringToObjec
         return nullptr;
     }
     // 给jsonObj->next赋值
-    if (jsonObj != NULL) {
-        if (jsonObj->next != NULL) {
-            nextOut = getAddstrtoobjTypeOut(env, nextOut, jsonObj->next);
-            nextOut = getAddstrtoobjValuesdoubleOut(env, nextOut, jsonObj->next);
-            nextOut = getAddstrtoobjValuesintOut(env, nextOut, jsonObj->next);
-            nextOut = getAddstrtoobjValuestringOut(env, nextOut, jsonObj->next);
-            nextOut = getAddstrtoobjStringOut(env, nextOut, jsonObj->next);
-            if (jsonObj->next->next != NULL) {
-                cJSON *nextNext = jsonObj->next->next;
-                if (nextNext != NULL) {
-                    nextOut = getAddstrtoobjNextOut(env, nextOut, jsonObj->next);
-                }
+    if (jsonObj == NULL) {
+        return NULL;
+    }
+    if (jsonObj->next != NULL) {
+        nextOut = getAddstrtoobjTypeOut(env, nextOut, jsonObj->next);
+        nextOut = getAddstrtoobjValuesdoubleOut(env, nextOut, jsonObj->next);
+        nextOut = getAddstrtoobjValuesintOut(env, nextOut, jsonObj->next);
+        nextOut = getAddstrtoobjValuestringOut(env, nextOut, jsonObj->next);
+        nextOut = getAddstrtoobjStringOut(env, nextOut, jsonObj->next);
+        if (jsonObj->next->next != NULL) {
+            cJSON *nextNext = jsonObj->next->next;
+            if (nextNext != NULL) {
+                nextOut = getAddstrtoobjNextOut(env, nextOut, jsonObj->next);
             }
-        } 
+        }
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
      * env: 当前环境的句柄
@@ -225,6 +226,24 @@ napi_value getAddstrtoobjNextOut(napi_env env, napi_value cJSON_AddStringToObjec
         return nullptr;
     }
     return cJSON_AddStringToObjectOut;
+}
+
+napi_value getJsonobjstrChildOut(napi_env env, napi_value childOut, cJSON *jsonObj)
+{
+    if (jsonObj->child != NULL) {
+        childOut = getAddstrtoobjTypeOut(env, childOut, jsonObj->child);
+        childOut = getAddstrtoobjValuesdoubleOut(env, childOut, jsonObj->child);
+        childOut = getAddstrtoobjValuesintOut(env, childOut, jsonObj->child);
+        childOut = getAddstrtoobjValuestringOut(env, childOut, jsonObj->child);
+        childOut = getAddstrtoobjStringOut(env, childOut, jsonObj->child);
+        if (jsonObj->child->next != NULL) {
+            cJSON *childNext = jsonObj->child->next;
+            if (childNext != NULL) {
+                childOut = getAddstrtoobjNextOut(env, childOut, jsonObj->child);
+            }
+        }
+    }
+    return childOut;
 }
 
 napi_value getAddstrtoobjChildOut(napi_env env, napi_value cJSON_AddStringToObjectOut, cJSON *jsonObj)
@@ -244,19 +263,7 @@ napi_value getAddstrtoobjChildOut(napi_env env, napi_value cJSON_AddStringToObje
     }
     // 给jsonObj->child赋值
     if (jsonObj != NULL) {
-        if (jsonObj->child != NULL) {
-            childOut = getAddstrtoobjTypeOut(env, childOut, jsonObj->child);
-            childOut = getAddstrtoobjValuesdoubleOut(env, childOut, jsonObj->child);
-            childOut = getAddstrtoobjValuesintOut(env, childOut, jsonObj->child);
-            childOut = getAddstrtoobjValuestringOut(env, childOut, jsonObj->child);
-            childOut = getAddstrtoobjStringOut(env, childOut, jsonObj->child);
-            if (jsonObj->child->next != NULL) {
-                cJSON *childNext = jsonObj->child->next;
-                if (childNext != NULL) {
-                   childOut = getAddstrtoobjNextOut(env, childOut, jsonObj->child);
-                }
-            }
-        }
+        childOut = getJsonobjstrChildOut(env, childOut, jsonObj);
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
      * env: 当前环境的句柄
@@ -390,7 +397,8 @@ char *getAddstrtoobjInfoValueIn(napi_env env, napi_value propValueIn)
  * 输入：一个cJSON对象，需要添加的item名字（字符串），需要添加的item内容（字符串）
  * 输出：添加item后的cJSON对象
  */
-napi_value KH526_cJSON_AddStringToObject(napi_env env, napi_callback_info info) {
+napi_value KH526_cJSON_AddStringToObject(napi_env env, napi_callback_info info)
+{
     napi_status status;
     /* [NAPI_GEN]: Node.js在其N-API中用来提供错误的扩展信息的结构体,结构体包含以下字段
      * error_message: 一个指向错误详细字符串的指针，提供了关于错误的文本描述

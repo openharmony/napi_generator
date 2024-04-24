@@ -197,18 +197,19 @@ napi_value getAddnumbertoobjNextOut(napi_env env, napi_value cJSON_AddNumberToOb
         return nullptr;
     }
     // 给jsonObj->next赋值
-    if (jsonObj != NULL) {
-        if (jsonObj->next != NULL) {
-            nextOut = getAddnumbertoobjTypeOut(env, nextOut, jsonObj->next);
-            nextOut = getAddnumbertoobjValuesdoubleOut(env, nextOut, jsonObj->next);
-            nextOut = getAddnumbertoobjValuesintOut(env, nextOut, jsonObj->next);
-            nextOut = getAddnumbertoobjValuestringOut(env, nextOut, jsonObj->next);
-            nextOut = getAddnumbertoobjStringOut(env, nextOut, jsonObj->next);
-            if (jsonObj->next->next != NULL) {
-                cJSON *nextNext = jsonObj->next->next;
-                if (nextNext != NULL) {
-                    nextOut = getAddnumbertoobjNextOut(env, nextOut, jsonObj->next);
-                }
+    if (jsonObj == NULL) {
+        return NULL;
+    }
+    if (jsonObj->next != NULL) {
+        nextOut = getAddnumbertoobjTypeOut(env, nextOut, jsonObj->next);
+        nextOut = getAddnumbertoobjValuesdoubleOut(env, nextOut, jsonObj->next);
+        nextOut = getAddnumbertoobjValuesintOut(env, nextOut, jsonObj->next);
+        nextOut = getAddnumbertoobjValuestringOut(env, nextOut, jsonObj->next);
+        nextOut = getAddnumbertoobjStringOut(env, nextOut, jsonObj->next);
+        if (jsonObj->next->next != NULL) {
+            cJSON *nextNext = jsonObj->next->next;
+            if (nextNext != NULL) {
+                nextOut = getAddnumbertoobjNextOut(env, nextOut, jsonObj->next);
             }
         }
     }
@@ -225,6 +226,25 @@ napi_value getAddnumbertoobjNextOut(napi_env env, napi_value cJSON_AddNumberToOb
         return nullptr;
     }
     return cJSON_AddNumberToObjectOut;
+}
+
+napi_value getJsonobjnumChildout(napi_env env, napi_value childOut, cJSON *jsonObj)
+{
+    if (jsonObj->child != NULL) {
+        // 依次返回，直接调用方法？
+        childOut = getAddnumbertoobjTypeOut(env, childOut, jsonObj->child);
+        childOut = getAddnumbertoobjValuesdoubleOut(env, childOut, jsonObj->child);
+        childOut = getAddnumbertoobjValuesintOut(env, childOut, jsonObj->child);
+        childOut = getAddnumbertoobjValuestringOut(env, childOut, jsonObj->child);
+        childOut = getAddnumbertoobjStringOut(env, childOut, jsonObj->child);
+        if (jsonObj->child->next != NULL) {
+            cJSON *childNext = jsonObj->child->next;
+            if (childNext != NULL) {
+                childOut = getAddnumbertoobjNextOut(env, childOut, jsonObj->child);
+            }
+        }
+    }
+    return childOut;
 }
 
 napi_value getAddnumbertoobjChildOut(napi_env env, napi_value cJSON_AddNumberToObjectOut, cJSON *jsonObj)
@@ -244,20 +264,7 @@ napi_value getAddnumbertoobjChildOut(napi_env env, napi_value cJSON_AddNumberToO
     }
     // 给jsonObj->child赋值
     if (jsonObj != NULL) {
-        if (jsonObj->child != NULL) {
-            // 依次返回，直接调用方法？
-            childOut = getAddnumbertoobjTypeOut(env, childOut, jsonObj->child);
-            childOut = getAddnumbertoobjValuesdoubleOut(env, childOut, jsonObj->child);
-            childOut = getAddnumbertoobjValuesintOut(env, childOut, jsonObj->child);
-            childOut = getAddnumbertoobjValuestringOut(env, childOut, jsonObj->child);
-            childOut = getAddnumbertoobjStringOut(env, childOut, jsonObj->child);
-            if (jsonObj->child->next != NULL) {
-                cJSON *childNext = jsonObj->child->next;
-                if (childNext != NULL) {
-                    childOut = getAddnumbertoobjNextOut(env, childOut, jsonObj->child);
-                }
-            }
-        }
+        childOut = getJsonobjnumChildout(env, childOut, jsonObj);
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
      * env: 当前环境的句柄
@@ -381,7 +388,8 @@ double getAddnumbertoobjInfoNum(napi_env env, napi_value propNumValue)
  * 输入：一个cJSON对象，需要添加的item名字（字符串），需要添加的item内容（数值）
  * 输出：添加item后的cJSON对象
  */
-napi_value KH206_cJSON_AddNumberToObject(napi_env env, napi_callback_info info) {
+napi_value KH206_cJSON_AddNumberToObject(napi_env env, napi_callback_info info)
+{
     napi_status status;
     /* [NAPI_GEN]: Node.js在其N-API中用来提供错误的扩展信息的结构体,结构体包含以下字段
      * error_message: 一个指向错误详细字符串的指针，提供了关于错误的文本描述

@@ -107,7 +107,8 @@ napi_value KH526_cJSON_AddStringToObject(napi_env env, napi_callback_info info);
  */
 napi_value KH206_cJSON_AddNumberToObject(napi_env env, napi_callback_info info);
 
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON*) cJSON_AddFalseToObject(cJSON * const object, const char * const name);的napi方法，
+/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON*) cJSON_AddFalseToObject(cJSON * const object, const char * const name);
+ * 的napi方法，
  * 输入：一个cJSON对象，需要添加的item名字（字符串）
  * 输出：添加item后的cJSON对象
  */
