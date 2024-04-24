@@ -1,0 +1,10 @@
+// [NAPI_GEN]:输出测试方法，加注释
+it('[test_case_name]', 0, () => {
+    // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+    hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+
+    [func_direct_testCase]
+
+    // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+    // e.g. expect(result).assertEqual(2+3)
+})

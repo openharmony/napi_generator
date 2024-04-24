@@ -1,0 +1,5 @@
+    // Todo: add business logic. 在这前后代码为框架所生成
+
+    /* [NAPI_GEN]: function return value*/ 
+[return_replace]
+    return [return_name]Out;
