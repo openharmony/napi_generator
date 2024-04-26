@@ -18,7 +18,11 @@ import image from '@ohos.multimedia.image';
 import Logger from '../../../util/Logger';
 import testNapi from 'libentry.so';
 import { TitleBar } from '../../../common/TitleBar'
+import { TcBaseSample } from '../../../interface/tctsample'
 import hilog from '@ohos.hilog';
+import { TcNADataType } from '../../../interface/tctnadatatype';
+import { TCTYPE } from '../../../interface/tctbase';
+import { TcCJsonSample } from '../../../interface/tctcjsonsample';
 
 const TAG: string = 'napi_roi';
 
@@ -82,7 +86,6 @@ struct napisetinstancedata {
         .justifyContent(FlexAlign.Start)
 
         Row() {
-
             Button($r('app.string.napi_set_instance_data'), { type: ButtonType.Capsule })
               .backgroundColor(Color.Blue)
               .width('80%')
@@ -93,6 +96,21 @@ struct napisetinstancedata {
               .margin({ left: 24 })
               .id('napi_set_instance_data')
               .onClick(() => {
+                let addres = testNapi.add(5, 8);
+                hilog.info(0x0000, 'testTag', `addres : ${addres}`);
+                let baseobj = testNapi.getTestCase(1);
+                hilog.info(0x0000, 'testTag', `baseobj : ${baseobj.name}`);
+                let tcbaseobj = baseobj as TcBaseSample;
+                hilog.info(0x0000, 'testTag', `baseobj.add : ${tcbaseobj.add(1, 2)}`);
+                // let type : TCTYPE = TCTYPE.TCT_NADATATYPE;
+                let naobj = testNapi.getTestCase(2);
+                hilog.info(0x0000, 'testTag', `naobj : ${naobj.name}`);
+                let tcnadatatypeobj = naobj as TcNADataType;
+                hilog.info(0x0000, 'testTag', `tcnadatatypeobj.testNapiStatus : ${tcnadatatypeobj.testNapiStatus(1, 2)}`);
+                let cjobj = testNapi.getTestCase(7);
+                hilog.info(0x0000, 'testTag', `cjobj : ${cjobj.name}`);
+                let tccjsonobj = cjobj as TcCJsonSample;
+                hilog.info(0x0000, 'testTag', `tccjsonobj.cjson_version : ${tccjsonobj.cjson_version()}`);
                 let instanceobj: Object = testNapi.instance;
                 let ret1 = `instance ${instanceobj} `
                 let ret2 = ' ld.lld: error: undefined symbol: napi_set_instance_data '
