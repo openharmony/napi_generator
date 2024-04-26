@@ -1,0 +1,2 @@
+/* [NAPI_GEN]:声明文件中的方法:[func_intro_replace]*/
+[tab_replace][export_replace][func_name_replace]:([func_param_replace]) => [func_return_replace];

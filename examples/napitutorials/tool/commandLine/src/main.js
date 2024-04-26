@@ -20,10 +20,14 @@ const main = require("./TsGen/tsMain");
 let ops = stdio.getopt({
     // 输入的.h文件路径，必填
     'filename': { key: 'f', args: 1, description: ".h file", default: "" },
-    // 可选参数，可设置默认值
+    // 可选参数，测试文件路径
     'testFilename': { key: 't', args: 1, description: "Ability.test.ets file", default: "" },
+    // 可选参数， 声明文件路径
     'indexFilename': { key: 'i', args: 1, description: "index.d.ts file", default: "" },
+    // 可选参数， cpp文件路径
     'outCppPath': { key: 'o', args: 1, description: ".cpp dir path", default: "" },
+    // 可选参数，是否生成init函数
+    'isGenInitFunc': { key: 'g', args: 1, description: "generate init function or not", default: true },
 });
 
 // 获取命令行参数 .h文件路径
@@ -31,6 +35,7 @@ let filePath = ops.filename
 let testFilePath = ops.testFilename
 let tsFilePath = ops.indexFilename
 let cppFilePath = ops.outCppPath
+let isGenInitFunc = ops.isGenInitFunc
 // 读取文件内容 判断参数是否为空
 if (filePath !== '') {
     let fileDir = path.resolve(filePath, '..');
@@ -45,14 +50,10 @@ if (filePath !== '') {
     }
     if(!cppFilePath) {
         let rootPath = path.resolve(indexFile, '..', '..', '..');
-        cppFilePath = path.join(rootPath, 'test.cpp');
+        cppFilePath = rootPath;
     }
 
-    console.info("filePath: " + filePath)
-    console.info("testFilePath: " + testFilePath)
-    console.info("tsFilePath: " + tsFilePath)
-    console.info("cppFilePath: " + cppFilePath)
-    main.doGenerate(filePath, testFilePath, tsFilePath, cppFilePath);
+    main.doGenerate(filePath, testFilePath, tsFilePath, cppFilePath, isGenInitFunc);
 }
 
 
@@ -67,7 +68,6 @@ function findIndexDTS(currentDir) {
             // 检查当前目录下是否有 index.d.ts 文件
             if (filesAndDirs.includes('index.d.ts')) {
                 const foundPath = path.join(currentPath, 'index.d.ts');
-                console.log(`Found index.d.ts at: ${foundPath}`);
                 return foundPath;
             }
             // 将路径的所有子目录添加到栈中以便后续遍历
