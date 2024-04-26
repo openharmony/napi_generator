@@ -672,17 +672,17 @@ static void RescontExecuteCB(napi_env env, void *data)
         if (pkt->stream_index == videoStreamIdx) {
             ret = decode_packet(videoDecCtx, frame, pkt);
             if (0 && ret == 0) {
-               OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "decode video "
-               "w[%{public}d]:h[%{public}d] pict_type[%{public}d]]]\n", frame->width, frame->height, frame->pict_type);
+                OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "decode video "
+                "w[%{public}d]:h[%{public}d] pict_type[%{public}d]]]\n", frame->width, frame->height, frame->pict_type);
            }
         } else if (pkt->stream_index == audioStreamIdx) {
             ret = decode_packet(audioDecCtx, frame, pkt);
             if (0 && ret == 0) {
-               OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
-                   "decode audio "
-                   "nbs[%{public}d]:pts[%{public}d] duration[%{public}d]]]\n",
-                   frame->nb_samples, av_ts2timestr(frame->pts, &audioDecCtx->time_base), frame->duration);
-           }
+                OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
+                    "decode audio "
+                    "nbs[%{public}d]:pts[%{public}d] duration[%{public}d]]]\n",
+                    frame->nb_samples, av_ts2timestr(frame->pts, &audioDecCtx->time_base), frame->duration);
+            }
         }
         
         av_packet_unref(pkt);

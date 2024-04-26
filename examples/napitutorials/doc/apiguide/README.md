@@ -7,7 +7,7 @@
 * [More resource and info about native Addons](#resources)
 
 Node-API is an ABI stable C interface provided by Node.js for building native
-addons. It is independent of the underlying JavaScript runtime (e.g. V8 or ChakraCore)
+addons. It is independent of the underlying JavaScript runtime (e.g.  or ChakraCore)
 and is maintained as part of Node.js itself. It is intended to insulate
 native addons from changes in the underlying JavaScript engine and allow
 modules compiled for one version to run on later versions of Node.js without
@@ -114,7 +114,7 @@ stability in general, and the Node-API ABI stability guarantee in particular.
 ## More resource and info about native Addons
 
 There are three options for implementing addons: Node-API, nan, or direct
-use of internal V8, libuv, and Node.js libraries. Unless there is a need for
+use of internal , libuv, and Node.js libraries. Unless there is a need for
 direct access to functionality that is not exposed by Node-API as outlined
 in [C/C++ addons](/dist/latest/docs/api/addons.html)
 in Node.js core, use Node-API. Refer to
