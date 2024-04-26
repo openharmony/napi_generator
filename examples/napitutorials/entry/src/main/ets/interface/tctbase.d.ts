@@ -13,21 +13,22 @@
  * limitations under the License.
  */
 
-type XComponentContextStatus = {
-  hasDraw: boolean,
-  hasChangeColor: boolean,
-};
+export enum TCTYPE {
+  TCT_BASE = 1,
+  TCT_NADATATYPE,
+  TCT_NAENVLCAPI,
+  TCT_JSABSTARCTOPS,
+  TCT_JSPREOPERTY,
+  TCT_JSVALUES,
+  TCT_CJSON,
+  TCT_FFMPEG,
+  TCT_OPENCV
+}
 
-type FFmpegDes = {
-  videoDec: string;
-  audioDec: string;
-};
+export interface TcBase {
+  name: string;
+}
 
-export interface XComponentContext {
-  drawPattern(a: number, b: number, c: number): void;
-  play(a: number, b: number, c: number): void;
-  stop(a: number, b: number, c: number): void;
-  getInfo(a: number, b: number, c: number): Promise<FFmpegDes>;
-  getStatus(): XComponentContextStatus;
-};
-
+export interface Callback<T> {
+  (data: T): void;
+}

@@ -13,21 +13,11 @@
  * limitations under the License.
  */
 
-type XComponentContextStatus = {
-  hasDraw: boolean,
-  hasChangeColor: boolean,
-};
+#ifndef NAPITUTORIALS_DATATYPES_H
+#define NAPITUTORIALS_DATATYPES_H
 
-type FFmpegDes = {
-  videoDec: string;
-  audioDec: string;
-};
+#include "common.h"
 
-export interface XComponentContext {
-  drawPattern(a: number, b: number, c: number): void;
-  play(a: number, b: number, c: number): void;
-  stop(a: number, b: number, c: number): void;
-  getInfo(a: number, b: number, c: number): Promise<FFmpegDes>;
-  getStatus(): XComponentContextStatus;
-};
+napi_value createTctNADataTypeInstance(napi_env env);
 
+#endif // NAPITUTORIALS_DATATYPES_H

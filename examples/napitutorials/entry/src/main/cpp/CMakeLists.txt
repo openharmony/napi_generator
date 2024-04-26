@@ -15,6 +15,7 @@ include_directories(${NATIVERENDER_ROOT_PATH}
 
 add_library(entry SHARED
     nodeapi/envlifecycleapis/napiinstancedata.cpp
+    nodeapi/datatypes/nadatatypes.cpp
     nodeapi/datatypes/napistatus.cpp
     nodeapi/datatypes/napienv.cpp
     nodeapi/datatypes/napivalue.cpp
@@ -22,6 +23,7 @@ add_library(entry SHARED
     nodeapi/datatypes/napithreadsafefuncrel.cpp
     nodeapi/datatypes/napithreadsafefuncall.cpp
     nodeapi/datatypes/napiextendederrorinfo.cpp
+    ncpp/cjsoncase/cjsonsample.cpp
     ncpp/cjsoncase/cjsoncase.cpp
     ncpp/cjsoncase/cjsonparsecase.cpp
     ncpp/cjsoncase/cjsongetarraysizecase.cpp
@@ -59,6 +61,8 @@ add_library(entry SHARED
     ncpp/ffmpegcase/render/egl_core.cpp
     ncpp/ffmpegcase/render/plugin_render.cpp
     ncpp/ffmpegcase/manager/plugin_manager.cpp
+    basesample/basesample.cpp
+
     init.cpp
 )
 
