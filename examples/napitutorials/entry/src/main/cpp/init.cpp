@@ -16,6 +16,9 @@
 #include "napi/native_api.h"
 #include <bits/alltypes.h>
 #include "nodeapi.h"
+#include "basesample.h"
+#include "nadatatypes.h"
+#include "cjsonsample.h"
 #include "javascriptapi.h"
 #include "ncpp/ffmpegcase/manager/plugin_manager.h"
 #include <iostream>
@@ -47,6 +50,56 @@ static napi_value Add(napi_env env, napi_callback_info info)
     return sum;
 }
 
+static napi_value getTestCase(napi_env env, napi_callback_info info) {
+    size_t requireArgc = 1;
+    size_t argc = 1;
+    napi_value args[1] = {nullptr};
+    napi_status status;
+    int32_t result = 0;
+
+    napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+
+    napi_valuetype valuetype0;
+    napi_typeof(env, args[0], &valuetype0);
+
+    uint32_t value0;
+    napi_get_value_uint32(env, args[0], &value0);
+
+    OH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, "getTestCase", "input param %{public}d", value0);
+    
+    // 返回结果
+    napi_value resultValue;
+    switch (value0) {
+        case TCT_BASE:
+            {
+                resultValue = createTctBaseInstance(env);
+            }
+            break;
+        case TCT_NADATATYPE:
+            {
+                resultValue = createTctNADataTypeInstance(env);
+            } 
+            break;
+        case TCT_NAENVLCAPI:
+        case TCT_JSABSTARCTOPS:
+        case TCT_JSPREOPERTY:
+        case TCT_JSVALUEs:
+            break;
+        case TCT_CJSON:
+            {
+                resultValue = createTctCJsonInstance(env);
+            }
+            break;
+        case TCT_FFMPEG:
+        case TCT_OPENCV:
+            break;
+        default:
+            break;
+    }
+
+    return resultValue;
+}
+
 EXTERN_C_START
 static napi_value Init(napi_env env, napi_value exports)
 {
@@ -61,6 +114,7 @@ static napi_value Init(napi_env env, napi_value exports)
 
     napi_property_descriptor descArr[] = {
         {"add", nullptr, Add, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"getTestCase", nullptr, getTestCase, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiStatus", nullptr, testNapiStatus, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testExterrinfo", nullptr, testNapiExterrinfo, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiEnv", nullptr, testNapiEnv, nullptr, nullptr, nullptr, napi_default, nullptr},
@@ -69,9 +123,8 @@ static napi_value Init(napi_env env, napi_value exports)
         {"testNapiThreadsafefuncrel", nullptr, setThreadsafefuncrel, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiThreadsafefuncall", nullptr, setThreadsafefuncall, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"cjson_version", nullptr, cJSONVersion, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"getContext", nullptr, NativeXComponentSample::PluginManager::GetContext,
-            nullptr, nullptr, nullptr, napi_default, nullptr}
-    };
+        {"getContext", nullptr, NativeXComponentSample::PluginManager::GetContext, nullptr, nullptr, nullptr,
+         napi_default, nullptr}};
     napi_define_properties(env, exports, sizeof(descArr) / sizeof(descArr[0]), descArr);
 
     NativeXComponentSample::PluginManager::GetInstance()->Export(env, exports);

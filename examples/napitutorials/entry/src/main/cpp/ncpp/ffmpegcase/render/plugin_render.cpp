@@ -21,11 +21,14 @@
 #include <string>
 #include "../common/common.h"
 #include "../manager/plugin_manager.h"
+#include "libavutil/pixdesc.h"
 #include "plugin_render.h"
 
 extern "C" {
     #include "libavformat/avformat.h"
     #include "libavcodec/avcodec.h"
+    #include "libavutil/timestamp.h"
+    #include "libavutil/pixdesc.h"
 
     // 自定义 avio_read_packet 函数
     int custom_avio_read_packet(void *opaque, uint8_t *buf, int bufSize)
@@ -101,6 +104,49 @@ extern "C" {
                 return ret;
             }
             *streamIdx = streamIndex;
+        }
+
+        return 0;
+    }
+
+    int decode_packet(AVCodecContext *dec, AVFrame *frame, const AVPacket *pkt) {
+        int ret = 0;
+
+        // submit the packet to the decoder
+        ret = avcodec_send_packet(dec, pkt);
+        if (ret < 0) {
+            fprintf(stderr, "Error submitting a packet for decoding (%s)\n", av_err2str(ret));
+            return ret;
+        }
+
+        // get all the available frames from the decoder
+        while (ret >= 0) {
+            ret = avcodec_receive_frame(dec, frame);
+            if (ret < 0) {
+                // those two return values are special and mean there is no output
+                // frame available, but there were no errors during decoding
+                if (ret == AVERROR_EOF || ret == AVERROR(EAGAIN))
+                    return 0;
+
+                fprintf(stderr, "Error during decoding (%s)\n", av_err2str(ret));
+                return ret;
+            }
+
+            // write the frame data to output file
+            if (dec->codec->type == AVMEDIA_TYPE_VIDEO) {
+                OH_LOG_Print(LOG_APP, LOG_INFO, 0xFF00, "PluginRender",
+                    "decode video format = [%{public}d]", frame->format,
+                    "w[%{public}d]:h[%{public}d] w[%{public}d]:h[%{public}d]\n",
+                    frame->width, frame->height, dec->width, dec->height);
+            } else {
+                OH_LOG_Print(LOG_APP, LOG_INFO, 0xFF00, "PluginRender",
+                    "decode audio nbs[%{public}d] pts[%{public}s]\n",
+                    frame->nb_samples, av_ts2timestr(frame->pts, &dec->time_base));
+            }
+
+            av_frame_unref(frame);
+            if (ret < 0)
+                return ret;
         }
 
         return 0;
@@ -406,7 +452,7 @@ napi_value PluginRender::NapiPlay(napi_env env, napi_callback_info info)
         render->eglCore_->fd_ = fd;
         render->eglCore_->foff_ = foff;
         render->eglCore_->flen_ = flen;
-        render->eglCore_->DrawBmp(fd, foff, flen);
+        render->eglCore_->DrawBmp(fd, foff, flen, hasDraw_);
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "render->eglCore_->Draw() executed");
     }
     return nullptr;
@@ -466,7 +512,7 @@ napi_value PluginRender::NapiStop(napi_env env, napi_callback_info info)
         render->eglCore_->fd_ = fd;
         render->eglCore_->foff_ = foff;
         render->eglCore_->flen_ = flen;
-        render->eglCore_->DrawBmp(fd, foff, flen);
+        render->eglCore_->DrawBmp(fd, foff, flen, hasDraw_);
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "render->eglCore_->Draw() executed");
     }
     return nullptr;
@@ -565,7 +611,7 @@ static void RescontExecuteCB(napi_env env, void *data)
         fclose(file);
         return;
     }
-    
+
     napi_value videoRes;
     napi_value audioRes;
     if (open_codec_context(&videoStreamIdx, &videoDecCtx, formatContext, AVMEDIA_TYPE_VIDEO) >= 0) {
@@ -579,11 +625,75 @@ static void RescontExecuteCB(napi_env env, void *data)
         napi_create_string_utf8(env, dumpBuf, strlen(dumpBuf), &audioRes);
     }
 
+    int64_t hours, mins, secs, us;
+    int64_t duration = formatContext->duration + (formatContext->duration <= INT64_MAX - 5000 ? 5000 : 0);
+    secs = duration / AV_TIME_BASE;
+    us = duration % AV_TIME_BASE;
+    mins = secs / 60;
+    secs %= 60;
+    hours = mins / 60;
+    mins %= 60;
+    int ssecs, sus;
+    av_log(NULL, AV_LOG_INFO, ", start: ");
+    ssecs = llabs(formatContext->start_time / AV_TIME_BASE);
+    sus = llabs(formatContext->start_time % AV_TIME_BASE);
+    
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
+        "duration[%{public}02d:%{public}02d:%{public}02d.%{public}2d], start[%{public}d:%{public}06d], bitrate[%{public}d]",
+        hours, mins, secs, (100 * us) / AV_TIME_BASE,
+        ssecs, (int) av_rescale(sus, 1000000, AV_TIME_BASE), formatContext->bit_rate / 1000);
+
+    frame = av_frame_alloc();
+    if (!frame) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "Could not allocate frame\n");
+        ret = AVERROR(ENOMEM);
+        goto end;
+    }
+
+    pkt = av_packet_alloc();
+    if (!pkt) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "Could not allocate packet\n");
+        ret = AVERROR(ENOMEM);
+        goto end;
+    }
+
+    /* read frames from the file */
+    while (av_read_frame(formatContext, pkt) >= 0) {
+        // check if the packet belongs to a stream we are interested in, otherwise
+        // skip it
+        if (pkt->stream_index == videoStreamIdx) {
+            ret = decode_packet(videoDecCtx, frame, pkt);
+//            if (ret == 0) {
+//                OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "decode video "
+//                "w[%{public}d]:h[%{public}d] pict_type[%{public}d]]]\n", frame->width, frame->height, frame->pict_type);
+//            }
+        } else if (pkt->stream_index == audioStreamIdx) {
+            ret = decode_packet(audioDecCtx, frame, pkt);
+//            if (ret == 0) {
+//                OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
+//                    "decode audio "
+//                    "nbs[%{public}d]:pts[%{public}d] duration[%{public}d]]]\n",
+//                    frame->nb_samples, av_ts2timestr(frame->pts, &audioDecCtx->time_base), frame->duration);
+//            }
+        }
+        
+        av_packet_unref(pkt);
+        if (ret < 0) {
+            break;
+        }
+    }
+end:    
     napi_value instance;
     napi_create_object(env, &instance);
     napi_set_named_property(env, instance, "videoDec", videoRes);
     napi_set_named_property(env, instance, "audioDec", audioRes);
     callbackData->result = instance;
+    
+    avcodec_free_context(&videoDecCtx);
+    avcodec_free_context(&audioDecCtx);
+    avformat_close_input(&formatContext);
+    av_packet_free(&pkt);
+    av_frame_free(&frame);
 }
 
 static void RescontCompleteCB(napi_env env, napi_status status, void *data)
@@ -751,7 +861,7 @@ napi_value PluginRender::NapiDrawPattern(napi_env env, napi_callback_info info)
         render->eglCore_->fd_ = fd;
         render->eglCore_->foff_ = foff;
         render->eglCore_->flen_ = flen;
-        render->eglCore_->DrawBmp(fd, foff, flen);
+        render->eglCore_->DrawBmp(fd, foff, flen, hasDraw_);
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "render->eglCore_->Draw() executed");
     }
     return nullptr;
