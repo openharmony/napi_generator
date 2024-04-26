@@ -509,7 +509,7 @@ void EGLCore::display(GLuint texGround)
     eglSwapBuffers(eglDisplay_, eglSurface_);
 }
 
-void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen)
+void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen, int& hasDraw)
 {
     flag_ = false;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "Drawbmp");
@@ -618,6 +618,7 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen)
 
     eglSwapBuffers(eglDisplay_, eglSurface_);
 
+    hasDraw = 1;
     flag_ = true;
 }
 

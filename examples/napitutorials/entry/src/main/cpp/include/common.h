@@ -56,6 +56,18 @@ constexpr int32_t ARGS_TWO = 2;
 constexpr int32_t ONLY_CALLBACK_MAX_PARA = 1;
 constexpr int32_t ONLY_CALLBACK_MIN_PARA = 0;
 
+enum TestCaseTypes {
+    TCT_BASE = 1,
+    TCT_NADATATYPE,
+    TCT_NAENVLCAPI,
+    TCT_JSABSTARCTOPS,
+    TCT_JSPREOPERTY,
+    TCT_JSVALUEs,
+    TCT_CJSON,
+    TCT_FFMPEG,
+    TCT_OPENCV
+};
+
 struct CallbackPromiseInfo {
     napi_ref callback = nullptr;
     napi_deferred deferred = nullptr;
