@@ -16,7 +16,8 @@
 #include "nadatatypes.h"
 #include "nodeapi.h"
 
-napi_value createTctNADataTypeInstance(napi_env env) {
+napi_value createTctNADataTypeInstance(napi_env env)
+{
     napi_status status;
     napi_value instance;
 

@@ -50,7 +50,8 @@ static napi_value Add(napi_env env, napi_callback_info info)
     return sum;
 }
 
-static napi_value getTestCase(napi_env env, napi_callback_info info) {
+static napi_value getTestCase(napi_env env, napi_callback_info info)
+{
     size_t requireArgc = 1;
     size_t argc = 1;
     napi_value args[1] = {nullptr};
@@ -78,12 +79,12 @@ static napi_value getTestCase(napi_env env, napi_callback_info info) {
         case TCT_NADATATYPE:
             {
                 resultValue = createTctNADataTypeInstance(env);
-            } 
+            }
             break;
         case TCT_NAENVLCAPI:
         case TCT_JSABSTARCTOPS:
         case TCT_JSPREOPERTY:
-        case TCT_JSVALUEs:
+        case TCT_JSVALUES:
             break;
         case TCT_CJSON:
             {
