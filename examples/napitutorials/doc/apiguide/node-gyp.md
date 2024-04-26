@@ -79,4 +79,4 @@ Sometimes finding the right settings for ```binding.gyp``` is not easy so to
 accomplish at most complicated task please refer to:
 
 - [GYP documentation](https://gyp.gsrc.io/index.md)
-- [node-gyp wiki](https://github.com/nodejs/node-gyp/wiki)
+- [node-gyp wiki](/node-gyp/wiki)

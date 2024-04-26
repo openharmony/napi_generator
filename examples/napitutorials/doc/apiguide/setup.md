@@ -28,7 +28,7 @@ To use **Node-API** in a native module:
      The base ABI-stable C APIs do not throw or handle C++ exceptions, but the
      Node-API C++ wrapper classes may _optionally_
      [integrate C++ and JavaScript exception-handling
-     ](https://github.com/nodejs/node-addon-api/blob/HEAD/doc/error_handling.md).
+     ](/node-addon-api/blob/HEAD/doc/error_handling.md).
 
      To use without C++ exceptions, add the following to `binding.gyp`:
 
