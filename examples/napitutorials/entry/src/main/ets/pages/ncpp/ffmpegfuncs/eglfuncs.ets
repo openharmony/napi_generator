@@ -36,7 +36,7 @@ struct eglfuncs {
   build() {
     Column() {
       Row() {
-        Text('Native XComponent Sample')
+        Text('EGL Texture Render Sample')
           .fontSize('24fp')
           .fontWeight(500)
           .margin({
@@ -86,7 +86,7 @@ struct eglfuncs {
 
       Row() {
         Column() {
-          Button('Draw Img')
+          Button('Draw BMP')
             .fontSize('16fp')
             .fontWeight(500)
             .margin({ bottom: 24 })
@@ -106,7 +106,7 @@ struct eglfuncs {
                       hasDraw = this.xComponentContext.getStatus().hasDraw;
                     }
                     if (hasDraw) {
-                      this.currentStatus = "draw star";
+                      this.currentStatus = "draw bmp";
                     }
                   }
                 })
