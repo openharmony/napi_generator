@@ -20,11 +20,16 @@ export interface InstanceData {
   testint32: number;
 }
 
+export interface tcBase {
+  name: string;
+}
+
 export interface Callback<T> {
   (data: T): void;
 }
 
 export const add: (a: number, b: number) => number;
+export const getTestCase: (a: number) => tcBase;
 export const testNapiStatus: (a: number, b: number) => number;
 export const testExterrinfo: (a: number, b: string) => number;
 export const testNapiEnv: () => string;

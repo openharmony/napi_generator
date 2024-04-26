@@ -49,12 +49,27 @@ constexpr uint8_t PARAM9 = 9;
 constexpr uint8_t PARAM10 = 10;
 constexpr uint8_t PARAM11 = 11;
 constexpr uint8_t PARAM12 = 12;
+constexpr uint8_t PARAM60 = 60;
 constexpr uint8_t PARAM100 = 100;
+constexpr uint8_t PARAM1000 = 1000;
+constexpr uint8_t PARAM100W = 1000000;
 
 constexpr int32_t ARGS_ONE = 1;
 constexpr int32_t ARGS_TWO = 2;
 constexpr int32_t ONLY_CALLBACK_MAX_PARA = 1;
 constexpr int32_t ONLY_CALLBACK_MIN_PARA = 0;
+
+enum TestCaseTypes {
+    TCT_BASE = 1,
+    TCT_NADATATYPE,
+    TCT_NAENVLCAPI,
+    TCT_JSABSTARCTOPS,
+    TCT_JSPREOPERTY,
+    TCT_JSVALUES,
+    TCT_CJSON,
+    TCT_FFMPEG,
+    TCT_OPENCV
+};
 
 struct CallbackPromiseInfo {
     napi_ref callback = nullptr;

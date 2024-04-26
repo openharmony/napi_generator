@@ -13,21 +13,15 @@
  * limitations under the License.
  */
 
-type XComponentContextStatus = {
-  hasDraw: boolean,
-  hasChangeColor: boolean,
-};
+import { TcBase, Callback } from './tctbase'
 
-type FFmpegDes = {
-  videoDec: string;
-  audioDec: string;
-};
-
-export interface XComponentContext {
-  drawPattern(a: number, b: number, c: number): void;
-  play(a: number, b: number, c: number): void;
-  stop(a: number, b: number, c: number): void;
-  getInfo(a: number, b: number, c: number): Promise<FFmpegDes>;
-  getStatus(): XComponentContextStatus;
-};
-
+export interface TcNADataType extends TcBase {
+  name: string;
+  testNapiStatus: (a: number, b: number) => number;
+  testExterrinfo: (a: number, b: string) => number;
+  testNapiEnv: () => string;
+  testNapiValue: () => string;
+  testNapiThreadsafefunc: (callback: Callback<string>) => number;
+  testNapiThreadsafefuncrel: (callback: Callback<string>) => number;
+  testNapiThreadsafefuncall: (callback: Callback<string>) => number;
+}

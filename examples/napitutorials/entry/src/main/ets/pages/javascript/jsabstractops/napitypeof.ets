@@ -108,8 +108,8 @@ struct napitypeoftypeof {
                   const testBool: boolean = true;
                   const testNum: number = -123.456;
                   const testStr: string = 'test';
-                  const testSym: symbol = Symbol();
-                  const testObj = {};
+                  // const testSym: symbol = Symbol();
+                  // const testObj = {};
                   const testFunc = () => {
                   };
                   // const testBigInt = 1n;
@@ -118,8 +118,8 @@ struct napitypeoftypeof {
                   const testBoolResult = testNapi.testNapiTypeof(testBool);
                   const testNumResult = testNapi.testNapiTypeof(testNum);
                   const testStrResult = testNapi.testNapiTypeof(testStr);
-                  const testSymResult = testNapi.testNapiTypeof(testSym);
-                  const testObjResult = testNapi.testNapiTypeof(testObj);
+                  // const testSymResult = testNapi.testNapiTypeof(testSym);
+                  // const testObjResult = testNapi.testNapiTypeof(testObj);
                   const testFuncResult = testNapi.testNapiTypeof(testFunc);
 
                   // Replace result in testcont
@@ -128,8 +128,8 @@ struct napitypeoftypeof {
                   this.testcont = this.testcont.replace('${testBoolResult}', `## ${testBoolResult} ##`);
                   this.testcont = this.testcont.replace('${testNumResult}', `## ${testNumResult} ##`);
                   this.testcont = this.testcont.replace('${testStrResult}', `## ${testStrResult} ##`);
-                  this.testcont = this.testcont.replace('${testSymResult}', `## ${testSymResult} ##`);
-                  this.testcont = this.testcont.replace('${testObjResult}', `## ${testObjResult} ##`);
+                  // this.testcont = this.testcont.replace('${testSymResult}', `## ${testSymResult} ##`);
+                  // this.testcont = this.testcont.replace('${testObjResult}', `## ${testObjResult} ##`);
                   this.testcont = this.testcont.replace('${testFuncResult}', `## ${testFuncResult} ##`);
 
                   // Print the results
@@ -138,8 +138,8 @@ struct napitypeoftypeof {
                   hilog.info(0x0000, TAG, `${typeof testBool} -> ${testBoolResult}`);
                   hilog.info(0x0000, TAG, `${typeof testNum} -> ${testNumResult}`);
                   hilog.info(0x0000, TAG, `${typeof testStr} -> ${testStrResult}`);
-                  hilog.info(0x0000, TAG, `${typeof testSym} -> ${testSymResult}`);
-                  hilog.info(0x0000, TAG, `${typeof testObj} -> ${testObjResult}`);
+                  // hilog.info(0x0000, TAG, `${typeof testSym} -> ${testSymResult}`);
+                  // hilog.info(0x0000, TAG, `${typeof testObj} -> ${testObjResult}`);
                   hilog.info(0x0000, TAG, `${typeof testFunc} -> ${testFuncResult}`);
                 } catch (error) {
                   hilog.error(0x0000, TAG, `Catch error testNapiTypeof: ${error.message}}`)
