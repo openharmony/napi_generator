@@ -85,16 +85,16 @@ The following is the documentation for node-addon-api.
 
 ## Examples
 
-Are you new to **node-addon-api**? Take a look at our **[examples](https://github.com/nodejs/node-addon-examples)**
+Are you new to **node-addon-api**? Take a look at our **[examples]()**
 
-- [Hello World](https://github.com/nodejs/node-addon-examples/tree/main/src/1-getting-started/1_hello_world)
-- [Pass arguments to a function](https://github.com/nodejs/node-addon-examples/tree/main/src/1-getting-started/2_function_arguments/node-addon-api)
-- [Callbacks](https://github.com/nodejs/node-addon-examples/tree/main/src/1-getting-started/3_callbacks/node-addon-api)
-- [Object factory](https://github.com/nodejs/node-addon-examples/tree/main/src/1-getting-started/4_object_factory/node-addon-api)
-- [Function factory](https://github.com/nodejs/node-addon-examples/tree/main/src/1-getting-started/5_function_factory/node-addon-api)
-- [Wrapping C++ Object](https://github.com/nodejs/node-addon-examples/tree/main/src/1-getting-started/6_object_wrap/node-addon-api)
-- [Factory of wrapped object](https://github.com/nodejs/node-addon-examples/tree/main/src/1-getting-started/7_factory_wrap/node-addon-api)
-- [Passing wrapped object around](https://github.com/nodejs/node-addon-examples/tree/main/src/2-js-to-native-conversion/8_passing_wrapped/node-addon-api)
+- [Hello World](/tree/main/src/1-getting-started/1_hello_world)
+- [Pass arguments to a function](/tree/main/src/1-getting-started/2_function_arguments/node-addon-api)
+- [Callbacks](/tree/main/src/1-getting-started/3_callbacks/node-addon-api)
+- [Object factory](/tree/main/src/1-getting-started/4_object_factory/node-addon-api)
+- [Function factory](/tree/main/src/1-getting-started/5_function_factory/node-addon-api)
+- [Wrapping C++ Object](/tree/main/src/1-getting-started/6_object_wrap/node-addon-api)
+- [Factory of wrapped object](/tree/main/src/1-getting-started/7_factory_wrap/node-addon-api)
+- [Passing wrapped object around](/tree/main/src/2-js-to-native-conversion/8_passing_wrapped/node-addon-api)
 
 <a name="abi-stability-guideline"></a>
 

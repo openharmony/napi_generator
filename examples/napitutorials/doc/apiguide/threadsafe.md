@@ -49,7 +49,7 @@ native C++ code (the "callback") on the Node.js thread.
 ### [`Napi::ThreadSafeFunction`](threadsafe_function.md)
 
 This API is designed without Node-API 5 native support for [the optional JavaScript
-  function callback feature](https://github.com/nodejs/node/commit/53297e66cb).
+  function callback feature](/node/commit/53297e66cb).
 
 This API has some dynamic functionality, in that:
 - The `[Non]BlockingCall()` methods provide a `Napi::Function` parameter as the

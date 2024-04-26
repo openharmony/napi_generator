@@ -1,6 +1,6 @@
 # CMake.js
 
-[**CMake.js**](https://github.com/cmake-js/cmake-js) is a build tool that allow native addon developers to compile their
+[**CMake.js**](cmake-js/cmake-js) is a build tool that allow native addon developers to compile their
 C or C++ code into executable form. It works like **[node-gyp](node-gyp.md)** but
 instead of Google's [**gyp**](https://gyp.gsrc.io) tool it is based on the [**CMake**](https://cmake.org) build system.
 
@@ -19,11 +19,11 @@ npm install -g cmake-js
 cmake-js --help
 ```
 
-> For *users* of your native addon, CMake.js should be configured as a dependency in your `package.json` as described in the [CMake.js documentation](https://github.com/cmake-js/cmake-js).
+> For *users* of your native addon, CMake.js should be configured as a dependency in your `package.json` as described in the [CMake.js documentation](cmake-js/cmake-js).
 
 ### CMakeLists.txt
 
-Your project will require a `CMakeLists.txt` file. The [CMake.js README file](https://github.com/cmake-js/cmake-js#usage) shows what's necessary.
+Your project will require a `CMakeLists.txt` file. The [CMake.js README file](cmake-js/cmake-js#usage) shows what's necessary.
 
 ### NAPI_VERSION
 
@@ -47,22 +47,22 @@ add_definitions(-DNAPI_EXPERIMENTAL)
 
 ### node-addon-api
 
-If your Node-API native add-on uses the optional [**node-addon-api**](https://github.com/nodejs/node-addon-api#node-addon-api-module) C++ wrapper, the `CMakeLists.txt` file requires additional configuration information as described on the [CMake.js README file](https://github.com/cmake-js/cmake-js#node-api-and-node-addon-api).
+If your Node-API native add-on uses the optional [**node-addon-api**](/node-addon-api#node-addon-api-module) C++ wrapper, the `CMakeLists.txt` file requires additional configuration information as described on the [CMake.js README file](cmake-js/cmake-js#node-api-and-node-addon-api).
 
 ## Example
 
-A working example of an Node-API native addon built using CMake.js can be found on the [node-addon-examples repository](https://github.com/nodejs/node-addon-examples/tree/main/src/8-tooling/build_with_cmake#building-node-api-addons-using-cmakejs).
+A working example of an Node-API native addon built using CMake.js can be found on the [node-addon-examples repository](/tree/main/src/8-tooling/build_with_cmake#building-node-api-addons-using-cmakejs).
 
 ## **CMake** Reference
 
-  - [Installation](https://github.com/cmake-js/cmake-js#installation)
-  - [How to use](https://github.com/cmake-js/cmake-js#usage)
-  - [Using Node-API and node-addon-api](https://github.com/cmake-js/cmake-js#n-api-and-node-addon-api)
-  - [Tutorials](https://github.com/cmake-js/cmake-js#tutorials)
-  - [Use case in the works - ArrayFire.js](https://github.com/cmake-js/cmake-js#use-case-in-the-works---arrayfirejs)
+  - [Installation](cmake-js/cmake-js#installation)
+  - [How to use](cmake-js/cmake-js#usage)
+  - [Using Node-API and node-addon-api](cmake-js/cmake-js#n-api-and-node-addon-api)
+  - [Tutorials](cmake-js/cmake-js#tutorials)
+  - [Use case in the works - ArrayFire.js](cmake-js/cmake-js#use-case-in-the-works---arrayfirejs)
 
 Sometimes finding the right settings is not easy so to accomplish at most
 complicated task please refer to:
 
 - [CMake documentation](https://cmake.org/)
-- [CMake.js wiki](https://github.com/cmake-js/cmake-js/wiki)
+- [CMake.js wiki](cmake-js/cmake-js/wiki)

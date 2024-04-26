@@ -5,7 +5,7 @@ On runtimes other than Node.js, node-api methods may return
 `napi_no_external_buffers_allowed` to indicate that external
 buffers are not supported. One such runtime is Electron as
 described in this issue
-[electron/issues/35801](https://github.com/electron/electron/issues/35801).
+[electron/issues/35801](electron/electron/issues/35801).
 
 In order to maintain broadest compatibility with all runtimes,
 you may define `NODE_API_NO_EXTERNAL_BUFFERS_ALLOWED` in your addon before
