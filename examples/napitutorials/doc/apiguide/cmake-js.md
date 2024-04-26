@@ -2,13 +2,13 @@
 
 [**CMake.js**](cmake-js/cmake-js) is a build tool that allow native addon developers to compile their
 C or C++ code into executable form. It works like **[node-gyp](node-gyp.md)** but
-instead of Google's [**gyp**](https://gyp.gsrc.io) tool it is based on the [**CMake**](https://cmake.org) build system.
+instead of 's [**gyp**]() tool it is based on the [**CMake**]() build system.
 
 ## Quick Start
 
 ### Install CMake
 
-CMake.js requires that CMake be installed. Installers for a variety of platforms can be found on the [CMake website](https://cmake.org).
+CMake.js requires that CMake be installed. Installers for a variety of platforms can be found on the [CMake website]().
 
 ### Install CMake.js
 
@@ -64,5 +64,5 @@ A working example of an Node-API native addon built using CMake.js can be found 
 Sometimes finding the right settings is not easy so to accomplish at most
 complicated task please refer to:
 
-- [CMake documentation](https://cmake.org/)
+- [CMake documentation](/)
 - [CMake.js wiki](cmake-js/cmake-js/wiki)

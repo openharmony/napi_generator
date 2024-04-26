@@ -225,7 +225,7 @@ exception after the native callback returns.
 ## Calling Node-API directly from a **node-addon-api** addon
 
 **node-addon-api** provides macros for throwing errors in response to non-OK
-`napi_status` results when calling [Node-API](https://nodejs.org/docs/latest/api/n-api.html)
+`napi_status` results when calling [Node-API](/docs/latest/api/n-api.html)
 functions from within a native addon. These macros are defined differently
 depending on whether C++ exceptions are enabled or not, but are available for
 use in either case.

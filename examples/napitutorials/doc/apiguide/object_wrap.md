@@ -229,7 +229,7 @@ For example, you could internally re-call the JavaScript contstructor _with_
 the **new** operator (via
 `Napi::Function::New(const std::vector<napi_value> &args)`), and return the
 resulting object.  Or you might do something else entirely, such as the way
-[`Date()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#constructor)
+[`Date()`](/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#constructor)
 produces a string when called as a function.
 
 ```cpp
