@@ -674,7 +674,7 @@ static void RescontExecuteCB(napi_env env, void *data)
             if (0 && ret == 0) {
                 OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "decode video "
                 "w[%{public}d]:h[%{public}d] pict_type[%{public}d]]]\n", frame->width, frame->height, frame->pict_type);
-           }
+            }
         } else if (pkt->stream_index == audioStreamIdx) {
             ret = decode_packet(audioDecCtx, frame, pkt);
             if (0 && ret == 0) {
