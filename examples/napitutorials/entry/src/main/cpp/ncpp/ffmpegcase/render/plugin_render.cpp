@@ -25,10 +25,10 @@
 #include "plugin_render.h"
 
 extern "C" {
-    #include "libavformat/avformat.h"
-    #include "libavcodec/avcodec.h"
-    #include "libavutil/timestamp.h"
-    #include "libavutil/pixdesc.h"
+    // #include "libavformat/avformat.h"
+    // #include "libavcodec/avcodec.h"
+    // #include "libavutil/timestamp.h"
+    // #include "libavutil/pixdesc.h"
 
     // 自定义 avio_read_packet 函数
     int custom_avio_read_packet(void *opaque, uint8_t *buf, int bufSize)
@@ -125,8 +125,9 @@ extern "C" {
             if (ret < 0) {
                 // those two return values are special and mean there is no output
                 // frame available, but there were no errors during decoding
-                if (ret == AVERROR_EOF || ret == AVERROR(EAGAIN))
+                if (ret == AVERROR_EOF || ret == AVERROR(EAGAIN)) {
                     return 0;
+                }
 
                 fprintf(stderr, "Error during decoding (%s)\n", av_err2str(ret));
                 return ret;
@@ -145,8 +146,9 @@ extern "C" {
             }
 
             av_frame_unref(frame);
-            if (ret < 0)
+            if (ret < 0) {
                 return ret;
+            }
         }
 
         return 0;
@@ -625,23 +627,27 @@ static void RescontExecuteCB(napi_env env, void *data)
         napi_create_string_utf8(env, dumpBuf, strlen(dumpBuf), &audioRes);
     }
 
-    int64_t hours, mins, secs, us;
+    int64_t hours = 0;
+    int64_t mins = 0;
+    int64_t secs = 0;
+    int64_t us = 0;
     int64_t duration = formatContext->duration + (formatContext->duration <= INT64_MAX - 5000 ? 5000 : 0);
     secs = duration / AV_TIME_BASE;
     us = duration % AV_TIME_BASE;
-    mins = secs / 60;
-    secs %= 60;
-    hours = mins / 60;
-    mins %= 60;
-    int ssecs, sus;
+    mins = secs / PARAM60;
+    secs %= PARAM60;
+    hours = mins / PARAM60;
+    mins %= PARAM60;
+    int ssecs = 0;
+    int sus = 0;
     av_log(NULL, AV_LOG_INFO, ", start: ");
     ssecs = llabs(formatContext->start_time / AV_TIME_BASE);
     sus = llabs(formatContext->start_time % AV_TIME_BASE);
     
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
         "duration[%{public}02d:%{public}02d:%{public}02d.%{public}2d], start[%{public}d:%{public}06d], bitrate[%{public}d]",
-        hours, mins, secs, (100 * us) / AV_TIME_BASE,
-        ssecs, (int) av_rescale(sus, 1000000, AV_TIME_BASE), formatContext->bit_rate / 1000);
+        hours, mins, secs, (PARAM100 * us) / AV_TIME_BASE,
+        ssecs, (int) av_rescale(sus, PARAM100W, AV_TIME_BASE), formatContext->bit_rate / PARAM1000);
 
     frame = av_frame_alloc();
     if (!frame) {
@@ -663,18 +669,18 @@ static void RescontExecuteCB(napi_env env, void *data)
         // skip it
         if (pkt->stream_index == videoStreamIdx) {
             ret = decode_packet(videoDecCtx, frame, pkt);
-//            if (ret == 0) {
-//                OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "decode video "
-//                "w[%{public}d]:h[%{public}d] pict_type[%{public}d]]]\n", frame->width, frame->height, frame->pict_type);
-//            }
+           if (0 && ret == 0) {
+               OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "decode video "
+               "w[%{public}d]:h[%{public}d] pict_type[%{public}d]]]\n", frame->width, frame->height, frame->pict_type);
+           }
         } else if (pkt->stream_index == audioStreamIdx) {
             ret = decode_packet(audioDecCtx, frame, pkt);
-//            if (ret == 0) {
-//                OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
-//                    "decode audio "
-//                    "nbs[%{public}d]:pts[%{public}d] duration[%{public}d]]]\n",
-//                    frame->nb_samples, av_ts2timestr(frame->pts, &audioDecCtx->time_base), frame->duration);
-//            }
+           if (0 && ret == 0) {
+               OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
+                   "decode audio "
+                   "nbs[%{public}d]:pts[%{public}d] duration[%{public}d]]]\n",
+                   frame->nb_samples, av_ts2timestr(frame->pts, &audioDecCtx->time_base), frame->duration);
+           }
         }
         
         av_packet_unref(pkt);
@@ -682,7 +688,7 @@ static void RescontExecuteCB(napi_env env, void *data)
             break;
         }
     }
-end:    
+end:
     napi_value instance;
     napi_create_object(env, &instance);
     napi_set_named_property(env, instance, "videoDec", videoRes);
