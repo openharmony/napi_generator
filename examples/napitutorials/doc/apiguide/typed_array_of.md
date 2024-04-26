@@ -3,7 +3,7 @@
 Class `Napi::TypedArrayOf<T>` inherits from class [`Napi::TypedArray`][].
 
 The `Napi::TypedArrayOf` class corresponds to the various
-[JavaScript `TypedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)
+[JavaScript `TypedArray`](/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray)
 classes.
 
 ## Typedefs

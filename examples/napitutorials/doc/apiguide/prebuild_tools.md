@@ -11,6 +11,6 @@ form of a native add-on.
 
 The following list report known tools that are compatible with **Node-API**:
 
-- **[node-pre-gyp](https://www.npmjs.com/package/node-pre-gyp)**
-- **[prebuild](https://www.npmjs.com/package/prebuild)**
-- **[prebuildify](https://www.npmjs.com/package/prebuildify)**
+- **[node-pre-gyp](/package/node-pre-gyp)**
+- **[prebuild](/package/prebuild)**
+- **[prebuildify](/package/prebuildify)**

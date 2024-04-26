@@ -116,15 +116,15 @@ stability in general, and the Node-API ABI stability guarantee in particular.
 There are three options for implementing addons: Node-API, nan, or direct
 use of internal V8, libuv, and Node.js libraries. Unless there is a need for
 direct access to functionality that is not exposed by Node-API as outlined
-in [C/C++ addons](https://nodejs.org/dist/latest/docs/api/addons.html)
+in [C/C++ addons](/dist/latest/docs/api/addons.html)
 in Node.js core, use Node-API. Refer to
-[C/C++ addons with Node-API](https://nodejs.org/dist/latest/docs/api/n-api.html)
+[C/C++ addons with Node-API](/dist/latest/docs/api/n-api.html)
 for more information on Node-API.
 
-- [C++ Addons](https://nodejs.org/dist/latest/docs/api/addons.html)
-- [Node-API](https://nodejs.org/dist/latest/docs/api/n-api.html)
-- [Node-API - Next Generation Node API for Native Modules](https://youtu.be/-Oniup60Afs)
-- [How We Migrated Realm JavaScript From NAN to Node-API](https://developer.mongodb.com/article/realm-javascript-nan-to-n-api)
+- [C++ Addons](/dist/latest/docs/api/addons.html)
+- [Node-API](/dist/latest/docs/api/n-api.html)
+- [Node-API - Next Generation Node API for Native Modules]()
+- [How We Migrated Realm JavaScript From NAN to Node-API](/article/realm-javascript-nan-to-n-api)
 
 As node-addon-api's core mission is to expose the plain C Node-API as C++
 wrappers, tools that facilitate n-api/node-addon-api providing more
@@ -132,12 +132,10 @@ convenient patterns for developing a Node.js add-on with n-api/node-addon-api
 can be published to NPM as standalone packages. It is also recommended to tag
 such packages with `node-addon-api` to provide more visibility to the community.
 
-Quick links to NPM searches: [keywords:node-addon-api](https://www.npmjs.com/search?q=keywords%3Anode-addon-api).
+Quick links to NPM searches: [keywords:node-addon-api](/search?q=keywords%3Anode-addon-api).
 
 <a name="other-bindings"></a>
 
 ## Other bindings
 
-- [napi-rs](https://napi.rs) - (`Rust`)
-
-[ABI stability guide]: https://nodejs.org/en/docs/guides/abi-stability/
+[ABI stability guide]: /en/docs/guides/abi-stability/

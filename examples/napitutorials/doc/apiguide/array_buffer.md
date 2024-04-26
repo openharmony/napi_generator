@@ -3,7 +3,7 @@
 Class `Napi::ArrayBuffer` inherits from class [`Napi::Object`][].
 
 The `Napi::ArrayBuffer` class corresponds to the
-[JavaScript `ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)
+[JavaScript `ArrayBuffer`](/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)
 class.
 
 ## Methods

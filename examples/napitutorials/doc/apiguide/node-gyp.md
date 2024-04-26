@@ -8,7 +8,7 @@ headers correctly, another reason is that we need a cross platform way to build
 C++ source into binary for the target platform.
 
 Until now **node-gyp** is the **de-facto** standard build tool for writing
-Node.js addons. It's based on Google's **gyp** build tool, which abstract away
+Node.js addons. It's based on 's **gyp** build tool, which abstract away
 many of the tedious issues related to cross platform building.
 
 **node-gyp** uses a file called ```binding.gyp``` that is located on the root of
@@ -68,15 +68,15 @@ NODE_API_MODULE(NODE_GYP_MODULE_NAME, Init)
 
 ## **node-gyp** reference
 
-  - [Installation](https://www.npmjs.com/package/node-gyp#installation)
-  - [How to use](https://www.npmjs.com/package/node-gyp#how-to-use)
-  - [The binding.gyp file](https://www.npmjs.com/package/node-gyp#the-bindinggyp-file)
-  - [Commands](https://www.npmjs.com/package/node-gyp#commands)
-  - [Command options](https://www.npmjs.com/package/node-gyp#command-options)
-  - [Configuration](https://www.npmjs.com/package/node-gyp#configuration)
+  - [Installation](/package/node-gyp#installation)
+  - [How to use](/package/node-gyp#how-to-use)
+  - [The binding.gyp file](/package/node-gyp#the-bindinggyp-file)
+  - [Commands](/package/node-gyp#commands)
+  - [Command options](/package/node-gyp#command-options)
+  - [Configuration](/package/node-gyp#configuration)
 
 Sometimes finding the right settings for ```binding.gyp``` is not easy so to
 accomplish at most complicated task please refer to:
 
-- [GYP documentation](https://gyp.gsrc.io/index.md)
+- [GYP documentation](/index.md)
 - [node-gyp wiki](/node-gyp/wiki)

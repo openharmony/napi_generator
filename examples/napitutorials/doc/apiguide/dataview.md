@@ -3,7 +3,7 @@
 Class `Napi::DataView` inherits from class [`Napi::Object`][].
 
 The `Napi::DataView` class corresponds to the
-[JavaScript `DataView`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView)
+[JavaScript `DataView`](/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView)
 class.
 
 ## Methods

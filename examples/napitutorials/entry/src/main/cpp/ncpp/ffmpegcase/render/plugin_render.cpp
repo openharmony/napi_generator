@@ -25,10 +25,10 @@
 #include "plugin_render.h"
 
 extern "C" {
-    // #include "libavformat/avformat.h"
-    // #include "libavcodec/avcodec.h"
-    // #include "libavutil/timestamp.h"
-    // #include "libavutil/pixdesc.h"
+    #include "libavformat/avformat.h"
+    #include "libavcodec/avcodec.h"
+    #include "libavutil/timestamp.h"
+    #include "libavutil/pixdesc.h"
 
     // 自定义 avio_read_packet 函数
     int custom_avio_read_packet(void *opaque, uint8_t *buf, int bufSize)
@@ -109,7 +109,8 @@ extern "C" {
         return 0;
     }
 
-    int decode_packet(AVCodecContext *dec, AVFrame *frame, const AVPacket *pkt) {
+    int decode_packet(AVCodecContext *dec, AVFrame *frame, const AVPacket *pkt)
+    {
         int ret = 0;
 
         // submit the packet to the decoder
@@ -645,7 +646,8 @@ static void RescontExecuteCB(napi_env env, void *data)
     sus = llabs(formatContext->start_time % AV_TIME_BASE);
     
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
-        "duration[%{public}02d:%{public}02d:%{public}02d.%{public}2d], start[%{public}d:%{public}06d], bitrate[%{public}d]",
+        "duration[%{public}02d:%{public}02d:%{public}02d.%{public}2d],"
+        " start[%{public}d:%{public}06d], bitrate[%{public}d]",
         hours, mins, secs, (PARAM100 * us) / AV_TIME_BASE,
         ssecs, (int) av_rescale(sus, PARAM100W, AV_TIME_BASE), formatContext->bit_rate / PARAM1000);
 
@@ -669,13 +671,13 @@ static void RescontExecuteCB(napi_env env, void *data)
         // skip it
         if (pkt->stream_index == videoStreamIdx) {
             ret = decode_packet(videoDecCtx, frame, pkt);
-           if (0 && ret == 0) {
+            if (0 && ret == 0) {
                OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "decode video "
                "w[%{public}d]:h[%{public}d] pict_type[%{public}d]]]\n", frame->width, frame->height, frame->pict_type);
            }
         } else if (pkt->stream_index == audioStreamIdx) {
             ret = decode_packet(audioDecCtx, frame, pkt);
-           if (0 && ret == 0) {
+            if (0 && ret == 0) {
                OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender",
                    "decode audio "
                    "nbs[%{public}d]:pts[%{public}d] duration[%{public}d]]]\n",

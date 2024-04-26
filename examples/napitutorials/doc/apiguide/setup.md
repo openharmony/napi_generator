@@ -5,7 +5,7 @@
 Before starting to use **Node-API** you need to assure you have the following
 prerequisites:
 
-* **Node.JS** see: [Installing Node.js](https://nodejs.org/)
+* **Node.JS** see: [Installing Node.js](/)
 
 * **Node.js native addon build tool**
 
