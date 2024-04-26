@@ -25,6 +25,15 @@ add_library(entry SHARED
     nodeapi/datatypes/napiextendederrorinfo.cpp
     ncpp/cjsoncase/cjsonsample.cpp
     ncpp/cjsoncase/cjsoncase.cpp
+    ncpp/cjsoncase/cjsonparsecase.cpp
+    ncpp/cjsoncase/cjsongetarraysizecase.cpp
+    ncpp/cjsoncase/cjsonprintcase.cpp
+    ncpp/cjsoncase/cjsoncreateobjectcase.cpp
+    ncpp/cjsoncase/cjsoncreatestringcase.cpp
+    ncpp/cjsoncase/cjsonaddstringtoobjectcase.cpp
+    ncpp/cjsoncase/cjsonaddnumbertoobjectcase.cpp
+    ncpp/cjsoncase/cjsonaddfalsetoobjectcase.cpp
+    ncpp/cjsoncase/nodeapiCommon.cpp
     javascriptapi/jsproperty/napigetpropertynames.cpp
     javascriptapi/jsproperty/napigetproperty.cpp
     javascriptapi/jsproperty/napisetproperty.cpp
