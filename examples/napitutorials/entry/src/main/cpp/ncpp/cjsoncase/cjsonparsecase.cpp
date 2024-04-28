@@ -13,8 +13,7 @@
  * limitations under the License.
  */
 
-#include "cjson/cJSON.h"
-#include "nodeapi.h"
+#include "cJsonNapiH/cjsonnapi.h"
 
 napi_value getCjsonChildOut2(napi_env env, napi_value childOut, cJSON *jsonChild)
 {
