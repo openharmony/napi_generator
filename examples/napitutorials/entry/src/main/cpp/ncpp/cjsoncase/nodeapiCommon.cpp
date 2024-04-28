@@ -353,7 +353,8 @@ cJSON *getNapiCjsonArrayNext(napi_env env, napi_value cjsonObj, cJSON *jsonObj, 
     return jsonObj;
 }
 
-cJSON *getNapiCjsonArrayPrev(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag) {
+cJSON *getNapiCjsonArrayPrev(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     // 遍历prev
