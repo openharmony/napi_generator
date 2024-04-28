@@ -312,7 +312,7 @@ napi_value getCreateintarrPrevOut(napi_env env, napi_value cJSON_CreateIntArrayO
     return cJSON_CreateIntArrayOut;
 }
 
-napi_status GetCjsonCreateArrayParams1(napi_env env, napi_value param, int **outArrayNumbers, uint32_t *outLen)
+uint32_t getCjsonObjArrayLen(napi_env env, napi_value param)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -325,21 +325,36 @@ napi_status GetCjsonCreateArrayParams1(napi_env env, napi_value param, int **out
         return status;
     }
     if (!isArray) {
-        return napi_array_expected;
+        return NULL;
     }
     // 获取数组长度
     uint32_t outerLen = 0;
     status = napi_get_array_length(env, param, &outerLen);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_get_array_length", tag);
-        return status;
+        return NULL;
     }
-    // 分配内存给输出数组
-    *outArrayNumbers = (int *)malloc(sizeof(int) *outerLen);
-    if (*outArrayNumbers == NULL) {
+    return outerLen;
+}
+
+napi_status GetCjsonCreateArrayParams1(napi_env env, napi_value param, int **outArrayNumbers, uint32_t *outLen)
+{
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    const char *tag = "[KH203_cJSON_CreateIntArray]";
+    uint32_t outerLen = getCjsonObjArrayLen(env, param);
+    // 分配内存给输出数组前的校验
+    if (outerLen == 0 || outerLen > (UINT_MAX / sizeof(int))) {
+        // outerLen 为0或者乘以sizeof(int)后超过了最大可分配的内存块大小
         return napi_generic_failure;
     }
-    
+    int *tempArrayNumbers = (int *)malloc(sizeof(int) * outerLen);
+    if (tempArrayNumbers == NULL) {
+        // 内存分配失败，处理错误
+        return napi_generic_failure;
+    }
+    // 如果校验和分配都成功，设置输出参数指向新分配的内存
+    *outArrayNumbers = tempArrayNumbers;
     // 遍历数组
     for (uint32_t i = 0; i < outerLen; i++) {
         napi_value v;
@@ -372,25 +387,25 @@ napi_status GetCjsonCreateArrayParams1(napi_env env, napi_value param, int **out
             return napi_number_expected;
         }
     }
-     // 设置输出数组长度
-     *outLen = outerLen;
-     return napi_ok;
+    // 设置输出数组长度
+    *outLen = outerLen;
+    return napi_ok;
 }
 
 int32_t GetCjsonCreateArrayParams2(napi_env env, napi_value param)
 {
-     napi_status status;
-     const napi_extended_error_info *extended_error_info;
-     const char *tag = "[KH203_cJSON_CreateIntArray]";
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    const char *tag = "[KH203_cJSON_CreateIntArray]";
 
-     napi_valuetype valuetypecount;
-     /* [NAPI_GEN]: 获取入参类型，第1个入参
-      * env: N-API环境的句柄，表示当前的上下文
-      * value: 要检查类型的js值
-      * result: 是一个指针，指向napi_valuetype枚举的值，函数会将结果存储在这里
-      */
-     status = napi_typeof(env, param, &valuetypecount);
-     if (status != napi_ok) {
+    napi_valuetype valuetypecount;
+    /* [NAPI_GEN]: 获取入参类型，第1个入参
+     * env: N-API环境的句柄，表示当前的上下文
+     * value: 要检查类型的js值
+     * result: 是一个指针，指向napi_valuetype枚举的值，函数会将结果存储在这里
+     */
+    status = napi_typeof(env, param, &valuetypecount);
+    if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_typeof", tag);
         return NULL;
     }
