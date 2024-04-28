@@ -161,7 +161,7 @@ napi_value getAdditemtoobjStringOut(napi_env env, napi_value cJSON_AddItemToObje
      */
     status =
         napi_create_string_utf8(env, jsonOut->string == nullptr ? "" : jsonOut->string, NAPI_AUTO_LENGTH, &stringOut);
-    if ( jsonOut->string != NULL) {
+    if (jsonOut->string != NULL) {
         OH_LOG_INFOS(LOG_APP, "KH180_cJSON_AddItemToObject success! jsonOut->string: %s", jsonOut->string);
     }
     if (status != napi_ok) {

@@ -188,7 +188,8 @@ napi_value getAdditemtoarrValuesintOut(napi_env env, napi_value cJSON_AddItemToA
     return cJSON_AddItemToArrayOut;
 }
 
-napi_value getAdditemtoarrValuesdoubleOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj) {
+napi_value getAdditemtoarrValuesdoubleOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH203_cJSON_CreateIntArray]";
@@ -345,7 +346,8 @@ napi_value getAdditemtoarrNextOut(napi_env env, napi_value cJSON_AddItemToArrayO
     return cJSON_AddItemToArrayOut;
 }
 
-napi_value getJsonarrayitemChildOut(napi_env env, napi_value childOut, cJSON *jsonObj) {
+napi_value getJsonarrayitemChildOut(napi_env env, napi_value childOut, cJSON *jsonObj)
+{
     if (jsonObj->child != NULL) {
         childOut = getAdditemtoarrTypeOut(env, childOut, jsonObj->child);
         childOut = getAdditemtoarrValuesdoubleOut(env, childOut, jsonObj->child);
@@ -411,7 +413,8 @@ napi_value getAdditemtoarrChildOut(napi_env env, napi_value cJSON_AddItemToArray
     return cJSON_AddItemToArrayOut;
 }
 
-napi_value getAdditemtoarrPrevOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj) {
+napi_value getAdditemtoarrPrevOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH203_cJSON_CreateIntArray]";

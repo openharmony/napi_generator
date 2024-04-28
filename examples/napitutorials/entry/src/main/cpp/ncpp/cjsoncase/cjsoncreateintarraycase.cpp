@@ -16,8 +16,6 @@
 #include "cJsonNapiH/cjsonnapi.h"
 #include <bits/alltypes.h>
 
-// constexpr uint16_t MAXARRATLEN = 128;
-
 napi_value getCreateintarrTypeOut(napi_env env, napi_value cJSON_CreateIntArrayOut, cJSON *jsonObj)
 {
     napi_status status;
@@ -415,7 +413,7 @@ int32_t GetCjsonCreateArrayParams2(napi_env env, napi_value param)
      * value：要转换的JavaScript值
      * result：指向 int32_t 类型的指针，在这里函数将存储转换后的整数值
      */
-    status = napi_get_value_int32(env,param, &countIn);
+    status = napi_get_value_int32(env, param, &countIn);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
         getErrMsg(status, env, extended_error_info, "napi_get_value_int32", tag);
