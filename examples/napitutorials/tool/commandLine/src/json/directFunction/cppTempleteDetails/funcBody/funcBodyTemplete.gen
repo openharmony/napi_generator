@@ -1,6 +1,7 @@
 /* [NAPI_GEN]: introduce function: [func_introduce_replace]*/
 napi_value [funcName](napi_env env, napi_callback_info info)
 {
+    OH_LOG_LOGINFOS(LOG_APP, "[funcName] begins");
     napi_status status;
     /* [NAPI_GEN]: Node.js在其N-API中用来提供错误的扩展信息的结构体,结构体包含以下字段
      * error_message: 一个指向错误详细字符串的指针，提供了关于错误的文本描述
@@ -14,5 +15,6 @@ napi_value [funcName](napi_env env, napi_callback_info info)
     const char *tag = "[[get_error_msg_tag]]";
     /* [NAPI_GEN]: get function param in*/
 [func_getParam_replace]
+    OH_LOG_LOGINFOS(LOG_APP, "[funcName] get return info begins");
 [func_return_replace]
 }

@@ -17,5 +17,7 @@
         return nullptr;
     }
     /* [NAPI_GEN]: 从args数组中获取入参 */
+    OH_LOG_LOGINFOS(LOG_APP, "[funcName] get param info begins");
 [getParam_replace]
+    OH_LOG_LOGINFOS(LOG_APP, "[funcName] get param info ends");
     
