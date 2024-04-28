@@ -17,10 +17,12 @@ import abilityTest from './Ability.test';
 import abilityTestJsProperty from './JsProperty/JsProperty.test';
 import jsAbstractOpsTest from './javascriptapi/jsabstractops.test';
 import abilityTestJsValues from './javascriptapi/JsValues.test';
+import abilityTestCjson from './CjsonTest/CjsonTest.test';
 
 export default function testsuite() {
   abilityTest();
   abilityTestJsProperty();
   abilityTestJsValues();
   jsAbstractOpsTest();
+  abilityTestCjson();
 }
