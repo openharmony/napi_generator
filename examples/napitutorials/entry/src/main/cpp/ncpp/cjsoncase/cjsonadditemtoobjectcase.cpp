@@ -231,7 +231,8 @@ napi_value getAdditemtoobjNextOut(napi_env env, napi_value cJSON_AddItemToObject
     return cJSON_AddItemToObjectOut;
 }
 
-napi_value getJsonarritemChildOut(napi_env env, napi_value childOut, cJSON *jsonObj) {
+napi_value getJsonarritemChildOut(napi_env env, napi_value childOut, cJSON *jsonObj)
+{
     if (jsonObj->child != NULL) {
         childOut = getAdditemtoobjTypeOut(env, childOut, jsonObj->child);
         childOut = getAdditemtoobjValuesdoubleOut(env, childOut, jsonObj->child);
@@ -247,7 +248,7 @@ napi_value getJsonarritemChildOut(napi_env env, napi_value childOut, cJSON *json
             cJSON *childChild = jsonObj->child->child;
             if (childChild != NULL) {
                 childOut = getAdditemtoobjChildOut(env, childOut, jsonObj->child);
-            }  
+            }
         }
     }
     return childOut;
@@ -441,14 +442,6 @@ cJSON *getCjsonAddItemToObjRes(napi_env env, napi_value cjsonObj, napi_value pro
 
     delete[] valueString;
     delete[] stringIn;
-//    // 打印 root 值
-//    char *rootString = cJSON_Print(root);
-//    if (rootString != NULL) {
-//        // 需要去掉字符串中的\n 这样方便查找打印出的字符串
-//        std::string printRootStr = rootString;
-//        RemoveNewlines(printRootStr);
-//        OH_LOG_INFOS(LOG_APP, "KH180_cJSON_AddItemToObject success! rootString: %s", printRootStr.c_str());
-//    }
     return root;
 }
 
@@ -489,61 +482,9 @@ napi_value KH180_cJSON_AddItemToObject(napi_env env, napi_callback_info info)
         return nullptr;
     }
     
-//    /* [NAPI_GEN]: 从args数组中获取入参 */
-////    napi_value propName = args[PARAM1];
-////    napi_value objItem = args[PARAM2];
-////    char *stringIn = getAdditemtoobjInfoParam1(env, propName);
-////    char *valueString = getAdditemtoobjInfoParam2(env, objItem);
-//
     // Todo: add business logic. 在这前后代码为框架所生成
     cJSON *root = NULL;
     root = getCjsonAddItemToObjRes(env, args[PARAM0], args[PARAM1], args[PARAM2]);
-    //    cJSON *root = cJSON_CreateObject();
-    //    // 初始化obj
-    //    napi_value cjsonObj = args[PARAM0];
-    //    root = initCJSON_Object(env, cjsonObj, root, tag);
-    //
-    //    cJSON *jsonArray = cJSON_CreateArray();
-    //    jsonArray = initCJSON_Array(env, objItem, jsonArray, tag, false);
-    //    char *rootString1 = cJSON_Print(jsonArray);
-    //    if (rootString1 != NULL) {
-    //        // 需要去掉字符串中的\n 这样方便查找打印出的字符串
-    //        std::string printRootStr = rootString1;
-    //        RemoveNewlines(printRootStr);
-    //        OH_LOG_INFOS(LOG_APP, "KH180_cJSON_AddItemToObject success! rootString1: %s", printRootStr.c_str());
-    //    }
-    //    cJSON_bool jsonArrayRes = cJSON_IsArray(jsonArray);
-    //    cJSON *jsonObject = cJSON_CreateObject();
-    //    jsonObject = initCJSON_Object(env, objItem, jsonObject, tag);
-    //    bool jsonObjectNull = false;
-    //    char *rootString4 = cJSON_Print(jsonObject);
-    //    if (rootString4 != NULL) {
-    //        // 需要去掉字符串中的\n 这样方便查找打印出的字符串
-    //        std::string printRootStr = rootString4;
-    //        RemoveNewlines(printRootStr);
-    //        if (printRootStr == "{}") {
-    //            jsonObjectNull = true;
-    //        }
-    //        OH_LOG_INFOS(LOG_APP, "KH180_cJSON_AddItemToObject success! rootString4: %s", printRootStr.c_str());
-    //    }
-    //    if (!jsonObjectNull) {
-    //        cJSON_AddItemToObject(root, stringIn, jsonObject);
-    //    } else if (jsonArrayRes) {
-    //        cJSON_AddItemToObject(root, stringIn, jsonArray);
-    //    } else {
-    //        cJSON_AddItemToObject(root, stringIn, cJSON_CreateString(valueString));
-    //    }
-    //
-    //    delete[] valueString;
-    //    delete[] stringIn;
-    //    // 打印 root 值
-    //    char *rootString = cJSON_Print(root);
-    //    if (rootString != NULL) {
-    //        // 需要去掉字符串中的\n 这样方便查找打印出的字符串
-    //        std::string printRootStr = rootString;
-    //        RemoveNewlines(printRootStr);
-    //        OH_LOG_INFOS(LOG_APP, "KH180_cJSON_AddItemToObject success! rootString: %s", printRootStr.c_str());
-    //    }
     
     /* [NAPI_GEN]: function return value*/
     napi_value cJSON_AddItemToObjectOut;

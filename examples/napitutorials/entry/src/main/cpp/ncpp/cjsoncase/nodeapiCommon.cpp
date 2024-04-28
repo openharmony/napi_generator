@@ -303,7 +303,8 @@ cJSON *initCJSON_Object(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const
     return jsonObj;
 }
 
-cJSON *getNapiCjsonArrayChild(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag) {
+cJSON *getNapiCjsonArrayChild(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     // 遍历child
@@ -327,7 +328,8 @@ cJSON *getNapiCjsonArrayChild(napi_env env, napi_value cjsonObj, cJSON *jsonObj,
     return jsonObj;
 }
 
-cJSON *getNapiCjsonArrayNext(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag) {
+cJSON *getNapiCjsonArrayNext(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     // 遍历next
@@ -346,7 +348,6 @@ cJSON *getNapiCjsonArrayNext(napi_env env, napi_value cjsonObj, cJSON *jsonObj, 
             } else {
                 jsonObj = initCJSON_Array(env, napiNextObj, jsonObj, tag, false);
             }
-            
         }
     }
     return jsonObj;

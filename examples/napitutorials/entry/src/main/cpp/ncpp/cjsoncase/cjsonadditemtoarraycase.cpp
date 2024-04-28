@@ -126,8 +126,8 @@ cJSON_bool addItemToArray(double arrayItemValuedoubleIn, char *arrayItemValuestr
     return success;
 }
 
-
-napi_value getAdditemtoarrTypeOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj) {
+napi_value getAdditemtoarrTypeOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH203_cJSON_CreateIntArray]";
@@ -157,7 +157,8 @@ napi_value getAdditemtoarrTypeOut(napi_env env, napi_value cJSON_AddItemToArrayO
     return cJSON_AddItemToArrayOut;
 }
 
-napi_value getAdditemtoarrValuesintOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj) {
+napi_value getAdditemtoarrValuesintOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH203_cJSON_CreateIntArray]";
@@ -217,7 +218,8 @@ napi_value getAdditemtoarrValuesdoubleOut(napi_env env, napi_value cJSON_AddItem
     return cJSON_AddItemToArrayOut;
 }
 
-napi_value getAdditemtoarrValuestringOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonOut) {
+napi_value getAdditemtoarrValuestringOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonOut)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH203_cJSON_CreateIntArray]";
@@ -252,7 +254,8 @@ napi_value getAdditemtoarrValuestringOut(napi_env env, napi_value cJSON_AddItemT
     return cJSON_AddItemToArrayOut;
 }
 
-napi_value getAdditemtoarrStringOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonOut) {
+napi_value getAdditemtoarrStringOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonOut)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH203_cJSON_CreateIntArray]";
@@ -287,7 +290,8 @@ napi_value getAdditemtoarrStringOut(napi_env env, napi_value cJSON_AddItemToArra
     return cJSON_AddItemToArrayOut;
 }
 
-napi_value getAdditemtoarrNextOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj) {
+napi_value getAdditemtoarrNextOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH203_cJSON_CreateIntArray]";
@@ -324,7 +328,6 @@ napi_value getAdditemtoarrNextOut(napi_env env, napi_value cJSON_AddItemToArrayO
             if (nextChild != NULL) {
                 nextOut = getAdditemtoarrChildOut(env, nextOut, jsonObj->next);
             }
-            
         }
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -373,7 +376,8 @@ napi_value getJsonarrayitemChildOut(napi_env env, napi_value childOut, cJSON *js
  * 输入：待返回的js对象，c++ cJSON对象
  * 输出：返回js的对象
  */
-napi_value getAdditemtoarrChildOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj) {
+napi_value getAdditemtoarrChildOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj)
+{
     napi_status status;
     const napi_extended_error_info *extended_error_info;
     const char *tag = "[KH203_cJSON_CreateIntArray]";
