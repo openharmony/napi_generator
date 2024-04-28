@@ -13,8 +13,7 @@
  * limitations under the License.
  */
 
-#include "cjson/cJSON.h"
-#include "nodeapi.h"
+#include "cJsonNapiH/cjsonnapi.h"
 
 napi_value getAddfalsetoobjTypeOut(napi_env env, napi_value cJSON_AddFalseToObjectOut, cJSON *jsonOut)
 {

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-#include "nodeapi.h"
+#include "cJsonNapiH/cjsoncommon.h"
 
 constexpr uint8_t TYPE1 = 1;
 constexpr uint8_t TYPE2 = 2;
@@ -23,10 +23,9 @@ constexpr uint8_t TYPE2 = 2;
  */
 void RemoveNewlines(std::string &str)
 {
-    std::string::size_type pos = 0;
-    while ((pos = str.find("\n", pos)) != std::string::npos) {
-        str.replace(pos, 1, "");
-    }
+    // 删除换行符、制表符和空格
+    str.erase(std::remove_if(str.begin(), str.end(), [](char c) { return c == '\n' || c == '\t' || c == ' '; }),
+              str.end());
 }
 
 /* 检查JavaScript对象是否为空（不含自己的属性），公共方法
@@ -170,7 +169,7 @@ int getNapiCjsonType(napi_env env, napi_value cjsonObj, const char *tag)
     return objValueTypeIn;
 }
 
-cJSON *getNapiCjsonChild(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag)
+cJSON *getNapiCjsonChild(napi_env env, napi_value cjsonObj, cJSON *jsonObj, char *objStr, const char *tag)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -180,6 +179,9 @@ cJSON *getNapiCjsonChild(napi_env env, napi_value cjsonObj, cJSON *jsonObj, cons
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
         return NULL;
+    }
+    if (objStr[0] != '\0') {
+        return jsonObj;
     }
     napi_valuetype valuetype;
     status = napi_typeof(env, napiChildObj, &valuetype);
@@ -233,6 +235,37 @@ cJSON *getNapiCjsonPrev(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const
     return jsonObj;
 }
 
+cJSON *getNapiCjsonChildArrObj(napi_env env, napi_value cjsonObj, cJSON *jsonObj, char *objStrIn, const char *tag)
+{
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    // 遍历child 确认child是否是数组
+    napi_value napiChildObj;
+    status = napi_get_named_property(env, cjsonObj, "child", &napiChildObj);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
+        return NULL;
+    }
+    napi_valuetype valuetype;
+    status = napi_typeof(env, napiChildObj, &valuetype);
+    if (valuetype == napi_object) {
+        if (!IsEmptyObject(env, napiChildObj, tag)) {
+            char *objChildStrIn = getNapiCjsonString(env, napiChildObj, tag);
+            char *objChildValstrIn = getNapiCjsonValuestring(env, napiChildObj, tag);
+            if (objChildStrIn[0] == '\0' && objChildValstrIn[0] == '\0') {
+                cJSON *jsonArray = cJSON_CreateArray();
+                jsonArray = initCJSON_Array(env, napiChildObj, jsonArray, tag, false);
+                cJSON_AddItemToObject(jsonObj, objStrIn, jsonArray);
+            }  else if (objChildStrIn[0] != '\0') {
+                cJSON *jsonObject = cJSON_CreateObject();
+                jsonObject = initCJSON_Object(env, napiChildObj, jsonObject, tag);
+                cJSON_AddItemToObject(jsonObj, objStrIn, jsonObject);
+            }
+        }
+    }
+    return jsonObj;
+}
+
 /* 在native初始化js传递的对象， 公共方法
  * env: 当前环境的句柄，代表当前的Node.js环境
  * cjsonObj: 从js传递的cJSON对象
@@ -258,11 +291,197 @@ cJSON *initCJSON_Object(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const
         } else if (objValueTypeIn == TYPE2) {
             jsonOut = cJSON_AddTrueToObject(jsonObj, objStrIn);
         }
+        // 判断 child是否是数组或者对象：例如{"test":[1,2,3]} 或者 {"test":{"name","john"}}
+        jsonObj = getNapiCjsonChildArrObj(env, cjsonObj, jsonObj, objStrIn, tag);
     }
 
-    jsonObj = getNapiCjsonChild(env, cjsonObj, jsonObj, tag);
+    // {"name":"Ann","age":18,"isStudent":true}类型字符串的解析
+    jsonObj = getNapiCjsonChild(env, cjsonObj, jsonObj, objStrIn, tag);
     jsonObj = getNapiCjsonNext(env, cjsonObj, jsonObj, tag);
     jsonObj = getNapiCjsonPrev(env, cjsonObj, jsonObj, tag);
     
     return jsonObj;
+}
+
+cJSON *getNapiCjsonArrayChild(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    // 遍历child
+    napi_value napiChildObj;
+    status = napi_get_named_property(env, cjsonObj, "child", &napiChildObj);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
+        return NULL;
+    }
+    napi_valuetype valuetype;
+    status = napi_typeof(env, napiChildObj, &valuetype);
+    if (valuetype == napi_object) {
+        if (!IsEmptyObject(env, napiChildObj, tag)) {
+            if (flag) {
+                jsonObj = initCJSON_ArrayObj(env, napiChildObj, jsonObj, tag, true);
+            } else {
+                jsonObj = initCJSON_Array(env, napiChildObj, jsonObj, tag, false);
+            }
+        }
+    }
+    return jsonObj;
+}
+
+cJSON *getNapiCjsonArrayNext(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    // 遍历next
+    napi_value napiNextObj;
+    status = napi_get_named_property(env, cjsonObj, "next", &napiNextObj);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
+        return NULL;
+    }
+    napi_valuetype valuetype;
+    status = napi_typeof(env, napiNextObj, &valuetype);
+    if (valuetype == napi_object) {
+        if (!IsEmptyObject(env, napiNextObj, tag)) {
+            if (flag) {
+                jsonObj = initCJSON_ArrayObj(env, napiNextObj, jsonObj, tag, true);
+            } else {
+                jsonObj = initCJSON_Array(env, napiNextObj, jsonObj, tag, false);
+            }
+            
+        }
+    }
+    return jsonObj;
+}
+
+cJSON *getNapiCjsonArrayPrev(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    // 遍历prev
+    napi_value napiPrevObj;
+    status = napi_get_named_property(env, cjsonObj, "prev", &napiPrevObj);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
+        return NULL;
+    }
+    napi_valuetype valuetype;
+    status = napi_typeof(env, napiPrevObj, &valuetype);
+    if (valuetype == napi_object) {
+        if (!IsEmptyObject(env, napiPrevObj, tag)) {
+            if (flag) {
+                jsonObj = initCJSON_ArrayObj(env, napiPrevObj, jsonObj, tag, true);
+            } else {
+                jsonObj = initCJSON_Array(env, napiPrevObj, jsonObj, tag, false);
+            }
+        }
+    }
+    return jsonObj;
+}
+
+/* 在native初始化js传递的对象， 公共方法
+ * env: 当前环境的句柄，代表当前的Node.js环境
+ * cjsonObj: 从js传递的cJSON对象,该对象表示一个基本类型的数组，如[9,-2,7]
+ * jsonObj: 待初始化的native层cJSON对象
+ * tag: 日志打印标识符
+ * flag: true表示判断是普通array,如：[2,-3,6];false表示判断数组元素是否是对象，如：[{"name":"ann"},{"name":"john"}]
+ * return cJSON: 返回c++ cJSON对象
+ */
+cJSON *initCJSON_Array(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag)
+{
+    char *objStrIn = getNapiCjsonString(env, cjsonObj, tag);
+    if (objStrIn[0] == '\0') {
+        int objValueTypeIn = getNapiCjsonType(env, cjsonObj, tag);
+        if (objValueTypeIn != cJSON_NULL && objValueTypeIn != cJSON_Invalid) {
+            double objValueDoubleIn = getNapiCjsonValuedouble(env, cjsonObj, tag);
+            // 打印出来objValueDoubleIn
+            if (objValueDoubleIn != 0) {
+                cJSON_AddItemToArray(jsonObj, cJSON_CreateNumber(objValueDoubleIn));
+            }
+        }
+    }
+
+    jsonObj = getNapiCjsonArrayChild(env, cjsonObj, jsonObj, tag, flag);
+    jsonObj = getNapiCjsonArrayNext(env, cjsonObj, jsonObj, tag, flag);
+    jsonObj = getNapiCjsonArrayPrev(env, cjsonObj, jsonObj, tag, flag);
+
+    return jsonObj;
+}
+
+/* 在native初始化js传递的对象， 公共方法
+ * env: 当前环境的句柄，代表当前的Node.js环境
+ * cjsonObj: 从js传递的cJSON对象,该对象表示一个数组,如：[{"name":"ann"},{"name":"john"}]
+ * jsonObj: 待初始化的native层cJSON对象
+ * tag: 日志打印标识符
+ * flag: true表示判断是普通array,如：[2,-3,6];false表示判断数组元素是否是对象，如：[{"name":"ann"},{"name":"john"}]
+ * return cJSON: 返回c++ cJSON对象
+ */
+cJSON *initCJSON_ArrayObj(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const char *tag, bool flag)
+{
+    char *objStrIn = getNapiCjsonString(env, cjsonObj, tag);
+    if (objStrIn[0] != '\0') {
+        cJSON *arrObj = cJSON_CreateObject();
+        arrObj = initCJSON_Object(env, cjsonObj, arrObj, tag);
+        char *rootString1 = cJSON_Print(arrObj);
+        bool isObjNull = false;
+        if (rootString1 != NULL) {
+            // 需要去掉字符串中的\n 这样方便查找打印出的字符串
+            std::string printRootStr = rootString1;
+            RemoveNewlines(printRootStr);
+            if (printRootStr == "{}") {
+                isObjNull = true;
+            }
+        }
+        if (!isObjNull) {
+            cJSON *objItem = cJSON_CreateObject();
+            cJSON_AddItemToArray(jsonObj, objItem);
+            objItem = initCJSON_Object(env, cjsonObj, objItem, tag);
+            char *rootString2 = cJSON_Print(jsonObj);
+            if (rootString2 != NULL) {
+                // 需要去掉字符串中的\n 这样方便查找打印出的字符串
+                std::string printRootStr = rootString2;
+                RemoveNewlines(printRootStr);
+            }
+            return jsonObj;
+        }
+    }
+
+    jsonObj = getNapiCjsonArrayChild(env, cjsonObj, jsonObj, tag, flag);
+    jsonObj = getNapiCjsonArrayNext(env, cjsonObj, jsonObj, tag, flag);
+    jsonObj = getNapiCjsonArrayPrev(env, cjsonObj, jsonObj, tag, flag);
+
+    return jsonObj;
+}
+
+/* 判断是单纯对象还是arrObj或objArr
+ * env: 当前环境的句柄，代表当前的Node.js环境
+ * cjsonObj: 从js传递的cJSON对象
+ * tag: 日志打印标识
+ * return 布尔值：若对象是array object或者object array返回true,如[{"name":"john"}]或{"testArr":[9,8,7]}
+ */
+bool isArrObject(napi_env env, napi_value cjsonObj, const char *tag)
+{
+    // 判断 root->child-string有没有值,有值则认为是普通object,没有值则认为是arrayObject
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    // 遍历child
+    napi_value napiChildObj;
+    status = napi_get_named_property(env, cjsonObj, "child", &napiChildObj);
+    if (status != napi_ok) {
+        getErrMsg(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
+        return NULL;
+    }
+    napi_valuetype valuetype;
+    status = napi_typeof(env, napiChildObj, &valuetype);
+    if (valuetype == napi_object) {
+        if (!IsEmptyObject(env, napiChildObj, tag)) {
+            char *objStrIn = getNapiCjsonString(env, napiChildObj, tag);
+            if (objStrIn[0] == '\0') {
+                return true;
+            } else {
+                bool isTrue = isArrObject(env, napiChildObj, tag);
+                return isTrue;
+            }
+        } else {
+            return false;
+        }
+    }
+    return false;
 }

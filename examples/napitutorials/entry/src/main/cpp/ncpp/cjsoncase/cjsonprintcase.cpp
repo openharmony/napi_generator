@@ -13,8 +13,61 @@
  * limitations under the License.
  */
 
-#include "cjson/cJSON.h"
-#include "nodeapi.h"
+#include "cJsonNapiH/cjsonnapi.h"
+
+char *getCjsonPrintRes(napi_env env, napi_value obj)
+{
+    const char *tag = "[KH735_cJSON_Print]";
+    // 创建一个JSON对象
+    cJSON *jsonObject = cJSON_CreateObject();
+    jsonObject = initCJSON_Object(env, obj, jsonObject, tag);
+    char *genResString1 = cJSON_Print(jsonObject);
+    char *resultStr = genResString1;
+    bool isNullObj = false;
+    if (genResString1 != NULL) {
+        std::string genResStringPrint = genResString1;
+        RemoveNewlines(genResStringPrint);
+        OH_LOG_INFOS(LOG_APP, "KH735_cJSON_Print success! genResString1: %s", genResStringPrint.c_str());
+        if (genResStringPrint == "{}") {
+            isNullObj = true;
+        }
+    }
+
+    bool isArrNull = false;
+    cJSON *jsonArray = cJSON_CreateArray();
+    jsonArray = initCJSON_Array(env, obj, jsonArray, tag, false);
+    char *genResString2 = cJSON_Print(jsonArray);
+    if (genResString2 != NULL) {
+        std::string genResStringPrint = genResString2;
+        RemoveNewlines(genResStringPrint);
+        OH_LOG_INFOS(LOG_APP, "KH735_cJSON_Print success! genResString2: %s", genResStringPrint.c_str());
+        if (genResStringPrint == "[]") {
+            isArrNull = true;
+        }
+    }
+
+    bool isArrObjNull = false;
+    cJSON *jsonArrayObj = cJSON_CreateArray();
+    jsonArrayObj = initCJSON_ArrayObj(env, obj, jsonArrayObj, tag, true);
+    char *genResString3 = cJSON_Print(jsonArrayObj);
+    if (genResString3 != NULL) {
+        std::string genResStringPrint = genResString3;
+        RemoveNewlines(genResStringPrint);
+        OH_LOG_INFOS(LOG_APP, "KH735_cJSON_Print success! genResString3: %s", genResStringPrint.c_str());
+        if (genResStringPrint == "[]") {
+            isArrObjNull = true;
+        }
+    }
+    bool isArrayObject = isArrObject(env, obj, tag);
+    if (!isArrObjNull && isArrayObject) {
+        resultStr = genResString3;
+    } else if (!isArrNull) {
+        resultStr = genResString2;
+    }
+    // 清理cJSON对象
+    cJSON_Delete(jsonObject);
+    return resultStr;
+}
 
 /* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(char *) cJSON_Print(const cJSON *item);的napi方法，
  * 输入一个cJSON对象
@@ -35,9 +88,9 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
     const char *tag = "[KH735_cJSON_Print]";
     /* [NAPI_GEN]: get function param in*/
     /* [NAPI_GEN]: argc：js传入的参数个数 */
-    size_t argc = 1;
+    size_t argc = PARAM1;
     /* [NAPI_GEN]: args: 一个数组,保存js传入的参数 */
-    napi_value args[1] = {nullptr};
+    napi_value args[PARAM1] = {nullptr};
     /* [NAPI_GEN]: napi_get_cb_info用于获取JS调用该函数时所传递的参数、接收参数的个数以及'this'的值
      * env: 当前环境的句柄，代表当前的Node.js环境
      * info: 回调信息句柄，代表当前回调的上下文
@@ -52,27 +105,10 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
         getErrMsg(status, env, extended_error_info, "napi_get_cb_info", tag);
         return NULL;
     }
-    /* [NAPI_GEN]: 从args数组中获取入参 */
-    
+  
     // Todo: add business logic. 在这之前代码为框架所生成
-    // 拿到cJSON 对象
-    napi_value obj = args[PARAM0];
-    // 创建一个JSON对象
-    cJSON *jsonObject = cJSON_CreateObject();
-    // 初始化对象
-    jsonObject = initCJSON_Object(env, obj, jsonObject, tag);
-   
-    // 将JSON对象序列化成字符串
-    char *genResString = cJSON_Print(jsonObject);
-    if (genResString != NULL) {
-        std::string genResStringPrint = genResString;
-        RemoveNewlines(genResStringPrint);
-        OH_LOG_INFOS(LOG_APP, "KH735_cJSON_Print success! genResString: %s", genResStringPrint.c_str());
-    }
+    char *resultStr = getCjsonPrintRes(env, args[PARAM0]);
     
-    // 清理cJSON对象
-    cJSON_Delete(jsonObject);
-
     /* [NAPI_GEN]: function return value*/
     napi_value cJSON_PrintOut;
     /* [NAPI_GEN]:
@@ -83,7 +119,7 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
      * 字符串的长度，可以是具体的字节数，或者使用特殊的值NAPI_AUTO_LENGTH来让函数自己计算长度(假定字符串以null结尾)
      * result: 指向napi_value的指针，函数执行成功后这个指针将指向新创建的js字符串
      */
-    status = napi_create_string_utf8(env, genResString, NAPI_AUTO_LENGTH, &cJSON_PrintOut);
+    status = napi_create_string_utf8(env, resultStr, NAPI_AUTO_LENGTH, &cJSON_PrintOut);
     if (status != napi_ok) {
         /*错误处理*/
         getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
