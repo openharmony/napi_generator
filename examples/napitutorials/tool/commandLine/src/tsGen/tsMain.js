@@ -558,7 +558,7 @@ function generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult
     let genResult = generateDirectFunction(parseResult, i, rootInfo.functions[i].genName, directFuncPath);
     funcDeclare += genResult[0];
     funcInit += genResult[1];
-    let funcBody = genResult[2];
+    let funcBody = includes_replace + genResult[2];
     writeFile(thisFuncCppFilePath, funcBody);
   }
 
@@ -579,7 +579,8 @@ function generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult
   let cppDeclareTempletePath = funcJson.directFunction.cppTempleteDetails.funcHDeclare.funcHDeclareTemplete;
   const cppDeclareTempleteAbsPath = path.join(__dirname, cppDeclareTempletePath);
   let cppDeclareTempleteContent = readFile(cppDeclareTempleteAbsPath);
-  cppDeclareTempleteContent = replaceAll(cppDeclareTempleteContent, '[h_file_name_replace]', napiHFileName.toUpperCase());
+  let napiHFileNameReplace = hFilePath.substring(index + 1, indexH) + 'Napi';
+  cppDeclareTempleteContent = replaceAll(cppDeclareTempleteContent, '[h_file_name_replace]', napiHFileNameReplace.toUpperCase());
   cppDeclareTempleteContent = replaceAll(cppDeclareTempleteContent, '[func_declare_replace]', funcDeclare);
   let declareFilePath = path.join(cppFilePath, napiHFileName);
   writeFile(declareFilePath, cppDeclareTempleteContent);
@@ -596,7 +597,7 @@ function writeTestFile(filePath, importContent, funcTestContent) {
       newFileContent = fileContent.slice(0, importPosition) + newImportStatement + fileContent.slice(importPosition);
   }
   // 追加写入测试用例
-  let testCasePosition = newFileContent.lastIndexOf('})\n}')
+  let testCasePosition = newFileContent.lastIndexOf('})')
   newFileContent = newFileContent.slice(0, testCasePosition) + funcTestContent + newFileContent.slice(testCasePosition);
 
   writeFile(filePath, newFileContent)

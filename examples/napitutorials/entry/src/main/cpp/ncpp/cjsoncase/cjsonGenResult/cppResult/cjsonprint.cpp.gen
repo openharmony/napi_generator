@@ -1,7 +1,8 @@
-
-/* [NAPI_GEN]: introduce function: [func_introduce_replace]*/ 
+#include "testNapi.h"
+/* [NAPI_GEN]: introduce function: [func_introduce_replace]*/
 napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
 {
+    OH_LOG_LOGINFOS(LOG_APP, "KH735_cJSON_Print begins");
     napi_status status;
     /* [NAPI_GEN]: Node.js在其N-API中用来提供错误的扩展信息的结构体,结构体包含以下字段
      * error_message: 一个指向错误详细字符串的指针，提供了关于错误的文本描述
@@ -12,8 +13,8 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
      */
     const napi_extended_error_info *extended_error_info;
     /* [NAPI_GEN]: tag: 日志打印标签*/
-    const char * tag = "[KH735_cJSON_Print]";
-    /* [NAPI_GEN]: get function param in*/ 
+    const char *tag = "[KH735_cJSON_Print]";
+    /* [NAPI_GEN]: get function param in*/
     /* [NAPI_GEN]: argc：js传入的参数个数 */
     size_t argc = 1;
     /* [NAPI_GEN]: args: 一个数组,保存js传入的参数 */
@@ -26,18 +27,21 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
      * this_arg: 如果不是NULL,则返回js回调中this的值
      * data: 如果不是NULL,则返回与回调函数关联的任何可选数据。通常用于传递在创建函数时指定的静态数据
      */
-    status = napi_get_cb_info(env, info, &argc, args , nullptr, nullptr);
+    status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     if(status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env,extended_error_info, "napi_get_cb_info",tag);
+        getErrMsg(status, env,extended_error_info, "napi_get_cb_info", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 从args数组中获取入参 */
+    OH_LOG_LOGINFOS(LOG_APP, "KH735_cJSON_Print get param info begins");
 
-    
+    OH_LOG_LOGINFOS(LOG_APP, "KH735_cJSON_Print get param info ends");
+
+    OH_LOG_LOGINFOS(LOG_APP, "KH735_cJSON_Print get return info begins");
     // Todo: add business logic. 在这前后代码为框架所生成
 
-    /* [NAPI_GEN]: function return value*/ 
+    /* [NAPI_GEN]: function return value*/
     napi_value cJSON_PrintOut;
     /* [NAPI_GEN]: 返回值是字符串时，napi_create_string_utf8用于在原生代码中创建一个新的js字符串。这个函数会根据提供的UTF-8编码的字符串创建一个等价的js字符串
      * env: 当前环境的句柄
@@ -52,6 +56,8 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
         return nullptr;
     }
 
+    OH_LOG_LOGINFOS(LOG_APP, "KH735_cJSON_Print get return info ends");
+    OH_LOG_LOGINFOS(LOG_APP, "KH735_cJSON_Print ends");
     return cJSON_PrintOut;
 
 }

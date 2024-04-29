@@ -99,6 +99,7 @@ function generateDirectFunction(params, index, tsFuncName, directFuncPath) {
       directFuncPath.cppTempleteDetails.funcBody.funcParamIn.funcGetParamTemplete);
     let funcGetParamTemplete = readFile(funcGetParamTempletePath)
     let genParam_replace = replaceAll(funcGetParamTemplete, '[param_length]', funcInfo.params.length)
+    genParam_replace = replaceAll(genParam_replace, '[funcName]', funcName_replace)
     genParam_replace = replaceAll(genParam_replace, '[getParam_replace]', paramGenResult)
     if (funcInfo.params.length !== 0) {
         body_replace = replaceAll(body_replace, '[func_getParam_replace]', genParam_replace)
@@ -111,6 +112,7 @@ function generateDirectFunction(params, index, tsFuncName, directFuncPath) {
         let funcReturnTempletePath = path.join(__dirname, funcRetOutPath.funcReturnTemplete);
         let funcReturnTemplete = readFile(funcReturnTempletePath);
         let = func_return_replace = replaceAll(funcReturnTemplete, '[return_name]', retObjInfo.objName)
+        func_return_replace = replaceAll(func_return_replace, '[funcName]', funcName_replace)
         func_return_replace = replaceAll(func_return_replace, '[return_replace]', retGenResult)
         body_replace = replaceAll(body_replace, '[func_return_replace]', func_return_replace)
     } else {
@@ -126,7 +128,6 @@ function generateDirectFunction(params, index, tsFuncName, directFuncPath) {
 }
 
 function getParamJs2C(funcInfo, i, paramGenTemplete, funcParamTypePath, paramGenResult, params) {
-  console.info("funcInfo.params[i].type.substring(0,10): " + funcInfo.params[i].type.substring(0, 10));
   let paramType = funcInfo.params[i].type === 'size_t' ? 'int64_t' : funcInfo.params[i].type;
   // 去除const 和 *
   paramType = paramType.replace('const', '').replace('*', '').trim()
