@@ -54,17 +54,38 @@ native_gen-win.exe、native_gen-linux、native_gen-macos
 pkg -t node14-win . -o napi_generator-win.exe
 ```
 
-2.下载header_parser  
+2.生成header_parser  
 
-下载header_parser/windows目录下的header_parser.exe(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接)。
+2.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 /usr/local/lib/python3.8/dist-packages/CppHeaderParser)目录下的全部文件
 
-[下载链接1](https://gitee.com/link?target=http%3A%2F%2Fftpkaihongdigi.i234.me%3A5000%2Fsharing%2FkBG1c7CvT)
+[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
 
-[下载链接2](https://gitee.com/link?target=http%3A%2F%2Fftp.kaihong.com%3A5000%2Fsharing%2FkBG1c7CvT)
+[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
 
-[下载链接3](https://gitee.com/link?target=http%3A%2F%2Fftp.kaihongdigi.com%3A5000%2Fsharing%2FkBG1c7CvT)
+[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
 
-3.将生成的native_gen-win.exe可执行程序和下载的header_parser.exe拷贝到napi_generator/examples/napitutorials/tool/resources/cmds/win目录下。
+2.2 修改py脚本（防止循环引用报错）
+
+修改python/Lib/json/encoder.py文件中_iterencode_dict方法，在raise ValueError("Circular reference detected")前加入下面两行代码：
+
+```
+yield '{}'
+return
+```
+
+2.3 安装 pyinstaller
+
+	pip install pyinstaller
+
+2.4 将python脚本打包成独立可执行文件
+进入 napi_generator/examples/napitutorials/tool/commandLine/src/tsGen 目录后执行如下命令：
+
+	pyinstaller -F header_parser.py
+
+打包后的可执行文件在dist目录中
+./src/tsGen/dist/header_parser.exe
+
+3.将生成的native_gen-win.exe可执行程序和生成的header_parser.exe拷贝到napi_generator/examples/napitutorials/tool/resources/cmds/win目录下。
 
 4.下载并安装IDEA Community：IntelliJ IDEA 2021.3.3 (Community Edition）、JDK11配置好环境。IDEA Community版本可以左键单击以下链接下载。
 
