@@ -23,7 +23,63 @@ const CJSON_MANAGEMENT: ThirdLevelCategory =
       {
         title: $r('app.string.napi_get_node_version'),
         url: 'pages/ncpp/cjsonfuncs/cjsonfuncs'
-      }
+      },
+      {
+        title: $r('app.string.napi_parse_json_string'),
+        url: 'pages/ncpp/cjsonfuncs/cjsonparse'
+      },
+      {
+        title: $r('app.string.napi_print_json_string'),
+        url: 'pages/ncpp/cjsonfuncs/cjsonprint'
+      },
+      {
+        title: $r('app.string.napi_create_json_string'),
+        url: 'pages/ncpp/cjsonfuncs/cjsoncreatestring'
+      },
+      {
+        title: $r('app.string.napi_create_json_object'),
+        url: 'pages/ncpp/cjsonfuncs/cjsoncreateobject'
+      },
+      {
+        title: $r('app.string.napi_add_string_to_object'),
+        url: 'pages/ncpp/cjsonfuncs/cjsonaddstringtoobject'
+      },
+      {
+        title: $r('app.string.napi_add_number_to_object'),
+        url: 'pages/ncpp/cjsonfuncs/cjsonaddnumbertoobject'
+      },
+      {
+        title: $r('app.string.napi_add_false_to_object'),
+        url: 'pages/ncpp/cjsonfuncs/cjsonaddfalsetoobject'
+      },
+      {
+        title: $r('app.string.napi_add_item_to_object'),
+        url: 'pages/ncpp/cjsonfuncs/cjsonadditemtoobject'
+      },
+      {
+        title: $r('app.string.napi_cjson_sample_test1'),
+        url: 'pages/ncpp/cjsonfuncs/cjsonsampletest1'
+      },
+      {
+        title: $r('app.string.napi_create_json_array'),
+        url: 'pages/ncpp/cjsonfuncs/cjsoncreatearray'
+      },
+      {
+        title: $r('app.string.napi_create_json_int_array'),
+        url: 'pages/ncpp/cjsonfuncs/cjsoncreateintarray'
+      },
+      {
+        title: $r('app.string.napi_add_item_to_array'),
+        url: 'pages/ncpp/cjsonfuncs/cjsonadditemtoarray'
+      },
+      {
+        title: $r('app.string.napi_cjson_sample_test2'),
+        url: 'pages/ncpp/cjsonfuncs/cjsonsampletest2'
+      },
+      {
+        title: $r('app.string.napi_cjson_sample_test3'),
+        url: 'pages/ncpp/cjsonfuncs/cjsonsampletest3'
+      },
     ]
   }
 
