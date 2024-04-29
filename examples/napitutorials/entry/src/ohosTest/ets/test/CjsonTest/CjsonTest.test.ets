@@ -223,7 +223,17 @@ export default function abilityTestCjson() {
       hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
       let cjobj = testNapi.getTestCase(7);
       let tccjsonobj = cjobj as TcCJsonSample;
-      let string = "name"
+      let valueObj: cJSON = {
+        next: null,
+        prev: null,
+        child: null,
+        type: 0,
+        valuestring: '',
+        valueint: 0,
+        valuedouble: 0,
+        string: ''
+      }
+      let string = "item"
       let valueItem: cJSON = {
         next: null,
         prev: null,
@@ -234,13 +244,7 @@ export default function abilityTestCjson() {
         valuedouble: 0,
         string: 'name'
       }
-      let cjsonObj: cJSON = tccjsonobj.KH361_cJSON_CreateObject();
-      // 向对象中添加元素
-      cjsonObj = tccjsonobj.KH526_cJSON_AddStringToObject(cjsonObj, "type", "rect");
-      cjsonObj = tccjsonobj.KH206_cJSON_AddNumberToObject(cjsonObj, "height", 1080);
-      cjsonObj = tccjsonobj.KH206_cJSON_AddNumberToObject(cjsonObj, "width", 1920);
-      cjsonObj = tccjsonobj.KH545_cJSON_AddFalseToObject(cjsonObj, "interface");
-      let result: cJSON = tccjsonobj.KH180_cJSON_AddItemToObject(cjsonObj, string, valueItem)
+      let result: cJSON = tccjsonobj.KH180_cJSON_AddItemToObject(valueObj, string, valueItem)
       hilog.info(0x0000, "testTag", "Test NAPI KH180_cJSON_AddItemToObject: ", result);
       console.info("Test NAPI KH180_cJSON_AddItemToObject result: ", JSON.stringify(result))
       // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
