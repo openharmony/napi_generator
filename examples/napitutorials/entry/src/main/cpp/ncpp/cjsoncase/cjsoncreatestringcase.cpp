@@ -105,7 +105,7 @@ napi_value getCreateStringChildOut(napi_env env, napi_value cJSON_CreateStringOu
     return cJSON_CreateStringOut;
 }
 
-napi_value getCreateStringTypeOut(napi_env env, napi_value cJSON_CreateStringOut)
+napi_value getCreateStringTypeOut(napi_env env, cJSON *jsonObject, napi_value cJSON_CreateStringOut)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -116,7 +116,7 @@ napi_value getCreateStringTypeOut(napi_env env, napi_value cJSON_CreateStringOut
      * value: 要准换成js数值的int32_t的值,这里以传入1为例,用例新增业务代码时可根据自身需求修改
      * result: 指向napi_value的指针，这个指针会被设置为新创建的js数值对象
      */
-    status = napi_create_int32(env, 1, &typeOut);
+    status = napi_create_int32(env, jsonObject->type, &typeOut);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
@@ -136,7 +136,7 @@ napi_value getCreateStringTypeOut(napi_env env, napi_value cJSON_CreateStringOut
     return cJSON_CreateStringOut;
 }
 
-napi_value getCreateStringValuestringOut(napi_env env, cJSON * jsonObject, napi_value cJSON_CreateStringOut)
+napi_value getCreateStringValuestringOut(napi_env env, cJSON *jsonObject, napi_value cJSON_CreateStringOut)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -171,7 +171,7 @@ napi_value getCreateStringValuestringOut(napi_env env, cJSON * jsonObject, napi_
     return cJSON_CreateStringOut;
 }
 
-napi_value getCreateStringValueintOut(napi_env env, napi_value cJSON_CreateStringOut)
+napi_value getCreateStringValueintOut(napi_env env, cJSON *jsonObject, napi_value cJSON_CreateStringOut)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -182,7 +182,7 @@ napi_value getCreateStringValueintOut(napi_env env, napi_value cJSON_CreateStrin
      * value: 要准换成js数值的int32_t的值,这里以传入1为例,用例新增业务代码时可根据自身需求修改
      * result: 指向napi_value的指针，这个指针会被设置为新创建的js数值对象
      */
-    status = napi_create_int32(env, 1, &valueintOut);
+    status = napi_create_int32(env, jsonObject->valueint, &valueintOut);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
@@ -202,7 +202,7 @@ napi_value getCreateStringValueintOut(napi_env env, napi_value cJSON_CreateStrin
     return cJSON_CreateStringOut;
 }
 
-napi_value getCreateStringValuedoubleOut(napi_env env, napi_value cJSON_CreateStringOut)
+napi_value getCreateStringValuedoubleOut(napi_env env, cJSON *jsonObject, napi_value cJSON_CreateStringOut)
 {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
@@ -213,7 +213,7 @@ napi_value getCreateStringValuedoubleOut(napi_env env, napi_value cJSON_CreateSt
      * value: 要传递给js的双精度浮点数值,这里以传入1.0为例，用例新增业务代码时可根据自身需求修改
      * result: 指向napi_value的指针，这个指针会被设置为新创建的js数值对象
      */
-    status = napi_create_double(env, 1.0, &valuedoubleOut);
+    status = napi_create_double(env, jsonObject->valuedouble, &valuedoubleOut);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "napi_create_double", tag);
         return nullptr;
@@ -366,10 +366,10 @@ napi_value KH515_cJSON_CreateString(napi_env env, napi_callback_info info)
     cJSON_CreateStringOut = getCreateStringNextOut(env, cJSON_CreateStringOut);
     cJSON_CreateStringOut = getCreateStringPrevOut(env, cJSON_CreateStringOut);
     cJSON_CreateStringOut = getCreateStringChildOut(env, cJSON_CreateStringOut);
-    cJSON_CreateStringOut = getCreateStringTypeOut(env, cJSON_CreateStringOut);
+    cJSON_CreateStringOut = getCreateStringTypeOut(env, jsonObject, cJSON_CreateStringOut);
     cJSON_CreateStringOut = getCreateStringValuestringOut(env, jsonObject, cJSON_CreateStringOut);
-    cJSON_CreateStringOut = getCreateStringValueintOut(env, cJSON_CreateStringOut);
-    cJSON_CreateStringOut = getCreateStringValuedoubleOut(env, cJSON_CreateStringOut);
+    cJSON_CreateStringOut = getCreateStringValueintOut(env, jsonObject, cJSON_CreateStringOut);
+    cJSON_CreateStringOut = getCreateStringValuedoubleOut(env, jsonObject, cJSON_CreateStringOut);
     cJSON_CreateStringOut = getCreateStringStringOut(env, cJSON_CreateStringOut);
  
     return cJSON_CreateStringOut;
