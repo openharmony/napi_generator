@@ -34,6 +34,10 @@ add_library(entry SHARED
     ncpp/cjsoncase/cjsonaddnumbertoobjectcase.cpp
     ncpp/cjsoncase/cjsonaddfalsetoobjectcase.cpp
     ncpp/cjsoncase/nodeapiCommon.cpp
+    ncpp/cjsoncase/cjsonadditemtoobjectcase.cpp
+    ncpp/cjsoncase/cjsoncreatearraycase.cpp
+    ncpp/cjsoncase/cjsoncreateintarraycase.cpp
+    ncpp/cjsoncase/cjsonadditemtoarraycase.cpp
     javascriptapi/jsproperty/napigetpropertynames.cpp
     javascriptapi/jsproperty/napigetproperty.cpp
     javascriptapi/jsproperty/napisetproperty.cpp

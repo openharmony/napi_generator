@@ -13,9 +13,42 @@ Native生成工具支持两种入口，分别是命令行、IntelliJ插件，使
 
 #### node脚本使用方法
 
-1.打开napitutorials工程，将待转换的.h文件放入该工程目录下任意位置，例如：将test.h文件放入./entry/src/main/cpp目录下。
+**1 生成header_parser程序**
 
-2.在命令行使用 以下命令运行脚本
+1.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 /usr/local/lib/python3.8/dist-packages/CppHeaderParser)目录下的全部文件
+
+[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
+
+[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
+
+[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
+
+1.2 修改py脚本（防止循环引用报错）
+
+修改python/Lib/json/encoder.py文件中_iterencode_dict方法，在raise ValueError("Circular reference detected")前加入下面两行代码：
+
+```
+yield '{}'
+return
+```
+
+1.3 安装 pyinstaller
+
+	pip install pyinstaller
+
+1.4 将python脚本打包成独立可执行文件
+进入 napi_generator/examples/napitutorials/tool/commandLine/src/tsGen 目录后执行如下命令：
+
+	pyinstaller -F header_parser.py
+
+打包后的可执行文件在dist目录中
+./src/tsGen/dist/header_parser.exe
+
+**2 运行node脚本**
+
+2.1打开napitutorials工程，将待转换的.h文件放入该工程目录下任意位置，例如：将test.h文件放入./entry/src/main/cpp目录下。
+
+2.2在命令行使用 以下命令运行脚本
 
 ```
 node ./tool/commandLine/src/main.js -f 接口文件路径
@@ -35,13 +68,15 @@ index.d.ts文件路径；
 
 -o, 可选参数，工程目录下生成的.cpp文件所在文件夹路径，若该目录下不存在.cpp文件则会创建test.cpp文件，默认路径为.h所在工程目录./src/main/cpp路径下；
 
+-g, 可选参数，是否生成init函数，默认为true
+
 例如：
 
 ```
 node ./tool/commandLine/src/main.js -f E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\test.h
 ```
 
-3.运行成功后命令行会打印出 Generate success，并在./entry/src/main/cpp会生成test.cpp文件，其中是接口napi层模板；在./entry/src/main/cpp/types/libentry/index.d.ts文件中会追加写入生成的ts接口；在./entrysrc/ohosTest/ets/test/Ability.test.ets生成接口测试代码模板。用户根据自身需求在test.cpp中增加业务代码，并在Ability.test.ets中增加合适断言之后，即可连接开发板并运行测试用例测试验证生成napi代码是否正确。例如：
+2.3运行成功后命令行会打印出 Generate success，并在./entry/src/main/cpp会生成test.cpp文件，其中是接口napi层模板；在./entry/src/main/cpp/types/libentry/index.d.ts文件中会追加写入生成的ts接口；在./entrysrc/ohosTest/ets/test/Ability.test.ets生成接口测试代码模板。用户根据自身需求在test.cpp中增加业务代码，并在Ability.test.ets中增加合适断言之后，即可连接开发板并运行测试用例测试验证生成napi代码是否正确。例如：
 
 在生成的test.cpp模板中 // Todo下增加一行：
 

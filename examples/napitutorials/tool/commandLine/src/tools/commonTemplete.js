@@ -26,6 +26,16 @@ let commonH = `
 #include "hilog/log.h"
 #include "napi/native_api.h"
 
+// 加入hilog打印声明
+#include "hilog/log.h"
+#include <bits/alltypes.h>
+#undef LOG_DOMAIN
+#undef LOG_TAG
+#define LOG_DOMAIN 0x3200
+#define LOG_TAG "[HILOG_PRINTHILOG_PRINT]"
+#define OH_LOG_LOGINFOS(type, ...) ((void)OH_LOG_Print((type), LOG_INFO, LOG_DOMAIN, LOG_TAG, __VA_ARGS__))
+#define OH_LOG_LOGERRORS(type, ...) ((void)OH_LOG_Print((type), LOG_ERROR, LOG_DOMAIN, LOG_TAG, __VA_ARGS__))
+
 #define GLOBAL_RESMGR (0xFFEE)
 constexpr int32_t RGB_565 = 2;
 constexpr int32_t RGBA_8888 = 3;

@@ -13,8 +13,7 @@
  * limitations under the License.
  */
 
-#include "cjson/cJSON.h"
-#include "nodeapi.h"
+#include "cJsonNapiH/cjsonnapi.h"
 
 /* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(int) cJSON_GetArraySize(const cJSON *array);的napi方法，
  * 输入一个cJSON数组

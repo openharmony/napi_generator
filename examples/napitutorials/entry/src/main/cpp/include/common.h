@@ -51,8 +51,8 @@ constexpr uint8_t PARAM11 = 11;
 constexpr uint8_t PARAM12 = 12;
 constexpr uint8_t PARAM60 = 60;
 constexpr uint8_t PARAM100 = 100;
-constexpr uint8_t PARAM1000 = 1000;
-constexpr uint8_t PARAM100W = 1000000;
+constexpr uint16_t PARAM1000 = 1000;
+constexpr uint32_t PARAM100W = 1000000;
 
 constexpr int32_t ARGS_ONE = 1;
 constexpr int32_t ARGS_TWO = 2;
