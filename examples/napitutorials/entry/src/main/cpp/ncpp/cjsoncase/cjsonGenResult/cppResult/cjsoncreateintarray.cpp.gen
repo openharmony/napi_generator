@@ -1,8 +1,11 @@
-#include "testNapi.h"
-/* [NAPI_GEN]: introduce function: [func_introduce_replace]*/
+#include "cjsonnapi.h"
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_CreateIntArray的napi方法，
+ * 输入：numbers: const int *; count: int;
+ * 输出：cJSON *
+ */
 napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
 {
-    OH_LOG_LOGINFOS(LOG_APP, "KH767_cJSON_CreateIntArray begins");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH767_cJSON_CreateIntArray", "KH767_cJSON_CreateIntArray begins");
     napi_status status;
     /* [NAPI_GEN]: Node.js在其N-API中用来提供错误的扩展信息的结构体,结构体包含以下字段
      * error_message: 一个指向错误详细字符串的指针，提供了关于错误的文本描述
@@ -16,9 +19,9 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     const char *tag = "[KH767_cJSON_CreateIntArray]";
     /* [NAPI_GEN]: get function param in*/
     /* [NAPI_GEN]: argc：js传入的参数个数 */
-    size_t argc = 2;
+    size_t argc = PARAMS2;
     /* [NAPI_GEN]: args: 一个数组,保存js传入的参数 */
-    napi_value args[2] = {nullptr};
+    napi_value args[PARAMS2] = {nullptr};
     /* [NAPI_GEN]: napi_get_cb_info用于获取JS调用该函数时所传递的参数、接收参数的个数以及'this'的值
      * env: 当前环境的句柄，代表当前的Node.js环境
      * info: 回调信息句柄，代表当前回调的上下文
@@ -30,20 +33,20 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     if(status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env,extended_error_info, "napi_get_cb_info", tag);
+        getErrMessage(status, env,extended_error_info, "napi_get_cb_info", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 从args数组中获取入参 */
-    OH_LOG_LOGINFOS(LOG_APP, "KH767_cJSON_CreateIntArray get param info begins");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH767_cJSON_CreateIntArray", "KH767_cJSON_CreateIntArray get param info begins");
     napi_valuetype valuetypenumbers;
-    /* [NAPI_GEN]: 获取入参类型，第0个入参
+    /* [NAPI_GEN]: 获取入参类型，第PARAMS0个入参
      * env: N-API环境的句柄，表示当前的上下文
      * value: 要检查类型的js值
      * result: 是一个指针，指向napi_valuetype枚举的值，函数会将结果存储在这里
      */
-    status = napi_typeof(env, args[0], &valuetypenumbers);
+    status = napi_typeof(env, args[PARAMS0], &valuetypenumbers);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_typeof", tag);
+        getErrMessage(status, env, extended_error_info, "napi_typeof", tag);
         return nullptr;
     }
     int32_t numbersIn = 0;
@@ -52,20 +55,20 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
      * value：要转换的JavaScript值
      * result：指向 int32_t 类型的指针，在这里函数将存储转换后的整数值
      */
-    status = napi_get_value_int32(env, args[0], &numbersIn);
+    status = napi_get_value_int32(env, args[PARAMS0], &numbersIn);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_get_value_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_value_int32", tag);
         return nullptr;
     }    napi_valuetype valuetypecount;
-    /* [NAPI_GEN]: 获取入参类型，第1个入参
+    /* [NAPI_GEN]: 获取入参类型，第PARAMS1个入参
      * env: N-API环境的句柄，表示当前的上下文
      * value: 要检查类型的js值
      * result: 是一个指针，指向napi_valuetype枚举的值，函数会将结果存储在这里
      */
-    status = napi_typeof(env, args[1], &valuetypecount);
+    status = napi_typeof(env, args[PARAMS1], &valuetypecount);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_typeof", tag);
+        getErrMessage(status, env, extended_error_info, "napi_typeof", tag);
         return nullptr;
     }
     int32_t countIn = 0;
@@ -74,15 +77,15 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
      * value：要转换的JavaScript值
      * result：指向 int32_t 类型的指针，在这里函数将存储转换后的整数值
      */
-    status = napi_get_value_int32(env, args[1], &countIn);
+    status = napi_get_value_int32(env, args[PARAMS1], &countIn);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_get_value_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_value_int32", tag);
         return nullptr;
     }
-    OH_LOG_LOGINFOS(LOG_APP, "KH767_cJSON_CreateIntArray get param info ends");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH767_cJSON_CreateIntArray", "KH767_cJSON_CreateIntArray get param info ends");
 
-    OH_LOG_LOGINFOS(LOG_APP, "KH767_cJSON_CreateIntArray get return info begins");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH767_cJSON_CreateIntArray", "KH767_cJSON_CreateIntArray get return info begins");
     // Todo: add business logic. 在这前后代码为框架所生成
 
     /* [NAPI_GEN]: function return value*/
@@ -93,7 +96,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
      */
     status = napi_create_object(env, &cJSON_CreateIntArrayOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
     napi_value nextOut;
@@ -103,7 +106,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
      */
     status = napi_create_object(env, &nextOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -115,7 +118,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "next", nextOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value prevOut;
@@ -125,7 +128,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
      */
     status = napi_create_object(env, &prevOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -137,7 +140,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "prev", prevOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value childOut;
@@ -147,7 +150,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
      */
     status = napi_create_object(env, &childOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -159,7 +162,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "child", childOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value typeOut;
@@ -170,7 +173,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
      */
     status = napi_create_int32(env, 1, &typeOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -182,7 +185,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "type", typeOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value valuestringOut;
@@ -195,7 +198,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_create_string_utf8(env, "valuestring", NAPI_AUTO_LENGTH, &valuestringOut);
     if (status != napi_ok) {
         /*错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -207,7 +210,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "valuestring", valuestringOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value valueintOut;
@@ -218,7 +221,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
      */
     status = napi_create_int32(env, 1, &valueintOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -230,7 +233,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "valueint", valueintOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value valuedoubleOut;
@@ -241,7 +244,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
      */
     status = napi_create_double(env, 1.0, &valuedoubleOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_double", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_double", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -253,7 +256,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "valuedouble", valuedoubleOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     napi_value stringOut;
@@ -266,7 +269,7 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_create_string_utf8(env, "string", NAPI_AUTO_LENGTH, &stringOut);
     if (status != napi_ok) {
         /*错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -278,12 +281,12 @@ napi_value KH767_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "string", stringOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
 
-    OH_LOG_LOGINFOS(LOG_APP, "KH767_cJSON_CreateIntArray get return info ends");
-    OH_LOG_LOGINFOS(LOG_APP, "KH767_cJSON_CreateIntArray ends");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH767_cJSON_CreateIntArray", "KH767_cJSON_CreateIntArray get return info ends");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH767_cJSON_CreateIntArray", "KH767_cJSON_CreateIntArray ends");
     return cJSON_CreateIntArrayOut;
 
 }
