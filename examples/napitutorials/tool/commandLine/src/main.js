@@ -46,7 +46,7 @@ if (filePath !== '') {
     }
     if (!testFilePath) {
         let rootPath = path.resolve(indexFile, '..', '..', '..', '..', '..');
-        testFilePath = path.join(rootPath, 'ohosTest/ets/test/Ability.test.ets');
+        testFilePath = path.join(rootPath, 'ohosTest/ets/test');
     }
     if(!cppFilePath) {
         let rootPath = path.resolve(indexFile, '..', '..', '..');

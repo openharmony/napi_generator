@@ -41,6 +41,9 @@
         "funcHDeclareTemplete": "../json/directFunction/cppTempleteDetails/funcHDeclare/funcHDeclareTemplete.gen"
       }
     },
-    "testTempleteDetails": "../json/directFunction/testTempleteDetails/abilityTestTemplete.gen"
+    "testTempleteDetails": {
+      "abilityTestTemplete": "../json/directFunction/testTempleteDetails/abilityTestTemplete.gen",
+      "abilityTestFirstGenTemplete": "../json/directFunction/testTempleteDetails/abilityTestFirstGenTemplete.gen"
+    }
   }
 }
