@@ -16,17 +16,38 @@
 #ifndef NAPITUTORIALS_CJSONCOMMON_H
 #define NAPITUTORIALS_CJSONCOMMON_H
 
-#include "common.h"
+#include <js_native_api.h>
+#include <js_native_api_types.h>
+#include <string>
+#include <stdio.h>
+#include <vector>
+#include "hilog/log.h"
+#include "napi/native_api.h"
 #include "cjson/cJSON.h"
 
-#include "hilog/log.h"
-#include <bits/alltypes.h>
-#undef LOG_DOMAIN
-#undef LOG_TAG
-#define LOG_DOMAIN 0x3200
-#define LOG_TAG "[nodeapi_cJSON]"
-#define OH_LOG_INFOS(type, ...) ((void)OH_LOG_Print((type), LOG_INFO, LOG_DOMAIN, LOG_TAG, __VA_ARGS__))
-#define OH_LOG_ERRORS(type, ...) ((void)OH_LOG_Print((type), LOG_ERROR, LOG_DOMAIN, LOG_TAG, __VA_ARGS__))
+#define GLOBAL_RESMGR (0xFFEE)
+const unsigned int LOG_PRINT_DOMAIN = 0xFF00;
+
+constexpr int32_t STR_MAX_SIZES = 200;
+constexpr int32_t LONG_STR_MAX_SIZES = 1024;
+
+constexpr uint8_t PARAMS0 = 0;
+constexpr uint8_t PARAMS1 = 1;
+constexpr uint8_t PARAMS2 = 2;
+constexpr uint8_t PARAMS3 = 3;
+constexpr uint8_t PARAMS4 = 4;
+constexpr uint8_t PARAMS5 = 5;
+constexpr uint8_t PARAMS6 = 6;
+constexpr uint8_t PARAMS7 = 7;
+constexpr uint8_t PARAMS8 = 8;
+constexpr uint8_t PARAMS9 = 9;
+constexpr uint8_t PARAMS10 = 10;
+constexpr uint8_t PARAMS11 = 11;
+constexpr uint8_t PARAMS12 = 12;
+constexpr uint8_t PARAMS100 = 100;
+
+void getErrMessage(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
+  const char *info, const char *tag);
 
 /* 去除字符串中的换行符，便于查找打印, 公共方法
  * str: 待去除\n的字符串

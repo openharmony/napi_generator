@@ -28,7 +28,7 @@ napi_value getAddstrtoobjTypeOut(napi_env env, napi_value cJSON_AddStringToObjec
      */
     status = napi_create_int32(env, jsonObj == NULL ? 0 : jsonObj->type, &typeOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -40,7 +40,7 @@ napi_value getAddstrtoobjTypeOut(napi_env env, napi_value cJSON_AddStringToObjec
     status = napi_set_named_property(env, cJSON_AddStringToObjectOut, "type", typeOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     return cJSON_AddStringToObjectOut;
@@ -59,7 +59,7 @@ napi_value getAddstrtoobjValuesintOut(napi_env env, napi_value cJSON_AddStringTo
      */
     status = napi_create_int32(env, jsonObj == NULL ? 0 : jsonObj->valueint, &valueintOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -71,7 +71,7 @@ napi_value getAddstrtoobjValuesintOut(napi_env env, napi_value cJSON_AddStringTo
     status = napi_set_named_property(env, cJSON_AddStringToObjectOut, "valueint", valueintOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     return cJSON_AddStringToObjectOut;
@@ -90,7 +90,7 @@ napi_value getAddstrtoobjValuesdoubleOut(napi_env env, napi_value cJSON_AddStrin
      */
     status = napi_create_double(env, jsonObj == NULL ? 0 : jsonObj->valuedouble, &valuedoubleOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_double", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_double", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -102,7 +102,7 @@ napi_value getAddstrtoobjValuesdoubleOut(napi_env env, napi_value cJSON_AddStrin
     status = napi_set_named_property(env, cJSON_AddStringToObjectOut, "valuedouble", valuedoubleOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     return cJSON_AddStringToObjectOut;
@@ -126,7 +126,7 @@ napi_value getAddstrtoobjValuestringOut(napi_env env, napi_value cJSON_AddString
                                      &valuestringOut);
     if (status != napi_ok) {
         /*错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -138,7 +138,7 @@ napi_value getAddstrtoobjValuestringOut(napi_env env, napi_value cJSON_AddString
     status = napi_set_named_property(env, cJSON_AddStringToObjectOut, "valuestring", valuestringOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     return cJSON_AddStringToObjectOut;
@@ -162,7 +162,7 @@ napi_value getAddstrtoobjStringOut(napi_env env, napi_value cJSON_AddStringToObj
         napi_create_string_utf8(env, jsonOut->string == nullptr ? "" : jsonOut->string, NAPI_AUTO_LENGTH, &stringOut);
     if (status != napi_ok) {
         /*错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -174,7 +174,7 @@ napi_value getAddstrtoobjStringOut(napi_env env, napi_value cJSON_AddStringToObj
     status = napi_set_named_property(env, cJSON_AddStringToObjectOut, "string", stringOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     return cJSON_AddStringToObjectOut;
@@ -192,7 +192,7 @@ napi_value getAddstrtoobjNextOut(napi_env env, napi_value cJSON_AddStringToObjec
      */
     status = napi_create_object(env, &nextOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
     // 给jsonObj->next赋值
@@ -221,7 +221,7 @@ napi_value getAddstrtoobjNextOut(napi_env env, napi_value cJSON_AddStringToObjec
     status = napi_set_named_property(env, cJSON_AddStringToObjectOut, "next", nextOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     return cJSON_AddStringToObjectOut;
@@ -257,7 +257,7 @@ napi_value getAddstrtoobjChildOut(napi_env env, napi_value cJSON_AddStringToObje
      */
     status = napi_create_object(env, &childOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
     // 给jsonObj->child赋值
@@ -273,7 +273,7 @@ napi_value getAddstrtoobjChildOut(napi_env env, napi_value cJSON_AddStringToObje
     status = napi_set_named_property(env, cJSON_AddStringToObjectOut, "child", childOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     return cJSON_AddStringToObjectOut;
@@ -291,7 +291,7 @@ napi_value getAddstrtoobjPrevOut(napi_env env, napi_value cJSON_AddStringToObjec
      */
     status = napi_create_object(env, &prevOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -303,7 +303,7 @@ napi_value getAddstrtoobjPrevOut(napi_env env, napi_value cJSON_AddStringToObjec
     status = napi_set_named_property(env, cJSON_AddStringToObjectOut, "prev", prevOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return nullptr;
     }
     return cJSON_AddStringToObjectOut;
@@ -322,7 +322,7 @@ char *getAddstrtoobjInfoNameIn(napi_env env, napi_value propNameIn)
      */
     status = napi_typeof(env, propNameIn, &valuetypename);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_typeof", tag);
+        getErrMessage(status, env, extended_error_info, "napi_typeof", tag);
         return nullptr;
     }
     size_t strSize1 = 0;
@@ -336,14 +336,14 @@ char *getAddstrtoobjInfoNameIn(napi_env env, napi_value propNameIn)
     /* [NAPI_GEN]: buf参数是NULL时，用于获取所需缓冲区大小*/
     status = napi_get_value_string_utf8(env, propNameIn, NULL, 0, &strSize1);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        getErrMessage(status, env, extended_error_info, "get value string", tag);
         return nullptr;
     }
     char *nameIn = new char[strSize1 + 1];
     /* [NAPI_GEN]: 用于获取字符串*/
     status = napi_get_value_string_utf8(env, propNameIn, nameIn, strSize1 + 1, &strSize1);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        getErrMessage(status, env, extended_error_info, "get value string", tag);
         delete[] nameIn;
         return nullptr;
     }
@@ -363,7 +363,7 @@ char *getAddstrtoobjInfoValueIn(napi_env env, napi_value propValueIn)
      */
     status = napi_typeof(env, propValueIn, &valuetypestring);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_typeof", tag);
+        getErrMessage(status, env, extended_error_info, "napi_typeof", tag);
         return nullptr;
     }
     size_t strSize2 = 0;
@@ -377,14 +377,14 @@ char *getAddstrtoobjInfoValueIn(napi_env env, napi_value propValueIn)
     /* [NAPI_GEN]: buf参数是NULL时，用于获取所需缓冲区大小*/
     status = napi_get_value_string_utf8(env, propValueIn, NULL, 0, &strSize2);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        getErrMessage(status, env, extended_error_info, "get value string", tag);
         return nullptr;
     }
     char *stringIn = new char[strSize2 + 1];
     /* [NAPI_GEN]: 用于获取字符串*/
     status = napi_get_value_string_utf8(env, propValueIn, stringIn, strSize2 + 1, &strSize2);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        getErrMessage(status, env, extended_error_info, "get value string", tag);
         delete[] stringIn;
         return nullptr;
     }
@@ -411,9 +411,9 @@ napi_value KH526_cJSON_AddStringToObject(napi_env env, napi_callback_info info)
     const char *tag = "[KH526_cJSON_AddStringToObject]";
     /* [NAPI_GEN]: get function param in*/
     /* [NAPI_GEN]: argc：js传入的参数个数 */
-    size_t argc = PARAM3;
+    size_t argc = PARAMS3;
     /* [NAPI_GEN]: args: 一个数组,保存js传入的参数 */
-    napi_value args[PARAM3] = {nullptr};
+    napi_value args[PARAMS3] = {nullptr};
     /* [NAPI_GEN]: napi_get_cb_info用于获取JS调用该函数时所传递的参数、接收参数的个数以及'this'的值
      * env: 当前环境的句柄，代表当前的Node.js环境
      * info: 回调信息句柄，代表当前回调的上下文
@@ -425,13 +425,13 @@ napi_value KH526_cJSON_AddStringToObject(napi_env env, napi_callback_info info)
     status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_get_cb_info", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_cb_info", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 从args数组中获取入参 */
-    napi_value propNameIn = args[PARAM1];
+    napi_value propNameIn = args[PARAMS1];
     char *nameIn = getAddstrtoobjInfoNameIn(env, propNameIn);
-    napi_value propValueIn = args[PARAM2];
+    napi_value propValueIn = args[PARAMS2];
     char *stringIn = getAddstrtoobjInfoValueIn(env, propValueIn);
 
     // Todo: add business logic. 在这前后代码为框架所生成
@@ -439,7 +439,7 @@ napi_value KH526_cJSON_AddStringToObject(napi_env env, napi_callback_info info)
     cJSON *jsonOut = nullptr;
 
     // init 传入的obj 初始化
-    napi_value cjsonObj = args[PARAM0];
+    napi_value cjsonObj = args[PARAMS0];
     jsonObj = initCJSON_Object(env, cjsonObj, jsonObj, tag);
     // add string to jsonObj
     jsonOut = cJSON_AddStringToObject(jsonObj, nameIn, stringIn);
@@ -448,7 +448,8 @@ napi_value KH526_cJSON_AddStringToObject(napi_env env, napi_callback_info info)
     if (jsonResStr != NULL) {
         std::string testaaa = jsonResStr;
         RemoveNewlines(testaaa);
-        OH_LOG_INFOS(LOG_APP, "KH526_cJSON_AddStringToObject success! 11. jsonResStr: %s", testaaa.c_str());
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH206_cJSON_AddNumberToObject", "jsonResStr: %s",
+            testaaa.c_str());
     }
 
     delete[] nameIn;
@@ -462,7 +463,7 @@ napi_value KH526_cJSON_AddStringToObject(napi_env env, napi_callback_info info)
      */
     status = napi_create_object(env, &cJSON_AddStringToObjectOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
 

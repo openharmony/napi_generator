@@ -34,9 +34,9 @@ napi_value KH373_cJSON_GetArraySize(napi_env env, napi_callback_info info)
     const char *tag = "[KH373_cJSON_GetArraySize]";
     /* [NAPI_GEN]: get function param in*/
     /* [NAPI_GEN]: argc：js传入的参数个数 */
-    size_t argc = 1;
+    size_t argc = PARAMS1;
     /* [NAPI_GEN]: args: 一个数组,保存js传入的参数 */
-    napi_value args[1] = {nullptr};
+    napi_value args[PARAMS1] = {nullptr};
     /* [NAPI_GEN]: napi_get_cb_info用于获取JS调用该函数时所传递的参数、接收参数的个数以及'this'的值
      * env: 当前环境的句柄，代表当前的Node.js环境
      * info: 回调信息句柄，代表当前回调的上下文
@@ -48,7 +48,7 @@ napi_value KH373_cJSON_GetArraySize(napi_env env, napi_callback_info info)
     status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_get_cb_info", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_cb_info", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 从args数组中获取入参 */
@@ -57,7 +57,7 @@ napi_value KH373_cJSON_GetArraySize(napi_env env, napi_callback_info info)
     napi_value arrayStringObj;
     status = napi_get_named_property(env, args[0], "valuestring", &arrayStringObj); // 读取属性
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get named property", tag);
+        getErrMessage(status, env, extended_error_info, "get named property", tag);
         return NULL;
     }
     size_t strSize0 = 0;
@@ -71,14 +71,14 @@ napi_value KH373_cJSON_GetArraySize(napi_env env, napi_callback_info info)
     /* [NAPI_GEN]: buf参数是NULL时，用于获取所需缓冲区大小*/
     status = napi_get_value_string_utf8(env, arrayStringObj, NULL, 0, &strSize0);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        getErrMessage(status, env, extended_error_info, "get value string", tag);
         return nullptr;
     }
     char *stringArrayIn = new char[strSize0 + 1];
     /* [NAPI_GEN]: 用于获取字符串*/
     status = napi_get_value_string_utf8(env, arrayStringObj, stringArrayIn, strSize0 + 1, &strSize0);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        getErrMessage(status, env, extended_error_info, "get value string", tag);
         delete[] stringArrayIn;
         return nullptr;
     }
@@ -97,7 +97,7 @@ napi_value KH373_cJSON_GetArraySize(napi_env env, napi_callback_info info)
      */
     status = napi_create_int32(env, arrayLenOut, &cJSON_GetArraySizeOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
     }
 

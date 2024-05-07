@@ -33,7 +33,7 @@ add_library(entry SHARED
     ncpp/cjsoncase/cjsonaddstringtoobjectcase.cpp
     ncpp/cjsoncase/cjsonaddnumbertoobjectcase.cpp
     ncpp/cjsoncase/cjsonaddfalsetoobjectcase.cpp
-    ncpp/cjsoncase/nodeapiCommon.cpp
+    ncpp/cjsoncase/cjsoncommon.cpp
     ncpp/cjsoncase/cjsonadditemtoobjectcase.cpp
     ncpp/cjsoncase/cjsoncreatearraycase.cpp
     ncpp/cjsoncase/cjsoncreateintarraycase.cpp
