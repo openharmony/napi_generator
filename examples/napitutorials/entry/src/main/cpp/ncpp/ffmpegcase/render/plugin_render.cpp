@@ -19,6 +19,7 @@
 #include <js_native_api.h>
 #include <js_native_api_types.h>
 #include <string>
+#include "common.h"
 #include "../common/common.h"
 #include "../manager/plugin_manager.h"
 #include "libavutil/pixdesc.h"

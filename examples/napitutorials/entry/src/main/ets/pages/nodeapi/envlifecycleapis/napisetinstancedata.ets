@@ -23,6 +23,7 @@ import hilog from '@ohos.hilog';
 import { TcNADataType } from '../../../interface/tctnadatatype';
 import { TCTYPE } from '../../../interface/tctbase';
 import { TcCJsonSample } from '../../../interface/tctcjsonsample';
+// import Benchmark from '../../../../js/benchmark/index';
 
 const TAG: string = 'napi_roi';
 
@@ -115,6 +116,9 @@ struct napisetinstancedata {
                 let ret1 = `instance ${instanceobj} `
                 let ret2 = ' ld.lld: error: undefined symbol: napi_set_instance_data '
                 hilog.info(0x0000, 'testTag', ret1);
+
+                // let benversion = Benchmark.version;
+                // hilog.info(0x0000, 'testTag', `benchmark version : ${benversion}`);
                 // hilog.info(0x0000, 'testTag', `instance ${instanceobj.testint32} `);
                 this.testcont = this.testcont.replace('log(instance)', 'log(## '+ret1+' ##)');
                 this.testcont = this.testcont.replace('log(myData)', 'log(## '+ret2+' ##)');
