@@ -1818,6 +1818,1007 @@
       return clock.apply(null, arguments);
     }
 
+    /*------------------------------------------------------------------------*/
 
+    /**
+     * Computes stats on benchmark results.
+     *
+     * @private
+     * @param {Object} bench The benchmark instance.
+     * @param {Object} options The options object.
+     */
+    function compute(bench, options) {
+      options || (options = {});
+
+      var async = options.async,
+          elapsed = 0,
+          initCount = bench.initCount,
+          minSamples = bench.minSamples,
+          queue = [],
+          sample = bench.stats.sample;
+
+      /**
+       * Adds a clone to the queue.
+       */
+      function enqueue() {
+        queue.push(_.assign(bench.clone(), {
+          '_original': bench,
+          'events': {
+            'abort': [update],
+            'cycle': [update],
+            'error': [update],
+            'start': [update]
+          }
+        }));
+      }
+
+      /**
+       * Updates the clone/original benchmarks to keep their data in sync.
+       */
+      function update(event) {
+        var clone = this,
+            type = event.type;
+
+        if (bench.running) {
+          if (type == 'start') {
+            // Note: `clone.minTime` prop is inited in `clock()`.
+            clone.count = bench.initCount;
+          }
+          else {
+            if (type == 'error') {
+              bench.error = clone.error;
+            }
+            if (type == 'abort') {
+              bench.abort();
+              bench.emit('cycle');
+            } else {
+              event.currentTarget = event.target = bench;
+              bench.emit(event);
+            }
+          }
+        } else if (bench.aborted) {
+          // Clear abort listeners to avoid triggering bench's abort/cycle again.
+          clone.events.abort.length = 0;
+          clone.abort();
+        }
+      }
+
+      /**
+       * Determines if more clones should be queued or if cycling should stop.
+       */
+      function evaluate(event) {
+        var critical,
+            df,
+            mean,
+            moe,
+            rme,
+            sd,
+            sem,
+            variance,
+            clone = event.target,
+            done = bench.aborted,
+            now = _.now(),
+            size = sample.push(clone.times.period),
+            maxedOut = size >= minSamples && (elapsed += now - clone.times.timeStamp) / 1e3 > bench.maxTime,
+            times = bench.times,
+            varOf = function(sum, x) { return sum + pow(x - mean, 2); };
+
+        // Exit early for aborted or unclockable tests.
+        if (done || clone.hz == Infinity) {
+          maxedOut = !(size = sample.length = queue.length = 0);
+        }
+
+        if (!done) {
+          // Compute the sample mean (estimate of the population mean).
+          mean = getMean(sample);
+          // Compute the sample variance (estimate of the population variance).
+          variance = _.reduce(sample, varOf, 0) / (size - 1) || 0;
+          // Compute the sample standard deviation (estimate of the population standard deviation).
+          sd = sqrt(variance);
+          // Compute the standard error of the mean (a.k.a. the standard deviation of the sampling distribution of the sample mean).
+          sem = sd / sqrt(size);
+          // Compute the degrees of freedom.
+          df = size - 1;
+          // Compute the critical value.
+          critical = tTable[Math.round(df) || 1] || tTable.infinity;
+          // Compute the margin of error.
+          moe = sem * critical;
+          // Compute the relative margin of error.
+          rme = (moe / mean) * 100 || 0;
+
+          _.assign(bench.stats, {
+            'deviation': sd,
+            'mean': mean,
+            'moe': moe,
+            'rme': rme,
+            'sem': sem,
+            'variance': variance
+          });
+
+          // Abort the cycle loop when the minimum sample size has been collected
+          // and the elapsed time exceeds the maximum time allowed per benchmark.
+          // We don't count cycle delays toward the max time because delays may be
+          // increased by browsers that clamp timeouts for inactive tabs. For more
+          // information see https://developer.mozilla.org/en/window.setTimeout#Inactive_tabs.
+          if (maxedOut) {
+            // Reset the `initCount` in case the benchmark is rerun.
+            bench.initCount = initCount;
+            bench.running = false;
+            done = true;
+            times.elapsed = (now - times.timeStamp) / 1e3;
+          }
+          if (bench.hz != Infinity) {
+            bench.hz = 1 / mean;
+            times.cycle = mean * bench.count;
+            times.period = mean;
+          }
+        }
+        // If time permits, increase sample size to reduce the margin of error.
+        if (queue.length < 2 && !maxedOut) {
+          enqueue();
+        }
+        // Abort the `invoke` cycle when done.
+        event.aborted = done;
+      }
+
+      // Init queue and begin.
+      enqueue();
+      invoke(queue, {
+        'name': 'run',
+        'args': { 'async': async },
+        'queued': true,
+        'onCycle': evaluate,
+        'onComplete': function() { bench.emit('complete'); }
+      });
+    }
+
+    /*------------------------------------------------------------------------*/
+
+    /**
+     * Cycles a benchmark until a run `count` can be established.
+     *
+     * @private
+     * @param {Object} clone The cloned benchmark instance.
+     * @param {Object} options The options object.
+     */
+    function cycle(clone, options) {
+      options || (options = {});
+
+      var deferred;
+      if (clone instanceof Deferred) {
+        deferred = clone;
+        clone = clone.benchmark;
+      }
+      var clocked,
+          cycles,
+          divisor,
+          event,
+          minTime,
+          period,
+          async = options.async,
+          bench = clone._original,
+          count = clone.count,
+          times = clone.times;
+
+      // Continue, if not aborted between cycles.
+      if (clone.running) {
+        // `minTime` is set to `Benchmark.options.minTime` in `clock()`.
+        cycles = ++clone.cycles;
+        clocked = deferred ? deferred.elapsed : clock(clone);
+        minTime = clone.minTime;
+
+        if (cycles > bench.cycles) {
+          bench.cycles = cycles;
+        }
+        if (clone.error) {
+          event = Event('error');
+          event.message = clone.error;
+          clone.emit(event);
+          if (!event.cancelled) {
+            clone.abort();
+          }
+        }
+      }
+      // Continue, if not errored.
+      if (clone.running) {
+        // Compute the time taken to complete last test cycle.
+        bench.times.cycle = times.cycle = clocked;
+        // Compute the seconds per operation.
+        period = bench.times.period = times.period = clocked / count;
+        // Compute the ops per second.
+        bench.hz = clone.hz = 1 / period;
+        // Avoid working our way up to this next time.
+        bench.initCount = clone.initCount = count;
+        // Do we need to do another cycle?
+        clone.running = clocked < minTime;
+
+        if (clone.running) {
+          // Tests may clock at `0` when `initCount` is a small number,
+          // to avoid that we set its count to something a bit higher.
+          if (!clocked && (divisor = divisors[clone.cycles]) != null) {
+            count = floor(4e6 / divisor);
+          }
+          // Calculate how many more iterations it will take to achieve the `minTime`.
+          if (count <= clone.count) {
+            count += Math.ceil((minTime - clocked) / period);
+          }
+          clone.running = count != Infinity;
+        }
+      }
+      // Should we exit early?
+      event = Event('cycle');
+      clone.emit(event);
+      if (event.aborted) {
+        clone.abort();
+      }
+      // Figure out what to do next.
+      if (clone.running) {
+        // Start a new cycle.
+        clone.count = count;
+        if (deferred) {
+          clone.compiled.call(deferred, context, timer);
+        } else if (async) {
+          delay(clone, function() { cycle(clone, options); });
+        } else {
+          cycle(clone);
+        }
+      }
+      else {
+        // Fix TraceMonkey bug associated with clock fallbacks.
+        // For more information see http://bugzil.la/509069.
+        if (support.browser) {
+          runScript(uid + '=1;delete ' + uid);
+        }
+        // We're done.
+        clone.emit('complete');
+      }
+    }
+
+    /*------------------------------------------------------------------------*/
+
+    /**
+     * Runs the benchmark.
+     *
+     * @memberOf Benchmark
+     * @param {Object} [options={}] Options object.
+     * @returns {Object} The benchmark instance.
+     * @example
+     *
+     * // basic usage
+     * bench.run();
+     *
+     * // or with options
+     * bench.run({ 'async': true });
+     */
+    function run(options) {
+      var bench = this,
+          event = Event('start');
+
+      // Set `running` to `false` so `reset()` won't call `abort()`.
+      bench.running = false;
+      bench.reset();
+      bench.running = true;
+
+      bench.count = bench.initCount;
+      bench.times.timeStamp = _.now();
+      bench.emit(event);
+
+      if (!event.cancelled) {
+        options = { 'async': ((options = options && options.async) == null ? bench.async : options) && support.timeout };
+
+        // For clones created within `compute()`.
+        if (bench._original) {
+          if (bench.defer) {
+            Deferred(bench);
+          } else {
+            cycle(bench, options);
+          }
+        }
+        // For original benchmarks.
+        else {
+          compute(bench, options);
+        }
+      }
+      return bench;
+    }
+
+    /*------------------------------------------------------------------------*/
+
+    // Firefox 1 erroneously defines variable and argument names of functions on
+    // the function itself as non-configurable properties with `undefined` values.
+    // The bugginess continues as the `Benchmark` constructor has an argument
+    // named `options` and Firefox 1 will not assign a value to `Benchmark.options`,
+    // making it non-writable in the process, unless it is the first property
+    // assigned by for-in loop of `_.assign()`.
+    _.assign(Benchmark, {
+
+      /**
+       * The default options copied by benchmark instances.
+       *
+       * @static
+       * @memberOf Benchmark
+       * @type Object
+       */
+      'options': {
+
+        /**
+         * A flag to indicate that benchmark cycles will execute asynchronously
+         * by default.
+         *
+         * @memberOf Benchmark.options
+         * @type boolean
+         */
+        'async': false,
+
+        /**
+         * A flag to indicate that the benchmark clock is deferred.
+         *
+         * @memberOf Benchmark.options
+         * @type boolean
+         */
+        'defer': false,
+
+        /**
+         * The delay between test cycles (secs).
+         * @memberOf Benchmark.options
+         * @type number
+         */
+        'delay': 0.005,
+
+        /**
+         * Displayed by `Benchmark#toString` when a `name` is not available
+         * (auto-generated if absent).
+         *
+         * @memberOf Benchmark.options
+         * @type string
+         */
+        'id': undefined,
+
+        /**
+         * The default number of times to execute a test on a benchmark's first cycle.
+         *
+         * @memberOf Benchmark.options
+         * @type number
+         */
+        'initCount': 1,
+
+        /**
+         * The maximum time a benchmark is allowed to run before finishing (secs).
+         *
+         * Note: Cycle delays aren't counted toward the maximum time.
+         *
+         * @memberOf Benchmark.options
+         * @type number
+         */
+        'maxTime': 5,
+
+        /**
+         * The minimum sample size required to perform statistical analysis.
+         *
+         * @memberOf Benchmark.options
+         * @type number
+         */
+        'minSamples': 5,
+
+        /**
+         * The time needed to reduce the percent uncertainty of measurement to 1% (secs).
+         *
+         * @memberOf Benchmark.options
+         * @type number
+         */
+        'minTime': 0,
+
+        /**
+         * The name of the benchmark.
+         *
+         * @memberOf Benchmark.options
+         * @type string
+         */
+        'name': undefined,
+
+        /**
+         * An event listener called when the benchmark is aborted.
+         *
+         * @memberOf Benchmark.options
+         * @type Function
+         */
+        'onAbort': undefined,
+
+        /**
+         * An event listener called when the benchmark completes running.
+         *
+         * @memberOf Benchmark.options
+         * @type Function
+         */
+        'onComplete': undefined,
+
+        /**
+         * An event listener called after each run cycle.
+         *
+         * @memberOf Benchmark.options
+         * @type Function
+         */
+        'onCycle': undefined,
+
+        /**
+         * An event listener called when a test errors.
+         *
+         * @memberOf Benchmark.options
+         * @type Function
+         */
+        'onError': undefined,
+
+        /**
+         * An event listener called when the benchmark is reset.
+         *
+         * @memberOf Benchmark.options
+         * @type Function
+         */
+        'onReset': undefined,
+
+        /**
+         * An event listener called when the benchmark starts running.
+         *
+         * @memberOf Benchmark.options
+         * @type Function
+         */
+        'onStart': undefined
+      },
+
+      /**
+       * Platform object with properties describing things like browser name,
+       * version, and operating system. See [`platform.js`](https://mths.be/platform).
+       *
+       * @static
+       * @memberOf Benchmark
+       * @type Object
+       */
+      'platform': context.platform || require('platform') || ({
+        'description': context.navigator && context.navigator.userAgent || null,
+        'layout': null,
+        'product': null,
+        'name': null,
+        'manufacturer': null,
+        'os': null,
+        'prerelease': null,
+        'version': null,
+        'toString': function() {
+          return this.description || '';
+        }
+      }),
+
+      /**
+       * The semantic version number.
+       *
+       * @static
+       * @memberOf Benchmark
+       * @type string
+       */
+      'version': '2.1.4'
+    });
+
+    _.assign(Benchmark, {
+      'filter': filter,
+      'formatNumber': formatNumber,
+      'invoke': invoke,
+      'join': join,
+      'runInContext': runInContext,
+      'support': support
+    });
+
+    // Add lodash methods to Benchmark.
+    _.each(['each', 'forEach', 'forOwn', 'has', 'indexOf', 'map', 'reduce'], function(methodName) {
+      Benchmark[methodName] = _[methodName];
+    });
+
+    /*------------------------------------------------------------------------*/
+
+    _.assign(Benchmark.prototype, {
+
+      /**
+       * The number of times a test was executed.
+       *
+       * @memberOf Benchmark
+       * @type number
+       */
+      'count': 0,
+
+      /**
+       * The number of cycles performed while benchmarking.
+       *
+       * @memberOf Benchmark
+       * @type number
+       */
+      'cycles': 0,
+
+      /**
+       * The number of executions per second.
+       *
+       * @memberOf Benchmark
+       * @type number
+       */
+      'hz': 0,
+
+      /**
+       * The compiled test function.
+       *
+       * @memberOf Benchmark
+       * @type {Function|string}
+       */
+      'compiled': undefined,
+
+      /**
+       * The error object if the test failed.
+       *
+       * @memberOf Benchmark
+       * @type Object
+       */
+      'error': undefined,
+
+      /**
+       * The test to benchmark.
+       *
+       * @memberOf Benchmark
+       * @type {Function|string}
+       */
+      'fn': undefined,
+
+      /**
+       * A flag to indicate if the benchmark is aborted.
+       *
+       * @memberOf Benchmark
+       * @type boolean
+       */
+      'aborted': false,
+
+      /**
+       * A flag to indicate if the benchmark is running.
+       *
+       * @memberOf Benchmark
+       * @type boolean
+       */
+      'running': false,
+
+      /**
+       * Compiled into the test and executed immediately **before** the test loop.
+       *
+       * @memberOf Benchmark
+       * @type {Function|string}
+       * @example
+       *
+       * // basic usage
+       * var bench = Benchmark({
+       *   'setup': function() {
+       *     var c = this.count,
+       *         element = document.getElementById('container');
+       *     while (c--) {
+       *       element.appendChild(document.createElement('div'));
+       *     }
+       *   },
+       *   'fn': function() {
+       *     element.removeChild(element.lastChild);
+       *   }
+       * });
+       *
+       * // compiles to something like:
+       * var c = this.count,
+       *     element = document.getElementById('container');
+       * while (c--) {
+       *   element.appendChild(document.createElement('div'));
+       * }
+       * var start = new Date;
+       * while (count--) {
+       *   element.removeChild(element.lastChild);
+       * }
+       * var end = new Date - start;
+       *
+       * // or using strings
+       * var bench = Benchmark({
+       *   'setup': '\
+       *     var a = 0;\n\
+       *     (function() {\n\
+       *       (function() {\n\
+       *         (function() {',
+       *   'fn': 'a += 1;',
+       *   'teardown': '\
+       *          }())\n\
+       *        }())\n\
+       *      }())'
+       * });
+       *
+       * // compiles to something like:
+       * var a = 0;
+       * (function() {
+       *   (function() {
+       *     (function() {
+       *       var start = new Date;
+       *       while (count--) {
+       *         a += 1;
+       *       }
+       *       var end = new Date - start;
+       *     }())
+       *   }())
+       * }())
+       */
+      'setup': _.noop,
+
+      /**
+       * Compiled into the test and executed immediately **after** the test loop.
+       *
+       * @memberOf Benchmark
+       * @type {Function|string}
+       */
+      'teardown': _.noop,
+
+      /**
+       * An object of stats including mean, margin or error, and standard deviation.
+       *
+       * @memberOf Benchmark
+       * @type Object
+       */
+      'stats': {
+
+        /**
+         * The margin of error.
+         *
+         * @memberOf Benchmark#stats
+         * @type number
+         */
+        'moe': 0,
+
+        /**
+         * The relative margin of error (expressed as a percentage of the mean).
+         *
+         * @memberOf Benchmark#stats
+         * @type number
+         */
+        'rme': 0,
+
+        /**
+         * The standard error of the mean.
+         *
+         * @memberOf Benchmark#stats
+         * @type number
+         */
+        'sem': 0,
+
+        /**
+         * The sample standard deviation.
+         *
+         * @memberOf Benchmark#stats
+         * @type number
+         */
+        'deviation': 0,
+
+        /**
+         * The sample arithmetic mean (secs).
+         *
+         * @memberOf Benchmark#stats
+         * @type number
+         */
+        'mean': 0,
+
+        /**
+         * The array of sampled periods.
+         *
+         * @memberOf Benchmark#stats
+         * @type Array
+         */
+        'sample': [],
+
+        /**
+         * The sample variance.
+         *
+         * @memberOf Benchmark#stats
+         * @type number
+         */
+        'variance': 0
+      },
+
+      /**
+       * An object of timing data including cycle, elapsed, period, start, and stop.
+       *
+       * @memberOf Benchmark
+       * @type Object
+       */
+      'times': {
+
+        /**
+         * The time taken to complete the last cycle (secs).
+         *
+         * @memberOf Benchmark#times
+         * @type number
+         */
+        'cycle': 0,
+
+        /**
+         * The time taken to complete the benchmark (secs).
+         *
+         * @memberOf Benchmark#times
+         * @type number
+         */
+        'elapsed': 0,
+
+        /**
+         * The time taken to execute the test once (secs).
+         *
+         * @memberOf Benchmark#times
+         * @type number
+         */
+        'period': 0,
+
+        /**
+         * A timestamp of when the benchmark started (ms).
+         *
+         * @memberOf Benchmark#times
+         * @type number
+         */
+        'timeStamp': 0
+      }
+    });
+
+    _.assign(Benchmark.prototype, {
+      'abort': abort,
+      'clone': clone,
+      'compare': compare,
+      'emit': emit,
+      'listeners': listeners,
+      'off': off,
+      'on': on,
+      'reset': reset,
+      'run': run,
+      'toString': toStringBench
+    });
+
+    /*------------------------------------------------------------------------*/
+
+    _.assign(Deferred.prototype, {
+
+      /**
+       * The deferred benchmark instance.
+       *
+       * @memberOf Benchmark.Deferred
+       * @type Object
+       */
+      'benchmark': null,
+
+      /**
+       * The number of deferred cycles performed while benchmarking.
+       *
+       * @memberOf Benchmark.Deferred
+       * @type number
+       */
+      'cycles': 0,
+
+      /**
+       * The time taken to complete the deferred benchmark (secs).
+       *
+       * @memberOf Benchmark.Deferred
+       * @type number
+       */
+      'elapsed': 0,
+
+      /**
+       * A timestamp of when the deferred benchmark started (ms).
+       *
+       * @memberOf Benchmark.Deferred
+       * @type number
+       */
+      'timeStamp': 0
+    });
+
+    _.assign(Deferred.prototype, {
+      'resolve': resolve
+    });
+
+    /*------------------------------------------------------------------------*/
+
+    _.assign(Event.prototype, {
+
+      /**
+       * A flag to indicate if the emitters listener iteration is aborted.
+       *
+       * @memberOf Benchmark.Event
+       * @type boolean
+       */
+      'aborted': false,
+
+      /**
+       * A flag to indicate if the default action is cancelled.
+       *
+       * @memberOf Benchmark.Event
+       * @type boolean
+       */
+      'cancelled': false,
+
+      /**
+       * The object whose listeners are currently being processed.
+       *
+       * @memberOf Benchmark.Event
+       * @type Object
+       */
+      'currentTarget': undefined,
+
+      /**
+       * The return value of the last executed listener.
+       *
+       * @memberOf Benchmark.Event
+       * @type Mixed
+       */
+      'result': undefined,
+
+      /**
+       * The object to which the event was originally emitted.
+       *
+       * @memberOf Benchmark.Event
+       * @type Object
+       */
+      'target': undefined,
+
+      /**
+       * A timestamp of when the event was created (ms).
+       *
+       * @memberOf Benchmark.Event
+       * @type number
+       */
+      'timeStamp': 0,
+
+      /**
+       * The event type.
+       *
+       * @memberOf Benchmark.Event
+       * @type string
+       */
+      'type': ''
+    });
+
+    /*------------------------------------------------------------------------*/
+
+    /**
+     * The default options copied by suite instances.
+     *
+     * @static
+     * @memberOf Benchmark.Suite
+     * @type Object
+     */
+    Suite.options = {
+
+      /**
+       * The name of the suite.
+       *
+       * @memberOf Benchmark.Suite.options
+       * @type string
+       */
+      'name': undefined
+    };
+
+    /*------------------------------------------------------------------------*/
+
+    _.assign(Suite.prototype, {
+
+      /**
+       * The number of benchmarks in the suite.
+       *
+       * @memberOf Benchmark.Suite
+       * @type number
+       */
+      'length': 0,
+
+      /**
+       * A flag to indicate if the suite is aborted.
+       *
+       * @memberOf Benchmark.Suite
+       * @type boolean
+       */
+      'aborted': false,
+
+      /**
+       * A flag to indicate if the suite is running.
+       *
+       * @memberOf Benchmark.Suite
+       * @type boolean
+       */
+      'running': false
+    });
+
+    _.assign(Suite.prototype, {
+      'abort': abortSuite,
+      'add': add,
+      'clone': cloneSuite,
+      'emit': emit,
+      'filter': filterSuite,
+      'join': arrayRef.join,
+      'listeners': listeners,
+      'off': off,
+      'on': on,
+      'pop': arrayRef.pop,
+      'push': push,
+      'reset': resetSuite,
+      'run': runSuite,
+      'reverse': arrayRef.reverse,
+      'shift': shift,
+      'slice': slice,
+      'sort': arrayRef.sort,
+      'splice': arrayRef.splice,
+      'unshift': unshift
+    });
+
+    /*------------------------------------------------------------------------*/
+
+    // Expose Deferred, Event, and Suite.
+    _.assign(Benchmark, {
+      'Deferred': Deferred,
+      'Event': Event,
+      'Suite': Suite
+    });
+
+    /*------------------------------------------------------------------------*/
+
+    // Add lodash methods as Suite methods.
+    _.each(['each', 'forEach', 'indexOf', 'map', 'reduce'], function(methodName) {
+      var func = _[methodName];
+      Suite.prototype[methodName] = function() {
+        var args = [this];
+        push.apply(args, arguments);
+        return func.apply(_, args);
+      };
+    });
+
+    // Avoid array-like object bugs with `Array#shift` and `Array#splice`
+    // in Firefox < 10 and IE < 9.
+    _.each(['pop', 'shift', 'splice'], function(methodName) {
+      var func = arrayRef[methodName];
+
+      Suite.prototype[methodName] = function() {
+        var value = this,
+            result = func.apply(value, arguments);
+
+        if (value.length === 0) {
+          delete value[0];
+        }
+        return result;
+      };
+    });
+
+    // Avoid buggy `Array#unshift` in IE < 8 which doesn't return the new
+    // length of the array.
+    Suite.prototype.unshift = function() {
+      var value = this;
+      unshift.apply(value, arguments);
+      return value.length;
+    };
+
+    return Benchmark;
+  }
+
+  /*--------------------------------------------------------------------------*/
+
+  // Export Benchmark.
+  // Some AMD build optimizers, like r.js, check for condition patterns like the following:
+  if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+    // Define as an anonymous module so, through path mapping, it can be aliased.
+    define(['lodash', 'platform'], function(_, platform) {
+      return runInContext({
+        '_': _,
+        'platform': platform
+      });
+    });
+  }
+  else {
+    var Benchmark = runInContext();
+
+    // Check for `exports` after `define` in case a build optimizer adds an `exports` object.
+    if (freeExports && freeModule) {
+      // Export for Node.js.
+      if (moduleExports) {
+        (freeModule.exports = Benchmark).Benchmark = Benchmark;
+      }
+      // Export for CommonJS support.
+      freeExports.Benchmark = Benchmark;
+    }
+    else {
+      // Export to the global object.
+      root.Benchmark = Benchmark;
+    }
   }
 }.call(this));
