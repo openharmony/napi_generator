@@ -366,7 +366,7 @@ napi_value getCjsonparseOut1(napi_env env, cJSON *jsonNext, napi_value cJSON_Par
         return nullptr;
     }
     nextOut = getCjsonNextOut(env, nextOut, jsonNext);
-    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，后将该对象返回js
      * env: 当前环境的句柄
      * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
      * utf8name: 属性的名称，是一个以UTF-8编码的字符串
@@ -388,7 +388,7 @@ napi_value getCjsonparseOut1(napi_env env, cJSON *jsonNext, napi_value cJSON_Par
         getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，将该对象返回js
      * env: 当前环境的句柄
      * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
      * utf8name: 属性的名称，是一个以UTF-8编码的字符串
@@ -419,7 +419,7 @@ napi_value getCjsonparseOut2(napi_env env, cJSON *json, cJSON *jsonChild, napi_v
     }
     childOut = getCjsonChildOut(env, childOut, jsonChild);
     /* [NAPI_GEN]:
-     * 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js env:
+     * 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，后将该对象返回js env:
      * 当前环境的句柄 object: 要设置属性的js对象，该对象是由上文napi_create_object创建的 utf8name:
      * 属性的名称，是一个以UTF-8编码的字符串 value:
      * 与属性名称关联的值，这个值可以是任何js类型（如一个数值、字符串、另一个对象等）
@@ -441,7 +441,7 @@ napi_value getCjsonparseOut2(napi_env env, cJSON *json, cJSON *jsonChild, napi_v
         getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，后将该对象返回js
      * env: 当前环境的句柄
      * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
      * utf8name: 属性的名称，是一个以UTF-8编码的字符串
@@ -477,7 +477,7 @@ napi_value getCjsonparseOut3(napi_env env, cJSON *json, napi_value cJSON_ParseOu
         getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，后将该对象返回js
      * env: 当前环境的句柄
      * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
      * utf8name: 属性的名称，是一个以UTF-8编码的字符串
@@ -500,7 +500,7 @@ napi_value getCjsonparseOut3(napi_env env, cJSON *json, napi_value cJSON_ParseOu
         getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，后将该对象返回js
      * env: 当前环境的句柄
      * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
      * utf8name: 属性的名称，是一个以UTF-8编码的字符串
@@ -530,7 +530,7 @@ napi_value getCjsonparseOut4(napi_env env, cJSON *json, napi_value cJSON_ParseOu
         getErrMessage(status, env, extended_error_info, "napi_create_double", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，后将该对象返回js
      * env: 当前环境的句柄
      * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
      * utf8name: 属性的名称，是一个以UTF-8编码的字符串
@@ -558,7 +558,7 @@ napi_value getCjsonparseOut4(napi_env env, cJSON *json, napi_value cJSON_ParseOu
         getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return nullptr;
     }
-    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，后将该对象返回js
      * env: 当前环境的句柄
      * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
      * utf8name: 属性的名称，是一个以UTF-8编码的字符串
@@ -599,7 +599,7 @@ napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
     /* [NAPI_GEN]: napi_get_cb_info用于获取JS调用该函数时所传递的参数、接收参数的个数以及'this'的值
      * env: 当前环境的句柄，代表当前的Node.js环境
      * info: 回调信息句柄，代表当前回调的上下文
-     * argc: 指向size_t的指针，最初应包含可接受的最大参数数量，函数返回时，它将包含实际传递的参数数量
+     * argc: 指向size_t的指针，开始应包含可接受的max参数数量，函数返回时，它将包含实际传递的参数数量
      * args: 一个足够大的数组，用于接收传递给回调函数的所有js参数。数组的大小应至少与argc传入的值一样大。
      * this_arg: 如果不是NULL,则返回js回调中this的值
      * data: 如果不是NULL,则返回与回调函数关联的任何可选数据。通常用于传递在创建函数时指定的静态数据
@@ -722,7 +722,7 @@ napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
     })
 ```
 
-2.运行 KH418_cJSON_Parse， 最终打印结果如下：
+2.运行 KH418_cJSON_Parse， 打印结果如下：
 
 ```
 I  Test NAPI KH418_cJSON_Parse result1:  {"next":{},"prev":{},"child":{},"type":16,"valuestring":"helloworld","valueint":0,"valuedouble":0,"string":""}

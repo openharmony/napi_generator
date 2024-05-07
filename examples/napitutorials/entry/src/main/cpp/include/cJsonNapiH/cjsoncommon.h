@@ -47,7 +47,7 @@ constexpr uint8_t PARAMS12 = 12;
 constexpr uint8_t PARAMS100 = 100;
 
 void getErrMessage(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
-  const char *info, const char *tag);
+    const char *info, const char *tag);
 
 /* 去除字符串中的换行符，便于查找打印, 公共方法
  * str: 待去除\n的字符串
