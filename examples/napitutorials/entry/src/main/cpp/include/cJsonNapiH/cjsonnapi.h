@@ -16,57 +16,51 @@
 #ifndef NAPITUTORIALS_CJSONNAPI_H
 #define NAPITUTORIALS_CJSONNAPI_H
 
-#include "common.h"
 #include "cjsoncommon.h"
 
-/* [NAPI_GEN]: 对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_Parse(const char *value);的napi方法，
- * 输入一个待转换的字符串
- * 输出cJSON序列化之后的字符串
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_Parse的napi方法，
+ * 输入：value: const char *;
+ * 输出：cJSON *
  */
 napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info);
 
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(int) cJSON_GetArraySize(const cJSON *array);的napi方法，
- * 输入一个cJSON数组
- * 输出数组长度
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_GetArraySize的napi方法，
+ * 输入：array: const cJSON *;
+ * 输出：int
  */
 napi_value KH373_cJSON_GetArraySize(napi_env env, napi_callback_info info);
 
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(char *) cJSON_Print(const cJSON *item);的napi方法，
- * 输入一个cJSON对象
- * 输出该对象序列化之后的字符串
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_Print的napi方法，
+ * 输入：item: const cJSON *;
+ * 输出：char *
  */
 napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info);
 
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_CreateObject(void);的napi方法，
- * 输入为空
- * 输出创建的cJSON对象
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_CreateObject的napi方法，
+ * 输入：void
+ * 输出：cJSON *
  */
 napi_value KH361_cJSON_CreateObject(napi_env env, napi_callback_info info);
 
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_CreateString(const char *string);的napi方法，
- * 输入一个字符串
- * 输出根据字符串创建的cJSON对象
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_CreateString的napi方法，
+ * 输入：string: const char *;
+ * 输出：cJSON *
  */
 napi_value KH515_cJSON_CreateString(napi_env env, napi_callback_info info);
 
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON*) cJSON_AddStringToObject(cJSON * const object, const char * const name,
- * const char * const string);的napi方法，
- * 输入：一个cJSON对象，需要添加的item名字（字符串），需要添加的item内容（字符串）
- * 输出：添加item后的cJSON对象
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_AddStringToObject的napi方法，
+ * 输入：object: cJSON * const; name: const char * const; string: const char * const;
+ * 输出：cJSON *
  */
 napi_value KH526_cJSON_AddStringToObject(napi_env env, napi_callback_info info);
-
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON*) cJSON_AddNumberToObject(cJSON * const object, const char * const name,
- * const double number);的napi方法，
- * 输入：一个cJSON对象，需要添加的item名字（字符串），需要添加的item内容（数值）
- * 输出：添加item后的cJSON对象
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_AddNumberToObject的napi方法，
+ * 输入：object: cJSON * const; name: const char * const; number: const double;
+ * 输出：cJSON *
  */
 napi_value KH206_cJSON_AddNumberToObject(napi_env env, napi_callback_info info);
-
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON*) cJSON_AddFalseToObject(cJSON * const object, const char * const name);
- * 的napi方法，
- * 输入：一个cJSON对象，需要添加的item名字（字符串）
- * 输出：添加item后的cJSON对象
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_AddFalseToObject的napi方法，
+ * 输入：object: cJSON * const; name: const char * const;
+ * 输出：cJSON *
  */
 napi_value KH545_cJSON_AddFalseToObject(napi_env env, napi_callback_info info);
 
@@ -76,10 +70,9 @@ napi_value KH545_cJSON_AddFalseToObject(napi_env env, napi_callback_info info);
  */
 napi_value getAdditemtoobjChildOut(napi_env env, napi_value cJSON_AddItemToObjectOut, cJSON *jsonObj);
 
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON_bool) cJSON_AddItemToObject(cJSON *object, const char *string,
- * cJSON *item); 的napi方法，
- * 输入：一个cJSON对象，需要添加的item名字（字符串），需要加入cJSON对象的item（cJSON 对象）
- * 输出：添加item后的cJSON对象
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_AddItemToObject的napi方法，
+ * 输入：object: cJSON *; string: const char *; item: cJSON *;
+ * 输出：int
  */
 napi_value KH180_cJSON_AddItemToObject(napi_env env, napi_callback_info info);
 
@@ -89,21 +82,20 @@ napi_value KH180_cJSON_AddItemToObject(napi_env env, napi_callback_info info);
  */
 napi_value getAdditemtoarrChildOut(napi_env env, napi_value cJSON_AddItemToArrayOut, cJSON *jsonObj);
 
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_CreateArray(void); 的napi方法，
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_CreateArray的napi方法，
  * 输入：void
- * 输出：创建的cjson array
+ * 输出：cJSON *
  */
 napi_value KH386_cJSON_CreateArray(napi_env env, napi_callback_info info);
-
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON *) cJSON_CreateIntArray(const int *numbers, int count); 的napi方法
- * 输入：一个number数组，number数组中元素的数量
- * 输出：创建的cJSON数组
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_CreateIntArray的napi方法，
+ * 输入：numbers: const int *; count: int;
+ * 输出：cJSON *
  */
 napi_value KH203_cJSON_CreateIntArray(napi_env env, napi_callback_info info);
 
-/* [NAPI_GEN]:对应cJSON.h中: CJSON_PUBLIC(cJSON_bool) cJSON_AddItemToArray(cJSON *array, cJSON *item); 的napi方法
- * 输入：一个cJSON数组对象，想要添加到cJSON数组中的cJSON元素
- * 输出：添加item后的cJSON对象
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_AddItemToArray的napi方法，
+ * 输入：array: cJSON *; item: cJSON *;
+ * 输出：int
  */
 napi_value KH802_cJSON_AddItemToArray(napi_env env, napi_callback_info info);
 
