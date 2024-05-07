@@ -38,7 +38,6 @@ function parseFileAll(hFilePath) {
         // call exe file (for real runtime)
         let sysInfo = os.platform()
         let execPath = path.dirname(process.execPath)
-        console.info("execPath : " + execPath)
         let exeFile = sysInfo === 'win32' ? path.join(execPath, "header_parser.exe") :
         path.join(execPath, "header_parser")
         cmd = exeFile + " " + hFilePath
@@ -325,7 +324,10 @@ function genFunction(func, tabLv, dtsDeclare) {
     dtsDeclareContent = replaceAll(dtsDeclareContent, '[export_replace]', funcPrefix)
     dtsDeclareContent = replaceAll(dtsDeclareContent, '[func_name_replace]', func.genName)
     dtsDeclareContent = replaceAll(dtsDeclareContent, '[func_param_replace]', funcParams)
+    dtsDeclareContent = replaceAll(dtsDeclareContent, '[input_introduce_replace]', funcParams === ''? "void": funcParams)
     dtsDeclareContent = replaceAll(dtsDeclareContent, '[func_return_replace]', func.retType)
+    dtsDeclareContent = replaceAll(dtsDeclareContent, '[output_introduce_replace]', func.retType)
+    dtsDeclareContent = replaceAll(dtsDeclareContent, '[func_introduce_replace]', func.name)
 
     return dtsDeclareContent
 }
@@ -510,15 +512,17 @@ async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath, isGe
     let dtsDeclarePath = path.join(__dirname, funcJson.directFunction.dtsTemplete);
     let dtsDeclare = readFile(dtsDeclarePath)
     
+    let hFileName = hFilePath.substring(hFilePath.lastIndexOf("\\") + 1, hFilePath.length);
     // 生成dts声明文件内容
     let tsContent = genTsContent(rootInfo, dtsDeclare)
+    tsContent = replaceAll(tsContent, "[file_introduce_replace]", hFileName)
     appendWriteFile(tsFilePath, '\n' + tsContent)
  
     // 生成native侧文件
     generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult, isGenInitFunc);
 
     // 生成测试用例
-    generateAbilityTest(funcJson, rootInfo, parseResult, testFilePath);
+    generateAbilityTest(funcJson, rootInfo, parseResult, testFilePath, hFileName);
 
     // 删除生成的中间文件
     clearTmpFile(tempFilePath)
@@ -526,14 +530,14 @@ async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath, isGe
     console.info('Generate success')
 }
 
-function generateAbilityTest(funcJson, rootInfo, parseResult, testFilePath) {
+function generateAbilityTest(funcJson, rootInfo, parseResult, testFilePath, hFileName) {
   let abilityTestTempletePath = funcJson.directFunction.testTempleteDetails;
   let abilityTestTempleteAbsPath = path.join(__dirname, abilityTestTempletePath);
   let abilityTestTemplete = readFile(abilityTestTempleteAbsPath);
   let genTestResult = '';
   // 生成测试用例  同时生成多个测试用例
   for (let i = 0; i < rootInfo.functions.length; i++) {
-    genTestResult += generateFuncTestCase(parseResult, i, rootInfo.functions[i].genName, abilityTestTemplete);
+    genTestResult += generateFuncTestCase(parseResult, i, rootInfo.functions[i].genName, abilityTestTemplete, hFileName);
   }
   const importContent = "import testNapi from 'libentry.so';";
   writeTestFile(testFilePath, importContent, genTestResult);
@@ -541,13 +545,14 @@ function generateAbilityTest(funcJson, rootInfo, parseResult, testFilePath) {
 
 function generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult, isGenInitFunc) {
   // 写入common.h 和 common.cpp
-  generateBase(cppFilePath, '');
+  generateBase(cppFilePath, '', hFilePath);
 
   let index = hFilePath.lastIndexOf("\\");
   let indexH = hFilePath.lastIndexOf(".h");
-  let napiHFileName = hFilePath.substring(index + 1, indexH) + 'Napi.h';
+  let napiHFileName = hFilePath.substring(index + 1, indexH).toLowerCase() + 'napi.h';
   let includes_replace = util.format('#include "%s"\n', napiHFileName);
-
+  let hFileName = hFilePath.substring(hFilePath.lastIndexOf("\\") + 1, hFilePath.length);
+  
   let funcDeclare = '';
   let funcInit = '';
   let directFuncPath = funcJson.directFunction;
@@ -555,7 +560,7 @@ function generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult
   for (let i = 0; i < rootInfo.functions.length; i++) {
     let cppFileName = rootInfo.functions[i].name.toLowerCase().replace('_', '').trim();
     let thisFuncCppFilePath = path.join(cppFilePath, cppFileName + '.cpp');
-    let genResult = generateDirectFunction(parseResult, i, rootInfo.functions[i].genName, directFuncPath);
+    let genResult = generateDirectFunction(parseResult, i, rootInfo.functions[i].genName, directFuncPath, hFileName);
     funcDeclare += genResult[0];
     funcInit += genResult[1];
     let funcBody = includes_replace + genResult[2];
@@ -570,7 +575,7 @@ function generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult
     let cppInitTemplete = readFile(cppInitTempleteAbsPath);
     cppInitTemplete = replaceAll(cppInitTemplete, '[include_replace]', includes_replace);
     cppInitTemplete = replaceAll(cppInitTemplete, '[init_replace]', funcInit);
-    let napiInitFileName = hFilePath.substring(index + 1, indexH) + 'Init.cpp';
+    let napiInitFileName = hFilePath.substring(index + 1, indexH).toLowerCase() + 'init.cpp';
     let initFilePath = path.join(cppFilePath, napiInitFileName);
     writeFile(initFilePath, cppInitTemplete);
   }
@@ -579,9 +584,11 @@ function generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult
   let cppDeclareTempletePath = funcJson.directFunction.cppTempleteDetails.funcHDeclare.funcHDeclareTemplete;
   const cppDeclareTempleteAbsPath = path.join(__dirname, cppDeclareTempletePath);
   let cppDeclareTempleteContent = readFile(cppDeclareTempleteAbsPath);
-  let napiHFileNameReplace = hFilePath.substring(index + 1, indexH) + 'Napi';
+  let napiHFileNameReplace = hFilePath.substring(index + 1, indexH).toLowerCase() + 'napi';
   cppDeclareTempleteContent = replaceAll(cppDeclareTempleteContent, '[h_file_name_replace]', napiHFileNameReplace.toUpperCase());
   cppDeclareTempleteContent = replaceAll(cppDeclareTempleteContent, '[func_declare_replace]', funcDeclare);
+  cppDeclareTempleteContent = replaceAll(cppDeclareTempleteContent, '[h_filename_replace]',
+      hFilePath.substring(index + 1, indexH).toLowerCase());
   let declareFilePath = path.join(cppFilePath, napiHFileName);
   writeFile(declareFilePath, cppDeclareTempleteContent);
 }

@@ -49,7 +49,7 @@ function generateRandomString(length) {
     return result;
 }
 
-function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete) {
+function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete, hFileName) {
     let funcInfo = {
         "name": "",
         "params": [],
@@ -64,19 +64,24 @@ function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete
     funcInfo.retType = params.functions[funcIndex].rtnType
     let funcParamDefine = ''
     let funcParamUse = ''
+    let funcInfoParams = ''
+    let funcInfoParamTemp = '[paramName]: [paramType]; '
     // 判断函数有几个参数，依次给参数赋值
     for(let i = 0; i < funcInfo.params.length; i++) {
+        let funcInfoParamReplace = replaceAll(funcInfoParamTemp, '[paramName]', funcInfo.params[i].name)
+        funcInfoParamReplace = replaceAll(funcInfoParamReplace, '[paramType]', funcInfo.params[i].type)
+        funcInfoParams += funcInfoParamReplace
         if (getTestType(funcInfo.params[i].type) === 'int') {
-            funcParamDefine += util.format('let %s = %s\n', funcInfo.params[i].name, generateRandomInteger(0, LENGTH))
+            funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomInteger(0, LENGTH))
             funcParamUse += funcInfo.params[i].name + ', '
         } else if (getTestType(funcInfo.params[i].type) === 'float') {
-            funcParamDefine += util.format('let %s = %s\n', funcInfo.params[i].name, generateRandomArbitrary(0, LENGTH, TWO_DECIMAL))
+            funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomArbitrary(0, LENGTH, TWO_DECIMAL))
             funcParamUse += funcInfo.params[i].name + ', '
         } else if (getTestType(funcInfo.params[i].type) === 'bool') {
-            funcParamDefine += util.format('let %s = %s\n', funcInfo.params[i].name, generateRandomBoolValue())
+            funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomBoolValue())
             funcParamUse += funcInfo.params[i].name + ', '
         } else if (getTestType(funcInfo.params[i].type) === 'string') {
-            funcParamDefine += util.format('let %s = "%s"\n', funcInfo.params[i].name, generateRandomString(LENGTH))
+            funcParamDefine += util.format('let %s = "%s"\n    ', funcInfo.params[i].name, generateRandomString(LENGTH))
             funcParamUse += funcInfo.params[i].name + ', '
         } 
     }
@@ -86,16 +91,20 @@ function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete
     let callFunc = ''
     // 调用函数
     if (getJsType(funcInfo.retType) !== 'void') {
-      callFunc = util.format('      let result: %s = testNapi.%s(%s)\n', getJsType(funcInfo.retType), tsFuncName, funcParamUse)
+      callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), tsFuncName, funcParamUse)
     } else {
-      callFunc = util.format('      testNapi.%s(%s)\n', tsFuncName, funcParamUse)
+      callFunc = util.format('testNapi.%s(%s)\n    ', tsFuncName, funcParamUse)
     }
     // 加 hilog 打印
-    let hilogContent = util.format('      hilog.info(0x0000, "testTag", "Test NAPI %s: ", result);', tsFuncName)
+    let hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", result);\n    ', tsFuncName)
     let func_test_replace = funcParamDefine + callFunc + hilogContent
     // 替换test_case_name
     let funcTestContent =  replaceAll(abilityTestTemplete,'[func_direct_testCase]', func_test_replace)
     funcTestContent = replaceAll(funcTestContent, '[test_case_name]', tsFuncName)
+    funcTestContent = replaceAll(funcTestContent, '[file_introduce_replace]', hFileName)
+    funcTestContent = replaceAll(funcTestContent, '[func_introduce_replace]', funcInfo.name)
+    funcTestContent = replaceAll(funcTestContent, '[input_introduce_replace]', funcInfoParams === ''? 'void': funcInfoParams)
+    funcTestContent = replaceAll(funcTestContent, '[output_introduce_replace]', funcInfo.retType)
 
     return funcTestContent
 }

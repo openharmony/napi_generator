@@ -1,7 +1,10 @@
-// [NAPI_GEN]:输出测试方法，加注释
+/* [NAPI_GEN]:对应[file_introduce_replace]中：[func_introduce_replace]方法的dts接口测试用例
+ * 方法输入: [input_introduce_replace]
+ * 方法输出: [output_introduce_replace]
+ */
 it('[test_case_name]', 0, () => {
     // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
-    hilog.info(0x0000, 'testTag', '%{public}s', 'it begin');
+    hilog.info(0x0000, 'testTag', '%{public}s', 'it [test_case_name] begin');
 
     [func_direct_testCase]
 

@@ -9,14 +9,14 @@
     /* [NAPI_GEN]: buf参数是NULL时，用于获取所需缓冲区大小*/
     status = napi_get_value_string_utf8(env, args[[param_index_replace]], NULL, 0, &strSize[param_index_replace]);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        getErrMessage(status, env, extended_error_info, "get value string", tag);
         return nullptr;
     }
     char *[param_name_replace]In = new char[strSize[param_index_replace] + 1];
     /* [NAPI_GEN]: 用于获取字符串*/
     status = napi_get_value_string_utf8(env, args[[param_index_replace]], [param_name_replace]In, strSize[param_index_replace] + 1, &strSize[param_index_replace]);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "get value string", tag);
+        getErrMessage(status, env, extended_error_info, "get value string", tag);
         delete[] [param_name_replace]In;
         return nullptr;
     }
