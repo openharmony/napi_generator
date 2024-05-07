@@ -6,6 +6,6 @@
      */
     status = napi_get_boolean(env, true, &[return_name_replace]Out);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_get_boolean", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_boolean", tag);
         return nullptr;
     }

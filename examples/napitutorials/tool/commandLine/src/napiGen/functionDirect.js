@@ -46,7 +46,7 @@ function analyzeRetIsTypeDef(type, info) {
 }
 
 //tsFuncName
-function generateDirectFunction(params, index, tsFuncName, directFuncPath) {
+function generateDirectFunction(params, index, tsFuncName, directFuncPath, hFileName) {
     let funcInfo = {
         "name": "",
         "params": [],
@@ -95,10 +95,23 @@ function generateDirectFunction(params, index, tsFuncName, directFuncPath) {
    
     let body_replace = replaceAll(bodyTemplete, '[funcName]', funcName_replace)
     body_replace = replaceAll(body_replace, '[get_error_msg_tag]', funcName_replace)
+    body_replace = replaceAll(body_replace, '[file_introduce_replace]', hFileName)
+    body_replace = replaceAll(body_replace, '[func_introduce_replace]', funcInfo.name)
+
+    let funcInfoParams = ''
+    let funcInfoParamTemp = '[paramName]: [paramType]; '
+    for (let i = 0; i < funcInfo.params.length; i++) {
+      let funcInfoParamReplace = replaceAll(funcInfoParamTemp, '[paramName]', funcInfo.params[i].name)
+      funcInfoParamReplace = replaceAll(funcInfoParamReplace, '[paramType]', funcInfo.params[i].type)
+      funcInfoParams += funcInfoParamReplace
+    }
+    body_replace = replaceAll(body_replace, '[input_introduce_replace]', funcInfoParams === ''? 'void': funcInfoParams)
+    body_replace = replaceAll(body_replace, '[output_introduce_replace]', funcInfo.retType)
+    
     let funcGetParamTempletePath = path.join(__dirname,
       directFuncPath.cppTempleteDetails.funcBody.funcParamIn.funcGetParamTemplete);
     let funcGetParamTemplete = readFile(funcGetParamTempletePath)
-    let genParam_replace = replaceAll(funcGetParamTemplete, '[param_length]', funcInfo.params.length)
+    let genParam_replace = replaceAll(funcGetParamTemplete, '[param_length]', "PARAMS" + funcInfo.params.length)
     genParam_replace = replaceAll(genParam_replace, '[funcName]', funcName_replace)
     genParam_replace = replaceAll(genParam_replace, '[getParam_replace]', paramGenResult)
     if (funcInfo.params.length !== 0) {
@@ -123,6 +136,11 @@ function generateDirectFunction(params, index, tsFuncName, directFuncPath) {
     let funcHDeclarePath = path.join(__dirname, directFuncPath.cppTempleteDetails.funcHDeclare.funcHDeclare);
     let funcHDeclare = readFile(funcHDeclarePath)
     funcHDeclare = replaceAll(funcHDeclare, '[funcName]', funcName_replace)
+
+    funcHDeclare = replaceAll(funcHDeclare, '[file_introduce_replace]', hFileName)
+    funcHDeclare = replaceAll(funcHDeclare, '[func_introduce_replace]', funcInfo.name)
+    funcHDeclare = replaceAll(funcHDeclare, '[input_introduce_replace]', funcInfoParams === ''? 'void': funcInfoParams)
+    funcHDeclare = replaceAll(funcHDeclare, '[output_introduce_replace]', funcInfo.retType)
    
     return [funcHDeclare, init_replace, body_replace]
 }
@@ -132,7 +150,7 @@ function getParamJs2C(funcInfo, i, paramGenTemplete, funcParamTypePath, paramGen
   // 去除const 和 *
   paramType = paramType.replace('const', '').replace('*', '').trim()
   let paramName = funcInfo.params[i].name;
-  let paramGen = replaceAll(paramGenTemplete, '[param_index_replace]', i);
+  let paramGen = replaceAll(paramGenTemplete, '[param_index_replace]', "PARAMS" + i);
   paramGen = replaceAll(paramGen, '[param_name_replace]', paramName);
   if (paramType === 'double') {
     let getParamPath = path.join(__dirname, funcParamTypePath.double)
@@ -169,7 +187,7 @@ function getParamJs2C(funcInfo, i, paramGenTemplete, funcParamTypePath, paramGen
 
 function getParamGenCon(getParamPath, i, paramName, paramGen) {
   let getParam = readFile(getParamPath);
-  getParam = replaceAll(getParam, '[param_index_replace]', i);
+  getParam = replaceAll(getParam, '[param_index_replace]', "PARAMS" + i);
   getParam = replaceAll(getParam, '[param_name_replace]', paramName);
   paramGen = replaceAll(paramGen, '[getParam_replace]', getParam);
   return paramGen;

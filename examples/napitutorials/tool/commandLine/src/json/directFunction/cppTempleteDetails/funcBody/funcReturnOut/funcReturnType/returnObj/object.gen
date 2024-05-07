@@ -5,6 +5,6 @@
      */
     status = napi_create_object(env, &[return_name_replace]Out);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return nullptr;
     }
