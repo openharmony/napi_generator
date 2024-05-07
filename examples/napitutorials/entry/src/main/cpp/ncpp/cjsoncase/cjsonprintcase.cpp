@@ -55,8 +55,6 @@ char *getCjsonPrintRes(napi_env env, napi_value obj)
     if (genResString3 != NULL) {
         std::string genResStringPrint = genResString3;
         RemoveNewlines(genResStringPrint);
-        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH735_cJSON_Print", "genResString3: %s",
-            genResStringPrint.c_str());
         if (genResStringPrint == "[]") {
             isArrObjNull = true;
         }
