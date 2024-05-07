@@ -89,14 +89,15 @@ function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete
     let index = funcParamUse.lastIndexOf(', ');
     funcParamUse = funcParamUse.substring(0, index);
     let callFunc = ''
+    let hilogContent = ''
     // 调用函数
     if (getJsType(funcInfo.retType) !== 'void') {
       callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), tsFuncName, funcParamUse)
+      // 加 hilog 打印
+      hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", result);\n    ', tsFuncName)
     } else {
       callFunc = util.format('testNapi.%s(%s)\n    ', tsFuncName, funcParamUse)
     }
-    // 加 hilog 打印
-    let hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", result);\n    ', tsFuncName)
     let func_test_replace = funcParamDefine + callFunc + hilogContent
     // 替换test_case_name
     let funcTestContent =  replaceAll(abilityTestTemplete,'[func_direct_testCase]', func_test_replace)

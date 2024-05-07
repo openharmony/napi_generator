@@ -111,12 +111,12 @@ index.d.ts文件路径；
 在napitutorials/entry/src/main/cpp目录下创建新文件夹cJsonOut
 
 ```
-node ./tool/commandLine/src/main.js -f E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\cJSON.h -o E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\cJsonOut -t E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\ohosTest\ets\test\Ability.test.ets -i E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\types\libentry\index.d.ts -g true
+node ./tool/commandLine/src/main.js -f E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\cJSON.h -o E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\cJsonOut -t E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\ohosTest\ets\test -i E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\types\libentry\index.d.ts -g true
 ```
 
 2.3运行成功后命令行会打印出 Generate success；
 
-并在./entry/src/main/cpp/cJsonOut目录下会生成方法的cpp文件: 分别是cjsonnapi.h（cJSON.h中接口对应的napi接口声明），cjsoninit.cpp（所有napi接口的init，用来初始化模块），cjsoncommon.h、cjsoncommon.cpp（公共方法的声明和实现，如获取错误信息方法）和cJSON.h中接口对应的cpp文件：每个cJSON.h中的接口对应一个cpp文件，该文件中为框架生成的cJSON接口的napi框架代码，如：cjsoncreateobject.cpp, cjsonparse.cpp 等等。在./entry/src/main/cpp/types/libentry/index.d.ts文件中会追加写入生成的ts接口；在./entrysrc/ohosTest/ets/test/Ability.test.ets生成接口测试代码模板。
+并在./entry/src/main/cpp/cJsonOut目录下会生成方法的cpp文件: 分别是cjsonnapi.h（cJSON.h中接口对应的napi接口声明），cjsoninit.cpp（所有napi接口的init，用来初始化模块），cjsoncommon.h、cjsoncommon.cpp（公共方法的声明和实现，如获取错误信息方法）和cJSON.h中接口对应的cpp文件：每个cJSON.h中的接口对应一个cpp文件，该文件中为框架生成的cJSON接口的napi框架代码，如：cjsoncreateobject.cpp, cjsonparse.cpp 等等。在./entry/src/main/cpp/types/libentry/index.d.ts文件中会追加写入生成的ts接口；在./entrysrc/ohosTest/ets/test/cJSONAbility.test.ets生成接口测试代码模板。
 
 #### 3.确认生成代码是否能正确编译
 
@@ -138,7 +138,7 @@ node ./tool/commandLine/src/main.js -f E:\napi_generator_aboutTest\napi_240329\n
 export const KH418_cJSON_Parse: (value: string) => cJSON;
 ```
 
-3.5在cJsonSampleTest/entry/src/ohosTest/ets/test目录下新建CjsonTest/CjsonTest.test.ets测试集，用于测试cJSON的接口，导入模块后将napitutorials/entry/src/ohosTest/ets/test/abilitytest.test.ets中的KH418_cJSON_Parse方法的测试用例拷贝至CjsonTest.test.ets中；
+3.5在cJsonSampleTest/entry/src/ohosTest/ets/test目录下新建CjsonTest/CjsonTest.test.ets测试集，用于测试cJSON的接口，导入模块后将napitutorials/entry/src/ohosTest/ets/test/cJSONAbilitytest.test.ets中的KH418_cJSON_Parse方法的测试用例拷贝至CjsonTest.test.ets中；
 
 导入模块：
 

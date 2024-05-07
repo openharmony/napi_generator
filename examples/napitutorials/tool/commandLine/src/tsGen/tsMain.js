@@ -530,17 +530,81 @@ async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath, isGe
     console.info('Generate success')
 }
 
+function checkPathType(path) {
+  try {
+    const stats = fs.statSync(path);
+    if (stats.isDirectory()) {
+      console.log(`${path} 是一个文件夹`);
+      return "directory"
+    } else if (stats.isFile()) {
+      console.log(`${path} 是一个文件`);
+      return "file"
+    } else {
+      console.log(`${path} 不是有效的路径`);
+      return "badpath"
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function checkFileIsNull(filePath) {
+  if (fs.existsSync(filePath)) {
+    try {
+      const fileContent = fs.readFileSync(filePath, 'utf-8');
+      if (fileContent.trim() === '') {
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error(`读取文件 ${filePath} 失败: ${err}`);
+    }
+  } 
+  return false;
+}
+
+function genTestTemplete(filePath, content) {
+  try {
+    fs.writeFileSync(filePath, content);
+  } catch (err) {
+    console.error(`创建文件 ${filePath} 失败: ${err}`);
+  }
+}
+
+
 function generateAbilityTest(funcJson, rootInfo, parseResult, testFilePath, hFileName) {
-  let abilityTestTempletePath = funcJson.directFunction.testTempleteDetails;
+  let index = hFileName.indexOf('.h')
+  let hFileNameReplace = hFileName.substring(0, index)
+  // 第一次生成时应生成框架
+  let abilityTestFirstGenTempletePath = funcJson.directFunction.testTempleteDetails.abilityTestFirstGenTemplete;
+  let abilityTestFirstGenAbsPath = path.join(__dirname, abilityTestFirstGenTempletePath);
+  let abilityTestFirstGenTemplete = readFile(abilityTestFirstGenAbsPath);
+  abilityTestFirstGenTemplete = replaceAll(abilityTestFirstGenTemplete, '[abilitytest_name_replace]', hFileNameReplace)
+
+  // 判断testFilePath是文件还是文件夹，若是文件夹则生成文件，同时第一次写入内容
+  let realTestFilePath = testFilePath
+  let isDir = checkPathType(realTestFilePath)
+  if (isDir === 'directory') {
+    realTestFilePath = path.join(testFilePath, hFileNameReplace + 'Ability.test.ets');
+    genTestTemplete(realTestFilePath, abilityTestFirstGenTemplete)
+  } else if (isDir === 'file') {
+    if (checkFileIsNull(realTestFilePath)) {
+      genTestTemplete(realTestFilePath, abilityTestFirstGenTemplete)
+    } 
+  }
+
+  // 不是第一次生成则追加写入
+  let abilityTestTempletePath = funcJson.directFunction.testTempleteDetails.abilityTestTemplete;
   let abilityTestTempleteAbsPath = path.join(__dirname, abilityTestTempletePath);
   let abilityTestTemplete = readFile(abilityTestTempleteAbsPath);
+  
   let genTestResult = '';
   // 生成测试用例  同时生成多个测试用例
   for (let i = 0; i < rootInfo.functions.length; i++) {
     genTestResult += generateFuncTestCase(parseResult, i, rootInfo.functions[i].genName, abilityTestTemplete, hFileName);
   }
   const importContent = "import testNapi from 'libentry.so';";
-  writeTestFile(testFilePath, importContent, genTestResult);
+  writeTestFile(realTestFilePath, importContent, genTestResult);
 }
 
 function generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult, isGenInitFunc) {
