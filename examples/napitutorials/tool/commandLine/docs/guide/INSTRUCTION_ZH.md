@@ -1,27 +1,61 @@
 # Native生成工具使用说明
-## 简介
 
-Native生成工具支持两种入口，分别是命令行、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。            
+## 准备
 
-## 工具介绍
+### 依赖
 
-通过Native生成工具，使用者可以将已有的.h接口文件生成.d.ts文件，并生成napi框架代码和接口测试代码。
+系统：建议Windows 10
 
-## 使用方法
+开发工具：DevEco Studio
+
+## 创建工程
+
+1.打开 DevEco Studio：
+
+选择Create Project -> Application -> Native C++ ，然后点击Next，将Project name修改为cJsonSampleTest，点击Finish，则工程创建成功。
+
+## 导入三方库
+
+将待转换的三方库导入工程中，如将cJSON三方库导入工程：
+
+1.cJSON三方库获取：[测试用三方库](https://gitee.com/openharmony/napi_generator/releases/tag/测试用资源)  选择cJSON.zip下载
+
+2.将三方库导入工程：将cJSON.zip解压，解压后可以拷贝内容进  cJsonSampleTest\entry\src\main\cpp\thirdparty 和 cJsonSampleTest\entry\libs 下
+
+3.将libcjson加入编译：在CMakeLists.txt中加入libcjson路径
+
+```
+set(CJSON_LIB_PATH ${NATIVERENDER_ROOT_PATH}/../../../libs/${OHOS_ARCH})
+```
+
+在target_link_libraries中加入libcjson.so:
+
+```
+${CJSON_LIB_PATH}/libcjson.so
+```
+
+4.修改编译选项：在cJsonSampleTest/entry/build-profile.json5文件中buildOption中增加abiFilters字段
+
+```
+"abiFilters": [
+        "arm64-v8a",
+        "armeabi-v7a"
+      ]
+```
+
+## 使用nativetool生成框架
 
 ### 命令行使用方法
 
-#### node脚本使用方法
-
-**1 生成header_parser程序**
+#### 1.生成header_parser程序
 
 1.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 /usr/local/lib/python3.8/dist-packages/CppHeaderParser)目录下的全部文件
 
-[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
+[下载链接1](https://gitee.com/link?target=http%3A%2F%2Fftpkaihongdigi.i234.me%3A5000%2Fsharing%2FkBG1c7CvT)
 
-[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
+[下载链接2](https://gitee.com/link?target=http%3A%2F%2Fftp.kaihong.com%3A5000%2Fsharing%2FkBG1c7CvT)
 
-[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
+[下载链接3](https://gitee.com/link?target=http%3A%2F%2Fftp.kaihongdigi.com%3A5000%2Fsharing%2FkBG1c7CvT)
 
 1.2 修改py脚本（防止循环引用报错）
 
@@ -34,19 +68,21 @@ return
 
 1.3 安装 pyinstaller
 
-	pip install pyinstaller
+```
+pip install pyinstaller
+```
 
-1.4 将python脚本打包成独立可执行文件
-进入 napi_generator/examples/napitutorials/tool/commandLine/src/tsGen 目录后执行如下命令：
+1.4 将python脚本打包成独立可执行文件 进入 napi_generator/examples/napitutorials/tool/commandLine/src/tsGen 目录后执行如下命令：
 
-	pyinstaller -F header_parser.py
+```
+pyinstaller -F header_parser.py
+```
 
-打包后的可执行文件在dist目录中
-./src/tsGen/dist/header_parser.exe
+打包后的可执行文件在dist目录中 ./src/tsGen/dist/header_parser.exe
 
-**2 运行node脚本**
+#### 2.运行node脚本
 
-2.1打开napitutorials工程，将待转换的.h文件放入该工程目录下任意位置，例如：将test.h文件放入./entry/src/main/cpp目录下。
+2.1打开 DevEco Studio，打开[napitutorials](https://gitee.com/openharmony/napi_generator/tree/master/examples/napitutorials)工程(napi_generator/examples/napitutorials)，将待转换的.h文件放入该工程目录下任意位置，例如：将cJSON.h文件放入./entry/src/main/cpp目录下。
 
 2.2在命令行使用 以下命令运行脚本
 
@@ -72,32 +108,626 @@ index.d.ts文件路径；
 
 例如：
 
-```
-node ./tool/commandLine/src/main.js -f E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\test.h
-```
-
-2.3运行成功后命令行会打印出 Generate success，并在./entry/src/main/cpp会生成test.cpp文件，其中是接口napi层模板；在./entry/src/main/cpp/types/libentry/index.d.ts文件中会追加写入生成的ts接口；在./entrysrc/ohosTest/ets/test/Ability.test.ets生成接口测试代码模板。用户根据自身需求在test.cpp中增加业务代码，并在Ability.test.ets中增加合适断言之后，即可连接开发板并运行测试用例测试验证生成napi代码是否正确。例如：
-
-在生成的test.cpp模板中 // Todo下增加一行：
+在napitutorials/entry/src/main/cpp目录下创建新文件夹cJsonOut
 
 ```
-res = value0 + value1;
+node ./tool/commandLine/src/main.js -f E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\cJSON.h -o E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\cJsonOut -t E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\ohosTest\ets\test\Ability.test.ets -i E:\napi_generator_aboutTest\napi_240329\napi_generator\examples\napitutorials\entry\src\main\cpp\types\libentry\index.d.ts -g true
 ```
 
-在Ability.test.ets文件中增加断言：
+2.3运行成功后命令行会打印出 Generate success；
+
+并在./entry/src/main/cpp/cJsonOut目录下会生成方法的cpp文件: 分别是cjsonnapi.h（cJSON.h中接口对应的napi接口声明），cjsoninit.cpp（所有napi接口的init，用来初始化模块），cjsoncommon.h、cjsoncommon.cpp（公共方法的声明和实现，如获取错误信息方法）和cJSON.h中接口对应的cpp文件：每个cJSON.h中的接口对应一个cpp文件，该文件中为框架生成的cJSON接口的napi框架代码，如：cjsoncreateobject.cpp, cjsonparse.cpp 等等。在./entry/src/main/cpp/types/libentry/index.d.ts文件中会追加写入生成的ts接口；在./entrysrc/ohosTest/ets/test/Ability.test.ets生成接口测试代码模板。
+
+#### 3.确认生成代码是否能正确编译
+
+以cJson_Parse接口为例：
+
+3.1将cJsonOut（napitutorials\entry\src\main\cpp\cJsonOut）拷贝至 cJsonSampleTest\entry\src\main\cpp目录下
+
+3.2将生成的cpp文件加入CMakeLists.txt编译, 将cjsonparse.cpp, cjsoncommon.cpp加入 cJsonSampleTest\entry\src\main\cpp\CMakeLists.txt中编译;
+
+3.3将cjsoninit.cpp中的KH418_cJSON_Parse方法的Init语句拷贝至cJsonSampleTest工程目录（cJsonSampleTest/entry/src/main/cpp）下的hello.cpp中的Init函数中；
 
 ```
-expect(result).assertEqual(2+3)
+{"KH418_cJSON_Parse", nullptr, KH418_cJSON_Parse, nullptr, nullptr, nullptr, napi_default, nullptr},
 ```
 
-连接开发板，运行Ability.test.ets中的测试用例：
+3.4查看index.d.ts（napitutorials/entry/src/main/cpp/types/libentry/index.d.ts）中是否有KH418_cJSON_Parse方法的ts声明，并将其拷贝至 cJsonSampleTest/entry/src/main/cpp/types/libentry/index.d.ts中；
 
-![img](../../../figures/DevEco_env_run_Abilitytest.png)
+```
+export const KH418_cJSON_Parse: (value: string) => cJSON;
+```
 
-![img](../../../figures/DevEco_env_Abilitytest_success.png)
+3.5在cJsonSampleTest/entry/src/ohosTest/ets/test目录下新建CjsonTest/CjsonTest.test.ets测试集，用于测试cJSON的接口，导入模块后将napitutorials/entry/src/ohosTest/ets/test/abilitytest.test.ets中的KH418_cJSON_Parse方法的测试用例拷贝至CjsonTest.test.ets中；
 
-### IntelliJ插件使用方法
+导入模块：
 
-具体的插件使用步骤，可以左键单击以下链接了解：
+```
+import testNapi from 'libentry.so';
+```
 
-[IntelliJ插件使用说明](https://gitee.com/openharmony/napi_generator/tree/master/examples/napitutorials/tool/plugin/docs/guide/INSTRUCTION_ZH.md)
+KH418_cJSON_Parse方法的测试用例：
+
+```
+    it('KH418_cJSON_Parse', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it KH418_cJSON_Parse begin');
+
+      let value = "WBA9piFK28"
+      let result: testNapi.cJSON = testNapi.KH418_cJSON_Parse(value)
+      hilog.info(0x0000, "testTag", "Test NAPI KH418_cJSON_Parse: ", result);
+      console.info("KH418_cJSON_Parse result: " + JSON.stringify(result))
+      // Defines a variety of assertion methods, which are used to declare expected boolean conditions.
+      // e.g. expect(result).assertEqual(2+3)
+    })
+```
+
+3.6运行CjsonTest.test.ets中KH418_cJSON_Parse方法的测试用例，用例成功运行，并打印出result，则生成代码成功；
+
+## 增加业务代码
+
+以cjson_parse接口为例
+
+1.在cjsonparse.cpp（cJsonSampleTest\entry\src\main\cpp\cJsonOut）代码中
+
+```
+// Todo: add business logic. 在这前后代码为框架所生成
+```
+
+处加入业务代码:
+
+1.1将字符串转换为cJSON对象，调用cJSON_Parse方法；
+
+```
+    cJSON *json = cJSON_Parse(valueIn);
+    if (json == nullptr) {
+        return nullptr;
+    }
+    cJSON *jsonChild = nullptr;
+    if (json != nullptr) {
+        jsonChild = json->child;
+    }
+    cJSON *jsonNext = nullptr;
+    if (jsonChild != nullptr) {
+        jsonNext = jsonChild->next;
+    }
+    delete[] valueIn;
+```
+
+1.2将native层转换成功的json对象对应转换为js层的对象：向框架生成的cJSON_ParseOut空对象中一一塞入json对象数据并返回js层。
+
+增加业务代码之后的cjsonparse.cpp如下所示：
+
+```
+#include "cjsonnapi.h"
+
+napi_value getCjsonChildOut2(napi_env env, napi_value childOut, cJSON *jsonChild) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    const char *tag = "[KH418_CJSON_Parse]";
+    napi_value childTypeOut;
+    status = napi_create_int32(env, jsonChild->type, &childTypeOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_int32 jsonChild->type", tag);
+        return nullptr;
+    }
+    status = napi_set_named_property(env, childOut, "type", childTypeOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property jsonChild->type", tag);
+        return nullptr;
+    }
+    napi_value childValueintOut;
+    status = napi_create_int32(env, jsonChild->valueint, &childValueintOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_int32 jsonChild->valueint", tag);
+        return nullptr;
+    }
+    status = napi_set_named_property(env, childOut, "valueint", childValueintOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property jsonChild->valueint", tag);
+        return nullptr;
+    }
+    napi_value childValuedoubleOut;
+    status = napi_create_double(env, jsonChild->valuedouble, &childValuedoubleOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_double jsonChild->valuedouble", tag);
+        return nullptr;
+    }
+    status = napi_set_named_property(env, childOut, "valuedouble", childValuedoubleOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property jsonChild->valuedouble", tag);
+        return nullptr;
+    }
+    return childOut;
+}
+
+napi_value getCjsonChildOut(napi_env env, napi_value childOut, cJSON *jsonChild) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    const char *tag = "[KH418_CJSON_Parse]";
+    // 将数据塞入child
+    if (jsonChild != nullptr) {
+        napi_value childValuestringOut;
+        status = napi_create_string_utf8(env, jsonChild->valuestring == nullptr ? "" : jsonChild->valuestring,
+                                         NAPI_AUTO_LENGTH, &childValuestringOut);
+        if (status != napi_ok) {
+            getErrMessage(status, env, extended_error_info, "napi_create_string_utf8 jsonChild->valuestring", tag);
+            return nullptr;
+        }
+        status = napi_set_named_property(env, childOut, "valuestring", childValuestringOut);
+        if (status != napi_ok) {
+            getErrMessage(status, env, extended_error_info, "napi_set_named_property jsonChild->valuestring", tag);
+            return nullptr;
+        }
+        napi_value childStringOut;
+        status = napi_create_string_utf8(env, jsonChild->string == nullptr ? "" : jsonChild->string, NAPI_AUTO_LENGTH,
+                                         &childStringOut);
+        if (status != napi_ok) {
+            getErrMessage(status, env, extended_error_info, "napi_create_string_utf8 jsonChild->string", tag);
+            return nullptr;
+        }
+        status = napi_set_named_property(env, childOut, "string", childStringOut);
+        if (status != napi_ok) {
+            getErrMessage(status, env, extended_error_info, "napi_set_named_property jsonChild->string", tag);
+            return nullptr;
+        }
+        childOut = getCjsonChildOut2(env, childOut, jsonChild);
+    }
+    return childOut;
+}
+
+napi_value getCjsonNextOut2(napi_env env, napi_value nextOut, cJSON *jsonNext) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    const char *tag = "[KH418_CJSON_Parse]";
+    napi_value nextTypeOut;
+    status = napi_create_int32(env, jsonNext->type, &nextTypeOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_int32 jsonNext->type", tag);
+        return nullptr;
+    }
+    status = napi_set_named_property(env, nextOut, "type", nextTypeOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property jsonNext->type", tag);
+        return nullptr;
+    }
+    napi_value nextValueintOut;
+    status = napi_create_int32(env, jsonNext->valueint, &nextValueintOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_int32 jsonNext->valueint", tag);
+        return nullptr;
+    }
+    status = napi_set_named_property(env, nextOut, "valueint", nextValueintOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property jsonNext->valueint", tag);
+        return nullptr;
+    }
+    napi_value nextValuedoubleOut;
+    status = napi_create_double(env, jsonNext->valuedouble, &nextValuedoubleOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_double jsonNext->valuedouble", tag);
+        return nullptr;
+    }
+    status = napi_set_named_property(env, nextOut, "valuedouble", nextValuedoubleOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property jsonNext->valuedouble", tag);
+        return nullptr;
+    }
+    return nextOut;
+}
+
+napi_value getCjsonNextOut(napi_env env, napi_value nextOut, cJSON *jsonNext) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    const char *tag = "[KH418_CJSON_Parse]";
+    // 将数据塞入next
+    if (jsonNext != nullptr) {
+        napi_value nextValuestringOut;
+        status = napi_create_string_utf8(env, jsonNext->valuestring == nullptr ? "" : jsonNext->valuestring,
+                                         NAPI_AUTO_LENGTH, &nextValuestringOut);
+        if (status != napi_ok) {
+            getErrMessage(status, env, extended_error_info, "napi_create_string_utf8 jsonNext->valuestring", tag);
+            return nullptr;
+        }
+        status = napi_set_named_property(env, nextOut, "valuestring", nextValuestringOut);
+        if (status != napi_ok) {
+            getErrMessage(status, env, extended_error_info, "napi_set_named_property jsonNext->valuestring", tag);
+            return nullptr;
+        }
+        napi_value nextStringOut;
+        status = napi_create_string_utf8(env, jsonNext->string == nullptr ? "" : jsonNext->string, NAPI_AUTO_LENGTH,
+                                         &nextStringOut);
+        if (status != napi_ok) {
+            getErrMessage(status, env, extended_error_info, "napi_create_string_utf8 jsonNext->string", tag);
+            return nullptr;
+        }
+        status = napi_set_named_property(env, nextOut, "string", nextStringOut);
+        if (status != napi_ok) {
+            getErrMessage(status, env, extended_error_info, "napi_set_named_property jsonNext->string", tag);
+            return nullptr;
+        }
+        nextOut = getCjsonNextOut2(env, nextOut, jsonNext);
+    }
+    return nextOut;
+}
+
+napi_value getCjsonparseOut1(napi_env env, cJSON *jsonNext, napi_value cJSON_ParseOut) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    const char *tag = "[KH418_CJSON_Parse]";
+    napi_value nextOut;
+    /* [NAPI_GEN]: 返回值是对象时，需要使用napi_create_object创建一个js的对象与js代码交互
+     * env: 当前环境的句柄
+     * result: 一个napi_value的指针，该指针将被设置为新创建的js对象
+     */
+    status = napi_create_object(env, &nextOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
+        return nullptr;
+    }
+    nextOut = getCjsonNextOut(env, nextOut, jsonNext);
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+     * env: 当前环境的句柄
+     * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
+     * utf8name: 属性的名称，是一个以UTF-8编码的字符串
+     * value: 与属性名称关联的值，这个值可以是任何js类型（如一个数值、字符串、另一个对象等）
+     */
+    status = napi_set_named_property(env, cJSON_ParseOut, "next", nextOut);
+    if (status != napi_ok) {
+        /* [NAPI_GEN]: 错误处理*/
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
+        return nullptr;
+    }
+    napi_value prevOut;
+    /* [NAPI_GEN]: 返回值是对象时，需要使用napi_create_object创建一个js的对象与js代码交互
+     * env: 当前环境的句柄
+     * result: 一个napi_value的指针，该指针将被设置为新创建的js对象
+     */
+    status = napi_create_object(env, &prevOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
+        return nullptr;
+    }
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+     * env: 当前环境的句柄
+     * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
+     * utf8name: 属性的名称，是一个以UTF-8编码的字符串
+     * value: 与属性名称关联的值，这个值可以是任何js类型（如一个数值、字符串、另一个对象等）
+     */
+    status = napi_set_named_property(env, cJSON_ParseOut, "prev", prevOut);
+    if (status != napi_ok) {
+        /* [NAPI_GEN]: 错误处理*/
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
+        return nullptr;
+    }
+    return cJSON_ParseOut;
+}
+
+napi_value getCjsonparseOut2(napi_env env, cJSON *json, cJSON *jsonChild, napi_value cJSON_ParseOut) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    const char *tag = "[KH418_CJSON_Parse]";
+    napi_value childOut;
+    /* [NAPI_GEN]: 返回值是对象时，需要使用napi_create_object创建一个js的对象与js代码交互
+     * env: 当前环境的句柄
+     * result: 一个napi_value的指针，该指针将被设置为新创建的js对象
+     */
+    status = napi_create_object(env, &childOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
+        return nullptr;
+    }
+    childOut = getCjsonChildOut(env, childOut, jsonChild);
+    /* [NAPI_GEN]:
+     * 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js env:
+     * 当前环境的句柄 object: 要设置属性的js对象，该对象是由上文napi_create_object创建的 utf8name:
+     * 属性的名称，是一个以UTF-8编码的字符串 value:
+     * 与属性名称关联的值，这个值可以是任何js类型（如一个数值、字符串、另一个对象等）
+     */
+    status = napi_set_named_property(env, cJSON_ParseOut, "child", childOut);
+    if (status != napi_ok) {
+        /* [NAPI_GEN]: 错误处理*/
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
+        return nullptr;
+    }
+    napi_value typeOut;
+    /* [NAPI_GEN]: 返回值是int32_t类型时，napi_create_int32 创建一个包含32位整数(int32_t)的js数值（Number）对象
+     * env: 当前环境的句柄
+     * value: 要准换成js数值的int32_t的值,这里以传入1为例,用例新增业务代码时可根据自身需求修改
+     * result: 指向napi_value的指针，这个指针会被设置为新创建的js数值对象
+     */
+    status = napi_create_int32(env, json == nullptr ? 0 : json->type, &typeOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
+        return nullptr;
+    }
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+     * env: 当前环境的句柄
+     * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
+     * utf8name: 属性的名称，是一个以UTF-8编码的字符串
+     * value: 与属性名称关联的值，这个值可以是任何js类型（如一个数值、字符串、另一个对象等）
+     */
+    status = napi_set_named_property(env, cJSON_ParseOut, "type", typeOut);
+    if (status != napi_ok) {
+        /* [NAPI_GEN]: 错误处理*/
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
+        return nullptr;
+    }
+    return cJSON_ParseOut;
+}
+
+napi_value getCjsonparseOut3(napi_env env, cJSON *json, napi_value cJSON_ParseOut) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    const char *tag = "[KH418_CJSON_Parse]";
+    napi_value valuestringOut;
+    /* [NAPI_GEN]:
+     * 返回值是字符串时，napi_create_string_utf8用于在原生代码中创建一个新的js字符串。这个函数会根据提供的UTF-8编码的字符串创建一个等价的js字符串
+     * env: 当前环境的句柄
+     * str: 指向以null结尾的UTF-8编码的C字符串的指针，这里以valuestring举例，用户可根据需求修改
+     * length:
+     * 字符串的长度，可以是具体的字节数，或者使用特殊的值NAPI_AUTO_LENGTH来让函数自己计算长度(假定字符串以null结尾)
+     * result: 指向napi_value的指针，函数执行成功后这个指针将指向新创建的js字符串
+     */
+    status =
+        napi_create_string_utf8(env, json == nullptr ? "" : (json->valuestring == nullptr ? "" : json->valuestring),
+                                NAPI_AUTO_LENGTH, &valuestringOut);
+    if (status != napi_ok) {
+        /*错误处理*/
+        getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
+        return nullptr;
+    }
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+     * env: 当前环境的句柄
+     * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
+     * utf8name: 属性的名称，是一个以UTF-8编码的字符串
+     * value: 与属性名称关联的值，这个值可以是任何js类型（如一个数值、字符串、另一个对象等）
+     */
+    status = napi_set_named_property(env, cJSON_ParseOut, "valuestring", valuestringOut);
+    if (status != napi_ok) {
+        /* [NAPI_GEN]: 错误处理*/
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
+        return nullptr;
+    }
+    napi_value valueintOut;
+    /* [NAPI_GEN]: 返回值是int32_t类型时，napi_create_int32 创建一个包含32位整数(int32_t)的js数值（Number）对象
+     * env: 当前环境的句柄
+     * value: 要准换成js数值的int32_t的值,这里以传入1为例,用例新增业务代码时可根据自身需求修改
+     * result: 指向napi_value的指针，这个指针会被设置为新创建的js数值对象
+     */
+    status = napi_create_int32(env, json == nullptr ? 0 : json->valueint, &valueintOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
+        return nullptr;
+    }
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+     * env: 当前环境的句柄
+     * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
+     * utf8name: 属性的名称，是一个以UTF-8编码的字符串
+     * value: 与属性名称关联的值，这个值可以是任何js类型（如一个数值、字符串、另一个对象等）
+     */
+    status = napi_set_named_property(env, cJSON_ParseOut, "valueint", valueintOut);
+    if (status != napi_ok) {
+        /* [NAPI_GEN]: 错误处理*/
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
+        return nullptr;
+    }
+    return cJSON_ParseOut;
+}
+
+napi_value getCjsonparseOut4(napi_env env, cJSON *json, napi_value cJSON_ParseOut) {
+    napi_status status;
+    const napi_extended_error_info *extended_error_info;
+    const char *tag = "[KH418_CJSON_Parse]";
+    napi_value valuedoubleOut;
+    /* [NAPI_GEN]: 返回值是double类型时，napi_create_double 创建一个包含双精度浮点数的js数值（Number）对象
+     * env: 当前环境的句柄
+     * value: 要传递给js的双精度浮点数值,这里以传入1.0为例，用例新增业务代码时可根据自身需求修改
+     * result: 指向napi_value的指针，这个指针会被设置为新创建的js数值对象
+     */
+    status = napi_create_double(env, json == nullptr ? 0 : json->valuedouble, &valuedoubleOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_double", tag);
+        return nullptr;
+    }
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+     * env: 当前环境的句柄
+     * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
+     * utf8name: 属性的名称，是一个以UTF-8编码的字符串
+     * value: 与属性名称关联的值，这个值可以是任何js类型（如一个数值、字符串、另一个对象等）
+     */
+    status = napi_set_named_property(env, cJSON_ParseOut, "valuedouble", valuedoubleOut);
+    if (status != napi_ok) {
+        /* [NAPI_GEN]: 错误处理*/
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
+        return nullptr;
+    }
+    napi_value stringOut;
+    /* [NAPI_GEN]:
+     * 返回值是字符串时，napi_create_string_utf8用于在原生代码中创建一个新的js字符串。这个函数会根据提供的UTF-8编码的字符串创建一个等价的js字符串
+     * env: 当前环境的句柄
+     * str: 指向以null结尾的UTF-8编码的C字符串的指针，这里以string举例，用户可根据需求修改
+     * length:
+     * 字符串的长度，可以是具体的字节数，或者使用特殊的值NAPI_AUTO_LENGTH来让函数自己计算长度(假定字符串以null结尾)
+     * result: 指向napi_value的指针，函数执行成功后这个指针将指向新创建的js字符串
+     */
+    status = napi_create_string_utf8(env, json == nullptr ? "" : (json->string == nullptr ? "" : json->string),
+                                     NAPI_AUTO_LENGTH, &stringOut);
+    if (status != napi_ok) {
+        /*错误处理*/
+        getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
+        return nullptr;
+    }
+    /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
+     * env: 当前环境的句柄
+     * object: 要设置属性的js对象，该对象是由上文napi_create_object创建的
+     * utf8name: 属性的名称，是一个以UTF-8编码的字符串
+     * value: 与属性名称关联的值，这个值可以是任何js类型（如一个数值、字符串、另一个对象等）
+     */
+    status = napi_set_named_property(env, cJSON_ParseOut, "string", stringOut);
+    if (status != napi_ok) {
+        /* [NAPI_GEN]: 错误处理*/
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
+        return nullptr;
+    }
+    return cJSON_ParseOut;
+}
+
+/* [NAPI_GEN]:对应cJSON.h中：cJSON_Parse的napi方法，
+ * 输入：value: const char *; 
+ * 输出：cJSON *
+ */ 
+napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
+{
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse begins");
+    napi_status status;
+    /* [NAPI_GEN]: Node.js在其N-API中用来提供错误的扩展信息的结构体,结构体包含以下字段
+     * error_message: 一个指向错误详细字符串的指针，提供了关于错误的文本描述
+     * engin_reserved: 一个保留给Js引擎使用的指针
+     * error_code: 错误码，指示了错误的种类，比如napi_pending_exception表示有一个JavaScript异常未被清理。
+     * engine_error_code：一个引擎特定的错误码，为引擎实现保留，具体含义依赖于使用的JavaScript引擎。
+     * error_message_len：错误消息字符串的长度。
+     */
+    const napi_extended_error_info *extended_error_info;
+    /* [NAPI_GEN]: tag: 日志打印标签*/
+    const char *tag = "[KH418_CJSON_Parse]";
+    /* [NAPI_GEN]: get function param in*/
+    /* [NAPI_GEN]: argc：js传入的参数个数 */
+    size_t argc = PARAMS1;
+    /* [NAPI_GEN]: args: 一个数组,保存js传入的参数 */
+    napi_value args[PARAMS1] = {nullptr};
+    /* [NAPI_GEN]: napi_get_cb_info用于获取JS调用该函数时所传递的参数、接收参数的个数以及'this'的值
+     * env: 当前环境的句柄，代表当前的Node.js环境
+     * info: 回调信息句柄，代表当前回调的上下文
+     * argc: 指向size_t的指针，最初应包含可接受的最大参数数量，函数返回时，它将包含实际传递的参数数量
+     * args: 一个足够大的数组，用于接收传递给回调函数的所有js参数。数组的大小应至少与argc传入的值一样大。
+     * this_arg: 如果不是NULL,则返回js回调中this的值
+     * data: 如果不是NULL,则返回与回调函数关联的任何可选数据。通常用于传递在创建函数时指定的静态数据
+     */
+    status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+    if(status != napi_ok) {
+        /* [NAPI_GEN]: 错误处理*/
+        getErrMessage(status, env,extended_error_info, "napi_get_cb_info", tag);
+        return nullptr;
+    }
+    /* [NAPI_GEN]: 从args数组中获取入参 */
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse get param info begins");
+    napi_valuetype valuetypevalue;
+    /* [NAPI_GEN]: 获取入参类型，第PARAMS0个入参
+     * env: N-API环境的句柄，表示当前的上下文
+     * value: 要检查类型的js值
+     * result: 是一个指针，指向napi_valuetype枚举的值，函数会将结果存储在这里
+     */
+    status = napi_typeof(env, args[PARAMS0], &valuetypevalue);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_typeof", tag);
+        return nullptr;
+    }
+    size_t strSizePARAMS0 = 0;
+    /* [NAPI_GEN]: napi_get_value_string_utf8用于将Js字符串转换为UTF-8编码的C字符串
+     * env: N-API环境的句柄，表示当前的上下文
+     * value: 要转换的JavaScript字符串
+     * buf: 用于存储结果的字符数组的指针
+     * bufsize: 缓冲区大小，以字节为单位
+     * result: 转换后的字符串的字节长度(不包括空终止符)。若干buf是NULL,则返回所需的缓冲区大小(包括空终止符)
+     */
+    /* [NAPI_GEN]: buf参数是NULL时，用于获取所需缓冲区大小*/
+    status = napi_get_value_string_utf8(env, args[PARAMS0], NULL, 0, &strSizePARAMS0);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "get value string", tag);
+        return nullptr;
+    }
+    char *valueIn = new char[strSizePARAMS0 + 1];
+    /* [NAPI_GEN]: 用于获取字符串*/
+    status = napi_get_value_string_utf8(env, args[PARAMS0], valueIn, strSizePARAMS0 + 1, &strSizePARAMS0);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "get value string", tag);
+        delete[] valueIn;
+        return nullptr;
+    }
+    // delete[] valueIn;  // remember to delete memory 
+
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse get param info ends");
+    
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse get return info begins");
+    // Todo: add business logic. 在这前后代码为框架所生成
+    cJSON *json = cJSON_Parse(valueIn);
+    if (json == nullptr) {
+        return nullptr;
+    }
+    cJSON *jsonChild = nullptr;
+    if (json != nullptr) {
+        jsonChild = json->child;
+    }
+    cJSON *jsonNext = nullptr;
+    if (jsonChild != nullptr) {
+        jsonNext = jsonChild->next;
+    }
+    delete[] valueIn;
+
+    /* [NAPI_GEN]: function return value*/ 
+    napi_value cJSON_ParseOut;
+    /* [NAPI_GEN]: 返回值是对象时，需要使用napi_create_object创建一个js的对象与js代码交互
+     * env: 当前环境的句柄
+     * result: 一个napi_value的指针，该指针将被设置为新创建的js对象
+     */
+    status = napi_create_object(env, &cJSON_ParseOut);
+    if (status != napi_ok) {
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
+        return nullptr;
+    }
+    cJSON_ParseOut = getCjsonparseOut1(env, jsonNext, cJSON_ParseOut);
+    cJSON_ParseOut = getCjsonparseOut2(env, json, jsonChild, cJSON_ParseOut);
+    cJSON_ParseOut = getCjsonparseOut3(env, json, cJSON_ParseOut);
+    cJSON_ParseOut = getCjsonparseOut4(env, json, cJSON_ParseOut);
+
+    cJSON_Delete(json);
+
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse get return info ends");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse ends");
+    return cJSON_ParseOut;
+
+}
+
+```
+
+## 测试调用
+
+以cjson_parse接口为例
+
+1.在cJsonSampleTest/entry/src/ohosTest/ets/test/CjsonTest/CjsonTest.test.ets测试集中修改KH418_cJSON_Parse方法的测试用例
+
+```
+    it('KH418_cJSON_Parse', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it KH418_cJSON_Parse begin');
+      // 测试字符串的转换
+      let value = '"helloworld"'
+      let result: testNapi.cJSON = testNapi.KH418_cJSON_Parse(value);
+      // 测试数字的转换
+      let value2 = '1.8'
+      let result2: testNapi.cJSON = testNapi.KH418_cJSON_Parse(value2);
+      // 测试数组的转换
+      let value3 = '["a","b"]'
+      let result3: testNapi.cJSON = testNapi.KH418_cJSON_Parse(value3);
+      // 测试对象的转换
+      let value4 = '{"name":"JohnDoe","age":18}'
+      let result4: testNapi.cJSON = testNapi.KH418_cJSON_Parse(value4);
+      
+      // 打印结果
+      console.info("Test NAPI KH418_cJSON_Parse result1: ", JSON.stringify(result))
+      console.info("Test NAPI KH418_cJSON_Parse result2: ", JSON.stringify(result2))
+      console.info("Test NAPI KH418_cJSON_Parse result3: ", JSON.stringify(result3))
+      console.info("Test NAPI KH418_cJSON_Parse result4: ", JSON.stringify(result4))
+    })
+```
+
+2.运行 KH418_cJSON_Parse， 最终打印结果如下：
+
+```
+I  Test NAPI KH418_cJSON_Parse result1:  {"next":{},"prev":{},"child":{},"type":16,"valuestring":"helloworld","valueint":0,"valuedouble":0,"string":""}
+I  Test NAPI KH418_cJSON_Parse result2:  {"next":{},"prev":{},"child":{},"type":8,"valuestring":"","valueint":1,"valuedouble":1.8,"string":""}
+I  Test NAPI KH418_cJSON_Parse result3:  {"next":{"valuestring":"b","string":"","type":16,"valueint":0,"valuedouble":0},"prev":{},"child":{"valuestring":"a","string":"","type":16,"valueint":0,"valuedouble":0},"type":32,"valuestring":"","valueint":0,"valuedouble":0,"string":""}
+I  Test NAPI KH418_cJSON_Parse result4:  {"next":{"valuestring":"","string":"age","type":8,"valueint":18,"valuedouble":18},"prev":{},"child":{"valuestring":"JohnDoe","string":"name","type":16,"valueint":0,"valuedouble":0},"type":64,"valuestring":"","valueint":0,"valuedouble":0,"string":""}
+```
+
