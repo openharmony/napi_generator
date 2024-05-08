@@ -61,25 +61,33 @@ ${CJSON_LIB_PATH}/libcjson.so
 
 ## 使用nativetool生成框架
 
-### 命令行使用方法
+### 准备
 
-#### **1.安装typescript及stdio**
+#### **1.下载源码**
 
-1.1 安装typescript：在napi_generator/examples/napitutorials/tool/commandLine目录下执行命令：
+下载[napi_generator](https://gitee.com/openharmony/napi_generator) 源码，使用DevEco Studio打开 napitutorials 工程(napi_generator/examples/napitutorials)
+
+```
+git clone git@gitee.com:openharmony/napi_generator.git
+```
+
+#### **2.安装typescript及stdio**
+
+2.1 安装typescript：在napi_generator/examples/napitutorials/tool/commandLine目录下执行命令：
 
 ```
 npm i typescript
 ```
 
-1.2 安装stdio：在napi_generator/examples/napitutorials/tool/commandLine目录下执行命令：
+2.2 安装stdio：在napi_generator/examples/napitutorials/tool/commandLine目录下执行命令：
 
 ```
 npm i stdio
 ```
 
-#### 2.生成header_parser程序
+#### 3.生成header_parser程序
 
-2.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 Python/Lib/site-packages/CppHeaderParser)目录下的全部文件(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接)
+3.1 安装python库 CppHeaderParser，在header_parser/src_code中下载CppHeaderParser.zip，解压后替换本地Python文件夹中CppHeaderParser(如 Python/Lib/site-packages/CppHeaderParser)目录下的全部文件(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接)
 
 ```
 pip install CppHeaderParser
@@ -91,7 +99,7 @@ pip install CppHeaderParser
 
 [下载链接3](https://gitee.com/link?target=http%3A%2F%2Fftp.kaihongdigi.com%3A5000%2Fsharing%2FkBG1c7CvT)
 
-2.2 修改py脚本（防止循环引用报错）
+3.2 修改py脚本（防止循环引用报错）
 
 修改python/Lib/json/encoder.py文件中_iterencode_dict方法，在raise ValueError("Circular reference detected")前加入下面两行代码：
 
@@ -100,13 +108,13 @@ yield '{}'
 return
 ```
 
-2.3 安装 pyinstaller
+3.3 安装 pyinstaller
 
 ```
 pip install pyinstaller
 ```
 
-2.4 将python脚本打包成独立可执行文件 进入 napi_generator/examples/napitutorials/tool/commandLine/src/tsGen 目录后使用cmd执行如下命令：
+3.4 将python脚本打包成独立可执行文件 进入 napi_generator/examples/napitutorials/tool/commandLine/src/tsGen 目录后使用cmd执行如下命令：
 
 ```
 pyinstaller -F header_parser.py
@@ -114,11 +122,13 @@ pyinstaller -F header_parser.py
 
 打包后的可执行文件在dist目录中 ./src/tsGen/dist/header_parser.exe
 
-#### 3.运行node脚本
+### 使用命令行生成框架
 
-3.1打开 DevEco Studio，打开[napitutorials](https://gitee.com/openharmony/napi_generator/tree/master/examples/napitutorials)工程(napi_generator/examples/napitutorials)，将待转换的.h文件放入该工程目录下任意位置，例如：将cJSON.h文件放入./entry/src/main/cpp目录下（cJSON.h可从导入的三方库下的include文件夹中获取）
+#### 1.运行node脚本
 
-3.2在命令行使用 以下命令运行脚本
+1.1打开 DevEco Studio，打开[napitutorials](https://gitee.com/openharmony/napi_generator/tree/master/examples/napitutorials)工程(napi_generator/examples/napitutorials)，将待转换的.h文件放入该工程目录下任意位置，例如：将cJSON.h文件放入./entry/src/main/cpp目录下（cJSON.h可从导入的三方库下的include文件夹中获取）
+
+1.2在命令行使用 以下命令运行脚本
 
 ```
 node ./tool/commandLine/src/main.js -f 接口文件路径 -o 生成路径 -t 测试文件路径 -i 声明文件路径
@@ -146,23 +156,23 @@ index.d.ts文件路径；
 node ./tool/commandLine/src/main.js -f ./entry/src/main/cpp/cJSON.h -o ./entry/src/main/cpp/cJsonOut -t ./entry/src/ohosTest/ets/test -i ./entry/src/main/cpp/types/libentry/index.d.ts -g true
 ```
 
-3.3运行成功后命令行会打印出 Generate success；
+1.3运行成功后命令行会打印出 Generate success；
 
 ![image-20240508143053083](../../../figures/DevEco_generate_success.png)
 
 并在./entry/src/main/cpp/cJsonOut目录下会生成方法的cpp文件: 分别是cjsonnapi.h（cJSON.h中接口对应的napi接口声明），cjsoninit.cpp（所有napi接口的init，用来初始化模块），cjsoncommon.h、cjsoncommon.cpp（公共方法的声明和实现，如获取错误信息方法）和cJSON.h中接口对应的cpp文件：每个cJSON.h中的接口对应一个cpp文件，该文件中为框架生成的cJSON接口的napi框架代码，如：cjsoncreateobject.cpp, cjsonparse.cpp 等等。在./entry/src/main/cpp/types/libentry/index.d.ts文件中会追加写入生成的ts接口；在./entry/src/ohosTest/ets/test/cJSONAbility.test.ets生成接口测试代码模板。
 
-#### 4.确认生成代码是否能正确编译
+#### 2.确认生成代码是否能正确编译
 
 以cJson_Parse接口为例：
 
-4.1将cJsonOut（napitutorials\entry\src\main\cpp\cJsonOut）拷贝至 cJsonSampleTest\entry\src\main\cpp目录下
+2.1将cJsonOut（napitutorials\entry\src\main\cpp\cJsonOut）拷贝至 cJsonSampleTest\entry\src\main\cpp目录下
 
-4.2将生成的cpp文件加入CMakeLists.txt编译, 将cjsonparse.cpp, cjsoncommon.cpp加入 cJsonSampleTest\entry\src\main\cpp\CMakeLists.txt中编译;
+2.2将生成的cpp文件加入CMakeLists.txt编译, 将cjsonparse.cpp, cjsoncommon.cpp加入 cJsonSampleTest\entry\src\main\cpp\CMakeLists.txt中编译;
 
 ![image-20240508101915977](../../../figures/DevEco_cmake_add_lib.png)
 
-4.3将cjsoninit.cpp中的KH418_cJSON_Parse方法的Init语句拷贝至cJsonSampleTest工程目录（cJsonSampleTest/entry/src/main/cpp）下的hello.cpp中的Init函数中；
+2.3将cjsoninit.cpp中的KH418_cJSON_Parse方法的Init语句拷贝至cJsonSampleTest工程目录（cJsonSampleTest/entry/src/main/cpp）下的hello.cpp中的Init函数中；
 
 ```
 {"KH418_cJSON_Parse", nullptr, KH418_cJSON_Parse, nullptr, nullptr, nullptr, napi_default, nullptr},
@@ -170,7 +180,7 @@ node ./tool/commandLine/src/main.js -f ./entry/src/main/cpp/cJSON.h -o ./entry/s
 
 ![image-20240508102426182](../../../figures/DevEco_add_funcInit.png)
 
-4.4查看index.d.ts（napitutorials/entry/src/main/cpp/types/libentry/index.d.ts）中是否有KH418_cJSON_Parse方法的ts声明，并将其以及方法所需的interface （如： cJSON）拷贝至 cJsonSampleTest/entry/src/main/cpp/types/libentry/index.d.ts中；
+2.4查看index.d.ts（napitutorials/entry/src/main/cpp/types/libentry/index.d.ts）中是否有KH418_cJSON_Parse方法的ts声明，并将其以及方法所需的interface （如： cJSON）拷贝至 cJsonSampleTest/entry/src/main/cpp/types/libentry/index.d.ts中；
 
 ```
 export interface cJSON {
@@ -190,7 +200,7 @@ export const KH418_cJSON_Parse: (value: string) => cJSON;
 
 ![image-20240508103333112](../../../figures/DevEco_add_dts_func.png)
 
-4.5将napitutorials/entry/src/ohosTest/ets/test/cJSONAbilitytest.test.ets拷贝到cJsonSampleTest/entry/src/ohosTest/ets/test目录下，保留其中的KH418_cJSON_Parse方法的测试用例，其余多余用例删除；
+2.5将napitutorials/entry/src/ohosTest/ets/test/cJSONAbilitytest.test.ets拷贝到cJsonSampleTest/entry/src/ohosTest/ets/test目录下，保留其中的KH418_cJSON_Parse方法的测试用例，其余多余用例删除；
 
 KH418_cJSON_Parse方法的测试用例：
 
@@ -214,7 +224,7 @@ KH418_cJSON_Parse方法的测试用例：
 
 ![image-20240508110824799](../../../figures/DevEco_add_abilitytest.png)
 
-4.6运行cJSONAbilitytest.test.ets中KH418_cJSON_Parse方法的测试用例，用例成功运行，并打印出result，则生成代码成功；
+2.6运行cJSONAbilitytest.test.ets中KH418_cJSON_Parse方法的测试用例，用例成功运行，并打印出result，则生成代码成功；
 
 打印出默认对象值：
 
