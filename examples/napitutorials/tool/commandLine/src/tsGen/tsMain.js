@@ -479,7 +479,6 @@ function sleep(ms) {
 async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath, isGenInitFunc) {
     // 预处理文件，读出文件中所有的宏，存在数组中
     let macros = await extractMacros(hFilePath)
-    console.info("macro: " + macros)
     // 将使用宏的地方置空
     let random = generateRandomInteger(MIN_RANDOM, MAX_RANDOM)
     let tempFileName = '../temp_' + random + '.h'
@@ -534,13 +533,10 @@ function checkPathType(path) {
   try {
     const stats = fs.statSync(path);
     if (stats.isDirectory()) {
-      console.log(`${path} 是一个文件夹`);
       return "directory"
     } else if (stats.isFile()) {
-      console.log(`${path} 是一个文件`);
       return "file"
     } else {
-      console.log(`${path} 不是有效的路径`);
       return "badpath"
     }
   } catch (err) {

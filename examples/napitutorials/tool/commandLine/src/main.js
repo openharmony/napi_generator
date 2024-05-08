@@ -36,50 +36,49 @@ let testFilePath = ops.testFilename
 let tsFilePath = ops.indexFilename
 let cppFilePath = ops.outCppPath
 let isGenInitFunc = ops.isGenInitFunc
+let rootPath = path.join(__dirname, '../../../');
 // 读取文件内容 判断参数是否为空
 if (filePath !== '') {
-    let fileDir = path.resolve(filePath, '..');
-    let indexFile = findIndexDTS(fileDir);
+
+    if (!isAbsolutePath(filePath)) {
+      filePath = getAbsolutePath(filePath)
+    }
+
+    if (tsFilePath && !isAbsolutePath(tsFilePath)) {
+      tsFilePath = getAbsolutePath(tsFilePath)
+    }
+
+    if (testFilePath && !isAbsolutePath(testFilePath)) {
+      testFilePath = getAbsolutePath(testFilePath)
+    }
+
+    if (cppFilePath && !isAbsolutePath(cppFilePath)) {
+      cppFilePath = getAbsolutePath(cppFilePath)
+    }
+
     // 若用户没有提供路径 则程序提供默认路径
     if (!tsFilePath) {
-        tsFilePath = indexFile
+        tsFilePath = path.join(rootPath, './entry/src/main/cpp/types/libentry/index.d.ts');
     }
     if (!testFilePath) {
-        let rootPath = path.resolve(indexFile, '..', '..', '..', '..', '..');
-        testFilePath = path.join(rootPath, 'ohosTest/ets/test');
+        testFilePath = path.join(rootPath, './entry/src/ohosTest/ets/test');
     }
     if(!cppFilePath) {
-        let rootPath = path.resolve(indexFile, '..', '..', '..');
-        cppFilePath = rootPath;
+        cppFilePath = path.join(filePath, '..');
     }
 
     main.doGenerate(filePath, testFilePath, tsFilePath, cppFilePath, isGenInitFunc);
 }
 
+function getAbsolutePath(relativePath) {
+  const absolutePath = path.resolve(rootPath, relativePath);
+  return absolutePath;
+}
 
-// 这个函数接收一个目录的绝对路径作为参数
-function findIndexDTS(currentDir) {
-    const stack = [currentDir]; // 一个栈来管理我们还要遍历的目录
-    while (stack.length > 0) {
-        const currentPath = stack.pop(); // 取得当前的路径
-        // 检查当前路径是否存在以及是否为目录
-        if (fs.existsSync(currentPath) && fs.statSync(currentPath).isDirectory()) {
-            const filesAndDirs = fs.readdirSync(currentPath);
-            // 检查当前目录下是否有 index.d.ts 文件
-            if (filesAndDirs.includes('index.d.ts')) {
-                const foundPath = path.join(currentPath, 'index.d.ts');
-                return foundPath;
-            }
-            // 将路径的所有子目录添加到栈中以便后续遍历
-            for (const item of filesAndDirs) {
-                const fullPath = path.join(currentPath, item);
-                if (fs.statSync(fullPath).isDirectory()) {
-                    stack.push(fullPath);
-                }
-            }
-        }
-    }
-    // 没有找到 index.d.ts 文件
-    console.log('index.d.ts not found in any checked directory.');
-    return null;
+function isAbsolutePath(filePath) {
+  if (path.isAbsolute(filePath)) {
+    return true;
+  } else {
+    return false;
+  }
 }
