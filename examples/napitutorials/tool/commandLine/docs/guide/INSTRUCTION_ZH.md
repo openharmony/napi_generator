@@ -164,7 +164,7 @@ node ./tool/commandLine/src/main.js -f ./entry/src/main/cpp/cJSON.h -o ./entry/s
 
 #### 2.确认生成代码是否能正确编译
 
-以cJSON_Parse接口为例：本例子生成的方法为KH418_cJSON_Parse，其中KH418中的数字为随机生成，用户使用时数字可能不是418, 而是其他三位随机数。
+以cJSON_Parse接口为例：本例子生成的方法为KH418_cJSON_Parse，其中KH418中的数字为随机生成，用户使用时数字可能不是418, 而是其它三位随机数。
 
 2.1将cJsonOut（napitutorials\entry\src\main\cpp\cJsonOut）拷贝至 cJsonSampleTest\entry\src\main\cpp目录下; 将cJSON.h拷贝至cJsonOut目录下。
 
