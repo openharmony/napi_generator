@@ -30,6 +30,8 @@
 
 ![image-20240508100502230](../../../figures/DevEco_import_libs.png)
 
+同时将arm64-v8a/lib下的所有.so文件拷贝一份至arm64-v8a下，将armeabi-v7a/lib下的所有.so文件拷贝一份至armeabi-v7a下。
+
 3.将libcjson加入编译：在CMakeLists.txt中加入libcjson路径
 
 ```
@@ -126,7 +128,7 @@ pyinstaller -F header_parser.py
 
 #### 1.运行node脚本
 
-1.1打开 DevEco Studio，打开[napitutorials](https://gitee.com/openharmony/napi_generator/tree/master/examples/napitutorials)工程(napi_generator/examples/napitutorials)，将待转换的.h文件放入该工程目录下任意位置，例如：将cJSON.h文件放入./entry/src/main/cpp目录下（cJSON.h可从导入的三方库下的include文件夹中获取）
+1.1打开 DevEco Studio，打开[napitutorials](https://gitee.com/openharmony/napi_generator/tree/master/examples/napitutorials)工程(napi_generator/examples/napitutorials)，将待转换的.h文件放入该工程目录下任意位置，例如：将cJSON.h文件放入./entry/src/main/cpp目录下（cJSON.h可从导入的三方库下的include文件夹中获取），在napitutorials/entry/src/main/cpp目录下创建新文件夹cJsonOut
 
 1.2在命令行使用 以下命令运行脚本
 
@@ -150,8 +152,6 @@ index.d.ts文件路径；
 
 例如：
 
-在napitutorials/entry/src/main/cpp目录下创建新文件夹cJsonOut
-
 ```
 node ./tool/commandLine/src/main.js -f ./entry/src/main/cpp/cJSON.h -o ./entry/src/main/cpp/cJsonOut -t ./entry/src/ohosTest/ets/test -i ./entry/src/main/cpp/types/libentry/index.d.ts -g true
 ```
@@ -164,9 +164,9 @@ node ./tool/commandLine/src/main.js -f ./entry/src/main/cpp/cJSON.h -o ./entry/s
 
 #### 2.确认生成代码是否能正确编译
 
-以cJson_Parse接口为例：
+以cJSON_Parse接口为例：本例子生成的方法为KH418_cJSON_Parse，其中KH418中的数字为随机生成，用户使用时数字可能不是418, 而是其他三位随机数。
 
-2.1将cJsonOut（napitutorials\entry\src\main\cpp\cJsonOut）拷贝至 cJsonSampleTest\entry\src\main\cpp目录下
+2.1将cJsonOut（napitutorials\entry\src\main\cpp\cJsonOut）拷贝至 cJsonSampleTest\entry\src\main\cpp目录下; 将cJSON.h拷贝至cJsonOut目录下。
 
 2.2将生成的cpp文件加入CMakeLists.txt编译, 将cjsonparse.cpp, cjsoncommon.cpp加入 cJsonSampleTest\entry\src\main\cpp\CMakeLists.txt中编译;
 
@@ -179,6 +179,12 @@ node ./tool/commandLine/src/main.js -f ./entry/src/main/cpp/cJSON.h -o ./entry/s
 ```
 
 ![image-20240508102426182](../../../figures/DevEco_add_funcInit.png)
+
+并在hello.cpp（cJsonSampleTest/entry/src/main/cpp/hello.cpp）中加入include语句：
+
+```
+#include "./cJsonOut/cjsonnapi.h"
+```
 
 2.4查看index.d.ts（napitutorials/entry/src/main/cpp/types/libentry/index.d.ts）中是否有KH418_cJSON_Parse方法的ts声明，并将其以及方法所需的interface （如： cJSON）拷贝至 cJsonSampleTest/entry/src/main/cpp/types/libentry/index.d.ts中；
 
@@ -224,7 +230,11 @@ KH418_cJSON_Parse方法的测试用例：
 
 ![image-20240508110824799](../../../figures/DevEco_add_abilitytest.png)
 
-2.6运行cJSONAbilitytest.test.ets中KH418_cJSON_Parse方法的测试用例，用例成功运行，并打印出result，则生成代码成功；
+2.6对工程签名：File->Project Structure ->Project -> Signing Configs
+
+![image-20240508111334952](../../../figures/DevEco_Sign_configs.png)
+
+运行cJSONAbilitytest.test.ets中KH418_cJSON_Parse方法的测试用例，用例成功运行，并打印出result，则生成代码成功；
 
 打印出默认对象值：
 
@@ -266,7 +276,7 @@ KH418_cJSON_Parse方法的测试用例：
 
 1.2将native层转换成功的json对象对应转换为js层的对象：向框架生成的cJSON_ParseOut空对象中一一塞入json对象数据并返回js层。
 
-增加业务代码之后的cjsonparse.cpp如下所示：
+增加业务代码之后的cjsonparse.cpp如下所示：（注意：本示例的方法名字是KH418_cJSON_Parse，用户使用时需要将KH418_cJSON_Parse方法名修改为自身的KHxxx_cJSON_Parse方法名）
 
 ```
 #include "cjsonnapi.h"
