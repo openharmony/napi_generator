@@ -52,13 +52,17 @@ ${CJSON_LIB_PATH}/libcjson.so
 
 ![image-20240508100005194](../../../figures/DevEco_add_thirdparty_lib.png)
 
-4.修改编译选项：在cJsonSampleTest/entry/build-profile.json5文件中buildOption中增加abiFilters字段
+4.修改编译选项：在cJsonSampleTest/entry/build-profile.json5文件中buildOption中增加abiFilters字段， 并将targets字段的runtimeOS改为OpenHarmony
 
 ```
 "abiFilters": [
         "arm64-v8a",
         "armeabi-v7a"
       ]
+```
+
+```
+"runtimeOS": "OpenHarmony"
 ```
 
 ![image-20240508100544906](../../../figures/DevEco_add_buildOption.png)
@@ -225,6 +229,16 @@ add_library(entry SHARED
 2.5将napitutorials/entry/src/ohosTest/ets/test/cJSONAbilitytest.test.ets拷贝到cJsonSampleTest/entry/src/ohosTest/ets/test目录下；
 
 在cJsonSampleTest/entry/src/ohosTest/ets/test/List.test.ets中导入cJSONAbilitytest.test.ets
+
+```
+import abilityTest from './Ability.test';
+import cJSONabilityTest from './cJSONAbility.test';
+
+export default function testsuite() {
+  abilityTest();
+  cJSONabilityTest();
+}
+```
 
 ![image-20240508110824799](../../../figures/DevEco_add_abilitytest.png)
 
