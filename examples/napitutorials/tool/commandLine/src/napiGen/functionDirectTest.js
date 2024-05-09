@@ -15,6 +15,7 @@
 const { NapiLog } = require("../tools/NapiLog");
 const util = require('util');
 const { generateRandomInteger } = require("../tools/tool");
+const { InterfaceList, TypeList } = require('../tools/common')
 const path = require('path')
 const fs = require("fs");
 const LENGTH = 10;
@@ -71,19 +72,28 @@ function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete
         let funcInfoParamReplace = replaceAll(funcInfoParamTemp, '[paramName]', funcInfo.params[i].name)
         funcInfoParamReplace = replaceAll(funcInfoParamReplace, '[paramType]', funcInfo.params[i].type)
         funcInfoParams += funcInfoParamReplace
-        if (getTestType(funcInfo.params[i].type) === 'int') {
+        let testType = getTestType(funcInfo.params[i].type);
+        if (testType === 'int') {
             funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomInteger(0, LENGTH))
             funcParamUse += funcInfo.params[i].name + ', '
-        } else if (getTestType(funcInfo.params[i].type) === 'float') {
+        } else if (testType === 'float') {
             funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomArbitrary(0, LENGTH, TWO_DECIMAL))
             funcParamUse += funcInfo.params[i].name + ', '
-        } else if (getTestType(funcInfo.params[i].type) === 'bool') {
+        } else if (testType === 'bool') {
             funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomBoolValue())
             funcParamUse += funcInfo.params[i].name + ', '
-        } else if (getTestType(funcInfo.params[i].type) === 'string') {
+        } else if (testType === 'string') {
             funcParamDefine += util.format('let %s = "%s"\n    ', funcInfo.params[i].name, generateRandomString(LENGTH))
             funcParamUse += funcInfo.params[i].name + ', '
-        } 
+        } else if (TypeList.getValue(testType)) {
+            let typeDefineRes = getTypeDefine(testType, funcParamDefine, funcInfo, i, funcParamUse);
+            funcParamDefine = typeDefineRes[0]
+            funcParamUse = typeDefineRes[1]
+        } else if (InterfaceList.getBody(testType)) {
+            let interfaceDefineRes =  getInterfaceDefine(testType, funcParamDefine, funcInfo, i, funcParamUse);
+            funcParamDefine = interfaceDefineRes[0]
+            funcParamUse = interfaceDefineRes[1]
+        }
     }
     // 去除调用参数的最后一个','
     let index = funcParamUse.lastIndexOf(', ');
@@ -94,7 +104,8 @@ function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete
     if (getJsType(funcInfo.retType) !== 'void') {
       callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), tsFuncName, funcParamUse)
       // 加 hilog 打印
-      hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", result);\n    ', tsFuncName)
+      hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', tsFuncName)
+      hilogContent += util.format('console.info("testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', tsFuncName)
     } else {
       callFunc = util.format('testNapi.%s(%s)\n    ', tsFuncName, funcParamUse)
     }
@@ -108,6 +119,66 @@ function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete
     funcTestContent = replaceAll(funcTestContent, '[output_introduce_replace]', funcInfo.retType)
 
     return funcTestContent
+}
+
+function getTypeDefine(testType, funcParamDefine, funcInfo, i, funcParamUse) {
+  let typeDefType = TypeList.getValue(testType);
+  // genType
+  if (typeDefType === 'number') {
+    funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomInteger(0, LENGTH));
+    funcParamUse += funcInfo.params[i].name + ', ';
+  } else if (typeDefType === 'string') {
+    funcParamDefine += util.format('let %s = "%s"\n    ', funcInfo.params[i].name, generateRandomString(LENGTH));
+    funcParamUse += funcInfo.params[i].name + ', ';
+  } else if (typeDefType === 'boolean') {
+    funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomBoolValue());
+    funcParamUse += funcInfo.params[i].name + ', ';
+  }
+  return [funcParamDefine, funcParamUse];
+}
+
+function getInterfaceDefine(testType, funcParamDefine, funcInfo, i, funcParamUse) {
+  let objValue = InterfaceList.getBody(testType);
+  let objTestData = 'let %s:testNapi.%s = { ';
+  for (let j = 0; j < objValue.length; j++) {
+    if (objValue[j].type === 'number') {
+      objTestData += util.format('%s: %s, ', objValue[j].name, generateRandomInteger(0, LENGTH));
+    } else if (objValue[j].type === 'string') {
+      objTestData += util.format('%s: "%s", ', objValue[j].name, generateRandomString(LENGTH));
+    } else if (objValue[j].type === 'boolean') {
+      objTestData += util.format('%s: %s, ', objValue[j].name, generateRandomBoolValue());
+    } else if (InterfaceList.getBody(objValue[j].type)) {
+      objTestData += util.format('%s: null, ', objValue[j].name);
+    } else if (objValue[j].type.indexOf('=>') >= 0) { // 成员方法
+      let interfaceFunc = objValue[j].type;
+      let indexFunc = interfaceFunc.indexOf('=>');
+      let interfaceFuncRet = interfaceFunc.substring(indexFunc + 2, interfaceFunc.length);
+      if (interfaceFuncRet.trim() === 'void') {
+        let interfaceFuncRetDefine = interfaceFunc.substring(0, indexFunc + 2) + '{}';
+        objTestData += util.format('%s, ', interfaceFuncRetDefine);
+      } else if (interfaceFuncRet.trim() === 'string') {
+        let interfaceFuncRetDefine = interfaceFunc.substring(0, indexFunc + 2) + '{return ""}';
+        objTestData += util.format('%s, ', interfaceFuncRetDefine);
+      } else if (interfaceFuncRet.trim() === 'boolean') {
+        let interfaceFuncRetDefine = interfaceFunc.substring(0, indexFunc + 2) + '{ return true }';
+        objTestData += util.format('%s, ', interfaceFuncRetDefine);
+      } else if (interfaceFuncRet.trim() === 'number') {
+        let interfaceFuncRetDefine = interfaceFunc.substring(0, indexFunc + 2) + '{ return 0 }';
+        objTestData += util.format('%s, ', interfaceFuncRetDefine);
+      }
+    }
+  }
+
+  // 去除调用参数的最后一个','
+  let index = objTestData.lastIndexOf(', ');
+  if (index !== -1) {
+    objTestData = objTestData.substring(0, index) + ' }\n    ';
+  } else {
+    objTestData = 'let %s:testNapi.%s = null;\n    ';
+  }
+  funcParamDefine += util.format(objTestData, funcInfo.params[i].name, testType);
+  funcParamUse += funcInfo.params[i].name + ', ';
+  return [funcParamDefine, funcParamUse];
 }
 
 function replaceAll(s, sfrom, sto) {
@@ -130,6 +201,7 @@ function getTestType(type) {
     } else if (type === 'std::string' || type.indexOf('char') >= 0) {
         return 'string'
     }
+    return type
 }
 
 function getJsType(type) {
