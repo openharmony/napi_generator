@@ -26,8 +26,6 @@ let ops = stdio.getopt({
     'indexFilename': { key: 'i', args: 1, description: "index.d.ts file", default: "" },
     // 可选参数， cpp文件路径
     'outCppPath': { key: 'o', args: 1, description: ".cpp dir path", default: "" },
-    // 可选参数，是否生成init函数
-    'isGenInitFunc': { key: 'g', args: 1, description: "generate init function or not", default: true },
 });
 
 // 获取命令行参数 .h文件路径
@@ -35,7 +33,6 @@ let filePath = ops.filename
 let testFilePath = ops.testFilename
 let tsFilePath = ops.indexFilename
 let cppFilePath = ops.outCppPath
-let isGenInitFunc = ops.isGenInitFunc
 let rootPath = path.join(__dirname, '../../../');
 // 读取文件内容 判断参数是否为空
 if (filePath !== '') {
@@ -58,16 +55,37 @@ if (filePath !== '') {
 
     // 若用户没有提供路径 则程序提供默认路径
     if (!tsFilePath) {
-        tsFilePath = path.join(rootPath, './entry/src/main/cpp/types/libentry/index.d.ts');
+        createDirectorySync(path.join(filePath, '../tsout'))
+        tsFilePath = path.join(filePath, '../tsout/index.d.ts');
     }
     if (!testFilePath) {
-        testFilePath = path.join(rootPath, './entry/src/ohosTest/ets/test');
+        testFilePath = path.join(filePath, '../testout');
+        createDirectorySync(testFilePath)
     }
     if(!cppFilePath) {
-        cppFilePath = path.join(filePath, '..');
+        // 若用户未给定cpp生成路径，则在.h路径下直接生成out路径
+        cppFilePath = path.join(filePath, '../cppout');
+        createDirectorySync(cppFilePath)
     }
 
-    main.doGenerate(filePath, testFilePath, tsFilePath, cppFilePath, isGenInitFunc);
+    main.doGenerate(filePath, testFilePath, tsFilePath, cppFilePath);
+}
+
+function createDirectorySync(directoryPath) {
+  try {
+    fs.mkdirSync(directoryPath, { recursive: true });
+  } catch (err) {
+    console.error(`无法创建文件夹 ${directoryPath}: ${err}`);
+  }
+}
+
+// 判断路径是否存在
+function isPathExsits(path) {
+  if (fs.existsSync(path)) {
+    return true
+  } else {
+    return false
+  }
 }
 
 function getAbsolutePath(relativePath) {

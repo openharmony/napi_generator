@@ -119,7 +119,7 @@ function generateDirectFunction(params, index, tsFuncName, directFuncPath, hFile
     } else {
         body_replace = replaceAll(body_replace, '[func_getParam_replace]', '')
     }
-    if (funcInfo.retType !== 'void') {
+    if (funcInfo.retType.replace('*', '').trim() !== 'void') {
         let returnType = funcInfo.retType === 'std::string' ? 'const char *' : funcInfo.retType
         returnType = returnType === 'size_t' ? 'int64_t' : returnType
         let funcReturnTempletePath = path.join(__dirname, funcRetOutPath.funcReturnTemplete);
@@ -129,7 +129,7 @@ function generateDirectFunction(params, index, tsFuncName, directFuncPath, hFile
         func_return_replace = replaceAll(func_return_replace, '[return_replace]', retGenResult)
         body_replace = replaceAll(body_replace, '[func_return_replace]', func_return_replace)
     } else {
-        body_replace = replaceAll(body_replace, '[func_return_replace]', '')
+        body_replace = replaceAll(body_replace, '[func_return_replace]', '    return NULL;\n')
     }
     body_replace = replaceAll(body_replace, '[return_replace]', retGenResult)
 
