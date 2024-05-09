@@ -93,8 +93,6 @@ npm i stdio
 
 下载 [header_parser.exe]() 可执行程序，将其拷贝到napi_generator/examples/napitutorials/tool/commandLine/src/tsGen目录下
 
-
-
 #### 使用命令行生成框架
 
 ##### 1.运行node脚本
@@ -221,8 +219,6 @@ add_library(entry SHARED
     cppout/cjsoninit.cpp
     )
 ```
-
-![image-20240508101915977](../../../figures/DevEco_cmake_add_lib.png)
 
 2.4将index.d.ts（napitutorials/entry/src/main/cpp/tsout/index.d.ts）中所有内容拷贝至 cJsonSampleTest/entry/src/main/cpp/types/libentry/index.d.ts中；
 
