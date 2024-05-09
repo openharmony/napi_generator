@@ -33,26 +33,8 @@ let filePath = ops.filename
 let testFilePath = ops.testFilename
 let tsFilePath = ops.indexFilename
 let cppFilePath = ops.outCppPath
-let rootPath = path.join(__dirname, '../../../');
 // 读取文件内容 判断参数是否为空
 if (filePath !== '') {
-
-    if (!isAbsolutePath(filePath)) {
-      filePath = getAbsolutePath(filePath)
-    }
-
-    if (tsFilePath && !isAbsolutePath(tsFilePath)) {
-      tsFilePath = getAbsolutePath(tsFilePath)
-    }
-
-    if (testFilePath && !isAbsolutePath(testFilePath)) {
-      testFilePath = getAbsolutePath(testFilePath)
-    }
-
-    if (cppFilePath && !isAbsolutePath(cppFilePath)) {
-      cppFilePath = getAbsolutePath(cppFilePath)
-    }
-
     // 若用户没有提供路径 则程序提供默认路径
     if (!tsFilePath) {
         createDirectorySync(path.join(filePath, '../tsout'))
@@ -76,27 +58,5 @@ function createDirectorySync(directoryPath) {
     fs.mkdirSync(directoryPath, { recursive: true });
   } catch (err) {
     console.error(`无法创建文件夹 ${directoryPath}: ${err}`);
-  }
-}
-
-// 判断路径是否存在
-function isPathExsits(path) {
-  if (fs.existsSync(path)) {
-    return true
-  } else {
-    return false
-  }
-}
-
-function getAbsolutePath(relativePath) {
-  const absolutePath = path.resolve(rootPath, relativePath);
-  return absolutePath;
-}
-
-function isAbsolutePath(filePath) {
-  if (path.isAbsolute(filePath)) {
-    return true;
-  } else {
-    return false;
   }
 }
