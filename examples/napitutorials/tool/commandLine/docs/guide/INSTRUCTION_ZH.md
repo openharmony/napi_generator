@@ -71,73 +71,59 @@ ${CJSON_LIB_PATH}/libcjson.so
 
 #### 准备
 
-##### **1.下载源码**
+##### 1.在本地新建文件夹nativetoolGen
 
-下载 [napi_generator](https://gitee.com/openharmony/napi_generator)  源码，使用DevEco Studio打开 napitutorials 工程(napi_generator/examples/napitutorials)
+##### **2.下载native_gen-win.exe**, header_parser.exe
 
-```
-git clone git@gitee.com:openharmony/napi_generator.git
-```
+下载 [native_gen-win.exe](https://gitee.com/openharmony/napi_generator/releases/tag/测试用资源) 可执行程序和 [header_parser.exe](https://gitee.com/openharmony/napi_generator/releases/tag/测试用资源) 可执行程序，将其拷贝到nativetoolGen目录下
 
-##### **2.安装typescript及stdio**
-
-2.1 安装typescript：在napi_generator/examples/napitutorials/tool/commandLine目录下执行命令：
-
-```
-npm i typescript
-```
-
-2.2 安装stdio：在napi_generator/examples/napitutorials/tool/commandLine目录下执行命令：
-
-```
-npm i stdio
-```
-
-##### 3.下载header_parser.exe
-
-下载 [header_parser.exe]() 可执行程序，将其拷贝到napi_generator/examples/napitutorials/tool/commandLine/src/tsGen目录下
+![image-20240508143053083](../../../figures/DevEco_Download_exe.png)
 
 #### 使用命令行生成框架
 
-##### 1.运行node脚本
+##### 1.运行可执行文件
 
-1.1打开 DevEco Studio，打开[napitutorials](https://gitee.com/openharmony/napi_generator/tree/master/examples/napitutorials)工程(napi_generator/examples/napitutorials)，将待转换的.h文件放入该工程目录下任意位置，例如：将cJSON.h文件放入./entry/src/main/cpp目录下（cJSON.h可从导入的三方库下的include文件夹中获取）
+1.1将待转换的.h文件放到nativetoolGen目录下，例如：将cJSON.h文件放入nativetoolGen目录下（cJSON.h可从导入的三方库下的include文件夹中获取）
+
+![image-20240508143053083](../../../figures/DevEco_add_hFile.png)
 
 1.2在命令行使用 以下命令运行脚本
 
 ```
-node ./tool/commandLine/src/main.js -f 接口文件路径 -o 生成路径 -t 测试文件路径 -i 声明文件路径
+native_gen-win.exe -f 接口文件路径 -o 生成路径 -t 测试文件路径 -i 声明文件路径
 ```
 
 其中，参数详情如下：
 
--f, 必选参数，待转换的.h文件；
+-f, 必选参数，待转换的.h文件；如cJSON.h。
 
--t, 可选参数，测试用例文件Ability.test.ets文件路径，默认路径为.h文件目录下testout文件夹下创建一个xxxAbility.test.ets文件路径（如：testout/cJSONAbility.test.ets）；
+-t, 可选参数，测试用例文件Ability.test.ets文件路径，默认路径为.h文件目录下testout文件夹下创建的xxxAbility.test.ets文件路径（如：testout/cJSONAbility.test.ets）。
 
--i, 可选参数，ts声明文件index.s.ts文件路径，默认路径为.h文件目录下tsout文件夹下创建index.d.ts文件路径（如：tsout/index.d.ts）
+-i, 可选参数，ts声明文件index.s.ts文件路径，默认路径为.h文件目录下tsout文件夹下创建的index.d.ts文件路径（如：tsout/index.d.ts）
 
 index.d.ts文件路径；
 
--o, 可选参数，生成的.cpp文件所在路径，默认路径为.h文件目录下cppout文件夹下；
+-o, 可选参数，生成的.cpp文件所在路径，默认路径为.h文件目录下创建的cppout文件夹路径；
 
 例如：
 
 ```
-node ./tool/commandLine/src/main.js -f ./entry/src/main/cpp/cJSON.h
+native_gen-win.exe -f cJSON.h
 ```
 
 1.3运行成功后命令行会打印出 Generate success；
 
 ![image-20240508143053083](../../../figures/DevEco_generate_success.png)
 
-并在./entry/src/main/cpp/cppout目录下会生成方法的cpp文件: 分别是cjsonnapi.h（cJSON.h中接口对应的napi接口声明），cjsoninit.cpp（所有napi接口的init，用来初始化模块），cjsoncommon.h、cjsoncommon.cpp（公共方法的声明和实现，如获取错误信息方法）和cJSON.h中接口对应的cpp文件：每个cJSON.h中的接口对应一个cpp文件，该文件中为框架生成的cJSON接口的napi框架代码，如：cjsoncreateobject.cpp, cjsonparse.cpp 等等。在./entry/src/main/cpp/tsout/index.d.ts文件中会写入生成的ts接口；在./entry/src/main/cpp/testout/cJSONAbility.test.ets生成接口测试代码模板。
+并在nativetoolGen/cppout目录下会生成方法的cpp文件: 分别是cjsonnapi.h（cJSON.h中接口对应的napi接口声明），cjsoninit.cpp（所有napi接口的init，用来初始化模块），cjsoncommon.h、cjsoncommon.cpp（公共方法的声明和实现，如获取错误信息方法）和cJSON.h中接口对应的cpp文件：每个cJSON.h中的接口对应一个cpp文件，该文件中为框架生成的cJSON接口的napi框架代码，如：cjsoncreateobject.cpp, cjsonparse.cpp 等等。在nativetoolGen/tsout/index.d.ts文件中会写入生成的ts接口；在nativetoolGen/testout/cJSONAbility.test.ets生成接口测试代码模板。
+
+![image-20240508143053083](../../../figures/DevEco_generate_success_result.png)
 
 ##### 2.确认生成代码是否能正确编译
 
-2.1将cppout（napitutorials\entry\src\main\cpp\cppout）拷贝至 cJsonSampleTest\entry\src\main\cpp目录下; 将cJSON.h拷贝至cppout目录下。
+2.1将cppout（nativetoolGen/cppout）拷贝至 cJsonSampleTest/entry/src/main/cpp目录下; 将cJSON.h拷贝至cppout目录下。
 
-2.2将生成的所有cpp文件加入CMakeLists.txt（cJsonSampleTest\entry\src\main\cpp\CMakeLists.txt）编译；
+2.2将生成的所有cpp文件加入CMakeLists.txt（cJsonSampleTest/entry/src/main/cpp/CMakeLists.txt）编译；
 
 ```
 add_library(entry SHARED
@@ -224,9 +210,9 @@ add_library(entry SHARED
     )
 ```
 
-2.4将index.d.ts（napitutorials/entry/src/main/cpp/tsout/index.d.ts）中所有内容拷贝至 cJsonSampleTest/entry/src/main/cpp/types/libentry/index.d.ts中；
+2.4将index.d.ts（nativetoolGen/tsout/index.d.ts）中所有内容拷贝至 cJsonSampleTest/entry/src/main/cpp/types/libentry/index.d.ts中；
 
-2.5将napitutorials/entry/src/ohosTest/ets/test/cJSONAbilitytest.test.ets拷贝到cJsonSampleTest/entry/src/ohosTest/ets/test目录下；
+2.5将nativetoolGen/cJSONAbilitytest.test.ets拷贝到cJsonSampleTest/entry/src/ohosTest/ets/test目录下；
 
 在cJsonSampleTest/entry/src/ohosTest/ets/test/List.test.ets中导入cJSONAbilitytest.test.ets
 
