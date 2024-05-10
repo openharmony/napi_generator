@@ -26,8 +26,6 @@ let ops = stdio.getopt({
     'indexFilename': { key: 'i', args: 1, description: "index.d.ts file", default: "" },
     // 可选参数， cpp文件路径
     'outCppPath': { key: 'o', args: 1, description: ".cpp dir path", default: "" },
-    // 可选参数，是否生成init函数
-    'isGenInitFunc': { key: 'g', args: 1, description: "generate init function or not", default: true },
 });
 
 // 获取命令行参数 .h文件路径
@@ -35,51 +33,30 @@ let filePath = ops.filename
 let testFilePath = ops.testFilename
 let tsFilePath = ops.indexFilename
 let cppFilePath = ops.outCppPath
-let isGenInitFunc = ops.isGenInitFunc
 // 读取文件内容 判断参数是否为空
 if (filePath !== '') {
-    let fileDir = path.resolve(filePath, '..');
-    let indexFile = findIndexDTS(fileDir);
     // 若用户没有提供路径 则程序提供默认路径
     if (!tsFilePath) {
-        tsFilePath = indexFile
+        createDirectorySync(path.join(filePath, '../tsout'))
+        tsFilePath = path.join(filePath, '../tsout/index.d.ts');
     }
     if (!testFilePath) {
-        let rootPath = path.resolve(indexFile, '..', '..', '..', '..', '..');
-        testFilePath = path.join(rootPath, 'ohosTest/ets/test/Ability.test.ets');
+        testFilePath = path.join(filePath, '../testout');
+        createDirectorySync(testFilePath)
     }
     if(!cppFilePath) {
-        let rootPath = path.resolve(indexFile, '..', '..', '..');
-        cppFilePath = rootPath;
+        // 若用户未给定cpp生成路径，则在.h路径下直接生成out路径
+        cppFilePath = path.join(filePath, '../cppout');
+        createDirectorySync(cppFilePath)
     }
 
-    main.doGenerate(filePath, testFilePath, tsFilePath, cppFilePath, isGenInitFunc);
+    main.doGenerate(filePath, testFilePath, tsFilePath, cppFilePath);
 }
 
-
-// 这个函数接收一个目录的绝对路径作为参数
-function findIndexDTS(currentDir) {
-    const stack = [currentDir]; // 一个栈来管理我们还要遍历的目录
-    while (stack.length > 0) {
-        const currentPath = stack.pop(); // 取得当前的路径
-        // 检查当前路径是否存在以及是否为目录
-        if (fs.existsSync(currentPath) && fs.statSync(currentPath).isDirectory()) {
-            const filesAndDirs = fs.readdirSync(currentPath);
-            // 检查当前目录下是否有 index.d.ts 文件
-            if (filesAndDirs.includes('index.d.ts')) {
-                const foundPath = path.join(currentPath, 'index.d.ts');
-                return foundPath;
-            }
-            // 将路径的所有子目录添加到栈中以便后续遍历
-            for (const item of filesAndDirs) {
-                const fullPath = path.join(currentPath, item);
-                if (fs.statSync(fullPath).isDirectory()) {
-                    stack.push(fullPath);
-                }
-            }
-        }
-    }
-    // 没有找到 index.d.ts 文件
-    console.log('index.d.ts not found in any checked directory.');
-    return null;
+function createDirectorySync(directoryPath) {
+  try {
+    fs.mkdirSync(directoryPath, { recursive: true });
+  } catch (err) {
+    console.error(`无法创建文件夹 ${directoryPath}: ${err}`);
+  }
 }

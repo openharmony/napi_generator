@@ -6,6 +6,6 @@
      */
     status = napi_create_double(env, 1.0, &[return_name_replace]Out);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_double", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_double", tag);
         return nullptr;
     }
