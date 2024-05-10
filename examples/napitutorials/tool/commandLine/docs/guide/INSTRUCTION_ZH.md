@@ -123,7 +123,7 @@ native_gen-win.exe -f cJSON.h
 
 2.1将cppout（nativetoolGen/cppout）拷贝至 cJsonSampleTest/entry/src/main/cpp目录下; 将cJSON.h拷贝至cppout目录下。
 
-2.2将生成的所有cpp文件加入CMakeLists.txt（cJsonSampleTest/entry/src/main/cpp/CMakeLists.txt）编译；其中cppout/cjsoninit.cpp为编译入口
+2.2将生成的所有cpp文件加入CMakeLists.txt（cJsonSampleTest/entry/src/main/cpp/CMakeLists.txt）编译，其中cppout/cjsoninit.cpp为编译入口；即用下列add_library替换原有的add_library
 
 ```
 add_library(entry SHARED
@@ -212,7 +212,7 @@ add_library(entry SHARED
 
 2.4将index.d.ts（nativetoolGen/tsout/index.d.ts）中所有内容拷贝至 cJsonSampleTest/entry/src/main/cpp/types/libentry/index.d.ts中；
 
-2.5将nativetoolGen/cJSONAbilitytest.test.ets拷贝到cJsonSampleTest/entry/src/ohosTest/ets/test目录下；
+2.5将nativetoolGen/testout/cJSONAbilitytest.test.ets拷贝到cJsonSampleTest/entry/src/ohosTest/ets/test目录下；
 
 在cJsonSampleTest/entry/src/ohosTest/ets/test/List.test.ets中导入cJSONAbilitytest.test.ets
 
@@ -250,7 +250,7 @@ export default function testsuite() {
 
 以cjson_parse接口为例
 
-1.在cjsonparse.cpp（cJsonSampleTest\entry\src\main\cpp\cJsonOut）代码中
+1.在cjsonparse.cpp（cJsonSampleTest\entry\src\main\cpp\cppout）代码中
 
 ```
 // Todo: add business logic. 在这前后代码为框架所生成
@@ -286,7 +286,7 @@ export default function testsuite() {
 napi_value getCjsonChildOut2(napi_env env, napi_value childOut, cJSON *jsonChild) {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
-    const char *tag = "[KH418_CJSON_Parse]";
+    const char *tag = "[KH418_cJSON_Parse]";
     napi_value childTypeOut;
     status = napi_create_int32(env, jsonChild->type, &childTypeOut);
     if (status != napi_ok) {
@@ -326,7 +326,7 @@ napi_value getCjsonChildOut2(napi_env env, napi_value childOut, cJSON *jsonChild
 napi_value getCjsonChildOut(napi_env env, napi_value childOut, cJSON *jsonChild) {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
-    const char *tag = "[KH418_CJSON_Parse]";
+    const char *tag = "[KH418_cJSON_Parse]";
     // 将数据塞入child
     if (jsonChild != nullptr) {
         napi_value childValuestringOut;
@@ -361,7 +361,7 @@ napi_value getCjsonChildOut(napi_env env, napi_value childOut, cJSON *jsonChild)
 napi_value getCjsonNextOut2(napi_env env, napi_value nextOut, cJSON *jsonNext) {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
-    const char *tag = "[KH418_CJSON_Parse]";
+    const char *tag = "[KH418_cJSON_Parse]";
     napi_value nextTypeOut;
     status = napi_create_int32(env, jsonNext->type, &nextTypeOut);
     if (status != napi_ok) {
@@ -401,7 +401,7 @@ napi_value getCjsonNextOut2(napi_env env, napi_value nextOut, cJSON *jsonNext) {
 napi_value getCjsonNextOut(napi_env env, napi_value nextOut, cJSON *jsonNext) {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
-    const char *tag = "[KH418_CJSON_Parse]";
+    const char *tag = "[KH418_cJSON_Parse]";
     // 将数据塞入next
     if (jsonNext != nullptr) {
         napi_value nextValuestringOut;
@@ -436,7 +436,7 @@ napi_value getCjsonNextOut(napi_env env, napi_value nextOut, cJSON *jsonNext) {
 napi_value getCjsonparseOut1(napi_env env, cJSON *jsonNext, napi_value cJSON_ParseOut) {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
-    const char *tag = "[KH418_CJSON_Parse]";
+    const char *tag = "[KH418_cJSON_Parse]";
     napi_value nextOut;
     /* [NAPI_GEN]: 返回值是对象时，需要使用napi_create_object创建一个js的对象与js代码交互
      * env: 当前环境的句柄
@@ -488,7 +488,7 @@ napi_value getCjsonparseOut1(napi_env env, cJSON *jsonNext, napi_value cJSON_Par
 napi_value getCjsonparseOut2(napi_env env, cJSON *json, cJSON *jsonChild, napi_value cJSON_ParseOut) {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
-    const char *tag = "[KH418_CJSON_Parse]";
+    const char *tag = "[KH418_cJSON_Parse]";
     napi_value childOut;
     /* [NAPI_GEN]: 返回值是对象时，需要使用napi_create_object创建一个js的对象与js代码交互
      * env: 当前环境的句柄
@@ -541,7 +541,7 @@ napi_value getCjsonparseOut2(napi_env env, cJSON *json, cJSON *jsonChild, napi_v
 napi_value getCjsonparseOut3(napi_env env, cJSON *json, napi_value cJSON_ParseOut) {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
-    const char *tag = "[KH418_CJSON_Parse]";
+    const char *tag = "[KH418_cJSON_Parse]";
     napi_value valuestringOut;
     /* [NAPI_GEN]:
      * 返回值是字符串时，napi_create_string_utf8用于在原生代码中创建一个新的js字符串。这个函数会根据提供的UTF-8编码的字符串创建一个等价的js字符串
@@ -600,7 +600,7 @@ napi_value getCjsonparseOut3(napi_env env, cJSON *json, napi_value cJSON_ParseOu
 napi_value getCjsonparseOut4(napi_env env, cJSON *json, napi_value cJSON_ParseOut) {
     napi_status status;
     const napi_extended_error_info *extended_error_info;
-    const char *tag = "[KH418_CJSON_Parse]";
+    const char *tag = "[KH418_cJSON_Parse]";
     napi_value valuedoubleOut;
     /* [NAPI_GEN]: 返回值是double类型时，napi_create_double 创建一个包含双精度浮点数的js数值（Number）对象
      * env: 当前环境的句柄
@@ -659,9 +659,9 @@ napi_value getCjsonparseOut4(napi_env env, cJSON *json, napi_value cJSON_ParseOu
  * 输入：value: const char *; 
  * 输出：cJSON *
  */ 
-napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
+napi_value KH418_cJSON_Parse(napi_env env, napi_callback_info info)
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse begins");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_cJSON_Parse", "KH418_cJSON_Parse begins");
     napi_status status;
     /* [NAPI_GEN]: Node.js在其N-API中用来提供错误的扩展信息的结构体,结构体包含以下字段
      * error_message: 一个指向错误详细字符串的指针，提供了关于错误的文本描述
@@ -672,7 +672,7 @@ napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
      */
     const napi_extended_error_info *extended_error_info;
     /* [NAPI_GEN]: tag: 日志打印标签*/
-    const char *tag = "[KH418_CJSON_Parse]";
+    const char *tag = "[KH418_cJSON_Parse]";
     /* [NAPI_GEN]: get function param in*/
     /* [NAPI_GEN]: argc：js传入的参数个数 */
     size_t argc = PARAMS1;
@@ -693,7 +693,7 @@ napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
         return nullptr;
     }
     /* [NAPI_GEN]: 从args数组中获取入参 */
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse get param info begins");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_cJSON_Parse", "KH418_cJSON_Parse get param info begins");
     napi_valuetype valuetypevalue;
     /* [NAPI_GEN]: 获取入参类型，第PARAMS0个入参
      * env: N-API环境的句柄，表示当前的上下文
@@ -729,9 +729,9 @@ napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
     }
     // delete[] valueIn;  // remember to delete memory 
 
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse get param info ends");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_cJSON_Parse", "KH418_cJSON_Parse get param info ends");
     
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse get return info begins");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_cJSON_Parse", "KH418_cJSON_Parse get return info begins");
     // Todo: add business logic. 在这前后代码为框架所生成
     cJSON *json = cJSON_Parse(valueIn);
     if (json == nullptr) {
@@ -765,8 +765,8 @@ napi_value KH418_CJSON_Parse(napi_env env, napi_callback_info info)
 
     cJSON_Delete(json);
 
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse get return info ends");
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_CJSON_Parse", "KH418_CJSON_Parse ends");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_cJSON_Parse", "KH418_cJSON_Parse get return info ends");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH418_cJSON_Parse", "KH418_cJSON_Parse ends");
     return cJSON_ParseOut;
 
 }
