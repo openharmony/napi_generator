@@ -16,86 +16,86 @@ const { writeFile } = require("./Tool");
 const re = require("./re");
 
 let commonH = `
-#ifndef NAPI_COMMON_H
-#define NAPI_COMMON_H
+#ifndef [h_define_replace]
+#define [h_define_replace]
 
-#include <string>
-#include <stdio.h>
 #include <js_native_api.h>
 #include <js_native_api_types.h>
+#include <string>
+#include <stdio.h>
+#include <vector>
 #include "hilog/log.h"
 #include "napi/native_api.h"
-
-// 加入hilog打印声明
-#include "hilog/log.h"
-#include <bits/alltypes.h>
-#undef LOG_DOMAIN
-#undef LOG_TAG
-#define LOG_DOMAIN 0x3200
-#define LOG_TAG "[HILOG_PRINTHILOG_PRINT]"
-#define OH_LOG_LOGINFOS(type, ...) ((void)OH_LOG_Print((type), LOG_INFO, LOG_DOMAIN, LOG_TAG, __VA_ARGS__))
-#define OH_LOG_LOGERRORS(type, ...) ((void)OH_LOG_Print((type), LOG_ERROR, LOG_DOMAIN, LOG_TAG, __VA_ARGS__))
+#include "[business_include_replace]"
 
 #define GLOBAL_RESMGR (0xFFEE)
-constexpr int32_t RGB_565 = 2;
-constexpr int32_t RGBA_8888 = 3;
+const unsigned int LOG_PRINT_DOMAIN = 0xFF00;
 
-constexpr int32_t STR_MAX_SIZE = 200;
-constexpr int32_t LONG_STR_MAX_SIZE = 1024;
-constexpr int32_t ERR_OK = 0;
-constexpr int8_t NO_ERROR = 0;
-constexpr int8_t ERROR = -1;
-constexpr uint8_t PARAM0 = 0;
-constexpr uint8_t PARAM1 = 1;
-constexpr uint8_t PARAM2 = 2;
-constexpr uint8_t PARAM3 = 3;
-constexpr uint8_t PARAM4 = 4;
-constexpr uint8_t PARAM5 = 5;
-constexpr uint8_t PARAM6 = 6;
-constexpr uint8_t PARAM7 = 7;
-constexpr uint8_t PARAM8 = 8;
-constexpr uint8_t PARAM9 = 9;
-constexpr uint8_t PARAM10 = 10;
-constexpr uint8_t PARAM11 = 11;
-constexpr uint8_t PARAM12 = 12;
-constexpr uint8_t PARAM100 = 100;
+constexpr int32_t STR_MAX_SIZES = 200;
+constexpr int32_t LONG_STR_MAX_SIZES = 1024;
+constexpr uint8_t PARAMS0 = 0;
+constexpr uint8_t PARAMS1 = 1;
+constexpr uint8_t PARAMS2 = 2;
+constexpr uint8_t PARAMS3 = 3;
+constexpr uint8_t PARAMS4 = 4;
+constexpr uint8_t PARAMS5 = 5;
+constexpr uint8_t PARAMS6 = 6;
+constexpr uint8_t PARAMS7 = 7;
+constexpr uint8_t PARAMS8 = 8;
+constexpr uint8_t PARAMS9 = 9;
+constexpr uint8_t PARAMS10 = 10;
+constexpr uint8_t PARAMS11 = 11;
+constexpr uint8_t PARAMS12 = 12;
+constexpr uint8_t PARAMS100 = 100;
 
-constexpr int32_t ARGS_ONE = 1;
-constexpr int32_t ARGS_TWO = 2;
-constexpr int32_t ONLY_CALLBACK_MAX_PARA = 1;
-constexpr int32_t ONLY_CALLBACK_MIN_PARA = 0;
+void getErrMessage(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
+    const char *info, const char *tag);
 
-void getErrMsg(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
-  const char *info, const char *tag);
-
-#endif //NAPI_COMMON_H
+#endif //[h_define_replace]
 `
 
 let commonCpp = `
-#include "common.h"
+#include "[include_name]common.h"
 
 /*[NAPI_GEN]:错误处理,获取错误详细信息*/
-void getErrMsg(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
-  const char *info, const char *tag)
+void getErrMessage(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
+    const char *info, const char *tag)
 {
-  status = napi_get_last_error_info(env, &extended_error_info);
-  if (status == napi_ok && extended_error_info != NULL) {
-      const char *errorMessage =
-          extended_error_info->error_message != NULL ? extended_error_info->error_message : "Unknown error";
-      OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, tag, "errmsg %{public}s!, engine_err_code %{public}d!.",
-                   std::to_string(extended_error_info->engine_error_code).c_str(), extended_error_info->error_code);
-      std::string myInfo = info;
-      std::string res = "Failed to " + myInfo + " em = " + errorMessage +
-                        ", eec = " + std::to_string(extended_error_info->engine_error_code) +
-                        ", ec = " + std::to_string(extended_error_info->error_code);
-      napi_throw_error(env, NULL, res.c_str());
-  }
+    status = napi_get_last_error_info(env, &extended_error_info);
+    if (status == napi_ok && extended_error_info != NULL) {
+        const char *errorMessage =
+            extended_error_info->error_message != NULL ? extended_error_info->error_message : "Unknown error";
+        OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, tag, "errmsg %{public}s!, engine_err_code %{public}d!.",
+        std::to_string(extended_error_info->engine_error_code).c_str(), extended_error_info->error_code);
+        std::string myInfo = info;
+        std::string res = "Failed to " + myInfo + " em = " + errorMessage +
+            ", eec = " + std::to_string(extended_error_info->engine_error_code) +
+            ", ec = " + std::to_string(extended_error_info->error_code);
+        napi_throw_error(env, NULL, res.c_str());
+    }
 }
 `
 
-function generateBase(destDir, license) {
-  writeFile(re.pathJoin(destDir, "common.h"), null != license ? (license + "\n" + commonH) : commonH)
-  writeFile(re.pathJoin(destDir, "common.cpp"), null != license ? (license + "\n" + commonCpp): commonCpp)
+function generateBase(destDir, license, hFilePath) {
+  let index = hFilePath.lastIndexOf("\\");
+  let indexH = hFilePath.lastIndexOf(".h");
+  let hFileName = hFilePath.substring(index + 1, indexH).toLowerCase();
+  // [h_define_replace]
+  let hDefine = "NAPITUTORIALS_" + hFileName.toLocaleUpperCase() + "COMMON_H"
+  commonH = replaceAll(commonH, "[h_define_replace]", hDefine)
+  // [business_include_replace]
+  let businessInclude = hFilePath.substring(index + 1, hFilePath.length)
+  commonH = replaceAll(commonH, "[business_include_replace]", businessInclude)
+  commonCpp = replaceAll(commonCpp, "[include_name]", hFileName)
+  writeFile(re.pathJoin(destDir, hFileName + "common.h"), null != license ? (license + "\n" + commonH) : commonH)
+  writeFile(re.pathJoin(destDir, hFileName + "common.cpp"), null != license ? (license + "\n" + commonCpp): commonCpp)
+}
+
+function replaceAll(s, sfrom, sto) {
+  while (s.indexOf(sfrom) >= 0) {
+      s = s.replace(sfrom, sto)
+  }
+  return s;
 }
 
 module.exports = {

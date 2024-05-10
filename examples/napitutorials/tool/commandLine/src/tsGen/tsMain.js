@@ -23,6 +23,7 @@ const readline = require('readline');
 const { generateDirectFunction } = require('../napiGen/functionDirect')
 const { generateFuncTestCase } = require('../napiGen/functionDirectTest')
 const { generateBase } = require('../tools/commonTemplete')
+const { InterfaceList, TypeList } = require('../tools/common')
 
 const MIN_RANDOM = 100
 const MAX_RANDOM = 999
@@ -31,18 +32,14 @@ let tsFuncName = ''
 function parseFileAll(hFilePath) {
     let execSync = require("child_process").execSync
     let cmd = ""
-    // node命令直接执行
-    if (fs.existsSync("tool/commandLine/src/tsGen/header_parser.py")) {
-        cmd = "python tool/commandLine/src/tsGen/header_parser.py " + hFilePath
-    } else {
-        // call exe file (for real runtime)
-        let sysInfo = os.platform()
-        let execPath = path.dirname(process.execPath)
-        console.info("execPath : " + execPath)
-        let exeFile = sysInfo === 'win32' ? path.join(execPath, "header_parser.exe") :
-        path.join(execPath, "header_parser")
-        cmd = exeFile + " " + hFilePath
-    }
+
+    // call exe file (for real runtime)
+    let sysInfo = os.platform()
+    let execPath = path.dirname(process.execPath)
+    // console.info("execPath : " + execPath)
+    let exeFile = sysInfo === 'win32' ? path.join(execPath, "header_parser.exe") :
+    path.join(execPath, "header_parser")
+    cmd = exeFile + " " + hFilePath
 
     let parseResult = null
     let stdout = execSync(cmd)
@@ -325,23 +322,67 @@ function genFunction(func, tabLv, dtsDeclare) {
     dtsDeclareContent = replaceAll(dtsDeclareContent, '[export_replace]', funcPrefix)
     dtsDeclareContent = replaceAll(dtsDeclareContent, '[func_name_replace]', func.genName)
     dtsDeclareContent = replaceAll(dtsDeclareContent, '[func_param_replace]', funcParams)
+    dtsDeclareContent = replaceAll(dtsDeclareContent, '[input_introduce_replace]', funcParams === ''? "void": funcParams)
     dtsDeclareContent = replaceAll(dtsDeclareContent, '[func_return_replace]', func.retType)
+    dtsDeclareContent = replaceAll(dtsDeclareContent, '[output_introduce_replace]', func.retType)
+    dtsDeclareContent = replaceAll(dtsDeclareContent, '[func_introduce_replace]', func.name)
 
-    return dtsDeclareContent
+    let classFuncTestUseTemplete = '[func_name_replace]:([func_param_replace]) => [func_return_replace]'
+    let classFuncTestUse = replaceAll(classFuncTestUseTemplete, '[func_name_replace]', func.genName)
+    classFuncTestUse = replaceAll(classFuncTestUse, '[func_param_replace]', funcParams)
+    classFuncTestUse = replaceAll(classFuncTestUse, '[func_return_replace]', func.retType)
+    let interfaceFuncResult = null;
+    if (func.isClassFunc) {
+      interfaceFuncResult = {
+        name: func.genName,
+        type: classFuncTestUse,
+      }
+    }
+    return [dtsDeclareContent,interfaceFuncResult]
+}
+
+function isJsBasicType(type) {
+  if (type === 'number' || type === 'string' || type === 'boolean') {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function genClass(classInfo, tabLv, dtsDeclare, needDeclare = false) {
     let tab = getTab(tabLv)
     let tsClass = tab + 'export ' + "interface " + classInfo.name + " {\n"
     let tab1 = getTab(tabLv + 1)
+    let interfaceBody = [];
     for (var i = 0; i < classInfo.properties.length; ++i) {
-        tsClass += util.format("%s%s: %s;\n", tab1, classInfo.properties[i].name, classInfo.properties[i].type)
+        let myType = classInfo.properties[i].type
+        if (!isJsBasicType(myType)) {
+          myType += ' | null'
+        }
+        tsClass += util.format("%s%s: %s;\n", tab1, classInfo.properties[i].name, myType)
+        interfaceBody.push({
+          name: classInfo.properties[i].name,
+          type: classInfo.properties[i].type,
+      })
     }
+
     // 循环加入class中的方法
+    let interfaceFunc = null
     for (let i = 0; i < classInfo.functions.length; ++i) {
-        tsClass += genFunction(classInfo.functions[i], tabLv+1, dtsDeclare)
+        let result = genFunction(classInfo.functions[i], tabLv+1, dtsDeclare);
+        tsClass += result[0]
+        interfaceFunc = result[1]
+        if (interfaceFunc !== null) {
+          interfaceBody.push(interfaceFunc)
+        }
     }
     tsClass += tab + "}\n"
+
+    let interfaceData = {
+      name: classInfo.name,
+      body: interfaceBody
+    }
+    InterfaceList.push(interfaceData)
     return tsClass
 }
 
@@ -349,7 +390,7 @@ function genNamespace(namespace, tabLv, dtsDeclare) {
     let tab = getTab(tabLv)
     let tsNamespace = tab + util.format("declare namespace %s {\n", namespace.name)
     for (var i = 0; i < namespace.functions.length; ++i) {
-        tsNamespace += genFunction(namespace.functions[i], tabLv + 1 , dtsDeclare)
+        tsNamespace += genFunction(namespace.functions[i], tabLv + 1 , dtsDeclare)[0]
     }
     for (var i = 0; i < namespace.classes.length; ++i) {
         tsNamespace += genClass(namespace.classes[i], tabLv + 1, dtsDeclare)
@@ -364,10 +405,25 @@ function genType(typeInfo, tabLv) {
   for (let i = 0; i < typeInfo.length; i++) {
     if (isNumberType(typeInfo[i].objTypedefVal)) {
       tsTypedef += tab + 'type ' + typeInfo[i].objTypedefKeys + ' = number;\n'
+      let typeData = {
+        name: typeInfo[i].objTypedefKeys,
+        body: "number"
+      }
+      TypeList.push(typeData)
     } else if (isBoolType(typeInfo[i].objTypedefVal)) {
       tsTypedef += tab + 'type ' + typeInfo[i].objTypedefKeys + ' = boolean;\n'
+      let typeData = {
+        name: typeInfo[i].objTypedefKeys,
+        body: "boolean"
+      }
+      TypeList.push(typeData)
     } else if (isStringType(typeInfo[i].objTypedefVal)) {
       tsTypedef += tab + 'type ' + typeInfo[i].objTypedefKeys + ' = string;\n'
+      let typeData = {
+        name: typeInfo[i].objTypedefKeys,
+        body: "string"
+      }
+      TypeList.push(typeData)
     }
   }
 
@@ -388,7 +444,7 @@ function genTsContent(rootInfo, dtsDeclare) {
     }
 
     for (var i = 0; i < rootInfo.functions.length; ++i) {
-        tsContent += genFunction(rootInfo.functions[i], 0, dtsDeclare)
+        tsContent += genFunction(rootInfo.functions[i], 0, dtsDeclare)[0]
     }
 
     return tsContent
@@ -474,10 +530,9 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath, isGenInitFunc) {
+async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath) {
     // 预处理文件，读出文件中所有的宏，存在数组中
     let macros = await extractMacros(hFilePath)
-    console.info("macro: " + macros)
     // 将使用宏的地方置空
     let random = generateRandomInteger(MIN_RANDOM, MAX_RANDOM)
     let tempFileName = '../temp_' + random + '.h'
@@ -510,15 +565,17 @@ async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath, isGe
     let dtsDeclarePath = path.join(__dirname, funcJson.directFunction.dtsTemplete);
     let dtsDeclare = readFile(dtsDeclarePath)
     
+    let hFileName = hFilePath.substring(hFilePath.lastIndexOf("\\") + 1, hFilePath.length);
     // 生成dts声明文件内容
     let tsContent = genTsContent(rootInfo, dtsDeclare)
+    tsContent = replaceAll(tsContent, "[file_introduce_replace]", hFileName)
     appendWriteFile(tsFilePath, '\n' + tsContent)
  
     // 生成native侧文件
-    generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult, isGenInitFunc);
+    generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult);
 
     // 生成测试用例
-    generateAbilityTest(funcJson, rootInfo, parseResult, testFilePath);
+    generateAbilityTest(funcJson, rootInfo, parseResult, testFilePath, hFileName);
 
     // 删除生成的中间文件
     clearTmpFile(tempFilePath)
@@ -526,28 +583,90 @@ async function doGenerate(hFilePath, testFilePath, tsFilePath, cppFilePath, isGe
     console.info('Generate success')
 }
 
-function generateAbilityTest(funcJson, rootInfo, parseResult, testFilePath) {
-  let abilityTestTempletePath = funcJson.directFunction.testTempleteDetails;
+function checkPathType(path) {
+  try {
+    const stats = fs.statSync(path);
+    if (stats.isDirectory()) {
+      return "directory"
+    } else if (stats.isFile()) {
+      return "file"
+    } else {
+      return "badpath"
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function checkFileIsNull(filePath) {
+  if (fs.existsSync(filePath)) {
+    try {
+      const fileContent = fs.readFileSync(filePath, 'utf-8');
+      if (fileContent.trim() === '') {
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error(`读取文件 ${filePath} 失败: ${err}`);
+    }
+  } 
+  return false;
+}
+
+function genTestTemplete(filePath, content) {
+  try {
+    fs.writeFileSync(filePath, content);
+  } catch (err) {
+    console.error(`创建文件 ${filePath} 失败: ${err}`);
+  }
+}
+
+
+function generateAbilityTest(funcJson, rootInfo, parseResult, testFilePath, hFileName) {
+  let index = hFileName.indexOf('.h')
+  let hFileNameReplace = hFileName.substring(0, index)
+  // 第一次生成时应生成框架
+  let abilityTestFirstGenTempletePath = funcJson.directFunction.testTempleteDetails.abilityTestFirstGenTemplete;
+  let abilityTestFirstGenAbsPath = path.join(__dirname, abilityTestFirstGenTempletePath);
+  let abilityTestFirstGenTemplete = readFile(abilityTestFirstGenAbsPath);
+  abilityTestFirstGenTemplete = replaceAll(abilityTestFirstGenTemplete, '[abilitytest_name_replace]', hFileNameReplace)
+
+  // 判断testFilePath是文件还是文件夹，若是文件夹则生成文件，同时第一次写入内容
+  let realTestFilePath = testFilePath
+  let isDir = checkPathType(realTestFilePath)
+  if (isDir === 'directory') {
+    realTestFilePath = path.join(testFilePath, hFileNameReplace + 'Ability.test.ets');
+    genTestTemplete(realTestFilePath, abilityTestFirstGenTemplete)
+  } else if (isDir === 'file') {
+    if (checkFileIsNull(realTestFilePath)) {
+      genTestTemplete(realTestFilePath, abilityTestFirstGenTemplete)
+    } 
+  }
+
+  // 不是第一次生成则追加写入
+  let abilityTestTempletePath = funcJson.directFunction.testTempleteDetails.abilityTestTemplete;
   let abilityTestTempleteAbsPath = path.join(__dirname, abilityTestTempletePath);
   let abilityTestTemplete = readFile(abilityTestTempleteAbsPath);
+  
   let genTestResult = '';
   // 生成测试用例  同时生成多个测试用例
   for (let i = 0; i < rootInfo.functions.length; i++) {
-    genTestResult += generateFuncTestCase(parseResult, i, rootInfo.functions[i].genName, abilityTestTemplete);
+    genTestResult += generateFuncTestCase(parseResult, i, rootInfo.functions[i].genName, abilityTestTemplete, hFileName);
   }
   const importContent = "import testNapi from 'libentry.so';";
-  writeTestFile(testFilePath, importContent, genTestResult);
+  writeTestFile(realTestFilePath, importContent, genTestResult);
 }
 
-function generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult, isGenInitFunc) {
+function generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult) {
   // 写入common.h 和 common.cpp
-  generateBase(cppFilePath, '');
+  generateBase(cppFilePath, '', hFilePath);
 
   let index = hFilePath.lastIndexOf("\\");
   let indexH = hFilePath.lastIndexOf(".h");
-  let napiHFileName = hFilePath.substring(index + 1, indexH) + 'Napi.h';
+  let napiHFileName = hFilePath.substring(index + 1, indexH).toLowerCase() + 'napi.h';
   let includes_replace = util.format('#include "%s"\n', napiHFileName);
-
+  let hFileName = hFilePath.substring(hFilePath.lastIndexOf("\\") + 1, hFilePath.length);
+  
   let funcDeclare = '';
   let funcInit = '';
   let directFuncPath = funcJson.directFunction;
@@ -555,33 +674,32 @@ function generateCppFile(cppFilePath, hFilePath, funcJson, rootInfo, parseResult
   for (let i = 0; i < rootInfo.functions.length; i++) {
     let cppFileName = rootInfo.functions[i].name.toLowerCase().replace('_', '').trim();
     let thisFuncCppFilePath = path.join(cppFilePath, cppFileName + '.cpp');
-    let genResult = generateDirectFunction(parseResult, i, rootInfo.functions[i].genName, directFuncPath);
+    let genResult = generateDirectFunction(parseResult, i, rootInfo.functions[i].genName, directFuncPath, hFileName);
     funcDeclare += genResult[0];
     funcInit += genResult[1];
     let funcBody = includes_replace + genResult[2];
     writeFile(thisFuncCppFilePath, funcBody);
   }
 
-  // 判断是否写Init文件
-  if (isGenInitFunc) {
-    // init函数内容
-    let cppInitTempletePath = funcJson.directFunction.initTempleteDetails.cppInitTemplete;
-    const cppInitTempleteAbsPath = path.join(__dirname, cppInitTempletePath);
-    let cppInitTemplete = readFile(cppInitTempleteAbsPath);
-    cppInitTemplete = replaceAll(cppInitTemplete, '[include_replace]', includes_replace);
-    cppInitTemplete = replaceAll(cppInitTemplete, '[init_replace]', funcInit);
-    let napiInitFileName = hFilePath.substring(index + 1, indexH) + 'Init.cpp';
-    let initFilePath = path.join(cppFilePath, napiInitFileName);
-    writeFile(initFilePath, cppInitTemplete);
-  }
+  // init函数内容
+  let cppInitTempletePath = funcJson.directFunction.initTempleteDetails.cppInitTemplete;
+  const cppInitTempleteAbsPath = path.join(__dirname, cppInitTempletePath);
+  let cppInitTemplete = readFile(cppInitTempleteAbsPath);
+  cppInitTemplete = replaceAll(cppInitTemplete, '[include_replace]', includes_replace);
+  cppInitTemplete = replaceAll(cppInitTemplete, '[init_replace]', funcInit);
+  let napiInitFileName = hFilePath.substring(index + 1, indexH).toLowerCase() + 'init.cpp';
+  let initFilePath = path.join(cppFilePath, napiInitFileName);
+  writeFile(initFilePath, cppInitTemplete);
 
   // 生成的napi方法声明文件
   let cppDeclareTempletePath = funcJson.directFunction.cppTempleteDetails.funcHDeclare.funcHDeclareTemplete;
   const cppDeclareTempleteAbsPath = path.join(__dirname, cppDeclareTempletePath);
   let cppDeclareTempleteContent = readFile(cppDeclareTempleteAbsPath);
-  let napiHFileNameReplace = hFilePath.substring(index + 1, indexH) + 'Napi';
+  let napiHFileNameReplace = hFilePath.substring(index + 1, indexH).toLowerCase() + 'napi';
   cppDeclareTempleteContent = replaceAll(cppDeclareTempleteContent, '[h_file_name_replace]', napiHFileNameReplace.toUpperCase());
   cppDeclareTempleteContent = replaceAll(cppDeclareTempleteContent, '[func_declare_replace]', funcDeclare);
+  cppDeclareTempleteContent = replaceAll(cppDeclareTempleteContent, '[h_filename_replace]',
+      hFilePath.substring(index + 1, indexH).toLowerCase());
   let declareFilePath = path.join(cppFilePath, napiHFileName);
   writeFile(declareFilePath, cppDeclareTempleteContent);
 }

@@ -6,6 +6,6 @@
      */
     status = napi_create_int32(env, 1, &[return_name_replace]Out);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
         return nullptr;
     }

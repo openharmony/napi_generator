@@ -18,6 +18,24 @@
 constexpr uint8_t TYPE1 = 1;
 constexpr uint8_t TYPE2 = 2;
 
+/*[NAPI_GEN]:错误处理,获取错误详细信息*/
+void getErrMessage(napi_status &status, napi_env &env, const napi_extended_error_info *&extended_error_info,
+    const char *info, const char *tag)
+{
+    status = napi_get_last_error_info(env, &extended_error_info);
+    if (status == napi_ok && extended_error_info != NULL) {
+        const char *errorMessage =
+            extended_error_info->error_message != NULL ? extended_error_info->error_message : "Unknown error";
+        OH_LOG_Print(LOG_APP, LOG_ERROR, GLOBAL_RESMGR, tag, "errmsg %{public}s!, engine_err_code %{public}d!.",
+                     std::to_string(extended_error_info->engine_error_code).c_str(), extended_error_info->error_code);
+        std::string myInfo = info;
+        std::string res = "Failed to " + myInfo + " em = " + errorMessage +
+                          ", eec = " + std::to_string(extended_error_info->engine_error_code) +
+                          ", ec = " + std::to_string(extended_error_info->error_code);
+        napi_throw_error(env, NULL, res.c_str());
+    }
+}
+
 /* 去除字符串中的换行符，便于查找打印, 公共方法
  * str: 待去除\n的字符串
  */
@@ -42,7 +60,7 @@ bool IsEmptyObject(napi_env env, napi_value obj, const char *tag)
     napi_valuetype valuetype;
     status = napi_typeof(env, obj, &valuetype);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "IsEmptyObject: napi_typeof obj", tag);
+        getErrMessage(status, env, extended_error_info, "IsEmptyObject: napi_typeof obj", tag);
         return NULL;
     }
     if (valuetype == napi_object) {
@@ -51,13 +69,13 @@ bool IsEmptyObject(napi_env env, napi_value obj, const char *tag)
         napi_value propertyNames;
         status = napi_get_property_names(env, obj, &propertyNames);
         if (status != napi_ok) {
-            getErrMsg(status, env, extended_error_info, "IsEmptyObject: napi_get_property_names obj", tag);
+            getErrMessage(status, env, extended_error_info, "IsEmptyObject: napi_get_property_names obj", tag);
             return NULL;
         }
         // 计算属性的个数
         status = napi_get_array_length(env, propertyNames, &propertyCount);
         if (status != napi_ok) {
-            getErrMsg(status, env, extended_error_info, "IsEmptyObject: napi_get_array_length propertyNames", tag);
+            getErrMessage(status, env, extended_error_info, "IsEmptyObject: napi_get_array_length propertyNames", tag);
             return NULL;
         }
         // 如果属性个数大于0，对象不为空
@@ -80,20 +98,20 @@ char *getNapiCjsonString(napi_env env, napi_value cjsonObj, const char *tag)
     napi_value napiPropStr;
     status = napi_get_named_property(env, cjsonObj, "string", &napiPropStr);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property 1", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property 1", tag);
         return NULL;
     }
     size_t strSize1 = 0;
     status = napi_get_value_string_utf8(env, napiPropStr, NULL, 0, &strSize1);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: get value string", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: get value string", tag);
         return NULL;
     }
     char *objStrIn = new char[strSize1 + 1];
     /* [NAPI_GEN]: 用于获取字符串*/
     status = napi_get_value_string_utf8(env, napiPropStr, objStrIn, strSize1 + 1, &strSize1);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: get value string", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: get value string", tag);
         delete[] objStrIn;
         return NULL;
     }
@@ -108,20 +126,20 @@ char *getNapiCjsonValuestring(napi_env env, napi_value cjsonObj, const char *tag
     napi_value napiPropValueStr;
     status = napi_get_named_property(env, cjsonObj, "valuestring", &napiPropValueStr);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
         return NULL;
     }
     size_t strSize2 = 0;
     status = napi_get_value_string_utf8(env, napiPropValueStr, NULL, 0, &strSize2);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: get value string", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: get value string", tag);
         return NULL;
     }
     char *objValueStrIn = new char[strSize2 + 1];
     /* [NAPI_GEN]: 用于获取字符串*/
     status = napi_get_value_string_utf8(env, napiPropValueStr, objValueStrIn, strSize2 + 1, &strSize2);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: get value string", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: get value string", tag);
         delete[] objValueStrIn;
         return NULL;
     }
@@ -136,13 +154,13 @@ double getNapiCjsonValuedouble(napi_env env, napi_value cjsonObj, const char *ta
     napi_value napiPropValueDouble;
     status = napi_get_named_property(env, cjsonObj, "valuedouble", &napiPropValueDouble);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property 2", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property 2", tag);
         return NULL;
     }
     double objValueDoubleIn = 0;
     status = napi_get_value_double(env, napiPropValueDouble, &objValueDoubleIn);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_value_double", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: napi_get_value_double", tag);
         return NULL;
     }
     return objValueDoubleIn;
@@ -156,14 +174,14 @@ int getNapiCjsonType(napi_env env, napi_value cjsonObj, const char *tag)
     napi_value napiPropValueBoolean;
     status = napi_get_named_property(env, cjsonObj, "type", &napiPropValueBoolean);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property 3", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property 3", tag);
         return NULL;
     }
 
     int objValueTypeIn = 0;
     status = napi_get_value_int32(env, napiPropValueBoolean, &objValueTypeIn);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_value_int32", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: napi_get_value_int32", tag);
         return NULL;
     }
     return objValueTypeIn;
@@ -177,7 +195,7 @@ cJSON *getNapiCjsonChild(napi_env env, napi_value cjsonObj, cJSON *jsonObj, char
     napi_value napiChildObj;
     status = napi_get_named_property(env, cjsonObj, "child", &napiChildObj);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
         return NULL;
     }
     if (objStr[0] != '\0') {
@@ -201,7 +219,7 @@ cJSON *getNapiCjsonNext(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const
     napi_value napiNextObj;
     status = napi_get_named_property(env, cjsonObj, "next", &napiNextObj);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
         return NULL;
     }
     napi_valuetype valuetypeNext;
@@ -222,7 +240,7 @@ cJSON *getNapiCjsonPrev(napi_env env, napi_value cjsonObj, cJSON *jsonObj, const
     napi_value napiPrevObj;
     status = napi_get_named_property(env, cjsonObj, "prev", &napiPrevObj);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
         return NULL;
     }
     napi_valuetype valuetypePrev;
@@ -243,7 +261,7 @@ cJSON *getNapiCjsonChildArrObj(napi_env env, napi_value cjsonObj, cJSON *jsonObj
     napi_value napiChildObj;
     status = napi_get_named_property(env, cjsonObj, "child", &napiChildObj);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Object: napi_get_named_property", tag);
         return NULL;
     }
     napi_valuetype valuetype;
@@ -311,7 +329,7 @@ cJSON *getNapiCjsonArrayChild(napi_env env, napi_value cjsonObj, cJSON *jsonObj,
     napi_value napiChildObj;
     status = napi_get_named_property(env, cjsonObj, "child", &napiChildObj);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
         return NULL;
     }
     napi_valuetype valuetype;
@@ -336,7 +354,7 @@ cJSON *getNapiCjsonArrayNext(napi_env env, napi_value cjsonObj, cJSON *jsonObj, 
     napi_value napiNextObj;
     status = napi_get_named_property(env, cjsonObj, "next", &napiNextObj);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
         return NULL;
     }
     napi_valuetype valuetype;
@@ -361,7 +379,7 @@ cJSON *getNapiCjsonArrayPrev(napi_env env, napi_value cjsonObj, cJSON *jsonObj, 
     napi_value napiPrevObj;
     status = napi_get_named_property(env, cjsonObj, "prev", &napiPrevObj);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
         return NULL;
     }
     napi_valuetype valuetype;
@@ -467,7 +485,7 @@ bool isArrObject(napi_env env, napi_value cjsonObj, const char *tag)
     napi_value napiChildObj;
     status = napi_get_named_property(env, cjsonObj, "child", &napiChildObj);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "initCJSON_Array: napi_get_named_property", tag);
         return NULL;
     }
     napi_valuetype valuetype;

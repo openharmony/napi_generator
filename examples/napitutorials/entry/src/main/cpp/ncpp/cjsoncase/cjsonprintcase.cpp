@@ -27,7 +27,8 @@ char *getCjsonPrintRes(napi_env env, napi_value obj)
     if (genResString1 != NULL) {
         std::string genResStringPrint = genResString1;
         RemoveNewlines(genResStringPrint);
-        OH_LOG_INFOS(LOG_APP, "KH735_cJSON_Print success! genResString1: %s", genResStringPrint.c_str());
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH735_cJSON_Print", "genResString1: %s",
+            genResStringPrint.c_str());
         if (genResStringPrint == "{}") {
             isNullObj = true;
         }
@@ -40,7 +41,8 @@ char *getCjsonPrintRes(napi_env env, napi_value obj)
     if (genResString2 != NULL) {
         std::string genResStringPrint = genResString2;
         RemoveNewlines(genResStringPrint);
-        OH_LOG_INFOS(LOG_APP, "KH735_cJSON_Print success! genResString2: %s", genResStringPrint.c_str());
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH735_cJSON_Print", "genResString2: %s",
+            genResStringPrint.c_str());
         if (genResStringPrint == "[]") {
             isArrNull = true;
         }
@@ -53,7 +55,6 @@ char *getCjsonPrintRes(napi_env env, napi_value obj)
     if (genResString3 != NULL) {
         std::string genResStringPrint = genResString3;
         RemoveNewlines(genResStringPrint);
-        OH_LOG_INFOS(LOG_APP, "KH735_cJSON_Print success! genResString3: %s", genResStringPrint.c_str());
         if (genResStringPrint == "[]") {
             isArrObjNull = true;
         }
@@ -88,9 +89,9 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
     const char *tag = "[KH735_cJSON_Print]";
     /* [NAPI_GEN]: get function param in*/
     /* [NAPI_GEN]: argc：js传入的参数个数 */
-    size_t argc = PARAM1;
+    size_t argc = PARAMS1;
     /* [NAPI_GEN]: args: 一个数组,保存js传入的参数 */
-    napi_value args[PARAM1] = {nullptr};
+    napi_value args[PARAMS1] = {nullptr};
     /* [NAPI_GEN]: napi_get_cb_info用于获取JS调用该函数时所传递的参数、接收参数的个数以及'this'的值
      * env: 当前环境的句柄，代表当前的Node.js环境
      * info: 回调信息句柄，代表当前回调的上下文
@@ -102,12 +103,12 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
     status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_get_cb_info", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_cb_info", tag);
         return NULL;
     }
   
     // Todo: add business logic. 在这之前代码为框架所生成
-    char *resultStr = getCjsonPrintRes(env, args[PARAM0]);
+    char *resultStr = getCjsonPrintRes(env, args[PARAMS0]);
     
     /* [NAPI_GEN]: function return value*/
     napi_value cJSON_PrintOut;
@@ -122,7 +123,7 @@ napi_value KH735_cJSON_Print(napi_env env, napi_callback_info info)
     status = napi_create_string_utf8(env, resultStr, NAPI_AUTO_LENGTH, &cJSON_PrintOut);
     if (status != napi_ok) {
         /*错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return NULL;
     }
 

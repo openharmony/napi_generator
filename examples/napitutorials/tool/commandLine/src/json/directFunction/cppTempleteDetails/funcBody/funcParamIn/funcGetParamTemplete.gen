@@ -13,11 +13,11 @@
     status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     if(status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env,extended_error_info, "napi_get_cb_info", tag);
+        getErrMessage(status, env,extended_error_info, "napi_get_cb_info", tag);
         return nullptr;
     }
     /* [NAPI_GEN]: 从args数组中获取入参 */
-    OH_LOG_LOGINFOS(LOG_APP, "[funcName] get param info begins");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "[funcName]", "[funcName] get param info begins");
 [getParam_replace]
-    OH_LOG_LOGINFOS(LOG_APP, "[funcName] get param info ends");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "[funcName]", "[funcName] get param info ends");
     

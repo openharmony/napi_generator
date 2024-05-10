@@ -6,6 +6,6 @@
      */
     status = napi_get_value_double(env, args[[param_index_replace]], &[param_name_replace]In);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_get_value_double", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_value_double", tag);
         return nullptr;
     }

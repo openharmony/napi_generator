@@ -29,7 +29,7 @@ napi_value getCreateintarrTypeOut(napi_env env, napi_value cJSON_CreateIntArrayO
      */
     status = napi_create_int32(env, jsonObj == NULL ? 0 : jsonObj->type, &typeOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
         return NULL;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -41,7 +41,7 @@ napi_value getCreateintarrTypeOut(napi_env env, napi_value cJSON_CreateIntArrayO
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "type", typeOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return NULL;
     }
     return cJSON_CreateIntArrayOut;
@@ -60,7 +60,7 @@ napi_value getCreateintarrValuesintOut(napi_env env, napi_value cJSON_CreateIntA
      */
     status = napi_create_int32(env, jsonObj == NULL ? 0 : jsonObj->valueint, &valueintOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_int32", tag);
         return NULL;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -72,7 +72,7 @@ napi_value getCreateintarrValuesintOut(napi_env env, napi_value cJSON_CreateIntA
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "valueint", valueintOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return NULL;
     }
     return cJSON_CreateIntArrayOut;
@@ -91,7 +91,7 @@ napi_value getCreateintarrValuesdoubleOut(napi_env env, napi_value cJSON_CreateI
      */
     status = napi_create_double(env, jsonObj == NULL ? 0 : jsonObj->valuedouble, &valuedoubleOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_double", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_double", tag);
         return NULL;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -103,7 +103,7 @@ napi_value getCreateintarrValuesdoubleOut(napi_env env, napi_value cJSON_CreateI
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "valuedouble", valuedoubleOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return NULL;
     }
     return cJSON_CreateIntArrayOut;
@@ -127,7 +127,7 @@ napi_value getCreateintarrValuestringOut(napi_env env, napi_value cJSON_CreateIn
                                      &valuestringOut);
     if (status != napi_ok) {
         /*错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return NULL;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -139,7 +139,7 @@ napi_value getCreateintarrValuestringOut(napi_env env, napi_value cJSON_CreateIn
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "valuestring", valuestringOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return NULL;
     }
     return cJSON_CreateIntArrayOut;
@@ -163,7 +163,7 @@ napi_value getCreateintarrStringOut(napi_env env, napi_value cJSON_CreateIntArra
         napi_create_string_utf8(env, jsonOut->string == nullptr ? "" : jsonOut->string, NAPI_AUTO_LENGTH, &stringOut);
     if (status != napi_ok) {
         /*错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_create_string_utf8", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
         return NULL;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -175,7 +175,7 @@ napi_value getCreateintarrStringOut(napi_env env, napi_value cJSON_CreateIntArra
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "string", stringOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return NULL;
     }
     return cJSON_CreateIntArrayOut;
@@ -193,7 +193,7 @@ napi_value getCreateintarrNextOut(napi_env env, napi_value cJSON_CreateIntArrayO
      */
     status = napi_create_object(env, &nextOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return NULL;
     }
     // 给jsonObj->next赋值
@@ -222,7 +222,7 @@ napi_value getCreateintarrNextOut(napi_env env, napi_value cJSON_CreateIntArrayO
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "next", nextOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return NULL;
     }
     return cJSON_CreateIntArrayOut;
@@ -258,7 +258,7 @@ napi_value getCreateintarrChildOut(napi_env env, napi_value cJSON_CreateIntArray
      */
     status = napi_create_object(env, &childOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return NULL;
     }
     // 给jsonObj->child赋值
@@ -274,7 +274,7 @@ napi_value getCreateintarrChildOut(napi_env env, napi_value cJSON_CreateIntArray
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "child", childOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return NULL;
     }
     return cJSON_CreateIntArrayOut;
@@ -292,7 +292,7 @@ napi_value getCreateintarrPrevOut(napi_env env, napi_value cJSON_CreateIntArrayO
      */
     status = napi_create_object(env, &prevOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return NULL;
     }
     /* [NAPI_GEN]: 返回值是对象时，将native侧的对象的属性和值依次塞入napi_create_object创建出的对象，最终将该对象返回js
@@ -304,7 +304,7 @@ napi_value getCreateintarrPrevOut(napi_env env, napi_value cJSON_CreateIntArrayO
     status = napi_set_named_property(env, cJSON_CreateIntArrayOut, "prev", prevOut);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_set_named_property", tag);
+        getErrMessage(status, env, extended_error_info, "napi_set_named_property", tag);
         return NULL;
     }
     return cJSON_CreateIntArrayOut;
@@ -319,7 +319,7 @@ uint32_t getCjsonObjArrayLen(napi_env env, napi_value param)
     bool isArray = false;
     status = napi_is_array(env, param, &isArray);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_is_array", tag);
+        getErrMessage(status, env, extended_error_info, "napi_is_array", tag);
         return status;
     }
     if (!isArray) {
@@ -329,7 +329,7 @@ uint32_t getCjsonObjArrayLen(napi_env env, napi_value param)
     uint32_t outerLen = 0;
     status = napi_get_array_length(env, param, &outerLen);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_get_array_length", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_array_length", tag);
         return NULL;
     }
     return outerLen;
@@ -359,7 +359,7 @@ napi_status GetCjsonCreateArrayParams1(napi_env env, napi_value param, int **out
         status = napi_get_element(env, param, i, &v);
         if (status != napi_ok) {
             free(*outArrayNumbers);
-            getErrMsg(status, env, extended_error_info, "napi_get_array_length", tag);
+            getErrMessage(status, env, extended_error_info, "napi_get_array_length", tag);
             return status;
         }
         // 确保数组中的元素是数字
@@ -367,7 +367,7 @@ napi_status GetCjsonCreateArrayParams1(napi_env env, napi_value param, int **out
         status = napi_typeof(env, v, &valuetypeNumber);
         if (status != napi_ok) {
             free(*outArrayNumbers);
-            getErrMsg(status, env, extended_error_info, "napi_typeof", tag);
+            getErrMessage(status, env, extended_error_info, "napi_typeof", tag);
             return status;
         }
         if (valuetypeNumber == napi_number) {
@@ -375,13 +375,13 @@ napi_status GetCjsonCreateArrayParams1(napi_env env, napi_value param, int **out
             status = napi_get_value_int32(env, v, &num);
             if (status != napi_ok) {
                 free(*outArrayNumbers);
-                getErrMsg(status, env, extended_error_info, "napi_get_array_length", tag);
+                getErrMessage(status, env, extended_error_info, "napi_get_array_length", tag);
                 return status;
             }
             (*outArrayNumbers)[i] = num;
         } else {
             free(*outArrayNumbers);
-            OH_LOG_ERRORS(LOG_APP, "KH203_cJSON_CreateIntArray get params fail! please input number type array");
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "KH203_cJSON_CreateIntArray", "get params fail");
             return napi_number_expected;
         }
     }
@@ -404,7 +404,7 @@ int32_t GetCjsonCreateArrayParams2(napi_env env, napi_value param)
      */
     status = napi_typeof(env, param, &valuetypecount);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_typeof", tag);
+        getErrMessage(status, env, extended_error_info, "napi_typeof", tag);
         return NULL;
     }
     int32_t countIn = 0;
@@ -416,7 +416,7 @@ int32_t GetCjsonCreateArrayParams2(napi_env env, napi_value param)
     status = napi_get_value_int32(env, param, &countIn);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_get_value_int32", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_value_int32", tag);
         return NULL;
     }
     return countIn;
@@ -441,9 +441,9 @@ napi_value KH203_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     const char *tag = "[KH203_cJSON_CreateIntArray]";
     /* [NAPI_GEN]: get function param in*/
     /* [NAPI_GEN]: argc：js传入的参数个数 */
-    size_t argc = PARAM2;
+    size_t argc = PARAMS2;
     /* [NAPI_GEN]: args: 一个数组,保存js传入的参数 */
-    napi_value args[PARAM2] = {nullptr};
+    napi_value args[PARAMS2] = {nullptr};
     /* [NAPI_GEN]: napi_get_cb_info用于获取JS调用该函数时所传递的参数、接收参数的个数以及'this'的值
      * env: 当前环境的句柄，代表当前的Node.js环境
      * info: 回调信息句柄，代表当前回调的上下文
@@ -455,18 +455,18 @@ napi_value KH203_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     status = napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     if (status != napi_ok) {
         /* [NAPI_GEN]: 错误处理*/
-        getErrMsg(status, env, extended_error_info, "napi_get_cb_info", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_cb_info", tag);
         return NULL;
     }
     
     int *arrayNumbers = NULL;
     uint32_t arrayLength = 0;
-    status = GetCjsonCreateArrayParams1(env, args[PARAM0], &arrayNumbers, &arrayLength);
+    status = GetCjsonCreateArrayParams1(env, args[PARAMS0], &arrayNumbers, &arrayLength);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_get_cb_info", tag);
+        getErrMessage(status, env, extended_error_info, "napi_get_cb_info", tag);
         return NULL;
     }
-    uint32_t countIn = GetCjsonCreateArrayParams2(env, args[PARAM1]);
+    uint32_t countIn = GetCjsonCreateArrayParams2(env, args[PARAMS1]);
     
     // Todo: add business logic. 在这前后代码为框架所生成
     cJSON *arrayRes = NULL;
@@ -475,11 +475,12 @@ napi_value KH203_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
     // 打印arrayRes2
     char *arrayString2 = cJSON_Print(arrayRes);
     if (arrayString2 == NULL) {
-        OH_LOG_ERRORS(LOG_APP, "KH203_cJSON_CreateIntArray fail! cJSON_Print failed.");
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "KH203_cJSON_CreateIntArray", "cJSON_Print failed");
         cJSON_free(arrayString2); // 释放 cJSON_Print 分配的内存
         return NULL;
     } else {
-        OH_LOG_INFOS(LOG_APP, "KH203_cJSON_CreateIntArray success! arrayString22: %s", arrayString2);
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "KH203_cJSON_CreateIntArray", "arrayString2: %s",
+            arrayString2);
         cJSON_free(arrayString2); // 释放 cJSON_Print 分配的内存
     }
 
@@ -491,7 +492,7 @@ napi_value KH203_cJSON_CreateIntArray(napi_env env, napi_callback_info info)
      */
     status = napi_create_object(env, &cJSON_CreateIntArrayOut);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "napi_create_object", tag);
+        getErrMessage(status, env, extended_error_info, "napi_create_object", tag);
         return NULL;
     }
     
