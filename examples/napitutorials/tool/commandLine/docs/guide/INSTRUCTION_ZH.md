@@ -34,7 +34,7 @@
 
 同时将arm64-v8a/lib下的所有.so文件拷贝一份至arm64-v8a下，将armeabi-v7a/lib下的所有.so文件拷贝一份至armeabi-v7a下。
 
-3.将libcjson加入编译：在CMakeLists.txt中加入libcjson路径
+3.将libcjson加入编译：在CMakeLists.txt（cJsonSampleTest/entry/src/main/cpp/CMakeLists.txt）中加入libcjson路径
 
 ```
 set(CJSON_LIB_PATH ${NATIVERENDER_ROOT_PATH}/../../../libs/${OHOS_ARCH})
@@ -123,7 +123,7 @@ native_gen-win.exe -f cJSON.h
 
 2.1将cppout（nativetoolGen/cppout）拷贝至 cJsonSampleTest/entry/src/main/cpp目录下; 将cJSON.h拷贝至cppout目录下。
 
-2.2将生成的所有cpp文件加入CMakeLists.txt（cJsonSampleTest/entry/src/main/cpp/CMakeLists.txt）编译；
+2.2将生成的所有cpp文件加入CMakeLists.txt（cJsonSampleTest/entry/src/main/cpp/CMakeLists.txt）编译；其中cppout/cjsoninit.cpp为编译入口
 
 ```
 add_library(entry SHARED
