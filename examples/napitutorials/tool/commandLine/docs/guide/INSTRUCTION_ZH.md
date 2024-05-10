@@ -26,7 +26,7 @@
 
 1.cJSON三方库获取：[测试用三方库](https://gitee.com/openharmony/napi_generator/releases/tag/测试用资源)  选择cJSON.zip下载
 
-![image-20240508100218813](../../../figures/Download_thirdparty.png)
+![image-20240508100218813](../../../figures/download_thirdparty.png)
 
 2.将三方库导入工程：将cJSON.zip解压，解压后可以拷贝内容进  cJsonSampleTest\entry\src\main\cpp\thirdparty 和 cJsonSampleTest\entry\libs 下
 
