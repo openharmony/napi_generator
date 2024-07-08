@@ -138,7 +138,7 @@
       var result = {
         msg: "selectIncludeName",
         mode: 2
-      }
+      };
       vscode.postMessage(result);
     }
 
@@ -146,23 +146,23 @@
       var result = {
         msg: "selectCppName",
         mode: 3
-      }
+      };
       vscode.postMessage(result);
     }
 
     function cancel() {
       var result = {
         msg: "cancelShowInfo"
-      }
+      };
       vscode.postMessage(result);
     }
 
     function setIndex(index) {
-      clickIndex = index
+      clickIndex = index;
     }
 
     function getIndex() {
-      return clickIndex
+      return clickIndex;
     }
     
     window.addEventListener('message', event => {
@@ -186,7 +186,7 @@
           document.getElementById("serviceCode").value = event.data.updateInfo.updateServiceCode;
         }
       } 
-    })
+    });
 
 </script>
 <body>
