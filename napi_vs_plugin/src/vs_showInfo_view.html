@@ -145,7 +145,7 @@
     function cancel() {
       var result = {
          msg: "cancelShowInfo"
-      }
+      };
       vscode.postMessage(result);
     }
 
@@ -184,24 +184,24 @@
     function renderList(configList, listElement) {
       configList.forEach((configItem, index) => {
         const listItem = document.createElement('tr');
-        const itemContent1 = document.createElement('th')
-        itemContent1.textContent = configItem.includeName
-        const itemContent2 = document.createElement('th')
-        itemContent2.textContent = configItem.cppName
-        const itemContent3 = document.createElement('th')
-        itemContent3.textContent = configItem.interfaceName
-        const itemContent4 = document.createElement('th')
-        itemContent4.textContent = configItem.serviceCode
-        listItem.appendChild(itemContent1)
-        listItem.appendChild(itemContent2)
-        listItem.appendChild(itemContent3)
-        listItem.appendChild(itemContent4)
+        const itemContent1 = document.createElement('th');
+        itemContent1.textContent = configItem.includeName;
+        const itemContent2 = document.createElement('th');
+        itemContent2.textContent = configItem.cppName;
+        const itemContent3 = document.createElement('th');
+        itemContent3.textContent = configItem.interfaceName;
+        const itemContent4 = document.createElement('th');
+        itemContent4.textContent = configItem.serviceCode;
+        listItem.appendChild(itemContent1);
+        listItem.appendChild(itemContent2);
+        listItem.appendChild(itemContent3);
+        listItem.appendChild(itemContent4);
 
         listItem.addEventListener('click', () => {
           highlightItem(listElement, index);
           setIndex(index);
           setUpdateInfo(configItem.includeName, configItem.cppName, configItem.interfaceName, configItem.serviceCode);
-        })
+        });
         listElement.appendChild(listItem);
       });
     }
@@ -211,13 +211,13 @@
       // 初始化
       if (message.msg === 'initShowInfo') {
         const listElement = document.getElementById('configList');
-        renderList(message.configList, listElement)
+        renderList(message.configList, listElement);
       } else if (message.msg === 'deleteData'){
         const listElement = document.getElementById('configList');
         while (listElement.firstChild) {
           listElement.removeChild(listElement.firstChild);
         }
-        renderList(message.configList, listElement)
+        renderList(message.configList, listElement);
       }
     });
 
