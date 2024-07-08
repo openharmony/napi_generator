@@ -21,9 +21,6 @@ const { NapiLog } = require("./tools/NapiLog");
 
 // 读取和解析.d.ts文件
 const filePath = '@ohos.test.d.ts';
-// const sourceCode = fs.readFileSync(filePath, 'utf-8');
-// const sourceFile = ts.createSourceFile(filePath, sourceCode, ts.ScriptTarget.Latest, true);
-// let statements = sourceFile.statements
 
 // 打印语法树
 function stringifyWithoutCircular(obj) {
@@ -44,8 +41,6 @@ function analyzeFileRaw(fn) {
     const sourceCode = fs.readFileSync(filePath, 'utf-8');
     const sourceFile = ts.createSourceFile(filePath, sourceCode, ts.ScriptTarget.Latest, true);
     let statements = sourceFile.statements
-
-   // console.log(stringifyWithoutCircular(sourceFile));
 
     let result = {
         exportDefault: [],
@@ -73,22 +68,6 @@ function analyzeFileRaw(fn) {
         result.declareLicense.push(licenseData)
     }
 
-    // let impordts = statements[1].getText();
-
-    // let ff = statements[1].getChildren();
-    // let ffa = statements[1].getChildAt(1);
-    // let ffb = statements[1].getChildCount();
-    // let ffc = statements[1].getLastToken();
-    // let xx = statements[1].getEnd();
-
-    // let exportsInfo = statements[2].getText();
-
-    // let ff = statements[2].end
-    // let gg = statements[2].
-    // let exportName = statements[2].expression.escapedText
-    
-    // result.exportDefault.push(exportName);
-
     return analyzeRaw(statements, result)
 }
 
@@ -98,18 +77,9 @@ function analyzeRaw(statements, result) {
         let matchs = re.match("export default ([a-zA-Z0-9_]+);", exportsInfo);
         if (matchs != null) {
             let exportName = re.getReg(exportsInfo, matchs.regs[1])
-            // data = re.removeReg(data, matchs.regs[0]);
             result.exportDefault.push(exportName)
         }
 
-        // data = re.replaceAll(data, "\n{", "{");
-        // let matchType = analyzeMatchType(matchs, data, result)
-        // if (matchType != null) {
-        //     data = matchType[0]
-        //     if (matchType[1] != null) {
-        //         result = matchType[1]
-        //     }            
-        // }
         let data = statements[1].getText();
         let namespace = analyzeMatchNamespace(matchs, data, result)
         if (namespace != null) {
@@ -128,11 +98,6 @@ function analyzeRaw(statements, result) {
             result = functionMatch[1]
         }
         
-        // if (oldData == data) {
-        //   NapiLog.logError("\nvvv 解析文件失败 vvv");
-        //   NapiLog.logError("[", data.substring(0, data.length > 64 ? 64 : data.length), "]");
-        //     break;
-        // }
         return result;
 
     }

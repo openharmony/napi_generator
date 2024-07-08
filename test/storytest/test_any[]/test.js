@@ -17,31 +17,31 @@ var assert = require("assert");
 
 describe('any[]', function () {
 
-    // function fun1(v1: any[]): number;
+    // 测试：function fun1(v1: any[]): number;
     it('test fun1', function () {
         let ret = fun1(['a', 'b', 'c', 'd']);
         assert.strictEqual(ret, 0);
     });
 
-    // function fun1(v1: any[]): number;
+    // 测试：function fun1(v1: any[]): number;
     it('test fun1', function () {
         let ret = fun1([1, 2, 3, 4]);
         assert.strictEqual(ret, 0);
     });
 
-    // function fun2(v1: Array<any>): number;
+    // 测试：function fun2(v1: Array<any>): number;
     it('test fun2', function () {
         let ret = fun2([true, true, false, false]);
         assert.strictEqual(ret, 0);
     });
 
-    // function fun4(v1: Array<any>, v: number): number;
+    // 测试：function fun4(v1: Array<any>, v: number): number;
     it('test fun4 string', function () {
         let ret = fun4(['a', 'b', 'c', 'd'], 0);
         assert.strictEqual(ret, 0);
     });
 
-    // function fun4(v1: Array<any>, v: number): number;
+    // 测试：function fun4(v1: Array<any>, v: number): number;
     it('test fun4 number', function () {
         let ret = fun4([1, 2, 3, 4], 0);
         assert.strictEqual(ret, 0);
@@ -52,25 +52,25 @@ describe('any[]', function () {
         assert.strictEqual(ret, 0);
     });
 
-    // function fun5(v: number, v1: Array<any>): number;
+    // 测试：function fun5(v: number, v1: Array<any>): number;
     it('test fun5', function () {
         let ret = fun5(0, ['a', 'b', 'c', 'd']);
         assert.strictEqual(ret, 0);
     });
 
-    // function fun6(v: number, v1: any): number;
+    // 测试：function fun6(v: number, v1: any): number;
     it('test fun6 string', function () {
         let ret = fun6(0, 'd');
         assert.strictEqual(ret, 0);
     });
 
-    // function fun6(v: number, v1: any): number;
+    // 测试：function fun6(v: number, v1: any): number;
     it('test fun6 number', function () {
         let ret = fun6(0, 1);
         assert.strictEqual(ret, 0);
     });
 
-    // function fun6(v: number, v1: any): number;
+    // 测试：function fun6(v: number, v1: any): number;
     it('test fun6 boolean', function () {
         let ret = fun6(0, true);
         assert.strictEqual(ret, 0);

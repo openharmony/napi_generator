@@ -16,7 +16,7 @@ const { fun1 } = require("./out/build/Release/napitest")
 const test = require("./out/build/Release/napitest")
 var assert = require("assert");
 
-// function fun1(v: any, v1: string): number;
+// 测试：function fun1(v: any, v1: string): number;
 describe('Any fun1', function () {    
     it('test fun1 any num string', function () {
         let ret = test.fun1("1", "aa");
@@ -93,7 +93,7 @@ describe('Any fun1 array map part', function () {
     });
 });
 
-// function fun2(v: number, v1: TestClass1): number;
+// 测试：function fun2(v: number, v1: TestClass1): number;
 describe('Any fun2', function () {
     it('test fun2 interface any string', function () {
         let ret = test.fun2(15, { 'any1': 'aaa', 'focused': 'aaa' });
@@ -146,7 +146,7 @@ describe('Any fun2', function () {
     });
 });
 
-// function fun4(v: number, v1: Array<any>): number;
+// 测试：function fun4(v: number, v1: Array<any>): number;
 describe('Any fun4', function () {
     it('test fun4 Array string', function () {
         let ret = test.fun4(15,['aaa', 'bbb']);
@@ -164,7 +164,7 @@ describe('Any fun4', function () {
     });
 });
 
-// function fun5(v: string, v1: any[]): number;
+// 测试：function fun5(v: string, v1: any[]): number;
 describe('Any fun5', function () {
     it('test fun5 any string', function () {
         let ret = test.fun5('aaa',['aaa', 'bbb']);
@@ -182,7 +182,7 @@ describe('Any fun5', function () {
     });
 });
 
-// function $fun6(v: boolean, param: Array<any>): number;
+// 测试：function $fun6(v: boolean, param: Array<any>): number;
 describe('Any fun6', function () {
     it('test fun6 array string', function () {
         let ret = test.$fun6(true,['aaa', 'bbb']);
@@ -200,7 +200,7 @@ describe('Any fun6', function () {
     });    
 });
 
-// function fun8(v1: string[], v?: any): number;
+// 测试：function fun8(v1: string[], v?: any): number;
 describe('Any fun8', function () {
     it('test fun8 option any null', function () {
         let ret = test.fun8(['aaa','bbb']);

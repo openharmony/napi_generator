@@ -36,7 +36,6 @@ function parseFileAll(hFilePath) {
     // call exe file (for real runtime)
     let sysInfo = os.platform()
     let execPath = path.dirname(process.execPath)
-    // console.info("execPath : " + execPath)
     let exeFile = sysInfo === 'win32' ? path.join(execPath, "header_parser.exe") :
     path.join(execPath, "header_parser")
     cmd = exeFile + " " + hFilePath
@@ -187,7 +186,6 @@ function createFuncInfo(parseFuncInfo, isClassFunc) {
     }
 
     let parseParams = parseFuncInfo.parameters
-    // console.info("parseParams:  " +   JSON.stringify(parseParams))
     for (var i = 0; i < parseParams.length; ++i) {
         let param = createParam(parseParams[i])
         funcInfo.params.push(param)
@@ -210,7 +208,6 @@ function putFuncIntoNamespace(funcInfo, namespaces) {
             return
         }
     }
-    // NapiLog.logError('The namespace [%s] of function %s is not found.'.format(funcInfo.namespace, funcInfo.name));
 }
 
 function analyzeRootTypeDef(rootInfo, parseResult) {
@@ -225,11 +222,9 @@ function analyzeRootTypeDef(rootInfo, parseResult) {
 
 function analyzeRootFunction(rootInfo, parseResult) {
     let parseFunctions = parseResult.functions
-    // console.info("parseFunctions:  " +   JSON.stringify(parseFunctions))
     for (var i = 0; i < parseFunctions.length; ++i) {
         // 普通方法生成模板
         let funcInfo = createFuncInfo(parseFunctions[i], false)
-        //rootInfo.functions.push(funcInfo)
         if (parseFunctions[i].namespace != '') {
             // function in namespace
             putFuncIntoNamespace(funcInfo, rootInfo.namespaces)
@@ -283,7 +278,6 @@ function putClassIntoNamespace(classInfo, namespaces) {
             return
         }
     }
-    // NapiLog.logError('The namespace [%s] of class %s is not found.'.format(classInfo.namespace, classInfo.name));
 }
 
 function analyzeClasses(rootInfo, parseResult) {
@@ -462,8 +456,6 @@ function removeMarco(hFilePath, tempFilePath, macros) {
     let processedContent = '';
     // 逐行读取文件内容并处理 去除方法中的宏
     rl.on('line', (line) => {
-        // void *(CJSON_CDECL *malloc_fn)(size_t sz);
-        // CJSON_PUBLIC(const char*) cJSON_Version(void);
         // 替换使用宏的地方，保留#define宏定义
         if (line.indexOf('#define') < 0 && line.indexOf('#ifndef') < 0 && line.indexOf('#ifdef')
             && line.indexOf('#elif') && line.indexOf('#if') < 0 && line.indexOf('#else')) {
@@ -511,7 +503,6 @@ function extractMacros(headerFilePath) {
 
       // 匹配#define指令的正则表达式
       const macroRegex = /^\s*#define\s+(\w+)/gm;
-      // const macroRegex = /^\s*#define\s+(\w+)(?:\s+([^\s]+))?.*$/gm;
       let match;
       const macros = [];
 

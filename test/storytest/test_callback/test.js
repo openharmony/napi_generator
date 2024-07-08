@@ -43,12 +43,12 @@ function onCallbackVoid () {
 
 }
 
-// cb: (wid: boolean, str: string, tc2:number) => string
+// 测试：cb: (wid: boolean, str: string, tc2:number) => string
 function onCallbackfun9(wid, str, tc2) {
     return 'wid' + 'str' + 'tc2'
 }
 
-// cb: (wid: boolean) => string
+// 测试：cb: (wid: boolean) => string
 function onCallbackfun10nm(wid) {
     return 'fun10nm'
 }
@@ -58,7 +58,6 @@ function onCallbackBooleanVStr (isOK) {
     if (isOK) {
         str = 'a' + 'b'
     }
-    // return 'test aaa'
 }
 
 function onCallbackBooleanVStrRet (isOK) {
@@ -86,64 +85,64 @@ function onCallbackfun21nm(isOk) {
 }
 
 describe('Test interface callback', function () {
-    // fun11(cb: Callback<number>): void;
+    // 测试：fun11(cb: Callback<number>): void;
     it('test callback in interface fun11', function () {
         let testClass = new TestClass1();
         testClass.fun11(onCallback);
     });
 
-    // fun12(cb: Callback<void>): void;
+    // 测试：fun12(cb: Callback<void>): void;
     it('test callback in interface fun12', function () {
         let testClass = new TestClass1();
         testClass.fun12(onVoidCallback);
     });
 
-    // fun13(cb: AsyncCallback<number>): void;
+    // 测试：fun13(cb: AsyncCallback<number>): void;
     it('test callback in interface fun13', function () {
         let testClass = new TestClass1();
         testClass.fun13(onAsyncCallback);
     });
 
-    // fun14(cb: AsyncCallback<void>): void; 
+    // 测试：fun14(cb: AsyncCallback<void>): void; 
     it('test callback in interface fun14', function () {
         let testClass = new TestClass1();
         testClass.fun14(onVoidAsyncCallback);
     });
 
-    // function fun15(cb: Callback<number>): string;
+    // 测试：function fun15(cb: Callback<number>): string;
     it('test common func callback fun15', function () {
         let testClass = new TestClass1();
         testClass.fun15(onCallbackNumStr);
     });
 
-    // fun16(tt: function): void;
+    // 测试：fun16(tt: function): void;
     it('test common func callback fun16', function () {
         let testClass = new TestClass1();       
         testClass.fun16(onCallbackVoid);
     });
 
-    // fun17(tt: Function): string;
+    // 测试：fun17(tt: Function): string;
     it('test common func callback fun17', function () { 
         let testClass = new TestClass1();       
         let ret = testClass.fun17(onCallbackVoid);
             assert.strictEqual(ret, '');
     });
 
-    // fun110(cb: (wid: boolean) => string): string;
+    // 测试：fun110(cb: (wid: boolean) => string): string;
     it('test common func callback fun110', function () { 
         let testClass = new TestClass1();       
         let ret = testClass.fun110(onCallbackBooleanVStrRet);
             assert.strictEqual(ret, '');
     });
 
-    // fun111(cb: (wid: boolean) => string): boolean;
+    // 测试：fun111(cb: (wid: boolean) => string): boolean;
     it('test common func callback fun111', function () { 
         let testClass = new TestClass1();       
         let ret = testClass.fun111(onCallbackBooleanVStrRet);
             assert.strictEqual(ret, false);
     });
 
-    // fun112(cb: (wid: boolean) => string): number;
+    // 测试：fun112(cb: (wid: boolean) => string): number;
     it('test common func callback fun112', function () { 
         let testClass = new TestClass1();       
         let ret = testClass.fun112(onCallbackBooleanVStrRet);
@@ -151,43 +150,43 @@ describe('Test interface callback', function () {
     });
 
     // 待补充用例
-    // fun210(cb: (wid: boolean) => string): boolean;
-    // fun211(cb: (wid: boolean) => boolean): string;
-    // fun212(cb: (wid: boolean) => number): string;
+    // 测试：fun210(cb: (wid: boolean) => string): boolean;
+    // 测试：fun211(cb: (wid: boolean) => boolean): string;
+    // 测试：fun212(cb: (wid: boolean) => number): string;
 });
 
 describe('Test callback', function () {
-    // function fun1(cb: Callback<number>): void;
+    // 测试：function fun1(cb: Callback<number>): void;
     it('test common func callback fun1', function () {
         testObj.fun1(onCallback);
     });
 
-    // function fun2(cb: Callback<void>): void;
+    // 测试：function fun2(cb: Callback<void>): void;
     it('test common func callback fun2', function () {
         testObj.fun2(onVoidCallback);
     });
 
-    // function fun3(cb: AsyncCallback<number>): void;
+    // 测试：function fun3(cb: AsyncCallback<number>): void;
     it('test common func callback fun3', function () {
         testObj.fun3(onAsyncCallback);
     });
 
-    // function fun4(cb: AsyncCallback<void>): void;
+    // 测试：function fun4(cb: AsyncCallback<void>): void;
     it('test common func callback fun4', function () {
         testObj.fun4(onVoidAsyncCallback);
     });
 
-    // function fun5(cb: Callback<number>): string;
+    // 测试：function fun5(cb: Callback<number>): string;
     it('test common func callback fun5', function () {        
         testObj.fun5(onCallbackNumStr);
     });
 
-    // function fun6(tt: function): void;
+    // 测试：function fun6(tt: function): void;
     it('test common func callback fun6', function () {        
         testObj.fun5(onCallbackVoid);
     });
     
-    // fun7(tt: Function): string;
+    // 测试：fun7(tt: Function): string;
     it('test common func callback fun7', function () {        
        let ret = testObj.fun7(onCallbackVoid);
         assert.strictEqual(ret, '');
@@ -195,56 +194,56 @@ describe('Test callback', function () {
 });
 
 describe('Test namespace arrow callback ', function () {
-    // function fun8(cb: (wid: boolean) => void): string;
+    // 测试：function fun8(cb: (wid: boolean) => void): string;
 it('test common func callback fun8', function () {
 let ret = ''   
 ret = testObj.fun8(onCallbackBooleanVStr);
 assert.strictEqual(ret, '');
 });
 
-// function fun9(cb: (wid: boolean, str: string, tc2:number) => string): string;
+// 测试：function fun9(cb: (wid: boolean, str: string, tc2:number) => string): string;
 it('test common func callback fun9', function () {
 let ret = ''   
 ret = testObj.fun9(onCallbackfun9);
 assert.strictEqual(ret, '');
 });
 
-// function fun10nm(cb: (wid: boolean) => string): string;
+// 测试：function fun10nm(cb: (wid: boolean) => string): string;
 it('test common func callback fun10nm', function () {
 let ret = ''   
 ret = testObj.fun10nm(onCallbackfun10nm);
 assert.strictEqual(ret, '');
 });
 
-// function fun11nm(cb: (wid: boolean) => string): boolean;
+// 测试：function fun11nm(cb: (wid: boolean) => string): boolean;
 it('test common func callback fun11nm', function () {
 let ret = ''   
 ret = testObj.fun11nm(onCallbackfun10nm);
 assert.strictEqual(ret, false);
 });
 
-// function fun12nm(cb: (wid: boolean) => string): number;
+// 测试：function fun12nm(cb: (wid: boolean) => string): number;
 it('test common func callback fun12nm', function () {
 let ret = ''   
 ret = testObj.fun12nm(onCallbackfun10nm);
 assert.strictEqual(ret, 0);
 });
 
-// function fun20nm(cb: (wid: boolean) => string): boolean;
+// 测试：function fun20nm(cb: (wid: boolean) => string): boolean;
 it('test common func callback fun20nm', function () {
 let ret = ''   
 ret = testObj.fun20nm(onCallbackBooleanVStrRet);
 assert.strictEqual(ret, false);
 });
 
-// function fun21nm(cb: (wid: boolean) => boolean): string;
+// 测试：function fun21nm(cb: (wid: boolean) => boolean): string;
 it('test common func callback fun21nm', function () {
 let ret = ''   
 ret = testObj.fun21nm(onCallbackfun21nm);
 assert.strictEqual(ret, '');
 });
 
-// function fun22nm(cb: (wid: boolean) => number): string;
+// 测试：function fun22nm(cb: (wid: boolean) => number): string;
 it('test common func callback fun22nm', function () {
 let ret = ''   
 ret = testObj.fun22nm(onCallbackfun22nm);
