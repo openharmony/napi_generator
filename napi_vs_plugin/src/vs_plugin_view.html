@@ -110,7 +110,7 @@
                 mode = 0;
             }
         });
-    }
+    };
 
     function sendParamMsg() {
         var fileNames = document.getElementById("interfaceFile").value;
@@ -125,7 +125,7 @@
             numberType: numberType,
             importIsCheck: importCheck,
             buttonName: buttonName,
-        }
+        };
         vscode.postMessage(result);
     }
 
@@ -133,21 +133,21 @@
         var result = {
             msg: "selectInterPath",
             mode: mode
-        }
+        };
         vscode.postMessage(result);
     }
 
     function selectPath(message) {
         var result = {
             msg: message
-        }
+        };
         vscode.postMessage(result);
     }
 
     function cancel() {
         var result = {
             msg: "cancel"
-        }
+        };
         vscode.postMessage(result);
     }
 
@@ -160,7 +160,7 @@
         genDir: genDir,
         mode: mode,
         interFile: document.getElementById("interfaceFile").value
-      }
+      };
       vscode.postMessage(result);
     }
 
@@ -182,7 +182,7 @@
         } else {
             console.log("param is error");
         }
-    })
+    });
 
     function inputChange() {
         var fileNames = document.getElementById("interfaceFile").value;
