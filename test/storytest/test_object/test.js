@@ -25,7 +25,7 @@ describe('Object interface', function () {
     }
 
     let tc1 = new TestClass1(); 
-    // fun1(v: Object): number;
+    // 测试：fun1(v: Object): number;
     it('test TestClass1 fun1', function () {
         let ret = tc1.fun1({"age":10,"name":"nameValue"});
         assert.strictEqual(ret, 0);
@@ -39,25 +39,25 @@ describe('Object interface', function () {
         assert.strictEqual(ret,0)
     });
 
-    // fun2(num: number, v: Object): number;
+    // 测试：fun2(num: number, v: Object): number;
     it('test TestClass1 fun2', function () {
         let ret = tc1.fun2(2, {"age":10,"name":"nameValue"});
         assert.strictEqual(ret, 0);
     });
 
-    // fun3(num: number, v: Object, Sam: string): number;
+    // 测试：fun3(num: number, v: Object, Sam: string): number;
     it('test TestClass1 fun3', function () {
         let ret = tc1.fun3(2, {"age":10,"name":"nameValue"}, "test4");
         assert.strictEqual(ret, 0);
     });
 
-    // fun4(numcc: number): Object;
+    // 测试：fun4(numcc: number): Object;
     it('test TestClass1 fun4', function () {      
         let ret = tc1.fun4(2);
         assert.deepStrictEqual(typeof ret, 'object');
     });
 
-    // fun9(): number;
+    // 测试：fun9(): number;
     it('test TestClass1 fun9', function () {
         let ret = tc1.fun9();
         assert.strictEqual(ret, 0);
@@ -72,7 +72,7 @@ describe('Object function', function () {
         RADIO_1XRTT : 2,
     }
     
-    // function fun5(v1: Object): number;
+    // 测试：function fun5(v1: Object): number;
     it('test fun5', function () {        
         let ret = fun5({"name":"sam","age":10});
         assert.strictEqual(ret, 0);
@@ -86,19 +86,19 @@ describe('Object function', function () {
         assert.strictEqual(ret, 0);
     });
 
-    // function fun6(num1: number, v2: Object): number;
+    // 测试：function fun6(num1: number, v2: Object): number;
     it('test fun6', function () {
         let ret = fun6(2, {"age":10,"name":"nameValue"});
         assert.strictEqual(ret, 0);
     });
 
-    // function fun7(num2: number, v3: Object, nike: string): number;
+    // 测试：function fun7(num2: number, v3: Object, nike: string): number;
     it('test fun7', function () { 
         let ret = fun7(2, {"age":10,"name":"nameValue"}, "test4");
         assert.strictEqual(ret, 0);
     });
 
-    // function fun8(dd: number): Object;
+    // 测试：function fun8(dd: number): Object;
     it('test fun8', function () {
         let ret = fun8(2);
         assert.deepStrictEqual(typeof ret, 'object');

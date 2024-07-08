@@ -48,13 +48,15 @@ describe('Class', function () {
         assert.strictEqual(retJson, '[]');
     });
 
-    // export class Woman {
-    //   constructor(name_: string, age_: number, isMarried_: boolean, status_: TestStatus;);
-    //   w_name: string;
-    //   w_age: number;
-    //   w_isMarried: boolean;
-    //   w_status: TestStatus;
-    // }
+    /* æµ‹è¯•
+    export class Woman {
+      constructor(name_: string, age_: number, isMarried_: boolean, status_: TestStatus;);
+      w_name: string;
+      w_age: number;
+      w_isMarried: boolean;
+      w_status: TestStatus;
+    }
+    */
     it('test Woman constructor', function () {
         let tc = new Woman("haha", 22, true, test.TestStatus.START_ABILITY);
         console.info("w_name is " + tc.w_name);
@@ -63,12 +65,14 @@ describe('Class', function () {
         console.info("w_status is " + tc.w_status);
     });
 
-    // export class Child {
-    //   constructor(name_: string, age_: number, status_: TestEnumString);
-    //   w_name: string;
-    //   w_age: number;
-    //   w_status: TestEnumString;
-    // }
+    /* æµ‹è¯•
+    export class Child {
+      constructor(name_: string, age_: number, status_: TestEnumString);
+      w_name: string;
+      w_age: number;
+      w_status: TestEnumString;
+    }
+    */
     it('test Child constructor', function () {
         let tc = new Child("xixi", 10, test.TestEnumString.ACTION_SEARCH);
         console.info("w_name is " + tc.w_name);
@@ -78,7 +82,6 @@ describe('Class', function () {
 });
 
 describe('Class Exception Test', function () {
-    // Òì³£²âÊÔ£ºclass¹¹Ôìº¯Êý°üº¬ÊýÖµÐÍÃ¶¾ÙµÄÒì³£²âÊÔ
     it('test Woman constructor exception', function () {
         let ret = false;
         try {
@@ -94,7 +97,6 @@ describe('Class Exception Test', function () {
         assert.strictEqual(ret, true);
     });
 
-    // Òì³£²âÊÔ£ºclass¹¹Ôìº¯Êý°üº¬×Ö·ûÐÍÃ¶¾ÙµÄÒì³£²âÊÔ
     it('test Child constructor exception', function () {
         let ret = false;
         try {
@@ -142,101 +144,98 @@ describe('Class part2', function () {
         assert.deepStrictEqual(typeof ret, 'undefined');
     });
 
-    // fun9(manA: Man): string;
-    // class Man 
-    // {
-    //     name: string;
-    //     age: number;
-    // }
+    /* æµ‹è¯•ï¼šfun9(manA: Man): string;
+    class Man 
+    {
+        name: string;
+        age: number;
+    }
+    */
     it('test TestClass1 fun9', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun9({ name: "testaa", age: 10});
         assert.strictEqual(ret, '');
     });
 
-    // fun10(v: Image): Image;
-    // export class Image {
-    //     width: number;
-    //     height: number;
-    //     toDataURL(type?: string, quality?: number): string;
-    // }
+    /* æµ‹è¯•ï¼šfun10(v: Image): Image;
+    export class Image {
+        width: number;
+        height: number;
+        toDataURL(type?: string, quality?: number): string;
+    }
+    */
     it('test TestClass1 fun10', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun10({ width: 5, height: 10});
         assert.strictEqual(ret, '');
     });
 
-    // fun11(v: LaunchReason): string;
+    // æµ‹è¯•ï¼šfun11(v: LaunchReason): string;
     it('test TestClass1 fun11', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun11(test.LaunchReason.START_ABILITY);
         assert.strictEqual(ret, '');
     });
 
-    // fun12(v: TestStatus): number;
-    // export enum TestStatus {
-    //     UNKNOWN = 0,
-    //     START_ABILITY = 1,
-    //     CALL = 2,
-    //     CONTINUATION = 3,
-    // }
+    /* æµ‹è¯•ï¼šfun12(v: TestStatus): number;
+    export enum TestStatus {
+        UNKNOWN = 0,
+        START_ABILITY = 1,
+        CALL = 2,
+        CONTINUATION = 3,
+    }
+    */
     it('test TestClass1 fun12', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun12(test.TestStatus.CALL);
         assert.strictEqual(ret, '');
     });
 
-    // fun13(v: TestEnumString): number;
-    // export enum TestEnumString {
-    //     ACTION_HOME = 'ohos.want.action.home',
-    //     ACTION_DIAL = 'ohos.want.action.dial',
-    //     ACTION_SEARCH = 'ohos.want.action.search',
-    //     ACTION_WIRELESS_SETTINGS = 'ohos.settings.wireless',
-    // }    
+    /* æµ‹è¯•ï¼šfun13(v: TestEnumString): number;
+    export enum TestEnumString {
+        ACTION_HOME = 'ohos.want.action.home',
+        ACTION_DIAL = 'ohos.want.action.dial',
+        ACTION_SEARCH = 'ohos.want.action.search',
+        ACTION_WIRELESS_SETTINGS = 'ohos.settings.wireless',
+    }
+    */
     it('test TestClass1 fun13', function () {
         let tc = new test.TestClass1();
         let ret = tc.fun13(test.TestEnumString.ACTION_DIAL);
         assert.strictEqual(ret, '');
     });
-
-    // interface testClassUse {
-    //     v0: string;
-    //     //v1: testClassLater;
-    //     // funceUse(n0: number): string;
-    //     funceUse(n0: testClassLater): string;
-    // }
 });
 
 describe('TestClass2', function () {    
-    // func1(name : string, fp3: {nm: string, age: number}): string;
+    // æµ‹è¯•ï¼šfunc1(name : string, fp3: {nm: string, age: number}): string;
     it('test TestClass2 func1', function () {
         let tc = new TestClass2()
         let ret = tc.func1("func1p1", {nm:"aaa",age:18,flag:false});
         //assert.strictEqual(ret.read, 0);
     });
 
-    // func2(input: string): { read: number; written: number; flag: boolean };
+    // æµ‹è¯•ï¼šfunc2(input: string): { read: number; written: number; flag: boolean };
     it('test TestClass2 func2', function () {
         let tc = new TestClass2()
         let ret = tc.func2("name");
         //assert.strictEqual(ret.read, 0);
     });
 
-    // func3(from: string, to: string): Promise<{result: number, errMsg: string, isT: boolean}>;
+    // æµ‹è¯•ï¼šfunc3(from: string, to: string): Promise<{result: number, errMsg: string, isT: boolean}>;
     it('test TestClass2 func3', function () {
         let tc = new TestClass2()
         let ret = tc.func3("from", "to");
         //assert.strictEqual(ret.read, 0);
     });
 
-    // func4(from: string, to: string): Promise<{result: number; errMsg: string; isT: boolean}>;
+    // æµ‹è¯•ï¼šfunc4(from: string, to: string): Promise<{result: number; errMsg: string; isT: boolean}>;
     it('test TestClass2 func4', function () {
         let tc = new TestClass2()
         let ret = tc.func4("responeFrom", "responseTo");
         //assert.strictEqual(ret.read, 0);
     });
 
-    // func5(v1: string, v2: number, v3: boolean);
+    // æµ‹è¯•ï¼šfunc5(v1: string, v2: number, v3: boolean);
     it('test TestClass2 func5', function () {
       let tc = new TestClass2()
       tc.func5("func5", 5, false);
@@ -244,15 +243,17 @@ describe('TestClass2', function () {
 });
 
 describe('Class Nest', function () {
-  // class Demo {
-  //     equals(other: Demo): boolean;
-  //     handleCallback(): void;
-  //     intPro: number;
-  //     strPro: string;
-  //     boolPro: boolean;
-  //     inter: aa;
-  //     type: Type;
-  // }
+  /* æµ‹è¯•
+  class Demo {
+      equals(other: Demo): boolean;
+      handleCallback(): void;
+      intPro: number;
+      strPro: string;
+      boolPro: boolean;
+      inter: aa;
+      type: Type;
+  }
+  */
   it('test Demo equals', function () {
       let tc1 = new test.Demo();
       let ret = tc1.equals({
@@ -265,23 +266,25 @@ describe('Class Nest', function () {
       assert.strictEqual(ret, false);
   });
 
-    // class Test {
-    //     type: Type;
-    //     func(param: Type): boolean;
-    // }
+  /* æµ‹è¯•
+    class Test {
+        type: Type;
+        func(param: Type): boolean;
+    }
+    */
     it('test Test func', function () {
         let tc1 = new test.Test();
         let ret = tc1.func(test.Type.typeB);
         assert.strictEqual(ret, false);
     });
 
-    // function funcTest(v: Type): boolean;
+    // æµ‹è¯•ï¼šfunction funcTest(v: Type): boolean;
     it('test funcTest', function () {
         let ret = test.funcTest(test.Type.typeA);
         assert.strictEqual(ret, false);
     });
 
-    // function funcTest2(v: Test): boolean;
+    // æµ‹è¯•ï¼šfunction funcTest2(v: Test): boolean;
     it('test funcTest2', function () {
         let ret = test.funcTest2({type: test.Type.typeB});
         assert.strictEqual(ret, false);

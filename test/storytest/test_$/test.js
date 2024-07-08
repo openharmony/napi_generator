@@ -17,32 +17,36 @@ const { Test, Person } = require("./out/build/Release/napitest")
 var assert = require("assert");
 
 describe('$', function () {
-    // interface Test {
-    //     $name: string;
-    //     $listInputMethod(V: string): void;
-    // }
+  /* 测试
+    interface Test {
+        $name: string;
+        $listInputMethod(V: string): void;
+    }
+    */
     it('test $listInputMethod', function () {
         let te = new Test();
         let ret = te.$listInputMethod("1");
         assert.deepStrictEqual(typeof ret, 'undefined');
     });
 
-    //     class Person {
-    //     static $getMaxAge(v1: string): number;
-    // }
+    /* 测试
+        class Person {
+        static $getMaxAge(v1: string): number;
+    }
+    */
     it('test $getMaxAge', function () {
         let pe = new Person();
         let ret = pe.$getMaxAge("1");
         assert.strictEqual(ret, 0);
     });
 
-    // function $fun2(v: string): string;
+    // 测试：function $fun2(v: string): string;
     it('test $fun2', function () {
         let ret = test.$fun2("1");
         assert.strictEqual(ret, '');
     });
 
-    // function fun3(v: Test): number;
+    // 测试：function fun3(v: Test): number;
     it('test fun3', function () {
         let ret = test.fun3('aaaaa');
         assert.strictEqual(ret, 0);
