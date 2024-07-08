@@ -17,37 +17,37 @@ var assert = require("assert");
 
 describe('array_map', function () {
     
-    // function fun1(v: Array<{[key: string]:string}>): number;
+    // 测试：function fun1(v: Array<{[key: string]:string}>): number;
     it('test fun1', function () {
         let ret = fun1([{"age":"a"}, {"name":"b"}]);
         assert.strictEqual(ret, 0);
     });
     
-    // function fun2(v: Array<{[key: string]:number}>): number;
+    // 测试：function fun2(v: Array<{[key: string]:number}>): number;
     it('test fun2', function () {
         let ret = fun2([{"age":1}, {"name":2}]);
         assert.strictEqual(ret, 0);
     });
 
-    // function fun3(v: Array<{[key: string]:boolean}>): number;
+    // 测试：function fun3(v: Array<{[key: string]:boolean}>): number;
     it('test fun3', function () {
         let ret = fun3([{"age":true}, {"name":false}]);
         assert.strictEqual(ret, 0);
     });
     
-    // function fun8(v: Array<Map<string, string>>): number;
+    // 测试：function fun8(v: Array<Map<string, string>>): number;
     it('test fun8', function () {
         let ret = fun8([{"age":"a"}, {"name":"b"}]);
         assert.strictEqual(ret, 0);
     });
 
-    // function fun9(v: Array<Map<string, number>>): number;
+    // 测试：function fun9(v: Array<Map<string, number>>): number;
     it('test fun9', function () {
         let ret = fun9([{"age":1}, {"name":2}]);
         assert.strictEqual(ret, 0);
     });
 
-    // function fun10(v: Array<Map<string, boolean>>): number;
+    // 测试：function fun10(v: Array<Map<string, boolean>>): number;
     it('test fun10', function () {
         let ret = fun10([{"age":true}, {"name":false}]);
         assert.strictEqual(ret, 0);

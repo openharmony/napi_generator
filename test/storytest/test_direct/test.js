@@ -20,14 +20,14 @@ describe('Number', function () {
         assert.strictEqual(ret, 0);
     }
 
-    // fun1(v: number): number;    
+    // 测试：fun1(v: number): number;    
     it('test TestClass1 fun1', function () {
         let tc1 = new TestClass1();
         let ret = tc1.fun1(1);
         assert.strictEqual(ret, 0);
     });
 
-    // fun2(v: string): Result;
+    // 测试：fun2(v: string): Result;
     it('test TestClass1 fun2', function () {
         let tc1 = new TestClass1();
         let ret = tc1.fun2('aaa');
@@ -37,7 +37,7 @@ describe('Number', function () {
 });
 
 describe('Direct', function () {
-  // function func1(v1: string, v2: number, v3: boolean);
+  // 测试：function func1(v1: string, v2: number, v3: boolean);
   it('test func1', function () {
       func1('aaa', 10, true);
   });
