@@ -112,7 +112,7 @@ class Tool {
         Tool.BACKUP_DIRECTORY[bkp] = Tool.DIRECTORY_STACK.concat([process.cwd()]);
     }
     static recoverd(bkp) {
-        Tool.DIRECTORY_STACK = [].concat(Tool.BACKUP_DIRECTORY[bkp]);
+        Tool.DIRECTORY_STACK = [].concat(Tool.BACKUP_DIRECTORY[bkp])
         Tool.popd();
     }
 
@@ -123,7 +123,7 @@ class Tool {
         CMAKE: 3,
         SCONS: 4,
         VS: 5,
-    };
+    }
     static GENERATE_TARGET_TYPE = Tool.TARGET_TYPE.GN;
 
     static setTarget(type) {//设置生成目标
@@ -225,6 +225,6 @@ catch (err) {
 
 module.exports = {
     Tool
-};
+}
 
 const Logger = require('./logger');
