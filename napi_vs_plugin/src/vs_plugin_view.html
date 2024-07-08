@@ -172,20 +172,20 @@
         
         const message = event.data.msg;
         const path = event.data.path;
-        if(message == "selectInterPath") {
+        if (message == "selectInterPath") {
             document.getElementById("interfaceFile").value = path;
             fillInputDir(path, message);
-        } else if(message == "selectGenPath") {
+        } else if (message == "selectGenPath") {
             document.getElementById("genFile").value = path;
-        } else if(message == "selectBuildPath") {
+        } else if (message == "selectBuildPath") {
             document.getElementById("buildFile").value = path;
         } else {
-            console.log("param is error");
+            console.log('param is error');
         }
     });
 
     function inputChange() {
-        var fileNames = document.getElementById("interfaceFile").value;
+        var fileNames = document.getElementById('interfaceFile').value;
         fillInputDir(fileNames);
     }
 
