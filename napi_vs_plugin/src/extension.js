@@ -155,7 +155,7 @@ function register(context, command) {
       var result = {
         msg: "selectInterPath",
         path: tt ? uri.fsPath : ""
-      }
+      };
       globalPanel.webview.postMessage(result);
     }
   });
