@@ -22,7 +22,7 @@ describe('test_Interface', function () {
         assert.strictEqual(ret, '');
     }
 
-    // function getProperties(callback: AsyncCallback<WindowProperties>): void;
+    // 测试：function getProperties(callback: AsyncCallback<WindowProperties>): void;
     it('test getProperties', function () {
         getProperties().then(abc);
     });
@@ -31,9 +31,11 @@ describe('test_Interface', function () {
 describe('test_Interface2', function () {
     let tc = new NodeSayHello()
     it('test interfaceFunc', function () {
-        // interface NodeSayHello {
-        //     interfaceFunc(v0: string, v1: WindowType): boolean;
-        // }
+      /* 测试
+        interface NodeSayHello {
+            interfaceFunc(v0: string, v1: WindowType): boolean;
+        }
+        */
         let ret = tc.interfaceFunc('hello', 5);
         assert.strictEqual(ret, false);
     });
@@ -42,9 +44,11 @@ describe('test_Interface2', function () {
 describe('test_Class', function () {
     let tc1 = new NodeSayHi()
 
-    // export class NodeSayHi {
-    //     classFunc(v0: WindowType, v1: number): string;   // Class中的方法参数是枚举
-    // }
+    /* 测试
+    export class NodeSayHi {
+        classFunc(v0: WindowType, v1: number): string;   // Class中的方法参数是枚举
+    }
+    */
     it('test classFunc', function () {
         let ret = tc1.classFunc(6, 8);
         assert.strictEqual(ret, '');
@@ -53,7 +57,7 @@ describe('test_Class', function () {
 
 describe('test_Function', function () {
     it('test enumParamFunc', function () {
-        // function enumParamFunc(v0: boolean, v1: WindowType): number;
+        // 测试：function enumParamFunc(v0: boolean, v1: WindowType): number;
         let ret = enumParamFunc(true, WindowType.TYPE_APP);
         assert.strictEqual(ret, 0);
     });

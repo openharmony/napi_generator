@@ -40,9 +40,11 @@ describe('test 1 on', function () {
         console.info('onCallback message = ' + message)
     }
 
-    // interface TestClass1 {
-    //     on(type: string, callback: Callback<boolean>): void; 
-    // }
+    /* 测试
+    interface TestClass1 {
+        on(type: string, callback: Callback<boolean>): void; 
+    }
+    */
     let tc1 = new TestClass1(); 
     it('test TestClass1 on', function () {
         ret = false;
@@ -50,13 +52,15 @@ describe('test 1 on', function () {
         tc1.off('OnEvent', onCallback);
     });
 
-    // interface ModelEvent{
-    //     topic: string;
-    //     message: string;
-    // }
-    // interface TestClass2 {
-    //     on(type: string, callback: Callback<ModelEvent>): void; // Callback为interface
-    // }
+    /* 测试
+    interface ModelEvent{
+        topic: string;
+        message: string;
+    }
+    interface TestClass2 {
+        on(type: string, callback: Callback<ModelEvent>): void; // Callback为interface
+    }
+    */
     let tc2 = new TestClass2(); 
     it('test TestClass2 on', function () {
         ret = false;
@@ -64,9 +68,11 @@ describe('test 1 on', function () {
         tc2.off('OnEvent', onCallback2);
     });
 
-    // interface TestClass3 {
-    //     on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
-    // }
+    /* 测试
+    interface TestClass3 {
+        on(type: string, callback: Callback<{topic:string,message:string}>): void; // Callback为匿名interface
+    }
+    */
     let tc3 = new TestClass3(); 
     it('test TestClass3 on', function () {
         ret = false;
@@ -91,9 +97,11 @@ describe('test 2 on', function () {
         console.info('onCallback2 inter.message = ' + inter.message)
     }
     
-    // interface TestClass4 {
-    //   on(type: "heartbeat", callback: (wid: boolean) => void): void; // 箭头函数支持
-    // }
+    /* 测试
+    interface TestClass4 {
+      on(type: "heartbeat", callback: (wid: boolean) => void): void; // 箭头函数支持
+    }
+    */
     let tc4 = new TestClass4(); 
     it('test TestClass4 on', function () {
         ret = false;
@@ -101,9 +109,11 @@ describe('test 2 on', function () {
         tc4.off('heartbeat', onCallback);
     });
 
-    // interface TestClass5 {
-    //   on(type: "inputStart", callback: (wid: boolean, modeEv: ModelEvent) => void): void // 回调函数参数个数大于1，支持
-    // }
+    /* 测试
+    interface TestClass5 {
+      on(type: "inputStart", callback: (wid: boolean, modeEv: ModelEvent) => void): void // 回调函数参数个数大于1，支持
+    }
+    */
     let tc5 = new TestClass5(); 
     it('test TestClass5 on', function () {
         ret = false;
@@ -112,7 +122,7 @@ describe('test 2 on', function () {
     });
 
     // namespace域中有多个on function
-    // function on(type: "onEvents", callback: (wid: number) => void): void; // 箭头函数支持
+    // 测试：function on(type: "onEvents", callback: (wid: number) => void): void; // 箭头函数支持
     it('test function on', function () {
       ret = false;
       on('onEvents', onCallback);
@@ -145,9 +155,11 @@ describe('test 3 on', function () {
       console.info('onCallback3 inter.message = ' + inter.message)
     }
 
-    // interface TestClass6 {
-    //   on(type: string, asyncCallback: AsyncCallback<boolean>): void;
-    // }
+    /* 测试
+    interface TestClass6 {
+      on(type: string, asyncCallback: AsyncCallback<boolean>): void;
+    }
+    */
     let tc6 = new TestClass6(); 
     it('test TestClass6 on', function () {
         ret = false;
@@ -155,9 +167,11 @@ describe('test 3 on', function () {
         tc6.off('test1', onCallback);
     });
   
-    // interface TestClass7 {
-    //   on(type: string, asyncCallback: AsyncCallback<ModelEvent>): void; // Callback为interface
-    // }
+    /* 测试
+    interface TestClass7 {
+      on(type: string, asyncCallback: AsyncCallback<ModelEvent>): void; // Callback为interface
+    }
+    */
     let tc7 = new TestClass7();
     it('test TestClass7 on', function () {
         ret = false;
@@ -168,27 +182,27 @@ describe('test 3 on', function () {
     // interface中有多个on
     let tc10 = new TestClass10(); 
     it('test TestClass10 on', function () {
-        // on(type: "heartbeat", callback: Callback<boolean>): void;
+        // 测试：on(type: "heartbeat", callback: Callback<boolean>): void;
         ret = false;
         tc10.on('heartbeat', onCallback);
         tc10.off('heartbeat');
 
-        // on(type: "enableChange", callback: Callback<ModelEvent>): void;
+        // 测试：on(type: "enableChange", callback: Callback<ModelEvent>): void;
         ret = false;
         tc10.on('enableChange', onCallback2);
         tc10.off('enableChange');
 
-        // on(type: string, asyncCallback: AsyncCallback<string>): void;
+        // 测试：on(type: string, asyncCallback: AsyncCallback<string>): void;
         ret = false;
         tc10.on('test01', onCallback);
         tc10.off('test01');
 
-        // on(type: string, callback: (wid: number) => void): void;
+        // 测试：on(type: string, callback: (wid: number) => void): void;
         ret = false;
         tc10.on('test02', onCallback);
         tc10.off('test02');
 
-        // on(type: "inputStart", callback: (wid: boolean, modeEv: ModelEvent) => void): void 
+        // 测试：on(type: "inputStart", callback: (wid: boolean, modeEv: ModelEvent) => void): void 
         ret = false;
         tc10.on('inputStart', onCallback3);
         tc10.off('inputStart');
@@ -196,14 +210,14 @@ describe('test 3 on', function () {
 });
 
 describe('test register/unRegister', function () {
-    // function registerNamespacefunc20(cb: Function);
-    // function unRegisterNamespacefunc20(cb: Function);
+    // 测试：function registerNamespacefunc20(cb: Function);
+    // 测试：function unRegisterNamespacefunc20(cb: Function);
 
-    // function registerNamespacefunc21(cb : (wid: number) => string);
-    // function unRegisterNamespacefunc21(cb : (wid: number) => string);
+    // 测试：function registerNamespacefunc21(cb : (wid: number) => string);
+    // 测试：function unRegisterNamespacefunc21(cb : (wid: number) => string);
 
-    // function registerNamespacefunc22(cb : Callback<boolean>);
-    // function unRegisterNamespacefunc22(cb : Callback<boolean>);   
+    // 测试：function registerNamespacefunc22(cb : Callback<boolean>);
+    // 测试：function unRegisterNamespacefunc22(cb : Callback<boolean>);   
 
     // cb: (wid: number) => string
     function onCallbackfun10nm(wid) {
@@ -225,17 +239,6 @@ describe('test register/unRegister', function () {
     
 });
 
-// interface TestClass11 {
-//     registerTestfunc11(cb: Function);
-//     unRegisterTestfunc11(cb: Function);
-
-//     registerTestfunc12(cb : (wid: number) => string);
-//     unRegisterTestfunc12(cb : (wid: number) => string);
-
-//     registerTestfunc13(cb : Callback<boolean>);
-//     unRegisterTestfunc13(cb : Callback<boolean>);
-// }
-
 function callbackTest14(ret1, ret2) {
     console.info("SayInfo.from = " + ret1.from)
     console.info("SayInfo.fromId = " + ret1.fromId)
@@ -249,12 +252,14 @@ function callbackTest14(ret1, ret2) {
     console.info("TestOptional.v5 = " + ret2.v5)
 }
 
-// interface TestClass12 {
-//   registerTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
-//   unRegisterTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
-// }
-// function registerNamespacefunc23(cb: (wid: SayInfo, test: TestOptional) => void);
-// function unRegisterNamespacefunc23(cb: (wid: SayInfo, test: TestOptional) => void);
+/* 测试
+interface TestClass12 {
+  registerTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
+  unRegisterTestfunc14(cb: (wid: SayInfo, test: TestOptional) => void);
+  }
+  function registerNamespacefunc23(cb: (wid: SayInfo, test: TestOptional) => void);
+  function unRegisterNamespacefunc23(cb: (wid: SayInfo, test: TestOptional) => void);
+*/
 describe('test register/unRegister callback interface/type param is optional', function () {
     let tc12 = new TestClass12();      
     it('test TestClass12 registerTestfunc14', function () {

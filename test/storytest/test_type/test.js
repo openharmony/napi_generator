@@ -18,44 +18,44 @@ var assert = require("assert");
 const { consumers } = require("stream");
 
 describe('type function', function () {  
-  // function fun1(v: Plant): number;
+  // 测试：function fun1(v: Plant): number;
   it('test fun1', function () {
     let ret = test.fun1({ tomato: 'iutluhkd', tomatoId: 52, isTomato: true });
     assert.deepStrictEqual(ret, 0);
   });
 
-  // function fun2(v: boolean): Plant;
+  // 测试：function fun2(v: boolean): Plant;
   it('test fun2', function () {
     let ret = test.fun2(true);
     let retJson = JSON.stringify(ret);
     assert.strictEqual(retJson, '{"tomato":"","tomatoId":0,"isTomato":false}');
   });
 
-  // function fun3(v0: MyString, v1: MyNumberType, v2: MyBool): boolean;
+  // 测试：function fun3(v0: MyString, v1: MyNumberType, v2: MyBool): boolean;
   it('test fun3', function () {
     let ret = test.fun3('missssss', 24, false);
     assert.deepStrictEqual(ret, false);
   });
 
-  // function fun4(v: string): MyString;
+  // 测试：function fun4(v: string): MyString;
   it('test fun4', function () {
     let ret = test.fun4('aaa');
     assert.deepStrictEqual(ret, '');
   });
 
-  // function fun5(v: number): MyNumberType;
+  // 测试：function fun5(v: number): MyNumberType;
   it('test fun5', function () {
     let ret = test.fun5(22);
     assert.deepStrictEqual(ret, 0);
   });
 
-  // function fun6(v: boolean): MyBool;
+  // 测试：function fun6(v: boolean): MyBool;
   it('test fun6', function () {
     let ret = test.fun6(true);
     assert.deepStrictEqual(ret, false);
   });
 
-  // function fun7(v: MyUnion): number;
+  // 测试：function fun7(v: MyUnion): number;
   it('test fun7', function () {
     let ret = test.fun7(true);
     assert.deepStrictEqual(ret, 0);
@@ -65,7 +65,7 @@ describe('type function', function () {
     assert.deepStrictEqual(ret3, 0);
   });
 
-  // function fun8(v: MyEnumType): string;
+  // 测试：function fun8(v: MyEnumType): string;
   it('test fun8', function () {
     let ret = test.fun8('keyup');
     assert.deepStrictEqual(ret, '');
@@ -73,13 +73,14 @@ describe('type function', function () {
     assert.deepStrictEqual(ret2, '');
   });
 
-  // function fun9(v: Flower): string;
-  // type Flower = 
-  // {
-  //   name: string;
-  //   Id: number;
-  //   isMoreFlower: boolean;
-  // }
+  /* 测试：function fun9(v: Flower): string;
+  type Flower = 
+  {
+    name: string;
+    Id: number;
+    isMoreFlower: boolean;
+  }
+  */
   it('test fun9', function () {
     let ret = test.fun9({ name: 'mudan', Id: 10, isMoreFlower: true });
     assert.deepStrictEqual(ret, '');
@@ -89,21 +90,23 @@ describe('type function', function () {
 });
 
 describe('Type Function', function () {
-    // type OptionalTest = 
-    // {
-    //   ttt: number;
-    //   param1?: string;
-    //   param2?: number;
-    //   param3?: boolean;
-    //   param4?: Array<number>;
-    //   param5?: string[];
-    //   param6: Array<boolean>;
-    //   param7?: Map<string, string>;
-    //   param8?: {[key: string]: number};
-    //   param9: Map<string, boolean>;
-    //   param10?: boolean | number | string;
-    // }
-    // function fun10(v: OptionalTest): string;
+  /* 测试
+    type OptionalTest = 
+    {
+      ttt: number;
+      param1?: string;
+      param2?: number;
+      param3?: boolean;
+      param4?: Array<number>;
+      param5?: string[];
+      param6: Array<boolean>;
+      param7?: Map<string, string>;
+      param8?: {[key: string]: number};
+      param9: Map<string, boolean>;
+      param10?: boolean | number | string;
+    }
+    function fun10(v: OptionalTest): string;
+    */
     it('test fun10', function () {
         let ret = test.fun10(
             { ttt: 11, param1: "param", param2: 20, param3: false,
@@ -135,35 +138,35 @@ describe('Type Function', function () {
 });
 
 describe('Interface', function () {
-  // catFunc1(v: MyString): MyString;
+  // 测试：catFunc1(v: MyString): MyString;
   it('test Animal catFunc1', function () {
       let tc1 = new Animal();
       let ret = tc1.catFunc1('cat');
       assert.deepStrictEqual(ret, '');
   });
 
-  // catFunc2(v: MyNumberType): MyNumberType;
+  // 测试：catFunc2(v: MyNumberType): MyNumberType;
   it('test Animal catFunc2', function () {
       let tc = new Animal();
       let ret = tc.catFunc2(23);
       assert.deepStrictEqual(ret, 0);
   });
 
-  // catFunc3(v: MyBool): MyBool;
+  // 测试：catFunc3(v: MyBool): MyBool;
   it('test Animal catFunc3', function () {
       let tc = new Animal();
       let ret = tc.catFunc3(true);
       assert.deepStrictEqual(ret, false);
   });
 
-  // catFunc4(v: Plant): string;
+  // 测试：catFunc4(v: Plant): string;
   it('test Animal catFunc4', function () {
       let tc = new test.Animal();
       let ret = tc.catFunc4({ tomato: 'ImageTomato', tomatoId: 12, isTomato: true });
       assert.deepStrictEqual(ret, '');
   });
 
-  // catFunc5(v: number): Plant;
+  // 测试：catFunc5(v: number): Plant;
   it('test Animal catFunc5', function () {
     let tc = new test.Animal();
     let ret = tc.catFunc5(66);
