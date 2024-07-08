@@ -78,10 +78,10 @@ class AnalyzeCMake {
                 AnalyzeMake.analyze(path.join(buildTmp, "Makefile")); //调用make生成命令行
             }
             else Logger.err("cmake fail");
-        })
+        });
     }
 }
 
 module.exports = {
     AnalyzeCMake
-}
+};

@@ -23,7 +23,7 @@ function saveMockData(projectPath, analyzeResult) {
         projectPath: projectPath,
         analyzeResult: analyzeResult
     }, null, 4);
-    fs.writeFileSync(path.join(Tool.CURRENT_TOOL_PATH, "mock.json"), ss)
+    fs.writeFileSync(path.join(Tool.CURRENT_TOOL_PATH, "mock.json"), ss);
     Logger.err("save mock exit");
 }
 
@@ -84,7 +84,7 @@ class GenerateGn {
         let ss = fs.readFileSync(path.join(Tool.CURRENT_TOOL_PATH, "mock.json"), { encoding: "utf8" });
         let ret = JSON.parse(ss);
         GenerateGn.generate(ret.projectPath, ret.analyzeResult);
-        Logger.err("generate mock exit")
+        Logger.err("generate mock exit");
     }
 
     static generate(projectPath, analyzeResult) {
@@ -118,7 +118,7 @@ class GenerateGn {
         static: [],
         dynamic: [],
         executable: []
-    }
+    };
     static generateTargetGroup(projectPath) {
         let gnName = path.join(projectPath, "BUILD.gn");
         let gnStr = 'import("//build/ohos.gni")\n\n';
@@ -141,7 +141,7 @@ class GenerateGn {
 
         gnStr += `
 group("all_targets") {
-    deps = [`
+    deps = [`;
         if (staticTargets.length > 0) {
             gnStr += `
         #静态库
@@ -163,7 +163,7 @@ group("all_targets") {
         gnStr += `
     ]
 }
-`
+`;
         while (gnStr.indexOf(Tool.OHOS_PROJECT_PATH) >= 0) {
             gnStr = gnStr.replace(Tool.OHOS_PROJECT_PATH, "/");
         }
@@ -187,7 +187,7 @@ group("all_targets") {
             includeDirs: new Set(),
             defines: new Set(),
             deps: new Set(),
-        }
+        };
         for (let absDepTarget of gen.inputs) {
             GenerateGn.collectFromGList(absDepTarget, genList, collectDetails);
         }
@@ -204,10 +204,10 @@ group("all_targets") {
                 configDetail += GenerateGn.genDetail("cflags_cc", collectDetails.cflagsCc);
             }
             if (collectDetails.cflags.has("-frtti")) {
-                removeConfigs += `        "//build/config/compiler:no_rtti",\n`
+                removeConfigs += `        "//build/config/compiler:no_rtti",\n`;
             }
             if (collectDetails.cflags.has("-fexceptions")) {
-                removeConfigs += `        "//build/config/compiler:no_exceptions",\n`
+                removeConfigs += `        "//build/config/compiler:no_exceptions",\n`;
             }
             targetStr = `config("%s_config") {%s}
 
@@ -240,7 +240,7 @@ subsystem_name = "%s"
     }
     static generateGn(gnPath, genList, projectPath) {
         if (!gnPath.startsWith(projectPath)) {
-            Logger.err("target path not in project path\ntarget:%s\nproject:%s".format(gnPath, projectPath))
+            Logger.err("target path not in project path\ntarget:%s\nproject:%s".format(gnPath, projectPath));
         }
         let gnStr = 'import("//build/ohos.gni")\n\n';
         let targetCount = 0;
@@ -273,7 +273,7 @@ subsystem_name = "%s"
     }
 
     static genDetail(name, detail) {
-        let ss = ""
+        let ss = "";
         for (let s of detail) {
             s=Tool.swapPath(s);
             if (ss.length > 0) ss += '",\n        "';
@@ -283,7 +283,7 @@ subsystem_name = "%s"
     %s = [
         "%s"
     ]
-`.format(name, ss)
+`.format(name, ss);
 
         while (ret.indexOf(Tool.OHOS_PROJECT_PATH) >= 0) {
             ret = ret.replace(Tool.OHOS_PROJECT_PATH, "/");
@@ -293,7 +293,7 @@ subsystem_name = "%s"
 
     static searchLib(name, genList) {
         for (let gnPath in genList) {
-            let gens = genList[gnPath]
+            let gens = genList[gnPath];
             for (let gen of gens) {
                 if (gen.target == name) {
                     let tt = checkoutLibName(gen.target);
@@ -381,7 +381,7 @@ subsystem_name = "%s"
             collectDetails.sources.add(name);
         }
         for (let gnPath in genList) {
-            let gens = genList[gnPath]
+            let gens = genList[gnPath];
             for (let gen of gens) {
                 if (name.endsWith(gen.target)) {
                     GenerateGn.collectGen(gen, genList, collectDetails);
@@ -393,4 +393,4 @@ subsystem_name = "%s"
 
 module.exports = {
     GenerateGn
-}
+};
