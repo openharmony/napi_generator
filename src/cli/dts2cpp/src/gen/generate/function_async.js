@@ -176,17 +176,17 @@ function generateFunctionAsync(func, data, className, implHCbVariable) {
 }
 
 function getMiddleFunc(param, middleFunc) {
-  if (param.valueCheckout == "") {
-    middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout); // # 输入参数解析
+  if (param.valueCheckout === '') {
+    middleFunc = replaceAll(middleFunc, '[valueCheckout]', param.valueCheckout); // # 输入参数解析
   } else {
     param.valueCheckout = removeEndlineEnter(param.valueCheckout);
-    middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout); // # 输入参数解析
+    middleFunc = replaceAll(middleFunc, '[valueCheckout]', param.valueCheckout); // # 输入参数解析
   }
   let optionalCallback = getOptionalCallbackInit(param);
-  if (optionalCallback == "") {
-    middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback); // 可选callback参数初始化
+  if (optionalCallback === '') {
+    middleFunc = replaceAll(middleFunc, '[optionalCallbackInit]', optionalCallback); // 可选callback参数初始化
   } else {
-    middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback + "\n    "); // 可选callback参数初始化
+    middleFunc = replaceAll(middleFunc, '[optionalCallbackInit]', optionalCallback + '\n    '); // 可选callback参数初始化
   }
   return middleFunc;
 }

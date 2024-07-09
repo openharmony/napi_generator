@@ -1,33 +1,33 @@
 /*
 * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
-* Licensed under the Apache License, Version 2.0 (the "License"); 
+* Licensed under the Apache License, Version 2.0 (the 'License'); 
 * you may not use this file except in compliance with the License. 
 * You may obtain a copy of the License at 
 *
 * http://www.apache.org/licenses/LICENSE-2.0 
 *
 * Unless required by applicable law or agreed to in writing, software 
-* distributed under the License is distributed on an "AS IS" BASIS, 
+* distributed under the License is distributed on an 'AS IS' BASIS, 
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
 
-const { NapiLog } = require("../tools/NapiLog");
+const { NapiLog } = require('../tools/NapiLog');
 const util = require('util');
 const path = require('path');
-const fs = require("fs");
-const { writeFile, readFile } = require("../tools/tool");
-const re = require("../tools/re");
+const fs = require('fs');
+const { writeFile, readFile } = require('../tools/tool');
+const re = require('../tools/re');
 const LENGTH = 10;
 const TWO_DECIMAL = 2;
 
 function analyzeRetIsObject(retType, objectInfo) {
     // 去除 * 和 空格
-    retType = retType.replace('*', '').replace('struct', '').trim()
-    let objKeys = Object.keys(objectInfo)
+    retType = retType.replace('*', '').replace('struct', '').trim();
+    let objKeys = Object.keys(objectInfo);
     for (let i = 0; i < objKeys.length; i++) {
-        if (retType == objKeys[i]) {
+        if (retType === objKeys[i]) {
             return true;
         }
     }
@@ -36,7 +36,7 @@ function analyzeRetIsObject(retType, objectInfo) {
 
 
 function analyzeRetIsTypeDef(type, info) {
-  let typedefKeys = Object.keys(info)
+  let typedefKeys = Object.keys(info);
   for (let i = 0; i < typedefKeys.length; i++) {
     if (type === typedefKeys[i]) {
       return info[type];
@@ -48,15 +48,15 @@ function analyzeRetIsTypeDef(type, info) {
 //tsFuncName
 function generateDirectFunction(params, index, tsFuncName, directFuncPath, hFileName) {
     let funcInfo = {
-        "name": "",
-        "params": [],
-        "retType": "",
-    }
+        'name': '',
+        'params': [],
+        'retType': '',
+    };
   
-    let funcName_replace = tsFuncName
+    let funcNameReplace = tsFuncName;
 
     // 方法的注册
-    let init_replace = genInitFunction(directFuncPath, funcName_replace);
+    let initReplace = genInitFunction(directFuncPath, funcNameReplace);
 
     // 分析方法  分析第index个方法
     analyzeFunction(funcInfo, params, index);
@@ -65,73 +65,73 @@ function generateDirectFunction(params, index, tsFuncName, directFuncPath, hFile
     let paramGenResult = genParamInfo(directFuncPath, funcInfo, params);
 
     // 返回值处理  对于对象要使用循环处理
-    let retGenResult = ''
+    let retGenResult = '';
     let retObjInfo = {
-        "objName": '',
-        "flag": false
-    }
+        'objName': '',
+        'flag': false
+    };
  
-    let funcRetOutPath = directFuncPath.cppTempleteDetails.funcBody.funcReturnOut
+    let funcRetOutPath = directFuncPath.cppTempleteDetails.funcBody.funcReturnOut;
     retGenResult = returnTypeC2Js(funcRetOutPath, funcInfo, params, retGenResult, retObjInfo);
 
-    let { body_replace, funcInfoParams } = getReplaceInfo(directFuncPath, funcInfo, funcName_replace, hFileName);
+    let { bodyReplace, funcInfoParams } = getReplaceInfo(directFuncPath, funcInfo, funcNameReplace, hFileName);
     
     let funcGetParamTempletePath = path.join(__dirname,
       directFuncPath.cppTempleteDetails.funcBody.funcParamIn.funcGetParamTemplete);
-    let funcGetParamTemplete = readFile(funcGetParamTempletePath)
-    let genParam_replace = getGenParamReplace(funcGetParamTemplete, funcInfo, funcName_replace, paramGenResult);
-    body_replace = getBodyReplace2(funcInfo, body_replace, genParam_replace);
+    let funcGetParamTemplete = readFile(funcGetParamTempletePath);
+    let genParamReplace = getGenParamReplace(funcGetParamTemplete, funcInfo, funcNameReplace, paramGenResult);
+    bodyReplace = getBodyReplace2(funcInfo, bodyReplace, genParamReplace);
     if (funcInfo.retType.replace('*', '').trim() !== 'void') {
-        let returnType = funcInfo.retType === 'std::string' ? 'const char *' : funcInfo.retType
-        returnType = returnType === 'size_t' ? 'int64_t' : returnType
+        let returnType = funcInfo.retType === 'std::string' ? 'const char *' : funcInfo.retType;
+        returnType = returnType === 'size_t' ? 'int64_t' : returnType;
         let funcReturnTempletePath = path.join(__dirname, funcRetOutPath.funcReturnTemplete);
         let funcReturnTemplete = readFile(funcReturnTempletePath);
-        let func_return_replace = replaceAll(funcReturnTemplete, '[return_name]', retObjInfo.objName)
-        func_return_replace = replaceAll(func_return_replace, '[funcName]', funcName_replace)
-        func_return_replace = replaceAll(func_return_replace, '[return_replace]', retGenResult)
-        body_replace = replaceAll(body_replace, '[func_return_replace]', func_return_replace)
+        let funcReturnReplace = replaceAll(funcReturnTemplete, '[return_name]', retObjInfo.objName);
+        funcReturnReplace = replaceAll(funcReturnReplace, '[funcName]', funcNameReplace);
+        funcReturnReplace = replaceAll(funcReturnReplace, '[return_replace]', retGenResult);
+        bodyReplace = replaceAll(bodyReplace, '[func_return_replace]', funcReturnReplace);
     } else {
-        body_replace = replaceAll(body_replace, '[func_return_replace]', '    return NULL;\n')
+        bodyReplace = replaceAll(bodyReplace, '[func_return_replace]', '    return NULL;\n');
     }
-    body_replace = replaceAll(body_replace, '[return_replace]', retGenResult)
+    bodyReplace = replaceAll(bodyReplace, '[return_replace]', retGenResult);
 
-    let funcHDeclare = genFuncHDeclare(directFuncPath, funcName_replace, hFileName, funcInfo, funcInfoParams);
+    let funcHDeclare = genFuncHDeclare(directFuncPath, funcNameReplace, hFileName, funcInfo, funcInfoParams);
    
-    return [funcHDeclare, init_replace, body_replace]
+    return [funcHDeclare, initReplace, bodyReplace];
 }
 
-function getReplaceInfo(directFuncPath, funcInfo, funcName_replace, hFileName) {
+function getReplaceInfo(directFuncPath, funcInfo, funcNameReplace, hFileName) {
   let funcBodyTempletePath = path.join(__dirname, directFuncPath.cppTempleteDetails.funcBody.funcBodyTemplete);
   let bodyTemplete = readFile(funcBodyTempletePath);
   let funcInfoParams = genFuncInfoParams(funcInfo);
-  let body_replace = replaceAll(bodyTemplete, '[funcName]', funcName_replace);
-  body_replace = getBodyReplace(body_replace, funcName_replace, hFileName, funcInfo, funcInfoParams);
-  return { body_replace, funcInfoParams };
+  let bodyReplace = replaceAll(bodyTemplete, '[funcName]', funcNameReplace);
+  bodyReplace = getBodyReplace(bodyReplace, funcNameReplace, hFileName, funcInfo, funcInfoParams);
+  return { bodyReplace, funcInfoParams };
 }
 
-function getBodyReplace(body_replace, funcName_replace, hFileName, funcInfo, funcInfoParams) {
-  body_replace = replaceAll(body_replace, '[get_error_msg_tag]', funcName_replace);
-  body_replace = replaceAll(body_replace, '[file_introduce_replace]', hFileName);
-  body_replace = replaceAll(body_replace, '[func_introduce_replace]', funcInfo.name);
-  body_replace = replaceAll(body_replace, '[input_introduce_replace]', funcInfoParams === '' ? 'void' : funcInfoParams);
-  body_replace = replaceAll(body_replace, '[output_introduce_replace]', funcInfo.retType);
-  return body_replace;
+function getBodyReplace(bodyReplace, funcNameReplace, hFileName, funcInfo, funcInfoParams) {
+  bodyReplace = replaceAll(bodyReplace, '[get_error_msg_tag]', funcNameReplace);
+  bodyReplace = replaceAll(bodyReplace, '[file_introduce_replace]', hFileName);
+  bodyReplace = replaceAll(bodyReplace, '[func_introduce_replace]', funcInfo.name);
+  bodyReplace = replaceAll(bodyReplace, '[input_introduce_replace]', funcInfoParams === '' ? 'void' : funcInfoParams);
+  bodyReplace = replaceAll(bodyReplace, '[output_introduce_replace]', funcInfo.retType);
+  return bodyReplace;
 }
 
-function getBodyReplace2(funcInfo, body_replace, genParam_replace) {
+function getBodyReplace2(funcInfo, bodyReplace, genParamReplace) {
   if (funcInfo.params.length !== 0) {
-    body_replace = replaceAll(body_replace, '[func_getParam_replace]', genParam_replace);
+    bodyReplace = replaceAll(bodyReplace, '[func_getParam_replace]', genParamReplace);
   } else {
-    body_replace = replaceAll(body_replace, '[func_getParam_replace]', '');
+    bodyReplace = replaceAll(bodyReplace, '[func_getParam_replace]', '');
   }
-  return body_replace;
+  return bodyReplace;
 }
 
-function getGenParamReplace(funcGetParamTemplete, funcInfo, funcName_replace, paramGenResult) {
-  let genParam_replace = replaceAll(funcGetParamTemplete, '[param_length]', "PARAMS" + funcInfo.params.length);
-  genParam_replace = replaceAll(genParam_replace, '[funcName]', funcName_replace);
-  genParam_replace = replaceAll(genParam_replace, '[getParam_replace]', paramGenResult);
-  return genParam_replace;
+function getGenParamReplace(funcGetParamTemplete, funcInfo, funcNameReplace, paramGenResult) {
+  let genParamReplace = replaceAll(funcGetParamTemplete, '[param_length]', 'PARAMS' + funcInfo.params.length);
+  genParamReplace = replaceAll(genParamReplace, '[funcName]', funcNameReplace);
+  genParamReplace = replaceAll(genParamReplace, '[getParam_replace]', paramGenResult);
+  return genParamReplace;
 }
 
 function genFuncInfoParams(funcInfo) {
@@ -145,10 +145,10 @@ function genFuncInfoParams(funcInfo) {
   return funcInfoParams;
 }
 
-function genFuncHDeclare(directFuncPath, funcName_replace, hFileName, funcInfo, funcInfoParams) {
+function genFuncHDeclare(directFuncPath, funcNameReplace, hFileName, funcInfo, funcInfoParams) {
   let funcHDeclarePath = path.join(__dirname, directFuncPath.cppTempleteDetails.funcHDeclare.funcHDeclare);
   let funcHDeclare = readFile(funcHDeclarePath);
-  funcHDeclare = replaceAll(funcHDeclare, '[funcName]', funcName_replace);
+  funcHDeclare = replaceAll(funcHDeclare, '[funcName]', funcNameReplace);
 
   funcHDeclare = replaceAll(funcHDeclare, '[file_introduce_replace]', hFileName);
   funcHDeclare = replaceAll(funcHDeclare, '[func_introduce_replace]', funcInfo.name);
@@ -180,43 +180,42 @@ function analyzeFunction(funcInfo, params, index) {
   }
 }
 
-function genInitFunction(directFuncPath, funcName_replace) {
+function genInitFunction(directFuncPath, funcNameReplace) {
   let funcInitPath = path.join(__dirname, directFuncPath.initTempleteDetails.funcInitTemplete);
   let funcInitTemplete = readFile(funcInitPath);
-  let init_replace = replaceAll(funcInitTemplete, '[func_name_replace]', funcName_replace);
-  return init_replace;
+  let initReplace = replaceAll(funcInitTemplete, '[func_name_replace]', funcNameReplace);
+  return initReplace;
 }
 
 function getParamJs2C(funcInfo, i, paramGenTemplete, funcParamTypePath, paramGenResult, params) {
   let paramType = funcInfo.params[i].type === 'size_t' ? 'int64_t' : funcInfo.params[i].type;
   // 去除const 和 *
-  paramType = paramType.replace('const', '').replace('*', '').trim()
+  paramType = paramType.replace('const', '').replace('*', '').trim();
   let paramName = funcInfo.params[i].name;
-  let paramGen = replaceAll(paramGenTemplete, '[param_index_replace]', "PARAMS" + i);
+  let paramGen = replaceAll(paramGenTemplete, '[param_index_replace]', 'PARAMS' + i);
   paramGen = replaceAll(paramGen, '[param_name_replace]', paramName);
   if (paramType === 'double') {
-    let getParamPath = path.join(__dirname, funcParamTypePath.double)
+    let getParamPath = path.join(__dirname, funcParamTypePath.double);
     paramGen = getParamGenCon(getParamPath, i, paramName, paramGen);
     paramGenResult += paramGen;
   } else if (paramType === 'uint32_t') {
-    let getParamPath = path.join(__dirname, funcParamTypePath.uint32_t)
+    let getParamPath = path.join(__dirname, funcParamTypePath.uint32_t);
     paramGen = getParamGenCon(getParamPath, i, paramName, paramGen);
-  
     paramGenResult += paramGen;
   } else if (paramType === 'int32_t' || paramType === 'int') {
-    let getParamPath = path.join(__dirname, funcParamTypePath.int32_t)
+    let getParamPath = path.join(__dirname, funcParamTypePath.int32_t);
     paramGen = getParamGenCon(getParamPath, i, paramName, paramGen);
     paramGenResult += paramGen;
   } else if (paramType === 'int64_t' || paramType === 'size_t') {
-    let getParamPath = path.join(__dirname, funcParamTypePath.int64_t)
+    let getParamPath = path.join(__dirname, funcParamTypePath.int64_t);
     paramGen = getParamGenCon(getParamPath, i, paramName, paramGen);
     paramGenResult += paramGen;
   } else if (paramType === 'bool') {
-    let getParamPath = path.join(__dirname, funcParamTypePath.bool)
+    let getParamPath = path.join(__dirname, funcParamTypePath.bool);
     paramGen = getParamGenCon(getParamPath, i, paramName, paramGen);
     paramGenResult += paramGen;
   } else if (paramType === 'std::string' || paramType.indexOf('char') >= 0) {
-    let getParamPath = path.join(__dirname, funcParamTypePath.string)
+    let getParamPath = path.join(__dirname, funcParamTypePath.string);
     paramGen = getParamGenCon(getParamPath, i, paramName, paramGen);
     paramGenResult += paramGen;
   } else if (analyzeRetIsTypeDef(paramType, params.typedefs)) { // typedefs
@@ -229,46 +228,46 @@ function getParamJs2C(funcInfo, i, paramGenTemplete, funcParamTypePath, paramGen
 
 function getParamGenCon(getParamPath, i, paramName, paramGen) {
   let getParam = readFile(getParamPath);
-  getParam = replaceAll(getParam, '[param_index_replace]', "PARAMS" + i);
+  getParam = replaceAll(getParam, '[param_index_replace]', 'PARAMS' + i);
   getParam = replaceAll(getParam, '[param_name_replace]', paramName);
   paramGen = replaceAll(paramGen, '[getParam_replace]', getParam);
   return paramGen;
 }
 
 function returnTypeC2Js(funcRetOutPath, funcInfo, params, retGenResult, retObjInfo) {
-    let setRetPropertyPath = path.join(__dirname, funcRetOutPath.funcReturnType.returnObj.funcReturnObjectToSet)
-    let setRetProperty = readFile(setRetPropertyPath)
+    let setRetPropertyPath = path.join(__dirname, funcRetOutPath.funcReturnType.returnObj.funcReturnObjectToSet);
+    let setRetProperty = readFile(setRetPropertyPath);
     let returnName = funcInfo.name;
     if (!retObjInfo.flag) {
-        retObjInfo.objName = returnName
+        retObjInfo.objName = returnName;
     }
     if (funcInfo.retType === 'uint32_t') {
-        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.uint32_t)
+        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.uint32_t);
         retGenResult = getRetTypeContent(funcReturnTypePath, returnName, retGenResult, retObjInfo, setRetProperty);
     } else if (funcInfo.retType === 'double') {
-        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.double)
+        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.double);
         retGenResult = getRetTypeContent(funcReturnTypePath, returnName, retGenResult, retObjInfo, setRetProperty);
     } else if (funcInfo.retType === 'int32_t' || funcInfo.retType === 'int') {
-        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.int32_t)
+        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.int32_t);
         retGenResult = getRetTypeContent(funcReturnTypePath, returnName, retGenResult, retObjInfo, setRetProperty);
     } else if (funcInfo.retType === 'int64_t' || funcInfo.retType === 'size_t') {
-        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.int64_t)
+        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.int64_t);
         retGenResult = getRetTypeContent(funcReturnTypePath, returnName, retGenResult, retObjInfo, setRetProperty);
     } else if (funcInfo.retType === 'bool') {
-        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.bool)
+        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.bool);
         retGenResult = getRetTypeContent(funcReturnTypePath, returnName, retGenResult, retObjInfo, setRetProperty);
-    } else if (funcInfo.retType === 'std::string' || funcInfo.retType.substring(0, 10) === 'const char'
-        || funcInfo.retType === 'char *') {
-        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.string)
+    } else if (funcInfo.retType === 'std::string' || funcInfo.retType.substring(0, 10) === 'const char' ||
+          funcInfo.retType === 'char *') {
+        let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.string);
         retGenResult = getRetTypeContent(funcReturnTypePath, returnName, retGenResult, retObjInfo, setRetProperty);
     } else if (analyzeRetIsObject(funcInfo.retType, params.classes)) { // 返回值是对象
         if (!retObjInfo.flag) {
             retGenResult = getObjRetContent(funcRetOutPath, retGenResult, returnName);
-            retObjInfo.flag = true
+            retObjInfo.flag = true;
             let objectProperty = getObjectProperty(funcInfo, params);
             // 遍历属性
             for (let i = 0; i < objectProperty.length; i++) {
-                let testRes = returnTypeC2Js(funcRetOutPath, objectProperty[i], params, retGenResult, retObjInfo)
+                let testRes = returnTypeC2Js(funcRetOutPath, objectProperty[i], params, retGenResult, retObjInfo);
                 retGenResult = testRes;
             }
         } else {
@@ -291,8 +290,8 @@ function getObjectProperty(funcInfo, params) {
   let myObjectProperty = myObject.properties.public;
   for (let j = 0; j < myObjectProperty.length; j++) {
     let propertyObj = {
-      "name": '',
-      "retType": ''
+      'name': '',
+      'retType': ''
     };
     propertyObj.name = myObjectProperty[j].name;
     propertyObj.retType = myObjectProperty[j].type;
@@ -315,7 +314,7 @@ function getObjRetGenResult(retObjInfo, retGenResult, funcRetOutPath, returnName
 }
 
 function getObjRetContent(funcRetOutPath, retGenResult, returnName) {
-  let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.returnObj.object)
+  let funcReturnTypePath = path.join(__dirname, funcRetOutPath.funcReturnType.returnObj.object);
   let funcReturnType = readFile(funcReturnTypePath);
   retGenResult += replaceAll(funcReturnType, '[return_name_replace]', returnName);
   return retGenResult;
@@ -336,21 +335,21 @@ function getRetTypeContent(funcReturnTypePath, returnName, retGenResult, retObjI
 
 function replaceAll(s, sfrom, sto) {
     while (s.indexOf(sfrom) >= 0) {
-        s = s.replace(sfrom, sto)
+        s = s.replace(sfrom, sto);
     }
     return s;
 }
 
 function createParam(parseParamInfo) {
     let param = {
-        "name": "",
-        "type": ""
-    }
-    param.name = parseParamInfo.name
-    param.type = parseParamInfo.type
-    return param
+        'name': '',
+        'type': ''
+    };
+    param.name = parseParamInfo.name;
+    param.type = parseParamInfo.type;
+    return param;
 }
 
 module.exports = {
     generateDirectFunction
-}
+};
