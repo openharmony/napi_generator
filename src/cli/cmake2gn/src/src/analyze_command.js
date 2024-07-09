@@ -82,7 +82,7 @@ class AnalyzeCommand {
             let cmakeLinkScriptData = fs.readFileSync(path.join(process.cwd(), cmakeLinkScriptFile),
                 { encoding: "utf8" });
             let cmds = cmakeLinkScriptData.split("\n");//link.txt中可能有多条命令链接
-            let rets = []
+            let rets = [];
             for (let c of cmds) {
                 let r = AnalyzeCommand.analyzeOneCmd(c);
                 if (r) {
@@ -102,7 +102,7 @@ class AnalyzeCommand {
         let cmdName = cmd.split(" ")[0];
         let pos = cmdName.lastIndexOf("/");
         let scrType = cmdName.substring(pos + 1, cmdName.length);
-        return scrType.startsWith(cmdType)
+        return scrType.startsWith(cmdType);
     }
 
     static analyzeOneCmd(cmd) {
@@ -176,7 +176,7 @@ class AnalyzeCommand {
             ],//c和c++选项
             cflagsCc: [],//c++选项
             cflagsC: [],//c选项
-        }
+        };
     }
 
     static splitString(s) {//按空格分割字符串
@@ -339,7 +339,7 @@ class AnalyzeCommand {
             ret: AnalyzeCommand.resultTemplete(),
             eles: AnalyzeCommand.splitString(cmd),
             p: 0,
-        }
+        };
 
         while (local.p < local.eles.length) {
             let e = local.eles[local.p++];
@@ -372,7 +372,7 @@ class AnalyzeCommand {
                 process.exit();
             }
         }
-        Logger.info("----clang-----" + local.ret.workDir + "\n\t" + local.ret.isLink + "," + local.ret.target)
+        Logger.info("----clang-----" + local.ret.workDir + "\n\t" + local.ret.isLink + "," + local.ret.target);
         return local.ret;
     }
     static analyzeCcAr(cmd) {
@@ -568,7 +568,7 @@ class AnalyzeCommand {
             ret: AnalyzeCommand.resultTemplete(),
             eles: AnalyzeCommand.splitString(cmd),
             p: 0,
-        }
+        };
         while (local.p < local.eles.length) {
             let e = local.eles[local.p++];
             if (e.endsWith("clang++") || e.endsWith("clang++.exe")) {
@@ -600,7 +600,7 @@ class AnalyzeCommand {
                 process.exit();
             }
         }
-        Logger.info("---clang++----" + local.ret.workDir + "\n\t" + local.ret.isLink + "," + local.ret.target)
+        Logger.info("---clang++----" + local.ret.workDir + "\n\t" + local.ret.isLink + "," + local.ret.target);
         return local.ret;
     }
 
@@ -637,4 +637,4 @@ class AnalyzeCommand {
 }
 module.exports = {
     AnalyzeCommand
-}
+};
