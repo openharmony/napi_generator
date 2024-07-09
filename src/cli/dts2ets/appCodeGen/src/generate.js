@@ -15,7 +15,6 @@
 // 生成BUILD.gn
 // 生成tool_utility.h，生成tool_utility.cpp
 const { replaceAll } = require("./tools/tool");
-// const { generateNamespace } = require("./generate/namespace");
 const { writeFile } = require("./tools/FileRW");
 const re = require("./tools/re");
 
@@ -79,59 +78,6 @@ Button() {
   });
 `
 
-// var genFileList = []
-// function deleteFolder(folderPath) {
-//     if (fs.existsSync(folderPath)) {
-//         fs.rmSync(folderPath, {"recursive": true})
-//     }
-// }
-
-// function createFolder(folderPath) {
-//     if (!fs.existsSync(folderPath)) {
-//         fs.mkdirSync(folderPath)
-//     }
-// }
-
-// function formatCode(destDir) {
-//     let sysInfo = os.platform()
-//     let clangFmtName = sysInfo === 'win32' ? "clang-format.exe" : "clang-format"
-//     let callPath = NapiLog.getCallPath();
-//     callPath = callPath.substring(callPath.indexOf("[") + 1, callPath.indexOf("src"));
-//     let dumyClangFmtFile = path.join(callPath, clangFmtName)
-//     let dumyFmtCfgFile = path.join(callPath, ".clang-format")
-
-//     if(!fs.existsSync(dumyClangFmtFile)) {
-//         NapiLog.logInfo("Warning: clang-format does not exist, can not format cpp file.");
-//         return
-//     }
-
-//     // 使用pkg打包的napi_generator工具，其中的clang-format程序在运行时是解压到一个名为snapshot的虚拟目录中的，如C:\snapshot\napi_generator\
-//     // 虚拟目录中的clang-format程序不能直接运行，必须先将它拷贝到本地硬盘的真实目录下。
-//     createFolder(path.resolve("./tmpLocal"))
-//     let localClangFmtFile = path.resolve("./tmpLocal/" + clangFmtName) // clang-format可执行程序
-//     let localFmtCfgFile = path.resolve("./tmpLocal/.clang-format") // clang-format格式化配置文件
-//     fs.copyFileSync(dumyClangFmtFile, localClangFmtFile)
-//     fs.copyFileSync(dumyFmtCfgFile, localFmtCfgFile)
-
-//     let execSync = require("child_process").execSync
-//     if (sysInfo != 'win32') {
-//         // linux系统下需要为临时复制的clang-format程序增加可执行权限
-//         execSync("chmod +x " + "\"" + localClangFmtFile + "\"")
-//     }
-
-//     for (let i = 0; i < genFileList.length; ++i) {
-//         // 文件路径前后要用引号包含，防止因为路径中存在空格而导致命令执行失败 (windows的文件夹允许有空格)
-//         let cmd = "\"" + localClangFmtFile + "\" -style=file -i \"" + path.resolve(path.join(destDir, genFileList[i]))
-//             + "\""
-//         try {
-//             execSync(cmd) // C++文件格式化
-//         } catch (err) {
-//             NapiLog.logError("Failed to format code, exception: " + err.stderr)
-//         }
-//     }
-//     // 格式化结束后，删除临时目录文件
-//     deleteFolder(path.resolve("./tmpLocal"))
-// }
 let FuncCfgList = []
 function analyzeJsonCfg(jsonCfg) {
     let len = jsonCfg.length;

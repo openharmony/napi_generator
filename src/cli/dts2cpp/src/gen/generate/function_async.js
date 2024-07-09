@@ -146,18 +146,7 @@ function generateFunctionAsync(func, data, className, implHCbVariable) {
     returnGenerate(param.callback, param, data)
     middleH = replaceValueOut(middleH, param);
 
-    if (param.valueCheckout == "") {
-        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
-    } else {
-        param.valueCheckout = removeEndlineEnter(param.valueCheckout)
-        middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
-    }
-    let optionalCallback = getOptionalCallbackInit(param)
-    if (optionalCallback == "") {
-        middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback) // 可选callback参数初始化
-    } else {
-        middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback + "\n    ") // 可选callback参数初始化
-    }
+    middleFunc = getMiddleFunc(param, middleFunc);
     middleFunc = replaceAll(middleFunc, "[start_async]", `
     napi_value result = pxt->StartAsync(%s_execute, reinterpret_cast<DataPtr>(vio), %s_complete,
     pxt->GetArgc() == %s? pxt->GetArgv(%d) : nullptr);`
@@ -184,6 +173,22 @@ function generateFunctionAsync(func, data, className, implHCbVariable) {
         implH = outResult[1]
     }
     return [middleFunc, implH, implCpp, middleH]
+}
+
+function getMiddleFunc(param, middleFunc) {
+  if (param.valueCheckout === '') {
+    middleFunc = replaceAll(middleFunc, '[valueCheckout]', param.valueCheckout); // # 输入参数解析
+  } else {
+    param.valueCheckout = removeEndlineEnter(param.valueCheckout);
+    middleFunc = replaceAll(middleFunc, '[valueCheckout]', param.valueCheckout); // # 输入参数解析
+  }
+  let optionalCallback = getOptionalCallbackInit(param);
+  if (optionalCallback === '') {
+    middleFunc = replaceAll(middleFunc, '[optionalCallbackInit]', optionalCallback); // 可选callback参数初始化
+  } else {
+    middleFunc = replaceAll(middleFunc, '[optionalCallbackInit]', optionalCallback + '\n    '); // 可选callback参数初始化
+  }
+  return middleFunc;
 }
 
 function generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable, implCpp, implH) {

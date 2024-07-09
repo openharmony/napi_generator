@@ -52,22 +52,4 @@ describe('array_map', function () {
         let ret = fun10([{"age":true}, {"name":false}]);
         assert.strictEqual(ret, 0);
     });
-
-    /*
-    it('test fun7', function () {
-        let ret = fun7([{"key":'{"code":0,"data":"code0"}'}, {"name":'{"code":1,"data":"code1"}'}]);
-        assert.strictEqual(ret, 0);
-    }); 
-    */  
-
-    /*it('test fun12', function () {
-        let ret = fun12([{"key1":'code1'}, {"key2":'code2'}]);
-        assert.strictEqual(ret, 0);
-    });
-    
-    it('test fun10', function () {
-        let ret = fun12([{"key1":'{"code":0,"data":"code0"}'}, {"key2":'{"code":1,"data":"code1"}'}]);
-        assert.strictEqual(ret, 0);
-    });
-    */
 });
