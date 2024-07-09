@@ -480,8 +480,8 @@ function getLineContent(line, macro) {
     let isMatch = regexPattern.test(line);
     if (isMatch) {
       let removeIndexLeft = line.indexOf('(');
-      line = line.substring(0, index) + line.substring(index + macro.length, removeIndexLeft)
-        + line.substring(removeIndexLeft + 1, line.length);
+      line = line.substring(0, index) + line.substring(index + macro.length, removeIndexLeft) +
+        line.substring(removeIndexLeft + 1, line.length);
       let removeIndexRight = line.indexOf(')');
       line = line.substring(0, removeIndexRight) + line.substring(removeIndexRight + 1, line.length);
     } else {
