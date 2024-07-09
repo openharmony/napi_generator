@@ -76,25 +76,7 @@ function jsToC(dest, napiVn, type, enumType = 0, optional) {
     if (type.indexOf("|") >= 0) {
         return unionTempleteFunc(dest, napiVn, type, optional)
     } else if (type === "string") {
-      let verifyEnumValue = '';
-      let strlt = LenIncrease.getAndIncrease()
-      if (enumType) {
-        // 对枚举是string的值做校验
-        verifyEnumValue = `
-    bool isStrValueInMap%s = false;
-    for (const auto& pair : enumMap%s) {
-      const char* charPtr = std::any_cast<const char*>(pair.second);
-      std::string value = charPtr;
-      if (value == %s) {
-        isStrValueInMap%s = true;
-        break;
-      }
-    }
-    if (!isStrValueInMap%s) {
-      napi_throw_error(env, nullptr, "enum value is wrong!");
-      return nullptr;
-    }`.format(strlt, enumType, dest, strlt, strlt)
-      } 
+      let verifyEnumValue = getVeriyEnumValue(enumType, dest); 
 
       if (napiVn.indexOf("GetValueProperty") >= 0) {
         let lt = LenIncrease.getAndIncrease()
@@ -103,7 +85,7 @@ function jsToC(dest, napiVn, type, enumType = 0, optional) {
       } else {
         return "pxt->SwapJs2CUtf8(%s, %s);".format(napiVn, dest) + verifyEnumValue
       }         
-   } else if (type.substring(type.length - 2) === "[]") {
+    } else if (type.substring(type.length - 2) === "[]") {
         return arrTemplete(dest, napiVn, type);
     } else if (type.substring(0, 12) === "NUMBER_TYPE_") {
         return numTempleteFunc (enumType, napiVn, type, dest);
@@ -127,6 +109,29 @@ function jsToC(dest, napiVn, type, enumType = 0, optional) {
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`
             .format(dest, napiVn, type), getLogErrInfo());
     }        
+}
+
+function getVeriyEnumValue(enumType, dest) {
+  let verifyEnumValue = '';
+  let strlt = LenIncrease.getAndIncrease();
+  if (enumType) {
+    // 对枚举是string的值做校验
+    verifyEnumValue = `
+    bool isStrValueInMap%s = false;
+    for (const auto& pair : enumMap%s) {
+      const char* charPtr = std::any_cast<const char*>(pair.second);
+      std::string value = charPtr;
+      if (value == %s) {
+        isStrValueInMap%s = true;
+        break;
+      }
+    }
+    if (!isStrValueInMap%s) {
+      napi_throw_error(env, nullptr, "enum value is wrong!");
+      return nullptr;
+    }`.format(strlt, enumType, dest, strlt, strlt);
+  }
+  return verifyEnumValue;
 }
 
 function interfaceTempleteFunc(type, napiVn, dest) {

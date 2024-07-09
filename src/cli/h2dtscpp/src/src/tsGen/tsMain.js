@@ -461,27 +461,7 @@ function removeMarco(hFilePath, tempFilePath, macros) {
             && line.indexOf('#elif') && line.indexOf('#if') < 0 && line.indexOf('#else')) {
           macros.forEach(macro => {
             // 去掉使用的宏以及括号()
-            
-            let index = line.indexOf(macro)
-            if (index >= 0) {
-              let regexPattern = new RegExp(macro + '\\s*\\(');
-              let isMatch = regexPattern.test(line)
-              if (isMatch) {
-                let removeIndexLeft = line.indexOf('(') 
-                line = line.substring(0, index) + line.substring(index + macro.length, removeIndexLeft)
-                  + line.substring(removeIndexLeft + 1, line.length)
-                let removeIndexRight = line.indexOf(')')
-                line = line.substring(0, removeIndexRight) + line.substring(removeIndexRight + 1, line.length)
-              } else {
-                let tmpLeft = line.substring(0, index)
-                let indexLeftBracket = tmpLeft.lastIndexOf('(')
-                tmpLeft = tmpLeft.substring(0, indexLeftBracket) + tmpLeft.substring(indexLeftBracket + 1, tmpLeft.length)
-                let tmpRight =  line.substring(index + macro.length, line.length)
-                let indexRightBracket = tmpRight.indexOf(')')
-                tmpRight = tmpRight.substring(0, indexRightBracket) + tmpRight.substring(indexRightBracket + 1, tmpRight.length)
-                line =  tmpLeft + tmpRight
-              }
-            }
+            line = getLineContent(line, macro);
           })
         }
         processedContent += line + '\n';
@@ -491,6 +471,30 @@ function removeMarco(hFilePath, tempFilePath, macros) {
     rl.on('close', () => {
         writeFile(tempFilePath, processedContent)
     });
+}
+
+function getLineContent(line, macro) {
+  let index = line.indexOf(macro);
+  if (index >= 0) {
+    let regexPattern = new RegExp(macro + '\\s*\\(');
+    let isMatch = regexPattern.test(line);
+    if (isMatch) {
+      let removeIndexLeft = line.indexOf('(');
+      line = line.substring(0, index) + line.substring(index + macro.length, removeIndexLeft)
+        + line.substring(removeIndexLeft + 1, line.length);
+      let removeIndexRight = line.indexOf(')');
+      line = line.substring(0, removeIndexRight) + line.substring(removeIndexRight + 1, line.length);
+    } else {
+      let tmpLeft = line.substring(0, index);
+      let indexLeftBracket = tmpLeft.lastIndexOf('(');
+      tmpLeft = tmpLeft.substring(0, indexLeftBracket) + tmpLeft.substring(indexLeftBracket + 1, tmpLeft.length);
+      let tmpRight = line.substring(index + macro.length, line.length);
+      let indexRightBracket = tmpRight.indexOf(')');
+      tmpRight = tmpRight.substring(0, indexRightBracket) + tmpRight.substring(indexRightBracket + 1, tmpRight.length);
+      line = tmpLeft + tmpRight;
+    }
+  }
+  return line;
 }
 
 // 读取头文件并提取所有的#define宏

@@ -57,18 +57,10 @@ function partGenerateBase(){
     it('test gen/extend/tool_utility generateBase', function () {
         var fs = require("fs");
         if (fs.existsSync('test/unittest/tool_utility.cpp')) {
-            fs.unlink('test/unittest/tool_utility.cpp', function (err) {
-                if (err) {
-                    return console.error(err);
-                }
-            });
+            unlinkCppFile(fs);
         }
         if (fs.existsSync('test/unittest/tool_utility.h')) {
-            fs.unlink('test/unittest/tool_utility.h', function (err) {
-                if (err) {
-                    return console.error(err);
-                }
-            });
+            unlinkHFile(fs);
         }
         generateBase('test/unittest', '/*\n* Copyright (c) 2022 Shenzhen Kaihong\n*/');
         let data = readFile("test/unittest/tool_utility.cpp")
@@ -83,3 +75,19 @@ function partGenerateBase(){
     });
 
 }
+function unlinkHFile(fs) {
+  fs.unlink('test/unittest/tool_utility.h', function (err) {
+    if (err) {
+      return console.error(err);
+    }
+  });
+}
+
+function unlinkCppFile(fs) {
+  fs.unlink('test/unittest/tool_utility.cpp', function (err) {
+    if (err) {
+      return console.error(err);
+    }
+  });
+}
+

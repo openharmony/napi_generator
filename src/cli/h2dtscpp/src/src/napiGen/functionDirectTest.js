@@ -63,38 +63,7 @@ function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete
         funcInfo.params.push(param)
     }
     funcInfo.retType = params.functions[funcIndex].rtnType
-    let funcParamDefine = ''
-    let funcParamUse = ''
-    let funcInfoParams = ''
-    let funcInfoParamTemp = '[paramName]: [paramType]; '
-    // 判断函数有几个参数，依次给参数赋值
-    for(let i = 0; i < funcInfo.params.length; i++) {
-        let funcInfoParamReplace = replaceAll(funcInfoParamTemp, '[paramName]', funcInfo.params[i].name)
-        funcInfoParamReplace = replaceAll(funcInfoParamReplace, '[paramType]', funcInfo.params[i].type)
-        funcInfoParams += funcInfoParamReplace
-        let testType = getTestType(funcInfo.params[i].type);
-        if (testType === 'int') {
-            funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomInteger(0, LENGTH))
-            funcParamUse += funcInfo.params[i].name + ', '
-        } else if (testType === 'float') {
-            funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomArbitrary(0, LENGTH, TWO_DECIMAL))
-            funcParamUse += funcInfo.params[i].name + ', '
-        } else if (testType === 'bool') {
-            funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomBoolValue())
-            funcParamUse += funcInfo.params[i].name + ', '
-        } else if (testType === 'string') {
-            funcParamDefine += util.format('let %s = "%s"\n    ', funcInfo.params[i].name, generateRandomString(LENGTH))
-            funcParamUse += funcInfo.params[i].name + ', '
-        } else if (TypeList.getValue(testType)) {
-            let typeDefineRes = getTypeDefine(testType, funcParamDefine, funcInfo, i, funcParamUse);
-            funcParamDefine = typeDefineRes[0]
-            funcParamUse = typeDefineRes[1]
-        } else if (InterfaceList.getBody(testType)) {
-            let interfaceDefineRes =  getInterfaceDefine(testType, funcParamDefine, funcInfo, i, funcParamUse);
-            funcParamDefine = interfaceDefineRes[0]
-            funcParamUse = interfaceDefineRes[1]
-        }
-    }
+    let { funcParamUse, funcParamDefine, funcInfoParams } = genInitTestfunc(funcInfo);
     // 去除调用参数的最后一个','
     let index = funcParamUse.lastIndexOf(', ');
     funcParamUse = funcParamUse.substring(0, index);
@@ -119,6 +88,42 @@ function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete
     funcTestContent = replaceAll(funcTestContent, '[output_introduce_replace]', funcInfo.retType)
 
     return funcTestContent
+}
+
+function genInitTestfunc(funcInfo) {
+  let funcParamDefine = '';
+  let funcParamUse = '';
+  let funcInfoParams = '';
+  let funcInfoParamTemp = '[paramName]: [paramType]; ';
+  // 判断函数有几个参数，依次给参数赋值
+  for (let i = 0; i < funcInfo.params.length; i++) {
+    let funcInfoParamReplace = replaceAll(funcInfoParamTemp, '[paramName]', funcInfo.params[i].name);
+    funcInfoParamReplace = replaceAll(funcInfoParamReplace, '[paramType]', funcInfo.params[i].type);
+    funcInfoParams += funcInfoParamReplace;
+    let testType = getTestType(funcInfo.params[i].type);
+    if (testType === 'int') {
+      funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomInteger(0, LENGTH));
+      funcParamUse += funcInfo.params[i].name + ', ';
+    } else if (testType === 'float') {
+      funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomArbitrary(0, LENGTH, TWO_DECIMAL));
+      funcParamUse += funcInfo.params[i].name + ', ';
+    } else if (testType === 'bool') {
+      funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomBoolValue());
+      funcParamUse += funcInfo.params[i].name + ', ';
+    } else if (testType === 'string') {
+      funcParamDefine += util.format('let %s = "%s"\n    ', funcInfo.params[i].name, generateRandomString(LENGTH));
+      funcParamUse += funcInfo.params[i].name + ', ';
+    } else if (TypeList.getValue(testType)) {
+      let typeDefineRes = getTypeDefine(testType, funcParamDefine, funcInfo, i, funcParamUse);
+      funcParamDefine = typeDefineRes[0];
+      funcParamUse = typeDefineRes[1];
+    } else if (InterfaceList.getBody(testType)) {
+      let interfaceDefineRes = getInterfaceDefine(testType, funcParamDefine, funcInfo, i, funcParamUse);
+      funcParamDefine = interfaceDefineRes[0];
+      funcParamUse = interfaceDefineRes[1];
+    }
+  }
+  return { funcParamUse, funcParamDefine, funcInfoParams };
 }
 
 function getTypeDefine(testType, funcParamDefine, funcInfo, i, funcParamUse) {
