@@ -12,17 +12,17 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const re = require("../tools/re");
+const re = require('../tools/re');
 
 /**函数返回值解析 */
 function analyzeReturn(ret) {
-    let isPromise = false
-    if (ret.indexOf("Promise") >= 0) {
-        isPromise = true
+    let isPromise = false;
+    if (ret.indexOf('Promise') >= 0) {
+        isPromise = true;
     }
-    return [ret, isPromise]
+    return [ret, isPromise];
 }
 
 module.exports = {
     analyzeReturn
-}
+};
