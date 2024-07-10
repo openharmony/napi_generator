@@ -142,10 +142,10 @@
         
         const message = event.data.msg;
         const path = event.data.path;
-        if(message == "selectHFilePath") {
+        if(message === "selectHFilePath") {
             document.getElementById("hFilePath").value = path;
             fillInputDir(path, message);
-        } else if(message == "selectHResultDir") {
+        } else if(message === "selectHResultDir") {
             document.getElementById("genHResultDir").value = path;
         } else {
             console.log("param is error");
@@ -160,13 +160,13 @@
     function fillInputDir(fileNames, message) {
         var dir;
         var fileName;
-        if (mode == 0) {
-            if (fileNames.indexOf(",") != -1) {
+        if (mode === 0) {
+            if (fileNames.indexOf(",") !== -1) {
                 fileName = fileNames.substring(0, fileNames.indexOf(","));
             } else {
                 fileName = fileNames;
             }
-            if (fileName.lastIndexOf("/") != -1) {
+            if (fileName.lastIndexOf("/") !== -1) {
                 dir = fileName.substring(0, fileName.lastIndexOf("/"));  
             } else {
                 dir = fileName.substring(0, fileName.lastIndexOf("\\")); 

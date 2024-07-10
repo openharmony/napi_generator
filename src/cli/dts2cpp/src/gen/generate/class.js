@@ -41,17 +41,17 @@ public:
 };`
 
 function generateVariable(name, type, variable, className) {
-    if (type == "string") variable.hDefine += "\n    std::string %s;".format(name)
-    else if (type.substring(0, 12) == "NUMBER_TYPE_") variable.hDefine += "\n    %s %s;".format(type, name)
+    if (type === "string") variable.hDefine += "\n    std::string %s;".format(name)
+    else if (type.substring(0, 12) === "NUMBER_TYPE_") variable.hDefine += "\n    %s %s;".format(type, name)
     else if (InterfaceList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
-    else if (type.indexOf("Array<") == 0) {
+    else if (type.indexOf("Array<") === 0) {
         let type2 = getArrayType(type)
-        if (type2 == "string") type2 = "std::string"
-        if (type2 == "boolean") type2 = "bool"
+        if (type2 === "string") type2 = "std::string"
+        if (type2 === "boolean") type2 = "bool"
         variable.hDefine += "\n    std::vector<%s> %s;".format(type2, name)
-    } else if (type == "boolean") {
+    } else if (type === "boolean") {
         variable.hDefine += "\n    bool %s;".format(name)
-    } else if (type.indexOf("[]") == 0) {
+    } else if (type.indexOf("[]") === 0) {
         variable.hDefine += "\n    std::vector<%s> %s;".format(type, name)
     }
     else
@@ -83,7 +83,7 @@ function generateVariable(name, type, variable, className) {
 function generateClass(name, data, inNamespace, functiontType) {
     let resultConnect = connectResult(data, inNamespace, name)
     let middleFunc = resultConnect[0]
-    let implH = functiontType == "static" ? "\n" + "static " +
+    let implH = functiontType === "static" ? "\n" + "static " +
         resultConnect[1].substring(1, resultConnect[1].length) : resultConnect[1]
     let implCpp = resultConnect[2]
     let middleInit = resultConnect[3]

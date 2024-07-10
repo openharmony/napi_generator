@@ -88,7 +88,7 @@ AllParseFileList.findClassByName = function (destClassName) {
     for (let i = 0; i < AllParseFileList.parseFile_.length; ++i) {
         let classes = AllParseFileList.parseFile_[i].classes;
         for (let className in classes) {
-            if (className == destClassName) {
+            if (className === destClassName) {
                 classes[className].isInclude = AllParseFileList.parseFile_[i].isInclude;
                 return classes[className];
             }
@@ -115,7 +115,7 @@ ProcessingClassList.clearAll = function () {
 }
 ProcessingClassList.findByName = function (className) {
     for (let i = 0; i < ProcessingClassList.classes_.length; ++i) {
-        if (ProcessingClassList.classes_[i].className == className) {
+        if (ProcessingClassList.classes_[i].className === className) {
             return ProcessingClassList.classes_[i];
         }
     }
