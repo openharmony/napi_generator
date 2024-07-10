@@ -155,7 +155,7 @@ class Tool {
      * @returns 
      */
     static getJsonCfg() {
-        if (this.globalJsonCfg == null) {
+        if (this.globalJsonCfg === null || this.globalJsonCfg === undefined) {
             let jsonFilePath = path.join(Tool.CURRENT_TOOL_PATH, "res/cfg.json");
             let jsonFile = fs.readFileSync(jsonFilePath, { encoding: "utf8" });
             this.globalJsonCfg = JSON.parse(jsonFile);
@@ -171,16 +171,16 @@ class Tool {
      * @returns cxx编译中允许处理的文件后缀名列表
      */
      static getAllowedCxx() {
-        if (this.allowedCxx == null) {
+        if (this.allowedCxx === null || this.allowedCxx === undefined) {
             this.allowedCxx = {};
             let jsonCfg = this.getJsonCfg();
             let allowedCxxSuffix = ".cpp, .cxx, .cc, .o, .z, .so, .a" + jsonCfg.fileSuffix;
             this.allowedCxx.fileSuffix = 
-                allowedCxxSuffix.split(",").map(item => item.trim()).filter(item => item != "");
+                allowedCxxSuffix.split(",").map(item => item.trim()).filter(item => item !== "");
             let allowedFlag = "--target=, -march=, -mfloat-abi=, -mfpu=, -fsigned-char, -ffast-math, -rdynamic, "
                 + "-UNDEBUG, -fno-threadsafe-statics, -fno-common, -fno-strict-aliasing, -fcolor-diagnostics, "
                 + "-fstrict-aliasing, -fdiagnostics-show-option" + jsonCfg.compileflag;
-            this.allowedCxx.compileflag = allowedFlag.split(",").map(item => item.trim()).filter(item => item != "");
+            this.allowedCxx.compileflag = allowedFlag.split(",").map(item => item.trim()).filter(item => item !== "");
         }
         return this.allowedCxx;
     }
@@ -190,16 +190,16 @@ class Tool {
      * @returns c编译中允许处理的文件后缀名列表
      */
      static getAllowedC() {
-        if (this.allowedC == null) {
+        if (this.allowedC === null || this.allowedC === undefined) {
             this.allowedC = {};
             let jsonCfg = this.getJsonCfg();
             let allowedCSuffix = '.c, .o, .o", .a, .S, .so' + jsonCfg.fileSuffix;
-            this.allowedC.fileSuffix = allowedCSuffix.split(",").map(item => item.trim()).filter(item => item != "");
+            this.allowedC.fileSuffix = allowedCSuffix.split(",").map(item => item.trim()).filter(item => item !== "");
             let allowedFlag = "--target=, -march=, -mfloat-abi=, -mfpu=, -fno-common, -fcolor-diagnostics, -ggdb, "
                 + "-fno-strict-aliasing, -ldl, -flto, -fno-builtin, -fno-stack-protector, -fvisibility=default, "
                 + "-fsigned-char, -fstack-protector-strong, -fdiagnostics-show-option"
                 + jsonCfg.compileflag;
-            this.allowedC.compileflag = allowedFlag.split(",").map(item => item.trim()).filter(item => item != "");
+            this.allowedC.compileflag = allowedFlag.split(",").map(item => item.trim()).filter(item => item !== "");
         }
         return this.allowedC;
     }

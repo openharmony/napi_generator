@@ -23,7 +23,7 @@ function doGenerate(ifname, destdir, jsonCfg) {
     let structOfTs = analyzeFile(ifname);
     let fn = re.getFileInPath(ifname);
     let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
-    if (structOfTs === undefined || structOfTs.declareNamespace.length == 0 || 
+    if (structOfTs === undefined || structOfTs.declareNamespace.length === 0 || 
         structOfTs.declareNamespace[0].name === undefined) {
         NapiLog.logError('analyzeFile file fail and file name is: ' + fn);
         return;

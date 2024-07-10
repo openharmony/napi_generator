@@ -25,13 +25,13 @@ function analyzeEnum(data) {
     }
     for (let i in body) {
         let bodyContent = body[i]
-        while (bodyContent.length > 0 && bodyContent[0] == ' ') {
+        while (bodyContent.length > 0 && bodyContent[0] === ' ') {
             bodyContent = bodyContent.substring(1, bodyContent.length)
         }
-        while (bodyContent.length > 0 && bodyContent[-1] == ' ') {
+        while (bodyContent.length > 0 && bodyContent[-1] === ' ') {
             bodyContent = bodyContent.substring(0, bodyContent.length - 1)
         }
-        if (bodyContent == "") {
+        if (bodyContent === "") {
             break
         }
         analyzeEnumResult(result, bodyContent, i)

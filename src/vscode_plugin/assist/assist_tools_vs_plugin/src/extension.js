@@ -54,24 +54,24 @@ function activate(context) {
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
-			if (msg == "cancel") {
+			if (msg === "cancel") {
 				globalPanel.dispose();
-			} else if (msg == "startApi") {
+			} else if (msg === "startApi") {
 				const extensionId = 'kaihong.ApiScan';
 				installStartExtension(extensionId);
-			} else if (msg == "startGn") {
+			} else if (msg === "startGn") {
 				const extensionId = 'kaihong.gn-gen';
 				installStartExtension(extensionId);
-			} else if (msg == "startService") {
+			} else if (msg === "startService") {
 				const extensionId = 'kaihong.service-gen';
 				installStartExtension(extensionId);
-			} else if (msg == "startTs") {
+			} else if (msg === "startTs") {
 				const extensionId = 'kaihong.ts-gen';
 				installStartExtension(extensionId);
-			} else if (msg == "startNapi") {
+			} else if (msg === "startNapi") {
 				const extensionId = 'kaihong.napi-gen';
 				installStartExtension(extensionId);
-			} else if (msg == "param") {
+			} else if (msg === "param") {
 				let isSelectToolChain = installExtensions(message);
 				startExtensions(isSelectToolChain);
 			}
@@ -91,22 +91,22 @@ function installExtensions(message) {
 	let checkTs = message.checkTs;
 	let checkNapi = message.checkNapi;
 	if (importCheck) {
-		if (extensionIds.length != 0) {
+		if (extensionIds.length !== 0) {
 			extensionIds.length = 0;
 		}
-		if (checkApi == true) {
+		if (checkApi === true) {
 			extensionIds.push('kaihong.ApiScan')
 		}
-		if (checkGn == true) {
+		if (checkGn === true) {
 			extensionIds.push('kaihong.gn-gen')
 		}
-		if (checkService == true) {
+		if (checkService === true) {
 			extensionIds.push('kaihong.service-gen')
 		}
-		if (checkTs == true) {
+		if (checkTs === true) {
 			extensionIds.push('kaihong.ts-gen')
 		}
-		if (checkNapi == true) {
+		if (checkNapi === true) {
 			extensionIds.push('kaihong.napi-gen')
 		}
 	}
@@ -134,15 +134,15 @@ async function startInstallExtensions(extensionIds) {
 * 执行完毕后启动工具链中下一个插件
 */
 function nextPluginExeCommand(nextPluginId) {
-    if (nextPluginId == "kaihong.ApiScan") {
+    if (nextPluginId === "kaihong.ApiScan") {
 		return 'api_scan';
-	} else if (nextPluginId == "kaihong.gn-gen") {
+	} else if (nextPluginId === "kaihong.gn-gen") {
 		return 'generate_gn';
-	} else if (nextPluginId == "kaihong.service-gen") {
+	} else if (nextPluginId === "kaihong.service-gen") {
 		return 'generate_service';
-	} else if (nextPluginId == "kaihong.ts-gen") {
+	} else if (nextPluginId === "kaihong.ts-gen") {
 		return 'generate_ts';
-	} else if (nextPluginId == "kaihong.napi-gen") {
+	} else if (nextPluginId === "kaihong.napi-gen") {
 		return 'generate_napi';
 	} else {
 		return null;
@@ -180,15 +180,15 @@ async function installStartExtension(extensionId) {
 	}
 
 	// 启动扩展
-	if (extensionId == "kaihong.ApiScan") {
+	if (extensionId === "kaihong.ApiScan") {
 		vscode.commands.executeCommand('api_scan', '', false, '');
-	} else if (extensionId == "kaihong.gn-gen") {
+	} else if (extensionId === "kaihong.gn-gen") {
 		vscode.commands.executeCommand('generate_gn', '', false, '');
-	} else if (extensionId == "kaihong.service-gen") {
+	} else if (extensionId === "kaihong.service-gen") {
 		vscode.commands.executeCommand('generate_service', '', false, '');
-	} else if (extensionId == "kaihong.ts-gen") {
+	} else if (extensionId === "kaihong.ts-gen") {
 		vscode.commands.executeCommand('generate_ts', '', false, '');
-	} else if (extensionId == "kaihong.napi-gen") {
+	} else if (extensionId === "kaihong.napi-gen") {
 		vscode.commands.executeCommand('generate_napi', '', false, '');
 	} 
 	else {

@@ -172,12 +172,12 @@
         
         const message = event.data.msg;
         const path = event.data.path;
-        if(message == "selectInterPath") {
+        if(message === "selectInterPath") {
             document.getElementById("interfaceFile").value = path;
             fillInputDir(path, message);
-        } else if(message == "selectGenPath") {
+        } else if(message === "selectGenPath") {
             document.getElementById("genFile").value = path;
-        } else if(message == "selectBuildPath") {
+        } else if(message === "selectBuildPath") {
             document.getElementById("buildFile").value = path;
         } else {
             console.log("param is error");
@@ -192,8 +192,8 @@
     function fillInputDir(fileNames, message) {
         var dir;
         var fileName;
-        if (mode == 0) {
-            if (fileNames.indexOf(",") != -1) {
+        if (mode === 0) {
+            if (fileNames.indexOf(",") !== -1) {
                 fileName = fileNames.substring(0, fileNames.indexOf(","));
             } else {
                 fileName = fileNames;

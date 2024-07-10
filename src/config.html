@@ -27,7 +27,7 @@
 			let vscode = acquireVsCodeApi();
 			window.onload = function () {
 				document.getElementById("selectMode").addEventListener("change", function (e) {
-					if (e.target.value == 1) {
+					if (e.target.value === 1) {
 						mode = 1;
 					} else {
 						mode = 0;

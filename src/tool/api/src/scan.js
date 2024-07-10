@@ -57,7 +57,7 @@ function collectFromSheet(sheet) {
         }
         collectInclude.add(sheet[idx].w);
 
-        if (sheet["C" + row].w == "Function") {
+        if (sheet["C" + row].w === "Function") {
             collectFunction.add(sheet["D" + row].w);
         }
         row += 1;
