@@ -48,9 +48,9 @@ var pathDir = ops.directory;
 var imports = ops.imports;
 if (fileNames == null && pathDir == null) {
     NapiLog.logInfo("fileNames and pathDir both cannot be empty at the same time");
-} else if (pathDir != '') {
+} else if (pathDir !== '') {
     readDirFiles();
-} else if (fileNames != '') {
+} else if (fileNames !== '') {
     readFiles();
 }
 
@@ -115,7 +115,7 @@ function getJsonCfg(currentPath) {
 function checkGenerate(fileName) {
     NapiLog.logInfo("check file []".format(fileName))
     let suffix = fileName.split('.').pop().toLowerCase();
-    if (ops.tsGen == 'true' && suffix === 'h') {
+    if (ops.tsGen === 'true' && suffix === 'h') {
         NapiLog.logInfo("convert .h file to .ts file...")
         tsMain.doGenerate(fileName, ops.out);
         return;

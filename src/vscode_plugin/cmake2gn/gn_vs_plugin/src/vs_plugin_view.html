@@ -244,20 +244,20 @@
     window.addEventListener('message', event => {
             const message = event.data.msg;
             const path = event.data.path;
-            if (message == "selectinputScriptDir") {
+            if (message === "selectinputScriptDir") {
                 let filepath = getinputScriptDirPath(path);
                 document.getElementById("inputScriptDirid").value = filepath;
                 fillInputDir2(path);
-            } else if (message == "selectoutputCodeDir") {
+            } else if (message === "selectoutputCodeDir") {
                 let filepath = getoutputCodeDirPath(path);
                 document.getElementById("outputCodeDirid").value = filepath;
                 fillInputDir(path);
-            } else if (message == "selectoriginCodeDir") {
+            } else if (message === "selectoriginCodeDir") {
                 document.getElementById("originCodeDirid").value = path;
-            } else if (message == "selecttransplantDir") {
+            } else if (message === "selecttransplantDir") {
                 let filepath = gettransplantDirPath(path);
                 document.getElementById("transplantDirid").value = filepath;
-            } else if (message == "colorThemeChanged") {
+            } else if (message === "colorThemeChanged") {
                 reloadFileImgPic();
             }
             else {

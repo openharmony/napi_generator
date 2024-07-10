@@ -27,7 +27,7 @@ else {
     Tool.CURRENT_TOOL_PATH = path.parse(process.execPath).dir;
 }
 
-if (Tool.MOCK_TYPE == Tool.MOCK_ENUM.MOCK_RUN) {
+if (Tool.MOCK_TYPE === Tool.MOCK_ENUM.MOCK_RUN) {
     GenerateGn.mockGenerate();//通过mock数据运行
 }
 
@@ -62,10 +62,10 @@ Tool.OHOS_PART_NAME = ops.part_name;
 
 let compileFile = path.parse(path.join(Tool.OHOS_PROJECT_PATH, ops.filename));
 
-if (ops.type == "cmake") {//cmake
+if (ops.type === "cmake") {//cmake
     AnalyzeCMake.analyze(compileFile, ops.cmake_args.substring(1, ops.cmake_args.length - 1));
 }
-else if (ops.type == "make") {//make
+else if (ops.type === "make") {//make
     AnalyzeMake.analyze(compileFile);
 }
 else {

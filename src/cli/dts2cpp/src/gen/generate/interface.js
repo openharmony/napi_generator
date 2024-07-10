@@ -73,7 +73,7 @@ let middleBodyTmplete = `
 function getHDefineOfVariable(name, type, variable, optional) {
     if (type.indexOf("|") >= 0) {
         unionTypeString(name, type, variable, optional)
-    } else if (type == "string") {
+    } else if (type === "string") {
         if (optional) {
             variable.hDefine += "\n    std::optional<std::string> %s;".format(name)
         } else {
@@ -93,27 +93,27 @@ function getHDefineOfVariable(name, type, variable, optional) {
       } else {
         variable.hDefine += "\n    %s %s;".format(type, name)
       }
-    } else if (type.indexOf("Array<") == 0) {
+    } else if (type.indexOf("Array<") === 0) {
         typeArrFunctionOne(type, variable, name, optional);
-    } else if (type == "boolean") {
+    } else if (type === "boolean") {
         if (optional) {
             variable.hDefine += "\n    std::optional<bool> %s;".format(name)
         } else {
             variable.hDefine += "\n    bool %s;".format(name)
         }
-    } else if (type.substring(type.length - 2) == "[]") {
+    } else if (type.substring(type.length - 2) === "[]") {
         typeArrFunctionTwo(type, variable, name, optional);
-    } else if (type.substring(0, 4) == "Map<" || type.indexOf("{[key:") == 0) {  // 支持可选参数？
+    } else if (type.substring(0, 4) === "Map<" || type.indexOf("{[key:") === 0) {  // 支持可选参数？
         variable.hDefine += mapTypeString(type, name, optional)
-    } else if (type == "any") {
+    } else if (type === "any") {
         variable.hDefine += anyTypeString(type, name)
-    } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+    } else if (type.substring(0, 12) === "NUMBER_TYPE_") {
         if (optional) {
             variable.hDefine += "\n    std::optional<%s> %s;".format(type, name)
         } else {
             variable.hDefine += "\n    %s %s;".format(type, name)
         }
-    } else if (type == "Object" || type == "object") {
+    } else if (type === "Object" || type === "object") {
         variable.hDefine += "\n    std::map<std::string, std::any> %s;".format(name)
     }
     else {
@@ -125,7 +125,7 @@ function getHDefineOfVariable(name, type, variable, optional) {
 
 function typeArrFunctionTwo(type, variable, name, optional) {
     let arrayType = getArrayTypeTwo(type);
-    if (arrayType == "any") {
+    if (arrayType === "any") {
         variable.hDefine += "\n    std::string %s_type;\n    std::any %s;".format(name, name);
     } else {
         let cType = jsType2CType(arrayType);
@@ -139,7 +139,7 @@ function typeArrFunctionTwo(type, variable, name, optional) {
 
 function typeArrFunctionOne(type, variable, name, optional) {
     let arrayType = getArrayType(type);
-    if (arrayType == "any") {
+    if (arrayType === "any") {
         variable.hDefine += "\n    std::string %s_type; \n    std::any %s;".format(name, name);
     } else {
         let cType = jsType2CType(arrayType);
@@ -237,13 +237,13 @@ function unionTypeString(name, type, variable, optional) {
 function mapTypeString(type, name, optional) {
     let mapType = getMapType(type)
     let mapTypeString
-    if (mapType[1] != undefined && mapType[2] == undefined) {
-        if (mapType[1] == "string") mapTypeString = "std::string, std::string"
-        else if (mapType[1] == "boolean") mapTypeString = "std::string, bool"
-        else if (mapType[1].substring(0, 12) == "NUMBER_TYPE_") {
+    if (mapType[1] !== undefined && mapType[1] !== null && mapType[2] === undefined) {
+        if (mapType[1] === "string") mapTypeString = "std::string, std::string"
+        else if (mapType[1] === "boolean") mapTypeString = "std::string, bool"
+        else if (mapType[1].substring(0, 12) === "NUMBER_TYPE_") {
             mapTypeString = "std::string, %s".format(mapType[1])
         }
-        else if (mapType[1].substring(0, 12) == "any") {
+        else if (mapType[1].substring(0, 12) === "any") {
             mapTypeString = `std::string, std::any`.format(mapType[1])
             return `\n    std::map<%s> %s;
             std::string %s_type;`.format(mapTypeString, name, name)
@@ -251,16 +251,16 @@ function mapTypeString(type, name, optional) {
         else if (InterfaceList.getValue(mapType[1])) mapTypeString = "std::string, %s".format(mapType[1])
     }
     if (mapType[2] != undefined) {
-        if (mapType[2] == "string") mapTypeString = "std::string, std::map<std::string, std::string>"
-        else if (mapType[2] == "boolean") mapTypeString = "std::string, std::map<std::string, bool>"
-        else if (mapType[2].substring(0, 12) == "NUMBER_TYPE_") {
+        if (mapType[2] === "string") mapTypeString = "std::string, std::map<std::string, std::string>"
+        else if (mapType[2] === "boolean") mapTypeString = "std::string, std::map<std::string, bool>"
+        else if (mapType[2].substring(0, 12) === "NUMBER_TYPE_") {
             mapTypeString = "std::string, std::map<std::string, %s>".format(mapType[2])
         }
     }
     if (mapType[3] != undefined) {
-        if (mapType[3] == "string") mapTypeString = "std::string, std::vector<std::string>"
-        else if (mapType[3] == "boolean") mapTypeString = "std::string, std::vector<bool>"
-        else if (mapType[3].substring(0, 12) == "NUMBER_TYPE_") {
+        if (mapType[3] === "string") mapTypeString = "std::string, std::vector<std::string>"
+        else if (mapType[3] === "boolean") mapTypeString = "std::string, std::vector<bool>"
+        else if (mapType[3].substring(0, 12) === "NUMBER_TYPE_") {
             mapTypeString = "std::string, std::vector<%s>".format(mapType[3])
         }
     }
@@ -321,9 +321,9 @@ class %s;\r`.format(name),
 
 function getConstructorFunc(data, param) {
     let funcValues = null;
-    if (data.function != null) {
+    if (data.function !== null && data.function !== undefined) {
         for (let i = 0; i < data.function.length; i++) {
-            if (data.function[i].name == "constructor") {
+            if (data.function[i].name === "constructor") {
                 funcValues = data.function[i].value;
             }
         }
@@ -335,7 +335,7 @@ function getConstructorFunc(data, param) {
     let getConParam = "";
     for (let i in tmpBody) {
         let flag = tmpBody[i].replaceAll('\n', '').replaceAll(' ', '')
-        if (flag != '') {
+        if (flag !== '') {
             let indexBegin = tmpBody[i].indexOf("pxt->GetArgv(");
             if (indexBegin > 0 && tmpBody[i].indexOf("\n") < 0) {
               tmpBody[i] = tmpBody[i].replaceAll("pxt->GetArgv(", "args[");
@@ -440,7 +440,7 @@ function connectResult(data, inNamespace, name) {
 }
 
 function generateMiddleInitFunc(func, inNamespace, middleInit, name) {
-    if (func.name != "constructor") {
+    if (func.name !== "constructor") {
         let toolNamespace = getToolNamespace(inNamespace);
         middleInit += `\n    funcList["%s"] = %s%s%s_middle::%s_middle;`.format(func.name,
             inNamespace, toolNamespace, name, func.name);
