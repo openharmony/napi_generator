@@ -450,18 +450,14 @@ function paramGenerateArray(p, funcValue, param) {
         } else if (arrayType === "any") {
             return paramGenerateAnyArray(p, name, type, param)
         }
-        else if (keyType === "[key:string]:"|| keyType === "Map<string,") {
+        else if (checkIsMap(keyType)) {
             let mapValueType = getMapValueType(strLen, keyType, arrayType);             
             arrayType = "std::map<std::string, %s>".format(mapValueType)
         }
         param.valueIn += funcValue.optional ? "\n    std::vector<%s>* in%d = nullptr;".format(arrayType, p) 
                                             : "\n    std::vector<%s> in%d;".format(arrayType, p)
         let arrValueCheckout = jsToC(inParamName, "pxt->GetArgv(%d)".format(getConstNum(p)), type)
-        if (funcValue.optional) {
-            arrValueCheckout = "if (pxt->GetArgc() > %s) {\n        vio->in%d = new std::vector<%s>;\n"
-                .format(getConstNum(p), p, arrayType) + arrValueCheckout + "    }\n"
-            param.optionalParamDestory += "C_DELETE(vio->in%d);\n    ".format(p)
-        }                                   
+        arrValueCheckout = getFuncOptionalValue(funcValue, arrValueCheckout, p, arrayType, param);                                   
         param.valueCheckout += arrValueCheckout
         param.valueFill += "%svio->in%d".format(param.valueFill.length > 0 ? ", " : "", p)
         param.valueDefine += "%sstd::vector<%s>%s%s".format(param.valueDefine.length > 0 ? ", "
@@ -470,6 +466,19 @@ function paramGenerateArray(p, funcValue, param) {
         NapiLog.logError("The current version do not support to this param to generate :", name,
             "type :", type, getLogErrInfo());
     }
+}
+
+function checkIsMap(keyType) {
+  return keyType === '[key:string]:' || keyType === 'Map<string,';
+}
+
+function getFuncOptionalValue(funcValue, arrValueCheckout, p, arrayType, param) {
+  if (funcValue.optional) {
+    arrValueCheckout = 'if (pxt->GetArgc() > %s) {\n        vio->in%d = new std::vector<%s>;\n'
+      .format(getConstNum(p), p, arrayType) + arrValueCheckout + '    }\n';
+    param.optionalParamDestory += 'C_DELETE(vio->in%d);\n    '.format(p);
+  }
+  return arrValueCheckout;
 }
 
 function paramGenerateAny(p, name, type, param) {
