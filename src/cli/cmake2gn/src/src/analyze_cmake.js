@@ -84,4 +84,4 @@ class AnalyzeCMake {
 
 module.exports = {
     AnalyzeCMake
-}
+};
