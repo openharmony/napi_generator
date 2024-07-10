@@ -61,7 +61,7 @@ function analyzeTypeVariable(t, tt, result) {
   let optionalFlag = re.getReg(t, tt.regs[2]) === '?' ? true : false;
   while (index !== -1) {
     valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease());
-    index = valueType.indexOf("number");
+    index = valueType.indexOf('number');
   }
   result.value.push({
     name: valueName,

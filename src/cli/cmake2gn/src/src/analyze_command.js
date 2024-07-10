@@ -531,7 +531,7 @@ class AnalyzeCommand {
             let datas = data.split(' ');
             let pp = ['.c',
                 '.o',
-                '.o'',
+                '.o',
                 '.a',
                 '.S',
                 '.so'
