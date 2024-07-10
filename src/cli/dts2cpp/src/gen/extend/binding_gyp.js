@@ -12,8 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { writeFile } = require("../tools/FileRW");
-const re = require("../tools/re");
+const { writeFile } = require('../tools/FileRW');
+const re = require('../tools/re');
 
 let gypTemplete = `
 {
@@ -33,28 +33,30 @@ let gypTemplete = `
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
 function generateGYP(destDir, implName, license, bindingCpp) {
-    let ss = gypTemplete.replaceAll("[implName]", implName)
-    ss = ss.replaceAll("[businessCodeCpp]", bindingCpp)
+    let ss = gypTemplete.replaceAll('[implName]', implName)
+    ss = ss.replaceAll('[businessCodeCpp]', bindingCpp)
     if (license) {
-        let s2 = license.substring(2, license.length - 2).split("\n");
-        license = "";
+        let s2 = license.substring(2, license.length - 2).split('\n');
+        license = '';
         for (let i = 1; i < s2.length; i++) {
             license = getLicense(s2, i, license);
         }
     }
-    writeFile(re.pathJoin(destDir, "binding.gyp"), (null !== license && undefined !== license) ?
-      (license + "\n" + ss) : ss)
+    writeFile(re.pathJoin(destDir, 'binding.gyp'), (null !== license && undefined !== license) ?
+      (license + '\n' + ss) : ss)
 
-    writeFile(re.pathJoin(destDir, "test.sh"), "node-gyp configure build && sleep 0.5 && node --expose-gc test.js")
+    writeFile(re.pathJoin(destDir, 'test.sh'), 'node-gyp configure build && sleep 0.5 && node --expose-gc test.js')
 
 }
 
 function getLicense(s2, i, license) {
   if (s2[i].length > 0) {
-    while (s2[i][0] === " ")
+    while (s2[i][0] === ' ')
+    {
       s2[i] = s2[i].substring(1);
-    if (s2[i].length > 3 && s2[i][0] === "*") {
-      license += "#" + s2[i].substring(1) + "\n";
+    }
+    if (s2[i].length > 3 && s2[i][0] === '*') {
+      license += '#' + s2[i].substring(1) + '\n';
     }
   }
   return license;

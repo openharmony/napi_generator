@@ -112,20 +112,7 @@ function register(context, command) {
 		globalPanel.webview.html = getWebviewContent(context, importToolChain);
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
-      msg = message.msg;
-      if (msg === 'cancel') {
-        globalPanel.dispose();
-      } else if (msg === 'param') {
-        if (configList.length !== 0) {
-          writeCfgJson();  // 写cfg.json文件
-        }
-        checkReceiveMsg(message);
-      } else if (msg === 'config') {
-        // 若选择文件夹或者选择了多个文件则不能配置业务代码
-        getMsgCfg(message, context);
-      } else {
-        selectPath(globalPanel, message);
-      }
+      msg = handleMsg(msg, message, context);
     }, undefined, context.subscriptions);
     // 路径有效性判断
     if (uri.fsPath !== undefined) {
@@ -139,6 +126,24 @@ function register(context, command) {
     }
   });
   return disposable;
+}
+
+function handleMsg(msg, message, context) {
+  msg = message.msg;
+  if (msg === 'cancel') {
+    globalPanel.dispose();
+  } else if (msg === 'param') {
+    if (configList.length !== 0) {
+      writeCfgJson(); // 写cfg.json文件
+    }
+    checkReceiveMsg(message);
+  } else if (msg === 'config') {
+    // 若选择文件夹或者选择了多个文件则不能配置业务代码
+    getMsgCfg(message, context);
+  } else {
+    selectPath(globalPanel, message);
+  }
+  return msg;
 }
 
 function getMsgCfg(message, context) {
