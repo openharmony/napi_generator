@@ -75,35 +75,23 @@ function getHDefineOfVariable(name, type, variable, optional) {
     if (type.indexOf("|") >= 0) {
         unionTypeString(name, type, variable, optional)
     } else if (type === "string") {
-        if (optional) {
-            variable.hDefine += "\n    std::optional<std::string> %s;".format(name)
-        } else {
-            variable.hDefine += "\n    std::string %s;".format(name)
-        }
+        variableTypeString(optional, variable, name);
     }
     else if (TypeList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (EnumList.getValue(type)) variable.hDefine += "\n    %s %s;".format(type, name)
     else if (type.indexOf("Array<") === 0) {
         typeArrFunctionOne(type, variable, name, optional);
     } else if (type === "boolean") {
-        if (optional) {
-            variable.hDefine += "\n    std::optional<bool> %s;".format(name)
-        } else {
-            variable.hDefine += "\n    bool %s;".format(name)
-        }
+        variableTypeBoolean(optional, variable, name);
     } else if (type.substring(type.length - 2) === "[]") {
         typeArrFunctionTwo(type, variable, name, optional);
-    } else if (type.substring(0, 4) === "Map<" || type.indexOf("{[key:") === 0) {
+    } else if (checkIsMap(type)) {
         variable.hDefine += mapTypeString(type, name, optional)
     } else if (type === "any") {
         variable.hDefine += anyTypeString(type, name)
     } else if (type.substring(0, 12) === "NUMBER_TYPE_") {
-        if (optional) {
-            variable.hDefine += "\n    std::optional<%s> %s;".format(type, name)
-        } else {
-            variable.hDefine += "\n    %s %s;".format(type, name)
-        }
-    } else if (type === "Object" || type === "object") {
+        variableTypeNumber(optional, variable, type, name);
+    } else if (checkIsObject(type)) {
         variable.hDefine += "\n    std::map<std::string, std::any> %s;".format(name)
     }
     else {
@@ -111,6 +99,38 @@ function getHDefineOfVariable(name, type, variable, optional) {
         ---- generateVariable fail %s,%s ----
         `.format(name, type));
     }
+}
+
+function checkIsObject(type) {
+  return type === "Object" || type === "object";
+}
+
+function checkIsMap(type) {
+  return type.substring(0, 4) === "Map<" || type.indexOf("{[key:") === 0;
+}
+
+function variableTypeNumber(optional, variable, type, name) {
+  if (optional) {
+    variable.hDefine += "\n    std::optional<%s> %s;".format(type, name);
+  } else {
+    variable.hDefine += "\n    %s %s;".format(type, name);
+  }
+}
+
+function variableTypeBoolean(optional, variable, name) {
+  if (optional) {
+    variable.hDefine += "\n    std::optional<bool> %s;".format(name);
+  } else {
+    variable.hDefine += "\n    bool %s;".format(name);
+  }
+}
+
+function variableTypeString(optional, variable, name) {
+  if (optional) {
+    variable.hDefine += "\n    std::optional<std::string> %s;".format(name);
+  } else {
+    variable.hDefine += "\n    std::string %s;".format(name);
+  }
 }
 
 function typeArrFunctionTwo(type, variable, name, optional) {

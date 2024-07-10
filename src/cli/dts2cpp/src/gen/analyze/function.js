@@ -60,17 +60,17 @@ function analyzeSubInterfaceVal(t, tt, result) {
 }
 
 function getFuncParaType(v, interfaceName, data, results) {
-    let arrayType = re.match('(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>', v['type'])
-    let parameter = v['type']
+    let arrayType = re.match('(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>', v.type)
+    let parameter = v.type
     if (arrayType) {
-        parameter = re.getReg(v['type'], arrayType.regs[2])
+        parameter = re.getReg(v.type, arrayType.regs[2])
     }
     if (isEnum(parameter, data)) {
         let index = enumIndex(parameter, data)
         if (data.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-            v['type'] = v['type'].replace(parameter, 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease())
+            v.type = v.type.replace(parameter, 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease())
         } else if (data.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
-            v['type'] = v['type'].replace(parameter, 'string')
+            v.type = v.type.replace(parameter, 'string')
         } else {
             NapiLog.logError('analyzeFunction getFuncParaType is not support this type %s.'
                 .format(data.enum[index].body.enumValueType), getLogErrInfo);
@@ -81,10 +81,10 @@ function getFuncParaType(v, interfaceName, data, results) {
      else if (isEnum(parameter, results)) {
         let index = enumIndex(parameter, results)
         if (results.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-          v['type'] = v['type'].replace(parameter, 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease())
-          v['realType'] = v['type']
+          v.type = v.type.replace(parameter, 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease())
+          v.realType = v.type
         } else if (results.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
-          v['type'] = v['type'].replace(parameter, 'string')
+          v.type = v.type.replace(parameter, 'string')
         } else {
           NapiLog.logError('analyzeFunction getFuncParaType is not support this type %s.'
               .format(results.enum[index].body.enumValueType), getLogErrInfo());
@@ -94,19 +94,19 @@ function getFuncParaType(v, interfaceName, data, results) {
 
     let interfaceType = re.match('{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$', v['type'])
     if (interfaceType) {
-        v['type'] = interfaceName
+        v.type = interfaceName
     }
 
     if (parameter.indexOf('number') >= 0) {
-        v['type'] = v['type'].replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease())
-        v['realType'] = v['type']
+        v.type = v.type.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease())
+        v.realType = v.type
     }
 
     // type的处理
     if (isType(parameter, data)) {
       let index = typeIndex(parameter, data)
       if (data.type[index].isEnum) {
-        v['type'] = v['type'].replace(parameter, 'string')
+        v.type = v.type.replace(parameter, 'string')
       }
     }
     return v
