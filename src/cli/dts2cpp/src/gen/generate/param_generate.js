@@ -469,14 +469,14 @@ function paramGenerateArray(p, funcValue, param) {
 }
 
 function checkIsMap(keyType) {
-  return keyType === "[key:string]:" || keyType === "Map<string,";
+  return keyType === '[key:string]:' || keyType === 'Map<string,';
 }
 
 function getFuncOptionalValue(funcValue, arrValueCheckout, p, arrayType, param) {
   if (funcValue.optional) {
-    arrValueCheckout = "if (pxt->GetArgc() > %s) {\n        vio->in%d = new std::vector<%s>;\n"
-      .format(getConstNum(p), p, arrayType) + arrValueCheckout + "    }\n";
-    param.optionalParamDestory += "C_DELETE(vio->in%d);\n    ".format(p);
+    arrValueCheckout = 'if (pxt->GetArgc() > %s) {\n        vio->in%d = new std::vector<%s>;\n'
+      .format(getConstNum(p), p, arrayType) + arrValueCheckout + '    }\n';
+    param.optionalParamDestory += 'C_DELETE(vio->in%d);\n    '.format(p);
   }
   return arrValueCheckout;
 }

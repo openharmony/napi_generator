@@ -102,34 +102,34 @@ function getHDefineOfVariable(name, type, variable, optional) {
 }
 
 function checkIsObject(type) {
-  return type === "Object" || type === "object";
+  return type === 'Object' || type === 'object';
 }
 
 function checkIsMap(type) {
-  return type.substring(0, 4) === "Map<" || type.indexOf("{[key:") === 0;
+  return type.substring(0, 4) === 'Map<' || type.indexOf('{[key:') === 0;
 }
 
 function variableTypeNumber(optional, variable, type, name) {
   if (optional) {
-    variable.hDefine += "\n    std::optional<%s> %s;".format(type, name);
+    variable.hDefine += '\n    std::optional<%s> %s;'.format(type, name);
   } else {
-    variable.hDefine += "\n    %s %s;".format(type, name);
+    variable.hDefine += '\n    %s %s;'.format(type, name);
   }
 }
 
 function variableTypeBoolean(optional, variable, name) {
   if (optional) {
-    variable.hDefine += "\n    std::optional<bool> %s;".format(name);
+    variable.hDefine += '\n    std::optional<bool> %s;'.format(name);
   } else {
-    variable.hDefine += "\n    bool %s;".format(name);
+    variable.hDefine += '\n    bool %s;'.format(name);
   }
 }
 
 function variableTypeString(optional, variable, name) {
   if (optional) {
-    variable.hDefine += "\n    std::optional<std::string> %s;".format(name);
+    variable.hDefine += '\n    std::optional<std::string> %s;'.format(name);
   } else {
-    variable.hDefine += "\n    std::string %s;".format(name);
+    variable.hDefine += '\n    std::string %s;'.format(name);
   }
 }
 
