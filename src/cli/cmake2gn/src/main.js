@@ -12,15 +12,15 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const path = require("path");
-const stdio = require("stdio");
-const { AnalyzeCMake } = require("./src/analyze_cmake");
-const { AnalyzeMake } = require("./src/analyze_make");
-const { GenerateGn } = require("./src/generate_gn");
-const { Logger } = require("./src/logger");
-const { Tool } = require("./src/tool");
+const path = require('path');
+const stdio = require('stdio');
+const { AnalyzeCMake } = require('./src/analyze_cmake');
+const { AnalyzeMake } = require('./src/analyze_make');
+const { GenerateGn } = require('./src/generate_gn');
+const { Logger } = require('./src/logger');
+const { Tool } = require('./src/tool');
 
-if (process.execPath.endsWith("node") || process.execPath.endsWith("node.exe")) {
+if (process.execPath.endsWith('node') || process.execPath.endsWith('node.exe')) {
     Tool.CURRENT_TOOL_PATH = __dirname;//工具目录，用来找到res内资源
 }
 else {
@@ -32,21 +32,21 @@ if (Tool.MOCK_TYPE == Tool.MOCK_ENUM.MOCK_RUN) {
 }
 
 let ops = stdio.getopt({
-    'type': { key: 't', args: 1, description: "", default: "cmake" },
+    'type': { key: 't', args: 1, description: '', default: 'cmake' },
     'filename': {
         key: 'f', args: 1,
         description: "The make file's relative path \
 ( third_party/opencv/CMakeLists.txt , make file can be Makefile/CMakeLists.txt)"
     },
     'ohos_product_output': {
-        key: 'o', args: 1, description: "ohos product output relative path",
-        default: "out/rk3568"
+        key: 'o', args: 1, description: 'ohos product output relative path',
+        default: 'out/rk3568'
     },
-    'ohos_project_path': { key: 'p', args: 1, description: "ohos project path ( /home/xxx/ohos_project )" },
-    'cmake_args': { key: 'a', args: 1, description: "like: (-DABC,-DQWE)", default: "" },
-    'subsystem_name': { key: 's', args: 1, description: "subsystem", default: "test_subsystem" },
-    'part_name': { key: 'm', args: 1, description: "part", default: "test_part" },
-    'porting_to': { key: 'd', args: 1, description: "porting to", default: "" },
+    'ohos_project_path': { key: 'p', args: 1, description: 'ohos project path ( /home/xxx/ohos_project )' },
+    'cmake_args': { key: 'a', args: 1, description: 'like: (-DABC,-DQWE)', default: '' },
+    'subsystem_name': { key: 's', args: 1, description: 'subsystem', default: 'test_subsystem' },
+    'part_name': { key: 'm', args: 1, description: 'part', default: 'test_part' },
+    'porting_to': { key: 'd', args: 1, description: 'porting to', default: '' },
 });
 
 Tool.OHOS_PROJECT_PATH = ops.ohos_project_path;
@@ -62,12 +62,12 @@ Tool.OHOS_PART_NAME = ops.part_name;
 
 let compileFile = path.parse(path.join(Tool.OHOS_PROJECT_PATH, ops.filename));
 
-if (ops.type == "cmake") {//cmake
+if (ops.type == 'cmake') {//cmake
     AnalyzeCMake.analyze(compileFile, ops.cmake_args.substring(1, ops.cmake_args.length - 1));
 }
-else if (ops.type == "make") {//make
+else if (ops.type == 'make') {//make
     AnalyzeMake.analyze(compileFile);
 }
 else {
-    Logger.err("not support " + ops.filename);
+    Logger.err('not support ' + ops.filename);
 }
