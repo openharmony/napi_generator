@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const childProcess = require('child_process');
-const fs = require('fs')
+const fs = require('fs');
 const path = require('path');
 const { AnalyzeCommand } = require('./analyze_command');
 const { Logger } = require('./logger');

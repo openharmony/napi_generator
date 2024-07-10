@@ -122,7 +122,7 @@ class GenerateGn {
         static: [],
         dynamic: [],
         executable: []
-    }
+    };
     static generateTargetGroup(projectPath) {
         let gnName = path.join(projectPath, 'BUILD.gn');
         let gnStr = 'import("//build/ohos.gni")\n\n';
@@ -145,7 +145,7 @@ class GenerateGn {
 
         gnStr += `
 group("all_targets") {
-    deps = [`
+    deps = [`;
         if (staticTargets.length > 0) {
             gnStr += `
         #静态库
@@ -208,7 +208,7 @@ group("all_targets") {
                 configDetail += GenerateGn.genDetail('cflags_cc', collectDetails.cflagsCc);
             }
             if (collectDetails.cflags.has('-frtti')) {
-                removeConfigs += `        "//build/config/compiler:no_rtti",\n`
+                removeConfigs += `        "//build/config/compiler:no_rtti",\n`;
             }
             if (collectDetails.cflags.has('-fexceptions')) {
                 removeConfigs += `        "//build/config/compiler:no_exceptions",\n`;
@@ -277,7 +277,7 @@ subsystem_name = "%s"
     }
 
     static genDetail(name, detail) {
-        let ss = ''
+        let ss = '';
         for (let s of detail) {
             s=Tool.swapPath(s);
             if (ss.length > 0) ss += '",\n        "';
