@@ -29,29 +29,33 @@ function saveMockData(projectPath, analyzeResult) {
 
 function preProcessResult(analyzeResult) {//把所有路径搞成绝对路径
     for (let r of analyzeResult) {
-        if (!r.target.startsWith("/")) {
-            if (!path.isAbsolute(r.target)) {
-                r.target = path.join(r.workDir, r.target);
-            }
-        }
-        for (let i = 0; i < r.inputs.length; i++) {
-            if (r.inputs[i].startsWith('"') && r.inputs[i].endsWith('"')) {
-                r.inputs[i] = r.inputs[i].substring(1, r.inputs[i].length - 1);
-            }
-            if (!r.inputs[i].startsWith("/")) {
-                if (!path.isAbsolute(r.inputs[i])) {
-                    r.inputs[i] = path.join(r.workDir, r.inputs[i]);
-                }
-            }
-        }
-        for (let i = 0; i < r.includes.length; i++) {
-            if (!r.includes[i].startsWith("/")) {
-                if (!path.isAbsolute(r.includes[i])) {
-                    r.includes[i] = path.join(r.workDir, r.includes[i]);
-                }
-            }
-        }
+        changePathToAbs(r);
     }
+}
+
+function changePathToAbs(r) {
+  if (!r.target.startsWith("/")) {
+    if (!path.isAbsolute(r.target)) {
+      r.target = path.join(r.workDir, r.target);
+    }
+  }
+  for (let i = 0; i < r.inputs.length; i++) {
+    if (r.inputs[i].startsWith('"') && r.inputs[i].endsWith('"')) {
+      r.inputs[i] = r.inputs[i].substring(1, r.inputs[i].length - 1);
+    }
+    if (!r.inputs[i].startsWith("/")) {
+      if (!path.isAbsolute(r.inputs[i])) {
+        r.inputs[i] = path.join(r.workDir, r.inputs[i]);
+      }
+    }
+  }
+  for (let i = 0; i < r.includes.length; i++) {
+    if (!r.includes[i].startsWith("/")) {
+      if (!path.isAbsolute(r.includes[i])) {
+        r.includes[i] = path.join(r.workDir, r.includes[i]);
+      }
+    }
+  }
 }
 
 function checkoutLibName(name) {//比如/home/libabc.so，返回["dynamic",abc]

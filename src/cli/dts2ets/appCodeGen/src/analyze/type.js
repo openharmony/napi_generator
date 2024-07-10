@@ -48,22 +48,26 @@ function analyzeType(data, rsltInterface = null) { // same as class
         if (t == "") break // 如果t为空直接返回
         let tt = re.match(" *([a-zA-Z0-9_]+)(\\?*)*: *([a-zA-Z_0-9<>,:{}[\\]| ]+)", t)
         if (tt && t.indexOf("=>") < 0) { // 接口成员变量, 但不包括带'=>'的成员，带'=>'的接口成员需要按函数处理
-            let valueName = re.getReg(t, tt.regs[1])
-            let valueType = re.getReg(t, tt.regs[3])
-            let index = valueType.indexOf("number")
-            let optionalFlag = re.getReg(t, tt.regs[2]) == '?' ? true : false;
-            while (index !== -1) {
-                valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
-                index = valueType.indexOf("number")
-            } 
-              result.value.push({
-                name: valueName,
-                type: valueType,
-                optional: optionalFlag
-              })
+            analyzeTypeVariable(t, tt, result);
         }
     }
     return result
+}
+
+function analyzeTypeVariable(t, tt, result) {
+  let valueName = re.getReg(t, tt.regs[1]);
+  let valueType = re.getReg(t, tt.regs[3]);
+  let index = valueType.indexOf("number");
+  let optionalFlag = re.getReg(t, tt.regs[2]) == '?' ? true : false;
+  while (index !== -1) {
+    valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease());
+    index = valueType.indexOf("number");
+  }
+  result.value.push({
+    name: valueName,
+    type: valueType,
+    optional: optionalFlag
+  });
 }
 
 function analyzeType2(data) {

@@ -21,12 +21,12 @@ const re = require("./gen/tools/VsPluginRe");
 const { VsPluginLog } = require("./gen/tools/VsPluginLog");
 const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
 const path = require('path');
-var exeFilePath = null;
-var globalPanel = null;
+let exeFilePath = null;
+let globalPanel = null;
 
-var importToolChain = false;
-var extensionIds = [];
-var nextPluginId = null;
+let importToolChain = false;
+let extensionIds = [];
+let nextPluginId = null;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -42,7 +42,7 @@ function activate(context) {
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposableMenu);
 	
-	var platform = detectPlatform();
+	let platform = detectPlatform();
 	if (platform == 'win') {
 		exeFilePath = __dirname + "/napi_generator-win.exe";
 	} else if (platform == 'mac') {
@@ -53,8 +53,8 @@ function activate(context) {
 }
 
 function executorH2Ts(name, genDir) {
-	var command = exeFilePath + " -f " + name + " -o " + genDir + " -t true";
-	var exec = require('child_process').exec;
+	let command = exeFilePath + " -f " + name + " -o " + genDir + " -t true";
+	let exec = require('child_process').exec;
 	exec(command, function (error, stdout, stderr) {
 		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
 		if (error || stdout.indexOf("success") < 0) {
@@ -85,21 +85,7 @@ function register(context, command) {
 				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
 			}
 		);
-		if (typeof(boolValue) == 'boolean' && Array.isArray(items)) {
-			if (boolValue == true) {
-				//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
-				let myExtensionId = 'kaihong.ts-gen';
-				for (let i = 0; i < items.length; i++) {
-					if (myExtensionId == items[i] && (i == items.length - 1)) {
-						importToolChain = false;
-					} else if (myExtensionId == items[i] && (i != items.length - 1)) {
-						importToolChain = boolValue;
-						nextPluginId = items[i + 1];
-					}
-					extensionIds.push(items[i]);
-				}
-			}
-		}
+		checkBoolval(boolValue, items);
 		globalPanel.webview.html = getWebviewContent(context, importToolChain);
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
@@ -117,7 +103,7 @@ function register(context, command) {
     if (uri.fsPath !== undefined) {
       let fn = re.getFileInPath(uri.fsPath);
       let tt = re.match("([a-zA-Z_0-9]+.h)", fn);
-      var result = {
+      let result = {
         msg: "selectHFilePath",
         path: tt ? uri.fsPath : ""
       }
@@ -125,6 +111,28 @@ function register(context, command) {
     }
 	});
 	return disposable;
+}
+
+function checkBoolval(boolValue, items) {
+  if (typeof (boolValue) == 'boolean' && Array.isArray(items)) {
+    if (boolValue == true) {
+      //遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
+      getNextPlugin(items, boolValue);
+    }
+  }
+}
+
+function getNextPlugin(items, boolValue) {
+  let myExtensionId = 'kaihong.ts-gen';
+  for (let i = 0; i < items.length; i++) {
+    if (myExtensionId == items[i] && (i == items.length - 1)) {
+      importToolChain = false;
+    } else if (myExtensionId == items[i] && (i != items.length - 1)) {
+      importToolChain = boolValue;
+      nextPluginId = items[i + 1];
+    }
+    extensionIds.push(items[i]);
+  }
 }
 
 function checkReceiveMsg(message) {
@@ -206,7 +214,7 @@ function startNextPlugin() {
 		   for (let index = 0; index < fileUri.length; index++) {
 				filePath += fileUri[index].fsPath.concat(",");
 		   }
-		   var result = {
+		   let result = {
 				msg: message.msg,
 				path: filePath.length > 0 ? filePath.substring(0, filePath.length - 1) : filePath
 				}
