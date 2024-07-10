@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const childProcess = require("child_process");
-const fs = require("fs")
+const fs = require("fs");
 const path = require("path");
 const { AnalyzeCommand } = require("./analyze_command");
 const { Logger } = require("./logger");
@@ -64,7 +64,7 @@ class AnalyzeMake {
         });
     }
     static analyzeBreakup() {
-        let acmd = ""
+        let acmd = "";
         for (let l of dlist) {
             if (l.endsWith("\\")) { // 合并带有换行符的命令
                 acmd += l;
@@ -126,5 +126,5 @@ function getAcmd(acmd, l) {
 }
 
 module.exports = {
-  AnalyzeMake
-}
+    AnalyzeMake
+};
