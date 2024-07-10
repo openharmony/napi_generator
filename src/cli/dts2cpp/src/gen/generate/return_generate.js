@@ -137,7 +137,7 @@ function c2JsForEnum(deep, type, value, dest, propertyName) {
 
 function cToJs(value, type, dest, deep = 1, optional, enumType = 0) {
     var propertyName = delPrefix(value);
-    if (type === null || type === undefined) {
+    if (checkRetIsUndefined(type)) {
         NapiLog.logError("type is invalid!")
         return
     }
@@ -158,11 +158,11 @@ function cToJs(value, type, dest, deep = 1, optional, enumType = 0) {
     else if(EnumList.getValue(type)){
         return c2JsForEnum(deep, type, value, dest, propertyName);
     }
-    else if (type.substring(0, 6) === "Array<" || type.substring(type.length - 2) === "[]") {
+    else if (checkRetIsArray(type)) {
         let arrayType = checkArrayParamType(type)
         return arrayTempleteFunc(arrayType, deep, dest, value)
     }
-    else if (type.substring(0, 4) === "Map<" || type.indexOf("{[key:") === 0) {
+    else if (checkRetIsMap(type)) {
         return mapTempleteFunc(type, deep, dest, value)
     }
     else if (type.substring(0, 12) === "NUMBER_TYPE_") {
@@ -175,13 +175,29 @@ function cToJs(value, type, dest, deep = 1, optional, enumType = 0) {
     else if (type === "any") {
         return anyTempleteFunc(value)
     }
-    else if (type === "Object" || type === "object") { 
+    else if (checkRetIsObject(type)) { 
         return objectTempleteFuncReturn(value)
     }
     else {
         NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n. `
             .format(value, type, dest), getLogErrInfo());
     }
+}
+
+function checkRetIsUndefined(type) {
+  return type === null || type === undefined;
+}
+
+function checkRetIsObject(type) {
+  return type === 'Object' || type === 'object';
+}
+
+function checkRetIsArray(type) {
+  return type.substring(0, 6) === 'Array<' || type.substring(type.length - 2) === '[]';
+}
+
+function checkRetIsMap(type) {
+  return type.substring(0, 4) === 'Map<' || type.indexOf('{[key:') === 0;
 }
 
 function c2JsForRetEnum(enumType, value, deep, dest) {
@@ -691,29 +707,33 @@ function returnGenerate(returnInfo, param, data, isOnFuncFlag = false) {
     outParam = result[1]
     generateOptionalAndUnion(returnInfo, param, data, outParam, c2JsresultName);
 
-    if (type === "string") {
-        param.valueOut = returnInfo.optional ? "std::string* out = nullptr;" : "std::string out;\n"        
-        param.valueDefine += "%sstd::string%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
-    } else if (type === "void") {
-        NapiLog.logInfo("The current void type don't need generate");
-    } else if (type === "boolean") {
-        param.valueOut = returnInfo.optional ? "bool* out = nullptr;" : "bool out;\n"
-        param.valueDefine += "%sbool%s out".format(param.valueDefine.length > 0 ? ", " : "", modifiers)
-    } else if (isEnum(type, data)) {
-        returnGenerateEnum(data, returnInfo, param)
-    } else if(generateType(type)){
-        returnGenerate2(returnInfo, param, data)
-    } else if (type.substring(0, 12) === "NUMBER_TYPE_") {
-        param.valueOut = type + (returnInfo.optional ? "* out = nullptr;" : " out;\n")
-        param.valueDefine += "%s%s%s out".format(param.valueDefine.length > 0 ? ", " : "", type, modifiers)
-    } else if (isObjectType(type)) {
-        returnGenerateObject(returnInfo, param, data)
-    } else if (isArrowFunc(type)) {
-        genArrowFuncParam(param, returnInfo, data);
-    } else {
-        NapiLog.logError("Do not support returning the type [%s]."
-            .format(type), getLogErrInfo());
-    }  
+    returnGenerateCheckType(type, param, returnInfo, modifiers, data);  
+}
+
+function returnGenerateCheckType(type, param, returnInfo, modifiers, data) {
+  if (type === 'string') {
+    param.valueOut = returnInfo.optional ? 'std::string* out = nullptr;' : 'std::string out;\n';
+    param.valueDefine += '%sstd::string%s out'.format(param.valueDefine.length > 0 ? ', ' : '', modifiers);
+  } else if (type === 'void') {
+    NapiLog.logInfo('The current void type do not need generate');
+  } else if (type === 'boolean') {
+    param.valueOut = returnInfo.optional ? 'bool* out = nullptr;' : 'bool out;\n';
+    param.valueDefine += '%sbool%s out'.format(param.valueDefine.length > 0 ? ', ' : '', modifiers);
+  } else if (isEnum(type, data)) {
+    returnGenerateEnum(data, returnInfo, param);
+  } else if (generateType(type)) {
+    returnGenerate2(returnInfo, param, data);
+  } else if (type.substring(0, 12) === 'NUMBER_TYPE_') {
+    param.valueOut = type + (returnInfo.optional ? '* out = nullptr;' : ' out;\n');
+    param.valueDefine += '%s%s%s out'.format(param.valueDefine.length > 0 ? ', ' : '', type, modifiers);
+  } else if (isObjectType(type)) {
+    returnGenerateObject(returnInfo, param, data);
+  } else if (isArrowFunc(type)) {
+    genArrowFuncParam(param, returnInfo, data);
+  } else {
+    NapiLog.logError('Do not support returning the type [%s].'
+      .format(type), getLogErrInfo());
+  }
 }
 
 function genArrowFuncParam(param, returnInfo, data) {
