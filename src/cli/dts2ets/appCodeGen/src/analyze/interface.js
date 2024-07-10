@@ -38,7 +38,7 @@ function analyzeNoNameInterface(valueType, valueName, rsltInterface) {
 /* 去除单行注释// */
 function parseNotes(data) {
     let notes = data.indexOf("//") >= 0 ? data.substring(data.indexOf("//"), data.length) : "";          
-    while(notes != "") {
+    while(notes !== "") {
         notes = notes.substring(0, notes.indexOf("\n")); 
         data = data.replace(notes, "");
         notes = ""
@@ -67,9 +67,9 @@ function analyzeInterface(data, rsltInterface = null, results, interfaceName = '
     for (let i in body) {
         let t = body[i]
         t = re.replaceAll(t, "\n", "")
-        while (t.length > 0 && t[0] == ' ') t = t.substring(1, t.length) // 去除前面的空格
-        while (t.length > 0 && t[-1] == ' ') t = t.substring(0, t.length - 1) // 去除后面的空格   
-        if (t == "") break // 如果t为空直接返回
+        while (t.length > 0 && t[0] === ' ') t = t.substring(1, t.length) // 去除前面的空格
+        while (t.length > 0 && t[-1] === ' ') t = t.substring(0, t.length - 1) // 去除后面的空格   
+        if (t === "") break // 如果t为空直接返回
         let tt = re.match(" *([a-zA-Z0-9_]+)(\\?*)*: *([a-zA-Z_0-9<>,:{}[\\]| ]+)", t)
         if (tt && t.indexOf("=>") < 0) { // 接口成员变量, 但不包括带'=>'的成员，带'=>'的接口成员需要按函数处理
             analyzeInterfaceVariable(t, tt, rsltInterface, result);
@@ -89,10 +89,10 @@ module.exports = {
 }
 
 function analyzeInterfaceFunction(t, tt, data, results, interfaceName, result) {
-  let ret = re.getReg(t, tt.regs[5]) == '' ? 'void' : re.getReg(t, tt.regs[5]);
-  let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) != '', re.getReg(t, tt.regs[2]),
+  let ret = re.getReg(t, tt.regs[5]) === '' ? 'void' : re.getReg(t, tt.regs[5]);
+  let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) !== '', re.getReg(t, tt.regs[2]),
     re.getReg(t, tt.regs[3]), ret, results, interfaceName);
-  if (funcDetail != null) {
+  if (funcDetail !== null && funcDetail !== undefined) {
     // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
     addUniqFunc2List(funcDetail, result.function);
   }
@@ -102,7 +102,7 @@ function analyzeInterfaceVariable(t, tt, rsltInterface, result) {
   let valueName = re.getReg(t, tt.regs[1]);
   let valueType = re.getReg(t, tt.regs[3]);
   let index = valueType.indexOf("number");
-  let optionalFlag = re.getReg(t, tt.regs[2]) == '?' ? true : false;
+  let optionalFlag = re.getReg(t, tt.regs[2]) === '?' ? true : false;
   while (index !== -1) {
     valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease());
     index = valueType.indexOf("number");

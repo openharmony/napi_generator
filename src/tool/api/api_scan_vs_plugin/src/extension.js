@@ -43,17 +43,17 @@ function activate(context) {
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposableMenu);
 	let platform = detectPlatform();
-	if (platform == 'win') {
+	if (platform === 'win') {
 		exeFilePath = __dirname + "/search-win.exe";
-	} else if (platform == 'mac') {
+	} else if (platform === 'mac') {
 		exeFilePath = __dirname + "/search-macos";
-	} else if (platform == 'Linux') {
+	} else if (platform === 'Linux') {
 		exeFilePath = __dirname + "/search-linux";
 	}
 }
 
 function executorApiscan(name, genDir) {
-	if (genDir == "" || genDir == null) {
+	if (genDir === "" || genDir === null || genDir === undefined) {
 		genDir = name;
 	}
 	let command = exeFilePath + " -d " + name + " -o " + genDir;
@@ -61,7 +61,8 @@ function executorApiscan(name, genDir) {
 	exec(command, function (error, stdout, stderr) {
 		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
 		if (error || stdout.indexOf("errno") > 0) {
-			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
+			vscode.window.showErrorMessage("genError:" + ((error !== null && error !== undefined) ?
+        error : "") + stdout);
 			return VsPluginLog.logError("VsPlugin:" + error + stdout);
 		}
 		vscode.window.showInformationMessage("Api Scan Successfully");
@@ -95,10 +96,10 @@ function register(context, command) {
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
-			if (msg == "cancel") {
+			if (msg === "cancel") {
 				globalPanel.dispose();
 			}
-			else if (msg == "api_scan") {
+			else if (msg === "api_scan") {
 				checkReceiveMsg(message);
 			} else {
 				selectPath(globalPanel, message);
@@ -119,8 +120,8 @@ function register(context, command) {
 }
 
 function checkBoolval(boolValue, items) {
-  if (typeof (boolValue) == 'boolean' && Array.isArray(items)) {
-    if (boolValue == true) {
+  if (typeof (boolValue) === 'boolean' && Array.isArray(items)) {
+    if (boolValue === true) {
       //遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
       getNextPlugin(items, boolValue);
     }
@@ -130,9 +131,9 @@ function checkBoolval(boolValue, items) {
 function getNextPlugin(items, boolValue) {
   let myExtensionId = 'kaihong.ApiScan';
   for (let i = 0; i < items.length; i++) {
-    if (myExtensionId == items[i] && (i == items.length - 1)) {
+    if (myExtensionId === items[i] && (i === items.length - 1)) {
       importToolChain = false;
-    } else if (myExtensionId == items[i] && (i != items.length - 1)) {
+    } else if (myExtensionId === items[i] && (i !== items.length - 1)) {
       importToolChain = boolValue;
       nextPluginId = items[i + 1];
     }
@@ -145,13 +146,13 @@ function checkReceiveMsg(message) {
 	let genDir = message.genDir;
 	let buttonName = message.buttonName;
 	name = re.replaceAll(name, " ", "");
-	if ("" == name) {
+	if ("" === name) {
 		vscode.window.showErrorMessage("Please enter the path!");
 		return;
 	}
 	if (exeFileExit()) {
 		executorApiscan(name, genDir);
-		if (buttonName == 'Next') {
+		if (buttonName === 'Next') {
 			startNextPlugin();
 		}
 	} else {
@@ -163,15 +164,15 @@ function checkReceiveMsg(message) {
 * 获取插件执行命令
 */
 function nextPluginExeCommand(nextPluginId) {
-    if (nextPluginId == "kaihong.ApiScan") {
+    if (nextPluginId === "kaihong.ApiScan") {
 		return 'api_scan';
-	} else if (nextPluginId == "kaihong.gn-gen") {
+	} else if (nextPluginId === "kaihong.gn-gen") {
 		return 'generate_gn';
-	} else if (nextPluginId == "kaihong.service-gen") {
+	} else if (nextPluginId === "kaihong.service-gen") {
 		return 'generate_service';
-	} else if (nextPluginId == "kaihong.ts-gen") {
+	} else if (nextPluginId === "kaihong.ts-gen") {
 		return 'generate_ts';
-	} else if (nextPluginId == "kaihong.napi-gen") {
+	} else if (nextPluginId === "kaihong.napi-gen") {
 		return 'generate_napi';
 	} else {
 		return null;

@@ -58,7 +58,8 @@ function generateGN(destDir, implName, license, partName, buildCpp) {
     if (license) {
         license = getGnLicense(license);
     }
-    writeFile(re.pathJoin(destDir, "BUILD.gn"), null != license ? (license + "\n" + gnFile) : gnFile)
+    writeFile(re.pathJoin(destDir, "BUILD.gn"), (null !== license && undefined !== license) ?
+      (license + "\n" + gnFile) : gnFile)
 }
 
 function getGnLicense(license) {
@@ -66,9 +67,9 @@ function getGnLicense(license) {
   license = "";
   for (let i = 1; i < s2.length; i++) {
     if (s2[i].length > 0) {
-      while (s2[i][0] == " ")
+      while (s2[i][0] === " ")
         s2[i] = s2[i].substring(1);
-      if (s2[i].length > 3 && s2[i][0] == "*") {
+      if (s2[i].length > 3 && s2[i][0] === "*") {
         license += "#" + s2[i].substring(1) + "\n";
       }
     }

@@ -43,11 +43,11 @@ function activate(context) {
 	context.subscriptions.push(disposableMenu);
 	
 	let platform = detectPlatform();
-	if (platform == 'win') {
+	if (platform === 'win') {
 		exeFilePath = __dirname + "/napi_generator-win.exe";
-	} else if (platform == 'mac') {
+	} else if (platform === 'mac') {
 		exeFilePath = __dirname + "/napi_generator-macos";
-	} else if (platform == 'Linux') {
+	} else if (platform === 'Linux') {
 		exeFilePath = __dirname + "/napi_generator-linux";
 	}
 }
@@ -58,7 +58,8 @@ function executorH2Ts(name, genDir) {
 	exec(command, function (error, stdout, stderr) {
 		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
 		if (error || stdout.indexOf("success") < 0) {
-			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
+			vscode.window.showErrorMessage("genError:" + ((error !== null && error !== undefined) ?
+        error : "") + stdout);
 			return VsPluginLog.logError("VsPlugin:" + error + stdout);
 		}
 		vscode.window.showInformationMessage("Generated successfully");
@@ -90,10 +91,10 @@ function register(context, command) {
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
-			if (msg == "cancel") {
+			if (msg === "cancel") {
 				globalPanel.dispose();
 			} 
-			else if(msg == "h2ts") {
+			else if(msg === "h2ts") {
 				checkReceiveMsg(message);
 			}else {
 				selectPath(globalPanel, message);
@@ -114,8 +115,8 @@ function register(context, command) {
 }
 
 function checkBoolval(boolValue, items) {
-  if (typeof (boolValue) == 'boolean' && Array.isArray(items)) {
-    if (boolValue == true) {
+  if (typeof (boolValue) === 'boolean' && Array.isArray(items)) {
+    if (boolValue === true) {
       //遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
       getNextPlugin(items, boolValue);
     }
@@ -125,9 +126,9 @@ function checkBoolval(boolValue, items) {
 function getNextPlugin(items, boolValue) {
   let myExtensionId = 'kaihong.ts-gen';
   for (let i = 0; i < items.length; i++) {
-    if (myExtensionId == items[i] && (i == items.length - 1)) {
+    if (myExtensionId === items[i] && (i === items.length - 1)) {
       importToolChain = false;
-    } else if (myExtensionId == items[i] && (i != items.length - 1)) {
+    } else if (myExtensionId === items[i] && (i !== items.length - 1)) {
       importToolChain = boolValue;
       nextPluginId = items[i + 1];
     }
@@ -140,13 +141,13 @@ function checkReceiveMsg(message) {
 	let genDir = message.genDir;
 	let buttonName = message.buttonName;
 	name = re.replaceAll(name, " ", "");
-	if ("" == name) {
+	if ("" === name) {
 		vscode.window.showErrorMessage("Please enter the path!");
 		return;
 	}
 	if (exeFileExit()) {
 		executorH2Ts(name, genDir);
-		if (buttonName == 'Next') {
+		if (buttonName === 'Next') {
 			startNextPlugin();
 		}
 	} else {
@@ -158,15 +159,15 @@ function checkReceiveMsg(message) {
 * 获取插件执行命令
 */
 function nextPluginExeCommand(nextPluginId) {
-    if (nextPluginId == "kaihong.ApiScan") {
+    if (nextPluginId === "kaihong.ApiScan") {
 		return 'api_scan';
-	} else if (nextPluginId == "kaihong.gn-gen") {
+	} else if (nextPluginId === "kaihong.gn-gen") {
 		return 'generate_gn';
-	} else if (nextPluginId == "kaihong.service-gen") {
+	} else if (nextPluginId === "kaihong.service-gen") {
 		return 'generate_service';
-	} else if (nextPluginId == "kaihong.ts-gen") {
+	} else if (nextPluginId === "kaihong.ts-gen") {
 		return 'generate_ts';
-	} else if (nextPluginId == "kaihong.napi-gen") {
+	} else if (nextPluginId === "kaihong.napi-gen") {
 		return 'generate_napi';
 	} else {
 		return null;
@@ -193,16 +194,16 @@ function startNextPlugin() {
 */
  function selectPath(panel, message) {
 	let mode = 1;
-	if (message.mode != undefined) {
+	if (message.mode !== undefined && message.mode !== null) {
 		mode = message.mode;
 	}
 	const options = {
-		canSelectMany: mode == 0 ? true : false,//是否可以选择多个
-		openLabel: mode == 0 ? '选择文件' : '选择文件夹',//打开选择的右下角按钮label
-		canSelectFiles: mode == 0 ? true : false,//是否选择文件
-		canSelectFolders: mode == 0 ? false : true,//是否选择文件夹
+		canSelectMany: mode === 0 ? true : false,//是否可以选择多个
+		openLabel: mode === 0 ? '选择文件' : '选择文件夹',//打开选择的右下角按钮label
+		canSelectFiles: mode === 0 ? true : false,//是否选择文件
+		canSelectFolders: mode === 0 ? false : true,//是否选择文件夹
 		defaultUri:vscode.Uri.file(''),//默认打开本地路径
-		filters: mode == 1 ? {} : { // 文件过滤选项，在文件夹选择模式下不可设置此配置，否则ubuntu系统下无法选择文件夹
+		filters: mode === 1 ? {} : { // 文件过滤选项，在文件夹选择模式下不可设置此配置，否则ubuntu系统下无法选择文件夹
 			'Text files': ['h']
 		} 
 	};

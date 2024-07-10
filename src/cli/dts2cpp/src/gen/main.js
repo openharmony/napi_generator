@@ -25,7 +25,7 @@ function doGenerate(ifname, destdir, imports, numberType, jsonCfg) {
     // to repace analyzeFile bythe below: let structOfTsRaw = analyzeFileRaw(ifname);
     let fn = re.getFileInPath(ifname);
     let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
-    if (structOfTs === undefined || structOfTs.declareNamespace.length == 0 || 
+    if (structOfTs === undefined || structOfTs.declareNamespace.length === 0 || 
         structOfTs.declareNamespace[0].name === undefined) {
         NapiLog.logError('analyzeFile file fail and file name is: ' + fn);
         return;
@@ -35,7 +35,7 @@ function doGenerate(ifname, destdir, imports, numberType, jsonCfg) {
     if (tt) {
         let moduleName = re.getReg(fn, tt.regs[2]);
         let importsStr = '' + imports
-        if (importsStr == 'true') {
+        if (importsStr === 'true') {
             importsFun(structOfTs.imports, destdir, ifname);
         } else {
             structOfTs.imports = [];
@@ -68,7 +68,7 @@ function importsFun(imports, destDir, ifname) {
             return
         }
         
-        if (ifnameFile == importFile) {
+        if (ifnameFile === importFile) {
             return
         } else {
             try {

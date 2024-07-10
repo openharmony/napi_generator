@@ -92,7 +92,7 @@ class GenerateGn {
     }
 
     static generate(projectPath, analyzeResult) {
-        if (Tool.MOCK_TYPE == Tool.MOCK_ENUM.MOCK_RECORD) {
+        if (Tool.MOCK_TYPE === Tool.MOCK_ENUM.MOCK_RECORD) {
             saveMockData(projectPath, analyzeResult);//保存mock数据
         }
 
@@ -299,7 +299,7 @@ subsystem_name = "%s"
         for (let gnPath in genList) {
             let gens = genList[gnPath]
             for (let gen of gens) {
-                if (gen.target == name) {
+                if (gen.target === name) {
                     let tt = checkoutLibName(gen.target);
                     return gen.workDir + ":" + tt[1];
                 }
@@ -314,13 +314,13 @@ subsystem_name = "%s"
             let badd = true;
             switch (collectFileStat) {
                 case 0:
-                    if (a == "-Xclang") {
+                    if (a === "-Xclang") {
                         collectFileStat = 1;
                         badd = false;
                     }
                     break;
                 case 1:
-                    if (a == "-include" || a == "-include-pch") {
+                    if (a === "-include" || a === "-include-pch") {
                         collectFileStat = 2;
                         badd = false;
                     }
@@ -330,7 +330,7 @@ subsystem_name = "%s"
                     }
                     break;
                 case 2:
-                    if (a == "-Xclang") {
+                    if (a === "-Xclang") {
                         collectFileStat = 3;
                         badd = false;
                     }

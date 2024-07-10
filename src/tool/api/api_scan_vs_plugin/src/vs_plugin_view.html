@@ -153,10 +153,10 @@
         const message = event.data.msg;
         const path = event.data.path;
 
-        if (message == "selectASFilePath") {
+        if (message === "selectASFilePath") {
             document.getElementById("asFilePath").value = path;
             document.getElementById("genASResultDir").value = path;
-        } else if (message == "selectASResultDir") {
+        } else if (message === "selectASResultDir") {
             document.getElementById("genASResultDir").value = path;
         } else {
             console.log("param is error");

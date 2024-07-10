@@ -177,12 +177,12 @@ EnumList.getValue = function (name) {
 
 function getArrayType(type) {
     let tt = re.match("Array<([a-zA-Z_0-9]+)>", type)
-    if (tt != null) {
+    if (tt !== null && tt !== undefined) {
         return re.getReg(type, tt.regs[1])
     } 
     
     tt = re.match("Array<{([[a-z:]+)([a-z:]]+)([a-zA-Z_1-9:]+)", type)
-    if (tt != null) {
+    if (tt !== null && tt !== undefined) {
         let res = ''
         let len = tt.regs.length
         for (let i=1; i<len; i++) {
@@ -193,7 +193,7 @@ function getArrayType(type) {
     }
     
     tt = re.match("Array<map<string", type)
-    if (tt != null) {
+    if (tt !== null && tt !== undefined) {
         let preStr = 'Array<'
         let preStrLen = preStr.length        
         let res = type.substring(preStrLen, type.length-1)              
@@ -201,7 +201,7 @@ function getArrayType(type) {
     }
 
     tt = re.match("Array<Map<string", type)
-    if (tt != null) {
+    if (tt !== null && tt !== undefined) {
         let preStr = 'Array<'
         let preStrLen = preStr.length        
         let res = type.substring(preStrLen, type.length-1)              
@@ -231,7 +231,7 @@ EnumValueType.ENUM_VALUE_TYPE_STRING = 1
 
 function isEnum(type, data) {
     let isEnum = false
-    if (null == data) {
+    if (null === data || undefined === data) {
         return isEnum
     }
     for (let i in data.enum) {
@@ -309,20 +309,20 @@ function getMapType(type) {
         }        
     }
     
-    if (ttValue != null) {
+    if (ttValue !== null && ttValue !== undefined) {
         valueType = re.getReg(type, ttValue.regs[1])
         if (valueType.indexOf("Array<") === 0) {
             valueArrayType = re.getReg(valueType, ttArray.regs[1])
             valueType = undefined
-        } else if (ttMap != undefined) {
+        } else if (ttMap !== undefined && ttMap !== null) {
             valueMapType = re.getReg(type, ttMap.regs[1])
             valueType = undefined
         }
     }
-    if (ttMap != null) {
+    if (ttMap !== null && ttMap !== undefined) {
         valueMapType = re.getReg(type, ttMap.regs[1])
     }
-    if (ttArray != null) {
+    if (ttArray !== null && ttArray !== undefined) {
         valueArrayType = re.getReg(type, ttArray.regs[1])
     }
     return [re.getReg(type, ttKey.regs[1]), valueType, valueMapType, valueArrayType]
@@ -404,7 +404,7 @@ function isCreateThreadsafeFunc(name) {
 
 function getOnObjCallbackType(funcName, interName) {
     let onObjCbType = ''
-    if (interName != '') {
+    if (interName !== '') {
         onObjCbType = interName + '_' + funcName
     } else {
         onObjCbType = funcName

@@ -85,7 +85,7 @@ bool %s%sReturn(%s)
 function removeEndlineEnter(value) {
     for (var i = value.length; i > 0; i--) {
         let len = value.length
-        if (value.substring(len - 1, len) == "\n" || value.substring(len - 1, len) == ' ') {
+        if (value.substring(len - 1, len) === "\n" || value.substring(len - 1, len) === ' ') {
             value = value.substring(0, len - 1)
         } else {
             value = '    ' + value + "\n"
@@ -115,17 +115,21 @@ function callBackReturnValJs2C(className, funcName, callbackRetType, funcRetType
         cbRetJs2CTrans = '';
     } else if (callbackRetType === 'string') {
         cbRetJs2CTrans = 'pxt->SwapJs2CUtf8(retVal, vio->cbOut);\n' + 
-        '%s%sReturn(vio->cbOut%s);\n'.format(className == null ? "" : "pInstance->", funcName, retOutFill);
+        '%s%sReturn(vio->cbOut%s);\n'.format((className === null || className === undefined) ?
+          "" : "pInstance->", funcName, retOutFill);
     } else if (callbackRetType === 'boolean') {
         cbRetJs2CTrans = 'vio->cbOut = pxt->SwapJs2CBool(retVal);\n' + 
-        '%s%sReturn(vio->cbOut%s);\n'.format(className == null ? "" : "pInstance->", funcName, retOutFill);
+        '%s%sReturn(vio->cbOut%s);\n'.format((className === null || className === undefined) ?
+          "" : "pInstance->", funcName, retOutFill);
     } else if (callbackRetType.substring(0, 12) == "NUMBER_TYPE_") {
         let lt = NumberIncrease.getAndIncrease()
         cbRetJs2CTrans = 'NUMBER_JS_2_C(retVal, NUMBER_TYPE_%d, vio->cbOut);\n'.format(lt) + 
-        '%s%sReturn(vio->cbOut%s);\n'.format(className == null ? "" : "pInstance->", funcName, retOutFill); 
+        '%s%sReturn(vio->cbOut%s);\n'.format((className === null || className === undefined) ?
+          "" : "pInstance->", funcName, retOutFill); 
     } else if (callbackRetType === 'number') {       
         cbRetJs2CTrans = 'NUMBER_JS_2_C(retVal, NUMBER_TYPE_1, vio->cbOut);\n' + 
-        '%s%sReturn(vio->cbOut%s);\n'.format(className == null ? "" : "pInstance->", funcName, retOutFill);
+        '%s%sReturn(vio->cbOut%s);\n'.format((className === null || className === undefined) ?
+          "" : "pInstance->", funcName, retOutFill);
     } else {
         NapiLog.logError("callBackReturnValJs2C not surpport callbackRetType:%s."
             .format(callbackRetType), getLogErrInfo());
@@ -161,7 +165,7 @@ function fillCbRetValueStruct(type, param, outName) {
         param.cbRetvalueDefine += "%sstd::string& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "", outName)
     } else if (type === 'boolean') {
         param.cbRetvalueDefine += "%sbool& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "", outName)
-    } else if (type.substring(0, 12) == "NUMBER_TYPE_") {
+    } else if (type.substring(0, 12) === "NUMBER_TYPE_") {
         param.cbRetvalueDefine += "%s%s& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "", type, outName)
     } else if ( type === 'number') {
         param.cbRetvalueDefine += "%sNUMBER_TYPE_1& %s".format(param.cbRetvalueDefine.length > 0 ? ", " : "",
@@ -215,9 +219,9 @@ function callbackReturnProc(param, func) {
     // 回调返回值非空，业务代码分两部分，一部分填写JS回调需要的参数(对应funcname函数)，一部分根据回调返回值进行后续业务处理(对应funcnameReturn函数)，
     // 回调返回值为空，则业务代码处理是一个整体，对应funcname函数，统一处理填写参数、函数返回值赋值处理。
     if (param.callback.returnType === 'void') {
-        if (func.ret == "string" || func.ret == "boolean" || func.ret.substring(0, 12) == "NUMBER_TYPE_") {
+        if (func.ret === "string" || func.ret === "boolean" || func.ret.substring(0, 12) === "NUMBER_TYPE_") {
             param.valueFill += param.valueFill.length > 0 ? ", vio->retOut" : "vio->retOut"
-        } else if (func.ret == "void") {
+        } else if (func.ret === "void") {
             NapiLog.logInfo("The current void type don't need generate");
         } else{
             NapiLog.logError("not support returnType:%s!".format(param.callback.returnType),
@@ -231,7 +235,7 @@ function callbackReturnProc(param, func) {
 }
 
 function replaceValueOut(param, middleH) {
-    if (param.valueOut == "") {
+    if (param.valueOut === "") {
         middleH = replaceAll(middleH, "[valueOut]", param.valueOut) // # 输出参数定义
     } else {
         middleH = replaceAll(middleH, "[valueOut]", "\n    " + param.valueOut) // # 输出参数定义
@@ -240,7 +244,7 @@ function replaceValueOut(param, middleH) {
 }
 
 function replaceValueCheckout(param, middleFunc) {
-    if (param.valueCheckout == "") {
+    if (param.valueCheckout === "") {
         middleFunc = replaceAll(middleFunc, "[valueCheckout]", param.valueCheckout) // # 输入参数解析
     } else {
         param.valueCheckout = removeEndlineEnter(param.valueCheckout)
@@ -252,7 +256,7 @@ function replaceValueCheckout(param, middleFunc) {
 function generateFunctionSync(func, data, className) {
     let middleFunc = replaceAll(funcSyncTemplete, "[funcName]", func.name)
     let middleH = ""
-    if (func.name != "constructor") {
+    if (func.name !== "constructor") {
       middleH = replaceAll(funcSyncMiddleHTemplete, "[funcName]", func.name)
     }
     let isClassresult = isClassFunc(className, middleH, middleFunc);
@@ -273,7 +277,8 @@ function generateFunctionSync(func, data, className) {
     middleH = replaceValueOut(param, middleH)
     middleFunc = replaceValueCheckout(param, middleFunc)
 
-    let callFunc = "%s%s(%s);".format(className == null ? "" : "pInstance->", func.name, param.valueFill)
+    let callFunc = "%s%s(%s);".format((className === null || className === undefined) ?
+      "" : "pInstance->", func.name, param.valueFill)
     middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
     let optionalCallback = getOptionalCallbackInit(param)
     middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback) // 可选callback参数初始化
@@ -299,14 +304,17 @@ function generateFunctionSync(func, data, className) {
         // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
         implH = "\n%s%s%sbool %s(%s)%s;".format(
             prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
-        let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
-        implCpp = cppTemplate.format(className == null ? "" : className + "::", func.name, param.valueDefine,
-            callStatement == null? "": callStatement)
+        let callStatement = jsonCfgList.getValue((className === null || className === undefined)?
+          "": className, func.name);
+        implCpp = cppTemplate.format((className === null || className === undefined) ?
+          "" : className + "::", func.name, param.valueDefine,
+            (callStatement === null || callStatement === undefined)? "": callStatement)
 
-        if (param.callback.returnType != 'void' && param.callback.returnType != undefined) {
+        if (param.callback.returnType !== 'void' && param.callback.returnType !== undefined) {
             implH += "\n%s%s%sbool %sReturn(%s)%s;".format(
                 prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.cbRetvalueDefine, prefixArr[3])
-            implCpp += cppFuncReturnTemplate.format(className == null ? "" : className + "::", 
+            implCpp += cppFuncReturnTemplate.format((className === null || className === undefined) ?
+              "" : className + "::", 
             func.name, param.cbRetvalueDefine)
         }
     }
@@ -314,7 +322,7 @@ function generateFunctionSync(func, data, className) {
 }
 
 function isClassFunc(className, middleH, middleFunc) {
-    if (className == null) {
+    if (className === null || className === undefined) {
         middleH = middleH.replaceAll("[static_define]", "");
         middleFunc = middleFunc.replaceAll("[unwarp_instance]", "");
         middleFunc = middleFunc.replaceAll("[middleClassName]", "");

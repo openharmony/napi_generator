@@ -166,7 +166,7 @@ function genNamespaceFunc(data, i, namespaceResult, inNamespace, name) {
 
 function getToolNamespaceFunc(inNamespace, name) {
     let toolNamespace;
-    if (inNamespace != '') {
+    if (inNamespace !== '') {
         let index = inNamespace.lastIndexOf('::');
         let bodyTmp = inNamespace.substring(0, index);
         let index2 = bodyTmp.lastIndexOf('::');

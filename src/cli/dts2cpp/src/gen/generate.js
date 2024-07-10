@@ -190,7 +190,7 @@ function formatCode(destDir) {
     fs.copyFileSync(dumyFmtCfgFile, localFmtCfgFile)
 
     let execSync = require("child_process").execSync
-    if (sysInfo != 'win32') {
+    if (sysInfo !== 'win32') {
         // linux系统下需要为临时复制的clang-format程序增加可执行权限
         execSync("chmod +x " + "\"" + localClangFmtFile + "\"")
     }
@@ -256,7 +256,7 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
     
     let numberUsing = ""
     var numbertype = "uint32_t";
-    if(numberType != "" && numberType != undefined){
+    if(numberType !== "" && (numberType !== undefined && numberType !== null)){
         numbertype = numberType;
     }
     for (let i = 1; i < NumberIncrease.get(); i++) {
@@ -279,7 +279,8 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
     }
     implCpp = implCpp.replaceAll("[include_configure_hCode]", includeH);
     implCpp = implCpp.replaceAll("[implCpp_detail]", result.implCpp)
-    writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), null != license ? (license + "\n" + implCpp) : implCpp)
+    writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), (null !== license && undefined !== license) ?
+      (license + "\n" + implCpp) : implCpp)
     genFileList.push("%s.cpp".format(ns0.name));
 
     let partName = moduleName.replace('.', '_')
@@ -300,7 +301,8 @@ function generateImplH(ns0, numberUsing, result, structOfTs, destDir, license) {
       imports += structOfTs.imports[i];
     }
     implH = replaceAll(implH, "[importTs]", imports);
-    writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), null != license ? (license + "\n" + implH) : implH);
+    writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), (null !== license && undefined !== license) ?
+      (license + "\n" + implH) : implH);
     genFileList.push("%s.h".format(ns0.name));
 }
 
@@ -311,7 +313,7 @@ function generateMiddleCpp(result, ns0, moduleName, destDir, license) {
     middleCpp = replaceAll(middleCpp, "[modulename]", moduleName);
     genFileList.splice(0, genFileList.length);
     writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)),
-      null != license ? (license + "\n" + middleCpp) : middleCpp);
+      (null !== license && undefined !== license) ? (license + "\n" + middleCpp) : middleCpp);
     genFileList.push("%s_middle.cpp".format(ns0.name));
 }
 
@@ -344,7 +346,7 @@ function generateMiddleH(ns0, result, destDir, license) {
     middleH = replaceAll(middleH, "[implName]", ns0.name);
     middleH = replaceAll(middleH, "[implH_detail]", result.middleH);
     writeFile(re.pathJoin(destDir, "%s_middle.h".format(ns0.name)),
-        null != license ? (license + "\n" + middleH) : middleH);
+      (null !== license && undefined !== license) ? (license + "\n" + middleH) : middleH);
     genFileList.push("%s_middle.h".format(ns0.name));
 }
 

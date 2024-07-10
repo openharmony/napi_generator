@@ -225,7 +225,7 @@ function analyzeRootFunction(rootInfo, parseResult) {
     for (var i = 0; i < parseFunctions.length; ++i) {
         // 普通方法生成模板
         let funcInfo = createFuncInfo(parseFunctions[i], false)
-        if (parseFunctions[i].namespace != '') {
+        if (parseFunctions[i].namespace !== '') {
             // function in namespace
             putFuncIntoNamespace(funcInfo, rootInfo.namespaces)
         } else {
@@ -285,7 +285,7 @@ function analyzeClasses(rootInfo, parseResult) {
 
     for (var className in parseClasses) {
         let classInfo = createClassInfo(parseClasses[className])
-        if (classInfo.namespace != '') {
+        if (classInfo.namespace !== '') {
             // class in namespace
             putClassIntoNamespace(classInfo, rootInfo.namespaces)
         } else {

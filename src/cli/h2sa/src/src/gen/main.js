@@ -34,11 +34,11 @@ NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"));
 
 let fileNames = ops.filename;
 var pathDir = ops.directory;
-if (fileNames == null && pathDir == null) {
+if ((fileNames === null || fileNames === undefined) && (pathDir === null || pathDir === undefined)) {
     NapiLog.logInfo("fileNames and pathDir both cannot be empty at the same time");
-} else if (pathDir && pathDir != '') {
+} else if (pathDir && pathDir !== '') {
     readDirFiles();
-} else if (fileNames && fileNames != '') {
+} else if (fileNames && fileNames !== '') {
     readFiles();
 }
 

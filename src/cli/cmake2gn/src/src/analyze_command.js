@@ -184,16 +184,16 @@ class AnalyzeCommand {
         let startp = -1;
         let isContinuChar = 0;
         for (let p = 0; p < s.length; p++) {
-            if (s[p] == "\"" && s[p-1] != "\\") {
+            if (s[p] === "\"" && s[p-1] !== "\\") {
                 isContinuChar = 1 - isContinuChar;
             }
             if (startp >= 0) {
-                if (s[p] == ' ' && isContinuChar == 0) {
+                if (s[p] === ' ' && isContinuChar === 0) {
                     ret.push(s.substring(startp, p));
                     startp = -1;
                 }
             }
-            else if (s[p] != ' ') {
+            else if (s[p] !== ' ') {
                 startp = p;
             }
         }
@@ -229,7 +229,7 @@ class AnalyzeCommand {
             "-isystem"
         ];
         for (let s of ss) {
-            if (e.startsWith(s) || e == "-w") {
+            if (e.startsWith(s) || e === "-w") {
                 return true;
             }
         }
@@ -237,14 +237,14 @@ class AnalyzeCommand {
     }
     static clangCheck2(local, e) {
         if (e.startsWith("-MT") || e.startsWith("-MF")) {
-            if (e.length == 3) {
+            if (e.length === 3) {
                 local.p++;
             }
             return true;
         }
 
         if (e.startsWith("-s")) {
-            if (e.length == 2) {
+            if (e.length === 2) {
                 local.p++;
             }
             return true;
@@ -254,7 +254,7 @@ class AnalyzeCommand {
     static clangCheck3(local, e) {
         if (e.startsWith("-D")) {//需要记录到defines里面的参数
             //需要 是否-D开头的，全部记录到defines里面
-            if (e.length == 2) {//-D xxx
+            if (e.length === 2) {//-D xxx
                 local.ret.defines.push(local.eles[local.p++]);
             }
             else {//-Dxxx
@@ -266,7 +266,7 @@ class AnalyzeCommand {
     }
     static clangCheck4(local, e) {
         if (e.startsWith("-I")) {//需要记录到includes的参数
-            if (e.length == 2) {//-I xxx
+            if (e.length === 2) {//-I xxx
                 local.ret.includes.push(local.eles[local.p++]);
             }
             else {//-Ixxx
@@ -285,15 +285,15 @@ class AnalyzeCommand {
         return false;
     }
     static clangCheck5(local, e) {
-        if (this.validCFlag(e, Tool.getAllowedC().compileflag) || (e == "-D__clang__")) {
+        if (this.validCFlag(e, Tool.getAllowedC().compileflag) || (e === "-D__clang__")) {
             local.ret.cflags.push(e); //需要记录到flags里面的参数
             return true;
         }
         return false;
     }
     static clangCheck6(local, e) {
-        if (e == "-o") {
-            if (e.length == 2) {//-o xxx
+        if (e === "-o") {
+            if (e.length === 2) {//-o xxx
                 local.ret.target = local.eles[local.p++];
             }
             else {//-oxxx
@@ -350,7 +350,7 @@ class AnalyzeCommand {
                 }
             }
             else if (AnalyzeCommand.clangCheck6(local, e)) { }
-            else if (e == "-c") {//编译
+            else if (e === "-c") {//编译
                 local.ret.isLink = false;
             }
             else if (AnalyzeCommand.clangCheck7(local, e)) { }
@@ -381,7 +381,7 @@ class AnalyzeCommand {
             else if (e.endsWith(".o")) {
                 ret.inputs.push(e);
             }
-            else if (e == "qc") {
+            else if (e === "qc") {
             }
             else {
                 Logger.err(cmd + "\nar未解析参数 " + e);
@@ -419,14 +419,14 @@ class AnalyzeCommand {
                 return true;
             }
         }
-        if (e == "-w") {//-----直接忽略的编译参数(和链接参数)
+        if (e === "-w") {//-----直接忽略的编译参数(和链接参数)
             return true;
         }
         return false;
     }
     static clangxxCheck2(local, e) {
         if (e.startsWith("-isystem")) {//需要 不清楚这个有什么用
-            if (e == "-isystem") {//-isystem xxxx
+            if (e === "-isystem") {//-isystem xxxx
                 local.ret.includes.push(local.eles[local.p++]);
             }
             else {//-Ixxx
@@ -439,7 +439,7 @@ class AnalyzeCommand {
     static clangxxCheck3(local, e) {
         if (e.startsWith("-D")) {//需要记录到defines里面的参数
             //需要 是否-D开头的，全部记录到defines里面
-            if (e.length == 2) {//-D xxx
+            if (e.length === 2) {//-D xxx
                 local.ret.defines.push(local.eles[local.p++]);
             }
             else {//-Dxxx
@@ -451,7 +451,7 @@ class AnalyzeCommand {
     }
     static clangxxCheck4(local, e) {
         if (e.startsWith("-I")) {//需要记录到includes的参数
-            if (e.length == 2) {//-I xxx
+            if (e.length === 2) {//-I xxx
                 local.ret.includes.push(local.eles[local.p++]);
             }
             else {//-Ixxx
@@ -471,7 +471,7 @@ class AnalyzeCommand {
     static clangxxCheck6(local, e) {
         if (e.startsWith("-Xclang")) {//透传参数
             let v = local.eles[local.p++];
-            if (v != "-emit-pch") {//需要丢弃这个选项
+            if (v !== "-emit-pch") {//需要丢弃这个选项
                 local.ret.cflags.push(e);
                 local.ret.cflags.push(v);
             }
@@ -489,8 +489,8 @@ class AnalyzeCommand {
         return false;
     }
     static clangxxCheck8(local, e) {
-        if (e == "-o") {
-            if (e.length == 2) {//-o xxx
+        if (e === "-o") {
+            if (e.length === 2) {//-o xxx
                 local.ret.target = local.eles[local.p++];
             }
             else {//-oxxx
@@ -578,7 +578,7 @@ class AnalyzeCommand {
             }
             else if (AnalyzeCommand.clangxxCheck7(local, e)) { }
             else if (AnalyzeCommand.clangxxCheck8(local, e)) { }
-            else if (e == "-c") {//编译
+            else if (e === "-c") {//编译
                 local.ret.isLink = false;
             }
             else if (AnalyzeCommand.clangxxCheck9(local, e)) { }

@@ -39,7 +39,7 @@ class AnalyzeMake {
                 Logger.err(data.toString());
             });
             ret.on('close', (code) => {
-                if (code == 0) {
+                if (code === 0) {
                     Logger.info("-----------------------------make ok");
                     udpServer_.close();
                     udpServer_ = null;
@@ -103,7 +103,7 @@ class AnalyzeMake {
             Logger.err(data.toString());
         });
         ret.on('close', (code) => {
-            if (code == 0) {
+            if (code === 0) {
                 Logger.info("-----------------------------make ok");
                 Tool.generateTarget(makeProjectPath.dir, analyzeResult);//生成结果目标
             }
