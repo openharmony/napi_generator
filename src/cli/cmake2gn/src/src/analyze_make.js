@@ -12,12 +12,12 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const childProcess = require("child_process");
-const fs = require("fs");
-const path = require("path");
-const { AnalyzeCommand } = require("./analyze_command");
-const { Logger } = require("./logger");
-const { Tool } = require("./tool");
+const childProcess = require('child_process');
+const fs = require('fs')
+const path = require('path');
+const { AnalyzeCommand } = require('./analyze_command');
+const { Logger } = require('./logger');
+const { Tool } = require('./tool');
 
 class AnalyzeMake {
     constructor() {
@@ -26,13 +26,13 @@ class AnalyzeMake {
 
     static USE_UDP_COLLECTOR = true;
     static collectByUdp(makeProjectPath) {
-        const dgram = require("dgram");
-        let udpServer_ = dgram.createSocket("udp4");
+        const dgram = require('dgram');
+        let udpServer_ = dgram.createSocket('udp4');
         let analyzeResult = [];
         udpServer_.bind(6000);
         udpServer_.on('listening', () => {
             Tool.pushd(makeProjectPath);
-            let ret = childProcess.spawn(Tool.getMake(), ["-C", makeProjectPath, "-n"]);
+            let ret = childProcess.spawn(Tool.getMake(), ['-C', makeProjectPath, '-n']);
             ret.stdout.on('data', (data) => {//要有，不然不进入close
             });
             ret.stderr.on('data', (data) => {
@@ -40,7 +40,7 @@ class AnalyzeMake {
             });
             ret.on('close', (code) => {
                 if (code === 0) {
-                    Logger.info("-----------------------------make ok");
+                    Logger.info('-----------------------------make ok');
                     udpServer_.close();
                     udpServer_ = null;
 
@@ -48,11 +48,11 @@ class AnalyzeMake {
 
                     Tool.generateTarget(makeProjectPath, analyzeResult);//生成结果目标
                 }
-                else Logger.err("make fail");
+                else Logger.err('make fail');
             });
         });
         udpServer_.on('error', (e) => {
-            Logger.err("udp error");
+            Logger.err('udp error');
         });
         udpServer_.on('message', (msg, rinfo) => {
             let acmd = msg.toString();
@@ -60,13 +60,13 @@ class AnalyzeMake {
             if (ret.length > 0) {
                 analyzeResult.push(...ret);
             }
-            udpServer_.send("ok", 0, 2, rinfo.port, rinfo.address);//反馈ok给make继续执行
+            udpServer_.send('ok', 0, 2, rinfo.port, rinfo.address);//反馈ok给make继续执行
         });
     }
     static analyzeBreakup() {
-        let acmd = "";
+        let acmd = ''
         for (let l of dlist) {
-            if (l.endsWith("\\")) { // 合并带有换行符的命令
+            if (l.endsWith('\\')) { // 合并带有换行符的命令
                 acmd += l;
             }
             else {
@@ -77,7 +77,7 @@ class AnalyzeMake {
     static analyze(makeProjectFile) {
         let makeProjectPath = path.parse(makeProjectFile);
         if (!fs.existsSync(makeProjectFile)) {
-            Logger.err("Makefile not exist in " + makeProjectPath.dir);
+            Logger.err('Makefile not exist in ' + makeProjectPath.dir);
             return;
         }
         if (AnalyzeMake.USE_UDP_COLLECTOR) {
@@ -85,17 +85,17 @@ class AnalyzeMake {
             return;
         }
         Tool.pushd(makeProjectPath.dir);
-        let ret = childProcess.spawn("make", ["-C", makeProjectPath.dir, "-n"]);
+        let ret = childProcess.spawn('make', ['-C', makeProjectPath.dir, '-n']);
         let cmdlist = [];
         let analyzeResult = [];
-        let procData = "";
+        let procData = '';
         ret.stdout.on('data', (data) => {
             procData += data.toString();
-            let p = procData.lastIndexOf("\n");
+            let p = procData.lastIndexOf('\n');
             if (p < 0) {
                 return;
             }
-            let dlist = procData.substring(0, p).split("\n");
+            let dlist = procData.substring(0, p).split('\n');
             procData = procData.substring(p + 1);
             AnalyzeMake.analyzeBreakup(dlist, cmdlist, analyzeResult);
         });
@@ -104,10 +104,10 @@ class AnalyzeMake {
         });
         ret.on('close', (code) => {
             if (code === 0) {
-                Logger.info("-----------------------------make ok");
+                Logger.info('-----------------------------make ok');
                 Tool.generateTarget(makeProjectPath.dir, analyzeResult);//生成结果目标
             }
-            else Logger.err("make fail");
+            else Logger.err('make fail');
         });
     }
 }
@@ -121,10 +121,10 @@ function getAcmd(acmd, l) {
       analyzeResult.push(...ret);
     }
   }
-  acmd = "";
+  acmd = '';
   return acmd;
 }
 
 module.exports = {
-    AnalyzeMake
-};
+  AnalyzeMake
+}

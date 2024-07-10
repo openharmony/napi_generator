@@ -209,7 +209,7 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
 
 function gennerateEventCallback(codeContext, data, param, className = null, isOnFuncFlag = false) {
     let paramIsAsync = false
-    let middleClassName = ""
+    let middleClassName = ''
 
     param.resultDefine = ''
     param.cbParams = ''
@@ -263,15 +263,19 @@ function gennerateEventCallback(codeContext, data, param, className = null, isOn
     genCallbackMethodH(param, codeContext);
 
     // 为每个on的event事件生成回调接口在工具代码中声明
-    let middleHCallback = replaceAll(middleHCallbackTemplate, "[eventName]", param.eventName)
-    middleHCallback = replaceAll(middleHCallback, "[callback_param_type]", param.params)
-    if (param.params === '') {
-        middleHCallback = replaceAll(middleHCallback, "&eventName,", "&eventName")
-    }
-    codeContext.middleH += middleHCallback
+    genCallbackMethodDeclare(param, codeContext);
 
     // 为每个on的event事件生成回调接口的实现供用户侧使用
     genCallbackMethod(param, className, middleClassName, codeContext);
+}
+
+function genCallbackMethodDeclare(param, codeContext) {
+  let middleHCallback = replaceAll(middleHCallbackTemplate, '[eventName]', param.eventName);
+  middleHCallback = replaceAll(middleHCallback, '[callback_param_type]', param.params);
+  if (param.params === '') {
+    middleHCallback = replaceAll(middleHCallback, '&eventName,', '&eventName');
+  }
+  codeContext.middleH += middleHCallback;
 }
 
 function getArrowCallbackC2JsParam(callbackFunc, param) {

@@ -279,14 +279,7 @@ function generateFunctionSync(func, data, className) {
 
     let callFunc = "%s%s(%s);".format((className === null || className === undefined) ?
       "" : "pInstance->", func.name, param.valueFill)
-    middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
-    let optionalCallback = getOptionalCallbackInit(param)
-    middleFunc = replaceAll(middleFunc, "[optionalCallbackInit]", optionalCallback) // 可选callback参数初始化
-    middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
-    middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
-    middleFunc = replaceAll(middleFunc, "[agrs_size]", param.paramSize)
-    
-    middleFunc = middleFunc.replaceAll("[callback_param_offset]", param.callback.offset); // 呼叫回调
+    middleFunc = getMiddleFunc(middleFunc, callFunc, param); // 呼叫回调
     
     // callback返回值处理，回调成功后根据js返回值，业务进行后续处理
     let callBackReturnProc = callBackReturnValJs2C(className, func.name, param.callback.returnType, func.ret)
@@ -319,6 +312,18 @@ function generateFunctionSync(func, data, className) {
         }
     }
     return [middleFunc, implH, implCpp, middleH]
+}
+
+function getMiddleFunc(middleFunc, callFunc, param) {
+  middleFunc = replaceAll(middleFunc, '[callFunc]', callFunc); // 执行
+  let optionalCallback = getOptionalCallbackInit(param);
+  middleFunc = replaceAll(middleFunc, '[optionalCallbackInit]', optionalCallback); // 可选callback参数初始化
+  middleFunc = replaceAll(middleFunc, '[valuePackage]', param.valuePackage); // 输出参数打包
+  middleFunc = replaceAll(middleFunc, '[optionalParamDestory]', param.optionalParamDestory); // 可选参数内存释放
+  middleFunc = replaceAll(middleFunc, '[agrs_size]', param.paramSize);
+
+  middleFunc = middleFunc.replaceAll('[callback_param_offset]', param.callback.offset); // 呼叫回调
+  return middleFunc;
 }
 
 function isClassFunc(className, middleH, middleFunc) {

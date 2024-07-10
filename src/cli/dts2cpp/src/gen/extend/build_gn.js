@@ -12,8 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { writeFile } = require("../tools/FileRW");
-const re = require("../tools/re");
+const { writeFile } = require('../tools/FileRW');
+const re = require('../tools/re');
 
 let gnTemplete = `\
 import("//build/ohos.gni")
@@ -51,26 +51,28 @@ ohos_shared_library("[implName]")
 /**创建nodejs编译文件，用于在ubuntu测试 */
 function generateGN(destDir, implName, license, partName, buildCpp) {
     let subsystemName = implName;
-    let gnFile = gnTemplete.replaceAll("[implName]", implName);
-    gnFile = gnFile.replaceAll("[businessCodeCpp]", buildCpp)
-    gnFile = gnFile.replaceAll("[subsystemName]", subsystemName);
-    gnFile = gnFile.replaceAll("[partName]", partName);
+    let gnFile = gnTemplete.replaceAll('[implName]', implName);
+    gnFile = gnFile.replaceAll('[businessCodeCpp]', buildCpp)
+    gnFile = gnFile.replaceAll('[subsystemName]', subsystemName);
+    gnFile = gnFile.replaceAll('[partName]', partName);
     if (license) {
         license = getGnLicense(license);
     }
-    writeFile(re.pathJoin(destDir, "BUILD.gn"), (null !== license && undefined !== license) ?
-      (license + "\n" + gnFile) : gnFile)
+    writeFile(re.pathJoin(destDir, 'BUILD.gn'), (null !== license && undefined !== license) ?
+      (license + '\n' + gnFile) : gnFile)
 }
 
 function getGnLicense(license) {
-  let s2 = license.substring(2, license.length - 2).split("\n");
-  license = "";
+  let s2 = license.substring(2, license.length - 2).split('\n');
+  license = '';
   for (let i = 1; i < s2.length; i++) {
     if (s2[i].length > 0) {
-      while (s2[i][0] === " ")
+      while (s2[i][0] === ' ')
+      {
         s2[i] = s2[i].substring(1);
-      if (s2[i].length > 3 && s2[i][0] === "*") {
-        license += "#" + s2[i].substring(1) + "\n";
+      }
+      if (s2[i].length > 3 && s2[i][0] === '*') {
+        license += '#' + s2[i].substring(1) + '\n';
       }
     }
   }
