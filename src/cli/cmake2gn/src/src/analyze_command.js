@@ -604,10 +604,10 @@ class AnalyzeCommand {
         }
         let ret = null;
         switch (AnalyzeCommand.getCompileCmdId(cmd)) {
-            case AnalyzeCommand.COMPILE_CMDS['clang']:
+            case AnalyzeCommand.COMPILE_CMDS.clang:
                 ret = AnalyzeCommand.analyzeCcClang(cmd);
                 break;
-            case AnalyzeCommand.COMPILE_CMDS['ar']:
+            case AnalyzeCommand.COMPILE_CMDS.ar:
                 ret = AnalyzeCommand.analyzeCcAr(cmd);
                 break;
             case AnalyzeCommand.COMPILE_CMDS['clang++']:
