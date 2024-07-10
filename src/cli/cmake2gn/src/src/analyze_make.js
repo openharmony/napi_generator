@@ -1,16 +1,16 @@
 /*
-* Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd. 
-* Licensed under the Apache License, Version 2.0 (the "License"); 
-* you may not use this file except in compliance with the License. 
-* You may obtain a copy of the License at 
+* Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
 *
-* http://www.apache.org/licenses/LICENSE-2.0 
+* http://www.apache.org/licenses/LICENSE-2.0
 *
-* Unless required by applicable law or agreed to in writing, software 
-* distributed under the License is distributed on an "AS IS" BASIS, 
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-* See the License for the specific language governing permissions and 
-* limitations under the License. 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
 */
 const childProcess = require('child_process');
 const fs = require('fs');
@@ -39,7 +39,7 @@ class AnalyzeMake {
                 Logger.err(data.toString());
             });
             ret.on('close', (code) => {
-                if (code == 0) {
+                if (code === 0) {
                     Logger.info('-----------------------------make ok');
                     udpServer_.close();
                     udpServer_ = null;
@@ -70,15 +70,7 @@ class AnalyzeMake {
                 acmd += l;
             }
             else {
-                acmd += l;
-                if (acmd.length > 0) {
-                    cmdlist.push(acmd);
-                    let ret = AnalyzeCommand.analyze(acmd);
-                    if (ret.length > 0) {
-                        analyzeResult.push(...ret);
-                    }
-                }
-                acmd = '';
+                acmd = getAcmd(acmd, l);
             }
         }
     }
@@ -111,7 +103,7 @@ class AnalyzeMake {
             Logger.err(data.toString());
         });
         ret.on('close', (code) => {
-            if (code == 0) {
+            if (code === 0) {
                 Logger.info('-----------------------------make ok');
                 Tool.generateTarget(makeProjectPath.dir, analyzeResult);//生成结果目标
             }
@@ -120,6 +112,19 @@ class AnalyzeMake {
     }
 }
 
+function getAcmd(acmd, l) {
+  acmd += l;
+  if (acmd.length > 0) {
+    cmdlist.push(acmd);
+    let ret = AnalyzeCommand.analyze(acmd);
+    if (ret.length > 0) {
+      analyzeResult.push(...ret);
+    }
+  }
+  acmd = '';
+  return acmd;
+}
+
 module.exports = {
-    AnalyzeMake
+  AnalyzeMake
 };

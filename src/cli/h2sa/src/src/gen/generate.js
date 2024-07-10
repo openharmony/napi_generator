@@ -64,7 +64,7 @@ function getUsingStr(usingList) {
 function getFuncParamStr(params) {
     let paramStr = "";
     for (let i = 0; i < params.length; ++i) {
-        paramStr += (i == 0) ? "" : ", ";
+        paramStr += (i === 0) ? "" : ", ";
         paramStr += params[i].type + " " + params[i].name;
     }
     return paramStr;
@@ -93,16 +93,16 @@ function getFuncParamStr(params) {
 
     let endPos = firstBracesPos + 1;
     let bracesCount = 1;
-    for (; (endPos < rawContent.length) && (bracesCount != 0); ++endPos) {
-        if (rawContent.charAt(endPos) == "{") {
+    for (; (endPos < rawContent.length) && (bracesCount !== 0); ++endPos) {
+        if (rawContent.charAt(endPos) === "{") {
             ++bracesCount;
         }
-        if (rawContent.charAt(endPos) == "}") {
+        if (rawContent.charAt(endPos) === "}") {
             --bracesCount;
         }
     }
 
-    if (bracesCount != 0) {
+    if (bracesCount !== 0) {
         // 左右括号不匹配
         NapiLog.logError("Warning: The braces of %s do not match.".format(className));
         return null;
@@ -120,7 +120,7 @@ function getFuncParamStr(params) {
 function findClassGenInfo(vType) {
     let marshallInfo = null;
     for (let i = 0; i < marshallFuncList.length; ++i) {
-        if (marshallFuncList[i].className == vType) {
+        if (marshallFuncList[i].className === vType) {
             marshallInfo = marshallFuncList[i].marshallFuncs;
         }
     }
@@ -141,10 +141,10 @@ function findGetSet(propName, classInfo) {
     let findSet = false;
     let result = null;
     for (let i = 0; i < classInfo.methods.public.length; ++i) {
-        if (getName == classInfo.methods.public[i].name) {
+        if (getName === classInfo.methods.public[i].name) {
             findGet = true;
         }
-        if (setName == classInfo.methods.public[i].name) {
+        if (setName === classInfo.methods.public[i].name) {
             findSet = true;
         }
     }
@@ -160,7 +160,7 @@ function privatePropMashall(parcelName, objName, classInfo, marshallInfo) {
     let propFuncs = []; // 保存成员属性对应的get/set方法
     for (let i = 0; i < properties.length; ++i) {
         let getSetInfo = findGetSet(properties[i].name, classInfo);
-        if (getSetInfo != null) {
+        if (getSetInfo !== null && getSetInfo !== undefined) {
             getSetInfo.type = properties[i].type;
             propFuncs.push(getSetInfo);
         } else {
@@ -220,7 +220,7 @@ function saveClassSrc(classInfo) {
         return;
     }
     for (let i = 0; i < dependSrcList.length; ++i) {
-        if (dependSrcList[i].name == classInfo.name){
+        if (dependSrcList[i].name === classInfo.name){
             // 该class的定义源码已经保存过了。
             return;
         }
@@ -232,7 +232,7 @@ function saveClassSrc(classInfo) {
 
     // 从.h源码中获取该class定义的源码段
     srcObj.srcCode = getClassSrc(className, rootHFileSrc);
-    if (srcObj.srcCode != null) {
+    if (srcObj.srcCode !== null && srcObj.srcCode !== undefined) {
         dependSrcList.push(srcObj);
     }
 }
@@ -284,7 +284,7 @@ function genClassWriteString(objName, parcelName, marshallInfo, classInfo) {
     if (!marshall) {
         // class的序列化代码还未生成，查看是否已在待处理列表中
         let ProcessingClass = ProcessingClassList.findByName(classInfo.name);
-        if (ProcessingClass == null) {
+        if (ProcessingClass === null || ProcessingClass === undefined) {
             // 待处理列表中没有，则创建该class的读写代码数据。
             marshall = createMarshallInfo(classInfo);
         } else {
@@ -433,14 +433,14 @@ function genProxyFunc(funcInfo, className, paramStr) {
     let tab = getTab(1);
     for (let i = 0; i < funcInfo.params.length; ++i) {
         let param = funcInfo.params[i];
-        writeDataStr += (i == 0) ? "" : "\n" + tab;
+        writeDataStr += (i === 0) ? "" : "\n" + tab;
         writeDataStr += genWrite(param.name, "data", param.type);
     }
     proxyFunc = replaceAll(proxyFunc, "[writeData]", writeDataStr);
 
     // 返回值处理
     let readReplyStr = "";
-    if (funcInfo.retType != "void") {
+    if (funcInfo.retType !== "void") {
         readReplyStr = "%s result;".format(funcInfo.retType);
         let destObj = {
             "name": "result",
@@ -623,30 +623,30 @@ function genFunctionCode(classInfo) {
     let funcTab = getTab(1);
     for (var i = 0; i < funcList.length; ++i) {
         funcList[i].funcEnum = funcList[i].name.toUpperCase(); // remote方法的枚举值
-        genResult.funcEnumStr += (i == 0) ? "" : ",\n" + enumTab;
+        genResult.funcEnumStr += (i === 0) ? "" : ",\n" + enumTab;
         genResult.funcEnumStr += funcList[i].funcEnum;
 
         let paramStr = getFuncParamStr(funcList[i].params);
-        genResult.iServiceFuncH += (i == 0) ? "" : "\n" + funcTab;
+        genResult.iServiceFuncH += (i === 0) ? "" : "\n" + funcTab;
         genResult.iServiceFuncH += "virtual %s %s(%s) = 0;".format(funcList[i].retType, funcList[i].name, paramStr);
 
-        genResult.proxyFuncH += (i == 0) ? "" : "\n" + funcTab;
+        genResult.proxyFuncH += (i === 0) ? "" : "\n" + funcTab;
         genResult.proxyFuncH += "%s %s(%s) override;".format(funcList[i].retType, funcList[i].name, paramStr);
 
-        genResult.stubInnerFuncH += (i == 0) ? "" : "\n" + funcTab;
+        genResult.stubInnerFuncH += (i === 0) ? "" : "\n" + funcTab;
         genResult.stubInnerFuncH += 
             "ErrCode %sInner(MessageParcel &data, MessageParcel &reply);".format(funcList[i].name);
 
         genResult.proxyFuncCpp += genProxyFunc(funcList[i], classInfo.name, paramStr);
 
-        genResult.stubInnerFuncMap += (i == 0) ? "" : "\n" + funcTab;
+        genResult.stubInnerFuncMap += (i === 0) ? "" : "\n" + funcTab;
         genResult.stubInnerFuncMap += "innerFuncs_[%s] = &%sStub::%sInner;".format(
             funcList[i].funcEnum, classInfo.name, funcList[i].name);
 
         genResult.stubInnerFuncCpp += genStubInnerFunc(funcList[i], classInfo.name);
         genResult.serviceFuncCpp += genServiceFunc(funcList[i], classInfo.name, paramStr);
 
-        genResult.clientFuncCpp += (i == 0) ? "" : "\n" + funcTab;
+        genResult.clientFuncCpp += (i === 0) ? "" : "\n" + funcTab;
         genResult.clientFuncCpp += "// proxy->%s(%s);".format(funcList[i].name, paramStr);
     }
     return genResult;

@@ -18,10 +18,10 @@ const { NumberIncrease } = require('../tools/common');
 /* 去除单行注释// */
 function parseNotes(data) {
     let notes = data.indexOf('//') >= 0 ? data.substring(data.indexOf('//'), data.length) : '';          
-    while(notes != '') {
+    while(notes !== '') {
         notes = notes.substring(0, notes.indexOf('\n')); 
         data = data.replace(notes, '');
-        notes = '';
+        notes = ''
         let st = data.indexOf('//');
         if(st >= 0) {
             notes = data.substring(st, data.length);
@@ -41,29 +41,33 @@ function analyzeType(data, rsltInterface = null) { // same as class
     };
     for (let i in body) {
         let t = body[i];
-        while (t.length > 0 && t[0] == ' ') // 去除前面的空格
+        while (t.length > 0 && t[0] === ' ') // 去除前面的空格
             t = t.substring(1, t.length);
-        while (t.length > 0 && t[-1] == ' ') // 去除后面的空格
+        while (t.length > 0 && t[-1] === ' ') // 去除后面的空格
             t = t.substring(0, t.length - 1);
-        if (t == '') break; // 如果t为空直接返回
+        if (t === '') break; // 如果t为空直接返回
         let tt = re.match(' *([a-zA-Z0-9_]+)(\\?*)*: *([a-zA-Z_0-9<>,:{}[\\]| ]+)', t);
         if (tt && t.indexOf('=>') < 0) { // 接口成员变量, 但不包括带'=>'的成员，带'=>'的接口成员需要按函数处理
-            let valueName = re.getReg(t, tt.regs[1]);
-            let valueType = re.getReg(t, tt.regs[3]);
-            let index = valueType.indexOf('number');
-            let optionalFlag = re.getReg(t, tt.regs[2]) == '?' ? true : false;
-            while (index !== -1) {
-                valueType = valueType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
-                index = valueType.indexOf('number');
-            } 
-              result.value.push({
-                name: valueName,
-                type: valueType,
-                optional: optionalFlag
-              });
+            analyzeTypeVariable(t, tt, result);
         }
     }
     return result;
+}
+
+function analyzeTypeVariable(t, tt, result) {
+  let valueName = re.getReg(t, tt.regs[1]);
+  let valueType = re.getReg(t, tt.regs[3]);
+  let index = valueType.indexOf('number');
+  let optionalFlag = re.getReg(t, tt.regs[2]) === '?' ? true : false;
+  while (index !== -1) {
+    valueType = valueType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
+    index = valueType.indexOf('number');
+  }
+  result.value.push({
+    name: valueName,
+    type: valueType,
+    optional: optionalFlag
+  });
 }
 
 function analyzeType2(data) {

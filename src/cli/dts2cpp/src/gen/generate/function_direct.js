@@ -175,7 +175,7 @@ function replaceOptionalParamDestory(middleFunc, param) {
 function generateFunctionDirect(func, data, className, implHVariable) {
     let middleFunc = replaceAll(funcDirectTemplete, "[funcName]", func.name)
     let middleH = ""
-    if (func.name != "constructor") {
+    if (func.name !== "constructor") {
       middleH = replaceAll(funcDirectMiddleHTemplete, "[funcName]", func.name)
     }
     
@@ -198,7 +198,7 @@ function generateFunctionDirect(func, data, className, implHVariable) {
         paramGenerate(i, func.value[i], param, data)
     }
     let returnInfo = {type: func.ret, optional: false}
-    if (func.ret == 'void') {
+    if (func.ret === 'void') {
         param.valuePackage = "result = pxt->UndefinedValue();";
     } else {
         returnGenerate(returnInfo, param, data)
@@ -243,21 +243,23 @@ function getimplHForForComClassValue(isAddReg, param, prefixArr, func) {
 function getimplCppForComClassValue(isAddReg, param, className, func) {
     let implCpp = ""
     let initListener = ''
-    let callStatement = jsonCfgList.getValue(className == null? "": className, func.name);
+    let callStatement = jsonCfgList.getValue((className === null || className === undefined)?
+      "": className, func.name);
 
     if (isAddReg) {
         initListener = '%s %s::listener_ = {};'.format(func.value[0].type, className)
         callStatement = '%s::listener_ = listener;'.format(className)
     }
 
-    implCpp = cppTemplate.format(initListener, className == null ? "" : className + "::", func.name, 
-    param.valueDefine, callStatement == null? "": callStatement)
+    implCpp = cppTemplate.format(initListener, (className === null || className === undefined) ?
+      "" : className + "::", func.name, 
+    param.valueDefine, (callStatement === null || callStatement === undefined)? "": callStatement)
     return implCpp
 }
 
 function replaceValueOut(middleH, param) {
     middleH = replaceAll(middleH, "[valueIn]", param.valueIn); // # 输入参数定义
-    if (param.valueOut == "") {
+    if (param.valueOut === "") {
         middleH = replaceAll(middleH, "[valueOut]", param.valueOut); // # 输出参数定义
     } else {
         middleH = replaceAll(middleH, "[valueOut]", "\n    " + param.valueOut); // # 输出参数定义
@@ -266,7 +268,7 @@ function replaceValueOut(middleH, param) {
 }
 
 function isClassFunc(className, middleFunc, middleH) {
-    if (className == null) {
+    if (className === null || className === undefined) {
         middleH = middleH.replaceAll("[static_define]", "");
         middleFunc = middleFunc.replaceAll("[unwarp_instance]", "");
         middleFunc = middleFunc.replaceAll("[middleClassName]", "");

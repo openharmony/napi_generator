@@ -27,7 +27,7 @@ else {
     Tool.CURRENT_TOOL_PATH = path.parse(process.execPath).dir;
 }
 
-if (Tool.MOCK_TYPE == Tool.MOCK_ENUM.MOCK_RUN) {
+if (Tool.MOCK_TYPE === Tool.MOCK_ENUM.MOCK_RUN) {
     GenerateGn.mockGenerate();//通过mock数据运行
 }
 

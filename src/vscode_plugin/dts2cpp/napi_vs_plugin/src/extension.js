@@ -23,12 +23,12 @@ const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
 const path = require('path');
 const INVALID_INDEX = -1;
 const SELECT_H_FILE = 2; // 选择.h文件
-var exeFilePath = null;
-var globalPanel = null;
-var showInfoPanel = null;
-var importToolChain = false;
-var extensionIds = [];
-var nextPluginId = null;
+let exeFilePath = null;
+let globalPanel = null;
+let showInfoPanel = null;
+let importToolChain = false;
+let extensionIds = [];
+let nextPluginId = null;
 let configList = new Array();
 let generateDir = '';
 let cfgPath = '';
@@ -47,22 +47,23 @@ function activate(context) {
   let disposableMenu = register(context, 'generate_napi_menu');
   context.subscriptions.push(disposable);
   context.subscriptions.push(disposableMenu);
-  var platform = detectPlatform();
-  if (platform == 'win') {
+  let platform = detectPlatform();
+  if (platform === 'win') {
     exeFilePath = __dirname + '/napi_generator-win.exe';
-  } else if (platform == 'mac') {
+  } else if (platform === 'mac') {
     exeFilePath = __dirname + '/napi_generator-macos';
-  } else if (platform == 'Linux') {
+  } else if (platform === 'Linux') {
     exeFilePath = __dirname + '/napi_generator-linux';
   }
 }
 
 function executor(name, genDir, mode, numberType, importIsCheck) {
-  var exec = require('child_process').exec;
+  let exec = require('child_process').exec;
   exec(genCommand(name, genDir, mode, numberType, importIsCheck), function (error, stdout, stderr) {
     VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ', stderr =' + stderr);
     if (error || stdout.indexOf('success') < 0) {
-      vscode.window.showErrorMessage('genError:' + (error != null ? error : '') + stdout);
+      vscode.window.showErrorMessage('genError:' + ((error !== null && error !== undefined) ?
+        error : '') + stdout);
       return VsPluginLog.logError('VsPlugin:' + error + stdout);
     }
     vscode.window.showInformationMessage('Generated successfully');
@@ -70,7 +71,7 @@ function executor(name, genDir, mode, numberType, importIsCheck) {
 }
 
 function genCommand(name, genDir, mode, numberType, importIsCheck) {
-  var genFileMode = mode == 0 ? ' -f ' : ' -d ';
+  let genFileMode = mode === 0 ? ' -f ' : ' -d ';
 
   let genServiceCode = '';
   console.log('cfgPath: ' + cfgPath);
@@ -107,52 +108,17 @@ function register(context, command) {
 			}
 		);
 
-		if (typeof(boolValue) == 'boolean' && Array.isArray(items)) {
-			if (boolValue == true) {
-				//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
-				let myExtensionId = 'kaihong.napi-gen';
-				for (let i = 0; i < items.length; i++) {
-					if (myExtensionId == items[i] && (i == items.length - 1)) {
-						importToolChain = false;
-					} else if (myExtensionId == items[i] && (i != items.length - 1)) {
-						importToolChain = boolValue;
-						nextPluginId = items[i + 1];
-					}
-					extensionIds.push(items[i]);
-				}
-			}
-		}
+		checkBoolval(boolValue, items);
 		globalPanel.webview.html = getWebviewContent(context, importToolChain);
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
-      msg = message.msg;
-      if (msg == 'cancel') {
-        globalPanel.dispose();
-      } else if (msg == 'param') {
-        if (configList.length !== 0) {
-          writeCfgJson();  // 写cfg.json文件
-        }
-        checkReceiveMsg(message);
-      } else if (msg === 'config') {
-        // 若选择文件夹或者选择了多个文件则不能配置业务代码
-        if (message.mode !== 0 || message.interFile.indexOf(',') > 0) {
-          vscode.window.showInformationMessage('选择文件夹或者多个文件时不能配置业务代码,请选择单个文件');
-          console.error('选择文件夹或者多个文件时不能配置业务代码,请选择单个文件');
-        } else if (trimAll(message.genDir).length <= 0) {
-          vscode.window.showInformationMessage('请输入生成框架路径!');
-          console.error('请输入生成框架路径!');
-        } else {
-          configServiceCode(message, context);
-        }
-      } else {
-        selectPath(globalPanel, message);
-      }
+      msg = handleMsg(msg, message, context);
     }, undefined, context.subscriptions);
     // 路径有效性判断
     if (uri.fsPath !== undefined) {
       let fn = re.getFileInPath(uri.fsPath);
       let tt = re.match("((@ohos\.)*[a-zA-Z_0-9]+.d.ts)", fn);
-      var result = {
+      let result = {
         msg: "selectInterPath",
         path: tt ? uri.fsPath : ""
       }
@@ -160,6 +126,58 @@ function register(context, command) {
     }
   });
   return disposable;
+}
+
+function handleMsg(msg, message, context) {
+  msg = message.msg;
+  if (msg === 'cancel') {
+    globalPanel.dispose();
+  } else if (msg === 'param') {
+    if (configList.length !== 0) {
+      writeCfgJson(); // 写cfg.json文件
+    }
+    checkReceiveMsg(message);
+  } else if (msg === 'config') {
+    // 若选择文件夹或者选择了多个文件则不能配置业务代码
+    getMsgCfg(message, context);
+  } else {
+    selectPath(globalPanel, message);
+  }
+  return msg;
+}
+
+function getMsgCfg(message, context) {
+  if (message.mode !== 0 || message.interFile.indexOf(',') > 0) {
+    vscode.window.showInformationMessage('选择文件夹或者多个文件时不能配置业务代码,请选择单个文件');
+    console.error('选择文件夹或者多个文件时不能配置业务代码,请选择单个文件');
+  } else if (trimAll(message.genDir).length <= 0) {
+    vscode.window.showInformationMessage('请输入生成框架路径!');
+    console.error('请输入生成框架路径!');
+  } else {
+    configServiceCode(message, context);
+  }
+}
+
+function checkBoolval(boolValue, items) {
+  if (typeof (boolValue) === 'boolean' && Array.isArray(items)) {
+    if (boolValue === true) {
+      //遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
+      getNextPlugin(items, boolValue);
+    }
+  }
+}
+
+function getNextPlugin(items, boolValue) {
+  let myExtensionId = 'kaihong.napi-gen';
+  for (let i = 0; i < items.length; i++) {
+    if (myExtensionId === items[i] && (i === items.length - 1)) {
+      importToolChain = false;
+    } else if (myExtensionId === items[i] && (i !== items.length - 1)) {
+      importToolChain = boolValue;
+      nextPluginId = items[i + 1];
+    }
+    extensionIds.push(items[i]);
+  }
 }
 
 // 去除字符串空格
@@ -262,7 +280,7 @@ function checkReceiveMsg(message) {
   let importIsCheck = message.importIsCheck;
   let buttonName = message.buttonName;
   checkMode(name, genDir, mode, numberType, importIsCheck);
-  if (buttonName == 'Next') {
+  if (buttonName === 'Next') {
     startNextPlugin();
   }
 }
@@ -331,15 +349,15 @@ function deleteData(index) {
  * 获取插件执行命令
  */
 function nextPluginExeCommand(nextPluginId) {
-  if (nextPluginId == 'kaihong.ApiScan') {
+  if (nextPluginId === 'kaihong.ApiScan') {
     return 'api_scan';
-  } else if (nextPluginId == 'kaihong.gn-gen') {
+  } else if (nextPluginId === 'kaihong.gn-gen') {
     return 'generate_gn';
-  } else if (nextPluginId == 'kaihong.service-gen') {
+  } else if (nextPluginId === 'kaihong.service-gen') {
     return 'generate_service';
-  } else if (nextPluginId == 'kaihong.ts-gen') {
+  } else if (nextPluginId === 'kaihong.ts-gen') {
     return 'generate_ts';
-  } else if (nextPluginId == 'kaihong.napi-gen') {
+  } else if (nextPluginId === 'kaihong.napi-gen') {
     return 'generate_napi';
   } else {
     return null;
@@ -386,7 +404,7 @@ function selectConfigPath(panel, message, generateDir) {
       // 获取相对路径  相对于生成框架路径
       let filePath = path.relative(generateDir, fileObsPath);
       console.log('relative filePath: ' + filePath);
-      var result = {
+      let result = {
         msg: message.msg,
         path: filePath,
       };
@@ -401,17 +419,17 @@ function selectConfigPath(panel, message, generateDir) {
  */
 function selectPath(panel, message) {
   let mode = 1;
-  if (message.mode != undefined) {
+  if (message.mode !== undefined && message.mode !== null) {
     mode = message.mode;
   }
   const options = {
-    canSelectMany: mode == 0 ? true : false, //是否可以选择多个
-    openLabel: mode == 0 ? '选择文件' : '选择文件夹', //打开选择的右下角按钮label
-    canSelectFiles: mode == 0 ? true : false, //是否选择文件
-    canSelectFolders: mode == 0 ? false : true, //是否选择文件夹
+    canSelectMany: mode === 0 ? true : false, //是否可以选择多个
+    openLabel: mode === 0 ? '选择文件' : '选择文件夹', //打开选择的右下角按钮label
+    canSelectFiles: mode === 0 ? true : false, //是否选择文件
+    canSelectFolders: mode === 0 ? false : true, //是否选择文件夹
     defaultUri: vscode.Uri.file(''), //默认打开本地路径
     // 文件过滤选项，在文件夹选择模式下不可设置此配置，否则ubuntu系统下无法选择文件夹
-    filters: mode == 1 ? {} : { 'Text files': ['d.ts'] },
+    filters: mode === 1 ? {} : { 'Text files': ['d.ts'] },
   };
 
   return vscode.window.showOpenDialog(options).then((fileUri) => {
@@ -421,7 +439,7 @@ function selectPath(panel, message) {
       for (let index = 0; index < fileUri.length; index++) {
         filePath += fileUri[index].fsPath.concat(',');
       }
-      var result = {
+      let result = {
         msg: message.msg,
         path: filePath.length > 0? filePath.substring(0, filePath.length - 1): filePath,
       };
@@ -433,11 +451,11 @@ function selectPath(panel, message) {
 
 function checkMode(name, genDir, mode, numberType, importIsCheck) {
   name = re.replaceAll(name, ' ', '');
-  if ('' == name) {
+  if ('' === name) {
     vscode.window.showErrorMessage('Please enter the path!');
     return;
   }
-  if (mode == 0) {
+  if (mode === 0) {
     if (name.indexOf('.') < 0) {
       vscode.window.showErrorMessage('Please enter the correct file path!');
       return;

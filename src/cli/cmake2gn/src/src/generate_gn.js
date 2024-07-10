@@ -29,32 +29,36 @@ function saveMockData(projectPath, analyzeResult) {
 
 function preProcessResult(analyzeResult) {//把所有路径搞成绝对路径
     for (let r of analyzeResult) {
-        if (!r.target.startsWith('/')) {
-            if (!path.isAbsolute(r.target)) {
-                r.target = path.join(r.workDir, r.target);
-            }
-        }
-        for (let i = 0; i < r.inputs.length; i++) {
-            if (r.inputs[i].startsWith('"') && r.inputs[i].endsWith('"')) {
-                r.inputs[i] = r.inputs[i].substring(1, r.inputs[i].length - 1);
-            }
-            if (!r.inputs[i].startsWith('/')) {
-                if (!path.isAbsolute(r.inputs[i])) {
-                    r.inputs[i] = path.join(r.workDir, r.inputs[i]);
-                }
-            }
-        }
-        for (let i = 0; i < r.includes.length; i++) {
-            if (!r.includes[i].startsWith('/')) {
-                if (!path.isAbsolute(r.includes[i])) {
-                    r.includes[i] = path.join(r.workDir, r.includes[i]);
-                }
-            }
-        }
+        changePathToAbs(r);
     }
 }
 
-function checkoutLibName(name) {//比如/home/libabc.so，返回["dynamic",abc]
+function changePathToAbs(r) {
+  if (!r.target.startsWith('/')) {
+    if (!path.isAbsolute(r.target)) {
+      r.target = path.join(r.workDir, r.target);
+    }
+  }
+  for (let i = 0; i < r.inputs.length; i++) {
+    if (r.inputs[i].startsWith('"') && r.inputs[i].endsWith('"')) {
+      r.inputs[i] = r.inputs[i].substring(1, r.inputs[i].length - 1);
+    }
+    if (!r.inputs[i].startsWith('/')) {
+      if (!path.isAbsolute(r.inputs[i])) {
+        r.inputs[i] = path.join(r.workDir, r.inputs[i]);
+      }
+    }
+  }
+  for (let i = 0; i < r.includes.length; i++) {
+    if (!r.includes[i].startsWith('/')) {
+      if (!path.isAbsolute(r.includes[i])) {
+        r.includes[i] = path.join(r.workDir, r.includes[i]);
+      }
+    }
+  }
+}
+
+function checkoutLibName(name) {//比如/home/libabc.so，返回['dynamic',abc]
     let pn = path.parse(name);
     let tname = pn.base;
     if (tname.endsWith('.a')) {
@@ -88,7 +92,7 @@ class GenerateGn {
     }
 
     static generate(projectPath, analyzeResult) {
-        if (Tool.MOCK_TYPE == Tool.MOCK_ENUM.MOCK_RECORD) {
+        if (Tool.MOCK_TYPE === Tool.MOCK_ENUM.MOCK_RECORD) {
             saveMockData(projectPath, analyzeResult);//保存mock数据
         }
 
@@ -295,7 +299,7 @@ subsystem_name = "%s"
         for (let gnPath in genList) {
             let gens = genList[gnPath];
             for (let gen of gens) {
-                if (gen.target == name) {
+                if (gen.target === name) {
                     let tt = checkoutLibName(gen.target);
                     return gen.workDir + ':' + tt[1];
                 }
@@ -310,13 +314,13 @@ subsystem_name = "%s"
             let badd = true;
             switch (collectFileStat) {
                 case 0:
-                    if (a == '-Xclang') {
+                    if (a === '-Xclang') {
                         collectFileStat = 1;
                         badd = false;
                     }
                     break;
                 case 1:
-                    if (a == '-include' || a == '-include-pch') {
+                    if (a === '-include' || a === '-include-pch') {
                         collectFileStat = 2;
                         badd = false;
                     }
@@ -326,7 +330,7 @@ subsystem_name = "%s"
                     }
                     break;
                 case 2:
-                    if (a == '-Xclang') {
+                    if (a === '-Xclang') {
                         collectFileStat = 3;
                         badd = false;
                     }

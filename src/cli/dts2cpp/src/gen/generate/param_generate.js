@@ -209,14 +209,14 @@ function unionTempleteFunc(dest, napiVn, type, optional) {
                 %s
             }\n`.format(dest, typeStr, jsToC("union_string", napiVn, unionType[i]),
             optional? dest+".emplace(union_string);":dest+" = union_string;")
-        } else if (unionType[i].substring(0, 12) == "NUMBER_TYPE_") {
+        } else if (unionType[i].substring(0, 12) === "NUMBER_TYPE_") {
             unionTypeString += `if (%s_%s == "number") {
                 std::uint32_t union_number;
                 %s
                 %s
             }\n`.format(dest, typeStr, jsToC("union_number", napiVn, unionType[i]),
             optional? dest+".emplace(union_number);":dest+" = union_number;")
-        } else if (unionType[i] == "boolean") {
+        } else if (unionType[i] === "boolean") {
             unionTypeString += `if (%s_%s == "boolean") {
                 bool union_boolean;
                 %s

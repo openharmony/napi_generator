@@ -151,22 +151,25 @@ function generateFunctionAsync(func, data, className, implHCbVariable) {
     napi_value result = pxt->StartAsync(%s_execute, reinterpret_cast<DataPtr>(vio), %s_complete,
     pxt->GetArgc() == %s? pxt->GetArgv(%d) : nullptr);`
         .format(func.name, func.name, getConstNum(parseInt(param.callback.offset) + 1),
-        getConstNum(param.callback.offset))); // 注册异步调用
-    let callFunc = '%s%s(%s);'.format(className == null ? '' : 'pInstance->', func.name, param.valueFill);
-    middleFunc = replaceAll(middleFunc, '[callFunc]', callFunc); // 执行
-    middleFunc = replaceAll(middleFunc, '[valuePackage]', param.valuePackage); // 输出参数打包
-    middleFunc = replaceAll(middleFunc, '[optionalParamDestory]', param.optionalParamDestory); // 可选参数内存释放
+        getConstNum(param.callback.offset))) // 注册异步调用
+    let callFunc = "%s%s(%s);".format((className === null || className === undefined) ?
+      "" : "pInstance->", func.name, param.valueFill)
+    middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc); // 执行
+    middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage); // 输出参数打包
+    middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory); // 可选参数内存释放
 
     let prefixArr = getPrefix(data, func);
-    let implH = '';
-    let implCpp = '';
+    let implH = "";
+    let implCpp = "";
     if (!func.isParentMember) {
         // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
-        implH = '\n%s%s%sbool %s(%s)%s;'.format(
+        implH = "\n%s%s%sbool %s(%s)%s;".format(
             prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3]);
-        let callStatement = jsonCfgList.getValue(className == null? '': className, func.name);
-        implCpp = cppTemplate.format(className == null ? '' : className + '::', func.name, param.valueDefine,
-            callStatement == null? '': callStatement);
+        let callStatement = jsonCfgList.getValue((className === null || className === undefined)?
+          "": className, func.name);
+        implCpp = cppTemplate.format((className === null || className === undefined) ?
+          "" : className + "::", func.name, param.valueDefine,
+            (callStatement === null || callStatement === undefined)? "": callStatement);
 
         let outResult = generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable, implCpp, implH);
         implCpp = outResult[0];
@@ -203,19 +206,22 @@ function generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable
         let useParams = '';
         let interBody = InterfaceList.getValue(outInterfaceName);
         for (let i = 0; i < interBody.length; i++) {
-            let realType = interBody[i].type == 'string' ? 'std::string' : interBody[i].type;
-            realType = interBody[i].type == 'boolean' ? 'bool' : realType;
-            defineParams += '%s %s, '.format(realType, interBody[i].name);
-            useParams += '%s%sOutRes.%s = %s;\n'.format(className == null ? '' : className + '::',
+            let realType = interBody[i].type === "string" ? "std::string" : interBody[i].type;
+            realType = interBody[i].type === "boolean" ? "bool" : realType;
+            defineParams += "%s %s, ".format(realType, interBody[i].name);
+            useParams += "%s%sOutRes.%s = %s;\n".format((className === null || className === undefined) ?
+              "" : className + "::",
                 outInterfaceName.toLocaleLowerCase(), interBody[i].name, interBody[i].name);
         }
         defineParams = defineParams.substring(0, defineParams.length - 2);
-        let cbOutDefine = '\n%s %s%sOutRes = {};'.format(outInterfaceName, className == null ? '' : className + '::',
-        outInterfaceName.toLocaleLowerCase());
-        cbInterfaceRes = cppCbResultTemplate.format(className == null ? '' : className + '::', outInterfaceName.toLocaleLowerCase(),
+        let cbOutDefine = "\n%s %s%sOutRes = {};".format(outInterfaceName, (className === null || className === undefined) ?
+          "" : className + "::",
+        outInterfaceName.toLocaleLowerCase())
+        cbInterfaceRes = cppCbResultTemplate.format((className === null || className === undefined) ?
+          "" : className + "::", outInterfaceName.toLocaleLowerCase(),
             defineParams, useParams);
-        if (className != null) {
-            cbInterfaceRes = replaceAll(cbInterfaceRes, '[replace_outDefine]', cbOutDefine);
+        if (className !== null && className !== undefined) {
+            cbInterfaceRes = replaceAll(cbInterfaceRes, '[replace_outDefine]', cbOutDefine)
         } else {
             cbInterfaceRes = replaceAll(cbInterfaceRes, '[replace_outDefine]', '');
         }
@@ -223,7 +229,8 @@ function generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable
         // 多次使用interface(非匿名)作为Promise回调只需生成一次cbResult接口
         let outResDefine = '\n%s%s%sstatic %s %sOutRes;'.format(
             prefixArr[0], prefixArr[1], prefixArr[2], outInterfaceName, outInterfaceName.toLocaleLowerCase());
-        let replaceOut = '\n    out = %s%sOutRes;'.format(className == null ? '' : className + '::',
+        let replaceOut = "\n    out = %s%sOutRes;".format((className === null || className === undefined) ?
+          "" : className + "::",
             outInterfaceName.toLocaleLowerCase());
         implCpp = replaceAll(implCpp, '[replace_valueOut]', replaceOut);
         if (implHCbVariable.indexOf(outResDefine) < 0) {
@@ -239,9 +246,9 @@ function generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable
 }
 
 function replaceValueOut(middleH, param) {
-    middleH = replaceAll(middleH, '[valueIn]', param.valueIn); // # 输入参数定义
-    if (param.valueOut == '') {
-        middleH = replaceAll(middleH, '[valueOut]', param.valueOut); // # 输出参数定义
+    middleH = replaceAll(middleH, "[valueIn]", param.valueIn); // # 输入参数定义
+    if (param.valueOut === "") {
+        middleH = replaceAll(middleH, "[valueOut]", param.valueOut); // # 输出参数定义
     } else {
         middleH = replaceAll(middleH, '[valueOut]', '\n    ' + param.valueOut); // # 输出参数定义
     }

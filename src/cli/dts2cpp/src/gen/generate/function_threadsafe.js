@@ -91,7 +91,7 @@ function generateThreadsafeFunc(func, data, className) {
     codeContext.middleFunc = replaceAll(threadsafeFuncTemplete, "[funcName]", postFix)
     codeContext.middleH = replaceAll(middleHTdSafeFuncTemplate, "[funcName]", postFix)
     let middleClassName = ""
-    if (className == null) {
+    if (className === null || className === undefined) {
         codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
         codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", "")
     }
