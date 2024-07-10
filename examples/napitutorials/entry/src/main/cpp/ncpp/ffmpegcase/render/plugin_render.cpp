@@ -24,12 +24,11 @@
 #include "../manager/plugin_manager.h"
 #include "libavutil/pixdesc.h"
 #include "plugin_render.h"
+#include "libavformat/avformat.h"
+#include "libavcodec/avcodec.h"
+#include "libavutil/timestamp.h"
 
 extern "C" {
-    #include "libavformat/avformat.h"
-    #include "libavcodec/avcodec.h"
-    #include "libavutil/timestamp.h"
-    #include "libavutil/pixdesc.h"
 
     // 自定义 avio_read_packet 函数
     int custom_avio_read_packet(void *opaque, uint8_t *buf, int bufSize)
