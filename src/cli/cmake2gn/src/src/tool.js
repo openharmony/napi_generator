@@ -155,9 +155,9 @@ class Tool {
      * @returns 
      */
     static getJsonCfg() {
-        if (this.globalJsonCfg == null) {
-            let jsonFilePath = path.join(Tool.CURRENT_TOOL_PATH, 'res/cfg.json');
-            let jsonFile = fs.readFileSync(jsonFilePath, { encoding: 'utf8' });
+        if (this.globalJsonCfg === null || this.globalJsonCfg === undefined) {
+            let jsonFilePath = path.join(Tool.CURRENT_TOOL_PATH, "res/cfg.json");
+            let jsonFile = fs.readFileSync(jsonFilePath, { encoding: "utf8" });
             this.globalJsonCfg = JSON.parse(jsonFile);
             this.globalJsonCfg.fileSuffix = this.globalJsonCfg.fileSuffix ? ',' + this.globalJsonCfg.fileSuffix : '';
             this.globalJsonCfg.compileflag = this.globalJsonCfg.compileflag ? ',' + this.globalJsonCfg.compileflag : '';
@@ -171,7 +171,7 @@ class Tool {
      * @returns cxx编译中允许处理的文件后缀名列表
      */
      static getAllowedCxx() {
-        if (this.allowedCxx == null) {
+        if (this.allowedCxx === null || this.allowedCxx === undefined) {
             this.allowedCxx = {};
             let jsonCfg = this.getJsonCfg();
             let allowedCxxSuffix = '.cpp, .cxx, .cc, .o, .z, .so, .a' + jsonCfg.fileSuffix;
@@ -190,7 +190,7 @@ class Tool {
      * @returns c编译中允许处理的文件后缀名列表
      */
      static getAllowedC() {
-        if (this.allowedC == null) {
+        if (this.allowedC === null || this.allowedC === undefined) {
             this.allowedC = {};
             let jsonCfg = this.getJsonCfg();
             let allowedCSuffix = '.c, .o, .o", .a, .S, .so' + jsonCfg.fileSuffix;

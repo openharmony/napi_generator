@@ -51,7 +51,6 @@ describe('interface_no_name', function () {
     // 测试：function fun4(input: string): { read: number; written: number };
     it('test interface_no_name fun4', function () {        
         let ret = fun4("name");
-        //assert.strictEqual(ret.read, 0);
     });
     
     // 测试：function fun5(value: {xOffset: number, animation: { duration: number, curve: string}});

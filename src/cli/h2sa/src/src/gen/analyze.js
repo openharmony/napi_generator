@@ -53,10 +53,10 @@ function createParam(parseParamInfo) {
     param.name = parseParamInfo.name;
     param.type = parseParamInfo.reference ? parseParamInfo.type.replace("&", "").trim(): parseParamInfo.type
     param.rawType = parseParamInfo.raw_type;
-    param.isPointer = (parseParamInfo.pointer == 1);
-    param.isReference = (parseParamInfo.reference == 1);
-    param.isArray = (parseParamInfo.array == 1);
-    param.isConstant = (parseParamInfo.constant == 1);
+    param.isPointer = (parseParamInfo.pointer === 1);
+    param.isReference = (parseParamInfo.reference === 1);
+    param.isArray = (parseParamInfo.array === 1);
+    param.isConstant = (parseParamInfo.constant === 1);
     return param;
 }
 
@@ -107,7 +107,7 @@ function createClassInfo(parseClassInfo) {
 }
 
 function analyzeClasses(rootInfo, parseClasses) {
-    if (parseClasses.length == 0) {
+    if (parseClasses.length === 0) {
         NapiLog.logError("Can not find any class.");
         return;
     }
@@ -116,7 +116,7 @@ function analyzeClasses(rootInfo, parseClasses) {
     let serviceClassName = null;// JSON集合中带“@ServiceClass”注解的class名称
     let i = 0;
     for(var className in parseClasses) {
-        if (++i == 1) {
+        if (++i === 1) {
             firstClassName = className;
         }
 
@@ -127,14 +127,14 @@ function analyzeClasses(rootInfo, parseClasses) {
         }
     }
 
-    if (parseClasses.length == 1) {
+    if (parseClasses.length === 1) {
         // h文件中只有唯一的一个类，基于该类的接口定义生成service
         rootInfo.serviceName = firstClassName;
         let classInfo = createClassInfo(parseClasses[firstClassName]);
         rootInfo.class.push(classInfo);
     } else {
         // h文件中有多个类，基于带@ServiceClass注解的类生成service
-        if (serviceClassName == null) {
+        if (serviceClassName === null || serviceClassName === undefined) {
             NapiLog.logError("There must be one class that contains @ServiceClass annotations.");
             return;
         }
@@ -154,7 +154,8 @@ function doAnalyze(hFilePath, cmdParam) {
         "class": [],
         "includes": [],
         "using": [],
-        "serviceId": cmdParam.serviceId == null ? "9002" : cmdParam.serviceId,
+        "serviceId": (cmdParam.serviceId === null || cmdParam.serviceId === undefined) ?
+          "9002" : cmdParam.serviceId,
         "rawContent": parseResult.rawContent
     }
 

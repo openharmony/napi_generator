@@ -50,7 +50,7 @@ if (fileNames == null && pathDir == null) {
     NapiLog.logInfo('fileNames and pathDir both cannot be empty at the same time');
 } else if (pathDir != '') {
     readDirFiles();
-} else if (fileNames != '') {
+} else if (fileNames !== '') {
     readFiles();
 }
 

@@ -73,7 +73,7 @@ function isStringType(cType) {
 }
 
 function isBoolType(cType) {
-    if (cType == 'bool') {
+    if (cType === 'bool') {
         return true
     }
     return false
@@ -195,7 +195,7 @@ function analyzeRootFunction(rootInfo, parseResult) {
     let parseFunctions = parseResult.functions
     for(var i = 0; i < parseFunctions.length; ++i) {
         let funcInfo = createFuncInfo(parseFunctions[i], false)
-        if (parseFunctions[i].namespace != '') {
+        if (parseFunctions[i].namespace !== '') {
             // function in namespace
             putFuncIntoNamespace(funcInfo, rootInfo.namespaces)
         } else {
@@ -256,7 +256,7 @@ function analyzeClasses(rootInfo, parseResult) {
 
     for(var className in parseClasses) {
         let classInfo = createClassInfo(parseClasses[className])
-        if (classInfo.namespace != '') {
+        if (classInfo.namespace !== '') {
             // class in namespace
             putClassIntoNamespace(classInfo, rootInfo.namespaces)
         } else {

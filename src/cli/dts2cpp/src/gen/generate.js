@@ -254,9 +254,9 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
 
     jsonCfgList.pop();
     
-    let numberUsing = '';
-    var numbertype = 'uint32_t';
-    if(numberType != '' && numberType != undefined){
+    let numberUsing = ""
+    var numbertype = "uint32_t";
+    if(numberType !== "" && (numberType !== undefined && numberType !== null)){
         numbertype = numberType;
     }
     for (let i = 1; i < NumberIncrease.get(); i++) {
@@ -277,17 +277,18 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
         includeH = includeHCppRes[1];
         buildCpp = includeHCppRes[2];
     }
-    implCpp = implCpp.replaceAll('[include_configure_hCode]', includeH);
-    implCpp = implCpp.replaceAll('[implCpp_detail]', result.implCpp);
-    writeFile(re.pathJoin(destDir, '%s.cpp'.format(ns0.name)), null != license ? (license + '\n' + implCpp) : implCpp);
-    genFileList.push('%s.cpp'.format(ns0.name));
+    implCpp = implCpp.replaceAll("[include_configure_hCode]", includeH);
+    implCpp = implCpp.replaceAll("[implCpp_detail]", result.implCpp)
+    writeFile(re.pathJoin(destDir, "%s.cpp".format(ns0.name)), (null !== license && undefined !== license) ?
+      (license + "\n" + implCpp) : implCpp)
+    genFileList.push("%s.cpp".format(ns0.name));
 
-    let partName = moduleName.replace('.', '_');
-    generateGYP(destDir, ns0.name, license, bindingCpp); // 生成ubuntu下测试的编译脚本
-    generateGN(destDir, ns0.name, license, partName, buildCpp); // 生成BUILD.gn for ohos
-    generateBase(destDir, license); // tool_utility.h/cpp
-    genFileList.push('tool_utility.h');
-    genFileList.push('tool_utility.cpp');
+    let partName = moduleName.replace('.', '_')
+    generateGYP(destDir, ns0.name, license, bindingCpp) // 生成ubuntu下测试的编译脚本
+    generateGN(destDir, ns0.name, license, partName, buildCpp) // 生成BUILD.gn for ohos
+    generateBase(destDir, license) // tool_utility.h/cpp
+    genFileList.push("tool_utility.h");
+    genFileList.push("tool_utility.cpp");
     formatCode(destDir);
 }
 
@@ -299,9 +300,10 @@ function generateImplH(ns0, numberUsing, result, structOfTs, destDir, license) {
     for (let i = 0; i < structOfTs.imports.length; i++) {
       imports += structOfTs.imports[i];
     }
-    implH = replaceAll(implH, '[importTs]', imports);
-    writeFile(re.pathJoin(destDir, '%s.h'.format(ns0.name)), null != license ? (license + '\n' + implH) : implH);
-    genFileList.push('%s.h'.format(ns0.name));
+    implH = replaceAll(implH, "[importTs]", imports);
+    writeFile(re.pathJoin(destDir, "%s.h".format(ns0.name)), (null !== license && undefined !== license) ?
+      (license + "\n" + implH) : implH);
+    genFileList.push("%s.h".format(ns0.name));
 }
 
 function generateMiddleCpp(result, ns0, moduleName, destDir, license) {
@@ -310,9 +312,9 @@ function generateMiddleCpp(result, ns0, moduleName, destDir, license) {
     middleCpp = replaceAll(middleCpp, '[implName]', ns0.name);
     middleCpp = replaceAll(middleCpp, '[modulename]', moduleName);
     genFileList.splice(0, genFileList.length);
-    writeFile(re.pathJoin(destDir, '%s_middle.cpp'.format(ns0.name)),
-      null != license ? (license + '\n' + middleCpp) : middleCpp);
-    genFileList.push('%s_middle.cpp'.format(ns0.name));
+    writeFile(re.pathJoin(destDir, "%s_middle.cpp".format(ns0.name)),
+      (null !== license && undefined !== license) ? (license + "\n" + middleCpp) : middleCpp);
+    genFileList.push("%s_middle.cpp".format(ns0.name));
 }
 
 // 将业务代码的头文件导入，若重复则跳过
@@ -339,13 +341,13 @@ function includeHCppFunc(jsonCfg, includeH, bindingCpp, buildCpp) {;
 }
 
 function generateMiddleH(ns0, result, destDir, license) {
-    let implName = ns0.name + '_middle';
-    let middleH = replaceAll(moduleHTemplete, '[impl_name_upper]', implName.toUpperCase());
-    middleH = replaceAll(middleH, '[implName]', ns0.name);
-    middleH = replaceAll(middleH, '[implH_detail]', result.middleH);
-    writeFile(re.pathJoin(destDir, '%s_middle.h'.format(ns0.name)),
-        null != license ? (license + '\n' + middleH) : middleH);
-    genFileList.push('%s_middle.h'.format(ns0.name));
+    let implName = ns0.name + "_middle";
+    let middleH = replaceAll(moduleHTemplete, "[impl_name_upper]", implName.toUpperCase());
+    middleH = replaceAll(middleH, "[implName]", ns0.name);
+    middleH = replaceAll(middleH, "[implH_detail]", result.middleH);
+    writeFile(re.pathJoin(destDir, "%s_middle.h".format(ns0.name)),
+      (null !== license && undefined !== license) ? (license + "\n" + middleH) : middleH);
+    genFileList.push("%s_middle.h".format(ns0.name));
 }
 
 module.exports = {

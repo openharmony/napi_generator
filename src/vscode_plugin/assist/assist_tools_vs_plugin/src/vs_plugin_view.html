@@ -330,15 +330,15 @@
           highlight(element);
         }
         
-        if (obj == "isChooseApi") {
+        if (obj === "isChooseApi") {
             chooseApiTool();
-        } else if (obj == "isChooseGn") {
+        } else if (obj === "isChooseGn") {
             chooseGnTool();
-        } else if (obj == "isChooseService") {
+        } else if (obj === "isChooseService") {
             chooseServiceTool();
-        } else if (obj == "isChooseTs") {
+        } else if (obj === "isChooseTs") {
             chooseTsTool();
-        } else if (obj == "isChooseNapi") {
+        } else if (obj === "isChooseNapi") {
             chooseNapiTool();
         } else {
             console.error("ERROR!")
@@ -354,19 +354,19 @@
     }
 
     function checkTool(obj, name) {
-        if (name == "isCheckApi") {
+        if (name === "isCheckApi") {
             let image =  document.getElementById("isChooseApi")
             highlightTools(obj.checked, image);
-        } else if (name == "isCheckGn") {
+        } else if (name === "isCheckGn") {
             let image =  document.getElementById("isChooseGn")
             highlightTools(obj.checked, image);
-        } else if (name == "isCheckService") {
+        } else if (name === "isCheckService") {
             let image =  document.getElementById("isChooseService")
             highlightTools(obj.checked, image);
-        } else if (name == "isCheckTs") {
+        } else if (name === "isCheckTs") {
             let image =  document.getElementById("isChooseTs")
             highlightTools(obj.checked, image);
-        } else if (name == "isCheckNapi") {
+        } else if (name === "isCheckNapi") {
             let image =  document.getElementById("isChooseNapi")
             highlightTools(obj.checked, image);
         } else {
