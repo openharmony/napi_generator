@@ -22,14 +22,14 @@ const { VsPluginLog } = require("./gen/tools/VsPluginLog");
 const { detectPlatform, readFile, writeFile } = require('./gen/tools/VsPluginTool');
 const path = require('path');
 const os = require('os');
-var exeFilePath = null;
-var flag = "";
-var isTrue = false;
-var globalPanel = null;
+let exeFilePath = null;
+let flag = "";
+let isTrue = false;
+let globalPanel = null;
 
-var importToolChain = false;
-var extensionIds = [];
-var nextPluginId = null;
+let importToolChain = false;
+let extensionIds = [];
+let nextPluginId = null;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -44,7 +44,7 @@ function activate(context) {
 	let disposableMenu = register(context, 'generate_gn_menu');
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposableMenu);
-	var platform = detectPlatform();
+	let platform = detectPlatform();
 	if (platform == 'win') {
 		exeFilePath = __dirname + "/gn-gen-win.exe";
 	} else if (platform == 'mac') {
@@ -53,7 +53,7 @@ function activate(context) {
 		exeFilePath = __dirname + "/gn-gen-linux";
 	}
 	vscode.window.onDidChangeActiveColorTheme(colorTheme => {
-		var result = {
+		let result = {
 			msg: "colorThemeChanged"
 		}
 		globalPanel.webview.postMessage(result);
@@ -62,7 +62,7 @@ function activate(context) {
 
 function gnexecutor(outputCodeDir, originCodeDir, inputScriptDir, scriptType, transplantDir, 
 	subsystemName, componentName, compileOptions) {
-	var exec = require('child_process').exec;
+	let exec = require('child_process').exec;
 	exec(genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType, transplantDir, 
 		subsystemName, componentName, compileOptions), 
 		{
@@ -81,7 +81,7 @@ function gnexecutor(outputCodeDir, originCodeDir, inputScriptDir, scriptType, tr
 
 function genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
 	transplantDir, subsystemName, componentName, compileOptions) {
-	var command = exeFilePath + " -o " + outputCodeDir + " -p " + originCodeDir + " -f " + inputScriptDir 
+	let command = exeFilePath + " -o " + outputCodeDir + " -p " + originCodeDir + " -f " + inputScriptDir 
 	+ " -t " + scriptType + " -s " + subsystemName + " -m " + componentName + " -d " + transplantDir;
 	if (compileOptions != "") {
 		command += " -a " + "\"" + compileOptions + "\"";
@@ -128,21 +128,7 @@ function register(context, command) {
 				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
 			}
 		);
-		 if (typeof(boolValue) == 'boolean' && Array.isArray(items)) {
-			if (boolValue == true) {
-				//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
-				let myExtensionId = 'kaihong.gn-gen';
-				for (let i = 0; i < items.length; i++) {
-					if (myExtensionId == items[i] && (i == items.length - 1)) {
-						importToolChain = false;
-					} else if (myExtensionId == items[i] && (i != items.length - 1)) {
-						importToolChain = boolValue;
-						nextPluginId = items[i + 1];
-					}
-					extensionIds.push(items[i]);
-				}
-			}
-		}
+		checkBoolval(boolValue, items);
 		globalPanel.webview.html = getWebviewContent(context, importToolChain);
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
@@ -159,7 +145,7 @@ function register(context, command) {
     if (uri.fsPath !== undefined) {
       let fn = re.getFileInPath(uri.fsPath);
       let tt = re.match("([a-zA-Z_0-9]+.[a-zA-Z_0-9])", fn);
-      var result = {
+      let result = {
         msg: "selectinputScriptDir",
         path: tt ? uri.fsPath : ""
       }
@@ -167,6 +153,28 @@ function register(context, command) {
     }
 	});
 	return disposable;
+}
+
+function checkBoolval(boolValue, items) {
+  if (typeof (boolValue) == 'boolean' && Array.isArray(items)) {
+    if (boolValue == true) {
+      //遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
+      getNextPlugin(items, boolValue);
+    }
+  }
+}
+
+function getNextPlugin(items, boolValue) {
+  let myExtensionId = 'kaihong.gn-gen';
+  for (let i = 0; i < items.length; i++) {
+    if (myExtensionId == items[i] && (i == items.length - 1)) {
+      importToolChain = false;
+    } else if (myExtensionId == items[i] && (i != items.length - 1)) {
+      importToolChain = boolValue;
+      nextPluginId = items[i + 1];
+    }
+    extensionIds.push(items[i]);
+  }
 }
 
 function checkReceiveMsg(message) {
@@ -245,14 +253,14 @@ function startNextPlugin() {
 	return vscode.window.showOpenDialog(options).then(fileUri => {
 		if (fileUri && fileUri[0]) {
 			console.log('Selected file: ' + fileUri[0].fsPath);
-			var filePath = "";
+			let filePath = "";
 			filePath = fileUri[0].fsPath.concat(',');
 			filePath = re.replaceAll(filePath, '\\\\', '/');
 			if (filePath.substring(1,2) == ":") {
 				let filePathTemp = filePath.substring(0,1).toUpperCase()
 				filePath = filePathTemp + filePath.substring(1,filePath.length)
 			}
-			var result = {
+			let result = {
 				 msg: message.msg,
 				 path: filePath.length > 0 ? filePath.substring(0, filePath.length - 1) : filePath
 			}

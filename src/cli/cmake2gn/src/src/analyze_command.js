@@ -315,20 +315,7 @@ class AnalyzeCommand {
             return true;
         }
         if (e.endsWith(".rsp")) {
-            console.log(Tool.CURRENT_DIR);
-            let rspth = path.join(Tool.CURRENT_DIR, e.substring(1));
-            let data = fs.readFileSync(rspth, { encoding: "utf8" });
-            if (data.endsWith("\r\n")) {
-                data = data.substring(0, data.length - 2);
-            }
-            let datas = data.split(" ");
-            for (let d of datas) {
-                for (let s of ss) {
-                    if (d.endsWith(s)) {
-                        local.ret.inputs.push(d);
-                    }
-                }
-            }
+            clangCheck7RspEnds(e, local);
             return true;
         }
         return false;
@@ -635,6 +622,24 @@ class AnalyzeCommand {
         return false;
     }
 }
+
+function clangCheck7RspEnds(e, local) {
+  console.log(Tool.CURRENT_DIR);
+  let rspth = path.join(Tool.CURRENT_DIR, e.substring(1));
+  let data = fs.readFileSync(rspth, { encoding: "utf8" });
+  if (data.endsWith("\r\n")) {
+    data = data.substring(0, data.length - 2);
+  }
+  let datas = data.split(" ");
+  for (let d of datas) {
+    for (let s of ss) {
+      if (d.endsWith(s)) {
+        local.ret.inputs.push(d);
+      }
+    }
+  }
+}
+
 module.exports = {
     AnalyzeCommand
 }

@@ -70,15 +70,7 @@ class AnalyzeMake {
                 acmd += l;
             }
             else {
-                acmd += l;
-                if (acmd.length > 0) {
-                    cmdlist.push(acmd);
-                    let ret = AnalyzeCommand.analyze(acmd);
-                    if (ret.length > 0) {
-                        analyzeResult.push(...ret);
-                    }
-                }
-                acmd = "";
+                acmd = getAcmd(acmd, l);
             }
         }
     }
@@ -120,6 +112,19 @@ class AnalyzeMake {
     }
 }
 
+function getAcmd(acmd, l) {
+  acmd += l;
+  if (acmd.length > 0) {
+    cmdlist.push(acmd);
+    let ret = AnalyzeCommand.analyze(acmd);
+    if (ret.length > 0) {
+      analyzeResult.push(...ret);
+    }
+  }
+  acmd = "";
+  return acmd;
+}
+
 module.exports = {
-    AnalyzeMake
+  AnalyzeMake
 }

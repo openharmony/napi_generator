@@ -39,12 +39,7 @@ function generateGYP(destDir, implName, license, bindingCpp) {
         let s2 = license.substring(2, license.length - 2).split("\n");
         license = "";
         for (let i = 1; i < s2.length; i++) {
-            if (s2[i].length > 0) {
-                while (s2[i][0] == " ") s2[i] = s2[i].substring(1);
-                if (s2[i].length > 3 && s2[i][0] == "*") {
-                    license += "#" + s2[i].substring(1) + "\n";
-                }
-            }
+            license = getLicense(s2, i, license);
         }
     }
     writeFile(re.pathJoin(destDir, "binding.gyp"), null != license ? (license + "\n" + ss) : ss)
@@ -53,6 +48,17 @@ function generateGYP(destDir, implName, license, bindingCpp) {
 
 }
 
+function getLicense(s2, i, license) {
+  if (s2[i].length > 0) {
+    while (s2[i][0] == " ")
+      s2[i] = s2[i].substring(1);
+    if (s2[i].length > 3 && s2[i][0] == "*") {
+      license += "#" + s2[i].substring(1) + "\n";
+    }
+  }
+  return license;
+}
+
 module.exports = {
-    generateGYP
+  generateGYP
 }

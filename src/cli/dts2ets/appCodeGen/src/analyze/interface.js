@@ -72,31 +72,12 @@ function analyzeInterface(data, rsltInterface = null, results, interfaceName = '
         if (t == "") break // 如果t为空直接返回
         let tt = re.match(" *([a-zA-Z0-9_]+)(\\?*)*: *([a-zA-Z_0-9<>,:{}[\\]| ]+)", t)
         if (tt && t.indexOf("=>") < 0) { // 接口成员变量, 但不包括带'=>'的成员，带'=>'的接口成员需要按函数处理
-            let valueName = re.getReg(t, tt.regs[1])
-            let valueType = re.getReg(t, tt.regs[3])
-            let index = valueType.indexOf("number")
-            let optionalFlag = re.getReg(t, tt.regs[2]) == '?' ? true : false;
-            while (index !== -1) {
-                valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease())
-                index = valueType.indexOf("number")
-            } 
-            valueType = analyzeNoNameInterface(valueType, valueName, rsltInterface)
-            result.value.push({
-                name: valueName,
-                type: valueType,
-                optional: optionalFlag
-            })
+            analyzeInterfaceVariable(t, tt, rsltInterface, result);
         }
         tt = re.match("(static )* *(\\$*[A-Za-z0-9_]+) *[:]? *\\(([\n 'a-zA-Z\'\'\"\":;=,_0-9?<>{}()=>|[\\]]*)\\)"
             + " *(:|=>)? *([A-Za-z0-9_<>{}:;, .[\\]]+)?", t)
         if (tt) { // 接口函数成员
-            let ret = re.getReg(t, tt.regs[5]) == ''? 'void': re.getReg(t, tt.regs[5])
-            let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) != '', re.getReg(t, tt.regs[2]),
-                re.getReg(t, tt.regs[3]), ret, results, interfaceName)
-            if (funcDetail != null) {
-                // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
-                addUniqFunc2List(funcDetail, result.function)
-            }
+            analyzeInterfaceFunction(t, tt, data, results, interfaceName, result);
         }
     }
     return result
@@ -105,4 +86,31 @@ function analyzeInterface(data, rsltInterface = null, results, interfaceName = '
 module.exports = {
     analyzeInterface,
     parseNotes
+}
+
+function analyzeInterfaceFunction(t, tt, data, results, interfaceName, result) {
+  let ret = re.getReg(t, tt.regs[5]) == '' ? 'void' : re.getReg(t, tt.regs[5]);
+  let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) != '', re.getReg(t, tt.regs[2]),
+    re.getReg(t, tt.regs[3]), ret, results, interfaceName);
+  if (funcDetail != null) {
+    // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
+    addUniqFunc2List(funcDetail, result.function);
+  }
+}
+
+function analyzeInterfaceVariable(t, tt, rsltInterface, result) {
+  let valueName = re.getReg(t, tt.regs[1]);
+  let valueType = re.getReg(t, tt.regs[3]);
+  let index = valueType.indexOf("number");
+  let optionalFlag = re.getReg(t, tt.regs[2]) == '?' ? true : false;
+  while (index !== -1) {
+    valueType = valueType.replace("number", "NUMBER_TYPE_" + NumberIncrease.getAndIncrease());
+    index = valueType.indexOf("number");
+  }
+  valueType = analyzeNoNameInterface(valueType, valueName, rsltInterface);
+  result.value.push({
+    name: valueName,
+    type: valueType,
+    optional: optionalFlag
+  });
 }

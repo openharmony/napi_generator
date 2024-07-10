@@ -23,12 +23,12 @@ const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
 const path = require('path');
 const INVALID_INDEX = -1;
 const SELECT_H_FILE = 2; // 选择.h文件
-var exeFilePath = null;
-var globalPanel = null;
-var showInfoPanel = null;
-var importToolChain = false;
-var extensionIds = [];
-var nextPluginId = null;
+let exeFilePath = null;
+let globalPanel = null;
+let showInfoPanel = null;
+let importToolChain = false;
+let extensionIds = [];
+let nextPluginId = null;
 let configList = new Array();
 let generateDir = '';
 let cfgPath = '';
@@ -47,7 +47,7 @@ function activate(context) {
   let disposableMenu = register(context, 'generate_napi_menu');
   context.subscriptions.push(disposable);
   context.subscriptions.push(disposableMenu);
-  var platform = detectPlatform();
+  let platform = detectPlatform();
   if (platform == 'win') {
     exeFilePath = __dirname + '/napi_generator-win.exe';
   } else if (platform == 'mac') {
@@ -58,7 +58,7 @@ function activate(context) {
 }
 
 function executor(name, genDir, mode, numberType, importIsCheck) {
-  var exec = require('child_process').exec;
+  let exec = require('child_process').exec;
   exec(genCommand(name, genDir, mode, numberType, importIsCheck), function (error, stdout, stderr) {
     VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ', stderr =' + stderr);
     if (error || stdout.indexOf('success') < 0) {
@@ -70,7 +70,7 @@ function executor(name, genDir, mode, numberType, importIsCheck) {
 }
 
 function genCommand(name, genDir, mode, numberType, importIsCheck) {
-  var genFileMode = mode == 0 ? ' -f ' : ' -d ';
+  let genFileMode = mode == 0 ? ' -f ' : ' -d ';
 
   let genServiceCode = '';
   console.log('cfgPath: ' + cfgPath);
@@ -107,21 +107,7 @@ function register(context, command) {
 			}
 		);
 
-		if (typeof(boolValue) == 'boolean' && Array.isArray(items)) {
-			if (boolValue == true) {
-				//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
-				let myExtensionId = 'kaihong.napi-gen';
-				for (let i = 0; i < items.length; i++) {
-					if (myExtensionId == items[i] && (i == items.length - 1)) {
-						importToolChain = false;
-					} else if (myExtensionId == items[i] && (i != items.length - 1)) {
-						importToolChain = boolValue;
-						nextPluginId = items[i + 1];
-					}
-					extensionIds.push(items[i]);
-				}
-			}
-		}
+		checkBoolval(boolValue, items);
 		globalPanel.webview.html = getWebviewContent(context, importToolChain);
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
@@ -135,15 +121,7 @@ function register(context, command) {
         checkReceiveMsg(message);
       } else if (msg === 'config') {
         // 若选择文件夹或者选择了多个文件则不能配置业务代码
-        if (message.mode !== 0 || message.interFile.indexOf(',') > 0) {
-          vscode.window.showInformationMessage('选择文件夹或者多个文件时不能配置业务代码,请选择单个文件');
-          console.error('选择文件夹或者多个文件时不能配置业务代码,请选择单个文件');
-        } else if (trimAll(message.genDir).length <= 0) {
-          vscode.window.showInformationMessage('请输入生成框架路径!');
-          console.error('请输入生成框架路径!');
-        } else {
-          configServiceCode(message, context);
-        }
+        getMsgCfg(message, context);
       } else {
         selectPath(globalPanel, message);
       }
@@ -152,7 +130,7 @@ function register(context, command) {
     if (uri.fsPath !== undefined) {
       let fn = re.getFileInPath(uri.fsPath);
       let tt = re.match("((@ohos\.)*[a-zA-Z_0-9]+.d.ts)", fn);
-      var result = {
+      let result = {
         msg: "selectInterPath",
         path: tt ? uri.fsPath : ""
       }
@@ -160,6 +138,40 @@ function register(context, command) {
     }
   });
   return disposable;
+}
+
+function getMsgCfg(message, context) {
+  if (message.mode !== 0 || message.interFile.indexOf(',') > 0) {
+    vscode.window.showInformationMessage('选择文件夹或者多个文件时不能配置业务代码,请选择单个文件');
+    console.error('选择文件夹或者多个文件时不能配置业务代码,请选择单个文件');
+  } else if (trimAll(message.genDir).length <= 0) {
+    vscode.window.showInformationMessage('请输入生成框架路径!');
+    console.error('请输入生成框架路径!');
+  } else {
+    configServiceCode(message, context);
+  }
+}
+
+function checkBoolval(boolValue, items) {
+  if (typeof (boolValue) == 'boolean' && Array.isArray(items)) {
+    if (boolValue == true) {
+      //遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
+      getNextPlugin(items, boolValue);
+    }
+  }
+}
+
+function getNextPlugin(items, boolValue) {
+  let myExtensionId = 'kaihong.napi-gen';
+  for (let i = 0; i < items.length; i++) {
+    if (myExtensionId == items[i] && (i == items.length - 1)) {
+      importToolChain = false;
+    } else if (myExtensionId == items[i] && (i != items.length - 1)) {
+      importToolChain = boolValue;
+      nextPluginId = items[i + 1];
+    }
+    extensionIds.push(items[i]);
+  }
 }
 
 // 去除字符串空格
@@ -386,7 +398,7 @@ function selectConfigPath(panel, message, generateDir) {
       // 获取相对路径  相对于生成框架路径
       let filePath = path.relative(generateDir, fileObsPath);
       console.log('relative filePath: ' + filePath);
-      var result = {
+      let result = {
         msg: message.msg,
         path: filePath,
       };
@@ -421,7 +433,7 @@ function selectPath(panel, message) {
       for (let index = 0; index < fileUri.length; index++) {
         filePath += fileUri[index].fsPath.concat(',');
       }
-      var result = {
+      let result = {
         msg: message.msg,
         path: filePath.length > 0? filePath.substring(0, filePath.length - 1): filePath,
       };
