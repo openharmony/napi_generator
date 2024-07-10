@@ -112,7 +112,7 @@ class Tool {
         Tool.BACKUP_DIRECTORY[bkp] = Tool.DIRECTORY_STACK.concat([process.cwd()]);
     }
     static recoverd(bkp) {
-        Tool.DIRECTORY_STACK = [].concat(Tool.BACKUP_DIRECTORY[bkp])
+        Tool.DIRECTORY_STACK = [].concat(Tool.BACKUP_DIRECTORY[bkp]);
         Tool.popd();
     }
 
@@ -123,7 +123,7 @@ class Tool {
         CMAKE: 3,
         SCONS: 4,
         VS: 5,
-    }
+    };
     static GENERATE_TARGET_TYPE = Tool.TARGET_TYPE.GN;
 
     static setTarget(type) {//设置生成目标
@@ -207,14 +207,14 @@ class Tool {
 
 String.prototype.format = function (...args) {
     var result = this;
-    let reg = new RegExp("%[sd]{1}")
+    let reg = new RegExp("%[sd]{1}");
     for (let i = 0; i < args.length; i++) {
-        let p = result.search(reg)
+        let p = result.search(reg);
         if (p < 0) break;
-        result = result.substring(0, p) + args[i] + result.substring(p + 2, result.length)
+        result = result.substring(0, p) + args[i] + result.substring(p + 2, result.length);
     }
     return result;
-}
+};
 
 try {
     Tool.VSCODE_INST = require('vscode');
@@ -225,6 +225,6 @@ catch (err) {
 
 module.exports = {
     Tool
-}
+};
 
 const Logger = require('./logger');
