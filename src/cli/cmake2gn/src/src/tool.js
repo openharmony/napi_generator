@@ -13,18 +13,18 @@
 * limitations under the License. 
 */
 const path = require('path');
-const fs = require("fs");
+const fs = require('fs');
 
 class Tool {
     constructor() {
 
     }
     static CURRENT_TOOL_PATH = null;//生成工具或插件所在路径，用于找到res
-    static OHOS_PROJECT_PATH = "/home/xx/ohos";
-    static OHOS_PORTING_TO = "third_party/opencv";
-    static OHOS_PRODUCT_OUTPUT_PATH = "out/rk3568-khdvk";//输出目录
-    static OHOS_SUBSYSTEM_NAME = "common";
-    static OHOS_PART_NAME = "common";
+    static OHOS_PROJECT_PATH = '/home/xx/ohos';
+    static OHOS_PORTING_TO = 'third_party/opencv';
+    static OHOS_PRODUCT_OUTPUT_PATH = 'out/rk3568-khdvk';//输出目录
+    static OHOS_SUBSYSTEM_NAME = 'common';
+    static OHOS_PART_NAME = 'common';
     static globalJsonCfg = null; // cfg.json 配置文件
     static allowedCxx = null; // cxx编译中允许处理的文件后缀列表
     static allowedC = null; // c编译中允许处理的文件后缀列表
@@ -36,58 +36,58 @@ class Tool {
     static getCMakeToolchain() {
         switch (process.platform) {
             case 'win32':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/win/ohos.toolchain.cmake");
+                return path.join(Tool.CURRENT_TOOL_PATH, 'res/win/ohos.toolchain.cmake');
             case 'linux':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/linux/ohos.toolchain.cmake");
+                return path.join(Tool.CURRENT_TOOL_PATH, 'res/linux/ohos.toolchain.cmake');
             case 'darwin':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/mac/ohos.toolchain.cmake");
+                return path.join(Tool.CURRENT_TOOL_PATH, 'res/mac/ohos.toolchain.cmake');
             default:
-                Logger.err("不支持 %s 平台".format(process.platform));
-                return "";
+                Logger.err('不支持 %s 平台'.format(process.platform));
+                return '';
         }
     }
     static getMakeRaw() {
         switch (process.platform) {
             case 'win32':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/win/bin/make_raw.exe");
+                return path.join(Tool.CURRENT_TOOL_PATH, 'res/win/bin/make_raw.exe');
             case 'linux':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/linux/bin/make_raw");
+                return path.join(Tool.CURRENT_TOOL_PATH, 'res/linux/bin/make_raw');
             case 'darwin':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/mac/bin/make_raw");
+                return path.join(Tool.CURRENT_TOOL_PATH, 'res/mac/bin/make_raw');
             default:
-                Logger.err("不支持 %s 平台".format(process.platform));
-                return "";
+                Logger.err('不支持 %s 平台'.format(process.platform));
+                return '';
         }
     }
     static getMake() {
         switch (process.platform) {
             case 'win32':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/win/bin/make.exe");
+                return path.join(Tool.CURRENT_TOOL_PATH, 'res/win/bin/make.exe');
             case 'linux':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/linux/bin/make");
+                return path.join(Tool.CURRENT_TOOL_PATH, 'res/linux/bin/make');
             case 'darwin':
-                return path.join(Tool.CURRENT_TOOL_PATH, "res/mac/bin/make");
+                return path.join(Tool.CURRENT_TOOL_PATH, 'res/mac/bin/make');
             default:
-                Logger.err("不支持 %s 平台".format(process.platform));
-                return "";
+                Logger.err('不支持 %s 平台'.format(process.platform));
+                return '';
         }
     }
     static getCMake() {
         switch (process.platform) {
             case 'win32':
-                return path.join(Tool.OHOS_PROJECT_PATH, "prebuilts/cmake/windows-x86/bin/cmake.exe");
+                return path.join(Tool.OHOS_PROJECT_PATH, 'prebuilts/cmake/windows-x86/bin/cmake.exe');
             case 'linux':
             case 'darwin':
-                return path.join(Tool.OHOS_PROJECT_PATH, "prebuilts/cmake/linux-x86/bin/cmake");
+                return path.join(Tool.OHOS_PROJECT_PATH, 'prebuilts/cmake/linux-x86/bin/cmake');
             default:
-                Logger.err("不支持 %s 平台".format(process.platform));
-                return "";
+                Logger.err('不支持 %s 平台'.format(process.platform));
+                return '';
         }
 
     }
     static swapPath(p, swapd) {
-        while (p.indexOf("\\") >= 0) {
-            p = p.replace("\\", "/");
+        while (p.indexOf('\\') >= 0) {
+            p = p.replace('\\', '/');
         }
         return p;
     }
@@ -138,7 +138,7 @@ class Tool {
                 GenerateGn.generate(projectPath, analyzeResult);
                 break;
             default:
-                Logger.err("generate target not support");
+                Logger.err('generate target not support');
                 break;
         }
     }
@@ -156,11 +156,11 @@ class Tool {
      */
     static getJsonCfg() {
         if (this.globalJsonCfg == null) {
-            let jsonFilePath = path.join(Tool.CURRENT_TOOL_PATH, "res/cfg.json");
-            let jsonFile = fs.readFileSync(jsonFilePath, { encoding: "utf8" });
+            let jsonFilePath = path.join(Tool.CURRENT_TOOL_PATH, 'res/cfg.json');
+            let jsonFile = fs.readFileSync(jsonFilePath, { encoding: 'utf8' });
             this.globalJsonCfg = JSON.parse(jsonFile);
-            this.globalJsonCfg.fileSuffix = this.globalJsonCfg.fileSuffix ? "," + this.globalJsonCfg.fileSuffix : "";
-            this.globalJsonCfg.compileflag = this.globalJsonCfg.compileflag ? "," + this.globalJsonCfg.compileflag : "";
+            this.globalJsonCfg.fileSuffix = this.globalJsonCfg.fileSuffix ? ',' + this.globalJsonCfg.fileSuffix : '';
+            this.globalJsonCfg.compileflag = this.globalJsonCfg.compileflag ? ',' + this.globalJsonCfg.compileflag : '';
         }
 
         return this.globalJsonCfg;
@@ -174,13 +174,13 @@ class Tool {
         if (this.allowedCxx == null) {
             this.allowedCxx = {};
             let jsonCfg = this.getJsonCfg();
-            let allowedCxxSuffix = ".cpp, .cxx, .cc, .o, .z, .so, .a" + jsonCfg.fileSuffix;
+            let allowedCxxSuffix = '.cpp, .cxx, .cc, .o, .z, .so, .a' + jsonCfg.fileSuffix;
             this.allowedCxx.fileSuffix = 
-                allowedCxxSuffix.split(",").map(item => item.trim()).filter(item => item != "");
-            let allowedFlag = "--target=, -march=, -mfloat-abi=, -mfpu=, -fsigned-char, -ffast-math, -rdynamic, "
-                + "-UNDEBUG, -fno-threadsafe-statics, -fno-common, -fno-strict-aliasing, -fcolor-diagnostics, "
-                + "-fstrict-aliasing, -fdiagnostics-show-option" + jsonCfg.compileflag;
-            this.allowedCxx.compileflag = allowedFlag.split(",").map(item => item.trim()).filter(item => item != "");
+                allowedCxxSuffix.split(',').map(item => item.trim()).filter(item => item != '');
+            let allowedFlag = '--target=, -march=, -mfloat-abi=, -mfpu=, -fsigned-char, -ffast-math, -rdynamic, '
+                + '-UNDEBUG, -fno-threadsafe-statics, -fno-common, -fno-strict-aliasing, -fcolor-diagnostics, '
+                + '-fstrict-aliasing, -fdiagnostics-show-option' + jsonCfg.compileflag;
+            this.allowedCxx.compileflag = allowedFlag.split(',').map(item => item.trim()).filter(item => item != '');
         }
         return this.allowedCxx;
     }
@@ -194,12 +194,12 @@ class Tool {
             this.allowedC = {};
             let jsonCfg = this.getJsonCfg();
             let allowedCSuffix = '.c, .o, .o", .a, .S, .so' + jsonCfg.fileSuffix;
-            this.allowedC.fileSuffix = allowedCSuffix.split(",").map(item => item.trim()).filter(item => item != "");
-            let allowedFlag = "--target=, -march=, -mfloat-abi=, -mfpu=, -fno-common, -fcolor-diagnostics, -ggdb, "
-                + "-fno-strict-aliasing, -ldl, -flto, -fno-builtin, -fno-stack-protector, -fvisibility=default, "
-                + "-fsigned-char, -fstack-protector-strong, -fdiagnostics-show-option"
+            this.allowedC.fileSuffix = allowedCSuffix.split(',').map(item => item.trim()).filter(item => item != '');
+            let allowedFlag = '--target=, -march=, -mfloat-abi=, -mfpu=, -fno-common, -fcolor-diagnostics, -ggdb, '
+                + '-fno-strict-aliasing, -ldl, -flto, -fno-builtin, -fno-stack-protector, -fvisibility=default, '
+                + '-fsigned-char, -fstack-protector-strong, -fdiagnostics-show-option'
                 + jsonCfg.compileflag;
-            this.allowedC.compileflag = allowedFlag.split(",").map(item => item.trim()).filter(item => item != "");
+            this.allowedC.compileflag = allowedFlag.split(',').map(item => item.trim()).filter(item => item != '');
         }
         return this.allowedC;
     }
@@ -207,7 +207,7 @@ class Tool {
 
 String.prototype.format = function (...args) {
     var result = this;
-    let reg = new RegExp("%[sd]{1}");
+    let reg = new RegExp('%[sd]{1}');
     for (let i = 0; i < args.length; i++) {
         let p = result.search(reg);
         if (p < 0) break;
