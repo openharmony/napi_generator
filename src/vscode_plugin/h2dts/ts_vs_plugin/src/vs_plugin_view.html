@@ -104,37 +104,37 @@
     let importCheck = false;
 
     function sendH2TsParamMsg() {
-		var fileNames = document.getElementById("hFilePath").value;
-		var genDir = document.getElementById("genHResultDir").value;
-        var buttonName = document.getElementById("okButton").textContent;
+		var fileNames = document.getElementById('hFilePath').value;
+		var genDir = document.getElementById('genHResultDir').value;
+        var buttonName = document.getElementById('okButton').textContent;
 		var result = {
-			msg: "h2ts",
+			msg: 'h2ts',
 			fileNames: fileNames,
 			genDir: genDir,
             buttonName: buttonName,
-		}
+		};
 		vscode.postMessage(result);
 	}
 
     function selectHFilePath() {
         var result = {
-            msg: "selectHFilePath",
+            msg: 'selectHFilePath',
             mode: mode
-        }
+        };
         vscode.postMessage(result);
     }
 
     function selectPath(message) {
         var result = {
             msg: message
-        }
+        };
         vscode.postMessage(result);
     }
 
     function cancel() {
         var result = {
-            msg: "cancel"
-        }
+            msg: 'cancel'
+        };
         vscode.postMessage(result);
     }
 
@@ -142,18 +142,18 @@
         
         const message = event.data.msg;
         const path = event.data.path;
-        if(message === "selectHFilePath") {
-            document.getElementById("hFilePath").value = path;
+        if (message === 'selectHFilePath') {
+            document.getElementById('hFilePath').value = path;
             fillInputDir(path, message);
-        } else if(message === "selectHResultDir") {
-            document.getElementById("genHResultDir").value = path;
+        } else if (message === 'selectHResultDir') {
+            document.getElementById('genHResultDir').value = path;
         } else {
-            console.log("param is error");
+            console.log('param is error');
         }
-    })
+    });
 
     function inputChange() {
-        var fileNames = document.getElementById("hFilePath").value;
+        var fileNames = document.getElementById('hFilePath').value;
         fillInputDir(fileNames);
     }
 
@@ -161,17 +161,17 @@
         var dir;
         var fileName;
         if (mode === 0) {
-            if (fileNames.indexOf(",") !== -1) {
-                fileName = fileNames.substring(0, fileNames.indexOf(","));
+            if (fileNames.indexOf(',') !== -1) {
+                fileName = fileNames.substring(0, fileNames.indexOf(','));
             } else {
                 fileName = fileNames;
             }
-            if (fileName.lastIndexOf("/") !== -1) {
-                dir = fileName.substring(0, fileName.lastIndexOf("/"));  
+            if (fileName.lastIndexOf('/') !== -1) {
+                dir = fileName.substring(0, fileName.lastIndexOf('/'));  
             } else {
-                dir = fileName.substring(0, fileName.lastIndexOf("\\")); 
+                dir = fileName.substring(0, fileName.lastIndexOf('\\')); 
             }
-            document.getElementById("genHResultDir").value = dir;
+            document.getElementById('genHResultDir').value = dir;
         } 
         else {
             dir = fileNames;

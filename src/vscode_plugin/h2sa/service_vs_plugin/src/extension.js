@@ -64,7 +64,7 @@ function executorService(name, genDir, serviceId) {
 		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ', stderr =' + stderr);
 		if (error || stdout.indexOf('success') < 0) {
 			vscode.window.showErrorMessage('genError:' + ((error !== null && error !== undefined) ?
-        error : "") + stdout);
+        error : '') + stdout);
 			return VsPluginLog.logError('VsPlugin:' + error + stdout);
 		}
 		vscode.window.showInformationMessage('Generated successfully');
