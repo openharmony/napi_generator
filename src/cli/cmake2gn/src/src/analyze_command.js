@@ -326,7 +326,7 @@ class AnalyzeCommand {
             ret: AnalyzeCommand.resultTemplete(),
             eles: AnalyzeCommand.splitString(cmd),
             p: 0,
-        }
+        };
 
         while (local.p < local.eles.length) {
             let e = local.eles[local.p++];
@@ -555,7 +555,7 @@ class AnalyzeCommand {
             ret: AnalyzeCommand.resultTemplete(),
             eles: AnalyzeCommand.splitString(cmd),
             p: 0,
-        }
+        };
         while (local.p < local.eles.length) {
             let e = local.eles[local.p++];
             if (e.endsWith('clang++') || e.endsWith('clang++.exe')) {
