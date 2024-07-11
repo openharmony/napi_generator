@@ -47,8 +47,9 @@ class AnalyzeMake {
                     AnalyzeCommand.storeCommands();
 
                     Tool.generateTarget(makeProjectPath, analyzeResult);//生成结果目标
+                } else {
+                    Logger.err('make fail');
                 }
-                else Logger.err('make fail');
             });
         });
         udpServer_.on('error', (e) => {
@@ -106,8 +107,9 @@ class AnalyzeMake {
             if (code === 0) {
                 Logger.info('-----------------------------make ok');
                 Tool.generateTarget(makeProjectPath.dir, analyzeResult);//生成结果目标
+            } else {
+                Logger.err('make fail');
             }
-            else Logger.err('make fail');
         });
     }
 }
