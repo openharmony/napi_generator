@@ -14,7 +14,7 @@
 */
 const re = require('../tools/re');
 const { checkOutBody, print } = require('../tools/tool');
-const { FuncType, NumberIncrease,isFuncType, isArrowFunc,isRegisterFunc } = require('../tools/common');
+const { FuncType, NumberIncrease, isFuncType, isArrowFunc, isRegisterFunc } = require('../tools/common');
 const { NapiLog } = require('../tools/NapiLog');
 
 function isSyncFuncType(type, funcType) {
@@ -67,7 +67,7 @@ function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
 
 /**函数参数解析 */
 function analyzeParams(funcName, values) {
-    let result =  [];
+    let result = [];
     let rsltCallFunction = [];
     let funcType = FuncType.DIRECT;
     let optionalParamCount = 0; // 可选参数的个数
@@ -98,8 +98,8 @@ function analyzeParams(funcName, values) {
                 optionalParamCount++;
             } else if (optionalParamCount > 0) {
                 // 可选参数之后不能再有必选参数，须是可选参数。
-                NapiLog.logError('Invalid parameter [%s] of function [%s],'.format(v, funcName) 
-                        + ' the required parameter cannot follow an optional parameter.');
+                NapiLog.logError('Invalid parameter [%s] of function [%s],'.format(v, funcName) + 
+                    ' the required parameter cannot follow an optional parameter.');
                 checkParamOk = false;
             } 
             if (checkParamOk) {
