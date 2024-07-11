@@ -117,10 +117,10 @@ function register(context, command) {
     // 路径有效性判断
     if (uri.fsPath !== undefined) {
       let fn = re.getFileInPath(uri.fsPath);
-      let tt = re.match("((@ohos\.)*[a-zA-Z_0-9]+.d.ts)", fn);
+      let tt = re.match('((@ohos\.)*[a-zA-Z_0-9]+.d.ts)', fn);
       let result = {
-        msg: "selectInterPath",
-        path: tt ? uri.fsPath : ""
+        msg: 'selectInterPath',
+        path: tt ? uri.fsPath : ''
       }
       globalPanel.webview.postMessage(result);
     }
@@ -129,23 +129,22 @@ function register(context, command) {
 }
 
 function handleMsg(msg, message, context) {
-  msg = message.msg;
-  if (msg === 'cancel') {
-    globalPanel.dispose();
-  } else if (msg === 'param') {
-    if (configList.length !== 0) {
-      writeCfgJson(); // 写cfg.json文件
-    }
-    checkReceiveMsg(message);
-  } else if (msg === 'config') {
-    // 若选择文件夹或者选择了多个文件则不能配置业务代码
+      msg = message.msg;
+      if (msg === 'cancel') {
+        globalPanel.dispose();
+      } else if (msg === 'param') {
+        if (configList.length !== 0) {
+          writeCfgJson(); // 写cfg.json文件
+        }
+        checkReceiveMsg(message);
+      } else if (msg === 'config') {
+        // 若选择文件夹或者选择了多个文件则不能配置业务代码
     getMsgCfg(message, context);
   } else {
     selectPath(globalPanel, message);
   }
   return msg;
 }
-
 function getMsgCfg(message, context) {
   if (message.mode !== 0 || message.interFile.indexOf(',') > 0) {
     vscode.window.showInformationMessage('选择文件夹或者多个文件时不能配置业务代码,请选择单个文件');
@@ -156,8 +155,8 @@ function getMsgCfg(message, context) {
   } else {
     configServiceCode(message, context);
   }
-}
-
+ } 
+      
 function checkBoolval(boolValue, items) {
   if (typeof (boolValue) === 'boolean' && Array.isArray(items)) {
     if (boolValue === true) {
@@ -394,7 +393,7 @@ function selectConfigPath(panel, message, generateDir) {
     canSelectFolders: false, //是否选择文件夹
     defaultUri: vscode.Uri.file(''), //默认打开本地路径
     // 文件过滤选项，在文件夹选择模式下不可设置此配置，否则ubuntu系统下无法选择文件夹
-    filters: mode === SELECT_H_FILE? { 'Text files': ['h', 'hpp', 'hxx'] }: { 'Text files': ['cpp', 'cc', 'C', 'cxx', 'c++'] },
+    filters: mode === SELECT_H_FILE ? { 'Text files': ['h', 'hpp', 'hxx'] } : { 'Text files': ['cpp', 'cc', 'C', 'cxx', 'c++'] },
   };
 
 	return vscode.window.showOpenDialog(options).then(fileUri => {
@@ -441,7 +440,7 @@ function selectPath(panel, message) {
       }
       let result = {
         msg: message.msg,
-        path: filePath.length > 0? filePath.substring(0, filePath.length - 1): filePath,
+        path: filePath.length > 0 ? filePath.substring(0, filePath.length - 1) : filePath,
       };
       panel.webview.postMessage(result);
       return fileUri[0].fsPath;

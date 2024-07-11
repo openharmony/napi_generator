@@ -104,10 +104,10 @@
     let type = '';
 
     function sendCfgParamMsg() {
-      let includeName = document.getElementById("includeName").value;
-      let cppName = document.getElementById("cppName").value;
-      let interfaceName = document.getElementById("interfaceName").value;
-      let serviceCode = document.getElementById("serviceCode").value;
+      let includeName = document.getElementById('includeName').value;
+      let cppName = document.getElementById('cppName').value;
+      let interfaceName = document.getElementById('interfaceName').value;
+      let serviceCode = document.getElementById('serviceCode').value;
       let data = {includeName, cppName, interfaceName, serviceCode};
       vscode.postMessage({
         msg: 'saveData',
@@ -136,57 +136,57 @@
 
     function selectIncludeName() {
       var result = {
-        msg: "selectIncludeName",
+        msg: 'selectIncludeName',
         mode: 2
-      }
+      };
       vscode.postMessage(result);
     }
 
     function selectCppName() {
       var result = {
-        msg: "selectCppName",
+        msg: 'selectCppName',
         mode: 3
-      }
+      };
       vscode.postMessage(result);
     }
 
     function cancel() {
       var result = {
-        msg: "cancelShowInfo"
-      }
+        msg: 'cancelShowInfo'
+      };
       vscode.postMessage(result);
     }
 
     function setIndex(index) {
-      clickIndex = index
+      clickIndex = index;
     }
 
     function getIndex() {
-      return clickIndex
+      return clickIndex;
     }
     
     window.addEventListener('message', event => {
       const message = event.data.msg;
       const path = event.data.path;
      
-      if(message === "selectIncludeName") {
-        document.getElementById("includeName").value = path;
-      } else if (message === "selectCppName") {
-        document.getElementById("cppName").value = path;
-      } else if (message === "updateData") {
+      if (message === 'selectIncludeName') {
+        document.getElementById('includeName').value = path;
+      } else if (message === 'selectCppName') {
+        document.getElementById('cppName').value = path;
+      } else if (message === 'updateData') {
         type = event.data.type;
-        document.getElementById("genPath").value = event.data.genPath;
+        document.getElementById('genPath').value = event.data.genPath;
         // 从showInfo界面过来，显示要修改的那一项数据
         if (event.data.type === 'update') {
           // 界面显示要修改的那一项数据
           setIndex(event.data.index);
-          document.getElementById("includeName").value = event.data.updateInfo.updateIncludeName;
-          document.getElementById("cppName").value = event.data.updateInfo.updateCppName;
-          document.getElementById("interfaceName").value = event.data.updateInfo.updateInterfaceName;
-          document.getElementById("serviceCode").value = event.data.updateInfo.updateServiceCode;
+          document.getElementById('includeName').value = event.data.updateInfo.updateIncludeName;
+          document.getElementById('cppName').value = event.data.updateInfo.updateCppName;
+          document.getElementById('interfaceName').value = event.data.updateInfo.updateInterfaceName;
+          document.getElementById('serviceCode').value = event.data.updateInfo.updateServiceCode;
         }
       } 
-    })
+    });
 
 </script>
 <body>
