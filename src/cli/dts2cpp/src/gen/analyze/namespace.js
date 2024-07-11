@@ -47,7 +47,7 @@ function analyzeNamespace(data) {
         class: [],
         namespace: [],
         callFunction: [],
-    }
+    };
     while (data !== '\n') {
         let oldData = data;
         data = removeEmptyLine(data);

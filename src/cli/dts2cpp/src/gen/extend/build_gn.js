@@ -46,13 +46,13 @@ ohos_shared_library("[implName]")
     part_name = "[partName]"
     subsystem_name = "[subsystemName]"
 }
-`
+`;
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
 function generateGN(destDir, implName, license, partName, buildCpp) {
     let subsystemName = implName;
     let gnFile = gnTemplete.replaceAll('[implName]', implName);
-    gnFile = gnFile.replaceAll('[businessCodeCpp]', buildCpp)
+    gnFile = gnFile.replaceAll('[businessCodeCpp]', buildCpp);
     gnFile = gnFile.replaceAll('[subsystemName]', subsystemName);
     gnFile = gnFile.replaceAll('[partName]', partName);
     if (license) {

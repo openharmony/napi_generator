@@ -13,7 +13,7 @@
 * limitations under the License. 
 */
 const os = require('os');
-const tsc = require("../../node_modules/typescript");
+const tsc = require('../../node_modules/typescript');
 const fs = require('fs');
 let vscode = null;
 try {
@@ -25,7 +25,7 @@ catch (err) {
 
 function replaceAll(s, sfrom, sto) {
     while (s.indexOf(sfrom) >= 0) {
-        s = s.replace(sfrom, sto)
+        s = s.replace(sfrom, sto);
     }
     return s;
 }
@@ -41,32 +41,32 @@ function detectPlatform() {
 }
 
 function checkFileError(ifname) {
-    let program = tsc.createProgram([ifname], {})
+    let program = tsc.createProgram([ifname], {});
     let emitResult = program.emit();
     let allDiagnostics = tsc.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
 
-    let errorMsg = ''
+    let errorMsg = '';
     allDiagnostics.forEach(diagnostic => {
         if (diagnostic.file) {
             let { line, character } = tsc.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
-            let message = tsc.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+            let message = tsc.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
             errorMsg += `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}\n`;
         } else {
-            errorMsg += tsc.flattenDiagnosticMessageText(diagnostic.messageText, "\n") + "\n";
+            errorMsg += tsc.flattenDiagnosticMessageText(diagnostic.messageText, '\n') + '\n';
         }
     });
 
     if (allDiagnostics.length > 0) {
         return [false, errorMsg];
     }
-    return [true, ""];
+    return [true, ''];
 }
 
 function utf8ArrayToStr(array) {
     var out, i, len, c;
     var char2, char3;
   
-    out = "";
+    out = '';
     len = array.length;
     i = 0;
     while (i < len) {
@@ -97,7 +97,7 @@ function utf8ArrayToStr(array) {
   
   function readFile(fn) {
     if (!fs.existsSync(fn)) {
-      return "";
+      return '';
     }
     let data = fs.readFileSync(fn);
     data = utf8ArrayToStr(data);
@@ -109,4 +109,4 @@ module.exports = {
     detectPlatform,
     checkFileError,
     readFile
-}
+};
