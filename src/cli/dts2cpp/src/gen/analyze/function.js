@@ -22,7 +22,7 @@ const { randomInt } = require('crypto');
 const { print } = require('../tools/tool');
 
 function analyzeSubInterface(data) {
-    let body = re.replaceAll(data, '\n', '').split(';') //  # replace(' ', '').
+    let body = re.replaceAll(data, '\n', '').split(';'); //  # replace(' ', '').
     let result = {
         value: [],
         function: [],
@@ -32,12 +32,16 @@ function analyzeSubInterface(data) {
     };
     for (let i in body) {
         let t = body[i];
-        while (t.length > 0 && t[0] === ' ') // 去除前面的空格
-            t = t.substring(1, t.length);
-        while (t.length > 0 && t[-1] === ' ') // 去除后面的空格
-            t = t.substring(0, t.length - 1)
-        if (t === '') break // 如果t为空直接返回
-        let tt = re.match(' *([a-zA-Z0-9_]+) *: *([a-zA-Z_0-9<>,:{}[\\] ]+)', t)
+        while (t.length > 0 && t[0] === ' ') { 
+            t = t.substring(1, t.length); // 去除前面的空格
+        }
+        while (t.length > 0 && t[-1] === ' ') {
+            t = t.substring(0, t.length - 1);  // 去除后面的空格
+        } 
+        if (t === '') {
+            break; // 如果t为空直接返回
+        }  
+        let tt = re.match(' *([a-zA-Z0-9_]+) *: *([a-zA-Z_0-9<>,:{}[\\] ]+)', t);
         if (tt) { // 变量
             analyzeSubInterfaceVal(t, tt, result);
         }
@@ -60,17 +64,17 @@ function analyzeSubInterfaceVal(t, tt, result) {
 }
 
 function getFuncParaType(v, interfaceName, data, results) {
-    let arrayType = re.match('(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>', v.type)
-    let parameter = v.type
+    let arrayType = re.match('(Async)*Callback<(Array<([a-zA-Z_0-9]+)>)>', v.type);
+    let parameter = v.type;
     if (arrayType) {
-        parameter = re.getReg(v.type, arrayType.regs[2])
+        parameter = re.getReg(v.type, arrayType.regs[2]);
     }
     if (isEnum(parameter, data)) {
         let index = enumIndex(parameter, data);
         if (data.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-            v.type = v.type.replace(parameter, 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease())
+            v.type = v.type.replace(parameter, 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
         } else if (data.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
-            v.type = v.type.replace(parameter, 'string')
+            v.type = v.type.replace(parameter, 'string');
         } else {
             NapiLog.logError('analyzeFunction getFuncParaType is not support this type %s.'
                 .format(data.enum[index].body.enumValueType), getLogErrInfo);
@@ -81,10 +85,10 @@ function getFuncParaType(v, interfaceName, data, results) {
      else if (isEnum(parameter, results)) {
         let index = enumIndex(parameter, results);
         if (results.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-          v.type = v.type.replace(parameter, 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease())
-          v.realType = v.type
+          v.type = v.type.replace(parameter, 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
+          v.realType = v.type;
         } else if (results.enum[index].body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
-          v.type = v.type.replace(parameter, 'string')
+          v.type = v.type.replace(parameter, 'string');
         } else {
           NapiLog.logError('analyzeFunction getFuncParaType is not support this type %s.'
               .format(results.enum[index].body.enumValueType), getLogErrInfo());
@@ -115,15 +119,15 @@ function getFuncParaType(v, interfaceName, data, results) {
 function analyzeFuncNoNameInterface(data, values, results) {
     values = re.replaceAll(re.replaceAll(values, ' ', ''), '\n', '');
     let interfaceName = '';
-    let matchNoName = '([:{<}>,;a-zA-Z_0-9]*)\\?*(:[A-Za-z0-9_,;]*)?:((Async)*Callback<)?{(([A-Za-z0-9_]+:'+
+    let matchNoName = '([:{<}>,;a-zA-Z_0-9]*)\\?*(:[A-Za-z0-9_,;]*)?:((Async)*Callback<)?{(([A-Za-z0-9_]+:' +
     '[A-Za-z0-9_,;]+)*)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}(}|,|;|>)?$';
     let matchs = re.match(matchNoName, values);
     if (matchs) {
-        let st = values.lastIndexOf('{');       
+        let st = values.lastIndexOf('{');
         let end = values.indexOf('}');
         let number = NumberIncrease.getAndIncrease();
         interfaceName = 'AUTO_INTERFACE_%s'.format(number);
-        let interfaceBody = values.substring(st+1, end);
+        let interfaceBody = values.substring(st + 1, end);
         let typeInterface = '{%s}'.format(interfaceBody);
         values = re.replaceAll(values, typeInterface, interfaceName);
         interfaceBody = re.replaceAll(interfaceBody, ',', ';');
@@ -141,7 +145,7 @@ function analyzeFuncNoNameInterface(data, values, results) {
     }
 
     matchs = re.match(matchNoName, values);
-    if(matchs) {
+    if (matchs) {
         let resNoNameInter = analyzeFuncNoNameInterface(data, values);
         values = resNoNameInter.values;
     }
@@ -166,7 +170,7 @@ function analyseSubReturn(ret, data, results) {
          let len = tt.length;
          let res = '';
          let interfaceName = '';
-         for (let i=0; i<len; i++) {
+         for (let i = 0; i < len; i++) {
              let regs1 = tt[i] + ';';
              res += regs1;
          }  
@@ -182,7 +186,7 @@ function analyseSubReturn(ret, data, results) {
                 name: interfaceName,
                 body: analyzeSubInterface(interfaceBody)
             });
-        } else if (Object.prototype.hasOwnProperty.call(results,'interface')) {
+        } else if (Object.prototype.hasOwnProperty.call(results, 'interface')) {
             results.interface.push({
                 name: interfaceName,
                 body: analyzeSubInterface(interfaceBody)
