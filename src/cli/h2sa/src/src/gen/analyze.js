@@ -12,25 +12,25 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { NapiLog } = require("../tools/NapiLog");
-const fs = require("fs");
-const os = require("os");
-const { AllParseFileList } = require("../tools/common");
+const { NapiLog } = require('../tools/NapiLog');
+const fs = require('fs');
+const os = require('os');
+const { AllParseFileList } = require('../tools/common');
 const path = require('path');
 
 function parseFileAll(hFilePath) {
-    let execSync = require("child_process").execSync;
-    let cmd = "";
-    if(fs.existsSync("./hdc/service/service-gen/src/gen/header_parser.py")) {
+    let execSync = require('child_process').execSync;
+    let cmd = '';
+    if (fs.existsSync('./hdc/service/service-gen/src/gen/header_parser.py')) {
         // call python file (for debug test)
-        cmd = "python ./hdc/service/service-gen/src/gen/header_parser.py " + hFilePath;
+        cmd = 'python ./hdc/service/service-gen/src/gen/header_parser.py ' + hFilePath;
     } else {
         // call exe file (for real runtime)
         let sysInfo = os.platform();
         let execPath = path.dirname(process.execPath);
-        let exeFile = sysInfo === 'win32' ? path.join(execPath, "header_parser.exe") : 
-                                            path.join(execPath, "header_parser");
-        cmd = exeFile + " " + hFilePath;
+        let exeFile = sysInfo === 'win32' ? path.join(execPath, 'header_parser.exe') : 
+                                            path.join(execPath, 'header_parser');
+        cmd = exeFile + ' ' + hFilePath;
     }
 
     let parseResult = null;
@@ -51,7 +51,7 @@ function analyzeNameSpace(rootInfo, parseResult) {
 function createParam(parseParamInfo) {
     let param = {};
     param.name = parseParamInfo.name;
-    param.type = parseParamInfo.reference ? parseParamInfo.type.replace("&", "").trim(): parseParamInfo.type
+    param.type = parseParamInfo.reference ? parseParamInfo.type.replace('&', '').trim() : parseParamInfo.type;
     param.rawType = parseParamInfo.raw_type;
     param.isPointer = (parseParamInfo.pointer === 1);
     param.isReference = (parseParamInfo.reference === 1);
@@ -62,15 +62,15 @@ function createParam(parseParamInfo) {
 
 function createFuncInfo(parseFuncInfo) {
     let funcInfo = {
-        "name": "", // 方法名
-        "params": [], // 参数列表
-        "retType": "", // 返回值
-        "rawStr": "" // 方法原始代码
-    }
+        'name': '', // 方法名
+        'params': [], // 参数列表
+        'retType': '', // 返回值
+        'rawStr': '' // 方法原始代码
+    };
     funcInfo.name = parseFuncInfo.name;
 
     let parseParams = parseFuncInfo.parameters;
-    for(var i = 0; i < parseParams.length; ++i) {
+    for (var i = 0; i < parseParams.length; ++i) {
         let param = createParam(parseParams[i]);
         funcInfo.params.push(param);
     }
@@ -82,7 +82,7 @@ function createFuncInfo(parseFuncInfo) {
 
 function createClassFunctions(parseFuncs) {
     let funcList = [];
-    for(var i = 0; i < parseFuncs.length; ++i) {
+    for (var i = 0; i < parseFuncs.length; ++i) {
         if (!(parseFuncs[i].constructor || parseFuncs[i].destructor)) { // 构造和析构方法不需要生成remote接口代码
             let funcInfo = createFuncInfo(parseFuncs[i]);
             funcList.push(funcInfo);
@@ -93,12 +93,12 @@ function createClassFunctions(parseFuncs) {
 
 function createClassInfo(parseClassInfo) {
     let classInfo = {
-        "name": "",
-        "namespace": [],
-        "properties": [],
-        "functions": [],
-        "extends":[]
-    }
+        'name': '',
+        'namespace': [],
+        'properties': [],
+        'functions': [],
+        'extends':[]
+    };
     classInfo.name = parseClassInfo.name;
     classInfo.namespace = parseClassInfo.namespace.split('::');
     classInfo.functions = createClassFunctions(parseClassInfo.methods.public);
@@ -108,20 +108,20 @@ function createClassInfo(parseClassInfo) {
 
 function analyzeClasses(rootInfo, parseClasses) {
     if (parseClasses.length === 0) {
-        NapiLog.logError("Can not find any class.");
+        NapiLog.logError('Can not find any class.');
         return;
     }
 
     let firstClassName = null; // JSON集合中第一个class名称
     let serviceClassName = null;// JSON集合中带“@ServiceClass”注解的class名称
     let i = 0;
-    for(var className in parseClasses) {
+    for (var className in parseClasses) {
         if (++i === 1) {
             firstClassName = className;
         }
 
         let doxygen = parseClasses[className].doxygen;
-        if (doxygen && doxygen.includes("@ServiceClass")) {
+        if (doxygen && doxygen.includes('@ServiceClass')) {
             serviceClassName = className;
             break;
         }
@@ -135,7 +135,7 @@ function analyzeClasses(rootInfo, parseClasses) {
     } else {
         // h文件中有多个类，基于带@ServiceClass注解的类生成service
         if (serviceClassName === null || serviceClassName === undefined) {
-            NapiLog.logError("There must be one class that contains @ServiceClass annotations.");
+            NapiLog.logError('There must be one class that contains @ServiceClass annotations.');
             return;
         }
         rootInfo.serviceName = serviceClassName;
@@ -149,15 +149,15 @@ function doAnalyze(hFilePath, cmdParam) {
     parseResult.isInclude = false;
     AllParseFileList.push(parseResult);
     let rootInfo = {
-        "serviceName": "",
-        "nameSpace": [],
-        "class": [],
-        "includes": [],
-        "using": [],
-        "serviceId": (cmdParam.serviceId === null || cmdParam.serviceId === undefined) ?
-          "9002" : cmdParam.serviceId,
-        "rawContent": parseResult.rawContent
-    }
+        'serviceName': '',
+        'nameSpace': [],
+        'class': [],
+        'includes': [],
+        'using': [],
+        'serviceId': (cmdParam.serviceId === null || cmdParam.serviceId === undefined) ?
+          '9002' : cmdParam.serviceId,
+        'rawContent': parseResult.rawContent
+    };
 
     analyzeNameSpace(rootInfo, parseResult);
     analyzeClasses(rootInfo, parseResult.classes);
@@ -168,4 +168,4 @@ function doAnalyze(hFilePath, cmdParam) {
 
 module.exports = {
     doAnalyze
-}
+};

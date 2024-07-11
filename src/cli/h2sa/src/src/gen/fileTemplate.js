@@ -474,4 +474,4 @@ module.exports = {
     serviceCfgTemplate,
     serviceCfgGnTemplate,
     iServiceCppTemplate
-}
+};
