@@ -156,8 +156,8 @@ class Tool {
      */
     static getJsonCfg() {
         if (this.globalJsonCfg === null || this.globalJsonCfg === undefined) {
-            let jsonFilePath = path.join(Tool.CURRENT_TOOL_PATH, "res/cfg.json");
-            let jsonFile = fs.readFileSync(jsonFilePath, { encoding: "utf8" });
+            let jsonFilePath = path.join(Tool.CURRENT_TOOL_PATH, 'res/cfg.json');
+            let jsonFile = fs.readFileSync(jsonFilePath, { encoding: 'utf8' });
             this.globalJsonCfg = JSON.parse(jsonFile);
             this.globalJsonCfg.fileSuffix = this.globalJsonCfg.fileSuffix ? ',' + this.globalJsonCfg.fileSuffix : '';
             this.globalJsonCfg.compileflag = this.globalJsonCfg.compileflag ? ',' + this.globalJsonCfg.compileflag : '';
@@ -176,11 +176,11 @@ class Tool {
             let jsonCfg = this.getJsonCfg();
             let allowedCxxSuffix = '.cpp, .cxx, .cc, .o, .z, .so, .a' + jsonCfg.fileSuffix;
             this.allowedCxx.fileSuffix = 
-                allowedCxxSuffix.split(',').map(item => item.trim()).filter(item => item != '');
-            let allowedFlag = '--target=, -march=, -mfloat-abi=, -mfpu=, -fsigned-char, -ffast-math, -rdynamic, '
-                + '-UNDEBUG, -fno-threadsafe-statics, -fno-common, -fno-strict-aliasing, -fcolor-diagnostics, '
-                + '-fstrict-aliasing, -fdiagnostics-show-option' + jsonCfg.compileflag;
-            this.allowedCxx.compileflag = allowedFlag.split(',').map(item => item.trim()).filter(item => item != '');
+                allowedCxxSuffix.split(',').map(item => item.trim()).filter(item => item !== '');
+            let allowedFlag = '--target=, -march=, -mfloat-abi=, -mfpu=, -fsigned-char, -ffast-math, -rdynamic, ' + 
+                '-UNDEBUG, -fno-threadsafe-statics, -fno-common, -fno-strict-aliasing, -fcolor-diagnostics, ' +
+                '-fstrict-aliasing, -fdiagnostics-show-option' + jsonCfg.compileflag;
+            this.allowedCxx.compileflag = allowedFlag.split(',').map(item => item.trim()).filter(item => item !== '');
         }
         return this.allowedCxx;
     }
@@ -194,12 +194,12 @@ class Tool {
             this.allowedC = {};
             let jsonCfg = this.getJsonCfg();
             let allowedCSuffix = '.c, .o, .o", .a, .S, .so' + jsonCfg.fileSuffix;
-            this.allowedC.fileSuffix = allowedCSuffix.split(',').map(item => item.trim()).filter(item => item != '');
-            let allowedFlag = '--target=, -march=, -mfloat-abi=, -mfpu=, -fno-common, -fcolor-diagnostics, -ggdb, '
-                + '-fno-strict-aliasing, -ldl, -flto, -fno-builtin, -fno-stack-protector, -fvisibility=default, '
-                + '-fsigned-char, -fstack-protector-strong, -fdiagnostics-show-option'
-                + jsonCfg.compileflag;
-            this.allowedC.compileflag = allowedFlag.split(',').map(item => item.trim()).filter(item => item != '');
+            this.allowedC.fileSuffix = allowedCSuffix.split(',').map(item => item.trim()).filter(item => item !== '');
+            let allowedFlag = '--target=, -march=, -mfloat-abi=, -mfpu=, -fno-common, -fcolor-diagnostics, -ggdb, ' +
+                '-fno-strict-aliasing, -ldl, -flto, -fno-builtin, -fno-stack-protector, -fvisibility=default, ' +
+                '-fsigned-char, -fstack-protector-strong, -fdiagnostics-show-option' +
+                jsonCfg.compileflag;
+            this.allowedC.compileflag = allowedFlag.split(',').map(item => item.trim()).filter(item => item !== '');
         }
         return this.allowedC;
     }
@@ -210,7 +210,9 @@ String.prototype.format = function (...args) {
     let reg = new RegExp('%[sd]{1}');
     for (let i = 0; i < args.length; i++) {
         let p = result.search(reg);
-        if (p < 0) break;
+        if (p < 0) {
+            break;
+        }
         result = result.substring(0, p) + args[i] + result.substring(p + 2, result.length);
     }
     return result;
