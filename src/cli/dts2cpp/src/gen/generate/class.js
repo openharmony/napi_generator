@@ -41,23 +41,26 @@ public:
 };`;
 
 function generateVariable(name, type, variable, className) {
-    if (type == 'string') variable.hDefine += '\n    std::string %s;'.format(name);
-    else if (type.substring(0, 12) == 'NUMBER_TYPE_') variable.hDefine += '\n    %s %s;'.format(type, name);
-    else if (InterfaceList.getValue(type)) variable.hDefine += '\n    %s %s;'.format(type, name);
-    else if (type.indexOf('Array<') == 0) {
+    if (type === 'string') {
+        variable.hDefine += '\n    std::string %s;'.format(name);
+    } else if (type.substring(0, 12) === 'NUMBER_TYPE_') {
+        variable.hDefine += '\n    %s %s;'.format(type, name);
+    } else if (InterfaceList.getValue(type)) {
+        variable.hDefine += '\n    %s %s;'.format(type, name);
+    } else if (type.indexOf('Array<') === 0) {
         let type2 = getArrayType(type);
-        if (type2 == 'string') type2 = 'std::string';
-        if (type2 == 'boolean') type2 = 'bool';
+        if (type2 === 'string') type2 = 'std::string';
+        if (type2 === 'boolean') type2 = 'bool';
         variable.hDefine += '\n    std::vector<%s> %s;'.format(type2, name);
-    } else if (type == 'boolean') {
+    } else if (type === 'boolean') {
         variable.hDefine += '\n    bool %s;'.format(name);
-    } else if (type.indexOf('[]') == 0) {
+    } else if (type.indexOf('[]') === 0) {
         variable.hDefine += '\n    std::vector<%s> %s;'.format(type, name);
-    }
-    else
+    } else {
         NapiLog.logError(`
         ---- generateVariable fail %s,%s ----
         `.format(name, type));
+    }
     variable.middleValue += `
     static napi_value getvalue_%s(napi_env env, napi_callback_info info)
     {
@@ -83,7 +86,7 @@ function generateVariable(name, type, variable, className) {
 function generateClass(name, data, inNamespace, functiontType) {
     let resultConnect = connectResult(data, inNamespace, name);
     let middleFunc = resultConnect[0];
-    let implH = functiontType == 'static' ? '\n' + 'static ' +
+    let implH = functiontType === 'static' ? '\n' + 'static ' +
         resultConnect[1].substring(1, resultConnect[1].length) : resultConnect[1];
     let implCpp = resultConnect[2];
     let middleInit = resultConnect[3];
@@ -96,7 +99,7 @@ function generateClass(name, data, inNamespace, functiontType) {
             selfNs = ', ' + nsl[nsl.length - 1];
         }
     }
-    let toolNamespace =  getToolNamespace(inNamespace);
+    let toolNamespace = getToolNamespace(inNamespace);
     middleInit += `\n    pxt->DefineClass("%s", %s%s%s_middle::constructor, valueList, funcList%s);\n}\n`
         .format(name, inNamespace, toolNamespace, name, selfNs);
     let result = {
@@ -124,7 +127,7 @@ function connectResult(data, inNamespace, name) {
         hDefine: '',
         middleValue: '',
     };
-    let toolNamespace =  getToolNamespace(inNamespace);
+    let toolNamespace = getToolNamespace(inNamespace);
     middleInit = `{\n    std::map<const char *, std::map<const char *, napi_callback>> valueList;`;
     for (let i in data.value) {
         let v = data.value[i];
@@ -139,7 +142,7 @@ function connectResult(data, inNamespace, name) {
     middleInit += `\n    std::map<const char *, napi_callback> funcList;`;
     for (let i in data.function) {
         let func = data.function[i];
-        let tmp;
+        let tmp = [];
         switch (func.type) {
             case FuncType.DIRECT:
                 tmp = generateFunctionDirect(func, '', name);
@@ -152,7 +155,8 @@ function connectResult(data, inNamespace, name) {
                 tmp = generateFunctionAsync(func, '', name);
                 break;
             default:
-                return;
+                tmp = [];
+                break;
         }
         middleFunc += tmp[0];
         implH += tmp[1];
@@ -171,7 +175,7 @@ function getToolNamespace(inNamespace) {
         let bodyTmp = inNamespace.substring(0, index);
         let index2 = bodyTmp.lastIndexOf('::');
         if (index2 > 0 && index2 < index) {
-            toolNamespace =  inNamespace.substring(index2 + 2, index) + '_interface::';
+            toolNamespace = inNamespace.substring(index2 + 2, index) + '_interface::';
         } else {
           toolNamespace = bodyTmp + '_interface::';
         }
