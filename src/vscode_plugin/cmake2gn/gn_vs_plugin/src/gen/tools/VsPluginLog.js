@@ -23,10 +23,10 @@ VsPluginLog.LEV_ERROR = 1;
 VsPluginLog.LEV_DEBUG = 2;
 VsPluginLog.LEV_INFO = 3;
 
-const LEV_STR = ["[NON]", "[ERR]", "[DBG]", "[INF]"]
+const LEV_STR = ['[NON]', '[ERR]', '[DBG]', '[INF]'];
 var logLevel = VsPluginLog.LEV_ERROR;
 var logFileName = null;
-var logResultMessage = [true, ""]
+var logResultMessage = [true, ''];
 
 function getDateString() {
     let nowDate = new Date();
@@ -35,7 +35,7 @@ function getDateString() {
 
 function saveLog(dateStr, levStr, detail) {
     if (logFileName) {
-        let logStr = dateStr + " " + levStr + " " + detail + "\n";
+        let logStr = dateStr + ' ' + levStr + ' ' + detail + '\n';
         fs.appendFileSync(logFileName, logStr);
     }
 }
@@ -43,36 +43,38 @@ function saveLog(dateStr, levStr, detail) {
 VsPluginLog.init = function (level, fileName) {
     logLevel = level in [VsPluginLog.LEV_NONE, VsPluginLog.LEV_ERROR, VsPluginLog.LEV_DEBUG, VsPluginLog.LEV_INFO]
         ? level : VsPluginLog.LEV_ERROR;
-    logFileName = fileName ? fileName : "napi_generator.log";
-}
+    logFileName = fileName ? fileName : 'napi_generator.log';
+};
 
 function recordLog(lev, ...args) {
     let dataStr = getDateString();
-    let detail = args.join(" ");
+    let detail = args.join(' ');
     saveLog(dataStr, LEV_STR[lev], detail);
     if (lev == VsPluginLog.LEV_ERROR) {
         logResultMessage = [false, detail];
     }
-    if (logLevel < lev) return;
+    if (logLevel < lev) {
+        return;
+    }
     VsPluginLog.logInfo(dataStr + LEV_STR[lev] + detail);
 }
 
 VsPluginLog.logError = function (...args) {
     recordLog(VsPluginLog.LEV_ERROR, args);
-}
+};
 
 VsPluginLog.logDebug = function (...args) {
     recordLog(VsPluginLog.LEV_DEBUG, args);
-}
+};
 
 VsPluginLog.logInfo = function (...args) {
     recordLog(VsPluginLog.LEV_INFO, args);
-}
+};
 
 VsPluginLog.getResult = function () {
     return logResultMessage;
-}
+};
 
 module.exports = {
     VsPluginLog
-}
+};
