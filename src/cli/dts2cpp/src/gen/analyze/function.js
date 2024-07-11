@@ -36,7 +36,7 @@ function analyzeSubInterface(data) {
             t = t.substring(1, t.length); // 去除前面的空格
         }
         while (t.length > 0 && t[-1] === ' ') {
-            t = t.substring(0, t.length - 1);  // 去除后面的空格
+            t = t.substring(0, t.length - 1); // 去除后面的空格
         } 
         if (t === '') {
             break; // 如果t为空直接返回

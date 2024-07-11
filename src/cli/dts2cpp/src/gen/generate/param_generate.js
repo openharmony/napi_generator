@@ -1164,7 +1164,6 @@ function paramGenerate(p, funcValue, param, data) {
 
 // on/off 接口的参数处理
 function eventParamGenerate(p, funcValue, param, data) {
-    let name = funcValue.name;
     let type = funcValue.type;
     if (type === undefined) {
         NapiLog.logError('eventParamGenerate param error: funcValue.type is null');
@@ -1173,31 +1172,26 @@ function eventParamGenerate(p, funcValue, param, data) {
     if (type.indexOf("'") >= 0) {
         type = type.replaceAll(''', '');
     }
-
     let regName = re.match('([a-zA-Z_0-9]+)', type);
     if (isFuncType(type)) {
         paramGenerateCallBack(data, funcValue, param, p);
     } else if (type.substring(0, 9) === 'Callback<' || type.substring(0, 14) === 'AsyncCallback<') {
-        // callback参数处理
-        paramGenerateCallBack(data, funcValue, param, p);
+        paramGenerateCallBack(data, funcValue, param, p); // callback参数处理
     } else if (CallFunctionList.getValue(type)) { // 判断条件
-        // callFunction => 函数参数处理
-        let onFlag = true;
+        let onFlag = true; // callFunction => 函数参数处理
         paramGenerateArrowCallBack(funcValue, param, p, onFlag);
     } else if (InterfaceList.getValue(type)) {
         let aaOnFlag = true;
-    }
-    else if (regName) {
-        // event type参数处理
+    } else if (regName) { // event type参数处理
         param.eventName = re.getReg(type, regName.regs[1]); // string类型如何处理？
         if (param.eventName === 'string') {
             param.eventNameIsStr = true;
             param.eventName = 'string%d'.format(NumberIncrease.getAndIncrease());
         }
-        param.valueDefine += '%sstd::string &%s'.format(param.valueDefine.length > 0 ? ', ' : '', name);
+        param.valueDefine += '%sstd::string &%s'.format(param.valueDefine.length > 0 ? ', ' : '', funcValue.name);
     } else {
         NapiLog.logError('function eventParamGenerate:The current version do not support to this param to generate :',
-            name, 'type :', type, getLogErrInfo());
+        funcValue.name, 'type :', type, getLogErrInfo());
     }
 }
 
