@@ -59,7 +59,7 @@ function generateGN(destDir, implName, license, partName, buildCpp) {
         license = getGnLicense(license);
     }
     writeFile(re.pathJoin(destDir, 'BUILD.gn'), (null !== license && undefined !== license) ?
-      (license + '\n' + gnFile) : gnFile)
+      (license + '\n' + gnFile) : gnFile);
 }
 
 function getGnLicense(license) {
@@ -81,4 +81,4 @@ function getGnLicense(license) {
 
 module.exports = {
   generateGN
-}
+};
