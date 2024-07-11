@@ -51,10 +51,12 @@ function analyzeNamespace(data) {
     while (data !== '\n') {
         let oldData = data;
         data = removeEmptyLine(data);
-        let matchs = re.match(' *\n*', data);   
+        let matchs = re.match(' *\n*', data);
         data = preProcessData(data);
         // 只剩下空格和回车时，解析完成
-        if (matchs && matchs.regs[0][1] === data.length) break;
+        if (matchs && matchs.regs[0][1] === data.length) {
+            break;
+        }
         let parseEnumResult = parseEnum(matchs, data, result);
         data = getDataByResult(parseEnumResult);
         
@@ -96,7 +98,7 @@ function parseEnumType(result) {
         // interface 匹配           
         for (let i in result.interface) {
           let interf = result.interface[i];
-          if(!isValidValue(interf)) {
+          if (!isValidValue(interf)) {
             NapiLog.logError('parseEnumType interf is null!');
             return null;
           }
@@ -104,7 +106,7 @@ function parseEnumType(result) {
           // function 匹配
           for (let j in interf.body.function) {
             let func = interf.body.function[j];
-            if(!isValidValue(func)) {
+            if (!isValidValue(func)) {
                 NapiLog.logError('parseEnumType func is null!');
                 return null;
             }
@@ -112,12 +114,12 @@ function parseEnumType(result) {
             // 参数匹配
             for (let k in func.value) {
                 let v = func.value[k];
-                if(!isValidValue(v)) {
+                if (!isValidValue(v)) {
                     NapiLog.logError('parseEnumType func.value is null!');
                     return null;
                 }
 
-                if (v.type ===  enumm.name) {
+                if (v.type === enumm.name) {
                     if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
                         v.type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
                     } else if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
@@ -277,17 +279,15 @@ function parseFunction(matchs, data, result) {
         let matchFuncArray = re.match(' *: *([A-Za-z0-9]+)(\\[]);*', funcRet);
         if (matchFuncArray) {
             funcRet = re.getReg(funcRet, [matchFuncArray.regs[1][0], matchFuncArray.regs[2][1]]);
-        }
-        else if (matchFunc) {
+        } else if (matchFunc) {
             funcRet = re.getReg(funcRet, matchFunc.regs[1]);
-        }
-        else {
+        } else {
             funcRet = 'void';
         }
         funcRet = re.replaceAll(re.replaceAll(funcRet, ' ', ''), '\n', '');
 
-        if(funcRet[funcRet.length-1] === ';'){
-            funcRet = funcRet.substring(0, funcRet.length-1);
+        if (funcRet[funcRet.length - 1] === ';') {
+            funcRet = funcRet.substring(0, funcRet.length - 1);
         }
         let funcDetail = analyzeFunction(
             result, false, funcName, funcValue.substring(1, funcValue.length - 1), funcRet, result);
@@ -341,7 +341,7 @@ function getParentNameList(firstKey, secondKey, parentStr) {
  * @param result 解析后的ts数据结构
  * @returns data 原始ts文件内容中剩余未解析的部分
  */
-function createInterfaceData (matchs, data, result) {
+function createInterfaceData(matchs, data, result) {
     let interfaceName = re.getReg(data, matchs.regs[2]);
     let interfaceBody = checkOutBody(data, matchs.regs[6][0], null, null);
     let bodyObj = analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1), result.interface, 
@@ -349,10 +349,10 @@ function createInterfaceData (matchs, data, result) {
     let extendsParent = re.getReg(data, matchs.regs[4]);
     let implementParent = re.getReg(data, matchs.regs[5]);
     bodyObj.parentNameList = [];
-    if(extendsParent !== '') {
+    if (extendsParent !== '') {
         bodyObj.parentNameList = getParentNameList('extends', 'implements', extendsParent);
     }
-    if(implementParent !== '') {
+    if (implementParent !== '') {
         bodyObj.parentNameList = getParentNameList('implements', 'extends', implementParent);
     }
     for (let i in bodyObj.parentNameList) {
@@ -386,7 +386,7 @@ function parseInterface(matchs, data, result) {
         '(export )*interface ([A-Za-z_0-9]+)(<T>)* *(extends [a-zA-Z_0-9, ]+)* *(implements [a-zA-Z_0-9, ]+)* *({)'
         , data);
     if (matchs) {
-        return createInterfaceData (matchs, data, result);
+        return createInterfaceData(matchs, data, result);
     }
     return data;
 }
