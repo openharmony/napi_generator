@@ -113,13 +113,13 @@
 
     function onInput(event) {
         var value = event.target.value;
-        value.replace(/\s*/g,"").toLowerCase();
+        value.replace(/\s*/g, '').toLowerCase();
         checkInput(value);
     }
 
     // 匹配子串
     function matchSubString(userInput) {
-      const keywords = ["apiscan", "gngen", "servicegen", "tsgen", "napi"];
+      const keywords = ['apiscan', 'gngen', 'servicegen', 'tsgen', 'napi'];
       let matchedKeyword = null;
       for (let i = 0; i < keywords.length; i++) {
         if (keywords[i].startsWith(userInput)) {
@@ -130,78 +130,78 @@
       if (matchedKeyword) {
         console.log(matchedKeyword);
       } else {
-        console.log("未找到匹配的字符串");
+        console.log('未找到匹配的字符串');
       }
       return matchedKeyword;
     }
 
     function checkInput(value) {
-        if (matchSubString(value) === "apiscan") {
-            document.getElementById("api").style.display="flex";
-            document.getElementById("gn").style.display="none";
-            document.getElementById("service").style.display="none";
-            document.getElementById("ts").style.display="none";
-            document.getElementById("napi").style.display="none";
-        } else if (matchSubString(value) === "gngen") {
-            document.getElementById("api").style.display="none";
-            document.getElementById("gn").style.display="flex";
-            document.getElementById("service").style.display="none";
-            document.getElementById("ts").style.display="none";
-            document.getElementById("napi").style.display="none";
-        } else if (matchSubString(value) === "servicegen") {
-            document.getElementById("api").style.display="none";
-            document.getElementById("gn").style.display="none";
-            document.getElementById("service").style.display="flex";
-            document.getElementById("ts").style.display="none";
-            document.getElementById("napi").style.display="none";
-        } else if (matchSubString(value) === "tsgen") {
-            document.getElementById("api").style.display="none";
-            document.getElementById("gn").style.display="none";
-            document.getElementById("service").style.display="none";
-            document.getElementById("ts").style.display="flex";
-            document.getElementById("napi").style.display="none";
-        } else if (matchSubString(value) === "napi") {
-            document.getElementById("api").style.display="none";
-            document.getElementById("gn").style.display="none";
-            document.getElementById("service").style.display="none";
-            document.getElementById("ts").style.display="none";
-            document.getElementById("napi").style.display="flex";
+        if (matchSubString(value) === 'apiscan') {
+            document.getElementById('api').style.display = 'flex';
+            document.getElementById('gn').style.display = 'none';
+            document.getElementById('service').style.display = 'none';
+            document.getElementById('ts').style.display = 'none';
+            document.getElementById('napi').style.display = 'none';
+        } else if (matchSubString(value) === 'gngen') {
+            document.getElementById('api').style.display = 'none';
+            document.getElementById('gn').style.display ='flex';
+            document.getElementById('service').style.display = 'none';
+            document.getElementById('ts').style.display = 'none';
+            document.getElementById('napi').style.display = 'none';
+        } else if (matchSubString(value) === 'servicegen') {
+            document.getElementById('api').style.display = 'none';
+            document.getElementById('gn').style.display = 'none';
+            document.getElementById('service').style.display = 'flex';
+            document.getElementById('ts').style.display='none';
+            document.getElementById('napi').style.display = 'none';
+        } else if (matchSubString(value) === 'tsgen') {
+            document.getElementById('api').style.display = 'none';
+            document.getElementById('gn').style.display = 'none';
+            document.getElementById('service').style.display = 'none';
+            document.getElementById('ts').style.display = 'flex';
+            document.getElementById('napi').style.display = 'none';
+        } else if (matchSubString(value) === 'napi') {
+            document.getElementById('api').style.display = 'none';
+            document.getElementById('gn').style.display = 'none';
+            document.getElementById('service').style.display = 'none';
+            document.getElementById('ts').style.display = 'none';
+            document.getElementById('napi').style.display = 'flex';
         } else if (value.trim() === '') {
             clearSelect();
         }
     }
 
     function clearSelect() {
-        document.getElementById("api").style.display="flex";
-        document.getElementById("gn").style.display="flex";
-        document.getElementById("service").style.display="flex";
-        document.getElementById("ts").style.display="flex";
-        document.getElementById("napi").style.display="flex";
+        document.getElementById('api').style.display = 'flex';
+        document.getElementById('gn').style.display = 'flex';
+        document.getElementById('service').style.display = 'flex';
+        document.getElementById('ts').style.display = 'flex';
+        document.getElementById('napi').style.display = 'flex';
     }
 
     function cancel() {
         var result = {
-            msg: "cancel"
-        }
+            msg: 'cancel'
+        };
         vscode.postMessage(result);
     }
 
     function sendParamMsg() {
         if (importCheck) {
-            let checkApi = document.getElementById("isCheckApi").checked;
-            let checkGn = document.getElementById("isCheckGn").checked;
-            let checkService = document.getElementById("isCheckService").checked;
-            let checkTs = document.getElementById("isCheckTs").checked;
-            let checkNapi = document.getElementById("isCheckNapi").checked;
+            let checkApi = document.getElementById('isCheckApi').checked;
+            let checkGn = document.getElementById('isCheckGn').checked;
+            let checkService = document.getElementById('isCheckService').checked;
+            let checkTs = document.getElementById('isCheckTs').checked;
+            let checkNapi = document.getElementById('isCheckNapi').checked;
             var result = {
-                msg: "param",
+                msg: 'param',
                 importIsCheck: importCheck,
                 checkApi: checkApi,
                 checkGn: checkGn,
                 checkService: checkService,
                 checkTs: checkTs,
                 checkNapi: checkNapi,
-            }
+            };
             vscode.postMessage(result);
         } else {
             sendParamMsg2();
@@ -211,26 +211,26 @@
     function sendParamMsg2() {
         if (chooseApi) {
             var result = {
-                 msg: "startApi"
-            }
+                 msg: 'startApi'
+            };
         } else if (chooseGn) {
             var result = {
-                msg: "startGn"
-            }
+                msg: 'startGn'
+            };
         } else if (chooseService) {
             var result = {
-                msg: "startService"
-            }
+                msg: 'startService'
+            };
         } else if (chooseTs) {
             var result = {
-                msg: "startTs"
-            }
+                msg: 'startTs'
+            };
         } else if (chooseNapi) {
             var result = {
-                msg: "startNapi"
-            }
+                msg: 'startNapi'
+            };
         } else {
-            console.error("ERROR!")
+            console.error('ERROR!');
         }
         vscode.postMessage(result);
     }
@@ -239,32 +239,32 @@
         importCheck = obj.checked;
         removeHighlight();
         if (importCheck) {
-            document.getElementById("isCheckApi").style.display="";
-            document.getElementById("isCheckGn").style.display="";
-            document.getElementById("isCheckService").style.display="";
-            document.getElementById("isCheckTs").style.display="";
-            document.getElementById("isCheckNapi").style.display="";
+            document.getElementById('isCheckApi').style.display = '';
+            document.getElementById('isCheckGn').style.display = '';
+            document.getElementById('isCheckService').style.display = '';
+            document.getElementById('isCheckTs').style.display = '';
+            document.getElementById('isCheckNapi').style.display = '';
 
-            document.getElementById("isCheckApi").checked = false;
-            document.getElementById("isCheckGn").checked = false;
-            document.getElementById("isCheckService").checked = false;
-            document.getElementById("isCheckTs").checked = false;
-            document.getElementById("isCheckNapi").checked = false;
+            document.getElementById('isCheckApi').checked = false;
+            document.getElementById('isCheckGn').checked = false;
+            document.getElementById('isCheckService').checked = false;
+            document.getElementById('isCheckTs').checked = false;
+            document.getElementById('isCheckNapi').checked = false;
         } else {
-            document.getElementById("isCheckApi").style.display="none";
-            document.getElementById("isCheckGn").style.display="none";
-            document.getElementById("isCheckService").style.display="none";
-            document.getElementById("isCheckTs").style.display="none";
-            document.getElementById("isCheckNapi").style.display="none";
+            document.getElementById('isCheckApi').style.display = 'none';
+            document.getElementById('isCheckGn').style.display = 'none';
+            document.getElementById('isCheckService').style.display = 'none';
+            document.getElementById('isCheckTs').style.display = 'none';
+            document.getElementById('isCheckNapi').style.display = 'none';
         }
     }
 
     function chooseApiTool() {
-        document.getElementById("apiDescriptions").style.display="flex";
-        document.getElementById("gnDescriptions").style.display="none";
-        document.getElementById("serviceDescriptions").style.display="none";
-        document.getElementById("tsDescriptions").style.display="none";
-        document.getElementById("napiDescriptions").style.display="none";
+        document.getElementById('apiDescriptions').style.display = 'flex';
+        document.getElementById('gnDescriptions').style.display = 'none';
+        document.getElementById('serviceDescriptions').style.display = 'none';
+        document.getElementById('tsDescriptions').style.display = 'none';
+        document.getElementById('napiDescriptions').style.display = 'none';
         chooseApi = true;
         chooseGn = false;
         chooseService = false;
@@ -273,11 +273,11 @@
     }
 
     function chooseGnTool() {
-        document.getElementById("apiDescriptions").style.display="none";
-        document.getElementById("gnDescriptions").style.display="flex";
-        document.getElementById("serviceDescriptions").style.display="none";
-        document.getElementById("tsDescriptions").style.display="none";
-        document.getElementById("napiDescriptions").style.display="none";
+        document.getElementById('apiDescriptions').style.display = 'none';
+        document.getElementById('gnDescriptions').style.display = 'flex';
+        document.getElementById('serviceDescriptions').style.display = 'none';
+        document.getElementById('tsDescriptions').style.display = 'none';
+        document.getElementById('napiDescriptions').style.display = 'none';
         chooseApi = false;
         chooseGn = true;
         chooseService = false;
@@ -286,11 +286,11 @@
     }
 
     function chooseServiceTool() {
-        document.getElementById("apiDescriptions").style.display="none";
-        document.getElementById("gnDescriptions").style.display="none";
-        document.getElementById("serviceDescriptions").style.display="flex";
-        document.getElementById("tsDescriptions").style.display="none";
-        document.getElementById("napiDescriptions").style.display="none";
+        document.getElementById('apiDescriptions').style.display = 'none';
+        document.getElementById('gnDescriptions').style.display = 'none';
+        document.getElementById('serviceDescriptions').style.display = 'flex';
+        document.getElementById('tsDescriptions').style.display = 'none';
+        document.getElementById('napiDescriptions').style.display = 'none';
         chooseApi = false;
         chooseGn = false;
         chooseService = true;
@@ -299,11 +299,11 @@
     }
 
     function chooseTsTool() {
-        document.getElementById("apiDescriptions").style.display="none";
-        document.getElementById("gnDescriptions").style.display="none";
-        document.getElementById("serviceDescriptions").style.display="none";
-        document.getElementById("tsDescriptions").style.display="flex";
-        document.getElementById("napiDescriptions").style.display="none";
+        document.getElementById('apiDescriptions').style.display = 'none';
+        document.getElementById('gnDescriptions').style.display = 'none';
+        document.getElementById('serviceDescriptions').style.display = 'none';
+        document.getElementById('tsDescriptions').style.display = 'flex';
+        document.getElementById('napiDescriptions').style.display = 'none';
         chooseApi = false;
         chooseGn = false;
         chooseService = false;
@@ -312,11 +312,11 @@
     }
 
     function chooseNapiTool() {
-        document.getElementById("apiDescriptions").style.display="none";
-        document.getElementById("gnDescriptions").style.display="none";
-        document.getElementById("serviceDescriptions").style.display="none";
-        document.getElementById("tsDescriptions").style.display="none";
-        document.getElementById("napiDescriptions").style.display="flex";
+        document.getElementById('apiDescriptions').style.display = 'none';
+        document.getElementById('gnDescriptions').style.display = 'none';
+        document.getElementById('serviceDescriptions').style.display = 'none';
+        document.getElementById('tsDescriptions').style.display = 'none';
+        document.getElementById('napiDescriptions').style.display = 'flex';
         chooseApi = false;
         chooseGn = false;
         chooseService = false;
@@ -330,18 +330,18 @@
           highlight(element);
         }
         
-        if (obj === "isChooseApi") {
+        if (obj === 'isChooseApi') {
             chooseApiTool();
-        } else if (obj === "isChooseGn") {
+        } else if (obj === 'isChooseGn') {
             chooseGnTool();
-        } else if (obj === "isChooseService") {
+        } else if (obj === 'isChooseService') {
             chooseServiceTool();
-        } else if (obj === "isChooseTs") {
+        } else if (obj === 'isChooseTs') {
             chooseTsTool();
-        } else if (obj === "isChooseNapi") {
+        } else if (obj === 'isChooseNapi') {
             chooseNapiTool();
         } else {
-            console.error("ERROR!")
+            console.error('ERROR!');
         }
     }
 
@@ -354,23 +354,23 @@
     }
 
     function checkTool(obj, name) {
-        if (name === "isCheckApi") {
-            let image =  document.getElementById("isChooseApi")
+        if (name === 'isCheckApi') {
+            let image = document.getElementById('isChooseApi');
             highlightTools(obj.checked, image);
-        } else if (name === "isCheckGn") {
-            let image =  document.getElementById("isChooseGn")
+        } else if (name === 'isCheckGn') {
+            let image = document.getElementById('isChooseGn');
             highlightTools(obj.checked, image);
-        } else if (name === "isCheckService") {
-            let image =  document.getElementById("isChooseService")
+        } else if (name === 'isCheckService') {
+            let image = document.getElementById('isChooseService');
             highlightTools(obj.checked, image);
-        } else if (name === "isCheckTs") {
-            let image =  document.getElementById("isChooseTs")
+        } else if (name === 'isCheckTs') {
+            let image = document.getElementById('isChooseTs');
             highlightTools(obj.checked, image);
-        } else if (name === "isCheckNapi") {
-            let image =  document.getElementById("isChooseNapi")
+        } else if (name === 'isCheckNapi') {
+            let image = document.getElementById('isChooseNapi');
             highlightTools(obj.checked, image);
         } else {
-            console.error("ERROR!")
+            console.error('ERROR!');
         }
     }
 
