@@ -112,7 +112,7 @@ public class ShowCfgInfoDialogPane extends JDialog {
 
     /**
      * 获得选中行的index
-     * 
+     *
      * @param void 空
      * @return 选中行的index(int)
      * @throws log 输出异常
