@@ -12,8 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { replaceAll } = require("../tools/tool");
-const re = require("../tools/re");
+const { replaceAll } = require('../tools/tool');
+const re = require('../tools/re');
 
 let middleHTdSafeFuncTemplate = `
 struct createThreadSafeFunc[funcName]_value_struct {
@@ -21,7 +21,7 @@ struct createThreadSafeFunc[funcName]_value_struct {
 };
 
 [static_define] napi_value createThreadSafeFunc[funcName]_middle(napi_env env, napi_callback_info info);
-`
+`;
 
 /**
  * ThreadsafeFunc接口生成模板
@@ -74,36 +74,36 @@ napi_value  [middleClassName]createThreadSafeFunc[funcName]_middle(napi_env env,
     delete pxt; // release
     return result;
 }
-`
+`;
 
 function generateThreadsafeFunc(func, data, className) {
     let codeContext = {
-        middleFunc: "",
-        implH: "",
-        implCpp: "",
-        middleH: ""
-    }
+        middleFunc: '',
+        implH: '',
+        implCpp: '',
+        middleH: ''
+    };
 
-    let name = func.name
-    let preFix = 'createThreadSafeFunc'
+    let name = func.name;
+    let preFix = 'createThreadSafeFunc';
 
-    let postFix = name.substring(preFix.length, name.length)
-    codeContext.middleFunc = replaceAll(threadsafeFuncTemplete, "[funcName]", postFix)
-    codeContext.middleH = replaceAll(middleHTdSafeFuncTemplate, "[funcName]", postFix)
-    let middleClassName = ""
+    let postFix = name.substring(preFix.length, name.length);
+    codeContext.middleFunc = replaceAll(threadsafeFuncTemplete, '[funcName]', postFix);
+    codeContext.middleH = replaceAll(middleHTdSafeFuncTemplate, '[funcName]', postFix);
+    let middleClassName = '';
     if (className === null || className === undefined) {
-        codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "")
-        codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", "")
+        codeContext.middleH = codeContext.middleH.replaceAll('[static_define]', '');
+        codeContext.middleFunc = codeContext.middleFunc.replaceAll('[middleClassName]', '');
     }
     else {
-        middleClassName = className + "_middle"
-        codeContext.middleH = codeContext.middleH.replaceAll("[static_define]", "static ")
-        codeContext.middleFunc = codeContext.middleFunc.replaceAll("[middleClassName]", middleClassName + "::")
+        middleClassName = className + '_middle';
+        codeContext.middleH = codeContext.middleH.replaceAll('[static_define]', 'static ');
+        codeContext.middleFunc = codeContext.middleFunc.replaceAll('[middleClassName]', middleClassName + '::');
     }
 
-    return [codeContext.middleFunc, codeContext.implH, codeContext.implCpp, codeContext.middleH]
+    return [codeContext.middleFunc, codeContext.implH, codeContext.implCpp, codeContext.middleH];
 }
 
 module.exports = {
     generateThreadsafeFunc
-}
+};
