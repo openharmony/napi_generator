@@ -19,99 +19,108 @@ const { analyzeFunction } = require('./function');
 
 /* 匿名interface */
 function analyzeNoNameInterface(valueType, valueName, rsltInterface) {
-    valueType = re.replaceAll(valueType, ' ', '')
-    let matchs = re.match('{(([A-Za-z0-9_]+:[A-Za-z0-9_,;]+)*)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$', valueType)
+    valueType = re.replaceAll(valueType, ' ', '');
+    let matchs = re.match('{(([A-Za-z0-9_]+:[A-Za-z0-9_,;]+)*)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$', valueType);
     if (matchs) {
         let number = NumberIncrease.getAndIncrease();
-        let interfaceTypeName = 'AUTO_INTERFACE_%s_%s'.format(valueName, number)
-        let interfaceBody = valueType.substring(1, valueType.length-1)
-        interfaceBody = re.replaceAll(interfaceBody, ',', ';\n')                
+        let interfaceTypeName = 'AUTO_INTERFACE_%s_%s'.format(valueName, number);
+        let interfaceBody = valueType.substring(1, valueType.length - 1);
+        interfaceBody = re.replaceAll(interfaceBody, ',', ';\n')
         rsltInterface.push({
             name: interfaceTypeName,
-            body: analyzeInterface(interfaceBody, rsltInterface)
-        })                
-        valueType = interfaceTypeName
+            body: analyzeInterface(interfaceBody, rsltInterface),
+        });
+        valueType = interfaceTypeName;
     }
-    return valueType
+    return valueType;
 }
 
 /* 去除单行注释// */
 function parseNotes(data) {
-    let notes = data.indexOf('//') >= 0 ? data.substring(data.indexOf('//'), data.length) : '';          
-    while(notes !== '') {
-        notes = notes.substring(0, notes.indexOf('\n')); 
+    let notes = data.indexOf('//') >= 0 ? data.substring(data.indexOf('//'), data.length) : '';
+    while (notes !== '') {
+        notes = notes.substring(0, notes.indexOf('\n'));
         data = data.replace(notes, '');
-        notes = ''
+        notes = '';
         let st = data.indexOf('//');
-        if(st >= 0) {
+        if (st >= 0) {
             notes = data.substring(st, data.length);
         }
     }
-    return data
+    return data;
 }
 
 /**interface解析 */
 function analyzeInterface(data, rsltInterface = null, results, interfaceName = '') { // same as class
-    let body = data
-    body = body.indexOf('//') < 0 ? body : parseNotes(body)
-    let arr  =  [...body.matchAll(/;\s*\n+/g)]
+    let body = data;
+    body = body.indexOf('//') < 0 ? body : parseNotes(body);
+    let arr = [...body.matchAll(/;\s*\n+/g)];
     for (let i = 0; i < arr.length; i++) {
-        let result = arr[i]
-        body = re.replaceAll(body, result[0], ';\n')
+        let result = arr[i];
+        body = re.replaceAll(body, result[0], ';\n');
     }
-    body = body.split(';\n')
+    body = body.split(';\n');
     let result = {
         value: [],
-        function: []
-    }
+        function: [],
+    };
     for (let i in body) {
-        let t = body[i]
-        t = re.replaceAll(t, '\n', '')
-        while (t.length > 0 && t[0] === ' ') t = t.substring(1, t.length) // 去除前面的空格
-        while (t.length > 0 && t[-1] === ' ') t = t.substring(0, t.length - 1) // 去除后面的空格   
-        if (t === '') break // 如果t为空直接返回
-        let tt = re.match(' *([a-zA-Z0-9_]+)(\\?*)*: *([a-zA-Z_0-9<>,:{}[\\]| ]+)', t)
+        let t = body[i];
+        t = re.replaceAll(t, '\n', '');
+        // 去除前面的空格
+        while (t.length > 0 && t[0] === ' ') {
+            t = t.substring(1, t.length);
+        }
+        // 去除后面的空格
+        while (t.length > 0 && t[-1] === ' ') {
+            t = t.substring(0, t.length - 1);
+        }
+        // 如果t为空直接返回
+        if (t === '') {
+            break;
+        }
+        let tt = re.match(' *([a-zA-Z0-9_]+)(\\?*)*: *([a-zA-Z_0-9<>,:{}[\\]| ]+)', t);
         if (tt && t.indexOf('=>') < 0) { // 接口成员变量, 但不包括带'=>'的成员，带'=>'的接口成员需要按函数处理
             analyzeInterfaceVariable(t, tt, rsltInterface, result);
         }
-        tt = re.match("(static )* *(\\$*[A-Za-z0-9_]+) *[:]? *\\(([\n 'a-zA-Z\'\'\"\":;=,_0-9?<>{}()=>|[\\]]*)\\)"
-            + ' *(:|=>)? *([A-Za-z0-9_<>{}:;, .[\\]]+)?', t)
+        tt = re.match('(static )* *(\\$*[A-Za-z0-9_]+) *[:]? *\\(([\n \'a-zA-Z\'\'\"\":;=,_0-9?<>{}()=>|[\\]]*)\\)' +
+            ' *(:|=>)? *([A-Za-z0-9_<>{}:;, .[\\]]+)?', t);
         if (tt) { // 接口函数成员
             analyzeInterfaceFunction(t, tt, data, results, interfaceName, result);
         }
     }
-    return result
+    return result;
 }
 
 module.exports = {
     analyzeInterface,
-    parseNotes
-}
+    parseNotes,
+};
 
 function analyzeInterfaceFunction(t, tt, data, results, interfaceName, result) {
-  let ret = re.getReg(t, tt.regs[5]) === '' ? 'void' : re.getReg(t, tt.regs[5]);
-  let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) !== '', re.getReg(t, tt.regs[2]),
-    re.getReg(t, tt.regs[3]), ret, results, interfaceName);
-  if (funcDetail !== null && funcDetail !== undefined) {
-    // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
-    addUniqFunc2List(funcDetail, result.function);
-  }
+    let ret = re.getReg(t, tt.regs[5]) === '' ? 'void' : re.getReg(t, tt.regs[5]);
+    let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) !== '', re.getReg(t, tt.regs[2]),
+        re.getReg(t, tt.regs[3]), ret, results, interfaceName);
+    if (funcDetail !== null && funcDetail !== undefined) {
+        // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
+        addUniqFunc2List(funcDetail, result.function);
+    }
 }
 
 function analyzeInterfaceVariable(t, tt, rsltInterface, result) {
-  let valueName = re.getReg(t, tt.regs[1]);
-  let valueType = re.getReg(t, tt.regs[3]);
-  let index = valueType.indexOf('number');
-  let optionalFlag = re.getReg(t, tt.regs[2]) === '?' ? true : false;
-  while (index !== -1) {
-    valueType = valueType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
-    index = valueType.indexOf('number');
-  }
-  valueType = analyzeNoNameInterface(valueType, valueName, rsltInterface);
-  result.value.push({
-    name: valueName,
-    type: valueType,
-    realType: valueType,
-    optional: optionalFlag
-  });
+    let valueName = re.getReg(t, tt.regs[1]);
+    let valueType = re.getReg(t, tt.regs[3]);
+    let index = valueType.indexOf('number');
+    let optionalFlag = re.getReg(t, tt.regs[2]) === '?' ? true : false;
+    while (index !== -1) {
+        valueType = valueType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
+        index = valueType.indexOf('number');
+    }
+    valueType = analyzeNoNameInterface(valueType, valueName, rsltInterface);
+    result.value.push({
+        name: valueName,
+        type: valueType,
+        realType: valueType,
+        optional: optionalFlag,
+    });
 }
