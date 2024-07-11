@@ -23,13 +23,12 @@ class AnalyzeCMake {
     constructor() {
 
     }
-    static mkdirBuildTemp(compileFile){
+    static mkdirBuildTemp(compileFile) {
         let buildTmp;
-        if(Tool.OHOS_PORTING_TO==''){
+        if (Tool.OHOS_PORTING_TO == '') {
             buildTmp = path.join(compileFile.dir, 'build_tmp');//cmake编译的临时目录
-        }
-        else{
-            buildTmp = path.join(Tool.OHOS_PROJECT_PATH,Tool.OHOS_PORTING_TO, 'build_tmp');//cmake编译的临时目录
+        } else {
+            buildTmp = path.join(Tool.OHOS_PROJECT_PATH, Tool.OHOS_PORTING_TO, 'build_tmp');//cmake编译的临时目录
         }
         if (fs.existsSync(buildTmp)) {
             fs.rmSync(buildTmp, { recursive: true, force: true });//🌻
@@ -57,9 +56,9 @@ class AnalyzeCMake {
         }
         ohosToolchainCmake = path.join(buildTmp, 'ohos.toolchain.cmake');
         fs.writeFileSync(ohosToolchainCmake, ohosToolchainCmakeData);
-        ohosToolchainCmake=Tool.swapPath(ohosToolchainCmake);
+        ohosToolchainCmake = Tool.swapPath(ohosToolchainCmake);
         let args = [compileFile.dir,
-            '-DCMAKE_TOOLCHAIN_FILE=%s'.format(ohosToolchainCmake),'-G','Unix Makefiles',
+            '-DCMAKE_TOOLCHAIN_FILE=%s'.format(ohosToolchainCmake), '-G', 'Unix Makefiles',
             '-DCMAKE_MAKE_PROGRAM=%s'.format(Tool.swapPath(Tool.getMakeRaw())),
         ];
         if (cmakeArgs.length > 0) {
@@ -76,8 +75,9 @@ class AnalyzeCMake {
             if (code == 0) {
                 Logger.info('------------------------cmake ok');
                 AnalyzeMake.analyze(path.join(buildTmp, 'Makefile')); //调用make生成命令行
+            } else {
+                Logger.err('cmake fail');
             }
-            else Logger.err('cmake fail');
         });
     }
 }
