@@ -51,7 +51,7 @@ function analyzeNamespace(data) {
     while (data !== '\n') {
         let oldData = data;
         data = removeEmptyLine(data);
-        let matchs = re.match(' *\n*', data)
+        let matchs = re.match(' *\n*', data);
         data = preProcessData(data);
         // 只剩下空格和回车时，解析完成
         if (matchs && matchs.regs[0][1] === data.length) {

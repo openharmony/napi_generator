@@ -139,7 +139,7 @@ function cToJs(value, type, dest, deep = 1, optional, enumType = 0) {
     var propertyName = delPrefix(value);
     if (checkRetIsUndefined(type)) {
         NapiLog.logError('type is invalid!');
-        return;
+        return undefined;
     }
     if (type.indexOf('|') >= 0) {
         return unionTempleteFunc(value, type, dest, optional);
@@ -184,6 +184,7 @@ function cToJs(value, type, dest, deep = 1, optional, enumType = 0) {
     else {
         NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n. `
             .format(value, type, dest), getLogErrInfo());
+        return undefined;
     }
 }
 
