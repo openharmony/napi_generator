@@ -334,19 +334,19 @@ void EGLCore::TRBackground()
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
-    unsigned int VBO = 0;
-    unsigned int VAO = 0;
-    unsigned int EBO = 0;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
+    unsigned int vbo = 0;
+    unsigned int vao = 0;
+    unsigned int ebo = 0;
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ebo);
 
-    glBindVertexArray(VAO);
+    glBindVertexArray(vao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // position attribute
@@ -381,7 +381,7 @@ void EGLCore::TRBackground()
 
     glUseProgram(program_);
 
-    glBindVertexArray(VAO);
+    glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, NUM_6, GL_UNSIGNED_INT, 0);
 
     eglSwapBuffers(eglDisplay_, eglSurface_);
@@ -563,19 +563,19 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen, int& hasDraw)
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
-    unsigned int VBO = 0;
-    unsigned int VAO = 0;
-    unsigned int EBO = 0;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
+    unsigned int vbo = 0;
+    unsigned int vao = 0;
+    unsigned int ebo = 0;
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ebo);
 
-    glBindVertexArray(VAO);
+    glBindVertexArray(vao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // position attribute
@@ -613,7 +613,7 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen, int& hasDraw)
 
     glUseProgram(program_);
 
-    glBindVertexArray(VAO);
+    glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, NUM_6, GL_UNSIGNED_INT, 0);
 
     eglSwapBuffers(eglDisplay_, eglSurface_);
