@@ -2,7 +2,7 @@
 
 ## dts2cpp（NAPI框架代码生成工具）
 
-[readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/dts2cpp/README_zh.md)
+[readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/dts2cpp/dts2cpp_README_zh.md)
 
 ## h2dts（TS接口生成工具）
 
@@ -16,10 +16,6 @@
 
 [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2sa/README_zh.md)
 
-## dts2ets
-
-暂无
-
 ## h2dtscpp（NATIVE生成工具）
 
 [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2dtscpp/README.md)
@@ -27,7 +23,3 @@
 ## scan（API扫描工具）
 
 [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/tool/api/README_zh.md)
-
-## hdf（HCS可视化工具）
-
-[readme](https://gitee.com/openharmony/drivers_hdf_core/tree/master/framework/tools/hcs-view/README_zh.md) 
