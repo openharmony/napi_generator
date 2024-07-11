@@ -97,36 +97,25 @@ function parseEnumType(result) {
 
         // interface 匹配           
         for (let i in result.interface) {
-          let interf = result.interface[i];
-          if (!isValidValue(interf)) {
-            NapiLog.logError('parseEnumType interf is null!');
-            return null;
-          }
-
-          // function 匹配
-          for (let j in interf.body.function) {
-            let func = interf.body.function[j];
-            if (!isValidValue(func)) {
-                NapiLog.logError('parseEnumType func is null!');
+            let interf = result.interface[i];
+            if (!isValidValue(interf)) {
+                NapiLog.logError('parseEnumType interf is null!');
                 return null;
             }
-            
-            // 参数匹配
-            for (let k in func.value) {
-                let v = func.value[k];
-                if (!isValidValue(v)) {
-                    NapiLog.logError('parseEnumType func.value is null!');
+
+            // function 匹配
+            for (let j in interf.body.function) {
+                let func = interf.body.function[j];
+                if (!isValidValue(func)) {
+                    NapiLog.logError('parseEnumType func is null!');
                     return null;
                 }
 
-                if (v.type === enumm.name) {
-                    if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-                        v.type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
-                    } else if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
-                        v.type = 'string';
-                    } else {
-                        NapiLog.logError('parseEnumType for interface function value is not support this type %s.'
-                            .format(enumm.body.enumValueType), getLogErrInfo());
+                // 参数匹配
+                for (let k in func.value) {
+                    let v = func.value[k];
+                    if (!isValidValue(v)) {
+                        NapiLog.logError('parseEnumType func.value is null!');
                         return null;
                     }
 
