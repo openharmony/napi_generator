@@ -12,8 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { writeFile } = require("./Tool");
-const re = require("./re");
+const { writeFile } = require('./Tool');
+const re = require('./re');
 
 let commonH = `
 #ifndef [h_define_replace]
@@ -52,7 +52,7 @@ void getErrMessage(napi_status &status, napi_env &env, const napi_extended_error
     const char *info, const char *tag);
 
 #endif //[h_define_replace]
-`
+`;
 
 let commonCpp = `
 #include "[include_name]common.h"
@@ -74,30 +74,30 @@ void getErrMessage(napi_status &status, napi_env &env, const napi_extended_error
         napi_throw_error(env, NULL, res.c_str());
     }
 }
-`
+`;
 
 function generateBase(destDir, license, hFilePath) {
-  let index = hFilePath.lastIndexOf("\\");
-  let indexH = hFilePath.lastIndexOf(".h");
+  let index = hFilePath.lastIndexOf('\\');
+  let indexH = hFilePath.lastIndexOf('.h');
   let hFileName = hFilePath.substring(index + 1, indexH).toLowerCase();
   // [h_define_replace]
-  let hDefine = "NAPITUTORIALS_" + hFileName.toLocaleUpperCase() + "COMMON_H"
-  commonH = replaceAll(commonH, "[h_define_replace]", hDefine)
+  let hDefine = 'NAPITUTORIALS_' + hFileName.toLocaleUpperCase() + 'COMMON_H';
+  commonH = replaceAll(commonH, '[h_define_replace]', hDefine);
   // [business_include_replace]
-  let businessInclude = hFilePath.substring(index + 1, hFilePath.length)
-  commonH = replaceAll(commonH, "[business_include_replace]", businessInclude)
-  commonCpp = replaceAll(commonCpp, "[include_name]", hFileName)
-  writeFile(re.pathJoin(destDir, hFileName + "common.h"), null != license ? (license + "\n" + commonH) : commonH)
-  writeFile(re.pathJoin(destDir, hFileName + "common.cpp"), null != license ? (license + "\n" + commonCpp): commonCpp)
+  let businessInclude = hFilePath.substring(index + 1, hFilePath.length);
+  commonH = replaceAll(commonH, '[business_include_replace]', businessInclude);
+  commonCpp = replaceAll(commonCpp, '[include_name]', hFileName);
+  writeFile(re.pathJoin(destDir, hFileName + 'common.h'), null != license ? (license + '\n' + commonH) : commonH);
+  writeFile(re.pathJoin(destDir, hFileName + 'common.cpp'), null != license ? (license + '\n' + commonCpp) : commonCpp);
 }
 
 function replaceAll(s, sfrom, sto) {
   while (s.indexOf(sfrom) >= 0) {
-      s = s.replace(sfrom, sto)
+      s = s.replace(sfrom, sto);
   }
   return s;
 }
 
 module.exports = {
   generateBase
-}
+};

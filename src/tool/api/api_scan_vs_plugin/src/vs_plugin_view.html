@@ -111,40 +111,40 @@
     var mode = 0;
     let vscode = acquireVsCodeApi();
     function sendApiscanParamMsg() {
-        var fileNames = document.getElementById("asFilePath").value;
-        var genDir = document.getElementById("genASResultDir").value;
-        var buttonName = document.getElementById("okButton").textContent;
+        var fileNames = document.getElementById('asFilePath').value;
+        var genDir = document.getElementById('genASResultDir').value;
+        var buttonName = document.getElementById('okButton').textContent;
         var result = {
-            msg: "api_scan",
+            msg: 'api_scan',
             fileNames: fileNames,
             genDir: genDir,
             buttonName: buttonName,
-        }
+        };
         vscode.postMessage(result);
     }
 
     function selectASFilePath() {
-        var fileNames = document.getElementById("asFilePath").value;     
+        var fileNames = document.getElementById('asFilePath').value;     
         var result = {
-            msg: "selectASFilePath",
+            msg: 'selectASFilePath',
             filePath: fileNames,
-        }
+        };
         vscode.postMessage(result);
     }
 
     function selectPath(message) {
-        var genDir = document.getElementById("genASResultDir").value;
+        var genDir = document.getElementById('genASResultDir').value;
         var result = {
             msg: message,
             filePath: genDir
-        }
+        };
         vscode.postMessage(result);
     }
 
     function cancel() {
         var result = {
-            msg: "cancel"
-        }
+            msg: 'cancel'
+        };
         vscode.postMessage(result);
     }
 
@@ -153,15 +153,15 @@
         const message = event.data.msg;
         const path = event.data.path;
 
-        if (message === "selectASFilePath") {
-            document.getElementById("asFilePath").value = path;
-            document.getElementById("genASResultDir").value = path;
-        } else if (message === "selectASResultDir") {
-            document.getElementById("genASResultDir").value = path;
+        if (message === 'selectASFilePath') {
+            document.getElementById('asFilePath').value = path;
+            document.getElementById('genASResultDir').value = path;
+        } else if (message === 'selectASResultDir') {
+            document.getElementById('genASResultDir').value = path;
         } else {
-            console.log("param is error");
+            console.log('param is error');
         }
-    })
+    });
 
 </script>
 

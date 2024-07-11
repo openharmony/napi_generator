@@ -18,7 +18,7 @@ function utf8ArrayToStr(array) {
   var out, i, len, c;
   var char2, char3;
 
-  out = "";
+  out = '';
   len = array.length;
   i = 0;
   while (i < len) {
@@ -53,9 +53,9 @@ function stringToUint8Array(string, options = { stream: false }) {
   }
   let pos = 0;
   const len = string.length;
-  let at = 0;  // output position
-  let tlen = Math.max(32, len + (len >> 1) + 7);  // 1.5x size
-  let target = new Uint8Array((tlen >> 3) << 3);  // ... but at 8 byte offset
+  let at = 0; // output position
+  let tlen = Math.max(32, len + (len >> 1) + 7); // 1.5x size
+  let target = new Uint8Array((tlen >> 3) << 3); // ... but at 8 byte offset
 
   while (pos < len) {
     let value = string.charCodeAt(pos++);
@@ -69,40 +69,40 @@ function stringToUint8Array(string, options = { stream: false }) {
         }
       }
       if (value >= 0xd800 && value <= 0xdbff) {
-        isContinue = true;  // drop lone surrogate
+        isContinue = true; // drop lone surrogate
       }
     }
 
     if (!isContinue) {
       // expand the buffer if we couldn't write 4 bytes
       if (at + 4 > target.length) {
-        tlen += 8;  // minimum extra
-        tlen *= (1.0 + (pos / string.length) * 2);  // take 2x the remaining
-        tlen = (tlen >> 3) << 3;  // 8 byte offset
+        tlen += 8; // minimum extra
+        tlen *= (1.0 + (pos / string.length) * 2); // take 2x the remaining
+        tlen = (tlen >> 3) << 3; // 8 byte offset
 
         target = uint8Array(tlen, target);
       }
 
-      let calculateResult = calculate(value, target, at)
-      isContinue = calculateResult[0]
-      target = calculateResult[1]
-      at = calculateResult[2]
+      let calculateResult = calculate(value, target, at);
+      isContinue = calculateResult[0];
+      target = calculateResult[1];
+      at = calculateResult[2];
     }
   }
   return target.slice(0, at);
 }
 
 function calculate(value, target, at) {
-  let isContinue = false
-  if ((value & 0xffffff80) === 0) {  // 1-byte
-    target[at++] = value;  // ASCII
+  let isContinue = false;
+  if ((value & 0xffffff80) === 0) { // 1-byte
+    target[at++] = value; // ASCII
     isContinue = true;
-  } else if ((value & 0xfffff800) === 0) {  // 2-byte
+  } else if ((value & 0xfffff800) === 0) { // 2-byte
     target[at++] = ((value >> 6) & 0x1f) | 0xc0;
-  } else if ((value & 0xffff0000) === 0) {  // 3-byte
+  } else if ((value & 0xffff0000) === 0) { // 3-byte
     target[at++] = ((value >> 12) & 0x0f) | 0xe0;
     target[at++] = ((value >> 6) & 0x3f) | 0x80;
-  } else if ((value & 0xffe00000) === 0) {  // 4-byte
+  } else if ((value & 0xffe00000) === 0) { // 4-byte
     target[at++] = ((value >> 18) & 0x07) | 0xf0;
     target[at++] = ((value >> 12) & 0x3f) | 0x80;
     target[at++] = ((value >> 6) & 0x3f) | 0x80;
@@ -112,18 +112,18 @@ function calculate(value, target, at) {
   if (!isContinue) {
     target[at++] = (value & 0x3f) | 0x80;
   }
-  return [isContinue, target, at]
+  return [isContinue, target, at];
 }
 
 function uint8Array(tlen, target) {
   const update = new Uint8Array(tlen);
   update.set(target);
-  return update
+  return update;
 }
 
 function readFile(fn) {
   if (!fs.existsSync(fn)) {
-    return "";
+    return '';
   }
   let data = fs.readFileSync(fn);
   data = utf8ArrayToStr(data);
@@ -138,11 +138,11 @@ function createFolder(path) {
   if (fs.existsSync(path)) {
     return;
   }
-  fs.mkdirSync(path)
+  fs.mkdirSync(path);
 }
 
 module.exports = {
   readFile,
   writeFile,
   createFolder
-}
+};
