@@ -29,12 +29,12 @@ let gypTemplete = `
         }
     ]
 }
-`
+`;
 
 /**创建nodejs编译文件，用于在ubuntu测试 */
 function generateGYP(destDir, implName, license, bindingCpp) {
-    let ss = gypTemplete.replaceAll('[implName]', implName)
-    ss = ss.replaceAll('[businessCodeCpp]', bindingCpp)
+    let ss = gypTemplete.replaceAll('[implName]', implName);
+    ss = ss.replaceAll('[businessCodeCpp]', bindingCpp);
     if (license) {
         let s2 = license.substring(2, license.length - 2).split('\n');
         license = '';

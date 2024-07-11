@@ -17,8 +17,8 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const fs = require('fs');
-const re = require("./gen/tools/VsPluginRe");
-const { VsPluginLog } = require("./gen/tools/VsPluginLog");
+const re = require('./gen/tools/VsPluginRe');
+const { VsPluginLog } = require('./gen/tools/VsPluginLog');
 const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
 const path = require('path');
 let exeFilePath = null;
@@ -44,25 +44,25 @@ function activate(context) {
 	
 	let platform = detectPlatform();
 	if (platform === 'win') {
-		exeFilePath = __dirname + "/napi_generator-win.exe";
+		exeFilePath = __dirname + '/napi_generator-win.exe';
 	} else if (platform === 'mac') {
-		exeFilePath = __dirname + "/napi_generator-macos";
+		exeFilePath = __dirname + '/napi_generator-macos';
 	} else if (platform === 'Linux') {
-		exeFilePath = __dirname + "/napi_generator-linux";
+		exeFilePath = __dirname + '/napi_generator-linux';
 	}
 }
 
 function executorH2Ts(name, genDir) {
-	let command = exeFilePath + " -f " + name + " -o " + genDir + " -t true";
+	let command = exeFilePath + ' -f ' + name + ' -o ' + genDir + ' -t true';
 	let exec = require('child_process').exec;
 	exec(command, function (error, stdout, stderr) {
-		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
-		if (error || stdout.indexOf("success") < 0) {
-			vscode.window.showErrorMessage("genError:" + ((error !== null && error !== undefined) ?
-        error : "") + stdout);
-			return VsPluginLog.logError("VsPlugin:" + error + stdout);
+		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ', stderr =' + stderr);
+		if (error || stdout.indexOf('success') < 0) {
+			vscode.window.showErrorMessage('genError:' + ((error !== null && error !== undefined) ?
+        error : '') + stdout);
+			return VsPluginLog.logError('VsPlugin:' + error + stdout);
 		}
-		vscode.window.showInformationMessage("Generated successfully");
+		vscode.window.showInformationMessage('Generated successfully');
 	});
 }
 
@@ -86,28 +86,29 @@ function register(context, command) {
 				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
 			}
 		);
-		checkBoolval(boolValue, items);
+		
+    checkBoolval(boolValue, items);
 		globalPanel.webview.html = getWebviewContent(context, importToolChain);
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
-			if (msg === "cancel") {
+			if (msg === 'cancel') {
 				globalPanel.dispose();
 			} 
-			else if(msg === "h2ts") {
+			else if (msg === 'h2ts') {
 				checkReceiveMsg(message);
-			}else {
+			} else {
 				selectPath(globalPanel, message);
 			}
 		}, undefined, context.subscriptions);
     // 路径有效性判断
     if (uri.fsPath !== undefined) {
       let fn = re.getFileInPath(uri.fsPath);
-      let tt = re.match("([a-zA-Z_0-9]+.h)", fn);
+      let tt = re.match('([a-zA-Z_0-9]+.h)', fn);
       let result = {
-        msg: "selectHFilePath",
-        path: tt ? uri.fsPath : ""
-      }
+        msg: 'selectHFilePath',
+        path: tt ? uri.fsPath : ''
+      };
       globalPanel.webview.postMessage(result);
     }
 	});
@@ -135,14 +136,13 @@ function getNextPlugin(items, boolValue) {
     extensionIds.push(items[i]);
   }
 }
-
 function checkReceiveMsg(message) {
 	let name = message.fileNames;
 	let genDir = message.genDir;
 	let buttonName = message.buttonName;
-	name = re.replaceAll(name, " ", "");
-	if ("" === name) {
-		vscode.window.showErrorMessage("Please enter the path!");
+	name = re.replaceAll(name, ' ', '');
+	if ('' === name) {
+		vscode.window.showErrorMessage('Please enter the path!');
 		return;
 	}
 	if (exeFileExit()) {
@@ -151,7 +151,7 @@ function checkReceiveMsg(message) {
 			startNextPlugin();
 		}
 	} else {
-		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
+		vscode.window.showInformationMessage('Copy executable program to ' + __dirname);
 	}
 }
 
@@ -159,15 +159,15 @@ function checkReceiveMsg(message) {
 * 获取插件执行命令
 */
 function nextPluginExeCommand(nextPluginId) {
-    if (nextPluginId === "kaihong.ApiScan") {
+    if (nextPluginId === 'kaihong.ApiScan') {
 		return 'api_scan';
-	} else if (nextPluginId === "kaihong.gn-gen") {
+	} else if (nextPluginId === 'kaihong.gn-gen') {
 		return 'generate_gn';
-	} else if (nextPluginId === "kaihong.service-gen") {
+	} else if (nextPluginId === 'kaihong.service-gen') {
 		return 'generate_service';
-	} else if (nextPluginId === "kaihong.ts-gen") {
+	} else if (nextPluginId === 'kaihong.ts-gen') {
 		return 'generate_ts';
-	} else if (nextPluginId === "kaihong.napi-gen") {
+	} else if (nextPluginId === 'kaihong.napi-gen') {
 		return 'generate_napi';
 	} else {
 		return null;
@@ -198,11 +198,11 @@ function startNextPlugin() {
 		mode = message.mode;
 	}
 	const options = {
-		canSelectMany: mode === 0 ? true : false,//是否可以选择多个
-		openLabel: mode === 0 ? '选择文件' : '选择文件夹',//打开选择的右下角按钮label
-		canSelectFiles: mode === 0 ? true : false,//是否选择文件
-		canSelectFolders: mode === 0 ? false : true,//是否选择文件夹
-		defaultUri:vscode.Uri.file(''),//默认打开本地路径
+		canSelectMany: mode === 0 ? true : false, //是否可以选择多个
+		openLabel: mode === 0 ? '选择文件' : '选择文件夹', //打开选择的右下角按钮label
+		canSelectFiles: mode === 0 ? true : false, //是否选择文件
+		canSelectFolders: mode === 0 ? false : true, //是否选择文件夹
+		defaultUri:vscode.Uri.file(''), //默认打开本地路径
 		filters: mode === 1 ? {} : { // 文件过滤选项，在文件夹选择模式下不可设置此配置，否则ubuntu系统下无法选择文件夹
 			'Text files': ['h']
 		} 
@@ -211,16 +211,16 @@ function startNextPlugin() {
 	return vscode.window.showOpenDialog(options).then(fileUri => {
 	   if (fileUri && fileUri[0]) {
 		   console.log('Selected file: ' + fileUri[0].fsPath);
-		   let filePath = "";
+		   let filePath = '';
 		   for (let index = 0; index < fileUri.length; index++) {
-				filePath += fileUri[index].fsPath.concat(",");
+				filePath += fileUri[index].fsPath.concat(',');
 		   }
 		   let result = {
 				msg: message.msg,
 				path: filePath.length > 0 ? filePath.substring(0, filePath.length - 1) : filePath
-				}
+				};
 		   panel.webview.postMessage(result);
-		   return fileUri[0].fsPath
+		   return fileUri[0].fsPath;
 	   }
    });
 }
@@ -243,10 +243,10 @@ function getWebViewContent(context, templatePath) {
     const dirPath = path.dirname(resourcePath);
     let html = fs.readFileSync(resourcePath, 'utf-8');
     html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
-        if ($2.indexOf("https://") < 0) {
+        if ($2.indexOf('https://') < 0) {
             return $1 + globalPanel.webview.asWebviewUri(vscode.Uri.file(path.resolve(dirPath, $2))) + '"';
         } else {
-            return $1 + $2+'"';
+            return $1 + $2 + '"';
         }
     });
     return html;
@@ -255,4 +255,4 @@ function getWebViewContent(context, templatePath) {
 module.exports = {
 	activate,
 	deactivate
-}
+};

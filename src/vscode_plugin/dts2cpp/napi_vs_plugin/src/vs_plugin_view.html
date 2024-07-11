@@ -103,64 +103,64 @@
     let vscode = acquireVsCodeApi();
     let importCheck = false;
     window.onload = function () {
-        document.getElementById("selectMode").addEventListener("change", function (e) {
+        document.getElementById('selectMode').addEventListener('change', function (e) {
             if (e.target.value === '1') {
                 mode = 1;
             } else {
                 mode = 0;
             }
         });
-    }
+    };
 
     function sendParamMsg() {
-        var fileNames = document.getElementById("interfaceFile").value;
-        var genDir = document.getElementById("genFile").value;
-        var numberType = document.getElementById("numberTypeid").value;
-        var buttonName = document.getElementById("okButton").textContent;
+        var fileNames = document.getElementById('interfaceFile').value;
+        var genDir = document.getElementById('genFile').value;
+        var numberType = document.getElementById('numberTypeid').value;
+        var buttonName = document.getElementById('okButton').textContent;
         var result = {
-            msg: "param",
+            msg: 'param',
             mode: mode,
             fileNames: fileNames,
             genDir: genDir,
             numberType: numberType,
             importIsCheck: importCheck,
             buttonName: buttonName,
-        }
+        };
         vscode.postMessage(result);
     }
 
     function selectInterPath() {
         var result = {
-            msg: "selectInterPath",
+            msg: 'selectInterPath',
             mode: mode
-        }
+        };
         vscode.postMessage(result);
     }
 
     function selectPath(message) {
         var result = {
             msg: message
-        }
+        };
         vscode.postMessage(result);
     }
 
     function cancel() {
         var result = {
-            msg: "cancel"
-        }
+            msg: 'cancel'
+        };
         vscode.postMessage(result);
     }
 
     // 只能在单个文件时配置
     function config() {
       // 配置业务代码之前需要获取生成框架代码的路径
-      var genDir = document.getElementById("genFile").value;
+      var genDir = document.getElementById('genFile').value;
       var result = {
-        msg: "config",
+        msg: 'config',
         genDir: genDir,
         mode: mode,
-        interFile: document.getElementById("interfaceFile").value
-      }
+        interFile: document.getElementById('interfaceFile').value
+      };
       vscode.postMessage(result);
     }
 
@@ -172,20 +172,20 @@
         
         const message = event.data.msg;
         const path = event.data.path;
-        if(message === "selectInterPath") {
-            document.getElementById("interfaceFile").value = path;
+        if (message === 'selectInterPath') {
+            document.getElementById('interfaceFile').value = path;
             fillInputDir(path, message);
-        } else if(message === "selectGenPath") {
-            document.getElementById("genFile").value = path;
-        } else if(message === "selectBuildPath") {
-            document.getElementById("buildFile").value = path;
+        } else if (message === 'selectGenPath') {
+            document.getElementById('genFile').value = path;
+        } else if (message === 'selectBuildPath') {
+            document.getElementById('buildFile').value = path;
         } else {
-            console.log("param is error");
+            console.log('param is error');
         }
-    })
+    });
 
     function inputChange() {
-        var fileNames = document.getElementById("interfaceFile").value;
+        var fileNames = document.getElementById('interfaceFile').value;
         fillInputDir(fileNames);
     }
 
@@ -193,17 +193,17 @@
         var dir;
         var fileName;
         if (mode === 0) {
-            if (fileNames.indexOf(",") !== -1) {
-                fileName = fileNames.substring(0, fileNames.indexOf(","));
+            if (fileNames.indexOf(',') !== -1) {
+                fileName = fileNames.substring(0, fileNames.indexOf(','));
             } else {
                 fileName = fileNames;
             }
-            dir = fileName.substring(0, fileName.lastIndexOf("\\"));
+            dir = fileName.substring(0, fileName.lastIndexOf('\\'));
         } else {
             dir = fileNames;
         }
-        document.getElementById("genFile").value = dir;
-        document.getElementById("buildFile").value = dir;
+        document.getElementById('genFile').value = dir;
+        document.getElementById('buildFile').value = dir;
     }
 
 </script>

@@ -12,10 +12,10 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { replaceAll, getPrefix, getConstNum } = require("../tools/tool");
-const { paramGenerate } = require("./param_generate");
-const { returnGenerate } = require("./return_generate");
-const { jsonCfgList, InterfaceList }= require("../tools/common");
+const { replaceAll, getPrefix, getConstNum } = require('../tools/tool');
+const { paramGenerate } = require('./param_generate');
+const { returnGenerate } = require('./return_generate');
+const { jsonCfgList, InterfaceList }= require('../tools/common');
 
 /**
  * 结果异步返回Async|Promise
@@ -28,7 +28,7 @@ struct [funcName]_value_struct {[valueIn]
 [static_define]void [funcName]_execute(XNapiTool *pxt, DataPtr data);
 [static_define]void [funcName]_complete(XNapiTool *pxt, DataPtr data);
 [static_define]napi_value [funcName]_middle(napi_env env, napi_callback_info info);
-`
+`;
 
 let funcAsyncTemplete = `
 void [middleClassName][funcName]_execute(XNapiTool *pxt, DataPtr data)
@@ -69,7 +69,7 @@ napi_value [middleClassName][funcName]_middle(napi_env env, napi_callback_info i
     struct [funcName]_value_struct *vio = new [funcName]_value_struct();
     [valueCheckout][optionalCallbackInit][start_async]
     return result;
-}`
+}`;
 
 let cppTemplate = `
 bool %s%s(%s)
@@ -77,7 +77,7 @@ bool %s%s(%s)
     %s[replace_valueOut]
     return true;
 }
-`
+`;
 
 let cppCbResultTemplate = `
 [replace_outDefine]
@@ -86,96 +86,96 @@ void %s%sSetCbValue(%s)
   %s
   return;
 }
-`
+`;
 
 function removeEndlineEnter(value) {
     for (var i = value.length; i > 0; i--) {
-        let len = value.length
-        if (value.substring(len - 1, len) === "\n" || value.substring(len - 1, len) === ' ') {
-            value = value.substring(0, len - 1)
+        let len = value.length;
+        if (value.substring(len - 1, len) == '\n' || value.substring(len - 1, len) == ' ') {
+            value = value.substring(0, len - 1);
         } else {
-            value = '    ' + value + "\n"
-            break
+            value = '    ' + value + '\n';
+            break;
         }
     }
-    return value
+    return value;
 }
 
 function getOptionalCallbackInit(param) {
     if (!param.callback.optional) {
-        return ""
+        return '';
     }
-    let cType = param.valueOut.substr(0, param.valueOut.indexOf("*"))
-    return "vio->out = new %s;".format(cType)
+    let cType = param.valueOut.substr(0, param.valueOut.indexOf('*'));
+    return 'vio->out = new %s;'.format(cType);
 }
 
 function replaceBasicInfo(middleFunc, middleH, className) {
-    if (className === null || className === undefined) {
-        middleH = middleH.replaceAll("[static_define]", "")
-        middleFunc = middleFunc.replaceAll("[unwarp_instance]", "")
-        middleFunc = middleFunc.replaceAll("[checkout_async_instance]", "")
-        middleFunc = middleFunc.replaceAll("[middleClassName]", "")
+    if (className == null) {
+        middleH = middleH.replaceAll('[static_define]', '');
+        middleFunc = middleFunc.replaceAll('[unwarp_instance]', '');
+        middleFunc = middleFunc.replaceAll('[checkout_async_instance]', '');
+        middleFunc = middleFunc.replaceAll('[middleClassName]', '');
     }
     else {
-        middleH = middleH.replaceAll("[static_define]", "static ")
-        middleFunc = middleFunc.replaceAll("[unwarp_instance]",
-            `pxt->SetAsyncInstance(pxt->UnWarpInstance());`)
-        middleFunc = middleFunc.replaceAll("[checkout_async_instance]",
-            "%s *pInstance = (%s *)pxt->GetAsyncInstance();".format(className, className))
-        middleFunc = middleFunc.replaceAll("[middleClassName]", className + "_middle" + "::")
+        middleH = middleH.replaceAll('[static_define]', 'static ');
+        middleFunc = middleFunc.replaceAll('[unwarp_instance]',
+            `pxt->SetAsyncInstance(pxt->UnWarpInstance());`);
+        middleFunc = middleFunc.replaceAll('[checkout_async_instance]',
+            '%s *pInstance = (%s *)pxt->GetAsyncInstance();'.format(className, className));
+        middleFunc = middleFunc.replaceAll('[middleClassName]', className + '_middle' + '::');
     }
-    return [middleFunc, middleH]
+    return [middleFunc, middleH];
 }
 function generateFunctionAsync(func, data, className, implHCbVariable) {
-    let middleFunc = replaceAll(funcAsyncTemplete, "[funcName]", func.name)
-    let middleH = ""
-    if (func.name !== "constructor") {
-      middleH = replaceAll(funcAsyncMiddleHTemplete, "[funcName]", func.name)
+    let middleFunc = replaceAll(funcAsyncTemplete, '[funcName]', func.name);
+    let middleH = '';
+    if (func.name != 'constructor') {
+      middleH = replaceAll(funcAsyncMiddleHTemplete, '[funcName]', func.name);
     }
-    let basicInfoRes = replaceBasicInfo(middleFunc, middleH, className)
-    middleFunc = basicInfoRes[0]
-    middleH = basicInfoRes[1]
+    let basicInfoRes = replaceBasicInfo(middleFunc, middleH, className);
+    middleFunc = basicInfoRes[0];
+    middleH = basicInfoRes[1];
 
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
-    let param = { valueIn: "", valueOut: "", valueCheckout: "", valueFill: "",
-        valuePackage: "", valueDefine: "", optionalParamDestory: "" }
+    let param = { valueIn: '', valueOut: '', valueCheckout: '', valueFill: '',
+        valuePackage: '', valueDefine: '', optionalParamDestory: '' };
 
     for (let i in func.value) {
-        paramGenerate(i, func.value[i], param, data)
+        paramGenerate(i, func.value[i], param, data);
     }
-    returnGenerate(param.callback, param, data)
+    returnGenerate(param.callback, param, data);
     middleH = replaceValueOut(middleH, param);
 
     middleFunc = getMiddleFunc(param, middleFunc);
-    middleFunc = replaceAll(middleFunc, "[start_async]", `
+    middleFunc = replaceAll(middleFunc, '[start_async]', `
     napi_value result = pxt->StartAsync(%s_execute, reinterpret_cast<DataPtr>(vio), %s_complete,
     pxt->GetArgc() == %s? pxt->GetArgv(%d) : nullptr);`
         .format(func.name, func.name, getConstNum(parseInt(param.callback.offset) + 1),
         getConstNum(param.callback.offset))) // 注册异步调用
     let callFunc = "%s%s(%s);".format((className === null || className === undefined) ?
       "" : "pInstance->", func.name, param.valueFill)
-    middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc) // 执行
-    middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage) // 输出参数打包
-    middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory) // 可选参数内存释放
+    middleFunc = replaceAll(middleFunc, "[callFunc]", callFunc); // 执行
+    middleFunc = replaceAll(middleFunc, "[valuePackage]", param.valuePackage); // 输出参数打包
+    middleFunc = replaceAll(middleFunc, "[optionalParamDestory]", param.optionalParamDestory); // 可选参数内存释放
 
-    let prefixArr = getPrefix(data, func)
-    let implH = ""
-    let implCpp = ""
+    let prefixArr = getPrefix(data, func);
+    let implH = "";
+    let implCpp = "";
     if (!func.isParentMember) {
         // 只有类/接口自己的成员方法需要在.h.cpp中生成，父类/父接口不需要
         implH = "\n%s%s%sbool %s(%s)%s;".format(
-            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3])
+            prefixArr[0], prefixArr[1], prefixArr[2], func.name, param.valueDefine, prefixArr[3]);
         let callStatement = jsonCfgList.getValue((className === null || className === undefined)?
           "": className, func.name);
         implCpp = cppTemplate.format((className === null || className === undefined) ?
           "" : className + "::", func.name, param.valueDefine,
-            (callStatement === null || callStatement === undefined)? "": callStatement)
+            (callStatement === null || callStatement === undefined)? "": callStatement);
 
-        let outResult = generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable, implCpp, implH)
-        implCpp = outResult[0]
-        implH = outResult[1]
+        let outResult = generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable, implCpp, implH);
+        implCpp = outResult[0];
+        implH = outResult[1];
     }
-    return [middleFunc, implH, implCpp, middleH]
+    return [middleFunc, implH, implCpp, middleH];
 }
 
 function getMiddleFunc(param, middleFunc) {
@@ -195,8 +195,8 @@ function getMiddleFunc(param, middleFunc) {
 }
 
 function generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable, implCpp, implH) {
-    let cbInterfaceRes = "";
-    let outInterfaceDefine = param.valueDefine.substring(param.valueDefine.lastIndexOf(",") + 1,
+    let cbInterfaceRes = '';
+    let outInterfaceDefine = param.valueDefine.substring(param.valueDefine.lastIndexOf(',') + 1,
         param.valueDefine.length);
     outInterfaceDefine = replaceAll(outInterfaceDefine, ' ', '');
     let index = outInterfaceDefine.indexOf('&');
@@ -223,24 +223,24 @@ function generateCbInterfaceOutFunc(param, className, prefixArr, implHCbVariable
         if (className !== null && className !== undefined) {
             cbInterfaceRes = replaceAll(cbInterfaceRes, '[replace_outDefine]', cbOutDefine)
         } else {
-            cbInterfaceRes = replaceAll(cbInterfaceRes, '[replace_outDefine]', '')
+            cbInterfaceRes = replaceAll(cbInterfaceRes, '[replace_outDefine]', '');
         }
        
         // 多次使用interface(非匿名)作为Promise回调只需生成一次cbResult接口
-        let outResDefine = "\n%s%s%sstatic %s %sOutRes;".format(
+        let outResDefine = '\n%s%s%sstatic %s %sOutRes;'.format(
             prefixArr[0], prefixArr[1], prefixArr[2], outInterfaceName, outInterfaceName.toLocaleLowerCase());
         let replaceOut = "\n    out = %s%sOutRes;".format((className === null || className === undefined) ?
           "" : className + "::",
             outInterfaceName.toLocaleLowerCase());
-        implCpp = replaceAll(implCpp, "[replace_valueOut]", replaceOut);
+        implCpp = replaceAll(implCpp, '[replace_valueOut]', replaceOut);
         if (implHCbVariable.indexOf(outResDefine) < 0) {
             implH += outResDefine;
-            implH += "\n%s%s%svoid %sSetCbValue(%s);".format(
+            implH += '\n%s%s%svoid %sSetCbValue(%s);'.format(
                 prefixArr[0], prefixArr[1], prefixArr[2], outInterfaceName.toLocaleLowerCase(), defineParams);
             implCpp += cbInterfaceRes;
         }
     } else {
-        implCpp = replaceAll(implCpp, "[replace_valueOut]", '');
+        implCpp = replaceAll(implCpp, '[replace_valueOut]', '');
     }
     return [implCpp, implH];
 }
@@ -250,11 +250,11 @@ function replaceValueOut(middleH, param) {
     if (param.valueOut === "") {
         middleH = replaceAll(middleH, "[valueOut]", param.valueOut); // # 输出参数定义
     } else {
-        middleH = replaceAll(middleH, "[valueOut]", "\n    " + param.valueOut); // # 输出参数定义
+        middleH = replaceAll(middleH, '[valueOut]', '\n    ' + param.valueOut); // # 输出参数定义
     }
     return middleH;
 }
 
 module.exports = {
     generateFunctionAsync
-}
+};
