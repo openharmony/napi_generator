@@ -182,8 +182,7 @@ function cToJs(value, type, dest, deep = 1, optional, enumType = 0) {
         return objectTempleteFuncReturn(value);
     }
     else {
-        NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n. `
-            .format(value, type, dest), getLogErrInfo());
+        NapiLog.logError(`\n---- This type do not generate cToJs %s,%s,%s ----\n. `.format(value, type, dest), getLogErrInfo());
         return undefined;
     }
 }
