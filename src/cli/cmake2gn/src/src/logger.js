@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { Tool } = require("./tool");
+const { Tool } = require('./tool');
 
 class Logger {
     constructor() {
@@ -23,7 +23,7 @@ class Logger {
             Tool.VSCODE_INST.window.showErrorMessage(msg);
         }
 
-        console.log("ERR :", msg);
+        console.log('ERR :', msg);
         if (dontexit) {
             return false;
         }
@@ -36,7 +36,7 @@ class Logger {
             Tool.VSCODE_INST.window.showInformationMessage(msg);
         }
 
-        console.log("INFO (%d) %s".format(Logger.INFO_NUM++, msg));
+        console.log('INFO (%d) %s'.format(Logger.INFO_NUM++, msg));
     }
 }
 

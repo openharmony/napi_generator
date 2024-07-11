@@ -184,7 +184,7 @@ class AnalyzeCommand {
         let startp = -1;
         let isContinuChar = 0;
         for (let p = 0; p < s.length; p++) {
-            if (s[p] === '\'' && s[p-1] !== '\\') {
+            if (s[p] == '\"' && s[p-1] != '\\') {
                 isContinuChar = 1 - isContinuChar;
             }
             if (startp >= 0) {
@@ -531,7 +531,7 @@ class AnalyzeCommand {
             let datas = data.split(' ');
             let pp = ['.c',
                 '.o',
-                '.o',
+                '.o"',
                 '.a',
                 '.S',
                 '.so'
@@ -548,8 +548,8 @@ class AnalyzeCommand {
         return false;
     }
     static analyzeCcClangxx(cmd) {
-        if (cmd.indexOf('\'')) {
-            cmd = cmd.replace(/\'/g, '');
+        if (cmd.indexOf('\"')) {
+            cmd = cmd.replace(/\"/g, '');
         }
         let local = {
             ret: AnalyzeCommand.resultTemplete(),
