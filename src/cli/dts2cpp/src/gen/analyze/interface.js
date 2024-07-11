@@ -28,7 +28,7 @@ function analyzeNoNameInterface(valueType, valueName, rsltInterface) {
         interfaceBody = re.replaceAll(interfaceBody, ',', ';\n');
         rsltInterface.push({
             name: interfaceTypeName,
-            body: analyzeInterface(interfaceBody, rsltInterface)
+            body: analyzeInterface(interfaceBody, rsltInterface),
         });
         valueType = interfaceTypeName;
     }
@@ -62,7 +62,7 @@ function analyzeInterface(data, rsltInterface = null, results, interfaceName = '
     body = body.split(';\n');
     let result = {
         value: [],
-        function: []
+        function: [],
     };
     for (let i in body) {
         let t = body[i];
@@ -95,29 +95,29 @@ module.exports = {
 };
 
 function analyzeInterfaceFunction(t, tt, data, results, interfaceName, result) {
-  let ret = re.getReg(t, tt.regs[5]) === '' ? 'void' : re.getReg(t, tt.regs[5]);
-  let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) !== '', re.getReg(t, tt.regs[2]),
-    re.getReg(t, tt.regs[3]), ret, results, interfaceName);
-  if (funcDetail !== null && funcDetail !== undefined) {
-    // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
-    addUniqFunc2List(funcDetail, result.function);
-  }
+    let ret = re.getReg(t, tt.regs[5]) === '' ? 'void' : re.getReg(t, tt.regs[5]);
+    let funcDetail = analyzeFunction(data, re.getReg(t, tt.regs[1]) !== '', re.getReg(t, tt.regs[2]),
+        re.getReg(t, tt.regs[3]), ret, results, interfaceName);
+    if (funcDetail !== null && funcDetail !== undefined) {
+        // 完全一样的方法不重复添加 (如同名同参的AsyncCallback和Promise方法)
+        addUniqFunc2List(funcDetail, result.function);
+    }
 }
 
 function analyzeInterfaceVariable(t, tt, rsltInterface, result) {
-  let valueName = re.getReg(t, tt.regs[1]);
-  let valueType = re.getReg(t, tt.regs[3]);
-  let index = valueType.indexOf('number');
-  let optionalFlag = re.getReg(t, tt.regs[2]) === '?' ? true : false;
-  while (index !== -1) {
-    valueType = valueType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
-    index = valueType.indexOf('number');
-  }
-  valueType = analyzeNoNameInterface(valueType, valueName, rsltInterface);
-  result.value.push({
-    name: valueName,
-    type: valueType,
-    realType: valueType,
-    optional: optionalFlag
-  });
+    let valueName = re.getReg(t, tt.regs[1]);
+    let valueType = re.getReg(t, tt.regs[3]);
+    let index = valueType.indexOf('number');
+    let optionalFlag = re.getReg(t, tt.regs[2]) === '?' ? true : false;
+    while (index !== -1) {
+        valueType = valueType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
+        index = valueType.indexOf('number');
+    }
+    valueType = analyzeNoNameInterface(valueType, valueName, rsltInterface);
+    result.value.push({
+        name: valueName,
+        type: valueType,
+        realType: valueType,
+        optional: optionalFlag,
+    });
 }

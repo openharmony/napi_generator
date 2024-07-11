@@ -21,8 +21,8 @@ function analyzeEnum(data) {
     let result = {
         element: [],
         function: [],
-        enumValueType: 0 // 0代表数字，1代表字符串
-    };
+        enumValueType: 0, // 0代表数字，1代表字符串
+    }
     for (let i in body) {
         let bodyContent = body[i];
         while (bodyContent.length > 0 && bodyContent[0] === ' ') {
@@ -40,8 +40,8 @@ function analyzeEnum(data) {
 }
 
 function analyzeEnumResult(result, bodyContent, index) {
-    let regString       = re.match(' *([a-zA-Z0-9_]+) * = *\'([\x21-\x7e]+)*\'', bodyContent);
-    let regSingleQuotes = re.match(" *([a-zA-Z0-9_]+) * = *'([\x21-\x7e]+)*'", bodyContent);
+    let regString = re.match(' *([a-zA-Z0-9_]+) * = *\"([\x21-\x7e]+)*\"', bodyContent);
+    let regSingleQuotes = re.match(' *([a-zA-Z0-9_]+) * = *\'([\x21-\x7e]+)*\'', bodyContent);
     let regNumber = re.match(' *([a-zA-Z0-9_]+) * = *([a-zA-Z_0-9<>-]+)', bodyContent);
     let reg = re.match(' *([a-zA-Z0-9_]+) *', bodyContent);
     if (regString) {
@@ -50,7 +50,7 @@ function analyzeEnumResult(result, bodyContent, index) {
         result.element.push({
             name: elementName,
             value: elementValue,
-            type: 'string'
+            type: 'string',
         });
         result.enumValueType = 1;
     } else if (regSingleQuotes) {
@@ -59,7 +59,7 @@ function analyzeEnumResult(result, bodyContent, index) {
         result.element.push({
             name: elementName,
             value: elementValue,
-            type: 'string'
+            type: 'string',
         });
         result.enumValueType = 1;
     } else if (regNumber) {
@@ -69,7 +69,7 @@ function analyzeEnumResult(result, bodyContent, index) {
         result.element.push({
             name: elementName,
             value: elementValue,
-            type: 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease()
+            type: 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease(),
         });
         result.enumValueType = 0;
     } else if (reg) {
@@ -78,7 +78,7 @@ function analyzeEnumResult(result, bodyContent, index) {
         result.element.push({
             name: elementName,
             value: elementValue,
-            type: 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease()
+            type: 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease(),
         });
         result.enumValueType = 0;
     }
@@ -87,5 +87,5 @@ function analyzeEnumResult(result, bodyContent, index) {
 
 module.exports = {
     analyzeEnum,
-    analyzeEnumResult
+    analyzeEnumResult,
 };

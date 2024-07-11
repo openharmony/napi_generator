@@ -20,7 +20,7 @@ const { NapiLog } = require('../tools/NapiLog');
 function isSyncFuncType(type, funcType) {
     let isSync = false;
     if (funcType === FuncType.DIRECT && type.indexOf('Callback') >= 0 && type.indexOf('AsyncCallback') < 0 ||
-    isFuncType(type) || isArrowFunc(type)) {
+        isFuncType(type) || isArrowFunc(type)) {
         isSync = true;
     }
     return isSync;
@@ -33,36 +33,36 @@ function isSyncFuncType(type, funcType) {
  * @param {*} rsltCallFunction 解析结果
  */
 function analyzeCallbackFunction(valueType, valueName, rsltCallFunction) {
-    
+
     if (valueType.indexOf('=>') > 0) {
         valueType = re.replaceAll(valueType, ' ', '');
     }
     let matchs = re.match('\\(([a-zA-Z_0-9:,]+)*\\)=>([a-zA-Z_0-9]+)', valueType);
 
     if (matchs) {
-      let number = NumberIncrease.getAndIncrease();
-      let functionTypeName = 'AUTO_CALLFUNCTION_%s_%s'.format(valueName, number);
-     
-      let functionRet = re.getReg(valueType, matchs.regs[2]);
-      let functionBody = re.getReg(valueType, matchs.regs[1]);
-     
-      let tmp = analyzeParams(functionTypeName, functionBody);
-      let bodyRes = tmp[0];
-      for (let i in bodyRes) {
-        let hasProperty = Object.prototype.hasOwnProperty.call(bodyRes[i], 'type');
-        if (hasProperty && bodyRes[i].type === 'number') {
-          bodyRes[i].type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
-        }
-      }
+        let number = NumberIncrease.getAndIncrease();
+        let functionTypeName = 'AUTO_CALLFUNCTION_%s_%s'.format(valueName, number);
 
-      rsltCallFunction.push({
-          'name': functionTypeName,
-          'body': bodyRes,
-          'ret': functionRet
-      });
-      valueType = functionTypeName;
-  }
-  return valueType;
+        let functionRet = re.getReg(valueType, matchs.regs[2]);
+        let functionBody = re.getReg(valueType, matchs.regs[1]);
+
+        let tmp = analyzeParams(functionTypeName, functionBody);
+        let bodyRes = tmp[0];
+        for (let i in bodyRes) {
+            let hasProperty = Object.prototype.hasOwnProperty.call(bodyRes[i], 'type');
+            if (hasProperty && bodyRes[i].type === 'number') {
+                bodyRes[i].type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
+            }
+        }
+
+        rsltCallFunction.push({
+            'name': functionTypeName,
+            'body': bodyRes,
+            'ret': functionRet,
+        });
+        valueType = functionTypeName;
+    }
+    return valueType;
 }
 
 /**函数参数解析 */
@@ -76,12 +76,12 @@ function analyzeParams(funcName, values) {
         if (v === null) {
             v = values;
         }
-            
+
         values = values.substring(v.length, values.length);
-        let matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *([a-zA-Z<,>|_0-9\\[\\]\\(\\):='{}]+)", v);
+        let matchs = re.match('([a-zA-Z_0-9\\.]+)(\\?*): *([a-zA-Z<,>|_0-9\\[\\]\\(\\):=\'{}]+)', v);
         if (matchs === null && (funcName === 'on' || funcName === 'off')) {
             // on和off的第一个参数的类型可以是一串字符
-            matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *\"([a-zA-Z|_0-9\\[\\]\\(\\):='{}]+)\"", v);
+            matchs = re.match('([a-zA-Z_0-9\\.]+)(\\?*): *\"([a-zA-Z|_0-9\\[\\]\\(\\):=\'{}]+)\"', v);
         }
         if (matchs !== null) {
             let type = re.getReg(v, matchs.regs[3]);
@@ -101,16 +101,16 @@ function analyzeParams(funcName, values) {
                 NapiLog.logError('Invalid parameter [%s] of function [%s],'.format(v, funcName) + 
                     ' the required parameter cannot follow an optional parameter.');
                 checkParamOk = false;
-            } 
+            }
             if (checkParamOk) {
-                result.push({ 'name': re.getReg(v, matchs.regs[1]), 'type': type, 'optional': optionalFlag, 'realType': type});
+                result.push({ 'name': re.getReg(v, matchs.regs[1]), 'type': type, 'optional': optionalFlag, 'realType': type });
                 if (type.indexOf('AsyncCallback') >= 0) {
                     funcType = FuncType.ASYNC;
                 }
 
                 if (isSyncFuncType(type, funcType)) {
                     funcType = FuncType.SYNC;
-                }             
+                }
             }
         }
         else {
@@ -121,5 +121,5 @@ function analyzeParams(funcName, values) {
 }
 
 module.exports = {
-    analyzeParams
+    analyzeParams,
 };
