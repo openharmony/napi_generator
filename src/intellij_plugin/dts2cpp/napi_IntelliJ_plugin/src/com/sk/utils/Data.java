@@ -50,7 +50,7 @@ public class Data {
 
     /**
      * get函数
-     * 
+     *
      * @param void 空
      * @return 用户配置的业务代码根路径
      * @throws log 输出异常

@@ -56,7 +56,7 @@ public class ConfigDialogPane extends JDialog {
 
     /**
      * 构造函数
-     *     
+     *
      * @param list  配置文件数据列表
      * @param index  用户选择的列表行索引
      * @param data   用户选择的列表行数据

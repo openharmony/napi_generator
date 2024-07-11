@@ -67,7 +67,7 @@ public class ShowCfgInfoDialog extends DialogWrapper {
 
     /**
      * 创建视图
-     * 
+     *
      * @param void 空
      * @return 组件内容
      * @throws log 输出异常
