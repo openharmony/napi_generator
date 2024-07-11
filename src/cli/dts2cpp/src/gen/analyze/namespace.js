@@ -22,7 +22,7 @@ const { analyzeType, analyzeType2, analyzeType2Result } = require('./type');
 const { NumberIncrease, EnumValueType, getLogErrInfo } = require('../tools/common');
 
 function preProcessData(data) {
-    data = data.indexOf('//') < 0 ? data : parseNotes(data);   
+    data = data.indexOf('//') < 0 ? data : parseNotes(data);
     data = re.replaceAll(data, '\n{', '{');
     return data;
 }
@@ -51,13 +51,15 @@ function analyzeNamespace(data) {
     while (data !== '\n') {
         let oldData = data;
         data = removeEmptyLine(data);
-        let matchs = re.match(' *\n*', data);   
+        let matchs = re.match(' *\n*', data);
         data = preProcessData(data);
         // 只剩下空格和回车时，解析完成
-        if (matchs && matchs.regs[0][1] === data.length) break;
+        if (matchs && matchs.regs[0][1] === data.length) {
+            break;
+        }
         let parseEnumResult = parseEnum(matchs, data, result);
         data = getDataByResult(parseEnumResult);
-        
+
         result = parseEnumType(result);
 
         let parseInterResult = parseInterface(matchs, data, result);
@@ -65,7 +67,7 @@ function analyzeNamespace(data) {
 
         let parseFunctionResult = parseFunction(matchs, data, result);
         data = getDataByResult(parseFunctionResult);
-        
+
         let parseTypeResult = parseType(matchs, data, result);
         data = getDataByResult(parseTypeResult);
 
@@ -95,42 +97,42 @@ function parseEnumType(result) {
 
         // interface 匹配           
         for (let i in result.interface) {
-          let interf = result.interface[i];
-          if(!isValidValue(interf)) {
-            NapiLog.logError('parseEnumType interf is null!');
-            return null;
-          }
-
-          // function 匹配
-          for (let j in interf.body.function) {
-            let func = interf.body.function[j];
-            if(!isValidValue(func)) {
-                NapiLog.logError('parseEnumType func is null!');
+            let interf = result.interface[i];
+            if (!isValidValue(interf)) {
+                NapiLog.logError('parseEnumType interf is null!');
                 return null;
             }
-            
-            // 参数匹配
-            for (let k in func.value) {
-                let v = func.value[k];
-                if(!isValidValue(v)) {
-                    NapiLog.logError('parseEnumType func.value is null!');
+
+            // function 匹配
+            for (let j in interf.body.function) {
+                let func = interf.body.function[j];
+                if (!isValidValue(func)) {
+                    NapiLog.logError('parseEnumType func is null!');
                     return null;
                 }
 
-                if (v.type ===  enumm.name) {
-                    if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-                        v.type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
-                    } else if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
-                        v.type = 'string';
-                    } else {
-                        NapiLog.logError('parseEnumType for interface function value is not support this type %s.'
-                            .format(enumm.body.enumValueType), getLogErrInfo());
+                // 参数匹配
+                for (let k in func.value) {
+                    let v = func.value[k];
+                    if (!isValidValue(v)) {
+                        NapiLog.logError('parseEnumType func.value is null!');
                         return null;
                     }
-                    result.interface[i].body.function[j].value[k].type = v.type;                    
-                }                
+
+                    if (v.type === enumm.name) {
+                        if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+                            v.type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
+                        } else if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
+                            v.type = 'string';
+                        } else {
+                            NapiLog.logError('parseEnumType for interface function value is not support this type %s.'
+                                .format(enumm.body.enumValueType), getLogErrInfo());
+                            return null;
+                        }
+                        result.interface[i].body.function[j].value[k].type = v.type;
+                    }
+                }
             }
-          }          
         }
     }
     return result;
@@ -143,7 +145,7 @@ function parseNamespace(matchs, data, result) {
         let namespaceBody = checkOutBody(data, matchs.regs[3][0], null, true);
         result.namespace.push({
             name: namespaceName,
-            body: analyzeNamespace(namespaceBody)
+            body: analyzeNamespace(namespaceBody),
         });
         data = data.substring(matchs.regs[3][0] + namespaceBody.length + 2, data.length);
         if (matchs.regs[1][0] !== -1) {
@@ -171,7 +173,7 @@ function parseEnum(matchs, data, result) {
         let enumBody = checkOutBody(data, matchs.regs[3][0], null, null);
         result.enum.push({
             name: enumName,
-            body: analyzeEnum(enumBody.substring(1, enumBody.length - 1))
+            body: analyzeEnum(enumBody.substring(1, enumBody.length - 1)),
         });
         data = data.substring(matchs.regs[3][0] + enumBody.length);
         if (matchs.regs[1][0] !== -1) {
@@ -183,7 +185,7 @@ function parseEnum(matchs, data, result) {
         let constName = re.getReg(data, matchs.regs[1]);
         result.const.push({
             name: constName,
-            body: re.getReg(data, matchs.regs[2])
+            body: re.getReg(data, matchs.regs[2]),
         });
         data = re.removeReg(data, matchs.regs[0]);
         if (matchs.regs[1][0] !== -1) {
@@ -195,7 +197,7 @@ function parseEnum(matchs, data, result) {
 
 function isValidValue(value) {
     if (value === null || value === undefined) {
-      return false;
+        return false;
     }
     return true;
 }
@@ -207,7 +209,7 @@ function getTypeInfo(result, typeName, typeType, isEnum) {
     result.type.push({
         name: typeName,
         body: typeType,
-        isEnum: isEnum
+        isEnum: isEnum,
     });
 }
 
@@ -218,7 +220,7 @@ function parseType(matchs, data, result) {
         let typeType = re.getReg(data, matchs.regs[3]);
         let index = typeType.indexOf('number');
         if (index !== -1) {
-          typeType = typeType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
+            typeType = typeType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
         }
         getTypeInfo(result, typeName, typeType, false);
         data = re.removeReg(data, matchs.regs[0]);
@@ -227,7 +229,7 @@ function parseType(matchs, data, result) {
         }
     }
 
-    matchs = re.match("(export )*type ([a-zA-Z]+) *= *([\\(\\):=a-zA-Z<> |\n']+);", data);
+    matchs = re.match('(export )*type ([a-zA-Z]+) *= *([\\(\\):=a-zA-Z<> |\n\']+); ', data);
     if (matchs) {
         let typeName = re.getReg(data, matchs.regs[2]);
         let typeBody = re.getReg(data, matchs.regs[3]);
@@ -286,8 +288,8 @@ function parseFunction(matchs, data, result) {
         }
         funcRet = re.replaceAll(re.replaceAll(funcRet, ' ', ''), '\n', '');
 
-        if(funcRet[funcRet.length-1] === ';'){
-            funcRet = funcRet.substring(0, funcRet.length-1);
+        if (funcRet[funcRet.length - 1] === ';') {
+            funcRet = funcRet.substring(0, funcRet.length - 1);
         }
         let funcDetail = analyzeFunction(
             result, false, funcName, funcValue.substring(1, funcValue.length - 1), funcRet, result);
@@ -341,18 +343,18 @@ function getParentNameList(firstKey, secondKey, parentStr) {
  * @param result 解析后的ts数据结构
  * @returns data 原始ts文件内容中剩余未解析的部分
  */
-function createInterfaceData (matchs, data, result) {
+function createInterfaceData(matchs, data, result) {
     let interfaceName = re.getReg(data, matchs.regs[2]);
     let interfaceBody = checkOutBody(data, matchs.regs[6][0], null, null);
-    let bodyObj = analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1), result.interface, 
-      result, interfaceName);
+    let bodyObj = analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1), result.interface,
+        result, interfaceName);
     let extendsParent = re.getReg(data, matchs.regs[4]);
     let implementParent = re.getReg(data, matchs.regs[5]);
     bodyObj.parentNameList = [];
-    if(extendsParent !== '') {
+    if (extendsParent !== '') {
         bodyObj.parentNameList = getParentNameList('extends', 'implements', extendsParent);
     }
-    if(implementParent !== '') {
+    if (implementParent !== '') {
         bodyObj.parentNameList = getParentNameList('implements', 'extends', implementParent);
     }
     for (let i in bodyObj.parentNameList) {
@@ -366,10 +368,10 @@ function createInterfaceData (matchs, data, result) {
 
     bodyObj.parentList = []; // 该接口继承的父类型列表
     bodyObj.childList = []; // 继承自该接口的子类型列表
-    
+
     result.interface.push({
         name: interfaceName,
-        body: bodyObj
+        body: bodyObj,
     });
     let rr = matchs.regs[6][0];
     rr = matchs.regs[6][0] + interfaceBody.length;
@@ -386,7 +388,7 @@ function parseInterface(matchs, data, result) {
         '(export )*interface ([A-Za-z_0-9]+)(<T>)* *(extends [a-zA-Z_0-9, ]+)* *(implements [a-zA-Z_0-9, ]+)* *({)'
         , data);
     if (matchs) {
-        return createInterfaceData (matchs, data, result);
+        return createInterfaceData(matchs, data, result);
     }
     return data;
 }
@@ -415,5 +417,5 @@ module.exports = {
     parseFunction,
     parseInterface,
     parseClass,
-    parseType
+    parseType,
 };
