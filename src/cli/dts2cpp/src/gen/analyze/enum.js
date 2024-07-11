@@ -24,15 +24,15 @@ function analyzeEnum(data) {
         enumValueType: 0 // 0代表数字，1代表字符串
     };
     for (let i in body) {
-        let bodyContent = body[i]
+        let bodyContent = body[i];
         while (bodyContent.length > 0 && bodyContent[0] === ' ') {
-            bodyContent = bodyContent.substring(1, bodyContent.length)
+            bodyContent = bodyContent.substring(1, bodyContent.length);
         }
         while (bodyContent.length > 0 && bodyContent[-1] === ' ') {
-            bodyContent = bodyContent.substring(0, bodyContent.length - 1)
+            bodyContent = bodyContent.substring(0, bodyContent.length - 1);
         }
-        if (bodyContent === "") {
-            break
+        if (bodyContent === '') {
+            break;
         }
         analyzeEnumResult(result, bodyContent, i);
     }
@@ -40,9 +40,9 @@ function analyzeEnum(data) {
 }
 
 function analyzeEnumResult(result, bodyContent, index) {
-    let regString       = re.match(' *([a-zA-Z0-9_]+) * = *\"([\x21-\x7e]+)*\"', bodyContent);
+    let regString       = re.match(' *([a-zA-Z0-9_]+) * = *\'([\x21-\x7e]+)*\'', bodyContent);
     let regSingleQuotes = re.match(" *([a-zA-Z0-9_]+) * = *'([\x21-\x7e]+)*'", bodyContent);
-    let regNumber = re.match(" *([a-zA-Z0-9_]+) * = *([a-zA-Z_0-9<>-]+)", bodyContent);
+    let regNumber = re.match(' *([a-zA-Z0-9_]+) * = *([a-zA-Z_0-9<>-]+)', bodyContent);
     let reg = re.match(' *([a-zA-Z0-9_]+) *', bodyContent);
     if (regString) {
         let elementName = re.getReg(bodyContent, regString.regs[1]);
