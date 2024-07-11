@@ -19,58 +19,58 @@ const { analyzeFunction } = require('./function');
 
 /* 匿名interface */
 function analyzeNoNameInterface(valueType, valueName, rsltInterface) {
-    valueType = re.replaceAll(valueType, ' ', '')
-    let matchs = re.match('{(([A-Za-z0-9_]+:[A-Za-z0-9_,;]+)*)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$', valueType)
+    valueType = re.replaceAll(valueType, ' ', '');
+    let matchs = re.match('{(([A-Za-z0-9_]+:[A-Za-z0-9_,;]+)*)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$', valueType);
     if (matchs) {
         let number = NumberIncrease.getAndIncrease();
-        let interfaceTypeName = 'AUTO_INTERFACE_%s_%s'.format(valueName, number)
-        let interfaceBody = valueType.substring(1, valueType.length-1)
-        interfaceBody = re.replaceAll(interfaceBody, ',', ';\n')                
+        let interfaceTypeName = 'AUTO_INTERFACE_%s_%s'.format(valueName, number);
+        let interfaceBody = valueType.substring(1, valueType.length-1);
+        interfaceBody = re.replaceAll(interfaceBody, ',', ';\n');
         rsltInterface.push({
             name: interfaceTypeName,
             body: analyzeInterface(interfaceBody, rsltInterface)
-        })                
-        valueType = interfaceTypeName
+        });
+        valueType = interfaceTypeName;
     }
-    return valueType
+    return valueType;
 }
 
 /* 去除单行注释// */
 function parseNotes(data) {
     let notes = data.indexOf('//') >= 0 ? data.substring(data.indexOf('//'), data.length) : '';          
-    while(notes !== '') {
+    while(notes != '') {
         notes = notes.substring(0, notes.indexOf('\n')); 
         data = data.replace(notes, '');
-        notes = ''
+        notes = '';
         let st = data.indexOf('//');
         if(st >= 0) {
             notes = data.substring(st, data.length);
         }
     }
-    return data
+    return data;
 }
 
 /**interface解析 */
 function analyzeInterface(data, rsltInterface = null, results, interfaceName = '') { // same as class
-    let body = data
-    body = body.indexOf('//') < 0 ? body : parseNotes(body)
-    let arr  =  [...body.matchAll(/;\s*\n+/g)]
+    let body = data;
+    body = body.indexOf('//') < 0 ? body : parseNotes(body);
+    let arr  =  [...body.matchAll(/;\s*\n+/g)];
     for (let i = 0; i < arr.length; i++) {
-        let result = arr[i]
-        body = re.replaceAll(body, result[0], ';\n')
+        let result = arr[i];
+        body = re.replaceAll(body, result[0], ';\n');
     }
-    body = body.split(';\n')
+    body = body.split(';\n');
     let result = {
         value: [],
         function: []
-    }
+    };
     for (let i in body) {
-        let t = body[i]
-        t = re.replaceAll(t, '\n', '')
-        while (t.length > 0 && t[0] === ' ') t = t.substring(1, t.length) // 去除前面的空格
-        while (t.length > 0 && t[-1] === ' ') t = t.substring(0, t.length - 1) // 去除后面的空格   
-        if (t === '') break // 如果t为空直接返回
-        let tt = re.match(' *([a-zA-Z0-9_]+)(\\?*)*: *([a-zA-Z_0-9<>,:{}[\\]| ]+)', t)
+        let t = body[i];
+        t = re.replaceAll(t, '\n', '');
+        while (t.length > 0 && t[0] === ' ') t = t.substring(1, t.length); // 去除前面的空格
+        while (t.length > 0 && t[-1] === ' ') t = t.substring(0, t.length - 1); // 去除后面的空格   
+        if (t === '') break; // 如果t为空直接返回
+        let tt = re.match(' *([a-zA-Z0-9_]+)(\\?*)*: *([a-zA-Z_0-9<>,:{}[\\]| ]+)', t);
         if (tt && t.indexOf('=>') < 0) { // 接口成员变量, 但不包括带'=>'的成员，带'=>'的接口成员需要按函数处理
             analyzeInterfaceVariable(t, tt, rsltInterface, result);
         }
@@ -80,7 +80,7 @@ function analyzeInterface(data, rsltInterface = null, results, interfaceName = '
             analyzeInterfaceFunction(t, tt, data, results, interfaceName, result);
         }
     }
-    return result
+    return result;
 }
 
 module.exports = {

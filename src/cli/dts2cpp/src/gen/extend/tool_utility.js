@@ -12,8 +12,8 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { writeFile } = require("../tools/FileRW");
-const re = require("../tools/re");
+const { writeFile } = require('../tools/FileRW');
+const re = require('../tools/re');
 
 let xNapiToolH = `\
 #ifndef CC_TOOL_H
@@ -254,7 +254,7 @@ private:
 };
 
 #endif
-`
+`;
 
 let xNapiToolCpp = `
 
@@ -1777,13 +1777,13 @@ void XNapiTool::CallThreadSafeFunc(std::string eventName) {
         return;
     }
 }
-`
+`;
 
 function generateBase(destDir, license) {
-    writeFile(re.pathJoin(destDir, "tool_utility.h"), null != license ? (license + "\n" + xNapiToolH) : xNapiToolH)
-    writeFile(re.pathJoin(destDir, "tool_utility.cpp"), null != license ? (license + "\n" + xNapiToolCpp):xNapiToolCpp)
+    writeFile(re.pathJoin(destDir, 'tool_utility.h'), null != license ? (license + '\n' + xNapiToolH) : xNapiToolH);
+    writeFile(re.pathJoin(destDir, 'tool_utility.cpp'), null != license ? (license + '\n' + xNapiToolCpp):xNapiToolCpp);
 }
 
 module.exports = {
     generateBase
-}
+};
