@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -56,6 +56,7 @@ public class ConfigDialogPane extends JDialog {
 
     /**
      * 构造函数
+     *
      * @param list  配置文件数据列表
      * @param index  用户选择的列表行索引
      * @param data   用户选择的列表行数据
@@ -105,6 +106,7 @@ public class ConfigDialogPane extends JDialog {
 
     /**
      * 将用户输入的文本选择框数据存入dataList列表
+     *
      * @param void 空
      * @throws log 输出异常
      */
@@ -119,6 +121,7 @@ public class ConfigDialogPane extends JDialog {
 
     /**
      * 验证文本选择框是否空。是否替换已存在的内容
+     *
      * @param void 空
      * @return ValidationInfo 返回不符要求的信息。
      * @throws log 输出异常

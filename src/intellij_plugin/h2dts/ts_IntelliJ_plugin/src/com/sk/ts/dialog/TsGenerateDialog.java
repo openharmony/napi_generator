@@ -1,11 +1,10 @@
 /*
- * Copyright (c) 2022 Guangzhou Digitalchina Information Technology Co., Ltd.
- * All rights reserved.
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,7 +51,7 @@ public class TsGenerateDialog extends DialogWrapper {
     JButton buttonHelp = new JButton("Help");
     JButton buttonOK = new JButton("OK");
     JButton buttonCancel = new JButton("Cancel");
-    private boolean IS_SELECTED = false;
+    private boolean isSelected = false;
     private GenerateDialogPane genDiag;
 
     /**
@@ -71,7 +70,7 @@ public class TsGenerateDialog extends DialogWrapper {
         setTitle(FRAME_TITLE);
         setModal(true);
         genDiag = new GenerateDialogPane(project, destPath, directoryPath, fileName);
-        IS_SELECTED = isSelectedToolchain;
+        isSelected = isSelectedToolchain;
         if (isSelectedToolchain) {
             buttonOK.setText("Next");
         } else {
@@ -100,6 +99,7 @@ public class TsGenerateDialog extends DialogWrapper {
         JPanel northPanel = new JPanel(new BorderLayout());
         northPanel.setPreferredSize(new Dimension(800, 350));
         northPanel.add(genDiag.getContentPanel());
+        panel.add(northPanel, BorderLayout.NORTH);
         JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         southPanel.setPreferredSize(new Dimension(800, 50));
         JPanel southWestPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -114,7 +114,6 @@ public class TsGenerateDialog extends DialogWrapper {
         buttonOKListener();
         southPanel.add(southWestPanel);
         southPanel.add(southEastPanel);
-        panel.add(northPanel, BorderLayout.NORTH);
         panel.add(southPanel, BorderLayout.SOUTH);
         panel.repaint();
         return panel;
@@ -133,8 +132,8 @@ public class TsGenerateDialog extends DialogWrapper {
 
     /**
      * help button监听事件
+     *
      * @param void 空
-     * @return void 空
      * @throws log 输出异常
      */
     public void buttonHelpListener() {
@@ -151,7 +150,6 @@ public class TsGenerateDialog extends DialogWrapper {
      * cancel button监听事件
      *
      * @param void 空
-     * @return void 空
      * @throws log 输出异常
      */
     public void buttonCancelListener() {
@@ -163,7 +161,6 @@ public class TsGenerateDialog extends DialogWrapper {
     /**
      * OK button监听事件
      * @param void 空
-     * @return void 空
      * @throws log 输出异常
      */
     public void buttonOKListener() {
@@ -173,7 +170,7 @@ public class TsGenerateDialog extends DialogWrapper {
                 LOG.info(validationInfo.message);
             } else {
                 if (genDiag.runFunH2ts()) {
-                    if (IS_SELECTED) {
+                    if (isSelected) {
                         Project project = genDiag.getProject();
                         String destPath = genDiag.getTsFileName();
                         String directoryPath = genDiag.getTsOutPath();
