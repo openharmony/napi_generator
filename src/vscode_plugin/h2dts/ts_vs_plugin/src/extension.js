@@ -43,11 +43,11 @@ function activate(context) {
 	context.subscriptions.push(disposableMenu);
 	
 	let platform = detectPlatform();
-	if (platform == 'win') {
+	if (platform === 'win') {
 		exeFilePath = __dirname + '/napi_generator-win.exe';
-	} else if (platform == 'mac') {
+	} else if (platform === 'mac') {
 		exeFilePath = __dirname + '/napi_generator-macos';
-	} else if (platform == 'Linux') {
+	} else if (platform === 'Linux') {
 		exeFilePath = __dirname + '/napi_generator-linux';
 	}
 }
