@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2023 Shenzhen Kaihong Digital Industry Development Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 package com.sk.utils;
 
 /**
@@ -50,6 +50,7 @@ public class Data {
 
     /**
      * get函数
+     * 
      * @param void 空
      * @return 用户配置的业务代码根路径
      * @throws log 输出异常
@@ -70,6 +71,7 @@ public class Data {
 
     /**
      * get函数
+     *
      * @param void 空
      * @return 用户配置的业务代码头文件相对路径
      * @throws log 输出异常
@@ -80,6 +82,7 @@ public class Data {
 
     /**
      * set函数
+     *
      * @param includeName 用户配置的业务代码头文件相对路径
      * @throws log 输出异常
      */
@@ -89,6 +92,7 @@ public class Data {
 
     /**
      * get函数
+     *
      * @param void 空
      * @return 用户配置的业务代码cpp文件相对路径
      * @throws log 输出异常
@@ -99,6 +103,7 @@ public class Data {
 
     /**
      * set函数
+     *
      * @param cppName 用户配置的业务代码cpp文件相对路径
      * @throws log 输出异常
      */
@@ -108,6 +113,7 @@ public class Data {
 
     /**
      * get函数
+     *
      * @param void 空
      * @return 用户配置的业务代码接口名
      * @throws log 输出异常
@@ -118,6 +124,7 @@ public class Data {
 
     /**
      * set函数
+     *
      * @param interfaceName 用户配置的业务代码接口名
      * @throws log 输出异常
      */
@@ -127,6 +134,7 @@ public class Data {
 
     /**
      * get函数
+     *
      * @param void 空
      * @return 用户配置的调用业务代码的代码
      * @throws log 输出异常
@@ -137,6 +145,7 @@ public class Data {
 
     /**
      * set函数
+     *
      * @param serviceCode 用户配置的调用业务代码的代码
      * @throws log 输出异常
      */
