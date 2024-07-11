@@ -24,5 +24,5 @@ function analyzeReturn(ret) {
 }
 
 module.exports = {
-    analyzeReturn
+    analyzeReturn,
 };

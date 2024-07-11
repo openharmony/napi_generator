@@ -59,23 +59,23 @@ function analyzeType(data, rsltInterface = null) { // same as class
 }
 
 function analyzeTypeVariable(t, tt, result) {
-  let valueName = re.getReg(t, tt.regs[1]);
-  let valueType = re.getReg(t, tt.regs[3]);
-  let index = valueType.indexOf('number');
-  let optionalFlag = re.getReg(t, tt.regs[2]) === '?' ? true : false;
-  while (index !== -1) {
-    valueType = valueType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
-    index = valueType.indexOf('number');
-  }
-  result.value.push({
-    name: valueName,
-    type: valueType,
-    optional: optionalFlag
-  });
+    let valueName = re.getReg(t, tt.regs[1]);
+    let valueType = re.getReg(t, tt.regs[3]);
+    let index = valueType.indexOf('number');
+    let optionalFlag = re.getReg(t, tt.regs[2]) === '?' ? true : false;
+    while (index !== -1) {
+        valueType = valueType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
+        index = valueType.indexOf('number');
+    }
+    result.value.push({
+        name: valueName,
+        type: valueType,
+        optional: optionalFlag,
+    });
 }
 
 function analyzeType2(data) {
-  let body = re.replaceAll(data, ' ', '').split('"|"');
+    let body = re.replaceAll(data, ' ', '').split('"|"');
     let result = {
         element: [],
         function: [],
@@ -98,24 +98,24 @@ function analyzeType2(data) {
 }
 
 function analyzeType2Result(result, bodyContent, index) {
-  let regString = re.match(' *([a-zA-Z0-9_]+) *', bodyContent);
-  if (regString) {
-      let elementName = re.getReg(bodyContent, regString.regs[1]);
-      elementName = 'NAME_' + elementName.toUpperCase();
-      let elementValue = re.getReg(bodyContent, regString.regs[1]);
-      result.element.push({
-          name: elementName,
-          value: elementValue,
-          type: 'string'
-      });
-      result.enumValueType = 1;
-  } 
-  return result;
+    let regString = re.match(' *([a-zA-Z0-9_]+) *', bodyContent);
+    if (regString) {
+        let elementName = re.getReg(bodyContent, regString.regs[1]);
+        elementName = 'NAME_' + elementName.toUpperCase();
+        let elementValue = re.getReg(bodyContent, regString.regs[1]);
+        result.element.push({
+            name: elementName,
+            value: elementValue,
+            type: 'string',
+        });
+        result.enumValueType = 1;
+    }
+    return result;
 }
 
 module.exports = {
     analyzeType,
     analyzeType2,
     analyzeType2Result,
-    parseNotes
+    parseNotes,
 };

@@ -12,10 +12,10 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { analyzeFile } = require("./analyze");
-const { generateAppCode } = require("./generate");
-const { NapiLog } = require("./tools/NapiLog");
-const re = require("./tools/re");
+const { analyzeFile } = require('./analyze');
+const { generateAppCode } = require('./generate');
+const { NapiLog } = require('./tools/NapiLog');
+const re = require('./tools/re');
 var fs = require('fs');
 
 function doGenerate(ifname, destdir, jsonCfg) {
@@ -23,12 +23,12 @@ function doGenerate(ifname, destdir, jsonCfg) {
     let structOfTs = analyzeFile(ifname);
     let fn = re.getFileInPath(ifname);
     let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
-    if (structOfTs === undefined || structOfTs.declareNamespace.length === 0 || 
+    if (structOfTs === undefined || structOfTs.declareNamespace.length === 0 ||
         structOfTs.declareNamespace[0].name === undefined) {
         NapiLog.logError('analyzeFile file fail and file name is: ' + fn);
         return;
     }
-    
+
     // step2: generate code
     if (tt) {
         let moduleName = re.getReg(fn, tt.regs[2]);
@@ -38,9 +38,9 @@ function doGenerate(ifname, destdir, jsonCfg) {
     } else {
         NapiLog.logError('file name ' + fn + ' format invalid in function of doGenerate!');
     }
-    return structOfTs.declareNamespace[0].name
+    return structOfTs.declareNamespace[0].name;
 }
 
 module.exports = {
-    doGenerate
-}
+    doGenerate,
+};

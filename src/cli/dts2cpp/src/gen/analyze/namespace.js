@@ -22,7 +22,7 @@ const { analyzeType, analyzeType2, analyzeType2Result } = require('./type');
 const { NumberIncrease, EnumValueType, getLogErrInfo } = require('../tools/common');
 
 function preProcessData(data) {
-    data = data.indexOf('//') < 0 ? data : parseNotes(data);   
+    data = data.indexOf('//') < 0 ? data : parseNotes(data);
     data = re.replaceAll(data, '\n{', '{');
     return data;
 }
@@ -59,7 +59,7 @@ function analyzeNamespace(data) {
         }
         let parseEnumResult = parseEnum(matchs, data, result);
         data = getDataByResult(parseEnumResult);
-        
+
         result = parseEnumType(result);
 
         let parseInterResult = parseInterface(matchs, data, result);
@@ -67,7 +67,7 @@ function analyzeNamespace(data) {
 
         let parseFunctionResult = parseFunction(matchs, data, result);
         data = getDataByResult(parseFunctionResult);
-        
+
         let parseTypeResult = parseType(matchs, data, result);
         data = getDataByResult(parseTypeResult);
 
@@ -129,10 +129,21 @@ function parseEnumType(result) {
                             .format(enumm.body.enumValueType), getLogErrInfo());
                         return null;
                     }
-                    result.interface[i].body.function[j].value[k].type = v.type;                    
-                }                
+
+                    if (v.type === enumm.name) {
+                        if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+                            v.type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
+                        } else if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
+                            v.type = 'string';
+                        } else {
+                            NapiLog.logError('parseEnumType for interface function value is not support this type %s.'
+                                .format(enumm.body.enumValueType), getLogErrInfo());
+                            return null;
+                        }
+                        result.interface[i].body.function[j].value[k].type = v.type;
+                    }
+                }
             }
-          }          
         }
     }
     return result;
@@ -145,7 +156,7 @@ function parseNamespace(matchs, data, result) {
         let namespaceBody = checkOutBody(data, matchs.regs[3][0], null, true);
         result.namespace.push({
             name: namespaceName,
-            body: analyzeNamespace(namespaceBody)
+            body: analyzeNamespace(namespaceBody),
         });
         data = data.substring(matchs.regs[3][0] + namespaceBody.length + 2, data.length);
         if (matchs.regs[1][0] !== -1) {
@@ -173,7 +184,7 @@ function parseEnum(matchs, data, result) {
         let enumBody = checkOutBody(data, matchs.regs[3][0], null, null);
         result.enum.push({
             name: enumName,
-            body: analyzeEnum(enumBody.substring(1, enumBody.length - 1))
+            body: analyzeEnum(enumBody.substring(1, enumBody.length - 1)),
         });
         data = data.substring(matchs.regs[3][0] + enumBody.length);
         if (matchs.regs[1][0] !== -1) {
@@ -185,7 +196,7 @@ function parseEnum(matchs, data, result) {
         let constName = re.getReg(data, matchs.regs[1]);
         result.const.push({
             name: constName,
-            body: re.getReg(data, matchs.regs[2])
+            body: re.getReg(data, matchs.regs[2]),
         });
         data = re.removeReg(data, matchs.regs[0]);
         if (matchs.regs[1][0] !== -1) {
@@ -197,7 +208,7 @@ function parseEnum(matchs, data, result) {
 
 function isValidValue(value) {
     if (value === null || value === undefined) {
-      return false;
+        return false;
     }
     return true;
 }
@@ -209,7 +220,7 @@ function getTypeInfo(result, typeName, typeType, isEnum) {
     result.type.push({
         name: typeName,
         body: typeType,
-        isEnum: isEnum
+        isEnum: isEnum,
     });
 }
 
@@ -220,7 +231,7 @@ function parseType(matchs, data, result) {
         let typeType = re.getReg(data, matchs.regs[3]);
         let index = typeType.indexOf('number');
         if (index !== -1) {
-          typeType = typeType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
+            typeType = typeType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
         }
         getTypeInfo(result, typeName, typeType, false);
         data = re.removeReg(data, matchs.regs[0]);
@@ -229,7 +240,7 @@ function parseType(matchs, data, result) {
         }
     }
 
-    matchs = re.match("(export )*type ([a-zA-Z]+) *= *([\\(\\):=a-zA-Z<> |\n']+);", data);
+    matchs = re.match('(export )*type ([a-zA-Z]+) *= *([\\(\\):=a-zA-Z<> |\n\']+); ', data);
     if (matchs) {
         let typeName = re.getReg(data, matchs.regs[2]);
         let typeBody = re.getReg(data, matchs.regs[3]);
@@ -344,8 +355,8 @@ function getParentNameList(firstKey, secondKey, parentStr) {
 function createInterfaceData(matchs, data, result) {
     let interfaceName = re.getReg(data, matchs.regs[2]);
     let interfaceBody = checkOutBody(data, matchs.regs[6][0], null, null);
-    let bodyObj = analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1), result.interface, 
-      result, interfaceName);
+    let bodyObj = analyzeInterface(interfaceBody.substring(1, interfaceBody.length - 1), result.interface,
+        result, interfaceName);
     let extendsParent = re.getReg(data, matchs.regs[4]);
     let implementParent = re.getReg(data, matchs.regs[5]);
     bodyObj.parentNameList = [];
@@ -366,10 +377,10 @@ function createInterfaceData(matchs, data, result) {
 
     bodyObj.parentList = []; // 该接口继承的父类型列表
     bodyObj.childList = []; // 继承自该接口的子类型列表
-    
+
     result.interface.push({
         name: interfaceName,
-        body: bodyObj
+        body: bodyObj,
     });
     let rr = matchs.regs[6][0];
     rr = matchs.regs[6][0] + interfaceBody.length;
@@ -415,5 +426,5 @@ module.exports = {
     parseFunction,
     parseInterface,
     parseClass,
-    parseType
+    parseType,
 };
