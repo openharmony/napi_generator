@@ -17,9 +17,9 @@ const { NumberIncrease } = require('../tools/common');
 
 /* 去除单行注释// */
 function parseNotes(data) {
-    let notes = data.indexOf('//') >= 0 ? data.substring(data.indexOf('//'), data.length) : '';
+    let notes = data.indexOf('//') >= 0 ? data.substring(data.indexOf('//'), data.length) : '';          
     while (notes !== '') {
-        notes = notes.substring(0, notes.indexOf('\n'));
+        notes = notes.substring(0, notes.indexOf('\n')); 
         data = data.replace(notes, '');
         notes = '';
         let st = data.indexOf('//');
@@ -42,14 +42,14 @@ function analyzeType(data, rsltInterface = null) { // same as class
     for (let i in body) {
         let t = body[i];
         while (t.length > 0 && t[0] === ' ') {
-            t = t.substring(1, t.length);
-        }
+            t = t.substring(1, t.length); // 去除前面的空格
+        } 
         while (t.length > 0 && t[-1] === ' ') {
-            t = t.substring(0, t.length - 1);
+            t = t.substring(0, t.length - 1); // 去除后面的空格
         }
         if (t === '') {
-            break;
-        }
+            break; // 如果t为空直接返回
+        }  
         let tt = re.match(' *([a-zA-Z0-9_]+)(\\?*)*: *([a-zA-Z_0-9<>,:{}[\\]| ]+)', t);
         if (tt && t.indexOf('=>') < 0) { // 接口成员变量, 但不包括带'=>'的成员，带'=>'的接口成员需要按函数处理
             analyzeTypeVariable(t, tt, result);

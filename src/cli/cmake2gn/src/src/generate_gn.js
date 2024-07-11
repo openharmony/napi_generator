@@ -174,14 +174,22 @@ group("all_targets") {
         fs.writeFileSync(gnName, gnStr, { encoding: 'utf8' });
     }
     static genTargetStr(targetName) {
+        let result; // 声明一个变量来存储返回结果
         switch (targetName[0]) {
             case 'static':
-                return 'ohos_static_library("' + targetName[1] + '")';
+                result = 'ohos_static_library("' + targetName[1] + '")';
+                break;
             case 'dynamic':
-                return 'ohos_shared_library("' + targetName[1] + '")';
+                result = 'ohos_shared_library("' + targetName[1] + '")';
+                break;
             case 'executable':
-                return 'ohos_executable("' + targetName[1] + '")';
+                result = 'ohos_executable("' + targetName[1] + '")';
+                break;
+            default:
+                    // 为未处理的情况提供一个默认返回值
+                result = 'unknown_target_type'; // 或者其他适当的默认值
         }
+        return result; // 确保函数返回一个值
     }
     static genCollectDetail(gen, genList) {
         let collectDetails = {
@@ -270,8 +278,7 @@ subsystem_name = "%s"
             let gnName = path.join(gnPath, 'BUILD.gn');
             Logger.info('输出：' + gnName + '\n' + gnStr);
             fs.writeFileSync(gnName, gnStr, { encoding: 'utf8' });
-        }
-        else {
+        } else {
             Logger.info('          no target');
         }
     }
@@ -279,7 +286,7 @@ subsystem_name = "%s"
     static genDetail(name, detail) {
         let ss = '';
         for (let s of detail) {
-            s=Tool.swapPath(s);
+            s = Tool.swapPath(s);
             if (ss.length > 0) ss += '",\n        "';
             ss += s;
         }

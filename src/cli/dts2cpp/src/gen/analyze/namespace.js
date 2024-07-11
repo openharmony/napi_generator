@@ -279,11 +279,9 @@ function parseFunction(matchs, data, result) {
         let matchFuncArray = re.match(' *: *([A-Za-z0-9]+)(\\[]);*', funcRet);
         if (matchFuncArray) {
             funcRet = re.getReg(funcRet, [matchFuncArray.regs[1][0], matchFuncArray.regs[2][1]]);
-        }
-        else if (matchFunc) {
+        } else if (matchFunc) {
             funcRet = re.getReg(funcRet, matchFunc.regs[1]);
-        }
-        else {
+        } else {
             funcRet = 'void';
         }
         funcRet = re.replaceAll(re.replaceAll(funcRet, ' ', ''), '\n', '');

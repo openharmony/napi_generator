@@ -32,17 +32,15 @@ function analyzeSubInterface(data) {
     };
     for (let i in body) {
         let t = body[i];
-        // 去除前面的空格
-        while (t.length > 0 && t[0] === ' ') {
-            t = t.substring(1, t.length);
+        while (t.length > 0 && t[0] === ' ') { 
+            t = t.substring(1, t.length); // 去除前面的空格
         }
-        // 去除后面的空格
         while (t.length > 0 && t[-1] === ' ') {
-            t = t.substring(0, t.length - 1);
-        }
+            t = t.substring(0, t.length - 1); // 去除后面的空格
+        } 
         if (t === '') {
             break; // 如果t为空直接返回
-        }
+        }  
         let tt = re.match(' *([a-zA-Z0-9_]+) *: *([a-zA-Z_0-9<>,:{}[\\] ]+)', t);
         if (tt) { // 变量
             analyzeSubInterfaceVal(t, tt, result);
@@ -169,13 +167,13 @@ function analyseSubReturn(ret, data, results) {
         tt = ret.split(';');
     }
     if (tt) {
-        let len = tt.length;
-        let res = '';
-        let interfaceName = '';
-        for (let i = 0; i < len; i++) {
-            let regs1 = tt[i] + ';';
-            res += regs1;
-        }
+         let len = tt.length;
+         let res = '';
+         let interfaceName = '';
+         for (let i = 0; i < len; i++) {
+             let regs1 = tt[i] + ';';
+             res += regs1;
+         }  
 
         let number = NumberIncrease.getAndIncrease();
         interfaceName = 'AUTO_INTERFACE_%s'.format(number);

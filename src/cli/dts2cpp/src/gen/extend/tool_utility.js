@@ -1781,7 +1781,7 @@ void XNapiTool::CallThreadSafeFunc(std::string eventName) {
 
 function generateBase(destDir, license) {
     writeFile(re.pathJoin(destDir, 'tool_utility.h'), null != license ? (license + '\n' + xNapiToolH) : xNapiToolH);
-    writeFile(re.pathJoin(destDir, 'tool_utility.cpp'), null != license ? (license + '\n' + xNapiToolCpp):xNapiToolCpp);
+    writeFile(re.pathJoin(destDir, 'tool_utility.cpp'), null != license ? (license + '\n' + xNapiToolCpp) : xNapiToolCpp);
 }
 
 module.exports = {

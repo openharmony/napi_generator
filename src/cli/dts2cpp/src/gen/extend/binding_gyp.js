@@ -43,9 +43,9 @@ function generateGYP(destDir, implName, license, bindingCpp) {
         }
     }
     writeFile(re.pathJoin(destDir, 'binding.gyp'), (null !== license && undefined !== license) ?
-      (license + '\n' + ss) : ss)
+      (license + '\n' + ss) : ss);
 
-    writeFile(re.pathJoin(destDir, 'test.sh'), 'node-gyp configure build && sleep 0.5 && node --expose-gc test.js')
+    writeFile(re.pathJoin(destDir, 'test.sh'), 'node-gyp configure build && sleep 0.5 && node --expose-gc test.js');
 
 }
 
@@ -64,4 +64,4 @@ function getLicense(s2, i, license) {
 
 module.exports = {
   generateGYP
-}
+};
