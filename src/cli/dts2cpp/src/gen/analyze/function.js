@@ -225,7 +225,7 @@ function getArrowCallFunc(tmp, results) {
     let callbackFunc = null;
 
     if (tmp[2][0] !== undefined) {
-        callbackFunc = tmp[2][0] // 当方法的参数是回调方法，并且回调方法写法为=>函数
+        callbackFunc = tmp[2][0]; // 当方法的参数是回调方法，并且回调方法写法为=>函数
     }
     if (results !== undefined && callbackFunc !== null) {
         results.callFunction.push(callbackFunc);
