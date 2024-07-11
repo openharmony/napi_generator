@@ -1,17 +1,17 @@
 /*
-* Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
-* Licensed under the Apache License, Version 2.0 (the "License"); 
-* you may not use this file except in compliance with the License. 
-* You may obtain a copy of the License at 
-*
-* http://www.apache.org/licenses/LICENSE-2.0 
-*
-* Unless required by applicable law or agreed to in writing, software 
-* distributed under the License is distributed on an "AS IS" BASIS, 
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-* See the License for the specific language governing permissions and 
-* limitations under the License. 
-*/
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License"); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at 
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ * See the License for the specific language governing permissions and 
+ * limitations under the License. 
+ */
 const fs = require('fs');
 const path = require('path');
 let vscode = null;
@@ -59,7 +59,7 @@ NapiLog.init = function (level, fileName) {
  * @param {} callerFuncName 指定取调用栈中哪个方法名所在的帧作为目标帧
  * @returns 
  */
-NapiLog.getCallPath = function(callerFuncName = null) {
+NapiLog.getCallPath = function (callerFuncName = null) {
     let callPath = '';
     let stackArray = new Error().stack.split('\n');
 
@@ -111,7 +111,9 @@ function recordLog(lev, ...args) {
         logResultMessage = [false, detail];
     }
     let logStr = callPath + ' ' + detail;
-    if (logLevel <= lev) { return logStr; }
+    if (logLevel <= lev) {
+        return logStr;
+    }
     NapiLog.logInfo(origMsgInfo[0]);
     return logStr;
 }
