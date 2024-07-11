@@ -16,16 +16,16 @@
 class InterfaceList { }
 InterfaceList.interfacess_ = [];
 InterfaceList.push = function (ifs) {
-    InterfaceList.interfacess_.push(ifs)
-}
+    InterfaceList.interfacess_.push(ifs);
+};
 InterfaceList.pop = function () {
-    InterfaceList.interfacess_.pop()
-}
+    InterfaceList.interfacess_.pop();
+};
 InterfaceList.getValue = function (name) {
-    let ifs = InterfaceList.interfacess_
+    let ifs = InterfaceList.interfacess_;
     for (let i in ifs) {
         if (ifs[i].name === name) {
-            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, "allProperties")
+            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
             if (hasProperty) {
                 return ifs[i].body.allProperties.values;
             } else {
@@ -34,32 +34,32 @@ InterfaceList.getValue = function (name) {
         }
     }
     return null;
-}
+};
 
 InterfaceList.getBody = function (name) {
-  let ifs = InterfaceList.interfacess_
+  let ifs = InterfaceList.interfacess_;
   for (let i in ifs) {
       if (ifs[i].name === name) {
           return ifs[i].body;
       }
   }
   return null;
-}
+};
 
 class TypeList { }
 TypeList.types = [];
 TypeList.push = function (ifs) {
-  TypeList.types.push(ifs)
-}
+  TypeList.types.push(ifs);
+};
 TypeList.pop = function () {
-  TypeList.types.pop()
-}
+  TypeList.types.pop();
+};
 TypeList.getValue = function (name) {
     // let ifs = TypeList.types[TypeList.types.length - 1]
-    let ifs = TypeList.types
+    let ifs = TypeList.types;
     for (let i in ifs) {
         if (ifs[i].name === name) {
-            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, "allProperties")
+            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
             if (hasProperty) {
                 return ifs[i].body.allProperties.values;
             } else {
@@ -68,9 +68,9 @@ TypeList.getValue = function (name) {
         }
     }
     return null;
-}
+};
 
 module.exports = {
   InterfaceList,
   TypeList,
-}
+};
