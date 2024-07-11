@@ -14,14 +14,14 @@
 */
 // 生成BUILD.gn
 // 生成tool_utility.h，生成tool_utility.cpp
-const { replaceAll } = require("./tools/tool");
-const { writeFile } = require("./tools/FileRW");
-const re = require("./tools/re");
+const { replaceAll } = require('./tools/tool');
+const { writeFile } = require('./tools/FileRW');
+const re = require('./tools/re');
 
-const { jsonCfgList } = require("./tools/common");
-const os = require("os");
+const { jsonCfgList } = require('./tools/common');
+const os = require('os');
 const path = require('path')
-const { NapiLog } = require("./tools/NapiLog");
+const { NapiLog } = require('./tools/NapiLog');
 
 const DIRECT = 1;
 const SYNC = 2;
@@ -55,7 +55,7 @@ struct Index {
     .height('100%')
   }
 }
-`
+`;
 let buttonTemplate = `
 Button() {
     Text('[button_test_interface_name]')
@@ -76,9 +76,9 @@ Button() {
 
     hilog.info(0x0000, 'testTag', 'button onClick end !');
   });
-`
+`;
 
-let FuncCfgList = []
+let FuncCfgList = [];
 function analyzeJsonCfg(jsonCfg) {
     let len = jsonCfg.length;
 
@@ -86,8 +86,8 @@ function analyzeJsonCfg(jsonCfg) {
     for (let i = 0; i < len; i++) {
       FuncCfgList.push({
           classOrInterfName: jsonCfg[i].classOrInterfName,
-          functionName: jsonCfg[i].functionName
-        })
+          functionName: jsonCfg[i].functionName,
+        });
     }
 }
 
@@ -132,7 +132,7 @@ function genIndexETSCode(indexEts, testFuncName, funcInfo, className = null) {
         NapiLog.logInfo('This type of function(%s) is not supported!'.format(funcType));
       }
     } else {
-      NapiLog.logInfo("test function(%s) is not current function(%s)!".format(testFuncName, funcInfo.name));
+      NapiLog.logInfo('test function(%s) is not current function(%s)!'.format(testFuncName, funcInfo.name));
     }
   return indexEts;
 }
@@ -155,13 +155,13 @@ function generateAppCode(structOfTs, destDir, moduleName, jsonCfg) {
     let indexEts = ''
     // 测试interface中的方法
     for (let i in ns0.body.interface) {
-        let ii = ns0.body.interface[i]
+        let ii = ns0.body.interface[i];
         indexEts = genInterClassFunc(ii, indexEts, FuncCfgList[0].classOrInterfName, FuncCfgList[0].functionName);
     }
 
     // 测试class中的方法
     for (let i in ns0.body.class) {
-        let ii = ns0.body.class[i]
+        let ii = ns0.body.class[i];
         indexEts = genInterClassFunc(ii, indexEts, FuncCfgList[0].classOrInterfName, FuncCfgList[0].functionName);
     }
 
@@ -172,8 +172,8 @@ function generateAppCode(structOfTs, destDir, moduleName, jsonCfg) {
     }
 
     // index.ets文件生成
-    indexEts = replaceAll(indexEts, "[import_module_name]", moduleName)
-    writeFile(re.pathJoin(destDir, "Index.ets"), null != license ? (license + "\n" + indexEts) : indexEts)
+    indexEts = replaceAll(indexEts, '[import_module_name]', moduleName);
+    writeFile(re.pathJoin(destDir, 'Index.ets'), null != license ? (license + '\n' + indexEts) : indexEts);
 }
 
 // 遍历 interface/class 中的function,生成对interface/class中的接口测试的代码
@@ -182,7 +182,7 @@ function genInterClassFunc(ii, indexEts, testClass = null, testFunc) {
   let interfaceBody = ii.body;
 
   if (testClass !== className) {
-    NapiLog.logInfo("test class(%s) is not current class(%s)!".format(testClass, className));
+    NapiLog.logInfo('test class(%s) is not current class(%s)!'.format(testClass, className));
     return indexEts;
   }
   // 遍历interface中的成员方法 
@@ -196,7 +196,7 @@ function genInterClassFunc(ii, indexEts, testClass = null, testFunc) {
 // 调用direct方法
 function callDirectFunction(funcName, funcValue, retValue, indexEts, className = null) {
   let testInterfaceName = funcName;
-  let testInterfaceButton = replaceAll(buttonTemplate, "[button_test_interface_name]", testInterfaceName);
+  let testInterfaceButton = replaceAll(buttonTemplate, '[button_test_interface_name]', testInterfaceName);
   let testInterfaceValue = ''; // 给方法参数赋初值
   let funcParamValue = ''; // 调用方法参数
   // 给接口参数赋初值
@@ -235,16 +235,16 @@ function callDirectFunction(funcName, funcValue, retValue, indexEts, className =
   } else {
     console.error('The current return type is not supported.');
   }
-  let useInterface = ''
+  let useInterface = '';
   if (className !== null) {
-    useInterface = 'let %sObj: napitest.%s = new napitest.%s();\n'.format(className, className, className)
+    useInterface = 'let %sObj: napitest.%s = new napitest.%s();\n'.format(className, className, className);
   }
   let buttonTestInterface = `%s%s%s`.format(useInterface, testInterfaceValue, useFunction);
-  testInterfaceButton = replaceAll(testInterfaceButton, "[button_test_interface_code]", buttonTestInterface);
-  indexEts = replaceAll(indexEtsTemplete, "[test_interface_button]", testInterfaceButton);
+  testInterfaceButton = replaceAll(testInterfaceButton, '[button_test_interface_code]', buttonTestInterface);
+  indexEts = replaceAll(indexEtsTemplete, '[test_interface_button]', testInterfaceButton);
   return indexEts;
 }
 
 module.exports = {
-    generateAppCode
-}
+    generateAppCode,
+};
