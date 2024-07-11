@@ -25,7 +25,7 @@ function utf8ArrayToStr(array) {
     var res, i, length, ch;
     var ch2, ch3;
   
-    res = "";
+    res = '';
     length = array.length;
     i = 0;
     while (i < length) {
@@ -70,7 +70,7 @@ function utf8ArrayToStr(array) {
 
   function readFile(fn) {
     if (!fs.existsSync(fn)) {
-      return "";
+      return '';
     }
     let data = fs.readFileSync(fn);
     data = utf8ArrayToStr(data);
@@ -79,4 +79,4 @@ function utf8ArrayToStr(array) {
 
 module.exports = {
     readFile
-}
+};

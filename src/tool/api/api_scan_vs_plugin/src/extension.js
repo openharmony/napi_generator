@@ -17,12 +17,12 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const fs = require('fs');
-const re = require("./gen/tools/VsPluginRe");
-const { VsPluginLog } = require("./gen/tools/VsPluginLog");
+const re = require('./gen/tools/VsPluginRe');
+const { VsPluginLog } = require('./gen/tools/VsPluginLog');
 const { detectPlatform, readFile } = require('./gen/tools/VsPluginTool');
 const path = require('path');
 let exeFilePath = null;
-const dirCache={};
+const dirCache = {};
 let globalPanel = null;
 
 let importToolChain = false;
@@ -44,28 +44,29 @@ function activate(context) {
 	context.subscriptions.push(disposableMenu);
 	let platform = detectPlatform();
 	if (platform === 'win') {
-		exeFilePath = __dirname + "/search-win.exe";
+		exeFilePath = __dirname + '/search-win.exe';
 	} else if (platform === 'mac') {
-		exeFilePath = __dirname + "/search-macos";
+		exeFilePath = __dirname + '/search-macos';
 	} else if (platform === 'Linux') {
-		exeFilePath = __dirname + "/search-linux";
+		exeFilePath = __dirname + '/search-linux';
 	}
 }
 
 function executorApiscan(name, genDir) {
-	if (genDir === "" || genDir === null || genDir === undefined) {
+	if (genDir === '' || genDir === null || genDir === undefined) {
 		genDir = name;
 	}
-	let command = exeFilePath + " -d " + name + " -o " + genDir;
+	let command = exeFilePath + ' -d ' + name + ' -o ' + genDir;
 	let exec = require('child_process').exec;
 	exec(command, function (error, stdout, stderr) {
-		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
-		if (error || stdout.indexOf("errno") > 0) {
-			vscode.window.showErrorMessage("genError:" + ((error !== null && error !== undefined) ?
-        error : "") + stdout);
-			return VsPluginLog.logError("VsPlugin:" + error + stdout);
+		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ', stderr =' + stderr);
+		if (error || stdout.indexOf('errno') > 0) {
+			vscode.window.showErrorMessage('genError:' + ((error !== null && error !== undefined) ?
+        error : '') + stdout);
+			return VsPluginLog.logError('VsPlugin:' + error + stdout);
 		}
-		vscode.window.showInformationMessage("Api Scan Successfully");
+		vscode.window.showInformationMessage('Api Scan Successfully');
+		return '';
 	});
 }
 
@@ -96,10 +97,10 @@ function register(context, command) {
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
-			if (msg === "cancel") {
+			if (msg === 'cancel') {
 				globalPanel.dispose();
 			}
-			else if (msg === "api_scan") {
+			else if (msg === 'api_scan') {
 				checkReceiveMsg(message);
 			} else {
 				selectPath(globalPanel, message);
@@ -108,11 +109,11 @@ function register(context, command) {
     // 路径有效性判断
     if (uri.fsPath !== undefined) {
       let fn = re.getFileInPath(uri.fsPath);
-      let tt = re.match("[a-zA-Z_0-9]", fn);
+      let tt = re.match('[a-zA-Z_0-9]', fn);
       let result = {
-        msg: "selectASFilePath",
-        path: tt ? uri.fsPath : ""
-      }
+        msg: 'selectASFilePath',
+        path: tt ? uri.fsPath : ''
+      };
       globalPanel.webview.postMessage(result);
     } 
 	});
@@ -145,9 +146,9 @@ function checkReceiveMsg(message) {
 	let name = message.fileNames;
 	let genDir = message.genDir;
 	let buttonName = message.buttonName;
-	name = re.replaceAll(name, " ", "");
-	if ("" === name) {
-		vscode.window.showErrorMessage("Please enter the path!");
+	name = re.replaceAll(name, ' ', '');
+	if ('' === name) {
+		vscode.window.showErrorMessage('Please enter the path!');
 		return;
 	}
 	if (exeFileExit()) {
@@ -156,7 +157,7 @@ function checkReceiveMsg(message) {
 			startNextPlugin();
 		}
 	} else {
-		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
+		vscode.window.showInformationMessage('Copy executable program to ' + __dirname);
 	}
 }
 
@@ -164,15 +165,15 @@ function checkReceiveMsg(message) {
 * 获取插件执行命令
 */
 function nextPluginExeCommand(nextPluginId) {
-    if (nextPluginId === "kaihong.ApiScan") {
+    if (nextPluginId === 'kaihong.ApiScan') {
 		return 'api_scan';
-	} else if (nextPluginId === "kaihong.gn-gen") {
+	} else if (nextPluginId === 'kaihong.gn-gen') {
 		return 'generate_gn';
-	} else if (nextPluginId === "kaihong.service-gen") {
+	} else if (nextPluginId === 'kaihong.service-gen') {
 		return 'generate_service';
-	} else if (nextPluginId === "kaihong.ts-gen") {
+	} else if (nextPluginId === 'kaihong.ts-gen') {
 		return 'generate_ts';
-	} else if (nextPluginId === "kaihong.napi-gen") {
+	} else if (nextPluginId === 'kaihong.napi-gen') {
 		return 'generate_napi';
 	} else {
 		return null;
@@ -199,24 +200,26 @@ function startNextPlugin() {
 */
 function selectPath(panel, message) {
 	const options = {
-		canSelectMany: false,//是否可以选择多个
-		canSelectFolders: true,//是否选择文件夹
+		canSelectMany: false, //是否可以选择多个
+		canSelectFolders: true, //是否选择文件夹
 		defaultUri:vscode.Uri.file(message.filePath)//默认打开本地路径		
 	};
    
 	return vscode.window.showOpenDialog(options).then(fileUri => {
 	   if (fileUri && fileUri[0]) {
 		   console.log('Selected file: ' + fileUri[0].fsPath);
-		   let filePath = "";
+		   let filePath = '';
 		   for (let index = 0; index < fileUri.length; index++) {
-				filePath += fileUri[index].fsPath.concat(",");
+				filePath += fileUri[index].fsPath.concat(',');
 		   }
 		   let result = {
 				msg: message.msg,
 				path: filePath.length > 0 ? filePath.substring(0, filePath.length - 1) : filePath
-				}
+				};
 		   panel.webview.postMessage(result);
-		   return fileUri[0].fsPath
+		   return fileUri[0].fsPath;
+	   } else {
+	   	return '';
 	   }
    });
 }
@@ -239,7 +242,7 @@ function getWebViewContent(context, templatePath) {
 	const dirPath = path.dirname(resourcePath);
 	let html = fs.readFileSync(resourcePath, 'utf-8');
 	html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
-        if ($2.indexOf("https://") < 0) {
+        if ($2.indexOf('https://') < 0) {
             return $1 + globalPanel.webview.asWebviewUri(vscode.Uri.file(path.resolve(dirPath, $2))) + '"';
         } else {
             return $1 + $2 + '"';
@@ -251,4 +254,4 @@ function getWebViewContent(context, templatePath) {
 module.exports = {
 	activate,
 	deactivate
-}
+};
