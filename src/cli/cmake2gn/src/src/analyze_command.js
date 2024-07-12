@@ -151,15 +151,15 @@ class AnalyzeCommand {
 
     static resultTemplete() {//解析命令行之后的结果模板
         return {
-            type: 0,//0 compile command,1 other command
+            type: 0, //0 compile command,1 other command
             workDir: process.cwd(),
             command: '',
             inputs: [],
             target: '',
-            isLink: false,//是否编译，.a/.o/可执行程序，需要生成目标
+            isLink: false, //是否编译，.a/.o/可执行程序，需要生成目标
             includes: [],
             defines: [
-                '_XOPEN_SOURCE=600',//ohos的编译环境缺失宏
+                '_XOPEN_SOURCE=600', //ohos的编译环境缺失宏
                 'FE_TONEAREST=0x00000000',
                 'FE_UPWARD=0x00400000',
                 'FE_DOWNWARD=0x00800000',
@@ -168,14 +168,14 @@ class AnalyzeCommand {
             cflags: [
                 '-Wno-implicit-function-declaration',
                 '-Wno-unused-function',
-                '-Wno-comments',//允许注释后面有个\
-                '-Wno-string-conversion',//允许char*当做bool使用
-                '-Wno-header-hygiene',//不检测命名空间污染
-                '-frtti',//支持typeid(xxx)
-                '-fexceptions',//支持try catch
-            ],//c和c++选项
-            cflagsCc: [],//c++选项
-            cflagsC: [],//c选项
+                '-Wno-comments', //允许注释后面有个\
+                '-Wno-string-conversion', //允许char*当做bool使用
+                '-Wno-header-hygiene', //不检测命名空间污染
+                '-frtti', //支持typeid(xxx)
+                '-fexceptions', //支持try catch
+            ], //c和c++选项
+            cflagsCc: [], //c++选项
+            cflagsC: [], //c选项
         };
     }
 
@@ -184,7 +184,7 @@ class AnalyzeCommand {
         let startp = -1;
         let isContinuChar = 0;
         for (let p = 0; p < s.length; p++) {
-            if (s[p] === '\"' && s[p-1] !== '\\') {
+            if (s[p] === '\"' && s[p - 1] !== '\\') {
                 isContinuChar = 1 - isContinuChar;
             }
             if (startp >= 0) {
@@ -536,13 +536,7 @@ class AnalyzeCommand {
                 '.S',
                 '.so'
             ];
-            for (let d of datas) {
-                for (let p of pp) {
-                    if (d.endsWith(p)) {
-                        local.ret.inputs.push(d);
-                    }
-                }
-            }
+            clangxxCheck9Func(datas, pp, local);
             return true;
         }
         return false;
@@ -610,7 +604,7 @@ class AnalyzeCommand {
             case AnalyzeCommand.COMPILE_CMDS.ar:
                 ret = AnalyzeCommand.analyzeCcAr(cmd);
                 break;
-            case AnalyzeCommand.COMPILE_CMDS['clang++']:
+            case AnalyzeCommand.COMPILE_CMDS.clang++:
                 ret = AnalyzeCommand.analyzeCcClangxx(cmd);
                 break;
         }
@@ -624,20 +618,30 @@ class AnalyzeCommand {
 }
 
 function clangCheck7RspEnds(e, local) {
-  console.log(Tool.CURRENT_DIR);
-  let rspth = path.join(Tool.CURRENT_DIR, e.substring(1));
-  let data = fs.readFileSync(rspth, { encoding: 'utf8' });
-  if (data.endsWith('\r\n')) {
-    data = data.substring(0, data.length - 2);
-  }
-  let datas = data.split(' ');
-  for (let d of datas) {
-    for (let s of ss) {
-      if (d.endsWith(s)) {
-        local.ret.inputs.push(d);
-      }
+    console.log(Tool.CURRENT_DIR);
+    let rspth = path.join(Tool.CURRENT_DIR, e.substring(1));
+    let data = fs.readFileSync(rspth, { encoding: 'utf8' });
+    if (data.endsWith('\r\n')) {
+        data = data.substring(0, data.length - 2);
     }
-  }
+    let datas = data.split(' ');
+    for (let d of datas) {
+        for (let s of ss) {
+            if (d.endsWith(s)) {
+                local.ret.inputs.push(d);
+            }
+        }
+    }
+}
+
+function clangxxCheck9Func(datas, pp, local) {
+    for (let d of datas) {
+        for (let p of pp) {
+            if (d.endsWith(p)) {
+                local.ret.inputs.push(d);
+            }
+        }
+    }
 }
 
 module.exports = {
