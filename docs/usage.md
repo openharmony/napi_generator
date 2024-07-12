@@ -68,26 +68,20 @@ vscode插件使用说明：[vscode插件使用说明](https://gitee.com/openharm
 
 **开发说明**
 
-可执行程序开发说明：[]()
-
-intelliJ插件开发说明：暂无
+可执行程序开发说明：[可执行程序开发说明](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2dtscpp/docs/guide/DEVELOP_ZH.md)
 
 **使用说明**
 
 可执行程序使用说明：[可执行程序使用说明](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2dtscpp/docs/usage/INSTRUCTION_ZH.md)
 
-intelliJ插件使用说明：暂无
-
 ## scan（API扫描工具）
 
 **开发说明** 
 
-暂无
+可执行程序使用说明：[可执行程序开发说明](https://gitee.com/openharmony/napi_generator/blob/master/src/tool/api/docs/scan_DEVELOP_ZH.md)
 
 **使用说明**
 
-可执行程序使用说明：[可执行程序使用说明](https://gitee.com/openharmony/napi_generator/blob/master/src/tool/api/docs/INSTRUCTION_ZH.md)
-
-intelliJ插件使用说明：暂无
+可执行程序使用说明：[可执行程序使用说明](https://gitee.com/openharmony/napi_generator/blob/master/src/tool/api/docs/scan_INSTRUCTION_ZH.md)
 
 vscode插件使用说明：[vscode插件使用说明](https://gitee.com/openharmony/napi_generator/blob/master/src/tool/api/api_scan_vs_plugin/docs/INSTRUCTION_ZH.md)
