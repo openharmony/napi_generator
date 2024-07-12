@@ -12,12 +12,12 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-const { NapiLog } = require("../tools/NapiLog");
+const { NapiLog } = require('../tools/NapiLog');
 const util = require('util');
-const { generateRandomInteger } = require("../tools/tool");
-const { InterfaceList, TypeList } = require('../tools/common')
-const path = require('path')
-const fs = require("fs");
+const { generateRandomInteger } = require('../tools/tool');
+const { InterfaceList, TypeList } = require('../tools/common');
+const path = require('path');
+const fs = require('fs');
 const LENGTH = 10;
 const TWO_DECIMAL = 2;
 const MODTWO = 2;
@@ -52,42 +52,42 @@ function generateRandomString(length) {
 
 function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete, hFileName) {
     let funcInfo = {
-        "name": "",
-        "params": [],
-        "retType": "",
+        'name': '',
+        'params': [],
+        'retType': '',
+    };
+    funcInfo.name = params.functions[funcIndex].name;
+    let parseParams = params.functions[funcIndex].parameters;
+    for (let i = 0; i < parseParams.length; ++i) {
+        let param = createParam(parseParams[i]);
+        funcInfo.params.push(param);
     }
-    funcInfo.name = params.functions[funcIndex].name
-    let parseParams =  params.functions[funcIndex].parameters
-    for(let i = 0; i < parseParams.length; ++i) {
-        let param = createParam(parseParams[i])
-        funcInfo.params.push(param)
-    }
-    funcInfo.retType = params.functions[funcIndex].rtnType
+    funcInfo.retType = params.functions[funcIndex].rtnType;
     let { funcParamUse, funcParamDefine, funcInfoParams } = genInitTestfunc(funcInfo);
     // 去除调用参数的最后一个','
     let index = funcParamUse.lastIndexOf(', ');
     funcParamUse = funcParamUse.substring(0, index);
-    let callFunc = ''
-    let hilogContent = ''
+    let callFunc = '';
+    let hilogContent = '';
     // 调用函数
     if (getJsType(funcInfo.retType) !== 'void') {
-      callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), tsFuncName, funcParamUse)
+      callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), tsFuncName, funcParamUse);
       // 加 hilog 打印
-      hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', tsFuncName)
-      hilogContent += util.format('console.info("testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', tsFuncName)
+      hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', tsFuncName);
+      hilogContent += util.format('console.info("testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', tsFuncName);
     } else {
-      callFunc = util.format('testNapi.%s(%s)\n    ', tsFuncName, funcParamUse)
+      callFunc = util.format('testNapi.%s(%s)\n    ', tsFuncName, funcParamUse);
     }
-    let func_test_replace = funcParamDefine + callFunc + hilogContent
+    let funcTestReplace = funcParamDefine + callFunc + hilogContent;
     // 替换test_case_name
-    let funcTestContent =  replaceAll(abilityTestTemplete,'[func_direct_testCase]', func_test_replace)
-    funcTestContent = replaceAll(funcTestContent, '[test_case_name]', tsFuncName)
-    funcTestContent = replaceAll(funcTestContent, '[file_introduce_replace]', hFileName)
-    funcTestContent = replaceAll(funcTestContent, '[func_introduce_replace]', funcInfo.name)
-    funcTestContent = replaceAll(funcTestContent, '[input_introduce_replace]', funcInfoParams === ''? 'void': funcInfoParams)
-    funcTestContent = replaceAll(funcTestContent, '[output_introduce_replace]', funcInfo.retType)
+    let funcTestContent = replaceAll(abilityTestTemplete, '[func_direct_testCase]', funcTestReplace);
+    funcTestContent = replaceAll(funcTestContent, '[test_case_name]', tsFuncName);
+    funcTestContent = replaceAll(funcTestContent, '[file_introduce_replace]', hFileName);
+    funcTestContent = replaceAll(funcTestContent, '[func_introduce_replace]', funcInfo.name);
+    funcTestContent = replaceAll(funcTestContent, '[input_introduce_replace]', funcInfoParams === '' ? 'void' : funcInfoParams);
+    funcTestContent = replaceAll(funcTestContent, '[output_introduce_replace]', funcInfo.retType);
 
-    return funcTestContent
+    return funcTestContent;
 }
 
 function genInitTestfunc(funcInfo) {
@@ -188,55 +188,55 @@ function getInterfaceDefine(testType, funcParamDefine, funcInfo, i, funcParamUse
 
 function replaceAll(s, sfrom, sto) {
     while (s.indexOf(sfrom) >= 0) {
-        s = s.replace(sfrom, sto)
+        s = s.replace(sfrom, sto);
     }
     return s;
 }
 
 function getTestType(type) {
     // 去掉const 和 *
-    type = type.replaceAll('const', '').replaceAll('*', '').trim()
+    type = type.replaceAll('const', '').replaceAll('*', '').trim();
     if (type === 'uint32_t' || type === 'int32_t' || type === 'int16_t' ||
         type === 'int64_t' || type === 'int' || type === 'size_t') {
-        return 'int'
+        return 'int';
     } else if (type === 'double_t' || type === 'double' || type === 'float') {
-        return 'float'
+        return 'float';
     } else if (type === 'bool') {
-        return 'bool'
+        return 'bool';
     } else if (type === 'std::string' || type.indexOf('char') >= 0) {
-        return 'string'
+        return 'string';
     }
-    return type
+    return type;
 }
 
 function getJsType(type) {
     // 去掉const 和 *
-    type = type.replaceAll('const', '').replaceAll('*', '').trim()
+    type = type.replaceAll('const', '').replaceAll('*', '').trim();
     if (type === 'uint32_t' || type === 'int32_t' || type === 'int16_t' || type === 'int64_t' ||
         type === 'int' || type === 'double_t' || type === 'double' || type === 'float' || type === 'size_t') {
-        return 'number'
+        return 'number';
     } else if (type.indexOf('char') >= 0 || type === 'std::string') {
-        return 'string'
+        return 'string';
     } else if (type === 'bool') {
-        return 'boolean'
+        return 'boolean';
     } else if (type === 'void') {
-        return type
+        return type;
     } else {
         // 对象，在ts中定义为interface
-        return 'testNapi.' + type.replace('*', '').trim()
+        return 'testNapi.' + type.replace('*', '').trim();
     }
 }
 
 function createParam(parseParamInfo) {
     let param = {
-        "name": "",
-        "type": ""
+        'name': '',
+        'type': ''
     }
-    param.name = parseParamInfo.name
-    param.type = parseParamInfo.type
-    return param
+    param.name = parseParamInfo.name;
+    param.type = parseParamInfo.type;
+    return param;
 }
 
 module.exports = {
     generateFuncTestCase
-}
+};
