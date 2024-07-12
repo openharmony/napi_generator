@@ -22,4 +22,4 @@
 
 ## scan（API扫描工具）
 
-[readme](https://gitee.com/openharmony/napi_generator/blob/master/src/tool/api/README_ZH.md)
+[readme](https://gitee.com/openharmony/napi_generator/blob/master/src/tool/api/scan_README_ZH.md)
