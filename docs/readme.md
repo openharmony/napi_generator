@@ -6,7 +6,7 @@
 
 ## h2dts（TS接口生成工具）
 
-[readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2dts/README_ZH.md)
+[readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2dts/h2dts_README_ZH.md)
 
 ## cmake2gn（GN脚本生成工具）
 
