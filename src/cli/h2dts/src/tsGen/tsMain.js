@@ -12,10 +12,10 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { NapiLog } = require('../gen/tools/NapiLog');
-const { writeFile } = require('../gen/tools/FileRW');
+const { NapiLog } = require('./tools/NapiLog');
+const { writeFile } = require('./tools/FileRW');
 const path = require('path');
-const re = require('../gen/tools/re');
+const re = require('./tools/re');
 const fs = require('fs');
 const os = require('os');
 
