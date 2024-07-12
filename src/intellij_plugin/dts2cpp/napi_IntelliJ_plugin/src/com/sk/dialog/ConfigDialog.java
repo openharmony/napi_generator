@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -51,6 +51,7 @@ public class ConfigDialog extends DialogWrapper {
 
     /**
      * 构造函数
+     *
      * @param list   配置文件数据列表
      * @param index  用户选择的列表行索引
      * @param data   用户选择的列表行数据
@@ -72,6 +73,7 @@ public class ConfigDialog extends DialogWrapper {
 
     /**
      * 创建视图
+     *
      * @param void 空
      * @return 组件内容
      * @throws log 输出异常
@@ -85,6 +87,7 @@ public class ConfigDialog extends DialogWrapper {
 
     /**
      * 校验数据
+     *
      * @param void 空
      * @return 错误信息 检测用户是否填入配置信息。
      * @throws log 输出异常
@@ -97,6 +100,7 @@ public class ConfigDialog extends DialogWrapper {
 
     /**
      * ok/cancel按钮
+     *
      * @param void 空
      * @return Action[] buttons list
      * @throws log 输出异常
@@ -114,6 +118,7 @@ public class ConfigDialog extends DialogWrapper {
 
     /**
      * help 按钮
+     *
      * @param void 空
      * @return Action[] button helpAction
      * @throws log 输出异常
