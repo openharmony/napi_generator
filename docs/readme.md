@@ -10,7 +10,7 @@
 
 ## cmake2gn（GN脚本生成工具）
 
-[readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/cmake2gn/README_ZH.md)
+[readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/cmake2gn/cmake2gn_README_ZH.md)
 
 ## h2sa（SERVICE框架生成工具）
 
