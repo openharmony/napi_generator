@@ -58,13 +58,13 @@ function analyzeFileRaw(fn) {
     }    
     
     let imports = statements[0].getText();
-    if (imports != null) {
+    if (imports !== null && imports !== undefined) {
         result.imports.push(imports);
     }
 
     let data = statements[0].getFullText();
     let licenseData = getLicense(data);
-    if (null != licenseData) {
+    if (null !== licenseData && undefined !== licenseData) {
         result.declareLicense.push(licenseData)
     }
 
@@ -75,25 +75,25 @@ function analyzeRaw(statements, result) {
     while (true) {
         let exportsInfo = statements[2].getText();
         let matchs = re.match("export default ([a-zA-Z0-9_]+);", exportsInfo);
-        if (matchs != null) {
+        if (matchs !== null && matchs !== undefined) {
             let exportName = re.getReg(exportsInfo, matchs.regs[1])
             result.exportDefault.push(exportName)
         }
 
         let data = statements[1].getText();
         let namespace = analyzeMatchNamespace(matchs, data, result)
-        if (namespace != null) {
+        if (namespace !== null && namespace !== undefined) {
             data = namespace[0]
             result = namespace[1]
         }
         let interface = analyzeMatchInterface(matchs, data, result)
-        if (interface != null) {
+        if (interface !== null && interface !== undefined) {
             data = interface[0]
             result = interface[1]
         }
 
         let functionMatch = analyzeMatchFunction(matchs, data, result)
-        if (functionMatch != null) {
+        if (functionMatch !== null && functionMatch !== undefined) {
             data = functionMatch[0]
             result = functionMatch[1]
         }
@@ -107,7 +107,7 @@ function analyzeRaw(statements, result) {
 function analyzeMatchNamespace(matchs, data, result) {
     matchs = re.match("declare namespace ([a-zA-Z_0-9]+) *({)", data);
     // 解析declare
-    if (matchs != null) {
+    if (matchs !== null && matchs !== undefined) {
         let namespaceName = re.getReg(data, matchs.regs[1])
         let namespaceData = checkOutBody(data, matchs.regs[2][0], null, true)
         data = data.substring(matchs.regs[2][1] + namespaceData.length + 1, data.length)
@@ -158,7 +158,7 @@ function analyzeMatchType(matchs, data, result) {
             name: exportName,
             body: exportBody
         })
-        if (matchs.regs[1][0] != -1) {
+        if (matchs.regs[1][0] !== -1) {
             result.exports.push(exportName)
         }
     }
@@ -172,7 +172,7 @@ function analyzeMatchType(matchs, data, result) {
             name: exportName,
             body: exportBody
         })
-        if (matchs.regs[1][0] != -1) {
+        if (matchs.regs[1][0] !== -1) {
             result.exports.push(exportName)
         }
     }

@@ -94,30 +94,36 @@ function analyzeParams(funcName, values) {
 
             let optionalFlag = re.getReg(v, matchs.regs[2]) === '?' ? true : false;
             let checkParamOk = true;
-            if (optionalFlag) {
-                optionalParamCount++;
-            } else if (optionalParamCount > 0) {
-                // 可选参数之后不能再有必选参数，须是可选参数。
-                NapiLog.logError('Invalid parameter [%s] of function [%s],'.format(v, funcName) + 
-                    ' the required parameter cannot follow an optional parameter.');
-                checkParamOk = false;
-            }
-            if (checkParamOk) {
-                result.push({ 'name': re.getReg(v, matchs.regs[1]), 'type': type, 'optional': optionalFlag, 'realType': type });
-                if (type.indexOf('AsyncCallback') >= 0) {
-                    funcType = FuncType.ASYNC;
-                }
-
-                if (isSyncFuncType(type, funcType)) {
-                    funcType = FuncType.SYNC;
-                }
-            }
+            analyzaParamsFunc(optionalFlag, optionalParamCount, v, funcName, checkParamOk,
+                result, matchs, type, funcType);
         }
         else {
             NapiLog.logError('Failed to analyse parameter [%s] of function [%s].'.format(v, funcName));
         }
     }
     return [result, funcType, rsltCallFunction];
+}
+
+function analyzaParamsFunc(optionalFlag, optionalParamCount, v, funcName, checkParamOk, 
+    result, matchs, type, funcType) {
+    if (optionalFlag) {
+        optionalParamCount++;
+    } else if (optionalParamCount > 0) {
+        // 可选参数之后不能再有必选参数，须是可选参数。
+        NapiLog.logError('Invalid parameter [%s] of function [%s],'.format(v, funcName) +
+            ' the required parameter cannot follow an optional parameter.');
+        checkParamOk = false;
+    }
+    if (checkParamOk) {
+        result.push({ 'name': re.getReg(v, matchs.regs[1]), 'type': type, 'optional': optionalFlag, 'realType': type });
+        if (type.indexOf('AsyncCallback') >= 0) {
+            funcType = FuncType.ASYNC;
+        }
+
+        if (isSyncFuncType(type, funcType)) {
+            funcType = FuncType.SYNC;
+        }
+    }
 }
 
 module.exports = {
