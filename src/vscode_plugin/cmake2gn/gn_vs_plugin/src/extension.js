@@ -17,13 +17,13 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const fs = require('fs');
-const re = require("./gen/tools/VsPluginRe");
-const { VsPluginLog } = require("./gen/tools/VsPluginLog");
+const re = require('./gen/tools/VsPluginRe');
+const { VsPluginLog } = require('./gen/tools/VsPluginLog');
 const { detectPlatform, readFile, writeFile } = require('./gen/tools/VsPluginTool');
 const path = require('path');
 const os = require('os');
 let exeFilePath = null;
-let flag = "";
+let flag = '';
 let isTrue = false;
 let globalPanel = null;
 
@@ -46,16 +46,16 @@ function activate(context) {
 	context.subscriptions.push(disposableMenu);
 	let platform = detectPlatform();
 	if (platform === 'win') {
-		exeFilePath = __dirname + "/gn-gen-win.exe";
+		exeFilePath = __dirname + '/gn-gen-win.exe';
 	} else if (platform === 'mac') {
-		exeFilePath = __dirname + "/gn-gen-macos";
+		exeFilePath = __dirname + '/gn-gen-macos';
 	} else if (platform === 'Linux') {
-		exeFilePath = __dirname + "/gn-gen-linux";
+		exeFilePath = __dirname + '/gn-gen-linux';
 	}
 	vscode.window.onDidChangeActiveColorTheme(colorTheme => {
 		let result = {
-			msg: "colorThemeChanged"
-		}
+			msg: 'colorThemeChanged'
+		};
 		globalPanel.webview.postMessage(result);
 	});
 }
@@ -69,28 +69,29 @@ function gnexecutor(outputCodeDir, originCodeDir, inputScriptDir, scriptType, tr
 			maxBuffer: 1024 * 1024 * 20
 		},
 		function (error, stdout, stderr) {
-		 VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
-		if (error || stdout.indexOf("generate gn ok") < 0) {
-			console.log(error)
-			vscode.window.showErrorMessage("genError:" + ((error !== null && error !== undefined) ?
-        error : "") + stdout);
-			return VsPluginLog.logError("VsPlugin:" + error + stdout);
+		 VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ', stderr =' + stderr);
+		if (error || stdout.indexOf('generate gn ok') < 0) {
+			console.log(error);
+			vscode.window.showErrorMessage('genError:' + ((error !== null && error !== undefined) ?
+        error : '') + stdout);
+			return VsPluginLog.logError('VsPlugin:' + error + stdout);
 		}
-		vscode.window.showInformationMessage("Generated successfully");
+		vscode.window.showInformationMessage('Generated successfully');
+		return '';
 	});
 }
 
 function genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
 	transplantDir, subsystemName, componentName, compileOptions) {
-	let command = exeFilePath + " -o " + outputCodeDir + " -p " + originCodeDir + " -f " + inputScriptDir 
-	+ " -t " + scriptType + " -s " + subsystemName + " -m " + componentName + " -d " + transplantDir;
-	if (compileOptions != "") {
-		command += " -a " + "\"" + compileOptions + "\"";
+	let command = exeFilePath + ' -o ' + outputCodeDir + ' -p ' + originCodeDir + ' -f ' + inputScriptDir + 
+	' -t ' + scriptType + ' -s ' + subsystemName + ' -m ' + componentName + ' -d ' + transplantDir;
+	if (compileOptions != '') {
+		command += ' -a ' + '\'' + compileOptions + '\'';
 	}
 
 	command = re.replaceAll(command, '\\\\', '/');
 	
-	console.log("command = " + command)
+	console.log('command = ' + command);
 	return command;
 }
 
@@ -134,9 +135,9 @@ function register(context, command) {
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
-			if (msg === "cancel") {
+			if (msg === 'cancel') {
 				globalPanel.dispose();
-			} else if(msg === "gn") {
+			} else if (msg === 'gn') {
 				checkReceiveMsg(message);
 			} else {
 				selectPath(globalPanel, message);
@@ -145,11 +146,11 @@ function register(context, command) {
     // 路径有效性判断
     if (uri.fsPath !== undefined) {
       let fn = re.getFileInPath(uri.fsPath);
-      let tt = re.match("([a-zA-Z_0-9]+.[a-zA-Z_0-9])", fn);
+      let tt = re.match('([a-zA-Z_0-9]+.[a-zA-Z_0-9])', fn);
       let result = {
-        msg: "selectinputScriptDir",
-        path: tt ? uri.fsPath : ""
-      }
+        msg: 'selectinputScriptDir',
+        path: tt ? uri.fsPath : ''
+      };
       globalPanel.webview.postMessage(result);
     }
 	});
@@ -202,15 +203,15 @@ function checkReceiveMsg(message) {
 * 获取插件执行命令
 */
 function nextPluginExeCommand(nextPluginId) {
-    if (nextPluginId === "kaihong.ApiScan") {
+    if (nextPluginId === 'kaihong.ApiScan') {
 		return 'api_scan';
-	} else if (nextPluginId === "kaihong.gn-gen") {
+	} else if (nextPluginId === 'kaihong.gn-gen') {
 		return 'generate_gn';
-	} else if (nextPluginId === "kaihong.service-gen") {
+	} else if (nextPluginId === 'kaihong.service-gen') {
 		return 'generate_service';
-	} else if (nextPluginId === "kaihong.ts-gen") {
+	} else if (nextPluginId === 'kaihong.ts-gen') {
 		return 'generate_ts';
-	} else if (nextPluginId === "kaihong.napi-gen") {
+	} else if (nextPluginId === 'kaihong.napi-gen') {
 		return 'generate_napi';
 	} else {
 		return null;
@@ -240,12 +241,12 @@ function startNextPlugin() {
 	if (message.mode !== undefined && message.mode !== null) {
 		mode = message.mode;
 	}
-	flag = flag === "" ? '' : flag;
+	flag = flag === '' ? '' : flag;
 	const options = {
-		canSelectMany: false,//是否可以选择多个
-		canSelectFiles: mode === 0 ? true : false,//是否选择文件
-		canSelectFolders: mode === 0 ? false : true,//是否选择文件夹
-		defaultUri:vscode.Uri.file(flag),//默认打开本地路径
+		canSelectMany: false, //是否可以选择多个
+		canSelectFiles: mode === 0 ? true : false, //是否选择文件
+		canSelectFolders: mode === 0 ? false : true, //是否选择文件夹
+		defaultUri:vscode.Uri.file(flag), //默认打开本地路径
 		filters: { 
 			'All files': ['*']
 		}
@@ -254,72 +255,74 @@ function startNextPlugin() {
 	return vscode.window.showOpenDialog(options).then(fileUri => {
 		if (fileUri && fileUri[0]) {
 			console.log('Selected file: ' + fileUri[0].fsPath);
-			let filePath = "";
+			let filePath = '';
 			filePath = fileUri[0].fsPath.concat(',');
 			filePath = re.replaceAll(filePath, '\\\\', '/');
-			if (filePath.substring(1,2) === ":") {
-				let filePathTemp = filePath.substring(0,1).toUpperCase()
-				filePath = filePathTemp + filePath.substring(1,filePath.length)
+			if (filePath.substring(1, 2) === ':') {
+				let filePathTemp = filePath.substring(0, 1).toUpperCase();
+				filePath = filePathTemp + filePath.substring(1, filePath.length);
 			}
 			let result = {
 				 msg: message.msg,
 				 path: filePath.length > 0 ? filePath.substring(0, filePath.length - 1) : filePath
-			}
+			};
 			console.log('message.msg: ' + message.msg);
-			if (!isTrue && message.msg === "selectoutputCodeDir"){
+			if (!isTrue && message.msg === 'selectoutputCodeDir') {
 				flag = filePath.substring(0, filePath.length - 1);
-				let fileTempName = "out";
+				let fileTempName = 'out';
 		        let pos = flag.indexOf(fileTempName);
-		        flag = flag.substr(0,pos-1);
+		        flag = flag.substr(0, pos - 1);
 				isTrue = true;
 			}
 			panel.webview.postMessage(result);
-			return fileUri[0].fsPath
+			return fileUri[0].fsPath;
+		} else {
+			return '';
 		}
    });
 }
 
 function checkMode(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
 	transplantDir, subsystemName, componentName, compileOptions) {
-	outputCodeDir = re.replaceAll(outputCodeDir, " ", "");
-	if ("" === outputCodeDir) {
-		vscode.window.showErrorMessage("Please enter the outputCodeDir path!");
+	outputCodeDir = re.replaceAll(outputCodeDir, ' ', '');
+	if ('' === outputCodeDir) {
+		vscode.window.showErrorMessage('Please enter the outputCodeDir path!');
 		return;
 	}
-	originCodeDir = re.replaceAll(originCodeDir, " ", "");
-	if ("" === originCodeDir) {
-		vscode.window.showErrorMessage("Please enter the originCodeDir path!");
+	originCodeDir = re.replaceAll(originCodeDir, ' ', '');
+	if ('' === originCodeDir) {
+		vscode.window.showErrorMessage('Please enter the originCodeDir path!');
 		return;
 	}
-	inputScriptDir = re.replaceAll(inputScriptDir, " ", "");
-	if ("" === inputScriptDir) {
-		vscode.window.showErrorMessage("Please enter the inputScriptDir path!");
+	inputScriptDir = re.replaceAll(inputScriptDir, ' ', '');
+	if ('' === inputScriptDir) {
+		vscode.window.showErrorMessage('Please enter the inputScriptDir path!');
 		return;
 	}
-	if (inputScriptDir.indexOf(".") < 0) {
-		vscode.window.showErrorMessage("Please enter the correct file path!");
+	if (inputScriptDir.indexOf('.') < 0) {
+		vscode.window.showErrorMessage('Please enter the correct file path!');
 		return;
 	}
-	transplantDir = re.replaceAll(transplantDir, " ", "");
-	if ("" === transplantDir) {
-		vscode.window.showErrorMessage("Please enter the transplantDir path!");
+	transplantDir = re.replaceAll(transplantDir, ' ', '');
+	if ('' === transplantDir) {
+		vscode.window.showErrorMessage('Please enter the transplantDir path!');
 		return;
 	}
-	subsystemName = re.replaceAll(subsystemName, " ", "");
-	if ("" === subsystemName) {
-		vscode.window.showErrorMessage("Please enter the subsystemName!");
+	subsystemName = re.replaceAll(subsystemName, ' ', '');
+	if ('' === subsystemName) {
+		vscode.window.showErrorMessage('Please enter the subsystemName!');
 		return;
 	}
-	componentName = re.replaceAll(componentName, " ", "");
-	if ("" === componentName) {
-		vscode.window.showErrorMessage("Please enter the componentName!");
+	componentName = re.replaceAll(componentName, ' ', '');
+	if ('' === componentName) {
+		vscode.window.showErrorMessage('Please enter the componentName!');
 		return;
 	}
 	if (exeFileExit()) {
 		gnexecutor(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
 			transplantDir, subsystemName, componentName, compileOptions);
 	} else {
-		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
+		vscode.window.showInformationMessage('Copy executable program to ' + __dirname);
 	}
 }
 
@@ -341,10 +344,10 @@ function getWebViewContent(context, templatePath) {
 	const dirPath = path.dirname(reoriginCodeDir);
 	let html = fs.readFileSync(reoriginCodeDir, 'utf-8');
 	html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
-		if ($2.indexOf("https://") < 0) {
+		if ($2.indexOf('https://') < 0) {
 			return $1 + globalPanel.webview.asWebviewUri(vscode.Uri.file(path.resolve(dirPath, $2))) + '"';
 		} else {
-			return $1 + $2+'"';
+			return $1 + $2 + '"';
 		}
 	});
 	return html;
@@ -353,4 +356,4 @@ function getWebViewContent(context, templatePath) {
 module.exports = {
 	activate,
 	deactivate
-}
+};

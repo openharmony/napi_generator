@@ -12,30 +12,30 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const path = require("path");
-const stdio = require("stdio");
+const path = require('path');
+const stdio = require('stdio');
 const fs = require('fs');
-const re = require("../tools/re");
+const re = require('../tools/re');
 
-const { NapiLog } = require("../tools/NapiLog");
-const { print } = require("../tools/tool");
-const analyze = require("./analyze");
-const gen =  require("./generate");
-const { writeFile, createFolder } = require("../tools/FileRW");
+const { NapiLog } = require('../tools/NapiLog');
+const { print } = require('../tools/tool');
+const analyze = require('./analyze');
+const gen = require('./generate');
+const { writeFile, createFolder } = require('../tools/FileRW');
 
 let ops = stdio.getopt({
-    'filename': { key: 'f', args: 1, description: ".h file", default: "" },
-    'out': { key: 'o', args: 1, description: "output directory", default: "." },
-    'loglevel': { key: 'l', args: 1, description: "Log Level: 0~3", default: "1" },
-    'serviceId': { key: 's', args: 1, description: "service register id: 9000~16777214", default: "9000" }
+    'filename': { key: 'f', args: 1, description: '.h file', default: '' },
+    'out': { key: 'o', args: 1, description: 'output directory', default: '.' },
+    'loglevel': { key: 'l', args: 1, description: 'Log Level: 0~3', default: '1' },
+    'serviceId': { key: 's', args: 1, description: 'service register id: 9000~16777214', default: '9000' }
 });
 
-NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"));
+NapiLog.init(ops.loglevel, path.join('' + ops.out, 'napi_gen.log'));
 
 let fileNames = ops.filename;
 var pathDir = ops.directory;
 if ((fileNames === null || fileNames === undefined) && (pathDir === null || pathDir === undefined)) {
-    NapiLog.logInfo("fileNames and pathDir both cannot be empty at the same time");
+    NapiLog.logInfo('fileNames and pathDir both cannot be empty at the same time');
 } else if (pathDir && pathDir !== '') {
     readDirFiles();
 } else if (fileNames && fileNames !== '') {
@@ -95,12 +95,12 @@ function genServiceFile(fileName) {
     let fileContent = gen.doGenerate(rootInfo);
 
     // 3. 创建service工程目录
-    let servicePath = re.pathJoin(ops.out, rootInfo.serviceName.toLowerCase() + "service");
-    let etcPath = re.pathJoin(servicePath, "etc");
-    let includePath = re.pathJoin(servicePath, "include");
-    let interfacePath = re.pathJoin(servicePath, "interface");
-    let profilePath = re.pathJoin(servicePath, "sa_profile");
-    let srcPath = re.pathJoin(servicePath, "src");
+    let servicePath = re.pathJoin(ops.out, rootInfo.serviceName.toLowerCase() + 'service');
+    let etcPath = re.pathJoin(servicePath, 'etc');
+    let includePath = re.pathJoin(servicePath, 'include');
+    let interfacePath = re.pathJoin(servicePath, 'interface');
+    let profilePath = re.pathJoin(servicePath, 'sa_profile');
+    let srcPath = re.pathJoin(servicePath, 'src');
     createFolder(servicePath);
     createFolder(etcPath);
     createFolder(includePath);
@@ -127,10 +127,10 @@ function genServiceFile(fileName) {
 }
 
 function checkGenerate(fileName) {
-    NapiLog.logInfo("check file []".format(fileName));
+    NapiLog.logInfo('check file []'.format(fileName));
     let suffix = fileName.split('.').pop().toLowerCase();
     if (suffix === 'h') {
-        NapiLog.logInfo("Generating service code from file " + fileName);
+        NapiLog.logInfo('Generating service code from file ' + fileName);
         genServiceFile(fileName);
     } else {
         NapiLog.logError('Only .h file is supported.');

@@ -29,14 +29,16 @@ function print(...args) {
 
 String.prototype.format = function (...args) {
     var result = this;
-    let reg = new RegExp("%[sd]{1}")
+    let reg = new RegExp('%[sd]{1}');
     for (let i = 0; i < args.length; i++) {
         let p = result.search(reg);
-        if (p < 0) break;
+        if (p < 0) {
+            break;
+        }
         result = result.substring(0, p) + args[i] + result.substring(p + 2, result.length);
     }
     return result;
-}
+};
 
 String.prototype.replaceAll = function (...args) {
     let result = this;
@@ -44,7 +46,7 @@ String.prototype.replaceAll = function (...args) {
         result = result.replace(args[0], args[1]);
     }
     return result;
-}
+};
 
 function replaceAll(s, sfrom, sto) {
     while (s.indexOf(sfrom) >= 0) {
@@ -54,9 +56,9 @@ function replaceAll(s, sfrom, sto) {
 }
 
 function getTab(tabLv) {
-    let tab = "";
-    for(var i = 0; i < tabLv; ++i) {
-        tab += "    ";
+    let tab = '';
+    for (var i = 0; i < tabLv; ++i) {
+        tab += '    ';
     }
     return tab;
 }
@@ -65,4 +67,4 @@ module.exports = {
     replaceAll,
     print,
     getTab
-}
+};
