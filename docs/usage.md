@@ -26,8 +26,6 @@ vscode插件使用说明：[vscode插件使用说明](https://gitee.com/openharm
 
 intelliJ插件开发说明：[intelliJ插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/src/intellij_plugin/h2dts/ts_IntelliJ_plugin/docs/guide/DEVELOP_zh.md)
 
-// vscode 是否支持？
-
 vscode插件开发说明：[vscode插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/src/vscode_plugin/h2dts/ts_vs_plugin/docs/guide/DEVELOP_zh.md)
 
 **使用说明**
@@ -48,7 +46,7 @@ vscode插件开发说明：暂无
 
 **使用说明**
 
-可执行程序使用说明：[可执行程序使用说明](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2sa/docs/usage/INSTRUCTION_ZH.md)
+可执行程序使用说明：[可执行程序使用说明](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2sa/docs/usage/h2sa_INSTRUCTION_ZH.md)
 
 vscode插件使用说明：[vscode插件使用说明](https://gitee.com/openharmony/napi_generator/blob/master/src/vscode_plugin/h2sa/service_vs_plugin/docs/usage/INSTRUCTION_ZH.md)
 
@@ -70,7 +68,7 @@ vscode插件使用说明：[vscode插件使用说明](https://gitee.com/openharm
 
 **开发说明**
 
-可执行程序开发说明：暂无
+可执行程序开发说明：[]()
 
 intelliJ插件开发说明：暂无
 
