@@ -138,8 +138,8 @@ function collectFeature(pth) {
 collectFeature(distDir);
 
 let result = {
-    function: intersection(androidFeature['function'], projectFeature['function']),
-    include: intersection(androidFeature['include'], projectFeature['include']),
+    function: intersection(androidFeature.function, projectFeature.function),
+    include: intersection(androidFeature.include, projectFeature.include),
 };
 console.log(result);
 ///////////////////////////////save to excel
