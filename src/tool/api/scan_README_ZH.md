@@ -5,7 +5,7 @@
 scan工具即API扫描工具，它可以扫描三方库中包含OpenHarmony源码不包含的接口，并输出result.xlsx文档。开发者移植三方库到OpenHarmony源码中，若三方库中包含一些OpenHarmony中不存在的接口，便会增加移植难度。此时可使用API扫描工具，提前预知风险接口，降低移植难度，提高开发效率。目前工具支持命令行和VS Code插件两种入口。
 
 	├── napi_generator                           
-	│   ├── ...                                  # 其他文档
+	│   ├── ...                                  # 其它文档
 	│   ├── src/tool
 	│   │   ├── api                              # api扫描工具
 	│   │   |   ├── api_scan_vs_plugin           # VS Code插件源码
