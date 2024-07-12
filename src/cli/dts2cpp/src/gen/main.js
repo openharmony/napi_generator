@@ -28,7 +28,7 @@ function doGenerate(ifname, destdir, imports, numberType, jsonCfg) {
     if (structOfTs === undefined || structOfTs.declareNamespace.length === 0 ||
         structOfTs.declareNamespace[0].name === undefined) {
         NapiLog.logError('analyzeFile file fail and file name is: ' + fn);
-        return;
+        return '';
     }
 
     // step2: generate code
@@ -77,11 +77,11 @@ function importsFun(imports, destDir, ifname) {
                 fs.mkdirSync(destDir + '/' + importPath[importPath.length - 1]);
             }
             imports[i] = '#include ' + '"' + importPath[importPath.length - 1] + '/' +
-                doGenerate(filePath, destDir + '/' + importPath[importPath.length - 1]) + '.h"\n'
+                doGenerate(filePath, destDir + '/' + importPath[importPath.length - 1]) + '.h"\n';
         }
     }
 }
 
 module.exports = {
     doGenerate,
-}
+};

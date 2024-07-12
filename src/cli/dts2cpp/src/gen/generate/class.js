@@ -49,8 +49,12 @@ function generateVariable(name, type, variable, className) {
         variable.hDefine += '\n    %s %s;'.format(type, name);
     } else if (type.indexOf('Array<') === 0) {
         let type2 = getArrayType(type);
-        if (type2 === 'string') type2 = 'std::string';
-        if (type2 === 'boolean') type2 = 'bool';
+        if (type2 === 'string') {
+            type2 = 'std::string';
+        }
+        if (type2 === 'boolean') {
+            type2 = 'bool';
+        }
         variable.hDefine += '\n    std::vector<%s> %s;'.format(type2, name);
     } else if (type === 'boolean') {
         variable.hDefine += '\n    bool %s;'.format(name);
@@ -111,8 +115,8 @@ public:%s
         middleBody: middleBodyTmplete.replaceAll('[className]', name).replaceAll('[static_funcs]', middleFunc),
         middleInit: middleInit,
         declarationH: `
-class %s;\r`.format(name), 
-        middleH: middleH   
+class %s;\r`.format(name),
+        middleH: middleH
     };
     return result;
 }
@@ -163,7 +167,7 @@ function connectResult(data, inNamespace, name) {
         implCpp += tmp[2];
         middleH += tmp[3];
         middleInit += `\n    funcList["%s"] = %s%s%s_middle::%s_middle;`
-          .format(func.name, inNamespace, toolNamespace, name, func.name);
+            .format(func.name, inNamespace, toolNamespace, name, func.name);
     }
     return [middleFunc, implH, implCpp, middleInit, middleH];
 }
@@ -177,7 +181,7 @@ function getToolNamespace(inNamespace) {
         if (index2 > 0 && index2 < index) {
             toolNamespace = inNamespace.substring(index2 + 2, index) + '_interface::';
         } else {
-          toolNamespace = bodyTmp + '_interface::';
+            toolNamespace = bodyTmp + '_interface::';
         }
     } else {
         toolNamespace = inNamespace + '_interface::';

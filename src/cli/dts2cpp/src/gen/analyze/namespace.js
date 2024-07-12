@@ -111,31 +111,35 @@ function parseEnumType(result) {
                     return null;
                 }
 
-                // 参数匹配
-                for (let k in func.value) {
-                    let v = func.value[k];
-                    if (!isValidValue(v)) {
-                        NapiLog.logError('parseEnumType func.value is null!');
-                        return null;
-                    }
-
-                    if (v.type === enumm.name) {
-                        if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-                            v.type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
-                        } else if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
-                            v.type = 'string';
-                        } else {
-                            NapiLog.logError('parseEnumType for interface function value is not support this type %s.'
-                                .format(enumm.body.enumValueType), getLogErrInfo());
-                            return null;
-                        }
-                        result.interface[i].body.function[j].value[k].type = v.type;
-                    }
-                }
+                parseEnumTypeFunc(func, enumm, result, i)
             }
         }
     }
     return result;
+}
+
+function parseEnumTypeFunc(func, enumm, result, i) {
+    // 参数匹配
+    for (let k in func.value) {
+        let v = func.value[k];
+        if (!isValidValue(v)) {
+            NapiLog.logError('parseEnumType func.value is null!');
+            return null;
+        }
+
+        if (v.type === enumm.name) {
+            if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+                v.type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
+            } else if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
+                v.type = 'string';
+            } else {
+                NapiLog.logError('parseEnumType for interface function value is not support this type %s.'
+                    .format(enumm.body.enumValueType), getLogErrInfo());
+                return null;
+            }
+            result.interface[i].body.function[j].value[k].type = v.type;
+        }
+    }
 }
 
 function parseNamespace(matchs, data, result) {
@@ -254,16 +258,16 @@ function parseType(matchs, data, result) {
         if (matchs.regs[1][0] !== -1) {
             result.exports.push(typeName);
         }
-    }
+}
     return data;
 }
 
 function parseFunction(matchs, data, result) {
     matchs = re.match('(export )*function (\\$*[A-Za-z0-9_]+) *(\\()', data);
-    if (null == matchs) {
+    if (null === matchs || undefined === matchs) {
         matchs = re.match('(export )*function (static )*(\\$*[A-Za-z0-9_]+) *(\\()', data);
     }
-    if (null == matchs) {
+    if (null === matchs || undefined === matchs) {
         matchs = re.match('(export )*function (static )*(register\\$*[A-Za-z0-9_]+) *(\\()', data);
     }
     if (matchs) {

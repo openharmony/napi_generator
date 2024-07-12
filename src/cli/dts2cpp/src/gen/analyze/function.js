@@ -96,7 +96,7 @@ function getFuncParaType(v, interfaceName, data, results) {
         }
     }
 
-    let interfaceType = re.match('{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$', v['type']);
+    let interfaceType = re.match('{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$', v.type);
     if (interfaceType) {
         v.type = interfaceName;
     }
