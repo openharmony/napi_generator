@@ -17,7 +17,7 @@ const re = require('../tools/re');
 
 /** Enum解析 */
 function analyzeEnum(data) {
-    let body = re.replaceAll(data, '\n', '').split(',')
+    let body = re.replaceAll(data, '\n', '').split(',');
     let result = {
         element: [],
         function: [],

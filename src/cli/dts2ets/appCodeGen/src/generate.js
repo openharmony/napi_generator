@@ -20,7 +20,7 @@ const re = require('./tools/re');
 
 const { jsonCfgList } = require('./tools/common');
 const os = require('os');
-const path = require('path')
+const path = require('path');
 const { NapiLog } = require('./tools/NapiLog');
 
 const DIRECT = 1;
@@ -152,7 +152,7 @@ function generateAppCode(structOfTs, destDir, moduleName, jsonCfg) {
 
     // 从文件分析的数据中拿到接口名，接口参数类型与个数，读取出来以此给接口参数赋初值。
     // 当前只支持一个接口的测试代码生成
-    let indexEts = ''
+    let indexEts = '';
     // 测试interface中的方法
     for (let i in ns0.body.interface) {
         let ii = ns0.body.interface[i];
@@ -173,7 +173,7 @@ function generateAppCode(structOfTs, destDir, moduleName, jsonCfg) {
 
     // index.ets文件生成
     indexEts = replaceAll(indexEts, '[import_module_name]', moduleName);
-    writeFile(re.pathJoin(destDir, 'Index.ets'), null != license ? (license + '\n' + indexEts) : indexEts);
+    writeFile(re.pathJoin(destDir, 'Index.ets'), null !== license && undefined !== license ? (license + '\n' + indexEts) : indexEts);
 }
 
 // 遍历 interface/class 中的function,生成对interface/class中的接口测试的代码
@@ -222,16 +222,16 @@ function callDirectFunction(funcName, funcValue, retValue, indexEts, className =
   // 返回值的处理
   let useFunction = '';
   if (retValue === 'void') {
-    useFunction = '%s.%s(%s);'.format(className === null? 'napitest': className + 'Obj', funcName, funcParamValue);
+    useFunction = '%s.%s(%s);'.format(className === null ? 'napitest' : className + 'Obj', funcName, funcParamValue);
   } else if (retValue === 'string') {
-    useFunction = 'let strRet: string = %s.%s(%s);\n'.format(className === null? 'napitest': className + 'Obj', funcName, funcParamValue);
-    useFunction += 'hilog.info(0x0000, "testTag", "%s.%s ret: " + strRet);'.format(className === null? 'napitest': className + 'Obj', funcName);
+    useFunction = 'let strRet: string = %s.%s(%s);\n'.format(className === null ? 'napitest' : className + 'Obj', funcName, funcParamValue);
+    useFunction += 'hilog.info(0x0000, "testTag", "%s.%s ret: " + strRet);'.format(className === null ? 'napitest': className + 'Obj', funcName);
   } else if (retValue === 'boolean') {
-    useFunction = 'let boolRet: boolean = %s.%s(%s);\n'.format(className === null? 'napitest': className + 'Obj', funcName, funcParamValue);
-    useFunction += 'hilog.info(0x0000, "testTag", "%s.%s ret: " + boolRet);'.format(className === null? 'napitest': className + 'Obj', funcName);
+    useFunction = 'let boolRet: boolean = %s.%s(%s);\n'.format(className === null ? 'napitest': className + 'Obj', funcName, funcParamValue);
+    useFunction += 'hilog.info(0x0000, "testTag", "%s.%s ret: " + boolRet);'.format(className === null ? 'napitest' : className + 'Obj', funcName);
   } else if (retValue.substring(0, SUBSTREND) === 'NUMBER_TYPE') {
-    useFunction = 'let numRet: number = %s.%s(%s);\n'.format(className === null? 'napitest': className + 'Obj', funcName, funcParamValue);
-    useFunction += 'hilog.info(0x0000, "testTag", "%s.%s ret: " + numRet);'.format(className === null? 'napitest': className + 'Obj', funcName);
+    useFunction = 'let numRet: number = %s.%s(%s);\n'.format(className === null ? 'napitest': className + 'Obj', funcName, funcParamValue);
+    useFunction += 'hilog.info(0x0000, "testTag", "%s.%s ret: " + numRet);'.format(className === null ? 'napitest' : className + 'Obj', funcName);
   } else {
     console.error('The current return type is not supported.');
   }

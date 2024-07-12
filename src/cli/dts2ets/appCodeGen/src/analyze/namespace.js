@@ -111,31 +111,35 @@ function parseEnumType(result) {
                     return null;
                 }
 
-                // 参数匹配
-                for (let k in func.value) {
-                    let v = func.value[k];
-                    if (!isValidValue(v)) {
-                        NapiLog.logError('parseEnumType func.value is null!');
-                        return null;
-                    }
-
-                    if (v.type === enumm.name) {
-                        if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
-                            v.type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
-                        } else if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
-                            v.type = 'string';
-                        } else {
-                            NapiLog.logError('parseEnumType for interface function value is not support this type %s.'
-                                .format(enumm.body.enumValueType), getLogErrInfo());
-                            return null;
-                        }
-                        result.interface[i].body.function[j].value[k].type = v.type;
-                    }
-                }
+                parseEnumTypeFunc(func, enumm, result, i)
             }
         }
     }
     return result;
+}
+
+function parseEnumTypeFunc(func, enumm, result, i) {
+    // 参数匹配
+    for (let k in func.value) {
+        let v = func.value[k];
+        if (!isValidValue(v)) {
+            NapiLog.logError('parseEnumType func.value is null!');
+            return null;
+        }
+
+        if (v.type === enumm.name) {
+            if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_NUMBER) {
+                v.type = 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease();
+            } else if (enumm.body.enumValueType === EnumValueType.ENUM_VALUE_TYPE_STRING) {
+                v.type = 'string';
+            } else {
+                NapiLog.logError('parseEnumType for interface function value is not support this type %s.'
+                    .format(enumm.body.enumValueType), getLogErrInfo());
+                return null;
+            }
+            result.interface[i].body.function[j].value[k].type = v.type;
+        }
+    }
 }
 
 function parseNamespace(matchs, data, result) {
@@ -220,7 +224,7 @@ function parseType(matchs, data, result) {
         let typeType = re.getReg(data, matchs.regs[3]);
         let index = typeType.indexOf('number');
         if (index !== -1) {
-            typeType = typeType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease())
+            typeType = typeType.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
         }
         getTypeInfo(result, typeName, typeType, false);
         data = re.removeReg(data, matchs.regs[0]);
@@ -260,10 +264,10 @@ function parseType(matchs, data, result) {
 
 function parseFunction(matchs, data, result) {
     matchs = re.match('(export )*function (\\$*[A-Za-z0-9_]+) *(\\()', data);
-    if (null == matchs) {
+    if (null === matchs || undefined === matchs) {
         matchs = re.match('(export )*function (static )*(\\$*[A-Za-z0-9_]+) *(\\()', data);
     }
-    if (null == matchs) {
+    if (null === matchs || undefined === matchs) {
         matchs = re.match('(export )*function (static )*(register\\$*[A-Za-z0-9_]+) *(\\()', data);
     }
     if (matchs) {
@@ -279,11 +283,9 @@ function parseFunction(matchs, data, result) {
         let matchFuncArray = re.match(' *: *([A-Za-z0-9]+)(\\[]);*', funcRet);
         if (matchFuncArray) {
             funcRet = re.getReg(funcRet, [matchFuncArray.regs[1][0], matchFuncArray.regs[2][1]]);
-        }
-        else if (matchFunc) {
+        } else if (matchFunc) {
             funcRet = re.getReg(funcRet, matchFunc.regs[1]);
-        }
-        else {
+        } else {
             funcRet = 'void';
         }
         funcRet = re.replaceAll(re.replaceAll(funcRet, ' ', ''), '\n', '');
