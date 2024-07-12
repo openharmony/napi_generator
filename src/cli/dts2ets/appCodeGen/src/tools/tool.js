@@ -63,8 +63,6 @@ function checkOutBody(body, off, flag, binside) {
         '(': ')',
         '{': '}',
         '<': '>',
-        //'<': '<',
-        //'>': '>',
     };
     let csl = {};
     let csr = {};
@@ -83,33 +81,38 @@ function checkOutBody(body, off, flag, binside) {
         }
         if (cs1 % 2 === 0) {
             let tb1 = true;
-            for (let k in csl) {
-                if (csl[k] !== csr[idx[k]]) {
-                    tb1 = false;
-                    break;
-                }
-            }
-            if (tb1 && body.substring(i, i + flag[1].length) === flag[1]) {
-                if (binside) {
-                    return body.substring(off + flag[0].length, i);
-                }
-                return body.substring(off, i + flag[1].length);
-            }
-
-            if (body[i] in csl) {
-                csl[body[i]] += 1;
-                if (body[i] in csr) {
-                    csr[body[i]] += 1;
-                }
-            }
-            if (body[i] in csr) {
-                if (!(body[i] === '>' && body[i - 1] === '=')) { // 尖括号匹配时忽略关键字 "=>"
-                    csr[body[i]] += 1;
-                }
-            }
+            checkOutBodyFunc(csl, csr, idx, tb1, body, i, flag, binside, off);
         }
     }
     return null;
+}
+
+function checkOutBodyFunc(csl, csr, idx, tb1, body, i, flag, binside, off) {
+    for (let k in csl) {
+        if (csl[k] !== csr[idx[k]]) {
+            tb1 = false;
+            break;
+        }
+    }
+    if (tb1 && body.substring(i, i + flag[1].length) === flag[1]) {
+        if (binside) {
+            return body.substring(off + flag[0].length, i);
+        }
+        return body.substring(off, i + flag[1].length);
+    }
+
+    if (body[i] in csl) {
+        csl[body[i]] += 1;
+        if (body[i] in csr) {
+            csr[body[i]] += 1;
+        }
+    }
+    if (body[i] in csr) {
+        if (!(body[i] === '>' && body[i - 1] === '=')) { // 尖括号匹配时忽略关键字 "=>"
+            csr[body[i]] += 1;
+        }
+    }
+    return '';
 }
 
 function removeExplains(data) {
