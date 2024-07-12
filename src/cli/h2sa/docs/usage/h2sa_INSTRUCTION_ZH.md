@@ -19,7 +19,7 @@ h2sa工具，即SERVICE框架生成工具，该工具支持命令行和VS Code�
 
 [下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
 
-获取nodejs脚本可执行程序service-gen-win.exe、service-gen-linux，用户可根据以下步骤生成nodejs脚本可执行程序：
+获取命令行可执行程序service-gen-win.exe、service-gen-linux，用户可根据以下步骤生成命令行可执行程序：
 
 [工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2sa/docs/guide/DEVELOP_ZH.md)
 

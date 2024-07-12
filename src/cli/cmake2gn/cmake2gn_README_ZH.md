@@ -5,11 +5,11 @@
 cmake2gn工具，即GN脚本转换工具，它可以根据三方库的CMakeLists.txt文件，编译转换生成BUILD.gn脚本文件。当前OpenHarmony源码只支持BUILD.gn文件编译，开发者无法移植CMakeLists.txt编译方式的三方库到OpenHarmony中。此时，开发者可使用GN脚本转换工具，根据CMakeLists.txt文件生成BUILD.gn脚本文件，降低移植难度，提高开发效率。目前工具支持可执行文件、VS Code插件两种入口。
 
 	├── napi_generator                               # 工具集
-	│   ├── ...                                      # 其他文件                           
+	│   ├── ...                                      # 其它文件                           
 	│   ├── src
 	│   │   ├── ...                              
 	│   │   ├── cli
-	│   │   |   ├── ...                              # 其他工具
+	│   │   |   ├── ...                              # 其它工具
 	│   │   |   ├── cmake2gn
 	│   │   |   |   ├── src
 	│   │   |   |   |   ├── main.js                  # 工具源码入口
@@ -259,6 +259,12 @@ group("all_targets") {
 }
 
 ```
+
+### 集成
+
+具体的将三方库集成到OpenHarmony的步骤，可以左键单击以下链接了解：
+
+[将三方库集成到OpenHarmony的方法](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/cmake2gn/docs/usage/ENSEMBLE_METHOD_ZH.md)
 
 ## 工具开发说明
 
