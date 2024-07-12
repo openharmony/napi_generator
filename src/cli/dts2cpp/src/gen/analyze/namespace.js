@@ -98,27 +98,32 @@ function parseEnumType(result) {
         // interface 匹配           
         for (let i in result.interface) {
             let interf = result.interface[i];
-            if (!isValidValue(interf)) {
-                NapiLog.logError('parseEnumType interf is null!');
-                return null;
-            }
-
-            // function 匹配
-            for (let j in interf.body.function) {
-                let func = interf.body.function[j];
-                if (!isValidValue(func)) {
-                    NapiLog.logError('parseEnumType func is null!');
-                    return null;
-                }
-
-                parseEnumTypeFunc(func, enumm, result, i)
-            }
+            parseEnumTypeFunc1(interf, enumm, result, i);
         }
     }
     return result;
 }
 
-function parseEnumTypeFunc(func, enumm, result, i) {
+function parseEnumTypeFunc1(interf, enumm, result, i) {
+    if (!isValidValue(interf)) {
+        NapiLog.logError('parseEnumType interf is null!');
+        return null;
+    }
+
+    // function 匹配
+    for (let j in interf.body.function) {
+        let func = interf.body.function[j];
+        if (!isValidValue(func)) {
+            NapiLog.logError('parseEnumType func is null!');
+            return null;
+        }
+
+        parseEnumTypeFunc2(func, enumm, result, i);
+    }
+    return '';
+}
+
+function parseEnumTypeFunc2(func, enumm, result, i) {
     // 参数匹配
     for (let k in func.value) {
         let v = func.value[k];
@@ -140,6 +145,7 @@ function parseEnumTypeFunc(func, enumm, result, i) {
             result.interface[i].body.function[j].value[k].type = v.type;
         }
     }
+    return '';
 }
 
 function parseNamespace(matchs, data, result) {
@@ -258,7 +264,7 @@ function parseType(matchs, data, result) {
         if (matchs.regs[1][0] !== -1) {
             result.exports.push(typeName);
         }
-}
+    }
     return data;
 }
 
