@@ -2,14 +2,7 @@
 
 ## 简介
 
-scan工具即API扫描工具，它可以扫描三方库中包含OpenHarmony源码不包含的接口，并输出result.xlsx文档。开发者移植三方库到OpenHarmony源码中，若三方库中包含一些OpenHarmony中不存在的接口，便会增加移植难度。此时可使用API扫描工具，提前预知风险接口，降低移植难度，提高开发效率。目前工具支持命令行和VS Code插件两种入口。
-
-	├── napi_generator                           
-	│   ├── ...                                  # 其它文档
-	│   ├── src/tool
-	│   │   ├── api                              # api扫描工具
-	│   │   |   ├── api_scan_vs_plugin           # VS Code插件源码
-	│   │   |   ├── ...
+scan工具可以扫描三方库中包含OpenHarmony源码不包含的接口，并输出result.xlsx文档。开发者移植三方库到OpenHarmony源码中，若三方库中包含一些OpenHarmony中不存在的接口，便会增加移植难度。此时可使用API扫描工具，提前预知风险接口，降低移植难度，提高开发效率。
 
 ## 约束
 系统：建议Ubuntu 20.04或者Windows 10
@@ -18,46 +11,33 @@ scan工具即API扫描工具，它可以扫描三方库中包含OpenHarmony源�
 
 ## 使用方法
 
-### 使用对象
+1.下载Andr_N_Games_api.xlsx文件，并放置在napi_generator/src/tool/api/src文件夹下，下载链接如下：
 
-系统开发者
-### 使用场景
+// todo
 
-移植三方库到OpenHarmony前预知风险接口。
+2.安装typescript：在napi_generator/src/tool/api/src目录下执行命令：
 
-### 工具获取
+	npm i typescript
 
-#### 命令行
+3.安装stdio：在napi_generator/src/tool/api/src目录下执行命令：
 
-命令行工具可根据源码自行打包，打包步骤如下：
+	npm i stdio
 
-[工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/src/tool/api/api_scan_vs_plugin/docs/DEVELOP_ZH.md)
-
-#### vscode插件
-
-工具支持VS Code插件，可在VS Code插件市场直接下载。
-
-### 工具输入
-
-根据使用者指定三方库项目源码，工具会输出风险接口。为了方便使用者快速上手工具，此处使用opencv项目为例，项目目录如下：
+4.根据使用者指定三方库项目源码，工具会输出风险接口。为了方便使用者快速上手工具，此处使用opencv项目为例，项目目录如下：
 
 ![](./figures/opencv.png)
 
-### 工具使用
+5.在napi_generator/src/tool/api/src下执行以下命令：
 
-#### 命令行
+```
+node scan.js -d E:\aboutTest\opencv-4.x\opencv-4.x -o E:\aboutTest\opencv-4.x\opencv-4.x
+```
 
-[命令行使用说明](https://gitee.com/openharmony/napi_generator/blob/master/src/tool/api/docs/scan_INSRTUCTION_ZH.md)
+其中,参数详情如下：
+	-d, 被扫描项目的路径
+	-o, 可选参数，默认为当前路径下，输出结果存放路径。
 
-#### vscode插件
-
-具体的工具使用步骤，可以左键单击以下链接了解：
-
-[工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/src/tool/api/api_scan_vs_plugin/docs/INSTRUCTION_ZH.md)
-
-### 工具输出
-
-在window环境下的，根据输入三方库项目,生成的输出文件result.xlsx，如下所示：
+6.在window环境下的，根据输入三方库项目,生成的输出文件result.xlsx，如下所示：
 
 ![](./figures/opencv_result.png)
 
@@ -66,19 +46,3 @@ scan工具即API扫描工具，它可以扫描三方库中包含OpenHarmony源�
 ![](./figures/opencv_include.png)
 
 ![](./figures/opencv_h.png)
-
-## 版本说明
-
-暂无
-
-## FAQ
-
-  [FAQ](https://gitee.com/openharmony/napi_generator/tree/master/src/tool/api/FAQ.md)
-
-## 参与贡献
-
-暂无
-
-## 相关仓
-
-暂无
