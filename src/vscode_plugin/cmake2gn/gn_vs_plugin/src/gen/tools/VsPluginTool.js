@@ -31,11 +31,11 @@ function replaceAll(s, sfrom, sto) {
 }
 
 function detectPlatform() {
-	if (os.type() == 'Windows_NT') {
+	if (os.type() === 'Windows_NT') {
 		return 'win';
-	} else if (os.type() == 'Darwin') {
+	} else if (os.type() === 'Darwin') {
 		return 'mac';
-	} else if (os.type() == 'Linux') {
+	} else if (os.type() === 'Linux') {
 		return 'Linux';
 	}
 }
