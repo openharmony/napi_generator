@@ -52,7 +52,7 @@ NapiLog.init = function (level, fileName) {
     logLevel = level in [NapiLog.LEV_NONE, NapiLog.LEV_ERROR, NapiLog.LEV_DEBUG, NapiLog.LEV_INFO]
         ? level : NapiLog.LEV_ERROR;
     logFileName = fileName ? fileName : 'napi_generator.log';
-}
+};
 
 /**
  * 通过调用栈获取当前正在执行的方法名，代码行数及文件路径
@@ -64,7 +64,7 @@ NapiLog.getCallPath = function (callerFuncName = null) {
     let stackArray = new Error().stack.split('\n');
 
     // 如果没有指定目标方法，默认在调用栈中查找当前方法"getCallPath"所在的帧
-    let destFuncName = callerFuncName != null ? callerFuncName : 'getCallPath';
+    let destFuncName = callerFuncName !== null ? callerFuncName : 'getCallPath';
 
     for (let i = stackArray.length - 1; i >= 0; --i) {
         // debug模式和打包后的可执行程序调用栈函数名不同， 以NapiLog.log()方法为例：
@@ -92,7 +92,7 @@ NapiLog.getCallPath = function (callerFuncName = null) {
     }
 
     return callPath;
-}
+};
 
 function print(...args) {
     if (vscode) {
@@ -111,7 +111,9 @@ function recordLog(lev, ...args) {
         logResultMessage = [false, detail];
     }
     let logStr = callPath + ' ' + detail;
-    if (logLevel <= lev) return logStr;
+    if (logLevel <= lev) {
+        return logStr;
+    }
     NapiLog.logInfo(origMsgInfo[0]);
     return logStr;
 }

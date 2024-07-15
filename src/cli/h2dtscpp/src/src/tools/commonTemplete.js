@@ -87,8 +87,8 @@ function generateBase(destDir, license, hFilePath) {
   let businessInclude = hFilePath.substring(index + 1, hFilePath.length);
   commonH = replaceAll(commonH, '[business_include_replace]', businessInclude);
   commonCpp = replaceAll(commonCpp, '[include_name]', hFileName);
-  writeFile(re.pathJoin(destDir, hFileName + 'common.h'), null != license ? (license + '\n' + commonH) : commonH);
-  writeFile(re.pathJoin(destDir, hFileName + 'common.cpp'), null != license ? (license + '\n' + commonCpp) : commonCpp);
+  writeFile(re.pathJoin(destDir, hFileName + 'common.h'), null !== license && undefined !== license ? (license + '\n' + commonH) : commonH);
+  writeFile(re.pathJoin(destDir, hFileName + 'common.cpp'), null !== license && undefined !== license ? (license + '\n' + commonCpp) : commonCpp);
 }
 
 function replaceAll(s, sfrom, sto) {

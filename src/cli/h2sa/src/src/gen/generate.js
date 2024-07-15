@@ -220,7 +220,7 @@ function saveClassSrc(classInfo) {
         return;
     }
     for (let i = 0; i < dependSrcList.length; ++i) {
-        if (dependSrcList[i].name === classInfo.name){
+        if (dependSrcList[i].name === classInfo.name) {
             // 该class的定义源码已经保存过了。
             return;
         }

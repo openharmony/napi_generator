@@ -43,11 +43,15 @@ FuncType.SYNC = 2;
 FuncType.ASYNC = 4;
 FuncType.PROMISE = 8;
 FuncType.ToString = function (type) {
-    if (type === FuncType.DIRECT) return 'DIRECT';
-    else if (type === FuncType.SYNC) return 'SYNC';
-    else if (type === FuncType.ASYNC) return 'ASYNC';
-    else if (type === FuncType.PROMISE) return 'PROMISE';
-    return 'UNKNOW';
+    if (type === FuncType.DIRECT) {
+        return 'DIRECT';
+    } else if (type === FuncType.ASYNC) {
+        return 'ASYNC';
+    } else if (type === FuncType.PROMISE) {
+        return 'PROMISE';
+    } else {
+        return 'UNKNOW';
+    }
 };
 
 class NumberIncrease { }
@@ -75,7 +79,7 @@ InterfaceList.getValue = function (name) {
     for (let i in ifs) {
         let vv = ifs[i];
         if (ifs[i].name === name) {
-            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties')
+            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
             if (hasProperty) {
                 return ifs[i].body.allProperties.values;
             } else {
@@ -109,14 +113,14 @@ CallFunctionList.getValue = function (name) {
         return null;
     }
 
-    let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1]
+    let cfs = CallFunctionList.callFuncs[CallFunctionList.callFuncs.length - 1];
     if (cfs === undefined) {
         return null;
     }
 
     for (let i = 0; i < cfs.length; i++) {
         if (cfs[i].name === name) {
-            return [cfs[i].body, cfs[i].ret]
+            return [cfs[i].body, cfs[i].ret];
         }
     }
     return null;
@@ -338,13 +342,13 @@ function getUnionType(type) {
 function isFuncType(type) {
     let isFunction = false;
     if (type === null || type === undefined) {
-        return isFunction;
+        isFunction = false;
     }
 
     if (type === 'function' || type === 'Function') {
         isFunction = true;
-        return isFunction;
     }
+    return isFunction;
 }
 
 function isRegisterFunc(name) {
@@ -362,7 +366,7 @@ function isUnRegisterFunc(name) {
     if (unRegIndex === 0) {
         isRegister = true;
     }
-    return isRegister
+    return isRegister;
 }
 
 function isOnObjCallback(name) {
@@ -420,27 +424,27 @@ function getOnCallbackFunAndInterName(CallbackType) {
     return [interName, funcName];
 }
 
-class jsonCfgList { }
-jsonCfgList.jsonCfg = [];
-jsonCfgList.push = function (ifs) {
-    jsonCfgList.jsonCfg.push(ifs);
+class JsonCfgList { }
+JsonCfgList.jsonCfg = [];
+JsonCfgList.push = function (ifs) {
+    JsonCfgList.jsonCfg.push(ifs);
 };
-jsonCfgList.pop = function () {
-    jsonCfgList.jsonCfg.pop();
+JsonCfgList.pop = function () {
+    JsonCfgList.jsonCfg.pop();
 };
-jsonCfgList.getValue = function (className, inter) {
-    let ifs = jsonCfgList.jsonCfg[jsonCfgList.jsonCfg.length - 1];
+JsonCfgList.getValue = function (className, inter) {
+    let ifs = JsonCfgList.jsonCfg[JsonCfgList.jsonCfg.length - 1];
     for (let i in ifs) {
         if (ifs[i].interfaceName.className === className && ifs[i].interfaceName.funcName === inter) {
             return ifs[i].serviceCode;
         }
     }
     return null;
-}
+};
 
 function getLogErrInfo() {
     let errInfo = ' Please refer to for support capacity:' +
-        'https://gitee.com/openharmony/napi_generator/tree/master/release-notes';
+        'https://gitee.com/openharmony/' + 'napi_generator/tree/master/release-notes';
     return errInfo;
 }
 
@@ -464,7 +468,7 @@ module.exports = {
     getUnionType,
     isFuncType,
     isArrowFunc,
-    jsonCfgList,
+    JsonCfgList,
     isRegisterFunc,
     isUnRegisterFunc,
     isOnObjCallback,

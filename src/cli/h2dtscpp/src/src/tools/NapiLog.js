@@ -64,7 +64,7 @@ NapiLog.getCallPath = function (callerFuncName = null) {
     let stackArray = new Error().stack.split('\n');
 
     // 如果没有指定目标方法，默认在调用栈中查找当前方法"getCallPath"所在的帧
-    let destFuncName = callerFuncName != null ? callerFuncName : 'getCallPath';
+    let destFuncName = callerFuncName !== null && callerFuncName !== undefined ? callerFuncName : 'getCallPath';
 
     for (let i = stackArray.length - 1; i >= 0; --i) {
         // debug模式和打包后的可执行程序调用栈函数名不同， 以NapiLog.log()方法为例：

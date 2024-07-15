@@ -85,7 +85,7 @@ function genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType,
 	transplantDir, subsystemName, componentName, compileOptions) {
 	let command = exeFilePath + ' -o ' + outputCodeDir + ' -p ' + originCodeDir + ' -f ' + inputScriptDir + 
 	' -t ' + scriptType + ' -s ' + subsystemName + ' -m ' + componentName + ' -d ' + transplantDir;
-	if (compileOptions != '') {
+	if (compileOptions !== '') {
 		command += ' -a ' + '\'' + compileOptions + '\'';
 	}
 
