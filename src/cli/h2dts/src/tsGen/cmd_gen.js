@@ -18,7 +18,6 @@ const { NapiLog } = require('./tools/NapiLog');
 const path = require('path');
 const stdio = require('stdio');
 var fs = require('fs');
-const { print } = require('./tools/tool');
 
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: '.d.ts file', default: '' },
@@ -28,7 +27,15 @@ let ops = stdio.getopt({
     'tsGen':{key: 't', args: 1, description: 'enable or disable generate typescript file', default: false },
 });
 
-NapiLog.init(ops.loglevel, path.join("" + ops.out, "napi_gen.log"));
+let vscode = null;
+try {
+    vscode = require('vscode');
+}
+catch (err) {
+    vscode = null;
+}
+
+NapiLog.init(ops.loglevel, path.join('' + ops.out, 'napi_gen.log'));
 
 let fileNames = ops.filename;
 var pathDir = ops.directory;
@@ -38,6 +45,13 @@ if (fileNames == null && pathDir == null) {
     readDirFiles();
 } else if (fileNames !== '') {
     readFiles();
+}
+
+function print(...args) {
+  if (vscode) {
+      vscode.window.showInformationMessage(...args);
+  }
+  console.log(...args);
 }
 
 function readFiles() {
