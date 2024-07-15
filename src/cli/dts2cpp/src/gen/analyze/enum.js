@@ -22,7 +22,7 @@ function analyzeEnum(data) {
         element: [],
         function: [],
         enumValueType: 0, // 0代表数字，1代表字符串
-    }
+    };
     for (let i in body) {
         let bodyContent = body[i];
         while (bodyContent.length > 0 && bodyContent[0] === ' ') {

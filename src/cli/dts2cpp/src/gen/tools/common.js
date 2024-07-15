@@ -43,10 +43,15 @@ FuncType.SYNC = 2;
 FuncType.ASYNC = 4;
 FuncType.PROMISE = 8;
 FuncType.ToString = function (type) {
-    if (type === FuncType.DIRECT) return 'DIRECT';
-    else if (type === FuncType.SYNC) return 'SYNC';
-    else if (type === FuncType.ASYNC) return 'ASYNC';
-    else if (type === FuncType.PROMISE) return 'PROMISE';
+    if (type === FuncType.DIRECT) {
+        return 'DIRECT';
+    } else if (type === FuncType.SYNC) {
+        return 'SYNC';
+    } else if (type === FuncType.ASYNC) {
+        return 'ASYNC';
+    } else if (type === FuncType.PROMISE) {
+        return 'PROMISE';
+    }
     return 'UNKNOW';
 };
 
@@ -338,13 +343,13 @@ function getUnionType(type) {
 function isFuncType(type) {
     let isFunction = false;
     if (type === null || type === undefined) {
-        return isFunction;
+        isFunction = true;
     }
 
     if (type === 'function' || type === 'Function') {
         isFunction = true;
-        return isFunction;
     }
+    return isFunction;
 }
 
 function isRegisterFunc(name) {
@@ -439,8 +444,8 @@ JsonCfgList.getValue = function (className, inter) {
 };
 
 function getLogErrInfo() {
-    let errInfo = ' Please refer to for support capacity:'
-        + 'https://gitee.com/openharmony/napi_generator/tree/master/release-notes';
+    let errInfo = ' Please refer to for support capacity:' +
+        'https://gitee.com/openharmony/' + 'napi_generator/tree/master/release-notes';
     return errInfo;
 }
 

@@ -18,15 +18,17 @@ function search(ss, data) {
     ss = replaceAll(ss, '\\.', '\\.');
     let reg = new RegExp(ss);
     let tt = reg.exec(data);
-    if (tt == null) return null;
+    if (tt === null || tt === undefined) {
+        return null;
+    }
     let ret = { 'regs': [] };
     for (let i = 0; i < tt.length; i++) {
         let p = data.indexOf(tt[i]);
-        if (tt[i] == null) {
-            ret['regs'].push([-1, -1]);
+        if (tt[i] === null) {
+            ret.regs.push([-1, -1]);
         }
         else {
-            ret['regs'].push([p, p + tt[i].length]);
+            ret.regs.push([p, p + tt[i].length]);
         }
     }
 
@@ -35,7 +37,9 @@ function search(ss, data) {
 
 function match(ss, data) {
     let tt = search(ss, data);
-    if (tt != null && tt.regs[0][0] == 0) return tt;
+    if (tt !== null && tt.regs[0][0] === 0) {
+        return tt;
+    }
     return null;
 }
 

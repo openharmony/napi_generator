@@ -26,7 +26,7 @@ function doGenerate(ifname, destdir, jsonCfg) {
     if (structOfTs === undefined || structOfTs.declareNamespace.length === 0 ||
         structOfTs.declareNamespace[0].name === undefined) {
         NapiLog.logError('analyzeFile file fail and file name is: ' + fn);
-        return;
+        return '';
     }
 
     // step2: generate code

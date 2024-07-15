@@ -18,7 +18,7 @@ const { NumberIncrease } = require('../tools/common');
 /* 去除单行注释// */
 function parseNotes(data) {
     let notes = data.indexOf('//') >= 0 ? data.substring(data.indexOf('//'), data.length) : '';
-    while (notes != '') {
+    while (notes !== '') {
         notes = notes.substring(0, notes.indexOf('\n'));
         data = data.replace(notes, '');
         notes = '';
@@ -76,7 +76,7 @@ function analyzeTypeVariable(t, tt, result) {
 }
 
 function analyzeType2(data) {
-    let body = re.replaceAll(data, ' ', '').split('"|"')
+    let body = re.replaceAll(data, ' ', '').split('"|"');
     let result = {
         element: [],
         function: [],

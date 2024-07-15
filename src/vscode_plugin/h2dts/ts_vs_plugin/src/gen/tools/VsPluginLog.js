@@ -50,10 +50,12 @@ function recordLog(lev, ...args) {
     let dataStr = getDateString();
     let detail = args.join(' ');
     saveLog(dataStr, LEV_STR[lev], detail);
-    if (lev == VsPluginLog.LEV_ERROR) {
+    if (lev === VsPluginLog.LEV_ERROR) {
         logResultMessage = [false, detail];
     }
-    if (logLevel < lev) return;
+    if (logLevel < lev) {
+        return;
+    }
     VsPluginLog.logInfo(dataStr + LEV_STR[lev] + detail);
 }
 

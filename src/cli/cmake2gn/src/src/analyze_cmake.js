@@ -25,7 +25,7 @@ class AnalyzeCMake {
     }
     static mkdirBuildTemp(compileFile) {
         let buildTmp;
-        if (Tool.OHOS_PORTING_TO == '') {
+        if (Tool.OHOS_PORTING_TO === '') {
             buildTmp = path.join(compileFile.dir, 'build_tmp');//cmake编译的临时目录
         } else {
             buildTmp = path.join(Tool.OHOS_PROJECT_PATH, Tool.OHOS_PORTING_TO, 'build_tmp');//cmake编译的临时目录
@@ -72,7 +72,7 @@ class AnalyzeCMake {
             Logger.err(data.toString(), true);
         });
         ret.on('close', (code) => {
-            if (code == 0) {
+            if (code === 0) {
                 Logger.info('------------------------cmake ok');
                 AnalyzeMake.analyze(path.join(buildTmp, 'Makefile')); //调用make生成命令行
             } else {
