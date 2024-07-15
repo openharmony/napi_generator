@@ -18,6 +18,7 @@ const path = require('path');
 const re = require('./tools/re');
 const fs = require('fs');
 const os = require('os');
+const util = require('util');
 
 function parseFileAll(hFilePath) {
     let execSync = require('child_process').execSync;
@@ -132,7 +133,7 @@ function getJsTypeFromC(cType, typeInfo) {
     }
     let jsType = basicC2js(basicCtype);
     if (typeInfo.array) {
-        jsType = 'Array<%s>'.format(jsType);
+        jsType = util.format('Array<%s>', jsType);
     }
     return jsType;
 }
@@ -188,7 +189,7 @@ function putFuncIntoNamespace(funcInfo, namespaces) {
             return;
         }
     }
-    NapiLog.logError('The namespace [%s] of function %s is not found.'.format(funcInfo.namespace, funcInfo.name));
+    NapiLog.logError(util.format('The namespace [%s] of function %s is not found.', funcInfo.namespace, funcInfo.name));
 }
 
 function analyzeRootFunction(rootInfo, parseResult) {
@@ -248,7 +249,7 @@ function putClassIntoNamespace(classInfo, namespaces) {
             return;
         }
     }
-    NapiLog.logError('The namespace [%s] of class %s is not found.'.format(classInfo.namespace, classInfo.name));
+    NapiLog.logError(util.format('The namespace [%s] of class %s is not found.', classInfo.namespace, classInfo.name));
 }
 
 function analyzeClasses(rootInfo, parseResult) {
@@ -283,7 +284,7 @@ function genFunction(func, tabLv, needDeclare = false) {
         funcParams += func.params[i].name + ': ' + func.params[i].type;
     }
     let declareStr = needDeclare ? 'declare ' : '';
-    return '%s%s%s%s%s(%s): %s;\n'.format(tab, declareStr, funcPrefix, func.static, func.name, funcParams, func.retType);
+    return util.format('%s%s%s%s%s(%s): %s;\n', tab, declareStr, funcPrefix, func.static, func.name, funcParams, func.retType);
 }
 
 function genClass(classInfo, tabLv, needDeclare = false) {
@@ -292,7 +293,7 @@ function genClass(classInfo, tabLv, needDeclare = false) {
     let tsClass = tab + declareStr + 'class ' + classInfo.name + ' {\n';
     let tab1 = getTab(tabLv + 1);
     for (var i = 0; i < classInfo.properties.length; ++i) {
-        tsClass += '%s%s: %s;\n'.format(tab1, classInfo.properties[i].name, classInfo.properties[i].type);
+        tsClass += util.format('%s%s: %s;\n', tab1, classInfo.properties[i].name, classInfo.properties[i].type);
     }
     for (var i = 0; i < classInfo.functions.length; ++i) {
         tsClass += genFunction(classInfo.functions[i], tabLv + 1);
@@ -303,7 +304,7 @@ function genClass(classInfo, tabLv, needDeclare = false) {
 
 function genNamespace(namespace, tabLv) {
     let tab = getTab(tabLv);
-    let tsNamespace = tab + 'declare namespace %s {\n'.format(namespace.name);
+    let tsNamespace = tab + util.format('declare namespace %s {\n', namespace.name);
     for (var i = 0; i < namespace.functions.length; ++i) {
         tsNamespace += genFunction(namespace.functions[i], tabLv + 1);
     }
@@ -331,7 +332,7 @@ function genTsContent(rootInfo) {
 
     if (rootInfo.namespaces.length > 0) {
         // export the first namespace as default
-        tsContent += '\nexport default %s;'.format(rootInfo.namespaces[0].name);
+        tsContent += util.format('\nexport default %s;', rootInfo.namespaces[0].name);
     }
 
     return tsContent;
