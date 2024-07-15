@@ -14,6 +14,8 @@
 */
 const fs = require('fs');
 const path = require('path');
+const util = require('util');
+
 let vscode = null;
 try {
     vscode = require('vscode');
@@ -85,7 +87,7 @@ NapiLog.getCallPath = function (callerFuncName = null) {
                 let lineNum = srcPath.substring(lineNumIndex + 1, colNumIndex);
                 let filePath = srcPath.substring(0, lineNumIndex);
 
-                callPath = '%s[%s(%s:%s)]'.format(funInfo, filePath, lineNum, colNum);
+                callPath = util.format('%s[%s(%s:%s)]', funInfo, filePath, lineNum, colNum);
             }
             break;
         }

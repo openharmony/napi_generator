@@ -18,6 +18,7 @@ const { NapiLog } = require('./tools/NapiLog');
 const path = require('path');
 const stdio = require('stdio');
 var fs = require('fs');
+const util = require('util');
 
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: '.d.ts file', default: '' },
@@ -71,7 +72,7 @@ function readFiles() {
 
 function handleDirFiles(files) {
     if (0 === files.length) {
-        NapiLog.logInfo('[Func: readDirFiles] No files in path  %s!'.format(pathDir));
+        NapiLog.logInfo(util.format('[Func: readDirFiles] No files in path  %s!', pathDir));
         return;
     }
     (function iterator(i) {
@@ -100,7 +101,7 @@ function readDirFiles() {
 }
 
 function checkGenerate(fileName) {
-    NapiLog.logInfo('check file []'.format(fileName));
+    NapiLog.logInfo(util.format('check file []', fileName));
     let suffix = fileName.split('.').pop().toLowerCase();
     if (suffix === 'h') {
         NapiLog.logInfo('convert .h file to .ts file...');
