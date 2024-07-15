@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 package com.sk.action;
 
 import javax.swing.JButton;
@@ -38,6 +38,7 @@ public class SelectCppAction implements ActionListener {
 
     /**
      * 构造函数
+     * 
      * @param button .cpp文件选择按钮
      * @param textField .cpp文件文本选择框
      * @param genPath 生成框架路径
@@ -51,6 +52,7 @@ public class SelectCppAction implements ActionListener {
 
     /**
      * 按钮监听函数
+     * 
      * @param actionEvent .cpp文件选择事件
      * @throws log 输出异常
      */
