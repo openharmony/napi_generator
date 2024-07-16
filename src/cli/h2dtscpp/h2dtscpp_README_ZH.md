@@ -20,7 +20,7 @@ h2dtscpp工具由C++语法解释器和代码生成器两部分组成。C++语法
 
 	npm i stdio
 
-3.下载header_parser.exe文件：[header_parser.exe](https://gitee.com/openharmony/napi_generator/releases/tag/生成工具)；选择 tool.rar下载并解压，将解压后的文件中的header_parser.exe拷贝到拷贝到node Js执行路径下（如C:\software\nodeJs）
+3.下载header_parser.exe文件：[header_parser.exe](https://gitee.com/openharmony/napi_generator/releases/tag/生成工具)；选择 tool.rar下载并解压，将解压后的文件中的header_parser.exe拷贝到napi_generator/src/cli/h2dtscpp/src/src/tsGen目录下。
 
 4.将待转换的.h文件拷贝到napi_generator/src/cli/h2dtscpp/src下，如 [cJSON测试三方库](https://gitee.com/openharmony/napi_generator/releases/tag/测试用资源) 的cJSON.h。
 
