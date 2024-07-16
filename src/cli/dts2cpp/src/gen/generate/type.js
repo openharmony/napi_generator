@@ -282,7 +282,7 @@ function generateType(name, data, inNamespace, inNameSpaceEnum, nameSpaceName, t
             implCpp: implCpp,
             middleBody: '',
             middleInit: middleInit,
-            declarationH: `,
+            declarationH: `
         struct %s;\r`.format(name),
             middleH: '',
             midInitEnumDefine: '',

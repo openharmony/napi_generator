@@ -878,6 +878,7 @@ function paramGenerateCallBack(data, funcValue, param, p) {
         }
     }
 
+    param.valueIn += '\n    uint32_t outErrCode = 0;';
     param.callback = {
         // function类型参数，按照空参数、空返回值回调处理 () => void {}
         type: cbParamType,
@@ -1170,7 +1171,7 @@ function eventParamGenerate(p, funcValue, param, data) {
         return;
     }
     if (type.indexOf("'") >= 0) {
-        type = type.replaceAll(''', '');
+        type = type.replaceAll('\'', '');
     }
     let regName = re.match('([a-zA-Z_0-9]+)', type);
     if (isFuncType(type)) {

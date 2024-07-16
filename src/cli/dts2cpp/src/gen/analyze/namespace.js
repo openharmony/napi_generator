@@ -229,7 +229,7 @@ function parseType(matchs, data, result) {
         }
     }
 
-    matchs = re.match('(export )*type ([a-zA-Z]+) *= *([\\(\\):=a-zA-Z<> |\n\']+); ', data);
+    matchs = re.match('(export )*type ([a-zA-Z]+) *= *([\\(\\):=a-zA-Z<> |\n\']+);', data);
     if (matchs) {
         let typeName = re.getReg(data, matchs.regs[2]);
         let typeBody = re.getReg(data, matchs.regs[3]);

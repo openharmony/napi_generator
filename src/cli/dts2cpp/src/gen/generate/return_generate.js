@@ -671,12 +671,12 @@ function returnGenerateForOnOffMultiPara(paramInfo, param, data) {
         NapiLog.logInfo('The current void type don\'t need generate');
     }
     else if (type === 'boolean') {
-        param.valueOut += paramInfo.optional ? 'bool* %s = nullptr;' : 'bool %s;\n';
+        param.valueOut += paramInfo.optional ? 'bool* %s = nullptr;' : 'bool %s;\n'
             .format(paramInfo.name, paramInfo.name);
         param.params += '%sbool%s %s'.format(param.params.length > 0 ? ', ' : '', modifiers, paramInfo.name);
     }
     else if (type.substring(0, 12) === 'NUMBER_TYPE_') {
-        param.valueOut += type + (paramInfo.optional ? '* %s = nullptr;' : ' %s;\n');
+        param.valueOut += type + (paramInfo.optional ? '* %s = nullptr;' : ' %s;\n')
             .format(paramInfo.name, paramInfo.name);
         param.params += '%s%s%s %s'.format(param.params.length > 0 ? ', ' : '', type, modifiers,
             paramInfo.name)

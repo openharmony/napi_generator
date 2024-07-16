@@ -326,7 +326,7 @@ function genCallbackMethodH(param, codeContext) {
 }
 
 function genCallbackMethod(param, className, middleClassName, codeContext) {
-    let isStrType = param.eventNameIsStr ? '' : `std::string eventName = '[fixed_eventName]';`;
+    let isStrType = param.eventNameIsStr ? '' : `std::string eventName = "[fixed_eventName]";`;
     isStrType = replaceAll(isStrType, '[fixed_eventName]', param.eventName);
     let implCppCallBack = replaceAll(implCppEventCallbakTemplate, '[eventName]', param.eventName);
     implCppCallBack = replaceAll(implCppCallBack, '[callback_param_type]', param.params);
