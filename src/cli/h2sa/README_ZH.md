@@ -9,7 +9,7 @@
 [工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2sa/docs/usage/INSTRUCTION_ZH.md)
 
 	├── napi_generator                               # NAPI框架代码生成工具
-	│   ├── ...                                      # 其他文档
+	│   ├── ...                                      # 其它文档
 	│   ├── src
 	│   │   ├── ...                                 
 	│   │   ├── cml                                  # 脚手架源码
@@ -18,7 +18,7 @@
 	│   │   |   |   |   ├── tools                    # 公共模块代码，包括消息体校验、文件读写、正则表达式转换等
 	│   │   |   |   |   ├── gen                      # 生成器
 	│   │   |   |   ├── package.json                 # 配置文件
-	│   │   |   ├── ...                              # 其他工具
+	│   │   |   ├── ...                              # 其它工具
 
 ## 约束
 系统：建议Ubuntu 20.04或者Windows 10

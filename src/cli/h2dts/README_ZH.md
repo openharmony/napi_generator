@@ -8,11 +8,11 @@
 [工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2dts/docs/usage/INSTRUCTION_ZH.md)
 
 	├── napi_generator                # 工具集
-	│   ├── ...                       # 其他文件
+	│   ├── ...                       # 其它文件
 	│   ├── src                  
 	│   │   ├── ...                              
 	│   │   ├── cml
-	│   │   |   ├── ...                       # 其他工具
+	│   │   |   ├── ...                       # 其它工具
 	│   │   |   ├── h2dts/src              # 工具源码
 	│   │   │   │   ├── tsGen                 # Ts框架工具源码
 	│   │   |   │   │   ├── header_parser.py  # 解析C++头文件并生成表示类的数据结构

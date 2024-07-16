@@ -9,11 +9,11 @@
 [工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/cmake2gn/docs/usage/INSTRUCTION_ZH.md)
 
 	├── napi_generator                               # 工具集
-	│   ├── ...                                      # 其他文件                           
+	│   ├── ...                                      # 其它文件                           
 	│   ├── src
 	│   │   ├── ...                              
 	│   │   ├── cml
-	│   │   |   ├── ...                              # 其他工具
+	│   │   |   ├── ...                              # 其它工具
 	│   │   |   ├── cmake2gn
 	│   │   |   |   ├── src
 	│   │   |   |   |   ├── main.js                  # 工具源码入口

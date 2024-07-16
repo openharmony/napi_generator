@@ -225,12 +225,12 @@ function callDirectFunction(funcName, funcValue, retValue, indexEts, className =
     useFunction = '%s.%s(%s);'.format(className === null ? 'napitest' : className + 'Obj', funcName, funcParamValue);
   } else if (retValue === 'string') {
     useFunction = 'let strRet: string = %s.%s(%s);\n'.format(className === null ? 'napitest' : className + 'Obj', funcName, funcParamValue);
-    useFunction += 'hilog.info(0x0000, "testTag", "%s.%s ret: " + strRet);'.format(className === null ? 'napitest': className + 'Obj', funcName);
+    useFunction += 'hilog.info(0x0000, "testTag", "%s.%s ret: " + strRet);'.format(className === null ? 'napitest' : className + 'Obj', funcName);
   } else if (retValue === 'boolean') {
-    useFunction = 'let boolRet: boolean = %s.%s(%s);\n'.format(className === null ? 'napitest': className + 'Obj', funcName, funcParamValue);
+    useFunction = 'let boolRet: boolean = %s.%s(%s);\n'.format(className === null ? 'napitest' : className + 'Obj', funcName, funcParamValue);
     useFunction += 'hilog.info(0x0000, "testTag", "%s.%s ret: " + boolRet);'.format(className === null ? 'napitest' : className + 'Obj', funcName);
   } else if (retValue.substring(0, SUBSTREND) === 'NUMBER_TYPE') {
-    useFunction = 'let numRet: number = %s.%s(%s);\n'.format(className === null ? 'napitest': className + 'Obj', funcName, funcParamValue);
+    useFunction = 'let numRet: number = %s.%s(%s);\n'.format(className === null ? 'napitest' : className + 'Obj', funcName, funcParamValue);
     useFunction += 'hilog.info(0x0000, "testTag", "%s.%s ret: " + numRet);'.format(className === null ? 'napitest' : className + 'Obj', funcName);
   } else {
     console.error('The current return type is not supported.');

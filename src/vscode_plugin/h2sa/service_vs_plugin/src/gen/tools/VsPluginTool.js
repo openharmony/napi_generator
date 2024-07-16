@@ -31,13 +31,15 @@ function replaceAll(s, sfrom, sto) {
 }
 
 function detectPlatform() {
+  let result = '';
 	if (os.type() === 'Windows_NT') {
-		return 'win';
+		result = 'win';
 	} else if (os.type() === 'Darwin') {
-		return 'mac';
+		result = 'mac';
 	} else if (os.type() === 'Linux') {
-		return 'Linux';
+		result = 'Linux';
 	}
+  return result;
 }
 
 function checkFileError(ifname) {

@@ -37,7 +37,7 @@ function search(ss, data) {
 
 function match(ss, data) {
     let tt = search(ss, data);
-    if (tt !== null && tt.regs[0][0] == 0) {
+    if (tt !== null && tt.regs[0][0] === 0) {
         return tt;
     }
     return null;

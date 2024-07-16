@@ -7,7 +7,7 @@ API扫描工具，它可以根据用户给定三方库项目扫描输出风险�
 ## 目录 
 
 	├── napi_generator/src/tool/api                           # API扫描工具
-	│   ├── ...                                               # 其他文件
+	│   ├── ...                                               # 其它文件
 	│   ├── api_scan_IntelliJ_plugin                          # IntelliJ插件代码
 	│   │   ├── docs                                          # IntelliJ插件说明
 	│   │   ├── resources                                     # IntelliJ插件说明

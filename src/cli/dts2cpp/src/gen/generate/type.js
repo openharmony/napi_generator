@@ -256,8 +256,11 @@ function generateType(name, data, inNamespace, inNameSpaceEnum, nameSpaceName, t
     let implCpp = resultConnect[2];
     let middleInit = resultConnect[3];
     let midInitEnumDefine = resultConnect[4];
-    let selfNs = '';
-    selfNs = getSelfNs(inNamespace);
+    let selfNs = getSelfNs(inNamespace);
+    generateTypeFunc(result, implH, implCpp, middleInit, midInitEnumDefine, name);
+}
+
+function generateTypeFunc(result, implH, implCpp, middleInit, midInitEnumDefine, name) {
     if (implH.indexOf('typedef') > 0) {
         result = {
             implH: implH,

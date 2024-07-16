@@ -168,7 +168,7 @@ struct Index {
           console.info("napiTestDemo ----funcTest returnVal = " + this.returnVal)
         })
 
-        // 调用其他模块的方法
+        // 调用其它模块的方法
         Button() {
           Text('调用entry模块的方法')
             .fontSize(20)
