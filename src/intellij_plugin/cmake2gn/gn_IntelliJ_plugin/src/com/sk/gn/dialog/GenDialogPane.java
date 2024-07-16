@@ -526,26 +526,26 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
 
         @Override
         public void run() {
-            InputStreamReader isr = null;
-            BufferedReader br = null;
+            InputStreamReader isr1 = null;
+            BufferedReader br1 = null;
             try {
-                isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-                br = new BufferedReader(isr);
+                isr1 = new InputStreamReader(is, StandardCharsets.UTF_8);
+                br1 = new BufferedReader(isr1);
                 String line;
-                while ((line = br.readLine()) != null) {
+                while ((line = br1.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);
                 }
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
             } finally {
-                // 确保BufferedReader br和InputStreamReader isr被关闭
+                // 确保BufferedReader br1和InputStreamReader isr1被关闭
                 try {
-                    br.close();
+                    br1.close();
                 } catch (IOException e) {
                     LOG.error(e);
                 }
                 try {
-                    isr.close();
+                    isr1.close();
                 } catch (IOException e) {
                     LOG.error(e);
                 }
@@ -567,20 +567,20 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
 
         @Override
         public void run() {
-            BufferedReader br = null;
+            BufferedReader br1 = null;
             try {
-                br = new BufferedReader(new InputStreamReader(process.getInputStream(),
+                br1 = new BufferedReader(new InputStreamReader(process.getInputStream(),
                     StandardCharsets.UTF_8));
                 genResultLog(process);
-                while (br.readLine() != null) {
+                while (br1.readLine() != null) {
                     LOG.info(" callExtProcess ");
                 }
             } catch (IOException ioException) {
                 LOG.error(" callExtProcess error" + ioException);
             } finally {
-                // 确保BufferedReader br被关闭
+                // 确保BufferedReader br1被关闭
                 try {
-                    br.close();
+                    br1.close();
                 } catch (IOException e) {
                     // 处理关闭BufferedReader时的异常
                     LOG.error(e);
