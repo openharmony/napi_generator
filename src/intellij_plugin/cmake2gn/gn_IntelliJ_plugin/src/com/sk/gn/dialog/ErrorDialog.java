@@ -68,7 +68,7 @@ public class ErrorDialog extends JDialog {
         addWindowListener(new WindowAdapter() {
             /**
              * close dialog
-             * 
+             *
              * @param windowEvent WindowEvent
              */
             @Override
