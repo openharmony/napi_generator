@@ -45,7 +45,7 @@ NapiLog.init(ops.loglevel, path.join('' + ops.out, 'napi_gen.log'));
 let fileNames = ops.filename;
 var pathDir = ops.directory;
 var imports = ops.imports;
-if (fileNames == null && pathDir == null) {
+if (fileNames === null && pathDir === null) {
     NapiLog.logInfo('fileNames and pathDir both cannot be empty at the same time');
 } else if (pathDir !== '') {
     readDirFiles();

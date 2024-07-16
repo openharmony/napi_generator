@@ -157,7 +157,7 @@ function createFuncInfo(parseFuncInfo, isClassFunc) {
         'namespace': '',
         'retType': '',
         'static': '',
-    }
+    };
     funcInfo.name = parseFuncInfo.name;
     funcInfo.namespace = parseFuncInfo.namespace;
     let tokenIndex = funcInfo.namespace.indexOf('::');
@@ -209,7 +209,7 @@ function analyzeRootFunction(rootInfo, parseResult) {
 function createProperties(parseProperties) {
     let propertyList = [];
     for (var i = 0; i < parseProperties.length; ++i) {
-        let property = {}
+        let property = {};
         property.name = parseProperties[i].name;
         property.type = getJsTypeFromC(parseProperties[i].raw_type, parseProperties[i]);
         propertyList.push(property);

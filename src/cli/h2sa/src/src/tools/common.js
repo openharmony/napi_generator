@@ -104,7 +104,7 @@ AllParseFileList.findClassByName = function (destClassName) {
 class ProcessingClassList { }
 ProcessingClassList.classes_ = [];
 ProcessingClassList.push = function (classObj) {
-    if (this.findByName(classObj.className) != null) {
+    if (this.findByName(classObj.className) !== null) {
         // 已存在的class不重复添加
         return;
     }

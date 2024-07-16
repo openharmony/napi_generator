@@ -32,7 +32,7 @@ function analyzeSubInterface(data) {
     };
     for (let i in body) {
         let t = body[i];
-        while (t.length > 0 && t[0] === ' '); {
+        while (t.length > 0 && t[0] === ' ') {
             t = t.substring(1, t.length);
         }
         while (t.length > 0 && t[-1] === ' ') {
@@ -95,13 +95,13 @@ function getFuncParaType(v, interfaceName, data, results) {
         }
     }
 
-    let interfaceType = re.match('{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$', v['type'])
+    let interfaceType = re.match('{([A-Za-z0-9_]+:[A-Za-z0-9_,]+)([A-Za-z0-9_]+:[A-Za-z0-9_]+)}$', v.type);
     if (interfaceType) {
         v.type = interfaceName;
     }
 
     if (parameter.indexOf('number') >= 0) {
-        v.type = v.type.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease())
+        v.type = v.type.replace('number', 'NUMBER_TYPE_' + NumberIncrease.getAndIncrease());
     }
 
     // type的处理

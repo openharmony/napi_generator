@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -38,6 +38,7 @@ public class SelectCppAction implements ActionListener {
 
     /**
      * 构造函数
+     *
      * @param button .cpp文件选择按钮
      * @param textField .cpp文件文本选择框
      * @param genPath 生成框架路径
@@ -51,6 +52,7 @@ public class SelectCppAction implements ActionListener {
 
     /**
      * 按钮监听函数
+     *
      * @param actionEvent .cpp文件选择事件
      * @throws log 输出异常
      */

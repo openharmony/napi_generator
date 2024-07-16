@@ -34,28 +34,28 @@ function preProcessResult(analyzeResult) {//把所有路径搞成绝对路径
 }
 
 function changePathToAbs(r) {
-  if (!r.target.startsWith('/')) {
-    if (!path.isAbsolute(r.target)) {
-      r.target = path.join(r.workDir, r.target);
+    if (!r.target.startsWith('/')) {
+        if (!path.isAbsolute(r.target)) {
+            r.target = path.join(r.workDir, r.target);
+        }
     }
-  }
-  for (let i = 0; i < r.inputs.length; i++) {
-    if (r.inputs[i].startsWith('"') && r.inputs[i].endsWith('"')) {
-      r.inputs[i] = r.inputs[i].substring(1, r.inputs[i].length - 1);
+    for (let i = 0; i < r.inputs.length; i++) {
+        if (r.inputs[i].startsWith('"') && r.inputs[i].endsWith('"')) {
+            r.inputs[i] = r.inputs[i].substring(1, r.inputs[i].length - 1);
+        }
+        if (!r.inputs[i].startsWith('/')) {
+            if (!path.isAbsolute(r.inputs[i])) {
+                r.inputs[i] = path.join(r.workDir, r.inputs[i]);
+            }
+        }
     }
-    if (!r.inputs[i].startsWith('/')) {
-      if (!path.isAbsolute(r.inputs[i])) {
-        r.inputs[i] = path.join(r.workDir, r.inputs[i]);
-      }
+    for (let i = 0; i < r.includes.length; i++) {
+        if (!r.includes[i].startsWith('/')) {
+            if (!path.isAbsolute(r.includes[i])) {
+                r.includes[i] = path.join(r.workDir, r.includes[i]);
+            }
+        }
     }
-  }
-  for (let i = 0; i < r.includes.length; i++) {
-    if (!r.includes[i].startsWith('/')) {
-      if (!path.isAbsolute(r.includes[i])) {
-        r.includes[i] = path.join(r.workDir, r.includes[i]);
-      }
-    }
-  }
 }
 
 function checkoutLibName(name) {//比如/home/libabc.so，返回['dynamic',abc]
@@ -186,7 +186,7 @@ group("all_targets") {
                 result = 'ohos_executable("' + targetName[1] + '")';
                 break;
             default:
-                    // 为未处理的情况提供一个默认返回值
+                // 为未处理的情况提供一个默认返回值
                 result = 'unknown_target_type'; // 或者其他适当的默认值
         }
         return result; // 确保函数返回一个值
@@ -287,7 +287,9 @@ subsystem_name = "%s"
         let ss = '';
         for (let s of detail) {
             s = Tool.swapPath(s);
-            if (ss.length > 0) ss += '",\n        "';
+            if (ss.length > 0) {
+                ss += '",\n        "';
+            }
             ss += s;
         }
         let ret = `

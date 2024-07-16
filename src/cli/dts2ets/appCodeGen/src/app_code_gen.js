@@ -40,7 +40,7 @@ let ops = stdio.getopt({
 NapiLog.init(ops.loglevel, path.join('' + ops.out, 'napi_gen.log'));
 
 let fileNames = ops.filename;
-if (fileNames == null) {
+if (fileNames === null) {
     NapiLog.logInfo('fileNames cannot be empty!');
 } else if (fileNames !== '') {
     readFiles();
@@ -81,7 +81,7 @@ function checkGenerate(fileName) {
     let tt = re.match('(@ohos\.)*([.a-z_A-Z0-9]+).d.ts', fn);
     if (tt) {
         let result = checkFileError(fileName);
-        let funcConfig
+        let funcConfig;
         if (ops.functionsCfg) {
             funcConfig = getJsonCfg(ops.functionsCfg);
         }

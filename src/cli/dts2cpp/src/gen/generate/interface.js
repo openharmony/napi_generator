@@ -272,7 +272,7 @@ function mapTypeString(type, name, optional) {
             mapTypeString = 'std::string, %s'.format(mapType[1]);
         }
     }
-    if (mapType[2] != undefined) {
+    if (mapType[2] !== undefined) {
         if (mapType[2] === 'string') {
             mapTypeString = 'std::string, std::map<std::string, std::string>';
         } else if (mapType[2] === 'boolean') {
@@ -281,7 +281,7 @@ function mapTypeString(type, name, optional) {
             mapTypeString = 'std::string, std::map<std::string, %s>'.format(mapType[2]);
         }
     }
-    if (mapType[3] != undefined) {
+    if (mapType[3] !== undefined) {
         if (mapType[3] === 'string') {
             mapTypeString = 'std::string, std::vector<std::string>';
         } else if (mapType[3] === 'boolean') {
