@@ -27,20 +27,18 @@ const specialPrefixArr = ['p->', 'vio->out.'];
  * @returns the real value without prefix, example: xxx, yyy
  */
 function delPrefix(valueName) {
-    for (var i in specialPrefixArr) {
-        if (valueName.indexOf(specialPrefixArr[i]) === 0) {
-            // Find special prefix and delete it.
-            return valueName.substring(specialPrefixArr[i].length, valueName.length);
-        }
-    }
-    // Without special prefix, nothing is changed.
-    return valueName;
+  return specialPrefixArr.reduce((result, prefix) => {
+      if (valueName.startsWith(prefix)) {
+          return valueName.substring(prefix.length);
+      }
+      return result;
+  }, valueName);
 }
 
 function cToJsForType(value, type, dest, deep) {
     let lt = deep;
     let result = '';
-    let ifl = TypeList.getValue(type)
+    let ifl = TypeList.getValue(type);
     if (typeof (ifl) === 'object') {
         for (let i in ifl) {
             let name2 = ifl[i].name;
