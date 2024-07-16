@@ -692,13 +692,13 @@ public class GenerateDialogPane extends JDialog {
 
         @Override
         public void run() {
-            InputStreamReader isr = null;
-            BufferedReader br = null;
+            InputStreamReader isr2 = null;
+            BufferedReader br2 = null;
             try {
-                isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-                br = new BufferedReader(isr);
+                isr2 = new InputStreamReader(is, StandardCharsets.UTF_8);
+                br2 = new BufferedReader(isr2);
                 String line;
-                while ((line = br.readLine()) != null) {
+                while ((line = br2.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);
                 }
             } catch (IOException ioException) {
@@ -706,12 +706,12 @@ public class GenerateDialogPane extends JDialog {
             } finally {
                 // 确保BufferedReader和InputStreamReader被关闭
                 try {
-                    br.close();
+                    br2.close();
                 } catch (IOException e) {
                     LOG.error(e);
                 }
                 try {
-                    isr.close();
+                    isr2.close();
                 } catch (IOException e) {
                     LOG.error(e);
                 }

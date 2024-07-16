@@ -402,26 +402,26 @@ public class ServiceGenerateDialogPane extends JDialog {
 
         @Override
         public void run() {
-            InputStreamReader isr = null;
-            BufferedReader br = null;
+            InputStreamReader isr4 = null;
+            BufferedReader br4 = null;
             try {
-                isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-                br = new BufferedReader(isr);
+                isr4 = new InputStreamReader(is, StandardCharsets.UTF_8);
+                br4 = new BufferedReader(isr4);
                 String line;
-                while ((line = br.readLine()) != null) {
+                while ((line = br4.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);
                 }
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
             } finally {
-                // 确保BufferedReader br和InputStreamReader isr被关闭
+                // 确保BufferedReader br4和InputStreamReader isr4被关闭
                 try {
-                    br.close();
+                    br4.close();
                 } catch (IOException e) {
                     LOG.error(e);
                 }
                 try {
-                    isr.close();
+                    isr4.close();
                 } catch (IOException e) {
                     LOG.error(e);
                 }
