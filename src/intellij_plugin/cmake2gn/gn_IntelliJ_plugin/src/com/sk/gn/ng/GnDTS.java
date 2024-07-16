@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -32,7 +32,7 @@ import com.sk.gn.utils.GenNotification;
  * @version: v1.0.0
  * @since 2022-09-21
  */
-public class GnDTS extends AnAction {
+public class GnDts extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
