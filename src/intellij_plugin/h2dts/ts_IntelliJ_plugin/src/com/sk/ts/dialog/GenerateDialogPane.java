@@ -320,9 +320,19 @@ public class GenerateDialogPane extends JDialog {
                 LOG.info("writeTmpFile createNewFile error");
             }
         }
-        FileOutputStream fw = new FileOutputStream(file);
-        fw.write(bs, 0, bs.length);
-        fw.close();
+        try {
+            FileOutputStream fw = new FileOutputStream(file);
+            fw.write(bs, 0, bs.length);
+        } catch (IOException e) {
+            // 处理可能发生的IOException
+            LOG.error("Error reading from process streams", e);
+        } finally {
+            try {
+                fw.close();
+            } catch (IOException e) {
+                LOG.error("Error closing stdInput", e);
+            }
+        }
     }
 
     /**
@@ -331,20 +341,39 @@ public class GenerateDialogPane extends JDialog {
      * @param process 进程ID
      */
     private void genResultLog(Process process) {
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        String sErr;
-        String sOut;
-        sErr = getErrorResult(stdError);
-        if (TextUtils.isEmpty(sErr)) {
-            sOut = genInputLog(stdInput);
-            if (!generateIsSuccess(sOut)) {
-                sErrorMessage = sOut;
+        BufferedReader stdInput = null;
+        BufferedReader stdError = null;
+        try {
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            String sErr;
+            String sOut;
+            sErr = getErrorResult(stdError);
+            if (TextUtils.isEmpty(sErr)) {
+                sOut = genInputLog(stdInput);
+                if (!generateIsSuccess(sOut)) {
+                    sErrorMessage = sOut;
+                }
+            } else {
+                generateSuccess = false;
+                sErrorMessage = sErr;
             }
-            return;
+        } catch (IOException e) {
+            // 处理可能发生的IOException
+            LOG.error("Error in genResultLog", e);
+        } finally {
+            // 确保BufferedReader对象被关闭
+            try {
+                stdInput.close();
+            } catch (IOException e) {
+                LOG.error("Error closing stdInput", e); // 记录关闭stdInput时的错误
+            }
+            try {
+                stdError.close();
+            } catch (IOException e) {
+                LOG.error("Error closing stdError", e); // 记录关闭stdError时的错误
+            }
         }
-        generateSuccess = false;
-        sErrorMessage = sErr;
     }
 
     /**
@@ -406,15 +435,29 @@ public class GenerateDialogPane extends JDialog {
 
         @Override
         public void run() {
+            InputStreamReader inputStreamReader = null;
+            BufferedReader bufferedReader = null;
             try {
-                InputStreamReader inputStreamReader = new InputStreamReader(is);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                inputStreamReader = new InputStreamReader(is);
+                bufferedReader = new BufferedReader(inputStreamReader);
                 String readLine;
                 while ((readLine = bufferedReader.readLine()) != null) {
                     LOG.error("StreamConsumer" + readLine);
                 }
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
+            } finally {
+            // 确保BufferedReader和InputStreamReader被关闭
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    LOG.error("Error closing BufferedReader", e);
+                }
+                try {
+                    inputStreamReader.close();
+                } catch (IOException e) {
+                    LOG.error("Error closing inputStreamReader", e);
+                }
             }
         }
     }

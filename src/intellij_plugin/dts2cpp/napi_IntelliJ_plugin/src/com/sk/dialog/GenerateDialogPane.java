@@ -574,9 +574,19 @@ public class GenerateDialogPane extends JDialog {
                 LOG.info("writeTmpFile createNewFile error");
             }
         }
-        FileOutputStream fw = new FileOutputStream(file);
-        fw.write(bs, 0, bs.length);
-        fw.close();
+        try {
+            FileOutputStream fw = new FileOutputStream(file);
+            fw.write(bs, 0, bs.length);
+        } catch (IOException e) {
+            // 处理可能发生的IOException
+            LOG.error("Error reading from process streams", e);
+        } finally {
+            try {
+                fw.close();
+            } catch (IOException e) {
+                LOG.error("Error closing stdInput", e);
+            }
+        }
     }
 
     /**
@@ -585,20 +595,39 @@ public class GenerateDialogPane extends JDialog {
      * @param process 进程ID
      */
     private void genResultLog(Process process) {
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        String sErr;
-        String sOut;
-        sErr = getErrorResult(stdError);
-        if (TextUtils.isEmpty(sErr)) {
-            sOut = genInputLog(stdInput);
-            if (!generateIsSuccess(sOut)) {
-                sErrorMessage = sOut;
+        BufferedReader stdInput = null;
+        BufferedReader stdError = null;
+        try {
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            String sErr;
+            String sOut;
+            sErr = getErrorResult(stdError);
+            if (TextUtils.isEmpty(sErr)) {
+                sOut = genInputLog(stdInput);
+                if (!generateIsSuccess(sOut)) {
+                    sErrorMessage = sOut;
+                }
+            } else {
+                generateSuccess = false;
+                sErrorMessage = sErr;
             }
-            return;
+        } catch (IOException e) {
+            // 处理可能发生的IOException
+            LOG.error("Error reading from process streams", e);
+        } finally {
+            // 确保BufferedReader对象被关闭
+            try {
+                stdInput.close();
+            } catch (IOException e) {
+                LOG.error("Error closing stdInput", e);
+            }
+            try {
+                stdError.close();
+            } catch (IOException e) {
+                LOG.error("Error closing stdError", e);
+            }
         }
-        generateSuccess = false;
-        sErrorMessage = sErr;
     }
 
     /**
@@ -660,15 +689,29 @@ public class GenerateDialogPane extends JDialog {
 
         @Override
         public void run() {
+            InputStreamReader isr = null;
+            BufferedReader br = null;
             try {
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
+                isr = new InputStreamReader(is);
+                br = new BufferedReader(isr);
                 String line;
                 while ((line = br.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);
                 }
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
+            } finally {
+                // 确保BufferedReader和InputStreamReader被关闭
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    LOG.error(e);
+                }
+                try {
+                    isr.close();
+                } catch (IOException e) {
+                    LOG.error(e);
+                }
             }
         }
     }

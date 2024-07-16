@@ -164,11 +164,16 @@ public class FileUtil {
             }
             FileOutputStream fw = new FileOutputStream(file);
             fw.write(bs, 0, bs.length);
-            fw.close();
         } catch (IOException e) {
             GenNotification.notifyMessage(project, e.getMessage(), "Can not Find File:" + oldPath,
                     NotificationType.ERROR);
             LOG.error(e);
+        } finally {
+            try {
+                fw.close();
+            } catch (IOException e) {
+                LOG.error("Error closing FileOutputStream", e);
+            }
         }
     }
 }

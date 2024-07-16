@@ -92,21 +92,40 @@ public class GenDts extends AnAction {
      * @param process 进程ID
      */
     private void genResultLog(Process process) {
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getErrorStream(),
+        BufferedReader stdInput = null;
+        BufferedReader stdError = null;
+        try {
+            stdInput = new BufferedReader(new InputStreamReader(process.getErrorStream(),
                 StandardCharsets.UTF_8));
-        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
                 StandardCharsets.UTF_8));
-        String sErr = getErrorResult(stdError);
-        String sOut;
-        if (TextUtils.isEmpty(sErr)) {
-            sOut = genInputLog(stdInput);
-            if (!generateIsSuccess(sOut)) {
-                sErrorMessage = sOut;
+            String sErr = getErrorResult(stdError);
+            String sOut;
+            if (TextUtils.isEmpty(sErr)) {
+                sOut = genInputLog(stdInput);
+                if (!generateIsSuccess(sOut)) {
+                    sErrorMessage = sOut;
+                }
+            } else {
+                generateSuccess = false;
+                sErrorMessage = sErr;
             }
-            return;
+        } catch (IOException e) {
+            // Handle exception
+            LOG.error(e);
+        } finally {
+            // Close resources in finally block to ensure they are closed even if an exception occurs
+            try {
+                stdInput.close();
+            } catch (IOException e) {
+                LOG.error(e);
+            }
+            try {
+                stdError.close();
+            } catch (IOException e) {
+                LOG.error(e);
+            }
         }
-        generateSuccess = false;
-        sErrorMessage = sErr;
     }
 
     /**
@@ -177,15 +196,29 @@ public class GenDts extends AnAction {
 
         @Override
         public void run() {
+            InputStreamReader isr = null;
+            BufferedReader br = null;
             try {
-                InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-                BufferedReader br = new BufferedReader(isr);
+                isr = new InputStreamReader(is, StandardCharsets.UTF_8);
+                br = new BufferedReader(isr);
                 String line;
                 while ((line = br.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);
                 }
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
+            } finally {
+                // 确保BufferedReader br和InputStreamReader isr被关闭
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    LOG.error(e);
+                }
+                try {
+                    isr.close();
+                } catch (IOException e) {
+                    LOG.error(e);
+                }
             }
         }
     }
@@ -240,9 +273,19 @@ public class GenDts extends AnAction {
                 LOG.info("writeTmpFile createNewFile error");
             }
         }
-        FileOutputStream fw = new FileOutputStream(file);
-        fw.write(bs, 0, bs.length);
-        fw.close();
+        try {
+            FileOutputStream fw = new FileOutputStream(file);
+            fw.write(bs, 0, bs.length);
+        } catch (IOException e) {
+            // 处理可能发生的IOException
+            LOG.error("Error reading from process streams", e);
+        } finally {
+            try {
+                fw.close();
+            } catch (IOException e) {
+                LOG.error("Error closing stdInput", e);
+            }
+        }
     }
 
     /**
