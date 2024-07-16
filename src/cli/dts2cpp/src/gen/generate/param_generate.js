@@ -57,7 +57,9 @@ function getMapCType(type) {
         else if (mapType[1] === 'any') { mapTypeString = 'std::any' }
         else if (mapType[1] !== null) { mapTypeString = mapType[1] }
     } else if (mapType[2] !== undefined) {
-        if (mapType[2] === 'string') { mapTypeString = 'std::map<std::string, std::string>' }
+        if (mapType[2] === 'string') {
+            mapTypeString = 'std::map<std::string, std::string>';
+        }
         else if (mapType[2].substring(0, 12) === 'NUMBER_TYPE_') { 
             mapTypeString = 'std::map<std::string, %s>'.format(mapType[2]);
         }
@@ -108,6 +110,7 @@ function jsToC(dest, napiVn, type, enumType = 0, optional) {
     } else {
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`
             .format(dest, napiVn, type), getLogErrInfo());
+        return null;
     }        
 }
 
@@ -827,7 +830,7 @@ function getCBparaTypeForArrow(type) {
 
     if (callbackParams.indexOf(',') >= 0) { // 多个参数，进行分割            
         callbackParams = callbackParams.split(',');
-        for(let i = 0; i < callbackParams.length; i++) {
+        for (let i = 0; i < callbackParams.length; i++) {
             NapiLog.logInfo('muilti paramets');
         }
     } else { // 一个参数
@@ -878,7 +881,6 @@ function paramGenerateCallBack(data, funcValue, param, p) {
         }
     }
 
-    param.valueIn += '\n    uint32_t outErrCode = 0;';
     param.callback = {
         // function类型参数，按照空参数、空返回值回调处理 () => void {}
         type: cbParamType,
@@ -1132,7 +1134,8 @@ function paramGenerate(p, funcValue, param, data) {
     let inParamName = funcValue.optional ? '(*vio->in' + p + ')' : 'vio->in' + p;
     let modifiers = funcValue.optional ? '*' : '&';
     if (type.indexOf('|') >= 0) {
-        return paramGenerateUnion(type, param, p, name);
+        paramGenerateUnion(type, param, p, name);
+        return;
     } else if (type === 'string') {
         paramGenerateCommon(p, 'std::string', funcValue, param, modifiers, inParamName);
     } else if (type.substring(0, 12) === 'NUMBER_TYPE_' && type.indexOf('[]') < 0) {
