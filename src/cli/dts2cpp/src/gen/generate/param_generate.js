@@ -472,7 +472,7 @@ function paramGenerateArray(p, funcValue, param) {
     } else {
         NapiLog.logError('The current version do not support to this param to generate :', name,
             'type :', type, getLogErrInfo());
-        return null;
+        return;
     }
 }
 
