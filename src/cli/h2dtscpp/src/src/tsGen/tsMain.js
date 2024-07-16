@@ -38,6 +38,10 @@ function parseFileAll(hFilePath) {
     let execPath = path.dirname(process.execPath);
     let exeFile = sysInfo === 'win32' ? path.join(execPath, 'header_parser.exe') :
     path.join(execPath, 'header_parser');
+    if(!fs.existsSync(exeFile)) {
+        // 若是用node执行
+        exeFile = path.join(__dirname, "header_parser.exe")
+    }
     cmd = exeFile + ' ' + hFilePath;
 
     let parseResult = null;
