@@ -32,7 +32,7 @@ public class ConfirmDialog extends DialogWrapper {
 
     /**
      * 构造函数
-     * 
+     *
      * @param message 弹出框信息内容
      */
     public ConfirmDialog(String message) {
