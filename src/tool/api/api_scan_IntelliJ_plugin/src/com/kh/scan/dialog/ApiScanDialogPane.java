@@ -272,6 +272,7 @@ public class ApiScanDialogPane extends JDialog {
      */
     private void writeTmpFile(String path, byte[] bs) throws IOException {
         File file = new File(path);
+        FileOutputStream fw = null;
         if (!file.exists()) {
             boolean isNewFile = file.createNewFile();
             if (!isNewFile) {
@@ -279,7 +280,7 @@ public class ApiScanDialogPane extends JDialog {
             }
         }
         try {
-            FileOutputStream fw = new FileOutputStream(file);
+            fw = new FileOutputStream(file);
             fw.write(bs, 0, bs.length);
         } catch (IOException e) {
             // 处理可能发生的IOException
@@ -302,8 +303,10 @@ public class ApiScanDialogPane extends JDialog {
         BufferedReader stdInput = null;
         BufferedReader stdError = null;
         try {
-            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream(),
+                StandardCharsets.UTF_8));
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
+                StandardCharsets.UTF_8));
             String sErr;
             String sOut;
             sErr = getErrorResult(stdError);
@@ -393,26 +396,26 @@ public class ApiScanDialogPane extends JDialog {
 
         @Override
         public void run() {
-            InputStreamReader isr = null;
-            BufferedReader br = null;
+            InputStreamReader isr5 = null;
+            BufferedReader br5 = null;
             try {
-                isr = new InputStreamReader(is);
-                br = new BufferedReader(isr);
+                isr5 = new InputStreamReader(is, StandardCharsets.UTF_8);
+                br5 = new BufferedReader(isr5);
                 String line;
-                while ((line = br.readLine()) != null) {
+                while ((line = br5.readLine()) != null) {
                     LOG.info(line);
                 }
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
             } finally {
-                // 确保BufferedReader br和InputStreamReader isr被关闭
+                // 确保BufferedReader5 br和InputStreamReader isr5被关闭
                 try {
-                    br.close();
+                    br5.close();
                 } catch (IOException e) {
                     LOG.error(e);
                 }
                 try {
-                    isr.close();
+                    isr5.close();
                 } catch (IOException e) {
                     LOG.error(e);
                 }
@@ -434,19 +437,20 @@ public class ApiScanDialogPane extends JDialog {
 
         @Override
         public void run() {
-            BufferedReader br = null;
+            BufferedReader br2 = null;
             try {
-                br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                br2 = new BufferedReader(new InputStreamReader(process.getInputStream(),
+                    StandardCharsets.UTF_8));
                 genResultLog(process);
-                while (br.readLine() != null) {
+                while (br2.readLine() != null) {
                     LOG.info(" callExtProcess ");
                 }
             } catch (IOException ioException) {
                 LOG.error(" callExtProcess error" + ioException);
             } finally {
-                // 确保BufferedReader br被关闭
+                // 确保BufferedReader br2被关闭
                 try {
-                    br.close();
+                    br2.close();
                 } catch (IOException e) {
                     // 处理关闭BufferedReader时的异常
                     LOG.error(e);

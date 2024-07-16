@@ -267,6 +267,7 @@ public class GenDts extends AnAction {
      */
     private void writeTmpFile(String path, byte[] bs) throws IOException {
         File file = new File(path);
+        FileOutputStream fw = null;
         if (!file.exists()) {
             boolean isNewFile = file.createNewFile();
             if (!isNewFile) {
@@ -274,7 +275,7 @@ public class GenDts extends AnAction {
             }
         }
         try {
-            FileOutputStream fw = new FileOutputStream(file);
+            fw = new FileOutputStream(file);
             fw.write(bs, 0, bs.length);
         } catch (IOException e) {
             // 处理可能发生的IOException
