@@ -158,7 +158,7 @@ var genFileList = [];
 
 function deleteFolder(folderPath) {
     if (fs.existsSync(folderPath)) {
-        fs.rmSync(folderPath, {'recursive': true});
+        fs.rmSync(folderPath, { 'recursive': true });
     }
 }
 
@@ -197,7 +197,7 @@ function formatCode(destDir) {
 
     for (let i = 0; i < genFileList.length; ++i) {
         // 文件路径前后要用引号包含，防止因为路径中存在空格而导致命令执行失败 (windows的文件夹允许有空格)
-        let cmd = '\"' + localClangFmtFile + '\" -style=file -i \"' + path.resolve(path.join(destDir, genFileList[i])) + 
+        let cmd = '\"' + localClangFmtFile + '\" -style=file -i \"' + path.resolve(path.join(destDir, genFileList[i])) +
             '\"';
         try {
             execSync(cmd); // C++文件格式化
@@ -218,8 +218,8 @@ function analyzeJsonCfg(jsonCfg) {
         if (jsonCfg[i].interfaceName.indexOf('::') > 0) {
             let tt = jsonCfg[i].interfaceName.split('::');
             interfaceBody = {
-              className: tt[0],
-              funcName: tt[1],
+                className: tt[0],
+                funcName: tt[1],
             };
         } else {
             interfaceBody = {
@@ -253,7 +253,7 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
     let result = generateNamespace(ns0.name, ns0.body);
 
     jsonCfgList.pop();
-    
+
     let numberUsing = '';
     var numbertype = 'uint32_t';
     if (numberType !== '' && (numberType !== undefined && numberType !== null)) {
@@ -280,13 +280,13 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
     implCpp = implCpp.replaceAll('[include_configure_hCode]', includeH);
     implCpp = implCpp.replaceAll('[implCpp_detail]', result.implCpp);
     writeFile(re.pathJoin(destDir, '%s.cpp'.format(ns0.name)), (null !== license && undefined !== license) ?
-      (license + '\n' + implCpp) : implCpp);
+        (license + '\n' + implCpp) : implCpp);
     genFileList.push('%s.cpp'.format(ns0.name));
 
     let partName = moduleName.replace('.', '_');
-    generateGYP(destDir, ns0.name, license, bindingCpp) // 生成ubuntu下测试的编译脚本;
-    generateGN(destDir, ns0.name, license, partName, buildCpp) // 生成BUILD.gn for ohos;
-    generateBase(destDir, license) // tool_utility.h/cpp;
+    generateGYP(destDir, ns0.name, license, bindingCpp); // 生成ubuntu下测试的编译脚本
+    generateGN(destDir, ns0.name, license, partName, buildCpp); // 生成BUILD.gn for ohos
+    generateBase(destDir, license) // tool_utility.h/cpp
     genFileList.push('tool_utility.h');
     genFileList.push('tool_utility.cpp');
     formatCode(destDir);
@@ -298,11 +298,11 @@ function generateImplH(ns0, numberUsing, result, structOfTs, destDir, license) {
     implH = replaceAll(implH, '[implH_detail]', result.implH);
     let imports = '';
     for (let i = 0; i < structOfTs.imports.length; i++) {
-      imports += structOfTs.imports[i];
+        imports += structOfTs.imports[i];
     }
     implH = replaceAll(implH, '[importTs]', imports);
     writeFile(re.pathJoin(destDir, '%s.h'.format(ns0.name)), (null !== license && undefined !== license) ?
-      (license + '\n' + implH) : implH);
+        (license + '\n' + implH) : implH);
     genFileList.push('%s.h'.format(ns0.name));
 }
 
@@ -313,12 +313,13 @@ function generateMiddleCpp(result, ns0, moduleName, destDir, license) {
     middleCpp = replaceAll(middleCpp, '[modulename]', moduleName);
     genFileList.splice(0, genFileList.length);
     writeFile(re.pathJoin(destDir, '%s_middle.cpp'.format(ns0.name)),
-      (null !== license && undefined !== license) ? (license + '\n' + middleCpp) : middleCpp);
+        (null !== license && undefined !== license) ? (license + '\n' + middleCpp) : middleCpp);
     genFileList.push('%s_middle.cpp'.format(ns0.name));
 }
 
 // 将业务代码的头文件导入，若重复则跳过
-function includeHCppFunc(jsonCfg, includeH, bindingCpp, buildCpp) {;
+function includeHCppFunc(jsonCfg, includeH, bindingCpp, buildCpp) {
+    ;
     for (let i = 0; i < jsonCfg.length; i++) {
         if (jsonCfg[i].includeName !== '') {
             let includeNamePath = jsonCfg[i].includeName;
@@ -346,7 +347,7 @@ function generateMiddleH(ns0, result, destDir, license) {
     middleH = replaceAll(middleH, '[implName]', ns0.name);
     middleH = replaceAll(middleH, '[implH_detail]', result.middleH);
     writeFile(re.pathJoin(destDir, '%s_middle.h'.format(ns0.name)),
-      (null !== license && undefined !== license) ? (license + '\n' + middleH) : middleH);
+        (null !== license && undefined !== license) ? (license + '\n' + middleH) : middleH);
     genFileList.push('%s_middle.h'.format(ns0.name));
 }
 

@@ -438,7 +438,8 @@ function paramGenerateArray(p, funcValue, param) {
             arrayType = 'bool';
         }
         if (arrayType === 'any') {
-            return paramGenerateAnyArray(p, name, type, param);
+            paramGenerateAnyArray(p, name, type, param);
+            return;
         }
         param.valueIn += funcValue.optional ? '\n    std::vector<%s>* in%d = nullptr;'.format(arrayType, p) 
                                             : '\n    std::vector<%s> in%d;'.format(arrayType, p);
@@ -455,25 +456,30 @@ function paramGenerateArray(p, funcValue, param) {
         } else if (arrayType === 'boolean') {
             arrayType = 'bool';
         } else if (arrayType === 'any') {
-            return paramGenerateAnyArray(p, name, type, param);
+            paramGenerateAnyArray(p, name, type, param);
+            return;
         }
         else if (checkIsMap(keyType)) {
             let mapValueType = getMapValueType(strLen, keyType, arrayType);             
             arrayType = 'std::map<std::string, %s>'.format(mapValueType);
         }
-        param.valueIn += funcValue.optional ? '\n    std::vector<%s>* in%d = nullptr;'.format(arrayType, p) 
-                                            : '\n    std::vector<%s> in%d;'.format(arrayType, p);
-        let arrValueCheckout = jsToC(inParamName, 'pxt->GetArgv(%d)'.format(getConstNum(p)), type);
-        arrValueCheckout = getFuncOptionalValue(funcValue, arrValueCheckout, p, arrayType, param);                                   
-        param.valueCheckout += arrValueCheckout;
-        param.valueFill += '%svio->in%d'.format(param.valueFill.length > 0 ? ', ' : '', p);
-        param.valueDefine += '%sstd::vector<%s>%s%s'.format(param.valueDefine.length > 0 ? ', '
-            : '', arrayType, modifiers, name);
+        paramGenArray(param, funcValue, arrayType, p, inParamName, type, modifiers, name);
     } else {
         NapiLog.logError('The current version do not support to this param to generate :', name,
             'type :', type, getLogErrInfo());
         return;
     }
+}
+
+function paramGenArray(param, funcValue, arrayType, p, inParamName, type, modifiers, name) {
+  param.valueIn += funcValue.optional ? '\n    std::vector<%s>* in%d = nullptr;'.format(arrayType, p)
+    : '\n    std::vector<%s> in%d;'.format(arrayType, p);
+  let arrValueCheckout = jsToC(inParamName, 'pxt->GetArgv(%d)'.format(getConstNum(p)), type);
+  arrValueCheckout = getFuncOptionalValue(funcValue, arrValueCheckout, p, arrayType, param);
+  param.valueCheckout += arrValueCheckout;
+  param.valueFill += '%svio->in%d'.format(param.valueFill.length > 0 ? ', ' : '', p);
+  param.valueDefine += '%sstd::vector<%s>%s%s'.format(param.valueDefine.length > 0 ? ', '
+    : '', arrayType, modifiers, name);
 }
 
 function checkIsMap(keyType) {

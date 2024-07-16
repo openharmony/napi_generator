@@ -136,7 +136,7 @@ function getAddOrRemoveReg(func, isAddReg) {
     if (func.value.length !== addParaSize) {
         NapiLog.logError(`AddReg param do not support param number not 1!`);
         return '';
-    } 
+    }
 
     let ValueType = func.value[0].type;
     let funNames = [];
@@ -176,9 +176,9 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     let middleFunc = replaceAll(funcDirectTemplete, '[funcName]', func.name);
     let middleH = '';
     if (func.name !== 'constructor') {
-      middleH = replaceAll(funcDirectMiddleHTemplete, '[funcName]', func.name);
+        middleH = replaceAll(funcDirectMiddleHTemplete, '[funcName]', func.name);
     }
-    
+
     let isAddReg = isAddFunc(func.name);
     let isRemoveReg = isRemoveFunc(func.name);
     let addListenerCont = '';
@@ -191,13 +191,15 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     middleFunc = isClassresult[0];
     middleH = isClassresult[1];
     // 定义输入,定义输出,解析,填充到函数内,输出参数打包,impl参数定义,可选参数内存释放
-    let param = { valueIn: '', valueOut: '', valueCheckout: '', valueFill: '',
-        valuePackage: '', valueDefine: '', optionalParamDestory: '' };
+    let param = {
+        valueIn: '', valueOut: '', valueCheckout: '', valueFill: '',
+        valuePackage: '', valueDefine: '', optionalParamDestory: ''
+    };
 
     for (let i in func.value) {
         paramGenerate(i, func.value[i], param, data);
     }
-    let returnInfo = {type: func.ret, optional: false};
+    let returnInfo = { type: func.ret, optional: false };
     if (func.ret === 'void') {
         param.valuePackage = 'result = pxt->UndefinedValue();';
     } else {
@@ -207,7 +209,8 @@ function generateFunctionDirect(func, data, className, implHVariable) {
 
     param.valueCheckout = removeEndlineEnter(param.valueCheckout);
     middleFunc = replaceAll(middleFunc, '[valueCheckout]', param.valueCheckout) // # 输入参数解析;
-    let callFunc = '%s%s(%s);'.format(className == null ? '' : 'pInstance->', func.name, param.valueFill);
+    let callFunc = '%s%s(%s);'.format(className === null || className === undefined ? '' : 'pInstance->',
+        func.name, param.valueFill);
     middleFunc = replaceAll(middleFunc, '[callFunc]', callFunc) // 执行;
     middleFunc = replaceAll(middleFunc, '[valuePackage]', param.valuePackage) // 输出参数打包;
     middleFunc = replaceOptionalParamDestory(middleFunc, param);
@@ -244,7 +247,7 @@ function getimplCppForComClassValue(isAddReg, param, className, func) {
     let implCpp = '';
     let initListener = '';
     let callStatement = jsonCfgList.getValue((className === null || className === undefined) ?
-      '' : className, func.name);
+        '' : className, func.name);
 
     if (isAddReg) {
         initListener = '%s %s::listener_ = {};'.format(func.value[0].type, className);
@@ -252,8 +255,8 @@ function getimplCppForComClassValue(isAddReg, param, className, func) {
     }
 
     implCpp = cppTemplate.format(initListener, (className === null || className === undefined) ?
-      '' : className + '::', func.name, 
-    param.valueDefine, (callStatement === null || callStatement === undefined) ? '' : callStatement);
+        '' : className + '::', func.name,
+        param.valueDefine, (callStatement === null || callStatement === undefined) ? '' : callStatement);
     return implCpp;
 }
 
@@ -276,11 +279,11 @@ function isClassFunc(className, middleFunc, middleH) {
     else {
         middleH = middleH.replaceAll('[static_define]', 'static ');
         middleFunc = middleFunc.replaceAll('[unwarp_instance]',
-      `void *instPtr = pxt->UnWarpInstance();
+            `void *instPtr = pxt->UnWarpInstance();
     %s *pInstance = static_cast<%s *>(instPtr);`.format(className, className));
         middleFunc = middleFunc.replaceAll('[middleClassName]', className + '_middle' + '::');
-  }
-  return [middleFunc, middleH];
+    }
+    return [middleFunc, middleH];
 }
 
 function constructorFunc(param, implHVariable, implH, prefixArr, className) {
@@ -319,12 +322,12 @@ function constructorFunc(param, implHVariable, implH, prefixArr, className) {
     // 构造函数只在h文件中，cpp文件中不包含
     if (len > 0) {
         implH = '\n%s%s%s%s() {};'.format(
-          prefixArr[0], prefixArr[1], prefixArr[2], className);
+            prefixArr[0], prefixArr[1], prefixArr[2], className);
         implH += '\n%s%s%s%s(%s) : %s {};'.format(
-          prefixArr[0], prefixArr[1], prefixArr[2], className, valueDef, costructorStr);
+            prefixArr[0], prefixArr[1], prefixArr[2], className, valueDef, costructorStr);
     } else {
         implH = '\n%s%s%s%s() {};'.format(
-          prefixArr[0], prefixArr[1], prefixArr[2], className);
+            prefixArr[0], prefixArr[1], prefixArr[2], className);
     }
     return implH;
 }

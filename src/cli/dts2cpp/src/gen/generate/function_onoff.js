@@ -171,7 +171,7 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
 
     if (isRegister || isUnRegister) {
         let prefix = getPrefix(isRegister);
-        param.eventName = func.name.replaceAll(prefix, '') // 去掉注册、注销关键字前缀;
+        param.eventName = func.name.replaceAll(prefix, ''); // 去掉注册、注销关键字前缀
         getEventName = 'vio->eventName = "%s";\n'.format(param.eventName);
     } else if (onObjFlag) {
         param.eventName = className + '_' + func.name;
@@ -196,9 +196,9 @@ function gennerateOnOffContext(codeContext, func, data, className, param) {
         codeContext.middleFunc = codeContext.middleFunc.replaceAll('[middleClassName]', middleClassName + '::');
     }
     let instancePtr = '%s'.format((className === null || className === undefined) ? '' : 'pInstance->');
-    codeContext.middleFunc = replaceAll(codeContext.middleFunc, '[instance]', instancePtr) //执行;
+    codeContext.middleFunc = replaceAll(codeContext.middleFunc, '[instance]', instancePtr); //执行
     
-    codeContext.middleFunc = replaceAll(codeContext.middleFunc, '[handleRegist]', registLine) //注册/去注册event;
+    codeContext.middleFunc = replaceAll(codeContext.middleFunc, '[handleRegist]', registLine); //注册/去注册event
    
     if (isRegister) {
         codeContext.middleFunc = replaceAll(codeContext.middleFunc, '(vio->eventName)', '()');

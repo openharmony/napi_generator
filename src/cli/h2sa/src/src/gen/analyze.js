@@ -41,7 +41,7 @@ function parseFileAll(hFilePath) {
 }
 
 function analyzeNameSpace(rootInfo, parseResult) {
-    if (parseResult.namespaces.length == 0) {
+    if (parseResult.namespaces.length === 0) {
         return;
     }
     let lastNameSpace = parseResult.namespaces[parseResult.namespaces.length - 1];
