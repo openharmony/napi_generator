@@ -26,7 +26,7 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../../figures/DevEco_step_firstNext.png)
 
-填写Project name、Save location,其他选项可不修改，单击Finish,新的工程就创建好了。
+填写Project name、Save location,其它选项可不修改，单击Finish,新的工程就创建好了。
 
 ![](../../figures/DevEco_step_finish.png)
 
@@ -40,7 +40,7 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../../figures/DevEco_step_apiscan.png)
 
-4、工具打开API Scan窗口，扫描项目路径框填写将要扫描项目的绝对路径，结果输出路径框自动填写与扫描项目相同路径，使用者可以根据实际情况修改结果输出路径，然后点击ok。
+4、工具打开API Scan窗口，扫描项目路径框填写将要扫描项目的路径（absolute path），结果输出路径框自动填写与扫描项目相同路径，使用者可以根据实际情况修改结果输出路径，然后点击ok。
 
 ![](../../figures/DevEco_step_api_ok.png)
 

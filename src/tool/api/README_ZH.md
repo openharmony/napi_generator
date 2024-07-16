@@ -9,7 +9,7 @@
 [工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/src/tool/api/docs/INSTRUCTION_ZH.md)
 
 	├── napi_generator                           
-	│   ├── ...                                  # 其他文档
+	│   ├── ...                                  # 其它文档
 	│   ├── src/tool
 	│   │   ├── api                              # api扫描工具
 	│   │   |   ├── api_scan_vs_plugin           # VS Code插件源码

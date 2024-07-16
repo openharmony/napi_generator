@@ -34,7 +34,7 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../figures/DevEco_step_firstNext.png)
 
-填写Project name、Save location,其他选项可不修改，单击Finish,新的工程就创建好了。
+填写Project name、Save location,其它选项可不修改，单击Finish,新的工程就创建好了。
 
 ![](../figures/DevEco_step_finish.png)
 

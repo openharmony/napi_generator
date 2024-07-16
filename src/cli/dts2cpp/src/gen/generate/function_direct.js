@@ -165,9 +165,9 @@ function getAddOrRemoveReg(func, isAddReg) {
 
 function replaceOptionalParamDestory(middleFunc, param) {
     if (param.optionalParamDestory === '') {
-        middleFunc = replaceAll(middleFunc, '[optionalParamDestory]', param.optionalParamDestory) // 可选参数内存释放;
+        middleFunc = replaceAll(middleFunc, '[optionalParamDestory]', param.optionalParamDestory); // 可选参数内存释放
     } else {
-        middleFunc = replaceAll(middleFunc, '[optionalParamDestory]', '\n    ' + param.optionalParamDestory) // 可选参数内存释放;
+        middleFunc = replaceAll(middleFunc, '[optionalParamDestory]', '\n    ' + param.optionalParamDestory); // 可选参数内存释放
     }
     return middleFunc;
 }
@@ -208,11 +208,11 @@ function generateFunctionDirect(func, data, className, implHVariable) {
     middleH = replaceValueOut(middleH, param);
 
     param.valueCheckout = removeEndlineEnter(param.valueCheckout);
-    middleFunc = replaceAll(middleFunc, '[valueCheckout]', param.valueCheckout) // # 输入参数解析;
+    middleFunc = replaceAll(middleFunc, '[valueCheckout]', param.valueCheckout); // # 输入参数解析
     let callFunc = '%s%s(%s);'.format(className === null || className === undefined ? '' : 'pInstance->',
         func.name, param.valueFill);
-    middleFunc = replaceAll(middleFunc, '[callFunc]', callFunc) // 执行;
-    middleFunc = replaceAll(middleFunc, '[valuePackage]', param.valuePackage) // 输出参数打包;
+    middleFunc = replaceAll(middleFunc, '[callFunc]', callFunc); // 执行
+    middleFunc = replaceAll(middleFunc, '[valuePackage]', param.valuePackage); // 输出参数打包
     middleFunc = replaceOptionalParamDestory(middleFunc, param);
     let prefixArr = getPrefix(data, func);
     let implH = '';

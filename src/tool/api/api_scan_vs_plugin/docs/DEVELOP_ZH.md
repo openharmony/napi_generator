@@ -26,7 +26,7 @@
 
 	npx vsce package
 
-  每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件ApiScan-0.0.1.vsix。结果如下：
+  每个选项都选择y，然后回车，结果会在当前目录下打包生成一个插件ApiScan-0.0.1.vsix。结果如下：
 
 	kaihong1@ubuntu:~/napi_generator_gjj/hdc/api/api_scan_vs_plugin/src$ npx vsce package
 	WARNING  A 'repository' field is missing from the 'package.json' manifest file.
@@ -62,7 +62,7 @@
 
 	npx vsce package
 
-  每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件ApiScan-0.0.1.vsix。结果如下：
+  每个选项都选择y，然后回车，结果会在当前目录下打包生成一个插件ApiScan-0.0.1.vsix。结果如下：
 
 	C:\napi_generator_GJJ\hdc\api\api_scan_vs_plugin\src>npx vsce package
 	WARNING  A 'repository' field is missing from the 'package.json' manifest file.

@@ -31,15 +31,15 @@
 
 	D:\napi_tool>cmd_gen-win.exe @ohos.power.d.ts                                                                                                                                                                                                pkg/prelude/bootstrap.js:1794                                                                                                                                                                                                                      return wrapper.apply(this.exports, args);                                                                                                                                                                                                                   ^                                                                                                                                                                                                                                                                                                                                                                                                                                                                    TypeError: Cannot read property 'name' of undefined                                                                                                                                                                                              at GenerateAll (C:\snapshot\gen\generate.js)                                                                                                                                                                                                 at Object.DoGenerate (C:\snapshot\gen\main.js)                                                                                                                                                                                               at Object.<anonymous> (C:\snapshot\gen\cmd_gen.js)                                                                                                                                                                                           at Module._compile (pkg/prelude/bootstrap.js:1794:22)                                                                                                                                                                                    [90m    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)[39m                                                                                                                                                      [90m    at Module.load (internal/modules/cjs/loader.js:950:32)[39m                                                                                                                                                                         [90m    at Function.Module._load (internal/modules/cjs/loader.js:790:12)[39m                                                                                                                                                                   at Function.runMain (pkg/prelude/bootstrap.js:1847:12)                                                                                                                                                                                   [90m    at internal/main/run_main_module.js:17:47[39m  
 
-问题定位：在windows命令行中执行cmd_gen-win.exe的时候后面没有加d.ts文件所在的绝对路径，导致d.ts文件没有找到。
+问题定位：在windows命令行中执行cmd_gen-win.exe的时候后面没有加d.ts文件所在的路径（absolute path），导致d.ts文件没有找到。
 
-问题解决：在执行cmd_gen-win.exe的时候后面要加.d.ts文件所在的绝对路径，或者把d.ts文件放入到cmd_gen-win.exe所在的目录中。例如直接执行：
+问题解决：在执行cmd_gen-win.exe的时候后面要加.d.ts文件所在的路径（absolute path），或者把d.ts文件放入到cmd_gen-win.exe所在的目录中。例如直接执行：
 
 	cmd_gen-win.exe @ohos.power.d.ts
 
 ### 3.未安装系统依赖插件，运行测试用例失败
 
-问题描述：首次运行UT或ST用例失败。
+问题描述：初次运行UT或ST用例失败。
 
 	Error: Cannot find module '../../node_modules/typescript'
 	Require stack:
@@ -52,7 +52,7 @@
 	    at require (internal/modules/cjs/helpers.js:101:18)
 	    at Object.<anonymous> (/home/harmony/hhhh/napi_generator_1/src/gen/tools/common.js:16:13)
 
-问题定位：首次运行测试用例,napi_generator目录下、napi_generator/src目录下依赖插件未全部安装。
+问题定位：初次运行测试用例,napi_generator目录下、napi_generator/src目录下依赖插件未全部安装。
 
 问题解决：napi_generator目录下、napi_generator/src目录下重新安装依赖即可，直到napi_generator/src/package.json文件中包含以下所有插件：
 
