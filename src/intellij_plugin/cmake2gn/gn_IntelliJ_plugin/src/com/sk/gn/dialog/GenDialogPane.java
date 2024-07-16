@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -71,7 +71,7 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
     private JButton selectTransplantButton;
     private JButton selectScriptButton;
     private JTextField subsystemTextField;
-    private JTextField test_partTextField;
+    private JTextField testPartTextField;
     private JTextField compileTextField;
     private JTextField inputScriptTextField;
     private JComboBox comboBox;
@@ -256,7 +256,7 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
         createCopyResMakeRawFile();
         createCopyResToolChainFile();
         GenNotification.notifyMessage(this.project, "", "正在生成", NotificationType.INFORMATION);
-        String command;
+        String command = '';
         command = genCommand();
         try {
             if (!TextUtils.isEmpty(command) && callExtProcess(command)) {
@@ -427,7 +427,7 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
         try {
             stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
             stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            String sErr;
+            String sErr = '';
             String sOut;
             sErr = getErrorResult(stdError);
             if (TextUtils.isEmpty(sErr)) {
