@@ -425,8 +425,10 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
         BufferedReader stdInput = null;
         BufferedReader stdError = null;
         try {
-            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream(),
+                StandardCharsets.UTF_8));
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
+                StandardCharsets.UTF_8));
             String sErr = '';
             String sOut;
             sErr = getErrorResult(stdError);
@@ -527,7 +529,7 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
             InputStreamReader isr = null;
             BufferedReader br = null;
             try {
-                isr = new InputStreamReader(is);
+                isr = new InputStreamReader(is, StandardCharsets.UTF_8);
                 br = new BufferedReader(isr);
                 String line;
                 while ((line = br.readLine()) != null) {
@@ -567,7 +569,8 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
         public void run() {
             BufferedReader br = null;
             try {
-                br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                br = new BufferedReader(new InputStreamReader(process.getInputStream(),
+                    StandardCharsets.UTF_8));
                 genResultLog(process);
                 while (br.readLine() != null) {
                     LOG.info(" callExtProcess ");

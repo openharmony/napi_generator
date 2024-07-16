@@ -314,6 +314,7 @@ public class GenerateDialogPane extends JDialog {
      */
     private void writeTmpFile(String path, byte[] bs) throws IOException {
         File file = new File(path);
+        FileOutputStream fw = null;
         if (!file.exists()) {
             boolean isNewFile = file.createNewFile();
             if (!isNewFile) {
@@ -321,7 +322,7 @@ public class GenerateDialogPane extends JDialog {
             }
         }
         try {
-            FileOutputStream fw = new FileOutputStream(file);
+            fw = new FileOutputStream(file);
             fw.write(bs, 0, bs.length);
         } catch (IOException e) {
             // 处理可能发生的IOException
@@ -344,8 +345,10 @@ public class GenerateDialogPane extends JDialog {
         BufferedReader stdInput = null;
         BufferedReader stdError = null;
         try {
-            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream(),
+                StandardCharsets.UTF_8));
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
+                StandardCharsets.UTF_8));
             String sErr;
             String sOut;
             sErr = getErrorResult(stdError);
@@ -438,7 +441,7 @@ public class GenerateDialogPane extends JDialog {
             InputStreamReader inputStreamReader = null;
             BufferedReader bufferedReader = null;
             try {
-                inputStreamReader = new InputStreamReader(is);
+                inputStreamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
                 bufferedReader = new BufferedReader(inputStreamReader);
                 String readLine;
                 while ((readLine = bufferedReader.readLine()) != null) {
@@ -447,7 +450,7 @@ public class GenerateDialogPane extends JDialog {
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
             } finally {
-            // 确保BufferedReader和InputStreamReader被关闭
+                // 确保BufferedReader和InputStreamReader被关闭
                 try {
                     bufferedReader.close();
                 } catch (IOException e) {

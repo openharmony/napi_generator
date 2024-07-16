@@ -568,6 +568,7 @@ public class GenerateDialogPane extends JDialog {
      */
     private void writeTmpFile(String path, byte[] bs) throws IOException {
         File file = new File(path);
+        FileOutputStream fw = null;
         if (!file.exists()) {
             boolean isNewFile = file.createNewFile();
             if (!isNewFile) {
@@ -575,7 +576,7 @@ public class GenerateDialogPane extends JDialog {
             }
         }
         try {
-            FileOutputStream fw = new FileOutputStream(file);
+            fw = new FileOutputStream(file);
             fw.write(bs, 0, bs.length);
         } catch (IOException e) {
             // 处理可能发生的IOException
@@ -598,8 +599,10 @@ public class GenerateDialogPane extends JDialog {
         BufferedReader stdInput = null;
         BufferedReader stdError = null;
         try {
-            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream(),
+                StandardCharsets.UTF_8));
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
+                StandardCharsets.UTF_8));
             String sErr;
             String sOut;
             sErr = getErrorResult(stdError);
@@ -692,7 +695,7 @@ public class GenerateDialogPane extends JDialog {
             InputStreamReader isr = null;
             BufferedReader br = null;
             try {
-                isr = new InputStreamReader(is);
+                isr = new InputStreamReader(is, StandardCharsets.UTF_8);
                 br = new BufferedReader(isr);
                 String line;
                 while ((line = br.readLine()) != null) {
