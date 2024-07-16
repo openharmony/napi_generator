@@ -38,7 +38,7 @@ public class SelectCppAction implements ActionListener {
 
     /**
      * 构造函数
-     * 
+     *
      * @param button .cpp文件选择按钮
      * @param textField .cpp文件文本选择框
      * @param genPath 生成框架路径
