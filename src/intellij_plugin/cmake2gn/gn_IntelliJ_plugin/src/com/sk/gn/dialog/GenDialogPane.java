@@ -422,20 +422,39 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
      * @param process 进程ID
      */
     private void genResultLog(Process process) {
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        String sErr;
-        String sOut;
-        sErr = getErrorResult(stdError);
-        if (TextUtils.isEmpty(sErr)) {
-            sOut = genInputLog(stdInput);
-            if (!generateIsSuccess(sOut)) {
-                sErrorMessage = sOut;
+        BufferedReader stdInput = null;
+        BufferedReader stdError = null;
+        try {
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            String sErr;
+            String sOut;
+            sErr = getErrorResult(stdError);
+            if (TextUtils.isEmpty(sErr)) {
+                sOut = genInputLog(stdInput);
+                if (!generateIsSuccess(sOut)) {
+                    sErrorMessage = sOut;
+                }
+            } else {
+                generateSuccess = false;
+                sErrorMessage = sErr;
             }
-            return;
+        } catch (IOException e) {
+            // Handle exception
+            LOG.error(e);
+        } finally {
+            // Close resources in finally block to ensure they are closed even if an exception occurs
+            try {
+                stdInput.close();
+            } catch (IOException e) {
+                LOG.error(e);
+            }
+            try {
+                stdError.close();
+            } catch (IOException e) {
+                LOG.error(e);
+            }
         }
-        generateSuccess = false;
-        sErrorMessage = sErr;
     }
 
     /**
@@ -505,15 +524,29 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
 
         @Override
         public void run() {
+            InputStreamReader isr = null;
+            BufferedReader br = null;
             try {
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
+                isr = new InputStreamReader(is);
+                br = new BufferedReader(isr);
                 String line;
                 while ((line = br.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);
                 }
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
+            } finally {
+                // 确保BufferedReader br和InputStreamReader isr被关闭
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    LOG.error(e);
+                }
+                try {
+                    isr.close();
+                } catch (IOException e) {
+                    LOG.error(e);
+                }
             }
         }
     }
@@ -532,14 +565,23 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
 
         @Override
         public void run() {
-            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            genResultLog(process);
+            BufferedReader br = null;
             try {
+                br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                genResultLog(process);
                 while (br.readLine() != null) {
                     LOG.info(" callExtProcess ");
                 }
             } catch (IOException ioException) {
                 LOG.error(" callExtProcess error" + ioException);
+            } finally {
+                // 确保BufferedReader br被关闭
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    // 处理关闭BufferedReader时的异常
+                    LOG.error(e);
+                }
             }
         }
     }
