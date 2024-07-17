@@ -20,7 +20,7 @@ dts2cpp工具，它可以根据用户指定路径下的ts(typescript)接口文�
 
 	npm i stdio
 
-3.将待转换的文件@ohos.napitest.d.ts拷贝到napi_generator/src/cli/dts2cpp/src下，并在该目录下新建out目录；@ohos.napitest.d.ts如下所示：
+3.将待转换的文件@ohos.napitest.d.ts拷贝到napi_generator/src/cli/dts2cpp/src/gen下，并在该目录下新建out目录；@ohos.napitest.d.ts如下所示：
 
 ```
 declare namespace napitest {
@@ -29,10 +29,10 @@ declare namespace napitest {
 export default napitest;
 ```
 
-4.在napi_generator/src/cli/dts2cpp/src下执行以下命令生成napi框架代码：
+4.在napi_generator/src/cli/dts2cpp/src/gen下执行以下命令生成napi框架代码：
 
 ```
-node gen\cmd_gen.js -f @ohos.napitest.d.ts -o out
+node cmd_gen.js -f @ohos.napitest.d.ts -o out
 ```
 
 其中，参数详情如下：

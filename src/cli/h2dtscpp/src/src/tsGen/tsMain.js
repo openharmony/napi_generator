@@ -429,7 +429,7 @@ function genType(typeInfo, tabLv) {
 }
 
 function genTsContent(rootInfo, dtsDeclare) {
-    let tsContent = rootInfo.needCallback ? 'import { AsyncCallback, Callback } from './../basic';\n\n' : '';
+    let tsContent = rootInfo.needCallback ? 'import { AsyncCallback, Callback } from \'./../basic\';\n\n' : '';
 
     // gen typedefs
     tsContent += genType(rootInfo.typedefs, 0);
@@ -507,8 +507,6 @@ function extractMacros(headerFilePath) {
     fs.readFile(headerFilePath, 'utf8', (err, data) => {
       if (err) {
         return reject(err);
-      } else {
-        return '';
       }
 
       // 匹配#define指令的正则表达式
