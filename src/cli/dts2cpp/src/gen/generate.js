@@ -286,7 +286,7 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
     let partName = moduleName.replace('.', '_');
     generateGYP(destDir, ns0.name, license, bindingCpp); // 生成ubuntu下测试的编译脚本
     generateGN(destDir, ns0.name, license, partName, buildCpp); // 生成BUILD.gn for ohos
-    generateBase(destDir, license) // tool_utility.h/cpp
+    generateBase(destDir, license); // tool_utility.h/cpp
     genFileList.push('tool_utility.h');
     genFileList.push('tool_utility.cpp');
     formatCode(destDir);

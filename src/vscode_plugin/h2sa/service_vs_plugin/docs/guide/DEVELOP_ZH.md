@@ -26,7 +26,7 @@
 
 	npx vsce package
 
-  每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件service-gen-0.0.1.vsix。结果如下：
+  每个选项都选择y，然后回车，结果会在当前目录下打包生成一个插件service-gen-0.0.1.vsix。结果如下：
 
 	kaihong1@ubuntu:~/napi_generator_gjj/src/vscode_plugin/h2sa/service_vs_plugin/src$ npx vsce package
 	This extension consists of 3282 files, out of which 1547 are JavaScript files. For performance reasons, you should bundle your extension: https://aka.ms/vscode-bundle-extension . You should also exclude unnecessary files by adding them to your .vscodeignore: https://aka.ms/vscode-vscodeignore
@@ -54,7 +54,7 @@
 
 	npx vsce package
 
-  每个选项都选择y，然后回车，最终会在当前目录下打包生成一个插件service-gen-0.0.1.vsix。结果如下：
+  每个选项都选择y，然后回车，结果会在当前目录下打包生成一个插件service-gen-0.0.1.vsix。结果如下：
 
 	C:\napi_generator_GJJ\src\vscode_plugin\h2sa\service_vs_plugin\src>npx vsce package
 	This extension consists of 3281 files, out of which 1547 are JavaScript files. For performance reasons, you should bundle your extension: https://aka.ms/vscode-bundle-extension . You should also exclude unnecessary files by adding them to your .vscodeignore: https://aka.ms/vscode-vscodeignore

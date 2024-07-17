@@ -26,7 +26,7 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../figures/DevEco_step_firstNext.png)
 
-填写Project name、Save location,其他选项可不修改，单击Finish,新的工程就创建好了。
+填写Project name、Save location,其它选项可不修改，单击Finish,新的工程就创建好了。
 
 ![](../figures/DevEco_step_finish.png)
 
@@ -44,7 +44,7 @@ Ability Template选择Empty Ability,单击Next。
 
 ![](../figures/DevEco_step_service.png)
 
-5、工具打开 Generate Service Frame窗口，.h文件选择框默认填写被操作的.h文件的绝对路径；输出路径选择框默认填写.h文件所在文件夹路径，可修改为任意路径；serviceID默认填写9000，可修改为其他id,然后点击ok。
+5、工具打开 Generate Service Frame窗口，.h文件选择框默认填写被操作的.h文件的路径（absolute path）；输出路径选择框默认填写.h文件所在文件夹路径，可修改为任意路径；serviceID默认填写9000，可修改为其它id,然后点击ok。
 
 ![](../figures/DevEco_step_service_ok.png)
 

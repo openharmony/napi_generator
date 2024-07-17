@@ -42,7 +42,7 @@ napi_generator的可执行程序方式和插件方式都具有预检查的功能
 	
 	joey@joey-virtual-machine:~/code/napi_test$ 
 
-@ohos.napitest.d.ts (33,49)，其中括号中第一个参数含义为行号，第二个参数含义为列号。
+@ohos.napitest.d.ts (33,49)，其中括号中the first 参数含义为行号，第二个参数含义为列号。
 
 预检查的触发方式与生成框架的入口一致，使用方法参见生成框架描述。
 

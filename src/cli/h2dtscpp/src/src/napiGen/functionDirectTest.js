@@ -231,7 +231,7 @@ function createParam(parseParamInfo) {
     let param = {
         'name': '',
         'type': ''
-    }
+    };
     param.name = parseParamInfo.name;
     param.type = parseParamInfo.type;
     return param;
