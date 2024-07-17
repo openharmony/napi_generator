@@ -27,20 +27,18 @@ const specialPrefixArr = ['p->', 'vio->out.'];
  * @returns the real value without prefix, example: xxx, yyy
  */
 function delPrefix(valueName) {
-    for (var i in specialPrefixArr) {
-        if (valueName.indexOf(specialPrefixArr[i]) === 0) {
-            // Find special prefix and delete it.
-            return valueName.substring(specialPrefixArr[i].length, valueName.length);
-        }
-    }
-    // Without special prefix, nothing is changed.
-    return valueName;
+  return specialPrefixArr.reduce((result, prefix) => {
+      if (valueName.startsWith(prefix)) {
+          return valueName.substring(prefix.length);
+      }
+      return result;
+  }, valueName);
 }
 
 function cToJsForType(value, type, dest, deep) {
     let lt = deep;
     let result = '';
-    let ifl = TypeList.getValue(type)
+    let ifl = TypeList.getValue(type);
     if (typeof (ifl) === 'object') {
         for (let i in ifl) {
             let name2 = ifl[i].name;
@@ -49,7 +47,7 @@ function cToJsForType(value, type, dest, deep) {
             let isSubEnum = EnumList.getValue(type2) ? true : false;
             let subDest = isSubEnum ? dest : 'tnv%d'.format(lt);
             let typeType = null;
-            let ifOptional = '';  // 如果是可选参数则需要增加可选参数是否有值的判断
+            let ifOptional = ''; // 如果是可选参数则需要增加可选参数是否有值的判断
             if (optional2) {
                 ifOptional = 'if (%s.%s.has_value())\n'.format(value, name2);
                 typeType = cToJs('%s.%s'.format(value, '%s.value()'.format(name2)), type2, subDest, deep + 1);
@@ -57,7 +55,7 @@ function cToJsForType(value, type, dest, deep) {
                 typeType = cToJs('%s.%s'.format(value, name2), type2, subDest, deep + 1);
             }
             if (isSubEnum) {
-                result += typeType
+                result += typeType;
             } else {
                 result += '%s{\nnapi_value tnv%d = nullptr;\n'.format(ifOptional, lt) +
                     typeType + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
@@ -91,7 +89,7 @@ function cToJsForInterface(value, type, dest, deep) {
 
         if (isSubEnum) {
             // interface include enum properties
-            result += interfaceType
+            result += interfaceType;
         } else {
             result += '%s{\nnapi_value tnv%d = nullptr;\n'.format(ifOptional, lt) +
                 interfaceType + `\npxt->SetValueProperty(%s, "%s", tnv%d);\n}\n`
@@ -493,7 +491,7 @@ function mapTempleteArray(mapType, tnvdef, lt) {
             pxt->SetArrayElement(tnv%d, j, tnv%d);
         }`.format(lt + 2, lt + 2, lt, lt, lt, lt + 2, lt + 1, lt + 2));
     }
-    return ret
+    return ret;
 }
 
 function returnGenerateMap(returnInfo, param) {
@@ -564,7 +562,7 @@ function getReturnFill(returnInfo, param) {
                 valueFillStr += '%svio->out'.format(valueFillStr.length > 0 ? ', ' : '');
             }
         }
-    } else {  // 普通方法的返回参数处理
+    } else { // 普通方法的返回参数处理
         valueFillStr = 'vio->out';
     }
     return valueFillStr;
@@ -590,7 +588,7 @@ function generateOptionalAndUnion(returnInfo, param, data, outParam, c2JsresultN
 
     // 判断callback是否有效，若无效，则为普通函数
     let paramCallbackFlag = param.callback !== undefined ? true : false;
-    let paramCallbackIsArrow
+    let paramCallbackIsArrow;
     if (paramCallbackFlag) { // 若callback有效， 判断是否是箭头函数
         paramCallbackIsArrow = param.callback.isArrowFuncFlag;
     }
@@ -630,7 +628,7 @@ function returnGenerateForArrowCbMultiPara(paramInfo, param, data, i) {
     else if (type === 'boolean') {
         param.valueOut += paramInfo.optional ? 'bool* %s = nullptr;' : 'bool %s;\n'
             .format(paramInfo.name, paramInfo.name);
-        param.valueDefine += '%sbool%s %s'.format(param.valueDefine.length > 0 ? ', ' : '', modifiers, paramInfo.name)
+        param.valueDefine += '%sbool%s %s'.format(param.valueDefine.length > 0 ? ', ' : '', modifiers, paramInfo.name);
     }
     else if (type.substring(0, 12) === 'NUMBER_TYPE_') {
         param.valueOut += type + (paramInfo.optional ? '* %s = nullptr;' : ' %s;\n')
@@ -671,15 +669,15 @@ function returnGenerateForOnOffMultiPara(paramInfo, param, data) {
         NapiLog.logInfo('The current void type don\'t need generate');
     }
     else if (type === 'boolean') {
-        param.valueOut += paramInfo.optional ? 'bool* %s = nullptr;' : 'bool %s;\n';
+        param.valueOut += paramInfo.optional ? 'bool* %s = nullptr;' : 'bool %s;\n'
             .format(paramInfo.name, paramInfo.name);
         param.params += '%sbool%s %s'.format(param.params.length > 0 ? ', ' : '', modifiers, paramInfo.name);
     }
     else if (type.substring(0, 12) === 'NUMBER_TYPE_') {
-        param.valueOut += type + (paramInfo.optional ? '* %s = nullptr;' : ' %s;\n');
+        param.valueOut += type + (paramInfo.optional ? '* %s = nullptr;' : ' %s;\n')
             .format(paramInfo.name, paramInfo.name);
         param.params += '%s%s%s %s'.format(param.params.length > 0 ? ', ' : '', type, modifiers,
-            paramInfo.name)
+            paramInfo.name);
     }
     else if (generateType(type)) {
         returnGenerate2(paramInfo, param, data);
@@ -812,7 +810,7 @@ function returnGenerate2(returnInfo, param, data) {
         arrayType = jsType2CType(arrayType);
         if (arrayType === 'any') {
             param.valueOut = `std::any out;\n
-            std::string out_type;`
+            std::string out_type;`;
             param.valueDefine += '%sstd::any &out'.format(param.valueDefine.length > 0 ? ', ' : '');
         } else {
             param.valueOut = returnInfo.optional ? 'std::vector<%s>* out = nullptr;\n'.format(arrayType)
@@ -879,4 +877,4 @@ module.exports = {
     returnGenerateEnum,
     objectTempleteFuncReturn,
     cToJsForType,
-}
+};

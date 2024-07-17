@@ -57,7 +57,9 @@ function getMapCType(type) {
         else if (mapType[1] === 'any') { mapTypeString = 'std::any' }
         else if (mapType[1] !== null) { mapTypeString = mapType[1] }
     } else if (mapType[2] !== undefined) {
-        if (mapType[2] === 'string') { mapTypeString = 'std::map<std::string, std::string>' }
+        if (mapType[2] === 'string') {
+            mapTypeString = 'std::map<std::string, std::string>';
+        }
         else if (mapType[2].substring(0, 12) === 'NUMBER_TYPE_') { 
             mapTypeString = 'std::map<std::string, %s>'.format(mapType[2]);
         }
@@ -108,6 +110,7 @@ function jsToC(dest, napiVn, type, enumType = 0, optional) {
     } else {
         NapiLog.logError(`do not support to generate jsToC %s,%s,%s`
             .format(dest, napiVn, type), getLogErrInfo());
+        return null;
     }        
 }
 
@@ -435,7 +438,8 @@ function paramGenerateArray(p, funcValue, param) {
             arrayType = 'bool';
         }
         if (arrayType === 'any') {
-            return paramGenerateAnyArray(p, name, type, param);
+            paramGenerateAnyArray(p, name, type, param);
+            return;
         }
         param.valueIn += funcValue.optional ? '\n    std::vector<%s>* in%d = nullptr;'.format(arrayType, p) 
                                             : '\n    std::vector<%s> in%d;'.format(arrayType, p);
@@ -452,24 +456,30 @@ function paramGenerateArray(p, funcValue, param) {
         } else if (arrayType === 'boolean') {
             arrayType = 'bool';
         } else if (arrayType === 'any') {
-            return paramGenerateAnyArray(p, name, type, param);
+            paramGenerateAnyArray(p, name, type, param);
+            return;
         }
         else if (checkIsMap(keyType)) {
             let mapValueType = getMapValueType(strLen, keyType, arrayType);             
             arrayType = 'std::map<std::string, %s>'.format(mapValueType);
         }
-        param.valueIn += funcValue.optional ? '\n    std::vector<%s>* in%d = nullptr;'.format(arrayType, p) 
-                                            : '\n    std::vector<%s> in%d;'.format(arrayType, p);
-        let arrValueCheckout = jsToC(inParamName, 'pxt->GetArgv(%d)'.format(getConstNum(p)), type);
-        arrValueCheckout = getFuncOptionalValue(funcValue, arrValueCheckout, p, arrayType, param);                                   
-        param.valueCheckout += arrValueCheckout;
-        param.valueFill += '%svio->in%d'.format(param.valueFill.length > 0 ? ', ' : '', p);
-        param.valueDefine += '%sstd::vector<%s>%s%s'.format(param.valueDefine.length > 0 ? ', '
-            : '', arrayType, modifiers, name);
+        paramGenArray(param, funcValue, arrayType, p, inParamName, type, modifiers, name);
     } else {
         NapiLog.logError('The current version do not support to this param to generate :', name,
             'type :', type, getLogErrInfo());
+        return;
     }
+}
+
+function paramGenArray(param, funcValue, arrayType, p, inParamName, type, modifiers, name) {
+  param.valueIn += funcValue.optional ? '\n    std::vector<%s>* in%d = nullptr;'.format(arrayType, p)
+    : '\n    std::vector<%s> in%d;'.format(arrayType, p);
+  let arrValueCheckout = jsToC(inParamName, 'pxt->GetArgv(%d)'.format(getConstNum(p)), type);
+  arrValueCheckout = getFuncOptionalValue(funcValue, arrValueCheckout, p, arrayType, param);
+  param.valueCheckout += arrValueCheckout;
+  param.valueFill += '%svio->in%d'.format(param.valueFill.length > 0 ? ', ' : '', p);
+  param.valueDefine += '%sstd::vector<%s>%s%s'.format(param.valueDefine.length > 0 ? ', '
+    : '', arrayType, modifiers, name);
 }
 
 function checkIsMap(keyType) {
@@ -827,7 +837,7 @@ function getCBparaTypeForArrow(type) {
 
     if (callbackParams.indexOf(',') >= 0) { // 多个参数，进行分割            
         callbackParams = callbackParams.split(',');
-        for(let i = 0; i < callbackParams.length; i++) {
+        for (let i = 0; i < callbackParams.length; i++) {
             NapiLog.logInfo('muilti paramets');
         }
     } else { // 一个参数
@@ -1131,7 +1141,8 @@ function paramGenerate(p, funcValue, param, data) {
     let inParamName = funcValue.optional ? '(*vio->in' + p + ')' : 'vio->in' + p;
     let modifiers = funcValue.optional ? '*' : '&';
     if (type.indexOf('|') >= 0) {
-        return paramGenerateUnion(type, param, p, name);
+        paramGenerateUnion(type, param, p, name);
+        return;
     } else if (type === 'string') {
         paramGenerateCommon(p, 'std::string', funcValue, param, modifiers, inParamName);
     } else if (type.substring(0, 12) === 'NUMBER_TYPE_' && type.indexOf('[]') < 0) {
@@ -1170,7 +1181,7 @@ function eventParamGenerate(p, funcValue, param, data) {
         return;
     }
     if (type.indexOf("'") >= 0) {
-        type = type.replaceAll(''', '');
+        type = type.replaceAll('\'', '');
     }
     let regName = re.match('([a-zA-Z_0-9]+)', type);
     if (isFuncType(type)) {
