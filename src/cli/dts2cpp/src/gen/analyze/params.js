@@ -94,8 +94,10 @@ function analyzeParams(funcName, values) {
 
             let optionalFlag = re.getReg(v, matchs.regs[2]) === '?' ? true : false;
             let checkParamOk = true;
-            analyzaParamsFunc(optionalFlag, optionalParamCount, v, funcName, checkParamOk,
+            let retVal = analyzaParamsFunc(optionalFlag, optionalParamCount, v, funcName, checkParamOk,
                 result, matchs, type, funcType);
+            result = retVal[0];
+            funcType = retVal[1];
         }
         else {
             NapiLog.logError('Failed to analyse parameter [%s] of function [%s].'.format(v, funcName));
@@ -124,6 +126,7 @@ function analyzaParamsFunc(optionalFlag, optionalParamCount, v, funcName, checkP
             funcType = FuncType.SYNC;
         }
     }
+    return [result, funcType];
 }
 
 module.exports = {

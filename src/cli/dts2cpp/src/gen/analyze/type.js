@@ -75,7 +75,7 @@ function analyzeTypeVariable(t, tt, result) {
 }
 
 function analyzeType2(data) {
-    let body = re.replaceAll(data, ' ', '').split('"|"');
+    let body = re.replaceAll(data, ' ', '').split('\'|\'');
     let result = {
         element: [],
         function: [],
