@@ -38,9 +38,9 @@ function parseFileAll(hFilePath) {
     let execPath = path.dirname(process.execPath);
     let exeFile = sysInfo === 'win32' ? path.join(execPath, 'header_parser.exe') :
     path.join(execPath, 'header_parser');
-    if(!fs.existsSync(exeFile)) {
+    if (!fs.existsSync(exeFile)) {
         // 若是用node执行
-        exeFile = path.join(__dirname, "header_parser.exe")
+        exeFile = path.join(__dirname, 'header_parser.exe');
     }
     cmd = exeFile + ' ' + hFilePath;
 
@@ -429,7 +429,7 @@ function genType(typeInfo, tabLv) {
 }
 
 function genTsContent(rootInfo, dtsDeclare) {
-    let tsContent = rootInfo.needCallback ? 'import { AsyncCallback, Callback } from './../basic';\n\n' : '';
+    let tsContent = rootInfo.needCallback ? 'import { AsyncCallback, Callback } from \'./../basic\';\n\n' : '';
 
     // gen typedefs
     tsContent += genType(rootInfo.typedefs, 0);
@@ -507,8 +507,6 @@ function extractMacros(headerFilePath) {
     fs.readFile(headerFilePath, 'utf8', (err, data) => {
       if (err) {
         return reject(err);
-      } else {
-        return '';
       }
 
       // 匹配#define指令的正则表达式
@@ -522,7 +520,7 @@ function extractMacros(headerFilePath) {
         macros.push(match[1]);
       }
 
-      resolve(macros);
+      return resolve(macros);
     });
   });
 }

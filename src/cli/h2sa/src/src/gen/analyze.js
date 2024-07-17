@@ -21,9 +21,9 @@ const path = require('path');
 function parseFileAll(hFilePath) {
     let execSync = require('child_process').execSync;
     let cmd = '';
-    if (fs.existsSync('./hdc/service/service-gen/src/gen/header_parser.py')) {
+    if (fs.existsSync('./header_parser.py')) {
         // call python file (for debug test)
-        cmd = 'python ./hdc/service/service-gen/src/gen/header_parser.py ' + hFilePath;
+        cmd = 'python ./header_parser.py ' + hFilePath;
     } else {
         // call exe file (for real runtime)
         let sysInfo = os.platform();
