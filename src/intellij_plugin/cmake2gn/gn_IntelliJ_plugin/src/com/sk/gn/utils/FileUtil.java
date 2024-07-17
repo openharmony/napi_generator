@@ -152,6 +152,7 @@ public class FileUtil {
      */
     public static void writeTmpFile(String path, String oldPath, Project project) {
         File file = new File(path);
+        FileOutputStream fw = null ;
         try (InputStream inputStream = FileUtil.class.getClassLoader().getResourceAsStream(oldPath)) {
             if (inputStream == null) {
                 throw new IOException("exec File InputStream is Null");
@@ -162,13 +163,18 @@ public class FileUtil {
             if (!isNewFile) {
                 LOG.info("writeTmpFile createNewFile error");
             }
-            FileOutputStream fw = new FileOutputStream(file);
+            fw = new FileOutputStream(file);
             fw.write(bs, 0, bs.length);
-            fw.close();
         } catch (IOException e) {
             GenNotification.notifyMessage(project, e.getMessage(), "Can not Find File:" + oldPath,
                     NotificationType.ERROR);
             LOG.error(e);
+        } finally {
+            try {
+                fw.close();
+            } catch (IOException e) {
+                LOG.error("Error closing FileOutputStream", e);
+            }
         }
     }
 }
