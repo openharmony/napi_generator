@@ -24,7 +24,7 @@
 <tbody>
 <tr id="row334175803317"><td class="cellrowborder" valign="top" width="18%" headers="mcps1.2.3.1.1 "><p id="p382391145710"><a name="p382391145710"></a><a name="p382391145710"></a><ul>函数类型</ul></p>
 </td>
-<td class="cellrowborder" valign="top" width="50%" headers="mcps1.2.3.1.2 "><a name="ul334485413318"></a><a name="ul334485413318"></a><ul id="ul334485413318"><li>支持使用createThreadSafeFuncXXX格式创建线程安全函数 [注：1.第一个参数为线程安全函数名称； 2.最后一个参数为回调函数]</li></ul>
+<td class="cellrowborder" valign="top" width="50%" headers="mcps1.2.3.1.2 "><a name="ul334485413318"></a><a name="ul334485413318"></a><ul id="ul334485413318"><li>支持使用createThreadSafeFuncXXX格式创建线程安全函数 [注：1.the first 参数为线程安全函数名称； 2.结尾一个参数为回调函数]</li></ul>
 </td>
 <td class="cellrowborder" valign="top" width="20%" headers="mcps1.2.3.1.3 ">
 <ul id="ult940244418001">

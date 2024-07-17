@@ -31,7 +31,7 @@ visual studio code 版本需1.62.0及以上。
 
 ![](../figures/pic-plug-in-gen-c++.png)
 
-6、 工具打开 Service Generate Frame窗口，.h文件选择框默认填写被操作的.h文件的绝对路径；输出路径选择框默认填写.h文件所在文件夹路径，可修改为任意路径；serviceID范围是1-16777215之间的整数，超出范围会提示错误，填入正确的serviceID，然后点击ok。
+6、 工具打开 Service Generate Frame窗口，.h文件选择框默认填写被操作的.h文件的路径（absolute path）；输出路径选择框默认填写.h文件所在文件夹路径，可修改为任意路径；serviceID范围是1-16777215之间的整数，超出范围会提示错误，填入正确的serviceID，然后点击ok。
 
 ![](../figures/pic-service-frame.png)
 

@@ -49,7 +49,7 @@ visual studio code 版本需1.62.0及以上。
 
 ![](../figures/pic-plug-in-import-service.png)
 
-进入 TS 工具填写相应参数后点击Next , 生成.d.ts文件，并启动 NAPI 工具, NAPI工具是工具链中最后一个工具，NAPI工具的输入参数可以是TS工具的输出，填写完相应参数后，点击 Ok, 生成napi框架代码。
+进入 TS 工具填写相应参数后点击Next , 生成.d.ts文件，并启动 NAPI 工具, NAPI工具是工具链中结尾一个工具，NAPI工具的输入参数可以是TS工具的输出，填写完相应参数后，点击 Ok, 生成napi框架代码。
 
 ![](../figures/pic-plug-in-import-ts.png)
 

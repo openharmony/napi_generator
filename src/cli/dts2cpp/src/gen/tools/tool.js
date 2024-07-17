@@ -36,11 +36,13 @@ function print(...args) {
 
 String.prototype.format = function (...args) {
     var result = this;
-    let reg = new RegExp('%[sd]{1}')
+    let reg = new RegExp('%[sd]{1}');
     for (let i = 0; i < args.length; i++) {
-        let p = result.search(reg)
-        if (p < 0) break;
-        result = result.substring(0, p) + args[i] + result.substring(p + 2, result.length)
+        let p = result.search(reg);
+        if (p < 0) {
+            break;
+        }
+        result = result.substring(0, p) + args[i] + result.substring(p + 2, result.length);
     }
     return result;
 };
@@ -162,7 +164,7 @@ function getLicense(data) {
         if (licenseData.search('Copyright') !== -1) {
             return licenseData;
         } else {
-            return null;
+            return '';
         }
     }
 }
@@ -200,10 +202,12 @@ function replaceTab(data) {
 }
 
 function removeEmptyLine2(data) {
-    while (data.indexOf(' \n'));
+    while (data.indexOf(' \n')) {
         data = data.replace(' \n', '\n');
-    while (data.indexOf('\n\n\n'));
+    }
+    while (data.indexOf('\n\n\n')) {
         data = data.replace('\n\n\n', '\n\n');
+    }
     return data;
 }
 
@@ -301,10 +305,10 @@ function getPrefix(data, funcInfo) {
     let virtualStr = '';
     let staticStr = isStatic ? 'static ' : '';
     if (data.childList) {
-        tabStr = '    ' // 类中的方法增加一个缩进
-        virtualStr = (data.childList.length > 0 && !isStatic) ? 'virtual ' : '' //如果是基类中的非静态方法，定义为虚函数
+        tabStr = '    '; // 类中的方法增加一个缩进
+        virtualStr = (data.childList.length > 0 && !isStatic) ? 'virtual ' : ''; //如果是基类中的非静态方法，定义为虚函数
     }
-    let overrideStr = funcInfo.isOverride ? ' override' : '' // 重写了父类方法，需要加上override关键字，否则触发c++门禁告警
+    let overrideStr = funcInfo.isOverride ? ' override' : ''; // 重写了父类方法，需要加上override关键字，否则触发c++门禁告警
     return [tabStr, staticStr, virtualStr, overrideStr];
 }
 

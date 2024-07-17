@@ -297,7 +297,9 @@
 
     function selectBlur(inputObj) {
         var t = inputObj;
-        setTimeout(() => {t.nextSibling.nextSibling.style.display = 'none';}, 150);
+        setTimeout(() => {
+            t.nextSibling.nextSibling.style.display = 'none';
+        }, 150);
     }
 
     function selectFocus(inputObj) {
