@@ -22,12 +22,12 @@ h2dtscpp工具由C++语法解释器和代码生成器两部分组成。C++语法
 
 3.下载header_parser.exe文件：[header_parser.exe](https://gitee.com/openharmony/napi_generator/releases/tag/生成工具)；选择 tool.rar下载并解压，将解压后的文件中的header_parser.exe拷贝到napi_generator/src/cli/h2dtscpp/src/src/tsGen目录下。
 
-4.将待转换的.h文件拷贝到napi_generator/src/cli/h2dtscpp/src下，如 [cJSON测试三方库](https://gitee.com/openharmony/napi_generator/releases/tag/测试用资源) 的cJSON.h。
+4.将待转换的.h文件拷贝到napi_generator/src/cli/h2dtscpp/src/src下，如 [cJSON测试三方库](https://gitee.com/openharmony/napi_generator/releases/tag/测试用资源) 的cJSON.h。
 
-5.在napi_generator/src/cli/h2dtscpp/src执行以下命令：
+5.在napi_generator/src/cli/h2dtscpp/src/src执行以下命令：
 
 ```
-node src\main.js -f cJSON.h
+node main.js -f cJSON.h
 ```
 
 其中，参数详情如下：
@@ -42,7 +42,7 @@ index.d.ts文件路径；
 
 -o, 可选参数，生成的.cpp文件所在路径，默认路径为.h文件目录下创建的cppout文件夹路径；
 
-6.执行成功后在napi_generator/src/cli/h2dtscpp/src目录下生成以下文件夹
+6.执行成功后在napi_generator/src/cli/h2dtscpp/src/src目录下生成以下文件夹
 
 ![](./docs/figures/h2dtscpp_out_example.png)
 

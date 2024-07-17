@@ -36,7 +36,7 @@ Openharmony@Ubuntu-64:~/OpenHarmony/third_party/mbedtls-development$ ls
 
 	npm i stdio
 
-6.在napi_generator/src/cli/cmake2gn/src/src下执行以下命令：
+6.在napi_generator/src/cli/cmake2gn/src下执行以下命令：
 
 ```
 node main.js -o out/rk3568 -p /home/OpenHarmony -f third_party/mbedtls-development/CMakeLists.txt -t cmake -s test_subsystem -m mbedtls-development
