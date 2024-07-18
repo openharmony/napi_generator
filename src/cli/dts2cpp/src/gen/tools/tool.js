@@ -167,6 +167,7 @@ function getLicense(data) {
             return '';
         }
     }
+    return '';
 }
 
 function removeEmptyLine(data) {

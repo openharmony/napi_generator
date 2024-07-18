@@ -443,8 +443,7 @@ JsonCfgList.getValue = function (className, inter) {
 };
 
 function getLogErrInfo() {
-    let errInfo = ' Please refer to for support capacity:' +
-        'https://gitee.com/openharmony/' + 'napi_generator/tree/master/release-notes';
+    let errInfo = ' Please refer to for support capacity';
     return errInfo;
 }
 

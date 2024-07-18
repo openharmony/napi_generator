@@ -51,7 +51,7 @@ function analyzeFile(fn) {
         }
     }
 
-    if (null !== licenseData && undefined !== licenseData) {
+    if ('' !== licenseData) {
         result.declareLicense.push(licenseData)
     }
     return analyze(data, result)
