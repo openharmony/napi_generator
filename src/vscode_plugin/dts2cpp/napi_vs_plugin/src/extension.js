@@ -66,7 +66,7 @@ function executor(name, genDir, mode, numberType, importIsCheck) {
         error : '') + stdout);
       return VsPluginLog.logError('VsPlugin:' + error + stdout);
     }
-    vscode.window.showInformationMessage('Generated successfully');
+    return vscode.window.showInformationMessage('Generated successfully');
   });
 }
 
@@ -95,23 +95,23 @@ function exeFileExit() {
 }
 
 function register(context, command) {
-	let disposable = vscode.commands.registerCommand(command, function (uri, boolValue, items) {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		globalPanel = vscode.window.createWebviewPanel(
-			'generate', // Identifies the type of WebView
-			'Generate Napi Frame', // Title of the panel displayed to the user
-			vscode.ViewColumn.Two, // Display the WebView panel in the form of new columns in the editor
-			{
-				enableScripts: true, // Enable or disable JS, default is Enable
-				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
-			}
-		);
+  let disposable = vscode.commands.registerCommand(command, function (uri, boolValue, items) {
+    // The code you place here will be executed every time your command is executed
+    // Display a message box to the user
+    globalPanel = vscode.window.createWebviewPanel(
+      'generate', // Identifies the type of WebView
+      'Generate Napi Frame', // Title of the panel displayed to the user
+      vscode.ViewColumn.Two, // Display the WebView panel in the form of new columns in the editor
+      {
+        enableScripts: true, // Enable or disable JS, default is Enable
+        retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
+      }
+    );
 
-		checkBoolval(boolValue, items);
-		globalPanel.webview.html = getWebviewContent(context, importToolChain);
-		let msg;
-		globalPanel.webview.onDidReceiveMessage(message => {
+    checkBoolval(boolValue, items);
+    globalPanel.webview.html = getWebviewContent(context, importToolChain);
+    let msg;
+    globalPanel.webview.onDidReceiveMessage(message => {
       msg = handleMsg(msg, message, context);
     }, undefined, context.subscriptions);
     // 路径有效性判断
@@ -129,16 +129,16 @@ function register(context, command) {
 }
 
 function handleMsg(msg, message, context) {
-      msg = message.msg;
-      if (msg === 'cancel') {
-        globalPanel.dispose();
-      } else if (msg === 'param') {
-        if (configList.length !== 0) {
-          writeCfgJson(); // 写cfg.json文件
-        }
-        checkReceiveMsg(message);
-      } else if (msg === 'config') {
-        // 若选择文件夹或者选择了多个文件则不能配置业务代码
+  msg = message.msg;
+  if (msg === 'cancel') {
+    globalPanel.dispose();
+  } else if (msg === 'param') {
+    if (configList.length !== 0) {
+      writeCfgJson(); // 写cfg.json文件
+    }
+    checkReceiveMsg(message);
+  } else if (msg === 'config') {
+    // 若选择文件夹或者选择了多个文件则不能配置业务代码
     getMsgCfg(message, context);
   } else {
     selectPath(globalPanel, message);
@@ -155,8 +155,8 @@ function getMsgCfg(message, context) {
   } else {
     configServiceCode(message, context);
   }
- } 
-      
+}
+
 function checkBoolval(boolValue, items) {
   if (typeof (boolValue) === 'boolean' && Array.isArray(items)) {
     if (boolValue === true) {
@@ -396,7 +396,7 @@ function selectConfigPath(panel, message, generateDir) {
     filters: mode === SELECT_H_FILE ? { 'Text files': ['h', 'hpp', 'hxx'] } : { 'Text files': ['cpp', 'cc', 'C', 'cxx', 'c++'] },
   };
 
-	return vscode.window.showOpenDialog(options).then(fileUri => {
+  return vscode.window.showOpenDialog(options).then(fileUri => {
     if (fileUri && fileUri[0]) {
       console.log('Selected file: ' + fileUri[0].fsPath);
       let fileObsPath = fileUri[0].fsPath;
@@ -410,6 +410,7 @@ function selectConfigPath(panel, message, generateDir) {
       panel.webview.postMessage(result);
       return fileUri[0].fsPath;
     }
+    return '';
   });
 }
 
@@ -445,6 +446,7 @@ function selectPath(panel, message) {
       panel.webview.postMessage(result);
       return fileUri[0].fsPath;
     }
+    return '';
   });
 }
 
@@ -481,7 +483,7 @@ function getCommonWebViewContent(context, html) {
 }
 
 // this method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() { }
 
 function getWebviewContent(context, importToolChain) {
   let data = readFile(__dirname + '/vs_plugin_view.html');
@@ -498,12 +500,12 @@ function getWebViewContent(context, templatePath, panel) {
   const dirPath = path.dirname(resourcePath);
   let html = fs.readFileSync(resourcePath, 'utf-8');
   html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
-      if ($2.indexOf('https://') < 0) {
-        return ($1 + panel.webview.asWebviewUri(vscode.Uri.file(path.resolve(dirPath, $2))) + '"');
-      } else {
-        return $1 + $2 + '"';
-      }
-    });
+    if ($2.indexOf('https://') < 0) {
+      return ($1 + panel.webview.asWebviewUri(vscode.Uri.file(path.resolve(dirPath, $2))) + '"');
+    } else {
+      return $1 + $2 + '"';
+    }
+  });
   return html;
 }
 
