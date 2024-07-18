@@ -41,7 +41,7 @@ function activate(context) {
 	let disposableMenu = register(context, 'generate_ts_menu');
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposableMenu);
-	
+
 	let platform = detectPlatform();
 	if (platform === 'win') {
 		exeFilePath = __dirname + '/napi_generator-win.exe';
@@ -59,10 +59,10 @@ function executorH2Ts(name, genDir) {
 		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ', stderr =' + stderr);
 		if (error || stdout.indexOf('success') < 0) {
 			vscode.window.showErrorMessage('genError:' + ((error !== null && error !== undefined) ?
-        error : '') + stdout);
+				error : '') + stdout);
 			return VsPluginLog.logError('VsPlugin:' + error + stdout);
 		}
-		vscode.window.showInformationMessage('Generated successfully');
+		return vscode.window.showInformationMessage('Generated successfully');
 	});
 }
 
@@ -86,55 +86,55 @@ function register(context, command) {
 				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
 			}
 		);
-		
-    checkBoolval(boolValue, items);
+
+		checkBoolval(boolValue, items);
 		globalPanel.webview.html = getWebviewContent(context, importToolChain);
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
 			if (msg === 'cancel') {
 				globalPanel.dispose();
-			} 
+			}
 			else if (msg === 'h2ts') {
 				checkReceiveMsg(message);
 			} else {
 				selectPath(globalPanel, message);
 			}
 		}, undefined, context.subscriptions);
-    // 路径有效性判断
-    if (uri.fsPath !== undefined) {
-      let fn = re.getFileInPath(uri.fsPath);
-      let tt = re.match('([a-zA-Z_0-9]+.h)', fn);
-      let result = {
-        msg: 'selectHFilePath',
-        path: tt ? uri.fsPath : ''
-      };
-      globalPanel.webview.postMessage(result);
-    }
+		// 路径有效性判断
+		if (uri.fsPath !== undefined) {
+			let fn = re.getFileInPath(uri.fsPath);
+			let tt = re.match('([a-zA-Z_0-9]+.h)', fn);
+			let result = {
+				msg: 'selectHFilePath',
+				path: tt ? uri.fsPath : ''
+			};
+			globalPanel.webview.postMessage(result);
+		}
 	});
 	return disposable;
 }
 
 function checkBoolval(boolValue, items) {
-  if (typeof (boolValue) === 'boolean' && Array.isArray(items)) {
-    if (boolValue === true) {
-      //遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
-      getNextPlugin(items, boolValue);
-    }
-  }
+	if (typeof (boolValue) === 'boolean' && Array.isArray(items)) {
+		if (boolValue === true) {
+			//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
+			getNextPlugin(items, boolValue);
+		}
+	}
 }
 
 function getNextPlugin(items, boolValue) {
-  let myExtensionId = 'kaihong.ts-gen';
-  for (let i = 0; i < items.length; i++) {
-    if (myExtensionId === items[i] && (i === items.length - 1)) {
-      importToolChain = false;
-    } else if (myExtensionId === items[i] && (i !== items.length - 1)) {
-      importToolChain = boolValue;
-      nextPluginId = items[i + 1];
-    }
-    extensionIds.push(items[i]);
-  }
+	let myExtensionId = 'kaihong.ts-gen';
+	for (let i = 0; i < items.length; i++) {
+		if (myExtensionId === items[i] && (i === items.length - 1)) {
+			importToolChain = false;
+		} else if (myExtensionId === items[i] && (i !== items.length - 1)) {
+			importToolChain = boolValue;
+			nextPluginId = items[i + 1];
+		}
+		extensionIds.push(items[i]);
+	}
 }
 function checkReceiveMsg(message) {
 	let name = message.fileNames;
@@ -159,7 +159,7 @@ function checkReceiveMsg(message) {
 * 获取插件执行命令
 */
 function nextPluginExeCommand(nextPluginId) {
-    if (nextPluginId === 'kaihong.ApiScan') {
+	if (nextPluginId === 'kaihong.ApiScan') {
 		return 'api_scan';
 	} else if (nextPluginId === 'kaihong.gn-gen') {
 		return 'generate_gn';
@@ -192,7 +192,7 @@ function startNextPlugin() {
 /**
 * 选择本地目录/文件夹
 */
- function selectPath(panel, message) {
+function selectPath(panel, message) {
 	let mode = 1;
 	if (message.mode !== undefined && message.mode !== null) {
 		mode = message.mode;
@@ -202,27 +202,28 @@ function startNextPlugin() {
 		openLabel: mode === 0 ? '选择文件' : '选择文件夹', //打开选择的右下角按钮label
 		canSelectFiles: mode === 0 ? true : false, //是否选择文件
 		canSelectFolders: mode === 0 ? false : true, //是否选择文件夹
-		defaultUri:vscode.Uri.file(''), //默认打开本地路径
+		defaultUri: vscode.Uri.file(''), //默认打开本地路径
 		filters: mode === 1 ? {} : { // 文件过滤选项，在文件夹选择模式下不可设置此配置，否则ubuntu系统下无法选择文件夹
 			'Text files': ['h']
-		} 
+		}
 	};
-   
+
 	return vscode.window.showOpenDialog(options).then(fileUri => {
-	   if (fileUri && fileUri[0]) {
-		   console.log('Selected file: ' + fileUri[0].fsPath);
-		   let filePath = '';
-		   for (let index = 0; index < fileUri.length; index++) {
+		if (fileUri && fileUri[0]) {
+			console.log('Selected file: ' + fileUri[0].fsPath);
+			let filePath = '';
+			for (let index = 0; index < fileUri.length; index++) {
 				filePath += fileUri[index].fsPath.concat(',');
-		   }
-		   let result = {
+			}
+			let result = {
 				msg: message.msg,
 				path: filePath.length > 0 ? filePath.substring(0, filePath.length - 1) : filePath
-				};
-		   panel.webview.postMessage(result);
-		   return fileUri[0].fsPath;
-	   }
-   });
+			};
+			panel.webview.postMessage(result);
+			return fileUri[0].fsPath;
+		}
+		return '';
+	});
 }
 
 // this method is called when your extension is deactivated
@@ -239,17 +240,17 @@ function getWebviewContent(context, importToolChain) {
 }
 
 function getWebViewContent(context, templatePath) {
-    const resourcePath = path.join(context.extensionPath, templatePath);
-    const dirPath = path.dirname(resourcePath);
-    let html = fs.readFileSync(resourcePath, 'utf-8');
-    html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
-        if ($2.indexOf('https://') < 0) {
-            return $1 + globalPanel.webview.asWebviewUri(vscode.Uri.file(path.resolve(dirPath, $2))) + '"';
-        } else {
-            return $1 + $2 + '"';
-        }
-    });
-    return html;
+	const resourcePath = path.join(context.extensionPath, templatePath);
+	const dirPath = path.dirname(resourcePath);
+	let html = fs.readFileSync(resourcePath, 'utf-8');
+	html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
+		if ($2.indexOf('https://') < 0) {
+			return $1 + globalPanel.webview.asWebviewUri(vscode.Uri.file(path.resolve(dirPath, $2))) + '"';
+		} else {
+			return $1 + $2 + '"';
+		}
+	});
+	return html;
 }
 
 module.exports = {
