@@ -64,7 +64,7 @@ function analyzeFileRaw(fn) {
 
     let data = statements[0].getFullText();
     let licenseData = getLicense(data);
-    if (null !== licenseData && undefined !== licenseData) {
+    if ('' !== licenseData) {
         result.declareLicense.push(licenseData)
     }
 
