@@ -10,15 +10,21 @@ h2dts工具，即Ts接口生成工具，它可以根据定义在c++头文件中�
 
 ## 使用方法
 
-1.安装typescript：在napi_generator/src/cli/h2dts/src目录下执行命令：
+1.安装python库 CppHeaderParser
+
+```
+pip install CppHeaderParser
+```
+
+2.安装typescript：在napi_generator/src/cli/h2dts/src目录下执行命令：
 
 	npm i typescript
 
-2.安装stdio：在napi_generator/src/cli/h2dts目录下执行命令：
+3.安装stdio：在napi_generator/src/cli/h2dts目录下执行命令：
 
 	npm i stdio
 
-3.将待转换的文件tsTest.h拷贝到napi_generator/src/cli/h2dts/src/tsGen下；TsGenTest.h文件如下所示：
+4.将待转换的文件tsTest.h拷贝到napi_generator/src/cli/h2dts/src/tsGen下；TsGenTest.h文件如下所示：
 
 ```
 #ifndef TSGENTEST_H
@@ -40,7 +46,7 @@ public:
 #endif
 ```
 
-4.在napi_generator/src/cli/h2dts/src/tsGen下执行以下命令生成ts声明文件：
+5.在napi_generator/src/cli/h2dts/src/tsGen下执行以下命令生成ts声明文件：
 
 ```
 node cmd_gen.js -f TsGenTest.h
@@ -54,7 +60,7 @@ node cmd_gen.js -f TsGenTest.h
 
   备注：-f与-d两个参数只选其中一个参数即可。
 
-5.执行成功后在napi_generator/src/cli/h2dts/src/tsGen下生成TsGenTest.d.ts声明文件
+6.执行成功后在napi_generator/src/cli/h2dts/src/tsGen下生成TsGenTest.d.ts声明文件
 
 ```
 TsGenTest.d.ts
