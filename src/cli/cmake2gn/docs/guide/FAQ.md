@@ -44,11 +44,11 @@
 
 	(-DOPENSSL_ROOT_DIR=abc,-DOPENSSL_INCLUDE_DIR=/home/harmony/OpenHarmony/third_party/boringssl/src/include,-DOPENSSL_CRYPTO_LIBRARY=/home/harmony/OpenHarmony/out/khdvk_rk3568_a/developtools/profiler/libcrypto.z.so,-DOPENSSL_SSL_LIBRARY=/home/harmony/OpenHarmony/out/khdvk_rk3568_a/developtools/profiler/libssl.z.so)
 
-![](./../figures/curl_generate_clang.png)
+![](./../figures/curl_generate.png)
 
 3、根据步骤2后再次发现新的错误，具体报错日志为：“clang未解析参数 /home/harmony/OpenHarmony/third_party/boringssl/src/include”，具体日志信息如下：
 
-![](./../figures/curl_generate_clang_log.png)
+![](./../figures/curl_generate_log.png)
 
 问题定位：编译脚本中存在工具不支持的特殊编译选项。
 
@@ -60,7 +60,7 @@
 
 1、使用VS Code插件转换libphonenumber库时，参数填写如图所示，点击ok之后，右下角弹出genError日志，可将日志信息全部复制到日记本等工具，查看日志显示: "Can't find Google C++ Testing Framework"。
 
-![](./../figures/libphnum_not_find_google.png)
+![](./../figures/libphnum_not_find_gg.png)
 
 ![](./../figures/libphnum_not_find_gtest.png)
 
@@ -70,7 +70,7 @@
 
 	(-DGTEST_INCLUDE_DIR=/home/harmony/OpenHarmony/third_party/googletest/googletest/include)
 
-![](./../figures/libphnum_not_find_google_sourcedir.png)
+![](./../figures/libphnum_not_find_gg_sourcedir.png)
 
 2、根据步骤1后发现新的错误，具体报错日志为未设置GTEST_SOURCE_DIR路径。
 

@@ -159,9 +159,10 @@ function getLicense(data) {
         if (licenseData.search('Copyright') !== -1) {
             return licenseData;
         } else {
-            return null;
+            return '';
         }
     }
+    return '';
 }
 
 function removeEmptyLine(data) {
