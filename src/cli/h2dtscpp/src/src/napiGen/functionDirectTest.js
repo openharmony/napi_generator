@@ -14,41 +14,11 @@
 */
 const { NapiLog } = require('../tools/NapiLog');
 const util = require('util');
-const { generateRandomInteger } = require('../tools/tool');
 const { InterfaceList, TypeList } = require('../tools/common');
 const path = require('path');
 const fs = require('fs');
-const LENGTH = 10;
-const TWO_DECIMAL = 2;
-const MODTWO = 2;
-
-// 随机生成浮点数值
-function generateRandomArbitrary(min, max, fixed) {
-    let random = (Math.random() * (max - min) + min).toFixed(fixed);
-    return parseFloat(random);
-}
-
-// 随机生成布尔值
-function generateRandomBoolValue() {
-    let randomBool = false;
-    if (generateRandomInteger(0, LENGTH) % MODTWO === 0) {
-        randomBool = true;
-    }
-    return randomBool;
-}
-
-// 随机生成字符串
-function generateRandomString(length) {
-    let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-
-    return result;
-}
+const INTVALUE = 5;
+const FLOATVALUE = 2.5;
 
 function generateFuncTestCase(params, funcIndex, tsFuncName, abilityTestTemplete, hFileName) {
     let funcInfo = {
@@ -102,16 +72,16 @@ function genInitTestfunc(funcInfo) {
     funcInfoParams += funcInfoParamReplace;
     let testType = getTestType(funcInfo.params[i].type);
     if (testType === 'int') {
-      funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomInteger(0, LENGTH));
+      funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, INTVALUE);
       funcParamUse += funcInfo.params[i].name + ', ';
     } else if (testType === 'float') {
-      funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomArbitrary(0, LENGTH, TWO_DECIMAL));
+      funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, FLOATVALUE);
       funcParamUse += funcInfo.params[i].name + ', ';
     } else if (testType === 'bool') {
-      funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomBoolValue());
+      funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, true);
       funcParamUse += funcInfo.params[i].name + ', ';
     } else if (testType === 'string') {
-      funcParamDefine += util.format('let %s = "%s"\n    ', funcInfo.params[i].name, generateRandomString(LENGTH));
+      funcParamDefine += util.format('let %s = "%s"\n    ', funcInfo.params[i].name, 'hello');
       funcParamUse += funcInfo.params[i].name + ', ';
     } else if (TypeList.getValue(testType)) {
       let typeDefineRes = getTypeDefine(testType, funcParamDefine, funcInfo, i, funcParamUse);
@@ -130,13 +100,13 @@ function getTypeDefine(testType, funcParamDefine, funcInfo, i, funcParamUse) {
   let typeDefType = TypeList.getValue(testType);
   // genType
   if (typeDefType === 'number') {
-    funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomInteger(0, LENGTH));
+    funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, INTVALUE);
     funcParamUse += funcInfo.params[i].name + ', ';
   } else if (typeDefType === 'string') {
-    funcParamDefine += util.format('let %s = "%s"\n    ', funcInfo.params[i].name, generateRandomString(LENGTH));
+    funcParamDefine += util.format('let %s = "%s"\n    ', funcInfo.params[i].name, 'hello');
     funcParamUse += funcInfo.params[i].name + ', ';
   } else if (typeDefType === 'boolean') {
-    funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, generateRandomBoolValue());
+    funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, false);
     funcParamUse += funcInfo.params[i].name + ', ';
   }
   return [funcParamDefine, funcParamUse];
@@ -147,11 +117,11 @@ function getInterfaceDefine(testType, funcParamDefine, funcInfo, i, funcParamUse
   let objTestData = 'let %s:testNapi.%s = { ';
   for (let j = 0; j < objValue.length; j++) {
     if (objValue[j].type === 'number') {
-      objTestData += util.format('%s: %s, ', objValue[j].name, generateRandomInteger(0, LENGTH));
+      objTestData += util.format('%s: %s, ', objValue[j].name, INTVALUE);
     } else if (objValue[j].type === 'string') {
-      objTestData += util.format('%s: "%s", ', objValue[j].name, generateRandomString(LENGTH));
+      objTestData += util.format('%s: "%s", ', objValue[j].name, 'hello');
     } else if (objValue[j].type === 'boolean') {
-      objTestData += util.format('%s: %s, ', objValue[j].name, generateRandomBoolValue());
+      objTestData += util.format('%s: %s, ', objValue[j].name, true);
     } else if (InterfaceList.getBody(objValue[j].type)) {
       objTestData += util.format('%s: null, ', objValue[j].name);
     } else if (objValue[j].type.indexOf('=>') >= 0) { // 成员方法
