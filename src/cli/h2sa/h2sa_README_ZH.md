@@ -13,15 +13,21 @@ h2sa工具，即SERVICE框架生成工具，当开发者为OpenHarmony系统框�
 
 ### 生成
 
-1.安装typescript：在napi_generator/src/cli/h2sa/src/src目录下执行命令：
+1.安装python库 CppHeaderParser
+
+```
+pip install CppHeaderParser
+```
+
+2.安装typescript：在napi_generator/src/cli/h2sa/src/src目录下执行命令：
 
 	npm i typescript
 
-2.安装stdio：在napi_generator/src/cli/h2sa/src目录下执行命令：
+3.安装stdio：在napi_generator/src/cli/h2sa/src目录下执行命令：
 
 	npm i stdio
 
-3.将待转换的文件test.h文件拷贝到napi_generator/src/cli/h2sa/src/src/gen目录下；test.h文件示例如下所示：
+4.将待转换的文件test.h文件拷贝到napi_generator/src/cli/h2sa/src/src/gen目录下；test.h文件示例如下所示：
 
 ```
 #ifndef TEST_H
@@ -51,7 +57,7 @@ namespace OHOS {
  */
 ```
 
-4.在napi_generator/src/cli/h2sa/src目录下执行命令生成service框架代码：
+5.在napi_generator/src/cli/h2sa/src/src/gen目录下执行命令生成service框架代码：
 
 ```
 node main.js -f test.h
@@ -63,7 +69,7 @@ node main.js -f test.h
   -o,生成框架代码输入到指定路径下；
   -s,指定serviceID。
 
-5.输出testservice文件夹，其中的文件如下所示：
+6.输出testservice文件夹，其中的文件如下所示：
 
 ![](./docs/figures/h2sa_outRes.png)
 
