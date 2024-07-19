@@ -28,7 +28,7 @@ let ops = stdio.getopt({
     'out': { key: 'o', args: 1, description: 'output directory', default: '.' },
     'loglevel': { key: 'l', args: 1, description: 'Log Level: 0~3', default: '1' },
     'serviceId': { key: 's', args: 1, description: 'service register id: 9000~16777214', default: '9000' },
-    'versionTag': { key: 'v', args: 1, description: 'version tag: 4.1 / master / 3.2 / 3.1', default: '4.1' }
+    'versionTag': { key: 'v', args: 1, description: 'version tag: 4.1 / 3.2', default: '3.2' }
 });
 
 NapiLog.init(ops.loglevel, path.join('' + ops.out, 'napi_gen.log'));

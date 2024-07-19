@@ -156,7 +156,8 @@ function doAnalyze(hFilePath, cmdParam) {
         'using': [],
         'serviceId': (cmdParam.serviceId === null || cmdParam.serviceId === undefined) ?
             '9002' : cmdParam.serviceId,
-        'versionTag': cmdParam.versionTag === null ? '4.1' : cmdParam.versionTag,
+        'versionTag': (cmdParam.versionTag === null || cmdParam.versionTag === undefined) ?
+            '3.2' : cmdParam.versionTag,
         'rawContent': parseResult.rawContent
     };
 
