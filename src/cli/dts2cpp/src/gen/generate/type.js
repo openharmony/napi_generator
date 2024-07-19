@@ -257,7 +257,8 @@ function generateType(name, data, inNamespace, inNameSpaceEnum, nameSpaceName, t
     let middleInit = resultConnect[3];
     let midInitEnumDefine = resultConnect[4];
     let selfNs = getSelfNs(inNamespace);
-    generateTypeFunc(result, implH, implCpp, middleInit, midInitEnumDefine, name);
+    result = generateTypeFunc(result, implH, implCpp, middleInit, midInitEnumDefine, name);
+    return result;
 }
 
 function generateTypeFunc(result, implH, implCpp, middleInit, midInitEnumDefine, name) {
