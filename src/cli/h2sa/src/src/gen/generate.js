@@ -90,7 +90,7 @@ function genClientMsgFunc(funcList) {
             // 数值类型初始化为0
             initParavalue = '1';
             initParamessage += '    int ' + funcList.params[n].name + ' = ' + initParavalue + ';\r\n';
-            funcList.params[n].name
+            funcList.params[n].name;
         } else if (boolType.includes(funcList.params[n].type)) {
             // 布尔类型初始化为true
             initParavalue = 'true';
