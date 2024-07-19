@@ -27,7 +27,8 @@ let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: '.h file', default: '' },
     'out': { key: 'o', args: 1, description: 'output directory', default: '.' },
     'loglevel': { key: 'l', args: 1, description: 'Log Level: 0~3', default: '1' },
-    'serviceId': { key: 's', args: 1, description: 'service register id: 9000~16777214', default: '9000' }
+    'serviceId': { key: 's', args: 1, description: 'service register id: 9000~16777214', default: '9000' },
+    'versionTag': { key: 'v', args: 1, description: 'version tag: 4.1 / 3.2', default: '3.2' }
 });
 
 NapiLog.init(ops.loglevel, path.join('' + ops.out, 'napi_gen.log'));
@@ -113,14 +114,18 @@ function genServiceFile(fileName) {
     createFolder(srcPath);
 
     // 4. 生成代码保存为文件
-    wirte2Disk(fileContent.serviceCfgFile, etcPath);
     wirte2Disk(fileContent.serviceCfgGnFile, etcPath);
     wirte2Disk(fileContent.proxyHFile, includePath);
     wirte2Disk(fileContent.stubHFile, includePath);
+    if (ops.versionTag === '4.1') {
+        wirte2Disk(fileContent.profileJsonFile, profilePath);
+    } else {
+        wirte2Disk(fileContent.profileXmlFile, profilePath);
+    }
+    wirte2Disk(fileContent.serviceCfgFile, etcPath);
     wirte2Disk(fileContent.serviceHFile, includePath);
     wirte2Disk(fileContent.iServiceHFile, interfacePath);
     wirte2Disk(fileContent.profileGnFile, profilePath);
-    wirte2Disk(fileContent.profileXmlFile, profilePath);
     wirte2Disk(fileContent.proxyCppFile, srcPath);
     wirte2Disk(fileContent.stubCppFile, srcPath);
     wirte2Disk(fileContent.serviceCppFile, srcPath);

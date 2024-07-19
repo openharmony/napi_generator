@@ -16,7 +16,6 @@
 #define TEST_H
 
 namespace OHOS {
-    namespace Example {
     /**
      * @brief service服务，提供IPC调用接口
      * @ServiceClass
@@ -25,6 +24,5 @@ namespace OHOS {
         public:
             int testFunc(int v1, int v2, bool v3);
         };
-    }  // namespace Example
 }  // namespace OHOS
 #endif  // TEST_H

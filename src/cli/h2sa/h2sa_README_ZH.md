@@ -68,7 +68,7 @@ node main.js -f test.h
   -l, 日志级别（0-3），默认为1；
   -o,生成框架代码输入到指定路径下；
   -s,指定serviceID。
-
+  -v,指定版本（3.2和4.1，默认版本为3.2）
 6.输出testservice文件夹，其中的文件如下所示：
 
 ![](./docs/figures/h2sa_outRes.png)

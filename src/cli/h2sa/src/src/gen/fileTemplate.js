@@ -39,6 +39,7 @@ public:
 } // namespace OHOS
 #endif // I_[marcoName]_SERVICE_H
 `;
+
 let proxyHTemplate = `#ifndef [marcoName]_PROXY_H
 #define [marcoName]_PROXY_H
 #include "message_parcel.h"
@@ -150,6 +151,7 @@ void [className]DeathRecipient::OnRemoteDied(const wptr<IRemoteObject> &remote)
 } // namespace [serviceName]
 } // namespace OHOS
 `;
+
 let proxyFuncTemplate = `[retType] [className]Proxy::[funcName]([params])
 {
     int retCode;
@@ -255,11 +257,14 @@ void [className]Service::OnStop()
 
 let serviceFuncImplTemplate = `[retType] [className]Service::[funcName]([params])
 {
-    [retType] ret;
+    [retType] ret = [initRetvalue];
     // TODO: Invoke the business implementation
+    ret = [paramsName];
+    printf("service [paramsName]= %i", ret);
     return ret;
 }
 `;
+
 let clientCppTemplate = `#include "[proxyHInclude]"
 #include "ipc_skeleton.h"
 #include "system_ability_definition.h"
@@ -296,8 +301,11 @@ int main(int argc, char *argv[])
 {
     auto proxy = getRemoteProxy();
     // TODO: Invoke remote method by proxy
+[clientFuncParaMessage]
+    int res = 99;
     [clientFuncInvoke]
-
+    printf("get res = %i", res);
+[clientFuncParaLogMessage]
     IPCSkeleton::JoinWorkThread();
     return 0;
 }`;
@@ -334,7 +342,7 @@ ohos_shared_library("[lowServiceName]service") {
 }
 
 ohos_executable("[lowServiceName]client") {
-    sources = [
+  sources = [
     "//[lowServiceName]service/src/[iServiceCppFile]",
     "//[lowServiceName]service/src/[proxyCppFile]",
     "//[lowServiceName]service/src/[clientCppFile]"
@@ -354,6 +362,58 @@ ohos_executable("[lowServiceName]client") {
     "hiviewdfx_hilog_native:libhilog",
     "ipc:ipc_core",
     "samgr_standard:samgr_proxy",
+  ]
+
+  part_name = "[lowServiceName]service_part"
+  subsystem_name = "[lowServiceName]service"
+}
+`;
+
+let buildGnTemplate41 = `import("//build/ohos.gni")
+
+ohos_shared_library("[lowServiceName]service") {
+  sources = [
+    "//[lowServiceName]service/src/[iServiceCppFile]",
+    "//[lowServiceName]service/src/[stubCppFile]",
+    "//[lowServiceName]service/src/[serviceCppFile]"
+  ]
+  include_dirs = [
+    "//[lowServiceName]service/include",
+    "//[lowServiceName]service/interface",
+    "//commonlibrary/c_utils/base/include",
+    "//base/startup/init/interfaces/innerkits/include/syspara"
+  ]
+
+  external_deps = [
+    "hilog:libhilog",
+    "ipc:ipc_core",
+    "safwk:system_ability_fwk",
+    "samgr:samgr_proxy",
+    "c_utils:utils",
+  ]
+
+  part_name = "[lowServiceName]service_part"
+  subsystem_name = "[lowServiceName]service"
+}
+
+ohos_executable("[lowServiceName]client") {
+  sources = [
+    "//[lowServiceName]service/src/[iServiceCppFile]",
+    "//[lowServiceName]service/src/[proxyCppFile]",
+    "//[lowServiceName]service/src/[clientCppFile]"
+  ]
+
+  include_dirs = [
+    "//[lowServiceName]service/include",
+    "//[lowServiceName]service/interface",
+    "//commonlibrary/c_utils/base/include"
+  ]
+
+  external_deps = [
+    "hilog:libhilog",
+    "ipc:ipc_core",
+    "samgr:samgr_proxy",
+    "c_utils:utils",
   ]
 
   part_name = "[lowServiceName]service_part"
@@ -408,11 +468,67 @@ let bundleJsonTemplate = `{
     }
 }`;
 
+let bundleJsonTemplate41 = `{
+    "name": "@ohos/[lowServiceName]service_part",
+    "description": "system ability framework test",
+    "homePage": "https://gitee.com/",
+    "version": "4.1",
+    "license": "Apache License 2.0",
+    "repository": "",
+    "publishAs": "code-segment",
+    "segment": {
+        "destPath": "[lowServiceName]service"
+    },
+    "dirs": {},
+    "scripts": {},
+    "component": {
+        "name": "[lowServiceName]service_part",
+        "subsystem": "[lowServiceName]service",
+        "adapted_system_type": [
+            "standard"
+        ],
+        "rom": "2048KB",
+        "ram": "~4096KB",
+        "deps": {
+            "components": [
+                "hilog",
+                "ipc",
+                "samgr",
+                "c_utils",
+                "safwk"
+            ],
+            "third_party": [ "libxml2" ]
+        },
+        "build": {
+            "sub_component": [
+                "//[lowServiceName]service:[lowServiceName]service",
+                "//[lowServiceName]service/sa_profile:[lowServiceName]service_sa_profile",
+                "//[lowServiceName]service:[lowServiceName]client",
+                "//[lowServiceName]service/etc:[lowServiceName]_service_init"
+            ],
+            "inner_kits": [
+            ],
+            "test": [
+            ]
+        }
+    }
+}`;
+
 let profileGnTemplate = `import("//build/ohos.gni")
 import("//build/ohos/sa_profile/sa_profile.gni")
 
 ohos_sa_profile("[lowServiceName]service_sa_profile") {
   sources = [ "[serviceId].xml" ]
+  
+  part_name = "[lowServiceName]service_part"
+}
+`;
+
+let profileGnTemplate41 = `import("//build/ohos.gni")
+import("//build/ohos/sa_profile/sa_profile.gni")
+
+ohos_sa_profile("[lowServiceName]service_sa_profile") {
+  sources = [ "[serviceId].json" ]
 
   part_name = "[lowServiceName]service_part"
 }
@@ -431,10 +547,35 @@ let profileXmlTemplate = `<?xml version="1.0" encoding="utf-8"?>
 </info>
 `;
 
+let profileJsonTemplate = `{
+  "process":"[lowServiceName]service_sa",
+      "systemability":[
+          {
+              "name":[serviceId],
+              "libpath":"lib[lowServiceName]service.z.so",
+              "run-on-create":false,
+              "auto-restart":true,
+              "distributed":false,
+              "dump-level":1
+          }
+      ]
+}`;
+
 let serviceCfgTemplate = `{
     "services" : [{
             "name" : "[lowServiceName]service",
             "path" : ["/system/bin/sa_main", "/system/profile/[lowServiceName]service_sa.xml"],
+            "uid" : "system",
+            "gid" : ["system", "shell"]
+        }
+    ]
+}
+`;
+
+let serviceCfgTemplate41 = `{
+    "services" : [{
+            "name" : "[lowServiceName]service",
+            "path" : ["/system/bin/sa_main", "/system/profile/[lowServiceName]service_sa.json"],
             "uid" : "system",
             "gid" : ["system", "shell"]
         }
@@ -468,10 +609,15 @@ module.exports = {
     serviceFuncImplTemplate,
     clientCppTemplate,
     buildGnTemplate,
+    buildGnTemplate41,
     bundleJsonTemplate,
+    bundleJsonTemplate41,
     profileGnTemplate,
+    profileGnTemplate41,
     profileXmlTemplate,
+    profileJsonTemplate,
     serviceCfgTemplate,
+    serviceCfgTemplate41,
     serviceCfgGnTemplate,
     iServiceCppTemplate
 };

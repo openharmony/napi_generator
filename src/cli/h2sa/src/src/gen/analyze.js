@@ -28,8 +28,8 @@ function parseFileAll(hFilePath) {
         // call exe file (for real runtime)
         let sysInfo = os.platform();
         let execPath = path.dirname(process.execPath);
-        let exeFile = sysInfo === 'win32' ? path.join(execPath, 'header_parser.exe') : 
-                                            path.join(execPath, 'header_parser');
+        let exeFile = sysInfo === 'win32' ? path.join(execPath, 'header_parser.exe') :
+            path.join(execPath, 'header_parser');
         cmd = exeFile + ' ' + hFilePath;
     }
 
@@ -97,7 +97,7 @@ function createClassInfo(parseClassInfo) {
         'namespace': [],
         'properties': [],
         'functions': [],
-        'extends':[]
+        'extends': []
     };
     classInfo.name = parseClassInfo.name;
     classInfo.namespace = parseClassInfo.namespace.split('::');
@@ -155,7 +155,9 @@ function doAnalyze(hFilePath, cmdParam) {
         'includes': [],
         'using': [],
         'serviceId': (cmdParam.serviceId === null || cmdParam.serviceId === undefined) ?
-          '9002' : cmdParam.serviceId,
+            '9002' : cmdParam.serviceId,
+        'versionTag': (cmdParam.versionTag === null || cmdParam.versionTag === undefined) ?
+            '3.2' : cmdParam.versionTag,
         'rawContent': parseResult.rawContent
     };
 
