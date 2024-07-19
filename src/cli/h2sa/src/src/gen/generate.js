@@ -76,7 +76,7 @@ function getFuncParamStr(params) {
 function getClientFuncParamStr(params) {
     let paramStr = '';
     for (let i = 0; i < params.length; ++i) {
-        paramStr += (i == 0) ? '' : ', ';
+        paramStr += (i === 0) ? '' : ', ';
         paramStr += params[i].name;
     }
     return paramStr;
@@ -104,7 +104,7 @@ function genClientMsgFunc(funcList) {
             initRetvalue = 'nullptr'; // 假设是指针类型或其他复杂类型
         }
     }
-    return initParamessage
+    return initParamessage;
 }
 
 function genClientLogFunc(funcList) {
@@ -117,7 +117,7 @@ function genClientLogFunc(funcList) {
             // 对于其他类型，这里可以根据需要进行处理
         }
     }
-    return initParaLog
+    return initParaLog;
 }
 
 
@@ -571,7 +571,7 @@ function genServiceFunc(funcInfo, className, paramStr) {
     for (var n = 0; n < funcInfo.params.length; ++n) {
         if (numericTypes.includes(funcInfo.params[n].type)) {
             // 数值添加
-            paramsName += (n == 0) ? '' : '+ ';
+            paramsName += (n === 0) ? '' : '+ ';
             paramsName += funcInfo.params[n].name + ' ';
         } else {
             // 对于其他类型，这里可以根据需要进行处理
@@ -747,7 +747,7 @@ function genFunctionCode(classInfo) {
 
         genResult.clientFuncMessage += genClientMsgFunc(funcList[i]);
         genResult.clientFuncLogMessage += genClientLogFunc(funcList[i]);
-        genResult.clientFuncCpp += (i == 0) ? '' : '\n' + funcTab;
+        genResult.clientFuncCpp += (i === 0) ? '' : '\n' + funcTab;
         genResult.clientFuncCpp += 'res = proxy->%s(%s);'.format(funcList[i].name, clientParamStr);
     }
     return genResult;
