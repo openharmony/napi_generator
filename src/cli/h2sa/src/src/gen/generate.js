@@ -16,13 +16,15 @@
 const { NapiLog } = require('../tools/NapiLog');
 const { replaceAll, getTab } = require('../tools/tool');
 const re = require('../tools/re');
-const { iServiceHTemplate, proxyHTemplate, stubHTemplate, serviceHTemplate, proxyCppTemplate,
-    proxyFuncTemplate, stubCppTemplate, stubInnerFuncTemplate, serviceCppTemplate, serviceFuncImplTemplate,
-    clientCppTemplate, buildGnTemplate, bundleJsonTemplate, profileGnTemplate, profileXmlTemplate, serviceCfgTemplate,
-    serviceCfgGnTemplate, iServiceCppTemplate } = require('./fileTemplate');
-const { DATA_W_MAP, DATA_R_MAP, VECTOR_W_MAP, VECTOR_R_MAP, getParcelType, AllParseFileList, MarshallInfo, 
-    ProcessingClassList} = require('../tools/common');
-
+const { iServiceHTemplate, proxyHTemplate, stubHTemplate, serviceHTemplate, proxyCppTemplate, proxyFuncTemplate,
+    stubCppTemplate, stubInnerFuncTemplate, serviceCppTemplate, serviceFuncImplTemplate, clientCppTemplate, buildGnTemplate,
+    buildGnTemplate41, bundleJsonTemplate, bundleJsonTemplate41, profileGnTemplate, profileGnTemplate41, profileJsonTemplate,
+    profileXmlTemplate, serviceCfgTemplate, serviceCfgTemplate41, serviceCfgGnTemplate, iServiceCppTemplate } = require('./fileTemplate');
+const { DATA_W_MAP, DATA_R_MAP, VECTOR_W_MAP, VECTOR_R_MAP, getParcelType, AllParseFileList, MarshallInfo,
+    ProcessingClassList } = require('../tools/common');
+const numericTypes = ['short', 'int', 'long', 'long long', 'float', 'double'];
+const boolType = ['bool'];
+const charType = ['char', 'string'];
 let rootHFileSrc = ''; // .h文件的源码
 let dependSrcList = []; //在.h文件中定义并被接口使用到的class/struct类定义源码集合(接口没用到的class定义就不需要了)
 let marshallFuncList = []; // class类的消息序列化方法代码集合
@@ -40,6 +42,7 @@ let fileContent = {
     'bundleJsonFile': {},
     'profileGnFile': {},
     'profileXmlFile': {},
+    'profileJsonFile': {},
     'serviceCfgFile': {},
     'serviceCfgGnFile': {},
     'iServiceCppFile': {},
@@ -70,22 +73,70 @@ function getFuncParamStr(params) {
     return paramStr;
 }
 
+function getClientFuncParamStr(params) {
+    let paramStr = '';
+    for (let i = 0; i < params.length; ++i) {
+        paramStr += (i == 0) ? '' : ', ';
+        paramStr += params[i].name;
+    }
+    return paramStr;
+}
+
+function genClientMsgFunc(funcList) {
+    let initParavalue = '';
+    let initParamessage = '';
+    for (var n = 0; n < funcList.params.length; ++n) {
+        if (numericTypes.includes(funcList.params[n].type)) {
+            // 数值类型初始化为0
+            initParavalue = '1';
+            initParamessage += '    int ' + funcList.params[n].name + ' = ' + initParavalue + ';\r\n';
+            funcList.params[n].name
+        } else if (boolType.includes(funcList.params[n].type)) {
+            // 布尔类型初始化为true
+            initParavalue = 'true';
+            initParamessage += '    bool ' + funcList.params[n].name + ' = ' + initParavalue + ';\r\n';
+        } else if (charType.includes(funcList.params[n].type)) {
+            // 字符类型初始化为空字符''
+            initParavalue = '';
+            initParamessage += '    string ' + funcList.params[n].name + ' = ' + initParavalue + ';\r\n';
+        } else {
+            // 对于其他类型，这里可以根据需要进行处理
+            initRetvalue = 'nullptr'; // 假设是指针类型或其他复杂类型
+        }
+    }
+    return initParamessage
+}
+
+function genClientLogFunc(funcList) {
+    let initParaLog = '';
+    for (let n = 0; n < funcList.params.length; ++n) {
+        if (numericTypes.includes(funcList.params[n].type)) {
+            // 数值类型初始化为0
+            initParaLog += '    printf("client %s = %i",%s);\r\n'.format(funcList.params[n].name, funcList.params[n].name);
+        } else {
+            // 对于其他类型，这里可以根据需要进行处理
+        }
+    }
+    return initParaLog
+}
+
+
 /**
  * 获取class类型在原始.h文件中的定义源码段
  * @param className 待查找的class名称(可以是struct)
  * @param rawContent .h文件源码
  * @returns class类型在原始.h文件中的定义源码段
  */
- function getClassSrc(className, rawContent) {
+function getClassSrc(className, rawContent) {
     let beginPos = rawContent.indexOf(className);
-    if ( beginPos < 0) {
+    if (beginPos < 0) {
         NapiLog.logError('Warning: Can not find definition of ' + className);
         return null;
     }
 
     let firstBracesPos = rawContent.indexOf('{', beginPos); // class后面第一个{的位置
     let firstSemiPos = rawContent.indexOf(';', beginPos); // class后面第一个分号的位置
-    if ( (firstBracesPos < 0) || (firstSemiPos < firstBracesPos)) {
+    if ((firstBracesPos < 0) || (firstSemiPos < firstBracesPos)) {
         // class定义后面找不到{}，或先找到了结束符分号，视为该class没有相关的实现代码
         NapiLog.logError('Warning: Can not find implementation of ' + className);
         return null;
@@ -107,7 +158,7 @@ function getFuncParamStr(params) {
         NapiLog.logError('Warning: The braces of %s do not match.'.format(className));
         return null;
     }
-    
+
     let classSrc = rawContent.substring(beginPos, endPos);
     return classSrc;
 }
@@ -150,8 +201,8 @@ function findGetSet(propName, classInfo) {
     }
     if (findGet && findSet) {
         // get和set方法必须同时具备，成员对象属性才能序列化/反序列化，缺一不可。
-        result = {'name': propName, 'getName': getName, 'setName': setName};
-    } 
+        result = { 'name': propName, 'getName': getName, 'setName': setName };
+    }
     return result;
 }
 
@@ -166,7 +217,7 @@ function privatePropMashall(parcelName, objName, classInfo, marshallInfo) {
         } else {
             NapiLog.logError(
                 'Warning: Can not find get/set method of %s.%s, the property will be ignored in remote request.'
-                .format(classInfo.name, properties[i].name));
+                    .format(classInfo.name, properties[i].name));
         }
     }
     let writePropStr = '';
@@ -250,25 +301,25 @@ function createMarshallInfo(classInfo) {
     // 为了marshall方法的入参能同时支持左值引用marshall(xx.obj)和右值引用marshall(xx.getObj())，这里采用万能引用模板来实现
     newMarshall.marshallFuncH = replaceAll(
         '\ntemplate<typename T> // T should be [className]& or [className]&&', '[className]', classInfo.name);
-    newMarshall.marshallFuncH += 
+    newMarshall.marshallFuncH +=
         '\n%s bool %s(MessageParcel& data, T&& %s) {[publicMarshall][privateMarshall]\n    return true;\n}\n'
-        .format('__attribute__((unused)) static', newMarshall.marshallFuncName, objName);
-    newMarshall.unmarshallFuncH = 
+            .format('__attribute__((unused)) static', newMarshall.marshallFuncName, objName);
+    newMarshall.unmarshallFuncH =
         '\n%s bool %s(MessageParcel& data, %s& %s) {[publicUnmarshall][privateUnmarshall]\n    return true;\n}\n'
-        .format('__attribute__((unused)) static', newMarshall.unmarshallFuncName, classInfo.name, objName);
+            .format('__attribute__((unused)) static', newMarshall.unmarshallFuncName, classInfo.name, objName);
 
     let marshallInfo = {
         'className': classInfo.name,
         'marshallFuncs': newMarshall
     };
     // 这里必须先将class放入处理列表中，以免后续的属性代码生成过程中再次遇到该class类型造成无限循环嵌套。
-    ProcessingClassList.push(marshallInfo); 
+    ProcessingClassList.push(marshallInfo);
 
     // 继续生成属性代码
     publicPropMashall('data', objName, classInfo, newMarshall);
     privatePropMashall('data', objName, classInfo, newMarshall);
 
-    marshallFuncList.push(marshallInfo); 
+    marshallFuncList.push(marshallInfo);
     return newMarshall;
 }
 
@@ -302,7 +353,7 @@ function genClassWriteString(objName, parcelName, marshallInfo, classInfo) {
  * @param marshallInfo class对应的打包函数(没有为null)
  * @param classInfo class结构信息
  */
- function genClassReadString(destObj, parcelName, marshallInfo, classInfo) {
+function genClassReadString(destObj, parcelName, marshallInfo, classInfo) {
     let marshall = marshallInfo;
     if (!marshall) {
         marshall = createMarshallInfo(classInfo);
@@ -327,7 +378,7 @@ function genClassWriteString(objName, parcelName, marshallInfo, classInfo) {
  * @param matchs vector类型的正则匹配结果
  * @returns 生成的vector变量序列化打包代码段
  */
- function genVectorWrite(vectorName, parcelName, vecType, matchs) {
+function genVectorWrite(vectorName, parcelName, vecType, matchs) {
     let rawType = re.getReg(vecType, matchs.regs[2]);
     let parcelType = getParcelType(rawType);
     let wFunc = VECTOR_W_MAP.get(parcelType);
@@ -378,7 +429,7 @@ function genWrite(srcName, parcelName, vType) {
  * @param matchs vector类型的正则匹配结果
  * @returns 生成的vector变量反序列化读取码段
  */
- function genVectorRead(parcelName, vectorName, vecType, matchs) {
+function genVectorRead(parcelName, vectorName, vecType, matchs) {
     let rawType = re.getReg(vecType, matchs.regs[2]);
     let parcelType = getParcelType(rawType);
     let rFunc = VECTOR_R_MAP.get(parcelType);
@@ -417,7 +468,7 @@ function genRead(parcelName, destObj) {
 
     // 从parcel data中读取基本类型变量
     let result = destObj.setFunc ? '%s(%s.%s());'.format(destObj.setFunc, parcelName, rFunc)
-                         : '%s = %s.%s();'.format(destObj.name, parcelName, rFunc);
+        : '%s = %s.%s();'.format(destObj.name, parcelName, rFunc);
     return result;
 }
 
@@ -470,7 +521,7 @@ function genStubInnerFunc(funcInfo, className) {
             readDataStr += '\n' + tab;
             innerParamStr += ' ,';
         }
-        
+
         //将remote请求中的参数值读取到内部参数变量中
         readDataStr += '%s %s;'.format(param.type, innerParamName); // 定义内部参数变量
         let destObj = {
@@ -500,9 +551,37 @@ function genStubInnerFunc(funcInfo, className) {
 
 function genServiceFunc(funcInfo, className, paramStr) {
     let serviceFunc = replaceAll(serviceFuncImplTemplate, '[retType]', funcInfo.retType);
+    // 根据类型初始化返回值
+    let initRetvalue;
+    let paramsName = '';
+    if (numericTypes.includes(funcInfo.retType)) {
+        // 数值类型初始化为0
+        initRetvalue = '0';
+    } else if (boolType.includes(funcInfo.retType)) {
+        // 布尔类型初始化为true
+        initRetvalue = 'true';
+    } else if (charType.includes(funcInfo.retType)) {
+        // 字符类型初始化为空字符''
+        initRetvalue = '';
+    } else {
+        // 对于其他类型，这里可以根据需要进行处理
+        initRetvalue = 'nullptr'; // 假设是指针类型或其他复杂类型
+    }
+
+    for (var n = 0; n < funcInfo.params.length; ++n) {
+        if (numericTypes.includes(funcInfo.params[n].type)) {
+            // 数值添加
+            paramsName += (n == 0) ? '' : '+ ';
+            paramsName += funcInfo.params[n].name + ' ';
+        } else {
+            // 对于其他类型，这里可以根据需要进行处理
+        }
+    }
+    serviceFunc = replaceAll(serviceFunc, '[initRetvalue]', initRetvalue);
     serviceFunc = replaceAll(serviceFunc, '[className]', className);
     serviceFunc = replaceAll(serviceFunc, '[funcName]', funcInfo.name);
     serviceFunc = replaceAll(serviceFunc, '[params]', paramStr);
+    serviceFunc = replaceAll(serviceFunc, '[paramsName]', paramsName);
     return serviceFunc;
 }
 
@@ -518,6 +597,8 @@ function genFunctions(classInfo, files) {
     files.stubCpp = replaceAll(files.stubCpp, '[innerFuncImpl]', res.stubInnerFuncCpp);
     files.serviceCpp = replaceAll(files.serviceCpp, '[serviceFuncImpl]', res.serviceFuncCpp);
     files.clientCpp = replaceAll(files.clientCpp, '[clientFuncInvoke]', res.clientFuncCpp);
+    files.clientCpp = replaceAll(files.clientCpp, '[clientFuncParaMessage]', res.clientFuncMessage);
+    files.clientCpp = replaceAll(files.clientCpp, '[clientFuncParaLogMessage]', res.clientFuncLogMessage);
 }
 
 function genFilesByTemplate(upperServiceName, lowServiceName, rootInfo) {
@@ -534,18 +615,27 @@ function genFilesByTemplate(upperServiceName, lowServiceName, rootInfo) {
     files.iServiceCpp = iServiceCppTemplate;
 
     // 按模板生成资源配置文件内容框架
-    files.buildGn = replaceAll(buildGnTemplate, '[lowServiceName]', lowServiceName);
+    if (rootInfo.versionTag === '4.1') {
+        files.buildGn = replaceAll(buildGnTemplate41, '[lowServiceName]', lowServiceName);
+        files.bundleJson = replaceAll(bundleJsonTemplate41, '[lowServiceName]', lowServiceName);
+        files.profileJson = replaceAll(profileJsonTemplate, '[lowServiceName]', lowServiceName);
+        files.profileJson = replaceAll(files.profileJson, '[serviceId]', rootInfo.serviceId);
+        files.profileGn = replaceAll(profileGnTemplate41, '[lowServiceName]', lowServiceName);
+        files.serviceCfg = replaceAll(serviceCfgTemplate41, '[lowServiceName]', lowServiceName);
+    } else {
+        files.buildGn = replaceAll(buildGnTemplate, '[lowServiceName]', lowServiceName);
+        files.bundleJson = replaceAll(bundleJsonTemplate, '[lowServiceName]', lowServiceName);
+        files.profileXml = replaceAll(profileXmlTemplate, '[lowServiceName]', lowServiceName);
+        files.profileXml = replaceAll(files.profileXml, '[serviceId]', rootInfo.serviceId);
+        files.profileGn = replaceAll(profileGnTemplate, '[lowServiceName]', lowServiceName);
+        files.serviceCfg = replaceAll(serviceCfgTemplate, '[lowServiceName]', lowServiceName);
+    }
     files.buildGn = replaceAll(files.buildGn, '[stubCppFile]', fileContent.stubCppFile.name);
     files.buildGn = replaceAll(files.buildGn, '[serviceCppFile]', fileContent.serviceCppFile.name);
     files.buildGn = replaceAll(files.buildGn, '[proxyCppFile]', fileContent.proxyCppFile.name);
     files.buildGn = replaceAll(files.buildGn, '[clientCppFile]', fileContent.clientCppFile.name);
     files.buildGn = replaceAll(files.buildGn, '[iServiceCppFile]', fileContent.iServiceCppFile.name);
-    files.bundleJson = replaceAll(bundleJsonTemplate, '[lowServiceName]', lowServiceName);
-    files.profileGn = replaceAll(profileGnTemplate, '[lowServiceName]', lowServiceName);
     files.profileGn = replaceAll(files.profileGn, '[serviceId]', rootInfo.serviceId);
-    files.profileXml = replaceAll(profileXmlTemplate, '[lowServiceName]', lowServiceName);
-    files.profileXml = replaceAll(files.profileXml, '[serviceId]', rootInfo.serviceId);
-    files.serviceCfg = replaceAll(serviceCfgTemplate, '[lowServiceName]', lowServiceName);
     files.serviceGnCfg = replaceAll(serviceCfgGnTemplate, '[lowServiceName]', lowServiceName);
     return files;
 }
@@ -600,7 +690,11 @@ function genFileNames(lowServiceName, rootInfo) {
     fileContent.buildGnFile.name = 'BUILD.gn';
     fileContent.bundleJsonFile.name = 'bundle.json';
     fileContent.profileGnFile.name = 'BUILD.gn';
-    fileContent.profileXmlFile.name = rootInfo.serviceId + '.xml';
+    if (rootInfo.versionTag === '4.1') {
+        fileContent.profileJsonFile.name = rootInfo.serviceId + '.json';
+    } else {
+        fileContent.profileXmlFile.name = rootInfo.serviceId + '.xml';
+    }
     fileContent.serviceCfgFile.name = '%s_service.cfg'.format(lowServiceName);
     fileContent.serviceCfgGnFile.name = 'BUILD.gn';
     fileContent.iServiceCppFile.name = 'i_%s_service.cpp'.format(lowServiceName);
@@ -618,7 +712,9 @@ function genFunctionCode(classInfo) {
     genResult.stubInnerFuncCpp = ''; // stub.cpp 的inner方法实现
     genResult.serviceFuncCpp = ''; // service.cpp的方法实现
     genResult.clientFuncCpp = ''; // client.cpp 的inner方法定义
-
+    genResult.clientFuncParaLen = ''; // client.cpp中参数的个数
+    genResult.clientFuncMessage = ''; // client.cpp中参数的初始化
+    genResult.clientFuncLogMessage = ''; //client.cpp 中的打印信息
     let enumTab = getTab(2);
     let funcTab = getTab(1);
     for (var i = 0; i < funcList.length; ++i) {
@@ -627,6 +723,7 @@ function genFunctionCode(classInfo) {
         genResult.funcEnumStr += funcList[i].funcEnum;
 
         let paramStr = getFuncParamStr(funcList[i].params);
+        let clientParamStr = getClientFuncParamStr(funcList[i].params);
         genResult.iServiceFuncH += (i === 0) ? '' : '\n' + funcTab;
         genResult.iServiceFuncH += 'virtual %s %s(%s) = 0;'.format(funcList[i].retType, funcList[i].name, paramStr);
 
@@ -634,7 +731,7 @@ function genFunctionCode(classInfo) {
         genResult.proxyFuncH += '%s %s(%s) override;'.format(funcList[i].retType, funcList[i].name, paramStr);
 
         genResult.stubInnerFuncH += (i === 0) ? '' : '\n' + funcTab;
-        genResult.stubInnerFuncH += 
+        genResult.stubInnerFuncH +=
             'ErrCode %sInner(MessageParcel &data, MessageParcel &reply);'.format(funcList[i].name);
 
         genResult.proxyFuncCpp += genProxyFunc(funcList[i], classInfo.name, paramStr);
@@ -646,8 +743,12 @@ function genFunctionCode(classInfo) {
         genResult.stubInnerFuncCpp += genStubInnerFunc(funcList[i], classInfo.name);
         genResult.serviceFuncCpp += genServiceFunc(funcList[i], classInfo.name, paramStr);
 
-        genResult.clientFuncCpp += (i === 0) ? '' : '\n' + funcTab;
-        genResult.clientFuncCpp += '// proxy->%s(%s);'.format(funcList[i].name, paramStr);
+        genResult.clientFuncParaLen += '%s'.format(funcList[i].params.length);
+
+        genResult.clientFuncMessage += genClientMsgFunc(funcList[i]);
+        genResult.clientFuncLogMessage += genClientLogFunc(funcList[i]);
+        genResult.clientFuncCpp += (i == 0) ? '' : '\n' + funcTab;
+        genResult.clientFuncCpp += 'res = proxy->%s(%s);'.format(funcList[i].name, clientParamStr);
     }
     return genResult;
 }
@@ -714,7 +815,11 @@ function doGenerate(rootInfo) {
     fileContent.buildGnFile.content = files.buildGn;
     fileContent.bundleJsonFile.content = files.bundleJson;
     fileContent.profileGnFile.content = files.profileGn;
-    fileContent.profileXmlFile.content = files.profileXml;
+    if (rootInfo.versionTag === '4.1') {
+        fileContent.profileJsonFile.content = files.profileJson;
+    } else {
+        fileContent.profileXmlFile.content = files.profileXml;
+    }
     fileContent.serviceCfgFile.content = files.serviceCfg;
     fileContent.serviceCfgGnFile.content = files.serviceGnCfg;
     fileContent.iServiceCppFile.content = files.iServiceCpp;
