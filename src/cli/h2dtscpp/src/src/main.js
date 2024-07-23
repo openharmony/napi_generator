@@ -35,7 +35,7 @@ if (filePath !== '') {
     // 若用户没有提供路径 则程序提供默认路径
     let genDir = path.join(filePath, '..')
     if (outPath !== '') {
-      genDir = outPath
+      genDir = outPath;
     }
 
     createDirectorySync(path.join(genDir, './tsout'));
