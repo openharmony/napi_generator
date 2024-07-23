@@ -90,20 +90,14 @@ ${CJSON_LIB_PATH}/libcjson.so
 1.2在命令行使用 以下命令运行脚本
 
 ```
-native_gen-win.exe -f 接口文件路径 -o 生成路径 -t 测试文件路径 -i 声明文件路径
+native_gen-win.exe -f 接口文件路径 -o 生成路径
 ```
 
 其中，参数详情如下：
 
 -f, 必选参数，待转换的.h文件；如cJSON.h。
 
--t, 可选参数，测试用例文件Ability.test.ets文件路径，默认路径为.h文件目录下testout文件夹下创建的xxxAbility.test.ets文件路径（如：testout/cJSONAbility.test.ets）。
-
--i, 可选参数，ts声明文件index.s.ts文件路径，默认路径为.h文件目录下tsout文件夹下创建的index.d.ts文件路径（如：tsout/index.d.ts）
-
-index.d.ts文件路径；
-
--o, 可选参数，生成的.cpp文件所在路径，默认路径为.h文件目录下创建的cppout文件夹路径；
+-o, 可选参数，生成路径，默认路径为.h文件所在路径；
 
 例如：
 
