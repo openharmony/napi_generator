@@ -12,10 +12,10 @@
 
 | 工作目标                | 完成情况 | 备注                                                         |
 | ----------------------- | -------- | ------------------------------------------------------------ |
-| NAPI生成工具            | V1.4.1版 | 可进行小规模的自动生成，功能最小集：可通过简单dts或h文件生成对应代码 |
-| TS生成工具（h2dts）     | V1.0.0版 | 提供命令行和VSCode及Ideal插件，功能最小集：可将简单的h文件转换为dts文件 |
-| Gn生成工具（cmake2gn）  | V1.0.0版 | 功能最小集：在具备cmake编译的环境下能实现gn文件的自动生成，但是有多工程引用及其他辅助情况可能存在问题 |
-| Service生成工具（h2sa） | V1.0.0版 | 功能最小集：通过h文件生成sa服务框架代码，包括Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及服务配置文件 |
+| NAPI生成工具            | V1.4.1版 | 可进行小规模的自动生成，基本功能集：可通过简单dts或h文件生成对应代码 |
+| TS生成工具（h2dts）     | V1.0.0版 | 提供命令行和VSCode及Ideal插件，基本功能集：可将简单的h文件转换为dts文件 |
+| Gn生成工具（cmake2gn）  | V1.0.0版 | 基本功能集：在具备cmake编译的环境下能实现gn文件的自动生成，但是有多工程引用及其他辅助情况可能存在问题 |
+| Service生成工具（h2sa） | V1.0.0版 | 基本功能集：通过h文件生成sa服务框架代码，包括Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及服务配置文件 |
 | API平台依赖分析扫描工具 | V1.0.0版 | 扫描三方库中包含OpenHarmony源码不包含的接口，并输出result.xlsx文档 |
 | HCS可视化工具           | V1.0.0版 | 详情参看：drivers_hdf_core/framework/tools/hcs-view          |
 | IDL生成工具             | V1.0.0版 | 详情参看：drivers_hdf_core/framework/tools/idl-gen           |
