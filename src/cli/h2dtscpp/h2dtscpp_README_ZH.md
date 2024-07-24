@@ -34,13 +34,7 @@ node main.js -f cJSON.h
 
 -f, 必选参数，待转换的.h文件；如cJSON.h。
 
--t, 可选参数，测试用例文件Ability.test.ets文件路径，默认路径为.h文件目录下testout文件夹下创建的xxxAbility.test.ets文件路径（如：testout/cJSONAbility.test.ets）。
-
--i, 可选参数，ts声明文件index.s.ts文件路径，默认路径为.h文件目录下tsout文件夹下创建的index.d.ts文件路径（如：tsout/index.d.ts）
-
-index.d.ts文件路径；
-
--o, 可选参数，生成的.cpp文件所在路径，默认路径为.h文件目录下创建的cppout文件夹路径；
+-o, 可选参数，生成路径，默认路径为.h文件所在路径；
 
 6.执行成功后在napi_generator/src/cli/h2dtscpp/src/src目录下生成以下文件夹
 
