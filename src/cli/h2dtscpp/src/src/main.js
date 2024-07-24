@@ -33,7 +33,7 @@ let cppFilePath = '';
 // 读取文件内容 判断参数是否为空
 if (filePath !== '') {
     // 若用户没有提供路径 则程序提供默认路径
-    let genDir = path.join(filePath, '..')
+    let genDir = path.join(filePath, '..');
     if (outPath !== '') {
       genDir = outPath;
     }
