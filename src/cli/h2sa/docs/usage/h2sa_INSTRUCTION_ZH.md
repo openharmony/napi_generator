@@ -13,11 +13,7 @@ h2sa工具，即SERVICE框架生成工具，该工具支持命令行和VS Code�
 
 下载python脚本可执行程序header_parser.exe（linux系统为header_parser)，下载链接如下：
 
-[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
-
-[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
-
-[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
+// 下载header_parser工具  从发行版下载的链接
 
 获取命令行可执行程序service-gen-win.exe、service-gen-linux，用户可根据以下步骤生成命令行可执行程序：
 
