@@ -1,0 +1,23 @@
+#ifndef OHOS_HDI_[upper_driver_name]_V1_0_[upper_driver_name]INTERFACESERVICE_H
+#define OHOS_HDI_[upper_driver_name]_V1_0_[upper_driver_name]INTERFACESERVICE_H
+
+#include "v1_0/i[driver_name]_interface.h"
+
+namespace OHOS {
+namespace HDI {
+namespace [driver_namespace_name] {
+namespace V1_0 {
+class [driver_inter_name]Service : public OHOS::HDI::[driver_namespace_name]::V1_0::[driver_idl_name] {
+public:
+    [driver_inter_name]Service() = default;
+    virtual ~[driver_inter_name]Service() = default;
+
+    int32_t Helloworld(const std::string& sendMsg, std::string& recvMsg) override;
+
+};
+} // V1_0
+} // [driver_namespace_name]
+} // HDI
+} // OHOS
+
+#endif // OHOS_HDI_[upper_driver_name]_V1_0_[upper_driver_name]INTERFACESERVICE_H

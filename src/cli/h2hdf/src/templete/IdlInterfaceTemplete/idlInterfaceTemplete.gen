@@ -1,0 +1,5 @@
+package ohos.hdi.[driver_name].v1_0;
+
+interface [driver_idl_name] {
+    Helloworld([in] String sendMsg, [out] String recvMsg);
+}
