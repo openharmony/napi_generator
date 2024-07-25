@@ -24,7 +24,7 @@ pip install CppHeaderParser
 
 	npm i stdio
 
-4.将待转换的文件tsTest.h拷贝到napi_generator/src/cli/h2dts/src/tsGen下；TsGenTest.h文件如下所示：
+4.将待转换的文件TsGenTest.h拷贝到napi_generator/src/cli/h2dts/src/tsGen下；TsGenTest.h文件如下所示：
 
 ```
 #ifndef TSGENTEST_H
