@@ -1,0 +1,115 @@
+#include <hdf_base.h>
+#include <hdf_device_desc.h>
+#include <hdf_log.h>
+#include <hdf_sbuf_ipc.h>
+#include "v1_0/[driver_name]_interface_stub.h"
+
+#define HDF_LOG_TAG    [driver_name]_interface_driver
+
+using namespace OHOS::HDI::[driver_namespace_name]::V1_0;
+
+struct Hdf[driver_inter_name]Host {
+    struct IDeviceIoService ioService;
+    OHOS::sptr<OHOS::IRemoteObject> stub;
+};
+
+// 处理客户端请求的Dispatch方法
+static int32_t [driver_inter_name]DriverDispatch(struct HdfDeviceIoClient *client, int cmdId, struct HdfSBuf *data,
+    struct HdfSBuf *reply)
+{
+    auto *hdf[driver_inter_name]Host = CONTAINER_OF(client->device->service, struct Hdf[driver_inter_name]Host, ioService);
+
+    OHOS::MessageParcel *dataParcel = nullptr;
+    OHOS::MessageParcel *replyParcel = nullptr;
+    OHOS::MessageOption option;
+
+    if (SbufToParcel(data, &dataParcel) != HDF_SUCCESS) {
+        HDF_LOGE("%{public}s: invalid data sbuf object to dispatch", __func__);
+        return HDF_ERR_INVALID_PARAM;
+    }
+    if (SbufToParcel(reply, &replyParcel) != HDF_SUCCESS) {
+        HDF_LOGE("%{public}s: invalid reply sbuf object to dispatch", __func__);
+        return HDF_ERR_INVALID_PARAM;
+    }
+
+    return hdf[driver_inter_name]Host->stub->SendRequest(cmdId, *dataParcel, *replyParcel, option);
+}
+
+// 驱动自身业务初始化的接口
+static int Hdf[driver_inter_name]DriverInit(struct HdfDeviceObject *deviceObject)
+{
+    HDF_LOGI("%{public}s: driver init start", __func__);
+    return HDF_SUCCESS;
+}
+
+// 将驱动对外提供的服务能力接口绑定到HDF框架
+static int Hdf[driver_inter_name]DriverBind(struct HdfDeviceObject *deviceObject)
+{
+    HDF_LOGI("%{public}s: driver bind start", __func__);
+    auto *hdf[driver_inter_name]Host = new (std::nothrow) Hdf[driver_inter_name]Host;
+    if (hdf[driver_inter_name]Host == nullptr) {
+        HDF_LOGE("%{public}s: failed to create create Hdf[driver_inter_name]Host object", __func__);
+        return HDF_FAILURE;
+    }
+
+    hdf[driver_inter_name]Host->ioService.Dispatch = [driver_inter_name]DriverDispatch;
+    hdf[driver_inter_name]Host->ioService.Open = NULL;
+    hdf[driver_inter_name]Host->ioService.Release = NULL;
+
+    auto serviceImpl = OHOS::HDI::[driver_namespace_name]::V1_0::[driver_idl_name]::Get(true);
+    if (serviceImpl == nullptr) {
+        HDF_LOGE("%{public}s: failed to get of implement service", __func__);
+        delete hdf[driver_inter_name]Host;
+        return HDF_FAILURE;
+    }
+
+    hdf[driver_inter_name]Host->stub = OHOS::HDI::ObjectCollector::GetInstance().GetOrNewObject(serviceImpl,
+        OHOS::HDI::[driver_namespace_name]::V1_0::[driver_idl_name]::GetDescriptor());
+    if (hdf[driver_inter_name]Host->stub == nullptr) {
+        HDF_LOGE("%{public}s: failed to get stub object", __func__);
+        delete hdf[driver_inter_name]Host;
+        return HDF_FAILURE;
+    }
+
+    deviceObject->service = &hdf[driver_inter_name]Host->ioService;
+    HDF_LOGI("%{public}s: driver bind end", __func__);
+    return HDF_SUCCESS;
+}
+
+// 驱动释放资源的接口
+static void Hdf[driver_inter_name]DriverRelease(struct HdfDeviceObject *deviceObject)
+{
+    HDF_LOGI("%{public}s: driver release start", __func__);
+    if (deviceObject->service == nullptr) {
+        return;
+    }
+
+    auto *hdf[driver_inter_name]Host = CONTAINER_OF(deviceObject->service, struct Hdf[driver_inter_name]Host, ioService);
+    if (hdf[driver_inter_name]Host != nullptr) {
+        delete hdf[driver_inter_name]Host;
+    }
+}
+
+/*
+ * 定义驱动入口的对象，必须为HdfDriverEntry（在hdf_device_desc.h中定义）类型的全局变量。
+ */
+struct HdfDriverEntry g_[driver_name]interfaceDriverEntry = {
+    .moduleVersion = 1,
+    .moduleName = "[driver_name]_service",
+    .Bind = Hdf[driver_inter_name]DriverBind,
+    .Init = Hdf[driver_inter_name]DriverInit,
+    .Release = Hdf[driver_inter_name]DriverRelease,
+};
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/*
+ * 调用HDF_INIT将驱动入口注册到HDF框架中。
+ * 在加载驱动时HDF框架会先调用Bind函数，再调用Init函数加载该驱动；当Init调用异常时，HDF框架会调用Release释放驱动资源并退出。
+ */
+HDF_INIT(g_[driver_name]interfaceDriverEntry);
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */

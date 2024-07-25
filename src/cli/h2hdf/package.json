@@ -1,0 +1,34 @@
+{
+  "name": "hdf-gen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "stdio": "^2.1.3",
+    "typescript": "^4.9.5"
+  },
+  "bin": "./src/main.js",
+  "pkg": {
+    "assets": [
+      "./src/templete/HcsconfigTemplete/hcsconfigTemplete.gen",
+      "./src/templete/IdlInterfaceTemplete/buildgnTemplete.gen",
+      "./src/templete/IdlInterfaceTemplete/bundlejsonTemplete.gen",
+      "./src/templete/IdlInterfaceTemplete/idlInterfaceTemplete.gen",
+      "./src/templete/PeripheralTemplete/DumpExampleTemplete/buildgnTemplete.gen",
+      "./src/templete/PeripheralTemplete/DumpExampleTemplete/dumpCTemplete.gen",
+      "./src/templete/PeripheralTemplete/DumpExampleTemplete/dumpHTemplete.gen",
+      "./src/templete/PeripheralTemplete/HdiServiceTemplete/buildgnTemplete.gen",
+      "./src/templete/PeripheralTemplete/HdiServiceTemplete/driverTemplete.gen",
+      "./src/templete/PeripheralTemplete/HdiServiceTemplete/logHTemplete.gen",
+      "./src/templete/PeripheralTemplete/HdiServiceTemplete/serviceCppTemplete.gen",
+      "./src/templete/PeripheralTemplete/HdiServiceTemplete/serviceHTemplete.gen",
+      "./src/templete/PeripheralTemplete/buildgnTemplete.gen",
+      "./src/templete/PeripheralTemplete/bundlejsonTemplete.gen"
+    ]
+  }
+}

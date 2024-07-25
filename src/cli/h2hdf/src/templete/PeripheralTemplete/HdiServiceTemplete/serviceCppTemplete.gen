@@ -1,0 +1,29 @@
+#include "v1_0/[driver_name]_interface_service.h"
+#include <hdf_base.h>
+#include "[driver_name]_log.h"
+#include "devhost_dump_reg.h"
+#include "[driver_name]_dump.h"
+
+#define HDF_LOG_TAG    [driver_name]_interface_service
+
+namespace OHOS {
+namespace HDI {
+namespace [driver_namespace_name] {
+namespace V1_0 {
+extern "C" [driver_idl_name] *[driver_inter_name]ImplGetInstance(void)
+{
+    DevHostRegisterDumpHost(Get[driver_namespace_name]Dump);
+    HDF_LOGI("%{public}s: [driver_idl_name] init", __func__);
+    return new (std::nothrow) [driver_inter_name]Service();
+}
+
+int32_t [driver_inter_name]Service::Helloworld(const std::string& sendMsg, std::string& recvMsg)
+{
+    HDF_LOGI("%{public}s: [driver_namespace_name]Service::Helloworld print", __func__);
+    return HDF_SUCCESS;
+}
+
+} // V1_0
+} // [driver_namespace_name]
+} // HDI
+} // OHOS

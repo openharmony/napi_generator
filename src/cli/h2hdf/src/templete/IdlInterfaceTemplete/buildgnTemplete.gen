@@ -1,0 +1,11 @@
+import("//drivers/hdf_core/adapter/uhdf2/hdi.gni")             # 编译idl必须要导入的模板
+hdi("[driver_name]") {                                         # 目标名称，会生成两个so，分别对应 lib[driver_name]_client_v1.0.z.so 和 lib[driver_name]_stub_v1.0.z.so
+   # package = "ohos.hdi.[driver_name].v1_0"                   # 包名，必须与idl路径匹配
+    module_name = "[driver_name]_service"                      # module_name控制dirver文件中驱动描 述符(struct HdfDriverEntry)的moduleName
+    sources = [                                                # 参与编译的idl文件
+        "[driver_idl_name].idl",                               # 接口idl
+    ]
+    language = "cpp"                                           # 控制idl生成c或c++代码 可选择`c`或`cpp`
+    subsystem_name = "hdf"                                     # 子系统名
+    part_name = "drivers_interface_[driver_name]"              # 组件名
+}
