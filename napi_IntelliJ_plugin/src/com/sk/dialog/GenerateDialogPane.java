@@ -501,15 +501,26 @@ public class GenerateDialogPane extends JDialog {
      */
     private void writeTmpFile(String path, byte[] bs) throws IOException {
         File file = new File(path);
+        FileOutputStream fw = null;
         if (!file.exists()) {
             boolean isNewFile = file.createNewFile();
             if (!isNewFile) {
                 LOG.info("writeTmpFile createNewFile error");
             }
         }
-        FileOutputStream fw = new FileOutputStream(file);
-        fw.write(bs, 0, bs.length);
-        fw.close();
+        try {
+            fw = new FileOutputStream(file);
+            fw.write(bs, 0, bs.length);
+        } catch (IOException e) {
+            // 处理可能发生的IOException
+            LOG.error("Error reading from process streams", e);
+        } finally {
+            try {
+                fw.close();
+            } catch (IOException e) {
+                LOG.error("Error closing stdInput", e);
+            }
+        }
     }
 
     /**
@@ -518,20 +529,41 @@ public class GenerateDialogPane extends JDialog {
      * @param process 进程ID
      */
     private void genResultLog(Process process) {
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-        String sErr;
-        String sOut;
-        sErr = getErrorResult(stdError);
-        if (TextUtils.isEmpty(sErr)) {
-            sOut = genInputLog(stdInput);
-            if (!generateIsSuccess(sOut)) {
-                sErrorMessage = sOut;
+        BufferedReader stdInput = null;
+        BufferedReader stdError = null;
+        try {
+            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream(),
+                StandardCharsets.UTF_8));
+            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
+                StandardCharsets.UTF_8));
+            String sErr;
+            String sOut;
+            sErr = getErrorResult(stdError);
+            if (TextUtils.isEmpty(sErr)) {
+                sOut = genInputLog(stdInput);
+                if (!generateIsSuccess(sOut)) {
+                    sErrorMessage = sOut;
+                }
+            } else {
+                generateSuccess = false;
+                sErrorMessage = sErr;
             }
-            return;
+        } catch (IOException e) {
+            // 处理可能发生的IOException
+            LOG.error("Error reading from process streams", e);
+        } finally {
+            // 确保BufferedReader对象被关闭
+            try {
+                stdInput.close();
+            } catch (IOException e) {
+                LOG.error("Error closing stdInput", e);
+            }
+            try {
+                stdError.close();
+            } catch (IOException e) {
+                LOG.error("Error closing stdError", e);
+            }
         }
-        generateSuccess = false;
-        sErrorMessage = sErr;
     }
 
     /**
@@ -593,15 +625,29 @@ public class GenerateDialogPane extends JDialog {
 
         @Override
         public void run() {
+            InputStreamReader isr2 = null;
+            BufferedReader br2 = null;
             try {
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
+                isr2 = new InputStreamReader(is, StandardCharsets.UTF_8);
+                br2 = new BufferedReader(isr2);
                 String line;
-                while ((line = br.readLine()) != null) {
+                while ((line = br2.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);
                 }
             } catch (IOException ioException) {
                 LOG.error("StreamConsumer io error" + ioException);
+            } finally {
+                // 确保BufferedReader和InputStreamReader被关闭
+                try {
+                    br2.close();
+                } catch (IOException e) {
+                    LOG.error(e);
+                }
+                try {
+                    isr2.close();
+                } catch (IOException e) {
+                    LOG.error(e);
+                }
             }
         }
     }
