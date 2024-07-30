@@ -104,7 +104,7 @@ function genDriverFramework(driverName, out = '') {
   let frameworkJsonPath = path.join(__dirname, './templete/framework.json');
   let frameworkJson = getJsonCfg(frameworkJsonPath);
 
-  let frameworkPath = pathJoin(out, 'hdf');
+  let frameworkPath = pathJoin(out, driverName + 'hdf');
 
   let namespaceName = driverName.substring(0,1).toUpperCase() + driverName.substring(1, driverName.length);
   let idlFileName = 'I' + namespaceName + 'Interface';
