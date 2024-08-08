@@ -109,7 +109,7 @@ cat hdf_devhost.cfg
 
 根据hostName找到对应hostId，如本例的hostName为hello_host，对应找到“name”为“hello_host”那一项，查看“path”的第二个参数，则为hostName对应的hostId，即14，如下所示：
 
-![image-20240724093743837](./figures/pic_show_hostId.png)
+![image-20240724093743837](./figures/pic_show_hostid.png)
 
 2.运行可执行文件hdf_devhost，手动拉起host：进入/vendor/bin路径下，运行可执行文件hdf_devhost，传入第一个参数为hostId，第二个参数为hostName；运行命令如下所示：
 
