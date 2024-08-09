@@ -26,6 +26,7 @@ let drivername = ops.drivername;
 // 若drivername不为空，则生成，否则打印错误信息
 if (drivername.trim().length !== 0 && checkInput(drivername)) {
   main.genDriverFramework(drivername);
+  console.info('Generate Success');
 } 
 
 function checkInput(input) {
