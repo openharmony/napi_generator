@@ -12,19 +12,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-const path = require('path');
 const fs = require('fs');
-
-/**
- * 获取Json文件内容
- * @returns
- */
-function getJsonCfg(jsonFilePath) {
-  let jsonCfg = null; // json 配置文件
-  let jsonFile = fs.readFileSync(jsonFilePath, { encoding: 'utf8' });
-  jsonCfg = JSON.parse(jsonFile);
-  return jsonCfg;
-}
+const path = require('path');
 
 function replaceAll(s, sfrom, sto) {
   while (s.indexOf(sfrom) >= 0) {
@@ -33,29 +22,19 @@ function replaceAll(s, sfrom, sto) {
   return s;
 }
 
-// 创建路径
-function createDirectorySync(directoryPath) {
-  try {
-    if (!fs.existsSync(directoryPath)) {
-      fs.mkdirSync(directoryPath, { recursive: true });
-    }
-  } catch (err) {
-    console.error(`无法创建文件夹 ${directoryPath}: ${err}`);
-  }
+function getJsonCfg(jsonFilePath) {
+  let jsonCfg = null;
+  let jsonFile = fs.readFileSync(jsonFilePath, { encoding: 'utf8' });
+  jsonCfg = JSON.parse(jsonFile);
+  return jsonCfg;
 }
 
 function pathJoin(...args) {
   return path.join(...args);
 }
 
-// 写文件
-function writeFile(fn, str) {
-  fs.writeFileSync(fn, str, { encoding: 'utf8' });
-}
-
 function utf8ArrayToStr(array) {
   let char2, char3;
-
   let outStr = '';
   let len = array.length;
   let i = 0;
@@ -94,6 +73,20 @@ function readFile(fn) {
   return data;
 }
 
+function createDirectorySync(directoryPath) {
+  try {
+    if (!fs.existsSync(directoryPath)) {
+      fs.mkdirSync(directoryPath, { recursive: true });
+    }
+  } catch (err) {
+    console.error(`无法创建文件夹 ${directoryPath}: ${err}`);
+  }
+}
+
+function writeFile(fn, str) {
+  fs.writeFileSync(fn, str, { encoding: 'utf8' });
+}
+
 /* 根据用户输入的driver名字生成framework框架
  * drivername:用户输入的驱动名，out:生成框架路径
  * 1. 读取json文件模板
@@ -112,7 +105,7 @@ function genDriverFramework(driverName, out = '') {
     'driverName': driverName,
     'namespaceName': namespaceName,
     'idlFileName': idlFileName,
-  }
+  };
 
   // 生成Hcs配置文件
   genHcsconfigFile(frameworkJson, driverName, frameworkPath);
@@ -121,7 +114,7 @@ function genDriverFramework(driverName, out = '') {
   genInterface(frameworkPath, frameworkJson, rootInfo);
 
   // 生成hdi_service
-  genPeripheral(frameworkPath,frameworkJson, rootInfo);
+  genPeripheral(frameworkPath, frameworkJson, rootInfo);
 }
 
 function genPeripheral(frameworkPath, frameworkJson, rootInfo) {
