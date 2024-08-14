@@ -111,7 +111,7 @@ cat hdf_devhost.cfg
 
 ![image-20240724093743837](./figures/pic_show_hostid.png)
 
-2.运行可执行文件hdf_devhost，手动拉起host：进入/vendor/bin路径下，运行可执行文件hdf_devhost，传入第一个参数为hostId，第二个参数为hostName；运行命令如下所示：
+2.运行可执行文件hdf_devhost，手动拉起host：进入/vendor/bin路径下，运行可执行文件hdf_devhost，传入一个参数为hostId，第二个参数为hostName；运行命令如下所示：
 
 ```
 ./hdf_devhost 14 hello_host
