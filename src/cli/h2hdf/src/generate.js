@@ -99,7 +99,7 @@ function genDriverFramework(driverName, out = '') {
 
   let frameworkPath = pathJoin(out, driverName + 'hdf');
 
-  let namespaceName = driverName.substring(0,1).toUpperCase() + driverName.substring(1, driverName.length);
+  let namespaceName = driverName.substring(0, 1).toUpperCase() + driverName.substring(1, driverName.length);
   let idlFileName = 'I' + namespaceName + 'Interface';
   let rootInfo = {
     'driverName': driverName,
