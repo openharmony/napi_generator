@@ -45,11 +45,11 @@ function activate(context) {
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposableMenu);
 	var platform = detectPlatform();
-	if (platform == 'win') {
+	if (platform === 'win') {
 		exeFilePath = __dirname + "/gn-gen-win.exe";
-	} else if (platform == 'mac') {
+	} else if (platform === 'mac') {
 		exeFilePath = __dirname + "/gn-gen-macos";
-	} else if (platform == 'Linux') {
+	} else if (platform === 'Linux') {
 		exeFilePath = __dirname + "/gn-gen-linux";
 	}
 	vscode.window.onDidChangeActiveColorTheme(colorTheme => {
@@ -72,7 +72,7 @@ function gnexecutor(outputCodeDir, originCodeDir, inputScriptDir, scriptType, tr
 		 VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
 		if (error || stdout.indexOf("generate gn ok") < 0) {
 			console.log(error)
-			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
+			vscode.window.showErrorMessage("genError:" + (error !== null ? error : "") + stdout);
 			return VsPluginLog.logError("VsPlugin:" + error + stdout);
 		}
 		vscode.window.showInformationMessage("Generated successfully");
@@ -83,7 +83,7 @@ function genGnCommand(outputCodeDir, originCodeDir, inputScriptDir, scriptType,
 	transplantDir, subsystemName, componentName, compileOptions) {
 	var command = exeFilePath + " -o " + outputCodeDir + " -p " + originCodeDir + " -f " + inputScriptDir 
 	+ " -t " + scriptType + " -s " + subsystemName + " -m " + componentName + " -d " + transplantDir;
-	if (compileOptions != "") {
+	if (compileOptions !== "") {
 		command += " -a " + "\"" + compileOptions + "\"";
 	}
 
@@ -115,6 +115,28 @@ function exeFileExit() {
 	return false;
 }
 
+function checkLoop(items, myExtensionId, boolValue) {
+	for (let i = 0; i < items.length; i++) {
+		if (myExtensionId === items[i] && (i === items.length - 1)) {
+			importToolChain = false;
+		} else if (myExtensionId === items[i] && (i !== items.length - 1)) {
+			importToolChain = boolValue;
+			nextPluginId = items[i + 1];
+		}
+		extensionIds.push(items[i]);
+	}
+}
+
+function checkBoolAndItems(boolValue, items) {
+	if (typeof(boolValue) === 'boolean' && Array.isArray(items)) {
+		if (boolValue === true) {
+			//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
+			let myExtensionId = 'kaihong.gn-gen';
+			checkLoop(items, myExtensionId, boolValue);
+		}
+	}
+}
+
 function register(context, command) {
 	let disposable = vscode.commands.registerCommand(command, function (uri, boolValue, items) {
 		// The code you place here will be executed every time your command is executed
@@ -128,28 +150,15 @@ function register(context, command) {
 				retainContextWhenHidden: true, // Keep the WebView state when it is hidden to avoid being reset
 			}
 		);
-		 if (typeof(boolValue) == 'boolean' && Array.isArray(items)) {
-			if (boolValue == true) {
-				//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
-				let myExtensionId = 'kaihong.gn-gen';
-				for (let i = 0; i < items.length; i++) {
-					if (myExtensionId == items[i] && (i == items.length - 1)) {
-						importToolChain = false;
-					} else if (myExtensionId == items[i] && (i != items.length - 1)) {
-						importToolChain = boolValue;
-						nextPluginId = items[i + 1];
-					}
-					extensionIds.push(items[i]);
-				}
-			}
-		}
+		
+		checkBoolAndItems(boolValue, items);
 		globalPanel.webview.html = getWebviewContent(context, importToolChain);
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
-			if (msg == "cancel") {
+			if (msg === "cancel") {
 				globalPanel.dispose();
-			} else if(msg == "gn") {
+			} else if(msg === "gn") {
 				checkReceiveMsg(message);
 			} else {
 				selectPath(globalPanel, message);
@@ -181,7 +190,7 @@ function checkReceiveMsg(message) {
 	checkMode(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
 		transplantDir, subsystemName, componentName, compileOptions);
 
-	if (buttonName == 'Next') {
+	if (buttonName === 'Next') {
 		startNextPlugin();
 	}
 }
@@ -190,15 +199,15 @@ function checkReceiveMsg(message) {
 * 获取插件执行命令
 */
 function nextPluginExeCommand(nextPluginId) {
-    if (nextPluginId == "kaihong.ApiScan") {
+    if (nextPluginId === "kaihong.ApiScan") {
 		return 'api_scan';
-	} else if (nextPluginId == "kaihong.gn-gen") {
+	} else if (nextPluginId === "kaihong.gn-gen") {
 		return 'generate_gn';
-	} else if (nextPluginId == "kaihong.service-gen") {
+	} else if (nextPluginId === "kaihong.service-gen") {
 		return 'generate_service';
-	} else if (nextPluginId == "kaihong.ts-gen") {
+	} else if (nextPluginId === "kaihong.ts-gen") {
 		return 'generate_ts';
-	} else if (nextPluginId == "kaihong.napi-gen") {
+	} else if (nextPluginId === "kaihong.napi-gen") {
 		return 'generate_napi';
 	} else {
 		return null;
@@ -225,14 +234,14 @@ function startNextPlugin() {
 */
  function selectPath(panel, message) {
 	 let mode = 1;
-	if (message.mode != undefined) {
+	if (message.mode !== undefined) {
 		mode = message.mode;
 	}
-	flag = flag == "" ? '' : flag;
+	flag = flag === "" ? '' : flag;
 	const options = {
 		canSelectMany: false,//是否可以选择多个
-		canSelectFiles: mode == 0 ? true : false,//是否选择文件
-		canSelectFolders: mode == 0 ? false : true,//是否选择文件夹
+		canSelectFiles: mode === 0 ? true : false,//是否选择文件
+		canSelectFolders: mode === 0 ? false : true,//是否选择文件夹
 		defaultUri:vscode.Uri.file(flag),//默认打开本地路径
 		filters: { 
 			'All files': ['*']
@@ -245,7 +254,7 @@ function startNextPlugin() {
 			var filePath = "";
 			filePath = fileUri[0].fsPath.concat(',');
 			filePath = re.replaceAll(filePath, '\\\\', '/');
-			if (filePath.substring(1,2) == ":") {
+			if (filePath.substring(1,2) === ":") {
 				let filePathTemp = filePath.substring(0,1).toUpperCase()
 				filePath = filePathTemp + filePath.substring(1,filePath.length)
 			}
@@ -254,7 +263,7 @@ function startNextPlugin() {
 				 path: filePath.length > 0 ? filePath.substring(0, filePath.length - 1) : filePath
 			}
 			console.log('message.msg: ' + message.msg);
-			if (!isTrue && message.msg == "selectoutputCodeDir"){
+			if (!isTrue && message.msg === "selectoutputCodeDir"){
 				flag = filePath.substring(0, filePath.length - 1);
 				let fileTempName = "out";
 		        let pos = flag.indexOf(fileTempName);
@@ -270,17 +279,17 @@ function startNextPlugin() {
 function checkMode(outputCodeDir, originCodeDir, inputScriptDir, scriptType, 
 	transplantDir, subsystemName, componentName, compileOptions) {
 	outputCodeDir = re.replaceAll(outputCodeDir, " ", "");
-	if ("" == outputCodeDir) {
+	if ("" === outputCodeDir) {
 		vscode.window.showErrorMessage("Please enter the outputCodeDir path!");
 		return;
 	}
 	originCodeDir = re.replaceAll(originCodeDir, " ", "");
-	if ("" == originCodeDir) {
+	if ("" === originCodeDir) {
 		vscode.window.showErrorMessage("Please enter the originCodeDir path!");
 		return;
 	}
 	inputScriptDir = re.replaceAll(inputScriptDir, " ", "");
-	if ("" == inputScriptDir) {
+	if ("" === inputScriptDir) {
 		vscode.window.showErrorMessage("Please enter the inputScriptDir path!");
 		return;
 	}
@@ -289,17 +298,17 @@ function checkMode(outputCodeDir, originCodeDir, inputScriptDir, scriptType,
 		return;
 	}
 	transplantDir = re.replaceAll(transplantDir, " ", "");
-	if ("" == transplantDir) {
+	if ("" === transplantDir) {
 		vscode.window.showErrorMessage("Please enter the transplantDir path!");
 		return;
 	}
 	subsystemName = re.replaceAll(subsystemName, " ", "");
-	if ("" == subsystemName) {
+	if ("" === subsystemName) {
 		vscode.window.showErrorMessage("Please enter the subsystemName!");
 		return;
 	}
 	componentName = re.replaceAll(componentName, " ", "");
-	if ("" == componentName) {
+	if ("" === componentName) {
 		vscode.window.showErrorMessage("Please enter the componentName!");
 		return;
 	}
