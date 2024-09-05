@@ -53,22 +53,22 @@ describe('Extend', function () {
     partGenerateBase();
 });
 
-function partGenerateBase(){
+function checkUnlink(filepath) {
+    fs.unlink(filepath, function (err) {
+        if (err) {
+            return console.error(err);
+        }
+    });
+}
+
+function partGenerateBase() {
     it('test gen/extend/tool_utility generateBase', function () {
         var fs = require("fs");
         if (fs.existsSync('test/unittest/tool_utility.cpp')) {
-            fs.unlink('test/unittest/tool_utility.cpp', function (err) {
-                if (err) {
-                    return console.error(err);
-                }
-            });
+            checkUnlink('test/unittest/tool_utility.cpp')
         }
         if (fs.existsSync('test/unittest/tool_utility.h')) {
-            fs.unlink('test/unittest/tool_utility.h', function (err) {
-                if (err) {
-                    return console.error(err);
-                }
-            });
+            checkUnlink('test/unittest/tool_utility.h')
         }
         generateBase('test/unittest', '/*\n* Copyright (c) 2022 Shenzhen Kaihong\n*/');
         let data = readFile("test/unittest/tool_utility.cpp")

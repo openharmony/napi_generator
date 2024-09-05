@@ -119,9 +119,12 @@ function unionTypeString(name, type, variable) {
     std::any %s;`.format(name, name)
 }
 
-function mapTypeString(type, name) {
-    let mapType = getMapType(type)
-    let mapTypeString
+function unionTypeString(name, type, variable) {
+    variable.hDefine += `std::string ${name}_type;\n
+    std ${name};`;
+}
+
+function checkMapType1(mapType, mapTypeString) {
     if (mapType[1] != undefined && mapType[2] == undefined) {
         if (mapType[1] == "string") mapTypeString = "std::string, std::string"
         else if (mapType[1] == "boolean") mapTypeString = "std::string, bool"
@@ -135,6 +138,9 @@ function mapTypeString(type, name) {
         }
         else if (TypeList.getValue(mapType[1])) mapTypeString = "std::string, %s".format(mapType[1])
     }
+}
+
+function checkMapType2(mapType, mapTypeString) {
     if (mapType[2] != undefined) {
         if (mapType[2] == "string") mapTypeString = "std::string, std::map<std::string, std::string>"
         else if (mapType[2] == "boolean") mapTypeString = "std::string, std::map<std::string, bool>"
@@ -142,6 +148,9 @@ function mapTypeString(type, name) {
             mapTypeString = "std::string, std::map<std::string, %s>".format(mapType[2])
         }
     }
+}
+
+function checkMapType3(mapType, mapTypeString) {
     if (mapType[3] != undefined) {
         if (mapType[3] == "string") mapTypeString = "std::string, std::vector<std::string>"
         else if (mapType[3] == "boolean") mapTypeString = "std::string, std::vector<bool>"
@@ -149,6 +158,16 @@ function mapTypeString(type, name) {
             mapTypeString = "std::string, std::vector<%s>".format(mapType[3])
         }
     }
+}
+
+function mapTypeString(type, name) {
+    let mapType = getMapType(type)
+    let mapTypeString
+
+    checkMapType1(mapType, mapTypeString)
+    checkMapType2(mapType, mapTypeString)
+    checkMapType3(mapType, mapTypeString)
+    
     return "\n    std::map<%s> %s;".format(mapTypeString, name);
 }
 
