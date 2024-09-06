@@ -15,71 +15,6 @@
 const fs = require('fs');
 const path = require('path');
 
-function replaceAll(s, sfrom, sto) {
-  while (s.indexOf(sfrom) >= 0) {
-      s = s.replace(sfrom, sto);
-  }
-  return s;
-}
-
-function pathJoin(...args) {
-  return path.join(...args);
-}
-
-function utf8ArrayToStr(array) {
-  let char2, char3;
-  let outStr = '';
-  let len = array.length;
-  let i = 0;
-  while (i < len) {
-    let ch = array[i++];
-    switch (ch >> 4) {
-      case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
-        // 0xxxxxxx
-        outStr += String.fromCharCode(ch);
-        break;
-      case 12: case 13:
-        // 110x xxxx   10xx xxxx
-        char2 = array[i++];
-        outStr += String.fromCharCode(((ch & 0x1F) << 6) | (char2 & 0x3F));
-        break;
-      case 14:
-        // 1110 xxxx  10xx xxxx  10xx xxxx
-        char2 = array[i++];
-        char3 = array[i++];
-        outStr += String.fromCharCode(((ch & 0x0F) << 12) |
-          ((char2 & 0x3F) << 6) |
-          ((char3 & 0x3F) << 0));
-        break;
-      }
-  }
-
-  return outStr;
-}
-
-function readFile(fn) {
-  if (!fs.existsSync(fn)) {
-    return '';
-  }
-  let data = fs.readFileSync(fn);
-  data = utf8ArrayToStr(data);
-  return data;
-}
-
-function createDirectorySync(directoryPath) {
-  try {
-    if (!fs.existsSync(directoryPath)) {
-      fs.mkdirSync(directoryPath, { recursive: true });
-    }
-  } catch (err) {
-    console.error(`无法创建文件夹 ${directoryPath}: ${err}`);
-  }
-}
-
-function writeFile(fn, str) {
-  fs.writeFileSync(fn, str, { encoding: 'utf8' });
-}
-
 /* 根据用户输入的driver名字生成framework框架
  * drivername:用户输入的驱动名，frameworkJson: 模板内容，out:生成框架路径
  * 替换模板中的名字并写文件输出
@@ -132,7 +67,6 @@ function genBuildFile(peripheralPath, frameworkJson, rootInfo) {
   if (rootInfo.version === 'v4_1') {
     bundlejsonPath = path.join(__dirname, frameworkJson.PeripheralTemplete.bundlejsonTemplete.v4_1);
   }
-  // let bundlejsonPath = path.join(__dirname, frameworkJson.PeripheralTemplete.bundlejsonTemplete);
   let bundlejsonContent = readFile(bundlejsonPath);
   bundlejsonContent = replaceAll(bundlejsonContent, '[driver_name]', rootInfo.driverName);
   writeFile(genBundlejsonPath, bundlejsonContent);
@@ -196,7 +130,7 @@ function genHdiService(peripheralPath, frameworkJson, rootInfo) {
   if (rootInfo.version === 'v4_1') {
     serviceGnPath = path.join(__dirname, frameworkJson.PeripheralTemplete.HdiServiceTemplete.buildgnTemplete.v4_1);
   }
-  // let serviceGnPath = path.join(__dirname, frameworkJson.PeripheralTemplete.HdiServiceTemplete.buildgnTemplete);
+
   let serviceGnContent = readFile(serviceGnPath);
   serviceGnContent = replaceAll(serviceGnContent, '[driver_name]', rootInfo.driverName);
   writeFile(genHdiServiceGnPath, serviceGnContent);
@@ -210,7 +144,6 @@ function genExampleDumpfile(peripheralPath, frameworkJson, rootInfo) {
   if (rootInfo.version === 'v4_1') {
     dumpExampleGnPath = path.join(__dirname, frameworkJson.PeripheralTemplete.DumpExampleTemplete.buildgnTemplete.v4_1);
   }
-  // let dumpExampleGnPath = path.join(__dirname, frameworkJson.PeripheralTemplete.DumpExampleTemplete.buildgnTemplete);
   let dumpExampleGnContent = readFile(dumpExampleGnPath);
   dumpExampleGnContent = replaceAll(dumpExampleGnContent, '[driver_name]', rootInfo.driverName);
   writeFile(genDumpExampleGnPath, dumpExampleGnContent);
@@ -276,6 +209,72 @@ function genHcsconfigFile(frameworkJson, driverName, frameworkPath) {
   createDirectorySync(genHcsconfigPath);
   let genHcsconfigFile = pathJoin(genHcsconfigPath, 'device_info.hcs');
   writeFile(genHcsconfigFile, hcsconfigContent);
+}
+
+function replaceAll(s, sfrom, sto) {
+  while (s.indexOf(sfrom) >= 0) {
+      s = s.replace(sfrom, sto);
+  }
+  return s;
+}
+
+function pathJoin(...args) {
+  return path.join(...args);
+}
+
+function utf8ArrayToStr(array) {
+  let char2;
+  let char3;
+  let outStr = '';
+  let len = array.length;
+  let i = 0;
+  while (i < len) {
+    let ch = array[i++];
+    switch (ch >> 4) {
+      case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+        // 0xxxxxxx
+        outStr += String.fromCharCode(ch);
+        break;
+      case 12: case 13:
+        // 110x xxxx   10xx xxxx
+        char2 = array[i++];
+        outStr += String.fromCharCode(((ch & 0x1F) << 6) | (char2 & 0x3F));
+        break;
+      case 14:
+        // 1110 xxxx  10xx xxxx  10xx xxxx
+        char2 = array[i++];
+        char3 = array[i++];
+        outStr += String.fromCharCode(((ch & 0x0F) << 12) |
+          ((char2 & 0x3F) << 6) |
+          ((char3 & 0x3F) << 0));
+        break;
+      }
+  }
+
+  return outStr;
+}
+
+function readFile(fn) {
+  if (!fs.existsSync(fn)) {
+    return '';
+  }
+  let data = fs.readFileSync(fn);
+  data = utf8ArrayToStr(data);
+  return data;
+}
+
+function createDirectorySync(directoryPath) {
+  try {
+    if (!fs.existsSync(directoryPath)) {
+      fs.mkdirSync(directoryPath, { recursive: true });
+    }
+  } catch (err) {
+    console.error(`无法创建文件夹 ${directoryPath}: ${err}`);
+  }
+}
+
+function writeFile(fn, str) {
+  fs.writeFileSync(fn, str, { encoding: 'utf8' });
 }
 
 module.exports = {
