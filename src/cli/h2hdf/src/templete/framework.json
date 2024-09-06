@@ -2,23 +2,31 @@
   "HcsconfigTemplete":"./templete/HcsconfigTemplete/hcsconfigTemplete.gen",
   "IdlInterfaceTemplete":{
     "buildgnTemplete":"./templete/IdlInterfaceTemplete/buildgnTemplete.gen",
-    "bundlejsonTemplete":"./templete/IdlInterfaceTemplete/bundlejsonTemplete.gen",
+    "bundlejsonTemplete":{
+      "v4_1": "./templete/IdlInterfaceTemplete/v4_1/bundlejsonTemplete.gen"
+    },
     "idlInterfaceTemplete":"./templete/IdlInterfaceTemplete/idlInterfaceTemplete.gen"
   },
   "PeripheralTemplete": {
     "DumpExampleTemplete": {
-      "buildgnTemplete":"./templete/PeripheralTemplete/DumpExampleTemplete/buildgnTemplete.gen",
+      "buildgnTemplete":{
+        "v4_1": "./templete/PeripheralTemplete/DumpExampleTemplete/v4_1/buildgnTemplete.gen"
+      },
       "dumpCTemplete":"./templete/PeripheralTemplete/DumpExampleTemplete/dumpCTemplete.gen",
       "dumpHTemplete":"./templete/PeripheralTemplete/DumpExampleTemplete/dumpHTemplete.gen"
     },
     "HdiServiceTemplete": {
-      "buildgnTemplete":"./templete/PeripheralTemplete/HdiServiceTemplete/buildgnTemplete.gen",
+      "buildgnTemplete":{
+        "v4_1": "./templete/PeripheralTemplete/HdiServiceTemplete/v4_1/buildgnTemplete.gen"
+      },
       "driverTemplete":"./templete/PeripheralTemplete/HdiServiceTemplete/driverTemplete.gen",
       "logHTemplete":"./templete/PeripheralTemplete/HdiServiceTemplete/logHTemplete.gen",
       "serviceCppTemplete":"./templete/PeripheralTemplete/HdiServiceTemplete/serviceCppTemplete.gen",
       "serviceHTemplete":"./templete/PeripheralTemplete/HdiServiceTemplete/serviceHTemplete.gen"
     },
     "buildgnTemplete":"./templete/PeripheralTemplete/buildgnTemplete.gen",
-    "bundlejsonTemplete":"./templete/PeripheralTemplete/bundlejsonTemplete.gen"
+    "bundlejsonTemplete":{
+      "v4_1": "./templete/PeripheralTemplete/v4_1/bundlejsonTemplete.gen"
+    }
   }
 }

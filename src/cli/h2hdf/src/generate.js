@@ -22,13 +22,6 @@ function replaceAll(s, sfrom, sto) {
   return s;
 }
 
-function getJsonCfg(jsonFilePath) {
-  let jsonCfg = null;
-  let jsonFile = fs.readFileSync(jsonFilePath, { encoding: 'utf8' });
-  jsonCfg = JSON.parse(jsonFile);
-  return jsonCfg;
-}
-
 function pathJoin(...args) {
   return path.join(...args);
 }
@@ -88,20 +81,16 @@ function writeFile(fn, str) {
 }
 
 /* 根据用户输入的driver名字生成framework框架
- * drivername:用户输入的驱动名，out:生成框架路径
- * 1. 读取json文件模板
- * 2. 替换模板中的名字并写文件输出
+ * drivername:用户输入的驱动名，frameworkJson: 模板内容，out:生成框架路径
+ * 替换模板中的名字并写文件输出
  */
-function genDriverFramework(driverName, out = '') {
-  // 读取Json文件，获取各模板路径
-  let frameworkJsonPath = path.join(__dirname, './templete/framework.json');
-  let frameworkJson = getJsonCfg(frameworkJsonPath);
-
+function genDriverFramework(driverName, frameworkJson, version, out = '') {
   let frameworkPath = pathJoin(out, driverName + 'hdf');
 
   let namespaceName = driverName.substring(0, 1).toUpperCase() + driverName.substring(1, driverName.length);
   let idlFileName = 'I' + namespaceName + 'Interface';
   let rootInfo = {
+    'version': version,
     'driverName': driverName,
     'namespaceName': namespaceName,
     'idlFileName': idlFileName,
@@ -139,7 +128,11 @@ function genPeripheral(frameworkPath, frameworkJson, rootInfo) {
 function genBuildFile(peripheralPath, frameworkJson, rootInfo) {
   // out/hdf/Peripheral/xxx/bundle.json
   let genBundlejsonPath = pathJoin(peripheralPath, 'bundle.json');
-  let bundlejsonPath = path.join(__dirname, frameworkJson.PeripheralTemplete.bundlejsonTemplete);
+  let bundlejsonPath = '';
+  if (rootInfo.version === 'v4_1') {
+    bundlejsonPath = path.join(__dirname, frameworkJson.PeripheralTemplete.bundlejsonTemplete.v4_1);
+  }
+  // let bundlejsonPath = path.join(__dirname, frameworkJson.PeripheralTemplete.bundlejsonTemplete);
   let bundlejsonContent = readFile(bundlejsonPath);
   bundlejsonContent = replaceAll(bundlejsonContent, '[driver_name]', rootInfo.driverName);
   writeFile(genBundlejsonPath, bundlejsonContent);
@@ -199,7 +192,11 @@ function genHdiService(peripheralPath, frameworkJson, rootInfo) {
 
   // 生成hdi_service下面的BUILD.gn: out/hdf/Peripheral/xxx/hdi_service/
   let genHdiServiceGnPath = pathJoin(hdiPath, 'BUILD.gn');
-  let serviceGnPath = path.join(__dirname, frameworkJson.PeripheralTemplete.HdiServiceTemplete.buildgnTemplete);
+  let serviceGnPath = '';
+  if (rootInfo.version === 'v4_1') {
+    serviceGnPath = path.join(__dirname, frameworkJson.PeripheralTemplete.HdiServiceTemplete.buildgnTemplete.v4_1);
+  }
+  // let serviceGnPath = path.join(__dirname, frameworkJson.PeripheralTemplete.HdiServiceTemplete.buildgnTemplete);
   let serviceGnContent = readFile(serviceGnPath);
   serviceGnContent = replaceAll(serviceGnContent, '[driver_name]', rootInfo.driverName);
   writeFile(genHdiServiceGnPath, serviceGnContent);
@@ -209,7 +206,11 @@ function genExampleDumpfile(peripheralPath, frameworkJson, rootInfo) {
   let dumpExamplePath = pathJoin(peripheralPath, 'hal');
   createDirectorySync(dumpExamplePath);
   let genDumpExampleGnPath = pathJoin(dumpExamplePath, 'BUILD.gn');
-  let dumpExampleGnPath = path.join(__dirname, frameworkJson.PeripheralTemplete.DumpExampleTemplete.buildgnTemplete);
+  let dumpExampleGnPath = '';
+  if (rootInfo.version === 'v4_1') {
+    dumpExampleGnPath = path.join(__dirname, frameworkJson.PeripheralTemplete.DumpExampleTemplete.buildgnTemplete.v4_1);
+  }
+  // let dumpExampleGnPath = path.join(__dirname, frameworkJson.PeripheralTemplete.DumpExampleTemplete.buildgnTemplete);
   let dumpExampleGnContent = readFile(dumpExampleGnPath);
   dumpExampleGnContent = replaceAll(dumpExampleGnContent, '[driver_name]', rootInfo.driverName);
   writeFile(genDumpExampleGnPath, dumpExampleGnContent);
@@ -246,7 +247,11 @@ function genInterface(frameworkPath, frameworkJson, rootInfo) {
 
   // idl接口bundlejson路径 out/hdf/IdlInterface/foo/bundle.json
   let genIdlBundlejsonPath = pathJoin(idlPath, 'bundle.json');
-  let idlBundlejsonPath = path.join(__dirname, frameworkJson.IdlInterfaceTemplete.bundlejsonTemplete);
+  let idlBundlejsonPath = '';
+  if (rootInfo.version === 'v4_1') {
+    idlBundlejsonPath = path.join(__dirname, frameworkJson.IdlInterfaceTemplete.bundlejsonTemplete.v4_1);
+  }
+  
   let idlBundlejsonContent = readFile(idlBundlejsonPath);
   idlBundlejsonContent = replaceAll(idlBundlejsonContent, '[driver_name]', rootInfo.driverName);
   writeFile(genIdlBundlejsonPath, idlBundlejsonContent);
