@@ -1,18 +1,17 @@
-# Develop guide
+# Develop Guide
 
 ## h2hdf工具使用场景
 
 在OpenHarmony系统中，上层应用或服务层通过调用HDF框架提供的HDI接口，能够以一种标准化和抽象化的方式与底层硬件设备进行交互。使用h2hdf工具，用户只需提供一个drivername，工具会自动生成整个框架的代码，包含驱动配置文件、idl接口、驱动程序driver和驱动服务框架。
 
-![image-20240724093743837](./figures/pic_frame.png))
+![image-20240724093743837](./figures/pic_code_frame.png)
 
 ## h2hdf工具代码框架说明
 
 ```
-napi_generator/src/cli/h2hdf
-
 h2hdf
 ├── docs                                      # 文档
+│   ├── figures                               # 图片资源
 │   ├── usage.md                              # 使用文档
 │   ├── develop.md                            # 设计文档        
 ├── src
@@ -21,21 +20,25 @@ h2hdf
 │   │   │   ├── hcsconfigTemplete.gen         # hcs配置模板
 │   │   ├── IdlInterfaceTemplete
 │   │   │   ├── buildgnTemplete.gen           # idl接口BUILD.gn模板
-│   │   │   ├── bundlejsonTemplete.gen        # idl接口bundle.json模板
+│   │   │   ├── v4_1
+│   │   │   │   ├── bundlejsonTemplete.gen    # idl接口bundle.json模板
 │   │   │   ├── idlInterfaceTemplete.gen      # idl接口定义文件模板
 │   │   ├── PeripheralTemplete
 │   │   │   ├── DumpExampleTemplete           # dump示例
-│   │   │   │   ├── buildgnTemplete.gen       # BUILD.gn模板
+│   │   │   │   ├── v4_1
+│   │   │   │   │   ├── buildgnTemplete.gen   # BUILD.gn模板
 │   │   │   │   ├── dumpCTemplete.gen         # dump实现示例模板
 │   │   │   │   ├── dumpHTemplete.gen         # dump h文件模板
 │   │   │   ├── HdiServiceTemplete            # hdi_service 模板
-│   │   │   │   ├── buildgnTemplete.gen       # BUILD.gn模板
+│   │   │   │   ├── v4_1
+│   │   │   │   │   ├── buildgnTemplete.gen   # BUILD.gn模板
 │   │   │   │   ├── driverTemplete.gen        # driver模板
 │   │   │   │   ├── logHTemplte.gen           # 日志文件模板
 │   │   │   │   ├── serviceCppTemplete.gen    # 驱动服务模板
 │   │   │   │   ├── serviceHTemplete.gen      # 驱动服务 h 文件模板
 │   │   │   ├── buildgnTemplete.gen           # hdi service BUILD.gn模板
-│   │   │   ├── bundlejsonTemplete.gen        # hdi service bundle.json模板
+│   │   │   ├── v4_1
+│   │   │   │   ├── bundlejsonTemplete.gen    # hdi service bundle.json模板
 │   │   ├── framework.json                    # 存储模板对应相对路径   
 │   ├── generate.js                           # 使用templete中对应的模板生成代码。
 │   ├── main.js                               # 工具入口文件,定义输入参数，调用generate.js来启动代码生成过程。
@@ -46,50 +49,60 @@ h2hdf
 
 ![image-20240724093743837](./figures/pic_code_frame.png)
 
-// 脚本重要函数
+main.js为脚本入口，其中使用stdio.getopt获取参数，参数分别为： -n, drivername，例如：hello；-v, 可选参数，版本，默认为4.1；-o, 可选参数，默认为当前目录，指定生成框架代码输出路径。
 
 ```
-// main.js
-
 let ops = stdio.getopt({
     // 输入driver name ,输入一个字符串，默认为hello
     'drivername': { key: 'n', args: 1, description: 'driver name', default: 'hello' },
+    // 输入版本号
+    'version': { key: 'v', args: 1, description: 'source version', default: '4.1' },
     // 输出文件夹路径
-    'out': { key: 'o', args: 1, description: 'output directory', default: '.' },
+    'out': { key: 'o', args: 1, description: 'output directory', default: '' },
 });
 ```
 
+对输入的参数值进行校验：checkInput对输入的drivername进行校验，输入的drivername必须符合命名规范；isValidValue对输入的版本号进行校验，输入的版本号必须包含在版本号数组中，该数组后续可持续更新：
+
 ```
-// generate.js
+...
+const allowedVersion = ['4.0', '4.1', '5.0', '5.1'];
+function isValidValue(value, allowedVersion) {
+  return allowedVersion.includes(value);
+}
 
+function checkInput(input) {
+  const regex = /\b[a-zA-Z_][a-zA-Z0-9_]*\b/;
+  return regex.test(input);
+}
+```
+
+使用getJsonCfg读取json文件中hdf框架模板的路径：
+
+```
+function getJsonCfg(jsonFilePath) {
+  let jsonCfg = null;
+  let jsonFile = fs.readFileSync(jsonFilePath, { encoding: 'utf8' });
+  jsonCfg = JSON.parse(jsonFile);
+  return jsonCfg;
+}
+```
+
+获取到每个模板的路径后，根据路径读取模板文件，并替换模板文件中的drivername等：
+
+```
 /* 根据用户输入的driver名字生成framework框架
- * drivername:用户输入的驱动名，out:生成框架路径
- * 1. 读取json文件模板
- * 2. 替换模板中的名字并写文件输出
+ * drivername:用户输入的驱动名，frameworkJson: 模板内容，out:生成框架路径
+ * 替换模板中的名字并写文件输出
  */
-function genDriverFramework(driverName, out = '') {
-  // 读取Json文件，获取各模板路径
-  let frameworkJsonPath = path.join(__dirname, './templete/framework.json');
-  let frameworkJson = getJsonCfg(frameworkJsonPath);
-
-  let frameworkPath = pathJoin(out, 'hdf');
-
-  let namespaceName = driverName.substring(0,1).toUpperCase() + driverName.substring(1, driverName.length);
-  let idlFileName = 'I' + namespaceName + 'Interface';
-  let rootInfo = {
-    'driverName': driverName,
-    'namespaceName': namespaceName,
-    'idlFileName': idlFileName,
-  }
-
+function genDriverFramework(driverName, frameworkJson, version, out = '') {
+  ...
   // 生成Hcs配置文件
   genHcsconfigFile(frameworkJson, driverName, frameworkPath);
-
   // 生成Idl接口
   genInterface(frameworkPath, frameworkJson, rootInfo);
-
   // 生成hdi_service
-  genPeripheral(frameworkPath,frameworkJson, rootInfo);
+  genPeripheral(frameworkPath, frameworkJson, rootInfo);
 }
 ```
 
@@ -115,11 +128,14 @@ node main.js -n hello
 
   -n, drivername，例如：hello
 
+  -v, 可选参数，版本，默认为4.1
+
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径。
 
 6.执行成功后在napi_generator/src/cli/h2hdf/src/下生成hellohdf文件夹，文件夹中目录结构如下所示：
 
 ```
+hellohdf
 ├── HcsConfig                                      # hcs配置文件
 │   ├── device_info.hcs                            # 内容配置到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中
 ├── IdlInterface                                                             
@@ -148,29 +164,56 @@ node main.js -n hello
 
 ### 编译
 
-1.将hellohdf/Peripheral文件夹下的hello文件夹拷贝到源码drivers/peripheral目录下，将hellohdf/IdlInterface文件夹下的hello文件夹拷贝到源码drivers/interface目录下，将hellohdf/HcsConfig/device_info.hcs中的内容拷贝到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中
+1.将hellohdf/Peripheral文件夹下的hello文件夹拷贝到源码drivers/peripheral目录下
 
-2.配置产品：在源码productdefine/common/inherit/rich.json文件中增加以下代码：
+```
+cp hellohdf/Peripheral/hello 源码/drivers/peripheral
+```
+
+将hellohdf/IdlInterface文件夹下的hello文件夹拷贝到源码drivers/interface目录下
+
+```
+cp hellohdf/IdlInterface/hello 源码/drivers/interface
+```
+
+将hellohdf/HcsConfig/device_info.hcs中的内容拷贝到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中，如下所示：
+
+```
+ root {
+    device_info {
+       ...
+       hello :: host {
+            hostName = "hello_host";
+            priority = 50;
+            hello_device :: device {
+                device0 :: deviceNode {
+                    preload = 0;
+                    policy = 2;
+                    priority = 100;
+                    moduleName = "libhello_driver.z.so";
+                    serviceName = "hello_interface_service";
+                }
+            }
+        }
+        ...
+     }
+ }
+```
+
+2.配置产品：以rk3568为例，在源码vendor/hihope/rk3568/config.json文件中hdf子系统的components中增加以下内容：
 
 ```
 {
-   "component": "drivers_interface_hello",
-   "features": []
+  "component": "drivers_interface_hello",
+  "features": []
 },
-```
-
-其中drivers_interface_hello为drivers/interface/hello/v1_0/BUILD.gn中的part_name。
-
-在源码productdefine/common/inherit/chipset_common.json文件中增加以下代码：
-
-```
 {
-   "component": "drivers_peripheral_hello",
-   "features": []
- },
+  "component": "drivers_peripheral_hello",
+  "features": []
+}
 ```
 
-其中drivers_peripheral_hello为drivers/peripheral/hello/bundle.json中的component。
+注意：drivers_interface_hello为drivers/interface/hello/v1_0/BUILD.gn中的part_name。drivers_peripheral_hello为drivers/peripheral/hello/bundle.json中的component。
 
 3.编译，在源码下执行以下命令进行编译：
 
@@ -200,6 +243,10 @@ cat hdf_devhost.cfg
 ./hdf_devhost 14 hello_host
 ```
 
+![image-20240903114845035](./figures/pic_show_exe.png)
+
+注意 ：不可将进程kill
+
 3.查看host是否加载：新开一个命令行窗口，hdc进入开发板，执行以下命令查看进程是否拉起：
 
 ```
@@ -219,14 +266,6 @@ ps -A | grep host
 ```
 
 ![image-20240724093543096](./figures/pic_show_host.png)
-
-```
-----------------------------------HdfDeviceServiceManager--------------------------------
-hdf device information in user space, format:
-...
-hello_host                        :0xf
-        device0                         :0xf000101     :hello_interface_service
-```
 
 使用hidumper查看更多信息
 

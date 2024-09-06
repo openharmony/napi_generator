@@ -17,18 +17,18 @@
     "assets": [
       "./src/templete/HcsconfigTemplete/hcsconfigTemplete.gen",
       "./src/templete/IdlInterfaceTemplete/buildgnTemplete.gen",
-      "./src/templete/IdlInterfaceTemplete/bundlejsonTemplete.gen",
+      "./src/templete/v4_1/IdlInterfaceTemplete/bundlejsonTemplete.gen",
       "./src/templete/IdlInterfaceTemplete/idlInterfaceTemplete.gen",
-      "./src/templete/PeripheralTemplete/DumpExampleTemplete/buildgnTemplete.gen",
+      "./src/templete/PeripheralTemplete/DumpExampleTemplete/v4_1/buildgnTemplete.gen",
       "./src/templete/PeripheralTemplete/DumpExampleTemplete/dumpCTemplete.gen",
       "./src/templete/PeripheralTemplete/DumpExampleTemplete/dumpHTemplete.gen",
-      "./src/templete/PeripheralTemplete/HdiServiceTemplete/buildgnTemplete.gen",
+      "./src/templete/PeripheralTemplete/HdiServiceTemplete/v4_1/buildgnTemplete.gen",
       "./src/templete/PeripheralTemplete/HdiServiceTemplete/driverTemplete.gen",
       "./src/templete/PeripheralTemplete/HdiServiceTemplete/logHTemplete.gen",
       "./src/templete/PeripheralTemplete/HdiServiceTemplete/serviceCppTemplete.gen",
       "./src/templete/PeripheralTemplete/HdiServiceTemplete/serviceHTemplete.gen",
       "./src/templete/PeripheralTemplete/buildgnTemplete.gen",
-      "./src/templete/PeripheralTemplete/bundlejsonTemplete.gen"
+      "./src/templete/PeripheralTemplete/v4_1/bundlejsonTemplete.gen"
     ]
   }
 }

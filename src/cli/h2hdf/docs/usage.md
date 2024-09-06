@@ -3,7 +3,7 @@
 ## 简介
 在OpenHarmony系统中，上层应用或服务层通过调用HDF框架提供的HDI接口，能够以一种标准化和抽象化的方式与底层硬件设备进行交互。使用h2hdf工具，用户只需提供一个drivername，工具会自动生成整个框架的代码，包含驱动配置文件、idl接口、驱动程序driver和驱动服务框架。
 
-![image-20240724093743837](./figures/pic_frame.png)
+![image-20240724093743837](./figures/pic_code_frame.png)
 
 ## 约束
 系统：建议Ubuntu 20.04或者Windows 10
@@ -32,11 +32,14 @@ node main.js -n hello
 
   -n, drivername，例如：hello
 
+  -v, 可选参数，版本，默认为4.1
+
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径。
 
 6.执行成功后在napi_generator/src/cli/h2hdf/src/下生成hellohdf文件夹，文件夹中目录结构如下所示：
 
 ```
+hellohdf
 ├── HcsConfig                                      # hcs配置文件
 │   ├── device_info.hcs                            # 内容配置到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中
 ├── IdlInterface                                                             
@@ -65,29 +68,56 @@ node main.js -n hello
 
 ### 编译
 
-1.将hellohdf/Peripheral文件夹下的hello文件夹拷贝到源码drivers/peripheral目录下，将hellohdf/IdlInterface文件夹下的hello文件夹拷贝到源码drivers/interface目录下，将hellohdf/HcsConfig/device_info.hcs中的内容拷贝到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中
+1.将hellohdf/Peripheral文件夹下的hello文件夹拷贝到源码drivers/peripheral目录下
 
-2.配置产品：在源码productdefine/common/inherit/rich.json文件中增加以下代码：
+```
+cp hellohdf/Peripheral/hello 源码/drivers/peripheral
+```
+
+将hellohdf/IdlInterface文件夹下的hello文件夹拷贝到源码drivers/interface目录下
+
+```
+cp hellohdf/IdlInterface/hello 源码/drivers/interface
+```
+
+将hellohdf/HcsConfig/device_info.hcs中的内容拷贝到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中，如下所示：
+
+```
+ root {
+    device_info {
+       ...
+       hello :: host {
+            hostName = "hello_host";
+            priority = 50;
+            hello_device :: device {
+                device0 :: deviceNode {
+                    preload = 0;
+                    policy = 2;
+                    priority = 100;
+                    moduleName = "libhello_driver.z.so";
+                    serviceName = "hello_interface_service";
+                }
+            }
+        }
+        ...
+     }
+ }
+```
+
+2.配置产品：以rk3568为例，在源码vendor/hihope/rk3568/config.json文件中hdf子系统的components中增加以下内容：
 
 ```
 {
-   "component": "drivers_interface_hello",
-   "features": []
+  "component": "drivers_interface_hello",
+  "features": []
 },
-```
-
-其中drivers_interface_hello为drivers/interface/hello/v1_0/BUILD.gn中的part_name。
-
-在源码productdefine/common/inherit/chipset_common.json文件中增加以下代码：
-
-```
 {
-   "component": "drivers_peripheral_hello",
-   "features": []
- },
+  "component": "drivers_peripheral_hello",
+  "features": []
+}
 ```
 
-其中drivers_peripheral_hello为drivers/peripheral/hello/bundle.json中的component。
+注意：drivers_interface_hello为drivers/interface/hello/v1_0/BUILD.gn中的part_name。drivers_peripheral_hello为drivers/peripheral/hello/bundle.json中的component。
 
 3.编译，在源码下执行以下命令进行编译：
 
@@ -117,6 +147,10 @@ cat hdf_devhost.cfg
 ./hdf_devhost 14 hello_host
 ```
 
+![image-20240903114845035](./figures/pic_show_exe.png)
+
+注意 ：不可将进程kill
+
 3.查看host是否加载：新开一个命令行窗口，hdc进入开发板，执行以下命令查看进程是否拉起：
 
 ```
@@ -137,14 +171,6 @@ ps -A | grep host
 
 ![image-20240724093543096](./figures/pic_show_host.png)
 
-```
-----------------------------------HdfDeviceServiceManager--------------------------------
-hdf device information in user space, format:
-...
-hello_host                        :0xf
-        device0                         :0xf000101     :hello_interface_service
-```
-
 使用hidumper查看更多信息
 
 ```
@@ -158,3 +184,4 @@ hidumper -s HdfDeviceServiceManager -a "-host hello_host -c"
 #### 静态加载
 
 // todo 待补充
+
