@@ -1,0 +1,13 @@
+hello :: host {
+    hostName = "hello_host";
+    priority = 50;
+    hello_device :: device {
+        device0 :: deviceNode {
+            preload = 0;
+            policy = 2;
+            priority = 100;
+            moduleName = "libhello_driver.z.so";
+            serviceName = "hello_interface_service";
+        }
+    }
+}
