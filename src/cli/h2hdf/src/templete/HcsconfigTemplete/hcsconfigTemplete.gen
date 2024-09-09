@@ -1,0 +1,13 @@
+[driver_name] :: host {
+    hostName = "[driver_name]_host";
+    priority = 50;
+    [driver_name]_device :: device {
+        device0 :: deviceNode {
+            preload = 0;
+            policy = 2;
+            priority = 100;
+            moduleName = "lib[driver_name]_driver.z.so";
+            serviceName = "[driver_name]_interface_service";
+        }
+    }
+}

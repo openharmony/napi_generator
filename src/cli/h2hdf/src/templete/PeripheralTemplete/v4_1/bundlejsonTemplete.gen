@@ -1,0 +1,46 @@
+{
+  "name": "@ohos/drivers_peripheral_[driver_name]",
+  "description": "[driver_name] device driver",
+  "version": "4.1",
+  "license": "Apache License 2.0",
+  "publishAs": "code-segment",
+  "segment": {
+    "destPath": "drivers/peripheral/[driver_name]"
+  },
+  "dirs": {},
+  "scripts": {},
+  "component": {
+    "name": "drivers_peripheral_[driver_name]",
+    "subsystem": "hdf",
+    "features": [
+    ],
+    "syscap": [],
+    "adapted_system_type": ["standard"],
+    "rom": "675KB",
+    "ram": "7400KB",
+    "deps": {
+      "components": [
+        "ipc",
+        "hdf_core",
+        "hilog",
+        "c_utils",
+        "drivers_interface_[driver_name]",
+        "hitrace",
+        "hilog_lite"
+      ],
+      "third_party": [
+        "bounds_checking_function"
+      ]
+    },
+    "build": {
+      "sub_component": [
+        "//drivers/peripheral/[driver_name]:[driver_name]_entry"
+      ],
+      "test": [
+      ],
+      "inner_kits": [
+        
+      ]
+    }
+  }
+}
