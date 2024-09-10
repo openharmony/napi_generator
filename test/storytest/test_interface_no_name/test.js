@@ -37,24 +37,19 @@ describe('interface_no_name', function () {
         assert.strictEqual(ret, '');
     });
     it('test interface_no_name fun2', function () {        
-        let ret = fun2(fp2);
-        //assert.strictEqual(ret, '');
+        fun2(fp2);
     });    
     
     it('test interface_no_name fun3', function () {        
-        let ret = fun3("fun3p1", {nm:"abc",age:20});
-        //assert.strictEqual(ret, '');
+        fun3("fun3p1", {nm:"abc",age:20});
     });
     
     it('test interface_no_name fun4', function () {        
-        let ret = fun4("name");
-        //assert.strictEqual(ret.read, 0);
+        fun4("name");
     });
     
     it('test interface_no_name fun5', function () {
         fun5(value);   
-        //let ret = fun5(value);
-        //assert.strictEqual(ret, void);
     });
     it('test interface_no_name fun6', function () {     
         fun6("name", value);

@@ -57,28 +57,32 @@ function readFiles() {
     }
 }
 
+function checkFileContent(files) {
+    (function iterator(i) {
+        if (i === files.length) {
+            return;
+        }
+        fs.stat(path.join(pathDir + '', files[i]), function (err, data) {
+            if (err) {
+                NapiLog.logError('read file error' + err);
+                return;
+            }
+            if (data.isFile()) {
+                let fileName = files[i];
+                checkGenerate(pathDir + '/' + fileName);
+            }
+            iterator(i + 1);
+        });
+    })(0);
+}
+
 function readDirFiles() {
     fs.readdir(pathDir + '', function (err, files) {
         if (err) {
             NapiLog.logError('readdir file error' + err);
             return;
         }
-        (function iterator(i) {
-            if (i === files.length) {
-                return;
-            }
-            fs.stat(path.join(pathDir + '', files[i]), function (err, data) {
-                if (err) {
-                    NapiLog.logError('read file error' + err);
-                    return;
-                }
-                if (data.isFile()) {
-                    let fileName = files[i];
-                    checkGenerate(pathDir + '/' + fileName);
-                }
-                iterator(i + 1);
-            });
-        })(0);
+        checkFileContent(files);
     });
 }
 

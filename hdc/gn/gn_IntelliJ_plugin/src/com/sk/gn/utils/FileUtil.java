@@ -162,9 +162,13 @@ public class FileUtil {
             if (!isNewFile) {
                 LOG.info("writeTmpFile createNewFile error");
             }
-            FileOutputStream fw = new FileOutputStream(file);
-            fw.write(bs, 0, bs.length);
-            fw.close();
+
+            try (FileOutputStream fw = new FileOutputStream(file)) {
+                fw.write(bs, 0, bs.length);
+            } catch (IOException e) {
+                Gen.notifyMessage(project, e.getMessage(), "Can not Find File:" + oldPath,
+                    NotificationType.ERROR);
+            }
         } catch (IOException e) {
             GenNotification.notifyMessage(project, e.getMessage(), "Can not Find File:" + oldPath,
                     NotificationType.ERROR);
