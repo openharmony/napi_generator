@@ -63,32 +63,36 @@ class AnalyzeMake {
             udpServer_.send("ok", 0, 2, rinfo.port, rinfo.address);//反馈ok给make继续执行
         });
     }
+
+    static checkBreakup(acmd) {
+        acmd += l;
+        if (acmd.length > 0) {
+            cmdlist.push(acmd);
+            let ret = AnalyzeCommand.analyze(acmd);
+            if (ret.length > 0) {
+                analyzeResult.push(...ret);
+            }
+        }
+        acmd = '';
+    }
+
     static analyzeBreakup() {
-        let acmd = ""
+        let acmd = '';
         for (let l of dlist) {
             if (l.endsWith("\\")) { // 合并带有换行符的命令
                 acmd += l;
-            }
-            else {
-                acmd += l;
-                if (acmd.length > 0) {
-                    cmdlist.push(acmd);
-                    let ret = AnalyzeCommand.analyze(acmd);
-                    if (ret.length > 0) {
-                        analyzeResult.push(...ret);
-                    }
-                }
-                acmd = "";
+            } else {
+                AnalyzeCommand.checkBreakup(acmd);
             }
         }
     }
+
     static analyze(makeProjectFile) {
         let makeProjectPath = path.parse(makeProjectFile);
         if (!fs.existsSync(makeProjectFile)) {
             Logger.err("Makefile not exist in " + makeProjectPath.dir);
             return;
-        }
-        if (AnalyzeMake.USE_UDP_COLLECTOR) {
+        } else if (AnalyzeMake.USE_UDP_COLLECTOR) {
             AnalyzeMake.collectByUdp(makeProjectPath.dir);
             return;
         }
@@ -96,7 +100,7 @@ class AnalyzeMake {
         let ret = childProcess.spawn("make", ["-C", makeProjectPath.dir, "-n"]);
         let cmdlist = [];
         let analyzeResult = [];
-        let procData = "";
+        let procData = '';
         ret.stdout.on('data', (data) => {
             procData += data.toString();
             let p = procData.lastIndexOf("\n");

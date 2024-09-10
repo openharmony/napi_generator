@@ -43,28 +43,28 @@ function activate(context) {
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposableMenu);
 	var platform = detectPlatform();
-	if (platform == 'win') {
-		exeFilePath = __dirname + "/search-win.exe";
-	} else if (platform == 'mac') {
-		exeFilePath = __dirname + "/search-macos";
-	} else if (platform == 'Linux') {
-		exeFilePath = __dirname + "/search-linux";
+	if (platform === 'win') {
+		exeFilePath = __dirname + '/search-win.exe';
+	} else if (platform === 'mac') {
+		exeFilePath = __dirname + '/search-macos';
+	} else if (platform === 'Linux') {
+		exeFilePath = __dirname + '/search-linux';
 	}
 }
 
 function executorApiscan(name, genDir) {
-	if (genDir == "" || genDir == null) {
+	if (genDir === '' || genDir === null) {
 		genDir = name;
 	}
-	var command = exeFilePath + " -d " + name + " -o " + genDir;
+	var command = exeFilePath + ' -d ' + name + ' -o ' + genDir;
 	var exec = require('child_process').exec;
 	exec(command, function (error, stdout, stderr) {
-		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ", stderr =" + stderr);
-		if (error || stdout.indexOf("errno") > 0) {
-			vscode.window.showErrorMessage("genError:" + (error != null ? error : "") + stdout);
-			return VsPluginLog.logError("VsPlugin:" + error + stdout);
+		VsPluginLog.logInfo('VsPlugin: stdout =' + stdout + ', stderr =' + stderr);
+		if (error || stdout.indexOf('errno') > 0) {
+			vscode.window.showErrorMessage('genError:' + (error !== null ? error : '') + stdout);
+			return VsPluginLog.logError('VsPlugin:' + error + stdout);
 		}
-		vscode.window.showInformationMessage("Api Scan Successfully");
+		vscode.window.showInformationMessage('Api Scan Successfully');
 	});
 }
 
@@ -73,6 +73,28 @@ function exeFileExit() {
 		return true;
 	}
 	return false;
+}
+
+function checkLoop(items, myExtensionId, boolValue) {
+	for (let i = 0; i < items.length; i++) {
+		if (myExtensionId === items[i] && (i === items.length - 1)) {
+			importToolChain = false;
+		} else if (myExtensionId === items[i] && (i !== items.length - 1)) {
+			importToolChain = boolValue;
+			nextPluginId = items[i + 1];
+		}
+		extensionIds.push(items[i]);
+	}
+}
+
+function checkBoolAndItems(boolValue, items) {
+	if (typeof(boolValue) === 'boolean' && Array.isArray(items)) {
+		if (boolValue === true) {
+			//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
+			let myExtensionId = 'kaihong.ApiScan';
+			checkLoop(items, myExtensionId, boolValue);
+		}
+	}
 }
 
 function register(context, command) {
@@ -89,40 +111,26 @@ function register(context, command) {
 			}
 		);
 
-		if (typeof(boolValue) == 'boolean' && Array.isArray(items)) {
-			if (boolValue == true) {
-				//遍历数组item,查看当前插件id是数组的第几个元素，并拿出下一个元素，并判断当前id是否是最后一个元素并做相应处理
-				let myExtensionId = 'kaihong.ApiScan';
-				for (let i = 0; i < items.length; i++) {
-					if (myExtensionId == items[i] && (i == items.length - 1)) {
-						importToolChain = false;
-					} else if (myExtensionId == items[i] && (i != items.length - 1)) {
-						importToolChain = boolValue;
-						nextPluginId = items[i + 1];
-					}
-					extensionIds.push(items[i]);
-				}
-			}
-		}
+		checkBoolAndItems(boolValue, items);
 		
 		globalPanel.webview.html = getWebviewContent(context, importToolChain);
 		let msg;
 		globalPanel.webview.onDidReceiveMessage(message => {
 			msg = message.msg;
-			if (msg == "cancel") {
+			if (msg === 'cancel') {
 				globalPanel.dispose();
 			}
-			else if (msg == "api_scan") {
+			else if (msg === 'api_scan') {
 				checkReceiveMsg(message);
 			} else {
 				selectPath(globalPanel, message);
 			}
 		}, undefined, context.subscriptions);
 		let fn = re.getFileInPath(uri.fsPath);
-		let tt = re.match("[a-zA-Z_0-9]", fn);
+		let tt = re.match('[a-zA-Z_0-9]', fn);
 		var result = {
-			msg: "selectASFilePath",
-			path: tt ? uri.fsPath : ""
+			msg: 'selectASFilePath',
+			path: tt ? uri.fsPath : ''
 		}
 		globalPanel.webview.postMessage(result);
 	});
@@ -133,18 +141,18 @@ function checkReceiveMsg(message) {
 	let name = message.fileNames;
 	let genDir = message.genDir;
 	let buttonName = message.buttonName;
-	name = re.replaceAll(name, " ", "");
-	if ("" == name) {
-		vscode.window.showErrorMessage("Please enter the path!");
+	name = re.replaceAll(name, ' ', '');
+	if ('' === name) {
+		vscode.window.showErrorMessage('Please enter the path!');
 		return;
 	}
 	if (exeFileExit()) {
 		executorApiscan(name, genDir);
-		if (buttonName == 'Next') {
+		if (buttonName === 'Next') {
 			startNextPlugin();
 		}
 	} else {
-		vscode.window.showInformationMessage("Copy executable program to " + __dirname);
+		vscode.window.showInformationMessage('Copy executable program to ' + __dirname);
 	}
 }
 
@@ -152,15 +160,15 @@ function checkReceiveMsg(message) {
 * 获取插件执行命令
 */
 function nextPluginExeCommand(nextPluginId) {
-    if (nextPluginId == "kaihong.ApiScan") {
+    if (nextPluginId === 'kaihong.ApiScan') {
 		return 'api_scan';
-	} else if (nextPluginId == "kaihong.gn-gen") {
+	} else if (nextPluginId === 'kaihong.gn-gen') {
 		return 'generate_gn';
-	} else if (nextPluginId == "kaihong.service-gen") {
+	} else if (nextPluginId === 'kaihong.service-gen') {
 		return 'generate_service';
-	} else if (nextPluginId == "kaihong.ts-gen") {
+	} else if (nextPluginId === 'kaihong.ts-gen') {
 		return 'generate_ts';
-	} else if (nextPluginId == "kaihong.napi-gen") {
+	} else if (nextPluginId === 'kaihong.napi-gen') {
 		return 'generate_napi';
 	} else {
 		return null;
@@ -195,9 +203,9 @@ function selectPath(panel, message) {
 	return vscode.window.showOpenDialog(options).then(fileUri => {
 	   if (fileUri && fileUri[0]) {
 		   console.log('Selected file: ' + fileUri[0].fsPath);
-		   let filePath = "";
+		   let filePath = '';
 		   for (let index = 0; index < fileUri.length; index++) {
-				filePath += fileUri[index].fsPath.concat(",");
+				filePath += fileUri[index].fsPath.concat(',');
 		   }
 		   var result = {
 				msg: message.msg,
@@ -227,7 +235,7 @@ function getWebViewContent(context, templatePath) {
 	const dirPath = path.dirname(resourcePath);
 	let html = fs.readFileSync(resourcePath, 'utf-8');
 	html = html.replace(/(<link.+?href="|<script.+?src="|<iframe.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
-        if ($2.indexOf("https://") < 0) {
+        if ($2.indexOf('https://') < 0) {
             return $1 + globalPanel.webview.asWebviewUri(vscode.Uri.file(path.resolve(dirPath, $2))) + '"';
         } else {
             return $1 + $2 + '"';

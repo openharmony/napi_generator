@@ -17,53 +17,62 @@ const { checkOutBody, print } = require("../tools/tool");
 const { FuncType } = require("../tools/common");
 const { NapiLog } = require("../tools/NapiLog");
 
-/**函数参数解析 */
-function analyzeParams(funcName, values) {
-    let result = []
-    let funcType = FuncType.DIRECT
-    let optionalParamCount = 0; // 可选参数的个数
-    while (values.length > 0) {
-        let v = checkOutBody(values, 0, ["", ","])
-        if (v == null)
-            v = values
-        values = values.substring(v.length, values.length)
-        let matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *([a-zA-Z<,>|_0-9\\[\\]\\(\\):='{}]+)", v)
-        if (matchs === null && (funcName === "on" || funcName === "off")) {
-            // on和off的第一个参数的类型可以是一串字符
-            matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *\"([a-zA-Z|_0-9\\[\\]\\(\\):='{}]+)\"", v)
-        }
-        if (matchs != null) {
-            let type = re.getReg(v, matchs.regs[3])
-            if (type.indexOf("Map") < 0) {
-                type = type.replace(/,/g, "")
-            }
+function checkMatchers(v, matchs, optionalParamCount, result, funcType, funcName) {
+    let type = re.getReg(v, matchs.regs[3]);
+    if (type.indexOf('Map') < 0) {
+        type = type.replace(/,/g, '');
+    }
 
-            let optionalFlag = re.getReg(v, matchs.regs[2]) === '?' ? true : false;
-            let checkParamOk = true;
-            if (optionalFlag) {
-                optionalParamCount++;
-            } else if (optionalParamCount > 0) {
-                // 可选参数之后不能再有必选参数，必选都是可选参数。
-                NapiLog.logError("Invalid parameter [%s] of function [%s],".format(v, funcName) 
-                        + " the required parameter cannot follow an optional parameter.");
-                checkParamOk = false;
-            } 
-            if (checkParamOk) {
-                result.push({ "name": re.getReg(v, matchs.regs[1]), "type": type , "optional": optionalFlag})
-                if (type.indexOf("AsyncCallback") >= 0)
-                    funcType = FuncType.ASYNC
-                if (funcType === FuncType.DIRECT && type.indexOf("Callback") >= 0 && type.indexOf("AsyncCallback") < 0)
-                    funcType = FuncType.SYNC
-            }
+    let optionalFlag = re.getReg(v, matchs.regs[2]) === '?' ? true : false;
+    let checkParamOk = true;
+    if (optionalFlag) {
+        optionalParamCount++;
+    } else if (optionalParamCount > 0) {
+        // 可选参数之后不能再有必选参数，必选都是可选参数。
+        NapiLog.logError('Invalid parameter [%s] of function [%s],'.format(v, funcName) +
+            ' the required parameter cannot follow an optional parameter.');
+        checkParamOk = false;
+    } 
+    if (checkParamOk) {
+        result.push({ 'name': re.getReg(v, matchs.regs[1]), 'type': type, 'optional': optionalFlag});
+        if (type.indexOf('AsyncCallback') >= 0) {
+            funcType = FuncType.ASYNC;
         }
-        else {
-            NapiLog.logError("方法[%s]的参数列表[%s]解析失败。".format(funcName, v));
-            NapiLog.logError("Failed to analyse parameter [%s] of function [%s].".format(v, funcName));
+        if (funcType === FuncType.DIRECT && type.indexOf('Callback') >= 0 && type.indexOf('AsyncCallback') < 0) {
+            funcType = FuncType.SYNC;
         }
     }
-    return [result, funcType]
+}
+
+function checkAnalyzeParams(values, result, funcType, optionalParamCount, funcName) {
+    while (values.length > 0) {
+        let v = checkOutBody(values, 0, ['', ',']);
+        if (v === null) {
+            v = values;
+        }
+        values = values.substring(v.length, values.length);
+        let matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *([a-zA-Z<,>|_0-9\\[\\]\\(\\):='{}]+)", v);
+        if (matchs === null && (funcName === 'on' || funcName === 'off')) {
+            // on和off的第一个参数的类型可以是一串字符
+            matchs = re.match("([a-zA-Z_0-9\\.]+)(\\?*): *\"([a-zA-Z|_0-9\\[\\]\\(\\):='{}]+)\"", v);
+        } else if (matchs != null) {
+            checkMatchers(v, matchs, optionalParamCount, result, funcType, funcName);
+        } else {
+            NapiLog.logError('方法[%s]的参数列表[%s]解析失败。'.format(funcName, v));
+            NapiLog.logError('Failed to analyse parameter [%s] of function [%s].'.format(v, funcName));
+        }
+    }
+}
+
+/**函数参数解析 */
+function analyzeParams(funcName, values) {
+    let result = [];
+    let funcType = FuncType.DIRECT;
+    let optionalParamCount = 0; // 可选参数的个数
+    checkAnalyzeParams(values, result, funcType, optionalParamCount, funcName);
+    return [result, funcType];
 }
 
 module.exports = {
     analyzeParams
-}
+};
