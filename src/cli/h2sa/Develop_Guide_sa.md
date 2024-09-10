@@ -4,7 +4,7 @@
 
 ​		当开发人员为OpenHarmony系统框架开发某些功能时，有时需要将这个功能包装成一个独立的服务进程运行在系统中，为了其它应用进程能够调用此服务，开发人员需要基于系统IPC通信框架编写一套远程接口调用实现。		Service代码生成工具能够帮助用户生成框架代码，提升开发效率。用户只需提供一个定义远程方法的.h头文件，工具会自动生成整个Service框架的代码，包含Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及开机自启动相关配置文件。用户可基于框架代码专注于业务功能的编写。
 
-![image-20240723101920662](C:\Users\kaihong\AppData\Roaming\Typora\typora-user-images\image-20240723101920662.png)
+![image](./docs/figures/service_frame_structure.png)
 
 ---
 
@@ -39,137 +39,7 @@ h2sa
 
 运行逻辑
 
-![image-20240723144207759](C:\Users\kaihong\AppData\Roaming\Typora\typora-user-images\image-20240723144207759.png)
-
-js文件中的部分重要函数和参数：
-
-~~~
-//main.js
-
-let ops = stdio.getopt({
-    //命令行参数
-    'filename': { key: 'f', args: 1, description: '.h file', default: '' },
-    'out': { key: 'o', args: 1, description: 'output directory', default: '.' },
-    'loglevel': { key: 'l', args: 1, description: 'Log Level: 0~3', default: '1' },
-    'serviceId': { key: 's', args: 1, description: 'service register id: 9000~16777214', default: '9000' },
-    'versionTag': { key: 'v', args: 1, description: 'version tag: 4.1 / 3.2', default: '3.2' }
-});
-
-function genServiceFile(fileName) {
-    // 1. h文件解析保存为结构体
-    let rootInfo = analyze.doAnalyze(fileName, ops);
-
-    // 2. 根据结构体生成代码
-    let fileContent = gen.doGenerate(rootInfo);
-
-    // 3. 创建service工程目录
-    let servicePath = re.pathJoin(ops.out, rootInfo.serviceName.toLowerCase() + 'service');
-    let etcPath = re.pathJoin(servicePath, 'etc');
-    let includePath = re.pathJoin(servicePath, 'include');
-    let interfacePath = re.pathJoin(servicePath, 'interface');
-    let profilePath = re.pathJoin(servicePath, 'sa_profile');
-    let srcPath = re.pathJoin(servicePath, 'src');
-    createFolder(servicePath);
-    createFolder(etcPath);
-    createFolder(includePath);
-    createFolder(interfacePath);
-    createFolder(profilePath);
-    createFolder(srcPath);
-
-    // 4. 生成代码保存为文件
-    wirte2Disk(fileContent.serviceCfgGnFile, etcPath);
-    wirte2Disk(fileContent.proxyHFile, includePath);
-    wirte2Disk(fileContent.stubHFile, includePath);
-    ...
-}
-
-~~~
-
-~~~
-// analyze.js
-
-function doAnalyze(hFilePath, cmdParam) {
-    let parseResult = parseFileAll(hFilePath);
-    parseResult.isInclude = false;
-    AllParseFileList.push(parseResult);
-    let rootInfo = {
-        'serviceName': '',
-        'nameSpace': [],
-        'class': [],
-        'includes': [],
-        'using': [],
-        'serviceId': (cmdParam.serviceId === null || cmdParam.serviceId === undefined) ?
-            '9002' : cmdParam.serviceId,
-        'versionTag': (cmdParam.versionTag === null || cmdParam.versionTag === undefined) ?
-            '3.2' : cmdParam.versionTag,
-        'rawContent': parseResult.rawContent
-    };
-
-    analyzeNameSpace(rootInfo, parseResult);
-    analyzeClasses(rootInfo, parseResult.classes);
-    rootInfo.includes = parseResult.includes;
-    rootInfo.using = parseResult.using;
-    return rootInfo;   //经过解析后返回的结构体；作为参数，传值调用使用
-}
-
-~~~
-
-~~~
-//generate.js
-let fileContent = {
-    'iServiceHFile': {},
-    'proxyHFile': {},
-    'stubHFile': {},
-    'serviceHFile': {},
-    'proxyCppFile': {},
-    'stubCppFile': {},
-    'serviceCppFile': {},
-    'clientCppFile': {},
-    'buildGnFile': {},
-    'bundleJsonFile': {},
-    'profileGnFile': {},
-    'profileXmlFile': {},
-    'profileJsonFile': {},
-    'serviceCfgFile': {},
-    'serviceCfgGnFile': {},
-    'iServiceCppFile': {},
-};
-
-function doGenerate(rootInfo) {
-    rootHFileSrc = rootInfo.rawContent;
-    let lowServiceName = rootInfo.serviceName.toLowerCase();
-    let upperServiceName = rootInfo.serviceName.toUpperCase();
-
-    // 生成文件名
-    genFileNames(lowServiceName, rootInfo);
-
-    // 按模板生成.h和.cpp文件内容框架
-    let files = genFilesByTemplate(upperServiceName, lowServiceName, rootInfo);
-
-    // 替换文件includes
-    replaceIncludes(files, rootInfo);
-	...
-
-    // 替换namespace
-    replaceServiceName(files, rootInfo);
-
-    // 替换类名
-    let classInfo = rootInfo.class[0];
-    replaceClassName(files, classInfo);
-	...
-	
-    // 文件内容汇总
-    fileContent.iServiceHFile.content = files.iServiceH;
-    fileContent.proxyHFile.content = files.proxyH;
-    fileContent.stubHFile.content = files.stubH;
-    fileContent.serviceHFile.content = files.serviceH;
-    fileContent.proxyCppFile.content = files.proxyCpp;
-    fileContent.stubCppFile.content = files.stubCpp;
-    fileContent.serviceCppFile.content = files.serviceCpp;
-    fileContent.clientCppFile.content = files.clientCpp;
-	...
-    return fileContent;
-}
+![image](./docs/figures/service_runLogic.png)
 
 ~~~
 
@@ -228,6 +98,3 @@ function doGenerate(rootInfo) {
        ├── test_service_proxy.cpp
        └── test_service_stub.cpp
    ~~~
-
-   
-
