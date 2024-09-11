@@ -77,6 +77,29 @@ h2sa工具，即SERVICE框架生成工具，当开发者为OpenHarmony系统框�
 
    ![](./docs/figures/h2sa_outRes.png)
 
+   ~~~
+   ├── BUILD.gn                                             # 整个服务的编译文件，包含2个内容:1)服务端程序动态库编译  2)客户端可执行程序编译
+   ├── bundle.json                                          # 将服务包装成一个OpenHarmoney子系统组件，提供相关信息
+   ├── etc                                                  # 服务启动配置目录，如果服务不需要开机自动启动，可以删除此目录。
+   │   ├── BUILD.gn
+   │   └── test_service.cfg                                 # 服务自启动配置文件，编译烧录后会在/ect/init/下生成xxx_service.cfg启动文件
+   ├── include
+   │   ├── test_service.h                                   # 服务端头文件
+   │   ├── test_service_proxy.h                             # proxy 客户端头文件，为开发人员封装remote请求发送的处理
+   │   └── test_service_stub.h                              # stub 服务端头文件，为开发人员封装remote请求接收的处理
+   ├── interface
+   │   └── i_test_service.h                                 # 由用户提供的.h文件生成的remote接口文件，stub和proxy都基于此文件实现接口。
+   ├── sa_profile                                           
+   │   ├── 9000.json                                        # 服务配置文件
+   │   └── BUILD.gn                                      
+   └── src
+       ├── i_test_service.cpp                               # 接口实现文件
+       ├── test_client.cpp                                  # 客户端程序
+       ├── test_service.cpp                                 # 服务端程序
+       ├── test_service_proxy.cpp                           # 客户端代理实现
+       └── test_service_stub.cpp                            # 服务端 stub 实现
+   ~~~
+
 #### 生成物的应用和验证
 
 1. 编译步骤：生成的testservice文件夹放在对应版本的源码根目录下
