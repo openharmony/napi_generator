@@ -75,7 +75,7 @@ h2sa工具，即SERVICE框架生成工具，当开发者为OpenHarmony系统框�
 
 1. 输出testservice文件夹，其中的文件如下所示：
 
-   ![](./docs/figures/h2sa_outRes.png)
+   ![](../figures/h2sa_outRes.png)
 
    ~~~
    ├── BUILD.gn                                             # 整个服务的编译文件，包含2个内容:1)服务端程序动态库编译  2)客户端可执行程序编译
