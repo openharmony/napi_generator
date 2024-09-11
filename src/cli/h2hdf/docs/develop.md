@@ -53,7 +53,7 @@ main.js为脚本入口，其中使用stdio.getopt获取参数，其中，参数�
 
   -n, drivername，例如：hello
 
-  -v, 可选参数，版本，默认为v4_1
+  -v, 可选参数，版本，默认为4.1
 
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径。
 
@@ -62,7 +62,7 @@ let ops = stdio.getopt({
     // 输入driver name ,输入一个字符串，默认为hello
     'drivername': { key: 'n', args: 1, description: 'driver name', default: 'hello' },
     // 输入版本号
-    'version': { key: 'v', args: 1, description: 'source version', default: 'v4_1' },
+    'version': { key: 'v', args: 1, description: 'source version', default: '4.1' },
     // 输出文件夹路径
     'out': { key: 'o', args: 1, description: 'output directory', default: '' },
 });
@@ -72,7 +72,7 @@ let ops = stdio.getopt({
 
 ```
 ...
-const allowedVersion = ['v4_1'];
+const allowedVersion = ['4.1'];
 function isValidValue(value, allowedVersion) {
   return allowedVersion.includes(value);
 }
@@ -105,20 +105,21 @@ function genDriverFramework(driverName, frameworkJson, version, out = '') {
 
 ### 适配新版本
 
-若当前工具不能满足需要，用户可对工具进行二次开发。例如：当前工具适配的源码版本是4.1，若用户需要适配其它版本，用户需修改以下文件进行适配：
+适配新版本的步骤如下：
 
-1.在main.js中，在allowedVersion数组中加入适配的版本号，其中版本号需统一写法，如4.1统一为v4_1, 5.0统一为v5_0。
+1.在main.js中，在allowedVersion数组中加入适配的版本号，其中版本号需统一写法，如4.1
 
-2.在templete目录下，以适配5.0源码为例，IdlInterfaceTemplete目录下新建v5_0文件夹，在v5_0文件夹下新增bundle.json模板，在 Periphheral, Periphheral/DumpExampleTemplete, Periphheral/HdiServiceTemplete新增v5_0文件夹，在v5_0下新增对应的BUILD.gn模板，并在framework.json中新增5.0版本的bundle.json,BUILD.gn模板路径。
+2.在templete目录下，IdlInterfaceTemplete目录下新建适配版本文件夹，如v4_1，在适配版本文件夹下新增bundle.json模板，在 Periphheral, Periphheral/DumpExampleTemplete, Periphheral/HdiServiceTemplete新增适配版本文件夹，在适配版本下新增对应的BUILD.gn模板，并在framework.json中新增版本的bundle.json,BUILD.gn模板路径。
 
-3.在generate.js中，在genInterface方法、genExampleDumpfile方法、genHdiService方法、genBuildFile方法中修改相应代码：当rootInfo.version为v5_0时，替换对应的BUILD.gn, bundle.json模板路径。
+3.在generate.js中，在genInterface方法、genExampleDumpfile方法、genHdiService方法、genBuildFile方法中修改相应代码：当rootInfo.version为新增版本时，替换对应的BUILD.gn, bundle.json模板路径。
 
-若适配新版本需要增加其它配置，可在templete目录下增加配置模板，并在framework.json中增加配置文件模板的路径，最后在generate.js中生成最终配置文件。
+4.适配新版本增加其它配置时，可在templete目录下增加配置模板，并在framework.json中增加配置文件模板的路径，然后在generate.js中替换模板并生成配置文件。
 
 ## Roadmap
 
 | 工作目标                      | 工作内容                                                     | 验收要求                                                     | 时间节点         |
 | ----------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------- |
 | 支持一个简单的sample_host模板 | 根据工具基于OpenHarmony4.1源码，编写脚本生成Hdf框架模板，其中包括hcsconfig模板，idl接口模板，peripheral模板 | 生成之后可动态加载Host，并能使用Hidump查看日志，打印出"hello word!" | 2024.8（已完成） |
-| 完善host模板                  | 增加testapp测试程序；完善模板中hitrace日志跟踪定位工具的使用；模板中增加死亡监听：客户端监听服务端消亡、服务端监听客户端消亡、服务端监听底层HDI侧消亡 | 驱动host能随镜像起来，在testapp中能测试监听客户端/服务端/hdi侧消亡是否成功；检测接口被调用时打印hitrace日志 | 2024.10          |
+| 完善host模板                  | 增加testapp测试程序；完善模板中hitrace日志跟踪定位工具的使用；模板中增加死亡监听：客户端监听服务端消亡、服务端监听客户端消亡、服务端监听底层HDI侧消亡 | 驱动host能随镜像起来，服务端/客户端/HDI侧消亡时能打印出日志；检测接口被调用时打印hitrace日志 | 2024.10          |
+| 适配5.0                       | 适配5.0release版本                                           | 适配5.0时，可以编译出对应版本的工具，且编译验证成功          | 2024.11          |
 
