@@ -77,7 +77,7 @@ let ops = stdio.getopt({
 
 3.在generate.js中，在doGenerate方法、genFilesByTemplate方法、genFileNames方法中修改相应代码：当rootInfo.version为v5_0时，替换对应的BUILD.gn, bundle.json模板路径。
 
-若适配新版本需要增加其它配置，可在templete目录下增加配置模板，并增加配置文件模板的路径，最后在generate.js中生成最终配置文件。
+若适配新版本需要增加其它配置，可在templete目录下增加配置模板，并增加配置文件模板的路径，在generate.js中生成配置文件。
 
 #### roadMap
 
