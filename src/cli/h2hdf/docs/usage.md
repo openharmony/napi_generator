@@ -30,7 +30,7 @@ node main.js -n hello
 
   -n, drivername，例如：hello
 
-  -v, 可选参数，版本，默认为v4_1
+  -v, 可选参数，版本，默认为4.1
 
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径。
 
@@ -66,24 +66,25 @@ hellohdf
 
 ### 编译
 
-1.将hellohdf/Peripheral文件夹下的hello文件夹拷贝到源码drivers/peripheral目录下
+1.**拷目录：**将hellohdf/Peripheral文件夹下的hello文件夹拷贝到源码drivers/peripheral目录下
 
 ```
-cp hellohdf/Peripheral/hello 源码/drivers/peripheral
+cp hellohdf/Peripheral/hello 源码/drivers/peripheral -r
 ```
 
-将hellohdf/IdlInterface文件夹下的hello文件夹拷贝到源码drivers/interface目录下
+2.**拷目录：**将hellohdf/IdlInterface文件夹下的hello文件夹拷贝到源码drivers/interface目录下
 
 ```
-cp hellohdf/IdlInterface/hello 源码/drivers/interface
+cp hellohdf/IdlInterface/hello 源码/drivers/interface -r
 ```
 
-将hellohdf/HcsConfig/device_info.hcs中的内容拷贝到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中，如下所示：
+3.**改文件：**将hellohdf/HcsConfig/device_info.hcs中的内容拷贝到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中，如下所示：
 
 ```
  root {
     device_info {
        ...
+       // 拷贝以下内容
        hello :: host {
             hostName = "hello_host";
             priority = 50;
@@ -97,12 +98,13 @@ cp hellohdf/IdlInterface/hello 源码/drivers/interface
                 }
             }
         }
+        // 拷贝上述内容
         ...
      }
  }
 ```
 
-2.配置产品：以rk3568为例，在源码vendor/hihope/rk3568/config.json文件中hdf子系统的components中增加以下内容：
+4.**配置产品：**以rk3568为例，在源码vendor/hihope/rk3568/config.json文件中hdf子系统的components中增加以下内容：
 
 ```
 {
@@ -115,9 +117,9 @@ cp hellohdf/IdlInterface/hello 源码/drivers/interface
 }
 ```
 
-注意：drivers_interface_hello为drivers/interface/hello/v1_0/BUILD.gn中的part_name。drivers_peripheral_hello为drivers/peripheral/hello/bundle.json中的component。
+"drivers_interface_hello"中的"drivers_peripheral_"为固定格式，"drivers_interface_hello"即为生成的drivers/interface/hello/v1_0/BUILD.gn中的part_name。"drivers_peripheral_hello"的"drivers_peripheral_"为固定格式，"drivers_peripheral_hello"即为生成的drivers/peripheral/hello/bundle.json中的component。
 
-3.编译，在源码下执行以下命令进行编译：
+5.**编译烧录：**在源码下执行以下命令进行编译：
 
 ```
 ./build.sh --product-name rk3568
@@ -129,20 +131,20 @@ cp hellohdf/IdlInterface/hello 源码/drivers/interface
 
 #### 动态加载
 
-1.查看hostId：hdc连接开发板，进入/vendor/etc/init路径下，并查看hdf_devhost.cfg文件，使用hdc命令如下：
+1.查看hostId：hdc连接开发板，查看hdf_devhost.cfg文件，使用hdc命令如下：
 
 ```
-cat hdf_devhost.cfg
+cat vendor/etc/init/hdf_devhost.cfg
 ```
 
 根据hostName找到对应hostId，如本例的hostName为hello_host，对应找到“name”为“hello_host”那一项，查看“path”的第二个参数，则为hostName对应的hostId，即14，如下所示：
 
 ![image-20240724093743837](./figures/pic_show_hostid.png)
 
-2.运行可执行文件hdf_devhost，手动拉起host：进入/vendor/bin路径下，运行可执行文件hdf_devhost，传入一个参数为hostId，第二个参数为hostName；运行命令如下所示：
+2.运行可执行文件hdf_devhost，手动拉起host：运行可执行文件hdf_devhost，传入一个参数为hostId，第二个参数为hostName；运行命令如下所示：
 
 ```
-./hdf_devhost 14 hello_host
+./vendor/bin/hdf_devhost 14 hello_host
 ```
 
 ![image-20240903114845035](./figures/pic_show_exe.png)
