@@ -1,9 +1,7 @@
-# Usage guide
+# Usage Guide
 
 ## 简介
 在OpenHarmony系统中，上层应用或服务层通过调用HDF框架提供的HDI接口，能够以一种标准化和抽象化的方式与底层硬件设备进行交互。使用h2hdf工具，用户只需提供一个drivername，工具会自动生成整个框架的代码，包含驱动配置文件、idl接口、驱动程序driver和驱动服务框架。
-
-![image-20240724093743837](./figures/pic_code_frame.png)
 
 ## 约束
 系统：建议Ubuntu 20.04或者Windows 10
@@ -32,7 +30,7 @@ node main.js -n hello
 
   -n, drivername，例如：hello
 
-  -v, 可选参数，版本，默认为4.1
+  -v, 可选参数，版本，默认为v4_1
 
   -o, 可选参数，默认为当前目录，指定生成框架代码输出路径。
 

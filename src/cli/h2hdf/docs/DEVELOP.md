@@ -47,16 +47,22 @@ h2hdf
 
 运行逻辑
 
-![image-20240724093743837](./figures/pic_code_frame.png)
+![image-20240724093743837](./figures/pic_code_process.png)
 
-main.js为脚本入口，其中使用stdio.getopt获取参数，参数分别为： -n, drivername，例如：hello；-v, 可选参数，版本，默认为4.1；-o, 可选参数，默认为当前目录，指定生成框架代码输出路径。
+main.js为脚本入口，其中使用stdio.getopt获取参数，其中，参数详情如下：
+
+  -n, drivername，例如：hello
+
+  -v, 可选参数，版本，默认为v4_1
+
+  -o, 可选参数，默认为当前目录，指定生成框架代码输出路径。
 
 ```
 let ops = stdio.getopt({
     // 输入driver name ,输入一个字符串，默认为hello
     'drivername': { key: 'n', args: 1, description: 'driver name', default: 'hello' },
     // 输入版本号
-    'version': { key: 'v', args: 1, description: 'source version', default: '4.1' },
+    'version': { key: 'v', args: 1, description: 'source version', default: 'v4_1' },
     // 输出文件夹路径
     'out': { key: 'o', args: 1, description: 'output directory', default: '' },
 });
@@ -66,7 +72,7 @@ let ops = stdio.getopt({
 
 ```
 ...
-const allowedVersion = ['4.0', '4.1', '5.0', '5.1'];
+const allowedVersion = ['v4_1'];
 function isValidValue(value, allowedVersion) {
   return allowedVersion.includes(value);
 }
@@ -74,17 +80,6 @@ function isValidValue(value, allowedVersion) {
 function checkInput(input) {
   const regex = /\b[a-zA-Z_][a-zA-Z0-9_]*\b/;
   return regex.test(input);
-}
-```
-
-使用getJsonCfg读取json文件中hdf框架模板的路径：
-
-```
-function getJsonCfg(jsonFilePath) {
-  let jsonCfg = null;
-  let jsonFile = fs.readFileSync(jsonFilePath, { encoding: 'utf8' });
-  jsonCfg = JSON.parse(jsonFile);
-  return jsonCfg;
 }
 ```
 
@@ -106,178 +101,24 @@ function genDriverFramework(driverName, frameworkJson, version, out = '') {
 }
 ```
 
-## 工具使用方法说明
+## 开发指导
 
-### 生成
+### 适配新版本
 
-1.安装typescript：在napi_generator/src/cli/h2hdf/src目录下执行命令：
+若当前工具不能满足需要，用户可对工具进行二次开发。例如：当前工具适配的源码版本是4.1，若用户需要适配其它版本，用户需修改以下文件进行适配：
 
-	npm i typescript
+1.在main.js中，在allowedVersion数组中加入适配的版本号，其中版本号需统一写法，如4.1统一为v4_1, 5.0统一为v5_0。
 
-2.安装stdio：在napi_generator/src/cli/h2hdf目录下执行命令： 
+2.在templete目录下，以适配5.0源码为例，IdlInterfaceTemplete目录下新建v5_0文件夹，在v5_0文件夹下新增bundle.json模板，在 Periphheral, Periphheral/DumpExampleTemplete, Periphheral/HdiServiceTemplete新增v5_0文件夹，在v5_0下新增对应的BUILD.gn模板，并在framework.json中新增5.0版本的bundle.json,BUILD.gn模板路径。
 
-	npm i stdio
+3.在generate.js中，在genInterface方法、genExampleDumpfile方法、genHdiService方法、genBuildFile方法中修改相应代码：当rootInfo.version为v5_0时，替换对应的BUILD.gn, bundle.json模板路径。
 
-3.在napi_generator/src/cli/h2hdf/src下执行以下命令生成ts声明文件：
+若适配新版本需要增加其它配置，可在templete目录下增加配置模板，并在framework.json中增加配置文件模板的路径，最后在generate.js中生成最终配置文件。
 
-```
-node main.js -n hello
-```
+## Roadmap
 
-其中，参数详情如下：
-
-  -n, drivername，例如：hello
-
-  -v, 可选参数，版本，默认为4.1
-
-  -o, 可选参数，默认为当前目录，指定生成框架代码输出路径。
-
-6.执行成功后在napi_generator/src/cli/h2hdf/src/下生成hellohdf文件夹，文件夹中目录结构如下所示：
-
-```
-hellohdf
-├── HcsConfig                                      # hcs配置文件
-│   ├── device_info.hcs                            # 内容配置到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中
-├── IdlInterface                                                             
-│   ├── hello                                      # 拷贝到源码drivers/interface          
-│   │   ├── v1_0              
-│   │   │   ├── BUILD.gn                           
-│   │   │   ├── IHelloInterface.idl                # idl接口               
-│   │   ├── bundle.json
-├── Peripheral                                     # 拷贝到源码drivers/peripheral
-│   ├── hello                                             
-│   │   ├── hal                                           
-│   │   │   ├── include
-│   │   │   │   ├── hello_dump.h                          
-│   │   │   ├── BUILD.gn
-│   │   │   ├── hello_dump.c                       # hidump实现              
-│   │   ├── hdi_service                            # hdi_service
-│   │   │   ├── BUILD.gn                           # 编译两个动态库：libhello_driver、libhello_interface_service_1.0
-│   │   │   ├── hello_interface_driver.cpp         # driver：定义驱动入口的对象，将驱动入口注册到HDF框架中；在加载驱动时HDF框架会先调用Bind函数，再调用Init函数加载该驱动；当Init调用异常时，HDF框架会调用Release释放驱动资源并退出
-│   │   │   ├── hello_interface_service.cpp        # 驱动服务
-│   │   │   ├── hello_interface_service.h
-│   │   ├── utils/interface
-│   │   │   ├── hello_log.h                        # 日志文件
-│   │   ├── BUILD.gn                               
-│   │   ├── bundle.json
-```
-
-### 编译
-
-1.将hellohdf/Peripheral文件夹下的hello文件夹拷贝到源码drivers/peripheral目录下
-
-```
-cp hellohdf/Peripheral/hello 源码/drivers/peripheral
-```
-
-将hellohdf/IdlInterface文件夹下的hello文件夹拷贝到源码drivers/interface目录下
-
-```
-cp hellohdf/IdlInterface/hello 源码/drivers/interface
-```
-
-将hellohdf/HcsConfig/device_info.hcs中的内容拷贝到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中，如下所示：
-
-```
- root {
-    device_info {
-       ...
-       hello :: host {
-            hostName = "hello_host";
-            priority = 50;
-            hello_device :: device {
-                device0 :: deviceNode {
-                    preload = 0;
-                    policy = 2;
-                    priority = 100;
-                    moduleName = "libhello_driver.z.so";
-                    serviceName = "hello_interface_service";
-                }
-            }
-        }
-        ...
-     }
- }
-```
-
-2.配置产品：以rk3568为例，在源码vendor/hihope/rk3568/config.json文件中hdf子系统的components中增加以下内容：
-
-```
-{
-  "component": "drivers_interface_hello",
-  "features": []
-},
-{
-  "component": "drivers_peripheral_hello",
-  "features": []
-}
-```
-
-注意：drivers_interface_hello为drivers/interface/hello/v1_0/BUILD.gn中的part_name。drivers_peripheral_hello为drivers/peripheral/hello/bundle.json中的component。
-
-3.编译，在源码下执行以下命令进行编译：
-
-```
-./build.sh --product-name rk3568
-```
-
-编译成功后，将源码下out/rk3568/packages/phone/image镜像烧录在dayu200开发板上
-
-### 验证
-
-#### 动态加载
-
-1.查看hostId：hdc连接开发板，进入/vendor/etc/init路径下，并查看hdf_devhost.cfg文件，使用hdc命令如下：
-
-```
-cat hdf_devhost.cfg
-```
-
-根据hostName找到对应hostId，如本例的hostName为hello_host，对应找到“name”为“hello_host”那一项，查看“path”的第二个参数，则为hostName对应的hostId，即14，如下所示：
-
-![image-20240724093743837](./figures/pic_show_hostid.png)
-
-2.运行可执行文件hdf_devhost，手动拉起host：进入/vendor/bin路径下，运行可执行文件hdf_devhost，传入一个参数为hostId，第二个参数为hostName；运行命令如下所示：
-
-```
-./hdf_devhost 14 hello_host
-```
-
-![image-20240903114845035](./figures/pic_show_exe.png)
-
-注意 ：不可将进程kill
-
-3.查看host是否加载：新开一个命令行窗口，hdc进入开发板，执行以下命令查看进程是否拉起：
-
-```
-ps -A | grep host
-```
-
-屏幕显示hello_host进程号，则表明host已被拉起
-
-![image-20240724093743837](./figures/pic_show_devhostPid.png)
-
-4.使用hidumper查看更多细节信息：
-
-查询所有正在运行的host
-
-```
- hidumper -s HdfDeviceServiceManager -a "-query"
-```
-
-![image-20240724093543096](./figures/pic_show_host.png)
-
-使用hidumper查看更多信息
-
-```
-hidumper -s HdfDeviceServiceManager -a "-host hello_host -c"
-```
-
-打印出Hello, World!
-
-![image-20240724093535915](./figures/pic_show_dump.png)
-
-#### 静态加载
-
-// todo 待补充
+| 工作目标                      | 工作内容                                                     | 验收要求                                                     | 时间节点         |
+| ----------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------- |
+| 支持一个简单的sample_host模板 | 根据工具基于OpenHarmony4.1源码，编写脚本生成Hdf框架模板，其中包括hcsconfig模板，idl接口模板，peripheral模板 | 生成之后可动态加载Host，并能使用Hidump查看日志，打印出"hello word!" | 2024.8（已完成） |
+| 完善host模板                  | 增加testapp测试程序；完善模板中hitrace日志跟踪定位工具的使用；模板中增加死亡监听：客户端监听服务端消亡、服务端监听客户端消亡、服务端监听底层HDI侧消亡 | 驱动host能随镜像起来，在testapp中能测试监听客户端/服务端/hdi侧消亡是否成功；检测接口被调用时打印hitrace日志 | 2024.10          |
 
