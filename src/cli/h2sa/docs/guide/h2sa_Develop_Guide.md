@@ -4,7 +4,7 @@
 
 ​		当开发人员为OpenHarmony系统框架开发某些功能时，有时需要将这个功能包装成一个独立的服务进程运行在系统中，为了其它应用进程能够调用此服务，开发人员需要基于系统IPC通信框架编写一套远程接口调用实现。		Service代码生成工具能够帮助用户生成框架代码，提升开发效率。用户只需提供一个定义远程方法的.h头文件，工具会自动生成整个Service框架的代码，包含Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及开机自启动相关配置文件。用户可基于框架代码专注于业务功能的编写。
 
-![image](./docs/figures/service_frame_structure.png)
+![image](../figures/service_frame_structure.png)
 
 ---
 
@@ -39,142 +39,45 @@ h2sa
 
 ### 运行逻辑
 
-![image](./docs/figures/service_runLogic.png)
+![image](../figures/service_runLogic.png)
 
-### 适配其它版本的方法
+main.js为脚本入口，其中使用stdio.getopt获取参数，其中,参数详情如下： 
 
-#### 场景说明
+​	-f，定义远程服务的.h文件； 
 
-为了实现工具生成的接口被其它子系统或者应用调用，需将生成的代码经系统框架开发者二次开发后编译集成到OpenHarmony系统中，使其生成动态库，供OpenHarmony应用层调用。此处介绍如何将工具生成的源码集成到OpenHarmony 4.1 relsease，可基于此方法集成OpenHarmony 5.0 relsease。
+​	-l,  日志级别（0-3），默认为1； 
 
-#### 修改编译文件
+​	-o, 生成框架代码输入到指定路径下； 
 
-1. 修改testservice/BUILD.gn文件，将utils/native 改为 commonlibrary/c_utils，将samgr_standard改为samgr，− 将hiviewdfx_hilog_native改为hilog，在ohos_shared_library("testservice")中include_dirs内新增"//base/startup/init/interfaces/innerkits/include/syspara",将ohos_shared_library("testservice")中的deps删除，并删除external_deps中的"startup_l2:syspara",同时在external_deps中新增"c_utils:utils", 将ohos_executable("testclient")中的deps删除，同时在external_deps中新增"c_utils:utils"。修改后的BUILD.gn文件内容如下所示：
+​	-s, 指定serviceID。 -
 
-   ```
-   import("//build/ohos.gni")
-   
-   ohos_shared_library("testservice") {
-     sources = [
-       "//testservice/src/i_test_service.cpp",
-       "//testservice/src/test_service_stub.cpp",
-       "//testservice/src/test_service.cpp"
-     ]
-     include_dirs = [
-       "//testservice/include",
-       "//testservice/interface",
-       "//commonlibrary/c_utils/base/include",
-       "//base/startup/init/interfaces/innerkits/include/syspara",
-     ]
-   
-     external_deps = [
-       "hilog:libhilog",
-       "ipc:ipc_core",
-       "safwk:system_ability_fwk",
-       "samgr:samgr_proxy",
-       "c_utils:utils",
-     ]
-   
-     part_name = "testservice_part"
-     subsystem_name = "testservice"
-   }
-   
-   ohos_executable("testclient") {
-       sources = [
-       "//testservice/src/i_test_service.cpp",
-       "//testservice/src/test_service_proxy.cpp",
-       "//testservice/src/test_client.cpp"
-     ]
-   
-     include_dirs = [
-       "//testservice/include",
-       "//testservice/interface",
-       "//commonlibrary/c_utils/base/include",
-     ]
-   
-     external_deps = [
-       "hilog:libhilog",
-       "ipc:ipc_core",
-       "samgr:samgr_proxy",
-       "c_utils:utils",
-     ]
-   
-     part_name = "testservice_part"
-     subsystem_name = "testservice"
-   }
-   ```
+​	-v, 指定版本（3.2和4.1，默认版本为3.2） 
 
-2. 修改testservice/bundle.json文件，将"name": "@ohos/testservice"修改为 "name": "@ohos/testservice_part"；将"samgr_standard"改为"samgr"，"utils_base"修改为"c_utils"；将"hiviewdfx_hilog_native"修改为"hilog"；− 将"deps":"components"下的"starup_l2"删除。修改后的bundle.json文件内容如下所示：
+~~~
+let ops = stdio.getopt({
+    'filename': { key: 'f', args: 1, description: '.h file', default: '' },
+    'out': { key: 'o', args: 1, description: 'output directory', default: '.' },
+    'loglevel': { key: 'l', args: 1, description: 'Log Level: 0~3', default: '1' },
+    'serviceId': { key: 's', args: 1, description: 'service register id: 9000~16777214', default: '9000' },
+    'versionTag': { key: 'v', args: 1, description: 'version tag: 4.1 / 3.2', default: '3.2' }
+});
+~~~
 
-   ```
-   {
-       "name": "@ohos/testservice_part",
-       "description": "system ability framework test",
-       "homePage": "https://gitee.com/",
-       "version": "4.1",
-       "license": "Apache License 2.0",
-       "repository": "",
-       "publishAs": "code-segment",
-       "segment": {
-           "destPath": "testservice"
-       },
-       "dirs": {},
-       "scripts": {},
-       "component": {
-           "name": "testservice_part",
-           "subsystem": "testservice",
-           "adapted_system_type": [
-               "standard"
-           ],
-           "rom": "2048KB",
-           "ram": "~4096KB",
-           "deps": {
-               "components": [
-                   "hilog",
-                   "ipc",
-                   "samgr",
-                   "c_utils",
-                   "safwk"
-               ],
-               "third_party": [ "libxml2" ]
-           },
-           "build": {
-               "sub_component": [
-                   "//testservice:testservice",
-                   "//testservice/sa_profile:testservice_sa_profile",
-                   "//testservice:testclient",
-                   "//testservice/etc:test_service_init"
-               ],
-               "inner_kits": [
-               ],
-               "test": [
-               ]
-           }
-       }
-   }
-   ```
+### 开发指导
 
-3. 步骤 1 修改testservice/sa_profile下的文件以及testservice/etc/test_service.cfg文件， 将testservice/sa_profile/9016.xml文件重命名为9016.json,并将内容修改为json格式，修改后的9016.json文件如下所示：
+#### 适配新版本
 
-   ```
-   {
-     "process":"testservice_sa",
-         "systemability":[
-             {
-                 "name":9016,
-                 "libpath":"libtestservice.z.so",
-                 "run-on-create":false,
-                 "auto-restart":true,
-                 "distributed":false,
-                 "dump-level":1
-             }
-         ]
-   }
-   ```
+若当前工具不能满足需要，用户可对工具进行二次开发。例如：当前工具适配的源码版本是4.1，若用户需要适配其他版本，用户需修改以下文件进行适配：
 
-   修改testservice/sa_profile/BUILD.gn文件：将sources = [ "9016.xml" ]修改为sources = [ "9016.json" ]
+**9月份会进行代码去重整改，预估适配方式如下，整改后如有出入，会进行修改**
 
-   修改testservice/etc/test_service.cfg文件：将"path"内的testservice_sa.xml修改为testservice_sa.json
+1.在main.js中，在allowedVersion数组中加入适配的版本号，如4.1统一为v4_1, 5.0统一为v5_0。
+
+2.在templete目录下，以适配5.0源码为例，IdlInterfaceTemplete目录下新建v5_0文件夹，在v5_0文件夹下新增对应的bundle.json模板，对应的BUILD.gn模板；新增5.0版本的bundle.json,BUILD.gn模板路径。
+
+3.在generate.js中，在doGenerate方法、genFilesByTemplate方法、genFileNames方法中修改相应代码：当rootInfo.version为v5_0时，替换对应的BUILD.gn, bundle.json模板路径。
+
+若适配新版本需要增加其他配置，可在templete目录下增加配置模板，并增加配置文件模板的路径，最后在generate.js中生成最终配置文件。
 
 #### roadMap
 
