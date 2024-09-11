@@ -37,64 +37,149 @@ h2sa
             └── tool.js                       //包含一些辅助工具函数
 ~~~
 
-运行逻辑
+### 运行逻辑
 
 ![image](./docs/figures/service_runLogic.png)
 
-~~~
+### 适配其它版本的方法
 
-### 工具使用方法说明
+#### 场景说明
 
-1. 安装python库 CppHeaderParser
+为了实现工具生成的接口被其它子系统或者应用调用，需将生成的代码经系统框架开发者二次开发后编译集成到OpenHarmony系统中，使其生成动态库，供OpenHarmony应用层调用。此处介绍如何将工具生成的源码集成到OpenHarmony 4.1 relsease，可基于此方法集成OpenHarmony 5.0 relsease。
 
-   ~~~
-   pip install CppHeaderParser
-   ~~~
+#### 修改编译文件
 
-2. 安装typescript：在napi_generator/src/cli/h2sa/src/src目录下执行命令
+1. 修改testservice/BUILD.gn文件，将utils/native 改为 commonlibrary/c_utils，将samgr_standard改为samgr，− 将hiviewdfx_hilog_native改为hilog，在ohos_shared_library("testservice")中include_dirs内新增"//base/startup/init/interfaces/innerkits/include/syspara",将ohos_shared_library("testservice")中的deps删除，并删除external_deps中的"startup_l2:syspara",同时在external_deps中新增"c_utils:utils", 将ohos_executable("testclient")中的deps删除，同时在external_deps中新增"c_utils:utils"。修改后的BUILD.gn文件内容如下所示：
 
-   ~~~
-   npm i typescript
-   ~~~
+   ```
+   import("//build/ohos.gni")
+   
+   ohos_shared_library("testservice") {
+     sources = [
+       "//testservice/src/i_test_service.cpp",
+       "//testservice/src/test_service_stub.cpp",
+       "//testservice/src/test_service.cpp"
+     ]
+     include_dirs = [
+       "//testservice/include",
+       "//testservice/interface",
+       "//commonlibrary/c_utils/base/include",
+       "//base/startup/init/interfaces/innerkits/include/syspara",
+     ]
+   
+     external_deps = [
+       "hilog:libhilog",
+       "ipc:ipc_core",
+       "safwk:system_ability_fwk",
+       "samgr:samgr_proxy",
+       "c_utils:utils",
+     ]
+   
+     part_name = "testservice_part"
+     subsystem_name = "testservice"
+   }
+   
+   ohos_executable("testclient") {
+       sources = [
+       "//testservice/src/i_test_service.cpp",
+       "//testservice/src/test_service_proxy.cpp",
+       "//testservice/src/test_client.cpp"
+     ]
+   
+     include_dirs = [
+       "//testservice/include",
+       "//testservice/interface",
+       "//commonlibrary/c_utils/base/include",
+     ]
+   
+     external_deps = [
+       "hilog:libhilog",
+       "ipc:ipc_core",
+       "samgr:samgr_proxy",
+       "c_utils:utils",
+     ]
+   
+     part_name = "testservice_part"
+     subsystem_name = "testservice"
+   }
+   ```
 
-3. 安装stdio：在napi_generator/src/cli/h2sa/src目录下执行命令
+2. 修改testservice/bundle.json文件，将"name": "@ohos/testservice"修改为 "name": "@ohos/testservice_part"；将"samgr_standard"改为"samgr"，"utils_base"修改为"c_utils"；将"hiviewdfx_hilog_native"修改为"hilog"；− 将"deps":"components"下的"starup_l2"删除。修改后的bundle.json文件内容如下所示：
 
-   ~~~
-   npm i stdio
-   ~~~
+   ```
+   {
+       "name": "@ohos/testservice_part",
+       "description": "system ability framework test",
+       "homePage": "https://gitee.com/",
+       "version": "4.1",
+       "license": "Apache License 2.0",
+       "repository": "",
+       "publishAs": "code-segment",
+       "segment": {
+           "destPath": "testservice"
+       },
+       "dirs": {},
+       "scripts": {},
+       "component": {
+           "name": "testservice_part",
+           "subsystem": "testservice",
+           "adapted_system_type": [
+               "standard"
+           ],
+           "rom": "2048KB",
+           "ram": "~4096KB",
+           "deps": {
+               "components": [
+                   "hilog",
+                   "ipc",
+                   "samgr",
+                   "c_utils",
+                   "safwk"
+               ],
+               "third_party": [ "libxml2" ]
+           },
+           "build": {
+               "sub_component": [
+                   "//testservice:testservice",
+                   "//testservice/sa_profile:testservice_sa_profile",
+                   "//testservice:testclient",
+                   "//testservice/etc:test_service_init"
+               ],
+               "inner_kits": [
+               ],
+               "test": [
+               ]
+           }
+       }
+   }
+   ```
 
-4. 将待转换的文件test.h文件拷贝到napi_generator/src/cli/h2sa/src/src/gen目录下
+3. 步骤 1 修改testservice/sa_profile下的文件以及testservice/etc/test_service.cfg文件， 将testservice/sa_profile/9016.xml文件重命名为9016.json,并将内容修改为json格式，修改后的9016.json文件如下所示：
 
-5. 在napi_generator/src/cli/h2sa/src/src/gen目录下执行命令生成service框架代码：
+   ```
+   {
+     "process":"testservice_sa",
+         "systemability":[
+             {
+                 "name":9016,
+                 "libpath":"libtestservice.z.so",
+                 "run-on-create":false,
+                 "auto-restart":true,
+                 "distributed":false,
+                 "dump-level":1
+             }
+         ]
+   }
+   ```
 
-   ~~~
-   node main.js -f test.h
-   ~~~
+   修改testservice/sa_profile/BUILD.gn文件：将sources = [ "9016.xml" ]修改为sources = [ "9016.json" ]
 
-   其中,参数详情如下： -f，定义远程服务的.h文件； -l, 日志级别（0-3），默认为1； -o,生成框架代码输入到指定路径下； -s,指定serviceID。 -v,指定版本（3.2和4.1，默认版本为3.2） 
+   修改testservice/etc/test_service.cfg文件：将"path"内的testservice_sa.xml修改为testservice_sa.json
 
-6. 输出testservice文件夹
+#### roadMap
 
-   ~~~
-   /xxxservice
-   ├── BUILD.gn                                             # 整个服务的编译文件，包含2个内容:1)服务端程序动态库编译  2)客户端可执行程序编译
-   ├── bundle.json                                          # 将服务包装成一个OpenHarmoney子系统组件，提供相关信息
-   ├── etc                                                  # 服务启动配置目录，如果服务不需要开机自动启动，可以删除此目录。
-   │   ├── BUILD.gn
-   │   └── test_service.cfg                                 # 服务自启动配置文件，编译烧录后会在/ect/init/下生成xxx_service.cfg启动文件
-   ├── include
-   │   ├── test_service.h                                   # 服务端头文件
-   │   ├── test_service_proxy.h                             # proxy 客户端头文件，为开发人员封装remote请求发送的处理
-   │   └── test_service_stub.h                              # stub 服务端头文件，为开发人员封装remote请求接收的处理
-   ├── interface
-   │   └── i_test_service.h                                 # 由用户提供的.h文件生成的remote接口文件，stub和proxy都基于此文件实现接口。
-   ├── sa_profile
-   │   ├── 9000.json
-   │   └── BUILD.gn
-   └── src
-       ├── i_test_service.cpp
-       ├── test_client.cpp
-       ├── test_service.cpp
-       ├── test_service_proxy.cpp
-       └── test_service_stub.cpp
-   ~~~
+| 时间点 | 预期任务                                                     | 验收标准                                                     | 完成情况 |
+| :----- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------- |
+| 9月份  | 1，代码去重方案提供（不同版本模板，proxy-stub框架，hidumper框架，hitrace）；<br />2，适配5.0release版本，增加代码中hidump、hitrace等日志跟踪定位工具的使用； | 1，设计文档；<br />2，适配5.0时，可以编译出对应版本的工具，且编译验证成功 |          |
+| 10月份 | 增加testapp调用 sa接口，包括死亡监听；                       | testapp                                                      |          |
+
