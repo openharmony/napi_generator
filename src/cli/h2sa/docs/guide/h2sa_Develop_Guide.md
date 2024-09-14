@@ -14,25 +14,21 @@
 napi_generator\src\cli\h2sa
 
 h2sa
-├── docs                                      //文档，（后续文档会整理在一起）
-├── examples                                  //样例，测试h文件
-│   ├── sample.h
-│   └── test.h            
-├── h2sa_DEVELOP_README_ZH.md                 //开发文档
+├── docs                                      //文档      
 ├── README_ZH.md                              //usage,使用说明
+├── package.json                          //Node.js打包配置文件
 └── src
-    ├── package.json                          //Node.js打包配置文件
-    └── src
-        ├── gen
-        │   ├── analyze.js                    //包含用于分析C++头文件的逻辑。读取头文件内容；解析文件以提取类、方法、参数等信息。
-        │   ├── file_template.js               //包含生成代码时使用的模板字符串。模板中的占位符将在代码生成过程中被实际的数据替换，以生成所需的代码文件。（之后换成inl或者tmpl模板文件，并分出不同版本的文件夹，不同类型的文件）
-        │   ├── generate.js                   //包含核心的代码生成逻辑。调用analyze.js来获取分析结果；使用fileTemplate.js中的模板和分析结果来生成代码。
-        │   ├── header_parser.py              //脚本，与analyze.js协同工作，用于解析C++头文件
-        │   └── main.js                       //项目的入口。初始化日志记录和其它工具；解析命令行参数，以确定用户想要执行的操作；调用generate.js来启动代码生成过程。
-        └── tools
+    ├── gen
+    │   ├── analyze.js                    //包含用于分析C++头文件的逻辑。读取头文件内容；解析文件以提取类、方法、参数等信息。
+    │   ├── file_template.js               //包含生成代码时使用的模板字符串。模板中的占位符将在代码生成过程中被实际的数据替换，以生成所需的代码文件。（之后换成inl或者tmpl模板文件，并分出不同版本的文件夹，不同类型的文件）
+    │   ├── generate.js                   //包含核心的代码生成逻辑。调用analyze.js来获取分析结果；使用fileTemplate.js中的模板和分析结果来生成代码。
+    │   ├── header_parser.py              //脚本，与analyze.js协同工作，用于解析C++头文件
+    │   └── test.h                        //生成sa的提示文件
+    │   └── main.js                       //项目的入口。初始化日志记录和其它工具；解析命令行参数，以确定用户想要执行的操作；调用generate.js来启动代码生成过程。
+    └── tools
             ├── common.js                     //包含整个项目中使用的通用函数和常量
-            ├── FileRW.js                     //包含文件读写操作的JavaScript模块
-            ├── NapiLog.js                    //日志记录模块
+            ├── file_rw.js                     //包含文件读写操作的JavaScript模块
+            ├── napi_log.js                    //日志记录模块
             ├── re.js                         //包含正则表达式相关功能的模块
             └── tool.js                       //包含一些辅助工具函数
 ~~~
@@ -73,11 +69,11 @@ let ops = stdio.getopt({
 
 1.在main.js中，在allowedVersion数组中加入适配的版本号，如4.1统一为v4_1, 5.0统一为v5_0。
 
-2.在templete目录下，以适配5.0源码为例，IdlInterfaceTemplete目录下新建v5_0文件夹，在v5_0文件夹下新增对应的bundle.json模板，对应的BUILD.gn模板；新增5.0版本的bundle.json,BUILD.gn模板路径。
+2.在file_template.js中，以适配5.0源码为例，新增v5_0版本对应的bundle.json模板，对应的BUILD.gn模板；新增5.0版本的bundle.json,BUILD.gn模板路径。
 
 3.在generate.js中，在doGenerate方法、genFilesByTemplate方法、genFileNames方法中修改相应代码：当rootInfo.version为v5_0时，替换对应的BUILD.gn, bundle.json模板路径。
 
-4.适配新版本需要增加其它配置，可在templete目录下增加配置模板，并增加配置文件模板的路径，在generate.js中生成配置文件。
+4.适配新版本需要增加其它配置，可在file_template.js中增加配置模板，并增加配置文件模板的路径，在generate.js中生成配置文件。
 
 #### RoadMap
 
