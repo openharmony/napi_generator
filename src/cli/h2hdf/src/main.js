@@ -26,7 +26,7 @@ let ops = stdio.getopt({
     'out': { key: 'o', args: 1, description: 'output directory', default: '' },
 });
 
-const allowedVersion = ['4.1', '4-1', '4_1', '4.0', '5.0', '5.1'];
+const allowedVersion = ['4.1'];
 
 let drivername = ops.drivername;
 let version = ops.version;
@@ -40,7 +40,7 @@ if (drivername.trim().length !== 0 && checkInput(drivername)) {
   // 在这里读取cfg文件
   let frameworkJsonPath = path.join(__dirname, './templete/framework.json');
   let frameworkJson = getJsonCfg(frameworkJsonPath);
-  if (version === '4.1' || version === '4-1' || version === '4_1') {
+  if (version === '4.1') {
     version = 'v4_1';
   } else {
     console.log('其他版本暂不支持...');

@@ -26,7 +26,7 @@
 static const char *g_dumpHelp =
     " usage:\n"
     " -h, --help: dump help\n"
-    " -c, --channel: dump the [driver_name] channel info\n";
+    " -c, --hello: dump the helloworld info\n";
 
 static uint32_t ShowHelloworldInfo(struct HdfSBuf *reply)
 {
