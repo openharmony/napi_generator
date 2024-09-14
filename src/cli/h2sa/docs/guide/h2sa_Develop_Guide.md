@@ -65,13 +65,11 @@ let ops = stdio.getopt({
 
 用户可对工具进行二次开发。例如：当前工具适配的源码版本是4.1，需要适配其它版本时，可修改以下文件进行适配：
 
-**9月份会进行代码去重整改，预估适配方式如下，整改后如有出入，会进行修改**
-
 1.在main.js中，在allowedVersion数组中加入适配的版本号，如4.1统一为v4_1, 5.0统一为v5_0。
 
-2.在file_template.js中，以适配5.0源码为例，新增v5_0版本对应的bundle.json模板，对应的BUILD.gn模板；新增5.0版本的bundle.json,BUILD.gn模板路径。
+2.在file_template.js中，以适配5.0源码为例，参考bundleJsonTemplate41，buildGnTemplate41 新增v5_0版本对应的bundle.json模板、BUILD.gn模板；在module.exports中新增5.0版本的bundle.json,BUILD.gn模板对应的变量名。
 
-3.在generate.js中，在doGenerate方法、genFilesByTemplate方法、genFileNames方法中修改相应代码：当rootInfo.version为v5_0时，替换对应的BUILD.gn, bundle.json模板路径。
+3.在generate.js中，在doGenerate方法、genFilesByTemplate方法、genFileNames方法中修改相应代码；当rootInfo.version为v5_0时，替换对应的BUILD.gn, bundle.json模板路径。
 
 4.适配新版本需要增加其它配置，可在file_template.js中增加配置模板，并增加配置文件模板的路径，在generate.js中生成配置文件。
 
