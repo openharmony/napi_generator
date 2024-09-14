@@ -1,9 +1,7 @@
-# Usage guide
+# Usage Guide
 
 ## 简介
 在OpenHarmony系统中，上层应用或服务层通过调用HDF框架提供的HDI接口，能够以一种标准化和抽象化的方式与底层硬件设备进行交互。使用h2hdf工具，用户只需提供一个drivername，工具会自动生成整个框架的代码，包含驱动配置文件、idl接口、驱动程序driver和驱动服务框架。
-
-![image-20240724093743837](./figures/pic_code_frame.png)
 
 ## 约束
 系统：建议Ubuntu 20.04或者Windows 10
@@ -22,7 +20,7 @@
 
 	npm i stdio
 
-3.在napi_generator/src/cli/h2hdf/src下执行以下命令生成ts声明文件：
+3.在napi_generator/src/cli/h2hdf/src下执行以下命令：
 
 ```
 node main.js -n hello
@@ -68,24 +66,25 @@ hellohdf
 
 ### 编译
 
-1.将hellohdf/Peripheral文件夹下的hello文件夹拷贝到源码drivers/peripheral目录下
+1. **拷目录：** 将hellohdf/Peripheral文件夹下的hello文件夹拷贝到源码drivers/peripheral目录下
 
 ```
-cp hellohdf/Peripheral/hello 源码/drivers/peripheral
+cp hellohdf/Peripheral/hello 源码/drivers/peripheral -r
 ```
 
-将hellohdf/IdlInterface文件夹下的hello文件夹拷贝到源码drivers/interface目录下
+2. **拷目录：** 将hellohdf/IdlInterface文件夹下的hello文件夹拷贝到源码drivers/interface目录下
 
 ```
-cp hellohdf/IdlInterface/hello 源码/drivers/interface
+cp hellohdf/IdlInterface/hello 源码/drivers/interface -r
 ```
 
-将hellohdf/HcsConfig/device_info.hcs中的内容拷贝到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中，如下所示：
+3. **改文件：** 将hellohdf/HcsConfig/device_info.hcs中的内容拷贝到源码vendor/hihope/rk3568/hdf_config/uhdf/device_info.hcs文件中，如下所示：
 
 ```
  root {
     device_info {
        ...
+       // 增加以下内容
        hello :: host {
             hostName = "hello_host";
             priority = 50;
@@ -99,12 +98,13 @@ cp hellohdf/IdlInterface/hello 源码/drivers/interface
                 }
             }
         }
+        // 增加上述内容
         ...
      }
  }
 ```
 
-2.配置产品：以rk3568为例，在源码vendor/hihope/rk3568/config.json文件中hdf子系统的components中增加以下内容：
+4. **配置产品：** 以rk3568为例，在源码vendor/hihope/rk3568/config.json文件中hdf子系统的components中增加以下内容：
 
 ```
 {
@@ -117,34 +117,32 @@ cp hellohdf/IdlInterface/hello 源码/drivers/interface
 }
 ```
 
-注意：drivers_interface_hello为drivers/interface/hello/v1_0/BUILD.gn中的part_name。drivers_peripheral_hello为drivers/peripheral/hello/bundle.json中的component。
+"drivers_interface_hello"为生成的drivers/interface/hello/v1_0/BUILD.gn中的part_name，其中"drivers_interface_"为固定格式。drivers_peripheral_hello"为生成的drivers/peripheral/hello/bundle.json中的component，"drivers_peripheral_"为固定格式。
 
-3.编译，在源码下执行以下命令进行编译：
+5. **编译：** 在源码下执行以下命令进行编译：
 
 ```
 ./build.sh --product-name rk3568
 ```
 
-编译成功后，将源码下out/rk3568/packages/phone/image镜像烧录在dayu200开发板上
+编译成功后，镜像位置在out/rk3568/packages/phone/image目录下
 
 ### 验证
 
 #### 动态加载
 
-1.查看hostId：hdc连接开发板，进入/vendor/etc/init路径下，并查看hdf_devhost.cfg文件，使用hdc命令如下：
+1.查看hostId：镜像烧录后，在vendor/etc/init/hdf_devhost.cfg文件里查看hostId
 
 ```
-cat hdf_devhost.cfg
+cat vendor/etc/init/hdf_devhost.cfg
 ```
-
-根据hostName找到对应hostId，如本例的hostName为hello_host，对应找到“name”为“hello_host”那一项，查看“path”的第二个参数，则为hostName对应的hostId，即14，如下所示：
 
 ![image-20240724093743837](./figures/pic_show_hostid.png)
 
-2.运行可执行文件hdf_devhost，手动拉起host：进入/vendor/bin路径下，运行可执行文件hdf_devhost，传入一个参数为hostId，第二个参数为hostName；运行命令如下所示：
+2.加载hello_host，命令如下：
 
 ```
-./hdf_devhost 14 hello_host
+./vendor/bin/hdf_devhost 14 hello_host
 ```
 
 ![image-20240903114845035](./figures/pic_show_exe.png)
@@ -163,7 +161,7 @@ ps -A | grep host
 
 4.使用hidumper查看更多细节信息：
 
-查询所有正在运行的host
+通过DeviceServiceManager查询用户空间的设备信息
 
 ```
  hidumper -s HdfDeviceServiceManager -a "-query"
@@ -171,15 +169,29 @@ ps -A | grep host
 
 ![image-20240724093543096](./figures/pic_show_host.png)
 
-使用hidumper查看更多信息
+通过DeviceServiceManager查询hello_host提供什么功能
+
+```
+hidumper -s HdfDeviceServiceManager -a "-host hello_host -h"
+```
+
+-h：打印dump help信息
+
+![image-20240724093543096](./figures/pic_show_dumph.png)
+
+通过DeviceServiceManager查询hello_host提供的helloworld功能
 
 ```
 hidumper -s HdfDeviceServiceManager -a "-host hello_host -c"
 ```
 
-打印出Hello, World!
+-c：打印出Hello, World!
 
 ![image-20240724093535915](./figures/pic_show_dump.png)
+
+其中，-h、-c定义在生成的hellohdf/Peripheral/hello/hal/hello_dump.c中：
+
+![image-20240724093543096](./figures/pic_show_dumpc.png)
 
 #### 静态加载
 

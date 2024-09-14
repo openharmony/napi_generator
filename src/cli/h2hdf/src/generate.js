@@ -16,7 +16,7 @@ const fs = require('fs');
 const path = require('path');
 
 /* 根据用户输入的driver名字生成framework框架
- * drivername:用户输入的驱动名，frameworkJson: 模板内容，out:生成框架路径
+ * drivername:用户输入的驱动名，version: 版本号，frameworkJson: 模板内容，out:生成框架路径
  * 替换模板中的名字并写文件输出
  */
 function genDriverFramework(driverName, frameworkJson, version, out = '') {
