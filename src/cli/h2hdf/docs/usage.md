@@ -161,7 +161,7 @@ ps -A | grep host
 
 4.使用hidumper查看更多细节信息：
 
-查询所有正在运行的host
+通过DeviceServiceManager查询用户空间的设备信息
 
 ```
  hidumper -s HdfDeviceServiceManager -a "-query"
@@ -169,11 +169,7 @@ ps -A | grep host
 
 ![image-20240724093543096](./figures/pic_show_host.png)
 
-对特定的SA执行命令：对特定的SA执行-a参数后的命令，-a后的命令由用户自己定义，在生成的hellohdf/Peripheral/hello/hal/hello_dump.c中定义如下：
-
-![image-20240724093543096](./figures/pic_show_dumpc.png)
-
-本例中，-h为自定义的help，显示参数定义， -c为自定义的用于打印helloworld的参数
+通过DeviceServiceManager查询hello_host提供什么功能
 
 ```
 hidumper -s HdfDeviceServiceManager -a "-host hello_host -h"
@@ -183,6 +179,8 @@ hidumper -s HdfDeviceServiceManager -a "-host hello_host -h"
 
 ![image-20240724093543096](./figures/pic_show_dumph.png)
 
+通过DeviceServiceManager查询hello_host提供的helloworld功能
+
 ```
 hidumper -s HdfDeviceServiceManager -a "-host hello_host -c"
 ```
@@ -190,6 +188,10 @@ hidumper -s HdfDeviceServiceManager -a "-host hello_host -c"
 -c：打印出Hello, World!
 
 ![image-20240724093535915](./figures/pic_show_dump.png)
+
+其中，-h、-c定义在生成的hellohdf/Peripheral/hello/hal/hello_dump.c中：
+
+![image-20240724093543096](./figures/pic_show_dumpc.png)
 
 #### 静态加载
 
