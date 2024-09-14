@@ -1,193 +1,83 @@
-### Usage Guide
+## Develop Guide
 
-## 简介
+### service代码生成工具使用场景
 
-h2sa工具，即SERVICE框架生成工具，当开发者为OpenHarmony系统框架开发某些功能时，有时需要将这个功能包装成一个独立的服务进程运行在系统中，为了其它应用进程能够调用此服务，开发人员需要基于系统IPC通信框架编写一套远程接口调用实现。实现Service远程调用接口需要开发人员熟悉IPC通信框架，了解proxy/stub的继承与实现方式，掌握C++类型转为MessageParcel数据包的各种API方法，有一定的学习成本。而Service代码生成工具能够帮助使用者生成框架代码，提升开发效率。用户只需提供一个定义远程方法的.h头文件，工具会自动生成整个Service框架的代码，包含Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及开机自启动相关配置文件。
+​       当开发人员为OpenHarmony系统框架开发某些功能时，有时需要将这个功能包装成一个独立的服务进程运行在系统中，为了其它应用进程能够调用此服务，开发人员需要基于系统IPC通信框架编写一套远程接口调用实现。     Service代码生成工具能够帮助用户生成框架代码，提升开发效率。用户只需提供一个定义远程方法的.h头文件，工具会自动生成整个Service框架的代码，包含Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及开机自启动相关配置文件。用户可基于框架代码专注于业务功能的编写。
 
-## 约束
+![image](../figures/service_file.png)
 
-系统：建议Ubuntu 20.04或者Windows 10
+---
 
-依赖版本：VS Code 1.62.0
+### service工具代码框架说明
 
-## 使用方法
+~~~
+napi_generator\src\cli\h2sa
 
-#### 命令行
+h2sa
+├── docs                                      //文档      
+├── README_ZH.md                              //usage,使用说明
+├── package.json                          //Node.js打包配置文件
+└── src
+    ├── gen
+    │   ├── analyze.js                    //包含用于分析C++头文件的逻辑。读取头文件内容；解析文件以提取类、方法、参数等信息。
+    │   ├── file_template.js               //包含生成代码时使用的模板字符串。模板中的占位符将在代码生成过程中被实际的数据替换，以生成所需的代码文件。（之后换成inl或者tmpl模板文件，并分出不同版本的文件夹，不同类型的文件）
+    │   ├── generate.js                   //包含核心的代码生成逻辑。调用analyze.js来获取分析结果；使用fileTemplate.js中的模板和分析结果来生成代码。
+    │   ├── header_parser.py              //脚本，与analyze.js协同工作，用于解析C++头文件
+    │   └── test.h                        //生成sa的提示文件
+    │   └── main.js                       //项目的入口。初始化日志记录和其它工具；解析命令行参数，以确定用户想要执行的操作；调用generate.js来启动代码生成过程。
+    └── tools
+            ├── common.js                     //包含整个项目中使用的通用函数和常量
+            ├── file_rw.js                     //包含文件读写操作的JavaScript模块
+            ├── napi_log.js                    //日志记录模块
+            ├── re.js                         //包含正则表达式相关功能的模块
+            └── tool.js                       //包含一些辅助工具函数
+~~~
 
-1. 安装python库 CppHeaderParser
+### 运行逻辑
 
-   ~~~
-   pip install CppHeaderParser
-   ~~~
+![image](../figures/service_runLogic.png)
 
-2. 安装typescript：在napi_generator/src/cli/h2sa/src目录下执行命令
+main.js为脚本入口，其中使用stdio.getopt获取参数，其中,参数详情如下： 
 
-   ~~~
-   npm i typescript
-   ~~~
-
-3. 安装stdio：在napi_generator/src/cli/h2sa目录下执行命令
-
-   ~~~
-   npm i stdio
-   ~~~
-
-4. 在napi_generator/src/cli/h2sa/src/gen目录下执行命令生成service框架代码：
-
-   ~~~
-   node main.js -f test.h
-   ~~~
-
-   其中,参数详情如下： 
    -f，定义远程服务的.h文件； 
-   -l，可选参数，日志级别（0-3），默认为1； 
-   -o，可选参数，生成框架代码输入到指定路径下； 
-   -s，可选参数，指定serviceID。 
-   -v，可选参数，指定版本（3.2和4.1，默认版本为3.2） 
 
-#### 生成物
+   -l,  日志级别（0-3），默认为1； 
 
-1. 输出testservice文件夹，其中的文件如下所示：
+   -o, 生成框架代码输入到指定路径下； 
 
-   ![](../figures/h2sa_outRes.png)
+   -s, 指定serviceID。 -
 
-   ~~~
-   ├── BUILD.gn                                             # 整个服务的编译文件，包含2个内容:1)服务端程序动态库编译  2)客户端可执行程序编译
-   ├── bundle.json                                          # 将服务包装成一个OpenHarmoney子系统组件，提供相关信息
-   ├── etc                                                  # 服务启动配置目录，如果服务不需要开机自动启动，可以删除此目录。
-   │   ├── BUILD.gn
-   │   └── test_service.cfg                                 # 服务自启动配置文件，编译烧录后会在/ect/init/下生成xxx_service.cfg启动文件
-   ├── include
-   │   ├── test_service.h                                   # 服务端头文件
-   │   ├── test_service_proxy.h                             # proxy 客户端头文件，为开发人员封装remote请求发送的处理
-   │   └── test_service_stub.h                              # stub 服务端头文件，为开发人员封装remote请求接收的处理
-   ├── interface
-   │   └── i_test_service.h                                 # 由用户提供的.h文件生成的remote接口文件，stub和proxy都基于此文件实现接口。
-   ├── sa_profile                                           
-   │   ├── 9000.json                                        # 服务配置文件
-   │   └── BUILD.gn                                      
-   └── src
-       ├── i_test_service.cpp                               # 接口实现文件
-       ├── test_client.cpp                                  # 客户端程序
-       ├── test_service.cpp                                 # 服务端程序
-       ├── test_service_proxy.cpp                           # 客户端代理实现
-       └── test_service_stub.cpp                            # 服务端 stub 实现
-   ~~~
+   -v, 指定版本（3.2和4.1，默认版本为3.2） 
 
-#### 应用和验证
+~~~
+let ops = stdio.getopt({
+    'filename': { key: 'f', args: 1, description: '.h file', default: '' },
+    'out': { key: 'o', args: 1, description: 'output directory', default: '.' },
+    'loglevel': { key: 'l', args: 1, description: 'Log Level: 0~3', default: '1' },
+    'serviceId': { key: 's', args: 1, description: 'service register id: 9000~16777214', default: '9000' },
+    'versionTag': { key: 'v', args: 1, description: 'version tag: 4.1 / 3.2', default: '3.2' }
+});
+~~~
 
-1. 将生成的testservice文件夹放在对应版本的源码根目录下
+### 开发指导
 
-2. 修改服务配置文件
+#### 适配新版本
 
-   在foundation/systemabilitymgr/samgr/interfaces/innerkits/samgr_proxy/include/system_ability_definition.h增加以下一行：
+用户可对工具进行二次开发。例如：当前工具适配的源码版本是4.1，需要适配其它版本时，可修改以下文件进行适配：
 
-   ```
-   TEST_SERVICE_ID                 = {serviceID},    //保证ID没有重复即可，例如：9016
-   ```
+**9月份会进行代码去重整改，预估适配方式如下，整改后如有出入，会进行修改**
 
-3. 修改子系统配置文件
+1.在main.js中，在allowedVersion数组中加入适配的版本号，如4.1统一为v4_1, 5.0统一为v5_0。
 
-   在build/subsystem_config.json中增加以下内容。
+2.在file_template.js中，以适配5.0源码为例，新增v5_0版本对应的bundle.json模板，对应的BUILD.gn模板；新增5.0版本的bundle.json,BUILD.gn模板路径。
 
-   ```
-   "testservice": {
-     "path":"testservice",
-     "name": "testservice" 
-   }
-   ```
+3.在generate.js中，在doGenerate方法、genFilesByTemplate方法、genFileNames方法中修改相应代码：当rootInfo.version为v5_0时，替换对应的BUILD.gn, bundle.json模板路径。
 
-4. 修改产品配置，如rk3568
+4.适配新版本需要增加其它配置，可在file_template.js中增加配置模板，并增加配置文件模板的路径，在generate.js中生成配置文件。
 
-   在vendor/kaihong/rk3568/config.json中增加以下内容：
+#### RoadMap
 
-   ```
-   {  
-    "subsystem": "testservice", 
-    "components": [
-     {
-      "component": "testservice_part",
-      "features": []
-     }
-    ]
-   }
-   ```
-
-5. 修改权限配置
-
-   在相应的产品目录的vendor/kaihong/rk3568/security_config/high_privilege_process_list.json中增加以下内容：
-
-   ```
-   {
-     "name": "testservice", 
-     "uid": "system",
-     "gid": ["root", "system"]
-   }
-   ```
-
-6. selinux权限配置
-
-   vendor/hihope/rk3568/config.json中"build_selinux"属性若为true， 即要配置selinux权限，应修改以下文件；若为false，无需修改
-
-   >   1. testservice/etc/sample_service.cfg
-   >
-   >      ```
-   >      "secon" : "u:r:testservice:s0"
-   >      ```
-   >
-   >   2. base/security/selinux_adapter/sepolicy/base/public/service_contexts
-   >
-   >      ```
-   >      9016                 u:object_r:sa_testservice:s0
-   >      ```
-   >
-   >   3. base/security/selinux_adapter/sepolicy/base/public/service.te
-   >
-   >      ```
-   >      type sa_testservice, sa_service_attr;
-   >      ```
-   >
-   >   4. base/security/selinux_adapter/sepolicy/ohos_policy/startup/init/system/init.te
-   >
-   >      ```
-   >      allow init testservice:process { getattr rlimitinh siginh transition };
-   >      ```
-   >
-   >   5. base/security/selinux/sepolicy/base/public/type.te
-   >
-   >      ```
-   >      type testservice, sadomain, domain;
-   >      ```
-   >
-   >   6. /base/security/selinux/sepolicy/base/te目录下增加新service的te文件，新增文件名即为服务名，例如：testservice.te
-   >
-   >      ```
-   >      allow testservice init_param:file { map open read };
-   >      allow testservice sa_testservice:samgr_class { add get };
-   >      ```
-
-7. 编码完成后，执行镜像编译命令
-
-   ~~~
-   ./build.sh --product-name 产品名
-   
-   若编译rk3568开发板，则执行
-   ./build.sh --product-name rk3568
-   ~~~
-
-8. 烧录镜像
-
-9. 运行验证
-
-   >验证一： shell登录开发板。 查看服务端进程是否已正常启动
-   >
-   >~~~
-   >ps -ef | grep testservice
-   >system         288     1 0 00:02:13 ?     00:00:00 testservice_sa  --- 服务进程已正常运行
-   >~~~
-   >
-   >验证二：运行客户端
-   >
-   >~~~
-   >/system/bin/testclient 
-   >~~~
+| 时间点 | 预期任务                                                     | 验收标准                                                     | 完成情况      |
+| :----- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------- |
+| 9月份  | 1，代码去重方案提供（不同版本模板，proxy-stub框架，hidumper框架，hitrace）；<br />2，适配5.0release版本，增加代码中hidump、hitrace等日志跟踪定位工具的使用； | 1，设计文档；<br />2，适配5.0时，可以编译出对应版本的工具，且编译验证成功 | 预计2024.9.24 |
+| 10月份 | 增加testapp调用 sa接口，包括死亡监听；                       | 杀掉服务后，有信息                                           |               |
