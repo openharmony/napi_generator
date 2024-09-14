@@ -17,17 +17,17 @@ const stdio = require('stdio');
 const fs = require('fs');
 const re = require('../tools/re');
 
-const { NapiLog } = require('../tools/NapiLog');
+const { NapiLog } = require('../tools/napi_log');
 const { print } = require('../tools/tool');
 const analyze = require('./analyze');
 const gen = require('./generate');
-const { writeFile, createFolder } = require('../tools/FileRW');
+const { writeFile, createFolder } = require('../tools/file_rw');
 
 let ops = stdio.getopt({
     'filename': { key: 'f', args: 1, description: '.h file', default: '' },
     'out': { key: 'o', args: 1, description: 'output directory', default: '.' },
     'loglevel': { key: 'l', args: 1, description: 'Log Level: 0~3', default: '1' },
-    'serviceId': { key: 's', args: 1, description: 'service register id: 9000~16777214', default: '9000' },
+    'serviceId': { key: 's', args: 1, description: 'service register id: 9000~16777214', default: '19000' },
     'versionTag': { key: 'v', args: 1, description: 'version tag: 4.1 / 3.2', default: '3.2' }
 });
 
