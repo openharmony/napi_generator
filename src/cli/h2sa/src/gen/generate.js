@@ -13,13 +13,13 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { NapiLog } = require('../tools/NapiLog');
+const { NapiLog } = require('../tools/napi_log');
 const { replaceAll, getTab } = require('../tools/tool');
 const re = require('../tools/re');
 const { iServiceHTemplate, proxyHTemplate, stubHTemplate, serviceHTemplate, proxyCppTemplate, proxyFuncTemplate,
     stubCppTemplate, stubInnerFuncTemplate, serviceCppTemplate, serviceFuncImplTemplate, clientCppTemplate, buildGnTemplate,
     buildGnTemplate41, bundleJsonTemplate, bundleJsonTemplate41, profileGnTemplate, profileGnTemplate41, profileJsonTemplate,
-    profileXmlTemplate, serviceCfgTemplate, serviceCfgTemplate41, serviceCfgGnTemplate, iServiceCppTemplate } = require('./fileTemplate');
+    profileXmlTemplate, serviceCfgTemplate, serviceCfgTemplate41, serviceCfgGnTemplate, iServiceCppTemplate } = require('./file_template');
 const { DATA_W_MAP, DATA_R_MAP, VECTOR_W_MAP, VECTOR_R_MAP, getParcelType, AllParseFileList, MarshallInfo,
     ProcessingClassList } = require('../tools/common');
 const numericTypes = ['short', 'int', 'long', 'long long', 'float', 'double'];

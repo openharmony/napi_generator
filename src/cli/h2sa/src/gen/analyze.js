@@ -12,7 +12,7 @@
 * See the License for the specific language governing permissions and 
 * limitations under the License. 
 */
-const { NapiLog } = require('../tools/NapiLog');
+const { NapiLog } = require('../tools/napi_log');
 const fs = require('fs');
 const os = require('os');
 const { AllParseFileList } = require('../tools/common');
