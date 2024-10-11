@@ -108,13 +108,13 @@
     }
 </style>
 <script type="text/javascript">
-    var mode = 0;
+    let mode = 0;
     let vscode = acquireVsCodeApi();
     function sendApiscanParamMsg() {
-        var fileNames = document.getElementById('asFilePath').value;
-        var genDir = document.getElementById('genASResultDir').value;
-        var buttonName = document.getElementById('okButton').textContent;
-        var result = {
+        let fileNames = document.getElementById('asFilePath').value;
+        let genDir = document.getElementById('genASResultDir').value;
+        let buttonName = document.getElementById('okButton').textContent;
+        let result = {
             msg: 'api_scan',
             fileNames: fileNames,
             genDir: genDir,
@@ -124,8 +124,8 @@
     }
 
     function selectASFilePath() {
-        var fileNames = document.getElementById('asFilePath').value;     
-        var result = {
+        let fileNames = document.getElementById('asFilePath').value;     
+        let result = {
             msg: 'selectASFilePath',
             filePath: fileNames,
         };
@@ -133,8 +133,8 @@
     }
 
     function selectPath(message) {
-        var genDir = document.getElementById('genASResultDir').value;
-        var result = {
+        let genDir = document.getElementById('genASResultDir').value;
+        let result = {
             msg: message,
             filePath: genDir
         };
@@ -142,7 +142,7 @@
     }
 
     function cancel() {
-        var result = {
+        let result = {
             msg: 'cancel'
         };
         vscode.postMessage(result);

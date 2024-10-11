@@ -19,7 +19,7 @@ const { checkFileError } = require('./tools/common');
 const { NapiLog } = require('./tools/NapiLog');
 const path = require('path');
 const stdio = require('stdio');
-var fs = require('fs');
+let fs = require('fs');
 const { print } = require('./tools/tool');
 
 let ops = stdio.getopt({

@@ -135,7 +135,7 @@
     }
 
     function selectIncludeName() {
-      var result = {
+      let result = {
         msg: 'selectIncludeName',
         mode: 2
       };
@@ -143,7 +143,7 @@
     }
 
     function selectCppName() {
-      var result = {
+      let result = {
         msg: 'selectCppName',
         mode: 3
       };
@@ -151,7 +151,7 @@
     }
 
     function cancel() {
-      var result = {
+      let result = {
         msg: 'cancelShowInfo'
       };
       vscode.postMessage(result);

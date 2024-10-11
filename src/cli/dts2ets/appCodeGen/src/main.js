@@ -16,7 +16,7 @@ const { analyzeFile } = require('./analyze');
 const { generateAppCode } = require('./generate');
 const { NapiLog } = require('./tools/NapiLog');
 const re = require('./tools/re');
-var fs = require('fs');
+let fs = require('fs');
 
 function doGenerate(ifname, destdir, jsonCfg) {
     // step1: analyze file
