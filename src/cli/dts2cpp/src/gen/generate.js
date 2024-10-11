@@ -25,7 +25,7 @@ const { NumberIncrease, jsonCfgList } = require('./tools/common');
 const os = require('os');
 const path = require('path');
 const { NapiLog } = require('./tools/NapiLog');
-var fs = require('fs');
+let fs = require('fs');
 
 let moduleHTemplete = `\
 #ifndef IMPL_[impl_name_upper]_H
@@ -154,7 +154,7 @@ let implCppTemplete = `\
 [include_configure_hCode]
 [implCpp_detail]
 `;
-var genFileList = [];
+let genFileList = [];
 
 function deleteFolder(folderPath) {
     if (fs.existsSync(folderPath)) {
@@ -255,7 +255,7 @@ function generateAll(structOfTs, destDir, moduleName, numberType, jsonCfg) {
     jsonCfgList.pop();
 
     let numberUsing = '';
-    var numbertype = 'uint32_t';
+    let numbertype = 'uint32_t';
     if (numberType !== '' && (numberType !== undefined && numberType !== null)) {
         numbertype = numberType;
     }

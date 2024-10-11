@@ -99,15 +99,15 @@
     }
 </style>
 <script type="text/javascript">
-    var mode = 0;
+    let mode = 0;
     let vscode = acquireVsCodeApi();
     let importCheck = false;
 
     function sendH2TsParamMsg() {
-		var fileNames = document.getElementById('hFilePath').value;
-		var genDir = document.getElementById('genHResultDir').value;
-        var buttonName = document.getElementById('okButton').textContent;
-		var result = {
+		let fileNames = document.getElementById('hFilePath').value;
+		let genDir = document.getElementById('genHResultDir').value;
+        let buttonName = document.getElementById('okButton').textContent;
+		let result = {
 			msg: 'h2ts',
 			fileNames: fileNames,
 			genDir: genDir,
@@ -117,7 +117,7 @@
 	}
 
     function selectHFilePath() {
-        var result = {
+        let result = {
             msg: 'selectHFilePath',
             mode: mode
         };
@@ -125,14 +125,14 @@
     }
 
     function selectPath(message) {
-        var result = {
+        let result = {
             msg: message
         };
         vscode.postMessage(result);
     }
 
     function cancel() {
-        var result = {
+        let result = {
             msg: 'cancel'
         };
         vscode.postMessage(result);
@@ -153,13 +153,13 @@
     });
 
     function inputChange() {
-        var fileNames = document.getElementById('hFilePath').value;
+        let fileNames = document.getElementById('hFilePath').value;
         fillInputDir(fileNames);
     }
 
     function fillInputDir(fileNames, message) {
-        var dir;
-        var fileName;
+        let dir;
+        let fileName;
         if (mode === 0) {
             if (fileNames.indexOf(',') !== -1) {
                 fileName = fileNames.substring(0, fileNames.indexOf(','));

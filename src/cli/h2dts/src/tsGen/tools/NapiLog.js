@@ -34,9 +34,9 @@ NapiLog.LEV_DEBUG = 2;
 NapiLog.LEV_INFO = 3;
 
 const LEV_STR = ['[NON]', '[ERR]', '[DBG]', '[INF]'];
-var logLevel = NapiLog.LEV_ERROR;
-var logFileName = null;
-var logResultMessage = [true, ''];
+let logLevel = NapiLog.LEV_ERROR;
+let logFileName = null;
+let logResultMessage = [true, ''];
 
 function getDateString() {
     let nowDate = new Date();

@@ -70,7 +70,7 @@ function createFuncInfo(parseFuncInfo) {
     funcInfo.name = parseFuncInfo.name;
 
     let parseParams = parseFuncInfo.parameters;
-    for (var i = 0; i < parseParams.length; ++i) {
+    for (let i = 0; i < parseParams.length; ++i) {
         let param = createParam(parseParams[i]);
         funcInfo.params.push(param);
     }
@@ -82,7 +82,7 @@ function createFuncInfo(parseFuncInfo) {
 
 function createClassFunctions(parseFuncs) {
     let funcList = [];
-    for (var i = 0; i < parseFuncs.length; ++i) {
+    for (let i = 0; i < parseFuncs.length; ++i) {
         if (!(parseFuncs[i].constructor || parseFuncs[i].destructor)) { // 构造和析构方法不需要生成remote接口代码
             let funcInfo = createFuncInfo(parseFuncs[i]);
             funcList.push(funcInfo);
@@ -115,7 +115,7 @@ function analyzeClasses(rootInfo, parseClasses) {
     let firstClassName = null; // JSON集合中第一个class名称
     let serviceClassName = null;// JSON集合中带“@ServiceClass”注解的class名称
     let i = 0;
-    for (var className in parseClasses) {
+    for (let className in parseClasses) {
         if (++i === 1) {
             firstClassName = className;
         }

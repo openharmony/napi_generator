@@ -102,17 +102,17 @@
     }
 </style>
 <script type="text/javascript">
-    var mode = 0;
+    let mode = 0;
     let vscode = acquireVsCodeApi();
-    var importCheck = false;
-    var chooseApi = false;
-    var chooseGn = false;
-    var chooseService = false;
-    var chooseTs = false;
-    var chooseNapi = false;
+    let importCheck = false;
+    let chooseApi = false;
+    let chooseGn = false;
+    let chooseService = false;
+    let chooseTs = false;
+    let chooseNapi = false;
 
     function onInput(event) {
-        var value = event.target.value;
+        let value = event.target.value;
         value.replace(/\s*/g, '').toLowerCase();
         checkInput(value);
     }
@@ -180,7 +180,7 @@
     }
 
     function cancel() {
-        var result = {
+        let result = {
             msg: 'cancel'
         };
         vscode.postMessage(result);
@@ -193,7 +193,7 @@
             let checkService = document.getElementById('isCheckService').checked;
             let checkTs = document.getElementById('isCheckTs').checked;
             let checkNapi = document.getElementById('isCheckNapi').checked;
-            var result = {
+            let result = {
                 msg: 'param',
                 importIsCheck: importCheck,
                 checkApi: checkApi,
@@ -210,23 +210,23 @@
 
     function sendParamMsg2() {
         if (chooseApi) {
-            var result = {
+            let result = {
                  msg: 'startApi'
             };
         } else if (chooseGn) {
-            var result = {
+            let result = {
                 msg: 'startGn'
             };
         } else if (chooseService) {
-            var result = {
+            let result = {
                 msg: 'startService'
             };
         } else if (chooseTs) {
-            var result = {
+            let result = {
                 msg: 'startTs'
             };
         } else if (chooseNapi) {
-            var result = {
+            let result = {
                 msg: 'startNapi'
             };
         } else {

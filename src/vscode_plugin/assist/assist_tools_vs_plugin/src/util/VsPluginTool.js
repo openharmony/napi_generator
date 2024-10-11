@@ -22,8 +22,12 @@ catch (err) {
 }
 
 function utf8ArrayToStr(array) {
-    var res, i, length, ch;
-    var ch2, ch3;
+    let res;
+    let i;
+    let length;
+    let ch;
+    let ch2;
+    let ch3;
   
     res = '';
     length = array.length;
