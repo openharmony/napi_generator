@@ -146,26 +146,26 @@
     }
 </style>
 <script type="text/javascript">
-    var mode = 0;
-    var flag = 0;
+    let mode = 0;
+    let flag = 0;
     let vscode = acquireVsCodeApi();
     
     function sendGnParamMsg() {
-        var outputCodeDir = document.getElementById('outputCodeDirid').value;
-        var originCodeDir = document.getElementById('originCodeDirid').value;
-        var inputScriptDir = document.getElementById('inputScriptDirid').value;
-        var scriptType = document.getElementById('scriptTypeid').value;
-        var transplantDir = document.getElementById('transplantDirid').value;
-        var subsystemName = document.getElementById('test_subsystemid').value;
-        var componentName = document.getElementById('test_partid').value;
-        var compileOptions = document.getElementById('compileOptionsid').innerText.replaceAll('\n', '');
-        var extFileRadio = document.getElementById('extFileRadio');
-        var extFlagRadio = document.getElementById('extFlagRadio');
-        var extFileInput = document.getElementById('extFileInput');
-        var extFlagInput = document.getElementById('extFlagInput');
-        var buttonName = document.getElementById('okButton').textContent;
+        let outputCodeDir = document.getElementById('outputCodeDirid').value;
+        let originCodeDir = document.getElementById('originCodeDirid').value;
+        let inputScriptDir = document.getElementById('inputScriptDirid').value;
+        let scriptType = document.getElementById('scriptTypeid').value;
+        let transplantDir = document.getElementById('transplantDirid').value;
+        let subsystemName = document.getElementById('test_subsystemid').value;
+        let componentName = document.getElementById('test_partid').value;
+        let compileOptions = document.getElementById('compileOptionsid').innerText.replaceAll('\n', '');
+        let extFileRadio = document.getElementById('extFileRadio');
+        let extFlagRadio = document.getElementById('extFlagRadio');
+        let extFileInput = document.getElementById('extFileInput');
+        let extFlagInput = document.getElementById('extFlagInput');
+        let buttonName = document.getElementById('okButton').textContent;
 
-        var result = {
+        let result = {
             msg: 'gn',
             outputCodeDir: outputCodeDir,
             originCodeDir: originCodeDir,
@@ -183,7 +183,7 @@
     }
 
     function selectinputScriptDir() {
-        var result = {
+        let result = {
             msg: 'selectinputScriptDir',
             mode: 0,
         };
@@ -191,7 +191,7 @@
     }
 
     function selectoutputCodePath(message) {
-        var result = {
+        let result = {
             msg: message,
             mode: 1,
         };
@@ -199,7 +199,7 @@
     }
 
     function selectoriginCodePath(message) {
-        var result = {
+        let result = {
             msg: message,
             mode: 1,
         };
@@ -207,7 +207,7 @@
     }
 
     function selecttransplantPath(message) {
-        var result = {
+        let result = {
             msg: message,
             mode: 1,
         };
@@ -215,7 +215,7 @@
     }
 
     function cancel() {
-        var result = {
+        let result = {
             msg: 'cancel'
         };
         vscode.postMessage(result);
@@ -296,7 +296,7 @@
     }
 
     function selectBlur(inputObj) {
-        var t = inputObj;
+        let t = inputObj;
         setTimeout(() => {
             t.nextSibling.nextSibling.style.display = 'none';
         }, 150);
@@ -316,18 +316,18 @@
     }
 
     function reloadFileImgPic() {
-        var bodyobj = document.getElementsByTagName('body')[0];
-        var extFileRadio11 = document.getElementById('extFileRadio');
-        var bgStyle = document.defaultView.getComputedStyle(bodyobj, null);  
-        var bgColor = bgStyle.getPropertyValue('background-color').match(/\d{1,3}/g); 
-        var isDarkBackground = true;
+        let bodyobj = document.getElementsByTagName('body')[0];
+        let extFileRadio11 = document.getElementById('extFileRadio');
+        let bgStyle = document.defaultView.getComputedStyle(bodyobj, null);  
+        let bgColor = bgStyle.getPropertyValue('background-color').match(/\d{1,3}/g); 
+        let isDarkBackground = true;
         if (bgColor) { 
             isDarkBackground = isDarkColor(bgColor);
         }
 
-        var fileImgPng = isDarkBackground ? 'file.png' : 'file_black.png';
-        var currentFileImgPath = document.getElementById('outputCodeDirImg').src;
-        var fileImgPath = currentFileImgPath.substr(0, currentFileImgPath.lastIndexOf('/') + 1);
+        let fileImgPng = isDarkBackground ? 'file.png' : 'file_black.png';
+        let currentFileImgPath = document.getElementById('outputCodeDirImg').src;
+        let fileImgPath = currentFileImgPath.substr(0, currentFileImgPath.lastIndexOf('/') + 1);
         fileImgPath += fileImgPng;
         document.getElementById('outputCodeDirImg').src = fileImgPath;
         document.getElementById('originCodeDirImg').src = fileImgPath;

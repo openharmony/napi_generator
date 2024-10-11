@@ -24,9 +24,9 @@ VsPluginLog.LEV_DEBUG = 2;
 VsPluginLog.LEV_INFO = 3;
 
 const LEV_STR = ['[NON]', '[ERR]', '[DBG]', '[INF]'];
-var logLevel = VsPluginLog.LEV_ERROR;
-var logFileName = null;
-var logResultMessage = [true, ''];
+let logLevel = VsPluginLog.LEV_ERROR;
+let logFileName = null;
+let logResultMessage = [true, ''];
 
 function getDateString() {
     let nowDate = new Date();

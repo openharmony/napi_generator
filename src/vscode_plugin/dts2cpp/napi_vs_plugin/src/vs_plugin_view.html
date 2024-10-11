@@ -99,7 +99,7 @@
     }
 </style>
 <script type="text/javascript">
-    var mode = 0;
+    let mode = 0;
     let vscode = acquireVsCodeApi();
     let importCheck = false;
     window.onload = function () {
@@ -113,11 +113,11 @@
     };
 
     function sendParamMsg() {
-        var fileNames = document.getElementById('interfaceFile').value;
-        var genDir = document.getElementById('genFile').value;
-        var numberType = document.getElementById('numberTypeid').value;
-        var buttonName = document.getElementById('okButton').textContent;
-        var result = {
+        let fileNames = document.getElementById('interfaceFile').value;
+        let genDir = document.getElementById('genFile').value;
+        let numberType = document.getElementById('numberTypeid').value;
+        let buttonName = document.getElementById('okButton').textContent;
+        let result = {
             msg: 'param',
             mode: mode,
             fileNames: fileNames,
@@ -130,7 +130,7 @@
     }
 
     function selectInterPath() {
-        var result = {
+        let result = {
             msg: 'selectInterPath',
             mode: mode
         };
@@ -138,14 +138,14 @@
     }
 
     function selectPath(message) {
-        var result = {
+        let result = {
             msg: message
         };
         vscode.postMessage(result);
     }
 
     function cancel() {
-        var result = {
+        let result = {
             msg: 'cancel'
         };
         vscode.postMessage(result);
@@ -154,8 +154,8 @@
     // 只能在单个文件时配置
     function config() {
       // 配置业务代码之前需要获取生成框架代码的路径
-      var genDir = document.getElementById('genFile').value;
-      var result = {
+      let genDir = document.getElementById('genFile').value;
+      let result = {
         msg: 'config',
         genDir: genDir,
         mode: mode,
@@ -185,13 +185,13 @@
     });
 
     function inputChange() {
-        var fileNames = document.getElementById('interfaceFile').value;
+        let fileNames = document.getElementById('interfaceFile').value;
         fillInputDir(fileNames);
     }
 
     function fillInputDir(fileNames, message) {
-        var dir;
-        var fileName;
+        let dir;
+        let fileName;
         if (mode === 0) {
             if (fileNames.indexOf(',') !== -1) {
                 fileName = fileNames.substring(0, fileNames.indexOf(','));
