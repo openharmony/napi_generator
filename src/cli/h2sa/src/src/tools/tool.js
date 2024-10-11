@@ -28,7 +28,7 @@ function print(...args) {
 }
 
 String.prototype.format = function (...args) {
-    var result = this;
+    let result = this;
     let reg = new RegExp('%[sd]{1}');
     for (let i = 0; i < args.length; i++) {
         let p = result.search(reg);
@@ -57,7 +57,7 @@ function replaceAll(s, sfrom, sto) {
 
 function getTab(tabLv) {
     let tab = '';
-    for (var i = 0; i < tabLv; ++i) {
+    for (let i = 0; i < tabLv; ++i) {
         tab += '    ';
     }
     return tab;
