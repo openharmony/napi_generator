@@ -69,7 +69,8 @@ function utf8ArrayToStr(array) {
     let i;
     let len;
     let c;
-    let char2, char3;
+    let char2 = '';
+    let char3 = '';
   
     out = '';
     len = array.length;
