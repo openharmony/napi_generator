@@ -18,7 +18,8 @@ const MOVE_TWELVE = 12;
 const MOVE_SIX = 6;
 
 function utf8ArrayToStr(array) {
-    let char2, char3;
+    let char2 = '';
+    let char3 = '';
 
     let outStr = '';
     let len = array.length;
