@@ -22,6 +22,22 @@ import hilog from '@ohos.hilog';
 
 const TAG: string = 'napi_value';
 
+export class Person
+{
+  name:string= "zhangsan";
+  age: number = 1;
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  };
+  addAge() {
+    return this.age;
+  };
+  changeName() {
+    return
+  };
+}
+
 @Entry
 @Component
 struct akivalue {
@@ -29,9 +45,10 @@ struct akivalue {
   private pixelMapFormat: image.PixelMapFormat = 3;
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State textcont: string = 'napi_value 这是一个用于表示 JavaScript 值的不透明指针。'
-  @State testcont: string = ' // 获取 N-API value \n'
-    + '  const myData = addon.testNapiValue(); \n'
+  @State textcont: string = 'JavaScript 是弱类型语言，可用泛型any表示任意类型。'
+    + 'C/C++使用aki::Value映射 JavaScript 的any类型。';
+  @State testcont: string = ' // 本示例用来验证any类型转换 \n'
+    + '  const myData = testNapi.ConvertToString(); \n'
     + ' // 使用获取的自定义数据 \n'
     + ' console.log(myData); // 输出自定义数据 \n';
 
@@ -64,8 +81,8 @@ struct akivalue {
             .width('90%')
             .margin(10)
             .fontSize(16)
-            .fontColor('#ff400336')
-            .backgroundColor('#ff985307')
+            .fontColor($r('app.color.COLOR_80000000'))
+            .backgroundColor($r('app.color.COLOR_99FFFFFF'))
             .enabled(false)
         }
         .width('100%')
@@ -84,7 +101,8 @@ struct akivalue {
             .id('napi_async_complete_callback')
             .onClick(() => {
               let res = '';
-              // let res = testNapi.testNapiValue();
+              let strArray: string[] = ['aki', 'jsbind'];
+              res = testNapi.ConvertToString(strArray);
               hilog.info(0x0000, 'testTag', `testNapiValue = ${res} `);
               this.testcont = this.testcont.replace('log(myData)', 'log(## '+res+' ##)');
             })

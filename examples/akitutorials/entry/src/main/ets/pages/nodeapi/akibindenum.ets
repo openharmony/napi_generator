@@ -29,9 +29,10 @@ struct akibindenum {
   private pixelMapFormat: image.PixelMapFormat = 3;
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State textcont: string = 'napi_value 这是一个用于表示 JavaScript 值的不透明指针。'
-  @State testcont: string = ' // 获取 N-API value \n'
-    + '  const myData = addon.testNapiValue(); \n'
+  @State textcont: string = 'JSBind语法糖JSBIND_ENUM、JSBIND_ENUM_VALUE支持绑定 C/C++ 枚举类型，'
+    + '映射为 JavaScript 的Number类型。';
+  @State testcont: string = ' // 获取 c++ 侧绑定的枚举型 \n'
+    + '  testNapi.Passing(testNapi.TypeFlags.NUM); \n'
     + ' // 使用获取的自定义数据 \n'
     + ' console.log(myData); // 输出自定义数据 \n';
 

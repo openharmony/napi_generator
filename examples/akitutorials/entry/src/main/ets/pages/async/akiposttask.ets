@@ -29,9 +29,9 @@ struct akiposttask {
   private pixelMapFormat: image.PixelMapFormat = 3;
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State textcont: string = 'napi_value 这是一个用于表示 JavaScript 值的不透明指针。'
-  @State testcont: string = ' // 获取 N-API value \n'
-    + '  const myData = addon.testNapiValue(); \n'
+  @State textcont: string = 'TaskRunner提供JS线程的任务调度器，开发人员可以从C++往JS线程PostTask。';
+  @State testcont: string = ' // js侧创建线程，然后在C++侧进行异步返回 \n'
+    + '  testNapi.ReturnPromiseResolveLater; \n'
     + ' // 使用获取的自定义数据 \n'
     + ' console.log(myData); // 输出自定义数据 \n';
 
@@ -64,8 +64,8 @@ struct akiposttask {
             .width('90%')
             .margin(10)
             .fontSize(16)
-            .fontColor('#ff400336')
-            .backgroundColor('#ff985307')
+            .fontColor($r('app.color.COLOR_80000000'))
+            .backgroundColor($r('app.color.COLOR_99FFFFFF'))
             .enabled(false)
         }
         .width('100%')
@@ -83,10 +83,12 @@ struct akiposttask {
             .margin({ left: 24 })
             .id('napi_async_complete_callback')
             .onClick(() => {
-              let res = '';
-              // let res = testNapi.testNapiValue();
-              hilog.info(0x0000, 'testTag', `testNapiValue = ${res} `);
-              this.testcont = this.testcont.replace('log(myData)', 'log(## '+res+' ##)');
+              testNapi.JSBind.initTaskRunner("main");
+              testNapi.ReturnPromiseResolveLater().then((value) => {
+                hilog.info(0x0000, 'testTag', `[AKI] ReturnPromiseResolveLater then: ${value}`);
+                this.testcont = this.testcont.replace('log(myData)', `log(## ${value} ##)`);
+              })
+
             })
         }
         .width('100%')

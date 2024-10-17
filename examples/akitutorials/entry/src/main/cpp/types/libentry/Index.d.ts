@@ -16,6 +16,13 @@
 export const SayHello: (a: string) => string;
 export const AsyncSayHello: (a: string) => Promise<string>;
 export const Passing: (flag: TypeFlags) => TypeFlags;
+export const ReturnPromiseResolveLater: () => Promise<object>;
+export const AsyncTaskReturnArrayBufferWithCommit: (uint8buff: Uint8Array) => Promise<ArrayBuffer>;
+export const ConvertToString: (a: object) => string;
+
+export class JSBind {
+  static initTaskRunner: (param: string) => void;
+}
 
 export enum TypeFlags {
   NONE,

@@ -29,9 +29,10 @@ struct akiarraybuffer {
   private pixelMapFormat: image.PixelMapFormat = 3;
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State textcont: string = 'napi_value 这是一个用于表示 JavaScript 值的不透明指针。'
-  @State testcont: string = ' // 获取 N-API value \n'
-    + '  const myData = addon.testNapiValue(); \n'
+  @State textcont: string = '当在非 JS 线程使用 aki::ArrayBuffer，'
+    + '需要关注数据字节流生命周期，并考虑是否需要结合Commit()函数使用。';
+  @State testcont: string = ' // 异步返回 ArrayBuffer 数据 \n'
+    + '  const myData = test.AsyncTaskReturnArrayBufferWithCommit(); \n'
     + ' // 使用获取的自定义数据 \n'
     + ' console.log(myData); // 输出自定义数据 \n';
 
@@ -64,8 +65,8 @@ struct akiarraybuffer {
             .width('90%')
             .margin(10)
             .fontSize(16)
-            .fontColor('#ff400336')
-            .backgroundColor('#ff985307')
+            .fontColor($r('app.color.COLOR_80000000'))
+            .backgroundColor($r('app.color.COLOR_99FFFFFF'))
             .enabled(false)
         }
         .width('100%')
@@ -83,10 +84,18 @@ struct akiarraybuffer {
             .margin({ left: 24 })
             .id('napi_async_complete_callback')
             .onClick(() => {
-              let res = '';
-              // let res = testNapi.testNapiValue();
-              hilog.info(0x0000, 'testTag', `testNapiValue = ${res} `);
-              this.testcont = this.testcont.replace('log(myData)', 'log(## '+res+' ##)');
+              let buff: ArrayBuffer = new ArrayBuffer(4);
+              let uint8Buff: Uint8Array = new Uint8Array(buff);
+              uint8Buff[0] = 0;
+              uint8Buff[1] = 1;
+              uint8Buff[2] = 2;
+              uint8Buff[3] = 3;
+              testNapi.AsyncTaskReturnArrayBufferWithCommit(uint8Buff).then(res => {
+                let uint8Buff1 = new Uint8Array(res);
+                let msg = uint8Buff1.toString();
+                hilog.info(0x0000, 'testTag', `testNapiValue = ${msg} `);
+                this.testcont = this.testcont.replace('log(myData)', 'log(## '+msg+' ##)');
+              });
             })
         }
         .width('100%')
