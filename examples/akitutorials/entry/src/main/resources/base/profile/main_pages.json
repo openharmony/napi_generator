@@ -1,0 +1,13 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/nodeapi/akibindclass",
+    "pages/nodeapi/akibindenum",
+    "pages/nodeapi/akibindfunction",
+    "pages/nodeapi/akibindglobal",
+    "pages/nodeapi/akibindmethod",
+    "pages/async/akiarraybuffer",
+    "pages/async/akiposttask",
+    "pages/async/akivalue"
+  ]
+}

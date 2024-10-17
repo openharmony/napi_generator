@@ -1,0 +1,249 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "entry_desc",
+      "value": "Component Collection"
+    },
+    {
+      "name": "MainAbility_desc",
+      "value": "ArkUI components, common attributes, common methods, etc. to classify and describe applications"
+    },
+    {
+      "name": "node_api",
+      "value": "Node Api"
+    },
+    {
+      "name": "javascript_api",
+      "value": "Javascript Api"
+    },
+    {
+      "name": "async_mgr",
+      "value": "Async Mgr"
+    },
+    {
+      "name": "other_mgr",
+      "value": "Other Mgr"
+    },
+    {
+      "name": "napi_object_detection",
+      "value": "Object Detection"
+    },
+    {
+      "name": "napi_dnn",
+      "value": "Deep Neural Networks"
+    },
+    {
+      "name": "animation",
+      "value": "Animation"
+    },
+    {
+      "name": "component",
+      "value": "Component"
+    },
+    {
+      "name": "universal",
+      "value": "Universal"
+    },
+    {
+      "name": "global_method",
+      "value": "Global Method"
+    },
+    {
+      "name": "auxiliary",
+      "value": "Auxiliary"
+    },
+    {
+      "name": "common_properties",
+      "value": "Common properties"
+    },
+    {
+      "name": "prop_background",
+      "value": "Background"
+    },
+    {
+      "name": "prop_foreground",
+      "value": "Foreground"
+    },
+    {
+      "name": "prop_border",
+      "value": "Border"
+    },
+    {
+      "name": "prop_font",
+      "value": "Font"
+    },
+    {
+      "name": "prop_bluefont",
+      "value": "#409EFF"
+    },
+    {
+      "name": "prop_orangefont",
+      "value": "#E6A23C"
+    },
+    {
+      "name": "prop_pinkfont",
+      "value": "#F56C6C"
+    },
+    {
+      "name": "prop_size",
+      "value": "Size"
+    },
+    {
+      "name": "graphic_transformation",
+      "value": "Graphics Transform"
+    },
+    {
+      "name": "common_events",
+      "value": "Common events"
+    },
+    {
+      "name": "click_event",
+      "value": "Click event"
+    },
+    {
+      "name": "touch_event",
+      "value": "Touch event"
+    },
+    {
+      "name": "show_hide_event",
+      "value": "Show/Hide Event"
+    },
+    {
+      "name": "drag_drop_event",
+      "value": "Drag/Drop Event"
+    },
+    {
+      "name": "key_event",
+      "value": "Key Event"
+    },
+    {
+      "name": "focus_event",
+      "value": "Focus Event"
+    },
+    {
+      "name": "mouse_event",
+      "value": "Mouse Event"
+    },
+    {
+      "name": "component_area_change_event",
+      "value": "Component Area Change Event"
+    },
+    {
+      "name": "gesture_processing",
+      "value": "Gesture Processing"
+    },
+    {
+      "name": "basic_gestures",
+      "value": "Basic Gestures"
+    },
+    {
+      "name": "tap_gesture",
+      "value": "TapGesture"
+    },
+    {
+      "name": "long_press_gesture",
+      "value": "LongPressGesture"
+    },
+    {
+      "name": "pan_gesture",
+      "value": "PanGesture"
+    },
+    {
+      "name": "pinch_gesture",
+      "value": "PinchGesture"
+    },
+    {
+      "name": "rotation_gesture",
+      "value": "RotationGesture"
+    },
+    {
+      "name": "swipe_gesture",
+      "value": "SwipeGesture"
+    },
+    {
+      "name": "combined_gestures",
+      "value": "Combined Gestures"
+    },
+    {
+      "name": "transition_animation",
+      "value": "Transition animation"
+    },
+    {
+      "name": "interpolation_calculation",
+      "value": "Interpolation calculation"
+    },
+    {
+      "name": "dialog",
+      "value": "Dialog"
+    },
+    {
+      "name": "cjson_management",
+      "value": "CJSON Test Case"
+    },
+    {
+      "name": "jsbind",
+      "value": "JSBind"
+    },
+    {
+      "name": "autoconvert",
+      "value": "Auto Convert"
+    },
+    {
+      "name": "apirefernce",
+      "value": "API Reference"
+    },
+    {
+      "name": "aki_register",
+      "value": "Aki Register"
+    },
+    {
+      "name": "aki_bind_global",
+      "value": "Aki Bind Global"
+    },
+    {
+      "name": "aki_bind_class",
+      "value": "Aki Bind Class"
+    },
+    {
+      "name": "aki_bind_enum",
+      "value": "Aki Bind Enum"
+    },
+    {
+      "name": "aki_bind_method",
+      "value": "Aki Bind Method"
+    },
+    {
+      "name": "aki_bind_function",
+      "value": "Aki Bind Function"
+    },
+    {
+      "name": "aki_task_runner",
+      "value": "Aki Task Runner"
+    },
+    {
+      "name": "aki_post_task",
+      "value": "Aki Post Task"
+    },
+    {
+      "name": "aki_value",
+      "value": "Aki Value"
+    },
+    {
+      "name": "aki_arraybuffer",
+      "value": "Aki ArrayBuffer"
+    }
+
+  ]
+}
