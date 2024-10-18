@@ -267,5 +267,86 @@ export default function jsAbstractOpsTest() {
       expect(testFuncResult).assertEqual('function');
       hilog.info(0x0000, 'testTag', '%{public}s', 'it napiTypeof  end');
     })
+
+    /**
+     * cpp/javascriptapi/jsabstractops/napiisarray.cpp
+     * pages/javascript/jsabstractops/napiisarray.ets
+     */
+    it('napiIsArrayTest', 0, () => {
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiIsArray begin');
+
+      // Test if number/string/boolean/null/undefined/array is array
+      const testNum: number = 123;
+      const testStr: string = 'test123'
+      const testBool: boolean = true;
+      const testNull: null = null;
+      const testUndef: undefined = undefined;
+      const testArr: Array<number | string | boolean | null | undefined> = [1, '2', false, null, undefined];
+      const testNumIsArrayResult = testNapi.testNapiIsArray(testNum);
+      const testStrIsArrayResult = testNapi.testNapiIsArray(testStr);
+      const testBoolIsArrayResult = testNapi.testNapiIsArray(testBool);
+      const testNullIsArrayResult = testNapi.testNapiIsArray(testNull);
+      const testUndefIsArrayResult = testNapi.testNapiIsArray(testUndef);
+      const testArrIsArrayResult = testNapi.testNapiIsArray(testArr);
+
+      // Print the results
+      hilog.info(0x0000, 'testTag', `napi_is_array(${testNum}) = ${testNumIsArrayResult}`);
+      hilog.info(0x0000, 'testTag', `napi_is_array(${testStr}) = ${testStrIsArrayResult}`);
+      hilog.info(0x0000, 'testTag', `napi_is_array(${testBool}) = ${testBoolIsArrayResult}`);
+      hilog.info(0x0000, 'testTag', `napi_is_array(${testNull}) = ${testNullIsArrayResult}`);
+      hilog.info(0x0000, 'testTag', `napi_is_array(${testUndef}) = ${testUndefIsArrayResult}`);
+      hilog.info(0x0000, 'testTag', `napi_is_array(${testArr}) = ${testArrIsArrayResult}`);
+
+      // Define assertion methods for type checking
+      expect(testNumIsArrayResult).assertEqual(false);
+      expect(testStrIsArrayResult).assertEqual(false);
+      expect(testBoolIsArrayResult).assertEqual(false);
+      expect(testNullIsArrayResult).assertEqual(false);
+      expect(testUndefIsArrayResult).assertEqual(false);
+      expect(testArrIsArrayResult).assertEqual(true);
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiIsArray end');
+    })
+
+    /**
+     * cpp/javascriptapi/jsabstractops/napistrictequals.cpp
+     * pages/javascript/jsabstractops/napistrictequals.ets
+     */
+    it('napiStrictEqualsTest', 0, () => {
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiStrictEquals begin');
+
+      // Test if the two objects are equal
+      const testNum: number = 123;
+      const testNumEqu: number = 123;
+      const testZeroNum: number = 0;
+      const testNumStr: string = '123';
+      const testZeroNumStr: string = '0';
+      const testBoolStr: string = 'true';
+      const testTrueBool: boolean = true;
+      const testNull: null = null;
+      const testUndef: undefined = undefined;
+      const testNumStrStrictEqualsResult = testNapi.testNapiStrictEquals(testNum, testNumStr);
+      const testZeroNumStrStrictEqualsResult = testNapi.testNapiStrictEquals(testZeroNum, testZeroNumStr);
+      const testTrueBoolStrStrictEqualsResult = testNapi.testNapiStrictEquals(testBoolStr, testTrueBool);
+      const testNullZeroStrictEqualsResult = testNapi.testNapiStrictEquals(testNull, testZeroNum);
+      const testNullUndefStrictEqualsResult = testNapi.testNapiStrictEquals(testNull, testUndef);
+      const testNumStrictEqualsResult = testNapi.testNapiStrictEquals(testNum, testNumEqu);
+
+      // Print the results
+      hilog.info(0x0000, 'testTag', `napi_strict_equals(${testNum}, ${testNumStr}) = ${testNumStrStrictEqualsResult}`);
+      hilog.info(0x0000, 'testTag', `napi_strict_equals(${testZeroNum}, ${testZeroNumStr}) = ${testZeroNumStrStrictEqualsResult}`);
+      hilog.info(0x0000, 'testTag', `napi_strict_equals(${testBoolStr}, ${testTrueBool}) = ${testTrueBoolStrStrictEqualsResult}`);
+      hilog.info(0x0000, 'testTag', `napi_strict_equals(${testNull}, ${testZeroNum}) = ${testNullZeroStrictEqualsResult}`);
+      hilog.info(0x0000, 'testTag', `napi_strict_equals(${testNull}, ${testUndef}) = ${testNullUndefStrictEqualsResult}`);
+      hilog.info(0x0000, 'testTag', `napi_strict_equals(${testNum}, ${testNumEqu}) = ${testNumStrictEqualsResult}`);
+
+      // Define assertion methods for type checking
+      expect(testNumStrStrictEqualsResult).assertEqual(false);
+      expect(testZeroNumStrStrictEqualsResult).assertEqual(false);
+      expect(testTrueBoolStrStrictEqualsResult).assertEqual(false);
+      expect(testNullZeroStrictEqualsResult).assertEqual(false);
+      expect(testNullUndefStrictEqualsResult).assertEqual(false);
+      expect(testNumStrictEqualsResult).assertEqual(true);
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it napiIsArray end');
+    })
   })
 }

@@ -50,6 +50,8 @@ add_library(entry SHARED
     javascriptapi/jsproperty/napigetelement.cpp
     javascriptapi/jsproperty/napihaselement.cpp
     javascriptapi/jsproperty/napideleteelement.cpp
+    javascriptapi/jsproperty/napiobjectfreeze.cpp
+    javascriptapi/jsproperty/napiobjectseal.cpp
     javascriptapi/jsproperty/jsPropertyInit.cpp
     javascriptapi/common.cpp
     javascriptapi/jsabstractops/napicoercetobool.cpp
@@ -57,6 +59,8 @@ add_library(entry SHARED
     javascriptapi/jsabstractops/napicoercetoobject.cpp
     javascriptapi/jsabstractops/napicoercetostring.cpp
     javascriptapi/jsabstractops/napitypeof.cpp
+    javascriptapi/jsabstractops/napiisarray.cpp
+    javascriptapi/jsabstractops/napistrictequals.cpp
     javascriptapi/jsabstractops/init.cpp
     javascriptapi/jsvalues/jsValuesInit.cpp
     javascriptapi/jsvalues/napicreateint32.cpp
