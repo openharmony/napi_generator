@@ -407,6 +407,44 @@ export default function abilityTestJsProperty() {
       expect(result3.toString()).assertContain(',,');
     })
 
+    it('testNapiObjectFreeze', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiObjectFreeze begin');
+      let obj: myObj = {
+        key1: 'value',
+        key2: 222,
+        true: 333,
+        key3: true
+      };
+      let result = testNapi.testNapiObjectFreeze(obj);
+      hilog.info(0x0000, 'testTag', `napi_object_freeze(obj) = ${JSON.stringify(result)}`);
+      expect(JSON.stringify(result)).assertContain('{"key1":"value","key2":222,"true":333,"key3":true}');
 
+      let result2 = testNapi.testNapiDeleteProperty(obj, 'key1');
+      hilog.info(0x0000, 'testTag', `napi_object_freeze(obj, 'key1') = ${JSON.stringify(result2)}`);
+      expect(JSON.stringify(result2)).assertContain('{"key1":"value","key2":222,"true":333,"key3":true}');
+    })
+
+    it('testNapiObjectSeal', 0, () => {
+      // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
+      hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiObjectSeal begin');
+      let obj: myObj = {
+        key1: 'value',
+        key2: 222,
+        true: 333,
+        key3: true
+      };
+      let result = testNapi.testNapiObjectSeal(obj);
+      hilog.info(0x0000, 'testTag', `napi_object_seal(obj) = ${JSON.stringify(result)}`);
+      expect(JSON.stringify(result)).assertContain('{"key1":"value","key2":222,"true":333,"key3":true}');
+
+      let result2 = testNapi.testNapiDeleteProperty(obj, 'key1');
+      hilog.info(0x0000, 'testTag', `napi_delete_property(obj, 'key1') = ${JSON.stringify(result2)}`);
+      expect(JSON.stringify(result2)).assertContain('{"key1":"value","key2":222,"true":333,"key3":true}');
+
+      let result3 = testNapi.testNapiSetProperty(obj, 'key1', 'flower');
+      hilog.info(0x0000, 'testTag', `napi_set_property(obj, 'key1', 'flower') = ${JSON.stringify(result3)}`);
+      expect(JSON.stringify(result3)).assertContain('{"key1":"flower","key2":222,"true":333,"key3":true}');
+    })
   })
 }

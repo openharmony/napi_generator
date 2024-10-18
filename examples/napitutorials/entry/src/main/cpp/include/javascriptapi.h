@@ -40,12 +40,16 @@ napi_value testNapiSetElement(napi_env env, napi_callback_info info);
 napi_value testNapiGetElement(napi_env env, napi_callback_info info);
 napi_value testNapiHasElement(napi_env env, napi_callback_info info);
 napi_value testNapiDeleteElement(napi_env env, napi_callback_info info);
+napi_value testNapiObjectFreeze(napi_env env, napi_callback_info info);
+napi_value testNapiObjectSeal(napi_env env, napi_callback_info info);
 
 napi_value testNapiCoerceToBool(napi_env env, napi_callback_info info);
 napi_value testNapiCoerceToNumber(napi_env env, napi_callback_info info);
 napi_value testNapiCoerceToObject(napi_env env, napi_callback_info info);
 napi_value testNapiCoerceToString(napi_env env, napi_callback_info info);
 napi_value testNapiTypeof(napi_env env, napi_callback_info info);
+napi_value testNapiIsArray(napi_env env, napi_callback_info info);
+napi_value testNapiStrictEquals(napi_env env, napi_callback_info info);
 
 void jsAbstractOpsInit(napi_property_descriptor **origDescPtr, size_t *len);
 

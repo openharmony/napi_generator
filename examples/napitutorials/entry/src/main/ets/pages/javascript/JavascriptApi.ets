@@ -270,7 +270,7 @@ const WORK_WITH_JAVASCRIPT_VALUES_AND_ABSTRACT_OPERATIONS: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_is_array'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsabstractops/napiisarray'
       },
       {
         title: $r('app.string.napi_is_arraybuffer'),
@@ -298,7 +298,7 @@ const WORK_WITH_JAVASCRIPT_VALUES_AND_ABSTRACT_OPERATIONS: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_strict_equals'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsabstractops/napistrictequals'
       },
       {
         title: $r('app.string.napi_detach_arraybuffer'),
@@ -385,11 +385,11 @@ const WORK_WITH_JAVASCRIPT_PROPERTIES: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_object_freeze'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napiobjectfreeze'
       },
       {
         title: $r('app.string.napi_object_seal'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsproperties/napiobjectseal'
       }
     ]
   }

@@ -49,7 +49,8 @@ export const testNapiSetElement: (a: object, b: number, c: any) => string;
 export const testNapiGetElement: (a: object, b: number) => string;
 export const testNapiHasElement: (a: object, b: number) => string;
 export const testNapiDeleteElement: (a: object, b: number) => string;
-
+export const testNapiObjectFreeze: (a: object) => object;
+export const testNapiObjectSeal: (a: object) => object;
 
 /* work_with_javascript_values_and_abstract_operations */
 export const testNapiCoerceToBool: (a: any) => boolean;
@@ -57,6 +58,8 @@ export const testNapiCoerceToNumber: (a: any) => number;
 export const testNapiCoerceToObject: (a: any) => object;
 export const testNapiCoerceToString: (a: any) => string;
 export const testNapiTypeof: (a: any) => string;
+export const testNapiIsArray: (a: any) => boolean;
+export const testNapiStrictEquals: (a: any, b: any) => boolean;
 
 /* work_with_javascript_values */
 export const testNapiCreateInt32: (number) => number;
