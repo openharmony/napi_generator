@@ -18,7 +18,8 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
-napi_value testNapiObjectSeal(napi_env env, napi_callback_info info) {
+napi_value testNapiObjectSeal(napi_env env, napi_callback_info info)
+{
     // pages/javascript/jsproperty/napiobjectseal
     // 获取参数数量
     size_t argc = PARAM1;

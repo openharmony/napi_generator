@@ -17,7 +17,8 @@
 
 static const char *TAG = "[jsapi_isarray]";
 
-napi_value testNapiIsArray(napi_env env, napi_callback_info info) {
+napi_value testNapiIsArray(napi_env env, napi_callback_info info)
+{
     // pages/javascript/jsabstractops/napiisarray
     size_t requireArgc = PARAM1;
     size_t argc = PARAM1;
