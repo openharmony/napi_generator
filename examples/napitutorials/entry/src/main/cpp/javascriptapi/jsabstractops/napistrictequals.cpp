@@ -17,7 +17,8 @@
 
 static const char *TAG = "[jsapi_strictequals]";
 
-napi_value testNapiStrictEquals(napi_env env, napi_callback_info info) {
+napi_value testNapiStrictEquals(napi_env env, napi_callback_info info)
+{
     // pages/javascript/jsabstractops/napistrictequals
     size_t requireArgc = PARAM2;
     size_t argc = PARAM2;

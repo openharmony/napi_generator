@@ -18,7 +18,8 @@
 
 static const char *TAG = "[javascriptapi_property]";
 
-napi_value testNapiObjectFreeze(napi_env env, napi_callback_info info) {
+napi_value testNapiObjectFreeze(napi_env env, napi_callback_info info)
+{
     // pages/javascript/jsproperty/napiobjectfreeze
     // 获取参数数量
     size_t argc = PARAM1;
