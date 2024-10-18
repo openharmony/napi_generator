@@ -22,15 +22,15 @@ const SIMPLE_ASYNCRONOUS_OPERATIONS: ThirdLevelCategory =
     childNodes: [
       {
         title: $r('app.string.aki_post_task'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/async/akiposttask'
       },
       {
         title: $r('app.string.aki_value'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/async/akivalue'
       },
       {
         title: $r('app.string.aki_arraybuffer'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/async/akiarraybuffer'
       }
     ]
   }
