@@ -29,9 +29,10 @@ struct akibindclass {
   private pixelMapFormat: image.PixelMapFormat = 3;
   @State isSetInstance: Boolean = false;
   @State imagePixelMap: PixelMap | undefined = undefined;
-  @State textcont: string = 'napi_value 这是一个用于表示 JavaScript 值的不透明指针。'
-  @State testcont: string = ' // 获取 N-API value \n'
-    + '  const myData = addon.testNapiValue(); \n'
+  @State textcont: string = 'AKI 提供 JSBIND_CLASS 对 C++ 类/结构体进行绑定，'
+    + '在JSBIND_CLASS作用域下可绑定：类构造函数、类成员函数、类成员属性的类特性。';
+  @State testcont: string = ' // js侧使用c++侧绑定的类 \n'
+    + '  new testNapi.TestObject(10.16); \n'
     + ' // 使用获取的自定义数据 \n'
     + ' console.log(myData); // 输出自定义数据 \n';
 
