@@ -69,6 +69,8 @@
     "pages/javascript/jsproperties/napigetelement",
     "pages/javascript/jsproperties/napihaselement",
     "pages/javascript/jsproperties/napideleteelement",
+    "pages/javascript/jsproperties/napiobjectfreeze",
+    "pages/javascript/jsproperties/napiobjectseal",
     "pages/javascript/jsabstractops/napicoercetobool",
     "pages/javascript/jsabstractops/napicoercetonumber",
     "pages/ncpp/cjsonfuncs/cjsonfuncs",
@@ -92,6 +94,8 @@
     "pages/javascript/jsabstractops/napicoercetoobject",
     "pages/javascript/jsabstractops/napicoercetostring",
     "pages/javascript/jsabstractops/napitypeof",
+    "pages/javascript/jsabstractops/napiisarray",
+    "pages/javascript/jsabstractops/napistrictequals",
     "pages/javascript/jsvalues/napicreateint32",
     "pages/javascript/jsvalues/napicreateuint32",
     "pages/javascript/jsvalues/napicreateint64"

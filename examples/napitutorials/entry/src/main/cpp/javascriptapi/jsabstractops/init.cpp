@@ -23,7 +23,9 @@ void jsAbstractOpsInit(napi_property_descriptor **origDescPtr, size_t *len)
         {"testNapiCoerceToNumber", nullptr, testNapiCoerceToNumber, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiCoerceToObject", nullptr, testNapiCoerceToObject, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiCoerceToString", nullptr, testNapiCoerceToString, nullptr, nullptr, nullptr, napi_default, nullptr},
-        {"testNapiTypeof", nullptr, testNapiTypeof, nullptr, nullptr, nullptr, napi_default, nullptr}
+        {"testNapiTypeof", nullptr, testNapiTypeof, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiIsArray", nullptr, testNapiIsArray, nullptr, nullptr, nullptr, napi_default, nullptr},
+        {"testNapiStrictEquals", nullptr, testNapiStrictEquals, nullptr, nullptr, nullptr, napi_default, nullptr}
     };
 
     // Allocate memory
