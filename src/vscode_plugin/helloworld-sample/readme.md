@@ -6,21 +6,17 @@
 
 方式1.右键.h文件 -> OHOS_Gen
 
-h2sa:
-![image-20241018135412769](h2sa4-1.png)
+h2sa:  https://gitee.com/openharmony/napi_generator/src/vscode_plugin/helloworld-sample/figures/h2sa4-1.png
 
-h2hdf: 
-![image-20241018135412769](h2hdf4-1.png)
+h2hdf: https://gitee.com/openharmony/napi_generator/src/vscode_plugin/helloworld-sample/figures/h2hdf4-1.png
 
-h2dts: 
-![image-20241018135412769](h2dts.png)
+h2dts: https://gitee.com/openharmony/napi_generator/src/vscode_plugin/helloworld-sample/figures/h2dts.png
 
-h2dtscpp: 
-![image-20241018135412769](h2dtscpp.png)
+h2dtscpp: https://gitee.com/openharmony/napi_generator/src/vscode_plugin/helloworld-sample/figures/h2dtscpp.png
 
 方式2.ctrl + shift + p
 
-![image-20241018135412769](ctrl_shift_p.png)
+https://gitee.com/openharmony/napi_generator/src/vscode_plugin/helloworld-sample/figures/ctrl_shift_p.png
 
 ## 使用：
 
