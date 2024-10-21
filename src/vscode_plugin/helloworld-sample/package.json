@@ -1,0 +1,137 @@
+{
+    "name": "helloworld-sample",
+    "displayName": "helloworld-sample",
+    "description": "HelloWorld example for VS Code",
+    "version": "0.0.1",
+    "publisher": "kaihong",
+    "repository": "https://github.com/Microsoft/vscode-extension-samples/helloworld-sample",
+    "engines": {
+        "vscode": "^1.34.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.h2sa3-2",
+        "onCommand:extension.h2sa4-1",
+        "onCommand:extension.h2hdf4-1",
+        "onCommand:extension.h2dts",
+        "onCommand:extension.h2dtscpp",
+        "onCommand:extension.dts2cpp"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.h2sa3-2",
+                "title": "h2sa3-2"
+            },
+            {
+                "command": "extension.h2sa4-1",
+                "title": "h2sa4-1"
+            },
+            {
+                "command": "extension.h2hdf4-1",
+                "title": "h2hdf4-1"
+            },
+            {
+                "command": "extension.h2dts",
+                "title": "h2dts"
+            },
+            {
+                "command": "extension.h2dtscpp",
+                "title": "h2dtscpp"
+            },
+            {
+                "command": "extension.dts2cpp",
+                "title": "dts2cpp"
+            }
+        ],
+        "submenus": [
+            {
+                "id": "gen-menulist",
+                "label": "OHOS_Gen"
+            },
+            {
+                "id": "gen-h2sa",
+                "label": "gen_sa"
+            },
+            {
+                "id": "gen-h2hdf",
+                "label": "gen_hdf"
+            }
+        ],
+        "menus": {
+            "gen-menulist": [
+                {
+                    "submenu": "gen-h2sa",
+                    "when": "resourceExtname == .h",
+                    "group": "z_commands"
+                },
+                {
+                    "submenu": "gen-h2hdf",
+                    "when": "resourceExtname == .h",
+                    "group": "z_commands"
+                },
+                {
+                    "command": "extension.h2dts",
+                    "when": "resourceExtname == .h",
+                    "group": "z_commands"
+                },
+                {
+                    "command": "extension.h2dtscpp",
+                    "when": "resourceExtname == .h",
+                    "group": "z_commands"
+                },
+                {
+                    "command": "extension.dts2cpp",
+                    "when": "resourceExtname == .ts",
+                    "group": "z_commands"
+                }
+            ],
+            "explorer/context": [
+                {
+                    "submenu": "gen-menulist",
+                    "when": "resourceExtname == .h || resourceExtname == .ts",
+                    "group": "z_commands"
+                }
+            ],
+            "gen-h2sa": [
+                {
+                    "command": "extension.h2sa3-2",
+                    "when": "resourceExtname == .h",
+                    "group": "z_commands"
+                },
+                {
+                    "command": "extension.h2sa4-1",
+                    "when": "resourceExtname == .h",
+                    "group": "z_commands"
+                }
+            ],
+            "gen-h2hdf": [
+                {
+                    "command": "extension.h2hdf4-1",
+                    "when": "resourceExtname == .h",
+                    "group": "z_commands"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "lint": "eslint . --ext .ts,.tsx",
+        "watch": "tsc -watch -p ./"
+    },
+    "devDependencies": {
+        "@types/node": "^16.17.0",
+        "@types/vscode": "^1.34.0",
+        "@typescript-eslint/eslint-plugin": "^5.30.0",
+        "@typescript-eslint/parser": "^5.30.0",
+        "eslint": "^8.13.0",
+        "typescript": "^4.7.2"
+    },
+    "dependencies": {
+        "vsce": "^2.15.0"
+    }
+}
