@@ -54,10 +54,6 @@ export function activate(context: vscode.ExtensionContext) {
               versionTag: '3.2'
             };
             genServiceFile(rootInfo, out);
-
-            vscode.window.showInformationMessage('h2sa3_2 end!');
-            console.info('h2sa3_2 end!')
-
         }
         // Display a message box to the user
         vscode.window.showInformationMessage('h2sa3_2!');
@@ -82,9 +78,6 @@ export function activate(context: vscode.ExtensionContext) {
             versionTag: '4.1'
           };
           genServiceFile(rootInfo, out);
-
-          console.info('h2sa4_1 end!')
-
       }
       // Display a message box to the user
       vscode.window.showInformationMessage('h2sa4_1!');
@@ -109,8 +102,6 @@ export function activate(context: vscode.ExtensionContext) {
               versionTag: '4.1'
             };
             genHdfFile(rootInfo, out);
-
-            console.info('h2hdf4_1 end!')
         }
         // Display a message box to the user
         vscode.window.showInformationMessage('h2hdf4_1!');
@@ -160,7 +151,6 @@ export function activate(context: vscode.ExtensionContext) {
             // generator
             let out = path.dirname(uri.fsPath);
             genDtsCppFile(rootInfo, out);
-
         }
         // Display a message box to the user
         vscode.window.showInformationMessage('h2dtscpp!');
@@ -186,9 +176,7 @@ export function activate(context: vscode.ExtensionContext) {
                 // Display a message box to the user
                 vscode.window.showInformationMessage(`${uri.fsPath} is not a .d.ts file!`);
             }
-
             // generator
-            
         }
     });
 
