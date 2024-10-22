@@ -4,7 +4,7 @@
 
 根据.h接口文件生成hdf模板，sa模板，dts接口文件以及napi模板。
 
-方式1.右键.h文件 -> OHOS_Gen
+方式1: 右键.h文件 -> OHOS_Gen
 
 h2sa:  https://gitee.com/openharmony/napi_generator/src/vscode_plugin/helloworld-sample/images/h2sa4-1.png
 
@@ -14,7 +14,7 @@ h2dts: https://gitee.com/openharmony/napi_generator/src/vscode_plugin/helloworld
 
 h2dtscpp: https://gitee.com/openharmony/napi_generator/src/vscode_plugin/helloworld-sample/images/h2dtscpp.png
 
-方式2.ctrl + shift + p
+方式2: ctrl + shift + p
 
 https://gitee.com/openharmony/napi_generator/src/vscode_plugin/helloworld-sample/images/ctrl_shift_p.png
 
