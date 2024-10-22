@@ -33,20 +33,13 @@ export function activate(context: vscode.ExtensionContext) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "helloworld-sample" is now active!');
-    vscode.window.showInformationMessage('Congratulations, your extension "helloworld-sample" is now active!');
 
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with registerCommand
     // The commandId parameter must match the command field in package.json
     const h2sa3_2 = vscode.commands.registerCommand('extension.h2sa3-2', async (uri) => {
         // The code you place here will be executed every time your command is executed
-        vscode.window.showInformationMessage('extension.h2sa3-2!');
         if (uri && uri.fsPath) {
-            vscode.window.showInformationMessage('extension.h2sa3-2: h path: ' + uri.fsPath);
-            let testContent = 'test vs plugin;'
-            let paths = path.dirname(uri.fsPath);
-            let filePath = path.join(paths, 'test222.txt');
-            fs.writeFileSync(filePath, testContent);
             // parse
             let funDescList = await parseHeaderFile(uri.fsPath);
             console.log('parse header file res: ', funDescList);
