@@ -54,6 +54,10 @@ export function removeTab(str: string) {
   str = replaceAll(str, '\r\n', '');
   str = replaceAll(str, '\r', '');
   str = replaceAll(str, '\n', '');
+  // 去除class中的public: protected: private:
+  str = replaceAll(str, 'public:', '');
+  str = replaceAll(str, 'protected:', '');
+  str = replaceAll(str, 'private:', '');
   while (str[0] === ' ') {
     str = str.replace(' ' , '')
   }
