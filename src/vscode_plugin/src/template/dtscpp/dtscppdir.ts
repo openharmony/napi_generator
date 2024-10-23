@@ -23,29 +23,32 @@ import { napiInitTemplate } from "./dtscpp_napiinit_template";
 import { dtscppReadmeTemplate } from "./dtscpp_readme_template";
 import { testFirstGenTemplate } from "./dtscpp_testfirstgen_template";
 
-// out/tsout
-export let dtscpp_tsout: DirTemp = {
-  name: 'tsout',
-  files: [indexdtsTemplate],
-  dirs: []
-}
-
-// out/testout
-export let dtscpp_testout: DirTemp = {
-  name: 'testout',
+export let dtscpp_testdir: DirTemp = {
+  name: 'test',
   files: [testFirstGenTemplate],
   dirs: []
 }
 
-// out/cppout
-export let dtscpp_cppout: DirTemp = {
-  name: 'cppout',
-  files: [napiCommonHTemplate, napiCommonCppTemplate, napiHTemplate, napiInitTemplate, napiCppTemplate],
+export let dtscpp_etsdir: DirTemp = {
+  name: 'ets',
+  files: [],
+  dirs: [dtscpp_testdir]
+}
+
+export let dtscpp_typesdir: DirTemp = {
+  name: 'types',
+  files: [indexdtsTemplate],
   dirs: []
 }
 
+export let dtscpp_cppdir: DirTemp = {
+  name: 'cpp',
+  files: [napiCommonHTemplate, napiCommonCppTemplate, napiHTemplate, napiInitTemplate, napiCppTemplate],
+  dirs: [dtscpp_typesdir]
+}
+
 export let dtscppout: DirTemp = {
-  name: '',
+  name: 'testh2dtscpp',
   files: [dtscppReadmeTemplate],
-  dirs: [dtscpp_cppout, dtscpp_testout, dtscpp_tsout]
+  dirs: [dtscpp_cppdir, dtscpp_etsdir]
 }
