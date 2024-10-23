@@ -32,7 +32,6 @@ import { profileJsonTemplate } from './sa_profilejson_template';
 import { serviceCfgTemplate } from './sa_cfg_template';
 import { serviceCfgTemplate41 } from './sa_cfg_template41';
 import { serviceCfgGnTemplate } from './sa_cfggn_template';
-import { iServiceCppTemplate } from './sa_i_servicecpp_template';
 import { saReadmeTemplate } from './sa_readme_template';
 import { saReadmeTemplate41 } from './sa_readme_template41';
 import { DirTemp } from '../../datatype';
@@ -75,7 +74,7 @@ export let sa_profile3_2_dir: DirTemp = {
 
 export let src_dir: DirTemp = {
   name: 'src',
-  files: [ proxyCppTemplate, stubCppTemplate, serviceCppTemplate, clientCppTemplate,iServiceCppTemplate],
+  files: [ proxyCppTemplate, stubCppTemplate, serviceCppTemplate, clientCppTemplate],
   dirs: []
 }
 
