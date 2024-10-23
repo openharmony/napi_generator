@@ -182,8 +182,13 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
     const typedefsRegex1 = /typedef\s+struct\s+\w+\s*{\s*[\s\S]*?}\s*\w+;/g;
     // 正则表达式匹配 typedef 后跟基本数据类型和自定义类型名称
     const typedefsRegex2 = /typedef\s+\w+\s+\w+\s*;/g;
+    // 正则表达式匹配 class xxx {};
+    const classRegex = /class\s+(\w+)\s+([a-zA-Z0-9_]+)?\s*(\{[^}]*\};)/g;
     let rawContent = removeComments(fs.readFileSync(path).toString());
     let structMatch = rawContent.match(typedefsRegex1);
+    if (!structMatch) {
+      structMatch = rawContent.match(classRegex);
+    }
     let basicTypeMatch = rawContent.match(typedefsRegex2);
     let interfaceListDef: string = '';
 
@@ -192,9 +197,15 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
     for (let index = 0; index < structMatch.length; index++) {
       let matchs = removeComments(structMatch[index]);
         let structIndex = matchs.indexOf('struct');
+        let classIndex = matchs.indexOf('class')
         let leftIndex = matchs.indexOf('{');
         let rightIndex = matchs.indexOf('}');
-        let interfaceName = matchs.substring(structIndex + 6, leftIndex).trim();
+        let interfaceName = '';
+        if (structIndex >= 0) {
+          interfaceName = matchs.substring(structIndex + 6, leftIndex).trim();
+        } else if (classIndex >= 0) {
+          interfaceName = matchs.substring(classIndex + 5, leftIndex).trim();
+        }
         let params = matchs.substring(leftIndex + 1, rightIndex).split(';');
         let interDefine = 'interface ' + interfaceName + ' {\n';
         let paramsContent: ParamObj[] = [];
@@ -215,7 +226,9 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
           }
           // 成员函数的处理
           const funcRegex = /\w+\s+\*?\(([^\)]+)\)\s*\(([^\)]*)\)\s*/;
-          const match = paramStr.match(funcRegex);
+          const funcRegex2 = /(\w+)\s+(::\w+|[\w:]+)\s*\(([^)]*)\)\s*/;
+          let match = paramStr.match(funcRegex);
+          let match2 = paramStr.match(funcRegex2);
           if (match) {
             // 处理成员函数  仅仅限于成员函数是函数指针的情况
             let interFuncParams: ParamObj[] = []
@@ -223,6 +236,19 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
             let funcName = getInterFuncName(match[1]);
             funcName = util.format('KH%s_%s', generateRandomInteger(MIN_RANDOM, MAX_RANDOM), funcName);
             let params = getInterFuncParams(match[2], interFuncParams);
+            interDefine += util.format('  %s:(%s) => %s;\n',funcName, params, returnType);
+            let funcObj: FuncObj = {
+              name: funcName,
+              returns: returnType,
+              parameters: interFuncParams
+            }
+            interFuncsContent.push(funcObj);
+          } else if (match2) {
+            let interFuncParams: ParamObj[] = []
+            let returnType = getInterFuncRetType(match2[1]);
+            let funcName = match2[2];
+            funcName = util.format('KH%s_%s', generateRandomInteger(MIN_RANDOM, MAX_RANDOM), funcName);
+            let params = getInterFuncParams(match2[3], interFuncParams);
             interDefine += util.format('  %s:(%s) => %s;\n',funcName, params, returnType);
             let funcObj: FuncObj = {
               name: funcName,
