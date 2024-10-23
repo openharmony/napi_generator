@@ -18,11 +18,15 @@ napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**
 
 - **h2dts**：根据.h文件生成OpenHarmony的JS-API接口文件，即将C/C++方法，枚举型，结构体，类转换成ArkTS语法的代码（.d.ts）。生成文件可以当作OpenHarmony应用导入的头文件使用；
 
-- **h2dtscpp**：根据.h头文件生成OpenHarmony Native C++应用开发模板，包括JS-API接口文件（.d.ts），CPP文件和测试代码（.ets）。生成文件对应的是DevEco Studio选择NativeC++生成的工程模板中的源码文件内容，验证过的平台如下：
+- **h2dtscpp**：根据.h头文件生成OpenHarmony Native C++应用开发模板，包括JS-API接口文件（.d.ts），CPP文件和测试代码（.ets）。生成文件对应的是DevEco Studio选择NativeC++生成的工程模板中的源码文件内容：
 
-  | 平台          | 版本                                                         |
-  | ------------- | ------------------------------------------------------------ |
+  ![](https://gitee.com/openharmony/napi_generator/raw/master/src/vscode_plugin/images/h2dtscpp_gen.png)
+  
+  验证过的平台如下：
+  
   | DecEco Studio | 4.1 Release（Build Version: 4.1.0.400, built on April 9, 2024） |
+  | ------------- | ------------------------------------------------------------ |
+  | 平台          | 版本                                                         |
 
 ## 使用：
 

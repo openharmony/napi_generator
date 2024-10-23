@@ -67,53 +67,53 @@
                 {
                     "submenu": "gen-h2sa",
                     "when": "resourceExtname == .h",
-                    "group": "z_commands"
+                    "group": "2_workspace"
                 },
                 {
                     "submenu": "gen-h2hdf",
                     "when": "resourceExtname == .h",
-                    "group": "z_commands"
+                    "group": "2_workspace"
                 },
                 {
                     "command": "extension.h2dts",
                     "when": "resourceExtname == .h",
-                    "group": "z_commands"
+                    "group": "2_workspace"
                 },
                 {
                     "command": "extension.h2dtscpp",
                     "when": "resourceExtname == .h",
-                    "group": "z_commands"
+                    "group": "2_workspace"
                 },
                 {
                     "command": "extension.dts2cpp",
                     "when": "resourceExtname == .ts",
-                    "group": "z_commands"
+                    "group": "2_workspace"
                 }
             ],
             "explorer/context": [
                 {
                     "submenu": "gen-menulist",
                     "when": "resourceExtname == .h || resourceExtname == .ts",
-                    "group": "z_commands"
+                    "group": "2_workspace"
                 }
             ],
             "gen-h2sa": [
                 {
                     "command": "extension.h2sa3-2",
                     "when": "resourceExtname == .h",
-                    "group": "z_commands"
+                    "group": "2_workspace"
                 },
                 {
                     "command": "extension.h2sa4-1",
                     "when": "resourceExtname == .h",
-                    "group": "z_commands"
+                    "group": "2_workspace"
                 }
             ],
             "gen-h2hdf": [
                 {
                     "command": "extension.h2hdf4-1",
                     "when": "resourceExtname == .h",
-                    "group": "z_commands"
+                    "group": "2_workspace"
                 }
             ]
         }
