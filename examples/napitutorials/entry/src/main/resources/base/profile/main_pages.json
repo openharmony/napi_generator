@@ -98,6 +98,10 @@
     "pages/javascript/jsabstractops/napistrictequals",
     "pages/javascript/jsvalues/napicreateint32",
     "pages/javascript/jsvalues/napicreateuint32",
-    "pages/javascript/jsvalues/napicreateint64"
+    "pages/javascript/jsvalues/napicreateint64",
+    "pages/javascript/jsfunctions/napicallfunction",
+    "pages/javascript/jsfunctions/napicreatefunction",
+    "pages/javascript/jsobjectwrap/napiwrap",
+    "pages/javascript/jsobjectwrap/napiunwrap"
   ]
 }

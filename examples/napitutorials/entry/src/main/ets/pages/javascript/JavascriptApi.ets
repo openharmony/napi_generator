@@ -400,11 +400,11 @@ const WORK_WITH_JAVASCRIPT_FUNCTIONS: ThirdLevelCategory =
     childNodes: [
       {
         title: $r('app.string.napi_call_function'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsfunctions/napicallfunction'
       },
       {
         title: $r('app.string.napi_create_function'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsfunctions/napicreatefunction'
       },
       {
         title: $r('app.string.napi_get_cb_info'),
@@ -432,11 +432,11 @@ const OBJECT_WRAP: ThirdLevelCategory =
       },
       {
         title: $r('app.string.napi_wrap'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsobjectwrap/napiwrap'
       },
       {
         title: $r('app.string.napi_unwrap'),
-        url: 'pages/image/basicSample/image2Gray'
+        url: 'pages/javascript/jsobjectwrap/napiunwrap'
       },
       {
         title: $r('app.string.napi_remove_wrap'),
