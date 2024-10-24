@@ -18,12 +18,14 @@
 
 static const char *TAG = "[javascriptapi_function]";
 
-napi_value SayHello(napi_env env, napi_callback_info info) {
+napi_value SayHello(napi_env env, napi_callback_info info)
+{
     printf("Hello\n");
     return NULL;
 }
 
-napi_value testNapiCreateFunction(napi_env env, napi_callback_info info) {
+napi_value testNapiCreateFunction(napi_env env, napi_callback_info info)
+{
     // pages/javascript/jsfunctions/napicreatefunction
     napi_value func;
     napi_status status;
