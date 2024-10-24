@@ -65,3 +65,11 @@ export const testNapiStrictEquals: (a: any, b: any) => boolean;
 export const testNapiCreateInt32: (number) => number;
 export const testNapiCreateUInt32: (number) => number;
 export const testNapiCreateInt64: (number) => number;
+
+/* work_with_javascript_functions */
+export const testNapiCallFunction: (a: Function, b: number) => number;
+export const testNapiCreateFunction: () => any;
+
+/* work_with_javascript_objectwrap */
+export const testNapiWrap: (a: string) => any;
+export const testNapiUnwrap: (a: any) => string;
