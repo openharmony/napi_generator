@@ -17,35 +17,32 @@
 #include "javascriptapi.h"
 
 static const char *TAG = "[javascriptapi_object_wrap]";
-
+static const int MAX_BUFFER_SIZE = 128;
 class Node {
 public:
-    Node(napi_env env, napi_value id)
-    {
+    Node(napi_env env, napi_value id) {
         // 将 JavaScript 字符串转换为 C++ 字符串
-        size_t idLength;
-        napi_get_value_string_utf8(env, id, nullptr, 0, &idLength);
-        char *buffer = new char[idLength + 1];
-        napi_get_value_string_utf8(env, id, buffer, idLength + 1, nullptr);
+        size_t idLength = MAX_BUFFER_SIZE;
+        char buf[MAX_BUFFER_SIZE];
+        char *buffer = buf;
+        napi_get_value_string_utf8(env, id, buffer, idLength, nullptr);
         // 将 C++ 字符串转换为 std::string
         _id = std::string(buffer);
-        // 释放分配的内存
-        delete[] buffer;
     }
     std::string GetId() { return _id; }
+
 private:
     std::string _id; // 成员变量，存储 id
 };
 
-napi_value testNapiWrap(napi_env env, napi_callback_info info)
-{
+napi_value testNapiWrap(napi_env env, napi_callback_info info) {
     size_t argc = PARAM1;
     napi_value argv[PARAM1] = {0};
     napi_value thisObj = nullptr;
     void *data = nullptr;
     napi_status status;
     napi_value cons;
-    
+
     const napi_extended_error_info *extended_error_info;
     // 获取回调函数的参数信息
     status = napi_get_cb_info(env, info, &argc, argv, &thisObj, &data);
@@ -61,17 +58,18 @@ napi_value testNapiWrap(napi_env env, napi_callback_info info)
         return NULL;
     }
     auto instance = new Node(env, argv[PARAM0]);
-    status = napi_wrap(env, thisObj, instance,
+    status = napi_wrap(
+        env, thisObj, instance,
         [](napi_env environment, void *data, void *hint) {
             auto objInfo = reinterpret_cast<Node *>(data);
             if (objInfo != nullptr) {
                 delete objInfo;
             }
-        }, NULL, NULL);
+        },
+        NULL, NULL);
     if (status != napi_ok) {
         getErrMsg(status, env, extended_error_info, "wrap", TAG);
         return NULL;
     }
     return thisObj;
 }
-
