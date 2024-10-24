@@ -18,7 +18,8 @@
 
 static const char *TAG = "[javascriptapi_function]";
 
-napi_value testNapiCallFunction(napi_env env, napi_callback_info info) {
+napi_value testNapiCallFunction(napi_env env, napi_callback_info info)
+{
     // pages/javascript/jsfunctions/napicallfunction
     // 获取参数数量
     size_t argc = PARAM2;
