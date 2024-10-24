@@ -16,9 +16,9 @@
 #include "common.h"
 #include "javascriptapi.h"
 
-napi_value jsFunctionsInit(napi_env env, napi_value exports) {
-    napi_property_descriptor desc[] =
-    {
+napi_value jsFunctionsInit(napi_env env, napi_value exports)
+{
+    napi_property_descriptor desc[] = {
         {"testNapiCallFunction", nullptr, testNapiCallFunction, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiCreateFunction", nullptr, testNapiCreateFunction, nullptr, nullptr, nullptr, napi_default, nullptr},
     };
