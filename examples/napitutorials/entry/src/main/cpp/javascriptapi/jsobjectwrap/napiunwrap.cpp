@@ -24,7 +24,8 @@ public:
     napi_valuetype result;
     napi_value resultStr;
     const napi_extended_error_info *extended_error_info;
-    MyNode(napi_env env, napi_value val) {
+    MyNode(napi_env env, napi_value val)
+    {
         // Call napi_typeof(), any -> napi_valuetype
         status = napi_typeof(env, val, &result);
         if (status != napi_ok) {
@@ -38,12 +39,14 @@ public:
             napi_throw_error(env, NULL, errMsg.c_str());
         }
     }
-    napi_value GetResult(napi_env env) {
+    napi_value GetResult(napi_env env)
+    {
         return resultStr;
     }
 };
 
-napi_value testNapiUnwrap(napi_env env, napi_callback_info info) {
+napi_value testNapiUnwrap(napi_env env, napi_callback_info info)
+{
     size_t argc = PARAM1;
     napi_value argv[PARAM1];
     napi_value thisObj;

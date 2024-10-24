@@ -20,7 +20,8 @@ static const char *TAG = "[javascriptapi_object_wrap]";
 
 class Node {
 public:
-    Node(napi_env env, napi_value id) {
+    Node(napi_env env, napi_value id)
+    {
         // 将 JavaScript 字符串转换为 C++ 字符串
         size_t idLength;
         napi_get_value_string_utf8(env, id, nullptr, 0, &idLength);
@@ -36,7 +37,8 @@ private:
     std::string _id; // 成员变量，存储 id
 };
 
-napi_value testNapiWrap(napi_env env, napi_callback_info info) {
+napi_value testNapiWrap(napi_env env, napi_callback_info info)
+{
     size_t argc = PARAM1;
     napi_value argv[PARAM1] = {0};
     napi_value thisObj = nullptr;
