@@ -1,6 +1,6 @@
 # 模板生成和语言转换工具
 
-napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**模板）和语言转换功能（依据**h**头文件转换生成**dts**接口文件 和 **native C++**工程文件）。
+napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**模板）和语言转换功能（依据**h**头文件转换生成**dts**接口文件 和  **native C++** 工程文件）。
 
 ## 功能：
 
@@ -24,19 +24,19 @@ napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**
   
   验证过的平台如下：
   
-  | DecEco Studio | 4.1 Release（Build Version: 4.1.0.400, built on April 9, 2024） |
-  | ------------- | ------------------------------------------------------------ |
   | 平台          | 版本                                                         |
+  | ------------- | ------------------------------------------------------------ |
+  | DecEco Studio | 4.1 Release（Build Version: 4.1.0.400, built on April 9, 2024） |
 
 ## 使用：
 
-- **方式1**: 右键.h文件在弹出菜单里选择子菜单**[OHOS_Gen]**内的功能：
+- **方式1**: 右键.h文件在弹出菜单里选择子菜单 **[OHOS_Gen]** 内的功能：
 
   ![](https://gitee.com/openharmony/napi_generator/raw/master/src/vscode_plugin/images/h2sa4-1.png)
 
   
 
-- **方式2**: 通过在工具栏选择**[帮助]**->**[显示所有命令]** 或者 快捷命令**[ctrl + shift + p]**在弹出窗口里输入h2dts等命令使用功能 
+- **方式2**: 通过在工具栏选择 **[帮助]** -> **[显示所有命令]**  或者 快捷命令 **[ctrl + shift + p]** 在弹出窗口里输入h2dts等命令使用功能 
 
   ![](https://gitee.com/openharmony/napi_generator/raw/master/src/vscode_plugin/images/ctrl_shift_p.png)
 
