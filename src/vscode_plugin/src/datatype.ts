@@ -13,6 +13,8 @@
 * limitations under the License.
 */
 
+import internal = require("stream");
+
 export interface FileTemp {
   name: string;
   content: string;
@@ -27,6 +29,32 @@ export interface DirTemp {
 export interface ParamObj {
   type: string;
   name: string;
+  arraySize: number;
+}
+
+export interface EnumObj {
+  name: string;
+  alias: string;
+  members: string[];
+}
+
+export interface UnionObj {
+  name: string;
+  alias: string;
+  members: ParamObj[];
+}
+
+export interface StructObj {
+  name: string;
+  alias: string;
+  members: ParamObj[];
+}
+
+export interface ClassObj {
+  name: string;
+  alias: string;
+  variableList: ParamObj[];
+  functionList: FuncObj[];
 }
 
 export interface FuncObj {
@@ -36,6 +64,10 @@ export interface FuncObj {
 }
 
 export interface ParseObj {
+  enums: EnumObj[];
+  unions: UnionObj[];
+  structs: StructObj[];
+  classes: ClassObj[];
   funcs: FuncObj[];
 }
 
