@@ -33,6 +33,8 @@ struct napiwrap {
   @State testcont: string = ' // 测试 N-API napi_wrap \n'
     + ' const result = testNapi.testNapiWrap(); \n'
     + ' console.log(result); \n'
+    + ' const ret = result.Tyof(1024); \n'
+    + ' console.log(ret);\n'
 
 
   controller: TextAreaController = new TextAreaController()
@@ -84,8 +86,9 @@ struct napiwrap {
             .id('napi_wrap')
             .onClick(() => {
               let node: testNapi.testNapiWrap = new testNapi.testNapiWrap();
-              console.log(`Node.Tyof('1024') is ${node.Tyof(1024)}`);
+              let ret = node.Tyof(1024);
               this.testcont = this.testcont.replace('log(result)', 'log(## type of node is ' + typeof (node) + ' ##)');
+              this.testcont = this.testcont.replace('log(ret)', 'log(## ' + ret + ' ##)');
             })
         }
         .width('100%')

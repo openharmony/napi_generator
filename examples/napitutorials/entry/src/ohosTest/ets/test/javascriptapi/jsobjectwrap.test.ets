@@ -45,10 +45,10 @@ export default function abilityTestJsObjectWrap() {
       let ret: testNapi.testNapiWrap = new testNapi.testNapiWrap();
       hilog.info(0x0000, 'testTag', `type of napi_wrap() is = ${typeof (ret)}`);
       expect(typeof (ret)).assertEqual('object');
+
       let ret1 = ret.Tyof('');
       hilog.info(0x0000, 'testTag', `type of ret.Tyof('') is = ${typeof (ret1)}`);
       expect(ret1).assertEqual('string');
-
 
       let ret2 = ret.Tyof(false);
       hilog.info(0x0000, 'testTag', `type of ret.Tyof(false) is = ${typeof (ret2)}`);
