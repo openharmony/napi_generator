@@ -21,7 +21,7 @@ static const char *TAG = "[javascriptapi_object_wrap]";
 class testNapiWrap {
 public:
     static napi_value Init(napi_env env, napi_value exports);
-    static void Destructor(napi_env env, void *nativeObject, void *finalize_hint);
+    static void Destructor(napi_env env, void *nativeObject, void *finalizeHint);
 
 private:
     explicit testNapiWrap(napi_value value_ = 0);
@@ -41,11 +41,13 @@ testNapiWrap::testNapiWrap(napi_value value) : value_(value), env_(nullptr), wra
 
 testNapiWrap::~testNapiWrap() { napi_delete_reference(env_, wrapper_); }
 
-void testNapiWrap::Destructor(napi_env env, void *nativeObject, [[maybe_unused]] void *finalize_hint) {
+void testNapiWrap::Destructor(napi_env env, void *nativeObject, [[maybe_unused]] void *finalizeHint)
+{
     reinterpret_cast<testNapiWrap *>(nativeObject)->~testNapiWrap();
 }
 
-napi_value testNapiWrap::Tyof(napi_env env, napi_callback_info info) {
+napi_value testNapiWrap::Tyof(napi_env env, napi_callback_info info)
+{
     napi_value jsThis;
     napi_valuetype result;
     napi_value resultStr;
@@ -78,7 +80,8 @@ napi_value testNapiWrap::Tyof(napi_env env, napi_callback_info info) {
     return resultStr;
 }
 
-napi_value testNapiWrap::New(napi_env env, napi_callback_info info) {
+napi_value testNapiWrap::New(napi_env env, napi_callback_info info)
+{
     napi_value newTarget;
     napi_get_new_target(env, info, &newTarget);
     if (newTarget != nullptr) {
@@ -105,7 +108,8 @@ napi_value testNapiWrap::New(napi_env env, napi_callback_info info) {
     }
 }
 
-napi_value testNapiWrap::Init(napi_env env, napi_value exports) {
+napi_value testNapiWrap::Init(napi_env env, napi_value exports)
+{
     napi_property_descriptor properties[] = {{"Tyof", nullptr, Tyof, nullptr, nullptr, nullptr, napi_default, nullptr}};
     napi_value cons;
     napi_define_class(env, "testNapiWrap", NAPI_AUTO_LENGTH, New, nullptr, 1, properties, &cons);
@@ -115,7 +119,8 @@ napi_value testNapiWrap::Init(napi_env env, napi_value exports) {
 }
 
 
-napi_value WrapInit(napi_env env, napi_value exports) {
+napi_value WrapInit(napi_env env, napi_value exports)
+{
     testNapiWrap::Init(env, exports);
     return exports;
 }
