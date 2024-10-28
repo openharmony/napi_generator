@@ -97,6 +97,7 @@ function parseStruct(data: string) {
     const structName = match[1] ||match[3] || match[4]; // 获取结构体名字
     const alias = match[3];
     const membersString = match[2] || match[5]; // 获取成员声明
+
     const members = membersString.split(';')
         .map(member => member.trim().replace(/[\n\r]/g, ''))
         .filter(member => member.length > 0);
@@ -104,25 +105,10 @@ function parseStruct(data: string) {
     let structItem: StructObj = {
       "name": structName,
       "alias": alias,
-      "members": []
+      "members": parseMembers(members),
+      "functions": []
     }
 
-    members.forEach(declaration => {
-      // 使用正则表达式匹配类型和变量名
-      const match = declaration.match(/(\w+)\s+(\w+)(\[(\d+)\])?/);
-      if (match) {
-        const type = match[1]; // 类型
-        const variable = match[2]; // 变量名
-        const arrayLength = match[4] ? parseInt(match[4], 10) : -1; // 解析数组长度
-        // console.log(`Type: ${type}, Variable:${variable}, Size:${arrayLength}`);
-        let paramItem: ParamObj = {
-          "type": type,
-          "name": variable,
-          "arraySize": arrayLength
-        }
-        structItem.members.push(paramItem);
-      }
-    });
     structs.push(structItem);
   }
   console.info(` return structs: ${JSON.stringify(structs)}`);

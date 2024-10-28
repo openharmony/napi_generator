@@ -48,6 +48,7 @@ export interface StructObj {
   name: string;
   alias: string;
   members: ParamObj[];
+  functions: FuncObj[];
 }
 
 export interface ClassObj {
