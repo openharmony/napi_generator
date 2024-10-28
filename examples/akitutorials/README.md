@@ -4,7 +4,7 @@
 
 AKI (Alpha Kernel Interacting) 是一款边界性编程体验友好的ArkTs FFI开发框架，针对OpenHarmony Native开发提供JS与C/C++跨语言访问场景解决方案。支持极简语法糖使用方式，简洁代码逻辑完成JS与C/C++的无障碍跨语言互调。
 
-简单讲，AKI就是对NAPI进行了一层封装，提供对典型应用场景的包装，减轻了用户开发NAPI层的开发负担，他的具体优点如下：
+简单讲，AKI就是对NAPI进行了一层封装，提供对典型应用场景的包装，减轻了用户开发NAPI层的开发负担，具体优点如下：
 
 * 解耦FFI代码与业务代码，友好的边界性编程体验；
 
@@ -290,7 +290,7 @@ aki 还是利用node-api技术提供 js 和 cpp 间跨语言的交互接口，�
 
 ##### N-API 主要特点
 
-1. **跨版本兼容性**：N-API 提供了一个稳定的 ABI（应用程序二进制接口），这意味着你编写的扩展可以在不同版本的 Node.js 上运行，而无需重新编译或修改代码。
+1. **跨版本兼容性**：N-API 提供了一个稳定的 ABI（应用程序二进制接口），这意味着扩展可以在不同版本的 Node.js 上运行，而无需重新编译或修改代码。
 2. **简化开发**：N-API 抽象了一些底层的细节，使得开发者可以专注于应用逻辑，而不必担心 Node.js 内部的实现。
 3. **性能优化**：通过使用本地代码，N-API 可以提高性能，特别是在需要进行大量计算或处理复杂数据结构的情况下。
 4. **安全性**：N-API 提供了一些安全机制，帮助开发者预防常见的内存管理问题，如缓冲区溢出等。
@@ -437,8 +437,8 @@ EXTERN_C_START
 static napi_value Init(napi_env env, napi_value exports) {
     ......
     for (auto& function : aki::Binding::GetFunctionList()) {
-        auto binder = function.GetBinder();
-        auto wrapper = reinterpret_cast<NapiWrapperFunctionInfo>(binder->GetWrapper());
+        auto akibinder = function.GetBinder();
+        auto wrapper = reinterpret_cast<NapiWrapperFunctionInfo>(akibinder->GetWrapper());
         
         napi_status status;
         aki::BindInfo* info = new aki::BindInfo();
