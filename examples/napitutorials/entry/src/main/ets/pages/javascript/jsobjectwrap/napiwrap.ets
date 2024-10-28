@@ -22,10 +22,6 @@ import hilog from '@ohos.hilog';
 
 const TAG: string = 'napi_wrap';
 
-interface Cafee {
-  name: string;
-}
-
 @Entry
 @Component
 struct napiwrap {
