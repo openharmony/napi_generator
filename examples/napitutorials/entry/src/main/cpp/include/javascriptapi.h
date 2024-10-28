@@ -65,6 +65,6 @@ napi_value testNapiCreateFunction(napi_env env, napi_callback_info info);
 
 napi_value jsObjectWrapInit(napi_env env, napi_value exports);
 napi_value testNapiWrap(napi_env env, napi_callback_info info);
-napi_value testNapiUnwrap(napi_env env, napi_callback_info info);
+napi_value WrapInit(napi_env env, napi_value exports);
 
 #endif //NAPITUTORIALS_JAVASCRIPTAPI_H

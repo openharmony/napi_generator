@@ -16,11 +16,15 @@
 import router from '@ohos.router';
 import image from '@ohos.multimedia.image';
 import Logger from '../../../util/Logger';
-import testNapi, { testNapiValue } from 'libentry.so';
+import testNapi from 'libentry.so';
 import { TitleBar } from '../../../common/TitleBar'
 import hilog from '@ohos.hilog';
 
 const TAG: string = 'napi_wrap';
+
+interface Cafee {
+  name: string;
+}
 
 @Entry
 @Component
@@ -83,8 +87,9 @@ struct napiwrap {
             .margin({ left: 24 })
             .id('napi_wrap')
             .onClick(() => {
-              console.log(`testNapi.testNapiWrap() is ${testNapi.testNapiWrap('tree')}`);
-              this.testcont = this.testcont.replace('log(result)', 'log(## ' +typeof (testNapi.testNapiWrap('tree')) + ' ##)');
+              let node: testNapi.testNapiWrap = new testNapi.testNapiWrap();
+              console.log(`Node.Tyof('1024') is ${node.Tyof(1024)}`);
+              this.testcont = this.testcont.replace('log(result)', 'log(## type of node is ' + typeof (node) + ' ##)');
             })
         }
         .width('100%')
