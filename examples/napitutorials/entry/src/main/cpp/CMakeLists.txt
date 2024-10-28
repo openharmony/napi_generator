@@ -66,6 +66,12 @@ add_library(entry SHARED
     javascriptapi/jsvalues/napicreateint32.cpp
     javascriptapi/jsvalues/napicreateuint32.cpp
     javascriptapi/jsvalues/napicreateint64.cpp
+    javascriptapi/jsfunctions/jsFunctionsInit.cpp
+    javascriptapi/jsfunctions/napicallfunction.cpp
+    javascriptapi/jsfunctions/napicreatefunction.cpp
+    javascriptapi/jsobjectwrap/jsObjectWrapInit.cpp
+    javascriptapi/jsobjectwrap/napiwrap.cpp
+    javascriptapi/jsobjectwrap/napiunwrap.cpp
     ncpp/ffmpegcase/render/egl_core.cpp
     ncpp/ffmpegcase/render/plugin_render.cpp
     ncpp/ffmpegcase/manager/plugin_manager.cpp
