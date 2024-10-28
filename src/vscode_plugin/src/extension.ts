@@ -34,6 +34,22 @@ export function activate(context: vscode.ExtensionContext) {
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "helloworld-sample" is now active!');
 
+    const ohcrosscompile = vscode.commands.registerCommand('extension.ohcrosscompile', async (uri) => {
+        // The code you place here will be executed every time your command is executed
+        if (uri && uri.fsPath) {
+            const stat = await vscode.workspace.fs.stat(uri);
+            if (stat.type === vscode.FileType.Directory) {
+                vscode.window.showInformationMessage(`You selected a directory: ${uri.fsPath}`);
+            } else {
+                vscode.window.showWarningMessage('Please select a directory.');
+            }
+        } else {
+            vscode.window.showWarningMessage('No resource selected.');
+        }
+        // Display a message box to the user
+        vscode.window.showInformationMessage('ohcrosscompile!');
+    });
+
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with registerCommand
     // The commandId parameter must match the command field in package.json
