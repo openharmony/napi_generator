@@ -42,11 +42,29 @@ export default function abilityTestJsObjectWrap() {
     it('testNapiWrap', 0, () => {
       // Defines a test case. This API supports three parameters: test case name, filter parameter, and test case function.
       hilog.info(0x0000, 'testTag', '%{public}s', 'it testNapiWrap begin');
-      hilog.info(0x0000, 'testTag', `type of napi_wrap("7") is = ${typeof (testNapi.testNapiWrap("7"))}`);
-      expect(typeof (testNapi.testNapiWrap("7"))).assertEqual('object');
+      let ret: testNapi.testNapiWrap = new testNapi.testNapiWrap();
+      hilog.info(0x0000, 'testTag', `type of napi_wrap() is = ${typeof (ret)}`);
+      expect(typeof (ret)).assertEqual('object');
+      let ret1 = ret.Tyof('');
+      hilog.info(0x0000, 'testTag', `type of ret.Tyof('') is = ${typeof (ret1)}`);
+      expect(ret1).assertEqual('string');
 
-      hilog.info(0x0000, 'testTag', `type of napi_wrap("tree") is = ${typeof (testNapi.testNapiWrap("tree"))}`);
-      expect(typeof (testNapi.testNapiWrap("tree"))).assertEqual('object');
+
+      let ret2 = ret.Tyof(false);
+      hilog.info(0x0000, 'testTag', `type of ret.Tyof(false) is = ${typeof (ret2)}`);
+      expect(ret2).assertEqual('boolean');
+
+      let ret3 = ret.Tyof(3);
+      hilog.info(0x0000, 'testTag', `type of ret.Tyof(3) is = ${typeof (ret3)}`);
+      expect(ret3).assertEqual('number');
+
+      let ret4 = ret.Tyof(null);
+      hilog.info(0x0000, 'testTag', `type of ret.Tyof(null) is = ${typeof (ret4)}`);
+      expect(ret4).assertEqual('null');
+
+      let ret5 = ret.Tyof(undefined);
+      hilog.info(0x0000, 'testTag', `type of ret.Tyof(3) is = ${typeof (ret5)}`);
+      expect(ret5).assertEqual('undefined');
     })
 
     it('testNapiUnwrap', 0, () => {

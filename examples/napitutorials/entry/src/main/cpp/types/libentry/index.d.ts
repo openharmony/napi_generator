@@ -25,6 +25,11 @@ export interface Callback<T> {
   (data: T): void;
 }
 
+export class testNapiWrap {
+  constructor();
+  Tyof: (arg: any) => string;
+}
+
 export const add: (a: number, b: number) => number;
 export const getTestCase: (a: number) => tcBase;
 export const testNapiStatus: (a: number, b: number) => number;
@@ -71,5 +76,4 @@ export const testNapiCallFunction: (a: Function, b: number) => number;
 export const testNapiCreateFunction: () => any;
 
 /* work_with_javascript_objectwrap */
-export const testNapiWrap: (a: string) => any;
 export const testNapiUnwrap: (a: any) => string;
