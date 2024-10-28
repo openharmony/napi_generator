@@ -13,28 +13,15 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.h2sa3-2",
-        "onCommand:extension.h2sa4-1",
-        "onCommand:extension.h2hdf4-1",
         "onCommand:extension.h2dts",
         "onCommand:extension.h2dtscpp",
-        "onCommand:extension.dts2cpp"
+        "onCommand:extension.dts2cpp",
+        "onCommand:extension.h2sa",
+        "onCommand:extension.h2hdf"
     ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
-            {
-                "command": "extension.h2sa3-2",
-                "title": "h2sa3-2"
-            },
-            {
-                "command": "extension.h2sa4-1",
-                "title": "h2sa4-1"
-            },
-            {
-                "command": "extension.h2hdf4-1",
-                "title": "h2hdf4-1"
-            },
             {
                 "command": "extension.h2dts",
                 "title": "h2dts"
@@ -46,33 +33,33 @@
             {
                 "command": "extension.dts2cpp",
                 "title": "dts2cpp"
+            },
+            {
+              "command": "extension.h2sa",
+              "title": "h2sa"
+            },
+            {
+              "command": "extension.h2hdf",
+              "title": "h2hdf"
             }
         ],
         "submenus": [
             {
                 "id": "gen-menulist",
                 "label": "OHOS_Gen"
-            },
-            {
-                "id": "gen-h2sa",
-                "label": "gen_sa"
-            },
-            {
-                "id": "gen-h2hdf",
-                "label": "gen_hdf"
             }
         ],
         "menus": {
             "gen-menulist": [
                 {
-                    "submenu": "gen-h2sa",
-                    "when": "resourceExtname == .h",
-                    "group": "2_workspace"
+                  "command": "extension.h2sa",
+                  "when": "resourceExtname == .h",
+                  "group": "2_workspace"
                 },
                 {
-                    "submenu": "gen-h2hdf",
-                    "when": "resourceExtname == .h",
-                    "group": "2_workspace"
+                  "command": "extension.h2hdf",
+                  "when": "resourceExtname == .h",
+                  "group": "2_workspace"
                 },
                 {
                     "command": "extension.h2dts",
@@ -94,25 +81,6 @@
                 {
                     "submenu": "gen-menulist",
                     "when": "resourceExtname == .h || resourceExtname == .ts",
-                    "group": "2_workspace"
-                }
-            ],
-            "gen-h2sa": [
-                {
-                    "command": "extension.h2sa3-2",
-                    "when": "resourceExtname == .h",
-                    "group": "2_workspace"
-                },
-                {
-                    "command": "extension.h2sa4-1",
-                    "when": "resourceExtname == .h",
-                    "group": "2_workspace"
-                }
-            ],
-            "gen-h2hdf": [
-                {
-                    "command": "extension.h2hdf4-1",
-                    "when": "resourceExtname == .h",
                     "group": "2_workspace"
                 }
             ]
