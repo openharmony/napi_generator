@@ -16,6 +16,7 @@
         "onCommand:extension.h2dts",
         "onCommand:extension.h2dtscpp",
         "onCommand:extension.dts2cpp",
+        "onCommand:extension.ohcrosscompile",
         "onCommand:extension.h2sa",
         "onCommand:extension.h2hdf"
     ],
@@ -41,6 +42,11 @@
             {
               "command": "extension.h2hdf",
               "title": "%extension.h2hdf.title%"
+
+            },
+            { 
+                "command": "extension.ohcrosscompile",
+                "title": "OH_CrossCompile"
             }
         ],
         "submenus": [
@@ -81,6 +87,11 @@
                 {
                     "submenu": "gen-menulist",
                     "when": "resourceExtname == .h || resourceExtname == .ts",
+                    "group": "2_workspace"
+                },
+                {
+                    "command": "extension.ohcrosscompile",
+                    "when": "resourceScheme == 'file'",
                     "group": "2_workspace"
                 }
             ]

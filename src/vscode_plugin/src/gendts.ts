@@ -138,7 +138,8 @@ function getInterFuncParams(str: string, paramObj: ParamObj[]) {
   let paramsStr = '';
   let paramObject: ParamObj = {
     name: '',
-    type: ''
+    type: '',
+    arraySize: 0
   }
   let paramArr = replaceAll(str, '*', '').split(',');
   for (let i = 0; i < paramArr.length; i++) {
@@ -268,7 +269,8 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
             interDefine += variableDefine;
             let paramObj: ParamObj = {
               name: variableName,
-              type: replaceAll(variabletype, 'struct', '').trim()
+              type: replaceAll(variabletype, 'struct', '').trim(),
+              arraySize: 0
             }
             paramsContent.push(paramObj);
           }
@@ -322,11 +324,13 @@ function createParam(parseParamInfo: ParamObj) {
   let tsParam: ParamObj = {
       name: '',
       type: '',
+      arraySize: 0
   };
 
   let cppParam: ParamObj = {
     name: '',
     type: '',
+    arraySize: 0
   };
   tsParam.name = replaceAll(parseParamInfo.name, '*', '');
   cppParam.name = tsParam.name;
