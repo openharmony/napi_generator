@@ -24,23 +24,23 @@
         "commands": [
             {
                 "command": "extension.h2dts",
-                "title": "h2dts"
+                "title": "%extension.h2dts.title%"
             },
             {
                 "command": "extension.h2dtscpp",
-                "title": "h2dtscpp"
+                "title": "%extension.h2dtscpp.title%"
             },
             {
                 "command": "extension.dts2cpp",
-                "title": "dts2cpp"
+                "title": "%extension.dts2cpp.title%"
             },
             {
               "command": "extension.h2sa",
-              "title": "h2sa"
+              "title": "%extension.h2sa.title%"
             },
             {
               "command": "extension.h2hdf",
-              "title": "h2hdf"
+              "title": "%extension.h2hdf.title%"
             }
         ],
         "submenus": [
