@@ -149,11 +149,14 @@ export function activate(context: vscode.ExtensionContext) {
         placeHolder: 'Please input...',
         validateInput: (input) => {
           if (!input) {
-              return "Input cannot be empty";
+            return "Input cannot be empty";
+          }
+          if (input !== value) {
+            return "Inconsistent input"
           }
       }
       });
-      if (value === what && value === 'Hdf Framework') {
+      if (value === 'Hdf Framework') {
         // 输入版本
         let versionTag = '4.1';
         const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: 'Please select the version...' })
@@ -161,7 +164,7 @@ export function activate(context: vscode.ExtensionContext) {
           versionTag === '4.1'     
         }
         generateHdf(hdfInputPath, versionTag);
-      } else if (value === what && value === 'SystemAbility Framework') {
+      } else if (value === 'SystemAbility Framework') {
         // 输入版本
         let versionTag = '3.2';
         const version = await vscode.window.showQuickPick(['OpenHarmony 3.2 release', 'OpenHarmony 4.1 release'], { placeHolder: 'Please select the version...' })
@@ -182,10 +185,8 @@ export function activate(context: vscode.ExtensionContext) {
           }
         });
         generateSa(hPath, versionTag, serviceId as string);
-      } else if (value === what && value === 'N-API  Framework') {
+      } else if (value === 'N-API  Framework') {
         generateDtscpp(hPath);
-      } else {
-        vscode.window.showInformationMessage('请重新输入...');
       }
     });
     context.subscriptions.push(ohGenerator);
