@@ -19,7 +19,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as ts from 'typescript';
 import { parseHeaderFile } from './parsec';
-import { DtscppRootInfo } from './datatype';
+import { DtscppRootInfo, GenInfo } from './datatype';
 import { parseTsFile } from './parsets';
 import { genServiceFile } from './gensa';
 import { genDtsFile } from './gendts';
@@ -129,22 +129,21 @@ export function activate(context: vscode.ExtensionContext) {
         // The code you place here will be executed every time your command is executed
         if (uri && uri.fsPath) {
             // parse
-            let funDescList = await parseHeaderFile(uri.fsPath);
-            console.log('parse header file res: ', funDescList);
-            console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
-            let fileName = path.basename(uri.fsPath, '.h');
-            let rootInfo: DtscppRootInfo = {
-              funcs: funDescList.funcs,
+            let parseRes = await parseHeaderFile(uri.fsPath);
+            console.log('parse header file res: ', parseRes);
+
+            let rootInfo: GenInfo = {
+              parseObj: parseRes,
               rawFilePath: uri.fsPath,  // e://xxx.h
-              fileName: fileName  // xxx
+              fileName: path.basename(uri.fsPath, '.h')  // xxx
             };
             // generator
-            let out = path.dirname(uri.fsPath);
-            genDtsFile(rootInfo, out);
-
+            let outPath = genDtsFile(rootInfo);
+            vscode.window.showInformationMessage(`h2dts: gen dts to ${outPath}`);
+        } else {
+            // Display a message box to the user
+            vscode.window.showErrorMessage(`h2dts: error uri ${JSON.stringify(uri)}!`);
         }
-        // Display a message box to the user
-        vscode.window.showInformationMessage('h2dts!');
     });
 
     context.subscriptions.push(h2dts);
