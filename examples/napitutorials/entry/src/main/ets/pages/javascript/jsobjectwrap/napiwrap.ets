@@ -16,7 +16,7 @@
 import router from '@ohos.router';
 import image from '@ohos.multimedia.image';
 import Logger from '../../../util/Logger';
-import testNapi, { testNapiValue } from 'libentry.so';
+import testNapi from 'libentry.so';
 import { TitleBar } from '../../../common/TitleBar'
 import hilog from '@ohos.hilog';
 
@@ -33,6 +33,8 @@ struct napiwrap {
   @State testcont: string = ' // 测试 N-API napi_wrap \n'
     + ' const result = testNapi.testNapiWrap(); \n'
     + ' console.log(result); \n'
+    + ' const ret = result.Tyof(1024); \n'
+    + ' console.log(ret);\n'
 
 
   controller: TextAreaController = new TextAreaController()
@@ -83,8 +85,10 @@ struct napiwrap {
             .margin({ left: 24 })
             .id('napi_wrap')
             .onClick(() => {
-              console.log(`testNapi.testNapiWrap() is ${testNapi.testNapiWrap('tree')}`);
-              this.testcont = this.testcont.replace('log(result)', 'log(## ' +typeof (testNapi.testNapiWrap('tree')) + ' ##)');
+              let node: testNapi.testNapiWrap = new testNapi.testNapiWrap();
+              let ret = node.Tyof(1024);
+              this.testcont = this.testcont.replace('log(result)', 'log(## type of node is ' + typeof (node) + ' ##)');
+              this.testcont = this.testcont.replace('log(ret)', 'log(## ' + ret + ' ##)');
             })
         }
         .width('100%')

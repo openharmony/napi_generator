@@ -19,7 +19,6 @@
 napi_value jsObjectWrapInit(napi_env env, napi_value exports)
 {
     napi_property_descriptor desc[] = {
-        {"testNapiWrap", nullptr, testNapiWrap, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"testNapiUnwrap", nullptr, testNapiUnwrap, nullptr, nullptr, nullptr, napi_default, nullptr}};
 
     napi_define_properties(env, exports, sizeof(desc) / sizeof(napi_property_descriptor), desc);
