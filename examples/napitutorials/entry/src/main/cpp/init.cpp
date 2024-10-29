@@ -119,7 +119,10 @@ static napi_value Init(napi_env env, napi_value exports)
 
     // 对应 javascriptapi/jsobjectwrap/jsObjectWrapInit.cpp
     jsObjectWrapInit(env, exports);
-    
+
+    // 对应 javascriptapi/jsobjectwrap/napiwrap.cpp
+    WrapInit(env, exports);
+
     napi_property_descriptor descArr[] = {
         {"add", nullptr, Add, nullptr, nullptr, nullptr, napi_default, nullptr},
         {"getTestCase", nullptr, getTestCase, nullptr, nullptr, nullptr, napi_default, nullptr},

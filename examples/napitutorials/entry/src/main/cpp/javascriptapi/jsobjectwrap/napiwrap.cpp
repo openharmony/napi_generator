@@ -17,58 +17,110 @@
 #include "javascriptapi.h"
 
 static const char *TAG = "[javascriptapi_object_wrap]";
-static const int MAX_BUFFER_SIZE = 128;
 
-class Node {
+class testNapiWrap {
 public:
-    Node(napi_env env, napi_value id)
-    {
-        // 将 JavaScript 字符串转换为 C++ 字符串
-        size_t idLength = MAX_BUFFER_SIZE;
-        char buf[MAX_BUFFER_SIZE];
-        char *buffer = buf;
-        napi_get_value_string_utf8(env, id, buffer, idLength, nullptr);
-        // 将 C++ 字符串转换为 std::string
-        _id = std::string(buffer);
-    }
-    std::string GetId() { return _id; }
+    static napi_value Init(napi_env env, napi_value exports);
+    static void Destructor(napi_env env, void *nativeObject, void *finalizeHint);
+
 private:
-    std::string _id; // 成员变量，存储 id
+    explicit testNapiWrap(napi_value value_ = 0);
+    ~testNapiWrap();
+
+    static napi_value New(napi_env env, napi_callback_info info);
+    static napi_value Tyof(napi_env env, napi_callback_info info);
+
+    napi_value value_;
+    napi_env env_;
+    napi_ref wrapper_;
 };
 
-napi_value testNapiWrap(napi_env env, napi_callback_info info)
+static thread_local napi_ref g_ref = nullptr;
+
+testNapiWrap::testNapiWrap(napi_value value) : value_(value), env_(nullptr), wrapper_(nullptr) {}
+
+testNapiWrap::~testNapiWrap() { napi_delete_reference(env_, wrapper_); }
+
+void testNapiWrap::Destructor(napi_env env, void *nativeObject, [[maybe_unused]] void *finalizeHint)
 {
-    size_t argc = PARAM1;
-    napi_value argv[PARAM1] = {0};
-    napi_value thisObj = nullptr;
-    void *data = nullptr;
+    reinterpret_cast<testNapiWrap *>(nativeObject)->~testNapiWrap();
+}
+
+napi_value testNapiWrap::Tyof(napi_env env, napi_callback_info info)
+{
+    napi_value jsThis;
+    napi_valuetype result;
+    napi_value resultStr;
     napi_status status;
-    napi_value cons;
+    size_t argc = PARAM1;
+    napi_value argv[PARAM1];
     const napi_extended_error_info *extended_error_info;
-    // 获取回调函数的参数信息
-    status = napi_get_cb_info(env, info, &argc, argv, &thisObj, &data);
+    status = napi_get_cb_info(env, info, &argc, argv, &jsThis, nullptr);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "Failed to get callback info", TAG);
+        getErrMsg(status, env, extended_error_info, "get cb info", TAG);
         return NULL;
     }
-    napi_valuetype resultType;
-    napi_typeof(env, argv[PARAM0], &resultType);
-    if (resultType != napi_string) {
-        std::string res = "Expected a string, got " + std::to_string(resultType);
-        napi_throw_error(env, NULL, res.c_str());
+    testNapiWrap *obj;
+    status = napi_unwrap(env, jsThis, reinterpret_cast<void **>(&obj));
+    if (status != napi_ok || obj == nullptr) {
+        getErrMsg(status, env, extended_error_info, "call napi_typeof()", TAG);
         return NULL;
     }
-    auto instance = new Node(env, argv[PARAM0]);
-    status = napi_wrap(env, thisObj, instance,
-        [](napi_env environment, void *data, void *hint) {
-            auto objInfo = reinterpret_cast<Node *>(data);
-            if (objInfo != nullptr) {
-                delete objInfo;
-            }
-        }, NULL, NULL);
+    status = napi_typeof(env, argv[0], &result);
     if (status != napi_ok) {
-        getErrMsg(status, env, extended_error_info, "wrap", TAG);
+        getErrMsg(status, env, extended_error_info, "call napi_typeof()", TAG);
         return NULL;
     }
-    return thisObj;
+    status = napiValueType2Str(env, result, &resultStr);
+    if (status != napi_ok) {
+        std::string errMsg = "Failed to convert napi_valuetype " + std::to_string(status) + " to string";
+        napi_throw_error(env, NULL, errMsg.c_str());
+        return NULL;
+    }
+    return resultStr;
+}
+
+napi_value testNapiWrap::New(napi_env env, napi_callback_info info)
+{
+    napi_value newTarget;
+    napi_get_new_target(env, info, &newTarget);
+    if (newTarget != nullptr) {
+        size_t argc = PARAM1;
+        napi_value args[PARAM1];
+        napi_value jsThis;
+        napi_get_cb_info(env, info, &argc, args, &jsThis, nullptr);
+        napi_value value;
+        testNapiWrap *obj = new testNapiWrap(value);
+        obj->env_ = env;
+        napi_wrap(env, jsThis, reinterpret_cast<void *>(obj), testNapiWrap::Destructor,
+                  nullptr, // finalize_hint
+                  &obj->wrapper_);
+        return jsThis;
+    } else {
+        size_t argc = PARAM1;
+        napi_value args[PARAM1];
+        napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
+        napi_value cons;
+        napi_get_reference_value(env, g_ref, &cons);
+        napi_value instance;
+        napi_new_instance(env, cons, argc, args, &instance);
+        return instance;
+    }
+}
+
+napi_value testNapiWrap::Init(napi_env env, napi_value exports)
+{
+    napi_property_descriptor properties[] = {{"Tyof", nullptr, Tyof, nullptr, nullptr, nullptr, napi_default, nullptr}};
+    napi_value cons;
+    napi_define_class(env, "testNapiWrap", NAPI_AUTO_LENGTH, New, nullptr, 1, properties, &cons);
+    napi_create_reference(env, cons, 1, &g_ref);
+    napi_set_named_property(env, exports, "testNapiWrap", cons);
+    return exports;
+}
+
+
+napi_value WrapInit(napi_env env, napi_value exports)
+{
+    testNapiWrap::Init(env, exports);
+    return exports;
 }
