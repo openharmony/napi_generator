@@ -56,13 +56,24 @@ export function activate(context: vscode.ExtensionContext) {
       // The code you place here will be executed every time your command is executed
       if (uri && uri.fsPath) {
           let versionTag = '3.2'; 
-          const version = await vscode.window.showQuickPick(['h2sa4-1', 'h2sa3-2'], { placeHolder: 'Please select the version...' });
-          if (version === 'h2sa4-1') {
+          const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release', 'OpenHarmony 3.2 release'], { placeHolder: 'Please select the version...' });
+          if (version === 'OpenHarmony 4.1 release') {
             versionTag = '4.1'
-          } else if (version === 'h2sa3-2') {
+          } else if (version === 'OpenHarmony 3.2 release') {
             versionTag = '3.2'
           }
-          generateSa(uri.fsPath, versionTag);
+          const serviceId = await vscode.window.showInputBox({
+            placeHolder: 'Please input serviceId...',
+            validateInput: (input) => {
+                if (!input) {
+                    return "Input cannot be empty";
+                }
+                if (!Number(input)) {
+                    return "Input a number"
+                }
+            }
+          });
+          generateSa(uri.fsPath, versionTag, serviceId as string);
       }
       // Display a message box to the user
       vscode.window.showInformationMessage('h2sa!');
@@ -74,8 +85,8 @@ export function activate(context: vscode.ExtensionContext) {
         // The code you place here will be executed every time your command is executed
         if (uri && uri.fsPath) {
           let versionTag = '4.1'; 
-          const version = await vscode.window.showQuickPick(['h2hdf4-1'], { placeHolder: 'Please select the version...' });
-          if (version === 'h2hdf4-1') {
+          const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: 'Please select the version...' });
+          if (version === 'OpenHarmony 4.1 release') {
             versionTag = '4.1'
           }
           generateHdf(uri.fsPath, versionTag);
@@ -131,39 +142,51 @@ export function activate(context: vscode.ExtensionContext) {
     // 欢迎菜单页面
     const ohGenerator = vscode.commands.registerCommand('extension.ohGenerator', async () => {
       // The code you place here will be executed every time your command is executed
-      // 给出一个默认的文件路径？默认文件路径放哪？
       let hPath = path.join(__dirname, '../test/test.h');
       let hdfInputPath = path.join(__dirname, '../test/hello.h');
-      const value = await vscode.window.showQuickPick(['h2hdf', 'h2sa', 'h2dtscpp', 'h2dts'], { placeHolder: 'Please select...' });
-      const what = await vscode.window.showInputBox({ placeHolder: 'please input...' });
-      if (value === what && value === 'h2hdf') {
+      const value = await vscode.window.showQuickPick(['Hdf Framework', 'SystemAbility Framework', 'N-API  Framework'], { placeHolder: 'Please select...' });
+      const what = await vscode.window.showInputBox({ 
+        placeHolder: 'Please input...',
+        validateInput: (input) => {
+          if (!input) {
+              return "Input cannot be empty";
+          }
+      }
+      });
+      if (value === what && value === 'Hdf Framework') {
         // 输入版本
         let versionTag = '4.1';
-        const version = await vscode.window.showQuickPick(['h2hdf4-1'], { placeHolder: 'Please select the version...' })
-        if (version === 'h2hdf4-1') {
+        const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: 'Please select the version...' })
+        if (version === 'OpenHarmony 4.1 release') {
           versionTag === '4.1'     
         }
         generateHdf(hdfInputPath, versionTag);
-      } else if (value === what && value === 'h2sa') {
+      } else if (value === what && value === 'SystemAbility Framework') {
         // 输入版本
         let versionTag = '3.2';
-        const version = await vscode.window.showQuickPick(['h2sa3-2', 'h2sa4-1'], { placeHolder: 'Please select the version...' })
-        if (version === 'h2sa4-1') {
+        const version = await vscode.window.showQuickPick(['OpenHarmony 3.2 release', 'OpenHarmony 4.1 release'], { placeHolder: 'Please select the version...' })
+        if (version === 'OpenHarmony 4.1 release') {
           versionTag = '4.1';
-        } else if (version === 'h2sa3-2') {
+        } else if (version === 'OpenHarmony 3.2 release') {
           versionTag = '3.2';
         }
-        generateSa(hPath, versionTag);
-      } else if (value === what && value === 'h2dts') {
-        generateDts(hPath);
-      } else if (value === what && value === 'h2dtscpp') {
+        const serviceId = await vscode.window.showInputBox({
+          placeHolder: 'Please input serviceId...',
+          validateInput: (input) => {
+              if (!input) {
+                  return "Input cannot be empty";
+              }
+              if (!Number(input)) {
+                  return "Input a number"
+              }
+          }
+        });
+        generateSa(hPath, versionTag, serviceId as string);
+      } else if (value === what && value === 'N-API  Framework') {
         generateDtscpp(hPath);
-      } else if (value === what && value === 'aki') {
-        vscode.window.showInformationMessage('待支持...');
       } else {
         vscode.window.showInformationMessage('请重新输入...');
       }
-      
     });
     context.subscriptions.push(ohGenerator);
 }
@@ -198,7 +221,7 @@ async function generateHdf(hdfInputPath: string, versionTag: string) {
    }
 }
 
-async function generateSa(hPath: string, versionTag: string) {
+async function generateSa(hPath: string, versionTag: string, serviceId: string) {
   vscode.window.withProgress({
     location: vscode.ProgressLocation.Notification,
     title: "Generating SA...",
@@ -217,7 +240,7 @@ async function generateSa(hPath: string, versionTag: string) {
     let rootInfo = {
       serviceName: serviceName,
       funcs: funDescList.funcs,
-      serviceId: '19000',
+      serviceId: serviceId,
       versionTag: versionTag
     };
     genServiceFile(rootInfo, out);
