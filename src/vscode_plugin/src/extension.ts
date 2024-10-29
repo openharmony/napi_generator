@@ -66,10 +66,10 @@ export function activate(context: vscode.ExtensionContext) {
             placeHolder: 'Please input serviceId...',
             validateInput: (input) => {
                 if (!input) {
-                    return "Input cannot be empty";
+                    return 'Input cannot be empty';
                 }
                 if (!Number(input)) {
-                    return "Input a number"
+                    return 'Input a number'
                 }
             }
           });
@@ -127,7 +127,7 @@ export function activate(context: vscode.ExtensionContext) {
                 // Display a message box to the user
                 // parseTsFile(uri.fsPath)
                 let res = parseTsFile(uri.fsPath);
-                console.info("res: " + JSON.stringify(res));
+                console.info('res: ' + JSON.stringify(res));
                 vscode.window.showInformationMessage('dts2cpp!');
             } else {
                 console.log('not dts uri is : ' + uri.fsPath );
@@ -149,10 +149,10 @@ export function activate(context: vscode.ExtensionContext) {
         placeHolder: 'Please input...',
         validateInput: (input) => {
           if (!input) {
-            return "Input cannot be empty";
+            return 'Input cannot be empty';
           }
           if (input !== value) {
-            return "Inconsistent input"
+            return 'Inconsistent input'
           }
       }
       });
@@ -177,10 +177,10 @@ export function activate(context: vscode.ExtensionContext) {
           placeHolder: 'Please input serviceId...',
           validateInput: (input) => {
               if (!input) {
-                  return "Input cannot be empty";
+                  return 'Input cannot be empty';
               }
               if (!Number(input)) {
-                  return "Input a number"
+                  return 'Input a number'
               }
           }
         });
@@ -195,14 +195,14 @@ export function activate(context: vscode.ExtensionContext) {
 async function generateHdf(hdfInputPath: string, versionTag: string) {
   vscode.window.withProgress({
     location: vscode.ProgressLocation.Notification,
-    title: "Generating HDF...",
+    title: 'Generating HDF...',
     cancellable: false
   }, async (progress) => {
     // analyze
     let funDescList = await parseHeaderFile(hdfInputPath);
     console.log('parse header file res: ', funDescList);
     console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
-    progress.report({ increment: 50, message: "Analyze complete." });
+    progress.report({ increment: 50, message: 'Analyze complete.' });
     // generator
     let out = path.dirname(hdfInputPath);
     let driverName = path.basename(hdfInputPath, '.h').toLocaleLowerCase();
@@ -212,7 +212,7 @@ async function generateHdf(hdfInputPath: string, versionTag: string) {
       versionTag: versionTag
     };
     genHdfFile(rootInfo, out);
-    progress.report({ increment: 100, message: "Generation complete." });
+    progress.report({ increment: 100, message: 'Generation complete.' });
   });
    // 显示出生成路径
    const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hdfInputPath), 'Open in Explorer');
@@ -225,7 +225,7 @@ async function generateHdf(hdfInputPath: string, versionTag: string) {
 async function generateSa(hPath: string, versionTag: string, serviceId: string) {
   vscode.window.withProgress({
     location: vscode.ProgressLocation.Notification,
-    title: "Generating SA...",
+    title: 'Generating SA...',
     cancellable: false
   }, async (progress) => {
     // analyze
@@ -233,7 +233,7 @@ async function generateSa(hPath: string, versionTag: string, serviceId: string) 
     console.log('parse header file res: ', funDescList);
     console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
 
-    progress.report({ increment: 50, message: "Analyze complete." });
+    progress.report({ increment: 50, message: 'Analyze complete.' });
 
     // generator
     let out = path.dirname(hPath);
@@ -245,7 +245,7 @@ async function generateSa(hPath: string, versionTag: string, serviceId: string) 
       versionTag: versionTag
     };
     genServiceFile(rootInfo, out);
-    progress.report({ increment: 100, message: "Generation complete." });
+    progress.report({ increment: 100, message: 'Generation complete.' });
   });
   // 显示出生成路径
   const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hPath), 'Open in Explorer');
@@ -258,7 +258,7 @@ async function generateSa(hPath: string, versionTag: string, serviceId: string) 
 async function generateDts(hPath: string) {
   vscode.window.withProgress({
     location: vscode.ProgressLocation.Notification,
-    title: "Generating DTS...",
+    title: 'Generating DTS...',
     cancellable: false
   }, async (progress) => {
     // analyze
@@ -266,7 +266,7 @@ async function generateDts(hPath: string) {
     console.log('parse header file res: ', funDescList);
     console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
 
-    progress.report({ increment: 50, message: "Analyze complete." });
+    progress.report({ increment: 50, message: 'Analyze complete.' });
 
     let fileName = path.basename(hPath, '.h');
     let rootInfo = {
@@ -277,7 +277,7 @@ async function generateDts(hPath: string) {
     // generator
     let out = path.dirname(hPath);
     genDtsFile(rootInfo, out);
-    progress.report({ increment: 100, message: "Generation complete." });
+    progress.report({ increment: 100, message: 'Generation complete.' });
   });
    // 显示出生成路径
    const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hPath), 'Open in Explorer');
@@ -290,7 +290,7 @@ async function generateDts(hPath: string) {
 async function generateDtscpp(hFilePath: string) {
   vscode.window.withProgress({
     location: vscode.ProgressLocation.Notification,
-    title: "Generating DTSCPP...",
+    title: 'Generating DTSCPP...',
     cancellable: false
   }, async (progress) => {
     // analyze
@@ -299,7 +299,7 @@ async function generateDtscpp(hFilePath: string) {
     console.log('parse header file res: ', funDescList);
     console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
 
-    progress.report({ increment: 50, message: "Analyze complete." });
+    progress.report({ increment: 50, message: 'Analyze complete.' });
 
     let rootInfo: DtscppRootInfo = {
       funcs: funDescList.funcs,
@@ -310,7 +310,7 @@ async function generateDtscpp(hFilePath: string) {
     // generator
     let out = path.dirname(hFilePath);
     genDtsCppFile(rootInfo, out);
-    progress.report({ increment: 100, message: "Generation complete." });
+    progress.report({ increment: 100, message: 'Generation complete.' });
   });
   // 显示出生成路径
   const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hFilePath), 'Open in Explorer');
