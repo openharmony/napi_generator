@@ -13,11 +13,11 @@
 * limitations under the License.
 */
 
-#include <string>
 #ifndef HELLO_H
 #define HELLO_H
+#include <string>
 
 namespace OHOS {
     std::string Helloworld(std::string sendMsg);
 }
-#endif 
+#endif
