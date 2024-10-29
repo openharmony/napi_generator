@@ -56,61 +56,13 @@ export function activate(context: vscode.ExtensionContext) {
       // The code you place here will be executed every time your command is executed
       if (uri && uri.fsPath) {
           let versionTag = '3.2'; 
-          const quickPick = vscode.window.createQuickPick();
-          quickPick.title = "h2sa";
-          quickPick.items = [
-            { label: 'h2sa3-2' },
-            { label: 'h2sa4-1'}
-          ];
-          quickPick.canSelectMany = false;
-
-          quickPick.onDidAccept(async () => {
-            const selectedItems = quickPick.selectedItems;
-            if (selectedItems.length > 0) {
-              const selectedItem = selectedItems[0].label;
-              if (selectedItem === 'h2sa3-2') {
-                versionTag = '3.2';
-              } else if (selectedItem === 'h2sa4-1') {
-                versionTag = '4.1';
-              }
-            }
-
-            vscode.window.withProgress({
-              location: vscode.ProgressLocation.Notification,
-              title: "Generating SA...",
-              cancellable: false
-            }, async (progress) => {
-             // progress.report({ increment: 0, message: "Starting..." });
-
-              // analyze
-              let funDescList = await parseHeaderFile(uri.fsPath);
-              console.log('parse header file res: ', funDescList);
-              console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
-
-              progress.report({ increment: 50, message: "Analyze complete." });
-
-              // generator
-              let out = path.dirname(uri.fsPath);
-              let serviceName = path.basename(uri.fsPath, '.h');
-              let rootInfo = {
-                serviceName: serviceName,
-                funcs: funDescList.funcs,
-                serviceId: '19000',
-                versionTag: versionTag
-              };
-              genServiceFile(rootInfo, out);
-
-              progress.report({ increment: 100, message: "Generation complete." });
-            });
-
-            quickPick.hide();
-          })
-
-          quickPick.onDidHide(() => {
-            quickPick.dispose();
-          })
-
-          quickPick.show();
+          const version = await vscode.window.showQuickPick(['h2sa4-1', 'h2sa3-2'], { placeHolder: 'Please select the version...' });
+          if (version === 'h2sa4-1') {
+            versionTag = '4.1'
+          } else if (version === 'h2sa3-2') {
+            versionTag = '3.2'
+          }
+          generateSa(uri.fsPath, versionTag);
       }
       // Display a message box to the user
       vscode.window.showInformationMessage('h2sa!');
@@ -121,59 +73,12 @@ export function activate(context: vscode.ExtensionContext) {
     const h2hdf = vscode.commands.registerCommand('extension.h2hdf', async (uri) => {
         // The code you place here will be executed every time your command is executed
         if (uri && uri.fsPath) {
-            
-            let versionTag = '4.1'; 
-            const quickPick = vscode.window.createQuickPick();
-            quickPick.title = "h2hdf";
-            quickPick.items = [
-              { label: 'h2hdf4-1'}
-            ];
-            quickPick.canSelectMany = false;
-
-            quickPick.onDidAccept(async () => {
-              const selectedItems = quickPick.selectedItems;
-              if (selectedItems.length > 0) {
-                const selectedItem = selectedItems[0].label;
-                if (selectedItem === 'h2hdf4-1') {
-                  versionTag = '4.1';
-                }
-              }
-
-              vscode.window.withProgress({
-                location: vscode.ProgressLocation.Notification,
-                title: "Generating DTS...",
-                cancellable: false
-              }, async (progress) => {
-                // progress.report({ increment: 0, message: "Starting..." });
-  
-                // analyze
-                let funDescList = await parseHeaderFile(uri.fsPath);
-                console.log('parse header file res: ', funDescList);
-                console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
-  
-                progress.report({ increment: 50, message: "Analyze complete." });
-  
-                // generator
-                let out = path.dirname(uri.fsPath);
-                let driverName = path.basename(uri.fsPath, '.h').toLocaleLowerCase();
-                let rootInfo = {
-                  driverName: driverName,
-                  funcs: funDescList.funcs,
-                  versionTag: versionTag
-                };
-                genHdfFile(rootInfo, out);
-  
-                progress.report({ increment: 100, message: "Generation complete." });
-              });
-
-              quickPick.hide();
-            })
-
-            quickPick.onDidHide(() => {
-              quickPick.dispose();
-            })
-
-            quickPick.show();
+          let versionTag = '4.1'; 
+          const version = await vscode.window.showQuickPick(['h2hdf4-1'], { placeHolder: 'Please select the version...' });
+          if (version === 'h2hdf4-1') {
+            versionTag = '4.1'
+          }
+          generateHdf(uri.fsPath, versionTag);
         }
         // Display a message box to the user
         vscode.window.showInformationMessage('h2hdf!');
@@ -183,33 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
     const h2dts = vscode.commands.registerCommand('extension.h2dts', async (uri) => {
         // The code you place here will be executed every time your command is executed
         if (uri && uri.fsPath) {
-            vscode.window.withProgress({
-              location: vscode.ProgressLocation.Notification,
-              title: "Generating DTS...",
-              cancellable: false
-            }, async (progress) => {
-              // progress.report({ increment: 0, message: "Starting..." });
-
-              // parse
-              let funDescList = await parseHeaderFile(uri.fsPath);
-              console.log('parse header file res: ', funDescList);
-              console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
-
-              progress.report({ increment: 50, message: "Analyze complete." });
-
-              let fileName = path.basename(uri.fsPath, '.h');
-              let rootInfo = {
-                  funcs: funDescList.funcs,
-                  rawFilePath: uri.fsPath,
-                  fileName: fileName
-              };
-              // generator
-              let out = path.dirname(uri.fsPath);
-              genDtsFile(rootInfo, out);
-
-              progress.report({ increment: 100, message: "Generation complete." });
-            });
-
+           generateDts(uri.fsPath);
         }
         // Display a message box to the user
         vscode.window.showInformationMessage('h2dts!');
@@ -219,33 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
     const h2dtscpp = vscode.commands.registerCommand('extension.h2dtscpp', async (uri) => {
         // The code you place here will be executed every time your command is executed
         if (uri && uri.fsPath) {
-            vscode.window.withProgress({
-              location: vscode.ProgressLocation.Notification,
-              title: "Generating DTS...",
-              cancellable: false
-            }, async (progress) => {
-              // progress.report({ increment: 0, message: "Starting..." });
-
-              // parse
-              let funDescList = await parseHeaderFile(uri.fsPath);
-              let fileName = path.basename(uri.fsPath, '.h');
-              console.log('parse header file res: ', funDescList);
-              console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
-
-              progress.report({ increment: 50, message: "Analyze complete." });
-
-              let rootInfo: DtscppRootInfo = {
-                funcs: funDescList.funcs,
-                rawFilePath: uri.fsPath,  // e://xxx.h
-                fileName: fileName  // xxx
-              };
-              
-              // generator
-              let out = path.dirname(uri.fsPath);
-              genDtsCppFile(rootInfo, out);
-
-              progress.report({ increment: 100, message: "Generation complete." });
-            });
+            generateDtscpp(uri.fsPath);
         }
         // Display a message box to the user
         vscode.window.showInformationMessage('h2dtscpp!');
@@ -274,4 +127,172 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
     context.subscriptions.push(dts2cpp);
+
+    // 欢迎菜单页面
+    const ohGenerator = vscode.commands.registerCommand('extension.ohGenerator', async () => {
+      // The code you place here will be executed every time your command is executed
+      // 给出一个默认的文件路径？默认文件路径放哪？
+      let hPath = path.join(__dirname, '../test/test.h');
+      let hdfInputPath = path.join(__dirname, '../test/hello.h');
+      const value = await vscode.window.showQuickPick(['h2hdf', 'h2sa', 'h2dtscpp', 'h2dts'], { placeHolder: 'Please select...' });
+      const what = await vscode.window.showInputBox({ placeHolder: 'please input...' });
+      if (value === what && value === 'h2hdf') {
+        // 输入版本
+        let versionTag = '4.1';
+        const version = await vscode.window.showQuickPick(['h2hdf4-1'], { placeHolder: 'Please select the version...' })
+        if (version === 'h2hdf4-1') {
+          versionTag === '4.1'     
+        }
+        generateHdf(hdfInputPath, versionTag);
+      } else if (value === what && value === 'h2sa') {
+        // 输入版本
+        let versionTag = '3.2';
+        const version = await vscode.window.showQuickPick(['h2sa3-2', 'h2sa4-1'], { placeHolder: 'Please select the version...' })
+        if (version === 'h2sa4-1') {
+          versionTag = '4.1';
+        } else if (version === 'h2sa3-2') {
+          versionTag = '3.2';
+        }
+        generateSa(hPath, versionTag);
+      } else if (value === what && value === 'h2dts') {
+        generateDts(hPath);
+      } else if (value === what && value === 'h2dtscpp') {
+        generateDtscpp(hPath);
+      } else if (value === what && value === 'aki') {
+        vscode.window.showInformationMessage('待支持...');
+      } else {
+        vscode.window.showInformationMessage('请重新输入...');
+      }
+      
+    });
+    context.subscriptions.push(ohGenerator);
 }
+
+async function generateHdf(hdfInputPath: string, versionTag: string) {
+  vscode.window.withProgress({
+    location: vscode.ProgressLocation.Notification,
+    title: "Generating HDF...",
+    cancellable: false
+  }, async (progress) => {
+    // analyze
+    let funDescList = await parseHeaderFile(hdfInputPath);
+    console.log('parse header file res: ', funDescList);
+    console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
+    progress.report({ increment: 50, message: "Analyze complete." });
+    // generator
+    let out = path.dirname(hdfInputPath);
+    let driverName = path.basename(hdfInputPath, '.h').toLocaleLowerCase();
+    let rootInfo = {
+      driverName: driverName,
+      funcs: funDescList.funcs,
+      versionTag: versionTag
+    };
+    genHdfFile(rootInfo, out);
+    progress.report({ increment: 100, message: "Generation complete." });
+  });
+   // 显示出生成路径
+   const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hdfInputPath), 'Open in Explorer');
+   if (choice === 'Open in Explorer') {
+     // 打开文件所在的目录
+     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hdfInputPath));
+   }
+}
+
+async function generateSa(hPath: string, versionTag: string) {
+  vscode.window.withProgress({
+    location: vscode.ProgressLocation.Notification,
+    title: "Generating SA...",
+    cancellable: false
+  }, async (progress) => {
+    // analyze
+    let funDescList = await parseHeaderFile(hPath);
+    console.log('parse header file res: ', funDescList);
+    console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
+
+    progress.report({ increment: 50, message: "Analyze complete." });
+
+    // generator
+    let out = path.dirname(hPath);
+    let serviceName = path.basename(hPath, '.h');
+    let rootInfo = {
+      serviceName: serviceName,
+      funcs: funDescList.funcs,
+      serviceId: '19000',
+      versionTag: versionTag
+    };
+    genServiceFile(rootInfo, out);
+    progress.report({ increment: 100, message: "Generation complete." });
+  });
+  // 显示出生成路径
+  const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hPath), 'Open in Explorer');
+  if (choice === 'Open in Explorer') {
+    // 打开文件所在的目录
+    vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hPath));
+  }
+}
+
+async function generateDts(hPath: string) {
+  vscode.window.withProgress({
+    location: vscode.ProgressLocation.Notification,
+    title: "Generating DTS...",
+    cancellable: false
+  }, async (progress) => {
+    // analyze
+    let funDescList = await parseHeaderFile(hPath);
+    console.log('parse header file res: ', funDescList);
+    console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
+
+    progress.report({ increment: 50, message: "Analyze complete." });
+
+    let fileName = path.basename(hPath, '.h');
+    let rootInfo = {
+      funcs: funDescList.funcs,
+      rawFilePath: hPath,
+      fileName: fileName
+    };
+    // generator
+    let out = path.dirname(hPath);
+    genDtsFile(rootInfo, out);
+    progress.report({ increment: 100, message: "Generation complete." });
+  });
+   // 显示出生成路径
+   const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hPath), 'Open in Explorer');
+   if (choice === 'Open in Explorer') {
+     // 打开文件所在的目录
+     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hPath));
+   }
+}
+
+async function generateDtscpp(hFilePath: string) {
+  vscode.window.withProgress({
+    location: vscode.ProgressLocation.Notification,
+    title: "Generating DTSCPP...",
+    cancellable: false
+  }, async (progress) => {
+    // analyze
+    let funDescList = await parseHeaderFile(hFilePath);
+    let fileName = path.basename(hFilePath, '.h');
+    console.log('parse header file res: ', funDescList);
+    console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
+
+    progress.report({ increment: 50, message: "Analyze complete." });
+
+    let rootInfo: DtscppRootInfo = {
+      funcs: funDescList.funcs,
+      rawFilePath: hFilePath,
+      fileName: fileName // xxx
+    };
+
+    // generator
+    let out = path.dirname(hFilePath);
+    genDtsCppFile(rootInfo, out);
+    progress.report({ increment: 100, message: "Generation complete." });
+  });
+  // 显示出生成路径
+  const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hFilePath), 'Open in Explorer');
+  if (choice === 'Open in Explorer') {
+    // 打开文件所在的目录
+    vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hFilePath));
+  }
+}
+

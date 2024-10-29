@@ -47,7 +47,17 @@
             { 
                 "command": "extension.ohcrosscompile",
                 "title": "OH_CrossCompile"
+            },
+	    {
+              "command": "extension.ohGenerator",
+              "title": "%extension.ohGenerator.title%"
             }
+        ],
+        "viewsWelcome": [
+          {
+            "view": "workbench.explorer.emptyView",
+            "contents": "Generate NAPI definition code and framework code for OpenHarmony. \n[OHGenerator](command:extension.ohGenerator)"
+          }
         ],
         "submenus": [
             {
