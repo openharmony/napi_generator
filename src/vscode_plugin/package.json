@@ -21,6 +21,7 @@
         "onCommand:extension.h2hdf"
     ],
     "main": "./out/extension.js",
+    "l10n":"./l10n",
     "contributes": {
         "commands": [
             {
@@ -46,7 +47,7 @@
             },
             { 
                 "command": "extension.ohcrosscompile",
-                "title": "OH_CrossCompile"
+                "title": "%extension.ohcrosscompile.title%"
             },
 	    {
               "command": "extension.ohGenerator",
@@ -56,7 +57,7 @@
         "viewsWelcome": [
           {
             "view": "workbench.explorer.emptyView",
-            "contents": "Generate NAPI definition code and framework code for OpenHarmony. \n[OHGenerator](command:extension.ohGenerator)"
+            "contents": "%Generate NAPI definition code and framework code for OpenHarmony. \n[OHGenerator](command:extension.ohGenerator)%"
           }
         ],
         "submenus": [
@@ -122,6 +123,7 @@
     },
     "dependencies": {
         "vsce": "^2.15.0",
-        "typescript": "^4.7.2"
+        "typescript": "^4.7.2",
+	"@vscode/l10n": "^0.0.10"
     }
 }
