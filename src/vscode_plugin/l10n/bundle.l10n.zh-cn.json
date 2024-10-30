@@ -1,0 +1,18 @@
+{
+  "Hdf Framework": "Hdf框架",
+  "SystemAbility Framework": "SystemAbility框架",
+  "N-API Framework": "N-API框架",
+  "Please input serviceId like 19000...": "请输入serviceId... 如: 19000",
+  "Input cannot be empty": "输入不能为空",
+  "Please input a number...": "请输入一个数字",
+  "Inconsistent input": "所选项与输入不一致",
+  "Please select the version...": "请选择版本...",
+  "Please select framework...": "请选择框架...",
+  "Please confirm your selection...": "请确认您的选择...",
+  "Open in Explorer": "在浏览器中打开",
+  "Parse complete.": "转换完成",
+  "Generation complete:": "生成完成",
+  "You selected a directory:": "您选择了一个目录",
+  "Please select a directory.": "请选择一个目录",
+  "No resource selected.": "未选择资源"
+}
