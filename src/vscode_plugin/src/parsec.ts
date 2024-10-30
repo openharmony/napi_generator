@@ -29,7 +29,7 @@ function parseEnum(data: string) {
     const enumName = match[1] ||match[3] || match[4];
     const aliasName = match[3];
     const membersString = match[2] || match[5];
-    const members = membersString.split(';')
+    const members = membersString.split(',')
         .map(member => member.trim().replace(/[\n\r\s]/g, ''))
         .filter(member => member.length > 0);
     let enumItem = {
@@ -45,7 +45,7 @@ function parseEnum(data: string) {
 
 function parseUnion(data: string) {
   // 使用正则表达式提取联合体定义
-  const unionRegex = /typedef\s+struct\s*(\w*)\s*{([^}]*)}\s*(\w+)\s*;|union\s+(\w+)\s*{([^}]*)}\s*;/g;
+  const unionRegex = /typedef\s+union\s*(\w*)\s*{([^}]*)}\s*(\w+)\s*;|union\s+(\w+)\s*{([^}]*)}\s*;/g;
   const unions: UnionObj[] = [];
   let match;
   while ((match = unionRegex.exec(data)) !== null) {
@@ -64,7 +64,8 @@ function parseUnion(data: string) {
     
     members.forEach(declaration => {
       // 使用正则表达式匹配类型和变量名
-      const match = declaration.match(/(\w+)\s+(\w+)(\[(\d+)\])?/);
+      // const match = declaration.match(/(\w+)\s+(\w+)(\[(\d+)\])?/);
+      const match = declaration.match(/(\w[\w\s\*]+)\s+(\w+)\s*/);
       if (match) {
         const type = match[1]; // 类型
         const variable = match[2]; // 变量名
@@ -101,25 +102,59 @@ function parseStruct(data: string) {
     const members = membersString.split(';')
         .map(member => member.trim().replace(/[\n\r]/g, ''))
         .filter(member => member.length > 0);
+
+    const variables: string[] = [];
+    const methods: string[] = [];
+
+    members.forEach(member => {
+        // 匹配方法声明
+        const methodRegex = /(\w[\w\s\*]+)\s+(\w+)\(([^)]*)\)\s*/;
+        const variableRegex = /(\w[\w\s\*]+)\s+(\w+)\s*/;
+
+        if (methodRegex.test(member)) {
+            methods.push(member.trim().replace(/[\n\r]/g, ''));
+        } else if (variableRegex.test(member)) {
+            variables.push(member.trim().replace(/[\n\r]/g, ''));
+        }
+    });
     
     let structItem: StructObj = {
       "name": structName,
       "alias": alias,
-      "members": parseMembers(members),
-      "functions": []
+      "members": parseMembers(variables),
+      "functions": parseMethods(methods)
     }
 
     structs.push(structItem);
   }
-  console.info(` return structs: ${JSON.stringify(structs)}`);
+  // console.info(` return structs: ${JSON.stringify(structs)}`);
   return structs;
+}
+// /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/
+function parseParameters(members: string[]): ParamObj[] {
+  // const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/;
+  const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d*)\])?$/;
+  // console.info(` parseParameters members: ${JSON.stringify(members)}`);
+  return members.map(member => {
+      const match = member.trim().match(memberRegex);
+      // console.info(` parseParameters match: ${JSON.stringify(match)}`);
+      if (match) {
+          const type = match[2];
+          const name = match[3];
+          // const arraySize = match[4] ? parseInt(match[4], 10) : -1;
+          const arraySize = match[4] && match[4] !== "" ? parseInt(match[4], 10) : -1;
+          return { type, name, arraySize };
+      }
+      return {};
+  }).filter((m): m is ParamObj => m !== null); // 类型保护
 }
 
 function parseMembers(members: string[]): ParamObj[] {
   const memberRegex = /(?:public:|private:)?\s*(\w+(?:\s+\w+)?)\s+(\w+)(?:\[(\d+)\])?/;
-  
+  // console.info(` parseMembers members: ${JSON.stringify(members)}`);
   return members.map(member => {
       const match = member.trim().match(memberRegex);
+      // console.info(` parseMembers match: ${JSON.stringify(match)}`);
       if (match) {
           const type = match[1];
           const name = match[2];
@@ -130,8 +165,9 @@ function parseMembers(members: string[]): ParamObj[] {
   }).filter((m): m is ParamObj => m !== null); // 类型保护
 }
 
-function parseFunctions(functions: string[]): FuncObj[] {
-  const functionRegex = /(\w+)\s+(\w+)\(([^)]*)\)/; // 正则表达式匹配返回值、函数名和参数
+function parseMethods(functions: string[]): FuncObj[] {
+  const functionRegex = /^(\w[\w\s]*\*?)\s+(\w+)\((.*?)\)$/;
+  // const functionRegex = /(\w+)\s+(\w+)\(([^)]*)\)/; // 正则表达式匹配返回值、函数名和参数
 
   return functions.map(func => {
       const match = func.trim().match(functionRegex);
@@ -139,7 +175,7 @@ function parseFunctions(functions: string[]): FuncObj[] {
           const returns = match[1]; // 返回值类型
           const name = match[2]; // 方法名
           const parameterstr = match[3].split(',').map(param => param.trim()).filter(Boolean); // 分割参数并去除空值
-          const parameters = parseMembers(parameterstr);
+          const parameters = parseParameters(parameterstr);
           return { returns, name, parameters };
       }
       return {};
@@ -176,7 +212,7 @@ function parseClass(data: string) {
       const variableList = parseMembers(variables);
       // console.log(`parseMembers: ${JSON.stringify(variableList)}`)
 
-      const functionList: FuncObj[] = parseFunctions(methods);
+      const functionList: FuncObj[] = parseMethods(methods);
       // console.log(`parsedFunctions: ${JSON.stringify(functionList)}`);
 
       const classItem: ClassObj = {
@@ -187,11 +223,11 @@ function parseClass(data: string) {
       }
       classes.push(classItem);
   }
-  console.info(` return classes: ${JSON.stringify(classes)}`);
+  // console.info(` return classes: ${JSON.stringify(classes)}`);
   return classes;
 }
 
-function parseFunction(data: string) {
+function parseFunctionOld(data: string) {
   // 使用正则表达式提取函数定义
   const functionRegex1 = /([a-zA-Z_]\w*\s+)+([*a-zA-Z_]\w+)\s*\(([^)]*)\)\s*(?={|;)/g;
   const functionRegex2 = /(\w+\s*\(.*?\)\s+)(\w+)\s*\((.*?)\);\s*/g;
@@ -237,17 +273,19 @@ function parseFunction(data: string) {
               arraySize: 0,
           })
       }
-      console.info(`ret: ${returnType} func: ${functionName} params:(${paramResList.map(ditem => {
-          return ' type: ' + ditem.type + ', ' + 'name: ' + ditem.name;
-      })})`)
+      // console.info(`ret: ${returnType} func: ${functionName} params:(${paramResList.map(ditem => {
+      //     return ' type: ' + ditem.type + ', ' + 'name: ' + ditem.name;
+      // })})`)
       let funcRes: FuncObj = {
-          name: functionName,
-          returns: returnType,
-          parameters: paramResList 
+        type: 'function',
+        name: functionName,
+        returns: returnType,
+        parameters: paramResList 
       } 
       return funcRes;
     }
     let res: FuncObj = {
+      type: '',
       name: '',
       returns: '',
       parameters: []
@@ -256,6 +294,7 @@ function parseFunction(data: string) {
   })
   .filter(detail => detail !== null);
 
+  console.log(`parse oldfunc : ${JSON.stringify(functionDetails)}`)
   return functionDetails;
   // if (functionDetails.length > 0) {
   //   const funcs = [...functionDetails.filter((funcItem) : funcItem is FuncObj => funcItem !== null)];
@@ -266,11 +305,35 @@ function parseFunction(data: string) {
   //           return ' type: ' + ditem.type + ', ' + 'name: ' + ditem.name;
   //       })})`
   //   ).join('\n');
-  //   console.info(` return parseFunctions: ${JSON.stringify(funcs)}`);
+  //   console.info(` return parseMethods: ${JSON.stringify(funcs)}`);
   //   return funcs;
   // } else {
   //   vscode.window.showInformationMessage('No functions found.');    
   // }
+}
+
+function parseFunction(data: string): FuncObj[] {
+  // const funcRegex = /^(static\s+)?(const\s+)?([\w\s\[\]*]+)\s+(\w+)\s*\(([^)]*)\);/gm;
+  const funcRegex = /(?:typedef\s+([\w\s\[\]*]+)\s+\(\*\s*(\w+)\)\s*\(([^)]*)\);|^(static\s+)?(const\s+)?([\w\s\[\]*]+)\s+(\w+)\s*\(([^)]*)\);)/gm
+  const functions: FuncObj[] = []
+  let match;
+  while ((match = funcRegex.exec(data)) !== null) {
+    // console.log(`func match: ${JSON.stringify(match)}`)
+    const returnType = match[1] ? match[1].trim() : match[6].trim(); //match[3].trim();
+    const name = match[2] ? match[2].trim() : match[7].trim(); //match[4].trim();
+    const params = (match[3] ? match[3] : match[8] || "").split(',').map(param => param.trim()).filter(param => param); //match[5].split(',').map(param => param.trim()).filter(param => param);
+    let isInterface = match[0].includes('typedef');
+    let funcItem: FuncObj = {
+      "type": isInterface ? "typedef" : "function",
+      "returns": returnType,
+      "name": name,
+      "parameters": parseParameters(params)
+    }
+
+    functions.push(funcItem);
+  }
+  // console.info(` return functions: ${JSON.stringify(functions)}`);
+  return functions;
 }
 
 export function parseHeaderFile(filePath: string): Promise<ParseObj> {
@@ -303,7 +366,7 @@ export function parseHeaderFile(filePath: string): Promise<ParseObj> {
         classes: classList,
         funcs: funcList
       }
-      console.info(` return parse result: ${JSON.stringify(parseRes)}`);
+      // console.info(` return parse result: ${JSON.stringify(parseRes)}`);
       resolve(parseRes);
     });
   });
