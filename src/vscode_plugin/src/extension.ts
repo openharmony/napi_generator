@@ -19,7 +19,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as ts from 'typescript';
 import { parseHeaderFile } from './parsec';
-import { DtscppRootInfo } from './datatype';
+import { DtscppRootInfo, GenInfo } from './datatype';
 import { parseTsFile } from './parsets';
 import { genServiceFile } from './gensa';
 import { genDtsFile } from './gendts';
@@ -97,12 +97,29 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(h2hdf);
 
     const h2dts = vscode.commands.registerCommand('extension.h2dts', async (uri) => {
-        // The code you place here will be executed every time your command is executed
-        if (uri && uri.fsPath) {
-           generateDts(uri.fsPath);
-        }
-        // Display a message box to the user
-        vscode.window.showInformationMessage('h2dts!');
+      // The code you place here will be executed every time your command is executed
+      if (uri && uri.fsPath) {
+        vscode.window.withProgress({
+          location: vscode.ProgressLocation.Notification,
+          title: "Generating .d.ts ...",
+          cancellable: false
+        }, async (progress) => {
+          // parse
+          let parseRes = await parseHeaderFile(uri.fsPath);
+          console.log('parse header file res: ', parseRes);
+          progress.report({ increment: 50, message: "Parse complete." });
+          
+          let rootInfo: GenInfo = {
+            parseObj: parseRes,
+            rawFilePath: uri.fsPath,  // e://xxx.h
+            fileName: path.basename(uri.fsPath, '.h')  // xxx
+          };
+          // generator
+          let outPath = genDtsFile(rootInfo);
+          progress.report({ increment: 100, message: `Generation complete: ${outPath}.` });
+        });
+      }
+
     });
     context.subscriptions.push(h2dts);
 
