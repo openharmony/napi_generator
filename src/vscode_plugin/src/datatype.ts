@@ -59,6 +59,7 @@ export interface ClassObj {
 }
 
 export interface FuncObj {
+  type: string;
   name: string;
   returns: string;
   parameters: ParamObj[];
@@ -88,6 +89,13 @@ export interface HdfRootInfo {
 export interface FuncTransferMap {
   fromType: string;
   tranferContent: string[];
+}
+
+// h2dts
+export interface GenInfo {
+  parseObj: ParseObj;
+  rawFilePath: string;
+  fileName: string;
 }
 
 // h2dtscpp
