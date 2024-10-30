@@ -26,6 +26,25 @@ import { genDtsFile } from './gendts';
 import { genHdfFile } from './genhdf';
 import { genDtsCppFile } from './gendtscpp';
 
+// 获取本地化字符串
+const SELECTED_DIR = vscode.l10n.t('You selected a directory:');
+const SELECTE_DIR = vscode.l10n.t('Please select a directory.');
+const NO_RES_SELECTED = vscode.l10n.t('No resource selected.');
+const HDF_FRAMEWORK = vscode.l10n.t('Hdf Framework');
+const SA_FRAMEWORK = vscode.l10n.t('SystemAbility Framework');
+const NAPI_FRAMEWORK = vscode.l10n.t('N-API Framework');
+const SELECT_VERSION = vscode.l10n.t('Please select the version...');
+const INPUT_SERVICEID = vscode.l10n.t('Please input serviceId like 19000...');
+const INPUT_NO_EMPTY = vscode.l10n.t('Input cannot be empty');
+const INPUT_NUMBER = vscode.l10n.t('Please input a number...');
+const SELECT_FRAMWORK = vscode.l10n.t('Please select framework...');
+const CONFIRM_SELECT = vscode.l10n.t('Please confirm your selection...');
+const INPUT_INCONSISTENT = vscode.l10n.t('Inconsistent input');
+const PARSE_COMPLETE = vscode.l10n.t('Parse complete.');
+const GEN_COMPLETE = vscode.l10n.t('Generation complete:');
+const OPEN_IN_EXPLORER = vscode.l10n.t('Open in Explorer');
+
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -38,12 +57,12 @@ export function activate(context: vscode.ExtensionContext) {
         if (uri && uri.fsPath) {
             const stat = await vscode.workspace.fs.stat(uri);
             if (stat.type === vscode.FileType.Directory) {
-                vscode.window.showInformationMessage(`You selected a directory: ${uri.fsPath}`);
+                vscode.window.showInformationMessage(SELECTED_DIR + uri.fsPath);
             } else {
-                vscode.window.showWarningMessage('Please select a directory.');
+                vscode.window.showWarningMessage(SELECTE_DIR);
             }
         } else {
-            vscode.window.showWarningMessage('No resource selected.');
+            vscode.window.showWarningMessage(NO_RES_SELECTED);
         }
         // Display a message box to the user
         vscode.window.showInformationMessage('ohcrosscompile!');
@@ -55,28 +74,27 @@ export function activate(context: vscode.ExtensionContext) {
     const h2sa = vscode.commands.registerCommand('extension.h2sa', async (uri) => {
       // The code you place here will be executed every time your command is executed
       if (uri && uri.fsPath) {
-          let versionTag = '3.2'; 
-          const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release', 'OpenHarmony 3.2 release'], { placeHolder: 'Please select the version...' });
+          let versionTag = '3.2';
+          const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release', 'OpenHarmony 3.2 release'], { placeHolder: SELECT_VERSION });
           if (version === 'OpenHarmony 4.1 release') {
             versionTag = '4.1'
           } else if (version === 'OpenHarmony 3.2 release') {
             versionTag = '3.2'
           }
           const serviceId = await vscode.window.showInputBox({
-            placeHolder: 'Please input serviceId...',
+            placeHolder: INPUT_SERVICEID,
+            value: "19000", // 设置默认值
             validateInput: (input) => {
                 if (!input) {
-                    return 'Input cannot be empty';
+                    return INPUT_NO_EMPTY;
                 }
                 if (!Number(input)) {
-                    return 'Input a number'
+                    return INPUT_NUMBER
                 }
             }
           });
           generateSa(uri.fsPath, versionTag, serviceId as string);
       }
-      // Display a message box to the user
-      vscode.window.showInformationMessage('h2sa!');
     });
 
     context.subscriptions.push(h2sa);
@@ -85,14 +103,12 @@ export function activate(context: vscode.ExtensionContext) {
         // The code you place here will be executed every time your command is executed
         if (uri && uri.fsPath) {
           let versionTag = '4.1'; 
-          const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: 'Please select the version...' });
+          const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION });
           if (version === 'OpenHarmony 4.1 release') {
             versionTag = '4.1'
           }
           generateHdf(uri.fsPath, versionTag);
         }
-        // Display a message box to the user
-        vscode.window.showInformationMessage('h2hdf!');
     });
     context.subscriptions.push(h2hdf);
 
@@ -107,7 +123,7 @@ export function activate(context: vscode.ExtensionContext) {
           // parse
           let parseRes = await parseHeaderFile(uri.fsPath);
           console.log('parse header file res: ', parseRes);
-          progress.report({ increment: 50, message: "Parse complete." });
+          progress.report({ increment: 50, message: PARSE_COMPLETE });
           
           let rootInfo: GenInfo = {
             parseObj: parseRes,
@@ -116,10 +132,9 @@ export function activate(context: vscode.ExtensionContext) {
           };
           // generator
           let outPath = genDtsFile(rootInfo);
-          progress.report({ increment: 100, message: `Generation complete: ${outPath}.` });
+          progress.report({ increment: 100, message: GEN_COMPLETE + outPath });
         });
       }
-
     });
     context.subscriptions.push(h2dts);
 
@@ -128,8 +143,6 @@ export function activate(context: vscode.ExtensionContext) {
         if (uri && uri.fsPath) {
             generateDtscpp(uri.fsPath);
         }
-        // Display a message box to the user
-        vscode.window.showInformationMessage('h2dtscpp!');
     });
     context.subscriptions.push(h2dtscpp);
 
@@ -161,48 +174,49 @@ export function activate(context: vscode.ExtensionContext) {
       // The code you place here will be executed every time your command is executed
       let hPath = path.join(__dirname, '../test/test.h');
       let hdfInputPath = path.join(__dirname, '../test/hello.h');
-      const value = await vscode.window.showQuickPick(['Hdf Framework', 'SystemAbility Framework', 'N-API  Framework'], { placeHolder: 'Please select...' });
-      const what = await vscode.window.showInputBox({ 
-        placeHolder: 'Please input...',
+      const value = await vscode.window.showQuickPick([HDF_FRAMEWORK, SA_FRAMEWORK, NAPI_FRAMEWORK], { placeHolder: SELECT_FRAMWORK });
+      await vscode.window.showInputBox({ 
+        placeHolder: CONFIRM_SELECT,
         validateInput: (input) => {
           if (!input) {
-            return 'Input cannot be empty';
+            return INPUT_NO_EMPTY;
           }
           if (input !== value) {
-            return 'Inconsistent input'
+            return INPUT_INCONSISTENT;
           }
       }
       });
-      if (value === 'Hdf Framework') {
+      if (value === HDF_FRAMEWORK) {
         // 输入版本
         let versionTag = '4.1';
-        const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: 'Please select the version...' })
+        const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION })
         if (version === 'OpenHarmony 4.1 release') {
           versionTag === '4.1'     
         }
         generateHdf(hdfInputPath, versionTag);
-      } else if (value === 'SystemAbility Framework') {
+      } else if (value === SA_FRAMEWORK) {
         // 输入版本
         let versionTag = '3.2';
-        const version = await vscode.window.showQuickPick(['OpenHarmony 3.2 release', 'OpenHarmony 4.1 release'], { placeHolder: 'Please select the version...' })
+        const version = await vscode.window.showQuickPick(['OpenHarmony 3.2 release', 'OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION })
         if (version === 'OpenHarmony 4.1 release') {
           versionTag = '4.1';
         } else if (version === 'OpenHarmony 3.2 release') {
           versionTag = '3.2';
         }
         const serviceId = await vscode.window.showInputBox({
-          placeHolder: 'Please input serviceId...',
+          placeHolder: INPUT_SERVICEID,
+          value: "19000",
           validateInput: (input) => {
               if (!input) {
-                  return 'Input cannot be empty';
+                  return INPUT_NO_EMPTY;
               }
               if (!Number(input)) {
-                  return 'Input a number'
+                  return INPUT_NUMBER
               }
           }
         });
         generateSa(hPath, versionTag, serviceId as string);
-      } else if (value === 'N-API  Framework') {
+      } else if (value === NAPI_FRAMEWORK) {
         generateDtscpp(hPath);
       }
     });
@@ -219,7 +233,7 @@ async function generateHdf(hdfInputPath: string, versionTag: string) {
     let funDescList = await parseHeaderFile(hdfInputPath);
     console.log('parse header file res: ', funDescList);
     console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
-    progress.report({ increment: 50, message: 'Analyze complete.' });
+    progress.report({ increment: 50, message: PARSE_COMPLETE });
     // generator
     let out = path.dirname(hdfInputPath);
     let driverName = path.basename(hdfInputPath, '.h').toLocaleLowerCase();
@@ -229,11 +243,11 @@ async function generateHdf(hdfInputPath: string, versionTag: string) {
       versionTag: versionTag
     };
     genHdfFile(rootInfo, out);
-    progress.report({ increment: 100, message: 'Generation complete.' });
+    progress.report({ increment: 100, message: GEN_COMPLETE + out});
   });
    // 显示出生成路径
-   const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hdfInputPath), 'Open in Explorer');
-   if (choice === 'Open in Explorer') {
+   const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hdfInputPath), OPEN_IN_EXPLORER);
+   if (choice === OPEN_IN_EXPLORER) {
      // 打开文件所在的目录
      vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hdfInputPath));
    }
@@ -250,7 +264,7 @@ async function generateSa(hPath: string, versionTag: string, serviceId: string) 
     console.log('parse header file res: ', funDescList);
     console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
 
-    progress.report({ increment: 50, message: 'Analyze complete.' });
+    progress.report({ increment: 50, message: PARSE_COMPLETE });
 
     // generator
     let out = path.dirname(hPath);
@@ -262,46 +276,14 @@ async function generateSa(hPath: string, versionTag: string, serviceId: string) 
       versionTag: versionTag
     };
     genServiceFile(rootInfo, out);
-    progress.report({ increment: 100, message: 'Generation complete.' });
+    progress.report({ increment: 100, message: GEN_COMPLETE + out });
   });
   // 显示出生成路径
-  const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hPath), 'Open in Explorer');
-  if (choice === 'Open in Explorer') {
+  const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hPath), OPEN_IN_EXPLORER);
+  if (choice === OPEN_IN_EXPLORER) {
     // 打开文件所在的目录
     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hPath));
   }
-}
-
-async function generateDts(hPath: string) {
-  vscode.window.withProgress({
-    location: vscode.ProgressLocation.Notification,
-    title: 'Generating DTS...',
-    cancellable: false
-  }, async (progress) => {
-    // analyze
-    let funDescList = await parseHeaderFile(hPath);
-    console.log('parse header file res: ', funDescList);
-    console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
-
-    progress.report({ increment: 50, message: 'Analyze complete.' });
-
-    let fileName = path.basename(hPath, '.h');
-    let rootInfo = {
-      funcs: funDescList.funcs,
-      rawFilePath: hPath,
-      fileName: fileName
-    };
-    // generator
-    let out = path.dirname(hPath);
-    genDtsFile(rootInfo, out);
-    progress.report({ increment: 100, message: 'Generation complete.' });
-  });
-   // 显示出生成路径
-   const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hPath), 'Open in Explorer');
-   if (choice === 'Open in Explorer') {
-     // 打开文件所在的目录
-     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hPath));
-   }
 }
 
 async function generateDtscpp(hFilePath: string) {
@@ -316,7 +298,7 @@ async function generateDtscpp(hFilePath: string) {
     console.log('parse header file res: ', funDescList);
     console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
 
-    progress.report({ increment: 50, message: 'Analyze complete.' });
+    progress.report({ increment: 50, message: PARSE_COMPLETE });
 
     let rootInfo: DtscppRootInfo = {
       funcs: funDescList.funcs,
@@ -327,11 +309,11 @@ async function generateDtscpp(hFilePath: string) {
     // generator
     let out = path.dirname(hFilePath);
     genDtsCppFile(rootInfo, out);
-    progress.report({ increment: 100, message: 'Generation complete.' });
+    progress.report({ increment: 100, message: GEN_COMPLETE + out });
   });
   // 显示出生成路径
-  const choice = await vscode.window.showInformationMessage('生成路径：', path.dirname(hFilePath), 'Open in Explorer');
-  if (choice === 'Open in Explorer') {
+  const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hFilePath), OPEN_IN_EXPLORER);
+  if (choice === OPEN_IN_EXPLORER) {
     // 打开文件所在的目录
     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hFilePath));
   }
