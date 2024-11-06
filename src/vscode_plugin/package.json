@@ -111,6 +111,10 @@
           {
             "language": "cpp",
             "path": "./snippets/napi_class_snippets.json"
+          },
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_async_snippets.json"
           }
         ]
     },
