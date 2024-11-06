@@ -85,7 +85,7 @@
       "    CallbackData *callbackData = reinterpret_cast<CallbackData *>(data);",
       "    // Todo: you can use \"napidoubleout\" command that return double value to js.",
       "    // Fulfill a ArkTs Promise with a given value.",
-      "    napi_resolve_deferred(env, callbackData->deferred, result);",
+      "    napi_resolve_deferred(env, callbackData->deferred, doubleOut);",
       "    // Clean up an asynchronous work request and its associated resources.",
       "    napi_delete_async_work(env, callbackData->asyncWork);",
       "    delete callbackData;",
