@@ -10,7 +10,8 @@
         "vscode": "^1.34.0"
     },
     "categories": [
-        "Other"
+        "Other",
+        "Snippets"
     ],
     "activationEvents": [
         "onCommand:extension.h2dts",
@@ -106,7 +107,12 @@
                     "group": "2_workspace"
                 }
             ]
-        }
+        "snippets": [
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_class_snippets.json"
+          }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
