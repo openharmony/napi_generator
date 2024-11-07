@@ -119,6 +119,10 @@
           {
             "language": "cpp",
             "path": "./snippets/napi_promise_snippets.json"
+          },
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_callback_snippets.json"
           }
         ]
     },
