@@ -1,0 +1,41 @@
+{
+  "Napi Promise": {
+    "prefix": "napipromise",
+    "body": [
+      "static napi_value PromiseSample(napi_env env, napi_callback_info info)",
+      "{",
+      "    napi_value promise;",
+      "    napi_deferred deferred;",
+      "    // Todo: you can use \"napiobjectin\" command that get object value from js.",
+      "    // Todo: you can use \"napidoublein\" command that get double value from js.",
+      "    // Business code. ",
+      "    double myRes = value0 + value1;",
+      "    // Create a new js Promise.",
+      "    napi_create_promise(env, &deferred, &promise);",
+      "    // Todo: you can use \"napidoubleout\" command that return double to js.",
+      "    bool isResolved = true;",
+      "    if (isResolved) {",
+      "        // Fulfill a js Promise with a given value.",
+      "        napi_resolve_deferred(env, deferred, doubleOut);",
+      "    } else {",
+      "        //  Reject a js Promise with a given reason.",
+      "        napi_reject_deferred(env, deferred, doubleOut);",
+      "    }",
+      "    return promise;",
+      "}",
+      "EXTERN_C_START",
+      "// Initialize the module.",
+      "static napi_value Init(napi_env env, napi_value exports)",
+      "{",
+      "    // Define properties and methods for a N-API object.",
+      "    napi_property_descriptor desc[] = {",
+      "        { \"promiseSample\", nullptr, PromiseSample, nullptr, nullptr, nullptr, napi_default, nullptr }",
+      "    };",
+      "    // Add an array of properties to a ArkTs object.",
+      "    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);",
+      "    return exports;",
+      "}",
+      "EXTERN_C_END"
+    ]
+  }
+}
