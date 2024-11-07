@@ -50,6 +50,7 @@
     "  // Retrieve obj (the C++ object) previously wrapped in jsThis (the ArkTS object), and perform subsequent operations.",
     "  napi_unwrap(env, jsThis, reinterpret_cast<void**>(&obj));",
     "  // Todo: you can use \"napistringutf8out\" command that return string utf8 value to js.",
+    "  return stringOut;",
     "}",
     "napi_value HelloWorld::SetValue(napi_env env, napi_callback_info info)",
     "{",
