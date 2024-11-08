@@ -1,0 +1,33 @@
+{
+  "Napi Struct": {
+    "prefix": "napistruct",
+    "body": [
+      "napi_value GetStructValueFromJs(napi_env env, napi_callback_info info)",
+      "{",
+      "    // Todo: you can use \"napiobjectin\" command that get object value from js.",
+      "    // Todo: you can use \"napigetvaluefromobject\" command that get value from js object.",
+      "    return nullptr;",
+      "}",
+      "napi_value CreateStructObjectToJs(napi_env env, napi_callback_info info)",
+      "{",
+      "    // Todo: you can use \"napiobjectout\" command that return object to js.",
+      "    // Todo: you can use \"napisetvalue2object\" command that set value to objectOut.",
+      "    return objectOut.",
+      "}",
+      "EXTERN_C_START",
+      "// Initialize the module.",
+      "static napi_value Init(napi_env env, napi_value exports)",
+      "{",
+      "    // Define properties and methods for a N-API object.",
+      "    napi_property_descriptor desc[] = {",
+      "        { \"getStructValueFromJs\", nullptr, GetStructValueFromJs, nullptr, nullptr, nullptr, napi_default, nullptr },",
+      "        { \"createStructObjectToJs\", nullptr, CreateStructObjectToJs, nullptr, nullptr, nullptr, napi_default, nullptr }",
+      "    };",
+      "    // Add an array of properties to a ArkTs object.",
+      "    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);",
+      "    return exports;",
+      "}",
+      "EXTERN_C_END"
+    ]
+  }
+}
