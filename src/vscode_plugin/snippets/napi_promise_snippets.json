@@ -1,0 +1,37 @@
+{
+  "Napi Promise": {
+    "prefix": "napipromise",
+    "body": [
+      "static napi_value PromiseSample(napi_env env, napi_callback_info info)",
+      "{",
+      "    napi_value promise;",
+      "    napi_deferred deferred;",
+      "    // Create a new js Promise.",
+      "    napi_create_promise(env, &deferred, &promise);",
+      "    napi_value valueOut = nullptr;",
+      "    bool isResolved = true;",
+      "    if (isResolved) {",
+      "        // Fulfill a js Promise with a given value.",
+      "        napi_resolve_deferred(env, deferred, valueOut);",
+      "    } else {",
+      "        //  Reject a js Promise with a given reason.",
+      "        napi_reject_deferred(env, deferred, valueOut);",
+      "    }",
+      "    return promise;",
+      "}",
+      "EXTERN_C_START",
+      "// Initialize the module.",
+      "static napi_value Init(napi_env env, napi_value exports)",
+      "{",
+      "    // Define properties and methods for a N-API object.",
+      "    napi_property_descriptor desc[] = {",
+      "        { \"promiseSample\", nullptr, PromiseSample, nullptr, nullptr, nullptr, napi_default, nullptr }",
+      "    };",
+      "    // Add an array of properties to a ArkTs object.",
+      "    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);",
+      "    return exports;",
+      "}",
+      "EXTERN_C_END"
+    ]
+  }
+}
