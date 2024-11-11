@@ -123,6 +123,18 @@
           {
             "language": "cpp",
             "path": "./snippets/napi_callback_snippets.json"
+          },
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_sync_snippets.json"
+          },
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_enum_snippets.json"
+          },
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_struct_snippets.json"
           }
         ]
     },
