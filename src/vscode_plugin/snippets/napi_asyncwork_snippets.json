@@ -1,6 +1,6 @@
 {
   "Napi Async Func": {
-    "prefix": "napiasyncfunc",
+    "prefix": "napiasyncwork",
     "body": [
       "struct AsyncData{",
       "    napi_async_work work;",
