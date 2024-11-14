@@ -13,7 +13,7 @@
       "    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, \"ASYNC\", \"ExecuteAsyncWork\");",
       "}",
       "static void CompleteAsyncWork(napi_env env, napi_status status, void* data) {",
-      "    // Todo: you can use \"napicallthreadsafefunc\" command that execute the callback.",
+      "    // Todo: you can use \"napicallfunc\" command that execute the callback.",
       "    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, \"ASYNC\", \"CompleteAsyncWork\");",
       "}",
       "napi_value StartAsyncWork(napi_env env, napi_callback_info info)",
