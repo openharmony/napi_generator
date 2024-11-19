@@ -1,29 +1,9 @@
 {
   "Napi Callback": {
-    "prefix": "napicallback",
+    "prefix": "napicallfunc",
     "body": [
-      "static napi_value CallbackSample(napi_env env, napi_callback_info info)",
-      "{",
-      "    napi_value callback;",
-      "    napi_value callbackArg[1] = nullptr;",
-      "    napi_value result;",
-      "    // Invokes a js function with the provided arguments and returns the result.",
-      "    napi_call_function(env, nullptr, callback, 1, callbackArg, &result);",
-      "    return nullptr;",
-      "}",
-      "EXTERN_C_START",
-      "// Initialize the module.",
-      "static napi_value Init(napi_env env, napi_value exports)",
-      "{",
-      "    // Define properties and methods for a N-API object.",
-      "    napi_property_descriptor desc[] = {",
-      "        { \"callbackSample\", nullptr, CallbackSample, nullptr, nullptr, nullptr, napi_default, nullptr }",
-      "    };",
-      "    // Add an array of properties to a ArkTs object.",
-      "    napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);",
-      "    return exports;",
-      "}",
-      "EXTERN_C_END"
+      "// Invokes a js function with the provided arguments and returns the result.",
+      "napi_call_function(env, recv, callbackFunc, argc, callbackArg, &result);"
     ]
   }
 }

@@ -1,0 +1,11 @@
+{
+  "Napi Enum": {
+    "prefix": "napienum",
+    "body": [
+      "// Enum in.",
+      "// Todo: you can use \"napiint32in\" or \"napistringutf8in\" command that get int32_t or string value from js.",
+      "// Enum out.",
+      "// Todo: you can use \"napiint32out\" or \"napistringutf8out\" command that return int32_t or string value to js"
+    ]
+  }
+}
