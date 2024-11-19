@@ -114,7 +114,7 @@
           },
           {
             "language": "cpp",
-            "path": "./snippets/napi_async_snippets.json"
+            "path": "./snippets/napi_asyncwork_snippets.json"
           },
           {
             "language": "cpp",
@@ -123,6 +123,14 @@
           {
             "language": "cpp",
             "path": "./snippets/napi_callback_snippets.json"
+          },
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_enum_snippets.json"
+          },
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_struct_snippets.json"
           }
         ]
     },

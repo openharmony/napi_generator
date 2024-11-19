@@ -1,0 +1,13 @@
+{
+  "Napi Struct": {
+    "prefix": "napistruct",
+    "body": [
+      "// Struct in",
+      "// Todo: you can use \"napiobjectin\" command that get object value from js.",
+      "// Todo: you can use \"napigetvaluefromobject\" command that get value from js object.",
+      "// Struct out",
+      "// Todo: you can use \"napiobjectout\" command that return object to js.",
+      "// Todo: you can use \"napisetvalue2object\" command that set value to objectOut."
+    ]
+  }
+}
