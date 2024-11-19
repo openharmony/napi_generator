@@ -290,7 +290,6 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
             execFn = "cmds/mac/gn-gen-macos";
             tmpDirFile += "/gn-gen-macos";
         }
-        File file = new File(tmpDirFile);
         writeTmpFile(tmpDirFile, execFn, project);
         if (SYS_NAME.contains("LINUX") || SYS_NAME.contains("MAC OS")) {
             try {
@@ -319,7 +318,6 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
             makeFilePath = "cmds/res/win/bin/make.exe";
         }
         String tmpDirFile = System.getProperty("java.io.tmpdir") + "/res/linux/bin/";
-        File file = new File(tmpDirFile);
         if (file.mkdirs()) {
             LOG.info("create dir success");
         }
@@ -342,7 +340,6 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
             makeFilePath = "cmds/res/win/bin/make_raw.exe";
         }
         String tmpDirFile = System.getProperty("java.io.tmpdir") + "/res/linux/bin/";
-        File file = new File(tmpDirFile);
         if (file.mkdirs()) {
             LOG.info("create dir success");
         }
@@ -365,7 +362,6 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
             toolchainFileDir = "cmds/res/win/ohos.toolchain.cmake";
         }
         String tmpDirFile = System.getProperty("java.io.tmpdir") + "/res/linux/";
-        File file = new File(tmpDirFile);
         if (file.mkdirs()) {
             LOG.info("create dir success");
         }
@@ -387,10 +383,6 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
             GenNotification.notifyMessage(this.project, "执行命令文件为空", "空命令行提示", NotificationType.ERROR);
             return false;
         }
-        final Process process = Runtime.getRuntime().exec(command);
-        threadPool.execute(new BlockThread(process));
-        StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
-        StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
         errConsumer.start();
         outputConsumer.start();
         if (generateSuccess) {
@@ -425,10 +417,6 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
         BufferedReader stdInput = null;
         BufferedReader stdError = null;
         try {
-            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream(),
-                StandardCharsets.UTF_8));
-            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
-                StandardCharsets.UTF_8));
             String sErr = '';
             String sOut;
             sErr = getErrorResult(stdError);
@@ -569,8 +557,6 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
         public void run() {
             BufferedReader br1 = null;
             try {
-                br1 = new BufferedReader(new InputStreamReader(process.getInputStream(),
-                    StandardCharsets.UTF_8));
                 genResultLog(process);
                 while (br1.readLine() != null) {
                     LOG.info(" callExtProcess ");

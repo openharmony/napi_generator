@@ -229,10 +229,6 @@ public class GenDts extends AnAction {
             GenNotification.notifyMessage(null, "执行命令文件为空", "空命令行提示", NotificationType.ERROR);
             return false;
         }
-        Process process = Runtime.getRuntime().exec(command);
-        genResultLog(process);
-        StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
-        StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
         errConsumer.start();
         outputConsumer.start();
 
@@ -344,7 +340,6 @@ public class GenDts extends AnAction {
             tmpDirFile += "native_gen-macos";
         }
 
-        File file = new File(tmpDirFile);
         String command = file.toString();
         command += " -f " + hFilePath;
         // 判断用户是否输入了 "-o"+cpp文件路径， "-i"+dts文件路径，"-t"+test文件路径 从界面获取
