@@ -269,7 +269,6 @@ public class GenerateDialogPane extends JDialog {
             copyFileToLocalPath("napi_generator-macos");
             tmpDirFile += "napi_generator-macos";
         }
-        File file = new File(tmpDirFile);
         String command = file.toString();
         String inArgs = genInArgs(interFileOrDir);
         command += inArgs + " -o " + genOutDir + " -i " + radioButton.isSelected() + " -n " + genNumbertypeArgs();
@@ -371,10 +370,6 @@ public class GenerateDialogPane extends JDialog {
             GenNotification.notifyMessage(this.project, "执行命令文件为空", "空命令行提示", NotificationType.ERROR);
             return false;
         }
-        Process process = Runtime.getRuntime().exec(command);
-        genResultLog(process);
-        StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
-        StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
         errConsumer.start();
         outputConsumer.start();
 
@@ -599,10 +594,6 @@ public class GenerateDialogPane extends JDialog {
         BufferedReader stdInput = null;
         BufferedReader stdError = null;
         try {
-            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream(),
-                StandardCharsets.UTF_8));
-            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
-                StandardCharsets.UTF_8));
             String sErr;
             String sOut;
             sErr = getErrorResult(stdError);
