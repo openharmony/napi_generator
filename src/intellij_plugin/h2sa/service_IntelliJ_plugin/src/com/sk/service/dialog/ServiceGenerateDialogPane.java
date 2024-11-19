@@ -178,7 +178,6 @@ public class ServiceGenerateDialogPane extends JDialog {
             execFn = "cmds/mac/service-gen-macos";
             tmpDirFile += "service-gen-macos";
         }
-        File file = new File(tmpDirFile);
         if (!file.exists()) {
             try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(execFn)) {
                 if (inputStream == null) {
@@ -241,10 +240,6 @@ public class ServiceGenerateDialogPane extends JDialog {
             GenNotification.notifyMessage(this.project, "执行命令文件为空", "空命令行提示", NotificationType.ERROR);
             return false;
         }
-        Process process = Runtime.getRuntime().exec(command);
-        genResultLog(process);
-        StreamConsumer errConsumer = new StreamConsumer(process.getErrorStream());
-        StreamConsumer outputConsumer = new StreamConsumer(process.getInputStream());
         errConsumer.start();
         outputConsumer.start();
         if (generateSuccess) {
@@ -309,10 +304,6 @@ public class ServiceGenerateDialogPane extends JDialog {
         BufferedReader stdInput = null;
         BufferedReader stdError = null;
         try {
-            stdInput = new BufferedReader(new InputStreamReader(process.getInputStream(),
-                StandardCharsets.UTF_8));
-            stdError = new BufferedReader(new InputStreamReader(process.getErrorStream(),
-                StandardCharsets.UTF_8));
             String sErr;
             String sOut;
             sErr = getErrorResult(stdError);
