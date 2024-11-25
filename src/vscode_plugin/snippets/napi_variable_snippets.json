@@ -163,5 +163,83 @@
       "// Convert a C string uft16 type to a JavaScript string type",
       "napi_create_string_utf16(env, stringRes, NAPI_AUTO_LENGTH, &stringOut);"
     ]
+  },
+  "Napi struct in": {
+    "prefix": "napistructin",
+    "body": [
+      "napi_value jsThis;",
+      "// Get js context and arguments",
+      "napi_get_cb_info(env, info, nullptr, nullptr, &jsThis, nullptr);",
+      "MyStruct* obj;",
+      "// Retrieve obj (the C++ object) previously wrapped in jsThis (the ArkTS object), and perform subsequent operations.",
+      "napi_unwrap(env, jsThis, reinterpret_cast<void**>(&obj));"
+    ]
+  },
+  "Napi struct out": {
+    "prefix": "napistructout",
+    "body": [
+      "napi_value jsThis;",
+      "// Retrieve the callback's context and arguments.",
+      "napi_get_cb_info(env, info, nullptr, nullptr, &jsThis, nullptr);",
+      "/** struct MyStruct {",
+      " *    public:",
+      " *      static napi_value Init(napi_env env, napi_value exports);",
+      " *      static void Destructor(napi_env env, void* nativeObject, void* finalize_hint);",
+      " *    private:",
+      " *      explicit MyStruct();",
+      " *      ~MyStruct();",
+      " *      static napi_value New(napi_env env, napi_callback_info info);",
+      " *      static napi_value GetValue(napi_env env, napi_callback_info info);",
+      " *      static napi_value SetValue(napi_env env, napi_callback_info info);",
+      " *      static napi_value Hello(napi_env env, napi_callback_info info);",
+      " *      std::string value_;",
+      " *      napi_env env_;",
+      " *      napi_ref wrapper_;",
+      " *  };",
+      " */",
+      "MyStruct* obj = new MyStruct();",
+      "obj->env_ = env;",
+      "// Wrap the C++ object obj in the ArkTS object jsThis.",
+      "napi_wrap(env, jsThis, reinterpret_cast<void*>(obj), MyStruct::Destructor, nullptr, &obj->wrapper_);"
+    ]
+  },
+  "Napi class in": {
+    "prefix": "napiclassin",
+    "body": [
+      "napi_value jsThis;",
+      "// Get js context and arguments",
+      "napi_get_cb_info(env, info, nullptr, nullptr, &jsThis, nullptr);",
+      "MyClass* obj;",
+      "// Retrieve obj (the C++ object) previously wrapped in jsThis (the ArkTS object), and perform subsequent operations.",
+      "napi_unwrap(env, jsThis, reinterpret_cast<void**>(&obj));"
+    ]
+  },
+  "Napi class out": {
+    "prefix": "napiclassout",
+    "body": [
+      "napi_value jsThis;",
+      "// Retrieve the callback's context and arguments.",
+      "napi_get_cb_info(env, info, nullptr, nullptr, &jsThis, nullptr);",
+      "/** struct MyClass {",
+      " *    public:",
+      " *      static napi_value Init(napi_env env, napi_value exports);",
+      " *      static void Destructor(napi_env env, void* nativeObject, void* finalize_hint);",
+      " *    private:",
+      " *      explicit MyClass();",
+      " *      ~MyClass();",
+      " *      static napi_value New(napi_env env, napi_callback_info info);",
+      " *      static napi_value GetValue(napi_env env, napi_callback_info info);",
+      " *      static napi_value SetValue(napi_env env, napi_callback_info info);",
+      " *      static napi_value Hello(napi_env env, napi_callback_info info);",
+      " *      std::string value_;",
+      " *      napi_env env_;",
+      " *      napi_ref wrapper_;",
+      " *  };",
+      " */",
+      "MyClass* obj = new MyClass();",
+      "obj->env_ = env;",
+      "// Wrap the C++ object obj in the ArkTS object jsThis.",
+      "napi_wrap(env, jsThis, reinterpret_cast<void*>(obj), MyClass::Destructor, nullptr, &obj->wrapper_);"
+    ]
   }
 }
