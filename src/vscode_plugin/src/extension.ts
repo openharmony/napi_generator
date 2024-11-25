@@ -53,19 +53,285 @@ export function activate(context: vscode.ExtensionContext) {
     console.log('Congratulations, your extension "helloworld-sample" is now active!');
 
     const ohcrosscompile = vscode.commands.registerCommand('extension.ohcrosscompile', async (uri) => {
-        // The code you place here will be executed every time your command is executed
-        if (uri && uri.fsPath) {
-            const stat = await vscode.workspace.fs.stat(uri);
-            if (stat.type === vscode.FileType.Directory) {
-                vscode.window.showInformationMessage(SELECTED_DIR + uri.fsPath);
-            } else {
-                vscode.window.showWarningMessage(SELECTE_DIR);
-            }
+      const platform = os.platform();
+      // vscode.window.showInformationMessage(`Platform: ${platform}`);
+  
+      // 创建选择框，选择要编译的三方库目录
+      const thirdPartyPick = vscode.window.createQuickPick();
+      thirdPartyPick.title = "OpenHarmony cross compile";
+      thirdPartyPick.step = 1;
+      thirdPartyPick.totalSteps = 5;
+      thirdPartyPick.placeholder = "Please select the directory of the third-party library you want to compile. ";
+      thirdPartyPick.items = [{ label: "Browse local files" }];
+      thirdPartyPick.onDidAccept(async () => {
+        const thirdPartyUri = await vscode.window.showOpenDialog({
+          canSelectMany: false,   //只允许选择一个文件夹
+          canSelectFolders: true, //能选择文件夹
+          canSelectFiles: false     //不能选择文件
+        });
+        if (thirdPartyUri && thirdPartyUri[0]) {  //检查是否选择了文件
+          // 获取文件路径
+          let thirdPartyPath = "";
+          thirdPartyPath = thirdPartyUri[0].path;
+          if (platform === "win32") {   //Windows系统下也可以使用正斜杠的路径，如 /D:/Learning/native，但要去除最前面的/
+            thirdPartyPath = thirdPartyPath.slice(1);
+          }
+          console.log(`thirdPartyPath: ${thirdPartyPath}`);
+  
+          // 创建选项框，选择是编译工具是make还是cmake
+          const toolPick = vscode.window.createQuickPick();
+          toolPick.title = "OpenHarmony cross compile";
+          toolPick.step = 2;
+          toolPick.totalSteps = 5;
+          toolPick.placeholder = "Please select the way you want to compile: ";
+          toolPick.items = [{ label: "cmake" }, { label: "make" }];
+          toolPick.onDidAccept(async () => {
+            // 获取编译工具选择的结果
+            const compileTool = toolPick.selectedItems[0].label;
+            // vscode.window.showInformationMessage("You've selected " + compileTool);
+  
+            // 创建选项框，选择交叉编译的目标系统架构，是arm64-v8a还是armeabi-v7a
+            const archPick = vscode.window.createQuickPick();
+            archPick.title = "OpenHarmony cross compile";
+            archPick.step = 3;
+            archPick.totalSteps = 5;
+            archPick.placeholder = "Please select the target system architecture for compilation: ";
+            archPick.items = [
+              {
+                label: "arm64-v8a",
+                description: "To compile 64-bit third-party library."
+              },
+              {
+                label: "armeabi-v7a",
+                description: "To compile 32-bit third-party library."
+              }
+            ];
+            archPick.onDidAccept(async () => {
+              // 获取系统架构选择的结果
+              const ohArchitecture = archPick.selectedItems[0].label;
+              console.log(ohArchitecture);
+  
+              // 创建选项框，选择是使用本地sdk还是从网上下载指定版本的sdk
+              const sourcePick = vscode.window.createQuickPick();
+              sourcePick.title = "OpenHarmony cross compile";
+              sourcePick.step = 4;
+              sourcePick.totalSteps = 5;
+              sourcePick.placeholder = "Please select the SDK you want to use: ";
+              sourcePick.items = [
+                {
+                  label: "Local",
+                  description: "Select the 'native' folder in local OpenHarmony SDK files."
+                },
+                {
+                  label: "Download",
+                  description: "Download a specified version of OpenHarmony SDK from internet."
+                }
+              ];
+              sourcePick.onDidAccept(async () => {
+                // 获取sdk来源选择的结果
+                const sdkSource = sourcePick.selectedItems[0].label;
+                console.log(sdkSource);
+  
+                let nativePath = "";
+                if (sdkSource === "Local") {
+                  const folderUri = await vscode.window.showOpenDialog({
+                    canSelectMany: false,   //只允许选择一个文件夹
+                    canSelectFolders: true, //能选择文件夹
+                    canSelectFiles: false     //不能选择文件
+                  });
+                  if (folderUri && folderUri[0]) {  //检查是否选择了文件
+                    // 获取文件路径
+                    let folderPath = "";
+                    let pathNames: string[];
+                    folderPath = folderUri[0].path;
+                    if (platform === "win32") {
+                      folderPath = folderPath.slice(1);
+                    }
+                    pathNames = folderPath.split('/');
+                    // 检查所选文件夹是否为native文件夹
+                    if (pathNames[pathNames.length - 1] !== "native") {
+                      vscode.window.showErrorMessage('Can\'t detect the native folder!');
+                    } else {
+                      nativePath = folderPath;
+  
+                      // 选择生成编译配置文件的目录
+                      const generatePick = vscode.window.createQuickPick();
+                      generatePick.title = "OpenHarmony cross compile";
+                      generatePick.step = 5;
+                      generatePick.totalSteps = 5;
+                      generatePick.placeholder = "Please select a folder to store the generated compilation configuration files: ";
+                      generatePick.items = [{ label: "Browse local files" }];
+                      generatePick.onDidAccept(async () => {
+                        const generateUri = await vscode.window.showOpenDialog({
+                          canSelectMany: false,
+                          canSelectFolders: true,
+                          canSelectFiles: false
+                        });
+                        if (generateUri && generateUri[0]) {
+                          let generatePath = "";
+                          generatePath = generateUri[0].path;
+                          if (platform === "win32") {
+                            generatePath = generatePath.slice(1);
+                          }
+                          console.log(`generatePath: ${generatePath}`);
+  
+                          crossCompile(platform, undefined, thirdPartyPath, compileTool, ohArchitecture, nativePath, generatePath);
+  
+                        } else {
+                          vscode.window.showErrorMessage('You haven\'t selected a folder to store the generated compilation configuration files! ');
+                        }
+                      });
+                      generatePick.show();
+                    }
+                  } else {
+                    vscode.window.showErrorMessage('No file selected');
+                  }
+  
+                } else if (sdkSource === "Download") {
+                  // 选择下载sdk的版本，并确定对应下载链接
+                  const versionPick = vscode.window.createQuickPick();
+                  versionPick.title = "OpenHarmony cross compile";
+                  versionPick.placeholder = "Please specify the SDK version: ";
+                  versionPick.items = [
+                    {
+                      label: "API Version 9",
+                      description: "Ohos_sdk_public 3.2.11.9 (API Version 9 Release)",
+                      detail: "Select a folder to install this SDK. It is compatible with OpenHarmony 3.2 Release."
+                    },
+                    {
+                      label: "API Version 10",
+                      description: "Ohos_sdk_public 4.0.10.13 (API Version 10 Release)",
+                      detail: "Select a folder to install this SDK. It is compatible with OpenHarmony 4.0 Release."
+                    },
+                    {
+                      label: "API Version 11",
+                      description: "Ohos_sdk_public 4.1.7.5 (API Version 11 Release)",
+                      detail: "Select a folder to install this SDK. It is compatible with OpenHarmony 4.1 Release."
+                    },
+                    {
+                      label: "API Version 12",
+                      description: "Ohos_sdk_public 5.0.0.71 (API Version 12 Release)",
+                      detail: "Select a folder to install this SDK. It is compatible with OpenHarmony 5.0.0 Release."
+                    },
+                  ];
+  
+                  versionPick.onDidAccept(async () => {
+                    const apiVersion = versionPick.selectedItems[0].label;
+                    let downloadLink = "";
+                    switch (apiVersion) {
+                      case "API Version 9":
+                        downloadLink = "https://repo.huaweicloud.com/openharmony/os/3.2-Release/ohos-sdk-windows_linux-public.tar.gz";
+                        break;
+                      case "API Version 10":
+                        downloadLink = "https://repo.huaweicloud.com/openharmony/os/4.0-Release/ohos-sdk-windows_linux-public.tar.gz";
+                        break;
+                      case "API Version 11":
+                        downloadLink = "https://repo.huaweicloud.com/openharmony/os/4.1-Release/ohos-sdk-windows_linux-public.tar.gz";
+                        break;
+                      case "API Version 12":
+                        downloadLink = "https://repo.huaweicloud.com/openharmony/os/5.0.0-Release/ohos-sdk-windows_linux-public.tar.gz";
+                        break;
+                    }
+                    console.log(downloadLink);
+                    const terminal = vscode.window.createTerminal({name: "OpenHarmony cross compile"});
+  
+                    // 选择sdk下载路径
+                    const folderUri = await vscode.window.showOpenDialog({
+                      canSelectMany: false,
+                      canSelectFolders: true,
+                      canSelectFiles: false
+                    });
+                    if (folderUri && folderUri[0]) {
+                      // 获取下载文件夹路径，拼装下载文件路径
+                      let folderPath = "";
+                      folderPath = folderUri[0].path;
+                      if (platform === "win32") {
+                        folderPath = folderPath.slice(1);
+                      }
+                      const fileName = "ohos-sdk-windows_linux-public.tar.gz";
+                      let filePath = path.join(folderPath, fileName);
+                      console.log(filePath);
+  
+                      // 下载并解压sdk中的native
+                      await vscode.window.withProgress({
+                        location: vscode.ProgressLocation.Notification,
+                        title: "Downloading and installing SDK",
+                        cancellable: false
+                      }, async (progress) => {
+                        // 下载sdk
+                        progress.report({ increment: 0, message: "Start downloading..." });
+  
+                        await downloadSdk(downloadLink, filePath, progress);
+                        vscode.window.showInformationMessage(`SDK downloaded to: ${filePath}`);
+  
+                        // 解压sdk中的native，并拼装nativePath
+                        progress.report({ increment: 10, message: "Download complete. Extracting..." });
+                        await extractTarGz(filePath, folderPath);
+                        nativePath = folderPath;
+                        if (apiVersion !== "API Version 12") {    //api12版本路径中没有ohos-sdk；9-11版本则有
+                          nativePath = path.join(nativePath, "ohos-sdk");
+                        }
+                        if (platform === "win32") {
+                          nativePath = path.join(nativePath, "windows");    //windows系统下的nativePath路径
+                        } else {
+                          nativePath = path.join(nativePath, "linux");   //linux系统下的nativePath路径
+                        }
+                        for (const file of await fs.promises.readdir(nativePath)) {
+                          if (file.startsWith("native")) {
+                            filePath = path.join(nativePath, file);   //获取native压缩包的文件路径
+                          }
+                        }
+                        await extractZip(platform, terminal, filePath, nativePath);
+                        nativePath = path.join(nativePath, "native");
+                        vscode.window.showInformationMessage(`SDK (${apiVersion}) installed to: ${folderPath}`);
+                        progress.report({ increment: 100, message: "SDK installation complete." })
+                      });
+  
+                      // 选择生成编译配置文件的目录
+                      const generatePick = vscode.window.createQuickPick();
+                      generatePick.title = "OpenHarmony cross compile";
+                      generatePick.step = 5;
+                      generatePick.totalSteps = 5;
+                      generatePick.placeholder = "Please select a folder to store the compiled binary files: ";
+                      generatePick.items = [{ label: "Browse local files" }];
+                      generatePick.onDidAccept(async () => {
+                        const generateUri = await vscode.window.showOpenDialog({
+                          canSelectMany: false,
+                          canSelectFolders: true,
+                          canSelectFiles: false
+                        });
+                        if (generateUri && generateUri[0]) {
+                          let generatePath = "";
+                          generatePath = generateUri[0].path;
+                          if (platform === "win32") {
+                            generatePath = generatePath.slice(1);
+                          }
+                          console.log(`generatePath: ${generatePath}`);
+  
+                          terminal.show();
+                          crossCompile(platform, terminal, thirdPartyPath, compileTool, ohArchitecture, nativePath, generatePath);
+                        } else {
+                          vscode.window.showErrorMessage('You haven\'t selected a folder to store the compiled binary files! ');
+                        }
+                      });
+                      generatePick.show();
+                    } else {
+                      vscode.window.showErrorMessage('You haven\'t selected a folder to install SDK! ');
+                    }
+                  });
+                  versionPick.show();
+                }
+              });
+              sourcePick.show();
+            });
+            archPick.show();
+          });
+          toolPick.show();
         } else {
-            vscode.window.showWarningMessage(NO_RES_SELECTED);
+          vscode.window.showErrorMessage('You haven\'t selected the third-party library folder to compile! ');
         }
-        // Display a message box to the user
-        vscode.window.showInformationMessage('ohcrosscompile!');
+      });
+      thirdPartyPick.show();
     });
 
     // The command has been defined in the package.json file
