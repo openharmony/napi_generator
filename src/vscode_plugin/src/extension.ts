@@ -18,6 +18,9 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as ts from 'typescript';
+import * as fs from 'fs';
+import * as os from 'os';
+import { downloadSdk, extractTarGz, extractZip, crossCompile } from './ohcrosscompile';
 import { parseHeaderFile } from './parsec';
 import { DtscppRootInfo, GenInfo } from './datatype';
 import { parseTsFile } from './parsets';
