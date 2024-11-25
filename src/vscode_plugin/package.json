@@ -131,6 +131,10 @@
           {
             "language": "cpp",
             "path": "./snippets/napi_struct_snippets.json"
+          },
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_variable_snippets.json"
           }
         ]
     },
