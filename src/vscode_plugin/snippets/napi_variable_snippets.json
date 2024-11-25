@@ -1,0 +1,167 @@
+{
+  "Napi double in": {
+    "prefix": "napidoublein",
+    "body": [
+      "double value0 = 0;",
+      "// Convert a JS number type value to a C double type.",
+      "napi_get_value_double(env, args[0], &value0);"
+    ]
+  },
+  "Napi int32_t in": {
+    "prefix": "napiint32in",
+    "body": [
+      "int32_t value0 = 0;",
+      "// Convert a JS number type value to a C int32_t type.",
+      "napi_get_value_int32(env, args[0], &value0);"
+    ]
+  },
+  "Napi uint32_t in": {
+    "prefix": "napiuint32in",
+    "body": [
+      "uint32_t value0 = 0;",
+      "// Convert a JS number type value to a C uint32_t type.",
+      "napi_get_value_uint32(env, args[0], &value0);"
+    ]
+  },
+  "Napi int64_t in": {
+    "prefix": "napiint64in",
+    "body": [
+      "int64_t value0 = 0;",
+      "// Convert a JS number type value to a C int64_t type.",
+      "napi_get_value_int64(env, args[0], &value0);"
+    ]
+  },
+  "Napi bool in": {
+    "prefix": "napiboolin",
+    "body": [
+      "bool value0 = false;",
+      "// Convert a JS boolean type value to a C bool type.",
+      "napi_get_value_bool(env, args[0], &value0);"
+    ]
+  },
+  "Napi string utf8 in": {
+    "prefix": "napistringutf8in",
+    "body": [
+      "size_t strUtf8Length = 0;",
+      "// Get the length of the js string.",
+      "napi_get_value_string_utf8(env, args[0], NULL, 0, &strUtf8Length);",
+      "char *value0 = new char[strUtf8Length + 1];",
+      "// Get the js string as a UTF-8 encoded C string.",
+      "napi_get_value_string_utf8(env, args[0], value0, strUtf8Length + 1, &strUtf8Length);",
+      "// Todo: Assign value0 to actual business value",
+      "delete[] value0;"
+    ]
+  },
+  "Napi string utf16 in": {
+    "prefix": "napistringutf16in",
+    "body": [
+      "size_t strUtf16Length = 0;",
+      "// Get the length of the js string.",
+      "napi_get_value_string_utf16(env, args[0], NULL, 0, &strUtf16Length);",
+      "char16_t *value0 = new char16_t[strUtf16Length + 1];",
+      "// Get the js string as a UTF-16 encoded C string.",
+      "napi_get_value_string_utf16(env, args[0], value0, strUtf16Length + 1, &strUtf16Length);",
+      "// Todo: Assign value0 to actual business value",
+      "delete[] value0;"
+    ]
+  },
+  "Napi is array": {
+    "prefix": "napiisarray",
+    "body": [
+      "bool isArray = false;",
+      "// Check if the provided napi_value is a JavaScript array.",
+      "napi_is_array(env, args[0], &isArray);"
+    ]
+  },
+  "Napi array in": {
+    "prefix": "napiarrayin",
+    "body": [
+      "uint32_t length = 0;",
+      "// Retrieve the length of a JavaScript array.",
+      "napi_get_array_length(env, args[0], &length);",
+      "for (uint32_t i = 0; i < length; i++) {",
+      "    napi_value element;",
+      "    // Get an element from a JavaScript array by index.",
+      "    napi_get_element(env, args[0], i, &element);",
+      "}"
+    ]
+  },
+  "Napi array out": {
+    "prefix": "napiarrayout",
+    "body": [
+      "napi_value resultArray;",
+      "size_t length = 3;",
+      "// Create a new JavaScript array with a specified length.",
+      "napi_create_array_with_length(env, length, &resultArray);",
+      "for (uint32_t i = 0; i < length; i++) {",
+      "    napi_value element;",
+      "    napi_create_int32(env, i, &element);",
+      "    // Set an element to a JavaScript array by index.",
+      "    napi_set_element(env, resultArray, i, element);",
+      "}"
+    ]
+  },
+  "Napi double out": {
+    "preix": "napidoubleout",
+    "body": [
+      "double doubleRes = 0;",
+      "napi_value doubleOut;",
+      "// Convert a C double type to a JavaScript number type.",
+      "napi_create_double(env, doubleRes, &doubleOut);"
+    ]
+  },
+  "Napi int32_t out": {
+    "prefix": "napiint32out",
+    "body": [
+      "int32_t int32Res = 0;",
+      "napi_value int32Out;",
+      "// Convert a C int32_t type to a JavaScript number type.",
+      "napi_create_int32(env, int32Res, &int32Out);"
+    ]
+  },
+  "Napi uint32_t out": {
+    "prefix": "napiuint32out",
+    "body": [
+      "uint32_t uint32Res = 0;",
+      "napi_value uint32Out;",
+      "// Convert a C uint32_t type to a JavaScript number type.",
+      "napi_create_uint32(env, uint32Res, &uint32Out);"
+    ]
+  },
+  "Napi int64_t out": {
+    "prefix": "napiint64out",
+    "body": [
+      "int64_t int64Res = 0;",
+      "napi_value int64Out;",
+      "// Convert a C int64_t type to a JavaScript number type.",
+      "napi_create_int64(env, int64Res, &int64Out);"
+    ]
+  },
+  "Napi bool out": {
+    "prefix": "napiboolout",
+    "body": [
+      "bool boolRes = false;",
+      "napi_value boolOut;",
+      "// Convert a C bool type to a JavaScript boolean type.",
+      "napi_get_boolean(env, boolRes, &boolOut);"
+    ]
+  },
+  "Napi string utf8 out": {
+    "prefix": "napistringutf8out",
+    "body": [
+      "const char* stringRes = \"hello world!\";",
+      "napi_value stringOut;",
+      "// Convert a C string uft8 type to a JavaScript string type",
+      "napi_create_string_utf8(env, stringRes, NAPI_AUTO_LENGTH, &stringOut);"
+    ]
+  },
+  "Napi string utf16 out": {
+    "prefix": "napistringutf16out",
+    "body": [
+      "const char16_t* stringRes = u\"hello world!\";",
+      "napi_value stringOut;",
+      "// Convert a C string uft16 type to a JavaScript string type",
+      "napi_create_string_utf16(env, stringRes, NAPI_AUTO_LENGTH, &stringOut);"
+    ]
+  }
+}
