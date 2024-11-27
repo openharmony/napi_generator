@@ -10,7 +10,6 @@
       "    // 'SayHello' function can be directly called from JavaScript.",
       "    JSBIND_FUNCTION(SayHello);",
       "}"
-
     ]
   },
   "Aki async function": {
@@ -27,7 +26,6 @@
       "    // function can be called asynchronously from JavaScript with Promises.",
       "    JSBIND_PFUNCTION(AsyncSayHello);",
       "}"
-
     ]
   }
 }
