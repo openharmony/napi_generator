@@ -1,0 +1,40 @@
+{
+  "Aki struct": {
+    "prefix": "akistruct",
+    "body": [
+      "struct B {",
+      "  public:",
+      "      B() {",
+      "          value_ = -1;",
+      "          result = -1;",
+      "      };",
+      "      explicit B(double test) { value_ = test; }",
+      "      ~B() = default;",
+      "      static double MultiplyObject(B obj1, B obj2) { return obj1.value_ * obj2.value_; }",
+      "      double Multiply(double mult) {",
+      "          value_ *= mult;",
+      "          return value_;",
+      "      }",
+      "      double GetValue() const { return value_; }",
+      "      void SetValue(double value) { value_ = value; }",
+      "      double result;",
+      "  private:",
+      "      double value_;",
+      "}; // B",
+      "// Bind struct B.",
+      "JSBIND_CLASS(B) {",
+      "    // Bind default constructor of struct.",
+      "    JSBIND_CONSTRUCTOR<>();",
+      "    // Bind a parameterized constructor of struct.",
+      "    JSBIND_CONSTRUCTOR<double>();",
+      "    // Bind member method of struct.",
+      "    JSBIND_METHOD(MultiplyObject);",
+      "    JSBIND_METHOD(Multiply);",
+      "    // Listen to struct member properties in C++.",
+      "    JSBIND_FIELD(\"value\", GetValue, SetValue);",
+      "    // Bind member property of struct.",
+      "    JSBIND_PROPERTY(result);",
+      "}"
+    ]
+  }
+}
