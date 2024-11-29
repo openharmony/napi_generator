@@ -139,6 +139,15 @@
           {
             "language": "cpp",
             "path": "./snippets/napi_variable_snippets.json"
+          },
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_external_snippets.json"
+          },
+          {
+            "language": "cpp",
+            "path": "./snippets/napi_error_snippets.json"
+          },
           }
         ]
     },
