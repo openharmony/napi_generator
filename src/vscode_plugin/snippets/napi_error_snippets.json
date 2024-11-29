@@ -1,0 +1,19 @@
+{
+  "Napi get last error info ": {
+    "prefix": "napigetlasterrorinfo",
+    "body": [
+      "// Retrieve detailed information about the last N-API error that occurred in the given environment.",
+      "const napi_extended_error_info* errorInfo;",
+      "napi_get_last_error_info(env, &errorInfo);"
+    ]
+  },
+  "Napi throw error ": {
+    "prefix": "napithrowerror",
+    "body": [
+      "// Create and throw a JavaScript Error with a specified code and message.",
+      "const char* code = \"ERROR_CODE\";",
+      "const char* msg = \"error message.\";",
+      "napi_throw_error(env, code, msg);"
+    ]
+  }
+}
