@@ -139,18 +139,7 @@
           {
             "language": "cpp",
             "path": "./snippets/napi_variable_snippets.json"
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_class_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_struct_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_enum_snippets.json"
-          }
+	  }
         ]
     },
     "scripts": {
