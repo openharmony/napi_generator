@@ -147,7 +147,7 @@
           {
             "language": "cpp",
             "path": "./snippets/napi_error_snippets.json"
-          }
+          },
         ]
     },
     "scripts": {
