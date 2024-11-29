@@ -148,11 +148,11 @@
             "language": "cpp",
             "path": "./snippets/napi_error_snippets.json"
           },
-	  {
+          {
             "language": "cpp",
             "path": "./snippets/aki_function_snippets.json"
           },
-	   {
+          {
             "language": "cpp",
             "path": "./snippets/aki_class_snippets.json"
           },
