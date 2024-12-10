@@ -31,7 +31,7 @@ const MAXINT = 100;
 const SUBSTREND = 11;
 const LENGTH = 5;
 const MODTWO = 2;
-var fs = require('fs');
+let fs = require('fs');
 
 let indexEtsTemplete = `\
 import napitest from '@ohos.[import_module_name]';
@@ -93,11 +93,11 @@ function analyzeJsonCfg(jsonCfg) {
 
 // 随机生成字符串
 function generateRandomString(length) {
-  var result = '';
-  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
+  let result = '';
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let charactersLength = characters.length;
 
-  for (var i = 0; i < length; i++) {
+  for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
 

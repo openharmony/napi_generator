@@ -281,6 +281,25 @@ bool EGLCore::EglContextInit(void* window, int width, int height)
     return CreateEnvironment();
 }
 
+bool EGLCore::doCreateEnvironment()
+{
+    if (!eglMakeCurrent(eglDisplay_, eglSurface_, eglSurface_, eglContext_)) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglMakeCurrent failed");
+        eglDestroyContext(eglDisplay_, eglContext_);
+        eglDestroySurface(eglDisplay_, eglSurface_);
+        eglTerminate(eglDisplay_);
+        return false;
+    }
+    // Create program.
+    program_ = TRCreateProgram(EGLTR_VERTEX_SHADER, EGLTR_FRAGMENT_SHADER);
+    if (program_ == PROGRAM_ERROR) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "CreateProgram: unable to create program");
+        return false;
+    }
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "CreateProgram: success!");
+    return true;
+}
+
 bool EGLCore::CreateEnvironment()
 {
     // Create surface.
@@ -288,7 +307,7 @@ bool EGLCore::CreateEnvironment()
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglWindow_ is null");
         return false;
     }
-    eglSurface_ = eglCreateWindowSurface(eglDisplay_, eglConfig_, eglWindow_, NULL);
+    eglSurface_ = eglCreateWindowSurface(eglDisplay_, eglConfig_, eglWindow_, nullptr);
     if (eglSurface_ == nullptr) {
         OH_LOG_Print(
             LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglCreateWindowSurface: unable to create");
@@ -305,21 +324,7 @@ bool EGLCore::CreateEnvironment()
         return false;
     }
 
-    if (!eglMakeCurrent(eglDisplay_, eglSurface_, eglSurface_, eglContext_)) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglMakeCurrent failed");
-        eglDestroyContext(eglDisplay_, eglContext_);
-        eglDestroySurface(eglDisplay_, eglSurface_);
-        eglTerminate(eglDisplay_);
-        return false;
-    }
-    // Create program.
-    program_ = TRCreateProgram(EGLTR_VERTEX_SHADER, EGLTR_FRAGMENT_SHADER);
-    if (program_ == PROGRAM_ERROR) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "CreateProgram: unable to create program");
-        return false;
-    }
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "CreateProgram: success!");
-    return true;
+    return doCreateEnvironment();
 }
 
 void EGLCore::TRBackground()
@@ -417,7 +422,7 @@ GLuint EGLCore::loadTexture()
     //------------------------------------------------------------
     // 读文件
     FILE *file = fdopen(fd_, "r");
-    if (file == NULL) {
+    if (file == nullptr) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fdopen failed!");
         return false;
     }
@@ -447,7 +452,7 @@ GLuint EGLCore::loadTexture()
     bmpSize = flen_ - NUM_54;
 
     unsigned char *bmpData = (unsigned char *)malloc(bmpSize);
-    if (bmpData == NULL) {
+    if (bmpData == nullptr) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB malloc failed!");
         fclose(file);
         return false;
@@ -515,7 +520,7 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen, int& hasDraw)
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "Drawbmp");
 
     FILE *file = fdopen(fd, "r");
-    if (file == NULL) {
+    if (file == nullptr) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fdopen failed!");
         return;
     }
@@ -532,7 +537,7 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen, int& hasDraw)
         return;
     }
     unsigned char *mediaData = new unsigned char[flen];
-    if (mediaData == NULL) {
+    if (mediaData == nullptr) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "new buffer failed!");
         fclose(file);
         return;
@@ -545,11 +550,11 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen, int& hasDraw)
     int width = 0;
     int height = 0;
     unsigned char *pdata = mediaData + NUM_18;
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "width: %{public}d", *((uint32_t *)pdata));
-    width = *((uint32_t *)pdata);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "width: %{public}d", *(static_case<uint32_t *>(pdata)));
+    width = *(static_case<uint32_t *>(pdata));
     pdata = mediaData + NUM_18 + NUM_4;
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "height: %{public}d", *((uint32_t *)pdata));
-    height = *((uint32_t *)pdata);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "height: %{public}d", *(static_case<uint32_t *>(pdata)));
+    height = *(static_case<uint32_t *>(pdata));
 
     float vertices[] = {
         // positions          // colors           // texture coords
@@ -866,14 +871,14 @@ void EGLCore::checkCompileErrors(unsigned int shader, std::string type)
     if (type != "PROGRAM") {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (!success) {
-            glGetShaderInfoLog(shader, NUM_1024, NULL, infoLog);
+            glGetShaderInfoLog(shader, NUM_1024, nullptr, infoLog);
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore",
                 "ERROR::SHADER_COMPILATION_ERROR of type: %{public}s", type.c_str());
         }
     } else {
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
         if (!success) {
-            glGetProgramInfoLog(shader, NUM_1024, NULL, infoLog);
+            glGetProgramInfoLog(shader, NUM_1024, nullptr, infoLog);
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore",
                 "ERROR::PROGRAM_LINKING_ERROR of type: %{public}s", type.c_str());
         }
@@ -892,12 +897,12 @@ GLuint EGLCore::TRCreateProgram(const char *vertexShader, const char *fragShader
     unsigned int fragment = 0;
     // vertex shader
     vertex = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex, 1, &vertexShader, NULL);
+    glShaderSource(vertex, 1, &vertexShader, nullptr);
     glCompileShader(vertex);
     checkCompileErrors(vertex, "VERTEX");
     // fragment Shader
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment, 1, &fragShader, NULL);
+    glShaderSource(fragment, 1, &fragShader, nullptr);
     glCompileShader(fragment);
     checkCompileErrors(fragment, "FRAGMENT");
 

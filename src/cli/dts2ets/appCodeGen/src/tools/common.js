@@ -79,7 +79,7 @@ InterfaceList.getValue = function (name) {
     for (let i in ifs) {
         let vv = ifs[i];
         if (ifs[i].name === name) {
-            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
+            let hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
             if (hasProperty) {
                 return ifs[i].body.allProperties.values;
             } else {
@@ -150,7 +150,7 @@ TypeList.getValue = function (name) {
     let ifs = TypeList.types[TypeList.types.length - 1];
     for (let i in ifs) {
         if (ifs[i].name === name) {
-            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
+            let hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
             if (hasProperty) {
                 return ifs[i].body.allProperties.values;
             } else {
@@ -334,7 +334,7 @@ function getMapType(type) {
 
 function getUnionType(type) {
     type = type.replace(/\s*/g, '');
-    var typeArr = new Array();
+    let typeArr = new Array();
     typeArr = type.split('|');
     return typeArr;
 }
