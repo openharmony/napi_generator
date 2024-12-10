@@ -56,7 +56,7 @@ extern "C" {
         }
         OH_LOG_Print(LOG_APP, LOG_INFO, 0xFF00, "PluginRender", "read_packet bytes[%{public}zu],bufsize[%{public}d]",
                      bytesRead, bufSize);
-        return (int)bytesRead;
+        return static_cast<int>(bytesRead);
     }
 
     int open_codec_context(int *streamIdx, AVCodecContext **decCtx, AVFormatContext *fmtCtx,
@@ -65,9 +65,9 @@ extern "C" {
         int ret = 0;
         int streamIndex = 0;
         AVStream *st;
-        const AVCodec *dec = NULL;
+        const AVCodec *dec = nullptr;
 
-        ret = av_find_best_stream(fmtCtx, type, -1, -1, NULL, 0);
+        ret = av_find_best_stream(fmtCtx, type, -1, -1, nullptr, 0);
         if (ret < 0) {
             fprintf(stderr, "Could not find %s stream in input file '%s'\n", av_get_media_type_string(type),
                     "srcfile");
@@ -98,7 +98,7 @@ extern "C" {
             }
 
             /* Init the decoders */
-            if ((ret = avcodec_open2(*decCtx, dec, NULL)) < 0) {
+            if ((ret = avcodec_open2(*decCtx, dec, nullptr)) < 0) {
                 fprintf(stderr, "Failed to open %s codec\n", av_get_media_type_string(type));
                 return ret;
             }
@@ -540,19 +540,19 @@ static void RescontExecuteCB(napi_env env, void *data)
 
     int ret = 0;
     uint32_t fbufLen = 8192;
-    unsigned char *fbuf = (unsigned char *)av_malloc(fbufLen);
+    unsigned char *fbuf = static_cast<unsigned char *>(av_malloc(fbufLen));
     char dumpBuf[256];
 
     uint32_t fd = callbackData->fd;
     uint32_t foff = callbackData->foff;
     uint32_t flen = callbackData->flen;
     
-    AVFormatContext *formatContext = NULL;
+    AVFormatContext *formatContext = nullptr;
     AVIOContext *avioContext = nullptr;
-    AVCodecContext *videoDecCtx = NULL;
-    AVCodecContext *audioDecCtx = NULL;
-    AVFrame *frame = NULL;
-    AVPacket *pkt = NULL;
+    AVCodecContext *videoDecCtx = nullptr;
+    AVCodecContext *audioDecCtx = nullptr;
+    AVFrame *frame = nullptr;
+    AVPacket *pkt = nullptr;
     int videoFrameCount = 0;
     int audioFrameCount = 0;
     
@@ -560,7 +560,7 @@ static void RescontExecuteCB(napi_env env, void *data)
     int audioStreamIdx = -1;
     
     FILE *file = fdopen(fd, "r");
-    if (file == NULL) {
+    if (file == nullptr) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "NapiGetInfo fdopen failed!");
         free(fbuf);
         return;
@@ -574,7 +574,7 @@ static void RescontExecuteCB(napi_env env, void *data)
         return;
     }
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "fseek %{public}ld", foff);
-    avioContext = avio_alloc_context(fbuf, fbufLen, 0, (void *)file, &custom_avio_read_packet, NULL, NULL);
+    avioContext = avio_alloc_context(fbuf, fbufLen, 0, (void *)file, &custom_avio_read_packet, nullptr, nullptr);
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avio_alloc_context");
     if (!avioContext) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avio_alloc_context failed");
@@ -594,7 +594,7 @@ static void RescontExecuteCB(napi_env env, void *data)
     }
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avformat_alloc_context");
     formatContext->pb = avioContext;
-    ret = avformat_open_input(&formatContext, NULL, NULL, NULL);
+    ret = avformat_open_input(&formatContext, nullptr, nullptr, nullptr);
     if (ret < 0) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avformat_open_input err %{public}d", ret);
         avformat_free_context(formatContext);
@@ -605,7 +605,7 @@ static void RescontExecuteCB(napi_env env, void *data)
     }
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avformat_open_input");
     // 获取流信息
-    ret = avformat_find_stream_info(formatContext, NULL);
+    ret = avformat_find_stream_info(formatContext, nullptr);
     if (ret < 0) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avformat_find_stream_info err  %{public}d",
                      ret);
@@ -640,7 +640,7 @@ static void RescontExecuteCB(napi_env env, void *data)
     mins %= PARAM60;
     int ssecs = 0;
     int sus = 0;
-    av_log(NULL, AV_LOG_INFO, ", start: ");
+    av_log(nullptr, AV_LOG_INFO, ", start: ");
     ssecs = llabs(formatContext->start_time / AV_TIME_BASE);
     sus = llabs(formatContext->start_time % AV_TIME_BASE);
     

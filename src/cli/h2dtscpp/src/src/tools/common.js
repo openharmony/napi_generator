@@ -25,7 +25,7 @@ InterfaceList.getValue = function (name) {
     let ifs = InterfaceList.interfacess_;
     for (let i in ifs) {
         if (ifs[i].name === name) {
-            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
+            let hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
             if (hasProperty) {
                 return ifs[i].body.allProperties.values;
             } else {
@@ -59,7 +59,7 @@ TypeList.getValue = function (name) {
     let ifs = TypeList.types;
     for (let i in ifs) {
         if (ifs[i].name === name) {
-            var hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
+            let hasProperty = Object.prototype.hasOwnProperty.call(ifs[i].body, 'allProperties');
             if (hasProperty) {
                 return ifs[i].body.allProperties.values;
             } else {

@@ -417,7 +417,7 @@ class FunctionDefiner {
 public:
 	......
 	// 注册方法
-    Binding::RegisterFunction(name, Binder::AddInvoker(func), &Binder::GetInstance());
+    Binding::RegisterFunction(name, Binder::AddInvoker(func), &Bind#er::GetInstance());
 };
 }
 ```
