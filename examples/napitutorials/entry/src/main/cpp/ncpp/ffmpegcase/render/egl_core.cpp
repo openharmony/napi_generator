@@ -550,10 +550,12 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen, int& hasDraw)
     int width = 0;
     int height = 0;
     unsigned char *pdata = mediaData + NUM_18;
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "width: %{public}d", *(static_case<uint32_t *>(pdata)));
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN,
+        "EGLCore", "width: %{public}d", *(static_case<uint32_t *>(pdata)));
     width = *(static_case<uint32_t *>(pdata));
     pdata = mediaData + NUM_18 + NUM_4;
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "height: %{public}d", *(static_case<uint32_t *>(pdata)));
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN,
+        "EGLCore", "height: %{public}d", *(static_case<uint32_t *>(pdata)));
     height = *(static_case<uint32_t *>(pdata));
 
     float vertices[] = {
