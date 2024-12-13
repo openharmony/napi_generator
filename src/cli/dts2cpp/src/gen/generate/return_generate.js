@@ -134,7 +134,7 @@ function c2JsForEnum(deep, type, value, dest, propertyName) {
 }
 
 function cToJs(value, type, dest, deep = 1, optional, enumType = 0) {
-    var propertyName = delPrefix(value);
+    let propertyName = delPrefix(value);
     if (checkRetIsUndefined(type)) {
         NapiLog.logError('type is invalid!');
         return undefined;

@@ -46,7 +46,7 @@
 
 ![](./../figures/curl_generate.png)
 
-3、根据步骤2后再次发现新的错误，具体报错日志为：“clang未解析参数 /home/harmony/OpenHarmony/third_party/boringssl/src/include”，具体日志信息如下：
+3、根据步骤2后再次发现新的错误，具体报错日志为：“未解析参数 /home/harmony/OpenHarmony/third_party/boringssl/src/include”，具体日志信息如下：
 
 ![](./../figures/curl_generate_log.png)
 
@@ -98,7 +98,7 @@
 
 	harmony@Ubuntu-64:~/linshi/napi_generator_2/hdc/gn/gn-gen$./gn-gen-linux -o out/khdvk_rk3568_a -p /home/harmony/OpenHarmony -f  third_party/libcoap/CMakeLists.txt -a "(-DM_LIBRARY=,-DMBEDTLS_INCLUDE_DIRS=/home/harmony/OpenHarmony/third_party/mbedtls,-DMBEDTLS_LIBRARY=/home/harmony/OpenHarmony/out/khdvk_rk3568_a/common/dsoftbus_standard/libmbedtls.z.so)"
 
-2、根据步骤1后发现新的错误，根据日志信息显示为“clang未解析参数 -g”。
+2、根据步骤1后发现新的错误，根据日志信息显示为“未解析参数 -g”。
 
 ![](./../figures/libcoap_not_analysis_g.png)
 
@@ -111,7 +111,7 @@
 	"compileflag": "--target=, -march=，-g"
 	}
 
-3、根据步骤2后发现新的错误，根据日志信息显示为“clang未解析参数 -lMBEDX509_LIBRARY-NOTFOUND”。
+3、根据步骤2后发现新的错误，根据日志信息显示为“未解析参数 -lMBEDX509_LIBRARY-NOTFOUND”。
 
 ![](./../figures/libcoap_not_analysis_mbedx509.png)
 
@@ -124,7 +124,7 @@
 	"compileflag": "--target=, -march=，-g,-lMBEDX509_LIBRARY-NOTFOUND"
 	}
 
-4、根据步骤2后发现新的错误，根据日志信息显示为“clang未解析参数 -lMBEDCRYPTO_LIBRARY-NOTFOUND”。
+4、根据步骤2后发现新的错误，根据日志信息显示为“未解析参数 -lMBEDCRYPTO_LIBRARY-NOTFOUND”。
 
 ![](./../figures/libcoap_not_analysis_mbedcrypto.png)
 

@@ -18,7 +18,7 @@ const { checkFileError } = require('./tools/common');
 const { NapiLog } = require('./tools/NapiLog');
 const path = require('path');
 const stdio = require('stdio');
-var fs = require('fs');
+let fs = require('fs');
 const { print } = require('./tools/tool');
 
 let ops = stdio.getopt({
@@ -43,8 +43,8 @@ let ops = stdio.getopt({
 NapiLog.init(ops.loglevel, path.join('' + ops.out, 'napi_gen.log'));
 
 let fileNames = ops.filename;
-var pathDir = ops.directory;
-var imports = ops.imports;
+let pathDir = ops.directory;
+let imports = ops.imports;
 if (fileNames === null && pathDir === null) {
     NapiLog.logInfo('fileNames and pathDir both cannot be empty at the same time');
 } else if (pathDir !== '') {

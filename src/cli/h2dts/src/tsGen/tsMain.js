@@ -53,7 +53,7 @@ function createNameSpaceInfo(parseNameSpaceInfo) {
 
 function analyzeNameSpace(rootInfo, parseResult) {
     let parseNameSpaces = parseResult.namespaces;
-    for (var i = 0; i < parseNameSpaces.length; ++i) {
+    for (let i = 0; i < parseNameSpaces.length; ++i) {
         let nameSpaceInfo = createNameSpaceInfo(parseNameSpaces[i]);
         rootInfo.namespaces.push(nameSpaceInfo);
     }
@@ -167,7 +167,7 @@ function createFuncInfo(parseFuncInfo, isClassFunc) {
     }
 
     let parseParams = parseFuncInfo.parameters;
-    for (var i = 0; i < parseParams.length; ++i) {
+    for (let i = 0; i < parseParams.length; ++i) {
         let param = createParam(parseParams[i]);
         funcInfo.params.push(param);
     }
@@ -183,7 +183,7 @@ function createFuncInfo(parseFuncInfo, isClassFunc) {
 }
 
 function putFuncIntoNamespace(funcInfo, namespaces) {
-    for (var i = 0; i < namespaces.length; ++i) {
+    for (let i = 0; i < namespaces.length; ++i) {
         if (namespaces[i].name === funcInfo.namespace) {
             namespaces[i].functions.push(funcInfo);
             return;
@@ -194,7 +194,7 @@ function putFuncIntoNamespace(funcInfo, namespaces) {
 
 function analyzeRootFunction(rootInfo, parseResult) {
     let parseFunctions = parseResult.functions;
-    for (var i = 0; i < parseFunctions.length; ++i) {
+    for (let i = 0; i < parseFunctions.length; ++i) {
         let funcInfo = createFuncInfo(parseFunctions[i], false);
         if (parseFunctions[i].namespace !== '') {
             // function in namespace
@@ -208,7 +208,7 @@ function analyzeRootFunction(rootInfo, parseResult) {
 
 function createProperties(parseProperties) {
     let propertyList = [];
-    for (var i = 0; i < parseProperties.length; ++i) {
+    for (let i = 0; i < parseProperties.length; ++i) {
         let property = {};
         property.name = parseProperties[i].name;
         property.type = getJsTypeFromC(parseProperties[i].raw_type, parseProperties[i]);
@@ -219,7 +219,7 @@ function createProperties(parseProperties) {
 
 function createClassFunctions(parseFuncs) {
     let funcList = [];
-    for (var i = 0; i < parseFuncs.length; ++i) {
+    for (let i = 0; i < parseFuncs.length; ++i) {
         let funcInfo = createFuncInfo(parseFuncs[i], true);
         funcList.push(funcInfo);
     }
@@ -243,7 +243,7 @@ function createClassInfo(parseClassInfo) {
 }
 
 function putClassIntoNamespace(classInfo, namespaces) {
-    for (var i = 0; i < namespaces.length; ++i) {
+    for (let i = 0; i < namespaces.length; ++i) {
         if (namespaces[i].name === classInfo.namespace) {
             namespaces[i].classes.push(classInfo);
             return;
@@ -255,7 +255,7 @@ function putClassIntoNamespace(classInfo, namespaces) {
 function analyzeClasses(rootInfo, parseResult) {
     let parseClasses = parseResult.classes;
 
-    for (var className in parseClasses) {
+    for (let className in parseClasses) {
         let classInfo = createClassInfo(parseClasses[className]);
         if (classInfo.namespace !== '') {
             // class in namespace
@@ -269,7 +269,7 @@ function analyzeClasses(rootInfo, parseResult) {
 
 function getTab(tabLv) {
     let tab = '';
-    for (var i = 0; i < tabLv; ++i) {
+    for (let i = 0; i < tabLv; ++i) {
         tab += '    ';
     }
     return tab;
@@ -279,7 +279,7 @@ function genFunction(func, tabLv, needDeclare = false) {
     let tab = getTab(tabLv);
     let funcPrefix = func.isClassFunc ? '' : 'function ';
     let funcParams = '';
-    for (var i = 0; i < func.params.length; ++i) {
+    for (let i = 0; i < func.params.length; ++i) {
         funcParams += i > 0 ? ', ' : '';
         funcParams += func.params[i].name + ': ' + func.params[i].type;
     }
@@ -292,10 +292,10 @@ function genClass(classInfo, tabLv, needDeclare = false) {
     let declareStr = needDeclare ? 'declare ' : '';
     let tsClass = tab + declareStr + 'class ' + classInfo.name + ' {\n';
     let tab1 = getTab(tabLv + 1);
-    for (var i = 0; i < classInfo.properties.length; ++i) {
+    for (let i = 0; i < classInfo.properties.length; ++i) {
         tsClass += util.format('%s%s: %s;\n', tab1, classInfo.properties[i].name, classInfo.properties[i].type);
     }
-    for (var i = 0; i < classInfo.functions.length; ++i) {
+    for (let i = 0; i < classInfo.functions.length; ++i) {
         tsClass += genFunction(classInfo.functions[i], tabLv + 1);
     }
     tsClass += tab + '}\n';
@@ -305,10 +305,10 @@ function genClass(classInfo, tabLv, needDeclare = false) {
 function genNamespace(namespace, tabLv) {
     let tab = getTab(tabLv);
     let tsNamespace = tab + util.format('declare namespace %s {\n', namespace.name);
-    for (var i = 0; i < namespace.functions.length; ++i) {
+    for (let i = 0; i < namespace.functions.length; ++i) {
         tsNamespace += genFunction(namespace.functions[i], tabLv + 1);
     }
-    for (var i = 0; i < namespace.classes.length; ++i) {
+    for (let i = 0; i < namespace.classes.length; ++i) {
         tsNamespace += genClass(namespace.classes[i], tabLv + 1);
     }
     tsNamespace += tab + '}\n';
@@ -318,15 +318,15 @@ function genNamespace(namespace, tabLv) {
 function genTsContent(rootInfo) {
     let tsContent = rootInfo.needCallback ? 'import { AsyncCallback, Callback } from \'./../basic\';\n\n' : '';
 
-    for (var i = 0; i < rootInfo.classes.length; ++i) {
+    for (let i = 0; i < rootInfo.classes.length; ++i) {
         tsContent += genClass(rootInfo.classes[i], 0, true);
     }
 
-    for (var i = 0; i < rootInfo.namespaces.length; ++i) {
+    for (let i = 0; i < rootInfo.namespaces.length; ++i) {
         tsContent += genNamespace(rootInfo.namespaces[i], 0);
     }
 
-    for (var i = 0; i < rootInfo.functions.length; ++i) {
+    for (let i = 0; i < rootInfo.functions.length; ++i) {
         tsContent += genFunction(rootInfo.functions[i], 0, true);
     }
 

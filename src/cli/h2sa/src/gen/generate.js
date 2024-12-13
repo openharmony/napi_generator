@@ -85,7 +85,7 @@ function getClientFuncParamStr(params) {
 function genClientMsgFunc(funcList) {
     let initParavalue = '';
     let initParamessage = '';
-    for (var n = 0; n < funcList.params.length; ++n) {
+    for (let n = 0; n < funcList.params.length; ++n) {
         if (numericTypes.includes(funcList.params[n].type)) {
             // 数值类型初始化为0
             initParavalue = '1';
@@ -568,7 +568,7 @@ function genServiceFunc(funcInfo, className, paramStr) {
         initRetvalue = 'nullptr'; // 假设是指针类型或其他复杂类型
     }
 
-    for (var n = 0; n < funcInfo.params.length; ++n) {
+    for (let n = 0; n < funcInfo.params.length; ++n) {
         if (numericTypes.includes(funcInfo.params[n].type)) {
             // 数值添加
             paramsName += (n === 0) ? '' : '+ ';
@@ -717,7 +717,7 @@ function genFunctionCode(classInfo) {
     genResult.clientFuncLogMessage = ''; //client.cpp 中的打印信息
     let enumTab = getTab(2);
     let funcTab = getTab(1);
-    for (var i = 0; i < funcList.length; ++i) {
+    for (let i = 0; i < funcList.length; ++i) {
         funcList[i].funcEnum = funcList[i].name.toUpperCase(); // remote方法的枚举值
         genResult.funcEnumStr += (i === 0) ? '' : ',\n' + enumTab;
         genResult.funcEnumStr += funcList[i].funcEnum;
