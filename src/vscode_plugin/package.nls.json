@@ -5,6 +5,6 @@
   "extension.h2dtscpp.title": "h2dtscpp",
   "extension.dts2cpp.title": "dts2cpp",
   "extension.ohGenerator.title": "OHGenerator",
-  "extension.ohcrosscompile.title": "OH_CrossCompile",
+  "extension.ohcrosscompile.title": "OpenHarmony Cross Compile",
   "Generate NAPI definition code and framework code for OpenHarmony. \n[OHGenerator](command:extension.ohGenerator)": "Generate NAPI definition code and framework code for OpenHarmony. \n[OHGenerator](command:extension.ohGenerator)"
 }
