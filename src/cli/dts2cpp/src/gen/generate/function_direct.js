@@ -59,7 +59,7 @@ bool %s%s(%s)
 `;
 
 function removeEndlineEnter(value) {
-    for (var i = value.length; i > 0; i--) {
+    for (let i = value.length; i > 0; i--) {
         let len = value.length;
         if (value.substring(len - 1, len) === '\n' || value.substring(len - 1, len) === ' ') {
             value = value.substring(0, len - 1);
