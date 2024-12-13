@@ -65,7 +65,9 @@ Note:If the text contains special characters, please escape them according to th
         <filefilterlist>
             <filefilter name="defaultFilter" desc="Files not to check">
                 <filteritem type="filename" name="*.mp4" desc="mp4 files"/>
-               <filteritem type="filename" name="*.py" desc="python files"/>
+                <filteritem type="filename" name="*.py" desc="python files"/>
+                <filteritem type="filename" name="*.md" desc="markdown files"/>
+                <filteritem type="filepath" name="examples/.*" desc="example files"/>
                 <filteritem type="filepath" name="src/generator/src/com/sk/dialog/.*." desc=""/>
                 <filteritem type="filepath" name="napi_IntelliJ_plugin/generator/src/com/sk/dialog/.*." desc=""/>
                 <filteritem type="filepath" name="test/storytest/test.py" desc="GPL or BSD license"/>
