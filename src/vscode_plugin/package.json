@@ -7,7 +7,7 @@
     "icon": "images/icon.png",
     "repository": "https://gitee.com/openharmony/napi_generator",
     "engines": {
-        "vscode": "^1.34.0"
+        "vscode": "^1.73.0"
     },
     "categories": [
         "Other",
@@ -50,7 +50,7 @@
                 "command": "extension.ohcrosscompile",
                 "title": "%extension.ohcrosscompile.title%"
             },
-	    {
+	          {
               "command": "extension.ohGenerator",
               "title": "%extension.ohGenerator.title%"
             }
@@ -103,16 +103,17 @@
                 },
                 {
                     "command": "extension.ohcrosscompile",
-                    "when": "resourceScheme == 'file'",
+                    "when": "resourceScheme == 'file' && explorerResourceIsFolder",
                     "group": "2_workspace"
                 }
             ]
+        },
         "snippets": [
           {
             "language": "cpp",
             "path": "./snippets/napi_class_snippets.json"
           },
-	  {
+	        {
             "language": "cpp",
             "path": "./snippets/napi_thread_snippets.json"
           },
@@ -174,7 +175,7 @@
     },
     "devDependencies": {
         "@types/node": "^16.17.0",
-        "@types/vscode": "^1.34.0",
+        "@types/vscode": "^1.73.0",
         "@typescript-eslint/eslint-plugin": "^5.30.0",
         "@typescript-eslint/parser": "^5.30.0",
         "eslint": "^8.13.0"
@@ -182,6 +183,6 @@
     "dependencies": {
         "vsce": "^2.15.0",
         "typescript": "^4.7.2",
-	"@vscode/l10n": "^0.0.10"
+	      "@vscode/l10n": "^0.0.10"
     }
 }
