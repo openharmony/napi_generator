@@ -1,6 +1,6 @@
 # 模板生成和语言转换工具
 
-napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**模板）和语言转换功能（依据**h**头文件转换生成**dts**接口文件 和  **native C++** 工程文件）。
+napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**模板）、语言转换功能（依据**h**头文件转换生成**dts**接口文件 和  **native C++** 工程文件）、交叉编译功能（使用OpenHarmony SDK所提供的工具链编译三方库源码）。
 
 ## 功能：
 
@@ -28,11 +28,17 @@ napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**
   | ------------- | ------------------------------------------------------------ |
   | DecEco Studio | 4.1 Release（Build Version: 4.1.0.400, built on April 9, 2024） |
 
+- **OpenHarmony交叉编译**：根据三方库中Makefile或CmakeLists，调用OpenHarmony SDK中提供的工具链进行交叉编译，拼装 make 及 make install 命令并调用终端执行。生成对应于目标系统架构的二进制文件及头文件，默认安装至三方库路径下ohCrossCompile目录中。
+
 ## 使用：
 
 - **方式1**: 右键.h文件在弹出菜单里选择子菜单 **[OHOS_Gen]** 内的功能：
 
   ![](https://gitee.com/openharmony/napi_generator/raw/master/src/vscode_plugin/images/h2sa4-1.png)
+
+  对于OpenHarmony交叉编译功能，可右键三方库文件夹，在菜单中选择 **[OpenHarmony 交叉编译]** 选项，以调用交叉编译功能。该功能的详细用法请参考：[OpenHarmony交叉编译功能使用帮助文档](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/ohCrossCompile.md)
+
+  ![](https://gitee.com/openharmony/napi_generator/raw/master/src/vscode_plugin/images/ohCrossCompile_menu.png)
 
   
 
