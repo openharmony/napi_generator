@@ -30,6 +30,8 @@ napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**
 
 - **OpenHarmony交叉编译**：根据三方库中Makefile或CmakeLists，调用OpenHarmony SDK中提供的工具链进行交叉编译，拼装 make 及 make install 命令并调用终端执行。生成对应于目标系统架构的二进制文件及头文件，默认安装至三方库路径下ohCrossCompile目录中。
 
+- **snippets**： 根据 [snippetsApi](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/snippetsApi.md) 中提供的命令提供各场景（结构体、枚举等）napi、Aki开发代码片段。
+
 ## 使用：
 
 - **方式1**: 右键.h文件在弹出菜单里选择子菜单 **[OHOS_Gen]** 内的功能：
@@ -39,6 +41,10 @@ napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**
   对于OpenHarmony交叉编译功能，可右键三方库文件夹，在菜单中选择 **[OpenHarmony 交叉编译]** 选项，以调用交叉编译功能。该功能的详细用法请参考：[OpenHarmony交叉编译功能使用帮助文档](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/ohCrossCompile.md)
 
   ![](https://gitee.com/openharmony/napi_generator/raw/master/src/vscode_plugin/images/ohCrossCompile_menu.png)
+
+  对于snippets功能，在cpp文件中输入 [snippetsApi](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/snippetsApi.md) 中提供的命令即可生成napi、Aki各场景的代码片段：
+
+  ![](https://gitee.com/openharmony/napi_generator/raw/master/src/vscode_plugin/images/snippets_use.png)
 
   
 
