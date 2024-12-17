@@ -49,9 +49,9 @@ private:
                             const GLfloat shapeVertices[], unsigned long vertSize);
     void Rotate2d(GLfloat centerX, GLfloat centerY, GLfloat* rotateX, GLfloat* rotateY, GLfloat theta);
     bool FinishDraw();
-    GLuint loadTexture();
-    void checkCompileErrors(unsigned int shader, std::string type);
-    void display(GLuint texID);
+    GLuint LoadTexture();
+    void CheckCompileErrors(unsigned int shader, std::string type);
+    void Display(GLuint texID);
 
 private:
     EGLNativeWindowType eglWindow_;

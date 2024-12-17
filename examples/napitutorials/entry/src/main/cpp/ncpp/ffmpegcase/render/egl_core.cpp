@@ -255,10 +255,10 @@ bool EGLCore::EglContextInit(void* window, int width, int height)
     UpdateSize(width, height);
     eglWindow_ = static_cast<EGLNativeWindowType>(window);
 
-    // Init display.
+    // Init Display.
     eglDisplay_ = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     if (eglDisplay_ == EGL_NO_DISPLAY) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglGetDisplay: unable to get EGL display");
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglGetDisplay: unable to get EGL Display");
         return false;
     }
 
@@ -266,7 +266,7 @@ bool EGLCore::EglContextInit(void* window, int width, int height)
     EGLint minorVersion;
     if (!eglInitialize(eglDisplay_, &majorVersion, &minorVersion)) {
         OH_LOG_Print(
-            LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglInitialize: unable to get initialize EGL display");
+            LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "eglInitialize: unable to get initialize EGL Display");
         return false;
     }
 
@@ -412,45 +412,12 @@ void EGLCore::Background()
     }
 }
 
-GLuint EGLCore::loadTexture()
+void EGLCore::ReadBmpData(FILE *file, uint32_t bmpSize)
 {
-    uint32_t bmpWidth = 0;
-    uint32_t bmpHeight = 0;
-    uint32_t bmpSize = 0;
-    uint8_t bmpBit = 0;
-    
-    //------------------------------------------------------------
-    // 读文件
-    FILE *file = fdopen(fd_, "r");
-    if (file == nullptr) {
-        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fdopen failed!");
-        return false;
+    if (bmpSize < 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB malloc failed!");
+        return;
     }
-
-    // 取文件
-    if (fseek(file, foff_ + NUM_18, SEEK_SET) != 0) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fseek failed!");
-        return false;
-    }
-    
-    if (fread(&bmpWidth, NUM_4, NUM_1, file) != 0) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
-    }
-    
-    if (fread(&bmpHeight, NUM_4, NUM_1, file) != 0) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
-    }
-    if (fread(&bmpBit, NUM_1, NUM_1, file) != 0) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
-    }
-    if (fread(&bmpBit, NUM_1, NUM_1, file) != 0) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
-    }
-    if (fread(&bmpBit, NUM_1, NUM_1, file) != 0) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
-    }
-    bmpSize = flen_ - NUM_54;
-
     unsigned char *bmpData = (unsigned char *)malloc(bmpSize);
     if (bmpData == nullptr) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB malloc failed!");
@@ -470,18 +437,52 @@ GLuint EGLCore::loadTexture()
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fclose failed!");
         return false;
     }
-
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_width: %{public}d", bmpWidth);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_height: %{public}d", bmpHeight);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_size: %{public}d", bmpSize);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "bmp_bit: %{public}d", bmpBit);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "read_cnt: %{public}zu", readCnt);
-
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore",
+        "bmp_width:%{public}d, height%{public}d, size%{public}d, bit%{public}d, cnt%{public}zu",
+        bmpWidth, bmpHeight, bmpSize, bmpBit, readCnt);
     free(bmpData);
+}
+
+GLuint EGLCore::LoadTexture()
+{
+    uint32_t bmpWidth = 0;
+    uint32_t bmpHeight = 0;
+    uint32_t bmpSize = 0;
+    uint8_t bmpBit = 0;
+
+    FILE *file = fdopen(fd_, "r");
+    if (file == nullptr) {
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fdopen failed!");
+        return false;
+    }
+
+    if (fseek(file, foff_ + NUM_18, SEEK_SET) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fseek failed!");
+        return false;
+    }
+    
+    if (fread(&bmpWidth, NUM_4, NUM_1, file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
+    }
+    if (fread(&bmpHeight, NUM_4, NUM_1, file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
+    }
+    if (fread(&bmpBit, NUM_1, NUM_1, file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
+    }
+    if (fread(&bmpBit, NUM_1, NUM_1, file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
+    }
+    if (fread(&bmpBit, NUM_1, NUM_1, file) != 0) {
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fread failed!");
+    }
+    bmpSize = flen_ - NUM_54;
+    ReadBmpData(FILE *file, uint32_t bmpSize);
+    
     return 0;
 }
 
-void EGLCore::display(GLuint texGround)
+void EGLCore::Display(GLuint texGround)
 {
     // 清空颜色缓冲区
     glClear(GL_COLOR_BUFFER_BIT);
@@ -866,7 +867,7 @@ GLuint EGLCore::LoadShader(GLenum type, const char* shaderSrc)
     return PROGRAM_ERROR;
 }
 
-void EGLCore::checkCompileErrors(unsigned int shader, std::string type)
+void EGLCore::CheckCompileErrors(unsigned int shader, std::string type)
 {
     int success;
     char infoLog[NUM_1024];
@@ -901,12 +902,12 @@ GLuint EGLCore::TRCreateProgram(const char *vertexShader, const char *fragShader
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &vertexShader, nullptr);
     glCompileShader(vertex);
-    checkCompileErrors(vertex, "VERTEX");
+    CheckCompileErrors(vertex, "VERTEX");
     // fragment Shader
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment, 1, &fragShader, nullptr);
     glCompileShader(fragment);
-    checkCompileErrors(fragment, "FRAGMENT");
+    CheckCompileErrors(fragment, "FRAGMENT");
 
     GLuint program = glCreateProgram();
     if (program == PROGRAM_ERROR) {
@@ -920,7 +921,7 @@ GLuint EGLCore::TRCreateProgram(const char *vertexShader, const char *fragShader
     glAttachShader(program, vertex);
     glAttachShader(program, fragment);
     glLinkProgram(program);
-    checkCompileErrors(program, "PROGRAM");
+    CheckCompileErrors(program, "PROGRAM");
     GLint linked;
     glGetProgramiv(program, GL_LINK_STATUS, &linked);
     if (linked != 0) {
