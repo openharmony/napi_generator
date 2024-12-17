@@ -2,18 +2,18 @@
 
 **Napi snippets**
 
-<table border="1">
+<table><thead align="center"><tr><th class="cellrowborder" valign="top" width="12%" ><ul>版本号</ul></th>
+<th class="cellrowborder" valign="top" width="25%"><ul>场景</ul></th>
+<th class="cellrowborder" valign="top" width="18%"><ul>命令</ul></th>
+<th class="cellrowborder" valign="top" width="45%"><ul>描述</ul></th>
+</tr>
+</thead>
+<tbody>
   <tr>
-    <th>版本</th>
-    <th>场景</th>
-    <th>命令</th>
-    <th>描述</th>
-  </tr>
-  <tr>
-    <td rowspan="34">0.0.1</td>
-    <td>类</td>
-    <td>napiclass</td>
-    <td>napi类使用场景代码片段</td>
+    <td class="cellrowborder" valign="top" width="12%" rowspan="34">0.0.1</td>
+    <td class="cellrowborder" valign="top" width="25%">类</td>
+    <td class="cellrowborder" valign="top" width="18%">napiclass</td>
+    <td class="cellrowborder" valign="top" width="45%">napi类使用场景代码片段</td>
   </tr>
   <tr>
     <td>结构体</td>
@@ -153,23 +153,23 @@
     <td>napithrowerror</td>
     <td>napi抛出JS错误对象代码片段</td>
   </tr>
+</tbody>
 </table>
-
 
 **Aki snippets**
 
-<table border="1">
+<table><thead align="center"><tr><th class="cellrowborder" valign="top" width="12%" ><ul>版本号</ul></th>
+<th class="cellrowborder" valign="top" width="25%"><ul>场景</ul></th>
+<th class="cellrowborder" valign="top" width="18%"><ul>命令</ul></th>
+<th class="cellrowborder" valign="top" width="45%"><ul>描述</ul></th>
+</tr>
+</thead>
+<tbody>
   <tr>
-    <th>版本</th>
-    <th>场景</th>
-    <th>命令</th>
-    <th>描述</th>
-  </tr>
-  <tr>
-    <td rowspan="5">0.0.1</td>
-    <td>类</td>
-    <td>akiclass</td>
-    <td>aki 类使用场景代码片段</td>
+    <td class="cellrowborder" valign="top" width="12%" rowspan="5">0.0.1</td>
+    <td class="cellrowborder" valign="top" width="25%">类</td>
+    <td class="cellrowborder" valign="top" width="18%">akiclass</td>
+    <td class="cellrowborder" valign="top" width="45%">aki 类使用场景代码片段</td>
   </tr>
   <tr>
     <td>结构体</td>
@@ -191,4 +191,5 @@
     <td>akiasyncfunc</td>
     <td>aki异步方法使用场景代码片段</td>
   </tr>
+</tbody>
 </table>
