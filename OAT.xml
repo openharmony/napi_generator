@@ -68,11 +68,23 @@ Note:If the text contains special characters, please escape them according to th
                 <filteritem type="filename" name="*.py" desc="python files"/>
                 <filteritem type="filename" name="*.md" desc="markdown files"/>
                 <filteritem type="filepath" name="examples/.*" desc="example files"/>
+                <filteritem type="filename" name="hvigorfile.ts" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
+                <filteritem type="filename" name="hvigor-wrapper.js" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
+                <filteritem type="filename" name="hvigorw" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
+                <filteritem type="filename" name="hvigorw.bat" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
                 <filteritem type="filepath" name="src/generator/src/com/sk/dialog/.*." desc=""/>
                 <filteritem type="filepath" name="napi_IntelliJ_plugin/generator/src/com/sk/dialog/.*." desc=""/>
                 <filteritem type="filepath" name="test/storytest/test.py" desc="GPL or BSD license"/>
                 <filteritem type="filepath" name="prebuilt/End User License Agreement.md" desc="EULA file"/>
             </filefilter>
+            <filefilter name="defaultPolicyFilter" desc="Files not to check license header polices">
+                <filteritem type="filename" name="*.java" desc="orig files"/>
+                <filteritem type="filename" name="hvigorfile.ts" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
+                <filteritem type="filename" name="hvigor-wrapper.js" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
+                <filteritem type="filename" name="hvigorw" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
+                <filteritem type="filename" name="hvigorw.bat" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
+            </filefilter>
+
             <filefilter name="binaryFileTypePolicyFilter" desc="Filters for binaryFile" >
                 <filteritem type="filename" name="*.png|*.vsix|*.hap|*.zip" desc="all file have check "/>
             </filefilter>
