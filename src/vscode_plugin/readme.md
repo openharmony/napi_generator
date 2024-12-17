@@ -30,7 +30,7 @@ napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**
 
 - **OpenHarmony交叉编译**：根据三方库中Makefile或CmakeLists，调用OpenHarmony SDK中提供的工具链进行交叉编译，拼装 make 及 make install 命令并调用终端执行。生成对应于目标系统架构的二进制文件及头文件，默认安装至三方库路径下ohCrossCompile目录中。
 
-- **snippets**： 根据 [snippetsApi](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/snippetsApi.md) 中提供的命令提供各场景（结构体、枚举等）napi、Aki开发代码片段。
+- **snippets**： 根据 [snippetsApi](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/snippetsApi.md) 中的命令提供各场景（结构体、枚举等）napi、Aki开发代码片段。
 
 ## 使用：
 
