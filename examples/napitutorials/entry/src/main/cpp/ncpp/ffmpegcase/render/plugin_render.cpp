@@ -30,22 +30,22 @@
 
 extern "C" {
     // 自定义 avio_read_packet 函数
-    int custom_avio_read_packet(void *opaque, uint8_t *buf, int bufSize)
+    int CustomAvioReadPacket(void *opaque, uint8_t *buf, int bufSize)
     {
         FILE *file = ((FILE *)opaque); // 将 void 指针转换为 int 指针，并取得文件描述符
         if (!file) {
-            OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "custom_avio_read_packet file is null");
+            OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "CustomAvioReadPacket file is null");
             return AVERROR_EOF;
         }
         OH_LOG_Print(LOG_APP, LOG_INFO, 0xFF00, "PluginRender", "read_packet %{public}d", bufSize);
         size_t bytesRead = fread(buf, 1, bufSize, file); // 从文件描述符中读取数据
         if (bytesRead <= 0) {
             if (feof(file)) {
-                OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "custom_avio_read_packet file eof %{public}zu",
+                OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "CustomAvioReadPacket file eof %{public}zu",
                              bytesRead);
                 return AVERROR_EOF;
             } else {
-                OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "custom_avio_read_packet file eio");
+                OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "PluginRender", "CustomAvioReadPacket file eio");
                 return AVERROR_EOF;
             }
         }
@@ -574,7 +574,7 @@ static void RescontExecuteCB(napi_env env, void *data)
         return;
     }
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "fseek %{public}ld", foff);
-    avioContext = avio_alloc_context(fbuf, fbufLen, 0, (void *)file, &custom_avio_read_packet, nullptr, nullptr);
+    avioContext = avio_alloc_context(fbuf, fbufLen, 0, (void *)file, &CustomAvioReadPacket, nullptr, nullptr);
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avio_alloc_context");
     if (!avioContext) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "PluginRender", "avio_alloc_context failed");
