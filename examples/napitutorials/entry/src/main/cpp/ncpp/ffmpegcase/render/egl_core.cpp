@@ -417,7 +417,7 @@ GLuint EGLCore::loadTexture()
     //------------------------------------------------------------
     // 读文件
     FILE *file = fdopen(fd_, "r");
-    if (file == NULL) {
+    if (file == nullptr) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fdopen failed!");
         return false;
     }
@@ -447,7 +447,7 @@ GLuint EGLCore::loadTexture()
     bmpSize = flen_ - NUM_54;
 
     unsigned char *bmpData = (unsigned char *)malloc(bmpSize);
-    if (bmpData == NULL) {
+    if (bmpData == nullptr) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB malloc failed!");
         fclose(file);
         return false;
@@ -515,7 +515,7 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen, int& hasDraw)
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "Drawbmp");
 
     FILE *file = fdopen(fd, "r");
-    if (file == NULL) {
+    if (file == nullptr) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "ResfdExecuteCB fdopen failed!");
         return;
     }
@@ -532,7 +532,7 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen, int& hasDraw)
         return;
     }
     unsigned char *mediaData = new unsigned char[flen];
-    if (mediaData == NULL) {
+    if (mediaData == nullptr) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "new buffer failed!");
         fclose(file);
         return;
@@ -546,10 +546,10 @@ void EGLCore::DrawBmp(uint32_t fd, uint32_t foff, uint32_t flen, int& hasDraw)
     int height = 0;
     unsigned char *pdata = mediaData + NUM_18;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "width: %{public}d", *((uint32_t *)pdata));
-    width = *((uint32_t *)pdata);
+    width = *(static_cast<uint32_t *>(pdata));
     pdata = mediaData + NUM_18 + NUM_4;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_PRINT_DOMAIN, "EGLCore", "height: %{public}d", *((uint32_t *)pdata));
-    height = *((uint32_t *)pdata);
+    height = *(static_cast<uint32_t *>(pdata));
 
     float vertices[] = {
         // positions          // colors           // texture coords
@@ -859,7 +859,7 @@ GLuint EGLCore::LoadShader(GLenum type, const char* shaderSrc)
     return PROGRAM_ERROR;
 }
 
-void EGLCore::checkCompileErrors(unsigned int shader, std::string type)
+void EGLCore::CheckCompileErrors(unsigned int shader, std::string type)
 {
     int success;
     char infoLog[NUM_1024];
@@ -894,12 +894,12 @@ GLuint EGLCore::TRCreateProgram(const char *vertexShader, const char *fragShader
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &vertexShader, NULL);
     glCompileShader(vertex);
-    checkCompileErrors(vertex, "VERTEX");
+    CheckCompileErrors(vertex, "VERTEX");
     // fragment Shader
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment, 1, &fragShader, NULL);
     glCompileShader(fragment);
-    checkCompileErrors(fragment, "FRAGMENT");
+    CheckCompileErrors(fragment, "FRAGMENT");
 
     GLuint program = glCreateProgram();
     if (program == PROGRAM_ERROR) {
@@ -913,7 +913,7 @@ GLuint EGLCore::TRCreateProgram(const char *vertexShader, const char *fragShader
     glAttachShader(program, vertex);
     glAttachShader(program, fragment);
     glLinkProgram(program);
-    checkCompileErrors(program, "PROGRAM");
+    CheckCompileErrors(program, "PROGRAM");
     GLint linked;
     glGetProgramiv(program, GL_LINK_STATUS, &linked);
     if (linked != 0) {
