@@ -28,12 +28,12 @@
   //    工具提供的业务接口（回调） void NodeISayHello::SayHelloListenerSayHelloStartCallback(SayInfo& info)
   // 3. 调用注册的NodeISayHelloListenerSayHelloEnd(info: SayInfo)方法
   //    工具提供的业务接口（回调） void NodeISayHello::SayHelloListenerSayHelloEndCallback(SayInfo& info)
-void NodeISayHello::sayHello(std::string& from, std::string& to, uint32_t& sayType)
+void NodeISayHello::SayHello(std::string& from, std::string& to, uint32_t& sayType)
 {
     // 1.打印
-    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI sayHello from=%{public}s", from.c_str());
-    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI sayHello to=%{public}s", to.c_str());
-    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI sayHello sayType=%{public}d", sayType);
+    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI SayHello from=%{public}s", from.c_str());
+    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI SayHello to=%{public}s", to.c_str());
+    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI SayHello sayType=%{public}d", sayType);
 
     // 2.调用回调
     napitest::napitest_interface::SayInfo info1;
@@ -69,12 +69,12 @@ void NodeISayHello::sayHello(std::string& from, std::string& to, uint32_t& sayTy
 }
 
 // 调用register注册的回调
-void NodeISayHello::sayHi(std::string& from, std::string& to, uint32_t& sayType)
+void NodeISayHello::SayHi(std::string& from, std::string& to, uint32_t& sayType)
 {
     // 1.打印
-    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI sayHi from=%{public}s", from.c_str());
-    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI sayHi to=%{public}s", to.c_str());
-    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI sayHi sayType=%{public}d", sayType);
+    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI SayHi from=%{public}s", from.c_str());
+    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI SayHi to=%{public}s", to.c_str());
+    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI SayHi sayType=%{public}d", sayType);
     // 2.调用回调
     napitest::napitest_interface::NodeISayHello *ptr = new napitest::napitest_interface::NodeISayHello();
     uint32_t callbackNum = 58;
@@ -84,7 +84,7 @@ void NodeISayHello::sayHi(std::string& from, std::string& to, uint32_t& sayType)
 }
 
 // 普通函数调用，返回str
-std::string funcTest(bool& v)
+std::string FuncTest(bool& v)
 {
     if (v) {
         return "true";
@@ -95,12 +95,12 @@ std::string funcTest(bool& v)
 
 // 1.打印值：from, to 以及枚举enum SayType的值
 // 2. 将回调值（0， "", "recv hello."）的值传回Js层
-void NodeISayHello::sayHelloWithResponse(std::string& from, std::string& to, uint32_t& sayType)
+void NodeISayHello::SayHelloWithResponse(std::string& from, std::string& to, uint32_t& sayType)
 {
     // 1.打印
-    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI sayHelloWithResponse from=%{public}s", from.c_str());
-    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI sayHelloWithResponse to=%{public}s", to.c_str());
-    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI sayHelloWithResponse sayType=%{public}d", sayType);
+    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI SayHelloWithResponse from=%{public}s", from.c_str());
+    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI SayHelloWithResponse to=%{public}s", to.c_str());
+    OH_LOG_INFO(LOG_APP, "NAPITEST_LOGI SayHelloWithResponse sayType=%{public}d", sayType);
     // 2.调用promise回调 (0, "", "recv hello.")
     napitest::napitest_interface::NodeISayHello *p = new  napitest::napitest_interface::NodeISayHello();
     // 调用工具接口将回调传回工具
