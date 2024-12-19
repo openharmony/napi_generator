@@ -22,11 +22,11 @@ namespace napitest {
 class NodeISayHello;
 class NodeISayHello {
 public:
-    void sayHello(std::string& from, std::string& to, uint32_t& sayType);
-    void sayHi(std::string& from, std::string& to, uint32_t& sayType);
-    void sayHelloWithResponse(std::string& from, std::string& to, uint32_t& sayType);
+    void SayHello(std::string& from, std::string& to, uint32_t& sayType);
+    void SayHi(std::string& from, std::string& to, uint32_t& sayType);
+    void SayHelloWithResponse(std::string& from, std::string& to, uint32_t& sayType);
 };
-std::string funcTest(bool& v);
+std::string FuncTest(bool& v);
 }
 #endif // IMPL_NODEISAYHELLO_H
 

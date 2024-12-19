@@ -169,8 +169,7 @@ public class ApiScanDialogPane extends JDialog {
         GenNotification.notifyMessage(this.project, "", "正在生成", NotificationType.INFORMATION);
         scanDir = scanDirPathTextField.getText();
         scanResultDir = outScanResultPathTextField.getText();
-        String command;
-        command = genCommand();
+        String command = genCommand();
 
         File outPath = new File(outScanResultPathTextField.getText());
         List<FileInfo> oldFileList = getFileInfoList(outPath);
