@@ -65,12 +65,13 @@ function checkFileError(ifname) {
 }
 
 function utf8ArrayToStr(array) {
-    let out, i, len, c;
-    let char2, char3;
+    let c = 0;
+    let char2 = 0;
+    let char3 = 0;
   
-    out = '';
-    len = array.length;
-    i = 0;
+    let out = '';
+    let len = array.length;
+    let i = 0;
     while (i < len) {
       c = array[i++];
       switch (c >> 4) {
