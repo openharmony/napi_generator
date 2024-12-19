@@ -14,21 +14,21 @@ OpenHarmony 交叉编译功能使开发者能够简单快速地调用 OpenHarmon
 
 ------
 
-若在 Windows 10 系统下使用本功能，则还需首先准备编译环境。本功能依赖于 mingw-w64 项目中 w64devkit 包所提供的 GCC 编译器来执行 make 操作，需下载并安装 w64devkit 工具：
+若在 Windows 10 系统下使用本功能，则还需首先准备编译环境。本功能依赖于 ming&w-w64 项目中 w64devkit 包所提供的 GCC 编译器来执行 make 操作，需下载并安装 w64devkit 工具：
 
 1. 下载 w64devkit 包。在链接 [Releases · skeeto/w64devkit](https://github.com/skeeto/w64devkit/releases) 中选择合适版本并下载；
 
 2. 安装 w64devkit 至合适路径，并将其安装目录下的 bin 目录加入系统环境变量 Path 中；
 
-3. 在 cmd 中执行命令`mingw32-make -v`以验证安装状态。若有如下输出则证明安装成功：
+3. 在 cmd 中执行命令`ming&w32-make -v`以验证安装状态。若有如下输出则证明安装成功：
 
    ```cmd
    Microsoft Windows [版本 10.0.19045.5247]
    (c) Microsoft Corporation。保留所有权利。
    
-   C:\Users\Administrator>mingw32-make -v
+   C:\Users\Administrator>ming&w32-make -v
    GNU Make 4.4.1
-   Built for x86_64-w64-mingw32
+   Built for x86_64-w64-ming&w32
    Copyright (C) 1988-2023 Free Software Foundation, Inc.
    License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
    This is free software: you are free to change and redistribute it.
@@ -112,7 +112,7 @@ OpenHarmony 交叉编译功能使开发者能够简单快速地调用 OpenHarmon
                 {
                     "command": "D:/Public_sdk/11/ohos-sdk/windows/native/build-tools/cmake/bin/cmake.exe",
                     "arguments": [
-                        "-G \"MinGW Makefiles\"",
+                        "-G \"ming&w Makefiles\"",
                         "-DCMAKE_SH=\"CMAKE_SH-NOTFOUND\"",
                         "-DCMAKE_TOOLCHAIN_FILE=D:/Public_sdk/11/ohos-sdk/windows/native/build/cmake/ohos.toolchain.cmake",
                         "-DCMAKE_INSTALL_PREFIX=d:/TestWork/VariousTests/cJSON/ohCrossCompile/arm64-v8a/installed",
@@ -122,11 +122,11 @@ OpenHarmony 交叉编译功能使开发者能够简单快速地调用 OpenHarmon
                     ]
                 },
                 {
-                    "command": "mingw32-make",
+                    "command": "ming&w32-make",
                     "arguments": []
                 },
                 {
-                    "command": "mingw32-make install",
+                    "command": "ming&w32-make install",
                     "arguments": []
                 }
             ]
@@ -146,7 +146,7 @@ OpenHarmony 交叉编译功能使开发者能够简单快速地调用 OpenHarmon
                 {
                     "command": "D:/Public_sdk/11/ohos-sdk/windows/native/build-tools/cmake/bin/cmake.exe",
                     "arguments": [
-                        "-G \"MinGW Makefiles\"",
+                        "-G \"ming&w Makefiles\"",
                         "-DCMAKE_SH=\"CMAKE_SH-NOTFOUND\"",
                         "-DCMAKE_TOOLCHAIN_FILE=D:/Public_sdk/11/ohos-sdk/windows/native/build/cmake/ohos.toolchain.cmake",
                         "-DCMAKE_INSTALL_PREFIX=d:/TestWork/VariousTests/cJSON/ohCrossCompile/armeabi-v7a/installed",
@@ -156,11 +156,11 @@ OpenHarmony 交叉编译功能使开发者能够简单快速地调用 OpenHarmon
                     ]
                 },
                 {
-                    "command": "mingw32-make",
+                    "command": "ming&w32-make",
                     "arguments": []
                 },
                 {
-                    "command": "mingw32-make install",
+                    "command": "ming&w32-make install",
                     "arguments": []
                 }
             ]

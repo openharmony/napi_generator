@@ -26,13 +26,13 @@
 
 	sudo npm i -g pkg
 
-4.集成clang-format（可选步骤）：
+4.集成cla&ng-format（可选步骤）：
 
   如果需要工具自动格式化生成的C++代码，可执行此步骤。
-  将windows版的clang-format.exe程序和linux版的clang-format程序拷贝到napi_generator目录下。
-  clang-format程序可从OpenHarmony编译环境获取：
-  windows版：OpenHarmony/prebuilts/clang/ohos/windows-x86_64/llvm/bin/clang-format.exe
-  Linux版：OpenHarmony/prebuilts/mingw-w64/ohos/linux-x86_64/clang-mingw/bin/clang-format
+  将windows版的cla&ng-format.exe程序和linux版的cla&ng-format程序拷贝到napi_generator目录下。
+  cla&ng-format程序可从OpenHarmony编译环境获取：
+  windows版：OpenHarmony/prebuilts/cla&ng/ohos/windows-x86_64/llvm/bin/cla&ng-format.exe
+  Linux版：OpenHarmony/prebuilts/ming&w-w64/ohos/linux-x86_64/cla&ng-ming&w/bin/cla&ng-format
 
 5.打包三个版本 : 执行命令：
 
@@ -71,13 +71,13 @@
 
 	npm i -g pkg
 
-4.集成clang-format（可选步骤）：
+4.集成cla&ng-format（可选步骤）：
 
   如果需要工具自动格式化生成的C++代码，可执行此步骤。
-  将windows版的clang-format.exe程序和linux版的clang-format程序拷贝到napi_generator目录下。
-  clang-format程序可从OpenHarmony编译环境获取：
-  windows版：OpenHarmony/prebuilts/clang/ohos/windows-x86_64/llvm/bin/clang-format.exe
-  Linux版：OpenHarmony/prebuilts/mingw-w64/ohos/linux-x86_64/clang-mingw/bin/clang-format
+  将windows版的cla&ng-format.exe程序和linux版的cla&ng-format程序拷贝到napi_generator目录下。
+  cla&ng-format程序可从OpenHarmony编译环境获取：
+  windows版：OpenHarmony/prebuilts/cla&ng/ohos/windows-x86_64/llvm/bin/cla&ng-format.exe
+  Linux版：OpenHarmony/prebuilts/ming&w-w64/ohos/linux-x86_64/cla&ng-ming&w/bin/cla&ng-format
 
 5.打包三个版本 : 使用管理员身份执行命令：
 
