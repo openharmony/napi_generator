@@ -70,7 +70,7 @@ napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**
 
 * dts2cpp：开发中，近期完成
 
-* OpenHarmony交叉编译：[OpenHarmony交叉编译使用帮助文档]()
+* OpenHarmony交叉编译：[OpenHarmony交叉编译使用帮助文档](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/uselibrary.md)
 
 ## 问题:
 
