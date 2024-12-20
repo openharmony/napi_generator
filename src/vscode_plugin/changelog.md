@@ -1,12 +1,14 @@
 # ChangeLog
 
-## 0.0.2 - 2024-12-17
+## 1.0.0 - 2024-12-20
 
 ### 新增功能
 
 1. 新增napi && aki snippets，详见：[snippetsApi](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/snippetsApi.md)
 
 2. 新增 OpenHarmony 交叉编译功能，详见：[OpenHarmony 交叉编译](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/doc/ohCrossCompile.md)
+
+3. 新增dts2cpp功能：开发中，近期完成
 
 ### Bug修复
 

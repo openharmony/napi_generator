@@ -28,6 +28,8 @@ napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**
   | ------------- | ------------------------------------------------------------ |
   | DecEco Studio | 4.1 Release（Build Version: 4.1.0.400, built on April 9, 2024） |
 
+- **dts2cpp**：根据.d.ts文件生成OpenHarmony Native C++应用开发模板中的CPP文件。
+
 - **OpenHarmony交叉编译**：根据三方库中Makefile或CmakeLists，调用OpenHarmony SDK中提供的工具链进行交叉编译，拼装 make 及 make install 命令并调用终端执行。生成对应于目标系统架构的二进制文件及头文件，默认安装至三方库路径下ohCrossCompile目录中。
 
 - **snippets**： 根据 [snippetsApi](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/snippetsApi.md) 中的命令提供各场景（结构体、枚举等）napi、Aki开发代码片段。
@@ -37,6 +39,10 @@ napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**
 - **方式1**: 右键.h文件在弹出菜单里选择子菜单 **[OHOS_Gen]** 内的功能：
 
   ![](https://gitee.com/openharmony/napi_generator/raw/master/src/vscode_plugin/images/h2sa4-1.png)
+
+  右键.d.ts文件在弹出菜单里选择子菜单 **[OHOS_Gen]** 内的功能：
+
+  ![](https://gitee.com/openharmony/napi_generator/raw/master/src/vscode_plugin/images/dts2cpp_gen.png)
 
   对于OpenHarmony交叉编译功能，可右键三方库文件夹，在菜单中选择 **[OpenHarmony 交叉编译]** 选项，以调用交叉编译功能。该功能的详细用法请参考：[OpenHarmony交叉编译功能使用帮助文档](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/ohCrossCompile.md)
 
@@ -61,6 +67,10 @@ napi-gen插件为OpenHarmony开发者提供模板生成（**sa**模板、**hdf**
 * h2hdf: [h2hdf使用帮助文档](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2hdf/docs/usage.md#编译)
 
 * h2dtscpp: [h2dtscpp使用帮助文档](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2dtscpp/docs/usage/INSTRUCTION_ZH.md)
+
+* dts2cpp：开发中，近期完成
+
+* OpenHarmony交叉编译：[OpenHarmony交叉编译使用帮助文档](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/docs/uselibrary.md)
 
 ## 问题:
 

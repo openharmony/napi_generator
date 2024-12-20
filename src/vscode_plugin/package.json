@@ -2,7 +2,7 @@
     "name": "napi-gen",
     "displayName": "napi-gen",
     "description": "Generate NAPI definition code and framework code for OpenHarmony",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "publisher": "kaihong",
     "icon": "images/icon.png",
     "repository": "https://gitee.com/openharmony/napi_generator",
