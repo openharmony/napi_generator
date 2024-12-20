@@ -10,7 +10,7 @@
 </thead>
 <tbody>
   <tr>
-    <td class="cellrowborder" valign="top" width="12%" rowspan="34">0.0.1</td>
+    <td class="cellrowborder" valign="top" width="12%" rowspan="34">1.0.0</td>
     <td class="cellrowborder" valign="top" width="25%">类</td>
     <td class="cellrowborder" valign="top" width="18%">napiclass</td>
     <td class="cellrowborder" valign="top" width="45%">napi类使用场景代码片段</td>
@@ -166,7 +166,7 @@
 </thead>
 <tbody>
   <tr>
-    <td class="cellrowborder" valign="top" width="12%" rowspan="5">0.0.1</td>
+    <td class="cellrowborder" valign="top" width="12%" rowspan="5">1.0.0</td>
     <td class="cellrowborder" valign="top" width="25%">类</td>
     <td class="cellrowborder" valign="top" width="18%">akiclass</td>
     <td class="cellrowborder" valign="top" width="45%">aki 类使用场景代码片段</td>
