@@ -13,15 +13,17 @@
 * limitations under the License.
 */
 
-import { DirTemp, DtscppRootInfo, FuncInfo, InterfaceList, TypeList } from "./datatype";
+import { DirTemp, DtscppRootInfo, FuncInfo, InterfaceList, TypeList, ParamObj, ParseObj, ClassObj, FuncObj } from "./datatype";
 import { replaceAll } from "./common/tool";
 import fs = require('fs');
 import path = require("path");
 import { napiFuncHTemplate, napiFuncInitTemplate } from "./template/func_template";
-import { dtscppout } from "./template/dtscpp/dtscppdir";
+import { cppout, dtscppout } from "./template/dtscpp/dtscppdir";
 import { analyzeRootFunction, genDtsInterface, genTsFunction } from "./gendts";
 import { generateDirectFunction } from "./gencpp";
 import { generateFuncTestCase } from "./gentest";
+
+import { tsTransferType } from "./template/functypemap_template";
 
 interface GenResult {
   dtsContent: string; // dts文件中的内容
@@ -128,13 +130,128 @@ function generateFuncCode(rootInfo: DtscppRootInfo) {
   return genResult;
 }
 
+// h2dtscpp
 export function genDtsCppFile(rootInfo: DtscppRootInfo, out: string) {
-  // 生成dts声明文件 xxx.d.ts
   let res: GenResult = generateFuncCode(rootInfo);
-
-  // h2dtscpp应该没有版本吧
   genDir(dtscppout, res, rootInfo, out);
-
   console.info('generate success!')
 }
 
+// dts2cpp
+export function genCppFile(parseObj: ParseObj, tsFilePath: string, out: string) {
+  let rootInfo: DtscppRootInfo = {
+    funcs: parseObj.funcs,
+    rawFilePath: tsFilePath,
+    fileName: path.basename(tsFilePath, '.d.ts')// xxx
+  };
+  let genResult: GenResult = generateFunctions(parseObj, tsFilePath);
+  genDir(cppout, genResult, rootInfo, out);
+  console.info('generate success!')
+}
+
+function generateFunctions(parseObj: ParseObj, tsFilePath: string) {
+  let cppfunctions: FuncInfo[] = getFunctions(parseObj);
+  let typeList: TypeList[] = getTypes(parseObj);
+  let interfaceList: InterfaceList[] = getInterfaces(parseObj);
+
+  let genResult: GenResult = {
+    dtsContent: '',
+    testContet: '',
+    napiHContent: '',
+    napiInitContent: '',
+    napiCppContent: '',
+  };
+  let rawFileName = path.basename(tsFilePath);
+  for (let i = 0; i < cppfunctions.length; i++) {
+    // 每个napi方法的init
+    genResult.napiInitContent += replaceAll(napiFuncInitTemplate, '[func_name_replace]', cppfunctions[i].genName);
+    // 每个napi方法的h声明
+    genResult.napiHContent += genHFunction(cppfunctions[i], rawFileName);
+    // 每个Napi方法的cpp说明
+    genResult.napiCppContent += generateDirectFunction(cppfunctions[i], rawFileName, typeList, interfaceList);
+  }
+  return genResult;
+}
+
+// 将interface列表中的js type全部转换为c type
+function getInterfaces(parseObj: ParseObj) {
+  return parseObj.classes.map(cls => {
+    const getParams = (variables: ParamObj[]) => 
+      variables.map(variable => ({
+        name: variable.name,
+        type: getCTypeFromJS(variable.type),
+        arraySize: variable.arraySize
+      }));
+      
+    const getFunctions = (functions: FuncObj[]) => 
+      functions.map(func => ({
+        type: func.type,
+        name: func.name,
+        returns: getCTypeFromJS(func.returns),
+        parameters: getParams(func.parameters)
+      }));
+      
+    return {
+      interfaceName: cls.name,
+      interfaceBody: {
+        params: getParams(cls.variableList),
+        funcs: getFunctions(cls.functionList)
+      }
+    };
+  });
+}
+
+function getTypes(parseObj: ParseObj) {
+  let typeList: TypeList[] = [];
+  for (let i = 0; i < parseObj.types!.length; i++) {
+    let typeObj: TypeList = {
+      typeName: parseObj.types![i].name,
+      typeBody: getCTypeFromJS(parseObj.types![i].alias),
+    };
+    typeList.push(typeObj);
+  }
+  return typeList;
+}
+
+function getFunctions(parseObj: ParseObj) {
+  let cppfunctions: FuncInfo[] = [];
+  for (let i = 0; i < parseObj.funcs.length; i++) {
+    let cppFuncInfo: FuncInfo = {
+      name: '',
+      params: [],
+      retType: '',
+      genName: ''
+    };
+    cppFuncInfo.name = parseObj.funcs[i].name;
+    cppFuncInfo.genName = parseObj.funcs[i].name;
+    let parseParams = parseObj.funcs[i].parameters;
+    for (let i = 0; i < parseParams.length; ++i) {
+      let paramsRes = createFuncParam(parseParams[i]);
+      cppFuncInfo.params.push(paramsRes);
+    }
+    cppFuncInfo.retType = getCTypeFromJS(parseObj.funcs[i].returns);
+    cppfunctions.push(cppFuncInfo);
+  }
+  return cppfunctions;
+}
+
+function getCTypeFromJS(type: string) {
+  let cType = type;
+  for (let index = 0; index < tsTransferType.length; index++) {
+    if (type === tsTransferType[index].fromType) {
+      cType = tsTransferType[index].tranferContent[0];
+    }
+  }
+  return cType;
+}
+
+function createFuncParam(params: ParamObj) {
+  let cppParam: ParamObj = {
+    name: '',
+    type: '',
+    arraySize: 0
+  };
+  cppParam.name = params.name;
+  cppParam.type = getCTypeFromJS(params.type);
+  return cppParam;
+}
