@@ -207,13 +207,15 @@ export function parseTsFile(filePath: string): ParseObj {
                         });
                         parseRes.classes.push(classItem);
                     } else if (ts.isPropertyDeclaration(member) || ts.isPropertyAssignment(member)) { // 判断是否是类的成员变量
-                      let paramTypeText = getParamType(member.type);
-                      let parameter: ParamObj = {
-                        name: member.name.escapedText,
-                        type: paramTypeText,
-                        arraySize: 0
+                      if ('type' in member && 'text' in member.name) {
+                        let paramTypeText = getParamType(member.type);
+                        let parameter: ParamObj = {
+                          name: member.name.text,
+                          type: paramTypeText,
+                          arraySize: 0
+                        }
+                        classItem.variableList.push(parameter);
                       }
-                      classItem.variableList.push(parameter);
                     }
                 });
             } catch (error) {
@@ -254,7 +256,10 @@ export function parseTsFile(filePath: string): ParseObj {
           const parameters = node.parameters;
           let parames: ParamObj[] = [];
           parameters.forEach(param => {
-            const paramName = param.name.escapedText; // 参数名称，如 "v1"
+            let paramName = '';
+            if ('text' in param.name) {
+              paramName = param.name.text; // 参数名称，如 "v1"
+            }
             const paramType = param.type; // 参数类型节点
             let paramText = getParamType(paramType);
 
