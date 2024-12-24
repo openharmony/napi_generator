@@ -506,25 +506,29 @@ export function activate(context: vscode.ExtensionContext) {
         // The code you place here will be executed every time your command is executed
         console.log('uri is : ' + uri.fsPath );
         if (uri && uri.fsPath) {
-            const extname = path.extname(uri.fsPath);
+          vscode.window.withProgress({
+            location: vscode.ProgressLocation.Notification,
+            title: "Generating CPP...",
+            cancellable: false
+          }, async (progress) => {
             const filename = path.basename(uri.fsPath);
             console.log('get filename ' );
             if (filename.endsWith('.d.ts')) {
                 // Display a message box to the user
-                // parseTsFile(uri.fsPath)
+                // analyze
                 let res = parseTsFile(uri.fsPath);
                 console.info('res: ' + JSON.stringify(res));
+                progress.report({ increment: 50, message: PARSE_COMPLETE });
+                // generator
                 let out = path.dirname(uri.fsPath);
-            
                 genCppFile(res, uri.fsPath, out);
-                
-                vscode.window.showInformationMessage('dts2cpp!');
+                progress.report({ increment: 100, message: GEN_COMPLETE + out });
             } else {
                 console.log('not dts uri is : ' + uri.fsPath );
                 // Display a message box to the user
                 vscode.window.showInformationMessage(`${uri.fsPath} is not a .d.ts file!`);
             }
-            // generator
+          });
         }
     });
     context.subscriptions.push(dts2cpp);
