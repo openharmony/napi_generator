@@ -27,7 +27,7 @@ import { parseTsFile } from './parsets';
 import { genServiceFile } from './gensa';
 import { genDtsFile } from './gendts';
 import { genHdfFile } from './genhdf';
-import { genDtsCppFile } from './gendtscpp';
+import { genDtsCppFile, genCppFile } from './gendtscpp';
 
 // 获取本地化字符串
 const SELECTED_DIR = vscode.l10n.t('You selected a directory:');
@@ -514,6 +514,10 @@ export function activate(context: vscode.ExtensionContext) {
                 // parseTsFile(uri.fsPath)
                 let res = parseTsFile(uri.fsPath);
                 console.info('res: ' + JSON.stringify(res));
+                let out = path.dirname(uri.fsPath);
+            
+                genCppFile(res, uri.fsPath, out);
+                
                 vscode.window.showInformationMessage('dts2cpp!');
             } else {
                 console.log('not dts uri is : ' + uri.fsPath );

@@ -18,6 +18,7 @@ import * as path from 'path';
 import * as ts from 'typescript';
 import { json } from 'stream/consumers';
 import internal = require('stream');
+import { ParamObj, FuncObj, ClassObj, EnumObj, TypeObj, ParseObj } from './datatype'
 
 const fs = require('fs');
 
@@ -31,7 +32,7 @@ interface NameObj {
     escapedText: string;
 }
 
-interface TypeObj {
+interface TypeObject {
     pos: number;
     escapedText: string;
 }
@@ -39,45 +40,19 @@ interface TypeObj {
 interface MemberObj {
     pos: number;
     name: NameObj;
-    type: TypeObj;
+    type: TypeObject;
 }
 
-
-export interface ParamItem {
-    type: string;
-    name: string;
-}
-
-export interface TypeItem {
-    name: string;
-    subItemList: ParamItem[];
-}
-
-export interface EnumItem {
-    name: string;
-    subItemList: string[];
-}
-
-export interface FuncItem {
-    name: string;
-    returns: string;
-    parameters: ParamItem[];
-}
-
-export interface ClassObj {
-    name: string;
-    funcs: FuncItem[];
-}
-
-export interface ParseObj {
-    classList: ClassObj[];
-    enumList: EnumItem[];
-    typeList: TypeItem[];
-}
+const NUMBER_TYPE = 148;
+const STRING_TYPE = 152;
+const BOOLEAN_TYPE = 134;
+const VOID_TYPE = 114;
+const ARRAY_TYPE = 185;
+const OBJECT_TYPE = 180;
 
 let gchecker: ts.TypeChecker;
 
-function getTypeAliasSubtypes(typeAlias: ts.TypeAliasDeclaration, list: ParamItem[]) {
+function getTypeAliasSubtypes(typeAlias: ts.TypeAliasDeclaration, list: ParamObj[]) {
     // 检查类型是否为类型节点
     const typeNode = typeAlias.type;
     // console.log('getTypeAliasSubtypes');
@@ -102,6 +77,7 @@ function getTypeAliasSubtypes(typeAlias: ts.TypeAliasDeclaration, list: ParamIte
                 list.push({
                     type: kindStr,
                     name: nameObj.escapedText,
+                    arraySize: 0
                 })
                 return `(${nameObj.escapedText}:${kindStr})`;
             });
@@ -114,18 +90,55 @@ function getTypeAliasSubtypes(typeAlias: ts.TypeAliasDeclaration, list: ParamIte
     return [];
 }
 
+function getParamType(paramType: any) {
+  if (paramType === undefined) {
+    return 'void';
+  }
+  let paramText = paramType.kind === NUMBER_TYPE ? 'number' : // 类型为 number
+                  paramType.kind === STRING_TYPE ? 'string' : // 类型为 string
+                  paramType.kind === BOOLEAN_TYPE ? 'boolean' : // 类型为 boolean
+                  paramType.kind === VOID_TYPE ? 'void' :
+                  'any'; // 默认any类型
+  if (paramType.kind === OBJECT_TYPE) {
+    const type = paramType.typeName.escapedText;
+    if (paramType.typeArguments) {
+      const subType = paramType.typeArguments[0].kind === NUMBER_TYPE ? 'number' :
+      paramType.typeArguments[0].kind === STRING_TYPE ? 'string' :
+      paramType.typeArguments[0].kind === BOOLEAN_TYPE ? 'boolean' : 'any';
+      if (type === 'Array') {
+        paramText = 'Array<' + subType + '>';
+      }
+    } else {
+      return type
+    }
+  }
+  if (paramType.kind === ARRAY_TYPE) {
+    const subType = paramType.elementType.kind === NUMBER_TYPE ? 'number' :
+                    paramType.elementType.kind === STRING_TYPE ? 'string' :
+                    paramType.elementType.kind === BOOLEAN_TYPE ? 'boolean' :
+                    'any';
+    paramText = 'Array<' + subType + '>';
+  }
+  return paramText;
+}
+
 export function parseTsFile(filePath: string): ParseObj {
     let parseRes: ParseObj = {
-        classList: [],
-        enumList: [],
-        typeList: [],
+        enums: [],
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+        types: [],
     }
     function visitor(node: ts.Node) {
         if (ts.isClassDeclaration(node) && node.name) {
             console.log(`Class: ${node.name.text}, ${node.members}`);
             let classItem: ClassObj = {
                 name: node.name.text,
-                funcs: [],
+                alias: '',
+                functionList: [],
+                variableList: []
             };
             try {
                 node.members.forEach(member => {
@@ -140,6 +153,7 @@ export function parseTsFile(filePath: string): ParseObj {
                             let returnObjStr = JSON.stringify(member.type);
                             // console.log(`returnObjStr: ${returnObjStr} `);
                             let returnObj = JSON.parse(returnObjStr);
+                            returnStr = getParamType(member.type);
                             if (returnObj.typeName) {
                                 let returnNameStr = JSON.stringify(returnObj.typeName);
                                 let returnName = JSON.parse(returnNameStr).escapedText;
@@ -162,15 +176,17 @@ export function parseTsFile(filePath: string): ParseObj {
                                 returnStr = `${returnName} <${returnArgs}>`
                             };
                         }
-                        let paramResList: ParamItem[] = [];
+                        let paramResList: ParamObj[] = [];
                         const params = member.parameters.map(param => {
                             // `${param.name}: ${param.type ? param.type : 'any'}`
                             let paramObjStr = JSON.stringify(param.name);
                             let paramStr = JSON.parse(paramObjStr).escapedText;
                             let paramTypeStr: string = 'any';
+                           
                             if (param.type) {
                                 let paramTypeObjStr = JSON.stringify(param.type);
                                 // console.log(`paramTypeObjStr: ${paramTypeObjStr} }`);
+                                paramTypeStr = getParamType(param.type);
                                 if (JSON.parse(paramTypeObjStr).typeName) {
                                     paramTypeStr = JSON.parse(paramTypeObjStr).typeName.escapedText;
                                 }
@@ -178,16 +194,26 @@ export function parseTsFile(filePath: string): ParseObj {
                             paramResList.push({
                                 name: paramStr,
                                 type: paramTypeStr,
+                                arraySize: 0
                             })
                             return `${paramStr}: ${paramTypeStr}`
                         }).join(', ');
                         console.log(`  Method: ${methodName}, Return Type: ${returnStr}, Parameters: ${params}`);
-                        classItem.funcs.push({
+                        classItem.functionList.push({
                             name: methodName,
                             returns: returnStr,
                             parameters: paramResList,
+                            type: '',
                         });
-                        parseRes.classList.push(classItem);
+                        parseRes.classes.push(classItem);
+                    } else if (ts.isPropertyDeclaration(member) || ts.isPropertyAssignment(member)) { // 判断是否是类的成员变量
+                      let paramTypeText = getParamType(member.type);
+                      let parameter: ParamObj = {
+                        name: member.name.escapedText,
+                        type: paramTypeText,
+                        arraySize: 0
+                      }
+                      classItem.variableList.push(parameter);
                     }
                 });
             } catch (error) {
@@ -196,32 +222,61 @@ export function parseTsFile(filePath: string): ParseObj {
         } else if (ts.isEnumDeclaration(node) && node.name) {
             try {
                 console.log(`Enum: ${node.name.text}`);
-                let enumItem: EnumItem = {
+                let enumItem: EnumObj = {
                     name: node.name.text,
-                    subItemList: [],
+                    alias: '',
+                    members: [],
                 };
                 // console.log(`Enum: ${node.name.text}, ${node.members.length}`);
                 node.members.forEach(member => {
                     const memJsonStr = JSON.stringify(member.name);
                     const memJsonObj = JSON.parse(memJsonStr);
                     // console.log(`Member: ${memJsonObj.escapedText}`)
-                    enumItem.subItemList.push(memJsonObj.escapedText);
+                    enumItem.members.push(memJsonObj.escapedText);
                 })
-                parseRes.enumList.push(enumItem);
+                parseRes.enums.push(enumItem);
             } catch (error) {
                 console.error('Error processing node:', error);
             }
-            
         } else if (ts.isTypeAliasDeclaration(node) && node.name) {
             console.log(`Type: ${node.name.text}`);
-            let typeItem: TypeItem = {
+            let typeItem: TypeObj = {
                 name: node.name.text,
-                subItemList: [],
+                alias: getParamType(node.type),
+                members: [],
             };
             // console.log(`Type: ${node.name.text}, ${node.typeParameters} ${typeof(node.type)}`);
-            const subtypes = getTypeAliasSubtypes(node, typeItem.subItemList);
-            parseRes.typeList.push(typeItem);
+            const subtypes = getTypeAliasSubtypes(node, typeItem.members);
+            parseRes.types!.push(typeItem);
             console.log(`subtypes : ${subtypes}`);
+        } else if (ts.isFunctionDeclaration(node) && node.name) {
+          console.log(`Type: ${node.name.text}`);
+          const parameters = node.parameters;
+          let parames: ParamObj[] = [];
+          parameters.forEach(param => {
+            const paramName = param.name.escapedText; // 参数名称，如 "v1"
+            const paramType = param.type; // 参数类型节点
+            let paramText = getParamType(paramType);
+
+            console.log(`  ${paramName}: ${paramText}`);
+            let parameter: ParamObj = {
+              name: paramName,
+              type: paramText,
+              arraySize: 0
+            }
+            parames.push(parameter);
+          });
+        
+          // 获取返回值类型
+          const returnTypeNode = node.type;
+          let returnTypeText = getParamType(returnTypeNode);
+          let funcItem: FuncObj = {
+            name: node.name.text,
+            returns: returnTypeText,
+            parameters: parames,
+            type: '',
+          }
+          parseRes.funcs.push(funcItem);
         }
         ts.forEachChild(node, visitor);
     }

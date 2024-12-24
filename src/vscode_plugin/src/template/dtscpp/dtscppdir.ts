@@ -52,3 +52,15 @@ export let dtscppout: DirTemp = {
   files: [dtscppReadmeTemplate],
   dirs: [dtscpp_cppdir, dtscpp_etsdir]
 }
+
+export let dts2cpp_cppdir: DirTemp = {
+  name: 'cpp',
+  files: [napiCommonHTemplate, napiCommonCppTemplate, napiHTemplate, napiInitTemplate, napiCppTemplate],
+  dirs: []
+}
+
+export let cppout: DirTemp = {
+  name: 'testdts2cpp',
+  files: [],
+  dirs: [dts2cpp_cppdir]
+}
