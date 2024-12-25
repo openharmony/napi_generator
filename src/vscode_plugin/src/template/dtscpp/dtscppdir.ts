@@ -62,5 +62,5 @@ export let dts2cpp_cppdir: DirTemp = {
 export let cppout: DirTemp = {
   name: 'testdts2cpp',
   files: [],
-  dirs: [dts2cpp_cppdir]
+  dirs: [dts2cpp_cppdir, dtscpp_etsdir]
 }
