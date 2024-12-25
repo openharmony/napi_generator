@@ -19,6 +19,5 @@ export class test
     a: string;
     b: number;
     c: boolean;
-    sayHello(from: string, to: string): number;
 }
 export function testFunc(v1: string, v2: boolean, v3: MyType): test;

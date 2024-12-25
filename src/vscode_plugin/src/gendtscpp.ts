@@ -169,6 +169,9 @@ function generateFunctions(parseObj: ParseObj, tsFilePath: string) {
     genResult.napiHContent += genHFunction(cppfunctions[i], rawFileName);
     // 每个Napi方法的cpp说明
     genResult.napiCppContent += generateDirectFunction(cppfunctions[i], rawFileName, typeList, interfaceList);
+    // gen test function
+    genResult.testContet += generateFuncTestCase(cppfunctions[i], rawFileName, typeList, interfaceList);
+
   }
   return genResult;
 }
