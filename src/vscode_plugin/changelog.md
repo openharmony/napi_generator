@@ -8,7 +8,7 @@
 
 2. 新增 OpenHarmony 交叉编译功能，详见：[OpenHarmony 交叉编译](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/doc/ohCrossCompile.md)
 
-3. 新增dts2cpp功能：开发中，近期完成
+3. 新增dts2cpp功能，详见：[readme](https://gitee.com/openharmony/napi_generator/blob/master/src/vscode_plugin/readme.md)
 
 ### Bug修复
 

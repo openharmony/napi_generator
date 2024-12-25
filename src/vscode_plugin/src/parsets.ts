@@ -205,7 +205,6 @@ export function parseTsFile(filePath: string): ParseObj {
                             parameters: paramResList,
                             type: '',
                         });
-                        parseRes.classes.push(classItem);
                     } else if (ts.isPropertyDeclaration(member) || ts.isPropertyAssignment(member)) { // 判断是否是类的成员变量
                       if ('type' in member && 'text' in member.name) {
                         let paramTypeText = getParamType(member.type);
@@ -217,6 +216,7 @@ export function parseTsFile(filePath: string): ParseObj {
                         classItem.variableList.push(parameter);
                       }
                     }
+                    parseRes.classes.push(classItem);
                 });
             } catch (error) {
                 console.error('Error processing node:', error);
