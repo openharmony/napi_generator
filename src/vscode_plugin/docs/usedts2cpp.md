@@ -1,5 +1,9 @@
 # dts2cpp使用文档
 
+## 环境
+
+DevEco Studio: Build Version: 4.1.0.400, built on April 9, 2024
+
 ## 创建工程
 
 1.打开 DevEco Studio：
@@ -10,7 +14,7 @@
 
 ![](../images/dts2cppTest_create_new_project_finish.png)
 
-2.修改编译选项：在dts2cppTest/entry/build-profile.json5文件中buildOption中增加abiFilters字段， 并将targets字段的runtimeOS改为OpenHarmony
+2.修改编译选项：在dts2cppTest/entry/build-profile.json5文件中buildOption/externalNativeOptions中增加abiFilters字段， 并将targets字段的runtimeOS改为OpenHarmony
 
 ```
 "abiFilters": [
@@ -45,7 +49,7 @@ libhilog_ndk.z.so
 
 ```
 import abilityTest from './Ability.test';
-import testdtsabilityTest from './testdtsAbility.test'
+import testdtsabilityTest from './testdtsAbility.test';
 
 export default function testsuite() {
   abilityTest();
@@ -55,7 +59,7 @@ export default function testsuite() {
 
 ![](../images/dts2cppTest_testList.png)
 
-1.3将转换的dts文件 (testdts.d.ts) 中所有内容拷贝至 cJsonSampleTest/entry/src/main/cpp/types/libentry/index.d.ts中。
+1.3将转换的dts文件 (testdts.d.ts) 中所有内容拷贝到 dts2cppTest/entry/src/main/cpp/types/libentry/index.d.ts中（不覆盖原有内容）。
 
 2.确认生成物是否能编译
 
@@ -63,7 +67,9 @@ export default function testsuite() {
 
 ![](../images/dts2cppTest_Sign_configs.png)
 
-2.2运行testdtsAbility.test.ets中的测试集testdtsActsAbilityTest，用例成功运行，并打印出相关log。
+2.2运行dts2cppTest/entry/src/ohosTest/ets/test/testdtsAbility.test.ets中的测试集testdtsActsAbilityTest，用例成功运行，并打印出相关log。
+
+![](../images/dts2cppTest_runtest.png)
 
 ![](../images/dts2cppTest_success.png)
 
