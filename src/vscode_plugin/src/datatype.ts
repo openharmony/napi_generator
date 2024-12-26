@@ -65,12 +65,19 @@ export interface FuncObj {
   parameters: ParamObj[];
 }
 
+export interface TypeObj {
+  name: string,
+  alias: string,
+  members: ParamObj[]
+}
+
 export interface ParseObj {
   enums: EnumObj[];
   unions: UnionObj[];
   structs: StructObj[];
   classes: ClassObj[];
   funcs: FuncObj[];
+  types?: TypeObj[];
 }
 
 export interface ServiceRootInfo {
