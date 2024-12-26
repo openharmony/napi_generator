@@ -129,3 +129,19 @@ export let idlTransferType: FuncTransferMap[] = [
     tranferContent: ['String']
   },
 ]
+
+// 将ts type转换为 c type
+export let tsTransferType: FuncTransferMap[] = [
+  {
+    fromType: 'boolean',
+    tranferContent: ['bool']
+  },
+  {
+    fromType: 'string',
+    tranferContent: ['std::string']
+  },
+  {
+    fromType: 'number',
+    tranferContent: ['int32_t', 'uint32_t', 'int', 'int64_t', 'uint64_t']
+  }
+]

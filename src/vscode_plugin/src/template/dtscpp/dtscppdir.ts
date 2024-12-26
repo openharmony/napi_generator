@@ -14,6 +14,7 @@
 */
 
 import { DirTemp } from "../../datatype";
+import { dts2hTemplate } from "./dts2cpp_h_template";
 import { napiCommonCppTemplate } from "./dtscpp_commoncpp_template";
 import { napiCommonHTemplate } from "./dtscpp_commonh_template";
 import { indexdtsTemplate } from "./dtscpp_dts_template";
@@ -51,4 +52,16 @@ export let dtscppout: DirTemp = {
   name: 'testh2dtscpp',
   files: [dtscppReadmeTemplate],
   dirs: [dtscpp_cppdir, dtscpp_etsdir]
+}
+
+export let dts2cpp_cppdir: DirTemp = {
+  name: 'cpp',
+  files: [napiCommonHTemplate, napiCommonCppTemplate, napiHTemplate, napiInitTemplate, napiCppTemplate, dts2hTemplate],
+  dirs: []
+}
+
+export let cppout: DirTemp = {
+  name: 'testdts2cpp',
+  files: [],
+  dirs: [dts2cpp_cppdir, dtscpp_etsdir]
 }
