@@ -53,7 +53,7 @@
 
 - h2sa工具可以根据一个定义远程方法的.h头文件，生成整个Service框架的代码，包含Ability注册、proxy/stub类实现、MessageParcel数据包构造、Service子系统编译及开机自启动相关配置文件。
 
-  [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2sa/h2sa_README_ZH.md)
+  [readme](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2sa/README_ZH.md)
 
   [版本说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2sa/docs/release-notes/Service-1.0.md)  
 
