@@ -12,7 +12,7 @@
 
 ### 架构图
 
-![架构图](..\figures\arch.png)
+![架构图](https://gitee.com/openharmony/napi_generator/raw/master/figures/arch.png)
 
 
 ### 文件结构
@@ -45,23 +45,16 @@ napi_generator
 ##### 命令行生成工具介绍
 * [cmake2gn](../src/cli/cmake2gn/docs/guide/DEVELOP_ZH.md)
 * [dts2cpp](../src/cli/dts2cpp/docs/guide/DEVELOP_ZH.md)
-* [dts2ets](../src/cli/dts2ets/docs/guide/DEVELOP_ZH.md)
 * [h2dts](../src/cli/h2dts/docs/guide/DEVELOP_ZH.md)
-* [h2dtscpp](../src/cli/h2dtscpp/docs/guide/DEVELOP_ZH.md)
 * [h2sa](../src/cli/h2sa/docs/guide/DEVELOP_ZH.md)
 ##### Intellij插件介绍
 * [assist](../src/intellij_plugin/assist/assist_tools_IntelliJ_plugin/docs/guide/DEVELOP_ZH.md)
-* [cmake2gn](../src/intellij_plugin/cmake2gn/gn_IntelliJ_plugin/docs/guide/DEVELOP_ZH.md)
 * [dts2cpp](../src/intellij_plugin/dts2cpp/napi_IntelliJ_plugin/docs/guide/DEVELOP_ZH.md)
 * [h2dts](../src/intellij_plugin/h2dts/ts_IntelliJ_plugin/docs/guide/DEVELOP_ZH.md)
-* [h2dtscpp](../src/intellij_plugin/h2dtscpp/native_IntelliJ_plugin/docs/guide/DEVELOP_ZH.md)
-* [h2sa](../src/intellij_plugin/h2sa/service_IntelliJ_plugin/docs/guide/DEVELOP_ZH.md)
 ##### API扫描工具介绍
 * [api](../src/tool/api/api_scan_IntelliJ_plugin/docs/DEVELOP_ZH.md)
 ##### Vscode插件介绍
-* [assist](../src/vscode_plugin/assist/assist_tools_vs_plugin/docs/guide/DEVELOP_ZH.md)
-* [cmake2gn](../src/vscode_plugin/cmake2gn/gn_vs_plugin/docs/guide/DEVELOP_ZH.md)
-* [dts2cpp](../src/vscode_plugin/dts2cpp/napi_vs_plugin/docs/guide/DEVELOP_ZH.md)
-* [h2dts](../src/vscode_plugin/h2dts/ts_vs_plugin/docs/guide/DEVELOP_ZH.md)
-* [h2dtscpp](../src/vscode_plugin/h2dtscpp/native_vs_plugin/docs/guide/DEVELOP_ZH.md)
-* [h2sa](../src/vscode_plugin/h2sa/service_vs_plugin/docs/guide/DEVELOP_ZH.md)
+* [dts2cpp](../src/vscode_plugin/readme.md)
+* [h2dts](../src/vscode_plugin/readme.md)
+* [h2dtscpp](../src/vscode_plugin/readme.md)
+* [h2sa](../src/vscode_plugin/readme.md)

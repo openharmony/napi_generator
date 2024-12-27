@@ -62,11 +62,11 @@ harmony@Ubuntu-64:~$ cd /home/harmony/OpenHarmony/foundation/multimodalinput/inp
 ninja -C out/khdvk_rk3568_a all_targets
 ```
 
-![](./../figures/ninja_build_success.png)
+![](https://gitee.com/openharmony/napi_generator/raw/master/src/cli/cmake2gn/docs/figures/ninja_build_success.png)
 
 3、编译成功后，会生成mbedtls-development相关动态库文件或可执行程序，生成文件及路径如下所示：
 
-![](./../figures/generate_file.png)
+![](https://gitee.com/openharmony/napi_generator/raw/master/src/cli/cmake2gn/docs/figures/generate_file.png)
 
 ## 总结
 
