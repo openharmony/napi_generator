@@ -12,7 +12,7 @@
 
 ### 架构图
 
-![架构图](../figures/arch.png)
+![架构图](https://gitee.com/openharmony/napi_generator/raw/master/figures/arch.png)
 
 
 ### 文件结构
