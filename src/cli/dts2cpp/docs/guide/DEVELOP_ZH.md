@@ -99,12 +99,6 @@
 
 	pkg -t node14-macos . -o napi_generator-macos
 
-### VS插件开发说明
-
-具体的插件开发步骤，可以左键单击以下链接了解：
-
-[VS插件开发说明](https://gitee.com/openharmony/napi_generator/blob/master/src/vscode_plugin/dts2cpp/napi_vs_plugin/docs/guide/DEVELOP_ZH.md)
-
 ### DevEco Studio上使用的IntelliJ插件开发说明
 
 具体的插件开发步骤，可以左键单击以下链接了解：

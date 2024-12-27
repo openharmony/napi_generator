@@ -65,10 +65,6 @@ cppout文件夹下内容（部分文件截图）如下所示：
 
 ![](./docs/figures/h2dtscpp_cppout_example.png)
 
-## 工具开发说明
-
-[工具使用说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2dtscpp/docs/guide/DEVELOP_ZH.md)
-
 ## 版本说明
 
 暂无
