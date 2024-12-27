@@ -7,7 +7,7 @@ scan工具，即API扫描工具，支持两种入口，分别是可执行程序�
 
 通过API扫描工具，开发者可以扫描输出三方库中存在，而OpenHarmony源码中不存在的风险接口，移植之前预知风险，降低移植难度，提高开发效率。
 
-![](./../figures/pic-api-frm.png)
+![](../figures/pic-api-frm.png)
 
 ## 生成result文件
 

@@ -15,7 +15,7 @@ SERVICE框架生成工具支持一种入口，即VS Code插件，使用者可以
 
 具体的插件使用步骤，可以左键单击以下链接了解：
 
-[VS插件使用说明](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/h2sa/service_vs_plugin/docs/usage/INSTRUCTION_ZH.md)
+[VS插件使用说明](https://gitee.com/openharmony/napi_generator/tree/master/src/vscode_plugin/readme.md)
 
 ## 集成
 
