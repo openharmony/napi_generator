@@ -276,7 +276,7 @@ public class ServiceGenerateDialogPane extends JDialog {
      * @param bs   字节内容
      * @throws IOException exception
      */
-    private void writeTmpFile(String path, byte[] bs){
+    private void writeTmpFile(String path, byte[] bs) {
         File file = new File(path);
         if (!file.exists()) {
             boolean isNewFile = file.createNewFile();
@@ -286,7 +286,7 @@ public class ServiceGenerateDialogPane extends JDialog {
         }
         try (FileOutputStream fw = new FileOutputStream(file)) {
             fw.write(bs, 0, bs.length);
-        } catch (IOException e){
+        } catch (IOException e) {
             LOG.error(" write file error" + e);
         }
     }
@@ -372,7 +372,7 @@ public class ServiceGenerateDialogPane extends JDialog {
 
         @Override
         public void run() {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))){
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
                 String line;
                 while ((line = br.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);

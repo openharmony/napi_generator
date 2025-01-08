@@ -366,7 +366,7 @@ public class ApiScanDialogPane extends JDialog {
 
         @Override
         public void run() {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))){
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
                 String line;
                 while ((line = br.readLine()) != null) {
                     LOG.info(line);
@@ -391,7 +391,7 @@ public class ApiScanDialogPane extends JDialog {
 
         @Override
         public void run() {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()))){
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 genResultLog(process);
                 while (br.readLine() != null) {
                     LOG.info(" callExtProcess ");

@@ -409,7 +409,7 @@ public class GenerateDialogPane extends JDialog {
         @Override
         public void run() {
             try (InputStreamReader inputStreamReader = new InputStreamReader(is);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader)){
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
                 String readLine;
                 while ((readLine = bufferedReader.readLine()) != null) {
                     LOG.error("StreamConsumer" + readLine);
