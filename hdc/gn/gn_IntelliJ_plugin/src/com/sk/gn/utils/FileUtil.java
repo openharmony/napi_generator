@@ -152,7 +152,8 @@ public class FileUtil {
      */
     public static void writeTmpFile(String path, String oldPath, Project project) {
         File file = new File(path);
-        try (InputStream inputStream = FileUtil.class.getClassLoader().getResourceAsStream(oldPath)) {
+        try (InputStream inputStream = FileUtil.class.getClassLoader().getResourceAsStream(oldPath);
+            FileOutputStream fw = new FileOutputStream(file)) {
             if (inputStream == null) {
                 throw new IOException("exec File InputStream is Null");
             }
@@ -162,7 +163,6 @@ public class FileUtil {
             if (!isNewFile) {
                 LOG.info("writeTmpFile createNewFile error");
             }
-            FileOutputStream fw = new FileOutputStream(file);
             fw.write(bs, 0, bs.length);
             fw.close();
         } catch (IOException e) {

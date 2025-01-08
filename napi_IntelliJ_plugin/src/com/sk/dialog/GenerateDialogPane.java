@@ -566,7 +566,7 @@ public class GenerateDialogPane extends JDialog {
      * @param bs   字节内容
      * @throws IOException exception
      */
-    private void writeTmpFile(String path, byte[] bs) throws IOException {
+    private void writeTmpFile(String path, byte[] bs) {
         File file = new File(path);
         if (!file.exists()) {
             boolean isNewFile = file.createNewFile();
@@ -574,9 +574,11 @@ public class GenerateDialogPane extends JDialog {
                 LOG.info("writeTmpFile createNewFile error");
             }
         }
-        FileOutputStream fw = new FileOutputStream(file);
-        fw.write(bs, 0, bs.length);
-        fw.close();
+        try (FileOutputStream fw = new FileOutputStream(file)) {
+            fw.write(bs, 0, bs.length);
+        } catch (IOException e) {
+            LOG.error(" write file error" + e);
+        }
     }
 
     /**
@@ -660,9 +662,7 @@ public class GenerateDialogPane extends JDialog {
 
         @Override
         public void run() {
-            try {
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))){
                 String line;
                 while ((line = br.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);
