@@ -320,9 +320,11 @@ public class GenerateDialogPane extends JDialog {
                 LOG.info("writeTmpFile createNewFile error");
             }
         }
-        FileOutputStream fw = new FileOutputStream(file);
-        fw.write(bs, 0, bs.length);
-        fw.close();
+        try (FileOutputStream fw = new FileOutputStream(file)) {
+            fw.write(bs, 0, bs.length);
+        } catch (IOException e) {
+            LOG.error(" write file error" + e);
+        }
     }
 
     /**
@@ -406,9 +408,8 @@ public class GenerateDialogPane extends JDialog {
 
         @Override
         public void run() {
-            try {
-                InputStreamReader inputStreamReader = new InputStreamReader(is);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            try (InputStreamReader inputStreamReader = new InputStreamReader(is);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
                 String readLine;
                 while ((readLine = bufferedReader.readLine()) != null) {
                     LOG.error("StreamConsumer" + readLine);

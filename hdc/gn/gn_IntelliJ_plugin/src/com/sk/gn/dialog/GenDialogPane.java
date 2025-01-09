@@ -505,9 +505,7 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
 
         @Override
         public void run() {
-            try {
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
                 String line;
                 while ((line = br.readLine()) != null) {
                     LOG.error("StreamConsumer" + line);
@@ -532,9 +530,8 @@ public class GenDialogPane extends JDialog implements SelectOutDirAction.SelectP
 
         @Override
         public void run() {
-            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            genResultLog(process);
-            try {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                genResultLog(process);
                 while (br.readLine() != null) {
                     LOG.info(" callExtProcess ");
                 }
