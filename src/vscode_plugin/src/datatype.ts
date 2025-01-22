@@ -88,9 +88,11 @@ export interface ServiceRootInfo {
 }
 
 export interface HdfRootInfo {
-  driverName: string; // driverName即为文件名字
+  // driverName即为文件名字
+  driverName: string; 
   funcs: FuncObj[];
-  versionTag: string;  // 默认4.1
+  // 默认4.1
+  versionTag: string;  
 }
 
 export interface FuncTransferMap {
@@ -121,8 +123,10 @@ export interface FuncInfo {
 
 // 保存 typedefine int cJSON_bool
 export interface TypeList {
-  typeName: string;  // cJSON_bool
-  typeBody: string;  // int
+  // cJSON_bool
+  typeName: string;  
+  // int
+  typeBody: string;  
 }
 
 export interface InterfaceBody {

@@ -18,7 +18,8 @@ import { FuncTransferMap } from "../datatype";
 export let transferMap: FuncTransferMap[] = [
   {
     fromType: 'bool',
-    tranferContent: ['WriteBoolUnaligned', 'ReadBoolUnaligned']  // 分离出array , vector, map等
+    // 分离出array , vector, map等
+    tranferContent: ['WriteBoolUnaligned', 'ReadBoolUnaligned']  
   },
   {
     fromType: 'int8_t',

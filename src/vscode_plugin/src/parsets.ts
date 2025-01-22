@@ -94,11 +94,15 @@ function getParamType(paramType: any) {
   if (paramType === undefined) {
     return 'void';
   }
-  let paramText = paramType.kind === NUMBER_TYPE ? 'number' : // 类型为 number
-                  paramType.kind === STRING_TYPE ? 'string' : // 类型为 string
-                  paramType.kind === BOOLEAN_TYPE ? 'boolean' : // 类型为 boolean
+                  // 类型为 number
+  let paramText = paramType.kind === NUMBER_TYPE ? 'number' : 
+                  // 类型为 string
+                  paramType.kind === STRING_TYPE ? 'string' : 
+                  // 类型为 boolean
+                  paramType.kind === BOOLEAN_TYPE ? 'boolean' : 
                   paramType.kind === VOID_TYPE ? 'void' :
-                  'any'; // 默认any类型
+                  // 默认any类型
+                  'any'; 
   if (paramType.kind === OBJECT_TYPE) {
     const type = paramType.typeName.escapedText;
     if (paramType.typeArguments) {
@@ -205,7 +209,8 @@ export function parseTsFile(filePath: string): ParseObj {
                             parameters: paramResList,
                             type: '',
                         });
-                    } else if (ts.isPropertyDeclaration(member) || ts.isPropertyAssignment(member)) { // 判断是否是类的成员变量
+                    } else if (ts.isPropertyDeclaration(member) || ts.isPropertyAssignment(member)) { 
+                      // 判断是否是类的成员变量
                       if ('type' in member && 'text' in member.name) {
                         let paramTypeText = getParamType(member.type);
                         let parameter: ParamObj = {
@@ -258,9 +263,11 @@ export function parseTsFile(filePath: string): ParseObj {
           parameters.forEach(param => {
             let paramName = '';
             if ('text' in param.name) {
-              paramName = param.name.text; // 参数名称，如 "v1"
+              // 参数名称，如 "v1"
+              paramName = param.name.text; 
             }
-            const paramType = param.type; // 参数类型节点
+            // 参数类型节点
+            const paramType = param.type; 
             let paramText = getParamType(paramType);
 
             console.log(`  ${paramName}: ${paramText}`);

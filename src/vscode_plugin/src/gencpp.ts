@@ -134,7 +134,8 @@ function getParamJs2C(funcInfo: FuncInfo, i: number, paramGenResult: string, typ
   } else if (paramType === 'std::string' || paramType.indexOf('char') >= 0) {
     paramGen = getParamGenCon(stringIn, i, paramName, paramGen);
     paramGenResult += paramGen;
-  } else if (getTypeBody(paramType, typeList)) { // typedefs
+  } else if (getTypeBody(paramType, typeList)) { 
+    // typedefs
     funcInfo.params[i].type = getTypeBody(paramType, typeList) as string;
     paramGenResult = getParamJs2C(funcInfo, i, paramGenResult, typeList);
   } 
@@ -166,7 +167,8 @@ function returnTypeC2Js(returnName: string, retType: string, retGenResult: strin
   } else if (retType === 'std::string' || retType.substring(0, 10) === 'const char' ||
         retType === 'char') {
       retGenResult = getRetTypeContent(stringRet, returnName, retGenResult, retObjInfo, objectTosetRet);
-  } else if (getInterfaceBody(retType, interfaceList)) { // 返回值是对象
+  } else if (getInterfaceBody(retType, interfaceList)) { 
+      // 返回值是对象
       if (!retObjInfo.flag) {
           retGenResult += replaceAll(objectRet, '[return_name_replace]', returnName);
           retObjInfo.flag = true;
@@ -181,7 +183,8 @@ function returnTypeC2Js(returnName: string, retType: string, retGenResult: strin
       } else {
           retGenResult = getObjRetGenResult(retObjInfo, retGenResult, returnName);
       }
-  } else if (getTypeBody(retType, typeList)) { // typedefs
+  } else if (getTypeBody(retType, typeList)) { 
+    // typedefs
     let funcRetType = getTypeBody(retType, typeList) as string;
     retGenResult = returnTypeC2Js(returnName, funcRetType, retGenResult, retObjInfo,typeList, interfaceList);
   }
