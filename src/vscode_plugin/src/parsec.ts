@@ -49,9 +49,11 @@ function parseUnion(data: string) {
   const unions: UnionObj[] = [];
   let match;
   while ((match = unionRegex.exec(data)) !== null) {
-    const unionName = match[1] || match[3] || match[4]; // 获取结构体名字
+    // 获取结构体名字
+    const unionName = match[1] || match[3] || match[4]; 
     const aliasName = match[3];
-    const membersString = match[2] || match[5]; // 获取成员声明
+    // 获取成员声明
+    const membersString = match[2] || match[5]; 
     const members = membersString.split(';')
         .map(member => member.trim().replace(/[\n\r]/g, ''))
         .filter(member => member.length > 0);
@@ -67,9 +69,12 @@ function parseUnion(data: string) {
       // const match = declaration.match(/(\w+)\s+(\w+)(\[(\d+)\])?/);
       const match = declaration.match(/(\w[\w\s\*]+)\s+(\w+)\s*/);
       if (match) {
-        const type = match[1]; // 类型
-        const variable = match[2]; // 变量名
-        const arrayLength = match[4] ? parseInt(match[4], 10) : -1; // 解析数组长度
+        // 类型
+        const type = match[1]; 
+        // 变量名
+        const variable = match[2]; 
+        // 解析数组长度
+        const arrayLength = match[4] ? parseInt(match[4], 10) : -1; 
         // console.log(`Type: ${type}, Variable:${variable}, Size:${arrayLength}`);
         let paramItem: ParamObj = {
           "type": type,
@@ -95,9 +100,11 @@ function parseStruct(data: string) {
   const structs: StructObj[] = [];
   let match;
   while ((match = structRegex.exec(data)) !== null) {
-    const structName = match[1] ||match[3] || match[4]; // 获取结构体名字
+    // 获取结构体名字
+    const structName = match[1] ||match[3] || match[4]; 
     const alias = match[3];
-    const membersString = match[2] || match[5]; // 获取成员声明
+    // 获取成员声明
+    const membersString = match[2] || match[5]; 
 
     const members = membersString.split(';')
         .map(member => member.trim().replace(/[\n\r]/g, ''))
@@ -146,7 +153,8 @@ function parseParameters(members: string[]): ParamObj[] {
           return { type, name, arraySize };
       }
       return {};
-  }).filter((m): m is ParamObj => m !== null); // 类型保护
+  // 类型保护
+  }).filter((m): m is ParamObj => m !== null); 
 }
 
 function parseMembers(members: string[]): ParamObj[] {
@@ -162,24 +170,30 @@ function parseMembers(members: string[]): ParamObj[] {
           return { type, name, arraySize };
       }
       return {};
-  }).filter((m): m is ParamObj => m !== null); // 类型保护
+  // 类型保护
+  }).filter((m): m is ParamObj => m !== null); 
 }
 
 function parseMethods(functions: string[]): FuncObj[] {
   const functionRegex = /^(\w[\w\s]*\*?)\s+(\w+)\((.*?)\)$/;
-  // const functionRegex = /(\w+)\s+(\w+)\(([^)]*)\)/; // 正则表达式匹配返回值、函数名和参数
+  // 正则表达式匹配返回值、函数名和参数
+  // const functionRegex = /(\w+)\s+(\w+)\(([^)]*)\)/; 
 
   return functions.map(func => {
       const match = func.trim().match(functionRegex);
       if (match) {
-          const returns = match[1]; // 返回值类型
-          const name = match[2]; // 方法名
-          const parameterstr = match[3].split(',').map(param => param.trim()).filter(Boolean); // 分割参数并去除空值
+          // 返回值类型
+          const returns = match[1]; 
+          // 方法名
+          const name = match[2]; 
+          // 分割参数并去除空值
+          const parameterstr = match[3].split(',').map(param => param.trim()).filter(Boolean); 
           const parameters = parseParameters(parameterstr);
           return { returns, name, parameters };
       }
       return {};
-  }).filter((f): f is FuncObj => f !== null); // 类型保护
+  // 类型保护
+  }).filter((f): f is FuncObj => f !== null); 
 }
 
 function parseClass(data: string) {
@@ -319,9 +333,12 @@ function parseFunction(data: string): FuncObj[] {
   let match;
   while ((match = funcRegex.exec(data)) !== null) {
     // console.log(`func match: ${JSON.stringify(match)}`)
-    const returnType = match[1] ? match[1].trim() : match[6].trim(); //match[3].trim();
-    const name = match[2] ? match[2].trim() : match[7].trim(); //match[4].trim();
-    const params = (match[3] ? match[3] : match[8] || "").split(',').map(param => param.trim()).filter(param => param); //match[5].split(',').map(param => param.trim()).filter(param => param);
+    // match[3].trim();
+    const returnType = match[1] ? match[1].trim() : match[6].trim(); 
+    // match[4].trim();
+    const name = match[2] ? match[2].trim() : match[7].trim(); 
+    // match[5].split(',').map(param => param.trim()).filter(param => param);
+    const params = (match[3] ? match[3] : match[8] || "").split(',').map(param => param.trim()).filter(param => param); 
     let isInterface = match[0].includes('typedef');
     let funcItem: FuncObj = {
       "type": isInterface ? "typedef" : "function",
