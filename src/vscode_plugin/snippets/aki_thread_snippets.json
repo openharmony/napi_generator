@@ -1,0 +1,12 @@
+{
+  "Aki TaskRunner PostTask": {
+    "prefix": "akiposttask",
+    "body": [
+      "// PostTask submits a lambda to the \"main\" task scheduler for execution in its managed threads. Initialize the scheduler with JSBind.initTaskRunner(\"main\") before using PostTask.",
+      "aki::TaskRunner::PostTask(\"main\", []() {",
+        "// execute on Js thread",
+        "// Todo: do something",
+      "});"
+    ]
+  }
+}

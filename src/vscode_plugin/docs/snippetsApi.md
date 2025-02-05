@@ -155,7 +155,6 @@
   </tr>
 </tbody>
 </table>
-
 **Aki snippets**
 
 <table><thead align="center"><tr><th class="cellrowborder" valign="top" width="12%" ><ul>版本号</ul></th>
@@ -166,7 +165,7 @@
 </thead>
 <tbody>
   <tr>
-    <td class="cellrowborder" valign="top" width="12%" rowspan="5">1.0.0</td>
+    <td class="cellrowborder" valign="top" width="12%" rowspan="33">1.0.0</td>
     <td class="cellrowborder" valign="top" width="25%">类</td>
     <td class="cellrowborder" valign="top" width="18%">akiclass</td>
     <td class="cellrowborder" valign="top" width="45%">aki 类使用场景代码片段</td>
@@ -182,14 +181,127 @@
     <td>aki 枚举使用场景代码片段</td>
   </tr>
   <tr>
-    <td>同步方法</td>
+    <td>同步</td>
     <td>akisyncfunc</td>
-    <td>aki同步方法使用场景代码片段</td>
+    <td>aki 同步方法使用场景代码片段</td>
   </tr>
   <tr>
-    <td>异步方法</td>
+    <td rowspan="7">异步</td>
     <td>akiasyncfunc</td>
-    <td>aki异步方法使用场景代码片段</td>
+    <td>aki 异步方法使用场景代码片段</td>
   </tr>
-</tbody>
-</table>
+  <tr>
+    <td>akicallfuncreturnstring</td>
+    <td>aki std::function回调场景代码片段</td>
+  </tr>
+  <tr>
+    <td>akicallbackreturnstring</td>
+    <td>aki 非线程安全回调场景代码片段</td>
+  </tr>
+  <tr>
+    <td>akisafecallbackreturnstring</td>
+    <td>aki 线程安全回调场景代码片段</td>
+  </tr>
+  <tr>
+    <td>akipromiseresolve</td>
+    <td>aki promise resolve代码片段</td>
+  </tr>
+  <tr>
+    <td>akipromisereject</td>
+    <td>aki promise reject代码片段</td>
+  </tr>
+  <tr>
+    <td>akiposttask</td>
+    <td>aki 往指定任务调度器投递任务代码片段</td>
+  </tr>
+  <tr>
+    <td rowspan="22">aki::Value</td>
+    <td>akipassvalueasbool</td>
+    <td>aki 将JS对象转换为C++ bool类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasuint8</td>
+    <td>aki 将JS对象转换为C++ uint8类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasint8</td>
+    <td>aki 将JS对象转换为C++ int8类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasuint16</td>
+    <td>aki 将JS对象转换为C++ uint16类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasint16</td>
+    <td>aki 将JS对象转换为C++ int16类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasint</td>
+    <td>aki 将JS对象转换为C++ int类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasint64</td>
+    <td>aki 将JS对象转换为C++ int64类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasfloat</td>
+    <td>aki 将JS对象转换为C++ float类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasdouble</td>
+    <td>aki 将JS对象转换为C++ double类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasstring</td>
+    <td>aki 将JS对象转换为C++ string类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasfunction</td>
+    <td>aki 将JS对象转换为C++ function类型代码片段</td>
+  </tr>  
+  <tr>
+    <td>akiarraypushvalue</td>
+    <td>aki 使用CallMethod在C++中调用JS定义的方法代码片段</td>
+  </tr>
+  <tr>
+    <td>akipassvalueasobject</td>
+    <td>aki 在C++中动态创建一个新的JS对象，并对其进行操作代码片段</td>
+  </tr>  
+  <tr>
+    <td>akicheckvalueisnull</td>
+    <td>aki 判断JS对象是否为null代码片段</td>
+  </tr> 
+  <tr>
+    <td>akicheckvalueisbool</td>
+    <td>aki 判断JS对象是否为bool类型代码片段</td>
+  </tr>  
+  <tr>
+    <td>akicheckvalueisnumber</td>
+    <td>aki 判断JS对象是否为number类型代码片段</td>
+  </tr>
+  <tr>
+    <td>akicheckvalueisstring</td>
+    <td>aki 判断JS对象是否为string类型代码片段</td>
+  </tr>  
+  <tr>
+    <td>akicheckvalueisobject</td>
+    <td>aki 判断JS对象是否为object类型代码片段</td>
+  </tr>  
+  <tr>
+    <td>akicheckvalueisarray</td>
+    <td>aki 判断JS对象是否为array类型代码片段</td>
+  </tr>  
+  <tr>
+    <td>akicheckvalueisfunction</td>
+    <td>aki 判断JS对象是否为function类型代码片段</td>
+  </tr>  
+  <tr>
+    <td>akivaluefromglobaljsonstringify</td>
+    <td>aki 在C++中访问全局定义的对象，调用JSON.stringify方法</td>
+  </tr>  
+  <tr>
+    <td>akivaluefromglobaljsonparse</td>
+    <td>aki 在C++中访问全局定义的对象，调用JSON.parse方法</td>
+  </tr>  
+  </tbody>
+</table>  
