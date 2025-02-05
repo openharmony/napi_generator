@@ -14,18 +14,18 @@
 * limitations under the License.
 */
 
-import { replaceAll, getTab } from './common/tool';
-import { getReg, match } from './common/re';
+import { replaceAll, getTab } from '../common/tool';
+import { getReg, match } from '../common/re';
 const numericTypes = ['short', 'int', 'long', 'long long', 'float', 'double'];
 const boolType = ['bool'];
 const charType = ['char', 'string'];
-import { service4_1_dir, service3_2_dir } from './template/sa/sadir';
-import { proxyFuncTemplate, stubInnerFuncTemplate, serviceFuncImplTemplate } from './template/func_template';
+import { service4_1_dir, service3_2_dir } from '../template/sa/sadir';
+import { proxyFuncTemplate, stubInnerFuncTemplate, serviceFuncImplTemplate } from '../template/func_template';
 import * as path from 'path';
 import * as fs from 'fs';
 import { format } from 'util'
 import { DirTemp, FuncObj, ParamObj, ServiceRootInfo } from './datatype';
-import { transferMap } from './template/functypemap_template'
+import { transferMap } from '../template/functypemap_template'
 
 // 常用类型转换表, 将C语言常见类型(key)转换为remote data读写函数使用的类型(value)
 // 例如 ErrCode 类型在框架中的系统原型为int类型，这里映射成int32_t，

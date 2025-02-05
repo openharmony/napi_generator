@@ -34,7 +34,7 @@ import { serviceCfgTemplate41 } from './sa_cfg_template41';
 import { serviceCfgGnTemplate } from './sa_cfggn_template';
 import { saReadmeTemplate } from './sa_readme_template';
 import { saReadmeTemplate41 } from './sa_readme_template41';
-import { DirTemp } from '../../datatype';
+import { DirTemp } from '../../gen/datatype';
 
 export let etc4_1_dir: DirTemp = {
   name: 'etc',

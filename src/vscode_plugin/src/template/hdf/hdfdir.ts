@@ -13,7 +13,7 @@
 * limitations under the License.
 */
 
-import { DirTemp } from "../../datatype"
+import { DirTemp } from "../../gen/datatype"
 import { hcsConfigTemplate } from "./hdf_hcsconfig_template"
 import { peripheralBuildGn } from "./hdf_buildgn_template"
 import { peripheralBundleJson4_1 } from "./hdf_bundlejson_template41"
