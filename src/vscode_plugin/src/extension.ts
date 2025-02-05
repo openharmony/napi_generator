@@ -21,15 +21,15 @@ import * as ts from 'typescript';
 import * as fs from 'fs';
 import * as os from 'os';
 import { downloadSdk , extractTarGz, extractZip, crossCompile, checkNative } from './ohcrosscompile';
-import { parseHeaderFile } from './parsec';
-import { DtscppRootInfo, GenInfo } from './datatype';
-import { parseTsFile } from './parsets';
-import { genServiceFile } from './gensa';
-import { genDtsFile } from './gendts';
-import { genHdfFile } from './genhdf';
-import { genDtsCppFile, genCppFile } from './gendtscpp';
+import { parseHeaderFile } from './parse/parsec';
+import { DtscppRootInfo, GenInfo } from './gen/datatype';
+import { parseTsFile } from './parse/parsets';
+import { genServiceFile } from './gen/gensa';
+import { genDtsFile } from './gen/gendts';
+import { genHdfFile } from './gen/genhdf';
+import { genDtsCppFile, genCppFile } from './gen/gendtscpp';
 
-// »ñÈ¡±¾µØ»¯×Ö·û´®
+// ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ø»ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 const SELECTED_DIR = vscode.l10n.t('You selected a directory:');
 const SELECTE_DIR = vscode.l10n.t('Please select a directory.');
 const NO_RES_SELECTED = vscode.l10n.t('No resource selected.');
@@ -101,16 +101,16 @@ export function activate(context: vscode.ExtensionContext) {
         }
         const canCmake = fs.existsSync(thirdPartyPath.concat("/CMakeLists.txt"));
         const canMake = fs.existsSync(thirdPartyPath.concat("/GNUmakefile")) || fs.existsSync(thirdPartyPath.concat("/Makefile")) || fs.existsSync(thirdPartyPath.concat("/makefile"));
-        if (canCmake || canMake) {  //Èç¹û¼ì²âµ½CMakeLists.txt»òmakefile£¬Ôò¿ÉÒÔ¼ÌÐø
+        if (canCmake || canMake) {  //ï¿½ï¿½ï¿½ï¿½ï¿½âµ½CMakeLists.txtï¿½ï¿½makefileï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½
 
   
-          // ÈôÃ»ÓÐ²å¼þÎÄ¼þ¼Ð¡¢°²×°ÎÄ¼þ¼Ð£¬Ôò´´½¨¡£¿É×Ô¶¯»ñÈ¡µ½°²×°Ä¿Â¼
+          // ï¿½ï¿½Ã»ï¿½Ð²ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½×°ï¿½Ä¼ï¿½ï¿½Ð£ï¿½ï¿½ò´´½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½×°Ä¿Â¼
           const ohCrossCompilePath = thirdPartyPath.concat("/ohCrossCompile");
           if (!fs.existsSync(ohCrossCompilePath)) {
             fs.mkdirSync(ohCrossCompilePath);
           }
   
-          // ÈôÃ»ÓÐÅäÖÃÎÄ¼þ£¬ÔòÒÔÄ¬ÈÏÅäÖÃ´´½¨ÅäÖÃÎÄ¼þ
+          // ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
           const configPath = ohCrossCompilePath.concat("/config.json")
           if (!fs.existsSync(configPath)) {
             const defaultConfig = {
@@ -140,10 +140,10 @@ export function activate(context: vscode.ExtensionContext) {
             fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 4), 'utf8');
           }
   
-          // »ñÈ¡±àÒë·½Ê½ÊÇmake»¹ÊÇcmake
-          if (configContent.settings.compileTool !== undefined && (configContent.settings.compileTool === "make" || configContent.settings.compileTool === "cmake")) {  //Èç¹ûÅäÖÃÎÄ¼þÖÐÒÑ¾­´æ´¢±àÒë·½Ê½£¬Ôò»ñµÃ
+          // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ë·½Ê½ï¿½ï¿½makeï¿½ï¿½ï¿½ï¿½cmake
+          if (configContent.settings.compileTool !== undefined && (configContent.settings.compileTool === "make" || configContent.settings.compileTool === "cmake")) {  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ë·½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             compileTool = configContent.settings.compileTool;
-          } else if (canCmake && canMake) {   //Èô×Ô¶¯ÅÐ¶Ï³ömakeÓëcmake¾ù¿ÉÊ¹ÓÃ£¬ÔòÑ¯ÎÊÓÃ»§£¬²¢´æ´¢½á¹û
+          } else if (canCmake && canMake) {   //ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ð¶Ï³ï¿½makeï¿½ï¿½cmakeï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã£ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½
   
             const toolPickItems = [
               {
@@ -171,19 +171,19 @@ export function activate(context: vscode.ExtensionContext) {
               vscode.window.showInformationMessage(COMPILATION_METHOD_LOST);
               return;
             }
-          } else if (canCmake) {  //Èô×Ô¶¯ÅÐ¶Ï³öÖ»¿ÉÒÔÊ¹ÓÃcmake
+          } else if (canCmake) {  //ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ð¶Ï³ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½cmake
             compileTool = "cmake";
             configContent.settings.compileTool = "cmake";
             fs.writeFileSync(configPath, JSON.stringify(configContent, null, 4), 'utf8');
-          } else {  //Èô×Ô¶¯ÅÐ¶Ï³öÖ»¿ÉÒÔÊ¹ÓÃmake
+          } else {  //ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ð¶Ï³ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½make
             compileTool = "make";
             configContent.settings.compileTool = "make";
             fs.writeFileSync(configPath, JSON.stringify(configContent, null, 4), 'utf8');
           }
   
   
-          // È·ÈÏÒª±àÒëµÄCPU¼Ü¹¹¡£°²×°ÎÄ¼þ¼ÐÈô²»´æÔÚÔò´´½¨
-          if (configContent.settings.ohArchitecture === undefined || configContent.settings.ohArchitecture.length === 0) {  //Èô¸ù¾ÝÅäÖÃÎÄ¼þÎÞ·¨È·¶¨CPU¼Ü¹¹²ÎÊý£¬ÔòÑ¯ÎÊÓÃ»§
+          // È·ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½CPUï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò´´½ï¿½
+          if (configContent.settings.ohArchitecture === undefined || configContent.settings.ohArchitecture.length === 0) {  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Þ·ï¿½È·ï¿½ï¿½CPUï¿½Ü¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ã»ï¿½
             const archPickItems = [
               {
                 label: "arm64-v8a",
@@ -201,7 +201,7 @@ export function activate(context: vscode.ExtensionContext) {
               title: OH_CROSS_COMPILE_TITLE
             };
             const archPick = await vscode.window.showQuickPick(archPickItems, archPickOptions)
-            if (archPick && Array.isArray(archPick) && archPick.length > 0) {   //»ñµÃÓÃ»§Ñ¡ÔñµÄÐÅÏ¢£¬²¢´æÈëÅäÖÃÎÄ¼þ
+            if (archPick && Array.isArray(archPick) && archPick.length > 0) {   //ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
               for (let item of archPick) {
                 let arch = item.label;
                 ohArchitecture.push(arch);
@@ -240,10 +240,10 @@ export function activate(context: vscode.ExtensionContext) {
           }       
           
   
-          // È·ÈÏsdkÖÐnative¹¤¾ßµÄÂ·¾¶
-          if (configContent.settings.nativePath === undefined || configContent.settings.nativePath === "") {  //Ñ¯ÎÊÓÃ»§
+          // È·ï¿½ï¿½sdkï¿½ï¿½nativeï¿½ï¿½ï¿½ßµï¿½Â·ï¿½ï¿½
+          if (configContent.settings.nativePath === undefined || configContent.settings.nativePath === "") {  //Ñ¯ï¿½ï¿½ï¿½Ã»ï¿½
   
-            // È·ÈÏsdkÀ´Ô´ÊÇ±¾µØ»¹ÊÇÏÂÔØ
+            // È·ï¿½ï¿½sdkï¿½ï¿½Ô´ï¿½Ç±ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             const sourcePickItems = [
               {
                 label: LOCAL,
@@ -263,7 +263,7 @@ export function activate(context: vscode.ExtensionContext) {
             const sourcePick = await vscode.window.showQuickPick(sourcePickItems, sourcePickOptions);
             
             if (sourcePick) {
-              if (sourcePick.label === LOCAL) {   //ÈôsdkÀ´Ô´Îª±¾µØ£¬ÔòÑ¯ÎÊÓÃ»§nativeËùÔÚµÄ¾ßÌåÂ·¾¶£¬²¢¼ì²éÊÇ·ñºÏ·¨
+              if (sourcePick.label === LOCAL) {   //ï¿½ï¿½sdkï¿½ï¿½Ô´Îªï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ã»ï¿½nativeï¿½ï¿½ï¿½ÚµÄ¾ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Ï·ï¿½
                 const folderUri = await vscode.window.showOpenDialog({
                   canSelectMany: false,
                   canSelectFolders: true,
@@ -279,7 +279,7 @@ export function activate(context: vscode.ExtensionContext) {
                     configContent.settings.nativePath = folderPath;
                     fs.writeFileSync(configPath, JSON.stringify(configContent, null, 4), 'utf8');
   
-                    // Ö´ÐÐ±àÒëÃüÁî
+                    // Ö´ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     crossCompile(platform, undefined, configPath, thirdPartyPath, compileTool, ohArchitecture, nativePath, ohCrossCompilePath);
                   } else {
                     vscode.window.showInformationMessage(NATIVE_CHECK_FAILED);
@@ -289,8 +289,8 @@ export function activate(context: vscode.ExtensionContext) {
                   vscode.window.showInformationMessage(FOLDER_LOST);
                   return;
                 }
-              } else if (sourcePick.label === DOWNLOAD) {   //ÈôsdkÀ´Ô´ÎªÍøÂç£¬ÔòÑ¯ÎÊÏÂÔØ°æ±¾ÓëÏÂÔØÂ·¾¶£¬ÏÂÔØ²¢½âÑ¹sdk
-                // »ñÈ¡ÏÂÔØ°æ±¾£¬´Ó¶ø»ñµÃÏÂÔØÁ´½Ó
+              } else if (sourcePick.label === DOWNLOAD) {   //ï¿½ï¿½sdkï¿½ï¿½Ô´Îªï¿½ï¿½ï¿½ç£¬ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½Ø°æ±¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½Ñ¹sdk
+                // ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ø°æ±¾ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 const versionPickItems = [
                   {
                     label: API9_LABEL,
@@ -338,7 +338,7 @@ export function activate(context: vscode.ExtensionContext) {
                       break;
                   }
   
-                  // Ñ¯ÎÊÏÂÔØÂ·¾¶
+                  // Ñ¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
                   const folderUri = await vscode.window.showOpenDialog({
                     canSelectMany: false,
                     canSelectFolders: true,
@@ -351,7 +351,7 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                     let filePath = folderPath.concat("/ohos-sdk-windows_linux-public.tar.gz");
                     
-                    // ÏÂÔØ²¢½âÑ¹sdkÖÐµÄnative
+                    // ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½Ñ¹sdkï¿½Ðµï¿½native
                     await vscode.window.withProgress({
                       location: vscode.ProgressLocation.Notification,
                       title: DOWNLOADING_TITLE,
@@ -362,23 +362,23 @@ export function activate(context: vscode.ExtensionContext) {
                       vscode.window.showInformationMessage(vscode.l10n.t('SDK downloaded to: {0}', filePath));
                       // vscode.window.showInformationMessage(`SDK downloaded to: ${filePath}`);
   
-                      // ½âÑ¹sdkÖÐµÄnative£¬²¢Æ´×°nativePath
+                      // ï¿½ï¿½Ñ¹sdkï¿½Ðµï¿½nativeï¿½ï¿½ï¿½ï¿½Æ´×°nativePath
                       progress.report({ increment: 10, message: DOWNLOADING_COMPLETE });
                       await extractTarGz(filePath, folderPath);
                       progress.report({ increment: 100, message: SDK_INSTALLED });
   
                       nativePath = folderPath;
-                      if (apiVersion !== API12_LABEL) {    //api12°æ±¾Â·¾¶ÖÐÃ»ÓÐohos-sdk£»9-11°æ±¾ÔòÓÐ
+                      if (apiVersion !== API12_LABEL) {    //api12ï¿½æ±¾Â·ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ohos-sdkï¿½ï¿½9-11ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½
                         nativePath = nativePath.concat("/ohos-sdk");
                       }
                       if (platform === "win32") {
-                        nativePath = nativePath.concat("/windows");    //windowsÏµÍ³ÏÂµÄnativePathÂ·¾¶
+                        nativePath = nativePath.concat("/windows");    //windowsÏµÍ³ï¿½Âµï¿½nativePathÂ·ï¿½ï¿½
                       } else {
-                        nativePath = nativePath.concat("/linux");   //linuxÏµÍ³ÏÂµÄnativePathÂ·¾¶
+                        nativePath = nativePath.concat("/linux");   //linuxÏµÍ³ï¿½Âµï¿½nativePathÂ·ï¿½ï¿½
                       }
                       for (const file of await fs.promises.readdir(nativePath)) {
                         if (file.startsWith("native")) {
-                          filePath = nativePath.concat("/" + file);   //»ñÈ¡nativeÑ¹Ëõ°üµÄÎÄ¼þÂ·¾¶
+                          filePath = nativePath.concat("/" + file);   //ï¿½ï¿½È¡nativeÑ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½
                         }
                       }
                       console.log(filePath);
@@ -389,7 +389,7 @@ export function activate(context: vscode.ExtensionContext) {
                       configContent.settings.nativePath = nativePath;
                       fs.writeFileSync(configPath, JSON.stringify(configContent, null, 4), 'utf8');
   
-                      // Ö´ÐÐ±àÒëÃüÁî
+                      // Ö´ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                       crossCompile(platform, terminal, configPath, thirdPartyPath, compileTool, ohArchitecture, nativePath, ohCrossCompilePath);
                     });
                   } else {
@@ -405,19 +405,19 @@ export function activate(context: vscode.ExtensionContext) {
               vscode.window.showInformationMessage(SDK_SOURCE_LOST);
               return;
             }
-          } else {  //ÅäÖÃÎÄ¼þÖÐnativePath·Ç¿Õ£¬Ôò´ÓÅäÖÃÎÄ¼þÖÐ»ñÈ¡
+          } else {  //ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½nativePathï¿½Ç¿Õ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ð»ï¿½È¡
             if (checkNative(platform, configContent.settings.nativePath)) {
               nativePath = configContent.settings.nativePath;
-              // Ö´ÐÐ±àÒëÃüÁî
+              // Ö´ï¿½Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
               crossCompile(platform, undefined, configPath, thirdPartyPath, compileTool, ohArchitecture, nativePath, ohCrossCompilePath);
-            } else {  //´ÓÅäÖÃÎÄ¼þÖÐ»ñÈ¡µÄnativePath·Ç·¨£¬ÔòÖØÖÃ£¬²¢ÌáÊ¾
+            } else {  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ð»ï¿½È¡ï¿½ï¿½nativePathï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
               configContent.settings.nativePath = "";
               fs.writeFileSync(configPath, JSON.stringify(configContent, null, 4), 'utf8');
               vscode.window.showInformationMessage(NATIVE_CHECK_FAILED);
               return;
             }
           }
-        } else {    //ÓÃ»§ËùÑ¡ÎÄ¼þ¼Ð²»º¬CMakeLists.extºÍMakefile
+        } else {    //ï¿½Ã»ï¿½ï¿½ï¿½Ñ¡ï¿½Ä¼ï¿½ï¿½Ð²ï¿½ï¿½ï¿½CMakeLists.extï¿½ï¿½Makefile
           vscode.window.showErrorMessage(CMAKE_MAKE_LOST);
         }
       }
@@ -439,7 +439,7 @@ export function activate(context: vscode.ExtensionContext) {
           }
           const serviceId = await vscode.window.showInputBox({
             placeHolder: INPUT_SERVICEID,
-            value: "19000", // ÉèÖÃÄ¬ÈÏÖµ
+            value: "19000", // ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Öµ
             validateInput: (input) => {
                 if (!input) {
                     return INPUT_NO_EMPTY;
@@ -533,7 +533,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(dts2cpp);
 
-    // »¶Ó­²Ëµ¥Ò³Ãæ
+    // ï¿½ï¿½Ó­ï¿½Ëµï¿½Ò³ï¿½ï¿½
     const ohGenerator = vscode.commands.registerCommand('extension.ohGenerator', async () => {
       // The code you place here will be executed every time your command is executed
       let hPath = path.join(__dirname, '../test/test.h');
@@ -551,7 +551,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
       });
       if (value === HDF_FRAMEWORK) {
-        // ÊäÈë°æ±¾
+        // ï¿½ï¿½ï¿½ï¿½æ±¾
         let versionTag = '4.1';
         const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION })
         if (version === 'OpenHarmony 4.1 release') {
@@ -559,7 +559,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
         generateHdf(hdfInputPath, versionTag);
       } else if (value === SA_FRAMEWORK) {
-        // ÊäÈë°æ±¾
+        // ï¿½ï¿½ï¿½ï¿½æ±¾
         let versionTag = '3.2';
         const version = await vscode.window.showQuickPick(['OpenHarmony 3.2 release', 'OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION })
         if (version === 'OpenHarmony 4.1 release') {
@@ -609,10 +609,10 @@ async function generateHdf(hdfInputPath: string, versionTag: string) {
     genHdfFile(rootInfo, out);
     progress.report({ increment: 100, message: GEN_COMPLETE + out});
   });
-   // ÏÔÊ¾³öÉú³ÉÂ·¾¶
+   // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
    const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hdfInputPath), OPEN_IN_EXPLORER);
    if (choice === OPEN_IN_EXPLORER) {
-     // ´ò¿ªÎÄ¼þËùÔÚµÄÄ¿Â¼
+     // ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Úµï¿½Ä¿Â¼
      vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hdfInputPath));
    }
 }
@@ -642,10 +642,10 @@ async function generateSa(hPath: string, versionTag: string, serviceId: string) 
     genServiceFile(rootInfo, out);
     progress.report({ increment: 100, message: GEN_COMPLETE + out });
   });
-  // ÏÔÊ¾³öÉú³ÉÂ·¾¶
+  // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
   const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hPath), OPEN_IN_EXPLORER);
   if (choice === OPEN_IN_EXPLORER) {
-    // ´ò¿ªÎÄ¼þËùÔÚµÄÄ¿Â¼
+    // ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Úµï¿½Ä¿Â¼
     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hPath));
   }
 }
@@ -675,10 +675,10 @@ async function generateDtscpp(hFilePath: string) {
     genDtsCppFile(rootInfo, out);
     progress.report({ increment: 100, message: GEN_COMPLETE + out });
   });
-  // ÏÔÊ¾³öÉú³ÉÂ·¾¶
+  // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
   const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hFilePath), OPEN_IN_EXPLORER);
   if (choice === OPEN_IN_EXPLORER) {
-    // ´ò¿ªÎÄ¼þËùÔÚµÄÄ¿Â¼
+    // ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Úµï¿½Ä¿Â¼
     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hFilePath));
   }
 }
