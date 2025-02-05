@@ -13,7 +13,7 @@
 * limitations under the License.
 */
 
-import { DirTemp } from "../../datatype";
+import { DirTemp } from "../../gen/datatype";
 import { dts2hTemplate } from "./dts2cpp_h_template";
 import { napiCommonCppTemplate } from "./dtscpp_commoncpp_template";
 import { napiCommonHTemplate } from "./dtscpp_commonh_template";

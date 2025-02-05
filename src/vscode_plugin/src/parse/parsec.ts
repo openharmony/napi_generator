@@ -16,7 +16,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as ts from 'typescript';
-import { ParamObj, FuncObj, StructObj, ClassObj, EnumObj, UnionObj, ParseObj } from './datatype'
+import { ParamObj, FuncObj, StructObj, ClassObj, EnumObj, UnionObj, ParseObj } from '../gen/datatype'
 
 import fs = require('fs');
 
