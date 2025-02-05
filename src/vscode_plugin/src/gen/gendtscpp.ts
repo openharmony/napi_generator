@@ -14,16 +14,16 @@
 */
 
 import { DirTemp, DtscppRootInfo, FuncInfo, InterfaceList, TypeList, ParamObj, ParseObj, ClassObj, FuncObj } from "./datatype";
-import { replaceAll } from "./common/tool";
+import { replaceAll } from "../common/tool";
 import fs = require('fs');
 import path = require("path");
-import { napiFuncHTemplate, napiFuncInitTemplate } from "./template/func_template";
-import { cppout, dtscppout } from "./template/dtscpp/dtscppdir";
+import { napiFuncHTemplate, napiFuncInitTemplate } from "../template/func_template";
+import { cppout, dtscppout } from "../template/dtscpp/dtscppdir";
 import { analyzeRootFunction, genDtsInterface, genTsFunction } from "./gendts";
 import { generateDirectFunction } from "./gencpp";
 import { generateFuncTestCase } from "./gentest";
 
-import { tsTransferType } from "./template/functypemap_template";
+import { tsTransferType } from "../template/functypemap_template";
 
 interface GenResult {
   dtsContent: string; // dts文件中的内容
