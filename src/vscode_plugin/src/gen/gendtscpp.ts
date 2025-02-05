@@ -26,9 +26,12 @@ import { generateFuncTestCase } from "./gentest";
 import { tsTransferType } from "../template/functypemap_template";
 
 interface GenResult {
-  dtsContent: string; // dts文件中的内容
-  testContet: string; // abilitytest文件中的内容
-  napiHContent: string; // h文件中的内容
+  // dts文件中的内容
+  dtsContent: string; 
+  // abilitytest文件中的内容
+  testContet: string; 
+  // h文件中的内容
+  napiHContent: string; 
   napiInitContent: string,
   napiCppContent: string
 }

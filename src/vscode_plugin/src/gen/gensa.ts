@@ -44,14 +44,22 @@ interface DestObj {
 
 interface GenResult {
   funcEnumStr: string,
-  iServiceFuncH: string, //i_service.h 方法定义
-  proxyFuncH: string, //proxy.h 方法定义
-  stubInnerFuncH: string, // stub.h 的inner方法定义
-  proxyFuncCpp: string, //proxy.cpp 方法实现
-  stubInnerFuncMap: string, // stub.cpp 的inner方法映射表
-  stubInnerFuncCpp: string, // stub.cpp 的inner方法实现
-  serviceFuncCpp: string, // service.cpp的方法实现: 参数初始化
-  clientFuncCpp: string, // client.cpp 的inner方法定义
+  // i_service.h 方法定义
+  iServiceFuncH: string, 
+  // proxy.h 方法定义
+  proxyFuncH: string, 
+  // stub.h 的inner方法定义
+  stubInnerFuncH: string, 
+  // proxy.cpp 方法实现
+  proxyFuncCpp: string, 
+  // stub.cpp 的inner方法映射表
+  stubInnerFuncMap: string, 
+  // stub.cpp 的inner方法实现
+  stubInnerFuncCpp: string, 
+  // service.cpp的方法实现: 参数初始化
+  serviceFuncCpp: string, 
+  // client.cpp 的inner方法定义
+  clientFuncCpp: string, 
 };
 
 function getParcelType(srcType: string) {
@@ -162,9 +170,11 @@ function genStubInnerFunc(funcInfo: FuncObj, className: string) {
     innerFunc = replaceAll(innerFunc, '[funcName]', funcInfo.name);
 
     // 入参处理
-    let readDataStr = ''; // 生成服务端读取客户端传参的代码段
+    // 生成服务端读取客户端传参的代码段
+    let readDataStr = ''; 
     let tab = getTab(1);
-    let innerParamStr = ''; // 调用业务方法时传入的入参列表
+    // 调用业务方法时传入的入参列表
+    let innerParamStr = ''; 
     for (let i = 0; i < funcInfo.parameters.length; ++i) {
         let param = funcInfo.parameters[i];
         let innerParamName = param.name + 'Val';
@@ -174,7 +184,8 @@ function genStubInnerFunc(funcInfo: FuncObj, className: string) {
         }
 
         //将remote请求中的参数值读取到内部参数变量中
-        readDataStr += format('%s %s;', param.type, innerParamName); // 定义内部参数变量
+        // 定义内部参数变量
+        readDataStr += format('%s %s;', param.type, innerParamName); 
         let destObj = {
             'name': param.name + 'Val',
             'type': param.type
@@ -185,7 +196,8 @@ function genStubInnerFunc(funcInfo: FuncObj, className: string) {
     innerFunc = replaceAll(innerFunc, '[readData]', readDataStr);
 
     // 调用service的实际业务逻辑实现方法
-    let writeReplyStr = ''; // 生成调用服务端实现并返回结果的代码段
+    // 生成调用服务端实现并返回结果的代码段
+    let writeReplyStr = ''; 
     if (funcInfo.returns === 'void') {
         writeReplyStr += format('%s(%s); // call business implementation', funcInfo.name, innerParamStr);
         writeReplyStr += '\n' + tab + 'reply.WriteInt32(retCode);';
@@ -215,7 +227,8 @@ function genServiceFunc(funcInfo: FuncObj, className: string, paramStr: string) 
         initRetvalue = '';
     } else {
         // 对于其他类型，这里可以根据需要进行处理
-        initRetvalue = 'nullptr'; // 假设是指针类型或其他复杂类型
+        // 假设是指针类型或其他复杂类型
+        initRetvalue = 'nullptr'; 
     }8
     serviceFunc = replaceAll(serviceFunc, '[initRetvalue]', initRetvalue);
     serviceFunc = replaceAll(serviceFunc, '[serviceName]', className);
@@ -228,20 +241,29 @@ function generateFunctionCode(rootInfo: ServiceRootInfo) {
   let funcList: FuncObj[] = rootInfo.funcs;
   let genResult: GenResult = {
     funcEnumStr:'',
-    iServiceFuncH: '', // i_service.h 方法定义
-    proxyFuncH: '', // proxy.h 方法定义
-    stubInnerFuncH: '', // stub.h 的inner方法定义
-    proxyFuncCpp: '', // proxy.cpp 方法实现
-    stubInnerFuncMap: '', // stub.cpp 的inner方法映射表
-    stubInnerFuncCpp: '', // stub.cpp 的inner方法实现
-    serviceFuncCpp: '', // service.cpp的方法实现: 参数初始化
-    clientFuncCpp: '', // client.cpp 的inner方法定义
+    // i_service.h 方法定义
+    iServiceFuncH: '', 
+    // proxy.h 方法定义
+    proxyFuncH: '', 
+    // stub.h 的inner方法定义
+    stubInnerFuncH: '', 
+    // proxy.cpp 方法实现
+    proxyFuncCpp: '', 
+    // stub.cpp 的inner方法映射表
+    stubInnerFuncMap: '', 
+    // stub.cpp 的inner方法实现
+    stubInnerFuncCpp: '', 
+    // service.cpp的方法实现: 参数初始化
+    serviceFuncCpp: '', 
+    // client.cpp 的inner方法定义
+    clientFuncCpp: '', 
   };
   let enumTab = getTab(2);
   let funcTab = getTab(1);
 
   for (let i = 0; i < funcList.length; ++i) {
-    let funcEnum = funcList[i].name.toUpperCase(); // remote方法的枚举值
+    // remote方法的枚举值
+    let funcEnum = funcList[i].name.toUpperCase(); 
     // 生成proxy端的方法
     let paramStr = getFuncParamStr(funcList[i].parameters);
     // proxy.h中的方法定义
