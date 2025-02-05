@@ -1,0 +1,248 @@
+{
+  "Passing value as bool": {
+    "prefix": "akipassvalueasbool",
+    "body": [
+      "// As is used to convert JavaScript objects into bool data type in C/C++.",
+      "bool PassingValueAsBool(aki::Value value) { return value.As<bool>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsBool);",
+      "}"
+    ]
+  },
+  "Passing value as uint8": {
+    "prefix": "akipassvalueasuint8",
+    "body": [
+      "// As is used to convert JavaScript objects into uint8_t data type in C/C++.",
+      "uint8_t PassingValueAsUint8(aki::Value value) { return value.As<uint8_t>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsUint8);",
+      "}"
+    ]
+  },
+  "Passing value as int8": {
+    "prefix": "akipassvalueasint8",
+    "body": [
+      "// As is used to convert JavaScript objects into int8_t data type in C/C++.",
+      "int8_t PassingValueAsInt8(aki::Value value) { return value.As<int8_t>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsInt8);",
+      "}"
+    ]
+  },
+  "Passing value as uint16": {
+    "prefix": "akipassvalueasuint16",
+    "body": [
+      "// As is used to convert JavaScript objects into uint16_t data type in C/C++.",
+      "uint16_t PassingValueAsUint16(aki::Value value) { return value.As<uint16_t>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsUint16);",
+      "}"
+    ]
+  },
+  "Passing value as int16": {
+    "prefix": "akipassvalueasint16",
+    "body": [
+      "// As is used to convert JavaScript objects into int16_t data type in C/C++.",
+      "int16_t PassingValueAsInt16(aki::Value value) { return value.As<int16_t>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsInt16);",
+      "}"
+    ]
+  },
+  "Passing value as int": {
+    "prefix": "akipassvalueasint",
+    "body": [
+      "// As is used to convert JavaScript objects into int data type in C/C++.",
+      "int PassingValueAsInt(aki::Value value) { return value.As<int>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsInt);",
+      "}"
+    ]
+  },
+  "Passing value as int64": {
+    "prefix": "akipassvalueasint64",
+    "body": [
+      "// As is used to convert JavaScript objects into int64_t data type in C/C++.",
+      "int64_t PassingValueAsInt64(aki::Value value) { return value.As<int64_t>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsInt64);",
+      "}"
+    ]
+  },
+  "Passing value as float": {
+    "prefix": "akipassvalueasfloat",
+    "body": [
+      "// As is used to convert JavaScript objects into float data type in C/C++.",
+      "float PassingValueAsFloat(aki::Value value) { return value.As<float>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsFloat);",
+      "}"
+    ]
+  },
+  "Passing value as double": {
+    "prefix": "akipassvalueasdouble",
+    "body": [
+      "// As is used to convert JavaScript objects into double data type in C/C++.",
+      "double PassingValueAsDouble(aki::Value value) { return value.As<double>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsDouble);",
+      "}"
+    ]
+  },
+  "Passing value as string": {
+    "prefix": "akipassvalueasstring",
+    "body": [
+      "// As is used to convert JavaScript objects into std::string data type in C/C++.",
+      "std::string PassingValueAsString(aki::Value value) { return value.As<std::string>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsString);",
+      "}"
+    ]
+  },
+  "Passing value as function": {
+    "prefix": "akipassvalueasfunction",
+    "body": [
+      "// Invoke a JavaScript function, passing a string parameter and returning a result string.",
+      "std::string PassingValueAsFunction(aki::Value value) { return value(\"aki value from c++\").As<std::string>(); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsFunction);",
+      "}"
+    ]
+  },
+  "Passing array value return array value": {
+    "prefix": "akiarraypushvalue",
+    "body": [
+      "// aki::Value is a class used for mapping the any type in JavaScript in C/C++.",
+      "aki::Value PassingArrayValueReturnArrayValue(aki::Value value) {",
+      "  // aki::Value::CallMethod is used to call the member functions of JavaScript objects and pass parameters.",
+      "  // Invoke the push method of the JavaScript array object, and pass the string \"jsbind\" as a parameter to this method.",
+      "  value.CallMethod(\"push\", \"jsbind\");",
+      "  return value;",
+      "}",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingArrayValueReturnArrayValue);",
+      "}"
+    ]
+  },
+  "Passing value as json object": {
+    "prefix": "akipassvalueasobject",
+    "body": [
+      "aki::Value PassingValueAsJsonObject(aki::Value value) {",
+      "  // Create a new aki::Value object for dynamic property access in C++.",
+      "  aki::Value val = aki::Value::NewObject();",
+      "  // Set a property name (key) and a value (value) into an aki::Value object.",
+      "  val.Set(\"name\", \"John\");",
+      "  return val;",
+      "}",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueAsJsonObject);",
+      "}"
+    ]
+  },
+  "Aki check value is undefined": {
+    "prefix": "akicheckvalueisundefined",
+    "body": [
+      "// Determine whether the aki::Value object is mapped to undefined in JavaScript.",
+      "aki::Value PassingValueCheckIsUndefined(aki::Value value) { return aki::Value(value.IsUndefined()); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueCheckIsUndefined);",
+      "}"
+    ]
+  },
+  "Aki check value is null": {
+    "prefix": "akicheckvalueisnull",
+    "body": [
+      "// Determine whether the aki::Value object is mapped to null in JavaScript.",
+      "aki::Value PassingValueCheckIsNull(aki::Value value) { return aki::Value(value.IsNull()); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueCheckIsNull);",
+      "}"
+    ]
+  },
+  "Aki check value is bool": {
+    "prefix": "akicheckvalueisbool",
+    "body": [
+      "// Determine whether the aki::Value object is mapped to bool in JavaScript.",
+      "aki::Value PassingValueCheckIsBool(aki::Value value) { return aki::Value(value.IsBool()); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueCheckIsBool);",
+      "}"
+    ]
+  },
+  "Aki check value is number": {
+    "prefix": "akicheckvalueisnumber",
+    "body": [
+      "// Determine whether the aki::Value object is mapped to number in JavaScript.",
+      "aki::Value PassingValueCheckIsNumber(aki::Value value) { return aki::Value(value.IsNumber()); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueCheckIsBool);",
+      "}"
+    ]
+  },
+  "Aki check value is string": {
+    "prefix": "akicheckvalueisstring",
+    "body": [
+      "// Determine whether the aki::Value object is mapped to string in JavaScript.",
+      "aki::Value PassingValueCheckIsString(aki::Value value) { return aki::Value(value.IsString()); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueCheckIsString);",
+      "}"
+    ]
+  },
+  "Aki check value is object": {
+    "prefix": "akicheckvalueisobject",
+    "body": [
+      "// Determine whether the aki::Value object is mapped to object in JavaScript.",
+      "aki::Value PassingValueCheckIsObject(aki::Value value) { return aki::Value(value.IsObject()); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueCheckIsObject);",
+      "}"
+    ]
+  },
+  "Aki check value is array": {
+    "prefix": "akicheckvalueisarray",
+    "body": [
+      "// Determine whether the aki::Value object is mapped to array in JavaScript.",
+      "aki::Value PassingValueCheckIsArray(aki::Value value) { return aki::Value(value.IsArray()); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueCheckIsArray);",
+      "}"
+    ]
+  },
+  "Aki check value is function": {
+    "prefix": "akicheckvalueisfunction",
+    "body": [
+      "// Determine whether the aki::Value object is mapped to function in JavaScript.",
+      "aki::Value PassingValueCheckIsFunction(aki::Value value) { return aki::Value(value.IsFunction()); }",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(PassingValueCheckIsFunction);",
+      "}"
+    ]
+  },
+  "Aki value from global json stringify": {
+    "prefix": "akivaluefromglobaljsonstringify",
+    "body": [
+      "aki::Value FromGlobalJSONStringify(aki::Value obj) {",
+      "  // Used to obtain properties under globalThis on the JS side.",
+      "  aki::Value json = aki::Value::FromGlobal(\"JSON\");",
+      "  return json[\"stringify\"](obj);",
+      "}",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(FromGlobalJSONStringify);",
+      "}"
+    ]
+  },
+  "Aki value from global json parse": {
+    "prefix": "akivaluefromglobaljsonparse",
+    "body": [
+      "aki::Value FromGlobalJSONParse(aki::Value obj) {",
+      "  // Used to obtain properties under globalThis on the JS side.",
+      "  aki::Value json = aki::Value::FromGlobal(\"JSON\");",
+      "  return json[\"parse\"](obj);",
+      "}",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(FromGlobalJSONParse);",
+      "}"
+    ]
+  }
+}
