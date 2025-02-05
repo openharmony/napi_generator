@@ -21,13 +21,13 @@ import * as ts from 'typescript';
 import * as fs from 'fs';
 import * as os from 'os';
 import { downloadSdk , extractTarGz, extractZip, crossCompile, checkNative } from './ohcrosscompile';
-import { parseHeaderFile } from './parsec';
-import { DtscppRootInfo, GenInfo } from './datatype';
-import { parseTsFile } from './parsets';
-import { genServiceFile } from './gensa';
-import { genDtsFile } from './gendts';
-import { genHdfFile } from './genhdf';
-import { genDtsCppFile, genCppFile } from './gendtscpp';
+import { parseHeaderFile } from './parse/parsec';
+import { DtscppRootInfo, GenInfo } from './gen/datatype';
+import { parseTsFile } from './parse/parsets';
+import { genServiceFile } from './gen/gensa';
+import { genDtsFile } from './gen/gendts';
+import { genHdfFile } from './gen/genhdf';
+import { genDtsCppFile, genCppFile } from './gen/gendtscpp';
 
 // 获取本地化字符串
 const SELECTED_DIR = vscode.l10n.t('You selected a directory:');

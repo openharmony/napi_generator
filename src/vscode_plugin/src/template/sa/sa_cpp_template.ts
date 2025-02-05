@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-import { FileTemp } from "../../datatype";
+import { FileTemp } from "../../gen/datatype";
 
 export let serviceCppTemplate: FileTemp = {
   name: '[serviceName]_service.cpp',

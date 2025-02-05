@@ -13,7 +13,7 @@
 * limitations under the License.
 */
 
-import { FuncTransferMap } from "../datatype";
+import { FuncTransferMap } from "../gen/datatype";
 
 export let transferMap: FuncTransferMap[] = [
   {

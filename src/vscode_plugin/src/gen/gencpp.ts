@@ -17,8 +17,8 @@ import { FuncInfo, InterfaceList, TypeList } from "./datatype";
 import { getInterfaceBody, getTypeBody } from "./gendts";
 import { boolIn, boolRet, doubleIn, doubleRet, funcGetParamTemplate, int32tIn, int32tRet, int64tIn, int64tRet, 
   napiFuncCppTemplate, napiFuncRetTemplate, objectRet, objectTosetRet, paramGenTemplate, stringIn, stringRet,
-  uint32tIn, uint32tRet } from "./template/func_template";
-import { replaceAll } from "./common/tool";
+  uint32tIn, uint32tRet } from "../template/func_template";
+import { replaceAll } from "../common/tool";
 
 interface RetObjInfo {
   objName: string;

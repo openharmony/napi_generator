@@ -16,11 +16,11 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { DirTemp, FuncObj, HdfRootInfo } from "./datatype";
-import { hdf4_1dir } from './template/hdf/hdfdir';
-import { idlTransferType } from './template/functypemap_template';
+import { hdf4_1dir } from '../template/hdf/hdfdir';
+import { idlTransferType } from '../template/functypemap_template';
 import { format } from 'util';
-import { getTab, replaceAll } from './common/tool';
-import { hdiServiceFuncTemplate } from './template/func_template';
+import { getTab, replaceAll } from '../common/tool';
+import { hdiServiceFuncTemplate } from '../template/func_template';
 
 
 // 常用类型转换表, 将C语言常见类型(key)转换为remote data读写函数使用的类型(value)

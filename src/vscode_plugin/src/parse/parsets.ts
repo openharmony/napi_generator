@@ -18,7 +18,7 @@ import * as path from 'path';
 import * as ts from 'typescript';
 import { json } from 'stream/consumers';
 import internal = require('stream');
-import { ParamObj, FuncObj, ClassObj, EnumObj, TypeObj, ParseObj } from './datatype'
+import { ParamObj, FuncObj, ClassObj, EnumObj, TypeObj, ParseObj } from '../gen/datatype'
 
 const fs = require('fs');
 
