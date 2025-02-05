@@ -13,7 +13,7 @@
 * limitations under the License.
 */
 
-import { FileTemp } from "../../datatype";
+import { FileTemp } from "../../gen/datatype";
 
 export let napiCppTemplate: FileTemp = {
   name: '[fileName]napi.cpp',

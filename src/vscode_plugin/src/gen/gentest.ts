@@ -14,10 +14,10 @@
 */
 
 import util = require('util');
-import { replaceAll } from "./common/tool";
+import { replaceAll } from "../common/tool";
 import { FuncInfo, InterfaceList, ParamObj, TypeList } from "./datatype";
 import { getInterfaceBody, getJsTypeFromC, getTypeBody, isBoolType, isNumberType, isStringType } from './gendts';
-import { testAbilityFuncTemplate } from "./template/func_template";
+import { testAbilityFuncTemplate } from "../template/func_template";
 const INTVALUE = 5;
 const FLOATVALUE = 2.5;
 

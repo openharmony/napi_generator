@@ -13,21 +13,19 @@
 * limitations under the License.
 */
 
-import { FileTemp } from "../../gen/datatype";
 
-export let hdfReadmeTemplate: FileTemp = {
-  name: 'readme.md',
-  content: `## 依赖
+import * as assert from 'assert';
 
-  插件版本: 0.0.1
-  
-  VSCode版本: VS Code 1.62.0及以上
-  
-  ## 使用方法
-  
-  生成物具体如何使用请参考以下链接：
-  
-  [usage](https://gitee.com/openharmony/napi_generator/blob/master/src/cli/h2hdf/docs/usage.md#编译)
-  
-  `
-}
+// You can import and use all API from the 'vscode' module
+// as well as import your extension to test it
+import * as vscode from 'vscode';
+// import * as myExtension from '../../extension';
+
+suite('Extension Test Suite', () => {
+	vscode.window.showInformationMessage('Start all tests.');
+
+	test('Sample test', () => {
+		assert.strictEqual([1, 2, 3].indexOf(5), -1);
+		assert.strictEqual([1, 2, 3].indexOf(0), -1);
+	});
+});

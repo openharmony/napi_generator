@@ -14,13 +14,13 @@
 */
 import fs = require('fs');
 import { DtscppRootInfo, FuncObj, InterfaceBody, ParamObj, FuncInfo, GenInfo, InterfaceList, TypeList } from './datatype';
-import { dts2cpp_key } from './template/dtscpp/dts2cpp_key';
+import { dts2cpp_key } from '../template/dtscpp/dts2cpp_key';
 import path = require('path');
 
-import { generateRandomInteger, removeComments, removeTab, replaceAll } from './common/tool';
+import { generateRandomInteger, removeComments, removeTab, replaceAll } from '../common/tool';
 import util = require('util');
-import re = require('./common/re');
-import { dtsFuncTemplate } from './template/func_template';
+import re = require('../common/re');
+import { dtsFuncTemplate } from '../template/func_template';
 
 const MIN_RANDOM = 100;
 const MAX_RANDOM = 999
