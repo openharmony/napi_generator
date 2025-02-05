@@ -362,7 +362,8 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
     
     if (basicTypeMatch) {
       for (let index = 0; index < basicTypeMatch.length; index++) {
-        console.log('Basic type typedef match:', basicTypeMatch[0]); // 输出匹配的基本类型定义
+        // 输出匹配的基本类型定义
+        console.log('Basic type typedef match:', basicTypeMatch[0]); 
         let matchs = basicTypeMatch[index].split(' ');
         let rawType = getJsTypeFromC(matchs[1].trim());
         let defineType = matchs[2].split(';')
