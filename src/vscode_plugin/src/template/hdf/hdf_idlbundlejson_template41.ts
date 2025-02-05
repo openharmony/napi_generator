@@ -13,7 +13,7 @@
 * limitations under the License.
 */
 
-import { FileTemp } from "../../datatype";
+import { FileTemp } from "../../gen/datatype";
 
 export let idlBundleJson4_1: FileTemp = {
   name: 'bundle.json',

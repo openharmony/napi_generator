@@ -13,7 +13,7 @@
 * limitations under the License.
 */
 
-import { FileTemp } from "../../datatype";
+import { FileTemp } from "../../gen/datatype";
 
 export let serviceCfgTemplate41: FileTemp = {
   name: '[serviceName]_service.cfg',
