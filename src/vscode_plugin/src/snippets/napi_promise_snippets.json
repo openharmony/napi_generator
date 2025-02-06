@@ -1,0 +1,23 @@
+{
+  "Napi create promise": {
+    "prefix": "napicreatepromise",
+    "body": [
+      "// Create a new js Promise.",
+      "napi_create_promise(env, &deferred, &promise);"
+    ]
+  },
+  "Napi resolve deferred": {
+    "prefix": "napiresolvedeferred",
+    "body": [
+      "// Fulfill a js Promise with a given value.",
+      "napi_resolve_deferred(env, deferred, resolution);"
+    ]
+  },
+  "Napi reject deferred": {
+    "prefix": "napirejectdeferred",
+    "body": [
+      "// Reject a js Promise with a given reason.",
+      "napi_reject_deferred(env, deferred, rejection);"
+    ]
+  }
+}
