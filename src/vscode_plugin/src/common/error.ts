@@ -13,11 +13,13 @@
 * limitations under the License.
 */
 
-type MyType = number;
-export class test
-{
-    a: string;
-    b: number;
-    c: boolean;
-}
-export function testFunc(v1: string, v2: boolean, v3: MyType): test;
+// The module 'vscode' contains the VS Code extensibility API
+// Import the module and reference it with the alias vscode in your code below
+
+import * as vscode from 'vscode';
+
+export const ERROR_UNKNOW = -1;
+export const ERROR_NOEXIST = -2;
+export const ERROR_NET = -3;
+export const ERROR_FILE = -4;
+export const ERROR_PARSE = -5;

@@ -13,10 +13,12 @@
 * limitations under the License.
 */
 
-#ifndef TEST_H
-#define TEST_H
+// The module 'vscode' contains the VS Code extensibility API
+// Import the module and reference it with the alias vscode in your code below
 
-namespace OHOS {
-    int testFunc(int v1, int v2, bool v3);
-}
-#endif
+import * as vscode from 'vscode';
+
+export const EVENT_PROGRESS = "progress";
+export const EVENT_ERROR = "error";
+export const EVENT_WARNING = "warn";
+export const EVENT_INFORMATION = "info";
