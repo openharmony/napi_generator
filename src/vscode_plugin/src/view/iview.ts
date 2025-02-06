@@ -13,11 +13,15 @@
 * limitations under the License.
 */
 
-#ifndef HELLO_H
-#define HELLO_H
-#include <string>
+import { IController } from "../controller/icontroller";
+import { IModel } from "../model/imodel";
 
-namespace OHOS {
-    std::string Helloworld(std::string sendMsg);
+export abstract class IView {
+    abstract name: string;
+    abstract model: IModel;
+    abstract controller: IController | undefined;
+
+    abstract init(controller: IController): void;
+    abstract showProgress(): void;
+    abstract showMsg(event: string, msg: string): void;
 }
-#endif

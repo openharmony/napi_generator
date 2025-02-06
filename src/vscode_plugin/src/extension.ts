@@ -28,6 +28,7 @@ import { genServiceFile } from './gen/gensa';
 import { genDtsFile } from './gen/gendts';
 import { genHdfFile } from './gen/genhdf';
 import { genDtsCppFile, genCppFile } from './gen/gendtscpp';
+import { H2dtsCtrl } from './controller/h2dtsctrl';
 
 // 获取本地化字符串
 const SELECTED_DIR = vscode.l10n.t('You selected a directory:');
@@ -481,29 +482,32 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(h2hdf);
 
-    const h2dts = vscode.commands.registerCommand('extension.h2dts', async (uri) => {
-      // The code you place here will be executed every time your command is executed
-      if (uri && uri.fsPath) {
-        vscode.window.withProgress({
-          location: vscode.ProgressLocation.Notification,
-          title: "Generating .d.ts ...",
-          cancellable: false
-        }, async (progress) => {
-          // parse
-          let parseRes = await parseHeaderFile(uri.fsPath);
-          console.log('parse header file res: ', parseRes);
-          progress.report({ increment: 50, message: PARSE_COMPLETE });
+    const h2dts = vscode.commands.registerCommand('extension.h2dts', async (uri: vscode.Uri) => {
+      let h2dtsCtrl = new H2dtsCtrl(uri);
+      h2dtsCtrl.init();
+
+      // // The code you place here will be executed every time your command is executed
+      // if (uri && uri.fsPath) {
+      //   vscode.window.withProgress({
+      //     location: vscode.ProgressLocation.Notification,
+      //     title: "Generating .d.ts ...",
+      //     cancellable: false
+      //   }, async (progress) => {
+      //     // parse
+      //     let parseRes = await parseHeaderFile(uri.fsPath);
+      //     console.log('parse header file res: ', parseRes);
+      //     progress.report({ increment: 50, message: PARSE_COMPLETE });
           
-          let rootInfo: GenInfo = {
-            parseObj: parseRes,
-            rawFilePath: uri.fsPath,  // e://xxx.h
-            fileName: path.basename(uri.fsPath, '.h')  // xxx
-          };
-          // generator
-          let outPath = genDtsFile(rootInfo);
-          progress.report({ increment: 100, message: GEN_COMPLETE + outPath });
-        });
-      }
+      //     let rootInfo: GenInfo = {
+      //       parseObj: parseRes,
+      //       rawFilePath: uri.fsPath,  // e://xxx.h
+      //       fileName: path.basename(uri.fsPath, '.h')  // xxx
+      //     };
+      //     // generator
+      //     let outPath = genDtsFile(rootInfo);
+      //     progress.report({ increment: 100, message: GEN_COMPLETE + outPath });
+      //   });
+      // }
     });
     context.subscriptions.push(h2dts);
 
