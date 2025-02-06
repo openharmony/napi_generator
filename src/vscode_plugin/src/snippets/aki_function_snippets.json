@@ -1,0 +1,31 @@
+{
+  "Aki sync function": {
+    "prefix": "akisyncfunc",
+    "body": [
+      "std::string SayHello(std::string msg) { return msg + \" too.\"; }",
+      "// Register the AKI plugin name: It is the name of the compiled *.so file, following the same rules as NAPI.",
+      "JSBIND_ADDON(entry)",
+      "// Used to define the scope of global functions that need to be bound.",
+      "JSBIND_GLOBAL() {",
+      "    // 'SayHello' function can be directly called from JavaScript.",
+      "    JSBIND_FUNCTION(SayHello);",
+      "}"
+    ]
+  },
+  "Aki async function": {
+    "prefix": "akiasyncfunc",
+    "body": [
+      "std::string AsyncSayHello(std::string msg) {",
+      "  // Do something;",
+      "  return msg + \" too.\";",
+      "}",
+      "// Register the AKI plugin name: It is the name of the compiled *.so file, following the same rules as NAPI.",
+      "JSBIND_ADDON(entry)",
+      "// Used to define the scope of global functions that need to be bound.",
+      "JSBIND_GLOBAL() {",
+      "    // function can be called asynchronously from JavaScript with Promises.",
+      "    JSBIND_PFUNCTION(AsyncSayHello);",
+      "}"
+    ]
+  }
+}
