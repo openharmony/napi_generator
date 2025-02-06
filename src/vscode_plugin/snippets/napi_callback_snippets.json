@@ -1,9 +1,0 @@
-{
-  "Napi Callback": {
-    "prefix": "napicallfunc",
-    "body": [
-      "// Invokes a js function with the provided arguments and returns the result.",
-      "napi_call_function(env, recv, callbackFunc, argc, callbackArg, &result);"
-    ]
-  }
-}
