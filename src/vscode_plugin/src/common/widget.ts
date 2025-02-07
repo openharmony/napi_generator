@@ -17,7 +17,40 @@
 // Import the module and reference it with the alias vscode in your code below
 
 import * as vscode from 'vscode';
-import { EVENT_ERROR, EVENT_INFORMATION, EVENT_WARNING } from './eventtype';
+import {
+    EVENT_ERROR,
+    EVENT_INFORMATION,
+    EVENT_WARNING
+} from './eventtype';
+import { Callback } from './define';
+
+export function doAsyncQuickPick(valueList: string[], options?: vscode.QuickPickOptions, cb?: Callback) {
+    vscode.window.showQuickPick(valueList, options).then((value) => {
+        if (cb) {
+            cb(value);
+        } else {
+            toastMsg(EVENT_ERROR, 'No cb in showQuickPick');
+        }
+    })
+}
+
+export async function doSyncQuickPick(valueList: string[], options?: vscode.QuickPickOptions) {
+    return await vscode.window.showQuickPick(valueList, options);
+}
+
+export function doAsyncInputBox(options?: vscode.InputBoxOptions, cb?: Callback) {
+    vscode.window.showInputBox(options).then((value) => {
+        if (cb) {
+            cb(value);
+        } else {
+            toastMsg(EVENT_ERROR, 'No cb in showInputBox');
+        }
+    })
+}
+
+export async function doSyncInputBox(options?: vscode.InputBoxOptions) {
+    return await vscode.window.showInputBox(options);
+}
 
 export function toastMsg(event: string, msg: string) {
     switch(event) {

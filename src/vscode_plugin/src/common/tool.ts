@@ -14,10 +14,13 @@
 */
 
 export function replaceAll(s: string, sfrom: string, sto: any) {
+  console.log('[replaceall] s:'+s+' sfrom:'+sfrom+' sto:'+sto);
+  if (s && sfrom && sto) {
     while (s.indexOf(sfrom) >= 0) {
-        s = s.replace(sfrom, sto);
-    }
-    return s;
+      s = s.replace(sfrom, sto);
+    }  
+  }
+  return s;
 }
 
 export function getTab(tabLv: number) {
