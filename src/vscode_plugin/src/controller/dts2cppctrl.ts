@@ -14,24 +14,24 @@
 */
 
 import { Uri } from "vscode";
-import { H2dtsMod } from "../model/h2dtsmod";
+import { Dts2cppMod } from "../model/dts2cppmod";
 import { IModel } from "../model/imodel";
-import { H2dtsView } from "../view/h2dtsview";
+import { Dts2cppView } from "../view/dts2cppview";
 
 import { IView } from "../view/iview";
 import { IController } from "./icontroller";
 import { EVENT_ERROR } from "../common/eventtype";
 
-export class H2dtsCtrl extends IController {
+export class Dts2cppCtrl extends IController {
   name: string;
   view: IView;
   model: IModel;
   uri: Uri;
   constructor(uri: Uri) {
     super();
-    this.name = 'h2dtsctrl';
-    this.model = H2dtsMod.getInstance();
-    this.view = new H2dtsView;
+    this.name = 'dts2cppctrl';
+    this.model = Dts2cppMod.getInstance();
+    this.view = new Dts2cppView;
     this.uri = uri;
   }
 
@@ -47,7 +47,7 @@ export class H2dtsCtrl extends IController {
     try {
       this.model.doStart();
     } catch(e) {
-      let errmsg = "h2dts start error: " + JSON.stringify(e)
+      let errmsg = this.name + " start error: " + JSON.stringify(e)
       console.error(errmsg);
       this.view.showMsg(EVENT_ERROR, errmsg);
     }  

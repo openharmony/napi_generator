@@ -14,24 +14,24 @@
 */
 
 import { Uri } from "vscode";
-import { H2dtsMod } from "../model/h2dtsmod";
+import { CrossCompileMod } from "../model/crosscompilemod";
 import { IModel } from "../model/imodel";
-import { H2dtsView } from "../view/h2dtsview";
+import { CrossCompileView } from "../view/crosscompileview";
 
 import { IView } from "../view/iview";
 import { IController } from "./icontroller";
 import { EVENT_ERROR } from "../common/eventtype";
 
-export class H2dtsCtrl extends IController {
+export class CrossCompileCtrl extends IController {
   name: string;
   view: IView;
   model: IModel;
   uri: Uri;
   constructor(uri: Uri) {
     super();
-    this.name = 'h2dtsctrl';
-    this.model = H2dtsMod.getInstance();
-    this.view = new H2dtsView;
+    this.name = 'crosscompilectrl';
+    this.model = CrossCompileMod.getInstance();
+    this.view = new CrossCompileView;
     this.uri = uri;
   }
 
