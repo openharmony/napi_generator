@@ -101,10 +101,13 @@ function getIdlType(cType: string) {
 }
 
 function isReturn(type: string) {
-   if (type.indexOf('&')>0 || type.indexOf('**')>0) {
-    return true;
-   }
-   return false;
+  console.log('isReturn in type: ', type);
+  if (type) {
+    if (type.indexOf('&')>0 || type.indexOf('**')>0) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function getIdlFuncParamStr(funcObj: FuncObj) {
