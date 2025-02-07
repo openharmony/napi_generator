@@ -44,35 +44,32 @@ export function checkNative(platform: string, nativePath: string): boolean {
 // 下载url所指示的sdk文件，到destination所指示的文件中
 export function downloadSdk(url: string, destination: string, progress: vscode.Progress<{ increment: number, message?: string }>): Promise<void> {
     return new Promise((resolve, reject) => {
-        const file = fs.createWriteStream(destination); //创建写入文件流
+        // 创建写入文件流
+        const file = fs.createWriteStream(destination); 
         https.get(url, (response) => {
             if (response.statusCode === 200) {
-                const totalSize = parseInt(String(response.headers['content-length']));   //单位Byte
+                const totalSize = parseInt(String(response.headers['content-length']));
                 console.log(`totalSize: ${totalSize}`);
                 let downloadedSize = 0;
-                response.on('data', (chunk) => {    //设置response的data事件，当每接收一个数据块时，计算下载进度并报告
+                response.on('data', (chunk) => {    
+                    // 设置response的data事件，当每接收一个数据块时，计算下载进度并报告
                     downloadedSize += chunk.length;
                     const percentage = (downloadedSize / totalSize) * 100;
-
-                    // increment是一个累加量，应每次累加当前数据块大小占总大小的比例
-                    // progress.report({ increment: ((chunk.length / totalSize) * 100 * 0.8), message: `Downloading SDK ... ${percentage.toFixed(2)}%` });
                     progress.report({ increment: ((chunk.length / totalSize) * 100 * 0.8), message: vscode.l10n.t('Downloading SDK ... {0}%', percentage.toFixed(2)) });
                 });
-                response.pipe(file);        //根据https请求返回的数据写入文件
-                file.on('finish', () => {   //当所有数据已被写入时，触发finish事件，关闭文件并用resolve更新Promise状态为完成
+                response.pipe(file);        
+                file.on('finish', () => {
                     file.close();
                     resolve();
                 });
             } else {
-                // vscode.window.showErrorMessage(`Connection failed! Statuscode: ${response.statusCode}`);
-                // reject(new Error(`Failed to get '${url}' (${response.statusCode})`));
                 if (response.statusCode) {
                     vscode.window.showErrorMessage(vscode.l10n.t('Connection failed! Statuscode: {0}', response.statusCode));
                     reject(new Error(vscode.l10n.t('Failed to get \'{0}\' ({1})', url, response.statusCode)));
                 }
                 
             }
-        }).on('error', (err) => {       //若https请求错误，则使用fs提供的unlink方法删除目标路径的文件，在unlink方法的回调函数中，用reject更新Promise状态为出错，并传递错误信息err
+        }).on('error', (err) => {
             fs.unlink(destination, () => reject(err));
         });
     });
@@ -82,30 +79,16 @@ export function downloadSdk(url: string, destination: string, progress: vscode.P
 export function extractTarGz(filePath: string, destination: string): Promise<void> {
     return new Promise((resolve, reject) => {
         fs.createReadStream(filePath)
-            .pipe(zlib.createGunzip())  // 解压 .gz
-            .pipe(tar.extract({         // 解压 .tar 内容
-                cwd: destination       // 解压到指定文件夹
+            .pipe(zlib.createGunzip())
+            .pipe(tar.extract({
+                cwd: destination
             }))
             .on('finish', () => resolve())
             .on('error', (err) => reject(err));
     });
 }
 
-// 提取filePath所指示的.zip文件，到destination所指示的文件夹中
-// export function extractZip(filePath: string, destination: string): Promise<void> {
-//     return new Promise((resolve, reject) => {
-//         fs.createReadStream(filePath)
-//             .pipe(unzipper.Extract({ path: destination }))  // 解压 .zip
-//             .on('close', () => {
-//                 resolve();
-//             })
-//             .on('error', (err) => reject(err));
-//     });
-// }
-
 // 利用终端命令，提取filePath所指示的.zip文件，到destination所指示的文件夹中
-// filePath: d:\Music\11\ohos-sdk\linux\native-linux-x64-4.1.7.5-Release.zip
-// destination: d:\Music\11\ohos-sdk\linux
 export function extractZip(platform: string, terminal: vscode.Terminal, filePath: string, destination: string): Promise<void> {
     return new Promise((resolve, reject) => {
         if (platform === "win32") {
@@ -115,7 +98,6 @@ export function extractZip(platform: string, terminal: vscode.Terminal, filePath
                     resolve();
                 },
                 (err) => {
-                    // vscode.window.showErrorMessage(`Error extracting file: ${err}`);
                     vscode.window.showErrorMessage(vscode.l10n.t('Error extracting file: {0}', err));
                     reject(err);
                 }
@@ -141,13 +123,15 @@ function crossCompile_win32(terminal: vscode.Terminal | undefined, thirdPartyPat
     return new Promise((resolve, reject) => {
 
         vscode.window.showInformationMessage(WINDOWS_START); 
-        if (terminal === undefined) {   //若使用本地的sdk，不进行解压操作，则terminal为undefined，在编译前进行创建
+        if (terminal === undefined) {   
+            // 若使用本地的sdk，不进行解压操作，则terminal为undefined，在编译前进行创建
             terminal = terminal = vscode.window.createTerminal({
                 name: TERMINAL_TITLE,
             });
             terminal.show();
-        } else {    //若使用下载的sdk，解压完要切换到三方库目录所在的驱动器盘符,以便进行后续编译操作
-            const driveLetter = thirdPartyPath.split('/')[0];  //获取三方库目录所在的驱动器盘符，如d:
+        } else {    
+            // 若使用下载的sdk，解压完要切换到三方库目录所在的驱动器盘符,以便进行后续编译操作
+            const driveLetter = thirdPartyPath.split('/')[0];
             terminal.sendText(`if ($?) {${driveLetter}}`);
         }
 
@@ -156,7 +140,8 @@ function crossCompile_win32(terminal: vscode.Terminal | undefined, thirdPartyPat
         // 若配置文件中actions为空，则根据settings设置actions
         if (configContent.actions === undefined || configContent.actions.length === 0) {
             let actions = new Array();
-            for (let arch of ohArchitecture) {   //对每个目标系统架构，先组装出commands为空的action
+            for (let arch of ohArchitecture) {   
+                // 对每个目标系统架构，先组装出commands为空的action
                 let action = {
                     compileTool: compileTool,
                     ohArchitecture: arch,
@@ -178,7 +163,6 @@ function crossCompile_win32(terminal: vscode.Terminal | undefined, thirdPartyPat
 
         // 对配置文件中每个action，若其commands为空，则组装出默认命令
         for (let action of configContent.actions) {
-            // vscode.window.showInformationMessage(`Compiled files of ${action.ohArchitecture} system will be installed at ${action.installPath}. `);
             vscode.window.showInformationMessage(vscode.l10n.t('Compiled files of {0} system will be installed at {1}. ', action.ohArchitecture, action.installPath));
             if (action.commands === undefined || action.commands.length === 0) {
                 let commands = new Array();
@@ -262,7 +246,6 @@ function crossCompile_win32(terminal: vscode.Terminal | undefined, thirdPartyPat
                 resolve();
             },
             (err) => {
-                // vscode.window.showErrorMessage(`Error occured while compiling. Error: ${err}`);
                 vscode.window.showErrorMessage(vscode.l10n.t('Error occured while compiling. Error: {0}', err));
                 reject(err);
             }
@@ -274,10 +257,10 @@ function crossCompile_win32(terminal: vscode.Terminal | undefined, thirdPartyPat
 function crossCompile_linux(terminal: vscode.Terminal | undefined, thirdPartyPath: string, configPath: string, compileTool: string, ohArchitecture: string[], nativePath: string, ohCrossCompilePath: string): Promise<void> {
     return new Promise((resolve, reject) => {
         vscode.window.showInformationMessage(LINUX_START);
-        if (terminal === undefined) {   //若使用本地的sdk，不进行解压操作，则terminal为undefined，在编译前进行创建
+        if (terminal === undefined) {   
+            // 若使用本地的sdk，不进行解压操作，则terminal为undefined，在编译前进行创建
             terminal = terminal = vscode.window.createTerminal({
                 name: TERMINAL_TITLE,
-                // cwd: thirdPartyPath
             });
             terminal.show();
         } 
@@ -286,7 +269,8 @@ function crossCompile_linux(terminal: vscode.Terminal | undefined, thirdPartyPat
         // 若配置文件中actions为空，则根据settings设置actions
         if (configContent.actions === undefined || configContent.actions.length === 0) {
             let actions = new Array();
-            for (let arch of ohArchitecture) {   //对每个目标系统架构，先组装出commands为空的action
+            for (let arch of ohArchitecture) {   
+                // 对每个目标系统架构，先组装出commands为空的action
                 let action = {
                     compileTool: compileTool,
                     ohArchitecture: arch,

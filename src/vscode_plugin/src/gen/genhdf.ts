@@ -31,9 +31,12 @@ const TYPE_DEF_MAP = new Map(
 ]);
 
 interface GenResult {
-  idlFuncDefine: string, // idl文件中方法的定义
-  hdiServiceFuncH: string, // xxx_interface_service.h文件中方法的定义
-  hdiServiceFuncCpp: string, // xxx_interface_service.cpp中方法的实现
+  // idl文件中方法的定义
+  idlFuncDefine: string, 
+  // xxx_interface_service.h文件中方法的定义
+  hdiServiceFuncH: string, 
+  // xxx_interface_service.cpp中方法的实现
+  hdiServiceFuncCpp: string, 
 }
 
 let nameObj = {
