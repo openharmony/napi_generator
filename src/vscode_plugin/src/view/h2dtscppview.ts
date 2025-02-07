@@ -13,7 +13,6 @@
 * limitations under the License.
 */
 import * as vscode from 'vscode';
-import { H2dtsMod } from "../model/h2dtsmod";
 import { IModel } from "../model/imodel";
 import { IView } from "./iview";
 import { 
@@ -24,16 +23,17 @@ import {
 } from '../common/eventtype';
 import { IController } from '../controller/icontroller';
 import { toastMsg } from '../common/widget';
+import { H2dtscppMod } from '../model/h2dtscppmod';
 
-export class H2dtsView extends IView {
+export class H2dtscppView extends IView {
   name: string;
   model: IModel;
   controller: IController | undefined;
   progress: vscode.Progress<{ message?: string; increment?: number; }> | undefined = undefined;
   constructor() {
     super();
-    this.name = 'h2dtsview';
-    this.model = H2dtsMod.getInstance();
+    this.name = 'h2dtscppview';
+    this.model = H2dtscppMod.getInstance();
   }
 
   init(controller: IController): void {
@@ -56,9 +56,9 @@ export class H2dtsView extends IView {
     try {
       vscode.window.withProgress({
         location: vscode.ProgressLocation.Notification,
-        title: "Generating .d.ts ...",
+        title: 'Generating DTSCPP...',
         cancellable: false
-      }, async (progress: vscode.Progress<{ message?: string; increment?: number; }>) => {
+      }, async (progress) => {
         this.progress = progress;
         if (this.controller) {
           this.controller.start();
@@ -67,8 +67,7 @@ export class H2dtsView extends IView {
     } catch (error) {
       let errmsg = this.name + " showProgress error: " + JSON.stringify(error);
       toastMsg(EVENT_ERROR, errmsg);
-    }
-        
+    }    
   }
   
   showMsg(event: string, msg: string): void {
