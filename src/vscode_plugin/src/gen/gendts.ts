@@ -112,6 +112,9 @@ function getInterFuncName(str: string) {
 }
 
 export function getJsTypeFromC(cType: string) {
+  if (!cType) {
+    return '';
+  }
   let basicCtype = cType;
   let matchs = re.match('(std::)?vector<([\x21-\x7e ]+)>', basicCtype);
   let isArray = 0;
@@ -179,11 +182,14 @@ function isJsBasicType(type: string) {
 
 function removeMarco(type: string) {
   // 去掉宏定义
-  let leftCraftIndex = type.indexOf('(');
-  let rightCraftIndex = type.indexOf(')');
-  if (leftCraftIndex >= 0 && rightCraftIndex > 0) {
-    type = removeTab(type.substring(leftCraftIndex + 1, rightCraftIndex));
+  if (type) {
+    let leftCraftIndex = type.indexOf('(');
+    let rightCraftIndex = type.indexOf(')');
+    if (leftCraftIndex >= 0 && rightCraftIndex > 0) {
+      type = removeTab(type.substring(leftCraftIndex + 1, rightCraftIndex));
+    }
   }
+  
   return type;
 }
 

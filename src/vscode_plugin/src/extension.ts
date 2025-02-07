@@ -29,6 +29,10 @@ import { genDtsFile } from './gen/gendts';
 import { genHdfFile } from './gen/genhdf';
 import { genDtsCppFile, genCppFile } from './gen/gendtscpp';
 import { H2dtsCtrl } from './controller/h2dtsctrl';
+import { H2saCtrl } from './controller/h2sactrl';
+import { H2hdfCtrl } from './controller/h2hdfctrl';
+import { H2dtscppCtrl } from './controller/h2dtscppctrl';
+import { Dts2cppCtrl } from './controller/dts2cppctrl';
 
 // ��ȡ���ػ��ַ���
 const SELECTED_DIR = vscode.l10n.t('You selected a directory:');
@@ -429,43 +433,49 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with registerCommand
     // The commandId parameter must match the command field in package.json
     const h2sa = vscode.commands.registerCommand('extension.h2sa', async (uri) => {
+      let h2saCtrl = new H2saCtrl(uri);
+      h2saCtrl.init();
       // The code you place here will be executed every time your command is executed
-      if (uri && uri.fsPath) {
-          let versionTag = '3.2';
-          const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release', 'OpenHarmony 3.2 release'], { placeHolder: SELECT_VERSION });
-          if (version === 'OpenHarmony 4.1 release') {
-            versionTag = '4.1'
-          } else if (version === 'OpenHarmony 3.2 release') {
-            versionTag = '3.2'
-          }
-          const serviceId = await vscode.window.showInputBox({
-            placeHolder: INPUT_SERVICEID,
-            value: "19000", // ����Ĭ��ֵ
-            validateInput: (input) => {
-                if (!input) {
-                    return INPUT_NO_EMPTY;
-                }
-                if (!Number(input)) {
-                    return INPUT_NUMBER
-                }
-            }
-          });
-          generateSa(uri.fsPath, versionTag, serviceId as string);
-      }
+      // if (uri && uri.fsPath) {
+      //     let versionTag = '3.2';
+      //     const version = await vscode.window.showQuickPick(
+      //       ['OpenHarmony 4.1 release', 'OpenHarmony 3.2 release'], 
+      //       { placeHolder: SELECT_VERSION }
+      //     );
+      //     if (version === 'OpenHarmony 4.1 release') {
+      //       versionTag = '4.1'
+      //     } else if (version === 'OpenHarmony 3.2 release') {
+      //       versionTag = '3.2'
+      //     }
+      //     const serviceId = await vscode.window.showInputBox({
+      //       placeHolder: INPUT_SERVICEID,
+      //       value: "19000", // ����Ĭ��ֵ
+      //       validateInput: (input) => {
+      //           if (!input) {
+      //               return INPUT_NO_EMPTY;
+      //           }
+      //           if (!Number(input)) {
+      //               return INPUT_NUMBER
+      //           }
+      //       }
+      //     });
+      //     generateSa(uri.fsPath, versionTag, serviceId as string);
+      // }
     });
-
     context.subscriptions.push(h2sa);
 
     const h2hdf = vscode.commands.registerCommand('extension.h2hdf', async (uri) => {
-        // The code you place here will be executed every time your command is executed
-        if (uri && uri.fsPath) {
-          let versionTag = '4.1'; 
-          const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION });
-          if (version === 'OpenHarmony 4.1 release') {
-            versionTag = '4.1'
-          }
-          generateHdf(uri.fsPath, versionTag);
-        }
+      let h2hdfCtrl = new H2hdfCtrl(uri);
+      h2hdfCtrl.init();
+        // // The code you place here will be executed every time your command is executed
+        // if (uri && uri.fsPath) {
+        //   let versionTag = '4.1'; 
+        //   const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION });
+        //   if (version === 'OpenHarmony 4.1 release') {
+        //     versionTag = '4.1'
+        //   }
+        //   generateHdf(uri.fsPath, versionTag);
+        // }
     });
     context.subscriptions.push(h2hdf);
 
@@ -499,45 +509,49 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(h2dts);
 
     const h2dtscpp = vscode.commands.registerCommand('extension.h2dtscpp', async (uri) => {
-        // The code you place here will be executed every time your command is executed
-        if (uri && uri.fsPath) {
-            generateDtscpp(uri.fsPath);
-        }
+      let h2dtscppCtrl = new H2dtscppCtrl(uri);
+      h2dtscppCtrl.init();
+      // // The code you place here will be executed every time your command is executed
+        // if (uri && uri.fsPath) {
+        //     generateDtscpp(uri.fsPath);
+        // }
     });
     context.subscriptions.push(h2dtscpp);
 
     const dts2cpp = vscode.commands.registerCommand('extension.dts2cpp', (uri) => {
-        // The code you place here will be executed every time your command is executed
-        console.log('uri is : ' + uri.fsPath );
-        if (uri && uri.fsPath) {
-          vscode.window.withProgress({
-            location: vscode.ProgressLocation.Notification,
-            title: "Generating CPP...",
-            cancellable: false
-          }, async (progress) => {
-            const filename = path.basename(uri.fsPath);
-            console.log('get filename ' );
-            if (filename.endsWith('.d.ts')) {
-                // Display a message box to the user
-                // analyze
-                let res = parseTsFile(uri.fsPath);
-                console.info('res: ' + JSON.stringify(res));
-                progress.report({ increment: 50, message: PARSE_COMPLETE });
-                // generator
-                let out = path.dirname(uri.fsPath);
-                genCppFile(res, uri.fsPath, out);
-                progress.report({ increment: 100, message: GEN_COMPLETE + out });
-            } else {
-                console.log('not dts uri is : ' + uri.fsPath );
-                // Display a message box to the user
-                vscode.window.showInformationMessage(`${uri.fsPath} is not a .d.ts file!`);
-            }
-          });
-        }
+      let dts2cppCtrl = new Dts2cppCtrl(uri);
+      dts2cppCtrl.init();
+      // The code you place here will be executed every time your command is executed
+      // console.log('uri is : ' + uri.fsPath );
+      // if (uri && uri.fsPath) {
+      //   vscode.window.withProgress({
+      //     location: vscode.ProgressLocation.Notification,
+      //     title: "Generating CPP...",
+      //     cancellable: false
+      //   }, async (progress) => {
+      //     const filename = path.basename(uri.fsPath);
+      //     console.log('get filename ' );
+      //     if (filename.endsWith('.d.ts')) {
+      //         // Display a message box to the user
+      //         // analyze
+      //         let res = parseTsFile(uri.fsPath);
+      //         console.info('res: ' + JSON.stringify(res));
+      //         progress.report({ increment: 50, message: PARSE_COMPLETE });
+      //         // generator
+      //         let out = path.dirname(uri.fsPath);
+      //         genCppFile(res, uri.fsPath, out);
+      //         progress.report({ increment: 100, message: GEN_COMPLETE + out });
+      //     } else {
+      //         console.log('not dts uri is : ' + uri.fsPath );
+      //         // Display a message box to the user
+      //         vscode.window.showInformationMessage(`${uri.fsPath} is not a .d.ts file!`);
+      //     }
+      //   });
+      // }
     });
     context.subscriptions.push(dts2cpp);
 
-    // ��ӭ�˵�ҳ��
+    // welcome page in vscode when no file or dir is opened
     const ohGenerator = vscode.commands.registerCommand('extension.ohGenerator', async () => {
       // The code you place here will be executed every time your command is executed
       let hPath = path.join(__dirname, '../test/test.h');
@@ -552,10 +566,10 @@ export function activate(context: vscode.ExtensionContext) {
           if (input !== value) {
             return INPUT_INCONSISTENT;
           }
-      }
+        }
       });
       if (value === HDF_FRAMEWORK) {
-        // ����汾
+        // input the version of oh
         let versionTag = '4.1';
         const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION })
         if (version === 'OpenHarmony 4.1 release') {
@@ -563,7 +577,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
         generateHdf(hdfInputPath, versionTag);
       } else if (value === SA_FRAMEWORK) {
-        // ����汾
+        // input the version of oh
         let versionTag = '3.2';
         const version = await vscode.window.showQuickPick(['OpenHarmony 3.2 release', 'OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION })
         if (version === 'OpenHarmony 4.1 release') {
@@ -613,10 +627,10 @@ async function generateHdf(hdfInputPath: string, versionTag: string) {
     genHdfFile(rootInfo, out);
     progress.report({ increment: 100, message: GEN_COMPLETE + out});
   });
-   // ��ʾ������·��
+   // show output path
    const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hdfInputPath), OPEN_IN_EXPLORER);
    if (choice === OPEN_IN_EXPLORER) {
-     // ���ļ����ڵ�Ŀ¼
+     // open the output folder
      vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hdfInputPath));
    }
 }
@@ -646,10 +660,10 @@ async function generateSa(hPath: string, versionTag: string, serviceId: string) 
     genServiceFile(rootInfo, out);
     progress.report({ increment: 100, message: GEN_COMPLETE + out });
   });
-  // ��ʾ������·��
+  // show the output path
   const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hPath), OPEN_IN_EXPLORER);
   if (choice === OPEN_IN_EXPLORER) {
-    // ���ļ����ڵ�Ŀ¼
+    // open output dir
     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hPath));
   }
 }
@@ -679,10 +693,10 @@ async function generateDtscpp(hFilePath: string) {
     genDtsCppFile(rootInfo, out);
     progress.report({ increment: 100, message: GEN_COMPLETE + out });
   });
-  // ��ʾ������·��
+  // show genarate path
   const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hFilePath), OPEN_IN_EXPLORER);
   if (choice === OPEN_IN_EXPLORER) {
-    // ���ļ����ڵ�Ŀ¼
+    // open the folder
     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hFilePath));
   }
 }
