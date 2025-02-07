@@ -34,7 +34,7 @@ import { H2hdfCtrl } from './controller/h2hdfctrl';
 import { H2dtscppCtrl } from './controller/h2dtscppctrl';
 import { Dts2cppCtrl } from './controller/dts2cppctrl';
 
-// ��ȡ���ػ��ַ���
+// 获取本地化字符串
 const SELECTED_DIR = vscode.l10n.t('You selected a directory:');
 const SELECTE_DIR = vscode.l10n.t('Please select a directory.');
 const NO_RES_SELECTED = vscode.l10n.t('No resource selected.');
@@ -106,16 +106,17 @@ export function activate(context: vscode.ExtensionContext) {
         }
         const canCmake = fs.existsSync(thirdPartyPath.concat("/CMakeLists.txt"));
         const canMake = fs.existsSync(thirdPartyPath.concat("/GNUmakefile")) || fs.existsSync(thirdPartyPath.concat("/Makefile")) || fs.existsSync(thirdPartyPath.concat("/makefile"));
-        if (canCmake || canMake) {  //�����⵽CMakeLists.txt��makefile������Լ���
-
-  
-          // ��û�в���ļ��С���װ�ļ��У��򴴽������Զ���ȡ����װĿ¼
+        
+        
+        // 如果检测到CMakeLists.txt或makefile，则可以继续
+        if (canCmake || canMake) {  
+          // 若没有插件文件夹、安装文件夹，则创建。可自动获取到安装目录
           const ohCrossCompilePath = thirdPartyPath.concat("/ohCrossCompile");
           if (!fs.existsSync(ohCrossCompilePath)) {
             fs.mkdirSync(ohCrossCompilePath);
           }
   
-          // ��û�������ļ�������Ĭ�����ô��������ļ�
+          // 若没有配置文件，则以默认配置创建配置文件
           const configPath = ohCrossCompilePath.concat("/config.json")
           if (!fs.existsSync(configPath)) {
             const defaultConfig = {
@@ -145,11 +146,11 @@ export function activate(context: vscode.ExtensionContext) {
             fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 4), 'utf8');
           }
   
-          // ��ȡ���뷽ʽ��make����cmake
-          if (configContent.settings.compileTool !== undefined && (configContent.settings.compileTool === "make" || configContent.settings.compileTool === "cmake")) {  //��������ļ����Ѿ��洢���뷽ʽ������
+          // 获取编译方式是make还是cmake
+          if (configContent.settings.compileTool !== undefined && (configContent.settings.compileTool === "make" || configContent.settings.compileTool === "cmake")) {  //如果配置文件中已经存储编译方式，则获得
             compileTool = configContent.settings.compileTool;
-          } else if (canCmake && canMake) {   //���Զ��жϳ�make��cmake����ʹ�ã���ѯ���û������洢���
-  
+          } else if (canCmake && canMake) {
+            // 若自动判断出make与cmake均可使用，则询问用户，并存储结果
             const toolPickItems = [
               {
                 label: "make",
@@ -176,19 +177,22 @@ export function activate(context: vscode.ExtensionContext) {
               vscode.window.showInformationMessage(COMPILATION_METHOD_LOST);
               return;
             }
-          } else if (canCmake) {  //���Զ��жϳ�ֻ����ʹ��cmake
+          } else if (canCmake) {  
+            // 若自动判断出只可以使用cmake
             compileTool = "cmake";
             configContent.settings.compileTool = "cmake";
             fs.writeFileSync(configPath, JSON.stringify(configContent, null, 4), 'utf8');
-          } else {  //���Զ��жϳ�ֻ����ʹ��make
+          } else {  
+            // 若自动判断出只可以使用make
             compileTool = "make";
             configContent.settings.compileTool = "make";
             fs.writeFileSync(configPath, JSON.stringify(configContent, null, 4), 'utf8');
           }
   
   
-          // ȷ��Ҫ�����CPU�ܹ�����װ�ļ������������򴴽�
-          if (configContent.settings.ohArchitecture === undefined || configContent.settings.ohArchitecture.length === 0) {  //�����������ļ��޷�ȷ��CPU�ܹ���������ѯ���û�
+          // 确认要编译的CPU架构。安装文件夹若不存在则创建
+          if (configContent.settings.ohArchitecture === undefined || configContent.settings.ohArchitecture.length === 0) {  
+            // 若根据配置文件无法确定CPU架构参数，则询问用户
             const archPickItems = [
               {
                 label: "arm64-v8a",
@@ -206,7 +210,8 @@ export function activate(context: vscode.ExtensionContext) {
               title: OH_CROSS_COMPILE_TITLE
             };
             const archPick = await vscode.window.showQuickPick(archPickItems, archPickOptions)
-            if (archPick && Array.isArray(archPick) && archPick.length > 0) {   //����û�ѡ�����Ϣ�������������ļ�
+            if (archPick && Array.isArray(archPick) && archPick.length > 0) {   
+              // 获得用户选择的信息，并存入配置文件
               for (let item of archPick) {
                 let arch = item.label;
                 ohArchitecture.push(arch);
@@ -245,10 +250,10 @@ export function activate(context: vscode.ExtensionContext) {
           }       
           
   
-          // ȷ��sdk��native���ߵ�·��
-          if (configContent.settings.nativePath === undefined || configContent.settings.nativePath === "") {  //ѯ���û�
+          // 确认sdk中native工具的路径
+          if (configContent.settings.nativePath === undefined || configContent.settings.nativePath === "") {
   
-            // ȷ��sdk��Դ�Ǳ��ػ�������
+            // 询问用户。确认sdk来源是本地还是下载
             const sourcePickItems = [
               {
                 label: LOCAL,
@@ -268,7 +273,8 @@ export function activate(context: vscode.ExtensionContext) {
             const sourcePick = await vscode.window.showQuickPick(sourcePickItems, sourcePickOptions);
             
             if (sourcePick) {
-              if (sourcePick.label === LOCAL) {   //��sdk��ԴΪ���أ���ѯ���û�native���ڵľ���·����������Ƿ�Ϸ�
+              // 若sdk来源为本地，则询问用户native所在的具体路径，并检查是否合法
+              if (sourcePick.label === LOCAL) {   
                 const folderUri = await vscode.window.showOpenDialog({
                   canSelectMany: false,
                   canSelectFolders: true,
@@ -284,7 +290,7 @@ export function activate(context: vscode.ExtensionContext) {
                     configContent.settings.nativePath = folderPath;
                     fs.writeFileSync(configPath, JSON.stringify(configContent, null, 4), 'utf8');
   
-                    // ִ�б�������
+                    // 执行编译命令
                     crossCompile(platform, undefined, configPath, thirdPartyPath, compileTool, ohArchitecture, nativePath, ohCrossCompilePath);
                   } else {
                     vscode.window.showInformationMessage(NATIVE_CHECK_FAILED);
@@ -294,8 +300,9 @@ export function activate(context: vscode.ExtensionContext) {
                   vscode.window.showInformationMessage(FOLDER_LOST);
                   return;
                 }
-              } else if (sourcePick.label === DOWNLOAD) {   //��sdk��ԴΪ���磬��ѯ�����ذ汾������·�������ز���ѹsdk
-                // ��ȡ���ذ汾���Ӷ������������
+              } else if (sourcePick.label === DOWNLOAD) {   
+                // 若sdk来源为网络，则询问下载版本与下载路径，下载并解压sdk
+                // 获取下载版本，从而获得下载链接
                 const versionPickItems = [
                   {
                     label: API9_LABEL,
@@ -343,7 +350,7 @@ export function activate(context: vscode.ExtensionContext) {
                       break;
                   }
   
-                  // ѯ������·��
+                  // 询问下载路径
                   const folderUri = await vscode.window.showOpenDialog({
                     canSelectMany: false,
                     canSelectFolders: true,
@@ -356,7 +363,7 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                     let filePath = folderPath.concat("/ohos-sdk-windows_linux-public.tar.gz");
                     
-                    // ���ز���ѹsdk�е�native
+                    // 下载并解压sdk中的native
                     await vscode.window.withProgress({
                       location: vscode.ProgressLocation.Notification,
                       title: DOWNLOADING_TITLE,
@@ -367,23 +374,27 @@ export function activate(context: vscode.ExtensionContext) {
                       vscode.window.showInformationMessage(vscode.l10n.t('SDK downloaded to: {0}', filePath));
                       // vscode.window.showInformationMessage(`SDK downloaded to: ${filePath}`);
   
-                      // ��ѹsdk�е�native����ƴװnativePath
+                      // 解压sdk中的native，并拼装nativePath
                       progress.report({ increment: 10, message: DOWNLOADING_COMPLETE });
                       await extractTarGz(filePath, folderPath);
                       progress.report({ increment: 100, message: SDK_INSTALLED });
   
                       nativePath = folderPath;
-                      if (apiVersion !== API12_LABEL) {    //api12�汾·����û��ohos-sdk��9-11�汾����
+                      if (apiVersion !== API12_LABEL) {    
+                        // api12版本路径中没有ohos-sdk；9-11版本则有
                         nativePath = nativePath.concat("/ohos-sdk");
                       }
                       if (platform === "win32") {
-                        nativePath = nativePath.concat("/windows");    //windowsϵͳ�µ�nativePath·��
+                        // windows系统下的nativePath路径
+                        nativePath = nativePath.concat("/windows");    
                       } else {
-                        nativePath = nativePath.concat("/linux");   //linuxϵͳ�µ�nativePath·��
+                        // linux系统下的nativePath路径
+                        nativePath = nativePath.concat("/linux");   
                       }
                       for (const file of await fs.promises.readdir(nativePath)) {
                         if (file.startsWith("native")) {
-                          filePath = nativePath.concat("/" + file);   //��ȡnativeѹ�������ļ�·��
+                          // 获取native压缩包的文件路径
+                          filePath = nativePath.concat("/" + file);   
                         }
                       }
                       console.log(filePath);
@@ -394,7 +405,7 @@ export function activate(context: vscode.ExtensionContext) {
                       configContent.settings.nativePath = nativePath;
                       fs.writeFileSync(configPath, JSON.stringify(configContent, null, 4), 'utf8');
   
-                      // ִ�б�������
+                      // 执行编译命令
                       crossCompile(platform, terminal, configPath, thirdPartyPath, compileTool, ohArchitecture, nativePath, ohCrossCompilePath);
                     });
                   } else {
@@ -410,19 +421,21 @@ export function activate(context: vscode.ExtensionContext) {
               vscode.window.showInformationMessage(SDK_SOURCE_LOST);
               return;
             }
-          } else {  //�����ļ���nativePath�ǿգ���������ļ��л�ȡ
+          } else {  //配置文件中nativePath非空，则从配置文件中获取
             if (checkNative(platform, configContent.settings.nativePath)) {
               nativePath = configContent.settings.nativePath;
-              // ִ�б�������
+              // 执行编译命令
               crossCompile(platform, undefined, configPath, thirdPartyPath, compileTool, ohArchitecture, nativePath, ohCrossCompilePath);
-            } else {  //�������ļ��л�ȡ��nativePath�Ƿ��������ã�����ʾ
+            } else {  
+              // 从配置文件中获取的nativePath非法，则重置，并提示
               configContent.settings.nativePath = "";
               fs.writeFileSync(configPath, JSON.stringify(configContent, null, 4), 'utf8');
               vscode.window.showInformationMessage(NATIVE_CHECK_FAILED);
               return;
             }
           }
-        } else {    //�û���ѡ�ļ��в���CMakeLists.ext��Makefile
+        } else {    
+          // 用户所选文件夹不含CMakeLists.ext和Makefile
           vscode.window.showErrorMessage(CMAKE_MAKE_LOST);
         }
       }
@@ -449,7 +462,7 @@ export function activate(context: vscode.ExtensionContext) {
       //     }
       //     const serviceId = await vscode.window.showInputBox({
       //       placeHolder: INPUT_SERVICEID,
-      //       value: "19000", // ����Ĭ��ֵ
+      //       value: "19000", // 设置默认值
       //       validateInput: (input) => {
       //           if (!input) {
       //               return INPUT_NO_EMPTY;
@@ -552,6 +565,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(dts2cpp);
 
     // welcome page in vscode when no file or dir is opened
+    // 欢迎菜单页面
     const ohGenerator = vscode.commands.registerCommand('extension.ohGenerator', async () => {
       // The code you place here will be executed every time your command is executed
       let hPath = path.join(__dirname, '../test/test.h');
@@ -570,6 +584,7 @@ export function activate(context: vscode.ExtensionContext) {
       });
       if (value === HDF_FRAMEWORK) {
         // input the version of oh
+        // 输入版本
         let versionTag = '4.1';
         const version = await vscode.window.showQuickPick(['OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION })
         if (version === 'OpenHarmony 4.1 release') {
@@ -578,6 +593,7 @@ export function activate(context: vscode.ExtensionContext) {
         generateHdf(hdfInputPath, versionTag);
       } else if (value === SA_FRAMEWORK) {
         // input the version of oh
+        // 输入版本
         let versionTag = '3.2';
         const version = await vscode.window.showQuickPick(['OpenHarmony 3.2 release', 'OpenHarmony 4.1 release'], { placeHolder: SELECT_VERSION })
         if (version === 'OpenHarmony 4.1 release') {
@@ -630,7 +646,11 @@ async function generateHdf(hdfInputPath: string, versionTag: string) {
    // show output path
    const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hdfInputPath), OPEN_IN_EXPLORER);
    if (choice === OPEN_IN_EXPLORER) {
-     // open the output folder
+   // open the output folder
+   // 显示出生成路径
+   const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hdfInputPath), OPEN_IN_EXPLORER);
+   if (choice === OPEN_IN_EXPLORER) {
+     // 打开文件所在的目录
      vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hdfInputPath));
    }
 }
@@ -663,7 +683,11 @@ async function generateSa(hPath: string, versionTag: string, serviceId: string) 
   // show the output path
   const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hPath), OPEN_IN_EXPLORER);
   if (choice === OPEN_IN_EXPLORER) {
-    // open output dir
+  // open output dir
+  // 显示出生成路径
+  const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hPath), OPEN_IN_EXPLORER);
+  if (choice === OPEN_IN_EXPLORER) {
+    // 打开文件所在的目录
     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hPath));
   }
 }
@@ -696,8 +720,13 @@ async function generateDtscpp(hFilePath: string) {
   // show genarate path
   const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hFilePath), OPEN_IN_EXPLORER);
   if (choice === OPEN_IN_EXPLORER) {
-    // open the folder
+  // open the folder
+  // 显示出生成路径
+  const choice = await vscode.window.showInformationMessage('outPath:', path.dirname(hFilePath), OPEN_IN_EXPLORER);
+  if (choice === OPEN_IN_EXPLORER) {
+    // 打开文件所在的目录
     vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(hFilePath));
   }
 }
+
 

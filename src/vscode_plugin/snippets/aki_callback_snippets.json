@@ -1,0 +1,41 @@
+{
+  "Aki callfunction return string": {
+    "prefix": "akicallfuncreturnstring",
+    "body": [
+      "// The bound native method with parameter types std::function can accept JS callbacks as input parameters.",
+      "void CallFunctionReturnString(std::function<std::string()> func) {",
+      "  auto str = func();",
+      "  AKI_LOG(INFO) << \"std::function callback return from Js: \" << str;",
+      "}",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(CallFunctionReturnString);",
+      "}"
+    ]
+  },
+  "Aki call js callback return string": {
+    "prefix": "akicallbackreturnstring",
+    "body": [
+      "// The bound native method with parameter types aki::Callback can accept JS callbacks as input parameters.",
+      "void CallJsbCallbackReturnString(aki::Callback<std::string()> func) {",
+      "  auto str = func();",
+      "  AKI_LOG(INFO) << \"aki::Callback callback return from Js: \" << str;",
+      "}",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(CallJsbCallbackReturnString);",
+      "}"
+    ]
+  },
+  "Aki call js safety callback return string": {
+    "prefix": "akisafecallbackreturnstring",
+    "body": [
+      "// The bound native method with parameter types aki::SafetyCallback can accept JS callbacks as input parameters.",
+      "void CallJsbSafetyCallbackReturnString(aki::SafetyCallback<std::string()> func) {",
+      "  auto str = func();",
+      "  AKI_LOG(INFO) << \"aki::SafetyCallback callback return from Js: \" << str;",
+      "}",
+      "JSBIND_GLOBAL() {",
+      "  JSBIND_FUNCTION(CallJsbSafetyCallbackReturnString);",
+      "}"
+    ]
+  }
+}
