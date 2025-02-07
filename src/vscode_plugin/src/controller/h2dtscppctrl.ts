@@ -14,15 +14,15 @@
 */
 
 import { Uri } from "vscode";
-import { H2dtsMod } from "../model/h2dtsmod";
 import { IModel } from "../model/imodel";
-import { H2dtsView } from "../view/h2dtsview";
 
 import { IView } from "../view/iview";
 import { IController } from "./icontroller";
 import { EVENT_ERROR } from "../common/eventtype";
+import { H2dtscppView } from "../view/h2dtscppview";
+import { H2dtscppMod } from "../model/h2dtscppmod";
 
-export class H2dtsCtrl extends IController {
+export class H2dtscppCtrl extends IController {
   name: string;
   view: IView;
   model: IModel;
@@ -30,8 +30,8 @@ export class H2dtsCtrl extends IController {
   constructor(uri: Uri) {
     super();
     this.name = 'h2dtsctrl';
-    this.model = H2dtsMod.getInstance();
-    this.view = new H2dtsView;
+    this.model = H2dtscppMod.getInstance();
+    this.view = new H2dtscppView;
     this.uri = uri;
   }
 
