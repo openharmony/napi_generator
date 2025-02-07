@@ -27,19 +27,19 @@ import {
   EVENT_WARNING
 } from '../common/eventtype';
 
-export class H2dtsMod extends IModel {
+export class CrossCompileMod extends IModel {
   name: string;
-  private static instance: H2dtsMod;
+  private static instance: CrossCompileMod;
   constructor() {
     super();
     this.name = 'h2dtsmod';
   }
 
   static getInstance(): IModel {
-    if (!H2dtsMod.instance) {
-        H2dtsMod.instance = new H2dtsMod();
+    if (!CrossCompileMod.instance) {
+      CrossCompileMod.instance = new CrossCompileMod();
     }
-    return H2dtsMod.instance;
+    return CrossCompileMod.instance;
   }
 
   init(uri: vscode.Uri): void {

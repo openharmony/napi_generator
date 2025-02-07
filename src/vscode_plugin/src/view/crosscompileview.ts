@@ -13,7 +13,7 @@
 * limitations under the License.
 */
 import * as vscode from 'vscode';
-import { H2dtsMod } from "../model/h2dtsmod";
+import { CrossCompileMod } from "../model/crosscompilemod";
 import { IModel } from "../model/imodel";
 import { IView } from "./iview";
 import { 
@@ -25,15 +25,15 @@ import {
 import { IController } from '../controller/icontroller';
 import { toastMsg } from '../common/widget';
 
-export class H2dtsView extends IView {
+export class CrossCompileView extends IView {
   name: string;
   model: IModel;
   controller: IController | undefined;
   progress: vscode.Progress<{ message?: string; increment?: number; }> | undefined = undefined;
   constructor() {
     super();
-    this.name = 'h2dtsview';
-    this.model = H2dtsMod.getInstance();
+    this.name = 'crosscompileview';
+    this.model = CrossCompileMod.getInstance();
   }
 
   init(controller: IController): void {

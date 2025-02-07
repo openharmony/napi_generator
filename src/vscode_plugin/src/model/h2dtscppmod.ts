@@ -16,9 +16,9 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { IModel } from "./imodel";
 import { parseHeaderFile } from '../parse/parsec';
-import { GenInfo } from '../gen/datatype';
+import { DtscppRootInfo, GenInfo } from '../gen/datatype';
 import { genDtsFile } from '../gen/gendts';
-import { GEN_COMPLETE, PARSE_COMPLETE } from '../common/constants';
+import { GEN_COMPLETE, OPEN_IN_EXPLORER, PARSE_COMPLETE } from '../common/constants';
 
 import {
   EVENT_ERROR,
@@ -26,20 +26,21 @@ import {
   EVENT_PROGRESS,
   EVENT_WARNING
 } from '../common/eventtype';
+import { genDtsCppFile } from '../gen/gendtscpp';
 
-export class H2dtsMod extends IModel {
+export class H2dtscppMod extends IModel {
   name: string;
-  private static instance: H2dtsMod;
+  private static instance: H2dtscppMod;
   constructor() {
     super();
-    this.name = 'h2dtsmod';
+    this.name = 'h2dtscppmod';
   }
 
   static getInstance(): IModel {
-    if (!H2dtsMod.instance) {
-        H2dtsMod.instance = new H2dtsMod();
+    if (!H2dtscppMod.instance) {
+      H2dtscppMod.instance = new H2dtscppMod();
     }
-    return H2dtsMod.instance;
+    return H2dtscppMod.instance;
   }
 
   init(uri: vscode.Uri): void {
@@ -49,21 +50,39 @@ export class H2dtsMod extends IModel {
   async doStart(): Promise<void> {
     try {
       if (this.uri) {
-        // parse
-        let parseRes = await parseHeaderFile(this.uri.fsPath);
-        console.log('parse header file res: ', parseRes);
+        // analyze
+        let funDescList = await parseHeaderFile(this.uri.fsPath);
+        let fileName = path.basename(this.uri.fsPath, '.h');
+        console.log('parse header file res: ', funDescList);
+        console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
+    
+        // progress.report({ increment: 50, message: PARSE_COMPLETE });
         this.emmitEventForKey(EVENT_PROGRESS, 50, PARSE_COMPLETE);
-
-        let rootInfo: GenInfo = {
-            parseObj: parseRes,
-            rawFilePath: this.uri.fsPath,  // e://xxx.h
-            fileName: path.basename(this.uri.fsPath, '.h')  // xxx
+    
+        let rootInfo: DtscppRootInfo = {
+          funcs: funDescList.funcs,
+          rawFilePath: this.uri.fsPath,
+          fileName: fileName // xxx
         };
+    
         // generator
-        let outPath = genDtsFile(rootInfo);
-        this.emmitEventForKey(EVENT_PROGRESS, 100, PARSE_COMPLETE);
+        let out = path.dirname(this.uri.fsPath);
+        genDtsCppFile(rootInfo, out);
+        // progress.report({ increment: 100, message: GEN_COMPLETE + out });
+        this.emmitEventForKey(EVENT_PROGRESS, 100, PARSE_COMPLETE + out);
+
+        // show genarate path
+        const choice = await vscode.window.showInformationMessage(
+          'outPath:', path.dirname(this.uri.fsPath), OPEN_IN_EXPLORER);
+        if (choice === OPEN_IN_EXPLORER) {
+          // open the folder
+          vscode.commands.executeCommand(
+            'revealFileInOS', vscode.Uri.file(this.uri.fsPath));
+        }
       } else {
-        console.error('parse header file error with undefine uri.');
+        let errmsg = 'parse header file error with undefine uri';
+        console.error(errmsg);
+        this.emmitEventForKey(EVENT_ERROR, -1, errmsg);
       }
     } catch (e) {
       let errmsg = 'parse header file error: ' + JSON.stringify(e);
