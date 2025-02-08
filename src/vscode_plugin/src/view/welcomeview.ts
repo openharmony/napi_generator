@@ -54,17 +54,17 @@ export class WelcomeView extends IView {
   }
 
   asyncCB = async (value: string) => {
-    await vscode.window.showInputBox({ 
-      placeHolder: CONFIRM_SELECT,
-      validateInput: (input) => {
-        if (!input) {
-          return INPUT_NO_EMPTY;
-        }
-        if (input !== value) {
-          return INPUT_INCONSISTENT;
-        }
-      }
-    });
+    // await vscode.window.showInputBox({ 
+    //   placeHolder: CONFIRM_SELECT,
+    //   validateInput: (input) => {
+    //     if (!input) {
+    //       return INPUT_NO_EMPTY;
+    //     }
+    //     if (input !== value) {
+    //       return INPUT_INCONSISTENT;
+    //     }
+    //   }
+    // });
 
     if (this.model) {
       let welcomeMode = this.model as WelcomeMod;
@@ -72,7 +72,7 @@ export class WelcomeView extends IView {
 
       const options: vscode.OpenDialogOptions = {
         canSelectFiles: true,
-        canSelectFolders: true,
+        canSelectFolders: false,
         canSelectMany: false,
         defaultUri: vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri : undefined,
         openLabel: 'Select'
@@ -84,12 +84,13 @@ export class WelcomeView extends IView {
           console.log('Selected path:', filePath);
           vscode.window.withProgress({
               location: vscode.ProgressLocation.Notification,
-              title: 'Generating DTSCPP...',
+              title: 'Generating ...',
               cancellable: false
             }, async (progress) => {
               this.progress = progress;
               if (this.controller) {
                 this.controller.uri = fileUri[0];
+                this.model.uri = fileUri[0];
                 this.controller.start();
               }  
             })

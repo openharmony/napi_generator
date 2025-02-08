@@ -52,6 +52,22 @@ export async function doSyncInputBox(options?: vscode.InputBoxOptions) {
     return await vscode.window.showInputBox(options);
 }
 
+export function doAsyncProgress(options: vscode.ProgressOptions, cb: Callback) {
+    vscode.window.withProgress({
+        location: vscode.ProgressLocation.Notification,
+        title: 'Generating HDF...',
+        cancellable: false
+      }, async (progress) => {
+        cb(progress);
+      })
+}
+
+export function doAsyncOpenDialog(options: vscode.OpenDialogOptions, cb: Callback) {
+    vscode.window.showOpenDialog(options).then(fileUri => {
+        cb(fileUri);
+    })
+}
+
 export function toastMsg(event: string, msg: string) {
     switch(event) {
         case EVENT_ERROR:
