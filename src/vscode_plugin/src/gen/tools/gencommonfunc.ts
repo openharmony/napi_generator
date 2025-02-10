@@ -13,11 +13,11 @@
 * limitations under the License.
 */
 
-import { getTab } from '../common/tool';
-import { getReg, match } from '../common/re';
+import { getTab } from '../../common/tool';
+import { getReg, match } from '../../common/re';
 import { format } from 'util'
-import { FuncObj, ParamObj } from './datatype';
-import { transferMap } from '../template/functypemap_template'
+import { FuncObj, ParamObj } from '../datatype';
+import { transferMap } from '../../template/functypemap_template'
 
 export function getFuncParamStr(params: ParamObj[]) {
   let paramStr = '';
@@ -51,12 +51,12 @@ const TYPE_DEF_MAP = new Map(
   ['long long', 'double'], ['long double', 'double'], ['std::string', 'string']
   ]);
 
-function getParcelType(srcType: string) {
+export function getParcelType(srcType: string) {
   let parcelType = TYPE_DEF_MAP.get(srcType);
   return parcelType === undefined ? srcType : parcelType;
 }
 
-function getTransferContent(parcelVecType: string, isWrite: number) {
+export function getTransferContent(parcelVecType: string, isWrite: number) {
   let rwFunc = '';
   for (let index = 0; index < transferMap.length; index++) {
     if (parcelVecType === transferMap[index].fromType) {

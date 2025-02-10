@@ -14,12 +14,12 @@
 */
 
 import * as fs from 'fs';
-import { FuncObj, HdfRootInfo } from "./datatype";
-import { replaceAll } from '../common/tool';
+import { FuncObj, HdfRootInfo } from "../datatype";
+import { replaceAll } from '../../common/tool';
 import { getServiceFuncParamStr } from './genservicehfile';
-import { hdiServiceFuncTemplate } from '../template/func_template';
+import { hdiServiceFuncTemplate } from '../../template/func_template';
 
-export function genServiceCppFile(rootInfo: HdfRootInfo, filePath: string, fileContent: string) {
+export function doGenServiceCppFile(rootInfo: HdfRootInfo, fileContent: string): string {
   let hdiServiceFuncCpp = '';
   let funcList: FuncObj[] = rootInfo.funcs;
   let upperName = rootInfo.driverName.substring(0, 1).toLocaleUpperCase();
@@ -34,5 +34,10 @@ export function genServiceCppFile(rootInfo: HdfRootInfo, filePath: string, fileC
   fileContent = replaceAll(fileContent, '[driverName]', rootInfo.driverName);
   fileContent = replaceAll(fileContent, '[marcoName]', marcoName);
   fileContent = replaceAll(fileContent, '[serviceFuncListImpl]', hdiServiceFuncCpp);
+  return fileContent;
+}
+
+export function genServiceCppFile(rootInfo: HdfRootInfo, filePath: string, fileContent: string) {
+  fileContent = doGenServiceCppFile(rootInfo, fileContent);
   fs.writeFileSync(filePath, fileContent);
 }

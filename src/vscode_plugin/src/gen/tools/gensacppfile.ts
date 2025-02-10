@@ -13,16 +13,16 @@
 * limitations under the License.
 */
 
-import { replaceAll } from '../common/tool';
+import { replaceAll } from '../../common/tool';
 const numericTypes = ['short', 'int', 'long', 'long long', 'float', 'double'];
 const boolType = ['bool'];
 const charType = ['char', 'string'];
-import { serviceFuncImplTemplate } from '../template/func_template';
+import { serviceFuncImplTemplate } from '../../template/func_template';
 import * as fs from 'fs';
-import { FuncObj, ServiceRootInfo } from './datatype';
-import { getFuncParamStr } from './genCommonFunc';
+import { FuncObj, ServiceRootInfo } from '../datatype';
+import { getFuncParamStr } from './gencommonfunc';
 
-function genServiceFunc(funcInfo: FuncObj, className: string, paramStr: string) {
+export function genServiceFunc(funcInfo: FuncObj, className: string, paramStr: string) {
   let serviceFunc = replaceAll(serviceFuncImplTemplate, '[retType]', funcInfo.returns);
   // 根据类型初始化返回值
   let initRetvalue;
@@ -48,8 +48,7 @@ function genServiceFunc(funcInfo: FuncObj, className: string, paramStr: string) 
   return serviceFunc;
 }
 
-// 生成 xxx_service.cpp
-export function genSaCppFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+export function doGenSaCppFile(rootInfo: ServiceRootInfo, fileContent: string): string {
   let funcList: FuncObj[] = rootInfo.funcs;
   let serviceFuncCpp = '';
   for (let i = 0; i < funcList.length; ++i) {
@@ -60,5 +59,11 @@ export function genSaCppFile(rootInfo: ServiceRootInfo, filePath: string, fileCo
   fileContent = replaceAll(fileContent, '[marcoName]', rootInfo.serviceName.toUpperCase());
   fileContent = replaceAll(fileContent, '[lowServiceName]', rootInfo.serviceName.toLowerCase());
   fileContent = replaceAll(fileContent, '[serviceFuncImpl]', serviceFuncCpp);
+  return fileContent;
+}
+
+// 生成 xxx_service.cpp
+export function genSaCppFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+  fileContent = doGenSaCppFile(rootInfo, fileContent);
   fs.writeFileSync(filePath, fileContent);
 }

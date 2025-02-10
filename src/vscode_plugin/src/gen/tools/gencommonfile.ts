@@ -14,8 +14,8 @@
 */
 
 import * as fs from 'fs';
-import { HdfRootInfo, ServiceRootInfo } from "./datatype";
-import { replaceAll } from '../common/tool';
+import { HdfRootInfo, ServiceRootInfo } from "../datatype";
+import { replaceAll } from '../../common/tool';
 
 // 生成sa非特殊处理的文件, 如xxx.cfg
 export function genSaCommonFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {

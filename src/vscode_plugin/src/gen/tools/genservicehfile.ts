@@ -14,9 +14,9 @@
 */
 
 import * as fs from 'fs';
-import { FuncObj, HdfRootInfo } from "./datatype";
+import { FuncObj, HdfRootInfo } from "../datatype";
 import { format } from 'util';
-import { getTab, replaceAll } from '../common/tool';
+import { getTab, replaceAll } from '../../common/tool';
 
 // 干脆这个用来表示hdf的service.h算了， 暂时先把hdf和sa的分开
 
@@ -41,7 +41,7 @@ export function getServiceFuncParamStr(funcObj: FuncObj) {
   return paramStr;
 }
 
-export function genServiceHFile(rootInfo: HdfRootInfo, filePath: string, fileContent: string) {
+export function doGenServiceHFile(rootInfo: HdfRootInfo, fileContent: string): string {
   let hdiServiceFuncH = '';
   let funcTab = getTab(1);
   let funcList: FuncObj[] = rootInfo.funcs;
@@ -58,5 +58,10 @@ export function genServiceHFile(rootInfo: HdfRootInfo, filePath: string, fileCon
   fileContent = replaceAll(fileContent, '[marcoName]', marcoName);
   fileContent = replaceAll(fileContent, '[driverUpperName]', upperDriverName);
   fileContent = replaceAll(fileContent, '[serviceFuncDeclare]', hdiServiceFuncH);
+  return fileContent;
+}
+
+export function genServiceHFile(rootInfo: HdfRootInfo, filePath: string, fileContent: string) {
+  fileContent = doGenServiceHFile(rootInfo, fileContent);
   fs.writeFileSync(filePath, fileContent);
 }

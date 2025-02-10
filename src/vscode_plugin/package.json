@@ -22,8 +22,24 @@
         "onCommand:extension.h2hdf"
     ],
     "main": "./out/extension.js",
-    "l10n":"./l10n",
+    "l10n": "./l10n",
     "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "YourExtensionConfiguration",
+            "properties": {
+                "napiExtension.outSetting": {
+                    "type": "string",
+                    "default": "./",
+                    "description": "description of outpath"
+                },
+                "testReport.canOutput": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "description of output flag"
+                }
+            }
+        },
         "commands": [
             {
                 "command": "extension.h2dts",
@@ -38,28 +54,27 @@
                 "title": "%extension.dts2cpp.title%"
             },
             {
-              "command": "extension.h2sa",
-              "title": "%extension.h2sa.title%"
+                "command": "extension.h2sa",
+                "title": "%extension.h2sa.title%"
             },
             {
-              "command": "extension.h2hdf",
-              "title": "%extension.h2hdf.title%"
-
+                "command": "extension.h2hdf",
+                "title": "%extension.h2hdf.title%"
             },
-            { 
+            {
                 "command": "extension.ohcrosscompile",
                 "title": "%extension.ohcrosscompile.title%"
             },
-	          {
-              "command": "extension.ohGenerator",
-              "title": "%extension.ohGenerator.title%"
+            {
+                "command": "extension.ohGenerator",
+                "title": "%extension.ohGenerator.title%"
             }
         ],
         "viewsWelcome": [
-          {
-            "view": "workbench.explorer.emptyView",
-            "contents": "%Generate NAPI definition code and framework code for OpenHarmony. \n[OHGenerator](command:extension.ohGenerator)%"
-          }
+            {
+                "view": "workbench.explorer.emptyView",
+                "contents": "%Generate NAPI definition code and framework code for OpenHarmony. \n[OHGenerator](command:extension.ohGenerator)%"
+            }
         ],
         "submenus": [
             {
@@ -70,14 +85,14 @@
         "menus": {
             "gen-menulist": [
                 {
-                  "command": "extension.h2sa",
-                  "when": "resourceExtname == .h",
-                  "group": "2_workspace"
+                    "command": "extension.h2sa",
+                    "when": "resourceExtname == .h",
+                    "group": "2_workspace"
                 },
                 {
-                  "command": "extension.h2hdf",
-                  "when": "resourceExtname == .h",
-                  "group": "2_workspace"
+                    "command": "extension.h2hdf",
+                    "when": "resourceExtname == .h",
+                    "group": "2_workspace"
                 },
                 {
                     "command": "extension.h2dts",
@@ -109,78 +124,78 @@
             ]
         },
         "snippets": [
-          {
-            "language": "cpp",
-            "path": "./snippets/napi_class_snippets.json"
-          },
-	        {
-            "language": "cpp",
-            "path": "./snippets/napi_thread_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/napi_asyncwork_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/napi_promise_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/napi_callback_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/napi_enum_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/napi_struct_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/napi_variable_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/napi_external_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/napi_error_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_function_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_class_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_struct_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_enum_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_callback_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_promise_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_thread_snippets.json"
-          },
-          {
-            "language": "cpp",
-            "path": "./snippets/aki_value_snippets.json"
-          }
+            {
+                "language": "cpp",
+                "path": "./snippets/napi_class_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/napi_thread_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/napi_asyncwork_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/napi_promise_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/napi_callback_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/napi_enum_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/napi_struct_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/napi_variable_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/napi_external_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/napi_error_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/aki_function_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/aki_class_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/aki_struct_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/aki_enum_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/aki_callback_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/aki_promise_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/aki_thread_snippets.json"
+            },
+            {
+                "language": "cpp",
+                "path": "./snippets/aki_value_snippets.json"
+            }
         ]
     },
     "scripts": {
@@ -192,23 +207,24 @@
         "test": "node ./out/test/runTest.js"
     },
     "devDependencies": {
-      "@types/glob": "^7.1.1",
-      "@types/mocha": "^5.2.6",
-      "@types/node": "^16.17.0",
-      "@types/tar": "^6.1.13",
-      "@types/vscode": "^1.73.0",
-      "@typescript-eslint/eslint-plugin": "^5.30.0",
-      "@typescript-eslint/parser": "^5.30.0",
-      "@vscode/test-electron": "^1.6.1",
-      "glob": "^7.1.4",
-      "mocha": "^6.1.4",
-      "source-map-support": "^0.5.12",
-      "eslint": "^8.13.0"
+        "@types/glob": "^7.1.1",
+        "@types/mocha": "^5.2.6",
+        "@types/node": "^16.17.0",
+        "@types/tar": "^6.1.13",
+        "@types/vscode": "^1.73.0",
+        "@typescript-eslint/eslint-plugin": "^5.30.0",
+        "@typescript-eslint/parser": "^5.30.0",
+        "@vscode/test-electron": "^1.6.1",
+        "eslint": "^8.13.0",
+        "glob": "^7.1.4",
+        "mocha": "^6.1.4",
+        "mocha-junit-reporter": "^2.2.1",
+        "source-map-support": "^0.5.12"
     },
     "dependencies": {
-        "vsce": "^2.15.0",
+        "@vscode/l10n": "^0.0.10",
+        "tar": "^7.4.3",
         "typescript": "^4.7.2",
-	      "@vscode/l10n": "^0.0.10",
-        "tar": "^7.4.3"
+        "vsce": "^2.15.0"
     }
 }
