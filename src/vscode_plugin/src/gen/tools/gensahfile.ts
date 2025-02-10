@@ -13,18 +13,23 @@
 * limitations under the License.
 */
 
-import { replaceAll } from '../common/tool';
+import { replaceAll } from '../../common/tool';
 import * as fs from 'fs';
-import { FuncObj, ServiceRootInfo } from './datatype';
-import { genDeclareContent } from './genCommonFunc';
+import { FuncObj, ServiceRootInfo } from '../datatype';
+import { genDeclareContent } from './gencommonfunc';
 
-// 生成 xxx_service_proxy.h
-export function genProxyHFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+export function doGenSaHFile(rootInfo: ServiceRootInfo, fileContent: string): string {
   let funcList: FuncObj[] = rootInfo.funcs;
-  let proxyFuncHContent = genDeclareContent(funcList);
+  let saFuncHContent = genDeclareContent(funcList);
   fileContent = replaceAll(fileContent, '[serviceName]', rootInfo.serviceName);
   fileContent = replaceAll(fileContent, '[marcoName]', rootInfo.serviceName.toUpperCase());
   fileContent = replaceAll(fileContent, '[lowServiceName]', rootInfo.serviceName.toLowerCase());
-  fileContent = replaceAll(fileContent, '[proxyHFunctions]', proxyFuncHContent);
+  fileContent = replaceAll(fileContent, '[serviceHFunctions]', saFuncHContent);
+  return fileContent;
+}
+
+// 生成 xxx_service.h
+export function genSaHFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+  fileContent = doGenSaHFile(rootInfo, fileContent);
   fs.writeFileSync(filePath, fileContent);
 }

@@ -18,15 +18,15 @@ import { sa_version_map } from '../template/sa/sadir';
 import * as path from 'path';
 import * as fs from 'fs';
 import { DirTemp, ServiceRootInfo } from './datatype';
-import { genProxyHFile } from './genproxyhfile';
-import { genProxyCppFile } from './genproxycppfile';
-import { genSaHFile } from './gensahfile';
-import { genSaCppFile } from './gensacppfile';
-import { genIServiceHFile } from './geniservicehfile';
-import { genStubHFile } from './genstubhfile';
-import { genStubCppFile } from './genstubcppfile';
-import { genClientCppFile } from './genclientcppfile';
-import { genSaCommonFile } from './genCommonFile';
+import { genProxyHFile } from './tools/genproxyhfile';
+import { genProxyCppFile } from './tools/genproxycppfile';
+import { genSaHFile } from './tools/gensahfile';
+import { genSaCppFile } from './tools/gensacppfile';
+import { genIServiceHFile } from './tools/geniservicehfile';
+import { genStubHFile } from './tools/genstubhfile';
+import { genStubCppFile } from './tools/genstubcppfile';
+import { genClientCppFile } from './tools/genclientcppfile';
+import { genSaCommonFile } from './tools/gencommonfile';
 
 const fileHandlers: { [key: string]: Function } = {
   '[serviceName]_service_proxy.h': genProxyHFile,

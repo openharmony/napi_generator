@@ -14,10 +14,10 @@
 * limitations under the License.
 */
 
-import { replaceAll, getTab } from '../common/tool';
+import { replaceAll, getTab } from '../../common/tool';
 import * as fs from 'fs';
 import { format } from 'util'
-import { FuncObj, ParamObj, ServiceRootInfo } from './datatype';
+import { FuncObj, ParamObj, ServiceRootInfo } from '../datatype';
 
 function getClientFuncParamStr(params: ParamObj[]) {
   let paramStr = '';
@@ -28,8 +28,7 @@ function getClientFuncParamStr(params: ParamObj[]) {
   return paramStr;
 }
 
-// 生成xxx_client.cpp
-export function genClientCppFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+export function doGenClientCppFile(rootInfo: ServiceRootInfo, fileContent: string): string {
   let clientFuncCpp = '';
   let funcList: FuncObj[] = rootInfo.funcs;
   let funcTab = getTab(1);
@@ -42,5 +41,11 @@ export function genClientCppFile(rootInfo: ServiceRootInfo, filePath: string, fi
   fileContent = replaceAll(fileContent, '[marcoName]', rootInfo.serviceName.toUpperCase());
   fileContent = replaceAll(fileContent, '[lowServiceName]', rootInfo.serviceName.toLowerCase());
   fileContent = replaceAll(fileContent, '[clientFuncInvoke]', clientFuncCpp);
+  return fileContent;
+}
+
+// 生成xxx_client.cpp
+export function genClientCppFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+  
   fs.writeFileSync(filePath, fileContent);
 }

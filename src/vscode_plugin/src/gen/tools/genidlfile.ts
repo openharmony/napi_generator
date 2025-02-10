@@ -14,25 +14,26 @@
 */
 
 import * as fs from 'fs';
-import { FuncObj, HdfRootInfo } from "./datatype";
-import { idlTransferType } from '../template/functypemap_template';
+import { FuncObj, HdfRootInfo } from "../datatype";
+import { idlTransferType } from '../../template/functypemap_template';
 import { format } from 'util';
-import { getTab, replaceAll } from '../common/tool';
+import { getTab, replaceAll } from '../../common/tool';
 
 // 常用类型转换表, 将C语言常见类型(key)转换为remote data读写函数使用的类型(value)
 // 例如 ErrCode 类型在框架中的系统原型为int类型，这里映射成int32_t，
 // 因为int32_t类型在 DATA_W_MAP/DATA_R_MAP 表中有对应的读写数据方法(WriteInt32/ReadInt32)
-const TYPE_DEF_MAP = new Map(
-  [['std::string', 'string'], ['char *', 'string']
+const TYPE_DEF_MAP = new Map([
+    ['std::string', 'string'],
+    ['char *', 'string']
 ]);
 
-function getParcelType(srcType: string) {
+export function getParcelType(srcType: string) {
   let parcelType = TYPE_DEF_MAP.get(srcType);
   return parcelType === undefined ? srcType : parcelType;
 }
 
 // idlTransferType
-function getIdlType(cType: string) {
+export function getIdlType(cType: string) {
   let rawType = getParcelType(cType);
   for (let index = 0; index < idlTransferType.length; index++) {
     if (rawType === idlTransferType[index].fromType) {
@@ -42,7 +43,7 @@ function getIdlType(cType: string) {
   return cType;
 }
 
-function isReturn(type: string) {
+export function isReturn(type: string) {
   if (type) {
     if (type.indexOf('&')>0 || type.indexOf('**')>0) {
       return true;
@@ -51,7 +52,7 @@ function isReturn(type: string) {
   return false;
 }
 
-function getIdlFuncParamStr(funcObj: FuncObj) {
+export function getIdlFuncParamStr(funcObj: FuncObj) {
   let idlParams = '';
   for (let i = 0; i < funcObj.parameters.length; ++i) {
     let type = getIdlType(funcObj.parameters[i].type);
@@ -73,8 +74,7 @@ function getIdlFuncParamStr(funcObj: FuncObj) {
   return idlParams;
 }
 
-// 每个方法一个文件
-export function genIdlFile(rootInfo: HdfRootInfo, filePath: string, fileContent: string) {
+export function doGenIdlFile(rootInfo: HdfRootInfo, fileContent: string): string {
   let funcTab = getTab(1);
   let idlFuncDefine = '';
   let funcList: FuncObj[] = rootInfo.funcs;
@@ -89,5 +89,11 @@ export function genIdlFile(rootInfo: HdfRootInfo, filePath: string, fileContent:
   fileContent = replaceAll(fileContent, '[driverName]', rootInfo.driverName);
   fileContent = replaceAll(fileContent, '[marcoName]', marcoName);
   fileContent = replaceAll(fileContent, '[idlFunDeclare]', idlFuncDefine);
+  return fileContent;
+}
+
+// 每个方法一个文件
+export function genIdlFile(rootInfo: HdfRootInfo, filePath: string, fileContent: string) {
+  fileContent = doGenIdlFile(rootInfo, fileContent);
   fs.writeFileSync(filePath, fileContent);
 }

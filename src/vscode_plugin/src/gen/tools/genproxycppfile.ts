@@ -13,14 +13,14 @@
 * limitations under the License.
 */
 
-import { getTab, replaceAll } from '../common/tool';
+import { getTab, replaceAll } from '../../common/tool';
 import * as fs from 'fs';
 import { format } from 'util'
-import { FuncObj, ParamObj, ServiceRootInfo } from './datatype';
-import { genRead, genWrite, getFuncParamStr } from './genCommonFunc';
-import { proxyFuncTemplate } from '../template/func_template';
+import { FuncObj, ParamObj, ServiceRootInfo } from '../datatype';
+import { genRead, genWrite, getFuncParamStr } from '../tools/gencommonfunc';
+import { proxyFuncTemplate } from '../../template/func_template';
 
-function genProxyFunc(funcInfo: FuncObj, className: string, paramStr: string, funcEnum: string) {
+export function genProxyFunc(funcInfo: FuncObj, className: string, paramStr: string, funcEnum: string) {
   let proxyFunc = replaceAll(proxyFuncTemplate, '[serviceName]', className);
   proxyFunc = replaceAll(proxyFunc, '[funcName]', funcInfo.name);
   proxyFunc = replaceAll(proxyFunc, '[params]', paramStr);
@@ -54,8 +54,7 @@ function genProxyFunc(funcInfo: FuncObj, className: string, paramStr: string, fu
   return proxyFunc;
 }
 
-// 生成 xxx_service_proxy.cpp
-export function genProxyCppFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+export function doGenProxyCppFile(rootInfo: ServiceRootInfo, fileContent: string) {
   let funcList: FuncObj[] = rootInfo.funcs;
   let proxyFuncCpp = '';
   for (let i = 0; i < funcList.length; ++i) {
@@ -68,5 +67,11 @@ export function genProxyCppFile(rootInfo: ServiceRootInfo, filePath: string, fil
   fileContent = replaceAll(fileContent, '[marcoName]', rootInfo.serviceName.toUpperCase());
   fileContent = replaceAll(fileContent, '[lowServiceName]', rootInfo.serviceName.toLowerCase());
   fileContent = replaceAll(fileContent, '[remoteFuncImpl]', proxyFuncCpp);
+  return fileContent;
+}
+
+// 生成 xxx_service_proxy.cpp
+export function genProxyCppFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+  fileContent = doGenProxyCppFile(rootInfo, fileContent);
   fs.writeFileSync(filePath, fileContent);
 }

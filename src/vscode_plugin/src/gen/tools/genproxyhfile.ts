@@ -13,24 +13,23 @@
 * limitations under the License.
 */
 
-import { replaceAll, getTab } from '../common/tool';
+import { replaceAll } from '../../common/tool';
 import * as fs from 'fs';
-import { format } from 'util'
-import { FuncObj, ServiceRootInfo } from './datatype';
+import { FuncObj, ServiceRootInfo } from '../datatype';
+import { genDeclareContent } from './gencommonfunc';
 
-// 生成 xxx_service_stub.h
-export function genStubHFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
-  let stubInnerFuncH = '';
+export function doGenProxyHFile(rootInfo: ServiceRootInfo, fileContent: string): string {
   let funcList: FuncObj[] = rootInfo.funcs;
-  let funcTab = getTab(1);
-  for (let i = 0; i < funcList.length; ++i) {
-    stubInnerFuncH += (i === 0) ? '' : '\n' + funcTab;
-    stubInnerFuncH +=
-      format('ErrCode %sInner(MessageParcel &data, MessageParcel &reply);', funcList[i].name);
-  }
+  let proxyFuncHContent = genDeclareContent(funcList);
   fileContent = replaceAll(fileContent, '[serviceName]', rootInfo.serviceName);
   fileContent = replaceAll(fileContent, '[marcoName]', rootInfo.serviceName.toUpperCase());
   fileContent = replaceAll(fileContent, '[lowServiceName]', rootInfo.serviceName.toLowerCase());
-  fileContent = replaceAll(fileContent, '[innerFuncDef]', stubInnerFuncH);
+  fileContent = replaceAll(fileContent, '[proxyHFunctions]', proxyFuncHContent);
+  return fileContent;
+}
+
+// 生成 xxx_service_proxy.h
+export function genProxyHFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+  fileContent = doGenProxyHFile(rootInfo, fileContent);
   fs.writeFileSync(filePath, fileContent);
 }

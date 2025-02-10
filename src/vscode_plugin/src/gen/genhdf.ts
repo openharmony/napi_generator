@@ -17,10 +17,10 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { DirTemp, HdfRootInfo } from "./datatype";
 import { hdf_version_map } from '../template/hdf/hdfdir';
-import { genIdlFile } from './genidlfile';
-import { genServiceHFile } from './genservicehfile';
-import { genServiceCppFile } from './genservicecppfile';
-import { genHdfCommonFile } from './genCommonFile';
+import { genIdlFile } from './tools/genidlfile';
+import { genServiceHFile } from './tools/genservicehfile';
+import { genServiceCppFile } from './tools/genservicecppfile';
+import { genHdfCommonFile } from './tools/gencommonfile';
 
 const fileHandlers: { [key: string]: Function } = {
   'I[marcoName]Interface.idl': genIdlFile,

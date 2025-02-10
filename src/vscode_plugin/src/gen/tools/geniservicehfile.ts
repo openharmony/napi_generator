@@ -13,13 +13,13 @@
 * limitations under the License.
 */
 
-import { replaceAll, getTab } from '../common/tool';
+import { replaceAll, getTab } from '../../common/tool';
 import * as fs from 'fs';
 import { format } from 'util'
-import { FuncObj, ServiceRootInfo } from './datatype';
-import { getFuncParamStr } from './genCommonFunc';
+import { FuncObj, ServiceRootInfo } from '../datatype';
+import { getFuncParamStr } from '../tools/gencommonfunc';
 
-export function genIServiceHFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+export function doGenIServiceHFile(rootInfo: ServiceRootInfo, fileContent: string): string {
   let iServiceFuncH = '';
   let funcEnumStr = '';
   let funcList: FuncObj[] = rootInfo.funcs;
@@ -37,5 +37,10 @@ export function genIServiceHFile(rootInfo: ServiceRootInfo, filePath: string, fi
   fileContent = replaceAll(fileContent, '[marcoName]', rootInfo.serviceName.toUpperCase());
   fileContent = replaceAll(fileContent, '[funcEnum]', funcEnumStr);
   fileContent = replaceAll(fileContent, '[iServiceHFunctions]', iServiceFuncH);
+  return fileContent;
+}
+
+export function genIServiceHFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+  fileContent = doGenIServiceHFile(rootInfo, fileContent);
   fs.writeFileSync(filePath, fileContent);
 }

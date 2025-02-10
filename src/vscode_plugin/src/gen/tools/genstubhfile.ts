@@ -13,18 +13,28 @@
 * limitations under the License.
 */
 
-import { replaceAll } from '../common/tool';
+import { replaceAll, getTab } from '../../common/tool';
 import * as fs from 'fs';
-import { FuncObj, ServiceRootInfo } from './datatype';
-import { genDeclareContent } from './genCommonFunc';
+import { format } from 'util'
+import { FuncObj, ServiceRootInfo } from '../datatype';
 
-// 生成 xxx_service.h
-export function genSaHFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+export function doGenStubHFile(rootInfo: ServiceRootInfo, fileContent: string): string {
+  let stubInnerFuncH = '';
   let funcList: FuncObj[] = rootInfo.funcs;
-  let saFuncHContent = genDeclareContent(funcList);
+  let funcTab = getTab(1);
+  for (let i = 0; i < funcList.length; ++i) {
+    stubInnerFuncH += (i === 0) ? '' : '\n' + funcTab;
+    stubInnerFuncH +=
+      format('ErrCode %sInner(MessageParcel &data, MessageParcel &reply);', funcList[i].name);
+  }
   fileContent = replaceAll(fileContent, '[serviceName]', rootInfo.serviceName);
   fileContent = replaceAll(fileContent, '[marcoName]', rootInfo.serviceName.toUpperCase());
   fileContent = replaceAll(fileContent, '[lowServiceName]', rootInfo.serviceName.toLowerCase());
-  fileContent = replaceAll(fileContent, '[serviceHFunctions]', saFuncHContent);
+  fileContent = replaceAll(fileContent, '[innerFuncDef]', stubInnerFuncH);
+  return fileContent;
+}
+// 生成 xxx_service_stub.h
+export function genStubHFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+  fileContent = doGenStubHFile(rootInfo, fileContent);
   fs.writeFileSync(filePath, fileContent);
 }

@@ -13,12 +13,12 @@
 * limitations under the License.
 */
 
-import { replaceAll, getTab } from '../common/tool';
-import { stubInnerFuncTemplate } from '../template/func_template';
+import { replaceAll, getTab } from '../../common/tool';
+import { stubInnerFuncTemplate } from '../../template/func_template';
 import * as fs from 'fs';
 import { format } from 'util'
-import { FuncObj, ServiceRootInfo } from './datatype';
-import { genRead, genWrite } from './genCommonFunc';
+import { FuncObj, ServiceRootInfo } from '../datatype';
+import { genRead, genWrite } from './gencommonfunc';
 
 function genStubInnerFunc(funcInfo: FuncObj, className: string) {
   let innerFunc = replaceAll(stubInnerFuncTemplate, '[serviceName]', className);
@@ -67,8 +67,7 @@ function genStubInnerFunc(funcInfo: FuncObj, className: string) {
   return innerFunc;
 }
 
-// 生成 xxx_service_stub.cpp
-export function genStubCppFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+export function doGenStubCppFile(rootInfo: ServiceRootInfo, fileContent: string): string {
   let stubInnerFuncMap = '';
   let stubInnerFuncCpp = '';
   let funcList: FuncObj[] = rootInfo.funcs;
@@ -81,5 +80,11 @@ export function genStubCppFile(rootInfo: ServiceRootInfo, filePath: string, file
   fileContent = replaceAll(fileContent, '[lowServiceName]', rootInfo.serviceName.toLowerCase());
   fileContent = replaceAll(fileContent, '[innerFuncMap]', stubInnerFuncMap);
   fileContent = replaceAll(fileContent, '[innerFuncImpl]', stubInnerFuncCpp);
+  return fileContent;
+}
+
+// 生成 xxx_service_stub.cpp
+export function genStubCppFile(rootInfo: ServiceRootInfo, filePath: string, fileContent: string) {
+  fileContent = doGenStubCppFile(rootInfo, fileContent);
   fs.writeFileSync(filePath, fileContent);
 }
