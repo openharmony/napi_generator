@@ -16,6 +16,7 @@
 import * as path from 'path';
 import * as Mocha from 'mocha';
 import * as glob from 'glob';
+import { getOutputPath, getReportConf } from '../../common/conf';
 
 export function run(): Promise<void> {
 	// Create the mocha test
@@ -23,6 +24,13 @@ export function run(): Promise<void> {
 		ui: 'tdd'
 	});
 	mocha.useColors(true);
+	
+	let reportTestResult = getReportConf();
+	if (reportTestResult) {
+		let outpath = getOutputPath();
+		outpath = outpath + 'testres.xunit.xml';
+		mocha.reporter('xunit', { output: outpath });
+	}
 
 	const testsRoot = path.resolve(__dirname, '..');
 
