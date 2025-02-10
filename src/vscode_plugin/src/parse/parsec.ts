@@ -20,7 +20,7 @@ import { ParamObj, FuncObj, StructObj, ClassObj, EnumObj, UnionObj, ParseObj } f
 
 import fs = require('fs');
 
-function parseEnum(data: string) {
+export function parseEnum(data: string) {
   // 使用正则表达式提取枚举定义
   const enumRegex = /typedef\s+enum\s+(\w*)\s*{([^}]*)}\s*(\w+);|enum\s+(\w+)\s*{([^}]*)}\s*;/g;
   const enums: EnumObj[] = [];
@@ -43,7 +43,7 @@ function parseEnum(data: string) {
   return enums;
 }
 
-function parseUnion(data: string) {
+export function parseUnion(data: string) {
   // 使用正则表达式提取联合体定义
   const unionRegex = /typedef\s+union\s*(\w*)\s*{([^}]*)}\s*(\w+)\s*;|union\s+(\w+)\s*{([^}]*)}\s*;/g;
   const unions: UnionObj[] = [];
@@ -91,7 +91,7 @@ function parseUnion(data: string) {
   return unions;
 }
 
-function parseStruct(data: string) {
+export function parseStruct(data: string) {
   // 使用正则表达式提取结构体定义
   // const structRegex = /typedef\s+struct\s+(\w+)\s*{([^}]*)}\s*(\w+);/g;
   // const structRegex = /(\btypedef\b\s+)?struct\s+\w*\s*{([^}]*)}\s*(\w+);/g;
@@ -138,7 +138,7 @@ function parseStruct(data: string) {
   return structs;
 }
 // /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/
-function parseParameters(members: string[]): ParamObj[] {
+export function parseParameters(members: string[]): ParamObj[] {
   // const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/;
   const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d*)\])?$/;
   // console.info(` parseParameters members: ${JSON.stringify(members)}`);
@@ -157,7 +157,7 @@ function parseParameters(members: string[]): ParamObj[] {
   }).filter((m): m is ParamObj => m !== null); 
 }
 
-function parseMembers(members: string[]): ParamObj[] {
+export function parseMembers(members: string[]): ParamObj[] {
   const memberRegex = /(?:public:|private:)?\s*(\w+(?:\s+\w+)?)\s+(\w+)(?:\[(\d+)\])?/;
   // console.info(` parseMembers members: ${JSON.stringify(members)}`);
   return members.map(member => {
@@ -174,7 +174,7 @@ function parseMembers(members: string[]): ParamObj[] {
   }).filter((m): m is ParamObj => m !== null); 
 }
 
-function parseMethods(functions: string[]): FuncObj[] {
+export function parseMethods(functions: string[]): FuncObj[] {
   const functionRegex = /^(\w[\w\s]*\*?)\s+(\w+)\((.*?)\)$/;
   // 正则表达式匹配返回值、函数名和参数
   // const functionRegex = /(\w+)\s+(\w+)\(([^)]*)\)/; 
@@ -196,7 +196,7 @@ function parseMethods(functions: string[]): FuncObj[] {
   }).filter((f): f is FuncObj => f !== null); 
 }
 
-function parseClass(data: string) {
+export function parseClass(data: string) {
   // 使用正则表达式提取类定义
   const classRegex = /class\s+(\w+)\s*{([^}]*)}/g;
   const classes: ClassObj[] = []
@@ -241,7 +241,7 @@ function parseClass(data: string) {
   return classes;
 }
 
-function parseFunctionOld(data: string) {
+export function parseFunctionOld(data: string) {
   // 使用正则表达式提取函数定义
   const functionRegex1 = /([a-zA-Z_]\w*\s+)+([*a-zA-Z_]\w+)\s*\(([^)]*)\)\s*(?={|;)/g;
   const functionRegex2 = /(\w+\s*\(.*?\)\s+)(\w+)\s*\((.*?)\);\s*/g;
@@ -326,7 +326,7 @@ function parseFunctionOld(data: string) {
   // }
 }
 
-function parseFunction(data: string): FuncObj[] {
+export function parseFunction(data: string): FuncObj[] {
   // const funcRegex = /^(static\s+)?(const\s+)?([\w\s\[\]*]+)\s+(\w+)\s*\(([^)]*)\);/gm;
   const funcRegex = /(?:typedef\s+([\w\s\[\]*]+)\s+\(\*\s*(\w+)\)\s*\(([^)]*)\);|^(static\s+)?(const\s+)?([\w\s\[\]*]+)\s+(\w+)\s*\(([^)]*)\);)/gm
   const functions: FuncObj[] = []

@@ -52,7 +52,7 @@ const OBJECT_TYPE = 180;
 
 let gchecker: ts.TypeChecker;
 
-function getTypeAliasSubtypes(typeAlias: ts.TypeAliasDeclaration, list: ParamObj[]) {
+export function getTypeAliasSubtypes(typeAlias: ts.TypeAliasDeclaration, list: ParamObj[]) {
     // 检查类型是否为类型节点
     const typeNode = typeAlias.type;
     // console.log('getTypeAliasSubtypes');
@@ -90,7 +90,7 @@ function getTypeAliasSubtypes(typeAlias: ts.TypeAliasDeclaration, list: ParamObj
     return [];
 }
 
-function getParamType(paramType: any) {
+export function getParamType(paramType: any) {
   if (paramType === undefined) {
     return 'void';
   }

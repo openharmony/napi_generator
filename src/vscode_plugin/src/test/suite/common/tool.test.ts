@@ -18,7 +18,7 @@ import * as assert from 'assert';
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from 'vscode';
-import * as tools from '../../common/tool'
+import * as tools from '../../../common/tool'
 // import * as myExtension from '../../extension';
 
 suite('Common_Tool_Test_Suite', () => {
@@ -28,6 +28,7 @@ suite('Common_Tool_Test_Suite', () => {
     test('replaceall_test_1', () => {
         let resultStr = tools.replaceAll('hello_world', 'or', 'er');
         assert.strictEqual(resultStr, 'hello_werld');
+        
         resultStr = tools.replaceAll('hello_world', 'l', 'r');
         assert.strictEqual(resultStr, 'herro_worrd');
     });
