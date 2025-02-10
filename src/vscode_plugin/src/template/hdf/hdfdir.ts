@@ -94,3 +94,6 @@ export let hdf4_1dir: DirTemp = {
   files: [hdfReadmeTemplate],
   dirs: [hdf_interface, hdf_peripheral, hdf_hcsconfig]
 }
+
+// 使用map管理版本
+export const hdf_version_map = new Map([['4.1', hdf4_1dir]]);
