@@ -89,3 +89,6 @@ export let service3_2_dir: DirTemp = {
   files: [buildGnTemplate, bundleJsonTemplate, saReadmeTemplate],
   dirs: [etc3_2_dir, include_dir, src_dir, interface_dir, sa_profile3_2_dir],
 }
+
+// 定义一个map用于保存sa的各个版本
+export const sa_version_map = new Map([['3.2', service3_2_dir], ['4.1', service4_1_dir]]);
