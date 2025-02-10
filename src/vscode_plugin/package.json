@@ -24,6 +24,22 @@
     "main": "./out/extension.js",
     "l10n": "./l10n",
     "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "YourExtensionConfiguration",
+            "properties": {
+                "napiExtension.outSetting": {
+                    "type": "string",
+                    "default": "./",
+                    "description": "description of outpath"
+                },
+                "testReport.canOutput": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "description of output flag"
+                }
+            }
+        },
         "commands": [
             {
                 "command": "extension.h2dts",
