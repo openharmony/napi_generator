@@ -17,7 +17,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as ts from 'typescript';
 import { ParamObj, FuncObj, StructObj, ClassObj, EnumObj, UnionObj, ParseObj } from '../gen/datatype'
-
+import { Logger } from '../common/log';
 import fs = require('fs');
 
 export function parseEnum(data: string) {
@@ -39,7 +39,7 @@ export function parseEnum(data: string) {
     }
     enums.push(enumItem);
   }
-  console.info(` return enums: ${JSON.stringify(enums)}`);
+  Logger.getInstance().info(` return enums: ${JSON.stringify(enums)}`);
   return enums;
 }
 
@@ -75,7 +75,7 @@ export function parseUnion(data: string) {
         const variable = match[2]; 
         // 解析数组长度
         const arrayLength = match[4] ? parseInt(match[4], 10) : -1; 
-        // console.log(`Type: ${type}, Variable:${variable}, Size:${arrayLength}`);
+        // Logger.getInstance().debug(`Type: ${type}, Variable:${variable}, Size:${arrayLength}`);
         let paramItem: ParamObj = {
           "type": type,
           "name": variable,
@@ -87,7 +87,7 @@ export function parseUnion(data: string) {
 
     unions.push(unionItem);
   }
-  console.info(` return unions: ${JSON.stringify(unions)}`);
+  Logger.getInstance().info(` return unions: ${JSON.stringify(unions)}`);
   return unions;
 }
 
@@ -134,17 +134,17 @@ export function parseStruct(data: string) {
 
     structs.push(structItem);
   }
-  // console.info(` return structs: ${JSON.stringify(structs)}`);
+  // Logger.getInstance().info(` return structs: ${JSON.stringify(structs)}`);
   return structs;
 }
 // /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/
 export function parseParameters(members: string[]): ParamObj[] {
   // const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/;
   const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d*)\])?$/;
-  // console.info(` parseParameters members: ${JSON.stringify(members)}`);
+  // Logger.getInstance().info(` parseParameters members: ${JSON.stringify(members)}`);
   return members.map(member => {
       const match = member.trim().match(memberRegex);
-      // console.info(` parseParameters match: ${JSON.stringify(match)}`);
+      // Logger.getInstance().info(` parseParameters match: ${JSON.stringify(match)}`);
       if (match) {
           const type = match[2];
           const name = match[3];
@@ -159,10 +159,10 @@ export function parseParameters(members: string[]): ParamObj[] {
 
 export function parseMembers(members: string[]): ParamObj[] {
   const memberRegex = /(?:public:|private:)?\s*(\w+(?:\s+\w+)?)\s+(\w+)(?:\[(\d+)\])?/;
-  // console.info(` parseMembers members: ${JSON.stringify(members)}`);
+  // Logger.getInstance().info(` parseMembers members: ${JSON.stringify(members)}`);
   return members.map(member => {
       const match = member.trim().match(memberRegex);
-      // console.info(` parseMembers match: ${JSON.stringify(match)}`);
+      // Logger.getInstance().info(` parseMembers match: ${JSON.stringify(match)}`);
       if (match) {
           const type = match[1];
           const name = match[2];
@@ -224,10 +224,10 @@ export function parseClass(data: string) {
       });
       
       const variableList = parseMembers(variables);
-      // console.log(`parseMembers: ${JSON.stringify(variableList)}`)
+      // Logger.getInstance().debug(`parseMembers: ${JSON.stringify(variableList)}`)
 
       const functionList: FuncObj[] = parseMethods(methods);
-      // console.log(`parsedFunctions: ${JSON.stringify(functionList)}`);
+      // Logger.getInstance().debug(`parsedFunctions: ${JSON.stringify(functionList)}`);
 
       const classItem: ClassObj = {
         "name": className,
@@ -237,7 +237,7 @@ export function parseClass(data: string) {
       }
       classes.push(classItem);
   }
-  // console.info(` return classes: ${JSON.stringify(classes)}`);
+  // Logger.getInstance().info(` return classes: ${JSON.stringify(classes)}`);
   return classes;
 }
 
@@ -248,7 +248,7 @@ export function parseFunctionOld(data: string) {
 
   let functions = data.match(functionRegex1) || [];
   if (functions.length <= 0) {
-    console.info("use functionRegex2");
+    Logger.getInstance().info("use functionRegex2");
     functions = data.match(functionRegex2) || [];
   }
   const functionDetails: FuncObj[] = functions.map(func => {
@@ -259,7 +259,7 @@ export function parseFunctionOld(data: string) {
     }
     let parts = func.trim().match(/([a-zA-Z_]\w+)\s+\(*([*a-zA-Z_]\w+)\)*\s*\(([^)]*)\)/);
     if (!parts) {
-      console.info("use regex2");
+      Logger.getInstance().info("use regex2");
       parts = func.trim().match(/(\w+\s*\(.*?\)\s+)(\w+)\s*\((.*?)\);\s*/);
     }
     if (parts) {
@@ -268,7 +268,7 @@ export function parseFunctionOld(data: string) {
       let functionName = parts[index + 1].trim();
       let paramList = parts[index + 2].split(',');
       if (parts[index].trim() === 'typedef') {
-          console.info("typedef -------------", parts);
+          Logger.getInstance().info("typedef -------------" + parts);
           returnType = parts[index + 1].trim();
           functionName = parts[index + 2].trim();
           paramList = parts[index + 3].split(',');
@@ -287,7 +287,7 @@ export function parseFunctionOld(data: string) {
               arraySize: 0,
           })
       }
-      // console.info(`ret: ${returnType} func: ${functionName} params:(${paramResList.map(ditem => {
+      // Logger.getInstance().info(`ret: ${returnType} func: ${functionName} params:(${paramResList.map(ditem => {
       //     return ' type: ' + ditem.type + ', ' + 'name: ' + ditem.name;
       // })})`)
       let funcRes: FuncObj = {
@@ -308,7 +308,7 @@ export function parseFunctionOld(data: string) {
   })
   .filter(detail => detail !== null);
 
-  console.log(`parse oldfunc : ${JSON.stringify(functionDetails)}`)
+  Logger.getInstance().debug(`parse oldfunc : ${JSON.stringify(functionDetails)}`)
   return functionDetails;
   // if (functionDetails.length > 0) {
   //   const funcs = [...functionDetails.filter((funcItem) : funcItem is FuncObj => funcItem !== null)];
@@ -319,7 +319,7 @@ export function parseFunctionOld(data: string) {
   //           return ' type: ' + ditem.type + ', ' + 'name: ' + ditem.name;
   //       })})`
   //   ).join('\n');
-  //   console.info(` return parseMethods: ${JSON.stringify(funcs)}`);
+  //   Logger.getInstance().info(` return parseMethods: ${JSON.stringify(funcs)}`);
   //   return funcs;
   // } else {
   //   vscode.window.showInformationMessage('No functions found.');    
@@ -332,7 +332,7 @@ export function parseFunction(data: string): FuncObj[] {
   const functions: FuncObj[] = []
   let match;
   while ((match = funcRegex.exec(data)) !== null) {
-    // console.log(`func match: ${JSON.stringify(match)}`)
+    // Logger.getInstance().debug(`func match: ${JSON.stringify(match)}`)
     // match[3].trim();
     const returnType = match[1] ? match[1].trim() : match[6].trim(); 
     // match[4].trim();
@@ -349,7 +349,7 @@ export function parseFunction(data: string): FuncObj[] {
 
     functions.push(funcItem);
   }
-  // console.info(` return functions: ${JSON.stringify(functions)}`);
+  // Logger.getInstance().info(` return functions: ${JSON.stringify(functions)}`);
   return functions;
 }
 
@@ -383,7 +383,7 @@ export function parseHeaderFile(filePath: string): Promise<ParseObj> {
         classes: classList,
         funcs: funcList
       }
-      // console.info(` return parse result: ${JSON.stringify(parseRes)}`);
+      // Logger.getInstance().info(` return parse result: ${JSON.stringify(parseRes)}`);
       resolve(parseRes);
     });
   });

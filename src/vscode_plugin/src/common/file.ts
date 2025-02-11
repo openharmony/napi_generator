@@ -14,9 +14,45 @@
 */
 
 const vscode = require("vscode");
+import * as fs from 'fs';
+import { getGenerateConf, GEN_TYPE } from './conf';
 
-export function getOutputPath(): string {
-  const config = vscode.workspace.getConfiguration('napiExtension');
-  const outSetting = config.get("outSetting");
-  return outSetting;
+export function saveFileSync(filePath: string, fileContent: string) {
+  let genType = getGenerateConf();
+  if (!fs.existsSync(filePath)) {
+    // TODO: if file exist, replace, append or new file
+    switch (genType) {
+      case GEN_TYPE.GEN_APPEND:
+        break;
+      case GEN_TYPE.GEN_REPLACE:
+        break;
+      case GEN_TYPE.GEN_NEW:
+        break;
+      default:
+        break;
+    }
+    fs.writeFileSync(filePath, fileContent);
+  } else {
+    fs.writeFileSync(filePath, fileContent);
+  }
+}
+
+export function mkdirSync(dirPath: string) {
+  let genType = getGenerateConf();
+  if (!fs.existsSync(dirPath)) {
+    // TODO: if file exist, replace, append or new file
+    switch (genType) {
+      case GEN_TYPE.GEN_APPEND:
+        break;
+      case GEN_TYPE.GEN_REPLACE:
+        break;
+      case GEN_TYPE.GEN_NEW:
+        break;
+      default:
+        break;
+    }
+    fs.mkdirSync(dirPath, { recursive: true });
+  } else {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
 }

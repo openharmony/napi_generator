@@ -21,7 +21,7 @@ import { genIdlFile } from './tools/genidlfile';
 import { genServiceHFile } from './tools/genservicehfile';
 import { genServiceCppFile } from './tools/genservicecppfile';
 import { genHdfCommonFile } from './tools/gencommonfile';
-
+import { Logger } from '../common/log';
 const fileHandlers: { [key: string]: Function } = {
   'I[marcoName]Interface.idl': genIdlFile,
   '[driverName]_interface_service.h': genServiceHFile,
@@ -64,12 +64,12 @@ function genDir(dirItem: DirTemp, rootInfo: HdfRootInfo, out: string) {
 }
 
 export function genHdfFile(rootInfo: HdfRootInfo, out: string) {
-  console.info("rootInfo: " + JSON.stringify(rootInfo))
+  Logger.getInstance().info("rootInfo: " + JSON.stringify(rootInfo))
 
   let dirContentTemplete = hdf_version_map.get(rootInfo.versionTag);
   if (dirContentTemplete !== undefined) {
     genDir(dirContentTemplete, rootInfo, out);
   }
 
-  console.info('generate success!')
+  Logger.getInstance().info('generate success!')
 }

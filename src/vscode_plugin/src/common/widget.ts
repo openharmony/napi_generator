@@ -22,6 +22,7 @@ import {
     EVENT_INFORMATION,
     EVENT_WARNING
 } from './eventtype';
+import { Logger } from './log';
 import { Callback } from './define';
 
 export function doAsyncQuickPick(valueList: string[], options?: vscode.QuickPickOptions, cb?: Callback) {
@@ -71,19 +72,19 @@ export function doAsyncOpenDialog(options: vscode.OpenDialogOptions, cb: Callbac
 export function toastMsg(event: string, msg: string) {
     switch(event) {
         case EVENT_ERROR:
-            console.error(msg);
+            Logger.getInstance().error(msg);
             vscode.window.showErrorMessage(msg);
             break;
         case EVENT_INFORMATION:
-            console.info(msg);
+            Logger.getInstance().info(msg);
             vscode.window.showInformationMessage(msg);
             break;
         case EVENT_WARNING:
-            console.warn(msg);
+            Logger.getInstance().warn(msg);
             vscode.window.showWarningMessage(msg);
             break;
         default:
-            console.log(msg);
+            Logger.getInstance().debug(msg);
             vscode.window.showInformationMessage(msg);
             break;
     }

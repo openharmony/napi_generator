@@ -22,7 +22,31 @@ export function getOutputPath(): string {
 }
 
 export function getReportConf(): string {
-    const config = vscode.workspace.getConfiguration('testReport');
-    const outSetting = config.get("canOutput");
-    return outSetting;
-  }
+  const config = vscode.workspace.getConfiguration('testReport');
+  const outSetting = config.get("canOutput");
+  return outSetting;
+}
+
+export enum GEN_TYPE {
+  GEN_REPLACE = 1,
+  GEN_APPEND,
+  GEN_NEW
+}
+
+export function getGenerateConf(): number {
+  const config = vscode.workspace.getConfiguration('genProject');
+  const outSetting = config.get("policy");
+  return outSetting;
+}
+
+export function getLogPath(): string {
+  const config = vscode.workspace.getConfiguration('logger');
+  const outSetting = config.get("filePath");
+  return outSetting;
+}
+
+export function getLogName(): string {
+  const config = vscode.workspace.getConfiguration('logger');
+  const outSetting = config.get("fileName");
+  return outSetting;
+}
