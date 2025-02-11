@@ -17,7 +17,7 @@ import { Uri } from "vscode";
 import { H2dtsMod } from "../model/h2dtsmod";
 import { IModel } from "../model/imodel";
 import { H2dtsView } from "../view/h2dtsview";
-
+import { Logger } from "../common/log";
 import { IView } from "../view/iview";
 import { IController } from "./icontroller";
 import { EVENT_ERROR } from "../common/eventtype";
@@ -48,7 +48,7 @@ export class H2dtsCtrl extends IController {
       this.model.doStart();
     } catch(e) {
       let errmsg = "h2dts start error: " + JSON.stringify(e)
-      console.error(errmsg);
+      Logger.getInstance().error(errmsg);
       this.view.showMsg(EVENT_ERROR, errmsg);
     }  
   }

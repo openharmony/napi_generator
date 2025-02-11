@@ -14,7 +14,7 @@
 */
 import * as vscode from 'vscode';
 import { Callback } from "../common/define"
-
+import { Logger } from "../common/log";
 export abstract class IModel {
     abstract name: string;
     uri: vscode.Uri | undefined = undefined;
@@ -43,7 +43,7 @@ export abstract class IModel {
         if (callback) {
             callback(...args);
         } else {
-            console.error(`No callback found with key "${event}".`);
+            Logger.getInstance().error(`No callback found with key "${event}".`);
         }
     }
 }

@@ -16,6 +16,7 @@ import fs = require('fs');
 import { DtscppRootInfo, FuncObj, InterfaceBody, ParamObj, FuncInfo, GenInfo, InterfaceList, TypeList } from './datatype';
 import { dts2cpp_key } from '../template/dtscpp/dts2cpp_key';
 import path = require('path');
+import { Logger } from '../common/log';
 
 import { generateRandomInteger, removeComments, removeTab, replaceAll } from '../common/tool';
 import util = require('util');
@@ -369,7 +370,7 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
     if (basicTypeMatch) {
       for (let index = 0; index < basicTypeMatch.length; index++) {
         // 输出匹配的基本类型定义
-        console.log('Basic type typedef match:', basicTypeMatch[0]); 
+        Logger.getInstance().debug('Basic type typedef match:' + basicTypeMatch[0]); 
         let matchs = basicTypeMatch[index].split(' ');
         let rawType = getJsTypeFromC(matchs[1].trim());
         let defineType = matchs[2].split(';')
@@ -553,6 +554,6 @@ export function genDtsFile(rootInfo: GenInfo) {
   let dirPath = path.dirname(rootInfo.rawFilePath);
   let outPath = path.join(dirPath, dtsFileName);
   fs.writeFileSync(outPath, fileContent);
-  console.info('generate success!')
+  Logger.getInstance().info('generate success!')
   return outPath;
 }

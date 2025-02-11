@@ -21,7 +21,7 @@ import { H2saView } from "../view/h2saview";
 import { IView } from "../view/iview";
 import { IController } from "./icontroller";
 import { EVENT_ERROR } from "../common/eventtype";
-
+import { Logger } from "../common/log";
 export class H2saCtrl extends IController {
     name: string;
     view: IView;
@@ -48,7 +48,7 @@ export class H2saCtrl extends IController {
             this.model.doStart();
         } catch(e) {
             let errmsg = this.name + " start error: " + JSON.stringify(e)
-            console.error(errmsg);
+            Logger.getInstance().error(errmsg);
             this.view.showMsg(EVENT_ERROR, errmsg);
         }
         

@@ -17,7 +17,7 @@ import { Uri } from "vscode";
 import { H2hdfMod } from "../model/h2hdfmod";
 import { IModel } from "../model/imodel";
 import { H2hdfView } from "../view/h2hdfview";
-
+import { Logger } from "../common/log";
 import { IView } from "../view/iview";
 import { IController } from "./icontroller";
 import { EVENT_ERROR } from "../common/eventtype";
@@ -48,7 +48,7 @@ export class H2hdfCtrl extends IController {
       this.model.doStart();
     } catch(e) {
       let errmsg = this.name + " start error: " + JSON.stringify(e)
-      console.error(errmsg);
+      Logger.getInstance().error(errmsg);
       this.view.showMsg(EVENT_ERROR, errmsg);
     }
   }

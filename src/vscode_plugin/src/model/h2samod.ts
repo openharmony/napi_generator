@@ -20,7 +20,7 @@ import { GenInfo } from '../gen/datatype';
 import { genDtsFile } from '../gen/gendts';
 import { GEN_COMPLETE, OPEN_IN_EXPLORER, PARSE_COMPLETE } from '../common/constants';
 import { genServiceFile } from '../gen/gensa';
-
+import { Logger } from '../common/log';
 import { 
   EVENT_ERROR,
   EVENT_INFORMATION,
@@ -61,8 +61,8 @@ export class H2saMod extends IModel {
   async generateSa(hPath: string, versionTag: string, serviceId: string) {
     // analyze
     let funDescList = await parseHeaderFile(hPath);
-    console.log('parse header file res: ', funDescList);
-    console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
+    Logger.getInstance().debug('parse header file res: ' + funDescList);
+    Logger.getInstance().debug('parse header file jsonstr: ' + JSON.stringify(funDescList));
 
     this.emmitEventForKey(EVENT_PROGRESS, 50, PARSE_COMPLETE);
 
@@ -92,11 +92,11 @@ export class H2saMod extends IModel {
       if (this.uri) {
           this.generateSa(this.uri.fsPath, this.versionTag, this.serviceId);
       } else {
-          console.error('parse header file error with undefine uri.');
+          Logger.getInstance().error('parse header file error with undefine uri.');
       }
     } catch (e) {
       let errmsg = 'parse header file error: ' + JSON.stringify(e);
-      console.error(errmsg);
+      Logger.getInstance().error(errmsg);
       this.emmitEventForKey(EVENT_ERROR, -1, errmsg);
     }
   }

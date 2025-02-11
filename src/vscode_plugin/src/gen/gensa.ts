@@ -27,7 +27,7 @@ import { genStubHFile } from './tools/genstubhfile';
 import { genStubCppFile } from './tools/genstubcppfile';
 import { genClientCppFile } from './tools/genclientcppfile';
 import { genSaCommonFile } from './tools/gencommonfile';
-
+import { Logger } from '../common/log';
 const fileHandlers: { [key: string]: Function } = {
   '[serviceName]_service_proxy.h': genProxyHFile,
   '[serviceName]_service_proxy.cpp': genProxyCppFile,
@@ -74,12 +74,12 @@ export function genDir(dirItem: DirTemp, rootInfo: ServiceRootInfo, out: string)
 }
 
 export function genServiceFile(rootInfo: ServiceRootInfo, out: string) {
-  console.info("rootInfo: " + JSON.stringify(rootInfo))
+  Logger.getInstance().info("rootInfo: " + JSON.stringify(rootInfo))
 
   let dirContentTemplete = sa_version_map.get(rootInfo.versionTag);
   if (dirContentTemplete !== undefined) {
     genDir(dirContentTemplete, rootInfo, out);
   }
 
-  console.info('generate success!')
+  Logger.getInstance().info('generate success!')
 }
