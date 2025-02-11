@@ -38,6 +38,22 @@
                     "default": false,
                     "description": "description of output flag"
                 }
+                ,
+                "genProject.policy": {
+                    "type": "number",
+                    "default": 1,
+                    "description": "generate policy: 1,replace;2,append;3,new"
+                },
+                "logger.filePath": {
+                    "type": "string",
+                    "default": "./",
+                    "description": "logger file path"
+                },
+                "logger.fileName": {
+                    "type": "string",
+                    "default": "dmesg.log",
+                    "description": "logger file name"
+                }
             }
         },
         "commands": [
