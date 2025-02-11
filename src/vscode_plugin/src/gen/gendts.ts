@@ -86,7 +86,7 @@ export function isNumberType(cType: string) {
   }
 }
 
-function basicC2js(cType: string) {
+export function basicC2js(cType: string) {
   let jsType = '';
   if (isStringType(cType)) {
       jsType = 'string';
@@ -100,13 +100,13 @@ function basicC2js(cType: string) {
   return jsType;
 }
 
-function getInterFuncRetType(str: string) {
+export function getInterFuncRetType(str: string) {
   let strArr = str.split(' ');
   // let retType = getJsTypeFromC(replaceAll(strArr[0], '*', ''));
   return replaceAll(strArr[0], '*', '');
 }
 
-function getInterFuncName(str: string) {
+export function getInterFuncName(str: string) {
   let strArr = str.split(' ');
   return replaceAll(strArr[1], '*', '');
 }
@@ -148,7 +148,7 @@ export function getJsTypeFromC(cType: string) {
   return jsType;
 }
 
-function getInterFuncParams(str: string, paramObj: ParamObj[]) {
+export function getInterFuncParams(str: string, paramObj: ParamObj[]) {
   let paramsStr = '';
   let paramObject: ParamObj = {
     name: '',
@@ -172,7 +172,7 @@ function getInterFuncParams(str: string, paramObj: ParamObj[]) {
   return paramsStr;
 }
 
-function isJsBasicType(type: string) {
+export function isJsBasicType(type: string) {
   if (type === 'number' || type === 'string' || type === 'boolean') {
     return true;
   } else {
@@ -180,7 +180,7 @@ function isJsBasicType(type: string) {
   }
 }
 
-function removeMarco(type: string) {
+export function removeMarco(type: string) {
   // 去掉宏定义
   if (type) {
     let leftCraftIndex = type.indexOf('(');
@@ -193,7 +193,7 @@ function removeMarco(type: string) {
   return type;
 }
 
-function createParam(parseParamInfo: ParamObj) {
+export function createParam(parseParamInfo: ParamObj) {
   let tsParam: ParamObj = {
       name: '',
       type: '',
@@ -213,7 +213,7 @@ function createParam(parseParamInfo: ParamObj) {
   return [tsParam, cppParam];
 }
 
-function createFuncInfo(parseFuncInfo: FuncObj) {
+export function createFuncInfo(parseFuncInfo: FuncObj) {
   let funcInfo: FuncInfo = {
       name: '',
       params: [],
@@ -406,7 +406,7 @@ export function getInterfaceBody(testType: string, interfaceList: InterfaceList[
 }
 
 //----------------------------
-function transTskey2Ckey(key: string) {
+export function transTskey2Ckey(key: string) {
   for(const keyItem of dts2cpp_key) {
     for(const str of keyItem.keys) {
       if (key.includes(str)) {
@@ -421,7 +421,7 @@ function transTskey2Ckey(key: string) {
   return key;
 }
 
-function getDtsEnum(rootInfo: GenInfo) {
+export function getDtsEnum(rootInfo: GenInfo) {
   let enumList = rootInfo.parseObj.enums;
   let out = '';
   for(const enumItem of enumList) {
@@ -438,7 +438,7 @@ function getDtsEnum(rootInfo: GenInfo) {
   return out;
 }
 
-function getDtsFunction(rootInfo: GenInfo) {
+export function getDtsFunction(rootInfo: GenInfo) {
   let funcList = rootInfo.parseObj.funcs;
   let out = '';
   for(const funcItem of funcList) {
@@ -470,7 +470,7 @@ function getDtsFunction(rootInfo: GenInfo) {
   return out;
 }
 
-function getDtsClasses(rootInfo: GenInfo) {
+export function getDtsClasses(rootInfo: GenInfo) {
   let classList = rootInfo.parseObj.classes;
   let out = '';
   for(const classItem of classList) {
@@ -494,7 +494,7 @@ function getDtsClasses(rootInfo: GenInfo) {
   return out;
 }
 
-function getDtsStructs(rootInfo: GenInfo) {
+export function getDtsStructs(rootInfo: GenInfo) {
   let structList = rootInfo.parseObj.structs;
   let out = '';
   for(const structItem of structList) {
@@ -520,7 +520,7 @@ function getDtsStructs(rootInfo: GenInfo) {
   return out;
 }
 
-function getDtsUnions(rootInfo: GenInfo) {
+export function getDtsUnions(rootInfo: GenInfo) {
   let unionList = rootInfo.parseObj.unions;
   let out = '';
   for(const unionItem of unionList) {
