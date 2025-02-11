@@ -46,7 +46,7 @@ const fileHandlers: { [key: string]: Function } = {
 };
 
 // 遍历数据结构，拿到模板内容，并生成文件内容
-function genDir(dirItem: DirTemp, rootInfo: ServiceRootInfo, out: string) {
+export function genDir(dirItem: DirTemp, rootInfo: ServiceRootInfo, out: string) {
   let dirPath = path.join(out, dirItem.name.replace('[serviceName]', rootInfo.serviceName));
   // 创建目录
   if (!fs.existsSync(dirPath)) {

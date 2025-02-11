@@ -50,7 +50,7 @@ export function generateFuncTestCase(funcInfo: FuncInfo, rawFileName: string,  t
   return funcTestContent;
 }
 
-function genInitTestfunc(funcInfo: FuncInfo, typeList: TypeList[], interfaceList: InterfaceList[]) {
+export function genInitTestfunc(funcInfo: FuncInfo, typeList: TypeList[], interfaceList: InterfaceList[]) {
   let funcParamDefine = '';
   let funcParamUse = '';
   let funcInfoParams = '';
@@ -86,7 +86,7 @@ function genInitTestfunc(funcInfo: FuncInfo, typeList: TypeList[], interfaceList
   return { funcParamUse, funcParamDefine, funcInfoParams };
 }
 
-function getTypeDefine(testType: string, funcParamDefine: string, funcInfo: FuncInfo, i: number, funcParamUse: string, typeList: TypeList[]) {
+export function getTypeDefine(testType: string, funcParamDefine: string, funcInfo: FuncInfo, i: number, funcParamUse: string, typeList: TypeList[]) {
   let cTypeDefine = getTypeBody(testType, typeList);
   let typeDefType = getJsTypeFromC(cTypeDefine as string);
   // genType
@@ -103,7 +103,7 @@ function getTypeDefine(testType: string, funcParamDefine: string, funcInfo: Func
   return [funcParamDefine, funcParamUse];
 }
 
-function genInterFuncParamStr(param: ParamObj[]) {
+export function genInterFuncParamStr(param: ParamObj[]) {
   let paramsStr = '';
   for(let i = 0; i < param.length; i++) {
     let rawType = getJsTypeFromC(param[i].type);
@@ -115,7 +115,7 @@ function genInterFuncParamStr(param: ParamObj[]) {
   return paramsStr;
 }
 
-function getInterfaceDefine(testType: string, funcParamDefine: string, funcInfo: FuncInfo, i: number, funcParamUse: string, interfaceList: InterfaceList[]) {
+export function getInterfaceDefine(testType: string, funcParamDefine: string, funcInfo: FuncInfo, i: number, funcParamUse: string, interfaceList: InterfaceList[]) {
   let objValue = getInterfaceBody(testType, interfaceList);
   let objTestData = 'let %s:testNapi.%s = { ';
   let interParams = objValue!.params;
@@ -166,7 +166,7 @@ function getInterfaceDefine(testType: string, funcParamDefine: string, funcInfo:
   return [funcParamDefine, funcParamUse];
 }
 
-function getTestType(type: string) {
+export function getTestType(type: string) {
     // 去掉const 和 *
     type = replaceAll(type,'const', '');
     type = replaceAll(type, '*', '').trim();
@@ -183,7 +183,7 @@ function getTestType(type: string) {
     return type;
 }
 
-function getJsType(type: string) {
+export function getJsType(type: string) {
     type = replaceAll(type,'const', '');
     type = replaceAll(type, '*', '').trim();
     if (isNumberType(type) || isStringType(type) || isBoolType(type) || type === 'void') {
