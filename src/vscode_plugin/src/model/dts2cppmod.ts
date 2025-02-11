@@ -28,7 +28,7 @@ import {
 } from '../common/eventtype';
 import { parseTsFile } from '../parse/parsets';
 import { genCppFile } from '../gen/gendtscpp';
-
+import { Logger } from '../common/log';
 export class Dts2cppMod extends IModel {
   name: string;
   private static instance: Dts2cppMod;
@@ -52,12 +52,12 @@ export class Dts2cppMod extends IModel {
     try {
       if (this.uri) {
         const filename = path.basename(this.uri.fsPath);
-        console.log('get filename ' );
+        Logger.getInstance().debug('get filename ' );
         if (filename.endsWith('.d.ts')) {
           // Display a message box to the user
           // analyze
           let res = parseTsFile(this.uri.fsPath);
-          console.info('res: ' + JSON.stringify(res));
+          Logger.getInstance().info('res: ' + JSON.stringify(res));
           // progress.report({ increment: 50, message: PARSE_COMPLETE });
           this.emmitEventForKey(EVENT_PROGRESS, 50, PARSE_COMPLETE);
           // generator
@@ -76,19 +76,19 @@ export class Dts2cppMod extends IModel {
           }
         } else {
           let errmsg = 'not dts uri is : ' + this.uri.fsPath;
-          console.error(errmsg);
+          Logger.getInstance().error(errmsg);
           // Display a message box to the user
           //vscode.window.showInformationMessage(`${this.uri.fsPath} is not a .d.ts file!`);
           this.emmitEventForKey(EVENT_ERROR, -1, errmsg);
         }
       } else {
         let errmsg = 'parse header file error with undefine uri';
-        console.error(errmsg);
+        Logger.getInstance().error(errmsg);
         this.emmitEventForKey(EVENT_ERROR, -1, errmsg);
       }
     } catch (e) {
       let errmsg = 'parse header file error: ' + JSON.stringify(e);
-      console.error(errmsg);
+      Logger.getInstance().error(errmsg);
       this.emmitEventForKey(EVENT_ERROR, -1, errmsg);
     }
   }

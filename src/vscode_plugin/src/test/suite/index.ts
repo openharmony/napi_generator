@@ -16,6 +16,7 @@
 import * as path from 'path';
 import * as Mocha from 'mocha';
 import * as glob from 'glob';
+import { Logger } from '../../common/log';
 import { getOutputPath, getReportConf } from '../../common/conf';
 
 export function run(): Promise<void> {
@@ -24,7 +25,7 @@ export function run(): Promise<void> {
 		ui: 'tdd'
 	});
 	mocha.useColors(true);
-	
+
 	let reportTestResult = getReportConf();
 	if (reportTestResult) {
 		let outpath = getOutputPath();
@@ -53,7 +54,7 @@ export function run(): Promise<void> {
 					}
 				});
 			} catch (err) {
-				console.error(err);
+				Logger.getInstance().error(JSON.stringify(err));
 				e(err);
 			}
 		});
