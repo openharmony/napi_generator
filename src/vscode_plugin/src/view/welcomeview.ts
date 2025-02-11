@@ -25,7 +25,7 @@ import {
 import { IController } from '../controller/icontroller';
 import { doAsyncQuickPick, toastMsg } from '../common/widget';
 import { CONFIRM_SELECT, HDF_FRAMEWORK, INPUT_INCONSISTENT, INPUT_NO_EMPTY, INPUT_NUMBER, INPUT_SERVICEID, NAPI_FRAMEWORK, SA_FRAMEWORK, SELECT_FRAMWORK, SELECT_VERSION } from '../common/constants';
-
+import { Logger } from '../common/log';
 export class WelcomeView extends IView {
   name: string;
   model: IModel;
@@ -81,7 +81,7 @@ export class WelcomeView extends IView {
       vscode.window.showOpenDialog(options).then(fileUri => {
         if (fileUri && fileUri[0]) {
           const filePath = fileUri[0].fsPath;
-          console.log('Selected path:', filePath);
+          Logger.getInstance().debug('Selected path:' + filePath);
           vscode.window.withProgress({
               location: vscode.ProgressLocation.Notification,
               title: 'Generating ...',

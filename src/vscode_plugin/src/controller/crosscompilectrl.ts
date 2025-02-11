@@ -13,11 +13,11 @@
 * limitations under the License.
 */
 
-import { Uri } from "vscode";
+import { InputBoxValidationSeverity, Uri } from "vscode";
 import { CrossCompileMod } from "../model/crosscompilemod";
 import { IModel } from "../model/imodel";
 import { CrossCompileView } from "../view/crosscompileview";
-
+import { Logger } from "../common/log";
 import { IView } from "../view/iview";
 import { IController } from "./icontroller";
 import { EVENT_ERROR } from "../common/eventtype";
@@ -48,7 +48,7 @@ export class CrossCompileCtrl extends IController {
       this.model.doStart();
     } catch(e) {
       let errmsg = "h2dts start error: " + JSON.stringify(e)
-      console.error(errmsg);
+      Logger.getInstance().error(errmsg);
       this.view.showMsg(EVENT_ERROR, errmsg);
     }  
   }

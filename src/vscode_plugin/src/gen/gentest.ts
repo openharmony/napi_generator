@@ -18,6 +18,8 @@ import { replaceAll } from "../common/tool";
 import { FuncInfo, InterfaceList, ParamObj, TypeList } from "./datatype";
 import { getInterfaceBody, getJsTypeFromC, getTypeBody, isBoolType, isNumberType, isStringType } from './gendts';
 import { testAbilityFuncTemplate } from "../template/func_template";
+import { Logger } from '../common/log';
+
 const INTVALUE = 5;
 const FLOATVALUE = 2.5;
 
@@ -29,12 +31,12 @@ export function generateFuncTestCase(funcInfo: FuncInfo, rawFileName: string,  t
   let callFunc = '';
   let hilogContent = '';
   // 调用函数
-  console.info("test funcInfo:" + JSON.stringify(funcInfo));
+  Logger.getInstance().info("test funcInfo:" + JSON.stringify(funcInfo));
   if (getJsType(funcInfo.retType) !== 'void') {
     callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), funcInfo.genName, funcParamUse);
     // 加 hilog 打印
     hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.genName);
-    hilogContent += util.format('console.info("testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.genName);
+    hilogContent += util.format('Logger.getInstance().info("testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.genName);
   } else {
     callFunc = util.format('testNapi.%s(%s)\n    ', funcInfo.genName, funcParamUse);
   }

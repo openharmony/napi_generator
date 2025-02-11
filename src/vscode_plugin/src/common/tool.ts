@@ -13,8 +13,23 @@
 * limitations under the License. 
 */
 
+export function getCurrentTimeString(): string {
+  const now = new Date();
+  // 使用 padStart 方法确保日期和月份部分是两位数
+  const yearLastTwoDigits = now.getFullYear() % 100; // 获取年份的最后两位
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  
+  // 拼接成完整的日期时间字符串，年份只显示最后两位
+  const currentTimeString = `${yearLastTwoDigits}${month}${day}${hours}${minutes}${seconds}`;
+  return currentTimeString;
+}
+
 export function replaceAll(s: string, sfrom: string, sto: any) {
-  // console.log('[replaceall] s:'+s+' sfrom:'+sfrom+' sto:'+sto);
+  // Logger.getInstance().debug('[replaceall] s:'+s+' sfrom:'+sfrom+' sto:'+sto);
   if (s && sfrom && sto) {
     while (s.indexOf(sfrom) >= 0) {
       s = s.replace(sfrom, sto);

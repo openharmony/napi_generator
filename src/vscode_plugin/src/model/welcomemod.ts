@@ -19,7 +19,7 @@ import { parseHeaderFile } from '../parse/parsec';
 import { GenInfo } from '../gen/datatype';
 import { genDtsFile } from '../gen/gendts';
 import { GEN_COMPLETE, HDF_FRAMEWORK, NAPI_FRAMEWORK, PARSE_COMPLETE, SA_FRAMEWORK } from '../common/constants';
-
+import { Logger } from "../common/log";
 import {
   EVENT_ERROR,
   EVENT_INFORMATION,
@@ -100,15 +100,15 @@ export class WelcomeMod extends IModel {
             // generateHdf(this.uri.fsPath, this.versionTag);
             break;
           default:
-            console.error('unknown gen type: ', this.genType);
+            Logger.getInstance().error('unknown gen type: ' + this.genType);
             break;
         }
       } else {
-        console.error('parse header file error with undefine uri.');
+        Logger.getInstance().error('parse header file error with undefine uri.');
       }
     } catch (e) {
       let errmsg = 'parse header file error: ' + JSON.stringify(e);
-      console.error(errmsg);
+      Logger.getInstance().error(errmsg);
       this.emmitEventForKey(EVENT_ERROR, -1, errmsg);
     }
   }

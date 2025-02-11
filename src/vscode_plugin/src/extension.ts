@@ -34,6 +34,7 @@ import { H2hdfCtrl } from './controller/h2hdfctrl';
 import { H2dtscppCtrl } from './controller/h2dtscppctrl';
 import { Dts2cppCtrl } from './controller/dts2cppctrl';
 import { WelcomeCtrl } from './controller/welcomectrl';
+import { Logger } from './common/log';
 
 // ��ȡ���ػ��ַ���
 const SELECTED_DIR = vscode.l10n.t('You selected a directory:');
@@ -88,9 +89,9 @@ const CMAKE_MAKE_LOST = vscode.l10n.t('Cannot detect CMakeLists.txt or Makefile!
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
+    // Use the console to output diagnostic information (Logger.getInstance().debug) and errors (Logger.getInstance().error)
     // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "helloworld-sample" is now active!');
+    Logger.getInstance().debug('Congratulations, your extension "helloworld-sample" is now active!');
 
     const ohcrosscompile = vscode.commands.registerCommand('extension.ohcrosscompile', async (uri) => {
       let compileTool: string;
@@ -387,7 +388,7 @@ export function activate(context: vscode.ExtensionContext) {
                           filePath = nativePath.concat("/" + file);   //��ȡnativeѹ�������ļ�·��
                         }
                       }
-                      console.log(filePath);
+                      Logger.getInstance().debug(filePath);
                       const terminal = vscode.window.createTerminal({ name: OH_CROSS_COMPILE_TITLE });
                       terminal.show();
                       await extractZip(platform, terminal, filePath, nativePath);
@@ -493,7 +494,7 @@ export function activate(context: vscode.ExtensionContext) {
       //   }, async (progress) => {
       //     // parse
       //     let parseRes = await parseHeaderFile(uri.fsPath);
-      //     console.log('parse header file res: ', parseRes);
+      //     Logger.getInstance().debug('parse header file res: ', parseRes);
       //     progress.report({ increment: 50, message: PARSE_COMPLETE });
           
       //     let rootInfo: GenInfo = {
@@ -523,7 +524,7 @@ export function activate(context: vscode.ExtensionContext) {
       let dts2cppCtrl = new Dts2cppCtrl(uri);
       dts2cppCtrl.init();
       // The code you place here will be executed every time your command is executed
-      // console.log('uri is : ' + uri.fsPath );
+      // Logger.getInstance().debug('uri is : ' + uri.fsPath );
       // if (uri && uri.fsPath) {
       //   vscode.window.withProgress({
       //     location: vscode.ProgressLocation.Notification,
@@ -531,19 +532,19 @@ export function activate(context: vscode.ExtensionContext) {
       //     cancellable: false
       //   }, async (progress) => {
       //     const filename = path.basename(uri.fsPath);
-      //     console.log('get filename ' );
+      //     Logger.getInstance().debug('get filename ' );
       //     if (filename.endsWith('.d.ts')) {
       //         // Display a message box to the user
       //         // analyze
       //         let res = parseTsFile(uri.fsPath);
-      //         console.info('res: ' + JSON.stringify(res));
+      //         Logger.getInstance().info('res: ' + JSON.stringify(res));
       //         progress.report({ increment: 50, message: PARSE_COMPLETE });
       //         // generator
       //         let out = path.dirname(uri.fsPath);
       //         genCppFile(res, uri.fsPath, out);
       //         progress.report({ increment: 100, message: GEN_COMPLETE + out });
       //     } else {
-      //         console.log('not dts uri is : ' + uri.fsPath );
+      //         Logger.getInstance().debug('not dts uri is : ' + uri.fsPath );
       //         // Display a message box to the user
       //         vscode.window.showInformationMessage(`${uri.fsPath} is not a .d.ts file!`);
       //     }
@@ -618,8 +619,8 @@ export function activate(context: vscode.ExtensionContext) {
 //   }, async (progress) => {
 //     // analyze
 //     let funDescList = await parseHeaderFile(hdfInputPath);
-//     console.log('parse header file res: ', funDescList);
-//     console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
+//     Logger.getInstance().debug('parse header file res: ', funDescList);
+//     Logger.getInstance().debug('parse header file jsonstr: ', JSON.stringify(funDescList));
 //     progress.report({ increment: 50, message: PARSE_COMPLETE });
 //     // generator
 //     let out = path.dirname(hdfInputPath);
@@ -648,8 +649,8 @@ export function activate(context: vscode.ExtensionContext) {
 //   }, async (progress) => {
 //     // analyze
 //     let funDescList = await parseHeaderFile(hPath);
-//     console.log('parse header file res: ', funDescList);
-//     console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
+//     Logger.getInstance().debug('parse header file res: ', funDescList);
+//     Logger.getInstance().debug('parse header file jsonstr: ', JSON.stringify(funDescList));
 
 //     progress.report({ increment: 50, message: PARSE_COMPLETE });
 
@@ -682,8 +683,8 @@ export function activate(context: vscode.ExtensionContext) {
 //     // analyze
 //     let funDescList = await parseHeaderFile(hFilePath);
 //     let fileName = path.basename(hFilePath, '.h');
-//     console.log('parse header file res: ', funDescList);
-//     console.log('parse header file jsonstr: ', JSON.stringify(funDescList));
+//     Logger.getInstance().debug('parse header file res: ', funDescList);
+//     Logger.getInstance().debug('parse header file jsonstr: ', JSON.stringify(funDescList));
 
 //     progress.report({ increment: 50, message: PARSE_COMPLETE });
 

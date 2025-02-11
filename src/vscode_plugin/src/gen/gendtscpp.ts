@@ -22,7 +22,7 @@ import { cppout, dtscppout } from "../template/dtscpp/dtscppdir";
 import { analyzeRootFunction, genDtsInterface, genTsFunction } from "./gendts";
 import { generateDirectFunction } from "./gencpp";
 import { generateFuncTestCase } from "./gentest";
-
+import { Logger } from "../common/log";
 import { tsTransferType } from "../template/functypemap_template";
 
 interface GenResult {
@@ -137,7 +137,7 @@ export function generateFuncCode(rootInfo: DtscppRootInfo) {
 export function genDtsCppFile(rootInfo: DtscppRootInfo, out: string) {
   let res: GenResult = generateFuncCode(rootInfo);
   genDir(dtscppout, res, rootInfo, out);
-  console.info('generate success!')
+  Logger.getInstance().info('generate success!')
 }
 
 // dts2cpp
@@ -149,7 +149,7 @@ export function genCppFile(parseObj: ParseObj, tsFilePath: string, out: string) 
   };
   let genResult: GenResult = generateFunctions(parseObj, tsFilePath);
   genDir(cppout, genResult, rootInfo, out);
-  console.info('generate success!')
+  Logger.getInstance().info('generate success!')
 }
 
 export function generateFunctions(parseObj: ParseObj, tsFilePath: string) {

@@ -28,7 +28,7 @@ suite('Common_Tool_Test_Suite', () => {
     test('replaceall_test_1', () => {
         let resultStr = tools.replaceAll('hello_world', 'or', 'er');
         assert.strictEqual(resultStr, 'hello_werld');
-        
+
         resultStr = tools.replaceAll('hello_world', 'l', 'r');
         assert.strictEqual(resultStr, 'herro_worrd');
     });
@@ -48,7 +48,7 @@ suite('Common_Tool_Test_Suite', () => {
         let resultStr = ''
         // 会死循环
         // resultStr = tools.replaceAll('hello_world', '', 'er');
-        // console.log("test replaceall_test_3 " + resultStr);
+        // Logger.getInstance().debug("test replaceall_test_3 " + resultStr);
         // assert.strictEqual(resultStr, 'hello_world');
         
         resultStr = tools.replaceAll('hello_world', 'ahello_world', 'er');

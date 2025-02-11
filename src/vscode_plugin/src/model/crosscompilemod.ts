@@ -19,7 +19,7 @@ import { parseHeaderFile } from '../parse/parsec';
 import { GenInfo } from '../gen/datatype';
 import { genDtsFile } from '../gen/gendts';
 import { GEN_COMPLETE, PARSE_COMPLETE } from '../common/constants';
-
+import { Logger } from '../common/log';
 import {
   EVENT_ERROR,
   EVENT_INFORMATION,
@@ -51,7 +51,7 @@ export class CrossCompileMod extends IModel {
       if (this.uri) {
         // parse
         let parseRes = await parseHeaderFile(this.uri.fsPath);
-        console.log('parse header file res: ', parseRes);
+        Logger.getInstance().debug('parse header file res: ' + parseRes);
         this.emmitEventForKey(EVENT_PROGRESS, 50, PARSE_COMPLETE);
 
         let rootInfo: GenInfo = {
@@ -63,11 +63,11 @@ export class CrossCompileMod extends IModel {
         let outPath = genDtsFile(rootInfo);
         this.emmitEventForKey(EVENT_PROGRESS, 100, PARSE_COMPLETE);
       } else {
-        console.error('parse header file error with undefine uri.');
+        Logger.getInstance().error('parse header file error with undefine uri.');
       }
     } catch (e) {
       let errmsg = 'parse header file error: ' + JSON.stringify(e);
-      console.error(errmsg);
+      Logger.getInstance().error(errmsg);
       this.emmitEventForKey(EVENT_ERROR, -1, errmsg);
     }
   }

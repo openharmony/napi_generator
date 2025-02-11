@@ -18,6 +18,7 @@ import * as fs from 'fs';
 import * as https from 'https';
 import * as zlib from 'zlib';
 import * as tar from 'tar';
+import { Logger } from './common/log';
 
 const WINDOWS_START = vscode.l10n.t('Starting compilation on Windows.');
 const TERMINAL_TITLE = vscode.l10n.t('OpenHarmony Cross Compile');
@@ -49,7 +50,7 @@ export function downloadSdk(url: string, destination: string, progress: vscode.P
         https.get(url, (response) => {
             if (response.statusCode === 200) {
                 const totalSize = parseInt(String(response.headers['content-length']));
-                console.log(`totalSize: ${totalSize}`);
+                Logger.getInstance().debug(`totalSize: ${totalSize}`);
                 let downloadedSize = 0;
                 response.on('data', (chunk) => {    
                     // 设置response的data事件，当每接收一个数据块时，计算下载进度并报告
@@ -240,7 +241,7 @@ function crossCompile_win32(terminal: vscode.Terminal | undefined, thirdPartyPat
             }
         }
         terminal.sendText(finalCommand);
-        console.log(finalCommand);
+        Logger.getInstance().debug(finalCommand);
         terminal.processId.then(
             () => {
                 resolve();
@@ -367,7 +368,7 @@ function crossCompile_linux(terminal: vscode.Terminal | undefined, thirdPartyPat
             }
         }
         terminal.sendText(finalCommand);
-        console.log(finalCommand);
+        Logger.getInstance().debug(finalCommand);
         terminal.processId.then(
             () => {
                 resolve();

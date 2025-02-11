@@ -19,6 +19,7 @@ import * as ts from 'typescript';
 import { json } from 'stream/consumers';
 import internal = require('stream');
 import { ParamObj, FuncObj, ClassObj, EnumObj, TypeObj, ParseObj } from '../gen/datatype'
+import { Logger } from '../common/log';
 
 const fs = require('fs');
 
@@ -55,19 +56,19 @@ let gchecker: ts.TypeChecker;
 export function getTypeAliasSubtypes(typeAlias: ts.TypeAliasDeclaration, list: ParamObj[]) {
     // 检查类型是否为类型节点
     const typeNode = typeAlias.type;
-    // console.log('getTypeAliasSubtypes');
+    // Logger.getInstance().debug('getTypeAliasSubtypes');
     try {
         if (ts.isUnionTypeNode(typeNode)) {
             // 如果是联合类型（Union Type），遍历它的子类型
-            console.log('isUnionTypeNode');
+            Logger.getInstance().debug('isUnionTypeNode');
             return typeNode.types.map(type => JSON.stringify(type.getText()));
         } else if (ts.isIntersectionTypeNode(typeNode)) {
             // 如果是交叉类型（Intersection Type），遍历它的子类型
-            console.log('isIntersectionTypeNode');
+            Logger.getInstance().debug('isIntersectionTypeNode');
             return typeNode.types.map(type => JSON.stringify(type.decorators));
         } else if (ts.isTypeLiteralNode(typeNode)) {
             // 如果是类型字面量（Type Literal），遍历它的属性
-            console.log('isTypeLiteralNode');
+            Logger.getInstance().debug('isTypeLiteralNode');
             return typeNode.members.map(member => {
                 let nameStr = JSON.stringify(member.name);
                 let nameObj = JSON.parse(nameStr);
@@ -85,7 +86,7 @@ export function getTypeAliasSubtypes(typeAlias: ts.TypeAliasDeclaration, list: P
         // 处理其他类型
         return [JSON.stringify(typeNode)];
     } catch (error) {
-        console.error('Error processing node:', error);
+        Logger.getInstance().error('Error processing node:' + error);
     }
     return [];
 }
@@ -137,7 +138,7 @@ export function parseTsFile(filePath: string): ParseObj {
     }
     function visitor(node: ts.Node) {
         if (ts.isClassDeclaration(node) && node.name) {
-            console.log(`Class: ${node.name.text}, ${node.members}`);
+            Logger.getInstance().debug(`Class: ${node.name.text}, ${node.members}`);
             let classItem: ClassObj = {
                 name: node.name.text,
                 alias: '',
@@ -146,16 +147,16 @@ export function parseTsFile(filePath: string): ParseObj {
             };
             try {
                 node.members.forEach(member => {
-                    // console.log(`Member: ${JSON.stringify(member)}`)
+                    // Logger.getInstance().debug(`Member: ${JSON.stringify(member)}`)
                     if (ts.isMethodDeclaration(member) && member.name) {
                         const methodstr = member.name ? JSON.stringify(member.name) : 'noname';
                         const methodObject = JSON.parse(methodstr);
                         const methodName = methodObject.escapedText;
-                        console.log(`memberName: ${methodName} `);
+                        Logger.getInstance().debug(`memberName: ${methodName} `);
                         let returnStr = 'void';
                         if (member.type) {
                             let returnObjStr = JSON.stringify(member.type);
-                            // console.log(`returnObjStr: ${returnObjStr} `);
+                            // Logger.getInstance().debug(`returnObjStr: ${returnObjStr} `);
                             let returnObj = JSON.parse(returnObjStr);
                             returnStr = getParamType(member.type);
                             if (returnObj.typeName) {
@@ -189,7 +190,7 @@ export function parseTsFile(filePath: string): ParseObj {
                            
                             if (param.type) {
                                 let paramTypeObjStr = JSON.stringify(param.type);
-                                // console.log(`paramTypeObjStr: ${paramTypeObjStr} }`);
+                                // Logger.getInstance().debug(`paramTypeObjStr: ${paramTypeObjStr} }`);
                                 paramTypeStr = getParamType(param.type);
                                 if (JSON.parse(paramTypeObjStr).typeName) {
                                     paramTypeStr = JSON.parse(paramTypeObjStr).typeName.escapedText;
@@ -202,7 +203,7 @@ export function parseTsFile(filePath: string): ParseObj {
                             })
                             return `${paramStr}: ${paramTypeStr}`
                         }).join(', ');
-                        console.log(`  Method: ${methodName}, Return Type: ${returnStr}, Parameters: ${params}`);
+                        Logger.getInstance().debug(`  Method: ${methodName}, Return Type: ${returnStr}, Parameters: ${params}`);
                         classItem.functionList.push({
                             name: methodName,
                             returns: returnStr,
@@ -224,40 +225,40 @@ export function parseTsFile(filePath: string): ParseObj {
                     parseRes.classes.push(classItem);
                 });
             } catch (error) {
-                console.error('Error processing node:', error);
+                Logger.getInstance().error('Error processing node:' + error);
             }
         } else if (ts.isEnumDeclaration(node) && node.name) {
             try {
-                console.log(`Enum: ${node.name.text}`);
+                Logger.getInstance().debug(`Enum: ${node.name.text}`);
                 let enumItem: EnumObj = {
                     name: node.name.text,
                     alias: '',
                     members: [],
                 };
-                // console.log(`Enum: ${node.name.text}, ${node.members.length}`);
+                // Logger.getInstance().debug(`Enum: ${node.name.text}, ${node.members.length}`);
                 node.members.forEach(member => {
                     const memJsonStr = JSON.stringify(member.name);
                     const memJsonObj = JSON.parse(memJsonStr);
-                    // console.log(`Member: ${memJsonObj.escapedText}`)
+                    // Logger.getInstance().debug(`Member: ${memJsonObj.escapedText}`)
                     enumItem.members.push(memJsonObj.escapedText);
                 })
                 parseRes.enums.push(enumItem);
             } catch (error) {
-                console.error('Error processing node:', error);
+                Logger.getInstance().error('Error processing node:' + error);
             }
         } else if (ts.isTypeAliasDeclaration(node) && node.name) {
-            console.log(`Type: ${node.name.text}`);
+            Logger.getInstance().debug(`Type: ${node.name.text}`);
             let typeItem: TypeObj = {
                 name: node.name.text,
                 alias: getParamType(node.type),
                 members: [],
             };
-            // console.log(`Type: ${node.name.text}, ${node.typeParameters} ${typeof(node.type)}`);
+            // Logger.getInstance().debug(`Type: ${node.name.text}, ${node.typeParameters} ${typeof(node.type)}`);
             const subtypes = getTypeAliasSubtypes(node, typeItem.members);
             parseRes.types!.push(typeItem);
-            console.log(`subtypes : ${subtypes}`);
+            Logger.getInstance().debug(`subtypes : ${subtypes}`);
         } else if (ts.isFunctionDeclaration(node) && node.name) {
-          console.log(`Type: ${node.name.text}`);
+          Logger.getInstance().debug(`Type: ${node.name.text}`);
           const parameters = node.parameters;
           let parames: ParamObj[] = [];
           parameters.forEach(param => {
@@ -270,7 +271,7 @@ export function parseTsFile(filePath: string): ParseObj {
             const paramType = param.type; 
             let paramText = getParamType(paramType);
 
-            console.log(`  ${paramName}: ${paramText}`);
+            Logger.getInstance().debug(`  ${paramName}: ${paramText}`);
             let parameter: ParamObj = {
               name: paramName,
               type: paramText,
