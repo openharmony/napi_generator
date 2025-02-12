@@ -21,6 +21,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as files from '../../../common/file'
 import { GEN_TYPE } from '../../../common/conf';
+import { Logger } from '../../../common/log';
 // import * as myExtension from '../../extension';
 
 suite('Common_File_Test_Suite', () => {
@@ -98,6 +99,85 @@ suite('Common_File_Test_Suite', () => {
     });
 
     //1, 测试一般情况
+    test('mkdirSync_new_test_1', () => {
+      let fPath = './testdir';
+      if (fs.existsSync(fPath)) {
+        fs.rmdirSync(fPath);
+      }
+      files.Filer.getInstance().mkdirSync(fPath);
+      let isExist = fs.existsSync(fPath);
+      assert.strictEqual(isExist, true);
+      if (fs.existsSync(fPath)) {
+        fs.rmdirSync(fPath);
+      }
+    });
+
+    //2, 测试边界情况
+    test('mkdirSync_new_test_2', () => {
+        // 短文件名
+        let fPath = './1';
+        let filer = files.Filer.getInstance();
+        filer.mkdirSync(fPath);
+        let isExist = fs.existsSync(fPath);
+        assert.strictEqual(isExist, true);
+        fs.rmdirSync(fPath);
+
+        // 长文件名
+        fPath = './1';
+        for (let i=0;i<100;i++) {
+            fPath = './1' + i;
+        }
+        fPath = fPath;
+        filer.mkdirSync(fPath);
+        isExist = fs.existsSync(fPath);
+        assert.strictEqual(isExist, true);
+        fs.rmdirSync(fPath);
+
+        // 中文文件名
+        fPath = './测试中文';
+        filer.mkdirSync(fPath);
+        isExist = fs.existsSync(fPath);
+        assert.strictEqual(isExist, true);
+        fs.rmdirSync(fPath);
+    });
+
+    //3, 测试异常情况
+    test('mkdirSync_new_test_3', () => {
+			let resultStr = ''
+			let fPath = './d1.txt';
+      if (fs.existsSync(fPath) && fs.lstatSync(fPath).isDirectory()) {
+        fs.rmdirSync(fPath);
+      }
+      let filer = files.Filer.getInstance();
+			filer.mkdirSync(fPath);
+			let isExist = fs.existsSync(fPath) && fs.lstatSync(fPath).isDirectory();
+			assert.strictEqual(isExist, true);
+      fs.rmdirSync(fPath);
+      
+      fPath = './{'
+			filer.mkdirSync(fPath);
+			isExist = fs.existsSync(fPath);
+			assert.strictEqual(isExist, true);
+      fs.rmdirSync(fPath);
+    });
+
+    //4, 测试错误情况
+    test('mkdirSync_new_test_4', () => {
+			let fPath = './';
+      let filer = files.Filer.getInstance();
+			try {
+				filer.mkdirSync(fPath);
+			} catch (e) {
+				let isError = true;
+				assert.strictEqual(isError, true);
+				let emsg = JSON.stringify(e);
+        Logger.getInstance().error(emsg);
+        let isLike = emsg.includes('EISDIR');
+				assert.strictEqual(isLike, true);
+			}
+    });
+
+    //1, 测试一般情况
     test('saveFileSync_append_test_1', () => {
       files.Filer.getInstance().setGenType(GEN_TYPE.GEN_APPEND);
       let fPath = './testfile.txt';
@@ -126,7 +206,7 @@ suite('Common_File_Test_Suite', () => {
     test('saveFileSync_append_test_2', () => {
       // 短文件名
       let fPath = './1.txt';
-      if (fs.existsSync(fPath)) {
+      if (fs.existsSync(fPath) && fs.lstatSync(fPath).isFile()) {
         fs.unlinkSync(fPath);
       }
       let filer = files.Filer.getInstance();
@@ -179,7 +259,7 @@ suite('Common_File_Test_Suite', () => {
     //3, 测试异常情况
     test('saveFileSync_append_test_3', () => {
 			let fPath = './1.txt';
-      if (fs.existsSync(fPath)) {
+      if (fs.existsSync(fPath) && fs.lstatSync(fPath).isFile()) {
         fs.unlinkSync(fPath);
       }
 
