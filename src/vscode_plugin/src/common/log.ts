@@ -54,21 +54,22 @@ export class Logger {
   }
 
   public info(message: string) {
-    Logger.getInstance().info(message);
+    console.info(message);
     this.log(INFO_MSG + message);
   }
 
   public error(message: string) {
-    Logger.getInstance().error(message);
+    console.error(message);
     this.log(ERROR_MSG + message);
   }
 
   public warn(message: string) {
-    Logger.getInstance().warn(message);
+    console.warn(message);
     this.log(WARN_MSG + message);
   }
 
   public log(message: string): void {
+    this.initLogFile();
     const timestamp = new Date().toISOString();
     const logMessage = `${timestamp} -${message}\n`;
     this.appendLog(logMessage);
