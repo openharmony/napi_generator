@@ -25,7 +25,6 @@ import * as logs from '../../../common/log'
 
 suite('Common_Log_Test_Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
-
     //1, 测试debug一般情况
     test('debug_test_1', () => {
       let logger = logs.Logger.getInstance();
@@ -61,7 +60,7 @@ suite('Common_Log_Test_Suite', () => {
       let fsize = fstat.size;
       let fflag = (fsize > 1048000 && fsize < 1049000) ? true : false;
       assert.strictEqual(fflag, true);
-      // fs.unlinkSync(logFilePath);
+      fs.unlinkSync(logFilePath);
     });
 
     //1, 测试info一般情况
@@ -152,7 +151,7 @@ suite('Common_Log_Test_Suite', () => {
         if (ditem.isFile()) {
           const { name, ext } = path.parse(ditem.name);
           if (name.includes('dmesg') && ext.includes('.log')) {
-
+            fs.unlinkSync(ditem.name);
           }
         }
       }

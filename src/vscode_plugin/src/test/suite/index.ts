@@ -25,7 +25,8 @@ export function run(): Promise<void> {
 		ui: 'tdd'
 	});
 	mocha.useColors(true);
-
+	mocha.timeout(10000);
+	mocha.enableTimeouts(true);
 	let reportTestResult = getReportConf();
 	if (reportTestResult) {
 		let outpath = getOutputPath();
