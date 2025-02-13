@@ -20,23 +20,55 @@ import { ParamObj, FuncObj, StructObj, ClassObj, EnumObj, UnionObj, ParseObj } f
 import { Logger } from '../common/log';
 import fs = require('fs');
 
-export function parseEnum(data: string) {
-  // 使用正则表达式提取枚举定义
-  const enumRegex = /typedef\s+enum\s+(\w*)\s*{([^}]*)}\s*(\w+);|enum\s+(\w+)\s*{([^}]*)}\s*;/g;
+export function doParseEnum(data: string) {
+  // const enumRegex = /typedef\s+enum\s+(\w*)\s*\{\s*([a-zA-Z0-9 _,]+)\}\s*(\w*)/g;
+  const enumRegex = /enum\s+(\w*)\s*{([^}]*)}/g;
   const enums: EnumObj[] = [];
   let match;
   while ((match = enumRegex.exec(data)) !== null) {
-    const enumName = match[1] ||match[3] || match[4];
+    const enumName = match[1] || match[3] || match[4];
     const aliasName = match[3];
     const membersString = match[2] || match[5];
-    const members = membersString.split(',')
-        .map(member => member.trim().replace(/[\n\r\s]/g, ''))
-        .filter(member => member.length > 0);
+    const comregex = /,\s*\/\/.*$/gm;
+    const cleanedEnumString = membersString.replace(comregex, '');
+
+    const enumMembers = cleanedEnumString.split('\n')
+      .map(member => member.trim().replace(/[,\n\r\s]/g, ''))
+      .filter(member => member);
+
     let enumItem = {
       "name": enumName,
       "alias": aliasName,
-      "members": members
-    }
+      "members": enumMembers
+    };
+    enums.push(enumItem);
+  }
+  Logger.getInstance().info(` return enums: ${JSON.stringify(enums)}`);
+  return enums;
+}
+
+
+export function parseEnum(data: string) {
+  // 使用正则表达式提取枚举定义
+  const enumRegex = /typedef\s+enum\s+(\w*)\s*{([^}]*)}\s*(\w+)|enum\s+(\w*)\s*{([^}]*)}/g;
+  const enums: EnumObj[] = [];
+  let match;
+  while ((match = enumRegex.exec(data)) !== null) {
+    const enumName = match[1] || match[3] || match[4];
+    const aliasName = match[3];
+    const membersString = match[2] || match[5];
+    const comregex = /\/\/.*$/gm;
+    const cleanedEnumString = membersString.replace(comregex, '');
+
+    const enumMembers = cleanedEnumString.split(',')
+      .map(member => member.trim().replace(/[,\n\r\s]/g, ''))
+      .filter(member => member);
+
+    let enumItem = {
+      "name": enumName,
+      "alias": aliasName,
+      "members": enumMembers
+    };
     enums.push(enumItem);
   }
   Logger.getInstance().info(` return enums: ${JSON.stringify(enums)}`);
