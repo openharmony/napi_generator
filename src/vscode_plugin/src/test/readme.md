@@ -61,4 +61,4 @@
 
 5. test report
 
-![image-20250212173323390](C:\Users\zxj\AppData\Roaming\Typora\typora-user-images\image-20250212173323390.png)
+![image-20250212173323390](https://foruda.gitee.com/images/1739354872893852569/9ab3d21d_14338299.png)
