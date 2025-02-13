@@ -17,6 +17,7 @@
   "No resource selected.": "未选择资源",
   "Use Makefile for compilation.": "根据 Makefile 交叉编译",
   "Use CMakeLists.txt for compilation.": "根据 CMakeLists.txt 交叉编译",
+  "Use configure script for compilation.": "根据 configure 脚本交叉编译",
   "Please select the way you want to compile: ": "请选择编译方式：",
   "OpenHarmony Cross Compile": "OpenHarmony 交叉编译",
   "Unable to comfirm the compilation method, compilation aborted.": "无法确认编译方式，编译过程终止",
