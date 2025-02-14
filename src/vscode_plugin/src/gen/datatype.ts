@@ -30,6 +30,7 @@ export interface ParamObj {
   type: string;
   name: string;
   arraySize: number;
+  arraySizeList: number[];
 }
 
 export interface EnumObj {
