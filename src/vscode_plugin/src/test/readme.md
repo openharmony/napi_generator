@@ -49,7 +49,7 @@
    |           | genstubcppfile    |                                                              |        |        |
    |           | genstubhfile      |                                                              |        |        |
    | gen       | gencpp            |                                                              |        |        |
-   |           | gendts            |                                                              |        |        |
+   |           | gendts            | transTskey2Ckey_test_1<br />transTskey2Ckey_test_2<br />transTskey2Ckey_test_3<br />transTskey2Ckey_test_4<br />getDtsEnum_test_1<br />getDtsEnum_test_2<br />getDtsEnum_test_3<br />getDtsEnum_test_4<br />getDtsUnions_test_1<br />getDtsUnions_test_2<br />getDtsUnions_test_3<br />getDtsUnions_test_4<br />getDtsStructs_test_1<br />getDtsStructs_test_2<br />getDtsStructs_test_3<br />getDtsStructs_test_4<br />getDtsClasses_test_1<br />getDtsClasses_test_2<br />getDtsClasses_test_3<br />getDtsClasses_test_4<br />getDtsFunction_test_1<br />getDtsFunction_test_2<br />getDtsFunction_test_3<br />getDtsFunction_test_4<br />genDtsFile_test_1<br />genDtsFile_test_2<br />genDtsFile_test_3<br />genDtsFile_test_4 | pass   |        |
    |           | gendtscpp         |                                                              |        |        |
    |           | genhdf            |                                                              |        |        |
    |           | gensa             |                                                              |        |        |
