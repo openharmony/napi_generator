@@ -86,7 +86,9 @@ export function parseUnion(data: string) {
     const aliasName = match[3];
     // 获取成员声明
     const membersString = match[2] || match[5]; 
-    const members = membersString.split(';')
+    const comregex = /\/\/.*$/gm;
+    const cleanedMembersString = membersString.replace(comregex, '');
+    const members = cleanedMembersString.split(';')
         .map(member => member.trim().replace(/[\n\r]/g, ''))
         .filter(member => member.length > 0);
     
@@ -99,19 +101,29 @@ export function parseUnion(data: string) {
     members.forEach(declaration => {
       // 使用正则表达式匹配类型和变量名
       // const match = declaration.match(/(\w+)\s+(\w+)(\[(\d+)\])?/);
-      const match = declaration.match(/(\w[\w\s\*]+)\s+(\w+)\s*/);
+      const memReg = /(\w[\w\s\*]+)\s+(\w+)\s*(\s*\[\s*\d+\s*(\]\s*\[\s*\d+\s*)*\])?/;
+      const match = declaration.match(memReg);
+      let arraySizes: string[] | null  = null;
       if (match) {
         // 类型
         const type = match[1]; 
         // 变量名
         const variable = match[2]; 
+        
         // 解析数组长度
-        const arrayLength = match[4] ? parseInt(match[4], 10) : -1; 
+        if ( match[3]) {
+          arraySizes = match[3]
+            .replace(/\s/g, '') // Remove all whitespace
+            .match(/\d+/g); // Find all numbers
+        }
+        // 解析数组长度
+        const numberList = arraySizes ? arraySizes.map(str => parseInt(str, 10)) : [];
         // Logger.getInstance().debug(`Type: ${type}, Variable:${variable}, Size:${arrayLength}`);
         let paramItem: ParamObj = {
           "type": type,
           "name": variable,
-          "arraySize": arrayLength
+          "arraySize": numberList.length>0 ? numberList[0] : -1,
+          "arraySizeList": numberList
         }
         unionItem.members.push(paramItem);
       }
@@ -234,40 +246,40 @@ export function parseClass(data: string) {
   const classes: ClassObj[] = []
   let match;
   while ((match = classRegex.exec(data)) !== null) {
-      const className = match[1];
-      const classMembers = match[2]
-        .split(';')
-        .map(member => member.trim().replace(/[\n\r]/g, ''))
-        .filter(member => member.length > 0);
+    const className = match[1];
+    const classMembers = match[2]
+      .split(';')
+      .map(member => member.trim().replace(/[\n\r]/g, ''))
+      .filter(member => member.length > 0);
 
-      const variables: string[] = [];
-      const methods: string[] = [];
+    const variables: string[] = [];
+    const methods: string[] = [];
 
-      classMembers.forEach(member => {
-          // 匹配方法声明
-          const methodRegex = /(\w[\w\s\*]+)\s+(\w+)\(([^)]*)\)\s*/;
-          const variableRegex = /(\w[\w\s\*]+)\s+(\w+)\s*/;
+    classMembers.forEach(member => {
+      // 匹配方法声明
+      const methodRegex = /(\w[\w\s\*]+)\s+(\w+)\(([^)]*)\)\s*/;
+      const variableRegex = /(\w[\w\s\*]+)\s+(\w+)\s*/;
 
-          if (methodRegex.test(member)) {
-              methods.push(member.trim().replace(/[\n\r]/g, ''));
-          } else if (variableRegex.test(member)) {
-              variables.push(member.trim().replace(/[\n\r]/g, ''));
-          }
-      });
-      
-      const variableList = parseMembers(variables);
-      // Logger.getInstance().debug(`parseMembers: ${JSON.stringify(variableList)}`)
-
-      const functionList: FuncObj[] = parseMethods(methods);
-      // Logger.getInstance().debug(`parsedFunctions: ${JSON.stringify(functionList)}`);
-
-      const classItem: ClassObj = {
-        "name": className,
-        "alias": '',
-        "variableList": variableList,
-        "functionList": functionList
+      if (methodRegex.test(member)) {
+          methods.push(member.trim().replace(/[\n\r]/g, ''));
+      } else if (variableRegex.test(member)) {
+          variables.push(member.trim().replace(/[\n\r]/g, ''));
       }
-      classes.push(classItem);
+    });
+    
+    const variableList = parseMembers(variables);
+    // Logger.getInstance().debug(`parseMembers: ${JSON.stringify(variableList)}`)
+
+    const functionList: FuncObj[] = parseMethods(methods);
+    // Logger.getInstance().debug(`parsedFunctions: ${JSON.stringify(functionList)}`);
+
+    const classItem: ClassObj = {
+      "name": className,
+      "alias": '',
+      "variableList": variableList,
+      "functionList": functionList
+    }
+    classes.push(classItem);
   }
   // Logger.getInstance().info(` return classes: ${JSON.stringify(classes)}`);
   return classes;
