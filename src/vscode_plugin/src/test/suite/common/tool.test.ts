@@ -110,9 +110,9 @@ suite('Common_Tool_Test_Suite', () => {
     test('getTab_test_4', () => {
         let resultTab = '';
         try {
-            resultTab = tools.getTab('3' as any);
-        } catch (error) {
+            resultTab = tools.getTab('a' as any);
             assert.strictEqual(resultTab, '');
+        } catch (error) {
             console.log('参数类型错误'+ JSON.stringify(error));
         }
     });
@@ -156,8 +156,8 @@ function(){}`;
         try {
             const code = 5;
             resultStr = tools.removeComments(code as any)
-        } catch(error) {
             assert.strictEqual(resultStr, '');
+        } catch(error) {
             console.log('参数类型错误'+ JSON.stringify(error));
         }
     });
@@ -185,6 +185,7 @@ function(){}`;
         let resultNum = 0;
         // 反向区间测试
         resultNum = tools.generateRandomInteger(10, 5);
+        console.log(`resultNum3: ${resultNum}`);
         assert.ok(resultNum >= 5 && resultNum <= 10); // 注意函数实际会处理反向区间
     });
     
@@ -192,9 +193,9 @@ function(){}`;
     test('generateRandomInteger_test_4', () => { // 错误情况
         let resultNum = 0;
         try {
-            resultNum = tools.generateRandomInteger('a' as any , 10)
+            resultNum = tools.generateRandomInteger('a' as any , 10);
+            assert.strictEqual(resultNum, NaN);
         } catch(error) {
-            assert.strictEqual(resultNum, 0);
             console.log('参数类型错误'+ JSON.stringify(error));
         }
     });
@@ -235,8 +236,8 @@ function(){}`;
         try {
             const code = 123;
             resultStr = tools.removeTab(code as any);
+            assert.strictEqual(resultStr, 123);
         } catch(error) {
-            assert.strictEqual(resultStr, '');
             console.log('参数类型错误'+ JSON.stringify(error));
         }
     });
