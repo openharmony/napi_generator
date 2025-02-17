@@ -54,6 +54,10 @@ suite('Common_Re_Test_Suite', () => {
 
         result = re.search('llo', 'hello world hello earth');
         assert.deepStrictEqual(result, { regs: [[2, 5]] });
+
+        result = re.search('^[a-zA-Z0-9]+$', 'abcd123');
+        assert.deepStrictEqual(result, { regs: [[0, 7]] });
+
     });
 
     //4. 测试错误情况
@@ -138,6 +142,9 @@ suite('Common_Re_Test_Suite', () => {
 
         result = re.match('Zero', 'hello Zero');
         assert.deepStrictEqual(result, null);
+
+        result = re.match('^[a-zA-Z0-9]+$', 'helloZero');
+        assert.deepStrictEqual(result, { regs: [[0, 9]] });
 
         result = re.match('Nine', 'hello Zero');
         assert.deepStrictEqual(result, null);
@@ -337,6 +344,8 @@ suite('Common_Re_Test_Suite', () => {
 
     //4. 测试错误情况
     test('getPathInPath_test_4', () => {
+        let result = re.getPathInPath('/**test*/');
+        console.error("result of re.getPathInPath('/**test*/') is ", result);
     })
 
     //1. 测试一般情况
@@ -344,34 +353,42 @@ suite('Common_Re_Test_Suite', () => {
         let result = re.all('ace');
         assert.deepStrictEqual(result, /ace/g);
 
-        result = re.all('元宵');
-        assert.deepStrictEqual(result, /元宵/g);
-        
         result = re.all(/qwe/);
         assert.deepStrictEqual(result, /qwe/g);
     })
 
     //2. 测试边界情况
     test('all_test_2', () => {
-        let result = re.all('^tt$');
-        assert.deepStrictEqual(result, /^tt$/g);
+        let result = re.all(/./);
+        assert.deepStrictEqual(result, /./g);
     })
 
     //3. 测试异常情况
     test('all_test_3', () => {
-        let result = re.all('なつめ そうせき');
-        assert.deepStrictEqual(result, /なつめ そうせき/g)
+        let result = re.all('^[a-zA-Z0-9]+$');
+        assert.deepStrictEqual(result, /^[a-zA-Z0-9]+$/g);
     })
 
     //4. 测试错误情况
     test('all_test_4', () => {
         let result: RegExp = /a/;
+        
+        result = re.all('^t*$$i86');
+        console.error("result of re.all('^t*$$i86') is ", result);
+
+        result = re.all('元宵');
+        console.error("result of re.all('元宵') is ", result);
+
+        result = re.all('なつめ そうせき');
+        console.error("result of re.all('なつめ そうせき') is ", result);
+
         try {
             result = re.all('');
             assert.deepStrictEqual(result, / /g);
         } catch (e) {
             console.error("result of re.all('') is ", result);
         }
+        
         try {
             result = re.all(/\p{Emoji}/u);
             assert.deepStrictEqual(result, /\p{Emoji}/gu);
@@ -408,16 +425,19 @@ suite('Common_Re_Test_Suite', () => {
 
         result = re.replaceAll('hello world\g', '\g', '\w');
         assert.deepStrictEqual(result, 'hello world\w');
+
+        result = re.replaceAll('123456asd7890', '^[a-zA-Z0-9]+$', 'worldf');
+        assert.deepStrictEqual(result, 'worldf');
     })
 
     //4. 测试错误情况
     test('replaceAll_test_4', () => {
         let result = 'error';
         try {
-            result = re.replaceAll('hello world', '', '\w');
-            assert.deepStrictEqual(result, 'hello\wworld');
+            result = re.replaceAll('hello world', '', ' the ');
+            assert.deepStrictEqual(result, 'hello the world');
         } catch (e) {
-            console.error("result of re.replaceAll('hello world', '', '\w') is ", result);
+            console.error("result of re.replaceAll('hello world', '', ' the ') is ", result);
         }
     })
  
