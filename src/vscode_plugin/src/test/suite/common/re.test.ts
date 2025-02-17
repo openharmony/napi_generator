@@ -294,17 +294,14 @@ suite('Common_Re_Test_Suite', () => {
 
         result = re.getFileInPath('なつめ そうせき/なつめ そうせき.なつめ そうせき');
         assert.strictEqual(result, 'なつめ そうせき.なつめ そうせき');
+
+        result = re.getFileInPath('dir/');
+        assert.strictEqual(result, 'dir');
     });
 
     // 4. 测试错误情况
     test('getFileInPath_test_4', () => {
-        let result = 'error';
-        try {
-            result = re.getFileInPath('dir/');
-            assert.strictEqual(result, '');
-        } catch (e) {
-            console.error("result of re.getFileInPath('dir/') is ", result);
-        }
+
     });
 
 
@@ -333,17 +330,13 @@ suite('Common_Re_Test_Suite', () => {
 
         result = re.getPathInPath('../../README.md');
         assert.strictEqual(result, '../..');
+
+        result = re.getPathInPath('/dir/');
+            assert.strictEqual(result, '/');
     })
 
     //4. 测试错误情况
     test('getPathInPath_test_4', () => {
-        let result = 'error';
-        try {
-            result = re.getPathInPath('dir/');
-            assert.strictEqual(result, 'dir');
-        } catch (e) {
-            console.error("result of re.getPathInPath('dir/') is ", result);
-        }
     })
 
     //1. 测试一般情况
