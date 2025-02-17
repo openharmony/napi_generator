@@ -16,9 +16,10 @@
 import util = require('util');
 import { replaceAll } from "../common/tool";
 import { FuncInfo, InterfaceList, ParamObj, TypeList } from "./datatype";
-import { getInterfaceBody, getJsTypeFromC, getTypeBody, isBoolType, isNumberType, isStringType } from './gendts';
+import { getInterfaceBody, getTypeBody, transTskey2Ckey } from './gendts';
 import { testAbilityFuncTemplate } from "../template/func_template";
 import { Logger } from '../common/log';
+import { dts2cpp_key } from '../template/dtscpp/dts2cpp_key';
 
 const INTVALUE = 5;
 const FLOATVALUE = 2.5;
@@ -35,15 +36,15 @@ export function generateFuncTestCase(funcInfo: FuncInfo, rawFileName: string,  t
   if (getJsType(funcInfo.retType) !== 'void') {
     callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), funcInfo.genName, funcParamUse);
     // 加 hilog 打印
-    hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.genName);
-    hilogContent += util.format('Logger.getInstance().info("testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.genName);
+    hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.name);
+    hilogContent += util.format('Logger.getInstance().info("testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.name);
   } else {
-    callFunc = util.format('testNapi.%s(%s)\n    ', funcInfo.genName, funcParamUse);
+    callFunc = util.format('testNapi.%s(%s)\n    ', funcInfo.name, funcParamUse);
   }
   let funcTestReplace = funcParamDefine + callFunc + hilogContent;
   // 替换test_case_name
   let funcTestContent = replaceAll(testAbilityFuncTemplate, '[func_direct_testCase]', funcTestReplace);
-  funcTestContent = replaceAll(funcTestContent, '[test_case_name]', funcInfo.genName);
+  funcTestContent = replaceAll(funcTestContent, '[test_case_name]', funcInfo.name);
   funcTestContent = replaceAll(funcTestContent, '[file_introduce_replace]', rawFileName);
   funcTestContent = replaceAll(funcTestContent, '[func_introduce_replace]', funcInfo.name);
   funcTestContent = replaceAll(funcTestContent, '[input_introduce_replace]', funcInfoParams === '' ? 'void' : funcInfoParams);
@@ -90,7 +91,7 @@ export function genInitTestfunc(funcInfo: FuncInfo, typeList: TypeList[], interf
 
 export function getTypeDefine(testType: string, funcParamDefine: string, funcInfo: FuncInfo, i: number, funcParamUse: string, typeList: TypeList[]) {
   let cTypeDefine = getTypeBody(testType, typeList);
-  let typeDefType = getJsTypeFromC(cTypeDefine as string);
+  let typeDefType = transTskey2Ckey(cTypeDefine as string);
   // genType
   if (typeDefType === 'number') {
     funcParamDefine += util.format('let %s = %s\n    ', funcInfo.params[i].name, INTVALUE);
@@ -108,7 +109,7 @@ export function getTypeDefine(testType: string, funcParamDefine: string, funcInf
 export function genInterFuncParamStr(param: ParamObj[]) {
   let paramsStr = '';
   for(let i = 0; i < param.length; i++) {
-    let rawType = getJsTypeFromC(param[i].type);
+    let rawType = transTskey2Ckey(param[i].type);
     paramsStr += param[i].name + ': ' + rawType;
     if (i !== param.length - 1) {
       paramsStr += ', ';
@@ -124,7 +125,7 @@ export function getInterfaceDefine(testType: string, funcParamDefine: string, fu
   let interFuncs = objValue!.funcs;
   // 成员变量赋值
   for (let j = 0; j < interParams.length; j++) {
-    let paramType = getJsTypeFromC(interParams[j].type);
+    let paramType = transTskey2Ckey(interParams[j].type);
     if (paramType === 'number') {
       objTestData += util.format('%s: %s, ', interParams[j].name, INTVALUE);
     } else if (paramType === 'string') {
@@ -140,7 +141,7 @@ export function getInterfaceDefine(testType: string, funcParamDefine: string, fu
   for (let j = 0; j < interFuncs.length; j++) {
     let paramStr = genInterFuncParamStr(interFuncs[j].parameters);
     let initInterFunc = util.format('%s:(%s) => ',interFuncs[j].name, paramStr);
-    let interFuncRetType = getJsTypeFromC(interFuncs[j].returns);
+    let interFuncRetType = transTskey2Ckey(interFuncs[j].returns);
     if (interFuncRetType === 'void') {
       let interfaceFuncRetDefine = initInterFunc + '{}';
       objTestData += util.format('%s, ', interfaceFuncRetDefine);
@@ -187,10 +188,13 @@ export function getTestType(type: string) {
 
 export function getJsType(type: string) {
     type = replaceAll(type,'const', '');
-    type = replaceAll(type, '*', '').trim();
-    if (isNumberType(type) || isStringType(type) || isBoolType(type) || type === 'void') {
-      return getJsTypeFromC(type);
-    } else {
-      return 'testNapi.' + type.replace('*', '').trim();
-    }  
+    type = replaceAll(type, '*', '').trim(); 
+    for(const keyItem of dts2cpp_key) {
+      for(const str of keyItem.keys) {
+        if (type.includes(str)) {
+          return transTskey2Ckey(type);
+        }
+      }
+    }
+    return 'testNapi.' + type.replace('*', '').trim();
 }
