@@ -61,4 +61,5 @@
 
 5. test report
 
-![image-20250212173323390](https://foruda.gitee.com/images/1739354872893852569/9ab3d21d_14338299.png)
+![image-20250212173323390](https://foruda.gitee.com/images/1739761977926853070/c103f93c_14338299.png)
+![image-20250212173323390](https://foruda.gitee.com/images/1739761999768688743/fba471f2_14338299.png)
