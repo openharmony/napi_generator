@@ -172,7 +172,8 @@ export function parseStruct(data: string) {
 // /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/
 export function parseParameters(members: string[]): ParamObj[] {
   // const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/;
-  const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d*)\])?$/;
+  // const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d*)\])?$/;
+  const memberRegex = /^(const\s+)?([\w\s*::<>]+)\s+(\w+)(?:\[(\d*)\])?$/;
   // Logger.getInstance().info(` parseParameters members: ${JSON.stringify(members)}`);
   return members.map(member => {
       const match = member.trim().match(memberRegex);
