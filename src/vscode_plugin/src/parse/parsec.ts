@@ -98,37 +98,58 @@ export function parseUnion(data: string) {
       "members": []
     }
     
-    members.forEach(declaration => {
-      // 使用正则表达式匹配类型和变量名
-      // const match = declaration.match(/(\w+)\s+(\w+)(\[(\d+)\])?/);
-      const memReg = /(\w[\w\s\*]+)\s+(\w+)\s*(\s*\[\s*\d+\s*(\]\s*\[\s*\d+\s*)*\])?/;
-      const match = declaration.match(memReg);
-      let arraySizes: string[] | null  = null;
-      if (match) {
-        // 类型
-        const type = match[1]; 
-        // 变量名
-        const variable = match[2]; 
-        
-        // 解析数组长度
-        if ( match[3]) {
-          arraySizes = match[3]
-            .replace(/\s/g, '') // Remove all whitespace
-            .match(/\d+/g); // Find all numbers
+    if (members.length >= 1) {
+      for (let i=0;i<members.length;i++) {
+        let declaration = members[i];
+      // members.forEach(declaration => {
+        // 使用正则表达式匹配类型和变量名
+        // const match = declaration.match(/(\w+)\s+(\w+)(\[(\d+)\])?/);
+        const memReg = /(\w[\w\s\*]+)\s+(\w+)\s*(\s*\[\s*\d+\s*(\]\s*\[\s*\d+\s*)*\])?/;
+        const match = declaration.match(memReg);
+        let arraySizes: string[] | null  = null;
+        if (match) {
+          // 类型
+          const type = match[1]; 
+          // 变量名
+          const variable = match[2]; 
+          
+          // 解析数组长度
+          if ( match[3]) {
+            arraySizes = match[3]
+              .replace(/\s/g, '') // Remove all whitespace
+              .match(/\d+/g); // Find all numbers
+          }
+          // 解析数组长度
+          const numberList = arraySizes ? arraySizes.map(str => parseInt(str, 10)) : [];
+          // Logger.getInstance().debug(`Type: ${type}, Variable:${variable}, Size:${arrayLength}`);
+          let paramItem: ParamObj = {
+            "type": type,
+            "name": variable,
+            "arraySize": numberList.length>0 ? numberList[0] : -1,
+            "arraySizeList": numberList
+          }
+          unionItem.members.push(paramItem);
+        } else {
+          let paramItem: ParamObj = {
+            "type": declaration,
+            "name": '',
+            "arraySize": -1,
+            "arraySizeList": []
+          }
+          unionItem.members.push(paramItem);
         }
-        // 解析数组长度
-        const numberList = arraySizes ? arraySizes.map(str => parseInt(str, 10)) : [];
-        // Logger.getInstance().debug(`Type: ${type}, Variable:${variable}, Size:${arrayLength}`);
-        let paramItem: ParamObj = {
-          "type": type,
-          "name": variable,
-          "arraySize": numberList.length>0 ? numberList[0] : -1,
-          "arraySizeList": numberList
-        }
-        unionItem.members.push(paramItem);
+      }  
+    } else if (members.length == 1) {
+      const type = members[0]; 
+      let paramItem: ParamObj = {
+        "type": type,
+        "name": "",
+        "arraySize": -1,
+        "arraySizeList": []
       }
-    });
-
+      unionItem.members.push(paramItem);
+    }
+    
     unions.push(unionItem);
   }
   Logger.getInstance().info(` return unions: ${JSON.stringify(unions)}`);
@@ -149,8 +170,9 @@ export function parseStruct(data: string) {
     const alias = match[3];
     // 获取成员声明
     const membersString = match[2] || match[5]; 
-
-    const members = membersString.split(';')
+    const comregex = /\/\/.*$/gm;
+    const cleanedMembersString = membersString.replace(comregex, '');
+    const members = cleanedMembersString.split(';')
         .map(member => member.trim().replace(/[\n\r]/g, ''))
         .filter(member => member.length > 0);
 
@@ -161,11 +183,13 @@ export function parseStruct(data: string) {
         // 匹配方法声明
         const methodRegex = /(\w[\w\s\*]+)\s+(\w+)\(([^)]*)\)\s*/;
         const variableRegex = /(\w[\w\s\*]+)\s+(\w+)\s*/;
-
+        const pattern = /(\w+)\s*\(\s*\*([^\)]+)\s*\)\s*\(\s*([\w\s,]*)\s*\)/;
         if (methodRegex.test(member)) {
             methods.push(member.trim().replace(/[\n\r]/g, ''));
         } else if (variableRegex.test(member)) {
             variables.push(member.trim().replace(/[\n\r]/g, ''));
+        } else if (pattern.test(member)) {
+          variables.push(member.trim().replace(/[\n\r]/g, '')); 
         }
     });
     
@@ -202,18 +226,61 @@ export function parseParameters(members: string[]): ParamObj[] {
 }
 
 export function parseMembers(members: string[]): ParamObj[] {
-  const memberRegex = /(?:public:|private:)?\s*(\w+(?:\s+\w+)?)\s+(\w+)(?:\[(\d+)\])?/;
-  // Logger.getInstance().info(` parseMembers members: ${JSON.stringify(members)}`);
+  // const memberRegex = /(?:public:|private:)?\s*(\w+(?:\s+\w+)?)\s+(\w+)(?:\[(\d+)\])?/;
+  // // Logger.getInstance().info(` parseMembers members: ${JSON.stringify(members)}`);
+  // return members.map(member => {
+  //     const match = member.trim().match(memberRegex);
+  //     // Logger.getInstance().info(` parseMembers match: ${JSON.stringify(match)}`);
+  //     if (match) {
+  //         const type = match[1];
+  //         const name = match[2];
+  //         const arraySize = match[3] ? parseInt(match[3], 10) : -1;
+  //         return { type, name, arraySize };
+  //     }
+  //     return {};
+  // // 类型保护
+  // }).filter((m): m is ParamObj => m !== null); 
+  const memReg = /(\w[\w\s\*]+)\s+(\w+)\s*(\s*\[\s*\d+\s*(\]\s*\[\s*\d+\s*)*\])?/;
+  const pattern = /(\w+)\s*\(\s*\*([^\)]+)\s*\)\s*\(\s*([\w\s,]*)\s*\)/;
+  let arraySizes: string[] | null  = null;
   return members.map(member => {
-      const match = member.trim().match(memberRegex);
-      // Logger.getInstance().info(` parseMembers match: ${JSON.stringify(match)}`);
-      if (match) {
-          const type = match[1];
-          const name = match[2];
-          const arraySize = match[3] ? parseInt(match[3], 10) : -1;
-          return { type, name, arraySize };
+    const match = member.trim().match(memReg);
+    if (match) {
+      const type = match[1];
+      const name = match[2];
+      let arraySize = 0;
+      // 解析数组长度
+      if ( match[3]) {
+        arraySizes = match[3]
+          .replace(/\s/g, '') // Remove all whitespace
+          .match(/\d+/g); // Find all numbers
       }
-      return {};
+      // 解析数组长度
+      const numberList = arraySizes ? arraySizes.map(str => parseInt(str, 10)) : [];
+      let asize = numberList.length>0 ? numberList[0] : -1;
+      return { 
+        "type": type, 
+        "name": name,
+        "arraySize": asize,
+        "arraySizeList": numberList
+      };
+    } else {
+      let funcmatch = member.trim().match(pattern);
+      if (funcmatch) {
+          const type = funcmatch[1];
+          const name = funcmatch[2];
+          let paramstr = funcmatch[3];
+          paramstr = paramstr.replace(/\s+/g, '');
+          const paramlist = paramstr.split(',');
+          return {
+              "type": type,
+              "name": name,
+              "arraySize": paramlist.length,
+              "arraySizeList": paramlist
+          }
+      }
+    }
+    return {};
   // 类型保护
   }).filter((m): m is ParamObj => m !== null); 
 }
@@ -259,11 +326,13 @@ export function parseClass(data: string) {
       // 匹配方法声明
       const methodRegex = /(\w[\w\s\*]+)\s+(\w+)\(([^)]*)\)\s*/;
       const variableRegex = /(\w[\w\s\*]+)\s+(\w+)\s*/;
-
+      const pattern = /(\w+)\s*\(\s*\*([^\)]+)\s*\)\s*\(\s*([\w\s,]*)\s*\)/;
       if (methodRegex.test(member)) {
           methods.push(member.trim().replace(/[\n\r]/g, ''));
       } else if (variableRegex.test(member)) {
           variables.push(member.trim().replace(/[\n\r]/g, ''));
+      } else if (pattern.test(member)) {
+        variables.push(member.trim().replace(/[\n\r]/g, '')); 
       }
     });
     
