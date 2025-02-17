@@ -111,65 +111,64 @@ suite('Gendts_transTskey2Ckey_Suite', () => {
     resStr = genDts.transTskey2Ckey('std::vector<char32_t>');
     assert.strictEqual(resStr, 'Array<string>');
   });
-});
 
-//2, 测试边界情况
-test('transTskey2Ckey_test_2', () => {
-  let resStr = genDts.transTskey2Ckey('std::string');
-  assert.strictEqual(resStr, 'string');
-  resStr = genDts.transTskey2Ckey('std::vector<std::string>');
-  assert.strictEqual(resStr, 'Array<string>');
-  resStr = genDts.transTskey2Ckey('char *');
-  assert.strictEqual(resStr, 'string');
-  resStr = genDts.transTskey2Ckey('');
-  assert.strictEqual(resStr, '');
-  resStr = genDts.transTskey2Ckey('char   *');
-  assert.strictEqual(resStr, resStr);
-  resStr = genDts.transTskey2Ckey('long long');
-  assert.strictEqual(resStr, 'number');
-  resStr = genDts.transTskey2Ckey('unsigned short');
-  assert.strictEqual(resStr, 'number');
-  resStr = genDts.transTskey2Ckey('unsigned long');
-  assert.strictEqual(resStr, 'number');
-  resStr = genDts.transTskey2Ckey('unsigned long long');
-  assert.strictEqual(resStr, 'number');
-  resStr = genDts.transTskey2Ckey('std::vector<long long>');
-  assert.strictEqual(resStr, 'Array<number>');
-  resStr = genDts.transTskey2Ckey('std::vector<unsigned short>');
-  assert.strictEqual(resStr, 'Array<number>');
-  resStr = genDts.transTskey2Ckey('std::vector<unsigned long>');
-  assert.strictEqual(resStr, 'Array<number>');
-  resStr = genDts.transTskey2Ckey('std::vector<unsigned long long>');
-  assert.strictEqual(resStr, 'Array<number>');
-  resStr = genDts.transTskey2Ckey('int *');
-  assert.strictEqual(resStr, 'number');
-});
+  //2, 测试边界情况
+  test('transTskey2Ckey_test_2', () => {
+    let resStr = genDts.transTskey2Ckey('std::string');
+    assert.strictEqual(resStr, 'string');
+    resStr = genDts.transTskey2Ckey('std::vector<std::string>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('char *');
+    assert.strictEqual(resStr, 'string');
+    resStr = genDts.transTskey2Ckey('');
+    assert.strictEqual(resStr, '');
+    resStr = genDts.transTskey2Ckey('char   *');
+    assert.strictEqual(resStr, resStr);
+    resStr = genDts.transTskey2Ckey('long long');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('unsigned short');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('unsigned long');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('unsigned long long');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::vector<long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::vector<unsigned short>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::vector<unsigned long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::vector<unsigned long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('int *');
+    assert.strictEqual(resStr, 'number');
+  });
 
-//3, 测试异常情况
-test('transTskey2Ckey_test_3', () => {
-  let resStr = genDts.transTskey2Ckey('');
-  assert.strictEqual(resStr, '');
-  resStr = genDts.transTskey2Ckey('int$#');
-  assert.strictEqual(resStr, 'number');
-});
+  //3, 测试异常情况
+  test('transTskey2Ckey_test_3', () => {
+    let resStr = genDts.transTskey2Ckey('');
+    assert.strictEqual(resStr, '');
+    resStr = genDts.transTskey2Ckey('int$#');
+    assert.strictEqual(resStr, 'number');
+  });
 
-//4, 测试错误情况
-test('transTskey2Ckey_test_4', () => {
-  let res = true;
-  try {
-    genDts.transTskey2Ckey(null);
-  } catch (error) {
-    res = false;
-  }
-  assert.strictEqual(res, false);
-  let res2 = true;
-  try {
-    genDts.transTskey2Ckey(undefined);
-  } catch (error) {
-    res2 = false;
-  }
-  assert.strictEqual(res2, false);
-});
+  //4, 测试错误情况
+  test('transTskey2Ckey_test_4', () => {
+    let res = true;
+    try {
+      genDts.transTskey2Ckey(null);
+    } catch (error) {
+      res = false;
+    }
+    assert.strictEqual(res, false);
+    let res2 = true;
+    try {
+      genDts.transTskey2Ckey(undefined);
+    } catch (error) {
+      res2 = false;
+    }
+    assert.strictEqual(res2, false);
+  });
 })
 
 suite('Gendts_enums_Suite', () => {
