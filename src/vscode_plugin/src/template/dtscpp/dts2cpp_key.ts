@@ -19,11 +19,15 @@ export let dts2cpp_key = [
         value: 'string'
     },
     {
-        keys: ['size_t', 'int', 'short', 'long', 'double', 'float'],
-        value: 'number'
+      keys: ['size_t', 'int', 'short', 'long', 'double', 'float', 'unsigned'],
+      value: 'number'
     },
     {
         keys: ['bool'],
         value: 'boolean'
+    },
+    {
+        keys: ['void'],
+        value: 'void'
     }
 ]

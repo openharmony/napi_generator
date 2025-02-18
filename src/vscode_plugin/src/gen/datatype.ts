@@ -119,7 +119,6 @@ export interface FuncInfo {
   name: string,
   params: ParamObj[],
   retType: string,
-  genName: string,
 }
 
 // 保存 typedefine int cJSON_bool

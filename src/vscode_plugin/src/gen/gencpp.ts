@@ -48,7 +48,7 @@ export function generateDirectFunction(funcInfo: FuncInfo, rawFileName: string, 
       let returnType = funcInfo.retType === 'std::string' ? 'const char *' : funcInfo.retType;
       returnType = returnType === 'size_t' ? 'int64_t' : returnType;
       let funcReturnReplace = replaceAll(napiFuncRetTemplate, '[return_name]', retObjInfo.objName);
-      funcReturnReplace = replaceAll(funcReturnReplace, '[func_name_replace]', funcInfo.genName);
+      funcReturnReplace = replaceAll(funcReturnReplace, '[func_name_replace]', funcInfo.name);
       funcReturnReplace = replaceAll(funcReturnReplace, '[return_replace]', retGenResult);
       bodyReplace = replaceAll(bodyReplace, '[func_return_replace]', funcReturnReplace);
   } else {
@@ -62,8 +62,8 @@ export function generateDirectFunction(funcInfo: FuncInfo, rawFileName: string, 
 
 export function getReplaceInfo(funcInfo: FuncInfo, hFileName: string) {
   let funcInfoParams = genFuncInfoParams(funcInfo);
-  let bodyReplace = replaceAll(napiFuncCppTemplate, '[func_name_replace]', funcInfo.genName);
-  bodyReplace = replaceAll(bodyReplace, '[get_error_msg_tag]', funcInfo.genName);
+  let bodyReplace = replaceAll(napiFuncCppTemplate, '[func_name_replace]', funcInfo.name);
+  bodyReplace = replaceAll(bodyReplace, '[get_error_msg_tag]', funcInfo.name);
   bodyReplace = replaceAll(bodyReplace, '[file_introduce_replace]', hFileName);
   bodyReplace = replaceAll(bodyReplace, '[func_introduce_replace]', funcInfo.name);
   bodyReplace = replaceAll(bodyReplace, '[input_introduce_replace]', funcInfoParams === '' ? 'void' : funcInfoParams);
@@ -82,7 +82,7 @@ export function getBodyReplace2(funcInfo: FuncInfo, bodyReplace: string, genPara
 
 export function getGenParamReplace(funcInfo: FuncInfo, paramGenResult: string) {
   let genParamReplace = replaceAll(funcGetParamTemplate, '[param_length]', 'PARAMS' + funcInfo.params.length);
-  genParamReplace = replaceAll(genParamReplace, '[func_name_replace]', funcInfo.genName);
+  genParamReplace = replaceAll(genParamReplace, '[func_name_replace]', funcInfo.name);
   genParamReplace = replaceAll(genParamReplace, '[getAllParam_replace]', paramGenResult);
   return genParamReplace;
 }

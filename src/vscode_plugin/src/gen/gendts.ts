@@ -23,29 +23,6 @@ import util = require('util');
 import re = require('../common/re');
 import { dtsFuncTemplate } from '../template/func_template';
 
-const MIN_RANDOM = 100;
-const MAX_RANDOM = 999
-
-export function isStringType(cType: string) {
-  switch (cType) {
-      case 'string':
-      case 'std::string':
-      case 'char':
-      case 'wchar_t':
-      case 'char16_t':
-      case 'char32_t':
-          return true;
-      default:
-          return false;
-  }
-}
-
-export function isBoolType(cType: string) {
-  if (cType === 'bool') {
-      return true;
-  }
-  return false;
-}
 
 export function genTsFunction(func: FuncInfo, rawFileName: string) {
   let funcParams = '';
@@ -56,50 +33,13 @@ export function genTsFunction(func: FuncInfo, rawFileName: string) {
   let funcContent = replaceAll(dtsFuncTemplate, '[file_introduce_replace]', rawFileName);
   funcContent = replaceAll(funcContent, '[func_introduce_replace]', func.name);
   funcContent = replaceAll(funcContent, '[input_introduce_replace]', funcParams === '' ? 'void' : funcParams);
-  funcContent = replaceAll(funcContent, '[func_name_replace]', func.genName);
+  funcContent = replaceAll(funcContent, '[func_name_replace]', func.name);
   funcContent = replaceAll(funcContent, '[func_param_replace]', funcParams);
   funcContent = replaceAll(funcContent, '[func_return_replace]', func.retType);
 
   return funcContent;
 }
 
-export function isNumberType(cType: string) {
-  switch (cType) {
-      case 'short':
-      case 'int':
-      case 'uint32_t':
-      case 'size_t':
-      case 'long':
-      case 'long long':
-      case 'float':
-      case 'double':
-      case 'long double':
-      case 'int16_t':
-      case 'uint16_t':
-      case 'int32_t':
-      case 'int64_t':
-      case 'uint64_t':
-      case 'double_t':
-      case 'float_t':
-          return true;
-      default:
-          return false;
-  }
-}
-
-export function basicC2js(cType: string) {
-  let jsType = '';
-  if (isStringType(cType)) {
-      jsType = 'string';
-  } else if (isBoolType(cType)) {
-      jsType = 'boolean';
-  } else if (isNumberType(cType)) {
-      jsType = 'number';
-  } else {
-      jsType = cType;
-  }
-  return jsType;
-}
 
 export function getInterFuncRetType(str: string) {
   let strArr = str.split(' ');
@@ -112,42 +52,6 @@ export function getInterFuncName(str: string) {
   return replaceAll(strArr[1], '*', '');
 }
 
-export function getJsTypeFromC(cType: string) {
-  if (!cType) {
-    return '';
-  }
-  let basicCtype = cType;
-  let matchs = re.match('(std::)?vector<([\x21-\x7e ]+)>', basicCtype);
-  let isArray = 0;
-  if (matchs) {
-      basicCtype = re.getReg(basicCtype, matchs.regs[2]).trim();
-      isArray = 1;
-  }
-
-  let unsignedIdx = basicCtype.indexOf('unsigned');
-  if (unsignedIdx >= 0) {
-      // cut off the keywords 'unsigned'
-      basicCtype = basicCtype.substring(unsignedIdx + 8, basicCtype.length).trim();
-  }
-  let jsType = basicC2js(basicCtype);
-  if (isArray) {
-      jsType = util.format('Array<%s>', jsType);
-  }
-  // 去掉const
-  jsType = replaceAll(jsType, 'const', '');
-  // struct cJson * 的情况
-  let matchStruct = re.match('(struct)?[A-Z_a-z0-9 *]+', basicCtype);
-  if (matchStruct) {
-      let index = basicCtype.indexOf('struct');
-      // 去掉struct和*
-      if (index >= 0) {
-        jsType = jsType.substring(index + 6, basicCtype.length);
-      }
-      jsType = replaceAll(jsType, '*', '').trim();
-  }
-  jsType = basicC2js(jsType);
-  return jsType;
-}
 
 export function getInterFuncParams(str: string, paramObj: ParamObj[]) {
   let paramsStr = '';
@@ -164,7 +68,7 @@ export function getInterFuncParams(str: string, paramObj: ParamObj[]) {
     paramObject.name = paramVal;
     paramObject.type = paramType;
     paramObj.push(paramObject);
-    let rawType = getJsTypeFromC(paramType);
+    let rawType = transTskey2Ckey(paramType);
     paramsStr += paramVal + ': ' + rawType;
     if (i !== paramArr.length - 1) {
       paramsStr += ', ';
@@ -209,7 +113,7 @@ export function createParam(parseParamInfo: ParamObj) {
   tsParam.name = replaceAll(parseParamInfo.name, '*', '');
   cppParam.name = tsParam.name;
   cppParam.type = removeMarco(parseParamInfo.type);
-  let rawType = getJsTypeFromC(parseParamInfo.type);
+  let rawType = transTskey2Ckey(parseParamInfo.type);
   tsParam.type = removeMarco(rawType);
   return [tsParam, cppParam];
 }
@@ -219,19 +123,15 @@ export function createFuncInfo(parseFuncInfo: FuncObj) {
       name: '',
       params: [],
       retType: '',
-      genName: ''
   };
 
   let cppFuncInfo: FuncInfo = {
     name: '',
     params: [],
     retType: '',
-    genName: ''
   }
   funcInfo.name = parseFuncInfo.name;
   cppFuncInfo.name = parseFuncInfo.name;
-  funcInfo.genName = util.format('KH%s_%s', generateRandomInteger(MIN_RANDOM, MAX_RANDOM), funcInfo.name);
-  cppFuncInfo.genName = funcInfo.genName;
   let parseParams = parseFuncInfo.parameters;
   for (let i = 0; i < parseParams.length; ++i) {
       let paramsRes = createParam(parseParams[i]);
@@ -246,7 +146,7 @@ export function createFuncInfo(parseFuncInfo: FuncObj) {
   let retType = parseFuncInfo.returns === '' ? 'void' : parseFuncInfo.returns;
   retType = removeMarco(retType);
   cppFuncInfo.retType = retType;
-  funcInfo.retType = getJsTypeFromC(retType);
+  funcInfo.retType = transTskey2Ckey(retType);
   return [funcInfo, cppFuncInfo];
 }
 
@@ -315,7 +215,6 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
           let interFuncParams: ParamObj[] = []
           let returnType = getInterFuncRetType(match[0]);
           let funcName = getInterFuncName(match[1]);
-          funcName = util.format('KH%s_%s', generateRandomInteger(MIN_RANDOM, MAX_RANDOM), funcName);
           let params = getInterFuncParams(match[2], interFuncParams);
           interDefine += util.format('  %s:(%s) => %s;\n',funcName, params, returnType);
           let funcObj: FuncObj = {
@@ -329,7 +228,6 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
           let interFuncParams: ParamObj[] = []
           let returnType = getInterFuncRetType(match2[1]);
           let funcName = match2[2];
-          funcName = util.format('KH%s_%s', generateRandomInteger(MIN_RANDOM, MAX_RANDOM), funcName);
           let params = getInterFuncParams(match2[3], interFuncParams);
           interDefine += util.format('  %s:(%s) => %s;\n',funcName, params, returnType);
           let funcObj: FuncObj = {
@@ -343,7 +241,7 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
           let lastTabIndex = paramStr.lastIndexOf(' ');
           const variableName = paramStr.substring(lastTabIndex + 1, paramStr.length).replace('*', '')
           const variabletype = paramStr.substring(0, lastTabIndex);
-          let rawType = getJsTypeFromC(variabletype);
+          let rawType = transTskey2Ckey(variabletype);
           if (!isJsBasicType(rawType)) {
             rawType += ' | null';
           }
@@ -372,7 +270,7 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
         // 输出匹配的基本类型定义
         Logger.getInstance().debug('Basic type typedef match:' + basicTypeMatch[0]); 
         let matchs = basicTypeMatch[index].split(' ');
-        let rawType = getJsTypeFromC(matchs[1].trim());
+        let rawType = transTskey2Ckey(matchs[1].trim());
         let defineType = matchs[2].split(';')
         let typedefine = 'type ' + defineType[0] + ' = ' + rawType + ';\n';
         interfaceListDef += typedefine;
@@ -411,6 +309,10 @@ export function transTskey2Ckey(key: string) {
   for(const keyItem of dts2cpp_key) {
     for(const str of keyItem.keys) {
       if (key.includes(str)) {
+        const match = key.match(/(std::)?vector<([\w\s*::<>]+)>/);
+        if (match) {
+          return 'Array<' + keyItem.value + '>';
+        }
         return keyItem.value;
       }
     }
