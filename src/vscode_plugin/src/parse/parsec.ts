@@ -170,6 +170,7 @@ export function parseStruct(data: string) {
     const alias = match[3];
     // 获取成员声明
     const membersString = match[2] || match[5]; 
+    // 去注释
     const comregex = /\/\/.*$/gm;
     const cleanedMembersString = membersString.replace(comregex, '');
     const members = cleanedMembersString.split(';')
@@ -208,14 +209,14 @@ export function parseStruct(data: string) {
 // /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/
 export function parseParameters(members: string[]): ParamObj[] {
   // const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/;
-  const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d*)\])?$/;
+  const memberRegex = /^(const\s+)?([\w\:\<\>\,\s*]+)\s+(\w+)(?:\[(\d*)\])?$/;
   // Logger.getInstance().info(` parseParameters members: ${JSON.stringify(members)}`);
   return members.map(member => {
       const match = member.trim().match(memberRegex);
       // Logger.getInstance().info(` parseParameters match: ${JSON.stringify(match)}`);
       if (match) {
-          const type = match[2];
-          const name = match[3];
+          const type = match[2].trim();
+          const name = match[3].trim();
           // const arraySize = match[4] ? parseInt(match[4], 10) : -1;
           const arraySize = match[4] && match[4] !== "" ? parseInt(match[4], 10) : -1;
           return { type, name, arraySize };
@@ -239,15 +240,18 @@ export function parseMembers(members: string[]): ParamObj[] {
   //     }
   //     return {};
   // // 类型保护
-  // }).filter((m): m is ParamObj => m !== null); 
-  const memReg = /(\w[\w\s\*]+)\s+(\w+)\s*(\s*\[\s*\d+\s*(\]\s*\[\s*\d+\s*)*\])?/;
+  // }).filter((m): m is ParamObj => m !== null);
+  const memReg = /(\w[\w\s\:\*]+)\s+(\w+)\s*(\s*\[\s*\d+\s*(\]\s*\[\s*\d+\s*)*\])?/;
   const pattern = /(\w+)\s*\(\s*\*([^\)]+)\s*\)\s*\(\s*([\w\s,]*)\s*\)/;
+  const commPattern = /([\S\,\ ]+)\s+(\w+)/;
   let arraySizes: string[] | null  = null;
   return members.map(member => {
+    member = member.replace(/\s*private\s*:\s*/, '');
+    member = member.replace(/\s*public\s*:\s*/, '');
     const match = member.trim().match(memReg);
     if (match) {
-      const type = match[1];
-      const name = match[2];
+      const type = match[1].trim();
+      const name = match[2].trim();
       let arraySize = 0;
       // 解析数组长度
       if ( match[3]) {
@@ -267,8 +271,8 @@ export function parseMembers(members: string[]): ParamObj[] {
     } else {
       let funcmatch = member.trim().match(pattern);
       if (funcmatch) {
-          const type = funcmatch[1];
-          const name = funcmatch[2];
+          const type = funcmatch[1].trim();
+          const name = funcmatch[2].trim();
           let paramstr = funcmatch[3];
           paramstr = paramstr.replace(/\s+/g, '');
           const paramlist = paramstr.split(',');
@@ -276,8 +280,27 @@ export function parseMembers(members: string[]): ParamObj[] {
               "type": type,
               "name": name,
               "arraySize": paramlist.length,
-              "arraySizeList": paramlist
+              "arraySizeList": paramlist.map(item => item.trim())
           }
+      } else {
+        let cmatch = member.trim().match(commPattern);
+        if (cmatch) {
+          const type = cmatch[1].trim();
+          const name = cmatch[2].trim();
+          return {
+              "type": type,
+              "name": name,
+              "arraySize": -1,
+              "arraySizeList": []
+          }
+        } else {
+          return {
+              "type": member,
+              "name": '',
+              "arraySize": -1,
+              "arraySizeList": []
+          };
+        }
       }
     }
     return {};
@@ -309,29 +332,38 @@ export function parseMethods(functions: string[]): FuncObj[] {
 
 export function parseClass(data: string) {
   // 使用正则表达式提取类定义
-  const classRegex = /class\s+(\w+)\s*{([^}]*)}/g;
+  const classRegex = /class\s+(\w+)\s*{([^}]*)}\s*(\w*)\s*;/g;
   const classes: ClassObj[] = []
   let match;
   while ((match = classRegex.exec(data)) !== null) {
     const className = match[1];
+    const alias = match[3];
     const classMembers = match[2]
-      .split(';')
+    // 去注释
+    const comregex = /\/\/.*$/gm;
+    const cleanedMembersString = classMembers.replace(comregex, '');
+    const memlist = cleanedMembersString.split(';')
       .map(member => member.trim().replace(/[\n\r]/g, ''))
       .filter(member => member.length > 0);
 
     const variables: string[] = [];
     const methods: string[] = [];
 
-    classMembers.forEach(member => {
+    memlist.forEach(member => {
       // 匹配方法声明
       const methodRegex = /(\w[\w\s\*]+)\s+(\w+)\(([^)]*)\)\s*/;
       const variableRegex = /(\w[\w\s\*]+)\s+(\w+)\s*/;
       const pattern = /(\w+)\s*\(\s*\*([^\)]+)\s*\)\s*\(\s*([\w\s,]*)\s*\)/;
+      const comParrtern = /([\S\,\ ]+)\s+(\w+)/;
       if (methodRegex.test(member)) {
-          methods.push(member.trim().replace(/[\n\r]/g, ''));
+        methods.push(member.trim().replace(/[\n\r]/g, ''));
       } else if (variableRegex.test(member)) {
-          variables.push(member.trim().replace(/[\n\r]/g, ''));
+        variables.push(member.trim().replace(/[\n\r]/g, ''));
       } else if (pattern.test(member)) {
+        variables.push(member.trim().replace(/[\n\r]/g, '')); 
+      } else if (comParrtern.test(member)) {
+        variables.push(member.trim().replace(/[\n\r]/g, '')); 
+      } else if (member.length > 0) {
         variables.push(member.trim().replace(/[\n\r]/g, '')); 
       }
     });
@@ -344,7 +376,7 @@ export function parseClass(data: string) {
 
     const classItem: ClassObj = {
       "name": className,
-      "alias": '',
+      "alias": alias,
       "variableList": variableList,
       "functionList": functionList
     }
@@ -441,7 +473,8 @@ export function parseFunctionOld(data: string) {
 
 export function parseFunction(data: string): FuncObj[] {
   // const funcRegex = /^(static\s+)?(const\s+)?([\w\s\[\]*]+)\s+(\w+)\s*\(([^)]*)\);/gm;
-  const funcRegex = /(?:typedef\s+([\w\s\[\]*]+)\s+\(\*\s*(\w+)\)\s*\(([^)]*)\);|^(static\s+)?(const\s+)?([\w\s\[\]*]+)\s+(\w+)\s*\(([^)]*)\);)/gm
+  // const funcRegex = /(?:typedef\s+([\w\:\<\>\s\[\]*]+)\s+\(\*\s*(\w+)\)\s*\(([^)]*)\);|^(static\s+)?(const\s+)?([\w\:\s\[\]*]+)\s+(\w+)\s*\(([^)]*)\);)/gm
+  const funcRegex = /(?:typedef\s+([\S\,\ ]+)\s+\(\*\s*(\w+)\)\s*\(([^)]*)\);|^(static\s+)?(const\s+)?([\S\,\ ]+)\s+(\w+)\s*\(([^)]*)\);)/gm
   const functions: FuncObj[] = []
   let match;
   while ((match = funcRegex.exec(data)) !== null) {
@@ -451,13 +484,23 @@ export function parseFunction(data: string): FuncObj[] {
     // match[4].trim();
     const name = match[2] ? match[2].trim() : match[7].trim(); 
     // match[5].split(',').map(param => param.trim()).filter(param => param);
-    const params = (match[3] ? match[3] : match[8] || "").split(',').map(param => param.trim()).filter(param => param); 
+    let paramstr = (match[3] ? match[3] : match[8] || "")
+    let paramreg = /([\w\s\:\*]+<[^>]*>[\s\w\:\*]+|[\*\w\s\:]+)/g;
+    let pmatch;
+    let matches = [];
+
+    while ((pmatch = paramreg.exec(paramstr)) !== null) {
+        matches.push(pmatch[0]);
+    }
+    // const params = (match[3] ? match[3] : match[8] || "")
+    //   .split(',').map(param => param.trim()).filter(param => param);
+    
     let isInterface = match[0].includes('typedef');
     let funcItem: FuncObj = {
       "type": isInterface ? "typedef" : "function",
       "returns": returnType,
       "name": name,
-      "parameters": parseParameters(params)
+      "parameters": parseParameters(matches)
     }
 
     functions.push(funcItem);
