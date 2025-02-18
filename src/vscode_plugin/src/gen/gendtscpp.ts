@@ -45,7 +45,7 @@ export function genHFunction(func: FuncInfo, rawFileName: string) {
   let hContent = replaceAll(napiFuncHTemplate, '[file_introduce_replace]', rawFileName);
   hContent = replaceAll(hContent, '[func_introduce_replace]', func.name);
   hContent = replaceAll(hContent, '[input_introduce_replace]', funcParams === '' ? 'void' : funcParams);
-  hContent = replaceAll(hContent, '[func_name_replace]', func.genName);
+  hContent = replaceAll(hContent, '[func_name_replace]', func.name);
   hContent = replaceAll(hContent, '[func_param_replace]', funcParams);
   hContent = replaceAll(hContent, '[func_return_replace]', func.retType === ''? 'void': func.retType);
 
@@ -120,7 +120,7 @@ export function generateFuncCode(rootInfo: DtscppRootInfo) {
     // gen dts function
     tsFuncContent += genTsFunction(tsfunctions[i], rawFileName);
     // 每个napi方法的init
-    genResult.napiInitContent += replaceAll(napiFuncInitTemplate, '[func_name_replace]', tsfunctions[i].genName);
+    genResult.napiInitContent += replaceAll(napiFuncInitTemplate, '[func_name_replace]', tsfunctions[i].name);
     // 每个napi方法的h声明
     genResult.napiHContent += genHFunction(cppfunctions[i], rawFileName);
     // 每个Napi方法的cpp说明
@@ -167,7 +167,7 @@ export function generateFunctions(parseObj: ParseObj, tsFilePath: string) {
   let rawFileName = path.basename(tsFilePath);
   for (let i = 0; i < cppfunctions.length; i++) {
     // 每个napi方法的init
-    genResult.napiInitContent += replaceAll(napiFuncInitTemplate, '[func_name_replace]', cppfunctions[i].genName);
+    genResult.napiInitContent += replaceAll(napiFuncInitTemplate, '[func_name_replace]', cppfunctions[i].name);
     // 每个napi方法的h声明
     genResult.napiHContent += genHFunction(cppfunctions[i], rawFileName);
     // 每个Napi方法的cpp说明
@@ -226,10 +226,8 @@ export function getFunctions(parseObj: ParseObj) {
       name: '',
       params: [],
       retType: '',
-      genName: ''
     };
     cppFuncInfo.name = parseObj.funcs[i].name;
-    cppFuncInfo.genName = parseObj.funcs[i].name;
     let parseParams = parseObj.funcs[i].parameters;
     for (let i = 0; i < parseParams.length; ++i) {
       let paramsRes = createFuncParam(parseParams[i]);
