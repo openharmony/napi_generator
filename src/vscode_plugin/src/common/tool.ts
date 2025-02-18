@@ -30,7 +30,7 @@ export function getCurrentTimeString(): string {
 
 export function replaceAll(s: string, sfrom: string, sto: any) {
   // Logger.getInstance().debug('[replaceall] s:'+s+' sfrom:'+sfrom+' sto:'+sto);
-  if (s && sfrom && sto) {
+  if (s && sfrom && sto || sto == '') {
     while (s.indexOf(sfrom) >= 0) {
       s = s.replace(sfrom, sto);
     }  
@@ -47,8 +47,8 @@ export function getTab(tabLv: number) {
 }
 
 export function removeComments(text: string): string {
-  // 移除单行注释
-  const singleLineRegex = /\/\/.*$/gm;
+  // 移除单行注释，确保不是URL的一部分
+  const singleLineRegex = /(?<!ftp:|https:|http:)\/\/.*$/gm;
   // 移除多行注释
   const multiLineRegex = /\/\*[\s\S]*?\*\//gm;
 
