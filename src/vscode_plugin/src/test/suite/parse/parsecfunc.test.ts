@@ -39,142 +39,785 @@ suite('Parse_C_Func_Suite', () => {
         assert.strictEqual(funcItem.parameters[1].name, 'b');
         assert.strictEqual(funcItem.parameters[1].type, 'int');
 
-        // assert.strictEqual(funcItem.alias, 'OperationType');
-        // assert.strictEqual(funcItem.members.length, 3);
-        // assert.strictEqual(funcItem.members[0], 'NEW');
-        // assert.strictEqual(funcItem.members[1], 'APPEND');
-        // assert.strictEqual(funcItem.members[2], 'REPLACE');
     });
 
     //2, 测试边界情况
-    // test('parseFunction_test_2', () => {
-    //     let testenum = `typedef enum {
-    //         NEW,
-    //         APPEND,
-    //         REPLACE
-    //     } OperationType;`
-    //     let enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 1);
-    //     let funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'OperationType');
-    //     // assert.strictEqual(funcItem.alias, 'OperationType');
-    //     // assert.strictEqual(funcItem.members.length, 3);
-    //     // assert.strictEqual(funcItem.members[0], 'NEW');
-    //     // assert.strictEqual(funcItem.members[1], 'APPEND');
-    //     // assert.strictEqual(funcItem.members[2], 'REPLACE');
+    test('parseFunction_test_2', () => {
+        // let paramstr = 'int a,test<int, int> alen, test<int, int> blen, test<int, int> clen, test<int, int> dlen';
+        // let paramreg = /(\w+<[^>]*>\s+\w+|\w+\s+\w+)/g;
+        // let match;
+        // let matches = [];
 
-    //     testenum = `typedef enum { NEW, APPEND, REPLACE } OperationType;`
-    //     enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 1);
-    //     funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'OperationType');
-    //     // assert.strictEqual(funcItem.alias, 'OperationType');
-    //     // assert.strictEqual(funcItem.members.length, 3);
-    //     // assert.strictEqual(funcItem.members[0], 'NEW');
-    //     // assert.strictEqual(funcItem.members[1], 'APPEND');
-    //     // assert.strictEqual(funcItem.members[2], 'REPLACE');
+        // while ((match = paramreg.exec(paramstr)) !== null) {
+        //     matches.push(match[0]);
+        // }
 
-    //     testenum = `typedef enum {
-    //         NEW
-    //     } OperationType;`
-    //     enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 1);
-    //     funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'OperationType');
-    //     // assert.strictEqual(funcItem.alias, 'OperationType');
-    //     // assert.strictEqual(funcItem.members.length, 1);
-    //     // assert.strictEqual(funcItem.members[0], 'NEW');
+        // let match: RegExpExecArray | null;
+        // let declarations: string[] = [];
+        // while ((match = paramreg.exec(paramstr)) != null) {
+        //     declarations.push(match[1]);
+        // };
 
-    //     testenum = `typedef enum { NEW } OperationType;`
-    //     enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 1);
-    //     funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'OperationType');
-    //     // assert.strictEqual(funcItem.alias, 'OperationType');
-    //     // assert.strictEqual(funcItem.members.length, 1);
-    //     // assert.strictEqual(funcItem.members[0], 'NEW');
+        let testenum = `int add_T(int a,int b);`
+        let enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        let funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'add_T');
+        assert.strictEqual(funcItem.returns, 'int');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 2);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'int');
+        assert.strictEqual(funcItem.parameters[1].name, 'b');
+        assert.strictEqual(funcItem.parameters[1].type, 'int');
 
-    //     testenum = `typedef enum OType {
-    //         NEW
-    //     } OperationType;`
-    //     enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 1);
-    //     funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'OType');
-    //     // assert.strictEqual(funcItem.alias, 'OperationType');
-    //     // assert.strictEqual(funcItem.members.length, 1);
-    //     // assert.strictEqual(funcItem.members[0], 'NEW');
+        testenum = `const int add_T(int a,int b);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'add_T');
+        assert.strictEqual(funcItem.returns, 'int');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 2);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'int');
+        assert.strictEqual(funcItem.parameters[1].name, 'b');
+        assert.strictEqual(funcItem.parameters[1].type, 'int');
 
-    //     testenum = `typedef enum OType { NEW } OperationType;`
-    //     enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 1);
-    //     funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'OType');
-    //     // assert.strictEqual(funcItem.alias, 'OperationType');
-    //     // assert.strictEqual(funcItem.members.length, 1);
-    //     // assert.strictEqual(funcItem.members[0], 'NEW');
+        testenum = `int add_T(const int a, int b);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'add_T');
+        assert.strictEqual(funcItem.returns, 'int');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 2);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'int');
+        assert.strictEqual(funcItem.parameters[1].name, 'b');
+        assert.strictEqual(funcItem.parameters[1].type, 'int');
 
-    //     testenum = `enum OType {
-    //         NEW
-    //     };`
-    //     enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 1);
-    //     funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'OType');
-    //     // assert.strictEqual(funcItem.alias, undefined);
-    //     // assert.strictEqual(funcItem.members.length, 1);
-    //     // assert.strictEqual(funcItem.members[0], 'NEW');
+        testenum = `int add_T(TEST a, int b);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'add_T');
+        assert.strictEqual(funcItem.returns, 'int');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 2);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'TEST');
+        assert.strictEqual(funcItem.parameters[1].name, 'b');
+        assert.strictEqual(funcItem.parameters[1].type, 'int');
 
-    //     testenum = `enum OType { NEW };`
-    //     enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 1);
-    //     funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'OType');
-    //     // assert.strictEqual(funcItem.alias, undefined);
-    //     // assert.strictEqual(funcItem.members.length, 1);
-    //     // assert.strictEqual(funcItem.members[0], 'NEW');
+        testenum = `int _ADD_T(TEST a, int b);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, '_ADD_T');
+        assert.strictEqual(funcItem.returns, 'int');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 2);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'TEST');
+        assert.strictEqual(funcItem.parameters[1].name, 'b');
+        assert.strictEqual(funcItem.parameters[1].type, 'int');
 
-    //     testenum = `enum OType { NEW }; enum TOTSize1 { DTS };`
-    //     enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 2);
-    //     funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'OType');
-    //     // assert.strictEqual(funcItem.alias, undefined);
-    //     // assert.strictEqual(funcItem.members.length, 1);
-    //     // assert.strictEqual(funcItem.members[0], 'NEW');
-    //     funcItem = enumObjList[1];
-    //     assert.strictEqual(funcItem.name, 'TOTSize1');
-    //     // assert.strictEqual(funcItem.alias, undefined);
-    //     // assert.strictEqual(funcItem.members.length, 1);
-    //     // assert.strictEqual(funcItem.members[0], 'DTS');
+        testenum = `int _ADD_T(long long a, int b);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, '_ADD_T');
+        assert.strictEqual(funcItem.returns, 'int');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 2);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'long long');
+        assert.strictEqual(funcItem.parameters[1].name, 'b');
+        assert.strictEqual(funcItem.parameters[1].type, 'int');
 
-    //     testenum = `enum TEST_ENUM { 
-    //         ENUM_1 = 1, // comment 
-    //         ENUM_2 = 2
-    //     }`;
-    //     enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 1);
-    //     funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'TEST_ENUM');
-    //     // assert.strictEqual(funcItem.alias, undefined);
-    //     // assert.strictEqual(funcItem.members.length, 2);
-    //     // assert.strictEqual(funcItem.members[0], 'ENUM_1=1');
-    //     // assert.strictEqual(funcItem.members[1], 'ENUM_2=2');
+        testenum = `std::string tfunc(std::string a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::string');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::string');
 
-    //     // 没有分号结尾
-    //     testenum = `enum TEST_ENUM { 
-    //         ENUM_1, // comment 
-    //         ENUM_2 
-    //     }`;
-    //     enumObjList = parsec.parseFunction(testenum);
-    //     assert.strictEqual(enumObjList.length, 1);
-    //     funcItem = enumObjList[0];
-    //     assert.strictEqual(funcItem.name, 'TEST_ENUM');
-    //     // assert.strictEqual(funcItem.alias, undefined);
-    //     // assert.strictEqual(funcItem.members.length, 2);
-    //     // assert.strictEqual(funcItem.members[0], 'ENUM_1');
-    //     // assert.strictEqual(funcItem.members[1], 'ENUM_2');
-    // });
+        testenum = `std::wstring tfunc(std::wstring a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::wstring');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::wstring');
+
+        testenum = `std::u16string tfunc(std::u16string a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::u16string');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::u16string');
+
+        testenum = `std::u32string tfunc(std::u32string a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::u32string');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::u32string');
+
+        testenum = `std::basic_string tfunc(std::basic_string a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::basic_string');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::basic_string');
+
+        testenum = `std::basic_string tfunc(std::basic_string a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::basic_string');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::basic_string');
+
+        testenum = `short tfunc(short a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'short');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'short');
+
+        testenum = `short int  tfunc(short int  a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'short int');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'short int');
+
+        testenum = `long tfunc(long a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'long');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'long');
+
+        testenum = `long int tfunc(long int a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'long int');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'long int');
+
+        testenum = `long long tfunc(long long a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'long long');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'long long');
+
+        testenum = `long long int tfunc(long long int a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'long long int');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'long long int');
+
+        testenum = `char tfunc(char a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'char');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'char');
+
+        testenum = `wchar_t tfunc(wchar_t a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'wchar_t');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'wchar_t');
+
+        testenum = `char16_t tfunc(char16_t a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'char16_t');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'char16_t');
+
+        testenum = `char32_t tfunc(char32_t a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'char32_t');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'char32_t');
+
+        testenum = `bool tfunc(bool a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'bool');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'bool');
+
+        testenum = `float tfunc(float a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'float');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'float');
+
+        testenum = `double tfunc(double a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'double');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'double');
+
+        testenum = `long double tfunc(long double a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'long double');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'long double');
+
+        testenum = `std::vector<int> tfunc(std::vector<int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::vector<int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::vector<int>');
+
+        testenum = `std::deque<int> tfunc(std::deque<int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::deque<int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::deque<int>');
+
+        testenum = `std::list<int> tfunc(std::list<int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::list<int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::list<int>');
+
+        testenum = `std::forward_list<int> tfunc(std::forward_list<int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::forward_list<int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::forward_list<int>');
+
+        testenum = `std::array<int> tfunc(std::array<int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::array<int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::array<int>');
+
+        testenum = `std::stack<int> tfunc(std::stack<int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::stack<int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::stack<int>');
+
+        testenum = `std::queue<int> tfunc(std::queue<int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::queue<int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::queue<int>');
+
+        testenum = `std::priority_queue<int> tfunc(std::priority_queue<int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::priority_queue<int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::priority_queue<int>');
+
+        testenum = `std::pair<double, int> tfunc(std::pair<double, int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::pair<double, int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::pair<double, int>');
+
+        testenum = `std::map<double, int> tfunc(std::map<double, int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::map<double, int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::map<double, int>');
+
+        testenum = `std::multimap<double, int> tfunc(std::multimap<double, int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::multimap<double, int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::multimap<double, int>');
+
+        testenum = `std::set<double, int> tfunc(std::set<double, int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::set<double, int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::set<double, int>');
+
+        testenum = `std::multiset<double, int> tfunc(std::multiset<double, int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::multiset<double, int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::multiset<double, int>');
+
+        testenum = `std::unordered_map<double, int> tfunc(std::unordered_map<double, int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::unordered_map<double, int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::unordered_map<double, int>');
+
+        testenum = `std::unordered_multimap<double, int> tfunc(std::unordered_multimap<double, int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::unordered_multimap<double, int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::unordered_multimap<double, int>');
+
+        testenum = `std::unordered_set<double, int> tfunc(std::unordered_set<double, int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::unordered_set<double, int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::unordered_set<double, int>');
+
+        testenum = `std::unordered_multiset<double, int> tfunc(std::unordered_multiset<double, int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::unordered_multiset<double, int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::unordered_multiset<double, int>');
+
+        testenum = `std::vector<int>::iterator tfunc(std::vector<int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::vector<int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::vector<int>::iterator');
+
+        testenum = `std::deque<int>::iterator tfunc(std::deque<int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::deque<int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::deque<int>::iterator');
+
+        testenum = `std::list<int>::iterator tfunc(std::list<int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::list<int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::list<int>::iterator');
+
+        testenum = `std::forward_list<int>::iterator tfunc(std::forward_list<int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::forward_list<int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::forward_list<int>::iterator');
+
+        testenum = `std::array<int>::iterator tfunc(std::array<int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::array<int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::array<int>::iterator');
+
+        testenum = `std::stack<int>::iterator tfunc(std::stack<int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::stack<int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::stack<int>::iterator');
+
+        testenum = `std::queue<int>::iterator tfunc(std::queue<int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::queue<int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::queue<int>::iterator');
+
+        testenum = `std::priority_queue<int>::iterator tfunc(std::priority_queue<int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::priority_queue<int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::priority_queue<int>::iterator');
+
+        testenum = `std::pair<double, int>::iterator tfunc(std::pair<double, int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::pair<double, int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::pair<double, int>::iterator');
+
+        testenum = `std::map<double, int>::iterator tfunc(std::map<double, int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::map<double, int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::map<double, int>::iterator');
+
+        testenum = `std::multimap<double, int>::iterator tfunc(std::multimap<double, int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::multimap<double, int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::multimap<double, int>::iterator');
+
+        testenum = `std::set<double, int>::iterator tfunc(std::set<double, int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::set<double, int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::set<double, int>::iterator');
+
+        testenum = `std::multiset<double, int>::iterator tfunc(std::multiset<double, int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::multiset<double, int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::multiset<double, int>::iterator');
+
+        testenum = `std::unordered_map<double, int>::iterator tfunc(std::unordered_map<double, int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::unordered_map<double, int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::unordered_map<double, int>::iterator');
+
+        testenum = `std::unordered_multimap<double, int>::iterator tfunc(std::unordered_multimap<double, int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::unordered_multimap<double, int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::unordered_multimap<double, int>::iterator');
+
+        testenum = `std::unordered_set<double, int>::iterator tfunc(std::unordered_set<double, int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::unordered_set<double, int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::unordered_set<double, int>::iterator');
+
+        testenum = `std::unordered_multiset<double, int>::iterator tfunc(std::unordered_multiset<double, int>::iterator a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::unordered_multiset<double, int>::iterator');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::unordered_multiset<double, int>::iterator');
+
+        // testenum = `std::function<int(int, int)> tfunc(std::function<int(int, int)> a);`
+        // enumObjList = parsec.parseFunction(testenum);
+        // assert.strictEqual(enumObjList.length, 1);
+        // funcItem = enumObjList[0];
+        // assert.strictEqual(funcItem.name, 'tfunc');
+        // assert.strictEqual(funcItem.returns, 'std::function<int(int, int)>');
+        // assert.strictEqual(funcItem.type, 'function');
+        // assert.strictEqual(funcItem.parameters.length, 1);
+        // assert.strictEqual(funcItem.parameters[0].name, 'a');
+        // assert.strictEqual(funcItem.parameters[0].type, 'std::function<int(int, int)>');
+
+        testenum = `std::tuple<int, float, double> tfunc(std::tuple<int, float, double> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::tuple<int, float, double>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::tuple<int, float, double>');
+
+        testenum = `std::complex<double> tfunc(std::complex<double> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::complex<double>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::complex<double>');
+
+        testenum = `std::valarray<int> tfunc(std::valarray<int> a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::valarray<int>');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::valarray<int>');
+
+        testenum = `std::time_t tfunc(std::time_t a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::time_t');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::time_t');
+
+        testenum = `std::clock_t tfunc(std::clock_t a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::clock_t');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::clock_t');
+
+        testenum = `std::tm tfunc(std::tm a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'std::tm');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'std::tm');
+
+        testenum = `wchar_t* tfunc(wchar_t* a);`
+        enumObjList = parsec.parseFunction(testenum);
+        assert.strictEqual(enumObjList.length, 1);
+        funcItem = enumObjList[0];
+        assert.strictEqual(funcItem.name, 'tfunc');
+        assert.strictEqual(funcItem.returns, 'wchar_t*');
+        assert.strictEqual(funcItem.type, 'function');
+        assert.strictEqual(funcItem.parameters.length, 1);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'wchar_t*');
+    });
 
     // //3, 测试异常情况
     // test('parseFunction_test_3', () => {
