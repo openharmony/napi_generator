@@ -36,7 +36,7 @@ const fileHandlers: { [key: string]: Function } = {
 };
 
 // 循环写入文件， 并将funcContent的内容写入模板
-function genDir(dirItem: DirTemp, rootInfo: HdfRootInfo, out: string) {
+export function genDir(dirItem: DirTemp, rootInfo: HdfRootInfo, out: string) {
   let dirPath = path.join(out, dirItem.name.replace('[driverName]', rootInfo.driverName));
   // 创建目录
   if (!fs.existsSync(dirPath)) {

@@ -36,7 +36,7 @@ interface GenResult {
   napiCppContent: string
 }
 
-function genHFunction(func: FuncInfo, rawFileName: string) {
+export function genHFunction(func: FuncInfo, rawFileName: string) {
   let funcParams = '';
   for (let i = 0; i < func.params.length; ++i) {
       funcParams += i > 0 ? ', ' : '';
@@ -45,14 +45,14 @@ function genHFunction(func: FuncInfo, rawFileName: string) {
   let hContent = replaceAll(napiFuncHTemplate, '[file_introduce_replace]', rawFileName);
   hContent = replaceAll(hContent, '[func_introduce_replace]', func.name);
   hContent = replaceAll(hContent, '[input_introduce_replace]', funcParams === '' ? 'void' : funcParams);
-  hContent = replaceAll(hContent, '[func_name_replace]', func.genName);
+  hContent = replaceAll(hContent, '[func_name_replace]', func.name);
   hContent = replaceAll(hContent, '[func_param_replace]', funcParams);
   hContent = replaceAll(hContent, '[func_return_replace]', func.retType === ''? 'void': func.retType);
 
   return hContent;
 }
 
-function replaceContent(fileContent: string, funcContent: GenResult, rootInfo: DtscppRootInfo) {
+export function replaceContent(fileContent: string, funcContent: GenResult, rootInfo: DtscppRootInfo) {
   let upperFileName = rootInfo.fileName.toLocaleUpperCase();
 
   fileContent = replaceAll(fileContent, '[fileName]', rootInfo.fileName);
@@ -66,7 +66,7 @@ function replaceContent(fileContent: string, funcContent: GenResult, rootInfo: D
   return fileContent;
 }
 
-function genDir(dirItem: DirTemp, funcContent: GenResult, rootInfo: DtscppRootInfo, out: string) 
+export function genDir(dirItem: DirTemp, funcContent: GenResult, rootInfo: DtscppRootInfo, out: string) 
 {
   let dirPath = path.join(out, dirItem.name);
   let lowerFileName = rootInfo.fileName.toLocaleLowerCase();
@@ -95,7 +95,7 @@ function genDir(dirItem: DirTemp, funcContent: GenResult, rootInfo: DtscppRootIn
   })
 }
 
-function generateFuncCode(rootInfo: DtscppRootInfo) {
+export function generateFuncCode(rootInfo: DtscppRootInfo) {
   let genResult: GenResult = {
     dtsContent: '',
     testContet: '',
@@ -120,7 +120,7 @@ function generateFuncCode(rootInfo: DtscppRootInfo) {
     // gen dts function
     tsFuncContent += genTsFunction(tsfunctions[i], rawFileName);
     // 每个napi方法的init
-    genResult.napiInitContent += replaceAll(napiFuncInitTemplate, '[func_name_replace]', tsfunctions[i].genName);
+    genResult.napiInitContent += replaceAll(napiFuncInitTemplate, '[func_name_replace]', tsfunctions[i].name);
     // 每个napi方法的h声明
     genResult.napiHContent += genHFunction(cppfunctions[i], rawFileName);
     // 每个Napi方法的cpp说明
@@ -152,7 +152,7 @@ export function genCppFile(parseObj: ParseObj, tsFilePath: string, out: string) 
   Logger.getInstance().info('generate success!')
 }
 
-function generateFunctions(parseObj: ParseObj, tsFilePath: string) {
+export function generateFunctions(parseObj: ParseObj, tsFilePath: string) {
   let cppfunctions: FuncInfo[] = getFunctions(parseObj);
   let typeList: TypeList[] = getTypes(parseObj);
   let interfaceList: InterfaceList[] = getInterfaces(parseObj);
@@ -167,7 +167,7 @@ function generateFunctions(parseObj: ParseObj, tsFilePath: string) {
   let rawFileName = path.basename(tsFilePath);
   for (let i = 0; i < cppfunctions.length; i++) {
     // 每个napi方法的init
-    genResult.napiInitContent += replaceAll(napiFuncInitTemplate, '[func_name_replace]', cppfunctions[i].genName);
+    genResult.napiInitContent += replaceAll(napiFuncInitTemplate, '[func_name_replace]', cppfunctions[i].name);
     // 每个napi方法的h声明
     genResult.napiHContent += genHFunction(cppfunctions[i], rawFileName);
     // 每个Napi方法的cpp说明
@@ -180,7 +180,7 @@ function generateFunctions(parseObj: ParseObj, tsFilePath: string) {
 }
 
 // 将interface列表中的js type全部转换为c type
-function getInterfaces(parseObj: ParseObj) {
+export function getInterfaces(parseObj: ParseObj) {
   return parseObj.classes.map(cls => {
     const getParams = (variables: ParamObj[]) => 
       variables.map(variable => ({
@@ -207,7 +207,7 @@ function getInterfaces(parseObj: ParseObj) {
   });
 }
 
-function getTypes(parseObj: ParseObj) {
+export function getTypes(parseObj: ParseObj) {
   let typeList: TypeList[] = [];
   for (let i = 0; i < parseObj.types!.length; i++) {
     let typeObj: TypeList = {
@@ -219,17 +219,15 @@ function getTypes(parseObj: ParseObj) {
   return typeList;
 }
 
-function getFunctions(parseObj: ParseObj) {
+export function getFunctions(parseObj: ParseObj) {
   let cppfunctions: FuncInfo[] = [];
   for (let i = 0; i < parseObj.funcs.length; i++) {
     let cppFuncInfo: FuncInfo = {
       name: '',
       params: [],
       retType: '',
-      genName: ''
     };
     cppFuncInfo.name = parseObj.funcs[i].name;
-    cppFuncInfo.genName = parseObj.funcs[i].name;
     let parseParams = parseObj.funcs[i].parameters;
     for (let i = 0; i < parseParams.length; ++i) {
       let paramsRes = createFuncParam(parseParams[i]);
@@ -241,7 +239,7 @@ function getFunctions(parseObj: ParseObj) {
   return cppfunctions;
 }
 
-function getCTypeFromJS(type: string) {
+export function getCTypeFromJS(type: string) {
   let cType = type;
   for (let index = 0; index < tsTransferType.length; index++) {
     if (type === tsTransferType[index].fromType) {
@@ -251,7 +249,7 @@ function getCTypeFromJS(type: string) {
   return cType;
 }
 
-function createFuncParam(params: ParamObj) {
+export function createFuncParam(params: ParamObj) {
   let cppParam: ParamObj = {
     name: '',
     type: '',
