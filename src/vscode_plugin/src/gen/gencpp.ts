@@ -48,7 +48,7 @@ export function generateDirectFunction(funcInfo: FuncInfo, rawFileName: string, 
       let returnType = funcInfo.retType === 'std::string' ? 'const char *' : funcInfo.retType;
       returnType = returnType === 'size_t' ? 'int64_t' : returnType;
       let funcReturnReplace = replaceAll(napiFuncRetTemplate, '[return_name]', retObjInfo.objName);
-      funcReturnReplace = replaceAll(funcReturnReplace, '[func_name_replace]', funcInfo.genName);
+      funcReturnReplace = replaceAll(funcReturnReplace, '[func_name_replace]', funcInfo.name);
       funcReturnReplace = replaceAll(funcReturnReplace, '[return_replace]', retGenResult);
       bodyReplace = replaceAll(bodyReplace, '[func_return_replace]', funcReturnReplace);
   } else {
@@ -60,10 +60,10 @@ export function generateDirectFunction(funcInfo: FuncInfo, rawFileName: string, 
   return bodyReplace;
 }
 
-function getReplaceInfo(funcInfo: FuncInfo, hFileName: string) {
+export function getReplaceInfo(funcInfo: FuncInfo, hFileName: string) {
   let funcInfoParams = genFuncInfoParams(funcInfo);
-  let bodyReplace = replaceAll(napiFuncCppTemplate, '[func_name_replace]', funcInfo.genName);
-  bodyReplace = replaceAll(bodyReplace, '[get_error_msg_tag]', funcInfo.genName);
+  let bodyReplace = replaceAll(napiFuncCppTemplate, '[func_name_replace]', funcInfo.name);
+  bodyReplace = replaceAll(bodyReplace, '[get_error_msg_tag]', funcInfo.name);
   bodyReplace = replaceAll(bodyReplace, '[file_introduce_replace]', hFileName);
   bodyReplace = replaceAll(bodyReplace, '[func_introduce_replace]', funcInfo.name);
   bodyReplace = replaceAll(bodyReplace, '[input_introduce_replace]', funcInfoParams === '' ? 'void' : funcInfoParams);
@@ -71,7 +71,7 @@ function getReplaceInfo(funcInfo: FuncInfo, hFileName: string) {
   return bodyReplace;
 }
 
-function getBodyReplace2(funcInfo: FuncInfo, bodyReplace: string, genParamReplace: string) {
+export function getBodyReplace2(funcInfo: FuncInfo, bodyReplace: string, genParamReplace: string) {
   if (funcInfo.params.length !== 0) {
     bodyReplace = replaceAll(bodyReplace, '[func_getParam_replace]', genParamReplace);
   } else {
@@ -80,14 +80,14 @@ function getBodyReplace2(funcInfo: FuncInfo, bodyReplace: string, genParamReplac
   return bodyReplace;
 }
 
-function getGenParamReplace(funcInfo: FuncInfo, paramGenResult: string) {
+export function getGenParamReplace(funcInfo: FuncInfo, paramGenResult: string) {
   let genParamReplace = replaceAll(funcGetParamTemplate, '[param_length]', 'PARAMS' + funcInfo.params.length);
-  genParamReplace = replaceAll(genParamReplace, '[func_name_replace]', funcInfo.genName);
+  genParamReplace = replaceAll(genParamReplace, '[func_name_replace]', funcInfo.name);
   genParamReplace = replaceAll(genParamReplace, '[getAllParam_replace]', paramGenResult);
   return genParamReplace;
 }
 
-function genFuncInfoParams(funcInfo: FuncInfo) {
+export function genFuncInfoParams(funcInfo: FuncInfo) {
   let funcInfoParams = '';
   let funcInfoParamTemp = '[paramName]: [paramType]; ';
   for (let i = 0; i < funcInfo.params.length; i++) {
@@ -99,7 +99,7 @@ function genFuncInfoParams(funcInfo: FuncInfo) {
 }
 
 
-function genParamInfo(funcInfo: FuncInfo, typeList: TypeList[]) {
+export function genParamInfo(funcInfo: FuncInfo, typeList: TypeList[]) {
   let paramGenResult = '';
   // napi 获取参数
   for (let i = 0; i < funcInfo.params.length; i++) {
@@ -109,7 +109,7 @@ function genParamInfo(funcInfo: FuncInfo, typeList: TypeList[]) {
 }
 
 
-function getParamJs2C(funcInfo: FuncInfo, i: number, paramGenResult: string, typeList: TypeList[]) {
+export function getParamJs2C(funcInfo: FuncInfo, i: number, paramGenResult: string, typeList: TypeList[]) {
   let paramType = funcInfo.params[i].type === 'size_t' ? 'int64_t' : funcInfo.params[i].type;
   // 去除const 和 *
   paramType = paramType.replace('const', '').replace('*', '').trim();
@@ -143,14 +143,14 @@ function getParamJs2C(funcInfo: FuncInfo, i: number, paramGenResult: string, typ
   return paramGenResult;
 }
 
-function getParamGenCon(getParamContent: string, i: number, paramName: string, paramGen: string) {
+export function getParamGenCon(getParamContent: string, i: number, paramName: string, paramGen: string) {
   let getParam = replaceAll(getParamContent, '[param_index_replace]', 'PARAMS' + i);
   getParam = replaceAll(getParam, '[param_name_replace]', paramName);
   paramGen = replaceAll(paramGen, '[getParam_replace]', getParam);
   return paramGen;
 }
 
-function returnTypeC2Js(returnName: string, retType: string, retGenResult: string, retObjInfo: RetObjInfo, typeList: TypeList[], interfaceList: InterfaceList[]) {
+export function returnTypeC2Js(returnName: string, retType: string, retGenResult: string, retObjInfo: RetObjInfo, typeList: TypeList[], interfaceList: InterfaceList[]) {
   if (!retObjInfo.flag) {
       retObjInfo.objName = returnName;
   }
@@ -191,7 +191,7 @@ function returnTypeC2Js(returnName: string, retType: string, retGenResult: strin
   return retGenResult;
 }
 
-function getObjRetGenResult(retObjInfo: RetObjInfo, retGenResult: string, returnName: string) {
+export function getObjRetGenResult(retObjInfo: RetObjInfo, retGenResult: string, returnName: string) {
   if (retObjInfo.objName !== '') {
     retGenResult += replaceAll(objectRet, '[return_name_replace]', returnName);
     let setRetPropertyObj = replaceAll(objectTosetRet, '[set_objname_replace]', retObjInfo.objName);
@@ -202,7 +202,7 @@ function getObjRetGenResult(retObjInfo: RetObjInfo, retGenResult: string, return
   return retGenResult;
 }
 
-function getRetTypeContent(retTypeTemplate: string, returnName: string, retGenResult: string,
+export function getRetTypeContent(retTypeTemplate: string, returnName: string, retGenResult: string,
   retObjInfo: RetObjInfo, setRetProperty: string) {
   let funcReturnType = replaceAll(retTypeTemplate, '[return_name_replace]', returnName);
   retGenResult += funcReturnType;
