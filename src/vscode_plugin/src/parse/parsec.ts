@@ -209,7 +209,8 @@ export function parseStruct(data: string) {
 // /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/
 export function parseParameters(members: string[]): ParamObj[] {
   // const memberRegex = /^(const\s+)?([\w\s*]+)\s+(\w+)(?:\[(\d+)\])?$/;
-  const memberRegex = /^(const\s+)?([\w\:\<\>\,\s*]+)\s+(\w+)(?:\[(\d*)\])?$/;
+  // const memberRegex = /^(const\s+)?([\w\:\<\>\,\s*]+)\s+(\w+)(?:\[(\d*)\])?$/;
+  const memberRegex = /^(const\s+)?([\w:<>,\s*()]+)\s+(\w+)(?:\[(\d*)])?$/;
   // Logger.getInstance().info(` parseParameters members: ${JSON.stringify(members)}`);
   return members.map(member => {
       const match = member.trim().match(memberRegex);
@@ -219,6 +220,12 @@ export function parseParameters(members: string[]): ParamObj[] {
           const name = match[3].trim();
           // const arraySize = match[4] ? parseInt(match[4], 10) : -1;
           const arraySize = match[4] && match[4] !== "" ? parseInt(match[4], 10) : -1;
+          return { type, name, arraySize };
+      } else {
+          const type = member;
+          const name = '';
+          // const arraySize = match[4] ? parseInt(match[4], 10) : -1;
+          const arraySize = -1;
           return { type, name, arraySize };
       }
       return {};
@@ -474,9 +481,18 @@ export function parseFunctionOld(data: string) {
 export function parseFunction(data: string): FuncObj[] {
   // const funcRegex = /^(static\s+)?(const\s+)?([\w\s\[\]*]+)\s+(\w+)\s*\(([^)]*)\);/gm;
   // const funcRegex = /(?:typedef\s+([\w\:\<\>\s\[\]*]+)\s+\(\*\s*(\w+)\)\s*\(([^)]*)\);|^(static\s+)?(const\s+)?([\w\:\s\[\]*]+)\s+(\w+)\s*\(([^)]*)\);)/gm
-  const funcRegex = /(?:typedef\s+([\S\,\ ]+)\s+\(\*\s*(\w+)\)\s*\(([^)]*)\);|^(static\s+)?(const\s+)?([\S\,\ ]+)\s+(\w+)\s*\(([^)]*)\);)/gm
+  // const funcRegex = 
+  //                 /(?:typedef\s+([\S\,\ ]+)\s+\(\*\s*(\w+)\)\s*\(([^)]*)\);|^(static\s+)?(const\s+)?([\S\,\ ]+)\s+(\w+)\s*\(([^)]*)\);)/gm
+  let funcRegLines = '(?:typedef\\s+([\\S\\,\\ ]+)\\s+\\(\\*\\s*(\\w+)\\)\\s*\\(([^)]*)\\);|' +
+    '^(static\\s+)?(const\\s+)?([\\S\\,\\ ]+)\\s+(\\w+)\\s*\\(([^)]*)\\);)';
+  // let comfucRegex = /(static\s+)?(const\s+)?((?:[\w:]+\s*<[^<>]+>|[\w:*]+\s*)+)\s+(\w+)\s*\(\s*((?:[\w:]+\s*<[^<>]+>|[\w:*]+)\s+\w+(?:,\s*)*)*\s*\)/g;
+  let comfucRegex = /(static\s+)?(const\s+)?((?:[\w:]+\s*<[^<>]+>|[\w:*]+\s*)+)\s+(\w+)\s*\(\s*((?:[\w:]+\s*<[^<>]+>|[\w:*]+)\s+\w+(?:,\s*)*)*\s*\)/g;
+///(static\s+)?(const\s+)?((?:\w+(?:::\w+)*(?:<[^<>]+>)?\s*)+)\s+(\w+)\s*\(\s*((?:[\w\s:<>,*]+\s+\w+\s*,?\s*)*)\s*\)/g;
+  // const comfucRegex = /(static\s+)?(const\s+)?((?:(?:long|short|signed|unsigned)\s+){1,3}\w+|\w+[\w:*]*(?:::\w+[\w:*<>]*)*)\s+(\w+)\s*\(\s*((?:\s*(?:[\w\s:<>,*]+)\s+\w+\s*,?)*)\s*\)/g;
+  const funcRegex = new RegExp(funcRegLines, 'gm');
   const functions: FuncObj[] = []
   let match;
+  let isFind = false;
   while ((match = funcRegex.exec(data)) !== null) {
     // Logger.getInstance().debug(`func match: ${JSON.stringify(match)}`)
     // match[3].trim();
@@ -490,10 +506,8 @@ export function parseFunction(data: string): FuncObj[] {
     let matches = [];
 
     while ((pmatch = paramreg.exec(paramstr)) !== null) {
-        matches.push(pmatch[0]);
+        matches.push(pmatch[0].trim());
     }
-    // const params = (match[3] ? match[3] : match[8] || "")
-    //   .split(',').map(param => param.trim()).filter(param => param);
     
     let isInterface = match[0].includes('typedef');
     let funcItem: FuncObj = {
@@ -502,9 +516,34 @@ export function parseFunction(data: string): FuncObj[] {
       "name": name,
       "parameters": parseParameters(matches)
     }
-
+    isFind = true;
     functions.push(funcItem);
   }
+
+  if (!isFind) {
+    while ((match = comfucRegex.exec(data)) !== null) {
+      const returnType = match[3].trim();
+      const name = match[4].trim();
+      let paramstr = match[5];
+
+      let paramreg = /([\w\s\:\*]+<[^>]*>[\s\w\:\*]+|[\*\w\s\:]+)/g;
+      let pmatch;
+      let matches = [];
+
+      while ((pmatch = paramreg.exec(paramstr)) !== null) {
+          matches.push(pmatch[0].trim());
+      }
+
+      let funcItem: FuncObj = {
+        "type": "function",
+        "returns": returnType,
+        "name": name,
+        "parameters": parseParameters(matches)
+      }
+      isFind = true;
+      functions.push(funcItem);
+    }
+  } 
   // Logger.getInstance().info(` return functions: ${JSON.stringify(functions)}`);
   return functions;
 }
