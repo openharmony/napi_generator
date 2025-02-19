@@ -305,14 +305,88 @@ export function getInterfaceBody(testType: string, interfaceList: InterfaceList[
 }
 
 //----------------------------
-export function transTskey2Ckey(key: string) {
+
+// h2dts
+export function transTskey2Ckey(key: string): string {
+  // 判断迭代器： 如std::vector<int>::iterator  ->  IterableIterator<Array<number>>
+  const regexIterator = /(std::\w+<[^>]+>)::iterator/;
+  const matchIterator = key.match(regexIterator);
+  if (matchIterator) {
+    return 'IterableIterator<' + transTskey2Ckey(matchIterator[1].trim()) + '>';
+  }
+
+  // 转换为Array<xxx>类型
+  const regexArray = /\b((std::)?(?:vector|array|deque|list|forward_list|stack|queue|valarray|priority_queue))\s*<([^>]*)>/;
+  const matchArray = key.match(regexArray);
+  if (matchArray) {
+    return `Array<${transTskey2Ckey(matchArray[3])}>`;
+  }
+
+  // 转换为Map<xxx, xxx>类型
+  const regexMap = /\b((std::)?(?:map|unordered_map|multimap|unordered_multimap))\s*<([^>]*)>/;
+  const matchMap = key.match(regexMap);
+  if (matchMap) {
+    const arr = matchMap[3].split(',');
+    if (arr.length == 2) {
+      return `Map<${transTskey2Ckey(arr[0])}, ${transTskey2Ckey(arr[1])}>`;
+    }
+  }
+
+  // 转换为Set<xxx>
+  const regexSet = /\b((std::)?(?:set|unordered_set|multiset|unordered_multiset))\s*<([^>]*)>/;
+  const matchSet = key.match(regexSet);
+  if (matchSet) {
+    return `Set<${transTskey2Ckey(matchSet[3])}>`;
+  }
+
+  // 转换为元组
+  const regexTuple = /\b((std::)?(?:tuple|pair))\s*<([^>]*)>/;
+  const matchTuple = key.match(regexTuple);
+  if (matchTuple) {
+    const arr = matchTuple[3].split(',');
+    let str = '';
+    for (let i = 0; i < arr.length; ++i) {
+      str += transTskey2Ckey(arr[i]);
+      if (i != arr.length - 1) {
+        str += ', ';
+      }
+    }
+    return `[${str}]`;
+  }
+
+  // 判断是否是std::function, 转换为箭头函数 如：std::function<void(int, int)> 转换为 (a: number, b: number)=>void
+  const regexFunction = /\b(std::)?function<([^<>]+)\(([^)]+)\)>/;
+  const matchFunction = key.match(regexFunction);
+  if (matchFunction) {
+    const returnType = matchFunction[1].trim(); // 返回类型
+    const paramList = (matchFunction[2].trim()).split(",").map(param => param.trim());
+    let str = '';
+    for (let i = 0; i < paramList.length; ++i) {
+      str += `param${i}: ${transTskey2Ckey(paramList[i])}`;
+      if (i != paramList.length - 1) {
+        str += ', ';
+      }
+    }
+    return `(${str})=>${transTskey2Ckey(returnType)}`;
+  }
+
+  // 判断是否是std::complex , 将复数类型转换为{real: number, imag: number}类型
+  const regexComplex = /\b((std::)?(?:complex))\s*<([^<>]*)>/;
+  const matchComplex = key.match(regexComplex);
+  if (matchComplex) {
+    const type = transTskey2Ckey(matchComplex[3].trim()); // 返回类型
+    return `{real: ${type}, imag: ${type}}`;
+  }
+
+  // 判断日期类型: std::time_t /std::clock_t /std::tm 转换为ts的Date类型
+  const regexDate = /\b((std::)?(?:time_t|clock_t|tm))\b/;
+  const matchDate = key.match(regexDate);
+  if (matchDate) {
+    return 'Date';
+  }
   for(const keyItem of dts2cpp_key) {
     for(const str of keyItem.keys) {
       if (key.includes(str)) {
-        const match = key.match(/(std::)?vector<([\w\s*::<>]+)>/);
-        if (match) {
-          return 'Array<' + keyItem.value + '>';
-        }
         return keyItem.value;
       }
     }
