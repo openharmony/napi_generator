@@ -308,6 +308,35 @@ export function getInterfaceBody(testType: string, interfaceList: InterfaceList[
 
 // h2dts
 export function transTskey2Ckey(key: string): string {
+  // 判断是否是std::function, 转换为箭头函数 如：std::function<void(int, int)> 转换为 (a: number, b: number)=>void
+  const regexFunction = /\b(std::)?function<([\w\s\:\*]+)\s?\(([\w\:\<\>\,\s*]*)\)>/;
+  const matchFunction = key.match(regexFunction);
+  if (matchFunction) {
+    const returnType = matchFunction[2].trim(); // 返回类型
+    let paramstr = matchFunction[3] ? matchFunction[3].trim() : ''
+    let paramreg = /([\w\s\:\*]+<[^>]*>|[\*\w\s\:]+)/g;
+    let pmatch;
+    let paramList = [];
+    while ((pmatch = paramreg.exec(paramstr)) !== null) {
+      paramList.push(pmatch[0]);
+    }
+    let str = '';
+    for (let i = 0; i < paramList.length; ++i) {
+      str += paramList[i].trim() === ''? '': `param${i}: ${transTskey2Ckey(paramList[i])}`;
+      if (i != paramList.length - 1) {
+        str += ', ';
+      }
+    }
+    return `(${str})=>${transTskey2Ckey(returnType)}`;
+  }
+
+  // 智能指针,例如： std::unique_ptr<int> -> number
+  const regexSmartPtr =/\b((std::)?(?:unique_ptr|shared_ptr|weak_ptr))\s*<([^>]*)>/;
+  const matchSmartPtr = key.match(regexSmartPtr);
+  if (matchSmartPtr) {
+    return transTskey2Ckey(matchSmartPtr[3].trim());
+  }
+
   // 判断迭代器： 如std::vector<int>::iterator  ->  IterableIterator<Array<number>>
   const regexIterator = /(std::\w+<[^>]+>)::iterator/;
   const matchIterator = key.match(regexIterator);
@@ -354,22 +383,6 @@ export function transTskey2Ckey(key: string): string {
     return `[${str}]`;
   }
 
-  // 判断是否是std::function, 转换为箭头函数 如：std::function<void(int, int)> 转换为 (a: number, b: number)=>void
-  const regexFunction = /\b(std::)?function<([^<>]+)\(([^)]+)\)>/;
-  const matchFunction = key.match(regexFunction);
-  if (matchFunction) {
-    const returnType = matchFunction[1].trim(); // 返回类型
-    const paramList = (matchFunction[2].trim()).split(",").map(param => param.trim());
-    let str = '';
-    for (let i = 0; i < paramList.length; ++i) {
-      str += `param${i}: ${transTskey2Ckey(paramList[i])}`;
-      if (i != paramList.length - 1) {
-        str += ', ';
-      }
-    }
-    return `(${str})=>${transTskey2Ckey(returnType)}`;
-  }
-
   // 判断是否是std::complex , 将复数类型转换为{real: number, imag: number}类型
   const regexComplex = /\b((std::)?(?:complex))\s*<([^<>]*)>/;
   const matchComplex = key.match(regexComplex);
@@ -395,7 +408,8 @@ export function transTskey2Ckey(key: string): string {
   for(const rkey of replaceKeyList) {
     key = key.replace(rkey, '').trim();
   }
-  return key;
+  // 其他类型转换为 any 类型，如typeDef定义的类型 
+  return 'any'
 }
 
 export function getDtsEnum(rootInfo: GenInfo) {
