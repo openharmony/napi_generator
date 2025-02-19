@@ -194,10 +194,13 @@ function crossCompile_win32(terminal: vscode.Terminal | undefined, thirdPartyPat
                     });
                 } else if (action.compileTool === "make") {
                     let target: string;
+                    let ld: string;
                     if (action.ohArchitecture === "arm64-v8a") {
                         target = "aarch64-linux-ohos";
+                        ld = "ld64.lld.exe";
                     } else {
                         target = "arm-linux-ohos";
+                        ld = "ld.lld.exe";
                     }
                     commands.push({
                         command: `cd ${action.cwd}`,
@@ -213,8 +216,11 @@ function crossCompile_win32(terminal: vscode.Terminal | undefined, thirdPartyPat
                         command: "mingw32-make",
                         arguments: [
                             `CC=\"${action.nativePath}/llvm/bin/clang.exe --target=${target}\"`,
+                            `LD=${action.nativePath}/llvm/bin/${ld}`,
                             `AR=${action.nativePath}/llvm/bin/llvm-ar.exe`,
-                            `RANDLIB=${action.nativePath}/llvm/bin/llvm-ranlib.exe`
+                            `AS=${action.nativePath}/llvm/bin/llvm-as.exe`,
+                            `RANDLIB=${action.nativePath}/llvm/bin/llvm-ranlib.exe`,
+                            `STRIP=${action.nativePath}/llvm/bin/llvm-strip.exe`
                         ]
                     });
                     commands.push({
@@ -321,10 +327,13 @@ function crossCompile_linux(terminal: vscode.Terminal | undefined, thirdPartyPat
                     });
                 } else if (action.compileTool === "make") {
                     let target: string;
+                    let ld: string;
                     if (action.ohArchitecture === "arm64-v8a") {
                         target = "aarch64-linux-ohos";
+                        ld = "ld64.lld";
                     } else {
                         target = "arm-linux-ohos";
+                        ld = "ld.lld";
                     }
                     commands.push({
                         command: `cd ${action.cwd}`,
@@ -340,8 +349,11 @@ function crossCompile_linux(terminal: vscode.Terminal | undefined, thirdPartyPat
                         command: "make",
                         arguments: [
                             `CC=\"${action.nativePath}/llvm/bin/clang --target=${target}\"`,
+                            `LD=${action.nativePath}/llvm/bin/${ld}`,
                             `AR=${action.nativePath}/llvm/bin/llvm-ar`,
-                            `RANDLIB=${action.nativePath}/llvm/bin/llvm-ranlib`
+                            `AS=${action.nativePath}/llvm/bin/llvm-as`,
+                            `RANDLIB=${action.nativePath}/llvm/bin/llvm-ranlib`,
+                            `STRIP=${action.nativePath}/llvm/bin/llvm-strip`
                         ]
                     });
                     commands.push({
@@ -349,6 +361,54 @@ function crossCompile_linux(terminal: vscode.Terminal | undefined, thirdPartyPat
                         arguments: [
                             `PREFIX=${action.installPath}`
                         ]
+                    });
+                } else if (action.compileTool === "configure") {
+                    let target: string;
+                    let ld: string;
+                    if (action.ohArchitecture === "arm64-v8a") {
+                        target = "aarch64-linux-ohos";
+                        ld = "ld64.lld";
+                    } else {
+                        target = "arm-linux-ohos";
+                        ld = "ld.lld";
+                    }
+                    commands.push({
+                        command: `cd ${action.cwd}`,
+                        arguments: []
+                    });
+                    if (ohArchitecture.length > 1) {
+                        commands.push({
+                            command: "make clean",
+                            arguments: []
+                        });
+                    }
+                    commands.push({
+                        command: "./configure",
+                        arguments: [
+                            `--host=${target}`,
+                            `--prefix=${action.installPath}`,
+
+                            //针对libcoap库的编译选项
+                            // `--disable-documentation`,
+                            // `--disable-dtls`,
+
+                            `CFLAGS=\"-pthread\"`,
+                            `LDFLAGS=\"-pthread\"`,
+                            `CC=\"${action.nativePath}/llvm/bin/clang --target=${target}\"`,
+                            `LD=${action.nativePath}/llvm/bin/${ld}`,
+                            `AR=${action.nativePath}/llvm/bin/llvm-ar`,
+                            `AS=${action.nativePath}/llvm/bin/llvm-as`,
+                            `RANDLIB=${action.nativePath}/llvm/bin/llvm-ranlib`,
+                            `STRIP=${action.nativePath}/llvm/bin/llvm-strip`
+                        ]
+                    });
+                    commands.push({
+                        command: "make",
+                        arguments: []
+                    });
+                    commands.push({
+                        command: "make install",
+                        arguments: []
                     });
                 }
                 action.commands = commands;
