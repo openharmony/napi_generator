@@ -437,6 +437,7 @@ export function parseFunctionOld(data: string) {
               name: paramName,
               type: paramType,
               arraySize: 0,
+              arraySizeList: []
           })
       }
       // Logger.getInstance().info(`ret: ${returnType} func: ${functionName} params:(${paramResList.map(ditem => {

@@ -255,35 +255,45 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
               name: node.name.text,
               alias: getParamType(node.type),
               members: [],
-              functions: []
+              functions: [],
+              types: [],
           };
-          node.type.members.forEach(member => {
-            // 处理属性
-            if (ts.isPropertySignature(member)) {
-              typeItem.members.push({
-                name: member.name.getText(sourceFile),
-                type: member.type?.getText(sourceFile) || "unknown",
-                arraySize: 0,
-                arraySizeList: []
-              });
-            }
-            // 处理方法
-            if (ts.isMethodSignature(member)) {
-              const parameters = member.parameters.map(param => ({
-                name: param.name.getText(sourceFile),
-                type: param.type?.getText(sourceFile) || "any",
-                arraySize: 0,
-                arraySizeList: []
-              }));
-      
-              typeItem.functions.push({
-                name: member.name.getText(sourceFile),
-                returns: member.type?.getText(sourceFile) || "void",
-                type: '',
-                parameters: parameters
-              });
-            }
-          });
+          if (node.type && node.type.members) {
+            node.type.members.forEach(member => {
+              // 处理属性
+              if (ts.isPropertySignature(member)) {
+                typeItem.members.push({
+                  name: member.name.getText(sourceFile),
+                  type: member.type?.getText(sourceFile) || "unknown",
+                  arraySize: 0,
+                  arraySizeList: []
+                });
+              }
+              // 处理方法
+              if (ts.isMethodSignature(member)) {
+                const parameters = member.parameters.map(param => ({
+                  name: param.name.getText(sourceFile),
+                  type: param.type?.getText(sourceFile) || "any",
+                  arraySize: 0,
+                  arraySizeList: []
+                }));
+        
+                typeItem.functions.push({
+                  name: member.name.getText(sourceFile),
+                  returns: member.type?.getText(sourceFile) || "void",
+                  type: '',
+                  parameters: parameters
+                });
+              }
+              
+            });
+          } else if (ts.isUnionTypeNode(node.type)) {
+            // 处理联合类型
+            node.type.types.forEach(typeNode => {
+              typeItem.types.push(typeNode.getText(sourceFile));
+            });
+          }
+          
           parseRes.types!.push(typeItem);
         } else if (ts.isFunctionDeclaration(node) && node.name) {
           Logger.getInstance().debug(`Type: ${node.name.text}`);
