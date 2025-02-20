@@ -26,7 +26,7 @@ suite('Parse_C_Func_Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
 
     //1, 测试 parseEnum 一般情况
-    test('parseFunction_test_1', () => {
+    test('parseFunction_c_test_1', () => {
         let testenum = `int add(int a,int b);`
         let funcObjList = parsec.parseFunction(testenum);
         assert.strictEqual(funcObjList.length, 1);
@@ -43,22 +43,7 @@ suite('Parse_C_Func_Suite', () => {
     });
 
     //2, 测试边界情况
-    test('parseFunction_test_2', () => {
-        // let paramstr = 'int a,test<int, int> alen, test<int, int> blen, test<int, int> clen, test<int, int> dlen';
-        // let paramreg = /(\w+<[^>]*>\s+\w+|\w+\s+\w+)/g;
-        // let match;
-        // let matches = [];
-
-        // while ((match = paramreg.exec(paramstr)) !== null) {
-        //     matches.push(match[0]);
-        // }
-
-        // let match: RegExpExecArray | null;
-        // let declarations: string[] = [];
-        // while ((match = paramreg.exec(paramstr)) != null) {
-        //     declarations.push(match[1]);
-        // };
-
+    test('parseFunction_c_test_2', () => {
         let testenum = `int add_T(int a,int b);`
         let funcObjList = parsec.parseFunction(testenum);
         assert.strictEqual(funcObjList.length, 1);
@@ -809,7 +794,7 @@ suite('Parse_C_Func_Suite', () => {
         assert.strictEqual(funcItem.parameters[0].type, 'wchar_t*');
     });
 
-    test('parseFunction_test_21', () => {
+    test('parseFunction_c_test_21', () => {
         let testenum = `std::function<int(int, int)> tfunc(int a);`
         let funcObjList = parsec.parseFunction(testenum);
         assert.strictEqual(funcObjList.length, 1);
@@ -835,7 +820,7 @@ suite('Parse_C_Func_Suite', () => {
     })
 
     //3, 测试异常情况
-    test('parseFunction_test_3', () => {
+    test('parseFunction_c_test_3', () => {
         let teststr: string = '';
         let funcObjList = parsec.parseFunction(teststr);
         assert.strictEqual(funcObjList.length, 0);
@@ -853,6 +838,7 @@ suite('Parse_C_Func_Suite', () => {
         assert.strictEqual(funcItem.parameters.length, 2);
         assert.strictEqual(funcItem.name, 'test');
         assert.strictEqual(funcItem.returns, 'void');
+        assert.strictEqual(funcItem.type, 'function');
         assert.strictEqual(funcItem.parameters[0].type, 'ENUM_1');
         assert.strictEqual(funcItem.parameters[1].type, 'ENUM_2');
 
@@ -863,6 +849,7 @@ suite('Parse_C_Func_Suite', () => {
         assert.strictEqual(funcItem.parameters.length, 2);
         assert.strictEqual(funcItem.name, 'test');
         assert.strictEqual(funcItem.returns, 'int');
+        assert.strictEqual(funcItem.type, 'function');
         assert.strictEqual(funcItem.parameters[0].type, 'ENUM_1');
         assert.strictEqual(funcItem.parameters[1].type, 'ENUM_2');
 
@@ -885,6 +872,20 @@ suite('Parse_C_Func_Suite', () => {
         funcItem = funcObjList[0];
         assert.strictEqual(funcItem.name, 'test');
         assert.strictEqual(funcItem.returns, 'typedef void');
+        assert.strictEqual(funcItem.type, 'typedef');
+        assert.strictEqual(funcItem.parameters.length, 2);
+        assert.strictEqual(funcItem.parameters[0].name, 'a');
+        assert.strictEqual(funcItem.parameters[0].type, 'int');
+        assert.strictEqual(funcItem.parameters[1].name, 'b');
+        assert.strictEqual(funcItem.parameters[1].type, 'float');
+
+        teststr = `typedef void (*test)(int a, float b);`
+        funcObjList = parsec.parseFunction(teststr);
+        assert.strictEqual(funcObjList.length, 1);
+        funcItem = funcObjList[0];
+        assert.strictEqual(funcItem.name, 'test');
+        assert.strictEqual(funcItem.returns, 'void');
+        assert.strictEqual(funcItem.type, 'typedef');
         assert.strictEqual(funcItem.parameters.length, 2);
         assert.strictEqual(funcItem.parameters[0].name, 'a');
         assert.strictEqual(funcItem.parameters[0].type, 'int');
@@ -893,7 +894,7 @@ suite('Parse_C_Func_Suite', () => {
     });
 
     //4, 测试错误情况
-    test('parseFunction_test_4', () => {
+    test('parseFunction_c_test_4', () => {
         let funcObjList = parsec.parseFunction('');
         assert.strictEqual(funcObjList.length, 0);
 

@@ -25,7 +25,7 @@ suite('Parse_Enum_C_Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
 
     //1, 测试 parseEnum 一般情况
-    test('parseEnum_test_1', () => {
+    test('parseEnum_c_test_1', () => {
         let testenum = `typedef enum {
             NEW,
             APPEND,
@@ -43,7 +43,7 @@ suite('Parse_Enum_C_Suite', () => {
     });
 
     //2, 测试边界情况
-    test('parseEnum_test_2', () => {
+    test('parseEnum_c_test_2', () => {
         let testenum = `typedef enum {
             NEW,
             APPEND,
@@ -173,7 +173,7 @@ suite('Parse_Enum_C_Suite', () => {
     });
 
     //3, 测试异常情况
-    test('parseEnum_test_3', () => {
+    test('parseEnum_c_test_3', () => {
         let teststr: string = '';
         let enumObjList = parsec.parseEnum(teststr);
         assert.strictEqual(enumObjList.length, 0);
@@ -229,7 +229,7 @@ suite('Parse_Enum_C_Suite', () => {
     });
 
     //4, 测试错误情况
-    test('parseEnum_test_4', () => {
+    test('parseEnum_c_test_4', () => {
         let enumObjList = parsec.parseEnum('');
         assert.strictEqual(enumObjList.length, 0);
 

@@ -25,7 +25,7 @@ suite('Parse_Class_C_Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
 
     //1, 测试 parseClass 一般情况
-    test('parseClass_test_1', () => {
+    test('parseClass_c_test_1', () => {
         let testclass = `typedef class OTC {
             private:
                 int len;
@@ -59,7 +59,7 @@ suite('Parse_Class_C_Suite', () => {
     });
 
     //2, 测试边界情况
-    test('parseClass_test_2', () => {
+    test('parseClass_c_test_2', () => {
         let testclass = `typedef class testa {
         private:
             short snum;
@@ -363,7 +363,7 @@ suite('Parse_Class_C_Suite', () => {
     });
 
     //3, 测试异常情况
-    test('parseClass_test_3', () => {
+    test('parseClass_c_test_3', () => {
         let teststr: string = '';
         let classObjList = parsec.parseClass(teststr);
         assert.strictEqual(classObjList.length, 0);
@@ -418,7 +418,7 @@ suite('Parse_Class_C_Suite', () => {
     });
 
     //4, 测试错误情况
-    test('parseClass_test_4', () => {
+    test('parseClass_c_test_4', () => {
         let classObjList = parsec.parseClass('');
         assert.strictEqual(classObjList.length, 0);
 
