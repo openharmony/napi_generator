@@ -25,7 +25,7 @@ suite('Parse_C_Struct_Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
 
     //1, 测试 parseStruct 一般情况
-    test('parseStruct_test_1', () => {
+    test('parseStruct_c_test_1', () => {
         let testenum = `typedef struct {
             int a;
             char b;
@@ -55,7 +55,7 @@ suite('Parse_C_Struct_Suite', () => {
     });
 
     //2, 测试边界情况
-    test('parseStruct_test_2', () => {
+    test('parseStruct_c_test_2', () => {
         let testenum = `typedef struct optype {
             int len;
             float width;
@@ -419,7 +419,7 @@ suite('Parse_C_Struct_Suite', () => {
     });
 
     //3, 测试异常情况
-    test('parseStruct_test_3', () => {
+    test('parseStruct_c_test_3', () => {
         let teststr: string = '';
         let structObjList = parsec.parseStruct(teststr);
         assert.strictEqual(structObjList.length, 0);
@@ -486,7 +486,7 @@ suite('Parse_C_Struct_Suite', () => {
     });
 
     // //4, 测试错误情况
-    test('parseStruct_test_4', () => {
+    test('parseStruct_c_test_4', () => {
         let structObjList = parsec.parseStruct('');
         assert.strictEqual(structObjList.length, 0);
 
