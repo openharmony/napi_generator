@@ -26,7 +26,7 @@ suite('Parse_C_Union_Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
 
     //1, 测试 parseUnion 一般情况
-    test('parseUnion_test_1', () => {
+    test('parseUnion_c_test_1', () => {
         let testenum = `typedef union {
             int len;
             float width;
@@ -48,7 +48,7 @@ suite('Parse_C_Union_Suite', () => {
     });
 
     //2, 测试边界情况
-    test('parseUnion_test_2', () => {
+    test('parseUnion_c_test_2', () => {
         let testenum = `typedef union optype {
             int len;
             float width;
@@ -356,7 +356,7 @@ suite('Parse_C_Union_Suite', () => {
     });
 
     //3, 测试异常情况
-    test('parseUnion_test_3', () => {
+    test('parseUnion_c_test_3', () => {
         let teststr: string = '';
         let unionObjList = parsec.parseUnion(teststr);
         assert.strictEqual(unionObjList.length, 0);
@@ -424,7 +424,7 @@ suite('Parse_C_Union_Suite', () => {
     });
 
     // //4, 测试错误情况
-    test('parseUnion_test_4', () => {
+    test('parseUnion_c_test_4', () => {
         let unionObjList = parsec.parseUnion('');
         assert.strictEqual(unionObjList.length, 0);
 
