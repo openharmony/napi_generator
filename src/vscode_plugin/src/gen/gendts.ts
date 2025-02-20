@@ -309,7 +309,7 @@ export function getInterfaceBody(testType: string, interfaceList: InterfaceList[
 // h2dts
 export function transTskey2Ckey(key: string): string {
   // 判断是否是std::function, 转换为箭头函数 如：std::function<void(int, int)> 转换为 (a: number, b: number)=>void
-  const regexFunction = /\b(std::)?function<([\w\s\:\*]+)\s?\(([\w\:\<\>\,\s*]*)\)>/;
+  const regexFunction = /\b(std::)?function<([\w\s\:\*]+)\s*\(([\w\:\<\>\,\s*]*)\)>/;
   const matchFunction = key.match(regexFunction);
   if (matchFunction) {
     const returnType = matchFunction[2].trim(); // 返回类型
@@ -331,7 +331,7 @@ export function transTskey2Ckey(key: string): string {
   }
 
   // 智能指针,例如： std::unique_ptr<int> -> number
-  const regexSmartPtr =/\b((std::)?(?:unique_ptr|shared_ptr|weak_ptr))\s*<([^>]*)>/;
+  const regexSmartPtr = /\b((std::)?(?:unique_ptr|shared_ptr|weak_ptr))\s*<([\w\:\<\>\,\s*]+)>/;
   const matchSmartPtr = key.match(regexSmartPtr);
   if (matchSmartPtr) {
     return transTskey2Ckey(matchSmartPtr[3].trim());
