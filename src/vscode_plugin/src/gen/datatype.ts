@@ -69,7 +69,8 @@ export interface FuncObj {
 export interface TypeObj {
   name: string,
   alias: string,
-  members: ParamObj[]
+  members: ParamObj[],
+  functions: FuncObj[]
 }
 
 export interface ParseObj {
