@@ -3247,7 +3247,7 @@ suite('Gendts_unions_Suite', () => {
     assert.strictEqual(resStr, 'export type TEST_ENUM = number | string | any | any | any | any ;\n\nexport type TEST_ENUM_T = TEST_ENUM;\n\n');
   });
 
-  //3, 测试异常情况export type OperationType = number ;\n\n
+  //3, 测试异常情况
   test('getDtsUnions_test_3', () => {
     // 1.没有parseObj.unions属性
     let rootInfo: GenInfo = {
