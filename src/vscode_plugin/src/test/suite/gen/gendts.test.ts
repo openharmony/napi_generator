@@ -113,17 +113,13 @@ suite('Gendts_transTskey2Ckey_Suite', () => {
   });
 
   //2, 测试边界情况
-  test('transTskey2Ckey_test_2', () => {
+  test('transTskey2Ckey_test_3', () => {
     let resStr = genDts.transTskey2Ckey('std::string');
     assert.strictEqual(resStr, 'string');
     resStr = genDts.transTskey2Ckey('std::vector<std::string>');
     assert.strictEqual(resStr, 'Array<string>');
     resStr = genDts.transTskey2Ckey('char *');
     assert.strictEqual(resStr, 'string');
-    resStr = genDts.transTskey2Ckey('');
-    assert.strictEqual(resStr, '');
-    resStr = genDts.transTskey2Ckey('char   *');
-    assert.strictEqual(resStr, resStr);
     resStr = genDts.transTskey2Ckey('long long');
     assert.strictEqual(resStr, 'number');
     resStr = genDts.transTskey2Ckey('unsigned short');
@@ -142,10 +138,609 @@ suite('Gendts_transTskey2Ckey_Suite', () => {
     assert.strictEqual(resStr, 'Array<number>');
     resStr = genDts.transTskey2Ckey('int *');
     assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::vector<int *>');
+    assert.strictEqual(resStr, 'Array<number>');
+    //std::vector<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::vector<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::vector<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::vector<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::vector<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::vector<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::vector<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::vector<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    //std::array
+    resStr = genDts.transTskey2Ckey('std::array<std::string, 10>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::array<char *, 10>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::array<long long, 10>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::array<unsigned short, 10>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::array<unsigned long, 10>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::array<unsigned long long, 10>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::array<int *, 10>');
+    assert.strictEqual(resStr, 'Array<number>');
+    //std::array<T, int>::iterator
+    resStr = genDts.transTskey2Ckey('std::array<std::string, 10>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::array<char *, 10>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::array<long long, 10>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::array<unsigned short, 10>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::array<unsigned long, 10>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::array<unsigned long long, 10>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::array<int *, 10>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    //std::deque
+    resStr = genDts.transTskey2Ckey('std::deque<std::string>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::deque<char *>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::deque<long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::deque<unsigned short>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::deque<unsigned long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::deque<unsigned long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::deque<int *>');
+    assert.strictEqual(resStr, 'Array<number>');
+    //std::deque<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::deque<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::deque<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::deque<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::deque<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::deque<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::deque<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::deque<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    //std::list
+    resStr = genDts.transTskey2Ckey('std::list<std::string>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::list<char *>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::list<long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::list<unsigned short>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::list<unsigned long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::list<unsigned long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::list<int *>');
+    assert.strictEqual(resStr, 'Array<number>');
+    //std::list<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::list<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::list<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::list<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::list<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::list<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::list<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::list<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    //std::forward_list
+    resStr = genDts.transTskey2Ckey('std::forward_list<std::string>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<char *>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<unsigned short>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<unsigned long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<unsigned long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<int *>');
+    assert.strictEqual(resStr, 'Array<number>');
+    //std::forward_list<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::forward_list<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::forward_list<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    //std::stack
+    resStr = genDts.transTskey2Ckey('std::stack<std::string>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::stack<char *>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::stack<long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::stack<unsigned short>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::stack<unsigned long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::stack<unsigned long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::stack<int *>');
+    assert.strictEqual(resStr, 'Array<number>');
+    //std::stack<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::stack<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::stack<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::stack<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::stack<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::stack<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::stack<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::stack<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    //std::queue
+    resStr = genDts.transTskey2Ckey('std::queue<std::string>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::queue<char *>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::queue<long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::queue<unsigned short>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::queue<unsigned long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::queue<unsigned long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::queue<int *>');
+    assert.strictEqual(resStr, 'Array<number>');
+    //std::queue<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::queue<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::queue<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::queue<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::queue<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::queue<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::queue<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::queue<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    //std::valarray
+    resStr = genDts.transTskey2Ckey('std::valarray<std::string>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::valarray<char *>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::valarray<long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::valarray<unsigned short>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::valarray<unsigned long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::valarray<unsigned long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::valarray<int *>');
+    assert.strictEqual(resStr, 'Array<number>');
+    //std::valarray<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::valarray<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::valarray<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::valarray<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::valarray<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::valarray<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::valarray<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::valarray<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    //std::priority_queue
+    resStr = genDts.transTskey2Ckey('std::priority_queue<std::string>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<char *>');
+    assert.strictEqual(resStr, 'Array<string>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<unsigned short>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<unsigned long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<unsigned long long>');
+    assert.strictEqual(resStr, 'Array<number>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<int *>');
+    assert.strictEqual(resStr, 'Array<number>');
+    //std::priority_queue<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::priority_queue<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<string>>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    resStr = genDts.transTskey2Ckey('std::priority_queue<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Array<number>>');
+    //std::map
+    resStr = genDts.transTskey2Ckey('std::map<std::string, int>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::map<charb *, size_t>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::map<std::string, long long>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::map<char *, int *>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::map<char *, unsigned long long>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::map<std::string, unsigned short>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::map<int *, std::string>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    resStr = genDts.transTskey2Ckey('std::map<double, char *>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    resStr = genDts.transTskey2Ckey('std::map<int *, char>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    //std::map<T1,T2>::iterator
+    resStr = genDts.transTskey2Ckey('std::map<std::string, int>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::map<charb *, size_t>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::map<std::string, long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::map<char *, int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::map<char *, unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::map<std::string, unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::map<int *, std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    resStr = genDts.transTskey2Ckey('std::map<double, char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    resStr = genDts.transTskey2Ckey('std::map<int *, char>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    //std::unordered_map
+    resStr = genDts.transTskey2Ckey('std::unordered_map<std::string, int>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<charb *, size_t>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<std::string, long long>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<char *, int *>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<char *, unsigned long long>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<std::string, unsigned short>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<int *, std::string>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<double, char *>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<int *, char>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    //std::unordered_map<T1,T2>::iterator
+    resStr = genDts.transTskey2Ckey('std::unordered_map<std::string, int>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<charb *, size_t>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<std::string, long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<char *, int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<char *, unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<std::string, unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<int *, std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<double, char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_map<int *, char>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    //std::multimap
+    resStr = genDts.transTskey2Ckey('std::multimap<std::string, int>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::multimap<charb *, size_t>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::multimap<std::string, long long>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::multimap<char *, int *>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::multimap<char *, unsigned long long>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::multimap<std::string, unsigned short>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::multimap<int *, std::string>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    resStr = genDts.transTskey2Ckey('std::multimap<double, char *>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    resStr = genDts.transTskey2Ckey('std::multimap<int *, char>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    //std::multimap<T1,T2>::iterator
+    resStr = genDts.transTskey2Ckey('std::multimap<std::string, int>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::multimap<charb *, size_t>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::multimap<std::string, long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::multimap<char *, int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::multimap<char *, unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::multimap<std::string, unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::multimap<int *, std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    resStr = genDts.transTskey2Ckey('std::multimap<double, char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    resStr = genDts.transTskey2Ckey('std::multimap<int *, char>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    //std::unordered_multimap
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<std::string, int>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<charb *, size_t>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<std::string, long long>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<char *, int *>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<char *, unsigned long long>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<std::string, unsigned short>');
+    assert.strictEqual(resStr, 'Map<string, number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<int *, std::string>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<double, char *>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<int *, char>');
+    assert.strictEqual(resStr, 'Map<number, string>');
+    //std::unordered_multimap<T1,T2>::iterator
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<std::string, int>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<charb *, size_t>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<std::string, long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<char *, int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<char *, unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<std::string, unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<string, number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<int *, std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<double, char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multimap<int *, char>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Map<number, string>>');
+    //std::set
+    resStr = genDts.transTskey2Ckey('std::set<std::string>');
+    assert.strictEqual(resStr, 'Set<string>');
+    resStr = genDts.transTskey2Ckey('std::set<char *>');
+    assert.strictEqual(resStr, 'Set<string>');
+    resStr = genDts.transTskey2Ckey('std::set<long long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::set<unsigned short>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::set<unsigned long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::set<unsigned long long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::set<int *>');
+    assert.strictEqual(resStr, 'Set<number>');
+    //std::set<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::set<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<string>>');
+    resStr = genDts.transTskey2Ckey('std::set<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<string>>');
+    resStr = genDts.transTskey2Ckey('std::set<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::set<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::set<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::set<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::set<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    //std::unordered_set
+    resStr = genDts.transTskey2Ckey('std::unordered_set<std::string>');
+    assert.strictEqual(resStr, 'Set<string>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<char *>');
+    assert.strictEqual(resStr, 'Set<string>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<long long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<unsigned short>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<unsigned long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<unsigned long long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<int *>');
+    assert.strictEqual(resStr, 'Set<number>');
+    //std::unordered_set<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::unordered_set<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<string>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<string>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_set<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    //std::multiset
+    resStr = genDts.transTskey2Ckey('std::multiset<std::string>');
+    assert.strictEqual(resStr, 'Set<string>');
+    resStr = genDts.transTskey2Ckey('std::multiset<char *>');
+    assert.strictEqual(resStr, 'Set<string>');
+    resStr = genDts.transTskey2Ckey('std::multiset<long long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::multiset<unsigned short>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::multiset<unsigned long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::multiset<unsigned long long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::multiset<int *>');
+    assert.strictEqual(resStr, 'Set<number>');
+    //std::multiset<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::multiset<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<string>>');
+    resStr = genDts.transTskey2Ckey('std::multiset<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<string>>');
+    resStr = genDts.transTskey2Ckey('std::multiset<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::multiset<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::multiset<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::multiset<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::multiset<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    //std::unordered_multiset
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<std::string>');
+    assert.strictEqual(resStr, 'Set<string>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<char *>');
+    assert.strictEqual(resStr, 'Set<string>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<long long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<unsigned short>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<unsigned long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<unsigned long long>');
+    assert.strictEqual(resStr, 'Set<number>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<int *>');
+    assert.strictEqual(resStr, 'Set<number>');
+    //std::unordered_multiset<T>::iterator
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<std::string>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<string>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<char *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<string>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<unsigned short>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<unsigned long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<unsigned long long>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    resStr = genDts.transTskey2Ckey('std::unordered_multiset<int *>::iterator');
+    assert.strictEqual(resStr, 'IterableIterator<Set<number>>');
+    //std::tuple
+    resStr = genDts.transTskey2Ckey('std::tuple<int16_t, bool,  int64_t, std::string, int32_t, char *, int *>');
+    assert.strictEqual(resStr, '[number, boolean, number, string, number, string, number]');
+    //std::pair
+    resStr = genDts.transTskey2Ckey('std::pair<int16_t, bool,  int64_t, std::string, int32_t, char *, int *>');
+    assert.strictEqual(resStr, '[number, boolean, number, string, number, string, number]');
+    //std::complex
+    resStr = genDts.transTskey2Ckey('std::complex<long long, int *>');
+    assert.strictEqual(resStr, '{real: number, imag: number}');
+    resStr = genDts.transTskey2Ckey('std::complex<unsigned short, unsigned long>');
+    assert.strictEqual(resStr, '{real: number, imag: number}');
+    resStr = genDts.transTskey2Ckey('std::complex<int64_t, unsigned long long>');
+    assert.strictEqual(resStr, '{real: number, imag: number}');
+    //Date
+    resStr = genDts.transTskey2Ckey('std::chrono::hours');
+    assert.strictEqual(resStr, 'Date');
+    resStr = genDts.transTskey2Ckey('std::chrono::minutes');
+    assert.strictEqual(resStr, 'Date');
+    //std::function
+    resStr = genDts.transTskey2Ckey('std::function<std::string(char *)>');
+    assert.strictEqual(resStr, '(param0: string)=>string');
+    resStr = genDts.transTskey2Ckey('std::function<unsigned short(long long, unsigned long)>');
+    assert.strictEqual(resStr, '(param0: number, param1: number)=>number');
+    resStr = genDts.transTskey2Ckey('std::function<void(int *, unsigned long long)>');
+    assert.strictEqual(resStr, '(param0: number, param1: number)=>void');
+    //std::unique_ptr
+    resStr = genDts.transTskey2Ckey('std::unique_ptr<std::string>');
+    assert.strictEqual(resStr, 'string');
+    resStr = genDts.transTskey2Ckey('std::unique_ptr<char *>');
+    assert.strictEqual(resStr, 'string');
+    resStr = genDts.transTskey2Ckey('std::unique_ptr<long long>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::unique_ptr<unsigned short>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::unique_ptr<unsigned long>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::unique_ptr<unsigned long long>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::unique_ptr<int *>');
+    assert.strictEqual(resStr, 'number');
+    //std::shared_ptr
+    resStr = genDts.transTskey2Ckey('std::shared_ptr<std::string>');
+    assert.strictEqual(resStr, 'string');
+    resStr = genDts.transTskey2Ckey('std::shared_ptr<char *>');
+    assert.strictEqual(resStr, 'string');
+    resStr = genDts.transTskey2Ckey('std::shared_ptr<long long>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::shared_ptr<unsigned short>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::shared_ptr<unsigned long>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::shared_ptr<unsigned long long>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::shared_ptr<int *>');
+    assert.strictEqual(resStr, 'number');
+    //std::weak_ptr
+    resStr = genDts.transTskey2Ckey('std::weak_ptr<std::string>');
+    assert.strictEqual(resStr, 'string');
+    resStr = genDts.transTskey2Ckey('std::weak_ptr<char *>');
+    assert.strictEqual(resStr, 'string');
+    resStr = genDts.transTskey2Ckey('std::weak_ptr<long long>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::weak_ptr<unsigned short>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::weak_ptr<unsigned long>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::weak_ptr<unsigned long long>');
+    assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('std::weak_ptr<int *>');
+    assert.strictEqual(resStr, 'number');
   });
 
   //3, 测试异常情况
-  test('transTskey2Ckey_test_3', () => {
+  test('transTskey2Ckey_test_4', () => {
     let resStr = genDts.transTskey2Ckey('');
     assert.strictEqual(resStr, '');
     resStr = genDts.transTskey2Ckey('int$#');
@@ -153,7 +748,7 @@ suite('Gendts_transTskey2Ckey_Suite', () => {
   });
 
   //4, 测试错误情况
-  test('transTskey2Ckey_test_4', () => {
+  test('transTskey2Ckey_test_5', () => {
     let res = true;
     try {
       genDts.transTskey2Ckey(null);
@@ -197,6 +792,31 @@ suite('Gendts_enums_Suite', () => {
     }
     let resStr = genDts.getDtsEnum(rootInfo);
     assert.strictEqual(resStr, 'export enum EnumObj {\n\tENUM_ONE,\n\tENUM_TWO,\n};\n\n');
+    
+    enums = [
+      {
+        name: 'OperationType',
+        alias: 'OperationType',
+        members: [
+          'NEW',
+          'APPEND',
+          'REPLACE'
+        ]
+      }
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: enums,
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    }
+    resStr = genDts.getDtsEnum(rootInfo);
+    assert.strictEqual(resStr, 'export enum OperationType {\n\tNEW,\n\tAPPEND,\n\tREPLACE,\n};\n\n');
   });
 
   //2, 测试边界情况
@@ -215,6 +835,153 @@ suite('Gendts_enums_Suite', () => {
     }
     let resStr = genDts.getDtsEnum(rootInfo);
     assert.strictEqual(resStr, '');
+
+    enums = [
+      {
+        name: 'OperationType',
+        alias: 'OperationType',
+        members: [
+          'NEW'
+        ],
+      }
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: enums,
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    }
+    resStr = genDts.getDtsEnum(rootInfo);
+    assert.strictEqual(resStr, 'export enum OperationType {\n\tNEW,\n};\n\n');
+
+    enums = [
+      {
+        name: 'OType',
+        alias: 'OperationType',
+        members: [
+          'NEW'
+        ]
+      }
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: enums,
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    }
+    resStr = genDts.getDtsEnum(rootInfo);
+    assert.strictEqual(resStr, 'export enum OType {\n\tNEW,\n};\n\nexport type OperationType = OType;\n\n');
+    
+    enums = [
+      {
+        name: 'OType',
+        alias: '',
+        members: [
+          'NEW'
+        ]
+      }
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: enums,
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    }
+    resStr = genDts.getDtsEnum(rootInfo);
+    assert.strictEqual(resStr, 'export enum OType {\n\tNEW,\n};\n\n');
+
+    enums = [
+      {
+        name: 'OType',
+        alias: '',
+        members: [
+          'NEW'
+        ]
+      },
+      {
+        name: 'TOTSize1',
+        alias: '',
+        members: [
+          'DTS'
+        ]
+      }
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: enums,
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    }
+    resStr = genDts.getDtsEnum(rootInfo);
+    assert.strictEqual(resStr, 'export enum OType {\n\tNEW,\n};\n\nexport enum TOTSize1 {\n\tDTS,\n};\n\n');
+    
+    enums = [
+      {
+        name: 'TEST_ENUM',
+        alias: '',
+        members: [
+          'ENUM_1 = 1',
+          'ENUM_2 = 2'
+        ]
+      }
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: enums,
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    }
+    resStr = genDts.getDtsEnum(rootInfo);
+    assert.strictEqual(resStr, 'export enum TEST_ENUM {\n\tENUM_1 = 1,\n\tENUM_2 = 2,\n};\n\n');
+
+    enums = [
+      {
+        name: 'TEST_ENUM',
+        alias: '',
+        members: [
+          'ENUM_1',
+          'ENUM_2'
+        ]
+      }
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: enums,
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    }
+    resStr = genDts.getDtsEnum(rootInfo);
+    assert.strictEqual(resStr, 'export enum TEST_ENUM {\n\tENUM_1,\n\tENUM_2,\n};\n\n');
   });
 
   //3, 测试异常情况
@@ -259,6 +1026,50 @@ suite('Gendts_enums_Suite', () => {
       res2 = false;
     }
     assert.strictEqual(res2, false);
+    //3.enums的name为空
+    enums = [
+      {
+        name: '',
+        alias: '',
+        members: [
+          'ENUM_1'
+        ]
+      }
+    ];
+    let rootInfo3: GenInfo = {
+      parseObj: {
+        enums: enums,
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    }
+    let res3 = genDts.getDtsEnum(rootInfo3);
+    assert.strictEqual(res3, 'export enum  {\n\tENUM_1,\n};\n\n');
+    //3.enums的name为空
+    enums = [
+      {
+        name: '',
+        alias: '',
+        members: []
+      }
+    ];
+    let rootInfo4: GenInfo = {
+      parseObj: {
+        enums: enums,
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    }
+    let res4 = genDts.getDtsEnum(rootInfo4);
+    assert.strictEqual(res4, 'export enum  {\n};\n\n');
   });
 
   //4, 测试错误情况
@@ -291,11 +1102,13 @@ suite('Gendts_unions_Suite', () => {
           type: 'int',
           name: 'v1',
           arraySize: -1,
+          arraySizeList: []
         },
         {
           type: 'double',
           name: 'v2',
           arraySize: -1,
+          arraySizeList: []
         }
       ],
     },
@@ -315,12 +1128,53 @@ suite('Gendts_unions_Suite', () => {
     };
     let resStr = genDts.getDtsUnions(rootInfo);
     assert.strictEqual(resStr, 'export type UnionObj = number | number ;\n\n');
+
+    let unions1: UnionObj[] = [
+      {
+        name: 'OperationType',
+        alias: 'OperationType',
+        members: [
+          {
+            type: 'int',
+            name: 'len',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'float',
+            name: 'width',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'char',
+            name: 'name',
+            arraySize: 20,
+            arraySizeList: [20]
+          }
+        ]
+      }
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions1,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type OperationType = number | number | string ;\n\n');
+
   });
 
   // 2, 测试边界情况 
   test('getDtsUnions_test_2', () => {
     // unions是空
-    let rootInfo = {
+    let rootInfo: GenInfo = {
       parseObj: {
         enums: [],
         unions: [],
@@ -333,9 +1187,441 @@ suite('Gendts_unions_Suite', () => {
     };
     let resStr = genDts.getDtsUnions(rootInfo);
     assert.strictEqual(resStr, '');
+
+    let unions1: UnionObj[] = [
+      {
+        name: 'OperationType',
+        alias: 'OperationType',
+        members: [
+          {
+            type: 'int',
+            name: 'len',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'float',
+            name: 'width',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'char',
+            name: 'name',
+            arraySize: 20,
+            arraySizeList: [20, 10]
+          }
+        ]
+      }
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions1,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type OperationType = number | number | string ;\n\n');
+
+    unions1 = [
+      {
+        name: 'optype',
+        alias: 'OperationType',
+        members: [
+          {
+            type: 'int',
+            name: 'len',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'float',
+            name: 'width',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'char',
+            name: 'name',
+            arraySize: 20,
+            arraySizeList: [20, 10]
+          }
+        ]
+      }
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions1,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type optype = number | number | string ;\n\nexport type OperationType = optype;\n\n');
+
+    unions1 = [
+      {
+        name: 'OperationType',
+        alias: 'OperationType',
+        members: [
+          {
+            type: 'char',
+            name: 'ch',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'int',
+            name: 'len',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'short',
+            name: 'slen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'long long',
+            name: 'llint',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'float',
+            name: 'width',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'double',
+            name: 'dlen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'long double',
+            name: 'ldlen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'void*',
+            name: 'ptr',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'char',
+            name: 'name',
+            arraySize: 20,
+            arraySizeList: [20, 10]
+          },
+          {
+            type: 'char',
+            name: 'ch3',
+            arraySize: 10,
+            arraySizeList: [10, 20, 30]
+          },
+          {
+            type: 'long long',
+            name: 'llint3',
+            arraySize: 10,
+            arraySizeList: [10, 20, 30]
+          },
+          {
+            type: 'float',
+            name: 'width3',
+            arraySize: 10,
+            arraySizeList: [10, 20, 30]
+          },
+          {
+            type: 'double',
+            name: 'dlens',
+            arraySize: 10,
+            arraySizeList: [10, 20, 30]
+          },
+          {
+            type: 'long double',
+            name: 'ldlen3',
+            arraySize: 10,
+            arraySizeList: [10, 20, 30]
+          },
+          {
+            type: 'void*',
+            name: 'ptr3',
+            arraySize: 10,
+            arraySizeList: [10, 20, 30]
+          },
+          {
+            type: 'signed char',
+            name: 'sch',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'signed int',
+            name: 'silen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'signed short',
+            name: 'slen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'signed long',
+            name: 'sllen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'signed long long',
+            name: 'sllint',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'signed float',
+            name: 'swidth',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'signed double',
+            name: 'sdlen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'signed void*',
+            name: 'ptr',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'unsigned char',
+            name: 'uch',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'unsigned int',
+            name: 'ulen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'unsigned short',
+            name: 'uslen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'unsigned long',
+            name: 'ullen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'unsigned long long',
+            name: 'ullint',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'unsigned float',
+            name: 'uwidth',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'unsigned double',
+            name: 'udlen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'unsigned long double',
+            name: 'uld',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'unsigned void*',
+            name: 'uptr',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'bool bflag',
+            name: 'uptr',
+            arraySize: -1,
+            arraySizeList: []
+          },
+        ]
+      }
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions1,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type OperationType = string | number | number | number | number | number | number | void | string | string | number | number | number | number | void | string | number | number | number | number | number | number | void | string | number | number | number | number | number | number | number | number | boolean ;\n\n');
+  
+    unions1 = [
+      {
+        name: 'OType',
+        alias: '',
+        members: [
+          {
+            type: 'int',
+            name: 'len',
+            arraySize: -1,
+            arraySizeList: []
+          }
+        ]
+      },
+      {
+        name: 'TOTSize1',
+        alias: '',
+        members:[
+          {
+            type: 'int',
+            name: 'len',
+            arraySize: -1,
+            arraySizeList: []
+          }
+        ]
+      }
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions1,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type OType = number ;\n\nexport type TOTSize1 = number ;\n\n');
+  
+    unions1 = [
+      {
+        name: 'TEST_ENUM',
+        alias: '',
+        members: [
+          {
+            type: 'int',
+            name: 'len',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'char',
+            name: 'name',
+            arraySize: 10,
+            arraySizeList: [10]
+          }
+        ]
+      }
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions1,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type TEST_ENUM = number | string ;\n\n');
+
+    unions1 = [
+      {
+        name: 'TEST_ENUM',
+        alias: 'TEST_ENUM_T',
+        members: [
+          {
+            type: 'int',
+            name: 'len',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'char',
+            name: 'name',
+            arraySize: 10,
+            arraySizeList: [10]
+          },
+          {
+            type: 'ENUM_T',
+            name: 'tenum',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'CLASS_T',
+            name: 'tclass',
+            arraySize: -1,
+            arraySizeList:[]
+          },
+          {
+            type: 'STRUCT_T',
+            name: 'tstruct',
+            arraySize: -1,
+            arraySizeList:[]
+          },
+          {
+            type: 'UNION_T',
+            name: 'tunion',
+            arraySize: -1,
+            arraySizeList:[]
+          }
+        ]
+      }
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions1,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type TEST_ENUM = number | string | any | any | any | any ;\n\nexport type TEST_ENUM_T = TEST_ENUM;\n\n');
   });
 
-  //3, 测试异常情况
+  //3, 测试异常情况export type OperationType = number ;\n\n
   test('getDtsUnions_test_3', () => {
     // 1.没有parseObj.unions属性
     let rootInfo: GenInfo = {
