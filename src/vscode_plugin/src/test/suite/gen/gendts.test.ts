@@ -2371,6 +2371,12 @@ suite('Gendts_transTskey2Ckey_Suite', () => {
     assert.strictEqual(resStr, '');
     resStr = genDts.transTskey2Ckey('int$#');
     assert.strictEqual(resStr, 'number');
+    resStr = genDts.transTskey2Ckey('MyType');
+    assert.strictEqual(resStr, 'any');
+    resStr = genDts.transTskey2Ckey('defined type');
+    assert.strictEqual(resStr, 'any');
+    resStr = genDts.transTskey2Ckey('std::weak_ptr<');
+    assert.strictEqual(resStr, 'any');
   });
 
   //4, 测试错误情况
