@@ -338,7 +338,7 @@ export function transTskey2Ckey(key: string): string {
   }
 
   // 判断迭代器： 如std::vector<int>::iterator  ->  IterableIterator<Array<number>>
-  const regexIterator = /(std::\w+<[^>]+>)::iterator/;
+  const regexIterator = /(std::(string|(\w+<[^>]+>)))::iterator/;
   const matchIterator = key.match(regexIterator);
   if (matchIterator) {
     return 'IterableIterator<' + transTskey2Ckey(matchIterator[1].trim()) + '>';
@@ -392,7 +392,7 @@ export function transTskey2Ckey(key: string): string {
   }
 
   // 判断日期类型: std::time_t /std::clock_t /std::tm 转换为ts的Date类型
-  const regexDate = /\b((std::)?(?:time_t|clock_t|tm))\b/;
+  const regexDate = /\b((std::)?(?:time_t|clock_t|tm|(?:chrono::(time_point|duration|system_clock|steady_clock|high_resolution_clock|hours|minutes|seconds|milliseconds|microseconds|nanoseconds))))\b/;
   const matchDate = key.match(regexDate);
   if (matchDate) {
     return 'Date';
