@@ -37,6 +37,7 @@ export interface EnumObj {
   name: string;
   alias: string;
   members: string[];
+  values?: string[];
 }
 
 export interface UnionObj {
