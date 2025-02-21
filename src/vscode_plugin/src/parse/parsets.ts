@@ -237,14 +237,39 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
                   name: node.name.text,
                   alias: '',
                   members: [],
+                  values: [],
               };
               // Logger.getInstance().debug(`Enum: ${node.name.text}, ${node.members.length}`);
               node.members.forEach(member => {
                   const memJsonStr = JSON.stringify(member.name);
                   const memJsonObj = JSON.parse(memJsonStr);
                   // Logger.getInstance().debug(`Member: ${memJsonObj.escapedText}`)
-                  enumItem.members.push(memJsonObj.escapedText);
+                  if (ts.isEnumMember(member)) {
+                    if (ts.isIdentifier(member.name)) {
+                      enumItem.members.push(member.name.getText(sourceFile));
+                    }
+                  }
+                  // enumItem.members.push(memJsonObj.escapedText);
+
+                  let valueText = "";
+                  let computedValue: number | undefined;
+                  // 提取初始化表达式
+                  if (member.initializer) {
+                    valueText = member.initializer.getText(sourceFile);
+                    if (ts.isCallExpression(member.initializer)) {
+                      valueText = member.initializer.expression.getText(sourceFile);
+                    }
+                    // 编译时计算表达式值（仅限常量表达式）
+                    const checker = (sourceFile as any).symbol?.parent?.checker;
+                    if (checker) {
+                        const type = checker.getTypeAtLocation(member.initializer);
+                        computedValue = type.isNumberLiteral() ? type.value : undefined;
+                    }
+                    enumItem.values?.push(valueText);
+                  }
               })
+
+              
               parseRes.enums.push(enumItem);
           } catch (error) {
               Logger.getInstance().error('Error processing node:' + error);
