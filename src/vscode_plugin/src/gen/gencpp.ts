@@ -249,26 +249,11 @@ export function transCkey2NapiOutkey(key: string) {
     key = key.replace(rkey, '').trim();
   }
   // 其他的全部当作object处理, 如typeDef/enum/struct/union/class等,当作objectOut处理，返回objectRet
-  // return key;
   return objectRet;
 }
 
 // 通过类型值映射模板，比如：uint32_t输入 -> uint32tIn -> napi_get_value_uint32
 export function transCkey2NapiInkey(key: string) {
-
-  // std::数组
-  // napi_get_array_length
-  // std::map  这个当object处理，不管
-  // std::set 怎么处理？？？ 当作object处理，不管
-  // 迭代器 iterator如何处理？？？ 当作object处理，不管
-  // std::function如何处理？？？ callbackIn
-  // 数组和map之类的东西是全部生成出来还是当作object
-
-  // 这里要做一个判断，用于确定类型是基本类型还是object ?
-  // 数组 map set iterator tuple pair
-
-  // 指针类型的咋整？ 不管？ 直接替换？
-
   for (const keyItem of h2napi_in_key) {
     for (const str of keyItem.keys) {
       if (key.includes(str)) {
@@ -286,8 +271,6 @@ export function transCkey2NapiInkey(key: string) {
 
 }
 
-// 把这些东西分成一个个文件
-// 根据文件内容来生成
 export function genCommonFile(rootInfo: GenInfo, filePath: string, fileContent: string) {
   fs.writeFileSync(filePath, fileContent);
 }
@@ -367,11 +350,9 @@ export function genNapiCppFile(rootInfo: GenInfo, filePath: string, fileContent:
       }
       bodyReplace = replaceAll(bodyReplace, '[input_introduce_replace]', funcInfoParams === '' ? 'void' : funcInfoParams);
       bodyReplace = replaceAll(bodyReplace, '[output_introduce_replace]', funcInfo.returns);
-      // // 替换参数模板
       // 方法参数的处理，解析参数类型，生成napi的参数处理代码
       let paramGenResult = getCppParamGen(funcInfo);
       bodyReplace = replaceAll(bodyReplace, '[func_getParam_replace]', paramGenResult);
-      // // 替换返回值模板
       // 方法返回值的处理，解析返回值类型，生成napi的返回值处理代码
       let returnGenResult = genCppReturnGen(funcInfo);
       bodyReplace = replaceAll(bodyReplace, '[func_return_replace]', returnGenResult);
@@ -461,12 +442,10 @@ export function genDir(dirItem: DirTemp, rootInfo: GenInfo, out: string) {
 
 // gen h and cpp file. 如果是dts2cpp,那么就拿到parcets的结果后，再根据translateTs2C来翻译，接着拿翻译的结果生成
 export function genHCppFile(rootInfo: GenInfo, out: string) {
-  // log
   if (out === undefined || out === null || out.trim() === '') {
     out = path.dirname(rootInfo.rawFilePath);
   }
   genDir(dts2cpp_cppdir, rootInfo, out);
-  // log
 }
 
 
