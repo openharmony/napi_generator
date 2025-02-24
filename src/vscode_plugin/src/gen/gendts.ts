@@ -528,7 +528,7 @@ export function getDtsUnions(rootInfo: GenInfo) {
   return out;
 }
 
-export function genDtsFile(rootInfo: GenInfo) {
+export function genDtsFile(rootInfo: GenInfo, out: string) {
   // gen enums
   let fileContent = getDtsEnum(rootInfo);
   // gen functions
@@ -541,8 +541,13 @@ export function genDtsFile(rootInfo: GenInfo) {
   fileContent += getDtsUnions(rootInfo);
 
   let dtsFileName = rootInfo.fileName + '.d.ts';
-  let dirPath = path.dirname(rootInfo.rawFilePath);
-  let outPath = path.join(dirPath, dtsFileName);
+  let outPath = ''
+  if (out === undefined || out === null || out.trim() === '') {
+    let dirPath = path.dirname(rootInfo.rawFilePath);
+    outPath = path.join(dirPath, dtsFileName);
+  } else {
+    outPath = path.join(out, dtsFileName);
+  }
   fs.writeFileSync(outPath, fileContent);
   Logger.getInstance().info('generate success!')
   return outPath;

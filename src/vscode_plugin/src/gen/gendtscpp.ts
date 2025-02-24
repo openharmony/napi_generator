@@ -13,15 +13,15 @@
 * limitations under the License.
 */
 
-import { DirTemp, DtscppRootInfo, FuncInfo, InterfaceList, TypeList, ParamObj, ParseObj, ClassObj, FuncObj } from "./datatype";
+import { DirTemp, DtscppRootInfo, FuncInfo, InterfaceList, TypeList, ParamObj, ParseObj, ClassObj, FuncObj, GenInfo } from "./datatype";
 import { replaceAll } from "../common/tool";
 import fs = require('fs');
 import path = require("path");
 import { napiFuncHTemplate, napiFuncInitTemplate } from "../template/func_template";
 import { cppout, dtscppout } from "../template/dtscpp/dtscppdir";
-import { analyzeRootFunction, genDtsInterface, genTsFunction } from "./gendts";
-import { generateDirectFunction } from "./gencpp";
-import { generateFuncTestCase } from "./gentest";
+import { analyzeRootFunction, genDtsFile, genDtsInterface, genTsFunction } from "./gendts";
+import { generateDirectFunction, genHCppFile } from "./gencpp";
+import { genAbilitytestFile, generateFuncTestCase } from "./gentest";
 import { Logger } from "../common/log";
 import { tsTransferType } from "../template/functypemap_template";
 
@@ -259,3 +259,28 @@ export function createFuncParam(params: ParamObj) {
   cppParam.type = getCTypeFromJS(params.type);
   return cppParam;
 }
+
+// -----------------------h2dtscpp------------------------
+export function createDir(path: string) {
+  if (!fs.existsSync(path)) {
+    fs.mkdirSync(path);
+  }
+}
+export function gendtscppFromH(rootInfo: GenInfo) {
+  // 生成dts文件
+  let outDir = path.dirname(rootInfo.rawFilePath);
+  let dtsOutPath = path.join(outDir, 'cpp');
+  createDir(dtsOutPath);
+  dtsOutPath = path.join(dtsOutPath, 'types');
+  createDir(dtsOutPath);
+  genDtsFile(rootInfo, dtsOutPath);
+  // 生成.cpp和.h文件 
+  genHCppFile(rootInfo, outDir);
+  // 生成Ability.test.ets文件
+  let testOutPath = path.join(outDir, 'test');
+  createDir(testOutPath);
+  testOutPath = path.join(testOutPath, 'ets');
+  createDir(testOutPath);
+  genAbilitytestFile(rootInfo, testOutPath);
+}
+// -------------------dts2cpp------------------------ todo
