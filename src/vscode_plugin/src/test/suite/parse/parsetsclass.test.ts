@@ -56,4 +56,982 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[1].type, 'string');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
+
+  //2, 测试 parseClass 类型覆盖情况
+  test('parseClass_ts_test_2', () => {
+    let testclass = `class OTC {
+        len: number;
+        name: string;
+        flag: boolean;
+        obj: any;
+        llen: number[];
+        lstr: string[];
+        lflag: boolean[];
+        lobj: any[];
+        tdef: aclass;
+        ltdef: aclass[];
+        contruct(a: number) {
+        };
+        deconstruct() {};
+        nfunc(num: number): number {
+          return 0;
+        };
+        sfunc(str: string): string {
+          return '';
+        };
+        bfunc(flag: boolean): boolean {
+          return true;
+        };
+        afunc(obj: any): any {
+          return '';
+        };
+        tfunc(obj: tclass): any  {
+          return {};
+        };
+        torfunc(obj: tclass | string): tclass | string {
+          return {};
+        };
+        lnfunc(num: number[]): number[] {
+          return [];
+        };
+        lsfunc(str: string[]): string[] {
+          return [];
+        };
+        lbfunc(flag: boolean[]): boolean[] {
+          return [];
+        };
+        lafunc(obj: any[]): any[] {
+          return [];
+        };
+        ltfunc(lobj: tclass[]): tclass[] {
+          return [];
+        };
+        funcdef: () => {};
+        nfundef: ((a: number)=> number);
+        strfundef: ((a: string)=> string);
+        bfundef: (a: boolean)=> boolean;
+        afundef: (a: any)=> any;
+        tfundef: (a: tclass)=> tclass;
+        lnfundef: (a: number[])=> number[];
+        lstrfundef: (a: string[])=> string[];
+        lbfundef: (a: boolean[])=> boolean[];
+        lafundef: (a: any[])=> any[];
+        ltfundef: (a: tclass[])=> tclass[];
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.variableList.length, 21);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'number');
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'string');
+    assert.strictEqual(classItem.variableList[2].name, 'flag');
+    assert.strictEqual(classItem.variableList[2].type, 'boolean');
+    assert.strictEqual(classItem.variableList[3].name, 'obj');
+    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[4].name, 'llen');
+    assert.strictEqual(classItem.variableList[4].type, 'Array<number>');
+    assert.strictEqual(classItem.variableList[5].name, 'lstr');
+    assert.strictEqual(classItem.variableList[5].type, 'Array<string>');
+    assert.strictEqual(classItem.variableList[6].name, 'lflag');
+    assert.strictEqual(classItem.variableList[6].type, 'Array<boolean>');
+    assert.strictEqual(classItem.variableList[7].name, 'lobj');
+    assert.strictEqual(classItem.variableList[7].type, 'Array<any>');
+    assert.strictEqual(classItem.variableList[8].name, 'tdef');
+    assert.strictEqual(classItem.variableList[8].type, 'aclass');
+    assert.strictEqual(classItem.variableList[9].name, 'ltdef');
+    assert.strictEqual(classItem.variableList[9].type, 'Array<any>');
+    assert.strictEqual(classItem.variableList[10].name, 'funcdef');
+    assert.strictEqual(classItem.variableList[10].type, 'any');
+    assert.strictEqual(classItem.variableList[11].name, 'nfundef');
+    assert.strictEqual(classItem.variableList[11].type, 'any');
+    assert.strictEqual(classItem.variableList[12].name, 'strfundef');
+    assert.strictEqual(classItem.variableList[12].type, 'any');
+    assert.strictEqual(classItem.variableList[13].name, 'bfundef');
+    assert.strictEqual(classItem.variableList[13].type, 'any');
+    assert.strictEqual(classItem.variableList[14].name, 'afundef');
+    assert.strictEqual(classItem.variableList[14].type, 'any');
+    assert.strictEqual(classItem.variableList[15].name, 'tfundef');
+    assert.strictEqual(classItem.variableList[15].type, 'any');
+    assert.strictEqual(classItem.variableList[16].name, 'lnfundef');
+    assert.strictEqual(classItem.variableList[16].type, 'any');
+    assert.strictEqual(classItem.variableList[17].name, 'lstrfundef');
+    assert.strictEqual(classItem.variableList[17].type, 'any');
+    assert.strictEqual(classItem.variableList[18].name, 'lbfundef');
+    assert.strictEqual(classItem.variableList[18].type, 'any');
+    assert.strictEqual(classItem.variableList[19].name, 'lafundef');
+    assert.strictEqual(classItem.variableList[19].type, 'any');
+    assert.strictEqual(classItem.variableList[20].name, 'ltfundef');
+    assert.strictEqual(classItem.variableList[20].type, 'any');
+
+    assert.strictEqual(classItem.functionList.length, 13);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+    assert.strictEqual(classItem.functionList[2].name, 'nfunc');
+    assert.strictEqual(classItem.functionList[2].returns, 'number');
+    assert.strictEqual(classItem.functionList[2].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[2].parameters[0].name, 'num');
+    assert.strictEqual(classItem.functionList[2].parameters[0].type, 'number');
+    assert.strictEqual(classItem.functionList[2].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[3].name, 'sfunc');
+    assert.strictEqual(classItem.functionList[3].returns, 'string');
+    assert.strictEqual(classItem.functionList[3].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[3].parameters[0].name, 'str');
+    assert.strictEqual(classItem.functionList[3].parameters[0].type, 'string');
+    assert.strictEqual(classItem.functionList[3].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[4].name, 'bfunc');
+    assert.strictEqual(classItem.functionList[4].returns, 'boolean');
+    assert.strictEqual(classItem.functionList[4].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[4].parameters[0].name, 'flag');
+    assert.strictEqual(classItem.functionList[4].parameters[0].type, 'boolean');
+    assert.strictEqual(classItem.functionList[4].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[5].name, 'afunc');
+    assert.strictEqual(classItem.functionList[5].returns, 'any');
+    assert.strictEqual(classItem.functionList[5].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[5].parameters[0].name, 'obj');
+    assert.strictEqual(classItem.functionList[5].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[5].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[6].name, 'tfunc');
+    assert.strictEqual(classItem.functionList[6].returns, 'any');
+    assert.strictEqual(classItem.functionList[6].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[6].parameters[0].name, 'obj');
+    assert.strictEqual(classItem.functionList[6].parameters[0].type, 'tclass');
+    assert.strictEqual(classItem.functionList[6].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[7].name, 'torfunc');
+    assert.strictEqual(classItem.functionList[7].returns, 'any');
+    assert.strictEqual(classItem.functionList[7].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[7].parameters[0].name, 'obj');
+    assert.strictEqual(classItem.functionList[7].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[7].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[8].name, 'lnfunc');
+    assert.strictEqual(classItem.functionList[8].returns, 'Array<number>');
+    assert.strictEqual(classItem.functionList[8].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[8].parameters[0].name, 'num');
+    assert.strictEqual(classItem.functionList[8].parameters[0].type, 'Array<number>');
+    assert.strictEqual(classItem.functionList[8].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[9].name, 'lsfunc');
+    assert.strictEqual(classItem.functionList[9].returns, 'Array<string>');
+    assert.strictEqual(classItem.functionList[9].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[9].parameters[0].name, 'str');
+    assert.strictEqual(classItem.functionList[9].parameters[0].type, 'Array<string>');
+    assert.strictEqual(classItem.functionList[9].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[10].name, 'lbfunc');
+    assert.strictEqual(classItem.functionList[10].returns, 'Array<boolean>');
+    assert.strictEqual(classItem.functionList[10].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[10].parameters[0].name, 'flag');
+    assert.strictEqual(classItem.functionList[10].parameters[0].type, 'Array<boolean>');
+    assert.strictEqual(classItem.functionList[10].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[11].name, 'lafunc');
+    assert.strictEqual(classItem.functionList[11].returns, 'Array<any>');
+    assert.strictEqual(classItem.functionList[11].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[11].parameters[0].name, 'obj');
+    assert.strictEqual(classItem.functionList[11].parameters[0].type, 'Array<any>');
+    assert.strictEqual(classItem.functionList[11].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[12].name, 'ltfunc');
+    assert.strictEqual(classItem.functionList[12].returns, 'Array<any>');
+    assert.strictEqual(classItem.functionList[12].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[12].parameters[0].name, 'lobj');
+    assert.strictEqual(classItem.functionList[12].parameters[0].type, 'Array<any>');
+    assert.strictEqual(classItem.functionList[12].parameters[0].arraySize, 0);
+  });
+
+  //3, 测试 parseClass 模板类模板函数情况
+  test('parseClass_ts_test_3', () => {
+    let testclass = `class OTC<Type> {
+        len: Type;
+        name: Type[];
+        add(a: Type) {
+        };
+        del: (x: Type, y: Type) => Type
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 1);
+    assert.strictEqual(classItem.functionList[0].name, 'add');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'Type');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+
+    assert.strictEqual(classItem.variableList.length, 3);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'Type');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'Array<any>');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+    assert.strictEqual(classItem.variableList[2].name, 'del');
+    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].arraySize, 0);
+  });
+
+  //4, 测试 parseClass 继承情况
+  test('parseClass_ts_test_4', () => {
+    let testclass = `class OTC extends Basic {
+        len: number;
+        name: string;
+        contruct(a: number) {
+        };
+        deconstruct() {};
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'number');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'string');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+  });
+
+  //5, 测试 parseClass 数组情况
+  test('parseClass_ts_test_5', () => {
+    let testclass = `class OTC extends Basic {
+        len: number[10];
+        name: string[10][20];
+        contruct(a: number[10][20][30]) {
+        };
+        deconstruct() {};
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+  });
+
+  //6, 测试 parseClass 测试模板继承情况
+  test('parseClass_ts_test_6', () => {
+    let testclass = `class OTC <Type extends Basic> {
+        len: Type;
+        name: Type[10][20];
+        contruct(a: Type[10][20][30]) {
+        };
+        deconstruct() {};
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'Type');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+  });
+
+  //7, 测试 parseClass 测试选择情况
+  test('parseClass_ts_test_7', () => {
+    let testclass = `class OTC <Type extends Basic> {
+        len: Type;
+        name?: Type[10][20];
+        contruct(a?: Type[10][20][30]) {
+        };
+        deconstruct() {};
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'Type');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+  });
+
+  //8, 测试 parseClass 测试注释选择情况
+  test('parseClass_ts_test_8', () => {
+    let testclass = `class OTC <Type extends Basic> {
+        // 测试注释
+        len: Type; //注释一
+        name?: Type[10][20];  /*注释2*/
+        contruct(a?: Type[10][20][30]) {
+        /* ------
+        * 注释3
+        */
+        };
+        deconstruct() {};
+        // ...
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'Type');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+  });
+
+  //9, 测试 parseClass 属性修饰符情况
+  test('parseClass_ts_test_9', () => {
+    let testclass = `class OTC <Type extends Basic> {
+        // 测试注释
+        readonly len: Type; //注释一
+        public name?: Type[10][20];  /*注释2*/
+        private contruct(a?: Type[10][20][30]) {
+        /* ------
+        * 注释3
+        */
+        };
+        const deconstruct() {};
+        // ...
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'Type');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+  });
+
+  //10, 测试 parseClass 索引签名情况
+  test('parseClass_ts_test_10', () => {
+    let testclass = `class OTC {
+        [index: number]: string;  
+        [index: string]: number | string;
+        readonly [index: number]: string;
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 0);
+    
+  });
+
+  //11, 测试 parseClass 扩展类型情况
+  test('parseClass_ts_test_11', () => {
+    let testclass = `class OTC {
+        const cc: ColorfulCircle = {
+          color: "red",
+          radius: 42,
+        };
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 1);
+    assert.strictEqual(classItem.variableList[0].name, 'cc');
+    assert.strictEqual(classItem.variableList[0].type, 'ColorfulCircle');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+  });
+
+  //12, 测试 parseClass 交集类型情况
+  test('parseClass_ts_test_12', () => {
+    let testclass = `class OTC {
+        const cc: Colorful & Circle;
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 1);
+    assert.strictEqual(classItem.variableList[0].name, 'cc');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    
+  });
+
+  //13, 测试 parseClass 泛型对象类型情况
+  test('parseClass_ts_test_13', () => {
+    let testclass = `class OTC {
+        const cc: any;
+        readonly contents: unknown;
+        cont: "hello world";
+        ents: Type;
+        val: OrNull<OneOrMany<Type>>;
+
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 5);
+    assert.strictEqual(classItem.variableList[0].name, 'cc');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'contents');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+    assert.strictEqual(classItem.variableList[2].name, 'cont');
+    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].arraySize, 0);
+    assert.strictEqual(classItem.variableList[3].name, 'ents');
+    assert.strictEqual(classItem.variableList[3].type, 'Type');
+    assert.strictEqual(classItem.variableList[3].arraySize, 0);
+    assert.strictEqual(classItem.variableList[4].name, 'val');
+    assert.strictEqual(classItem.variableList[4].type, 'any');
+    assert.strictEqual(classItem.variableList[4].arraySize, 0);
+  });
+
+  //14, 测试 parseClass readonly array对象类型情况
+  test('parseClass_ts_test_14', () => {
+    let testclass = `class OTC {
+        const roArray: ReadonlyArray<string> = ["red", "green", "blue"];
+        readonly contents: roArray.slice();
+        x: readonly string[] = [];
+        a: pair[0];
+        const [x, y, z] = coord;
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 5);
+    assert.strictEqual(classItem.variableList[0].name, 'roArray');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'contents');
+    assert.strictEqual(classItem.variableList[1].type, undefined);
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+    assert.strictEqual(classItem.variableList[2].name, 'x');
+    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].arraySize, 0);
+    assert.strictEqual(classItem.variableList[3].name, 'a');
+    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].arraySize, 0);
+    assert.strictEqual(classItem.variableList[4].name, 'coord');
+    assert.strictEqual(classItem.variableList[4].type, 'void');
+    assert.strictEqual(classItem.variableList[4].arraySize, 0);
+  });
+
+  //15, 测试 parseClass 剩余元素类型情况
+  test('parseClass_ts_test_15', () => {
+    let testclass = `class OTC {
+      const a: StringNumberBooleans = ["hello", 1];
+      const b: StringNumberBooleans = ["beautiful", 2, true];
+      const c: StringNumberBooleans = ["world", 3, true, false, true, false, true];
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 3);
+    assert.strictEqual(classItem.variableList[0].name, 'a');
+    assert.strictEqual(classItem.variableList[0].type, 'StringNumberBooleans');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'b');
+    assert.strictEqual(classItem.variableList[1].type, 'StringNumberBooleans');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+    assert.strictEqual(classItem.variableList[2].name, 'c');
+    assert.strictEqual(classItem.variableList[2].type, 'StringNumberBooleans');
+    assert.strictEqual(classItem.variableList[2].arraySize, 0);
+  });
+
+  //16, 测试 parseClass 元祖类型情况
+  test('parseClass_ts_test_16', () => {
+    let testclass = `class OTC {
+      pair: readonly [string, number];
+      [x, y]: [number, number];
+      const c: [3, 4] as const;
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'pair');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'c');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+  });
+
+  //17, 测试 parseClass keyof类型情况
+  test('parseClass_ts_test_17', () => {
+    let testclass = `class OTC {
+      pair: keyof Arrayish;
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 1);
+    assert.strictEqual(classItem.variableList[0].name, 'pair');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+  });
+
+  //18, 测试 parseClass typeof类型情况
+  test('parseClass_ts_test_18', () => {
+    let testclass = `class OTC {
+      pair: typeof "Hello world";
+      name: typeof Stype;
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 3);
+    assert.strictEqual(classItem.variableList[0].name, 'pair');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'Hello world');
+    assert.strictEqual(classItem.variableList[1].type, 'void');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+    assert.strictEqual(classItem.variableList[2].name, 'name');
+    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].arraySize, 0);
+  });
+
+  //19, 测试 parseClass 索引访问类型情况
+  test('parseClass_ts_test_19', () => {
+    let testclass = `class OTC {
+      pair: Person["age"];
+      name: Person["age" | "name"];
+      test: Person[keyof Person];
+      obj: Person[AliveOrName];
+      amo: typeof MyArray[number];
+      topy: Person[pair];
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 6);
+    assert.strictEqual(classItem.variableList[0].name, 'pair');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+    assert.strictEqual(classItem.variableList[2].name, 'test');
+    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].arraySize, 0);
+    assert.strictEqual(classItem.variableList[3].name, 'obj');
+    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].arraySize, 0);
+    assert.strictEqual(classItem.variableList[4].name, 'amo');
+    assert.strictEqual(classItem.variableList[4].type, 'any');
+    assert.strictEqual(classItem.variableList[4].arraySize, 0);
+    assert.strictEqual(classItem.variableList[5].name, 'topy');
+    assert.strictEqual(classItem.variableList[5].type, 'any');
+    assert.strictEqual(classItem.variableList[5].arraySize, 0);
+  });
+
+  //20, 测试 parseClass 条件类型情况
+  test('parseClass_ts_test_20', () => {
+    let testclass = `class OTC {
+      pair: Dog extends Animal ? number : string;
+      name: T extends number ? IdLabel : NameLabel;
+      test: T extends { message: unknown };
+      obj: Type extends Array<infer Item> ? Item : Type;
+      oamp: Type extends any ? Type[] : never;
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 5);
+    assert.strictEqual(classItem.variableList[0].name, 'pair');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+    assert.strictEqual(classItem.variableList[2].name, 'test');
+    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].arraySize, 0);
+    assert.strictEqual(classItem.variableList[3].name, 'obj');
+    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].arraySize, 0);
+    assert.strictEqual(classItem.variableList[4].name, 'oamp');
+    assert.strictEqual(classItem.variableList[4].type, 'any');
+    assert.strictEqual(classItem.variableList[4].arraySize, 0);
+
+  });
+
+  //21, 测试 parseClass 映射类型情况
+  test('parseClass_ts_test_21', () => {
+    let testclass = `class OTC {
+      [key: string]: boolean | Horse;
+      [Property in keyof Type]: boolean;
+      [Property in keyof Type]-?: Type[Property];
+      [Properties in keyof Type as NewKeyType]: Type[Properties];
+      [Property in keyof Type as \`get\${Capitalize<string & Property>}\`]: () => Type[Property];
+      [Property in keyof Type as Exclude<Property, "kind">]: Type[Property];
+      [E in Events as E["kind"]]: (event: E) => void;
+      [Property in keyof Type]: Type[Property] extends { pii: true } ? true : false;
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 3);
+    assert.strictEqual(classItem.variableList[0].name, 'Type');
+    assert.strictEqual(classItem.variableList[0].type, 'void');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'boolean');
+    assert.strictEqual(classItem.variableList[1].type, 'void');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+    assert.strictEqual(classItem.variableList[2].name, 'Type');
+    assert.strictEqual(classItem.variableList[2].type, 'void');
+    assert.strictEqual(classItem.variableList[2].arraySize, 0);
+  });
+
+  //22, 测试 parseClass 模板字面类型情况
+  test('parseClass_ts_test_22', () => {
+    let testclass = `class OTC {
+      pair: "world";
+      name: "welcome_email" | "email_heading";
+       on<Key extends string & keyof Type>
+        (eventName: \`\${Key}Changed\`, callback: (newValue: Type[Key]) => void ): void;
+      ShoutyGreeting: Uppercase<Greeting>;
+      ASCIICacheKey<Str extends string> = \`ID-\${Uppercase<Str>}\`
+      MainID: ASCIICacheKey<"my_app">
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'on');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[1].name, 'ASCIICacheKey');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 3);
+    assert.strictEqual(classItem.variableList[0].name, 'pair');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+    assert.strictEqual(classItem.variableList[2].name, 'ShoutyGreeting');
+    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].arraySize, 0);
+
+  });
+
+  //23, 测试 parseClass 内在字符串操作类型情况
+  test('parseClass_ts_test_23', () => {
+    let testclass = `class OTC {
+      ShoutyGreeting: Uppercase<"Greeting">;
+      QuietGreeting: Lowercase<"Greeting">;
+      Greeting: Capitalize<"LowercaseGreeting">;
+      UncomfortableGreeting: Uncapitalize<"UppercaseGreeting">;
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+    assert.strictEqual(classItem.variableList.length, 4);
+    assert.strictEqual(classItem.variableList[0].name, 'ShoutyGreeting');
+    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'QuietGreeting');
+    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+    assert.strictEqual(classItem.variableList[2].name, 'Greeting');
+    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].arraySize, 0);
+    assert.strictEqual(classItem.variableList[3].name, 'UncomfortableGreeting');
+    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].arraySize, 0);
+
+  });
+
+  //24, 测试 parseClass export情况
+  test('parseClass_ts_test_24', () => {
+    let testclass = `export class OTC {
+        len: number;
+        name: string;
+        contruct(a: number) {
+        };
+        deconstruct() {};
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'number');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'string');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+  });
+
+  //25, 测试 parseClass 库文件情况
+  test('parseClass_ts_test_25', () => {
+    let testclass = `class OTC {
+        len: require("mylib");
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 0);
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'require');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'mylib');
+    assert.strictEqual(classItem.variableList[1].type, 'void');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+  });
+
+  //26, 测试 parseClass declare namespace 情况
+  test('parseClass_ts_test_26', () => {
+    let testclass = `declare namespace {
+      export class OTC {
+        len: number;
+        name: string;
+        contruct(a: number) {
+        };
+        deconstruct() {};
+      }
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 1);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'number');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'string');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+  });
+
+  //27, 测试 parseClass 两个类extend 情况
+  test('parseClass_ts_test_27', () => {
+    let testclass = `declare namespace {
+      export class OTC {
+        len: number;
+        name: string;
+        contruct(a: number) {
+        };
+        deconstruct() {};
+      }
+      export class OTC2 extend OTC {
+        len2: number;
+        name2: string;
+        contruct2(a: number) {
+        };
+        deconstruct2() {};
+      }
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 2);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'number');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'string');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+
+
+    classItem = classObjList.classes[1];
+    assert.strictEqual(classItem.name, 'OTC2');
+    assert.strictEqual(classItem.functionList.length, 0);
+  });
+
+  //28, 测试 parseClass 两个类不同 情况
+  test('parseClass_ts_test_28', () => {
+    let testclass = `declare namespace {
+      export class OTC {
+        len: number;
+        name: string;
+        contruct(a: number) {
+        };
+        deconstruct() {};
+      }
+      export class OTC2 {
+        len2: number;
+        name2: string;
+        contruct2(a: number) {
+        };
+        deconstruct2() {};
+      }
+    };`
+    let classObjList = parsets.doParseTs("test.ts", testclass);
+    assert.strictEqual(classObjList.classes.length, 2);
+    let classItem = classObjList.classes[0];
+    assert.strictEqual(classItem.name, 'OTC');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len');
+    assert.strictEqual(classItem.variableList[0].type, 'number');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name');
+    assert.strictEqual(classItem.variableList[1].type, 'string');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+
+
+    classItem = classObjList.classes[1];
+    assert.strictEqual(classItem.name, 'OTC2');
+    assert.strictEqual(classItem.functionList.length, 2);
+    assert.strictEqual(classItem.functionList[0].name, 'contruct2');
+    assert.strictEqual(classItem.functionList[0].returns, 'void');
+    assert.strictEqual(classItem.functionList[0].parameters.length, 1);
+    assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number');
+    assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
+    assert.strictEqual(classItem.functionList[1].name, 'deconstruct2');
+    assert.strictEqual(classItem.functionList[1].returns, 'void');
+
+    assert.strictEqual(classItem.variableList.length, 2);
+    assert.strictEqual(classItem.variableList[0].name, 'len2');
+    assert.strictEqual(classItem.variableList[0].type, 'number');
+    assert.strictEqual(classItem.variableList[0].arraySize, 0);
+    assert.strictEqual(classItem.variableList[1].name, 'name2');
+    assert.strictEqual(classItem.variableList[1].type, 'string');
+    assert.strictEqual(classItem.variableList[1].arraySize, 0);
+
+  });
 })
