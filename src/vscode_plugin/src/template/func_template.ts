@@ -72,7 +72,7 @@ export let napiFuncInitTemplate = `// [NAPI_GEN]:方法注册后,js方法与nati
 `;
 
 // napi方法定义
-export let napiFuncHTemplate = `/* [NAPI_GEN]:对应[file_introduce_replace]中：[func_introduce_replace]的napi方法,
+export let napiFuncHTemplate = `/* [NAPI_GEN]:对应[file_introduce_replace]中：[func_name_replace]的napi方法,
 * 输入：[input_introduce_replace]
 * 输出：[func_return_replace]
 */ 
@@ -80,7 +80,7 @@ napi_value [func_name_replace](napi_env env, napi_callback_info info);
 `;
 
 // napi方法体实现
-export let napiFuncCppTemplate = `/* [NAPI_GEN]:对应[file_introduce_replace]中：[func_introduce_replace]的napi方法,
+export let napiFuncCppTemplate = `/* [NAPI_GEN]:对应[file_introduce_replace]中：[func_name_replace]的napi方法,
 * 输入：[input_introduce_replace]
 * 输出：[output_introduce_replace]
 */ 
@@ -134,7 +134,7 @@ if (status != napi_ok) {
 export let stringRet =  `napi_value [return_name_replace]Out;
 /* [NAPI_GEN]: 返回值是字符串时,napi_create_string_utf8用于在原生代码中创建一个新的js字符串。这个函数会根据提供的UTF-8编码的字符串创建一个等价的js字符串
  * env: 当前环境的句柄
- * str: 指向以null结尾的UTF-8编码的C字符串的指针,这里以[return_name_replace]举例，用户可根据需求修改
+ * str: 指向以null结尾的UTF-8编码的C字符串的指针,这里以"[return_name_replace]"举例，用户可根据需求修改
  * length: 字符串的长度,可以是具体的字节数,或者使用特殊的值NAPI_AUTO_LENGTH来让函数自己计算长度(假定字符串以null结尾)
  * result: 指向napi_value的指针,函数执行成功后这个指针将指向新创建的js字符串
  */
@@ -142,6 +142,21 @@ status = napi_create_string_utf8(env, "[return_name_replace]", NAPI_AUTO_LENGTH,
 if (status != napi_ok) {
     /*错误处理*/
     getErrMessage(status, env, extended_error_info, "napi_create_string_utf8", tag);
+    return nullptr;
+}
+`;
+
+export let stringRetUtf16 =  `napi_value [return_name_replace]Out;
+/* [NAPI_GEN]: 返回值是字符串时,napi_create_string_utf16用于在原生代码中创建一个新的js字符串。这个函数会根据提供的UTF-16编码的字符串创建一个等价的js字符串
+ * env: 当前环境的句柄
+ * str: 指向以null结尾的UTF-8编码的C字符串的指针,这里以"[return_name_replace]"举例，用户可根据需求修改
+ * length: 字符串的长度,可以是具体的字节数,或者使用特殊的值NAPI_AUTO_LENGTH来让函数自己计算长度(假定字符串以null结尾)
+ * result: 指向napi_value的指针,函数执行成功后这个指针将指向新创建的js字符串
+ */
+status = napi_create_string_utf16(env, u"[return_name_replace]", NAPI_AUTO_LENGTH, &[return_name_replace]Out);
+if (status != napi_ok) {
+    /*错误处理*/
+    getErrMessage(status, env, extended_error_info, "napi_create_string_utf16", tag);
     return nullptr;
 }
 `;
@@ -301,6 +316,31 @@ if (status != napi_ok) {
 // delete[] [param_name_replace]In;  // remember to delete memory 
 `;
 
+export let stringInUtf16 =  `size_t strSize[param_index_replace] = 0;
+/* [NAPI_GEN]: napi_get_value_string_utf16用于将Js字符串转换为UTF-16编码的C字符串
+ * env: N-API环境的句柄,表示当前的上下文
+ * value: 要转换的JavaScript字符串
+ * buf: 用于存储结果的字符数组的指针
+ * bufsize: 缓冲区大小，以字节为单位
+ * result: 转换后的字符串的字节长度(不包括空终止符)。若干buf是NULL,则返回所需的缓冲区大小(包括空终止符)
+ */
+/* [NAPI_GEN]: buf参数是NULL时,用于获取所需缓冲区大小*/
+status = napi_get_value_string_utf16(env, args[[param_index_replace]], NULL, 0, &strSize[param_index_replace]);
+if (status != napi_ok) {
+    getErrMessage(status, env, extended_error_info, "get value string", tag);
+    return nullptr;
+}
+char16_t *[param_name_replace]In = new char16_t[strSize[param_index_replace] + 1];
+/* [NAPI_GEN]: 用于获取字符串*/
+status = napi_get_value_string_utf16(env, args[[param_index_replace]], [param_name_replace]In, strSize[param_index_replace] + 1, &strSize[param_index_replace]);
+if (status != napi_ok) {
+    getErrMessage(status, env, extended_error_info, "get value string", tag);
+    delete[] [param_name_replace]In;
+    return nullptr;
+}
+// delete[] [param_name_replace]In;  // remember to delete memory 
+`;
+
 export let int64tIn =  `int64_t [param_name_replace]In = 0;
 /* [NAPI_GEN]: napi_get_value_int64将一个 napi_value 类型的 js 布尔值转换成一个 C 语言的 int64_t 类型的数值
  * env: N-API环境的句柄,表示当前的上下文
@@ -354,8 +394,23 @@ if (status != napi_ok) {
 }
 `;
 
+export let callbackIn =  `
+    napi_value argv;
+    // Todo:创建要传递给回调函数的参数
+    napi_value result;
+    /**
+    * env: napi_env 类型的环境变量
+    * this_arg: 指向 JavaScript 对象的指针，表示回调函数中的 this 值。如果不需要传递 this 值，则可以设置为 nullptr。
+    * func: 指向 JavaScript 回调函数的指针。
+    * argc: 传递给回调函数的参数数量。
+    * argv: 一个 napi_value 类型的数组，用于存储要传递给回调函数的参数。
+    * result: 指向返回值的指针。如果回调函数没有返回值，则可以设置为 nullptr。
+    */
+    napi_call_function(env, nullptr, args[[param_index_replace]], 1, &argv, &result);
+`;
+
 // napi testAbility需要生成的方法模板
-export let testAbilityFuncTemplate =  `  /* [NAPI_GEN]:对应[file_introduce_replace]中：[func_introduce_replace]方法的dts接口测试用例
+export let testAbilityFuncTemplate =  `  /* [NAPI_GEN]:对应[file_introduce_replace]中：[func_name_replace]方法的dts接口测试用例
   * 方法输入: [input_introduce_replace]
   * 方法输出: [func_return_replace]
   */

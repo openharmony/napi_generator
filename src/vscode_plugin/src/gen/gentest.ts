@@ -15,12 +15,14 @@
 
 import util = require('util');
 import { replaceAll } from "../common/tool";
-import { FuncInfo, InterfaceList, ParamObj, TypeList } from "./datatype";
+import { FuncInfo, GenInfo, InterfaceList, ParamObj, TypeList } from "./datatype";
 import { getInterfaceBody, getTypeBody, transTskey2Ckey } from './gendts';
 import { testAbilityFuncTemplate } from "../template/func_template";
 import { Logger } from '../common/log';
-import { dts2cpp_key } from '../template/dtscpp/dts2cpp_key';
-
+import { dts2cpp_key, dts2testvalue } from '../template/dtscpp/dts2cpp_key';
+import * as path from 'path';
+import * as fs from 'fs';
+import { testFirstGenTemplate } from '../template/dtscpp/dtscpp_testfirstgen_template';
 const INTVALUE = 5;
 const FLOATVALUE = 2.5;
 
@@ -197,4 +199,76 @@ export function getJsType(type: string) {
       }
     }
     return 'testNapi.' + type.replace('*', '').trim();
+}
+
+// ----------------------- gentest ------------------------
+// 用H文件为源文件生成Ability.test.ets文件
+export function genAbilitytestFile(rootInfo: GenInfo, out: string) {
+  if (out === undefined || out === null ||out.trim() === '') {
+    out = path.dirname(rootInfo.rawFilePath);
+  }
+  let testContent = ''
+  if (rootInfo.parseObj && rootInfo.parseObj.funcs) {
+    rootInfo.parseObj.funcs.forEach(funcInfo => {
+      let callFunc = ''; // 调用函数内容
+      let hilogContent = ''; // hilog内容
+      let funcParamDefine = ''; // 函数参数定义并初始化
+      let funcParamUse = ''; // 函数参数使用
+      let funcInfoParams = ''; // 注释
+      let funcInfoParamTemp = '[paramName]: [paramType]; ';
+      // 遍历方法参数，给参数赋初始值，生成注释和参数使用内容
+      // 1. 先将所有type转换为ts的type
+      for (let i = 0; i < funcInfo.parameters.length; ++i) {
+        // 注释
+        let funcInfoParamReplace = replaceAll(funcInfoParamTemp, '[paramName]', funcInfo.parameters[i].name);
+        funcInfoParamReplace = replaceAll(funcInfoParamReplace, '[paramType]', funcInfo.parameters[i].type);
+        funcInfoParams += funcInfoParamReplace;
+        // 参数定义并初始化
+        const param = funcInfo.parameters[i];
+        let paramType = transTskey2Ckey(param.type);
+        let testValue = '\'Please give an any value.\'';  // any类型咋赋值？
+        dts2testvalue.forEach(item => {
+          if (item.key === paramType) {
+            testValue = item.value;
+          }
+        })
+        funcParamDefine += util.format('let %s: %s = %s;\n    ', funcInfo.parameters[i].name, paramType, testValue);
+        funcParamUse += funcInfo.parameters[i].name + ', ';
+        // 如果是最后一个参数，去掉最后的逗号和空格
+        if (funcInfo.parameters.length === i + 1) {
+          funcParamUse = funcParamUse.slice(0, -2); // 去掉最后一个逗号和空格
+        }
+      }
+      // 返回值
+      let returnType = transTskey2Ckey(funcInfo.returns);
+      if (returnType === 'void') {
+        callFunc = util.format('testNapi.%s(%s)\n    ', funcInfo.name, funcParamUse);
+      } else {
+        callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', returnType, funcInfo.name, funcParamUse);
+        hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.name);
+        // hilogContent += util.format('console.info("testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.name);
+      }
+      let funcTestReplace = funcParamDefine + callFunc + hilogContent;
+      let rawFileName = path.basename(rootInfo.rawFilePath);
+      // 替换test_case_name
+      let funcTestContent = replaceAll(testAbilityFuncTemplate, '[func_direct_testCase]', funcTestReplace);
+      funcTestContent = replaceAll(funcTestContent, '[test_case_name]', funcInfo.name);
+      funcTestContent = replaceAll(funcTestContent, '[file_introduce_replace]', rawFileName);
+      funcTestContent = replaceAll(funcTestContent, '[func_introduce_replace]', funcInfo.name);
+      funcTestContent = replaceAll(funcTestContent, '[input_introduce_replace]', funcInfoParams === '' ? 'void' : funcInfoParams);
+      funcTestContent = replaceAll(funcTestContent, '[func_return_replace]', funcInfo.returns);
+
+      testContent += funcTestContent;
+    });
+
+    let fileContent = replaceAll(testFirstGenTemplate.content, '[testAbilityFunctions]', testContent);
+    // 将文件写入out文件夹
+    if (!fs.existsSync(out)) {
+      fs.mkdirSync(out, { recursive: true });
+    }
+    let lowerFileName = rootInfo.fileName.toLocaleLowerCase();
+    let fileName = testFirstGenTemplate.name.replace('[fileName]', lowerFileName);
+    let filePath = path.join(out, fileName);
+    fs.writeFileSync(filePath, fileContent);
+  }
 }
