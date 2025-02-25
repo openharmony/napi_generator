@@ -174,14 +174,128 @@ suite('Gendts_unions_Suite', () => {
             arraySizeList: []
           },
           {
+            type: 'wchar_t',
+            name: 'wch',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'char8_t',
+            name: 'ch8',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'char16_t',
+            name: 'ch16',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'char32_t',
+            name: 'ch32',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::string',
+            name: 'str',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::wstring',
+            name: 'wstr',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::u16string',
+            name: 'su16sname',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::u32string',
+            name: 'su32sname',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::basic_string',
+            name: 'sbsname',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
             type: 'int',
             name: 'len',
             arraySize: -1,
             arraySizeList: []
           },
           {
+            type: 'size_t',
+            name: 'size',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'uint8_t',
+            name: 'u8int',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'uint16_t',
+            name: 'u16int',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'uint32_t',
+            name: 'u32int',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'uint64_t',
+            name: 'u64int',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'int8_t',
+            name: 'int8',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'int16_t',
+            name: 'int16',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'int32_t',
+            name: 'int32',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'int64_t',
+            name: 'int64',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
             type: 'short',
             name: 'slen',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'unsigned',
+            name: 'unum',
             arraySize: -1,
             arraySizeList: []
           },
@@ -212,12 +326,6 @@ suite('Gendts_unions_Suite', () => {
           {
             type: 'long double',
             name: 'ldlen',
-            arraySize: -1,
-            arraySizeList: []
-          },
-          {
-            type: 'void*',
-            name: 'ptr',
             arraySize: -1,
             arraySizeList: []
           },
@@ -276,12 +384,6 @@ suite('Gendts_unions_Suite', () => {
             arraySizeList: [10, 20, 30]
           },
           {
-            type: 'void*',
-            name: 'ptr3',
-            arraySize: 10,
-            arraySizeList: [10, 20, 30]
-          },
-          {
             type: 'signed char',
             name: 'sch',
             arraySize: -1,
@@ -320,12 +422,6 @@ suite('Gendts_unions_Suite', () => {
           {
             type: 'signed double',
             name: 'sdlen',
-            arraySize: -1,
-            arraySizeList: []
-          },
-          {
-            type: 'signed void*',
-            name: 'ptr',
             arraySize: -1,
             arraySizeList: []
           },
@@ -378,12 +474,6 @@ suite('Gendts_unions_Suite', () => {
             arraySizeList: []
           },
           {
-            type: 'unsigned void*',
-            name: 'uptr',
-            arraySize: -1,
-            arraySizeList: []
-          },
-          {
             type: 'bool',
             name: 'bflag',
             arraySize: -1,
@@ -392,6 +482,252 @@ suite('Gendts_unions_Suite', () => {
           {
             type: 'std::map<char, float>',
             name: 'Map',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::vector<int>',
+            name: 'svlist',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::deque<int>',
+            name: 'sdlist',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::list<int>',
+            name: 'slst',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::forward_list<int>',
+            name: 'sflist',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::array<int>',
+            name: 'salist',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::stack<int>',
+            name: 'sqstack',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::queue<int>',
+            name: 'sqlist',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::priority_queue<int>',
+            name: 'spqlist',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::pair<double, int>',
+            name: 'sppair',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::map<doiuble, int>',
+            name: 'smap',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::multimap<double, int>',
+            name: 'smmap',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::set<double, int>',
+            name: 'sset',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::multiset<double, int>',
+            name: 'smset',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::unordered_map<double, int>',
+            name: 'sumap',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::unordered_multimap<double, int>',
+            name: 'summap',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::unordered_set<double, int>',
+            name: 'suset',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::unordered_multiset<double, int>',
+            name: 'sumset',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::vector<int>::iterator',
+            name: 'svlistIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::deque<int>::iterator',
+            name: 'sdlistIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::list<int>::iterator',
+            name: 'slistIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::forward_list<int>::iterator',
+            name: 'sflistIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::array<int>::iterator',
+            name: 'salistIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::stack<int>::iterator',
+            name: 'sqstackIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::queue<int>::iterator',
+            name: 'sqqueIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::priority_queue<int>::iterator',
+            name: 'spqlistIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::pair<double, int>::iterator',
+            name: 'sppairIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::map<double, int>::iterator',
+            name: 'smapIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::multimap<double, int>::iterator',
+            name: 'smmapIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::set<double, int>::iterator',
+            name: 'ssetIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::multiset<double, int>::iterator',
+            name: 'smsetIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::unordered_map<double, int>::iterator',
+            name: 'sumapIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::unordered_multimap<double, int>::iterator',
+            name: 'summapIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::unordered_set<double, int>::iterator',
+            name: 'susetIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::unordered_multiset<double, int>::iterator',
+            name: 'sumsetIter',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::function<int(int, int)>',
+            name: 'func',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::tuple<int, float, double>',
+            name: 'myTuple',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::complex<double>',
+            name: 'myComplex',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::valarray<int>',
+            name: 'myValarray',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::time_t',
+            name: 'myTimet',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::clock_t',
+            name: 'myClock',
+            arraySize: -1,
+            arraySizeList: []
+          },
+          {
+            type: 'std::tm',
+            name: 'myTm',
             arraySize: -1,
             arraySizeList: []
           }
@@ -410,7 +746,22 @@ suite('Gendts_unions_Suite', () => {
       fileName: 'test',
     };
     resStr = genDts.getDtsUnions(rootInfo);
-    assert.strictEqual(resStr, 'export type OperationType = string | number | number | number | number | number | number | number | void | string | string | number | number | number | number | number | number | number | void | string | number | number | number | number | number | number | void | string | number | number | number | number | number | number | number | number | boolean | Map<string, number> ;\n\n');
+    assert.strictEqual(resStr, 'export type OperationType = string | string | string | string | string | string | ' +
+      'string | string | string | string | number | number | number | number | number | number | number | number | ' +
+      'number | number | number | number | number | number | number | number | number | string | string | number | ' +
+      'number | number | number | number | number | number | string | number | number | number | number | number | ' +
+      'number | string | number | number | number | number | number | number | number | boolean | ' +
+      'Map<string, number> | Array<number> | Array<number> | Array<number> | Array<number> | Array<number> | ' +
+      'Array<number> | Array<number> | Array<number> | [number, number] | Map<any, number> | Map<number, number> | ' +
+      'Set<number> | Set<number> | Map<number, number> | Map<number, number> | Set<number> | Set<number> | ' +
+      'IterableIterator<Array<number>> | IterableIterator<Array<number>> | IterableIterator<Array<number>> | ' +
+      'IterableIterator<Array<number>> | IterableIterator<Array<number>> | IterableIterator<Array<number>> | ' +
+      'IterableIterator<Array<number>> | IterableIterator<Array<number>> | IterableIterator<[number, number]> | ' +
+      'IterableIterator<Map<number, number>> | IterableIterator<Map<number, number>> | ' +
+      'IterableIterator<Set<number>> | IterableIterator<Set<number>> | IterableIterator<Map<number, number>> | ' +
+      'IterableIterator<Map<number, number>> | IterableIterator<Set<number>> | IterableIterator<Set<number>> | ' +
+      '(param0: number, param1: number)=>number | [number, number, number] | {real: number, imag: number} | ' +
+      'Array<number> | Date | Date | Date ;\n\n');
     //3.unions有两个成员
     unions = [
       {
@@ -897,6 +1248,630 @@ suite('Gendts_unions_Suite', () => {
             }
         ]
       },
+      {
+        name: 'TEST_38',
+        alias: '',
+        members:[
+            {
+                type: 'long int',
+                name: 'silong',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_39',
+        alias: '',
+        members:[
+            {
+                type: 'long long int',
+                name: 'llinum',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_40',
+        alias: '',
+        members:[
+            {
+                type: 'char8_t',
+                name: 'c8name',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_41',
+        alias: '',
+        members:[
+            {
+                type: 'char16_t',
+                name: 'c16name',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_42',
+        alias: '',
+        members:[
+            {
+                type: 'char32_t',
+                name: 'c32name',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_43',
+        alias: '',
+        members:[
+            {
+                type: 'char64_t',
+                name: 'c64name',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_44',
+        alias: '',
+        members:[
+            {
+                type: 'std::string',
+                name: 'str',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_45',
+        alias: '',
+        members:[
+            {
+                type: 'std::wstring',
+                name: 'swsname',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_46',
+        alias: '',
+        members:[
+            {
+                type: 'std::u16string',
+                name: 'su16sname',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_47',
+        alias: '',
+        members:[
+            {
+                type: 'std::u32string',
+                name: 'su32sname',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_48',
+        alias: '',
+        members:[
+            {
+                type: 'std::basic_string',
+                name: 'sbsname',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_49',
+        alias: '',
+        members:[
+            {
+                type: 'std::vector<int>',
+                name: 'svlist',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_50',
+        alias: '',
+        members:[
+            {
+                type: 'std::deque<int>',
+                name: 'sdlist',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_51',
+        alias: '',
+        members:[
+            {
+                type: 'std::list<int>',
+                name: 'slist',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_52',
+        alias: '',
+        members:[
+            {
+                type: 'std::forward_list<int>',
+                name: 'sflist',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_53',
+        alias: '',
+        members:[
+            {
+                type: 'std::array<int>',
+                name: 'salist',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_54',
+        alias: '',
+        members:[
+            {
+                type: 'std::stack<int>',
+                name: 'sqstack',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_55',
+        alias: '',
+        members:[
+            {
+                type: 'std::queue<int>',
+                name: 'sqlist',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_56',
+        alias: '',
+        members:[
+            {
+                type: 'std::priority_queue<int>',
+                name: 'spqlist',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_57',
+        alias: '',
+        members:[
+            {
+                type: 'std::pair<double, int>',
+                name: 'sppair',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_58',
+        alias: '',
+        members:[
+            {
+                type: 'std::map<double, int>',
+                name: 'smap',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_59',
+        alias: '',
+        members:[
+            {
+                type: 'std::multimap<double, int>',
+                name: 'smmap',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_60',
+        alias: '',
+        members:[
+            {
+                type: 'std::set<double, int>',
+                name: 'sset',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_61',
+        alias: '',
+        members:[
+            {
+                type: 'std::multiset<double, int>',
+                name: 'smset',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_62',
+        alias: '',
+        members:[
+            {
+                type: 'std::unordered_map<double, int>',
+                name: 'sumap',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_63',
+        alias: '',
+        members:[
+            {
+                type: 'std::unordered_multimap<double, int>',
+                name: 'summap',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_64',
+        alias: '',
+        members:[
+            {
+                type: 'std::unordered_set<double, int>',
+                name: 'suset',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_65',
+        alias: '',
+        members:[
+            {
+                type: 'std::unordered_multiset<double, int>',
+                name: 'sumset',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_66',
+        alias: '',
+        members:[
+            {
+                type: 'std::vector<int>::iterator',
+                name: 'svlistIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_67',
+        alias: '',
+        members:[
+            {
+                type: 'std::deque<int>::iterator',
+                name: 'sdlistIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_68',
+        alias: '',
+        members:[
+            {
+                type: 'std::list<int>::iterator',
+                name: 'slistIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_69',
+        alias: '',
+        members:[
+            {
+                type: 'std::forward_list<int>::iterator',
+                name: 'sflistIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_70',
+        alias: '',
+        members:[
+            {
+                type: 'std::array<int>::iterator',
+                name: 'salistIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_71',
+        alias: '',
+        members:[
+            {
+                type: 'std::stack<int>::iterator',
+                name: 'sqstackIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_72',
+        alias: '',
+        members:[
+            {
+                type: 'std::queue<int>::iterator',
+                name: 'sqqueIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_73',
+        alias: '',
+        members:[
+            {
+                type: 'std::priority_queue<int>::iterator',
+                name: 'spqlistIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_74',
+        alias: '',
+        members:[
+            {
+                type: 'std::pair<double, int>::iterator',
+                name: 'sppairIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_75',
+        alias: '',
+        members:[
+            {
+                type: 'std::map<double, int>::iterator',
+                name: 'smapIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_76',
+        alias: '',
+        members:[
+            {
+                type: 'std::multimap<double, int>::iterator',
+                name: 'smmapIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_77',
+        alias: '',
+        members:[
+            {
+                type: 'std::set<double, int>::iterator',
+                name: 'ssetIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_78',
+        alias: '',
+        members:[
+            {
+                type: 'std::multiset<double, int>::iterator',
+                name: 'smsetIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_79',
+        alias: '',
+        members:[
+            {
+                type: 'std::unordered_map<double, int>::iterator',
+                name: 'sumapIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_80',
+        alias: '',
+        members:[
+            {
+                type: 'std::unordered_multimap<double, int>::iterator',
+                name: 'summapIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_81',
+        alias: '',
+        members:[
+            {
+                type: 'std::unordered_set<double, int>::iterator',
+                name: 'susetIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_82',
+        alias: '',
+        members:[
+            {
+                type: 'std::unordered_multiset<double, int>::iterator',
+                name: 'sumsetIter',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_83',
+        alias: '',
+        members:[
+            {
+                type: 'std::function<int(int, int)>',
+                name: 'func',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_84',
+        alias: '',
+        members:[
+            {
+                type: 'std::tuple<int, float, double>',
+                name: 'myTuple',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_85',
+        alias: '',
+        members:[
+            {
+                type: 'std::complex<double>',
+                name: 'myComplex',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_86',
+        alias: '',
+        members:[
+            {
+                type: 'std::valarray<int>',
+                name: 'myValarray',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_87',
+        alias: '',
+        members:[
+            {
+                type: 'std::time_t',
+                name: 'myTimet',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_88',
+        alias: '',
+        members:[
+            {
+                type: 'std::clock_t',
+                name: 'myClock',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      },
+      {
+        name: 'TEST_89',
+        alias: '',
+        members:[
+            {
+                type: 'std::tm',
+                name: 'myTm',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ]
+      }
     ]
     rootInfo = {
       parseObj: {
@@ -910,7 +1885,52 @@ suite('Gendts_unions_Suite', () => {
       fileName: 'test',
     };
     resStr = genDts.getDtsUnions(rootInfo);
-    assert.strictEqual(resStr, 'export type TEST_1 = number ;\n\nexport type TEST_2 = string ;\n\nexport type TEST_3 = number ;\n\nexport type TEST_4 = number ;\n\nexport type TEST_5 = number ;\n\nexport type TEST_6 = number ;\n\nexport type TEST_7 = number ;\n\nexport type TEST_8 = number ;\n\nexport type TEST_9 = string ;\n\nexport type TEST_10 = string ;\n\nexport type TEST_11 = string ;\n\nexport type TEST_12 = number ;\n\nexport type TEST_13 = number ;\n\nexport type TEST_14 = number ;\n\nexport type TEST_15 = number ;\n\nexport type TEST_16 = number ;\n\nexport type TEST_17 = number ;\n\nexport type TEST_18 = number ;\n\nexport type TEST_19 = string ;\n\nexport type TEST_20 = string ;\n\nexport type TEST_21 = number ;\n\nexport type TEST_22 = number ;\n\nexport type TEST_23 = number ;\n\nexport type TEST_24 = number ;\n\nexport type TEST_25 = number ;\n\nexport type TEST_26 = number ;\n\nexport type TEST_27 = string ;\n\nexport type TEST_28 = string ;\n\nexport type TEST_29 = number ;\n\nexport type TEST_30 = number ;\n\nexport type TEST_31 = number ;\n\nexport type TEST_32 = number ;\n\nexport type TEST_33 = number ;\n\nexport type TEST_34 = number ;\n\nexport type TEST_35 = number ;\n\nexport type TEST_36 = number ;\n\nexport type TEST_37 = boolean ;\n\n');
+    assert.strictEqual(resStr, 'export type TEST_1 = number ;\n\nexport type TEST_2 = string ;\n\n' +
+      'export type TEST_3 = number ;\n\nexport type TEST_4 = number ;\n\nexport type TEST_5 = number ;\n\n' +
+      'export type TEST_6 = number ;\n\nexport type TEST_7 = number ;\n\nexport type TEST_8 = number ;\n\n' +
+      'export type TEST_9 = string ;\n\nexport type TEST_10 = string ;\n\nexport type TEST_11 = string ;\n\n' +
+      'export type TEST_12 = number ;\n\nexport type TEST_13 = number ;\n\nexport type TEST_14 = number ;\n\n' +
+      'export type TEST_15 = number ;\n\nexport type TEST_16 = number ;\n\nexport type TEST_17 = number ;\n\n' +
+      'export type TEST_18 = number ;\n\nexport type TEST_19 = string ;\n\nexport type TEST_20 = string ;\n\n' +
+      'export type TEST_21 = number ;\n\nexport type TEST_22 = number ;\n\nexport type TEST_23 = number ;\n\n' +
+      'export type TEST_24 = number ;\n\nexport type TEST_25 = number ;\n\nexport type TEST_26 = number ;\n\n' +
+      'export type TEST_27 = string ;\n\nexport type TEST_28 = string ;\n\nexport type TEST_29 = number ;\n\n' +
+      'export type TEST_30 = number ;\n\nexport type TEST_31 = number ;\n\nexport type TEST_32 = number ;\n\n' +
+      'export type TEST_33 = number ;\n\nexport type TEST_34 = number ;\n\nexport type TEST_35 = number ;\n\n' +
+      'export type TEST_36 = number ;\n\nexport type TEST_37 = boolean ;\n\nexport type TEST_38 = number ;\n\n' +
+      'export type TEST_39 = number ;\n\nexport type TEST_40 = string ;\n\nexport type TEST_41 = string ;\n\n' +
+      'export type TEST_42 = string ;\n\nexport type TEST_43 = string ;\n\nexport type TEST_44 = string ;\n\n' +
+      'export type TEST_45 = string ;\n\nexport type TEST_46 = string ;\n\nexport type TEST_47 = string ;\n\n' +
+      'export type TEST_48 = string ;\n\nexport type TEST_49 = Array<number> ;\n\n' +
+      'export type TEST_50 = Array<number> ;\n\nexport type TEST_51 = Array<number> ;\n\n' +
+      'export type TEST_52 = Array<number> ;\n\nexport type TEST_53 = Array<number> ;\n\n' +
+      'export type TEST_54 = Array<number> ;\n\nexport type TEST_55 = Array<number> ;\n\n' +
+      'export type TEST_56 = Array<number> ;\n\nexport type TEST_57 = [number, number] ;\n\n' +
+      'export type TEST_58 = Map<number, number> ;\n\nexport type TEST_59 = Map<number, number> ;\n\n' +
+      'export type TEST_60 = Set<number> ;\n\nexport type TEST_61 = Set<number> ;\n\n' +
+      'export type TEST_62 = Map<number, number> ;\n\nexport type TEST_63 = Map<number, number> ;\n\n' +
+      'export type TEST_64 = Set<number> ;\n\nexport type TEST_65 = Set<number> ;\n\n' +
+      'export type TEST_66 = IterableIterator<Array<number>> ;\n\n' +
+      'export type TEST_67 = IterableIterator<Array<number>> ;\n\n' +
+      'export type TEST_68 = IterableIterator<Array<number>> ;\n\n' +
+      'export type TEST_69 = IterableIterator<Array<number>> ;\n\n' +
+      'export type TEST_70 = IterableIterator<Array<number>> ;\n\n' +
+      'export type TEST_71 = IterableIterator<Array<number>> ;\n\n' +
+      'export type TEST_72 = IterableIterator<Array<number>> ;\n\n' +
+      'export type TEST_73 = IterableIterator<Array<number>> ;\n\n' +
+      'export type TEST_74 = IterableIterator<[number, number]> ;\n\n' +
+      'export type TEST_75 = IterableIterator<Map<number, number>> ;\n\n' +
+      'export type TEST_76 = IterableIterator<Map<number, number>> ;\n\n' +
+      'export type TEST_77 = IterableIterator<Set<number>> ;\n\n' +
+      'export type TEST_78 = IterableIterator<Set<number>> ;\n\n' +
+      'export type TEST_79 = IterableIterator<Map<number, number>> ;\n\n' +
+      'export type TEST_80 = IterableIterator<Map<number, number>> ;\n\n' +
+      'export type TEST_81 = IterableIterator<Set<number>> ;\n\n' +
+      'export type TEST_82 = IterableIterator<Set<number>> ;\n\n' +
+      'export type TEST_83 = (param0: number, param1: number)=>number ;\n\n' +
+      'export type TEST_84 = [number, number, number] ;\n\nexport type TEST_85 = {real: number, imag: number} ;\n\n' +
+      'export type TEST_86 = Array<number> ;\n\nexport type TEST_87 = Date ;\n\nexport type TEST_88 = Date ;\n\n' +
+      'export type TEST_89 = Date ;\n\n');
   });
 
   //3, 测试异常情况export type OperationType = number ;\n\n
@@ -927,10 +1947,10 @@ suite('Gendts_unions_Suite', () => {
         rawFilePath: 'e:\\test.h',
         fileName: 'test',
       };
-      let resStr = genDts.getDtsUnions(rootInfo);
-      assert.strictEqual(resStr, '');
-      //2.unions.name为空
-      let unions: UnionObj[] = [
+    let resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, '');
+    //2.unions.name为空
+    let unions: UnionObj[] = [
         {
           name: '',
           alias: '',
@@ -943,8 +1963,8 @@ suite('Gendts_unions_Suite', () => {
             }
           ]
         }
-      ]
-      rootInfo = {
+    ]
+    rootInfo = {
         parseObj: {
           enums: [],
           unions: unions,
@@ -954,18 +1974,18 @@ suite('Gendts_unions_Suite', () => {
         },
         rawFilePath: 'e:\\test.h',
         fileName: 'test',
-      };
-      resStr = genDts.getDtsUnions(rootInfo);
-      assert.strictEqual(resStr, 'export type  = Array<number> ;\n\n');
-      //3.unions.members为空
-      unions = [
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type  = Array<number> ;\n\n');
+    //3.unions.members为空
+    unions = [
         {
           name: 'UnionObj',
           alias: '',
           members: []
         }
-      ]
-      rootInfo = {
+    ]
+    rootInfo = {
         parseObj: {
           enums: [],
           unions: unions,
@@ -975,24 +1995,24 @@ suite('Gendts_unions_Suite', () => {
         },
         rawFilePath: 'e:\\test.h',
         fileName: 'test',
-      };
-      resStr = genDts.getDtsUnions(rootInfo);
-      assert.strictEqual(resStr, 'export type UnionObj = ;\n\n');
-      //4.没有unions.name属性
-      unions = [
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type UnionObj = ;\n\n');
+    //4.没有unions.name属性
+    unions = [
         {
           alias: '',
           members: [
             {
               type: 'char32_t',
-              name: 'str',
+              name: 'ch32',
               arraySize: -1,
               arraySizeList: []
             }
           ]
         }
-      ]
-      rootInfo = {
+    ]
+    rootInfo = {
         parseObj: {
           enums: [],
           unions: unions,
@@ -1002,11 +2022,11 @@ suite('Gendts_unions_Suite', () => {
         },
         rawFilePath: 'e:\\test.h',
         fileName: 'test',
-      };
-      resStr = genDts.getDtsUnions(rootInfo);
-      assert.strictEqual(resStr, 'export type undefined = string ;\n\n');
-      //5.没有unions.alias属性
-      unions = [
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type undefined = string ;\n\n');
+    //5.没有unions.alias属性
+    unions = [
         {
           name: 'UnionObj',
           alias: '',
@@ -1019,8 +2039,8 @@ suite('Gendts_unions_Suite', () => {
             }
           ]
         }
-      ]
-      rootInfo = {
+    ]
+    rootInfo = {
         parseObj: {
           enums: [],
           unions: unions,
@@ -1030,11 +2050,11 @@ suite('Gendts_unions_Suite', () => {
         },
         rawFilePath: 'e:\\test.h',
         fileName: 'test',
-      };
-      resStr = genDts.getDtsUnions(rootInfo);
-      assert.strictEqual(resStr, 'export type UnionObj = number ;\n\n');
-      //6.unions.name为空，unions.alias不为空
-      unions = [
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type UnionObj = number ;\n\n');
+    //6.unions.name为空，unions.alias不为空
+    unions = [
         {
           name: '',
           alias: 'UnionObj',
@@ -1047,8 +2067,8 @@ suite('Gendts_unions_Suite', () => {
             }
           ]
         }
-      ]
-      rootInfo = {
+    ]
+    rootInfo = {
         parseObj: {
           enums: [],
           unions: unions,
@@ -1058,11 +2078,11 @@ suite('Gendts_unions_Suite', () => {
         },
         rawFilePath: 'e:\\test.h',
         fileName: 'test',
-      };
-      resStr = genDts.getDtsUnions(rootInfo);
-      assert.strictEqual(resStr, 'export type  = number ;\n\n');
-      //7.type为中文
-      unions = [
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type  = number ;\n\n');
+    //7.type为中文
+    unions = [
         {
           name: '',
           alias: 'UnionObj',
@@ -1075,8 +2095,8 @@ suite('Gendts_unions_Suite', () => {
             }
           ]
         }
-      ]
-      rootInfo = {
+    ]
+    rootInfo = {
         parseObj: {
           enums: [],
           unions: unions,
@@ -1086,11 +2106,11 @@ suite('Gendts_unions_Suite', () => {
         },
         rawFilePath: 'e:\\test.h',
         fileName: 'test',
-      };
-      resStr = genDts.getDtsUnions(rootInfo);
-      assert.strictEqual(resStr, 'export type  = any ;\n\n');
-      //8.type为乱码
-      unions = [
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type  = any ;\n\n');
+    //8.type为乱码
+    unions = [
         {
           name: '',
           alias: 'UnionObj',
@@ -1103,8 +2123,145 @@ suite('Gendts_unions_Suite', () => {
             }
           ]
         }
-      ]
-      rootInfo = {
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type  = any ;\n\n');
+    //8.type为日文
+    unions = [
+      {
+        name: '',
+        alias: 'UnionObj',
+        members: [
+          {
+            type: 'あさ',
+            name: 'len',
+            arraySize: -1,
+            arraySizeList: []
+          }
+        ]
+      }
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type  = any ;\n\n');
+    //9.没有ParamObj.name属性
+    unions = [
+      {
+        name: 'UnionObj',
+        alias: '',
+        members: [
+          {
+            type: 'int',
+            arraySize: -1,
+            arraySizeList: []
+          }
+        ],
+      },
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type UnionObj = number ;\n\n');
+    //10.没有ParamObj.arraaySize属性
+    unions = [
+      {
+        name: 'UnionObj',
+        alias: '',
+        members: [
+          {
+            type: 'int',
+            name: 'UnionObj',
+            arraySizeList: []
+          }
+        ],
+      },
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type UnionObj = number ;\n\n');
+    //12.没有ParamObj.arraySizeList属性
+    unions = [
+      {
+        name: 'UnionObj',
+        alias: '',
+        members: [
+          {
+            type: 'int',
+            name: 'v1',
+            arraySize: -1
+          }
+        ],
+      },
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type UnionObj = number ;\n\n');
+    //10.type字符为特殊字符
+    unions = [
+      {
+        name: 'UnionObj',
+        alias: '',
+        members: [
+          {
+            type: '1',
+            name: 'v1',
+            arraySize: -1,
+            arraySizeList: []
+          }
+        ]
+      }
+    ]
+    rootInfo = {
         parseObj: {
           enums: [],
           unions: unions,
@@ -1114,37 +2271,9 @@ suite('Gendts_unions_Suite', () => {
         },
         rawFilePath: 'e:\\test.h',
         fileName: 'test',
-      };
-      resStr = genDts.getDtsUnions(rootInfo);
-      assert.strictEqual(resStr, 'export type  = any ;\n\n');
-      //8.type为日文
-      unions = [
-        {
-          name: '',
-          alias: 'UnionObj',
-          members: [
-            {
-              type: 'あさ',
-              name: 'len',
-              arraySize: -1,
-              arraySizeList: []
-            }
-          ]
-        }
-      ]
-      rootInfo = {
-        parseObj: {
-          enums: [],
-          unions: unions,
-          structs: [],
-          classes: [],
-          funcs: []
-        },
-        rawFilePath: 'e:\\test.h',
-        fileName: 'test',
-      };
-      resStr = genDts.getDtsUnions(rootInfo);
-      assert.strictEqual(resStr, 'export type  = any ;\n\n');
+    };
+    resStr = genDts.getDtsUnions(rootInfo);
+    assert.strictEqual(resStr, 'export type UnionObj = any ;\n\n');
   });
 
   //4, 测试错误情况
@@ -1205,5 +2334,70 @@ suite('Gendts_unions_Suite', () => {
       res4 = false;
     }
     assert.strictEqual(res4, false);
+    //5. type不符合要求
+    let unions: UnionObj[] = [
+      {
+        name: '',
+        alias: 'UnionObj',
+        members: [
+          {
+            type: 1,
+            name: 'len',
+            arraySize: -1,
+            arraySizeList: []
+          }
+        ]
+      }
+    ]
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    let res5 = true;
+    try {
+      genDts.getDtsUnions(rootInfo);
+    } catch (e) {
+      res5 = false;
+    }
+    assert.strictEqual(res5, false);
+    //6.没有ParamObj.type属性
+    unions = [
+      {
+        name: 'UnionObj',
+        alias: '',
+        members: [
+          {
+            name: 'v1',
+            arraySize: -1,
+            arraySizeList: []
+          }
+        ],
+      },
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: [],
+        unions: unions,
+        structs: [],
+        classes: [],
+        funcs: []
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    };
+    let res6 = true;
+    try {
+      genDts.getDtsUnions(rootInfo);
+    } catch (e) {
+      res6 = false;
+    }
+    assert.strictEqual(res6, false);
   });
 })
