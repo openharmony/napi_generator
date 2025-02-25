@@ -13,10 +13,26 @@
 * limitations under the License.
 */
 
-import { isObjectBindingPattern } from "typescript"
-import { boolIn, boolRet, callbackIn, doubleIn, doubleRet, int32tIn, int32tRet, int64tIn, int64tRet, objectRet, stringIn, stringInUtf16, stringRet, stringRetUtf16, uint32tIn, uint32tRet } from "../func_template"
+import { 
+  boolIn, 
+  boolRet, 
+  callbackIn, 
+  doubleIn, 
+  doubleRet, 
+  int32tIn, 
+  int32tRet, 
+  int64tIn, 
+  int64tRet, 
+  objectRet, 
+  stringIn, 
+  stringInUtf16, 
+  stringRet, 
+  stringRetUtf16, 
+  uint32tIn, 
+  uint32tRet 
+} from "../func_template"
 
-export let dts2cpp_key = [
+export let cpp2DtsKey = [
     {
         keys: ['char', 'string'],
         value: 'string'
@@ -35,9 +51,9 @@ export let dts2cpp_key = [
     }
 ]
 
-export let h2napi_in_key = [
+export let h2NapiInKey = [
   {
-    // 如包含这些字眼，则默认是ObjectIn, 此时框架不做任何处理，由用户自己处理
+    // 濡傚寘鍚繖浜涘瓧鐪硷紝鍒欓粯璁ゆ槸ObjectIn, 姝ゆ椂妗嗘灦涓嶅仛浠讳綍澶勭悊锛岀敱鐢ㄦ埛鑷繁澶勭悊
     keys: ['iterator', 'vector', 'list', 'map', 'array', 'set', 'stack', 'queue', 'deque', 'tuple', 'pair'],
     value: ''
   },
@@ -76,9 +92,9 @@ export let h2napi_in_key = [
 ]
 
 
-export let h2napi_out_key = [
+export let h2NapiOutKey = [
   {
-    // 如包含这些字眼，则默认是ObjectOut
+    // 濡傚寘鍚繖浜涘瓧鐪硷紝鍒欓粯璁ゆ槸ObjectOut
     keys: ['iterator', 'vector', 'list', 'map', 'array', 'set', 'stack', 'queue', 'deque', 'tuple', 'pair'],
     value: objectRet
   },
@@ -112,7 +128,7 @@ export let h2napi_out_key = [
   }
 ]
 
-export let dts2testvalue = [
+export let dts2TestValue = [
   {
     key: 'number',
     value: '1'
