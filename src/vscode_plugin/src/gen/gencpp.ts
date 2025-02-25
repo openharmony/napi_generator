@@ -17,14 +17,15 @@ import { DirTemp, FuncInfo, FuncObj, GenInfo, InterfaceList, TypeList } from "./
 import { getInterfaceBody, getTypeBody } from "./gendts";
 import {
   boolIn, boolRet, doubleIn, doubleRet, funcGetParamTemplate, int32tIn, int32tRet, int64tIn, int64tRet,
-  napiFuncCppTemplate, napiFuncHTemplate, napiFuncInitTemplate, napiFuncRetTemplate, objectRet, objectTosetRet, paramGenTemplate, stringIn, stringRet,
+  napiFuncCppTemplate, napiFuncHTemplate, napiFuncInitTemplate, napiFuncRetTemplate, objectRet, objectTosetRet,
+  paramGenTemplate, stringIn, stringRet,
   uint32tIn, uint32tRet
 } from "../template/func_template";
 import { replaceAll } from "../common/tool";
 import { cppout, dts2cpp_cppdir } from "../template/dtscpp/dtscppdir";
 import * as path from 'path';
 import * as fs from 'fs';
-import { h2napi_in_key, h2napi_out_key } from "../template/dtscpp/dts2cpp_key";
+import { h2NapiInKey, h2NapiOutKey } from "../template/dtscpp/dts2cpp_key";
 import { napiCppTemplate } from "../template/dtscpp/dtscpp_napicpp_template";
 
 interface RetObjInfo {
@@ -237,7 +238,7 @@ const fileHandlers: { [key: string]: Function } = {
 // 通过类型值映射模板，比如：uint32_t返回值 -> uint32tRet -> napi_create_uint32
 export function transCkey2NapiOutkey(key: string) {
   // 数组 map set iterator tuple pair 等都当作objectOut处理
-  for (const keyItem of h2napi_out_key) {
+  for (const keyItem of h2NapiOutKey) {
     for (const str of keyItem.keys) {
       if (key.includes(str)) {
         return keyItem.value;
@@ -254,7 +255,7 @@ export function transCkey2NapiOutkey(key: string) {
 
 // 通过类型值映射模板，比如：uint32_t输入 -> uint32tIn -> napi_get_value_uint32
 export function transCkey2NapiInkey(key: string) {
-  for (const keyItem of h2napi_in_key) {
+  for (const keyItem of h2NapiInKey) {
     for (const str of keyItem.keys) {
       if (key.includes(str)) {
         return keyItem.value;
@@ -266,21 +267,25 @@ export function transCkey2NapiInkey(key: string) {
     key = key.replace(rkey, '').trim();
   }
   // 其他的全部当作object处理, 如typeDef/enum/struct/union/class等, 此时不需要做任何处理，因此返回空
-  // return key;
   return '';
 
 }
 
-export function genCommonFile(rootInfo: GenInfo, filePath: string, fileContent: string) {
+// 把这些东西分成一个个文件,根据文件内容来生成
+export function genCommonFile(rootInfo: GenInfo, filePath: string, 
+  fileContent: string) {
   fs.writeFileSync(filePath, fileContent);
 }
 // 生成Init的文件
-export function genInitCppFile(rootInfo: GenInfo, filePath: string, fileContent: string) {
+
+export function genInitCppFile(rootInfo: GenInfo, filePath: string,
+  fileContent: string) {
   let napiInitContent = '';
   if (rootInfo.parseObj && rootInfo.parseObj.funcs) {
     rootInfo.parseObj.funcs.forEach(func => {
       let funcName = func.name;
-      napiInitContent += replaceAll(napiFuncInitTemplate, '[func_name_replace]', funcName);
+      napiInitContent += replaceAll(napiFuncInitTemplate, 
+      '[func_name_replace]', funcName);
     });
   }
   // 写文件
@@ -289,23 +294,23 @@ export function genInitCppFile(rootInfo: GenInfo, filePath: string, fileContent:
   fs.writeFileSync(filePath, fileContent);
 }
 
-// 生成common.h文件
-// 这个读模板直接生成
-export function genCommonHFile(rootInfo: GenInfo, filePath: string, fileContent: string) {
+// 生成common.h文件,这个读模板直接生成
+export function genCommonHFile(rootInfo: GenInfo, filePath: string,
+  fileContent: string) {
   let upperFileName = rootInfo.fileName.toLocaleUpperCase();
   fileContent = replaceAll(fileContent, '[fileName]', rootInfo.fileName);
   fileContent = replaceAll(fileContent, '[upper_filename]', upperFileName);
   fs.writeFileSync(filePath, fileContent);
 }
-// 生成common.cpp文件
-// 读模板直接生成
+// 生成common.cpp文件,读模板直接生成
 export function genCommonCppFile(rootInfo: GenInfo, filePath: string, fileContent: string) {
   fileContent = replaceAll(fileContent, '[fileName]', rootInfo.fileName);
   fs.writeFileSync(filePath, fileContent);
 }
 
 // 生成napi.h文件
-export function genNapiHFile(rootInfo: GenInfo, filePath: string, fileContent: string) {
+export function genNapiHFile(rootInfo: GenInfo, filePath: string,
+  fileContent: string) {
   let napiHContent = '';
   if (rootInfo.parseObj && rootInfo.parseObj.funcs) {
     rootInfo.parseObj.funcs.forEach(func => {
@@ -319,7 +324,8 @@ export function genNapiHFile(rootInfo: GenInfo, filePath: string, fileContent: s
       hContent = replaceAll(hContent, '[input_introduce_replace]', funcParams === '' ? 'void' : funcParams);
       hContent = replaceAll(hContent, '[func_name_replace]', func.name);
       hContent = replaceAll(hContent, '[func_param_replace]', funcParams);
-      hContent = replaceAll(hContent, '[func_return_replace]', func.returns === '' ? 'void' : func.returns);
+      hContent = replaceAll(hContent, '[func_return_replace]',
+        func.returns === '' ? 'void' : func.returns);
       napiHContent += hContent;
     });
   }
@@ -331,31 +337,41 @@ export function genNapiHFile(rootInfo: GenInfo, filePath: string, fileContent: s
 }
 
 // 生成napi.cpp文件
-export function genNapiCppFile(rootInfo: GenInfo, filePath: string, fileContent: string) {
+export function genNapiCppFile(rootInfo: GenInfo, filePath: string,
+  fileContent: string) {
   let napiCppContent = '';
   if (rootInfo.parseObj && rootInfo.parseObj.funcs) {
     rootInfo.parseObj.funcs.forEach(funcInfo => {
       // 替换每个方法主体
       let hFileName = path.basename(rootInfo.rawFilePath);
-      let bodyReplace = replaceAll(napiFuncCppTemplate, '[func_name_replace]', funcInfo.name);
-      bodyReplace = replaceAll(bodyReplace, '[get_error_msg_tag]', funcInfo.name);
-      bodyReplace = replaceAll(bodyReplace, '[file_introduce_replace]', hFileName);
-      // // 生成方法注释
-      let funcInfoParams = funcInfo.parameters.length > 0 ? '': 'void';
+      let bodyReplace = replaceAll(napiFuncCppTemplate, '[func_name_replace]',
+        funcInfo.name);
+      bodyReplace = replaceAll(bodyReplace, '[get_error_msg_tag]',
+        funcInfo.name);
+      bodyReplace = replaceAll(bodyReplace, '[file_introduce_replace]',
+        hFileName);
+      // 生成方法注释
+      let funcInfoParams = funcInfo.parameters.length > 0 ? '' : 'void';
       let funcInfoParamTemp = '[paramName]: [paramType]; ';
       for (let i = 0; i < funcInfo.parameters.length; i++) {
-        let funcInfoParamReplace = replaceAll(funcInfoParamTemp, '[paramName]', funcInfo.parameters[i].name);
-        funcInfoParamReplace = replaceAll(funcInfoParamReplace, '[paramType]', funcInfo.parameters[i].type);
+        let funcInfoParamReplace = replaceAll(funcInfoParamTemp, '[paramName]',
+          funcInfo.parameters[i].name);
+        funcInfoParamReplace = replaceAll(funcInfoParamReplace, '[paramType]',
+          funcInfo.parameters[i].type);
         funcInfoParams += funcInfoParamReplace;
       }
-      bodyReplace = replaceAll(bodyReplace, '[input_introduce_replace]', funcInfoParams === '' ? 'void' : funcInfoParams);
-      bodyReplace = replaceAll(bodyReplace, '[output_introduce_replace]', funcInfo.returns);
+      bodyReplace = replaceAll(bodyReplace, '[input_introduce_replace]',
+        funcInfoParams === '' ? 'void' : funcInfoParams);
+      bodyReplace = replaceAll(bodyReplace, '[output_introduce_replace]',
+        funcInfo.returns);
       // 方法参数的处理，解析参数类型，生成napi的参数处理代码
       let paramGenResult = getCppParamGen(funcInfo);
-      bodyReplace = replaceAll(bodyReplace, '[func_getParam_replace]', paramGenResult);
+      bodyReplace = replaceAll(bodyReplace, '[func_getParam_replace]',
+        paramGenResult);
       // 方法返回值的处理，解析返回值类型，生成napi的返回值处理代码
       let returnGenResult = genCppReturnGen(funcInfo);
-      bodyReplace = replaceAll(bodyReplace, '[func_return_replace]', returnGenResult);
+      bodyReplace = replaceAll(bodyReplace, '[func_return_replace]',
+        returnGenResult);
       // 组合一个个方法
       napiCppContent += bodyReplace;
     });
@@ -371,7 +387,8 @@ export function genNapiCppFile(rootInfo: GenInfo, filePath: string, fileContent:
   fs.writeFileSync(filePath, fileContent);
 }
 
-// 方法输入参数的处理  只处理基本类型，像数组/map/set/class/struct等都全部当作object，且不做处理
+// 方法输入参数的处理,只处理基本类型，像数组/map/set/class/struct等都全部当作
+// object，且不做处理
 export function getCppParamGen(funcInfo: FuncObj): string {
   // 处理输入的参数，生成napi的参数处理代码
   if (funcInfo.parameters.length === 0) {
@@ -385,16 +402,23 @@ export function getCppParamGen(funcInfo: FuncObj): string {
       paramGenResult = '// Todo: handle object input';
       continue;
     }
-    let getParam = replaceAll(getParamInTemplate, '[param_index_replace]', 'PARAMS' + i);
-    getParam = replaceAll(getParam, '[param_name_replace]', funcInfo.parameters[i].name);
-    let paramGen = replaceAll(paramGenTemplate, '[param_index_replace]', 'PARAMS' + i);
-    paramGen = replaceAll(paramGen, '[param_name_replace]', funcInfo.parameters[i].name);
+    let getParam = replaceAll(getParamInTemplate, '[param_index_replace]',
+      'PARAMS' + i);
+    getParam = replaceAll(getParam, '[param_name_replace]',
+      funcInfo.parameters[i].name);
+    let paramGen = replaceAll(paramGenTemplate, '[param_index_replace]',
+      'PARAMS' + i);
+    paramGen = replaceAll(paramGen, '[param_name_replace]',
+      funcInfo.parameters[i].name);
     paramGen = replaceAll(paramGen, '[getParam_replace]', getParam);
     paramGenResult += paramGen;
   }
-  let genParamReplace = replaceAll(funcGetParamTemplate, '[param_length]', 'PARAMS' + funcInfo.parameters.length);
-  genParamReplace = replaceAll(genParamReplace, '[func_name_replace]', funcInfo.name);
-  genParamReplace = replaceAll(genParamReplace, '[getAllParam_replace]', paramGenResult);
+  let genParamReplace = replaceAll(funcGetParamTemplate, '[param_length]', 
+    'PARAMS' + funcInfo.parameters.length);
+  genParamReplace = replaceAll(genParamReplace, '[func_name_replace]',
+    funcInfo.name);
+  genParamReplace = replaceAll(genParamReplace, '[getAllParam_replace]',
+    paramGenResult);
   return genParamReplace
 }
 
@@ -405,11 +429,14 @@ export function genCppReturnGen(funcInfo: FuncObj): string {
     return '    return NULL;\n';
   }
   let returnName = funcInfo.name + 'Out';
-  let funcReturnReplace = replaceAll(napiFuncRetTemplate, '[return_name]', returnName);
+  let funcReturnReplace = replaceAll(napiFuncRetTemplate, '[return_name]',
+    returnName);
   let retGenResult = transCkey2NapiOutkey(funcInfo.returns);
   retGenResult = replaceAll(retGenResult, '[return_name_replace]', returnName);
-  funcReturnReplace = replaceAll(funcReturnReplace, '[func_name_replace]', funcInfo.name);
-  funcReturnReplace = replaceAll(funcReturnReplace, '[return_replace]', retGenResult);
+  funcReturnReplace = replaceAll(funcReturnReplace, '[func_name_replace]',
+    funcInfo.name);
+  funcReturnReplace = replaceAll(funcReturnReplace, '[return_replace]',
+    retGenResult);
   return funcReturnReplace;
 }
 
@@ -440,7 +467,7 @@ export function genDir(dirItem: DirTemp, rootInfo: GenInfo, out: string) {
   })
 }
 
-// gen h and cpp file. 如果是dts2cpp,那么就拿到parcets的结果后，再根据translateTs2C来翻译，接着拿翻译的结果生成
+// gen h and cpp file.
 export function genHCppFile(rootInfo: GenInfo, out: string) {
   if (out === undefined || out === null || out.trim() === '') {
     out = path.dirname(rootInfo.rawFilePath);

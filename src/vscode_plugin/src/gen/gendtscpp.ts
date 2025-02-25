@@ -266,8 +266,9 @@ export function createDir(path: string) {
     fs.mkdirSync(path);
   }
 }
-export function gendtscppFromH(rootInfo: GenInfo) {
-  // 生成dts文件
+export function genDtscppFromH(rootInfo: GenInfo) {
+  // 生成dts文件: 这里将文件生成在 cpp/types目录下,该路径是ndk工程中的dts文件的默
+  // 认路径
   let outDir = path.dirname(rootInfo.rawFilePath);
   let dtsOutPath = path.join(outDir, 'cpp');
   createDir(dtsOutPath);
@@ -276,6 +277,16 @@ export function gendtscppFromH(rootInfo: GenInfo) {
   genDtsFile(rootInfo, dtsOutPath);
   // 生成.cpp和.h文件 
   genHCppFile(rootInfo, outDir);
+  // 生成Ability.test.ets文件：这里将文件生成在 test/ets目录下,该路径是ndk工程中
+  // 的test文件的默认路径
+  let testOutPath = path.join(outDir, 'test');
+  createDir(testOutPath);
+  testOutPath = path.join(testOutPath, 'ets');
+  createDir(testOutPath);
+  genAbilitytestFile(rootInfo, testOutPath);
+  console.log('h2dtscpp success!')
+}
+// -------------------dts2cpp------------------------
   // 生成Ability.test.ets文件
   let testOutPath = path.join(outDir, 'test');
   createDir(testOutPath);

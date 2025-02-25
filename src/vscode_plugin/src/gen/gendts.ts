@@ -14,7 +14,7 @@
 */
 import fs = require('fs');
 import { DtscppRootInfo, FuncObj, InterfaceBody, ParamObj, FuncInfo, GenInfo, InterfaceList, TypeList } from './datatype';
-import { dts2cpp_key } from '../template/dtscpp/dts2cpp_key';
+import { cpp2DtsKey } from '../template/dtscpp/dts2cpp_key';
 import path = require('path');
 import { Logger } from '../common/log';
 
@@ -22,7 +22,7 @@ import { generateRandomInteger, removeComments, removeTab, replaceAll } from '..
 import util = require('util');
 import re = require('../common/re');
 import { dtsFuncTemplate } from '../template/func_template';
-
+const DTS = '.d.ts';
 
 export function genTsFunction(func: FuncInfo, rawFileName: string) {
   let funcParams = '';
@@ -540,7 +540,7 @@ export function genDtsFile(rootInfo: GenInfo, out: string) {
   // gen union
   fileContent += getDtsUnions(rootInfo);
 
-  let dtsFileName = rootInfo.fileName + '.d.ts';
+  let dtsFileName = rootInfo.fileName + DTS;
   let outPath = ''
   if (out === undefined || out === null || out.trim() === '') {
     let dirPath = path.dirname(rootInfo.rawFilePath);
