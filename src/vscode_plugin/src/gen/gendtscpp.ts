@@ -286,12 +286,4 @@ export function genDtscppFromH(rootInfo: GenInfo) {
   genAbilitytestFile(rootInfo, testOutPath);
   console.log('h2dtscpp success!')
 }
-// -------------------dts2cpp------------------------
-  // 生成Ability.test.ets文件
-  let testOutPath = path.join(outDir, 'test');
-  createDir(testOutPath);
-  testOutPath = path.join(testOutPath, 'ets');
-  createDir(testOutPath);
-  genAbilitytestFile(rootInfo, testOutPath);
-}
-// -------------------dts2cpp------------------------ todo
+// -------------------dts2cpp------------------------todo
