@@ -22,7 +22,7 @@ import {
   uint32tIn, uint32tRet
 } from "../template/func_template";
 import { replaceAll } from "../common/tool";
-import { cppdir, cppout, dts2cpp_cppdir } from "../template/dtscpp/dtscppdir";
+import { cppdir } from "../template/dtscpp/dtscppdir";
 import * as path from 'path';
 import * as fs from 'fs';
 import { h2NapiInKey, h2NapiOutKey } from "../template/dtscpp/dts2cpp_key";

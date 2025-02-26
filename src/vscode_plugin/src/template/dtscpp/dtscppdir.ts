@@ -69,6 +69,7 @@ export let cppout: DirTemp = {
 // ---------------
 export let cppdir: DirTemp = {
   name: '',
-  files: [napiCommonHTemplate, napiCommonCppTemplate, napiHTemplate, napiInitTemplate, napiCppTemplate, dts2hTemplate],
+  files: [napiCommonHTemplate, napiCommonCppTemplate, napiHTemplate,
+    napiInitTemplate, napiCppTemplate, dts2hTemplate],
   dirs: []
 }
