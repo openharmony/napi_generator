@@ -72,7 +72,8 @@ suite('Gendts_enums_Suite', () => {
       fileName: 'test',
     }
     resStr = genDts.getDtsEnum(rootInfo);
-    assert.strictEqual(resStr, 'export enum EnumObj {\n\tENUM_ONE,\n\tENUM_TWO,\n};\n\nexport type OperationType = EnumObj;\n\n');
+    assert.strictEqual(resStr, 'export enum EnumObj {\n\tENUM_ONE,\n\tENUM_TWO,\n};\n\n'
+      +'export type OperationType = EnumObj;\n\n');
     //3.enums中alias和name相同
     enums = [
       {
@@ -97,6 +98,32 @@ suite('Gendts_enums_Suite', () => {
     }
     resStr = genDts.getDtsEnum(rootInfo);
     assert.strictEqual(resStr, 'export enum EnumObj {\n\tENUM_ONE,\n\tENUM_TWO,\n};\n\n');
+    //4.有EnumObj.values属性
+    enums = [
+      {
+        name: 'str',
+        alias: '',
+        members: [
+          'std::string'
+        ],
+        values: [
+          'hello'
+        ]
+      }
+    ];
+    rootInfo = {
+      parseObj: {
+        enums: enums,
+        unions: [],
+        structs: [],
+        classes: [],
+        funcs: [],
+      },
+      rawFilePath: 'e:\\test.h',
+      fileName: 'test',
+    }
+    resStr = genDts.getDtsEnum(rootInfo);
+    assert.strictEqual(resStr, 'export enum str {\n\tstd::string,\n};\n\n');
   });
 
   //2, 测试边界情况
@@ -185,7 +212,12 @@ suite('Gendts_enums_Suite', () => {
       fileName: 'test',
     }
     resStr = genDts.getDtsEnum(rootInfo);
-    assert.strictEqual(resStr, 'export enum EnumObj {\n\t摇粒绒,\n\t1 + 1 > 2,\n\t0817 deadline,\n\tmoon,\n\tflower,\n\tlight,\n\tball_796,\n\tpurple,\n\twhite,\n\tcute,\n\tpuppy,\n\tjiashi假使,\n\tcity_walk,\n\tteeee_eeeet,\n\tcloth,\n\tdog_A_cat,\n\textension,\n\tOpenHarmony,\n\tTs,\n\tnext_year,\n\tgreen park,\n\triver,\n\tstd::string,\n\tstd::array<int, 10>,\n\tbear,\n\tolder,\n\thouse,\n\tla77LA66,\n\tENUM_ONE,\n\t123,\n\tENUM_TWO=2,\n\tbool,\n\tCHAR,\n\tstring,\n\t开源鸿蒙,\n\t哈萨克,\n\tげっこう,\n\thello world,\n\t3.68743969984233577,\n\t**^\t,\n};\n\n');
+    assert.strictEqual(resStr, 'export enum EnumObj {\n\t摇粒绒,\n\t1 + 1 > 2,\n\t0817 deadline,\n\tmoon,\n\tflower,\n' +
+      '\tlight,\n\tball_796,\n\tpurple,\n\twhite,\n\tcute,\n\tpuppy,\n\tjiashi假使,\n\tcity_walk,\n\tteeee_eeeet,\n' +
+      '\tcloth,\n\tdog_A_cat,\n\textension,\n\tOpenHarmony,\n\tTs,\n\tnext_year,\n\tgreen park,\n\triver,\n' +
+      '\tstd::string,\n\tstd::array<int, 10>,\n\tbear,\n\tolder,\n\thouse,\n\tla77LA66,\n\tENUM_ONE,\n\t123,\n' +
+      '\tENUM_TWO=2,\n\tbool,\n\tCHAR,\n\tstring,\n\t开源鸿蒙,\n\t哈萨克,\n\tげっこう,\n\thello world,\n' +
+      '\t3.68743969984233577,\n\t**^\t,\n};\n\n');
     //3.enums有两个EnumObj
     enums = [
       {
@@ -234,33 +266,11 @@ suite('Gendts_enums_Suite', () => {
         ]
       },
       {
-        name: 'tttype',
-        alias: '',
-        members:[
-          'char'
-        ]
-      },
-      {
         name: '方向',
         alias: '',
         members: [
           '上'
         ]
-      },
-      {
-        name: 'pikachu',
-        alias: '',
-        members: [
-          'pikachu'
-        ]
-      },
-      {
-        name: '颜色',
-        alias: '',
-        members: [
-          '红',
-        ]
-
       },
       {
         name: 'どうぶつえん',
@@ -410,13 +420,6 @@ suite('Gendts_enums_Suite', () => {
         ]
       },
       {
-        name: 'uptr',
-        alias: '',
-        members: [
-          'unsigned void*'
-        ]
-      },
-      {
         name: 'bflag',
         alias: '',
         members: [
@@ -424,73 +427,360 @@ suite('Gendts_enums_Suite', () => {
         ]
       },
       {
-        name: 'ptr',
+        name: 'cwname',
         alias: '',
         members: [
-          'signed void*'
+          'wchar_t'
         ]
       },
       {
-        name: 'fruit1',
+        name: 'c8name',
         alias: '',
         members: [
-          'apple'
+          'char8_t'
         ]
       },
       {
-        name: 'fruit2',
+        name: 'c16name',
         alias: '',
         members: [
-          'orange'
+          'char16_t'
         ]
       },
       {
-        name: 'fruit3',
+        name: 'c32name',
         alias: '',
         members: [
-          'banana'
+          'char32_t'
         ]
       },
       {
-        name: 'fruit4',
+        name: 'c64name',
         alias: '',
         members: [
-          'pomelo'
+          'char64_t'
         ]
       },
       {
-        name: 'fruit5',
+        name: 'ssname',
         alias: '',
         members: [
-          'pear'
+          'std::string'
         ]
       },
       {
-        name: 'fruit6',
+        name: 'swsname',
         alias: '',
         members: [
-          'peach'
+          'std:wstring'
         ]
       },
       {
-        name: 'fruit7',
+        name: 'su16sname',
         alias: '',
         members: [
-          'cherry'
+          'std::u16string'
         ]
       },
       {
-        name: 'fruit8',
+        name: 'su32sname',
         alias: '',
         members: [
-          'watermelon'
+          'std:u32string'
         ]
       },
       {
-        name: 'fruit9',
+        name: 'sbsname',
         alias: '',
         members: [
-          'strawberry'
+          'std::basic_string'
+        ]
+      },
+      {
+        name: 'svlist',
+        alias: '',
+        members: [
+          'std::vector<int>'
+        ]
+      },
+      {
+        name: 'sdlist',
+        alias: '',
+        members: [
+          'std::deque<int>'
+        ]
+      },
+      {
+        name: 'slist',
+        alias: '',
+        members: [
+          'std::list<int>'
+        ]
+      },
+      {
+        name: 'sflist',
+        alias: '',
+        members: [
+          'std::forward_list<int>'
+        ]
+      },
+      {
+        name: 'salist',
+        alias: '',
+        members: [
+          'std::array<int>'
+        ]
+      },
+      {
+        name: 'sqstack',
+        alias: '',
+        members: [
+          'std::stack<int>'
+        ]
+      },
+      {
+        name: 'sqlist',
+        alias: '',
+        members: [
+          'std::queue<int>'
+        ]
+      },
+      {
+        name: 'spqlist',
+        alias: '',
+        members: [
+          'std::priority_queue<int>'
+        ]
+      },
+      {
+        name: 'sppair',
+        alias: '',
+        members: [
+          'std::pair<double, int>'
+        ]
+      },
+      {
+        name: 'smap',
+        alias: '',
+        members: [
+          'std::map<double, int>'
+        ]
+      },
+      {
+        name: 'smmap',
+        alias: '',
+        members: [
+          'std::multimap<double, int>'
+        ]
+      },
+      {
+        name: 'sset',
+        alias: '',
+        members: [
+          'std::set<double, int>'
+        ]
+      },
+      {
+        name: 'smset',
+        alias: '',
+        members: [
+          'std::multiset<double, int>'
+        ]
+      },
+      {
+        name: 'sumap',
+        alias: '',
+        members: [
+          'std::unordered_map<double, int>'
+        ]
+      },
+      {
+        name: 'summap',
+        alias: '',
+        members: [
+          'std::unordered_multimap<double, int>'
+        ]
+      },
+      {
+        name: 'suset',
+        alias: '',
+        members: [
+          'std::unordered_set<double, int>'
+        ]
+      },
+      {
+        name: 'sumset',
+        alias: '',
+        members: [
+          'std::unordered_multiset<double, int>'
+        ]
+      },
+      {
+        name: 'svlistIter',
+        alias: '',
+        members: [
+          'std::vector<int>::iterator'
+        ]
+      },
+      {
+        name: 'sdlistIter',
+        alias: '',
+        members: [
+          'std::deque<int>::iterator'
+        ]
+      },
+      {
+        name: 'slistIter',
+        alias: '',
+        members: [
+          'std::list<int>::iterator'
+        ]
+      },
+      {
+        name: 'sflistIter',
+        alias: '',
+        members: [
+          'std::forward_list<int>::iterator'
+        ]
+      },
+      {
+        name: 'salistIter',
+        alias: '',
+        members: [
+          'std::array<int>::iterator'
+        ]
+      },
+      {
+        name: 'sqstackIter',
+        alias: '',
+        members: [
+          'std::stack<int>::iterator'
+        ]
+      },
+      {
+        name: 'sqqueIter',
+        alias: '',
+        members: [
+          'std::queue<int>::iterator'
+        ]
+      },
+      {
+        name: 'spqlistIter',
+        alias: '',
+        members: [
+          'std::priority_queue<int>::iterator'
+        ]
+      },
+      {
+        name: 'sppairIter',
+        alias: '',
+        members: [
+          'std::pair<double, int>::iterator'
+        ]
+      },
+      {
+        name: 'smapIter',
+        alias: '',
+        members: [
+          'std::map<double, int>::iterator'
+        ]
+      },
+      {
+        name: 'smmapIter',
+        alias: '',
+        members: [
+          'std::multimap<double, int>::iterator'
+        ]
+      },
+      {
+        name: 'ssetIter',
+        alias: '',
+        members: [
+          'std::set<double, int>::iterator'
+        ]
+      },
+      {
+        name: 'smsetIter',
+        alias: '',
+        members: [
+          'std::multiset<double, int>::iterator'
+        ]
+      },
+      {
+        name: 'sumapIter',
+        alias: '',
+        members: [
+          'std::unordered_map<double, int>::iterator'
+        ]
+      },
+      {
+        name: 'summapIter',
+        alias: '',
+        members: [
+          'std::unordered_multimap<double, int>::iterator'
+        ]
+      },
+      {
+        name: 'susetIter',
+        alias: '',
+        members: [
+          'std::unordered_set<double, int>::iterator'
+        ]
+      },
+      {
+        name: 'sumsetIter',
+        alias: '',
+        members: [
+          'std::unordered_multiset<double, int>::iterator'
+        ]
+      },
+      {
+        name: 'func',
+        alias: '',
+        members: [
+          'std::function<int(int, int)>'
+        ]
+      },
+      {
+        name: 'myTuple',
+        alias: '',
+        members: [
+          'std::tuple<int, float, double>'
+        ]
+      },
+      {
+        name: 'myComplex',
+        alias: '',
+        members: [
+          'std::complex<double>'
+        ]
+      },
+      {
+        name: 'myValarray',
+        alias: '',
+        members: [
+          'std::valarray<int>'
+        ]
+      },
+      {
+        name: 'myTimet',
+        alias: '',
+        members: [
+          'std::time_t'
+        ]
+      },
+      {
+        name: 'myClock',
+        alias: '',
+        members: [
+          'std::clock_t'
+        ]
+      },
+      {
+        name: 'myTm',
+        alias: '',
+        members: [
+          'std::tm'
         ]
       }
     ];
@@ -506,8 +796,47 @@ suite('Gendts_enums_Suite', () => {
       fileName: 'test',
     }
     resStr = genDts.getDtsEnum(rootInfo);
-    assert.strictEqual(resStr, 'export enum TEST_ENUM {\n\tENUM_1 = 1,\n\tENUM_2 = 2,\n};\n\nexport enum EnumObj {\n\tenums,\n};\n\nexport enum tttype {\n\tchar,\n};\n\nexport enum 方向 {\n\t上,\n};\n\nexport enum pikachu {\n\tpikachu,\n};\n\nexport enum 颜色 {\n\t红,\n};\n\nexport enum どうぶつえん {\n\tしまうま,\n};\n\nexport enum slen {\n\tshort,\n};\n\nexport enum width {\n\tfloat,\n};\n\nexport enum ullint {\n\tunsigned long long,\n};\n\nexport enum sllint {\n\tsigned long long,\n};\n\nexport enum llen {\n\tlong,\n};\n\nexport enum uld {\n\tunsigned long double,\n};\n\nexport enum uwidth {\n\tunsigned float,\n};\n\nexport enum sld {\n\tsigned long double,\n};\n\nexport enum sdlen {\n\tsigned double,\n};\n\nexport enum ch {\n\tchar,\n};\n\nexport enum len {\n\tint,\n};\n\nexport enum llint {\n\tlong long,\n};\n\nexport enum dlen {\n\tdouble,\n};\n\nexport enum ldlen {\n\tlong double,\n};\n\nexport enum uch {\n\tunsigned char,\n};\n\nexport enum ulen {\n\tint,\n};\n\nexport enum uslen {\n\tunsigned short,\n};\n\nexport enum ullen {\n\tunsigned long,\n};\n\nexport enum sllen {\n\tsigned long,\n};\n\nexport enum udlen {\n\tunsigned double,\n};\n\nexport enum uptr {\n\tunsigned void*,\n};\n\nexport enum bflag {\n\tbool,\n};\n\nexport enum ptr {\n\tsigned void*,\n};\n\nexport enum fruit1 {\n\tapple,\n};\n\nexport enum fruit2 {\n\torange,\n};\n\nexport enum fruit3 {\n\tbanana,\n};\n\nexport enum fruit4 {\n\tpomelo,\n};\n\nexport enum fruit5 {\n\tpear,\n};\n\nexport enum fruit6 {\n\tpeach,\n};\n\nexport enum fruit7 {\n\tcherry,\n};\n\nexport enum fruit8 {\n\twatermelon,\n};\n\nexport enum fruit9 {\n\tstrawberry,\n};\n\n');
-
+    assert.strictEqual(resStr, 'export enum TEST_ENUM {\n\tENUM_1 = 1,\n\tENUM_2 = 2,\n};\n\nexport enum EnumObj {\n' +
+      '\tenums,\n};\n\nexport enum 方向 {\n\t上,\n};\n\nexport enum どうぶつえん {\n\tしまうま,\n};\n\n' +
+      'export enum slen {\n\tshort,\n};\n\nexport enum width {\n\tfloat,\n};\n\nexport enum ullint {\n' +
+      '\tunsigned long long,\n};\n\nexport enum sllint {\n\tsigned long long,\n};\n\nexport enum llen {\n\tlong,\n' +
+      '};\n\nexport enum uld {\n\tunsigned long double,\n};\n\nexport enum uwidth {\n\tunsigned float,\n};\n\n' +
+      'export enum sld {\n\tsigned long double,\n};\n\nexport enum sdlen {\n\tsigned double,\n};\n\n' +
+      'export enum ch {\n\tchar,\n};\n\nexport enum len {\n\tint,\n};\n\nexport enum llint {\n\tlong long,\n};\n\n' +
+      'export enum dlen {\n\tdouble,\n};\n\nexport enum ldlen {\n\tlong double,\n};\n\nexport enum uch {\n' +
+      '\tunsigned char,\n};\n\nexport enum ulen {\n\tint,\n};\n\nexport enum uslen {\n\tunsigned short,\n};\n\n' +
+      'export enum ullen {\n\tunsigned long,\n};\n\nexport enum sllen {\n\tsigned long,\n};\n\nexport enum udlen {\n' +
+      '\tunsigned double,\n};\n\nexport enum bflag {\n\tbool,\n};\n\nexport enum cwname {\n\twchar_t,\n};\n' +
+      '\nexport enum c8name {\n\tchar8_t,\n};\n\nexport enum c16name {\n\tchar16_t,\n};\n\nexport enum c32name {\n' +
+      '\tchar32_t,\n};\n\nexport enum c64name {\n\tchar64_t,\n};\n\nexport enum ssname {\n\tstd::string,\n};\n\n' +
+      'export enum swsname {\n\tstd:wstring,\n};\n\nexport enum su16sname {\n\tstd::u16string,\n};\n\n' +
+      'export enum su32sname {\n\tstd:u32string,\n};\n\nexport enum sbsname {\n\tstd::basic_string,\n};\n\n' +
+      'export enum svlist {\n\tstd::vector<int>,\n};\n\nexport enum sdlist {\n\tstd::deque<int>,\n};\n\n' +
+      'export enum slist {\n\tstd::list<int>,\n};\n\nexport enum sflist {\n\tstd::forward_list<int>,\n};\n\n' +
+      'export enum salist {\n\tstd::array<int>,\n};\n\nexport enum sqstack {\n\tstd::stack<int>,\n};\n\n' +
+      'export enum sqlist {\n\tstd::queue<int>,\n};\n\nexport enum spqlist {\n\tstd::priority_queue<int>,\n};\n\n' +
+      'export enum sppair {\n\tstd::pair<double, int>,\n};\n\nexport enum smap {\n\tstd::map<double, int>,\n};\n\n' +
+      'export enum smmap {\n\tstd::multimap<double, int>,\n};\n\nexport enum sset {\n\tstd::set<double, int>,\n' +
+      '};\n\nexport enum smset {\n\tstd::multiset<double, int>,\n};\n\nexport enum sumap {\n' +
+      '\tstd::unordered_map<double, int>,\n};\n\nexport enum summap {\n\tstd::unordered_multimap<double, int>,\n' +
+      '};\n\nexport enum suset {\n\tstd::unordered_set<double, int>,\n};\n\nexport enum sumset {\n' +
+      '\tstd::unordered_multiset<double, int>,\n};\n\nexport enum svlistIter {\n\tstd::vector<int>::iterator,\n};\n\n'+
+      'export enum sdlistIter {\n\tstd::deque<int>::iterator,\n};\n\nexport enum slistIter {\n' +
+      '\tstd::list<int>::iterator,\n};\n\nexport enum sflistIter {\n\tstd::forward_list<int>::iterator,\n};\n\n' +
+      'export enum salistIter {\n\tstd::array<int>::iterator,\n};\n\nexport enum sqstackIter {\n' +
+      '\tstd::stack<int>::iterator,\n};\n\nexport enum sqqueIter {\n\tstd::queue<int>::iterator,\n};\n\n' +
+      'export enum spqlistIter {\n\tstd::priority_queue<int>::iterator,\n};\n\nexport enum sppairIter {\n' +
+      '\tstd::pair<double, int>::iterator,\n};\n\nexport enum smapIter {\n\tstd::map<double, int>::iterator,\n};\n\n' +
+      'export enum smmapIter {\n\tstd::multimap<double, int>::iterator,\n};\n\nexport enum ssetIter {\n' +
+      '\tstd::set<double, int>::iterator,\n};\n\nexport enum smsetIter {\n\tstd::multiset<double, int>::iterator,\n' +
+      '};\n\nexport enum sumapIter {\n\tstd::unordered_map<double, int>::iterator,\n};\n\nexport enum summapIter {\n' +
+      '\tstd::unordered_multimap<double, int>::iterator,\n};\n\nexport enum susetIter {\n' +
+      '\tstd::unordered_set<double, int>::iterator,\n};\n\nexport enum sumsetIter {\n' +
+      '\tstd::unordered_multiset<double, int>::iterator,\n};\n\nexport enum func {\n' +
+      '\tstd::function<int(int, int)>,\n};\n\nexport enum myTuple {\n\tstd::tuple<int, float, double>,\n};\n\n' +
+      'export enum myComplex {\n\tstd::complex<double>,\n};\n\nexport enum myValarray {\n\tstd::valarray<int>,\n' +
+      '};\n\nexport enum myTimet {\n\tstd::time_t,\n};\n\nexport enum myClock {\n\tstd::clock_t,\n};\n\n' +
+      'export enum myTm {\n\tstd::tm,\n};\n\n');
   });
 
   //3, 测试异常情况
@@ -594,7 +923,7 @@ suite('Gendts_enums_Suite', () => {
     resStr = genDts.getDtsEnum(rootInfo);
     assert.strictEqual(resStr, 'export enum undefined {\n\tENUM_1,\n};\n\n');
 
-    //5.alias不存在
+    //5.没有enums.alias属性
     enums = [
       {
         name: 'TEST_ENUM',
