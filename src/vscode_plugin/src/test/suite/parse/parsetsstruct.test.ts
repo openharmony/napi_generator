@@ -25,7 +25,7 @@ import * as parsets from '../../../parse/parsets';
 suite('Parse_Struct_TS_Suite', () => {
   vscode.window.showInformationMessage('Start all tests.');
   
-  //1, 测试 parseClass 一般情况
+  //1, 测试 parseStruct 一般情况
   test('parseStruct_ts_test_1', () => {
     let teststruct = `interface Point { 
         x: number;
@@ -51,7 +51,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.functions[0].parameters[0].type, 'string');
   });
 
-  //2, 测试 parseClass 类型覆盖情况
+  //2, 测试 parseStruct 类型覆盖情况
   test('parseStruct_ts_test_2', () => {
     let teststruct = `interface OTC {
         len: number;
@@ -214,7 +214,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.functions[12].parameters[0].arraySize, 0);
   });
 
-  //3, 测试 parseClass 模板类模板函数情况
+  //3, 测试 parseStruct 模板类模板函数情况
   test('parseStruct_ts_test_3', () => {
     let teststruct = `interface OTC<Type> {
         len: Type;
@@ -246,7 +246,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[2].arraySize, 0);
   });
 
-  //4, 测试 parseClass 继承情况
+  //4, 测试 parseStruct 继承情况
   test('parseStruct_ts_test_4', () => {
     let teststruct = `interface OTC extends Basic {
         len: number;
@@ -277,7 +277,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //5, 测试 parseClass 数组情况
+  //5, 测试 parseStruct 数组情况
   test('parseStruct_ts_test_5', () => {
     let teststruct = `interface OTC extends Basic {
         len: number[10];
@@ -308,7 +308,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //6, 测试 parseClass 测试模板继承情况
+  //6, 测试 parseStruct 测试模板继承情况
   test('parseStruct_ts_test_6', () => {
     let teststruct = `interface OTC <Type extends Basic> {
         len: Type;
@@ -339,7 +339,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //7, 测试 parseClass 测试选择情况
+  //7, 测试 parseStruct 测试选择情况
   test('parseStruct_ts_test_7', () => {
     let teststruct = `interface OTC <Type extends Basic> {
         len: Type;
@@ -370,7 +370,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //8, 测试 parseClass 测试注释选择情况
+  //8, 测试 parseStruct 测试注释选择情况
   test('parseStruct_ts_test_8', () => {
     let teststruct = `interface OTC <Type extends Basic> {
         // 测试注释
@@ -403,7 +403,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //9, 测试 parseClass 属性修饰符情况
+  //9, 测试 parseStruct 属性修饰符情况
   test('parseStruct_ts_test_9', () => {
     let teststruct = `interface OTC <Type extends Basic> {
         // 测试注释
@@ -439,7 +439,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[2].arraySize, 0);
   });
 
-  //10, 测试 parseClass 索引签名情况
+  //10, 测试 parseStruct 索引签名情况
   test('parseStruct_ts_test_10', () => {
     let teststruct = `interface OTC {
         [index: number]: string;  
@@ -455,7 +455,7 @@ suite('Parse_Struct_TS_Suite', () => {
     
   });
 
-  //11, 测试 parseClass 扩展类型情况
+  //11, 测试 parseStruct 扩展类型情况
   test('parseStruct_ts_test_11', () => {
     let teststruct = `interface OTC {
         const cc: ColorfulCircle = {
@@ -478,7 +478,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[1].arraySize, 0);
   });
 
-  //12, 测试 parseClass 交集类型情况
+  //12, 测试 parseStruct 交集类型情况
   test('parseStruct_ts_test_12', () => {
     let teststruct = `interface OTC {
         const cc: Colorful & Circle;
@@ -497,7 +497,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[1].arraySize, 0);
   });
 
-  //13, 测试 parseClass 泛型对象类型情况
+  //13, 测试 parseStruct 泛型对象类型情况
   test('parseStruct_ts_test_13', () => {
     let teststruct =  `interface OTC {
         const cc: any;
@@ -533,7 +533,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[5].arraySize, 0);
   });
 
-  //14, 测试 parseClass readonly array对象类型情况
+  //14, 测试 parseStruct readonly array对象类型情况
   test('parseStruct_ts_test_14', () => {
     let teststruct = `interface OTC {
         const roArray: ReadonlyArray<string> = ["red", "green", "blue"];
@@ -571,7 +571,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[6].arraySize, 0);
   });
 
-  //15, 测试 parseClass 剩余元素类型情况
+  //15, 测试 parseStruct 剩余元素类型情况
   test('parseStruct_ts_test_15', () => {
     let teststruct = `interface OTC {
       const a: StringNumberBooleans = ["hello", 1];
@@ -604,7 +604,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[5].arraySize, 0);
   });
 
-  //16, 测试 parseClass 元祖类型情况
+  //16, 测试 parseStruct 元祖类型情况
   test('parseStruct_ts_test_16', () => {
     let teststruct = `interface OTC {
       pair: readonly [string, number];
@@ -628,7 +628,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[2].arraySize, 0);
   });
 
-  //17, 测试 parseClass keyof类型情况
+  //17, 测试 parseStruct keyof类型情况
   test('parseStruct_ts_test_17', () => {
     let teststruct = `interface OTC {
       pair: keyof Arrayish;
@@ -644,7 +644,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //18, 测试 parseClass typeof类型情况
+  //18, 测试 parseStruct typeof类型情况
   test('parseStruct_ts_test_18', () => {
     let teststruct = `interface OTC {
       pair: typeof "Hello world";
@@ -667,7 +667,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[2].arraySize, 0);
   });
 
-  //19, 测试 parseClass 索引访问类型情况
+  //19, 测试 parseStruct 索引访问类型情况
   test('parseStruct_ts_test_19', () => {
     let teststruct = `interface OTC {
       pair: Person["age"];
@@ -703,7 +703,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[5].arraySize, 0);
   });
 
-  //20, 测试 parseClass 条件类型情况
+  //20, 测试 parseStruct 条件类型情况
   test('parseStruct_ts_test_20', () => {
     let teststruct = `interface OTC {
       pair: Dog extends Animal ? number : string;
@@ -736,7 +736,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //21, 测试 parseClass 映射类型情况
+  //21, 测试 parseStruct 映射类型情况
   test('parseStruct_ts_test_21', () => {
     let teststruct = `interface OTC {
       [key: string]: boolean | Horse;
@@ -765,7 +765,7 @@ suite('Parse_Struct_TS_Suite', () => {
     // assert.strictEqual(structItem.members[2].arraySize, 0);
   });
 
-  //22, 测试 parseClass 模板字面类型情况
+  //22, 测试 parseStruct 模板字面类型情况
   test('parseStruct_ts_test_22', () => {
     let teststruct = `interface OTC {
       pair: "world";
@@ -799,7 +799,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //23, 测试 parseClass 内在字符串操作类型情况
+  //23, 测试 parseStruct 内在字符串操作类型情况
   test('parseStruct_ts_test_23', () => {
     let teststruct = `interface OTC {
       ShoutyGreeting: Uppercase<"Greeting">;
@@ -828,7 +828,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //24, 测试 parseClass export情况
+  //24, 测试 parseStruct export情况
   test('parseStruct_ts_test_24', () => {
     let teststruct = `export interface OTC {
         len: number;
@@ -859,7 +859,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //25, 测试 parseClass 库文件情况
+  //25, 测试 parseStruct 库文件情况
   test('parseStruct_ts_test_25', () => {
     let teststruct = `interface OTC {
         len: require("mylib");
@@ -877,7 +877,7 @@ suite('Parse_Struct_TS_Suite', () => {
     
   });
 
-  //26, 测试 parseClass declare namespace 情况
+  //26, 测试 parseStruct declare namespace 情况
   test('parseStruct_ts_test_26', () => {
     let teststruct = `declare namespace {
       export interface OTC {
@@ -910,7 +910,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //27, 测试 parseClass 两个类extend 情况
+  //27, 测试 parseStruct 两个类extend 情况
   test('parseStruct_ts_test_27', () => {
     let teststruct = `declare namespace {
       export interface OTC {
@@ -954,7 +954,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.functions.length, 0);
   });
 
-  //28, 测试 parseClass 两个类不同 情况
+  //28, 测试 parseStruct 两个类不同 情况
   test('parseStruct_ts_test_28', () => {
     let teststruct = `declare namespace {
       export interface OTC {
@@ -1016,7 +1016,7 @@ suite('Parse_Struct_TS_Suite', () => {
   });
 
   // 异常和错误用例
-  //41, 测试 parseClass 名字有下划线情况
+  //41, 测试 parseStruct 名字有下划线情况
   test('parseStruct_ts_test_41', () => {
     let teststruct = `interface _TEST_T {
         len: number;
@@ -1047,7 +1047,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //42, 测试 parseClass 单行情况
+  //42, 测试 parseStruct 单行情况
   test('parseStruct_ts_test_42', () => {
     let teststruct = `interface OTC { len: number; contruct(a: number) : void; };`
     let structObjList = parsets.doParseTs("test.ts", teststruct);
@@ -1068,7 +1068,7 @@ suite('Parse_Struct_TS_Suite', () => {
     
   });
 
-  //43, 测试 parseClass 单行模板类模板函数情况
+  //43, 测试 parseStruct 单行模板类模板函数情况
   test('parseStruct_ts_test_43', () => {
     let teststruct = `interface OTC<Type> {len: Type; add(a: Type) : void;};`
     let structObjList = parsets.doParseTs("test.ts", teststruct);
@@ -1090,7 +1090,7 @@ suite('Parse_Struct_TS_Suite', () => {
     
   });
 
-  //44, 测试 parseClass 继承没有名字情况
+  //44, 测试 parseStruct 继承没有名字情况
   test('parseStruct_ts_test_44', () => {
     let teststruct = `interface OTC extends {
         len: number;
@@ -1106,7 +1106,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members.length, 0);
   });
 
-  //45, 测试 parseClass 中文名字和扩展情况
+  //45, 测试 parseStruct 中文名字和扩展情况
   test('parseStruct_ts_test_45', () => {
     let teststruct = `interface 中文 extends 扩展 {
         len: number[10];
@@ -1137,7 +1137,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //46, 测试 parseClass 测试中文模板继承情况
+  //46, 测试 parseStruct 测试中文模板继承情况
   test('parseStruct_ts_test_46', () => {
     let teststruct = `interface OTC <类型 extends 基础> {
         len: Type;
@@ -1168,7 +1168,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //47, 测试 parseClass 测试选择少类型情况
+  //47, 测试 parseStruct 测试选择少类型情况
   test('parseStruct_ts_test_47', () => {
     let teststruct = `interface OTC <Type extends Basic> {
         len: Type;
@@ -1192,7 +1192,7 @@ suite('Parse_Struct_TS_Suite', () => {
     
   });
 
-  //48, 测试 parseClass 测试注释选择情况
+  //48, 测试 parseStruct 测试注释选择情况
   test('parseStruct_ts_test_48', () => {
     let teststruct = `/* 
       interface OTC {
@@ -1206,7 +1206,7 @@ suite('Parse_Struct_TS_Suite', () => {
     
   });
 
-  //49, 测试 parseClass 空类情况
+  //49, 测试 parseStruct 空类情况
   test('parseStruct_ts_test_49', () => {
     let teststruct = `interface OTC  {}; interface OTC2  {};`
     let structObjList = parsets.doParseTs("test.ts", teststruct);
@@ -1217,7 +1217,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.name, 'OTC2');
   });
 
-  //50, 测试 parseClass 少分号情况
+  //50, 测试 parseStruct 少分号情况
   test('parseStruct_ts_test_50', () => {
     let teststruct = `interface OTC {
         aname: string
@@ -1234,7 +1234,7 @@ suite('Parse_Struct_TS_Suite', () => {
     
   });
 
-  //51, 测试 parseClass 扩展类型少括号情况
+  //51, 测试 parseStruct 扩展类型少括号情况
   test('parseStruct_ts_test_51', () => {
     let teststruct = `interface OTC {
         const cc: ColorfulCircle = {
@@ -1256,7 +1256,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[1].arraySize, 0);
   });
 
-  //52, 测试 parseClass 交集类型错误情况
+  //52, 测试 parseStruct 交集类型错误情况
   test('parseStruct_ts_test_52', () => {
     let teststruct = `interface OTC {
         const cc: Colorful & ;
@@ -1276,7 +1276,7 @@ suite('Parse_Struct_TS_Suite', () => {
     
   });
 
-  //53, 测试 parseClass 泛型对象类型少尖括号情况
+  //53, 测试 parseStruct 泛型对象类型少尖括号情况
   test('parseStruct_ts_test_53', () => {
     let teststruct = `interface OTC {
         const cc: any;
@@ -1312,7 +1312,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[5].arraySize, 0);
   });
 
-  //54, 测试 parseClass readonly array对象少]类型情况
+  //54, 测试 parseStruct readonly array对象少]类型情况
   test('parseStruct_ts_test_54', () => {
     let teststruct = `interface OTC {
         const roArray: ReadonlyArray<string> = ["red", "green", "blue";
@@ -1341,7 +1341,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[3].arraySize, 0);
   });
 
-  //55, 测试 parseClass 剩余元素类型情况
+  //55, 测试 parseStruct 剩余元素类型情况
   test('parseStruct_ts_test_55', () => {
     let teststruct = `interface OTC {
       const a: StringNumberBooleans = ["hello", ;
@@ -1374,7 +1374,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[5].arraySize, 0);
   });
 
-  //56, 测试 parseClass 元祖类型少类型情况
+  //56, 测试 parseStruct 元祖类型少类型情况
   test('parseStruct_ts_test_56', () => {
     let teststruct = `interface OTC {
       pair: readonly [string, ];
@@ -1401,7 +1401,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[3].arraySize, 0);
   });
 
-  //57, 测试 parseClass keyof少类型情况
+  //57, 测试 parseStruct keyof少类型情况
   test('parseStruct_ts_test_57', () => {
     let teststruct = `interface OTC {
       pair: keyof ;
@@ -1417,7 +1417,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //58, 测试 parseClass typeof少类型情况
+  //58, 测试 parseStruct typeof少类型情况
   test('parseStruct_ts_test_58', () => {
     let teststruct = `interface OTC {
       pair: typeof "Hello world";
@@ -1440,7 +1440,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[2].arraySize, 0);
   });
 
-  //59, 测试 parseClass 索引访问少]类型情况
+  //59, 测试 parseStruct 索引访问少]类型情况
   test('parseStruct_ts_test_59', () => {
     let teststruct = `interface OTC {
       pair: Person["age];
@@ -1476,7 +1476,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[5].arraySize, 0);
   });
 
-  //60, 测试 parseClass 条件类型少选项情况
+  //60, 测试 parseStruct 条件类型少选项情况
   test('parseStruct_ts_test_60', () => {
     let teststruct = `interface OTC {
       pair: Dog extends Animal ? number ;
@@ -1509,7 +1509,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //61, 测试 parseClass 映射少类型情况
+  //61, 测试 parseStruct 映射少类型情况
   test('parseStruct_ts_test_61', () => {
     let teststruct = `interface OTC {
       [key: string]: boolean | ;
@@ -1527,7 +1527,7 @@ suite('Parse_Struct_TS_Suite', () => {
   
   });
 
-  //62, 测试 parseClass 模板字面少“类型情况
+  //62, 测试 parseStruct 模板字面少“类型情况
   test('parseStruct_ts_test_62', () => {
     let teststruct = `interface OTC {
       pair: 1;
@@ -1549,7 +1549,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //63, 测试 parseClass 内在字符串操作类型情况
+  //63, 测试 parseStruct 内在字符串操作类型情况
   test('parseStruct_ts_test_63', () => {
     let teststruct = `interface OTC {
       ShoutyGreeting: Uppercase<1>;
@@ -1578,7 +1578,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //64, 测试 parseClass export 在一行情况
+  //64, 测试 parseStruct export 在一行情况
   test('parseStruct_ts_test_64', () => {
     let teststruct = `export interface OTC {len: number;name: string; contruct(a: number): void;deconstruct(): void;};`
     let structObjList = parsets.doParseTs("test.ts", teststruct);
@@ -1604,7 +1604,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //65, 测试 parseClass 库文件在一行情况
+  //65, 测试 parseStruct 库文件在一行情况
   test('parseStruct_ts_test_65', () => {
     let teststruct = `interface OTC { len: require("mylib");};`
     let structObjList = parsets.doParseTs("test.ts", teststruct);
@@ -1620,7 +1620,7 @@ suite('Parse_Struct_TS_Suite', () => {
     
   });
 
-  //66, 测试 parseClass declare namespace 情况
+  //66, 测试 parseStruct declare namespace 情况
   test('parseStruct_ts_test_66', () => {
     let teststruct = `declare namespace { export interface OTC { len: number; name: string; contruct(a: number): void;}};`
     let structObjList = parsets.doParseTs("test.ts", teststruct);
@@ -1644,7 +1644,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[0].arraySize, 0);
   });
 
-  //67, 测试 parseClass extend自己 情况
+  //67, 测试 parseStruct extend自己 情况
   test('parseStruct_ts_test_67', () => {
     let teststruct = `declare namespace {
       export interface OTC2 extend OTC2 {
@@ -1662,7 +1662,7 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.functions.length, 0);
   });
 
-  //68, 测试 parseClass 两个类不同 情况
+  //68, 测试 parseStruct 两个类不同 情况
   test('parseStruct_ts_test_68', () => {
     let teststruct = `declare namespace {
       export interface OTC {len: number;name: string; contruct(a: number): void;deconstruct(): void;}
@@ -1713,7 +1713,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //69, 测试 parseClass 特殊符号不同 情况
+  //69, 测试 parseStruct 特殊符号不同 情况
   test('parseStruct_ts_test_69', () => {
     let teststruct = `declare namespace {
       export interface OTC {
@@ -1747,7 +1747,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //70, 测试 parseClass 重构 情况
+  //70, 测试 parseStruct 重构 情况
   test('parseStruct_ts_test_70', () => {
     let teststruct = `declare namespace {
       export interface OTC {
@@ -1785,7 +1785,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //71, 测试 parseClass 函数重载错误 情况
+  //71, 测试 parseStruct 函数重载错误 情况
   test('parseStruct_ts_test_71', () => {
     let teststruct = `declare namespace {
       export interface OTC {
@@ -1822,7 +1822,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //72, 测试 parseClass this 情况
+  //72, 测试 parseStruct this 情况
   test('parseStruct_ts_test_72', () => {
     let teststruct = `declare namespace {
       export interface User {
@@ -1864,7 +1864,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //73, 测试 parseClass 函数可分配 情况
+  //73, 测试 parseStruct 函数可分配 情况
   test('parseStruct_ts_test_73', () => {
     let teststruct = `
     type voidFunc = () => void;
@@ -1909,7 +1909,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //74, 测试 parseClass 获取器，设置器 情况
+  //74, 测试 parseStruct 获取器，设置器 情况
   test('parseStruct_ts_test_74', () => {
     let teststruct = `
     type voidFunc = () => void;
@@ -1937,7 +1937,7 @@ suite('Parse_Struct_TS_Suite', () => {
 
   });
 
-  //75, 测试 parseClass 基类继承实现 情况
+  //75, 测试 parseStruct 基类继承实现 情况
   test('parseStruct_ts_test_75', () => {
     let teststruct = `
       type voidFunc = () => void;
