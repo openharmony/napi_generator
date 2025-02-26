@@ -36,7 +36,7 @@ export function generateFuncTestCase(funcInfo: FuncInfo, rawFileName: string,  t
   // 调用函数
   Logger.getInstance().info("test funcInfo:" + JSON.stringify(funcInfo));
   if (getJsType(funcInfo.retType) !== 'void') {
-    callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), funcInfo.genName, funcParamUse);
+    callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), funcInfo.name, funcParamUse);
     // 加 hilog 打印
     hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.name);
     hilogContent += util.format('Logger.getInstance().info("testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.name);
@@ -191,7 +191,7 @@ export function getTestType(type: string) {
 export function getJsType(type: string) {
     type = replaceAll(type,'const', '');
     type = replaceAll(type, '*', '').trim(); 
-    for(const keyItem of dts2cpp_key) {
+    for(const keyItem of cpp2DtsKey) {
       for(const str of keyItem.keys) {
         if (type.includes(str)) {
           return transTskey2Ckey(type);
@@ -228,7 +228,7 @@ export function genAbilitytestFile(rootInfo: GenInfo, out: string) {
         // 参数定义并初始化
         const param = funcInfo.parameters[i];
         let paramType = transTskey2Ckey(param.type);
-        let testValue = '\'Please give an any value.\'';  // any类型咋赋值？
+        let testValue = 'undefined; // Please give an any value.';  // any类型咋赋值？
         dts2TestValue.forEach(item => {
           if (item.key === paramType) {
             testValue = item.value;
@@ -242,8 +242,10 @@ export function genAbilitytestFile(rootInfo: GenInfo, out: string) {
           funcParamUse = funcParamUse.slice(0, -2); // 去掉最后一个逗号和空格
         }
       }
-      // 返回值
-      let returnType = transTskey2Ckey(funcInfo.returns);
+      // 返回值,如果本来就是ts类型就不用替换了：如Promise<unknown>，就不用替换了
+      let tsPromiseReg = /Promise<([^>]+)>/g;
+      let returnType = tsPromiseReg.exec(funcInfo.returns)? funcInfo.returns:
+        transTskey2Ckey(funcInfo.returns);
       if (returnType === 'void') {
         callFunc = util.format('testNapi.%s(%s)\n    ', funcInfo.name,
           funcParamUse);
