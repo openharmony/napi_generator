@@ -1671,27 +1671,7 @@ suite('Parse_Class_TS_Suite', () => {
     let classObjList = parsets.doParseTs("test.ts", testclass);
     assert.strictEqual(classObjList.classes.length, 1);
     let classItem = classObjList.classes[0];
-    // assert.strictEqual(classItem.name, 'OTC');
-    // assert.strictEqual(classItem.functionList.length, 2);
-    // assert.strictEqual(classItem.functionList[0].name, 'contruct');
-    // assert.strictEqual(classItem.functionList[0].returns, 'void');
-    // assert.strictEqual(classItem.functionList[0].parameters.length, 1);
-    // assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
-    // assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number');
-    // assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
-    // assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
-    // assert.strictEqual(classItem.functionList[1].returns, 'void');
-
-    // assert.strictEqual(classItem.variableList.length, 2);
-    // assert.strictEqual(classItem.variableList[0].name, 'len');
-    // assert.strictEqual(classItem.variableList[0].type, 'number');
-    // assert.strictEqual(classItem.variableList[0].arraySize, 0);
-    // assert.strictEqual(classItem.variableList[1].name, 'name');
-    // assert.strictEqual(classItem.variableList[1].type, 'string');
-    // assert.strictEqual(classItem.variableList[1].arraySize, 0);
-
-
-    // classItem = classObjList.classes[1];
+  
     assert.strictEqual(classItem.name, 'OTC2');
     assert.strictEqual(classItem.functionList.length, 0);
   });
