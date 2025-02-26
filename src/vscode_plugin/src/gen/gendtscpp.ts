@@ -13,7 +13,9 @@
 * limitations under the License.
 */
 
-import { DirTemp, DtscppRootInfo, FuncInfo, InterfaceList, TypeList, ParamObj, ParseObj, ClassObj, FuncObj, GenInfo } from "./datatype";
+import { DirTemp, DtscppRootInfo, FuncInfo, InterfaceList, TypeList, 
+ParamObj, ParseObj, ClassObj, FuncObj, GenInfo, 
+UnionObj, StructObj, TypeObj } from "./datatype";
 import { replaceAll } from "../common/tool";
 import fs = require('fs');
 import path = require("path");
@@ -24,6 +26,7 @@ import { generateDirectFunction, genHCppFile } from "./gencpp";
 import { genAbilitytestFile, generateFuncTestCase } from "./gentest";
 import { Logger } from "../common/log";
 import { tsTransferType } from "../template/functypemap_template";
+import { dts2CppKey } from "../template/dtscpp/dts2cpp_key";
 
 interface GenResult {
   // dts文件中的内容
@@ -186,7 +189,8 @@ export function getInterfaces(parseObj: ParseObj) {
       variables.map(variable => ({
         name: variable.name,
         type: getCTypeFromJS(variable.type),
-        arraySize: variable.arraySize
+        arraySize: variable.arraySize,
+        arraySizeList: []
       }));
       
     const getFunctions = (functions: FuncObj[]) => 
@@ -253,7 +257,8 @@ export function createFuncParam(params: ParamObj) {
   let cppParam: ParamObj = {
     name: '',
     type: '',
-    arraySize: 0
+    arraySize: 0,
+    arraySizeList: [],
   };
   cppParam.name = params.name;
   cppParam.type = getCTypeFromJS(params.type);
@@ -267,23 +272,184 @@ export function createDir(path: string) {
   }
 }
 export function genDtscppFromH(rootInfo: GenInfo) {
-  // 生成dts文件: 这里将文件生成在 cpp/types目录下,该路径是ndk工程中的dts文件的默
+  let rootDir = path.dirname(rootInfo.rawFilePath);
+  let cppOutPath = path.join(rootDir, 'cpp');
+  createDir(cppOutPath);
+  let dtsOutPath = path.join(cppOutPath, 'types');
+  createDir(dtsOutPath);
+  // 生成dts文件: 这里将文件生成在cpp/types目录下,该路径是ndk工程中的dts文件的默
   // 认路径
-  let outDir = path.dirname(rootInfo.rawFilePath);
-  let dtsOutPath = path.join(outDir, 'cpp');
-  createDir(dtsOutPath);
-  dtsOutPath = path.join(dtsOutPath, 'types');
-  createDir(dtsOutPath);
   genDtsFile(rootInfo, dtsOutPath);
-  // 生成.cpp和.h文件 
-  genHCppFile(rootInfo, outDir);
-  // 生成Ability.test.ets文件：这里将文件生成在 test/ets目录下,该路径是ndk工程中
-  // 的test文件的默认路径
-  let testOutPath = path.join(outDir, 'test');
+  // 生成.cpp和.h文件:这里将文件生成在cpp目录下,该路径是ndk工程中的cpp文件的默
+  // 认路径
+  genHCppFile(rootInfo, cppOutPath);
+  let testOutPath = path.join(rootDir, 'test');
   createDir(testOutPath);
   testOutPath = path.join(testOutPath, 'ets');
   createDir(testOutPath);
+  // 生成Ability.test.ets文件：这里将文件生成在test/ets目录下,该路径是ndk工程中
+  // 的test文件的默认路径
   genAbilitytestFile(rootInfo, testOutPath);
-  console.log('h2dtscpp success!')
+  Logger.getInstance().info('generate success!')
 }
-// -------------------dts2cpp------------------------todo
+
+// -------------------dts2cpp------------------------
+// 将dts类型转换为c++类型
+export function transCkey2Dtskey(key: string): string {
+  // 箭头函数类型: (a:number,b:string)=>void -> std::function<void(double, string)> 
+  const arrowFuncReg = /\(([\w\:\<\>\,\s*]*)\)\s*=>([\w\s\:<\>\,\s*]+)/;
+  const arrowFuncMatch = key.match(arrowFuncReg);
+  if (arrowFuncMatch) {
+    const paramsStr = arrowFuncMatch[1] ? arrowFuncMatch[1].trim() : '';
+    let paramreg = /([\w\s\:\*]+<[^>]*>|[\*\w\s\:]+)/g;
+    let pmatch;
+    let paramList = [];
+    while ((pmatch = paramreg.exec(paramsStr)) !== null) {
+      paramList.push(pmatch[0]);
+    }
+    let str = '';
+    for (let i = 0; i < paramList.length; ++i) {
+      const [paramName, paramType] = paramList[i].split(':').map((item) => item.trim());
+      str += paramType === '' ? '' : transCkey2Dtskey(paramType);
+      if (i != paramList.length - 1) {
+        str += ', ';
+      }
+    }
+    return `std::function<${transCkey2Dtskey(arrowFuncMatch[2].trim())}(${str})>`;
+  }
+
+  // Callback<boolean> -> std::function<void(bool)>
+  const callbackReg = /Callback\s*<([^>]+)>/g;
+  const callbackMatch = callbackReg.exec(key);
+  if (callbackMatch) {
+    return `std::function<void(${transCkey2Dtskey(callbackMatch[1].trim())})>`;
+  }
+
+  // 基本类型：number/string/boolean/Map/Set/Array
+  for (const keyItem of dts2CppKey) {
+    for (const str of keyItem.keys) {
+      if (key.trim().replace(' ', '') === str) {
+        return keyItem.value;
+      }
+    }
+  }
+  // 如果是object类型，直接返回类型名如：a: AType  -> AType
+  return key;
+}
+
+export function transParseObj(parseObj: ParseObj) {
+  // trans enums
+  let enums = parseObj.enums;
+  // trans unions
+  let unions: UnionObj[] = [];
+  for (let union of parseObj.unions) {
+    unions.push({
+      name: union.name,
+      alias: union.alias,
+      members: transParameters(union.members),
+    });
+  }
+  // trans structs
+  let structs: StructObj[] = [];
+  for (let struct of parseObj.structs) {
+    structs.push({
+      name: struct.name,
+      alias: struct.alias,
+      members: transParameters(struct.members),
+      functions: transFunctions(struct.functions)
+    });
+  }
+  // trans classes
+  let classes: ClassObj[] = [];
+  for (let classObj of parseObj.classes) {
+    classes.push({
+      name: classObj.name,
+      alias: classObj.alias,
+      variableList: transParameters(classObj.variableList),
+      functionList: transFunctions(classObj.functionList)
+    });
+  }
+  // trans funcs
+  let funcs: FuncObj[] = transFunctions(parseObj.funcs);
+
+  // trans types : 首先判断types是否存在
+  let types: TypeObj[] = [];
+  if (parseObj.types && parseObj.types.length > 0) {
+    for (let type of parseObj.types) {
+      let memberType: string[] = type.types; // 这个types是啥？里面的成员是不是需要转换啊
+      for (let member of memberType) {
+        let cType = transCkey2Dtskey(member); 
+        memberType.push(cType);
+      }
+      types.push({
+        name: type.name,
+        alias: type.alias,
+        members: transParameters(type.members),
+        types: memberType,  // for test. 这里面是啥还不知道
+        functions: transFunctions(type.functions)
+      });
+    }
+  }
+
+  let transParseObj: ParseObj = {
+    enums: enums,
+    unions: unions,
+    structs: structs,
+    classes: classes,
+    funcs: funcs,
+    types: types
+  };
+
+  return transParseObj;
+}
+
+// 将FuncObj[]中的ts type全转换成cpp type
+function transFunctions(tranFuncs: FuncObj[]) {
+  let funcs: FuncObj[] = [];
+  for (let func of tranFuncs) {
+    funcs.push({
+      name: func.name,
+      type: func.type,
+      returns: transCkey2Dtskey(func.returns),
+      parameters: transParameters(func.parameters),
+    });
+  }
+  return funcs;
+}
+
+// 将ParamObj[]中的ts type全转换成cpp type
+export function transParameters(transMembers: ParamObj[]) {
+  let members: ParamObj[] = [];
+  for (let member of transMembers) {
+    members.push({
+      type: transCkey2Dtskey(member.type),
+      name: member.name,
+      arraySize: member.arraySize,
+      arraySizeList: member.arraySizeList
+    });
+  }
+  return members;
+}
+
+export function genCppFromDts(rootInfo: GenInfo) {
+  // 要将rootInfo中的type信息转换为c++类型，然后写入cpp文件中
+  let hRootInfo: GenInfo = {
+    parseObj: transParseObj(rootInfo.parseObj),
+    rawFilePath: rootInfo.rawFilePath,
+    fileName: rootInfo.fileName
+  }
+  // 生成napi框架(.h文件和.cpp文件):这里将文件生成在cpp目录下,该路径是ndk工程中
+  // 的cpp文件的默认路径
+  let rootDir = path.dirname(hRootInfo.rawFilePath);
+  let cppOutPath = path.join(rootDir, 'cpp');
+  createDir(cppOutPath);
+  genHCppFile(hRootInfo, cppOutPath);
+  // 生成Ability.test.ets文件: 这里将文件生成在test/ets目录下,该路径是ndk工程中
+  // 的test文件的默认路径
+  let testOutPath = path.join(rootDir, 'test');
+  createDir(testOutPath);
+  testOutPath = path.join(testOutPath, 'ets');
+  createDir(testOutPath);
+  genAbilitytestFile(hRootInfo, testOutPath);
+}
+

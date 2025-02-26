@@ -22,7 +22,7 @@ import { generateRandomInteger, removeComments, removeTab, replaceAll } from '..
 import util = require('util');
 import re = require('../common/re');
 import { dtsFuncTemplate } from '../template/func_template';
-const DTS = '.d.ts';
+const dtsFileExt = '.d.ts';
 
 export function genTsFunction(func: FuncInfo, rawFileName: string) {
   let funcParams = '';
@@ -58,7 +58,8 @@ export function getInterFuncParams(str: string, paramObj: ParamObj[]) {
   let paramObject: ParamObj = {
     name: '',
     type: '',
-    arraySize: 0
+    arraySize: 0,
+    arraySizeList: []
   }
   let paramArr = replaceAll(str, '*', '').split(',');
   for (let i = 0; i < paramArr.length; i++) {
@@ -102,13 +103,15 @@ export function createParam(parseParamInfo: ParamObj) {
   let tsParam: ParamObj = {
       name: '',
       type: '',
-      arraySize: 0
+      arraySize: 0,
+      arraySizeList: []
   };
 
   let cppParam: ParamObj = {
     name: '',
     type: '',
-    arraySize: 0
+    arraySize: 0,
+    arraySizeList: []
   };
   tsParam.name = replaceAll(parseParamInfo.name, '*', '');
   cppParam.name = tsParam.name;
@@ -250,7 +253,9 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
           let paramObj: ParamObj = {
             name: variableName,
             type: replaceAll(variabletype, 'struct', '').trim(),
-            arraySize: 0
+            arraySize: 0,
+            arraySizeList: [],
+
           }
           paramsContent.push(paramObj);
         }
@@ -397,7 +402,7 @@ export function transTskey2Ckey(key: string): string {
   if (matchDate) {
     return 'Date';
   }
-  for(const keyItem of dts2cpp_key) {
+  for(const keyItem of cpp2DtsKey) {
     for(const str of keyItem.keys) {
       if (key.includes(str)) {
         return keyItem.value;
@@ -540,7 +545,7 @@ export function genDtsFile(rootInfo: GenInfo, out: string) {
   // gen union
   fileContent += getDtsUnions(rootInfo);
 
-  let dtsFileName = rootInfo.fileName + DTS;
+  let dtsFileName = rootInfo.fileName + dtsFileExt;
   let outPath = ''
   if (out === undefined || out === null || out.trim() === '') {
     let dirPath = path.dirname(rootInfo.rawFilePath);
