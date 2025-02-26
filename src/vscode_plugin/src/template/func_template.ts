@@ -412,7 +412,7 @@ if (status != napi_ok) {
 `;
 
 export let callbackIn =  `
-napi_value argv[1];
+napi_value argv;
 // Todo: 创建要传递给回调函数的参数
 napi_value result;
 /**
@@ -424,7 +424,7 @@ napi_value result;
 
 * result: 指向返回值的指针。如果回调函数没有返回值，则可以设置为 nullptr。
 */
-napi_call_function(env, nullptr, args[[param_index_replace]], 1, argv, result);
+napi_call_function(env, nullptr, args[[param_index_replace]], 1, &argv, result);
 `;
 
 // napi testAbility需要生成的方法模板
