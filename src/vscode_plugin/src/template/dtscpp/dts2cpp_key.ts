@@ -91,6 +91,76 @@ export let h2NapiInKey = [
   }
 ]
 
+export let dts2CppKey = [
+  {
+    keys: ['number'],
+    value: 'double'
+  },
+  {
+    keys: ['string'],
+    value: 'std::string'
+  },
+  {
+    keys: ['boolean'],
+    value: 'bool'
+  },
+  {
+    keys: ['void'],
+    value: 'void'
+  },
+  {
+    keys: ['Array<number>', 'number[]'],
+    value: 'std::vector<double>'
+  },
+  {
+    keys: ['Array<string>', 'string[]'],
+    value: 'std::vector<std::string>'
+  },
+  {
+    keys: ['Array<boolean>', 'boolean[]'],
+    value: 'std::vector<bool>'
+  },
+  {
+    keys: ['Map<string,number>'],
+    value: 'std::map<std::string, double>'
+  },
+  {
+    keys: ['Map<string,string>'],
+    value: 'std::map<std::string, std::string>'
+  },
+  {
+    keys: ['Map<string,boolean>'],
+    value: 'std::map<std::string, bool>'
+  },
+  {
+    keys: ['Map<number,number>'],
+    value: 'std::map<double, double>'
+  },
+  {
+    keys: ['Map<number,string>'],
+    value: 'std::map<double, std::string>'
+  },
+  {
+    keys: ['Map<number,boolean>'],
+    value: 'std::map<double, bool>'
+  },
+  {
+    keys: ['Set<string>'],
+    value: 'std::set<std::string>'
+  },
+  {
+    keys: ['Set<number>'],
+    value: 'std::set<double>'
+  },
+  {
+    keys: ['Set<boolean>'],
+    value: 'std::set<bool>'
+  },
+  {
+    keys: ['any', 'object'],
+    value: 'std::any'
+  }
+]
 
 export let h2NapiOutKey = [
   {

@@ -239,6 +239,23 @@ if (status != napi_ok) {
 }
 `;
 
+export let promiseRet =  `napi_value [return_name_replace]Out;
+napi_deferred [return_name_replace]DeferedOut;
+/* [NAPI_GEN]: 创建一个空的promise对象
+ * env: N-API环境的句柄,表示当前的上下文
+ * promise: 用于接收创建的promise对象的指针
+ * deferred: 用于接收deferred对象的指针
+*/
+status = napi_create_promise(env, &[return_name_replace]Out, &[return_name_replace]DeferedOut);
+if (status != napi_ok) {
+   /* [NAPI_GEN]: 错误处理*/
+   getErrMessage(status, env, extended_error_info, "napi_create_promise", tag);
+   return nullptr;
+}       
+// Todo: create async work here.
+`;
+
+
 // napi func的paramGen template
 export let paramGenTemplate = `napi_valuetype valuetype[param_name_replace];
 /* [NAPI_GEN]: 获取入参类型，第[param_index_replace]个入参
@@ -395,18 +412,19 @@ if (status != napi_ok) {
 `;
 
 export let callbackIn =  `
-    napi_value argv;
-    // Todo:创建要传递给回调函数的参数
-    napi_value result;
-    /**
-    * env: napi_env 类型的环境变量
-    * this_arg: 指向 JavaScript 对象的指针，表示回调函数中的 this 值。如果不需要传递 this 值，则可以设置为 nullptr。
-    * func: 指向 JavaScript 回调函数的指针。
-    * argc: 传递给回调函数的参数数量。
-    * argv: 一个 napi_value 类型的数组，用于存储要传递给回调函数的参数。
-    * result: 指向返回值的指针。如果回调函数没有返回值，则可以设置为 nullptr。
-    */
-    napi_call_function(env, nullptr, args[[param_index_replace]], 1, &argv, &result);
+napi_value argv;
+// Todo: 创建要传递给回调函数的参数
+napi_value result;
+/**
+* env: napi_env 类型的环境变量
+* this_arg: 指向 JavaScript 对象的指针，表示回调函数中的 this 值。如果不需要递 this 值，则可以设置为 nullptr。
+* func: 指向 JavaScript 回调函数的指针。
+* argc: 传递给回调函数的参数数量。示例中传递了一个参数。
+* argv: 一个 napi_value 类型的数组，用于存储要传递给回调函数的参数。示例中传递了一个参数。
+
+* result: 指向返回值的指针。如果回调函数没有返回值，则可以设置为 nullptr。
+*/
+napi_call_function(env, nullptr, args[[param_index_replace]], 1, &argv, result);
 `;
 
 // napi testAbility需要生成的方法模板

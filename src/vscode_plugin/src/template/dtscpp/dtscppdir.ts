@@ -65,3 +65,11 @@ export let cppout: DirTemp = {
   files: [],
   dirs: [dts2cpp_cppdir, dtscpp_etsdir]
 }
+
+// ---------------
+export let cppdir: DirTemp = {
+  name: '',
+  files: [napiCommonHTemplate, napiCommonCppTemplate, napiHTemplate,
+    napiInitTemplate, napiCppTemplate, dts2hTemplate],
+  dirs: []
+}
