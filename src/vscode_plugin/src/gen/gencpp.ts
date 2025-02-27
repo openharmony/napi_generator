@@ -18,11 +18,11 @@ import { getInterfaceBody, getTypeBody } from "./gendts";
 import {
   boolIn, boolRet, doubleIn, doubleRet, funcGetParamTemplate, int32tIn, int32tRet, int64tIn, int64tRet,
   napiFuncCppTemplate, napiFuncHTemplate, napiFuncInitTemplate, napiFuncRetTemplate, objectRet, objectTosetRet,
-  paramGenTemplate, stringIn, stringRet,
+  paramGenTemplate, promiseRet, stringIn, stringRet,
   uint32tIn, uint32tRet
 } from "../template/func_template";
 import { replaceAll } from "../common/tool";
-import { cppout, dts2cpp_cppdir } from "../template/dtscpp/dtscppdir";
+import { cppdir } from "../template/dtscpp/dtscppdir";
 import * as path from 'path';
 import * as fs from 'fs';
 import { h2NapiInKey, h2NapiOutKey } from "../template/dtscpp/dts2cpp_key";
@@ -237,6 +237,13 @@ const fileHandlers: { [key: string]: Function } = {
 
 // 通过类型值映射模板，比如：uint32_t返回值 -> uint32tRet -> napi_create_uint32
 export function transCkey2NapiOutkey(key: string) {
+   // 如果是ts传递的Promise<>类型，并且transTs2C时未转换，那么就返回promiseRet
+   let tsPromiseReg = /Promise<([^>]+)>/g;
+   const tsPromiseMatch = tsPromiseReg.exec(key);
+   if (tsPromiseMatch) {
+     return promiseRet;
+   }
+
   // 数组 map set iterator tuple pair 等都当作objectOut处理
   for (const keyItem of h2NapiOutKey) {
     for (const str of keyItem.keys) {
@@ -399,7 +406,7 @@ export function getCppParamGen(funcInfo: FuncObj): string {
     let getParamInTemplate = transCkey2NapiInkey(funcInfo.parameters[i].type);
     // 如果getParamInTemplate是空，则默认是对象输入，不做任何处理
     if (getParamInTemplate === '') {
-      paramGenResult = '// Todo: handle object input';
+      paramGenResult += '// Todo: handle object input.\n\n';
       continue;
     }
     let getParam = replaceAll(getParamInTemplate, '[param_index_replace]',
@@ -428,7 +435,7 @@ export function genCppReturnGen(funcInfo: FuncObj): string {
   if (funcInfo.returns === 'void') {
     return '    return NULL;\n';
   }
-  let returnName = funcInfo.name + 'Out';
+  let returnName = funcInfo.name;
   let funcReturnReplace = replaceAll(napiFuncRetTemplate, '[return_name]',
     returnName);
   let retGenResult = transCkey2NapiOutkey(funcInfo.returns);
@@ -472,7 +479,7 @@ export function genHCppFile(rootInfo: GenInfo, out: string) {
   if (out === undefined || out === null || out.trim() === '') {
     out = path.dirname(rootInfo.rawFilePath);
   }
-  genDir(dts2cpp_cppdir, rootInfo, out);
+  genDir(cppdir, rootInfo, out);
 }
 
 
