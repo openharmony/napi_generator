@@ -18,18 +18,21 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
+
 /**
  * <h3>类名：该类用于xxx</h3>
- * @description ${description}
+ * description ${description}
+ *
  * @author ${USER}
- * @date ${YEAR}-${MONTH}-${DAY}
+ * date 2025-02-28
+ * since 2025-02-28
  * @version 1.0
  */
 public class OhCrossCompile extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        // TODO: insert action logic here
+        // NEEDO: insert action logic here
         Messages.showInfoMessage("This is the OhCrossCompile!", "OhCrossCompile");
     }
 

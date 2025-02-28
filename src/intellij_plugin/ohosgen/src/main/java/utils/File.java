@@ -14,11 +14,14 @@
  */
 
 package utils;
+
 /**
  * <h3>类名：该类用于xxx</h3>
- * @description ${description}
+ * description ${description}
+ *
  * @author ${USER}
- * @date ${YEAR}-${MONTH}-${DAY}
+ * date 2025-02-28
+ * since 2025-02-28
  * @version 1.0
  */
 public class File {

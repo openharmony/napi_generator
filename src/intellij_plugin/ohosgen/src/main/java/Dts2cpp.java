@@ -19,7 +19,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
-import com.intellij.openapi.ui.Messages;
+import com. intellij. openapi. project. Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,57 +27,65 @@ import java.io.IOException;
 
 /**
  * <h3>类名：该类用于xxx</h3>
- * @description ${description}
+ * description ${description}
+ *
  * @author ${USER}
- * @date ${YEAR}-${MONTH}-${DAY}
+ * date 2025-02-28
+ * since 2025-02-28
  * @version 1.0
  */
 public class Dts2cpp extends AnAction {
 
     private void showProgress(@NotNull AnActionEvent e) {
-// 获取当前选中的文件
+        Project project = e.getProject();
+        // 获取当前选中的文件
         VirtualFile file = e.getDataContext().getData(CommonDataKeys.VIRTUAL_FILE);
         if (file != null && file.getExtension() != null && file.getExtension().equals("ts")) {
             // 如果是 .java 文件，执行任务
-            ProgressManager.getInstance().run(new Task.Backgroundable(e.getProject(), "Processing File", true) {
-                @Override
-                public void run(@NotNull ProgressIndicator indicator) {
-                    doAnalysis(indicator);
-                }
-
-                private void doAnalysis(@NotNull ProgressIndicator indicator) {
-                    indicator.setFraction(0.0);
-                    // 新增文件读取逻辑
-                    try {
-                        String content = new String(file.contentsToByteArray(), file.getCharset());
-                        System.out.println(content);
-
-                        String[] lines = content.split("\n");
-                        for (int i = 0; i < lines.length; i++) {
-                            // 模拟处理每一行
-                            indicator.setFraction((i + 1) / (double) lines.length);
-                            indicator.setText("Dts2cpp steps : " + (i + 1) + "/" + lines.length);
-
-                            // 这里添加实际业务逻辑
-                            processLine(lines[i]);
-
-                            Thread.sleep(50); // 调整延时更符合实际场景
-                        }
-                    } catch (InterruptedException | IOException ex) {
-                        System.out.println("Error: " + ex.getMessage() + "Failure");
-                    }
-                }
-                // 示例行处理方法
-                private void processLine(String line) {
-                    // 实际业务逻辑（如语法分析/代码检查等）
-                }
-            });
+            doProgress(project, file);
         }
+    }
+
+    private void doProgress(Project project, VirtualFile file) {
+        ProgressManager.getInstance().run(new Task.Backgroundable(project, "Processing File", true) {
+            @Override
+            public void run(@NotNull ProgressIndicator indicator) {
+                doAnalysis(indicator);
+            }
+
+            private void doAnalysis(@NotNull ProgressIndicator indicator) {
+                indicator.setFraction(0.0);
+                // 新增文件读取逻辑
+                try {
+                    String content = new String(file.contentsToByteArray(), file.getCharset());
+                    System.out.println(content);
+
+                    String[] lines = content.split("\n");
+                    for (int i = 0; i < lines.length; i++) {
+                        // 模拟处理每一行
+                        indicator.setFraction((i + 1) / (double) lines.length);
+                        indicator.setText("Dts2cpp steps : " + (i + 1) + "/" + lines.length);
+
+                        // 这里添加实际业务逻辑
+                        processLine(lines[i]);
+
+                        Thread.sleep(50); // 调整延时更符合实际场景
+                    }
+                } catch (InterruptedException | IOException ex) {
+                    System.out.println("Error: " + ex.getMessage() + "Failure");
+                }
+            }
+
+            // 示例行处理方法
+            private void processLine(String line) {
+                // 实际业务逻辑（如语法分析/代码检查等）
+            }
+        });
     }
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        // TODO: insert action logic here
+        // NEEDO: insert action logic here
 //        Messages.showInfoMessage("This is the Dts2cpp!", "Dts2cpp");
         showProgress(e);
     }
