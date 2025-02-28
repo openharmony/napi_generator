@@ -21,7 +21,7 @@ package utils;
  *
  * @author ${USER}
  * date 2025-02-28
- * since 2025-02-28
+ * @since 2025-02-28
  * @version 1.0
  */
 public class PluginError {
