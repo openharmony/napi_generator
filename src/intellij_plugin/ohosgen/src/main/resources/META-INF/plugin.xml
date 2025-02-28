@@ -1,0 +1,79 @@
+<!--* Copyright (c) 2025 Shenzhen Kaihong Digital.-->
+<!--* Licensed under the Apache License, Version 2.0 (the "License");-->
+<!--* you may not use this file except in compliance with the License.-->
+<!--* You may obtain a copy of the License at-->
+<!--* http://www.apache.org/licenses/LICENSE-2.0-->
+<!--* Unless required by applicable law or agreed to in writing, software-->
+<!--* distributed under the License is distributed on an "AS IS" BASIS,-->
+<!--* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.-->
+<!--* See the License for the specific language governing permissions and-->
+<!--* limitations under the License.-->
+<!--*/-->
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.example.napigenerator</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>NapiGenerator</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="wangshi@kaihong.com" url="https://www.kaihong.com"> Kaihong Digital Industry Development Co. </vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+    Propose NAPI Framework Code Generation Tools to Enhance Development Efficiency on OpenHarmony Standard System.<br>
+    <em>transfer dts files to c files</em>
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+
+    </extensions>
+    <actions>
+<!--        <action id="PlugTest" class="PlugTestAction" text="PlugTest" description="PlugTest">-->
+<!--            <add-to-group group-id="ToolsMenu" anchor="last"/>-->
+<!--            <keyboard-shortcut keymap="$default" first-keystroke="ctrl CLOSE_BRACKET" second-keystroke="ctrl QUOTE"/>-->
+<!--        </action>-->
+<!--        <action id="OHOS_Gen" class="OhosGenAction" text="Ohos_Gen" description="Ohos_Gen">-->
+<!--            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>-->
+<!--            <keyboard-shortcut keymap="$default" first-keystroke="ctrl O"/>-->
+<!--        </action>-->
+        <group id="OhosGenGroup" text="OhosGen" description="Sub Menu for OHOS Gen" popup="true">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+<!--            <reference ref="OHOS_Gen"/> &lt;!&ndash; 将子菜单关联到主 Action &ndash;&gt;-->
+
+            <!-- 子 Action -->
+            <action id="h2dts" class="H2dtsAction" text="h2dts" description="This is h2dts"/>
+            <action id="h2dtscpp" class="H2dtscppAction" text="h2dtscpp" description="This is h2dtscpp"/>
+            <action id="dts2cpp" class="Dts2cpp" text="dts2cpp" description="This is dts2cpp"/>
+            <action id="ohcrosscompile" class="OhCrossCompile" text="ohcrosscompile" description="This is crosscompile"/>
+            <action id="h2sa" class="H2sa" text="h2sa" description="This is h2sa"/>
+            <action id="h2hdf" class="H2hdf" text="h2hdf" description="This is h2hdf"/>
+        </group>
+<!--        <action id="h2dts" class="H2dtsAction" text="h2dts" description="h2dts">-->
+<!--            <add-to-group group-id="PopupMenuActions" anchor="first"/>-->
+<!--        </action>-->
+<!--        <action id="h2dtscpp" class="H2dtscppAction" text="h2dtscpp" description="h2dtscpp">-->
+<!--            <add-to-group group-id="PopupMenuActions" anchor="first"/>-->
+<!--        </action>-->
+<!--        <action id="dts2cpp" class="Dts2cpp" text="dts2cpp" description="dts2cpp"/>-->
+<!--        <action id="ohcrosscompile" class="OhCrossCompile" text="ohcrosscompile" description="ohcrosscompile">-->
+<!--            <add-to-group group-id="PopupMenuActions" anchor="first"/>-->
+<!--        </action>-->
+<!--        <action id="h2sa" class="H2sa" text="h2sa" description="h2sa">-->
+<!--            <add-to-group group-id="PopupMenuActions" anchor="first"/>-->
+<!--        </action>-->
+<!--        <action id="h2hdf" class="H2hdf" text="h2hdf" description="h2hdf">-->
+<!--            <add-to-group group-id="PopupMenuActions" anchor="first"/>-->
+<!--        </action>-->
+    </actions>
+</idea-plugin>
