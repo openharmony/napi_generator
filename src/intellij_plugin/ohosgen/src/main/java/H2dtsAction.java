@@ -1,7 +1,8 @@
+/* * 版权所有 (c) 深圳开鸿数字产业发展有限公司 2025-2025 */
 /*
- * Copyright (c) 2025 Shenzhen Kaihong Digital.
+ Copyright (c) 2025 Shenzhen Kaihong Digital Industry Development Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+ * may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
