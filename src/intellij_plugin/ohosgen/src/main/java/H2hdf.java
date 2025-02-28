@@ -22,7 +22,13 @@ import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
-
+/**
+ * <h3>类名：该类用于xxx</h3>
+ * @description ${description}
+ * @author ${USER}
+ * @date ${YEAR}-${MONTH}-${DAY}
+ * @version 1.0
+ */
 public class H2hdf extends AnAction {
 
     private void showProgress(AnActionEvent e) {
