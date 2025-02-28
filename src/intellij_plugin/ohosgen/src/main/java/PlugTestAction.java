@@ -17,18 +17,21 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+
 /**
  * <h3>类名：该类用于xxx</h3>
- * @description ${description}
+ * description ${description}
+ *
  * @author ${USER}
- * @date ${YEAR}-${MONTH}-${DAY}
+ * date 2025-02-28
+ * since 2025-02-28
  * @version 1.0
  */
 public class PlugTestAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        // TODO: insert action logic here
+        // NEEDO: insert action logic here
         System.out.println(" Plug Test Action!");
         Project project = e.getProject();
         if (project == null) {

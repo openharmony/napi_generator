@@ -22,17 +22,20 @@ import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
+
 /**
  * <h3>类名：该类用于xxx</h3>
- * @description ${description}
+ * description ${description}
+ *
  * @author ${USER}
- * @date ${YEAR}-${MONTH}-${DAY}
+ * date 2025-02-28
+ * since 2025-02-28
  * @version 1.0
  */
 public class H2hdf extends AnAction {
 
     private void showProgress(AnActionEvent e) {
-// 获取当前选中的文件
+    // 获取当前选中的文件
         VirtualFile file = e.getDataContext().getData(CommonDataKeys.VIRTUAL_FILE);
         if (file != null && file.getExtension() != null && file.getExtension().equals("h")) {
             // 如果是 .java 文件，执行任务
@@ -57,8 +60,7 @@ public class H2hdf extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        // TODO: insert action logic here
-//        Messages.showInfoMessage("This is the Dts2cpp!", "Dts2cpp");
+        // NEEDO: insert action logic here
         showProgress(e);
     }
 
