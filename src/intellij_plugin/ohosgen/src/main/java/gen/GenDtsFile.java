@@ -14,6 +14,12 @@
  */
 
 package gen;
-
+/**
+ * <h3>类名：该类用于xxx</h3>
+ * @description ${description}
+ * @author ${USER}
+ * @date ${YEAR}-${MONTH}-${DAY}
+ * @version 1.0
+ */
 public class GenDtsFile {
 }

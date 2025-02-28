@@ -16,8 +16,11 @@
 package utils;
 
 /**
- * 解析时间戳的工具类。
- * @since 2025-02-28
+ * <h3>类名：该类用于xxx</h3>
+ * @description ${description}
+ * @author ${USER}
+ * @date ${YEAR}-${MONTH}-${DAY}
+ * @version 1.0
  */
 public class Constants {
 }

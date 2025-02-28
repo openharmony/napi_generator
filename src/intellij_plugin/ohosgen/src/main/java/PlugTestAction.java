@@ -17,7 +17,13 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
-
+/**
+ * <h3>类名：该类用于xxx</h3>
+ * @description ${description}
+ * @author ${USER}
+ * @date ${YEAR}-${MONTH}-${DAY}
+ * @version 1.0
+ */
 public class PlugTestAction extends AnAction {
 
     @Override
@@ -34,7 +40,6 @@ public class PlugTestAction extends AnAction {
             return;
         }
 
-//        Message protoMessage = buildProtobufMessage();
         String result = "Proto Message:  protoMessage.toString()";
 
         Messages.showMessageDialog(
@@ -44,12 +49,4 @@ public class PlugTestAction extends AnAction {
                 Messages.getInformationIcon()
         );
     }
-
-//    private Message buildProtobufMessage() {
-//        // 假设已通过protoc生成UserInfo类
-//        return UserInfo.newBuilder()
-//                .setName("John")
-//                .setId(123)
-//                .build();
-//    }
 }
