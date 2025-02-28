@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -25,9 +25,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+/**
+ * <h3>类名：该类用于xxx</h3>
+ * @description ${description}
+ * @author ${USER}
+ * @date ${YEAR}-${MONTH}-${DAY}
+ * @version 1.0
+ */
 public class Dts2cpp extends AnAction {
 
-    private void showProgress(AnActionEvent e) {
+    private void showProgress(@NotNull AnActionEvent e) {
 // 获取当前选中的文件
         VirtualFile file = e.getDataContext().getData(CommonDataKeys.VIRTUAL_FILE);
         if (file != null && file.getExtension() != null && file.getExtension().equals("ts")) {
@@ -35,6 +42,10 @@ public class Dts2cpp extends AnAction {
             ProgressManager.getInstance().run(new Task.Backgroundable(e.getProject(), "Processing File", true) {
                 @Override
                 public void run(@NotNull ProgressIndicator indicator) {
+                    doAnalysis(indicator);
+                }
+
+                private void doAnalysis(@NotNull ProgressIndicator indicator) {
                     indicator.setFraction(0.0);
                     // 新增文件读取逻辑
                     try {
@@ -54,11 +65,8 @@ public class Dts2cpp extends AnAction {
                         }
                     } catch (InterruptedException | IOException ex) {
                         System.out.println("Error: " + ex.getMessage() + "Failure");
-                        Messages.showErrorDialog("Error: " + ex.getMessage(), "Failure");
                     }
-//                    Messages.showInfoMessage("File processing complete!", "Main Action");
                 }
-
                 // 示例行处理方法
                 private void processLine(String line) {
                     // 实际业务逻辑（如语法分析/代码检查等）
