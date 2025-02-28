@@ -70,7 +70,6 @@ public class H2sa extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
-//        Messages.showInfoMessage("This is the Dts2cpp!", "Dts2cpp");
         showProgress(e);
     }
 

@@ -16,14 +16,11 @@
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.progress.Task;
 import com. intellij. openapi. project. Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
+import utils.MockBgTask;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -47,40 +44,7 @@ public class Dts2cpp extends AnAction {
     }
 
     private void doProgress(Project project, VirtualFile file) {
-        ProgressManager.getInstance().run(new Task.Backgroundable(project, "Processing File", true) {
-            @Override
-            public void run(@NotNull ProgressIndicator indicator) {
-                doAnalysis(indicator);
-            }
-
-            private void doAnalysis(@NotNull ProgressIndicator indicator) {
-                indicator.setFraction(0.0);
-                // 新增文件读取逻辑
-                try {
-                    String content = new String(file.contentsToByteArray(), file.getCharset());
-                    System.out.println(content);
-
-                    String[] lines = content.split("\n");
-                    for (int i = 0; i < lines.length; i++) {
-                        // 模拟处理每一行
-                        indicator.setFraction((i + 1) / (double) lines.length);
-                        indicator.setText("Dts2cpp steps : " + (i + 1) + "/" + lines.length);
-
-                        // 这里添加实际业务逻辑
-                        processLine(lines[i]);
-
-                        Thread.sleep(50); // 调整延时更符合实际场景
-                    }
-                } catch (InterruptedException | IOException ex) {
-                    System.out.println("Error: " + ex.getMessage() + "Failure");
-                }
-            }
-
-            // 示例行处理方法
-            private void processLine(String line) {
-                // 实际业务逻辑（如语法分析/代码检查等）
-            }
-        });
+        ProgressManager.getInstance().run(new MockBgTask(project, "Processing File", true));
     }
 
     @Override
