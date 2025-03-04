@@ -97,8 +97,6 @@ public class LogUtils {
 
     /**
      * 日志滚动
-     *
-     * @return void
      */
     private static synchronized void rollOver() {
         try {
@@ -125,8 +123,6 @@ public class LogUtils {
 
     /**
      * 重新初始化
-     *
-     * @return void
      */
     public static void reinit() {
         // 1. 关闭现有日志流‌:ml-citation{ref="1,3" data="citationList"}
@@ -153,8 +149,6 @@ public class LogUtils {
 
     /**
      * 清除日志
-     *
-     * @return void
      */
     public static void clear() {
         if (writer != null) {
@@ -180,7 +174,9 @@ public class LogUtils {
         // 2. 处理目录模式‌:ml-citation{ref="3,4" data="citationList"}
         if (logFile.isDirectory()) {
             File[] logFiles = logFile.listFiles((dir, name) -> name.endsWith(".log"));
-            if (logFiles == null) return;
+            if (logFiles == null) {
+                return;
+            }
 
             for (File file : logFiles) {
                 if (file.delete()) {
@@ -207,7 +203,6 @@ public class LogUtils {
      * 写调试日志
      *
      * @param message 调试日志
-     * @return
      */
     public static void debug(String message) {
         log(DEBUG, message);
@@ -217,7 +212,6 @@ public class LogUtils {
      * 写信息日志
      *
      * @param message 信息日志
-     * @return
      */
     public static void info(String message) {
         log(INFO, message);
@@ -227,7 +221,6 @@ public class LogUtils {
      * 写告警日志
      *
      * @param message 告警日志
-     * @return
      */
     public static void warn(String message) {
         log(WARN, message);
@@ -237,7 +230,6 @@ public class LogUtils {
      * 写错误日志
      *
      * @param message 错误日志
-     * @return
      */
     public static void error(String message) {
         log(ERROR, message);
@@ -249,7 +241,6 @@ public class LogUtils {
      *
      * @param level 日志等级
      * @param message 告警日志
-     * @return
      */
     private static synchronized void log(int level, String message) {
         if (level < currentLevel) return; // 低于当前级别则不记录‌:ml-citation{ref="3,6" data="citationList"}

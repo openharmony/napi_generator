@@ -41,7 +41,8 @@ public class FileUtils {
     public static boolean createFile(String filePath) {
         File file = new File(filePath);
         try {
-            return file.createNewFile(); // 文件不存在时创建新文件‌:ml-citation{ref="2" data="citationList"}
+            // 文件不存在时创建新文件‌:ml-citation{ref="2" data="citationList"}
+            return file.createNewFile();
         } catch (IOException e) {
             System.out.println("createFile error: " + e.getMessage());
             return false;
@@ -52,7 +53,6 @@ public class FileUtils {
      * 根据文件列表删除文件
      *
      * @param files 文件路径
-     * @return void
      */
     private static synchronized void doDeleteFile(File[] files) {
         if (files != null) {
@@ -100,10 +100,10 @@ public class FileUtils {
      *
      * @param filePath 文件路径
      * @param content  待写入内容
-     * @return void
      */
     public static void overwriteText(String filePath, String content) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) { // false 表示覆盖模式‌:ml-citation{ref="3" data="citationList"}
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
+            // false 表示覆盖模式‌:ml-citation{ref="3" data="citationList"}
             writer.write(content);
         } catch (IOException e) {
             System.out.println("overwriteText error: " + e.getMessage());
@@ -115,10 +115,10 @@ public class FileUtils {
      *
      * @param filePath 文件路径
      * @param content  待追加内容
-     * @return void
      */
     public static void appendText(String filePath, String content) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) { // true 表示追加模式‌:ml-citation{ref="6" data="citationList"}
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            // true 表示追加模式‌:ml-citation{ref="6" data="citationList"}
             writer.write(content);
             writer.newLine(); // 换行追加
         } catch (IOException e) {
@@ -134,7 +134,8 @@ public class FileUtils {
      */
     public static List<String> readText(String filePath) {
         List<String> lines = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) { // 逐行读取文本‌:ml-citation{ref="8" data="citationList"}
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            // 逐行读取文本‌:ml-citation{ref="8" data="citationList"}
             String line;
             while ((line = reader.readLine()) != null) {
                 lines.add(line);
@@ -152,7 +153,8 @@ public class FileUtils {
      * @param data     二进制数据
      */
     public static void overwriteBinary(String filePath, byte[] data) {
-        try (FileOutputStream fos = new FileOutputStream(filePath)) { // 直接覆盖二进制文件‌:ml-citation{ref="5" data="citationList"}
+        try (FileOutputStream fos = new FileOutputStream(filePath)) {
+            // 直接覆盖二进制文件‌:ml-citation{ref="5" data="citationList"}
             fos.write(data);
         } catch (IOException e) {
             System.out.println("overwriteBinary error: " + e.getMessage());
@@ -167,12 +169,21 @@ public class FileUtils {
      */
     public static byte[] readBinary(String filePath) {
         File file = new File(filePath);
-        if (!file.exists() || file.isDirectory()) return null; // 路径校验‌:ml-citation{ref="1,3" data="citationList"}
+        // 路径校验‌:ml-citation{ref="1,3" data="citationList"}
+        if (!file.exists() || file.isDirectory()) {
+            return null;
+        }
 
-        try (FileInputStream fis = new FileInputStream(file)) { // 自动关闭流‌:ml-citation{ref="2,4" data="citationList"}
-            byte[] data = new byte[(int) file.length()]; // 根据文件大小初始化数组
-            int ret = fis.read(data); // 一次性读取全部内容‌:ml-citation{ref="2" data="citationList"}
-            return data;
+        try (FileInputStream fis = new FileInputStream(file)) {
+            // 自动关闭流‌:ml-citation{ref="2,4" data="citationList"}
+            byte[] data = new byte[(int) file.length()];
+            // 根据文件大小初始化数组
+            // 一次性读取全部内容‌:ml-citation{ref="2" data="citationList"}
+            int ret = fis.read(data);
+            if (ret > 0) {
+                return data;
+            }
+            return new byte[0];
         } catch (IOException e) {
             System.out.println("readBinary error: " + e.getMessage());
             return new byte[0];
