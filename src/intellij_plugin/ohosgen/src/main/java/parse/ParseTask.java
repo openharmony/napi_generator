@@ -42,21 +42,43 @@ public class ParseTask extends Task.Backgroundable implements BaseListener {
     private VirtualFile parseFile;
     private final ParseBase parser;
 
+    /**
+     * 构造函数
+     *
+     * @param project 事件
+     * @param type 类型
+     * @param flag 是否可以取消
+     */
     public ParseTask(@Nullable Project project, @NlsContexts.ProgressTitle @NotNull String type, boolean flag) {
         super(project, type, flag);
         parser = ParseFactory.getParser(type);
         parser.addListener(this);
     }
 
+    /**
+     * 设置文件
+     *
+     * @param file 文件
+     */
     public void setFile(VirtualFile file) {
         parseFile = file;
     }
 
+    /**
+     * 运行
+     *
+     * @param indicator 提示器
+     */
     @Override
     public void run(@NotNull ProgressIndicator indicator) {
         doAnalysis(indicator);
     }
 
+    /**
+     * 解析
+     *
+     * @param indicator 提示器
+     */
     private void doAnalysis(@NotNull ProgressIndicator indicator) {
         indicator.setFraction(0.0);
         // 新增文件读取逻辑
@@ -83,12 +105,21 @@ public class ParseTask extends Task.Backgroundable implements BaseListener {
         }
     }
 
-    // 示例行处理方法
+    /**
+     * 处理内容
+     *
+     * @param line 文件内容
+     */
     private void processLine(String line) {
         // 实际业务逻辑（如语法分析/代码检查等）
         System.out.println("processLine");
     }
 
+    /**
+     * 监听消息
+     *
+     * @param event 事件
+     */
     @Override
     public void onEvent(BaseEvent event) {
         String jsonStr = event.getEventMsg();

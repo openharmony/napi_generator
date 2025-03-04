@@ -32,14 +32,31 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class ParseBase {
     protected final List<BaseListener> listeners = new CopyOnWriteArrayList<>();
 
-    public ParseBase() {
+    /**
+     * 构造函数
+     */
+    public ParseBase() {}
 
-    }
-
+    /**
+     * 增加listener
+     *
+     * @param listener 监听器
+     */
     public void addListener(BaseListener listener) {
         listeners.add(listener);
     }
 
+    /**
+     * 根据文件名解析文件
+     *
+     * @param filePath 文件路径
+     */
     public abstract void parseFile(String filePath);
+
+    /**
+     * 根据文件内容解析文件
+     *
+     * @param fileContent 文件内容
+     */
     public abstract void parseContent(String fileContent);// 抽象方法声明
 }

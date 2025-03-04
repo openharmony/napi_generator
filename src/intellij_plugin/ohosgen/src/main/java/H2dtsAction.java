@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -62,7 +63,7 @@ public class H2dtsAction extends AnAction {
                     indicator.setText("Processing step " + (i + 1));
                     doSleep();
                 }
-                Messages.showInfoMessage("File processing complete!", "Main Action");
+//                Messages.showInfoMessage("File processing complete!", "Main Action");
             }
         });
     }
@@ -71,6 +72,15 @@ public class H2dtsAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
         showProgress(e);
+    }
+
+    // 新增方法：显式选择线程模型
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        // 根据需求选择以下两种之一：
+//        return ActionUpdateThread.EDT; // UI 线程操作（如界面刷新）
+        // 或
+        return ActionUpdateThread.BGT; // 后台线程操作（如耗时计算）
     }
 
     @Override

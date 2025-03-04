@@ -15,7 +15,6 @@
 
 package parse;
 
-import com.esotericsoftware.kryo.kryo5.util.ObjectMap;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import utils.BaseEvent;
@@ -30,6 +29,11 @@ import utils.BaseEvent;
  * @version 1.0
  */
 public class ParseC extends ParseBase{
+    /**
+     * 根据名字解析文件
+     *
+     * @param filePath 文件路径
+     */
     @Override
     public void parseFile(String filePath) {
         System.out.println("parseFile: " + filePath);
@@ -48,6 +52,11 @@ public class ParseC extends ParseBase{
         });
     }
 
+    /**
+     * 根据内容解析文件
+     *
+     * @param fileContent 文件内容
+     */
     @Override
     public void parseContent(String fileContent) {
         System.out.println("c parseContent");

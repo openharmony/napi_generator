@@ -28,6 +28,11 @@ import utils.BaseListener;
  * @since 2025-02-28
  */
 public class ParseNotification implements BaseListener {
+    /**
+     * 监听消息
+     *
+     * @param event 事件
+     */
     @Override
     public void onEvent(BaseEvent event) {
         System.out.println("receive msg: " + event.getEventMsg());

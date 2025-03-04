@@ -30,8 +30,19 @@ public class ParseInfo {
     private int progress;
     private int total;
 
+    /**
+     * 构造函数
+     */
     public ParseInfo() {}
 
+    /**
+     * 有参数构造函数
+     *
+     * @param vs 状态
+     * @param vm 内容
+     * @param vp 进度
+     * @param vt 总数
+     */
     public ParseInfo(String vs, String vm, int vp, int vt) {
         status = vs;
         message = vm;
@@ -39,27 +50,74 @@ public class ParseInfo {
         total = vt;
     }
 
+    /**
+     * 设置状态
+     *
+     * @param vs 状态
+     */
     public void setStatus(String vs) {
         status = vs;
     }
+
+    /**
+     * 读取状态
+     *
+     * @return 状态
+     */
     public String getStatus() {
         return status;
     }
+
+    /**
+     * 设置消息
+     *
+     * @param vm 消息
+     */
     public void setMessage(String vm) {
         message = vm;
     }
+
+    /**
+     * 读取消息
+     *
+     * @return 消息
+     */
     public String getMessage() {
         return message;
     }
+
+    /**
+     * 设置进度
+     *
+     * @param vp 进度
+     */
     public void setProgress(int vp) {
         progress = vp;
     }
+
+    /**
+     * 读取进度
+     *
+     * @return 进度
+     */
     public int getProgress() {
         return progress;
     }
+
+    /**
+     * 设置总数
+     *
+     * @param vt 总数
+     */
     public void setTotal(int vt) {
         total = vt;
     }
+
+    /**
+     * 读取总数
+     *
+     * @return 总数
+     */
     public int getTotal() {
         return total;
     }

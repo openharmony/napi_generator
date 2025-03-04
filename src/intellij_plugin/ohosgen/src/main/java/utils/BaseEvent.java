@@ -41,10 +41,20 @@ public class BaseEvent extends EventObject {
         super(source);
     }
 
+    /**
+     * 设置消息
+     *
+     * @param msg 消息
+     */
     public void setEventMsg(String msg) {
         eventMsg = msg;
     }
 
+    /**
+     * 获取消息
+     *
+     * @return 消息内容
+     */
     public String getEventMsg() {
         return eventMsg;
     }
