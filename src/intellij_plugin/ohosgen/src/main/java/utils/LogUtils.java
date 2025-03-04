@@ -30,7 +30,7 @@ import java.util.Date;
  * @since 2025-02-28
  * @version 1.0
  */
-public class Log {
+public class LogUtils {
     // 日志级别常量
     public static final int DEBUG = 1;
     public static final int INFO = 2;

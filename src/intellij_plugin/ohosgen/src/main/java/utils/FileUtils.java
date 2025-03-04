@@ -42,10 +42,33 @@ public class FileUtils {
         try {
             return file.createNewFile(); // 文件不存在时创建新文件‌:ml-citation{ref="2" data="citationList"}
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("createFile error: " + e.getMessage());
             return false;
         }
     }
+
+    // 新增文件删除接口
+    public static synchronized boolean deleteFile(String path) {
+        File target = new File(path);
+        if (!target.exists()) return false; // 路径不存在直接返回失败‌:ml-citation{ref="3" data="citationList"}
+
+        try {
+            if (target.isDirectory()) {
+                // 递归删除子文件和空目录‌:ml-citation{ref="4" data="citationList"}
+                File[] files = target.listFiles();
+                if (files != null) {
+                    for (File child : files) {
+                        deleteFile(child.getAbsolutePath()); // 递归调用删除子项‌:ml-citation{ref="4" data="citationList"}
+                    }
+                }
+            }
+            return target.delete(); // 删除文件或空目录‌:ml-citation{ref="3,4" data="citationList"}
+        } catch (SecurityException e) {
+            System.out.println("deleteFile error: " + e.getMessage());
+            return false; // 权限不足时返回失败‌:ml-citation{ref="3" data="citationList"}
+        }
+    }
+
     /**
      * 覆盖写入文本内容
      * @param filePath 文件路径
@@ -55,7 +78,7 @@ public class FileUtils {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) { // false 表示覆盖模式‌:ml-citation{ref="3" data="citationList"}
             writer.write(content);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("overwriteText error: " + e.getMessage());
         }
     }
     /**
@@ -68,7 +91,7 @@ public class FileUtils {
             writer.write(content);
             writer.newLine(); // 换行追加
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("appendText error: " + e.getMessage());
         }
     }
         /**
@@ -84,7 +107,7 @@ public class FileUtils {
                 lines.add(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("readText error: " + e.getMessage());
         }
         return lines;
     }
@@ -98,7 +121,26 @@ public class FileUtils {
         try (FileOutputStream fos = new FileOutputStream(filePath)) { // 直接覆盖二进制文件‌:ml-citation{ref="5" data="citationList"}
             fos.write(data);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("overwriteBinary error: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 读取二进制文件全部内容
+     * @param filePath 文件路径
+     * @return 字节数组（文件不存在时返回 null）
+     */
+    public static byte[] readBinary(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists() || file.isDirectory()) return null; // 路径校验‌:ml-citation{ref="1,3" data="citationList"}
+
+        try (FileInputStream fis = new FileInputStream(file)) { // 自动关闭流‌:ml-citation{ref="2,4" data="citationList"}
+            byte[] data = new byte[(int) file.length()]; // 根据文件大小初始化数组
+            int ret = fis.read(data); // 一次性读取全部内容‌:ml-citation{ref="2" data="citationList"}
+            return data;
+        } catch (IOException e) {
+            System.out.println("readBinary error: " + e.getMessage());
+            return null;
         }
     }
 }
