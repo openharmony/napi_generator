@@ -63,7 +63,7 @@ public class H2dtsAction extends AnAction {
                     indicator.setText("Processing step " + (i + 1));
                     doSleep();
                 }
-//                Messages.showInfoMessage("File processing complete!", "Main Action");
+                System.out.println("doProgress exception ex.printStackTrace();");
             }
         });
     }
@@ -78,8 +78,6 @@ public class H2dtsAction extends AnAction {
     @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
         // 根据需求选择以下两种之一：
-//        return ActionUpdateThread.EDT; // UI 线程操作（如界面刷新）
-        // 或
         return ActionUpdateThread.BGT; // 后台线程操作（如耗时计算）
     }
 
