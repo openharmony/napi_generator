@@ -57,7 +57,8 @@ public class Dts2cpp extends AnAction {
     }
 
     @Override
-    public @NotNull ActionUpdateThread getActionUpdateThread() {
+    @NotNull
+    public ActionUpdateThread getActionUpdateThread() {
         // 根据需求选择以下两种之一：
         // 后台线程操作（如耗时计算）
         return ActionUpdateThread.BGT;

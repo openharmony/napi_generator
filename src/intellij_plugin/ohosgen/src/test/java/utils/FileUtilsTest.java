@@ -88,7 +88,7 @@ class FileUtilsTest {
 
     @Test
     void overwriteBinary() {
-        byte[] aList = {1,2,3};
+        byte[] aList = {1, 2, 3};
         FileUtils.overwriteBinary("test.file", aList);
         byte[] bList = FileUtils.readBinary("test.file");
         if (bList != null) {

@@ -75,7 +75,8 @@ public class H2dtsAction extends AnAction {
 
     // 新增方法：显式选择线程模型
     @Override
-    public @NotNull ActionUpdateThread getActionUpdateThread() {
+    @NotNull
+    public ActionUpdateThread getActionUpdateThread() {
         // 根据需求选择以下两种之一：
         // 后台线程操作（如耗时计算）
         return ActionUpdateThread.BGT;
