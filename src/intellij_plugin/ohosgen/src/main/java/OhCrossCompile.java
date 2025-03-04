@@ -13,11 +13,13 @@
  * limitations under the License.
  */
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -34,6 +36,14 @@ public class OhCrossCompile extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
         Messages.showInfoMessage("This is the OhCrossCompile!", "OhCrossCompile");
+    }
+
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        // 根据需求选择以下两种之一：
+//        return ActionUpdateThread.EDT; // UI 线程操作（如界面刷新）
+        // 或
+        return ActionUpdateThread.BGT; // 后台线程操作（如耗时计算）
     }
 
     @Override

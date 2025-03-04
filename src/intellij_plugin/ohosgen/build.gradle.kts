@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Copyright (c) 2025 Shenzhen Kaihong Digital.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -29,10 +29,10 @@ repositories {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2024.1.7")
-    type.set("IC") // Target IDE Platform
+  version.set("2024.1.7")
+  type.set("IC") // Target IDE Platform
 
-    plugins.set(listOf(/* Plugin Dependencies */))
+  plugins.set(listOf(/* Plugin Dependencies */))
 }
 
 tasks {
@@ -60,3 +60,16 @@ tasks {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
 }
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")  // JUnit 5 API
+    testImplementation("org.junit.vintage:junit-vintage-engine") {
+        exclude(group = "junit", module = "junit")
+    }
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0") // 必须的运行时引擎
+}
+

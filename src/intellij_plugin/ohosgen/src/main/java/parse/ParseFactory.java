@@ -15,6 +15,8 @@
 
 package parse;
 
+import java.util.Locale;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description ${description}
@@ -24,10 +26,16 @@ package parse;
  * @since 2025-02-28
  * @version 1.0
  */
-
 public class ParseFactory {
+    /**
+     * 获取解析类
+     *
+     * @param type 解析类型
+     * @return 解析类 (类型不存在时候抛出异常）
+     * @throws IllegalArgumentException
+     */
     public static ParseBase getParser(String type) {
-        return switch (type.toUpperCase()) {
+        return switch (type.toUpperCase(Locale.ROOT)) {
             case "C" -> new ParseC();
             case "TS" -> new ParseTs();
             default -> {

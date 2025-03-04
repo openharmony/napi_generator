@@ -34,6 +34,7 @@ public class FileUtils {
 
     /**
      * 创建新文件（若不存在）
+     *
      * @param filePath 文件路径
      * @return 是否创建成功
      */
@@ -47,32 +48,59 @@ public class FileUtils {
         }
     }
 
-    // 新增文件删除接口
+    /**
+     * 根据文件列表删除文件
+     *
+     * @param files 文件路径
+     * @return void
+     */
+    private static synchronized void doDeleteFile(File[] files) {
+        if (files != null) {
+            for (File child : files) {
+                // 递归调用删除子项‌:ml-citation{ref="4" data="citationList"}
+                try {
+                    deleteFile(child.getCanonicalPath());
+                } catch (IOException e) {
+                    System.out.println("getCanonicalPath error: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    /**
+     * 根据路径
+     *
+     * @param path 路径
+     * @return 是否删除成功
+     */
     public static synchronized boolean deleteFile(String path) {
         File target = new File(path);
-        if (!target.exists()) return false; // 路径不存在直接返回失败‌:ml-citation{ref="3" data="citationList"}
+        if (!target.exists()) {
+            // 路径不存在直接返回失败‌:ml-citation{ref="3" data="citationList"}
+            return false;
+        }
 
         try {
             if (target.isDirectory()) {
                 // 递归删除子文件和空目录‌:ml-citation{ref="4" data="citationList"}
                 File[] files = target.listFiles();
-                if (files != null) {
-                    for (File child : files) {
-                        deleteFile(child.getAbsolutePath()); // 递归调用删除子项‌:ml-citation{ref="4" data="citationList"}
-                    }
-                }
+                doDeleteFile(files);
             }
-            return target.delete(); // 删除文件或空目录‌:ml-citation{ref="3,4" data="citationList"}
+            // 删除文件或空目录‌:ml-citation{ref="3,4" data="citationList"}
+            return target.delete();
         } catch (SecurityException e) {
             System.out.println("deleteFile error: " + e.getMessage());
-            return false; // 权限不足时返回失败‌:ml-citation{ref="3" data="citationList"}
+            // 权限不足时返回失败‌:ml-citation{ref="3" data="citationList"}
+            return false;
         }
     }
 
     /**
      * 覆盖写入文本内容
+     *
      * @param filePath 文件路径
      * @param content  待写入内容
+     * @return void
      */
     public static void overwriteText(String filePath, String content) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) { // false 表示覆盖模式‌:ml-citation{ref="3" data="citationList"}
@@ -81,10 +109,13 @@ public class FileUtils {
             System.out.println("overwriteText error: " + e.getMessage());
         }
     }
+
     /**
      * 追加文本内容到文件末尾
+     *
      * @param filePath 文件路径
      * @param content  待追加内容
+     * @return void
      */
     public static void appendText(String filePath, String content) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) { // true 表示追加模式‌:ml-citation{ref="6" data="citationList"}
@@ -94,11 +125,13 @@ public class FileUtils {
             System.out.println("appendText error: " + e.getMessage());
         }
     }
-        /**
-         * 读取文本文件内容
-         * @param filePath 文件路径
-         * @return 按行读取的内容列表
-         */
+
+    /**
+     * 读取文本文件内容
+     *
+     * @param filePath 文件路径
+     * @return 按行读取的内容列表
+     */
     public static List<String> readText(String filePath) {
         List<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) { // 逐行读取文本‌:ml-citation{ref="8" data="citationList"}
@@ -114,6 +147,7 @@ public class FileUtils {
 
     /**
      * 覆盖写入二进制数据（如图片、音频）
+     *
      * @param filePath 文件路径
      * @param data     二进制数据
      */
@@ -127,6 +161,7 @@ public class FileUtils {
 
     /**
      * 读取二进制文件全部内容
+     *
      * @param filePath 文件路径
      * @return 字节数组（文件不存在时返回 null）
      */
@@ -140,7 +175,7 @@ public class FileUtils {
             return data;
         } catch (IOException e) {
             System.out.println("readBinary error: " + e.getMessage());
-            return null;
+            return new byte[0];
         }
     }
 }

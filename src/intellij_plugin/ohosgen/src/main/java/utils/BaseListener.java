@@ -27,5 +27,10 @@ import java.util.EventListener;
  * @since 2025-02-28
  */
 public interface BaseListener extends EventListener {
+    /**
+     * 监听消息
+     *
+     * @param event 事件
+     */
     void onEvent(BaseEvent event);
 }

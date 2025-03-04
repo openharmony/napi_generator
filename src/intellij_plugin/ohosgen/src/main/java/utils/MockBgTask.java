@@ -36,19 +36,41 @@ import java.io.IOException;
 public class MockBgTask extends Task.Backgroundable {
     private VirtualFile parseFile;
 
+    /**
+     * 构造函数
+     *
+     * @param project 项目
+     * @param title 标题
+     * @param flag 是否可以取消
+     */
     public MockBgTask(@Nullable Project project, @NlsContexts.ProgressTitle @NotNull String title, boolean flag) {
         super(project, title, flag);
     }
 
+    /**
+     * 设置文件
+     *
+     * @param file 文件内容
+     */
     public void setFile(VirtualFile file) {
         parseFile = file;
     }
 
+    /**
+     * 运行
+     *
+     * @param indicator 提示
+     */
     @Override
     public void run(@NotNull ProgressIndicator indicator) {
         doAnalysis(indicator);
     }
 
+    /**
+     * 分析
+     *
+     * @param indicator 提示
+     */
     private void doAnalysis(@NotNull ProgressIndicator indicator) {
         indicator.setFraction(0.0);
         // 新增文件读取逻辑

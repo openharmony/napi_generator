@@ -29,6 +29,11 @@ import utils.BaseEvent;
  * @version 1.0
  */
 public class ParseTs extends ParseBase{
+    /**
+     * 根据文件名解析
+     *
+     * @param filePath 文件路径
+     */
     @Override
     public void parseFile(String filePath) {
         System.out.println("parseFile: " + filePath);
@@ -47,6 +52,11 @@ public class ParseTs extends ParseBase{
         });
     }
 
+    /**
+     * 处理内容
+     *
+     * @param fileContent 文件内容
+     */
     @Override
     public void parseContent(String fileContent) {
         System.out.println("parseContent: " + fileContent);
