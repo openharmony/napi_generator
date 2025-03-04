@@ -105,6 +105,8 @@ public class H2hdf extends AnAction {
 
     /**
      * 插件事件更新
+     *
+     * @param e 插件事件
      */
     @Override
     public void update(AnActionEvent e) {

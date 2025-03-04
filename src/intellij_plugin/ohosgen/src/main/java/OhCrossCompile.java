@@ -31,13 +31,20 @@ import org.jetbrains.annotations.NotNull;
  * @version 1.0
  */
 public class OhCrossCompile extends AnAction {
-
+    /**
+     * 执行插件动作
+     *
+     * @param e 插件事件
+     */
     @Override
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
         Messages.showInfoMessage("This is the OhCrossCompile!", "OhCrossCompile");
     }
 
+    /**
+     * 插件线程类型更新
+     */
     @Override
     @NotNull
     public ActionUpdateThread getActionUpdateThread() {
@@ -46,6 +53,11 @@ public class OhCrossCompile extends AnAction {
         return ActionUpdateThread.BGT;
     }
 
+    /**
+     * 更新
+     *
+     * @param e 插件事件
+     */
     @Override
     public void update(AnActionEvent e) {
         // 获取当前选中的文件
