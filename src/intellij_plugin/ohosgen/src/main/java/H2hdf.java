@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -20,7 +21,6 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +35,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class H2hdf extends AnAction {
 
+    /**
+     * 显示进度
+     *
+     * @param e 插件事件
+     */
     private void showProgress(AnActionEvent e) {
         Project project = e.getProject();
         // 获取当前选中的文件
@@ -45,6 +50,9 @@ public class H2hdf extends AnAction {
         }
     }
 
+    /**
+     * 睡眠
+     */
     private void doSleep() {
         try {
             Thread.sleep(500); // 模拟耗时操作
@@ -52,6 +60,12 @@ public class H2hdf extends AnAction {
             System.out.println("thread exception ex.printStackTrace();");
         }
     }
+
+    /**
+     * 任务开始
+     *
+     * @param project 项目
+     */
     private void doProgress(Project project) {
         ProgressManager.getInstance().run(new Task.Backgroundable(project, "Processing File", true) {
             @Override
@@ -62,17 +76,38 @@ public class H2hdf extends AnAction {
                     indicator.setText("Processing step " + (i + 1));
                     doSleep();
                 }
-                Messages.showInfoMessage("File processing complete!", "Main Action");
+                System.out.println("File processing complete! + Main Action");
             }
         });
     }
 
+    /**
+     * 开始动作
+     *
+     * @param e 插件事件
+     */
     @Override
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
         showProgress(e);
     }
 
+    /**
+     * 获取线程类型
+     */
+    @Override
+    @NotNull
+    public ActionUpdateThread getActionUpdateThread() {
+        // 根据需求选择以下两种之一：
+        // 后台线程操作（如耗时计算）
+        return ActionUpdateThread.BGT;
+    }
+
+    /**
+     * 插件事件更新
+     *
+     * @param e 插件事件
+     */
     @Override
     public void update(AnActionEvent e) {
         // 获取当前选中的文件

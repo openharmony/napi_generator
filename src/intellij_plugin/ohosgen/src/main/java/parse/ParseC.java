@@ -15,6 +15,10 @@
 
 package parse;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import utils.BaseEvent;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description ${description}
@@ -24,5 +28,50 @@ package parse;
  * @since 2025-02-28
  * @version 1.0
  */
-public class ParseC {
+public class ParseC extends ParseBase {
+    /**
+     * 根据名字解析文件
+     *
+     * @param filePath 文件路径
+     */
+    @Override
+    public void parseFile(String filePath) {
+        System.out.println("parseFile: " + filePath);
+        BaseEvent pcEvent = new BaseEvent(this);
+        pcEvent.setEventMsg("parsec complete");
+        ParseInfo pi = new ParseInfo("start", "parse c starting", 0, 100);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String jsonStr = mapper.writeValueAsString(pi);
+            pcEvent.setEventMsg(jsonStr);
+        } catch (JsonProcessingException e) {
+            System.out.println("json process error: " + e.getMessage());
+        }
+        listeners.forEach(listener -> {
+            listener.onEvent(pcEvent);
+        });
+    }
+
+    /**
+     * 根据内容解析文件
+     *
+     * @param fileContent 文件内容
+     */
+    @Override
+    public void parseContent(String fileContent) {
+        System.out.println("c parseContent");
+        BaseEvent pcEvent = new BaseEvent(this);
+        pcEvent.setEventMsg("parsec complete");
+        ParseInfo pi = new ParseInfo("start", "parse c content starting", 0, 100);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String jsonStr = mapper.writeValueAsString(pi);
+            pcEvent.setEventMsg(jsonStr);
+        } catch (JsonProcessingException e) {
+            System.out.println("json process error: " + e.getMessage());
+        }
+        listeners.forEach(listener -> {
+            listener.onEvent(pcEvent);
+        });
+    }
 }

@@ -15,14 +15,22 @@
 
 package utils;
 
+import java.util.EventListener;
+
 /**
  * <h3>类名：该类用于xxx</h3>
- * description ${description}
+ * description base of listener
  *
- * @author ${USER}
- * date 2025-02-28
- * @since 2025-02-28
+ * @author Administrator
+ *         date 2025-02-28
  * @version 1.0
+ * @since 2025-02-28
  */
-public class File {
+public interface BaseListener extends EventListener {
+    /**
+     * 监听消息
+     *
+     * @param event 事件
+     */
+    void onEvent(BaseEvent event);
 }
