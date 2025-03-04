@@ -171,7 +171,7 @@ public class FileUtils {
         File file = new File(filePath);
         // 路径校验‌:ml-citation{ref="1,3" data="citationList"}
         if (!file.exists() || file.isDirectory()) {
-            return null;
+            return new byte[0];
         }
 
         try (FileInputStream fis = new FileInputStream(file)) {

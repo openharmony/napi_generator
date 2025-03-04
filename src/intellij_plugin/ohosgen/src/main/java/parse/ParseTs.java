@@ -28,7 +28,7 @@ import utils.BaseEvent;
  * @since 2025-02-28
  * @version 1.0
  */
-public class ParseTs extends ParseBase{
+public class ParseTs extends ParseBase {
     /**
      * 根据文件名解析
      *
