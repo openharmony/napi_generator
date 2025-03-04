@@ -15,6 +15,7 @@
 
 package utils;
 
+import com.esotericsoftware.kryo.kryo5.minlog.Log;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,10 +34,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class LogUtilsTest {
     @BeforeEach
     void setUp() {
+        LogUtils.reinit();
     }
 
     @AfterEach
     void tearDown() {
+        LogUtils.clear();
     }
 
     @Test
@@ -65,17 +68,21 @@ class LogUtilsTest {
 
     @Test
     void debug() {
+        LogUtils.debug("write debug");
     }
 
     @Test
     void info() {
+        LogUtils.info("write info");
     }
 
     @Test
     void warn() {
+        LogUtils.warn("write warn");
     }
 
     @Test
     void error() {
+        LogUtils.error("write error");
     }
 }
