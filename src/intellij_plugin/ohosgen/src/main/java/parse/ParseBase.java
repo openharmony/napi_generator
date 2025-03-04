@@ -13,16 +13,33 @@
  * limitations under the License.
  */
 
-package utils;
+package parse;
+
+import utils.BaseListener;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * <h3>类名：该类用于xxx</h3>
- * description ${description}
+ * description base of parse
  *
- * @author ${USER}
- * date 2025-02-28
- * @since 2025-02-28
+ * @author Administrator
+ *         date 2025-02-28
  * @version 1.0
+ * @since 2025-02-28
  */
-public class Log {
+public abstract class ParseBase {
+    protected final List<BaseListener> listeners = new CopyOnWriteArrayList<>();
+
+    public ParseBase() {
+
+    }
+
+    public void addListener(BaseListener listener) {
+        listeners.add(listener);
+    }
+
+    public abstract void parseFile(String filePath);
+    public abstract void parseContent(String fileContent);// 抽象方法声明
 }
