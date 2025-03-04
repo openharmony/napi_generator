@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -20,7 +21,7 @@ import com.intellij.openapi.progress.ProgressManager;
 import com. intellij. openapi. project. Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
-import utils.MockBgTask;
+import parse.ParseTask;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -32,7 +33,11 @@ import utils.MockBgTask;
  * @version 1.0
  */
 public class Dts2cpp extends AnAction {
-
+    /**
+     * 显示进度
+     *
+     * @param e 插件事件
+     */
     private void showProgress(@NotNull AnActionEvent e) {
         Project project = e.getProject();
         // 获取当前选中的文件
@@ -43,16 +48,45 @@ public class Dts2cpp extends AnAction {
         }
     }
 
+    /**
+     * 执行进度
+     *
+     * @param project 项目
+     * @param file 文件
+     */
     private void doProgress(Project project, VirtualFile file) {
-        ProgressManager.getInstance().run(new MockBgTask(project, "Processing File", true));
+        ParseTask pt = new ParseTask(project, "C", true);
+        pt.setFile(file);
+        ProgressManager.getInstance().run(pt);
     }
 
+    /**
+     * 执行动作
+     *
+     * @param e 插件事件
+     */
     @Override
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
         showProgress(e);
     }
 
+    /**
+     * 更新插件线程状态
+     */
+    @Override
+    @NotNull
+    public ActionUpdateThread getActionUpdateThread() {
+        // 根据需求选择以下两种之一：
+        // 后台线程操作（如耗时计算）
+        return ActionUpdateThread.BGT;
+    }
+
+    /**
+     * 更新
+     *
+     * @param e 插件事件
+     */
     @Override
     public void update(AnActionEvent e) {
         // 获取当前选中的文件

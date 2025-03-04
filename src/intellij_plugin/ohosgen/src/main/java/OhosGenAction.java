@@ -29,13 +29,22 @@ import com.intellij.openapi.vfs.VirtualFile;
  * @version 1.0
  */
 public class OhosGenAction extends AnAction {
-
+    /**
+     * 执行插件动作
+     *
+     * @param e 插件事件
+     */
     @Override
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
         Messages.showInfoMessage("This is the OhosGenAction!", "OhosGenAction");
     }
 
+    /**
+     * 更新
+     *
+     * @param e 插件事件
+     */
     @Override
     public void update(AnActionEvent e) {
         // 获取当前选中的文件

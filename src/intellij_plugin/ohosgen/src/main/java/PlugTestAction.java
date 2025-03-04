@@ -28,7 +28,11 @@ import com.intellij.openapi.ui.Messages;
  * @version 1.0
  */
 public class PlugTestAction extends AnAction {
-
+    /**
+     * 执行插件事件
+     *
+     * @param e 插件事件
+     */
     @Override
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
