@@ -28,7 +28,7 @@ import utils.BaseEvent;
  * @since 2025-02-28
  * @version 1.0
  */
-public class ParseC extends ParseBase{
+public class ParseC extends ParseBase {
     /**
      * 根据名字解析文件
      *

@@ -21,7 +21,6 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +35,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class H2hdf extends AnAction {
 
+    /**
+     * 显示进度
+     *
+     * @param e 插件事件
+     */
     private void showProgress(AnActionEvent e) {
         Project project = e.getProject();
         // 获取当前选中的文件
@@ -46,6 +50,9 @@ public class H2hdf extends AnAction {
         }
     }
 
+    /**
+     * 睡眠
+     */
     private void doSleep() {
         try {
             Thread.sleep(500); // 模拟耗时操作
@@ -53,6 +60,12 @@ public class H2hdf extends AnAction {
             System.out.println("thread exception ex.printStackTrace();");
         }
     }
+
+    /**
+     * 任务开始
+     *
+     * @param project 项目
+     */
     private void doProgress(Project project) {
         ProgressManager.getInstance().run(new Task.Backgroundable(project, "Processing File", true) {
             @Override
@@ -68,18 +81,30 @@ public class H2hdf extends AnAction {
         });
     }
 
+    /**
+     * 开始动作
+     *
+     * @param e 插件事件
+     */
     @Override
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
         showProgress(e);
     }
 
+    /**
+     * 获取线程类型
+     */
     @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
         // 根据需求选择以下两种之一：
-        return ActionUpdateThread.BGT; // 后台线程操作（如耗时计算）
+        // 后台线程操作（如耗时计算）
+        return ActionUpdateThread.BGT;
     }
 
+    /**
+     * 插件事件更新
+     */
     @Override
     public void update(AnActionEvent e) {
         // 获取当前选中的文件

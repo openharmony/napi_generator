@@ -42,14 +42,17 @@ public class LogUtils {
      * 调试级别
      */
     public static final int DEBUG = 1;
+
     /**
      * 信息级别
      */
     public static final int INFO = 2;
+
     /**
      * 告警级别
      */
     public static final int WARN = 3;
+
     /**
      * 错误级别
      */
@@ -67,7 +70,7 @@ public class LogUtils {
     private static final int MAX_FILES = 5;
     private static FileWriter writer;
     private static String currentLogPath = DEFAULT_LOG_PATH;
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     static {
         initLogDir();
@@ -96,6 +99,19 @@ public class LogUtils {
     }
 
     /**
+     * 改名字
+     */
+    private static synchronized void doRename(File src, int i) {
+        if (src.exists()) {
+            File dest = new File(LOG_DIR, "app." + (i + 1) + ".log");
+            boolean res = src.renameTo(dest);
+            if (!res) {
+                System.out.println("rollOver " + LOG_DIR + " failed!");
+            }
+        }
+    }
+
+    /**
      * 日志滚动
      */
     private static synchronized void rollOver() {
@@ -103,13 +119,7 @@ public class LogUtils {
             writer.close();
             for (int i = MAX_FILES - 1; i >= 1; i--) {
                 File src = new File(LOG_DIR, "app." + i + ".log");
-                if (src.exists()) {
-                    File dest = new File(LOG_DIR, "app." + (i + 1) + ".log");
-                    boolean res = src.renameTo(dest);
-                    if (!res) {
-                        System.out.println("rollOver " + LOG_DIR + " failed!");
-                    }
-                }
+                doRename(src, i);
             }
             boolean res = new File(LOG_DIR, LOG_FILE).renameTo(new File(LOG_DIR, "app.1.log"));
             if (!res) {
@@ -243,13 +253,18 @@ public class LogUtils {
      * @param message 告警日志
      */
     private static synchronized void log(int level, String message) {
-        if (level < currentLevel) return; // 低于当前级别则不记录‌:ml-citation{ref="3,6" data="citationList"}
+        if (level < currentLevel) {
+            // 低于当前级别则不记录‌:ml-citation{ref="3,6" data="citationList"}
+            return;
+        }
 
         try {
             File logFile = new File(LOG_DIR, LOG_FILE);
-            if (logFile.length() >= MAX_SIZE) rollOver();
+            if (logFile.length() >= MAX_SIZE) {
+                rollOver();
+            }
 
-            String timestamp = sdf.format(new Date());
+            String timestamp = SDF.format(new Date());
             String levelName = getLevelName(level);
             String logLine = String.format("%s [%s] %s%n", timestamp, levelName, message);
             writer.write(logLine);
@@ -288,11 +303,12 @@ public class LogUtils {
     }
 
     /**
-     * 指定路径读取日志文件内容
+     * 指定路径，大小读取日志文件内容
      *
      * @param logPath    日志文件路径
      * @param pageNum    页码
      * @param pageSize   每页行数
+     * @return 文件内容列表
      */
     public static synchronized List<String> readLog(String logPath, int pageNum, int pageSize) {
         File logFile = new File(logPath);
@@ -303,7 +319,7 @@ public class LogUtils {
             while ((line = reader.readLine()) != null) {
                 allLines.add(line);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             return Collections.singletonList("日志读取失败: " + e.getMessage());
         }
 

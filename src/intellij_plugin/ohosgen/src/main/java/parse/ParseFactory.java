@@ -32,7 +32,7 @@ public class ParseFactory {
      *
      * @param type 解析类型
      * @return 解析类 (类型不存在时候抛出异常）
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException 非法参数异常
      */
     public static ParseBase getParser(String type) {
         return switch (type.toUpperCase(Locale.ROOT)) {

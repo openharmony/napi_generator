@@ -22,7 +22,6 @@ import com. intellij. openapi. project. Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import parse.ParseTask;
-import utils.MockBgTask;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -60,7 +59,8 @@ public class Dts2cpp extends AnAction {
     @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
         // 根据需求选择以下两种之一：
-        return ActionUpdateThread.BGT; // 后台线程操作（如耗时计算）
+        // 后台线程操作（如耗时计算）
+        return ActionUpdateThread.BGT;
     }
 
     @Override

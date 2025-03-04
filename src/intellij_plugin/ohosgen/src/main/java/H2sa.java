@@ -21,7 +21,6 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 
@@ -77,7 +76,8 @@ public class H2sa extends AnAction {
     @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
         // 根据需求选择以下两种之一：
-        return ActionUpdateThread.BGT; // 后台线程操作（如耗时计算）
+        // 后台线程操作（如耗时计算）
+        return ActionUpdateThread.BGT;
     }
 
     @Override

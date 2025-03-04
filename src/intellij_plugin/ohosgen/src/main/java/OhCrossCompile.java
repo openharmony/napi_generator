@@ -41,7 +41,8 @@ public class OhCrossCompile extends AnAction {
     @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
         // 根据需求选择以下两种之一：
-        return ActionUpdateThread.BGT; // 后台线程操作（如耗时计算）
+        // 后台线程操作（如耗时计算）
+        return ActionUpdateThread.BGT;
     }
 
     @Override

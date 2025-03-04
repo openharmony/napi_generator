@@ -30,6 +30,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2025-02-28
  */
 public abstract class ParseBase {
+    /**
+     * 存储所有监听回调
+     */
     protected final List<BaseListener> listeners = new CopyOnWriteArrayList<>();
 
     /**
@@ -58,5 +61,5 @@ public abstract class ParseBase {
      *
      * @param fileContent 文件内容
      */
-    public abstract void parseContent(String fileContent);// 抽象方法声明
+    public abstract void parseContent(String fileContent);
 }
