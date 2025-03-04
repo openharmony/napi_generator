@@ -33,7 +33,11 @@ import parse.ParseTask;
  * @version 1.0
  */
 public class Dts2cpp extends AnAction {
-
+    /**
+     * 显示进度
+     *
+     * @param e 插件事件
+     */
     private void showProgress(@NotNull AnActionEvent e) {
         Project project = e.getProject();
         // 获取当前选中的文件
@@ -44,18 +48,32 @@ public class Dts2cpp extends AnAction {
         }
     }
 
+    /**
+     * 执行进度
+     *
+     * @param project 项目
+     * @param file 文件
+     */
     private void doProgress(Project project, VirtualFile file) {
         ParseTask pt = new ParseTask(project, "C", true);
         pt.setFile(file);
         ProgressManager.getInstance().run(pt);
     }
 
+    /**
+     * 执行动作
+     *
+     * @param e 插件事件
+     */
     @Override
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
         showProgress(e);
     }
 
+    /**
+     * 更新插件线程状态
+     */
     @Override
     @NotNull
     public ActionUpdateThread getActionUpdateThread() {
@@ -64,6 +82,11 @@ public class Dts2cpp extends AnAction {
         return ActionUpdateThread.BGT;
     }
 
+    /**
+     * 更新
+     *
+     * @param e 插件事件
+     */
     @Override
     public void update(AnActionEvent e) {
         // 获取当前选中的文件

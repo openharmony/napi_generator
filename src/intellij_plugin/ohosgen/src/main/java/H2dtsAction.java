@@ -35,6 +35,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class H2dtsAction extends AnAction {
 
+    /**
+     * 显示进度
+     *
+     * @param e 插件事件
+     */
     private void showProgress(AnActionEvent e) {
         Project project = e.getProject();
         // 获取当前选中的文件
@@ -45,6 +50,9 @@ public class H2dtsAction extends AnAction {
         }
     }
 
+    /**
+     * 睡眠
+     */
     private void doSleep() {
         try {
             Thread.sleep(500); // 模拟耗时操作
@@ -52,6 +60,12 @@ public class H2dtsAction extends AnAction {
             System.out.println("thread exception ex.printStackTrace();");
         }
     }
+
+    /**
+     * 执行
+     *
+     * @param project 项目
+     */
     private void doProgress(Project project) {
         ProgressManager.getInstance().run(new Task.Backgroundable(project, "Processing File", true) {
             @Override
@@ -67,6 +81,11 @@ public class H2dtsAction extends AnAction {
         });
     }
 
+    /**
+     * 执行插件动作
+     *
+     * @param e 插件事件
+     */
     @Override
     public void actionPerformed(AnActionEvent e) {
         // NEEDO: insert action logic here
@@ -82,6 +101,11 @@ public class H2dtsAction extends AnAction {
         return ActionUpdateThread.BGT;
     }
 
+    /**
+     * 更新
+     *
+     * @param e 插件事件
+     */
     @Override
     public void update(AnActionEvent e) {
         // 获取当前选中的文件
