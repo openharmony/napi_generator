@@ -10987,4 +10987,1754 @@ public class TypeScriptParser extends TypeScriptParserBase {
 		return _localctx;
 	}
 
-	
+	@SuppressWarnings("CheckReturnValue")
+	public static class PropertyAssignmentContext extends ParserRuleContext {
+		public PropertyAssignmentContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_propertyAssignment; }
+
+		public PropertyAssignmentContext() { }
+		public void copyFrom(PropertyAssignmentContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class PropertyExpressionAssignmentContext extends PropertyAssignmentContext {
+		public PropertyNameContext propertyName() {
+			return getRuleContext(PropertyNameContext.class,0);
+		}
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode Colon() { return getToken(TypeScriptParser.Colon, 0); }
+		public TerminalNode Assign() { return getToken(TypeScriptParser.Assign, 0); }
+		public PropertyExpressionAssignmentContext(PropertyAssignmentContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPropertyExpressionAssignment(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPropertyExpressionAssignment(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ComputedPropertyExpressionAssignmentContext extends PropertyAssignmentContext {
+		public TerminalNode OpenBracket() { return getToken(TypeScriptParser.OpenBracket, 0); }
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode CloseBracket() { return getToken(TypeScriptParser.CloseBracket, 0); }
+		public TerminalNode Colon() { return getToken(TypeScriptParser.Colon, 0); }
+		public ComputedPropertyExpressionAssignmentContext(PropertyAssignmentContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterComputedPropertyExpressionAssignment(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitComputedPropertyExpressionAssignment(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class SpreadOperatorContext extends PropertyAssignmentContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode Ellipsis() { return getToken(TypeScriptParser.Ellipsis, 0); }
+		public SpreadOperatorContext(PropertyAssignmentContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterSpreadOperator(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitSpreadOperator(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class PropertyShorthandContext extends PropertyAssignmentContext {
+		public IdentifierOrKeyWordContext identifierOrKeyWord() {
+			return getRuleContext(IdentifierOrKeyWordContext.class,0);
+		}
+		public PropertyShorthandContext(PropertyAssignmentContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPropertyShorthand(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPropertyShorthand(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class PropertySetterContext extends PropertyAssignmentContext {
+		public SetAccessorContext setAccessor() {
+			return getRuleContext(SetAccessorContext.class,0);
+		}
+		public PropertySetterContext(PropertyAssignmentContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPropertySetter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPropertySetter(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class PropertyGetterContext extends PropertyAssignmentContext {
+		public GetAccessorContext getAccessor() {
+			return getRuleContext(GetAccessorContext.class,0);
+		}
+		public PropertyGetterContext(PropertyAssignmentContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPropertyGetter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPropertyGetter(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class RestParameterInObjectContext extends PropertyAssignmentContext {
+		public RestParameterContext restParameter() {
+			return getRuleContext(RestParameterContext.class,0);
+		}
+		public RestParameterInObjectContext(PropertyAssignmentContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterRestParameterInObject(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitRestParameterInObject(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class MethodPropertyContext extends PropertyAssignmentContext {
+		public GeneratorMethodContext generatorMethod() {
+			return getRuleContext(GeneratorMethodContext.class,0);
+		}
+		public MethodPropertyContext(PropertyAssignmentContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterMethodProperty(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitMethodProperty(this);
+		}
+	}
+
+	public final PropertyAssignmentContext propertyAssignment() throws RecognitionException {
+		PropertyAssignmentContext _localctx = new PropertyAssignmentContext(_ctx, getState());
+		enterRule(_localctx, 258, RULE_propertyAssignment);
+		int _la;
+		try {
+			setState(1588);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,211,_ctx) ) {
+			case 1:
+				_localctx = new PropertyExpressionAssignmentContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1569);
+				propertyName();
+				setState(1570);
+				_la = _input.LA(1);
+				if ( !(_la==Assign || _la==Colon) ) {
+				_errHandler.recoverInline(this);
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
+					consume();
+				}
+				setState(1571);
+				singleExpression(0);
+				}
+				break;
+			case 2:
+				_localctx = new ComputedPropertyExpressionAssignmentContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1573);
+				match(OpenBracket);
+				setState(1574);
+				singleExpression(0);
+				setState(1575);
+				match(CloseBracket);
+				setState(1576);
+				match(Colon);
+				setState(1577);
+				singleExpression(0);
+				}
+				break;
+			case 3:
+				_localctx = new PropertyGetterContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(1579);
+				getAccessor();
+				}
+				break;
+			case 4:
+				_localctx = new PropertySetterContext(_localctx);
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(1580);
+				setAccessor();
+				}
+				break;
+			case 5:
+				_localctx = new MethodPropertyContext(_localctx);
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(1581);
+				generatorMethod();
+				}
+				break;
+			case 6:
+				_localctx = new PropertyShorthandContext(_localctx);
+				enterOuterAlt(_localctx, 6);
+				{
+				setState(1582);
+				identifierOrKeyWord();
+				}
+				break;
+			case 7:
+				_localctx = new SpreadOperatorContext(_localctx);
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(1584);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Ellipsis) {
+					{
+					setState(1583);
+					match(Ellipsis);
+					}
+				}
+
+				setState(1586);
+				singleExpression(0);
+				}
+				break;
+			case 8:
+				_localctx = new RestParameterInObjectContext(_localctx);
+				enterOuterAlt(_localctx, 8);
+				{
+				setState(1587);
+				restParameter();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class GetAccessorContext extends ParserRuleContext {
+		public GetterContext getter() {
+			return getRuleContext(GetterContext.class,0);
+		}
+		public TerminalNode OpenParen() { return getToken(TypeScriptParser.OpenParen, 0); }
+		public TerminalNode CloseParen() { return getToken(TypeScriptParser.CloseParen, 0); }
+		public TerminalNode OpenBrace() { return getToken(TypeScriptParser.OpenBrace, 0); }
+		public FunctionBodyContext functionBody() {
+			return getRuleContext(FunctionBodyContext.class,0);
+		}
+		public TerminalNode CloseBrace() { return getToken(TypeScriptParser.CloseBrace, 0); }
+		public TypeAnnotationContext typeAnnotation() {
+			return getRuleContext(TypeAnnotationContext.class,0);
+		}
+		public GetAccessorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_getAccessor; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterGetAccessor(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitGetAccessor(this);
+		}
+	}
+
+	public final GetAccessorContext getAccessor() throws RecognitionException {
+		GetAccessorContext _localctx = new GetAccessorContext(_ctx, getState());
+		enterRule(_localctx, 260, RULE_getAccessor);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1590);
+			getter();
+			setState(1591);
+			match(OpenParen);
+			setState(1592);
+			match(CloseParen);
+			setState(1594);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Colon) {
+				{
+				setState(1593);
+				typeAnnotation();
+				}
+			}
+
+			setState(1596);
+			match(OpenBrace);
+			setState(1597);
+			functionBody();
+			setState(1598);
+			match(CloseBrace);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class SetAccessorContext extends ParserRuleContext {
+		public SetterContext setter() {
+			return getRuleContext(SetterContext.class,0);
+		}
+		public TerminalNode OpenParen() { return getToken(TypeScriptParser.OpenParen, 0); }
+		public TerminalNode CloseParen() { return getToken(TypeScriptParser.CloseParen, 0); }
+		public TerminalNode OpenBrace() { return getToken(TypeScriptParser.OpenBrace, 0); }
+		public FunctionBodyContext functionBody() {
+			return getRuleContext(FunctionBodyContext.class,0);
+		}
+		public TerminalNode CloseBrace() { return getToken(TypeScriptParser.CloseBrace, 0); }
+		public FormalParameterListContext formalParameterList() {
+			return getRuleContext(FormalParameterListContext.class,0);
+		}
+		public SetAccessorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_setAccessor; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterSetAccessor(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitSetAccessor(this);
+		}
+	}
+
+	public final SetAccessorContext setAccessor() throws RecognitionException {
+		SetAccessorContext _localctx = new SetAccessorContext(_ctx, getState());
+		enterRule(_localctx, 262, RULE_setAccessor);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1600);
+			setter();
+			setState(1601);
+			match(OpenParen);
+			setState(1603);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 131344L) != 0) || ((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & -4294967297L) != 0) || ((((_la - 135)) & ~0x3f) == 0 && ((1L << (_la - 135)) & 13L) != 0)) {
+				{
+				setState(1602);
+				formalParameterList();
+				}
+			}
+
+			setState(1605);
+			match(CloseParen);
+			setState(1606);
+			match(OpenBrace);
+			setState(1607);
+			functionBody();
+			setState(1608);
+			match(CloseBrace);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class PropertyNameContext extends ParserRuleContext {
+		public IdentifierNameContext identifierName() {
+			return getRuleContext(IdentifierNameContext.class,0);
+		}
+		public TerminalNode StringLiteral() { return getToken(TypeScriptParser.StringLiteral, 0); }
+		public NumericLiteralContext numericLiteral() {
+			return getRuleContext(NumericLiteralContext.class,0);
+		}
+		public TerminalNode OpenBracket() { return getToken(TypeScriptParser.OpenBracket, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode CloseBracket() { return getToken(TypeScriptParser.CloseBracket, 0); }
+		public PropertyNameContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_propertyName; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPropertyName(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPropertyName(this);
+		}
+	}
+
+	public final PropertyNameContext propertyName() throws RecognitionException {
+		PropertyNameContext _localctx = new PropertyNameContext(_ctx, getState());
+		enterRule(_localctx, 264, RULE_propertyName);
+		try {
+			setState(1617);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case NullLiteral:
+			case BooleanLiteral:
+			case Break:
+			case Do:
+			case Instanceof:
+			case Typeof:
+			case Case:
+			case Else:
+			case New:
+			case Var:
+			case Catch:
+			case Finally:
+			case Return:
+			case Void:
+			case Continue:
+			case For:
+			case Switch:
+			case While:
+			case Debugger:
+			case Function_:
+			case This:
+			case With:
+			case Default:
+			case If:
+			case Throw:
+			case Delete:
+			case In:
+			case Try:
+			case As:
+			case From:
+			case ReadOnly:
+			case Async:
+			case Await:
+			case Yield:
+			case Class:
+			case Enum:
+			case Extends:
+			case Super:
+			case Const:
+			case Export:
+			case Import:
+			case Implements:
+			case Let:
+			case Private:
+			case Public:
+			case Interface:
+			case Package:
+			case Protected:
+			case Static:
+			case Any:
+			case Number:
+			case Never:
+			case Boolean:
+			case String:
+			case Unique:
+			case Symbol:
+			case Undefined:
+			case Object:
+			case Of:
+			case KeyOf:
+			case TypeAlias:
+			case Constructor:
+			case Namespace:
+			case Require:
+			case Module:
+			case Abstract:
+			case Identifier:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1610);
+				identifierName();
+				}
+				break;
+			case StringLiteral:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1611);
+				match(StringLiteral);
+				}
+				break;
+			case DecimalLiteral:
+			case HexIntegerLiteral:
+			case OctalIntegerLiteral:
+			case OctalIntegerLiteral2:
+			case BinaryIntegerLiteral:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(1612);
+				numericLiteral();
+				}
+				break;
+			case OpenBracket:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(1613);
+				match(OpenBracket);
+				setState(1614);
+				singleExpression(0);
+				setState(1615);
+				match(CloseBracket);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArgumentsContext extends ParserRuleContext {
+		public TerminalNode OpenParen() { return getToken(TypeScriptParser.OpenParen, 0); }
+		public TerminalNode CloseParen() { return getToken(TypeScriptParser.CloseParen, 0); }
+		public ArgumentListContext argumentList() {
+			return getRuleContext(ArgumentListContext.class,0);
+		}
+		public TerminalNode Comma() { return getToken(TypeScriptParser.Comma, 0); }
+		public ArgumentsContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_arguments; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterArguments(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitArguments(this);
+		}
+	}
+
+	public final ArgumentsContext arguments() throws RecognitionException {
+		ArgumentsContext _localctx = new ArgumentsContext(_ctx, getState());
+		enterRule(_localctx, 266, RULE_arguments);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1619);
+			match(OpenParen);
+			setState(1624);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & -576460747975294632L) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & -1L) != 0) || ((((_la - 128)) & ~0x3f) == 0 && ((1L << (_la - 128)) & 7359L) != 0)) {
+				{
+				setState(1620);
+				argumentList();
+				setState(1622);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Comma) {
+					{
+					setState(1621);
+					match(Comma);
+					}
+				}
+
+				}
+			}
+
+			setState(1626);
+			match(CloseParen);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArgumentListContext extends ParserRuleContext {
+		public List<ArgumentContext> argument() {
+			return getRuleContexts(ArgumentContext.class);
+		}
+		public ArgumentContext argument(int i) {
+			return getRuleContext(ArgumentContext.class,i);
+		}
+		public List<TerminalNode> Comma() { return getTokens(TypeScriptParser.Comma); }
+		public TerminalNode Comma(int i) {
+			return getToken(TypeScriptParser.Comma, i);
+		}
+		public ArgumentListContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_argumentList; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterArgumentList(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitArgumentList(this);
+		}
+	}
+
+	public final ArgumentListContext argumentList() throws RecognitionException {
+		ArgumentListContext _localctx = new ArgumentListContext(_ctx, getState());
+		enterRule(_localctx, 268, RULE_argumentList);
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1628);
+			argument();
+			setState(1633);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,217,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					setState(1629);
+					match(Comma);
+					setState(1630);
+					argument();
+					}
+					}
+				}
+				setState(1635);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,217,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArgumentContext extends ParserRuleContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public TerminalNode Ellipsis() { return getToken(TypeScriptParser.Ellipsis, 0); }
+		public ArgumentContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_argument; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterArgument(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitArgument(this);
+		}
+	}
+
+	public final ArgumentContext argument() throws RecognitionException {
+		ArgumentContext _localctx = new ArgumentContext(_ctx, getState());
+		enterRule(_localctx, 270, RULE_argument);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1637);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Ellipsis) {
+				{
+				setState(1636);
+				match(Ellipsis);
+				}
+			}
+
+			setState(1641);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,219,_ctx) ) {
+			case 1:
+				{
+				setState(1639);
+				singleExpression(0);
+				}
+				break;
+			case 2:
+				{
+				setState(1640);
+				identifier();
+				}
+				break;
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ExpressionSequenceContext extends ParserRuleContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public List<TerminalNode> Comma() { return getTokens(TypeScriptParser.Comma); }
+		public TerminalNode Comma(int i) {
+			return getToken(TypeScriptParser.Comma, i);
+		}
+		public ExpressionSequenceContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_expressionSequence; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterExpressionSequence(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitExpressionSequence(this);
+		}
+	}
+
+	public final ExpressionSequenceContext expressionSequence() throws RecognitionException {
+		ExpressionSequenceContext _localctx = new ExpressionSequenceContext(_ctx, getState());
+		enterRule(_localctx, 272, RULE_expressionSequence);
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1643);
+			singleExpression(0);
+			setState(1648);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,220,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					setState(1644);
+					match(Comma);
+					setState(1645);
+					singleExpression(0);
+					}
+					}
+				}
+				setState(1650);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,220,_ctx);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class SingleExpressionContext extends ParserRuleContext {
+		public SingleExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_singleExpression; }
+
+		public SingleExpressionContext() { }
+		public void copyFrom(SingleExpressionContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class TemplateStringExpressionContext extends SingleExpressionContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TemplateStringLiteralContext templateStringLiteral() {
+			return getRuleContext(TemplateStringLiteralContext.class,0);
+		}
+		public TemplateStringExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTemplateStringExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTemplateStringExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class GeneratorsExpressionContext extends SingleExpressionContext {
+		public GeneratorBlockContext generatorBlock() {
+			return getRuleContext(GeneratorBlockContext.class,0);
+		}
+		public GeneratorsExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterGeneratorsExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitGeneratorsExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class PowerExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode Power() { return getToken(TypeScriptParser.Power, 0); }
+		public PowerExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPowerExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPowerExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class InExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode In() { return getToken(TypeScriptParser.In, 0); }
+		public InExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterInExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitInExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class GenericTypesContext extends SingleExpressionContext {
+		public TypeArgumentsContext typeArguments() {
+			return getRuleContext(TypeArgumentsContext.class,0);
+		}
+		public ExpressionSequenceContext expressionSequence() {
+			return getRuleContext(ExpressionSequenceContext.class,0);
+		}
+		public GenericTypesContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterGenericTypes(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitGenericTypes(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class OptionalChainExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode QuestionMarkDot() { return getToken(TypeScriptParser.QuestionMarkDot, 0); }
+		public OptionalChainExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterOptionalChainExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitOptionalChainExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArgumentsExpressionContext extends SingleExpressionContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public ArgumentsContext arguments() {
+			return getRuleContext(ArgumentsContext.class,0);
+		}
+		public ArgumentsExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterArgumentsExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitArgumentsExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ThisExpressionContext extends SingleExpressionContext {
+		public TerminalNode This() { return getToken(TypeScriptParser.This, 0); }
+		public ThisExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterThisExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitThisExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class TypeofExpressionContext extends SingleExpressionContext {
+		public TerminalNode Typeof() { return getToken(TypeScriptParser.Typeof, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TypeofExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTypeofExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTypeofExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class GeneratorsFunctionExpressionContext extends SingleExpressionContext {
+		public GeneratorFunctionDeclarationContext generatorFunctionDeclaration() {
+			return getRuleContext(GeneratorFunctionDeclarationContext.class,0);
+		}
+		public GeneratorsFunctionExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterGeneratorsFunctionExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitGeneratorsFunctionExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class EqualityExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode Equals_() { return getToken(TypeScriptParser.Equals_, 0); }
+		public TerminalNode NotEquals() { return getToken(TypeScriptParser.NotEquals, 0); }
+		public TerminalNode IdentityEquals() { return getToken(TypeScriptParser.IdentityEquals, 0); }
+		public TerminalNode IdentityNotEquals() { return getToken(TypeScriptParser.IdentityNotEquals, 0); }
+		public EqualityExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterEqualityExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitEqualityExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class BitXOrExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode BitXOr() { return getToken(TypeScriptParser.BitXOr, 0); }
+		public BitXOrExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterBitXOrExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitBitXOrExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CastAsExpressionContext extends SingleExpressionContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode As() { return getToken(TypeScriptParser.As, 0); }
+		public AsExpressionContext asExpression() {
+			return getRuleContext(AsExpressionContext.class,0);
+		}
+		public CastAsExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterCastAsExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitCastAsExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class MultiplicativeExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode Multiply() { return getToken(TypeScriptParser.Multiply, 0); }
+		public TerminalNode Divide() { return getToken(TypeScriptParser.Divide, 0); }
+		public TerminalNode Modulus() { return getToken(TypeScriptParser.Modulus, 0); }
+		public MultiplicativeExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterMultiplicativeExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitMultiplicativeExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class BitShiftExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode LeftShiftArithmetic() { return getToken(TypeScriptParser.LeftShiftArithmetic, 0); }
+		public List<TerminalNode> MoreThan() { return getTokens(TypeScriptParser.MoreThan); }
+		public TerminalNode MoreThan(int i) {
+			return getToken(TypeScriptParser.MoreThan, i);
+		}
+		public BitShiftExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterBitShiftExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitBitShiftExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class AdditiveExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode Plus() { return getToken(TypeScriptParser.Plus, 0); }
+		public TerminalNode Minus() { return getToken(TypeScriptParser.Minus, 0); }
+		public AdditiveExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterAdditiveExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitAdditiveExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class RelationalExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode LessThan() { return getToken(TypeScriptParser.LessThan, 0); }
+		public TerminalNode MoreThan() { return getToken(TypeScriptParser.MoreThan, 0); }
+		public TerminalNode LessThanEquals() { return getToken(TypeScriptParser.LessThanEquals, 0); }
+		public TerminalNode GreaterThanEquals() { return getToken(TypeScriptParser.GreaterThanEquals, 0); }
+		public RelationalExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterRelationalExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitRelationalExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class BitNotExpressionContext extends SingleExpressionContext {
+		public TerminalNode BitNot() { return getToken(TypeScriptParser.BitNot, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public BitNotExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterBitNotExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitBitNotExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class NewExpressionContext extends SingleExpressionContext {
+		public TerminalNode New() { return getToken(TypeScriptParser.New, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public ArgumentsContext arguments() {
+			return getRuleContext(ArgumentsContext.class,0);
+		}
+		public TypeArgumentsContext typeArguments() {
+			return getRuleContext(TypeArgumentsContext.class,0);
+		}
+		public NewExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterNewExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitNewExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class LiteralExpressionContext extends SingleExpressionContext {
+		public LiteralContext literal() {
+			return getRuleContext(LiteralContext.class,0);
+		}
+		public LiteralExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterLiteralExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitLiteralExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArrayLiteralExpressionContext extends SingleExpressionContext {
+		public ArrayLiteralContext arrayLiteral() {
+			return getRuleContext(ArrayLiteralContext.class,0);
+		}
+		public ArrayLiteralExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterArrayLiteralExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitArrayLiteralExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class MemberDotExpressionContext extends SingleExpressionContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode Dot() { return getToken(TypeScriptParser.Dot, 0); }
+		public IdentifierNameContext identifierName() {
+			return getRuleContext(IdentifierNameContext.class,0);
+		}
+		public TerminalNode Not() { return getToken(TypeScriptParser.Not, 0); }
+		public TerminalNode Hashtag() { return getToken(TypeScriptParser.Hashtag, 0); }
+		public TypeGenericContext typeGeneric() {
+			return getRuleContext(TypeGenericContext.class,0);
+		}
+		public TerminalNode QuestionMark() { return getToken(TypeScriptParser.QuestionMark, 0); }
+		public MemberDotExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterMemberDotExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitMemberDotExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class MemberIndexExpressionContext extends SingleExpressionContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode OpenBracket() { return getToken(TypeScriptParser.OpenBracket, 0); }
+		public ExpressionSequenceContext expressionSequence() {
+			return getRuleContext(ExpressionSequenceContext.class,0);
+		}
+		public TerminalNode CloseBracket() { return getToken(TypeScriptParser.CloseBracket, 0); }
+		public TerminalNode QuestionMarkDot() { return getToken(TypeScriptParser.QuestionMarkDot, 0); }
+		public MemberIndexExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterMemberIndexExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitMemberIndexExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class BitAndExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode BitAnd() { return getToken(TypeScriptParser.BitAnd, 0); }
+		public BitAndExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterBitAndExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitBitAndExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class BitOrExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode BitOr() { return getToken(TypeScriptParser.BitOr, 0); }
+		public BitOrExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterBitOrExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitBitOrExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class AssignmentOperatorExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public AssignmentOperatorContext assignmentOperator() {
+			return getRuleContext(AssignmentOperatorContext.class,0);
+		}
+		public AssignmentOperatorExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterAssignmentOperatorExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitAssignmentOperatorExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class VoidExpressionContext extends SingleExpressionContext {
+		public TerminalNode Void() { return getToken(TypeScriptParser.Void, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public VoidExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterVoidExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitVoidExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class TernaryExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode QuestionMark() { return getToken(TypeScriptParser.QuestionMark, 0); }
+		public TerminalNode Colon() { return getToken(TypeScriptParser.Colon, 0); }
+		public TernaryExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTernaryExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTernaryExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class LogicalAndExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode And() { return getToken(TypeScriptParser.And, 0); }
+		public LogicalAndExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterLogicalAndExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitLogicalAndExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class PreIncrementExpressionContext extends SingleExpressionContext {
+		public TerminalNode PlusPlus() { return getToken(TypeScriptParser.PlusPlus, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public PreIncrementExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPreIncrementExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPreIncrementExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ObjectLiteralExpressionContext extends SingleExpressionContext {
+		public ObjectLiteralContext objectLiteral() {
+			return getRuleContext(ObjectLiteralContext.class,0);
+		}
+		public ObjectLiteralExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterObjectLiteralExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitObjectLiteralExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class LogicalOrExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode Or() { return getToken(TypeScriptParser.Or, 0); }
+		public LogicalOrExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterLogicalOrExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitLogicalOrExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class NonNullAssertionExpressionContext extends SingleExpressionContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode Not() { return getToken(TypeScriptParser.Not, 0); }
+		public NonNullAssertionExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterNonNullAssertionExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitNonNullAssertionExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class NotExpressionContext extends SingleExpressionContext {
+		public TerminalNode Not() { return getToken(TypeScriptParser.Not, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public NotExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterNotExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitNotExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class PreDecreaseExpressionContext extends SingleExpressionContext {
+		public TerminalNode MinusMinus() { return getToken(TypeScriptParser.MinusMinus, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public PreDecreaseExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPreDecreaseExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPreDecreaseExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class AwaitExpressionContext extends SingleExpressionContext {
+		public TerminalNode Await() { return getToken(TypeScriptParser.Await, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public AwaitExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterAwaitExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitAwaitExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class FunctionExpressionContext extends SingleExpressionContext {
+		public AnonymousFunctionContext anonymousFunction() {
+			return getRuleContext(AnonymousFunctionContext.class,0);
+		}
+		public FunctionExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterFunctionExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitFunctionExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UnaryMinusExpressionContext extends SingleExpressionContext {
+		public TerminalNode Minus() { return getToken(TypeScriptParser.Minus, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public UnaryMinusExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterUnaryMinusExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitUnaryMinusExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class AssignmentExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode Assign() { return getToken(TypeScriptParser.Assign, 0); }
+		public AssignmentExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterAssignmentExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitAssignmentExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class PostDecreaseExpressionContext extends SingleExpressionContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode MinusMinus() { return getToken(TypeScriptParser.MinusMinus, 0); }
+		public PostDecreaseExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPostDecreaseExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPostDecreaseExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class InstanceofExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode Instanceof() { return getToken(TypeScriptParser.Instanceof, 0); }
+		public InstanceofExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterInstanceofExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitInstanceofExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class UnaryPlusExpressionContext extends SingleExpressionContext {
+		public TerminalNode Plus() { return getToken(TypeScriptParser.Plus, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public UnaryPlusExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterUnaryPlusExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitUnaryPlusExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class DeleteExpressionContext extends SingleExpressionContext {
+		public TerminalNode Delete() { return getToken(TypeScriptParser.Delete, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public DeleteExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterDeleteExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitDeleteExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class IteratorsExpressionContext extends SingleExpressionContext {
+		public IteratorBlockContext iteratorBlock() {
+			return getRuleContext(IteratorBlockContext.class,0);
+		}
+		public IteratorsExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterIteratorsExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitIteratorsExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class SuperExpressionContext extends SingleExpressionContext {
+		public TerminalNode Super() { return getToken(TypeScriptParser.Super, 0); }
+		public SuperExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterSuperExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitSuperExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ParenthesizedExpressionContext extends SingleExpressionContext {
+		public TerminalNode OpenParen() { return getToken(TypeScriptParser.OpenParen, 0); }
+		public ExpressionSequenceContext expressionSequence() {
+			return getRuleContext(ExpressionSequenceContext.class,0);
+		}
+		public TerminalNode CloseParen() { return getToken(TypeScriptParser.CloseParen, 0); }
+		public ParenthesizedExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterParenthesizedExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitParenthesizedExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class PostIncrementExpressionContext extends SingleExpressionContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode PlusPlus() { return getToken(TypeScriptParser.PlusPlus, 0); }
+		public PostIncrementExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPostIncrementExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPostIncrementExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class YieldExpressionContext extends SingleExpressionContext {
+		public YieldStatementContext yieldStatement() {
+			return getRuleContext(YieldStatementContext.class,0);
+		}
+		public YieldExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterYieldExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitYieldExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ClassExpressionContext extends SingleExpressionContext {
+		public TerminalNode Class() { return getToken(TypeScriptParser.Class, 0); }
+		public ClassHeritageContext classHeritage() {
+			return getRuleContext(ClassHeritageContext.class,0);
+		}
+		public ClassTailContext classTail() {
+			return getRuleContext(ClassTailContext.class,0);
+		}
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public TypeParametersContext typeParameters() {
+			return getRuleContext(TypeParametersContext.class,0);
+		}
+		public ClassExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterClassExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitClassExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class IdentifierExpressionContext extends SingleExpressionContext {
+		public IdentifierNameContext identifierName() {
+			return getRuleContext(IdentifierNameContext.class,0);
+		}
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public IdentifierExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterIdentifierExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitIdentifierExpression(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class CoalesceExpressionContext extends SingleExpressionContext {
+		public List<SingleExpressionContext> singleExpression() {
+			return getRuleContexts(SingleExpressionContext.class);
+		}
+		public SingleExpressionContext singleExpression(int i) {
+			return getRuleContext(SingleExpressionContext.class,i);
+		}
+		public TerminalNode NullCoalesce() { return getToken(TypeScriptParser.NullCoalesce, 0); }
+		public CoalesceExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterCoalesceExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitCoalesceExpression(this);
+		}
+	}
+
+	public final SingleExpressionContext singleExpression() throws RecognitionException {
+		return singleExpression(0);
+	}
+
