@@ -68,6 +68,7 @@ Note:If the text contains special characters, please escape them according to th
                 <filteritem type="filename" name="*.mp4" desc="mp4 files"/>
                 <filteritem type="filename" name="*.py" desc="python files"/>
                 <filteritem type="filename" name="*.md" desc="markdown files"/>
+                <filteritem type="filename" name="*.java" desc="markdown files"/>
                 <filteritem type="filepath" name="examples/.*" desc="example files"/>
                 <filteritem type="filename" name="hvigorfile.ts" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
                 <filteritem type="filename" name="hvigor-wrapper.js" desc="hvigor配置文件，DevEco Studio自动生成，不手动修改"/>
