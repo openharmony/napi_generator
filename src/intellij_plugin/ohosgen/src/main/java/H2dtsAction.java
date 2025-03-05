@@ -92,7 +92,11 @@ public class H2dtsAction extends AnAction {
         showProgress(e);
     }
 
-    // 新增方法：显式选择线程模型
+    /**
+     * 显式选择线程模型
+     *
+     * @return 线程类型
+     */
     @Override
     @NotNull
     public ActionUpdateThread getActionUpdateThread() {
