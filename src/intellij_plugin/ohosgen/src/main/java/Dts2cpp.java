@@ -55,7 +55,7 @@ public class Dts2cpp extends AnAction {
      * @param file 文件
      */
     private void doProgress(Project project, VirtualFile file) {
-        ParseTask pt = new ParseTask(project, "C", true);
+        ParseTask pt = new ParseTask(project, "TS", true);
         pt.setFile(file);
         ProgressManager.getInstance().run(pt);
     }
@@ -73,6 +73,8 @@ public class Dts2cpp extends AnAction {
 
     /**
      * 更新插件线程状态
+     *
+     * @return 线程类型
      */
     @Override
     @NotNull

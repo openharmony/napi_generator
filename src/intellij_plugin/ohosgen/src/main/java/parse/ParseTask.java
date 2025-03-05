@@ -17,6 +17,8 @@ package parse;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
@@ -28,6 +30,7 @@ import utils.BaseEvent;
 import utils.BaseListener;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -85,15 +88,17 @@ public class ParseTask extends Task.Backgroundable implements BaseListener {
         try {
             String content = new String(parseFile.contentsToByteArray(), parseFile.getCharset());
             System.out.println("doAnalysis");
+            InputStream is = parseFile.getInputStream();
+            CharStream ics = CharStreams.fromStream(is);
 
-            parser.parseContent(content);
+            parser.parseCStream(ics);
             System.out.println("parseContent finish");
             String[] lines = content.split("\n");
             for (int i = 0; i < lines.length; i++) {
                 // 模拟处理每一行
                 indicator.setFraction((i + 1) / (double) lines.length);
                 indicator.setText("Dts2cpp steps : " + (i + 1) + "/" + lines.length);
-                System.out.println("Dts2cpp steps : " + (i + 1) + "/" + lines.length);
+//                System.out.println("Dts2cpp steps : " + (i + 1) + "/" + lines.length);
                 // 这里添加实际业务逻辑
                 processLine(lines[i]);
 
@@ -112,7 +117,7 @@ public class ParseTask extends Task.Backgroundable implements BaseListener {
      */
     private void processLine(String line) {
         // 实际业务逻辑（如语法分析/代码检查等）
-        System.out.println("processLine");
+//        System.out.println("processLine");
     }
 
     /**

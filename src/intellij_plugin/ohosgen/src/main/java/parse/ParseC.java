@@ -17,7 +17,11 @@ package parse;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import grammar.*;
+import org.antlr.v4.runtime.CharStream;
 import utils.BaseEvent;
+
+import java.lang.reflect.Type;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -73,5 +77,46 @@ public class ParseC extends ParseBase {
         listeners.forEach(listener -> {
             listener.onEvent(pcEvent);
         });
+    }
+
+    /**
+     * 处理内容
+     *
+     * @param fileCStream 文件内容
+     */
+    @Override
+    public void parseCStream(CharStream fileCStream) {
+        System.out.println("ts parse char stream");
+        this.fcStream = fileCStream;
+    }
+
+    @Override
+    protected EnumObj[] parseEnum() {
+        return super.parseEnum();
+    }
+
+    @Override
+    protected UnionObj[] parseUnion() {
+        return super.parseUnion();
+    }
+
+    @Override
+    protected StructObj[] parseStruct() {
+        return super.parseStruct();
+    }
+
+    @Override
+    protected ClassObj[] parseClass() {
+        return super.parseClass();
+    }
+
+    @Override
+    protected FuncObj[] parseFunc() {
+        return super.parseFunc();
+    }
+
+    @Override
+    protected TypeObj[] parseType() {
+        return super.parseType();
     }
 }
