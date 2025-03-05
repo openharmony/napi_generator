@@ -66,6 +66,7 @@ tasks.test {
 }
 
 dependencies {
+    implementation("org.antlr:antlr4-runtime:4.13.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")  // JUnit 5 API
     testImplementation("org.junit.vintage:junit-vintage-engine") {
         exclude(group = "junit", module = "junit")
