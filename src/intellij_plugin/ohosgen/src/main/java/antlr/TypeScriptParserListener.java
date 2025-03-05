@@ -1910,5 +1910,642 @@ public interface TypeScriptParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void enterBitShiftExpression(TypeScriptParser.BitShiftExpressionContext ctx);
-
+	/**
+	 * Exit a parse tree produced by the {@code BitShiftExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitShiftExpression(TypeScriptParser.BitShiftExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AdditiveExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdditiveExpression(TypeScriptParser.AdditiveExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AdditiveExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdditiveExpression(TypeScriptParser.AdditiveExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code RelationalExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelationalExpression(TypeScriptParser.RelationalExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code RelationalExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelationalExpression(TypeScriptParser.RelationalExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BitNotExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitNotExpression(TypeScriptParser.BitNotExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BitNotExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitNotExpression(TypeScriptParser.BitNotExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NewExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNewExpression(TypeScriptParser.NewExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NewExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNewExpression(TypeScriptParser.NewExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LiteralExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLiteralExpression(TypeScriptParser.LiteralExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LiteralExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLiteralExpression(TypeScriptParser.LiteralExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ArrayLiteralExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayLiteralExpression(TypeScriptParser.ArrayLiteralExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ArrayLiteralExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayLiteralExpression(TypeScriptParser.ArrayLiteralExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MemberDotExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMemberDotExpression(TypeScriptParser.MemberDotExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MemberDotExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMemberDotExpression(TypeScriptParser.MemberDotExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MemberIndexExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMemberIndexExpression(TypeScriptParser.MemberIndexExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MemberIndexExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMemberIndexExpression(TypeScriptParser.MemberIndexExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BitAndExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitAndExpression(TypeScriptParser.BitAndExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BitAndExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitAndExpression(TypeScriptParser.BitAndExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BitOrExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitOrExpression(TypeScriptParser.BitOrExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BitOrExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitOrExpression(TypeScriptParser.BitOrExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AssignmentOperatorExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentOperatorExpression(TypeScriptParser.AssignmentOperatorExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignmentOperatorExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentOperatorExpression(TypeScriptParser.AssignmentOperatorExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code VoidExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterVoidExpression(TypeScriptParser.VoidExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code VoidExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitVoidExpression(TypeScriptParser.VoidExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code TernaryExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterTernaryExpression(TypeScriptParser.TernaryExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code TernaryExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitTernaryExpression(TypeScriptParser.TernaryExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LogicalAndExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalAndExpression(TypeScriptParser.LogicalAndExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LogicalAndExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalAndExpression(TypeScriptParser.LogicalAndExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PreIncrementExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPreIncrementExpression(TypeScriptParser.PreIncrementExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PreIncrementExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPreIncrementExpression(TypeScriptParser.PreIncrementExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ObjectLiteralExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectLiteralExpression(TypeScriptParser.ObjectLiteralExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ObjectLiteralExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectLiteralExpression(TypeScriptParser.ObjectLiteralExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LogicalOrExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalOrExpression(TypeScriptParser.LogicalOrExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LogicalOrExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalOrExpression(TypeScriptParser.LogicalOrExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NonNullAssertionExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNonNullAssertionExpression(TypeScriptParser.NonNullAssertionExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NonNullAssertionExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNonNullAssertionExpression(TypeScriptParser.NonNullAssertionExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NotExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotExpression(TypeScriptParser.NotExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NotExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotExpression(TypeScriptParser.NotExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PreDecreaseExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPreDecreaseExpression(TypeScriptParser.PreDecreaseExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PreDecreaseExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPreDecreaseExpression(TypeScriptParser.PreDecreaseExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AwaitExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAwaitExpression(TypeScriptParser.AwaitExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AwaitExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAwaitExpression(TypeScriptParser.AwaitExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FunctionExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionExpression(TypeScriptParser.FunctionExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FunctionExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionExpression(TypeScriptParser.FunctionExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code UnaryMinusExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryMinusExpression(TypeScriptParser.UnaryMinusExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code UnaryMinusExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryMinusExpression(TypeScriptParser.UnaryMinusExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AssignmentExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentExpression(TypeScriptParser.AssignmentExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignmentExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentExpression(TypeScriptParser.AssignmentExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PostDecreaseExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPostDecreaseExpression(TypeScriptParser.PostDecreaseExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PostDecreaseExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPostDecreaseExpression(TypeScriptParser.PostDecreaseExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code InstanceofExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterInstanceofExpression(TypeScriptParser.InstanceofExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code InstanceofExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitInstanceofExpression(TypeScriptParser.InstanceofExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code UnaryPlusExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryPlusExpression(TypeScriptParser.UnaryPlusExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code UnaryPlusExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryPlusExpression(TypeScriptParser.UnaryPlusExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code DeleteExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeleteExpression(TypeScriptParser.DeleteExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code DeleteExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeleteExpression(TypeScriptParser.DeleteExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IteratorsExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIteratorsExpression(TypeScriptParser.IteratorsExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IteratorsExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIteratorsExpression(TypeScriptParser.IteratorsExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SuperExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSuperExpression(TypeScriptParser.SuperExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SuperExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSuperExpression(TypeScriptParser.SuperExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ParenthesizedExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenthesizedExpression(TypeScriptParser.ParenthesizedExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ParenthesizedExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenthesizedExpression(TypeScriptParser.ParenthesizedExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PostIncrementExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPostIncrementExpression(TypeScriptParser.PostIncrementExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PostIncrementExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPostIncrementExpression(TypeScriptParser.PostIncrementExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code YieldExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterYieldExpression(TypeScriptParser.YieldExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code YieldExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitYieldExpression(TypeScriptParser.YieldExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ClassExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassExpression(TypeScriptParser.ClassExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ClassExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassExpression(TypeScriptParser.ClassExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IdentifierExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierExpression(TypeScriptParser.IdentifierExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IdentifierExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierExpression(TypeScriptParser.IdentifierExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CoalesceExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterCoalesceExpression(TypeScriptParser.CoalesceExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CoalesceExpression}
+	 * labeled alternative in {@link TypeScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitCoalesceExpression(TypeScriptParser.CoalesceExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#asExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAsExpression(TypeScriptParser.AsExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#asExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAsExpression(TypeScriptParser.AsExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#assignable}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignable(TypeScriptParser.AssignableContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#assignable}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignable(TypeScriptParser.AssignableContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#anonymousFunction}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnonymousFunction(TypeScriptParser.AnonymousFunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#anonymousFunction}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnonymousFunction(TypeScriptParser.AnonymousFunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#arrowFunctionDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrowFunctionDeclaration(TypeScriptParser.ArrowFunctionDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#arrowFunctionDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrowFunctionDeclaration(TypeScriptParser.ArrowFunctionDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#arrowFunctionParameters}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrowFunctionParameters(TypeScriptParser.ArrowFunctionParametersContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#arrowFunctionParameters}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrowFunctionParameters(TypeScriptParser.ArrowFunctionParametersContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#arrowFunctionBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrowFunctionBody(TypeScriptParser.ArrowFunctionBodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#arrowFunctionBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrowFunctionBody(TypeScriptParser.ArrowFunctionBodyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#assignmentOperator}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentOperator(TypeScriptParser.AssignmentOperatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#assignmentOperator}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentOperator(TypeScriptParser.AssignmentOperatorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterLiteral(TypeScriptParser.LiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitLiteral(TypeScriptParser.LiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#templateStringLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterTemplateStringLiteral(TypeScriptParser.TemplateStringLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#templateStringLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitTemplateStringLiteral(TypeScriptParser.TemplateStringLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#templateStringAtom}.
+	 * @param ctx the parse tree
+	 */
+	void enterTemplateStringAtom(TypeScriptParser.TemplateStringAtomContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#templateStringAtom}.
+	 * @param ctx the parse tree
+	 */
+	void exitTemplateStringAtom(TypeScriptParser.TemplateStringAtomContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#numericLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumericLiteral(TypeScriptParser.NumericLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#numericLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumericLiteral(TypeScriptParser.NumericLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#bigintLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterBigintLiteral(TypeScriptParser.BigintLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#bigintLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitBigintLiteral(TypeScriptParser.BigintLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#getter}.
+	 * @param ctx the parse tree
+	 */
+	void enterGetter(TypeScriptParser.GetterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#getter}.
+	 * @param ctx the parse tree
+	 */
+	void exitGetter(TypeScriptParser.GetterContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#setter}.
+	 * @param ctx the parse tree
+	 */
+	void enterSetter(TypeScriptParser.SetterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#setter}.
+	 * @param ctx the parse tree
+	 */
+	void exitSetter(TypeScriptParser.SetterContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#identifierName}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierName(TypeScriptParser.IdentifierNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#identifierName}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierName(TypeScriptParser.IdentifierNameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifier(TypeScriptParser.IdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifier(TypeScriptParser.IdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#identifierOrKeyWord}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierOrKeyWord(TypeScriptParser.IdentifierOrKeyWordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#identifierOrKeyWord}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierOrKeyWord(TypeScriptParser.IdentifierOrKeyWordContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#reservedWord}.
+	 * @param ctx the parse tree
+	 */
+	void enterReservedWord(TypeScriptParser.ReservedWordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#reservedWord}.
+	 * @param ctx the parse tree
+	 */
+	void exitReservedWord(TypeScriptParser.ReservedWordContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#keyword}.
+	 * @param ctx the parse tree
+	 */
+	void enterKeyword(TypeScriptParser.KeywordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#keyword}.
+	 * @param ctx the parse tree
+	 */
+	void exitKeyword(TypeScriptParser.KeywordContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TypeScriptParser#eos}.
+	 * @param ctx the parse tree
+	 */
+	void enterEos(TypeScriptParser.EosContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TypeScriptParser#eos}.
+	 * @param ctx the parse tree
+	 */
+	void exitEos(TypeScriptParser.EosContext ctx);
 }
