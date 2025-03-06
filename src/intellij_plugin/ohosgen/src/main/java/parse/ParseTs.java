@@ -22,14 +22,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import grammar.*;
 import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import utils.BaseEvent;
-
-import java.io.IOException;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -96,9 +93,6 @@ public class ParseTs extends ParseBase {
             TypeScriptCustomListener tsc = new TypeScriptCustomListener();
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.walk(tsc, tree);
-//            // 遍历 AST 提取语法元素（需自定义 Visitor/Listener）
-//            TypeScriptVisitor<String> visitor = new CustomTypeScriptVisitor();
-//            String result = visitor.visit(tree);
 
             System.out.println("ts parse char stream finish");
         } catch (RecognitionException e) {
