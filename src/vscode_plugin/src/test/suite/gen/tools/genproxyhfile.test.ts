@@ -1480,5 +1480,1595 @@ std::time_t myTimet, std::clock_t myClock, std::tm myTm) override;
         `);
     })
 
+    //3, 测试异常情况
+    test('doGenProxyHFile_test_3', () => {
+        //1.ServiceRootInfo.funcs为空数组
+        let rootInfo: ServiceRootInfo = {
+            serviceName: 'test',
+            funcs: [],
+            serviceId: '0',
+            versionTag: '0'
+        };
+        let fileContent: string = `#ifndef [marcoName]_PROXY_H
+        #define [marcoName]_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_[lowServiceName]_service.h"
+        
+        namespace OHOS {
+        namespace [serviceName] {
+        class [serviceName]Proxy : public IRemoteProxy<I[serviceName]Service> {
+        public:
+            explicit [serviceName]Proxy(const sptr<IRemoteObject> &impl);
+            ~[serviceName]Proxy() = default;
+            //[functions]
+            [proxyHFunctions]
+        private:
+            static inline BrokerDelegator<[serviceName]Proxy> delegator_;
+        };
+        
+        class [serviceName]DeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            [serviceName]DeathRecipient();
+            virtual ~[serviceName]DeathRecipient();
+        };
+        } // namespace [serviceName]
+        } // namespace OHOS
+        #endif // [marcoName]_PROXY_H
+        `;
+        let resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //2.ServiceRootInfo.ServiceName属性为空
+        let params: ParamObj[] = [
+            {
+                type: 'int',
+                name: 'inum',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ];
+        let funcs: FuncObj[] = [
+            {
+                type: '',
+                name: 'func',
+                returns: 'int',
+                parameters: params,
+            }
+        ];
+        rootInfo = {
+            serviceName: '',
+            funcs: funcs,
+            serviceId: '0',
+            versionTag: '0'
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo,fileContent);
+        assert.strictEqual(resStr, `#ifndef _PROXY_H
+        #define _PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i__service.h"
+        
+        namespace OHOS {
+        namespace  {
+        class Proxy : public IRemoteProxy<IService> {
+        public:
+            explicit Proxy(const sptr<IRemoteObject> &impl);
+            ~Proxy() = default;
+            //[functions]
+            int func(int inum) override;
+        private:
+            static inline BrokerDelegator<Proxy> delegator_;
+        };
+        
+        class DeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            DeathRecipient();
+            virtual ~DeathRecipient();
+        };
+        } // namespace 
+        } // namespace OHOS
+        #endif // _PROXY_H
+        `);
+        //3.FuncObj.name属性为空
+        funcs = [
+            {
+                type: '',
+                name: '',
+                returns: 'void',
+                parameters: params
+            }
+        ];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void (int inum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //4.FuncObj.returns属性为空
+        funcs = [
+            {
+                type: '',
+                name: 'func',
+                returns: '',
+                parameters: params
+            }
+        ];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+             func(int inum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //5.FuncObj.parameters属性为空
+        funcs = [
+            {
+                type: '',
+                name: 'func',
+                returns: 'void',
+                parameters: []
+            }
+        ];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void func() override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //6.ParamObj.type属性为空
+        params = [{
+            type: '',
+            name: 'fnum',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: 'func',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void func( fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //7.ParamObj.name属性为空
+        params = [{
+            type: 'float',
+            name: '',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: 'func',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void func(float ) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //8.ServiceRootInfo.serviceName为中文
+        params = [
+            {
+                type: 'int',
+                name: 'inum',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ];
+        funcs = [
+            {
+                type: '',
+                name: 'func',
+                returns: 'int',
+                parameters: params,
+            }
+        ];
+        rootInfo = {
+            serviceName: '名字',
+            funcs: funcs,
+            serviceId: '0',
+            versionTag: '0'
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo,fileContent);
+        assert.strictEqual(resStr, `#ifndef 名字_PROXY_H
+        #define 名字_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_名字_service.h"
+        
+        namespace OHOS {
+        namespace 名字 {
+        class 名字Proxy : public IRemoteProxy<I名字Service> {
+        public:
+            explicit 名字Proxy(const sptr<IRemoteObject> &impl);
+            ~名字Proxy() = default;
+            //[functions]
+            int func(int inum) override;
+        private:
+            static inline BrokerDelegator<名字Proxy> delegator_;
+        };
+        
+        class 名字DeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            名字DeathRecipient();
+            virtual ~名字DeathRecipient();
+        };
+        } // namespace 名字
+        } // namespace OHOS
+        #endif // 名字_PROXY_H
+        `);
+        //9.ServiceRootInfo.serviceName为特殊字符串
+        params = [
+            {
+                type: 'int',
+                name: 'inum',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ];
+        funcs = [
+            {
+                type: '',
+                name: 'func',
+                returns: 'int',
+                parameters: params,
+            }
+        ];
+        rootInfo = {
+            serviceName: 'class',
+            funcs: funcs,
+            serviceId: '0',
+            versionTag: '0'
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo,fileContent);
+        assert.strictEqual(resStr, `#ifndef CLASS_PROXY_H
+        #define CLASS_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_class_service.h"
+        
+        namespace OHOS {
+        namespace class {
+        class classProxy : public IRemoteProxy<IclassService> {
+        public:
+            explicit classProxy(const sptr<IRemoteObject> &impl);
+            ~classProxy() = default;
+            //[functions]
+            int func(int inum) override;
+        private:
+            static inline BrokerDelegator<classProxy> delegator_;
+        };
+        
+        class classDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            classDeathRecipient();
+            virtual ~classDeathRecipient();
+        };
+        } // namespace class
+        } // namespace OHOS
+        #endif // CLASS_PROXY_H
+        `);
+        //10.FunObj.name为中文
+        params = [{
+            type: 'float',
+            name: 'fnum',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: '函数',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void 函数(float fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //11.FunObj.name为特殊字符串
+        params = [{
+            type: 'float',
+            name: 'fnum',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: 'class',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void class(float fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //12.ParamObj.name为中文
+        params = [{
+            type: 'float',
+            name: '浮点数',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: 'func',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void func(float 浮点数) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //13.ParamObj.name为特殊字符
+        params = [{
+            type: 'float',
+            name: 'int',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: 'func',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void func(float int) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //14.缺少ServiceRootInfo.serviceId属性
+        params = [{
+            type: 'float',
+            name: 'fnum',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: 'func',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void func(float fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //15.缺少ServiceRootInfo.versionTag属性
+        funcs = [{
+            type: '',
+            name: 'func',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void func(float fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //16.缺少FunObj.type属性
+        funcs = [{
+            name: 'func',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void func(float fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //17.缺少FunObj.name属性
+        funcs = [{
+            type: '',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void undefined(float fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //18.缺少FunObj.returns属性
+        funcs = [{
+            type: '',
+            name: 'funcs',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            undefined funcs(float fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //19.缺少ParamObj.type属性
+        params = [{
+            name: 'fnum',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: 'funcs',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void funcs(undefined fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //20.缺少ParamObj.name属性
+        params = [{
+            type: 'float',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: 'funcs',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void funcs(float undefined) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //21.缺少ParamObj.arraySize属性
+        params = [{
+            type: 'float',
+            name: 'fnum',
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: 'funcs',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void funcs(float fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //22.缺少ParamObj.arraySizeList属性
+        params = [{
+            type: 'float',
+            name: 'fnum',
+            arraySize: -1,
+        }];
+        funcs = [{
+            type: '',
+            name: 'funcs',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, `#ifndef TEST_PROXY_H
+        #define TEST_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_test_service.h"
+        
+        namespace OHOS {
+        namespace test {
+        class testProxy : public IRemoteProxy<ItestService> {
+        public:
+            explicit testProxy(const sptr<IRemoteObject> &impl);
+            ~testProxy() = default;
+            //[functions]
+            void funcs(float fnum) override;
+        private:
+            static inline BrokerDelegator<testProxy> delegator_;
+        };
+        
+        class testDeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            testDeathRecipient();
+            virtual ~testDeathRecipient();
+        };
+        } // namespace test
+        } // namespace OHOS
+        #endif // TEST_PROXY_H
+        `);
+        //23.fileContent传入空字符
+        params = [{
+            type: 'float',
+            name: 'fnum',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        funcs = [{
+            type: '',
+            name: 'funcs',
+            returns: 'void',
+            parameters: params
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        fileContent = '';
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, '');
+        //24.fileContent仅含有[serviceName]
+        fileContent = '[serviceName]';
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, 'test');
+        //25.fileContent仅含有[marcoName]
+        fileContent = '[marcoName]';
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, 'TEST');
+        //26.fileContent仅含有[lowServiceName]
+        fileContent = '[lowServiceName]';
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, 'test');
+        //27.fileContent仅含有[proxyHFunctions]
+        fileContent = '[proxyHFunctions]';
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, 'void funcs(float fnum) override;');
+        //28.fileContent不含有[serviceName],[marcoName],[lowServiceName],[proxyHFunctions]
+        fileContent = 'aaa';
+        resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        assert.strictEqual(resStr, 'aaa');
+    });
+
+    //4, 测试错误情况
+    test('doGenProxyHFile_test_4', () => {
+        //1.缺少ServiceRootInfo.serviceName属性
+        let params: ParamObj[] = [{
+            type: 'float',
+            name: 'fnum',
+            arraySize: -1,
+            arraySizeList: []
+        }];
+        let funcs: FuncObj[] = [{
+            type: '',
+            name: 'func',
+            returns: 'void',
+            parameters: params
+        }];
+        let rootInfo: ServiceRootInfo = {
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        let fileContent: string = `#ifndef [marcoName]_PROXY_H
+        #define [marcoName]_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_[lowServiceName]_service.h"
+
+        namespace OHOS {
+        namespace [serviceName] {
+        class [serviceName]Proxy : public IRemoteProxy<I[serviceName]Service> {
+        public:
+            explicit [serviceName]Proxy(const sptr<IRemoteObject> &impl);
+            ~[serviceName]Proxy() = default;
+            //[functions]
+            [proxyHFunctions]
+        private:
+            static inline BrokerDelegator<[serviceName]Proxy> delegator_;
+        };
+
+        class [serviceName]DeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            [serviceName]DeathRecipient();
+            virtual ~[serviceName]DeathRecipient();
+        };
+        } // namespace [serviceName]
+        } // namespace OHOS
+        #endif // [marcoName]_PROXY_H
+        `;
+        let res1 = true;
+        try {
+            genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        } catch (error) {
+            res1 = false;
+        }
+        assert.strictEqual(res1, false);
+        //2.缺少ServiceRootInfo.funcs属性
+        rootInfo = {
+            serviceName: 'test',
+            serviceId: '',
+            versionTag: ''
+        };
+        let res2 = true;
+        try {
+            genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        } catch (error) {
+            res2 = false;
+        }
+        assert.strictEqual(res2, false);
+        //3.缺少FunObj.parameters属性
+        funcs = [{
+            type: '',
+            name: 'funcs',
+            returns: 'void',
+        }];
+        rootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        let res3 = true;
+        try {
+            genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        } catch (error) {
+            res3 = false;
+        }
+        assert.strictEqual(res3, false);
+    })
+
+    //1, 测试一般情况
+    test('genProxyHFile_test_1', () =>{
+        let params: ParamObj[] = [
+            {
+                type: 'int',
+                name: 'inum',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ];
+        let funcs: FuncObj[] = [
+            {
+                type: 'int',
+                name: 'func',
+                returns: 'int',
+                parameters: params
+            }
+        ];
+        let rootInfo: ServiceRootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        let filePath: string = 'D:/SigProject/mycrystal/test_service_proxy.h'
+        let fileContent: string = `#ifndef [marcoName]_PROXY_H
+        #define [marcoName]_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_[lowServiceName]_service.h"
+        
+        namespace OHOS {
+        namespace [serviceName] {
+        class [serviceName]Proxy : public IRemoteProxy<I[serviceName]Service> {
+        public:
+            explicit [serviceName]Proxy(const sptr<IRemoteObject> &impl);
+            ~[serviceName]Proxy() = default;
+            //[functions]
+            [proxyHFunctions]
+        private:
+            static inline BrokerDelegator<[serviceName]Proxy> delegator_;
+        };
+        
+        class [serviceName]DeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            [serviceName]DeathRecipient();
+            virtual ~[serviceName]DeathRecipient();
+        };
+        } // namespace [serviceName]
+        } // namespace OHOS
+        #endif // [marcoName]_PROXY_H
+        `;
+        let resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        let content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+    })
+
+    //2, 测试边界情况
+    test('genProxyHFile_test_2', () => {
+        //1.在其他路径下生成文件
+        let params: ParamObj[] = [
+            {
+                type: 'int',
+                name: 'inum',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ];
+        let funcs: FuncObj[] = [
+            {
+                type: 'int',
+                name: 'func',
+                returns: 'int',
+                parameters: params
+            }
+        ];
+        let rootInfo: ServiceRootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        let fileContent: string = `#ifndef [marcoName]_PROXY_H
+        #define [marcoName]_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_[lowServiceName]_service.h"
+        
+        namespace OHOS {
+        namespace [serviceName] {
+        class [serviceName]Proxy : public IRemoteProxy<I[serviceName]Service> {
+        public:
+            explicit [serviceName]Proxy(const sptr<IRemoteObject> &impl);
+            ~[serviceName]Proxy() = default;
+            //[functions]
+            [proxyHFunctions]
+        private:
+            static inline BrokerDelegator<[serviceName]Proxy> delegator_;
+        };
+        
+        class [serviceName]DeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            [serviceName]DeathRecipient();
+            virtual ~[serviceName]DeathRecipient();
+        };
+        } // namespace [serviceName]
+        } // namespace OHOS
+        #endif // [marcoName]_PROXY_H
+        `;
+        let resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        let filePath: string = 'E:/VMShare/test_service_proxy.h'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        let content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+
+        filePath = './test_service_proxy.h'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+
+        filePath = 'test_service_proxy.h'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+
+        //2.生成其他名称的文件
+        filePath = 'D:/SigProject/mycrystal/111111.h'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+
+        filePath = 'D:/SigProject/mycrystal/そうせき.h'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+
+        filePath = 'D:/SigProject/mycrystal/文件.h'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+    })
+
+    //3, 测试异常情况
+    test('genProxyHFile_test_3', () => {
+        //1. 生成其他类型的文件
+        //生成txt文件
+        let params: ParamObj[] = [
+            {
+                type: 'int',
+                name: 'inum',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ];
+        let funcs: FuncObj[] = [
+            {
+                type: 'int',
+                name: 'func',
+                returns: 'int',
+                parameters: params
+            }
+        ];
+        let rootInfo: ServiceRootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        let filePath: string = 'D:/SigProject/mycrystal/test_service_proxy.txt';
+        let fileContent: string = `#ifndef [marcoName]_PROXY_H
+        #define [marcoName]_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_[lowServiceName]_service.h"
+        
+        namespace OHOS {
+        namespace [serviceName] {
+        class [serviceName]Proxy : public IRemoteProxy<I[serviceName]Service> {
+        public:
+            explicit [serviceName]Proxy(const sptr<IRemoteObject> &impl);
+            ~[serviceName]Proxy() = default;
+            //[functions]
+            [proxyHFunctions]
+        private:
+            static inline BrokerDelegator<[serviceName]Proxy> delegator_;
+        };
+        
+        class [serviceName]DeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            [serviceName]DeathRecipient();
+            virtual ~[serviceName]DeathRecipient();
+        };
+        } // namespace [serviceName]
+        } // namespace OHOS
+        #endif // [marcoName]_PROXY_H
+        `;
+        let resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        let content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+        //生成mp4文件
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.mp4'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+        //生成mp3文件
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.mp3'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+        //生成cpp文件
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.cpp'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+        //生成md文件
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.md'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+        //生成docx文件
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.docx'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+        //生成pdf文件
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.pdf'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+        //生成html文件
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.html'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+        //生成js文件
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.js'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.aipk'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.文件'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+
+        filePath = 'D:/SigProject/mycrystal/test_service_proxy.そうせき'
+        genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        content = fs.readFileSync(filePath);
+        assert.strictEqual(content.toString(), resStr);
+    })
+
+    //4, 测试错误情况
+    test('genProxyHFile_test_4', () => {
+        //1.未指定文件名
+        let params: ParamObj[] = [
+            {
+                type: 'int',
+                name: 'inum',
+                arraySize: -1,
+                arraySizeList: []
+            }
+        ];
+        let funcs: FuncObj[] = [
+            {
+                type: 'int',
+                name: 'func',
+                returns: 'int',
+                parameters: params
+            }
+        ];
+        let rootInfo: ServiceRootInfo = {
+            serviceName: 'test',
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        let fileContent: string = `#ifndef [marcoName]_PROXY_H
+        #define [marcoName]_PROXY_H
+        #include "message_parcel.h"
+        #include "parcel.h"
+        #include "iremote_broker.h"
+        #include "iremote_proxy.h"
+        #include "i_[lowServiceName]_service.h"
+        
+        namespace OHOS {
+        namespace [serviceName] {
+        class [serviceName]Proxy : public IRemoteProxy<I[serviceName]Service> {
+        public:
+            explicit [serviceName]Proxy(const sptr<IRemoteObject> &impl);
+            ~[serviceName]Proxy() = default;
+            //[functions]
+            [proxyHFunctions]
+        private:
+            static inline BrokerDelegator<[serviceName]Proxy> delegator_;
+        };
+        
+        class [serviceName]DeathRecipient : public IRemoteObject::DeathRecipient {
+        public:
+            virtual void OnRemoteDied(const wptr<IRemoteObject> &remote) override;
+            [serviceName]DeathRecipient();
+            virtual ~[serviceName]DeathRecipient();
+        };
+        } // namespace [serviceName]
+        } // namespace OHOS
+        #endif // [marcoName]_PROXY_H
+        `;
+        let filePath: string = 'D:/SigProject/mycrystal/';
+        let res1 = true;
+        try {
+            genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        } catch (error) {
+            res1 = false;
+        }
+        assert.strictEqual(res1, false);
+        //2.文件名不符合标准
+        filePath = 'D:/SigProject/mycrystal/test_?proxy<h>.h'
+        let res2 = true;
+        try {
+            genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        } catch (error) {
+            res2 = false;
+        }
+        assert.strictEqual(res2, false);
+        //3.调用doGenProxyHFile错误
+        rootInfo = {
+            funcs: funcs,
+            serviceId: '',
+            versionTag: ''
+        };
+        let res3 = true;
+        try {
+            genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        } catch (error) {
+            res3 = false;
+        }
+        assert.strictEqual(res3, false);
+        //4.文件路径错误
+        filePath = 'E:/VMShare/Acat/test_service_proxy.h'
+        let res4 = true;
+        try {
+            genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
+        } catch (error) {
+            res4 = false;
+        }
+        assert.strictEqual(res4, false);
+    })
 
 })
