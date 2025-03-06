@@ -15,8 +15,17 @@
 
 package parse;
 
+import antlr.TypeScriptCustomListener;
+import antlr.TypeScriptLexer;
+import antlr.TypeScriptParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import grammar.*;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import utils.BaseEvent;
 
 /**
@@ -59,7 +68,41 @@ public class ParseTs extends ParseBase {
      */
     @Override
     public void parseContent(String fileContent) {
-        System.out.println("parseContent: " + fileContent);
+        System.out.println("ts parseContent");
+        this.fileContent = fileContent;
+        doNotify();
+    }
+
+    /**
+     * 处理内容
+     *
+     * @param fileCStream 文件内容
+     */
+    @Override
+    public void parseCStream(CharStream fileCStream) {
+        System.out.println("ts parse char stream start");
+        this.fcStream = fileCStream;
+
+        try {
+            // 初始化词法分析器
+            TypeScriptLexer lexer = new TypeScriptLexer(this.fcStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            // 初始化语法分析器并生成 AST
+            TypeScriptParser parser = new TypeScriptParser(tokens);
+            ParseTree tree = parser.program();
+            TypeScriptCustomListener tsc = new TypeScriptCustomListener();
+            ParseTreeWalker walker = new ParseTreeWalker();
+            walker.walk(tsc, tree);
+
+            System.out.println("ts parse char stream finish");
+        } catch (RecognitionException e) {
+            System.out.println("parse cstream e.printStackTrace(): " + e.getMessage());
+        }
+
+        doNotify();
+    }
+
+    private void doNotify() {
         BaseEvent pcEvent = new BaseEvent(this);
         pcEvent.setEventMsg("parsec complete");
         ParseInfo pi = new ParseInfo("start", "parse ts content starting", 0, 100);
@@ -73,5 +116,35 @@ public class ParseTs extends ParseBase {
         listeners.forEach(listener -> {
             listener.onEvent(pcEvent);
         });
+    }
+
+    @Override
+    protected EnumObj[] parseEnum() {
+        return super.parseEnum();
+    }
+
+    @Override
+    protected UnionObj[] parseUnion() {
+        return super.parseUnion();
+    }
+
+    @Override
+    protected StructObj[] parseStruct() {
+        return super.parseStruct();
+    }
+
+    @Override
+    protected ClassObj[] parseClass() {
+        return super.parseClass();
+    }
+
+    @Override
+    protected FuncObj[] parseFunc() {
+        return super.parseFunc();
+    }
+
+    @Override
+    protected TypeObj[] parseType() {
+        return super.parseType();
     }
 }

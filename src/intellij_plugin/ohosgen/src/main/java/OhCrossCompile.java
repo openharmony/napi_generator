@@ -44,6 +44,8 @@ public class OhCrossCompile extends AnAction {
 
     /**
      * 插件线程类型更新
+     *
+     * @return 线程类型
      */
     @Override
     @NotNull
