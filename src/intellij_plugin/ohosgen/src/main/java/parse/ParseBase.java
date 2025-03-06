@@ -15,6 +15,9 @@
 
 package parse;
 
+import grammar.*;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
 import utils.BaseListener;
 
 import java.util.List;
@@ -30,6 +33,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2025-02-28
  */
 public abstract class ParseBase {
+    protected String fileContent;
+    protected CharStream fcStream;
     /**
      * 存储所有监听回调
      */
@@ -62,4 +67,65 @@ public abstract class ParseBase {
      * @param fileContent 文件内容
      */
     public abstract void parseContent(String fileContent);
+
+    /**
+     * 根据文件char stream解析文件
+     *
+     * @param fileCStream 文件内容
+     */
+    public abstract void parseCStream(CharStream fileCStream);
+
+    /**
+     * 解析enum
+     *
+     * @return enum
+     */
+    protected EnumObj[] parseEnum() {
+        return new EnumObj[0];
+    };
+
+    /**
+     * 解析union
+     *
+     * @return union
+     */
+    protected UnionObj[] parseUnion() {
+        return new UnionObj[0];
+    }
+
+    /**
+     * 解析struct
+     *
+     * @return struct
+     */
+    protected StructObj[] parseStruct() {
+        return new StructObj[0];
+    }
+
+    /**
+     * 解析class
+     *
+     * @return class
+     */
+    protected ClassObj[] parseClass() {
+        return new ClassObj[0];
+    }
+
+    /**
+     * 解析func
+     *
+     * @return func
+     */
+    protected FuncObj[] parseFunc() {
+        return new FuncObj[0];
+    }
+
+    /**
+     * 解析type
+     *
+     * @return type
+     */
+    protected TypeObj[] parseType() {
+        return new TypeObj[0];
+    }
 }

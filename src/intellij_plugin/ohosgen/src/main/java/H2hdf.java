@@ -94,6 +94,8 @@ public class H2hdf extends AnAction {
 
     /**
      * 获取线程类型
+     *
+     * @return 线程类型
      */
     @Override
     @NotNull

@@ -93,6 +93,8 @@ public class H2sa extends AnAction {
 
     /**
      * 更新插件线程类型
+     *
+     * @return 线程类型
      */
     @Override
     @NotNull
