@@ -478,7 +478,7 @@ export function getDtsClasses(rootInfo: GenInfo) {
     for(const method of classItem.functionList) {
       let methodContent = '';
       for(const param of method.parameters) {
-        methodContent = `${param.name}: ${transTskey2Ckey(param.type)}, `;
+        methodContent += `${param.name}: ${transTskey2Ckey(param.type)}, `;
       }
       classBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
     };
@@ -503,7 +503,7 @@ export function getDtsStructs(rootInfo: GenInfo) {
       let methodContent = '';
       for(const param of method.parameters) {
         if (param.name && param.type) {
-          methodContent = `${param.name}: ${transTskey2Ckey(param.type)}, `;
+          methodContent += `${param.name}: ${transTskey2Ckey(param.type)}, `;
         }
       }
       structBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`

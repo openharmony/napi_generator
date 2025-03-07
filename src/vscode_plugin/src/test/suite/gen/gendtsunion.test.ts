@@ -358,7 +358,7 @@ suite('Gendts_unions_Suite', () => {
             name: 'llen3',
             arraySize: 10,
             arraySizeList: [10, 20, 30]
-          }
+          },
           {
             type: 'long long',
             name: 'llint3',
