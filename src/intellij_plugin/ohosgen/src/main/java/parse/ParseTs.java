@@ -16,6 +16,7 @@
 package parse;
 
 import antlr.TypeScriptCustomListener;
+import antlr.TypeScriptErrorListener;
 import antlr.TypeScriptLexer;
 import antlr.TypeScriptParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -89,6 +90,8 @@ public class ParseTs extends ParseBase {
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             // 初始化语法分析器并生成 AST
             TypeScriptParser parser = new TypeScriptParser(tokens);
+            parser.removeErrorListeners();
+            parser.addErrorListener(new TypeScriptErrorListener());
             ParseTree tree = parser.program();
             TypeScriptCustomListener tsc = new TypeScriptCustomListener();
             ParseTreeWalker walker = new ParseTreeWalker();
