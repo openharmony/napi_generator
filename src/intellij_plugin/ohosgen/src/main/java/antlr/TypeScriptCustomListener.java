@@ -42,7 +42,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
             System.out.println("single : " + value);
             int cnt = sec.getChildCount();
             System.out.println("single child cnt: " + cnt);
-            for (int i=0; i < cnt; i++) {
+            for (int i = 0; i < cnt; i++) {
                 ParseTree pt = sec.getChild(i);
                 System.out.println("single child pt: " + pt.getText());
             }

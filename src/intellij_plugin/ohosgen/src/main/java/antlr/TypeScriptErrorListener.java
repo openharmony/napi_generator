@@ -42,7 +42,7 @@ public class TypeScriptErrorListener extends BaseErrorListener {
         // 输出错误位置和消息
         String errorHeader = String.format(Locale.ROOT, "语法错误@行%d:%d - ", line, charPositionInLine + 1);
         String errorDetail = String.format("符号 '%s' 无效，预期: %s",
-                ((Token) offendingSymbol).getText(),
+                offendingSymbol instanceof Token ? ((Token) offendingSymbol).getText() : "",
                 getExpectedTokens(recognizer, e));
         System.err.println(errorHeader + errorDetail + " | 错误详情: " + msg);
     }
