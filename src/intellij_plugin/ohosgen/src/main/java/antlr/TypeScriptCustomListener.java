@@ -37,12 +37,12 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         String typeAnno = ctx.typeAnnotation() != null ? ctx.typeAnnotation().getText() : "";
         System.out.println("type : " + typeAnno);
         List<TypeScriptParser.SingleExpressionContext> secList = ctx.singleExpression();
-        for (TypeScriptParser.SingleExpressionContext sec: secList) {
+        for (TypeScriptParser.SingleExpressionContext sec : secList) {
             String value = sec.getText();
             System.out.println("single : " + value);
             int cnt = sec.getChildCount();
             System.out.println("single child cnt: " + cnt);
-            for (int i=0; i<cnt; i++) {
+            for (int i=0; i < cnt; i++) {
                 ParseTree pt = sec.getChild(i);
                 System.out.println("single child pt: " + pt.getText());
             }
@@ -69,7 +69,6 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     @Override
     public void enterFunctionDeclaration(TypeScriptParser.FunctionDeclarationContext ctx) {
         super.enterFunctionDeclaration(ctx);
-//        System.out.println("find Function Declare: ");
         // 提取函数名、参数等信息
         String funcName = ctx.identifier().getText();
         System.out.println("Function: " + funcName + " all: " + ctx.getText());
@@ -164,23 +163,24 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         if (tpc != null) {
             System.out.println("Type params: " + tpc.getText());
         }
-        TypeScriptParser.Type_Context t_c = ctx.type_();
-        if (t_c != null) {
-            System.out.println("Type type_: " + t_c.getText());
+        TypeScriptParser.Type_Context typeContext = ctx.type_();
+        if (typeContext != null) {
+            System.out.println("Type type_: " + typeContext.getText());
 
-            TypeScriptParser.UnionOrIntersectionOrPrimaryTypeContext upt = t_c.unionOrIntersectionOrPrimaryType();
+            TypeScriptParser.UnionOrIntersectionOrPrimaryTypeContext upt =
+                    typeContext.unionOrIntersectionOrPrimaryType();
             if (upt != null) {
                 System.out.println("Type uoiop: " + upt.getText());
             }
-            TypeScriptParser.TypeGenericContext tgc = t_c.typeGeneric();
+            TypeScriptParser.TypeGenericContext tgc = typeContext.typeGeneric();
             if (tgc != null) {
                 System.out.println("Type typeGeneric: " + tgc.getText());
             }
-            TypeScriptParser.ConstructorTypeContext ctc = t_c.constructorType();
+            TypeScriptParser.ConstructorTypeContext ctc = typeContext.constructorType();
             if (ctc != null) {
                 System.out.println("Type constructorType: " + ctc.getText());
             }
-            TypeScriptParser.FunctionTypeContext ftc = t_c.functionType();
+            TypeScriptParser.FunctionTypeContext ftc = typeContext.functionType();
             if (ftc != null) {
                 System.out.println("Type functionType: " + ftc.getText());
             }
@@ -191,7 +191,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
 
     @Override
     public void enterEnumBody(TypeScriptParser.EnumBodyContext ctx) {
-//        super.enterEnumBody(ctx);
+        super.enterEnumBody(ctx);
         System.out.println("find Enum Body: ");
         String enumName = ctx.getText();
         System.out.println("Enum: " + enumName);
@@ -217,8 +217,8 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         System.out.println("Enum name: " + res);
 
         List<TypeScriptParser.EnumMemberContext> members = ctx.enumBody().enumMemberList().enumMember();
-        for (int i=0; i<members.size(); i++) {
-            res += " , " + members.get(i).getText();
+        for (TypeScriptParser.EnumMemberContext member : members) {
+            res += " , " + member.getText();
         }
         System.out.println("Enum: " + res);
     }
@@ -232,14 +232,14 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     @Override
     public void enterInterfaceDeclaration(TypeScriptParser.InterfaceDeclarationContext ctx) {
         super.enterInterfaceDeclaration(ctx);
-        System.out.println("find interface Declare: "+ ctx.getText());
+        System.out.println("find interface Declare: " + ctx.getText());
         String interfaceName = ctx.identifier().getText();
         System.out.println("interface name: " + interfaceName);
         TypeScriptParser.ObjectTypeContext otc = ctx.objectType();
         TypeScriptParser.TypeBodyContext tbc = otc.typeBody();
         TypeScriptParser.TypeMemberListContext tlc = tbc.typeMemberList();
         List<TypeScriptParser.TypeMemberContext> tmcList = tlc.typeMember();
-        for (TypeScriptParser.TypeMemberContext tmc: tmcList) {
+        for (TypeScriptParser.TypeMemberContext tmc : tmcList) {
             String callSign = tmc.callSignature().getText();
             System.out.println("interface callSign: " + callSign);
             String typeAnno = tmc.callSignature().typeAnnotation().getText();
@@ -259,7 +259,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     @Override
     public void enterAbstractDeclaration(TypeScriptParser.AbstractDeclarationContext ctx) {
         super.enterAbstractDeclaration(ctx);
-        System.out.println("find abstract Declare: "+ ctx.toString());
+        System.out.println("find abstract Declare: " + ctx.toString());
     }
 
     @Override

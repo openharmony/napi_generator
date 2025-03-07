@@ -17,6 +17,9 @@ package antlr;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.IntervalSet;
+
+import java.util.Locale;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description typescript error listener
@@ -37,7 +40,7 @@ public class TypeScriptErrorListener extends BaseErrorListener {
         System.err.println("syntax error");
         System.out.println("syntax error");
         // 输出错误位置和消息
-        String errorHeader = String.format("语法错误@行%d:%d - ", line, charPositionInLine + 1);
+        String errorHeader = String.format(Locale.ROOT, "语法错误@行%d:%d - ", line, charPositionInLine + 1);
         String errorDetail = String.format("符号 '%s' 无效，预期: %s",
                 ((Token) offendingSymbol).getText(),
                 getExpectedTokens(recognizer, e));
@@ -45,7 +48,9 @@ public class TypeScriptErrorListener extends BaseErrorListener {
     }
 
     private String getExpectedTokens(Recognizer<?, ?> recognizer, RecognitionException e) {
-        if (e == null) return "未知预期符号";
+        if (e == null) {
+            return "未知预期符号";
+        }
         IntervalSet expectedTokens = e.getExpectedTokens();
         return expectedTokens.toString(recognizer.getVocabulary());
     }
