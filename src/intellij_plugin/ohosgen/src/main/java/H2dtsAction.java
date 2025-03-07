@@ -23,6 +23,7 @@ import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
+import parse.ParseTask;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -40,24 +41,13 @@ public class H2dtsAction extends AnAction {
      *
      * @param e 插件事件
      */
-    private void showProgress(AnActionEvent e) {
+    private void showProgress(@NotNull AnActionEvent e) {
         Project project = e.getProject();
         // 获取当前选中的文件
         VirtualFile file = e.getDataContext().getData(CommonDataKeys.VIRTUAL_FILE);
         if (file != null && file.getExtension() != null && file.getExtension().equals("h")) {
-            // 如果是 .java 文件，执行任务
-            doProgress(project);
-        }
-    }
-
-    /**
-     * 睡眠
-     */
-    private void doSleep() {
-        try {
-            Thread.sleep(500); // 模拟耗时操作
-        } catch (InterruptedException ex) {
-            System.out.println("thread exception ex.printStackTrace();");
+            // 如果是 .h 文件，执行任务
+            doProgress(project, file);
         }
     }
 
@@ -65,20 +55,12 @@ public class H2dtsAction extends AnAction {
      * 执行
      *
      * @param project 项目
+     * @param file 文件
      */
-    private void doProgress(Project project) {
-        ProgressManager.getInstance().run(new Task.Backgroundable(project, "Processing File", true) {
-            @Override
-            public void run(@NotNull ProgressIndicator indicator) {
-                indicator.setFraction(0.0);
-                for (int i = 0; i < 10; i++) {
-                    indicator.setFraction((i + 1) / 10.0);
-                    indicator.setText("Processing step " + (i + 1));
-                    doSleep();
-                }
-                System.out.println("doProgress exception ex.printStackTrace();");
-            }
-        });
+    private void doProgress(Project project, VirtualFile file) {
+        ParseTask pt = new ParseTask(project, "C", true);
+        pt.setFile(file);
+        ProgressManager.getInstance().run(pt);
     }
 
     /**
