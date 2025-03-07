@@ -15,10 +15,15 @@
 
 package parse;
 
+import antlr.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import grammar.*;
 import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import utils.BaseEvent;
 
 import java.lang.reflect.Type;
@@ -86,8 +91,44 @@ public class ParseC extends ParseBase {
      */
     @Override
     public void parseCStream(CharStream fileCStream) {
-        System.out.println("ts parse char stream");
+        System.out.println("c/cpp parse char stream");
         this.fcStream = fileCStream;
+
+        try {
+            // 初始化词法分析器
+            CPP14Lexer lexer = new CPP14Lexer(this.fcStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            // 初始化语法分析器并生成 AST
+            CPP14Parser parser = new CPP14Parser(tokens);
+            parser.removeErrorListeners();
+            parser.addErrorListener(new CPP14ErrorListener());
+            ParseTree tree = parser.translationUnit();
+            CPP14CustomListener tsc = new CPP14CustomListener();
+            ParseTreeWalker walker = new ParseTreeWalker();
+            walker.walk(tsc, tree);
+
+            System.out.println("c/cpp parse char stream finish");
+        } catch (RecognitionException e) {
+            System.out.println("parse cstream e.printStackTrace(): " + e.getMessage());
+        }
+
+        doNotify();
+    }
+
+    private void doNotify() {
+        BaseEvent pcEvent = new BaseEvent(this);
+        pcEvent.setEventMsg("parsec complete");
+        ParseInfo pi = new ParseInfo("start", "parse ts content starting", 0, 100);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String jsonStr = mapper.writeValueAsString(pi);
+            pcEvent.setEventMsg(jsonStr);
+        } catch (JsonProcessingException e) {
+            System.out.println("json process error: " + e.getMessage());
+        }
+        listeners.forEach(listener -> {
+            listener.onEvent(pcEvent);
+        });
     }
 
     @Override
