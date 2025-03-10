@@ -15,7 +15,10 @@
 
 package parse;
 
-import antlr.*;
+import antlr.cpp.CPP14CustomListener;
+import antlr.cpp.CPP14ErrorListener;
+import antlr.cpp.CPP14Lexer;
+import antlr.cpp.CPP14Parser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import grammar.*;
@@ -24,9 +27,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import utils.Constants;
 import utils.BaseEvent;
-
-import java.lang.reflect.Type;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -48,7 +50,7 @@ public class ParseC extends ParseBase {
         System.out.println("parseFile: " + filePath);
         BaseEvent pcEvent = new BaseEvent(this);
         pcEvent.setEventMsg("parsec complete");
-        ParseInfo pi = new ParseInfo("start", "parse c starting", 0, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("start", "parse c starting", 0, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -71,7 +73,7 @@ public class ParseC extends ParseBase {
         System.out.println("c parseContent");
         BaseEvent pcEvent = new BaseEvent(this);
         pcEvent.setEventMsg("parsec complete");
-        ParseInfo pi = new ParseInfo("start", "parse c content starting", 0, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("start", "parse c content starting", 0, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -93,7 +95,7 @@ public class ParseC extends ParseBase {
     public void parseCStream(CharStream fileCStream) {
         System.out.println("c/cpp parse char stream");
         this.fcStream = fileCStream;
-
+        SendEvent(Constants.START_STATUS, Constants.C_CPP_START_MSG, 50);
         try {
             // 初始化词法分析器
             CPP14Lexer lexer = new CPP14Lexer(this.fcStream);
@@ -107,28 +109,12 @@ public class ParseC extends ParseBase {
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.walk(tsc, tree);
 
-            System.out.println("c/cpp parse char stream finish");
+            System.out.println();
         } catch (RecognitionException e) {
             System.out.println("parse cstream e.printStackTrace(): " + e.getMessage());
         }
 
-        doNotify();
-    }
-
-    private void doNotify() {
-        BaseEvent pcEvent = new BaseEvent(this);
-        pcEvent.setEventMsg("parsec complete");
-        ParseInfo pi = new ParseInfo("start", "parse ts content starting", 0, 100);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String jsonStr = mapper.writeValueAsString(pi);
-            pcEvent.setEventMsg(jsonStr);
-        } catch (JsonProcessingException e) {
-            System.out.println("json process error: " + e.getMessage());
-        }
-        listeners.forEach(listener -> {
-            listener.onEvent(pcEvent);
-        });
+        SendEvent(Constants.COMPLETE_STATUS, Constants.C_CPP_COMPLETE_MSG, 50);
     }
 
     @Override
