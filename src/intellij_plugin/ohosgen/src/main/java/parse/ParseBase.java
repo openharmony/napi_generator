@@ -15,10 +15,14 @@
 
 package parse;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import grammar.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
+import utils.BaseEvent;
 import utils.BaseListener;
+import utils.Constants;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -35,6 +39,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class ParseBase {
     protected String fileContent;
     protected CharStream fcStream;
+    protected String status;
+    protected String procMsg;
+    protected int progress;
+    protected int totalProgress = Constants.HUNDRED_PERCENT;
     /**
      * 存储所有监听回调
      */
@@ -52,6 +60,43 @@ public abstract class ParseBase {
      */
     public void addListener(BaseListener listener) {
         listeners.add(listener);
+    }
+
+    /**
+     * send event
+     *
+     * @param status    状态
+     * @param msg   消息
+     * @param process   进度
+     */
+    protected void SendEvent(String status, String msg, int process) {
+        this.procMsg = msg;
+        this.status = status;
+        this.progress = process;
+        doNotify(status, msg, process);
+    }
+
+    /**
+     * notify parse info
+     *
+     * @param status 状态
+     * @param msg   消息
+     * @param process   进度
+     */
+    protected void doNotify(String status, String msg, int process) {
+        BaseEvent pcEvent = new BaseEvent(this);
+        pcEvent.setEventMsg("parsec complete");
+        ParseTaskInfo pi = new ParseTaskInfo(status, msg, process, this.totalProgress);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String jsonStr = mapper.writeValueAsString(pi);
+            pcEvent.setEventMsg(jsonStr);
+        } catch (JsonProcessingException e) {
+            System.out.println("json process error: " + e.getMessage());
+        }
+        listeners.forEach(listener -> {
+            listener.onEvent(pcEvent);
+        });
     }
 
     /**
