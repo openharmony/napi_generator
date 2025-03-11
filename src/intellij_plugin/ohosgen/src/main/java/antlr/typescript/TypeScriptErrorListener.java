@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package antlr;
+package antlr.typescript;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.IntervalSet;

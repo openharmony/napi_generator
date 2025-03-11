@@ -24,16 +24,18 @@ package parse;
  * @version 1.0
  * @since 2025-02-28
  */
-public class ParseInfo {
+public class ParseTaskInfo {
     private String status;
     private String message;
+    private int currentType;
+    private String jsonData;
     private int progress;
     private int total;
 
     /**
      * 构造函数
      */
-    public ParseInfo() {}
+    public ParseTaskInfo() {}
 
     /**
      * 有参数构造函数
@@ -43,11 +45,18 @@ public class ParseInfo {
      * @param vp 进度
      * @param vt 总数
      */
-    public ParseInfo(String vs, String vm, int vp, int vt) {
-        status = vs;
-        message = vm;
-        progress = vp;
-        total = vt;
+    public ParseTaskInfo(String vs, String vm, int vp, int vt) {
+        this.status = vs;
+        this.message = vm;
+        this.progress = vp;
+        this.total = vt;
+    }
+
+    public ParseTaskInfo(String vs, String vm, int ct, String jd) {
+        this.status = vs;
+        this.message = vm;
+        this.currentType = ct;
+        this.jsonData = jd;
     }
 
     /**
