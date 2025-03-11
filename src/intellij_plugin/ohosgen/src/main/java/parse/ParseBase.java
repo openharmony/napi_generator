@@ -200,7 +200,8 @@ public abstract class ParseBase {
 
     /**
      * 接收解析结果
-     * @param pi2
+     *
+     * @param pi2 解析结构
      */
     public void receive(ParseTaskInfo pi2) {
         System.out.println("receive parse result: " + pi2.getJsonData());
