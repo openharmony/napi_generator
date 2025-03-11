@@ -423,9 +423,14 @@ export function getDtsEnum(rootInfo: GenInfo) {
   for(const enumItem of enumList) {
     let enumHead = `export enum ${enumItem.name} {\n`
     let enumBody = ''
-    enumItem.members.forEach(element => {
-      enumBody += `\t${element},\n`
-    });
+    try {
+      enumItem.members.forEach(element => {
+        enumBody += `\t${element},\n`
+      });
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
     out += enumHead + enumBody + '};\n\n'
     if (enumItem.name && enumItem.alias && enumItem.name !== enumItem.alias) {
       out += `export type ${enumItem.alias} = ${enumItem.name};\n\n`
@@ -442,25 +447,30 @@ export function getDtsFunction(rootInfo: GenInfo) {
     let funcTail = '';
     let enumBody = ''
     let returnType = transTskey2Ckey(funcItem.returns);
-    if (funcItem.type === 'typedef') {
-      funcHead = `export interface ${funcItem.name} {\n`;
-      funcTail = '};\n\n';
-      funcItem.parameters.forEach(element => {
-        if (element.name && element.type) {
-          enumBody += `${element.name}: ${transTskey2Ckey(element.type)}, `
-        }
-      });
-      enumBody = `\t(${enumBody.slice(0, -2)}): ${returnType};\n`
-      out += funcHead + `${enumBody}` + funcTail;
-    } else {
-      funcHead = `export function ${funcItem.name}(`
-      funcTail = `): ${returnType};\n\n`;
-      funcItem.parameters.forEach(element => {
-        if (element.name && element.type) {
-          enumBody += `${element.name}: ${transTskey2Ckey(element.type)}, `
-        }
-      });
-      out += funcHead + enumBody.slice(0, -2) + funcTail;
+    try {
+      if (funcItem.type === 'typedef') {
+        funcHead = `export interface ${funcItem.name} {\n`;
+        funcTail = '};\n\n';
+        funcItem.parameters.forEach(element => {
+          if (element.name && element.type) {
+            enumBody += `${element.name}: ${transTskey2Ckey(element.type)}, `
+          }
+        });
+        enumBody = `\t(${enumBody.slice(0, -2)}): ${returnType};\n`
+        out += funcHead + `${enumBody}` + funcTail;
+      } else {
+        funcHead = `export function ${funcItem.name}(`
+        funcTail = `): ${returnType};\n\n`;
+        funcItem.parameters.forEach(element => {
+          if (element.name && element.type) {
+            enumBody += `${element.name}: ${transTskey2Ckey(element.type)}, `
+          }
+        });
+        out += funcHead + enumBody.slice(0, -2) + funcTail;
+      }
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
     }
   }
   return out;
@@ -472,16 +482,30 @@ export function getDtsClasses(rootInfo: GenInfo) {
   for(const classItem of classList) {
     let classHead = `export class ${classItem.name} {\n`
     let classBody = ''
-    for(const attribute of classItem.variableList) {
-      classBody += `\t${attribute.name}: ${transTskey2Ckey(attribute.type)};\n`
-    };
-    for(const method of classItem.functionList) {
-      let methodContent = '';
-      for(const param of method.parameters) {
-        methodContent += `${param.name}: ${transTskey2Ckey(param.type)}, `;
+    try {
+      if (classItem.variableList.length > 0) {
+        for (const attribute of classItem.variableList) {
+          classBody += `\t${attribute.name}: ${transTskey2Ckey(attribute.type)};\n`
+        };
       }
-      classBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
-    };
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
+    try {
+      if (classItem.functionList.length > 0) {
+        for (const method of classItem.functionList) {
+          let methodContent = '';
+          for (const param of method.parameters) {
+            methodContent += `${param.name}: ${transTskey2Ckey(param.type)}, `;
+          }
+          classBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
+        };
+      }
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
     out += classHead + classBody + '};\n\n'
     if (classItem.name && classItem.alias) {
       out += `export type ${classItem.alias} = ${classItem.name};\n\n`
@@ -496,18 +520,32 @@ export function getDtsStructs(rootInfo: GenInfo) {
   for(const structItem of structList) {
     let structHead = `export type ${structItem.name} = {\n`
     let structBody = ''
-    for(const attribute of structItem.members) {
-      structBody += `\t${attribute.name}: ${transTskey2Ckey(attribute.type)};\n`
-    };
-    for(const method of structItem.functions) {
-      let methodContent = '';
-      for(const param of method.parameters) {
-        if (param.name && param.type) {
-          methodContent += `${param.name}: ${transTskey2Ckey(param.type)}, `;
-        }
+    try {
+      if (structItem.members.length > 0) {
+        for (const attribute of structItem.members) {
+          structBody += `\t${attribute.name}: ${transTskey2Ckey(attribute.type)};\n`
+        };
       }
-      structBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
-    };
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
+    try {
+      if (structItem.functions.length > 0) {
+        for (const method of structItem.functions) {
+          let methodContent = '';
+          for (const param of method.parameters) {
+            if (param.name && param.type) {
+              methodContent += `${param.name}: ${transTskey2Ckey(param.type)}, `;
+            }
+          }
+          structBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
+        };
+      }
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
     out += structHead + structBody + '};\n\n'
     if (structItem.name && structItem.alias && structItem.name !== structItem.alias) {
       out += `export type ${structItem.alias} = ${structItem.name};\n\n`
@@ -522,9 +560,14 @@ export function getDtsUnions(rootInfo: GenInfo) {
   for(const unionItem of unionList) {
     let unionHead = `export type ${unionItem.name} = `
     let unionBody = ''
-    for(const element of unionItem.members) {
-      unionBody += `${transTskey2Ckey(element.type)} | `
-    };
+    try {
+      for (const element of unionItem.members) {
+        unionBody += `${transTskey2Ckey(element.type)} | `
+      };
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
     out += unionHead + unionBody.slice(0, -2) + ';\n\n'
     if (unionItem.name && unionItem.alias && unionItem.name !== unionItem.alias) {
       out += `export type ${unionItem.alias} = ${unionItem.name};\n\n`
