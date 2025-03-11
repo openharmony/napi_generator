@@ -19,7 +19,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import grammar.*;
 import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
 import utils.BaseEvent;
 import utils.BaseListener;
 import utils.Constants;
@@ -37,12 +36,37 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2025-02-28
  */
 public abstract class ParseBase {
+
+    /**
+     * 文件内容
+     */
     protected String fileContent;
+
+    /**
+     * 文件char stream
+     */
     protected CharStream fcStream;
+
+    /**
+     * 状态
+     */
     protected String status;
+
+    /**
+     * 进度消息
+     */
     protected String procMsg;
+
+    /**
+     * 进度数据
+     */
     protected int progress;
+
+    /**
+     * 总进度
+     */
     protected int totalProgress = Constants.HUNDRED_PERCENT;
+
     /**
      * 存储所有监听回调
      */
@@ -69,7 +93,7 @@ public abstract class ParseBase {
      * @param msg   消息
      * @param process   进度
      */
-    protected void SendEvent(String status, String msg, int process) {
+    protected void sendEvent(String status, String msg, int process) {
         this.procMsg = msg;
         this.status = status;
         this.progress = process;
@@ -172,5 +196,13 @@ public abstract class ParseBase {
      */
     protected TypeObj[] parseType() {
         return new TypeObj[0];
+    }
+
+    /**
+     * 接收解析结果
+     * @param pi2
+     */
+    public void receive(ParseTaskInfo pi2) {
+        System.out.println("receive parse result: " + pi2.getJsonData());
     }
 }
