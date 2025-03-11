@@ -15,10 +15,10 @@
 
 package parse;
 
-import antlr.TypeScriptCustomListener;
-import antlr.TypeScriptErrorListener;
-import antlr.TypeScriptLexer;
-import antlr.TypeScriptParser;
+import antlr.typescript.TypeScriptCustomListener;
+import antlr.typescript.TypeScriptErrorListener;
+import antlr.typescript.TypeScriptLexer;
+import antlr.typescript.TypeScriptParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import grammar.*;
@@ -28,6 +28,7 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import utils.BaseEvent;
+import utils.Constants;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -49,7 +50,7 @@ public class ParseTs extends ParseBase {
         System.out.println("parseFile: " + filePath);
         BaseEvent pcEvent = new BaseEvent(this);
         pcEvent.setEventMsg("parsec complete");
-        ParseInfo pi = new ParseInfo("start", "parse ts starting", 0, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("start", "parse ts starting", 0, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -71,7 +72,7 @@ public class ParseTs extends ParseBase {
     public void parseContent(String fileContent) {
         System.out.println("ts parseContent");
         this.fileContent = fileContent;
-        doNotify();
+        SendEvent(Constants.COMPLETE_STATUS, Constants.TS_COMPLETE_MSG, 50);
     }
 
     /**
@@ -84,6 +85,7 @@ public class ParseTs extends ParseBase {
         System.out.println("ts parse char stream start");
         this.fcStream = fileCStream;
 
+        SendEvent(Constants.START_STATUS, Constants.TS_START_MSG, 0);
         try {
             // 初始化词法分析器
             TypeScriptLexer lexer = new TypeScriptLexer(this.fcStream);
@@ -102,23 +104,7 @@ public class ParseTs extends ParseBase {
             System.out.println("parse cstream e.printStackTrace(): " + e.getMessage());
         }
 
-        doNotify();
-    }
-
-    private void doNotify() {
-        BaseEvent pcEvent = new BaseEvent(this);
-        pcEvent.setEventMsg("parsec complete");
-        ParseInfo pi = new ParseInfo("start", "parse ts content starting", 0, 100);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String jsonStr = mapper.writeValueAsString(pi);
-            pcEvent.setEventMsg(jsonStr);
-        } catch (JsonProcessingException e) {
-            System.out.println("json process error: " + e.getMessage());
-        }
-        listeners.forEach(listener -> {
-            listener.onEvent(pcEvent);
-        });
+        SendEvent(Constants.COMPLETE_STATUS, Constants.TS_COMPLETE_MSG, 50);
     }
 
     @Override

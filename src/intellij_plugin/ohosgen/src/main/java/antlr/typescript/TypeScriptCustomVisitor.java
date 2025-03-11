@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package antlr;
+package antlr.typescript;
 
 import java.util.List;
 import java.util.ArrayList;

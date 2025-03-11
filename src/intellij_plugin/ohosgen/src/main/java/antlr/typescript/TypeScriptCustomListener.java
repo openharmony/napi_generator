@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package antlr;
+package antlr.typescript;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -268,5 +268,27 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         System.out.println("find export Declare: " + ctx.toString());
     }
 
+    @Override
+    public void enterConstraint(TypeScriptParser.ConstraintContext ctx) {
+        super.enterConstraint(ctx);
+        System.out.println("enter constraint: " + ctx.toString());
+    }
 
+    @Override
+    public void exitConstraint(TypeScriptParser.ConstraintContext ctx) {
+        super.exitConstraint(ctx);
+        System.out.println("exit constraint: " + ctx.toString());
+    }
+
+    @Override
+    public void enterProgram(TypeScriptParser.ProgramContext ctx) {
+        super.enterProgram(ctx);
+        System.out.println("enter Program: " + ctx.toString());
+    }
+
+    @Override
+    public void exitProgram(TypeScriptParser.ProgramContext ctx) {
+        super.exitProgram(ctx);
+        System.out.println("exit Program: " + ctx.toString());
+    }
 }

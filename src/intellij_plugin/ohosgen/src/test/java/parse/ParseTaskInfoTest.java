@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @version 1.0
  * @since 2025-02-28
  */
-class ParseInfoTest {
+class ParseTaskInfoTest {
 
     @BeforeEach
     void setUp() {
@@ -44,7 +44,7 @@ class ParseInfoTest {
 
     @Test
     void setStatus() {
-        ParseInfo pi = new ParseInfo("complete", "parse c finished", 100, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("complete", "parse c finished", 100, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -61,7 +61,7 @@ class ParseInfoTest {
 
     @Test
     void getStatus() {
-        ParseInfo pi = new ParseInfo("complete", "parse c finished", 100, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("complete", "parse c finished", 100, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -78,7 +78,7 @@ class ParseInfoTest {
 
     @Test
     void setMessage() {
-        ParseInfo pi = new ParseInfo("complete", "parse c finished", 100, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("complete", "parse c finished", 100, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -95,7 +95,7 @@ class ParseInfoTest {
 
     @Test
     void getMessage() {
-        ParseInfo pi = new ParseInfo("complete", "parse c finished", 100, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("complete", "parse c finished", 100, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -112,7 +112,7 @@ class ParseInfoTest {
 
     @Test
     void setProgress() {
-        ParseInfo pi = new ParseInfo("complete", "parse c finished", 100, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("complete", "parse c finished", 100, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -129,7 +129,7 @@ class ParseInfoTest {
 
     @Test
     void getProgress() {
-        ParseInfo pi = new ParseInfo("complete", "parse c finished", 100, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("complete", "parse c finished", 100, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -146,7 +146,7 @@ class ParseInfoTest {
 
     @Test
     void setTotal() {
-        ParseInfo pi = new ParseInfo("complete", "parse c finished", 100, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("complete", "parse c finished", 100, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -163,7 +163,7 @@ class ParseInfoTest {
 
     @Test
     void getTotal() {
-        ParseInfo pi = new ParseInfo("complete", "parse c finished", 100, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("complete", "parse c finished", 100, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
@@ -180,7 +180,7 @@ class ParseInfoTest {
 
     @Test
     void toJson() {
-        ParseInfo pi = new ParseInfo("complete", "parse c finished", 100, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("complete", "parse c finished", 100, 100);
         ObjectMapper mapper = new ObjectMapper();
         String expStr = "{\"status\":\"complete\",\"message\":\"parse c finished\",\"progress\":100,\"total\":100}";
         try {
@@ -195,12 +195,12 @@ class ParseInfoTest {
 
     @Test
     void fromJson() {
-        ParseInfo pi = new ParseInfo("complete", "parse c finished", 100, 100);
+        ParseTaskInfo pi = new ParseTaskInfo("complete", "parse c finished", 100, 100);
         ObjectMapper mapper = new ObjectMapper();
         try {
             String jsonStr = mapper.writeValueAsString(pi);
             System.out.println("Test fromJson: " + jsonStr);
-            ParseInfo pi2 = mapper.readValue(jsonStr, ParseInfo.class);
+            ParseTaskInfo pi2 = mapper.readValue(jsonStr, ParseTaskInfo.class);
 
             assertEquals("complete", pi2.getStatus());
             assertEquals("parse c finished", pi2.getMessage());
