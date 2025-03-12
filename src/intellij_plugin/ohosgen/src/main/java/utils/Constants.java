@@ -26,6 +26,11 @@ package utils;
  */
 public class Constants {
     /**
+     * 解析未知代码
+     */
+    public static final int PARSE_UNKNOWN_LANGUAGE = -1;
+
+    /**
      * 解析c/cpp代码
      */
     public static final int PARSE_C_CPP_LANGUAGE = 1;
