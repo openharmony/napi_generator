@@ -24,7 +24,7 @@ package grammar;
  * @version 1.0
  * @since 2025-02-28
  */
-public class ParseObj {
+public class ParseObj extends GBaseObject {
     private EnumObj[] enumList;
     private UnionObj[] unionList;
     private StructObj[] structList;

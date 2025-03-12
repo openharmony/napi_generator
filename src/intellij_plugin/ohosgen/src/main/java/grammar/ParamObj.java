@@ -24,7 +24,7 @@ package grammar;
  * @version 1.0
  * @since 2025-02-28
  */
-public class ParamObj {
+public class ParamObj extends GBaseObject {
     private String type;
     private String name;
     private int arraySize;

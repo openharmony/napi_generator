@@ -15,6 +15,11 @@
 
 package grammar;
 
+import utils.TsToken;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description type grammar
@@ -24,17 +29,23 @@ package grammar;
  * @version 1.0
  * @since 2025-02-28
  */
-public class TypeObj {
+public class TypeObj extends GBaseObject {
     private String name;
     private String alias;
-    private ParamObj[] paramList;
-    private FuncObj[] funcList;
-    private String[] typeList;
+    private List<ParamObj> paramList;
+    private List<FuncObj> funcList;
+    private List<String> typeList;
 
     /**
      * 构造函数
      */
-    public TypeObj() {}
+    public TypeObj() {
+        this.token = TsToken.TS_TOKEN_TYPE;
+
+        this.paramList = new CopyOnWriteArrayList<>();
+        this.funcList = new CopyOnWriteArrayList<>();
+        this.typeList = new CopyOnWriteArrayList<>();
+    }
 
     /**
      * 构造函数
@@ -45,7 +56,11 @@ public class TypeObj {
      * @param fl 方法
      * @param tl 类型
      */
-    public TypeObj(String nv, String av, ParamObj[] pl, FuncObj[] fl, String[] tl) {
+    public TypeObj(String nv,
+                   String av,
+                   List<ParamObj> pl,
+                   List<FuncObj> fl,
+                   List<String> tl) {
         this.name = nv;
         this.alias = av;
         this.paramList = pl;
@@ -94,7 +109,7 @@ public class TypeObj {
      *
      * @return 参数
      */
-    public ParamObj[] getParamList() {
+    public List<ParamObj> getParamList() {
         return paramList;
     }
 
@@ -103,7 +118,7 @@ public class TypeObj {
      *
      * @param paramList 参数
      */
-    public void setParamList(ParamObj[] paramList) {
+    public void setParamList(List<ParamObj> paramList) {
         this.paramList = paramList;
     }
 
@@ -112,7 +127,7 @@ public class TypeObj {
      *
      * @return 类型
      */
-    public String[] getTypeList() {
+    public List<String> getTypeList() {
         return typeList;
     }
 
@@ -120,7 +135,7 @@ public class TypeObj {
      * 设置类型
      * @param typeList 类型
      */
-    public void setTypeList(String[] typeList) {
+    public void setTypeList(List<String> typeList) {
         this.typeList = typeList;
     }
 
@@ -129,7 +144,7 @@ public class TypeObj {
      *
      * @return 方法
      */
-    public FuncObj[] getFuncList() {
+    public List<FuncObj> getFuncList() {
         return funcList;
     }
 
@@ -138,7 +153,16 @@ public class TypeObj {
      *
      * @param funcList 方法
      */
-    public void setFuncList(FuncObj[] funcList) {
+    public void setFuncList(List<FuncObj> funcList) {
         this.funcList = funcList;
+    }
+
+    /**
+     * 设置value
+     *
+     * @param value 定义值
+     */
+    public void addTypeValue(String value) {
+        this.typeList.add(value);
     }
 }
