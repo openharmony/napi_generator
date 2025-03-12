@@ -26,7 +26,7 @@ import kotlinx.html.S;
  * @version 1.0
  * @since 2025-02-28
  */
-public class UnionObj {
+public class UnionObj extends GBaseObject {
     private String name;
     private String alias;
     private ParamObj[] memList;

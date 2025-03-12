@@ -24,7 +24,7 @@ package grammar;
  * @version 1.0
  * @since 2025-02-28
  */
-public class StructObj {
+public class StructObj extends GBaseObject {
     private String name;
     private String alias;
     private ParamObj[] memberList;

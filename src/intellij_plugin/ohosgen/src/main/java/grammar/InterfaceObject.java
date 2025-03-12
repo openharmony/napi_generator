@@ -15,19 +15,21 @@
 
 package grammar;
 
+import utils.TsToken;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * <h3>类名：该类用于xxx</h3>
- * description class grammar
+ * description interface grammar
  *
  * @author Administrator
  *         date 2025-02-28
  * @version 1.0
  * @since 2025-02-28
  */
-public class ClassObj extends GBaseObject {
+public class InterfaceObject extends GBaseObject {
     private String name;
     private String alias;
     private List<ParamObj> paramList;
@@ -36,7 +38,9 @@ public class ClassObj extends GBaseObject {
     /**
      * 构造函数
      */
-    public ClassObj() {
+    public InterfaceObject() {
+        this.token = TsToken.TS_TOKEN_INTERFACE;
+
         this.paramList = new CopyOnWriteArrayList<>();
         this.funcList = new CopyOnWriteArrayList<>();
     }
@@ -44,7 +48,7 @@ public class ClassObj extends GBaseObject {
     /**
      * 构造函数
      */
-    public ClassObj(String nv, String av, List<ParamObj> pl, List<FuncObj> fl) {
+    public InterfaceObject(String nv, String av, List<ParamObj> pl, List<FuncObj> fl) {
         this.name = nv;
         this.alias = av;
         this.paramList = pl;
