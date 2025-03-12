@@ -95,36 +95,17 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     @Override
     public void enterExpressionStatement(TypeScriptParser.ExpressionStatementContext ctx) {
         super.enterExpressionStatement(ctx);
-//        System.out.println("ExpressionStatement: " + ctx.getText());
-//        System.out.println("ExpressionStatement: " + ctx.getParent().getText());
-//        System.out.println("ExpressionStatement: " + ctx.getStart().getText());
-//        System.out.println("ExpressionStatement: " + ctx.getChildCount());
-//        System.out.println("ExpressionStatement: " + ctx.getChild(0).getText());
-//        System.out.println("ExpressionStatement: " + ctx.getPayload().getText());
 
     }
 
     @Override
     public void enterIdentifierOrPattern(TypeScriptParser.IdentifierOrPatternContext ctx) {
         super.enterIdentifierOrPattern(ctx);
-//        System.out.println("IdentifierOrPattern: " + ctx.getText());
-//        System.out.println("IdentifierOrPattern: " + ctx.getParent().getText());
-//        System.out.println("IdentifierOrPattern: " + ctx.getStart().getText());
-//        System.out.println("IdentifierOrPattern: " + ctx.getChildCount());
-//        System.out.println("IdentifierOrPattern: " + ctx.getChild(0).getText());
-//        System.out.println("IdentifierOrPattern: " + ctx.getPayload().getText());
     }
 
     @Override
     public void enterObjectLiteralExpression(TypeScriptParser.ObjectLiteralExpressionContext ctx) {
         super.enterObjectLiteralExpression(ctx);
-//        System.out.println("ObjectLiteralExpression: " + ctx.getText());
-//        System.out.println("ObjectLiteralExpression: " + ctx.getParent().getText());
-//        System.out.println("ObjectLiteralExpression parent.start: " + ctx.getParent().getStart().getText());
-//        System.out.println("ObjectLiteralExpression: " + ctx.getStart().getText());
-//        System.out.println("ObjectLiteralExpression: " + ctx.getChildCount());
-//        System.out.println("ObjectLiteralExpression: " + ctx.getChild(0).getText());
-//        System.out.println("ObjectLiteralExpression: " + ctx.getPayload().getText());
         ParserRuleContext prc = ctx.getParent();
         ParserRuleContext fprc = prc.getParent();
         String tokenStr = fprc.getStart().getText();
@@ -142,21 +123,12 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     @Override
     public void enterLiteralExpression(TypeScriptParser.LiteralExpressionContext ctx) {
         super.enterLiteralExpression(ctx);
-//        System.out.println("LiteralExpressionContext: " + ctx.getText());
-//        System.out.println("LiteralExpressionContext: " + ctx.getParent().getText());
-//        System.out.println("LiteralExpressionContext parent start: " + ctx.getParent().getStart().getText());
-//        System.out.println("LiteralExpressionContext parent stop: " + ctx.getParent().getStop().getText());
-//        System.out.println("LiteralExpressionContext: " + ctx.getStart().getText());
-//
-//        System.out.println("LiteralExpressionContext: " + ctx.getChildCount());
-//        System.out.println("LiteralExpressionContext: " + ctx.getChild(0).getText());
-//        System.out.println("LiteralExpressionContext: " + ctx.getPayload().getText());
 
         String memName = ctx.getParent().getStart().getText();
         String memValue = ctx.getParent().getStop().getText();
         if (this.currentToken.equals(TsToken.TS_TOKEN_ENUM)) {
             if (this.currentObject instanceof EnumObj) {
-                EnumObj eo = (EnumObj)this.currentObject;
+                EnumObj eo = (EnumObj) this.currentObject;
                 eo.addMemberItem(memName);
                 eo.addMemberValue(memValue);
                 int lastIndex = this.enumObjList.size() - 1;
@@ -170,13 +142,6 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     @Override
     public void enterExpressionSequence(TypeScriptParser.ExpressionSequenceContext ctx) {
         super.enterExpressionSequence(ctx);
-//        System.out.println("ExpressionSequence: " + ctx.getText());
-//        System.out.println("ExpressionSequence: " + ctx.getParent().getText());
-//        System.out.println("ExpressionSequence parent.start: " + ctx.getParent().getStart().getText());
-//        System.out.println("ExpressionSequence: " + ctx.getStart().getText());
-//        System.out.println("ExpressionSequence: " + ctx.getChildCount());
-//        System.out.println("ExpressionSequence: " + ctx.getChild(0).getText());
-//        System.out.println("ExpressionSequence: " + ctx.getPayload().getText());
 
     }
 
@@ -272,7 +237,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         System.out.println("Method callSign: " + callSign);
         String typeAnno = ctx.callSignature().typeAnnotation().getText();
         System.out.println("Method typeAnno: " + typeAnno);
-        TypeScriptParser.ParameterListContext plc =  ctx.callSignature().parameterList();
+        TypeScriptParser.ParameterListContext plc = ctx.callSignature().parameterList();
 
         FuncObj fo = new FuncObj();
         fo.setType(typeAnno);
@@ -291,7 +256,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         }
 
         if ((this.currentObject != null) && (this.currentObject instanceof ClassObj)) {
-            ClassObj co = (ClassObj)this.currentObject;
+            ClassObj co = (ClassObj) this.currentObject;
             co.addFunc(fo);
 
             int lastIndex = this.classObjList.size() - 1;
@@ -312,7 +277,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         String typeName = ctx.typeAnnotation().getText();
         System.out.println("Property name: " + propertyName + " type: " + typeName);
         if ((this.currentObject != null) && (this.currentObject instanceof ClassObj)) {
-            ClassObj co = (ClassObj)this.currentObject;
+            ClassObj co = (ClassObj) this.currentObject;
             co.addParam(propertyName, typeName);
 
             int lastIndex = this.classObjList.size() - 1;

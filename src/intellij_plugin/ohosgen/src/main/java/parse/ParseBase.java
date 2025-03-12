@@ -198,6 +198,7 @@ public abstract class ParseBase {
     /**
      * 解析type
      *
+     * @param pi2  解析进程
      * @return type
      */
     protected TypeObj[] parseType(ParseTaskInfo pi2) {
