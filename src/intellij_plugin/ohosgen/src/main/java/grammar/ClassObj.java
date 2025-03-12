@@ -15,6 +15,8 @@
 
 package grammar;
 
+import utils.TsToken;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -37,14 +39,22 @@ public class ClassObj extends GBaseObject {
      * 构造函数
      */
     public ClassObj() {
+        this.token = TsToken.TS_TOKEN_CLASS;
+
         this.paramList = new CopyOnWriteArrayList<>();
         this.funcList = new CopyOnWriteArrayList<>();
     }
 
     /**
      * 构造函数
+     *
+     * @param nv 名字
+     * @param av 别名
+     * @param pl 参数
+     * @param fl 方法
      */
     public ClassObj(String nv, String av, List<ParamObj> pl, List<FuncObj> fl) {
+        this();
         this.name = nv;
         this.alias = av;
         this.paramList = pl;

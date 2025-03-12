@@ -16,7 +16,6 @@
 package antlr.typescript;
 
 import grammar.*;
-import it.unimi.dsi.fastutil.bytes.F;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ParserRuleContext;
 import utils.Constants;

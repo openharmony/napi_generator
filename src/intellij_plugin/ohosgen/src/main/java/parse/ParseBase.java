@@ -158,6 +158,7 @@ public abstract class ParseBase {
     /**
      * 解析union
      *
+     * @param pi2 解析任务
      * @return union
      */
     protected UnionObj[] parseUnion(ParseTaskInfo pi2) {

@@ -53,7 +53,7 @@ public class FuncObj extends GBaseObject {
      * @param pl 参数
      */
     public FuncObj(String tv, String nv, String rv, List<ParamObj> pl) {
-        this.token = TsToken.TS_TOKEN_FUNCTION;
+        this();
 
         this.type = tv;
         this.name = nv;
