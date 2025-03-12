@@ -84,7 +84,6 @@ public class GBaseObject {
         // 创建 Gson 实例并启用格式化
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        String json = gson.toJson(this);
-        return json;
+        return gson.toJson(this);
     }
 }
