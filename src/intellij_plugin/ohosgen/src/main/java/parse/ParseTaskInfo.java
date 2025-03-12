@@ -27,7 +27,8 @@ package parse;
 public class ParseTaskInfo {
     private String status;
     private String message;
-    private int currentType;
+    private int lanType;
+    private int parseType;
     private String jsonData;
     private int progress;
     private int total;
@@ -55,7 +56,7 @@ public class ParseTaskInfo {
     public ParseTaskInfo(String vs, String vm, int ct, String jd) {
         this.status = vs;
         this.message = vm;
-        this.currentType = ct;
+        this.lanType = ct;
         this.jsonData = jd;
     }
 
@@ -96,6 +97,42 @@ public class ParseTaskInfo {
     }
 
     /**
+     * 获取解析类型
+     *
+     * @return 解析类型
+     */
+    public int getLanType() {
+        return lanType;
+    }
+
+    /**
+     * 设置 解析类型
+     *
+     * @param lanType 解析类型
+     */
+    public void setLanType(int lanType) {
+        this.lanType = lanType;
+    }
+
+    /**
+     * 获取 json data
+     *
+     * @return jsonData 解析数据
+     */
+    public String getJsonData() {
+        return jsonData;
+    }
+
+    /**
+     * 设置 json data
+     *
+     * @param jsonData 解析数据
+     */
+    public void setJsonData(String jsonData) {
+        this.jsonData = jsonData;
+    }
+
+    /**
      * 设置进度
      *
      * @param vp 进度
@@ -129,5 +166,23 @@ public class ParseTaskInfo {
      */
     public int getTotal() {
         return total;
+    }
+
+    /**
+     * 读取解析类型
+     *
+     * @return 解析类型
+     */
+    public int getParseType() {
+        return parseType;
+    }
+
+    /**
+     * 读取解析类型
+     *
+     * @param parseType 解析类型
+     */
+    public void setParseType(int parseType) {
+        this.parseType = parseType;
     }
 }

@@ -21,6 +21,10 @@ import antlr.typescript.TypeScriptLexer;
 import antlr.typescript.TypeScriptParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import event.CustomEvent;
+import event.CustomEventListener;
 import grammar.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -39,7 +43,7 @@ import utils.Constants;
  * @since 2025-02-28
  * @version 1.0
  */
-public class ParseTs extends ParseBase {
+public class ParseTs extends ParseBase implements CustomEventListener {
     /**
      * 根据文件名解析
      *
@@ -72,7 +76,7 @@ public class ParseTs extends ParseBase {
     public void parseContent(String fileContent) {
         System.out.println("ts parseContent");
         this.fileContent = fileContent;
-        SendEvent(Constants.COMPLETE_STATUS, Constants.TS_COMPLETE_MSG, 50);
+        sendEvent(Constants.COMPLETE_STATUS, Constants.TS_COMPLETE_MSG, 50);
     }
 
     /**
@@ -85,7 +89,7 @@ public class ParseTs extends ParseBase {
         System.out.println("ts parse char stream start");
         this.fcStream = fileCStream;
 
-        SendEvent(Constants.START_STATUS, Constants.TS_START_MSG, 0);
+        sendEvent(Constants.START_STATUS, Constants.TS_START_MSG, 0);
         try {
             // 初始化词法分析器
             TypeScriptLexer lexer = new TypeScriptLexer(this.fcStream);
@@ -99,41 +103,154 @@ public class ParseTs extends ParseBase {
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.walk(tsc, tree);
 
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            String json = gson.toJson(tsc);
+            System.out.println("ts parse result: " +json);
+
             System.out.println("ts parse char stream finish");
         } catch (RecognitionException e) {
             System.out.println("parse cstream e.printStackTrace(): " + e.getMessage());
         }
 
-        SendEvent(Constants.COMPLETE_STATUS, Constants.TS_COMPLETE_MSG, 50);
+        sendEvent(Constants.COMPLETE_STATUS, Constants.TS_COMPLETE_MSG, 50);
     }
 
+    /**
+     * 接收解析结果
+     *
+     * @param pi2 解析结构
+     */
     @Override
-    protected EnumObj[] parseEnum() {
-        return super.parseEnum();
+    public void receive(ParseTaskInfo pi2) {
+        super.receive(pi2);
+        if (pi2.getLanType() != Constants.PARSE_TS_LANGUAGE) {
+            System.err.println("Language type is not ts language");
+            return;
+        }
+        switch (pi2.getParseType()) {
+            case Constants.PARSE_TS_ABSTRACT:
+                break;
+            case Constants.PARSE_TS_CLASS:
+                parseClass(pi2);
+                break;
+            case Constants.PARSE_TS_ENUM:
+                parseEnum(pi2);
+                break;
+            case Constants.PARSE_TS_EXPORT:
+                break;
+            case Constants.PARSE_TS_FUNCTION:
+                parseFunc(pi2);
+                break;
+            case Constants.PARSE_TS_GENERIC:
+                break;
+            case Constants.PARSE_TS_GENERIC_CLASS:
+                break;
+            case Constants.PARSE_TS_GENERIC_INTERFACE:
+                break;
+            case Constants.PARSE_TS_IMPORT:
+                break;
+            case Constants.PARSE_TS_INTERFACE:
+                break;
+            case Constants.PARSE_TS_JS_CLASS:
+                break;
+            case Constants.PARSE_TS_LOOP:
+                break;
+            case Constants.PARSE_TS_MODULE:
+                break;
+            case Constants.PARSE_TS_NON_NULL:
+                break;
+            case Constants.PARSE_TS_OBJECT_INITIALIZER:
+                break;
+            case Constants.PARSE_TS_STATEMENT:
+                break;
+            case Constants.PARSE_TS_TEMPLATE_STRING:
+                break;
+            case Constants.PARSE_TS_TYPE:
+                parseType(pi2);
+                break;
+            case Constants.PARSE_TS_VARIABLE:
+                break;
+            case Constants.PARSE_TS_EXIT_TRANSLATION:
+                break;
+            default:
+                break;
+        }
     }
 
+    /**
+     * 解析枚举
+     *
+     * @param pi2 解析结果
+     * @return 解析结果
+     */
     @Override
-    protected UnionObj[] parseUnion() {
-        return super.parseUnion();
+    protected EnumObj[] parseEnum(ParseTaskInfo pi2) {
+        return super.parseEnum(pi2);
     }
 
+    /**
+     * 解析联合
+     *
+     * @param pi2 解析结果
+     * @return 解析结果
+     */
     @Override
-    protected StructObj[] parseStruct() {
-        return super.parseStruct();
+    protected UnionObj[] parseUnion(ParseTaskInfo pi2) {
+        return super.parseUnion(pi2);
     }
 
+    /**
+     * 解析结构体
+     *
+     * @param pi2 解析结果
+     * @return 解析结果
+     */
     @Override
-    protected ClassObj[] parseClass() {
-        return super.parseClass();
+    protected StructObj[] parseStruct(ParseTaskInfo pi2) {
+        return super.parseStruct(pi2);
     }
 
+    /**
+     * 解析类
+     *
+     * @param pi2 解析结果
+     * @return 解析结果
+     */
     @Override
-    protected FuncObj[] parseFunc() {
-        return super.parseFunc();
+    protected ClassObj[] parseClass(ParseTaskInfo pi2) {
+        return super.parseClass(pi2);
     }
 
+    /**
+     * 解析方法
+     *
+     * @param pi2 解析结果
+     * @return 解析结果
+     */
     @Override
-    protected TypeObj[] parseType() {
-        return super.parseType();
+    protected FuncObj[] parseFunc(ParseTaskInfo pi2) {
+        return super.parseFunc(pi2);
+    }
+
+    /**
+     * 解析type
+     *
+     * @param pi2 解析结果
+     * @return 解析结果
+     */
+    @Override
+    protected TypeObj[] parseType(ParseTaskInfo pi2) {
+        return super.parseType(pi2);
+    }
+
+    /**
+     * 处理事件
+     *
+     * @param event 事件
+     */
+    @Override
+    public void handleEvent(CustomEvent event) {
+        System.out.println("parse ts handle: " + event.toString());
     }
 }
