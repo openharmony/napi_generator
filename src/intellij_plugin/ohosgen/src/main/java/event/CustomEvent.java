@@ -34,6 +34,7 @@ public class CustomEvent extends EventObject {
      *
      * @param source
      *         the object on which the Event initially occurred
+     * @param message 消息
      * @throws IllegalArgumentException
      *         if source is null
      */

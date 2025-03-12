@@ -47,6 +47,11 @@ public class InterfaceObject extends GBaseObject {
 
     /**
      * 构造函数
+     *
+     * @param nv 名字
+     * @param av 别名
+     * @param pl 参数
+     * @param fl 方法
      */
     public InterfaceObject(String nv, String av, List<ParamObj> pl, List<FuncObj> fl) {
         this.name = nv;
@@ -127,10 +132,21 @@ public class InterfaceObject extends GBaseObject {
         return paramList;
     }
 
+    /**
+     * 增加参数
+     *
+     * @param po 参数
+     */
     public void addParam(ParamObj po) {
         this.paramList.add(po);
     }
 
+    /**
+     * 增加参数
+     *
+     * @param name 名称
+     * @param type 类型
+     */
     public void addParam(String name, String type) {
         ParamObj po = new ParamObj();
         po.setType(type);
@@ -138,10 +154,22 @@ public class InterfaceObject extends GBaseObject {
         this.paramList.add(po);
     }
 
+    /**
+     * 增加方法
+     *
+     * @param fo 方法
+     */
     public void addFunc(FuncObj fo) {
         this.funcList.add(fo);
     }
 
+    /**
+     * 增加方法
+     *
+     * @param name 名称
+     * @param ret 返回值
+     * @param poList 参数
+     */
     public void addFunc(String name, String ret, List<ParamObj> poList) {
         FuncObj fo = new FuncObj();
         fo.setName(name);

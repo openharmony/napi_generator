@@ -123,10 +123,21 @@ public class ClassObj extends GBaseObject {
         return paramList;
     }
 
+    /**
+     * 增加param
+     *
+     * @param po param
+     */
     public void addParam(ParamObj po) {
         this.paramList.add(po);
     }
 
+    /**
+     * 增加param
+     *
+     * @param name 名字
+     * @param type 类型
+     */
     public void addParam(String name, String type) {
         ParamObj po = new ParamObj();
         po.setType(type);
@@ -134,10 +145,22 @@ public class ClassObj extends GBaseObject {
         this.paramList.add(po);
     }
 
+    /**
+     * 增加方法
+     *
+     * @param fo 方法
+     */
     public void addFunc(FuncObj fo) {
         this.funcList.add(fo);
     }
 
+    /**
+     * 增加方法
+     *
+     * @param name 名字
+     * @param ret 返回值
+     * @param poList 参数
+     */
     public void addFunc(String name, String ret, List<ParamObj> poList) {
         FuncObj fo = new FuncObj();
         fo.setName(name);

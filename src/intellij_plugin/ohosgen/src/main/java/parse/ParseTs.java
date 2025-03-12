@@ -106,7 +106,7 @@ public class ParseTs extends ParseBase implements CustomEventListener {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
             String json = gson.toJson(tsc);
-            System.out.println("ts parse result: " +json);
+            System.out.println("ts parse result: " + json);
 
             System.out.println("ts parse char stream finish");
         } catch (RecognitionException e) {
@@ -128,54 +128,7 @@ public class ParseTs extends ParseBase implements CustomEventListener {
             System.err.println("Language type is not ts language");
             return;
         }
-        switch (pi2.getParseType()) {
-            case Constants.PARSE_TS_ABSTRACT:
-                break;
-            case Constants.PARSE_TS_CLASS:
-                parseClass(pi2);
-                break;
-            case Constants.PARSE_TS_ENUM:
-                parseEnum(pi2);
-                break;
-            case Constants.PARSE_TS_EXPORT:
-                break;
-            case Constants.PARSE_TS_FUNCTION:
-                parseFunc(pi2);
-                break;
-            case Constants.PARSE_TS_GENERIC:
-                break;
-            case Constants.PARSE_TS_GENERIC_CLASS:
-                break;
-            case Constants.PARSE_TS_GENERIC_INTERFACE:
-                break;
-            case Constants.PARSE_TS_IMPORT:
-                break;
-            case Constants.PARSE_TS_INTERFACE:
-                break;
-            case Constants.PARSE_TS_JS_CLASS:
-                break;
-            case Constants.PARSE_TS_LOOP:
-                break;
-            case Constants.PARSE_TS_MODULE:
-                break;
-            case Constants.PARSE_TS_NON_NULL:
-                break;
-            case Constants.PARSE_TS_OBJECT_INITIALIZER:
-                break;
-            case Constants.PARSE_TS_STATEMENT:
-                break;
-            case Constants.PARSE_TS_TEMPLATE_STRING:
-                break;
-            case Constants.PARSE_TS_TYPE:
-                parseType(pi2);
-                break;
-            case Constants.PARSE_TS_VARIABLE:
-                break;
-            case Constants.PARSE_TS_EXIT_TRANSLATION:
-                break;
-            default:
-                break;
-        }
+
     }
 
     /**

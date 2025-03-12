@@ -34,6 +34,9 @@ public class GBaseObject {
      */
     protected int languageType = Constants.PARSE_UNKNOWN_LANGUAGE;
 
+    /**
+     * 关键字
+     */
     protected String token = "";
 
     /**
