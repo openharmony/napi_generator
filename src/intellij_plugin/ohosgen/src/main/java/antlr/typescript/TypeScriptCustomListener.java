@@ -324,25 +324,9 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
 
         } else if (varName.equals(TsToken.TS_TOKEN_ABSTRACT)) {
             int cnt = ctx.children.size();
-            for (int i=0; i<cnt; i++) {
+            for (int i = 0; i < cnt; i++) {
                 ParseTree item = ctx.children.get(i);
-                if (item instanceof TypeScriptParser.ClassExpressionContext cec) {
-                    String token = cec.start.getText();
-                    if (token.equals(TsToken.TS_TOKEN_CLASS)) {
-                        this.currentToken = token;
-
-                        int childCnt = item.getChildCount();
-                        for (int j=0; j<childCnt; j++) {
-                            ParseTree childItem = item.getChild(j);
-                            int itemCnt = childItem.getChildCount();
-                            if (itemCnt > 0) {
-                                System.out.println("abstract item: " + childItem.getText());
-                            }
-                        }
-                    }
-                }
-
-
+                System.out.println("item: " + item.getText());
             }
         }
 
