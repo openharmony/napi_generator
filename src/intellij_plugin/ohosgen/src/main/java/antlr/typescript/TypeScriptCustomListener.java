@@ -18,7 +18,6 @@ package antlr.typescript;
 import antlr.ParseBaseListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import event.CustomEvent;
 import grammar.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -227,10 +226,70 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     /**
      * 设置联合
      *
-     * @param unionObjList
+     * @param unionObjList 联合数组
      */
     public void setUnionObjList(List<UnionObj> unionObjList) {
         this.unionObjList = unionObjList;
+    }
+
+    @Override
+    public void enterFunctionType(TypeScriptParser.FunctionTypeContext ctx) {
+        super.enterFunctionType(ctx);
+        System.out.println("enterFunctionType: " + ctx.getText());
+    }
+
+    @Override
+    public void enterFunctionBody(TypeScriptParser.FunctionBodyContext ctx) {
+        super.enterFunctionBody(ctx);
+        System.out.println("enterFunctionBody: " + ctx.getText());
+    }
+
+    @Override
+    public void enterUnion(TypeScriptParser.UnionContext ctx) {
+        super.enterUnion(ctx);
+        System.out.println("enterUnion: " + ctx.getText());
+    }
+
+    @Override
+    public void enterTypeAnnotation(TypeScriptParser.TypeAnnotationContext ctx) {
+        super.enterTypeAnnotation(ctx);
+        System.out.println("enterTypeAnnotation: " + ctx.getText());
+    }
+
+    @Override
+    public void enterPropertyName(TypeScriptParser.PropertyNameContext ctx) {
+        super.enterPropertyName(ctx);
+        System.out.println("enterPropertyName: " + ctx.getText());
+    }
+
+    @Override
+    public void enterAnonymousFunction(TypeScriptParser.AnonymousFunctionContext ctx) {
+        super.enterAnonymousFunction(ctx);
+        System.out.println("enterAnonymousFunction: " + ctx.getText());
+    }
+
+    @Override
+    public void enterIdentifier(TypeScriptParser.IdentifierContext ctx) {
+        super.enterIdentifier(ctx);
+        System.out.println("enterIdentifier: " + ctx.getText());
+    }
+
+    @Override
+    public void enterIdentifierExpression(TypeScriptParser.IdentifierExpressionContext ctx) {
+        super.enterIdentifierExpression(ctx);
+        System.out.println("enterIdentifierExpression: " + ctx.getText());
+    }
+
+    @Override
+    public void enterIdentifierName(TypeScriptParser.IdentifierNameContext ctx) {
+        super.enterIdentifierName(ctx);
+        System.out.println("enterIdentifierName: " + ctx.getText());
+    }
+
+    @Override
+    public void enterVariableStatement(TypeScriptParser.VariableStatementContext ctx) {
+        super.enterVariableStatement(ctx);
+        System.out.println("enterVariableStatement: " + ctx.getText());
     }
 
     @Override
@@ -263,6 +322,28 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
             this.typeObjList.add(to);
             System.out.println("type: " + to.toJsonString());
 
+        } else if (varName.equals(TsToken.TS_TOKEN_ABSTRACT)) {
+            int cnt = ctx.children.size();
+            for (int i=0; i<cnt; i++) {
+                ParseTree item = ctx.children.get(i);
+                if (item instanceof TypeScriptParser.ClassExpressionContext cec) {
+                    String token = cec.start.getText();
+                    if (token.equals(TsToken.TS_TOKEN_CLASS)) {
+                        this.currentToken = token;
+
+                        int childCnt = item.getChildCount();
+                        for (int j=0; j<childCnt; j++) {
+                            ParseTree childItem = item.getChild(j);
+                            int itemCnt = childItem.getChildCount();
+                            if (itemCnt > 0) {
+                                System.out.println("abstract item: " + childItem.getText());
+                            }
+                        }
+                    }
+                }
+
+
+            }
         }
 
 
@@ -272,7 +353,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     @Override
     public void enterExpressionStatement(TypeScriptParser.ExpressionStatementContext ctx) {
         super.enterExpressionStatement(ctx);
-
+        System.out.println("enterExpressionStatement: " + ctx.getText());
     }
 
     @Override
@@ -389,6 +470,49 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     }
 
     @Override
+    public void enterCallSignature(TypeScriptParser.CallSignatureContext ctx) {
+        super.enterCallSignature(ctx);
+        System.out.println("enterCallSignature: " + ctx.getText());
+    }
+
+    @Override
+    public void enterClassElementName(TypeScriptParser.ClassElementNameContext ctx) {
+        super.enterClassElementName(ctx);
+        System.out.println("enterClassElementName: " + ctx.getText());
+    }
+
+    @Override
+    public void enterClassOrInterfaceTypeList(TypeScriptParser.ClassOrInterfaceTypeListContext ctx) {
+        super.enterClassOrInterfaceTypeList(ctx);
+        System.out.println("enterClassOrInterfaceTypeList: " + ctx.getText());
+    }
+
+    @Override
+    public void enterDeclaration(TypeScriptParser.DeclarationContext ctx) {
+        super.enterDeclaration(ctx);
+        System.out.println("enterDeclaration: " + ctx.getText());
+    }
+
+    @Override
+    public void enterClassExpression(TypeScriptParser.ClassExpressionContext ctx) {
+        super.enterClassExpression(ctx);
+        System.out.println("enterClassExpression: " + ctx.getText());
+
+        int childCnt = ctx.getChildCount();
+        if (childCnt > 2) {
+
+            ParseTree pt = ctx.getChild(1);
+            if (pt instanceof TypeScriptParser.IdentifierContext ic) {
+                ClassObj obj = new ClassObj();
+                obj.setName(ic.start.getText());
+                this.currentToken = TsToken.TS_TOKEN_CLASS;
+                this.currentObject = obj;
+                this.classObjList.add(obj);
+            }
+        }
+    }
+
+    @Override
     public void enterClassElement(TypeScriptParser.ClassElementContext ctx) {
         super.enterClassElement(ctx);
         System.out.println("Class element: " + ctx.getText());
@@ -444,6 +568,30 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
 
         int cnt = ctx.getChildCount();
         System.out.println("Method param cnt: " + cnt);
+    }
+
+    @Override
+    public void enterFunctionExpression(TypeScriptParser.FunctionExpressionContext ctx) {
+        super.enterFunctionExpression(ctx);
+        System.out.println("enterFunctionExpression: " + ctx.getText());
+    }
+
+    @Override
+    public void enterGeneratorsFunctionExpression(TypeScriptParser.GeneratorsFunctionExpressionContext ctx) {
+        super.enterGeneratorsFunctionExpression(ctx);
+        System.out.println("enterGeneratorsFunctionExpression: " + ctx.getText());
+    }
+
+    @Override
+    public void enterArrowFunctionDeclaration(TypeScriptParser.ArrowFunctionDeclarationContext ctx) {
+        super.enterArrowFunctionDeclaration(ctx);
+        System.out.println("enterArrowFunctionDeclaration: " + ctx.getText());
+    }
+
+    @Override
+    public void enterArgument(TypeScriptParser.ArgumentContext ctx) {
+        super.enterArgument(ctx);
+        System.out.println("enterArgument: " + ctx.getText());
     }
 
     @Override
@@ -540,6 +688,42 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     }
 
     @Override
+    public void enterArguments(TypeScriptParser.ArgumentsContext ctx) {
+        super.enterArguments(ctx);
+        System.out.println("enterArguments: " + ctx.toString());
+    }
+
+    @Override
+    public void enterClassExtendsClause(TypeScriptParser.ClassExtendsClauseContext ctx) {
+        super.enterClassExtendsClause(ctx);
+        System.out.println("enterClassExtendsClause: " + ctx.getText());
+    }
+
+    @Override
+    public void enterClassHeritage(TypeScriptParser.ClassHeritageContext ctx) {
+        super.enterClassHeritage(ctx);
+        System.out.println("enterClassHeritage: " + ctx.getText());
+    }
+
+    @Override
+    public void enterEnumMember(TypeScriptParser.EnumMemberContext ctx) {
+        super.enterEnumMember(ctx);
+        System.out.println("enterEnumMember: " + ctx.getText());
+    }
+
+    @Override
+    public void enterMethodSignature(TypeScriptParser.MethodSignatureContext ctx) {
+        super.enterMethodSignature(ctx);
+        System.out.println("enterMethodSignature: " + ctx.getText());
+    }
+
+    @Override
+    public void enterAbstractMemberDeclaration(TypeScriptParser.AbstractMemberDeclarationContext ctx) {
+        super.enterAbstractMemberDeclaration(ctx);
+        System.out.println("find abstract member Declare: " + ctx.getText());
+    }
+
+    @Override
     public void enterInterfaceDeclaration(TypeScriptParser.InterfaceDeclarationContext ctx) {
         super.enterInterfaceDeclaration(ctx);
         System.out.println("find interface Declare: " + ctx.getText());
@@ -581,7 +765,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     @Override
     public void enterAbstractDeclaration(TypeScriptParser.AbstractDeclarationContext ctx) {
         super.enterAbstractDeclaration(ctx);
-        System.out.println("find abstract Declare: " + ctx.toString());
+        System.out.println("find abstract Declare: " + ctx.getText());
     }
 
     @Override

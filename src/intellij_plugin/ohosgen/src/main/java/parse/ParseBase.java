@@ -143,7 +143,7 @@ public abstract class ParseBase {
      *
      * @param fileCStream
      *         文件内容
-     * @return
+     * @return 解析结果
      */
     public abstract ParseObj parseCStream(CharStream fileCStream);
 

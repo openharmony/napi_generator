@@ -15,8 +15,6 @@
 
 package antlr;
 
-import event.CustomEvent;
-
 /**
  * <h3>类名：该类用于xxx</h3>
  * description parse base listener
@@ -30,6 +28,8 @@ public interface ParseBaseListener {
 
     /**
      * 打印 json str
+     *
+     * @return json 字符串
      */
     String dump2JsonStr();
 }
