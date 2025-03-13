@@ -15,6 +15,11 @@
 
 package grammar;
 
+import utils.TsToken;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description function of grammar
@@ -24,16 +29,20 @@ package grammar;
  * @version 1.0
  * @since 2025-02-28
  */
-public class FuncObj {
+public class FuncObj extends GBaseObject {
     private String type;
     private String name;
     private String retValue;
-    private ParamObj[] paramList;
+    private List<ParamObj> paramList;
 
     /**
      * 构造函数
      */
-    public FuncObj() {}
+    public FuncObj() {
+        this.token = TsToken.TS_TOKEN_FUNCTION;
+
+        this.paramList = new CopyOnWriteArrayList<>();
+    }
 
     /**
      * 构造函数
@@ -43,7 +52,9 @@ public class FuncObj {
      * @param rv 返回值
      * @param pl 参数
      */
-    public FuncObj(String tv, String nv, String rv, ParamObj[] pl) {
+    public FuncObj(String tv, String nv, String rv, List<ParamObj> pl) {
+        this();
+
         this.type = tv;
         this.name = nv;
         this.retValue = rv;
@@ -109,7 +120,7 @@ public class FuncObj {
      *
      * @param paramList 参数
      */
-    public void setParamList(ParamObj[] paramList) {
+    public void setParamList(List<ParamObj> paramList) {
         this.paramList = paramList;
     }
 
@@ -118,7 +129,29 @@ public class FuncObj {
      *
      * @return 参数
      */
-    public ParamObj[] getParamList() {
+    public List<ParamObj> getParamList() {
         return paramList;
+    }
+
+    /**
+     * 增加函数参数
+     *
+     * @param po 参数
+     */
+    public void addParam(ParamObj po) {
+        this.paramList.add(po);
+    }
+
+    /**
+     * 增加函数参数
+     *
+     * @param name 参数名称
+     * @param type 参数类型
+     */
+    public void addParam(String name, String type) {
+        ParamObj po = new ParamObj();
+        po.setName(name);
+        po.setType(type);
+        this.paramList.add(po);
     }
 }

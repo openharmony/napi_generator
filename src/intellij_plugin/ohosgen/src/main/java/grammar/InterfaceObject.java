@@ -22,77 +22,60 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * <h3>类名：该类用于xxx</h3>
- * description type grammar
+ * description interface grammar
  *
  * @author Administrator
  *         date 2025-02-28
  * @version 1.0
  * @since 2025-02-28
  */
-public class TypeObj extends GBaseObject {
+public class InterfaceObject extends GBaseObject {
     private String name;
     private String alias;
     private List<ParamObj> paramList;
     private List<FuncObj> funcList;
-    private List<String> typeList;
 
     /**
      * 构造函数
      */
-    public TypeObj() {
-        this.token = TsToken.TS_TOKEN_TYPE;
+    public InterfaceObject() {
+        this.token = TsToken.TS_TOKEN_INTERFACE;
 
         this.paramList = new CopyOnWriteArrayList<>();
         this.funcList = new CopyOnWriteArrayList<>();
-        this.typeList = new CopyOnWriteArrayList<>();
     }
 
     /**
      * 构造函数
      *
-     * @param nv 名称
+     * @param nv 名字
      * @param av 别名
      * @param pl 参数
      * @param fl 方法
-     * @param tl 类型
      */
-    public TypeObj(String nv,
-                   String av,
-                   List<ParamObj> pl,
-                   List<FuncObj> fl,
-                   List<String> tl) {
+    public InterfaceObject(String nv, String av, List<ParamObj> pl, List<FuncObj> fl) {
         this.name = nv;
         this.alias = av;
         this.paramList = pl;
         this.funcList = fl;
-        this.typeList = tl;
     }
 
     /**
-     * 获取名称
+     * 设名字
      *
-     * @return 名称
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * 设置名称
-     *
-     * @param name 名称
+     * @param name 名字
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * 获取别名
+     * 读名字
      *
-     * @return 别名
+     * @return name 名字
      */
-    public String getAlias() {
-        return alias;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -105,64 +88,92 @@ public class TypeObj extends GBaseObject {
     }
 
     /**
-     * 获取参数
+     * 读取别名
      *
-     * @return 参数
+     * @return 别名
      */
-    public List<ParamObj> getParamList() {
-        return paramList;
-    }
-
-    /**
-     * 设置参数
-     *
-     * @param paramList 参数
-     */
-    public void setParamList(List<ParamObj> paramList) {
-        this.paramList = paramList;
-    }
-
-    /**
-     * 获取类型
-     *
-     * @return 类型
-     */
-    public List<String> getTypeList() {
-        return typeList;
-    }
-
-    /**
-     * 设置类型
-     * @param typeList 类型
-     */
-    public void setTypeList(List<String> typeList) {
-        this.typeList = typeList;
-    }
-
-    /**
-     * 获取方法
-     *
-     * @return 方法
-     */
-    public List<FuncObj> getFuncList() {
-        return funcList;
+    public String getAlias() {
+        return alias;
     }
 
     /**
      * 设置方法
      *
-     * @param funcList 方法
+     * @param funcList 方法列表
      */
     public void setFuncList(List<FuncObj> funcList) {
         this.funcList = funcList;
     }
 
     /**
-     * 设置value
+     * 获取方法列表
      *
-     * @param value 定义值
+     * @return 方法列表
      */
-    public void addTypeValue(String value) {
-        this.typeList.add(value);
+    public List<FuncObj> getFuncList() {
+        return funcList;
+    }
+
+    /**
+     * 设置参数
+     *
+     * @param paramList 参数列表
+     */
+    public void setParamList(List<ParamObj> paramList) {
+        this.paramList = paramList;
+    }
+
+    /**
+     * 读取方法
+     *
+     * @return 方法列表
+     */
+    public List<ParamObj> getParamList() {
+        return paramList;
+    }
+
+    /**
+     * 增加参数
+     *
+     * @param po 参数
+     */
+    public void addParam(ParamObj po) {
+        this.paramList.add(po);
+    }
+
+    /**
+     * 增加参数
+     *
+     * @param name 名称
+     * @param type 类型
+     */
+    public void addParam(String name, String type) {
+        ParamObj po = new ParamObj();
+        po.setType(type);
+        po.setName(name);
+        this.paramList.add(po);
+    }
+
+    /**
+     * 增加方法
+     *
+     * @param fo 方法
+     */
+    public void addFunc(FuncObj fo) {
+        this.funcList.add(fo);
+    }
+
+    /**
+     * 增加方法
+     *
+     * @param name 名称
+     * @param ret 返回值
+     * @param poList 参数
+     */
+    public void addFunc(String name, String ret, List<ParamObj> poList) {
+        FuncObj fo = new FuncObj();
+        fo.setName(name);
+        fo.setRetValue(ret);
+        fo.setParamList(poList);
     }
 }

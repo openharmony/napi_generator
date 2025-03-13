@@ -132,6 +132,7 @@ public class ParseTask extends Task.Backgroundable implements BaseListener {
         ObjectMapper mapper = new ObjectMapper();
         try {
             ParseTaskInfo pi2 = mapper.readValue(jsonStr, ParseTaskInfo.class);
+            parser.receive(pi2);
         } catch (JsonProcessingException e) {
             System.out.println("Test fromJson catch: " + e.getMessage());
         }

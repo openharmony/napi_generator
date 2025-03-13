@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package antlr.typescript;// Generated from TypeScriptParser.g4 by ANTLR 4.13.2
+package antlr.typescript; // Generated from TypeScriptParser.g4 by ANTLR 4.13.2
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**

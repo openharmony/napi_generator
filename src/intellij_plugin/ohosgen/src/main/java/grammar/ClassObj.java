@@ -15,6 +15,11 @@
 
 package grammar;
 
+import utils.TsToken;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description class grammar
@@ -24,21 +29,32 @@ package grammar;
  * @version 1.0
  * @since 2025-02-28
  */
-public class ClassObj {
+public class ClassObj extends GBaseObject {
     private String name;
     private String alias;
-    private ParamObj[] paramList;
-    private FuncObj[] funcList;
+    private List<ParamObj> paramList;
+    private List<FuncObj> funcList;
 
     /**
      * 构造函数
      */
-    public ClassObj() {}
+    public ClassObj() {
+        this.token = TsToken.TS_TOKEN_CLASS;
+
+        this.paramList = new CopyOnWriteArrayList<>();
+        this.funcList = new CopyOnWriteArrayList<>();
+    }
 
     /**
      * 构造函数
+     *
+     * @param nv 名字
+     * @param av 别名
+     * @param pl 参数
+     * @param fl 方法
      */
-    public ClassObj(String nv, String av, ParamObj[] pl, FuncObj[] fl) {
+    public ClassObj(String nv, String av, List<ParamObj> pl, List<FuncObj> fl) {
+        this();
         this.name = nv;
         this.alias = av;
         this.paramList = pl;
@@ -86,7 +102,7 @@ public class ClassObj {
      *
      * @param funcList 方法列表
      */
-    public void setFuncList(FuncObj[] funcList) {
+    public void setFuncList(List<FuncObj> funcList) {
         this.funcList = funcList;
     }
 
@@ -95,7 +111,7 @@ public class ClassObj {
      *
      * @return 方法列表
      */
-    public FuncObj[] getFuncList() {
+    public List<FuncObj> getFuncList() {
         return funcList;
     }
 
@@ -104,7 +120,7 @@ public class ClassObj {
      *
      * @param paramList 参数列表
      */
-    public void setParamList(ParamObj[] paramList) {
+    public void setParamList(List<ParamObj> paramList) {
         this.paramList = paramList;
     }
 
@@ -113,7 +129,52 @@ public class ClassObj {
      *
      * @return 方法列表
      */
-    public ParamObj[] getParamList() {
+    public List<ParamObj> getParamList() {
         return paramList;
+    }
+
+    /**
+     * 增加param
+     *
+     * @param po param
+     */
+    public void addParam(ParamObj po) {
+        this.paramList.add(po);
+    }
+
+    /**
+     * 增加param
+     *
+     * @param name 名字
+     * @param type 类型
+     */
+    public void addParam(String name, String type) {
+        ParamObj po = new ParamObj();
+        po.setType(type);
+        po.setName(name);
+        this.paramList.add(po);
+    }
+
+    /**
+     * 增加方法
+     *
+     * @param fo 方法
+     */
+    public void addFunc(FuncObj fo) {
+        this.funcList.add(fo);
+    }
+
+    /**
+     * 增加方法
+     *
+     * @param name 名字
+     * @param ret 返回值
+     * @param poList 参数
+     */
+    public void addFunc(String name, String ret, List<ParamObj> poList) {
+        FuncObj fo = new FuncObj();
+        fo.setName(name);
+        fo.setRetValue(ret);
+        fo.setParamList(poList);
     }
 }
