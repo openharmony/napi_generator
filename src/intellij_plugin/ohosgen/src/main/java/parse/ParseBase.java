@@ -147,18 +147,22 @@ public abstract class ParseBase {
     /**
      * 解析enum
      *
+     * @param pi2 解析结果
      * @return enum
      */
-    protected EnumObj[] parseEnum() {
+    protected EnumObj[] parseEnum(ParseTaskInfo pi2) {
+        System.out.println("parse enum: " + pi2.toString());
         return new EnumObj[0];
     };
 
     /**
      * 解析union
      *
+     * @param pi2 解析任务
      * @return union
      */
-    protected UnionObj[] parseUnion() {
+    protected UnionObj[] parseUnion(ParseTaskInfo pi2) {
+        System.out.println("parse union: " + pi2.toString());
         return new UnionObj[0];
     }
 
@@ -167,7 +171,8 @@ public abstract class ParseBase {
      *
      * @return struct
      */
-    protected StructObj[] parseStruct() {
+    protected StructObj[] parseStruct(ParseTaskInfo pi2) {
+        System.out.println("parse struct: " + pi2.toString());
         return new StructObj[0];
     }
 
@@ -176,7 +181,8 @@ public abstract class ParseBase {
      *
      * @return class
      */
-    protected ClassObj[] parseClass() {
+    protected ClassObj[] parseClass(ParseTaskInfo pi2) {
+        System.out.println("parse class: " + pi2.toString());
         return new ClassObj[0];
     }
 
@@ -185,16 +191,19 @@ public abstract class ParseBase {
      *
      * @return func
      */
-    protected FuncObj[] parseFunc() {
+    protected FuncObj[] parseFunc(ParseTaskInfo pi2) {
+        System.out.println("parse function: " + pi2.toString());
         return new FuncObj[0];
     }
 
     /**
      * 解析type
      *
+     * @param pi2  解析进程
      * @return type
      */
-    protected TypeObj[] parseType() {
+    protected TypeObj[] parseType(ParseTaskInfo pi2) {
+        System.out.println("parse type: " + pi2.toString());
         return new TypeObj[0];
     }
 

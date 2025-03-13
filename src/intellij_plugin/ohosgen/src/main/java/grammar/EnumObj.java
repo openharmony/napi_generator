@@ -15,6 +15,11 @@
 
 package grammar;
 
+import utils.TsToken;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description enum grammar
@@ -24,16 +29,20 @@ package grammar;
  * @version 1.0
  * @since 2025-02-28
  */
-public class EnumObj {
+public class EnumObj extends GBaseObject {
     private String name;
     private String alias;
-    private String[] memberList;
-    private String[] valueList;
+    private List<String> memberList;
+    private List<String> valueList;
 
     /**
      * 构造函数
      */
-    public EnumObj() {}
+    public EnumObj() {
+        this.token = TsToken.TS_TOKEN_ENUM;
+        this.memberList = new CopyOnWriteArrayList<>();
+        this.valueList = new CopyOnWriteArrayList<>();
+    }
 
     /**
      * 构造函数
@@ -43,7 +52,7 @@ public class EnumObj {
      * @param ml 成员
      * @param vl 值
      */
-    public EnumObj(String nv, String av, String[] ml, String[] vl) {
+    public EnumObj(String nv, String av, List<String> ml, List<String> vl) {
         this.name = nv;
         this.alias = av;
         this.memberList = ml;
@@ -91,7 +100,7 @@ public class EnumObj {
      *
      * @return 成员列表
      */
-    public String[] getMemberList() {
+    public List<String> getMemberList() {
         return memberList;
     }
 
@@ -100,7 +109,7 @@ public class EnumObj {
      *
      * @param memberList 成员列表
      */
-    public void setMemberList(String[] memberList) {
+    public void setMemberList(List<String> memberList) {
         this.memberList = memberList;
     }
 
@@ -109,7 +118,7 @@ public class EnumObj {
      *
      * @return 值列表
      */
-    public String[] getValueList() {
+    public List<String> getValueList() {
         return valueList;
     }
 
@@ -118,7 +127,27 @@ public class EnumObj {
      *
      * @param valueList 值列表
      */
-    public void setValueList(String[] valueList) {
+    public void setValueList(List<String> valueList) {
         this.valueList = valueList;
     }
+
+    /**
+     * 添加成员
+     *
+     * @param memName 成员名称
+     */
+    public void addMemberItem(String memName) {
+        this.memberList.add(memName);
+    }
+
+    /**
+     * 添加成员值
+     *
+     * @param memValue 成员值
+     */
+    public void addMemberValue(String memValue) {
+        this.valueList.add(memValue);
+    }
+
+
 }

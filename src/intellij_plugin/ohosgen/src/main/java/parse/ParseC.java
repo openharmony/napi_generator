@@ -95,7 +95,7 @@ public class ParseC extends ParseBase {
     public void parseCStream(CharStream fileCStream) {
         System.out.println("c/cpp parse char stream");
         this.fcStream = fileCStream;
-        SendEvent(Constants.START_STATUS, Constants.C_CPP_START_MSG, 50);
+        sendEvent(Constants.START_STATUS, Constants.C_CPP_START_MSG, 50);
         try {
             // 初始化词法分析器
             CPP14Lexer lexer = new CPP14Lexer(this.fcStream);
@@ -114,36 +114,36 @@ public class ParseC extends ParseBase {
             System.out.println("parse cstream e.printStackTrace(): " + e.getMessage());
         }
 
-        SendEvent(Constants.COMPLETE_STATUS, Constants.C_CPP_COMPLETE_MSG, 50);
+        sendEvent(Constants.COMPLETE_STATUS, Constants.C_CPP_COMPLETE_MSG, 50);
     }
 
     @Override
-    protected EnumObj[] parseEnum() {
-        return super.parseEnum();
+    protected EnumObj[] parseEnum(ParseTaskInfo pi2) {
+        return super.parseEnum(pi2);
     }
 
     @Override
-    protected UnionObj[] parseUnion() {
-        return super.parseUnion();
+    protected UnionObj[] parseUnion(ParseTaskInfo pi2) {
+        return super.parseUnion(pi2);
     }
 
     @Override
-    protected StructObj[] parseStruct() {
-        return super.parseStruct();
+    protected StructObj[] parseStruct(ParseTaskInfo pi2) {
+        return super.parseStruct(pi2);
     }
 
     @Override
-    protected ClassObj[] parseClass() {
-        return super.parseClass();
+    protected ClassObj[] parseClass(ParseTaskInfo pi2) {
+        return super.parseClass(pi2);
     }
 
     @Override
-    protected FuncObj[] parseFunc() {
-        return super.parseFunc();
+    protected FuncObj[] parseFunc(ParseTaskInfo pi2) {
+        return super.parseFunc(pi2);
     }
 
     @Override
-    protected TypeObj[] parseType() {
-        return super.parseType();
+    protected TypeObj[] parseType(ParseTaskInfo pi2) {
+        return super.parseType(pi2);
     }
 }
