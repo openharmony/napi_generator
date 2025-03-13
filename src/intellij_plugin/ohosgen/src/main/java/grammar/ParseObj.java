@@ -15,6 +15,9 @@
 
 package grammar;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description parse object
@@ -25,23 +28,25 @@ package grammar;
  * @since 2025-02-28
  */
 public class ParseObj extends GBaseObject {
-    private EnumObj[] enumList;
-    private UnionObj[] unionList;
-    private StructObj[] structList;
-    private ClassObj[] classList;
-    private FuncObj[] funcList;
-    private TypeObj[] typeList;
+    private List<EnumObj> enumList;
+    private List<UnionObj> unionList;
+    private List<StructObj> structList;
+    private List<ClassObj> classList;
+    private List<FuncObj> funcList;
+    private List<TypeObj> typeList;
+    private List<InterfaceObject> interfaceList;
 
     /**
      * 构造函数
      */
-    ParseObj() {
-        enumList = new EnumObj[0];
-        unionList = new UnionObj[0];
-        structList = new StructObj[0];
-        classList = new ClassObj[0];
-        funcList = new FuncObj[0];
-        typeList = new TypeObj[0];
+    public ParseObj() {
+        enumList = new CopyOnWriteArrayList<>();
+        unionList = new CopyOnWriteArrayList<>();
+        structList = new CopyOnWriteArrayList<>();
+        classList = new CopyOnWriteArrayList<>();
+        funcList = new CopyOnWriteArrayList<>();
+        typeList = new CopyOnWriteArrayList<>();
+        interfaceList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -49,7 +54,7 @@ public class ParseObj extends GBaseObject {
      *
      * @param res enum对象
      */
-    void setEnumList(EnumObj[] res) {
+    public void setEnumList(List<EnumObj> res) {
         enumList = res;
     }
 
@@ -58,7 +63,7 @@ public class ParseObj extends GBaseObject {
      *
      * @param res union对象
      */
-    void getUnionList(UnionObj[] res) {
+    public void setUnionList(List<UnionObj> res) {
         unionList = res;
     }
 
@@ -67,7 +72,7 @@ public class ParseObj extends GBaseObject {
      *
      * @param res struct对象
      */
-    void setStructList(StructObj[] res) {
+    public void setStructList(List<StructObj> res) {
         structList = res;
     }
 
@@ -76,7 +81,7 @@ public class ParseObj extends GBaseObject {
      *
      * @param res class对象
      */
-    void setClassList(ClassObj[] res) {
+    public void setClassList(List<ClassObj> res) {
         classList = res;
     }
 
@@ -85,7 +90,7 @@ public class ParseObj extends GBaseObject {
      *
      * @param res func对象
      */
-    void setFuncList(FuncObj[] res) {
+    public void setFuncList(List<FuncObj> res) {
         funcList = res;
     }
 
@@ -94,7 +99,7 @@ public class ParseObj extends GBaseObject {
      *
      * @param res type对象
      */
-    void setTypeList(TypeObj[] res) {
+    public void setTypeList(List<TypeObj> res) {
         typeList = res;
     }
 
@@ -103,7 +108,7 @@ public class ParseObj extends GBaseObject {
      *
      * @return 解析后enum列表
      */
-    EnumObj[] getEnumList() {
+    public List<EnumObj> getEnumList() {
         return enumList;
     }
 
@@ -112,7 +117,7 @@ public class ParseObj extends GBaseObject {
      *
      * @return 解析后union列表
      */
-    UnionObj[] getUnionList() {
+    public List<UnionObj> getUnionList() {
         return unionList;
     }
 
@@ -121,7 +126,7 @@ public class ParseObj extends GBaseObject {
      *
      * @return 解析后struct列表
      */
-    StructObj[] getStructList() {
+    public List<StructObj> getStructList() {
         return structList;
     }
 
@@ -130,7 +135,7 @@ public class ParseObj extends GBaseObject {
      *
      * @return 解析后class列表
      */
-    ClassObj[] getClassList() {
+    public List<ClassObj> getClassList() {
         return classList;
     }
 
@@ -139,7 +144,7 @@ public class ParseObj extends GBaseObject {
      *
      * @return 解析后func列表
      */
-    FuncObj[] getFuncList() {
+    public List<FuncObj> getFuncList() {
         return funcList;
     }
 
@@ -148,7 +153,25 @@ public class ParseObj extends GBaseObject {
      *
      * @return 解析后type列表
      */
-    TypeObj[] getTypeList() {
+    public List<TypeObj> getTypeList() {
         return typeList;
+    }
+
+    /**
+     * 获取interface对象
+     *
+     * @return interface对象
+     */
+    public List<InterfaceObject> getInterfaceList() {
+        return interfaceList;
+    }
+
+    /**
+     * 设置interface对象
+     *
+     * @param interfaceList interface 对象
+     */
+    public void setInterfaceList(List<InterfaceObject> interfaceList) {
+        this.interfaceList = interfaceList;
     }
 }

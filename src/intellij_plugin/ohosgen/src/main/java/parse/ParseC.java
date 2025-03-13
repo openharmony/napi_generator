@@ -15,6 +15,7 @@
 
 package parse;
 
+import antlr.ParseBaseListener;
 import antlr.cpp.CPP14CustomListener;
 import antlr.cpp.CPP14ErrorListener;
 import antlr.cpp.CPP14Lexer;
@@ -89,10 +90,12 @@ public class ParseC extends ParseBase {
     /**
      * 处理内容
      *
-     * @param fileCStream 文件内容
+     * @param fileCStream
+     *         文件内容
+     * @return
      */
     @Override
-    public void parseCStream(CharStream fileCStream) {
+    public ParseObj parseCStream(CharStream fileCStream) {
         System.out.println("c/cpp parse char stream");
         this.fcStream = fileCStream;
         sendEvent(Constants.START_STATUS, Constants.C_CPP_START_MSG, 50);
@@ -115,6 +118,12 @@ public class ParseC extends ParseBase {
         }
 
         sendEvent(Constants.COMPLETE_STATUS, Constants.C_CPP_COMPLETE_MSG, 50);
+        return null;
+    }
+
+    @Override
+    protected ParseObj genParseResult(ParseBaseListener pbl) {
+        return null;
     }
 
     @Override
