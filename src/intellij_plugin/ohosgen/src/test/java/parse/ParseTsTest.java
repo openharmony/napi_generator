@@ -15,7 +15,6 @@
 
 package parse;
 
-import antlr.typescript.TypeScriptParser;
 import grammar.*;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
@@ -71,8 +70,7 @@ class ParseTsTest {
     }
 
     @Test
-    void parseCStreamClass() {
-        ParseBase parser = ParseFactory.getParser("ts");
+    void parseCStreamClass_1() {
         String testClass = "export class Box {\n" +
                 "\tlines: number;\n" +
                 "\tsrcType: TestEnum;\n" +
@@ -84,6 +82,8 @@ class ParseTsTest {
                 "\ttransform2D(calcCB: Calculate): boolean;\n" +
                 "\ttransform3D(ctCB: CallbackTest): boolean;\n" +
                 "};";
+        ParseBase parser = ParseFactory.getParser("ts");
+
         CodePointCharStream cStream = CharStreams.fromString(testClass);
         ParseObj po = parser.parseCStream(cStream);
         List<ClassObj> eol = po.getClassList();
@@ -113,6 +113,51 @@ class ParseTsTest {
         poItem = pl.get(6);
         assertEquals("heith_", poItem.getName());
         assertEquals("number", poItem.getType());
+    }
+
+    @Test
+    void parseCStreamClass_2() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testClass = "abstract class Person {\n" +
+                "    name: string;\n" +
+                "\n" +
+                "    constructor(name: string) {\n" +
+                "        this.name = name;\n" +
+                "    }\n" +
+                "\n" +
+                "    abstract find(string): Person;\n" +
+                "    abstract nameAbs: string;\n" +
+                "}";
+        CodePointCharStream cStream = CharStreams.fromString(testClass);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> eol = po.getClassList();
+        assertEquals(1, eol.size());
+        ClassObj co = eol.get(0);
+        assertEquals("Person", co.getName());
+        List<ParamObj> pl = co.getParamList();
+        assertEquals(2, pl.size());
+        ParamObj poItem = pl.get(0);
+        assertEquals("name", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pl.get(1);
+        assertEquals("nameAbs", poItem.getName());
+        assertEquals("string", poItem.getType());
+        List<FuncObj> fol = co.getFuncList();
+        assertEquals(3, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("constructor", foItem.getName());
+        List<ParamObj> pol = foItem.getParamList();
+        assertEquals(1, pol.size());
+        poItem = pol.get(0);
+        assertEquals("name", poItem.getName());
+        assertEquals("string", poItem.getType());
+        foItem = fol.get(1);
+        assertEquals("find", foItem.getName());
+        pol = foItem.getParamList();
+        assertEquals(1, pol.size());
+        poItem = pol.get(0);
+        assertEquals("string", poItem.getType());
+
     }
 
     @Test
