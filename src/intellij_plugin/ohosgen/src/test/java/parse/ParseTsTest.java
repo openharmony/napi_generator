@@ -35,6 +35,34 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ParseTsTest {
 
+    String testClass_3 = "abstract class Person {\n" +
+            "    name: string;\n" +
+            "    value: int;\n" +
+            "\n" +
+            "    constructor(name: string, value: int) {\n" +
+            "        this.name = name;\n" +
+            "        this.value = value;\n" +
+            "    }\n" +
+            "\n" +
+            "    abstract find(target: string, cnt: int): Person;\n" +
+            "    abstract add(int, string): Person;\n" +
+            "    abstract nameAbs: string;\n" +
+            "}";
+
+    String testClass_4 = "abstract class Person {\n" +
+            "    name: string;\n" +
+            "    value: int;\n" +
+            "\n" +
+            "    constructor(string, int) {\n" +
+            "        this.name = name;\n" +
+            "        this.value = value;\n" +
+            "    }\n" +
+            "\n" +
+            "    abstract find(string): Person;\n" +
+            "    abstract add(int, string): Person;\n" +
+            "    abstract nameAbs: string;\n" +
+            "}";
+
     @Test
     void parseFile() {
     }
@@ -163,19 +191,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamClass_3() {
-        String testClass = "abstract class Person {\n" +
-                "    name: string;\n" +
-                "    value: int;\n" +
-                "\n" +
-                "    constructor(name: string, value: int) {\n" +
-                "        this.name = name;\n" +
-                "        this.value = value;\n" +
-                "    }\n" +
-                "\n" +
-                "    abstract find(target: string, cnt: int): Person;\n" +
-                "    abstract add(int, string): Person;\n" +
-                "    abstract nameAbs: string;\n" +
-                "}";
+        String testClass = this.testClass_3;
         CodePointCharStream cStream = CharStreams.fromString(testClass);
         ParseBase parser = ParseFactory.getParser("ts");
         ParseObj po = parser.parseCStream(cStream);
@@ -234,19 +250,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamClass_4() {
-        String testClass = "abstract class Person {\n" +
-                "    name: string;\n" +
-                "    value: int;\n" +
-                "\n" +
-                "    constructor(string, int) {\n" +
-                "        this.name = name;\n" +
-                "        this.value = value;\n" +
-                "    }\n" +
-                "\n" +
-                "    abstract find(string): Person;\n" +
-                "    abstract add(int, string): Person;\n" +
-                "    abstract nameAbs: string;\n" +
-                "}";
+        String testClass = testClass_4;
         CodePointCharStream cStream = CharStreams.fromString(testClass);
         ParseBase parser = ParseFactory.getParser("ts");
         ParseObj po = parser.parseCStream(cStream);

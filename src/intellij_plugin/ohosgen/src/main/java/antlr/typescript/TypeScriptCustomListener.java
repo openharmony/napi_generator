@@ -19,10 +19,8 @@ import antlr.ParseBaseListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import grammar.*;
-import it.unimi.dsi.fastutil.bytes.F;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.apache.groovy.parser.antlr4.GroovyParser;
 import utils.Constants;
 import utils.TsToken;
 
@@ -396,32 +394,37 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         String res = ctx.formalParameterList().getText();
         System.out.println("Construct: " + res);
         TypeScriptParser.FormalParameterListContext fplc = ctx.formalParameterList();
-        if (fplc != null && (this.currentObject instanceof ClassObj co)) {
-            int cnt = fplc.getChildCount();
-            FuncObj fo = new FuncObj();
-            fo.setName("constructor");
-            fo.setRetValue("void");
-            co.addFunc(fo);
-            for (int i = 0; i < cnt; i++) {
-                ParseTree pt = fplc.getChild(i);
-                if (pt instanceof TypeScriptParser.FormalParameterArgContext fpac) {
-                    String type = "";
-                    if (fpac.typeAnnotation() != null && fpac.typeAnnotation().stop != null) {
-                        type = fpac.typeAnnotation().stop.getText();
-                    }
-
-                    String name = "";
-                    if (fpac.assignable() != null) {
-                        name = fpac.assignable().getText();
-                    }
-
-                    if (type.isEmpty()) {
-                        type = name;
-                    }
-                    fo.addParam(name, type);
-                }
-            }
+        if (fplc == null || !(this.currentObject instanceof ClassObj co)) {
+            return;
         }
+
+        int cnt = fplc.getChildCount();
+        FuncObj fo = new FuncObj();
+        fo.setName("constructor");
+        fo.setRetValue("void");
+        co.addFunc(fo);
+        for (int i = 0; i < cnt; i++) {
+            ParseTree pt = fplc.getChild(i);
+            if (!(pt instanceof TypeScriptParser.FormalParameterArgContext fpac)) {
+                continue;
+            }
+
+            String type = "";
+            if (fpac.typeAnnotation() != null && fpac.typeAnnotation().stop != null) {
+                type = fpac.typeAnnotation().stop.getText();
+            }
+
+            String name = "";
+            if (fpac.assignable() != null) {
+                name = fpac.assignable().getText();
+            }
+
+            if (type.isEmpty()) {
+                type = name;
+            }
+            fo.addParam(name, type);
+        }
+
     }
 
     @Override
