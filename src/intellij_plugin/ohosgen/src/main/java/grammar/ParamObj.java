@@ -25,6 +25,7 @@ package grammar;
  * @since 2025-02-28
  */
 public class ParamObj extends GBaseObject {
+    private String qualifier;
     private String type;
     private String name;
     private int arraySize;
@@ -48,6 +49,24 @@ public class ParamObj extends GBaseObject {
         this.name = nv;
         this.arraySize = as;
         this.asList = asl;
+    }
+
+    /**
+     * 确定参数关键字
+     *
+     * @return 参数关键字
+     */
+    public String getQualifier() {
+        return qualifier;
+    }
+
+    /**
+     * 设置参数关键字
+     *
+     * @param qualifier 关键字
+     */
+    public void setQualifier(String qualifier) {
+        this.qualifier = qualifier;
     }
 
     /**

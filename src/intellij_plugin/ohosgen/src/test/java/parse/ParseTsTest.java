@@ -35,6 +35,45 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ParseTsTest {
 
+    String testClass2 = "abstract class Person {\n" +
+            "    name: string;\n" +
+            "\n" +
+            "    constructor(name: string) {\n" +
+            "        this.name = name;\n" +
+            "    }\n" +
+            "\n" +
+            "    abstract find(target: string): Person;\n" +
+            "    abstract nameAbs: string;\n" +
+            "}";
+
+    String testClass3 = "abstract class Person {\n" +
+            "    name: string;\n" +
+            "    value: int;\n" +
+            "\n" +
+            "    constructor(name: string, value: int) {\n" +
+            "        this.name = name;\n" +
+            "        this.value = value;\n" +
+            "    }\n" +
+            "\n" +
+            "    abstract find(target: string, cnt: int): Person;\n" +
+            "    abstract add(int, string): Person;\n" +
+            "    abstract nameAbs: string;\n" +
+            "}";
+
+    String testClass4 = "abstract class Person {\n" +
+            "    name: string;\n" +
+            "    value: int;\n" +
+            "\n" +
+            "    constructor(string, int) {\n" +
+            "        this.name = name;\n" +
+            "        this.value = value;\n" +
+            "    }\n" +
+            "\n" +
+            "    abstract find(string): Person;\n" +
+            "    abstract add(int, string): Person;\n" +
+            "    abstract nameAbs: string;\n" +
+            "}";
+
     @Test
     void parseFile() {
     }
@@ -117,16 +156,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamClass_2() {
-        String testClass = "abstract class Person {\n" +
-                "    name: string;\n" +
-                "\n" +
-                "    constructor(name: string) {\n" +
-                "        this.name = name;\n" +
-                "    }\n" +
-                "\n" +
-                "    abstract find(string): Person;\n" +
-                "    abstract nameAbs: string;\n" +
-                "}";
+        String testClass = testClass2;
         CodePointCharStream cStream = CharStreams.fromString(testClass);
         ParseBase parser = ParseFactory.getParser("ts");
         ParseObj po = parser.parseCStream(cStream);
@@ -143,7 +173,7 @@ class ParseTsTest {
         assertEquals("nameAbs", poItem.getName());
         assertEquals("string", poItem.getType());
         List<FuncObj> fol = co.getFuncList();
-        assertEquals(3, fol.size());
+        assertEquals(2, fol.size());
         FuncObj foItem = fol.get(0);
         assertEquals("constructor", foItem.getName());
         List<ParamObj> pol = foItem.getParamList();
@@ -153,11 +183,120 @@ class ParseTsTest {
         assertEquals("string", poItem.getType());
         foItem = fol.get(1);
         assertEquals("find", foItem.getName());
+        assertEquals("Person", foItem.getRetValue());
         pol = foItem.getParamList();
         assertEquals(1, pol.size());
         poItem = pol.get(0);
         assertEquals("string", poItem.getType());
 
+    }
+
+    @Test
+    void parseCStreamClass_3() {
+        String testClass = this.testClass3;
+        CodePointCharStream cStream = CharStreams.fromString(testClass);
+        ParseBase parser = ParseFactory.getParser("ts");
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> eol = po.getClassList();
+        assertEquals(1, eol.size());
+        ClassObj co = eol.get(0);
+        List<ParamObj> pl = co.getParamList();
+        assertEquals(3, pl.size());
+        ParamObj poItem = pl.get(1);
+        assertEquals("value", poItem.getName());
+        assertEquals("int", poItem.getType());
+        poItem = pl.get(2);
+        assertEquals("nameAbs", poItem.getName());
+        assertEquals("string", poItem.getType());
+        List<FuncObj> fol = co.getFuncList();
+        assertEquals(3, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("constructor", foItem.getName());
+        List<ParamObj> pol = foItem.getParamList();
+        assertEquals(2, pol.size());
+        poItem = pol.get(0);
+        assertEquals("name", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("value", poItem.getName());
+        assertEquals("int", poItem.getType());
+
+        foItem = fol.get(1);
+        assertEquals("find", foItem.getName());
+        assertEquals("Person", foItem.getRetValue());
+        pol = foItem.getParamList();
+        assertEquals(2, pol.size());
+        poItem = pol.get(0);
+        assertEquals("target", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("cnt", poItem.getName());
+        assertEquals("int", poItem.getType());
+
+        foItem = fol.get(2);
+        assertEquals("add", foItem.getName());
+        assertEquals("Person", foItem.getRetValue());
+        pol = foItem.getParamList();
+        assertEquals(2, pol.size());
+        poItem = pol.get(0);
+        assertEquals("int", poItem.getName());
+        assertEquals("int", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("string", poItem.getType());
+    }
+
+    @Test
+    void parseCStreamClass_4() {
+        String testClass = testClass4;
+        CodePointCharStream cStream = CharStreams.fromString(testClass);
+        ParseBase parser = ParseFactory.getParser("ts");
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> eol = po.getClassList();
+        assertEquals(1, eol.size());
+        ClassObj co = eol.get(0);
+        List<ParamObj> pl = co.getParamList();
+        assertEquals(3, pl.size());
+        ParamObj poItem = pl.get(0);
+        assertEquals("name", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pl.get(1);
+        assertEquals("value", poItem.getName());
+        assertEquals("int", poItem.getType());
+        poItem = pl.get(2);
+        assertEquals("nameAbs", poItem.getName());
+        assertEquals("string", poItem.getType());
+        List<FuncObj> fol = co.getFuncList();
+        assertEquals(3, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("constructor", foItem.getName());
+        List<ParamObj> pol = foItem.getParamList();
+        assertEquals(2, pol.size());
+        poItem = pol.get(0);
+        assertEquals("string", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("int", poItem.getType());
+
+        foItem = fol.get(1);
+        assertEquals("find", foItem.getName());
+        assertEquals("Person", foItem.getRetValue());
+        pol = foItem.getParamList();
+        assertEquals(1, pol.size());
+        poItem = pol.get(0);
+        assertEquals("string", poItem.getName());
+        assertEquals("string", poItem.getType());
+
+        foItem = fol.get(2);
+        assertEquals("add", foItem.getName());
+        assertEquals("Person", foItem.getRetValue());
+        pol = foItem.getParamList();
+        assertEquals(2, pol.size());
+        poItem = pol.get(0);
+        assertEquals("int", poItem.getName());
+        assertEquals("int", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("string", poItem.getName());
+        assertEquals("string", poItem.getType());
     }
 
     @Test
