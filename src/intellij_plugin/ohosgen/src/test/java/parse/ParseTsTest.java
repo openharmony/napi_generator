@@ -117,7 +117,6 @@ class ParseTsTest {
 
     @Test
     void parseCStreamClass_2() {
-        ParseBase parser = ParseFactory.getParser("ts");
         String testClass = "abstract class Person {\n" +
                 "    name: string;\n" +
                 "\n" +
@@ -129,6 +128,7 @@ class ParseTsTest {
                 "    abstract nameAbs: string;\n" +
                 "}";
         CodePointCharStream cStream = CharStreams.fromString(testClass);
+        ParseBase parser = ParseFactory.getParser("ts");
         ParseObj po = parser.parseCStream(cStream);
         List<ClassObj> eol = po.getClassList();
         assertEquals(1, eol.size());
