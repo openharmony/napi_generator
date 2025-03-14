@@ -40,6 +40,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     private final int currentLanguage = Constants.PARSE_TS_LANGUAGE;
     private String currentToken = "";
     private GBaseObject currentObject;
+    private String currentIdentifier = "";
     private List<EnumObj> enumObjList;
     private List<ClassObj> classObjList;
     private List<FuncObj> funcObjList;
@@ -272,6 +273,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     public void enterIdentifier(TypeScriptParser.IdentifierContext ctx) {
         super.enterIdentifier(ctx);
         System.out.println("enterIdentifier: " + ctx.getText());
+        this.currentIdentifier = ctx.getText();
     }
 
     @Override
@@ -391,6 +393,37 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         // 提取构造函数参数列表
         String res = ctx.formalParameterList().getText();
         System.out.println("Construct: " + res);
+        TypeScriptParser.FormalParameterListContext fplc = ctx.formalParameterList();
+        if (fplc == null || !(this.currentObject instanceof ClassObj co)) {
+            return;
+        }
+
+        int cnt = fplc.getChildCount();
+        FuncObj fo = new FuncObj();
+        fo.setName("constructor");
+        fo.setRetValue("void");
+        co.addFunc(fo);
+        for (int i = 0; i < cnt; i++) {
+            ParseTree pt = fplc.getChild(i);
+            if (!(pt instanceof TypeScriptParser.FormalParameterArgContext fpac)) {
+                continue;
+            }
+
+            String type = "";
+            if (fpac.typeAnnotation() != null && fpac.typeAnnotation().stop != null) {
+                type = fpac.typeAnnotation().stop.getText();
+            }
+
+            String name = "";
+            if (fpac.assignable() != null) {
+                name = fpac.assignable().getText();
+            }
+
+            if (type.isEmpty()) {
+                type = name;
+            }
+            fo.addParam(name, type);
+        }
 
     }
 
@@ -457,6 +490,31 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     public void enterCallSignature(TypeScriptParser.CallSignatureContext ctx) {
         super.enterCallSignature(ctx);
         System.out.println("enterCallSignature: " + ctx.getText());
+        if (this.currentToken.equals(TsToken.TS_TOKEN_CLASS) &&
+                (this.currentObject instanceof ClassObj co)) {
+            String typeName = ctx.typeAnnotation().stop.getText();
+            FuncObj fo = new FuncObj();
+            fo.setRetValue(typeName);
+            fo.setName(this.currentIdentifier);
+            TypeScriptParser.ParameterListContext plc = ctx.parameterList();
+            int childCnt = plc.getChildCount();
+            for (int i = 0; i < childCnt; i++) {
+                ParseTree pt = plc.getChild(i);
+                if (pt instanceof TypeScriptParser.ParameterContext pc) {
+                    String paramName = pc.start.getText();
+                    String paramType = pc.stop.getText();
+                    fo.addParam(paramName, paramType);
+                }
+            }
+            co.addFunc(fo);
+        }
+
+    }
+
+    @Override
+    public void enterTypeName(TypeScriptParser.TypeNameContext ctx) {
+        super.enterTypeName(ctx);
+        System.out.println("enterTypeName: " + ctx.getText());
     }
 
     @Override
@@ -500,6 +558,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     public void enterClassElement(TypeScriptParser.ClassElementContext ctx) {
         super.enterClassElement(ctx);
         System.out.println("Class element: " + ctx.getText());
+
         TypeScriptParser.StatementContext sc = ctx.statement();
         if (sc != null) {
             System.out.println("Class state: " + sc.getText());
@@ -705,6 +764,18 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     public void enterAbstractMemberDeclaration(TypeScriptParser.AbstractMemberDeclarationContext ctx) {
         super.enterAbstractMemberDeclaration(ctx);
         System.out.println("find abstract member Declare: " + ctx.getText());
+        TypeScriptParser.AbstractDeclarationContext adc = ctx.abstractDeclaration();
+        TypeScriptParser.VariableStatementContext vsc = adc.variableStatement();
+        if (vsc != null) {
+            TypeScriptParser.VariableDeclarationListContext vdl = vsc.variableDeclarationList();
+            String paramName = vdl.start.getText();
+            String paramType = vdl.stop.getText();
+
+            if (this.currentObject instanceof ClassObj co) {
+                co.addParam(paramName, paramType);
+            }
+        }
+
     }
 
     @Override
