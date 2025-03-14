@@ -17,6 +17,7 @@ package parse;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import grammar.ParseObj;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import com.intellij.openapi.progress.ProgressIndicator;
@@ -91,7 +92,7 @@ public class ParseTask extends Task.Backgroundable implements BaseListener {
             InputStream is = parseFile.getInputStream();
             CharStream ics = CharStreams.fromStream(is);
 
-            parser.parseCStream(ics);
+            ParseObj po = parser.parseCStream(ics);
             System.out.println("parseContent finish");
             String[] lines = content.split("\n");
             for (int i = 0; i < lines.length; i++) {

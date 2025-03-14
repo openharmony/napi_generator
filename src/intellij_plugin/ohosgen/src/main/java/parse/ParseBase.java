@@ -15,6 +15,7 @@
 
 package parse;
 
+import antlr.ParseBaseListener;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import grammar.*;
@@ -140,9 +141,19 @@ public abstract class ParseBase {
     /**
      * 根据文件char stream解析文件
      *
-     * @param fileCStream 文件内容
+     * @param fileCStream
+     *         文件内容
+     * @return 解析结果
      */
-    public abstract void parseCStream(CharStream fileCStream);
+    public abstract ParseObj parseCStream(CharStream fileCStream);
+
+    /**
+     * 生成 解析结果
+     *
+     * @param pbl 解析监听
+     * @return 解析结果
+     */
+    protected abstract ParseObj genParseResult(ParseBaseListener pbl);
 
     /**
      * 解析enum

@@ -72,5 +72,6 @@ dependencies {
         exclude(group = "junit", module = "junit")
     }
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0") // 必须的运行时引擎
+    implementation("com.google.code.gson:gson:2.10.1")
 }
 
