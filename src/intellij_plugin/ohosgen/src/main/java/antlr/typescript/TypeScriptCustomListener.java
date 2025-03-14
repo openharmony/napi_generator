@@ -15,6 +15,9 @@
 
 package antlr.typescript;
 
+import antlr.ParseBaseListener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import grammar.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -33,7 +36,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @version 1.0
  * @since 2025-02-28
  */
-public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
+public class TypeScriptCustomListener extends TypeScriptParserBaseListener implements ParseBaseListener {
     private final int currentLanguage = Constants.PARSE_TS_LANGUAGE;
     private String currentToken = "";
     private GBaseObject currentObject;
@@ -45,6 +48,9 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     private List<UnionObj> unionObjList;
     private List<InterfaceObject> interfaceObjList;
 
+    /**
+     * 构造函数
+     */
     public TypeScriptCustomListener() {
         enumObjList = new CopyOnWriteArrayList<>();
         classObjList = new CopyOnWriteArrayList<>();
@@ -55,12 +61,243 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         interfaceObjList = new CopyOnWriteArrayList<>();
     }
 
+    /**
+     * 获取语言
+     *
+     * @return 语言
+     */
+    public int getCurrentLanguage() {
+        return currentLanguage;
+    }
+
+    /**
+     * 设置当前关键字
+     *
+     * @param currentToken 关键字
+     */
+    public void setCurrentToken(String currentToken) {
+        this.currentToken = currentToken;
+    }
+
+    /**
+     * 获取关键字
+     *
+     * @return 关键字
+     */
+    public String getCurrentToken() {
+        return currentToken;
+    }
+
+    /**
+     * 获取当前解析对象
+     *
+     * @return 解析对象
+     */
+    public GBaseObject getCurrentObject() {
+        return currentObject;
+    }
+
+    /**
+     * 设置当前解析对象
+     *
+     * @param currentObject 当前解析对象
+     */
+    public void setCurrentObject(GBaseObject currentObject) {
+        this.currentObject = currentObject;
+    }
+
+    /**
+     * 获取类对象
+     *
+     * @return 对象
+     */
+    public List<ClassObj> getClassObjList() {
+        return classObjList;
+    }
+
+    /**
+     * 设置类对象
+     *
+     * @param classObjList 类对象
+     */
+    public void setClassObjList(List<ClassObj> classObjList) {
+        this.classObjList = classObjList;
+    }
+
+    /**
+     * 获取枚举对象
+     *
+     * @return 枚举对象
+     */
+    public List<EnumObj> getEnumObjList() {
+        return enumObjList;
+    }
+
+    /**
+     * 枚举
+     *
+     * @param enumObjList 枚举
+     */
+    public void setEnumObjList(List<EnumObj> enumObjList) {
+        this.enumObjList = enumObjList;
+    }
+
+    /**
+     * 获取方法
+     *
+     * @return 方法
+     */
+    public List<FuncObj> getFuncObjList() {
+        return funcObjList;
+    }
+
+    /**
+     * 设置方法
+     *
+     * @param funcObjList 方法
+     */
+    public void setFuncObjList(List<FuncObj> funcObjList) {
+        this.funcObjList = funcObjList;
+    }
+
+    /**
+     * 获取结构体
+     *
+     * @return 结构体
+     */
+    public List<StructObj> getStructObjList() {
+        return structObjList;
+    }
+
+    /**
+     * 设置结构体
+     *
+     * @param structObjList 结构体
+     */
+    public void setStructObjList(List<StructObj> structObjList) {
+        this.structObjList = structObjList;
+    }
+
+    /**
+     * 获取接口
+     *
+     * @return 接口
+     */
+    public List<InterfaceObject> getInterfaceObjList() {
+        return interfaceObjList;
+    }
+
+    /**
+     * 设置接口
+     *
+     * @param interfaceObjList 接口
+     */
+    public void setInterfaceObjList(List<InterfaceObject> interfaceObjList) {
+        this.interfaceObjList = interfaceObjList;
+    }
+
+    /**
+     * 获取type
+     *
+     * @return type
+     */
+    public List<TypeObj> getTypeObjList() {
+        return typeObjList;
+    }
+
+    /**
+     * 设置 type
+     *
+     * @param typeObjList type
+     */
+    public void setTypeObjList(List<TypeObj> typeObjList) {
+        this.typeObjList = typeObjList;
+    }
+
+    /**
+     * 获取联合
+     *
+     * @return 联合
+     */
+    public List<UnionObj> getUnionObjList() {
+        return unionObjList;
+    }
+
+    /**
+     * 设置联合
+     *
+     * @param unionObjList 联合数组
+     */
+    public void setUnionObjList(List<UnionObj> unionObjList) {
+        this.unionObjList = unionObjList;
+    }
+
+    @Override
+    public void enterFunctionType(TypeScriptParser.FunctionTypeContext ctx) {
+        super.enterFunctionType(ctx);
+        System.out.println("enterFunctionType: " + ctx.getText());
+    }
+
+    @Override
+    public void enterFunctionBody(TypeScriptParser.FunctionBodyContext ctx) {
+        super.enterFunctionBody(ctx);
+        System.out.println("enterFunctionBody: " + ctx.getText());
+    }
+
+    @Override
+    public void enterUnion(TypeScriptParser.UnionContext ctx) {
+        super.enterUnion(ctx);
+        System.out.println("enterUnion: " + ctx.getText());
+    }
+
+    @Override
+    public void enterTypeAnnotation(TypeScriptParser.TypeAnnotationContext ctx) {
+        super.enterTypeAnnotation(ctx);
+        System.out.println("enterTypeAnnotation: " + ctx.getText());
+    }
+
+    @Override
+    public void enterPropertyName(TypeScriptParser.PropertyNameContext ctx) {
+        super.enterPropertyName(ctx);
+        System.out.println("enterPropertyName: " + ctx.getText());
+    }
+
+    @Override
+    public void enterAnonymousFunction(TypeScriptParser.AnonymousFunctionContext ctx) {
+        super.enterAnonymousFunction(ctx);
+        System.out.println("enterAnonymousFunction: " + ctx.getText());
+    }
+
+    @Override
+    public void enterIdentifier(TypeScriptParser.IdentifierContext ctx) {
+        super.enterIdentifier(ctx);
+        System.out.println("enterIdentifier: " + ctx.getText());
+    }
+
+    @Override
+    public void enterIdentifierExpression(TypeScriptParser.IdentifierExpressionContext ctx) {
+        super.enterIdentifierExpression(ctx);
+        System.out.println("enterIdentifierExpression: " + ctx.getText());
+    }
+
+    @Override
+    public void enterIdentifierName(TypeScriptParser.IdentifierNameContext ctx) {
+        super.enterIdentifierName(ctx);
+        System.out.println("enterIdentifierName: " + ctx.getText());
+    }
+
+    @Override
+    public void enterVariableStatement(TypeScriptParser.VariableStatementContext ctx) {
+        super.enterVariableStatement(ctx);
+        System.out.println("enterVariableStatement: " + ctx.getText());
+    }
+
     @Override
     public void enterVariableDeclaration(TypeScriptParser.VariableDeclarationContext ctx) {
         String varName = ctx.identifierOrKeyWord().getText();
         System.out.println("变量名: " + varName);
         System.out.println("var : " + ctx.getText());
-        String typeAnno = ctx.typeAnnotation() != null ? ctx.typeAnnotation().getText() : "";
+        String typeAnno = ctx.typeAnnotation() != null ? ctx.typeAnnotation().stop.getText() : "";
         System.out.println("type : " + typeAnno);
         if (varName.equals(TsToken.TS_TOKEN_TYPE)) {
             TypeObj to = new TypeObj();
@@ -85,6 +322,12 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
             this.typeObjList.add(to);
             System.out.println("type: " + to.toJsonString());
 
+        } else if (varName.equals(TsToken.TS_TOKEN_ABSTRACT)) {
+            int cnt = ctx.children.size();
+            for (int i = 0; i < cnt; i++) {
+                ParseTree item = ctx.children.get(i);
+                System.out.println("item: " + item.getText());
+            }
         }
 
 
@@ -94,7 +337,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     @Override
     public void enterExpressionStatement(TypeScriptParser.ExpressionStatementContext ctx) {
         super.enterExpressionStatement(ctx);
-
+        System.out.println("enterExpressionStatement: " + ctx.getText());
     }
 
     @Override
@@ -111,7 +354,6 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         if (tokenStr.equals(TsToken.TS_TOKEN_ENUM)) {
             EnumObj eo = new EnumObj();
             eo.setName(ctx.getParent().getStart().getText());
-            this.enumObjList.add(eo);
             this.currentToken = TsToken.TS_TOKEN_ENUM;
             this.currentObject = eo;
             this.enumObjList.add(eo);
@@ -168,7 +410,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
 
         String callSign = ctx.callSignature().getText();
         System.out.println("Function callSign: " + callSign);
-        String typeAnno = ctx.callSignature().typeAnnotation().getText();
+        String typeAnno = ctx.callSignature().typeAnnotation().stop.getText();
         System.out.println("Function typeAnno: " + typeAnno);
         FuncObj fo = new FuncObj();
         fo.setName(funcName);
@@ -178,7 +420,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
             for (TypeScriptParser.ParameterContext pc : plc) {
                 System.out.println("Function param: " + pc.getText());
                 TypeScriptParser. RequiredParameterContext rpc = pc.requiredParameter();
-                String type = rpc.typeAnnotation().getText();
+                String type = rpc.typeAnnotation().stop.getText();
                 String name = rpc.identifierOrPattern().getText();
                 System.out.println("Function type: " + type + " name: " + name);
                 fo.addParam(name, type);
@@ -212,6 +454,49 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     }
 
     @Override
+    public void enterCallSignature(TypeScriptParser.CallSignatureContext ctx) {
+        super.enterCallSignature(ctx);
+        System.out.println("enterCallSignature: " + ctx.getText());
+    }
+
+    @Override
+    public void enterClassElementName(TypeScriptParser.ClassElementNameContext ctx) {
+        super.enterClassElementName(ctx);
+        System.out.println("enterClassElementName: " + ctx.getText());
+    }
+
+    @Override
+    public void enterClassOrInterfaceTypeList(TypeScriptParser.ClassOrInterfaceTypeListContext ctx) {
+        super.enterClassOrInterfaceTypeList(ctx);
+        System.out.println("enterClassOrInterfaceTypeList: " + ctx.getText());
+    }
+
+    @Override
+    public void enterDeclaration(TypeScriptParser.DeclarationContext ctx) {
+        super.enterDeclaration(ctx);
+        System.out.println("enterDeclaration: " + ctx.getText());
+    }
+
+    @Override
+    public void enterClassExpression(TypeScriptParser.ClassExpressionContext ctx) {
+        super.enterClassExpression(ctx);
+        System.out.println("enterClassExpression: " + ctx.getText());
+
+        int childCnt = ctx.getChildCount();
+        if (childCnt > 2) {
+
+            ParseTree pt = ctx.getChild(1);
+            if (pt instanceof TypeScriptParser.IdentifierContext ic) {
+                ClassObj obj = new ClassObj();
+                obj.setName(ic.start.getText());
+                this.currentToken = TsToken.TS_TOKEN_CLASS;
+                this.currentObject = obj;
+                this.classObjList.add(obj);
+            }
+        }
+    }
+
+    @Override
     public void enterClassElement(TypeScriptParser.ClassElementContext ctx) {
         super.enterClassElement(ctx);
         System.out.println("Class element: " + ctx.getText());
@@ -235,6 +520,8 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         String callSign = ctx.callSignature().getText();
         System.out.println("Method callSign: " + callSign);
         String typeAnno = ctx.callSignature().typeAnnotation().getText();
+        TypeScriptParser.TypeAnnotationContext tac = ctx.callSignature().typeAnnotation();
+        typeAnno = tac.stop.getText();
         System.out.println("Method typeAnno: " + typeAnno);
         TypeScriptParser.ParameterListContext plc = ctx.callSignature().parameterList();
 
@@ -268,12 +555,36 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     }
 
     @Override
+    public void enterFunctionExpression(TypeScriptParser.FunctionExpressionContext ctx) {
+        super.enterFunctionExpression(ctx);
+        System.out.println("enterFunctionExpression: " + ctx.getText());
+    }
+
+    @Override
+    public void enterGeneratorsFunctionExpression(TypeScriptParser.GeneratorsFunctionExpressionContext ctx) {
+        super.enterGeneratorsFunctionExpression(ctx);
+        System.out.println("enterGeneratorsFunctionExpression: " + ctx.getText());
+    }
+
+    @Override
+    public void enterArrowFunctionDeclaration(TypeScriptParser.ArrowFunctionDeclarationContext ctx) {
+        super.enterArrowFunctionDeclaration(ctx);
+        System.out.println("enterArrowFunctionDeclaration: " + ctx.getText());
+    }
+
+    @Override
+    public void enterArgument(TypeScriptParser.ArgumentContext ctx) {
+        super.enterArgument(ctx);
+        System.out.println("enterArgument: " + ctx.getText());
+    }
+
+    @Override
     public void enterPropertyDeclarationExpression(TypeScriptParser.PropertyDeclarationExpressionContext ctx) {
         super.enterPropertyDeclarationExpression(ctx);
 
         System.out.println("Property property: " + ctx.getText());
         String propertyName = ctx.propertyName().getText();
-        String typeName = ctx.typeAnnotation().getText();
+        String typeName = ctx.typeAnnotation().stop.getText();
         System.out.println("Property name: " + propertyName + " type: " + typeName);
         if ((this.currentObject != null) && (this.currentObject instanceof ClassObj)) {
             ClassObj co = (ClassObj) this.currentObject;
@@ -361,6 +672,42 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     }
 
     @Override
+    public void enterArguments(TypeScriptParser.ArgumentsContext ctx) {
+        super.enterArguments(ctx);
+        System.out.println("enterArguments: " + ctx.toString());
+    }
+
+    @Override
+    public void enterClassExtendsClause(TypeScriptParser.ClassExtendsClauseContext ctx) {
+        super.enterClassExtendsClause(ctx);
+        System.out.println("enterClassExtendsClause: " + ctx.getText());
+    }
+
+    @Override
+    public void enterClassHeritage(TypeScriptParser.ClassHeritageContext ctx) {
+        super.enterClassHeritage(ctx);
+        System.out.println("enterClassHeritage: " + ctx.getText());
+    }
+
+    @Override
+    public void enterEnumMember(TypeScriptParser.EnumMemberContext ctx) {
+        super.enterEnumMember(ctx);
+        System.out.println("enterEnumMember: " + ctx.getText());
+    }
+
+    @Override
+    public void enterMethodSignature(TypeScriptParser.MethodSignatureContext ctx) {
+        super.enterMethodSignature(ctx);
+        System.out.println("enterMethodSignature: " + ctx.getText());
+    }
+
+    @Override
+    public void enterAbstractMemberDeclaration(TypeScriptParser.AbstractMemberDeclarationContext ctx) {
+        super.enterAbstractMemberDeclaration(ctx);
+        System.out.println("find abstract member Declare: " + ctx.getText());
+    }
+
+    @Override
     public void enterInterfaceDeclaration(TypeScriptParser.InterfaceDeclarationContext ctx) {
         super.enterInterfaceDeclaration(ctx);
         System.out.println("find interface Declare: " + ctx.getText());
@@ -376,16 +723,16 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
         for (TypeScriptParser.TypeMemberContext tmc : tmcList) {
             String callSign = tmc.callSignature().getText();
             System.out.println("interface callSign: " + callSign);
-            String typeAnno = tmc.callSignature().typeAnnotation().getText();
+            String typeAnno = tmc.callSignature().typeAnnotation().stop.getText();
             System.out.println("interface typeAnno: " + typeAnno);
             FuncObj fo = new FuncObj();
             fo.setName("");
-            fo.setType(typeAnno);
+            fo.setRetValue(typeAnno);
             List<TypeScriptParser.ParameterContext> plc = tmc.callSignature().parameterList().parameter();
             for (TypeScriptParser.ParameterContext pc : plc) {
                 System.out.println("interface param: " + pc.getText());
                 TypeScriptParser. RequiredParameterContext rpc = pc.requiredParameter();
-                String ta = rpc.typeAnnotation().getText();
+                String ta = rpc.typeAnnotation().stop.getText();
                 String iop = rpc.identifierOrPattern().getText();
                 System.out.println("interface type: " + ta + " name: " + iop);
                 fo.addParam(iop, ta);
@@ -402,7 +749,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     @Override
     public void enterAbstractDeclaration(TypeScriptParser.AbstractDeclarationContext ctx) {
         super.enterAbstractDeclaration(ctx);
-        System.out.println("find abstract Declare: " + ctx.toString());
+        System.out.println("find abstract Declare: " + ctx.getText());
     }
 
     @Override
@@ -433,5 +780,11 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener {
     public void exitProgram(TypeScriptParser.ProgramContext ctx) {
         super.exitProgram(ctx);
         System.out.println("exit Program: " + ctx.toString());
+    }
+
+    @Override
+    public String dump2JsonStr() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(this);
     }
 }

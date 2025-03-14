@@ -15,14 +15,13 @@
 
 package parse;
 
+import antlr.ParseBaseListener;
 import antlr.typescript.TypeScriptCustomListener;
 import antlr.typescript.TypeScriptErrorListener;
 import antlr.typescript.TypeScriptLexer;
 import antlr.typescript.TypeScriptParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import event.CustomEvent;
 import event.CustomEventListener;
 import grammar.*;
@@ -82,10 +81,12 @@ public class ParseTs extends ParseBase implements CustomEventListener {
     /**
      * 处理内容
      *
-     * @param fileCStream 文件内容
+     * @param fileCStream
+     *         文件内容
+     * @return 解析结果
      */
     @Override
-    public void parseCStream(CharStream fileCStream) {
+    public ParseObj parseCStream(CharStream fileCStream) {
         System.out.println("ts parse char stream start");
         this.fcStream = fileCStream;
 
@@ -103,17 +104,20 @@ public class ParseTs extends ParseBase implements CustomEventListener {
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.walk(tsc, tree);
 
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-            String json = gson.toJson(tsc);
+            String json = tsc.dump2JsonStr();
             System.out.println("ts parse result: " + json);
 
+            ParseObj po = genParseResult(tsc);
+
             System.out.println("ts parse char stream finish");
+            return po;
         } catch (RecognitionException e) {
             System.out.println("parse cstream e.printStackTrace(): " + e.getMessage());
+        } finally {
+            sendEvent(Constants.COMPLETE_STATUS, Constants.TS_COMPLETE_MSG, 50);
         }
 
-        sendEvent(Constants.COMPLETE_STATUS, Constants.TS_COMPLETE_MSG, 50);
+        return null;
     }
 
     /**
@@ -129,6 +133,31 @@ public class ParseTs extends ParseBase implements CustomEventListener {
             return;
         }
 
+    }
+
+    /**
+     * 生成解析结果
+     *
+     * @param pbl 解析监听
+     * @return 解析结果
+     */
+    @Override
+    protected ParseObj genParseResult(ParseBaseListener pbl) {
+        if (!(pbl instanceof TypeScriptCustomListener tcl)) {
+            return null;
+        }
+
+        ParseObj po = new ParseObj();
+
+        po.setInterfaceList(tcl.getInterfaceObjList());
+        po.setEnumList(tcl.getEnumObjList());
+        po.setClassList(tcl.getClassObjList());
+        po.setFuncList(tcl.getFuncObjList());
+        po.setStructList(tcl.getStructObjList());
+        po.setTypeList(tcl.getTypeObjList());
+        po.setUnionList(tcl.getUnionObjList());
+
+        return po;
     }
 
     /**

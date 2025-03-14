@@ -15,6 +15,7 @@
 
 package parse;
 
+import antlr.ParseBaseListener;
 import antlr.cpp.CPP14CustomListener;
 import antlr.cpp.CPP14ErrorListener;
 import antlr.cpp.CPP14Lexer;
@@ -89,10 +90,12 @@ public class ParseC extends ParseBase {
     /**
      * 处理内容
      *
-     * @param fileCStream 文件内容
+     * @param fileCStream
+     *         文件内容
+     * @return 解析结果
      */
     @Override
-    public void parseCStream(CharStream fileCStream) {
+    public ParseObj parseCStream(CharStream fileCStream) {
         System.out.println("c/cpp parse char stream");
         this.fcStream = fileCStream;
         sendEvent(Constants.START_STATUS, Constants.C_CPP_START_MSG, 50);
@@ -115,33 +118,81 @@ public class ParseC extends ParseBase {
         }
 
         sendEvent(Constants.COMPLETE_STATUS, Constants.C_CPP_COMPLETE_MSG, 50);
+        return null;
     }
 
+    /**
+     * 生成解析结果
+     *
+     * @param pbl 解析监听
+     * @return 解析结果
+     */
+    @Override
+    protected ParseObj genParseResult(ParseBaseListener pbl) {
+        return null;
+    }
+
+    /**
+     * 解析枚举
+     *
+     * @param pi2 解析结果
+     * @return 枚举
+     */
     @Override
     protected EnumObj[] parseEnum(ParseTaskInfo pi2) {
         return super.parseEnum(pi2);
     }
 
+    /**
+     * 解析枚举
+     *
+     * @param pi2 解析结果
+     * @return 联合
+     */
     @Override
     protected UnionObj[] parseUnion(ParseTaskInfo pi2) {
         return super.parseUnion(pi2);
     }
 
+    /**
+     * 解析枚举
+     *
+     * @param pi2 解析结果
+     * @return 结构体
+     */
     @Override
     protected StructObj[] parseStruct(ParseTaskInfo pi2) {
         return super.parseStruct(pi2);
     }
 
+    /**
+     * 解析枚举
+     *
+     * @param pi2 解析结果
+     * @return 类
+     */
     @Override
     protected ClassObj[] parseClass(ParseTaskInfo pi2) {
         return super.parseClass(pi2);
     }
 
+    /**
+     * 解析枚举
+     *
+     * @param pi2 解析结果
+     * @return 方法
+     */
     @Override
     protected FuncObj[] parseFunc(ParseTaskInfo pi2) {
         return super.parseFunc(pi2);
     }
 
+    /**
+     * 解析枚举
+     *
+     * @param pi2 解析结果
+     * @return 类型
+     */
     @Override
     protected TypeObj[] parseType(ParseTaskInfo pi2) {
         return super.parseType(pi2);
