@@ -492,6 +492,9 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         System.out.println("enterCallSignature: " + ctx.getText());
         if (this.currentToken.equals(TsToken.TS_TOKEN_CLASS) &&
                 (this.currentObject instanceof ClassObj co)) {
+            if (findFunction(co)) {
+                return;
+            }
             String typeName = ctx.typeAnnotation().stop.getText();
             FuncObj fo = new FuncObj();
             fo.setRetValue(typeName);
@@ -565,8 +568,9 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         }
 
         TypeScriptParser.PropertyMemberDeclarationContext pmdc = ctx.propertyMemberDeclaration();
-        if (pmdc != null) {
+        if (pmdc instanceof TypeScriptParser.GetterSetterDeclarationExpressionContext gsdec) {
             System.out.println("Class property: " + pmdc.getText());
+            setFuncAccessor(gsdec);
         }
     }
 
@@ -578,23 +582,39 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         System.out.println("Method name: " + propertyName);
         String callSign = ctx.callSignature().getText();
         System.out.println("Method callSign: " + callSign);
-        String typeAnno = ctx.callSignature().typeAnnotation().getText();
+        String typeAnno = "";
         TypeScriptParser.TypeAnnotationContext tac = ctx.callSignature().typeAnnotation();
-        typeAnno = tac.stop.getText();
+        if (tac != null && tac.type_() != null) {
+            typeAnno = tac.type_().getText();
+        }
+
         System.out.println("Method typeAnno: " + typeAnno);
         TypeScriptParser.ParameterListContext plc = ctx.callSignature().parameterList();
 
         FuncObj fo = new FuncObj();
-        fo.setType(typeAnno);
+        fo.setRetValue(typeAnno);
         fo.setName(propertyName);
+        if (ctx.propertyMemberBase() != null && ctx.propertyMemberBase().Async() != null) {
+            fo.setType(ctx.propertyMemberBase().Async().getText());
+        }
+
+        if (ctx.propertyMemberBase() != null && ctx.propertyMemberBase().accessibilityModifier() != null) {
+            fo.setAccessor(ctx.propertyMemberBase().accessibilityModifier().getText());
+        }
 
         if (plc != null) {
             List<TypeScriptParser.ParameterContext> plcList = ctx.callSignature().parameterList().parameter();
             for (TypeScriptParser.ParameterContext pc : plcList) {
                 System.out.println("Method param: " + pc.getText());
                 TypeScriptParser. RequiredParameterContext rpc = pc.requiredParameter();
-                String ta = rpc.typeAnnotation().getText();
-                String iop = rpc.identifierOrPattern().getText();
+                String ta = "";
+                if (rpc.typeAnnotation() != null && rpc.typeAnnotation().type_() != null) {
+                    ta = rpc.typeAnnotation().type_().getText();
+                }
+                String iop = "";
+                if (rpc.identifierOrPattern() != null) {
+                    iop = rpc.identifierOrPattern().getText();
+                }
                 System.out.println("Method type: " + ta + " name: " + iop);
                 fo.addParam(iop, ta);
             }
@@ -644,10 +664,10 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         System.out.println("Property property: " + ctx.getText());
         String propertyName = ctx.propertyName().getText();
         String typeName = ctx.typeAnnotation().stop.getText();
+        String qualifier = ctx.start.getText();
         System.out.println("Property name: " + propertyName + " type: " + typeName);
-        if ((this.currentObject != null) && (this.currentObject instanceof ClassObj)) {
-            ClassObj co = (ClassObj) this.currentObject;
-            co.addParam(propertyName, typeName);
+        if (this.currentObject instanceof ClassObj co) {
+            co.addParam(propertyName, typeName, qualifier);
 
             int lastIndex = this.classObjList.size() - 1;
             this.classObjList.set(lastIndex, co);
@@ -746,6 +766,9 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     public void enterClassHeritage(TypeScriptParser.ClassHeritageContext ctx) {
         super.enterClassHeritage(ctx);
         System.out.println("enterClassHeritage: " + ctx.getText());
+        if (this.currentObject instanceof ClassObj co) {
+            co.addHeritage(ctx.start.getText(), ctx.stop.getText());
+        }
     }
 
     @Override
@@ -792,6 +815,10 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         io.setName(interfaceName);
 
         for (TypeScriptParser.TypeMemberContext tmc : tmcList) {
+            if (tmc.callSignature() == null) {
+                io.addParam(tmc.start.getText(), tmc.stop.getText());
+                continue;
+            }
             String callSign = tmc.callSignature().getText();
             System.out.println("interface callSign: " + callSign);
             String typeAnno = tmc.callSignature().typeAnnotation().stop.getText();
@@ -857,5 +884,66 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     public String dump2JsonStr() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(this);
+    }
+
+    private boolean findFunction(ClassObj coItem) {
+        List<FuncObj> fol = coItem.getFuncList();
+        for (FuncObj foItem : fol) {
+            String fName = foItem.getName();
+            if (fName.equals(this.currentIdentifier)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void setFuncAccessor(TypeScriptParser.GetterSetterDeclarationExpressionContext gsdec) {
+        if (gsdec.getAccessor() != null && gsdec.getAccessor().getter() != null) {
+            String type = gsdec.getAccessor().getter().identifier().getText();
+            String name = gsdec.getAccessor().getter().classElementName().getText();
+            FuncObj fo = new FuncObj();
+            fo.setName(name);
+            fo.setType(type);
+            if (this.currentObject instanceof ClassObj co) {
+                co.addFunc(fo);
+            }
+        } else if (gsdec.setAccessor() != null) {
+            String type = gsdec.setAccessor().setter().identifier().getText();
+            String name = gsdec.setAccessor().setter().classElementName().getText();
+            gsdec.setAccessor().setter();
+            FuncObj fo = new FuncObj();
+            fo.setName(name);
+            fo.setType(type);
+            TypeScriptParser.FormalParameterListContext fplc = gsdec.setAccessor().formalParameterList();
+
+            if (fplc == null || !(this.currentObject instanceof ClassObj co)) {
+                return;
+            }
+
+            int cnt = fplc.getChildCount();
+            for (int i = 0; i < cnt; i++) {
+                ParseTree pt = fplc.getChild(i);
+                if (!(pt instanceof TypeScriptParser.FormalParameterArgContext fpac)) {
+                    continue;
+                }
+
+                String fType = "";
+                if (fpac.typeAnnotation() != null && fpac.typeAnnotation().stop != null) {
+                    fType = fpac.typeAnnotation().stop.getText();
+                }
+
+                String fName = "";
+                if (fpac.assignable() != null) {
+                    fName = fpac.assignable().getText();
+                }
+
+                if (type.isEmpty()) {
+                    fType = fName;
+                }
+                fo.addParam(fName, fType);
+            }
+
+            co.addFunc(fo);
+        }
     }
 }

@@ -34,6 +34,8 @@ public class ClassObj extends GBaseObject {
     private String alias;
     private List<ParamObj> paramList;
     private List<FuncObj> funcList;
+    private List<String> heritageTypeList;
+    private List<String> heritageNameList;
 
     /**
      * 构造函数
@@ -43,6 +45,8 @@ public class ClassObj extends GBaseObject {
 
         this.paramList = new CopyOnWriteArrayList<>();
         this.funcList = new CopyOnWriteArrayList<>();
+        this.heritageTypeList = new CopyOnWriteArrayList<>();
+        this.heritageNameList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -125,6 +129,42 @@ public class ClassObj extends GBaseObject {
     }
 
     /**
+     * 继承名称
+     *
+     * @param heritageNameList 继承名称
+     */
+    public void setHeritageNameList(List<String> heritageNameList) {
+        this.heritageNameList = heritageNameList;
+    }
+
+    /**
+     * 继承名字
+     *
+     * @return 继承名称
+     */
+    public List<String> getHeritageNameList() {
+        return heritageNameList;
+    }
+
+    /**
+     * 设置继承类型
+     *
+     * @param heritageTypeList 继承类型
+     */
+    public void setHeritageTypeList(List<String> heritageTypeList) {
+        this.heritageTypeList = heritageTypeList;
+    }
+
+    /**
+     * 获取继承类型
+     *
+     * @return 继承类型
+     */
+    public List<String> getHeritageTypeList() {
+        return heritageTypeList;
+    }
+
+    /**
      * 读取方法
      *
      * @return 方法列表
@@ -156,6 +196,21 @@ public class ClassObj extends GBaseObject {
     }
 
     /**
+     * 增加param
+     *
+     * @param name 名字
+     * @param type 类型
+     * @param qualifier 声明
+     */
+    public void addParam(String name, String type, String qualifier) {
+        ParamObj po = new ParamObj();
+        po.setType(type);
+        po.setName(name);
+        po.setQualifier(qualifier);
+        this.paramList.add(po);
+    }
+
+    /**
      * 增加方法
      *
      * @param fo 方法
@@ -176,5 +231,16 @@ public class ClassObj extends GBaseObject {
         fo.setName(name);
         fo.setRetValue(ret);
         fo.setParamList(poList);
+    }
+
+    /**
+     * 增加heritage 的类型和名称
+     *
+     * @param type 类型如 extend，implement
+     * @param name 名称
+     */
+    public void addHeritage(String type, String name) {
+        heritageNameList.add(name);
+        heritageTypeList.add(type);
     }
 }

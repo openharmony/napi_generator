@@ -74,6 +74,104 @@ class ParseTsTest {
             "    abstract nameAbs: string;\n" +
             "}";
 
+    String testClass5 = "class Employee extends Person {\n" +
+            "    empCode: number;\n" +
+            "\n" +
+            "    constructor(name: string, code: number) {\n" +
+            "        super(name); // must call super()\n" +
+            "        this.empCode = code;\n" +
+            "    }\n" +
+            "\n" +
+            "    find(name:string): Person {\n" +
+            "        // execute AJAX request to find an employee from a db\n" +
+            "        return new Employee(name, 1);\n" +
+            "    }\n" +
+            "}";
+
+    String testInterface1 = "export interface CallbackTest {\n" +
+            "\t(msg: string): void;\n" +
+            "};";
+
+    String testInterface2 = "interface IPerson {\n" +
+            "    name: string;\n" +
+            "}";
+
+    String testClass6 = "interface IPerson {\n" +
+            "    name: string;\n" +
+            "}\n" +
+            "\n" +
+            "class Person implements IPerson {\n" +
+            "    public publicString: string;\n" +
+            "    private privateString: string;\n" +
+            "    protected protectedString: string;\n" +
+            "    readonly readonlyString: string;\n" +
+            "    name: string;\n" +
+            "\n" +
+            "    constructor(name: string) {\n" +
+            "        this.name = name;\n" +
+            "    }\n" +
+            "}";
+
+    String testClass7 = "interface IPerson {\n" +
+            "    name: string;\n" +
+            "}\n" +
+            "\n" +
+            "class Person implements IPerson {\n" +
+            "    public publicString: string;\n" +
+            "    private privateString: string;\n" +
+            "    protected protectedString: string;\n" +
+            "    readonly readonlyString: string;\n" +
+            "    name: string;\n" +
+            "\n" +
+            "    constructor(name: string) {\n" +
+            "        this.name = name;\n" +
+            "    }\n" +
+            "}\n" +
+            "\n" +
+            "class Employee extends Person {\n" +
+            "    empCode: number;\n" +
+            "    currentUser: any;\n" +
+            "    static pi: number = 3.14;\n" +
+            "\n" +
+            "    constructor(empcode: number, name:string) {\n" +
+            "        super(name);\n" +
+            "        this.empCode = empcode;\n" +
+            "    }\n" +
+            "\n" +
+            "    get user() {\n" +
+            "        return this.currentUser;\n" +
+            "    }\n" +
+            "\n" +
+            "    set user(usr: any) {\n" +
+            "        this.currentUser = usr;\n" +
+            "    }\n" +
+            "\n" +
+            "    displayName():void {\n" +
+            "        console.log(\"Name = \" + this.name +  \", Employee Code = \" + this.empCode);\n" +
+            "    }\n" +
+            "}";
+
+    String testClass8 = "export class myClass {\n" +
+            "    public async foo(    ): Promise<any> {\n" +
+            "    }\n" +
+            "}";
+
+    String testClass9 = "export class NotController {\n" +
+            "    @Post()\n" +
+            "    notControllerPost(body) {\n" +
+            "        return 'This is not an api method';\n" +
+            "    }\n" +
+            "}";
+
+    String testClass10 = "export default class CustomerModel {\n" +
+            "    constructor(data) {\n" +
+            "        this.cardAccountId = data.cardAccountId;\n" +
+            "        this.accountHolderId = data.accountHolderId;\n" +
+            "        this.firstName = data.firstName;\n" +
+            "        this.lastName = data.lastName;\n" +
+            "    }\n" +
+            "}";
+
     @Test
     void parseFile() {
     }
@@ -300,6 +398,252 @@ class ParseTsTest {
     }
 
     @Test
+    void parseCStreamClass_5() {
+        String testClass = testClass5;
+        CodePointCharStream cStream = CharStreams.fromString(testClass);
+        ParseBase parser = ParseFactory.getParser("ts");
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(1, col.size());
+        ClassObj coItem = col.get(0);
+        assertEquals("Employee", coItem.getName());
+        List<String> hnl = coItem.getHeritageNameList();
+        assertEquals(1, hnl.size());
+        assertEquals("Person", hnl.get(0));
+        List<String> htl = coItem.getHeritageTypeList();
+        assertEquals(1, htl.size());
+        assertEquals("extends", htl.get(0));
+        List<ParamObj> pol = coItem.getParamList();
+        assertEquals(1, pol.size());
+        ParamObj poItem = pol.get(0);
+        assertEquals("empCode", poItem.getName());
+        assertEquals("number", poItem.getType());
+        List<FuncObj> fol = coItem.getFuncList();
+        assertEquals(2, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("constructor", foItem.getName());
+        assertEquals("void", foItem.getRetValue());
+        pol = foItem.getParamList();
+        assertEquals(2, pol.size());
+        poItem = pol.get(0);
+        assertEquals("name", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("code", poItem.getName());
+        assertEquals("number", poItem.getType());
+        foItem = fol.get(1);
+        assertEquals("find", foItem.getName());
+        assertEquals("Person", foItem.getRetValue());
+        pol = foItem.getParamList();
+        assertEquals(1, pol.size());
+        poItem = pol.get(0);
+        assertEquals("name", poItem.getName());
+        assertEquals("string", poItem.getType());
+    }
+
+    @Test
+    void parseCStreamClass_6() {
+        String testClass = testClass6;
+        CodePointCharStream cStream = CharStreams.fromString(testClass);
+        ParseBase parser = ParseFactory.getParser("ts");
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(1, col.size());
+        ClassObj coItem = col.get(0);
+        assertEquals("Person", coItem.getName());
+        List<String> htl = coItem.getHeritageTypeList();
+        List<String> hnl = coItem.getHeritageNameList();
+        assertEquals("implements", htl.get(0));
+        assertEquals("IPerson", hnl.get(0));
+        List<ParamObj> pol = coItem.getParamList();
+        assertEquals(5, pol.size());
+        ParamObj poItem = pol.get(0);
+        assertEquals("string", poItem.getType());
+        assertEquals("publicString", poItem.getName());
+        assertEquals("public", poItem.getQualifier());
+        poItem = pol.get(1);
+        assertEquals("string", poItem.getType());
+        assertEquals("privateString", poItem.getName());
+        assertEquals("private", poItem.getQualifier());
+        poItem = pol.get(2);
+        assertEquals("string", poItem.getType());
+        assertEquals("protectedString", poItem.getName());
+        assertEquals("protected", poItem.getQualifier());
+        poItem = pol.get(3);
+        assertEquals("string", poItem.getType());
+        assertEquals("readonlyString", poItem.getName());
+        assertEquals("readonly", poItem.getQualifier());
+        poItem = pol.get(4);
+        assertEquals("string", poItem.getType());
+        assertEquals("name", poItem.getName());
+        List<FuncObj> fol = coItem.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("constructor", foItem.getName());
+        assertEquals("void", foItem.getRetValue());
+        pol = foItem.getParamList();
+        assertEquals(1, pol.size());
+        poItem = pol.get(0);
+        assertEquals("name", poItem.getName());
+        assertEquals("string", poItem.getType());
+    }
+
+    @Test
+    void parseCStreamClass_7_1() {
+        String testClass = testClass7;
+        CodePointCharStream cStream = CharStreams.fromString(testClass);
+        ParseBase parser = ParseFactory.getParser("ts");
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(2, col.size());
+        ClassObj coItem = col.get(0);
+        assertEquals("Person", coItem.getName());
+        List<String> hnl = coItem.getHeritageNameList();
+        assertEquals(1, hnl.size());
+        assertEquals("IPerson", hnl.get(0));
+        List<String> htl = coItem.getHeritageTypeList();
+        assertEquals(1, htl.size());
+        assertEquals("implements", htl.get(0));
+        List<ParamObj> pol = coItem.getParamList();
+        assertEquals(5, pol.size());
+        ParamObj poItem = pol.get(0);
+        assertEquals("public", poItem.getQualifier());
+        assertEquals("publicString", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("private", poItem.getQualifier());
+        assertEquals("privateString", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(2);
+        assertEquals("protected", poItem.getQualifier());
+        assertEquals("protectedString", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(3);
+        assertEquals("readonly", poItem.getQualifier());
+        assertEquals("readonlyString", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(4);
+        assertEquals("name", poItem.getName());
+        assertEquals("string", poItem.getType());
+        List<FuncObj> fol = coItem.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("constructor", foItem.getName());
+        assertEquals("void", foItem.getRetValue());
+    }
+
+    @Test
+    void parseCStreamClass_7_2() {
+        CodePointCharStream cStream = CharStreams.fromString(testClass7);
+        ParseBase parser = ParseFactory.getParser("ts");
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(2, col.size());
+
+        ClassObj coItem = col.get(1);
+        assertEquals("Employee", coItem.getName());
+        List<String> hnl = coItem.getHeritageNameList();
+        assertEquals(1, hnl.size());
+        assertEquals("Person", hnl.get(0));
+        List<String> htl = coItem.getHeritageTypeList();
+        assertEquals(1, htl.size());
+        assertEquals("extends", htl.get(0));
+        List<ParamObj> pol = coItem.getParamList();
+        assertEquals(3, pol.size());
+        ParamObj poItem = pol.get(0);
+        assertEquals("empCode", poItem.getName());
+        assertEquals("number", poItem.getType());
+        assertEquals("currentUser", pol.get(1).getName());
+        assertEquals("any", pol.get(1).getType());
+        assertEquals("pi", pol.get(2).getName());
+        assertEquals("number", pol.get(2).getType());
+        assertEquals("static", pol.get(2).getQualifier());
+        List<FuncObj> fol = coItem.getFuncList();
+        assertEquals(4, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("constructor", foItem.getName());
+        pol = foItem.getParamList();
+        assertEquals(2, pol.size());
+        poItem = pol.get(0);
+        assertEquals("empcode", poItem.getName());
+        assertEquals("number", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("name", poItem.getName());
+        assertEquals("string", poItem.getType());
+        foItem = fol.get(1);
+        assertEquals("user", foItem.getName());
+        assertEquals("get", foItem.getType());
+        pol = foItem.getParamList();
+        assertEquals(0, pol.size());
+        foItem = fol.get(2);
+        assertEquals("user", foItem.getName());
+        assertEquals("set", foItem.getType());
+        pol = foItem.getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("usr", pol.get(0).getName());
+        assertEquals("any", pol.get(0).getType());
+        assertEquals("displayName", fol.get(3).getName());
+        assertEquals(0, fol.get(3).getParamList().size());
+    }
+
+    @Test
+    void parseCStreamClass_8() {
+        String testClass = testClass8;
+        CodePointCharStream cStream = CharStreams.fromString(testClass);
+        ParseBase parser = ParseFactory.getParser("ts");
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(1, col.size());
+        ClassObj coItem = col.get(0);
+        assertEquals("myClass", coItem.getName());
+        List<FuncObj> fol = coItem.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("foo", foItem.getName());
+        assertEquals("Promise<any>", foItem.getRetValue());
+        assertEquals("async", foItem.getType());
+        assertEquals("public", foItem.getAccessor());
+    }
+
+    @Test
+    void parseCStreamClass_9() {
+        String testClass = testClass9;
+        CodePointCharStream cStream = CharStreams.fromString(testClass);
+        ParseBase parser = ParseFactory.getParser("ts");
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(1, col.size());
+        ClassObj coItem = col.get(0);
+        assertEquals("NotController", coItem.getName());
+        List<FuncObj> fol = coItem.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("notControllerPost", foItem.getName());
+        List<ParamObj> pol = foItem.getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("body", pol.get(0).getName());
+    }
+
+    @Test
+    void parseCStreamClass_10() {
+        String testClass = testClass10;
+        CodePointCharStream cStream = CharStreams.fromString(testClass);
+        ParseBase parser = ParseFactory.getParser("ts");
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(1, col.size());
+        ClassObj coItem = col.get(0);
+        assertEquals("CustomerModel", coItem.getName());
+        List<FuncObj> fol = coItem.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("constructor", foItem.getName());
+        List<ParamObj> pol = foItem.getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("data", pol.get(0).getName());
+    }
+
+    @Test
     void parseCStreamFunc() {
         ParseBase parser = ParseFactory.getParser("ts");
         String testFunc = "export function transform2D(\n" +
@@ -329,9 +673,7 @@ class ParseTsTest {
     @Test
     void parseCStreamInterface() {
         ParseBase parser = ParseFactory.getParser("ts");
-        String testInterface = "export interface CallbackTest {\n" +
-                "\t(msg: string): void;\n" +
-                "};";
+        String testInterface = testInterface1;
         CodePointCharStream cStream = CharStreams.fromString(testInterface);
         ParseObj po = parser.parseCStream(cStream);
         List<InterfaceObject> iol = po.getInterfaceList();

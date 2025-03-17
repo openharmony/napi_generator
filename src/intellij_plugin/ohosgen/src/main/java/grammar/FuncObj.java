@@ -30,6 +30,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2025-02-28
  */
 public class FuncObj extends GBaseObject {
+    private String accessor;
     private String type;
     private String name;
     private String retValue;
@@ -77,6 +78,24 @@ public class FuncObj extends GBaseObject {
      */
     public String getType() {
         return type;
+    }
+
+    /**
+     * 设置访问属性
+     *
+     * @param accessor 访问属性
+     */
+    public void setAccessor(String accessor) {
+        this.accessor = accessor;
+    }
+
+    /**
+     * 获取访问属性
+     *
+     * @return 访问属性
+     */
+    public String getAccessor() {
+        return accessor;
     }
 
     /**
