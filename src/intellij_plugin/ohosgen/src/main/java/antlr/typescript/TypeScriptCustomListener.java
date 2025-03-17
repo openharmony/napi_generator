@@ -19,7 +19,6 @@ import antlr.ParseBaseListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import grammar.*;
-import it.unimi.dsi.fastutil.bytes.F;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.ParserRuleContext;
 import utils.Constants;
@@ -569,65 +568,9 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         }
 
         TypeScriptParser.PropertyMemberDeclarationContext pmdc = ctx.propertyMemberDeclaration();
-        if (pmdc != null) {
+        if (pmdc instanceof TypeScriptParser.GetterSetterDeclarationExpressionContext gsdec) {
             System.out.println("Class property: " + pmdc.getText());
-            if (pmdc instanceof TypeScriptParser.GetterSetterDeclarationExpressionContext gsdec) {
-                if (gsdec.getAccessor() != null && gsdec.getAccessor().getter() != null) {
-                    String type = gsdec.getAccessor().getter().identifier().getText();
-                    String name = gsdec.getAccessor().getter().classElementName().getText();
-                    FuncObj fo = new FuncObj();
-                    fo.setName(name);
-                    fo.setType(type);
-                    if (this.currentObject instanceof ClassObj co) {
-                        co.addFunc(fo);
-                    }
-                } else if (gsdec.setAccessor() != null) {
-                    String type = gsdec.setAccessor().setter().identifier().getText();
-                    String name = gsdec.setAccessor().setter().classElementName().getText();
-                    gsdec.setAccessor().setter();
-                    FuncObj fo = new FuncObj();
-                    fo.setName(name);
-                    fo.setType(type);
-                    TypeScriptParser.FormalParameterListContext fplc = gsdec.setAccessor().formalParameterList();
-
-                    if (fplc == null || !(this.currentObject instanceof ClassObj co)) {
-                        return;
-                    }
-
-                    int cnt = fplc.getChildCount();
-                    for (int i = 0; i < cnt; i++) {
-                        ParseTree pt = fplc.getChild(i);
-                        if (!(pt instanceof TypeScriptParser.FormalParameterArgContext fpac)) {
-                            continue;
-                        }
-
-                        String fType = "";
-                        if (fpac.typeAnnotation() != null && fpac.typeAnnotation().stop != null) {
-                            fType = fpac.typeAnnotation().stop.getText();
-                        }
-
-                        String fName = "";
-                        if (fpac.assignable() != null) {
-                            fName = fpac.assignable().getText();
-                        }
-
-                        if (type.isEmpty()) {
-                            fType = fName;
-                        }
-                        fo.addParam(fName, fType);
-                    }
-
-                    co.addFunc(fo);
-                }
-
-            }
-//            TypeScriptParser.TypeAnnotationContext tac =
-//                ((TypeScriptParser.PropertyDeclarationExpressionContext) pmdc).typeAnnotation();
-//            String type = tac.stop.getText();
-//            TypeScriptParser.PropertyNameContext pnc =
-//                ((TypeScriptParser.PropertyDeclarationExpressionContext) pmdc).propertyName();
-//            String name = pnc.getText();
-
+            setFuncAccessor(gsdec);
         }
     }
 
@@ -656,7 +599,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         }
 
         if (ctx.propertyMemberBase() != null && ctx.propertyMemberBase().accessibilityModifier() != null) {
-            fo.setAccessibility(ctx.propertyMemberBase().accessibilityModifier().getText());
+            fo.setAccessor(ctx.propertyMemberBase().accessibilityModifier().getText());
         }
 
         if (plc != null) {
@@ -952,5 +895,55 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
             }
         }
         return false;
+    }
+
+    private void setFuncAccessor(TypeScriptParser.GetterSetterDeclarationExpressionContext gsdec) {
+        if (gsdec.getAccessor() != null && gsdec.getAccessor().getter() != null) {
+            String type = gsdec.getAccessor().getter().identifier().getText();
+            String name = gsdec.getAccessor().getter().classElementName().getText();
+            FuncObj fo = new FuncObj();
+            fo.setName(name);
+            fo.setType(type);
+            if (this.currentObject instanceof ClassObj co) {
+                co.addFunc(fo);
+            }
+        } else if (gsdec.setAccessor() != null) {
+            String type = gsdec.setAccessor().setter().identifier().getText();
+            String name = gsdec.setAccessor().setter().classElementName().getText();
+            gsdec.setAccessor().setter();
+            FuncObj fo = new FuncObj();
+            fo.setName(name);
+            fo.setType(type);
+            TypeScriptParser.FormalParameterListContext fplc = gsdec.setAccessor().formalParameterList();
+
+            if (fplc == null || !(this.currentObject instanceof ClassObj co)) {
+                return;
+            }
+
+            int cnt = fplc.getChildCount();
+            for (int i = 0; i < cnt; i++) {
+                ParseTree pt = fplc.getChild(i);
+                if (!(pt instanceof TypeScriptParser.FormalParameterArgContext fpac)) {
+                    continue;
+                }
+
+                String fType = "";
+                if (fpac.typeAnnotation() != null && fpac.typeAnnotation().stop != null) {
+                    fType = fpac.typeAnnotation().stop.getText();
+                }
+
+                String fName = "";
+                if (fpac.assignable() != null) {
+                    fName = fpac.assignable().getText();
+                }
+
+                if (type.isEmpty()) {
+                    fType = fName;
+                }
+                fo.addParam(fName, fType);
+            }
+
+            co.addFunc(fo);
+        }
     }
 }
