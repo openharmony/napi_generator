@@ -30,7 +30,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2025-02-28
  */
 public class FuncObj extends GBaseObject {
-    private String accessibility;
+    private String accessor;
     private String type;
     private String name;
     private String retValue;
@@ -83,10 +83,10 @@ public class FuncObj extends GBaseObject {
     /**
      * 设置访问属性
      *
-     * @param accessibility 访问属性
+     * @param accessor 访问属性
      */
-    public void setAccessibility(String accessibility) {
-        this.accessibility = accessibility;
+    public void setAccessor(String accessor) {
+        this.accessor = accessor;
     }
 
     /**
@@ -94,8 +94,8 @@ public class FuncObj extends GBaseObject {
      *
      * @return 访问属性
      */
-    public String getAccessibility() {
-        return accessibility;
+    public String getAccessor() {
+        return accessor;
     }
 
     /**

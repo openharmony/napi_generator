@@ -88,7 +88,11 @@ class ParseTsTest {
             "    }\n" +
             "}";
 
-    String testInterface = "interface IPerson {\n" +
+    String testInterface1 = "export interface CallbackTest {\n" +
+            "\t(msg: string): void;\n" +
+            "};";
+
+    String testInterface2 = "interface IPerson {\n" +
             "    name: string;\n" +
             "}";
 
@@ -485,7 +489,7 @@ class ParseTsTest {
     }
 
     @Test
-    void parseCStreamClass_7() {
+    void parseCStreamClass_7_1() {
         String testClass = testClass7;
         CodePointCharStream cStream = CharStreams.fromString(testClass);
         ParseBase parser = ParseFactory.getParser("ts");
@@ -526,29 +530,37 @@ class ParseTsTest {
         FuncObj foItem = fol.get(0);
         assertEquals("constructor", foItem.getName());
         assertEquals("void", foItem.getRetValue());
-        coItem = col.get(1);
+    }
+
+    @Test
+    void parseCStreamClass_7_2() {
+        CodePointCharStream cStream = CharStreams.fromString(testClass7);
+        ParseBase parser = ParseFactory.getParser("ts");
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(2, col.size());
+
+        ClassObj coItem = col.get(1);
         assertEquals("Employee", coItem.getName());
-        hnl = coItem.getHeritageNameList();
+        List<String> hnl = coItem.getHeritageNameList();
         assertEquals(1, hnl.size());
         assertEquals("Person", hnl.get(0));
-        htl = coItem.getHeritageTypeList();
+        List<String> htl = coItem.getHeritageTypeList();
         assertEquals(1, htl.size());
         assertEquals("extends", htl.get(0));
-        pol = coItem.getParamList();
+        List<ParamObj> pol = coItem.getParamList();
         assertEquals(3, pol.size());
-        poItem = pol.get(0);
+        ParamObj poItem = pol.get(0);
         assertEquals("empCode", poItem.getName());
         assertEquals("number", poItem.getType());
-        poItem = pol.get(1);
-        assertEquals("currentUser", poItem.getName());
-        assertEquals("any", poItem.getType());
-        poItem = pol.get(2);
-        assertEquals("pi", poItem.getName());
-        assertEquals("number", poItem.getType());
-        assertEquals("static", poItem.getQualifier());
-        fol = coItem.getFuncList();
+        assertEquals("currentUser", pol.get(1).getName());
+        assertEquals("any", pol.get(1).getType());
+        assertEquals("pi", pol.get(2).getName());
+        assertEquals("number", pol.get(2).getType());
+        assertEquals("static", pol.get(2).getQualifier());
+        List<FuncObj> fol = coItem.getFuncList();
         assertEquals(4, fol.size());
-        foItem = fol.get(0);
+        FuncObj foItem = fol.get(0);
         assertEquals("constructor", foItem.getName());
         pol = foItem.getParamList();
         assertEquals(2, pol.size());
@@ -568,13 +580,10 @@ class ParseTsTest {
         assertEquals("set", foItem.getType());
         pol = foItem.getParamList();
         assertEquals(1, pol.size());
-        poItem = pol.get(0);
-        assertEquals("usr", poItem.getName());
-        assertEquals("any", poItem.getType());
-        foItem = fol.get(3);
-        assertEquals("displayName", foItem.getName());
-        pol = foItem.getParamList();
-        assertEquals(0, pol.size());
+        assertEquals("usr", pol.get(0).getName());
+        assertEquals("any", pol.get(0).getType());
+        assertEquals("displayName", fol.get(3).getName());
+        assertEquals(0, fol.get(3).getParamList().size());
     }
 
     @Test
@@ -593,7 +602,7 @@ class ParseTsTest {
         assertEquals("foo", foItem.getName());
         assertEquals("Promise<any>", foItem.getRetValue());
         assertEquals("async", foItem.getType());
-        assertEquals("public", foItem.getAccessibility());
+        assertEquals("public", foItem.getAccessor());
     }
 
     @Test
@@ -664,9 +673,7 @@ class ParseTsTest {
     @Test
     void parseCStreamInterface() {
         ParseBase parser = ParseFactory.getParser("ts");
-        String testInterface = "export interface CallbackTest {\n" +
-                "\t(msg: string): void;\n" +
-                "};";
+        String testInterface = testInterface1;
         CodePointCharStream cStream = CharStreams.fromString(testInterface);
         ParseObj po = parser.parseCStream(cStream);
         List<InterfaceObject> iol = po.getInterfaceList();
