@@ -240,7 +240,8 @@ class ParseTsTest {
             "    else return firstName;\n" +
             "  }";
 
-    String testFunc16 = "// Try passing a nested type to the function. This tests we don't match \">>\" and \">>>\" operators\n" +
+    String testFunc16 = "// Try passing a nested type to the function. " +
+            " This tests we don't match \">>\" and \">>>\" operators\n" +
             "// when closing nested types.\n" +
             "function nestedType(map: Map<string, Map<string, Set<string>>>) {\n" +
             "    // Check that we can parse these too.\n" +
@@ -956,15 +957,8 @@ class ParseTsTest {
         ParseObj po = parser.parseCStream(cStream);
         List<FuncObj> fol = po.getFuncList();
         assertEquals(1, fol.size());
-//        assertEquals("Greet", fol.get(0).getName());
-//        assertEquals("number", fol.get(0).getRetValue());
         List<ParamObj> pol = fol.get(0).getParamList();
         assertEquals(0, pol.size());
-//        assertEquals("x", pol.get(0).getName());
-//        assertEquals("number", pol.get(0).getType());
-//        assertEquals("y", pol.get(1).getName());
-//        assertEquals("number", pol.get(1).getType());
-
     }
 
     @Test
