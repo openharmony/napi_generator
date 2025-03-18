@@ -27,6 +27,21 @@ package utils;
 
 public class TsToken {
     /**
+     * optional token
+     */
+    public static final String TS_TOKEN_OPTIONAL = "optional";
+
+    /**
+     * required token
+     */
+    public static final String TS_TOKEN_REQUIRED = "required";
+
+    /**
+     * rest parameter token
+     */
+    public static final String TS_TOKEN_REST_PARAM = "rest_param";
+
+    /**
      * enum token
      */
     public static final String TS_TOKEN_ENUM = "enum";

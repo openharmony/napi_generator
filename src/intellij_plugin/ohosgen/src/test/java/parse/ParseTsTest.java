@@ -19,6 +19,7 @@ import grammar.*;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.junit.jupiter.api.Test;
+import utils.TsToken;
 
 import java.util.List;
 
@@ -171,6 +172,89 @@ class ParseTsTest {
             "        this.lastName = data.lastName;\n" +
             "    }\n" +
             "}";
+
+    String testFunc2 = "namespace StringUtility\n" +
+            "{\n" +
+            "    function ToCapital(str: string): string {\n" +
+            "        return str.toUpperCase();\n" +
+            "    }\n" +
+            "\n" +
+            "    function Nemw(str: string, length: number = 0): string {\n" +
+            "        return str.toUpperCase();\n" +
+            "    }\n" +
+            "    export function Eported(from: string, length: number = 0): string {\n" +
+            "        return from.toUpperCase();\n" +
+            "    }\n" +
+            "\n" +
+            "    export function Eported2(str: string, length: number = 0): string {\n" +
+            "        return str.toUpperCase();\n" +
+            "    }\n" +
+            "}";
+
+    String testFunc3 = "function Sum(x: number, y: number) : void {\n" +
+            "    console.log('processNumKeyPairs: key = ' + key + ', value = ' + value)\n" +
+            "    return x + y;\n" +
+            "}";
+
+    String testFunc4 = "let greeting = function() {\n" +
+            "    console.log(\"Hello TypeScript!\");\n" +
+            "};";
+
+    String testFunc5 = "let SumAnon = function(x: number, y: number) : number\n" +
+            "{\n" +
+            "    return x + y;\n" +
+            "}";
+
+    String testFunc6 = "function Greet(greeting: string, name?: string ) : string {\n" +
+            "    return greeting + ' ' + name + '!';\n" +
+            "}";
+
+    String testFunc7 = "function terminateJob(jobId: string) {\n" +
+            "    return this.http.delete<IOperationResult<any>>();\n" +
+            "}";
+
+    String testFunc8 = "function Greet2(name: string, greeting: string = \"Hello\") : string {\n" +
+            "    return greeting + ' ' + name + '!';\n" +
+            "}";
+
+    String testFunc9 = "Greet(undefined, 'Steve');";
+
+    String testFunc10 = "let sumArrow = (x: number, y: number): number => {\n" +
+            "    return x + y\n" +
+            "}";
+
+    String testFunc11 = "let Print = () => console.log(\"Hello TypeScript\");";
+
+    String testFunc12 = "let sumShortArrow = (x: number, y: number) => x + y;";
+
+    String testFunc13 = "function Greet(greeting: string, ...names: string[]) {\n" +
+            "    return greeting + \" \" + names.join(\", \") + \"!\";\n" +
+            "}";
+
+    String testFunc14 = "function Test(value: TestClass | TestClass2): value is TestClass {\n" +
+            "    return (<TestClass>value).someFunction !== undefined;\n" +
+            "}";
+
+    String testFunc15 = "function buildName(firstName: string, lastName?: string) {\n" +
+            "    if (lastName) return firstName + \" \" + lastName;\n" +
+            "    else return firstName;\n" +
+            "  }";
+
+    String testFunc16 = "// Try passing a nested type to the function. This tests we don't match \">>\" and \">>>\" operators\n" +
+            "// when closing nested types.\n" +
+            "function nestedType(map: Map<string, Map<string, Set<string>>>) {\n" +
+            "    // Check that we can parse these too.\n" +
+            "    let a = 12;\n" +
+            "    let b = a >> 5;\n" +
+            "    let c = b >>> 5;\n" +
+            "}";
+
+    String testFunc17 = "// Function parameter lists can have a trailing comma.\n" +
+            "// See https://github.com/Microsoft/TypeScript/issues/16152\n" +
+            "function TrailingComma(arg1: string, arg2: number,) {}";
+
+    String testFunc18 = "var myFunction = function(arg1: string, arg2: number,) {};";
+
 
     @Test
     void parseFile() {
@@ -644,7 +728,7 @@ class ParseTsTest {
     }
 
     @Test
-    void parseCStreamFunc() {
+    void parseCStreamFunc_1() {
         ParseBase parser = ParseFactory.getParser("ts");
         String testFunc = "export function transform2D(\n" +
                 "\tdirection: number,\n" +
@@ -668,6 +752,345 @@ class ParseTsTest {
         poItem = pol.get(2);
         assertEquals("calcCB", poItem.getName());
         assertEquals("Calculate", poItem.getType());
+    }
+
+    @Test
+    void parseCStreamFunc_2() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc2;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(4, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("ToCapital", fo.getName());
+        assertEquals("string", fo.getRetValue());
+        List<ParamObj> pol = fo.getParamList();
+        assertEquals(1, pol.size());
+        ParamObj poItem = pol.get(0);
+        assertEquals("str", poItem.getName());
+        assertEquals("string", poItem.getType());
+
+        fo = fol.get(1);
+        assertEquals("Nemw", fo.getName());
+        assertEquals("string", fo.getRetValue());
+        pol = fo.getParamList();
+        assertEquals(2, pol.size());
+        poItem = pol.get(0);
+        assertEquals("str", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("length", poItem.getName());
+        assertEquals("number", poItem.getType());
+
+        fo = fol.get(2);
+        assertEquals("Eported", fo.getName());
+        assertEquals("string", fo.getRetValue());
+        pol = fo.getParamList();
+        assertEquals(2, pol.size());
+        poItem = pol.get(0);
+        assertEquals("from", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("length", poItem.getName());
+        assertEquals("number", poItem.getType());
+
+        fo = fol.get(3);
+        assertEquals("Eported2", fo.getName());
+        assertEquals("string", fo.getRetValue());
+        pol = fo.getParamList();
+        assertEquals(2, pol.size());
+        poItem = pol.get(0);
+        assertEquals("str", poItem.getName());
+        assertEquals("string", poItem.getType());
+        poItem = pol.get(1);
+        assertEquals("length", poItem.getName());
+        assertEquals("number", poItem.getType());
+    }
+
+    @Test
+    void parseCStreamFunc_3() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc3;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("Sum", fol.get(0).getName());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("x", pol.get(0).getName());
+        assertEquals("number", pol.get(0).getType());
+        assertEquals("y", pol.get(1).getName());
+        assertEquals("number", pol.get(1).getType());
+    }
+
+    @Test
+    void parseCStreamFunc_4() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc4;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("greeting", fol.get(0).getAlias());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(0, pol.size());
+    }
+
+    @Test
+    void parseCStreamFunc_5() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc5;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("SumAnon", fol.get(0).getAlias());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("x", pol.get(0).getName());
+        assertEquals("number", pol.get(0).getType());
+        assertEquals("y", pol.get(1).getName());
+        assertEquals("number", pol.get(1).getType());
+    }
+
+    @Test
+    void parseCStreamFunc_6() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc6;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("Greet", fol.get(0).getName());
+        assertEquals("string", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("greeting", pol.get(0).getName());
+        assertEquals("string", pol.get(0).getType());
+        assertEquals("name", pol.get(1).getName());
+        assertEquals("string", pol.get(1).getType());
+        assertEquals(TsToken.TS_TOKEN_OPTIONAL, pol.get(1).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_7() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc7;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("terminateJob", fol.get(0).getName());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("jobId", pol.get(0).getName());
+        assertEquals("string", pol.get(0).getType());
+
+    }
+
+    @Test
+    void parseCStreamFunc_8() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc8;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("Greet2", fol.get(0).getName());
+        assertEquals("string", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("name", pol.get(0).getName());
+        assertEquals("string", pol.get(0).getType());
+        assertEquals("greeting", pol.get(1).getName());
+        assertEquals("string", pol.get(1).getType());
+    }
+
+    @Test
+    void parseCStreamFunc_9() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc9;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("Greet", fol.get(0).getAlias());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("undefined", pol.get(0).getName());
+        assertEquals("", pol.get(0).getType());
+        assertEquals("'Steve'", pol.get(1).getName());
+        assertEquals("", pol.get(1).getType());
+    }
+
+    @Test
+    void parseCStreamFunc_10() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc10;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("sumArrow", fol.get(0).getAlias());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("x", pol.get(0).getName());
+        assertEquals("number", pol.get(0).getType());
+        assertEquals("y", pol.get(1).getName());
+        assertEquals("number", pol.get(1).getType());
+    }
+
+    @Test
+    void parseCStreamFunc_11() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc11;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+//        assertEquals("Greet", fol.get(0).getName());
+//        assertEquals("number", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(0, pol.size());
+//        assertEquals("x", pol.get(0).getName());
+//        assertEquals("number", pol.get(0).getType());
+//        assertEquals("y", pol.get(1).getName());
+//        assertEquals("number", pol.get(1).getType());
+
+    }
+
+    @Test
+    void parseCStreamFunc_12() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc12;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("sumShortArrow", fol.get(0).getAlias());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("x", pol.get(0).getName());
+        assertEquals("number", pol.get(0).getType());
+        assertEquals("y", pol.get(1).getName());
+        assertEquals("number", pol.get(1).getType());
+    }
+
+    @Test
+    void parseCStreamFunc_13() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc13;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("Greet", fol.get(0).getName());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("greeting", pol.get(0).getName());
+        assertEquals("string", pol.get(0).getType());
+        assertEquals("names", pol.get(1).getName());
+        assertEquals("string[]", pol.get(1).getType());
+        assertEquals(TsToken.TS_TOKEN_REST_PARAM, pol.get(1).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_14() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc14;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("Test", fol.get(0).getName());
+        assertEquals("boolean", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("value", pol.get(0).getName());
+        assertEquals("TestClass|TestClass2", pol.get(0).getType());
+
+    }
+
+    @Test
+    void parseCStreamFunc_15() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc15;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("buildName", fol.get(0).getName());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("firstName", pol.get(0).getName());
+        assertEquals("string", pol.get(0).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+        assertEquals("lastName", pol.get(1).getName());
+        assertEquals("string", pol.get(1).getType());
+        assertEquals(TsToken.TS_TOKEN_OPTIONAL, pol.get(1).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_16() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc16;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("nestedType", fol.get(0).getName());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("map", pol.get(0).getName());
+        assertEquals("Map<string,Map<string,Set<string>>>", pol.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunc_17() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc17;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("TrailingComma", fol.get(0).getName());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("arg1", pol.get(0).getName());
+        assertEquals("string", pol.get(0).getType());
+        assertEquals("arg2", pol.get(1).getName());
+        assertEquals("number", pol.get(1).getType());
+    }
+
+    @Test
+    void parseCStreamFunc_18() {
+        ParseBase parser = ParseFactory.getParser("ts");
+        String testFunc = testFunc18;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("myFunction", fol.get(0).getAlias());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(2, pol.size());
+        assertEquals("arg1", pol.get(0).getName());
+        assertEquals("string", pol.get(0).getType());
+        assertEquals("arg2", pol.get(1).getName());
+        assertEquals("number", pol.get(1).getType());
     }
 
     @Test

@@ -15,6 +15,8 @@
 
 package grammar;
 
+import utils.TsToken;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description param grammar
@@ -25,16 +27,42 @@ package grammar;
  * @since 2025-02-28
  */
 public class ParamObj extends GBaseObject {
+    /**
+     * 参数约束：constant，abstract
+     */
     private String qualifier;
+
+    /**
+     * 参数修饰：可选（optional)，必选(required)
+     */
+    private String decorator;
+
+    /**
+     * 参数类型
+     */
     private String type;
+
+    /**
+     * 参数名称
+     */
     private String name;
+
+    /**
+     * 参数数组数量
+     */
     private int arraySize;
+
+    /**
+     * 参数赋值
+     */
     private int[] asList;
 
     /**
      * 构造函数
      */
-    public ParamObj() {}
+    public ParamObj() {
+        this.decorator = TsToken.TS_TOKEN_REQUIRED;
+    }
 
     /**
      * 构造函数
@@ -45,6 +73,7 @@ public class ParamObj extends GBaseObject {
      * @param asl 数组下标数组
      */
     public ParamObj(String tv, String nv, int as, int[] asl) {
+        this();
         this.type = tv;
         this.name = nv;
         this.arraySize = as;
@@ -67,6 +96,24 @@ public class ParamObj extends GBaseObject {
      */
     public void setQualifier(String qualifier) {
         this.qualifier = qualifier;
+    }
+
+    /**
+     * 获取修饰
+     *
+     * @return 修饰
+     */
+    public String getDecorator() {
+        return decorator;
+    }
+
+    /**
+     * 设置 修饰
+     *
+     * @param decorator 修饰
+     */
+    public void setDecorator(String decorator) {
+        this.decorator = decorator;
     }
 
     /**

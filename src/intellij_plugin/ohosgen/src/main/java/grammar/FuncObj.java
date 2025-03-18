@@ -30,10 +30,34 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2025-02-28
  */
 public class FuncObj extends GBaseObject {
+    /**
+     * 访问方式: public, protected, private
+     */
     private String accessor;
+
+    /**
+     * 访问类型：async，get，set
+     */
     private String type;
+
+    /**
+     * 方法名称
+     */
     private String name;
+
+    /**
+     * 方法别名：可以是函数指针
+     */
+    private String alias;
+
+    /**
+     * 方法返回值
+     */
     private String retValue;
+
+    /**
+     * 方法参数
+     */
     private List<ParamObj> paramList;
 
     /**
@@ -41,7 +65,9 @@ public class FuncObj extends GBaseObject {
      */
     public FuncObj() {
         this.token = TsToken.TS_TOKEN_FUNCTION;
-
+        this.accessor = TsToken.TS_TOKEN_PUBLIC;
+        this.type = "";
+        this.retValue = TsToken.TS_TOKEN_VOID;
         this.paramList = new CopyOnWriteArrayList<>();
     }
 
@@ -78,6 +104,24 @@ public class FuncObj extends GBaseObject {
      */
     public String getType() {
         return type;
+    }
+
+    /**
+     * 设置alias
+     *
+     * @param alias 函数别名
+     */
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    /**
+     * 获取alias
+     *
+     * @return 返回函数别名
+     */
+    public String getAlias() {
+        return this.alias;
     }
 
     /**
@@ -171,6 +215,21 @@ public class FuncObj extends GBaseObject {
         ParamObj po = new ParamObj();
         po.setName(name);
         po.setType(type);
+        this.paramList.add(po);
+    }
+
+    /**
+     * 添加参数
+     *
+     * @param name 名字
+     * @param type 类型
+     * @param decorator 修饰
+     */
+    public void addParam(String name, String type, String decorator) {
+        ParamObj po = new ParamObj();
+        po.setName(name);
+        po.setType(type);
+        po.setDecorator(decorator);
         this.paramList.add(po);
     }
 }
