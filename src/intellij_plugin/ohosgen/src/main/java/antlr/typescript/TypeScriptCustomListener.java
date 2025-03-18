@@ -295,6 +295,41 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     }
 
     @Override
+    public void enterFormalParameterList(TypeScriptParser.FormalParameterListContext ctx) {
+        super.enterFormalParameterList(ctx);
+        System.out.println("enterParameterList: " + ctx.getText());
+        if (this.currentObject instanceof FuncObj fo) {
+            if (!fo.getParamList().isEmpty()) {
+                return;
+            }
+            TypeScriptParser.FormalParameterListContext fpl = ctx.formalParameterList();
+            List<TypeScriptParser.FormalParameterArgContext> fpacl = ctx.formalParameterArg();
+            for (TypeScriptParser.FormalParameterArgContext fpac : fpacl) {
+                String name = fpac.assignable().getText();
+                String type = fpac.typeAnnotation().type_().getText();
+                ParamObj po = new ParamObj();
+                po.setName(name);
+                po.setType(type);
+                fo.addParam(po);
+            }
+        }
+    }
+
+    @Override
+    public void enterParameterList(TypeScriptParser.ParameterListContext ctx) {
+        super.enterParameterList(ctx);
+        System.out.println("enterParameterList: " + ctx.getText());
+        if (this.currentObject instanceof FuncObj fo) {
+            List<TypeScriptParser.ParameterContext> pcl = ctx.parameter();
+            int cnt = pcl.size();
+            for (int i = 0; i < cnt; i++) {
+                TypeScriptParser.ParameterContext pcItem = pcl.get(i);
+
+            }
+        }
+    }
+
+    @Override
     public void enterVariableDeclaration(TypeScriptParser.VariableDeclarationContext ctx) {
         String varName = ctx.identifierOrKeyWord().getText();
         System.out.println("变量名: " + varName);
@@ -330,9 +365,50 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                 ParseTree item = ctx.children.get(i);
                 System.out.println("item: " + item.getText());
             }
+        } else if (ctx.singleExpression() != null) {
+            List<TypeScriptParser.SingleExpressionContext> sel = ctx.singleExpression();
+            for (TypeScriptParser.SingleExpressionContext sec : sel) {
+                String varType = sec.start.getText();
+                if (varType.equals(TsToken.TS_TOKEN_FUNCTION)) {
+                    this.currentIdentifier = varName;
+                    FuncObj fo = new FuncObj();
+                    fo.setAlias(varName);
+                    this.currentObject = fo;
+                    this.funcObjList.add(fo);
+                    break;
+                } else if ((sec instanceof TypeScriptParser.FunctionExpressionContext fec) && fec.anonymousFunction() != null) {
+                    TypeScriptParser.AnonymousFunctionContext afc = fec.anonymousFunction();
+                    TypeScriptParser.ArrowFunctionDeclarationContext afdc = afc.arrowFunctionDeclaration();
+                    FuncObj fo = new FuncObj();
+                    fo.setAlias(varName);
+                    this.currentObject = fo;
+                    this.funcObjList.add(fo);
+                    if (afdc.arrowFunctionParameters().formalParameterList() != null) {
+                        List<TypeScriptParser.FormalParameterArgContext> fpacl =
+                                afdc.arrowFunctionParameters().formalParameterList().formalParameterArg();
+
+                        for (TypeScriptParser.FormalParameterArgContext fpac : fpacl) {
+                            String name = fpac.assignable().getText();
+                            String type = fpac.typeAnnotation().type_().getText();
+                            fo.addParam(name, type);
+                            System.out.println("addparam: " + fo.toJsonString());
+                        }
+                    }
+
+                } else if (sec instanceof TypeScriptParser.ParenthesizedExpressionContext pec) {
+                    FuncObj fo = new FuncObj();
+                    fo.setAlias(varName);
+                    this.currentObject = fo;
+                    this.funcObjList.add(fo);
+                    List<TypeScriptParser.SingleExpressionContext> secl = pec.expressionSequence().singleExpression();
+
+                    for (TypeScriptParser.SingleExpressionContext secItem : secl) {
+                        String name = secItem.getText();
+                        fo.addParam(name, "");
+                    }
+                }
+            }
         }
-
-
         System.out.println("------------------------------");
     }
 
@@ -443,20 +519,51 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
 
         String callSign = ctx.callSignature().getText();
         System.out.println("Function callSign: " + callSign);
-        String typeAnno = ctx.callSignature().typeAnnotation().stop.getText();
+        String typeAnno = TsToken.TS_TOKEN_VOID;
+        if (ctx.callSignature().typeAnnotation() != null) {
+            TypeScriptParser.Type_Context tc = ctx.callSignature().typeAnnotation().type_();
+            typeAnno = tc.getText();
+            int typeCnt = tc.unionOrIntersectionOrPrimaryType().getChildCount();
+            for (int j = 0; j < typeCnt; j++) {
+                int rotCnt = tc.unionOrIntersectionOrPrimaryType().getChild(j).getChildCount();
+                for (int k = 0; k < rotCnt; k++) {
+                    String typeStr = tc.unionOrIntersectionOrPrimaryType().getChild(j).getChild(k).getText();
+                    if (typeStr.equals(TsToken.TS_TOKEN_IS)) {
+                        typeAnno = TsToken.TS_TOKEN_BOOLEAN;
+                        break;
+                    }
+                }
+            }
+
+        }
         System.out.println("Function typeAnno: " + typeAnno);
         FuncObj fo = new FuncObj();
         fo.setName(funcName);
         fo.setRetValue(typeAnno);
         if (ctx.callSignature().parameterList() != null) {
-            List<TypeScriptParser.ParameterContext> plc = ctx.callSignature().parameterList().parameter();
-            for (TypeScriptParser.ParameterContext pc : plc) {
+            TypeScriptParser.ParameterListContext plc = ctx.callSignature().parameterList();
+            List<TypeScriptParser.ParameterContext> plcl = plc.parameter();
+            for (TypeScriptParser.ParameterContext pc : plcl) {
                 System.out.println("Function param: " + pc.getText());
-                TypeScriptParser. RequiredParameterContext rpc = pc.requiredParameter();
-                String type = rpc.typeAnnotation().stop.getText();
-                String name = rpc.identifierOrPattern().getText();
-                System.out.println("Function type: " + type + " name: " + name);
-                fo.addParam(name, type);
+                TypeScriptParser.OptionalParameterContext opc = pc.optionalParameter();
+                if (opc != null) {
+                    String type = opc.typeAnnotation().type_().getText();
+                    String name = opc.identifierOrPattern().getText();
+                    System.out.println("OptionalParameter type: " + type + " name: " + name);
+                    fo.addParam(name, type, TsToken.TS_TOKEN_OPTIONAL);
+                }
+                TypeScriptParser.RequiredParameterContext rpc = pc.requiredParameter();
+                if (rpc != null) {
+                    String type = rpc.typeAnnotation().type_().getText();
+                    String name = rpc.identifierOrPattern().getText();
+                    System.out.println("RequiredParameter type: " + type + " name: " + name);
+                    fo.addParam(name, type, TsToken.TS_TOKEN_REQUIRED);
+                }
+            }
+            if (plc.restParameter() != null) {
+                String name = plc.restParameter().singleExpression().getText();
+                String type = plc.restParameter().typeAnnotation().type_().getText();
+                fo.addParam(name, type, TsToken.TS_TOKEN_REST_PARAM);
             }
         }
         System.out.println("--------------------" + fo.toJsonString());
