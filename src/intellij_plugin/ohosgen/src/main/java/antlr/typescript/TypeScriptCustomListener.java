@@ -410,43 +410,8 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     @Override
     public void enterConstructorDeclaration(TypeScriptParser.ConstructorDeclarationContext ctx) {
         // 提取构造函数参数列表
-//        String res = ctx.formalParameterList().getText();
-//        System.out.println("Construct: " + res);
-//        TypeScriptParser.FormalParameterListContext fplc = ctx.formalParameterList();
-//        if (fplc == null || !(this.currentObject instanceof ClassObj co)) {
-//            return;
-//        }
-//
-//        int cnt = fplc.getChildCount();
-//        FuncObj fo = new FuncObj();
-//        fo.setName("constructor");
-//        fo.setRetValue("void");
-//        co.addFunc(fo);
-//        for (int i = 0; i < cnt; i++) {
-//            ParseTree pt = fplc.getChild(i);
-//            if ((pt instanceof TypeScriptParser.FormalParameterArgContext fpac)) {
-//                String type = "";
-//                if (fpac.typeAnnotation() != null && fpac.typeAnnotation().stop != null) {
-//                    type = fpac.typeAnnotation().stop.getText();
-//                }
-//
-//                String name = "";
-//                if (fpac.assignable() != null) {
-//                    name = fpac.assignable().getText();
-//                }
-//
-//                if (type.isEmpty()) {
-//                    type = name;
-//                }
-//                fo.addParam(name, type);
-//            }
-//            if ((pt instanceof  TypeScriptParser.LastFormalParameterArgContext lfpac)) {
-//                String type = lfpac.typeAnnotation() != null ? lfpac.typeAnnotation().getText() : TsToken.TS_TOKEN_ANY;
-//                String name = lfpac.identifier().getText();
-//                String de = lfpac.Ellipsis() != null ? TsToken.TS_TOKEN_REST_PARAM : "";
-//                fo.addParam(name, type, de);
-//            }
-//        }
+        String res = ctx.formalParameterList().getText();
+        System.out.println("Construct: " + res);
 
     }
 
@@ -475,7 +440,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         if (ctx.callSignature().typeParameters() != null) {
             TypeScriptParser.TypeParametersContext tpc = ctx.callSignature().typeParameters();
             List<TypeScriptParser.TypeParameterContext> tpcl = tpc.typeParameterList().typeParameter();
-            for (TypeScriptParser.TypeParameterContext tpcItem: tpcl) {
+            for (TypeScriptParser.TypeParameterContext tpcItem : tpcl) {
                 fo.addTemplate(tpcItem.identifier().getText());
             }
 
@@ -516,7 +481,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
             if (tgc != null) {
                 TypeScriptParser.TypeArgumentListContext talc = tgc.typeArgumentList();
                 List<TypeScriptParser.TypeArgumentContext> tacl = talc.typeArgument();
-                for (TypeScriptParser.TypeArgumentContext tac: tacl) {
+                for (TypeScriptParser.TypeArgumentContext tac : tacl) {
                     co.addHeritageTemplate(tac.type_().getText());
                 }
             } else {
@@ -525,7 +490,8 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
 
         } else if (heritage.implementsClause() != null) {
             String type = heritage.implementsClause().Implements().getText();
-            TypeScriptParser.ClassOrInterfaceTypeListContext citl = heritage.implementsClause().classOrInterfaceTypeList();
+            TypeScriptParser.ClassOrInterfaceTypeListContext citl =
+                    heritage.implementsClause().classOrInterfaceTypeList();
             TypeScriptParser.TypeReferenceContext trc = citl.typeReference(0);
             if (trc != null && trc.typeGeneric() != null) {
                 TypeScriptParser.TypeArgumentListContext talc = trc.typeGeneric().typeArgumentList();
@@ -672,17 +638,12 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         super.enterMethodDeclarationExpression(ctx);
         System.out.println("Method property: " + ctx.getText());
         String propertyName = ctx.propertyName().getText();
-        System.out.println("Method name: " + propertyName);
         String callSign = ctx.callSignature().getText();
-        System.out.println("Method callSign: " + callSign);
         String typeAnno = "";
         TypeScriptParser.TypeAnnotationContext tac = ctx.callSignature().typeAnnotation();
         if (tac != null && tac.type_() != null) {
             typeAnno = tac.type_().getText();
         }
-
-        System.out.println("Method typeAnno: " + typeAnno);
-        TypeScriptParser.ParameterListContext plc = ctx.callSignature().parameterList();
 
         FuncObj fo = new FuncObj();
         fo.setRetValue(typeAnno);
@@ -699,10 +660,10 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
             fo.setQualifier(ctx.propertyMemberBase().Static().getText());
         }
 
+        TypeScriptParser.ParameterListContext plc = ctx.callSignature().parameterList();
         if (plc != null) {
             List<TypeScriptParser.ParameterContext> plcList = ctx.callSignature().parameterList().parameter();
             for (TypeScriptParser.ParameterContext pc : plcList) {
-                System.out.println("Method param: " + pc.getText());
                 TypeScriptParser. RequiredParameterContext rpc = pc.requiredParameter();
                 String ta = "";
                 if (rpc.typeAnnotation() != null && rpc.typeAnnotation().type_() != null) {
@@ -1058,7 +1019,8 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
 
             for (TypeScriptParser.FormalParameterArgContext fpac : fpacl) {
                 String name = fpac.assignable().getText();
-                String type = fpac.typeAnnotation() != null ? fpac.typeAnnotation() .type_().getText() : TsToken.TS_TOKEN_VOID;
+                String type = fpac.typeAnnotation() != null ?
+                        fpac.typeAnnotation() .type_().getText() : TsToken.TS_TOKEN_VOID;
                 fo.addParam(name, type);
                 System.out.println("addparam: " + fo.toJsonString());
             }
@@ -1101,21 +1063,25 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                 if (secItem == null) {
                     continue;
                 }
-                String temp = ((TypeScriptParser.GenericTypesContext) secItem).typeArguments().getText();
-                TypeScriptParser.ExpressionSequenceContext esc = ((TypeScriptParser.GenericTypesContext) secItem).expressionSequence();
-                List<TypeScriptParser. SingleExpressionContext> secl = esc.singleExpression();
 
                 FuncObj fo = new FuncObj();
                 fo.setName(varType);
                 fo.setAlias(varName);
-                fo.addTemplate(temp);
 
-                for ( TypeScriptParser.SingleExpressionContext secObj: secl) {
-                    ParamObj po = new ParamObj();
-                    TypeScriptParser.ExpressionSequenceContext testobj = ((TypeScriptParser.ParenthesizedExpressionContext)secObj).expressionSequence();
-//                    po.setName(testobj.singleExpression(0).getText());
-                    po.setStrValue(testobj.singleExpression(0).getText());
-                    fo.addParam(po);
+                if (secItem instanceof TypeScriptParser.GenericTypesContext gtc) {
+                    String temp = gtc.typeArguments().getText();
+                    fo.addTemplate(temp);
+
+                    TypeScriptParser.ExpressionSequenceContext esc = gtc.expressionSequence();
+                    List<TypeScriptParser. SingleExpressionContext> secl = esc.singleExpression();
+
+                    for ( TypeScriptParser.SingleExpressionContext secObj: secl) {
+                        ParamObj po = new ParamObj();
+                        TypeScriptParser.ExpressionSequenceContext testobj =
+                                ((TypeScriptParser.ParenthesizedExpressionContext)secObj).expressionSequence();
+                        po.setStrValue(testobj.singleExpression(0).getText());
+                        fo.addParam(po);
+                    }
                 }
 
                 this.currentObject = fo;
