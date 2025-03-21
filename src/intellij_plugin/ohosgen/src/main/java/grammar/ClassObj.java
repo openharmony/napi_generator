@@ -36,6 +36,8 @@ public class ClassObj extends GBaseObject {
     private List<FuncObj> funcList;
     private List<String> heritageTypeList;
     private List<String> heritageNameList;
+    private List<String> heritageTemplateList;
+    private List<String> tempList;
 
     /**
      * 构造函数
@@ -45,8 +47,10 @@ public class ClassObj extends GBaseObject {
 
         this.paramList = new CopyOnWriteArrayList<>();
         this.funcList = new CopyOnWriteArrayList<>();
+        this.tempList = new CopyOnWriteArrayList<>();
         this.heritageTypeList = new CopyOnWriteArrayList<>();
         this.heritageNameList = new CopyOnWriteArrayList<>();
+        this.heritageTemplateList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -165,12 +169,50 @@ public class ClassObj extends GBaseObject {
     }
 
     /**
+     * 获取继承模板类型
+     *
+     * @return 模板类型
+     */
+    public List<String> getHeritageTemplateList() {
+        return heritageTemplateList;
+    }
+
+    /**
+     * 设置继承模板类型
+     *
+     * @param heritageTemplateList 模板类型
+     */
+    public void setHeritageTemplateList(List<String> heritageTemplateList) {
+        this.heritageTemplateList = heritageTemplateList;
+    }
+
+
+
+    /**
      * 读取方法
      *
      * @return 方法列表
      */
     public List<ParamObj> getParamList() {
         return paramList;
+    }
+
+    /**
+     * 设置模板类型
+     *
+     * @param tempList 模板类型
+     */
+    public void setTempList(List<String> tempList) {
+        this.tempList = tempList;
+    }
+
+    /**
+     * 获取模板列表
+     *
+     * @return 模板列表
+     */
+    public List<String> getTempList() {
+        return tempList;
     }
 
     /**
@@ -211,6 +253,23 @@ public class ClassObj extends GBaseObject {
     }
 
     /**
+     * 增加param
+     *
+     * @param name 名字
+     * @param type 类型
+     * @param qualifier 声明
+     * @param initial 初始化值
+     */
+    public void addParam(String name, String type, String qualifier, String initial) {
+        ParamObj po = new ParamObj();
+        po.setType(type);
+        po.setName(name);
+        po.setQualifier(qualifier);
+        po.setStrValue(initial);
+        this.paramList.add(po);
+    }
+
+    /**
      * 增加方法
      *
      * @param fo 方法
@@ -242,5 +301,23 @@ public class ClassObj extends GBaseObject {
     public void addHeritage(String type, String name) {
         heritageNameList.add(name);
         heritageTypeList.add(type);
+    }
+
+    /**
+     * 增加模板类型
+     *
+     * @param tmp 模板类型
+     */
+    public void addTemplate(String tmp) {
+        tempList.add(tmp);
+    }
+
+    /**
+     * 增加继承模板类
+     *
+     * @param ht 继承模板类
+     */
+    public void addHeritageTemplate(String ht) {
+        heritageTemplateList.add(ht);
     }
 }
