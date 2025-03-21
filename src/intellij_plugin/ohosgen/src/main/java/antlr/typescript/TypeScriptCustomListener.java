@@ -489,7 +489,6 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
             }
 
         } else if (heritage.implementsClause() != null) {
-            String type = heritage.implementsClause().Implements().getText();
             TypeScriptParser.ClassOrInterfaceTypeListContext citl =
                     heritage.implementsClause().classOrInterfaceTypeList();
             TypeScriptParser.TypeReferenceContext trc = citl.typeReference(0);
@@ -502,6 +501,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
             }
 
             String name = trc.typeName().getText();
+            String type = heritage.implementsClause().Implements().getText();
             co.addHeritage(type, name);
         }
 
@@ -1020,11 +1020,19 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
             for (TypeScriptParser.FormalParameterArgContext fpac : fpacl) {
                 String name = fpac.assignable().getText();
                 String type = fpac.typeAnnotation() != null ?
-                        fpac.typeAnnotation() .type_().getText() : TsToken.TS_TOKEN_VOID;
+                        fpac.typeAnnotation().type_().getText() : TsToken.TS_TOKEN_VOID;
                 fo.addParam(name, type);
                 System.out.println("addparam: " + fo.toJsonString());
             }
         }
+    }
+
+    private FuncObj createFuncObj(String varName) {
+        FuncObj fo = new FuncObj();
+        fo.setAlias(varName);
+        this.currentObject = fo;
+        this.funcObjList.add(fo);
+        return fo;
     }
 
     private void setVariableSingleExpression(TypeScriptParser.VariableDeclarationContext ctx, String varName) {
@@ -1033,25 +1041,16 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
             String varType = sec.start.getText();
             if (varType.equals(TsToken.TS_TOKEN_FUNCTION)) {
                 this.currentIdentifier = varName;
-                FuncObj fo = new FuncObj();
-                fo.setAlias(varName);
-                this.currentObject = fo;
-                this.funcObjList.add(fo);
+                createFuncObj(varName);
                 break;
             } else if ((sec instanceof TypeScriptParser.FunctionExpressionContext fec) &&
                     fec.anonymousFunction() != null) {
                 TypeScriptParser.AnonymousFunctionContext afc = fec.anonymousFunction();
                 TypeScriptParser.ArrowFunctionDeclarationContext afdc = afc.arrowFunctionDeclaration();
-                FuncObj fo = new FuncObj();
-                fo.setAlias(varName);
-                this.currentObject = fo;
-                this.funcObjList.add(fo);
+                FuncObj fo = createFuncObj(varName);
                 setFuncExpressionParam(afdc, fo);
             } else if (sec instanceof TypeScriptParser.ParenthesizedExpressionContext pec) {
-                FuncObj fo = new FuncObj();
-                fo.setAlias(varName);
-                this.currentObject = fo;
-                this.funcObjList.add(fo);
+                FuncObj fo = createFuncObj(varName);
                 List<TypeScriptParser.SingleExpressionContext> secl = pec.expressionSequence().singleExpression();
 
                 for (TypeScriptParser.SingleExpressionContext secItem : secl) {
@@ -1064,28 +1063,26 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                     continue;
                 }
 
-                FuncObj fo = new FuncObj();
+                FuncObj fo = createFuncObj(varName);
                 fo.setName(varType);
-                fo.setAlias(varName);
 
-                if (secItem instanceof TypeScriptParser.GenericTypesContext gtc) {
-                    String temp = gtc.typeArguments().getText();
-                    fo.addTemplate(temp);
-
-                    TypeScriptParser.ExpressionSequenceContext esc = gtc.expressionSequence();
-                    List<TypeScriptParser. SingleExpressionContext> secl = esc.singleExpression();
-
-                    for ( TypeScriptParser.SingleExpressionContext secObj: secl) {
-                        ParamObj po = new ParamObj();
-                        TypeScriptParser.ExpressionSequenceContext testobj =
-                                ((TypeScriptParser.ParenthesizedExpressionContext)secObj).expressionSequence();
-                        po.setStrValue(testobj.singleExpression(0).getText());
-                        fo.addParam(po);
-                    }
+                if (!(secItem instanceof TypeScriptParser.GenericTypesContext gtc)) {
+                    continue;
                 }
 
-                this.currentObject = fo;
-                this.funcObjList.add(fo);
+                String temp = gtc.typeArguments().getText();
+                fo.addTemplate(temp);
+
+                TypeScriptParser.ExpressionSequenceContext esc = gtc.expressionSequence();
+                List<TypeScriptParser. SingleExpressionContext> secl = esc.singleExpression();
+
+                for (TypeScriptParser.SingleExpressionContext secObj : secl) {
+                    ParamObj po = new ParamObj();
+                    TypeScriptParser.ExpressionSequenceContext testobj =
+                            ((TypeScriptParser.ParenthesizedExpressionContext) secObj).expressionSequence();
+                    po.setStrValue(testobj.singleExpression(0).getText());
+                    fo.addParam(po);
+                }
             }
         }
     }
