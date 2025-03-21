@@ -1075,14 +1075,19 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
 
                 TypeScriptParser.ExpressionSequenceContext esc = gtc.expressionSequence();
                 List<TypeScriptParser. SingleExpressionContext> secl = esc.singleExpression();
+                setFuncParamStr(fo, secl);
 
-                for (TypeScriptParser.SingleExpressionContext secObj : secl) {
-                    ParamObj po = new ParamObj();
-                    TypeScriptParser.ExpressionSequenceContext testobj =
-                            ((TypeScriptParser.ParenthesizedExpressionContext) secObj).expressionSequence();
-                    po.setStrValue(testobj.singleExpression(0).getText());
-                    fo.addParam(po);
-                }
+            }
+        }
+    }
+
+    private void setFuncParamStr(FuncObj fo, List<TypeScriptParser. SingleExpressionContext> secl) {
+        for (TypeScriptParser.SingleExpressionContext secObj : secl) {
+            if (secObj instanceof TypeScriptParser.ParenthesizedExpressionContext pec) {
+                ParamObj po = new ParamObj();
+                TypeScriptParser.ExpressionSequenceContext testObj = pec.expressionSequence();
+                po.setStrValue(testObj.singleExpression(0).getText());
+                fo.addParam(po);
             }
         }
     }
