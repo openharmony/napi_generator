@@ -265,181 +265,181 @@ class ParseTsTest {
             "}";
 
     String testClass14 = "class Shape {\n" +
-            "    constructor (id, x, y) {\n" +
-            "        this.id = id\n" +
-            "        this.move(x, y)\n" +
-            "    }\n" +
-            "    move (x, y) {\n" +
-            "        this.x = x\n" +
-            "        this.y = y\n" +
-            "    }\n" +
-            "}";
+        "    constructor (id, x, y) {\n" +
+        "        this.id = id\n" +
+        "        this.move(x, y)\n" +
+        "    }\n" +
+        "    move (x, y) {\n" +
+        "        this.x = x\n" +
+        "        this.y = y\n" +
+        "    }\n" +
+        "}";
 
     String testClass15 = "class Rectangle extends Shape {\n" +
-            "    constructor (id, x, y, width, height) {\n" +
-            "        super(id, x, y)\n" +
-            "        this.width  = width\n" +
-            "        this.height = height\n" +
-            "    }\n" +
-            "}";
+        "    constructor (id, x, y, width, height) {\n" +
+        "        super(id, x, y)\n" +
+        "        this.width  = width\n" +
+        "        this.height = height\n" +
+        "    }\n" +
+        "}";
 
     String testClass16 = "class Circle extends Shape {\n" +
-            "    constructor (id, x, y, radius) {\n" +
-            "        super(id, x, y)\n" +
-            "        this.radius = radius\n" +
-            "    }\n" +
-            "}";
+        "    constructor (id, x, y, radius) {\n" +
+        "        super(id, x, y)\n" +
+        "        this.radius = radius\n" +
+        "    }\n" +
+        "}";
 
     String testClass17 = "var aggregation = (baseClass, ...mixins) => {\n" +
-            "    let base = class _Combined extends baseClass {\n" +
-            "        constructor (...args) {\n" +
-            "            super(...args)\n" +
-            "            mixins.forEach((mixin) => {\n" +
-            "                mixin.prototype.initializer.call(this)\n" +
-            "            })\n" +
-            "        }\n" +
-            "    }\n" +
-            "    let copyProps = (target, source) => {\n" +
-            "        Object.getOwnPropertyNames(source)\n" +
-            "            .concat(Object.getOwnPropertySymbols(source))\n" +
-            "            .forEach((prop) => {\n" +
-            "            if (prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/))\n" +
-            "                return\n" +
-            "            Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop))\n" +
-            "        })\n" +
-            "    }\n" +
-            "    mixins.forEach((mixin) => {\n" +
-            "        copyProps(base.prototype, mixin.prototype)\n" +
-            "        copyProps(base, mixin)\n" +
-            "    })\n" +
-            "    return base\n" +
-            "}";
+        "let base = class _Combined extends baseClass {\n" +
+        "    constructor (...args) {\n" +
+        "        super(...args)\n" +
+        "        mixins.forEach((mixin) => {\n" +
+        "            mixin.prototype.initializer.call(this)\n" +
+        "        })\n" +
+        "    }\n" +
+        "}\n" +
+        "let copyProps = (target, source) => {\n" +
+        "    Object.getOwnPropertyNames(source)\n" +
+        "    .concat(Object.getOwnPropertySymbols(source))\n" +
+        "    .forEach((prop) => {\n" +
+        "    if (prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/))\n" +
+        "            return\n" +
+        "        Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop))\n" +
+        "    })\n" +
+        "}\n" +
+        "mixins.forEach((mixin) => {\n" +
+        "    copyProps(base.prototype, mixin.prototype)\n" +
+        "    copyProps(base, mixin)\n" +
+        "})\n" +
+        "return base\n" +
+        "}";
 
     String testClass18 = "class Colored {\n" +
-            "    initializer ()     { this._color = \"white\" }\n" +
-            "    get color ()       { return this._color }\n" +
-            "    set color (v)      { this._color = v }\n" +
-            "}";
+        "    initializer ()     { this._color = \"white\" }\n" +
+        "    get color ()       { return this._color }\n" +
+        "    set color (v)      { this._color = v }\n" +
+        "}";
 
     String testClass19 = "class ZCoord {\n" +
-            "    initializer ()     { this._z = 0 }\n" +
-            "    get z ()           { return this._z }\n" +
-            "    set z (v)          { this._z = v }\n" +
-            "}";
+        "    initializer ()     { this._z = 0 }\n" +
+        "    get z ()           { return this._z }\n" +
+        "    set z (v)          { this._z = v }\n" +
+        "}";
 
     String testClass20 = "class Shape {\n" +
-            "    constructor (x, y) { this._x = x; this._y = y }\n" +
-            "    get x ()           { return this._x }\n" +
-            "    set x (v)          { this._x = v }\n" +
-            "    get y ()           { return this._y }\n" +
-            "    set y (v)          { this._y = v }\n" +
-            "}";
+        "    constructor (x, y) { this._x = x; this._y = y }\n" +
+        "    get x ()           { return this._x }\n" +
+        "    set x (v)          { this._x = v }\n" +
+        "    get y ()           { return this._y }\n" +
+        "    set y (v)          { this._y = v }\n" +
+        "}";
 
     String testClass21 = "class Rectangle extends aggregation(Shape, Colored, ZCoord) {}";
 
     String testClass22 = "class Shape {\n" +
-            "    // …\n" +
-            "    toString () {\n" +
-            "        return `Shape(${this.id})`\n" +
-            "    }\n" +
-            "}";
+        "    // …\n" +
+        "    toString () {\n" +
+        "        return `Shape(${this.id})`\n" +
+        "    }\n" +
+        "}";
 
     String testClass23 = "class Rectangle extends Shape {\n" +
-            "    constructor (id, x, y, width, height) {\n" +
-            "        super(id, x, y)\n" +
-            "        // …\n" +
-            "    }\n" +
-            "\n" +
-            "    toString () {\n" +
-            "        return \"Rectangle > \" + super.toString()\n" +
-            "    }\n" +
-            "}";
+        "    constructor (id, x, y, width, height) {\n" +
+        "        super(id, x, y)\n" +
+        "        // …\n" +
+        "    }\n" +
+        "\n" +
+        "    toString () {\n" +
+        "        return \"Rectangle > \" + super.toString()\n" +
+        "    }\n" +
+        "}";
 
     String testClass24 = "class Circle extends Shape {\n" +
-            "    constructor (id, x, y, radius) {\n" +
-            "        super(id, x, y)\n" +
-            "        // …\n" +
-            "    }\n" +
-            "    toString () {\n" +
-            "        return \"Circle > \" + super.toString()\n" +
-            "    }\n" +
-            "}";
+        "    constructor (id, x, y, radius) {\n" +
+        "        super(id, x, y)\n" +
+        "        // …\n" +
+        "    }\n" +
+        "    toString () {\n" +
+        "        return \"Circle > \" + super.toString()\n" +
+        "    }\n" +
+        "}";
 
     String testClass25 = "class Rectangle extends Shape {\n" +
-            "    // …\n" +
-            "    static contextTypes = {\n" +
-            "        router: PropTypes.object,\n" +
-            "    };\n" +
-            "\n" +
-            "    static defaultRectangle () {\n" +
-            "        return new Rectangle(\"default\", 0, 0, 100, 100)\n" +
-            "    }\n" +
-            "}";
+        "    // …\n" +
+        "    static contextTypes = {\n" +
+        "        router: PropTypes.object,\n" +
+        "    };\n" +
+        "\n" +
+        "    static defaultRectangle () {\n" +
+        "        return new Rectangle(\"default\", 0, 0, 100, 100)\n" +
+        "    }\n" +
+        "}";
 
     String testClass26 = "class Circle extends Shape {\n" +
-            "    // …\n" +
-            "    static defaultCircle () {\n" +
-            "        return new Circle(\"default\", 0, 0, 100)\n" +
-            "    }\n" +
-            "}";
+        "    // …\n" +
+        "    static defaultCircle () {\n" +
+        "        return new Circle(\"default\", 0, 0, 100)\n" +
+        "    }\n" +
+        "}";
 
     String testClass27 = "class Rectangle {\n" +
-            "    constructor (width, height) {\n" +
-            "        this._width  = width\n" +
-            "        this._height = height\n" +
-            "    }\n" +
-            "    set width  (width)  { this._width = width               }\n" +
-            "    get width  ()       { return this._width                }\n" +
-            "    set height (height) { this._height = height             }\n" +
-            "    get height ()       { return this._height               }\n" +
-            "    get area   ()       { return this._width * this._height }\n" +
-            "}";
+        "    constructor (width, height) {\n" +
+        "        this._width  = width\n" +
+        "        this._height = height\n" +
+        "    }\n" +
+        "    set width  (width)  { this._width = width               }\n" +
+        "    get width  ()       { return this._width                }\n" +
+        "    set height (height) { this._height = height             }\n" +
+        "    get height ()       { return this._height               }\n" +
+        "    get area   ()       { return this._width * this._height }\n" +
+        "}";
 
     String testClass28 = "class A {\n" +
-            "    ;\n" +
-            "}";
+        "    ;\n" +
+        "}";
 
     String testClass29 = "class B {\n" +
-            "    get [runtimeCalc]() {return 1};\n" +
-            "    set [runtimeCalc](p) {};\n" +
-            "    get 'string as key'() {};\n" +
-            "}";
+        "    get [runtimeCalc]() {return 1};\n" +
+        "    set [runtimeCalc](p) {};\n" +
+        "    get 'string as key'() {};\n" +
+        "}";
 
     String testClass30 = "const PREFIX = \"prefix\";" +
-            "class ClassWithField {\n" +
-            "  field;\n" +
-            "  fieldWithInitializer = \"instance field\";\n" +
-            "  [`${PREFIX}Field`] = \"prefixed field\";\n" +
-            "}";
+        "class ClassWithField {\n" +
+        "  field;\n" +
+        "  fieldWithInitializer = \"instance field\";\n" +
+        "  [`${PREFIX}Field`] = \"prefixed field\";\n" +
+        "}";
 
     String testClass31 = "class ClassWithStaticInitializationBlock {\n" +
-            "  static staticProperty1 = 'Property 1';\n" +
-            "  static staticProperty2;\n" +
-            "  static {\n" +
-            "    this.staticProperty2 = 'Property 2';\n" +
-            "  }\n" +
-            "}";
+        "  static staticProperty1 = 'Property 1';\n" +
+        "  static staticProperty2;\n" +
+        "  static {\n" +
+        "    this.staticProperty2 = 'Property 2';\n" +
+        "  }\n" +
+        "}";
 
     String testClass32 = "export class Employee {\n" +
-            "    empCode: number;\n" +
-            "    empName: string;\n" +
-            "    constructor(name: string, code: number) {\n" +
-            "        this.empName = name;\n" +
-            "        this.empCode = code;\n" +
-            "    }\n" +
-            "    displayEmployee() {\n" +
-            "        console.log (\"Employee Code: \" + this.empCode + \", Employee Name: \" + this.empName );\n" +
-            "    }\n" +
-            "}";
+        "    empCode: number;\n" +
+        "    empName: string;\n" +
+        "    constructor(name: string, code: number) {\n" +
+        "        this.empName = name;\n" +
+        "        this.empCode = code;\n" +
+        "    }\n" +
+        "    displayEmployee() {\n" +
+        "        console.log (\"Employee Code: \" + this.empCode + \", Employee Name: \" + this.empName );\n" +
+        "    }\n" +
+        "}";
 
     String testClass33 = "class O{\n" +
-            "    i = 1;\n" +
-            "}";
+        "    i = 1;\n" +
+        "}";
 
     String testClass34 = "class Entity{\n" +
-            "    name = \"test\";\n" +
-            "    obj = new O();\n" +
-            "}\n";
+        "    name = \"test\";\n" +
+        "    obj = new O();\n" +
+        "}\n";
 
     String testFunc2 = "namespace StringUtility\n" +
             "{\n" +
@@ -2319,37 +2319,5 @@ class ParseTsTest {
         List<String> tl = toItem.getTypeList();
         assertEquals(1, tl.size());
         assertEquals("TestShape", tl.get(0));
-    }
-
-    @Test
-    void receive() {
-    }
-
-    @Test
-    void parseEnum() {
-    }
-
-    @Test
-    void parseUnion() {
-    }
-
-    @Test
-    void parseStruct() {
-    }
-
-    @Test
-    void parseClass() {
-    }
-
-    @Test
-    void parseFunc() {
-    }
-
-    @Test
-    void parseType() {
-    }
-
-    @Test
-    void handleEvent() {
     }
 }
