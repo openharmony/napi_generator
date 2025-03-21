@@ -17,6 +17,9 @@ package grammar;
 
 import utils.TsToken;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description param grammar
@@ -58,10 +61,16 @@ public class ParamObj extends GBaseObject {
     private int[] asList;
 
     /**
+     * 参数值
+     */
+    private List<String> vList;
+
+    /**
      * 构造函数
      */
     public ParamObj() {
         this.decorator = TsToken.TS_TOKEN_REQUIRED;
+        vList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -168,6 +177,53 @@ public class ParamObj extends GBaseObject {
      */
     public int[] getAsList() {
         return asList;
+    }
+
+    /**
+     * 获取值数组
+     *
+     * @return 值数组
+     */
+    public List<String> getvList() {
+        return vList;
+    }
+
+    /**
+     * 设置值数据
+     *
+     * @param vList 值数据
+     */
+    public void setvList(List<String> vList) {
+        this.vList = vList;
+    }
+
+    /**
+     * 设置值
+     *
+     * @param value 初始化值
+     */
+    public void setStrValue(String value) {
+        this.vList.add(value);
+    }
+
+    /**
+     * 获取类参数值
+     *
+     * @param i 下标
+     * @return 返回参数值
+     */
+    public String getStrValue(int i) {
+        return vList.get(i);
+    }
+
+    /**
+     * 获取类参数值
+     *
+     * @param i 下标
+     * @return 返回参数值
+     */
+    public int getIntValue(int i) {
+        return asList[i];
     }
 
     /**
