@@ -61,6 +61,16 @@ public class FuncObj extends GBaseObject {
     private List<ParamObj> paramList;
 
     /**
+     * 限定
+     */
+    private String qualifier;
+
+    /**
+     * 模板类型列表
+     */
+    private List<String> tempList;
+
+    /**
      * 构造函数
      */
     public FuncObj() {
@@ -69,6 +79,7 @@ public class FuncObj extends GBaseObject {
         this.type = "";
         this.retValue = TsToken.TS_TOKEN_VOID;
         this.paramList = new CopyOnWriteArrayList<>();
+        this.tempList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -104,6 +115,61 @@ public class FuncObj extends GBaseObject {
      */
     public String getType() {
         return type;
+    }
+
+    /**
+     * 获取模板类
+     *
+     * @return 模板类列表
+     */
+    public List<String> getTempList() {
+        return tempList;
+    }
+
+    /**
+     * 设置模板类
+     *
+     * @param tempList 模板类列表
+     */
+    public void setTempList(List<String> tempList) {
+        this.tempList = tempList;
+    }
+
+    /**
+     * 获取模板类
+     *
+     * @param i 游标
+     * @return 模板类
+     */
+    public String getTemplate(int i) {
+        return this.tempList.get(i);
+    }
+
+    /**
+     * 增加模板
+     *
+     * @param temp 模板
+     */
+    public void addTemplate(String temp) {
+        this.tempList.add(temp);
+    }
+
+    /**
+     * 设置限定
+     *
+     * @param qualifier 限定
+     */
+    public void setQualifier(String qualifier) {
+        this.qualifier = qualifier;
+    }
+
+    /**
+     * 获取限定
+     *
+     * @return 限定
+     */
+    public String getQualifier() {
+        return qualifier;
     }
 
     /**
