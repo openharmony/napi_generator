@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package antlr;
+package antlr.cpp;
 // Generated from ./CPP14Parser.g4 by ANTLR 4.13.2
 
 import org.antlr.v4.runtime.ParserRuleContext;
