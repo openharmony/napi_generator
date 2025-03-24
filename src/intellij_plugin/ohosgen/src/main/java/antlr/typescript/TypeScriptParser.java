@@ -13761,3 +13761,1550 @@ public class TypeScriptParser extends TypeScriptParserBase {
 			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitAnonymousFunction(this);
 		}
 	}
+
+	public final AnonymousFunctionContext anonymousFunction() throws RecognitionException {
+		AnonymousFunctionContext _localctx = new AnonymousFunctionContext(_ctx, getState());
+		enterRule(_localctx, 280, RULE_anonymousFunction);
+		int _la;
+		try {
+			setState(1870);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,245,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1849);
+				functionDeclaration();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1851);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Async) {
+					{
+					setState(1850);
+					match(Async);
+					}
+				}
+
+				setState(1853);
+				match(Function_);
+				setState(1855);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Multiply) {
+					{
+					setState(1854);
+					match(Multiply);
+					}
+				}
+
+				setState(1857);
+				match(OpenParen);
+				setState(1859);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 131344L) != 0) || ((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & -4294967297L) != 0) || ((((_la - 135)) & ~0x3f) == 0 && ((1L << (_la - 135)) & 13L) != 0)) {
+					{
+					setState(1858);
+					formalParameterList();
+					}
+				}
+
+				setState(1861);
+				match(CloseParen);
+				setState(1863);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Colon) {
+					{
+					setState(1862);
+					typeAnnotation();
+					}
+				}
+
+				setState(1865);
+				match(OpenBrace);
+				setState(1866);
+				functionBody();
+				setState(1867);
+				match(CloseBrace);
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(1869);
+				arrowFunctionDeclaration();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArrowFunctionDeclarationContext extends ParserRuleContext {
+		public ArrowFunctionParametersContext arrowFunctionParameters() {
+			return getRuleContext(ArrowFunctionParametersContext.class,0);
+		}
+		public TerminalNode ARROW() { return getToken(TypeScriptParser.ARROW, 0); }
+		public ArrowFunctionBodyContext arrowFunctionBody() {
+			return getRuleContext(ArrowFunctionBodyContext.class,0);
+		}
+		public TerminalNode Async() { return getToken(TypeScriptParser.Async, 0); }
+		public TypeAnnotationContext typeAnnotation() {
+			return getRuleContext(TypeAnnotationContext.class,0);
+		}
+		public ArrowFunctionDeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_arrowFunctionDeclaration; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterArrowFunctionDeclaration(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitArrowFunctionDeclaration(this);
+		}
+	}
+
+	public final ArrowFunctionDeclarationContext arrowFunctionDeclaration() throws RecognitionException {
+		ArrowFunctionDeclarationContext _localctx = new ArrowFunctionDeclarationContext(_ctx, getState());
+		enterRule(_localctx, 282, RULE_arrowFunctionDeclaration);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1873);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,246,_ctx) ) {
+			case 1:
+				{
+				setState(1872);
+				match(Async);
+				}
+				break;
+			}
+			setState(1875);
+			arrowFunctionParameters();
+			setState(1877);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Colon) {
+				{
+				setState(1876);
+				typeAnnotation();
+				}
+			}
+
+			setState(1879);
+			match(ARROW);
+			setState(1880);
+			arrowFunctionBody();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArrowFunctionParametersContext extends ParserRuleContext {
+		public PropertyNameContext propertyName() {
+			return getRuleContext(PropertyNameContext.class,0);
+		}
+		public TerminalNode OpenParen() { return getToken(TypeScriptParser.OpenParen, 0); }
+		public TerminalNode CloseParen() { return getToken(TypeScriptParser.CloseParen, 0); }
+		public FormalParameterListContext formalParameterList() {
+			return getRuleContext(FormalParameterListContext.class,0);
+		}
+		public ArrowFunctionParametersContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_arrowFunctionParameters; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterArrowFunctionParameters(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitArrowFunctionParameters(this);
+		}
+	}
+
+	public final ArrowFunctionParametersContext arrowFunctionParameters() throws RecognitionException {
+		ArrowFunctionParametersContext _localctx = new ArrowFunctionParametersContext(_ctx, getState());
+		enterRule(_localctx, 284, RULE_arrowFunctionParameters);
+		int _la;
+		try {
+			setState(1888);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case OpenBracket:
+			case NullLiteral:
+			case BooleanLiteral:
+			case DecimalLiteral:
+			case HexIntegerLiteral:
+			case OctalIntegerLiteral:
+			case OctalIntegerLiteral2:
+			case BinaryIntegerLiteral:
+			case Break:
+			case Do:
+			case Instanceof:
+			case Typeof:
+			case Case:
+			case Else:
+			case New:
+			case Var:
+			case Catch:
+			case Finally:
+			case Return:
+			case Void:
+			case Continue:
+			case For:
+			case Switch:
+			case While:
+			case Debugger:
+			case Function_:
+			case This:
+			case With:
+			case Default:
+			case If:
+			case Throw:
+			case Delete:
+			case In:
+			case Try:
+			case As:
+			case From:
+			case ReadOnly:
+			case Async:
+			case Await:
+			case Yield:
+			case Class:
+			case Enum:
+			case Extends:
+			case Super:
+			case Const:
+			case Export:
+			case Import:
+			case Implements:
+			case Let:
+			case Private:
+			case Public:
+			case Interface:
+			case Package:
+			case Protected:
+			case Static:
+			case Any:
+			case Number:
+			case Never:
+			case Boolean:
+			case String:
+			case Unique:
+			case Symbol:
+			case Undefined:
+			case Object:
+			case Of:
+			case KeyOf:
+			case TypeAlias:
+			case Constructor:
+			case Namespace:
+			case Require:
+			case Module:
+			case Abstract:
+			case Identifier:
+			case StringLiteral:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1882);
+				propertyName();
+				}
+				break;
+			case OpenParen:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1883);
+				match(OpenParen);
+				setState(1885);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 131344L) != 0) || ((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & -4294967297L) != 0) || ((((_la - 135)) & ~0x3f) == 0 && ((1L << (_la - 135)) & 13L) != 0)) {
+					{
+					setState(1884);
+					formalParameterList();
+					}
+				}
+
+				setState(1887);
+				match(CloseParen);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArrowFunctionBodyContext extends ParserRuleContext {
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode OpenBrace() { return getToken(TypeScriptParser.OpenBrace, 0); }
+		public FunctionBodyContext functionBody() {
+			return getRuleContext(FunctionBodyContext.class,0);
+		}
+		public TerminalNode CloseBrace() { return getToken(TypeScriptParser.CloseBrace, 0); }
+		public ArrowFunctionBodyContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_arrowFunctionBody; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterArrowFunctionBody(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitArrowFunctionBody(this);
+		}
+	}
+
+	public final ArrowFunctionBodyContext arrowFunctionBody() throws RecognitionException {
+		ArrowFunctionBodyContext _localctx = new ArrowFunctionBodyContext(_ctx, getState());
+		enterRule(_localctx, 286, RULE_arrowFunctionBody);
+		try {
+			setState(1895);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,250,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1890);
+				singleExpression(0);
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1891);
+				match(OpenBrace);
+				setState(1892);
+				functionBody();
+				setState(1893);
+				match(CloseBrace);
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class AssignmentOperatorContext extends ParserRuleContext {
+		public TerminalNode MultiplyAssign() { return getToken(TypeScriptParser.MultiplyAssign, 0); }
+		public TerminalNode DivideAssign() { return getToken(TypeScriptParser.DivideAssign, 0); }
+		public TerminalNode ModulusAssign() { return getToken(TypeScriptParser.ModulusAssign, 0); }
+		public TerminalNode PlusAssign() { return getToken(TypeScriptParser.PlusAssign, 0); }
+		public TerminalNode MinusAssign() { return getToken(TypeScriptParser.MinusAssign, 0); }
+		public TerminalNode LeftShiftArithmeticAssign() { return getToken(TypeScriptParser.LeftShiftArithmeticAssign, 0); }
+		public TerminalNode RightShiftArithmeticAssign() { return getToken(TypeScriptParser.RightShiftArithmeticAssign, 0); }
+		public TerminalNode RightShiftLogicalAssign() { return getToken(TypeScriptParser.RightShiftLogicalAssign, 0); }
+		public TerminalNode BitAndAssign() { return getToken(TypeScriptParser.BitAndAssign, 0); }
+		public TerminalNode BitXorAssign() { return getToken(TypeScriptParser.BitXorAssign, 0); }
+		public TerminalNode BitOrAssign() { return getToken(TypeScriptParser.BitOrAssign, 0); }
+		public TerminalNode PowerAssign() { return getToken(TypeScriptParser.PowerAssign, 0); }
+		public TerminalNode NullishCoalescingAssign() { return getToken(TypeScriptParser.NullishCoalescingAssign, 0); }
+		public AssignmentOperatorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_assignmentOperator; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterAssignmentOperator(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitAssignmentOperator(this);
+		}
+	}
+
+	public final AssignmentOperatorContext assignmentOperator() throws RecognitionException {
+		AssignmentOperatorContext _localctx = new AssignmentOperatorContext(_ctx, getState());
+		enterRule(_localctx, 288, RULE_assignmentOperator);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1897);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 288195191779622912L) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class LiteralContext extends ParserRuleContext {
+		public TerminalNode NullLiteral() { return getToken(TypeScriptParser.NullLiteral, 0); }
+		public TerminalNode BooleanLiteral() { return getToken(TypeScriptParser.BooleanLiteral, 0); }
+		public TerminalNode StringLiteral() { return getToken(TypeScriptParser.StringLiteral, 0); }
+		public TemplateStringLiteralContext templateStringLiteral() {
+			return getRuleContext(TemplateStringLiteralContext.class,0);
+		}
+		public TerminalNode RegularExpressionLiteral() { return getToken(TypeScriptParser.RegularExpressionLiteral, 0); }
+		public NumericLiteralContext numericLiteral() {
+			return getRuleContext(NumericLiteralContext.class,0);
+		}
+		public BigintLiteralContext bigintLiteral() {
+			return getRuleContext(BigintLiteralContext.class,0);
+		}
+		public LiteralContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_literal; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitLiteral(this);
+		}
+	}
+
+	public final LiteralContext literal() throws RecognitionException {
+		LiteralContext _localctx = new LiteralContext(_ctx, getState());
+		enterRule(_localctx, 290, RULE_literal);
+		try {
+			setState(1906);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case NullLiteral:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1899);
+				match(NullLiteral);
+				}
+				break;
+			case BooleanLiteral:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1900);
+				match(BooleanLiteral);
+				}
+				break;
+			case StringLiteral:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(1901);
+				match(StringLiteral);
+				}
+				break;
+			case BackTick:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(1902);
+				templateStringLiteral();
+				}
+				break;
+			case RegularExpressionLiteral:
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(1903);
+				match(RegularExpressionLiteral);
+				}
+				break;
+			case DecimalLiteral:
+			case HexIntegerLiteral:
+			case OctalIntegerLiteral:
+			case OctalIntegerLiteral2:
+			case BinaryIntegerLiteral:
+				enterOuterAlt(_localctx, 6);
+				{
+				setState(1904);
+				numericLiteral();
+				}
+				break;
+			case BigHexIntegerLiteral:
+			case BigOctalIntegerLiteral:
+			case BigBinaryIntegerLiteral:
+			case BigDecimalIntegerLiteral:
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(1905);
+				bigintLiteral();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TemplateStringLiteralContext extends ParserRuleContext {
+		public List<TerminalNode> BackTick() { return getTokens(TypeScriptParser.BackTick); }
+		public TerminalNode BackTick(int i) {
+			return getToken(TypeScriptParser.BackTick, i);
+		}
+		public List<TemplateStringAtomContext> templateStringAtom() {
+			return getRuleContexts(TemplateStringAtomContext.class);
+		}
+		public TemplateStringAtomContext templateStringAtom(int i) {
+			return getRuleContext(TemplateStringAtomContext.class,i);
+		}
+		public TemplateStringLiteralContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_templateStringLiteral; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTemplateStringLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTemplateStringLiteral(this);
+		}
+	}
+
+	public final TemplateStringLiteralContext templateStringLiteral() throws RecognitionException {
+		TemplateStringLiteralContext _localctx = new TemplateStringLiteralContext(_ctx, getState());
+		enterRule(_localctx, 292, RULE_templateStringLiteral);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1908);
+			match(BackTick);
+			setState(1912);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (((((_la - 146)) & ~0x3f) == 0 && ((1L << (_la - 146)) & 7L) != 0)) {
+				{
+				{
+				setState(1909);
+				templateStringAtom();
+				}
+				}
+				setState(1914);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(1915);
+			match(BackTick);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TemplateStringAtomContext extends ParserRuleContext {
+		public TerminalNode TemplateStringAtom() { return getToken(TypeScriptParser.TemplateStringAtom, 0); }
+		public TerminalNode TemplateStringStartExpression() { return getToken(TypeScriptParser.TemplateStringStartExpression, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TerminalNode TemplateCloseBrace() { return getToken(TypeScriptParser.TemplateCloseBrace, 0); }
+		public TerminalNode TemplateStringEscapeAtom() { return getToken(TypeScriptParser.TemplateStringEscapeAtom, 0); }
+		public TemplateStringAtomContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_templateStringAtom; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTemplateStringAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTemplateStringAtom(this);
+		}
+	}
+
+	public final TemplateStringAtomContext templateStringAtom() throws RecognitionException {
+		TemplateStringAtomContext _localctx = new TemplateStringAtomContext(_ctx, getState());
+		enterRule(_localctx, 294, RULE_templateStringAtom);
+		try {
+			setState(1923);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case TemplateStringAtom:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1917);
+				match(TemplateStringAtom);
+				}
+				break;
+			case TemplateStringStartExpression:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1918);
+				match(TemplateStringStartExpression);
+				setState(1919);
+				singleExpression(0);
+				setState(1920);
+				match(TemplateCloseBrace);
+				}
+				break;
+			case TemplateStringEscapeAtom:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(1922);
+				match(TemplateStringEscapeAtom);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class NumericLiteralContext extends ParserRuleContext {
+		public TerminalNode DecimalLiteral() { return getToken(TypeScriptParser.DecimalLiteral, 0); }
+		public TerminalNode HexIntegerLiteral() { return getToken(TypeScriptParser.HexIntegerLiteral, 0); }
+		public TerminalNode OctalIntegerLiteral() { return getToken(TypeScriptParser.OctalIntegerLiteral, 0); }
+		public TerminalNode OctalIntegerLiteral2() { return getToken(TypeScriptParser.OctalIntegerLiteral2, 0); }
+		public TerminalNode BinaryIntegerLiteral() { return getToken(TypeScriptParser.BinaryIntegerLiteral, 0); }
+		public NumericLiteralContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_numericLiteral; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterNumericLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitNumericLiteral(this);
+		}
+	}
+
+	public final NumericLiteralContext numericLiteral() throws RecognitionException {
+		NumericLiteralContext _localctx = new NumericLiteralContext(_ctx, getState());
+		enterRule(_localctx, 296, RULE_numericLiteral);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1925);
+			_la = _input.LA(1);
+			if ( !(((((_la - 61)) & ~0x3f) == 0 && ((1L << (_la - 61)) & 31L) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class BigintLiteralContext extends ParserRuleContext {
+		public TerminalNode BigDecimalIntegerLiteral() { return getToken(TypeScriptParser.BigDecimalIntegerLiteral, 0); }
+		public TerminalNode BigHexIntegerLiteral() { return getToken(TypeScriptParser.BigHexIntegerLiteral, 0); }
+		public TerminalNode BigOctalIntegerLiteral() { return getToken(TypeScriptParser.BigOctalIntegerLiteral, 0); }
+		public TerminalNode BigBinaryIntegerLiteral() { return getToken(TypeScriptParser.BigBinaryIntegerLiteral, 0); }
+		public BigintLiteralContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_bigintLiteral; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterBigintLiteral(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitBigintLiteral(this);
+		}
+	}
+
+	public final BigintLiteralContext bigintLiteral() throws RecognitionException {
+		BigintLiteralContext _localctx = new BigintLiteralContext(_ctx, getState());
+		enterRule(_localctx, 298, RULE_bigintLiteral);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1927);
+			_la = _input.LA(1);
+			if ( !(((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & 15L) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class GetterContext extends ParserRuleContext {
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public ClassElementNameContext classElementName() {
+			return getRuleContext(ClassElementNameContext.class,0);
+		}
+		public GetterContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_getter; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterGetter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitGetter(this);
+		}
+	}
+
+	public final GetterContext getter() throws RecognitionException {
+		GetterContext _localctx = new GetterContext(_ctx, getState());
+		enterRule(_localctx, 300, RULE_getter);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1929);
+			if (!(this.n("get"))) throw new FailedPredicateException(this, "this.n(\"get\")");
+			setState(1930);
+			identifier();
+			setState(1931);
+			classElementName();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class SetterContext extends ParserRuleContext {
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public ClassElementNameContext classElementName() {
+			return getRuleContext(ClassElementNameContext.class,0);
+		}
+		public SetterContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_setter; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterSetter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitSetter(this);
+		}
+	}
+
+	public final SetterContext setter() throws RecognitionException {
+		SetterContext _localctx = new SetterContext(_ctx, getState());
+		enterRule(_localctx, 302, RULE_setter);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1933);
+			if (!(this.n("set"))) throw new FailedPredicateException(this, "this.n(\"set\")");
+			setState(1934);
+			identifier();
+			setState(1935);
+			classElementName();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class IdentifierNameContext extends ParserRuleContext {
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public ReservedWordContext reservedWord() {
+			return getRuleContext(ReservedWordContext.class,0);
+		}
+		public IdentifierNameContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_identifierName; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterIdentifierName(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitIdentifierName(this);
+		}
+	}
+
+	public final IdentifierNameContext identifierName() throws RecognitionException {
+		IdentifierNameContext _localctx = new IdentifierNameContext(_ctx, getState());
+		enterRule(_localctx, 304, RULE_identifierName);
+		try {
+			setState(1939);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,254,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1937);
+				identifier();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1938);
+				reservedWord();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class IdentifierContext extends ParserRuleContext {
+		public TerminalNode Identifier() { return getToken(TypeScriptParser.Identifier, 0); }
+		public TerminalNode Async() { return getToken(TypeScriptParser.Async, 0); }
+		public TerminalNode As() { return getToken(TypeScriptParser.As, 0); }
+		public TerminalNode From() { return getToken(TypeScriptParser.From, 0); }
+		public TerminalNode Yield() { return getToken(TypeScriptParser.Yield, 0); }
+		public TerminalNode Of() { return getToken(TypeScriptParser.Of, 0); }
+		public TerminalNode Any() { return getToken(TypeScriptParser.Any, 0); }
+		public TerminalNode Number() { return getToken(TypeScriptParser.Number, 0); }
+		public TerminalNode Boolean() { return getToken(TypeScriptParser.Boolean, 0); }
+		public TerminalNode String() { return getToken(TypeScriptParser.String, 0); }
+		public TerminalNode Unique() { return getToken(TypeScriptParser.Unique, 0); }
+		public TerminalNode Symbol() { return getToken(TypeScriptParser.Symbol, 0); }
+		public TerminalNode Never() { return getToken(TypeScriptParser.Never, 0); }
+		public TerminalNode Undefined() { return getToken(TypeScriptParser.Undefined, 0); }
+		public TerminalNode Object() { return getToken(TypeScriptParser.Object, 0); }
+		public TerminalNode KeyOf() { return getToken(TypeScriptParser.KeyOf, 0); }
+		public TerminalNode TypeAlias() { return getToken(TypeScriptParser.TypeAlias, 0); }
+		public TerminalNode Constructor() { return getToken(TypeScriptParser.Constructor, 0); }
+		public TerminalNode Namespace() { return getToken(TypeScriptParser.Namespace, 0); }
+		public TerminalNode Abstract() { return getToken(TypeScriptParser.Abstract, 0); }
+		public IdentifierContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_identifier; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterIdentifier(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitIdentifier(this);
+		}
+	}
+
+	public final IdentifierContext identifier() throws RecognitionException {
+		IdentifierContext _localctx = new IdentifierContext(_ctx, getState());
+		enterRule(_localctx, 306, RULE_identifier);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1941);
+			_la = _input.LA(1);
+			if ( !(((((_la - 96)) & ~0x3f) == 0 && ((1L << (_la - 96)) & 5016517607467L) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class IdentifierOrKeyWordContext extends ParserRuleContext {
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public TerminalNode TypeAlias() { return getToken(TypeScriptParser.TypeAlias, 0); }
+		public TerminalNode Require() { return getToken(TypeScriptParser.Require, 0); }
+		public IdentifierOrKeyWordContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_identifierOrKeyWord; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterIdentifierOrKeyWord(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitIdentifierOrKeyWord(this);
+		}
+	}
+
+	public final IdentifierOrKeyWordContext identifierOrKeyWord() throws RecognitionException {
+		IdentifierOrKeyWordContext _localctx = new IdentifierOrKeyWordContext(_ctx, getState());
+		enterRule(_localctx, 308, RULE_identifierOrKeyWord);
+		try {
+			setState(1946);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,255,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1943);
+				identifier();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1944);
+				match(TypeAlias);
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(1945);
+				match(Require);
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ReservedWordContext extends ParserRuleContext {
+		public KeywordContext keyword() {
+			return getRuleContext(KeywordContext.class,0);
+		}
+		public TerminalNode NullLiteral() { return getToken(TypeScriptParser.NullLiteral, 0); }
+		public TerminalNode BooleanLiteral() { return getToken(TypeScriptParser.BooleanLiteral, 0); }
+		public ReservedWordContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_reservedWord; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterReservedWord(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitReservedWord(this);
+		}
+	}
+
+	public final ReservedWordContext reservedWord() throws RecognitionException {
+		ReservedWordContext _localctx = new ReservedWordContext(_ctx, getState());
+		enterRule(_localctx, 310, RULE_reservedWord);
+		try {
+			setState(1951);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case Break:
+			case Do:
+			case Instanceof:
+			case Typeof:
+			case Case:
+			case Else:
+			case New:
+			case Var:
+			case Catch:
+			case Finally:
+			case Return:
+			case Void:
+			case Continue:
+			case For:
+			case Switch:
+			case While:
+			case Debugger:
+			case Function_:
+			case This:
+			case With:
+			case Default:
+			case If:
+			case Throw:
+			case Delete:
+			case In:
+			case Try:
+			case As:
+			case From:
+			case ReadOnly:
+			case Async:
+			case Await:
+			case Yield:
+			case Class:
+			case Enum:
+			case Extends:
+			case Super:
+			case Const:
+			case Export:
+			case Import:
+			case Implements:
+			case Let:
+			case Private:
+			case Public:
+			case Interface:
+			case Package:
+			case Protected:
+			case Static:
+			case Number:
+			case Boolean:
+			case String:
+			case TypeAlias:
+			case Require:
+			case Module:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1948);
+				keyword();
+				}
+				break;
+			case NullLiteral:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1949);
+				match(NullLiteral);
+				}
+				break;
+			case BooleanLiteral:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(1950);
+				match(BooleanLiteral);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class KeywordContext extends ParserRuleContext {
+		public TerminalNode Break() { return getToken(TypeScriptParser.Break, 0); }
+		public TerminalNode Do() { return getToken(TypeScriptParser.Do, 0); }
+		public TerminalNode Instanceof() { return getToken(TypeScriptParser.Instanceof, 0); }
+		public TerminalNode Typeof() { return getToken(TypeScriptParser.Typeof, 0); }
+		public TerminalNode Case() { return getToken(TypeScriptParser.Case, 0); }
+		public TerminalNode Else() { return getToken(TypeScriptParser.Else, 0); }
+		public TerminalNode New() { return getToken(TypeScriptParser.New, 0); }
+		public TerminalNode Var() { return getToken(TypeScriptParser.Var, 0); }
+		public TerminalNode Catch() { return getToken(TypeScriptParser.Catch, 0); }
+		public TerminalNode Finally() { return getToken(TypeScriptParser.Finally, 0); }
+		public TerminalNode Return() { return getToken(TypeScriptParser.Return, 0); }
+		public TerminalNode Void() { return getToken(TypeScriptParser.Void, 0); }
+		public TerminalNode Continue() { return getToken(TypeScriptParser.Continue, 0); }
+		public TerminalNode For() { return getToken(TypeScriptParser.For, 0); }
+		public TerminalNode Switch() { return getToken(TypeScriptParser.Switch, 0); }
+		public TerminalNode While() { return getToken(TypeScriptParser.While, 0); }
+		public TerminalNode Debugger() { return getToken(TypeScriptParser.Debugger, 0); }
+		public TerminalNode Function_() { return getToken(TypeScriptParser.Function_, 0); }
+		public TerminalNode This() { return getToken(TypeScriptParser.This, 0); }
+		public TerminalNode With() { return getToken(TypeScriptParser.With, 0); }
+		public TerminalNode Default() { return getToken(TypeScriptParser.Default, 0); }
+		public TerminalNode If() { return getToken(TypeScriptParser.If, 0); }
+		public TerminalNode Throw() { return getToken(TypeScriptParser.Throw, 0); }
+		public TerminalNode Delete() { return getToken(TypeScriptParser.Delete, 0); }
+		public TerminalNode In() { return getToken(TypeScriptParser.In, 0); }
+		public TerminalNode Try() { return getToken(TypeScriptParser.Try, 0); }
+		public TerminalNode Class() { return getToken(TypeScriptParser.Class, 0); }
+		public TerminalNode Enum() { return getToken(TypeScriptParser.Enum, 0); }
+		public TerminalNode Extends() { return getToken(TypeScriptParser.Extends, 0); }
+		public TerminalNode Super() { return getToken(TypeScriptParser.Super, 0); }
+		public TerminalNode Const() { return getToken(TypeScriptParser.Const, 0); }
+		public TerminalNode Export() { return getToken(TypeScriptParser.Export, 0); }
+		public TerminalNode Import() { return getToken(TypeScriptParser.Import, 0); }
+		public TerminalNode Implements() { return getToken(TypeScriptParser.Implements, 0); }
+		public TerminalNode Let() { return getToken(TypeScriptParser.Let, 0); }
+		public TerminalNode Private() { return getToken(TypeScriptParser.Private, 0); }
+		public TerminalNode Public() { return getToken(TypeScriptParser.Public, 0); }
+		public TerminalNode Interface() { return getToken(TypeScriptParser.Interface, 0); }
+		public TerminalNode Package() { return getToken(TypeScriptParser.Package, 0); }
+		public TerminalNode Protected() { return getToken(TypeScriptParser.Protected, 0); }
+		public TerminalNode Static() { return getToken(TypeScriptParser.Static, 0); }
+		public TerminalNode Yield() { return getToken(TypeScriptParser.Yield, 0); }
+		public TerminalNode Async() { return getToken(TypeScriptParser.Async, 0); }
+		public TerminalNode Await() { return getToken(TypeScriptParser.Await, 0); }
+		public TerminalNode ReadOnly() { return getToken(TypeScriptParser.ReadOnly, 0); }
+		public TerminalNode From() { return getToken(TypeScriptParser.From, 0); }
+		public TerminalNode As() { return getToken(TypeScriptParser.As, 0); }
+		public TerminalNode Require() { return getToken(TypeScriptParser.Require, 0); }
+		public TerminalNode TypeAlias() { return getToken(TypeScriptParser.TypeAlias, 0); }
+		public TerminalNode String() { return getToken(TypeScriptParser.String, 0); }
+		public TerminalNode Boolean() { return getToken(TypeScriptParser.Boolean, 0); }
+		public TerminalNode Number() { return getToken(TypeScriptParser.Number, 0); }
+		public TerminalNode Module() { return getToken(TypeScriptParser.Module, 0); }
+		public KeywordContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_keyword; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterKeyword(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitKeyword(this);
+		}
+	}
+
+	public final KeywordContext keyword() throws RecognitionException {
+		KeywordContext _localctx = new KeywordContext(_ctx, getState());
+		enterRule(_localctx, 312, RULE_keyword);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1953);
+			_la = _input.LA(1);
+			if ( !(((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & -4027625446047744001L) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class EosContext extends ParserRuleContext {
+		public TerminalNode SemiColon() { return getToken(TypeScriptParser.SemiColon, 0); }
+		public TerminalNode EOF() { return getToken(TypeScriptParser.EOF, 0); }
+		public EosContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_eos; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterEos(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitEos(this);
+		}
+	}
+
+	public final EosContext eos() throws RecognitionException {
+		EosContext _localctx = new EosContext(_ctx, getState());
+		enterRule(_localctx, 314, RULE_eos);
+		try {
+			setState(1959);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,257,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1955);
+				match(SemiColon);
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1956);
+				match(EOF);
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(1957);
+				if (!(this.lineTerminatorAhead())) throw new FailedPredicateException(this, "this.lineTerminatorAhead()");
+				}
+				break;
+			case 4:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(1958);
+				if (!(this.closeBrace())) throw new FailedPredicateException(this, "this.closeBrace()");
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+		switch (ruleIndex) {
+		case 10:
+			return unionOrIntersectionOrPrimaryType_sempred((UnionOrIntersectionOrPrimaryTypeContext)_localctx, predIndex);
+		case 11:
+			return primaryType_sempred((PrimaryTypeContext)_localctx, predIndex);
+		case 20:
+			return arrayType_sempred((ArrayTypeContext)_localctx, predIndex);
+		case 55:
+			return decoratorMemberExpression_sempred((DecoratorMemberExpressionContext)_localctx, predIndex);
+		case 82:
+			return expressionStatement_sempred((ExpressionStatementContext)_localctx, predIndex);
+		case 84:
+			return iterationStatement_sempred((IterationStatementContext)_localctx, predIndex);
+		case 86:
+			return continueStatement_sempred((ContinueStatementContext)_localctx, predIndex);
+		case 87:
+			return breakStatement_sempred((BreakStatementContext)_localctx, predIndex);
+		case 88:
+			return returnStatement_sempred((ReturnStatementContext)_localctx, predIndex);
+		case 89:
+			return yieldStatement_sempred((YieldStatementContext)_localctx, predIndex);
+		case 97:
+			return throwStatement_sempred((ThrowStatementContext)_localctx, predIndex);
+		case 112:
+			return generatorMethod_sempred((GeneratorMethodContext)_localctx, predIndex);
+		case 137:
+			return singleExpression_sempred((SingleExpressionContext)_localctx, predIndex);
+		case 150:
+			return getter_sempred((GetterContext)_localctx, predIndex);
+		case 151:
+			return setter_sempred((SetterContext)_localctx, predIndex);
+		case 157:
+			return eos_sempred((EosContext)_localctx, predIndex);
+		}
+		return true;
+	}
+	private boolean unionOrIntersectionOrPrimaryType_sempred(UnionOrIntersectionOrPrimaryTypeContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 0:
+			return precpred(_ctx, 3);
+		case 1:
+			return precpred(_ctx, 2);
+		}
+		return true;
+	}
+	private boolean primaryType_sempred(PrimaryTypeContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 2:
+			return precpred(_ctx, 6);
+		case 3:
+			return this.notLineTerminator();
+		}
+		return true;
+	}
+	private boolean arrayType_sempred(ArrayTypeContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 4:
+			return this.notLineTerminator();
+		}
+		return true;
+	}
+	private boolean decoratorMemberExpression_sempred(DecoratorMemberExpressionContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 5:
+			return precpred(_ctx, 2);
+		}
+		return true;
+	}
+	private boolean expressionStatement_sempred(ExpressionStatementContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 6:
+			return this.notOpenBraceAndNotFunctionAndNotInterface();
+		}
+		return true;
+	}
+	private boolean iterationStatement_sempred(IterationStatementContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 7:
+			return this.p("of");
+		case 8:
+			return this.p("of");
+		}
+		return true;
+	}
+	private boolean continueStatement_sempred(ContinueStatementContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 9:
+			return this.notLineTerminator();
+		}
+		return true;
+	}
+	private boolean breakStatement_sempred(BreakStatementContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 10:
+			return this.notLineTerminator();
+		}
+		return true;
+	}
+	private boolean returnStatement_sempred(ReturnStatementContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 11:
+			return this.notLineTerminator();
+		}
+		return true;
+	}
+	private boolean yieldStatement_sempred(YieldStatementContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 12:
+			return this.notLineTerminator();
+		}
+		return true;
+	}
+	private boolean throwStatement_sempred(ThrowStatementContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 13:
+			return this.notLineTerminator();
+		}
+		return true;
+	}
+	private boolean generatorMethod_sempred(GeneratorMethodContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 14:
+			return this.notLineTerminator();
+		}
+		return true;
+	}
+	private boolean singleExpression_sempred(SingleExpressionContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 15:
+			return precpred(_ctx, 50);
+		case 16:
+			return precpred(_ctx, 32);
+		case 17:
+			return precpred(_ctx, 31);
+		case 18:
+			return precpred(_ctx, 30);
+		case 19:
+			return precpred(_ctx, 29);
+		case 20:
+			return precpred(_ctx, 28);
+		case 21:
+			return precpred(_ctx, 27);
+		case 22:
+			return precpred(_ctx, 26);
+		case 23:
+			return precpred(_ctx, 25);
+		case 24:
+			return precpred(_ctx, 24);
+		case 25:
+			return precpred(_ctx, 23);
+		case 26:
+			return precpred(_ctx, 22);
+		case 27:
+			return precpred(_ctx, 21);
+		case 28:
+			return precpred(_ctx, 20);
+		case 29:
+			return precpred(_ctx, 19);
+		case 30:
+			return precpred(_ctx, 18);
+		case 31:
+			return precpred(_ctx, 17);
+		case 32:
+			return precpred(_ctx, 16);
+		case 33:
+			return precpred(_ctx, 51);
+		case 34:
+			return precpred(_ctx, 49);
+		case 35:
+			return precpred(_ctx, 48);
+		case 36:
+			return precpred(_ctx, 45);
+		case 37:
+			return precpred(_ctx, 44);
+		case 38:
+			return this.notLineTerminator();
+		case 39:
+			return precpred(_ctx, 43);
+		case 40:
+			return this.notLineTerminator();
+		case 41:
+			return precpred(_ctx, 15);
+		case 42:
+			return precpred(_ctx, 2);
+		case 43:
+			return precpred(_ctx, 1);
+		}
+		return true;
+	}
+	private boolean getter_sempred(GetterContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 44:
+			return this.n("get");
+		}
+		return true;
+	}
+	private boolean setter_sempred(SetterContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 45:
+			return this.n("set");
+		}
+		return true;
+	}
+	private boolean eos_sempred(EosContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 46:
+			return this.lineTerminatorAhead();
+		case 47:
+			return this.closeBrace();
+		}
+		return true;
+	}
