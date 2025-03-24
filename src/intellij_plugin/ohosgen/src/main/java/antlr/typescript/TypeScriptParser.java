@@ -1971,3 +1971,1935 @@ public class TypeScriptParser extends TypeScriptParserBase {
 		}
 		return _localctx;
 	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ArrayTypeContext extends ParserRuleContext {
+		public PrimaryTypeContext primaryType() {
+			return getRuleContext(PrimaryTypeContext.class,0);
+		}
+		public TerminalNode OpenBracket() { return getToken(TypeScriptParser.OpenBracket, 0); }
+		public TerminalNode CloseBracket() { return getToken(TypeScriptParser.CloseBracket, 0); }
+		public ArrayTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_arrayType; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterArrayType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitArrayType(this);
+		}
+	}
+
+	public final ArrayTypeContext arrayType() throws RecognitionException {
+		ArrayTypeContext _localctx = new ArrayTypeContext(_ctx, getState());
+		enterRule(_localctx, 40, RULE_arrayType);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(486);
+			primaryType(0);
+			setState(487);
+			if (!(this.notLineTerminator())) throw new FailedPredicateException(this, "this.notLineTerminator()");
+			setState(488);
+			match(OpenBracket);
+			setState(489);
+			match(CloseBracket);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TupleTypeContext extends ParserRuleContext {
+		public TerminalNode OpenBracket() { return getToken(TypeScriptParser.OpenBracket, 0); }
+		public TupleElementTypesContext tupleElementTypes() {
+			return getRuleContext(TupleElementTypesContext.class,0);
+		}
+		public TerminalNode CloseBracket() { return getToken(TypeScriptParser.CloseBracket, 0); }
+		public TupleTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_tupleType; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTupleType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTupleType(this);
+		}
+	}
+
+	public final TupleTypeContext tupleType() throws RecognitionException {
+		TupleTypeContext _localctx = new TupleTypeContext(_ctx, getState());
+		enterRule(_localctx, 42, RULE_tupleType);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(491);
+			match(OpenBracket);
+			setState(492);
+			tupleElementTypes();
+			setState(493);
+			match(CloseBracket);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TupleElementTypesContext extends ParserRuleContext {
+		public List<Type_Context> type_() {
+			return getRuleContexts(Type_Context.class);
+		}
+		public Type_Context type_(int i) {
+			return getRuleContext(Type_Context.class,i);
+		}
+		public List<TerminalNode> Comma() { return getTokens(TypeScriptParser.Comma); }
+		public TerminalNode Comma(int i) {
+			return getToken(TypeScriptParser.Comma, i);
+		}
+		public TupleElementTypesContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_tupleElementTypes; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTupleElementTypes(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTupleElementTypes(this);
+		}
+	}
+
+	public final TupleElementTypesContext tupleElementTypes() throws RecognitionException {
+		TupleElementTypesContext _localctx = new TupleElementTypesContext(_ctx, getState());
+		enterRule(_localctx, 44, RULE_tupleElementTypes);
+		int _la;
+		try {
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(495);
+			type_();
+			setState(500);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,24,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					setState(496);
+					match(Comma);
+					setState(497);
+					type_();
+					}
+					}
+				}
+				setState(502);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,24,_ctx);
+			}
+			setState(504);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Comma) {
+				{
+				setState(503);
+				match(Comma);
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class FunctionTypeContext extends ParserRuleContext {
+		public TerminalNode OpenParen() { return getToken(TypeScriptParser.OpenParen, 0); }
+		public TerminalNode CloseParen() { return getToken(TypeScriptParser.CloseParen, 0); }
+		public TerminalNode ARROW() { return getToken(TypeScriptParser.ARROW, 0); }
+		public Type_Context type_() {
+			return getRuleContext(Type_Context.class,0);
+		}
+		public TypeParametersContext typeParameters() {
+			return getRuleContext(TypeParametersContext.class,0);
+		}
+		public ParameterListContext parameterList() {
+			return getRuleContext(ParameterListContext.class,0);
+		}
+		public FunctionTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_functionType; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterFunctionType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitFunctionType(this);
+		}
+	}
+
+	public final FunctionTypeContext functionType() throws RecognitionException {
+		FunctionTypeContext _localctx = new FunctionTypeContext(_ctx, getState());
+		enterRule(_localctx, 46, RULE_functionType);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(507);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==LessThan) {
+				{
+				setState(506);
+				typeParameters();
+				}
+			}
+
+			setState(509);
+			match(OpenParen);
+			setState(511);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1729382256910401808L) != 0) || ((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & -4294967297L) != 0) || ((((_la - 135)) & ~0x3f) == 0 && ((1L << (_la - 135)) & 13L) != 0)) {
+				{
+				setState(510);
+				parameterList();
+				}
+			}
+
+			setState(513);
+			match(CloseParen);
+			setState(514);
+			match(ARROW);
+			setState(515);
+			type_();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ConstructorTypeContext extends ParserRuleContext {
+		public TerminalNode New() { return getToken(TypeScriptParser.New, 0); }
+		public TerminalNode OpenParen() { return getToken(TypeScriptParser.OpenParen, 0); }
+		public TerminalNode CloseParen() { return getToken(TypeScriptParser.CloseParen, 0); }
+		public TerminalNode ARROW() { return getToken(TypeScriptParser.ARROW, 0); }
+		public Type_Context type_() {
+			return getRuleContext(Type_Context.class,0);
+		}
+		public TypeParametersContext typeParameters() {
+			return getRuleContext(TypeParametersContext.class,0);
+		}
+		public ParameterListContext parameterList() {
+			return getRuleContext(ParameterListContext.class,0);
+		}
+		public ConstructorTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_constructorType; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterConstructorType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitConstructorType(this);
+		}
+	}
+
+	public final ConstructorTypeContext constructorType() throws RecognitionException {
+		ConstructorTypeContext _localctx = new ConstructorTypeContext(_ctx, getState());
+		enterRule(_localctx, 48, RULE_constructorType);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(517);
+			match(New);
+			setState(519);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==LessThan) {
+				{
+				setState(518);
+				typeParameters();
+				}
+			}
+
+			setState(521);
+			match(OpenParen);
+			setState(523);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1729382256910401808L) != 0) || ((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & -4294967297L) != 0) || ((((_la - 135)) & ~0x3f) == 0 && ((1L << (_la - 135)) & 13L) != 0)) {
+				{
+				setState(522);
+				parameterList();
+				}
+			}
+
+			setState(525);
+			match(CloseParen);
+			setState(526);
+			match(ARROW);
+			setState(527);
+			type_();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TypeQueryContext extends ParserRuleContext {
+		public TerminalNode Typeof() { return getToken(TypeScriptParser.Typeof, 0); }
+		public TypeQueryExpressionContext typeQueryExpression() {
+			return getRuleContext(TypeQueryExpressionContext.class,0);
+		}
+		public TypeQueryContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_typeQuery; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTypeQuery(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTypeQuery(this);
+		}
+	}
+
+	public final TypeQueryContext typeQuery() throws RecognitionException {
+		TypeQueryContext _localctx = new TypeQueryContext(_ctx, getState());
+		enterRule(_localctx, 50, RULE_typeQuery);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(529);
+			match(Typeof);
+			setState(530);
+			typeQueryExpression();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TypeQueryExpressionContext extends ParserRuleContext {
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public List<IdentifierNameContext> identifierName() {
+			return getRuleContexts(IdentifierNameContext.class);
+		}
+		public IdentifierNameContext identifierName(int i) {
+			return getRuleContext(IdentifierNameContext.class,i);
+		}
+		public List<TerminalNode> Dot() { return getTokens(TypeScriptParser.Dot); }
+		public TerminalNode Dot(int i) {
+			return getToken(TypeScriptParser.Dot, i);
+		}
+		public TypeQueryExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_typeQueryExpression; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTypeQueryExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTypeQueryExpression(this);
+		}
+	}
+
+	public final TypeQueryExpressionContext typeQueryExpression() throws RecognitionException {
+		TypeQueryExpressionContext _localctx = new TypeQueryExpressionContext(_ctx, getState());
+		enterRule(_localctx, 52, RULE_typeQueryExpression);
+		try {
+			int _alt;
+			setState(542);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,31,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(532);
+				identifier();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(536);
+				_errHandler.sync(this);
+				_alt = 1;
+				do {
+					switch (_alt) {
+					case 1:
+						{
+						{
+						setState(533);
+						identifierName();
+						setState(534);
+						match(Dot);
+						}
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
+					}
+					setState(538);
+					_errHandler.sync(this);
+					_alt = getInterpreter().adaptivePredict(_input,30,_ctx);
+				} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+				setState(540);
+				identifierName();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class PropertySignaturContext extends ParserRuleContext {
+		public PropertyNameContext propertyName() {
+			return getRuleContext(PropertyNameContext.class,0);
+		}
+		public TerminalNode ReadOnly() { return getToken(TypeScriptParser.ReadOnly, 0); }
+		public TerminalNode QuestionMark() { return getToken(TypeScriptParser.QuestionMark, 0); }
+		public TypeAnnotationContext typeAnnotation() {
+			return getRuleContext(TypeAnnotationContext.class,0);
+		}
+		public TerminalNode ARROW() { return getToken(TypeScriptParser.ARROW, 0); }
+		public Type_Context type_() {
+			return getRuleContext(Type_Context.class,0);
+		}
+		public PropertySignaturContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_propertySignatur; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterPropertySignatur(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitPropertySignatur(this);
+		}
+	}
+
+	public final PropertySignaturContext propertySignatur() throws RecognitionException {
+		PropertySignaturContext _localctx = new PropertySignaturContext(_ctx, getState());
+		enterRule(_localctx, 54, RULE_propertySignatur);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(545);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,32,_ctx) ) {
+			case 1:
+				{
+				setState(544);
+				match(ReadOnly);
+				}
+				break;
+			}
+			setState(547);
+			propertyName();
+			setState(549);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==QuestionMark) {
+				{
+				setState(548);
+				match(QuestionMark);
+				}
+			}
+
+			setState(552);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Colon) {
+				{
+				setState(551);
+				typeAnnotation();
+				}
+			}
+
+			setState(556);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==ARROW) {
+				{
+				setState(554);
+				match(ARROW);
+				setState(555);
+				type_();
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TypeAnnotationContext extends ParserRuleContext {
+		public TerminalNode Colon() { return getToken(TypeScriptParser.Colon, 0); }
+		public Type_Context type_() {
+			return getRuleContext(Type_Context.class,0);
+		}
+		public TypeAnnotationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_typeAnnotation; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTypeAnnotation(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTypeAnnotation(this);
+		}
+	}
+
+	public final TypeAnnotationContext typeAnnotation() throws RecognitionException {
+		TypeAnnotationContext _localctx = new TypeAnnotationContext(_ctx, getState());
+		enterRule(_localctx, 56, RULE_typeAnnotation);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(558);
+			match(Colon);
+			setState(559);
+			type_();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class CallSignatureContext extends ParserRuleContext {
+		public TerminalNode OpenParen() { return getToken(TypeScriptParser.OpenParen, 0); }
+		public TerminalNode CloseParen() { return getToken(TypeScriptParser.CloseParen, 0); }
+		public TypeParametersContext typeParameters() {
+			return getRuleContext(TypeParametersContext.class,0);
+		}
+		public ParameterListContext parameterList() {
+			return getRuleContext(ParameterListContext.class,0);
+		}
+		public TypeAnnotationContext typeAnnotation() {
+			return getRuleContext(TypeAnnotationContext.class,0);
+		}
+		public CallSignatureContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_callSignature; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterCallSignature(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitCallSignature(this);
+		}
+	}
+
+	public final CallSignatureContext callSignature() throws RecognitionException {
+		CallSignatureContext _localctx = new CallSignatureContext(_ctx, getState());
+		enterRule(_localctx, 58, RULE_callSignature);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(562);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==LessThan) {
+				{
+				setState(561);
+				typeParameters();
+				}
+			}
+
+			setState(564);
+			match(OpenParen);
+			setState(566);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1729382256910401808L) != 0) || ((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & -4294967297L) != 0) || ((((_la - 135)) & ~0x3f) == 0 && ((1L << (_la - 135)) & 13L) != 0)) {
+				{
+				setState(565);
+				parameterList();
+				}
+			}
+
+			setState(568);
+			match(CloseParen);
+			setState(570);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,38,_ctx) ) {
+			case 1:
+				{
+				setState(569);
+				typeAnnotation();
+				}
+				break;
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ParameterListContext extends ParserRuleContext {
+		public RestParameterContext restParameter() {
+			return getRuleContext(RestParameterContext.class,0);
+		}
+		public List<ParameterContext> parameter() {
+			return getRuleContexts(ParameterContext.class);
+		}
+		public ParameterContext parameter(int i) {
+			return getRuleContext(ParameterContext.class,i);
+		}
+		public List<TerminalNode> Comma() { return getTokens(TypeScriptParser.Comma); }
+		public TerminalNode Comma(int i) {
+			return getToken(TypeScriptParser.Comma, i);
+		}
+		public ParameterListContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_parameterList; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterParameterList(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitParameterList(this);
+		}
+	}
+
+	public final ParameterListContext parameterList() throws RecognitionException {
+		ParameterListContext _localctx = new ParameterListContext(_ctx, getState());
+		enterRule(_localctx, 60, RULE_parameterList);
+		int _la;
+		try {
+			int _alt;
+			setState(588);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case Ellipsis:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(572);
+				restParameter();
+				}
+				break;
+			case OpenBracket:
+			case OpenBrace:
+			case NullLiteral:
+			case BooleanLiteral:
+			case Break:
+			case Do:
+			case Instanceof:
+			case Typeof:
+			case Case:
+			case Else:
+			case New:
+			case Var:
+			case Catch:
+			case Finally:
+			case Return:
+			case Void:
+			case Continue:
+			case For:
+			case Switch:
+			case While:
+			case Debugger:
+			case Function_:
+			case This:
+			case With:
+			case Default:
+			case If:
+			case Throw:
+			case Delete:
+			case In:
+			case Try:
+			case As:
+			case From:
+			case ReadOnly:
+			case Async:
+			case Await:
+			case Yield:
+			case Class:
+			case Enum:
+			case Extends:
+			case Super:
+			case Const:
+			case Export:
+			case Import:
+			case Implements:
+			case Let:
+			case Private:
+			case Public:
+			case Interface:
+			case Package:
+			case Protected:
+			case Static:
+			case Any:
+			case Number:
+			case Never:
+			case Boolean:
+			case String:
+			case Unique:
+			case Symbol:
+			case Undefined:
+			case Object:
+			case Of:
+			case KeyOf:
+			case TypeAlias:
+			case Constructor:
+			case Namespace:
+			case Require:
+			case Module:
+			case Abstract:
+			case At:
+			case Identifier:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(573);
+				parameter();
+				setState(578);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,39,_ctx);
+				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+					if ( _alt==1 ) {
+						{
+						{
+						setState(574);
+						match(Comma);
+						setState(575);
+						parameter();
+						}
+						}
+					}
+					setState(580);
+					_errHandler.sync(this);
+					_alt = getInterpreter().adaptivePredict(_input,39,_ctx);
+				}
+				setState(583);
+				_errHandler.sync(this);
+				switch ( getInterpreter().adaptivePredict(_input,40,_ctx) ) {
+				case 1:
+					{
+					setState(581);
+					match(Comma);
+					setState(582);
+					restParameter();
+					}
+					break;
+				}
+				setState(586);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Comma) {
+					{
+					setState(585);
+					match(Comma);
+					}
+				}
+
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class RequiredParameterListContext extends ParserRuleContext {
+		public List<RequiredParameterContext> requiredParameter() {
+			return getRuleContexts(RequiredParameterContext.class);
+		}
+		public RequiredParameterContext requiredParameter(int i) {
+			return getRuleContext(RequiredParameterContext.class,i);
+		}
+		public List<TerminalNode> Comma() { return getTokens(TypeScriptParser.Comma); }
+		public TerminalNode Comma(int i) {
+			return getToken(TypeScriptParser.Comma, i);
+		}
+		public RequiredParameterListContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_requiredParameterList; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterRequiredParameterList(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitRequiredParameterList(this);
+		}
+	}
+
+	public final RequiredParameterListContext requiredParameterList() throws RecognitionException {
+		RequiredParameterListContext _localctx = new RequiredParameterListContext(_ctx, getState());
+		enterRule(_localctx, 62, RULE_requiredParameterList);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(590);
+			requiredParameter();
+			setState(595);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==Comma) {
+				{
+				{
+				setState(591);
+				match(Comma);
+				setState(592);
+				requiredParameter();
+				}
+				}
+				setState(597);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ParameterContext extends ParserRuleContext {
+		public RequiredParameterContext requiredParameter() {
+			return getRuleContext(RequiredParameterContext.class,0);
+		}
+		public OptionalParameterContext optionalParameter() {
+			return getRuleContext(OptionalParameterContext.class,0);
+		}
+		public ParameterContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_parameter; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterParameter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitParameter(this);
+		}
+	}
+
+	public final ParameterContext parameter() throws RecognitionException {
+		ParameterContext _localctx = new ParameterContext(_ctx, getState());
+		enterRule(_localctx, 64, RULE_parameter);
+		try {
+			setState(600);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,44,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(598);
+				requiredParameter();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(599);
+				optionalParameter();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class OptionalParameterContext extends ParserRuleContext {
+		public IdentifierOrPatternContext identifierOrPattern() {
+			return getRuleContext(IdentifierOrPatternContext.class,0);
+		}
+		public DecoratorListContext decoratorList() {
+			return getRuleContext(DecoratorListContext.class,0);
+		}
+		public TerminalNode QuestionMark() { return getToken(TypeScriptParser.QuestionMark, 0); }
+		public InitializerContext initializer() {
+			return getRuleContext(InitializerContext.class,0);
+		}
+		public AccessibilityModifierContext accessibilityModifier() {
+			return getRuleContext(AccessibilityModifierContext.class,0);
+		}
+		public TypeAnnotationContext typeAnnotation() {
+			return getRuleContext(TypeAnnotationContext.class,0);
+		}
+		public OptionalParameterContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_optionalParameter; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterOptionalParameter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitOptionalParameter(this);
+		}
+	}
+
+	public final OptionalParameterContext optionalParameter() throws RecognitionException {
+		OptionalParameterContext _localctx = new OptionalParameterContext(_ctx, getState());
+		enterRule(_localctx, 66, RULE_optionalParameter);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(603);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==At) {
+				{
+				setState(602);
+				decoratorList();
+				}
+			}
+
+			{
+			setState(606);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,46,_ctx) ) {
+			case 1:
+				{
+				setState(605);
+				accessibilityModifier();
+				}
+				break;
+			}
+			setState(608);
+			identifierOrPattern();
+			setState(617);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case QuestionMark:
+				{
+				setState(609);
+				match(QuestionMark);
+				setState(611);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Colon) {
+					{
+					setState(610);
+					typeAnnotation();
+					}
+				}
+
+				}
+				break;
+			case Assign:
+			case Colon:
+				{
+				setState(614);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Colon) {
+					{
+					setState(613);
+					typeAnnotation();
+					}
+				}
+
+				setState(616);
+				initializer();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class RestParameterContext extends ParserRuleContext {
+		public TerminalNode Ellipsis() { return getToken(TypeScriptParser.Ellipsis, 0); }
+		public SingleExpressionContext singleExpression() {
+			return getRuleContext(SingleExpressionContext.class,0);
+		}
+		public TypeAnnotationContext typeAnnotation() {
+			return getRuleContext(TypeAnnotationContext.class,0);
+		}
+		public RestParameterContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_restParameter; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterRestParameter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitRestParameter(this);
+		}
+	}
+
+	public final RestParameterContext restParameter() throws RecognitionException {
+		RestParameterContext _localctx = new RestParameterContext(_ctx, getState());
+		enterRule(_localctx, 68, RULE_restParameter);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(619);
+			match(Ellipsis);
+			setState(620);
+			singleExpression(0);
+			setState(622);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Colon) {
+				{
+				setState(621);
+				typeAnnotation();
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class RequiredParameterContext extends ParserRuleContext {
+		public IdentifierOrPatternContext identifierOrPattern() {
+			return getRuleContext(IdentifierOrPatternContext.class,0);
+		}
+		public DecoratorListContext decoratorList() {
+			return getRuleContext(DecoratorListContext.class,0);
+		}
+		public AccessibilityModifierContext accessibilityModifier() {
+			return getRuleContext(AccessibilityModifierContext.class,0);
+		}
+		public TypeAnnotationContext typeAnnotation() {
+			return getRuleContext(TypeAnnotationContext.class,0);
+		}
+		public RequiredParameterContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_requiredParameter; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterRequiredParameter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitRequiredParameter(this);
+		}
+	}
+
+	public final RequiredParameterContext requiredParameter() throws RecognitionException {
+		RequiredParameterContext _localctx = new RequiredParameterContext(_ctx, getState());
+		enterRule(_localctx, 70, RULE_requiredParameter);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(625);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==At) {
+				{
+				setState(624);
+				decoratorList();
+				}
+			}
+
+			setState(628);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,52,_ctx) ) {
+			case 1:
+				{
+				setState(627);
+				accessibilityModifier();
+				}
+				break;
+			}
+			setState(630);
+			identifierOrPattern();
+			setState(632);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Colon) {
+				{
+				setState(631);
+				typeAnnotation();
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class AccessibilityModifierContext extends ParserRuleContext {
+		public TerminalNode Public() { return getToken(TypeScriptParser.Public, 0); }
+		public TerminalNode Private() { return getToken(TypeScriptParser.Private, 0); }
+		public TerminalNode Protected() { return getToken(TypeScriptParser.Protected, 0); }
+		public AccessibilityModifierContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_accessibilityModifier; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterAccessibilityModifier(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitAccessibilityModifier(this);
+		}
+	}
+
+	public final AccessibilityModifierContext accessibilityModifier() throws RecognitionException {
+		AccessibilityModifierContext _localctx = new AccessibilityModifierContext(_ctx, getState());
+		enterRule(_localctx, 72, RULE_accessibilityModifier);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(634);
+			_la = _input.LA(1);
+			if ( !(((((_la - 112)) & ~0x3f) == 0 && ((1L << (_la - 112)) & 19L) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class IdentifierOrPatternContext extends ParserRuleContext {
+		public IdentifierNameContext identifierName() {
+			return getRuleContext(IdentifierNameContext.class,0);
+		}
+		public BindingPatternContext bindingPattern() {
+			return getRuleContext(BindingPatternContext.class,0);
+		}
+		public IdentifierOrPatternContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_identifierOrPattern; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterIdentifierOrPattern(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitIdentifierOrPattern(this);
+		}
+	}
+
+	public final IdentifierOrPatternContext identifierOrPattern() throws RecognitionException {
+		IdentifierOrPatternContext _localctx = new IdentifierOrPatternContext(_ctx, getState());
+		enterRule(_localctx, 74, RULE_identifierOrPattern);
+		try {
+			setState(638);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case NullLiteral:
+			case BooleanLiteral:
+			case Break:
+			case Do:
+			case Instanceof:
+			case Typeof:
+			case Case:
+			case Else:
+			case New:
+			case Var:
+			case Catch:
+			case Finally:
+			case Return:
+			case Void:
+			case Continue:
+			case For:
+			case Switch:
+			case While:
+			case Debugger:
+			case Function_:
+			case This:
+			case With:
+			case Default:
+			case If:
+			case Throw:
+			case Delete:
+			case In:
+			case Try:
+			case As:
+			case From:
+			case ReadOnly:
+			case Async:
+			case Await:
+			case Yield:
+			case Class:
+			case Enum:
+			case Extends:
+			case Super:
+			case Const:
+			case Export:
+			case Import:
+			case Implements:
+			case Let:
+			case Private:
+			case Public:
+			case Interface:
+			case Package:
+			case Protected:
+			case Static:
+			case Any:
+			case Number:
+			case Never:
+			case Boolean:
+			case String:
+			case Unique:
+			case Symbol:
+			case Undefined:
+			case Object:
+			case Of:
+			case KeyOf:
+			case TypeAlias:
+			case Constructor:
+			case Namespace:
+			case Require:
+			case Module:
+			case Abstract:
+			case Identifier:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(636);
+				identifierName();
+				}
+				break;
+			case OpenBracket:
+			case OpenBrace:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(637);
+				bindingPattern();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ConstructSignatureContext extends ParserRuleContext {
+		public TerminalNode New() { return getToken(TypeScriptParser.New, 0); }
+		public TerminalNode OpenParen() { return getToken(TypeScriptParser.OpenParen, 0); }
+		public TerminalNode CloseParen() { return getToken(TypeScriptParser.CloseParen, 0); }
+		public TypeParametersContext typeParameters() {
+			return getRuleContext(TypeParametersContext.class,0);
+		}
+		public ParameterListContext parameterList() {
+			return getRuleContext(ParameterListContext.class,0);
+		}
+		public TypeAnnotationContext typeAnnotation() {
+			return getRuleContext(TypeAnnotationContext.class,0);
+		}
+		public ConstructSignatureContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_constructSignature; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterConstructSignature(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitConstructSignature(this);
+		}
+	}
+
+	public final ConstructSignatureContext constructSignature() throws RecognitionException {
+		ConstructSignatureContext _localctx = new ConstructSignatureContext(_ctx, getState());
+		enterRule(_localctx, 76, RULE_constructSignature);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(640);
+			match(New);
+			setState(642);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==LessThan) {
+				{
+				setState(641);
+				typeParameters();
+				}
+			}
+
+			setState(644);
+			match(OpenParen);
+			setState(646);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1729382256910401808L) != 0) || ((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & -4294967297L) != 0) || ((((_la - 135)) & ~0x3f) == 0 && ((1L << (_la - 135)) & 13L) != 0)) {
+				{
+				setState(645);
+				parameterList();
+				}
+			}
+
+			setState(648);
+			match(CloseParen);
+			setState(650);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Colon) {
+				{
+				setState(649);
+				typeAnnotation();
+				}
+			}
+
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class IndexSignatureContext extends ParserRuleContext {
+		public TerminalNode OpenBracket() { return getToken(TypeScriptParser.OpenBracket, 0); }
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public TerminalNode Colon() { return getToken(TypeScriptParser.Colon, 0); }
+		public TerminalNode CloseBracket() { return getToken(TypeScriptParser.CloseBracket, 0); }
+		public TypeAnnotationContext typeAnnotation() {
+			return getRuleContext(TypeAnnotationContext.class,0);
+		}
+		public TerminalNode Number() { return getToken(TypeScriptParser.Number, 0); }
+		public TerminalNode String() { return getToken(TypeScriptParser.String, 0); }
+		public IndexSignatureContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_indexSignature; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterIndexSignature(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitIndexSignature(this);
+		}
+	}
+
+	public final IndexSignatureContext indexSignature() throws RecognitionException {
+		IndexSignatureContext _localctx = new IndexSignatureContext(_ctx, getState());
+		enterRule(_localctx, 78, RULE_indexSignature);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(652);
+			match(OpenBracket);
+			setState(653);
+			identifier();
+			setState(654);
+			match(Colon);
+			setState(655);
+			_la = _input.LA(1);
+			if ( !(_la==Number || _la==String) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			setState(656);
+			match(CloseBracket);
+			setState(657);
+			typeAnnotation();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class MethodSignatureContext extends ParserRuleContext {
+		public PropertyNameContext propertyName() {
+			return getRuleContext(PropertyNameContext.class,0);
+		}
+		public CallSignatureContext callSignature() {
+			return getRuleContext(CallSignatureContext.class,0);
+		}
+		public TerminalNode QuestionMark() { return getToken(TypeScriptParser.QuestionMark, 0); }
+		public MethodSignatureContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_methodSignature; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterMethodSignature(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitMethodSignature(this);
+		}
+	}
+
+	public final MethodSignatureContext methodSignature() throws RecognitionException {
+		MethodSignatureContext _localctx = new MethodSignatureContext(_ctx, getState());
+		enterRule(_localctx, 80, RULE_methodSignature);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(659);
+			propertyName();
+			setState(661);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==QuestionMark) {
+				{
+				setState(660);
+				match(QuestionMark);
+				}
+			}
+
+			setState(663);
+			callSignature();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TypeAliasDeclarationContext extends ParserRuleContext {
+		public TerminalNode TypeAlias() { return getToken(TypeScriptParser.TypeAlias, 0); }
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public TerminalNode Assign() { return getToken(TypeScriptParser.Assign, 0); }
+		public Type_Context type_() {
+			return getRuleContext(Type_Context.class,0);
+		}
+		public EosContext eos() {
+			return getRuleContext(EosContext.class,0);
+		}
+		public TerminalNode Export() { return getToken(TypeScriptParser.Export, 0); }
+		public TypeParametersContext typeParameters() {
+			return getRuleContext(TypeParametersContext.class,0);
+		}
+		public TypeAliasDeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_typeAliasDeclaration; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterTypeAliasDeclaration(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitTypeAliasDeclaration(this);
+		}
+	}
+
+	public final TypeAliasDeclarationContext typeAliasDeclaration() throws RecognitionException {
+		TypeAliasDeclarationContext _localctx = new TypeAliasDeclarationContext(_ctx, getState());
+		enterRule(_localctx, 82, RULE_typeAliasDeclaration);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(666);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Export) {
+				{
+				setState(665);
+				match(Export);
+				}
+			}
+
+			setState(668);
+			match(TypeAlias);
+			setState(669);
+			identifier();
+			setState(671);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==LessThan) {
+				{
+				setState(670);
+				typeParameters();
+				}
+			}
+
+			setState(673);
+			match(Assign);
+			setState(674);
+			type_();
+			setState(675);
+			eos();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ConstructorDeclarationContext extends ParserRuleContext {
+		public TerminalNode Constructor() { return getToken(TypeScriptParser.Constructor, 0); }
+		public TerminalNode OpenParen() { return getToken(TypeScriptParser.OpenParen, 0); }
+		public TerminalNode CloseParen() { return getToken(TypeScriptParser.CloseParen, 0); }
+		public AccessibilityModifierContext accessibilityModifier() {
+			return getRuleContext(AccessibilityModifierContext.class,0);
+		}
+		public FormalParameterListContext formalParameterList() {
+			return getRuleContext(FormalParameterListContext.class,0);
+		}
+		public TerminalNode SemiColon() { return getToken(TypeScriptParser.SemiColon, 0); }
+		public TerminalNode OpenBrace() { return getToken(TypeScriptParser.OpenBrace, 0); }
+		public FunctionBodyContext functionBody() {
+			return getRuleContext(FunctionBodyContext.class,0);
+		}
+		public TerminalNode CloseBrace() { return getToken(TypeScriptParser.CloseBrace, 0); }
+		public ConstructorDeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_constructorDeclaration; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterConstructorDeclaration(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitConstructorDeclaration(this);
+		}
+	}
+
+	public final ConstructorDeclarationContext constructorDeclaration() throws RecognitionException {
+		ConstructorDeclarationContext _localctx = new ConstructorDeclarationContext(_ctx, getState());
+		enterRule(_localctx, 84, RULE_constructorDeclaration);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(678);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (((((_la - 112)) & ~0x3f) == 0 && ((1L << (_la - 112)) & 19L) != 0)) {
+				{
+				setState(677);
+				accessibilityModifier();
+				}
+			}
+
+			setState(680);
+			match(Constructor);
+			setState(681);
+			match(OpenParen);
+			setState(683);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 131344L) != 0) || ((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & -4294967297L) != 0) || ((((_la - 135)) & ~0x3f) == 0 && ((1L << (_la - 135)) & 13L) != 0)) {
+				{
+				setState(682);
+				formalParameterList();
+				}
+			}
+
+			setState(685);
+			match(CloseParen);
+			setState(691);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,63,_ctx) ) {
+			case 1:
+				{
+				{
+				setState(686);
+				match(OpenBrace);
+				setState(687);
+				functionBody();
+				setState(688);
+				match(CloseBrace);
+				}
+				}
+				break;
+			case 2:
+				{
+				setState(690);
+				match(SemiColon);
+				}
+				break;
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class InterfaceDeclarationContext extends ParserRuleContext {
+		public TerminalNode Interface() { return getToken(TypeScriptParser.Interface, 0); }
+		public IdentifierContext identifier() {
+			return getRuleContext(IdentifierContext.class,0);
+		}
+		public ObjectTypeContext objectType() {
+			return getRuleContext(ObjectTypeContext.class,0);
+		}
+		public TerminalNode Export() { return getToken(TypeScriptParser.Export, 0); }
+		public TerminalNode Declare() { return getToken(TypeScriptParser.Declare, 0); }
+		public TypeParametersContext typeParameters() {
+			return getRuleContext(TypeParametersContext.class,0);
+		}
+		public InterfaceExtendsClauseContext interfaceExtendsClause() {
+			return getRuleContext(InterfaceExtendsClauseContext.class,0);
+		}
+		public TerminalNode SemiColon() { return getToken(TypeScriptParser.SemiColon, 0); }
+		public InterfaceDeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_interfaceDeclaration; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterInterfaceDeclaration(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitInterfaceDeclaration(this);
+		}
+	}
+
+	public final InterfaceDeclarationContext interfaceDeclaration() throws RecognitionException {
+		InterfaceDeclarationContext _localctx = new InterfaceDeclarationContext(_ctx, getState());
+		enterRule(_localctx, 86, RULE_interfaceDeclaration);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(694);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Export) {
+				{
+				setState(693);
+				match(Export);
+				}
+			}
+
+			setState(697);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Declare) {
+				{
+				setState(696);
+				match(Declare);
+				}
+			}
+
+			setState(699);
+			match(Interface);
+			setState(700);
+			identifier();
+			setState(702);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==LessThan) {
+				{
+				setState(701);
+				typeParameters();
+				}
+			}
+
+			setState(705);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Extends) {
+				{
+				setState(704);
+				interfaceExtendsClause();
+				}
+			}
+
+			setState(707);
+			objectType();
+			setState(709);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,68,_ctx) ) {
+			case 1:
+				{
+				setState(708);
+				match(SemiColon);
+				}
+				break;
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class InterfaceExtendsClauseContext extends ParserRuleContext {
+		public TerminalNode Extends() { return getToken(TypeScriptParser.Extends, 0); }
+		public ClassOrInterfaceTypeListContext classOrInterfaceTypeList() {
+			return getRuleContext(ClassOrInterfaceTypeListContext.class,0);
+		}
+		public InterfaceExtendsClauseContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_interfaceExtendsClause; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).enterInterfaceExtendsClause(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof TypeScriptParserListener ) ((TypeScriptParserListener)listener).exitInterfaceExtendsClause(this);
+		}
+	}
+
+	public final InterfaceExtendsClauseContext interfaceExtendsClause() throws RecognitionException {
+		InterfaceExtendsClauseContext _localctx = new InterfaceExtendsClauseContext(_ctx, getState());
+		enterRule(_localctx, 88, RULE_interfaceExtendsClause);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(711);
+			match(Extends);
+			setState(712);
+			classOrInterfaceTypeList();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
