@@ -19,8 +19,6 @@ import grammar.*;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.junit.jupiter.api.Test;
-import utils.TsToken;
-
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
