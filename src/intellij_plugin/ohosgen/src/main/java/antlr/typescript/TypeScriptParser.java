@@ -13,18 +13,14 @@
  * limitations under the License.
  */
 
-package antlr;
+package antlr.typescript;
 
 // Generated from TypeScriptParser.g4 by ANTLR 4.13.2
-import antlr.TypeScriptParserBase;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue", "this-escape"})
 public class TypeScriptParser extends TypeScriptParserBase {
