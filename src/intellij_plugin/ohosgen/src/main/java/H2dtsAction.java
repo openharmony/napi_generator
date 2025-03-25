@@ -58,7 +58,7 @@ public class H2dtsAction extends AnAction {
      * @param file 文件
      */
     private void doProgress(Project project, VirtualFile file) {
-        ParseTask pt = new ParseTask(project, "C", true);
+        ParseTask pt = new ParseTask(project, "CPP", true);
         pt.setFile(file);
         ProgressManager.getInstance().run(pt);
     }
