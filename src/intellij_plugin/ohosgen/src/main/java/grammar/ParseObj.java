@@ -35,6 +35,7 @@ public class ParseObj extends GBaseObject {
     private List<FuncObj> funcList;
     private List<TypeObj> typeList;
     private List<InterfaceObject> interfaceList;
+    private List<ParamObj> varList;
 
     /**
      * 构造函数
@@ -47,6 +48,7 @@ public class ParseObj extends GBaseObject {
         funcList = new CopyOnWriteArrayList<>();
         typeList = new CopyOnWriteArrayList<>();
         interfaceList = new CopyOnWriteArrayList<>();
+        varList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -104,6 +106,15 @@ public class ParseObj extends GBaseObject {
     }
 
     /**
+     * 设置var对象
+     *
+     * @param varList 变量对象
+     */
+    public void setVarList(List<ParamObj> varList) {
+        this.varList = varList;
+    }
+
+    /**
      * 获取解析enum对象
      *
      * @return 解析后enum列表
@@ -155,6 +166,15 @@ public class ParseObj extends GBaseObject {
      */
     public List<TypeObj> getTypeList() {
         return typeList;
+    }
+
+    /**
+     * 获取变量列表
+     *
+     * @return 变量列表
+     */
+    public List<ParamObj> getVarList() {
+        return varList;
     }
 
     /**
