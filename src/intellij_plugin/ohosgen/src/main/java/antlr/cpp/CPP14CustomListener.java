@@ -19,6 +19,7 @@ import antlr.ParseBaseListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import grammar.*;
+import org.apache.xmlbeans.impl.xb.xsdschema.UnionDocument;
 import utils.Constants;
 import utils.CppToken;
 
@@ -244,17 +245,29 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
     public void enterClassSpecifier(CPP14Parser.ClassSpecifierContext ctx) {
         super.enterClassSpecifier(ctx);
         System.out.println("c/cpp class: " + ctx.getText());
-        String key = ctx.classHead().classKey().getText();
-        if (key.equals(CppToken.CPP_TOKEN_STRUCT)) {
-            StructObj so = new StructObj();
-            String name = (ctx.classHead() != null) && (ctx.classHead().classHeadName() != null) ?
-                    ctx.classHead().classHeadName().getText() : "";
-            so.setName(name);
-            this.currentObject = so;
-            this.currentToken = CppToken.CPP_TOKEN_STRUCT;
-            this.structObjList.add(so);
+        if (ctx.classHead() != null && ctx.classHead().classKey() != null) {
+            String key = ctx.classHead().classKey().getText();
+            if (key.equals(CppToken.CPP_TOKEN_STRUCT)) {
+                StructObj so = new StructObj();
+                String name = (ctx.classHead().classHeadName() != null) ?
+                        ctx.classHead().classHeadName().getText() : "";
+                so.setName(name);
+                this.currentObject = so;
+                this.currentToken = CppToken.CPP_TOKEN_STRUCT;
+                this.structObjList.add(so);
+            }
+        } else if (ctx.classHead() != null && ctx.classHead().Union() != null) {
+            String key = ctx.classHead().Union().getText();
+            if (key.equals(CppToken.CPP_TOKEN_UNION)) {
+                UnionObj uo = new UnionObj();
+                String name = (ctx.classHead().classHeadName() != null) ?
+                        ctx.classHead().classHeadName().getText() : "";
+                uo.setName(name);
+                this.currentObject = uo;
+                this.currentToken = CppToken.CPP_TOKEN_UNION;
+                this.unionObjList.add(uo);
+            }
         }
-
     }
 
     @Override
@@ -276,6 +289,16 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
                 po.setName(mdc.getText());
                 po.setType(type);
                 so.addMember(po);
+            }
+        } else if (this.currentObject instanceof  UnionObj uo) {
+            String type = ctx.declSpecifierSeq().getText();
+            String name = ctx.memberDeclaratorList().getText();
+            List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
+            for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
+                ParamObj po = new ParamObj();
+                po.setName(mdc.getText());
+                po.setType(type);
+                uo.addMember(po);
             }
         }
 
@@ -332,6 +355,8 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
             eo.setAlias(ctx.getText());
         } else if (this.currentObject instanceof StructObj so) {
             so.setAlias(ctx.getText());
+        } else if (this.currentObject instanceof UnionObj uo) {
+            uo.setAlias(ctx.getText());
         }
 
     }
