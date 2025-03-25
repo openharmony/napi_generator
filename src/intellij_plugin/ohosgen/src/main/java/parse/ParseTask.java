@@ -99,7 +99,7 @@ public class ParseTask extends Task.Backgroundable implements BaseListener {
                 // 模拟处理每一行
                 indicator.setFraction((i + 1) / (double) lines.length);
                 indicator.setText("Dts2cpp steps : " + (i + 1) + "/" + lines.length);
-//                System.out.println("Dts2cpp steps : " + (i + 1) + "/" + lines.length);
+
                 // 这里添加实际业务逻辑
                 processLine(lines[i]);
 

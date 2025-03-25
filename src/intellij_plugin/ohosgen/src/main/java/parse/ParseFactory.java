@@ -36,7 +36,7 @@ public class ParseFactory {
      */
     public static ParseBase getParser(String type) {
         return switch (type.toUpperCase(Locale.ROOT)) {
-            case "C" -> new ParseC();
+            case "CPP" -> new ParseCpp();
             case "TS" -> new ParseTs();
             default -> {
                 System.out.println("Unsupported parser type: " + type);
