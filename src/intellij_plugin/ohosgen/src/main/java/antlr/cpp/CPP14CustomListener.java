@@ -73,7 +73,6 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
      * 获取关键字
      *
      * @param currentToken 当前token
-     * @return 关键字
      */
     public void setCurrentToken(String currentToken) {
         this.currentToken = currentToken;
