@@ -363,6 +363,611 @@ class ParseCppTest {
     }
 
     @Test
+    void parseCStreamClass1() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "class tree_el {\n" +
+                "   int val;\n" +
+                "   struct tree_el * right, * left;\n" +
+                "};";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(1, col.size());
+        ClassObj co = col.get(0);
+        assertEquals("tree_el", co.getName());
+
+        List<ParamObj> pl = co.getParamList();
+        assertEquals(3, pl.size());
+        assertEquals("val", pl.get(0).getName());
+        assertEquals("int", pl.get(0).getType());
+        assertEquals("structtree_el", pl.get(1).getType());
+        assertEquals("*right", pl.get(1).getName());
+        assertEquals("structtree_el", pl.get(2).getType());
+        assertEquals("*left", pl.get(2).getName());
+
+    }
+
+    @Test
+    void parseCStreamClass2() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "class {\n" +
+                "   int val;\n" +
+                "   struct tree_el * right, * left;\n" +
+                "};";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(1, col.size());
+        ClassObj co = col.get(0);
+
+        List<ParamObj> pl = co.getParamList();
+        assertEquals(3, pl.size());
+        assertEquals("val", pl.get(0).getName());
+        assertEquals("int", pl.get(0).getType());
+        assertEquals("structtree_el", pl.get(1).getType());
+        assertEquals("*right", pl.get(1).getName());
+        assertEquals("structtree_el", pl.get(2).getType());
+        assertEquals("*left", pl.get(2).getName());
+
+    }
+    @Test
+    void parseCStreamClass3() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "typedef class {\n" +
+                "   int val;\n" +
+                "   struct tree_el * right, * left;\n" +
+                "} tree_el_T;";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(1, col.size());
+        ClassObj co = col.get(0);
+        assertEquals("tree_el_T", co.getAlias());
+
+        List<ParamObj> pl = co.getParamList();
+        assertEquals(3, pl.size());
+        assertEquals("val", pl.get(0).getName());
+        assertEquals("int", pl.get(0).getType());
+        assertEquals("structtree_el", pl.get(1).getType());
+        assertEquals("*right", pl.get(1).getName());
+        assertEquals("structtree_el", pl.get(2).getType());
+        assertEquals("*left", pl.get(2).getName());
+
+    }
+
+    @Test
+    void parseCStreamClass4() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "typedef class tree_el {\n" +
+                "   int val;\n" +
+                "   struct tree_el * right, * left;\n" +
+                "} tree_el_T;";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ClassObj> col = po.getClassList();
+        assertEquals(1, col.size());
+        ClassObj co = col.get(0);
+        assertEquals("tree_el", co.getName());
+        assertEquals("tree_el_T", co.getAlias());
+
+        List<ParamObj> pl = co.getParamList();
+        assertEquals(3, pl.size());
+        assertEquals("val", pl.get(0).getName());
+        assertEquals("int", pl.get(0).getType());
+        assertEquals("structtree_el", pl.get(1).getType());
+        assertEquals("*right", pl.get(1).getName());
+        assertEquals("structtree_el", pl.get(2).getType());
+        assertEquals("*left", pl.get(2).getName());
+
+    }
+
+    @Test
+    void parseCStreamFunction1() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo();";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+    }
+
+    @Test
+    void parseCStreamFunction2() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( short s );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("s", pl.get(0).getName());
+        assertEquals("short", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction3() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( short int si );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("si", pl.get(0).getName());
+        assertEquals("short int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction4() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( signed short ss );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("ss", pl.get(0).getName());
+        assertEquals("signed short", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction5() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( signed short int ssi);";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("ssi", pl.get(0).getName());
+        assertEquals("signed short int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction6() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( unsigned short us );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("us", pl.get(0).getName());
+        assertEquals("unsigned short", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction7() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( unsigned short int usi );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("usi", pl.get(0).getName());
+        assertEquals("unsigned short int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction8() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( int i);";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("i", pl.get(0).getName());
+        assertEquals("int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction9() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( signed s );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("s", pl.get(0).getName());
+        assertEquals("signed", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction10() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( signed int si );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("si", pl.get(0).getName());
+        assertEquals("signed int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction11() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( unsigned u );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("u", pl.get(0).getName());
+        assertEquals("unsigned", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction12() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( unsigned int ui );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("ui", pl.get(0).getName());
+        assertEquals("unsigned int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction13() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( long l );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("l", pl.get(0).getName());
+        assertEquals("long", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction14() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( long int li );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("li", pl.get(0).getName());
+        assertEquals("long int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction15() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( signed long sl );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("sl", pl.get(0).getName());
+        assertEquals("signed long", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction16() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( signed long int sli );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("sli", pl.get(0).getName());
+        assertEquals("signed long int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction17() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( unsigned long ul );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("ul", pl.get(0).getName());
+        assertEquals("unsigned long", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction18() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( unsigned long int uli );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("uli", pl.get(0).getName());
+        assertEquals("unsigned long int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction19() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( long long ll );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("ll", pl.get(0).getName());
+        assertEquals("long long", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction20() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( long long int lli );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("lli", pl.get(0).getName());
+        assertEquals("long long int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction21() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( signed long long sll );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("sll", pl.get(0).getName());
+        assertEquals("signed long long", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction22() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( signed long long int slli );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("slli", pl.get(0).getName());
+        assertEquals("signed long long int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction23() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( unsigned long long ull );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("ull", pl.get(0).getName());
+        assertEquals("unsigned long long", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction24() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( unsigned long long int ulli );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("ulli", pl.get(0).getName());
+        assertEquals("unsigned long long int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction25() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( double d );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("d", pl.get(0).getName());
+        assertEquals("double", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction26() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( long double ld );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("ld", pl.get(0).getName());
+        assertEquals("long double", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction27() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( unsigned long );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("", pl.get(0).getName());
+        assertEquals("unsigned long", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction28() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( unsigned long int );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("", pl.get(0).getName());
+        assertEquals("unsigned long int", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction29() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( long long );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("", pl.get(0).getName());
+        assertEquals("long long", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFunction30() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "int foo( long long int );";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj fo = fol.get(0);
+        assertEquals("foo", fo.getName());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("", pl.get(0).getName());
+        assertEquals("long long int", pl.get(0).getType());
+    }
+
+    @Test
     void genParseResult() {
     }
 

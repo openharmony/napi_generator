@@ -71,6 +71,11 @@ public class FuncObj extends GBaseObject {
     private List<String> tempList;
 
     /**
+     * 声明类型
+     */
+    private List<String> decList;
+
+    /**
      * 构造函数
      */
     public FuncObj() {
@@ -80,6 +85,7 @@ public class FuncObj extends GBaseObject {
         this.retValue = TsToken.TS_TOKEN_VOID;
         this.paramList = new CopyOnWriteArrayList<>();
         this.tempList = new CopyOnWriteArrayList<>();
+        this.decList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -297,5 +303,14 @@ public class FuncObj extends GBaseObject {
         po.setType(type);
         po.setDecorator(decorator);
         this.paramList.add(po);
+    }
+
+    /**
+     * 添加声明类型
+     *
+     * @param decName
+     */
+    public void addDecl(String decName) {
+        this.decList.add(decName);
     }
 }
