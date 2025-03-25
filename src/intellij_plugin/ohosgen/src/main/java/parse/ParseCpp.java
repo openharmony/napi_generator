@@ -40,7 +40,7 @@ import utils.BaseEvent;
  * @since 2025-02-28
  * @version 1.0
  */
-public class ParseC extends ParseBase {
+public class ParseCpp extends ParseBase {
     /**
      * 根据名字解析文件
      *
@@ -112,7 +112,13 @@ public class ParseC extends ParseBase {
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.walk(tsc, tree);
 
-            System.out.println();
+            String json = tsc.dump2JsonStr();
+            System.out.println("cpp parse result: " + json);
+
+            ParseObj po = genParseResult(tsc);
+
+            System.out.println("cpp parse char stream finish");
+            return po;
         } catch (RecognitionException e) {
             System.out.println("parse cstream e.printStackTrace(): " + e.getMessage());
         }
@@ -129,7 +135,21 @@ public class ParseC extends ParseBase {
      */
     @Override
     protected ParseObj genParseResult(ParseBaseListener pbl) {
-        return null;
+        if (!(pbl instanceof CPP14CustomListener tcl)) {
+            return null;
+        }
+
+        ParseObj po = new ParseObj();
+
+        po.setInterfaceList(tcl.getInterfaceObjList());
+        po.setEnumList(tcl.getEnumObjList());
+        po.setClassList(tcl.getClassObjList());
+        po.setFuncList(tcl.getFuncObjList());
+        po.setStructList(tcl.getStructObjList());
+        po.setTypeList(tcl.getTypeObjList());
+        po.setUnionList(tcl.getUnionObjList());
+
+        return po;
     }
 
     /**
