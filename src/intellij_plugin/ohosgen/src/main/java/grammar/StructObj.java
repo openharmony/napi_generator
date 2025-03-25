@@ -37,7 +37,7 @@ public class StructObj extends GBaseObject {
      * 构造函数
      */
     public StructObj() {
-        this.memberList =  new CopyOnWriteArrayList<>();
+        this.memberList = new CopyOnWriteArrayList<>();
         this.funcList = new CopyOnWriteArrayList<>();
     }
 
@@ -50,6 +50,7 @@ public class StructObj extends GBaseObject {
      * @param fl 方法
      */
     public StructObj(String nv, String av, List<ParamObj> ml, List<FuncObj> fl) {
+        this();
         this.name = nv;
         this.alias = av;
         this.memberList = ml;
