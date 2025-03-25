@@ -19,14 +19,11 @@ import antlr.ParseBaseListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import grammar.*;
-import org.apache.xmlbeans.impl.xb.xsdschema.UnionDocument;
 import utils.Constants;
 import utils.CppToken;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import static utils.CppToken.CPP_TOKEN_ENUM;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -75,6 +72,7 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
     /**
      * 获取关键字
      *
+     * @param currentToken 当前token
      * @return 关键字
      */
     public void setCurrentToken(String currentToken) {
@@ -280,7 +278,7 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
     public void enterMemberdeclaration(CPP14Parser.MemberdeclarationContext ctx) {
         super.enterMemberdeclaration(ctx);
         System.out.println("c/cpp Memberdeclaration: " + ctx.getText());
-        if (this.currentObject instanceof  StructObj so) {
+        if (this.currentObject instanceof StructObj so) {
             String type = ctx.declSpecifierSeq().getText();
             String name = ctx.memberDeclaratorList().getText();
             List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
@@ -290,7 +288,7 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
                 po.setType(type);
                 so.addMember(po);
             }
-        } else if (this.currentObject instanceof  UnionObj uo) {
+        } else if (this.currentObject instanceof UnionObj uo) {
             String type = ctx.declSpecifierSeq().getText();
             String name = ctx.memberDeclaratorList().getText();
             List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();

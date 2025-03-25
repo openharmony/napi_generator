@@ -20,7 +20,6 @@ import antlr.cpp.CPP14CustomListener;
 import antlr.cpp.CPP14ErrorListener;
 import antlr.cpp.CPP14Lexer;
 import antlr.cpp.CPP14Parser;
-import antlr.typescript.TypeScriptCustomListener;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import grammar.*;
