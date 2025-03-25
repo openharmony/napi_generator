@@ -17,6 +17,9 @@ package grammar;
 
 import kotlinx.html.S;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description union grammar
@@ -29,12 +32,14 @@ import kotlinx.html.S;
 public class UnionObj extends GBaseObject {
     private String name;
     private String alias;
-    private ParamObj[] memList;
+    private List<ParamObj> memList;
 
     /**
      * 构造函数
      */
-    public UnionObj() {}
+    public UnionObj() {
+        memList = new CopyOnWriteArrayList<>();
+    }
 
     /**
      * 构造函数
@@ -43,7 +48,7 @@ public class UnionObj extends GBaseObject {
      * @param av 别名
      * @param pl 参数
      */
-    public UnionObj(String nv, String av, ParamObj[] pl) {
+    public UnionObj(String nv, String av, List<ParamObj> pl) {
         this.name = nv;
         this.alias = av;
         this.memList = pl;
@@ -90,7 +95,7 @@ public class UnionObj extends GBaseObject {
      *
      * @return 成员
      */
-    public ParamObj[] getMemList() {
+    public List<ParamObj> getMemList() {
         return memList;
     }
 
@@ -99,7 +104,16 @@ public class UnionObj extends GBaseObject {
      *
      * @param memList 成员
      */
-    public void setMemList(ParamObj[] memList) {
+    public void setMemList(List<ParamObj> memList) {
         this.memList = memList;
+    }
+
+    /**
+     * 增加属性
+     *
+     * @param po 属性
+     */
+    public void addMember(ParamObj po) {
+        this.memList.add(po);
     }
 }

@@ -15,10 +15,7 @@
 
 package parse;
 
-import grammar.EnumObj;
-import grammar.ParamObj;
-import grammar.ParseObj;
-import grammar.StructObj;
+import grammar.*;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.junit.jupiter.api.AfterEach;
@@ -254,6 +251,107 @@ class ParseCppTest {
         assertEquals("Tree_el_T", so.getAlias());
 
         List<ParamObj> ml = so.getMemberList();
+        assertEquals(3, ml.size());
+        assertEquals("val", ml.get(0).getName());
+        assertEquals("int", ml.get(0).getType());
+        assertEquals("structtree_el", ml.get(1).getType());
+        assertEquals("*right", ml.get(1).getName());
+        assertEquals("structtree_el", ml.get(2).getType());
+        assertEquals("*left", ml.get(2).getName());
+
+    }
+
+    @Test
+    void parseCStreamUnion1() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "union tree_el {\n" +
+                "   int val;\n" +
+                "   struct tree_el * right, * left;\n" +
+                "};";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<UnionObj> sol = po.getUnionList();
+        assertEquals(1, sol.size());
+        UnionObj so = sol.get(0);
+        assertEquals("tree_el", so.getName());
+
+        List<ParamObj> ml = so.getMemList();
+        assertEquals(3, ml.size());
+        assertEquals("val", ml.get(0).getName());
+        assertEquals("int", ml.get(0).getType());
+        assertEquals("structtree_el", ml.get(1).getType());
+        assertEquals("*right", ml.get(1).getName());
+        assertEquals("structtree_el", ml.get(2).getType());
+        assertEquals("*left", ml.get(2).getName());
+
+    }
+
+    @Test
+    void parseCStreamUnion2() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "union {\n" +
+                "   int val;\n" +
+                "   struct tree_el * right, * left;\n" +
+                "};";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<UnionObj> sol = po.getUnionList();
+        assertEquals(1, sol.size());
+        UnionObj so = sol.get(0);
+
+        List<ParamObj> ml = so.getMemList();
+        assertEquals(3, ml.size());
+        assertEquals("val", ml.get(0).getName());
+        assertEquals("int", ml.get(0).getType());
+        assertEquals("structtree_el", ml.get(1).getType());
+        assertEquals("*right", ml.get(1).getName());
+        assertEquals("structtree_el", ml.get(2).getType());
+        assertEquals("*left", ml.get(2).getName());
+
+    }
+
+    @Test
+    void parseCStreamUnion3() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "typedef union {\n" +
+                "   int val;\n" +
+                "   Tree_el_T * right, * left;\n" +
+                "} Tree_el_T;";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<UnionObj> sol = po.getUnionList();
+        assertEquals(1, sol.size());
+        UnionObj so = sol.get(0);
+        assertEquals("", so.getName());
+        assertEquals("Tree_el_T", so.getAlias());
+
+        List<ParamObj> ml = so.getMemList();
+        assertEquals(3, ml.size());
+        assertEquals("val", ml.get(0).getName());
+        assertEquals("int", ml.get(0).getType());
+        assertEquals("Tree_el_T", ml.get(1).getType());
+        assertEquals("*right", ml.get(1).getName());
+        assertEquals("Tree_el_T", ml.get(2).getType());
+        assertEquals("*left", ml.get(2).getName());
+
+    }
+
+    @Test
+    void parseCStreamUnion4() {
+        ParseBase parser = ParseFactory.getParser("cpp");
+        String testEnum = "typedef union tree_el {\n" +
+                "   int val;\n" +
+                "   struct tree_el * right, * left;\n" +
+                "} Tree_el_T;";
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<UnionObj> sol = po.getUnionList();
+        assertEquals(1, sol.size());
+        UnionObj so = sol.get(0);
+        assertEquals("tree_el", so.getName());
+        assertEquals("Tree_el_T", so.getAlias());
+
+        List<ParamObj> ml = so.getMemList();
         assertEquals(3, ml.size());
         assertEquals("val", ml.get(0).getName());
         assertEquals("int", ml.get(0).getType());
