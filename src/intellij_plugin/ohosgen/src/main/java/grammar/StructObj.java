@@ -15,6 +15,9 @@
 
 package grammar;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description grammar structure
@@ -27,13 +30,16 @@ package grammar;
 public class StructObj extends GBaseObject {
     private String name;
     private String alias;
-    private ParamObj[] memberList;
-    private FuncObj[] funcList;
+    private List<ParamObj> memberList;
+    private List<FuncObj> funcList;
 
     /**
      * 构造函数
      */
-    public StructObj() {}
+    public StructObj() {
+        this.memberList =  new CopyOnWriteArrayList<>();
+        this.funcList = new CopyOnWriteArrayList<>();
+    }
 
     /**
      * 构造函数
@@ -43,7 +49,7 @@ public class StructObj extends GBaseObject {
      * @param ml 成员
      * @param fl 方法
      */
-    public StructObj(String nv, String av, ParamObj[] ml, FuncObj[] fl) {
+    public StructObj(String nv, String av, List<ParamObj> ml, List<FuncObj> fl) {
         this.name = nv;
         this.alias = av;
         this.memberList = ml;
@@ -91,7 +97,7 @@ public class StructObj extends GBaseObject {
      *
      * @return 方法
      */
-    public FuncObj[] getFuncList() {
+    public List<FuncObj> getFuncList() {
         return funcList;
     }
 
@@ -100,7 +106,7 @@ public class StructObj extends GBaseObject {
      *
      * @param funcList 方法
      */
-    public void setFuncList(FuncObj[] funcList) {
+    public void setFuncList(List<FuncObj> funcList) {
         this.funcList = funcList;
     }
 
@@ -109,7 +115,7 @@ public class StructObj extends GBaseObject {
      *
      * @return 成员
      */
-    public ParamObj[] getMemberList() {
+    public List<ParamObj> getMemberList() {
         return memberList;
     }
 
@@ -118,8 +124,26 @@ public class StructObj extends GBaseObject {
      *
      * @param memberList 成员
      */
-    public void setMemberList(ParamObj[] memberList) {
+    public void setMemberList(List<ParamObj> memberList) {
         this.memberList = memberList;
+    }
+
+    /**
+     * 增加方法
+     *
+     * @param fo 方法
+     */
+    public void addFunction(FuncObj fo) {
+        this.funcList.add(fo);
+    }
+
+    /**
+     * 增加属性
+     *
+     * @param po 属性
+     */
+    public void addMember(ParamObj po) {
+        this.memberList.add(po);
     }
 
 }
