@@ -12485,3 +12485,1801 @@ public class CPP14Parser extends CPP14ParserBase {
 		}
 		return _localctx;
 	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class MemberSpecificationContext extends ParserRuleContext {
+		public List<MemberdeclarationContext> memberdeclaration() {
+			return getRuleContexts(MemberdeclarationContext.class);
+		}
+		public MemberdeclarationContext memberdeclaration(int i) {
+			return getRuleContext(MemberdeclarationContext.class,i);
+		}
+		public List<AccessSpecifierContext> accessSpecifier() {
+			return getRuleContexts(AccessSpecifierContext.class);
+		}
+		public AccessSpecifierContext accessSpecifier(int i) {
+			return getRuleContext(AccessSpecifierContext.class,i);
+		}
+		public List<TerminalNode> Colon() { return getTokens(CPP14Parser.Colon); }
+		public TerminalNode Colon(int i) {
+			return getToken(CPP14Parser.Colon, i);
+		}
+		public MemberSpecificationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_memberSpecification; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterMemberSpecification(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitMemberSpecification(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitMemberSpecification(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final MemberSpecificationContext memberSpecification() throws RecognitionException {
+		MemberSpecificationContext _localctx = new MemberSpecificationContext(_ctx, getState());
+		enterRule(_localctx, 290, RULE_memberSpecification);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1676);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				setState(1676);
+				_errHandler.sync(this);
+				switch (_input.LA(1)) {
+				case Alignas:
+				case Auto:
+				case Bool:
+				case Char:
+				case Char16:
+				case Char32:
+				case Class:
+				case Const:
+				case Constexpr:
+				case Decltype:
+				case Double:
+				case Enum:
+				case Explicit:
+				case Extern:
+				case Float:
+				case Friend:
+				case Inline:
+				case Int:
+				case Long:
+				case Mutable:
+				case Operator:
+				case Register:
+				case Short:
+				case Signed:
+				case Static:
+				case Static_assert:
+				case Struct:
+				case Template:
+				case Thread_local:
+				case Typedef:
+				case Typename_:
+				case Union:
+				case Unsigned:
+				case Using:
+				case Virtual:
+				case Void:
+				case Volatile:
+				case Wchar:
+				case LeftParen:
+				case LeftBracket:
+				case Star:
+				case And:
+				case Tilde:
+				case AndAnd:
+				case Colon:
+				case Doublecolon:
+				case Semi:
+				case Ellipsis:
+				case Identifier:
+					{
+					setState(1672);
+					memberdeclaration();
+					}
+					break;
+				case Private:
+				case Protected:
+				case Public:
+					{
+					setState(1673);
+					accessSpecifier();
+					setState(1674);
+					match(Colon);
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				}
+				setState(1678);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( ((((_la - 10)) & ~0x3f) == 0 && ((1L << (_la - 10)) & 1543877313594212121L) != 0) || ((((_la - 74)) & ~0x3f) == 0 && ((1L << (_la - 74)) & 463888353847684093L) != 0) );
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class MemberdeclarationContext extends ParserRuleContext {
+		public TerminalNode Semi() { return getToken(CPP14Parser.Semi, 0); }
+		public AttributeSpecifierSeqContext attributeSpecifierSeq() {
+			return getRuleContext(AttributeSpecifierSeqContext.class,0);
+		}
+		public DeclSpecifierSeqContext declSpecifierSeq() {
+			return getRuleContext(DeclSpecifierSeqContext.class,0);
+		}
+		public MemberDeclaratorListContext memberDeclaratorList() {
+			return getRuleContext(MemberDeclaratorListContext.class,0);
+		}
+		public FunctionDefinitionContext functionDefinition() {
+			return getRuleContext(FunctionDefinitionContext.class,0);
+		}
+		public UsingDeclarationContext usingDeclaration() {
+			return getRuleContext(UsingDeclarationContext.class,0);
+		}
+		public StaticAssertDeclarationContext staticAssertDeclaration() {
+			return getRuleContext(StaticAssertDeclarationContext.class,0);
+		}
+		public TemplateDeclarationContext templateDeclaration() {
+			return getRuleContext(TemplateDeclarationContext.class,0);
+		}
+		public AliasDeclarationContext aliasDeclaration() {
+			return getRuleContext(AliasDeclarationContext.class,0);
+		}
+		public EmptyDeclaration_Context emptyDeclaration_() {
+			return getRuleContext(EmptyDeclaration_Context.class,0);
+		}
+		public MemberdeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_memberdeclaration; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterMemberdeclaration(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitMemberdeclaration(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitMemberdeclaration(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final MemberdeclarationContext memberdeclaration() throws RecognitionException {
+		MemberdeclarationContext _localctx = new MemberdeclarationContext(_ctx, getState());
+		enterRule(_localctx, 292, RULE_memberdeclaration);
+		int _la;
+		try {
+			setState(1696);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,232,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1681);
+				_errHandler.sync(this);
+				switch ( getInterpreter().adaptivePredict(_input,229,_ctx) ) {
+				case 1:
+					{
+					setState(1680);
+					attributeSpecifierSeq();
+					}
+					break;
+				}
+				setState(1684);
+				_errHandler.sync(this);
+				switch ( getInterpreter().adaptivePredict(_input,230,_ctx) ) {
+				case 1:
+					{
+					setState(1683);
+					declSpecifierSeq();
+					}
+					break;
+				}
+				setState(1687);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 4503599694480384L) != 0) || ((((_la - 85)) & ~0x3f) == 0 && ((1L << (_la - 85)) & 217711892254981L) != 0)) {
+					{
+					setState(1686);
+					memberDeclaratorList();
+					}
+				}
+
+				setState(1689);
+				match(Semi);
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1690);
+				functionDefinition();
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(1691);
+				usingDeclaration();
+				}
+				break;
+			case 4:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(1692);
+				staticAssertDeclaration();
+				}
+				break;
+			case 5:
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(1693);
+				templateDeclaration();
+				}
+				break;
+			case 6:
+				enterOuterAlt(_localctx, 6);
+				{
+				setState(1694);
+				aliasDeclaration();
+				}
+				break;
+			case 7:
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(1695);
+				emptyDeclaration_();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class MemberDeclaratorListContext extends ParserRuleContext {
+		public List<MemberDeclaratorContext> memberDeclarator() {
+			return getRuleContexts(MemberDeclaratorContext.class);
+		}
+		public MemberDeclaratorContext memberDeclarator(int i) {
+			return getRuleContext(MemberDeclaratorContext.class,i);
+		}
+		public List<TerminalNode> Comma() { return getTokens(CPP14Parser.Comma); }
+		public TerminalNode Comma(int i) {
+			return getToken(CPP14Parser.Comma, i);
+		}
+		public MemberDeclaratorListContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_memberDeclaratorList; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterMemberDeclaratorList(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitMemberDeclaratorList(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitMemberDeclaratorList(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final MemberDeclaratorListContext memberDeclaratorList() throws RecognitionException {
+		MemberDeclaratorListContext _localctx = new MemberDeclaratorListContext(_ctx, getState());
+		enterRule(_localctx, 294, RULE_memberDeclaratorList);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1698);
+			memberDeclarator();
+			setState(1703);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==Comma) {
+				{
+				{
+				setState(1699);
+				match(Comma);
+				setState(1700);
+				memberDeclarator();
+				}
+				}
+				setState(1705);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class MemberDeclaratorContext extends ParserRuleContext {
+		public DeclaratorContext declarator() {
+			return getRuleContext(DeclaratorContext.class,0);
+		}
+		public VirtualSpecifierSeqContext virtualSpecifierSeq() {
+			return getRuleContext(VirtualSpecifierSeqContext.class,0);
+		}
+		public PureSpecifierContext pureSpecifier() {
+			return getRuleContext(PureSpecifierContext.class,0);
+		}
+		public BraceOrEqualInitializerContext braceOrEqualInitializer() {
+			return getRuleContext(BraceOrEqualInitializerContext.class,0);
+		}
+		public TerminalNode Colon() { return getToken(CPP14Parser.Colon, 0); }
+		public ConstantExpressionContext constantExpression() {
+			return getRuleContext(ConstantExpressionContext.class,0);
+		}
+		public TerminalNode Identifier() { return getToken(CPP14Parser.Identifier, 0); }
+		public AttributeSpecifierSeqContext attributeSpecifierSeq() {
+			return getRuleContext(AttributeSpecifierSeqContext.class,0);
+		}
+		public MemberDeclaratorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_memberDeclarator; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterMemberDeclarator(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitMemberDeclarator(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitMemberDeclarator(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final MemberDeclaratorContext memberDeclarator() throws RecognitionException {
+		MemberDeclaratorContext _localctx = new MemberDeclaratorContext(_ctx, getState());
+		enterRule(_localctx, 296, RULE_memberDeclarator);
+		int _la;
+		try {
+			setState(1726);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,237,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1706);
+				declarator();
+				setState(1715);
+				_errHandler.sync(this);
+				switch ( getInterpreter().adaptivePredict(_input,234,_ctx) ) {
+				case 1:
+					{
+					setState(1707);
+					virtualSpecifierSeq();
+					}
+					break;
+				case 2:
+					{
+					setState(1708);
+					if (!( this.IsPureSpecifierAllowed() )) throw new FailedPredicateException(this, " this.IsPureSpecifierAllowed() ");
+					setState(1709);
+					pureSpecifier();
+					}
+					break;
+				case 3:
+					{
+					setState(1710);
+					if (!( this.IsPureSpecifierAllowed() )) throw new FailedPredicateException(this, " this.IsPureSpecifierAllowed() ");
+					setState(1711);
+					virtualSpecifierSeq();
+					setState(1712);
+					pureSpecifier();
+					}
+					break;
+				case 4:
+					{
+					setState(1714);
+					braceOrEqualInitializer();
+					}
+					break;
+				}
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1717);
+				declarator();
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(1719);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Identifier) {
+					{
+					setState(1718);
+					match(Identifier);
+					}
+				}
+
+				setState(1722);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Alignas || _la==LeftBracket) {
+					{
+					setState(1721);
+					attributeSpecifierSeq();
+					}
+				}
+
+				setState(1724);
+				match(Colon);
+				setState(1725);
+				constantExpression();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class VirtualSpecifierSeqContext extends ParserRuleContext {
+		public List<VirtualSpecifierContext> virtualSpecifier() {
+			return getRuleContexts(VirtualSpecifierContext.class);
+		}
+		public VirtualSpecifierContext virtualSpecifier(int i) {
+			return getRuleContext(VirtualSpecifierContext.class,i);
+		}
+		public VirtualSpecifierSeqContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_virtualSpecifierSeq; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterVirtualSpecifierSeq(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitVirtualSpecifierSeq(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitVirtualSpecifierSeq(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final VirtualSpecifierSeqContext virtualSpecifierSeq() throws RecognitionException {
+		VirtualSpecifierSeqContext _localctx = new VirtualSpecifierSeqContext(_ctx, getState());
+		enterRule(_localctx, 298, RULE_virtualSpecifierSeq);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1729);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(1728);
+				virtualSpecifier();
+				}
+				}
+				setState(1731);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( _la==Final || _la==Override );
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class VirtualSpecifierContext extends ParserRuleContext {
+		public TerminalNode Override() { return getToken(CPP14Parser.Override, 0); }
+		public TerminalNode Final() { return getToken(CPP14Parser.Final, 0); }
+		public VirtualSpecifierContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_virtualSpecifier; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterVirtualSpecifier(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitVirtualSpecifier(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitVirtualSpecifier(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final VirtualSpecifierContext virtualSpecifier() throws RecognitionException {
+		VirtualSpecifierContext _localctx = new VirtualSpecifierContext(_ctx, getState());
+		enterRule(_localctx, 300, RULE_virtualSpecifier);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1733);
+			_la = _input.LA(1);
+			if ( !(_la==Final || _la==Override) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class PureSpecifierContext extends ParserRuleContext {
+		public TerminalNode Assign() { return getToken(CPP14Parser.Assign, 0); }
+		public TerminalNode IntegerLiteral() { return getToken(CPP14Parser.IntegerLiteral, 0); }
+		public PureSpecifierContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_pureSpecifier; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterPureSpecifier(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitPureSpecifier(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitPureSpecifier(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final PureSpecifierContext pureSpecifier() throws RecognitionException {
+		PureSpecifierContext _localctx = new PureSpecifierContext(_ctx, getState());
+		enterRule(_localctx, 302, RULE_pureSpecifier);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1735);
+			match(Assign);
+			setState(1736);
+			match(IntegerLiteral);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class BaseClauseContext extends ParserRuleContext {
+		public TerminalNode Colon() { return getToken(CPP14Parser.Colon, 0); }
+		public BaseSpecifierListContext baseSpecifierList() {
+			return getRuleContext(BaseSpecifierListContext.class,0);
+		}
+		public BaseClauseContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_baseClause; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterBaseClause(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitBaseClause(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitBaseClause(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final BaseClauseContext baseClause() throws RecognitionException {
+		BaseClauseContext _localctx = new BaseClauseContext(_ctx, getState());
+		enterRule(_localctx, 304, RULE_baseClause);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1738);
+			match(Colon);
+			setState(1739);
+			baseSpecifierList();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class BaseSpecifierListContext extends ParserRuleContext {
+		public List<BaseSpecifierContext> baseSpecifier() {
+			return getRuleContexts(BaseSpecifierContext.class);
+		}
+		public BaseSpecifierContext baseSpecifier(int i) {
+			return getRuleContext(BaseSpecifierContext.class,i);
+		}
+		public List<TerminalNode> Ellipsis() { return getTokens(CPP14Parser.Ellipsis); }
+		public TerminalNode Ellipsis(int i) {
+			return getToken(CPP14Parser.Ellipsis, i);
+		}
+		public List<TerminalNode> Comma() { return getTokens(CPP14Parser.Comma); }
+		public TerminalNode Comma(int i) {
+			return getToken(CPP14Parser.Comma, i);
+		}
+		public BaseSpecifierListContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_baseSpecifierList; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterBaseSpecifierList(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitBaseSpecifierList(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitBaseSpecifierList(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final BaseSpecifierListContext baseSpecifierList() throws RecognitionException {
+		BaseSpecifierListContext _localctx = new BaseSpecifierListContext(_ctx, getState());
+		enterRule(_localctx, 306, RULE_baseSpecifierList);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1741);
+			baseSpecifier();
+			setState(1743);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Ellipsis) {
+				{
+				setState(1742);
+				match(Ellipsis);
+				}
+			}
+
+			setState(1752);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==Comma) {
+				{
+				{
+				setState(1745);
+				match(Comma);
+				setState(1746);
+				baseSpecifier();
+				setState(1748);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Ellipsis) {
+					{
+					setState(1747);
+					match(Ellipsis);
+					}
+				}
+
+				}
+				}
+				setState(1754);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class BaseSpecifierContext extends ParserRuleContext {
+		public BaseTypeSpecifierContext baseTypeSpecifier() {
+			return getRuleContext(BaseTypeSpecifierContext.class,0);
+		}
+		public TerminalNode Virtual() { return getToken(CPP14Parser.Virtual, 0); }
+		public AccessSpecifierContext accessSpecifier() {
+			return getRuleContext(AccessSpecifierContext.class,0);
+		}
+		public AttributeSpecifierSeqContext attributeSpecifierSeq() {
+			return getRuleContext(AttributeSpecifierSeqContext.class,0);
+		}
+		public BaseSpecifierContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_baseSpecifier; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterBaseSpecifier(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitBaseSpecifier(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitBaseSpecifier(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final BaseSpecifierContext baseSpecifier() throws RecognitionException {
+		BaseSpecifierContext _localctx = new BaseSpecifierContext(_ctx, getState());
+		enterRule(_localctx, 308, RULE_baseSpecifier);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1756);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Alignas || _la==LeftBracket) {
+				{
+				setState(1755);
+				attributeSpecifierSeq();
+				}
+			}
+
+			setState(1770);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case Decltype:
+			case Doublecolon:
+			case Identifier:
+				{
+				setState(1758);
+				baseTypeSpecifier();
+				}
+				break;
+			case Virtual:
+				{
+				setState(1759);
+				match(Virtual);
+				setState(1761);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 126100789566373888L) != 0)) {
+					{
+					setState(1760);
+					accessSpecifier();
+					}
+				}
+
+				setState(1763);
+				baseTypeSpecifier();
+				}
+				break;
+			case Private:
+			case Protected:
+			case Public:
+				{
+				setState(1764);
+				accessSpecifier();
+				setState(1766);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Virtual) {
+					{
+					setState(1765);
+					match(Virtual);
+					}
+				}
+
+				setState(1768);
+				baseTypeSpecifier();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ClassOrDeclTypeContext extends ParserRuleContext {
+		public ClassNameContext className() {
+			return getRuleContext(ClassNameContext.class,0);
+		}
+		public NestedNameSpecifierContext nestedNameSpecifier() {
+			return getRuleContext(NestedNameSpecifierContext.class,0);
+		}
+		public DecltypeSpecifierContext decltypeSpecifier() {
+			return getRuleContext(DecltypeSpecifierContext.class,0);
+		}
+		public ClassOrDeclTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_classOrDeclType; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterClassOrDeclType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitClassOrDeclType(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitClassOrDeclType(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ClassOrDeclTypeContext classOrDeclType() throws RecognitionException {
+		ClassOrDeclTypeContext _localctx = new ClassOrDeclTypeContext(_ctx, getState());
+		enterRule(_localctx, 310, RULE_classOrDeclType);
+		try {
+			setState(1777);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,247,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1773);
+				_errHandler.sync(this);
+				switch ( getInterpreter().adaptivePredict(_input,246,_ctx) ) {
+				case 1:
+					{
+					setState(1772);
+					nestedNameSpecifier(0);
+					}
+					break;
+				}
+				setState(1775);
+				className();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1776);
+				decltypeSpecifier();
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class BaseTypeSpecifierContext extends ParserRuleContext {
+		public ClassOrDeclTypeContext classOrDeclType() {
+			return getRuleContext(ClassOrDeclTypeContext.class,0);
+		}
+		public BaseTypeSpecifierContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_baseTypeSpecifier; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterBaseTypeSpecifier(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitBaseTypeSpecifier(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitBaseTypeSpecifier(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final BaseTypeSpecifierContext baseTypeSpecifier() throws RecognitionException {
+		BaseTypeSpecifierContext _localctx = new BaseTypeSpecifierContext(_ctx, getState());
+		enterRule(_localctx, 312, RULE_baseTypeSpecifier);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1779);
+			classOrDeclType();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class AccessSpecifierContext extends ParserRuleContext {
+		public TerminalNode Private() { return getToken(CPP14Parser.Private, 0); }
+		public TerminalNode Protected() { return getToken(CPP14Parser.Protected, 0); }
+		public TerminalNode Public() { return getToken(CPP14Parser.Public, 0); }
+		public AccessSpecifierContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_accessSpecifier; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterAccessSpecifier(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitAccessSpecifier(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitAccessSpecifier(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final AccessSpecifierContext accessSpecifier() throws RecognitionException {
+		AccessSpecifierContext _localctx = new AccessSpecifierContext(_ctx, getState());
+		enterRule(_localctx, 314, RULE_accessSpecifier);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1781);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 126100789566373888L) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ConversionFunctionIdContext extends ParserRuleContext {
+		public TerminalNode Operator() { return getToken(CPP14Parser.Operator, 0); }
+		public ConversionTypeIdContext conversionTypeId() {
+			return getRuleContext(ConversionTypeIdContext.class,0);
+		}
+		public ConversionFunctionIdContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_conversionFunctionId; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterConversionFunctionId(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitConversionFunctionId(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitConversionFunctionId(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ConversionFunctionIdContext conversionFunctionId() throws RecognitionException {
+		ConversionFunctionIdContext _localctx = new ConversionFunctionIdContext(_ctx, getState());
+		enterRule(_localctx, 316, RULE_conversionFunctionId);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1783);
+			match(Operator);
+			setState(1784);
+			conversionTypeId();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ConversionTypeIdContext extends ParserRuleContext {
+		public TypeSpecifierSeqContext typeSpecifierSeq() {
+			return getRuleContext(TypeSpecifierSeqContext.class,0);
+		}
+		public ConversionDeclaratorContext conversionDeclarator() {
+			return getRuleContext(ConversionDeclaratorContext.class,0);
+		}
+		public ConversionTypeIdContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_conversionTypeId; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterConversionTypeId(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitConversionTypeId(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitConversionTypeId(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ConversionTypeIdContext conversionTypeId() throws RecognitionException {
+		ConversionTypeIdContext _localctx = new ConversionTypeIdContext(_ctx, getState());
+		enterRule(_localctx, 318, RULE_conversionTypeId);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1786);
+			typeSpecifierSeq();
+			setState(1788);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,248,_ctx) ) {
+			case 1:
+				{
+				setState(1787);
+				conversionDeclarator();
+				}
+				break;
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ConversionDeclaratorContext extends ParserRuleContext {
+		public PointerOperatorContext pointerOperator() {
+			return getRuleContext(PointerOperatorContext.class,0);
+		}
+		public ConversionDeclaratorContext conversionDeclarator() {
+			return getRuleContext(ConversionDeclaratorContext.class,0);
+		}
+		public ConversionDeclaratorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_conversionDeclarator; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterConversionDeclarator(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitConversionDeclarator(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitConversionDeclarator(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ConversionDeclaratorContext conversionDeclarator() throws RecognitionException {
+		ConversionDeclaratorContext _localctx = new ConversionDeclaratorContext(_ctx, getState());
+		enterRule(_localctx, 320, RULE_conversionDeclarator);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1790);
+			pointerOperator();
+			setState(1792);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,249,_ctx) ) {
+			case 1:
+				{
+				setState(1791);
+				conversionDeclarator();
+				}
+				break;
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ConstructorInitializerContext extends ParserRuleContext {
+		public TerminalNode Colon() { return getToken(CPP14Parser.Colon, 0); }
+		public MemInitializerListContext memInitializerList() {
+			return getRuleContext(MemInitializerListContext.class,0);
+		}
+		public ConstructorInitializerContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_constructorInitializer; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterConstructorInitializer(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitConstructorInitializer(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitConstructorInitializer(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ConstructorInitializerContext constructorInitializer() throws RecognitionException {
+		ConstructorInitializerContext _localctx = new ConstructorInitializerContext(_ctx, getState());
+		enterRule(_localctx, 322, RULE_constructorInitializer);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1794);
+			match(Colon);
+			setState(1795);
+			memInitializerList();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class MemInitializerListContext extends ParserRuleContext {
+		public List<MemInitializerContext> memInitializer() {
+			return getRuleContexts(MemInitializerContext.class);
+		}
+		public MemInitializerContext memInitializer(int i) {
+			return getRuleContext(MemInitializerContext.class,i);
+		}
+		public List<TerminalNode> Ellipsis() { return getTokens(CPP14Parser.Ellipsis); }
+		public TerminalNode Ellipsis(int i) {
+			return getToken(CPP14Parser.Ellipsis, i);
+		}
+		public List<TerminalNode> Comma() { return getTokens(CPP14Parser.Comma); }
+		public TerminalNode Comma(int i) {
+			return getToken(CPP14Parser.Comma, i);
+		}
+		public MemInitializerListContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_memInitializerList; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterMemInitializerList(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitMemInitializerList(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitMemInitializerList(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final MemInitializerListContext memInitializerList() throws RecognitionException {
+		MemInitializerListContext _localctx = new MemInitializerListContext(_ctx, getState());
+		enterRule(_localctx, 324, RULE_memInitializerList);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1797);
+			memInitializer();
+			setState(1799);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==Ellipsis) {
+				{
+				setState(1798);
+				match(Ellipsis);
+				}
+			}
+
+			setState(1808);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==Comma) {
+				{
+				{
+				setState(1801);
+				match(Comma);
+				setState(1802);
+				memInitializer();
+				setState(1804);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==Ellipsis) {
+					{
+					setState(1803);
+					match(Ellipsis);
+					}
+				}
+
+				}
+				}
+				setState(1810);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class MemInitializerContext extends ParserRuleContext {
+		public MeminitializeridContext meminitializerid() {
+			return getRuleContext(MeminitializeridContext.class,0);
+		}
+		public TerminalNode LeftParen() { return getToken(CPP14Parser.LeftParen, 0); }
+		public TerminalNode RightParen() { return getToken(CPP14Parser.RightParen, 0); }
+		public BracedInitListContext bracedInitList() {
+			return getRuleContext(BracedInitListContext.class,0);
+		}
+		public ExpressionListContext expressionList() {
+			return getRuleContext(ExpressionListContext.class,0);
+		}
+		public MemInitializerContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_memInitializer; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterMemInitializer(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitMemInitializer(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitMemInitializer(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final MemInitializerContext memInitializer() throws RecognitionException {
+		MemInitializerContext _localctx = new MemInitializerContext(_ctx, getState());
+		enterRule(_localctx, 326, RULE_memInitializer);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1811);
+			meminitializerid();
+			setState(1818);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case LeftParen:
+				{
+				setState(1812);
+				match(LeftParen);
+				setState(1814);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 8364979464334764286L) != 0) || ((((_la - 65)) & ~0x3f) == 0 && ((1L << (_la - 65)) & 4719772474400910417L) != 0) || _la==Identifier) {
+					{
+					setState(1813);
+					expressionList();
+					}
+				}
+
+				setState(1816);
+				match(RightParen);
+				}
+				break;
+			case LeftBrace:
+				{
+				setState(1817);
+				bracedInitList();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class MeminitializeridContext extends ParserRuleContext {
+		public ClassOrDeclTypeContext classOrDeclType() {
+			return getRuleContext(ClassOrDeclTypeContext.class,0);
+		}
+		public TerminalNode Identifier() { return getToken(CPP14Parser.Identifier, 0); }
+		public MeminitializeridContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_meminitializerid; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterMeminitializerid(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitMeminitializerid(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitMeminitializerid(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final MeminitializeridContext meminitializerid() throws RecognitionException {
+		MeminitializeridContext _localctx = new MeminitializeridContext(_ctx, getState());
+		enterRule(_localctx, 328, RULE_meminitializerid);
+		try {
+			setState(1822);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,255,_ctx) ) {
+			case 1:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(1820);
+				classOrDeclType();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(1821);
+				match(Identifier);
+				}
+				break;
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class OperatorFunctionIdContext extends ParserRuleContext {
+		public TerminalNode Operator() { return getToken(CPP14Parser.Operator, 0); }
+		public TheOperatorContext theOperator() {
+			return getRuleContext(TheOperatorContext.class,0);
+		}
+		public OperatorFunctionIdContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_operatorFunctionId; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterOperatorFunctionId(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitOperatorFunctionId(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitOperatorFunctionId(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final OperatorFunctionIdContext operatorFunctionId() throws RecognitionException {
+		OperatorFunctionIdContext _localctx = new OperatorFunctionIdContext(_ctx, getState());
+		enterRule(_localctx, 330, RULE_operatorFunctionId);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1824);
+			match(Operator);
+			setState(1825);
+			theOperator();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class LiteralOperatorIdContext extends ParserRuleContext {
+		public TerminalNode Operator() { return getToken(CPP14Parser.Operator, 0); }
+		public TerminalNode StringLiteral() { return getToken(CPP14Parser.StringLiteral, 0); }
+		public TerminalNode Identifier() { return getToken(CPP14Parser.Identifier, 0); }
+		public TerminalNode UserDefinedStringLiteral() { return getToken(CPP14Parser.UserDefinedStringLiteral, 0); }
+		public LiteralOperatorIdContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_literalOperatorId; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterLiteralOperatorId(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitLiteralOperatorId(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitLiteralOperatorId(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final LiteralOperatorIdContext literalOperatorId() throws RecognitionException {
+		LiteralOperatorIdContext _localctx = new LiteralOperatorIdContext(_ctx, getState());
+		enterRule(_localctx, 332, RULE_literalOperatorId);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1827);
+			match(Operator);
+			setState(1831);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case StringLiteral:
+				{
+				setState(1828);
+				match(StringLiteral);
+				setState(1829);
+				match(Identifier);
+				}
+				break;
+			case UserDefinedStringLiteral:
+				{
+				setState(1830);
+				match(UserDefinedStringLiteral);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TemplateDeclarationContext extends ParserRuleContext {
+		public TerminalNode Template() { return getToken(CPP14Parser.Template, 0); }
+		public TerminalNode Less() { return getToken(CPP14Parser.Less, 0); }
+		public TemplateparameterListContext templateparameterList() {
+			return getRuleContext(TemplateparameterListContext.class,0);
+		}
+		public TerminalNode Greater() { return getToken(CPP14Parser.Greater, 0); }
+		public DeclarationContext declaration() {
+			return getRuleContext(DeclarationContext.class,0);
+		}
+		public TemplateDeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_templateDeclaration; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterTemplateDeclaration(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitTemplateDeclaration(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitTemplateDeclaration(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final TemplateDeclarationContext templateDeclaration() throws RecognitionException {
+		TemplateDeclarationContext _localctx = new TemplateDeclarationContext(_ctx, getState());
+		enterRule(_localctx, 334, RULE_templateDeclaration);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1833);
+			match(Template);
+			setState(1834);
+			match(Less);
+			setState(1835);
+			templateparameterList();
+			setState(1836);
+			match(Greater);
+			setState(1837);
+			declaration();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TemplateparameterListContext extends ParserRuleContext {
+		public List<TemplateParameterContext> templateParameter() {
+			return getRuleContexts(TemplateParameterContext.class);
+		}
+		public TemplateParameterContext templateParameter(int i) {
+			return getRuleContext(TemplateParameterContext.class,i);
+		}
+		public List<TerminalNode> Comma() { return getTokens(CPP14Parser.Comma); }
+		public TerminalNode Comma(int i) {
+			return getToken(CPP14Parser.Comma, i);
+		}
+		public TemplateparameterListContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_templateparameterList; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterTemplateparameterList(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitTemplateparameterList(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitTemplateparameterList(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final TemplateparameterListContext templateparameterList() throws RecognitionException {
+		TemplateparameterListContext _localctx = new TemplateparameterListContext(_ctx, getState());
+		enterRule(_localctx, 336, RULE_templateparameterList);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(1839);
+			templateParameter();
+			setState(1844);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==Comma) {
+				{
+				{
+				setState(1840);
+				match(Comma);
+				setState(1841);
+				templateParameter();
+				}
+				}
+				setState(1846);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class TemplateParameterContext extends ParserRuleContext {
+		public TypeParameterContext typeParameter() {
+			return getRuleContext(TypeParameterContext.class,0);
+		}
+		public ParameterDeclarationContext parameterDeclaration() {
+			return getRuleContext(ParameterDeclarationContext.class,0);
+		}
+		public TemplateParameterContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_templateParameter; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).enterTemplateParameter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CPP14ParserListener ) ((CPP14ParserListener)listener).exitTemplateParameter(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CPP14ParserVisitor ) return ((CPP14ParserVisitor<? extends T>)visitor).visitTemplateParameter(this);
+			else return visitor.visitChildren(this);
+		}
+	}
