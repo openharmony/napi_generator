@@ -46,7 +46,7 @@ ANTLR依赖Java环境，所以必须要安装JDK 1.6+，并设置好环境变量
 
 3. 测试下是否安装成功：在cmd中输入antlr4,回车，观察输出是否如下图。
    ![image-3](.\images\image-3.png)
-   在cmd中输入grun，回车，观察输出是否如下图，如果正常的话，那到这里就说明我们的安装和配置已经成功！
+   在cmd中输入grun，回车，观察输出是否如下图，如果正常的话，那到这里就说明Antlr4的安装和配置已经成功！
    ![image-4](.\images\image-4.png)
 
 ## 三、语法文件编写
@@ -88,7 +88,7 @@ ruleN
   tokenVocab：导入外部词法文件（用于拆分大型语法）。
   TokenLabelType：默认的是antlr的Token类型，这里可以使用自定义的token类，如MyToken。需要配合TokenFactory使用
 
-- **import**导入其他语法文件的规则，lexer grammer只能导入lexer grammer，parser grammer只能导入parser grammer，混合语法可以同时导入以上两者。
+- **import**导入别的语法文件的规则，lexer grammer只能导入lexer grammer，parser grammer只能导入parser grammer，混合语法可以同时导入以上两者。
 
 - **tokens**定义虚拟Token，用于在语法树上标记节点，不用于匹配具体字符。
 
@@ -137,7 +137,7 @@ ruleN
 
 - 词法规则以大写字母开头，定义了如何将输入文本分解成词法单元（tokens)。词法规则使用正则表达式来定义匹配模式。
 
-- 语法规则以小写字母开头，规则通过组合词法单元和其他语法规则来定义语法结构，例如
+- 语法规则以小写字母开头，规则通过组合词法单元和别的语法规则来定义语法结构，例如
 
 ```
 expr : expr op=('*'|'/') expr  # MulDiv
@@ -234,7 +234,7 @@ expr : <assoc=right> expr '^' expr
   ID : ('a'..'z'|'A'..'Z')+ ; 
   ```
 
-  ID规则可能和其他规则冲突，譬如其他关键字enum
+  ID规则可能和别的规则冲突，譬如别的关键字enum
 
 - 匹配数字
 
@@ -345,7 +345,7 @@ expr : <assoc=right> expr '^' expr
 
    ![image-8](.\images\image-8.png)
 
-   还有一些其他的TestRig参数如下：
+   还有一些别的TestRig参数如下：
 
    | 选项                     | 功能说明                                                     | 示例用法                                                     |
    | ------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -354,7 +354,7 @@ expr : <assoc=right> expr '^' expr
    | `-trace`                 | 打印规则的名字以及进入和离开该规则时的词法符号，用于调试     | `grun Hello r -trace`                                        |
    | `-diagnostics`           | 开启解析过程中的调试信息输出，通常在输入文本有歧义等特殊情况下使用 | `grun Hello r -diagnostics`                                  |
    | `-SLL`                   | 使用更快但受限的解析策略（默认策略为 `LL(*)`）               | `grun Hello r -SLL`                                          |
-   | `input-filename(s)`      | 输入测试文本文件名，从控制台输入时忽略此参数                 | `grun Hello r -gui aa.txt`(aa.txt是同级目录下的测试文本文件) |
+   | `input-filename(s)`      | 输入测试文本文件名，从控制台输入时忽略此参数                 | `grun Hello r -gui test.txt`(test.txt是同级目录下的测试文本文件) |
 
 ## 五、进阶版示例
 
