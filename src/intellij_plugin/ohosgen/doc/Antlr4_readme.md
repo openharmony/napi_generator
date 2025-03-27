@@ -32,18 +32,20 @@ ANTLR依赖Java环境，所以必须要安装JDK 1.6+，并设置好环境变量
    ```
 
 3. 配置环境变量
-   1) 修改CLASSPATH
-      打开环境变量，选择“系统变量”中的“CLASSPATH”，双击打开，如果系统变量中没有“CLASSPATH”，需新建“CLASSPATH”，在变量值中做如下添加:
-      ![image-1](.\images\image-1.png)
-      ![image-2](.\images\image-2.png)
-      ps:需要有一个 点（.）。
-      2)修改Path
-      找到系统变量中的Path进行修改，双击打开，点击“新建”，添加C:\Users\zxj\TOOLS\ANTLR4\bat\到末尾，点击“确定”(C:\Users\zxj\TOOLS\ANTLR4为前面提到的antlr-4.13.2-complete.jar存放的文件夹)。
+   
+   1）修改CLASSPATH
+   打开环境变量，选择“系统变量”中的“CLASSPATH”，双击打开，如果系统变量中没有“CLASSPATH”，需新建“CLASSPATH”，在变量值中做如下添加:
+   ![image-1](.\images\image-1.png)
+   ![image-2](.\images\image-2.png)
+   ps:需要有一个 点（.）。
+   
+   2)修改Path
+   找到系统变量中的Path进行修改，双击打开，点击“新建”，添加C:\Users\zxj\TOOLS\ANTLR4\bat\到末尾，点击“确定”(C:\Users\zxj\TOOLS\ANTLR4为前面提到的antlr-4.13.2-complete.jar存放的文件夹)。
 
 路径添加完毕！重启电脑让路径生效。
 
 3. 测试下是否安装成功：在cmd中输入antlr4,回车，观察输出是否如下图。
-   [![image-3](.\images\image-3.png)](https://postimg.cc/Lgp6KbD3)
+   ![image-3](.\images\image-3.png)
    在cmd中输入grun，回车，观察输出是否如下图，如果正常的话，那到这里就说明我们的安装和配置已经成功！
    ![image-4](.\images\image-4.png)
 
@@ -309,7 +311,7 @@ expr : <assoc=right> expr '^' expr
 
    运行ANTLR命令编译该语法文件生成词法分析器和语法分析器如下：
 
-   [![image-5](.\images\image-5.png)](https://postimg.cc/WqTjfJp9)
+   ![image-5](.\images\image-5.png)
 
 3. 编译生成文件的java代码
 
@@ -341,7 +343,7 @@ expr : <assoc=right> expr '^' expr
 
    在语法文件所在目录的命令行窗口输入  `grun Hello r -gui`，按回车，然后按Ctrl+Z，再次回车，会得到
 
-   [![image-8](.\images\image-8.png)
+   ![image-8](.\images\image-8.png)
 
    还有一些其他的TestRig参数如下：
 
@@ -1929,3 +1931,92 @@ expr : <assoc=right> expr '^' expr
    ```
 
 5. 编写解析代码，即在语法文件所在目录下新建一index.ts文件，内容如下：
+
+   ```ts
+   import { CharStreams, CommonTokenStream, ParseTreeWalker, ParseTree, RuleContext, TerminalNode  } from 'antlr4';
+   import CPP14Lexer from './CPP14Lexer';
+   import CPP14Parser from './CPP14Parser';
+   import { CPPListener } from './CPPListener';
+   
+   function parseWithListener(content: string) {
+       const inputStream = CharStreams.fromString(content);
+       const lexer = new CPP14Lexer(inputStream);
+       const tokenStream = new CommonTokenStream(lexer);
+       const parser = new CPP14Parser(tokenStream);
+       const tree = parser.translationUnit();
+       const listener = new CPPListener();
+       const walker = new ParseTreeWalker();
+       walker.walk(listener, tree);
+       listener.printMessage();
+       
+       return tree;
+   }
+   
+   const testInput = `
+   #include<cstdio>
+   #include<memory>
+   #include"cfi_util.h"
+   
+   class A {
+   public:
+       virtual void f(){
+           printf("baseA");
+       }
+       virtual ~A(){}
+   };
+   
+   class B : public A{
+   public:
+       void f() override{
+           printf("subclassB");
+       }
+       ~B() override{}
+   };
+   
+   class C: public A{
+   public:
+       void f() override{
+           printf("subclassC");
+       }
+       ~C() override{}
+   };
+   
+   int main(){
+   
+       if(DEBUG){
+           ShowCfiLogFile();
+       }
+       ClearCfiLog();
+       if(DEBUG){
+           ShowCfiLogFile();
+       }
+       
+       //This test will trigger a subclass parent class conversion CFI check failure
+       std::shared_ptr<B> b_ptr = std::make_shared<B>();
+       std::shared_ptr<A> a_ptr = b_ptr;
+       int* a_vtable = (int*)a_ptr.get();
+       printf("a_vtable: %x",*a_vtable);
+       std::shared_ptr<C> c_ptr = std::static_pointer_cast<C>(a_ptr);
+       FindAndCheck("'C' failed during base-to-derived cast");
+       
+       ClearCfiLog();
+       if(DEBUG){
+           ShowCfiLogFile();
+       }
+       return 0;
+   }
+   `;
+   
+   const parseTree = parseWithListener(testInput);
+   console.log(parseTree);
+   ```
+
+6. 编译并运行解析器
+
+   ```
+   npx tsc
+   node index.js
+   ```
+
+   获得解析结果如下
+   ![image-10](.\images\image-10.png)
