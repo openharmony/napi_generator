@@ -21,6 +21,7 @@ import * as vscode from 'vscode';
 import * as genDts from '../../../gen/gendts'
 import { ClassObj, EnumObj, FuncObj, GenInfo, ParseObj, StructObj, UnionObj } from '../../../gen/datatype';
 import * as fs from 'fs';
+import * as path from 'path';
 
 suite('Gendts_file_Suite', () => {
   vscode.window.showInformationMessage('Start all tests.');
@@ -39,21 +40,24 @@ suite('Gendts_file_Suite', () => {
             type: 'int',
             name: 'v1',
             arraySize: -1,
+            arraySizeList: [],
           }
         ],
       },
     ],
   }
+  let hFilePath = path.join(__dirname, '../../../test/test.h');
 
   //1, 测试一般情况
   test('genDtsFile_test_1', () => {
     let rootInfo: GenInfo = {
       parseObj: parseObj,
-      rawFilePath: 'e:\\test.h',
+      rawFilePath: hFilePath,
       fileName: 'test',
     }
-    let expectedPath = genDts.genDtsFile(rootInfo);
-    assert.strictEqual(expectedPath, 'e:\\test.d.ts');
+    let expectedPath = genDts.genDtsFile(rootInfo, '');
+    let genFilePath = path.join(path.dirname(hFilePath), 'test.d.ts');
+    assert.strictEqual(expectedPath, genFilePath);
     // 清理生成的文件
     fs.unlinkSync(expectedPath);
   });
@@ -62,11 +66,12 @@ suite('Gendts_file_Suite', () => {
   test('genDtsFile_test_2', () => {
     let rootInfo: GenInfo = {
       parseObj: parseObj,
-      rawFilePath: 'e:\\test.h',
+      rawFilePath: hFilePath,
       fileName: '',
     }
-    let expectedPath = genDts.genDtsFile(rootInfo);
-    assert.strictEqual(expectedPath, 'e:\\.d.ts');
+    let expectedPath = genDts.genDtsFile(rootInfo, '');
+    let genFilePath = path.join(path.dirname(hFilePath), '.d.ts');
+    assert.strictEqual(expectedPath, genFilePath);
     // 清理生成的文件
     fs.unlinkSync(expectedPath);
   });
@@ -75,11 +80,11 @@ suite('Gendts_file_Suite', () => {
   test('genDtsFile_test_3', () => {
     let rootInfo: GenInfo = {
       fileName: 'test',
-      rawFilePath: 'e:\\test.h',
+      rawFilePath: hFilePath,
     }
     let res = true;
     try {
-      genDts.genDtsFile(rootInfo);
+      genDts.genDtsFile(rootInfo, '');
     } catch (error) {
       res = false;
     }
@@ -91,7 +96,7 @@ suite('Gendts_file_Suite', () => {
     }
     let res2 = true;
     try {
-      genDts.genDtsFile(rootInfo2);
+      genDts.genDtsFile(rootInfo2, '');
     } catch (error) {
       res2 = false;
     }
@@ -103,14 +108,14 @@ suite('Gendts_file_Suite', () => {
   test('genDtsFile_test_4', () => {
     let res = true;
     try {
-      genDts.genDtsFile(null);
+      genDts.genDtsFile(null, '');
     } catch (error) {
       res = false;
     }
     assert.strictEqual(res, false);
     let res2 = true;
     try {
-      genDts.genDtsFile(undefined);
+      genDts.genDtsFile(undefined, '');
     } catch (error) {
       res2 = false;
     }
