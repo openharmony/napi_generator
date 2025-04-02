@@ -464,7 +464,7 @@ napi_value [class_name_replace]::New(napi_env env, napi_callback_info info)
     delete obj;
     return jsThis;
   } else {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, "CLASS", \"[class_name_replace] must be invoked as a constructor with "new"\");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, "CLASS", "[class_name_replace] must be invoked as a constructor with 'new'");
     return nullptr;
   }
 }
