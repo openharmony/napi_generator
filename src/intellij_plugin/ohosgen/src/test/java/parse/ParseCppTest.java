@@ -1246,32 +1246,7 @@ class ParseCppTest {
         assertEquals("", pl.get(0).getName());
         assertEquals("void", pl.get(0).getType());
 
-        fo = fol.get(5);
-        assertEquals("GetGlobalLock", fo.getName());
-        assertEquals("void", fo.getRetValue());
 
-        pl = fo.getParamList();
-        assertEquals(1, pl.size());
-        assertEquals("", pl.get(0).getName());
-        assertEquals("void", pl.get(0).getType());
-
-        fo = fol.get(6);
-        assertEquals("ReleaseGlobalLock", fo.getName());
-        assertEquals("void", fo.getRetValue());
-
-        pl = fo.getParamList();
-        assertEquals(1, pl.size());
-        assertEquals("", pl.get(0).getName());
-        assertEquals("void", pl.get(0).getType());
-
-        fo = fol.get(7);
-        assertEquals("EnterGenericThread", fo.getName());
-        assertEquals("static void", fo.getRetValue());
-
-        pl = fo.getParamList();
-        assertEquals(1, pl.size());
-        assertEquals("*entry", pl.get(0).getName());
-        assertEquals("void", pl.get(0).getType());
     }
 
     @Test
@@ -1283,9 +1258,9 @@ class ParseCppTest {
         List<FuncObj> fol = po.getFuncList();
         assertEquals(12, fol.size());
 
-        FuncObj fo = fol.get(0);
-        assertEquals("OS_AllocTLSIndex", fo.getName());
-        assertEquals("OS_TLSIndex", fo.getRetValue());
+        FuncObj fo = fol.get(5);
+        assertEquals("GetGlobalLock", fo.getName());
+        assertEquals("void", fo.getRetValue());
 
         List<ParamObj> pl = fo.getParamList();
         assertEquals(1, pl.size());

@@ -157,9 +157,9 @@ public class GenDtsFile extends GeneratorBase {
     }
 
     /**
-     * 替换cpp token
+     * 替换cpptoken
      *
-     * @param cppKey cpp token
+     * @param cppKey 语言关键字
      * @return 替换后字符串
      */
     private String replaceCppToken(String cppKey) {
@@ -352,9 +352,8 @@ public class GenDtsFile extends GeneratorBase {
         for (ClassObj co : col) {
             String className = co.getName();
             className = !className.isEmpty() ? className : co.getAlias();
-            List<FuncObj> funcList = co.getFuncList();
+
             List<ParamObj> paList = co.getParamList();
-            int i = 0;
             resContent += TS_NEW_LINE + TS_EXPORT_TOKEN + TS_BLANK_SPACE + TS_CLASS_TOKEN +
                     TS_BLANK_SPACE + className + TS_BLANK_SPACE + TS_LEFT_BRACE;
 
@@ -369,17 +368,16 @@ public class GenDtsFile extends GeneratorBase {
                 } else {
                     resContent += TS_SEMICOLON;
                 }
-                i++;
             }
 
-            i = 0;
+            List<FuncObj> funcList = co.getFuncList();
             for (FuncObj funcItem : funcList) {
                 resContent += TS_NEW_LINE + TS_TAB_SPACE + replaceCppToken(funcItem.getName()) + TS_LEFT_PARENTHESES;
                 List<ParamObj> pol = funcItem.getParamList();
                 for (ParamObj poItem : pol) {
                     String retType = cpp2TsKey(poItem.getType());
                     resContent += replaceCppToken(poItem.getName()) + TS_COLON +
-                            TS_BLANK_SPACE + retType + TS_COMMA + TS_BLANK_SPACE;
+                        TS_BLANK_SPACE + retType + TS_COMMA + TS_BLANK_SPACE;
                 }
                 if (pol.size() > 0) {
                     resContent = StringUtils.removeLastCharacter(resContent, 2);
@@ -387,9 +385,7 @@ public class GenDtsFile extends GeneratorBase {
 
                 String retValue = funcItem.getRetValue();
                 resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + TS_COLON +
-                        TS_BLANK_SPACE + cpp2TsKey(retValue) + TS_SEMICOLON;
-
-                i++;
+                    TS_BLANK_SPACE + cpp2TsKey(retValue) + TS_SEMICOLON;
             }
 
             resContent = StringUtils.removeLastSpace(resContent);

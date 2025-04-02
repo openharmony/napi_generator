@@ -314,22 +314,22 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
                 FuncObj fo = new FuncObj();
                 fo.setName(npdcItem.noPointerDeclarator().getText());
                 fo.setRetValue(type);
-
-                if (npdcItem.parametersAndQualifiers() != null &&
-                        npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
-                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().parameterDeclarationList() != null) {
-                    List<CPP14Parser.ParameterDeclarationContext> pdcList =
-                            npdcItem.parametersAndQualifiers().parameterDeclarationClause().
-                                    parameterDeclarationList().parameterDeclaration();
-                    for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
-                        ParamObj poItem = new ParamObj();
-                        poItem.setName(pdcItem.declarator().getText());
-                        poItem.setType(pdcItem.declSpecifierSeq().getText());
-                        fo.addParam(poItem);
-                    }
-                }
-
                 so.addFunc(fo);
+                if (!(npdcItem.parametersAndQualifiers() != null &&
+                    npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
+                    npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                    parameterDeclarationList() != null)) {
+                    continue;
+                }
+                List<CPP14Parser.ParameterDeclarationContext> pdcList =
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                                parameterDeclarationList().parameterDeclaration();
+                for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
+                    ParamObj poItem = new ParamObj();
+                    poItem.setName(pdcItem.declarator().getText());
+                    poItem.setType(pdcItem.declSpecifierSeq().getText());
+                    fo.addParam(poItem);
+                }
             } else {
                 ParamObj po = new ParamObj();
                 po.setName(mdc.declarator().getText());
@@ -378,22 +378,23 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
                 FuncObj fo = new FuncObj();
                 fo.setName(npdcItem.noPointerDeclarator().getText());
                 fo.setRetValue(type);
-
-                if (npdcItem.parametersAndQualifiers() != null &&
-                        npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
-                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().parameterDeclarationList() != null) {
-                    List<CPP14Parser.ParameterDeclarationContext> pdcList =
-                            npdcItem.parametersAndQualifiers().parameterDeclarationClause().
-                                    parameterDeclarationList().parameterDeclaration();
-                    for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
-                        ParamObj poItem = new ParamObj();
-                        poItem.setName(pdcItem.declarator().getText());
-                        poItem.setType(pdcItem.declSpecifierSeq().getText());
-                        fo.addParam(poItem);
-                    }
-                }
-
                 uo.addFunc(fo);
+
+                if (!(npdcItem.parametersAndQualifiers() != null &&
+                    npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
+                    npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                    parameterDeclarationList() != null)) {
+                    continue;
+                }
+                List<CPP14Parser.ParameterDeclarationContext> pdcList =
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                                parameterDeclarationList().parameterDeclaration();
+                for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
+                    ParamObj poItem = new ParamObj();
+                    poItem.setName(pdcItem.declarator().getText());
+                    poItem.setType(pdcItem.declSpecifierSeq().getText());
+                    fo.addParam(poItem);
+                }
             } else {
                 ParamObj po = new ParamObj();
                 po.setName(mdc.declarator().getText());
@@ -431,23 +432,22 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
                 FuncObj fo = new FuncObj();
                 fo.setName(npdcItem.noPointerDeclarator().getText());
                 fo.setRetValue(type);
-
-                if (npdcItem.parametersAndQualifiers() != null &&
+                co.addFunc(fo);
+                if (!(npdcItem.parametersAndQualifiers() != null &&
                     npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
                     npdcItem.parametersAndQualifiers().parameterDeclarationClause().
-                    parameterDeclarationList() != null) {
-                    List<CPP14Parser.ParameterDeclarationContext> pdcList =
-                            npdcItem.parametersAndQualifiers().parameterDeclarationClause().
-                                    parameterDeclarationList().parameterDeclaration();
-                    for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
-                        ParamObj poItem = new ParamObj();
-                        poItem.setName(pdcItem.declarator().getText());
-                        poItem.setType(pdcItem.declSpecifierSeq().getText());
-                        fo.addParam(poItem);
-                    }
+                    parameterDeclarationList() != null)) {
+                    continue;
                 }
-
-                co.addFunc(fo);
+                List<CPP14Parser.ParameterDeclarationContext> pdcList =
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                                parameterDeclarationList().parameterDeclaration();
+                for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
+                    ParamObj poItem = new ParamObj();
+                    poItem.setName(pdcItem.declarator().getText());
+                    poItem.setType(pdcItem.declSpecifierSeq().getText());
+                    fo.addParam(poItem);
+                }
             } else {
                 ParamObj po = new ParamObj();
                 po.setName(mdc.declarator().getText());
@@ -558,7 +558,7 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
                 ctx.declSpecifierSeq() != null) {
             String paType = "";
             List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
-            for (CPP14Parser.DeclSpecifierContext item: dscl) {
+            for (CPP14Parser.DeclSpecifierContext item : dscl) {
                 paType += item.getText() + " ";
             }
             paType = StringUtils.removeLastSpace(paType);
