@@ -27,6 +27,19 @@ package antlr;
 public interface ParseBaseListener {
 
     /**
+     * removeLastSpace
+     *
+     * @param str 删除字符串最后一个空格
+     * @return 返回字符串
+     */
+    public static String removeLastSpace(String str) {
+        if (str != null && !str.isEmpty() && str.charAt(str.length() - 1) == ' ') {
+            return str.substring(0, str.length() - 1);
+        }
+        return str;
+    }
+
+    /**
      * 打印 json str
      *
      * @return json 字符串
