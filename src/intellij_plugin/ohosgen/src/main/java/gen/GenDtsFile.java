@@ -33,63 +33,63 @@ import java.util.Map;
  * @version 1.0
  */
 public class GenDtsFile extends GeneratorBase {
-    private final String TS_ENUM_TOKEN = "enum";
-    private final String TS_CLASS_TOKEN = "class";
-    private final String TS_EXPORT_TOKEN = "export";
-    private final String TS_IMPLEMENTS_TOKEN = "implements";
-    private final String TS_EXTENDS_TOKEN = "extends";
-    private final String TS_CONST_TOKEN = "const";
-    private final String TS_PRIVATE_TOKEN = "private";
-    private final String TS_PUBLIC_TOKEN = "public";
-    private final String TS_INTERFACE_TOKEN = "interface";
-    private final String TS_PROTECTED_TOKEN = "protected";
-    private final String TS_STATIC_TOKEN = "static";
-    private final String TS_ANY_TOKEN = "any";
-    private final String TS_NUMBER_TOKEN = "number";
-    private final String TS_NEVER_TOKEN = "never";
-    private final String TS_BOOLEAN_TOKEN = "boolean";
-    private final String TS_STRING_TOKEN = "string";
-    private final String TS_UNIQUE_TOKEN = "unique";
-    private final String TS_SYMBOL_TOKEN = "symbol";
-    private final String TS_UNDEFINED_TOKEN = "undefined";
-    private final String TS_OBJECT_TOKEN = "object";
-    private final String TS_OF_TOKEN = "of";
-    private final String TS_KEYOF_TOKEN = "keyof";
-    private final String TS_TYPE_TOKEN = "type";
-    private final String TS_CONSTRUCTOR_TOKEN = "constructor";
-    private final String TS_NAMESPACE_TOKEN = "namespace";
-    private final String TS_REQUIRE_TOKEN = "require";
-    private final String TS_MODULE_TOKEN = "module";
-    private final String TS_DECLARE_TOKEN = "declare";
-    private final String TS_ABSTRACT_TOKEN = "abstract";
-    private final String TS_DEBUGGER_TOKEN = "debugger";
-    private final String TS_FUNCTION_TOKEN = "function";
-    private final String TS_THIS_TOKEN = "this";
-    private final String TS_WITH_TOKEN = "with";
-    private final String TS_DEFAULT_TOKEN = "default";
-    private final String TS_READONLY_TOKEN = "readonly";
-    private final String TS_ASYNC_TOKEN = "async";
-    private final String TS_AWAIT_TOKEN = "await";
-    private final String TS_YIELD_TOKEN = "yield";
-    private final String TS_NEW_LINE = "\n";
-    private final String TS_TAB_SPACE = "\t";
-    private final String TS_BLANK_SPACE = " ";
-    private final String TS_SPLIT = " | ";
-    private final String TS_EQUAL = " = ";
-    private final String TS_COMMA = ",";
-    private final String TS_SEMICOLON = ";";
-    private final String TS_COLON = ":";
-    private final String TS_LEFT_BRACE = "{";
-    private final String TS_RIGHT_BRACE = "}";
-    private final String TS_LEFT_PARENTHESES = "(";
-    private final String TS_RIGHT_PARENTHESES = ")";
-    private final String TS_LEFT_SQUARE_BRACKET = "[";
-    private final String TS_RIGHT_SQUARE_BRACKET = "]";
-    private final String TS_LEFT_ANGLE_BRACKET = "<";
-    private final String TS_RIGHT_ANGLE_BRACKET = ">";
+    private static final String TS_ENUM_TOKEN = "enum";
+    private static final String TS_CLASS_TOKEN = "class";
+    private static final String TS_EXPORT_TOKEN = "export";
+    private static final String TS_IMPLEMENTS_TOKEN = "implements";
+    private static final String TS_EXTENDS_TOKEN = "extends";
+    private static final String TS_CONST_TOKEN = "const";
+    private static final String TS_PRIVATE_TOKEN = "private";
+    private static final String TS_PUBLIC_TOKEN = "public";
+    private static final String TS_INTERFACE_TOKEN = "interface";
+    private static final String TS_PROTECTED_TOKEN = "protected";
+    private static final String TS_STATIC_TOKEN = "static";
+    private static final String TS_ANY_TOKEN = "any";
+    private static final String TS_NUMBER_TOKEN = "number";
+    private static final String TS_NEVER_TOKEN = "never";
+    private static final String TS_BOOLEAN_TOKEN = "boolean";
+    private static final String TS_STRING_TOKEN = "string";
+    private static final String TS_UNIQUE_TOKEN = "unique";
+    private static final String TS_SYMBOL_TOKEN = "symbol";
+    private static final String TS_UNDEFINED_TOKEN = "undefined";
+    private static final String TS_OBJECT_TOKEN = "object";
+    private static final String TS_OF_TOKEN = "of";
+    private static final String TS_KEYOF_TOKEN = "keyof";
+    private static final String TS_TYPE_TOKEN = "type";
+    private static final String TS_CONSTRUCTOR_TOKEN = "constructor";
+    private static final String TS_NAMESPACE_TOKEN = "namespace";
+    private static final String TS_REQUIRE_TOKEN = "require";
+    private static final String TS_MODULE_TOKEN = "module";
+    private static final String TS_DECLARE_TOKEN = "declare";
+    private static final String TS_ABSTRACT_TOKEN = "abstract";
+    private static final String TS_DEBUGGER_TOKEN = "debugger";
+    private static final String TS_FUNCTION_TOKEN = "function";
+    private static final String TS_THIS_TOKEN = "this";
+    private static final String TS_WITH_TOKEN = "with";
+    private static final String TS_DEFAULT_TOKEN = "default";
+    private static final String TS_READONLY_TOKEN = "readonly";
+    private static final String TS_ASYNC_TOKEN = "async";
+    private static final String TS_AWAIT_TOKEN = "await";
+    private static final String TS_YIELD_TOKEN = "yield";
+    private static final String TS_NEW_LINE = "\n";
+    private static final String TS_TAB_SPACE = "\t";
+    private static final String TS_BLANK_SPACE = " ";
+    private static final String TS_SPLIT = " | ";
+    private static final String TS_EQUAL = " = ";
+    private static final String TS_COMMA = ",";
+    private static final String TS_SEMICOLON = ";";
+    private static final String TS_COLON = ":";
+    private static final String TS_LEFT_BRACE = "{";
+    private static final String TS_RIGHT_BRACE = "}";
+    private static final String TS_LEFT_PARENTHESES = "(";
+    private static final String TS_RIGHT_PARENTHESES = ")";
+    private static final String TS_LEFT_SQUARE_BRACKET = "[";
+    private static final String TS_RIGHT_SQUARE_BRACKET = "]";
+    private static final String TS_LEFT_ANGLE_BRACKET = "<";
+    private static final String TS_RIGHT_ANGLE_BRACKET = ">";
 
-    private final String TS_FILE_PREFIX = "ag_";
-    private final String TS_FILE_SUFFIX = ".d.ts";
+    private static final String TS_FILE_PREFIX = "ag_";
+    private static final String TS_FILE_SUFFIX = ".d.ts";
 
     private String interfaceContent = "";
     private String enumContent = "";
@@ -311,7 +311,6 @@ public class GenDtsFile extends GeneratorBase {
 
         String resContent = "";
         for (EnumObj eo : eol) {
-//            System.out.println("Enum jsonStr: " + eo.toJsonString());
             String enumName = eo.getName();
             enumName = !enumName.isEmpty() ? enumName : eo.getAlias();
             List<String> memList = eo.getMemberList();
@@ -332,7 +331,6 @@ public class GenDtsFile extends GeneratorBase {
             resContent += TS_NEW_LINE + TS_RIGHT_BRACE + TS_SEMICOLON + TS_NEW_LINE;
         }
         this.enumContent = resContent;
-//        System.out.println("genEnumList : " + resContent);
     };
 
     /**
@@ -345,7 +343,6 @@ public class GenDtsFile extends GeneratorBase {
 
         String resContent = "";
         for (ClassObj co : col) {
-//            System.out.println("Class jsonStr: " + co.toJsonString());
             String className = co.getName();
             className = !className.isEmpty() ? className : co.getAlias();
             List<FuncObj> funcList = co.getFuncList();
@@ -392,7 +389,6 @@ public class GenDtsFile extends GeneratorBase {
             resContent += TS_NEW_LINE + TS_RIGHT_BRACE + TS_SEMICOLON + TS_NEW_LINE;
         }
         this.classContent = resContent;
-//        System.out.println("genClassList : " + resContent);
     };
 
     /**
@@ -404,7 +400,6 @@ public class GenDtsFile extends GeneratorBase {
         System.out.println("genFuncList : " + fol.toString());
         String resContent = "";
         for (FuncObj fo : fol) {
-//            System.out.println("Func jsonStr: " + fo.toJsonString());
             String funcName = fo.getName();
             funcName = !funcName.isEmpty() ? funcName : fo.getAlias();
             List<ParamObj> paList = fo.getParamList();
@@ -442,7 +437,6 @@ public class GenDtsFile extends GeneratorBase {
 
         String resContent = "";
         for (StructObj so : sol) {
-//            System.out.println("Struct jsonStr: " + so.toJsonString());
             String structName = so.getName();
             structName = !structName.isEmpty() ? structName : so.getAlias();
             List<FuncObj> funcList = so.getFuncList();
@@ -489,7 +483,6 @@ public class GenDtsFile extends GeneratorBase {
             resContent += TS_NEW_LINE + TS_RIGHT_BRACE + TS_SEMICOLON + TS_NEW_LINE;
         }
         this.structContent = resContent;
-//        System.out.println("genStructList : " + resContent);
     };
 
     /**
@@ -511,7 +504,6 @@ public class GenDtsFile extends GeneratorBase {
 
         String resContent = "";
         for (UnionObj uo : uol) {
-//            System.out.println("Union jsonStr: " + uo.toJsonString());
             String unionName = uo.getName();
             unionName = !unionName.isEmpty() ? unionName : uo.getAlias();
             List<ParamObj> paList = uo.getMemList();
@@ -530,7 +522,6 @@ public class GenDtsFile extends GeneratorBase {
             resContent += TS_SEMICOLON + TS_NEW_LINE;
         }
         this.unionContent = resContent;
-//        System.out.println("genUnionList : " + resContent);
     };
 
     /**
@@ -543,7 +534,6 @@ public class GenDtsFile extends GeneratorBase {
 
         String resContent = "";
         for (ParamObj po : pol) {
-//            System.out.println("Var jsonStr: " + uo.toJsonString());
             String paName = po.getName();
             String paType = cpp2TsKey(po.getType());
             String paValue = po.getStrValue(0);

@@ -301,172 +301,184 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
         System.out.println("c/cpp attribute: " + ctx.getText());
     }
 
+    private void setStructMember(CPP14Parser.MemberdeclarationContext ctx, StructObj so) {
+        String type = ctx.declSpecifierSeq().getText();
+        List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+        type = !dscl.isEmpty() ? "" : type;
+        for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
+            if (dscItem.typeSpecifier() != null &&
+                    dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier() != null) {
+                CPP14Parser.ElaboratedTypeSpecifierContext esc =
+                        dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier();
+                type += esc.Enum() != null ? esc.Enum().getText() + " " : "";
+                type += esc.classKey() != null ? esc.classKey().getText() + " " : "";
+                type += esc.Identifier();
+            } else {
+                type += dscItem.getText() + " ";
+            }
+        }
+        if (!dscl.isEmpty()) {
+            type = StringUtils.removeLastSpace(type);
+        }
+        String name = ctx.memberDeclaratorList().getText();
+        List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
+        for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
+            if (mdc.declarator() != null && mdc.declarator().pointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().constantExpression() == null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().noPointerDeclarator() != null) {
+                CPP14Parser.NoPointerDeclaratorContext npdcItem =
+                        mdc.declarator().pointerDeclarator().noPointerDeclarator();
+                FuncObj fo = new FuncObj();
+                fo.setName(npdcItem.noPointerDeclarator().getText());
+                fo.setRetValue(type);
+
+                if (npdcItem.parametersAndQualifiers() != null &&
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().parameterDeclarationList() != null) {
+                    List<CPP14Parser.ParameterDeclarationContext> pdcList =
+                            npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                                    parameterDeclarationList().parameterDeclaration();
+                    for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
+                        ParamObj poItem = new ParamObj();
+                        poItem.setName(pdcItem.declarator().getText());
+                        poItem.setType(pdcItem.declSpecifierSeq().getText());
+                        fo.addParam(poItem);
+                    }
+                }
+
+                so.addFunc(fo);
+            } else {
+                ParamObj po = new ParamObj();
+                po.setName(mdc.declarator().getText());
+                if (mdc.braceOrEqualInitializer() != null) {
+                    po.setStrValue(mdc.braceOrEqualInitializer().initializerClause().getText());
+                }
+                po.setType(type);
+                so.addMember(po);
+            }
+        }
+    }
+
+    private void setUnionMember(CPP14Parser.MemberdeclarationContext ctx, UnionObj uo) {
+        String type = ctx.declSpecifierSeq().getText();
+        List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+        type = !dscl.isEmpty() ? "" : type;
+        for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
+            type += dscItem.getText() + " ";
+        }
+        if (!dscl.isEmpty()) {
+            type = StringUtils.removeLastSpace(type);
+        }
+        String name = ctx.memberDeclaratorList().getText();
+        List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
+        for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
+            if (mdc.declarator() != null && mdc.declarator().pointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().constantExpression() == null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().noPointerDeclarator() != null) {
+                CPP14Parser.NoPointerDeclaratorContext npdcItem =
+                        mdc.declarator().pointerDeclarator().noPointerDeclarator();
+                FuncObj fo = new FuncObj();
+                fo.setName(npdcItem.noPointerDeclarator().getText());
+                fo.setRetValue(type);
+
+                if (npdcItem.parametersAndQualifiers() != null &&
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().parameterDeclarationList() != null) {
+                    List<CPP14Parser.ParameterDeclarationContext> pdcList =
+                            npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                                    parameterDeclarationList().parameterDeclaration();
+                    for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
+                        ParamObj poItem = new ParamObj();
+                        poItem.setName(pdcItem.declarator().getText());
+                        poItem.setType(pdcItem.declSpecifierSeq().getText());
+                        fo.addParam(poItem);
+                    }
+                }
+
+                uo.addFunc(fo);
+            } else {
+                ParamObj po = new ParamObj();
+                po.setName(mdc.declarator().getText());
+                if (mdc.braceOrEqualInitializer() != null) {
+                    po.setStrValue(mdc.braceOrEqualInitializer().initializerClause().getText());
+                }
+                po.setType(type);
+                uo.addMember(po);
+            }
+        }
+    }
+
+    private void setClassMember(CPP14Parser.MemberdeclarationContext ctx, ClassObj co) {
+        String type = ctx.declSpecifierSeq().getText();
+        List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+        type = !dscl.isEmpty() ? "" : type;
+        for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
+            if (dscItem.typeSpecifier() != null &&
+                    dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier() != null) {
+                CPP14Parser.ElaboratedTypeSpecifierContext esc =
+                        dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier();
+                type += esc.Enum() != null ? esc.Enum().getText() + " " : "";
+                type += esc.classKey() != null ? esc.classKey().getText() + " " : "";
+                type += esc.Identifier();
+            } else {
+                type += dscItem.getText() + " ";
+            }
+        }
+        if (!dscl.isEmpty()) {
+            type = StringUtils.removeLastSpace(type);
+        }
+        String name = ctx.memberDeclaratorList().getText();
+        List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
+        for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
+            if (mdc.declarator() != null && mdc.declarator().pointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().constantExpression() == null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().noPointerDeclarator() != null) {
+                CPP14Parser.NoPointerDeclaratorContext npdcItem =
+                        mdc.declarator().pointerDeclarator().noPointerDeclarator();
+                FuncObj fo = new FuncObj();
+                fo.setName(npdcItem.noPointerDeclarator().getText());
+                fo.setRetValue(type);
+
+                if (npdcItem.parametersAndQualifiers() != null &&
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().parameterDeclarationList() != null) {
+                    List<CPP14Parser.ParameterDeclarationContext> pdcList =
+                            npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                                    parameterDeclarationList().parameterDeclaration();
+                    for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
+                        ParamObj poItem = new ParamObj();
+                        poItem.setName(pdcItem.declarator().getText());
+                        poItem.setType(pdcItem.declSpecifierSeq().getText());
+                        fo.addParam(poItem);
+                    }
+                }
+
+                co.addFunc(fo);
+            } else {
+                ParamObj po = new ParamObj();
+                po.setName(mdc.declarator().getText());
+                if (mdc.braceOrEqualInitializer() != null) {
+                    po.setStrValue(mdc.braceOrEqualInitializer().initializerClause().getText());
+                }
+                po.setType(type);
+                co.addParam(po);
+            }
+        }
+    }
+
     @Override
     public void enterMemberdeclaration(CPP14Parser.MemberdeclarationContext ctx) {
         super.enterMemberdeclaration(ctx);
         System.out.println("c/cpp Memberdeclaration: " + ctx.getText());
         if (this.currentObject instanceof StructObj so) {
-            String type = ctx.declSpecifierSeq().getText();
-            List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
-            type = !dscl.isEmpty() ? "" : type;
-            for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
-                if (dscItem.typeSpecifier() != null &&
-                        dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier() != null) {
-                    CPP14Parser.ElaboratedTypeSpecifierContext esc =
-                            dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier();
-                    type += esc.Enum() != null ? esc.Enum().getText() + " " : "";
-                    type += esc.classKey() != null ? esc.classKey().getText() + " " : "";
-                    type += esc.Identifier();
-                } else {
-                    type += dscItem.getText() + " ";
-                }
-            }
-            if (!dscl.isEmpty()) {
-                type = StringUtils.removeLastSpace(type);
-            }
-            String name = ctx.memberDeclaratorList().getText();
-            List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
-            for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
-                if (mdc.declarator() != null && mdc.declarator().pointerDeclarator() != null &&
-                        mdc.declarator().pointerDeclarator().noPointerDeclarator() != null &&
-                        mdc.declarator().pointerDeclarator().noPointerDeclarator().constantExpression() == null &&
-                        mdc.declarator().pointerDeclarator().noPointerDeclarator().noPointerDeclarator() != null) {
-                    CPP14Parser.NoPointerDeclaratorContext npdcItem =
-                            mdc.declarator().pointerDeclarator().noPointerDeclarator();
-                    FuncObj fo = new FuncObj();
-                    fo.setName(npdcItem.noPointerDeclarator().getText());
-                    fo.setRetValue(type);
-
-                    if (npdcItem.parametersAndQualifiers() != null &&
-                            npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
-                            npdcItem.parametersAndQualifiers().parameterDeclarationClause().parameterDeclarationList() != null) {
-                        List<CPP14Parser.ParameterDeclarationContext> pdcList =
-                                npdcItem.parametersAndQualifiers().parameterDeclarationClause().
-                                        parameterDeclarationList().parameterDeclaration();
-                        for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
-                            ParamObj poItem = new ParamObj();
-                            poItem.setName(pdcItem.declarator().getText());
-                            poItem.setType(pdcItem.declSpecifierSeq().getText());
-                            fo.addParam(poItem);
-                        }
-                    }
-
-                    so.addFunc(fo);
-                } else {
-                    ParamObj po = new ParamObj();
-                    po.setName(mdc.declarator().getText());
-                    if (mdc.braceOrEqualInitializer() != null) {
-                        po.setStrValue(mdc.braceOrEqualInitializer().initializerClause().getText());
-                    }
-                    po.setType(type);
-                    so.addMember(po);
-                }
-            }
+            setStructMember(ctx, so);
         } else if (this.currentObject instanceof UnionObj uo) {
-            String type = ctx.declSpecifierSeq().getText();
-            List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
-            type = !dscl.isEmpty() ? "" : type;
-            for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
-                type += dscItem.getText() + " ";
-            }
-            if (!dscl.isEmpty()) {
-                type = StringUtils.removeLastSpace(type);
-            }
-            String name = ctx.memberDeclaratorList().getText();
-            List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
-            for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
-                if (mdc.declarator() != null && mdc.declarator().pointerDeclarator() != null &&
-                        mdc.declarator().pointerDeclarator().noPointerDeclarator() != null &&
-                        mdc.declarator().pointerDeclarator().noPointerDeclarator().constantExpression() == null &&
-                        mdc.declarator().pointerDeclarator().noPointerDeclarator().noPointerDeclarator() != null) {
-                    CPP14Parser.NoPointerDeclaratorContext npdcItem =
-                            mdc.declarator().pointerDeclarator().noPointerDeclarator();
-                    FuncObj fo = new FuncObj();
-                    fo.setName(npdcItem.noPointerDeclarator().getText());
-                    fo.setRetValue(type);
-
-                    if (npdcItem.parametersAndQualifiers() != null &&
-                            npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
-                            npdcItem.parametersAndQualifiers().parameterDeclarationClause().parameterDeclarationList() != null) {
-                        List<CPP14Parser.ParameterDeclarationContext> pdcList =
-                                npdcItem.parametersAndQualifiers().parameterDeclarationClause().
-                                        parameterDeclarationList().parameterDeclaration();
-                        for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
-                            ParamObj poItem = new ParamObj();
-                            poItem.setName(pdcItem.declarator().getText());
-                            poItem.setType(pdcItem.declSpecifierSeq().getText());
-                            fo.addParam(poItem);
-                        }
-                    }
-
-                    uo.addFunc(fo);
-                } else {
-                    ParamObj po = new ParamObj();
-                    po.setName(mdc.declarator().getText());
-                    if (mdc.braceOrEqualInitializer() != null) {
-                        po.setStrValue(mdc.braceOrEqualInitializer().initializerClause().getText());
-                    }
-                    po.setType(type);
-                    uo.addMember(po);
-                }
-            }
+            setUnionMember(ctx, uo);
         } else if (this.currentObject instanceof ClassObj co) {
-            String type = ctx.declSpecifierSeq().getText();
-            List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
-            type = !dscl.isEmpty() ? "" : type;
-            for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
-                if (dscItem.typeSpecifier() != null &&
-                        dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier() != null) {
-                    CPP14Parser.ElaboratedTypeSpecifierContext esc =
-                            dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier();
-                    type += esc.Enum() != null ? esc.Enum().getText() + " " : "";
-                    type += esc.classKey() != null ? esc.classKey().getText() + " " : "";
-                    type += esc.Identifier();
-                } else {
-                    type += dscItem.getText() + " ";
-                }
-            }
-            if (!dscl.isEmpty()) {
-                type = StringUtils.removeLastSpace(type);
-            }
-            String name = ctx.memberDeclaratorList().getText();
-            List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
-            for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
-                if (mdc.declarator() != null && mdc.declarator().pointerDeclarator() != null &&
-                        mdc.declarator().pointerDeclarator().noPointerDeclarator() != null &&
-                        mdc.declarator().pointerDeclarator().noPointerDeclarator().constantExpression() == null &&
-                        mdc.declarator().pointerDeclarator().noPointerDeclarator().noPointerDeclarator() != null) {
-                    CPP14Parser.NoPointerDeclaratorContext npdcItem =
-                            mdc.declarator().pointerDeclarator().noPointerDeclarator();
-                    FuncObj fo = new FuncObj();
-                    fo.setName(npdcItem.noPointerDeclarator().getText());
-                    fo.setRetValue(type);
-
-                    if (npdcItem.parametersAndQualifiers() != null &&
-                        npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
-                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().parameterDeclarationList() != null) {
-                        List<CPP14Parser.ParameterDeclarationContext> pdcList =
-                                npdcItem.parametersAndQualifiers().parameterDeclarationClause().
-                                        parameterDeclarationList().parameterDeclaration();
-                        for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
-                            ParamObj poItem = new ParamObj();
-                            poItem.setName(pdcItem.declarator().getText());
-                            poItem.setType(pdcItem.declSpecifierSeq().getText());
-                            fo.addParam(poItem);
-                        }
-                    }
-
-                    co.addFunc(fo);
-                } else {
-                    ParamObj po = new ParamObj();
-                    po.setName(mdc.declarator().getText());
-                    if (mdc.braceOrEqualInitializer() != null) {
-                        po.setStrValue(mdc.braceOrEqualInitializer().initializerClause().getText());
-                    }
-                    po.setType(type);
-                    co.addParam(po);
-                }
-            }
+            setClassMember(ctx, co);
         }
 
     }
@@ -526,66 +538,81 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
         System.out.println("c/cpp enterBlockDeclaration: " + ctx.getText());
     }
 
+    private void parseConstant(CPP14Parser.SimpleDeclarationContext ctx) {
+        if (ctx.initDeclaratorList().initDeclarator(0) != null &&
+                ctx.initDeclaratorList().initDeclarator(0).initializer() != null &&
+                ctx.declSpecifierSeq() != null) {
+            String paType = "";
+            List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+            for (CPP14Parser.DeclSpecifierContext item: dscl) {
+                paType += item.getText() + " ";
+            }
+            paType = StringUtils.removeLastSpace(paType);
+            String paName = ctx.initDeclaratorList().initDeclarator(0).declarator().getText();
+            String initValue = ctx.initDeclaratorList().initDeclarator(0).initializer().braceOrEqualInitializer().initializerClause().getText();
+
+            ParamObj po = new ParamObj();
+            po.setName(paName);
+            po.setType(paType);
+            po.setStrValue(initValue);
+            this.constList.add(po);
+        }
+    }
+
+    private void parseFunction(CPP14Parser.SimpleDeclarationContext ctx) {
+        CPP14Parser.NoPointerDeclaratorContext npdc = ctx.initDeclaratorList().initDeclarator(0).
+                declarator().pointerDeclarator().noPointerDeclarator();
+        String name = npdc.noPointerDeclarator().getText();
+        FuncObj fo = new FuncObj();
+        fo.setName(name);
+        List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+        for (CPP14Parser.DeclSpecifierContext dsc : dscl) {
+            fo.addDecl(dsc.getText());
+        }
+        if (npdc.parametersAndQualifiers().parameterDeclarationClause() != null) {
+            List<CPP14Parser.ParameterDeclarationContext> pdcl = npdc.parametersAndQualifiers().
+                    parameterDeclarationClause().parameterDeclarationList().parameterDeclaration();
+            for (CPP14Parser.ParameterDeclarationContext pdc : pdcl) {
+                String varName = pdc.declarator() != null ? pdc.declarator().getText() : "";
+                String typeName = "";
+
+                List<CPP14Parser.DeclSpecifierContext> dscList = pdc.declSpecifierSeq().declSpecifier();
+                for (CPP14Parser.DeclSpecifierContext dscItem : dscList) {
+                    typeName += dscItem.getText() + " ";
+                }
+                if (dscList.size() > 0) {
+                    typeName = typeName.substring(0, typeName.length() - 1);
+                }
+
+                ParamObj po = new ParamObj();
+                po.setName(varName);
+                po.setType(typeName);
+                fo.addParam(po);
+            }
+        }
+
+        this.currentObject = fo;
+        this.currentToken = CppToken.CPP_TOKEN_FUNCTION;
+        this.funcObjList.add(fo);
+    }
+
     @Override
     public void enterSimpleDeclaration(CPP14Parser.SimpleDeclarationContext ctx) {
         super.enterSimpleDeclaration(ctx);
         System.out.println("c/cpp enterSimpleDeclaration: " + ctx.getText());
 
-        if (ctx.initDeclaratorList() != null) {
-            CPP14Parser.NoPointerDeclaratorContext npdc = ctx.initDeclaratorList().initDeclarator(0).
-                    declarator().pointerDeclarator().noPointerDeclarator();
-            if (npdc.noPointerDeclarator() != null) {
-                String name = npdc.noPointerDeclarator().getText();
-                FuncObj fo = new FuncObj();
-                fo.setName(name);
-                List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
-                for (CPP14Parser.DeclSpecifierContext dsc : dscl) {
-                    fo.addDecl(dsc.getText());
-                }
-                if (npdc.parametersAndQualifiers().parameterDeclarationClause() != null) {
-                    List<CPP14Parser.ParameterDeclarationContext> pdcl = npdc.parametersAndQualifiers().
-                            parameterDeclarationClause().parameterDeclarationList().parameterDeclaration();
-                    for (CPP14Parser.ParameterDeclarationContext pdc : pdcl) {
-                        String varName = pdc.declarator() != null ? pdc.declarator().getText() : "";
-                        String typeName = "";
-
-                        List<CPP14Parser.DeclSpecifierContext> dscList = pdc.declSpecifierSeq().declSpecifier();
-                        for (CPP14Parser.DeclSpecifierContext dscItem : dscList) {
-                            typeName += dscItem.getText() + " ";
-                        }
-                        if (dscList.size() > 0) {
-                            typeName = typeName.substring(0, typeName.length() - 1);
-                        }
-
-                        ParamObj po = new ParamObj();
-                        po.setName(varName);
-                        po.setType(typeName);
-                        fo.addParam(po);
-                    }
-                }
-
-                this.currentObject = fo;
-                this.currentToken = CppToken.CPP_TOKEN_FUNCTION;
-                this.funcObjList.add(fo);
-            } else {
-                if (ctx.initDeclaratorList().initDeclarator(0) != null && ctx.initDeclaratorList().initDeclarator(0).initializer() != null) {
-                    String paType = "";
-                    List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
-                    for (CPP14Parser.DeclSpecifierContext item: dscl) {
-                        paType += item.getText() + " ";
-                    }
-                    paType = StringUtils.removeLastSpace(paType);
-                    String paName = ctx.initDeclaratorList().initDeclarator(0).declarator().getText();
-                    String initValue = ctx.initDeclaratorList().initDeclarator(0).initializer().braceOrEqualInitializer().initializerClause().getText();
-
-                    ParamObj po = new ParamObj();
-                    po.setName(paName);
-                    po.setType(paType);
-                    po.setStrValue(initValue);
-                    this.constList.add(po);
-                }
-            }
+        if (ctx.initDeclaratorList() == null) {
+            return;
         }
+
+        CPP14Parser.NoPointerDeclaratorContext npdc = ctx.initDeclaratorList().initDeclarator(0).
+                declarator().pointerDeclarator().noPointerDeclarator();
+        if (npdc.noPointerDeclarator() != null) {
+            parseFunction(ctx);
+        } else {
+            parseConstant(ctx);
+        }
+
     }
 
     @Override
