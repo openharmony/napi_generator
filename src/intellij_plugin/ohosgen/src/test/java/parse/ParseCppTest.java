@@ -94,7 +94,7 @@ class ParseCppTest {
             "  uint16_t port;\n" +
             "};";
 
-    private final String testCStreamFile2 = "/*-------------------------------------------------------------------------\n" +
+    private final String testCStreamFile2 = "/*---------------------------------------\n" +
             " * dEQP glslang integration\n" +
             " * ------------------------\n" +
             " *\n" +
@@ -1271,6 +1271,25 @@ class ParseCppTest {
         pl = fo.getParamList();
         assertEquals(1, pl.size());
         assertEquals("*entry", pl.get(0).getName());
+        assertEquals("void", pl.get(0).getType());
+    }
+
+    @Test
+    void parseCStreamFile3() {
+        ParseBase parser = ParseFactory.getParser("h2dts");
+        String testEnum = testCStreamFile2;
+        CodePointCharStream cStream = CharStreams.fromString(testEnum);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(12, fol.size());
+
+        FuncObj fo = fol.get(0);
+        assertEquals("OS_AllocTLSIndex", fo.getName());
+        assertEquals("OS_TLSIndex", fo.getRetValue());
+
+        List<ParamObj> pl = fo.getParamList();
+        assertEquals(1, pl.size());
+        assertEquals("", pl.get(0).getName());
         assertEquals("void", pl.get(0).getType());
 
         fo = fol.get(8);

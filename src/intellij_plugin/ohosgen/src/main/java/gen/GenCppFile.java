@@ -38,7 +38,8 @@ public class GenCppFile extends GeneratorBase {
 
     /**
      * 生成输出内容
-     * @param po
+     *
+     * @param po 解析类
      */
     @Override
     public void genContent(ParseObj po) {
@@ -53,7 +54,8 @@ public class GenCppFile extends GeneratorBase {
 
     /**
      * 生成输出内容
-     * @param iol
+     *
+     * @param iol 接口列表
      */
     @Override
     public void genInterfaceList(List<InterfaceObject> iol) {
@@ -62,7 +64,8 @@ public class GenCppFile extends GeneratorBase {
 
     /**
      * 生成输出内容
-     * @param eol
+     *
+     * @param eol 枚举列表
      */
     @Override
     public void genEnumList(List<EnumObj> eol) {
@@ -71,7 +74,8 @@ public class GenCppFile extends GeneratorBase {
 
     /**
      * 生成输出内容
-     * @param col
+     *
+     * @param col 类列表
      */
     @Override
     public void genClassList(List<ClassObj> col) {
@@ -80,7 +84,8 @@ public class GenCppFile extends GeneratorBase {
 
     /**
      * 生成输出内容
-     * @param fol
+     *
+     * @param fol 方法列表
      */
     @Override
     public void genFuncList(List<FuncObj> fol) {
@@ -89,7 +94,8 @@ public class GenCppFile extends GeneratorBase {
 
     /**
      * 生成输出内容
-     * @param sol
+     *
+     * @param sol 结构体列表
      */
     @Override
     public void genStructList(List<StructObj> sol) {
@@ -98,7 +104,8 @@ public class GenCppFile extends GeneratorBase {
 
     /**
      * 生成输出内容
-     * @param tol
+     *
+     * @param tol 类型列表
      */
     @Override
     public void genTypeList(List<TypeObj> tol) {
@@ -107,7 +114,8 @@ public class GenCppFile extends GeneratorBase {
 
     /**
      * 生成输出内容
-     * @param uol
+     *
+     * @param uol 联合体列表
      */
     @Override
     public void genUnionList(List<UnionObj> uol) {
