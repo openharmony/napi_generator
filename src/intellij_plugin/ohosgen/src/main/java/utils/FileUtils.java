@@ -120,7 +120,6 @@ public class FileUtils {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
             // true 表示追加模式‌:ml-citation{ref="6" data="citationList"}
             writer.write(content);
-            writer.newLine(); // 换行追加
         } catch (IOException e) {
             System.out.println("appendText error: " + e.getMessage());
         }

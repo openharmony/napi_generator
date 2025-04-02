@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 import grammar.*;
 import utils.Constants;
 import utils.CppToken;
+import utils.StringUtils;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -46,6 +47,7 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
     private List<TypeObj> typeObjList;
     private List<UnionObj> unionObjList;
     private List<InterfaceObject> interfaceObjList;
+    private List<ParamObj> constList;
 
     /**
      * 构造函数
@@ -58,6 +60,7 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
         typeObjList = new CopyOnWriteArrayList<>();
         unionObjList = new CopyOnWriteArrayList<>();
         interfaceObjList = new CopyOnWriteArrayList<>();
+        constList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -232,6 +235,24 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
         this.unionObjList = unionObjList;
     }
 
+    /**
+     * 获取常量列表
+     *
+     * @return 返回常量列表
+     */
+    public List<ParamObj> getConstList() {
+        return constList;
+    }
+
+    /**
+     * 设置常量列表
+     *
+     * @param constList 常量列表
+     */
+    public void setConstList(List<ParamObj> constList) {
+        this.constList = constList;
+    }
+
     @Override
     public void enterAbstractDeclarator(CPP14Parser.AbstractDeclaratorContext ctx) {
         super.enterAbstractDeclarator(ctx);
@@ -252,6 +273,14 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
                 this.currentObject = so;
                 this.currentToken = CppToken.CPP_TOKEN_STRUCT;
                 this.structObjList.add(so);
+            } else if (key.equals(CppToken.CPP_TOKEN_CLASS)) {
+                ClassObj co = new ClassObj();
+                String name = (ctx.classHead().classHeadName() != null) ?
+                        ctx.classHead().classHeadName().getText() : "";
+                co.setName(name);
+                this.currentObject = co;
+                this.currentToken = CppToken.CPP_TOKEN_CLASS;
+                this.classObjList.add(co);
             }
         } else if (ctx.classHead() != null && ctx.classHead().Union() != null) {
             String key = ctx.classHead().Union().getText();
@@ -273,30 +302,197 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
         System.out.println("c/cpp attribute: " + ctx.getText());
     }
 
+    private void setStructFunc(CPP14Parser.MemberdeclarationContext ctx, StructObj so, String type) {
+        List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
+        for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
+            if (mdc.declarator() != null && mdc.declarator().pointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().constantExpression() == null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().noPointerDeclarator() != null) {
+                CPP14Parser.NoPointerDeclaratorContext npdcItem =
+                        mdc.declarator().pointerDeclarator().noPointerDeclarator();
+                FuncObj fo = new FuncObj();
+                fo.setName(npdcItem.noPointerDeclarator().getText());
+                fo.setRetValue(type);
+                so.addFunc(fo);
+                if (!(npdcItem.parametersAndQualifiers() != null &&
+                    npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
+                    npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                    parameterDeclarationList() != null)) {
+                    continue;
+                }
+                List<CPP14Parser.ParameterDeclarationContext> pdcList =
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                                parameterDeclarationList().parameterDeclaration();
+                for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
+                    ParamObj poItem = new ParamObj();
+                    poItem.setName(pdcItem.declarator().getText());
+                    poItem.setType(pdcItem.declSpecifierSeq().getText());
+                    fo.addParam(poItem);
+                }
+            } else {
+                ParamObj po = new ParamObj();
+                po.setName(mdc.declarator().getText());
+                if (mdc.braceOrEqualInitializer() != null) {
+                    po.setStrValue(mdc.braceOrEqualInitializer().initializerClause().getText());
+                }
+                po.setType(type);
+                so.addMember(po);
+            }
+        }
+    }
+
+    private void setStructMember(CPP14Parser.MemberdeclarationContext ctx, StructObj so) {
+        String type = ctx.declSpecifierSeq().getText();
+        List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+        type = !dscl.isEmpty() ? "" : type;
+        for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
+            if (dscItem.typeSpecifier() != null &&
+                    dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier() != null) {
+                CPP14Parser.ElaboratedTypeSpecifierContext esc =
+                        dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier();
+                type += esc.Enum() != null ? esc.Enum().getText() + " " : "";
+                type += esc.classKey() != null ? esc.classKey().getText() + " " : "";
+                type += esc.Identifier();
+            } else {
+                type += dscItem.getText() + " ";
+            }
+        }
+        if (!dscl.isEmpty()) {
+            type = StringUtils.removeLastSpace(type);
+        }
+        setStructFunc(ctx, so, type);
+
+    }
+
+    private void setUnionFunc(CPP14Parser.MemberdeclarationContext ctx, UnionObj uo, String type) {
+
+        List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
+        for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
+            if (mdc.declarator() != null && mdc.declarator().pointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().constantExpression() == null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().noPointerDeclarator() != null) {
+                CPP14Parser.NoPointerDeclaratorContext npdcItem =
+                        mdc.declarator().pointerDeclarator().noPointerDeclarator();
+                FuncObj fo = new FuncObj();
+                fo.setName(npdcItem.noPointerDeclarator().getText());
+                fo.setRetValue(type);
+                uo.addFunc(fo);
+
+                if (!(npdcItem.parametersAndQualifiers() != null &&
+                    npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
+                    npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                    parameterDeclarationList() != null)) {
+                    continue;
+                }
+                List<CPP14Parser.ParameterDeclarationContext> pdcList =
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                                parameterDeclarationList().parameterDeclaration();
+                for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
+                    ParamObj poItem = new ParamObj();
+                    poItem.setName(pdcItem.declarator().getText());
+                    poItem.setType(pdcItem.declSpecifierSeq().getText());
+                    fo.addParam(poItem);
+                }
+            } else {
+                ParamObj po = new ParamObj();
+                po.setName(mdc.declarator().getText());
+                if (mdc.braceOrEqualInitializer() != null) {
+                    po.setStrValue(mdc.braceOrEqualInitializer().initializerClause().getText());
+                }
+                po.setType(type);
+                uo.addMember(po);
+            }
+        }
+    }
+
+    private void setUnionMember(CPP14Parser.MemberdeclarationContext ctx, UnionObj uo) {
+        String type = ctx.declSpecifierSeq().getText();
+        List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+        type = !dscl.isEmpty() ? "" : type;
+        for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
+            type += dscItem.getText() + " ";
+        }
+        if (!dscl.isEmpty()) {
+            type = StringUtils.removeLastSpace(type);
+        }
+        setUnionFunc(ctx, uo, type);
+    }
+
+    private void setClassFunc(CPP14Parser.MemberdeclarationContext ctx, ClassObj co, String type) {
+        List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
+        for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
+            if (mdc.declarator() != null && mdc.declarator().pointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator() != null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().constantExpression() == null &&
+                    mdc.declarator().pointerDeclarator().noPointerDeclarator().noPointerDeclarator() != null) {
+                CPP14Parser.NoPointerDeclaratorContext npdcItem =
+                        mdc.declarator().pointerDeclarator().noPointerDeclarator();
+                FuncObj fo = new FuncObj();
+                fo.setName(npdcItem.noPointerDeclarator().getText());
+                fo.setRetValue(type);
+                co.addFunc(fo);
+                if (!(npdcItem.parametersAndQualifiers() != null &&
+                    npdcItem.parametersAndQualifiers().parameterDeclarationClause() != null &&
+                    npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                    parameterDeclarationList() != null)) {
+                    continue;
+                }
+                List<CPP14Parser.ParameterDeclarationContext> pdcList =
+                        npdcItem.parametersAndQualifiers().parameterDeclarationClause().
+                                parameterDeclarationList().parameterDeclaration();
+                for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcList) {
+                    ParamObj poItem = new ParamObj();
+                    poItem.setName(pdcItem.declarator().getText());
+                    poItem.setType(pdcItem.declSpecifierSeq().getText());
+                    fo.addParam(poItem);
+                }
+            } else {
+                ParamObj po = new ParamObj();
+                po.setName(mdc.declarator().getText());
+                if (mdc.braceOrEqualInitializer() != null) {
+                    po.setStrValue(mdc.braceOrEqualInitializer().initializerClause().getText());
+                }
+                po.setType(type);
+                co.addParam(po);
+            }
+        }
+    }
+
+    private void setClassMember(CPP14Parser.MemberdeclarationContext ctx, ClassObj co) {
+        String type = ctx.declSpecifierSeq().getText();
+        List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+        type = !dscl.isEmpty() ? "" : type;
+        for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
+            if (dscItem.typeSpecifier() != null &&
+                    dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier() != null) {
+                CPP14Parser.ElaboratedTypeSpecifierContext esc =
+                        dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier();
+                type += esc.Enum() != null ? esc.Enum().getText() + " " : "";
+                type += esc.classKey() != null ? esc.classKey().getText() + " " : "";
+                type += esc.Identifier();
+            } else {
+                type += dscItem.getText() + " ";
+            }
+        }
+        if (!dscl.isEmpty()) {
+            type = StringUtils.removeLastSpace(type);
+        }
+        setClassFunc(ctx, co, type);
+
+    }
+
     @Override
     public void enterMemberdeclaration(CPP14Parser.MemberdeclarationContext ctx) {
         super.enterMemberdeclaration(ctx);
         System.out.println("c/cpp Memberdeclaration: " + ctx.getText());
         if (this.currentObject instanceof StructObj so) {
-            String type = ctx.declSpecifierSeq().getText();
-            String name = ctx.memberDeclaratorList().getText();
-            List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
-            for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
-                ParamObj po = new ParamObj();
-                po.setName(mdc.getText());
-                po.setType(type);
-                so.addMember(po);
-            }
+            setStructMember(ctx, so);
         } else if (this.currentObject instanceof UnionObj uo) {
-            String type = ctx.declSpecifierSeq().getText();
-            String name = ctx.memberDeclaratorList().getText();
-            List<CPP14Parser.MemberDeclaratorContext> mdcl = ctx.memberDeclaratorList().memberDeclarator();
-            for (CPP14Parser.MemberDeclaratorContext mdc : mdcl) {
-                ParamObj po = new ParamObj();
-                po.setName(mdc.getText());
-                po.setType(type);
-                uo.addMember(po);
-            }
+            setUnionMember(ctx, uo);
+        } else if (this.currentObject instanceof ClassObj co) {
+            setClassMember(ctx, co);
         }
 
     }
@@ -311,7 +507,30 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
     public void enterDeclarationseq(CPP14Parser.DeclarationseqContext ctx) {
         super.enterDeclarationseq(ctx);
         System.out.println("c/cpp enterDeclarationseq: " + ctx.getText());
+    }
 
+    @Override
+    public void enterInclusiveOrExpression(CPP14Parser.InclusiveOrExpressionContext ctx) {
+        super.enterInclusiveOrExpression(ctx);
+        System.out.println("c/cpp enterInclusiveOrExpression: " + ctx.getText());
+    }
+
+    @Override
+    public void enterAbstractPackDeclarator(CPP14Parser.AbstractPackDeclaratorContext ctx) {
+        super.enterAbstractPackDeclarator(ctx);
+        System.out.println("c/cpp enterAbstractPackDeclarator: " + ctx.getText());
+    }
+
+    @Override
+    public void enterBaseTypeSpecifier(CPP14Parser.BaseTypeSpecifierContext ctx) {
+        super.enterBaseTypeSpecifier(ctx);
+        System.out.println("c/cpp enterBaseTypeSpecifier: " + ctx.getText());
+    }
+
+    @Override
+    public void enterHandler(CPP14Parser.HandlerContext ctx) {
+        super.enterHandler(ctx);
+        System.out.println("c/cpp enterHandler: " + ctx.getText());
     }
 
     @Override
@@ -324,6 +543,7 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
     public void enterDeclaration(CPP14Parser.DeclarationContext ctx) {
         super.enterDeclaration(ctx);
         System.out.println("c/cpp declaration: " + ctx.getText());
+
     }
 
     @Override
@@ -332,10 +552,82 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
         System.out.println("c/cpp enterBlockDeclaration: " + ctx.getText());
     }
 
+    private void parseConstant(CPP14Parser.SimpleDeclarationContext ctx) {
+        if (ctx.initDeclaratorList().initDeclarator(0) != null &&
+                ctx.initDeclaratorList().initDeclarator(0).initializer() != null &&
+                ctx.declSpecifierSeq() != null) {
+            String paType = "";
+            List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+            for (CPP14Parser.DeclSpecifierContext item : dscl) {
+                paType += item.getText() + " ";
+            }
+            paType = StringUtils.removeLastSpace(paType);
+            String paName = ctx.initDeclaratorList().initDeclarator(0).declarator().getText();
+            String initValue = ctx.initDeclaratorList().initDeclarator(0).initializer().
+                    braceOrEqualInitializer().initializerClause().getText();
+
+            ParamObj po = new ParamObj();
+            po.setName(paName);
+            po.setType(paType);
+            po.setStrValue(initValue);
+            this.constList.add(po);
+        }
+    }
+
+    private void parseFunction(CPP14Parser.SimpleDeclarationContext ctx) {
+        CPP14Parser.NoPointerDeclaratorContext npdc = ctx.initDeclaratorList().initDeclarator(0).
+                declarator().pointerDeclarator().noPointerDeclarator();
+        String name = npdc.noPointerDeclarator().getText();
+        FuncObj fo = new FuncObj();
+        fo.setName(name);
+        List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+        for (CPP14Parser.DeclSpecifierContext dsc : dscl) {
+            fo.addDecl(dsc.getText());
+        }
+        if (npdc.parametersAndQualifiers().parameterDeclarationClause() != null) {
+            List<CPP14Parser.ParameterDeclarationContext> pdcl = npdc.parametersAndQualifiers().
+                    parameterDeclarationClause().parameterDeclarationList().parameterDeclaration();
+            for (CPP14Parser.ParameterDeclarationContext pdc : pdcl) {
+                String varName = pdc.declarator() != null ? pdc.declarator().getText() : "";
+                String typeName = "";
+
+                List<CPP14Parser.DeclSpecifierContext> dscList = pdc.declSpecifierSeq().declSpecifier();
+                for (CPP14Parser.DeclSpecifierContext dscItem : dscList) {
+                    typeName += dscItem.getText() + " ";
+                }
+                if (dscList.size() > 0) {
+                    typeName = typeName.substring(0, typeName.length() - 1);
+                }
+
+                ParamObj po = new ParamObj();
+                po.setName(varName);
+                po.setType(typeName);
+                fo.addParam(po);
+            }
+        }
+
+        this.currentObject = fo;
+        this.currentToken = CppToken.CPP_TOKEN_FUNCTION;
+        this.funcObjList.add(fo);
+    }
+
     @Override
     public void enterSimpleDeclaration(CPP14Parser.SimpleDeclarationContext ctx) {
         super.enterSimpleDeclaration(ctx);
         System.out.println("c/cpp enterSimpleDeclaration: " + ctx.getText());
+
+        if (ctx.initDeclaratorList() == null) {
+            return;
+        }
+
+        CPP14Parser.NoPointerDeclaratorContext npdc = ctx.initDeclaratorList().initDeclarator(0).
+                declarator().pointerDeclarator().noPointerDeclarator();
+        if (npdc.noPointerDeclarator() != null) {
+            parseFunction(ctx);
+        } else {
+            parseConstant(ctx);
+        }
+
     }
 
     @Override
@@ -354,15 +646,51 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
             so.setAlias(ctx.getText());
         } else if (this.currentObject instanceof UnionObj uo) {
             uo.setAlias(ctx.getText());
+        } else if (this.currentObject instanceof ClassObj co) {
+            co.setAlias(ctx.getText());
         }
+    }
 
+    @Override
+    public void enterExpressionStatement(CPP14Parser.ExpressionStatementContext ctx) {
+        super.enterExpressionStatement(ctx);
+        System.out.println("c/cpp enterExpressionStatement: " + ctx.getText());
+    }
+
+    @Override
+    public void enterDeclarationStatement(CPP14Parser.DeclarationStatementContext ctx) {
+        super.enterDeclarationStatement(ctx);
+        System.out.println("c/cpp enterDeclarationStatement: " + ctx.getText());
+    }
+
+    @Override
+    public void enterCompoundStatement(CPP14Parser.CompoundStatementContext ctx) {
+        super.enterCompoundStatement(ctx);
+        System.out.println("c/cpp enterCompoundStatement: " + ctx.getText());
+    }
+
+    @Override
+    public void enterDeclarator(CPP14Parser.DeclaratorContext ctx) {
+        super.enterDeclarator(ctx);
+        System.out.println("c/cpp enterDeclarator: " + ctx.getText());
+    }
+
+    @Override
+    public void enterEmptyDeclaration_(CPP14Parser.EmptyDeclaration_Context ctx) {
+        super.enterEmptyDeclaration_(ctx);
+        System.out.println("c/cpp enterEmptyDeclaration_: " + ctx.getText());
+    }
+
+    @Override
+    public void enterTranslationUnit(CPP14Parser.TranslationUnitContext ctx) {
+        super.enterTranslationUnit(ctx);
+        System.out.println("c/cpp enterTranslationUnit: " + ctx.getText());
     }
 
     @Override
     public void enterAsmDefinition(CPP14Parser.AsmDefinitionContext ctx) {
         super.enterAsmDefinition(ctx);
         System.out.println("c/cpp enterAsmDefinition: " + ctx.getText());
-
     }
 
     @Override
@@ -456,9 +784,89 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
     }
 
     @Override
+    public void enterPrimaryExpression(CPP14Parser.PrimaryExpressionContext ctx) {
+        super.enterPrimaryExpression(ctx);
+        System.out.println("c/cpp enterPrimaryExpression: " + ctx.getText());
+    }
+
+    @Override
+    public void enterPostfixExpression(CPP14Parser.PostfixExpressionContext ctx) {
+        super.enterPostfixExpression(ctx);
+        System.out.println("c/cpp enterPostfixExpression: " + ctx.getText());
+    }
+
+    @Override
+    public void enterConstantExpression(CPP14Parser.ConstantExpressionContext ctx) {
+        super.enterConstantExpression(ctx);
+        System.out.println("c/cpp enterConstantExpression: " + ctx.getText());
+    }
+
+    @Override
+    public void enterVirtualSpecifier(CPP14Parser.VirtualSpecifierContext ctx) {
+        super.enterVirtualSpecifier(ctx);
+        System.out.println("c/cpp enterVirtualSpecifier: " + ctx.getText());
+    }
+
+    @Override
+    public void enterBalancedtoken(CPP14Parser.BalancedtokenContext ctx) {
+        super.enterBalancedtoken(ctx);
+        System.out.println("c/cpp enterBalancedtoken: " + ctx.getText());
+    }
+
+    @Override
+    public void enterBalancedTokenSeq(CPP14Parser.BalancedTokenSeqContext ctx) {
+        super.enterBalancedTokenSeq(ctx);
+        System.out.println("c/cpp enterBalancedtoken: " + ctx.getText());
+    }
+
+    @Override
+    public void enterBaseSpecifier(CPP14Parser.BaseSpecifierContext ctx) {
+        super.enterBaseSpecifier(ctx);
+        System.out.println("c/cpp enterBaseSpecifier: " + ctx.getText());
+    }
+
+    @Override
+    public void enterBaseClause(CPP14Parser.BaseClauseContext ctx) {
+        super.enterBaseClause(ctx);
+        System.out.println("c/cpp enterBaseClause: " + ctx.getText());
+    }
+
+    @Override
     public void enterFunctionDefinition(CPP14Parser.FunctionDefinitionContext ctx) {
         super.enterFunctionDefinition(ctx);
         System.out.println("c/cpp function: " + ctx.getText());
+
+        String typeName = ctx.declSpecifierSeq().getText();
+        List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
+        if (!dscl.isEmpty()) {
+            typeName = "";
+        }
+        for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
+            typeName += dscItem.getText() + " ";
+        }
+        typeName = ParseBaseListener.removeLastSpace(typeName);
+        String funcName = ctx.declarator().pointerDeclarator().noPointerDeclarator().noPointerDeclarator().getText();
+
+        FuncObj fo = new FuncObj();
+        fo.setName(funcName);
+        fo.setRetValue(typeName);
+
+        this.currentToken = CppToken.CPP_TOKEN_FUNCTION;
+        this.currentObject = fo;
+        this.funcObjList.add(fo);
+
+        CPP14Parser.ParameterDeclarationListContext pdl = ctx.declarator().pointerDeclarator().noPointerDeclarator().
+                parametersAndQualifiers().parameterDeclarationClause().parameterDeclarationList();
+        List<CPP14Parser.ParameterDeclarationContext> pdcl = pdl.parameterDeclaration();
+        for (CPP14Parser.ParameterDeclarationContext pdcItem : pdcl) {
+            ParamObj po = new ParamObj();
+            String type = pdcItem.declSpecifierSeq().getText();
+            String name = pdcItem.declarator() != null ? pdcItem.declarator().getText() : "";
+            po.setType(type);
+            po.setName(name);
+            fo.addParam(po);
+        }
+
     }
 
     @Override
@@ -479,7 +887,7 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
         List<CPP14Parser.EnumeratorDefinitionContext> edcl = ctx.enumeratorList().enumeratorDefinition();
         for (CPP14Parser.EnumeratorDefinitionContext edc : edcl) {
             String memName = edc.enumerator().getText();
-            String memValue = edc.constantExpression().getText();
+            String memValue = edc.constantExpression() != null ? edc.constantExpression().getText() : "";
             eo.addMemberItem(memName);
             eo.addMemberValue(memValue);
         }
@@ -540,6 +948,12 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
     public void exitTranslationUnit(CPP14Parser.TranslationUnitContext ctx) {
         super.exitTranslationUnit(ctx);
         System.out.println("c/cpp exit translation unit: " + ctx.getText());
+    }
+
+    @Override
+    public void enterFunctionSpecifier(CPP14Parser.FunctionSpecifierContext ctx) {
+        super.enterFunctionSpecifier(ctx);
+        System.out.println("c/cpp enterFunctionSpecifier: " + ctx.getText());
     }
 
     @Override

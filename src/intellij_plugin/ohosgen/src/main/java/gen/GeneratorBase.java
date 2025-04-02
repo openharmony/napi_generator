@@ -21,104 +21,102 @@ import java.util.List;
 
 /**
  * <h3>类名：该类用于xxx</h3>
- * description ${description}
+ * description base of generator
  *
- * @author ${USER}
- * date 2025-02-28
- * @since 2025-02-28
+ * @author Administrator
+ *         date 2025-02-28
  * @version 1.0
+ * @since 2025-02-28
  */
-public class GenCppFile extends GeneratorBase {
+public class GeneratorBase {
     /**
-     * 构造函数
-     */
-    GenCppFile() {
-
-    }
-
-    /**
-     * 生成输出内容
+     * 生成内容
      *
      * @param po 解析类
      */
-    @Override
     public void genContent(ParseObj po) {
-        genInterfaceList(po.getInterfaceList());
-        genEnumList(po.getEnumList());
-        genClassList(po.getClassList());
-        genFuncList(po.getFuncList());
-        genStructList(po.getStructList());
-        genTypeList(po.getTypeList());
-        genUnionList(po.getUnionList());
+        System.out.println("GeneratorBase: genContent");
     }
 
     /**
-     * 生成输出内容
+     * 生成文件
+     *
+     * @param filePath 文件路径
+     * @param fileName 文件名
+     */
+    public void genFile(String filePath, String fileName) {
+        System.out.println("GeneratorBase: path is " + filePath + ", file is " + fileName);
+    }
+
+    /**
+     * 生成接口
      *
      * @param iol 接口列表
      */
-    @Override
     public void genInterfaceList(List<InterfaceObject> iol) {
-
+        System.out.println("GeneratorBase: genInterfaceList");
     };
 
     /**
-     * 生成输出内容
+     * 生成枚举
      *
      * @param eol 枚举列表
      */
-    @Override
     public void genEnumList(List<EnumObj> eol) {
-
+        System.out.println("GeneratorBase: genEnumList");
     };
 
     /**
-     * 生成输出内容
+     * 生成类
      *
      * @param col 类列表
      */
-    @Override
     public void genClassList(List<ClassObj> col) {
-
+        System.out.println("GeneratorBase: genClassList");
     };
 
     /**
-     * 生成输出内容
+     * 生成方法
      *
      * @param fol 方法列表
      */
-    @Override
     public void genFuncList(List<FuncObj> fol) {
-
+        System.out.println("GeneratorBase: genFuncList");
     };
 
     /**
-     * 生成输出内容
+     * 生成结构体
      *
      * @param sol 结构体列表
      */
-    @Override
     public void genStructList(List<StructObj> sol) {
-
+        System.out.println("GeneratorBase: genStructList");
     };
 
     /**
-     * 生成输出内容
+     * 生成类型
      *
      * @param tol 类型列表
      */
-    @Override
     public void genTypeList(List<TypeObj> tol) {
-
+        System.out.println("GeneratorBase: genTypeList");
     };
 
     /**
-     * 生成输出内容
+     * 生成联合体
      *
      * @param uol 联合体列表
      */
-    @Override
     public void genUnionList(List<UnionObj> uol) {
-
+        System.out.println("GeneratorBase: genUnionList");
     };
+
+    /**
+     * 生成变量
+     *
+     * @param pol 变量列表
+     */
+    public void genVarList(List<ParamObj> pol) {
+        System.out.println("GeneratorBase: genVarList");
+    }
 }
