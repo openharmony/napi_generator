@@ -22,8 +22,6 @@ import antlr.cpp.CPP14Lexer;
 import antlr.cpp.CPP14Parser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gen.GenerateFactory;
-import gen.GeneratorBase;
 import grammar.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;

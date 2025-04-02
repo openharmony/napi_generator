@@ -1,6 +1,21 @@
+/*
+ * Copyright (c) 2025 Shenzhen Kaihong Digital.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package utils;
 
-import java.util.List;
+import java.util.Locale;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -22,7 +37,7 @@ public class StringUtils {
         int index = str.indexOf(delimiter);
         if (index != -1) {
             String prefix = str.substring(0, index);
-            String suffix = str.substring(index + 1).toLowerCase();
+            String suffix = str.substring(index + 1).toLowerCase(Locale.ROOT);
             System.out.println("前缀: " + prefix);
             System.out.println("后缀: " + suffix);
         } else {

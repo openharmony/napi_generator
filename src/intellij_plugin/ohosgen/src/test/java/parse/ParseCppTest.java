@@ -37,6 +37,177 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ParseCppTest {
 
+    private final String testCStreamFile1 = "#ifndef COAP_ADDRESS_H_\n" +
+            "#define COAP_ADDRESS_H_\n" +
+            "\n" +
+            "#include <assert.h>\n" +
+            "#include <stdint.h>\n" +
+            "#include <string.h>\n" +
+            "#include <sys/types.h>\n" +
+            "#include \"libcoap.h\"\n" +
+            "\n" +
+            "#include \"coap3/coap_pdu.h\"\n" +
+            "\n" +
+            "#if defined(WITH_LWIP)\n" +
+            "\n" +
+            "#include <lwip/ip_addr.h>\n" +
+            "\n" +
+            "struct coap_address_t {\n" +
+            "  uint16_t port;\n" +
+            "  ip_addr_t addr;\n" +
+            "};\n" +
+            "\n" +
+            "/**\n" +
+            " * Returns the port from @p addr in host byte order.\n" +
+            " */\n" +
+            "COAP_STATIC_INLINE uint16_t\n" +
+            "coap_address_get_port(const coap_address_t *addr) {\n" +
+            "  return addr->port;\n" +
+            "}\n" +
+            "\n" +
+            "/**\n" +
+            " * Sets the port field of @p addr to @p port (in host byte order).\n" +
+            " */\n" +
+            "COAP_STATIC_INLINE void\n" +
+            "coap_address_set_port(coap_address_t *addr, uint16_t port) {\n" +
+            "  addr->port = port;\n" +
+            "}\n" +
+            "\n" +
+            "#define _coap_address_equals_impl(A, B) \\\n" +
+            "  ((A)->port == (B)->port &&        \\\n" +
+            "   (!!ip_addr_cmp(&(A)->addr,&(B)->addr)))\n" +
+            "\n" +
+            "#define _coap_address_isany_impl(A)  ip_addr_isany(&(A)->addr)\n" +
+            "\n" +
+            "#define _coap_is_mcast_impl(Address) ip_addr_ismulticast(&(Address)->addr)\n" +
+            "\n" +
+            "#ifdef COAP_SUPPORT_SOCKET_BROADCAST\n" +
+            "#define _coap_is_bcast_impl(Address) ip_addr_isbroadcast(&(Address)->addr)\n" +
+            "#endif\n" +
+            "\n" +
+            "#elif defined(WITH_CONTIKI)\n" +
+            "\n" +
+            "#include \"uip.h\"\n" +
+            "\n" +
+            "struct coap_address_t {\n" +
+            "  uip_ipaddr_t addr;\n" +
+            "  uint16_t port;\n" +
+            "};";
+
+    private final String testCStreamFile2 = "/*-------------------------------------------------------------------------\n" +
+            " * dEQP glslang integration\n" +
+            " * ------------------------\n" +
+            " *\n" +
+            " *\n" +
+            " * Licensed under the Apache License, Version 2.0 (the \"License\");\n" +
+            " * you may not use this file except in compliance with the License.\n" +
+            " * You may obtain a copy of the License at\n" +
+            " *\n" +
+            " *      http://www.apache.org/licenses/LICENSE-2.0\n" +
+            " *\n" +
+            " * Unless required by applicable law or agreed to in writing, software\n" +
+            " * distributed under the License is distributed on an \"AS IS\" BASIS,\n" +
+            " * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n" +
+            " * See the License for the specific language governing permissions and\n" +
+            " * limitations under the License.\n" +
+            " *\n" +
+            " *//*!\n" +
+            " * \\file\n" +
+            " * \\brief glslang OS interface.\n" +
+            " *//*--------------------------------------------------------------------*/\n" +
+            "\n" +
+            "#include \"osinclude.h\"\n" +
+            "\n" +
+            "#include \"deThread.h\"\n" +
+            "#include \"deThreadLocal.h\"\n" +
+            "#include \"deMutex.h\"\n" +
+            "\n" +
+            "namespace glslang\n" +
+            "{\n" +
+            "\n" +
+            "DE_STATIC_ASSERT(sizeof(deThreadLocal)\t== sizeof(OS_TLSIndex));\n" +
+            "DE_STATIC_ASSERT(sizeof(deThread)\t\t== sizeof(void*));\n" +
+            "\n" +
+            "// Thread-local\n" +
+            "\n" +
+            "OS_TLSIndex OS_AllocTLSIndex (void)\n" +
+            "{\n" +
+            "\treturn (OS_TLSIndex)deThreadLocal_create();\n" +
+            "}\n" +
+            "\n" +
+            "bool OS_SetTLSValue (OS_TLSIndex nIndex, void* lpvValue)\n" +
+            "{\n" +
+            "\tdeThreadLocal_set((deThreadLocal)nIndex, lpvValue);\n" +
+            "\treturn true;\n" +
+            "}\n" +
+            "\n" +
+            "bool OS_FreeTLSIndex (OS_TLSIndex nIndex)\n" +
+            "{\n" +
+            "\tdeThreadLocal_destroy((deThreadLocal)nIndex);\n" +
+            "\treturn true;\n" +
+            "}\n" +
+            "\n" +
+            "void* OS_GetTLSValue (OS_TLSIndex nIndex)\n" +
+            "{\n" +
+            "\treturn deThreadLocal_get((deThreadLocal)nIndex);\n" +
+            "}\n" +
+            "\n" +
+            "// Global lock\n" +
+            "\n" +
+            "static deMutex s_globalLock = 0;\n" +
+            "\n" +
+            "void InitGlobalLock (void)\n" +
+            "{\n" +
+            "\tDE_ASSERT(s_globalLock == 0);\n" +
+            "\ts_globalLock = deMutex_create(DE_NULL);\n" +
+            "}\n" +
+            "\n" +
+            "void GetGlobalLock (void)\n" +
+            "{\n" +
+            "\tdeMutex_lock(s_globalLock);\n" +
+            "}\n" +
+            "\n" +
+            "void ReleaseGlobalLock (void)\n" +
+            "{\n" +
+            "\tdeMutex_unlock(s_globalLock);\n" +
+            "}\n" +
+            "\n" +
+            "// Threading\n" +
+            "\n" +
+            "DE_STATIC_ASSERT(sizeof(void*) >= sizeof(deThread));\n" +
+            "\n" +
+            "static void EnterGenericThread (void* entry)\n" +
+            "{\n" +
+            "\t((TThreadEntrypoint)entry)(DE_NULL);\n" +
+            "}\n" +
+            "\n" +
+            "void* OS_CreateThread (TThreadEntrypoint entry)\n" +
+            "{\n" +
+            "\treturn (void*)(deUintptr)deThread_create(EnterGenericThread, (void*)entry, DE_NULL);\n" +
+            "}\n" +
+            "\n" +
+            "void OS_WaitForAllThreads (void* threads, int numThreads)\n" +
+            "{\n" +
+            "\tfor (int ndx = 0; ndx < numThreads; ndx++)\n" +
+            "\t{\n" +
+            "\t\tconst deThread thread = (deThread)(deUintptr)((void**)threads)[ndx];\n" +
+            "\t\tdeThread_join(thread);\n" +
+            "\t\tdeThread_destroy(thread);\n" +
+            "\t}\n" +
+            "}\n" +
+            "\n" +
+            "void OS_Sleep (int milliseconds)\n" +
+            "{\n" +
+            "\tdeSleep(milliseconds);\n" +
+            "}\n" +
+            "\n" +
+            "void OS_DumpMemoryCounters (void)\n" +
+            "{\n" +
+            "\t// Not used\n" +
+            "}\n" +
+            "\n" +
+            "} // glslang\n";
+
     @BeforeEach
     void setUp() {
     }
@@ -970,62 +1141,7 @@ class ParseCppTest {
     @Test
     void parseCStreamFile1() {
         ParseBase parser = ParseFactory.getParser("h2dts");
-        String testEnum = "#ifndef COAP_ADDRESS_H_\n" +
-                "#define COAP_ADDRESS_H_\n" +
-                "\n" +
-                "#include <assert.h>\n" +
-                "#include <stdint.h>\n" +
-                "#include <string.h>\n" +
-                "#include <sys/types.h>\n" +
-                "#include \"libcoap.h\"\n" +
-                "\n" +
-                "#include \"coap3/coap_pdu.h\"\n" +
-                "\n" +
-                "#if defined(WITH_LWIP)\n" +
-                "\n" +
-                "#include <lwip/ip_addr.h>\n" +
-                "\n" +
-                "struct coap_address_t {\n" +
-                "  uint16_t port;\n" +
-                "  ip_addr_t addr;\n" +
-                "};\n" +
-                "\n" +
-                "/**\n" +
-                " * Returns the port from @p addr in host byte order.\n" +
-                " */\n" +
-                "COAP_STATIC_INLINE uint16_t\n" +
-                "coap_address_get_port(const coap_address_t *addr) {\n" +
-                "  return addr->port;\n" +
-                "}\n" +
-                "\n" +
-                "/**\n" +
-                " * Sets the port field of @p addr to @p port (in host byte order).\n" +
-                " */\n" +
-                "COAP_STATIC_INLINE void\n" +
-                "coap_address_set_port(coap_address_t *addr, uint16_t port) {\n" +
-                "  addr->port = port;\n" +
-                "}\n" +
-                "\n" +
-                "#define _coap_address_equals_impl(A, B) \\\n" +
-                "  ((A)->port == (B)->port &&        \\\n" +
-                "   (!!ip_addr_cmp(&(A)->addr,&(B)->addr)))\n" +
-                "\n" +
-                "#define _coap_address_isany_impl(A)  ip_addr_isany(&(A)->addr)\n" +
-                "\n" +
-                "#define _coap_is_mcast_impl(Address) ip_addr_ismulticast(&(Address)->addr)\n" +
-                "\n" +
-                "#ifdef COAP_SUPPORT_SOCKET_BROADCAST\n" +
-                "#define _coap_is_bcast_impl(Address) ip_addr_isbroadcast(&(Address)->addr)\n" +
-                "#endif\n" +
-                "\n" +
-                "#elif defined(WITH_CONTIKI)\n" +
-                "\n" +
-                "#include \"uip.h\"\n" +
-                "\n" +
-                "struct coap_address_t {\n" +
-                "  uip_ipaddr_t addr;\n" +
-                "  uint16_t port;\n" +
-                "};";
+        String testEnum = testCStreamFile1;
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
         List<FuncObj> fol = po.getFuncList();
@@ -1078,120 +1194,7 @@ class ParseCppTest {
     @Test
     void parseCStreamFile2() {
         ParseBase parser = ParseFactory.getParser("h2dts");
-        String testEnum = "/*-------------------------------------------------------------------------\n" +
-                " * dEQP glslang integration\n" +
-                " * ------------------------\n" +
-                " *\n" +
-                " * Copyright 2015 The Android Open Source Project\n" +
-                " *\n" +
-                " * Licensed under the Apache License, Version 2.0 (the \"License\");\n" +
-                " * you may not use this file except in compliance with the License.\n" +
-                " * You may obtain a copy of the License at\n" +
-                " *\n" +
-                " *      http://www.apache.org/licenses/LICENSE-2.0\n" +
-                " *\n" +
-                " * Unless required by applicable law or agreed to in writing, software\n" +
-                " * distributed under the License is distributed on an \"AS IS\" BASIS,\n" +
-                " * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n" +
-                " * See the License for the specific language governing permissions and\n" +
-                " * limitations under the License.\n" +
-                " *\n" +
-                " *//*!\n" +
-                " * \\file\n" +
-                " * \\brief glslang OS interface.\n" +
-                " *//*--------------------------------------------------------------------*/\n" +
-                "\n" +
-                "#include \"osinclude.h\"\n" +
-                "\n" +
-                "#include \"deThread.h\"\n" +
-                "#include \"deThreadLocal.h\"\n" +
-                "#include \"deMutex.h\"\n" +
-                "\n" +
-                "namespace glslang\n" +
-                "{\n" +
-                "\n" +
-                "DE_STATIC_ASSERT(sizeof(deThreadLocal)\t== sizeof(OS_TLSIndex));\n" +
-                "DE_STATIC_ASSERT(sizeof(deThread)\t\t== sizeof(void*));\n" +
-                "\n" +
-                "// Thread-local\n" +
-                "\n" +
-                "OS_TLSIndex OS_AllocTLSIndex (void)\n" +
-                "{\n" +
-                "\treturn (OS_TLSIndex)deThreadLocal_create();\n" +
-                "}\n" +
-                "\n" +
-                "bool OS_SetTLSValue (OS_TLSIndex nIndex, void* lpvValue)\n" +
-                "{\n" +
-                "\tdeThreadLocal_set((deThreadLocal)nIndex, lpvValue);\n" +
-                "\treturn true;\n" +
-                "}\n" +
-                "\n" +
-                "bool OS_FreeTLSIndex (OS_TLSIndex nIndex)\n" +
-                "{\n" +
-                "\tdeThreadLocal_destroy((deThreadLocal)nIndex);\n" +
-                "\treturn true;\n" +
-                "}\n" +
-                "\n" +
-                "void* OS_GetTLSValue (OS_TLSIndex nIndex)\n" +
-                "{\n" +
-                "\treturn deThreadLocal_get((deThreadLocal)nIndex);\n" +
-                "}\n" +
-                "\n" +
-                "// Global lock\n" +
-                "\n" +
-                "static deMutex s_globalLock = 0;\n" +
-                "\n" +
-                "void InitGlobalLock (void)\n" +
-                "{\n" +
-                "\tDE_ASSERT(s_globalLock == 0);\n" +
-                "\ts_globalLock = deMutex_create(DE_NULL);\n" +
-                "}\n" +
-                "\n" +
-                "void GetGlobalLock (void)\n" +
-                "{\n" +
-                "\tdeMutex_lock(s_globalLock);\n" +
-                "}\n" +
-                "\n" +
-                "void ReleaseGlobalLock (void)\n" +
-                "{\n" +
-                "\tdeMutex_unlock(s_globalLock);\n" +
-                "}\n" +
-                "\n" +
-                "// Threading\n" +
-                "\n" +
-                "DE_STATIC_ASSERT(sizeof(void*) >= sizeof(deThread));\n" +
-                "\n" +
-                "static void EnterGenericThread (void* entry)\n" +
-                "{\n" +
-                "\t((TThreadEntrypoint)entry)(DE_NULL);\n" +
-                "}\n" +
-                "\n" +
-                "void* OS_CreateThread (TThreadEntrypoint entry)\n" +
-                "{\n" +
-                "\treturn (void*)(deUintptr)deThread_create(EnterGenericThread, (void*)entry, DE_NULL);\n" +
-                "}\n" +
-                "\n" +
-                "void OS_WaitForAllThreads (void* threads, int numThreads)\n" +
-                "{\n" +
-                "\tfor (int ndx = 0; ndx < numThreads; ndx++)\n" +
-                "\t{\n" +
-                "\t\tconst deThread thread = (deThread)(deUintptr)((void**)threads)[ndx];\n" +
-                "\t\tdeThread_join(thread);\n" +
-                "\t\tdeThread_destroy(thread);\n" +
-                "\t}\n" +
-                "}\n" +
-                "\n" +
-                "void OS_Sleep (int milliseconds)\n" +
-                "{\n" +
-                "\tdeSleep(milliseconds);\n" +
-                "}\n" +
-                "\n" +
-                "void OS_DumpMemoryCounters (void)\n" +
-                "{\n" +
-                "\t// Not used\n" +
-                "}\n" +
-                "\n" +
-                "} // glslang\n";
+        String testEnum = testCStreamFile2;
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
         List<FuncObj> fol = po.getFuncList();
