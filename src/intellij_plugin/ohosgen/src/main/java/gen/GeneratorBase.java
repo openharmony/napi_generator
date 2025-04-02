@@ -29,42 +29,93 @@ import java.util.List;
  * @since 2025-02-28
  */
 public class GeneratorBase {
+    /**
+     * 生成内容
+     *
+     * @param po 解析类
+     */
     public void genContent(ParseObj po) {
         System.out.println("GeneratorBase: genContent");
     }
 
+    /**
+     * 生成文件
+     *
+     * @param filePath 文件路径
+     * @param fileName 文件名
+     */
     public void genFile(String filePath, String fileName) {
         System.out.println("GeneratorBase: path is " + filePath + ", file is " + fileName);
     }
 
+    /**
+     * 生成接口
+     *
+     * @param iol 接口列表
+     */
     public void genInterfaceList(List<InterfaceObject> iol) {
         System.out.println("GeneratorBase: genInterfaceList");
     };
 
+    /**
+     * 生成枚举
+     *
+     * @param eol 枚举列表
+     */
     public void genEnumList(List<EnumObj> eol) {
         System.out.println("GeneratorBase: genEnumList");
-
     };
 
+    /**
+     * 生成类
+     *
+     * @param col 类列表
+     */
     public void genClassList(List<ClassObj> col) {
         System.out.println("GeneratorBase: genClassList");
     };
 
+    /**
+     * 生成方法
+     *
+     * @param fol 方法列表
+     */
     public void genFuncList(List<FuncObj> fol) {
         System.out.println("GeneratorBase: genFuncList");
     };
 
+    /**
+     * 生成结构体
+     *
+     * @param sol 结构体列表
+     */
     public void genStructList(List<StructObj> sol) {
         System.out.println("GeneratorBase: genStructList");
     };
 
+    /**
+     * 生成类型
+     *
+     * @param tol 类型列表
+     */
     public void genTypeList(List<TypeObj> tol) {
-        System.out.println("GeneratorBase: genTypeList");    };
+        System.out.println("GeneratorBase: genTypeList");
+    };
 
+    /**
+     * 生成联合体
+     *
+     * @param uol 联合体列表
+     */
     public void genUnionList(List<UnionObj> uol) {
         System.out.println("GeneratorBase: genUnionList");
     };
 
+    /**
+     * 生成变量
+     *
+     * @param pol 变量列表
+     */
     public void genVarList(List<ParamObj> pol) {
         System.out.println("GeneratorBase: genVarList");
     }

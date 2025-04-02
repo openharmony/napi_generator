@@ -256,6 +256,7 @@ public class GenDtsFile extends GeneratorBase {
 
     /**
      * 生成输出内容
+     *
      * @param po 解析对象
      */
     @Override
@@ -272,6 +273,9 @@ public class GenDtsFile extends GeneratorBase {
 
     /**
      * 生成文件
+     *
+     * @param fileName 文件名
+     * @param filePath 文件路径
      */
     @Override
     public void genFile(String filePath, String fileName) {
@@ -294,6 +298,7 @@ public class GenDtsFile extends GeneratorBase {
 
     /**
      * 生成输出内容
+     *
      * @param iol 接口对象列表
      */
     @Override
@@ -303,6 +308,7 @@ public class GenDtsFile extends GeneratorBase {
 
     /**
      * 生成输出内容
+     *
      * @param eol 枚举对象列表
      */
     @Override
@@ -335,6 +341,7 @@ public class GenDtsFile extends GeneratorBase {
 
     /**
      * 生成输出内容
+     *
      * @param col 类对象列表
      */
     @Override
@@ -393,6 +400,7 @@ public class GenDtsFile extends GeneratorBase {
 
     /**
      * 生成输出内容
+     *
      * @param fol 方法对象列表
      */
     @Override
@@ -429,6 +437,7 @@ public class GenDtsFile extends GeneratorBase {
 
     /**
      * 生成输出内容
+     *
      * @param sol 结构体对象列表
      */
     @Override
@@ -439,9 +448,8 @@ public class GenDtsFile extends GeneratorBase {
         for (StructObj so : sol) {
             String structName = so.getName();
             structName = !structName.isEmpty() ? structName : so.getAlias();
-            List<FuncObj> funcList = so.getFuncList();
+
             List<ParamObj> paList = so.getMemberList();
-            int i = 0;
             resContent += TS_NEW_LINE + TS_EXPORT_TOKEN + TS_BLANK_SPACE + TS_CLASS_TOKEN +
                     TS_BLANK_SPACE + structName + TS_BLANK_SPACE + TS_LEFT_BRACE;
 
@@ -456,10 +464,9 @@ public class GenDtsFile extends GeneratorBase {
                 } else {
                     resContent += TS_SEMICOLON;
                 }
-                i++;
             }
 
-            i = 0;
+            List<FuncObj> funcList = so.getFuncList();
             for (FuncObj funcItem : funcList) {
                 resContent += TS_NEW_LINE + TS_TAB_SPACE + replaceCppToken(funcItem.getName()) + TS_LEFT_PARENTHESES;
                 List<ParamObj> pol = funcItem.getParamList();
@@ -475,8 +482,6 @@ public class GenDtsFile extends GeneratorBase {
                 String retValue = funcItem.getRetValue();
                 resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + TS_COLON +
                         TS_BLANK_SPACE + cpp2TsKey(retValue) + TS_SEMICOLON;
-
-                i++;
             }
 
             resContent = StringUtils.removeLastSpace(resContent);
@@ -487,6 +492,7 @@ public class GenDtsFile extends GeneratorBase {
 
     /**
      * 生成输出内容
+     *
      * @param tol 类型对象列表
      */
     @Override
@@ -496,6 +502,7 @@ public class GenDtsFile extends GeneratorBase {
 
     /**
      * 生成输出内容
+     *
      * @param uol 联合体对象列表
      */
     @Override
@@ -526,6 +533,7 @@ public class GenDtsFile extends GeneratorBase {
 
     /**
      * 生成输出内容
+     *
      * @param pol 常量列表
      */
     @Override
