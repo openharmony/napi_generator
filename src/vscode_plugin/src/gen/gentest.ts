@@ -226,6 +226,7 @@ export function genAbilitytestFile(rootInfo: GenInfo, out: string) {
   let lowerFileName = rootInfo.fileName.toLocaleLowerCase();
   let fileName = testFirstGenTemplate.name.replace('[fileName]',
     lowerFileName);
+  fileContent = replaceAll(fileContent, '[fileName]', lowerFileName); 
   let filePath = path.join(out, fileName);
   fs.writeFileSync(filePath, fileContent);
 }
