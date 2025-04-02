@@ -427,8 +427,176 @@ napi_value result;
 napi_call_function(env, nullptr, args[[param_index_replace]], 1, &argv, result);
 `;
 
+// class与struct模板  class主体 放在xxxnapi.cpp中
+export let classTemplate = `
+// class napi框架主体 
+// 这里构造函数都是默认无参构造函数，如果需要自定义构造函数，可以自行添加
+[class_name_replace]::[class_name_replace]() {}
+[class_name_replace]::~[class_name_replace]() { napi_delete_reference(env_, wrapper_); }
+void [class_name_replace]::Destructor(napi_env env, void* nativeObject, [[maybe_unused]] void* finalize_hint)
+{
+  reinterpret_cast<[class_name_replace]*>(nativeObject)->~[class_name_replace]();
+}
+napi_value [class_name_replace]::New(napi_env env, napi_callback_info info)
+{
+  napi_value newTarget;
+  napi_status status;
+  // Check if the constructor was invoked with new.
+  napi_get_new_target(env, info, &newTarget);
+  if (newTarget != nullptr) {
+    // Invoked as the constructor "new [class_name_replace]()".
+    napi_value jsThis;
+    // Retrieve the callback's context and arguments.
+    status = napi_get_cb_info(env, info, nullptr, nullptr, &jsThis, nullptr);
+    if (status != napi_ok) {
+      getErrMessage(status, env, extended_error_info, "napi_get_cb_info", tag);
+      return nullptr;
+    }
+    // Create the C++ object. 默认调用无参构造函数，如果需要自定义构造函数，可以自行添加
+    [class_name_replace]* obj = new [class_name_replace]();
+    obj->env_ = env;
+    // Wrap the C++ object obj in the ArkTS object jsThis.
+    status =napi_wrap(env, jsThis, reinterpret_cast<void*>(obj), [class_name_replace]::Destructor, nullptr, &obj->wrapper_);
+    if (status != napi_ok) {
+      getErrMessage(status, env, extended_error_info, "napi_wrap", tag);
+      return nullptr;
+    }
+    delete obj;
+    return jsThis;
+  } else {
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, "CLASS", \"[class_name_replace] must be invoked as a constructor with "new"\");
+    return nullptr;
+  }
+}
+[class_property_get_set_replace]
+[class_method_content_replace]
+`
+
+// class的声明，放在xxxnapi.h文件中   
+export let classNapiHTemplate = `
+class [class_name_replace] {
+  public:
+    static napi_value Init(napi_env env, napi_value exports);
+    static void Destructor(napi_env env, void* nativeObject, void*finalize_hint);
+  private:
+    explicit [class_name_replace]();
+    ~[class_name_replace]();
+    static napi_value New(napi_env env, napi_callback_info info);
+    // 属性的get set函数声明
+    [class_property_get_set_declare]
+    // 方法的声明
+    [class_method_declare]
+    // 变量的声明
+    [class_variable_declare]
+    napi_env env_;
+    napi_ref wrapper_;
+};
+`
+
+// 替换classNapiHTemplate模板中的内容
+export let classMethodDeclareTemplate = `
+    static napi_value [class_method_name_replace](napi_env env, napi_callback_info info);
+`
+
+// 成员方法无入参
+export let classMethodNoParamTemplate = `
+napi_value jsThis;
+// 注释
+status = napi_get_cb_info(env, info, nullptr, nullptr, &jsThis, nullptr);
+if (status != napi_ok) {
+  getErrMessage(status, env, extended_error_info, "napi_get_cb_info", tag);
+  return nullptr;
+}
+`
+
+// 成员方法有入参
+export let classMethodGetParamTemplate = `
+napi_value jsThis;
+size_t argc = [param_count_replace];
+napi_value args[[param_count_replace]];
+// 注释
+status = napi_get_cb_info(env, info, &argc, args, &jsThis, nullptr);
+if (status != napi_ok) {
+   getErrMessage(status, env, extended_error_info, "napi_get_cb_info", tag);
+   return nullptr;
+}
+[class_method_get_param]
+`
+
+// class的成员方法Napi实现 放在xxxnapi.cpp文件中  
+export let classMethodTemplate = `
+// [NAPI_GEN]:class成员函数的实现方法
+napi_value [class_name_replace]::[class_method_name_replace](napi_env env, napi_callback_info info)
+{
+  [class_method_param_in]
+  // Todo: business logic here.
+  [class_name_replace]* obj;
+  // 通过napi_unwrap将jsThis之前绑定的C++对象取出，并对其进行操作
+  napi_unwrap(env, jsThis, reinterpret_cast<void**>(&obj));
+  // Todo: you can get value from js and set value to C++.
+  [class_method_return]
+}
+`
+export let classPropertyGetTemplate = `
+// [NAPI_GEN]:class成员变量的get方法
+napi_value [class_name_replace]::Get[class_property_name_replace](napi_env env  napi_callback_info info)
+{
+  napi_value jsThis;
+  napi_get_cb_info(env, info, nullptr, nullptr, &jsThis, nullptr);
+  [class_name_replace]* obj;
+  // Retrieve obj (the C++ object) previously wrapped in jsThis (the ArkTobject), and perform subsequent operations.
+  napi_unwrap(env, jsThis, reinterpret_cast<void**>(&obj));
+  // Todo:  get value from C++.
+  // return value to js...
+  [class_property_get]
+}  
+`;
+
+export let classPropertySetTemplate = `
+// [NAPI_GEN]:class成员变量的set方法
+napi_value [class_name_replace]::Set[class_property_name_replace](napi_env env, napi_callback_info info)
+{
+  napi_value jsThis;
+  napi_get_cb_info(env, info, nullptr, nullptr, &jsThis, nullptr);
+  [class_name_replace]* obj;
+  napi_unwrap(env, jsThis, reinterpret_cast<void**>());
+  napi_value jsThis;
+  size_t argc = 1;
+  napi_value args[1];
+  napi_get_cb_info(env, info, &argc, args, &jsThis, nullptr);
+  [class_name_replace]* obj;
+  napi_unwrap(env, jsThis, reinterpret_cast<void**>(&obj));
+  // 例如： napi_get_value_int32(env, args[0], &obj->a);
+  [class_property_set]
+  // Todo: set value to C++.
+  return nullptr;
+}  
+`; 
+
+// 每个类的成员属性都对应一个get和set函数
+export let classPropertyDeclareTemplate = `
+    // [NAPI_GEN]:方法注册后,js与native的class属性映射get与set
+    { [class_property_name_replace], 0, 0, Get[class_property_name_replace], Set[class_property_name_replace], 0, napi_default, 0 },
+`;
+
+export let classInitTemplate = `
+// Define properties and methods for a N-API object
+napi_property_descriptor [class_name_replace]Properties[] = {
+  // 成员属性的get与set
+  [class_property_replace]
+   // 成员方法的调用
+  [class_method_replace]
+};
+napi_value cons;
+// Define a js class 这里需要介绍class这个参数
+napi_define_class(env, "[class_name_replace]", NAPI_AUTO_LENGTH, New, nullptr,
+  sizeof([class_name_replace]Properties) / sizeof([class_name_replace]Properties[0]), [class_name_replace]Properties, &cons);
+// Set the '[class_name_replace]' class on the exports object.
+napi_set_named_property(env, exports, "[class_name_replace]", cons);
+`
+
 // napi testAbility需要生成的方法模板
-export let testAbilityFuncTemplate =  `  /* [NAPI_GEN]:对应[file_introduce_replace]中：[func_name_replace]方法的dts接口测试用例
+export let testAbilityFuncTemplate = `  /* [NAPI_GEN]:对应[file_introduce_replace]中：[test_case_name]的dts接口测试用例
   * 方法输入: [input_introduce_replace]
   * 方法输出: [func_return_replace]
   */
