@@ -13,36 +13,35 @@
  * limitations under the License.
  */
 
-package antlr;
+package gen;
+
+import java.util.Locale;
 
 /**
  * <h3>类名：该类用于xxx</h3>
- * description parse base listener
+ * description create generator
  *
  * @author Administrator
  *         date 2025-02-28
  * @version 1.0
  * @since 2025-02-28
  */
-public interface ParseBaseListener {
-
+public class GenerateFactory {
     /**
-     * removeLastSpace
+     * 获取解析类
      *
-     * @param str 删除字符串最后一个空格
-     * @return 返回字符串
+     * @param type 解析类型
+     * @return 解析类 (类型不存在时候抛出异常）
+     * @throws IllegalArgumentException 非法参数异常
      */
-    static String removeLastSpace(String str) {
-        if (str != null && !str.isEmpty() && str.charAt(str.length() - 1) == ' ') {
-            return str.substring(0, str.length() - 1);
-        }
-        return str;
+    public static GeneratorBase getGenerator(String type) {
+        return switch (type.toUpperCase(Locale.ROOT)) {
+            case "CPP" -> new GenCppFile();
+            case "DTS" -> new GenDtsFile();
+            default -> {
+                System.out.println("Unsupported parser type: " + type);
+                throw new IllegalArgumentException("Unsupported parser type: " + type);
+            }
+        };
     }
-
-    /**
-     * 打印 json str
-     *
-     * @return json 字符串
-     */
-    String dump2JsonStr();
 }

@@ -17,6 +17,8 @@ package parse;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gen.GenerateFactory;
+import gen.GeneratorBase;
 import grammar.ParseObj;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -69,6 +71,24 @@ public class ParseTask extends Task.Backgroundable implements BaseListener {
     }
 
     /**
+     * 返回解析文件名称
+     *
+     * @return 解析文件名称
+     */
+    public String getFileName() {
+        return this.parseFile.getName();
+    };
+
+    /**
+     * 获得文件路径
+     *
+     * @return 文件路径
+     */
+    public String getFilePath() {
+        return this.parseFile.getParent().getPath();
+    }
+
+    /**
      * 运行
      *
      * @param indicator 提示器
@@ -94,6 +114,11 @@ public class ParseTask extends Task.Backgroundable implements BaseListener {
 
             ParseObj po = parser.parseCStream(ics);
             System.out.println("parseContent finish");
+
+            GeneratorBase gb = GenerateFactory.getGenerator(parser.genType);
+            gb.genContent(po);
+            gb.genFile(getFilePath(), getFileName());
+            System.out.println("genContent finish");
             String[] lines = content.split("\n");
             for (int i = 0; i < lines.length; i++) {
                 // 模拟处理每一行

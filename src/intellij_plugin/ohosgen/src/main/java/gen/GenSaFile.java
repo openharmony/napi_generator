@@ -13,36 +13,19 @@
  * limitations under the License.
  */
 
-package antlr;
+package gen;
 
 /**
  * <h3>类名：该类用于xxx</h3>
- * description parse base listener
+ * description ${description}
  *
- * @author Administrator
- *         date 2025-02-28
- * @version 1.0
+ * @author ${USER}
+ * date 2025-02-28
  * @since 2025-02-28
+ * @version 1.0
  */
-public interface ParseBaseListener {
+public class GenSaFile extends GeneratorBase {
+    GenSaFile() {
 
-    /**
-     * removeLastSpace
-     *
-     * @param str 删除字符串最后一个空格
-     * @return 返回字符串
-     */
-    static String removeLastSpace(String str) {
-        if (str != null && !str.isEmpty() && str.charAt(str.length() - 1) == ' ') {
-            return str.substring(0, str.length() - 1);
-        }
-        return str;
     }
-
-    /**
-     * 打印 json str
-     *
-     * @return json 字符串
-     */
-    String dump2JsonStr();
 }

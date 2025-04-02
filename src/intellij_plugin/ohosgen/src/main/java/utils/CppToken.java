@@ -26,6 +26,11 @@ package utils;
  */
 public class CppToken {
     /**
+     * func token
+     */
+    public static final String CPP_TOKEN_FUNCTION = "function";
+
+    /**
      * alignas token
      */
     public static final String CPP_TOKEN_ALIGNAS = "alignas";

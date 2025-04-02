@@ -130,21 +130,21 @@ public class StructObj extends GBaseObject {
     }
 
     /**
-     * 增加方法
-     *
-     * @param fo 方法
-     */
-    public void addFunction(FuncObj fo) {
-        this.funcList.add(fo);
-    }
-
-    /**
      * 增加属性
      *
      * @param po 属性
      */
     public void addMember(ParamObj po) {
         this.memberList.add(po);
+    }
+
+    /**
+     * 增加方法
+     *
+     * @param fo 方法
+     */
+    public void addFunc(FuncObj fo) {
+        this.funcList.add(fo);
     }
 
 }
