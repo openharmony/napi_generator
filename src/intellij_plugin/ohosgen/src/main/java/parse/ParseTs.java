@@ -44,6 +44,15 @@ import utils.Constants;
  */
 public class ParseTs extends ParseBase implements CustomEventListener {
     /**
+     * 构造函数
+     *
+     * @param genType 生成类型
+     */
+    ParseTs(String genType) {
+        this.genType = genType;
+    }
+
+    /**
      * 根据文件名解析
      *
      * @param filePath 文件路径
