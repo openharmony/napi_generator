@@ -33,6 +33,7 @@ public class UnionObj extends GBaseObject {
     private String name;
     private String alias;
     private List<ParamObj> memList;
+    private List<FuncObj> funcList;
 
     /**
      * 构造函数
@@ -109,11 +110,38 @@ public class UnionObj extends GBaseObject {
     }
 
     /**
+     * 获取方法
+     *
+     * @return 方法列表
+     */
+    public List<FuncObj> getFuncList() {
+        return funcList;
+    }
+
+    /**
+     * 设置方法
+     *
+     * @param funcList 方法列表
+     */
+    public void setFuncList(List<FuncObj> funcList) {
+        this.funcList = funcList;
+    }
+
+    /**
      * 增加属性
      *
      * @param po 属性
      */
     public void addMember(ParamObj po) {
         this.memList.add(po);
+    }
+
+    /**
+     * 增加方法
+     *
+     * @param fo 方法
+     */
+    public void addFunc(FuncObj fo) {
+        this.funcList.add(fo);
     }
 }

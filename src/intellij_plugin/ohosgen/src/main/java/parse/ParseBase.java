@@ -39,6 +39,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class ParseBase {
 
     /**
+     * 生成类型
+     */
+    protected String genType;
+
+    /**
      * 文件内容
      */
     protected String fileContent;
@@ -85,6 +90,15 @@ public abstract class ParseBase {
      */
     public void addListener(BaseListener listener) {
         listeners.add(listener);
+    }
+
+    /**
+     * 返回生成类型
+     *
+     * @return 生成类型
+     */
+    public String getGenType() {
+        return genType;
     }
 
     /**

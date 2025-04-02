@@ -22,6 +22,8 @@ import antlr.cpp.CPP14Lexer;
 import antlr.cpp.CPP14Parser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gen.GenerateFactory;
+import gen.GeneratorBase;
 import grammar.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -41,6 +43,15 @@ import utils.BaseEvent;
  * @version 1.0
  */
 public class ParseCpp extends ParseBase {
+    /**
+     * 构造函数
+     *
+     * @param genType 生成类型
+     */
+    ParseCpp(String genType) {
+        this.genType = genType;
+    }
+
     /**
      * 根据名字解析文件
      *
@@ -116,8 +127,8 @@ public class ParseCpp extends ParseBase {
             System.out.println("cpp parse result: " + json);
 
             ParseObj po = genParseResult(tsc);
-
             System.out.println("cpp parse char stream finish");
+
             return po;
         } catch (RecognitionException e) {
             System.out.println("parse cstream e.printStackTrace(): " + e.getMessage());
@@ -148,6 +159,7 @@ public class ParseCpp extends ParseBase {
         po.setStructList(tcl.getStructObjList());
         po.setTypeList(tcl.getTypeObjList());
         po.setUnionList(tcl.getUnionObjList());
+        po.setVarList(tcl.getConstList());
 
         return po;
     }

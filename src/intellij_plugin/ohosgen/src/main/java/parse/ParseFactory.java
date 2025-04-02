@@ -35,9 +35,16 @@ public class ParseFactory {
      * @throws IllegalArgumentException 非法参数异常
      */
     public static ParseBase getParser(String type) {
-        return switch (type.toUpperCase(Locale.ROOT)) {
-            case "CPP" -> new ParseCpp();
-            case "TS" -> new ParseTs();
+        String[] sList = type.split("2");
+        if (sList.length <= 0) {
+            System.out.println("type split error: " + type);
+            return null;
+        }
+        String paseType = sList[0];
+        String genType = sList[1];
+        return switch (paseType.toUpperCase(Locale.ROOT)) {
+            case "H" -> new ParseCpp(genType);
+            case "TS" -> new ParseTs(genType);
             default -> {
                 System.out.println("Unsupported parser type: " + type);
                 throw new IllegalArgumentException("Unsupported parser type: " + type);
