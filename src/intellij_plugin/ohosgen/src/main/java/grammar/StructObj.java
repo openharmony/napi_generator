@@ -138,6 +138,11 @@ public class StructObj extends GBaseObject {
         this.memberList.add(po);
     }
 
+    /**
+     * 增加方法
+     *
+     * @param fo 方法
+     */
     public void addFunc(FuncObj fo) {
         this.funcList.add(fo);
     }

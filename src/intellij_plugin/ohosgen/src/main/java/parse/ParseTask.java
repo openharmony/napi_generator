@@ -79,6 +79,11 @@ public class ParseTask extends Task.Backgroundable implements BaseListener {
         return this.parseFile.getName();
     };
 
+    /**
+     * 获得文件路径
+     *
+     * @return 文件路径
+     */
     public String getFilePath() {
         return this.parseFile.getParent().getPath();
     }

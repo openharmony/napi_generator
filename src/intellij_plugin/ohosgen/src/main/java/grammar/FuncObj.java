@@ -308,7 +308,7 @@ public class FuncObj extends GBaseObject {
     /**
      * 添加声明类型
      *
-     * @param decName
+     * @param decName 声明
      */
     public void addDecl(String decName) {
         this.decList.add(decName);

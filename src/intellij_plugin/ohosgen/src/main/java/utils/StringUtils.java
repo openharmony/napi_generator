@@ -46,7 +46,7 @@ public class StringUtils {
     }
 
     /**
-     * removeLastSpace
+     * 删除最后的一个空格
      *
      * @param str 删除字符串最后一个空格
      * @return 返回字符串
@@ -59,9 +59,10 @@ public class StringUtils {
     }
 
     /**
-     * removeLastSpace
+     * 删除最后的几个字符
      *
      * @param str 删除字符串最后一个空格
+     * @param n 需要删除字符的个数
      * @return 返回字符串
      */
     public static String removeLastCharacter(String str, int n) {
