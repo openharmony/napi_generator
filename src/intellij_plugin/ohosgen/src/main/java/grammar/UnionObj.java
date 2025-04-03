@@ -159,6 +159,13 @@ public class UnionObj extends GBaseObject {
         this.funcList.add(fo);
     }
 
+    /**
+     * 增加方法
+     *
+     * @param name 方法名
+     * @param retValue  返回值
+     * @param pol 方法参数
+     */
     public void addFunc(String name, String retValue, List<ParamObj> pol) {
         FuncObj fo = new FuncObj();
         fo.setName(name);

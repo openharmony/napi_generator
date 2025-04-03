@@ -71,13 +71,14 @@ class GenDtsFileTest {
 
     @Test
     void genFile() {
-        ParseObj po = new ParseObj();
         ParamObj pao = new ParamObj();
         pao.setName("TestParam");
         pao.setType("int");
         pao.setStrValue("100");
         List<ParamObj> pol = new CopyOnWriteArrayList<>();
         pol.add(pao);
+
+        ParseObj po = new ParseObj();
         po.setVarList(pol);
 
         GeneratorBase gb = GenerateFactory.getGenerator("DTS");
@@ -109,7 +110,6 @@ class GenDtsFileTest {
 
     @Test
     void genEnumList() {
-        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
         ParseObj po = new ParseObj();
         EnumObj eo = new EnumObj();
         eo.setName("TestEnum");
@@ -120,6 +120,7 @@ class GenDtsFileTest {
         List<EnumObj> eol = new CopyOnWriteArrayList<>();
         eol.add(eo);
         po.setEnumList(eol);
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
         gb.genEnumList(po.getEnumList());
 
         if (gb instanceof GenDtsFile gdf) {
@@ -135,8 +136,6 @@ class GenDtsFileTest {
 
     @Test
     void genClassList() {
-        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
-        ParseObj po = new ParseObj();
         ClassObj co = new ClassObj();
         co.setName("TestClass");
 
@@ -157,7 +156,10 @@ class GenDtsFileTest {
 
         List<ClassObj> col = new CopyOnWriteArrayList<>();
         col.add(co);
+
+        ParseObj po = new ParseObj();
         po.setClassList(col);
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
         gb.genClassList(po.getClassList());
 
         if (gb instanceof GenDtsFile gdf) {
@@ -174,8 +176,6 @@ class GenDtsFileTest {
 
     @Test
     void genFuncList() {
-        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
-        ParseObj po = new ParseObj();
         ClassObj co = new ClassObj();
         co.setName("TestClass");
 
@@ -196,7 +196,9 @@ class GenDtsFileTest {
 
         List<ClassObj> col = new CopyOnWriteArrayList<>();
         col.add(co);
+        ParseObj po = new ParseObj();
         po.setClassList(col);
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
         gb.genClassList(po.getClassList());
 
         if (gb instanceof GenDtsFile gdf) {
@@ -213,8 +215,6 @@ class GenDtsFileTest {
 
     @Test
     void genStructList() {
-        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
-        ParseObj po = new ParseObj();
         StructObj so = new StructObj();
         so.setName("TestStruct");
 
@@ -235,7 +235,10 @@ class GenDtsFileTest {
 
         List<StructObj> sol = new CopyOnWriteArrayList<>();
         sol.add(so);
+        ParseObj po = new ParseObj();
         po.setStructList(sol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
         gb.genStructList(po.getStructList());
 
         if (gb instanceof GenDtsFile gdf) {
@@ -256,8 +259,6 @@ class GenDtsFileTest {
 
     @Test
     void genUnionList() {
-        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
-        ParseObj po = new ParseObj();
         UnionObj uo = new UnionObj();
         uo.setName("TestUnion");
 
@@ -266,7 +267,9 @@ class GenDtsFileTest {
 
         List<UnionObj> uol = new CopyOnWriteArrayList<>();
         uol.add(uo);
+        ParseObj po = new ParseObj();
         po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
         gb.genUnionList(po.getUnionList());
 
         if (gb instanceof GenDtsFile gdf) {
@@ -279,15 +282,15 @@ class GenDtsFileTest {
 
     @Test
     void genVarList() {
-        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
-        ParseObj po = new ParseObj();
         ParamObj pao = new ParamObj();
         pao.setName("TestParam");
         pao.setType("int");
         pao.setStrValue("100");
         List<ParamObj> pol = new CopyOnWriteArrayList<>();
         pol.add(pao);
+        ParseObj po = new ParseObj();
         po.setVarList(pol);
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
         gb.genVarList(po.getVarList());
 
         if (gb instanceof GenDtsFile gdf) {

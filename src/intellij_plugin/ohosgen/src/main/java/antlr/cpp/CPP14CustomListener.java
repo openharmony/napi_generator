@@ -412,7 +412,10 @@ public class CPP14CustomListener extends CPP14ParserBaseListener implements Pars
         List<CPP14Parser.DeclSpecifierContext> dscl = ctx.declSpecifierSeq().declSpecifier();
         type = !dscl.isEmpty() ? "" : type;
         for (CPP14Parser.DeclSpecifierContext dscItem : dscl) {
-            type += dscItem.getText() + " ";
+            type += dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier() != null ?
+                dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier().classKey().getText() +
+                " " + dscItem.typeSpecifier().trailingTypeSpecifier().elaboratedTypeSpecifier().Identifier().getText() :
+                dscItem.getText() + " ";
         }
         if (!dscl.isEmpty()) {
             type = StringUtils.removeLastSpace(type);

@@ -318,7 +318,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamEnum() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testEnum = "enum Colors {\n" +
                 "  Red = \"RED\",\n" +
                 "  Green = \"GREEN\",\n" +
@@ -344,7 +344,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_1() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = "export function transform2D(\n" +
                 "\tdirection: number,\n" +
                 "\tangle: number,\n" +
@@ -371,7 +371,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_2() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc2;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -425,7 +425,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_3() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc3;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -443,7 +443,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_4() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc4;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -457,7 +457,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_5() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc5;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -475,7 +475,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_6() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc6;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -494,7 +494,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_7() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc7;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -511,7 +511,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_8() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc8;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -529,7 +529,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_9() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc9;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -547,7 +547,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_10() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc10;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -565,7 +565,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_11() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc11;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -577,7 +577,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_12() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc12;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -595,7 +595,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_13() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc13;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -614,7 +614,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_14() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc14;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -631,7 +631,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_15() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc15;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -651,7 +651,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_16() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc16;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -667,7 +667,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_17() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc17;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -685,7 +685,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_18() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc18;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -703,7 +703,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_19() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc19;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -719,7 +719,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_20() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc20;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -737,7 +737,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_21() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc21;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -754,7 +754,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_22() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc22;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -774,7 +774,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_23() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc23;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -793,7 +793,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_24() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc24;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -810,7 +810,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_25() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc25;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -827,7 +827,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_26() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc26;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -847,7 +847,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_27() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc27;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -864,7 +864,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_28() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc28;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -882,7 +882,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamFunc_29() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testFunc = testFunc29;
         CodePointCharStream cStream = CharStreams.fromString(testFunc);
         ParseObj po = parser.parseCStream(cStream);
@@ -899,7 +899,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamInterface() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testInterface = testInterface1;
         CodePointCharStream cStream = CharStreams.fromString(testInterface);
         ParseObj po = parser.parseCStream(cStream);
@@ -920,7 +920,7 @@ class ParseTsTest {
 
     @Test
     void parseCStreamType() {
-        ParseBase parser = ParseFactory.getParser("ts");
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testType = "export type TestShap_t = TestShape;";
         CodePointCharStream cStream = CharStreams.fromString(testType);
         ParseObj po = parser.parseCStream(cStream);
