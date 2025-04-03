@@ -17,7 +17,7 @@ import * as path from 'path';
 import { IModel } from "./imodel";
 import { parseHeaderFile } from '../parse/parsec';
 import { DtscppRootInfo, GenInfo } from '../gen/datatype';
-import { genDtsFile } from '../gen/gendts';
+import { genDtscppFromH } from '../gen/gendtscpp';
 import { GEN_COMPLETE, OPEN_IN_EXPLORER, PARSE_COMPLETE } from '../common/constants';
 import { Logger } from '../common/log';
 import {
@@ -74,7 +74,7 @@ export class H2dtscppMod extends IModel {
         // generator
         let out = path.dirname(this.uri.fsPath);
         // genDtsCppFile(rootInfo, out);
-        gendtscppFromH(rootInfo);
+        genDtscppFromH(rootInfo);
         // progress.report({ increment: 100, message: GEN_COMPLETE + out });
         this.emmitEventForKey(EVENT_PROGRESS, 100, PARSE_COMPLETE + out);
 
