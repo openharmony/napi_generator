@@ -16,6 +16,7 @@
 package gen;
 
 import grammar.*;
+import utils.Constants;
 
 import java.util.List;
 
@@ -29,6 +30,17 @@ import java.util.List;
  * @since 2025-02-28
  */
 public class GeneratorBase {
+    private final String headerFormat = "// Generated from %s by KaiHong ohgen %s-PLUGIN";
+
+    /**
+     * 生成文件头内容
+     */
+    public String genFileHeader(String filePath) {
+        String fileHeader = "";
+        fileHeader += String.format(headerFormat, filePath, Constants.VERSION);
+        return fileHeader;
+    }
+
     /**
      * 生成内容
      *

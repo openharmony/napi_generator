@@ -138,6 +138,13 @@ public class GenDtsFile extends GeneratorBase {
     );
 
     /**
+     * 构造函数
+     */
+    GenDtsFile() {
+
+    }
+
+    /**
      * 将 cpp key 转换成 ts key
      *
      * @param cppKey 枚举对象列表
@@ -157,7 +164,7 @@ public class GenDtsFile extends GeneratorBase {
     }
 
     /**
-     * 替换cpptoken
+     * 将cpp token 替换成对应的dts token
      *
      * @param cppKey 语言关键字
      * @return 替换后字符串
@@ -173,13 +180,6 @@ public class GenDtsFile extends GeneratorBase {
             }
         }
         return retKey;
-    }
-
-    /**
-     * 构造函数
-     */
-    GenDtsFile() {
-
     }
 
     /**
@@ -285,6 +285,8 @@ public class GenDtsFile extends GeneratorBase {
         System.out.println("outFileName : " + outFileName);
 
         FileUtils.createFile(outFileName);
+
+        FileUtils.appendText(outFileName, this.genFileHeader(filePath + File.separator + fileName));
         FileUtils.appendText(outFileName, this.constContent);
         FileUtils.appendText(outFileName, this.enumContent);
         FileUtils.appendText(outFileName, this.typeContent);
@@ -543,7 +545,8 @@ public class GenDtsFile extends GeneratorBase {
             String paValue = po.getStrValue(0);
             int i = 0;
             resContent += TS_NEW_LINE + TS_EXPORT_TOKEN + TS_BLANK_SPACE + TS_CONST_TOKEN +
-                    TS_BLANK_SPACE + paName + TS_COLON + paType + TS_EQUAL + paValue;
+                    TS_BLANK_SPACE + paName + TS_BLANK_SPACE + TS_COLON + TS_BLANK_SPACE +
+                    paType + TS_EQUAL + paValue;
 
             resContent += TS_SEMICOLON + TS_NEW_LINE;
         }
