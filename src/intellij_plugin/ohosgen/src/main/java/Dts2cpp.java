@@ -55,7 +55,7 @@ public class Dts2cpp extends AnAction {
      * @param file 文件
      */
     private void doProgress(Project project, VirtualFile file) {
-        ParseTask pt = new ParseTask(project, "TS", true);
+        ParseTask pt = new ParseTask(project, "ts2cpp", true);
         pt.setFile(file);
         ProgressManager.getInstance().run(pt);
     }

@@ -290,6 +290,7 @@ public class ClassObj extends GBaseObject {
         fo.setName(name);
         fo.setRetValue(ret);
         fo.setParamList(poList);
+        this.funcList.add(fo);
     }
 
     /**

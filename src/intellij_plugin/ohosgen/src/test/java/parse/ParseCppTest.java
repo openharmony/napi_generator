@@ -226,7 +226,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamEnum1() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "enum Colors {\n" +
                 "  Red = 1,\n" +
                 "  Green = 2,\n" +
@@ -252,7 +252,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamEnum2() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "enum {\n" +
                 "  Red = 1,\n" +
                 "  Green = 2,\n" +
@@ -278,7 +278,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamEnum3() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "typedef enum {\n" +
                 "  Red = 1,\n" +
                 "  Green = 2,\n" +
@@ -305,7 +305,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamEnum4() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "typedef enum Colors {\n" +
                 "  Red = 1,\n" +
                 "  Green = 2,\n" +
@@ -332,7 +332,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamStruct1() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "struct tree_el {\n" +
                 "   int val;\n" +
                 "   struct tree_el * right, * left;\n" +
@@ -348,16 +348,16 @@ class ParseCppTest {
         assertEquals(3, ml.size());
         assertEquals("val", ml.get(0).getName());
         assertEquals("int", ml.get(0).getType());
-        assertEquals("structtree_el", ml.get(1).getType());
+        assertEquals("struct tree_el", ml.get(1).getType());
         assertEquals("*right", ml.get(1).getName());
-        assertEquals("structtree_el", ml.get(2).getType());
+        assertEquals("struct tree_el", ml.get(2).getType());
         assertEquals("*left", ml.get(2).getName());
 
     }
 
     @Test
     void parseCStreamStruct2() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "struct {\n" +
                 "   int val;\n" +
                 "   Tree_el_T * right, * left;\n" +
@@ -382,7 +382,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamStruct3() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "typedef struct {\n" +
                 "   int val;\n" +
                 "   Tree_el_T * right, * left;\n" +
@@ -408,7 +408,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamStruct4() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "typedef struct tree_el {\n" +
                 "   int val;\n" +
                 "   struct tree_el * right, * left;\n" +
@@ -425,16 +425,16 @@ class ParseCppTest {
         assertEquals(3, ml.size());
         assertEquals("val", ml.get(0).getName());
         assertEquals("int", ml.get(0).getType());
-        assertEquals("structtree_el", ml.get(1).getType());
+        assertEquals("struct tree_el", ml.get(1).getType());
         assertEquals("*right", ml.get(1).getName());
-        assertEquals("structtree_el", ml.get(2).getType());
+        assertEquals("struct tree_el", ml.get(2).getType());
         assertEquals("*left", ml.get(2).getName());
 
     }
 
     @Test
     void parseCStreamUnion1() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "union tree_el {\n" +
                 "   int val;\n" +
                 "   struct tree_el * right, * left;\n" +
@@ -450,16 +450,16 @@ class ParseCppTest {
         assertEquals(3, ml.size());
         assertEquals("val", ml.get(0).getName());
         assertEquals("int", ml.get(0).getType());
-        assertEquals("structtree_el", ml.get(1).getType());
+        assertEquals("struct tree_el", ml.get(1).getType());
         assertEquals("*right", ml.get(1).getName());
-        assertEquals("structtree_el", ml.get(2).getType());
+        assertEquals("struct tree_el", ml.get(2).getType());
         assertEquals("*left", ml.get(2).getName());
 
     }
 
     @Test
     void parseCStreamUnion2() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "union {\n" +
                 "   int val;\n" +
                 "   struct tree_el * right, * left;\n" +
@@ -474,16 +474,16 @@ class ParseCppTest {
         assertEquals(3, ml.size());
         assertEquals("val", ml.get(0).getName());
         assertEquals("int", ml.get(0).getType());
-        assertEquals("structtree_el", ml.get(1).getType());
+        assertEquals("struct tree_el", ml.get(1).getType());
         assertEquals("*right", ml.get(1).getName());
-        assertEquals("structtree_el", ml.get(2).getType());
+        assertEquals("struct tree_el", ml.get(2).getType());
         assertEquals("*left", ml.get(2).getName());
 
     }
 
     @Test
     void parseCStreamUnion3() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "typedef union {\n" +
                 "   int val;\n" +
                 "   Tree_el_T * right, * left;\n" +
@@ -509,7 +509,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamUnion4() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "typedef union tree_el {\n" +
                 "   int val;\n" +
                 "   struct tree_el * right, * left;\n" +
@@ -526,16 +526,16 @@ class ParseCppTest {
         assertEquals(3, ml.size());
         assertEquals("val", ml.get(0).getName());
         assertEquals("int", ml.get(0).getType());
-        assertEquals("structtree_el", ml.get(1).getType());
+        assertEquals("struct tree_el", ml.get(1).getType());
         assertEquals("*right", ml.get(1).getName());
-        assertEquals("structtree_el", ml.get(2).getType());
+        assertEquals("struct tree_el", ml.get(2).getType());
         assertEquals("*left", ml.get(2).getName());
 
     }
 
     @Test
     void parseCStreamClass1() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "class tree_el {\n" +
                 "   int val;\n" +
                 "   struct tree_el * right, * left;\n" +
@@ -551,16 +551,16 @@ class ParseCppTest {
         assertEquals(3, pl.size());
         assertEquals("val", pl.get(0).getName());
         assertEquals("int", pl.get(0).getType());
-        assertEquals("structtree_el", pl.get(1).getType());
+        assertEquals("struct tree_el", pl.get(1).getType());
         assertEquals("*right", pl.get(1).getName());
-        assertEquals("structtree_el", pl.get(2).getType());
+        assertEquals("struct tree_el", pl.get(2).getType());
         assertEquals("*left", pl.get(2).getName());
 
     }
 
     @Test
     void parseCStreamClass2() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "class {\n" +
                 "   int val;\n" +
                 "   struct tree_el * right, * left;\n" +
@@ -575,15 +575,15 @@ class ParseCppTest {
         assertEquals(3, pl.size());
         assertEquals("val", pl.get(0).getName());
         assertEquals("int", pl.get(0).getType());
-        assertEquals("structtree_el", pl.get(1).getType());
+        assertEquals("struct tree_el", pl.get(1).getType());
         assertEquals("*right", pl.get(1).getName());
-        assertEquals("structtree_el", pl.get(2).getType());
+        assertEquals("struct tree_el", pl.get(2).getType());
         assertEquals("*left", pl.get(2).getName());
 
     }
     @Test
     void parseCStreamClass3() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "typedef class {\n" +
                 "   int val;\n" +
                 "   struct tree_el * right, * left;\n" +
@@ -599,16 +599,16 @@ class ParseCppTest {
         assertEquals(3, pl.size());
         assertEquals("val", pl.get(0).getName());
         assertEquals("int", pl.get(0).getType());
-        assertEquals("structtree_el", pl.get(1).getType());
+        assertEquals("struct tree_el", pl.get(1).getType());
         assertEquals("*right", pl.get(1).getName());
-        assertEquals("structtree_el", pl.get(2).getType());
+        assertEquals("struct tree_el", pl.get(2).getType());
         assertEquals("*left", pl.get(2).getName());
 
     }
 
     @Test
     void parseCStreamClass4() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "typedef class tree_el {\n" +
                 "   int val;\n" +
                 "   struct tree_el * right, * left;\n" +
@@ -625,16 +625,16 @@ class ParseCppTest {
         assertEquals(3, pl.size());
         assertEquals("val", pl.get(0).getName());
         assertEquals("int", pl.get(0).getType());
-        assertEquals("structtree_el", pl.get(1).getType());
+        assertEquals("struct tree_el", pl.get(1).getType());
         assertEquals("*right", pl.get(1).getName());
-        assertEquals("structtree_el", pl.get(2).getType());
+        assertEquals("struct tree_el", pl.get(2).getType());
         assertEquals("*left", pl.get(2).getName());
 
     }
 
     @Test
     void parseCStreamFunction1() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo();";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -647,7 +647,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction2() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( short s );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -664,7 +664,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction3() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( short int si );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -681,7 +681,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction4() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( signed short ss );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -698,7 +698,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction5() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( signed short int ssi);";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -715,7 +715,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction6() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( unsigned short us );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -732,7 +732,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction7() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( unsigned short int usi );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -749,7 +749,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction8() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( int i);";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -766,7 +766,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction9() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( signed s );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -783,7 +783,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction10() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( signed int si );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -800,7 +800,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction11() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( unsigned u );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -817,7 +817,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction12() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( unsigned int ui );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -834,7 +834,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction13() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( long l );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -851,7 +851,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction14() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( long int li );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -868,7 +868,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction15() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( signed long sl );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -885,7 +885,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction16() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( signed long int sli );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -902,7 +902,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction17() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( unsigned long ul );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -919,7 +919,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction18() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( unsigned long int uli );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -936,7 +936,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction19() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( long long ll );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -953,7 +953,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction20() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( long long int lli );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -970,7 +970,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction21() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( signed long long sll );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -987,7 +987,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction22() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( signed long long int slli );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -1004,7 +1004,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction23() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( unsigned long long ull );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -1021,7 +1021,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction24() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( unsigned long long int ulli );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -1038,7 +1038,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction25() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( double d );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -1055,7 +1055,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction26() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( long double ld );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -1072,7 +1072,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction27() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( unsigned long );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -1089,7 +1089,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction28() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( unsigned long int );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -1106,7 +1106,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction29() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( long long );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
@@ -1123,7 +1123,7 @@ class ParseCppTest {
 
     @Test
     void parseCStreamFunction30() {
-        ParseBase parser = ParseFactory.getParser("cpp");
+        ParseBase parser = ParseFactory.getParser("h2dts");
         String testEnum = "int foo( long long int );";
         CodePointCharStream cStream = CharStreams.fromString(testEnum);
         ParseObj po = parser.parseCStream(cStream);
