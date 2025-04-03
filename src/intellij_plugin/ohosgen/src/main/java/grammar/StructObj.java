@@ -139,6 +139,19 @@ public class StructObj extends GBaseObject {
     }
 
     /**
+     * 增加属性
+     *
+     * @param name 属性名
+     * @param type 属性类型
+     */
+    public void addMember(String name, String type) {
+        ParamObj po = new ParamObj();
+        po.setName(name);
+        po.setType(type);
+        this.memberList.add(po);
+    }
+
+    /**
      * 增加方法
      *
      * @param fo 方法
@@ -147,4 +160,18 @@ public class StructObj extends GBaseObject {
         this.funcList.add(fo);
     }
 
+    /**
+     * 增加方法
+     *
+     * @param name 方法名
+     * @param retValue 返回值
+     * @param pol 方法参数
+     */
+    public void addFunc(String name, String retValue, List<ParamObj> pol) {
+        FuncObj fo = new FuncObj();
+        fo.setName(name);
+        fo.setRetValue(retValue);
+        fo.setParamList(pol);
+        this.funcList.add(fo);
+    }
 }

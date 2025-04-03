@@ -15,16 +15,18 @@
 
 package gen;
 
-import grammar.EnumObj;
-import grammar.ParseObj;
+import com.thaiopensource.relaxng.edit.Param;
+import grammar.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static utils.FileUtils.readText;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -47,10 +49,58 @@ class GenDtsFileTest {
 
     @Test
     void genContent() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("int");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
+        gb.genContent(po);
+
+        if (gb instanceof GenDtsFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nexport const TestParam : number = 100;\n";
+            assertEquals(expect, varContent);
+        }
     }
 
     @Test
     void genFile() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("int");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
+        gb.genContent(po);
+        gb.genFile("./", "testGenFile.h");
+
+        File file = new File("./ag_testGenFile_h.d.ts");
+        assertEquals(true, file.exists());
+        assertEquals(false, file.isDirectory());
+
+        List<String> fcList = readText("./ag_testGenFile_h.d.ts");
+
+        assertEquals("// Generated from ./\\testGenFile.h by KaiHong ohgen 1.0.0-PLUGIN",
+                fcList.get(0));
+        assertEquals("export const TestParam : number = 100;",
+                fcList.get(1));
+
+        if (gb instanceof GenDtsFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nexport const TestParam : number = 100;\n";
+            assertEquals(expect, varContent);
+        }
     }
 
     @Test
@@ -85,14 +135,119 @@ class GenDtsFileTest {
 
     @Test
     void genClassList() {
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
+        ParseObj po = new ParseObj();
+        ClassObj co = new ClassObj();
+        co.setName("TestClass");
+
+        co.addParam("name", "char*");
+        co.addParam("age", "int");
+
+        List<ParamObj> poList = new CopyOnWriteArrayList<>();
+        ParamObj poItem = new ParamObj();
+        poItem.setName("a");
+        poItem.setType("int");
+        poList.add(poItem);
+        ParamObj poItem2 = new ParamObj();
+        poItem2.setName("b");
+        poItem2.setType("int");
+        poList.add(poItem2);
+
+        co.addFunc("add", "int", poList);
+
+        List<ClassObj> col = new CopyOnWriteArrayList<>();
+        col.add(co);
+        po.setClassList(col);
+        gb.genClassList(po.getClassList());
+
+        if (gb instanceof GenDtsFile gdf) {
+            String classContent = gdf.getClassContent();
+            System.out.println("genClass: " + classContent);
+            String expect = "\nexport class TestClass {\n" +
+                    "\tname: string;\n" +
+                    "\tage: number;\n" +
+                    "\tadd(a: number, b: number) : number;\n" +
+                    "};\n";
+            assertEquals(expect, classContent);
+        }
     }
 
     @Test
     void genFuncList() {
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
+        ParseObj po = new ParseObj();
+        ClassObj co = new ClassObj();
+        co.setName("TestClass");
+
+        co.addParam("name", "char*");
+        co.addParam("age", "int");
+
+        List<ParamObj> poList = new CopyOnWriteArrayList<>();
+        ParamObj poItem = new ParamObj();
+        poItem.setName("a");
+        poItem.setType("int");
+        poList.add(poItem);
+        ParamObj poItem2 = new ParamObj();
+        poItem2.setName("b");
+        poItem2.setType("int");
+        poList.add(poItem2);
+
+        co.addFunc("add", "int", poList);
+
+        List<ClassObj> col = new CopyOnWriteArrayList<>();
+        col.add(co);
+        po.setClassList(col);
+        gb.genClassList(po.getClassList());
+
+        if (gb instanceof GenDtsFile gdf) {
+            String classContent = gdf.getClassContent();
+            System.out.println("genClass: " + classContent);
+            String expect = "\nexport class TestClass {\n" +
+                    "\tname: string;\n" +
+                    "\tage: number;\n" +
+                    "\tadd(a: number, b: number) : number;\n" +
+                    "};\n";
+            assertEquals(expect, classContent);
+        }
     }
 
     @Test
     void genStructList() {
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
+        ParseObj po = new ParseObj();
+        StructObj so = new StructObj();
+        so.setName("TestStruct");
+
+        so.addMember("name", "char*");
+        so.addMember("age", "int");
+
+        List<ParamObj> poList = new CopyOnWriteArrayList<>();
+        ParamObj poItem = new ParamObj();
+        poItem.setName("a");
+        poItem.setType("int");
+        poList.add(poItem);
+        ParamObj poItem2 = new ParamObj();
+        poItem2.setName("b");
+        poItem2.setType("int");
+        poList.add(poItem2);
+
+        so.addFunc("add", "int", poList);
+
+        List<StructObj> sol = new CopyOnWriteArrayList<>();
+        sol.add(so);
+        po.setStructList(sol);
+        gb.genStructList(po.getStructList());
+
+        if (gb instanceof GenDtsFile gdf) {
+            String structContent = gdf.getStructContent();
+            System.out.println("genStruct: " + structContent);
+            String expect = "\nexport class TestStruct {\n" +
+                    "\tname: string;\n" +
+                    "\tage: number;\n" +
+                    "\tadd(a: number, b: number) : number;\n" +
+                    "};\n";
+            assertEquals(expect, structContent);
+        }
     }
 
     @Test
@@ -101,9 +256,45 @@ class GenDtsFileTest {
 
     @Test
     void genUnionList() {
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
+        ParseObj po = new ParseObj();
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "char*");
+        uo.addMember("age", "int");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        po.setUnionList(uol);
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenDtsFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nexport type TestUnion = string | number;\n";
+            assertEquals(expect, unionContent);
+        }
     }
 
     @Test
     void genVarList() {
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("int");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+        gb.genVarList(po.getVarList());
+
+        if (gb instanceof GenDtsFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nexport const TestParam : number = 100;\n";
+            assertEquals(expect, varContent);
+        }
     }
 }
