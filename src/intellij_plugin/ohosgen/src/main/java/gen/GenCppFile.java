@@ -116,6 +116,7 @@ public class GenCppFile extends GeneratorBase {
             Map.entry("(", ""),
             Map.entry(")", "")
     );
+
     /**
      * 构造函数
      */
