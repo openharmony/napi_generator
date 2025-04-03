@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+* Copyright (c) 2025 Shenzhen Kaihong Digital Industry Development Co., Ltd.
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
@@ -18,12 +18,12 @@ import * as assert from 'assert';
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from 'vscode';
-import * as genDts from '../../../gen/gendts'
-import { ClassObj, EnumObj, FuncObj, GenInfo, ParseObj, StructObj, UnionObj } from '../../../gen/datatype';
-import * as fs from 'fs';
+import * as genNapiCommonCpp from '../../../gen/tools/gennapicommoncpp'
+import { GenInfo, ParseObj } from '../../../gen/datatype';
 import * as path from 'path';
+import { napiCommonCppTemplate } from '../../../template/dtscpp/dtscpp_commoncpp_template';
 
-suite('Gendts_file_Suite', () => {
+suite('Gennapicommoncpp_file_Suite', () => {
   vscode.window.showInformationMessage('Start all tests.');
   let parseObj: ParseObj = {
     enums: [],
@@ -49,76 +49,45 @@ suite('Gendts_file_Suite', () => {
   let hFilePath = path.join(__dirname, '../../../test/test.h');
 
   //1, 测试一般情况
-  test('genDtsFile_test_1', () => {
+  test('genNapiCommonCppFile_test_1', () => {
     let rootInfo: GenInfo = {
       parseObj: parseObj,
       rawFilePath: hFilePath,
       fileName: 'test',
     }
-    let expectedPath = genDts.genDtsFile(rootInfo, '');
-    let genFilePath = path.join(path.dirname(hFilePath), 'test.d.ts');
-    assert.strictEqual(expectedPath, genFilePath);
-    // 清理生成的文件
-    fs.unlinkSync(expectedPath);
+    let fileContent = genNapiCommonCpp.doGenCommonCppFile(rootInfo, napiCommonCppTemplate.content);
+    // 判断有没有替换成功，那么直接判断那个替换的字符串是否在fileContent中,若没有，则成功，若有，则失败
+    assert.strictEqual(fileContent.indexOf('[filename]') >= 0? 0: -1, -1);
   });
 
   //2, 测试边界情况
-  test('genDtsFile_test_2', () => {
+  test('genNapiCommonCppFile_test_2', () => {
     let rootInfo: GenInfo = {
       parseObj: parseObj,
       rawFilePath: hFilePath,
       fileName: '',
     }
-    let expectedPath = genDts.genDtsFile(rootInfo, '');
-    let genFilePath = path.join(path.dirname(hFilePath), '.d.ts');
-    assert.strictEqual(expectedPath, genFilePath);
-    // 清理生成的文件
-    fs.unlinkSync(expectedPath);
+    let fileContent = genNapiCommonCpp.doGenCommonCppFile(rootInfo, napiCommonCppTemplate.content);
+    assert.strictEqual(fileContent.indexOf('[filename]') >= 0? 0: -1, -1);
   });
 
   //3, 测试异常情况
-  test('genDtsFile_test_3', () => {
+  test('genNapiCommonCppFile_test_3', () => {
     let rootInfo: GenInfo = {
-      fileName: 'test',
+      parseObj: parseObj,
       rawFilePath: hFilePath,
     }
-    let res = true;
-    try {
-      genDts.genDtsFile(rootInfo, '');
-    } catch (error) {
-      res = false;
-    }
-    assert.strictEqual(res, false);
-
-    let rootInfo2: GenInfo = {
-      parseObj: parseObj,
-      fileName: 'test',
-    }
-    let res2 = true;
-    try {
-      genDts.genDtsFile(rootInfo2, '');
-    } catch (error) {
-      res2 = false;
-    }
-    assert.strictEqual(res2, false);
+    let fileContent = genNapiCommonCpp.doGenCommonCppFile(rootInfo, napiCommonCppTemplate.content);
+    assert.strictEqual(fileContent.indexOf('[filename]') >= 0? 0: -1, 0);
 
   });
 
   //4, 测试错误情况
-  test('genDtsFile_test_4', () => {
-    let res = true;
-    try {
-      genDts.genDtsFile(null, '');
-    } catch (error) {
-      res = false;
-    }
-    assert.strictEqual(res, false);
-    let res2 = true;
-    try {
-      genDts.genDtsFile(undefined, '');
-    } catch (error) {
-      res2 = false;
-    }
-    assert.strictEqual(res2, false);
+  test('genNapiCommonCppFile_test_4', () => {
+    let fileContent = genNapiCommonCpp.doGenCommonCppFile(undefined, napiCommonCppTemplate.content);
+    assert.strictEqual(fileContent.indexOf('[filename]') >= 0? 0: -1, -1);
+
+    let fileContent2 = genNapiCommonCpp.doGenCommonCppFile(null, napiCommonCppTemplate.content);
+    assert.strictEqual(fileContent2.indexOf('[filename]') >= 0? 0: -1, -1);
   });
 });

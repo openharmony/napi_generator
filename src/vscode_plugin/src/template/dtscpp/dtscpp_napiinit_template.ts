@@ -50,6 +50,10 @@ export let napiInitTemplate: FileTemp = {
        * properties: 指向 napi_property_descriptor 结构体数组的指针，每个结构体描述了一个要定义的属性。
        */
       napi_define_properties(env, exports, sizeof(desc) / sizeof(desc[0]), desc);
+      
+      [class_init_replace]
+      [struct_init_replace]
+      
       return exports;
   }
   EXTERN_C_END
