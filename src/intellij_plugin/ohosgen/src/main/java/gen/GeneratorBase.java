@@ -34,6 +34,9 @@ public class GeneratorBase {
 
     /**
      * 生成文件头内容
+     *
+     * @param filePath 文件路径
+     * @return 返回文件头
      */
     public String genFileHeader(String filePath) {
         String fileHeader = "";
