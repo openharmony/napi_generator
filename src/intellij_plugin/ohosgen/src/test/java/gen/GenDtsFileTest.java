@@ -136,7 +136,6 @@ class GenDtsFileTest {
 
     @Test
     void genEnumList2() {
-        ParseObj po = new ParseObj();
         EnumObj eo = new EnumObj();
         eo.setName("Colors");
         List<String> ml = new CopyOnWriteArrayList<>();
@@ -151,6 +150,7 @@ class GenDtsFileTest {
         eo.setValueList(vl);
         List<EnumObj> eol = new CopyOnWriteArrayList<>();
         eol.add(eo);
+        ParseObj po = new ParseObj();
         po.setEnumList(eol);
         GeneratorBase gb = GenerateFactory.getGenerator("DTS");
         gb.genEnumList(po.getEnumList());

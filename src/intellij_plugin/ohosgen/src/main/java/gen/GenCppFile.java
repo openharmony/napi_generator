@@ -360,21 +360,16 @@ public class GenCppFile extends GeneratorBase {
         for (ClassObj co : col) {
             String className = co.getName();
             className = !className.isEmpty() ? className : co.getAlias();
-            String htStr = "";
             List<String> hnList = co.getHeritageNameList();
-            if (hnList.size() > 0) {
-                htStr += CPP_BLANK_SPACE + CPP_COLON + CPP_BLANK_SPACE;
-            }
+            String htStr = hnList.size() > 0 ? CPP_BLANK_SPACE + CPP_COLON + CPP_BLANK_SPACE : "";
             for (String hName : hnList) {
                 htStr += CPP_PUBLIC_TOKEN + CPP_BLANK_SPACE + hName + CPP_COMMA + CPP_BLANK_SPACE;
             }
             htStr = htStr.length() > 1 ? StringUtils.removeLastCharacter(htStr, 2) : htStr;
 
-
-            List<ParamObj> paList = co.getParamList();
             resContent += CPP_NEW_LINE + CPP_CLASS_TOKEN +
                     CPP_BLANK_SPACE + className + htStr + CPP_BLANK_SPACE + CPP_LEFT_BRACE;
-
+            List<ParamObj> paList = co.getParamList();
             for (ParamObj paItem : paList) {
                 String paType = paItem.getType();
                 String qualifyStr = paItem.getQualifier() == null || paItem.getQualifier().isEmpty() ?
@@ -382,8 +377,7 @@ public class GenCppFile extends GeneratorBase {
                 resContent += CPP_NEW_LINE + CPP_TAB_SPACE + qualifyStr + ts2CppKey(paType) +
                         CPP_BLANK_SPACE + replaceTsToken(paItem.getName());
                 List<String> initVList = paItem.getvList();
-                int vaSize = initVList.size();
-                if (vaSize > 0) {
+                if (!initVList.isEmpty()) {
                     resContent += CPP_EQUAL + initVList.get(0) + CPP_SEMICOLON;
                 } else {
                     resContent += CPP_SEMICOLON;
@@ -403,13 +397,12 @@ public class GenCppFile extends GeneratorBase {
                             retType + CPP_BLANK_SPACE + replaceTsToken(poItem.getName()) +
                             CPP_COMMA + CPP_BLANK_SPACE;
                 }
-                if (pol.size() > 0) {
+                if (!pol.isEmpty()) {
                     resContent = StringUtils.removeLastCharacter(resContent, 2);
                 }
                 resContent += CPP_RIGHT_PARENTHESES + CPP_SEMICOLON;
             }
 
-            resContent = StringUtils.removeLastSpace(resContent);
             resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
         }
         this.classContent = resContent;
