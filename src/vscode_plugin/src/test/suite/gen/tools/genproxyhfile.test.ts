@@ -2727,7 +2727,7 @@ std::time_t myTimet, std::clock_t myClock, std::tm myTm) override;
             serviceId: '',
             versionTag: ''
         };
-        let filePath: string = 'D:/SigProject/mycrystal/test_service_proxy.h'
+        let filePath: string = '../../../../../../../test_service_proxy.h'
         let fileContent: string = `#ifndef [marcoName]_PROXY_H
         #define [marcoName]_PROXY_H
         #include "message_parcel.h"
@@ -2820,7 +2820,7 @@ std::time_t myTimet, std::clock_t myClock, std::tm myTm) override;
         #endif // [marcoName]_PROXY_H
         `;
         let resStr = genProxyhFile.doGenProxyHFile(rootInfo, fileContent);
-        let filePath: string = 'E:/VMShare/test_service_proxy.h'
+        let filePath: string = '../../../../../../../test_service_proxy.h'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         let content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
@@ -2836,17 +2836,17 @@ std::time_t myTimet, std::clock_t myClock, std::tm myTm) override;
         assert.strictEqual(content.toString(), resStr);
 
         //2.生成其他名称的文件
-        filePath = 'D:/SigProject/mycrystal/111111.h'
+        filePath = '../../../../../../../111111.h'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
 
-        filePath = 'D:/SigProject/mycrystal/そうせき.h'
+        filePath = '../../../../../../../そうせき.h'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
 
-        filePath = 'D:/SigProject/mycrystal/文件.h'
+        filePath = '../../../../../../../文件.h'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
@@ -2878,7 +2878,7 @@ std::time_t myTimet, std::clock_t myClock, std::tm myTm) override;
             serviceId: '',
             versionTag: ''
         };
-        let filePath: string = 'D:/SigProject/mycrystal/test_service_proxy.txt';
+        let filePath: string = '../../../../../../../test_service_proxy.txt';
         let fileContent: string = `#ifndef [marcoName]_PROXY_H
         #define [marcoName]_PROXY_H
         #include "message_parcel.h"
@@ -2914,62 +2914,62 @@ std::time_t myTimet, std::clock_t myClock, std::tm myTm) override;
         let content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
         //生成mp4文件
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.mp4'
+        filePath = '../../../../../../../test_service_proxy.mp4'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
         //生成mp3文件
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.mp3'
+        filePath = '../../../../../../../test_service_proxy.mp3'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
         //生成cpp文件
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.cpp'
+        filePath = '../../../../../../../test_service_proxy.cpp'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
         //生成md文件
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.md'
+        filePath = '../../../../../../../test_service_proxy.md'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
         //生成docx文件
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.docx'
+        filePath = '../../../../../../../test_service_proxy.docx'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
         //生成pdf文件
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.pdf'
+        filePath = '../../../../../../../test_service_proxy.pdf'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
         //生成html文件
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.html'
+        filePath = '../../../../../../../test_service_proxy.html'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
         //生成js文件
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.js'
+        filePath = '../../../../../../../test_service_proxy.js'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
 
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy'
+        filePath = '../../../../../../../test_service_proxy'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
 
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.aipk'
+        filePath = '../../../../../../../test_service_proxy.aipk'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
 
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.文件'
+        filePath = '../../../../../../../test_service_proxy.文件'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
 
-        filePath = 'D:/SigProject/mycrystal/test_service_proxy.そうせき'
+        filePath = '../../../../../../../test_service_proxy.そうせき'
         genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
         content = fs.readFileSync(filePath);
         assert.strictEqual(content.toString(), resStr);
@@ -3030,7 +3030,7 @@ std::time_t myTimet, std::clock_t myClock, std::tm myTm) override;
         } // namespace OHOS
         #endif // [marcoName]_PROXY_H
         `;
-        let filePath: string = 'D:/SigProject/mycrystal/';
+        let filePath: string = '../../../../../../../';
         let res1 = true;
         try {
             genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
@@ -3039,7 +3039,7 @@ std::time_t myTimet, std::clock_t myClock, std::tm myTm) override;
         }
         assert.strictEqual(res1, false);
         //2.文件名不符合标准
-        filePath = 'D:/SigProject/mycrystal/test_?proxy<h>.h'
+        filePath = '../../../../../../../test_?proxy<h>.h'
         let res2 = true;
         try {
             genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
@@ -3061,7 +3061,7 @@ std::time_t myTimet, std::clock_t myClock, std::tm myTm) override;
         }
         assert.strictEqual(res3, false);
         //4.文件路径错误
-        filePath = 'E:/VMShare/Acat/test_service_proxy.h'
+        filePath = '../atiuombxas/test_service_proxy.h'
         let res4 = true;
         try {
             genProxyhFile.genProxyHFile(rootInfo, filePath, fileContent);
