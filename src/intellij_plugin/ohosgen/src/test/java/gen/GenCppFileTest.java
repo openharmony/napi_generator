@@ -209,15 +209,6 @@ class GenCppFileTest {
         co.addParam(pa3);
 
         List<ParamObj> poList = new CopyOnWriteArrayList<>();
-        ParamObj poItem = new ParamObj();
-        poItem.setName("a");
-        poItem.setType("number");
-        poList.add(poItem);
-        ParamObj poItem2 = new ParamObj();
-        poItem2.setName("b");
-        poItem2.setType("number");
-        poList.add(poItem2);
-
         co.addFunc("constructor", "", poList);
 
         List<ClassObj> col = new CopyOnWriteArrayList<>();
@@ -236,7 +227,7 @@ class GenCppFileTest {
                     "\tprivate int age;\n" +
                     "\tprotected char* no;\n" +
                     "\treadonly char* addr;\n" +
-                    "\tconstructor(int a, int b);\n" +
+                    "\tconstructor();\n" +
                     "};\n";
             assertEquals(expect, classContent);
         }
@@ -419,7 +410,6 @@ class GenCppFileTest {
 
     @Test
     void genEnumList() {
-        ParseObj po = new ParseObj();
         EnumObj eo = new EnumObj();
         eo.setName("TestEnum");
         List<String> ml = new CopyOnWriteArrayList<>();
@@ -432,6 +422,7 @@ class GenCppFileTest {
         eo.setValueList(vl);
         List<EnumObj> eol = new CopyOnWriteArrayList<>();
         eol.add(eo);
+        ParseObj po = new ParseObj();
         po.setEnumList(eol);
         GeneratorBase gb = GenerateFactory.getGenerator("CPP");
         gb.genEnumList(po.getEnumList());
