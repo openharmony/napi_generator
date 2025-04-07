@@ -21,6 +21,7 @@ import utils.StringUtils;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -37,6 +38,7 @@ public class GenCppFile extends GeneratorBase {
     private static final String CPP_CLASS_TOKEN = "class";
     private static final String CPP_STRUCT_TOKEN = "struct";
     private static final String CPP_UNION_TOKEN = "union";
+    private static final String CPP_CHAR_START_TOKEN = "char*";
     private static final String CPP_EXPORT_TOKEN = "export";
     private static final String CPP_IMPLEMENCPP_TOKEN = "implements";
     private static final String CPP_EXTENDS_TOKEN = "extends";
@@ -79,6 +81,8 @@ public class GenCppFile extends GeneratorBase {
     private static final String CPP_SPLIT = " | ";
     private static final String CPP_EQUAL = " = ";
     private static final String CPP_COMMA = ",";
+    private static final String CPP_DOUBLE_QUOTATION = "\"";
+    private static final String CPP_UNDER_LINE = "_";
     private static final String CPP_SEMICOLON = ";";
     private static final String CPP_COLON = ":";
     private static final String CPP_LEFT_BRACE = "{";
@@ -90,6 +94,7 @@ public class GenCppFile extends GeneratorBase {
     private static final String CPP_LEFT_ANGLE_BRACKET = "<";
     private static final String CPP_RIGHT_ANGLE_BRACKET = ">";
 
+    private static final String CPP_STR_SUFFIX = "STR";
     private static final String CPP_FILE_PREFIX = "ag_";
     private static final String CPP_FILE_H_SUFFIX = ".h";
     private static final String CPP_FILE_CPP_SUFFIX = ".cpp";
@@ -113,6 +118,7 @@ public class GenCppFile extends GeneratorBase {
     );
 
     private final Map<String, String> tsTokenMap = Map.ofEntries(
+            Map.entry("\"", ""),
             Map.entry("*", ""),
             Map.entry("&", ""),
             Map.entry("(", ""),
@@ -311,15 +317,33 @@ public class GenCppFile extends GeneratorBase {
             for (String memItem : memList) {
                 resContent += CPP_NEW_LINE + CPP_TAB_SPACE + memItem;
                 if (vaList.size() > i && !vaList.get(i).isEmpty()) {
-                    resContent += CPP_EQUAL + vaList.get(i) + CPP_COMMA;
+                    resContent += CPP_EQUAL + replaceTsToken(vaList.get(i)) + CPP_COMMA;
                 } else {
                     resContent += CPP_COMMA;
                 }
                 i++;
             }
+
             resContent = StringUtils.removeLastSpace(resContent);
             resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
+
+            i = 0;
+            if (vaList.size() > i && !vaList.get(i).isEmpty() &&
+                    vaList.get(i).contains("\"")) {
+                resContent += CPP_NEW_LINE + CPP_CHAR_START_TOKEN + CPP_BLANK_SPACE +
+                        enumName.toLowerCase(Locale.ROOT) + CPP_UNDER_LINE + CPP_STR_SUFFIX +
+                        CPP_LEFT_SQUARE_BRACKET + CPP_RIGHT_SQUARE_BRACKET + CPP_EQUAL + CPP_LEFT_BRACE;
+                for (String val : vaList) {
+                    resContent += CPP_NEW_LINE + CPP_TAB_SPACE + CPP_LEFT_SQUARE_BRACKET +
+                            memList.get(i) + CPP_RIGHT_SQUARE_BRACKET + CPP_EQUAL + val + CPP_COMMA;
+                    i++;
+                }
+                resContent = StringUtils.removeLastCharacter(resContent, 1);
+                resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
+
+            }
         }
+
         this.enumContent = resContent;
     };
 

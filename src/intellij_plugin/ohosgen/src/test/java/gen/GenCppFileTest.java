@@ -41,8 +41,7 @@ class GenCppFileTest {
     }
 
     @Test
-    void getEnumContent() {
-        ParseObj po = new ParseObj();
+    void getEnumContent1() {
         EnumObj eo = new EnumObj();
         eo.setName("TestEnum");
         List<String> ml = new CopyOnWriteArrayList<>();
@@ -51,6 +50,7 @@ class GenCppFileTest {
         eo.setMemberList(ml);
         List<EnumObj> eol = new CopyOnWriteArrayList<>();
         eol.add(eo);
+        ParseObj po = new ParseObj();
         po.setEnumList(eol);
         GeneratorBase gb = GenerateFactory.getGenerator("CPP");
         gb.genEnumList(po.getEnumList());
@@ -61,6 +61,78 @@ class GenCppFileTest {
             String expect = "\nenum TestEnum {\n" +
                     "\tONE,\n" +
                     "\tTWO,\n" +
+                    "};\n";
+            assertEquals(expect, enumContent);
+        }
+    }
+
+    @Test
+    void getEnumContent2() {
+        EnumObj eo = new EnumObj();
+        eo.setName("Colors");
+        List<String> ml = new CopyOnWriteArrayList<>();
+        ml.add("Red");
+        ml.add("Green");
+        ml.add("Blue");
+        eo.setMemberList(ml);
+        List<String> vl = new CopyOnWriteArrayList<>();
+        vl.add("RED");
+        vl.add("GREEN");
+        vl.add("BLUE");
+        eo.setValueList(vl);
+        List<EnumObj> eol = new CopyOnWriteArrayList<>();
+        eol.add(eo);
+        ParseObj po = new ParseObj();
+        po.setEnumList(eol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genEnumList(po.getEnumList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String enumContent = gdf.getEnumContent();
+            System.out.println("genEnum: " + enumContent);
+            String expect = "\nenum Colors {\n" +
+                    "\tRed = RED,\n" +
+                    "\tGreen = GREEN,\n" +
+                    "\tBlue = BLUE,\n" +
+                    "};\n";
+            assertEquals(expect, enumContent);
+        }
+    }
+
+    @Test
+    void getEnumContent3() {
+        EnumObj eo = new EnumObj();
+        eo.setName("Colors");
+        List<String> ml = new CopyOnWriteArrayList<>();
+        ml.add("Red");
+        ml.add("Green");
+        ml.add("Blue");
+        eo.setMemberList(ml);
+        List<String> vl = new CopyOnWriteArrayList<>();
+        vl.add("\"RED\"");
+        vl.add("\"GREEN\"");
+        vl.add("\"BLUE\"");
+        eo.setValueList(vl);
+        List<EnumObj> eol = new CopyOnWriteArrayList<>();
+        eol.add(eo);
+        ParseObj po = new ParseObj();
+        po.setEnumList(eol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genEnumList(po.getEnumList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String enumContent = gdf.getEnumContent();
+            System.out.println("genEnum: " + enumContent);
+            String expect = "\nenum Colors {\n" +
+                    "\tRed = RED,\n" +
+                    "\tGreen = GREEN,\n" +
+                    "\tBlue = BLUE,\n" +
+                    "};\n" +
+                    "\n" +
+                    "char* colors_STR[] = {\n" +
+                    "\t[Red] = \"RED\",\n" +
+                    "\t[Green] = \"GREEN\",\n" +
+                    "\t[Blue] = \"BLUE\"\n" +
                     "};\n";
             assertEquals(expect, enumContent);
         }
