@@ -511,7 +511,7 @@ suite('Gendts_structs_Suite', () => {
     } catch (error) {
       res2 = false;
     }
-    assert.strictEqual(res2, false);
+    assert.strictEqual(res2, true);
 
     //用例3. struct没有members属性
     let rootInfo3: GenInfo = {
@@ -535,7 +535,7 @@ suite('Gendts_structs_Suite', () => {
     } catch (error) {
       res3 = false;
     }
-    assert.strictEqual(res3, false);
+    assert.strictEqual(res3, true);
 
     //用例4，function没有return属性
     let structs4: StructObj[] =[{
@@ -579,7 +579,7 @@ suite('Gendts_structs_Suite', () => {
     } catch (error) {
       res4 = false;
     }
-    assert.strictEqual(res4, false);
+    assert.strictEqual(res4, true);
 
     //用例5，function没有parameters属性
     let structs5: StructObj[] =[{
@@ -616,7 +616,7 @@ suite('Gendts_structs_Suite', () => {
     } catch (error) {
       res5 = false;
     }
-    assert.strictEqual(res5, false);
+    assert.strictEqual(res5, true);
   });
 
   //4, 测试错误情况

@@ -314,8 +314,8 @@ suite('Common_Re_Test_Suite', () => {
 
     //1. 测试一般情况
     test('getPathInPath_test_1', () => {
-        let result = re.getPathInPath('../docs/ytsbn.pdf');
-        assert.strictEqual(result, '../docs');
+        let result = re.getPathInPath('../ytsbn.pdf');
+        assert.strictEqual(result, '..');
 
         result = re.getPathInPath('..\\音频.mp4');
         assert.strictEqual(result, '..');

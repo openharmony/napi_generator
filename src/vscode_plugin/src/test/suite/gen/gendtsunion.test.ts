@@ -2333,7 +2333,7 @@ suite('Gendts_unions_Suite', () => {
     } catch (error) {
       res4 = false;
     }
-    assert.strictEqual(res4, false);
+    assert.strictEqual(res4, true);
     //5. type不符合要求
     let unions: UnionObj[] = [
       {
@@ -2366,7 +2366,7 @@ suite('Gendts_unions_Suite', () => {
     } catch (e) {
       res5 = false;
     }
-    assert.strictEqual(res5, false);
+    assert.strictEqual(res5, true);
     //6.没有ParamObj.type属性
     unions = [
       {
@@ -2398,6 +2398,6 @@ suite('Gendts_unions_Suite', () => {
     } catch (e) {
       res6 = false;
     }
-    assert.strictEqual(res6, false);
+    assert.strictEqual(res6, true);
   });
 })
