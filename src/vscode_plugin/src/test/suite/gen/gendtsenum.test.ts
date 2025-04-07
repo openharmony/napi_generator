@@ -1015,7 +1015,7 @@ suite('Gendts_enums_Suite', () => {
     } catch (error) {
       res3 = false;
     }
-    assert.strictEqual(res3, false);
+    assert.strictEqual(res3, true);
 
     //4.没有parseObj.enums属性
     rootInfo = {

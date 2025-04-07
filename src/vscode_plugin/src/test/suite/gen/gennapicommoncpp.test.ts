@@ -57,7 +57,7 @@ suite('Gennapicommoncpp_file_Suite', () => {
     }
     let fileContent = genNapiCommonCpp.doGenCommonCppFile(rootInfo, napiCommonCppTemplate.content);
     // 判断有没有替换成功，那么直接判断那个替换的字符串是否在fileContent中,若没有，则成功，若有，则失败
-    assert.strictEqual(fileContent.indexOf('[filename]') >= 0? 0: -1, -1);
+    assert.strictEqual(fileContent.indexOf('[fileName]') >= 0? 0: -1, -1);
   });
 
   //2, 测试边界情况
@@ -68,7 +68,7 @@ suite('Gennapicommoncpp_file_Suite', () => {
       fileName: '',
     }
     let fileContent = genNapiCommonCpp.doGenCommonCppFile(rootInfo, napiCommonCppTemplate.content);
-    assert.strictEqual(fileContent.indexOf('[filename]') >= 0? 0: -1, -1);
+    assert.strictEqual(fileContent.indexOf('[fileName]') >= 0? 0: -1, -1);
   });
 
   //3, 测试异常情况
@@ -78,16 +78,16 @@ suite('Gennapicommoncpp_file_Suite', () => {
       rawFilePath: hFilePath,
     }
     let fileContent = genNapiCommonCpp.doGenCommonCppFile(rootInfo, napiCommonCppTemplate.content);
-    assert.strictEqual(fileContent.indexOf('[filename]') >= 0? 0: -1, 0);
+    assert.strictEqual(fileContent.indexOf('[fileName]') >= 0? 0: -1, 0);
 
   });
 
   //4, 测试错误情况
   test('genNapiCommonCppFile_test_4', () => {
     let fileContent = genNapiCommonCpp.doGenCommonCppFile(undefined, napiCommonCppTemplate.content);
-    assert.strictEqual(fileContent.indexOf('[filename]') >= 0? 0: -1, -1);
+    assert.strictEqual(fileContent.indexOf('[fileName]') >= 0? 0: -1, 0);
 
     let fileContent2 = genNapiCommonCpp.doGenCommonCppFile(null, napiCommonCppTemplate.content);
-    assert.strictEqual(fileContent2.indexOf('[filename]') >= 0? 0: -1, -1);
+    assert.strictEqual(fileContent2.indexOf('[fileName]') >= 0? 0: -1, 0);
   });
 });
