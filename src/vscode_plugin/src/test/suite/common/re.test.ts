@@ -278,10 +278,10 @@ suite('Common_Re_Test_Suite', () => {
 
     //1. 测试一般情况
     test('getFileInPath_test_1', () => {
-        let result = re.getFileInPath('/home/user/list.json');
+        let result = re.getFileInPath('../list.json');
         assert.strictEqual(result, 'list.json');
 
-        result = re.getFileInPath('D:\\用户\\音频.txt');
+        result = re.getFileInPath('..\\音频.txt');
         assert.strictEqual(result, '音频.txt');
 
         result = re.getFileInPath('moon.mobi');
@@ -314,11 +314,11 @@ suite('Common_Re_Test_Suite', () => {
 
     //1. 测试一般情况
     test('getPathInPath_test_1', () => {
-        let result = re.getPathInPath('/home/user/docs/ytsbn.pdf');
-        assert.strictEqual(result, '/home/user/docs');
+        let result = re.getPathInPath('../docs/ytsbn.pdf');
+        assert.strictEqual(result, '../docs');
 
-        result = re.getPathInPath('D:\\用户\\音频.mp4');
-        assert.strictEqual(result, 'D:\\用户');
+        result = re.getPathInPath('..\\音频.mp4');
+        assert.strictEqual(result, '..');
     })
 
     //2. 测试边界情况
