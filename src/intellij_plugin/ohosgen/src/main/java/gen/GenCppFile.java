@@ -360,14 +360,26 @@ public class GenCppFile extends GeneratorBase {
         for (ClassObj co : col) {
             String className = co.getName();
             className = !className.isEmpty() ? className : co.getAlias();
+            String htStr = "";
+            List<String> hnList = co.getHeritageNameList();
+            if (hnList.size() > 0) {
+                htStr += CPP_BLANK_SPACE + CPP_COLON + CPP_BLANK_SPACE;
+            }
+            for (String hName : hnList) {
+                htStr += CPP_PUBLIC_TOKEN + CPP_BLANK_SPACE + hName + CPP_COMMA + CPP_BLANK_SPACE;
+            }
+            htStr = htStr.length() > 1 ? StringUtils.removeLastCharacter(htStr, 2) : htStr;
+
 
             List<ParamObj> paList = co.getParamList();
             resContent += CPP_NEW_LINE + CPP_CLASS_TOKEN +
-                    CPP_BLANK_SPACE + className + CPP_BLANK_SPACE + CPP_LEFT_BRACE;
+                    CPP_BLANK_SPACE + className + htStr + CPP_BLANK_SPACE + CPP_LEFT_BRACE;
 
             for (ParamObj paItem : paList) {
                 String paType = paItem.getType();
-                resContent += CPP_NEW_LINE + CPP_TAB_SPACE + ts2CppKey(paType) +
+                String qualifyStr = paItem.getQualifier() == null || paItem.getQualifier().isEmpty() ?
+                        "" : paItem.getQualifier() + CPP_BLANK_SPACE;
+                resContent += CPP_NEW_LINE + CPP_TAB_SPACE + qualifyStr + ts2CppKey(paType) +
                         CPP_BLANK_SPACE + replaceTsToken(paItem.getName());
                 List<String> initVList = paItem.getvList();
                 int vaSize = initVList.size();
@@ -381,7 +393,8 @@ public class GenCppFile extends GeneratorBase {
             List<FuncObj> funcList = co.getFuncList();
             for (FuncObj funcItem : funcList) {
                 String retValue = funcItem.getRetValue();
-                resContent += CPP_NEW_LINE + CPP_TAB_SPACE + ts2CppKey(retValue) + CPP_BLANK_SPACE +
+                retValue = retValue.isEmpty() ? "" : ts2CppKey(retValue) + CPP_BLANK_SPACE;
+                resContent += CPP_NEW_LINE + CPP_TAB_SPACE + retValue +
                         replaceTsToken(funcItem.getName()) + CPP_LEFT_PARENTHESES;
                 List<ParamObj> pol = funcItem.getParamList();
                 for (ParamObj poItem : pol) {

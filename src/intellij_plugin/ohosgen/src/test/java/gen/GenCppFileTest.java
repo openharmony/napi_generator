@@ -16,6 +16,7 @@
 package gen;
 
 import grammar.*;
+import it.unimi.dsi.fastutil.ints.P;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -139,7 +140,7 @@ class GenCppFileTest {
     }
 
     @Test
-    void getClassContent() {
+    void getClassContent1() {
         ClassObj co = new ClassObj();
         co.setName("TestClass");
 
@@ -173,6 +174,69 @@ class GenCppFileTest {
                     "\tchar* name;\n" +
                     "\tint age;\n" +
                     "\tint add(int a, int b);\n" +
+                    "};\n";
+            assertEquals(expect, classContent);
+        }
+    }
+
+    @Test
+    void getClassContent2() {
+        ClassObj co = new ClassObj();
+        co.setName("TestClass");
+        List<String> hList = new CopyOnWriteArrayList<>();
+        hList.add("IPerson");
+        co.setHeritageNameList(hList);
+
+        ParamObj pa = new ParamObj();
+        pa.setName("name");
+        pa.setType("string");
+        pa.setQualifier("public");
+        co.addParam(pa);
+        ParamObj pa1 = new ParamObj();
+        pa1.setName("age");
+        pa1.setType("number");
+        pa1.setQualifier("private");
+        co.addParam(pa1);
+        ParamObj pa2 = new ParamObj();
+        pa2.setName("no");
+        pa2.setType("string");
+        pa2.setQualifier("protected");
+        co.addParam(pa2);
+        ParamObj pa3 = new ParamObj();
+        pa3.setName("addr");
+        pa3.setType("string");
+        pa3.setQualifier("readonly");
+        co.addParam(pa3);
+
+        List<ParamObj> poList = new CopyOnWriteArrayList<>();
+        ParamObj poItem = new ParamObj();
+        poItem.setName("a");
+        poItem.setType("number");
+        poList.add(poItem);
+        ParamObj poItem2 = new ParamObj();
+        poItem2.setName("b");
+        poItem2.setType("number");
+        poList.add(poItem2);
+
+        co.addFunc("constructor", "", poList);
+
+        List<ClassObj> col = new CopyOnWriteArrayList<>();
+        col.add(co);
+
+        ParseObj po = new ParseObj();
+        po.setClassList(col);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genClassList(po.getClassList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String classContent = gdf.getClassContent();
+            System.out.println("genClass: " + classContent);
+            String expect = "\nclass TestClass : public IPerson {\n" +
+                    "\tpublic char* name;\n" +
+                    "\tprivate int age;\n" +
+                    "\tprotected char* no;\n" +
+                    "\treadonly char* addr;\n" +
+                    "\tconstructor(int a, int b);\n" +
                     "};\n";
             assertEquals(expect, classContent);
         }
