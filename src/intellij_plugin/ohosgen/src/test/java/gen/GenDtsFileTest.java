@@ -109,7 +109,7 @@ class GenDtsFileTest {
     }
 
     @Test
-    void genEnumList() {
+    void genEnumList1() {
         ParseObj po = new ParseObj();
         EnumObj eo = new EnumObj();
         eo.setName("TestEnum");
@@ -129,6 +129,39 @@ class GenDtsFileTest {
             String expect = "\nexport enum TestEnum {\n" +
                     "\tONE,\n" +
                     "\tTWO,\n" +
+                    "};\n";
+            assertEquals(expect, enumContent);
+        }
+    }
+
+    @Test
+    void genEnumList2() {
+        EnumObj eo = new EnumObj();
+        eo.setName("Colors");
+        List<String> ml = new CopyOnWriteArrayList<>();
+        ml.add("Red");
+        ml.add("Green");
+        ml.add("Blue");
+        eo.setMemberList(ml);
+        List<String> vl = new CopyOnWriteArrayList<>();
+        vl.add("RED");
+        vl.add("GREEN");
+        vl.add("BLUE");
+        eo.setValueList(vl);
+        List<EnumObj> eol = new CopyOnWriteArrayList<>();
+        eol.add(eo);
+        ParseObj po = new ParseObj();
+        po.setEnumList(eol);
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
+        gb.genEnumList(po.getEnumList());
+
+        if (gb instanceof GenDtsFile gdf) {
+            String enumContent = gdf.getEnumContent();
+            System.out.println("genEnum: " + enumContent);
+            String expect = "\nexport enum Colors {\n" +
+                    "\tRed = RED,\n" +
+                    "\tGreen = GREEN,\n" +
+                    "\tBlue = BLUE,\n" +
                     "};\n";
             assertEquals(expect, enumContent);
         }
@@ -176,40 +209,24 @@ class GenDtsFileTest {
 
     @Test
     void genFuncList() {
-        ClassObj co = new ClassObj();
-        co.setName("TestClass");
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
 
-        co.addParam("name", "char*");
-        co.addParam("age", "int");
+        fo.addParam("name", "char*");
+        fo.addParam("age", "int");
 
-        List<ParamObj> poList = new CopyOnWriteArrayList<>();
-        ParamObj poItem = new ParamObj();
-        poItem.setName("a");
-        poItem.setType("int");
-        poList.add(poItem);
-        ParamObj poItem2 = new ParamObj();
-        poItem2.setName("b");
-        poItem2.setType("int");
-        poList.add(poItem2);
-
-        co.addFunc("add", "int", poList);
-
-        List<ClassObj> col = new CopyOnWriteArrayList<>();
-        col.add(co);
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
         ParseObj po = new ParseObj();
-        po.setClassList(col);
+        po.setFuncList(fol);
         GeneratorBase gb = GenerateFactory.getGenerator("DTS");
-        gb.genClassList(po.getClassList());
+        gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenDtsFile gdf) {
-            String classContent = gdf.getClassContent();
-            System.out.println("genClass: " + classContent);
-            String expect = "\nexport class TestClass {\n" +
-                    "\tname: string;\n" +
-                    "\tage: number;\n" +
-                    "\tadd(a: number, b: number) : number;\n" +
-                    "};\n";
-            assertEquals(expect, classContent);
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nexport function TestFunc(name: string, age: number) : void;";
+            assertEquals(expect, funcContent);
         }
     }
 
