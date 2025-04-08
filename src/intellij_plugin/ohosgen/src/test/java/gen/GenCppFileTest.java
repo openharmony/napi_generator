@@ -234,7 +234,218 @@ class GenCppFileTest {
     }
 
     @Test
-    void getFuncContent() {
+    void getClassContent3() {
+        ClassObj co = new ClassObj();
+        co.setName("Employee");
+        List<String> hList = new CopyOnWriteArrayList<>();
+        hList.add("Person");
+        co.setHeritageNameList(hList);
+
+        ParamObj pa = new ParamObj();
+        pa.setName("empCode");
+        pa.setType("number");
+        co.addParam(pa);
+
+        ParamObj pa1 = new ParamObj();
+        pa1.setName("currentUser");
+        pa1.setType("any");
+        co.addParam(pa1);
+
+        ParamObj pa2 = new ParamObj();
+        pa2.setName("pi");
+        pa2.setType("number");
+        pa2.setQualifier("static");
+        pa2.setStrValue("3.14");
+        co.addParam(pa2);
+
+        List<ParamObj> poList = new CopyOnWriteArrayList<>();
+        ParamObj p1 = new ParamObj();
+        p1.setName("empcode");
+        p1.setType("number");
+        ParamObj p2 = new ParamObj();
+        p2.setName("name");
+        p2.setType("string");
+        co.addFunc("constructor", "", poList);
+        List<ParamObj> poList1 = new CopyOnWriteArrayList<>();
+        co.addFunc("displayName", "void", poList1);
+
+        List<ClassObj> col = new CopyOnWriteArrayList<>();
+        col.add(co);
+
+        ParseObj po = new ParseObj();
+        po.setClassList(col);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genClassList(po.getClassList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String classContent = gdf.getClassContent();
+            System.out.println("genClass: " + classContent);
+            String expect = "\nclass Employee : public Person {\n" +
+                    "\tint empCode;\n" +
+                    "\tauto currentUser;\n" +
+                    "\tstatic int pi = 3.14;\n" +
+                    "\tconstructor();\n" +
+                    "\tvoid displayName();\n" +
+                    "};\n";
+            assertEquals(expect, classContent);
+        }
+    }
+
+    @Test
+    void getClassContent4() {
+        ClassObj co = new ClassObj();
+        co.setName("myClass");
+
+        List<ParamObj> poList1 = new CopyOnWriteArrayList<>();
+        FuncObj fo = new FuncObj();
+        fo.setName("foo");
+        fo.setRetValue("Promise<any>");
+        fo.setAccessor("public");
+        fo.setType("async");
+        fo.setParamList(poList1);
+        co.addFunc(fo);
+        List<ClassObj> col = new CopyOnWriteArrayList<>();
+        col.add(co);
+
+        ParseObj po = new ParseObj();
+        po.setClassList(col);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genClassList(po.getClassList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String classContent = gdf.getClassContent();
+            System.out.println("genClass: " + classContent);
+            String expect = "\nclass myClass {\n" +
+                    "\tauto foo();\n" +
+                    "};\n";
+            assertEquals(expect, classContent);
+        }
+    }
+
+    @Test
+    void getClassContent5() {
+        ClassObj co = new ClassObj();
+        co.setName("KeyValuePair");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        ParamObj pa = new ParamObj();
+        pa.setName("key");
+        pa.setType("T");
+        pa.setQualifier("private");
+        pol.add(pa);
+        ParamObj po1 = new ParamObj();
+        po1.setName("val");
+        po1.setType("U");
+        po1.setQualifier("private");
+        pol.add(po1);
+        co.setParamList(pol);
+
+        List<String> tmpList = new CopyOnWriteArrayList<>();
+        tmpList.add("T");
+        tmpList.add("U");
+        co.setTempList(tmpList);
+
+        List<ParamObj> poList1 = new CopyOnWriteArrayList<>();
+        FuncObj fo = new FuncObj();
+        fo.setName("setKeyValue");
+        fo.setRetValue("void");
+        fo.addParam("key", "T");
+        fo.addParam("val", "U");
+        co.addFunc(fo);
+        List<ClassObj> col = new CopyOnWriteArrayList<>();
+        col.add(co);
+
+        ParseObj po = new ParseObj();
+        po.setClassList(col);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genClassList(po.getClassList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String classContent = gdf.getClassContent();
+            System.out.println("genClass: " + classContent);
+            String expect = "\ntemplate <typename T, typename U> class KeyValuePair {\n" +
+                    "\tprivate T key;\n" +
+                    "\tprivate U val;\n" +
+                    "\tvoid setKeyValue(T key, U val);\n" +
+                    "};\n";
+            assertEquals(expect, classContent);
+        }
+    }
+
+    @Test
+    void getClassContent6() {
+        ClassObj co = new ClassObj();
+        co.setName("kvProcessor");
+        List<String> tmpList = new CopyOnWriteArrayList<>();
+        tmpList.add("T");
+        tmpList.add("U");
+        co.setTempList(tmpList);
+        List<String> htList = new CopyOnWriteArrayList<>();
+        htList.add("implements");
+        co.setHeritageTypeList(htList);
+        List<String> hnList = new CopyOnWriteArrayList<>();
+        hnList.add("IKeyValueProcessor");
+        co.setHeritageNameList(hnList);
+        List<String> htempList = new CopyOnWriteArrayList<>();
+        htempList.add("T");
+        htempList.add("U");
+        co.setHeritageTemplateList(htempList);
+
+        List<ParamObj> poList1 = new CopyOnWriteArrayList<>();
+        FuncObj fo = new FuncObj();
+        fo.setName("process");
+        fo.setRetValue("void");
+        fo.addParam("key", "T");
+        fo.addParam("val", "U");
+        co.addFunc(fo);
+        List<ClassObj> col = new CopyOnWriteArrayList<>();
+        col.add(co);
+
+        ParseObj po = new ParseObj();
+        po.setClassList(col);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genClassList(po.getClassList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String classContent = gdf.getClassContent();
+            System.out.println("genClass: " + classContent);
+            String expect = "\ntemplate <typename T, typename U> class kvProcessor : public IKeyValueProcessor<T, U> {\n" +
+                    "\tvoid process(T key, U val);\n" +
+                    "};\n";
+            assertEquals(expect, classContent);
+        }
+    }
+
+    @Test
+    void getClassContent7() {
+        ClassObj co = new ClassObj();
+        co.setName("Shape");
+
+        FuncObj fo = new FuncObj();
+        fo.setName("process");
+        fo.setRetValue("void");
+        fo.addParam("key", "");
+        fo.addParam("val", "");
+        co.addFunc(fo);
+        List<ClassObj> col = new CopyOnWriteArrayList<>();
+        col.add(co);
+
+        ParseObj po = new ParseObj();
+        po.setClassList(col);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genClassList(po.getClassList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String classContent = gdf.getClassContent();
+            System.out.println("genClass: " + classContent);
+            String expect = "\nclass Shape {\n" +
+                    "\tvoid process(auto key, auto val);\n" +
+                    "};\n";
+            assertEquals(expect, classContent);
+        }
+    }
+
+    @Test
+    void getFuncContent1() {
         FuncObj fo = new FuncObj();
         fo.setName("TestFunc");
         fo.setRetValue("void");
@@ -256,7 +467,178 @@ class GenCppFileTest {
     }
 
     @Test
-    void getStructContent() {
+    void getFuncContent2() {
+        FuncObj fo = new FuncObj();
+        fo.setName("ToCapital");
+        fo.setRetValue("string");
+        fo.addParam("str", "string");
+        ParamObj pa = new ParamObj();
+        pa.setName("length");
+        pa.setType("number");
+        pa.setStrValue("0");
+        fo.addParam(pa);
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nchar* ToCapital(char* str, int length = 0);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void getFuncContent3() {
+        FuncObj fo = new FuncObj();
+        fo.setName("Nemw");
+        fo.setRetValue("string");
+        ParamObj pa1 = new ParamObj();
+        pa1.setName("str");
+        pa1.setType("string");
+        pa1.setStrValue("\"joke\"");
+        fo.addParam(pa1);
+        ParamObj pa2 = new ParamObj();
+        pa2.setName("length");
+        pa2.setType("number");
+        pa2.setStrValue("0");
+        fo.addParam(pa2);
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nchar* Nemw(char* str = \"joke\", int length = 0);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void getFuncContent4() {
+        FuncObj fo = new FuncObj();
+        fo.setName("Nemw");
+        fo.setRetValue("string");
+        ParamObj pa1 = new ParamObj();
+        pa1.setName("str");
+        fo.addParam(pa1);
+        ParamObj pa2 = new ParamObj();
+        pa2.setName("length");
+        fo.addParam(pa2);
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nchar* Nemw(auto str, auto length);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void getFuncContent5() {
+        FuncObj fo = new FuncObj();
+        fo.setName("Nemw");
+        fo.setRetValue("");
+        ParamObj pa1 = new ParamObj();
+        pa1.setName("str");
+        fo.addParam(pa1);
+        ParamObj pa2 = new ParamObj();
+        pa2.setName("length");
+        fo.addParam(pa2);
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nNemw(auto str, auto length);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void getFuncContent6() {
+        FuncObj fo = new FuncObj();
+        fo.setName("getArray");
+        fo.setRetValue("T[]");
+
+        List<String> tempList = new CopyOnWriteArrayList<>();
+        tempList.add("T");
+        fo.setTempList(tempList);
+        ParamObj pa1 = new ParamObj();
+        pa1.setName("items");
+        pa1.setType("T[]");
+        fo.addParam(pa1);
+
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\ntemplate<typename T> T* getArray(T* items);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void getFuncContent7() {
+        FuncObj fo = new FuncObj();
+        fo.setName("displayType");
+        fo.setRetValue("void");
+
+        List<String> tempList = new CopyOnWriteArrayList<>();
+        tempList.add("T");
+        tempList.add("U");
+        fo.setTempList(tempList);
+        ParamObj pa1 = new ParamObj();
+        pa1.setName("id");
+        pa1.setType("T");
+        fo.addParam(pa1);
+        ParamObj pa2 = new ParamObj();
+        pa2.setName("name");
+        pa2.setType("U");
+        fo.addParam(pa2);
+
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\ntemplate<typename T, typename U> void displayType(T id, U name);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void getStructContent1() {
         StructObj so = new StructObj();
         so.setName("TestStruct");
 
@@ -296,11 +678,114 @@ class GenCppFileTest {
     }
 
     @Test
+    void getStructContent2() {
+        StructObj so = new StructObj();
+        so.setName("TestStruct");
+        so.addMember("name", "T");
+        so.addMember("age", "U");
+        so.addTemplate("T");
+        so.addTemplate("U");
+
+        List<ParamObj> poList = new CopyOnWriteArrayList<>();
+        ParamObj poItem = new ParamObj();
+        poItem.setName("a");
+        poItem.setType("T");
+        poList.add(poItem);
+        ParamObj poItem2 = new ParamObj();
+        poItem2.setName("b");
+        poItem2.setType("U");
+        poList.add(poItem2);
+
+        so.addFunc("add", "number", poList);
+
+        List<StructObj> sol = new CopyOnWriteArrayList<>();
+        sol.add(so);
+        ParseObj po = new ParseObj();
+        po.setStructList(sol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genStructList(po.getStructList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String structContent = gdf.getStructContent();
+            System.out.println("genStruct: " + structContent);
+            String expect = "\ntemplate <typename T, typename U> struct TestStruct {\n" +
+                    "\tT name;\n" +
+                    "\tU age;\n" +
+                    "\tint add(T a, U b);\n" +
+                    "};\n";
+            assertEquals(expect, structContent);
+        }
+    }
+
+    @Test
+    void getStructContent3() {
+        StructObj so = new StructObj();
+        so.setName("TestStruct");
+
+        so.addMember("name", "");
+        so.addMember("age", "");
+
+        List<ParamObj> poList = new CopyOnWriteArrayList<>();
+        ParamObj poItem = new ParamObj();
+        poItem.setName("a");
+        poItem.setType("");
+        poList.add(poItem);
+        ParamObj poItem2 = new ParamObj();
+        poItem2.setName("b");
+        poItem2.setType("");
+        poList.add(poItem2);
+
+        so.addFunc("add", "", poList);
+
+        List<StructObj> sol = new CopyOnWriteArrayList<>();
+        sol.add(so);
+        ParseObj po = new ParseObj();
+        po.setStructList(sol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genStructList(po.getStructList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String structContent = gdf.getStructContent();
+            System.out.println("genStruct: " + structContent);
+            String expect = "\nstruct TestStruct {\n" +
+                    "\tauto name;\n" +
+                    "\tauto age;\n" +
+                    "\tadd(auto a, auto b);\n" +
+                    "};\n";
+            assertEquals(expect, structContent);
+        }
+    }
+
+    @Test
+    void getStructContent4() {
+        StructObj so = new StructObj();
+        so.setName("TestStruct");
+
+        List<StructObj> sol = new CopyOnWriteArrayList<>();
+        sol.add(so);
+        ParseObj po = new ParseObj();
+        po.setStructList(sol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genStructList(po.getStructList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String structContent = gdf.getStructContent();
+            System.out.println("genStruct: " + structContent);
+            String expect = "\nstruct TestStruct {\n" +
+                    "};\n";
+            assertEquals(expect, structContent);
+        }
+    }
+
+    @Test
     void getTypeContent() {
     }
 
     @Test
-    void getUnionContent() {
+    void getUnionContent1() {
         UnionObj uo = new UnionObj();
         uo.setName("TestUnion");
 
@@ -324,6 +809,35 @@ class GenCppFileTest {
             assertEquals(expect, unionContent);
         }
     }
+
+    @Test
+    void getUnionContent2() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+        uo.addMember("name", "T");
+        uo.addMember("age", "U");
+
+        uo.addTemplate("T");
+        uo.addTemplate("U");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\ntemplate <typename T, typename U> union TestUnion{\n" +
+                    "\tT name;\n" +
+                    "\tU age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
 
     @Test
     void getConstContent() {
