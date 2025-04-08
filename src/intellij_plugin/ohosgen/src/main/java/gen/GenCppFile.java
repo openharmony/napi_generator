@@ -357,26 +357,28 @@ public class GenCppFile extends GeneratorBase {
         this.enumContent = resContent;
     };
 
-    private String setClassFunc(List<FuncObj> funcList, String resContent) {
+    private String setClassFunc(List<FuncObj> funcList, String content) {
+        String tempResContent = content;
         for (FuncObj funcItem : funcList) {
             String retValue = funcItem.getRetValue();
             retValue = retValue.isEmpty() ? "" : ts2CppKey(retValue) + CPP_BLANK_SPACE;
-            resContent += CPP_NEW_LINE + CPP_TAB_SPACE + retValue +
+            tempResContent += CPP_NEW_LINE + CPP_TAB_SPACE + retValue +
                     replaceTsToken(funcItem.getName()) + CPP_LEFT_PARENTHESES;
             List<ParamObj> pol = funcItem.getParamList();
             for (ParamObj poItem : pol) {
                 String retType = ts2CppKey(poItem.getType()).isEmpty() ?
                         CPP_AUTO_TOKEN : ts2CppKey(poItem.getType());
-                resContent += poItem.getName() == null ? retType + CPP_COMMA + CPP_BLANK_SPACE :
+                tempResContent += (poItem.getName() == null) ? retType + CPP_COMMA + CPP_BLANK_SPACE :
                         retType + CPP_BLANK_SPACE + replaceTsToken(poItem.getName()) + CPP_COMMA + CPP_BLANK_SPACE;
             }
             if (!pol.isEmpty()) {
-                resContent = StringUtils.removeLastCharacter(resContent, 2);
+                tempResContent = StringUtils.removeLastCharacter(tempResContent, 2);
             }
-            resContent += CPP_RIGHT_PARENTHESES + CPP_SEMICOLON;
+            tempResContent += CPP_RIGHT_PARENTHESES + CPP_SEMICOLON;
         }
-        return resContent;
+        return tempResContent;
     }
+
     /**
      * 生成输出内容
      *
@@ -513,8 +515,7 @@ public class GenCppFile extends GeneratorBase {
                         CPP_BLANK_SPACE + paItem.getName();
                         ;
                 List<String> initVList = paItem.getvList();
-                int vaSize = initVList.size();
-                if (vaSize > 0) {
+                if (initVList.size() > 0) {
                     resContent += CPP_EQUAL + initVList.get(0) + CPP_SEMICOLON;
                 } else {
                     resContent += CPP_SEMICOLON;
@@ -534,10 +535,7 @@ public class GenCppFile extends GeneratorBase {
                     resContent += retType + CPP_BLANK_SPACE + replaceTsToken(poItem.getName()) +
                             CPP_COMMA + CPP_BLANK_SPACE;
                 }
-                if (!pol.isEmpty()) {
-                    resContent = StringUtils.removeLastCharacter(resContent, 2);
-                }
-
+                resContent = !pol.isEmpty() ? StringUtils.removeLastCharacter(resContent, 2) : resContent;
                 resContent += CPP_RIGHT_PARENTHESES + CPP_SEMICOLON;
             }
 
