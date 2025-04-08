@@ -408,7 +408,8 @@ class GenCppFileTest {
         if (gb instanceof GenCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\ntemplate <typename T, typename U> class kvProcessor : public IKeyValueProcessor<T, U> {\n" +
+            String expect = "\ntemplate <typename T, typename U> class kvProcessor : " +
+                    "public IKeyValueProcessor<T, U> {\n" +
                     "\tvoid process(T key, U val);\n" +
                     "};\n";
             assertEquals(expect, classContent);

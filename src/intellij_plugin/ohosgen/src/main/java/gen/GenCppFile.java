@@ -357,6 +357,26 @@ public class GenCppFile extends GeneratorBase {
         this.enumContent = resContent;
     };
 
+    private String setClassFunc(List<FuncObj> funcList, String resContent) {
+        for (FuncObj funcItem : funcList) {
+            String retValue = funcItem.getRetValue();
+            retValue = retValue.isEmpty() ? "" : ts2CppKey(retValue) + CPP_BLANK_SPACE;
+            resContent += CPP_NEW_LINE + CPP_TAB_SPACE + retValue +
+                    replaceTsToken(funcItem.getName()) + CPP_LEFT_PARENTHESES;
+            List<ParamObj> pol = funcItem.getParamList();
+            for (ParamObj poItem : pol) {
+                String retType = ts2CppKey(poItem.getType()).isEmpty() ?
+                        CPP_AUTO_TOKEN : ts2CppKey(poItem.getType());
+                resContent += poItem.getName() == null ? retType + CPP_COMMA + CPP_BLANK_SPACE :
+                        retType + CPP_BLANK_SPACE + replaceTsToken(poItem.getName()) + CPP_COMMA + CPP_BLANK_SPACE;
+            }
+            if (!pol.isEmpty()) {
+                resContent = StringUtils.removeLastCharacter(resContent, 2);
+            }
+            resContent += CPP_RIGHT_PARENTHESES + CPP_SEMICOLON;
+        }
+        return resContent;
+    }
     /**
      * 生成输出内容
      *
@@ -374,7 +394,7 @@ public class GenCppFile extends GeneratorBase {
             String templateStr = !co.getTempList().isEmpty() ?
                     CPP_TEMPLATE_TOKEN + CPP_BLANK_SPACE + CPP_LEFT_ANGLE_BRACKET : "";
             for (String teStr : co.getTempList()) {
-                templateStr +=  CPP_TYPE_NAME_TOKEN + CPP_BLANK_SPACE + teStr + CPP_COMMA + CPP_BLANK_SPACE;
+                templateStr += CPP_TYPE_NAME_TOKEN + CPP_BLANK_SPACE + teStr + CPP_COMMA + CPP_BLANK_SPACE;
             }
             templateStr = templateStr.length() > 1 ?
                 StringUtils.removeLastCharacter(templateStr, 2) + CPP_RIGHT_ANGLE_BRACKET + CPP_BLANK_SPACE : "";
@@ -410,24 +430,7 @@ public class GenCppFile extends GeneratorBase {
                 }
             }
 
-            List<FuncObj> funcList = co.getFuncList();
-            for (FuncObj funcItem : funcList) {
-                String retValue = funcItem.getRetValue();
-                retValue = retValue.isEmpty() ? "" : ts2CppKey(retValue) + CPP_BLANK_SPACE;
-                resContent += CPP_NEW_LINE + CPP_TAB_SPACE + retValue +
-                        replaceTsToken(funcItem.getName()) + CPP_LEFT_PARENTHESES;
-                List<ParamObj> pol = funcItem.getParamList();
-                for (ParamObj poItem : pol) {
-                    String retType = ts2CppKey(poItem.getType()).isEmpty() ?
-                            CPP_AUTO_TOKEN : ts2CppKey(poItem.getType());
-                    resContent += poItem.getName() == null ? retType + CPP_COMMA + CPP_BLANK_SPACE :
-                            retType + CPP_BLANK_SPACE + replaceTsToken(poItem.getName()) + CPP_COMMA + CPP_BLANK_SPACE;
-                }
-                if (!pol.isEmpty()) {
-                    resContent = StringUtils.removeLastCharacter(resContent, 2);
-                }
-                resContent += CPP_RIGHT_PARENTHESES + CPP_SEMICOLON;
-            }
+            resContent = setClassFunc(co.getFuncList(), resContent);
 
             resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
         }
@@ -495,7 +498,7 @@ public class GenCppFile extends GeneratorBase {
             String templateStr = !so.getTemplateList().isEmpty() ?
                     CPP_TEMPLATE_TOKEN + CPP_BLANK_SPACE + CPP_LEFT_ANGLE_BRACKET : "";
             for (String teStr : so.getTemplateList()) {
-                templateStr +=  CPP_TYPE_NAME_TOKEN + CPP_BLANK_SPACE + teStr + CPP_COMMA + CPP_BLANK_SPACE;
+                templateStr += CPP_TYPE_NAME_TOKEN + CPP_BLANK_SPACE + teStr + CPP_COMMA + CPP_BLANK_SPACE;
             }
             templateStr = templateStr.length() > 1 ?
                     StringUtils.removeLastCharacter(templateStr, 2) + CPP_RIGHT_ANGLE_BRACKET + CPP_BLANK_SPACE : "";
@@ -521,12 +524,13 @@ public class GenCppFile extends GeneratorBase {
             List<FuncObj> funcList = so.getFuncList();
             for (FuncObj funcItem : funcList) {
                 String retValue = ts2CppKey(funcItem.getRetValue()).isEmpty() ? "" :
-                        ts2CppKey(funcItem.getRetValue()) + CPP_BLANK_SPACE;
+                    ts2CppKey(funcItem.getRetValue()) + CPP_BLANK_SPACE;
                 resContent += CPP_NEW_LINE + CPP_TAB_SPACE + retValue +
-                         replaceTsToken(funcItem.getName()) + CPP_LEFT_PARENTHESES;
+                    replaceTsToken(funcItem.getName()) + CPP_LEFT_PARENTHESES;
                 List<ParamObj> pol = funcItem.getParamList();
                 for (ParamObj poItem : pol) {
-                    String retType = ts2CppKey(poItem.getType()).isEmpty() ? CPP_AUTO_TOKEN : ts2CppKey(poItem.getType());
+                    String retType = ts2CppKey(poItem.getType()).isEmpty() ?
+                            CPP_AUTO_TOKEN : ts2CppKey(poItem.getType());
                     resContent += retType + CPP_BLANK_SPACE + replaceTsToken(poItem.getName()) +
                             CPP_COMMA + CPP_BLANK_SPACE;
                 }
@@ -570,7 +574,7 @@ public class GenCppFile extends GeneratorBase {
             String templateStr = !uo.getTemplateList().isEmpty() ?
                     CPP_TEMPLATE_TOKEN + CPP_BLANK_SPACE + CPP_LEFT_ANGLE_BRACKET : "";
             for (String teStr : uo.getTemplateList()) {
-                templateStr +=  CPP_TYPE_NAME_TOKEN + CPP_BLANK_SPACE + teStr + CPP_COMMA + CPP_BLANK_SPACE;
+                templateStr += CPP_TYPE_NAME_TOKEN + CPP_BLANK_SPACE + teStr + CPP_COMMA + CPP_BLANK_SPACE;
             }
             templateStr = templateStr.length() > 1 ?
                     StringUtils.removeLastCharacter(templateStr, 2) + CPP_RIGHT_ANGLE_BRACKET + CPP_BLANK_SPACE : "";
