@@ -32,6 +32,7 @@ public class StructObj extends GBaseObject {
     private String alias;
     private List<ParamObj> memberList;
     private List<FuncObj> funcList;
+    private List<String> templateList;
 
     /**
      * 构造函数
@@ -39,6 +40,7 @@ public class StructObj extends GBaseObject {
     public StructObj() {
         this.memberList = new CopyOnWriteArrayList<>();
         this.funcList = new CopyOnWriteArrayList<>();
+        this.templateList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -130,6 +132,24 @@ public class StructObj extends GBaseObject {
     }
 
     /**
+     * 获取模板类列表
+     *
+     * @return 模板类列表
+     */
+    public List<String> getTemplateList() {
+        return templateList;
+    }
+
+    /**
+     * 设置模板类列表
+     *
+     * @param templateList 模板类列表
+     */
+    public void setTemplateList(List<String> templateList) {
+        this.templateList = templateList;
+    }
+
+    /**
      * 增加属性
      *
      * @param po 属性
@@ -173,5 +193,14 @@ public class StructObj extends GBaseObject {
         fo.setRetValue(retValue);
         fo.setParamList(pol);
         this.funcList.add(fo);
+    }
+
+    /**
+     * 增加模板
+     *
+     * @param name 增加模板名字
+     */
+    public void addTemplate(String name) {
+        this.templateList.add(name);
     }
 }
