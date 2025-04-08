@@ -213,7 +213,7 @@ public class ParamObj extends GBaseObject {
      * @return 返回参数值
      */
     public String getStrValue(int i) {
-        return vList.get(i);
+        return vList.isEmpty() ? "" : vList.get(i);
     }
 
     /**

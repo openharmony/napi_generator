@@ -35,12 +35,14 @@ public class UnionObj extends GBaseObject {
     private String alias;
     private List<ParamObj> memList;
     private List<FuncObj> funcList;
+    private List<String> templateList;
 
     /**
      * 构造函数
      */
     public UnionObj() {
         memList = new CopyOnWriteArrayList<>();
+        templateList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -129,6 +131,24 @@ public class UnionObj extends GBaseObject {
     }
 
     /**
+     * 获取模板列表
+     *
+     * @return 模板列表
+     */
+    public List<String> getTemplateList() {
+        return templateList;
+    }
+
+    /**
+     * 设置模板列表
+     *
+     * @param templateList 模板列表
+     */
+    public void setTemplateList(List<String> templateList) {
+        this.templateList = templateList;
+    }
+
+    /**
      * 增加属性
      *
      * @param po 属性
@@ -172,5 +192,14 @@ public class UnionObj extends GBaseObject {
         fo.setRetValue(retValue);
         fo.setParamList(pol);
         this.funcList.add(fo);
+    }
+
+    /**
+     * 增加模板
+     *
+     * @param name 模板名称
+     */
+    public void addTemplate(String name) {
+        this.templateList.add(name);
     }
 }
