@@ -919,7 +919,7 @@ class ParseTsTest {
     }
 
     @Test
-    void parseCStreamType() {
+    void parseCStreamType1() {
         ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testType = "export type TestShap_t = TestShape;";
         CodePointCharStream cStream = CharStreams.fromString(testType);
@@ -931,5 +931,374 @@ class ParseTsTest {
         List<String> tl = toItem.getTypeList();
         assertEquals(1, tl.size());
         assertEquals("TestShape", tl.get(0));
+    }
+
+    @Test
+    void parseCStreamType2() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testType2;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<TypeObj> tol = po.getTypeList();
+        assertEquals(1, tol.size());
+        TypeObj toItem = tol.get(0);
+        assertEquals("Employee", toItem.getName());
+        List<ParamObj> pal = toItem.getParamList();
+        assertEquals(6, pal.size());
+        assertEquals("type", pal.get(0).getName());
+        assertEquals("\"employee\"", pal.get(0).getStrValue(0));
+        assertEquals("\"manager\"", pal.get(0).getStrValue(1));
+        assertEquals("typeId", pal.get(1).getName());
+        assertEquals("1", pal.get(1).getStrValue(0));
+        assertEquals("2", pal.get(1).getStrValue(1));
+        assertEquals("id", pal.get(2).getName());
+        assertEquals("string", pal.get(2).getType());
+        assertEquals("name", pal.get(3).getName());
+        assertEquals("string", pal.get(3).getType());
+        assertEquals("address", pal.get(4).getName());
+        assertEquals("string", pal.get(4).getType());
+        assertEquals("phone", pal.get(5).getName());
+        assertEquals("string", pal.get(5).getType());
+    }
+
+    @Test
+    void parseCStreamType3() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testType3;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<TypeObj> tol = po.getTypeList();
+        assertEquals(1, tol.size());
+        TypeObj toItem = tol.get(0);
+        assertEquals("EmployeeType", toItem.getName());
+        assertEquals("\"employee\"", toItem.getParamList().get(0).getStrValue(0));
+        assertEquals("\"manager\"", toItem.getParamList().get(0).getStrValue(1));
+
+    }
+
+    @Test
+    void parseCStreamType4() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testType4;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<TypeObj> tol = po.getTypeList();
+        assertEquals(1, tol.size());
+        TypeObj toItem = tol.get(0);
+        assertEquals("EmployeeNameType", toItem.getName());
+        assertEquals("Employee[\"name\"]", toItem.getTypeList().get(0));
+
+    }
+
+    @Test
+    void parseCStreamType5() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testType5;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<TypeObj> tol = po.getTypeList();
+        assertEquals(1, tol.size());
+        TypeObj toItem = tol.get(0);
+        assertEquals("EmployeeMap", toItem.getName());
+        assertEquals("Map<string,string>", toItem.getTypeList().get(0));
+
+    }
+
+    @Test
+    void parseCStreamType6() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testType6;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<TypeObj> tol = po.getTypeList();
+        assertEquals(1, tol.size());
+        TypeObj toItem = tol.get(0);
+        assertEquals("EmployeeMapKey", toItem.getName());
+        assertEquals("keyofEmployeeMap", toItem.getTypeList().get(0));
+
+    }
+
+    @Test
+    void parseCStreamConst1() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable1;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("employeeName", voItem.getName());
+        assertEquals("\"John\"", voItem.getStrValue(0));
+    }
+
+    @Test
+    void parseCStreamConst2() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable2;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("employeeName", voItem.getName());
+        assertEquals("string", voItem.getType());
+        assertEquals("\"John\"", voItem.getStrValue(0));
+    }
+
+    @Test
+    void parseCStreamConst3() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable3;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("num1", voItem.getName());
+        assertEquals("number", voItem.getType());
+        assertEquals("1", voItem.getStrValue(0));
+    }
+
+    @Test
+    void parseCStreamConst4() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable4;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(2, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("playerCodes", voItem.getName());
+        assertEquals("player1", voItem.getPaList().get(0).getName());
+        assertEquals("9", voItem.getPaList().get(0).getStrValue(0));
+        assertEquals("player2", voItem.getPaList().get(1).getName());
+        assertEquals("10", voItem.getPaList().get(1).getStrValue(0));
+        assertEquals("player3", voItem.getPaList().get(2).getName());
+        assertEquals("13", voItem.getPaList().get(2).getStrValue(0));
+        assertEquals("player4", voItem.getPaList().get(3).getName());
+        assertEquals("20", voItem.getPaList().get(3).getStrValue(0));
+
+        ParamObj voItem1 = vol.get(1);
+        assertEquals("playerCodes.player2", voItem1.getName());
+        assertEquals("11", voItem1.getStrValue(0));
+    }
+
+    @Test
+    void parseCStreamConst5() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable5;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("playerCodes", voItem.getName());
+        assertEquals("player1", voItem.getPaList().get(0).getName());
+        assertEquals("50", voItem.getPaList().get(0).getStrValue(0));
+        assertEquals("player2", voItem.getPaList().get(1).getName());
+        assertEquals("10", voItem.getPaList().get(1).getStrValue(0));
+        assertEquals("player3", voItem.getPaList().get(2).getName());
+        assertEquals("13", voItem.getPaList().get(2).getStrValue(0));
+        assertEquals("player4", voItem.getPaList().get(3).getName());
+        assertEquals("20", voItem.getPaList().get(3).getStrValue(0));
+    }
+
+    @Test
+    void parseCStreamConst6() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable6;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("playerCodesArray", voItem.getName());
+        assertEquals("player1", voItem.getPaList().get(0).getName());
+        assertEquals("50", voItem.getPaList().get(0).getStrValue(0));
+        assertEquals("player2", voItem.getPaList().get(1).getName());
+        assertEquals("playerCodes[Test]", voItem.getPaList().get(1).getStrValue(0));
+        assertEquals("player3", voItem.getPaList().get(2).getName());
+        assertEquals("13", voItem.getPaList().get(2).getStrValue(0));
+        assertEquals("player4", voItem.getPaList().get(3).getName());
+        assertEquals("20", voItem.getPaList().get(3).getStrValue(0));
+    }
+
+    @Test
+    void parseCStreamConst7() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable7;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("ROUTES", voItem.getName());
+        assertEquals("any[]", voItem.getType());
+        List<ParamObj> paList = voItem.getPaList();
+        assertEquals(6, paList.size());
+
+        assertEquals("path", paList.get(0).getPaList().get(0).getName());
+        assertEquals("title", paList.get(0).getPaList().get(1).getName());
+        assertEquals("icon", paList.get(0).getPaList().get(2).getName());
+        assertEquals("class", paList.get(0).getPaList().get(3).getName());
+        assertEquals("allowAnonymous", paList.get(0).getPaList().get(4).getName());
+        assertEquals("'/dashboard'", paList.get(0).getPaList().get(0).getStrValue(0));
+        assertEquals("'Dashboard'", paList.get(0).getPaList().get(1).getStrValue(0));
+        assertEquals("'dashboard'", paList.get(0).getPaList().get(2).getStrValue(0));
+        assertEquals("''", paList.get(0).getPaList().get(3).getStrValue(0));
+        assertEquals("false", paList.get(0).getPaList().get(4).getStrValue(0));
+
+        assertEquals("path", paList.get(1).getPaList().get(0).getName());
+        assertEquals("title", paList.get(1).getPaList().get(1).getName());
+        assertEquals("icon", paList.get(1).getPaList().get(2).getName());
+        assertEquals("class", paList.get(1).getPaList().get(3).getName());
+        assertEquals("allowAnonymous", paList.get(1).getPaList().get(4).getName());
+        assertEquals("'/deals'", paList.get(1).getPaList().get(0).getStrValue(0));
+        assertEquals("'Deals'", paList.get(1).getPaList().get(1).getStrValue(0));
+        assertEquals("'assignment'", paList.get(1).getPaList().get(2).getStrValue(0));
+        assertEquals("''", paList.get(1).getPaList().get(3).getStrValue(0));
+        assertEquals("false", paList.get(1).getPaList().get(4).getStrValue(0));
+
+        assertEquals("path", paList.get(2).getPaList().get(0).getName());
+        assertEquals("title", paList.get(2).getPaList().get(1).getName());
+        assertEquals("icon", paList.get(2).getPaList().get(2).getName());
+        assertEquals("class", paList.get(2).getPaList().get(3).getName());
+        assertEquals("allowAnonymous", paList.get(2).getPaList().get(4).getName());
+        assertEquals("'/pipeline'", paList.get(2).getPaList().get(0).getStrValue(0));
+        assertEquals("'Pipeline'", paList.get(2).getPaList().get(1).getStrValue(0));
+        assertEquals("'timeline'", paList.get(2).getPaList().get(2).getStrValue(0));
+        assertEquals("''", paList.get(2).getPaList().get(3).getStrValue(0));
+        assertEquals("false", paList.get(2).getPaList().get(4).getStrValue(0));
+
+        assertEquals("path", paList.get(3).getPaList().get(0).getName());
+        assertEquals("title", paList.get(3).getPaList().get(1).getName());
+        assertEquals("icon", paList.get(3).getPaList().get(2).getName());
+        assertEquals("class", paList.get(3).getPaList().get(3).getName());
+        assertEquals("allowAnonymous", paList.get(3).getPaList().get(4).getName());
+        assertEquals("'/language-resolver'", paList.get(3).getPaList().get(0).getStrValue(0));
+        assertEquals("'Language'", paList.get(3).getPaList().get(1).getStrValue(0));
+        assertEquals("'translate'", paList.get(3).getPaList().get(2).getStrValue(0));
+        assertEquals("''", paList.get(3).getPaList().get(3).getStrValue(0));
+        assertEquals("false", paList.get(3).getPaList().get(4).getStrValue(0));
+
+        assertEquals("path", paList.get(4).getPaList().get(0).getName());
+        assertEquals("title", paList.get(4).getPaList().get(1).getName());
+        assertEquals("icon", paList.get(4).getPaList().get(2).getName());
+        assertEquals("class", paList.get(4).getPaList().get(3).getName());
+        assertEquals("allowAnonymous", paList.get(4).getPaList().get(4).getName());
+        assertEquals("'/commit-analysis'", paList.get(4).getPaList().get(0).getStrValue(0));
+        assertEquals("'Commit History'", paList.get(4).getPaList().get(1).getStrValue(0));
+        assertEquals("'tune'", paList.get(4).getPaList().get(2).getStrValue(0));
+        assertEquals("''", paList.get(4).getPaList().get(3).getStrValue(0));
+        assertEquals("false", paList.get(4).getPaList().get(4).getStrValue(0));
+
+        assertEquals("path", paList.get(5).getPaList().get(0).getName());
+        assertEquals("title", paList.get(5).getPaList().get(1).getName());
+        assertEquals("icon", paList.get(5).getPaList().get(2).getName());
+        assertEquals("class", paList.get(5).getPaList().get(3).getName());
+        assertEquals("allowAnonymous", paList.get(5).getPaList().get(4).getName());
+        assertEquals("'/login'", paList.get(5).getPaList().get(0).getStrValue(0));
+        assertEquals("'Log In'", paList.get(5).getPaList().get(1).getStrValue(0));
+        assertEquals("'lock'", paList.get(5).getPaList().get(2).getStrValue(0));
+        assertEquals("''", paList.get(5).getPaList().get(3).getStrValue(0));
+        assertEquals("true", paList.get(5).getPaList().get(4).getStrValue(0));
+    }
+
+    @Test
+    void parseCStreamConst8() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable8;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("Components", voItem.getName());
+        assertEquals("_.chain([_.values(ROUTES)asany[]]).flatten()." +
+                "filter((item)=>item.name&&(item.name.toLowerCase().endsWith('component')))." +
+                "value", voItem.getStrValue(0));
+    }
+
+    @Test
+    void parseCStreamConst9() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable9;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("fileLanguages", voItem.getName());
+        assertEquals("_.uniqBy", voItem.getStrValue(0));
+        assertEquals("([...this.fileLanguages,...Components],p=>p.fileId)", voItem.getStrValue(1));
+    }
+
+    @Test
+    void parseCStreamConst10() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable10;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("languageMap", voItem.getName());
+
+    }
+
+    @Test
+    void parseCStreamConst11() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable11;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("schema", voItem.getName());
+
+    }
+
+    @Test
+    void parseCStreamConst12() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable12;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("codesByType", voItem.getName());
+
+    }
+
+    @Test
+    void parseCStreamConst13() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable13;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        FuncObj foItem = fol.get(0);
+        assertEquals("post", foItem.getAlias());
+        assertEquals("void", foItem.getRetValue());
+        List<ParamObj> paList = foItem.getParamList();
+
+        assertEquals("any[]", paList.get(0).getType());
+        assertEquals("...args", paList.get(0).getName());
+    }
+
+    @Test
+    void parseCStreamConst14() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable14;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("function", voItem.getName());
+        assertEquals("([x]:any)=>x", voItem.getStrValue(0));
     }
 }

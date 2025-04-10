@@ -71,4 +71,13 @@ public class StringUtils {
         }
         return str;
     }
+
+    public static boolean isAllDigits(String str) {
+        return str != null && str.matches("\\d+");
+    }
+
+    public static boolean isBoolean(String str) {
+        String lowerStr = str.toLowerCase(Locale.ROOT);
+        return lowerStr.equals("true") || lowerStr.equals("false");
+    }
 }

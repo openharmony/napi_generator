@@ -33,6 +33,7 @@ public class TypeObj extends GBaseObject {
     private String name;
     private String alias;
     private List<ParamObj> paramList;
+    private ParamObj lastParamObj;
     private List<FuncObj> funcList;
     private List<String> typeList;
 
@@ -164,5 +165,33 @@ public class TypeObj extends GBaseObject {
      */
     public void addTypeValue(String value) {
         this.typeList.add(value);
+    }
+
+    /**
+     * 增加参数对象
+     *
+     * @param pa 参数对象
+     */
+    public void addParam(ParamObj pa) {
+        this.paramList.add(pa);
+        this.lastParamObj = pa;
+    }
+
+    /**
+     * 获取最近的参数对象
+     *
+     * @return 最近参数对象
+     */
+    public ParamObj getLastParamObj() {
+        return this.lastParamObj;
+    }
+
+    /**
+     * 设置最近参数对象
+     *
+     * @param lastParamObj 最近参数对象
+     */
+    public void setLastParamObj(ParamObj lastParamObj) {
+        this.lastParamObj = lastParamObj;
     }
 }
