@@ -268,6 +268,11 @@ public class ParamObj extends GBaseObject {
         this.paList = paList;
     }
 
+    /**
+     * 增加子参数
+     *
+     * @param pa 子参数
+     */
     public void addParam(ParamObj pa) {
         this.paList.add(pa);
     }

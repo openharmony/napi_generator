@@ -72,10 +72,22 @@ public class StringUtils {
         return str;
     }
 
+    /**
+     * 判读是否为数字
+     *
+     * @param str 字符串
+     * @return 是数字返回 true
+     */
     public static boolean isAllDigits(String str) {
         return str != null && str.matches("\\d+");
     }
 
+    /**
+     * 判断是否为布尔
+     *
+     * @param str 字符串
+     * @return 是布尔返回true
+     */
     public static boolean isBoolean(String str) {
         String lowerStr = str.toLowerCase(Locale.ROOT);
         return lowerStr.equals("true") || lowerStr.equals("false");

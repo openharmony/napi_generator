@@ -968,10 +968,7 @@ class GenCppFileTest {
         paItem1.setName("path");
         paItem1.setStrValue("'/dashboard'");
         paListItem1.addParam(paItem1);
-        ParamObj paItem2 = new ParamObj();
-        paItem2.setName("title");
-        paItem2.setStrValue("'Dashboard'");
-        paListItem1.addParam(paItem2);
+
         ParamObj paItem3 = new ParamObj();
         paItem3.setName("allowAnonymous");
         paItem3.setStrValue("false");
@@ -983,10 +980,7 @@ class GenCppFileTest {
         paItem21.setName("path");
         paItem21.setStrValue("'/deals'");
         paListItem2.addParam(paItem21);
-        ParamObj paItem22 = new ParamObj();
-        paItem22.setName("title");
-        paItem22.setStrValue("'Deals'");
-        paListItem2.addParam(paItem22);
+
         ParamObj paItem23 = new ParamObj();
         paItem23.setName("allowAnonymous");
         paItem23.setStrValue("true");
@@ -1005,13 +999,12 @@ class GenCppFileTest {
             System.out.println("getVar: " + constContent);
             String expect = "\nstruct ROUTESST {\n" +
                     "\tstd::string path;\n" +
-                    "\tstd::string title;\n" +
                     "\tboolean allowAnonymous;\n" +
                     "};\n" +
                     "\n" +
                     "const std::vector<ROUTESST> ROUTES = {\n" +
-                    "\t{'/dashboard', 'Dashboard', false},\n" +
-                    "\t{'/deals', 'Deals', true},\n" +
+                    "\t{'/dashboard', false},\n" +
+                    "\t{'/deals', true},\n" +
                     "};\n";
             assertEquals(expect, constContent);
         }

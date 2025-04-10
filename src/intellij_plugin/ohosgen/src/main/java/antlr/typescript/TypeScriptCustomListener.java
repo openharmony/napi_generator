@@ -285,7 +285,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                     String keyStr = uipt.getChild(i).getText();
                     if (!TsToken.isTsToken(keyStr)) {
                         lastPa.setStrValue(keyStr);
-                    } else if (TsToken.isTsVarType(keyStr)){
+                    } else if (TsToken.isTsVarType(keyStr)) {
                         lastPa.setType(keyStr);
                     }
 
@@ -889,6 +889,20 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         }
     }
 
+    private void addUnionParam(TypeScriptParser.UnionOrIntersectionOrPrimaryTypeContext upt, TypeObj to) {
+        int cCnt = upt.getChildCount();
+        ParamObj pa = new ParamObj();
+        for (int i = 0; i < cCnt; i++) {
+            String keyStr = upt.getChild(i).getText();
+            if (!TsToken.isTsToken(keyStr)) {
+                pa.setStrValue(keyStr);
+            } else if (TsToken.isTsVarType(keyStr)){
+                pa.setType(keyStr);
+            }
+        }
+        to.addParam(pa);
+    }
+
     @Override
     public void enterTypeAliasDeclaration(TypeScriptParser.TypeAliasDeclarationContext ctx) {
         super.enterTypeAliasDeclaration(ctx);
@@ -911,17 +925,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                     typeContext.unionOrIntersectionOrPrimaryType();
             if (upt != null && upt.getChildCount() > 1) {
                 System.out.println("Type uoiop: " + upt.getText());
-                int cCnt = upt.getChildCount();
-                ParamObj pa = new ParamObj();
-                for (int i = 0; i < cCnt; i++) {
-                    String keyStr = upt.getChild(i).getText();
-                    if (!TsToken.isTsToken(keyStr)) {
-                        pa.setStrValue(keyStr);
-                    } else if (TsToken.isTsVarType(keyStr)){
-                        pa.setType(keyStr);
-                    }
-                }
-                to.addParam(pa);
+                addUnionParam(upt, to);
             }
             TypeScriptParser.TypeGenericContext tgc = typeContext.typeGeneric();
             if (tgc != null) {
@@ -1214,13 +1218,11 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     }
 
     private void setVariableSingleExpression(TypeScriptParser.VariableDeclarationContext ctx, String varName) {
-        List<TypeScriptParser.SingleExpressionContext> sel = ctx.singleExpression();
-        for (TypeScriptParser.SingleExpressionContext sec : sel) {
+        for (TypeScriptParser.SingleExpressionContext sec : ctx.singleExpression()) {
             String varType = sec.start.getText();
             if (varType.equals(TsToken.TS_TOKEN_FUNCTION)) {
                 this.currentIdentifier = varName;
                 createFuncObj(varName);
-                break;
             } else if ((sec instanceof TypeScriptParser.FunctionExpressionContext fec) &&
                     fec.anonymousFunction() != null) {
                 TypeScriptParser.AnonymousFunctionContext afc = fec.anonymousFunction();
@@ -1244,13 +1246,8 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                 if (secItem instanceof TypeScriptParser.GenericTypesContext gtc) {
                     FuncObj fo = createFuncObj(varName);
                     fo.setName(varType);
-
-                    String temp = gtc.typeArguments().getText();
-                    fo.addTemplate(temp);
-
-                    TypeScriptParser.ExpressionSequenceContext esc = gtc.expressionSequence();
-                    List<TypeScriptParser. SingleExpressionContext> secl = esc.singleExpression();
-                    setFuncParamStr(fo, secl);
+                    fo.addTemplate(gtc.typeArguments().getText());
+                    setFuncParamStr(fo, gtc.expressionSequence().singleExpression());
                 }
 
                 if (secItem instanceof TypeScriptParser.ParenthesizedExpressionContext pec) {
@@ -1260,14 +1257,12 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                     this.varObjList.add(paObj);
                 }
             } else {
-                System.out.println("const 变量名: " + varName);
                 ParamObj pa = new ParamObj();
                 pa.setName(varName);
                 String typeName = (ctx.typeAnnotation() != null && ctx.typeAnnotation().type_() != null) ?
                         ctx.typeAnnotation().type_().getText() : "";
                 pa.setType(typeName);
-                int cCnt = typeName.contains(TsToken.TS_TOKEN_BRACKET) ?
-                        0 : sec.getChildCount();
+                int cCnt = typeName.contains(TsToken.TS_TOKEN_BRACKET) ? 0 : sec.getChildCount();
                 for (int i = 0; i < cCnt; i++) {
                     pa.setStrValue(sec.getChild(i).getText());
                 }

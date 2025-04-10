@@ -1124,7 +1124,7 @@ class ParseTsTest {
     }
 
     @Test
-    void parseCStreamConst7() {
+    void parseCStreamConst7_1() {
         ParseBase parser = ParseFactory.getParser("ts2cpp");
         String testType = testVariable7;
         CodePointCharStream cStream = CharStreams.fromString(testType);
@@ -1169,6 +1169,21 @@ class ParseTsTest {
         assertEquals("'timeline'", paList.get(2).getPaList().get(2).getStrValue(0));
         assertEquals("''", paList.get(2).getPaList().get(3).getStrValue(0));
         assertEquals("false", paList.get(2).getPaList().get(4).getStrValue(0));
+    }
+
+    @Test
+    void parseCStreamConst7_2() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testType = testVariable7;
+        CodePointCharStream cStream = CharStreams.fromString(testType);
+        ParseObj po = parser.parseCStream(cStream);
+        List<ParamObj> vol = po.getVarList();
+        assertEquals(1, vol.size());
+        ParamObj voItem = vol.get(0);
+        assertEquals("ROUTES", voItem.getName());
+        assertEquals("any[]", voItem.getType());
+        List<ParamObj> paList = voItem.getPaList();
+        assertEquals(6, paList.size());
 
         assertEquals("path", paList.get(3).getPaList().get(0).getName());
         assertEquals("title", paList.get(3).getPaList().get(1).getName());
