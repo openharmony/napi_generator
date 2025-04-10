@@ -381,67 +381,67 @@ public class TsToken {
     /**
      * less than token
      */
-    public static final String TS_TOKEN_LessThan = "<";
+    public static final String TS_TOKEN_LESSTHAN = "<";
 
     /**
      * more than token
      */
-    public static final String TS_TOKEN_MoreThan = ">";
+    public static final String TS_TOKEN_MORETHAN = ">";
 
     /**
      * less than equals token
      */
-    public static final String TS_TOKEN_LessThanEquals = "<=";
+    public static final String TS_TOKEN_LESSTHANEQUALS = "<=";
 
     /**
      * greater than equals token
      */
-    public static final String TS_TOKEN_GreaterThanEquals = ">=";
+    public static final String TS_TOKEN_GREATERTHANEQUALS = ">=";
 
     /**
      * equals token
      */
-    public static final String TS_TOKEN_Equals = "==";
+    public static final String TS_TOKEN_EQUALS = "==";
 
     /**
      * not equals token
      */
-    public static final String TS_TOKEN_NotEquals = "!=";
+    public static final String TS_TOKEN_NOTEQUALS = "!=";
 
     /**
      * identity equals token
      */
-    public static final String TS_TOKEN_IdentityEquals = "===";
+    public static final String TS_TOKEN_IDENTITYEQUALS = "===";
 
     /**
      * identity not equals token
      */
-    public static final String TS_TOKEN_IdentityNotEquals = "!==";
+    public static final String TS_TOKEN_IDENTITYNOTEQUALS = "!==";
 
     /**
      * bit and  token
      */
-    public static final String TS_TOKEN_BitAnd = "&";
+    public static final String TS_TOKEN_BITAND = "&";
 
     /**
      * BitXOr token
      */
-    public static final String TS_TOKEN_BitXOr = "^";
+    public static final String TS_TOKEN_BITXOR = "^";
 
     /**
      * BitOr token
      */
-    public static final String TS_TOKEN_BitOr = "|";
+    public static final String TS_TOKEN_BITOR = "|";
 
     /**
      * And token
      */
-    public static final String TS_TOKEN_And= "&&";
+    public static final String TS_TOKEN_AND = "&&";
 
     /**
      * Or token
      */
-    public static final String TS_TOKEN_Or = "||";
+    public static final String TS_TOKEN_OR = "||";
 
     /**
      * MultiplyAssign token
@@ -592,19 +592,19 @@ public class TsToken {
         TS_TOKEN_ASYNC,
         TS_TOKEN_AWAIT,
         TS_TOKEN_YIELD,
-        TS_TOKEN_LessThan,
-        TS_TOKEN_MoreThan,
-        TS_TOKEN_LessThanEquals,
-        TS_TOKEN_GreaterThanEquals,
-        TS_TOKEN_Equals,
-        TS_TOKEN_NotEquals,
-        TS_TOKEN_IdentityEquals,
-        TS_TOKEN_IdentityNotEquals,
-        TS_TOKEN_BitAnd,
-        TS_TOKEN_BitXOr,
-        TS_TOKEN_BitOr,
-        TS_TOKEN_And,
-        TS_TOKEN_Or,
+            TS_TOKEN_LESSTHAN,
+            TS_TOKEN_MORETHAN,
+            TS_TOKEN_LESSTHANEQUALS,
+            TS_TOKEN_GREATERTHANEQUALS,
+            TS_TOKEN_EQUALS,
+            TS_TOKEN_NOTEQUALS,
+            TS_TOKEN_IDENTITYEQUALS,
+            TS_TOKEN_IDENTITYNOTEQUALS,
+            TS_TOKEN_BITAND,
+            TS_TOKEN_BITXOR,
+            TS_TOKEN_BITOR,
+            TS_TOKEN_AND,
+            TS_TOKEN_OR,
         TS_TOKEN_MULTIPLYASSIGN,
         TS_TOKEN_DIVIDEASSIGN,
         TS_TOKEN_MODULUSASSIGN,

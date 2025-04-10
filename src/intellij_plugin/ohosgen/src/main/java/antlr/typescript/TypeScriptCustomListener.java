@@ -271,25 +271,28 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         System.out.println("enterUnion: " + ctx.getText());
     }
 
+    private void setTypeParam(TypeScriptParser.TypeAnnotationContext ctx, TypeObj to) {
+        TypeScriptParser. UnionOrIntersectionOrPrimaryTypeContext uipt =
+                ctx.type_().unionOrIntersectionOrPrimaryType();
+        int cCnt = uipt.getChildCount();
+        ParamObj lastPa = to.getLastParamObj();
+        for (int i = 0; i < cCnt; i++) {
+            String keyStr = uipt.getChild(i).getText();
+            if (!TsToken.isTsToken(keyStr)) {
+                lastPa.setStrValue(keyStr);
+            } else if (TsToken.isTsVarType(keyStr)) {
+                lastPa.setType(keyStr);
+            }
+
+        }
+    }
     @Override
     public void enterTypeAnnotation(TypeScriptParser.TypeAnnotationContext ctx) {
         super.enterTypeAnnotation(ctx);
         System.out.println("enterTypeAnnotation: " + ctx.getText());
         if (this.currentObject instanceof TypeObj to) {
             if (ctx.type_() != null && ctx.type_().unionOrIntersectionOrPrimaryType() != null) {
-                TypeScriptParser. UnionOrIntersectionOrPrimaryTypeContext uipt =
-                        ctx.type_().unionOrIntersectionOrPrimaryType();
-                int cCnt = uipt.getChildCount();
-                ParamObj lastPa = to.getLastParamObj();
-                for (int i = 0; i < cCnt; i++) {
-                    String keyStr = uipt.getChild(i).getText();
-                    if (!TsToken.isTsToken(keyStr)) {
-                        lastPa.setStrValue(keyStr);
-                    } else if (TsToken.isTsVarType(keyStr)) {
-                        lastPa.setType(keyStr);
-                    }
-
-                }
+                setTypeParam(ctx, to);
             }
         }
     }
@@ -1234,15 +1237,11 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                 List<TypeScriptParser.SingleExpressionContext> secl = pec.expressionSequence().singleExpression();
 
                 for (TypeScriptParser.SingleExpressionContext secItem : secl) {
-                    String name = secItem.getText();
-                    fo.addParam(name, "");
+                    fo.addParam(secItem.getText(), "");
                 }
-            } else if (sec instanceof TypeScriptParser.IdentifierExpressionContext iec) {
+            } else if (sec instanceof TypeScriptParser.IdentifierExpressionContext iec &&
+                    iec.singleExpression() != null) {
                 TypeScriptParser.SingleExpressionContext secItem = iec.singleExpression();
-                if (secItem == null) {
-                    continue;
-                }
-
                 if (secItem instanceof TypeScriptParser.GenericTypesContext gtc) {
                     FuncObj fo = createFuncObj(varName);
                     fo.setName(varType);
