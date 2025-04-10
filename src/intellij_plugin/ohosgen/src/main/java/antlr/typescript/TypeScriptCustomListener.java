@@ -505,7 +505,8 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
     }
 
     @Override
-    public void enterComputedPropertyExpressionAssignment(TypeScriptParser.ComputedPropertyExpressionAssignmentContext ctx) {
+    public void enterComputedPropertyExpressionAssignment(
+            TypeScriptParser.ComputedPropertyExpressionAssignmentContext ctx) {
         super.enterComputedPropertyExpressionAssignment(ctx);
         System.out.println("enterComputedPropertyExpressionAssignment: " + ctx.getText());
     }
@@ -899,7 +900,7 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
             String keyStr = upt.getChild(i).getText();
             if (!TsToken.isTsToken(keyStr)) {
                 pa.setStrValue(keyStr);
-            } else if (TsToken.isTsVarType(keyStr)){
+            } else if (TsToken.isTsVarType(keyStr)) {
                 pa.setType(keyStr);
             }
         }
