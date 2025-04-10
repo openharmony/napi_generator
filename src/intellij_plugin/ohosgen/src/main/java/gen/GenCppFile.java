@@ -609,6 +609,38 @@ public class GenCppFile extends GeneratorBase {
         this.unionContent = resContent;
     };
 
+    private String genVarArrayList(String tmpContent, String paName, List<ParamObj> paList) {
+        String resContent = tmpContent;
+        resContent += CPP_NEW_LINE + CPP_STRUCT_TOKEN + CPP_BLANK_SPACE + paName +
+                CPP_STRUCT_SUFFIX + CPP_BLANK_SPACE + CPP_LEFT_BRACE;
+        List<ParamObj> paramList = paList.get(0).getPaList();
+        for (ParamObj paItem : paramList) {
+            String paStr = paItem.getName();
+            String paVal = paItem.getStrValue(0);
+            String typeStr = StringUtils.isAllDigits(paVal) ?
+                    CPP_NUMBER_TOKEN : CPP_STD_STRING;
+            typeStr = StringUtils.isBoolean(paVal) ? CPP_BOOLEAN_TOKEN : typeStr;
+            resContent += CPP_NEW_LINE + CPP_TAB_SPACE + typeStr + CPP_BLANK_SPACE + paStr + CPP_SEMICOLON;
+        }
+        resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
+
+        resContent += CPP_NEW_LINE + CPP_CONST_TOKEN + CPP_BLANK_SPACE + CPP_STD_VECTOR +
+                CPP_LEFT_ANGLE_BRACKET + paName + CPP_STRUCT_SUFFIX + CPP_RIGHT_ANGLE_BRACKET +
+                CPP_BLANK_SPACE + paName + CPP_EQUAL + CPP_LEFT_BRACE;
+        for (ParamObj paramListItem : paList) {
+            List<ParamObj> subParamList = paramListItem.getPaList();
+            resContent += CPP_NEW_LINE + CPP_TAB_SPACE + CPP_LEFT_BRACE;
+            for (ParamObj paItem : subParamList) {
+                String paVal = paItem.getStrValue(0);
+                resContent += paVal + CPP_COMMA + CPP_BLANK_SPACE;
+            }
+            resContent = StringUtils.removeLastCharacter(resContent, 2);
+            resContent += CPP_RIGHT_BRACE + CPP_COMMA;
+        }
+        resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
+        return resContent;
+    };
+
     /**
      * 生成输出内容
      *
@@ -626,8 +658,7 @@ public class GenCppFile extends GeneratorBase {
             List<ParamObj> paList = po.getPaList();
             if (paList.isEmpty()) {
                 resContent += CPP_NEW_LINE + CPP_EXTENDS_TOKEN + CPP_BLANK_SPACE + CPP_CONST_TOKEN +
-                        CPP_BLANK_SPACE + paType + CPP_BLANK_SPACE + paName +
-                        CPP_EQUAL + paValue;
+                        CPP_BLANK_SPACE + paType + CPP_BLANK_SPACE + paName + CPP_EQUAL + paValue;
 
                 resContent += CPP_SEMICOLON + CPP_NEW_LINE;
             } else if (paList.get(0).getPaList().isEmpty()) {
@@ -647,33 +678,7 @@ public class GenCppFile extends GeneratorBase {
                 resContent = StringUtils.removeLastCharacter(resContent, 1);
                 resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
             } else if (!(paList.get(0).getPaList().isEmpty())) {
-                resContent += CPP_NEW_LINE + CPP_STRUCT_TOKEN + CPP_BLANK_SPACE + paName +
-                        CPP_STRUCT_SUFFIX + CPP_BLANK_SPACE + CPP_LEFT_BRACE;
-                List<ParamObj> paramList = paList.get(0).getPaList();
-                for (ParamObj paItem : paramList) {
-                    String paStr = paItem.getName();
-                    String paVal = paItem.getStrValue(0);
-                    String typeStr = StringUtils.isAllDigits(paVal) ?
-                            CPP_NUMBER_TOKEN : CPP_STD_STRING;
-                    typeStr = StringUtils.isBoolean(paVal) ? CPP_BOOLEAN_TOKEN : typeStr;
-                    resContent += CPP_NEW_LINE + CPP_TAB_SPACE + typeStr + CPP_BLANK_SPACE + paStr + CPP_SEMICOLON;
-                }
-                resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
-
-                resContent += CPP_NEW_LINE + CPP_CONST_TOKEN + CPP_BLANK_SPACE + CPP_STD_VECTOR +
-                        CPP_LEFT_ANGLE_BRACKET + paName + CPP_STRUCT_SUFFIX + CPP_RIGHT_ANGLE_BRACKET +
-                        CPP_BLANK_SPACE + paName + CPP_EQUAL + CPP_LEFT_BRACE;
-                for (ParamObj paramListItem : paList) {
-                    List<ParamObj> subParamList = paramListItem.getPaList();
-                    resContent += CPP_NEW_LINE + CPP_TAB_SPACE + CPP_LEFT_BRACE;
-                    for (ParamObj paItem : subParamList) {
-                        String paVal = paItem.getStrValue(0);
-                        resContent += paVal + CPP_COMMA + CPP_BLANK_SPACE;
-                    }
-                    resContent = StringUtils.removeLastCharacter(resContent, 2);
-                    resContent += CPP_RIGHT_BRACE + CPP_COMMA;
-                }
-                resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
+                resContent = genVarArrayList(resContent, paName, paList);
             }
 
         }

@@ -446,67 +446,67 @@ public class TsToken {
     /**
      * MultiplyAssign token
      */
-    public static final String TS_TOKEN_MultiplyAssign = "*=";
+    public static final String TS_TOKEN_MULTIPLYASSIGN = "*=";
 
     /**
      * DivideAssign token
      */
-    public static final String TS_TOKEN_DivideAssign = "/=";
+    public static final String TS_TOKEN_DIVIDEASSIGN = "/=";
 
     /**
      * ModulusAssign token
      */
-    public static final String TS_TOKEN_ModulusAssign = "%=";
+    public static final String TS_TOKEN_MODULUSASSIGN = "%=";
 
     /**
      * PlusAssign token
      */
-    public static final String TS_TOKEN_PlusAssign = "+=";
+    public static final String TS_TOKEN_PLUSASSIGN = "+=";
 
     /**
      * MinusAssign token
      */
-    public static final String TS_TOKEN_MinusAssign = "-=";
+    public static final String TS_TOKEN_MIMUSASSIGN = "-=";
 
     /**
      * LeftShiftArithmeticAssign token
      */
-    public static final String TS_TOKEN_LeftShiftArithmeticAssign = "<<=";
+    public static final String TS_TOKEN_LEFTSHIFTARITHMETICASSIGN = "<<=";
 
     /**
      * RightShiftArithmeticAssign token
      */
-    public static final String TS_TOKEN_RightShiftArithmeticAssign = ">>=";
+    public static final String TS_TOKEN_RIGHTSHIFTARITHMETICASSIGN = ">>=";
 
     /**
      * RightShiftLogicalAssign token
      */
-    public static final String TS_TOKEN_RightShiftLogicalAssign = ">>>=";
+    public static final String TS_TOKEN_RIGHTSHIFTLOGICALASSIGN = ">>>=";
 
     /**
      * BitAndAssign token
      */
-    public static final String TS_TOKEN_BitAndAssign = "&=";
+    public static final String TS_TOKEN_BITANDASSIGN = "&=";
 
     /**
      * BitXorAssign token
      */
-    public static final String TS_TOKEN_BitXorAssign = "^=";
+    public static final String TS_TOKEN_BITXORASSIGN = "^=";
 
     /**
      * BitOrAssign token
      */
-    public static final String TS_TOKEN_BitOrAssign = "|=";
+    public static final String TS_TOKEN_BITORASSIGN = "|=";
 
     /**
      * PowerAssign token
      */
-    public static final String TS_TOKEN_PowerAssign = "**=";
+    public static final String TS_TOKEN_POWERASSIGN = "**=";
 
     /**
      * NullishCoalescingAssign token
      */
-    public static final String TS_TOKEN_NullishCoalescingAssign = "??=";
+    public static final String TS_TOKEN_NULLISHCOALESCINGASSIGN = "??=";
 
     /**
      * await token
@@ -518,7 +518,10 @@ public class TsToken {
      */
     public static final String TS_TOKEN_BRACKET = "[]";
 
-    public static final List<String> tsTokenList = List.of(
+    /**
+     * key list
+     */
+    public static final List<String> TS_TOKEN_LIST = List.of(
         TS_TOKEN_OPTIONAL,
         TS_TOKEN_REQUIRED,
         TS_TOKEN_REST_PARAM,
@@ -602,23 +605,26 @@ public class TsToken {
         TS_TOKEN_BitOr,
         TS_TOKEN_And,
         TS_TOKEN_Or,
-        TS_TOKEN_MultiplyAssign,
-        TS_TOKEN_DivideAssign,
-        TS_TOKEN_ModulusAssign,
-        TS_TOKEN_PlusAssign,
-        TS_TOKEN_MinusAssign,
-        TS_TOKEN_LeftShiftArithmeticAssign,
-        TS_TOKEN_RightShiftArithmeticAssign,
-        TS_TOKEN_RightShiftLogicalAssign,
-        TS_TOKEN_BitAndAssign,
-        TS_TOKEN_BitXorAssign,
-        TS_TOKEN_BitOrAssign,
-        TS_TOKEN_PowerAssign,
-        TS_TOKEN_NullishCoalescingAssign,
+        TS_TOKEN_MULTIPLYASSIGN,
+        TS_TOKEN_DIVIDEASSIGN,
+        TS_TOKEN_MODULUSASSIGN,
+        TS_TOKEN_PLUSASSIGN,
+        TS_TOKEN_MIMUSASSIGN,
+        TS_TOKEN_LEFTSHIFTARITHMETICASSIGN,
+        TS_TOKEN_RIGHTSHIFTARITHMETICASSIGN,
+        TS_TOKEN_RIGHTSHIFTLOGICALASSIGN,
+        TS_TOKEN_BITANDASSIGN,
+        TS_TOKEN_BITXORASSIGN,
+        TS_TOKEN_BITORASSIGN,
+        TS_TOKEN_POWERASSIGN,
+        TS_TOKEN_NULLISHCOALESCINGASSIGN,
         TS_TOKEN_ARROW
     );
 
-    public static final List<String> tsVarTypeList = List.of(
+    /**
+     * var key list
+     */
+    public static final List<String> TS_VAR_TYPE_LIST = List.of(
             TS_TOKEN_ANY,
             TS_TOKEN_NUMBER,
             TS_TOKEN_NEVER,
@@ -626,12 +632,24 @@ public class TsToken {
             TS_TOKEN_STRING
     );
 
+    /**
+     * 判断是否是关键字
+     *
+     * @param key 字符串
+     * @return 若是ts关键字返回true
+     */
     public static boolean isTsToken(String key) {
-        return TsToken.tsTokenList.contains(key);
+        return TsToken.TS_TOKEN_LIST.contains(key);
     }
 
+    /**
+     * 判断是否为变量类型
+     *
+     * @param key 字符串
+     * @return 若是变量类型返回true
+     */
     public static boolean isTsVarType(String key) {
-        return TsToken.tsVarTypeList.contains(key);
+        return TsToken.TS_VAR_TYPE_LIST.contains(key);
     }
 
 }
