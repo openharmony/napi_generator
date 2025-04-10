@@ -165,6 +165,7 @@ public class ParseTs extends ParseBase implements CustomEventListener {
         po.setStructList(tcl.getStructObjList());
         po.setTypeList(tcl.getTypeObjList());
         po.setUnionList(tcl.getUnionObjList());
+        po.setVarList(tcl.getVarObjList());
 
         return po;
     }

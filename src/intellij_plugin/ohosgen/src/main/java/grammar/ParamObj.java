@@ -66,11 +66,17 @@ public class ParamObj extends GBaseObject {
     private List<String> vList;
 
     /**
+     * 结构体初始化
+     */
+    private List<ParamObj> paList;
+
+    /**
      * 构造函数
      */
     public ParamObj() {
         this.decorator = TsToken.TS_TOKEN_REQUIRED;
         vList = new CopyOnWriteArrayList<>();
+        paList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -242,5 +248,32 @@ public class ParamObj extends GBaseObject {
      */
     public void setAsList(int[] asList) {
         this.asList = asList;
+    }
+
+    /**
+     * 获取初始化结构
+     *
+     * @return 初始化结构
+     */
+    public List<ParamObj> getPaList() {
+        return paList;
+    }
+
+    /**
+     * 设置初始化结构
+     *
+     * @param paList 初始化结构
+     */
+    public void setPaList(List<ParamObj> paList) {
+        this.paList = paList;
+    }
+
+    /**
+     * 增加子参数
+     *
+     * @param pa 子参数
+     */
+    public void addParam(ParamObj pa) {
+        this.paList.add(pa);
     }
 }

@@ -15,6 +15,8 @@
 
 package utils;
 
+import java.util.List;
+
 /**
  * <h3>类名：该类用于xxx</h3>
  * description typescript token
@@ -375,5 +377,279 @@ public class TsToken {
      * yield token
      */
     public static final String TS_TOKEN_YIELD = "yield";
+
+    /**
+     * less than token
+     */
+    public static final String TS_TOKEN_LESSTHAN = "<";
+
+    /**
+     * more than token
+     */
+    public static final String TS_TOKEN_MORETHAN = ">";
+
+    /**
+     * less than equals token
+     */
+    public static final String TS_TOKEN_LESSTHANEQUALS = "<=";
+
+    /**
+     * greater than equals token
+     */
+    public static final String TS_TOKEN_GREATERTHANEQUALS = ">=";
+
+    /**
+     * equals token
+     */
+    public static final String TS_TOKEN_EQUALS = "==";
+
+    /**
+     * not equals token
+     */
+    public static final String TS_TOKEN_NOTEQUALS = "!=";
+
+    /**
+     * identity equals token
+     */
+    public static final String TS_TOKEN_IDENTITYEQUALS = "===";
+
+    /**
+     * identity not equals token
+     */
+    public static final String TS_TOKEN_IDENTITYNOTEQUALS = "!==";
+
+    /**
+     * bit and  token
+     */
+    public static final String TS_TOKEN_BITAND = "&";
+
+    /**
+     * BitXOr token
+     */
+    public static final String TS_TOKEN_BITXOR = "^";
+
+    /**
+     * BitOr token
+     */
+    public static final String TS_TOKEN_BITOR = "|";
+
+    /**
+     * And token
+     */
+    public static final String TS_TOKEN_AND = "&&";
+
+    /**
+     * Or token
+     */
+    public static final String TS_TOKEN_OR = "||";
+
+    /**
+     * MultiplyAssign token
+     */
+    public static final String TS_TOKEN_MULTIPLYASSIGN = "*=";
+
+    /**
+     * DivideAssign token
+     */
+    public static final String TS_TOKEN_DIVIDEASSIGN = "/=";
+
+    /**
+     * ModulusAssign token
+     */
+    public static final String TS_TOKEN_MODULUSASSIGN = "%=";
+
+    /**
+     * PlusAssign token
+     */
+    public static final String TS_TOKEN_PLUSASSIGN = "+=";
+
+    /**
+     * MinusAssign token
+     */
+    public static final String TS_TOKEN_MIMUSASSIGN = "-=";
+
+    /**
+     * LeftShiftArithmeticAssign token
+     */
+    public static final String TS_TOKEN_LEFTSHIFTARITHMETICASSIGN = "<<=";
+
+    /**
+     * RightShiftArithmeticAssign token
+     */
+    public static final String TS_TOKEN_RIGHTSHIFTARITHMETICASSIGN = ">>=";
+
+    /**
+     * RightShiftLogicalAssign token
+     */
+    public static final String TS_TOKEN_RIGHTSHIFTLOGICALASSIGN = ">>>=";
+
+    /**
+     * BitAndAssign token
+     */
+    public static final String TS_TOKEN_BITANDASSIGN = "&=";
+
+    /**
+     * BitXorAssign token
+     */
+    public static final String TS_TOKEN_BITXORASSIGN = "^=";
+
+    /**
+     * BitOrAssign token
+     */
+    public static final String TS_TOKEN_BITORASSIGN = "|=";
+
+    /**
+     * PowerAssign token
+     */
+    public static final String TS_TOKEN_POWERASSIGN = "**=";
+
+    /**
+     * NullishCoalescingAssign token
+     */
+    public static final String TS_TOKEN_NULLISHCOALESCINGASSIGN = "??=";
+
+    /**
+     * await token
+     */
+    public static final String TS_TOKEN_ARROW = "=>";
+
+    /**
+     * bracket token
+     */
+    public static final String TS_TOKEN_BRACKET = "[]";
+
+    /**
+     * key list
+     */
+    public static final List<String> TS_TOKEN_LIST = List.of(
+        TS_TOKEN_OPTIONAL,
+        TS_TOKEN_REQUIRED,
+        TS_TOKEN_REST_PARAM,
+        TS_TOKEN_ENUM,
+        TS_TOKEN_CLASS,
+        TS_TOKEN_EXTENDS,
+        TS_TOKEN_SUPER,
+        TS_TOKEN_CONST,
+        TS_TOKEN_EXPORT,
+        TS_TOKEN_IMPORT,
+        TS_TOKEN_IMPLEMENT,
+        TS_TOKEN_LET,
+        TS_TOKEN_PRIVATE,
+        TS_TOKEN_PUBLIC,
+        TS_TOKEN_INTERFACE,
+        TS_TOKEN_PACKAGE,
+        TS_TOKEN_PROTECTED,
+        TS_TOKEN_STATIC,
+        TS_TOKEN_ANY,
+        TS_TOKEN_NUMBER,
+        TS_TOKEN_NEVER,
+        TS_TOKEN_BOOLEAN,
+        TS_TOKEN_STRING,
+        TS_TOKEN_UNIQUE,
+        TS_TOKEN_SYMBOL,
+        TS_TOKEN_UNDEFINED,
+        TS_TOKEN_OBJECT,
+        TS_TOKEN_OF,
+        TS_TOKEN_KEYOF,
+        TS_TOKEN_TYPE,
+        TS_TOKEN_CONSTRUCTOR,
+        TS_TOKEN_NAMESPACE,
+        TS_TOKEN_REQUIRE,
+        TS_TOKEN_MODULE,
+        TS_TOKEN_DECLARE,
+        TS_TOKEN_ABSTRACT,
+        TS_TOKEN_IS,
+        TS_TOKEN_NULL,
+        TS_TOKEN_BREAK,
+        TS_TOKEN_DO,
+        TS_TOKEN_INSTANCEOF,
+        TS_TOKEN_TYPEOF,
+        TS_TOKEN_CASE,
+        TS_TOKEN_ELSE,
+        TS_TOKEN_NEW,
+        TS_TOKEN_VAR,
+        TS_TOKEN_CATCH,
+        TS_TOKEN_FINALLY,
+        TS_TOKEN_RETURN,
+        TS_TOKEN_VOID,
+        TS_TOKEN_CONTINUE,
+        TS_TOKEN_FOR,
+        TS_TOKEN_SWITCH,
+        TS_TOKEN_WHILE,
+        TS_TOKEN_DEBUGGER,
+        TS_TOKEN_FUNCTION,
+        TS_TOKEN_THIS,
+        TS_TOKEN_WITH,
+        TS_TOKEN_DEFAULT,
+        TS_TOKEN_IF,
+        TS_TOKEN_THROW,
+        TS_TOKEN_DELETE,
+        TS_TOKEN_IN,
+        TS_TOKEN_TRY,
+        TS_TOKEN_AS,
+        TS_TOKEN_FROM,
+        TS_TOKEN_READONLY,
+        TS_TOKEN_ASYNC,
+        TS_TOKEN_AWAIT,
+        TS_TOKEN_YIELD,
+            TS_TOKEN_LESSTHAN,
+            TS_TOKEN_MORETHAN,
+            TS_TOKEN_LESSTHANEQUALS,
+            TS_TOKEN_GREATERTHANEQUALS,
+            TS_TOKEN_EQUALS,
+            TS_TOKEN_NOTEQUALS,
+            TS_TOKEN_IDENTITYEQUALS,
+            TS_TOKEN_IDENTITYNOTEQUALS,
+            TS_TOKEN_BITAND,
+            TS_TOKEN_BITXOR,
+            TS_TOKEN_BITOR,
+            TS_TOKEN_AND,
+            TS_TOKEN_OR,
+        TS_TOKEN_MULTIPLYASSIGN,
+        TS_TOKEN_DIVIDEASSIGN,
+        TS_TOKEN_MODULUSASSIGN,
+        TS_TOKEN_PLUSASSIGN,
+        TS_TOKEN_MIMUSASSIGN,
+        TS_TOKEN_LEFTSHIFTARITHMETICASSIGN,
+        TS_TOKEN_RIGHTSHIFTARITHMETICASSIGN,
+        TS_TOKEN_RIGHTSHIFTLOGICALASSIGN,
+        TS_TOKEN_BITANDASSIGN,
+        TS_TOKEN_BITXORASSIGN,
+        TS_TOKEN_BITORASSIGN,
+        TS_TOKEN_POWERASSIGN,
+        TS_TOKEN_NULLISHCOALESCINGASSIGN,
+        TS_TOKEN_ARROW
+    );
+
+    /**
+     * var key list
+     */
+    public static final List<String> TS_VAR_TYPE_LIST = List.of(
+            TS_TOKEN_ANY,
+            TS_TOKEN_NUMBER,
+            TS_TOKEN_NEVER,
+            TS_TOKEN_BOOLEAN,
+            TS_TOKEN_STRING
+    );
+
+    /**
+     * 判断是否是关键字
+     *
+     * @param key 字符串
+     * @return 若是ts关键字返回true
+     */
+    public static boolean isTsToken(String key) {
+        return TsToken.TS_TOKEN_LIST.contains(key);
+    }
+
+    /**
+     * 判断是否为变量类型
+     *
+     * @param key 字符串
+     * @return 若是变量类型返回true
+     */
+    public static boolean isTsVarType(String key) {
+        return TsToken.TS_VAR_TYPE_LIST.contains(key);
+    }
 
 }
