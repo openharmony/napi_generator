@@ -1271,6 +1271,49 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                 this.currentToken = TsToken.TS_TOKEN_VAR;
             }
         }
+        String nameStr = ctx.identifierOrKeyWord().getText();
+        if (ctx.typeAnnotation() != null && ctx.typeAnnotation().type_().functionType() != null) {
+            FuncObj fo = new FuncObj();
+            fo.setName(nameStr);
+            this.funcObjList.add(fo);
+            String retType = ctx.typeAnnotation().type_().functionType().type_().getText();
+            fo.setRetValue(retType);
+            if (ctx.typeAnnotation().type_().functionType().parameterList() != null) {
+                List<TypeScriptParser.ParameterContext> pacl =
+                        ctx.typeAnnotation().type_().functionType().parameterList().parameter();
+                for (TypeScriptParser.ParameterContext paItem : pacl) {
+                    String paNameStr = paItem.requiredParameter().identifierOrPattern().getText();
+                    String paTypeStr = paItem.requiredParameter().typeAnnotation().type_().getText();
+                    ParamObj paSfItem = new ParamObj();
+                    paSfItem.setName(paNameStr);
+                    paSfItem.setType(paTypeStr);
+                    if (paItem.requiredParameter().typeAnnotation().type_().functionType() != null) {
+                        TypeScriptParser.TypeAnnotationContext tacItem = paItem.requiredParameter().typeAnnotation();
+                        String subFunRetType = paItem.requiredParameter().typeAnnotation().
+                                type_().functionType().type_().getText();
+                        String subFunParam = paItem.requiredParameter().typeAnnotation().type_().
+                                functionType().parameterList() == null ? "" : paItem.requiredParameter().
+                                typeAnnotation().type_().functionType().parameterList().getText();
+                        FuncObj subFoItem = new FuncObj();
+                        subFoItem.setName("");
+                        subFoItem.setRetValue(subFunRetType);
+
+                        if (!subFunParam.isEmpty()) {
+                            List<TypeScriptParser.ParameterContext> paCtxList = paItem.requiredParameter().
+                                    typeAnnotation().type_().functionType().parameterList().parameter();
+                            for (TypeScriptParser.ParameterContext paCtx : paCtxList) {
+                                String subType = paCtx.requiredParameter().typeAnnotation().type_().getText();
+                                String subName = paCtx.requiredParameter().identifierOrPattern().getText();
+                                subFoItem.addParam(subName, subType);
+                            }
+                        }
+                        paSfItem.addFunc(subFoItem);
+
+                    }
+                    fo.addParam(paSfItem);
+                }
+            }
+        }
     }
 
     private void setFuncParamStr(FuncObj fo, List<TypeScriptParser. SingleExpressionContext> secl) {
