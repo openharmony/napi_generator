@@ -223,6 +223,39 @@ class ParseTsTest {
             "  let i = p!;\n" +
             "}";
 
+    String testFunc30 = "export const AsyncTaskReturnVoid: () => Promise<object>;";
+
+    String testFunc31 = "export const AsyncTaskLongLongFunctionReturnLong: (min: number, max: number, " +
+            "func: (a: number, b: number, c: string) => number) => Promise<number>;";
+
+    String testFunc32 = "export const AsyncTaskLongReturnLong: (a: number) => Promise<number>;";
+
+    String testFunc33 = "export const CallbackInvoke: (func: () => void) => void;";
+
+    String testFunc34 = "export const CallbackInvokeFromThread: (func: () => void) => void;";
+
+    String testFunc35 = "export const CallbackReturnVoid: (func: () => void) => void;";
+
+    String testFunc36 = "export const SafetyCallbackReturnVoid: (func: () => void) => void;";
+
+    String testFunc37 = "export const CallbackReturnBool_True: (func: (value: boolean) => boolean) => boolean;";
+
+    String testFunc38 = "export const SafetyCallbackReturnBool_True: (func: (value: boolean) => boolean) => boolean;";
+
+    String testFunc39 = "export const CallbackReturnInt_Int: (func: (value: number) => number) => number;";
+
+    String testFunc40 = "export const CallbackReturnString_String: (func: (value: string) => string) => string;";
+
+    String testFunc41 = "export const SafetyCallbackReturnString_String: (func: (value: string) => string) => string;";
+
+    String testFunc42 = "export const CallbackReturnDouble_Double: (func: (value: number) => number) => number;";
+
+    String testFunc43 = "export const SafetyCallbackReturnDouble_Double: " +
+            "(func: (value: number) => number) => number;";
+
+    String testFunc44 = "export const SafetyCallbackReturnDouble_Double_Num_X2: " +
+            "(func: (value: number) => number) => number;";
+
     String testType2 = "// TypeAlias\n" +
             "type Employee = {\n" +
             "     type: \"employee\" | \"manager\";\n" +
@@ -895,6 +928,310 @@ class ParseTsTest {
         assertEquals("e", pol.get(0).getName());
         assertEquals("Entity", pol.get(0).getType());
         assertEquals(TsToken.TS_TOKEN_OPTIONAL, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_30() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc30;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("AsyncTaskReturnVoid", fol.get(0).getName());
+        assertEquals("Promise<object>", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(0, pol.size());
+
+    }
+
+    @Test
+    void parseCStreamFunc_31() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc31;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("AsyncTaskLongLongFunctionReturnLong", fol.get(0).getName());
+        assertEquals("Promise<number>", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(3, pol.size());
+        assertEquals("min", pol.get(0).getName());
+        assertEquals("number", pol.get(0).getType());
+        assertEquals("max", pol.get(1).getName());
+        assertEquals("number", pol.get(1).getType());
+        assertEquals("func", pol.get(2).getName());
+        assertEquals("(a:number,b:number,c:string)=>number", pol.get(2).getType());
+        assertEquals("number", pol.get(2).getFoList().get(0).getRetValue());
+        assertEquals("a", pol.get(2).getFoList().get(0).getParamList().get(0).getName());
+        assertEquals("number", pol.get(2).getFoList().get(0).getParamList().get(0).getType());
+        assertEquals("b", pol.get(2).getFoList().get(0).getParamList().get(1).getName());
+        assertEquals("number", pol.get(2).getFoList().get(0).getParamList().get(1).getType());
+        assertEquals("c", pol.get(2).getFoList().get(0).getParamList().get(2).getName());
+        assertEquals("string", pol.get(2).getFoList().get(0).getParamList().get(2).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_32() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc32;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("AsyncTaskLongReturnLong", fol.get(0).getName());
+        assertEquals("Promise<number>", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("a", pol.get(0).getName());
+        assertEquals("number", pol.get(0).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_33() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc33;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("CallbackInvoke", fol.get(0).getName());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("()=>void", pol.get(0).getType());
+        assertEquals("void", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(0, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_34() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc34;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("CallbackInvokeFromThread", fol.get(0).getName());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("()=>void", pol.get(0).getType());
+        assertEquals("void", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(0, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_35() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc35;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("CallbackReturnVoid", fol.get(0).getName());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("()=>void", pol.get(0).getType());
+        assertEquals("void", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(0, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_36() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc36;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("SafetyCallbackReturnVoid", fol.get(0).getName());
+        assertEquals("void", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("()=>void", pol.get(0).getType());
+        assertEquals("void", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(0, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_37() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc37;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("CallbackReturnBool_True", fol.get(0).getName());
+        assertEquals("boolean", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("(value:boolean)=>boolean", pol.get(0).getType());
+        assertEquals("boolean", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(1, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals("value", pol.get(0).getFoList().get(0).getParamList().get(0).getName());
+        assertEquals("boolean", pol.get(0).getFoList().get(0).getParamList().get(0).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_38() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc38;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("SafetyCallbackReturnBool_True", fol.get(0).getName());
+        assertEquals("boolean", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("(value:boolean)=>boolean", pol.get(0).getType());
+        assertEquals("boolean", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(1, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals("value", pol.get(0).getFoList().get(0).getParamList().get(0).getName());
+        assertEquals("boolean", pol.get(0).getFoList().get(0).getParamList().get(0).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_39() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc39;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("CallbackReturnInt_Int", fol.get(0).getName());
+        assertEquals("number", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("(value:number)=>number", pol.get(0).getType());
+        assertEquals("number", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(1, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals("value", pol.get(0).getFoList().get(0).getParamList().get(0).getName());
+        assertEquals("number", pol.get(0).getFoList().get(0).getParamList().get(0).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_40() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc40;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("CallbackReturnString_String", fol.get(0).getName());
+        assertEquals("string", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("(value:string)=>string", pol.get(0).getType());
+        assertEquals("string", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(1, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals("value", pol.get(0).getFoList().get(0).getParamList().get(0).getName());
+        assertEquals("string", pol.get(0).getFoList().get(0).getParamList().get(0).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_41() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc41;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("SafetyCallbackReturnString_String", fol.get(0).getName());
+        assertEquals("string", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("(value:string)=>string", pol.get(0).getType());
+        assertEquals("string", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(1, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals("value", pol.get(0).getFoList().get(0).getParamList().get(0).getName());
+        assertEquals("string", pol.get(0).getFoList().get(0).getParamList().get(0).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_42() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc42;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("CallbackReturnDouble_Double", fol.get(0).getName());
+        assertEquals("number", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("(value:number)=>number", pol.get(0).getType());
+        assertEquals("number", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(1, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals("value", pol.get(0).getFoList().get(0).getParamList().get(0).getName());
+        assertEquals("number", pol.get(0).getFoList().get(0).getParamList().get(0).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_43() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc43;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("SafetyCallbackReturnDouble_Double", fol.get(0).getName());
+        assertEquals("number", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("(value:number)=>number", pol.get(0).getType());
+        assertEquals("number", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(1, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals("value", pol.get(0).getFoList().get(0).getParamList().get(0).getName());
+        assertEquals("number", pol.get(0).getFoList().get(0).getParamList().get(0).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
+    }
+
+    @Test
+    void parseCStreamFunc_44() {
+        ParseBase parser = ParseFactory.getParser("ts2cpp");
+        String testFunc = testFunc44;
+        CodePointCharStream cStream = CharStreams.fromString(testFunc);
+        ParseObj po = parser.parseCStream(cStream);
+        List<FuncObj> fol = po.getFuncList();
+        assertEquals(1, fol.size());
+        assertEquals("SafetyCallbackReturnDouble_Double_Num_X2", fol.get(0).getName());
+        assertEquals("number", fol.get(0).getRetValue());
+        List<ParamObj> pol = fol.get(0).getParamList();
+        assertEquals(1, pol.size());
+        assertEquals("func", pol.get(0).getName());
+        assertEquals("(value:number)=>number", pol.get(0).getType());
+        assertEquals("number", pol.get(0).getFoList().get(0).getRetValue());
+        assertEquals(1, pol.get(0).getFoList().get(0).getParamList().size());
+        assertEquals("value", pol.get(0).getFoList().get(0).getParamList().get(0).getName());
+        assertEquals("number", pol.get(0).getFoList().get(0).getParamList().get(0).getType());
+        assertEquals(TsToken.TS_TOKEN_REQUIRED, pol.get(0).getDecorator());
     }
 
     @Test
