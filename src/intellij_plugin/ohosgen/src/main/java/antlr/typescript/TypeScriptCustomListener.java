@@ -1188,7 +1188,9 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         }
     }
 
-    private void setFuncExpressionParam(TypeScriptParser.ArrowFunctionDeclarationContext afdc, FuncObj fo) {
+    private void setFuncExpressionParam(TypeScriptParser.FunctionExpressionContext fec, FuncObj fo) {
+        TypeScriptParser.AnonymousFunctionContext afc = fec.anonymousFunction();
+        TypeScriptParser.ArrowFunctionDeclarationContext afdc = afc.arrowFunctionDeclaration();
         if (afdc.arrowFunctionParameters().formalParameterList() != null) {
             List<TypeScriptParser.FormalParameterArgContext> fpacl =
                     afdc.arrowFunctionParameters().formalParameterList().formalParameterArg();
@@ -1218,11 +1220,13 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         fo.setAlias(varName);
         this.currentObject = fo;
         this.funcObjList.add(fo);
+        this.currentIdentifier = varName;
         return fo;
     }
 
-    private void setCbFunc(TypeScriptParser.VariableDeclarationContext ctx, String nameStr) {
+    private void setCbFunc(TypeScriptParser.VariableDeclarationContext ctx) {
         FuncObj fo = new FuncObj();
+        String nameStr = ctx.identifierOrKeyWord().getText();
         fo.setName(nameStr);
         this.funcObjList.add(fo);
         fo.setRetValue(ctx.typeAnnotation().type_().functionType().type_().getText());
@@ -1266,14 +1270,11 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
         for (TypeScriptParser.SingleExpressionContext sec : ctx.singleExpression()) {
             String varType = sec.start.getText();
             if (varType.equals(TsToken.TS_TOKEN_FUNCTION)) {
-                this.currentIdentifier = varName;
                 createFuncObj(varName);
             } else if ((sec instanceof TypeScriptParser.FunctionExpressionContext fec) &&
                     fec.anonymousFunction() != null) {
-                TypeScriptParser.AnonymousFunctionContext afc = fec.anonymousFunction();
-                TypeScriptParser.ArrowFunctionDeclarationContext afdc = afc.arrowFunctionDeclaration();
                 FuncObj fo = createFuncObj(varName);
-                setFuncExpressionParam(afdc, fo);
+                setFuncExpressionParam(fec, fo);
             } else if (sec instanceof TypeScriptParser.ParenthesizedExpressionContext pec) {
                 FuncObj fo = createFuncObj(varName);
                 List<TypeScriptParser.SingleExpressionContext> secl = pec.expressionSequence().singleExpression();
@@ -1283,15 +1284,14 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                 }
             } else if (sec instanceof TypeScriptParser.IdentifierExpressionContext iec &&
                     iec.singleExpression() != null) {
-                TypeScriptParser.SingleExpressionContext secItem = iec.singleExpression();
-                if (secItem instanceof TypeScriptParser.GenericTypesContext gtc) {
+                if (iec.singleExpression() instanceof TypeScriptParser.GenericTypesContext gtc) {
                     FuncObj fo = createFuncObj(varName);
                     fo.setName(varType);
                     fo.addTemplate(gtc.typeArguments().getText());
                     setFuncParamStr(fo, gtc.expressionSequence().singleExpression());
                 }
 
-                if (secItem instanceof TypeScriptParser.ParenthesizedExpressionContext pec) {
+                if (iec.singleExpression() instanceof TypeScriptParser.ParenthesizedExpressionContext pec) {
                     ParamObj paObj = new ParamObj();
                     paObj.setName(ctx.identifierOrKeyWord().getText());
                     paObj.setStrValue(sec.getText());
@@ -1312,9 +1312,9 @@ public class TypeScriptCustomListener extends TypeScriptParserBaseListener imple
                 this.currentToken = TsToken.TS_TOKEN_VAR;
             }
         }
-        String nameStr = ctx.identifierOrKeyWord().getText();
+
         if (ctx.typeAnnotation() != null && ctx.typeAnnotation().type_().functionType() != null) {
-            setCbFunc(ctx, nameStr);
+            setCbFunc(ctx);
         }
     }
 
