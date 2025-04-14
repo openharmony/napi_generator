@@ -79,7 +79,8 @@ export function getTypeAliasSubtypes(typeAlias: ts.TypeAliasDeclaration, list: P
                 list.push({
                     type: kindStr,
                     name: nameObj.escapedText,
-                    arraySize: 0
+                    arraySize: 0,
+                    arraySizeList: []
                 })
                 return `(${nameObj.escapedText}:${kindStr})`;
             });
@@ -96,7 +97,8 @@ export function getParamType(paramType: any) {
   if (paramType === undefined) {
     return 'void';
   }
-                  // 类型为 number
+  Logger.getInstance().info('getParamType: ' + paramType.kind)
+  // 类型为 number
   let paramText = paramType.kind === NUMBER_TYPE ? 'number' : 
                   // 类型为 string
                   paramType.kind === STRING_TYPE ? 'string' : 
@@ -159,14 +161,17 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
                     let returnObjStr = JSON.stringify(member.type);
                     // Logger.getInstance().debug(`returnObjStr: ${returnObjStr} `);
                     let returnObj = JSON.parse(returnObjStr);
-                    returnStr = getParamType(member.type);
+                    returnStr = member.type?.getText(sourceFile); //getParamType(member.type);
                     if (returnObj.typeName) {
                         let returnNameStr = JSON.stringify(returnObj.typeName);
                         let returnName = JSON.parse(returnNameStr).escapedText;
                         let returnArgsStr = JSON.stringify(returnObj.typeArguments);
                         let returnArgsObj = JSON.parse(returnArgsStr);
                         const returnArgs = returnArgsObj.map((argItem: TypeArguments) => {
-                            let argStr = argItem.members.map((memItem: MemberObj) => {
+                            if (argItem.members) {
+                              
+                            }
+                            let argStr = argItem.members ? argItem.members.map((memItem: MemberObj) => {
                                 let memNameStr = '';
                                 let memTypeStr = 'void';
                                 if (memItem.name) {
@@ -176,7 +181,7 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
                                     memTypeStr = memItem.type.escapedText ? memItem.type.escapedText : 'any';
                                 }
                                 return `${memNameStr}: ${memTypeStr}`;
-                            }).join(', ');
+                            }).join(', ') : "";
                             return argStr;
                         })
                         returnStr = `${returnName} <${returnArgs}>`
@@ -192,7 +197,7 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
                       if (param.type) {
                           let paramTypeObjStr = JSON.stringify(param.type);
                           // Logger.getInstance().debug(`paramTypeObjStr: ${paramTypeObjStr} }`);
-                          paramTypeStr = getParamType(param.type);
+                          paramTypeStr = param.type?.getText(sourceFile); //getParamType(param.type);
                           if (JSON.parse(paramTypeObjStr).typeName) {
                               paramTypeStr = JSON.parse(paramTypeObjStr).typeName.escapedText;
                           }
@@ -215,7 +220,7 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
                 } else if (ts.isPropertyDeclaration(member) || ts.isPropertyAssignment(member)) { 
                   // 判断是否是类的成员变量
                   if ('type' in member && 'text' in member.name) {
-                    let paramTypeText = getParamType(member.type);
+                    let paramTypeText = member.type?.getText(sourceFile); //getParamType(member.type);
                     let parameter: ParamObj = {
                       name: member.name.text,
                       type: paramTypeText,
@@ -278,7 +283,7 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
           Logger.getInstance().debug(`Type: ${node.name.text}`);
           let typeItem: TypeObj = {
               name: node.name.text,
-              alias: getParamType(node.type),
+              alias: node.type?.getText(sourceFile), //getParamType(node.type),
               members: [],
               functions: [],
               types: [],
@@ -332,7 +337,7 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
             }
             // 参数类型节点
             const paramType = param.type; 
-            let paramText = getParamType(paramType);
+            let paramText = param.type?.getText(sourceFile); //getParamType(paramType);
 
             Logger.getInstance().debug(`  ${paramName}: ${paramText}`);
             let parameter: ParamObj = {
@@ -346,7 +351,7 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
         
           // 获取返回值类型
           const returnTypeNode = node.type;
-          let returnTypeText = getParamType(returnTypeNode);
+          let returnTypeText = node.type?.getText(sourceFile); //getParamType(returnTypeNode);
           let funcItem: FuncObj = {
             name: node.name.text,
             returns: returnTypeText,
@@ -367,7 +372,7 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
                 // Logger.getInstance().debug(`Member: ${JSON.stringify(member)}`)
                 if (ts.isMethodDeclaration(member) && member.name) {
                   // 判断是否是方法
-                  let paramTypeText = getParamType(member.type);
+                  let paramTypeText = member.type?.getText(sourceFile); //getParamType(member.type);
                   let parameter: ParamObj = {
                     name: 'test',
                     type: paramTypeText,
@@ -378,7 +383,7 @@ export function doParseTs(filePath: string, sourceCode: string): ParseObj {
                 } else if (ts.isPropertyDeclaration(member) || ts.isPropertyAssignment(member)) { 
                   // 判断是否是类的成员变量
                   if ('type' in member && 'text' in member.name) {
-                    let paramTypeText = getParamType(member.type);
+                    let paramTypeText = member.type?.getText(sourceFile); //getParamType(member.type);
                     let parameter: ParamObj = {
                       name: member.name.text,
                       type: paramTypeText,

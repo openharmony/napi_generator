@@ -253,7 +253,8 @@ export function createFuncParam(params: ParamObj) {
   let cppParam: ParamObj = {
     name: '',
     type: '',
-    arraySize: 0
+    arraySize: 0,
+    arraySizeList: []
   };
   cppParam.name = params.name;
   cppParam.type = getCTypeFromJS(params.type);
