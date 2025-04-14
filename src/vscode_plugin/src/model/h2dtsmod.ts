@@ -60,7 +60,7 @@ export class H2dtsMod extends IModel {
             fileName: path.basename(this.uri.fsPath, '.h')  // xxx
         };
         // generator
-        let outPath = genDtsFile(rootInfo);
+        let outPath = genDtsFile(rootInfo, '');
         this.emmitEventForKey(EVENT_PROGRESS, 100, PARSE_COMPLETE);
       } else {
         Logger.getInstance().error('parse header file error with undefine uri.');

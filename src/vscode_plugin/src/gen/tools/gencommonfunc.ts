@@ -16,8 +16,11 @@
 import { getTab } from '../../common/tool';
 import { getReg, match } from '../../common/re';
 import { format } from 'util'
-import { FuncObj, ParamObj } from '../datatype';
+import { FuncObj, ParamObj, StructObj, ClassObj } from '../datatype';
 import { transferMap } from '../../template/functypemap_template'
+import { classMethodDeclareTemplate, objectRet, promiseRet } from "../../template/func_template";
+import { replaceAll } from "../../common/tool";
+import { h2NapiInKey, h2NapiOutKey } from "../../template/dtscpp/dts2cpp_key";
 
 export function getFuncParamStr(params: ParamObj[]) {
   let paramStr = '';
@@ -101,4 +104,78 @@ export function genRead(parcelName: string, destObj: ParamObj) {
   let parcelType = getParcelType(destObj.type);
   let rFunc = getTransferContent(parcelType, 1);
   return format('%s = %s.%s();', destObj.name, parcelName, rFunc);
+}
+
+// ------------ gencpp common function --------------
+// 通过类型值映射模板，比如：uint32_t返回值 -> uint32tRet -> napi_create_uint32
+export function transCkey2NapiOutkey(key: string) {
+  // 如果是ts传递的Promise<>类型，并且transTs2C时未转换，那么就返回promiseRet
+  let tsPromiseReg = /Promise<([^>]+)>/g;
+  const tsPromiseMatch = tsPromiseReg.exec(key);
+  if (tsPromiseMatch) {
+    return promiseRet;
+  }
+
+ // 数组 map set iterator tuple pair 等都当作objectOut处理
+ for (const keyItem of h2NapiOutKey) {
+   for (const str of keyItem.keys) {
+     if (key.includes(str)) {
+       return keyItem.value;
+     }
+   }
+ }
+ let replaceKeyList = ['enum', 'struct', 'union'];
+ for (const rkey of replaceKeyList) {
+   key = key.replace(rkey, '').trim();
+ }
+ // 其他的全部当作object处理, 如typeDef/enum/struct/union/class等,当作objectOut处理，返回objectRet
+ return objectRet;
+}
+
+// 通过类型值映射模板，比如：uint32_t输入 -> uint32tIn -> napi_get_value_uint32
+export function transCkey2NapiInkey(key: string) {
+ for (const keyItem of h2NapiInKey) {
+   for (const str of keyItem.keys) {
+     if (key.includes(str)) {
+       return keyItem.value;
+     }
+   }
+ }
+ let replaceKeyList = ['enum', 'struct', 'union'];
+ for (const rkey of replaceKeyList) {
+   key = key.replace(rkey, '').trim();
+ }
+ // 其他的全部当作object处理, 如typeDef/enum/struct/union/class等, 此时不需要做任何处理，因此返回空
+ return '';
+}
+// class的成员变量声明，以及成员变量的Get/Set方法的声明
+export function genClsVariableDeclare(cls: ClassObj) {
+  let clsVariableDeclare = '';
+  let clsVariableGetSetDeclare = '';
+  for (let i = 0; i < cls.variableList.length; ++i) {
+    clsVariableDeclare += cls.variableList[i].type + ' ' + cls.variableList[i].name + ';\n    ';
+    let name = cls.variableList[i].name.toLocaleLowerCase();
+    name = name.substring(0, 1).toLocaleUpperCase() + name.substring(1);
+    // 属性Get函数声明
+    clsVariableGetSetDeclare += replaceAll(classMethodDeclareTemplate, '[class_method_name_replace]', 'Get' + name);
+    // 属性Set函数声明
+    clsVariableGetSetDeclare += replaceAll(classMethodDeclareTemplate, '[class_method_name_replace]', 'Set' + name);
+  }
+  return { clsVariableDeclare, clsVariableGetSetDeclare }; 
+}
+
+// struct的成员变量声明，以及成员变量的Get/Set方法的声明
+export function genStructVariableDeclare(struct: StructObj) {
+  let clsVariableDeclare = '';
+  let clsVariableGetSetDeclare = '';
+  for (let i = 0; i < struct.members.length; ++i) {
+    clsVariableDeclare += struct.members[i].type + ' ' + struct.members[i].name + ';\n    ';
+    let name = struct.members[i].name.toLocaleLowerCase();
+    name = name.substring(0, 1).toLocaleUpperCase() + name.substring(1);
+    // 属性Get函数声明
+    clsVariableGetSetDeclare += replaceAll(classMethodDeclareTemplate, '[class_method_name_replace]', 'Get' + name);
+    // 属性Set函数声明
+    clsVariableGetSetDeclare += replaceAll(classMethodDeclareTemplate, '[class_method_name_replace]', 'Set' + name);
+  }
+  return { clsVariableDeclare, clsVariableGetSetDeclare }; 
 }

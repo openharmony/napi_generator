@@ -13,12 +13,24 @@
 * limitations under the License.
 */
 
-import { FuncInfo, InterfaceList, TypeList } from "./datatype";
+import { DirTemp, FuncInfo, GenInfo, InterfaceList, TypeList } from "./datatype";
 import { getInterfaceBody, getTypeBody } from "./gendts";
-import { boolIn, boolRet, doubleIn, doubleRet, funcGetParamTemplate, int32tIn, int32tRet, int64tIn, int64tRet, 
-  napiFuncCppTemplate, napiFuncRetTemplate, objectRet, objectTosetRet, paramGenTemplate, stringIn, stringRet,
-  uint32tIn, uint32tRet } from "../template/func_template";
+import {
+  boolIn, boolRet, doubleIn, doubleRet, funcGetParamTemplate, int32tIn,
+  int32tRet, int64tIn, int64tRet, napiFuncCppTemplate,
+  napiFuncRetTemplate, objectRet, objectTosetRet, paramGenTemplate, stringIn,
+  stringRet, uint32tIn, uint32tRet
+} from "../template/func_template";
 import { replaceAll } from "../common/tool";
+import { cppdir } from "../template/dtscpp/dtscppdir";
+import * as path from 'path';
+import * as fs from 'fs';
+import { genInitCppFile } from "./tools/gennapiinit";
+import { genNapiHFile } from "./tools/gennapih";
+import { genNapiCppFile } from "./tools/gennapicpp";
+import { genCommonHFile } from "./tools/gennapicommonh";
+import { genCommonCppFile } from "./tools/gennapicommoncpp";
+import { genNapiCommonFile } from "./tools/gencommonfile";
 
 interface RetObjInfo {
   objName: string;
@@ -214,3 +226,52 @@ export function getRetTypeContent(retTypeTemplate: string, returnName: string, r
   }
   return retGenResult;
 }
+
+
+// ------------------------------  gencpp -----------------------------
+const fileHandlers: { [key: string]: Function } = {
+  '[fileName]init.cpp': genInitCppFile,
+  '[fileName]napi.h': genNapiHFile,
+  '[fileName]napi.cpp': genNapiCppFile,
+  '[fileName]common.h': genCommonHFile,
+  '[fileName]common.cpp': genCommonCppFile,
+  '[fileName].h': genNapiCommonFile,
+  'readme.md': genNapiCommonFile
+};
+
+export function genDir(dirItem: DirTemp, rootInfo: GenInfo, out: string) {
+  let dirPath = path.join(out, dirItem.name);
+  let lowerFileName = rootInfo.fileName.toLocaleLowerCase();
+  // 创建目录
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+  // 遍历生成当前目录文件
+  dirItem.files.forEach(file => {
+    let fileName = file.name.replace('[fileName]', lowerFileName);
+    let filePath = path.join(dirPath, fileName);
+    // 将content写入文件， 这里的content是模板，需要replace里面的部分内容
+    if (!fs.existsSync(filePath)) {
+      // 拿到每个文件并且根据文件生成内容并写入
+      const handler = fileHandlers[file.name];
+      if (handler) {
+        // 调用对应的生成文件方法
+        handler(rootInfo, filePath, file.content);
+      }
+    }
+  })
+  // 遍历子目录，生成子目录的文件
+  dirItem.dirs.forEach(subDir => {
+    genDir(subDir, rootInfo, dirPath);
+  })
+}
+
+// gen h and cpp file.
+export function genHCppFile(rootInfo: GenInfo, out: string) {
+  if (out === undefined || out === null || out.trim() === '') {
+    out = path.dirname(rootInfo.rawFilePath);
+  }
+  genDir(cppdir, rootInfo, out);
+}
+
+
