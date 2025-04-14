@@ -36,7 +36,10 @@ public class GenerateFactory {
      */
     public static GeneratorBase getGenerator(String type) {
         return switch (type.toUpperCase(Locale.ROOT)) {
-            case "CPP" -> new GenCppFile();
+            case "CPPH" -> new GenCppHFile();
+            case "CH" -> new GenCHFile();
+            case "NAPICPP" -> new GenNapiCppFile();
+            case "AKICPP" -> new GenAkiCppFile();
             case "DTS" -> new GenDtsFile();
             default -> {
                 System.out.println("Unsupported parser type: " + type);
