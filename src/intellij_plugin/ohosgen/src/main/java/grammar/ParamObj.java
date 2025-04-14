@@ -71,12 +71,18 @@ public class ParamObj extends GBaseObject {
     private List<ParamObj> paList;
 
     /**
+     * 回调函数定义
+     */
+    private List<FuncObj> foList;
+
+    /**
      * 构造函数
      */
     public ParamObj() {
         this.decorator = TsToken.TS_TOKEN_REQUIRED;
         vList = new CopyOnWriteArrayList<>();
         paList = new CopyOnWriteArrayList<>();
+        foList = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -275,5 +281,32 @@ public class ParamObj extends GBaseObject {
      */
     public void addParam(ParamObj pa) {
         this.paList.add(pa);
+    }
+
+    /**
+     * 获取回调函数列表
+     *
+     * @return 回调函数列表
+     */
+    public List<FuncObj> getFoList() {
+        return foList;
+    }
+
+    /**
+     * 设置回调函数列表
+     *
+     * @param foList 回调函数列表
+     */
+    public void setFoList(List<FuncObj> foList) {
+        this.foList = foList;
+    }
+
+    /**
+     * 增加回调函数方法
+     *
+     * @param fo 回调函数
+     */
+    public void addFunc(FuncObj fo) {
+        this.foList.add(fo);
     }
 }
