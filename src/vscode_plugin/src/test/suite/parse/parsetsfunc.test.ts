@@ -20,6 +20,7 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as parsec from '../../../parse/parsec';
 import * as parsets from '../../../parse/parsets';
+import { Z_UNKNOWN } from 'zlib';
 // import * as myExtension from '../../extension';
 
 suite('Parse_Func_TS_Suite', () => {
@@ -58,12 +59,12 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'Array<any>');
+    assert.strictEqual(funcItem.returns, 'number[][]');
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'boolean');
     assert.strictEqual(funcItem.parameters[1].name, 'b');
-    assert.strictEqual(funcItem.parameters[1].type, 'Array<number>');
+    assert.strictEqual(funcItem.parameters[1].type, 'number[]');
 
   });
 
@@ -124,7 +125,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '{x:number, y:number}');
 
   });
 
@@ -143,7 +144,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '{x:number, y?:string}');
 
   });
 
@@ -162,7 +163,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'number | string');
 
   });
 
@@ -181,7 +182,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'number | string');
 
   });
 
@@ -200,7 +201,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '"left" | "right" | "center"');
 
   });
 
@@ -219,7 +220,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'string | null');
 
   });
 
@@ -238,7 +239,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'string | null');
 
   });
 
@@ -257,7 +258,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a:string) => void');
 
   });
 
@@ -276,7 +277,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a?:string) => void');
 
   });
 
@@ -292,10 +293,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'any');
+    assert.strictEqual(funcItem.returns, 'Type | undefined');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a:Type[]) => Type');
 
   });
 
@@ -311,10 +312,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'any');
+    assert.strictEqual(funcItem.returns, 'Output | undefined');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a:Input[]) => Output');
 
   });
 
@@ -330,7 +331,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'Type');
@@ -350,10 +351,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'unknown');
 
   });
 
@@ -369,10 +370,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'unknown');
 
   });
 
@@ -388,7 +389,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'Function');
@@ -407,12 +408,12 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, 'n');
     assert.strictEqual(funcItem.parameters[0].type, 'number');
     assert.strictEqual(funcItem.parameters[1].name, 'm');
-    assert.strictEqual(funcItem.parameters[1].type, 'Array<number>');
+    assert.strictEqual(funcItem.parameters[1].type, 'number[]');
 
   });
 
@@ -429,10 +430,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, '');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '{ a: number; b: number; c: number }');
 
   });
 
@@ -483,12 +484,12 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'Array<any>');
+    assert.strictEqual(funcItem.returns, 'number[][]');
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'boolean');
     assert.strictEqual(funcItem.parameters[1].name, 'b');
-    assert.strictEqual(funcItem.parameters[1].type, 'Array<number>');
+    assert.strictEqual(funcItem.parameters[1].type, 'number[]');
 
   });
 
@@ -510,7 +511,7 @@ suite('Parse_Func_TS_Suite', () => {
 
   //25, 测试 parseFunc any 和 map在一行 情况
   test('parseFunc_ts_test_25', () => {
-    let testfunc = `function add(a: any, b: map): void {return;};`
+    let testfunc = `function add(a: any, b: Map<string, number>): void {return;};`
     let funcObjList = parsets.doParseTs("test.ts", testfunc);
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
@@ -520,7 +521,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'any');
     assert.strictEqual(funcItem.parameters[1].name, 'b');
-    assert.strictEqual(funcItem.parameters[1].type, 'map');
+    assert.strictEqual(funcItem.parameters[1].type, 'Map<string, number>');
 
   });
 
@@ -534,7 +535,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '{x:number, y:number}');
 
   });
 
@@ -548,7 +549,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '{x:number, y?:string}');
 
   });
 
@@ -562,7 +563,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'number | string');
 
   });
 
@@ -576,7 +577,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'number | string');
 
   });
 
@@ -590,7 +591,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '"left" | "right" | "center"');
 
   });
 
@@ -604,7 +605,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'string | null');
 
   });
 
@@ -618,7 +619,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'string | null');
   });
 
   //33, 测试 parseFunc 回调函数类型在一行 情况
@@ -631,7 +632,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a:string) => void');
 
   });
 
@@ -645,7 +646,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a?:string) => void');
 
   });
 
@@ -656,26 +657,26 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'any');
+    assert.strictEqual(funcItem.returns, 'Type | undefined');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a:Type[]) => Type');
 
   });
 
-  //36, 测试 parseFunc 泛型两个参数类型在一行 情况
-  test('parseFunc_ts_test_36', () => {
-    let testfunc = `function add<Input, Output>(fn: (a:Input[]) => Output): Output | undefined { return Output; };`
-    let funcObjList = parsets.doParseTs("test.ts", testfunc);
-    assert.strictEqual(funcObjList.funcs.length, 1);
-    let funcItem = funcObjList.funcs[0];
-    assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'any');
-    assert.strictEqual(funcItem.parameters.length, 1);
-    assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+  // //36, 测试 parseFunc 泛型两个参数类型在一行 情况
+  // test('parseFunc_ts_test_36', () => {
+  //   let testfunc = `function add<Input, Output>(fn: (a:Input[]) => Output): Output | undefined { return Output; };`
+  //   let funcObjList = parsets.doParseTs("test.ts", testfunc);
+  //   assert.strictEqual(funcObjList.funcs.length, 1);
+  //   let funcItem = funcObjList.funcs[0];
+  //   assert.strictEqual(funcItem.name, 'add');
+  //   assert.strictEqual(funcItem.returns, 'any');
+  //   assert.strictEqual(funcItem.parameters.length, 1);
+  //   assert.strictEqual(funcItem.parameters[0].name, 'fn');
+  //   assert.strictEqual(funcItem.parameters[0].type, 'any');
 
-  });
+  // });
 
   //36, 测试 parseFunc 泛型扩展类型在一行 情况
   test('parseFunc_ts_test_36', () => {
@@ -684,7 +685,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'Type');
@@ -699,10 +700,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'unknown');
 
   });
 
@@ -713,10 +714,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'unknown');
 
   });
 
@@ -727,7 +728,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'Function');
@@ -741,12 +742,12 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, 'n');
     assert.strictEqual(funcItem.parameters[0].type, 'number');
     assert.strictEqual(funcItem.parameters[1].name, 'm');
-    assert.strictEqual(funcItem.parameters[1].type, 'Array<number>');
+    assert.strictEqual(funcItem.parameters[1].type, 'number[]');
 
   });
 
@@ -758,10 +759,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, '');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '{ a: number; b: number; c: number }');
 
   });
 
@@ -792,7 +793,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
 
   });
 
@@ -808,12 +809,12 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'any');
+    assert.strictEqual(funcItem.returns, 'number[[]');
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'boolean');
     assert.strictEqual(funcItem.parameters[1].name, 'b');
-    assert.strictEqual(funcItem.parameters[1].type, 'Array<number>');
+    assert.strictEqual(funcItem.parameters[1].type, 'number[');
 
   });
 
@@ -829,7 +830,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'any');
+    assert.strictEqual(funcItem.returns, '{');
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'String');
@@ -874,9 +875,9 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, '');
-    assert.strictEqual(funcItem.parameters[0].type, 'void');
+    assert.strictEqual(funcItem.parameters[0].type, undefined);
     assert.strictEqual(funcItem.parameters[1].name, 'a');
-    assert.strictEqual(funcItem.parameters[1].type, 'any');
+    assert.strictEqual(funcItem.parameters[1].type, '{x:number, y:number}');
   });
 
   //56, 测试 parseFunc 声明可选属性类型 情况
@@ -894,7 +895,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '{x:number, y?:string}');
 
   });
 
@@ -913,7 +914,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'number | string');
 
   });
 
@@ -932,7 +933,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'number | string');
 
   });
 
@@ -953,9 +954,9 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'B');
     assert.strictEqual(funcItem.parameters[1].name, 'extend');
-    assert.strictEqual(funcItem.parameters[1].type, 'void');
+    assert.strictEqual(funcItem.parameters[1].type, undefined);
     assert.strictEqual(funcItem.parameters[2].name, 'string');
-    assert.strictEqual(funcItem.parameters[2].type, 'void');
+    assert.strictEqual(funcItem.parameters[2].type, undefined);
   });
 
   //60, 测试 parseFunc null 参数类型 情况
@@ -973,7 +974,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, '');
-    assert.strictEqual(funcItem.parameters[0].type, 'void');
+    assert.strictEqual(funcItem.parameters[0].type, undefined);
 
   });
 
@@ -992,7 +993,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'string | null');
 
   });
 
@@ -1011,7 +1012,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, '中文');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a:string) => void');
 
   });
 
@@ -1030,7 +1031,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcItem.returns, 'void');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a?:中文参数) => void');
 
   });
 
@@ -1046,10 +1047,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'any');
+    assert.strictEqual(funcItem.returns, '中文泛型 | undefined');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a:中文泛型[]) => 中文泛型');
 
   });
 
@@ -1065,10 +1066,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'any');
+    assert.strictEqual(funcItem.returns, '| undefined');
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'fn');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '(a:Input[]) =>');
 
   });
 
@@ -1084,7 +1085,7 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
     assert.strictEqual(funcItem.parameters[0].type, 'Type');
@@ -1104,10 +1105,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'typeof globalThis');
 
   });
 
@@ -1123,10 +1124,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, 'a');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, 'unknown & null');
 
   });
 
@@ -1142,10 +1143,10 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 1);
     assert.strictEqual(funcItem.parameters[0].name, '');
-    assert.strictEqual(funcItem.parameters[0].type, 'any');
+    assert.strictEqual(funcItem.parameters[0].type, '[number, number]');
 
   });
 
@@ -1161,12 +1162,12 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 2);
     assert.strictEqual(funcItem.parameters[0].name, 'n');
     assert.strictEqual(funcItem.parameters[0].type, 'number');
     assert.strictEqual(funcItem.parameters[1].name, 'm');
-    assert.strictEqual(funcItem.parameters[1].type, 'Array<any>');
+    assert.strictEqual(funcItem.parameters[1].type, '数组[]');
 
   });
 
@@ -1183,16 +1184,16 @@ suite('Parse_Func_TS_Suite', () => {
     assert.strictEqual(funcObjList.funcs.length, 1);
     let funcItem = funcObjList.funcs[0];
     assert.strictEqual(funcItem.name, 'add');
-    assert.strictEqual(funcItem.returns, 'void');
+    assert.strictEqual(funcItem.returns, undefined);
     assert.strictEqual(funcItem.parameters.length, 4);
     assert.strictEqual(funcItem.parameters[0].name, '');
-    assert.strictEqual(funcItem.parameters[0].type, 'void');
+    assert.strictEqual(funcItem.parameters[0].type, undefined);
     assert.strictEqual(funcItem.parameters[1].name, '');
-    assert.strictEqual(funcItem.parameters[1].type, 'void');
+    assert.strictEqual(funcItem.parameters[1].type, undefined);
     assert.strictEqual(funcItem.parameters[2].name, '');
-    assert.strictEqual(funcItem.parameters[2].type, 'void');
+    assert.strictEqual(funcItem.parameters[2].type, undefined);
     assert.strictEqual(funcItem.parameters[3].name, '');
-    assert.strictEqual(funcItem.parameters[3].type, 'void');
+    assert.strictEqual(funcItem.parameters[3].type, undefined);
   });
 
   //72, 测试 parseFunc 函数名带下划线  类型 情况

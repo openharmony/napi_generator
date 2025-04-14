@@ -34,7 +34,7 @@ export function generateFuncTestCase(funcInfo: FuncInfo, rawFileName: string,  t
   // 调用函数
   Logger.getInstance().info("test funcInfo:" + JSON.stringify(funcInfo));
   if (getJsType(funcInfo.retType) !== 'void') {
-    callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), funcInfo.genName, funcParamUse);
+    callFunc = util.format('let result: %s = testNapi.%s(%s)\n    ', getJsType(funcInfo.retType), funcInfo.name, funcParamUse);
     // 加 hilog 打印
     hilogContent = util.format('hilog.info(0x0000, "testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.name);
     hilogContent += util.format('Logger.getInstance().info("testTag", "Test NAPI %s: ", JSON.stringify(result));\n    ', funcInfo.name);
