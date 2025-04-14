@@ -28,7 +28,7 @@
 | union     | 已支持                 | parse: `src/test/suite/parse/parsetsunion.test.ts`<br>gen: 待补充用例 |
 | type      | parse支持，gen暂不支持 | -                                                            |
 
-### 其他
+### 其它
 | 功能             | 状态     | 测试用例路径 |
 | ---------------- | -------- | ------------ |
 | import自定义文件 | 暂不支持 | -            |
