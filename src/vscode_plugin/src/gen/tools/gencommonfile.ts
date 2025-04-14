@@ -14,7 +14,7 @@
 */
 
 import * as fs from 'fs';
-import { HdfRootInfo, ServiceRootInfo } from "../datatype";
+import { GenInfo, HdfRootInfo, ServiceRootInfo } from "../datatype";
 import { replaceAll } from '../../common/tool';
 
 // 生成sa非特殊处理的文件, 如xxx.cfg
@@ -34,6 +34,12 @@ export function genHdfCommonFile(rootInfo: HdfRootInfo, filePath: string, fileCo
   fileContent = replaceAll(fileContent, '[driverName]', rootInfo.driverName);
   fileContent = replaceAll(fileContent, '[marcoName]', marcoName);
   fileContent = replaceAll(fileContent, '[driverUpperName]', upperDriverName);
+  fs.writeFileSync(filePath, fileContent);
+}
+
+// 生成napi非特殊处理的文件
+export function genNapiCommonFile(rootInfo: GenInfo, filePath: string, 
+  fileContent: string) {
   fs.writeFileSync(filePath, fileContent);
 }
 

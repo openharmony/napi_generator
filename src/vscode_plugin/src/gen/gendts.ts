@@ -14,7 +14,7 @@
 */
 import fs = require('fs');
 import { DtscppRootInfo, FuncObj, InterfaceBody, ParamObj, FuncInfo, GenInfo, InterfaceList, TypeList } from './datatype';
-import { dts2cpp_key } from '../template/dtscpp/dts2cpp_key';
+import { cpp2DtsKey } from '../template/dtscpp/dts2cpp_key';
 import path = require('path');
 import { Logger } from '../common/log';
 
@@ -22,7 +22,7 @@ import { generateRandomInteger, removeComments, removeTab, replaceAll } from '..
 import util = require('util');
 import re = require('../common/re');
 import { dtsFuncTemplate } from '../template/func_template';
-
+const dtsFileExt = '.d.ts';
 
 export function genTsFunction(func: FuncInfo, rawFileName: string) {
   let funcParams = '';
@@ -309,14 +309,101 @@ export function getInterfaceBody(testType: string, interfaceList: InterfaceList[
 }
 
 //----------------------------
-export function transTskey2Ckey(key: string) {
-  for(const keyItem of dts2cpp_key) {
+
+// h2dts
+export function transTskey2Ckey(key: string): string {
+  // 判断是否是std::function, 转换为箭头函数 如：std::function<void(int, int)> 转换为 (a: number, b: number)=>void
+  const regexFunction = /\b(std::)?function<([\w\s\:\*]+)\s*\(([\w\:\<\>\,\s*]*)\)>/;
+  const matchFunction = key.match(regexFunction);
+  if (matchFunction) {
+    const returnType = matchFunction[2].trim(); // 返回类型
+    let paramstr = matchFunction[3] ? matchFunction[3].trim() : ''
+    let paramreg = /([\w\s\:\*]+<[^>]*>|[\*\w\s\:]+)/g;
+    let pmatch;
+    let paramList = [];
+    while ((pmatch = paramreg.exec(paramstr)) !== null) {
+      paramList.push(pmatch[0]);
+    }
+    let str = '';
+    for (let i = 0; i < paramList.length; ++i) {
+      str += paramList[i].trim() === ''? '': `param${i}: ${transTskey2Ckey(paramList[i])}`;
+      if (i != paramList.length - 1) {
+        str += ', ';
+      }
+    }
+    return `(${str})=>${transTskey2Ckey(returnType)}`;
+  }
+
+  // 智能指针,例如： std::unique_ptr<int> -> number
+  const regexSmartPtr = /\b((std::)?(?:unique_ptr|shared_ptr|weak_ptr))\s*<([\w\:\<\>\,\s*]+)>/;
+  const matchSmartPtr = key.match(regexSmartPtr);
+  if (matchSmartPtr) {
+    return transTskey2Ckey(matchSmartPtr[3].trim());
+  }
+
+  // 判断迭代器： 如std::vector<int>::iterator  ->  IterableIterator<Array<number>>
+  const regexIterator = /(std::(string|(\w+<[^>]+>)))::iterator/;
+  const matchIterator = key.match(regexIterator);
+  if (matchIterator) {
+    return 'IterableIterator<' + transTskey2Ckey(matchIterator[1].trim()) + '>';
+  }
+
+  // 转换为Array<xxx>类型
+  const regexArray = /\b((std::)?(?:vector|array|deque|list|forward_list|stack|queue|valarray|priority_queue))\s*<([^>]*)>/;
+  const matchArray = key.match(regexArray);
+  if (matchArray) {
+    return `Array<${transTskey2Ckey(matchArray[3])}>`;
+  }
+
+  // 转换为Map<xxx, xxx>类型
+  const regexMap = /\b((std::)?(?:map|unordered_map|multimap|unordered_multimap))\s*<([^>]*)>/;
+  const matchMap = key.match(regexMap);
+  if (matchMap) {
+    const arr = matchMap[3].split(',');
+    if (arr.length == 2) {
+      return `Map<${transTskey2Ckey(arr[0])}, ${transTskey2Ckey(arr[1])}>`;
+    }
+  }
+
+  // 转换为Set<xxx>
+  const regexSet = /\b((std::)?(?:set|unordered_set|multiset|unordered_multiset))\s*<([^>]*)>/;
+  const matchSet = key.match(regexSet);
+  if (matchSet) {
+    return `Set<${transTskey2Ckey(matchSet[3])}>`;
+  }
+
+  // 转换为元组
+  const regexTuple = /\b((std::)?(?:tuple|pair))\s*<([^>]*)>/;
+  const matchTuple = key.match(regexTuple);
+  if (matchTuple) {
+    const arr = matchTuple[3].split(',');
+    let str = '';
+    for (let i = 0; i < arr.length; ++i) {
+      str += transTskey2Ckey(arr[i]);
+      if (i != arr.length - 1) {
+        str += ', ';
+      }
+    }
+    return `[${str}]`;
+  }
+
+  // 判断是否是std::complex , 将复数类型转换为{real: number, imag: number}类型
+  const regexComplex = /\b((std::)?(?:complex))\s*<([^<>]*)>/;
+  const matchComplex = key.match(regexComplex);
+  if (matchComplex) {
+    const type = transTskey2Ckey(matchComplex[3].trim()); // 返回类型
+    return `{real: ${type}, imag: ${type}}`;
+  }
+
+  // 判断日期类型: std::time_t /std::clock_t /std::tm 转换为ts的Date类型
+  const regexDate = /\b((std::)?(?:time_t|clock_t|tm|(?:chrono::(time_point|duration|system_clock|steady_clock|high_resolution_clock|hours|minutes|seconds|milliseconds|microseconds|nanoseconds))))\b/;
+  const matchDate = key.match(regexDate);
+  if (matchDate) {
+    return 'Date';
+  }
+  for(const keyItem of cpp2DtsKey) {
     for(const str of keyItem.keys) {
       if (key.includes(str)) {
-        const match = key.match(/(std::)?vector<([\w\s*::<>]+)>/);
-        if (match) {
-          return 'Array<' + keyItem.value + '>';
-        }
         return keyItem.value;
       }
     }
@@ -325,7 +412,8 @@ export function transTskey2Ckey(key: string) {
   for(const rkey of replaceKeyList) {
     key = key.replace(rkey, '').trim();
   }
-  return key;
+  // 其他类型转换为 any 类型，如typeDef定义的类型 
+  return 'any'
 }
 
 export function getDtsEnum(rootInfo: GenInfo) {
@@ -334,9 +422,14 @@ export function getDtsEnum(rootInfo: GenInfo) {
   for(const enumItem of enumList) {
     let enumHead = `export enum ${enumItem.name} {\n`
     let enumBody = ''
-    enumItem.members.forEach(element => {
-      enumBody += `\t${element},\n`
-    });
+    try {
+      enumItem.members.forEach(element => {
+        enumBody += `\t${element},\n`
+      });
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
     out += enumHead + enumBody + '};\n\n'
     if (enumItem.name && enumItem.alias && enumItem.name !== enumItem.alias) {
       out += `export type ${enumItem.alias} = ${enumItem.name};\n\n`
@@ -353,25 +446,30 @@ export function getDtsFunction(rootInfo: GenInfo) {
     let funcTail = '';
     let enumBody = ''
     let returnType = transTskey2Ckey(funcItem.returns);
-    if (funcItem.type === 'typedef') {
-      funcHead = `export interface ${funcItem.name} {\n`;
-      funcTail = '};\n\n';
-      funcItem.parameters.forEach(element => {
-        if (element.name && element.type) {
-          enumBody += `${element.name}: ${transTskey2Ckey(element.type)}, `
-        }
-      });
-      enumBody = `\t(${enumBody.slice(0, -2)}): ${returnType};\n`
-      out += funcHead + `${enumBody}` + funcTail;
-    } else {
-      funcHead = `export function ${funcItem.name}(`
-      funcTail = `): ${returnType};\n\n`;
-      funcItem.parameters.forEach(element => {
-        if (element.name && element.type) {
-          enumBody += `${element.name}: ${transTskey2Ckey(element.type)}, `
-        }
-      });
-      out += funcHead + enumBody.slice(0, -2) + funcTail;
+    try {
+      if (funcItem.type === 'typedef') {
+        funcHead = `export interface ${funcItem.name} {\n`;
+        funcTail = '};\n\n';
+        funcItem.parameters.forEach(element => {
+          if (element.name && element.type) {
+            enumBody += `${element.name}: ${transTskey2Ckey(element.type)}, `
+          }
+        });
+        enumBody = `\t(${enumBody.slice(0, -2)}): ${returnType};\n`
+        out += funcHead + `${enumBody}` + funcTail;
+      } else {
+        funcHead = `export function ${funcItem.name}(`
+        funcTail = `): ${returnType};\n\n`;
+        funcItem.parameters.forEach(element => {
+          if (element.name && element.type) {
+            enumBody += `${element.name}: ${transTskey2Ckey(element.type)}, `
+          }
+        });
+        out += funcHead + enumBody.slice(0, -2) + funcTail;
+      }
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
     }
   }
   return out;
@@ -383,16 +481,30 @@ export function getDtsClasses(rootInfo: GenInfo) {
   for(const classItem of classList) {
     let classHead = `export class ${classItem.name} {\n`
     let classBody = ''
-    for(const attribute of classItem.variableList) {
-      classBody += `\t${attribute.name}: ${transTskey2Ckey(attribute.type)};\n`
-    };
-    for(const method of classItem.functionList) {
-      let methodContent = '';
-      for(const param of method.parameters) {
-        methodContent = `${param.name}: ${transTskey2Ckey(param.type)}, `;
+    try {
+      if (classItem.variableList.length > 0) {
+        for (const attribute of classItem.variableList) {
+          classBody += `\t${attribute.name}: ${transTskey2Ckey(attribute.type)};\n`
+        };
       }
-      classBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
-    };
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
+    try {
+      if (classItem.functionList.length > 0) {
+        for (const method of classItem.functionList) {
+          let methodContent = '';
+          for (const param of method.parameters) {
+            methodContent += `${param.name}: ${transTskey2Ckey(param.type)}, `;
+          }
+          classBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
+        };
+      }
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
     out += classHead + classBody + '};\n\n'
     if (classItem.name && classItem.alias) {
       out += `export type ${classItem.alias} = ${classItem.name};\n\n`
@@ -407,18 +519,32 @@ export function getDtsStructs(rootInfo: GenInfo) {
   for(const structItem of structList) {
     let structHead = `export type ${structItem.name} = {\n`
     let structBody = ''
-    for(const attribute of structItem.members) {
-      structBody += `\t${attribute.name}: ${transTskey2Ckey(attribute.type)};\n`
-    };
-    for(const method of structItem.functions) {
-      let methodContent = '';
-      for(const param of method.parameters) {
-        if (param.name && param.type) {
-          methodContent = `${param.name}: ${transTskey2Ckey(param.type)}, `;
-        }
+    try {
+      if (structItem.members.length > 0) {
+        for (const attribute of structItem.members) {
+          structBody += `\t${attribute.name}: ${transTskey2Ckey(attribute.type)};\n`
+        };
       }
-      structBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
-    };
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
+    try {
+      if (structItem.functions.length > 0) {
+        for (const method of structItem.functions) {
+          let methodContent = '';
+          for (const param of method.parameters) {
+            if (param.name && param.type) {
+              methodContent += `${param.name}: ${transTskey2Ckey(param.type)}, `;
+            }
+          }
+          structBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
+        };
+      }
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
     out += structHead + structBody + '};\n\n'
     if (structItem.name && structItem.alias && structItem.name !== structItem.alias) {
       out += `export type ${structItem.alias} = ${structItem.name};\n\n`
@@ -433,9 +559,14 @@ export function getDtsUnions(rootInfo: GenInfo) {
   for(const unionItem of unionList) {
     let unionHead = `export type ${unionItem.name} = `
     let unionBody = ''
-    for(const element of unionItem.members) {
-      unionBody += `${transTskey2Ckey(element.type)} | `
-    };
+    try {
+      for (const element of unionItem.members) {
+        unionBody += `${transTskey2Ckey(element.type)} | `
+      };
+    } catch (e) {
+      let errmsg = 'generate dts file error: ' + JSON.stringify(e);
+      Logger.getInstance().error(errmsg);
+    }
     out += unionHead + unionBody.slice(0, -2) + ';\n\n'
     if (unionItem.name && unionItem.alias && unionItem.name !== unionItem.alias) {
       out += `export type ${unionItem.alias} = ${unionItem.name};\n\n`
@@ -444,7 +575,7 @@ export function getDtsUnions(rootInfo: GenInfo) {
   return out;
 }
 
-export function genDtsFile(rootInfo: GenInfo) {
+export function genDtsFile(rootInfo: GenInfo, out: string) {
   // gen enums
   let fileContent = getDtsEnum(rootInfo);
   // gen functions
@@ -456,9 +587,14 @@ export function genDtsFile(rootInfo: GenInfo) {
   // gen union
   fileContent += getDtsUnions(rootInfo);
 
-  let dtsFileName = rootInfo.fileName + '.d.ts';
-  let dirPath = path.dirname(rootInfo.rawFilePath);
-  let outPath = path.join(dirPath, dtsFileName);
+  let dtsFileName = rootInfo.fileName + dtsFileExt;
+  let outPath = ''
+  if (out === undefined || out === null || out.trim() === '') {
+    let dirPath = path.dirname(rootInfo.rawFilePath);
+    outPath = path.join(dirPath, dtsFileName);
+  } else {
+    outPath = path.join(out, dtsFileName);
+  }
   fs.writeFileSync(outPath, fileContent);
   Logger.getInstance().info('generate success!')
   return outPath;
