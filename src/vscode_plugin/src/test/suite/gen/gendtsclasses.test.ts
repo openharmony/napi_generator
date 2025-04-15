@@ -68,7 +68,10 @@ suite('Gendts_classes_Suite', () => {
       fileName: 'test',
     };
     let resStr = genDts.getDtsClasses(rootInfo1);
-    assert.strictEqual(resStr, 'export class ClassObj {\n\tval: number;\n\tclassFunc(v1: number): number;\n};\n\n');
+    assert.strictEqual(resStr, 'export class ClassObj {\n\tval: number;\n\tclassFunc(v1: number): number;\n\t'
+      + 'classFuncAsync(v1: number, cbf: (param: number) => void): void;\n\t'
+      + 'classFuncPromise(v1: number): Promise<number>;\n'
+      + '};\n\n');
 
     //用例2.classes中alias不为空，且alias不等于name，其他正常
     let classes2: ClassObj[] = [
