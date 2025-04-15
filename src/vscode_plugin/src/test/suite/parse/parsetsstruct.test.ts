@@ -88,12 +88,21 @@ suite('Parse_Struct_TS_Suite', () => {
         lbfundef: (a: boolean[])=> boolean[];
         lafundef: (a: any[])=> any[];
         ltfundef: (a: tstruct[])=> tstruct[];
+        mapstr: Map<string, string>;
+        mapnum: Map<string, number>;
+        mapbool: Map<string, boolean>;
+        arraystr: Array<string>;
+        arraynum: Array<number>;
+        arraybool: Array<boolean>;
+        setstr: Set<string>;
+        setnum: Set<number>;
+        setbool: Set<boolean>;
     };`
     let structObjList = parsets.doParseTs("test.ts", teststruct);
     assert.strictEqual(structObjList.structs.length, 1);
     let structItem = structObjList.structs[0];
     assert.strictEqual(structItem.name, 'OTC');
-    assert.strictEqual(structItem.members.length, 21);
+    assert.strictEqual(structItem.members.length, 30);
     assert.strictEqual(structItem.members[0].name, 'len');
     assert.strictEqual(structItem.members[0].type, 'number');
     assert.strictEqual(structItem.members[1].name, 'name');
@@ -136,6 +145,24 @@ suite('Parse_Struct_TS_Suite', () => {
     assert.strictEqual(structItem.members[19].type, '(a: any[])=> any[]');
     assert.strictEqual(structItem.members[20].name, 'ltfundef');
     assert.strictEqual(structItem.members[20].type, '(a: tstruct[])=> tstruct[]');
+    assert.strictEqual(structItem.members[21].name, 'mapstr');
+    assert.strictEqual(structItem.members[21].type, 'Map<string, string>');
+    assert.strictEqual(structItem.members[22].name, 'mapnum');
+    assert.strictEqual(structItem.members[22].type, 'Map<string, number>');
+    assert.strictEqual(structItem.members[23].name, 'mapbool');
+    assert.strictEqual(structItem.members[23].type, 'Map<string, boolean>');
+    assert.strictEqual(structItem.members[24].name, 'arraystr');
+    assert.strictEqual(structItem.members[24].type, 'Array<string>');
+    assert.strictEqual(structItem.members[25].name, 'arraynum');
+    assert.strictEqual(structItem.members[25].type, 'Array<number>');
+    assert.strictEqual(structItem.members[26].name, 'arraybool');
+    assert.strictEqual(structItem.members[26].type, 'Array<boolean>');
+    assert.strictEqual(structItem.members[27].name, 'setstr');
+    assert.strictEqual(structItem.members[27].type, 'Set<string>');
+    assert.strictEqual(structItem.members[28].name, 'setnum');
+    assert.strictEqual(structItem.members[28].type, 'Set<number>');
+    assert.strictEqual(structItem.members[29].name, 'setbool');
+    assert.strictEqual(structItem.members[29].type, 'Set<boolean>');
 
     assert.strictEqual(structItem.functions.length, 13);
     assert.strictEqual(structItem.functions[0].name, 'contruct');
