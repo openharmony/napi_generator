@@ -35,8 +35,8 @@ export function doGenNapiInitFile(rootInfo: GenInfo, fileContent: string) {
       classInit = replaceAll(classInit, '[class_method_replace]', clsMethodDeclare);
       let { clsVariableDeclare, clsVariableGetSetDeclare } = genClsVariableDeclare(classObj);
       classInit = replaceAll(classInit, '[class_property_replace]', clsVariableGetSetDeclare);
+      classesInit += classInit;
     });
-    classesInit += classInit;
   }
 
   // struct的声明
@@ -52,8 +52,8 @@ export function doGenNapiInitFile(rootInfo: GenInfo, fileContent: string) {
       structInit = replaceAll(structInit, '[class_method_replace]', clsMethodDeclare);
       let { clsVariableDeclare, clsVariableGetSetDeclare } = genStructVariableDeclare(classObj);
       structInit = replaceAll(structInit, '[class_property_replace]', clsVariableGetSetDeclare);
+      structsInit += structInit;
     });
-    structsInit += structInit;
   }
 
   if (rootInfo.parseObj && rootInfo.parseObj.funcs) {
