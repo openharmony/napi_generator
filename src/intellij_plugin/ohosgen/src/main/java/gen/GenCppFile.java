@@ -297,7 +297,9 @@ public class GenCppFile extends GeneratorBase {
         String outFileName = filePath + File.separator + CPP_FILE_PREFIX +
                 fileName.replace(".", "_") + CPP_FILE_H_SUFFIX;
         System.out.println("outFileName : " + outFileName);
-
+        if (this.genMode.equals(GeneratorBase.GEN_REPLACE)) {
+            FileUtils.deleteFile(outFileName);
+        }
         FileUtils.createFile(outFileName);
 
         FileUtils.appendText(outFileName, this.genFileHeader(filePath + File.separator + fileName));
