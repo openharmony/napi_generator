@@ -117,12 +117,22 @@ suite('Parse_Class_TS_Suite', () => {
         lbfundef: (a: boolean[])=> boolean[];
         lafundef: (a: any[])=> any[];
         ltfundef: (a: tclass[])=> tclass[];
+
+        mapstr: Map<string, string>;
+        mapnum: Map<string, number>;
+        mapbool: Map<string, boolean>;
+        arraystr: Array<string>;
+        arraynum: Array<number>;
+        arraybool: Array<boolean>;
+        setstr: Set<string>;
+        setnum: Set<number>;
+        setbool: Set<boolean>;
     };`
     let classObjList = parsets.doParseTs("test.ts", testclass);
     assert.strictEqual(classObjList.classes.length, 1);
     let classItem = classObjList.classes[0];
     assert.strictEqual(classItem.name, 'OTC');
-    assert.strictEqual(classItem.variableList.length, 21);
+    assert.strictEqual(classItem.variableList.length, 30);
     assert.strictEqual(classItem.variableList[0].name, 'len');
     assert.strictEqual(classItem.variableList[0].type, 'number');
     assert.strictEqual(classItem.variableList[1].name, 'name');
@@ -132,39 +142,58 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[3].name, 'obj');
     assert.strictEqual(classItem.variableList[3].type, 'any');
     assert.strictEqual(classItem.variableList[4].name, 'llen');
-    assert.strictEqual(classItem.variableList[4].type, 'Array<number>');
+    assert.strictEqual(classItem.variableList[4].type, 'number[]');
     assert.strictEqual(classItem.variableList[5].name, 'lstr');
-    assert.strictEqual(classItem.variableList[5].type, 'Array<string>');
+    assert.strictEqual(classItem.variableList[5].type, 'string[]');
     assert.strictEqual(classItem.variableList[6].name, 'lflag');
-    assert.strictEqual(classItem.variableList[6].type, 'Array<boolean>');
+    assert.strictEqual(classItem.variableList[6].type, 'boolean[]');
     assert.strictEqual(classItem.variableList[7].name, 'lobj');
-    assert.strictEqual(classItem.variableList[7].type, 'Array<any>');
+    assert.strictEqual(classItem.variableList[7].type, 'any[]');
     assert.strictEqual(classItem.variableList[8].name, 'tdef');
     assert.strictEqual(classItem.variableList[8].type, 'aclass');
     assert.strictEqual(classItem.variableList[9].name, 'ltdef');
-    assert.strictEqual(classItem.variableList[9].type, 'Array<any>');
+    assert.strictEqual(classItem.variableList[9].type, 'aclass[]');
     assert.strictEqual(classItem.variableList[10].name, 'funcdef');
-    assert.strictEqual(classItem.variableList[10].type, 'any');
+    assert.strictEqual(classItem.variableList[10].type, '() => {}');
     assert.strictEqual(classItem.variableList[11].name, 'nfundef');
-    assert.strictEqual(classItem.variableList[11].type, 'any');
+    assert.strictEqual(classItem.variableList[11].type, '((a: number)=> number)');
     assert.strictEqual(classItem.variableList[12].name, 'strfundef');
-    assert.strictEqual(classItem.variableList[12].type, 'any');
+    assert.strictEqual(classItem.variableList[12].type, '((a: string)=> string)');
     assert.strictEqual(classItem.variableList[13].name, 'bfundef');
-    assert.strictEqual(classItem.variableList[13].type, 'any');
+    assert.strictEqual(classItem.variableList[13].type, '(a: boolean)=> boolean');
     assert.strictEqual(classItem.variableList[14].name, 'afundef');
-    assert.strictEqual(classItem.variableList[14].type, 'any');
+    assert.strictEqual(classItem.variableList[14].type, '(a: any)=> any');
     assert.strictEqual(classItem.variableList[15].name, 'tfundef');
-    assert.strictEqual(classItem.variableList[15].type, 'any');
+    assert.strictEqual(classItem.variableList[15].type, '(a: tclass)=> tclass');
     assert.strictEqual(classItem.variableList[16].name, 'lnfundef');
-    assert.strictEqual(classItem.variableList[16].type, 'any');
+    assert.strictEqual(classItem.variableList[16].type, '(a: number[])=> number[]');
     assert.strictEqual(classItem.variableList[17].name, 'lstrfundef');
-    assert.strictEqual(classItem.variableList[17].type, 'any');
+    assert.strictEqual(classItem.variableList[17].type, '(a: string[])=> string[]');
     assert.strictEqual(classItem.variableList[18].name, 'lbfundef');
-    assert.strictEqual(classItem.variableList[18].type, 'any');
+    assert.strictEqual(classItem.variableList[18].type, '(a: boolean[])=> boolean[]');
     assert.strictEqual(classItem.variableList[19].name, 'lafundef');
-    assert.strictEqual(classItem.variableList[19].type, 'any');
+    assert.strictEqual(classItem.variableList[19].type, '(a: any[])=> any[]');
     assert.strictEqual(classItem.variableList[20].name, 'ltfundef');
-    assert.strictEqual(classItem.variableList[20].type, 'any');
+    assert.strictEqual(classItem.variableList[20].type, '(a: tclass[])=> tclass[]');
+    assert.strictEqual(classItem.variableList[21].name, 'mapstr');
+    assert.strictEqual(classItem.variableList[21].type, 'Map<string, string>');
+    assert.strictEqual(classItem.variableList[22].name, 'mapnum');
+    assert.strictEqual(classItem.variableList[22].type, 'Map<string, number>');
+    assert.strictEqual(classItem.variableList[23].name, 'mapbool');
+    assert.strictEqual(classItem.variableList[23].type, 'Map<string, boolean>');
+    assert.strictEqual(classItem.variableList[24].name, 'arraystr');
+    assert.strictEqual(classItem.variableList[24].type, 'Array<string>');
+    assert.strictEqual(classItem.variableList[25].name, 'arraynum');
+    assert.strictEqual(classItem.variableList[25].type, 'Array<number>');
+    assert.strictEqual(classItem.variableList[26].name, 'arraybool');
+    assert.strictEqual(classItem.variableList[26].type, 'Array<boolean>');
+    assert.strictEqual(classItem.variableList[27].name, 'setstr');
+    assert.strictEqual(classItem.variableList[27].type, 'Set<string>');
+    assert.strictEqual(classItem.variableList[28].name, 'setnum');
+    assert.strictEqual(classItem.variableList[28].type, 'Set<number>');
+    assert.strictEqual(classItem.variableList[29].name, 'setbool');
+    assert.strictEqual(classItem.variableList[29].type, 'Set<boolean>');
+
 
     assert.strictEqual(classItem.functionList.length, 13);
     assert.strictEqual(classItem.functionList[0].name, 'contruct');
@@ -206,40 +235,40 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[6].parameters[0].type, 'tclass');
     assert.strictEqual(classItem.functionList[6].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[7].name, 'torfunc');
-    assert.strictEqual(classItem.functionList[7].returns, 'any');
+    assert.strictEqual(classItem.functionList[7].returns, 'tclass | string');
     assert.strictEqual(classItem.functionList[7].parameters.length, 1);
     assert.strictEqual(classItem.functionList[7].parameters[0].name, 'obj');
-    assert.strictEqual(classItem.functionList[7].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[7].parameters[0].type, 'tclass | string');
     assert.strictEqual(classItem.functionList[7].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[8].name, 'lnfunc');
-    assert.strictEqual(classItem.functionList[8].returns, 'Array<number>');
+    assert.strictEqual(classItem.functionList[8].returns, 'number[]');
     assert.strictEqual(classItem.functionList[8].parameters.length, 1);
     assert.strictEqual(classItem.functionList[8].parameters[0].name, 'num');
-    assert.strictEqual(classItem.functionList[8].parameters[0].type, 'Array<number>');
+    assert.strictEqual(classItem.functionList[8].parameters[0].type, 'number[]');
     assert.strictEqual(classItem.functionList[8].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[9].name, 'lsfunc');
-    assert.strictEqual(classItem.functionList[9].returns, 'Array<string>');
+    assert.strictEqual(classItem.functionList[9].returns, 'string[]');
     assert.strictEqual(classItem.functionList[9].parameters.length, 1);
     assert.strictEqual(classItem.functionList[9].parameters[0].name, 'str');
-    assert.strictEqual(classItem.functionList[9].parameters[0].type, 'Array<string>');
+    assert.strictEqual(classItem.functionList[9].parameters[0].type, 'string[]');
     assert.strictEqual(classItem.functionList[9].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[10].name, 'lbfunc');
-    assert.strictEqual(classItem.functionList[10].returns, 'Array<boolean>');
+    assert.strictEqual(classItem.functionList[10].returns, 'boolean[]');
     assert.strictEqual(classItem.functionList[10].parameters.length, 1);
     assert.strictEqual(classItem.functionList[10].parameters[0].name, 'flag');
-    assert.strictEqual(classItem.functionList[10].parameters[0].type, 'Array<boolean>');
+    assert.strictEqual(classItem.functionList[10].parameters[0].type, 'boolean[]');
     assert.strictEqual(classItem.functionList[10].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[11].name, 'lafunc');
-    assert.strictEqual(classItem.functionList[11].returns, 'Array<any>');
+    assert.strictEqual(classItem.functionList[11].returns, 'any[]');
     assert.strictEqual(classItem.functionList[11].parameters.length, 1);
     assert.strictEqual(classItem.functionList[11].parameters[0].name, 'obj');
-    assert.strictEqual(classItem.functionList[11].parameters[0].type, 'Array<any>');
+    assert.strictEqual(classItem.functionList[11].parameters[0].type, 'any[]');
     assert.strictEqual(classItem.functionList[11].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[12].name, 'ltfunc');
-    assert.strictEqual(classItem.functionList[12].returns, 'Array<any>');
+    assert.strictEqual(classItem.functionList[12].returns, 'tclass[]');
     assert.strictEqual(classItem.functionList[12].parameters.length, 1);
     assert.strictEqual(classItem.functionList[12].parameters[0].name, 'lobj');
-    assert.strictEqual(classItem.functionList[12].parameters[0].type, 'Array<any>');
+    assert.strictEqual(classItem.functionList[12].parameters[0].type, 'tclass[]');
     assert.strictEqual(classItem.functionList[12].parameters[0].arraySize, 0);
   });
 
@@ -269,10 +298,10 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'Type');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'Array<any>');
+    assert.strictEqual(classItem.variableList[1].type, 'Type[]');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'del');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, '(x: Type, y: Type) => Type');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
   });
 
@@ -326,17 +355,17 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[0].returns, 'void');
     assert.strictEqual(classItem.functionList[0].parameters.length, 1);
     assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
-    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number[10][20][30]');
     assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
     assert.strictEqual(classItem.functionList[1].returns, 'void');
 
     assert.strictEqual(classItem.variableList.length, 2);
     assert.strictEqual(classItem.variableList[0].name, 'len');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'number[10]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'string[10][20]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
 
@@ -358,7 +387,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[0].returns, 'void');
     assert.strictEqual(classItem.functionList[0].parameters.length, 1);
     assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
-    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'Type[10][20][30]');
     assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
     assert.strictEqual(classItem.functionList[1].returns, 'void');
@@ -368,7 +397,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'Type');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'Type[10][20]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
 
@@ -390,7 +419,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[0].returns, 'void');
     assert.strictEqual(classItem.functionList[0].parameters.length, 1);
     assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
-    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'Type[10][20][30]');
     assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
     assert.strictEqual(classItem.functionList[1].returns, 'void');
@@ -400,7 +429,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'Type');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'Type[10][20]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
 
@@ -427,7 +456,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[0].returns, 'void');
     assert.strictEqual(classItem.functionList[0].parameters.length, 1);
     assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
-    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'Type[10][20][30]');
     assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
     assert.strictEqual(classItem.functionList[1].returns, 'void');
@@ -437,7 +466,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'Type');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'Type[10][20]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
 
@@ -464,7 +493,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[0].returns, 'void');
     assert.strictEqual(classItem.functionList[0].parameters.length, 1);
     assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
-    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'Type[10][20][30]');
     assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
     assert.strictEqual(classItem.functionList[1].returns, 'void');
@@ -474,7 +503,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'Type');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'Type[10][20]');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
   });
 
@@ -525,7 +554,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 1);
     assert.strictEqual(classItem.variableList[0].name, 'cc');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'Colorful & Circle');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     
   });
@@ -550,16 +579,16 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'any');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'contents');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'unknown');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'cont');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, '"hello world"');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
     assert.strictEqual(classItem.variableList[3].name, 'ents');
     assert.strictEqual(classItem.variableList[3].type, 'Type');
     assert.strictEqual(classItem.variableList[3].arraySize, 0);
     assert.strictEqual(classItem.variableList[4].name, 'val');
-    assert.strictEqual(classItem.variableList[4].type, 'any');
+    assert.strictEqual(classItem.variableList[4].type, 'OrNull<OneOrMany<Type>>');
     assert.strictEqual(classItem.variableList[4].arraySize, 0);
   });
 
@@ -579,19 +608,19 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 5);
     assert.strictEqual(classItem.variableList[0].name, 'roArray');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'ReadonlyArray<string>');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'contents');
-    assert.strictEqual(classItem.variableList[1].type, undefined);
+    assert.strictEqual(classItem.variableList[1].type, 'roArray.slice');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'x');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, 'readonly string[]');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
     assert.strictEqual(classItem.variableList[3].name, 'a');
-    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].type, 'pair[0]');
     assert.strictEqual(classItem.variableList[3].arraySize, 0);
     assert.strictEqual(classItem.variableList[4].name, 'coord');
-    assert.strictEqual(classItem.variableList[4].type, 'void');
+    assert.strictEqual(classItem.variableList[4].type, undefined);
     assert.strictEqual(classItem.variableList[4].arraySize, 0);
   });
 
@@ -633,10 +662,10 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 2);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'readonly [string, number]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'c');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, '[3, 4]');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
   });
 
@@ -652,7 +681,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 1);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'keyof Arrayish');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
 
@@ -669,13 +698,13 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 3);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'typeof');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'Hello world');
-    assert.strictEqual(classItem.variableList[1].type, 'void');
+    assert.strictEqual(classItem.variableList[1].type, undefined);
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'name');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, 'typeof Stype');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
   });
 
@@ -696,22 +725,22 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 6);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'Person["age"]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'Person["age" | "name"]');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'test');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, 'Person[keyof Person]');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
     assert.strictEqual(classItem.variableList[3].name, 'obj');
-    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].type, 'Person[AliveOrName]');
     assert.strictEqual(classItem.variableList[3].arraySize, 0);
     assert.strictEqual(classItem.variableList[4].name, 'amo');
-    assert.strictEqual(classItem.variableList[4].type, 'any');
+    assert.strictEqual(classItem.variableList[4].type, 'typeof MyArray[number]');
     assert.strictEqual(classItem.variableList[4].arraySize, 0);
     assert.strictEqual(classItem.variableList[5].name, 'topy');
-    assert.strictEqual(classItem.variableList[5].type, 'any');
+    assert.strictEqual(classItem.variableList[5].type, 'Person[pair]');
     assert.strictEqual(classItem.variableList[5].arraySize, 0);
   });
 
@@ -731,19 +760,19 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 5);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'Dog extends Animal ? number : string');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'T extends number ? IdLabel : NameLabel');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'test');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, 'T extends { message: unknown }');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
     assert.strictEqual(classItem.variableList[3].name, 'obj');
-    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].type, 'Type extends Array<infer Item> ? Item : Type');
     assert.strictEqual(classItem.variableList[3].arraySize, 0);
     assert.strictEqual(classItem.variableList[4].name, 'oamp');
-    assert.strictEqual(classItem.variableList[4].type, 'any');
+    assert.strictEqual(classItem.variableList[4].type, 'Type extends any ? Type[] : never');
     assert.strictEqual(classItem.variableList[4].arraySize, 0);
 
   });
@@ -767,13 +796,13 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 3);
     assert.strictEqual(classItem.variableList[0].name, 'Type');
-    assert.strictEqual(classItem.variableList[0].type, 'void');
+    assert.strictEqual(classItem.variableList[0].type, undefined);
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'boolean');
-    assert.strictEqual(classItem.variableList[1].type, 'void');
+    assert.strictEqual(classItem.variableList[1].type, undefined);
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'Type');
-    assert.strictEqual(classItem.variableList[2].type, 'void');
+    assert.strictEqual(classItem.variableList[2].type, undefined);
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
   });
 
@@ -800,13 +829,13 @@ suite('Parse_Class_TS_Suite', () => {
 
     assert.strictEqual(classItem.variableList.length, 3);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, '"world"');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, '"welcome_email" | "email_heading"');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'ShoutyGreeting');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, 'Uppercase<Greeting>');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
 
   });
@@ -826,16 +855,16 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 4);
     assert.strictEqual(classItem.variableList[0].name, 'ShoutyGreeting');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'Uppercase<"Greeting">');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'QuietGreeting');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'Lowercase<"Greeting">');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'Greeting');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, 'Capitalize<"LowercaseGreeting">');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
     assert.strictEqual(classItem.variableList[3].name, 'UncomfortableGreeting');
-    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].type, 'Uncapitalize<"UppercaseGreeting">');
     assert.strictEqual(classItem.variableList[3].arraySize, 0);
 
   });
@@ -888,7 +917,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'require');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'mylib');
-    assert.strictEqual(classItem.variableList[1].type, 'void');
+    assert.strictEqual(classItem.variableList[1].type, undefined);
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
 
@@ -1146,17 +1175,17 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[0].returns, 'void');
     assert.strictEqual(classItem.functionList[0].parameters.length, 1);
     assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
-    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number[10][20][30]');
     assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
     assert.strictEqual(classItem.functionList[1].returns, 'void');
 
     assert.strictEqual(classItem.variableList.length, 2);
     assert.strictEqual(classItem.variableList[0].name, 'len');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'number[10]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'string[10][20]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
 
@@ -1178,7 +1207,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[0].returns, 'void');
     assert.strictEqual(classItem.functionList[0].parameters.length, 1);
     assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
-    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'Type[10][20][30]');
     assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
     assert.strictEqual(classItem.functionList[1].returns, 'void');
@@ -1188,7 +1217,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'Type');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'Type[10][20]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
 
@@ -1210,7 +1239,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[0].returns, 'void');
     assert.strictEqual(classItem.functionList[0].parameters.length, 1);
     assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
-    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'Type[10][20][30]');
     assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
     assert.strictEqual(classItem.functionList[1].returns, 'void');
@@ -1220,10 +1249,10 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'Type');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'void');
+    assert.strictEqual(classItem.variableList[1].type, undefined);
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'Type');
-    assert.strictEqual(classItem.variableList[2].type, 'void');
+    assert.strictEqual(classItem.variableList[2].type, undefined);
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
   });
 
@@ -1302,7 +1331,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 1);
     assert.strictEqual(classItem.variableList[0].name, 'cc');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'Colorful &');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     
   });
@@ -1327,16 +1356,16 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'any');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'contents');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'unknown');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'cont');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, '"hello world"');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
     assert.strictEqual(classItem.variableList[3].name, 'ents');
     assert.strictEqual(classItem.variableList[3].type, 'Type');
     assert.strictEqual(classItem.variableList[3].arraySize, 0);
     assert.strictEqual(classItem.variableList[4].name, 'val');
-    assert.strictEqual(classItem.variableList[4].type, 'any');
+    assert.strictEqual(classItem.variableList[4].type, 'OrNull<OneOrMany<Type>');
     assert.strictEqual(classItem.variableList[4].arraySize, 0);
   });
 
@@ -1356,10 +1385,10 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 2);
     assert.strictEqual(classItem.variableList[0].name, 'roArray');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'ReadonlyArray<string>');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'coord');
-    assert.strictEqual(classItem.variableList[1].type, 'void');
+    assert.strictEqual(classItem.variableList[1].type, undefined);
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     
   });
@@ -1402,13 +1431,13 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 3);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'readonly [string, ]');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'c');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, '[3, 4]');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'as');
-    assert.strictEqual(classItem.variableList[2].type, 'void');
+    assert.strictEqual(classItem.variableList[2].type, undefined);
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
   });
 
@@ -1424,7 +1453,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 1);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'keyof');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
 
@@ -1441,13 +1470,13 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 3);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'typeof');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'Hello world');
-    assert.strictEqual(classItem.variableList[1].type, 'void');
+    assert.strictEqual(classItem.variableList[1].type, undefined);
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'name');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, 'typeof');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
   });
 
@@ -1468,22 +1497,22 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 6);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'Person["age];');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'Person["age" | "name"');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'test');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, 'Person[keyof Person');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
     assert.strictEqual(classItem.variableList[3].name, 'obj');
-    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].type, 'Person[AliveOrName');
     assert.strictEqual(classItem.variableList[3].arraySize, 0);
     assert.strictEqual(classItem.variableList[4].name, 'amo');
-    assert.strictEqual(classItem.variableList[4].type, 'any');
+    assert.strictEqual(classItem.variableList[4].type, 'typeof MyArray[number');
     assert.strictEqual(classItem.variableList[4].arraySize, 0);
     assert.strictEqual(classItem.variableList[5].name, 'topy');
-    assert.strictEqual(classItem.variableList[5].type, 'any');
+    assert.strictEqual(classItem.variableList[5].type, 'Person[pair');
     assert.strictEqual(classItem.variableList[5].arraySize, 0);
   });
 
@@ -1503,19 +1532,19 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 5);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'Dog extends Animal ? number');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'T extends number ? IdLabel');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'test');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, 'T extends { message: unknown }');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
     assert.strictEqual(classItem.variableList[3].name, 'obj');
-    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].type, 'Type extends Array<infer Item> ? Item :');
     assert.strictEqual(classItem.variableList[3].arraySize, 0);
     assert.strictEqual(classItem.variableList[4].name, 'oamp');
-    assert.strictEqual(classItem.variableList[4].type, 'any');
+    assert.strictEqual(classItem.variableList[4].type, 'Type extends any ?  : never');
     assert.strictEqual(classItem.variableList[4].arraySize, 0);
 
   });
@@ -1533,7 +1562,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 1);
     assert.strictEqual(classItem.variableList[0].name, 'Type');
-    assert.strictEqual(classItem.variableList[0].type, 'void');
+    assert.strictEqual(classItem.variableList[0].type, undefined);
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   
   });
@@ -1552,10 +1581,10 @@ suite('Parse_Class_TS_Suite', () => {
     
     assert.strictEqual(classItem.variableList.length, 2);
     assert.strictEqual(classItem.variableList[0].name, 'pair');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, '1');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'name');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, '"welcome_email" | "email_heading;');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
 
   });
@@ -1575,16 +1604,16 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList.length, 0);
     assert.strictEqual(classItem.variableList.length, 4);
     assert.strictEqual(classItem.variableList[0].name, 'ShoutyGreeting');
-    assert.strictEqual(classItem.variableList[0].type, 'any');
+    assert.strictEqual(classItem.variableList[0].type, 'Uppercase<1>');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'QuietGreeting');
-    assert.strictEqual(classItem.variableList[1].type, 'any');
+    assert.strictEqual(classItem.variableList[1].type, 'Lowercase<true>');
     assert.strictEqual(classItem.variableList[1].arraySize, 0);
     assert.strictEqual(classItem.variableList[2].name, 'Greeting');
-    assert.strictEqual(classItem.variableList[2].type, 'any');
+    assert.strictEqual(classItem.variableList[2].type, 'Capitalize<unknown>');
     assert.strictEqual(classItem.variableList[2].arraySize, 0);
     assert.strictEqual(classItem.variableList[3].name, 'UncomfortableGreeting');
-    assert.strictEqual(classItem.variableList[3].type, 'any');
+    assert.strictEqual(classItem.variableList[3].type, 'Uncapitalize<undefined>');
     assert.strictEqual(classItem.variableList[3].arraySize, 0);
 
   });
@@ -1629,7 +1658,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.variableList[0].type, 'require');
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
     assert.strictEqual(classItem.variableList[1].name, 'mylib');
-    assert.strictEqual(classItem.variableList[1].type, 'void');
+    assert.strictEqual(classItem.variableList[1].type, undefined);
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
   });
 
@@ -1746,7 +1775,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[0].returns, 'void');
     assert.strictEqual(classItem.functionList[0].parameters.length, 1);
     assert.strictEqual(classItem.functionList[0].parameters[0].name, 'a');
-    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'Array<number>');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'number[]');
     assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[1].name, 'deconstruct');
     assert.strictEqual(classItem.functionList[1].returns, 'void');
@@ -1787,7 +1816,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[1].returns, 'number');
     assert.strictEqual(classItem.functionList[1].parameters.length, 1);
     assert.strictEqual(classItem.functionList[1].parameters[0].name, 'arr');
-    assert.strictEqual(classItem.functionList[1].parameters[0].type, 'Array<any>');
+    assert.strictEqual(classItem.functionList[1].parameters[0].type, 'any[]');
     assert.strictEqual(classItem.functionList[1].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[2].name, 'len');
     assert.strictEqual(classItem.functionList[2].returns, 'void');
@@ -1825,7 +1854,7 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.functionList[1].returns, 'number');
     assert.strictEqual(classItem.functionList[1].parameters.length, 1);
     assert.strictEqual(classItem.functionList[1].parameters[0].name, 'arr');
-    assert.strictEqual(classItem.functionList[1].parameters[0].type, 'Array<number>');
+    assert.strictEqual(classItem.functionList[1].parameters[0].type, 'number[]');
     assert.strictEqual(classItem.functionList[1].parameters[0].arraySize, 0);
     assert.strictEqual(classItem.functionList[2].name, 'len');
     assert.strictEqual(classItem.functionList[2].returns, 'void');
@@ -1865,10 +1894,10 @@ suite('Parse_Class_TS_Suite', () => {
     assert.strictEqual(classItem.name, 'OTC');
     assert.strictEqual(classItem.functionList.length, 1);
     assert.strictEqual(classItem.functionList[0].name, 'filterUsers');
-    assert.strictEqual(classItem.functionList[0].returns, 'Array<any>');
+    assert.strictEqual(classItem.functionList[0].returns, 'User[]');
     assert.strictEqual(classItem.functionList[0].parameters.length, 1);
     assert.strictEqual(classItem.functionList[0].parameters[0].name, 'filter');
-    assert.strictEqual(classItem.functionList[0].parameters[0].type, 'any');
+    assert.strictEqual(classItem.functionList[0].parameters[0].type, '(this: User) => boolean');
     assert.strictEqual(classItem.functionList[0].parameters[0].arraySize, 0);
 
     assert.strictEqual(classItem.variableList.length, 0);
@@ -1934,7 +1963,7 @@ suite('Parse_Class_TS_Suite', () => {
 
     assert.strictEqual(classItem.variableList.length, 1);
     assert.strictEqual(classItem.variableList[0].name, '_length');
-    assert.strictEqual(classItem.variableList[0].type, 'void');
+    assert.strictEqual(classItem.variableList[0].type, undefined);
     assert.strictEqual(classItem.variableList[0].arraySize, 0);
 
   });
