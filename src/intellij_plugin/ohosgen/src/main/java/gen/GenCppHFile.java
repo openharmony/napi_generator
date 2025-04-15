@@ -33,7 +33,7 @@ import java.util.Map;
  * @since 2025-02-28
  * @version 1.0
  */
-public class GenCppFile extends GeneratorBase {
+public class GenCppHFile extends GeneratorBase {
     private static final String CPP_ENUM_TOKEN = "enum";
     private static final String CPP_CLASS_TOKEN = "class";
     private static final String CPP_STRUCT_TOKEN = "struct";
@@ -112,6 +112,7 @@ public class GenCppFile extends GeneratorBase {
     private static final String CPP_STD_DEQUE = "std::deque";
     private static final String CPP_STD_MULTIMAP = "std::multimap";
     private static final String CPP_STD_MULTISET = "std::multiset";
+    private static final String CPP_STD_FUNCTION = "std::function";
 
     private static final String CPP_STR_SUFFIX = "STR";
     private static final String CPP_FILE_PREFIX = "ag_";
@@ -132,7 +133,7 @@ public class GenCppFile extends GeneratorBase {
     private final Map<String, String> ts2cppMap = Map.ofEntries(
             Map.entry("any", "auto"),
             Map.entry("boolean", "bool"),
-            Map.entry("string", "char*"),
+            Map.entry("string", "std::string"),
             Map.entry("number", "int"),
             Map.entry("void", "void"),
             Map.entry("[]", "*")
@@ -149,7 +150,7 @@ public class GenCppFile extends GeneratorBase {
     /**
      * 构造函数
      */
-    GenCppFile() {
+    GenCppHFile() {
 
     }
 

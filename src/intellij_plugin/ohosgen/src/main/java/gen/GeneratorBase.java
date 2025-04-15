@@ -30,6 +30,26 @@ import java.util.List;
  * @since 2025-02-28
  */
 public class GeneratorBase {
+    /**
+     * 生成文件时追加内容
+     */
+    public static final String GEN_APPEND = "APPEND";
+
+    /**
+     * 生成文件时覆盖内容
+     */
+    public static final String GEN_REPLACE = "REPLACE";
+
+    /**
+     * 生成文件名
+     */
+    protected String genFileName = "";
+
+    /**
+     * 生成文件模式
+     */
+    protected String genMode = GEN_REPLACE;
+
     private final String headerFormat = "// Generated from %s by KaiHong ohgen %s-PLUGIN";
 
     /**
@@ -61,6 +81,10 @@ public class GeneratorBase {
      */
     public void genFile(String filePath, String fileName) {
         System.out.println("GeneratorBase: path is " + filePath + ", file is " + fileName);
+    }
+
+    public void setGenMode(String genMode) {
+        this.genMode = genMode;
     }
 
     /**

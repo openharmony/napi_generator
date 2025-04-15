@@ -16,14 +16,13 @@
 package gen;
 
 import grammar.*;
-import it.unimi.dsi.fastutil.ints.P;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static utils.FileUtils.readText;
 
 /**
@@ -35,7 +34,7 @@ import static utils.FileUtils.readText;
  * @version 1.0
  * @since 2025-02-28
  */
-class GenCppFileTest {
+class GenCHFileTest {
 
     @Test
     void getInterfaceContent() {
