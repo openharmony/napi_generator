@@ -477,7 +477,6 @@ public class GenAkiCppFile extends GeneratorBase {
     }
 
     private String genCppClassContent(ClassObj co) {
-        String resContent = "";
         String className = co.getName();
         className = !className.isEmpty() ? className : co.getAlias();
 
@@ -503,6 +502,7 @@ public class GenAkiCppFile extends GeneratorBase {
         }
         htempStr = htempList.size() > 0 ?
                 StringUtils.removeLastCharacter(htempStr, 2) + AKI_RIGHT_ANGLE_BRACKET : "";
+        String resContent = "";
         resContent += AKI_NEW_LINE + templateStr + AKI_CLASS_TOKEN +
                 AKI_BLANK_SPACE + className + htStr + htempStr + AKI_BLANK_SPACE + AKI_LEFT_BRACE;
         List<ParamObj> paList = co.getParamList();
@@ -526,15 +526,11 @@ public class GenAkiCppFile extends GeneratorBase {
     }
 
     private String genAkiCppClassContent(ClassObj co) {
-        String resContent = "";
         String className = co.getName();
         className = !className.isEmpty() ? className : co.getAlias();
 
         String classDeclare = AKI_CLASS_DECLARE.replace(AKI_CLASS_NAME, className);
-        String classConstructDeclare = "";
         String classPropertyDeclare = "";
-        String classFunctionDeclare = "";
-        String classPFunctionDeclare = "";
 
         List<ParamObj> paList = co.getParamList();
         for (ParamObj paItem : paList) {
@@ -543,6 +539,8 @@ public class GenAkiCppFile extends GeneratorBase {
         classDeclare = classDeclare.replace(AKI_PROPERTY_EXPRESSION, classPropertyDeclare);
 
         List<FuncObj> foList = co.getFuncList();
+        String classFunctionDeclare = "";
+        String classConstructDeclare = "";
         for (FuncObj foItem : foList) {
             if (foItem.getName().equals("constructor")) {
                 String paramStr = "";
@@ -556,12 +554,13 @@ public class GenAkiCppFile extends GeneratorBase {
                 classFunctionDeclare += AKI_METHOD_DECLARE.replace(AKI_METHOD_NAME, foItem.getName());
             }
         }
+
+        String classPFunctionDeclare = "";
         classDeclare = classDeclare.replace(AKI_METHOD_EXPRESSION, classFunctionDeclare);
         classDeclare = classDeclare.replace(AKI_CONSTRUCTOR_EXPRESSION, classConstructDeclare);
         classDeclare = classDeclare.replace(AKI_PMETHOD_EXPRESSION, classPFunctionDeclare);
 
-        resContent = classDeclare;
-        return resContent;
+        return classDeclare;
     }
 
     /**
@@ -582,7 +581,6 @@ public class GenAkiCppFile extends GeneratorBase {
     };
 
     private String genCppFuncContent(FuncObj fo) {
-        String resContent = "";
         String funcName = fo.getName();
         funcName = !funcName.isEmpty() ? funcName : fo.getAlias();
         List<String> tempList = fo.getTempList();
@@ -595,6 +593,7 @@ public class GenAkiCppFile extends GeneratorBase {
         List<ParamObj> paList = fo.getParamList();
         String retValue = ts2CppKey(fo.getRetValue()).isEmpty() ?
                 "" : ts2CppKey(fo.getRetValue()) + AKI_BLANK_SPACE;
+        String resContent = "";
         resContent += AKI_NEW_LINE + tempStr + retValue +
                 replaceTsToken(funcName) + AKI_LEFT_PARENTHESES;
 
