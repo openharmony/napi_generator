@@ -17,6 +17,7 @@ package gen;
 
 import grammar.*;
 import utils.Constants;
+import utils.FileUtils;
 
 import java.util.List;
 
@@ -31,6 +32,13 @@ import java.util.List;
  */
 public class GeneratorBase {
     private final String headerFormat = "// Generated from %s by KaiHong ohgen %s-PLUGIN";
+    public static final String GEN_APPEND = "APPEND";
+    public static final String GEN_REPLACE = "REPLACE";
+    private final String GEN_NEW = "NEW";
+
+    protected String genFileName = "";
+    protected String genMode = GEN_REPLACE;
+
 
     /**
      * 生成文件头内容
@@ -61,6 +69,10 @@ public class GeneratorBase {
      */
     public void genFile(String filePath, String fileName) {
         System.out.println("GeneratorBase: path is " + filePath + ", file is " + fileName);
+    }
+
+    public void setGenMode(String genMode) {
+        this.genMode = genMode;
     }
 
     /**
