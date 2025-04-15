@@ -27,7 +27,7 @@ import {
   EVENT_WARNING
 } from '../common/eventtype';
 import { parseTsFile } from '../parse/parsets';
-import { genCppFile } from '../gen/gendtscpp';
+import { genCppFile, genCppFromDts } from '../gen/gendtscpp';
 import { Logger } from '../common/log';
 export class Dts2cppMod extends IModel {
   name: string;
@@ -62,7 +62,13 @@ export class Dts2cppMod extends IModel {
           this.emmitEventForKey(EVENT_PROGRESS, 50, PARSE_COMPLETE);
           // generator
           let out = path.dirname(this.uri.fsPath);
-          genCppFile(res, this.uri.fsPath, out);
+          // genCppFile(res, this.uri.fsPath, out);
+          let rootInfo: GenInfo = {
+            parseObj: res,
+            rawFilePath: this.uri.fsPath,  // e://xxx.d.ts
+            fileName: path.basename(this.uri.fsPath, '.d.ts')  // xxx
+          };
+          genCppFromDts(rootInfo);
           // progress.report({ increment: 100, message: GEN_COMPLETE + out });
           this.emmitEventForKey(EVENT_PROGRESS, 100, PARSE_COMPLETE + out);
 
