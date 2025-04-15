@@ -66,7 +66,7 @@ export class H2dtsMod extends IModel {
         Logger.getInstance().error('parse header file error with undefine uri.');
       }
     } catch (e) {
-      let errmsg = 'parse header file error: ' + JSON.stringify(e);
+      let errmsg = 'parse header file error: ' + e.message;
       Logger.getInstance().error(errmsg);
       this.emmitEventForKey(EVENT_ERROR, -1, errmsg);
     }

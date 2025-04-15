@@ -254,8 +254,7 @@ export function genDtsInterface(path: string, typeList: TypeList[], interfaceLis
             name: variableName,
             type: replaceAll(variabletype, 'struct', '').trim(),
             arraySize: 0,
-            arraySizeList: [],
-
+            arraySizeList: []
           }
           paramsContent.push(paramObj);
         }
