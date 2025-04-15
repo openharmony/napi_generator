@@ -44,7 +44,8 @@ function genStubInnerFunc(funcInfo: FuncObj, className: string) {
     let destObj = {
       'name': param.name + 'Val',
       'type': param.type,
-      'arraySize': -1
+      'arraySize': -1,
+      'arraySizeList': []
     };
     readDataStr += '\n' + tab + genRead('data', destObj);
     innerParamStr += innerParamName;
