@@ -17,7 +17,7 @@ import * as path from 'path';
 import { IModel } from "./imodel";
 import { parseHeaderFile } from '../parse/parsec';
 import { DtscppRootInfo, GenInfo } from '../gen/datatype';
-import { genDtsFile } from '../gen/gendts';
+import { genDtscppFromH } from '../gen/gendtscpp';
 import { GEN_COMPLETE, OPEN_IN_EXPLORER, PARSE_COMPLETE } from '../common/constants';
 import { Logger } from '../common/log';
 import {
@@ -51,23 +51,30 @@ export class H2dtscppMod extends IModel {
     try {
       if (this.uri) {
         // analyze
-        let funDescList = await parseHeaderFile(this.uri.fsPath);
+        let parseRes = await parseHeaderFile(this.uri.fsPath);
         let fileName = path.basename(this.uri.fsPath, '.h');
-        Logger.getInstance().debug('parse header file res: ' + funDescList);
-        Logger.getInstance().debug('parse header file jsonstr: ' + JSON.stringify(funDescList));
+        Logger.getInstance().debug('parse header file res: ' + parseRes);
+        Logger.getInstance().debug('parse header file jsonstr: ' + JSON.stringify(parseRes));
     
         // progress.report({ increment: 50, message: PARSE_COMPLETE });
         this.emmitEventForKey(EVENT_PROGRESS, 50, PARSE_COMPLETE);
-    
-        let rootInfo: DtscppRootInfo = {
-          funcs: funDescList.funcs,
-          rawFilePath: this.uri.fsPath,
-          fileName: fileName // xxx
+
+        // let rootInfo: DtscppRootInfo = {
+        //   funcs: funDescList.funcs,
+        //   rawFilePath: this.uri.fsPath,
+        //   fileName: fileName // xxx
+        // };
+
+        let rootInfo: GenInfo = {
+          parseObj: parseRes,
+          rawFilePath: this.uri.fsPath,  // e://xxx.h
+          fileName: path.basename(this.uri.fsPath, '.h')  // xxx
         };
     
         // generator
         let out = path.dirname(this.uri.fsPath);
-        genDtsCppFile(rootInfo, out);
+        // genDtsCppFile(rootInfo, out);
+        genDtscppFromH(rootInfo);
         // progress.report({ increment: 100, message: GEN_COMPLETE + out });
         this.emmitEventForKey(EVENT_PROGRESS, 100, PARSE_COMPLETE + out);
 
