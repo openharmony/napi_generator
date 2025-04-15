@@ -35,6 +35,40 @@ import static utils.FileUtils.readText;
  * @since 2025-02-28
  */
 class GenAkiCppFileTest {
+    private String classContentExpect2 = "\nclass TestClass : public IPerson {\n" +
+            "\tpublic char* name;\n" +
+            "\tprivate int age;\n" +
+            "\tprotected char* no;\n" +
+            "\treadonly char* addr;\n" +
+            "\tconstructor();\n" +
+            "};\n" +
+            "\n" +
+            "JSBIND_CLASS(TestClass)\n" +
+            "{\n" +
+            "\tJSBIND_CONSTRUCTOR<>();\n" +
+            "\tJSBIND_PROPERTY(name);\n" +
+            "\tJSBIND_PROPERTY(age);\n" +
+            "\tJSBIND_PROPERTY(no);\n" +
+            "\tJSBIND_PROPERTY(addr);\n" +
+            "};\n";
+
+    private String classContentExpect3 = "\nclass Employee : public Person {\n" +
+            "\tint empCode;\n" +
+            "\tauto currentUser;\n" +
+            "\tstatic int pi = 3.14;\n" +
+            "\tconstructor();\n" +
+            "\tvoid displayName();\n" +
+            "};\n" +
+            "\n" +
+            "JSBIND_CLASS(Employee)\n" +
+            "{\n" +
+            "\tJSBIND_CONSTRUCTOR<>();\n" +
+            "\tJSBIND_METHOD(displayName, \"displayName\");\n" +
+            "\tJSBIND_PMETHOD(displayName, \"displayNamePromise\");\n" +
+            "\tJSBIND_PROPERTY(empCode);\n" +
+            "\tJSBIND_PROPERTY(currentUser);\n" +
+            "\tJSBIND_PROPERTY(pi);\n" +
+            "};\n";
 
     @Test
     void getInterfaceContent() {
@@ -297,22 +331,7 @@ class GenAkiCppFileTest {
         if (gb instanceof GenAkiCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\nclass TestClass : public IPerson {\n" +
-                    "\tpublic char* name;\n" +
-                    "\tprivate int age;\n" +
-                    "\tprotected char* no;\n" +
-                    "\treadonly char* addr;\n" +
-                    "\tconstructor();\n" +
-                    "};\n" +
-                    "\n" +
-                    "JSBIND_CLASS(TestClass)\n" +
-                    "{\n" +
-                    "\tJSBIND_CONSTRUCTOR<>();\n" +
-                    "\tJSBIND_PROPERTY(name);\n" +
-                    "\tJSBIND_PROPERTY(age);\n" +
-                    "\tJSBIND_PROPERTY(no);\n" +
-                    "\tJSBIND_PROPERTY(addr);\n" +
-                    "};\n";
+            String expect = classContentExpect2;
             assertEquals(expect, classContent);
         }
     }
@@ -364,23 +383,7 @@ class GenAkiCppFileTest {
         if (gb instanceof GenAkiCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\nclass Employee : public Person {\n" +
-                    "\tint empCode;\n" +
-                    "\tauto currentUser;\n" +
-                    "\tstatic int pi = 3.14;\n" +
-                    "\tconstructor();\n" +
-                    "\tvoid displayName();\n" +
-                    "};\n" +
-                    "\n" +
-                    "JSBIND_CLASS(Employee)\n" +
-                    "{\n" +
-                    "\tJSBIND_CONSTRUCTOR<>();\n" +
-                    "\tJSBIND_METHOD(displayName, \"displayName\");\n" +
-                    "\tJSBIND_PMETHOD(displayName, \"displayNamePromise\");\n" +
-                    "\tJSBIND_PROPERTY(empCode);\n" +
-                    "\tJSBIND_PROPERTY(currentUser);\n" +
-                    "\tJSBIND_PROPERTY(pi);\n" +
-                    "};\n";
+            String expect = classContentExpect3;
             assertEquals(expect, classContent);
         }
     }
@@ -516,7 +519,8 @@ class GenAkiCppFileTest {
         if (gb instanceof GenAkiCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\ntemplate <typename T, typename U> class kvProcessor : public IKeyValueProcessor<T, U> {\n" +
+            String expect = "\ntemplate <typename T, typename U> class kvProcessor : " +
+                    "public IKeyValueProcessor<T, U> {\n" +
                     "\tvoid process(T key, U val);\n" +
                     "};\n" +
                     "\n" +
