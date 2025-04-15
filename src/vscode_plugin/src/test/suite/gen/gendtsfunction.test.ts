@@ -56,7 +56,10 @@ suite('Gendts_funcs_Suite', () => {
       fileName: 'test',
     }
     let resStr = genDts.getDtsFunction(rootInfo);
-    assert.strictEqual(resStr, 'export function testFunc(v1: boolean): number;\n\n');
+    // assert.strictEqual(resStr, 'export function testFunc(v1: boolean): number;\n\n');
+    assert.strictEqual(resStr.includes('export function testFunc(v1: boolean): number;'), true);
+    assert.strictEqual(resStr.includes('export function testFuncAsync(v1: boolean, cbf: (param: number) => void): void;'), true);
+    assert.strictEqual(resStr.includes('export function testFunc(v1: boolean): Promise<number>;'), true);
 
     //用例2: 普通函数
     let funcList2: FuncObj[] = [{
@@ -81,7 +84,10 @@ suite('Gendts_funcs_Suite', () => {
       fileName: 'test'
     }
     resStr = genDts.getDtsFunction(rootInfo2);
-    assert.strictEqual(resStr, 'export function calculate(x: number, y: number): number;\n\n');
+    // assert.strictEqual(resStr, 'export function calculate(x: number, y: number): number;\n\n');
+    assert.strictEqual(resStr.includes('export function calculate(x: number, y: number): number;'), true);
+    assert.strictEqual(resStr.includes('export function calculateAsync(x: number, y: number, cbf: (param: number) => void): void;'), true);
+    assert.strictEqual(resStr.includes('export function calculatePromise(x: number, y: number): Promise<number>;'), true);
   
     //用例3: typedef接口
     let funcList3: FuncObj[] = [{
@@ -131,7 +137,10 @@ suite('Gendts_funcs_Suite', () => {
       fileName: 'test'
     }
     resStr = genDts.getDtsFunction(rootInfo4);
-    assert.strictEqual(resStr, 'export function concat(str1: string, codes: Array<number>, flag: boolean): string;\n\n');
+    // assert.strictEqual(resStr, 'export function concat(str1: string, codes: Array<number>, flag: boolean): string;\n\n');
+    assert.strictEqual(resStr.includes('export function concat(str1: string, codes: Array<number>, flag: boolean): string;'), true);
+    assert.strictEqual(resStr.includes('export function concatAsync(str1: string, codes: Array<number>, flag: boolean, cbf: (param: string) => void): void;'), true);
+    assert.strictEqual(resStr.includes('export function concatPromsie(str1: string, codes: Array<number>, flag: boolean): Promise<string>;'), true);
   
     //用例5: 保留字函数名
     let funcList5: FuncObj[] = [{
@@ -154,7 +163,11 @@ suite('Gendts_funcs_Suite', () => {
       fileName: 'test'
     }
     resStr = genDts.getDtsFunction(rootInfo5);
-    assert.strictEqual(resStr, 'export function delete(id: number): void;\n\n');
+    // assert.strictEqual(resStr, 'export function delete(id: number): void;\n\n');
+    assert.strictEqual(resStr.includes('export function delete(id: number): void;'), true);
+    assert.strictEqual(resStr.includes('export function deleteAsync(id: number, cbf: () => void): void;'), true);
+    assert.strictEqual(resStr.includes('export function deletePromise(id: number): Promise<void>;'), true);
+
 
     //用例6 混合类型声明
     let funcList6: FuncObj[] = [
@@ -195,7 +208,9 @@ suite('Gendts_funcs_Suite', () => {
       'export interface Callback {\n' +
       '\t(code: number, message: string): void;\n' +
       '};\n\n' +
-      'export function validate(cb: any, data: Array<number>): boolean;\n\n';
+      'export function validate(cb: any, data: Array<number>): boolean;\n\n' +
+      'export function validateAsync(cb: any, data: Array<number>, cbf: (param: boolean) => void): void;\n\n' +
+      'export function validatePromise(cb: any, data: Array<number>): Promise<void>;\n\n';
     assert.strictEqual(resStr, expected);
 
     //用例7: 保留字函数名
@@ -260,7 +275,10 @@ suite('Gendts_funcs_Suite', () => {
       fileName: 'test',
     }
     resStr = genDts.getDtsFunction(rootInfo2);
-    assert.strictEqual(resStr, 'export function testFunc(): number;\n\n');
+    // assert.strictEqual(resStr, 'export function testFunc(): number;\n\n');
+    assert.strictEqual(resStr.includes('export function testFunc(): number;'), true);
+    assert.strictEqual(resStr.includes('export function testFuncAsync(cbf: (param: number) => void): void;'), true);
+    assert.strictEqual(resStr.includes('export function testFuncPromise(): Promise<number>'), true);
 
     //用例3 特殊字符参数名测试
     let funcList3 = [
@@ -286,10 +304,14 @@ suite('Gendts_funcs_Suite', () => {
       fileName: 'test',
     }
     resStr = genDts.getDtsFunction(rootInfo3);
-    assert.strictEqual(
-      resStr,
-      'export function specialChars(data-id: number, class: string): void;\n\n'
-    );
+    // assert.strictEqual(
+    //   resStr,
+    //   'export function specialChars(data-id: number, class: string): void;\n\n'
+    // );
+
+    assert.strictEqual(resStr.includes('export function specialChars(data-id: number, class: string): void;'), true);
+    assert.strictEqual(resStr.includes('export function specialCharsAsync(data-id: number, class: string, cbf: (param: void) => void): void;'), true);
+    assert.strictEqual(resStr.includes('export function specialCharsPromise(data-id: number, class: string): Promise<void>;'), true);
 
     //用例4 最大参数数量
     const maxParams = Array(10).fill(0).map((_,i) => ({
@@ -338,7 +360,10 @@ suite('Gendts_funcs_Suite', () => {
       fileName: 'test',
     }
     resStr = genDts.getDtsFunction(rootInfo5);  
-    assert.strictEqual(resStr, 'export function invalid(): void;\n\n');
+    // assert.strictEqual(resStr, 'export function invalid(): void;\n\n');
+    assert.strictEqual(resStr.includes('export function invalid(): void;'), true);
+    assert.strictEqual(resStr.includes('export function invalidAsync(cbf: () => void): void;'), true);
+    assert.strictEqual(resStr.includes('export function invalidPromise(): Promise<void>;'), true);
 
     //用例6: 带特殊符号的参数名
     let funcList6 = [
@@ -364,7 +389,10 @@ suite('Gendts_funcs_Suite', () => {
       fileName: 'test',
     }
     resStr = genDts.getDtsFunction(rootInfo6);  
-    assert.strictEqual(resStr, 'export function special(data-url: string, class: number): void;\n\n');
+    // assert.strictEqual(resStr, 'export function special(data-url: string, class: number): void;\n\n');
+    assert.strictEqual(resStr.includes('export function special(data-url: string, class: number): void;'), true);
+    assert.strictEqual(resStr.includes('export function specialAsync(data-url: string, class: number, cbf: () => void): void;'), true);
+    assert.strictEqual(resStr.includes('export function specialPromise(data-url: string, class: number): Promise<void>;'), true);
   });
 
   //3, 测试异常情况
@@ -485,7 +513,10 @@ suite('Gendts_funcs_Suite', () => {
       fileName: 'test',
     }
     let reStr = genDts.getDtsFunction(rootInfo4);
-    assert.strictEqual(reStr, 'export function testFunc(param: any): any;\n\n');
+    // assert.strictEqual(reStr, 'export function testFunc(param: any): any;\n\n');
+    assert.strictEqual(reStr.includes('export function testFunc(param: any): any;'), true);
+    assert.strictEqual(reStr.includes('export function testFunc(param: any, cbf: (param: any) => void): any;'), true);
+    assert.strictEqual(reStr.includes('export function testFunc(param: any): Promise<any>;'), true);
     assert.match(reStr, /param: any/);
   });
 
