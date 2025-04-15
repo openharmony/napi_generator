@@ -283,7 +283,9 @@ public class GenDtsFile extends GeneratorBase {
         String outFileName = filePath + File.separator + TS_FILE_PREFIX +
                 fileName.replace(".", "_") + TS_FILE_SUFFIX;
         System.out.println("outFileName : " + outFileName);
-
+        if (this.genMode.equals(GeneratorBase.GEN_REPLACE)) {
+            FileUtils.deleteFile(outFileName);
+        }
         FileUtils.createFile(outFileName);
 
         FileUtils.appendText(outFileName, this.genFileHeader(filePath + File.separator + fileName));

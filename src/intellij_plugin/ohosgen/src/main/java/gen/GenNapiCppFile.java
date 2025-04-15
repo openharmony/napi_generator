@@ -33,7 +33,7 @@ import java.util.Map;
  * @since 2025-02-28
  * @version 1.0
  */
-public class GenCppFile extends GeneratorBase {
+public class GenNapiCppFile extends GeneratorBase {
     private static final String CPP_ENUM_TOKEN = "enum";
     private static final String CPP_CLASS_TOKEN = "class";
     private static final String CPP_STRUCT_TOKEN = "struct";
@@ -149,7 +149,7 @@ public class GenCppFile extends GeneratorBase {
     /**
      * 构造函数
      */
-    GenCppFile() {
+    GenNapiCppFile() {
 
     }
 
@@ -297,9 +297,7 @@ public class GenCppFile extends GeneratorBase {
         String outFileName = filePath + File.separator + CPP_FILE_PREFIX +
                 fileName.replace(".", "_") + CPP_FILE_H_SUFFIX;
         System.out.println("outFileName : " + outFileName);
-        if (this.genMode.equals(GeneratorBase.GEN_REPLACE)) {
-            FileUtils.deleteFile(outFileName);
-        }
+
         FileUtils.createFile(outFileName);
 
         FileUtils.appendText(outFileName, this.genFileHeader(filePath + File.separator + fileName));
