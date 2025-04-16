@@ -76,6 +76,7 @@ suite('Gennapicommoncpp_file_Suite', () => {
     let rootInfo: GenInfo = {
       parseObj: parseObj,
       rawFilePath: hFilePath,
+      fileName: undefined
     }
     let fileContent = genNapiCommonCpp.doGenCommonCppFile(rootInfo, napiCommonCppTemplate.content);
     assert.strictEqual(fileContent.indexOf('[fileName]') >= 0? 0: -1, 0);
