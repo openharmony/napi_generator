@@ -75,8 +75,14 @@ suite('Gendts_structs_Suite', () => {
     };
 
     let resStr = genDts.getDtsStructs(rootInfo);
-    assert.strictEqual(resStr, 'export type StructObj = {\n\tname: string;'
-      + '\n\tage: number;\n\tfuncTest(v: number): boolean;\n};\n\n');
+    assert.strictEqual(resStr,  'export type StructObj = {\n' +
+        '\tname: string;\n' +
+        '\tage: number;\n' +
+        '\tfuncTest(v: number): boolean;\n' +
+        '\tfuncTestAsync(v: number, cbf: (param: boolean) => void): void;\n' +
+        '\tfuncTestPromise(v: number): Promise<boolean>;\n' +
+        '};\n' +
+        '\n');
   
     //用例2.正常情况,有alias，且alias不等于name
     let structs2: StructObj[] = [
@@ -128,9 +134,16 @@ suite('Gendts_structs_Suite', () => {
     };
 
     resStr = genDts.getDtsStructs(rootInfo2);
-    assert.strictEqual(resStr, 'export type StructObj = {\n\tname: string;'
-      + '\n\tage: number;\n\tfuncTest(v: number): boolean;\n};\n\n'
-      + 'export type Alias = StructObj;\n\n');
+    assert.strictEqual(resStr,  'export type StructObj = {\n' +
+      '\tname: string;\n' +
+      '\tage: number;\n' +
+      '\tfuncTest(v: number): boolean;\n' +
+      '\tfuncTestAsync(v: number, cbf: (param: boolean) => void): void;\n' +
+      '\tfuncTestPromise(v: number): Promise<boolean>;\n' +
+      '};\n' +
+      '\n' +
+      'export type Alias = StructObj;\n' +
+      '\n');
 
     //用例3.正常情况,有alias，且alias等于name
     let structs3: StructObj[] = [
@@ -182,8 +195,14 @@ suite('Gendts_structs_Suite', () => {
     };
 
     resStr = genDts.getDtsStructs(rootInfo3);
-    assert.strictEqual(resStr, 'export type StructObj = {\n\tname: string;'
-      + '\n\tage: number;\n\tfuncTest(v: number): boolean;\n};\n\n');
+    assert.strictEqual(resStr, 'export type StructObj = {\n' +
+      '\tname: string;\n' +
+      '\tage: number;\n' +
+      '\tfuncTest(v: number): boolean;\n' +
+      '\tfuncTestAsync(v: number, cbf: (param: boolean) => void): void;\n' +
+      '\tfuncTestPromise(v: number): Promise<boolean>;\n' +
+      '};\n' +
+      '\n');
 
     //用例4.正常情况,一个member，多个parameters
     let structs4: StructObj[] = [
@@ -226,8 +245,13 @@ suite('Gendts_structs_Suite', () => {
     };
 
     resStr = genDts.getDtsStructs(rootInfo4);
-    assert.strictEqual(resStr, 'export type StructObj = {\n\tname: string;'
-      + '\n\tfuncTest(a: string, b: number, c: boolean): boolean;\n};\n\n');
+    assert.strictEqual(resStr, 'export type StructObj = {\n' +
+      '\tname: string;\n' +
+      '\tfuncTest(a: string, b: number, c: boolean): boolean;\n' +
+      '\tfuncTestAsync(a: string, b: number, c: boolean, cbf: (param: boolean) => void): void;\n' +
+      '\tfuncTestPromise(a: string, b: number, c: boolean): Promise<boolean>;\n' +
+      '};\n' +
+      '\n');
 
     //用例4.正常情况,多个member，多个parameters
     let structs5: StructObj[] = [
@@ -276,8 +300,14 @@ suite('Gendts_structs_Suite', () => {
     };
 
     resStr = genDts.getDtsStructs(rootInfo5);
-    assert.strictEqual(resStr, 'export type StructObj = {\n\tname: string;'
-      + '\n\tage: number;\n\tfuncTest(aa: string, bb: number, cc: boolean): boolean;\n};\n\n');
+    assert.strictEqual(resStr, 'export type StructObj = {\n' +
+      '\tname: string;\n' +
+      '\tage: number;\n' +
+      '\tfuncTest(aa: string, bb: number, cc: boolean): boolean;\n' +
+      '\tfuncTestAsync(aa: string, bb: number, cc: boolean, cbf: (param: boolean) => void): void;\n' +
+      '\tfuncTestPromise(aa: string, bb: number, cc: boolean): Promise<boolean>;\n' +
+      '};\n' +
+      '\n');
 
     //用例6.正常情况,一个member，一个parameters
     let structs6: StructObj[] = [
@@ -318,9 +348,15 @@ suite('Gendts_structs_Suite', () => {
     };
 
     resStr = genDts.getDtsStructs(rootInfo6);
-    assert.strictEqual(resStr, 'export type StructObj = {\n\tname: string;'
-      + '\n\tfuncTest(aa: string): boolean;\n};\n\nexport type Alias = StructObj;\n\n');
-    
+    assert.strictEqual(resStr, 'export type StructObj = {\n' +
+      '\tname: string;\n' +
+      '\tfuncTest(aa: string): boolean;\n' +
+      '\tfuncTestAsync(aa: string, cbf: (param: boolean) => void): void;\n' +
+      '\tfuncTestPromise(aa: string): Promise<boolean>;\n' +
+      '};\n' +
+      '\n' +
+      'export type Alias = StructObj;\n' +
+      '\n');
   });
 
   //2, 测试边界情况
@@ -372,7 +408,12 @@ suite('Gendts_structs_Suite', () => {
       fileName: 'test',
     };
     resStr = genDts.getDtsStructs(rootInfo2);
-    assert.strictEqual(resStr, 'export type StructObj = {\n\tfuncTest(v: number): boolean;\n};\n\n');
+    assert.strictEqual(resStr, 'export type StructObj = {\n' +
+        '\tfuncTest(v: number): boolean;\n' +
+        '\tfuncTestAsync(v: number, cbf: (param: boolean) => void): void;\n' +
+        '\tfuncTestPromise(v: number): Promise<boolean>;\n' +
+        '};\n' +
+        '\n');
 
     //用例3.structs有成员，成员变量不为空，成员方法为空
     let structs3: StructObj[] =[{

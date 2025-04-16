@@ -78,6 +78,7 @@ suite('Gennapicommonh_file_Suite', () => {
     let rootInfo: GenInfo = {
       parseObj: parseObj,
       rawFilePath: hFilePath,
+      fileName: undefined
     }
     let fileContent = genNapiCommonH.doGenCommonHFile(rootInfo, napiCommonHTemplate.content);
     assert.strictEqual(fileContent.indexOf('[upper_filename]') >= 0? 0: -1, 0);
