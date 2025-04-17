@@ -45,6 +45,7 @@ export function genProxyFunc(funcInfo: FuncObj, className: string, paramStr: str
       'name': 'result',
       'type': funcInfo.returns,
       'arraySize': -1,
+      'arraySizeList': []
     };
     readReplyStr += '\n' + tab + genRead('reply', destObj);
     readReplyStr += '\n' + tab + 'return result;';

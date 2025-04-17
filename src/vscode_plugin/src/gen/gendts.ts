@@ -466,6 +466,14 @@ export function getDtsFunction(rootInfo: GenInfo) {
           }
         });
         out += funcHead + enumBody.slice(0, -2) + funcTail;
+        // 生成异步方法（callback）的dts
+        funcHead = `export function ${funcItem.name}Async(`
+        funcTail = returnType === 'void'? 'cbf: () => void): void;\n\n' : `cbf: (param: ${returnType}) => void): void;\n\n`
+        out += funcHead + enumBody + funcTail;
+        // 生成异步方法（promise）的dts
+        funcHead = `export function ${funcItem.name}Promise(`
+        funcTail = `): Promise<${returnType}>;\n\n`;
+        out += funcHead + enumBody.slice(0, -2) + funcTail;
       }
     } catch (e) {
       let errmsg = 'generate dts file error: ' + JSON.stringify(e);
@@ -499,13 +507,18 @@ export function getDtsClasses(rootInfo: GenInfo) {
             methodContent += `${param.name}: ${transTskey2Ckey(param.type)}, `;
           }
           classBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
+          // callback方法
+          let callbackContent = method.returns === 'void'? 'cbf: () => void' : `cbf: (param: ${transTskey2Ckey(method.returns)}) => void`
+          classBody += `\t${method.name}Async(${methodContent}${callbackContent}): void;\n`
+          // promise方法
+          classBody += `\t${method.name}Promsie(${methodContent.slice(0, -2)}): Promise<${transTskey2Ckey(method.returns)}>;\n`
         };
       }
     } catch (e) {
       let errmsg = 'generate dts file error: ' + JSON.stringify(e);
       Logger.getInstance().error(errmsg);
     }
-    out += classHead + classBody + '};\n\n'
+    out += classHead + classBody + '}\n\n'
     if (classItem.name && classItem.alias) {
       out += `export type ${classItem.alias} = ${classItem.name};\n\n`
     }
@@ -539,6 +552,11 @@ export function getDtsStructs(rootInfo: GenInfo) {
             }
           }
           structBody += `\t${method.name}(${methodContent.slice(0, -2)}): ${transTskey2Ckey(method.returns)};\n`
+          // callback方法
+          let callbackContent = method.returns === 'void'? 'cbf: () => void' : `cbf: (param: ${transTskey2Ckey(method.returns)}) => void`
+          structBody += `\t${method.name}Async(${methodContent}${callbackContent}): void;\n`
+          // promise方法
+          structBody += `\t${method.name}Promise(${methodContent.slice(0, -2)}): Promise<${transTskey2Ckey(method.returns)}>;\n`;
         };
       }
     } catch (e) {
