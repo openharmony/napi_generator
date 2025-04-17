@@ -68,7 +68,13 @@ suite('Gendts_classes_Suite', () => {
       fileName: 'test',
     };
     let resStr = genDts.getDtsClasses(rootInfo1);
-    assert.strictEqual(resStr, 'export class ClassObj {\n\tval: number;\n\tclassFunc(v1: number): number;\n};\n\n');
+    assert.strictEqual(resStr, 'export class ClassObj {\n' +
+        '\tval: number;\n' +
+        '\tclassFunc(v1: number): number;\n' +
+        '\tclassFuncAsync(v1: number, cbf: (param: number) => void): void;\n' +
+        '\tclassFuncPromise(v1: number): Promise<number>;\n' +
+        '}\n' +
+        '\n');
 
     //用例2.classes中alias不为空，且alias不等于name，其他正常
     let classes2: ClassObj[] = [
@@ -113,8 +119,15 @@ suite('Gendts_classes_Suite', () => {
       fileName: 'test',
     };
     resStr = genDts.getDtsClasses(rootInfo2);
-    assert.strictEqual(resStr, 'export class ClassObj {\n\tval: number;\n\tclassFunc(v1: number): number;\n};\n\n'
-      + 'export type Alias = ClassObj;\n\n');
+    assert.strictEqual(resStr,  'export class ClassObj {\n' +
+        '\tval: number;\n' +
+        '\tclassFunc(v1: number): number;\n' +
+        '\tclassFuncAsync(v1: number, cbf: (param: number) => void): void;\n' +
+        '\tclassFuncPromise(v1: number): Promise<number>;\n' +
+        '}\n' +
+        '\n' +
+        'export type Alias = ClassObj;\n' +
+        '\n');
   
     //用例3.classes中alias不为空，且alias等于name，其他正常 
     let Classes3:ClassObj[] = [
@@ -159,8 +172,15 @@ suite('Gendts_classes_Suite', () => {
       fileName: 'test',
     };
     resStr = genDts.getDtsClasses(rootInfo3);
-    assert.strictEqual(resStr, 'export class ClassObj {\n\tval: number;\n\tclassFunc(v1: number): number;\n};\n\n'
-      + 'export type ClassObj = ClassObj;\n\n');
+    assert.strictEqual(resStr, 'export class ClassObj {\n' +
+        '\tval: number;\n' +
+        '\tclassFunc(v1: number): number;\n' +
+        '\tclassFuncAsync(v1: number, cbf: (param: number) => void): void;\n' +
+        '\tclassFuncPromise(v1: number): Promise<number>;\n' +
+        '}\n' +
+        '\n' +
+        'export type ClassObj = ClassObj;\n' +
+        '\n');
 
     //用例4. 混合多个类和复杂参数
     let classes4: ClassObj[] = [
@@ -216,11 +236,18 @@ suite('Gendts_classes_Suite', () => {
       '\tspeed: number;\n' +
       '\tisRunning: boolean;\n' +
       '\tstart(keyType: number, authCode: string, true: boolean): void;\n' +
-      '};\n\n' +
-      'export type Car = Vehicle;\n\n' +
+      '\tstartAsync(keyType: number, authCode: string, true: boolean, cbf: () => void): void;\n' +
+      '\tstartPromise(keyType: number, authCode: string, true: boolean): Promise<void>;\n' +
+      '}\n' +
+      '\n' +
+      'export type Car = Vehicle;\n' +
+      '\n' +
       'export class Engine {\n' +
       '\tgetRPM(): number;\n' +
-      '};\n\n';
+      '\tgetRPMAsync(cbf: (param: number) => void): void;\n' +
+      '\tgetRPMPromise(): Promise<number>;\n' +
+      '}\n' +
+      '\n';
     assert.strictEqual(resStr, expected);
 
     //用例5. 测试多参数方法的情况
@@ -256,8 +283,14 @@ suite('Gendts_classes_Suite', () => {
     resStr = genDts.getDtsClasses(rootInfo5);
     assert.strictEqual(
       resStr,
-      'export class MultiParamClass {\n\tcalculate(x: number, y: number): number;\n};\n\n' +  
-      'export type MPCType = MultiParamClass;\n\n'
+      'export class MultiParamClass {\n' +
+      '\tcalculate(x: number, y: number): number;\n' +
+      '\tcalculateAsync(x: number, y: number, cbf: (param: number) => void): void;\n' +
+      '\tcalculatePromise(x: number, y: number): Promise<number>;\n' +
+      '}\n' +
+      '\n' +
+      'export type MPCType = MultiParamClass;\n' +
+      '\n'
     );
     
     //用例6. 测试混合多个类的情况
@@ -301,9 +334,14 @@ suite('Gendts_classes_Suite', () => {
     resStr = genDts.getDtsClasses(rootInfo6);
     assert.strictEqual(
       resStr,
-      'export class ClassA {\n\tflag: boolean;\n};\n\n' +
+      'export class ClassA {\n\tflag: boolean;\n}\n\n' +
       'export type AliasA = ClassA;\n\n' +
-      'export class ClassB {\n\tgetName(): string;\n};\n\n'
+      'export class ClassB {\n' +
+      '\tgetName(): string;\n' +
+      '\tgetNameAsync(cbf: (param: string) => void): void;\n' +
+      '\tgetNamePromise(): Promise<string>;\n' +
+      '}\n' +
+      '\n'
     );
 
     //用例7. 测试特殊类型转换（如布尔型）
@@ -346,8 +384,15 @@ suite('Gendts_classes_Suite', () => {
     resStr = genDts.getDtsClasses(rootInfo7);
     assert.strictEqual(
       resStr,
-      'export class SpecialTypes {\n\tisValid: boolean;\n\tgetChar(input: number): string;\n};\n\n' +
-      'export type SType = SpecialTypes;\n\n'
+      'export class SpecialTypes {\n' +
+      '\tisValid: boolean;\n' +
+      '\tgetChar(input: number): string;\n' +
+      '\tgetCharAsync(input: number, cbf: (param: string) => void): void;\n' +
+      '\tgetCharPromise(input: number): Promise<string>;\n' +
+      '}\n' +
+      '\n' +
+      'export type SType = SpecialTypes;\n' +
+      '\n'
     );
 
     //用例8. 包含数组类型和复杂类型转换
@@ -386,12 +431,16 @@ suite('Gendts_classes_Suite', () => {
     resStr = genDts.getDtsClasses(rootInfo8);
     assert.strictEqual(
       resStr,
-      'export class DataContainer {\n' +
-      '\tscores: Array<number>;\n' +
-      '\tbuffer: string;\n' +
-      '\tgetData(length: number, compress: boolean): void;\n' +
-      '};\n\n' +
-      'export type DC = DataContainer;\n\n'
+        'export class DataContainer {\n' +
+        '\tscores: Array<number>;\n' +
+        '\tbuffer: string;\n' +
+        '\tgetData(length: number, compress: boolean): void;\n' +
+        '\tgetDataAsync(length: number, compress: boolean, cbf: (param: void) => void): void;\n' +
+        '\tgetDataPromise(length: number, compress: boolean): Promise<void>;\n' +
+        '}\n' +
+        '\n' +
+        'export type DC = DataContainer;\n' +
+        '\n'
     );
 
     //用例9. 测试C++特殊类型转换
@@ -433,7 +482,10 @@ suite('Gendts_classes_Suite', () => {
       '\tcount: number;\n' +
       '\tbigNum: number;\n' +
       '\tgetSize(buffer: number): number;\n' +
-      '};\n\n'
+      '\tgetSizeAsync(buffer: number, cbf: (param: number) => void): void;\n' +
+      '\tgetSizePromise(buffer: number): Promise<number>;\n' +
+      '}\n' +
+      '\n'
     );
 
     //用例10. 测试静态成员和方法
@@ -471,7 +523,10 @@ suite('Gendts_classes_Suite', () => {
       'export class Utils {\n' +
       '\tVERSION: string;\n' +
       '\tstaticMethod(): void;\n' +
-      '};\n\n'
+      '\tstaticMethodAsync(cbf: () => void): void;\n' +
+      '\tstaticMethodPromise(): Promise<void>;\n' +
+      '}\n' +
+      '\n'
     );
 
     //用例11. 测试模板类处理
@@ -512,10 +567,14 @@ suite('Gendts_classes_Suite', () => {
     assert.strictEqual(
       genDts.getDtsClasses(rootInfo11),
       'export class Vector {\n' +
-      '\tdata: any;\n' + // 假设泛型暂未处理，返回any类型
+      '\tdata: any;\n' +
       '\tpush(item: any): void;\n' +
-      '};\n\n' +
-      'export type Vec = Vector;\n\n'
+      '\tpushAsync(item: any, cbf: () => void): void;\n' +
+      '\tpushPromise(item: any): Promise<void>;\n' +
+      '}\n' +
+      '\n' +
+      'export type Vec = Vector;\n' +
+      '\n'
     );
 
     //用例12. 测试const成员变量
@@ -547,7 +606,7 @@ suite('Gendts_classes_Suite', () => {
       genDts.getDtsClasses(rootInfo12),
       'export class Constants {\n' +
       '\tMAX_SIZE: number;\n' +
-      '};\n\n'
+      '}\n\n'
     );
 
     //用例13. 测试嵌套类
@@ -579,7 +638,7 @@ suite('Gendts_classes_Suite', () => {
       genDts.getDtsClasses(rootInfo13),
       'export class Outer::Inner {\n' +
       '\tvalue: number;\n' +
-      '};\n\n' +
+      '}\n\n' +
       'export type Nested = Outer::Inner;\n\n'
     );
   });
@@ -633,7 +692,12 @@ suite('Gendts_classes_Suite', () => {
       fileName: 'test',
     };
     let resStr2 = genDts.getDtsClasses(rootInfo2);
-    assert.strictEqual(resStr2, 'export class ClassObj {\n\tclassFunc(v1: number): number;\n};\n\n');
+    assert.strictEqual(resStr2, 'export class ClassObj {\n' +
+        '\tclassFunc(v1: number): number;\n' +
+        '\tclassFuncAsync(v1: number, cbf: (param: number) => void): void;\n' +
+        '\tclassFuncPromise(v1: number): Promise<number>;\n' +
+        '}\n' +
+        '\n');
 
     //用例3.class有成员，成员变量不为空，成员方法为空
     let rootInfo3 = {
@@ -659,7 +723,7 @@ suite('Gendts_classes_Suite', () => {
       fileName: 'test',
     };
     let resStr3 = genDts.getDtsClasses(rootInfo3);
-    assert.strictEqual(resStr3, 'export class ClassObj {\n\tval: number;\n};\n\n');
+    assert.strictEqual(resStr3, 'export class ClassObj {\n\tval: number;\n}\n\n');
 
     //用例4. 特殊命名测试
     let rootInfo4 = {
@@ -687,13 +751,16 @@ suite('Gendts_classes_Suite', () => {
       fileName: 'test',
     };
     let res4 = genDts.getDtsClasses(rootInfo4);
-    assert.strictEqual(
-      res4,
-      'export class Class$With$SpecialChars {\n' +
-      '\tdata-url: string;\n' +
-      '\tdelete(): void;\n' +
-      '};\n\n' +
-      'export type Alias_With_Underscore = Class$With$SpecialChars;\n\n'
+    assert.strictEqual(res4,
+        'export class Class$With$SpecialChars {\n' +
+        '\tdata-url: string;\n' +
+        '\tdelete(): void;\n' +
+        '\tdeleteAsync(cbf: () => void): void;\n' +
+        '\tdeletePromise(): Promise<void>;\n' +
+        '}\n' +
+        '\n' +
+        'export type Alias_With_Underscore = Class$With$SpecialChars;\n' +
+        '\n'
     );
   
     //用例5. 空参数列表测试
@@ -718,7 +785,12 @@ suite('Gendts_classes_Suite', () => {
       fileName: 'test',
     };
     let res5 = genDts.getDtsClasses(rootInfo5);
-    assert.strictEqual(res5, 'export class EmptyParams {\n\tnoop(): void;\n};\n\n');
+    assert.strictEqual(res5, 'export class EmptyParams {\n' +
+        '\tnoop(): void;\n' +
+        '\tnoopAsync(cbf: () => void): void;\n' +
+        '\tnoopPromise(): Promise<void>;\n' +
+        '}\n' +
+        '\n');
 
     //用例6. 参数缺少必要字段，缺少alias属性的情况
     let rootInfo6: GenInfo = {
@@ -743,7 +815,7 @@ suite('Gendts_classes_Suite', () => {
       fileName: 'test',
     };
     resStr = genDts.getDtsClasses(rootInfo6);
-    assert.strictEqual(resStr, 'export class InvalidClass {\n\tinvalidVar: string;\n};\n\n');
+    assert.strictEqual(resStr, 'export class InvalidClass {\n\tinvalidVar: string;\n}\n\n');
 
     //用例7. 测试空变量和空方法的类结构
     let classes7: ClassObj[] = [
@@ -770,7 +842,7 @@ suite('Gendts_classes_Suite', () => {
     let resStr7 = genDts.getDtsClasses(rootInfo7);
     assert.strictEqual(
       resStr7,
-      'export class EmptyClass {\n};\n\n' +
+      'export class EmptyClass {\n}\n\n' +
       'export type EmptyAlias = EmptyClass;\n\n'
     );
 
@@ -799,11 +871,8 @@ suite('Gendts_classes_Suite', () => {
     };
 
     let resStr8 = genDts.getDtsClasses(rootInfo8);
-    assert.match(
-      resStr8,
-      new RegExp(`export class ${longName} {\\n\\tvalue: number;\\n};\\n\\n`
-        + `export type ${longName}_Alias = ${longName};`)
-    );
+    assert.strictEqual(resStr8, `export class ${longName} {\n\tvalue: number;\n}\n\n`
+      + `export type ${longName}_Alias = ${longName};\n\n`);
   });
 
   //3, 测试异常情况
