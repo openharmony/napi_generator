@@ -490,12 +490,12 @@ public class GenNapiCppFile extends GeneratorBase {
     };
 
     private String genCppEnumContent(EnumObj eo) {
-        String resContent = "";
         String enumName = eo.getName();
         enumName = !enumName.isEmpty() ? enumName : eo.getAlias();
         List<String> memList = eo.getMemberList();
         List<String> vaList = eo.getValueList();
         int i = 0;
+        String resContent = "";
         resContent += NAPI_NEW_LINE + NAPI_ENUM_TOKEN +
                 NAPI_BLANK_SPACE + enumName + NAPI_BLANK_SPACE + NAPI_LEFT_BRACE;
         for (String memItem : memList) {
@@ -529,7 +529,6 @@ public class GenNapiCppFile extends GeneratorBase {
     }
 
     private String genNapiEnumContent(EnumObj eo) {
-        String resContent = "";
         String enumName = eo.getName();
         enumName = !enumName.isEmpty() ? enumName : eo.getAlias();
         List<String> memList = eo.getMemberList();
@@ -552,7 +551,7 @@ public class GenNapiCppFile extends GeneratorBase {
         enumDeclare = enumDeclare.replace(NAPI_ENUM_ITEM_VALUE, valueList.isEmpty() ?
                 NAPI_ENUM_VALUE_INDEX : NAPI_ENUM_VALUE_ITER);
         enumDeclare = enumDeclare.replace(NAPI_ENUM_CNT, Integer.toString(memList.size()));
-
+        String resContent = "";
         resContent = enumDeclare + NAPI_EXPORT_ENUM.replace(NAPI_ENUM_NAME, enumName);
         return resContent;
     }
@@ -648,7 +647,6 @@ public class GenNapiCppFile extends GeneratorBase {
     }
 
     private String genNapiClassContent(ClassObj co) {
-        String resContent = "";
         String className = co.getName();
         className = !className.isEmpty() ? className : co.getAlias();
         List<FuncObj> funcList = co.getFuncList();
@@ -699,6 +697,7 @@ public class GenNapiCppFile extends GeneratorBase {
         String classInitStr = NAPI_CLASS_INIT.replace(NAPI_CLASS_NAME, className);
         classDeclare += classInitStr;
 
+        String resContent = "";
         resContent = classDeclare;
         return resContent;
     }

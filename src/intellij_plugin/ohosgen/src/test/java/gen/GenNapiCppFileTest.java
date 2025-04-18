@@ -35,6 +35,37 @@ import static utils.FileUtils.readText;
  * @since 2025-02-28
  */
 class GenNapiCppFileTest {
+    private String enumContTest3 = "\nenum Colors {\n" +
+            "\tRed = RED,\n" +
+            "\tGreen = GREEN,\n" +
+            "\tBlue = BLUE,\n" +
+            "};\n" +
+            "\n" +
+            "char* colors_STR[] = {\n" +
+            "\t[Red] = \"RED\",\n" +
+            "\t[Green] = \"GREEN\",\n" +
+            "\t[Blue] = \"BLUE\"\n" +
+            "};\n" +
+            "\n" +
+            "// 创建枚举对象\n" +
+            "napi_value CreateColorsEnum(napi_env env) {\n" +
+            "\tnapi_value enum_obj;\n" +
+            "\tnapi_create_object(env, &enum_obj);\n" +
+            "\n" +
+            "\t// 添加枚举成员\n" +
+            "\tconst char* members[] = {\"Red\", \"Green\", \"Blue\"};\n" +
+            "\tconst int values[] = {\"RED\", \"GREEN\", \"BLUE\"};\n" +
+            "\tfor (int32_t i = 0; i < 3; ++i) {\n" +
+            "\t\tnapi_value value;\n" +
+            "\t\tnapi_create_int32(env, value[i], &value);\n" +
+            "\t\tnapi_set_named_property(env, enum_obj, members[i], value);\n" +
+            "\t}\n" +
+            "\n" +
+            "\treturn enum_obj;\n" +
+            "}\n" +
+            "\t// 创建并绑定枚举\n" +
+            "\tnapi_value Colors_enum = CreateColorsEnum(env);\n" +
+            "\tnapi_set_named_property(env, exports, \"Colors\", Colors_enum);\n";
 
     private String classContTest1 = "\nclass TestClass {\n" +
             "\tstd::string name;\n" +
@@ -47,7 +78,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
+            "napi_ok && thisVar != nullptr) {\n" +
             "\t\tTestClass *reference = new TestClass();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorTestClass, nullptr, nullptr) == napi_ok) {\n" +
@@ -169,7 +201,8 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value TestClassIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, nullptr, sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, &TestClassIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, nullptr, " +
+            "sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, &TestClassIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"TestClass\", TestClassIns) != napi_ok) {\n" +
@@ -189,7 +222,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tTestClass *reference = new TestClass();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorTestClass, nullptr, nullptr) == napi_ok) {\n" +
@@ -801,7 +835,8 @@ class GenNapiCppFileTest {
             "\t\treturn nullptr;\n" +
             "\t}";
 
-    private String classContTest6 = "\ntemplate <typename T, typename U> class kvProcessor : public IKeyValueProcessor<T, U> {\n" +
+    private String classContTest6 =
+            "\ntemplate <typename T, typename U> class kvProcessor : public IKeyValueProcessor<T, U> {\n" +
             "\tvoid process(T key, U val);\n" +
             "};\n" +
             "\n" +
@@ -810,7 +845,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tkvProcessor *reference = new kvProcessor();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorkvProcessor, nullptr, nullptr) == napi_ok) {\n" +
@@ -854,7 +890,9 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value kvProcessorIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"kvProcessor\", NAPI_AUTO_LENGTH, ConstructorkvProcessor, nullptr, sizeof(kvProcessorProps) / sizeof(kvProcessorProps[0]), kvProcessorProps, &kvProcessorIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"kvProcessor\", NAPI_AUTO_LENGTH, ConstructorkvProcessor, nullptr, " +
+            "sizeof(kvProcessorProps) / sizeof(kvProcessorProps[0]), " +
+            "kvProcessorProps, &kvProcessorIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"kvProcessor\", kvProcessorIns) != napi_ok) {\n" +
@@ -870,7 +908,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
+            "napi_ok && thisVar != nullptr) {\n" +
             "\t\tShape *reference = new Shape();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorShape, nullptr, nullptr) == napi_ok) {\n" +
@@ -914,7 +953,8 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value ShapeIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"Shape\", NAPI_AUTO_LENGTH, ConstructorShape, nullptr, sizeof(ShapeProps) / sizeof(ShapeProps[0]), ShapeProps, &ShapeIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"Shape\", NAPI_AUTO_LENGTH, ConstructorShape, nullptr, " +
+            "sizeof(ShapeProps) / sizeof(ShapeProps[0]), ShapeProps, &ShapeIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"Shape\", ShapeIns) != napi_ok) {\n" +
@@ -1048,37 +1088,7 @@ class GenNapiCppFileTest {
         if (gb instanceof GenNapiCppFile gdf) {
             String enumContent = gdf.getEnumContent();
             System.out.println("genEnum: " + enumContent);
-            String expect = "\nenum Colors {\n" +
-                    "\tRed = RED,\n" +
-                    "\tGreen = GREEN,\n" +
-                    "\tBlue = BLUE,\n" +
-                    "};\n" +
-                    "\n" +
-                    "char* colors_STR[] = {\n" +
-                    "\t[Red] = \"RED\",\n" +
-                    "\t[Green] = \"GREEN\",\n" +
-                    "\t[Blue] = \"BLUE\"\n" +
-                    "};\n" +
-                    "\n" +
-                    "// 创建枚举对象\n" +
-                    "napi_value CreateColorsEnum(napi_env env) {\n" +
-                    "\tnapi_value enum_obj;\n" +
-                    "\tnapi_create_object(env, &enum_obj);\n" +
-                    "\n" +
-                    "\t// 添加枚举成员\n" +
-                    "\tconst char* members[] = {\"Red\", \"Green\", \"Blue\"};\n" +
-                    "\tconst int values[] = {\"RED\", \"GREEN\", \"BLUE\"};\n" +
-                    "\tfor (int32_t i = 0; i < 3; ++i) {\n" +
-                    "\t\tnapi_value value;\n" +
-                    "\t\tnapi_create_int32(env, value[i], &value);\n" +
-                    "\t\tnapi_set_named_property(env, enum_obj, members[i], value);\n" +
-                    "\t}\n" +
-                    "\n" +
-                    "\treturn enum_obj;\n" +
-                    "}\n" +
-                    "\t// 创建并绑定枚举\n" +
-                    "\tnapi_value Colors_enum = CreateColorsEnum(env);\n" +
-                    "\tnapi_set_named_property(env, exports, \"Colors\", Colors_enum);\n";
+            String expect = enumContTest3;
             assertEquals(expect, enumContent);
         }
     }
