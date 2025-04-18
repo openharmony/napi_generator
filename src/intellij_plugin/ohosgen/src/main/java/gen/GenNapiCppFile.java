@@ -172,7 +172,8 @@ public class GenNapiCppFile extends GeneratorBase {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok &&" +
+            " thisVar != nullptr) {\n" +
             "\t\tNAPI_CLASS_NAME *reference = new NAPI_CLASS_NAME();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorNAPI_CLASS_NAME, nullptr, nullptr) == napi_ok) {\n" +
@@ -783,7 +784,8 @@ public class GenNapiCppFile extends GeneratorBase {
                 templateStr += NAPI_TYPE_NAME_TOKEN + NAPI_BLANK_SPACE + teStr + NAPI_COMMA + NAPI_BLANK_SPACE;
             }
             templateStr = templateStr.length() > 1 ?
-                    StringUtils.removeLastCharacter(templateStr, 2) + NAPI_RIGHT_ANGLE_BRACKET + NAPI_BLANK_SPACE : "";
+                    StringUtils.removeLastCharacter(templateStr, 2) +
+                    NAPI_RIGHT_ANGLE_BRACKET + NAPI_BLANK_SPACE : "";
 
             List<ParamObj> paList = so.getMemberList();
             resContent += NAPI_NEW_LINE + templateStr + NAPI_STRUCT_TOKEN +
@@ -855,7 +857,8 @@ public class GenNapiCppFile extends GeneratorBase {
                 templateStr += NAPI_TYPE_NAME_TOKEN + NAPI_BLANK_SPACE + teStr + NAPI_COMMA + NAPI_BLANK_SPACE;
             }
             templateStr = templateStr.length() > 1 ?
-                    StringUtils.removeLastCharacter(templateStr, 2) + NAPI_RIGHT_ANGLE_BRACKET + NAPI_BLANK_SPACE : "";
+                    StringUtils.removeLastCharacter(templateStr, 2) +
+                    NAPI_RIGHT_ANGLE_BRACKET + NAPI_BLANK_SPACE : "";
 
             resContent += NAPI_NEW_LINE + templateStr + NAPI_UNION_TOKEN +
                     NAPI_BLANK_SPACE + unionName + NAPI_LEFT_BRACE;
