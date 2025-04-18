@@ -125,7 +125,6 @@ public class GenAkiCppFile extends GeneratorBase {
     private static final String AKI_FILE_C_SUFFIX = ".c";
     private static final String AKI_STRUCT_SUFFIX = "ST";
 
-
     private static final String AKI_ENUM_NAME = "AKI_ENUM_NAME";
     private static final String AKI_ENUM_ITEM_NANE = "AKI_ENUM_ITEM_NANE";
     private static final String AKI_ENUM_ITEM_DECLARE = "\n\tJSBIND_ENUM_VALUE(AKI_ENUM_ITEM_NANE);";
