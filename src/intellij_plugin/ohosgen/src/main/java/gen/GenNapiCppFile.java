@@ -271,7 +271,7 @@ public class GenNapiCppFile extends GeneratorBase {
             "\tif (napi_set_named_property(env, exports, \"NAPI_CLASS_NAME\", NAPI_CLASS_NAMEIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}";
-    
+
     private String interfaceContent = "";
     private String enumContent = "";
     private String classContent = "";

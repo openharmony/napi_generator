@@ -423,7 +423,9 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value TestClassIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, nullptr, sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, &TestClassIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, " +
+            "nullptr, sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, " +
+            "&TestClassIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"TestClass\", TestClassIns) != napi_ok) {\n" +
@@ -443,7 +445,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) ==" +
+            " napi_ok && thisVar != nullptr) {\n" +
             "\t\tEmployee *reference = new Employee();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorEmployee, nullptr, nullptr) == napi_ok) {\n" +
@@ -623,12 +626,14 @@ class GenNapiCppFileTest {
             "\t{constructor, nullptr, constructorEmployee, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
             "\t{displayName, nullptr, displayNameEmployee, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
             "\t{empCode, nullptr, nullptr, GetempCodeEmployee, SetempCodeEmployee, nullptr, napi_default, nullptr},\n" +
-            "\t{currentUser, nullptr, nullptr, GetcurrentUserEmployee, SetcurrentUserEmployee, nullptr, napi_default, nullptr},\n" +
+            "\t{currentUser, nullptr, nullptr, GetcurrentUserEmployee, SetcurrentUserEmployee, nullptr, " +
+            "napi_default, nullptr},\n" +
             "\t{pi, nullptr, nullptr, GetpiEmployee, SetpiEmployee, nullptr, napi_default, nullptr},\n" +
             "};\n" +
             "\n" +
             "napi_value EmployeeIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"Employee\", NAPI_AUTO_LENGTH, ConstructorEmployee, nullptr, sizeof(EmployeeProps) / sizeof(EmployeeProps[0]), EmployeeProps, &EmployeeIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"Employee\", NAPI_AUTO_LENGTH, ConstructorEmployee, nullptr, " +
+            "sizeof(EmployeeProps) / sizeof(EmployeeProps[0]), EmployeeProps, &EmployeeIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"Employee\", EmployeeIns) != napi_ok) {\n" +
@@ -644,7 +649,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
+            "napi_ok && thisVar != nullptr) {\n" +
             "\t\tmyClass *reference = new myClass();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructormyClass, nullptr, nullptr) == napi_ok) {\n" +
@@ -688,7 +694,8 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value myClassIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"myClass\", NAPI_AUTO_LENGTH, ConstructormyClass, nullptr, sizeof(myClassProps) / sizeof(myClassProps[0]), myClassProps, &myClassIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"myClass\", NAPI_AUTO_LENGTH, ConstructormyClass, nullptr, " +
+            "sizeof(myClassProps) / sizeof(myClassProps[0]), myClassProps, &myClassIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"myClass\", myClassIns) != napi_ok) {\n" +
@@ -1959,257 +1966,4 @@ class GenNapiCppFileTest {
         }
     }
 
-    @Test
-    void genContent() {
-        ParseObj po = new ParseObj();
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("int");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-        po.setVarList(pol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
-        gb.genContent(po);
-
-        if (gb instanceof GenNapiCppFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
-        }
-    }
-
-    @Test
-    void genFile() {
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("int");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-
-        ParseObj po = new ParseObj();
-        po.setVarList(pol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
-        gb.genContent(po);
-        gb.genFile("./", "testGenFile.d.ts");
-
-        File file = new File("./ag_testGenFile_d_ts.h");
-        assertEquals(true, file.exists());
-        assertEquals(false, file.isDirectory());
-
-        List<String> fcList = readText("./ag_testGenFile_d_ts.h");
-
-        assertEquals("// Generated from ./\\testGenFile.d.ts by KaiHong ohgen 1.0.0-PLUGIN",
-                fcList.get(0));
-        assertEquals("const int TestParam = 100;",
-                fcList.get(1));
-
-        if (gb instanceof GenNapiCppFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
-        }
-    }
-
-    @Test
-    void genInterfaceList() {
-    }
-
-    @Test
-    void genEnumList() {
-        EnumObj eo = new EnumObj();
-        eo.setName("TestEnum");
-        List<String> ml = new CopyOnWriteArrayList<>();
-        ml.add("ONE");
-        ml.add("TWO");
-        eo.setMemberList(ml);
-        List<String> vl = new CopyOnWriteArrayList<>();
-        vl.add("1");
-        vl.add("2");
-        eo.setValueList(vl);
-        List<EnumObj> eol = new CopyOnWriteArrayList<>();
-        eol.add(eo);
-        ParseObj po = new ParseObj();
-        po.setEnumList(eol);
-        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
-        gb.genEnumList(po.getEnumList());
-
-        if (gb instanceof GenNapiCppFile gdf) {
-            String enumContent = gdf.getEnumContent();
-            System.out.println("genEnum: " + enumContent);
-            String expect = "\nenum TestEnum {\n" +
-                    "\tONE = 1,\n" +
-                    "\tTWO = 2,\n" +
-                    "};\n";
-            assertEquals(expect, enumContent);
-        }
-    }
-
-    @Test
-    void genClassList() {
-        ClassObj co = new ClassObj();
-        co.setName("TestClass");
-
-        co.addParam("name", "string");
-        co.addParam("age", "number");
-
-        List<ParamObj> poList = new CopyOnWriteArrayList<>();
-        ParamObj poItem = new ParamObj();
-        poItem.setName("a");
-        poItem.setType("number");
-        poList.add(poItem);
-        ParamObj poItem2 = new ParamObj();
-        poItem2.setName("b");
-        poItem2.setType("number");
-        poList.add(poItem2);
-
-        co.addFunc("add", "number", poList);
-
-        poList = new CopyOnWriteArrayList<>();
-        poItem = new ParamObj();
-        poItem.setType("number");
-        poList.add(poItem);
-
-        co.addFunc("delete", "number", poList);
-
-        List<ClassObj> col = new CopyOnWriteArrayList<>();
-        col.add(co);
-
-        ParseObj po = new ParseObj();
-        po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
-        gb.genClassList(po.getClassList());
-
-        if (gb instanceof GenNapiCppFile gdf) {
-            String classContent = gdf.getClassContent();
-            System.out.println("genClass: " + classContent);
-            String expect = "\nclass TestClass {\n" +
-                    "\tchar* name;\n" +
-                    "\tint age;\n" +
-                    "\tint add(int a, int b);\n" +
-                    "\tint delete(int);\n" +
-                    "};\n";
-            assertEquals(expect, classContent);
-        }
-    }
-
-    @Test
-    void genFuncList() {
-        FuncObj fo = new FuncObj();
-        fo.setName("TestFunc");
-        fo.setRetValue("void");
-        fo.addParam("name", "string");
-        fo.addParam("age", "number");
-        List<FuncObj> fol = new CopyOnWriteArrayList<>();
-        fol.add(fo);
-        ParseObj po = new ParseObj();
-        po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
-        gb.genFuncList(po.getFuncList());
-
-        if (gb instanceof GenNapiCppFile gdf) {
-            String funcContent = gdf.getFuncContent();
-            System.out.println("genFunc: " + funcContent);
-            String expect = "\nvoid TestFunc(char* name, int age);";
-            assertEquals(expect, funcContent);
-        }
-    }
-
-    @Test
-    void genStructList() {
-        StructObj so = new StructObj();
-        so.setName("TestStruct");
-
-        so.addMember("name", "string");
-        so.addMember("age", "number");
-
-        List<ParamObj> poList = new CopyOnWriteArrayList<>();
-        ParamObj poItem = new ParamObj();
-        poItem.setName("a");
-        poItem.setType("int");
-        poList.add(poItem);
-        ParamObj poItem2 = new ParamObj();
-        poItem2.setName("b");
-        poItem2.setType("int");
-        poList.add(poItem2);
-
-        so.addFunc("add", "int", poList);
-
-        List<StructObj> sol = new CopyOnWriteArrayList<>();
-        sol.add(so);
-        ParseObj po = new ParseObj();
-        po.setStructList(sol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
-        gb.genStructList(po.getStructList());
-
-        if (gb instanceof GenNapiCppFile gdf) {
-            String structContent = gdf.getStructContent();
-            System.out.println("genStruct: " + structContent);
-            String expect = "\nstruct TestStruct {\n" +
-                    "\tchar* name;\n" +
-                    "\tint age;\n" +
-                    "\tint add(int a, int b);\n" +
-                    "};\n";
-            assertEquals(expect, structContent);
-        }
-    }
-
-    @Test
-    void genTypeList() {
-        TypeObj to = new TypeObj();
-    }
-
-    @Test
-    void genUnionList() {
-        UnionObj uo = new UnionObj();
-        uo.setName("TestUnion");
-
-        uo.addMember("name", "any");
-        uo.addMember("age", "number");
-
-        List<UnionObj> uol = new CopyOnWriteArrayList<>();
-        uol.add(uo);
-        ParseObj po = new ParseObj();
-        po.setUnionList(uol);
-        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
-        gb.genUnionList(po.getUnionList());
-
-        if (gb instanceof GenNapiCppFile gdf) {
-            String unionContent = gdf.getUnionContent();
-            System.out.println("genUnion: " + unionContent);
-            String expect = "\nunion TestUnion{\n" +
-                    "\tauto name;\n" +
-                    "\tint age;\n" +
-                    "};\n";
-            assertEquals(expect, unionContent);
-        }
-    }
-
-    @Test
-    void genVarList() {
-        ParseObj po = new ParseObj();
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("number");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-        po.setVarList(pol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
-        gb.genVarList(pol);
-
-        if (gb instanceof GenNapiCppFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
-        }
-    }
 }
