@@ -711,7 +711,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
+            "napi_ok && thisVar != nullptr) {\n" +
             "\t\tKeyValuePair *reference = new KeyValuePair();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorKeyValuePair, nullptr, nullptr) == napi_ok) {\n" +
@@ -833,7 +834,9 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value KeyValuePairIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"KeyValuePair\", NAPI_AUTO_LENGTH, ConstructorKeyValuePair, nullptr, sizeof(KeyValuePairProps) / sizeof(KeyValuePairProps[0]), KeyValuePairProps, &KeyValuePairIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"KeyValuePair\", NAPI_AUTO_LENGTH, ConstructorKeyValuePair, " +
+            "nullptr, sizeof(KeyValuePairProps) / sizeof(KeyValuePairProps[0]), KeyValuePairProps, " +
+            "&KeyValuePairIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"KeyValuePair\", KeyValuePairIns) != napi_ok) {\n" +
