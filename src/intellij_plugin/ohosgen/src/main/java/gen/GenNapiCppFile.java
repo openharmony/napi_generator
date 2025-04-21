@@ -297,7 +297,8 @@ public class GenNapiCppFile extends GeneratorBase {
             "\n\t\treturn nullptr;" +
             "\n\t};\n";
 
-    private static final String NAPI_FUNCTION_DECLARE = "\nnapi_value NAPI_FUNCTION_NAMENapi(napi_env env, napi_callback_info info)\n" +
+    private static final String NAPI_FUNCTION_DECLARE =
+            "\nnapi_value NAPI_FUNCTION_NAMENapi(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -965,8 +966,7 @@ public class GenNapiCppFile extends GeneratorBase {
 
     private String genFuncCall(FuncObj fo) {
         System.out.println("genFuncCall : " + fo.getName());
-        String resContent = NAPI_FUNCTION_CALL_EXPRESSION.replace(NAPI_FUNCTION_NAME, fo.getName());
-        return resContent;
+        return NAPI_FUNCTION_CALL_EXPRESSION.replace(NAPI_FUNCTION_NAME, fo.getName());
     };
 
     private String genFuncRet(String retType) {
@@ -985,31 +985,29 @@ public class GenNapiCppFile extends GeneratorBase {
 
     private String genNapiFunctionContent(FuncObj fo) {
         String funcName = fo.getName();
-        funcName = funcName.isEmpty()? fo.getAlias() : funcName;
+        funcName = funcName.isEmpty() ? fo.getAlias() : funcName;
         funcName = StringUtils.unCapitalFirst(funcName);
-        String funcPropertyStr = NAPI_FUNCTION_DESC_DECLARE.replace(NAPI_FUNCTION_NAME,
-                funcName);
-        String funcInitStr = NAPI_FUNCTION_INIT.replace(NAPI_FUNCTION_DESC_PROPERTY,
-                funcPropertyStr);
-
-        String funcDeclareStr = NAPI_FUNCTION_DECLARE.replace(NAPI_FUNCTION_NAME, funcName);
 
         String funcGetParamStr = "";
         String funcCallStr = "";
         String funcRetStr = "";
         int i = 0;
-        for (ParamObj pa: fo.getParamList()) {
+        for (ParamObj pa : fo.getParamList()) {
             funcGetParamStr += genGetParam(pa, i);
             i++;
         }
         funcCallStr += genFuncCall(fo);
         funcRetStr += genFuncRet(fo.getRetValue());
         String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT, Integer.toString(fo.getParamList().size()));
+        String funcDeclareStr = NAPI_FUNCTION_DECLARE.replace(NAPI_FUNCTION_NAME, funcName);
         funcDeclareStr = funcDeclareStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
         funcDeclareStr = funcDeclareStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
         funcDeclareStr = funcDeclareStr.replace(NAPI_CLASS_RETURN_VALUE_DECLARE, funcRetStr);
 
-
+        String funcPropertyStr = NAPI_FUNCTION_DESC_DECLARE.replace(NAPI_FUNCTION_NAME,
+                funcName);
+        String funcInitStr = NAPI_FUNCTION_INIT.replace(NAPI_FUNCTION_DESC_PROPERTY,
+                funcPropertyStr);
         String resContent = "";
         resContent += funcDeclareStr + funcInitStr;
         return resContent;
