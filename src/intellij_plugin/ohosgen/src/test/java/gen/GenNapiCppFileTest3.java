@@ -182,6 +182,7 @@ class GenNapiCppFileTest3 {
             "\t{ \"toCapital\", nullptr, toCapitalNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
             "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+
     private String testFuncContent3 = "\nstd::string Nemw(std::string str = \"joke\", int length = 0);\n" +
             "napi_value nemwNapi(napi_env env, napi_callback_info info)\n" +
             "{\n" +
@@ -260,6 +261,7 @@ class GenNapiCppFileTest3 {
             "\t{ \"nemw\", nullptr, nemwNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
             "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+
     private String testFuncContent4 = "\nstd::string Nemw(auto str, auto length);\n" +
             "napi_value nemwNapi(napi_env env, napi_callback_info info)\n" +
             "{\n" +
@@ -295,6 +297,7 @@ class GenNapiCppFileTest3 {
             "\t{ \"nemw\", nullptr, nemwNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
             "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+
     private String testFuncContent5 = "\nNemw(auto str, auto length);\n" +
             "napi_value nemwNapi(napi_env env, napi_callback_info info)\n" +
             "{\n" +
@@ -322,6 +325,7 @@ class GenNapiCppFileTest3 {
             "\t{ \"nemw\", nullptr, nemwNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
             "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+
     private String testFuncContent6 = "\ntemplate<typename T> T* getArray(T* items);\n" +
             "napi_value getArrayNapi(napi_env env, napi_callback_info info)\n" +
             "{\n" +
@@ -349,6 +353,7 @@ class GenNapiCppFileTest3 {
             "\t{ \"getArray\", nullptr, getArrayNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
             "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+
     private String testFuncContent7 = "\ntemplate<typename T, typename U> void displayType(T id, U name);\n" +
             "napi_value displayTypeNapi(napi_env env, napi_callback_info info)\n" +
             "{\n" +
