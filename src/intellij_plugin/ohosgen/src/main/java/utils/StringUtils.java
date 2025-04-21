@@ -92,4 +92,30 @@ public class StringUtils {
         String lowerStr = str.toLowerCase(Locale.ROOT);
         return lowerStr.equals("true") || lowerStr.equals("false");
     }
+
+    /**
+     * 小写第一个字母
+     *
+     * @param input 字符串
+     * @return 返回字符串
+     */
+    public static String unCapitalFirst(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        return input.substring(0, 1).toLowerCase(Locale.ROOT) + input.substring(1);
+    }
+
+    /**
+     * 大写第一个字母
+     *
+     * @param input 字符串
+     * @return 返回字符串
+     */
+    public static String capitalFirst(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase(Locale.ROOT) + input.substring(1);
+    }
 }
