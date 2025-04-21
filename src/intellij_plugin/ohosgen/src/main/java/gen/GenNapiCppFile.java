@@ -34,91 +34,244 @@ import java.util.Map;
  * @version 1.0
  */
 public class GenNapiCppFile extends GeneratorBase {
-    private static final String CPP_ENUM_TOKEN = "enum";
-    private static final String CPP_CLASS_TOKEN = "class";
-    private static final String CPP_STRUCT_TOKEN = "struct";
-    private static final String CPP_UNION_TOKEN = "union";
-    private static final String CPP_TEMPLATE_TOKEN = "template";
-    private static final String CPP_TYPE_NAME_TOKEN = "typename";
-    private static final String CPP_STAR_TOKEN = "*";
-    private static final String CPP_CHAR_START_TOKEN = "char*";
-    private static final String CPP_AUTO_TOKEN = "auto";
-    private static final String CPP_EXPORT_TOKEN = "export";
-    private static final String CPP_IMPLEMENCPP_TOKEN = "implements";
-    private static final String CPP_EXTENDS_TOKEN = "extends";
-    private static final String CPP_CONST_TOKEN = "const";
-    private static final String CPP_PRIVATE_TOKEN = "private";
-    private static final String CPP_PUBLIC_TOKEN = "public";
-    private static final String CPP_INTERFACE_TOKEN = "interface";
-    private static final String CPP_PROTECTED_TOKEN = "protected";
-    private static final String CPP_STATIC_TOKEN = "static";
-    private static final String CPP_ANY_TOKEN = "any";
-    private static final String CPP_NUMBER_TOKEN = "number";
-    private static final String CPP_NEVER_TOKEN = "never";
-    private static final String CPP_BOOLEAN_TOKEN = "boolean";
-    private static final String CPP_STRING_TOKEN = "string";
-    private static final String CPP_UNIQUE_TOKEN = "unique";
-    private static final String CPP_SYMBOL_TOKEN = "symbol";
-    private static final String CPP_UNDEFINED_TOKEN = "undefined";
-    private static final String CPP_OBJECT_TOKEN = "object";
-    private static final String CPP_OF_TOKEN = "of";
-    private static final String CPP_KEYOF_TOKEN = "keyof";
-    private static final String CPP_TYPE_TOKEN = "type";
-    private static final String CPP_CONSTRUCTOR_TOKEN = "constructor";
-    private static final String CPP_NAMESPACE_TOKEN = "namespace";
-    private static final String CPP_REQUIRE_TOKEN = "require";
-    private static final String CPP_MODULE_TOKEN = "module";
-    private static final String CPP_DECLARE_TOKEN = "declare";
-    private static final String CPP_ABSTRACT_TOKEN = "abstract";
-    private static final String CPP_DEBUGGER_TOKEN = "debugger";
-    private static final String CPP_FUNCTION_TOKEN = "function";
-    private static final String CPP_THIS_TOKEN = "this";
-    private static final String CPP_WITH_TOKEN = "with";
-    private static final String CPP_DEFAULT_TOKEN = "default";
-    private static final String CPP_READONLY_TOKEN = "readonly";
-    private static final String CPP_ASYNC_TOKEN = "async";
-    private static final String CPP_AWAIT_TOKEN = "await";
-    private static final String CPP_YIELD_TOKEN = "yield";
-    private static final String CPP_NEW_LINE = "\n";
-    private static final String CPP_TAB_SPACE = "\t";
-    private static final String CPP_BLANK_SPACE = " ";
-    private static final String CPP_SPLIT = " | ";
-    private static final String CPP_EQUAL = " = ";
-    private static final String CPP_COMMA = ",";
-    private static final String CPP_DOUBLE_QUOTATION = "\"";
-    private static final String CPP_UNDER_LINE = "_";
-    private static final String CPP_SEMICOLON = ";";
-    private static final String CPP_COLON = ":";
-    private static final String CPP_ELLIPSIS = "...";
-    private static final String CPP_DOT = ".";
-    private static final String CPP_LEFT_BRACE = "{";
-    private static final String CPP_RIGHT_BRACE = "}";
-    private static final String CPP_LEFT_PARENTHESES = "(";
-    private static final String CPP_RIGHT_PARENTHESES = ")";
-    private static final String CPP_LEFT_SQUARE_BRACKET = "[";
-    private static final String CPP_RIGHT_SQUARE_BRACKET = "]";
-    private static final String CPP_LEFT_ANGLE_BRACKET = "<";
-    private static final String CPP_RIGHT_ANGLE_BRACKET = ">";
+    private static final String NAPI_ENUM_TOKEN = "enum";
+    private static final String NAPI_CLASS_TOKEN = "class";
+    private static final String NAPI_STRUCT_TOKEN = "struct";
+    private static final String NAPI_UNION_TOKEN = "union";
+    private static final String NAPI_TEMPLATE_TOKEN = "template";
+    private static final String NAPI_TYPE_NAME_TOKEN = "typename";
+    private static final String NAPI_STAR_TOKEN = "*";
+    private static final String NAPI_CHAR_START_TOKEN = "char*";
+    private static final String NAPI_AUTO_TOKEN = "auto";
+    private static final String NAPI_EXPORT_TOKEN = "export";
+    private static final String NAPI_IMPLEMENNAPI_TOKEN = "implements";
+    private static final String NAPI_EXTENDS_TOKEN = "extends";
+    private static final String NAPI_CONST_TOKEN = "const";
+    private static final String NAPI_PRIVATE_TOKEN = "private";
+    private static final String NAPI_PUBLIC_TOKEN = "public";
+    private static final String NAPI_INTERFACE_TOKEN = "interface";
+    private static final String NAPI_PROTECTED_TOKEN = "protected";
+    private static final String NAPI_STATIC_TOKEN = "static";
+    private static final String NAPI_ANY_TOKEN = "any";
+    private static final String NAPI_NUMBER_TOKEN = "number";
+    private static final String NAPI_NEVER_TOKEN = "never";
+    private static final String NAPI_BOOLEAN_TOKEN = "boolean";
+    private static final String NAPI_STRING_TOKEN = "string";
+    private static final String NAPI_UNIQUE_TOKEN = "unique";
+    private static final String NAPI_SYMBOL_TOKEN = "symbol";
+    private static final String NAPI_UNDEFINED_TOKEN = "undefined";
+    private static final String NAPI_OBJECT_TOKEN = "object";
+    private static final String NAPI_OF_TOKEN = "of";
+    private static final String NAPI_KEYOF_TOKEN = "keyof";
+    private static final String NAPI_TYPE_TOKEN = "type";
+    private static final String NAPI_CONSTRUCTOR_TOKEN = "constructor";
+    private static final String NAPI_NAMESPACE_TOKEN = "namespace";
+    private static final String NAPI_REQUIRE_TOKEN = "require";
+    private static final String NAPI_MODULE_TOKEN = "module";
+    private static final String NAPI_DECLARE_TOKEN = "declare";
+    private static final String NAPI_ABSTRACT_TOKEN = "abstract";
+    private static final String NAPI_DEBUGGER_TOKEN = "debugger";
+    private static final String NAPI_FUNCTION_TOKEN = "function";
+    private static final String NAPI_THIS_TOKEN = "this";
+    private static final String NAPI_WITH_TOKEN = "with";
+    private static final String NAPI_DEFAULT_TOKEN = "default";
+    private static final String NAPI_READONLY_TOKEN = "readonly";
+    private static final String NAPI_ASYNC_TOKEN = "async";
+    private static final String NAPI_AWAIT_TOKEN = "await";
+    private static final String NAPI_YIELD_TOKEN = "yield";
+    private static final String NAPI_NEW_LINE = "\n";
+    private static final String NAPI_TAB_SPACE = "\t";
+    private static final String NAPI_BLANK_SPACE = " ";
+    private static final String NAPI_SPLIT = " | ";
+    private static final String NAPI_EQUAL = " = ";
+    private static final String NAPI_COMMA = ",";
+    private static final String NAPI_DOUBLE_QUOTATION = "\"";
+    private static final String NAPI_UNDER_LINE = "_";
+    private static final String NAPI_SEMICOLON = ";";
+    private static final String NAPI_COLON = ":";
+    private static final String NAPI_ELLIPSIS = "...";
+    private static final String NAPI_DOT = ".";
+    private static final String NAPI_LEFT_BRACE = "{";
+    private static final String NAPI_RIGHT_BRACE = "}";
+    private static final String NAPI_LEFT_PARENTHESES = "(";
+    private static final String NAPI_RIGHT_PARENTHESES = ")";
+    private static final String NAPI_LEFT_SQUARE_BRACKET = "[";
+    private static final String NAPI_RIGHT_SQUARE_BRACKET = "]";
+    private static final String NAPI_LEFT_ANGLE_BRACKET = "<";
+    private static final String NAPI_RIGHT_ANGLE_BRACKET = ">";
 
-    private static final String CPP_STD_STRING = "std::string";
-    private static final String CPP_STD_VECTOR = "std::vector";
-    private static final String CPP_STD_LIST = "std::list";
-    private static final String CPP_STD_ARRAY = "std::array";
-    private static final String CPP_STD_STACK = "std::stack";
-    private static final String CPP_STD_QUEUE = "std::queue";
-    private static final String CPP_STD_PAIR = "std::pair";
-    private static final String CPP_STD_MAP = "std::map";
-    private static final String CPP_STD_SET = "std::set";
-    private static final String CPP_STD_DEQUE = "std::deque";
-    private static final String CPP_STD_MULTIMAP = "std::multimap";
-    private static final String CPP_STD_MULTISET = "std::multiset";
+    private static final String NAPI_STD_STRING = "std::string";
+    private static final String NAPI_STD_VECTOR = "std::vector";
+    private static final String NAPI_STD_LIST = "std::list";
+    private static final String NAPI_STD_ARRAY = "std::array";
+    private static final String NAPI_STD_STACK = "std::stack";
+    private static final String NAPI_STD_QUEUE = "std::queue";
+    private static final String NAPI_STD_PAIR = "std::pair";
+    private static final String NAPI_STD_MAP = "std::map";
+    private static final String NAPI_STD_SET = "std::set";
+    private static final String NAPI_STD_DEQUE = "std::deque";
+    private static final String NAPI_STD_MULTIMAP = "std::multimap";
+    private static final String NAPI_STD_MULTISET = "std::multiset";
 
-    private static final String CPP_STR_SUFFIX = "STR";
-    private static final String CPP_FILE_PREFIX = "ag_";
-    private static final String CPP_FILE_H_SUFFIX = ".h";
-    private static final String CPP_FILE_CPP_SUFFIX = ".cpp";
-    private static final String CPP_FILE_C_SUFFIX = ".c";
-    private static final String CPP_STRUCT_SUFFIX = "ST";
+    private static final String NAPI_STR_SUFFIX = "STR";
+    private static final String NAPI_FILE_PREFIX = "ag_";
+    private static final String NAPI_FILE_H_SUFFIX = ".h";
+    private static final String NAPI_FILE_NAPI_SUFFIX = ".cpp";
+    private static final String NAPI_FILE_C_SUFFIX = ".c";
+    private static final String NAPI_STRUCT_SUFFIX = "ST";
+
+    private static final String NAPI_ENUM_NAME = "NAPI_ENUM_NAME";
+    private static final String NAPI_ENUM_MEM_LIST = "NAPI_ENUM_MEM_LIST";
+    private static final String NAPI_ENUM_VAL_LIST = "NAPI_ENUM_VAL_LIST";
+    private static final String NAPI_ENUM_CNT = "NAPI_ENUM_CNT";
+    private static final String NAPI_ENUM_ITEM_VALUE = "NAPI_ENUM_ITEM_VALUE";
+    private static final String NAPI_ENUM_VALUE_INDEX = "i";
+    private static final String NAPI_ENUM_VALUE_ITER = "value[i]";
+    private static final String NAPI_CREATE_ENUM_DECLARE = "\n// 创建枚举对象\n" +
+            "napi_value CreateNAPI_ENUM_NAMEEnum(napi_env env) {\n" +
+            "\tnapi_value enum_obj;\n" +
+            "\tnapi_create_object(env, &enum_obj);\n" +
+            "\n" +
+            "\t// 添加枚举成员\n" +
+            "\tconst char* members[] = {NAPI_ENUM_MEM_LIST};\n" +
+            "\tconst int values[] = {NAPI_ENUM_VAL_LIST};\n" +
+            "\tfor (int32_t i = 0; i < NAPI_ENUM_CNT; ++i) {\n" +
+            "\t\tnapi_value value;\n" +
+            "\t\tnapi_create_int32(env, NAPI_ENUM_ITEM_VALUE, &value);\n" +
+            "\t\tnapi_set_named_property(env, enum_obj, members[i], value);\n" +
+            "\t}\n" +
+            "\n" +
+            "\treturn enum_obj;\n" +
+            "}\n";
+
+    private static final String NAPI_EXPORT_ENUM = "\t// 创建并绑定枚举\n" +
+            "\tnapi_value NAPI_ENUM_NAME_enum = CreateNAPI_ENUM_NAMEEnum(env);\n" +
+            "\tnapi_set_named_property(env, exports, \"NAPI_ENUM_NAME\", NAPI_ENUM_NAME_enum);\n";
+
+    private static final String NAPI_CLASS_NAME = "NAPI_CLASS_NAME";
+    private static final String NAPI_CLASS_METHOD_NAME = "NAPI_CLASS_METHOD_NAME";
+    private static final String NAPI_CLASS_ATTRIBUTE_NAME = "NAPI_CLASS_ATTRIBUTE_NAME";
+    private static final String NAPI_CONSTRUCTOR_EXPRESSION = "NAPI_CONSTRUCTOR_EXPRESSION";
+    private static final String NAPI_CONSTRUCTOR_DECLARE = "\n\tJSBIND_CONSTRUCTOR<NAPI_CONSTRUCTOR_PARAMS>();";
+    private static final String NAPI_CONSTRUCTOR_PARAMS = "NAPI_CONSTRUCTOR_PARAMS";
+    private static final String NAPI_METHOD_DECLARE = "\n\tJSBIND_METHOD(NAPI_METHOD_NAME, \"NAPI_METHOD_NAME\");" +
+            "\n\tJSBIND_PMETHOD(NAPI_METHOD_NAME, \"NAPI_METHOD_NAMEPromise\");";
+    private static final String NAPI_METHOD_EXPRESSION = "NAPI_METHOD_EXPRESSION";
+    private static final String NAPI_METHOD_NAME = "NAPI_METHOD_NAME";
+    private static final String NAPI_PMETHOD_DECLARE = "\n\tJSBIND_PMETHOD(NAPI_PMETHOD_NAME);";
+    private static final String NAPI_PMETHOD_EXPRESSION = "NAPI_PMETHOD_EXPRESSION";
+    private static final String NAPI_PMETHOD_NAME = "NAPI_PMETHOD_NAME";
+    private static final String NAPI_PROPERTY_DECLARE = "\n\tJSBIND_PROPERTY(NAPI_PROPERTY_NAME);";
+    private static final String NAPI_PROPERTY_EXPRESSION = "NAPI_PROPERTY_EXPRESSION";
+    private static final String NAPI_PROPERTY_NAME = "NAPI_PROPERTY_NAME";
+
+
+    private static final String NAPI_CLASS_CONSTRUCTURE =
+            "\nnapi_value ConstructorNAPI_CLASS_NAME(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
+            "\tnapi_get_undefined(env, &undefineVar);\n" +
+            "\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok &&" +
+            " thisVar != nullptr) {\n" +
+            "\t\tNAPI_CLASS_NAME *reference = new NAPI_CLASS_NAME();\n" +
+            "\t\tif (napi_wrap(env, thisVar,\n" +
+            "\t\t\treinterpret_cast<void *>(reference), DestructorNAPI_CLASS_NAME, nullptr, nullptr) == napi_ok) {\n" +
+            "\t\t\treturn thisVar;\n" +
+            "\t\t}\n" +
+            "\t\treturn thisVar;\n" +
+            "\t}\n" +
+            "\treturn undefineVar;\n" +
+            "};\n";
+    private static final String NAPI_CLASS_DESTRUCTURE =
+            "\nvoid DestructorNAPI_CLASS_NAME(napi_env env, void *nativeObject, void *finalize)\n" +
+            "{\n" +
+            "\tdelete reinterpret_cast<NAPI_CLASS_NAME *>(nativeObject);\n" +
+            "};\n";
+    private static final String NAPI_CLASS_GET_ATTRIBUTE_DECLARE =
+            "\nnapi_value GetNAPI_CLASS_ATTRIBUTE_NAME(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tNAPI_CLASS_NAME *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n";
+    private static final String NAPI_CLASS_SET_ATTRIBUTE_DECLARE =
+            "\nnapi_value SetNAPI_CLASS_ATTRIBUTE_NAME(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tNAPI_CLASS_NAME *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->NAPI_CLASS_ATTRIBUTE_NAME = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n";
+    private static final String NAPI_CLASS_METHOD_DECLARE =
+            "\nnapi_value NAPI_CLASS_METHOD_NAMENAPI_CLASS_NAME(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取napi对象\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tNAPI_CLASS_NAME *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\t// 创建返回参数\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t}\n" +
+            "\treturn result;\n" +
+            "};\n";
+    private static final String NAPI_CLASS_METHOD_PROPERTY = "NAPI_CLASS_METHOD_PROPERTY";
+    private static final String NAPI_CLASS_ATTRIBUTE_PROPERTY = "NAPI_CLASS_ATTRIBUTE_PROPERTY";
+    private static final String NAPI_CLASS_METHOD_PROPERTY_DECLARE =
+            "\t{NAPI_CLASS_METHOD_NAME, nullptr, NAPI_CLASS_METHOD_NAMENAPI_CLASS_NAME, " +
+                    "nullptr, nullptr, nullptr, napi_default, nullptr},\n";
+    private static final String NAPI_CLASS_ATTRIBUTE_PROPERTY_DECLARE =
+            "\t{NAPI_CLASS_ATTRIBUTE_NAME, nullptr, nullptr, GetNAPI_CLASS_ATTRIBUTE_NAMENAPI_CLASS_NAME, " +
+                    "SetNAPI_CLASS_ATTRIBUTE_NAMENAPI_CLASS_NAME, nullptr, napi_default, nullptr},\n";
+    private static final String NAPI_CLASS_PROPERTY_DECLARE =
+            "\nnapi_property_descriptor NAPI_CLASS_NAMEProps[] = {\n" +
+            "NAPI_CLASS_METHOD_PROPERTY" +
+            "NAPI_CLASS_ATTRIBUTE_PROPERTY" +
+            "};\n";
+    private static final String NAPI_CLASS_INIT = "\nnapi_value NAPI_CLASS_NAMEIns = nullptr;\n" +
+            "\tif (napi_define_class(env, \"NAPI_CLASS_NAME\", NAPI_AUTO_LENGTH, " +
+            "ConstructorNAPI_CLASS_NAME, nullptr, sizeof(NAPI_CLASS_NAMEProps) / " +
+            "sizeof(NAPI_CLASS_NAMEProps[0]), NAPI_CLASS_NAMEProps, " +
+            "&NAPI_CLASS_NAMEIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}\n" +
+            "\tif (napi_set_named_property(env, exports, \"NAPI_CLASS_NAME\", NAPI_CLASS_NAMEIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}";
 
     private String interfaceContent = "";
     private String enumContent = "";
@@ -130,20 +283,35 @@ public class GenNapiCppFile extends GeneratorBase {
     private String constContent = "";
 
     private final Map<String, String> ts2cppMap = Map.ofEntries(
-            Map.entry("any", "auto"),
-            Map.entry("boolean", "bool"),
-            Map.entry("string", "char*"),
-            Map.entry("number", "int"),
-            Map.entry("void", "void"),
-            Map.entry("[]", "*")
+        Map.entry("any", "auto"),
+        Map.entry("boolean", "bool"),
+        Map.entry("string", "std::string"),
+        Map.entry("number", "int"),
+        Map.entry("void", "void"),
+        Map.entry("[]", "*")
     );
 
     private final Map<String, String> tsTokenMap = Map.ofEntries(
-            Map.entry("\"", ""),
-            Map.entry("*", ""),
-            Map.entry("&", ""),
-            Map.entry("(", ""),
-            Map.entry(")", "")
+        Map.entry("\"", ""),
+        Map.entry("*", ""),
+        Map.entry("&", ""),
+        Map.entry("(", ""),
+        Map.entry(")", "")
+    );
+
+    private final Map<String, String> getArguMap = Map.ofEntries(
+        Map.entry("bool", "auto"),
+        Map.entry("string", "napi_get_value_string_utf8"),
+        Map.entry("int", "api_get_value_int32"),
+        Map.entry("uint", "api_get_value_int32"),
+        Map.entry("object", "auto")
+    );
+
+    private final Map<String, String> setArguMap = Map.ofEntries(
+        Map.entry("bool", "auto"),
+        Map.entry("string", "auto"),
+        Map.entry("int", "auto"),
+        Map.entry("object", "auto")
     );
 
     /**
@@ -168,7 +336,7 @@ public class GenNapiCppFile extends GeneratorBase {
             String key = entry.getKey();
             String value = entry.getValue();
             int ret = cppKey.indexOf(key);
-            if (ret >= 0 && value.contains(CPP_STAR_TOKEN)) {
+            if (ret >= 0 && value.contains(NAPI_STAR_TOKEN)) {
                 return cppKey.substring(0, ret) + value;
             } else if (ret >= 0) {
                 return value;
@@ -294,8 +462,8 @@ public class GenNapiCppFile extends GeneratorBase {
     @Override
     public void genFile(String filePath, String fileName) {
         System.out.println("genFile : " + filePath + fileName);
-        String outFileName = filePath + File.separator + CPP_FILE_PREFIX +
-                fileName.replace(".", "_") + CPP_FILE_H_SUFFIX;
+        String outFileName = filePath + File.separator + NAPI_FILE_PREFIX +
+                fileName.replace(".", "_") + NAPI_FILE_H_SUFFIX;
         System.out.println("outFileName : " + outFileName);
 
         FileUtils.createFile(outFileName);
@@ -322,6 +490,73 @@ public class GenNapiCppFile extends GeneratorBase {
         System.out.println("genInterfaceList" + iol.toString());
     };
 
+    private String genCppEnumContent(EnumObj eo) {
+        String enumName = eo.getName();
+        enumName = !enumName.isEmpty() ? enumName : eo.getAlias();
+        List<String> memList = eo.getMemberList();
+        List<String> vaList = eo.getValueList();
+        int i = 0;
+        String resContent = "";
+        resContent += NAPI_NEW_LINE + NAPI_ENUM_TOKEN +
+                NAPI_BLANK_SPACE + enumName + NAPI_BLANK_SPACE + NAPI_LEFT_BRACE;
+        for (String memItem : memList) {
+            resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + memItem;
+            if (vaList.size() > i && !vaList.get(i).isEmpty()) {
+                resContent += NAPI_EQUAL + replaceTsToken(vaList.get(i)) + NAPI_COMMA;
+            } else {
+                resContent += NAPI_COMMA;
+            }
+            i++;
+        }
+
+        resContent = StringUtils.removeLastSpace(resContent);
+        resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
+
+        i = 0;
+        if (vaList.size() > i && !vaList.get(i).isEmpty() &&
+                vaList.get(i).contains("\"")) {
+            resContent += NAPI_NEW_LINE + NAPI_CHAR_START_TOKEN + NAPI_BLANK_SPACE +
+                    enumName.toLowerCase(Locale.ROOT) + NAPI_UNDER_LINE + NAPI_STR_SUFFIX +
+                    NAPI_LEFT_SQUARE_BRACKET + NAPI_RIGHT_SQUARE_BRACKET + NAPI_EQUAL + NAPI_LEFT_BRACE;
+            for (String val : vaList) {
+                resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + NAPI_LEFT_SQUARE_BRACKET +
+                        memList.get(i) + NAPI_RIGHT_SQUARE_BRACKET + NAPI_EQUAL + val + NAPI_COMMA;
+                i++;
+            }
+            resContent = StringUtils.removeLastCharacter(resContent, 1);
+            resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
+        }
+        return resContent;
+    }
+
+    private String genNapiEnumContent(EnumObj eo) {
+        String enumName = eo.getName();
+        enumName = !enumName.isEmpty() ? enumName : eo.getAlias();
+        List<String> memList = eo.getMemberList();
+        String enumNameList = "";
+        for (String memItem : memList) {
+            enumNameList += NAPI_DOUBLE_QUOTATION + memItem + NAPI_DOUBLE_QUOTATION + NAPI_COMMA + NAPI_BLANK_SPACE;
+        }
+        enumNameList = StringUtils.removeLastCharacter(enumNameList, 2);
+
+        String enumValueList = "";
+        List<String> valueList = eo.getValueList();
+        for (String valItem : valueList) {
+            enumValueList += valItem + NAPI_COMMA + NAPI_BLANK_SPACE;
+        }
+        enumValueList = StringUtils.removeLastCharacter(enumValueList, 2);
+
+        String enumDeclare = NAPI_CREATE_ENUM_DECLARE.replace(NAPI_ENUM_NAME, enumName);
+        enumDeclare = enumDeclare.replace(NAPI_ENUM_MEM_LIST, enumNameList);
+        enumDeclare = enumDeclare.replace(NAPI_ENUM_VAL_LIST, enumValueList);
+        enumDeclare = enumDeclare.replace(NAPI_ENUM_ITEM_VALUE, valueList.isEmpty() ?
+                NAPI_ENUM_VALUE_INDEX : NAPI_ENUM_VALUE_ITER);
+        enumDeclare = enumDeclare.replace(NAPI_ENUM_CNT, Integer.toString(memList.size()));
+        String resContent = "";
+        resContent = enumDeclare + NAPI_EXPORT_ENUM.replace(NAPI_ENUM_NAME, enumName);
+        return resContent;
+    }
+
     /**
      * 生成输出内容
      *
@@ -333,41 +568,8 @@ public class GenNapiCppFile extends GeneratorBase {
 
         String resContent = "";
         for (EnumObj eo : eol) {
-            String enumName = eo.getName();
-            enumName = !enumName.isEmpty() ? enumName : eo.getAlias();
-            List<String> memList = eo.getMemberList();
-            List<String> vaList = eo.getValueList();
-            int i = 0;
-            resContent += CPP_NEW_LINE + CPP_ENUM_TOKEN +
-                    CPP_BLANK_SPACE + enumName + CPP_BLANK_SPACE + CPP_LEFT_BRACE;
-            for (String memItem : memList) {
-                resContent += CPP_NEW_LINE + CPP_TAB_SPACE + memItem;
-                if (vaList.size() > i && !vaList.get(i).isEmpty()) {
-                    resContent += CPP_EQUAL + replaceTsToken(vaList.get(i)) + CPP_COMMA;
-                } else {
-                    resContent += CPP_COMMA;
-                }
-                i++;
-            }
-
-            resContent = StringUtils.removeLastSpace(resContent);
-            resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
-
-            i = 0;
-            if (vaList.size() > i && !vaList.get(i).isEmpty() &&
-                    vaList.get(i).contains("\"")) {
-                resContent += CPP_NEW_LINE + CPP_CHAR_START_TOKEN + CPP_BLANK_SPACE +
-                        enumName.toLowerCase(Locale.ROOT) + CPP_UNDER_LINE + CPP_STR_SUFFIX +
-                        CPP_LEFT_SQUARE_BRACKET + CPP_RIGHT_SQUARE_BRACKET + CPP_EQUAL + CPP_LEFT_BRACE;
-                for (String val : vaList) {
-                    resContent += CPP_NEW_LINE + CPP_TAB_SPACE + CPP_LEFT_SQUARE_BRACKET +
-                            memList.get(i) + CPP_RIGHT_SQUARE_BRACKET + CPP_EQUAL + val + CPP_COMMA;
-                    i++;
-                }
-                resContent = StringUtils.removeLastCharacter(resContent, 1);
-                resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
-
-            }
+            resContent += genCppEnumContent(eo);
+            resContent += genNapiEnumContent(eo);
         }
 
         this.enumContent = resContent;
@@ -377,22 +579,128 @@ public class GenNapiCppFile extends GeneratorBase {
         String tempResContent = content;
         for (FuncObj funcItem : funcList) {
             String retValue = funcItem.getRetValue();
-            retValue = retValue.isEmpty() ? "" : ts2CppKey(retValue) + CPP_BLANK_SPACE;
-            tempResContent += CPP_NEW_LINE + CPP_TAB_SPACE + retValue +
-                    replaceTsToken(funcItem.getName()) + CPP_LEFT_PARENTHESES;
+            retValue = retValue.isEmpty() ? "" : ts2CppKey(retValue) + NAPI_BLANK_SPACE;
+            tempResContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + retValue +
+                    replaceTsToken(funcItem.getName()) + NAPI_LEFT_PARENTHESES;
             List<ParamObj> pol = funcItem.getParamList();
             for (ParamObj poItem : pol) {
                 String retType = ts2CppKey(poItem.getType()).isEmpty() ?
-                        CPP_AUTO_TOKEN : ts2CppKey(poItem.getType());
-                tempResContent += (poItem.getName() == null) ? retType + CPP_COMMA + CPP_BLANK_SPACE :
-                        retType + CPP_BLANK_SPACE + replaceTsToken(poItem.getName()) + CPP_COMMA + CPP_BLANK_SPACE;
+                        NAPI_AUTO_TOKEN : ts2CppKey(poItem.getType());
+                tempResContent += (poItem.getName() == null) ? retType + NAPI_COMMA + NAPI_BLANK_SPACE :
+                        retType + NAPI_BLANK_SPACE + replaceTsToken(poItem.getName()) + NAPI_COMMA + NAPI_BLANK_SPACE;
             }
             if (!pol.isEmpty()) {
                 tempResContent = StringUtils.removeLastCharacter(tempResContent, 2);
             }
-            tempResContent += CPP_RIGHT_PARENTHESES + CPP_SEMICOLON;
+            tempResContent += NAPI_RIGHT_PARENTHESES + NAPI_SEMICOLON;
         }
         return tempResContent;
+    }
+
+    private String genCppClassContent(ClassObj co) {
+        String className = co.getName();
+        className = !className.isEmpty() ? className : co.getAlias();
+
+        String templateStr = !co.getTempList().isEmpty() ?
+                NAPI_TEMPLATE_TOKEN + NAPI_BLANK_SPACE + NAPI_LEFT_ANGLE_BRACKET : "";
+        for (String teStr : co.getTempList()) {
+            templateStr += NAPI_TYPE_NAME_TOKEN + NAPI_BLANK_SPACE + teStr + NAPI_COMMA + NAPI_BLANK_SPACE;
+        }
+        templateStr = templateStr.length() > 1 ?
+                StringUtils.removeLastCharacter(templateStr, 2) + NAPI_RIGHT_ANGLE_BRACKET + NAPI_BLANK_SPACE : "";
+
+        List<String> hnList = co.getHeritageNameList();
+        String htStr = hnList.size() > 0 ? NAPI_BLANK_SPACE + NAPI_COLON + NAPI_BLANK_SPACE : "";
+        for (String hName : hnList) {
+            htStr += NAPI_PUBLIC_TOKEN + NAPI_BLANK_SPACE + hName + NAPI_COMMA + NAPI_BLANK_SPACE;
+        }
+        htStr = htStr.length() > 1 ? StringUtils.removeLastCharacter(htStr, 2) : htStr;
+
+        List<String> htempList = co.getHeritageTemplateList();
+        String htempStr = htempList.size() > 0 ? NAPI_LEFT_ANGLE_BRACKET : "";
+        for (String tempStr : htempList) {
+            htempStr += tempStr + NAPI_COMMA + NAPI_BLANK_SPACE;
+        }
+        htempStr = htempList.size() > 0 ?
+                StringUtils.removeLastCharacter(htempStr, 2) + NAPI_RIGHT_ANGLE_BRACKET : "";
+        String resContent = "";
+        resContent += NAPI_NEW_LINE + templateStr + NAPI_CLASS_TOKEN +
+                NAPI_BLANK_SPACE + className + htStr + htempStr + NAPI_BLANK_SPACE + NAPI_LEFT_BRACE;
+        List<ParamObj> paList = co.getParamList();
+        for (ParamObj paItem : paList) {
+            String paType = paItem.getType();
+            String qualifyStr = paItem.getQualifier() == null || paItem.getQualifier().isEmpty() ?
+                    "" : paItem.getQualifier() + NAPI_BLANK_SPACE;
+            resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + qualifyStr + ts2CppKey(paType) +
+                    NAPI_BLANK_SPACE + replaceTsToken(paItem.getName());
+            List<String> initVList = paItem.getvList();
+            if (!initVList.isEmpty()) {
+                resContent += NAPI_EQUAL + initVList.get(0) + NAPI_SEMICOLON;
+            } else {
+                resContent += NAPI_SEMICOLON;
+            }
+        }
+
+        resContent = setClassFunc(co.getFuncList(), resContent);
+
+        resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
+        return resContent;
+    }
+
+    private String genNapiClassContent(ClassObj co) {
+        String className = co.getName();
+        className = !className.isEmpty() ? className : co.getAlias();
+        List<FuncObj> funcList = co.getFuncList();
+        String classNameList = "";
+        String classMethodContent = "";
+        String classMethodProperty = "";
+        for (FuncObj funcItem : funcList) {
+            String classMethodStr = NAPI_CLASS_METHOD_DECLARE.replace(
+                    NAPI_CLASS_NAME, className);
+            classMethodStr = classMethodStr.replace(
+                    NAPI_CLASS_METHOD_NAME, funcItem.getName());
+            classMethodContent += classMethodStr;
+
+            String classMethodPropertyStr = NAPI_CLASS_METHOD_PROPERTY_DECLARE.replace(
+                    NAPI_CLASS_METHOD_NAME, funcItem.getName());
+            classMethodPropertyStr = classMethodPropertyStr.replace(NAPI_CLASS_NAME, className);
+            classMethodProperty += classMethodPropertyStr;
+        }
+
+        String classAttributeContent = "";
+        String classAttributeProperty = "";
+        List<ParamObj> paList = co.getParamList();
+        for (ParamObj paItem : paList) {
+            String getAttributeContent = NAPI_CLASS_GET_ATTRIBUTE_DECLARE.replace(
+                    NAPI_CLASS_ATTRIBUTE_NAME, paItem.getName());
+            getAttributeContent = getAttributeContent.replace(NAPI_CLASS_NAME, className);
+            String setAttributeContent = NAPI_CLASS_SET_ATTRIBUTE_DECLARE.replace(
+                    NAPI_CLASS_ATTRIBUTE_NAME, paItem.getName());
+            setAttributeContent = setAttributeContent.replace(NAPI_CLASS_NAME, className);
+            classAttributeContent += getAttributeContent + setAttributeContent;
+
+            String classAttributeStr = NAPI_CLASS_ATTRIBUTE_PROPERTY_DECLARE.replace(
+                    NAPI_CLASS_ATTRIBUTE_NAME, paItem.getName());
+            classAttributeStr = classAttributeStr.replace(NAPI_CLASS_NAME, className);
+            classAttributeProperty += classAttributeStr;
+        }
+
+
+        String classDeclare = NAPI_CLASS_CONSTRUCTURE.replace(NAPI_CLASS_NAME, className);
+        classDeclare += NAPI_CLASS_DESTRUCTURE.replace(NAPI_CLASS_NAME, className);
+        classDeclare += classMethodContent + classAttributeContent;
+
+        String classPropertyStr = NAPI_CLASS_PROPERTY_DECLARE.replace(NAPI_CLASS_NAME, className);
+        classPropertyStr = classPropertyStr.replace(NAPI_CLASS_METHOD_PROPERTY, classMethodProperty);
+        classPropertyStr = classPropertyStr.replace(NAPI_CLASS_ATTRIBUTE_PROPERTY, classAttributeProperty);
+        classDeclare += classPropertyStr;
+
+        String classInitStr = NAPI_CLASS_INIT.replace(NAPI_CLASS_NAME, className);
+        classDeclare += classInitStr;
+
+        String resContent = "";
+        resContent = classDeclare;
+        return resContent;
     }
 
     /**
@@ -406,51 +714,8 @@ public class GenNapiCppFile extends GeneratorBase {
 
         String resContent = "";
         for (ClassObj co : col) {
-            String className = co.getName();
-            className = !className.isEmpty() ? className : co.getAlias();
-
-            String templateStr = !co.getTempList().isEmpty() ?
-                    CPP_TEMPLATE_TOKEN + CPP_BLANK_SPACE + CPP_LEFT_ANGLE_BRACKET : "";
-            for (String teStr : co.getTempList()) {
-                templateStr += CPP_TYPE_NAME_TOKEN + CPP_BLANK_SPACE + teStr + CPP_COMMA + CPP_BLANK_SPACE;
-            }
-            templateStr = templateStr.length() > 1 ?
-                StringUtils.removeLastCharacter(templateStr, 2) + CPP_RIGHT_ANGLE_BRACKET + CPP_BLANK_SPACE : "";
-
-            List<String> hnList = co.getHeritageNameList();
-            String htStr = hnList.size() > 0 ? CPP_BLANK_SPACE + CPP_COLON + CPP_BLANK_SPACE : "";
-            for (String hName : hnList) {
-                htStr += CPP_PUBLIC_TOKEN + CPP_BLANK_SPACE + hName + CPP_COMMA + CPP_BLANK_SPACE;
-            }
-            htStr = htStr.length() > 1 ? StringUtils.removeLastCharacter(htStr, 2) : htStr;
-
-            List<String> htempList = co.getHeritageTemplateList();
-            String htempStr = htempList.size() > 0 ? CPP_LEFT_ANGLE_BRACKET : "";
-            for (String tempStr : htempList) {
-                htempStr += tempStr + CPP_COMMA + CPP_BLANK_SPACE;
-            }
-            htempStr = htempList.size() > 0 ?
-                StringUtils.removeLastCharacter(htempStr, 2) + CPP_RIGHT_ANGLE_BRACKET : "";
-            resContent += CPP_NEW_LINE + templateStr + CPP_CLASS_TOKEN +
-                    CPP_BLANK_SPACE + className + htStr + htempStr + CPP_BLANK_SPACE + CPP_LEFT_BRACE;
-            List<ParamObj> paList = co.getParamList();
-            for (ParamObj paItem : paList) {
-                String paType = paItem.getType();
-                String qualifyStr = paItem.getQualifier() == null || paItem.getQualifier().isEmpty() ?
-                        "" : paItem.getQualifier() + CPP_BLANK_SPACE;
-                resContent += CPP_NEW_LINE + CPP_TAB_SPACE + qualifyStr + ts2CppKey(paType) +
-                        CPP_BLANK_SPACE + replaceTsToken(paItem.getName());
-                List<String> initVList = paItem.getvList();
-                if (!initVList.isEmpty()) {
-                    resContent += CPP_EQUAL + initVList.get(0) + CPP_SEMICOLON;
-                } else {
-                    resContent += CPP_SEMICOLON;
-                }
-            }
-
-            resContent = setClassFunc(co.getFuncList(), resContent);
-
-            resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
+            resContent += genCppClassContent(co);
+            resContent += genNapiClassContent(co);
         }
         this.classContent = resContent;
     };
@@ -468,32 +733,32 @@ public class GenNapiCppFile extends GeneratorBase {
             String funcName = fo.getName();
             funcName = !funcName.isEmpty() ? funcName : fo.getAlias();
             List<String> tempList = fo.getTempList();
-            String tempStr = tempList.isEmpty() ? "" : CPP_TEMPLATE_TOKEN + CPP_LEFT_ANGLE_BRACKET;
+            String tempStr = tempList.isEmpty() ? "" : NAPI_TEMPLATE_TOKEN + NAPI_LEFT_ANGLE_BRACKET;
             for (String teStr : tempList) {
-                tempStr += CPP_TYPE_NAME_TOKEN + CPP_BLANK_SPACE + teStr + CPP_COMMA + CPP_BLANK_SPACE;
+                tempStr += NAPI_TYPE_NAME_TOKEN + NAPI_BLANK_SPACE + teStr + NAPI_COMMA + NAPI_BLANK_SPACE;
             }
             tempStr = tempList.isEmpty() ? "" :
-                    StringUtils.removeLastCharacter(tempStr, 2) + CPP_RIGHT_ANGLE_BRACKET + CPP_BLANK_SPACE;
+                    StringUtils.removeLastCharacter(tempStr, 2) + NAPI_RIGHT_ANGLE_BRACKET + NAPI_BLANK_SPACE;
             List<ParamObj> paList = fo.getParamList();
             String retValue = ts2CppKey(fo.getRetValue()).isEmpty() ?
-                    "" : ts2CppKey(fo.getRetValue()) + CPP_BLANK_SPACE;
-            resContent += CPP_NEW_LINE + tempStr + retValue +
-                    replaceTsToken(funcName) + CPP_LEFT_PARENTHESES;
+                    "" : ts2CppKey(fo.getRetValue()) + NAPI_BLANK_SPACE;
+            resContent += NAPI_NEW_LINE + tempStr + retValue +
+                    replaceTsToken(funcName) + NAPI_LEFT_PARENTHESES;
 
             for (ParamObj poItem : paList) {
                 String paType = ts2CppKey(poItem.getType()).isEmpty() ?
-                        CPP_AUTO_TOKEN + CPP_BLANK_SPACE : ts2CppKey(poItem.getType()) + CPP_BLANK_SPACE;
+                        NAPI_AUTO_TOKEN + NAPI_BLANK_SPACE : ts2CppKey(poItem.getType()) + NAPI_BLANK_SPACE;
                 String paName = poItem.getName();
                 String defaultVal = poItem.getStrValue(0);
-                defaultVal = defaultVal.isEmpty() ? "" : CPP_EQUAL + defaultVal;
+                defaultVal = defaultVal.isEmpty() ? "" : NAPI_EQUAL + defaultVal;
                 resContent += !paName.isEmpty() ? paType + replaceTsToken(paName) +
-                        defaultVal + CPP_COMMA + CPP_BLANK_SPACE :
-                        paType + CPP_COMMA + CPP_BLANK_SPACE;
+                        defaultVal + NAPI_COMMA + NAPI_BLANK_SPACE :
+                        paType + NAPI_COMMA + NAPI_BLANK_SPACE;
             }
             if (!paList.isEmpty()) {
                 resContent = StringUtils.removeLastCharacter(resContent, 2);
             }
-            resContent += CPP_RIGHT_PARENTHESES + CPP_SEMICOLON;
+            resContent += NAPI_RIGHT_PARENTHESES + NAPI_SEMICOLON;
         }
         this.funcContent = resContent;
         System.out.println("genFuncList : " + resContent);
@@ -514,49 +779,50 @@ public class GenNapiCppFile extends GeneratorBase {
             structName = !structName.isEmpty() ? structName : so.getAlias();
 
             String templateStr = !so.getTemplateList().isEmpty() ?
-                    CPP_TEMPLATE_TOKEN + CPP_BLANK_SPACE + CPP_LEFT_ANGLE_BRACKET : "";
+                    NAPI_TEMPLATE_TOKEN + NAPI_BLANK_SPACE + NAPI_LEFT_ANGLE_BRACKET : "";
             for (String teStr : so.getTemplateList()) {
-                templateStr += CPP_TYPE_NAME_TOKEN + CPP_BLANK_SPACE + teStr + CPP_COMMA + CPP_BLANK_SPACE;
+                templateStr += NAPI_TYPE_NAME_TOKEN + NAPI_BLANK_SPACE + teStr + NAPI_COMMA + NAPI_BLANK_SPACE;
             }
             templateStr = templateStr.length() > 1 ?
-                    StringUtils.removeLastCharacter(templateStr, 2) + CPP_RIGHT_ANGLE_BRACKET + CPP_BLANK_SPACE : "";
+                    StringUtils.removeLastCharacter(templateStr, 2) +
+                    NAPI_RIGHT_ANGLE_BRACKET + NAPI_BLANK_SPACE : "";
 
             List<ParamObj> paList = so.getMemberList();
-            resContent += CPP_NEW_LINE + templateStr + CPP_STRUCT_TOKEN +
-                    CPP_BLANK_SPACE + structName + CPP_BLANK_SPACE + CPP_LEFT_BRACE;
+            resContent += NAPI_NEW_LINE + templateStr + NAPI_STRUCT_TOKEN +
+                    NAPI_BLANK_SPACE + structName + NAPI_BLANK_SPACE + NAPI_LEFT_BRACE;
 
             for (ParamObj paItem : paList) {
-                String paType = paItem.getType().isEmpty() ? CPP_AUTO_TOKEN : paItem.getType();
-                resContent += CPP_NEW_LINE + CPP_TAB_SPACE + ts2CppKey(paType) +
-                        CPP_BLANK_SPACE + paItem.getName();
+                String paType = paItem.getType().isEmpty() ? NAPI_AUTO_TOKEN : paItem.getType();
+                resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + ts2CppKey(paType) +
+                        NAPI_BLANK_SPACE + paItem.getName();
                         ;
                 List<String> initVList = paItem.getvList();
                 if (initVList.size() > 0) {
-                    resContent += CPP_EQUAL + initVList.get(0) + CPP_SEMICOLON;
+                    resContent += NAPI_EQUAL + initVList.get(0) + NAPI_SEMICOLON;
                 } else {
-                    resContent += CPP_SEMICOLON;
+                    resContent += NAPI_SEMICOLON;
                 }
             }
 
             List<FuncObj> funcList = so.getFuncList();
             for (FuncObj funcItem : funcList) {
                 String retValue = ts2CppKey(funcItem.getRetValue()).isEmpty() ? "" :
-                    ts2CppKey(funcItem.getRetValue()) + CPP_BLANK_SPACE;
-                resContent += CPP_NEW_LINE + CPP_TAB_SPACE + retValue +
-                    replaceTsToken(funcItem.getName()) + CPP_LEFT_PARENTHESES;
+                    ts2CppKey(funcItem.getRetValue()) + NAPI_BLANK_SPACE;
+                resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + retValue +
+                    replaceTsToken(funcItem.getName()) + NAPI_LEFT_PARENTHESES;
                 List<ParamObj> pol = funcItem.getParamList();
                 for (ParamObj poItem : pol) {
                     String retType = ts2CppKey(poItem.getType()).isEmpty() ?
-                            CPP_AUTO_TOKEN : ts2CppKey(poItem.getType());
-                    resContent += retType + CPP_BLANK_SPACE + replaceTsToken(poItem.getName()) +
-                            CPP_COMMA + CPP_BLANK_SPACE;
+                            NAPI_AUTO_TOKEN : ts2CppKey(poItem.getType());
+                    resContent += retType + NAPI_BLANK_SPACE + replaceTsToken(poItem.getName()) +
+                            NAPI_COMMA + NAPI_BLANK_SPACE;
                 }
                 resContent = !pol.isEmpty() ? StringUtils.removeLastCharacter(resContent, 2) : resContent;
-                resContent += CPP_RIGHT_PARENTHESES + CPP_SEMICOLON;
+                resContent += NAPI_RIGHT_PARENTHESES + NAPI_SEMICOLON;
             }
 
             resContent = StringUtils.removeLastSpace(resContent);
-            resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
+            resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
         }
         this.structContent = resContent;
     };
@@ -586,58 +852,59 @@ public class GenNapiCppFile extends GeneratorBase {
             unionName = !unionName.isEmpty() ? unionName : uo.getAlias();
 
             String templateStr = !uo.getTemplateList().isEmpty() ?
-                    CPP_TEMPLATE_TOKEN + CPP_BLANK_SPACE + CPP_LEFT_ANGLE_BRACKET : "";
+                    NAPI_TEMPLATE_TOKEN + NAPI_BLANK_SPACE + NAPI_LEFT_ANGLE_BRACKET : "";
             for (String teStr : uo.getTemplateList()) {
-                templateStr += CPP_TYPE_NAME_TOKEN + CPP_BLANK_SPACE + teStr + CPP_COMMA + CPP_BLANK_SPACE;
+                templateStr += NAPI_TYPE_NAME_TOKEN + NAPI_BLANK_SPACE + teStr + NAPI_COMMA + NAPI_BLANK_SPACE;
             }
             templateStr = templateStr.length() > 1 ?
-                    StringUtils.removeLastCharacter(templateStr, 2) + CPP_RIGHT_ANGLE_BRACKET + CPP_BLANK_SPACE : "";
+                    StringUtils.removeLastCharacter(templateStr, 2) +
+                    NAPI_RIGHT_ANGLE_BRACKET + NAPI_BLANK_SPACE : "";
 
-            resContent += CPP_NEW_LINE + templateStr + CPP_UNION_TOKEN +
-                    CPP_BLANK_SPACE + unionName + CPP_LEFT_BRACE;
+            resContent += NAPI_NEW_LINE + templateStr + NAPI_UNION_TOKEN +
+                    NAPI_BLANK_SPACE + unionName + NAPI_LEFT_BRACE;
 
             List<ParamObj> paList = uo.getMemList();
             for (ParamObj paItem : paList) {
                 String paType = paItem.getType();
                 String paName = paItem.getName();
-                resContent += CPP_NEW_LINE + CPP_TAB_SPACE + ts2CppKey(paType)
-                        + CPP_BLANK_SPACE + paName + CPP_SEMICOLON;
+                resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + ts2CppKey(paType)
+                        + NAPI_BLANK_SPACE + paName + NAPI_SEMICOLON;
             }
-            resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE;
-            resContent += CPP_SEMICOLON + CPP_NEW_LINE;
+            resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE;
+            resContent += NAPI_SEMICOLON + NAPI_NEW_LINE;
         }
         this.unionContent = resContent;
     };
 
     private String genVarArrayList(String tmpContent, String paName, List<ParamObj> paList) {
         String resContent = tmpContent;
-        resContent += CPP_NEW_LINE + CPP_STRUCT_TOKEN + CPP_BLANK_SPACE + paName +
-                CPP_STRUCT_SUFFIX + CPP_BLANK_SPACE + CPP_LEFT_BRACE;
+        resContent += NAPI_NEW_LINE + NAPI_STRUCT_TOKEN + NAPI_BLANK_SPACE + paName +
+                NAPI_STRUCT_SUFFIX + NAPI_BLANK_SPACE + NAPI_LEFT_BRACE;
         List<ParamObj> paramList = paList.get(0).getPaList();
         for (ParamObj paItem : paramList) {
             String paStr = paItem.getName();
             String paVal = paItem.getStrValue(0);
             String typeStr = StringUtils.isAllDigits(paVal) ?
-                    CPP_NUMBER_TOKEN : CPP_STD_STRING;
-            typeStr = StringUtils.isBoolean(paVal) ? CPP_BOOLEAN_TOKEN : typeStr;
-            resContent += CPP_NEW_LINE + CPP_TAB_SPACE + typeStr + CPP_BLANK_SPACE + paStr + CPP_SEMICOLON;
+                    NAPI_NUMBER_TOKEN : NAPI_STD_STRING;
+            typeStr = StringUtils.isBoolean(paVal) ? NAPI_BOOLEAN_TOKEN : typeStr;
+            resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + typeStr + NAPI_BLANK_SPACE + paStr + NAPI_SEMICOLON;
         }
-        resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
+        resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
 
-        resContent += CPP_NEW_LINE + CPP_CONST_TOKEN + CPP_BLANK_SPACE + CPP_STD_VECTOR +
-                CPP_LEFT_ANGLE_BRACKET + paName + CPP_STRUCT_SUFFIX + CPP_RIGHT_ANGLE_BRACKET +
-                CPP_BLANK_SPACE + paName + CPP_EQUAL + CPP_LEFT_BRACE;
+        resContent += NAPI_NEW_LINE + NAPI_CONST_TOKEN + NAPI_BLANK_SPACE + NAPI_STD_VECTOR +
+                NAPI_LEFT_ANGLE_BRACKET + paName + NAPI_STRUCT_SUFFIX + NAPI_RIGHT_ANGLE_BRACKET +
+                NAPI_BLANK_SPACE + paName + NAPI_EQUAL + NAPI_LEFT_BRACE;
         for (ParamObj paramListItem : paList) {
             List<ParamObj> subParamList = paramListItem.getPaList();
-            resContent += CPP_NEW_LINE + CPP_TAB_SPACE + CPP_LEFT_BRACE;
+            resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + NAPI_LEFT_BRACE;
             for (ParamObj paItem : subParamList) {
                 String paVal = paItem.getStrValue(0);
-                resContent += paVal + CPP_COMMA + CPP_BLANK_SPACE;
+                resContent += paVal + NAPI_COMMA + NAPI_BLANK_SPACE;
             }
             resContent = StringUtils.removeLastCharacter(resContent, 2);
-            resContent += CPP_RIGHT_BRACE + CPP_COMMA;
+            resContent += NAPI_RIGHT_BRACE + NAPI_COMMA;
         }
-        resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
+        resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
         return resContent;
     };
 
@@ -653,30 +920,30 @@ public class GenNapiCppFile extends GeneratorBase {
         String resContent = "";
         for (ParamObj po : pol) {
             String paName = po.getName();
-            String paType = ts2CppKey(po.getType()).isEmpty() ? CPP_AUTO_TOKEN : ts2CppKey(po.getType());
+            String paType = ts2CppKey(po.getType()).isEmpty() ? NAPI_AUTO_TOKEN : ts2CppKey(po.getType());
             String paValue = po.getStrValue(0);
             List<ParamObj> paList = po.getPaList();
             if (paList.isEmpty()) {
-                resContent += CPP_NEW_LINE + CPP_EXTENDS_TOKEN + CPP_BLANK_SPACE + CPP_CONST_TOKEN +
-                        CPP_BLANK_SPACE + paType + CPP_BLANK_SPACE + paName + CPP_EQUAL + paValue;
+                resContent += NAPI_NEW_LINE + NAPI_EXTENDS_TOKEN + NAPI_BLANK_SPACE + NAPI_CONST_TOKEN +
+                        NAPI_BLANK_SPACE + paType + NAPI_BLANK_SPACE + paName + NAPI_EQUAL + paValue;
 
-                resContent += CPP_SEMICOLON + CPP_NEW_LINE;
+                resContent += NAPI_SEMICOLON + NAPI_NEW_LINE;
             } else if (paList.get(0).getPaList().isEmpty()) {
                 String valType = StringUtils.isAllDigits(paList.get(0).getStrValue(0)) ?
-                        CPP_NUMBER_TOKEN : CPP_STD_STRING;
-                resContent += CPP_NEW_LINE + CPP_EXTENDS_TOKEN + CPP_BLANK_SPACE + CPP_CONST_TOKEN +
-                        CPP_BLANK_SPACE + CPP_STD_MAP + CPP_LEFT_ANGLE_BRACKET + CPP_STD_STRING +
-                        CPP_COMMA + CPP_BLANK_SPACE + valType + CPP_RIGHT_BRACE + CPP_BLANK_SPACE +
-                        paName + CPP_EQUAL + CPP_LEFT_BRACE;
+                        NAPI_NUMBER_TOKEN : NAPI_STD_STRING;
+                resContent += NAPI_NEW_LINE + NAPI_EXTENDS_TOKEN + NAPI_BLANK_SPACE + NAPI_CONST_TOKEN +
+                        NAPI_BLANK_SPACE + NAPI_STD_MAP + NAPI_LEFT_ANGLE_BRACKET + NAPI_STD_STRING +
+                        NAPI_COMMA + NAPI_BLANK_SPACE + valType + NAPI_RIGHT_BRACE + NAPI_BLANK_SPACE +
+                        paName + NAPI_EQUAL + NAPI_LEFT_BRACE;
                 for (ParamObj paItem : paList) {
                     String pName = paItem.getName();
                     String pVal = paItem.getStrValue(0);
-                    resContent += CPP_NEW_LINE + CPP_TAB_SPACE + CPP_LEFT_BRACE + CPP_DOUBLE_QUOTATION +
-                            pName + CPP_DOUBLE_QUOTATION + CPP_COMMA + CPP_BLANK_SPACE + pVal +
-                            CPP_RIGHT_BRACE + CPP_COMMA;
+                    resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + NAPI_LEFT_BRACE + NAPI_DOUBLE_QUOTATION +
+                            pName + NAPI_DOUBLE_QUOTATION + NAPI_COMMA + NAPI_BLANK_SPACE + pVal +
+                            NAPI_RIGHT_BRACE + NAPI_COMMA;
                 }
                 resContent = StringUtils.removeLastCharacter(resContent, 1);
-                resContent += CPP_NEW_LINE + CPP_RIGHT_BRACE + CPP_SEMICOLON + CPP_NEW_LINE;
+                resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
             } else if (!(paList.get(0).getPaList().isEmpty())) {
                 resContent = genVarArrayList(resContent, paName, paList);
             }

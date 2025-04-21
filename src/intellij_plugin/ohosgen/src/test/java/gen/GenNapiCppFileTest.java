@@ -18,12 +18,10 @@ package gen;
 import grammar.*;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static utils.FileUtils.readText;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -35,6 +33,941 @@ import static utils.FileUtils.readText;
  * @since 2025-02-28
  */
 class GenNapiCppFileTest {
+    private String enumContTest3 = "\nenum Colors {\n" +
+            "\tRed = RED,\n" +
+            "\tGreen = GREEN,\n" +
+            "\tBlue = BLUE,\n" +
+            "};\n" +
+            "\n" +
+            "char* colors_STR[] = {\n" +
+            "\t[Red] = \"RED\",\n" +
+            "\t[Green] = \"GREEN\",\n" +
+            "\t[Blue] = \"BLUE\"\n" +
+            "};\n" +
+            "\n" +
+            "// 创建枚举对象\n" +
+            "napi_value CreateColorsEnum(napi_env env) {\n" +
+            "\tnapi_value enum_obj;\n" +
+            "\tnapi_create_object(env, &enum_obj);\n" +
+            "\n" +
+            "\t// 添加枚举成员\n" +
+            "\tconst char* members[] = {\"Red\", \"Green\", \"Blue\"};\n" +
+            "\tconst int values[] = {\"RED\", \"GREEN\", \"BLUE\"};\n" +
+            "\tfor (int32_t i = 0; i < 3; ++i) {\n" +
+            "\t\tnapi_value value;\n" +
+            "\t\tnapi_create_int32(env, value[i], &value);\n" +
+            "\t\tnapi_set_named_property(env, enum_obj, members[i], value);\n" +
+            "\t}\n" +
+            "\n" +
+            "\treturn enum_obj;\n" +
+            "}\n" +
+            "\t// 创建并绑定枚举\n" +
+            "\tnapi_value Colors_enum = CreateColorsEnum(env);\n" +
+            "\tnapi_set_named_property(env, exports, \"Colors\", Colors_enum);\n";
+
+    private String classContTest1 = "\nclass TestClass {\n" +
+            "\tstd::string name;\n" +
+            "\tint age;\n" +
+            "\tint add(int a, int b);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value ConstructorTestClass(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
+            "\tnapi_get_undefined(env, &undefineVar);\n" +
+            "\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
+            "napi_ok && thisVar != nullptr) {\n" +
+            "\t\tTestClass *reference = new TestClass();\n" +
+            "\t\tif (napi_wrap(env, thisVar,\n" +
+            "\t\t\treinterpret_cast<void *>(reference), DestructorTestClass, nullptr, nullptr) == napi_ok) {\n" +
+            "\t\t\treturn thisVar;\n" +
+            "\t\t}\n" +
+            "\t\treturn thisVar;\n" +
+            "\t}\n" +
+            "\treturn undefineVar;\n" +
+            "};\n" +
+            "\n" +
+            "void DestructorTestClass(napi_env env, void *nativeObject, void *finalize)\n" +
+            "{\n" +
+            "\tdelete reinterpret_cast<TestClass *>(nativeObject);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value addTestClass(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取napi对象\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\t// 创建返回参数\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t}\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Getname(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Setname(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->name = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Getage(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Setage(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->age = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_property_descriptor TestClassProps[] = {\n" +
+            "\t{add, nullptr, addTestClass, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{name, nullptr, nullptr, GetnameTestClass, SetnameTestClass, nullptr, napi_default, nullptr},\n" +
+            "\t{age, nullptr, nullptr, GetageTestClass, SetageTestClass, nullptr, napi_default, nullptr},\n" +
+            "};\n" +
+            "\n" +
+            "napi_value TestClassIns = nullptr;\n" +
+            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, nullptr, " +
+            "sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, &TestClassIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}\n" +
+            "\tif (napi_set_named_property(env, exports, \"TestClass\", TestClassIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}";
+
+    private String classContTest2 = "\nclass TestClass : public IPerson {\n" +
+            "\tpublic std::string name;\n" +
+            "\tprivate int age;\n" +
+            "\tprotected std::string no;\n" +
+            "\treadonly std::string addr;\n" +
+            "\tconstructor();\n" +
+            "};\n" +
+            "\n" +
+            "napi_value ConstructorTestClass(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
+            "\tnapi_get_undefined(env, &undefineVar);\n" +
+            "\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
+            "\t\tTestClass *reference = new TestClass();\n" +
+            "\t\tif (napi_wrap(env, thisVar,\n" +
+            "\t\t\treinterpret_cast<void *>(reference), DestructorTestClass, nullptr, nullptr) == napi_ok) {\n" +
+            "\t\t\treturn thisVar;\n" +
+            "\t\t}\n" +
+            "\t\treturn thisVar;\n" +
+            "\t}\n" +
+            "\treturn undefineVar;\n" +
+            "};\n" +
+            "\n" +
+            "void DestructorTestClass(napi_env env, void *nativeObject, void *finalize)\n" +
+            "{\n" +
+            "\tdelete reinterpret_cast<TestClass *>(nativeObject);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value constructorTestClass(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取napi对象\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\t// 创建返回参数\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t}\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Getname(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Setname(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->name = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Getage(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Setage(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->age = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Getno(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Setno(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->no = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Getaddr(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Setaddr(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tTestClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->addr = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_property_descriptor TestClassProps[] = {\n" +
+            "\t{constructor, nullptr, constructorTestClass, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{name, nullptr, nullptr, GetnameTestClass, SetnameTestClass, nullptr, napi_default, nullptr},\n" +
+            "\t{age, nullptr, nullptr, GetageTestClass, SetageTestClass, nullptr, napi_default, nullptr},\n" +
+            "\t{no, nullptr, nullptr, GetnoTestClass, SetnoTestClass, nullptr, napi_default, nullptr},\n" +
+            "\t{addr, nullptr, nullptr, GetaddrTestClass, SetaddrTestClass, nullptr, napi_default, nullptr},\n" +
+            "};\n" +
+            "\n" +
+            "napi_value TestClassIns = nullptr;\n" +
+            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, " +
+            "nullptr, sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, " +
+            "&TestClassIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}\n" +
+            "\tif (napi_set_named_property(env, exports, \"TestClass\", TestClassIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}";
+
+    private String classContTest3 = "\nclass Employee : public Person {\n" +
+            "\tint empCode;\n" +
+            "\tauto currentUser;\n" +
+            "\tstatic int pi = 3.14;\n" +
+            "\tconstructor();\n" +
+            "\tvoid displayName();\n" +
+            "};\n" +
+            "\n" +
+            "napi_value ConstructorEmployee(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
+            "\tnapi_get_undefined(env, &undefineVar);\n" +
+            "\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) ==" +
+            " napi_ok && thisVar != nullptr) {\n" +
+            "\t\tEmployee *reference = new Employee();\n" +
+            "\t\tif (napi_wrap(env, thisVar,\n" +
+            "\t\t\treinterpret_cast<void *>(reference), DestructorEmployee, nullptr, nullptr) == napi_ok) {\n" +
+            "\t\t\treturn thisVar;\n" +
+            "\t\t}\n" +
+            "\t\treturn thisVar;\n" +
+            "\t}\n" +
+            "\treturn undefineVar;\n" +
+            "};\n" +
+            "\n" +
+            "void DestructorEmployee(napi_env env, void *nativeObject, void *finalize)\n" +
+            "{\n" +
+            "\tdelete reinterpret_cast<Employee *>(nativeObject);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value constructorEmployee(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取napi对象\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tEmployee *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\t// 创建返回参数\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t}\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value displayNameEmployee(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取napi对象\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tEmployee *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\t// 创建返回参数\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t}\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value GetempCode(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tEmployee *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value SetempCode(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tEmployee *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->empCode = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value GetcurrentUser(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tEmployee *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value SetcurrentUser(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tEmployee *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->currentUser = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Getpi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tEmployee *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Setpi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tEmployee *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->pi = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_property_descriptor EmployeeProps[] = {\n" +
+            "\t{constructor, nullptr, constructorEmployee, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{displayName, nullptr, displayNameEmployee, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{empCode, nullptr, nullptr, GetempCodeEmployee, SetempCodeEmployee, nullptr, napi_default, nullptr},\n" +
+            "\t{currentUser, nullptr, nullptr, GetcurrentUserEmployee, SetcurrentUserEmployee, nullptr, " +
+            "napi_default, nullptr},\n" +
+            "\t{pi, nullptr, nullptr, GetpiEmployee, SetpiEmployee, nullptr, napi_default, nullptr},\n" +
+            "};\n" +
+            "\n" +
+            "napi_value EmployeeIns = nullptr;\n" +
+            "\tif (napi_define_class(env, \"Employee\", NAPI_AUTO_LENGTH, ConstructorEmployee, nullptr, " +
+            "sizeof(EmployeeProps) / sizeof(EmployeeProps[0]), EmployeeProps, &EmployeeIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}\n" +
+            "\tif (napi_set_named_property(env, exports, \"Employee\", EmployeeIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}";
+
+    private String classContTest4 = "\nclass myClass {\n" +
+            "\tauto foo();\n" +
+            "};\n" +
+            "\n" +
+            "napi_value ConstructormyClass(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
+            "\tnapi_get_undefined(env, &undefineVar);\n" +
+            "\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
+            "napi_ok && thisVar != nullptr) {\n" +
+            "\t\tmyClass *reference = new myClass();\n" +
+            "\t\tif (napi_wrap(env, thisVar,\n" +
+            "\t\t\treinterpret_cast<void *>(reference), DestructormyClass, nullptr, nullptr) == napi_ok) {\n" +
+            "\t\t\treturn thisVar;\n" +
+            "\t\t}\n" +
+            "\t\treturn thisVar;\n" +
+            "\t}\n" +
+            "\treturn undefineVar;\n" +
+            "};\n" +
+            "\n" +
+            "void DestructormyClass(napi_env env, void *nativeObject, void *finalize)\n" +
+            "{\n" +
+            "\tdelete reinterpret_cast<myClass *>(nativeObject);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value foomyClass(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取napi对象\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tmyClass *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\t// 创建返回参数\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t}\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_property_descriptor myClassProps[] = {\n" +
+            "\t{foo, nullptr, foomyClass, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "};\n" +
+            "\n" +
+            "napi_value myClassIns = nullptr;\n" +
+            "\tif (napi_define_class(env, \"myClass\", NAPI_AUTO_LENGTH, ConstructormyClass, nullptr, " +
+            "sizeof(myClassProps) / sizeof(myClassProps[0]), myClassProps, &myClassIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}\n" +
+            "\tif (napi_set_named_property(env, exports, \"myClass\", myClassIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}";
+
+    private String classContTest5 = "\ntemplate <typename T, typename U> class KeyValuePair {\n" +
+            "\tprivate T key;\n" +
+            "\tprivate U val;\n" +
+            "\tvoid setKeyValue(T key, U val);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value ConstructorKeyValuePair(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
+            "\tnapi_get_undefined(env, &undefineVar);\n" +
+            "\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
+            "napi_ok && thisVar != nullptr) {\n" +
+            "\t\tKeyValuePair *reference = new KeyValuePair();\n" +
+            "\t\tif (napi_wrap(env, thisVar,\n" +
+            "\t\t\treinterpret_cast<void *>(reference), DestructorKeyValuePair, nullptr, nullptr) == napi_ok) {\n" +
+            "\t\t\treturn thisVar;\n" +
+            "\t\t}\n" +
+            "\t\treturn thisVar;\n" +
+            "\t}\n" +
+            "\treturn undefineVar;\n" +
+            "};\n" +
+            "\n" +
+            "void DestructorKeyValuePair(napi_env env, void *nativeObject, void *finalize)\n" +
+            "{\n" +
+            "\tdelete reinterpret_cast<KeyValuePair *>(nativeObject);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value setKeyValueKeyValuePair(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取napi对象\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tKeyValuePair *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\t// 创建返回参数\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t}\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Getkey(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tKeyValuePair *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Setkey(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tKeyValuePair *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->key = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Getval(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tKeyValuePair *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value Setval(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tKeyValuePair *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tobj->val = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_property_descriptor KeyValuePairProps[] = {\n" +
+            "\t{setKeyValue, nullptr, setKeyValueKeyValuePair, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{key, nullptr, nullptr, GetkeyKeyValuePair, SetkeyKeyValuePair, nullptr, napi_default, nullptr},\n" +
+            "\t{val, nullptr, nullptr, GetvalKeyValuePair, SetvalKeyValuePair, nullptr, napi_default, nullptr},\n" +
+            "};\n" +
+            "\n" +
+            "napi_value KeyValuePairIns = nullptr;\n" +
+            "\tif (napi_define_class(env, \"KeyValuePair\", NAPI_AUTO_LENGTH, ConstructorKeyValuePair, " +
+            "nullptr, sizeof(KeyValuePairProps) / sizeof(KeyValuePairProps[0]), KeyValuePairProps, " +
+            "&KeyValuePairIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}\n" +
+            "\tif (napi_set_named_property(env, exports, \"KeyValuePair\", KeyValuePairIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}";
+
+    private String classContTest6 =
+            "\ntemplate <typename T, typename U> class kvProcessor : public IKeyValueProcessor<T, U> {\n" +
+            "\tvoid process(T key, U val);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value ConstructorkvProcessor(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
+            "\tnapi_get_undefined(env, &undefineVar);\n" +
+            "\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
+            "\t\tkvProcessor *reference = new kvProcessor();\n" +
+            "\t\tif (napi_wrap(env, thisVar,\n" +
+            "\t\t\treinterpret_cast<void *>(reference), DestructorkvProcessor, nullptr, nullptr) == napi_ok) {\n" +
+            "\t\t\treturn thisVar;\n" +
+            "\t\t}\n" +
+            "\t\treturn thisVar;\n" +
+            "\t}\n" +
+            "\treturn undefineVar;\n" +
+            "};\n" +
+            "\n" +
+            "void DestructorkvProcessor(napi_env env, void *nativeObject, void *finalize)\n" +
+            "{\n" +
+            "\tdelete reinterpret_cast<kvProcessor *>(nativeObject);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value processkvProcessor(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取napi对象\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tkvProcessor *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\t// 创建返回参数\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t}\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_property_descriptor kvProcessorProps[] = {\n" +
+            "\t{process, nullptr, processkvProcessor, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "};\n" +
+            "\n" +
+            "napi_value kvProcessorIns = nullptr;\n" +
+            "\tif (napi_define_class(env, \"kvProcessor\", NAPI_AUTO_LENGTH, ConstructorkvProcessor, nullptr, " +
+            "sizeof(kvProcessorProps) / sizeof(kvProcessorProps[0]), " +
+            "kvProcessorProps, &kvProcessorIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}\n" +
+            "\tif (napi_set_named_property(env, exports, \"kvProcessor\", kvProcessorIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}";
+
+    private String classContTest7 = "\nclass Shape {\n" +
+            "\tvoid process(auto key, auto val);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value ConstructorShape(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
+            "\tnapi_get_undefined(env, &undefineVar);\n" +
+            "\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
+            "napi_ok && thisVar != nullptr) {\n" +
+            "\t\tShape *reference = new Shape();\n" +
+            "\t\tif (napi_wrap(env, thisVar,\n" +
+            "\t\t\treinterpret_cast<void *>(reference), DestructorShape, nullptr, nullptr) == napi_ok) {\n" +
+            "\t\t\treturn thisVar;\n" +
+            "\t\t}\n" +
+            "\t\treturn thisVar;\n" +
+            "\t}\n" +
+            "\treturn undefineVar;\n" +
+            "};\n" +
+            "\n" +
+            "void DestructorShape(napi_env env, void *nativeObject, void *finalize)\n" +
+            "{\n" +
+            "\tdelete reinterpret_cast<Shape *>(nativeObject);\n" +
+            "};\n" +
+            "\n" +
+            "napi_value processShape(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取napi对象\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &jsthis, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\tShape *obj;\n" +
+            "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
+            "\t\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\t// 创建返回参数\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t}\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_property_descriptor ShapeProps[] = {\n" +
+            "\t{process, nullptr, processShape, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "};\n" +
+            "\n" +
+            "napi_value ShapeIns = nullptr;\n" +
+            "\tif (napi_define_class(env, \"Shape\", NAPI_AUTO_LENGTH, ConstructorShape, nullptr, " +
+            "sizeof(ShapeProps) / sizeof(ShapeProps[0]), ShapeProps, &ShapeIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}\n" +
+            "\tif (napi_set_named_property(env, exports, \"Shape\", ShapeIns) != napi_ok) {\n" +
+            "\t\treturn nullptr;\n" +
+            "\t}";
 
     @Test
     void getInterfaceContent() {
@@ -52,16 +985,36 @@ class GenNapiCppFileTest {
         eol.add(eo);
         ParseObj po = new ParseObj();
         po.setEnumList(eol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genEnumList(po.getEnumList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String enumContent = gdf.getEnumContent();
             System.out.println("genEnum: " + enumContent);
             String expect = "\nenum TestEnum {\n" +
                     "\tONE,\n" +
                     "\tTWO,\n" +
-                    "};\n";
+                    "};\n" +
+                    "\n" +
+                    "// 创建枚举对象\n" +
+                    "napi_value CreateTestEnumEnum(napi_env env) {\n" +
+                    "\tnapi_value enum_obj;\n" +
+                    "\tnapi_create_object(env, &enum_obj);\n" +
+                    "\n" +
+                    "\t// 添加枚举成员\n" +
+                    "\tconst char* members[] = {\"ONE\", \"TWO\"};\n" +
+                    "\tconst int values[] = {};\n" +
+                    "\tfor (int32_t i = 0; i < 2; ++i) {\n" +
+                    "\t\tnapi_value value;\n" +
+                    "\t\tnapi_create_int32(env, i, &value);\n" +
+                    "\t\tnapi_set_named_property(env, enum_obj, members[i], value);\n" +
+                    "\t}\n" +
+                    "\n" +
+                    "\treturn enum_obj;\n" +
+                    "}\n" +
+                    "\t// 创建并绑定枚举\n" +
+                    "\tnapi_value TestEnum_enum = CreateTestEnumEnum(env);\n" +
+                    "\tnapi_set_named_property(env, exports, \"TestEnum\", TestEnum_enum);\n";
             assertEquals(expect, enumContent);
         }
     }
@@ -84,17 +1037,37 @@ class GenNapiCppFileTest {
         eol.add(eo);
         ParseObj po = new ParseObj();
         po.setEnumList(eol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genEnumList(po.getEnumList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String enumContent = gdf.getEnumContent();
             System.out.println("genEnum: " + enumContent);
             String expect = "\nenum Colors {\n" +
                     "\tRed = RED,\n" +
                     "\tGreen = GREEN,\n" +
                     "\tBlue = BLUE,\n" +
-                    "};\n";
+                    "};\n" +
+                    "\n" +
+                    "// 创建枚举对象\n" +
+                    "napi_value CreateColorsEnum(napi_env env) {\n" +
+                    "\tnapi_value enum_obj;\n" +
+                    "\tnapi_create_object(env, &enum_obj);\n" +
+                    "\n" +
+                    "\t// 添加枚举成员\n" +
+                    "\tconst char* members[] = {\"Red\", \"Green\", \"Blue\"};\n" +
+                    "\tconst int values[] = {RED, GREEN, BLUE};\n" +
+                    "\tfor (int32_t i = 0; i < 3; ++i) {\n" +
+                    "\t\tnapi_value value;\n" +
+                    "\t\tnapi_create_int32(env, values[i], &value);\n" +
+                    "\t\tnapi_set_named_property(env, enum_obj, members[i], value);\n" +
+                    "\t}\n" +
+                    "\n" +
+                    "\treturn enum_obj;\n" +
+                    "}\n" +
+                    "\t// 创建并绑定枚举\n" +
+                    "\tnapi_value Colors_enum = CreateColorsEnum(env);\n" +
+                    "\tnapi_set_named_property(env, exports, \"Colors\", Colors_enum);\n";
             assertEquals(expect, enumContent);
         }
     }
@@ -117,23 +1090,13 @@ class GenNapiCppFileTest {
         eol.add(eo);
         ParseObj po = new ParseObj();
         po.setEnumList(eol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genEnumList(po.getEnumList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String enumContent = gdf.getEnumContent();
             System.out.println("genEnum: " + enumContent);
-            String expect = "\nenum Colors {\n" +
-                    "\tRed = RED,\n" +
-                    "\tGreen = GREEN,\n" +
-                    "\tBlue = BLUE,\n" +
-                    "};\n" +
-                    "\n" +
-                    "char* colors_STR[] = {\n" +
-                    "\t[Red] = \"RED\",\n" +
-                    "\t[Green] = \"GREEN\",\n" +
-                    "\t[Blue] = \"BLUE\"\n" +
-                    "};\n";
+            String expect = enumContTest3;
             assertEquals(expect, enumContent);
         }
     }
@@ -163,17 +1126,13 @@ class GenNapiCppFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genClassList(po.getClassList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\nclass TestClass {\n" +
-                    "\tchar* name;\n" +
-                    "\tint age;\n" +
-                    "\tint add(int a, int b);\n" +
-                    "};\n";
+            String expect = classContTest1;
             assertEquals(expect, classContent);
         }
     }
@@ -215,19 +1174,13 @@ class GenNapiCppFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genClassList(po.getClassList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\nclass TestClass : public IPerson {\n" +
-                    "\tpublic char* name;\n" +
-                    "\tprivate int age;\n" +
-                    "\tprotected char* no;\n" +
-                    "\treadonly char* addr;\n" +
-                    "\tconstructor();\n" +
-                    "};\n";
+            String expect = classContTest2;
             assertEquals(expect, classContent);
         }
     }
@@ -273,19 +1226,13 @@ class GenNapiCppFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genClassList(po.getClassList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\nclass Employee : public Person {\n" +
-                    "\tint empCode;\n" +
-                    "\tauto currentUser;\n" +
-                    "\tstatic int pi = 3.14;\n" +
-                    "\tconstructor();\n" +
-                    "\tvoid displayName();\n" +
-                    "};\n";
+            String expect = classContTest3;
             assertEquals(expect, classContent);
         }
     }
@@ -308,15 +1255,13 @@ class GenNapiCppFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genClassList(po.getClassList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\nclass myClass {\n" +
-                    "\tauto foo();\n" +
-                    "};\n";
+            String expect = classContTest4;
             assertEquals(expect, classContent);
         }
     }
@@ -355,17 +1300,13 @@ class GenNapiCppFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genClassList(po.getClassList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\ntemplate <typename T, typename U> class KeyValuePair {\n" +
-                    "\tprivate T key;\n" +
-                    "\tprivate U val;\n" +
-                    "\tvoid setKeyValue(T key, U val);\n" +
-                    "};\n";
+            String expect = classContTest5;
             assertEquals(expect, classContent);
         }
     }
@@ -401,16 +1342,13 @@ class GenNapiCppFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genClassList(po.getClassList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\ntemplate <typename T, typename U> class kvProcessor : " +
-                    "public IKeyValueProcessor<T, U> {\n" +
-                    "\tvoid process(T key, U val);\n" +
-                    "};\n";
+            String expect = classContTest6;
             assertEquals(expect, classContent);
         }
     }
@@ -431,15 +1369,13 @@ class GenNapiCppFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genClassList(po.getClassList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
-            String expect = "\nclass Shape {\n" +
-                    "\tvoid process(auto key, auto val);\n" +
-                    "};\n";
+            String expect = classContTest7;
             assertEquals(expect, classContent);
         }
     }
@@ -455,10 +1391,10 @@ class GenNapiCppFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genFuncList(po.getFuncList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
             String expect = "\nvoid TestFunc(char* name, int age);";
@@ -481,10 +1417,10 @@ class GenNapiCppFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genFuncList(po.getFuncList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
             String expect = "\nchar* ToCapital(char* str, int length = 0);";
@@ -511,10 +1447,10 @@ class GenNapiCppFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genFuncList(po.getFuncList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
             String expect = "\nchar* Nemw(char* str = \"joke\", int length = 0);";
@@ -537,10 +1473,10 @@ class GenNapiCppFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genFuncList(po.getFuncList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
             String expect = "\nchar* Nemw(auto str, auto length);";
@@ -563,10 +1499,10 @@ class GenNapiCppFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genFuncList(po.getFuncList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
             String expect = "\nNemw(auto str, auto length);";
@@ -592,10 +1528,10 @@ class GenNapiCppFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genFuncList(po.getFuncList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
             String expect = "\ntemplate<typename T> T* getArray(T* items);";
@@ -626,10 +1562,10 @@ class GenNapiCppFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genFuncList(po.getFuncList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
             String expect = "\ntemplate<typename T, typename U> void displayType(T id, U name);";
@@ -662,10 +1598,10 @@ class GenNapiCppFileTest {
         ParseObj po = new ParseObj();
         po.setStructList(sol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genStructList(po.getStructList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String structContent = gdf.getStructContent();
             System.out.println("genStruct: " + structContent);
             String expect = "\nstruct TestStruct {\n" +
@@ -703,10 +1639,10 @@ class GenNapiCppFileTest {
         ParseObj po = new ParseObj();
         po.setStructList(sol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genStructList(po.getStructList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String structContent = gdf.getStructContent();
             System.out.println("genStruct: " + structContent);
             String expect = "\ntemplate <typename T, typename U> struct TestStruct {\n" +
@@ -743,10 +1679,10 @@ class GenNapiCppFileTest {
         ParseObj po = new ParseObj();
         po.setStructList(sol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genStructList(po.getStructList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String structContent = gdf.getStructContent();
             System.out.println("genStruct: " + structContent);
             String expect = "\nstruct TestStruct {\n" +
@@ -768,10 +1704,10 @@ class GenNapiCppFileTest {
         ParseObj po = new ParseObj();
         po.setStructList(sol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genStructList(po.getStructList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String structContent = gdf.getStructContent();
             System.out.println("genStruct: " + structContent);
             String expect = "\nstruct TestStruct {\n" +
@@ -796,10 +1732,10 @@ class GenNapiCppFileTest {
         uol.add(uo);
         ParseObj po = new ParseObj();
         po.setUnionList(uol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genUnionList(po.getUnionList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String unionContent = gdf.getUnionContent();
             System.out.println("genUnion: " + unionContent);
             String expect = "\nunion TestUnion{\n" +
@@ -824,10 +1760,10 @@ class GenNapiCppFileTest {
         uol.add(uo);
         ParseObj po = new ParseObj();
         po.setUnionList(uol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genUnionList(po.getUnionList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String unionContent = gdf.getUnionContent();
             System.out.println("genUnion: " + unionContent);
             String expect = "\ntemplate <typename T, typename U> union TestUnion{\n" +
@@ -848,10 +1784,10 @@ class GenNapiCppFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genVarList(po.getVarList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String constContent = gdf.getConstContent();
             System.out.println("getVar: " + constContent);
             String expect = "\nextends const auto employeeName = \"John\";\n";
@@ -870,10 +1806,10 @@ class GenNapiCppFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genVarList(po.getVarList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String constContent = gdf.getConstContent();
             System.out.println("getVar: " + constContent);
             String expect = "\nextends const char* employeeName = \"John\";\n";
@@ -892,10 +1828,10 @@ class GenNapiCppFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genVarList(po.getVarList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String constContent = gdf.getConstContent();
             System.out.println("getVar: " + constContent);
             String expect = "\nextends const int num1 = 1;\n";
@@ -921,10 +1857,10 @@ class GenNapiCppFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genVarList(po.getVarList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String constContent = gdf.getConstContent();
             System.out.println("getVar: " + constContent);
             String expect = "\nextends const std::map<std::string, number} playerCodes = {\n" +
@@ -945,10 +1881,10 @@ class GenNapiCppFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genVarList(po.getVarList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String constContent = gdf.getConstContent();
             System.out.println("getVar: " + constContent);
             String expect = "\nextends const auto playerCodes.player2 = 11;\n";
@@ -990,10 +1926,10 @@ class GenNapiCppFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genVarList(po.getVarList());
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String constContent = gdf.getConstContent();
             System.out.println("getVar: " + constContent);
             String expect = "\nstruct ROUTESST {\n" +
@@ -1020,10 +1956,10 @@ class GenNapiCppFileTest {
         pol.add(pao);
         po.setVarList(pol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("NAPICPP");
         gb.genVarList(pol);
 
-        if (gb instanceof GenCppFile gdf) {
+        if (gb instanceof GenNapiCppFile gdf) {
             String varContent = gdf.getConstContent();
             System.out.println("genVar: " + varContent);
             String expect = "\nextends const int TestParam = 100;\n";
@@ -1031,257 +1967,4 @@ class GenNapiCppFileTest {
         }
     }
 
-    @Test
-    void genContent() {
-        ParseObj po = new ParseObj();
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("int");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-        po.setVarList(pol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
-        gb.genContent(po);
-
-        if (gb instanceof GenCppFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
-        }
-    }
-
-    @Test
-    void genFile() {
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("int");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-
-        ParseObj po = new ParseObj();
-        po.setVarList(pol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
-        gb.genContent(po);
-        gb.genFile("./", "testGenFile.d.ts");
-
-        File file = new File("./ag_testGenFile_d_ts.h");
-        assertEquals(true, file.exists());
-        assertEquals(false, file.isDirectory());
-
-        List<String> fcList = readText("./ag_testGenFile_d_ts.h");
-
-        assertEquals("// Generated from ./\\testGenFile.d.ts by KaiHong ohgen 1.0.0-PLUGIN",
-                fcList.get(0));
-        assertEquals("const int TestParam = 100;",
-                fcList.get(1));
-
-        if (gb instanceof GenCppFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
-        }
-    }
-
-    @Test
-    void genInterfaceList() {
-    }
-
-    @Test
-    void genEnumList() {
-        EnumObj eo = new EnumObj();
-        eo.setName("TestEnum");
-        List<String> ml = new CopyOnWriteArrayList<>();
-        ml.add("ONE");
-        ml.add("TWO");
-        eo.setMemberList(ml);
-        List<String> vl = new CopyOnWriteArrayList<>();
-        vl.add("1");
-        vl.add("2");
-        eo.setValueList(vl);
-        List<EnumObj> eol = new CopyOnWriteArrayList<>();
-        eol.add(eo);
-        ParseObj po = new ParseObj();
-        po.setEnumList(eol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
-        gb.genEnumList(po.getEnumList());
-
-        if (gb instanceof GenCppFile gdf) {
-            String enumContent = gdf.getEnumContent();
-            System.out.println("genEnum: " + enumContent);
-            String expect = "\nenum TestEnum {\n" +
-                    "\tONE = 1,\n" +
-                    "\tTWO = 2,\n" +
-                    "};\n";
-            assertEquals(expect, enumContent);
-        }
-    }
-
-    @Test
-    void genClassList() {
-        ClassObj co = new ClassObj();
-        co.setName("TestClass");
-
-        co.addParam("name", "string");
-        co.addParam("age", "number");
-
-        List<ParamObj> poList = new CopyOnWriteArrayList<>();
-        ParamObj poItem = new ParamObj();
-        poItem.setName("a");
-        poItem.setType("number");
-        poList.add(poItem);
-        ParamObj poItem2 = new ParamObj();
-        poItem2.setName("b");
-        poItem2.setType("number");
-        poList.add(poItem2);
-
-        co.addFunc("add", "number", poList);
-
-        poList = new CopyOnWriteArrayList<>();
-        poItem = new ParamObj();
-        poItem.setType("number");
-        poList.add(poItem);
-
-        co.addFunc("delete", "number", poList);
-
-        List<ClassObj> col = new CopyOnWriteArrayList<>();
-        col.add(co);
-
-        ParseObj po = new ParseObj();
-        po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
-        gb.genClassList(po.getClassList());
-
-        if (gb instanceof GenCppFile gdf) {
-            String classContent = gdf.getClassContent();
-            System.out.println("genClass: " + classContent);
-            String expect = "\nclass TestClass {\n" +
-                    "\tchar* name;\n" +
-                    "\tint age;\n" +
-                    "\tint add(int a, int b);\n" +
-                    "\tint delete(int);\n" +
-                    "};\n";
-            assertEquals(expect, classContent);
-        }
-    }
-
-    @Test
-    void genFuncList() {
-        FuncObj fo = new FuncObj();
-        fo.setName("TestFunc");
-        fo.setRetValue("void");
-        fo.addParam("name", "string");
-        fo.addParam("age", "number");
-        List<FuncObj> fol = new CopyOnWriteArrayList<>();
-        fol.add(fo);
-        ParseObj po = new ParseObj();
-        po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
-        gb.genFuncList(po.getFuncList());
-
-        if (gb instanceof GenCppFile gdf) {
-            String funcContent = gdf.getFuncContent();
-            System.out.println("genFunc: " + funcContent);
-            String expect = "\nvoid TestFunc(char* name, int age);";
-            assertEquals(expect, funcContent);
-        }
-    }
-
-    @Test
-    void genStructList() {
-        StructObj so = new StructObj();
-        so.setName("TestStruct");
-
-        so.addMember("name", "string");
-        so.addMember("age", "number");
-
-        List<ParamObj> poList = new CopyOnWriteArrayList<>();
-        ParamObj poItem = new ParamObj();
-        poItem.setName("a");
-        poItem.setType("int");
-        poList.add(poItem);
-        ParamObj poItem2 = new ParamObj();
-        poItem2.setName("b");
-        poItem2.setType("int");
-        poList.add(poItem2);
-
-        so.addFunc("add", "int", poList);
-
-        List<StructObj> sol = new CopyOnWriteArrayList<>();
-        sol.add(so);
-        ParseObj po = new ParseObj();
-        po.setStructList(sol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
-        gb.genStructList(po.getStructList());
-
-        if (gb instanceof GenCppFile gdf) {
-            String structContent = gdf.getStructContent();
-            System.out.println("genStruct: " + structContent);
-            String expect = "\nstruct TestStruct {\n" +
-                    "\tchar* name;\n" +
-                    "\tint age;\n" +
-                    "\tint add(int a, int b);\n" +
-                    "};\n";
-            assertEquals(expect, structContent);
-        }
-    }
-
-    @Test
-    void genTypeList() {
-        TypeObj to = new TypeObj();
-    }
-
-    @Test
-    void genUnionList() {
-        UnionObj uo = new UnionObj();
-        uo.setName("TestUnion");
-
-        uo.addMember("name", "any");
-        uo.addMember("age", "number");
-
-        List<UnionObj> uol = new CopyOnWriteArrayList<>();
-        uol.add(uo);
-        ParseObj po = new ParseObj();
-        po.setUnionList(uol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
-        gb.genUnionList(po.getUnionList());
-
-        if (gb instanceof GenCppFile gdf) {
-            String unionContent = gdf.getUnionContent();
-            System.out.println("genUnion: " + unionContent);
-            String expect = "\nunion TestUnion{\n" +
-                    "\tauto name;\n" +
-                    "\tint age;\n" +
-                    "};\n";
-            assertEquals(expect, unionContent);
-        }
-    }
-
-    @Test
-    void genVarList() {
-        ParseObj po = new ParseObj();
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("number");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-        po.setVarList(pol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
-        gb.genVarList(pol);
-
-        if (gb instanceof GenCppFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
-        }
-    }
 }
