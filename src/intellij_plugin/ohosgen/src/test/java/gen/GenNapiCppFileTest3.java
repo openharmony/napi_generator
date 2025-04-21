@@ -381,6 +381,7 @@ class GenNapiCppFileTest3 {
             "\t{ \"displayType\", nullptr, displayTypeNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
             "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+
     @Test
     void getInterfaceContent() {
     }
