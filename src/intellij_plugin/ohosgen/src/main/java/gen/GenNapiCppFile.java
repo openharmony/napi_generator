@@ -1137,10 +1137,11 @@ public class GenNapiCppFile extends GeneratorBase {
         funcRetStr += genFuncRet(funcItem.getRetValue());
         String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT,
                 Integer.toString(funcItem.getParamList().size()));
-        structMethodStr = structMethodStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
-        structMethodStr = structMethodStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
-        structMethodStr = structMethodStr.replace(NAPI_CLASS_RETURN_VALUE_DECLARE, funcRetStr);
-        return structMethodStr;
+        String tempStr = structMethodStr;
+        tempStr = tempStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
+        tempStr = tempStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
+        tempStr = tempStr.replace(NAPI_CLASS_RETURN_VALUE_DECLARE, funcRetStr);
+        return tempStr;
     }
 
     private String genNapiStructContent(StructObj so) {
