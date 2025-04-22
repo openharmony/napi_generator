@@ -968,6 +968,14 @@ class GenAkiCppFileTest {
                     "\tchar* name;\n" +
                     "\tbool age;\n" +
                     "\tint add(bool a, bool b);\n" +
+                    "};\n" +
+                    "\n" +
+                    "JSBIND_CLASS(TestStruct)\n" +
+                    "{\n" +
+                    "\tJSBIND_METHOD(add, \"add\");\n" +
+                    "\tJSBIND_PMETHOD(add, \"addPromise\");\n" +
+                    "\tJSBIND_PROPERTY(name);\n" +
+                    "\tJSBIND_PROPERTY(age);\n" +
                     "};\n";
             assertEquals(expect, structContent);
         }
@@ -1009,6 +1017,14 @@ class GenAkiCppFileTest {
                     "\tT name;\n" +
                     "\tU age;\n" +
                     "\tint add(T a, U b);\n" +
+                    "};\n" +
+                    "\n" +
+                    "JSBIND_CLASS(TestStruct)\n" +
+                    "{\n" +
+                    "\tJSBIND_METHOD(add, \"add\");\n" +
+                    "\tJSBIND_PMETHOD(add, \"addPromise\");\n" +
+                    "\tJSBIND_PROPERTY(name);\n" +
+                    "\tJSBIND_PROPERTY(age);\n" +
                     "};\n";
             assertEquals(expect, structContent);
         }
@@ -1049,6 +1065,14 @@ class GenAkiCppFileTest {
                     "\tauto name;\n" +
                     "\tauto age;\n" +
                     "\tadd(auto a, auto b);\n" +
+                    "};\n" +
+                    "\n" +
+                    "JSBIND_CLASS(TestStruct)\n" +
+                    "{\n" +
+                    "\tJSBIND_METHOD(add, \"add\");\n" +
+                    "\tJSBIND_PMETHOD(add, \"addPromise\");\n" +
+                    "\tJSBIND_PROPERTY(name);\n" +
+                    "\tJSBIND_PROPERTY(age);\n" +
                     "};\n";
             assertEquals(expect, structContent);
         }
@@ -1071,6 +1095,10 @@ class GenAkiCppFileTest {
             String structContent = gdf.getStructContent();
             System.out.println("genStruct: " + structContent);
             String expect = "\nstruct TestStruct {\n" +
+                    "};\n" +
+                    "\n" +
+                    "JSBIND_CLASS(TestStruct)\n" +
+                    "{\n" +
                     "};\n";
             assertEquals(expect, structContent);
         }
