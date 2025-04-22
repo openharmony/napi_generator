@@ -893,26 +893,7 @@ public class GenNapiCppFile extends GeneratorBase {
             classMethodStr = classMethodStr.replace(
                     NAPI_CLASS_METHOD_NAME, funcItem.getName());
 
-            String funcName = funcItem.getName();
-            funcName = funcName.isEmpty() ? funcItem.getAlias() : funcName;
-            funcName = StringUtils.unCapitalFirst(funcName);
-
-            String funcGetParamStr = "";
-            String funcCallStr = "";
-            String funcRetStr = "";
-            int i = 0;
-            for (ParamObj pa : funcItem.getParamList()) {
-                funcGetParamStr += genGetParam(pa, i);
-                i++;
-            }
-            funcCallStr += genFuncCall(funcItem);
-            funcRetStr += genFuncRet(funcItem.getRetValue());
-            String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT, Integer.toString(funcItem.getParamList().size()));
-
-            classMethodStr = classMethodStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
-            classMethodStr = classMethodStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
-            classMethodStr = classMethodStr.replace(NAPI_CLASS_RETURN_VALUE_DECLARE, funcRetStr);
-
+            classMethodStr = genNapiFuncConvert(funcItem, classMethodStr);
             classMethodContent += classMethodStr;
 
             String classMethodPropertyStr = NAPI_CLASS_METHOD_PROPERTY_DECLARE.replace(
@@ -1139,6 +1120,29 @@ public class GenNapiCppFile extends GeneratorBase {
         return resContent;
     }
 
+    private String genNapiFuncConvert(FuncObj funcItem, String structMethodStr) {
+        String funcName = funcItem.getName();
+        funcName = funcName.isEmpty() ? funcItem.getAlias() : funcName;
+        funcName = StringUtils.unCapitalFirst(funcName);
+
+        String funcGetParamStr = "";
+        String funcCallStr = "";
+        String funcRetStr = "";
+        int i = 0;
+        for (ParamObj pa : funcItem.getParamList()) {
+            funcGetParamStr += genGetParam(pa, i);
+            i++;
+        }
+        funcCallStr += genFuncCall(funcItem);
+        funcRetStr += genFuncRet(funcItem.getRetValue());
+        String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT,
+                Integer.toString(funcItem.getParamList().size()));
+        structMethodStr = structMethodStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
+        structMethodStr = structMethodStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
+        structMethodStr = structMethodStr.replace(NAPI_CLASS_RETURN_VALUE_DECLARE, funcRetStr);
+        return structMethodStr;
+    }
+
     private String genNapiStructContent(StructObj so) {
         String structName = so.getName();
         structName = !structName.isEmpty() ? structName : so.getAlias();
@@ -1152,26 +1156,7 @@ public class GenNapiCppFile extends GeneratorBase {
             structMethodStr = structMethodStr.replace(
                     NAPI_CLASS_METHOD_NAME, funcItem.getName());
 
-            String funcName = funcItem.getName();
-            funcName = funcName.isEmpty() ? funcItem.getAlias() : funcName;
-            funcName = StringUtils.unCapitalFirst(funcName);
-
-            String funcGetParamStr = "";
-            String funcCallStr = "";
-            String funcRetStr = "";
-            int i = 0;
-            for (ParamObj pa : funcItem.getParamList()) {
-                funcGetParamStr += genGetParam(pa, i);
-                i++;
-            }
-            funcCallStr += genFuncCall(funcItem);
-            funcRetStr += genFuncRet(funcItem.getRetValue());
-            String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT,
-                    Integer.toString(funcItem.getParamList().size()));
-            structMethodStr = structMethodStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
-            structMethodStr = structMethodStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
-            structMethodStr = structMethodStr.replace(NAPI_CLASS_RETURN_VALUE_DECLARE, funcRetStr);
-
+            structMethodStr = genNapiFuncConvert(funcItem, structMethodStr);
             structMethodContent += structMethodStr;
 
             String structMethodPropertyStr = NAPI_CLASS_METHOD_PROPERTY_DECLARE.replace(
