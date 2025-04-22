@@ -190,7 +190,7 @@ public class GenNapiCppFile extends GeneratorBase {
             "\tdelete reinterpret_cast<NAPI_CLASS_NAME *>(nativeObject);\n" +
             "};\n";
     private static final String NAPI_CLASS_GET_ATTRIBUTE_DECLARE =
-            "\nnapi_value GetNAPI_CLASS_ATTRIBUTE_NAME(napi_env env, napi_callback_info info)\n" +
+            "\nnapi_value GetNAPI_CLASS_ATTRIBUTE_NAMENAPI_CLASS_NAME(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -208,7 +208,7 @@ public class GenNapiCppFile extends GeneratorBase {
             "\treturn result;\n" +
             "};\n";
     private static final String NAPI_CLASS_SET_ATTRIBUTE_DECLARE =
-            "\nnapi_value SetNAPI_CLASS_ATTRIBUTE_NAME(napi_env env, napi_callback_info info)\n" +
+            "\nnapi_value SetNAPI_CLASS_ATTRIBUTE_NAMENAPI_CLASS_NAME(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -241,11 +241,11 @@ public class GenNapiCppFile extends GeneratorBase {
             "\tNAPI_CLASS_NAME *obj;\n" +
             "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
             "\t\n" +
-            "\t// 获取参数" +
-            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
-            "\t// 调用原始类方法" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE" +
+            "\t// 调用原始类方法\n" +
             "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
-            "\t// 创建返回参数" +
+            "\t// 创建返回参数\n" +
             "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
             "\t}\n" +
             "\treturn result;\n" +
@@ -253,10 +253,10 @@ public class GenNapiCppFile extends GeneratorBase {
     private static final String NAPI_CLASS_METHOD_PROPERTY = "NAPI_CLASS_METHOD_PROPERTY";
     private static final String NAPI_CLASS_ATTRIBUTE_PROPERTY = "NAPI_CLASS_ATTRIBUTE_PROPERTY";
     private static final String NAPI_CLASS_METHOD_PROPERTY_DECLARE =
-            "\t{NAPI_CLASS_METHOD_NAME, nullptr, NAPI_CLASS_METHOD_NAMENAPI_CLASS_NAME, " +
+            "\t{\"NAPI_CLASS_METHOD_NAME\", nullptr, NAPI_CLASS_METHOD_NAMENAPI_CLASS_NAME, " +
             "nullptr, nullptr, nullptr, napi_default, nullptr},\n";
     private static final String NAPI_CLASS_ATTRIBUTE_PROPERTY_DECLARE =
-            "\t{NAPI_CLASS_ATTRIBUTE_NAME, nullptr, nullptr, GetNAPI_CLASS_ATTRIBUTE_NAMENAPI_CLASS_NAME, " +
+            "\t{\"NAPI_CLASS_ATTRIBUTE_NAME\", nullptr, nullptr, GetNAPI_CLASS_ATTRIBUTE_NAMENAPI_CLASS_NAME, " +
                     "SetNAPI_CLASS_ATTRIBUTE_NAMENAPI_CLASS_NAME, nullptr, napi_default, nullptr},\n";
     private static final String NAPI_CLASS_PROPERTY_DECLARE =
             "\nnapi_property_descriptor NAPI_CLASS_NAMEProps[] = {\n" +
@@ -283,11 +283,11 @@ public class GenNapiCppFile extends GeneratorBase {
     private static final String NAPI_CLASS_CALL_METHOD_DECLARE = "NAPI_CLASS_CALL_METHOD_DECLARE";
     private static final String NAPI_CLASS_RETURN_VALUE_DECLARE = "NAPI_CLASS_RETURN_VALUE_DECLARE";
 
-    private static final String NAPI_FUNCTION_CALL_EXPRESSION = "\n\tNAPI_FUNCTION_NAME(NAPI_PARAM_EXPRESSION);";
+    private static final String NAPI_FUNCTION_CALL_EXPRESSION = "NAPI_FUNCTION_NAME(NAPI_PARAM_EXPRESSION);";
 
     private static final String NAPI_PARAM_CNT = "NAPI_PARAM_CNT";
     private static final String NAPI_PARAM_CHECK =
-            "\n\tsize_t argc = NAPI_PARAM_CNT;" +
+            "size_t argc = NAPI_PARAM_CNT;" +
             "\n\tnapi_value args[NAPI_PARAM_CNT] = {nullptr};" +
             "\n\tnapi_value this_arg;" +
             "\n\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);" +
@@ -295,7 +295,7 @@ public class GenNapiCppFile extends GeneratorBase {
             "\n\tif (argc < NAPI_PARAM_CNT) {" +
             "\n\t\tnapi_throw_error(env, \"EINVAL\", \"需要NAPI_PARAM_CNT个参数\");" +
             "\n\t\treturn nullptr;" +
-            "\n\t};\n";
+            "\n\t};\n\n";
 
     private static final String NAPI_FUNCTION_DECLARE =
             "\nnapi_value NAPI_FUNCTION_NAMENapi(napi_env env, napi_callback_info info)\n" +
@@ -304,11 +304,11 @@ public class GenNapiCppFile extends GeneratorBase {
             "\tnapi_value jsthis;\n" +
             "\tnapi_status status;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
-            "\t// 获取参数" +
-            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
-            "\t// 调用原始类方法" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE" +
+            "\t// 调用原始类方法\n" +
             "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
-            "\t// 创建返回参数" +
+            "\t// 创建返回参数\n" +
             "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
             "\treturn result;\n" +
             "};\n";
@@ -321,6 +321,41 @@ public class GenNapiCppFile extends GeneratorBase {
             "NAPI_FUNCTION_DESC_DECLARE" +
             "};\n" +
             "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+
+    private static final String NAPI_VAL_GET_DECLARE =
+            "\nnapi_value GetNAPI_CLASS_ATTRIBUTE_NAMENAPI_CLASS_NAME(napi_env env, napi_callback_info info)\n" +
+                    "{\n" +
+                    "\tnapi_value result = nullptr;\n" +
+                    "\tnapi_value jsthis;\n" +
+                    "\tnapi_status status;\n" +
+                    "\tnapi_get_undefined(env, &result);\n" +
+                    "\tif (napi_get_cb_info(env, info, nullptr, nullptr, nullptr, nullptr) != napi_ok) {\n" +
+                    "\t\treturn result;\n" +
+                    "\t}\n" +
+                    "\n" +
+                    "\t// 创建返回对象\n" +
+                    "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+                    "\n" +
+                    "\treturn result;\n" +
+                    "};\n";
+    private static final String NAPI_VAL_SET_DECLARE =
+            "\nnapi_value SetNAPI_CLASS_ATTRIBUTE_NAMENAPI_CLASS_NAME(napi_env env, napi_callback_info info)\n" +
+                    "{\n" +
+                    "\tnapi_value result = nullptr;\n" +
+                    "\tnapi_get_undefined(env, &result);\n" +
+                    "\tchar msg[128] = {0};\n" +
+                    "\tnapi_value jsthis;\n" +
+                    "\tnapi_value msgvalue;\n" +
+                    "\tnapi_status status;\n" +
+                    "\tsize_t argc = 1, size = 0;\n" +
+                    "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, nullptr, nullptr) != napi_ok) {\n" +
+                    "\t\treturn result;\n" +
+                    "\t}\n" +
+                    "\t// 获取参数\n" +
+                    "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+                    "\tNAPI_CLASS_ATTRIBUTE_NAME = msg;\n" +
+                    "\treturn nullptr;\n" +
+                    "};\n";
 
     private String interfaceContent = "";
     private String enumContent = "";
@@ -349,7 +384,7 @@ public class GenNapiCppFile extends GeneratorBase {
     );
 
     private final Map<String, String> getArguMap = Map.ofEntries(
-        Map.entry("bool", "\n\tnapi_valuetype valuetypeNAPI_PARAM_CNT;" +
+        Map.entry("bool", "\tnapi_valuetype valuetypeNAPI_PARAM_CNT;" +
                 "\n\tif (napi_typeof(env, args[NAPI_PARAM_CNT], &valuetypeNAPI_PARAM_CNT) != napi_ok) {" +
                 "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");" +
@@ -367,8 +402,8 @@ public class GenNapiCppFile extends GeneratorBase {
                 "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_double error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");" +
                 "\n\t\treturn result;" +
-                "\n\t};\n"),
-        Map.entry("string", "\n\tnapi_valuetype valuetypeNAPI_PARAM_CNT;" +
+                "\n\t};\n\n"),
+        Map.entry("string", "\tnapi_valuetype valuetypeNAPI_PARAM_CNT;" +
                 "\n\tif (napi_typeof(env, args[NAPI_PARAM_CNT], &valuetypeNAPI_PARAM_CNT) != napi_ok) {" +
                 "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");" +
@@ -390,8 +425,8 @@ public class GenNapiCppFile extends GeneratorBase {
                 "\"napi_get_value_string_utf8 error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");" +
                 "\n\t\treturn result;" +
-                "\n\t};\n"),
-        Map.entry("number", "\n\tnapi_valuetype valuetypeNAPI_PARAM_CNT;" +
+                "\n\t};\n\n"),
+        Map.entry("number", "\tnapi_valuetype valuetypeNAPI_PARAM_CNT;" +
                 "\n\tif (napi_typeof(env, args[NAPI_PARAM_CNT], &valuetypeNAPI_PARAM_CNT) != napi_ok) {" +
                 "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");" +
@@ -413,8 +448,8 @@ public class GenNapiCppFile extends GeneratorBase {
                 "\"napi_get_value_int32 error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");" +
                 "\n\t\treturn result;" +
-                "\n\t};\n"),
-        Map.entry("double", "\n\tnapi_valuetype valuetypeNAPI_PARAM_CNT;" +
+                "\n\t};\n\n"),
+        Map.entry("double", "\tnapi_valuetype valuetypeNAPI_PARAM_CNT;" +
                 "\n\tif (napi_typeof(env, args[NAPI_PARAM_CNT], &valuetypeNAPI_PARAM_CNT) != napi_ok) {" +
                 "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");" +
@@ -436,8 +471,8 @@ public class GenNapiCppFile extends GeneratorBase {
                 "\"napi_get_value_double error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");" +
                 "\n\t\treturn result;" +
-                "\n\t};\n"),
-        Map.entry("object", "\n\tnapi_valuetype valuetypeNAPI_PARAM_CNT;" +
+                "\n\t};\n\n"),
+        Map.entry("object", "\tnapi_valuetype valuetypeNAPI_PARAM_CNT;" +
                 "\n\tif (napi_typeof(env, args[NAPI_PARAM_CNT], &valuetypeNAPI_PARAM_CNT) != napi_ok) {" +
                 "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");" +
@@ -456,21 +491,21 @@ public class GenNapiCppFile extends GeneratorBase {
                 "\"napi_unwrap error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");" +
                 "\n\t\treturn result;" +
-                "\n\t};\n")
+                "\n\t};\n\n")
     );
 
     private final Map<String, String> setArguMap = Map.ofEntries(
         Map.entry("void", ""),
         Map.entry("bool",
-                "\n\tnapi_value valueRetNAPI_PARAM_CNT;\n" +
+                "napi_value valueRetNAPI_PARAM_CNT;" +
                 "\n\tif (napi_create_uint32(env, args[NAPI_PARAM_CNT], &valueNAPI_PARAM_CNT) != napi_ok) {" +
                 "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_double error\");" +
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");" +
                 "\n\t\treturn result;" +
                 "\n\t};" +
-                "\n\treturn valueRetNAPI_PARAM_CNT"),
+                "\n\treturn valueRetNAPI_PARAM_CNT;\n"),
         Map.entry("string",
-                "\n\tnapi_value valueRetNAPI_PARAM_CNT;\n" +
+                "napi_value valueRetNAPI_PARAM_CNT;" +
                 "\n\tif (napi_create_string_utf8(env, args[NAPI_PARAM_CNT], " +
                 "realSize, &valueRetNAPI_PARAM_CNT) != napi_ok) {" +
                 "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", " +
@@ -478,9 +513,9 @@ public class GenNapiCppFile extends GeneratorBase {
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");" +
                 "\n\t\treturn result;" +
                 "\n\t};" +
-                "\n\treturn valueRetNAPI_PARAM_CNT"),
+                "\n\treturn valueRetNAPI_PARAM_CNT;\n"),
         Map.entry("number",
-                "\n\tnapi_value valueRetNAPI_PARAM_CNT;\n" +
+                "napi_value valueRetNAPI_PARAM_CNT;" +
                 "\n\tif (napi_create_int32(env, args[NAPI_PARAM_CNT], " +
                 "&valueRetNAPI_PARAM_CNT) != napi_ok) {" +
                 "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", " +
@@ -488,9 +523,9 @@ public class GenNapiCppFile extends GeneratorBase {
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");" +
                 "\n\t\treturn result;" +
                 "\n\t};" +
-                "\n\treturn valueRetNAPI_PARAM_CNT"),
+                "\n\treturn valueRetNAPI_PARAM_CNT;\n"),
         Map.entry("double",
-                "\n\tnapi_value valueRetNAPI_PARAM_CNT;\n" +
+                "napi_value valueRetNAPI_PARAM_CNT;" +
                 "\n\tif (napi_create_double(env, args[NAPI_PARAM_CNT], " +
                 "&valueRetNAPI_PARAM_CNT) != napi_ok) {" +
                 "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", " +
@@ -498,9 +533,9 @@ public class GenNapiCppFile extends GeneratorBase {
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");" +
                 "\n\t\treturn result;" +
                 "\n\t};" +
-                "\n\treturn valueRetNAPI_PARAM_CNT"),
+                "\n\treturn valueRetNAPI_PARAM_CNT;\n"),
         Map.entry("object",
-                "\n\tNAPI_PARAM_TYPE *reference = new NAPI_PARAM_TYPE();\n" +
+                "NAPI_PARAM_TYPE *reference = new NAPI_PARAM_TYPE();" +
                 "\n\tif (napi_wrap(env, thisVar, reinterpret_cast<void *>(reference), " +
                         "DesNAPI_PARAM_TYPENAPI_FUNCTION_NAMENAPI_PARAM_CNT, nullptr, " +
                         "nullptr) != napi_ok) {" +
@@ -509,7 +544,7 @@ public class GenNapiCppFile extends GeneratorBase {
                 "\n\t\tnapi_throw_error(env, \"EINTYPE\", \"error wrap value\");" +
                 "\n\t\treturn result;" +
                 "\n\t};" +
-                "\n\treturn thisVar;")
+                "\n\treturn thisVar;\n")
     );
 
     /**
@@ -857,6 +892,27 @@ public class GenNapiCppFile extends GeneratorBase {
                     NAPI_CLASS_NAME, className);
             classMethodStr = classMethodStr.replace(
                     NAPI_CLASS_METHOD_NAME, funcItem.getName());
+
+            String funcName = funcItem.getName();
+            funcName = funcName.isEmpty() ? funcItem.getAlias() : funcName;
+            funcName = StringUtils.unCapitalFirst(funcName);
+
+            String funcGetParamStr = "";
+            String funcCallStr = "";
+            String funcRetStr = "";
+            int i = 0;
+            for (ParamObj pa : funcItem.getParamList()) {
+                funcGetParamStr += genGetParam(pa, i);
+                i++;
+            }
+            funcCallStr += genFuncCall(funcItem);
+            funcRetStr += genFuncRet(funcItem.getRetValue());
+            String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT, Integer.toString(funcItem.getParamList().size()));
+
+            classMethodStr = classMethodStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
+            classMethodStr = classMethodStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
+            classMethodStr = classMethodStr.replace(NAPI_CLASS_RETURN_VALUE_DECLARE, funcRetStr);
+
             classMethodContent += classMethodStr;
 
             String classMethodPropertyStr = NAPI_CLASS_METHOD_PROPERTY_DECLARE.replace(
@@ -1030,6 +1086,135 @@ public class GenNapiCppFile extends GeneratorBase {
         System.out.println("genFuncList : " + resContent);
     };
 
+    private String genCppStructContent(StructObj so) {
+        String structName = so.getName();
+        structName = !structName.isEmpty() ? structName : so.getAlias();
+
+        String templateStr = !so.getTemplateList().isEmpty() ?
+                NAPI_TEMPLATE_TOKEN + NAPI_BLANK_SPACE + NAPI_LEFT_ANGLE_BRACKET : "";
+        for (String teStr : so.getTemplateList()) {
+            templateStr += NAPI_TYPE_NAME_TOKEN + NAPI_BLANK_SPACE + teStr + NAPI_COMMA + NAPI_BLANK_SPACE;
+        }
+        templateStr = templateStr.length() > 1 ?
+                StringUtils.removeLastCharacter(templateStr, 2) +
+                        NAPI_RIGHT_ANGLE_BRACKET + NAPI_BLANK_SPACE : "";
+
+        List<ParamObj> paList = so.getMemberList();
+        String resContent = "";
+        resContent += NAPI_NEW_LINE + templateStr + NAPI_STRUCT_TOKEN +
+                NAPI_BLANK_SPACE + structName + NAPI_BLANK_SPACE + NAPI_LEFT_BRACE;
+
+        for (ParamObj paItem : paList) {
+            String paType = paItem.getType().isEmpty() ? NAPI_AUTO_TOKEN : paItem.getType();
+            resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + ts2CppKey(paType) +
+                    NAPI_BLANK_SPACE + paItem.getName();
+            ;
+            List<String> initVList = paItem.getvList();
+            if (initVList.size() > 0) {
+                resContent += NAPI_EQUAL + initVList.get(0) + NAPI_SEMICOLON;
+            } else {
+                resContent += NAPI_SEMICOLON;
+            }
+        }
+
+        List<FuncObj> funcList = so.getFuncList();
+        for (FuncObj funcItem : funcList) {
+            String retValue = ts2CppKey(funcItem.getRetValue()).isEmpty() ? "" :
+                    ts2CppKey(funcItem.getRetValue()) + NAPI_BLANK_SPACE;
+            resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + retValue +
+                    replaceTsToken(funcItem.getName()) + NAPI_LEFT_PARENTHESES;
+            List<ParamObj> pol = funcItem.getParamList();
+            for (ParamObj poItem : pol) {
+                String retType = ts2CppKey(poItem.getType()).isEmpty() ?
+                        NAPI_AUTO_TOKEN : ts2CppKey(poItem.getType());
+                resContent += retType + NAPI_BLANK_SPACE + replaceTsToken(poItem.getName()) +
+                        NAPI_COMMA + NAPI_BLANK_SPACE;
+            }
+            resContent = !pol.isEmpty() ? StringUtils.removeLastCharacter(resContent, 2) : resContent;
+            resContent += NAPI_RIGHT_PARENTHESES + NAPI_SEMICOLON;
+        }
+
+        resContent = StringUtils.removeLastSpace(resContent);
+        resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
+        return resContent;
+    }
+
+    private String genNapiStructContent(StructObj so) {
+        String structName = so.getName();
+        structName = !structName.isEmpty() ? structName : so.getAlias();
+        List<FuncObj> funcList = so.getFuncList();
+        String structNameList = "";
+        String structMethodContent = "";
+        String structMethodProperty = "";
+        for (FuncObj funcItem : funcList) {
+            String structMethodStr = NAPI_CLASS_METHOD_DECLARE.replace(
+                    NAPI_CLASS_NAME, structName);
+            structMethodStr = structMethodStr.replace(
+                    NAPI_CLASS_METHOD_NAME, funcItem.getName());
+
+            String funcName = funcItem.getName();
+            funcName = funcName.isEmpty() ? funcItem.getAlias() : funcName;
+            funcName = StringUtils.unCapitalFirst(funcName);
+
+            String funcGetParamStr = "";
+            String funcCallStr = "";
+            String funcRetStr = "";
+            int i = 0;
+            for (ParamObj pa : funcItem.getParamList()) {
+                funcGetParamStr += genGetParam(pa, i);
+                i++;
+            }
+            funcCallStr += genFuncCall(funcItem);
+            funcRetStr += genFuncRet(funcItem.getRetValue());
+            String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT,
+                    Integer.toString(funcItem.getParamList().size()));
+            structMethodStr = structMethodStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
+            structMethodStr = structMethodStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
+            structMethodStr = structMethodStr.replace(NAPI_CLASS_RETURN_VALUE_DECLARE, funcRetStr);
+
+            structMethodContent += structMethodStr;
+
+            String structMethodPropertyStr = NAPI_CLASS_METHOD_PROPERTY_DECLARE.replace(
+                    NAPI_CLASS_METHOD_NAME, funcItem.getName());
+            structMethodPropertyStr = structMethodPropertyStr.replace(NAPI_CLASS_NAME, structName);
+            structMethodProperty += structMethodPropertyStr;
+        }
+
+        String classAttributeContent = "";
+        String classAttributeProperty = "";
+        List<ParamObj> paList = so.getMemberList();
+        for (ParamObj paItem : paList) {
+            String getAttributeContent = NAPI_CLASS_GET_ATTRIBUTE_DECLARE.replace(
+                    NAPI_CLASS_ATTRIBUTE_NAME, paItem.getName());
+            getAttributeContent = getAttributeContent.replace(NAPI_CLASS_NAME, structName);
+            String setAttributeContent = NAPI_CLASS_SET_ATTRIBUTE_DECLARE.replace(
+                    NAPI_CLASS_ATTRIBUTE_NAME, paItem.getName());
+            setAttributeContent = setAttributeContent.replace(NAPI_CLASS_NAME, structName);
+            classAttributeContent += getAttributeContent + setAttributeContent;
+
+            String classAttributeStr = NAPI_CLASS_ATTRIBUTE_PROPERTY_DECLARE.replace(
+                    NAPI_CLASS_ATTRIBUTE_NAME, paItem.getName());
+            classAttributeStr = classAttributeStr.replace(NAPI_CLASS_NAME, structName);
+            classAttributeProperty += classAttributeStr;
+        }
+
+        String classDeclare = NAPI_CLASS_CONSTRUCTURE.replace(NAPI_CLASS_NAME, structName);
+        classDeclare += NAPI_CLASS_DESTRUCTURE.replace(NAPI_CLASS_NAME, structName);
+        classDeclare += structMethodContent + classAttributeContent;
+
+        String classPropertyStr = NAPI_CLASS_PROPERTY_DECLARE.replace(NAPI_CLASS_NAME, structName);
+        classPropertyStr = classPropertyStr.replace(NAPI_CLASS_METHOD_PROPERTY, structMethodProperty);
+        classPropertyStr = classPropertyStr.replace(NAPI_CLASS_ATTRIBUTE_PROPERTY, classAttributeProperty);
+        classDeclare += classPropertyStr;
+
+        String classInitStr = NAPI_CLASS_INIT.replace(NAPI_CLASS_NAME, structName);
+        classDeclare += classInitStr;
+
+        String resContent = "";
+        resContent = classDeclare;
+        return resContent;
+    }
+
     /**
      * 生成输出内容
      *
@@ -1041,54 +1226,8 @@ public class GenNapiCppFile extends GeneratorBase {
 
         String resContent = "";
         for (StructObj so : sol) {
-            String structName = so.getName();
-            structName = !structName.isEmpty() ? structName : so.getAlias();
-
-            String templateStr = !so.getTemplateList().isEmpty() ?
-                    NAPI_TEMPLATE_TOKEN + NAPI_BLANK_SPACE + NAPI_LEFT_ANGLE_BRACKET : "";
-            for (String teStr : so.getTemplateList()) {
-                templateStr += NAPI_TYPE_NAME_TOKEN + NAPI_BLANK_SPACE + teStr + NAPI_COMMA + NAPI_BLANK_SPACE;
-            }
-            templateStr = templateStr.length() > 1 ?
-                    StringUtils.removeLastCharacter(templateStr, 2) +
-                    NAPI_RIGHT_ANGLE_BRACKET + NAPI_BLANK_SPACE : "";
-
-            List<ParamObj> paList = so.getMemberList();
-            resContent += NAPI_NEW_LINE + templateStr + NAPI_STRUCT_TOKEN +
-                    NAPI_BLANK_SPACE + structName + NAPI_BLANK_SPACE + NAPI_LEFT_BRACE;
-
-            for (ParamObj paItem : paList) {
-                String paType = paItem.getType().isEmpty() ? NAPI_AUTO_TOKEN : paItem.getType();
-                resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + ts2CppKey(paType) +
-                        NAPI_BLANK_SPACE + paItem.getName();
-                        ;
-                List<String> initVList = paItem.getvList();
-                if (initVList.size() > 0) {
-                    resContent += NAPI_EQUAL + initVList.get(0) + NAPI_SEMICOLON;
-                } else {
-                    resContent += NAPI_SEMICOLON;
-                }
-            }
-
-            List<FuncObj> funcList = so.getFuncList();
-            for (FuncObj funcItem : funcList) {
-                String retValue = ts2CppKey(funcItem.getRetValue()).isEmpty() ? "" :
-                    ts2CppKey(funcItem.getRetValue()) + NAPI_BLANK_SPACE;
-                resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + retValue +
-                    replaceTsToken(funcItem.getName()) + NAPI_LEFT_PARENTHESES;
-                List<ParamObj> pol = funcItem.getParamList();
-                for (ParamObj poItem : pol) {
-                    String retType = ts2CppKey(poItem.getType()).isEmpty() ?
-                            NAPI_AUTO_TOKEN : ts2CppKey(poItem.getType());
-                    resContent += retType + NAPI_BLANK_SPACE + replaceTsToken(poItem.getName()) +
-                            NAPI_COMMA + NAPI_BLANK_SPACE;
-                }
-                resContent = !pol.isEmpty() ? StringUtils.removeLastCharacter(resContent, 2) : resContent;
-                resContent += NAPI_RIGHT_PARENTHESES + NAPI_SEMICOLON;
-            }
-
-            resContent = StringUtils.removeLastSpace(resContent);
-            resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
+            resContent += genCppStructContent(so);
+            resContent += genNapiStructContent(so);
         }
         this.structContent = resContent;
     };
@@ -1174,6 +1313,69 @@ public class GenNapiCppFile extends GeneratorBase {
         return resContent;
     };
 
+    private String genCppValContent(ParamObj po) {
+        String paName = po.getName();
+        String paType = ts2CppKey(po.getType()).isEmpty() ? NAPI_AUTO_TOKEN : ts2CppKey(po.getType());
+        String paValue = po.getStrValue(0);
+        List<ParamObj> paList = po.getPaList();
+        String resContent = "";
+        if (paList.isEmpty()) {
+            resContent += NAPI_NEW_LINE + NAPI_EXTENDS_TOKEN + NAPI_BLANK_SPACE + NAPI_CONST_TOKEN +
+                    NAPI_BLANK_SPACE + paType + NAPI_BLANK_SPACE + paName + NAPI_EQUAL + paValue;
+
+            resContent += NAPI_SEMICOLON + NAPI_NEW_LINE;
+        } else if (paList.get(0).getPaList().isEmpty()) {
+            String valType = StringUtils.isAllDigits(paList.get(0).getStrValue(0)) ?
+                    NAPI_NUMBER_TOKEN : NAPI_STD_STRING;
+            resContent += NAPI_NEW_LINE + NAPI_EXTENDS_TOKEN + NAPI_BLANK_SPACE + NAPI_CONST_TOKEN +
+                    NAPI_BLANK_SPACE + NAPI_STD_MAP + NAPI_LEFT_ANGLE_BRACKET + NAPI_STD_STRING +
+                    NAPI_COMMA + NAPI_BLANK_SPACE + valType + NAPI_RIGHT_BRACE + NAPI_BLANK_SPACE +
+                    paName + NAPI_EQUAL + NAPI_LEFT_BRACE;
+            for (ParamObj paItem : paList) {
+                String pName = paItem.getName();
+                String pVal = paItem.getStrValue(0);
+                resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + NAPI_LEFT_BRACE + NAPI_DOUBLE_QUOTATION +
+                        pName + NAPI_DOUBLE_QUOTATION + NAPI_COMMA + NAPI_BLANK_SPACE + pVal +
+                        NAPI_RIGHT_BRACE + NAPI_COMMA;
+            }
+            resContent = StringUtils.removeLastCharacter(resContent, 1);
+            resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
+        } else if (!(paList.get(0).getPaList().isEmpty())) {
+            resContent = genVarArrayList(resContent, paName, paList);
+        }
+        return resContent;
+    };
+
+    private String genNapiValContent(ParamObj po) {
+        String paramAttributeContent = "";
+        String paramAttributeProperty = "";
+        String structName = "GNAPI";
+        {
+            String getAttributeContent = NAPI_VAL_GET_DECLARE.replace(
+                    NAPI_CLASS_ATTRIBUTE_NAME, po.getName());
+            getAttributeContent = getAttributeContent.replace(NAPI_CLASS_NAME, structName);
+            String setAttributeContent = NAPI_VAL_SET_DECLARE.replace(
+                    NAPI_CLASS_ATTRIBUTE_NAME, po.getName());
+            setAttributeContent = setAttributeContent.replace(NAPI_CLASS_NAME, structName);
+            paramAttributeContent += getAttributeContent + setAttributeContent;
+
+            String classAttributeStr = NAPI_CLASS_ATTRIBUTE_PROPERTY_DECLARE.replace(
+                    NAPI_CLASS_ATTRIBUTE_NAME, po.getName());
+            classAttributeStr = classAttributeStr.replace(NAPI_CLASS_NAME, structName);
+            paramAttributeProperty += classAttributeStr;
+        }
+
+        String classDeclare = "";
+        classDeclare += paramAttributeContent;
+
+        String classPropertyStr = NAPI_CLASS_PROPERTY_DECLARE.replace(NAPI_CLASS_NAME, structName);
+        classPropertyStr = classPropertyStr.replace(NAPI_CLASS_ATTRIBUTE_PROPERTY, paramAttributeProperty);
+        classPropertyStr = classPropertyStr.replace(NAPI_CLASS_METHOD_PROPERTY, "");
+        classDeclare += classPropertyStr;
+
+        return classDeclare;
+    }
+
     /**
      * 生成输出内容
      *
@@ -1185,35 +1387,8 @@ public class GenNapiCppFile extends GeneratorBase {
 
         String resContent = "";
         for (ParamObj po : pol) {
-            String paName = po.getName();
-            String paType = ts2CppKey(po.getType()).isEmpty() ? NAPI_AUTO_TOKEN : ts2CppKey(po.getType());
-            String paValue = po.getStrValue(0);
-            List<ParamObj> paList = po.getPaList();
-            if (paList.isEmpty()) {
-                resContent += NAPI_NEW_LINE + NAPI_EXTENDS_TOKEN + NAPI_BLANK_SPACE + NAPI_CONST_TOKEN +
-                        NAPI_BLANK_SPACE + paType + NAPI_BLANK_SPACE + paName + NAPI_EQUAL + paValue;
-
-                resContent += NAPI_SEMICOLON + NAPI_NEW_LINE;
-            } else if (paList.get(0).getPaList().isEmpty()) {
-                String valType = StringUtils.isAllDigits(paList.get(0).getStrValue(0)) ?
-                        NAPI_NUMBER_TOKEN : NAPI_STD_STRING;
-                resContent += NAPI_NEW_LINE + NAPI_EXTENDS_TOKEN + NAPI_BLANK_SPACE + NAPI_CONST_TOKEN +
-                        NAPI_BLANK_SPACE + NAPI_STD_MAP + NAPI_LEFT_ANGLE_BRACKET + NAPI_STD_STRING +
-                        NAPI_COMMA + NAPI_BLANK_SPACE + valType + NAPI_RIGHT_BRACE + NAPI_BLANK_SPACE +
-                        paName + NAPI_EQUAL + NAPI_LEFT_BRACE;
-                for (ParamObj paItem : paList) {
-                    String pName = paItem.getName();
-                    String pVal = paItem.getStrValue(0);
-                    resContent += NAPI_NEW_LINE + NAPI_TAB_SPACE + NAPI_LEFT_BRACE + NAPI_DOUBLE_QUOTATION +
-                            pName + NAPI_DOUBLE_QUOTATION + NAPI_COMMA + NAPI_BLANK_SPACE + pVal +
-                            NAPI_RIGHT_BRACE + NAPI_COMMA;
-                }
-                resContent = StringUtils.removeLastCharacter(resContent, 1);
-                resContent += NAPI_NEW_LINE + NAPI_RIGHT_BRACE + NAPI_SEMICOLON + NAPI_NEW_LINE;
-            } else if (!(paList.get(0).getPaList().isEmpty())) {
-                resContent = genVarArrayList(resContent, paName, paList);
-            }
-
+            resContent += genCppValContent(po);
+            resContent += genNapiValContent(po);
         }
         this.constContent = resContent;
         System.out.println("genVarList : " + resContent);
