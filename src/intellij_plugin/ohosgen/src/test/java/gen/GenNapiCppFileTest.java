@@ -76,8 +76,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
-            "napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tTestClass *reference = new TestClass();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorTestClass, nullptr, nullptr) == napi_ok) {\n" +
@@ -107,16 +107,76 @@ class GenNapiCppFileTest {
             "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
             "\t\n" +
             "\t// 获取参数\n" +
-            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype0;\n" +
+            "\tif (napi_typeof(env, args[0], &valuetype0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_number) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_number error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第valuetype0个参数必须是数字\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tint value0 = 0;\n" +
+            "\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_int32(env, args[0], &value0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_int32 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype1;\n" +
+            "\tif (napi_typeof(env, args[1], &valuetype1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_number) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_number error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第valuetype1个参数必须是数字\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tint value1 = 0;\n" +
+            "\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_int32(env, args[1], &value1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_int32 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
             "\t// 调用原始类方法\n" +
-            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\tadd(NAPI_PARAM_EXPRESSION);\n" +
             "\t// 创建返回参数\n" +
-            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\tnapi_value valueRet0;\n" +
+            "\tif (napi_create_int32(env, args[0], &valueRet0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_int32 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
             "\t}\n" +
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Getname(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetnameTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -134,7 +194,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Setname(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetnameTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -154,7 +214,7 @@ class GenNapiCppFileTest {
             "\treturn nullptr;\n" +
             "};\n" +
             "\n" +
-            "napi_value Getage(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetageTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -172,7 +232,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Setage(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetageTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -193,9 +253,9 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_property_descriptor TestClassProps[] = {\n" +
-            "\t{add, nullptr, addTestClass, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
-            "\t{name, nullptr, nullptr, GetnameTestClass, SetnameTestClass, nullptr, napi_default, nullptr},\n" +
-            "\t{age, nullptr, nullptr, GetageTestClass, SetageTestClass, nullptr, napi_default, nullptr},\n" +
+            "\t{\"add\", nullptr, addTestClass, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{\"name\", nullptr, nullptr, GetnameTestClass, SetnameTestClass, nullptr, napi_default, nullptr},\n" +
+            "\t{\"age\", nullptr, nullptr, GetageTestClass, SetageTestClass, nullptr, napi_default, nullptr},\n" +
             "};\n" +
             "\n" +
             "napi_value TestClassIns = nullptr;\n" +
@@ -251,16 +311,25 @@ class GenNapiCppFileTest {
             "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
             "\t\n" +
             "\t// 获取参数\n" +
-            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tsize_t argc = 0;\n" +
+            "\tnapi_value args[0] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 0) {\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要0个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
             "\t// 调用原始类方法\n" +
-            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\tconstructor(NAPI_PARAM_EXPRESSION);\n" +
             "\t// 创建返回参数\n" +
-            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t\n" +
             "\t}\n" +
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Getname(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetnameTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -278,7 +347,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Setname(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetnameTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -298,7 +367,7 @@ class GenNapiCppFileTest {
             "\treturn nullptr;\n" +
             "};\n" +
             "\n" +
-            "napi_value Getage(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetageTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -316,7 +385,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Setage(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetageTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -336,7 +405,7 @@ class GenNapiCppFileTest {
             "\treturn nullptr;\n" +
             "};\n" +
             "\n" +
-            "napi_value Getno(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetnoTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -354,7 +423,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Setno(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetnoTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -374,7 +443,7 @@ class GenNapiCppFileTest {
             "\treturn nullptr;\n" +
             "};\n" +
             "\n" +
-            "napi_value Getaddr(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetaddrTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -392,7 +461,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Setaddr(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetaddrTestClass(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -413,17 +482,16 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_property_descriptor TestClassProps[] = {\n" +
-            "\t{constructor, nullptr, constructorTestClass, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
-            "\t{name, nullptr, nullptr, GetnameTestClass, SetnameTestClass, nullptr, napi_default, nullptr},\n" +
-            "\t{age, nullptr, nullptr, GetageTestClass, SetageTestClass, nullptr, napi_default, nullptr},\n" +
-            "\t{no, nullptr, nullptr, GetnoTestClass, SetnoTestClass, nullptr, napi_default, nullptr},\n" +
-            "\t{addr, nullptr, nullptr, GetaddrTestClass, SetaddrTestClass, nullptr, napi_default, nullptr},\n" +
+            "\t{\"constructor\", nullptr, constructorTestClass, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{\"name\", nullptr, nullptr, GetnameTestClass, SetnameTestClass, nullptr, napi_default, nullptr},\n" +
+            "\t{\"age\", nullptr, nullptr, GetageTestClass, SetageTestClass, nullptr, napi_default, nullptr},\n" +
+            "\t{\"no\", nullptr, nullptr, GetnoTestClass, SetnoTestClass, nullptr, napi_default, nullptr},\n" +
+            "\t{\"addr\", nullptr, nullptr, GetaddrTestClass, SetaddrTestClass, nullptr, napi_default, nullptr},\n" +
             "};\n" +
             "\n" +
             "napi_value TestClassIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, " +
-            "nullptr, sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, " +
-            "&TestClassIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, nullptr, " +
+            "sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, &TestClassIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"TestClass\", TestClassIns) != napi_ok) {\n" +
@@ -443,8 +511,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) ==" +
-            " napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tEmployee *reference = new Employee();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorEmployee, nullptr, nullptr) == napi_ok) {\n" +
@@ -474,11 +542,20 @@ class GenNapiCppFileTest {
             "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
             "\t\n" +
             "\t// 获取参数\n" +
-            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tsize_t argc = 0;\n" +
+            "\tnapi_value args[0] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 0) {\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要0个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
             "\t// 调用原始类方法\n" +
-            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\tconstructor(NAPI_PARAM_EXPRESSION);\n" +
             "\t// 创建返回参数\n" +
-            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t\n" +
             "\t}\n" +
             "\treturn result;\n" +
             "};\n" +
@@ -497,16 +574,25 @@ class GenNapiCppFileTest {
             "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
             "\t\n" +
             "\t// 获取参数\n" +
-            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tsize_t argc = 0;\n" +
+            "\tnapi_value args[0] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 0) {\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要0个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
             "\t// 调用原始类方法\n" +
-            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\tdisplayName(NAPI_PARAM_EXPRESSION);\n" +
             "\t// 创建返回参数\n" +
-            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t\n" +
             "\t}\n" +
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value GetempCode(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetempCodeEmployee(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -524,7 +610,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value SetempCode(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetempCodeEmployee(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -544,7 +630,7 @@ class GenNapiCppFileTest {
             "\treturn nullptr;\n" +
             "};\n" +
             "\n" +
-            "napi_value GetcurrentUser(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetcurrentUserEmployee(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -562,7 +648,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value SetcurrentUser(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetcurrentUserEmployee(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -582,7 +668,7 @@ class GenNapiCppFileTest {
             "\treturn nullptr;\n" +
             "};\n" +
             "\n" +
-            "napi_value Getpi(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetpiEmployee(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -600,7 +686,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Setpi(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetpiEmployee(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -621,12 +707,13 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_property_descriptor EmployeeProps[] = {\n" +
-            "\t{constructor, nullptr, constructorEmployee, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
-            "\t{displayName, nullptr, displayNameEmployee, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
-            "\t{empCode, nullptr, nullptr, GetempCodeEmployee, SetempCodeEmployee, nullptr, napi_default, nullptr},\n" +
-            "\t{currentUser, nullptr, nullptr, GetcurrentUserEmployee, SetcurrentUserEmployee, nullptr, " +
+            "\t{\"constructor\", nullptr, constructorEmployee, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{\"displayName\", nullptr, displayNameEmployee, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{\"empCode\", nullptr, nullptr, GetempCodeEmployee, SetempCodeEmployee, nullptr, " +
             "napi_default, nullptr},\n" +
-            "\t{pi, nullptr, nullptr, GetpiEmployee, SetpiEmployee, nullptr, napi_default, nullptr},\n" +
+            "\t{\"currentUser\", nullptr, nullptr, GetcurrentUserEmployee, SetcurrentUserEmployee, nullptr, " +
+            "napi_default, nullptr},\n" +
+            "\t{\"pi\", nullptr, nullptr, GetpiEmployee, SetpiEmployee, nullptr, napi_default, nullptr},\n" +
             "};\n" +
             "\n" +
             "napi_value EmployeeIns = nullptr;\n" +
@@ -647,8 +734,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
-            "napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tmyClass *reference = new myClass();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructormyClass, nullptr, nullptr) == napi_ok) {\n" +
@@ -678,17 +765,26 @@ class GenNapiCppFileTest {
             "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
             "\t\n" +
             "\t// 获取参数\n" +
-            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tsize_t argc = 0;\n" +
+            "\tnapi_value args[0] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 0) {\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要0个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
             "\t// 调用原始类方法\n" +
-            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\tfoo(NAPI_PARAM_EXPRESSION);\n" +
             "\t// 创建返回参数\n" +
-            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t\n" +
             "\t}\n" +
             "\treturn result;\n" +
             "};\n" +
             "\n" +
             "napi_property_descriptor myClassProps[] = {\n" +
-            "\t{foo, nullptr, foomyClass, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{\"foo\", nullptr, foomyClass, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
             "};\n" +
             "\n" +
             "napi_value myClassIns = nullptr;\n" +
@@ -711,8 +807,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
-            "napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tKeyValuePair *reference = new KeyValuePair();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorKeyValuePair, nullptr, nullptr) == napi_ok) {\n" +
@@ -742,16 +838,25 @@ class GenNapiCppFileTest {
             "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
             "\t\n" +
             "\t// 获取参数\n" +
-            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
             "\t// 调用原始类方法\n" +
-            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\tsetKeyValue(NAPI_PARAM_EXPRESSION);\n" +
             "\t// 创建返回参数\n" +
-            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t\n" +
             "\t}\n" +
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Getkey(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetkeyKeyValuePair(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -769,7 +874,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Setkey(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetkeyKeyValuePair(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -789,7 +894,7 @@ class GenNapiCppFileTest {
             "\treturn nullptr;\n" +
             "};\n" +
             "\n" +
-            "napi_value Getval(napi_env env, napi_callback_info info)\n" +
+            "napi_value GetvalKeyValuePair(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -807,7 +912,7 @@ class GenNapiCppFileTest {
             "\treturn result;\n" +
             "};\n" +
             "\n" +
-            "napi_value Setval(napi_env env, napi_callback_info info)\n" +
+            "napi_value SetvalKeyValuePair(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_get_undefined(env, &result);\n" +
@@ -828,15 +933,18 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_property_descriptor KeyValuePairProps[] = {\n" +
-            "\t{setKeyValue, nullptr, setKeyValueKeyValuePair, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
-            "\t{key, nullptr, nullptr, GetkeyKeyValuePair, SetkeyKeyValuePair, nullptr, napi_default, nullptr},\n" +
-            "\t{val, nullptr, nullptr, GetvalKeyValuePair, SetvalKeyValuePair, nullptr, napi_default, nullptr},\n" +
+            "\t{\"setKeyValue\", nullptr, setKeyValueKeyValuePair, nullptr, nullptr, nullptr, " +
+            "napi_default, nullptr},\n" +
+            "\t{\"key\", nullptr, nullptr, GetkeyKeyValuePair, SetkeyKeyValuePair, nullptr, " +
+            "napi_default, nullptr},\n" +
+            "\t{\"val\", nullptr, nullptr, GetvalKeyValuePair, SetvalKeyValuePair, nullptr, " +
+            "napi_default, nullptr},\n" +
             "};\n" +
             "\n" +
             "napi_value KeyValuePairIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"KeyValuePair\", NAPI_AUTO_LENGTH, ConstructorKeyValuePair, " +
-            "nullptr, sizeof(KeyValuePairProps) / sizeof(KeyValuePairProps[0]), KeyValuePairProps, " +
-            "&KeyValuePairIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"KeyValuePair\", NAPI_AUTO_LENGTH, ConstructorKeyValuePair, nullptr, " +
+            "sizeof(KeyValuePairProps) / sizeof(KeyValuePairProps[0]), KeyValuePairProps, &KeyValuePairIns) " +
+            "!= napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"KeyValuePair\", KeyValuePairIns) != napi_ok) {\n" +
@@ -854,7 +962,7 @@ class GenNapiCppFileTest {
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
             "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
-            "thisVar != nullptr) {\n" +
+                    "thisVar != nullptr) {\n" +
             "\t\tkvProcessor *reference = new kvProcessor();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorkvProcessor, nullptr, nullptr) == napi_ok) {\n" +
@@ -884,23 +992,32 @@ class GenNapiCppFileTest {
             "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
             "\t\n" +
             "\t// 获取参数\n" +
-            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
             "\t// 调用原始类方法\n" +
-            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\tprocess(NAPI_PARAM_EXPRESSION);\n" +
             "\t// 创建返回参数\n" +
-            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t\n" +
             "\t}\n" +
             "\treturn result;\n" +
             "};\n" +
             "\n" +
             "napi_property_descriptor kvProcessorProps[] = {\n" +
-            "\t{process, nullptr, processkvProcessor, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{\"process\", nullptr, processkvProcessor, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
             "};\n" +
             "\n" +
             "napi_value kvProcessorIns = nullptr;\n" +
             "\tif (napi_define_class(env, \"kvProcessor\", NAPI_AUTO_LENGTH, ConstructorkvProcessor, nullptr, " +
-            "sizeof(kvProcessorProps) / sizeof(kvProcessorProps[0]), " +
-            "kvProcessorProps, &kvProcessorIns) != napi_ok) {\n" +
+                    "sizeof(kvProcessorProps) / sizeof(kvProcessorProps[0]), kvProcessorProps, &kvProcessorIns) " +
+                    "!= napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"kvProcessor\", kvProcessorIns) != napi_ok) {\n" +
@@ -916,8 +1033,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
-            "napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar " +
+            "!= nullptr) {\n" +
             "\t\tShape *reference = new Shape();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorShape, nullptr, nullptr) == napi_ok) {\n" +
@@ -947,17 +1064,26 @@ class GenNapiCppFileTest {
             "\tstatus = napi_unwrap(env, jsthis, (void **)&obj);\n" +
             "\t\n" +
             "\t// 获取参数\n" +
-            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
             "\t// 调用原始类方法\n" +
-            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\tprocess(NAPI_PARAM_EXPRESSION);\n" +
             "\t// 创建返回参数\n" +
-            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\t\n" +
             "\t}\n" +
             "\treturn result;\n" +
             "};\n" +
             "\n" +
             "napi_property_descriptor ShapeProps[] = {\n" +
-            "\t{process, nullptr, processShape, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
+            "\t{\"process\", nullptr, processShape, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
             "};\n" +
             "\n" +
             "napi_value ShapeIns = nullptr;\n" +

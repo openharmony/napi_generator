@@ -662,6 +662,96 @@ public class GenAkiCppFile extends GeneratorBase {
         System.out.println("genFuncList : " + resContent);
     };
 
+    private String genCppStructContent(StructObj so) {
+        String structName = so.getName();
+        structName = !structName.isEmpty() ? structName : so.getAlias();
+
+        String templateStr = !so.getTemplateList().isEmpty() ?
+                AKI_TEMPLATE_TOKEN + AKI_BLANK_SPACE + AKI_LEFT_ANGLE_BRACKET : "";
+        for (String teStr : so.getTemplateList()) {
+            templateStr += AKI_TYPE_NAME_TOKEN + AKI_BLANK_SPACE + teStr + AKI_COMMA + AKI_BLANK_SPACE;
+        }
+        templateStr = templateStr.length() > 1 ?
+                StringUtils.removeLastCharacter(templateStr, 2) + AKI_RIGHT_ANGLE_BRACKET + AKI_BLANK_SPACE : "";
+
+        List<ParamObj> paList = so.getMemberList();
+        String resContent = "";
+        resContent += AKI_NEW_LINE + templateStr + AKI_STRUCT_TOKEN +
+                AKI_BLANK_SPACE + structName + AKI_BLANK_SPACE + AKI_LEFT_BRACE;
+
+        for (ParamObj paItem : paList) {
+            String paType = paItem.getType().isEmpty() ? AKI_AUTO_TOKEN : paItem.getType();
+            resContent += AKI_NEW_LINE + AKI_TAB_SPACE + ts2CppKey(paType) +
+                    AKI_BLANK_SPACE + paItem.getName();
+            ;
+            List<String> initVList = paItem.getvList();
+            if (initVList.size() > 0) {
+                resContent += AKI_EQUAL + initVList.get(0) + AKI_SEMICOLON;
+            } else {
+                resContent += AKI_SEMICOLON;
+            }
+        }
+
+        List<FuncObj> funcList = so.getFuncList();
+        for (FuncObj funcItem : funcList) {
+            String retValue = ts2CppKey(funcItem.getRetValue()).isEmpty() ? "" :
+                    ts2CppKey(funcItem.getRetValue()) + AKI_BLANK_SPACE;
+            resContent += AKI_NEW_LINE + AKI_TAB_SPACE + retValue +
+                    replaceTsToken(funcItem.getName()) + AKI_LEFT_PARENTHESES;
+            List<ParamObj> pol = funcItem.getParamList();
+            for (ParamObj poItem : pol) {
+                String retType = ts2CppKey(poItem.getType()).isEmpty() ?
+                        AKI_AUTO_TOKEN : ts2CppKey(poItem.getType());
+                resContent += retType + AKI_BLANK_SPACE + replaceTsToken(poItem.getName()) +
+                        AKI_COMMA + AKI_BLANK_SPACE;
+            }
+            resContent = !pol.isEmpty() ? StringUtils.removeLastCharacter(resContent, 2) : resContent;
+            resContent += AKI_RIGHT_PARENTHESES + AKI_SEMICOLON;
+        }
+
+        resContent = StringUtils.removeLastSpace(resContent);
+        resContent += AKI_NEW_LINE + AKI_RIGHT_BRACE + AKI_SEMICOLON + AKI_NEW_LINE;
+        return resContent;
+    }
+
+    private String genAkiCppStructContent(StructObj so) {
+        String structName = so.getName();
+        structName = !structName.isEmpty() ? structName : so.getAlias();
+
+        String structDeclare = AKI_CLASS_DECLARE.replace(AKI_CLASS_NAME, structName);
+        String classPropertyDeclare = "";
+
+        List<ParamObj> paList = so.getMemberList();
+        for (ParamObj paItem : paList) {
+            classPropertyDeclare += AKI_PROPERTY_DECLARE.replace(AKI_PROPERTY_NAME, paItem.getName());
+        }
+        structDeclare = structDeclare.replace(AKI_PROPERTY_EXPRESSION, classPropertyDeclare);
+
+        List<FuncObj> foList = so.getFuncList();
+        String classFunctionDeclare = "";
+        String classConstructDeclare = "";
+        for (FuncObj foItem : foList) {
+            if (foItem.getName().equals("constructor")) {
+                String paramStr = "";
+                for (ParamObj poItem : foItem.getParamList()) {
+                    paramStr += poItem.getType() + AKI_COMMA + AKI_BLANK_SPACE;
+                }
+                paramStr = StringUtils.removeLastCharacter(paramStr, 2);
+                classConstructDeclare += AKI_CONSTRUCTOR_DECLARE.replace(
+                        AKI_CONSTRUCTOR_PARAMS, paramStr);
+            } else {
+                classFunctionDeclare += AKI_METHOD_DECLARE.replace(AKI_METHOD_NAME, foItem.getName());
+            }
+        }
+
+        String classPFunctionDeclare = "";
+        structDeclare = structDeclare.replace(AKI_METHOD_EXPRESSION, classFunctionDeclare);
+        structDeclare = structDeclare.replace(AKI_CONSTRUCTOR_EXPRESSION, classConstructDeclare);
+        structDeclare = structDeclare.replace(AKI_PMETHOD_EXPRESSION, classPFunctionDeclare);
+
+        return structDeclare;
+    }
+
     /**
      * 生成输出内容
      *
@@ -673,53 +763,8 @@ public class GenAkiCppFile extends GeneratorBase {
 
         String resContent = "";
         for (StructObj so : sol) {
-            String structName = so.getName();
-            structName = !structName.isEmpty() ? structName : so.getAlias();
-
-            String templateStr = !so.getTemplateList().isEmpty() ?
-                    AKI_TEMPLATE_TOKEN + AKI_BLANK_SPACE + AKI_LEFT_ANGLE_BRACKET : "";
-            for (String teStr : so.getTemplateList()) {
-                templateStr += AKI_TYPE_NAME_TOKEN + AKI_BLANK_SPACE + teStr + AKI_COMMA + AKI_BLANK_SPACE;
-            }
-            templateStr = templateStr.length() > 1 ?
-                    StringUtils.removeLastCharacter(templateStr, 2) + AKI_RIGHT_ANGLE_BRACKET + AKI_BLANK_SPACE : "";
-
-            List<ParamObj> paList = so.getMemberList();
-            resContent += AKI_NEW_LINE + templateStr + AKI_STRUCT_TOKEN +
-                    AKI_BLANK_SPACE + structName + AKI_BLANK_SPACE + AKI_LEFT_BRACE;
-
-            for (ParamObj paItem : paList) {
-                String paType = paItem.getType().isEmpty() ? AKI_AUTO_TOKEN : paItem.getType();
-                resContent += AKI_NEW_LINE + AKI_TAB_SPACE + ts2CppKey(paType) +
-                        AKI_BLANK_SPACE + paItem.getName();
-                        ;
-                List<String> initVList = paItem.getvList();
-                if (initVList.size() > 0) {
-                    resContent += AKI_EQUAL + initVList.get(0) + AKI_SEMICOLON;
-                } else {
-                    resContent += AKI_SEMICOLON;
-                }
-            }
-
-            List<FuncObj> funcList = so.getFuncList();
-            for (FuncObj funcItem : funcList) {
-                String retValue = ts2CppKey(funcItem.getRetValue()).isEmpty() ? "" :
-                    ts2CppKey(funcItem.getRetValue()) + AKI_BLANK_SPACE;
-                resContent += AKI_NEW_LINE + AKI_TAB_SPACE + retValue +
-                    replaceTsToken(funcItem.getName()) + AKI_LEFT_PARENTHESES;
-                List<ParamObj> pol = funcItem.getParamList();
-                for (ParamObj poItem : pol) {
-                    String retType = ts2CppKey(poItem.getType()).isEmpty() ?
-                            AKI_AUTO_TOKEN : ts2CppKey(poItem.getType());
-                    resContent += retType + AKI_BLANK_SPACE + replaceTsToken(poItem.getName()) +
-                            AKI_COMMA + AKI_BLANK_SPACE;
-                }
-                resContent = !pol.isEmpty() ? StringUtils.removeLastCharacter(resContent, 2) : resContent;
-                resContent += AKI_RIGHT_PARENTHESES + AKI_SEMICOLON;
-            }
-
-            resContent = StringUtils.removeLastSpace(resContent);
-            resContent += AKI_NEW_LINE + AKI_RIGHT_BRACE + AKI_SEMICOLON + AKI_NEW_LINE;
+            resContent += genCppStructContent(so);
+            resContent += genAkiCppStructContent(so);
         }
         this.structContent = resContent;
     };
