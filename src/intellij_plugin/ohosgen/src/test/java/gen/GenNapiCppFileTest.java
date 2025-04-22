@@ -76,7 +76,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tTestClass *reference = new TestClass();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorTestClass, nullptr, nullptr) == napi_ok) {\n" +
@@ -258,7 +259,8 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value TestClassIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, nullptr, sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, &TestClassIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, nullptr, " +
+            "sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, &TestClassIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"TestClass\", TestClassIns) != napi_ok) {\n" +
@@ -278,7 +280,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tTestClass *reference = new TestClass();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorTestClass, nullptr, nullptr) == napi_ok) {\n" +
@@ -487,7 +490,8 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value TestClassIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, nullptr, sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, &TestClassIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"TestClass\", NAPI_AUTO_LENGTH, ConstructorTestClass, nullptr, " +
+            "sizeof(TestClassProps) / sizeof(TestClassProps[0]), TestClassProps, &TestClassIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"TestClass\", TestClassIns) != napi_ok) {\n" +
@@ -507,7 +511,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tEmployee *reference = new Employee();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorEmployee, nullptr, nullptr) == napi_ok) {\n" +
@@ -704,13 +709,16 @@ class GenNapiCppFileTest {
             "napi_property_descriptor EmployeeProps[] = {\n" +
             "\t{\"constructor\", nullptr, constructorEmployee, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
             "\t{\"displayName\", nullptr, displayNameEmployee, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
-            "\t{\"empCode\", nullptr, nullptr, GetempCodeEmployee, SetempCodeEmployee, nullptr, napi_default, nullptr},\n" +
-            "\t{\"currentUser\", nullptr, nullptr, GetcurrentUserEmployee, SetcurrentUserEmployee, nullptr, napi_default, nullptr},\n" +
+            "\t{\"empCode\", nullptr, nullptr, GetempCodeEmployee, SetempCodeEmployee, nullptr, " +
+            "napi_default, nullptr},\n" +
+            "\t{\"currentUser\", nullptr, nullptr, GetcurrentUserEmployee, SetcurrentUserEmployee, nullptr, " +
+            "napi_default, nullptr},\n" +
             "\t{\"pi\", nullptr, nullptr, GetpiEmployee, SetpiEmployee, nullptr, napi_default, nullptr},\n" +
             "};\n" +
             "\n" +
             "napi_value EmployeeIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"Employee\", NAPI_AUTO_LENGTH, ConstructorEmployee, nullptr, sizeof(EmployeeProps) / sizeof(EmployeeProps[0]), EmployeeProps, &EmployeeIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"Employee\", NAPI_AUTO_LENGTH, ConstructorEmployee, nullptr, " +
+            "sizeof(EmployeeProps) / sizeof(EmployeeProps[0]), EmployeeProps, &EmployeeIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"Employee\", EmployeeIns) != napi_ok) {\n" +
@@ -726,7 +734,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tmyClass *reference = new myClass();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructormyClass, nullptr, nullptr) == napi_ok) {\n" +
@@ -779,7 +788,8 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value myClassIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"myClass\", NAPI_AUTO_LENGTH, ConstructormyClass, nullptr, sizeof(myClassProps) / sizeof(myClassProps[0]), myClassProps, &myClassIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"myClass\", NAPI_AUTO_LENGTH, ConstructormyClass, nullptr, " +
+            "sizeof(myClassProps) / sizeof(myClassProps[0]), myClassProps, &myClassIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"myClass\", myClassIns) != napi_ok) {\n" +
@@ -797,7 +807,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tKeyValuePair *reference = new KeyValuePair();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorKeyValuePair, nullptr, nullptr) == napi_ok) {\n" +
@@ -922,13 +933,18 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_property_descriptor KeyValuePairProps[] = {\n" +
-            "\t{\"setKeyValue\", nullptr, setKeyValueKeyValuePair, nullptr, nullptr, nullptr, napi_default, nullptr},\n" +
-            "\t{\"key\", nullptr, nullptr, GetkeyKeyValuePair, SetkeyKeyValuePair, nullptr, napi_default, nullptr},\n" +
-            "\t{\"val\", nullptr, nullptr, GetvalKeyValuePair, SetvalKeyValuePair, nullptr, napi_default, nullptr},\n" +
+            "\t{\"setKeyValue\", nullptr, setKeyValueKeyValuePair, nullptr, nullptr, nullptr, " +
+            "napi_default, nullptr},\n" +
+            "\t{\"key\", nullptr, nullptr, GetkeyKeyValuePair, SetkeyKeyValuePair, nullptr, " +
+            "napi_default, nullptr},\n" +
+            "\t{\"val\", nullptr, nullptr, GetvalKeyValuePair, SetvalKeyValuePair, nullptr, " +
+            "napi_default, nullptr},\n" +
             "};\n" +
             "\n" +
             "napi_value KeyValuePairIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"KeyValuePair\", NAPI_AUTO_LENGTH, ConstructorKeyValuePair, nullptr, sizeof(KeyValuePairProps) / sizeof(KeyValuePairProps[0]), KeyValuePairProps, &KeyValuePairIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"KeyValuePair\", NAPI_AUTO_LENGTH, ConstructorKeyValuePair, nullptr, " +
+            "sizeof(KeyValuePairProps) / sizeof(KeyValuePairProps[0]), KeyValuePairProps, &KeyValuePairIns) " +
+            "!= napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"KeyValuePair\", KeyValuePairIns) != napi_ok) {\n" +
@@ -945,7 +961,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+                    "thisVar != nullptr) {\n" +
             "\t\tkvProcessor *reference = new kvProcessor();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorkvProcessor, nullptr, nullptr) == napi_ok) {\n" +
@@ -998,7 +1015,9 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value kvProcessorIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"kvProcessor\", NAPI_AUTO_LENGTH, ConstructorkvProcessor, nullptr, sizeof(kvProcessorProps) / sizeof(kvProcessorProps[0]), kvProcessorProps, &kvProcessorIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"kvProcessor\", NAPI_AUTO_LENGTH, ConstructorkvProcessor, nullptr, " +
+                    "sizeof(kvProcessorProps) / sizeof(kvProcessorProps[0]), kvProcessorProps, &kvProcessorIns) " +
+                    "!= napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"kvProcessor\", kvProcessorIns) != napi_ok) {\n" +
@@ -1014,7 +1033,8 @@ class GenNapiCppFileTest {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar " +
+            "!= nullptr) {\n" +
             "\t\tShape *reference = new Shape();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorShape, nullptr, nullptr) == napi_ok) {\n" +
@@ -1067,7 +1087,8 @@ class GenNapiCppFileTest {
             "};\n" +
             "\n" +
             "napi_value ShapeIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"Shape\", NAPI_AUTO_LENGTH, ConstructorShape, nullptr, sizeof(ShapeProps) / sizeof(ShapeProps[0]), ShapeProps, &ShapeIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"Shape\", NAPI_AUTO_LENGTH, ConstructorShape, nullptr, " +
+            "sizeof(ShapeProps) / sizeof(ShapeProps[0]), ShapeProps, &ShapeIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"Shape\", ShapeIns) != napi_ok) {\n" +
