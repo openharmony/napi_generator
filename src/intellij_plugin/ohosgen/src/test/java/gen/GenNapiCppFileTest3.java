@@ -384,7 +384,8 @@ class GenNapiCppFileTest3 {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == " +
+            "napi_ok && thisVar != nullptr) {\n" +
             "\t\tTestStruct *reference = new TestStruct();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorTestStruct, nullptr, nullptr) == napi_ok) {\n" +
@@ -521,7 +522,8 @@ class GenNapiCppFileTest3 {
             "};\n" +
             "\n" +
             "napi_value TestStructIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"TestStruct\", NAPI_AUTO_LENGTH, ConstructorTestStruct, nullptr, sizeof(TestStructProps) / sizeof(TestStructProps[0]), TestStructProps, &TestStructIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"TestStruct\", NAPI_AUTO_LENGTH, ConstructorTestStruct, nullptr, " +
+            "sizeof(TestStructProps) / sizeof(TestStructProps[0]), TestStructProps, &TestStructIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"TestStruct\", TestStructIns) != napi_ok) {\n" +
@@ -539,7 +541,8 @@ class GenNapiCppFileTest3 {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok " +
+            "&& thisVar != nullptr) {\n" +
             "\t\tTestStruct *reference = new TestStruct();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorTestStruct, nullptr, nullptr) == napi_ok) {\n" +
@@ -677,7 +680,8 @@ class GenNapiCppFileTest3 {
             "};\n" +
             "\n" +
             "napi_value TestStructIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"TestStruct\", NAPI_AUTO_LENGTH, ConstructorTestStruct, nullptr, sizeof(TestStructProps) / sizeof(TestStructProps[0]), TestStructProps, &TestStructIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"TestStruct\", NAPI_AUTO_LENGTH, ConstructorTestStruct, nullptr, " +
+            "sizeof(TestStructProps) / sizeof(TestStructProps[0]), TestStructProps, &TestStructIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"TestStruct\", TestStructIns) != napi_ok) {\n" +
@@ -695,7 +699,8 @@ class GenNapiCppFileTest3 {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tTestStruct *reference = new TestStruct();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorTestStruct, nullptr, nullptr) == napi_ok) {\n" +
@@ -826,7 +831,8 @@ class GenNapiCppFileTest3 {
             "};\n" +
             "\n" +
             "napi_value TestStructIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"TestStruct\", NAPI_AUTO_LENGTH, ConstructorTestStruct, nullptr, sizeof(TestStructProps) / sizeof(TestStructProps[0]), TestStructProps, &TestStructIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"TestStruct\", NAPI_AUTO_LENGTH, ConstructorTestStruct, nullptr, " +
+            "sizeof(TestStructProps) / sizeof(TestStructProps[0]), TestStructProps, &TestStructIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"TestStruct\", TestStructIns) != napi_ok) {\n" +
@@ -841,7 +847,8 @@ class GenNapiCppFileTest3 {
             "\tnapi_value undefineVar = nullptr, thisVar = nullptr;\n" +
             "\tnapi_get_undefined(env, &undefineVar);\n" +
             "\n" +
-            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && thisVar != nullptr) {\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, &thisVar, nullptr) == napi_ok && " +
+            "thisVar != nullptr) {\n" +
             "\t\tTestStruct *reference = new TestStruct();\n" +
             "\t\tif (napi_wrap(env, thisVar,\n" +
             "\t\t\treinterpret_cast<void *>(reference), DestructorTestStruct, nullptr, nullptr) == napi_ok) {\n" +
@@ -861,7 +868,8 @@ class GenNapiCppFileTest3 {
             "};\n" +
             "\n" +
             "napi_value TestStructIns = nullptr;\n" +
-            "\tif (napi_define_class(env, \"TestStruct\", NAPI_AUTO_LENGTH, ConstructorTestStruct, nullptr, sizeof(TestStructProps) / sizeof(TestStructProps[0]), TestStructProps, &TestStructIns) != napi_ok) {\n" +
+            "\tif (napi_define_class(env, \"TestStruct\", NAPI_AUTO_LENGTH, ConstructorTestStruct, nullptr, " +
+            "sizeof(TestStructProps) / sizeof(TestStructProps[0]), TestStructProps, &TestStructIns) != napi_ok) {\n" +
             "\t\treturn nullptr;\n" +
             "\t}\n" +
             "\tif (napi_set_named_property(env, exports, \"TestStruct\", TestStructIns) != napi_ok) {\n" +
@@ -905,7 +913,8 @@ class GenNapiCppFileTest3 {
             "};\n" +
             "\n" +
             "napi_property_descriptor GNAPIProps[] = {\n" +
-            "\t{\"employeeName\", nullptr, nullptr, GetemployeeNameGNAPI, SetemployeeNameGNAPI, nullptr, napi_default, nullptr},\n" +
+            "\t{\"employeeName\", nullptr, nullptr, GetemployeeNameGNAPI, SetemployeeNameGNAPI, nullptr, " +
+            "napi_default, nullptr},\n" +
             "};\n";
 
     private String testValContent2 = "\nextends const std::string employeeName = \"John\";\n" +
@@ -945,7 +954,8 @@ class GenNapiCppFileTest3 {
             "};\n" +
             "\n" +
             "napi_property_descriptor GNAPIProps[] = {\n" +
-            "\t{\"employeeName\", nullptr, nullptr, GetemployeeNameGNAPI, SetemployeeNameGNAPI, nullptr, napi_default, nullptr},\n" +
+            "\t{\"employeeName\", nullptr, nullptr, GetemployeeNameGNAPI, SetemployeeNameGNAPI, nullptr, " +
+            "napi_default, nullptr},\n" +
             "};\n";
 
     private String testValContent3 = "\nextends const int num1 = 1;\n" +
@@ -1028,7 +1038,8 @@ class GenNapiCppFileTest3 {
             "};\n" +
             "\n" +
             "napi_property_descriptor GNAPIProps[] = {\n" +
-            "\t{\"playerCodes\", nullptr, nullptr, GetplayerCodesGNAPI, SetplayerCodesGNAPI, nullptr, napi_default, nullptr},\n" +
+            "\t{\"playerCodes\", nullptr, nullptr, GetplayerCodesGNAPI, SetplayerCodesGNAPI, " +
+            "nullptr, napi_default, nullptr},\n" +
             "};\n";
 
     private String testValContent5 = "\nextends const auto playerCodes.player2 = 11;\n" +
@@ -1068,7 +1079,8 @@ class GenNapiCppFileTest3 {
             "};\n" +
             "\n" +
             "napi_property_descriptor GNAPIProps[] = {\n" +
-            "\t{\"playerCodes.player2\", nullptr, nullptr, GetplayerCodes.player2GNAPI, SetplayerCodes.player2GNAPI, nullptr, napi_default, nullptr},\n" +
+            "\t{\"playerCodes.player2\", nullptr, nullptr, GetplayerCodes.player2GNAPI, " +
+            "SetplayerCodes.player2GNAPI, nullptr, napi_default, nullptr},\n" +
             "};\n";
 
     private String testValContent6 = "\nstruct ROUTESST {\n" +
@@ -1117,6 +1129,47 @@ class GenNapiCppFileTest3 {
             "\n" +
             "napi_property_descriptor GNAPIProps[] = {\n" +
             "\t{\"ROUTES\", nullptr, nullptr, GetROUTESGNAPI, SetROUTESGNAPI, nullptr, napi_default, nullptr},\n" +
+            "};\n";
+
+    private String testGenConstContent = "\nextends const int TestParam = 100;\n" +
+            "\n" +
+            "napi_value GetTestParamGNAPI(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tif (napi_get_cb_info(env, info, nullptr, nullptr, nullptr, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 创建返回对象\n" +
+            "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value SetTestParamGNAPI(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\tchar msg[128] = {0};\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_value msgvalue;\n" +
+            "\tnapi_status status;\n" +
+            "\tsize_t argc = 1, size = 0;\n" +
+            "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, nullptr, nullptr) != napi_ok) {\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\t// 获取参数\n" +
+            "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
+            "\tTestParam = msg;\n" +
+            "\treturn nullptr;\n" +
+            "};\n" +
+            "\n" +
+            "napi_property_descriptor GNAPIProps[] = {\n" +
+            "\t{\"TestParam\", nullptr, nullptr, GetTestParamGNAPI, " +
+            "SetTestParamGNAPI, nullptr, napi_default, nullptr},\n" +
             "};\n";
 
     @Test
@@ -1681,45 +1734,7 @@ class GenNapiCppFileTest3 {
         if (gb instanceof GenNapiCppFile gdf) {
             String varContent = gdf.getConstContent();
             System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n" +
-                    "\n" +
-                    "napi_value GetTestParamGNAPI(napi_env env, napi_callback_info info)\n" +
-                    "{\n" +
-                    "\tnapi_value result = nullptr;\n" +
-                    "\tnapi_value jsthis;\n" +
-                    "\tnapi_status status;\n" +
-                    "\tnapi_get_undefined(env, &result);\n" +
-                    "\tif (napi_get_cb_info(env, info, nullptr, nullptr, nullptr, nullptr) != napi_ok) {\n" +
-                    "\t\treturn result;\n" +
-                    "\t}\n" +
-                    "\n" +
-                    "\t// 创建返回对象\n" +
-                    "\tNAPI_CLASS_RETURN_VALUE_DECLARE\n" +
-                    "\n" +
-                    "\treturn result;\n" +
-                    "};\n" +
-                    "\n" +
-                    "napi_value SetTestParamGNAPI(napi_env env, napi_callback_info info)\n" +
-                    "{\n" +
-                    "\tnapi_value result = nullptr;\n" +
-                    "\tnapi_get_undefined(env, &result);\n" +
-                    "\tchar msg[128] = {0};\n" +
-                    "\tnapi_value jsthis;\n" +
-                    "\tnapi_value msgvalue;\n" +
-                    "\tnapi_status status;\n" +
-                    "\tsize_t argc = 1, size = 0;\n" +
-                    "\tif (napi_get_cb_info(env, info, &argc, &msgvalue, nullptr, nullptr) != napi_ok) {\n" +
-                    "\t\treturn result;\n" +
-                    "\t}\n" +
-                    "\t// 获取参数\n" +
-                    "\tNAPI_GET_ARGUMENTS_DECLARE\n" +
-                    "\tTestParam = msg;\n" +
-                    "\treturn nullptr;\n" +
-                    "};\n" +
-                    "\n" +
-                    "napi_property_descriptor GNAPIProps[] = {\n" +
-                    "\t{\"TestParam\", nullptr, nullptr, GetTestParamGNAPI, SetTestParamGNAPI, nullptr, napi_default, nullptr},\n" +
-                    "};\n";
+            String expect = testGenConstContent;
             assertEquals(expect, varContent);
         }
     }
