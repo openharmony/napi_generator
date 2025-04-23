@@ -138,7 +138,7 @@ public class GenDtsFile extends GeneratorBase {
         Map.entry("export", "")
     );
 
-    private final Map<String, String> cppTokenMap = Map.ofEntries(
+    private final Map<String, String>cppTokenMap = Map.ofEntries(
         Map.entry("*", ""),
         Map.entry("&", ""),
         Map.entry("(", ""),
@@ -148,12 +148,12 @@ public class GenDtsFile extends GeneratorBase {
     /**
      * const style
      */
-    public static int CONV_CONST_STYLE = 1;
+    public final static int CONV_CONST_STYLE = 1;
 
     /**
      * declare style
      */
-    public static int CONV_DECLARE_STYLE = 2;
+    public final static int CONV_DECLARE_STYLE = 2;
 
     private int styleType = CONV_DECLARE_STYLE;
 
