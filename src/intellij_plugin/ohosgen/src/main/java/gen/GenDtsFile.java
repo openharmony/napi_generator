@@ -71,6 +71,8 @@ public class GenDtsFile extends GeneratorBase {
     private static final String TS_ASYNC_TOKEN = "async";
     private static final String TS_AWAIT_TOKEN = "await";
     private static final String TS_YIELD_TOKEN = "yield";
+    private static final String TS_VOID_TOKEN = "void";
+    private static final String TS_ARROW_TOKEN = "=>";
     private static final String TS_NEW_LINE = "\n";
     private static final String TS_TAB_SPACE = "\t";
     private static final String TS_BLANK_SPACE = " ";
@@ -88,7 +90,13 @@ public class GenDtsFile extends GeneratorBase {
     private static final String TS_LEFT_ANGLE_BRACKET = "<";
     private static final String TS_RIGHT_ANGLE_BRACKET = ">";
 
+    private static final String TS_RET_TYPE = "TS_RET_TYPE";
+    private static final String TS_CB_TEMP = "cb: (err: string, res: TS_RET_TYPE) => void";
+    private static final String TS_CB_VOID_TEMP = "cb: (err: string) => void";
+    private static final String TS_PROMISE_TEMP = "Promise<TS_RET_TYPE>";
     private static final String TS_FILE_PREFIX = "ag_";
+    private static final String TS_AYNC_SUFFIX = "Async";
+    private static final String TS_PROMISE_SUFFIX = "Promise";
     private static final String TS_FILE_SUFFIX = ".d.ts";
 
     private String interfaceContent = "";
@@ -138,10 +146,66 @@ public class GenDtsFile extends GeneratorBase {
     );
 
     /**
+     * const style
+     */
+    public static int CONV_CONST_STYLE = 1;
+
+    /**
+     * declare style
+     */
+    public static int CONV_DECLARE_STYLE = 2;
+
+    private int styleType = CONV_DECLARE_STYLE;
+
+    /**
      * 构造函数
      */
     GenDtsFile() {
 
+    }
+
+    /**
+     * 设置 style type
+     *
+     * @param styleType 转换类型
+     */
+    public void setStyleType(int styleType) {
+        this.styleType = styleType;
+    }
+
+    /**
+     * 获取 style type
+     *
+     * @return 转换类型
+     */
+    public int getStyleType() {
+        return styleType;
+    }
+
+    private String genArrowStr() {
+        if (styleType == CONV_CONST_STYLE) {
+            return TS_ARROW_TOKEN;
+        }
+
+        if (styleType == CONV_DECLARE_STYLE) {
+            return TS_COLON;
+        }
+
+        return "";
+    }
+
+    private String genExportStr(String funcName, String suffix) {
+        if (styleType == CONV_CONST_STYLE) {
+            return TS_NEW_LINE + TS_EXPORT_TOKEN + TS_BLANK_SPACE + TS_CONST_TOKEN + TS_BLANK_SPACE +
+                    replaceCppToken(funcName) + suffix + TS_COLON + TS_BLANK_SPACE + TS_LEFT_PARENTHESES;
+        }
+
+        if (styleType == CONV_DECLARE_STYLE) {
+            return TS_NEW_LINE + TS_EXPORT_TOKEN + TS_BLANK_SPACE + TS_FUNCTION_TOKEN +
+                    TS_BLANK_SPACE + replaceCppToken(funcName) + suffix + TS_LEFT_PARENTHESES;
+        }
+
+        return "";
     }
 
     /**
@@ -343,6 +407,86 @@ public class GenDtsFile extends GeneratorBase {
         this.enumContent = resContent;
     };
 
+    private String genClassFuncDts(FuncObj fo) {
+        String resContent = "";
+        String funcName = fo.getName();
+        funcName = !funcName.isEmpty() ? funcName : fo.getAlias();
+        List<ParamObj> paList = fo.getParamList();
+        int i = 0;
+        resContent += TS_NEW_LINE + TS_TAB_SPACE + replaceCppToken(funcName) + TS_LEFT_PARENTHESES;
+
+        for (ParamObj poItem : paList) {
+            String paType = cpp2TsKey(poItem.getType());
+            String paName = poItem.getName();
+
+            resContent += !paName.isEmpty() ? replaceCppToken(paName) + TS_COLON +
+                    TS_BLANK_SPACE + paType + TS_COMMA + TS_BLANK_SPACE :
+                    paType + TS_COMMA + TS_BLANK_SPACE;
+        }
+        if (paList.size() > 0) {
+            resContent = StringUtils.removeLastCharacter(resContent, 2);
+        }
+
+        String retValue = fo.getRetValue();
+        resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + TS_COLON +
+                TS_BLANK_SPACE + cpp2TsKey(retValue) + TS_SEMICOLON;
+        return resContent;
+    }
+
+    private String genClassAsyncFuncDts(FuncObj fo) {
+        String resContent = "";
+        String funcName = fo.getName();
+        funcName = !funcName.isEmpty() ? funcName : fo.getAlias();
+        List<ParamObj> paList = fo.getParamList();
+        int i = 0;
+        resContent += TS_NEW_LINE + TS_TAB_SPACE + replaceCppToken(funcName) + TS_AYNC_SUFFIX + TS_LEFT_PARENTHESES;
+
+        for (ParamObj poItem : paList) {
+            String paType = cpp2TsKey(poItem.getType());
+            String paName = poItem.getName();
+
+            resContent += !paName.isEmpty() ? replaceCppToken(paName) + TS_COLON +
+                    TS_BLANK_SPACE + paType + TS_COMMA + TS_BLANK_SPACE :
+                    paType + TS_COMMA + TS_BLANK_SPACE;
+        }
+        String retValue = fo.getRetValue();
+        resContent += retValue.equals(TS_VOID_TOKEN) ? TS_CB_VOID_TEMP :
+                TS_CB_TEMP.replace(TS_RET_TYPE, cpp2TsKey(retValue));
+
+        resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + TS_COLON +
+                TS_BLANK_SPACE + TS_VOID_TOKEN + TS_SEMICOLON;
+        return resContent;
+    }
+
+    private String genClassPromiseFuncDts(FuncObj fo) {
+        String resContent = "";
+        String funcName = fo.getName();
+        funcName = !funcName.isEmpty() ? funcName : fo.getAlias();
+        List<ParamObj> paList = fo.getParamList();
+        int i = 0;
+        resContent += TS_NEW_LINE + TS_TAB_SPACE + replaceCppToken(funcName) + TS_PROMISE_SUFFIX + TS_LEFT_PARENTHESES;
+
+        for (ParamObj poItem : paList) {
+            String paType = cpp2TsKey(poItem.getType());
+            String paName = poItem.getName();
+
+            resContent += !paName.isEmpty() ? replaceCppToken(paName) + TS_COLON +
+                    TS_BLANK_SPACE + paType + TS_COMMA + TS_BLANK_SPACE :
+                    paType + TS_COMMA + TS_BLANK_SPACE;
+        }
+
+        if (paList.size() > 0) {
+            resContent = StringUtils.removeLastCharacter(resContent, 2);
+        }
+
+        String retValue = fo.getRetValue();
+        String promiseStr = TS_PROMISE_TEMP.replace(TS_RET_TYPE, cpp2TsKey(retValue));
+
+        resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + TS_COLON +
+                TS_BLANK_SPACE + promiseStr + TS_SEMICOLON;
+        return resContent;
+    }
+
     /**
      * 生成输出内容
      *
@@ -376,20 +520,9 @@ public class GenDtsFile extends GeneratorBase {
 
             List<FuncObj> funcList = co.getFuncList();
             for (FuncObj funcItem : funcList) {
-                resContent += TS_NEW_LINE + TS_TAB_SPACE + replaceCppToken(funcItem.getName()) + TS_LEFT_PARENTHESES;
-                List<ParamObj> pol = funcItem.getParamList();
-                for (ParamObj poItem : pol) {
-                    String retType = cpp2TsKey(poItem.getType());
-                    resContent += replaceCppToken(poItem.getName()) + TS_COLON +
-                        TS_BLANK_SPACE + retType + TS_COMMA + TS_BLANK_SPACE;
-                }
-                if (pol.size() > 0) {
-                    resContent = StringUtils.removeLastCharacter(resContent, 2);
-                }
-
-                String retValue = funcItem.getRetValue();
-                resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + TS_COLON +
-                    TS_BLANK_SPACE + cpp2TsKey(retValue) + TS_SEMICOLON;
+                resContent += genClassFuncDts(funcItem);
+                resContent += genClassAsyncFuncDts(funcItem);
+                resContent += genClassPromiseFuncDts(funcItem);
             }
 
             resContent = StringUtils.removeLastSpace(resContent);
@@ -397,6 +530,86 @@ public class GenDtsFile extends GeneratorBase {
         }
         this.classContent = resContent;
     };
+
+    private String genFuncDts(FuncObj fo) {
+        String resContent = "";
+        String funcName = fo.getName();
+        funcName = !funcName.isEmpty() ? funcName : fo.getAlias();
+        List<ParamObj> paList = fo.getParamList();
+        int i = 0;
+        resContent += genExportStr(funcName, "");
+
+        for (ParamObj poItem : paList) {
+            String paType = cpp2TsKey(poItem.getType());
+            String paName = poItem.getName();
+
+            resContent += !paName.isEmpty() ? replaceCppToken(paName) + TS_COLON +
+                    TS_BLANK_SPACE + paType + TS_COMMA + TS_BLANK_SPACE :
+                    paType + TS_COMMA + TS_BLANK_SPACE;
+        }
+        if (paList.size() > 0) {
+            resContent = StringUtils.removeLastCharacter(resContent, 2);
+        }
+
+        String retValue = fo.getRetValue();
+        resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + genArrowStr() +
+                TS_BLANK_SPACE + cpp2TsKey(retValue) + TS_SEMICOLON;
+        return resContent;
+    }
+
+    private String genAsyncFuncDts(FuncObj fo) {
+        String resContent = "";
+        String funcName = fo.getName();
+        funcName = !funcName.isEmpty() ? funcName : fo.getAlias();
+        List<ParamObj> paList = fo.getParamList();
+        int i = 0;
+        resContent += genExportStr(funcName, TS_AYNC_SUFFIX);
+
+        for (ParamObj poItem : paList) {
+            String paType = cpp2TsKey(poItem.getType());
+            String paName = poItem.getName();
+
+            resContent += !paName.isEmpty() ? replaceCppToken(paName) + TS_COLON +
+                    TS_BLANK_SPACE + paType + TS_COMMA + TS_BLANK_SPACE :
+                    paType + TS_COMMA + TS_BLANK_SPACE;
+        }
+        String retValue = fo.getRetValue();
+        resContent += retValue.equals(TS_VOID_TOKEN) ? TS_CB_VOID_TEMP :
+                TS_CB_TEMP.replace(TS_RET_TYPE, cpp2TsKey(retValue));
+
+        resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + genArrowStr() +
+                TS_BLANK_SPACE + TS_VOID_TOKEN + TS_SEMICOLON;
+        return resContent;
+    }
+
+    private String genPromiseFuncDts(FuncObj fo) {
+        String resContent = "";
+        String funcName = fo.getName();
+        funcName = !funcName.isEmpty() ? funcName : fo.getAlias();
+        List<ParamObj> paList = fo.getParamList();
+        int i = 0;
+        resContent += genExportStr(funcName, TS_PROMISE_SUFFIX);
+
+        for (ParamObj poItem : paList) {
+            String paType = cpp2TsKey(poItem.getType());
+            String paName = poItem.getName();
+
+            resContent += !paName.isEmpty() ? replaceCppToken(paName) + TS_COLON +
+                    TS_BLANK_SPACE + paType + TS_COMMA + TS_BLANK_SPACE :
+                    paType + TS_COMMA + TS_BLANK_SPACE;
+        }
+
+        if (paList.size() > 0) {
+            resContent = StringUtils.removeLastCharacter(resContent, 2);
+        }
+
+        String retValue = fo.getRetValue();
+        String promiseStr = TS_PROMISE_TEMP.replace(TS_RET_TYPE, cpp2TsKey(retValue));
+
+        resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + genArrowStr() +
+                TS_BLANK_SPACE + promiseStr + TS_SEMICOLON;
+        return resContent;
+    }
 
     /**
      * 生成输出内容
@@ -408,28 +621,9 @@ public class GenDtsFile extends GeneratorBase {
         System.out.println("genFuncList : " + fol.toString());
         String resContent = "";
         for (FuncObj fo : fol) {
-            String funcName = fo.getName();
-            funcName = !funcName.isEmpty() ? funcName : fo.getAlias();
-            List<ParamObj> paList = fo.getParamList();
-            int i = 0;
-            resContent += TS_NEW_LINE + TS_EXPORT_TOKEN + TS_BLANK_SPACE + TS_FUNCTION_TOKEN +
-                    TS_BLANK_SPACE + replaceCppToken(funcName) + TS_LEFT_PARENTHESES;
-
-            for (ParamObj poItem : paList) {
-                String paType = cpp2TsKey(poItem.getType());
-                String paName = poItem.getName();
-
-                resContent += !paName.isEmpty() ? replaceCppToken(paName) + TS_COLON +
-                        TS_BLANK_SPACE + paType + TS_COMMA + TS_BLANK_SPACE :
-                        paType + TS_COMMA + TS_BLANK_SPACE;
-            }
-            if (paList.size() > 0) {
-                resContent = StringUtils.removeLastCharacter(resContent, 2);
-            }
-
-            String retValue = fo.getRetValue();
-            resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + TS_COLON +
-                    TS_BLANK_SPACE + cpp2TsKey(retValue) + TS_SEMICOLON;
+            resContent += genFuncDts(fo);
+            resContent += genAsyncFuncDts(fo);
+            resContent += genPromiseFuncDts(fo);
         }
         this.funcContent = resContent;
         System.out.println("genFuncList : " + resContent);
@@ -468,20 +662,9 @@ public class GenDtsFile extends GeneratorBase {
 
             List<FuncObj> funcList = so.getFuncList();
             for (FuncObj funcItem : funcList) {
-                resContent += TS_NEW_LINE + TS_TAB_SPACE + replaceCppToken(funcItem.getName()) + TS_LEFT_PARENTHESES;
-                List<ParamObj> pol = funcItem.getParamList();
-                for (ParamObj poItem : pol) {
-                    String retType = cpp2TsKey(poItem.getType());
-                    resContent += replaceCppToken(poItem.getName()) + TS_COLON +
-                            TS_BLANK_SPACE + retType + TS_COMMA + TS_BLANK_SPACE;
-                }
-                if (!pol.isEmpty()) {
-                    resContent = StringUtils.removeLastCharacter(resContent, 2);
-                }
-
-                String retValue = funcItem.getRetValue();
-                resContent += TS_RIGHT_PARENTHESES + TS_BLANK_SPACE + TS_COLON +
-                        TS_BLANK_SPACE + cpp2TsKey(retValue) + TS_SEMICOLON;
+                resContent += genClassFuncDts(funcItem);
+                resContent += genClassAsyncFuncDts(funcItem);
+                resContent += genClassPromiseFuncDts(funcItem);
             }
 
             resContent = StringUtils.removeLastSpace(resContent);
