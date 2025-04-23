@@ -114,6 +114,8 @@ public class GenNapiCppFile extends GeneratorBase {
     private static final String NAPI_STD_MULTIMAP = "std::multimap";
     private static final String NAPI_STD_MULTISET = "std::multiset";
 
+    private static final String NAPI_ASYNC_SUFFIX = "Async";
+    private static final String NAPI_PROMISE_SUFFIX = "Promise";
     private static final String NAPI_STR_SUFFIX = "STR";
     private static final String NAPI_FILE_PREFIX = "ag_";
     private static final String NAPI_FILE_H_SUFFIX = ".h";
@@ -320,7 +322,7 @@ public class GenNapiCppFile extends GeneratorBase {
     private static final String NAPI_FUNCTION_INIT = "napi_property_descriptor funcDesc[] = {\n" +
             "NAPI_FUNCTION_DESC_DECLARE" +
             "};\n" +
-            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n";
 
     private static final String NAPI_VAL_GET_DECLARE =
             "\nnapi_value GetNAPI_CLASS_ATTRIBUTE_NAMENAPI_CLASS_NAME(napi_env env, napi_callback_info info)\n" +
@@ -356,6 +358,60 @@ public class GenNapiCppFile extends GeneratorBase {
                     "\tNAPI_CLASS_ATTRIBUTE_NAME = msg;\n" +
                     "\treturn nullptr;\n" +
                     "};\n";
+
+    private static final String NAPI_ASYNC_DATA_PARAM = "NAPI_ASYNC_DATA_PARAM";
+
+    private static final String NAPI_RET_TYPE = "NAPI_RET_TYPE";
+
+    private static final String NAPI_CREATE_RET_TYPE = "NAPI_CREATE_RET_TYPE";
+
+    private static final String NAPI_ASYNC_DATA = "\nstruct NAPI_FUNCTION_NAMEAsyncData {\n" +
+            "\tnapi_async_work work;\t\t\t// 异步工作句柄\n" +
+            "\tnapi_deferred deferred;\t\t\t// Promise句柄（如果使用Promise）\n" +
+            "\tnapi_ref callback_ref;\t\t\t// JS回调引用\n" +
+            "\tNAPI_ASYNC_DATA_PARAM\n" +
+            "\tNAPI_RET_TYPE result;\t\t\t// 返回值\n" +
+            "\tnapi_status status;\t\t\t// 执行状态\n" +
+            "};\n";
+
+    private static final String NAPI_EXECUTE_WORK = "\n// 实际执行计算的线程池任务\n" +
+            "void NAPI_FUNCTION_NAMEExecuteWork(napi_env env, void* data) {\n" +
+            "\tNAPI_FUNCTION_NAMEAsyncData* async_data = static_cast<NAPI_FUNCTION_NAMEAsyncData*>(data);\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
+            "\tasync_data->result = res; // 实际计算\n" +
+            "}\n";
+
+    private static final String NAPI_COMPLETE_WORK = "\n// 计算结果返回给JS事件循环\n" +
+            "void NAPI_FUNCTION_NAMECompleteWork(napi_env env, napi_status status, void* data) {\n" +
+            "\tNAPI_FUNCTION_NAMEAsyncData* async_data = static_cast<NAPI_FUNCTION_NAMEAsyncData*>(data);\n" +
+            "\n" +
+            "\t// 准备回调参数\n" +
+            "\tnapi_value argv[2] = { nullptr };\n" +
+            "\tif (async_data->status == napi_ok) {\n" +
+            "\t\tNAPI_CREATE_RET_TYPE\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t} else {\n" +
+            "\t\tnapi_value error_msg;\n" +
+            "\t\tnapi_create_string_utf8(env, \"NAPI_FUNCTION_NAME failed\", NAPI_AUTO_LENGTH, &error_msg);\n" +
+            "\t\tnapi_create_error(env, NULL, error_msg, &argv[1]);\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 获取JS回调函数\n" +
+            "\tnapi_value callback;\n" +
+            "\tnapi_get_reference_value(env, async_data->callback_ref, &callback);\n" +
+            "\n" +
+            "\t// 调用回调\n" +
+            "\tnapi_value global;\n" +
+            "\tnapi_get_global(env, &global);\n" +
+            "\tnapi_call_function(env, global, callback, 2, argv, nullptr);\n" +
+            "\n" +
+            "\t// 清理资源\n" +
+            "\tnapi_delete_async_work(env, async_data->work);\n" +
+            "\tnapi_delete_reference(env, async_data->callback_ref);\n" +
+            "\tdelete async_data;\n" +
+            "};\n";
 
     private String interfaceContent = "";
     private String enumContent = "";
@@ -545,6 +601,73 @@ public class GenNapiCppFile extends GeneratorBase {
                 "\n\t\treturn result;" +
                 "\n\t};" +
                 "\n\treturn thisVar;\n")
+    );
+
+    private final Map<String, String> createTypeMap = Map.ofEntries(
+            Map.entry("void", ""),
+            Map.entry("bool", "if (napi_create_uint32(env, async_data->result, &argv[1]) != napi_ok) {\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_uint32 error\");\n" +
+                    "\tnapi_throw_error(env, \"EINTYPE\", \"error napi_create_uint32\");\n" +
+                    "\treturn;\n" +
+                    "};\n" +
+                    "\n" +
+                    "if (napi_get_null(env, &argv[0]) != napi_ok) {\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_null error\");\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_null error\");\n" +
+                    "\tnapi_throw_error(env, \"EINTYPE\", \"error napi_get_null\");\n" +
+                    "\treturn;\n" +
+                    "};"),
+            Map.entry("string", "if (napi_create_string_utf8(env, async_data->result, &argv[1]) != napi_ok) {\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
+                    "\tnapi_throw_error(env, \"EINTYPE\", \"error napi_create_string_utf8\");\n" +
+                    "\treturn;\n" +
+                    "};\n" +
+                    "\n" +
+                    "if (napi_get_null(env, &argv[0]) != napi_ok) {\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_null error\");\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_null error\");\n" +
+                    "\tnapi_throw_error(env, \"EINTYPE\", \"error napi_get_null\");\n" +
+                    "\treturn;\n" +
+                    "};"),
+            Map.entry("number", "if (napi_create_int32(env, async_data->result, &argv[1]) != napi_ok) {\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_int32 error\");\n" +
+                    "\tnapi_throw_error(env, \"EINTYPE\", \"error napi_create_int32\");\n" +
+                    "\treturn;\n" +
+                    "};\n" +
+                    "\n" +
+                    "if (napi_get_null(env, &argv[0]) != napi_ok) {\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_null error\");\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_null error\");\n" +
+                    "\tnapi_throw_error(env, \"EINTYPE\", \"error napi_get_null\");\n" +
+                    "\treturn;\n" +
+                    "};"),
+            Map.entry("double", "if (napi_create_double(env, async_data->result, &argv[1]) != napi_ok) {\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_double error\");\n" +
+                    "\tnapi_throw_error(env, \"EINTYPE\", \"error napi_create_double\");\n" +
+                    "\treturn;\n" +
+                    "};\n" +
+                    "\n" +
+                    "if (napi_get_null(env, &argv[0]) != napi_ok) {\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_null error\");\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_null error\");\n" +
+                    "\tnapi_throw_error(env, \"EINTYPE\", \"error napi_get_null\");\n" +
+                    "\treturn;\n" +
+                    "};"),
+            Map.entry("object", "if (napi_create_object(env, &argv[1]) != napi_ok) {\n" +
+                    "\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_object error\");\n" +
+                    "\tnapi_throw_error(env, \"EINTYPE\", \"error napi_create_object\");\n" +
+                    "\treturn;\n" +
+                    "} else {\n" +
+                    "\t// 设置对象的属性\n" +
+                    "\tnapi_value name = nullptr;\n" +
+                    "\t// 设置属性名为\"name\"\n" +
+                    "\tnapi_create_string_utf8(env, \"tag\", NAPI_AUTO_LENGTH, &name);\n" +
+                    "\tnapi_value value = nullptr;\n" +
+                    "\t// 设置属性值为\"Hello from Node-API!\"\n" +
+                    "\tnapi_create_int32(env, async_data->result, &value);\n" +
+                    "\t// 将属性设置到对象上\n" +
+                    "\tnapi_set_property(env, argv[1], name, value);\n" +
+                    "}\n")
     );
 
     /**
@@ -1050,6 +1173,66 @@ public class GenNapiCppFile extends GeneratorBase {
         return resContent;
     }
 
+    private String genNapiAsyncFunctionContent(FuncObj fo) {
+        String funcName = fo.getName();
+        funcName = funcName.isEmpty() ? fo.getAlias() : funcName;
+        funcName = StringUtils.unCapitalFirst(funcName) + NAPI_ASYNC_SUFFIX;
+
+        String funcGetParamStr = "";
+        String funcCallStr = "";
+        String funcRetStr = "";
+        int i = 0;
+        for (ParamObj pa : fo.getParamList()) {
+            funcGetParamStr += genGetParam(pa, i);
+            i++;
+        }
+        funcCallStr += genFuncCall(fo);
+        funcRetStr += genFuncRet(fo.getRetValue());
+        String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT, Integer.toString(fo.getParamList().size()));
+        String funcDeclareStr = NAPI_FUNCTION_DECLARE.replace(NAPI_FUNCTION_NAME, funcName);
+        funcDeclareStr = funcDeclareStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
+        funcDeclareStr = funcDeclareStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
+        funcDeclareStr = funcDeclareStr.replace(NAPI_CLASS_RETURN_VALUE_DECLARE, funcRetStr);
+
+        String funcPropertyStr = NAPI_FUNCTION_DESC_DECLARE.replace(NAPI_FUNCTION_NAME,
+                funcName);
+        String funcInitStr = NAPI_FUNCTION_INIT.replace(NAPI_FUNCTION_DESC_PROPERTY,
+                funcPropertyStr);
+        String resContent = "";
+        resContent += funcDeclareStr + funcInitStr;
+        return resContent;
+    }
+
+    private String genNapiPromiseFunctionContent(FuncObj fo) {
+        String funcName = fo.getName();
+        funcName = funcName.isEmpty() ? fo.getAlias() : funcName;
+        funcName = StringUtils.unCapitalFirst(funcName) + NAPI_PROMISE_SUFFIX;
+
+        String funcGetParamStr = "";
+        String funcCallStr = "";
+        String funcRetStr = "";
+        int i = 0;
+        for (ParamObj pa : fo.getParamList()) {
+            funcGetParamStr += genGetParam(pa, i);
+            i++;
+        }
+        funcCallStr += genFuncCall(fo);
+        funcRetStr += genFuncRet(fo.getRetValue());
+        String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT, Integer.toString(fo.getParamList().size()));
+        String funcDeclareStr = NAPI_FUNCTION_DECLARE.replace(NAPI_FUNCTION_NAME, funcName);
+        funcDeclareStr = funcDeclareStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
+        funcDeclareStr = funcDeclareStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
+        funcDeclareStr = funcDeclareStr.replace(NAPI_CLASS_RETURN_VALUE_DECLARE, funcRetStr);
+
+        String funcPropertyStr = NAPI_FUNCTION_DESC_DECLARE.replace(NAPI_FUNCTION_NAME,
+                funcName);
+        String funcInitStr = NAPI_FUNCTION_INIT.replace(NAPI_FUNCTION_DESC_PROPERTY,
+                funcPropertyStr);
+        String resContent = "";
+        resContent += funcDeclareStr + funcInitStr;
+        return resContent;
+    }
+
     /**
      * 生成输出内容
      *
@@ -1062,6 +1245,8 @@ public class GenNapiCppFile extends GeneratorBase {
         for (FuncObj fo : fol) {
             resContent += genCppFunctionContent(fo);
             resContent += genNapiFunctionContent(fo);
+            resContent += genNapiAsyncFunctionContent(fo);
+            resContent += genNapiPromiseFunctionContent(fo);
         }
         this.funcContent = resContent;
         System.out.println("genFuncList : " + resContent);
