@@ -153,7 +153,8 @@ std::string ConvertToString(aki::Value obj)
         return strObj.As<std::string>();
     } else {
         napi_value nvalue = obj.GetHandle();
-        napi_value nage, nname;
+        napi_value nage;
+        napi_value nname;
         napi_get_named_property(aki::JSBind::GetScopedEnv(), nvalue, "age", &nage);
         napi_get_named_property(aki::JSBind::GetScopedEnv(), nvalue, "name", &nname);
         
