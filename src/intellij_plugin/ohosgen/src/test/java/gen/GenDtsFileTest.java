@@ -199,10 +199,12 @@ class GenDtsFileTest {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
             String expect = "\nexport class TestClass {\n" +
-                    "\tname: string;\n" +
-                    "\tage: number;\n" +
-                    "\tadd(a: number, b: number) : number;\n" +
-                    "};\n";
+                "\tname: string;\n" +
+                "\tage: number;\n" +
+                "\tadd(a: number, b: number) : number;\n" +
+                "\taddAsync(a: number, b: number, cb: (err: string, res: number) => void) : void;\n" +
+                "\taddPromise(a: number, b: number) : Promise<number>;\n" +
+                "};\n";
             assertEquals(expect, classContent);
         }
     }
@@ -225,10 +227,43 @@ class GenDtsFileTest {
         if (gb instanceof GenDtsFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
-            String expect = "\nexport function TestFunc(name: string, age: number) : void;";
+            String expect = "\nexport function TestFunc(name: string, age: number) : void;\n" +
+                    "export function TestFuncAsync(name: string, age: number, cb: (err: string) => void) : void;\n" +
+                    "export function TestFuncPromise(name: string, age: number) : Promise<void>;";
             assertEquals(expect, funcContent);
         }
     }
+
+    @Test
+    void genFuncList2() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+
+        fo.addParam("name", "char*");
+        fo.addParam("age", "int");
+
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("DTS");
+
+        if (gb instanceof GenDtsFile gdts) {
+            gdts.setStyleType(GenDtsFile.CONV_CONST_STYLE);
+        }
+
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenDtsFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nexport const TestFunc: (name: string, age: number) => void;\n" +
+                    "export const TestFuncAsync: (name: string, age: number, cb: (err: string) => void) => void;\n" +
+                    "export const TestFuncPromise: (name: string, age: number) => Promise<void>;";
+            assertEquals(expect, funcContent);
+        }
+    }
+
 
     @Test
     void genStructList() {
@@ -265,6 +300,8 @@ class GenDtsFileTest {
                     "\tname: string;\n" +
                     "\tage: number;\n" +
                     "\tadd(a: number, b: number) : number;\n" +
+                    "\taddAsync(a: number, b: number, cb: (err: string, res: number) => void) : void;\n" +
+                    "\taddPromise(a: number, b: number) : Promise<number>;\n" +
                     "};\n";
             assertEquals(expect, structContent);
         }
