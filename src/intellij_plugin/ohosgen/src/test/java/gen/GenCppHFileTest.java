@@ -1077,7 +1077,7 @@ class GenCppHFileTest {
 
         assertEquals("// Generated from ./\\testGenFile.d.ts by KaiHong ohgen 1.0.0-PLUGIN",
                 fcList.get(0));
-        assertEquals("const int TestParam = 100;",
+        assertEquals("extends const int TestParam = 100;",
                 fcList.get(1));
 
         if (gb instanceof GenCppHFile gdf) {

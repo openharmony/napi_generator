@@ -52,7 +52,7 @@ class GenCHFileTest {
         eol.add(eo);
         ParseObj po = new ParseObj();
         po.setEnumList(eol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genEnumList(po.getEnumList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -84,7 +84,7 @@ class GenCHFileTest {
         eol.add(eo);
         ParseObj po = new ParseObj();
         po.setEnumList(eol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genEnumList(po.getEnumList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -117,7 +117,7 @@ class GenCHFileTest {
         eol.add(eo);
         ParseObj po = new ParseObj();
         po.setEnumList(eol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genEnumList(po.getEnumList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -163,7 +163,7 @@ class GenCHFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genClassList(po.getClassList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -215,7 +215,7 @@ class GenCHFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genClassList(po.getClassList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -273,7 +273,7 @@ class GenCHFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genClassList(po.getClassList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -308,7 +308,7 @@ class GenCHFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genClassList(po.getClassList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -355,7 +355,7 @@ class GenCHFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genClassList(po.getClassList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -401,7 +401,7 @@ class GenCHFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genClassList(po.getClassList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -431,7 +431,7 @@ class GenCHFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genClassList(po.getClassList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -455,7 +455,7 @@ class GenCHFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -481,7 +481,7 @@ class GenCHFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -511,7 +511,7 @@ class GenCHFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -537,7 +537,7 @@ class GenCHFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -563,7 +563,7 @@ class GenCHFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -592,7 +592,7 @@ class GenCHFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -626,7 +626,7 @@ class GenCHFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -662,7 +662,7 @@ class GenCHFileTest {
         ParseObj po = new ParseObj();
         po.setStructList(sol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genStructList(po.getStructList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -703,7 +703,7 @@ class GenCHFileTest {
         ParseObj po = new ParseObj();
         po.setStructList(sol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genStructList(po.getStructList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -743,7 +743,7 @@ class GenCHFileTest {
         ParseObj po = new ParseObj();
         po.setStructList(sol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genStructList(po.getStructList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -768,7 +768,7 @@ class GenCHFileTest {
         ParseObj po = new ParseObj();
         po.setStructList(sol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genStructList(po.getStructList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -796,7 +796,7 @@ class GenCHFileTest {
         uol.add(uo);
         ParseObj po = new ParseObj();
         po.setUnionList(uol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genUnionList(po.getUnionList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -824,7 +824,7 @@ class GenCHFileTest {
         uol.add(uo);
         ParseObj po = new ParseObj();
         po.setUnionList(uol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genUnionList(po.getUnionList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -848,7 +848,7 @@ class GenCHFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genVarList(po.getVarList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -870,7 +870,7 @@ class GenCHFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genVarList(po.getVarList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -892,7 +892,7 @@ class GenCHFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genVarList(po.getVarList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -921,7 +921,7 @@ class GenCHFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genVarList(po.getVarList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -945,7 +945,7 @@ class GenCHFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genVarList(po.getVarList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -990,7 +990,7 @@ class GenCHFileTest {
         pol.add(paObj);
         ParseObj po = new ParseObj();
         po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genVarList(po.getVarList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -1020,7 +1020,7 @@ class GenCHFileTest {
         pol.add(pao);
         po.setVarList(pol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genVarList(pol);
 
         if (gb instanceof GenCppFile gdf) {
@@ -1042,7 +1042,7 @@ class GenCHFileTest {
         pol.add(pao);
         po.setVarList(pol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genContent(po);
 
         if (gb instanceof GenCppFile gdf) {
@@ -1065,7 +1065,7 @@ class GenCHFileTest {
         ParseObj po = new ParseObj();
         po.setVarList(pol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genContent(po);
         gb.genFile("./", "testGenFile.d.ts");
 
@@ -1077,7 +1077,7 @@ class GenCHFileTest {
 
         assertEquals("// Generated from ./\\testGenFile.d.ts by KaiHong ohgen 1.0.0-PLUGIN",
                 fcList.get(0));
-        assertEquals("const int TestParam = 100;",
+        assertEquals("extends const int TestParam = 100;",
                 fcList.get(1));
 
         if (gb instanceof GenCppFile gdf) {
@@ -1108,7 +1108,7 @@ class GenCHFileTest {
         eol.add(eo);
         ParseObj po = new ParseObj();
         po.setEnumList(eol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genEnumList(po.getEnumList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -1154,7 +1154,7 @@ class GenCHFileTest {
 
         ParseObj po = new ParseObj();
         po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genClassList(po.getClassList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -1181,7 +1181,7 @@ class GenCHFileTest {
         fol.add(fo);
         ParseObj po = new ParseObj();
         po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -1217,7 +1217,7 @@ class GenCHFileTest {
         ParseObj po = new ParseObj();
         po.setStructList(sol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genStructList(po.getStructList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -1249,7 +1249,7 @@ class GenCHFileTest {
         uol.add(uo);
         ParseObj po = new ParseObj();
         po.setUnionList(uol);
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genUnionList(po.getUnionList());
 
         if (gb instanceof GenCppFile gdf) {
@@ -1274,7 +1274,7 @@ class GenCHFileTest {
         pol.add(pao);
         po.setVarList(pol);
 
-        GeneratorBase gb = GenerateFactory.getGenerator("CPP");
+        GeneratorBase gb = GenerateFactory.getGenerator("CH");
         gb.genVarList(pol);
 
         if (gb instanceof GenCppFile gdf) {
