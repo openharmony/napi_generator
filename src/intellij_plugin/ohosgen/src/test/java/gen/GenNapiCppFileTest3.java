@@ -47,9 +47,11 @@ class GenNapiCppFileTest3 {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
-            "\t};\n\n" +
+            "\t};\n" +
+            "\n" +
             "\tnapi_valuetype valuetype0;\n" +
             "\tif (napi_typeof(env, args[0], &valuetype0) != napi_ok) {\n" +
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
@@ -69,7 +71,8 @@ class GenNapiCppFileTest3 {
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_string_utf8 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
             "\t\treturn result;\n" +
-            "\t};\n\n" +
+            "\t};\n" +
+            "\n" +
             "\tnapi_valuetype valuetype1;\n" +
             "\tif (napi_typeof(env, args[1], &valuetype1) != napi_ok) {\n" +
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
@@ -94,16 +97,65 @@ class GenNapiCppFileTest3 {
             "\n" +
             "\t// 调用原始类方法\n" +
             "\tTestFunc(NAPI_PARAM_EXPRESSION);\n" +
-            "\t// 创建返回参数\n\t\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
             "\treturn result;\n" +
             "};\n" +
             "napi_property_descriptor funcDesc[] = {\n" +
             "\t{ \"testFunc\", nullptr, testFuncNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
-            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
-
-    private String testFuncContent2 = "\nstd::string ToCapital(std::string str, int length = 0);\n" +
-            "napi_value toCapitalNapi(napi_env env, napi_callback_info info)\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "struct testFuncAsyncData {\n" +
+            "\tnapi_async_work work;\t\t\t// 异步工作句柄\n" +
+            "\tnapi_deferred deferred;\t\t\t// Promise句柄（如果使用Promise）\n" +
+            "\tnapi_ref callback_ref;\t\t\t// JS回调引用\n" +
+            "\tstring name;\n" +
+            "\tnumber age;\n" +
+            "\tvoid result;\t\t\t// 返回值\n" +
+            "\tnapi_status status;\t\t\t// 执行状态\n" +
+            "};\n" +
+            "\n" +
+            "// 实际执行计算的线程池任务\n" +
+            "void testFuncAsyncExecuteWork(napi_env env, void* data) {\n" +
+            "\ttestFuncAsyncData* async_data = static_cast<testFuncAsyncData*>(data);\n" +
+            "\t// 调用原始类方法\n" +
+            "\tTestFunc(name, age);\n" +
+            "\tasync_data->result = res; // 实际计算\n" +
+            "}\n" +
+            "\n" +
+            "// 计算结果返回给JS事件循环\n" +
+            "void testFuncAsyncCompleteWork(napi_env env, napi_status status, void* data) {\n" +
+            "\ttestFuncAsyncData* async_data = static_cast<testFuncAsyncData*>(data);\n" +
+            "\n" +
+            "\t// 准备回调参数\n" +
+            "\tnapi_value argv[2] = { nullptr };\n" +
+            "\tif (async_data->status == napi_ok) {\n" +
+            "\t\t\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t} else {\n" +
+            "\t\tnapi_value error_msg;\n" +
+            "\t\tnapi_create_string_utf8(env, \"testFuncAsync failed\", NAPI_AUTO_LENGTH, &error_msg);\n" +
+            "\t\tnapi_create_error(env, NULL, error_msg, &argv[1]);\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 获取JS回调函数\n" +
+            "\tnapi_value callback;\n" +
+            "\tnapi_get_reference_value(env, async_data->callback_ref, &callback);\n" +
+            "\n" +
+            "\t// 调用回调\n" +
+            "\tnapi_value global;\n" +
+            "\tnapi_get_global(env, &global);\n" +
+            "\tnapi_call_function(env, global, callback, 2, argv, nullptr);\n" +
+            "\n" +
+            "\t// 清理资源\n" +
+            "\tnapi_delete_async_work(env, async_data->work);\n" +
+            "\tnapi_delete_reference(env, async_data->callback_ref);\n" +
+            "\tdelete async_data;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value testFuncAsyncNapi(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -116,9 +168,11 @@ class GenNapiCppFileTest3 {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
-            "\t};\n\n" +
+            "\t};\n" +
+            "\n" +
             "\tnapi_valuetype valuetype0;\n" +
             "\tif (napi_typeof(env, args[0], &valuetype0) != napi_ok) {\n" +
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
@@ -138,7 +192,153 @@ class GenNapiCppFileTest3 {
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_string_utf8 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
             "\t\treturn result;\n" +
-            "\t};\n\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype1;\n" +
+            "\tif (napi_typeof(env, args[1], &valuetype1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_number) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_number error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第valuetype1个参数必须是数字\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tint value1 = 0;\n" +
+            "\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_int32(env, args[1], &value1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_int32 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tTestFunc(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"testFuncAsync\", nullptr, testFuncAsyncNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "napi_value testFuncPromiseNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype0;\n" +
+            "\tif (napi_typeof(env, args[0], &valuetype0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_string) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_string error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第0个参数必须是字符串\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tchar* value0[MAX_BUFFER_SIZE];\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_string_utf8(env, args[0], &value0, bufferSize, &realSize) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype1;\n" +
+            "\tif (napi_typeof(env, args[1], &valuetype1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_number) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_number error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第valuetype1个参数必须是数字\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tint value1 = 0;\n" +
+            "\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_int32(env, args[1], &value1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_int32 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tTestFunc(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"testFuncPromise\", nullptr, testFuncPromiseNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n";
+
+    private String testFuncContent2 = "\nstd::string ToCapital(std::string str, int length = 0);\n" +
+            "napi_value toCapitalNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype0;\n" +
+            "\tif (napi_typeof(env, args[0], &valuetype0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_string) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_string error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第0个参数必须是字符串\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tchar* value0[MAX_BUFFER_SIZE];\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_string_utf8(env, args[0], &value0, bufferSize, &realSize) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
             "\tnapi_valuetype valuetype1;\n" +
             "\tif (napi_typeof(env, args[1], &valuetype1) != napi_ok) {\n" +
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
@@ -163,23 +363,79 @@ class GenNapiCppFileTest3 {
             "\n" +
             "\t// 调用原始类方法\n" +
             "\tToCapital(NAPI_PARAM_EXPRESSION);\n" +
-            "\t// 创建返回参数\n\tnapi_value valueRet0;" +
-            "\n" +
+            "\t// 创建返回参数\n" +
+            "\tnapi_value valueRet0;\n" +
             "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
             "\t\treturn result;\n" +
             "\t};\n" +
-            "\treturn valueRet0;\n\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
             "\treturn result;\n" +
             "};\n" +
             "napi_property_descriptor funcDesc[] = {\n" +
             "\t{ \"toCapital\", nullptr, toCapitalNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
-            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
-
-    private String testFuncContent3 = "\nstd::string Nemw(std::string str = \"joke\", int length = 0);\n" +
-            "napi_value nemwNapi(napi_env env, napi_callback_info info)\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "struct toCapitalAsyncData {\n" +
+            "\tnapi_async_work work;\t\t\t// 异步工作句柄\n" +
+            "\tnapi_deferred deferred;\t\t\t// Promise句柄（如果使用Promise）\n" +
+            "\tnapi_ref callback_ref;\t\t\t// JS回调引用\n" +
+            "\tstring str;\n" +
+            "\tnumber length;\n" +
+            "\tvoid result;\t\t\t// 返回值\n" +
+            "\tnapi_status status;\t\t\t// 执行状态\n" +
+            "};\n" +
+            "\n" +
+            "// 实际执行计算的线程池任务\n" +
+            "void toCapitalAsyncExecuteWork(napi_env env, void* data) {\n" +
+            "\ttoCapitalAsyncData* async_data = static_cast<toCapitalAsyncData*>(data);\n" +
+            "\t// 调用原始类方法\n" +
+            "\tToCapital(str, length);\n" +
+            "\tasync_data->result = res; // 实际计算\n" +
+            "}\n" +
+            "\n" +
+            "// 计算结果返回给JS事件循环\n" +
+            "void toCapitalAsyncCompleteWork(napi_env env, napi_status status, void* data) {\n" +
+            "\ttoCapitalAsyncData* async_data = static_cast<toCapitalAsyncData*>(data);\n" +
+            "\n" +
+            "\t// 准备回调参数\n" +
+            "\tnapi_value argv[2] = { nullptr };\n" +
+            "\tif (async_data->status == napi_ok) {\n" +
+            "\t\tnapi_value valueRet0;\n" +
+            "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t} else {\n" +
+            "\t\tnapi_value error_msg;\n" +
+            "\t\tnapi_create_string_utf8(env, \"toCapitalAsync failed\", NAPI_AUTO_LENGTH, &error_msg);\n" +
+            "\t\tnapi_create_error(env, NULL, error_msg, &argv[1]);\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 获取JS回调函数\n" +
+            "\tnapi_value callback;\n" +
+            "\tnapi_get_reference_value(env, async_data->callback_ref, &callback);\n" +
+            "\n" +
+            "\t// 调用回调\n" +
+            "\tnapi_value global;\n" +
+            "\tnapi_get_global(env, &global);\n" +
+            "\tnapi_call_function(env, global, callback, 2, argv, nullptr);\n" +
+            "\n" +
+            "\t// 清理资源\n" +
+            "\tnapi_delete_async_work(env, async_data->work);\n" +
+            "\tnapi_delete_reference(env, async_data->callback_ref);\n" +
+            "\tdelete async_data;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value toCapitalAsyncNapi(napi_env env, napi_callback_info info)\n" +
             "{\n" +
             "\tnapi_value result = nullptr;\n" +
             "\tnapi_value jsthis;\n" +
@@ -192,9 +448,11 @@ class GenNapiCppFileTest3 {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
-            "\t};\n\n" +
+            "\t};\n" +
+            "\n" +
             "\tnapi_valuetype valuetype0;\n" +
             "\tif (napi_typeof(env, args[0], &valuetype0) != napi_ok) {\n" +
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
@@ -214,7 +472,167 @@ class GenNapiCppFileTest3 {
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_string_utf8 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
             "\t\treturn result;\n" +
-            "\t};\n\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype1;\n" +
+            "\tif (napi_typeof(env, args[1], &valuetype1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_number) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_number error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第valuetype1个参数必须是数字\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tint value1 = 0;\n" +
+            "\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_int32(env, args[1], &value1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_int32 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tToCapital(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\tnapi_value valueRet0;\n" +
+            "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"toCapitalAsync\", nullptr, toCapitalAsyncNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "napi_value toCapitalPromiseNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype0;\n" +
+            "\tif (napi_typeof(env, args[0], &valuetype0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_string) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_string error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第0个参数必须是字符串\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tchar* value0[MAX_BUFFER_SIZE];\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_string_utf8(env, args[0], &value0, bufferSize, &realSize) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype1;\n" +
+            "\tif (napi_typeof(env, args[1], &valuetype1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_number) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_number error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第valuetype1个参数必须是数字\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tint value1 = 0;\n" +
+            "\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_int32(env, args[1], &value1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_int32 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tToCapital(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\tnapi_value valueRet0;\n" +
+            "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"toCapitalPromise\", nullptr, toCapitalPromiseNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n";
+
+    private String testFuncContent3 = "\nstd::string Nemw(std::string str = \"joke\", int length = 0);\n" +
+            "napi_value nemwNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype0;\n" +
+            "\tif (napi_typeof(env, args[0], &valuetype0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_string) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_string error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第0个参数必须是字符串\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tchar* value0[MAX_BUFFER_SIZE];\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_string_utf8(env, args[0], &value0, bufferSize, &realSize) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
             "\tnapi_valuetype valuetype1;\n" +
             "\tif (napi_typeof(env, args[1], &valuetype1) != napi_ok) {\n" +
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
@@ -239,20 +657,235 @@ class GenNapiCppFileTest3 {
             "\n" +
             "\t// 调用原始类方法\n" +
             "\tNemw(NAPI_PARAM_EXPRESSION);\n" +
-            "\t// 创建返回参数\n\tnapi_value valueRet0;" +
-            "\n" +
+            "\t// 创建返回参数\n" +
+            "\tnapi_value valueRet0;\n" +
             "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
             "\t\treturn result;\n" +
             "\t};\n" +
-            "\treturn valueRet0;\n\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
             "\treturn result;\n" +
             "};\n" +
             "napi_property_descriptor funcDesc[] = {\n" +
             "\t{ \"nemw\", nullptr, nemwNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
-            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "struct nemwAsyncData {\n" +
+            "\tnapi_async_work work;\t\t\t// 异步工作句柄\n" +
+            "\tnapi_deferred deferred;\t\t\t// Promise句柄（如果使用Promise）\n" +
+            "\tnapi_ref callback_ref;\t\t\t// JS回调引用\n" +
+            "\tstring str;\n" +
+            "\tnumber length;\n" +
+            "\tvoid result;\t\t\t// 返回值\n" +
+            "\tnapi_status status;\t\t\t// 执行状态\n" +
+            "};\n" +
+            "\n" +
+            "// 实际执行计算的线程池任务\n" +
+            "void nemwAsyncExecuteWork(napi_env env, void* data) {\n" +
+            "\tnemwAsyncData* async_data = static_cast<nemwAsyncData*>(data);\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNemw(str, length);\n" +
+            "\tasync_data->result = res; // 实际计算\n" +
+            "}\n" +
+            "\n" +
+            "// 计算结果返回给JS事件循环\n" +
+            "void nemwAsyncCompleteWork(napi_env env, napi_status status, void* data) {\n" +
+            "\tnemwAsyncData* async_data = static_cast<nemwAsyncData*>(data);\n" +
+            "\n" +
+            "\t// 准备回调参数\n" +
+            "\tnapi_value argv[2] = { nullptr };\n" +
+            "\tif (async_data->status == napi_ok) {\n" +
+            "\t\tnapi_value valueRet0;\n" +
+            "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t} else {\n" +
+            "\t\tnapi_value error_msg;\n" +
+            "\t\tnapi_create_string_utf8(env, \"nemwAsync failed\", NAPI_AUTO_LENGTH, &error_msg);\n" +
+            "\t\tnapi_create_error(env, NULL, error_msg, &argv[1]);\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 获取JS回调函数\n" +
+            "\tnapi_value callback;\n" +
+            "\tnapi_get_reference_value(env, async_data->callback_ref, &callback);\n" +
+            "\n" +
+            "\t// 调用回调\n" +
+            "\tnapi_value global;\n" +
+            "\tnapi_get_global(env, &global);\n" +
+            "\tnapi_call_function(env, global, callback, 2, argv, nullptr);\n" +
+            "\n" +
+            "\t// 清理资源\n" +
+            "\tnapi_delete_async_work(env, async_data->work);\n" +
+            "\tnapi_delete_reference(env, async_data->callback_ref);\n" +
+            "\tdelete async_data;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value nemwAsyncNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype0;\n" +
+            "\tif (napi_typeof(env, args[0], &valuetype0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_string) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_string error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第0个参数必须是字符串\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tchar* value0[MAX_BUFFER_SIZE];\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_string_utf8(env, args[0], &value0, bufferSize, &realSize) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype1;\n" +
+            "\tif (napi_typeof(env, args[1], &valuetype1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_number) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_number error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第valuetype1个参数必须是数字\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tint value1 = 0;\n" +
+            "\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_int32(env, args[1], &value1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_int32 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNemw(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\tnapi_value valueRet0;\n" +
+            "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"nemwAsync\", nullptr, nemwAsyncNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "napi_value nemwPromiseNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype0;\n" +
+            "\tif (napi_typeof(env, args[0], &valuetype0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_string) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_string error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第0个参数必须是字符串\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tchar* value0[MAX_BUFFER_SIZE];\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_string_utf8(env, args[0], &value0, bufferSize, &realSize) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\tnapi_valuetype valuetype1;\n" +
+            "\tif (napi_typeof(env, args[1], &valuetype1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_typeof error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error value type\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\tif (type != napi_number) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_number error\");\n" +
+            "\t\tapi_throw_type_error(env, \"ERR_INVALID_ARG_TYPE\", \"第valuetype1个参数必须是数字\");\n" +
+            "\t\treturn result;\n" +
+            "\t}\n" +
+            "\n" +
+            "\tint value1 = 0;\n" +
+            "\n" +
+            "\tsize_t bufferSize = MAX_BUFFER_SIZE;\n" +
+            "\tsize_t realSize = 0;\n" +
+            "\tif (napi_get_value_int32(env, args[1], &value1) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_get_value_int32 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNemw(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\tnapi_value valueRet0;\n" +
+            "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"nemwPromise\", nullptr, nemwPromiseNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n";
 
     private String testFuncContent4 = "\nstd::string Nemw(auto str, auto length);\n" +
             "napi_value nemwNapi(napi_env env, napi_callback_info info)\n" +
@@ -268,26 +901,156 @@ class GenNapiCppFileTest3 {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
             "\n" +
             "\t// 调用原始类方法\n" +
             "\tNemw(NAPI_PARAM_EXPRESSION);\n" +
-            "\t// 创建返回参数\n\tnapi_value valueRet0;" +
-            "\n" +
+            "\t// 创建返回参数\n" +
+            "\tnapi_value valueRet0;\n" +
             "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
             "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
             "\t\treturn result;\n" +
             "\t};\n" +
-            "\treturn valueRet0;\n\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
             "\treturn result;\n" +
             "};\n" +
             "napi_property_descriptor funcDesc[] = {\n" +
             "\t{ \"nemw\", nullptr, nemwNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
-            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "struct nemwAsyncData {\n" +
+            "\tnapi_async_work work;\t\t\t// 异步工作句柄\n" +
+            "\tnapi_deferred deferred;\t\t\t// Promise句柄（如果使用Promise）\n" +
+            "\tnapi_ref callback_ref;\t\t\t// JS回调引用\n" +
+            "\tauto str;\n" +
+            "\tauto length;\n" +
+            "\tvoid result;\t\t\t// 返回值\n" +
+            "\tnapi_status status;\t\t\t// 执行状态\n" +
+            "};\n" +
+            "\n" +
+            "// 实际执行计算的线程池任务\n" +
+            "void nemwAsyncExecuteWork(napi_env env, void* data) {\n" +
+            "\tnemwAsyncData* async_data = static_cast<nemwAsyncData*>(data);\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNemw(str, length);\n" +
+            "\tasync_data->result = res; // 实际计算\n" +
+            "}\n" +
+            "\n" +
+            "// 计算结果返回给JS事件循环\n" +
+            "void nemwAsyncCompleteWork(napi_env env, napi_status status, void* data) {\n" +
+            "\tnemwAsyncData* async_data = static_cast<nemwAsyncData*>(data);\n" +
+            "\n" +
+            "\t// 准备回调参数\n" +
+            "\tnapi_value argv[2] = { nullptr };\n" +
+            "\tif (async_data->status == napi_ok) {\n" +
+            "\t\tnapi_value valueRet0;\n" +
+            "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t} else {\n" +
+            "\t\tnapi_value error_msg;\n" +
+            "\t\tnapi_create_string_utf8(env, \"nemwAsync failed\", NAPI_AUTO_LENGTH, &error_msg);\n" +
+            "\t\tnapi_create_error(env, NULL, error_msg, &argv[1]);\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 获取JS回调函数\n" +
+            "\tnapi_value callback;\n" +
+            "\tnapi_get_reference_value(env, async_data->callback_ref, &callback);\n" +
+            "\n" +
+            "\t// 调用回调\n" +
+            "\tnapi_value global;\n" +
+            "\tnapi_get_global(env, &global);\n" +
+            "\tnapi_call_function(env, global, callback, 2, argv, nullptr);\n" +
+            "\n" +
+            "\t// 清理资源\n" +
+            "\tnapi_delete_async_work(env, async_data->work);\n" +
+            "\tnapi_delete_reference(env, async_data->callback_ref);\n" +
+            "\tdelete async_data;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value nemwAsyncNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNemw(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\tnapi_value valueRet0;\n" +
+            "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"nemwAsync\", nullptr, nemwAsyncNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "napi_value nemwPromiseNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNemw(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\tnapi_value valueRet0;\n" +
+            "\tif (napi_create_string_utf8(env, args[0], realSize, &valueRet0) != napi_ok) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"napi_create_string_utf8 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINTYPE\", \"error get value\");\n" +
+            "\t\treturn result;\n" +
+            "\t};\n" +
+            "\treturn valueRet0;\n" +
+            "\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"nemwPromise\", nullptr, nemwPromiseNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n";
 
     private String testFuncContent5 = "\nNemw(auto str, auto length);\n" +
             "napi_value nemwNapi(napi_env env, napi_callback_info info)\n" +
@@ -303,19 +1066,128 @@ class GenNapiCppFileTest3 {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
             "\n" +
             "\t// 调用原始类方法\n" +
             "\tNemw(NAPI_PARAM_EXPRESSION);\n" +
-            "\t// 创建返回参数\n\t\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
             "\treturn result;\n" +
             "};\n" +
             "napi_property_descriptor funcDesc[] = {\n" +
             "\t{ \"nemw\", nullptr, nemwNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
-            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "struct nemwAsyncData {\n" +
+            "\tnapi_async_work work;\t\t\t// 异步工作句柄\n" +
+            "\tnapi_deferred deferred;\t\t\t// Promise句柄（如果使用Promise）\n" +
+            "\tnapi_ref callback_ref;\t\t\t// JS回调引用\n" +
+            "\tauto str;\n" +
+            "\tauto length;\n" +
+            "\tvoid result;\t\t\t// 返回值\n" +
+            "\tnapi_status status;\t\t\t// 执行状态\n" +
+            "};\n" +
+            "\n" +
+            "// 实际执行计算的线程池任务\n" +
+            "void nemwAsyncExecuteWork(napi_env env, void* data) {\n" +
+            "\tnemwAsyncData* async_data = static_cast<nemwAsyncData*>(data);\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNemw(str, length);\n" +
+            "\tasync_data->result = res; // 实际计算\n" +
+            "}\n" +
+            "\n" +
+            "// 计算结果返回给JS事件循环\n" +
+            "void nemwAsyncCompleteWork(napi_env env, napi_status status, void* data) {\n" +
+            "\tnemwAsyncData* async_data = static_cast<nemwAsyncData*>(data);\n" +
+            "\n" +
+            "\t// 准备回调参数\n" +
+            "\tnapi_value argv[2] = { nullptr };\n" +
+            "\tif (async_data->status == napi_ok) {\n" +
+            "\t\t\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t} else {\n" +
+            "\t\tnapi_value error_msg;\n" +
+            "\t\tnapi_create_string_utf8(env, \"nemwAsync failed\", NAPI_AUTO_LENGTH, &error_msg);\n" +
+            "\t\tnapi_create_error(env, NULL, error_msg, &argv[1]);\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 获取JS回调函数\n" +
+            "\tnapi_value callback;\n" +
+            "\tnapi_get_reference_value(env, async_data->callback_ref, &callback);\n" +
+            "\n" +
+            "\t// 调用回调\n" +
+            "\tnapi_value global;\n" +
+            "\tnapi_get_global(env, &global);\n" +
+            "\tnapi_call_function(env, global, callback, 2, argv, nullptr);\n" +
+            "\n" +
+            "\t// 清理资源\n" +
+            "\tnapi_delete_async_work(env, async_data->work);\n" +
+            "\tnapi_delete_reference(env, async_data->callback_ref);\n" +
+            "\tdelete async_data;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value nemwAsyncNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNemw(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"nemwAsync\", nullptr, nemwAsyncNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "napi_value nemwPromiseNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tNemw(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"nemwPromise\", nullptr, nemwPromiseNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n";
 
     private String testFuncContent6 = "\ntemplate<typename T> T* getArray(T* items);\n" +
             "napi_value getArrayNapi(napi_env env, napi_callback_info info)\n" +
@@ -331,19 +1203,127 @@ class GenNapiCppFileTest3 {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 1) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 1 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要1个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
             "\n" +
             "\t// 调用原始类方法\n" +
             "\tgetArray(NAPI_PARAM_EXPRESSION);\n" +
-            "\t// 创建返回参数\n\t\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
             "\treturn result;\n" +
             "};\n" +
             "napi_property_descriptor funcDesc[] = {\n" +
             "\t{ \"getArray\", nullptr, getArrayNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
-            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "struct getArrayAsyncData {\n" +
+            "\tnapi_async_work work;\t\t\t// 异步工作句柄\n" +
+            "\tnapi_deferred deferred;\t\t\t// Promise句柄（如果使用Promise）\n" +
+            "\tnapi_ref callback_ref;\t\t\t// JS回调引用\n" +
+            "\tT[] items;\n" +
+            "\tvoid result;\t\t\t// 返回值\n" +
+            "\tnapi_status status;\t\t\t// 执行状态\n" +
+            "};\n" +
+            "\n" +
+            "// 实际执行计算的线程池任务\n" +
+            "void getArrayAsyncExecuteWork(napi_env env, void* data) {\n" +
+            "\tgetArrayAsyncData* async_data = static_cast<getArrayAsyncData*>(data);\n" +
+            "\t// 调用原始类方法\n" +
+            "\tgetArray(items);\n" +
+            "\tasync_data->result = res; // 实际计算\n" +
+            "}\n" +
+            "\n" +
+            "// 计算结果返回给JS事件循环\n" +
+            "void getArrayAsyncCompleteWork(napi_env env, napi_status status, void* data) {\n" +
+            "\tgetArrayAsyncData* async_data = static_cast<getArrayAsyncData*>(data);\n" +
+            "\n" +
+            "\t// 准备回调参数\n" +
+            "\tnapi_value argv[2] = { nullptr };\n" +
+            "\tif (async_data->status == napi_ok) {\n" +
+            "\t\t\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t} else {\n" +
+            "\t\tnapi_value error_msg;\n" +
+            "\t\tnapi_create_string_utf8(env, \"getArrayAsync failed\", NAPI_AUTO_LENGTH, &error_msg);\n" +
+            "\t\tnapi_create_error(env, NULL, error_msg, &argv[1]);\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 获取JS回调函数\n" +
+            "\tnapi_value callback;\n" +
+            "\tnapi_get_reference_value(env, async_data->callback_ref, &callback);\n" +
+            "\n" +
+            "\t// 调用回调\n" +
+            "\tnapi_value global;\n" +
+            "\tnapi_get_global(env, &global);\n" +
+            "\tnapi_call_function(env, global, callback, 2, argv, nullptr);\n" +
+            "\n" +
+            "\t// 清理资源\n" +
+            "\tnapi_delete_async_work(env, async_data->work);\n" +
+            "\tnapi_delete_reference(env, async_data->callback_ref);\n" +
+            "\tdelete async_data;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value getArrayAsyncNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 1;\n" +
+            "\tnapi_value args[1] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 1) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 1 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要1个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tgetArray(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"getArrayAsync\", nullptr, getArrayAsyncNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "napi_value getArrayPromiseNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 1;\n" +
+            "\tnapi_value args[1] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 1) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 1 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要1个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tgetArray(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"getArrayPromise\", nullptr, getArrayPromiseNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n";
 
     private String testFuncContent7 = "\ntemplate<typename T, typename U> void displayType(T id, U name);\n" +
             "napi_value displayTypeNapi(napi_env env, napi_callback_info info)\n" +
@@ -359,19 +1339,128 @@ class GenNapiCppFileTest3 {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
             "\n" +
             "\t// 调用原始类方法\n" +
             "\tdisplayType(NAPI_PARAM_EXPRESSION);\n" +
-            "\t// 创建返回参数\n\t\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
             "\treturn result;\n" +
             "};\n" +
             "napi_property_descriptor funcDesc[] = {\n" +
             "\t{ \"displayType\", nullptr, displayTypeNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
             "};\n" +
-            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);";
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "struct displayTypeAsyncData {\n" +
+            "\tnapi_async_work work;\t\t\t// 异步工作句柄\n" +
+            "\tnapi_deferred deferred;\t\t\t// Promise句柄（如果使用Promise）\n" +
+            "\tnapi_ref callback_ref;\t\t\t// JS回调引用\n" +
+            "\tT id;\n" +
+            "\tU name;\n" +
+            "\tvoid result;\t\t\t// 返回值\n" +
+            "\tnapi_status status;\t\t\t// 执行状态\n" +
+            "};\n" +
+            "\n" +
+            "// 实际执行计算的线程池任务\n" +
+            "void displayTypeAsyncExecuteWork(napi_env env, void* data) {\n" +
+            "\tdisplayTypeAsyncData* async_data = static_cast<displayTypeAsyncData*>(data);\n" +
+            "\t// 调用原始类方法\n" +
+            "\tdisplayType(id, name);\n" +
+            "\tasync_data->result = res; // 实际计算\n" +
+            "}\n" +
+            "\n" +
+            "// 计算结果返回给JS事件循环\n" +
+            "void displayTypeAsyncCompleteWork(napi_env env, napi_status status, void* data) {\n" +
+            "\tdisplayTypeAsyncData* async_data = static_cast<displayTypeAsyncData*>(data);\n" +
+            "\n" +
+            "\t// 准备回调参数\n" +
+            "\tnapi_value argv[2] = { nullptr };\n" +
+            "\tif (async_data->status == napi_ok) {\n" +
+            "\t\t\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t} else {\n" +
+            "\t\tnapi_value error_msg;\n" +
+            "\t\tnapi_create_string_utf8(env, \"displayTypeAsync failed\", NAPI_AUTO_LENGTH, &error_msg);\n" +
+            "\t\tnapi_create_error(env, NULL, error_msg, &argv[1]);\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 获取JS回调函数\n" +
+            "\tnapi_value callback;\n" +
+            "\tnapi_get_reference_value(env, async_data->callback_ref, &callback);\n" +
+            "\n" +
+            "\t// 调用回调\n" +
+            "\tnapi_value global;\n" +
+            "\tnapi_get_global(env, &global);\n" +
+            "\tnapi_call_function(env, global, callback, 2, argv, nullptr);\n" +
+            "\n" +
+            "\t// 清理资源\n" +
+            "\tnapi_delete_async_work(env, async_data->work);\n" +
+            "\tnapi_delete_reference(env, async_data->callback_ref);\n" +
+            "\tdelete async_data;\n" +
+            "};\n" +
+            "\n" +
+            "napi_value displayTypeAsyncNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tdisplayType(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"displayTypeAsync\", nullptr, displayTypeAsyncNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n" +
+            "\n" +
+            "napi_value displayTypePromiseNapi(napi_env env, napi_callback_info info)\n" +
+            "{\n" +
+            "\tnapi_value result = nullptr;\n" +
+            "\tnapi_value jsthis;\n" +
+            "\tnapi_status status;\n" +
+            "\tnapi_get_undefined(env, &result);\n" +
+            "\t// 获取参数\n" +
+            "\tsize_t argc = 2;\n" +
+            "\tnapi_value args[2] = {nullptr};\n" +
+            "\tnapi_value this_arg;\n" +
+            "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
+            "\t// 参数校验\n" +
+            "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
+            "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
+            "\t\treturn nullptr;\n" +
+            "\t};\n" +
+            "\n" +
+            "\t// 调用原始类方法\n" +
+            "\tdisplayType(NAPI_PARAM_EXPRESSION);\n" +
+            "\t// 创建返回参数\n" +
+            "\t\n" +
+            "\treturn result;\n" +
+            "};\n" +
+            "napi_property_descriptor funcDesc[] = {\n" +
+            "\t{ \"displayTypePromise\", nullptr, displayTypePromiseNapi, nullptr, nullptr, nullptr, napi_default, nullptr },\n" +
+            "};\n" +
+            "napi_define_properties(env, exports, sizeof(funcDesc) / sizeof(funcDesc[0]), funcDesc);\n";
 
     private String testStructContent1 = "\nstruct TestStruct {\n" +
             "\tstd::string name;\n" +
@@ -421,6 +1510,7 @@ class GenNapiCppFileTest3 {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
@@ -578,6 +1668,7 @@ class GenNapiCppFileTest3 {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
@@ -736,6 +1827,7 @@ class GenNapiCppFileTest3 {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +

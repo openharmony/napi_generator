@@ -113,6 +113,7 @@ class GenNapiCppFileTest {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
@@ -317,6 +318,7 @@ class GenNapiCppFileTest {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 0) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 0 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要0个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
@@ -548,6 +550,7 @@ class GenNapiCppFileTest {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 0) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 0 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要0个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
@@ -580,6 +583,7 @@ class GenNapiCppFileTest {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 0) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 0 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要0个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
@@ -771,6 +775,7 @@ class GenNapiCppFileTest {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 0) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 0 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要0个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
@@ -844,6 +849,7 @@ class GenNapiCppFileTest {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
@@ -998,6 +1004,7 @@ class GenNapiCppFileTest {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +
@@ -1070,6 +1077,7 @@ class GenNapiCppFileTest {
             "\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);\n" +
             "\t// 参数校验\n" +
             "\tif (argc < 2) {\n" +
+            "\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < 2 error\");\n" +
             "\t\tnapi_throw_error(env, \"EINVAL\", \"需要2个参数\");\n" +
             "\t\treturn nullptr;\n" +
             "\t};\n" +

@@ -280,7 +280,7 @@ public class GenNapiCppFile extends GeneratorBase {
     private static final String NAPI_FUNCTION_DESC_PROPERTY = "NAPI_FUNCTION_DESC_DECLARE";
     private static final String NAPI_PARAM_NAME = "NAPI_PARAM_NAME";
     private static final String NAPI_PARAM_TYPE = "NAPI_PARAM_TYPE";
-
+    private static final String NAPI_PARAM_EXPRESSION = "NAPI_PARAM_EXPRESSION";
     private static final String NAPI_GET_ARGUMENTS_DECLARE = "NAPI_GET_ARGUMENTS_DECLARE";
     private static final String NAPI_CLASS_CALL_METHOD_DECLARE = "NAPI_CLASS_CALL_METHOD_DECLARE";
     private static final String NAPI_CLASS_RETURN_VALUE_DECLARE = "NAPI_CLASS_RETURN_VALUE_DECLARE";
@@ -295,6 +295,7 @@ public class GenNapiCppFile extends GeneratorBase {
             "\n\tnapi_get_cb_info(env, info, &argc, args, &this_arg, nullptr);" +
             "\n\t// 参数校验" +
             "\n\tif (argc < NAPI_PARAM_CNT) {" +
+            "\n\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"argc < NAPI_PARAM_CNT error\");" +
             "\n\t\tnapi_throw_error(env, \"EINVAL\", \"需要NAPI_PARAM_CNT个参数\");" +
             "\n\t\treturn nullptr;" +
             "\n\t};\n\n";
@@ -365,26 +366,59 @@ public class GenNapiCppFile extends GeneratorBase {
 
     private static final String NAPI_CREATE_RET_TYPE = "NAPI_CREATE_RET_TYPE";
 
-    private static final String NAPI_ASYNC_DATA = "\nstruct NAPI_FUNCTION_NAMEAsyncData {\n" +
+    private static final String NAPI_ASYNC_DATA = "\nstruct NAPI_FUNCTION_NAMEData {\n" +
             "\tnapi_async_work work;\t\t\t// 异步工作句柄\n" +
             "\tnapi_deferred deferred;\t\t\t// Promise句柄（如果使用Promise）\n" +
             "\tnapi_ref callback_ref;\t\t\t// JS回调引用\n" +
-            "\tNAPI_ASYNC_DATA_PARAM\n" +
+            "NAPI_ASYNC_DATA_PARAM" +
             "\tNAPI_RET_TYPE result;\t\t\t// 返回值\n" +
             "\tnapi_status status;\t\t\t// 执行状态\n" +
             "};\n";
 
     private static final String NAPI_EXECUTE_WORK = "\n// 实际执行计算的线程池任务\n" +
             "void NAPI_FUNCTION_NAMEExecuteWork(napi_env env, void* data) {\n" +
-            "\tNAPI_FUNCTION_NAMEAsyncData* async_data = static_cast<NAPI_FUNCTION_NAMEAsyncData*>(data);\n" +
+            "\tNAPI_FUNCTION_NAMEData* async_data = static_cast<NAPI_FUNCTION_NAMEData*>(data);\n" +
             "\t// 调用原始类方法\n" +
             "\tNAPI_CLASS_CALL_METHOD_DECLARE\n" +
             "\tasync_data->result = res; // 实际计算\n" +
             "}\n";
 
-    private static final String NAPI_COMPLETE_WORK = "\n// 计算结果返回给JS事件循环\n" +
+    private static final String NAPI_PROMISE_COMPLETE_WORK = "\n// 计算结果返回给JS事件循环\n" +
             "void NAPI_FUNCTION_NAMECompleteWork(napi_env env, napi_status status, void* data) {\n" +
-            "\tNAPI_FUNCTION_NAMEAsyncData* async_data = static_cast<NAPI_FUNCTION_NAMEAsyncData*>(data);\n" +
+            "\tNAPI_FUNCTION_NAMEData* async_data = static_cast<NAPI_FUNCTION_NAMEData*>(data);\n" +
+            "\n" +
+            "\t// 准备回调参数\n" +
+            "\tnapi_value argv[2] = { nullptr };\n" +
+            "\tif (async_data->status == napi_ok) {\n" +
+            "\t\tNAPI_CREATE_RET_TYPE\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t} else {\n" +
+            "\t\tnapi_value error_msg;\n" +
+            "\t\tnapi_create_string_utf8(env, \"NAPI_FUNCTION_NAME failed\", NAPI_AUTO_LENGTH, &error_msg);\n" +
+            "\t\tnapi_create_error(env, NULL, error_msg, &argv[1]);\n" +
+            "\t\tnapi_get_null(env, &argv[0]);\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 获取JS回调函数\n" +
+            "\tif (async_data->deferred) {\n" +
+            "\t\tif (status == napi_ok) {\n" +
+            "\t\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"resolve promise\");" +
+            "\t\t\tnapi_resolve_deferred(env, async_data->deferred, argv);\n" +
+            "\t\t} else {\n" +
+            "\t\t\tOH_LOG_Print(LOG_APP, LOG_INFO, GLOBAL_RESMGR, \"Log\", \"reject promise\");" +
+            "\t\t\tnapi_reject_deferred(env, async_data->deferred, argv);\n" +
+            "\t\t}\n" +
+            "\t}\n" +
+            "\n" +
+            "\t// 清理资源\n" +
+            "\tnapi_delete_async_work(env, async_data->work);\n" +
+            "\tnapi_delete_reference(env, async_data->callback_ref);\n" +
+            "\tdelete async_data;\n" +
+            "};\n";
+
+    private static final String NAPI_ASYNC_COMPLETE_WORK = "\n// 计算结果返回给JS事件循环\n" +
+            "void NAPI_FUNCTION_NAMECompleteWork(napi_env env, napi_status status, void* data) {\n" +
+            "\tNAPI_FUNCTION_NAMEData* async_data = static_cast<NAPI_FUNCTION_NAMEData*>(data);\n" +
             "\n" +
             "\t// 准备回调参数\n" +
             "\tnapi_value argv[2] = { nullptr };\n" +
@@ -1124,6 +1158,12 @@ public class GenNapiCppFile extends GeneratorBase {
         return resContent;
     };
 
+    private String genDataParam(ParamObj pa, int off) {
+        String name = pa.getName().isEmpty() ? "value" + Integer.toString(off) : pa.getName();
+        String type = pa.getType() == null ? NAPI_AUTO_TOKEN : pa.getType();
+        return NAPI_TAB_SPACE + type + NAPI_BLANK_SPACE + name + NAPI_SEMICOLON + NAPI_NEW_LINE;
+    }
+
     private String genFuncCall(FuncObj fo) {
         System.out.println("genFuncCall : " + fo.getName());
         return NAPI_FUNCTION_CALL_EXPRESSION.replace(NAPI_FUNCTION_NAME, fo.getName());
@@ -1181,13 +1221,35 @@ public class GenNapiCppFile extends GeneratorBase {
         String funcGetParamStr = "";
         String funcCallStr = "";
         String funcRetStr = "";
+        String dataParamStr = "";
+        String paramListStr = "";
         int i = 0;
         for (ParamObj pa : fo.getParamList()) {
             funcGetParamStr += genGetParam(pa, i);
+            dataParamStr += genDataParam(pa, i);
+            paramListStr += pa.getName() + NAPI_COMMA + NAPI_BLANK_SPACE;
             i++;
         }
+        paramListStr = StringUtils.removeLastCharacter(paramListStr, 2);
+        // create async function template
         funcCallStr += genFuncCall(fo);
         funcRetStr += genFuncRet(fo.getRetValue());
+
+        // create async data
+        String retType = fo.getType().isEmpty() ? NAPI_VOID_TOKEN : fo.getType();
+        String asyncDataStr = NAPI_ASYNC_DATA.replace(NAPI_FUNCTION_NAME, funcName);
+        asyncDataStr = asyncDataStr.replace(NAPI_ASYNC_DATA_PARAM, dataParamStr);
+        asyncDataStr = asyncDataStr.replace(NAPI_RET_TYPE, retType);
+
+        // create execute work
+        String exeWorkStr = NAPI_EXECUTE_WORK.replace(NAPI_FUNCTION_NAME, funcName);
+        exeWorkStr = exeWorkStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
+        exeWorkStr = exeWorkStr.replace(NAPI_PARAM_EXPRESSION, paramListStr);
+
+        // create complete work
+        String completeWorkStr = NAPI_ASYNC_COMPLETE_WORK.replace(NAPI_FUNCTION_NAME, funcName);
+        completeWorkStr = completeWorkStr.replace(NAPI_CREATE_RET_TYPE, funcRetStr);
+
         String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT, Integer.toString(fo.getParamList().size()));
         String funcDeclareStr = NAPI_FUNCTION_DECLARE.replace(NAPI_FUNCTION_NAME, funcName);
         funcDeclareStr = funcDeclareStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
@@ -1199,7 +1261,7 @@ public class GenNapiCppFile extends GeneratorBase {
         String funcInitStr = NAPI_FUNCTION_INIT.replace(NAPI_FUNCTION_DESC_PROPERTY,
                 funcPropertyStr);
         String resContent = "";
-        resContent += funcDeclareStr + funcInitStr;
+        resContent += asyncDataStr + exeWorkStr + completeWorkStr + funcDeclareStr + funcInitStr;
         return resContent;
     }
 
@@ -1211,13 +1273,35 @@ public class GenNapiCppFile extends GeneratorBase {
         String funcGetParamStr = "";
         String funcCallStr = "";
         String funcRetStr = "";
+        String dataParamStr = "";
+        String paramListStr = "";
         int i = 0;
         for (ParamObj pa : fo.getParamList()) {
             funcGetParamStr += genGetParam(pa, i);
+            dataParamStr += genDataParam(pa, i);
+            paramListStr += pa.getName() + NAPI_COMMA + NAPI_BLANK_SPACE;
             i++;
         }
+        paramListStr = StringUtils.removeLastCharacter(paramListStr, 2);
+        // create async function template
         funcCallStr += genFuncCall(fo);
         funcRetStr += genFuncRet(fo.getRetValue());
+
+        // create async data
+        String retType = fo.getType().isEmpty() ? NAPI_VOID_TOKEN : fo.getType();
+        String asyncDataStr = NAPI_ASYNC_DATA.replace(NAPI_FUNCTION_NAME, funcName);
+        asyncDataStr = asyncDataStr.replace(NAPI_ASYNC_DATA_PARAM, dataParamStr);
+        asyncDataStr = asyncDataStr.replace(NAPI_RET_TYPE, retType);
+
+        // create execute work
+        String exeWorkStr = NAPI_EXECUTE_WORK.replace(NAPI_FUNCTION_NAME, funcName);
+        exeWorkStr = exeWorkStr.replace(NAPI_CLASS_CALL_METHOD_DECLARE, funcCallStr);
+        exeWorkStr = exeWorkStr.replace(NAPI_PARAM_EXPRESSION, paramListStr);
+
+        // create complete work
+        String completeWorkStr = NAPI_PROMISE_COMPLETE_WORK.replace(NAPI_FUNCTION_NAME, funcName);
+        completeWorkStr = completeWorkStr.replace(NAPI_CREATE_RET_TYPE, funcRetStr);
+
         String paCheckStr = NAPI_PARAM_CHECK.replace(NAPI_PARAM_CNT, Integer.toString(fo.getParamList().size()));
         String funcDeclareStr = NAPI_FUNCTION_DECLARE.replace(NAPI_FUNCTION_NAME, funcName);
         funcDeclareStr = funcDeclareStr.replace(NAPI_GET_ARGUMENTS_DECLARE, paCheckStr + funcGetParamStr);
