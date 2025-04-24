@@ -33,6 +33,16 @@ import java.util.Map;
  * @version 1.0
  */
 public class GenDtsFile extends GeneratorBase {
+    /**
+     * const style
+     */
+    public static final int CONV_CONST_STYLE = 1;
+
+    /**
+     * declare style
+     */
+    public static final int CONV_DECLARE_STYLE = 2;
+
     private static final String TS_ENUM_TOKEN = "enum";
     private static final String TS_CLASS_TOKEN = "class";
     private static final String TS_EXPORT_TOKEN = "export";
@@ -144,16 +154,6 @@ public class GenDtsFile extends GeneratorBase {
         Map.entry("(", ""),
         Map.entry(")", "")
     );
-
-    /**
-     * const style
-     */
-    public final static int CONV_CONST_STYLE = 1;
-
-    /**
-     * declare style
-     */
-    public final static int CONV_DECLARE_STYLE = 2;
 
     private int styleType = CONV_DECLARE_STYLE;
 
