@@ -84,7 +84,6 @@ class GenCHFileTest2 {
             "\tint* p18;\n" +
             "\tint* p19;\n" +
             "\tint* p20;\n" +
-            "\tint add(int a, int b);\n" +
             "\tint delete(int);\n" +
             "};\n";
 
@@ -323,18 +322,6 @@ class GenCHFileTest2 {
 
         List<ParamObj> poList = new CopyOnWriteArrayList<>();
         ParamObj poItem = new ParamObj();
-        poItem.setName("a");
-        poItem.setType("number");
-        poList.add(poItem);
-        ParamObj poItem2 = new ParamObj();
-        poItem2.setName("b");
-        poItem2.setType("number");
-        poList.add(poItem2);
-
-        co.addFunc("add", "number", poList);
-
-        poList = new CopyOnWriteArrayList<>();
-        poItem = new ParamObj();
         poItem.setType("number");
         poList.add(poItem);
 
