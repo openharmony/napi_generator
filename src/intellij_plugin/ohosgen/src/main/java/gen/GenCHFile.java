@@ -132,9 +132,14 @@ public class GenCHFile extends GeneratorBase {
     private final Map<String, String> ts2cppMap = Map.ofEntries(
             Map.entry("any", "auto"),
             Map.entry("boolean", "bool"),
+            Map.entry("std::string", "char*"),
             Map.entry("string", "char*"),
             Map.entry("number", "int"),
-            Map.entry("void", "void"),
+            Map.entry("std::array<int>", "int*"),
+            Map.entry("std::stack<int>", "int*"),
+            Map.entry("std::vector<int>", "int*"),
+            Map.entry("std::queue<int>", "int*"),
+            Map.entry("std::list<int>", "int*"),
             Map.entry("[]", "*")
     );
 
@@ -168,7 +173,7 @@ public class GenCHFile extends GeneratorBase {
             String key = entry.getKey();
             String value = entry.getValue();
             int ret = cppKey.indexOf(key);
-            if (ret >= 0 && value.contains(C_STAR_TOKEN)) {
+            if (ret >= 0 && value.contains(C_STAR_TOKEN) && !(cppKey.substring(0, ret).contains("std"))) {
                 return cppKey.substring(0, ret) + value;
             } else if (ret >= 0) {
                 return value;
