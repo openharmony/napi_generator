@@ -35,6 +35,31 @@ import static utils.FileUtils.readText;
  * @since 2025-02-28
  */
 class GenCppHFileTest {
+    private String genClassContentTest2 = "\nclass TestClass {\n" +
+            "\tstd::string name;\n" +
+            "\tint age;\n" +
+            "\tlong p1;\n" +
+            "\tshort p2;\n" +
+            "\tlong long p3;\n" +
+            "\tfloat p4;\n" +
+            "\tdouble p5;\n" +
+            "\tuint8 p6;\n" +
+            "\tuint16 p7;\n" +
+            "\tuint32 p8;\n" +
+            "\tuint64 p9;\n" +
+            "\tint8 p10;\n" +
+            "\tint16 p11;\n" +
+            "\tint32 p12;\n" +
+            "\tint64 p13;\n" +
+            "\tsize_t p14;\n" +
+            "\tstd::string p15;\n" +
+            "\tstd::string p16;\n" +
+            "\tstd::array<int> p17;\n" +
+            "\tstd::stack<int> p18;\n" +
+            "\tstd::vector<int> p19;\n" +
+            "\tstd::queue<int> p20;\n" +
+            "\tint delete(int);\n" +
+            "};\n";
 
     @Test
     void getInterfaceContent() {
@@ -1032,7 +1057,7 @@ class GenCppHFileTest {
     }
 
     @Test
-    void genContent() {
+    void genContent1() {
         ParseObj po = new ParseObj();
         ParamObj pao = new ParamObj();
         pao.setName("TestParam");
@@ -1049,6 +1074,445 @@ class GenCppHFileTest {
             String varContent = gdf.getConstContent();
             System.out.println("genVar: " + varContent);
             String expect = "\nextends const int TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent2() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("long");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const long TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent3() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("short");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const short TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent4() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("long long");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const long long TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent5() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("float");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const float TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent6() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("double");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const double TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent7() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("uint8");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const uint8 TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent8() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("uint16");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const uint16 TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent9() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("uint32");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const uint32 TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent10() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("uint64");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const uint64 TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent11() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("int8");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const int8 TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent12() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("int16");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const int16 TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent13() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("int32");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const int32 TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent14() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("int64");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const int64 TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent15() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("size_t");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const size_t TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+    @Test
+    void genContent16() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("string");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const std::string TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent17() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("std::string");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const std::string TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent18() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("std::array<int>");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const std::array<int> TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent19() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("std::stack<int>");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const std::stack<int> TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent20() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("std::vector<int>");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const std::vector<int> TestParam = 100;\n";
+            assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void genContent21() {
+        ParseObj po = new ParseObj();
+        ParamObj pao = new ParamObj();
+        pao.setName("TestParam");
+        pao.setType("std::queue<int>");
+        pao.setStrValue("100");
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(pao);
+        po.setVarList(pol);
+
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genContent(po);
+
+        if (gb instanceof GenCppHFile gdf) {
+            String varContent = gdf.getConstContent();
+            System.out.println("genVar: " + varContent);
+            String expect = "\nextends const std::queue<int> TestParam = 100;\n";
             assertEquals(expect, varContent);
         }
     }
@@ -1123,7 +1587,7 @@ class GenCppHFileTest {
     }
 
     @Test
-    void genClassList() {
+    void genClassList1() {
         ClassObj co = new ClassObj();
         co.setName("TestClass");
 
@@ -1171,7 +1635,58 @@ class GenCppHFileTest {
     }
 
     @Test
-    void genFuncList() {
+    void genClassList2() {
+        ClassObj co = new ClassObj();
+        co.setName("TestClass");
+
+        co.addParam("name", "string");
+        co.addParam("age", "number");
+        co.addParam("p1", "long");
+        co.addParam("p2", "short");
+        co.addParam("p3", "long long");
+        co.addParam("p4", "float");
+        co.addParam("p5", "double");
+        co.addParam("p6", "uint8");
+        co.addParam("p7", "uint16");
+        co.addParam("p8", "uint32");
+        co.addParam("p9", "uint64");
+        co.addParam("p10", "int8");
+        co.addParam("p11", "int16");
+        co.addParam("p12", "int32");
+        co.addParam("p13", "int64");
+        co.addParam("p14", "size_t");
+        co.addParam("p15", "string");
+        co.addParam("p16", "std::string");
+        co.addParam("p17", "std::array<int>");
+        co.addParam("p18", "std::stack<int>");
+        co.addParam("p19", "std::vector<int>");
+        co.addParam("p20", "std::queue<int>");
+
+        List<ParamObj> poList = new CopyOnWriteArrayList<>();
+        ParamObj poItem = new ParamObj();
+        poItem.setType("number");
+        poList.add(poItem);
+
+        co.addFunc("delete", "number", poList);
+
+        List<ClassObj> col = new CopyOnWriteArrayList<>();
+        col.add(co);
+
+        ParseObj po = new ParseObj();
+        po.setClassList(col);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genClassList(po.getClassList());
+
+        if (gb instanceof GenCppHFile gdf) {
+            String classContent = gdf.getClassContent();
+            System.out.println("genClass: " + classContent);
+            String expect = genClassContentTest2;
+            assertEquals(expect, classContent);
+        }
+    }
+
+    @Test
+    void genFuncList1() {
         FuncObj fo = new FuncObj();
         fo.setName("TestFunc");
         fo.setRetValue("void");
@@ -1193,95 +1708,266 @@ class GenCppHFileTest {
     }
 
     @Test
-    void genStructList() {
-        StructObj so = new StructObj();
-        so.setName("TestStruct");
-
-        so.addMember("name", "string");
-        so.addMember("age", "number");
-
-        List<ParamObj> poList = new CopyOnWriteArrayList<>();
-        ParamObj poItem = new ParamObj();
-        poItem.setName("a");
-        poItem.setType("int");
-        poList.add(poItem);
-        ParamObj poItem2 = new ParamObj();
-        poItem2.setName("b");
-        poItem2.setType("int");
-        poList.add(poItem2);
-
-        so.addFunc("add", "int", poList);
-
-        List<StructObj> sol = new CopyOnWriteArrayList<>();
-        sol.add(so);
+    void genFuncList2() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "int");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
         ParseObj po = new ParseObj();
-        po.setStructList(sol);
-
+        po.setFuncList(fol);
         GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
-        gb.genStructList(po.getStructList());
+        gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppHFile gdf) {
-            String structContent = gdf.getStructContent();
-            System.out.println("genStruct: " + structContent);
-            String expect = "\nstruct TestStruct {\n" +
-                    "\tstd::string name;\n" +
-                    "\tint age;\n" +
-                    "\tint add(int a, int b);\n" +
-                    "};\n";
-            assertEquals(expect, structContent);
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, int age);";
+            assertEquals(expect, funcContent);
         }
     }
 
     @Test
-    void genTypeList() {
-        TypeObj to = new TypeObj();
-    }
-
-    @Test
-    void genUnionList() {
-        UnionObj uo = new UnionObj();
-        uo.setName("TestUnion");
-
-        uo.addMember("name", "any");
-        uo.addMember("age", "number");
-
-        List<UnionObj> uol = new CopyOnWriteArrayList<>();
-        uol.add(uo);
+    void genFuncList3() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "long");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
         ParseObj po = new ParseObj();
-        po.setUnionList(uol);
+        po.setFuncList(fol);
         GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
-        gb.genUnionList(po.getUnionList());
+        gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppHFile gdf) {
-            String unionContent = gdf.getUnionContent();
-            System.out.println("genUnion: " + unionContent);
-            String expect = "\nunion TestUnion{\n" +
-                    "\tauto name;\n" +
-                    "\tint age;\n" +
-                    "};\n";
-            assertEquals(expect, unionContent);
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, long age);";
+            assertEquals(expect, funcContent);
         }
     }
 
     @Test
-    void genVarList() {
+    void genFuncList4() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "short");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
         ParseObj po = new ParseObj();
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("number");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-        po.setVarList(pol);
-
+        po.setFuncList(fol);
         GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
-        gb.genVarList(pol);
+        gb.genFuncList(po.getFuncList());
 
         if (gb instanceof GenCppHFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, short age);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void genFuncList5() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "long long");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppHFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, long long age);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void genFuncList6() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "float");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppHFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, float age);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void genFuncList7() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "double");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppHFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, double age);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void genFuncList8() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "uint8");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppHFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, uint8 age);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void genFuncList9() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "uint16");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppHFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, uint16 age);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void genFuncList10() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "uint32");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppHFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, uint32 age);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void genFuncList11() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "uint64");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppHFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, uint64 age);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void genFuncList12() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "int8");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppHFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, int8 age);";
+            assertEquals(expect, funcContent);
+        }
+    }
+
+    @Test
+    void genFuncList13() {
+        FuncObj fo = new FuncObj();
+        fo.setName("TestFunc");
+        fo.setRetValue("void");
+        fo.addParam("name", "string");
+        fo.addParam("age", "int16");
+        List<FuncObj> fol = new CopyOnWriteArrayList<>();
+        fol.add(fo);
+        ParseObj po = new ParseObj();
+        po.setFuncList(fol);
+        GeneratorBase gb = GenerateFactory.getGenerator("CPPH");
+        gb.genFuncList(po.getFuncList());
+
+        if (gb instanceof GenCppHFile gdf) {
+            String funcContent = gdf.getFuncContent();
+            System.out.println("genFunc: " + funcContent);
+            String expect = "\nvoid TestFunc(std::string name, int16 age);";
+            assertEquals(expect, funcContent);
         }
     }
 }
