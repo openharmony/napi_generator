@@ -18,12 +18,10 @@ package gen;
 import grammar.*;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static utils.FileUtils.readText;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -715,6 +713,243 @@ class GenAkiCppFileTest3 {
             System.out.println("genVar: " + varContent);
             String expect = "\nextends const std::map<int> TestParam = 100;\n";
             assertEquals(expect, varContent);
+        }
+    }
+
+    @Test
+    void getVarContent1() {
+        ParamObj paObj = new ParamObj();
+        paObj.setName("employeeName");
+        paObj.setStrValue("\"John\"");
+
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(paObj);
+        ParseObj po = new ParseObj();
+        po.setVarList(pol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genVarList(po.getVarList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String constContent = gdf.getConstContent();
+            System.out.println("getVar: " + constContent);
+            String expect = "\nextends const auto employeeName = \"John\";\n";
+            assertEquals(expect, constContent);
+        }
+    }
+
+    @Test
+    void getVarContent2() {
+        ParamObj paObj = new ParamObj();
+        paObj.setName("employeeName");
+        paObj.setType("string");
+        paObj.setStrValue("\"John\"");
+
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(paObj);
+        ParseObj po = new ParseObj();
+        po.setVarList(pol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genVarList(po.getVarList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String constContent = gdf.getConstContent();
+            System.out.println("getVar: " + constContent);
+            String expect = "\nextends const std::string employeeName = \"John\";\n";
+            assertEquals(expect, constContent);
+        }
+    }
+
+    @Test
+    void getVarContent3() {
+        ParamObj paObj = new ParamObj();
+        paObj.setName("num1");
+        paObj.setType("number");
+        paObj.setStrValue("1");
+
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(paObj);
+        ParseObj po = new ParseObj();
+        po.setVarList(pol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genVarList(po.getVarList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String constContent = gdf.getConstContent();
+            System.out.println("getVar: " + constContent);
+            String expect = "\nextends const int num1 = 1;\n";
+            assertEquals(expect, constContent);
+        }
+    }
+
+    @Test
+    void getVarContent4() {
+        ParamObj paObj = new ParamObj();
+        paObj.setName("playerCodes");
+
+        ParamObj paItem1 = new ParamObj();
+        paItem1.setName("player1");
+        paItem1.setStrValue("9");
+        paObj.addParam(paItem1);
+        ParamObj paItem2 = new ParamObj();
+        paItem2.setName("player2");
+        paItem2.setStrValue("10");
+        paObj.addParam(paItem2);
+
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(paObj);
+        ParseObj po = new ParseObj();
+        po.setVarList(pol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genVarList(po.getVarList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String constContent = gdf.getConstContent();
+            System.out.println("getVar: " + constContent);
+            String expect = "\nextends const std::map<std::string, number} playerCodes = {\n" +
+                    "\t{\"player1\", 9},\n" +
+                    "\t{\"player2\", 10}\n" +
+                    "};\n";
+            assertEquals(expect, constContent);
+        }
+    }
+
+    @Test
+    void getVarContent5() {
+        ParamObj paObj = new ParamObj();
+        paObj.setName("playerCodes.player2");
+        paObj.setStrValue("11");
+
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(paObj);
+        ParseObj po = new ParseObj();
+        po.setVarList(pol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genVarList(po.getVarList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String constContent = gdf.getConstContent();
+            System.out.println("getVar: " + constContent);
+            String expect = "\nextends const auto playerCodes.player2 = 11;\n";
+            assertEquals(expect, constContent);
+        }
+    }
+
+    @Test
+    void getVarContent6() {
+        ParamObj paObj = new ParamObj();
+        paObj.setName("ROUTES");
+        paObj.setType("any[]");
+
+        ParamObj paListItem1 = new ParamObj();
+        ParamObj paItem1 = new ParamObj();
+        paItem1.setName("path");
+        paItem1.setStrValue("'/dashboard'");
+        paListItem1.addParam(paItem1);
+
+        ParamObj paItem3 = new ParamObj();
+        paItem3.setName("allowAnonymous");
+        paItem3.setStrValue("false");
+        paListItem1.addParam(paItem3);
+        paObj.addParam(paListItem1);
+
+        ParamObj paListItem2 = new ParamObj();
+        ParamObj paItem21 = new ParamObj();
+        paItem21.setName("path");
+        paItem21.setStrValue("'/deals'");
+        paListItem2.addParam(paItem21);
+
+        ParamObj paItem23 = new ParamObj();
+        paItem23.setName("allowAnonymous");
+        paItem23.setStrValue("true");
+        paListItem2.addParam(paItem23);
+        paObj.addParam(paListItem2);
+
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(paObj);
+        ParseObj po = new ParseObj();
+        po.setVarList(pol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genVarList(po.getVarList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String constContent = gdf.getConstContent();
+            System.out.println("getVar: " + constContent);
+            String expect = "\nstruct ROUTESST {\n" +
+                    "\tstd::string path;\n" +
+                    "\tboolean allowAnonymous;\n" +
+                    "};\n" +
+                    "\n" +
+                    "const std::vector<ROUTESST> ROUTES = {\n" +
+                    "\t{'/dashboard', false},\n" +
+                    "\t{'/deals', true},\n" +
+                    "};\n";
+            assertEquals(expect, constContent);
+        }
+    }
+
+    @Test
+    void getVarContent7() {
+        ParamObj paObj = new ParamObj();
+        paObj.setName("num1");
+        paObj.setType("int");
+        paObj.setStrValue("1");
+
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(paObj);
+        ParseObj po = new ParseObj();
+        po.setVarList(pol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genVarList(po.getVarList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String constContent = gdf.getConstContent();
+            System.out.println("getVar: " + constContent);
+            String expect = "\nextends const int num1 = 1;\n";
+            assertEquals(expect, constContent);
+        }
+    }
+
+    @Test
+    void getVarContent8() {
+        ParamObj paObj = new ParamObj();
+        paObj.setName("num1");
+        paObj.setType("long");
+        paObj.setStrValue("1");
+
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(paObj);
+        ParseObj po = new ParseObj();
+        po.setVarList(pol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genVarList(po.getVarList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String constContent = gdf.getConstContent();
+            System.out.println("getVar: " + constContent);
+            String expect = "\nextends const long num1 = 1;\n";
+            assertEquals(expect, constContent);
+        }
+    }
+
+    @Test
+    void getVarContent9() {
+        ParamObj paObj = new ParamObj();
+        paObj.setName("num1");
+        paObj.setType("short");
+        paObj.setStrValue("1");
+
+        List<ParamObj> pol = new CopyOnWriteArrayList<>();
+        pol.add(paObj);
+        ParseObj po = new ParseObj();
+        po.setVarList(pol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genVarList(po.getVarList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String constContent = gdf.getConstContent();
+            System.out.println("getVar: " + constContent);
+            String expect = "\nextends const short num1 = 1;\n";
+            assertEquals(expect, constContent);
         }
     }
 }
