@@ -42,6 +42,7 @@ public class GenAkiCppFile extends GeneratorBase {
     private static final String AKI_TYPE_NAME_TOKEN = "typename";
     private static final String AKI_STAR_TOKEN = "*";
     private static final String AKI_CHAR_START_TOKEN = "char*";
+    private static final String AKI_STD_STRING_TOKEN = "std::string";
     private static final String AKI_AUTO_TOKEN = "auto";
     private static final String AKI_EXPORT_TOKEN = "export";
     private static final String AKI_IMPLEMENAKI_TOKEN = "implements";
@@ -183,7 +184,7 @@ public class GenAkiCppFile extends GeneratorBase {
     private final Map<String, String> ts2cppMap = Map.ofEntries(
             Map.entry("any", "auto"),
             Map.entry("boolean", "bool"),
-            Map.entry("string", "char*"),
+            Map.entry("string", "std::string"),
             Map.entry("number", "int"),
             Map.entry("void", "void"),
             Map.entry("[]", "*")
@@ -404,7 +405,7 @@ public class GenAkiCppFile extends GeneratorBase {
         i = 0;
         if (vaList.size() > i && !vaList.get(i).isEmpty() &&
                 vaList.get(i).contains("\"")) {
-            resContent += AKI_NEW_LINE + AKI_CHAR_START_TOKEN + AKI_BLANK_SPACE +
+            resContent += AKI_NEW_LINE + AKI_STD_STRING_TOKEN + AKI_BLANK_SPACE +
                     enumName.toLowerCase(Locale.ROOT) + AKI_UNDER_LINE + AKI_STR_SUFFIX +
                     AKI_LEFT_SQUARE_BRACKET + AKI_RIGHT_SQUARE_BRACKET + AKI_EQUAL + AKI_LEFT_BRACE;
             for (String val : vaList) {

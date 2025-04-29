@@ -18,12 +18,10 @@ package gen;
 import grammar.*;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static utils.FileUtils.readText;
 
 /**
  * <h3>类名：该类用于xxx</h3>
@@ -34,12 +32,12 @@ import static utils.FileUtils.readText;
  * @version 1.0
  * @since 2025-02-28
  */
-class GenAkiCppFileTest {
+class GenAkiCppFileTest1 {
     private String classContentExpect2 = "\nclass TestClass : public IPerson {\n" +
-            "\tpublic char* name;\n" +
+            "\tpublic std::string name;\n" +
             "\tprivate int age;\n" +
-            "\tprotected char* no;\n" +
-            "\treadonly char* addr;\n" +
+            "\tprotected std::string no;\n" +
+            "\treadonly std::string addr;\n" +
             "\tconstructor();\n" +
             "};\n" +
             "\n" +
@@ -68,6 +66,57 @@ class GenAkiCppFileTest {
             "\tJSBIND_PROPERTY(empCode);\n" +
             "\tJSBIND_PROPERTY(currentUser);\n" +
             "\tJSBIND_PROPERTY(pi);\n" +
+            "};\n";
+
+    private String classContentExpect9 = "\nclass myClass2 {\n" +
+            "\tstd::string name;\n" +
+            "\tint age;\n" +
+            "\tlong p1;\n" +
+            "\tshort p2;\n" +
+            "\tlong long p3;\n" +
+            "\tfloat p4;\n" +
+            "\tdouble p5;\n" +
+            "\tuint8 p6;\n" +
+            "\tuint16 p7;\n" +
+            "\tuint32 p8;\n" +
+            "\tuint64 p9;\n" +
+            "\tint8 p10;\n" +
+            "\tint16 p11;\n" +
+            "\tint32 p12;\n" +
+            "\tint64 p13;\n" +
+            "\tsize_t p14;\n" +
+            "\tstd::string p15;\n" +
+            "\tstd::string p16;\n" +
+            "\tstd::array<int> p17;\n" +
+            "\tstd::stack<int> p18;\n" +
+            "\tstd::vector<int> p19;\n" +
+            "\tstd::queue<int> p20;\n" +
+            "};\n" +
+            "\n" +
+            "JSBIND_CLASS(myClass2)\n" +
+            "{\n" +
+            "\tJSBIND_PROPERTY(name);\n" +
+            "\tJSBIND_PROPERTY(age);\n" +
+            "\tJSBIND_PROPERTY(p1);\n" +
+            "\tJSBIND_PROPERTY(p2);\n" +
+            "\tJSBIND_PROPERTY(p3);\n" +
+            "\tJSBIND_PROPERTY(p4);\n" +
+            "\tJSBIND_PROPERTY(p5);\n" +
+            "\tJSBIND_PROPERTY(p6);\n" +
+            "\tJSBIND_PROPERTY(p7);\n" +
+            "\tJSBIND_PROPERTY(p8);\n" +
+            "\tJSBIND_PROPERTY(p9);\n" +
+            "\tJSBIND_PROPERTY(p10);\n" +
+            "\tJSBIND_PROPERTY(p11);\n" +
+            "\tJSBIND_PROPERTY(p12);\n" +
+            "\tJSBIND_PROPERTY(p13);\n" +
+            "\tJSBIND_PROPERTY(p14);\n" +
+            "\tJSBIND_PROPERTY(p15);\n" +
+            "\tJSBIND_PROPERTY(p16);\n" +
+            "\tJSBIND_PROPERTY(p17);\n" +
+            "\tJSBIND_PROPERTY(p18);\n" +
+            "\tJSBIND_PROPERTY(p19);\n" +
+            "\tJSBIND_PROPERTY(p20);\n" +
             "};\n";
 
     @Test
@@ -174,7 +223,7 @@ class GenAkiCppFileTest {
                     "\tBlue = BLUE,\n" +
                     "};\n" +
                     "\n" +
-                    "char* colors_STR[] = {\n" +
+                    "std::string colors_STR[] = {\n" +
                     "\t[Red] = \"RED\",\n" +
                     "\t[Green] = \"GREEN\",\n" +
                     "\t[Blue] = \"BLUE\"\n" +
@@ -272,7 +321,7 @@ class GenAkiCppFileTest {
             String classContent = gdf.getClassContent();
             System.out.println("genClass: " + classContent);
             String expect = "\nclass TestClass {\n" +
-                    "\tchar* name;\n" +
+                    "\tstd::string name;\n" +
                     "\tint age;\n" +
                     "\tint add(int a, int b);\n" +
                     "};\n" +
@@ -618,6 +667,50 @@ class GenAkiCppFileTest {
     }
 
     @Test
+    void getClassContent9() {
+        ClassObj co = new ClassObj();
+        co.setName("myClass2");
+
+        co.addParam("name", "string");
+        co.addParam("age", "number");
+        co.addParam("p1", "long");
+        co.addParam("p2", "short");
+        co.addParam("p3", "long long");
+        co.addParam("p4", "float");
+        co.addParam("p5", "double");
+        co.addParam("p6", "uint8");
+        co.addParam("p7", "uint16");
+        co.addParam("p8", "uint32");
+        co.addParam("p9", "uint64");
+        co.addParam("p10", "int8");
+        co.addParam("p11", "int16");
+        co.addParam("p12", "int32");
+        co.addParam("p13", "int64");
+        co.addParam("p14", "size_t");
+        co.addParam("p15", "string");
+        co.addParam("p16", "std::string");
+        co.addParam("p17", "std::array<int>");
+        co.addParam("p18", "std::stack<int>");
+        co.addParam("p19", "std::vector<int>");
+        co.addParam("p20", "std::queue<int>");
+
+        List<ClassObj> col = new CopyOnWriteArrayList<>();
+        col.add(co);
+
+        ParseObj po = new ParseObj();
+        po.setClassList(col);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genClassList(po.getClassList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String classContent = gdf.getClassContent();
+            System.out.println("genClass: " + classContent);
+            String expect = classContentExpect9;
+            assertEquals(expect, classContent);
+        }
+    }
+
+    @Test
     void getFuncContent1() {
         FuncObj fo = new FuncObj();
         fo.setName("TestFunc");
@@ -634,7 +727,7 @@ class GenAkiCppFileTest {
         if (gb instanceof GenAkiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
-            String expect = "\nvoid TestFunc(char* name, int age);\n" +
+            String expect = "\nvoid TestFunc(std::string name, int age);\n" +
                     "\n" +
                     "JSBIND_GLOBAL()\n" +
                     "{\n" +
@@ -666,7 +759,7 @@ class GenAkiCppFileTest {
         if (gb instanceof GenAkiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
-            String expect = "\nchar* ToCapital(char* str, int length = 0);\n" +
+            String expect = "\nstd::string ToCapital(std::string str, int length = 0);\n" +
                     "\n" +
                     "JSBIND_GLOBAL()\n" +
                     "{\n" +
@@ -702,7 +795,7 @@ class GenAkiCppFileTest {
         if (gb instanceof GenAkiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
-            String expect = "\nchar* Nemw(char* str = \"joke\", int length = 0);\n" +
+            String expect = "\nstd::string Nemw(std::string str = \"joke\", int length = 0);\n" +
                     "\n" +
                     "JSBIND_GLOBAL()\n" +
                     "{\n" +
@@ -734,7 +827,7 @@ class GenAkiCppFileTest {
         if (gb instanceof GenAkiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
-            String expect = "\nchar* Nemw(auto str, auto length);\n" +
+            String expect = "\nstd::string Nemw(auto str, auto length);\n" +
                     "\n" +
                     "JSBIND_GLOBAL()\n" +
                     "{\n" +
@@ -879,7 +972,7 @@ class GenAkiCppFileTest {
         if (gb instanceof GenAkiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
-            String expect = "\nchar* Nemw(auto str, auto length);\n" +
+            String expect = "\nstd::string Nemw(auto str, auto length);\n" +
                     "\n" +
                     "int getCnt();\n" +
                     "\n" +
@@ -922,7 +1015,7 @@ class GenAkiCppFileTest {
         if (gb instanceof GenAkiCppFile gdf) {
             String funcContent = gdf.getFuncContent();
             System.out.println("genFunc: " + funcContent);
-            String expect = "\nvoid TestFunc(char* name, aki::SafetyCallback<boolean(bool)> func);\n" +
+            String expect = "\nvoid TestFunc(std::string name, aki::SafetyCallback<boolean(bool)> func);\n" +
                     "\n" +
                     "JSBIND_GLOBAL()\n" +
                     "{\n" +
@@ -965,7 +1058,7 @@ class GenAkiCppFileTest {
             String structContent = gdf.getStructContent();
             System.out.println("genStruct: " + structContent);
             String expect = "\nstruct TestStruct {\n" +
-                    "\tchar* name;\n" +
+                    "\tstd::string name;\n" +
                     "\tbool age;\n" +
                     "\tint add(bool a, bool b);\n" +
                     "};\n" +
@@ -1127,7 +1220,7 @@ class GenAkiCppFileTest {
             String unionContent = gdf.getUnionContent();
             System.out.println("genUnion: " + unionContent);
             String expect = "\nunion TestUnion{\n" +
-                    "\tchar* name;\n" +
+                    "\tstd::string name;\n" +
                     "\tint age;\n" +
                     "};\n";
             assertEquals(expect, unionContent);
@@ -1163,449 +1256,12 @@ class GenAkiCppFileTest {
     }
 
     @Test
-    void getVarContent1() {
-        ParamObj paObj = new ParamObj();
-        paObj.setName("employeeName");
-        paObj.setStrValue("\"John\"");
-
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(paObj);
-        ParseObj po = new ParseObj();
-        po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genVarList(po.getVarList());
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String constContent = gdf.getConstContent();
-            System.out.println("getVar: " + constContent);
-            String expect = "\nextends const auto employeeName = \"John\";\n";
-            assertEquals(expect, constContent);
-        }
-    }
-
-    @Test
-    void getVarContent2() {
-        ParamObj paObj = new ParamObj();
-        paObj.setName("employeeName");
-        paObj.setType("string");
-        paObj.setStrValue("\"John\"");
-
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(paObj);
-        ParseObj po = new ParseObj();
-        po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genVarList(po.getVarList());
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String constContent = gdf.getConstContent();
-            System.out.println("getVar: " + constContent);
-            String expect = "\nextends const char* employeeName = \"John\";\n";
-            assertEquals(expect, constContent);
-        }
-    }
-
-    @Test
-    void getVarContent3() {
-        ParamObj paObj = new ParamObj();
-        paObj.setName("num1");
-        paObj.setType("number");
-        paObj.setStrValue("1");
-
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(paObj);
-        ParseObj po = new ParseObj();
-        po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genVarList(po.getVarList());
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String constContent = gdf.getConstContent();
-            System.out.println("getVar: " + constContent);
-            String expect = "\nextends const int num1 = 1;\n";
-            assertEquals(expect, constContent);
-        }
-    }
-
-    @Test
-    void getVarContent4() {
-        ParamObj paObj = new ParamObj();
-        paObj.setName("playerCodes");
-
-        ParamObj paItem1 = new ParamObj();
-        paItem1.setName("player1");
-        paItem1.setStrValue("9");
-        paObj.addParam(paItem1);
-        ParamObj paItem2 = new ParamObj();
-        paItem2.setName("player2");
-        paItem2.setStrValue("10");
-        paObj.addParam(paItem2);
-
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(paObj);
-        ParseObj po = new ParseObj();
-        po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genVarList(po.getVarList());
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String constContent = gdf.getConstContent();
-            System.out.println("getVar: " + constContent);
-            String expect = "\nextends const std::map<std::string, number} playerCodes = {\n" +
-                    "\t{\"player1\", 9},\n" +
-                    "\t{\"player2\", 10}\n" +
-                    "};\n";
-            assertEquals(expect, constContent);
-        }
-    }
-
-    @Test
-    void getVarContent5() {
-        ParamObj paObj = new ParamObj();
-        paObj.setName("playerCodes.player2");
-        paObj.setStrValue("11");
-
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(paObj);
-        ParseObj po = new ParseObj();
-        po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genVarList(po.getVarList());
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String constContent = gdf.getConstContent();
-            System.out.println("getVar: " + constContent);
-            String expect = "\nextends const auto playerCodes.player2 = 11;\n";
-            assertEquals(expect, constContent);
-        }
-    }
-
-    @Test
-    void getVarContent6() {
-        ParamObj paObj = new ParamObj();
-        paObj.setName("ROUTES");
-        paObj.setType("any[]");
-
-        ParamObj paListItem1 = new ParamObj();
-        ParamObj paItem1 = new ParamObj();
-        paItem1.setName("path");
-        paItem1.setStrValue("'/dashboard'");
-        paListItem1.addParam(paItem1);
-
-        ParamObj paItem3 = new ParamObj();
-        paItem3.setName("allowAnonymous");
-        paItem3.setStrValue("false");
-        paListItem1.addParam(paItem3);
-        paObj.addParam(paListItem1);
-
-        ParamObj paListItem2 = new ParamObj();
-        ParamObj paItem21 = new ParamObj();
-        paItem21.setName("path");
-        paItem21.setStrValue("'/deals'");
-        paListItem2.addParam(paItem21);
-
-        ParamObj paItem23 = new ParamObj();
-        paItem23.setName("allowAnonymous");
-        paItem23.setStrValue("true");
-        paListItem2.addParam(paItem23);
-        paObj.addParam(paListItem2);
-
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(paObj);
-        ParseObj po = new ParseObj();
-        po.setVarList(pol);
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genVarList(po.getVarList());
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String constContent = gdf.getConstContent();
-            System.out.println("getVar: " + constContent);
-            String expect = "\nstruct ROUTESST {\n" +
-                    "\tstd::string path;\n" +
-                    "\tboolean allowAnonymous;\n" +
-                    "};\n" +
-                    "\n" +
-                    "const std::vector<ROUTESST> ROUTES = {\n" +
-                    "\t{'/dashboard', false},\n" +
-                    "\t{'/deals', true},\n" +
-                    "};\n";
-            assertEquals(expect, constContent);
-        }
-    }
-
-    @Test
-    void getConstContent() {
-        ParseObj po = new ParseObj();
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("int");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-        po.setVarList(pol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genVarList(pol);
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
-        }
-    }
-
-    @Test
-    void genContent() {
-        ParseObj po = new ParseObj();
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("int");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-        po.setVarList(pol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genContent(po);
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
-        }
-    }
-
-    @Test
-    void genFile() {
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("int");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-
-        ParseObj po = new ParseObj();
-        po.setVarList(pol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genContent(po);
-        gb.genFile("./", "testGenFile.h");
-
-        File file = new File("./ag_akitestGenFile_h.cpp");
-        assertEquals(true, file.exists());
-        assertEquals(false, file.isDirectory());
-
-        List<String> fcList = readText("./ag_akitestGenFile_h.cpp");
-
-        assertEquals("// Generated from ./\\testGenFile.h by KaiHong ohgen 1.0.0-PLUGIN",
-                fcList.get(0));
-
-        assertEquals("#include <string>",
-                fcList.get(1));
-        assertEquals("#include <aki/jsbind.h>",
-                fcList.get(2));
-        assertEquals("",
-                fcList.get(3));
-        assertEquals("JSBIND_ADDON(testGenFileh)",
-                fcList.get(4));
-        assertEquals("extends const int TestParam = 100;",
-                fcList.get(6));
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
-        }
-    }
-
-    @Test
-    void genInterfaceList() {
-    }
-
-    @Test
-    void genEnumList() {
-        EnumObj eo = new EnumObj();
-        eo.setName("TestEnum");
-        List<String> ml = new CopyOnWriteArrayList<>();
-        ml.add("ONE");
-        ml.add("TWO");
-        eo.setMemberList(ml);
-        List<String> vl = new CopyOnWriteArrayList<>();
-        vl.add("1");
-        vl.add("2");
-        eo.setValueList(vl);
-        List<EnumObj> eol = new CopyOnWriteArrayList<>();
-        eol.add(eo);
-        ParseObj po = new ParseObj();
-        po.setEnumList(eol);
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genEnumList(po.getEnumList());
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String enumContent = gdf.getEnumContent();
-            System.out.println("genEnum: " + enumContent);
-            String expect = "\nenum TestEnum {\n" +
-                    "\tONE = 1,\n" +
-                    "\tTWO = 2,\n" +
-                    "};\n" +
-                    "\n" +
-                    "JSBIND_ENUM(TestEnum) {\n" +
-                    "\tJSBIND_ENUM_VALUE(ONE);\n" +
-                    "\tJSBIND_ENUM_VALUE(TWO);\n" +
-                    "};\n";
-            assertEquals(expect, enumContent);
-        }
-    }
-
-    @Test
-    void genClassList() {
-        ClassObj co = new ClassObj();
-        co.setName("TestClass");
-
-        co.addParam("name", "string");
-        co.addParam("age", "number");
-
-        List<ParamObj> poList = new CopyOnWriteArrayList<>();
-        ParamObj poItem = new ParamObj();
-        poItem.setName("a");
-        poItem.setType("number");
-        poList.add(poItem);
-        ParamObj poItem2 = new ParamObj();
-        poItem2.setName("b");
-        poItem2.setType("number");
-        poList.add(poItem2);
-
-        co.addFunc("add", "number", poList);
-
-        poList = new CopyOnWriteArrayList<>();
-        poItem = new ParamObj();
-        poItem.setType("number");
-        poList.add(poItem);
-
-        co.addFunc("delete", "number", poList);
-
-        List<ClassObj> col = new CopyOnWriteArrayList<>();
-        col.add(co);
-
-        ParseObj po = new ParseObj();
-        po.setClassList(col);
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genClassList(po.getClassList());
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String classContent = gdf.getClassContent();
-            System.out.println("genClass: " + classContent);
-            String expect = "\nclass TestClass {\n" +
-                    "\tchar* name;\n" +
-                    "\tint age;\n" +
-                    "\tint add(int a, int b);\n" +
-                    "\tint delete(int);\n" +
-                    "};\n" +
-                    "\n" +
-                    "JSBIND_CLASS(TestClass)\n" +
-                    "{\n" +
-                    "\tJSBIND_METHOD(add, \"add\");\n" +
-                    "\tJSBIND_PMETHOD(add, \"addPromise\");\n" +
-                    "\tJSBIND_METHOD(delete, \"delete\");\n" +
-                    "\tJSBIND_PMETHOD(delete, \"deletePromise\");\n" +
-                    "\tJSBIND_PROPERTY(name);\n" +
-                    "\tJSBIND_PROPERTY(age);\n" +
-                    "};\n";
-            assertEquals(expect, classContent);
-        }
-    }
-
-    @Test
-    void genFuncList() {
-        FuncObj fo = new FuncObj();
-        fo.setName("TestFunc");
-        fo.setRetValue("void");
-        fo.addParam("name", "string");
-        fo.addParam("age", "number");
-        List<FuncObj> fol = new CopyOnWriteArrayList<>();
-        fol.add(fo);
-        ParseObj po = new ParseObj();
-        po.setFuncList(fol);
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genFuncList(po.getFuncList());
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String funcContent = gdf.getFuncContent();
-            System.out.println("genFunc: " + funcContent);
-            String expect = "\nvoid TestFunc(char* name, int age);\n" +
-                    "\n" +
-                    "JSBIND_GLOBAL()\n" +
-                    "{\n" +
-                    "\tJSBIND_FUNCTION(TestFunc, \"TestFunc\");\n" +
-                    "\tJSBIND_PFUNCTION(TestFunc, \"TestFuncPromise\");\n" +
-                    "};\n";
-            assertEquals(expect, funcContent);
-        }
-    }
-
-    @Test
-    void genStructList() {
-        StructObj so = new StructObj();
-        so.setName("TestStruct");
-
-        so.addMember("name", "string");
-        so.addMember("age", "number");
-
-        List<ParamObj> poList = new CopyOnWriteArrayList<>();
-        ParamObj poItem = new ParamObj();
-        poItem.setName("a");
-        poItem.setType("int");
-        poList.add(poItem);
-        ParamObj poItem2 = new ParamObj();
-        poItem2.setName("b");
-        poItem2.setType("int");
-        poList.add(poItem2);
-
-        so.addFunc("add", "int", poList);
-
-        List<StructObj> sol = new CopyOnWriteArrayList<>();
-        sol.add(so);
-        ParseObj po = new ParseObj();
-        po.setStructList(sol);
-
-        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genStructList(po.getStructList());
-
-        if (gb instanceof GenAkiCppFile gdf) {
-            String structContent = gdf.getStructContent();
-            System.out.println("genStruct: " + structContent);
-            String expect = "\nstruct TestStruct {\n" +
-                "\tchar* name;\n" +
-                "\tint age;\n" +
-                "\tint add(int a, int b);\n" +
-                "};\n" +
-                "\n" +
-                "JSBIND_CLASS(TestStruct)\n" +
-                "{\n" +
-                "\tJSBIND_METHOD(add, \"add\");\n" +
-                "\tJSBIND_PMETHOD(add, \"addPromise\");\n" +
-                "\tJSBIND_PROPERTY(name);\n" +
-                "\tJSBIND_PROPERTY(age);\n" +
-                "};\n";
-            assertEquals(expect, structContent);
-        }
-    }
-
-    @Test
-    void genTypeList() {
-        TypeObj to = new TypeObj();
-    }
-
-    @Test
-    void genUnionList() {
+    void getUnionContent3() {
         UnionObj uo = new UnionObj();
         uo.setName("TestUnion");
 
-        uo.addMember("name", "any");
-        uo.addMember("age", "number");
+        uo.addMember("name", "string");
+        uo.addMember("age", "int");
 
         List<UnionObj> uol = new CopyOnWriteArrayList<>();
         uol.add(uo);
@@ -1618,7 +1274,7 @@ class GenAkiCppFileTest {
             String unionContent = gdf.getUnionContent();
             System.out.println("genUnion: " + unionContent);
             String expect = "\nunion TestUnion{\n" +
-                    "\tauto name;\n" +
+                    "\tstd::string name;\n" +
                     "\tint age;\n" +
                     "};\n";
             assertEquals(expect, unionContent);
@@ -1626,24 +1282,523 @@ class GenAkiCppFileTest {
     }
 
     @Test
-    void genVarList() {
-        ParseObj po = new ParseObj();
-        ParamObj pao = new ParamObj();
-        pao.setName("TestParam");
-        pao.setType("number");
-        pao.setStrValue("100");
-        List<ParamObj> pol = new CopyOnWriteArrayList<>();
-        pol.add(pao);
-        po.setVarList(pol);
+    void getUnionContent4() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
 
+        uo.addMember("name", "string");
+        uo.addMember("age", "long");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
         GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
-        gb.genVarList(pol);
+        gb.genUnionList(po.getUnionList());
 
         if (gb instanceof GenAkiCppFile gdf) {
-            String varContent = gdf.getConstContent();
-            System.out.println("genVar: " + varContent);
-            String expect = "\nextends const int TestParam = 100;\n";
-            assertEquals(expect, varContent);
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tlong age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
         }
     }
+
+    @Test
+    void getUnionContent5() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "short");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tshort age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent6() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "long long");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tlong long age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent7() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "float");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tfloat age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent8() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "double");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tdouble age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent9() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "uint8");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tuint8 age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent10() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "uint16");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tuint16 age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent11() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "uint32");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tuint32 age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent12() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "uint64");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tuint64 age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent13() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "int8");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tint8 age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent14() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "int16");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tint16 age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent15() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "int32");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tint32 age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent16() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "int64");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tint64 age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent17() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "size_t");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tsize_t age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent18() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "string");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tstd::string age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent19() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "std::string");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tstd::string age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent20() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "std::array<int>");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tstd::array<int> age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent21() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "std::stack<int>");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tstd::stack<int> age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent22() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "std::vector<int>");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tstd::vector<int> age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
+    @Test
+    void getUnionContent23() {
+        UnionObj uo = new UnionObj();
+        uo.setName("TestUnion");
+
+        uo.addMember("name", "string");
+        uo.addMember("age", "std::queue<int>");
+
+        List<UnionObj> uol = new CopyOnWriteArrayList<>();
+        uol.add(uo);
+        ParseObj po = new ParseObj();
+        po.setUnionList(uol);
+        GeneratorBase gb = GenerateFactory.getGenerator("AKICPP");
+        gb.genUnionList(po.getUnionList());
+
+        if (gb instanceof GenAkiCppFile gdf) {
+            String unionContent = gdf.getUnionContent();
+            System.out.println("genUnion: " + unionContent);
+            String expect = "\nunion TestUnion{\n" +
+                    "\tstd::string name;\n" +
+                    "\tstd::queue<int> age;\n" +
+                    "};\n";
+            assertEquals(expect, unionContent);
+        }
+    }
+
 }
