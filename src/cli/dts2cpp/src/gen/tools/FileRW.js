@@ -17,7 +17,7 @@ const fs = require('fs');
 function utf8ArrayToStr(array) {
     let out;
     let i;
-    let len
+    let len;
     let c;
     let char2;
     let char3;
