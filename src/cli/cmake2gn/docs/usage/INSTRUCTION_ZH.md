@@ -1,17 +1,7 @@
-# GN脚本转换工具可执行程序使用说明
+# GN脚本转换工具可执行程序使用说明（不可用）
 ## 简介
 
-gn脚本生成工具目前支持两种入口，分别是可执行程序、VS Code插件，推荐使用VSCode插件。可执行文件、VS Code插件下载路径如下：
-
-[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/1OjtRhtGf/gn-gen-0.0.1)
-
-下载文件说明如下：
-
-	│   │   |── res                           # 工具所需make文件
-	│   │   |── gn-0.0.1.vsix                 # VS Code插件
-	│   │   |── gn-gen-linux                  # Linux可执行程序 
-	│   │   |── gn-gen-win.exe                # Windows可执行程序    
-	│   │   └── gn-gen-macos                  # Mac可执行程序                
+gn脚本生成工具目前支持一种入口，即VS Code插件，推荐使用VSCode插件。  
 
 ## 工具介绍
 

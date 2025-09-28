@@ -1,4 +1,4 @@
-# GN脚本转换工具开发说明
+# GN脚本转换工具开发说明（不可用）
 
 若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的可执行文件和插件。
 
@@ -14,9 +14,7 @@
 
 ##### Linux
 
-1.下载res文件夹，并放置到napi_generator/src/cli/cmake2gn/src目录下，下载链接如下：
-
-[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/1OjtRhtGf/gn-gen-0.0.1)
+1.下载res文件夹，并放置到napi_generator/src/cli/cmake2gn/src目录下
 
 2.安装typescript：在napi_generator/src/cli/cmake2gn/src/src目录下执行命令：
 
@@ -55,9 +53,7 @@
 
 ##### Windows
 
-1.下载res文件夹，并放置到napi_generator/src/cli/cmake2gn/src目录下，下载链接如下：
-
-[下载链接](http://ftpkaihongdigi.i234.me:5000/fsdownload/1OjtRhtGf/gn-gen-0.0.1)
+1.下载res文件夹，并放置到napi_generator/src/cli/cmake2gn/src目录下
 
 2.安装typescript：使用管理员身份在napi_generator/src/cli/cmake2gn/src/src目录下执行命令：
 
