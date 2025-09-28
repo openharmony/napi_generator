@@ -24,9 +24,9 @@ Openharmony@Ubuntu-64:~/OpenHarmony/third_party/mbedtls-development$ ls
 3rdparty  BUGS.md  ChangeLog  cmake  configs  DartConfiguration.tcl  docs  include  LICENSE  programs  scripts  SUPPORT.md  visualc  BRANCHES.md  ChangeLog.d  CMakeLists.txt  CONTRIBUTING.md  dco.txt  doxygen  library  Makefile  README.md  SECURITY.md  tests
 ```
 
-2.下载res文件夹，并放置到napi_generator/src/cli/cmake2gn/src目录下，下载链接如下：
+2.下载res文件夹，并放置到napi_generator/src/cli/cmake2gn/src目录下，
 
-// todo
+选择 [generator-tools-resource](https://gitee.com/openharmony/napi_generator/releases/tag/napigen_resource) 下载，解压后在napi_resouce/resources/cmake2gn/develops/ 下获取res文件夹
 
 3.安装typescript：在napi_generator/src/cli/cmake2gn/src/src目录下执行命令：
 
@@ -70,4 +70,6 @@ node main.js -o out/rk3568 -p /home/OpenHarmony -f third_party/mbedtls-developme
 
 [将三方库集成到OpenHarmony的方法](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/cmake2gn/docs/usage/ENSEMBLE_METHOD_ZH.md)
 
+## VS Code插件使用方法
 
+[VS Code插件使用方法](https://gitcode.com/openharmony/napi_generator/tree/master/src/cli/cmake2gn/docs/usage/VSCODE_INSTRUCTION_ZH.md)

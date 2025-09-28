@@ -1,4 +1,4 @@
-# Ts接口生成工具
+# Ts接口生成工具（不可用）
 
 ## 简介
 本文主要介绍ts(type-script)接口生成工具，它可以根据定义在c++头文件中的接口，生成type-script语言的ts接口文件。若某个服务实现方式为c++，且供应用层访问的接口已在.h文件中定义，此时，NAPI接口开发者使用此工具可一键生成对应的ts文件，进而将生成的ts文件作为NAPI框架生成代码工具的输入，生成NAPI框架代码。串行使用ts接口生成工具、NAPI框架代码生成工具，形成工具链，达到降低NAPI接口开发难度，提高开发效率。目前工具支持可执行文件、IntelliJ插件两种入口。
@@ -37,9 +37,7 @@
 
 ### 工具使用
 
-工具有两种类型，分别是可执行文件、IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。可执行文件、IntelliJ插下载路径如下，选择napi_generator_outputs.zip中generator.jar下载：
-
-[下载链接](http://ftp.kaihongdigi.com:5000/fsdownload/mKjfCmPjk/generator_outputs_NAPI_0930)
+工具有两种类型，分别是可执行文件、IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。
 
 具体的工具使用步骤，可以左键单击以下链接了解：
 

@@ -1,4 +1,4 @@
-# SERVICE框架生成工具开发说明
+# SERVICE框架生成工具开发说明（不可用）
 
 若当前工具功能不满足开发者需求，开发者需增强工具能力，则可基于已有源码进行工具二次开发，编译打包生成自定义的可执行文件和插件。
 
@@ -55,12 +55,6 @@
 ```
 sudo pip install CppHeaderParser
 ```
-
-[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
-
-[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
-
-[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
 
 6.2 安装pyinstaller
 
@@ -124,12 +118,6 @@ pyinstaller -F header_parser.py
 ```
 pip install CppHeaderParser
 ```
-
-[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
-
-[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
-
-[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
 
 6.2 安装pyinstaller
 

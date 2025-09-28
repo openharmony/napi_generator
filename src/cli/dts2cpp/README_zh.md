@@ -1,4 +1,4 @@
-# NAPI框架生成工具
+# NAPI框架生成工具（不可用）
 
 ## 简介
 本文主要介绍NAPI框架代码生成工具，它可以根据用户指定路径下的ts(typescript)接口文件一键生成NAPI框架代码、业务代码框架、GN文件等。在开发JS应用与NAPI间接口时，底层框架开发者无需关注Nodejs语法、C++与JS之间的数据类型转换等上层应用转换逻辑，只关注底层业务逻辑即可，专业的人做专业的事，从而可以大大提高开发效率。目前工具支持可执行文件、VS Code插件、DevEco Studio上使用的IntelliJ插件三种入口。
@@ -41,17 +41,7 @@
 
 ### 工具使用
 
-工具有三种类型，分别是可执行文件、VS Code插件、DevEco Studio上使用的IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。可执行文件下载路径如下(由于网络原因，可能会导致有的下载链接失效，因此提供了以下三个下载链接):
-
-[可执行文件下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/yaRiKSjBI)
-
-[可执行文件下载链接2](http://ftp.kaihong.com:5000/fsdownload/yaRiKSjBI/)
-
-[可执行文件下载链接3](http://ftp.kaihongdigi.com:5000/fsdownload/yaRiKSjBI/)
-
-访问密码：kaihong
-
-压缩包解压密码：kaihong20231121
+工具有三种类型，分别是可执行文件、VS Code插件、DevEco Studio上使用的IntelliJ插件。其中的可执行文件可根据工具使用者的开发环境选择，支持Windows，Linux和Mac。
 
 DevEco Studio上使用的IntelliJ插件下载路径如下:
 
