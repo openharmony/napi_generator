@@ -92,7 +92,7 @@ namespace OHOS {
 
 开发者可以根据如下的步骤来完成对工具的开发：
 
- [工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2sa/docs/guide/DEVELOP_ZH.md)
+ [工具开发说明](https://gitee.com/openharmony/napi_generator/tree/master/src/cli/h2sa/docs/guide/h2sa_Develop_Guide.md)
 
 ## 版本说明
 
