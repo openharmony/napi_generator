@@ -1,13 +1,7 @@
-# Ts接口生成工具使用说明
+# Ts接口生成工具使用说明（不可用）
 ## 简介
 
 Ts接口生成工具支持两种入口，分别是可执行程序、IntelliJ插件，使用者可以根据自己的需要选择合适的工具。可执行文件、IntelliJ插件下载路径如下。
-
-[下载链接1](http://ftpkaihongdigi.i234.me:5000/sharing/kBG1c7CvT)
-
-[下载链接2](http://ftp.kaihong.com:5000/sharing/kBG1c7CvT)
-
-[下载链接3](http://ftp.kaihongdigi.com:5000/sharing/kBG1c7CvT)
 
 下载文件说明如下：
 
