@@ -1,16 +1,4 @@
-#include "ErrorCodes.h"
-#include "FormatDetector.h"
-#include "UnifiedDecompressor.h"
-#include "common.h"
-#include "hilog/log.h"
-#include "napi/native_api.h"
-#include <atomic>
-#include <cerrno>
-#include <cstring>
-#include <fstream>
-#include <map>
-#include <memory>
-#include <mutex>
+#include "napi_decompress_async.h"
 
 #undef LOG_DOMAIN
 #undef LOG_TAG
@@ -79,11 +67,10 @@ struct ProgressData {
         }
     }
 };
-
 // ===== 异步执行相关辅助函数 =====
-
 // 检查任务是否被取消
-static bool CheckTaskCancellation(AsyncDecompressData *asyncData) {
+static bool CheckTaskCancellation(AsyncDecompressData *asyncData)
+{
     if (asyncData->cancelFlag && asyncData->cancelFlag->load()) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "任务已取消 (ID: %llu)",
                      (unsigned long long)asyncData->taskId);
@@ -94,9 +81,9 @@ static bool CheckTaskCancellation(AsyncDecompressData *asyncData) {
     }
     return false;
 }
-
 // 验证输入文件可读性
-static bool ValidateInputFile(AsyncDecompressData *asyncData) {
+static bool ValidateInputFile(AsyncDecompressData *asyncData)
+{
     std::ifstream testFile(asyncData->inputPath, std::ios::binary);
     if (!testFile.good()) {
         int err = errno;
@@ -109,43 +96,45 @@ static bool ValidateInputFile(AsyncDecompressData *asyncData) {
     testFile.close();
     return true;
 }
-
 // 创建进度回调函数
-static DecompressProgressCallback CreateProgressCallback(AsyncDecompressData *asyncData) {
-    if (asyncData->tsfn == nullptr)
+static DecompressProgressCallback CreateProgressCallback(AsyncDecompressData *asyncData)
+{
+    if (asyncData->tsfn == nullptr) {
         return nullptr;
-
+    }
     return [asyncData](uint64_t processed, uint64_t total, const std::string &currentFile) -> bool {
         if (asyncData->cancelFlag && asyncData->cancelFlag->load()) {
             asyncData->wasCancelled = true;
             return false;
         }
-
-        int percentage = total > SIZE_ZERO ? (int)((processed * PERCENT_100) / total) : INIT_ZERO;
+        int percentage = INIT_ZERO;
+        if (total != SIZE_ZERO) {
+           percentage = total > SIZE_ZERO ? (int)((processed * PERCENT_100) / total) : INIT_ZERO;
+        }
         if (percentage % PERCENT_10 == INIT_ZERO || percentage == INIT_ZERO || percentage == PERCENT_100) {
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "进度: %d%%", percentage);
         }
-
         napi_call_threadsafe_function(asyncData->tsfn,
                                       new ProgressData(processed, total, currentFile, asyncData->formatName),
                                       napi_tsfn_nonblocking);
         return true;
     };
 }
-
 // 异步执行函数（在工作线程执行）
-static void ExecuteDecompress(napi_env env, void *data) {
+static void ExecuteDecompress(napi_env env, void *data)
+{
     AsyncDecompressData *asyncData = static_cast<AsyncDecompressData *>(data);
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "开始解压: %s", asyncData->inputPath.c_str());
-
-    if (CheckTaskCancellation(asyncData))
+    if (CheckTaskCancellation(asyncData)) {
         return;
-    if (!ValidateInputFile(asyncData))
+    }
+    if (!ValidateInputFile(asyncData)) {
         return;
-
+    }
     DecompressProgressCallback progressCallback = CreateProgressCallback(asyncData);
+    DecompressErrorOutput errorOutput(&asyncData->error, &asyncData->archiveError);
     asyncData->success = UnifiedDecompressor::Decompress(asyncData->inputPath.c_str(), asyncData->outputPath.c_str(),
-                                                         progressCallback, &asyncData->error, &asyncData->archiveError);
+                                                         progressCallback, &errorOutput);
 
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "解压完成: success=%d", asyncData->success);
     if (asyncData->tsfn != nullptr) {
@@ -153,11 +142,10 @@ static void ExecuteDecompress(napi_env env, void *data) {
         asyncData->tsfn = nullptr;
     }
 }
-
 // ===== 完成回调相关辅助函数 =====
-
 // 生成结果消息
-static void GenerateResultMessage(AsyncDecompressData *asyncData, std::string &message, int &errorCode) {
+static void GenerateResultMessage(AsyncDecompressData *asyncData, std::string &message, int &errorCode)
+{
     if (asyncData->success) {
         message = "✅ 解压成功 (" + asyncData->formatName + " 格式)";
         errorCode = ERROR_CODE_SUCCESS;
@@ -169,33 +157,30 @@ static void GenerateResultMessage(AsyncDecompressData *asyncData, std::string &m
         errorCode = static_cast<int>(ArchiveErrorCode::DECOMPRESS_FAILED);
     }
 }
-
 // 创建基本结果对象
-static void CreateResultObject(napi_env env, AsyncDecompressData *asyncData, napi_value result) {
+static void CreateResultObject(napi_env env, AsyncDecompressData *asyncData, napi_value result)
+{
     std::string message;
     int errorCode = ERROR_CODE_SUCCESS;
     GenerateResultMessage(asyncData, message, errorCode);
-
     napi_value successVal, messageVal, formatVal, errorCodeVal;
     napi_get_boolean(env, asyncData->success, &successVal);
     napi_create_string_utf8(env, message.c_str(), NAPI_AUTO_LENGTH, &messageVal);
     napi_create_string_utf8(env, asyncData->formatName.c_str(), NAPI_AUTO_LENGTH, &formatVal);
     napi_create_int32(env, errorCode, &errorCodeVal);
-
     napi_set_named_property(env, result, "success", successVal);
     napi_set_named_property(env, result, "message", messageVal);
     napi_set_named_property(env, result, "format", formatVal);
     napi_set_named_property(env, result, "errorCode", errorCodeVal);
 }
-
 // 添加取消状态和文件列表
-static void AddExtraResultInfo(napi_env env, AsyncDecompressData *asyncData, napi_value result) {
+static void AddExtraResultInfo(napi_env env, AsyncDecompressData *asyncData, napi_value result)
+{
     if (asyncData->wasCancelled) {
         napi_value cancelledVal;
         napi_get_boolean(env, true, &cancelledVal);
         napi_set_named_property(env, result, "cancelled", cancelledVal);
     }
-
     napi_value filesArray;
     napi_create_array_with_length(env, asyncData->extractedFiles.size(), &filesArray);
     for (size_t i = STRING_POS_FIRST; i < asyncData->extractedFiles.size(); ++i) {
@@ -205,9 +190,9 @@ static void AddExtraResultInfo(napi_env env, AsyncDecompressData *asyncData, nap
     }
     napi_set_named_property(env, result, "files", filesArray);
 }
-
 // 清理异步任务
-static void CleanupAsyncTask(napi_env env, AsyncDecompressData *asyncData) {
+static void CleanupAsyncTask(napi_env env, AsyncDecompressData *asyncData)
+{
     {
         std::lock_guard<std::mutex> lock(g_decompressTasksMutex);
         g_decompressCancelFlags.erase(asyncData->taskId);
@@ -217,99 +202,89 @@ static void CleanupAsyncTask(napi_env env, AsyncDecompressData *asyncData) {
     }
     delete asyncData;
 }
-
 // 完成回调（在 JS 线程执行）
-static void CompleteDecompress(napi_env env, napi_status status, void *data) {
+static void CompleteDecompress(napi_env env, napi_status status, void *data)
+{
     AsyncDecompressData *asyncData = static_cast<AsyncDecompressData *>(data);
-
     napi_value result;
     napi_create_object(env, &result);
     CreateResultObject(env, asyncData, result);
     AddExtraResultInfo(env, asyncData, result);
-
     if (asyncData->success) {
         napi_resolve_deferred(env, asyncData->deferred, result);
     } else {
         napi_reject_deferred(env, asyncData->deferred, result);
     }
-
     CleanupAsyncTask(env, asyncData);
 }
-
 // ===== DecompressFileAsync相关辅助函数 =====
-
 // 创建进度对象
-static void CreateProgressObject(napi_env env, ProgressData *progData, napi_value progress_obj) {
+static void CreateProgressObject(napi_env env, ProgressData *progData, napi_value progress_obj)
+{
     uint64_t actualProcessed = progData->processed;
     uint64_t actualTotal = progData->total == SIZE_ZERO ? PERCENT_100 : progData->total;
-    if (actualProcessed > actualTotal)
+    if (actualProcessed > actualTotal) {
         actualProcessed = actualTotal;
-
+    }
     int percentage = INIT_ZERO;
     if (actualTotal > SIZE_ZERO) {
         if (actualProcessed >= actualTotal) {
             percentage = PERCENT_100;
         } else {
             percentage = (int)((double)actualProcessed / (double)actualTotal * PERCENT_100);
-            if (percentage == INIT_ZERO && actualProcessed > SIZE_ZERO)
+            if (percentage == INIT_ZERO && actualProcessed > SIZE_ZERO) {
                 percentage = INDEX_OFFSET_NEXT;
-            if (percentage > PERCENT_100)
+            }
+            if (percentage > PERCENT_100) {
                 percentage = PERCENT_100;
+            }
         }
     }
-
     napi_value processed_val, total_val, percentage_val, currentFile_val;
     napi_create_int64(env, actualProcessed, &processed_val);
     napi_create_int64(env, actualTotal, &total_val);
     napi_create_int32(env, percentage, &percentage_val);
-
     std::string fileInfo =
         progData->currentFile.empty() ? ("解压 " + progData->formatName + " 中...") : progData->currentFile;
     napi_create_string_utf8(env, fileInfo.c_str(), NAPI_AUTO_LENGTH, &currentFile_val);
-
     napi_set_named_property(env, progress_obj, "processed", processed_val);
     napi_set_named_property(env, progress_obj, "total", total_val);
     napi_set_named_property(env, progress_obj, "percentage", percentage_val);
     napi_set_named_property(env, progress_obj, "currentFile", currentFile_val);
-
     napi_value filesCompleted_val, totalFiles_val;
     napi_create_int32(env, progData->filesCompleted, &filesCompleted_val);
     napi_create_int32(env, progData->totalFiles, &totalFiles_val);
     napi_set_named_property(env, progress_obj, "filesCompleted", filesCompleted_val);
     napi_set_named_property(env, progress_obj, "totalFiles", totalFiles_val);
 }
-
 // 进度回调处理
-static void HandleProgressCallback(napi_env env, napi_value js_callback, void *context, void *data) {
+static void HandleProgressCallback(napi_env env, napi_value js_callback, void *context, void *data)
+{
     ProgressData *progData = static_cast<ProgressData *>(data);
-
     if (env == nullptr || js_callback == nullptr) {
         delete progData;
         return;
     }
-
     napi_value progress_obj;
     napi_create_object(env, &progress_obj);
     CreateProgressObject(env, progData, progress_obj);
-
     napi_value undefined;
     napi_get_undefined(env, &undefined);
     napi_call_function(env, undefined, js_callback, NAPI_CALLBACK_ARGS_ONE, &progress_obj, nullptr);
     delete progData;
 }
-
 // 初始化异步任务
-static void InitializeAsyncTask(AsyncDecompressData *asyncData) {
+static void InitializeAsyncTask(AsyncDecompressData *asyncData)
+{
     std::lock_guard<std::mutex> lock(g_decompressTasksMutex);
     asyncData->taskId = g_nextDecompressTaskId++;
     asyncData->cancelFlag = std::make_shared<std::atomic<bool>>(false);
     g_decompressCancelFlags[asyncData->taskId] = asyncData->cancelFlag;
 }
-
 // ===== 导出的NAPI函数 =====
-
 // 异步解压函数
-napi_value DecompressFileAsync(napi_env env, napi_callback_info info) {
+napi_value DecompressFileAsync(napi_env env, napi_callback_info info)
+{
     size_t argc = NAPI_ARGC_THREE;
     napi_value args[NAPI_ARGC_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
@@ -339,8 +314,7 @@ napi_value DecompressFileAsync(napi_env env, napi_callback_info info) {
             napi_value resource_name;
             napi_create_string_utf8(env, "DecompressProgress", NAPI_AUTO_LENGTH, &resource_name);
             napi_create_threadsafe_function(env, args[INDEX_OFFSET_TWO], nullptr, resource_name, INIT_ZERO,
-                                            INDEX_OFFSET_NEXT, nullptr, nullptr, nullptr, HandleProgressCallback,
-                                            &asyncData->tsfn);
+                INDEX_OFFSET_NEXT, nullptr, nullptr, nullptr, HandleProgressCallback, &asyncData->tsfn);
         }
     }
     napi_value promise;
@@ -359,21 +333,18 @@ napi_value DecompressFileAsync(napi_env env, napi_callback_info info) {
     napi_set_named_property(env, controller, "promise", promise);
     return controller;
 }
-
 // 取消解压任务
-napi_value CancelDecompress(napi_env env, napi_callback_info info) {
+napi_value CancelDecompress(napi_env env, napi_callback_info info)
+{
     size_t argc = NAPI_ARGC_ONE;
     napi_value args[NAPI_ARGC_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-
     if (argc < NAPI_ARGC_ONE) {
         napi_throw_error(env, nullptr, "需要1个参数: taskId");
         return nullptr;
     }
-
     int64_t taskId = TASKID_ZERO;
     napi_get_value_int64(env, args[STRING_POS_FIRST], &taskId);
-
     bool cancelled = false;
     {
         std::lock_guard<std::mutex> lock(g_decompressTasksMutex);
@@ -383,7 +354,6 @@ napi_value CancelDecompress(napi_env env, napi_callback_info info) {
             cancelled = true;
         }
     }
-
     napi_value result;
     napi_get_boolean(env, cancelled, &result);
     return result;
