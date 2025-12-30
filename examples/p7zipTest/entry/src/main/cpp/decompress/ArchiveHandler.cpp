@@ -16,30 +16,51 @@
 #define LOG_DOMAIN 0x0000
 #define LOG_TAG "ArchiveHandler"
 
+// 转换字符串为小写
+static std::string ToLowerCase(const std::string &str)
+{
+    std::string result = str;
+    for (char &c : result) {
+        if (c >= 'A' && c <= 'Z') {
+            c = c - 'A' + 'a';
+        }
+    }
+    return result;
+}
+
+// 尝试移除指定后缀（不区分大小写）
+static bool TryRemoveSuffix(const std::string &fileName, const char *suffix, std::string &result)
+{
+    size_t suffixLen = strlen(suffix);
+    if (fileName.length() <= suffixLen) {
+        return false;
+    }
+    
+    std::string lowerFileName = ToLowerCase(fileName);
+    if (lowerFileName.length() >= suffixLen &&
+        lowerFileName.substr(lowerFileName.length() - suffixLen) == suffix) {
+        result = fileName.substr(0, fileName.length() - suffixLen);
+        return true;
+    }
+    return false;
+}
+
 // 从压缩包文件名推断原始文件名（用于 gz/bz2/xz 等单文件压缩）
 static std::string InferFileNameFromArchive(const std::string &archivePath)
 {
     // 获取文件名（去掉路径）
     size_t lastSlash = archivePath.find_last_of("/\\");
     std::string fileName = (lastSlash != std::string::npos) ? archivePath.substr(lastSlash + 1) : archivePath;
+    
     // 去掉常见的压缩格式后缀
     const char *suffixes[] = {".gz", ".bz2", ".xz", ".lzma"};
     for (const char *suffix : suffixes) {
-        size_t suffixLen = strlen(suffix);
-        if (fileName.length() > suffixLen) {
-            std::string lowerFileName = fileName;
-            // 转小写比较
-            for (char &c : lowerFileName) {
-                if (c >= 'A' && c <= 'Z')
-                    c = c - 'A' + 'a';
-            }
-            if (lowerFileName.length() >= suffixLen &&
-                lowerFileName.substr(lowerFileName.length() - suffixLen) == suffix) {
-                // 返回去掉后缀的文件名
-                return fileName.substr(0, fileName.length() - suffixLen);
-            }
+        std::string result;
+        if (TryRemoveSuffix(fileName, suffix, result)) {
+            return result;
         }
     }
+    
     // 如果没有匹配的后缀，返回原文件名
     return fileName;
 }
@@ -51,7 +72,8 @@ static std::string Utf16ToUtf8(const wchar_t *wstr)
     }
     std::string result;
     result.reserve(wcslen(wstr) * UNICODE_2BYTE_MAX / UNICODE_1BYTE_MAX); // 预分配空间（中文最多3字节）
-    for (size_t i = 0; wstr[i] != 0; i++) {
+    size_t i = 0;
+    while (wstr[i] != 0) {
         uint32_t codepoint = wstr[i];
         // 处理 UTF-16 代理对 (Surrogate Pairs) - 用于 emoji 等
         if (codepoint >= UTF16_SURROGATE_HIGH_START && codepoint <= UTF16_SURROGATE_HIGH_END) {
@@ -59,9 +81,10 @@ static std::string Utf16ToUtf8(const wchar_t *wstr)
             if (wstr[i + 1] >= UTF16_SURROGATE_LOW_START && wstr[i + 1] <= UTF16_SURROGATE_LOW_END) {
                 // 低位代理
                 uint32_t high = codepoint;
-                uint32_t low = wstr[++i];
+                uint32_t low = wstr[i + 1];
                 codepoint = UTF16_SURROGATE_OFFSET + ((high - UTF16_SURROGATE_HIGH_START) << SHIFT_10_BITS) +
                             (low - UTF16_SURROGATE_LOW_START);
+                i++; // 跳过低位代理
             }
         }
         // 转换为 UTF-8
@@ -87,6 +110,7 @@ static std::string Utf16ToUtf8(const wchar_t *wstr)
                 static_cast<char>(UTF8_CONTINUATION_PREFIX | ((codepoint >> SHIFT_6_BITS) & UTF8_CONTINUATION_MASK));
             result += static_cast<char>(UTF8_CONTINUATION_PREFIX | (codepoint & UTF8_CONTINUATION_MASK));
         }
+        i++; // 移动到下一个字符
     }
     return result;
 }
@@ -134,37 +158,37 @@ static bool CreateDirRecursive(const std::string &path)
     return mkdir(path.c_str(), DIR_PERMISSION_DEFAULT) == 0 || errno == EEXIST;
 }
 // CInFileStream 实现
-CInFileStream::CInFileStream() : _fileSize(0), _refCount(1) {}
+CInFileStream::CInFileStream() : fileSize(0), refCount(1) {}
 
 CInFileStream::~CInFileStream() { Close(); }
 
 bool CInFileStream::Open(const char *fileName)
 {
-    _file.open(fileName, std::ios::binary | std::ios::ate);
-    if (!_file.good()) {
+    file.open(fileName, std::ios::binary | std::ios::ate);
+    if (!file.good()) {
         // 记录详细的错误信息
         int err = errno;
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 文件打开失败: %s, errno=%d (%s)", fileName, err,
                      strerror(err));
         return false;
     }
-    _fileSize = _file.tellg();
-    if (_fileSize < 0) {
+    fileSize = file.tellg();
+    if (fileSize < 0) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 无法获取文件大小: %s", fileName);
-        _file.close();
+        file.close();
         return false;
     }
-    _file.seekg(0);
-    _filePath = fileName;
+    file.seekg(0);
+    filePath = fileName;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✓ 文件打开成功: %s (大小: %llu bytes)", fileName,
-                 (unsigned long long)_fileSize);
+                 (unsigned long long)fileSize);
     return true;
 }
 
 void CInFileStream::Close()
 {
-    if (_file.is_open()) {
-        _file.close();
+    if (file.is_open()) {
+        file.close();
     }
 }
 
@@ -187,12 +211,12 @@ STDMETHODIMP CInFileStream::QueryInterface(REFIID iid, void **outObject)
     return E_NOINTERFACE;
 }
 
-STDMETHODIMP_(ULONG) CInFileStream::AddRef() { return ++_refCount; }
+STDMETHODIMP_(ULONG) CInFileStream::AddRef() { return ++refCount; }
 
 STDMETHODIMP_(ULONG) CInFileStream::Release()
 {
-    if (--_refCount != 0) {
-        return _refCount;
+    if (--refCount != 0) {
+        return refCount;
     }
     delete this;
     return 0;
@@ -203,13 +227,13 @@ STDMETHODIMP CInFileStream::Read(void *data, UInt32 size, UInt32 *processedSize)
     if (processedSize) {
         *processedSize = 0;
     }
-    if (!_file.is_open()) {
+    if (!file.is_open()) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Read failed: file not open");
         return E_FAIL;
     }
-    _file.read((char *)data, size);
-    UInt32 realSize = _file.gcount();
-    if (_file.bad()) {
+    file.read((char *)data, size);
+    UInt32 realSize = file.gcount();
+    if (file.bad()) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Read failed: bad() = true, errno=%d (%s)", errno,
                      strerror(errno));
         return E_FAIL;
@@ -218,13 +242,13 @@ STDMETHODIMP CInFileStream::Read(void *data, UInt32 size, UInt32 *processedSize)
         *processedSize = realSize;
     }
     OH_LOG_Print(LOG_APP, LOG_DEBUG, LOG_DOMAIN, LOG_TAG, "📖 Read: requested=%u, actual=%u, eof=%d", size, realSize,
-                 _file.eof());
+                 file.eof());
     return S_OK;
 }
 
 STDMETHODIMP CInFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPosition)
 {
-    if (!_file.is_open()) {
+    if (!file.is_open()) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Seek failed: file not open");
         return E_FAIL;
     }
@@ -244,14 +268,14 @@ STDMETHODIMP CInFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPos
             return STG_E_INVALIDFUNCTION;
     }
     // 清除错误状态（特别是 eof）
-    _file.clear();
-    _file.seekg(offset, dir);
-    if (_file.fail()) {
+    file.clear();
+    file.seekg(offset, dir);
+    if (file.fail()) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Seek failed: offset=%lld, origin=%u, errno=%d (%s)",
                      (long long)offset, seekOrigin, errno, strerror(errno));
         return E_FAIL;
     }
-    auto pos = _file.tellg();
+    auto pos = file.tellg();
     if (newPosition) {
         *newPosition = pos;
     }
@@ -262,30 +286,30 @@ STDMETHODIMP CInFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPos
 
 STDMETHODIMP CInFileStream::GetSize(UInt64 *size)
 {
-    *size = _fileSize;
+    *size = fileSize;
     return S_OK;
 }
 // COutFileStream 实现（支持 7z 随机访问）
-COutFileStream::COutFileStream() : _file(nullptr), _refCount(1) {}
+COutFileStream::COutFileStream() : file(nullptr), refCount(1) {}
 
 COutFileStream::~COutFileStream()
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🔨 析构函数: %s", _filePath.c_str());
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🔨 析构函数: %s", filePath.c_str());
     Close();
 }
 
 bool COutFileStream::Open(const char *fileName)
 {
-    _filePath = fileName;
+    filePath = fileName;
     // 创建父目录
-    size_t pos = _filePath.find_last_of('/');
+    size_t pos = filePath.find_last_of('/');
     if (pos != std::string::npos) {
-        std::string dir = _filePath.substr(0, pos);
+        std::string dir = filePath.substr(0, pos);
         CreateDirRecursive(dir);
     }
     // 打开文件：使用 FILE* 支持 fseek（7z 格式需要）
-    _file = fopen(fileName, "wb");
-    if (!_file) {
+    file = fopen(fileName, "wb");
+    if (!file) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Open failed: %s, errno=%d (%s)", fileName, errno,
                      strerror(errno));
         return false;
@@ -296,17 +320,17 @@ bool COutFileStream::Open(const char *fileName)
 
 void COutFileStream::Close()
 {
-    if (_file) {
+    if (file) {
         // 关键：确保所有数据都写入磁盘
-        fflush(_file);
+        fflush(file);
         // 关闭文件
-        if (fclose(_file) != 0) {
+        if (fclose(file) != 0) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Close failed for %s: errno=%d (%s)",
-                         _filePath.c_str(), errno, strerror(errno));
+                         filePath.c_str(), errno, strerror(errno));
         } else {
-            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✓ 文件已关闭: %s", _filePath.c_str());
+            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✓ 文件已关闭: %s", filePath.c_str());
         }
-        _file = nullptr;
+        file = nullptr;
     }
 }
 
@@ -329,34 +353,34 @@ STDMETHODIMP COutFileStream::QueryInterface(REFIID iid, void **outObject)
 
 STDMETHODIMP_(ULONG) COutFileStream::AddRef()
 {
-    ULONG newCount = ++_refCount;
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📈 AddRef: %s, refCount: %u → %u", _filePath.c_str(),
+    ULONG newCount = ++refCount;
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📈 AddRef: %s, refCount: %u → %u", filePath.c_str(),
                  (unsigned int)(newCount - 1), (unsigned int)newCount);
     return newCount;
 }
 
 STDMETHODIMP_(ULONG) COutFileStream::Release()
 {
-    ULONG newCount = --_refCount;
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📉 Release: %s, refCount: %u → %u", _filePath.c_str(),
+    ULONG newCount = --refCount;
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📉 Release: %s, refCount: %u → %u", filePath.c_str(),
                  (unsigned int)(newCount + 1), (unsigned int)newCount);
     if (newCount != 0) {
         return newCount;
     }
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🗑️  删除对象: %s", _filePath.c_str());
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🗑️  删除对象: %s", filePath.c_str());
     delete this;
     return 0;
 }
 
 STDMETHODIMP COutFileStream::Write(const void *data, UInt32 size, UInt32 *processedSize)
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📝 Write called: size=%u, file=%s", size, _filePath.c_str());
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📝 Write called: size=%u, file=%s", size, filePath.c_str());
     if (processedSize) {
         *processedSize = 0;
     }
-    if (!_file) {
+    if (!file) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Write failed: file not open for %s",
-                     _filePath.c_str());
+                     filePath.c_str());
         return E_FAIL;
     }
     if (size == 0) {
@@ -365,31 +389,31 @@ STDMETHODIMP COutFileStream::Write(const void *data, UInt32 size, UInt32 *proces
         return S_OK;
     }
     // 写入数据（使用 fwrite）
-    size_t written = fwrite(data, 1, size, _file);
+    size_t written = fwrite(data, 1, size, file);
     // 检查写入是否成功
     if (written != size) {
         int err = errno;
         // 特别处理磁盘空间不足错误
         if (err == ENOSPC) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG,
-                         "❌❌❌ 磁盘空间不足！文件: %s, 尝试写入: %u bytes, 实际写入: %zu bytes", _filePath.c_str(),
+                         "❌❌❌ 磁盘空间不足！文件: %s, 尝试写入: %u bytes, 实际写入: %zu bytes", filePath.c_str(),
                          size, written);
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "请释放磁盘空间后重试！");
         } else if (err == EDQUOT) {
-            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌❌❌ 超出磁盘配额！文件: %s", _filePath.c_str());
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌❌❌ 超出磁盘配额！文件: %s", filePath.c_str());
         } else {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG,
-                         "❌ Write failed for %s: expected=%u, actual=%zu, errno=%d (%s)", _filePath.c_str(), size,
+                         "❌ Write failed for %s: expected=%u, actual=%zu, errno=%d (%s)", filePath.c_str(), size,
                          written, err, strerror(err));
         }
         return E_FAIL;
     }
     // 立即刷新缓冲区（关键！防止数据丢失）
-    if (fflush(_file) != 0) {
+    if (fflush(file) != 0) {
         int err = errno;
         if (err == ENOSPC) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌❌❌ 磁盘空间不足（刷新时）！文件: %s",
-                         _filePath.c_str());
+                         filePath.c_str());
         }
         // fflush失败也要报告，但不一定要返回错误（数据可能已写入）
         OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "⚠️  fflush警告: errno=%d (%s)", err, strerror(err));
@@ -402,7 +426,7 @@ STDMETHODIMP COutFileStream::Write(const void *data, UInt32 size, UInt32 *proces
     totalWritten += size;
     if (totalWritten % SIZE_10MB < size) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "已写入 %lu MB 到 %s",
-                     (unsigned long)(totalWritten / BYTES_PER_MB), _filePath.c_str());
+                     (unsigned long)(totalWritten / BYTES_PER_MB), filePath.c_str());
     }
     return S_OK;
 }
@@ -410,27 +434,27 @@ STDMETHODIMP COutFileStream::Write(const void *data, UInt32 size, UInt32 *proces
 STDMETHODIMP COutFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPosition)
 {
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🔍 Seek called: offset=%lld, origin=%u, file=%s",
-                 (long long)offset, seekOrigin, _filePath.c_str());
-    if (!_file) {
+                 (long long)offset, seekOrigin, filePath.c_str());
+    if (!file) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Seek failed: file not open for %s",
-                     _filePath.c_str());
+                     filePath.c_str());
         return E_FAIL;
     }
     // 转换 seekOrigin
     int origin = (seekOrigin == STREAM_SEEK_CUR) ? SEEK_CUR : (seekOrigin == STREAM_SEEK_END) ? SEEK_END : SEEK_SET;
     // 执行 seek
-    if (fseek(_file, offset, origin) != 0) {
+    if (fseek(file, offset, origin) != 0) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG,
-                     "❌ Seek failed for %s: offset=%lld, origin=%u, errno=%d (%s)", _filePath.c_str(),
+                     "❌ Seek failed for %s: offset=%lld, origin=%u, errno=%d (%s)", filePath.c_str(),
                      (long long)offset, seekOrigin, errno, strerror(errno));
         return E_FAIL;
     }
     // 返回新位置
     if (newPosition) {
-        long pos = ftell(_file);
+        long pos = ftell(file);
         if (pos < 0) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ ftell failed for %s: errno=%d (%s)",
-                         _filePath.c_str(), errno, strerror(errno));
+                         filePath.c_str(), errno, strerror(errno));
             return E_FAIL;
         }
         *newPosition = (UInt64)pos;
@@ -443,7 +467,7 @@ STDMETHODIMP COutFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPo
 STDMETHODIMP COutFileStream::SetSize(UInt64 newSize)
 {
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📏 SetSize called: newSize=%llu, file=%s",
-                 (unsigned long long)newSize, _filePath.c_str());
+                 (unsigned long long)newSize, filePath.c_str());
     // 7z 库可能会调用此方法预分配空间，我们简单返回 S_OK
     // 在实际应用中，可以使用 ftruncate 来真正设置文件大小
     return S_OK;
@@ -451,37 +475,37 @@ STDMETHODIMP COutFileStream::SetSize(UInt64 newSize)
 
 // CArchiveExtractCallback 实现
 CArchiveExtractCallback::CArchiveExtractCallback()
-    : _refCount(1), _totalSize(0), _processedSize(0), _numFiles(0), _currentIndex(0), _outFileStreamSpec(nullptr),
-      _outFileStream(nullptr), _lastReportedProgress(0) {}
+    : refCount(1), totalSize(0), processedSize(0), numFiles(0), currentIndex(0), outFileStreamSpec(nullptr),
+      outFileStream(nullptr), lastReportedProgress(0) {}
 
 CArchiveExtractCallback::~CArchiveExtractCallback() {}
 
 // 🔧 统一的进度报告函数 - 确保进度永不回退
 void CArchiveExtractCallback::ReportProgress(uint64_t processed, const std::string &message)
 {
-    if (!_progressCallback) {
+    if (!progressCallback) {
         return;
     }
     // 🔧 关键：使用max确保进度单调递增
     uint64_t safeProcessed = processed;
-    if (_lastReportedProgress > safeProcessed) {
-        safeProcessed = _lastReportedProgress; // 不允许回退
+    if (lastReportedProgress > safeProcessed) {
+        safeProcessed = lastReportedProgress; // 不允许回退
         OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "⚠️  进度防回退：%lu→%lu, 保持%lu",
-                     (unsigned long)processed, (unsigned long)safeProcessed, (unsigned long)_lastReportedProgress);
+                     (unsigned long)processed, (unsigned long)safeProcessed, (unsigned long)lastReportedProgress);
     }
-    uint64_t displayTotal = _totalSize > 0 ? _totalSize : 100;
+    uint64_t displayTotal = totalSize > 0 ? totalSize : 100;
     if (safeProcessed > displayTotal) {
         safeProcessed = displayTotal;
     }
     // 进度节流：只在变化超过2%时回调（性能优化：减少50%回调）
-    uint64_t progressDelta = safeProcessed > _lastReportedProgress ? safeProcessed - _lastReportedProgress : 0;
+    uint64_t progressDelta = safeProcessed > lastReportedProgress ? safeProcessed - lastReportedProgress : 0;
     uint64_t twoPercent = displayTotal / (PERCENT_100 / PROGRESS_THROTTLE_PERCENT); // 2% 节流
     if (twoPercent == 0) {
         twoPercent = INDEX_OFFSET_NEXT;
     }
     if (progressDelta >= twoPercent || safeProcessed == 0 || safeProcessed >= displayTotal) {
-        _progressCallback(safeProcessed, displayTotal, message);
-        _lastReportedProgress = safeProcessed;
+        progressCallback(safeProcessed, displayTotal, message);
+        lastReportedProgress = safeProcessed;
         int percentage = displayTotal > 0 ? (int)((safeProcessed * PERCENT_100) / displayTotal) : 0;
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 进度: %d%% (%lu/%lu) - %s", percentage,
                      (unsigned long)safeProcessed, (unsigned long)displayTotal, message.c_str());
@@ -492,18 +516,18 @@ void CArchiveExtractCallback::ReportProgress(uint64_t processed, const std::stri
 uint64_t CArchiveExtractCallback::GetFileSizeFromProperty(PROPVARIANT &prop, UInt32 index)
 {
     if (prop.vt == VT_UI8) {
-        if (index < 5) {
+        if (index < ARRAY_SIZE_FIVE) {
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "  文件 %u: size=%llu (VT_UI8)", index,
                          prop.uhVal.QuadPart);
         }
         return prop.uhVal.QuadPart;
     } else if (prop.vt == VT_UI4) {
-        if (index < 5) {
+        if (index < ARRAY_SIZE_FIVE) {
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "  文件 %u: size=%u (VT_UI4)", index, prop.ulVal);
         }
         return prop.ulVal;
     } else {
-        if (index < 5) {
+        if (index < ARRAY_SIZE_FIVE) {
             OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "  文件 %u: size type=%u (未知类型)", index, prop.vt);
         }
         return 0;
@@ -512,28 +536,28 @@ uint64_t CArchiveExtractCallback::GetFileSizeFromProperty(PROPVARIANT &prop, UIn
 // 计算所有文件总大小
 void CArchiveExtractCallback::CalculateTotalSize()
 {
-    _totalSize = 0;
-    for (UInt32 i = 0; i < _numFiles; i++) {
+    totalSize = 0;
+    for (UInt32 i = 0; i < numFiles; i++) {
         PROPVARIANT prop;
         prop.vt = VT_EMPTY;
-        _archiveHandler->GetProperty(i, kpidSize, &prop);
-        _totalSize += GetFileSizeFromProperty(prop, i);
+        archiveHandler->GetProperty(i, kpidSize, &prop);
+        totalSize += GetFileSizeFromProperty(prop, i);
     }
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 总大小: %llu bytes (%llu MB)", _totalSize,
-                 _totalSize / (1024 * 1024));
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 总大小: %llu bytes (%llu MB)", totalSize,
+                 totalSize / (BYTES_PER_KB * BYTES_PER_KB));
 }
 // 触发初始进度报告
 void CArchiveExtractCallback::ReportInitialProgress()
 {
-    std::string debugInit = "DEBUG_INIT TotalSize=" + std::to_string(_totalSize) +
-                            " NumFiles=" + std::to_string(_numFiles) +
-                            " DisplayTotal=" + std::to_string(_totalSize > 0 ? _totalSize : 100);
+    std::string debugInit = "DEBUG_INIT TotalSize=" + std::to_string(totalSize) +
+                            " NumFiles=" + std::to_string(numFiles) +
+                            " DisplayTotal=" + std::to_string(totalSize > 0 ? totalSize : 100);
     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", debugInit.c_str());
-    std::string initMsg = "🚀 准备解压 " + std::to_string(_numFiles) + " 个文件...";
+    std::string initMsg = "🚀 准备解压 " + std::to_string(numFiles) + " 个文件...";
     ReportProgress(0, initMsg);
     // 小文件快速进度提示
-    if (_totalSize > 0 && _totalSize < 1024) {
-        uint64_t smallProgress = (_totalSize / 100) ? (_totalSize / 100) : 1;
+    if (totalSize > 0 && totalSize < BYTES_PER_KB) {
+        uint64_t smallProgress = (totalSize / PERCENT_100) ? (totalSize / PERCENT_100) : 1;
         ReportProgress(smallProgress, "⚡ 小文件快速解压中...");
     }
 }
@@ -541,18 +565,18 @@ void CArchiveExtractCallback::ReportInitialProgress()
 void CArchiveExtractCallback::Init(IInArchive *archiveHandler, const char *sourceArchivePath, const char *directoryPath,
                                    const char *password, ArchiveExtractCallback callback)
 {
-    _archiveHandler = archiveHandler;
-    _sourceArchivePath = sourceArchivePath ? sourceArchivePath : "";
-    _directoryPath = directoryPath;
+    archiveHandler = archiveHandler;
+    sourceArchivePath = sourceArchivePath ? sourceArchivePath : "";
+    directoryPath = directoryPath;
     if (password) {
-        _password = password;
+        password = password;
     }
-    _progressCallback = callback;
+    progressCallback = callback;
     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "CHECKPOINT_INIT: callback is %s",
                  callback ? "NOT NULL" : "NULL");
-    CreateDirRecursive(_directoryPath);
-    _archiveHandler->GetNumberOfItems(&_numFiles);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 Init: 归档包含 %u 个条目", _numFiles);
+    CreateDirRecursive(directoryPath);
+    archiveHandler->GetNumberOfItems(&numFiles);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 Init: 归档包含 %u 个条目", numFiles);
     CalculateTotalSize();
     ReportInitialProgress();
 }
@@ -574,12 +598,12 @@ STDMETHODIMP CArchiveExtractCallback::QueryInterface(REFIID iid, void **outObjec
     return E_NOINTERFACE;
 }
 
-STDMETHODIMP_(ULONG) CArchiveExtractCallback::AddRef() { return ++_refCount; }
+STDMETHODIMP_(ULONG) CArchiveExtractCallback::AddRef() { return ++refCount; }
 
 STDMETHODIMP_(ULONG) CArchiveExtractCallback::Release()
 {
-    if (--_refCount != 0) {
-        return _refCount;
+    if (--refCount != 0) {
+        return refCount;
     }
     delete this;
     return 0;
@@ -591,9 +615,9 @@ STDMETHODIMP CArchiveExtractCallback::SetCompleted(const UInt64 *completeValue)
 {
     if (completeValue) {
         uint64_t reportedProgress = *completeValue;
-        // 🔧 使用max(completeValue, _processedSize)确保进度不回退
-        uint64_t actualCompleted = reportedProgress > _processedSize ? reportedProgress : _processedSize;
-        int percentage = _totalSize > 0 ? (int)((actualCompleted * PERCENT_100) / _totalSize) : 0;
+        // 🔧 使用max(completeValue, processedSize)确保进度不回退
+        uint64_t actualCompleted = reportedProgress > processedSize ? reportedProgress : processedSize;
+        int percentage = totalSize > 0 ? (int)((actualCompleted * PERCENT_100) / totalSize) : 0;
         std::string msg = "解压中... (" + std::to_string(percentage) + "%)";
         ReportProgress(actualCompleted, msg);
     }
@@ -604,14 +628,14 @@ std::string CArchiveExtractCallback::GetAndProcessFileName(UInt32 index)
 {
     PROPVARIANT prop;
     prop.vt = VT_EMPTY;
-    _archiveHandler->GetProperty(index, kpidPath, &prop);
+    archiveHandler->GetProperty(index, kpidPath, &prop);
     std::string fileName;
     if (prop.vt == VT_BSTR && prop.bstrVal) {
         fileName = Utf16ToUtf8(prop.bstrVal);
     }
     if (fileName.empty()) {
-        if (!_sourceArchivePath.empty()) {
-            fileName = InferFileNameFromArchive(_sourceArchivePath);
+        if (!sourceArchivePath.empty()) {
+            fileName = InferFileNameFromArchive(sourceArchivePath);
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📝 从压缩包名推断文件名: %s", fileName.c_str());
         }
         if (fileName.empty()) {
@@ -625,9 +649,9 @@ bool CArchiveExtractCallback::CheckAndHandleDirectory(UInt32 index, const std::s
 {
     PROPVARIANT prop;
     prop.vt = VT_EMPTY;
-    _archiveHandler->GetProperty(index, kpidIsDir, &prop);
+    archiveHandler->GetProperty(index, kpidIsDir, &prop);
     if (prop.vt == VT_BOOL && prop.boolVal != VARIANT_FALSE) {
-        std::string fullPath = _directoryPath + "/" + fileName;
+        std::string fullPath = directoryPath + "/" + fileName;
         CreateDirRecursive(fullPath);
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📁 创建目录: %s", fileName.c_str());
         return true;
@@ -639,7 +663,7 @@ uint64_t CArchiveExtractCallback::GetFileSize(UInt32 index)
 {
     PROPVARIANT prop;
     prop.vt = VT_EMPTY;
-    HRESULT sizeResult = _archiveHandler->GetProperty(index, kpidSize, &prop);
+    HRESULT sizeResult = archiveHandler->GetProperty(index, kpidSize, &prop);
     uint64_t fileSize = 0;
     if (sizeResult == S_OK) {
         if (prop.vt == VT_UI8) {
@@ -654,29 +678,29 @@ uint64_t CArchiveExtractCallback::GetFileSize(UInt32 index)
 HRESULT CArchiveExtractCallback::CreateOutputFileStream(const std::string &fileName, uint64_t fileSize,
                                                         ISequentialOutStream **outStream)
 {
-    std::string fullPath = _directoryPath + "/" + fileName;
+    std::string fullPath = directoryPath + "/" + fileName;
     COutFileStream *outFileStreamSpec = new COutFileStream;
     if (!outFileStreamSpec->Open(fullPath.c_str())) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 无法打开输出文件: %s", fullPath.c_str());
         delete outFileStreamSpec;
         return E_FAIL;
     }
-    _outFileStreamSpec = outFileStreamSpec;
-    _outFileStream = outFileStreamSpec;
+    outFileStreamSpec = outFileStreamSpec;
+    outFileStream = outFileStreamSpec;
     *outStream = outFileStreamSpec;
     outFileStreamSpec->AddRef();
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✅ 打开文件: %s (预期大小: %lu bytes)", fileName.c_str(),
                  (unsigned long)fileSize);
     std::string fileInfo =
-        "📄 [" + std::to_string(_currentIndex + 1) + "/" + std::to_string(_numFiles) + "] " + fileName;
-    ReportProgress(_processedSize, fileInfo);
+        "📄 [" + std::to_string(currentIndex + 1) + "/" + std::to_string(numFiles) + "] " + fileName;
+    ReportProgress(processedSize, fileInfo);
     return S_OK;
 }
 
 STDMETHODIMP CArchiveExtractCallback::GetStream(UInt32 index, ISequentialOutStream **outStream, Int32 askExtractMode)
 {
     *outStream = nullptr;
-    _currentIndex = index;
+    currentIndex = index;
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📥 GetStream: index=%u, askExtractMode=%d", index,
                  askExtractMode);
     if (askExtractMode != NArchive::NExtract::NAskMode::kExtract) {
@@ -699,56 +723,56 @@ STDMETHODIMP CArchiveExtractCallback::PrepareOperation(Int32 askExtractMode)
 
 STDMETHODIMP CArchiveExtractCallback::SetOperationResult(Int32 opRes)
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🏁 SetOperationResult: opRes=%d, _outFileStream=%p", opRes,
-                 _outFileStream);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🏁 SetOperationResult: opRes=%d, outFileStream=%p", opRes,
+                 outFileStream);
     // ⚠️  关键步骤：必须先关闭文件！（参考 p7zip Client7z.cpp:458-464）
     // 不调用 Close() 会导致：
     //   1. 缓冲区数据不写入磁盘 → 文件大小为 0
     //   2. 文件保持打开状态 → 产生 .fuse_hidden 文件
-    if (_outFileStream != nullptr) {
+    if (outFileStream != nullptr) {
         // 使用原始指针调用 Close()（参考 p7zip 标准实现）
-        if (_outFileStreamSpec) {
+        if (outFileStreamSpec) {
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🔒 正在关闭文件流 (opRes=%d)...", opRes);
-            _outFileStreamSpec->Close(); // 刷新缓冲区到磁盘
+            outFileStreamSpec->Close(); // 刷新缓冲区到磁盘
         }
         // 释放引用（这可能导致对象删除）
-        ULONG refCount = _outFileStream->Release();
+        ULONG refCount = outFileStream->Release();
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📉 Release() 后引用计数: %u", (unsigned int)refCount);
-        _outFileStream = nullptr;
-        _outFileStreamSpec = nullptr;
+        outFileStream = nullptr;
+        outFileStreamSpec = nullptr;
     }
     if (opRes == NArchive::NExtract::NOperationResult::kOK) {
         // 更新已处理大小
         PROPVARIANT prop;
         prop.vt = VT_EMPTY;
-        _archiveHandler->GetProperty(_currentIndex, kpidSize, &prop);
+        archiveHandler->GetProperty(currentIndex, kpidSize, &prop);
         uint64_t currentFileSize = 0;
         if (prop.vt == VT_UI8) {
             currentFileSize = prop.uhVal.QuadPart;
-            _processedSize += currentFileSize;
+            processedSize += currentFileSize;
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✅ 文件提取成功 (index=%u, size=%lu, type=VT_UI8)",
-                         _currentIndex, (unsigned long)currentFileSize);
+                         currentIndex, (unsigned long)currentFileSize);
         } else if (prop.vt == VT_UI4) {
             // 🔧 修复：处理小文件（返回VT_UI4类型）
             currentFileSize = prop.ulVal;
-            _processedSize += currentFileSize;
+            processedSize += currentFileSize;
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✅ 文件提取成功 (index=%u, size=%lu, type=VT_UI4)",
-                         _currentIndex, (unsigned long)currentFileSize);
+                         currentIndex, (unsigned long)currentFileSize);
         } else {
             OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "⚠️  文件大小类型未知: vt=%u", prop.vt);
         }
         // 立即触发进度回调（每完成一个文件）
-        uint64_t actualProcessed = _processedSize;
+        uint64_t actualProcessed = processedSize;
         // 如果是最后一个文件，确保显示100%
-        if (_currentIndex + INDEX_OFFSET_NEXT == _numFiles && _totalSize > 0) {
-            actualProcessed = _totalSize;
+        if (currentIndex + INDEX_OFFSET_NEXT == numFiles && totalSize > 0) {
+            actualProcessed = totalSize;
         }
         // 显示完成的文件计数
-        std::string progress = "✅ 已完成 " + std::to_string(_currentIndex + INDEX_OFFSET_NEXT) + "/" +
-                               std::to_string(_numFiles) + " 个文件";
+        std::string progress = "✅ 已完成 " + std::to_string(currentIndex + INDEX_OFFSET_NEXT) + "/" +
+                               std::to_string(numFiles) + " 个文件";
         ReportProgress(actualProcessed, progress);
     } else {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 文件提取失败 (index=%u, opRes=%d)", _currentIndex,
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 文件提取失败 (index=%u, opRes=%d)", currentIndex,
                      opRes);
     }
     return S_OK;
@@ -816,7 +840,7 @@ static IInArchive *CreateAndValidateArchive(const GUID *clsid, const std::string
     HRESULT result = CreateObject(clsid, &IID_IInArchive, (void **)&archive);
     if (result != S_OK || !archive) {
         std::ostringstream detail;
-        detail << "文件: " << filePath << "\nHRESULT: 0x" << std::hex << std::setfill('0') << std::setw(HEX_WIDTH_8) << 
+        detail << "文件: " << filePath << "\nHRESULT: 0x" << std::hex << std::setfill('0') << std::setw(HEX_WIDTH_8) <<
             (unsigned int)result << "\n可能原因: 静态库未包含此格式的解码器";
         ArchiveError err(ArchiveErrorCode::DECOMPRESS_OPEN_ARCHIVE_FAILED,
                          ErrorMessages::GetMessage(ArchiveErrorCode::DECOMPRESS_OPEN_ARCHIVE_FAILED), detail.str());
@@ -946,36 +970,34 @@ static void SendFinalProgress(IInArchive *archive, ArchiveExtractCallback callba
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 最终进度回调: 100%% - %s", finalMsg.c_str());
 }
 
-bool ArchiveHandler::ExtractArchive(const std::string &archivePath, const std::string &outputDir,
-                                    const std::string &password, ArchiveExtractCallback callback, std::string *error,
-                                    ArchiveError *archiveError)
+bool ArchiveHandler::ExtractArchive(const ExtractOptions &options)
 {
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "=== ExtractArchive START ===");
-    IInArchive *archive = CreateArchiveHandler(archivePath, error, archiveError);
+    IInArchive *archive = CreateArchiveHandler(options.archivePath, options.error, options.archiveError);
     if (!archive) {
         return false;
     }
     CInFileStream *fileSpec = new CInFileStream;
-    if (!OpenArchiveStream(archive, archivePath, fileSpec, error, archiveError)) {
+    if (!OpenArchiveStream(archive, options.archivePath, fileSpec, options.error, options.archiveError)) {
         return false;
     }
     UInt32 numItems = 0;
     archive->GetNumberOfItems(&numItems);
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📦 Archive contains %u items", numItems);
     CArchiveExtractCallback *extractCallbackSpec = new CArchiveExtractCallback;
-    extractCallbackSpec->Init(archive, archivePath.c_str(), outputDir.c_str(),
-                              password.empty() ? nullptr : password.c_str(), callback);
+    extractCallbackSpec->Init(archive, options.archivePath.c_str(), options.outputDir.c_str(),
+                              options.password.empty() ? nullptr : options.password.c_str(), options.callback);
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🚀 Starting extraction...");
     HRESULT result = archive->Extract(nullptr, (UInt32)(Int32)-1, 0, extractCallbackSpec);
     if (result != S_OK) {
-        HandleExtractionError(result, archivePath, outputDir, error, archiveError);
+        HandleExtractionError(result, options.archivePath, options.outputDir, options.error, options.archiveError);
         extractCallbackSpec->Release();
         archive->Close();
         archive->Release();
         delete fileSpec;
         return false;
     }
-    SendFinalProgress(archive, callback);
+    SendFinalProgress(archive, options.callback);
     archive->Close();
     archive->Release();
     extractCallbackSpec->Release();

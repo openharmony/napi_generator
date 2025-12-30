@@ -15,12 +15,26 @@
 
 using ArchiveExtractCallback = std::function<void(uint64_t processed, uint64_t total, const std::string &fileName)>;
 
+// 解压选项结构体
+struct ExtractOptions {
+    std::string archivePath;        // 压缩包路径
+    std::string outputDir;          // 输出目录
+    std::string password;           // 密码（可选）
+    ArchiveExtractCallback callback; // 进度回调（可选）
+    std::string *error;             // 错误信息输出（可选）
+    ArchiveError *archiveError;     // 详细错误信息（可选）
+    
+    // 构造函数，提供默认值
+    ExtractOptions(const std::string &archive, const std::string &output)
+        : archivePath(archive), outputDir(output), error(nullptr), archiveError(nullptr) {}
+};
+
 // 输入流实现
 class CInFileStream : public IInStream, public IStreamGetSize {
-    std::ifstream _file;
-    std::string _filePath;
-    uint64_t _fileSize;
-    ULONG _refCount;
+    std::ifstream file;
+    std::string filePath;
+    uint64_t fileSize;
+    ULONG refCount;
 
 public:
     CInFileStream();
@@ -40,9 +54,9 @@ public:
 
 // 输出流实现（支持 7z 格式的随机访问）
 class COutFileStream : public IOutStream {
-    FILE *_file;
-    std::string _filePath;
-    ULONG _refCount;
+    FILE *file;
+    std::string filePath;
+    ULONG refCount;
 
 public:
     COutFileStream();
@@ -62,22 +76,22 @@ public:
 
 // 解压回调实现
 class CArchiveExtractCallback : public IArchiveExtractCallback {
-    IInArchive *_archiveHandler;
-    std::string _directoryPath;
-    std::string _sourceArchivePath; // 源压缩包路径，用于推断文件名
-    std::string _password;
-    ArchiveExtractCallback _progressCallback;
+    IInArchive *archiveHandler;
+    std::string directoryPath;
+    std::string sourceArchivePath; // 源压缩包路径，用于推断文件名
+    std::string password;
+    ArchiveExtractCallback progressCallback;
 
-    UInt64 _totalSize;
-    UInt64 _processedSize;
-    UInt64 _lastReportedProgress; // 上次报告的进度，用于减少回调频率
-    UInt32 _numFiles;
-    UInt32 _currentIndex;
-    ULONG _refCount;
+    UInt64 totalSize;
+    UInt64 processedSize;
+    UInt64 lastReportedProgress; // 上次报告的进度，用于减少回调频率
+    UInt32 numFiles;
+    UInt32 currentIndex;
+    ULONG refCount;
 
     // 保存两个指针（参考 p7zip Client7z.cpp:234-235）
-    COutFileStream *_outFileStreamSpec;   // 原始指针，用于调用 Close()
-    ISequentialOutStream *_outFileStream; // 接口指针，用于生命周期管理
+    COutFileStream *outFileStreamSpec;   // 原始指针，用于调用 Close()
+    ISequentialOutStream *outFileStream; // 接口指针，用于生命周期管理
 
 public:
     CArchiveExtractCallback();
@@ -114,9 +128,8 @@ private:
 // Archive 处理器
 class ArchiveHandler {
 public:
-    static bool ExtractArchive(const std::string &archivePath, const std::string &outputDir,
-                               const std::string &password, ArchiveExtractCallback callback, std::string *error,
-                               ArchiveError *archiveError = nullptr);
+    // 解压压缩包（使用 ExtractOptions 结构体）
+    static bool ExtractArchive(const ExtractOptions &options);
 
     static IInArchive *CreateArchiveHandler(const std::string &filePath, std::string *error,
                                             ArchiveError *archiveError = nullptr);
