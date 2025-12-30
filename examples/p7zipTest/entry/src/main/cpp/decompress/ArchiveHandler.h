@@ -101,7 +101,6 @@ public:
 private:
     // 🔧 统一的进度报告函数，确保进度单调递增
     void ReportProgress(uint64_t processed, const std::string &message);
-
     // 辅助方法
     uint64_t GetFileSizeFromProperty(PROPVARIANT &prop, UInt32 index);
     void CalculateTotalSize();
