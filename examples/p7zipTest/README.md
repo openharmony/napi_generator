@@ -96,7 +96,6 @@ p7zipTest/
 
 - OpenHarmony SDK: API 18 或更高
 - DevEco Studio: DevEco Studio 5.0.2 Release
-- NDK: 支持 C++17
 - 操作系统: Windows
 
 ### 构建步骤
@@ -109,19 +108,19 @@ p7zipTest/
 2. **使用 DevEco Studio 打开项目**
    
 - File → Open → napi_generator/examples/p7zipTest
-   
+  
 3. **配置 SDK**
    
 - 确保已安装 OpenHarmony SDK API 18+
-   
+  
 4. **下载三方库**
    
 - 在 [p7zip三方库]() 下载p7zip三方库，解压到本项目entry/libs目录下
-   
+  
 4. **构建项目**
    
 - Build → Build Hap(s)/APP(s)
-   
+  
 5. **运行**
    - 连接 OpenHarmony 设备
    - Run → Run 'entry'

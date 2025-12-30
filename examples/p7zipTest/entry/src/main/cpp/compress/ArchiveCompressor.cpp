@@ -538,9 +538,9 @@ static CompressFileItem CreateSingleFileItem(const std::string &inputFile)
 std::string ArchiveCompressor::GetFormatName(CompressFormat format)
 {
     switch (format) {
-        case CompressFormat::SEVENZ:
+        case CompressFormat::SevenZ:
             return "7z";
-        case CompressFormat::ZIP:
+        case CompressFormat::Zip:
             return "Zip";
         default:
             return "Unknown";
@@ -896,7 +896,7 @@ static uint64_t GetTotalSize(const std::vector<CompressFileItem> &files)
 // 创建IOutArchive对象（静态辅助函数）
 static IOutArchive *CreateOutArchive(CompressFormat format, const CompressOptions &options)
 {
-    const GUID *clsid = (format == CompressFormat::SEVENZ) ? &CLSID_CFormat7z : &CLSID_CFormatZip;
+    const GUID *clsid = (format == CompressFormat::SevenZ) ? &CLSID_CFormat7z : &CLSID_CFormatZip;
     IOutArchive *outArchive = nullptr;
     HRESULT result = CreateObject(clsid, &IID_IOutArchive, (void **)&outArchive);
     if (result != S_OK || !outArchive) {
@@ -904,7 +904,7 @@ static IOutArchive *CreateOutArchive(CompressFormat format, const CompressOption
         ArchiveErrorCode errCode = ArchiveErrorCode::COMPRESS_ENCODER_NOT_AVAILABLE;
         std::ostringstream detail;
         detail << "HRESULT: 0x" << std::hex << std::setfill('0') << std::setw(HEX_WIDTH_8) << (unsigned int)result;
-        if (format == CompressFormat::SEVENZ) {
+        if (format == CompressFormat::SevenZ) {
             detail << "\n【7z编码器不可用】" << "\n原因: lib7z.a缺少7z编码器模块" << "\n现象: 解压7z正常，但压缩7z失败" <<
                 "\n解决方案:" << "\n  1. 重新编译p7zip，包含LZMA编码器" << "\n  2. 或使用ZIP格式替代";
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "7z encoder not available in lib7z.a");
@@ -928,7 +928,7 @@ static bool SetCompressionProperties(IOutArchive *outArchive, const CompressOpti
     if (qiResult != S_OK || !setProperties) {
         return true; // 不是错误，某些格式可能不支持
     }
-    if (options.format == CompressFormat::ZIP) {
+    if (options.format == CompressFormat::Zip) {
         // ZIP 格式：设置压缩级别和 UTF-8 编码（支持中文文件名）
         const wchar_t *names[] = {L"x", L"cu"};
         // 使用 C++ 零初始化（安全且符合标准）
@@ -1044,7 +1044,7 @@ static void HandleCompressionError(HRESULT result, const std::string &outputArch
     std::ostringstream detail;
     detail << "HRESULT: 0x" << std::hex << std::setfill('0') << std::setw(HEX_WIDTH_8) << (unsigned int)result <<
             " (" << errName << ")\n输出文件: " << outputArchive;
-    if (options.format == CompressFormat::SEVENZ && result == HRESULT_E_NOTIMPL) {
+    if (options.format == CompressFormat::SevenZ && result == HRESULT_E_NOTIMPL) {
         detail << "\n\n⚠️ 提示：7z编码器不可用，请使用ZIP格式";
         OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "7z encoder not available, please use ZIP format instead");
     }

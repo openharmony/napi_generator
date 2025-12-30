@@ -274,10 +274,10 @@ static bool CheckTaskCancelled(AsyncCompressContext *context)
 static bool ParseCompressFormat(AsyncCompressContext *context, CompressFormat &format)
 {
     if (context->format == "7z") {
-        format = CompressFormat::SEVENZ;
+        format = CompressFormat::SevenZ;
         return true;
     } else if (context->format == "zip") {
-        format = CompressFormat::ZIP;
+        format = CompressFormat::Zip;
         return true;
     } else {
         context->success = false;
