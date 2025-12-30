@@ -5,7 +5,7 @@
 #include <functional>
 #include <string>
 #include <vector>
-
+#include "common.h"
 // 压缩进度回调类型
 // 返回 true 表示继续压缩，返回 false 表示取消压缩
 using CompressProgressCallback =
@@ -16,7 +16,6 @@ enum class CompressFormat {
     SEVENZ, // 7z
     ZIP     // zip
 };
-
 // 要压缩的文件信息
 struct CompressFileItem {
     std::string sourcePath;  // 源文件路径
@@ -32,7 +31,8 @@ struct CompressOptions {
     std::string *error;         // 兼容旧接口
     ArchiveError *archiveError; // 新增：详细错误信息
 
-    CompressOptions(CompressFormat fmt = CompressFormat::ZIP, int level = 5, CompressProgressCallback cb = nullptr,
+    CompressOptions(CompressFormat fmt = CompressFormat::ZIP, int level = DEFAULT_COMPRESSION_LEVEL,
+                    CompressProgressCallback cb = nullptr,
                     std::string *err = nullptr, ArchiveError *arcErr = nullptr)
         : format(fmt), compressionLevel(level), callback(cb), error(err), archiveError(arcErr) {}
 };
@@ -51,7 +51,6 @@ public:
      */
     static bool CompressFile(const std::string &inputFile, const std::string &outputArchive,
                              const CompressOptions &options);
-
     /**
      * 压缩多个文件
      * @param files 要压缩的文件列表
@@ -61,7 +60,6 @@ public:
      */
     static bool CompressFiles(const std::vector<CompressFileItem> &files, const std::string &outputArchive,
                               const CompressOptions &options);
-
     /**
      * 压缩整个目录
      * @param inputDir 输入目录路径
@@ -71,12 +69,10 @@ public:
      */
     static bool CompressDirectory(const std::string &inputDir, const std::string &outputArchive,
                                   const CompressOptions &options);
-
     /**
      * 获取格式名称
      */
     static std::string GetFormatName(CompressFormat format);
-
     /**
      * 扫描目录获取所有文件（公共方法，供混合压缩使用）
      * @param dirPath 要扫描的目录路径
@@ -87,7 +83,6 @@ public:
      */
     static bool ScanDirectory(const std::string &dirPath, const std::string &basePath,
                               std::vector<CompressFileItem> &files, std::string *error);
-
 private:
     // 使用p7zip标准接口压缩
     static bool CompressWithP7zip(const std::vector<CompressFileItem> &files, const std::string &outputArchive,
