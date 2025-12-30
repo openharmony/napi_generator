@@ -31,42 +31,65 @@ static bool ReadFileHeader(const std::string &filePath, unsigned char *header, s
     return bytesRead >= MIN_HEADER_SIZE;
 }
 
+// 魔数检查规则结构
+struct MagicCheckRule {
+    const unsigned char *magic;
+    size_t size;
+    ArchiveFormat format;
+};
+
+// 检查 ZIP 格式（包含多个魔数变体）
+static bool IsZipFormat(const unsigned char *header, size_t bytesRead)
+{
+    if (bytesRead < MAGIC_ZIP_SIZE) {
+        return false;
+    }
+    return memcmp(header, MAGIC_ZIP, MAGIC_ZIP_SIZE) == 0 || 
+           memcmp(header, MAGIC_ZIP_EMPTY, MAGIC_ZIP_SIZE) == 0 ||
+           memcmp(header, MAGIC_ZIP_SPANNED, MAGIC_ZIP_SIZE) == 0;
+}
+
+// 检查 LZMA 格式（特殊的字节检查）
+static bool IsLzmaFormat(const unsigned char *header, size_t bytesRead)
+{
+    if (bytesRead < MAGIC_LZMA_SIZE) {
+        return false;
+    }
+    return header[0] == 0x5D && header[1] == 0x00 && header[LZMA_HEADER_INDEX_2] == 0x00;
+}
+
 // 检查基本格式魔数
 static ArchiveFormat CheckBasicFormats(const unsigned char *header, size_t bytesRead)
 {
-    if (bytesRead >= MAGIC_7Z_SIZE && memcmp(header, MAGIC_7Z, MAGIC_7Z_SIZE) == 0) {
-        return ArchiveFormat::SEVENZ;
+    // ZIP 格式特殊处理（多个魔数）
+    if (IsZipFormat(header, bytesRead)) {
+        return ArchiveFormat::ZIP;
     }
-    if (bytesRead >= MAGIC_ZIP_SIZE) {
-        if (memcmp(header, MAGIC_ZIP, MAGIC_ZIP_SIZE) == 0 || memcmp(header, MAGIC_ZIP_EMPTY, MAGIC_ZIP_SIZE) == 0 ||
-            memcmp(header, MAGIC_ZIP_SPANNED, MAGIC_ZIP_SIZE) == 0) {
-            return ArchiveFormat::ZIP;
-        }
-    }
-    if (bytesRead >= MAGIC_RAR5_SIZE && memcmp(header, MAGIC_RAR5, MAGIC_RAR5_SIZE) == 0) {
-        return ArchiveFormat::RAR5;
-    }
-    if (bytesRead >= MAGIC_RAR_SIZE && memcmp(header, MAGIC_RAR, MAGIC_RAR_SIZE) == 0) {
-        return ArchiveFormat::RAR;
-    }
-    if (bytesRead >= MAGIC_GZIP_SIZE && memcmp(header, MAGIC_GZIP, MAGIC_GZIP_SIZE) == 0) {
-        return ArchiveFormat::GZIP;
-    }
-    if (bytesRead >= MAGIC_BZIP2_SIZE && memcmp(header, MAGIC_BZIP2, MAGIC_BZIP2_SIZE) == 0) {
-        return ArchiveFormat::BZIP2;
-    }
-    if (bytesRead >= MAGIC_XZ_SIZE && memcmp(header, MAGIC_XZ, MAGIC_XZ_SIZE) == 0) {
-        return ArchiveFormat::XZ;
-    }
-    if (bytesRead >= MAGIC_LZMA_SIZE && header[0] == 0x5D && header[1] == 0x00 && header[LZMA_HEADER_INDEX_2] == 0x00) {
+    
+    // LZMA 格式特殊处理（多字节检查）
+    if (IsLzmaFormat(header, bytesRead)) {
         return ArchiveFormat::LZMA;
     }
-    if (bytesRead >= MAGIC_CAB_SIZE && memcmp(header, MAGIC_CAB, MAGIC_CAB_SIZE) == 0) {
-        return ArchiveFormat::CAB;
+    
+    // 标准魔数检查规则表
+    static const MagicCheckRule rules[] = {
+        {MAGIC_7Z, MAGIC_7Z_SIZE, ArchiveFormat::SEVENZ},
+        {MAGIC_RAR5, MAGIC_RAR5_SIZE, ArchiveFormat::RAR5},
+        {MAGIC_RAR, MAGIC_RAR_SIZE, ArchiveFormat::RAR},
+        {MAGIC_GZIP, MAGIC_GZIP_SIZE, ArchiveFormat::GZIP},
+        {MAGIC_BZIP2, MAGIC_BZIP2_SIZE, ArchiveFormat::BZIP2},
+        {MAGIC_XZ, MAGIC_XZ_SIZE, ArchiveFormat::XZ},
+        {MAGIC_CAB, MAGIC_CAB_SIZE, ArchiveFormat::CAB},
+        {MAGIC_WIM, MAGIC_WIM_SIZE, ArchiveFormat::WIM}
+    };
+    
+    // 遍历规则表进行检查
+    for (const auto &rule : rules) {
+        if (bytesRead >= rule.size && memcmp(header, rule.magic, rule.size) == 0) {
+            return rule.format;
+        }
     }
-    if (bytesRead >= MAGIC_WIM_SIZE && memcmp(header, MAGIC_WIM, MAGIC_WIM_SIZE) == 0) {
-        return ArchiveFormat::WIM;
-    }
+    
     return ArchiveFormat::UNKNOWN;
 }
 // 检查TAR格式

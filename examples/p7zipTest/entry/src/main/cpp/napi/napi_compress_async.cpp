@@ -163,7 +163,7 @@ static void ProcessMultipleFiles(AsyncCompressContext *context, const CompressOp
 }
 // 处理目录并添加到文件列表（降低嵌套层次的辅助函数）
 static void ProcessDirectoryForCompression(const std::string &path, const std::string &commonBasePath,
-                                          std::vector<CompressFileItem> &allFiles, std::string *error)
+    std::vector<CompressFileItem> &allFiles, std::string *error)
 {
     std::vector<CompressFileItem> dirFiles;
     if (!ArchiveCompressor::ScanDirectory(path, path, dirFiles, error)) {
@@ -192,7 +192,7 @@ static void ProcessDirectoryForCompression(const std::string &path, const std::s
 
 // 处理单个路径项（降低嵌套层次的辅助函数）
 static void ProcessPathItem(const std::string &path, const std::string &commonBasePath,
-                           std::vector<CompressFileItem> &allFiles, std::string *error)
+    std::vector<CompressFileItem> &allFiles, std::string *error)
 {
     struct stat st;
     if (stat(path.c_str(), &st) != INIT_ZERO) {
@@ -271,13 +271,13 @@ static bool CheckTaskCancelled(AsyncCompressContext *context)
     return false;
 }
 // 解析压缩格式
-static bool ParseCompressFormat(AsyncCompressContext *context, COMPRESSFORMAT &format)
+static bool ParseCompressFormat(AsyncCompressContext *context, CompressFormat &format)
 {
     if (context->format == "7z") {
-        format = COMPRESSFORMAT::SEVENZ;
+        format = CompressFormat::SEVENZ;
         return true;
     } else if (context->format == "zip") {
-        format = COMPRESSFORMAT::ZIP;
+        format = CompressFormat::ZIP;
         return true;
     } else {
         context->success = false;
@@ -341,7 +341,7 @@ static void CompressExecute(napi_env env, void *data)
     if (CheckTaskCancelled(context)) {
         return;
     }
-    COMPRESSFORMAT format;
+    CompressFormat format;
     if (!ParseCompressFormat(context, format)) {
         return;
     }
@@ -417,7 +417,7 @@ static void AddSuccessStatistics(napi_env env, napi_value result, AsyncCompressC
 {
     napi_value origSizeVal;
     napi_value compSizeVal;
-    napi_value ratioVal; 
+    napi_value ratioVal;
     napi_value fileCountVal;
     napi_create_int64(env, context->originalSize, &origSizeVal);
     napi_create_int64(env, context->compressedSize, &compSizeVal);
@@ -470,10 +470,10 @@ static bool ParseInputPaths(napi_env env, napi_value array, AsyncCompressContext
     for (uint32_t i = INIT_ZERO; i < arrayLength; i++) {
         napi_value element;
         napi_get_element(env, array, i, &element);
-        size_t str_len;
-        napi_get_value_string_utf8(env, element, nullptr, INIT_ZERO, &str_len);
-        std::vector<char> str_buf(str_len + VECTOR_BUFFER_OFFSET);
-        napi_get_value_string_utf8(env, element, str_buf.data(), str_len + VECTOR_BUFFER_OFFSET, &str_len);
+        size_t strLen;
+        napi_get_value_string_utf8(env, element, nullptr, INIT_ZERO, &strLen);
+        std::vector<char> str_buf(strLen + VECTOR_BUFFER_OFFSET);
+        napi_get_value_string_utf8(env, element, str_buf.data(), strLen + VECTOR_BUFFER_OFFSET, &strLen);
         context->inputPaths.push_back(str_buf.data());
     }
     return true;
@@ -540,18 +540,18 @@ static bool SetupContextParams(napi_env env, napi_value *args, AsyncCompressCont
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "CompressAsync: 接收到 %zu 个输入路径",
                  context->inputPaths.size());
     // 获取输出路径
-    size_t output_len;
-    napi_get_value_string_utf8(env, args[INDEX_OFFSET_NEXT], nullptr, INIT_ZERO, &output_len);
-    std::vector<char> output_buf(output_len + VECTOR_BUFFER_OFFSET);
-    napi_get_value_string_utf8(env, args[INDEX_OFFSET_NEXT], output_buf.data(), output_len + VECTOR_BUFFER_OFFSET,
-                               &output_len);
+    size_t outputLen;
+    napi_get_value_string_utf8(env, args[INDEX_OFFSET_NEXT], nullptr, INIT_ZERO, &outputLen);
+    std::vector<char> output_buf(outputLen + VECTOR_BUFFER_OFFSET);
+    napi_get_value_string_utf8(env, args[INDEX_OFFSET_NEXT], output_buf.data(), outputLen + VECTOR_BUFFER_OFFSET,
+                               &outputLen);
     context->outputPath = output_buf.data();
     // 获取压缩格式
-    size_t format_len;
-    napi_get_value_string_utf8(env, args[INDEX_OFFSET_TWO], nullptr, INIT_ZERO, &format_len);
-    std::vector<char> format_buf(format_len + VECTOR_BUFFER_OFFSET);
-    napi_get_value_string_utf8(env, args[INDEX_OFFSET_TWO], format_buf.data(), format_len + VECTOR_BUFFER_OFFSET,
-                               &format_len);
+    size_t formatLen;
+    napi_get_value_string_utf8(env, args[INDEX_OFFSET_TWO], nullptr, INIT_ZERO, &formatLen);
+    std::vector<char> format_buf(formatLen + VECTOR_BUFFER_OFFSET);
+    napi_get_value_string_utf8(env, args[INDEX_OFFSET_TWO], format_buf.data(), formatLen + VECTOR_BUFFER_OFFSET,
+                               &formatLen);
     context->format = format_buf.data();
     return true;
 }

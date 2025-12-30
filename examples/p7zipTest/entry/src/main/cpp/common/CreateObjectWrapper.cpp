@@ -106,11 +106,11 @@ extern "C" HRESULT CreateObject(const GUID *clsid, const GUID *iid, void **outOb
     // 2. 尝试全局 CreateArchiver（弱符号）
     if (CreateArchiver != nullptr) {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "→ Using CreateArchiver");
-        static bool in_fallback = false;
-        if (!in_fallback) {
-            in_fallback = true;
+        static bool inFallback = false;
+        if (!inFallback) {
+            inFallback = true;
             HRESULT result = CreateArchiver(clsid, iid, outObject);
-            in_fallback = false;
+            inFallback = false;
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "CreateArchiver returned: 0x%08X", result);
             return result;
         }
