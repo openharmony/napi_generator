@@ -8,9 +8,9 @@
 #define LOG_TAG "P7ZIP_NAPI"
 
 EXTERN_C_START
-static napi_value Init(napi_env env, napi_value exports) {
+static napi_value Init(napi_env env, napi_value exports)
+{
     napi_property_descriptor desc[] = {
-        // 文件压缩/解压功能
         // 统一压缩接口 - 支持文件+文件夹混合
         {"compress", nullptr, CompressAsync, nullptr, nullptr, nullptr, napi_default, nullptr},
         // 取消压缩任务

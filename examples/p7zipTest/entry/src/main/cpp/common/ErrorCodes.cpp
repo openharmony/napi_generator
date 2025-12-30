@@ -13,8 +13,7 @@
 #define LOG_DOMAIN 0x0000
 #define LOG_TAG "ErrorCodes"
 // 错误消息映射表
-const std::map<ArchiveErrorCode, std::string> ErrorMessages::messages =
-{
+const std::map<ArchiveErrorCode, std::string> ErrorMessages::messages = {
     // 成功
     {ArchiveErrorCode::SUCCESS, "操作成功"},
     // 通用错误
@@ -118,13 +117,13 @@ static ArchiveErrorCode MapErrnoToCode(int err)
 // 从errno创建错误
 ArchiveError ArchiveError::FromErrno(int err, const std::string &context)
 {
-    std::string detail = context;
-    if (!detail.empty()) {
-        detail += ", ";
+    std::string errorDetail = context;
+    if (!errorDetail.empty()) {
+        errorDetail += ", ";
     }
-    detail += "errno=" + std::to_string(err) + " (" + strerror(err) + ")";
-    ArchiveErrorCode code = MapErrnoToCode(err);
-    return ArchiveError(code, ErrorMessages::GetMessage(code), detail);
+    errorDetail += "errno=" + std::to_string(err) + " (" + strerror(err) + ")";
+    ArchiveErrorCode errorCode = MapErrnoToCode(err);
+    return ArchiveError(errorCode, ErrorMessages::GetMessage(errorCode), errorDetail);
 }
 // 获取父目录路径
 static std::string GetParentDirectory(const std::string &path)
