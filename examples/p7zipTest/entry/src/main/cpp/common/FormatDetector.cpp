@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cstring>
 #include <fstream>
+#include <unordered_map>
 // 文件魔数定义
 static const unsigned char MAGIC_7Z[] = {0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C};
 static const unsigned char MAGIC_ZIP[] = {0x50, 0x4B, 0x03, 0x04};
@@ -24,7 +25,7 @@ static bool ReadFileHeader(const std::string &filePath, unsigned char *header, s
     if (!file.good()) {
         return false;
     }
-    file.read((char *)header, headerSize);
+    file.read(reinterpret_cast<char *>(header), headerSize);
     bytesRead = file.gcount();
     file.close();
     return bytesRead >= MIN_HEADER_SIZE;
@@ -88,7 +89,7 @@ static ArchiveFormat CheckIsoFormat(const std::string &filePath)
     unsigned char cdMagic[ISO_MAGIC_SIZE];
     for (size_t offset : offsets) {
         isoFile.seekg(offset);
-        isoFile.read((char *)cdMagic, ISO_MAGIC_SIZE);
+        isoFile.read(reinterpret_cast<char *>(cdMagic), ISO_MAGIC_SIZE);
         if (isoFile.gcount() == ISO_MAGIC_SIZE && memcmp(cdMagic, MAGIC_ISO, ISO_MAGIC_SIZE) == 0) {
             return ArchiveFormat::ISO;
         }
@@ -118,6 +119,36 @@ ArchiveFormat FormatDetector::DetectBySignature(const std::string &filePath)
 
 ArchiveFormat FormatDetector::DetectByExtension(const std::string &filePath)
 {
+    // 扩展名到格式的映射表（静态初始化，只创建一次）
+    static const std::unordered_map<std::string, ArchiveFormat> extensionMap = {
+        // 基本格式
+        {"7z", ArchiveFormat::SEVENZ},
+        {"zip", ArchiveFormat::ZIP},
+        {"jar", ArchiveFormat::ZIP},
+        {"apk", ArchiveFormat::ZIP},
+        {"rar", ArchiveFormat::RAR},
+        {"gz", ArchiveFormat::GZIP},
+        {"gzip", ArchiveFormat::GZIP},
+        {"bz2", ArchiveFormat::BZIP2},
+        {"bzip2", ArchiveFormat::BZIP2},
+        {"xz", ArchiveFormat::XZ},
+        {"lzma", ArchiveFormat::LZMA},
+        {"lzma86", ArchiveFormat::LZMA86},
+        {"tar", ArchiveFormat::TAR},
+        {"iso", ArchiveFormat::ISO},
+        {"img", ArchiveFormat::ISO},
+        {"cab", ArchiveFormat::CAB},
+        {"wim", ArchiveFormat::WIM},
+        {"swm", ArchiveFormat::WIM},
+        {"esd", ArchiveFormat::WIM},
+        // 复合扩展名
+        {"tgz", ArchiveFormat::GZIP},
+        {"tpz", ArchiveFormat::GZIP},
+        {"tbz", ArchiveFormat::BZIP2},
+        {"tbz2", ArchiveFormat::BZIP2},
+        {"txz", ArchiveFormat::XZ}
+    };
+
     // 获取小写扩展名
     size_t dotPos = filePath.find_last_of('.');
     if (dotPos == std::string::npos) {
@@ -125,53 +156,13 @@ ArchiveFormat FormatDetector::DetectByExtension(const std::string &filePath)
     }
     std::string ext = filePath.substr(dotPos + 1);
     std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
-    // 匹配扩展名
-    if (ext == "7z") {
-        return ArchiveFormat::SEVENZ;
+    
+    // 在映射表中查找
+    auto it = extensionMap.find(ext);
+    if (it != extensionMap.end()) {
+        return it->second;
     }
-    if (ext == "zip" || ext == "jar" || ext == "apk") {
-        return ArchiveFormat::ZIP;
-    }
-    if (ext == "rar") {
-        return ArchiveFormat::RAR;
-    }
-    if (ext == "gz" || ext == "gzip") {
-        return ArchiveFormat::GZIP;
-    }
-    if (ext == "bz2" || ext == "bzip2") {
-        return ArchiveFormat::BZIP2;
-    }
-    if (ext == "xz") {
-        return ArchiveFormat::XZ;
-    }
-    if (ext == "lzma") {
-        return ArchiveFormat::LZMA;
-    }
-    if (ext == "lzma86") {
-        return ArchiveFormat::LZMA86;
-    }
-    if (ext == "tar") {
-        return ArchiveFormat::TAR;
-    }
-    if (ext == "iso" || ext == "img") {
-        return ArchiveFormat::ISO;
-    }
-    if (ext == "cab") {
-        return ArchiveFormat::CAB;
-    }
-    if (ext == "wim" || ext == "swm" || ext == "esd") {
-        return ArchiveFormat::WIM;
-    }
-    // 检查复合扩展名 (.tar.gz, .tar.bz2, etc.)
-    if (ext == "tgz" || ext == "tpz") {
-        return ArchiveFormat::GZIP;
-    }   
-    if (ext == "tbz" || ext == "tbz2") {
-        return ArchiveFormat::BZIP2;
-    }
-    if (ext == "txz") {
-        return ArchiveFormat::XZ;
-    }
+    
     return ArchiveFormat::UNKNOWN;
 }
 

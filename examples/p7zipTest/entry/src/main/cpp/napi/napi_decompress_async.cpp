@@ -32,7 +32,8 @@ struct AsyncDecompressData {
     std::shared_ptr<std::atomic<bool>> cancelFlag;
     bool wasCancelled = false;
 
-    ~AsyncDecompressData() {
+    ~AsyncDecompressData()
+    {
         if (tsfn != nullptr) {
             napi_release_threadsafe_function(tsfn, napi_tsfn_release);
         }
@@ -47,23 +48,18 @@ struct ProgressData {
     std::string formatName;
     int filesCompleted;
     int totalFiles;
-
     ProgressData(uint64_t p, uint64_t t, const std::string &f, const std::string &fmt)
         : processed(p), total(t), currentFile(f), formatName(fmt), filesCompleted(INIT_ZERO),
           totalFiles(FILE_COUNT_SINGLE) {
         size_t bracketPos = f.find('[');
         size_t slashPos = f.find('/');
         size_t closeBracketPos = f.find(']');
-
         if (bracketPos != STRING_NOT_FOUND && slashPos != STRING_NOT_FOUND && closeBracketPos != STRING_NOT_FOUND &&
             bracketPos < slashPos && slashPos < closeBracketPos) {
-            try {
-                filesCompleted =
-                    std::stoi(f.substr(bracketPos + INDEX_OFFSET_NEXT, slashPos - bracketPos - INDEX_OFFSET_NEXT));
-                totalFiles =
-                    std::stoi(f.substr(slashPos + INDEX_OFFSET_NEXT, closeBracketPos - slashPos - INDEX_OFFSET_NEXT));
-            } catch (...) {
-            }
+            filesCompleted =
+                std::stoi(f.substr(bracketPos + INDEX_OFFSET_NEXT, slashPos - bracketPos - INDEX_OFFSET_NEXT));
+            totalFiles =
+                std::stoi(f.substr(slashPos + INDEX_OFFSET_NEXT, closeBracketPos - slashPos - INDEX_OFFSET_NEXT));
         }
     }
 };
@@ -108,8 +104,8 @@ static DecompressProgressCallback CreateProgressCallback(AsyncDecompressData *as
             return false;
         }
         int percentage = INIT_ZERO;
-        if (total != SIZE_ZERO) {
-           percentage = total > SIZE_ZERO ? (int)((processed * PERCENT_100) / total) : INIT_ZERO;
+        if (total > SIZE_ZERO) {
+            percentage = (int)((processed * PERCENT_100) / total);
         }
         if (percentage % PERCENT_10 == INIT_ZERO || percentage == INIT_ZERO || percentage == PERCENT_100) {
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "进度: %d%%", percentage);
@@ -163,7 +159,10 @@ static void CreateResultObject(napi_env env, AsyncDecompressData *asyncData, nap
     std::string message;
     int errorCode = ERROR_CODE_SUCCESS;
     GenerateResultMessage(asyncData, message, errorCode);
-    napi_value successVal, messageVal, formatVal, errorCodeVal;
+    napi_value successVal;
+    napi_value messageVal;
+    napi_value formatVal;
+    napi_value errorCodeVal;
     napi_get_boolean(env, asyncData->success, &successVal);
     napi_create_string_utf8(env, message.c_str(), NAPI_AUTO_LENGTH, &messageVal);
     napi_create_string_utf8(env, asyncData->formatName.c_str(), NAPI_AUTO_LENGTH, &formatVal);
@@ -240,7 +239,10 @@ static void CreateProgressObject(napi_env env, ProgressData *progData, napi_valu
             }
         }
     }
-    napi_value processed_val, total_val, percentage_val, currentFile_val;
+    napi_value processed_val;
+    napi_value total_val;
+    napi_value percentage_val;
+    napi_value currentFile_val;
     napi_create_int64(env, actualProcessed, &processed_val);
     napi_create_int64(env, actualTotal, &total_val);
     napi_create_int32(env, percentage, &percentage_val);
@@ -251,7 +253,8 @@ static void CreateProgressObject(napi_env env, ProgressData *progData, napi_valu
     napi_set_named_property(env, progress_obj, "total", total_val);
     napi_set_named_property(env, progress_obj, "percentage", percentage_val);
     napi_set_named_property(env, progress_obj, "currentFile", currentFile_val);
-    napi_value filesCompleted_val, totalFiles_val;
+    napi_value filesCompleted_val;
+    napi_value totalFiles_val;
     napi_create_int32(env, progData->filesCompleted, &filesCompleted_val);
     napi_create_int32(env, progData->totalFiles, &totalFiles_val);
     napi_set_named_property(env, progress_obj, "filesCompleted", filesCompleted_val);

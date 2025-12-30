@@ -161,6 +161,58 @@ static void ProcessMultipleFiles(AsyncCompressContext *context, const CompressOp
     context->success = ArchiveCompressor::CompressFiles(files, context->outputPath, options);
     context->fileCount = files.size();
 }
+// 处理目录并添加到文件列表（降低嵌套层次的辅助函数）
+static void ProcessDirectoryForCompression(const std::string &path, const std::string &commonBasePath,
+                                          std::vector<CompressFileItem> &allFiles, std::string *error)
+{
+    std::vector<CompressFileItem> dirFiles;
+    if (!ArchiveCompressor::ScanDirectory(path, path, dirFiles, error)) {
+        return;
+    }
+    
+    std::string dirRelativePath = GetRelativePath(path, commonBasePath);
+    if (dirFiles.empty()) {
+        // 空目录
+        CompressFileItem emptyDir;
+        emptyDir.sourcePath = path;
+        emptyDir.archivePath = dirRelativePath;
+        emptyDir.isDirectory = true;
+        allFiles.push_back(emptyDir);
+        return;
+    }
+    
+    // 添加目录中的文件
+    for (auto &item : dirFiles) {
+        if (!dirRelativePath.empty()) {
+            item.archivePath = dirRelativePath + "/" + item.archivePath;
+        }
+        allFiles.push_back(item);
+    }
+}
+
+// 处理单个路径项（降低嵌套层次的辅助函数）
+static void ProcessPathItem(const std::string &path, const std::string &commonBasePath,
+                           std::vector<CompressFileItem> &allFiles, std::string *error)
+{
+    struct stat st;
+    if (stat(path.c_str(), &st) != INIT_ZERO) {
+        OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "无法访问路径，跳过: %s", path.c_str());
+        return;
+    }
+    
+    if (S_ISDIR(st.st_mode)) {
+        // 处理目录：扫描并添加所有文件
+        ProcessDirectoryForCompression(path, commonBasePath, allFiles, error);
+    } else {
+        // 处理文件：直接添加
+        CompressFileItem item;
+        item.sourcePath = path;
+        item.archivePath = GetRelativePath(path, commonBasePath);
+        item.isDirectory = false;
+        allFiles.push_back(item);
+    }
+}
+
 // 处理混合项目压缩（合并内联，精简代码）
 static void ProcessMixedItems(AsyncCompressContext *context, const CompressOptions &options, std::string *error)
 {
@@ -168,44 +220,12 @@ static void ProcessMixedItems(AsyncCompressContext *context, const CompressOptio
     std::string commonBasePath = FindCommonBasePath(context->inputPaths);
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "  公共基础路径: %s",
                  commonBasePath.empty() ? "(无)" : commonBasePath.c_str());
+    
     std::vector<CompressFileItem> allFiles;
     for (const auto &path : context->inputPaths) {
-        struct stat st;
-        if (stat(path.c_str(), &st) != INIT_ZERO) {
-            OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "无法访问路径，跳过: %s", path.c_str());
-            continue;
-        }
-        if (S_ISDIR(st.st_mode)) {
-            // 处理目录：扫描并添加所有文件
-            std::vector<CompressFileItem> dirFiles;
-            if (ArchiveCompressor::ScanDirectory(path, path, dirFiles, error)) {
-                std::string dirRelativePath = GetRelativePath(path, commonBasePath);
-                if (dirFiles.empty()) {
-                    // 空目录
-                    CompressFileItem emptyDir;
-                    emptyDir.sourcePath = path;
-                    emptyDir.archivePath = dirRelativePath;
-                    emptyDir.isDirectory = true;
-                    allFiles.push_back(emptyDir);
-                } else {
-                    // 添加目录中的文件
-                    for (auto &item : dirFiles) {
-                        if (!dirRelativePath.empty()) {
-                            item.archivePath = dirRelativePath + "/" + item.archivePath;
-                        }
-                        allFiles.push_back(item);
-                    }
-                }
-            }
-        } else {
-            // 处理文件：直接添加
-            CompressFileItem item;
-            item.sourcePath = path;
-            item.archivePath = GetRelativePath(path, commonBasePath);
-            item.isDirectory = false;
-            allFiles.push_back(item);
-        }
+        ProcessPathItem(path, commonBasePath, allFiles, error);
     }
+    
     if (allFiles.empty()) {
         context->success = false;
         context->error = "没有找到任何文件可以压缩";
@@ -251,13 +271,13 @@ static bool CheckTaskCancelled(AsyncCompressContext *context)
     return false;
 }
 // 解析压缩格式
-static bool ParseCompressFormat(AsyncCompressContext *context, CompressFormat &format)
+static bool ParseCompressFormat(AsyncCompressContext *context, COMPRESSFORMAT &format)
 {
     if (context->format == "7z") {
-        format = CompressFormat::SEVENZ;
+        format = COMPRESSFORMAT::SEVENZ;
         return true;
     } else if (context->format == "zip") {
-        format = CompressFormat::ZIP;
+        format = COMPRESSFORMAT::ZIP;
         return true;
     } else {
         context->success = false;
@@ -321,7 +341,7 @@ static void CompressExecute(napi_env env, void *data)
     if (CheckTaskCancelled(context)) {
         return;
     }
-    CompressFormat format;
+    COMPRESSFORMAT format;
     if (!ParseCompressFormat(context, format)) {
         return;
     }
@@ -375,7 +395,11 @@ static void GenerateResultMessage(AsyncCompressContext *context, std::string &me
 static void CreateBasicResult(napi_env env, napi_value result, AsyncCompressContext *context,
                               const std::string &message, int errorCode)
 {
-    napi_value successVal, messageVal, formatVal, cancelledVal, errorCodeVal;
+    napi_value successVal;
+    napi_value messageVal;
+    napi_value formatVal;
+    napi_value cancelledVal;
+    napi_value errorCodeVal;
     napi_get_boolean(env, context->success, &successVal);
     napi_get_boolean(env, context->wasCancelled, &cancelledVal);
     napi_create_string_utf8(env, message.c_str(), message.length(), &messageVal);
@@ -391,7 +415,10 @@ static void CreateBasicResult(napi_env env, napi_value result, AsyncCompressCont
 // 添加成功结果的统计信息
 static void AddSuccessStatistics(napi_env env, napi_value result, AsyncCompressContext *context)
 {
-    napi_value origSizeVal, compSizeVal, ratioVal, fileCountVal;
+    napi_value origSizeVal;
+    napi_value compSizeVal;
+    napi_value ratioVal; 
+    napi_value fileCountVal;
     napi_create_int64(env, context->originalSize, &origSizeVal);
     napi_create_int64(env, context->compressedSize, &compSizeVal);
     napi_create_int32(env, context->fileCount, &fileCountVal);
@@ -467,7 +494,10 @@ static bool CreateThreadSafeFunction(napi_env env, napi_value progressCallback, 
             if (env != nullptr && js_callback != nullptr) {
                 napi_value progress_obj;
                 napi_create_object(env, &progress_obj);
-                napi_value processed_val, total_val, percentage_val, currentFile_val;
+                napi_value processed_val;
+                napi_value total_val;
+                napi_value percentage_val;
+                napi_value currentFile_val;
                 napi_create_int64(env, progressData->processed, &processed_val);
                 napi_create_int64(env, progressData->total, &total_val);
                 int percentage = progressData->total > SIZE_ZERO?
@@ -481,7 +511,8 @@ static bool CreateThreadSafeFunction(napi_env env, napi_value progressCallback, 
                 napi_set_named_property(env, progress_obj, "total", total_val);
                 napi_set_named_property(env, progress_obj, "percentage", percentage_val);
                 napi_set_named_property(env, progress_obj, "currentFile", currentFile_val);
-                napi_value undefined, callback_result;
+                napi_value undefined;
+                napi_value callback_result;
                 napi_get_undefined(env, &undefined);
                 napi_call_function(env, undefined, js_callback, NAPI_CALLBACK_ARGS_ONE, &progress_obj,
                                    &callback_result);

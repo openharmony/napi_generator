@@ -88,7 +88,8 @@ public:
     // 获取错误码数值
     int GetErrorCode() const { return static_cast<int>(code); }
     // 获取完整错误消息
-    std::string GetFullMessage() const {
+    std::string GetFullMessage() const
+    {
         std::string fullMsg = message;
         if (!detail.empty()) {
             fullMsg += "\n详细信息: " + detail;

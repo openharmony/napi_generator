@@ -68,8 +68,8 @@ static bool WriteCompressedFile(const std::string &outputFile, uint64_t origSize
         }
         return false;
     }
-    outFile.write((char *)&origSize, sizeof(origSize));
-    outFile.write((char *)data.data(), dataLen + LZMA_PROPS_SIZE);
+    outFile.write(reinterpret_cast<const char *>(&origSize), sizeof(origSize));
+    outFile.write(reinterpret_cast<const char *>(data.data()), dataLen + LZMA_PROPS_SIZE);
     outFile.close();
     return true;
 }
@@ -115,10 +115,10 @@ static bool ReadCompressedFile(const std::string &inputFile, uint64_t &origSize,
         }
         return false;
     }
-    inFile.read((char *)&origSize, sizeof(origSize));
+    inFile.read(reinterpret_cast<char *>(&origSize), sizeof(origSize));
     size_t compressedSize = fileSize - sizeof(uint64_t);
     compressedData.resize(compressedSize);
-    inFile.read((char *)compressedData.data(), compressedSize);
+    inFile.read(reinterpret_cast<char *>(compressedData.data()), compressedSize);
     inFile.close();
     return true;
 }

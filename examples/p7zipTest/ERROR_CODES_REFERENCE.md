@@ -146,7 +146,7 @@
 
 1. **只读文件**
    ```bash
-   chmod +w file.txt  # Linux/HarmonyOS
+   chmod +w file.txt
    ```
 
 2. **无读取权限**
@@ -191,7 +191,7 @@ if (result.errorCode === 4007) {
 建议：
 1. 重新下载文件
 2. 检查原始文件
-3. 使用其他解压工具验证
+3. 使用其它解压工具验证
 ```
 
 ## JavaScript 层错误码映射
