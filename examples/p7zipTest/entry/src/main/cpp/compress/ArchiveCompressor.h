@@ -12,7 +12,7 @@ using CompressProgressCallback =
     std::function<bool(uint64_t processed, uint64_t total, const std::string &currentFile)>;
 
 // 压缩格式
-enum class CompressFormat {
+enum class COMPRESSFORMAT {
     SEVENZ, // 7z
     ZIP     // zip
 };
@@ -25,13 +25,13 @@ struct CompressFileItem {
 
 // 压缩选项参数
 struct CompressOptions {
-    CompressFormat format;
+    COMPRESSFORMAT format;
     int compressionLevel;
     CompressProgressCallback callback;
     std::string *error;         // 兼容旧接口
     ArchiveError *archiveError; // 新增：详细错误信息
 
-    CompressOptions(CompressFormat fmt = CompressFormat::ZIP, int level = DEFAULT_COMPRESSION_LEVEL,
+    CompressOptions(COMPRESSFORMAT fmt = COMPRESSFORMAT::ZIP, int level = DEFAULT_COMPRESSION_LEVEL,
                     CompressProgressCallback cb = nullptr,
                     std::string *err = nullptr, ArchiveError *arcErr = nullptr)
         : format(fmt), compressionLevel(level), callback(cb), error(err), archiveError(arcErr) {}
@@ -72,7 +72,7 @@ public:
     /**
      * 获取格式名称
      */
-    static std::string GetFormatName(CompressFormat format);
+    static std::string GetFormatName(COMPRESSFORMAT format);
     /**
      * 扫描目录获取所有文件（公共方法，供混合压缩使用）
      * @param dirPath 要扫描的目录路径
@@ -83,6 +83,7 @@ public:
      */
     static bool ScanDirectory(const std::string &dirPath, const std::string &basePath,
                               std::vector<CompressFileItem> &files, std::string *error);
+
 private:
     // 使用p7zip标准接口压缩
     static bool CompressWithP7zip(const std::vector<CompressFileItem> &files, const std::string &outputArchive,
