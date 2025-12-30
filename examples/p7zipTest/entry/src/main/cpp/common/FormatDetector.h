@@ -24,13 +24,10 @@ class FormatDetector {
 public:
     // 根据文件头魔数检测格式
     static ArchiveFormat DetectBySignature(const std::string &filePath);
-
     // 根据文件扩展名检测格式
     static ArchiveFormat DetectByExtension(const std::string &filePath);
-
     // 综合检测（优先魔数，后备扩展名）
     static ArchiveFormat Detect(const std::string &filePath);
-
     // 获取格式名称
     static std::string GetFormatName(ArchiveFormat format);
 };
