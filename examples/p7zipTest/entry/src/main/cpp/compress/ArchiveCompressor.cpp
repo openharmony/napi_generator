@@ -13,10 +13,10 @@
 #include "common.h"
 #include "hilog/log.h"
 #include <algorithm>
+#include <cerrno>
 #include <codecvt>
 #include <cstring>
 #include <dirent.h>
-#include <errno.h>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
@@ -32,6 +32,73 @@
 
 // UTF-8 编码转换工具函数
 // UTF-8 字符串转换为 wstring (用于压缩时设置文件名)
+// 解析 UTF-8 字符并返回 codepoint 和消耗的字节数
+static bool ParseUtf8Codepoint(const std::string &utf8Str, size_t pos, uint32_t &codepoint, size_t &bytesConsumed)
+{
+    if (pos >= utf8Str.size()) {
+        return false;
+    }
+    
+    unsigned char c = utf8Str[pos];
+    if ((c & UTF8_1BYTE_MASK) == 0) {
+        // 单字节 ASCII (0xxxxxxx)
+        codepoint = c;
+        bytesConsumed = INDEX_OFFSET_NEXT;
+    } else if ((c & UTF8_2BYTE_MASK) == UTF8_2BYTE_PREFIX) {
+        // 双字节 (110xxxxx 10xxxxxx)
+        if (pos + INDEX_OFFSET_NEXT >= utf8Str.size()) {
+            return false;
+        }
+        codepoint = (c & UTF8_2BYTE_DATA_MASK) << SHIFT_6_BITS;
+        codepoint |= (utf8Str[pos + INDEX_OFFSET_NEXT] & UTF8_CONTINUATION_MASK);
+        bytesConsumed = INDEX_OFFSET_TWO;
+    } else if ((c & UTF8_3BYTE_MASK) == UTF8_3BYTE_PREFIX) {
+        // 三字节 (1110xxxx 10xxxxxx 10xxxxxx) - 常见中文
+        if (pos + INDEX_OFFSET_TWO >= utf8Str.size()) {
+            return false;
+        }
+        codepoint = (c & UTF8_3BYTE_DATA_MASK) << SHIFT_12_BITS;
+        codepoint |= (utf8Str[pos + INDEX_OFFSET_NEXT] & UTF8_CONTINUATION_MASK) << SHIFT_6_BITS;
+        codepoint |= (utf8Str[pos + INDEX_OFFSET_TWO] & UTF8_CONTINUATION_MASK);
+        bytesConsumed = INDEX_OFFSET_THREE;
+    } else if ((c & UTF8_4BYTE_MASK) == UTF8_4BYTE_PREFIX) {
+        // 四字节 (11110xxx 10xxxxxx 10xxxxxx 10xxxxxx)
+        if (pos + INDEX_OFFSET_THREE >= utf8Str.size()) {
+            return false;
+        }
+        codepoint = (c & UTF8_4BYTE_DATA_MASK) << SHIFT_18_BITS;
+        codepoint |= (utf8Str[pos + INDEX_OFFSET_NEXT] & UTF8_CONTINUATION_MASK) << SHIFT_12_BITS;
+        codepoint |= (utf8Str[pos + INDEX_OFFSET_TWO] & UTF8_CONTINUATION_MASK) << SHIFT_6_BITS;
+        codepoint |= (utf8Str[pos + INDEX_OFFSET_THREE] & UTF8_CONTINUATION_MASK);
+        bytesConsumed = INDEX_OFFSET_THREE + INDEX_OFFSET_NEXT;
+    } else {
+        // 无效的 UTF-8 序列
+        bytesConsumed = 1;
+        return false;
+    }
+    return true;
+}
+
+// 将 Unicode codepoint 添加到 wstring
+static void AppendCodepointToWstring(uint32_t codepoint, std::wstring &result)
+{
+    if (sizeof(wchar_t) == WCHAR_SIZE_32) {
+        // Linux: wchar_t 是 32 位
+        result += static_cast<wchar_t>(codepoint);
+    } else {
+        // Windows: wchar_t 是 16 位，需要处理代理对
+        if (codepoint <= UNICODE_BMP_MAX) {
+            result += static_cast<wchar_t>(codepoint);
+        } else {
+            // 需要代理对 (surrogate pair)
+            codepoint -= UTF16_SURROGATE_OFFSET;
+            result += static_cast<wchar_t>(UTF16_SURROGATE_HIGH_START + (codepoint >> SHIFT_10_BITS));
+            result += static_cast<wchar_t>(UTF16_SURROGATE_LOW_START + (codepoint & UTF16_SURROGATE_MASK));
+        }
+    }
+}
+
+// UTF-8 字符串转换为宽字符串
 static std::wstring Utf8ToWstring(const std::string &utf8Str)
 {
     if (utf8Str.empty()) {
@@ -42,91 +109,45 @@ static std::wstring Utf8ToWstring(const std::string &utf8Str)
     size_t i = 0;
     while (i < utf8Str.size()) {
         uint32_t codepoint = 0;
-        unsigned char c = utf8Str[i];
-        if ((c & UTF8_1BYTE_MASK) == 0) {
-            // 单字节 ASCII (0xxxxxxx)
-            codepoint = c;
-            i += INDEX_OFFSET_NEXT;
-        } else if ((c & UTF8_2BYTE_MASK) == UTF8_2BYTE_PREFIX) {
-            // 双字节 (110xxxxx 10xxxxxx)
-            if (i + INDEX_OFFSET_NEXT >= utf8Str.size()) {
-                break;
-            }
-            codepoint = (c & UTF8_2BYTE_DATA_MASK) << SHIFT_6_BITS;
-            codepoint |= (utf8Str[i + INDEX_OFFSET_NEXT] & UTF8_CONTINUATION_MASK);
-            i += INDEX_OFFSET_TWO;
-        } else if ((c & UTF8_3BYTE_MASK) == UTF8_3BYTE_PREFIX) {
-            // 三字节 (1110xxxx 10xxxxxx 10xxxxxx) - 常见中文
-            if (i + INDEX_OFFSET_TWO >= utf8Str.size()) {
-                break;
-            }
-            codepoint = (c & UTF8_3BYTE_DATA_MASK) << SHIFT_12_BITS;
-            codepoint |= (utf8Str[i + INDEX_OFFSET_NEXT] & UTF8_CONTINUATION_MASK) << SHIFT_6_BITS;
-            codepoint |= (utf8Str[i + INDEX_OFFSET_TWO] & UTF8_CONTINUATION_MASK);
-            i += INDEX_OFFSET_THREE;
-        } else if ((c & UTF8_4BYTE_MASK) == UTF8_4BYTE_PREFIX) {
-            // 四字节 (11110xxx 10xxxxxx 10xxxxxx 10xxxxxx)
-            if (i + INDEX_OFFSET_THREE >= utf8Str.size()) {
-                break;
-            }
-            codepoint = (c & UTF8_4BYTE_DATA_MASK) << SHIFT_18_BITS;
-            codepoint |= (utf8Str[i + INDEX_OFFSET_NEXT] & UTF8_CONTINUATION_MASK) << SHIFT_12_BITS;
-            codepoint |= (utf8Str[i + INDEX_OFFSET_TWO] & UTF8_CONTINUATION_MASK) << SHIFT_6_BITS;
-            codepoint |= (utf8Str[i + INDEX_OFFSET_THREE] & UTF8_CONTINUATION_MASK);
-            i += INDEX_OFFSET_THREE + INDEX_OFFSET_NEXT;
-        } else {
-            // 无效的 UTF-8 序列，跳过
-            i += 1;
-            continue;
+        size_t bytesConsumed = 0;
+        if (ParseUtf8Codepoint(utf8Str, i, codepoint, bytesConsumed)) {
+            AppendCodepointToWstring(codepoint, result);
         }
-        // 将 codepoint 转换为 wchar_t
-        if (sizeof(wchar_t) == WCHAR_SIZE_32) {
-            // Linux/HarmonyOS: wchar_t 是 32 位
-            result += static_cast<wchar_t>(codepoint);
-        } else {
-            // Windows: wchar_t 是 16 位，需要处理代理对
-            if (codepoint <= UNICODE_BMP_MAX) {
-                result += static_cast<wchar_t>(codepoint);
-            } else {
-                // 需要代理对 (surrogate pair)
-                codepoint -= UTF16_SURROGATE_OFFSET;
-                result += static_cast<wchar_t>(UTF16_SURROGATE_HIGH_START + (codepoint >> SHIFT_10_BITS));
-                result += static_cast<wchar_t>(UTF16_SURROGATE_LOW_START + (codepoint & UTF16_SURROGATE_MASK));
-            }
-        }
+        i += bytesConsumed;
     }
     return result;
 }
 
-// 使用 __fs::filesystem 命名空间 (HarmonyOS)
+// 使用 __fs::filesystem 命名空间
 namespace fs = std::__fs::filesystem;
 // 压缩更新回调实现
 class CArchiveUpdateCallback : public IArchiveUpdateCallback2 {
 private:
-    ULONG _refCount;
-    const std::vector<CompressFileItem> *_files;
-    std::string _basePath;
-    CompressProgressCallback _progressCallback;
-    uint64_t _totalSize;
-    uint64_t _processedSize;
-    uint64_t _maxProcessedSize; // 新增：记录最大进度值，防止倒退
-    uint32_t _currentIndex;
-    bool _isFinalized; // 标记是否已完成（用于最后报告100%）
+    ULONG refCount;
+    const std::vector<CompressFileItem> *files;
+    std::string basePath;
+    CompressProgressCallback progressCallback;
+    uint64_t totalSize;
+    uint64_t processedSize;
+    uint64_t maxProcessedSize; // 新增：记录最大进度值，防止倒退
+    uint32_t currentIndex;
+    bool isFinalized; // 标记是否已完成（用于最后报告100%）
     // 嵌套类实现ICompressProgressInfo
     class CCompressProgressInfoImpl : public ICompressProgressInfo {
     private:
-        CArchiveUpdateCallback *_parent;
+        CArchiveUpdateCallback *parent;
 
     public:
-        CCompressProgressInfoImpl(CArchiveUpdateCallback *parent) : _parent(parent) {}
+        explicit CCompressProgressInfoImpl(CArchiveUpdateCallback *parent) : parent(parent) {}
 
-        STDMETHOD(QueryInterface)(REFIID iid, void **outObject) { return _parent->QueryInterface(iid, outObject); }
+        STDMETHOD(QueryInterface)(REFIID iid, void **outObject) { return parent->QueryInterface(iid, outObject); }
 
-        STDMETHOD_(ULONG, AddRef)() { return _parent->AddRef(); }
+        STDMETHOD_(ULONG, AddRef)() { return parent->AddRef(); }
 
-        STDMETHOD_(ULONG, Release)() { return _parent->Release(); }
+        STDMETHOD_(ULONG, Release)() { return parent->Release(); }
 
-        STDMETHOD(SetRatioInfo)(const UInt64 *inSize, const UInt64 *outSize) {
+        STDMETHOD(SetRatioInfo)(const UInt64 *inSize, const UInt64 *outSize)
+        {
             if (inSize && outSize) {
                 OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "  SetRatioInfo: in=%llu, out=%llu",
                              (unsigned long long)*inSize, (unsigned long long)*outSize);
@@ -135,15 +156,15 @@ private:
         }
     };
 
-    CCompressProgressInfoImpl _compressProgressInfo;
+    CCompressProgressInfoImpl compressProgressInfo;
 
 public:
     CArchiveUpdateCallback(const std::vector<CompressFileItem> *files, const std::string &basePath, uint64_t totalSize,
-                           CompressProgressCallback callback):
-          _refCount(1), _files(files), _basePath(basePath), _progressCallback(callback), _totalSize(totalSize),
-          _processedSize(0), _maxProcessedSize(0), // 初始化最大进度值
-          _currentIndex(0), _isFinalized(false), // 初始化为未完成
-          _compressProgressInfo(this) {}
+                           CompressProgressCallback callback)
+          : refCount(1), files(files), basePath(basePath), progressCallback(callback), totalSize(totalSize),
+          processedSize(0), maxProcessedSize(0), // 初始化最大进度值
+          currentIndex(0), isFinalized(false), // 初始化为未完成
+          compressProgressInfo(this) {}
 
     virtual ~CArchiveUpdateCallback() {}
 
@@ -179,21 +200,21 @@ public:
         return E_NOINTERFACE;
     }
 
-    STDMETHOD_(ULONG, AddRef)() { return ++_refCount; }
+    STDMETHOD_(ULONG, AddRef)() { return ++refCount; }
 
     STDMETHOD_(ULONG, Release)()
     {
-        if (--_refCount == 0) {
+        if (--refCount == 0) {
             delete this;
             return 0;
         }
-        return _refCount;
+        return refCount;
     }
     // IProgress
     STDMETHOD(SetTotal)(UInt64 total)
     {
-        if (_totalSize == 0) {
-            _totalSize = total;
+        if (totalSize == 0) {
+            totalSize = total;
         }
         return S_OK;
     }
@@ -202,18 +223,18 @@ private:
     // 辅助函数：处理正常递增进度
     void HandleNormalProgress(uint64_t currentValue, uint64_t maxDataProgress)
     {
-        _maxProcessedSize = currentValue;
-        if (currentValue >= _totalSize * PERCENT_95 / PERCENT_100) {
-            _processedSize = maxDataProgress;
+        maxProcessedSize = currentValue;
+        if (currentValue >= totalSize * PERCENT_95 / PERCENT_100) {
+            processedSize = maxDataProgress;
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG,
                          "[Progress] Data phase capped at %d%%: raw=%llu, display=%llu / %llu", PERCENT_95,
-                         (unsigned long long)currentValue, (unsigned long long)_processedSize,
-                         (unsigned long long)_totalSize);
+                         (unsigned long long)currentValue, (unsigned long long)processedSize,
+                         (unsigned long long)totalSize);
         } else {
-            _processedSize = currentValue;
+            processedSize = currentValue;
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "[Progress] Normal: %llu / %llu (%.1f%%)",
-                         (unsigned long long)_processedSize, (unsigned long long)_totalSize,
-                         _totalSize > 0 ? (_processedSize * PERCENT_100 / _totalSize) : 0.0);
+                         (unsigned long long)processedSize, (unsigned long long)totalSize,
+                         totalSize > 0 ? (processedSize * PERCENT_100 / totalSize) : 0.0);
         }
     }
     // 辅助函数：处理finalize阶段进度
@@ -221,17 +242,17 @@ private:
     {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG,
                      "[Progress] Finalize detected: currentValue=%llu, maxProcessed=%llu",
-                     (unsigned long long)currentValue, (unsigned long long)_maxProcessedSize);
-        uint64_t finalizeRange = _totalSize - maxDataProgress;
-        if (_maxProcessedSize > 0 && finalizeRange > 0) {
-            uint64_t finalizeProgress = (finalizeRange * currentValue) / _maxProcessedSize;
-            _processedSize = maxDataProgress + std::min(finalizeProgress, finalizeRange);
+                     (unsigned long long)currentValue, (unsigned long long)maxProcessedSize);
+        uint64_t finalizeRange = totalSize - maxDataProgress;
+        if (maxProcessedSize > 0 && finalizeRange > 0) {
+            uint64_t finalizeProgress = (finalizeRange * currentValue) / maxProcessedSize;
+            processedSize = maxDataProgress + std::min(finalizeProgress, finalizeRange);
         } else {
-            _processedSize = maxDataProgress;
+            processedSize = maxDataProgress;
         }
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG,
-                     "[Progress] Finalize: %llu / %llu (%.1f%%) [mapped from %llu]", (unsigned long long)_processedSize,
-                     (unsigned long long)_totalSize, _totalSize > 0 ? (_processedSize * PERCENT_100 / _totalSize) : 0.0,
+                     "[Progress] Finalize: %llu / %llu (%.1f%%) [mapped from %llu]", (unsigned long long)processedSize,
+                     (unsigned long long)totalSize, totalSize > 0 ? (processedSize * PERCENT_100 / totalSize) : 0.0,
                      (unsigned long long)currentValue);
     }
 
@@ -242,31 +263,31 @@ public:
             return S_OK;
         }
         uint64_t currentValue = *completeValue;
-        const uint64_t MAX_DATA_PROGRESS = _totalSize * PERCENT_95 / PERCENT_100;
-        if (currentValue > _maxProcessedSize) {
+        const uint64_t MAX_DATA_PROGRESS = totalSize * PERCENT_95 / PERCENT_100;
+        if (currentValue > maxProcessedSize) {
             HandleNormalProgress(currentValue, MAX_DATA_PROGRESS);
-        } else if (currentValue < _maxProcessedSize && _maxProcessedSize >= _totalSize * PERCENT_95 / PERCENT_100) {
+        } else if (currentValue < maxProcessedSize && maxProcessedSize >= totalSize * PERCENT_95 / PERCENT_100) {
             HandleFinalizeProgress(currentValue, MAX_DATA_PROGRESS);
         } else {
-            _processedSize = _maxProcessedSize;
+            processedSize = maxProcessedSize;
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "[Progress] Hold: %llu / %llu (%.1f%%)",
-                         (unsigned long long)_processedSize, (unsigned long long)_totalSize,
-                         _totalSize > 0 ? (_processedSize * PERCENT_100 / _totalSize) : 0.0);
+                         (unsigned long long)processedSize, (unsigned long long)totalSize,
+                         totalSize > 0 ? (processedSize * PERCENT_100 / totalSize) : 0.0);
         }
-        std::string currentFile = (_currentIndex < _files->size()) ? (*_files)[_currentIndex].archivePath : "";
-        if (_progressCallback) {
-            _progressCallback(_processedSize, _totalSize, currentFile);
+        std::string currentFile = (currentIndex < files->size()) ? (*files)[currentIndex].archivePath : "";
+        if (progressCallback) {
+            progressCallback(processedSize, totalSize, currentFile);
         }
         return S_OK;
     }
     // 在压缩完成后调用，报告真正的100%
     void ReportFinalized()
     {
-        _isFinalized = true;
-        _processedSize = _totalSize;
-        std::string currentFile = (_currentIndex < _files->size()) ? (*_files)[_currentIndex].archivePath : "";
-        if (_progressCallback) {
-            _progressCallback(_totalSize, _totalSize, "完成");
+        isFinalized = true;
+        processedSize = totalSize;
+        std::string currentFile = (currentIndex < files->size()) ? (*files)[currentIndex].archivePath : "";
+        if (progressCallback) {
+            progressCallback(totalSize, totalSize, "完成");
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "[Progress] Finalized: 100%% complete");
         }
     }
@@ -372,12 +393,13 @@ public:
     STDMETHOD(GetProperty)(UInt32 index, PROPID propID, PROPVARIANT *value)
     {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "  GetProperty[%u]: propID=%d", index, propID);
-        if (index >= _files->size()) {
+        if (index >= files->size()) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "  GetProperty: index out of range!");
             return E_INVALIDARG;
         }
-        const auto &item = (*_files)[index];
-        memset(value, 0, sizeof(PROPVARIANT));
+        const auto &item = (*files)[index];
+        // 使用 C++ 零初始化（安全且符合标准）
+        *value = PROPVARIANT{};
         value->vt = VT_EMPTY;
         ProcessPropertyByType(propID, value, item);
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "  GetProperty[%u] propID=%d → vt=%d (success)", index,
@@ -388,12 +410,12 @@ public:
     STDMETHOD(GetStream)(UInt32 index, ISequentialInStream **inStream)
     {
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "  GetStream[%u]", index);
-        if (index >= _files->size()) {
+        if (index >= files->size()) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "  GetStream: index out of range!");
             return E_INVALIDARG;
         }
-        _currentIndex = index;
-        const auto &item = (*_files)[index];
+        currentIndex = index;
+        const auto &item = (*files)[index];
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "    File: %s", item.sourcePath.c_str());
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "    IsDir: %d", item.isDirectory ? 1 : 0);
         if (item.isDirectory) {
@@ -442,13 +464,83 @@ static const GUID CLSID_CFormatZip = {0x23170F69, 0x40C1, 0x278A, {0x10, 0x00, 0
 
 // IOutArchive 接口 ID (已在IArchive.h中通过ARCHIVE_INTERFACE宏定义)
 // extern const GUID IID_IOutArchive;
+
+// 辅助函数：设置错误信息
+static void SetCompressError(const CompressOptions &options, const ArchiveError &err)
+{
+    if (options.error) {
+        *options.error = err.GetFullMessage();
+    }
+    if (options.archiveError) {
+        *options.archiveError = err;
+    }
+    OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", err.GetFullMessage().c_str());
+}
+
+// 验证输入文件（存在性和访问权限）
+static bool ValidateCompressInputFile(const std::string &inputFile, const CompressOptions &options)
+{
+    if (!fs::exists(inputFile)) {
+        ArchiveError err(ArchiveErrorCode::FILE_NOT_FOUND, ErrorMessages::GetMessage(ArchiveErrorCode::FILE_NOT_FOUND),
+                         "文件路径: " + inputFile);
+        SetCompressError(options, err);
+        return false;
+    }
+    ArchiveError accessErr = ArchiveError::CheckAccess(inputFile, false);
+    if (!accessErr.IsSuccess()) {
+        SetCompressError(options, accessErr);
+        return false;
+    }
+    return true;
+}
+
+// 检查压缩所需磁盘空间
+static bool CheckCompressDiskSpace(const std::string &inputFile, const std::string &outputArchive,
+                                   const CompressOptions &options)
+{
+    try {
+        uint64_t inputSize = fs::file_size(inputFile);
+        uint64_t estimatedSize = inputSize + SIZE_1MB; // 加1MB余量
+        ArchiveError diskErr = ArchiveError::CheckDiskSpace(outputArchive, estimatedSize);
+        if (!diskErr.IsSuccess()) {
+            SetCompressError(options, diskErr);
+            return false;
+        }
+    } catch (const std::exception &e) {
+        OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "获取文件大小失败，跳过磁盘空间检查: %s", e.what());
+    }
+    return true;
+}
+
+// 验证输出路径的写权限
+static bool ValidateOutputArchivePath(const std::string &outputArchive, const CompressOptions &options)
+{
+    ArchiveError writeErr = ArchiveError::CheckAccess(outputArchive, true);
+    if (!writeErr.IsSuccess()) {
+        SetCompressError(options, writeErr);
+        return false;
+    }
+    return true;
+}
+
+// 创建单个文件项
+static CompressFileItem CreateSingleFileItem(const std::string &inputFile)
+{
+    CompressFileItem item;
+    item.sourcePath = inputFile;
+    fs::path p(inputFile);
+    item.archivePath = p.filename().string();
+    item.isDirectory = fs::is_directory(inputFile);
+    return item;
+}
+
 // ArchiveCompressor 实现
-std::string ArchiveCompressor::GetFormatName(CompressFormat format)
+std::string ArchiveCompressor::GetFormatName(COMPRESSFORMAT format)
 {
     switch (format) {
-        case CompressFormat::SEVENZ:
+        case COMPRESSFORMAT::SEVENZ:
             return "7z";
-        case CompressFormat::ZIP:
+        case COMPRESSFORMAT::ZIP:
             return "Zip";
         default:
             return "Unknown";
@@ -459,106 +551,50 @@ bool ArchiveCompressor::CompressFile(const std::string &inputFile, const std::st
                                      const CompressOptions &options)
 {
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "=== CompressFile START ===");
-    // 检查输入文件是否存在
-    if (!fs::exists(inputFile)) {
-        ArchiveError err(ArchiveErrorCode::FILE_NOT_FOUND, ErrorMessages::GetMessage(ArchiveErrorCode::FILE_NOT_FOUND),
-                         "文件路径: " + inputFile);
-        if (options.error) {
-            *options.error = err.GetFullMessage();
-        }
-        if (options.archiveError) {
-            *options.archiveError = err;
-        }
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", err.GetFullMessage().c_str());
+    // 验证输入文件
+    if (!ValidateCompressInputFile(inputFile, options)) {
         return false;
     }
-    // 检查输入文件访问权限
-    ArchiveError accessErr = ArchiveError::CheckAccess(inputFile, false);
-    if (!accessErr.IsSuccess()) {
-        if (options.error) {
-            *options.error = accessErr.GetFullMessage();
-        }
-        if (options.archiveError) {
-            *options.archiveError = accessErr;
-        }
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", accessErr.GetFullMessage().c_str());
+    // 检查磁盘空间
+    if (!CheckCompressDiskSpace(inputFile, outputArchive, options)) {
         return false;
     }
-    // 获取文件大小并检查磁盘空间
-    try {
-        uint64_t inputSize = fs::file_size(inputFile);
-        // 估算压缩后大小（最坏情况：无压缩）
-        uint64_t estimatedSize = inputSize + SIZE_1MB; // 加1MB余量
-        ArchiveError diskErr = ArchiveError::CheckDiskSpace(outputArchive, estimatedSize);
-        if (!diskErr.IsSuccess()) {
-            if (options.error) {
-                *options.error = diskErr.GetFullMessage();
-            }
-            if (options.archiveError) {
-                *options.archiveError = diskErr;
-            }
-            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", diskErr.GetFullMessage().c_str());
-            return false;
-        }
-    } catch (const std::exception &e) {
-        OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "获取文件大小失败，跳过磁盘空间检查: %s", e.what());
-    }
-    // 检查输出路径的写权限
-    ArchiveError writeErr = ArchiveError::CheckAccess(outputArchive, true);
-    if (!writeErr.IsSuccess()) {
-        if (options.error) {
-            *options.error = writeErr.GetFullMessage();
-        }
-        if (options.archiveError) {
-            *options.archiveError = writeErr;
-        }
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", writeErr.GetFullMessage().c_str());
+    // 验证输出路径
+    if (!ValidateOutputArchivePath(outputArchive, options)) {
         return false;
     }
-    // 创建文件项
+    // 创建文件项并压缩
     std::vector<CompressFileItem> files;
-    CompressFileItem item;
-    item.sourcePath = inputFile;
-    // 获取文件名作为压缩包内路径
-    fs::path p(inputFile);
-    item.archivePath = p.filename().string();
-    item.isDirectory = fs::is_directory(inputFile);
-    files.push_back(item);
+    files.push_back(CreateSingleFileItem(inputFile));
     return CompressWithP7zip(files, outputArchive, options);
 }
 
-bool ArchiveCompressor::CompressFiles(const std::vector<CompressFileItem> &files, const std::string &outputArchive,
-                                      const CompressOptions &options)
+// 报告错误信息的辅助函数
+static bool ReportCompressError(const ArchiveError &err, const CompressOptions &options)
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "=== CompressFiles START ===");
-    if (files.empty()) {
-        ArchiveError err(ArchiveErrorCode::COMPRESS_NO_INPUT_FILES,
-                         ErrorMessages::GetMessage(ArchiveErrorCode::COMPRESS_NO_INPUT_FILES), "文件列表为空");
-        if (options.error) {
-            *options.error = err.GetFullMessage();
-        }
-        if (options.archiveError) {
-            *options.archiveError = err;
-        }
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", err.GetFullMessage().c_str());
-        return false;
+    if (options.error) {
+        *options.error = err.GetFullMessage();
     }
-    // 计算所有文件的总大小
-    uint64_t totalSize = 0;
+    if (options.archiveError) {
+        *options.archiveError = err;
+    }
+    OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", err.GetFullMessage().c_str());
+    return false;
+}
+
+// 验证并计算文件总大小
+static bool ValidateFilesAndCalculateSize(const std::vector<CompressFileItem> &files, 
+                                          const CompressOptions &options,
+                                          uint64_t &totalSize)
+{
+    totalSize = 0;
     for (const auto &item : files) {
         if (!item.isDirectory) {
             try {
                 // 检查文件是否存在和可访问
                 ArchiveError accessErr = ArchiveError::CheckAccess(item.sourcePath, false);
                 if (!accessErr.IsSuccess()) {
-                    if (options.error) {
-                        *options.error = accessErr.GetFullMessage();
-                    }
-                    if (options.archiveError) {
-                        *options.archiveError = accessErr;
-                    }
-                    OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", accessErr.GetFullMessage().c_str());
-                    return false;
+                    return ReportCompressError(accessErr, options);
                 }
                 totalSize += fs::file_size(item.sourcePath);
             } catch (const std::exception &e) {
@@ -567,31 +603,49 @@ bool ArchiveCompressor::CompressFiles(const std::vector<CompressFileItem> &files
             }
         }
     }
+    return true;
+}
+
+// 检查输出环境（磁盘空间和写权限）
+static bool ValidateOutputEnvironment(const std::string &outputArchive, uint64_t totalSize,
+                                      const CompressOptions &options)
+{
     // 检查磁盘空间（估算压缩后大小为原大小的70% + 1MB余量）
     uint64_t estimatedSize = (totalSize * COMPRESSION_RATIO_ESTIMATE / PERCENT_100) + SIZE_1MB;
     ArchiveError diskErr = ArchiveError::CheckDiskSpace(outputArchive, estimatedSize);
     if (!diskErr.IsSuccess()) {
-        if (options.error) {
-            *options.error = diskErr.GetFullMessage();
-        }
-        if (options.archiveError) {
-            *options.archiveError = diskErr;
-        }
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", diskErr.GetFullMessage().c_str());
-        return false;
+        return ReportCompressError(diskErr, options);
     }
+    
     // 检查输出路径写权限
     ArchiveError writeErr = ArchiveError::CheckAccess(outputArchive, true);
     if (!writeErr.IsSuccess()) {
-        if (options.error) {
-            *options.error = writeErr.GetFullMessage();
-        }
-        if (options.archiveError) {
-            *options.archiveError = writeErr;
-        }
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", writeErr.GetFullMessage().c_str());
+        return ReportCompressError(writeErr, options);
+    }
+    
+    return true;
+}
+
+bool ArchiveCompressor::CompressFiles(const std::vector<CompressFileItem> &files, const std::string &outputArchive,
+                                      const CompressOptions &options)
+{
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "=== CompressFiles START ===");
+    // 检查文件列表是否为空
+    if (files.empty()) {
+        ArchiveError err(ArchiveErrorCode::COMPRESS_NO_INPUT_FILES,
+                         ErrorMessages::GetMessage(ArchiveErrorCode::COMPRESS_NO_INPUT_FILES), "文件列表为空");
+        return ReportCompressError(err, options);
+    }
+    // 验证文件并计算总大小
+    uint64_t totalSize = 0;
+    if (!ValidateFilesAndCalculateSize(files, options, totalSize)) {
         return false;
     }
+    // 检查输出环境
+    if (!ValidateOutputEnvironment(outputArchive, totalSize, options)) {
+        return false;
+    }
+    // 执行压缩
     return CompressWithP7zip(files, outputArchive, options);
 }
 // 辅助函数：验证目录并检查权限
@@ -784,21 +838,24 @@ bool ArchiveCompressor::ScanDirectory(const std::string &dirPath, const std::str
     // 检查目录是否存在（使用stat而不是filesystem）
     struct stat st;
     if (stat(dirPath.c_str(), &st) != 0) {
-        if (error)
+        if (error) {
             *error = "目录不存在或无法访问: " + dirPath;
+        }
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "stat failed for %s, errno=%d", dirPath.c_str(), errno);
         return false;
     }
     if (!S_ISDIR(st.st_mode)) {
-        if (error)
+        if (error) {
             *error = "路径不是目录: " + dirPath;
+        }
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "Path is not a directory: %s", dirPath.c_str());
         return false;
     }
     // 使用C风格API递归扫描，不会抛出C++异常
     if (!ScanDirectoryRecursive(dirPath, basePath, "", files)) {
-        if (error)
+        if (error) {
             *error = "扫描目录失败";
+        }
         return false;
     }
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "ScanDirectory completed, found %zu items", files.size());
@@ -824,9 +881,9 @@ static uint64_t GetTotalSize(const std::vector<CompressFileItem> &files)
     return total;
 }
 // 创建IOutArchive对象（静态辅助函数）
-static IOutArchive *CreateOutArchive(CompressFormat format, const CompressOptions &options)
+static IOutArchive *CreateOutArchive(COMPRESSFORMAT format, const CompressOptions &options)
 {
-    const GUID *clsid = (format == CompressFormat::SEVENZ) ? &CLSID_CFormat7z : &CLSID_CFormatZip;
+    const GUID *clsid = (format == COMPRESSFORMAT::SEVENZ) ? &CLSID_CFormat7z : &CLSID_CFormatZip;
     IOutArchive *outArchive = nullptr;
     HRESULT result = CreateObject(clsid, &IID_IOutArchive, (void **)&outArchive);
     if (result != S_OK || !outArchive) {
@@ -834,7 +891,7 @@ static IOutArchive *CreateOutArchive(CompressFormat format, const CompressOption
         ArchiveErrorCode errCode = ArchiveErrorCode::COMPRESS_ENCODER_NOT_AVAILABLE;
         std::ostringstream detail;
         detail << "HRESULT: 0x" << std::hex << std::setfill('0') << std::setw(HEX_WIDTH_8) << (unsigned int)result;
-        if (format == CompressFormat::SEVENZ) {
+        if (format == COMPRESSFORMAT::SEVENZ) {
             detail << "\n【7z编码器不可用】" << "\n原因: lib7z.a缺少7z编码器模块" << "\n现象: 解压7z正常，但压缩7z失败" <<
                 "\n解决方案:" << "\n  1. 重新编译p7zip，包含LZMA编码器" << "\n  2. 或使用ZIP格式替代";
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "7z encoder not available in lib7z.a");
@@ -858,11 +915,11 @@ static bool SetCompressionProperties(IOutArchive *outArchive, const CompressOpti
     if (qiResult != S_OK || !setProperties) {
         return true; // 不是错误，某些格式可能不支持
     }
-    if (options.format == CompressFormat::ZIP) {
+    if (options.format == COMPRESSFORMAT::ZIP) {
         // ZIP 格式：设置压缩级别和 UTF-8 编码（支持中文文件名）
         const wchar_t *names[] = {L"x", L"cu"};
-        PROPVARIANT values[2];
-        memset(values, 0, sizeof(values));
+        // 使用 C++ 零初始化（安全且符合标准）
+        PROPVARIANT values[2] = {};
         values[0].vt = VT_UI4;
         values[0].ulVal = options.compressionLevel;
         values[1].vt = VT_BSTR;
@@ -879,8 +936,8 @@ static bool SetCompressionProperties(IOutArchive *outArchive, const CompressOpti
     } else {
         // 7z 格式：设置压缩级别和线程数
         const wchar_t *names[] = {L"x", L"mt"};
-        PROPVARIANT values[ARRAY_SIZE_TWO];
-        memset(values, 0, sizeof(values));
+        // 使用 C++ 零初始化（安全且符合标准）
+        PROPVARIANT values[ARRAY_SIZE_TWO] = {};
         values[0].vt = VT_UI4;
         values[0].ulVal = (options.compressionLevel > DEFAULT_COMPRESSION_LEVEL) ? DEFAULT_COMPRESSION_LEVEL
                                                                                  : options.compressionLevel;
@@ -974,7 +1031,7 @@ static void HandleCompressionError(HRESULT result, const std::string &outputArch
     std::ostringstream detail;
     detail << "HRESULT: 0x" << std::hex << std::setfill('0') << std::setw(HEX_WIDTH_8) << (unsigned int)result <<
             " (" << errName << ")\n输出文件: " << outputArchive;
-    if (options.format == CompressFormat::SEVENZ && result == HRESULT_E_NOTIMPL) {
+    if (options.format == COMPRESSFORMAT::SEVENZ && result == HRESULT_E_NOTIMPL) {
         detail << "\n\n⚠️ 提示：7z编码器不可用，请使用ZIP格式";
         OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "7z encoder not available, please use ZIP format instead");
     }
@@ -1068,3 +1125,4 @@ bool ArchiveCompressor::CompressWithP7zip(const std::vector<CompressFileItem> &f
     }
     return result;
 }
+
