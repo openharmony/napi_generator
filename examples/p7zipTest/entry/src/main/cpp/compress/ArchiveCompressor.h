@@ -13,8 +13,8 @@ using CompressProgressCallback =
 
 // 压缩格式
 enum class CompressFormat {
-    SevenZ, // 7z
-    Zip     // zip
+    SEVEN_Z, // 7z
+    ZIP     // ZIP
 };
 // 要压缩的文件信息
 struct CompressFileItem {
@@ -31,14 +31,14 @@ struct CompressOptions {
     std::string *error;         // 兼容旧接口
     ArchiveError *archiveError; // 新增：详细错误信息
 
-    explicit CompressOptions(CompressFormat fmt = CompressFormat::Zip, int level = DEFAULT_COMPRESSION_LEVEL,
+    explicit CompressOptions(CompressFormat fmt = CompressFormat::ZIP, int level = DEFAULT_COMPRESSION_LEVEL,
                              CompressProgressCallback cb = nullptr,
                              std::string *err = nullptr, ArchiveError *arcErr = nullptr)
         : format(fmt), compressionLevel(level), callback(cb), error(err), archiveError(arcErr) {}
 };
 
 /**
- * 压缩器类 - 支持 7z 和 Zip 格式压缩
+ * 压缩器类 - 支持 7z 和 ZIP 格式压缩
  */
 class ArchiveCompressor {
 public:
@@ -85,7 +85,7 @@ public:
                               std::vector<CompressFileItem> &files, std::string *error);
 
 private:
-    // 使用p7zip标准接口压缩
+    // 使用p7ZIP标准接口压缩
     static bool CompressWithP7zip(const std::vector<CompressFileItem> &files, const std::string &outputArchive,
                                   const CompressOptions &options);
 };
