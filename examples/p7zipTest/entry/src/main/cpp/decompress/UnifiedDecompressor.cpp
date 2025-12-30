@@ -176,15 +176,19 @@ bool UnifiedDecompressor::DecompressFormat(const std::string &inputFile, const s
         format == ArchiveFormat::SEVENZ || format == ArchiveFormat::ZIP || format == ArchiveFormat::TAR ||
         format == ArchiveFormat::RAR || format == ArchiveFormat::RAR5 || format == ArchiveFormat::ISO ||
         format == ArchiveFormat::CAB || format == ArchiveFormat::WIM) {
-        std::string *error = errorOutput ? errorOutput->error : nullptr;
-        ArchiveError *archiveError = errorOutput ? errorOutput->archiveError : nullptr;
-        return ArchiveHandler::ExtractArchive(
-            inputFile, outputPath, "",
-            [callback](uint64_t processed, uint64_t total, const std::string &fileName) {
-                if (callback) {
-                    callback(processed, total, fileName);
-                }
-            }, error, archiveError);
+        // 使用新的 ExtractOptions 结构体
+        ExtractOptions options(inputFile, outputPath);
+        options.password = "";
+        options.callback = [callback](uint64_t processed, uint64_t total, const std::string &fileName) {
+            if (callback) {
+                callback(processed, total, fileName);
+            }
+        };
+        if (errorOutput) {
+            options.error = errorOutput->error;
+            options.archiveError = errorOutput->archiveError;
+        }
+        return ArchiveHandler::ExtractArchive(options);
     }
     return HandleUnsupportedFormat(format, errorOutput);
 }
