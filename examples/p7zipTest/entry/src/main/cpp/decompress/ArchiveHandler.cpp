@@ -565,17 +565,17 @@ void CArchiveExtractCallback::ReportInitialProgress()
 void CArchiveExtractCallback::Init(IInArchive *archiveHandler, const char *sourceArchivePath, const char *directoryPath,
                                    const char *password, ArchiveExtractCallback callback)
 {
-    archiveHandler = archiveHandler;
-    sourceArchivePath = sourceArchivePath ? sourceArchivePath : "";
-    directoryPath = directoryPath;
+    this->archiveHandler = archiveHandler;
+    this->sourceArchivePath = sourceArchivePath ? sourceArchivePath : "";
+    this->directoryPath = directoryPath;
     if (password) {
-        password = password;
+        this->password = password;
     }
-    progressCallback = callback;
+    this->progressCallback = callback;
     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "CHECKPOINT_INIT: callback is %s",
                  callback ? "NOT NULL" : "NULL");
-    CreateDirRecursive(directoryPath);
-    archiveHandler->GetNumberOfItems(&numFiles);
+    CreateDirRecursive(this->directoryPath);
+    this->archiveHandler->GetNumberOfItems(&this->numFiles);
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 Init: 归档包含 %u 个条目", numFiles);
     CalculateTotalSize();
     ReportInitialProgress();

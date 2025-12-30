@@ -28,6 +28,20 @@ extern "C"
     HRESULT CreateObject(const GUID *clsid, const GUID *iid, void **outObject);
 }
 
+// 设置错误输出（统一的错误处理辅助函数）
+static void SetErrorOutput(DecompressErrorOutput *errorOutput, const ArchiveError &err)
+{
+    if (!errorOutput) {
+        return;
+    }
+    if (errorOutput->error) {
+        *errorOutput->error = err.GetFullMessage();
+    }
+    if (errorOutput->archiveError) {
+        *errorOutput->archiveError = err;
+    }
+}
+
 bool UnifiedDecompressor::Decompress(const std::string &inputFile, const std::string &outputPath,
                                      DecompressProgressCallback callback, DecompressErrorOutput *errorOutput)
 {
@@ -52,31 +66,16 @@ bool UnifiedDecompressor::Decompress(const std::string &inputFile, const std::st
     // 检查输入文件访问权限
     ArchiveError accessErr = ArchiveError::CheckAccess(inputFile, false);
     if (!accessErr.IsSuccess()) {
-        if (errorOutput) {
-            if (errorOutput->error) {
-                *errorOutput->error = accessErr.GetFullMessage();
-            }
-            if (errorOutput->archiveError) {
-                *errorOutput->archiveError = accessErr;
-            }
-        }
+        SetErrorOutput(errorOutput, accessErr);
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", accessErr.GetFullMessage().c_str());
         return false;
     }
     // 自动检测格式
     ArchiveFormat format = FormatDetector::Detect(inputFile);
-
     if (format == ArchiveFormat::UNKNOWN) {
         ArchiveError err(ArchiveErrorCode::FORMAT_DETECTION_FAILED,
                          ErrorMessages::GetMessage(ArchiveErrorCode::FORMAT_DETECTION_FAILED), "文件: " + inputFile);
-        if (errorOutput) {
-            if (errorOutput->error) {
-                *errorOutput->error = err.GetFullMessage();
-            }
-            if (errorOutput->archiveError) {
-                *errorOutput->archiveError = err;
-            }
-        }
+        SetErrorOutput(errorOutput, err);
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", err.GetFullMessage().c_str());
         return false;
     }
@@ -114,14 +113,7 @@ static bool CheckDiskSpace(const std::string &outputPath, uint64_t requiredSize,
                  requiredSize / static_cast<double>(BYTES_PER_MB), useRealSize ? "真实" : "估算");
     ArchiveError diskErr = ArchiveError::CheckDiskSpace(outputPath, requiredSize);
     if (!diskErr.IsSuccess()) {
-        if (errorOutput) {
-            if (errorOutput->error) {
-                *errorOutput->error = diskErr.GetFullMessage();
-            }
-            if (errorOutput->archiveError) {
-                *errorOutput->archiveError = diskErr;
-            }
-        }
+        SetErrorOutput(errorOutput, diskErr);
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", diskErr.GetFullMessage().c_str());
         return false;
     }
@@ -133,16 +125,34 @@ static bool HandleUnsupportedFormat(ArchiveFormat format, DecompressErrorOutput 
     ArchiveError err(ArchiveErrorCode::UNSUPPORTED_FORMAT,
                      ErrorMessages::GetMessage(ArchiveErrorCode::UNSUPPORTED_FORMAT),
                      "格式代码: " + std::to_string((int)format));
-    if (errorOutput) {
-        if (errorOutput->error) {
-            *errorOutput->error = err.GetFullMessage();
-        }
-        if (errorOutput->archiveError) {
-            *errorOutput->archiveError = err;
-        }
-    }
+    SetErrorOutput(errorOutput, err);
     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", err.GetFullMessage().c_str());
     return false;
+}
+// 判断格式是否支持 p7zip 处理
+static bool IsP7zipSupportedFormat(ArchiveFormat format)
+{
+    return format == ArchiveFormat::GZIP || format == ArchiveFormat::BZIP2 || format == ArchiveFormat::XZ ||
+           format == ArchiveFormat::SEVENZ || format == ArchiveFormat::ZIP || format == ArchiveFormat::TAR ||
+           format == ArchiveFormat::RAR || format == ArchiveFormat::RAR5 || format == ArchiveFormat::ISO ||
+           format == ArchiveFormat::CAB || format == ArchiveFormat::WIM;
+}
+// 使用 p7zip 处理格式
+static bool DecompressWithP7zip(const std::string &inputFile, const std::string &outputPath,
+                                DecompressProgressCallback callback, DecompressErrorOutput *errorOutput)
+{
+    ExtractOptions options(inputFile, outputPath);
+    options.password = "";
+    options.callback = [callback](uint64_t processed, uint64_t total, const std::string &fileName) {
+        if (callback) {
+            callback(processed, total, fileName);
+        }
+    };
+    if (errorOutput) {
+        options.error = errorOutput->error;
+        options.archiveError = errorOutput->archiveError;
+    }
+    return ArchiveHandler::ExtractArchive(options);
 }
 
 bool UnifiedDecompressor::DecompressFormat(const std::string &inputFile, const std::string &outputPath,
@@ -150,45 +160,26 @@ bool UnifiedDecompressor::DecompressFormat(const std::string &inputFile, const s
                                            DecompressErrorOutput *errorOutput)
 {
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "DecompressFormat: format=%d", (int)format);
+    // 检查输出路径写入权限
     ArchiveError writeErr = ArchiveError::CheckAccess(outputPath, true);
     if (!writeErr.IsSuccess()) {
-        if (errorOutput) {
-            if (errorOutput->error) {
-                *errorOutput->error = writeErr.GetFullMessage();
-            }
-            if (errorOutput->archiveError) {
-                *errorOutput->archiveError = writeErr;
-            }
-        }
+        SetErrorOutput(errorOutput, writeErr);
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", writeErr.GetFullMessage().c_str());
         return false;
     }
+    // 计算并检查磁盘空间
     bool useRealSize = false;
     uint64_t requiredSize = CalculateRequiredSize(inputFile, format, useRealSize);
     if (!CheckDiskSpace(outputPath, requiredSize, useRealSize, errorOutput)) {
         return false;
     }
+    // 根据格式选择解压方式
     if (format == ArchiveFormat::LZMA) {
         std::string *error = errorOutput ? errorOutput->error : nullptr;
         return DecompressLZMA(inputFile, outputPath, callback, error);
     }
-    if (format == ArchiveFormat::GZIP || format == ArchiveFormat::BZIP2 || format == ArchiveFormat::XZ ||
-        format == ArchiveFormat::SEVENZ || format == ArchiveFormat::ZIP || format == ArchiveFormat::TAR ||
-        format == ArchiveFormat::RAR || format == ArchiveFormat::RAR5 || format == ArchiveFormat::ISO ||
-        format == ArchiveFormat::CAB || format == ArchiveFormat::WIM) {
-        // 使用新的 ExtractOptions 结构体
-        ExtractOptions options(inputFile, outputPath);
-        options.password = "";
-        options.callback = [callback](uint64_t processed, uint64_t total, const std::string &fileName) {
-            if (callback) {
-                callback(processed, total, fileName);
-            }
-        };
-        if (errorOutput) {
-            options.error = errorOutput->error;
-            options.archiveError = errorOutput->archiveError;
-        }
-        return ArchiveHandler::ExtractArchive(options);
+    if (IsP7zipSupportedFormat(format)) {
+        return DecompressWithP7zip(inputFile, outputPath, callback, errorOutput);
     }
     return HandleUnsupportedFormat(format, errorOutput);
 }

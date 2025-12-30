@@ -161,10 +161,10 @@ private:
 public:
     CArchiveUpdateCallback(const std::vector<CompressFileItem> *files, const std::string &basePath, uint64_t totalSize,
                            CompressProgressCallback callback)
-          : refCount(1), files(files), basePath(basePath), progressCallback(callback), totalSize(totalSize),
-          processedSize(0), maxProcessedSize(0), // 初始化最大进度值
-          currentIndex(0), isFinalized(false), // 初始化为未完成
-          compressProgressInfo(this) {}
+        : refCount(1), files(files), basePath(basePath), progressCallback(callback), totalSize(totalSize),
+        processedSize(0), maxProcessedSize(0), // 初始化最大进度值
+        currentIndex(0), isFinalized(false), // 初始化为未完成
+        compressProgressInfo(this) {}
 
     virtual ~CArchiveUpdateCallback() {}
 
@@ -263,11 +263,11 @@ public:
             return S_OK;
         }
         uint64_t currentValue = *completeValue;
-        const uint64_t MAX_DATA_PROGRESS = totalSize * PERCENT_95 / PERCENT_100;
+        const uint64_t maxDataProgress = totalSize * PERCENT_95 / PERCENT_100;
         if (currentValue > maxProcessedSize) {
-            HandleNormalProgress(currentValue, MAX_DATA_PROGRESS);
+            HandleNormalProgress(currentValue, maxDataProgress);
         } else if (currentValue < maxProcessedSize && maxProcessedSize >= totalSize * PERCENT_95 / PERCENT_100) {
-            HandleFinalizeProgress(currentValue, MAX_DATA_PROGRESS);
+            HandleFinalizeProgress(currentValue, maxDataProgress);
         } else {
             processedSize = maxProcessedSize;
             OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "[Progress] Hold: %llu / %llu (%.1f%%)",
@@ -535,12 +535,12 @@ static CompressFileItem CreateSingleFileItem(const std::string &inputFile)
 }
 
 // ArchiveCompressor 实现
-std::string ArchiveCompressor::GetFormatName(COMPRESSFORMAT format)
+std::string ArchiveCompressor::GetFormatName(CompressFormat format)
 {
     switch (format) {
-        case COMPRESSFORMAT::SEVENZ:
+        case CompressFormat::SEVENZ:
             return "7z";
-        case COMPRESSFORMAT::ZIP:
+        case CompressFormat::ZIP:
             return "Zip";
         default:
             return "Unknown";
@@ -582,26 +582,39 @@ static bool ReportCompressError(const ArchiveError &err, const CompressOptions &
     return false;
 }
 
+// 获取单个文件的大小
+static bool GetFileSizeWithValidation(const std::string &filePath, uint64_t &fileSize, const CompressOptions &options)
+{
+    // 检查文件是否存在和可访问
+    ArchiveError accessErr = ArchiveError::CheckAccess(filePath, false);
+    if (!accessErr.IsSuccess()) {
+        return ReportCompressError(accessErr, options);
+    }
+    try {
+        fileSize = fs::file_size(filePath);
+        return true;
+    } catch (const std::exception &e) {
+        OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "获取文件大小失败: %s, 错误: %s",
+                     filePath.c_str(), e.what());
+        return true; // 继续处理其他文件
+    }
+}
+
 // 验证并计算文件总大小
-static bool ValidateFilesAndCalculateSize(const std::vector<CompressFileItem> &files, 
+static bool ValidateFilesAndCalculateSize(const std::vector<CompressFileItem> &files,
                                           const CompressOptions &options,
                                           uint64_t &totalSize)
 {
     totalSize = 0;
     for (const auto &item : files) {
-        if (!item.isDirectory) {
-            try {
-                // 检查文件是否存在和可访问
-                ArchiveError accessErr = ArchiveError::CheckAccess(item.sourcePath, false);
-                if (!accessErr.IsSuccess()) {
-                    return ReportCompressError(accessErr, options);
-                }
-                totalSize += fs::file_size(item.sourcePath);
-            } catch (const std::exception &e) {
-                OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "获取文件大小失败: %s, 错误: %s",
-                             item.sourcePath.c_str(), e.what());
-            }
+        if (item.isDirectory) {
+            continue; // 跳过目录
         }
+        uint64_t fileSize = 0;
+        if (!GetFileSizeWithValidation(item.sourcePath, fileSize, options)) {
+            return false;
+        }
+        totalSize += fileSize;
     }
     return true;
 }
@@ -681,7 +694,7 @@ static bool ValidateDirectory(const std::string &inputDir, const CompressOptions
         }
         if (options.archiveError) {
             *options.archiveError = accessErr;
-        } 
+        }
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", accessErr.GetFullMessage().c_str());
         return false;
     }
@@ -881,9 +894,9 @@ static uint64_t GetTotalSize(const std::vector<CompressFileItem> &files)
     return total;
 }
 // 创建IOutArchive对象（静态辅助函数）
-static IOutArchive *CreateOutArchive(COMPRESSFORMAT format, const CompressOptions &options)
+static IOutArchive *CreateOutArchive(CompressFormat format, const CompressOptions &options)
 {
-    const GUID *clsid = (format == COMPRESSFORMAT::SEVENZ) ? &CLSID_CFormat7z : &CLSID_CFormatZip;
+    const GUID *clsid = (format == CompressFormat::SEVENZ) ? &CLSID_CFormat7z : &CLSID_CFormatZip;
     IOutArchive *outArchive = nullptr;
     HRESULT result = CreateObject(clsid, &IID_IOutArchive, (void **)&outArchive);
     if (result != S_OK || !outArchive) {
@@ -891,7 +904,7 @@ static IOutArchive *CreateOutArchive(COMPRESSFORMAT format, const CompressOption
         ArchiveErrorCode errCode = ArchiveErrorCode::COMPRESS_ENCODER_NOT_AVAILABLE;
         std::ostringstream detail;
         detail << "HRESULT: 0x" << std::hex << std::setfill('0') << std::setw(HEX_WIDTH_8) << (unsigned int)result;
-        if (format == COMPRESSFORMAT::SEVENZ) {
+        if (format == CompressFormat::SEVENZ) {
             detail << "\n【7z编码器不可用】" << "\n原因: lib7z.a缺少7z编码器模块" << "\n现象: 解压7z正常，但压缩7z失败" <<
                 "\n解决方案:" << "\n  1. 重新编译p7zip，包含LZMA编码器" << "\n  2. 或使用ZIP格式替代";
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "7z encoder not available in lib7z.a");
@@ -915,7 +928,7 @@ static bool SetCompressionProperties(IOutArchive *outArchive, const CompressOpti
     if (qiResult != S_OK || !setProperties) {
         return true; // 不是错误，某些格式可能不支持
     }
-    if (options.format == COMPRESSFORMAT::ZIP) {
+    if (options.format == CompressFormat::ZIP) {
         // ZIP 格式：设置压缩级别和 UTF-8 编码（支持中文文件名）
         const wchar_t *names[] = {L"x", L"cu"};
         // 使用 C++ 零初始化（安全且符合标准）
@@ -1031,7 +1044,7 @@ static void HandleCompressionError(HRESULT result, const std::string &outputArch
     std::ostringstream detail;
     detail << "HRESULT: 0x" << std::hex << std::setfill('0') << std::setw(HEX_WIDTH_8) << (unsigned int)result <<
             " (" << errName << ")\n输出文件: " << outputArchive;
-    if (options.format == COMPRESSFORMAT::SEVENZ && result == HRESULT_E_NOTIMPL) {
+    if (options.format == CompressFormat::SEVENZ && result == HRESULT_E_NOTIMPL) {
         detail << "\n\n⚠️ 提示：7z编码器不可用，请使用ZIP格式";
         OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "7z encoder not available, please use ZIP format instead");
     }

@@ -104,7 +104,7 @@ static DecompressProgressCallback CreateProgressCallback(AsyncDecompressData *as
             return false;
         }
         int percentage = INIT_ZERO;
-        if (total > SIZE_ZERO) {
+        if (total > 0) {
             percentage = (int)((processed * PERCENT_100) / total);
         }
         if (percentage % PERCENT_10 == INIT_ZERO || percentage == INIT_ZERO || percentage == PERCENT_100) {
