@@ -44,7 +44,7 @@ static bool IsZipFormat(const unsigned char *header, size_t bytesRead)
     if (bytesRead < MAGIC_ZIP_SIZE) {
         return false;
     }
-    return memcmp(header, MAGIC_ZIP, MAGIC_ZIP_SIZE) == 0 || 
+    return memcmp(header, MAGIC_ZIP, MAGIC_ZIP_SIZE) == 0 ||
            memcmp(header, MAGIC_ZIP_EMPTY, MAGIC_ZIP_SIZE) == 0 ||
            memcmp(header, MAGIC_ZIP_SPANNED, MAGIC_ZIP_SIZE) == 0;
 }
