@@ -16,7 +16,7 @@ export type CompressProgressCallback = (progress: {
  * @param format 压缩格式："7z" 或 "zip"
  * @param progressCallback 可选的进度回调函数
  * @returns Promise，压缩完成后 resolve
- * 
+ *
  * @example
  * ```typescript
  * // 压缩多个文件和文件夹
@@ -43,6 +43,7 @@ export interface CompressController {
     compressionRatio?: number;
     fileCount?: number;
   }>;
+
   /** 任务 ID，用于取消操作 */
   taskId: number;
 }
@@ -58,11 +59,11 @@ export const compress: (
  * 取消正在进行的压缩任务
  * @param taskId 任务 ID（从 compress 返回的 taskId）
  * @returns true 表示成功发送取消请求，false 表示任务不存在或已完成
- * 
+ *
  * @example
  * ```typescript
  * const ctrl = testNapi.compress(['/bigdir'], '/output.zip', 'zip');
- * 
+ *
  * // 几秒后取消
  * setTimeout(() => {
  *   const cancelled = testNapi.cancelCompress(ctrl.taskId);
