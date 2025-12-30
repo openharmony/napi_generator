@@ -11,6 +11,15 @@
 using DecompressProgressCallback =
     std::function<void(uint64_t processed, uint64_t total, const std::string &currentFile)>;
 
+// 错误输出参数结构体
+struct DecompressErrorOutput {
+    std::string *error = nullptr;        // 错误信息（兼容旧接口）
+    ArchiveError *archiveError = nullptr; // 详细错误信息（新增）
+
+    DecompressErrorOutput() = default;
+    DecompressErrorOutput(std::string *err, ArchiveError *archErr) : error(err), archiveError(archErr) {}
+};
+
 class UnifiedDecompressor {
 public:
     /**
@@ -18,28 +27,24 @@ public:
      * @param inputFile 输入压缩文件路径
      * @param outputPath 输出路径（文件或目录）
      * @param callback 进度回调
-     * @param error 错误信息输出（兼容旧接口）
-     * @param archiveError 详细错误信息输出（新增）
+     * @param errorOutput 错误输出（包含兼容旧接口的error和新增的archiveError）
      * @return 是否成功
      */
     static bool Decompress(const std::string &inputFile, const std::string &outputPath,
-                           DecompressProgressCallback callback = nullptr, std::string *error = nullptr,
-                           ArchiveError *archiveError = nullptr);
-
+                           DecompressProgressCallback callback = nullptr,
+                           DecompressErrorOutput *errorOutput = nullptr);
     /**
      * 解压指定格式
      * @param inputFile 输入文件
      * @param outputPath 输出路径
      * @param format 指定格式
      * @param callback 进度回调
-     * @param error 错误信息（兼容旧接口）
-     * @param archiveError 详细错误信息（新增）
+     * @param errorOutput 错误输出（包含兼容旧接口的error和新增的archiveError）
      * @return 是否成功
      */
     static bool DecompressFormat(const std::string &inputFile, const std::string &outputPath, ArchiveFormat format,
-                                 DecompressProgressCallback callback = nullptr, std::string *error = nullptr,
-                                 ArchiveError *archiveError = nullptr);
-
+                                 DecompressProgressCallback callback = nullptr,
+                                 DecompressErrorOutput *errorOutput = nullptr);
     /**
      * 获取压缩包的真实未压缩大小（通过读取元数据）
      * @param inputFile 压缩文件路径
