@@ -1,0 +1,7 @@
+{
+  "src": [
+    "pages/MainMenu",
+    "pages/DecompressTestPage",
+    "pages/CompressTestPage"
+  ]
+}
