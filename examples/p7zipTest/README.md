@@ -26,7 +26,7 @@
 
 🛠 **技术特性**
 - C++ Native 实现，高性能
-- 完整的错误码系统（详见 [错误码参考](ERROR_CODES_REFERENCE.md)）
+- 完整的错误码系统（详见 [错误码参考](https://gitcode.com/openharmony/napi_generator/examples/p7zipTest/ERROR_CODES_REFERENCE.md)）
 - 线程安全的异步操作
 - UTF-8/UTF-16 编码支持
 - 内存优化和资源管理
@@ -113,10 +113,10 @@ p7zipTest/
    
 - 确保已安装 OpenHarmony SDK API 18+
   
-4. **下载三方库**
-   
-- 在 [p7zip三方库]() 下载p7zip三方库，解压到本项目entry/libs目录下
-  
+4. **编译三方库**
+
+   [p7zip三方库编译文档](https://gitcode.com/openharmony/napi_generator/examples/p7zipTest/OHOS_BUILD_STEP_BY_STEP.md)
+
 4. **构建项目**
    
 - Build → Build Hap(s)/APP(s)
@@ -268,7 +268,7 @@ napi_value CancelCompress(napi_env env, napi_callback_info info);  // 取消压�
 
 ## ❌ 错误码
 
-完整的错误码列表请参见：[ERROR_CODES_REFERENCE.md](ERROR_CODES_REFERENCE.md)
+完整的错误码列表请参见：[ERROR_CODES_REFERENCE.md](https://gitcode.com/openharmony/napi_generator/examples/p7zipTest/ERROR_CODES_REFERENCE.md)
 
 常见错误码：
 
