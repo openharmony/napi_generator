@@ -101,6 +101,7 @@ p7zipTest/
 ### 构建步骤
 
 1. **克隆项目**
+   
    ```bash
    git clone git@gitcode.com:openharmony/napi_generator.git 
    ```
@@ -117,8 +118,17 @@ p7zipTest/
 
    [p7zip三方库编译文档](https://gitcode.com/openharmony/napi_generator/examples/p7zipTest/OHOS_BUILD_STEP_BY_STEP.md)
 
+   将编译好的产物拷贝到`napi_generator/examples/p7zipTest/entry/libs`下面，同时将[三方库头文件]()中的`include`文件夹拷贝到这里；最终目录结构如下：
+
+```
+│   └── libs/                          # 预编译库
+│       ├── arm64-v8a/lib7z.so
+│       ├── armeabi-v7a/lib7z.so
+│       ├── x86_64/lib7z.so
+│       └── include/                   # p7zip 头文件
+```
+
 4. **构建项目**
-   
 - Build → Build Hap(s)/APP(s)
   
 5. **运行**
@@ -134,82 +144,6 @@ hdc install entry-default-signed.hap
 ```
 
 ## 💻 使用示例
-
-### ArkTS API 使用
-
-#### 压缩文件
-
-```typescript
-import { compressItems, CompressOptions, CompressResult } from '../utils/Compress';
-
-// 压缩单个文件
-const controller = await compressItems(
-  ['/path/to/file.txt'],           // 输入文件列表
-  '/path/to/output.7z',             // 输出文件
-  { format: '7z', compressionLevel: 5 }, // 选项
-  (progress) => {
-    console.log(`进度: ${progress.percentage}%`);
-    console.log(`当前文件: ${progress.currentFile}`);
-  }
-);
-
-// 等待完成
-const result: CompressResult = await controller.promise;
-if (result.success) {
-  console.log('压缩成功！');
-  console.log(`压缩率: ${result.compressionRatio}%`);
-} else {
-  console.error(`压缩失败: ${result.message}`);
-}
-
-// 取消操作（如需要）
-// controller.cancel();
-```
-
-#### 解压文件
-
-```typescript
-import { Unzip, DecompressResult } from '../utils/Unzip';
-
-// 创建解压实例
-const unzip = new Unzip('/path/to/archive.7z', {
-  overwrite: true,
-  password: 'optional_password'  // 如果有密码
-});
-
-// 监听进度
-unzip.on('progress', (progress) => {
-  console.log(`进度: ${progress.percentage}%`);
-  console.log(`${progress.filesCompleted}/${progress.totalFiles} 文件`);
-});
-
-// 执行解压
-const result: DecompressResult = await unzip.decompress('/output/dir');
-if (result.success) {
-  console.log('解压成功！');
-  console.log(`格式: ${result.format}`);
-  console.log(`文件: ${result.files?.join(', ')}`);
-} else {
-  console.error(`解压失败: ${result.message} (错误码: ${result.errorCode})`);
-}
-
-// 取消解压（如需要）
-// unzip.cancel();
-```
-
-#### 获取压缩包信息
-
-```typescript
-// 获取压缩包信息（不解压）
-const info = await unzip.getArchiveInfo();
-console.log(`格式: ${info.format}`);
-console.log(`文件数: ${info.fileCount}`);
-console.log(`总大小: ${info.totalSize} 字节`);
-
-info.files.forEach(file => {
-  console.log(`- ${file.name}: ${file.size} 字节`);
-});
-```
 
 ### Native API 使用
 
@@ -280,8 +214,6 @@ napi_value CancelCompress(napi_env env, napi_callback_info info);  // 取消压�
 | 1004 | UNSUPPORTED_FORMAT | 不支持的格式 |
 | 2000 | COMPRESS_FAILED | 压缩失败 |
 | 3000 | DECOMPRESS_FAILED | 解压失败 |
-| 3004 | DECOMPRESS_PASSWORD_REQUIRED | 需要密码 |
-| 3005 | DECOMPRESS_WRONG_PASSWORD | 密码错误 |
 | 4001 | FILE_NOT_FOUND | 文件不存在 |
 | 4003 | FILE_ACCESS_DENIED | 文件访问被拒绝 |
 
@@ -310,44 +242,6 @@ napi_value CancelCompress(napi_env env, napi_callback_info info);  // 取消压�
 2. 在 `ArchiveCompressor.cpp` 或 `ArchiveHandler.cpp` 中实现处理逻辑
 3. 更新 `common.h` 中的格式常量
 4. 更新 TypeScript 接口定义
-
-### 自定义错误处理
-
-```cpp
-#include "common/ErrorCodes.h"
-
-// 使用错误码
-ErrorCode code = ErrorCode::FILE_NOT_FOUND;
-std::string message = GetErrorMessage(code);
-int errorNumber = static_cast<int>(code);
-```
-
-### 内存管理
-
-项目使用 RAII 原则进行资源管理：
-
-```cpp
-// 自动资源管理
-class AutoDeleteFile {
-public:
-    explicit AutoDeleteFile(const std::string& path) : path_(path) {}
-    ~AutoDeleteFile() {
-        if (!path_.empty()) {
-            remove(path_.c_str());
-        }
-    }
-private:
-    std::string path_;
-};
-```
-
-### 线程安全
-
-```cpp
-// 使用互斥锁保护共享资源
-std::lock_guard<std::mutex> lock(taskMutex_);
-// 安全访问共享数据
-```
 
 ## 📝 已知问题
 
