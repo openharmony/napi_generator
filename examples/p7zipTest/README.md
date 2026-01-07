@@ -327,22 +327,121 @@ type DecompressProgressCallback = (progress: {
 }) => void;
 ```
 
+## 💻 使用示例
+
+### ArkTS API 使用
+
+#### 压缩文件示例
+
+```typescript
+import testNapi from 'libentry.so';
+
+// 基本压缩
+const ctrl = testNapi.compress(
+  ['/data/storage/el2/base/haps/entry/files/test.txt'],
+  '/data/storage/el2/base/haps/entry/files/output.7z',
+  '7z',
+  (progress) => {
+    console.log(`进度: ${progress.percentage}%`);
+    console.log(`当前文件: ${progress.currentFile}`);
+    console.log(`已处理: ${progress.processed}/${progress.total} 字节`);
+  }
+);
+
+// 等待压缩完成
+ctrl.promise.then(result => {
+  if (result.success) {
+    console.log('压缩成功！');
+    console.log(`格式: ${result.format}`);
+    console.log(`原始大小: ${result.originalSize} 字节`);
+    console.log(`压缩后大小: ${result.compressedSize} 字节`);
+    console.log(`压缩率: ${result.compressionRatio}%`);
+    console.log(`文件数: ${result.fileCount}`);
+  } else {
+    console.error(`压缩失败: ${result.message}`);
+  }
+});
+
+// 取消压缩（可选）
+// setTimeout(() => {
+//   const cancelled = testNapi.cancelCompress(ctrl.taskId);
+//   console.log(cancelled ? '取消成功' : '任务已完成');
+// }, 1000);
+```
+
+#### 压缩多个文件和文件夹
+
+```typescript
+import testNapi from 'libentry.so';
+
+// 混合压缩文件和文件夹
+const ctrl = testNapi.compress(
+  [
+    '/data/storage/el2/base/haps/entry/files/file1.txt',
+    '/data/storage/el2/base/haps/entry/files/folder1',
+    '/data/storage/el2/base/haps/entry/files/file2.jpg'
+  ],
+  '/data/storage/el2/base/haps/entry/files/archive.zip',
+  'zip',
+  (progress) => {
+    console.log(`${progress.percentage}% - ${progress.currentFile}`);
+  }
+);
+
+const result = await ctrl.promise;
+console.log(result.success ? '✅ 压缩成功' : `❌ ${result.message}`);
+```
+
+#### 解压文件示例
+
+```typescript
+import testNapi from 'libentry.so';
+
+// 解压文件
+const ctrl = testNapi.decompressFile(
+  '/data/storage/el2/base/haps/entry/files/archive.7z',
+  '/data/storage/el2/base/haps/entry/files/extracted',
+  (progress) => {
+    console.log(`进度: ${progress.percentage}%`);
+    console.log(`当前文件: ${progress.currentFile}`);
+    console.log(`已完成: ${progress.filesCompleted}/${progress.totalFiles} 文件`);
+  }
+);
+
+// 等待解压完成
+ctrl.promise.then(result => {
+  if (result.success) {
+    console.log('解压成功！');
+    console.log(`格式: ${result.format}`);
+    console.log(`文件列表: ${result.files?.join(', ')}`);
+  } else {
+    console.error(`解压失败: ${result.message} (错误码: ${result.errorCode})`);
+  }
+});
+
+// 取消解压（可选）
+// setTimeout(() => {
+//   const cancelled = testNapi.cancelDecompress(ctrl.taskId);
+//   console.log(cancelled ? '取消成功' : '任务已完成');
+// }, 1000);
+```
+
 ## ❌ 错误码
 
 完整的错误码列表请参见：[ERROR_CODES_REFERENCE.md](https://gitcode.com/openharmony/napi_generator/examples/p7zipTest/ERROR_CODES_REFERENCE.md)
 
 常见错误码：
 
-| 错误码 | 名称 | 说明 |
-|--------|------|------|
-| 0 | SUCCESS | 操作成功 |
-| 1001 | INVALID_PARAMETER | 无效参数 |
-| 1002 | OPERATION_CANCELLED | 操作已取消 |
-| 1004 | UNSUPPORTED_FORMAT | 不支持的格式 |
-| 2000 | COMPRESS_FAILED | 压缩失败 |
-| 3000 | DECOMPRESS_FAILED | 解压失败 |
-| 4001 | FILE_NOT_FOUND | 文件不存在 |
-| 4003 | FILE_ACCESS_DENIED | 文件访问被拒绝 |
+| 错误码 | 名称                | 说明           |
+| ------ | ------------------- | -------------- |
+| 0      | SUCCESS             | 操作成功       |
+| 1001   | INVALID_PARAMETER   | 无效参数       |
+| 1002   | OPERATION_CANCELLED | 操作已取消     |
+| 1004   | UNSUPPORTED_FORMAT  | 不支持的格式   |
+| 2000   | COMPRESS_FAILED     | 压缩失败       |
+| 3000   | DECOMPRESS_FAILED   | 解压失败       |
+| 4001   | FILE_NOT_FOUND      | 文件不存在     |
+| 4003   | FILE_ACCESS_DENIED  | 文件访问被拒绝 |
 
 ## 🧪 测试
 
