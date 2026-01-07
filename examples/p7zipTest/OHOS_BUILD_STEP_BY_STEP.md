@@ -20,7 +20,11 @@ sudo apt install -y build-essential git
 
 ### 1.2 准备 OpenHarmony SDK
 
-确认下面文件存在：
+下载OpenHarmony SDK，选择master 6.1.0或以上版本full sdk下载：
+
+[每日构建 | OpenHarmony CI](https://ci.openharmony.cn/workbench/cicd/dailybuild/dailylist)
+
+将下载的包解压后把linux文件夹拷贝到linux环境中，确认下面文件存在：
 
 ```bash
 ls /home/kaihong/ohSDK/linux/native/llvm/bin/clang
@@ -42,7 +46,9 @@ cd p7zip-master
 
 ### 方式 B：下载源码压缩包
 
-[p7zip源码压缩包下载](https://www.7-zip.org/download.html)
+路径一：[github源码压缩包下载地址](https://github.com/p7zip-project/p7zip)
+
+路径二：[p7zip源码压缩包下载](https://www.7-zip.org/download.html)
 
 ```bash
 mkdir -p /home/kaihong/buildP7zip
@@ -523,9 +529,5 @@ build_ohos/x86_64/lib7z.so
 - `CPP/7zip/Compress/Lzma2Encoder.h`
 - `CPP/7zip/7zip_gcc.mak`
 - `ohos_build_patch.sh`
-
-### 编译脚本
-- `build_ohos_simple.sh`
-- `ohos_build_restore.sh`
 
 
