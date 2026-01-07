@@ -61,7 +61,7 @@ build_ohos/armeabi-v7a/lib7z.so
 build_ohos/x86_64/lib7z.so
 ```
 
-## 3. 这套脚本做了什么？（只保留必要理解）
+## 3. 这套脚本做了什么？
 
 `ohos_build_script/build_ohos_simple.sh` 流程：
 1. 下载上游源码（commit 见 `ohos_patches/UPSTREAM_COMMIT.txt`），解压到 `.ohos_build_work/src/`
@@ -99,7 +99,7 @@ $NM -D "$so" | grep ' U ' | egrep 'FL2_|NZSTD|AesCbc_.*_HW' && echo FAIL || echo
 
 预期输出：`OK`
 
-## 5. 常见问题（只列最常见）
+## 5. 常见问题
 
 ### Q1：脚本下载上游源码失败（网络问题）
 
