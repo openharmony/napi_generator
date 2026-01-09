@@ -161,6 +161,21 @@ export function compressItems(
   hilog.info(DOMAIN, 'Compress', `开始压缩: ${paths.length} 个项目 -> ${outputPath}`);
   hilog.info(DOMAIN, 'Compress', `格式: ${options.format}, 级别: ${options.compressionLevel || 5}`);
 
+  // 检查Native模块是否加载成功
+  hilog.info(DOMAIN, 'Compress', `[调试] testNapi类型: ${typeof testNapi}`);
+  // 避免 testNapi 为 undefined 时继续访问属性导致二次异常
+  if (testNapi === undefined || testNapi === null) {
+    hilog.error(DOMAIN, 'Compress', `[Native加载失败] testNapi为空，说明 libentry.so 没有成功加载/初始化`);
+    hilog.error(DOMAIN, 'Compress', `[Native加载失败] 请在 HiLog/FaultLog 里搜索关键词: dlopen / relocating failed / libentry.so / lib7z.so`);
+    throw new Error('Native模块(libentry.so)加载失败，请查看日志中的 dlopen/relocating failed');
+  }
+  hilog.info(DOMAIN, 'Compress', `[调试] compress函数类型: ${typeof (testNapi as object as Record<string, object>).compress}`);
+  if (typeof (testNapi as object as Record<string, object>).compress !== 'function') {
+    hilog.error(DOMAIN, 'Compress', `[Native加载失败] testNapi.compress 不是函数，可能NAPI导出不完整/初始化失败`);
+    throw new Error('Native模块导出异常：compress 不存在');
+  }
+  hilog.info(DOMAIN, 'Compress', `[调试] 准备调用 testNapi.compress...`);
+  
   // 调用原生压缩接口，获取控制器
   const nativeCtrl = testNapi.compress(
     paths,
@@ -171,6 +186,7 @@ export function compressItems(
       onProgress(progress);
     } : undefined
   );
+  hilog.info(DOMAIN, 'Compress', `[调试] testNapi.compress 调用成功，taskId=${nativeCtrl.taskId}`);
 
   // 包装 Promise 添加日志和统计
   const wrappedPromise = nativeCtrl.promise.then(result => {
@@ -196,6 +212,21 @@ export function compressItems(
     return result;
   }).catch((error: Error) => {
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+    hilog.error(DOMAIN, 'Compress', `[调试] Promise catch 捕获异常!`);
+    hilog.error(DOMAIN, 'Compress', `[调试] 错误类型: ${typeof error}`);
+    hilog.error(DOMAIN, 'Compress', `[调试] 是否Error实例: ${error instanceof Error}`);
+    if (error instanceof Error) {
+      hilog.error(DOMAIN, 'Compress', `[调试] message: ${error.message}`);
+      hilog.error(DOMAIN, 'Compress', `[调试] name: ${error.name}`);
+      hilog.error(DOMAIN, 'Compress', `[调试] stack: ${error.stack}`);
+    } else {
+      hilog.error(DOMAIN, 'Compress', `[调试] 非Error对象: ${String(error)}`);
+      try {
+        hilog.error(DOMAIN, 'Compress', `[调试] keys: ${Object.keys(error as object).join(', ')}`);
+      } catch (e) {
+        hilog.error(DOMAIN, 'Compress', `[调试] 无法获取keys`);
+      }
+    }
     hilog.error(DOMAIN, 'Compress', `压缩异常 (耗时: ${duration}秒): ${JSON.stringify(error)}`);
     throw error;
   });
