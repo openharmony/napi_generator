@@ -43,23 +43,12 @@ export interface DecompressResult {
   cancelled?: boolean;   // 新增：是否被取消
 }
 
-/**
- * 压缩包信息
- */
-export interface ArchiveInfo {
-  format: string;
-  fileCount: number;
-  totalSize: number;
-  files: Array<FileInfo>;
-}
-
-/**
- * 文件信息
- */
-export interface FileInfo {
-  name: string;
-  size: number;
-  isDirectory?: boolean;
+function ensureNativeLoaded(): void {
+  if (testNapi === undefined || testNapi === null) {
+    hilog.error(DOMAIN, 'Unzip', `[Native加载失败] testNapi为空，说明 libentry.so 没有成功加载/初始化`);
+    hilog.error(DOMAIN, 'Unzip', `[Native加载失败] 请在 HiLog/FaultLog 里搜索关键词: dlopen / relocating failed / libentry.so / lib7z.so`);
+    throw new Error('Native模块(libentry.so)加载失败，请查看日志中的 dlopen/relocating failed');
+  }
 }
 
 /**
@@ -134,6 +123,7 @@ export class Unzip {
    */
   async decompress(outputPath: string): Promise<DecompressResult> {
     try {
+      ensureNativeLoaded();
       // 触发 start 事件
       if (this.startCallback) {
         this.startCallback();
@@ -180,48 +170,5 @@ export class Unzip {
     }
   }
 
-  /**
-   * 获取压缩包信息（不解压）
-   * 注意：此功能暂未实现，需要使用 Archive API
-   */
-  async getInfo(): Promise<ArchiveInfo> {
-    return new Promise((resolve, reject) => {
-      try {
-        // TODO: 实现 Archive API 后启用
-        // const info = testNapi.getArchiveInfo(this.inputPath);
-        // resolve(info);
-        
-        // 暂时返回占位符数据
-        const placeholder: ArchiveInfo = {
-          format: 'LZMA',
-          fileCount: 1,
-          totalSize: 0,
-          files: []
-        };
-        resolve(placeholder);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
-  /**
-   * 列出压缩包中的所有文件（不解压）
-   * 注意：此功能暂未实现，需要使用 Archive API
-   */
-  async listFiles(): Promise<Array<FileInfo>> {
-    return new Promise((resolve, reject) => {
-      try {
-        // TODO: 实现 Archive API 后启用
-        // const files = testNapi.listArchive(this.inputPath);
-        // resolve(files);
-        
-        // 暂时返回空数组
-        resolve([]);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
 }
 
