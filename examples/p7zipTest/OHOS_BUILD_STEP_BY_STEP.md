@@ -26,25 +26,25 @@ sudo apt install -y build-essential git curl patch
 将下载的包解压后把linux文件夹拷贝到linux环境中，确认下面文件存在：
 
 ```bash
-ls "你的SDK环境所在文件夹"/linux/native/llvm/bin/clang
-ls "你的SDK环境所在文件夹"/linux/native/sysroot
+ls "SDK环境所在文件夹"/linux/native/llvm/bin/clang
+ls "SDK环境所在文件夹"/linux/native/sysroot
 ```
 
 ### 1.3 准备编译脚本
 
-下载 [编译脚本]() 解压到linux环境任意目录中，打开`ohos_build_script/build_ohos_simple.sh`脚本文件，确认`OpenHarmony SDK`路径为你的环境路径：
+下载 [编译脚本]() 解压到linux环境任意目录中，打开`ohos_build_script/build_ohos_simple.sh`脚本文件，确认`OpenHarmony SDK`路径为用户环境路径：
 
 ```bash
 # OpenHarmony SDK 路径（可通过环境变量覆盖）
 OHOS_SDK="${OHOS_SDK:-/home/kaihong/ohSDK/linux}"
 ```
 
-如果你的机器路径不同，就把它们改成你自己的绝对路径（否则会编译到错误目录，或者找不到 SDK）。
+如果机器路径不同与上面不同，就把它们改成用户自己的路径（否则会编译到错误目录，或者找不到 SDK）。
 
 ## 2. 快速开始
 
 ```bash
-cd 你下载的脚本路径
+cd 下载的脚本路径
 # 给脚本增加可执行权限
 chmod +x ohos_build_script/*.sh
 # 执行主脚本
@@ -76,7 +76,7 @@ build_ohos/x86_64/lib7z.so
 ### 4.1 只允许依赖系统库（NEEDED）
 
 ```bash
-SDK=/home/kaihong/ohSDK/linux  # 这里修改为你环境的OpenHarmony SDK路径
+SDK=/home/kaihong/ohSDK/linux  # 这里修改为用户环境的OpenHarmony SDK路径
 READELF=$SDK/native/llvm/bin/llvm-readelf
 
 for arch in arm64-v8a armeabi-v7a x86_64; do
@@ -90,7 +90,7 @@ done
 ### 4.2 `dlopen` 硬条件：这些未定义符号必须为 0
 
 ```bash
-SDK=/home/kaihong/ohSDK/linux  # 这里修改为你环境的OpenHarmony SDK路径
+SDK=/home/kaihong/ohSDK/linux  # 这里修改为用户环境的OpenHarmony SDK路径
 NM=$SDK/native/llvm/bin/llvm-nm
 
 so=build_ohos/armeabi-v7a/lib7z.so
@@ -111,10 +111,10 @@ $NM -D "$so" | grep ' U ' | egrep 'FL2_|NZSTD|AesCbc_.*_HW' && echo FAIL || echo
 用环境变量指定 SDK：
 
 ```bash
-OHOS_SDK=/你的/ohSDK/linux ./ohos_build_script/build_ohos_simple.sh
+OHOS_SDK=/用户/ohSDK/linux ./ohos_build_script/build_ohos_simple.sh
 ```
 
-### Q3：我想保留工作目录方便排查
+### Q3：保留工作目录方便排查
 
 ```bash
 KEEP_WORK_DIR=1 ./ohos_build_script/build_ohos_simple.sh
