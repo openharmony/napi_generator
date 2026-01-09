@@ -253,12 +253,14 @@ struct DecompressTestPage {
     this.extractedFiles = [];
     
     const modeText = mode === 'single' ? '单文件' : '多文件';
-    const outputPath = `${this.filesDir}/output`;
+    // 使用独立的解压目录，避免与创建文件路径冲突
+    const outputPath = `${this.filesDir}/decompress_${mode}_${format}`;
     this.inputPathDisplay = inputPath;
     this.outputPathDisplay = outputPath;
     
     this.addLog('========================================');
     this.addLog(`🚀 解压 ${modeText}.${format}`);
+    this.addLog(`📁 输出目录: decompress_${mode}_${format}/`);
     this.addLog('========================================');
     this.statusText = `解压中...`;
     
