@@ -1,8 +1,5 @@
 import router from '@ohos.router';
 import { hilog } from '@kit.PerformanceAnalysisKit';
-import common from '@ohos.app.ability.common';
-import { TestFileGenerator, CreateResult } from '../utils/TestFileGenerator';
-import promptAction from '@ohos.promptAction';
 
 const DOMAIN = 0x0000;
 
@@ -10,8 +7,6 @@ const DOMAIN = 0x0000;
 @Component
 struct MainMenu {
   @State appVersion: string = 'v1.0.0';
-  @State isCreatingFiles: boolean = false;
-  private context = getContext(this) as common.UIAbilityContext;
 
   private navigateTo(url: string, title: string) {
     router.pushUrl({
@@ -21,50 +16,6 @@ struct MainMenu {
     }).catch((err: Error) => {
       hilog.error(DOMAIN, 'MainMenu', `导航失败: ${err.message}`);
     });
-  }
-
-  // 创建测试文件
-  private async createTestFiles() {
-    if (this.isCreatingFiles) {
-      return;
-    }
-    
-    this.isCreatingFiles = true;
-    
-    try {
-      promptAction.showToast({
-        message: '正在创建测试文件...',
-        duration: 2000
-      });
-      
-      const filesDir = this.context.filesDir;
-      hilog.info(DOMAIN, 'MainMenu', `文件目录: ${filesDir}`);
-      
-      const result = await TestFileGenerator.createCompleteTestEnv(filesDir);
-      
-      if (result.success) {
-        promptAction.showDialog({
-          title: '✓ 测试文件创建成功',
-          message: `${result.message}\n\n文件位置：\n${filesDir}\n\n现在可以使用以下路径进行测试：\n\n单文件：test.txt\n多文件：file1.txt, file2.txt, file3.txt\n文件夹：dir1（3个文件）, dir2（2文件+1嵌套文件夹）\n目录压缩：${filesDir}/mydir`,
-          buttons: [{ text: '知道了', color: '#2196F3' }]
-        });
-      } else {
-        promptAction.showDialog({
-          title: '创建失败',
-          message: result.message,
-          buttons: [{ text: '确定', color: '#FF0000' }]
-        });
-      }
-    } catch (error) {
-      hilog.error(DOMAIN, 'MainMenu', `创建测试文件失败: ${error}`);
-      promptAction.showDialog({
-        title: '错误',
-        message: `创建失败: ${error}`,
-        buttons: [{ text: '确定', color: '#FF0000' }]
-      });
-    } finally {
-      this.isCreatingFiles = false;
-    }
   }
 
   build() {
