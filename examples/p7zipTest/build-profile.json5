@@ -1,0 +1,56 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "material": {
+          "certpath": "C:/Users/kaihong/.ohos/config/openharmony/default_p7zipTest_5WbWHB7djxhsccDJrABYvQf0lq_hxavML7VieShdfws=.cer",
+          "storePassword": "0000001B343E37786E7E4AE5B67F21D983B49725CD146AAE7C53F1C22FEC9547F92BAB066D22D4FC0895D7",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B61AB265C01446E8730F41769A8103529BEFF1B28E71785727BFA8BB12C6CAF0679D09A1E6FBD51",
+          "profile": "C:/Users/kaihong/.ohos/config/openharmony/default_p7zipTest_5WbWHB7djxhsccDJrABYvQf0lq_hxavML7VieShdfws=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:/Users/kaihong/.ohos/config/openharmony/default_p7zipTest_5WbWHB7djxhsccDJrABYvQf0lq_hxavML7VieShdfws=.p12"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": 23,
+        "compatibleSdkVersion": 23,
+        "compileSdkVersion": 23,
+        "runtimeOS": "OpenHarmony",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}
