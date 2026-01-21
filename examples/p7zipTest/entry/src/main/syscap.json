@@ -1,0 +1,29 @@
+{
+  "devices": {
+    "general": [
+      "default"
+    ],
+    "custom": [
+      {
+        "OpenHarmony-3.2-RK3568": [
+          "SystemCapability.ArkUI.ArkUI.Full",
+          "SystemCapability.ArkUI.ArkUI.Lite",
+          "SystemCapability.Communication.NetManager.Core",
+          "SystemCapability.FileManagement.File.FileIO",
+          "SystemCapability.Utils.Lang"
+        ]
+      }
+    ]
+  },
+  "development": {
+    "addedSysCaps": []
+  },
+  "production": {
+    "addedSysCaps": [],
+    "removedSysCaps": [
+      "SystemCapability.HiviewDFX.HiDumper",
+      "SystemCapability.Security.DeviceAuth"
+    ]
+  }
+}
+
