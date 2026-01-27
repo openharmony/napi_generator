@@ -1896,3 +1896,1173 @@ def get_compatibility_devices(page=1, limit=16, certification_type=None, system_
     
     Returns:
         设备列表和总数
+    """
+    api_url = "https://compatibility.openharmony.cn/certificate/external/certificationapply/list"
+    
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Origin': 'https://compatibility.openharmony.cn',
+        'Referer': 'https://compatibility.openharmony.cn/',
+    }
+    
+    if certification_type is None:
+        certification_type = [0, 1, 2]  # 全部类型
+    if system_version is None:
+        system_version = [6]  # 默认OpenHarmony 6.0
+    elif system_version == []:  # 空列表表示查询所有版本
+        system_version = [1, 2, 3, 4, 5, 6]  # 查询所有可能的版本
+    if system_type is None:
+        system_type = ["轻量系统", "小型系统", "标准系统"]  # 全部系统类型
+    
+    payload = {
+        "page": page,
+        "limit": limit,
+        "certificationType": certification_type,
+        "systemVersion": system_version,
+        "systemType": system_type,
+        "companyName": company_name,
+        "searchCondition": search_condition
+    }
+    
+    try:
+        response = requests.post(api_url, headers=headers, json=payload, timeout=30)
+        response.raise_for_status()
+        
+        data = response.json()
+        
+        if isinstance(data, dict):
+            if data.get('success') and data.get('code') == 200:
+                body = data.get('body', {})
+                if isinstance(body, dict):
+                    result_list = body.get('result', [])
+                    total = body.get('total', len(result_list))
+                    company_count = body.get('companyCount', 0)
+                    print(f"✓ 成功获取数据: 共 {total} 条，当前页 {len(result_list)} 条，涉及 {company_count} 个公司")
+                    return {
+                        'devices': result_list,
+                        'total': total,
+                        'company_count': company_count,
+                        'page': page,
+                        'limit': limit
+                    }
+            else:
+                print(f"⚠ API返回错误: code={data.get('code')}, msg={data.get('msg')}")
+                
+    except Exception as e:
+        print(f"❌ 查询兼容性设备失败: {e}")
+        import traceback
+        traceback.print_exc()
+    
+    return None
+
+def get_all_compatibility_devices(certification_type=None, system_version=None, system_type=None, company_name="", search_condition="", max_pages=None, limit=50):
+    """
+    获取所有兼容性设备（支持分页）
+    
+    Args:
+        certification_type: 认证类型列表
+        system_version: 系统版本列表
+        system_type: 系统类型列表
+        company_name: 公司名称（manufactureId）
+        search_condition: 搜索条件
+        max_pages: 最大页数，None表示获取全部
+        limit: 每页数量
+    
+    Returns:
+        所有设备列表和统计信息
+    """
+    all_devices = []
+    page = 1
+    total_from_api = None
+    
+    while True:
+        if max_pages and page > max_pages:
+            break
+        
+        print(f"  获取第 {page} 页...", end=' ', flush=True)
+        
+        result = get_compatibility_devices(
+            page=page,
+            limit=limit,
+            certification_type=certification_type,
+            system_version=system_version,
+            system_type=system_type,
+            company_name=company_name,
+            search_condition=search_condition
+        )
+        
+        if result and result.get('devices'):
+            devices = result['devices']
+            all_devices.extend(devices)
+            if total_from_api is None:
+                total_from_api = result.get('total', 0)
+            print(f"✓ 获取 {len(devices)} 条（累计 {len(all_devices)} 条）")
+            
+            # 如果当前页数据少于limit，说明已经是最后一页
+            if len(devices) < limit:
+                print(f"  已获取全部数据（共 {len(all_devices)} 条）")
+                break
+        else:
+            print("✗ 无数据")
+            break
+        
+        page += 1
+    
+    if not all_devices:
+        print("❌ 未获取到任何数据")
+        return None
+    
+    return {
+        'devices': all_devices,
+        'total': total_from_api or len(all_devices),
+        'fetched': len(all_devices)
+    }
+
+def analyze_compatibility_statistics(devices_result):
+    """
+    分析兼容性设备统计信息
+    
+    Args:
+        devices_result: 设备查询结果
+    
+    Returns:
+        统计信息字典
+    """
+    if not devices_result or not devices_result.get('devices'):
+        return None
+    
+    devices = devices_result['devices']
+    
+    # 按公司统计
+    companies = {}
+    # 按系统类型统计
+    system_types = {}
+    # 按系统版本统计
+    system_versions = {}
+    # 按认证类型统计
+    certification_types = {}
+    
+    for device in devices:
+        company = device.get('companyName', '未知公司')
+        sys_type = device.get('systemType', '未知系统')
+        sys_version = device.get('systemVersion', '未知版本')
+        cert_type = device.get('certificationType', '未知类型')
+        
+        # 按公司统计
+        if company not in companies:
+            companies[company] = {
+                'count': 0,
+                'by_system_type': {},
+                'by_version': {}
+            }
+        companies[company]['count'] += 1
+        
+        # 按系统类型统计（在公司下）
+        if sys_type not in companies[company]['by_system_type']:
+            companies[company]['by_system_type'][sys_type] = 0
+        companies[company]['by_system_type'][sys_type] += 1
+        
+        # 按版本统计（在公司下）
+        if sys_version not in companies[company]['by_version']:
+            companies[company]['by_version'][sys_version] = 0
+        companies[company]['by_version'][sys_version] += 1
+        
+        # 按系统类型统计（全局）
+        if sys_type not in system_types:
+            system_types[sys_type] = 0
+        system_types[sys_type] += 1
+        
+        # 按系统版本统计（全局）
+        if sys_version not in system_versions:
+            system_versions[sys_version] = 0
+        system_versions[sys_version] += 1
+        
+        # 按认证类型统计
+        if cert_type not in certification_types:
+            certification_types[cert_type] = 0
+        certification_types[cert_type] += 1
+    
+    return {
+        'total_devices': len(devices),
+        'companies': companies,
+        'system_types': system_types,
+        'system_versions': system_versions,
+        'certification_types': certification_types
+    }
+
+def print_compatibility_statistics(stats, company_name_map=None):
+    """
+    打印兼容性设备统计信息
+    
+    Args:
+        stats: 统计信息字典
+        company_name_map: 公司ID到名称的映射字典
+    """
+    if not stats:
+        print("❌ 无统计数据")
+        return
+    
+    print(f"\n{'='*80}")
+    print(f"兼容性设备统计报告")
+    print(f"{'='*80}")
+    print(f"总设备数: {stats['total_devices']} 个")
+    
+    # 按系统类型统计
+    if stats.get('system_types'):
+        print(f"\n按系统类型统计:")
+        print(f"{'系统类型':<20} {'设备数量':<10}")
+        print("-" * 30)
+        for sys_type, count in sorted(stats['system_types'].items(), key=lambda x: x[1], reverse=True):
+            print(f"{sys_type:<20} {count:<10}")
+    
+    # 按系统版本统计
+    if stats.get('system_versions'):
+        print(f"\n按系统版本统计:")
+        print(f"{'系统版本':<30} {'设备数量':<10}")
+        print("-" * 40)
+        for sys_version, count in sorted(stats['system_versions'].items(), key=lambda x: x[1], reverse=True):
+            print(f"{sys_version:<30} {count:<10}")
+    
+    # 按认证类型统计
+    if stats.get('certification_types'):
+        print(f"\n按认证类型统计:")
+        print(f"{'认证类型':<20} {'设备数量':<10}")
+        print("-" * 30)
+        for cert_type, count in sorted(stats['certification_types'].items(), key=lambda x: x[1], reverse=True):
+            print(f"{cert_type:<20} {count:<10}")
+    
+    # 按公司统计
+    if stats.get('companies'):
+        print(f"\n按公司统计（前20名）:")
+        print(f"{'排名':<6} {'公司名称':<40} {'设备总数':<10} {'轻量系统':<10} {'小型系统':<10} {'标准系统':<10}")
+        print("-" * 90)
+        
+        sorted_companies = sorted(stats['companies'].items(), key=lambda x: x[1]['count'], reverse=True)
+        for rank, (company_id, data) in enumerate(sorted_companies[:20], 1):
+            company_display = company_name_map.get(company_id, company_id) if company_name_map else company_id
+            company_display = company_display[:38] if len(company_display) > 38 else company_display
+            by_type = data.get('by_system_type', {})
+            print(f"{rank:<6} {company_display:<40} {data['count']:<10} "
+                  f"{by_type.get('轻量系统', 0):<10} {by_type.get('小型系统', 0):<10} {by_type.get('标准系统', 0):<10}")
+    
+    print(f"\n{'='*80}\n")
+
+def save_compatibility_stats_to_markdown(stats, company_name_map, csv_filename, company_display_name="所有企业", version_desc="全部版本"):
+    """
+    将兼容性设备统计结果保存为Markdown文档
+    
+    Args:
+        stats: 统计信息字典（来自analyze_compatibility_statistics）
+        company_name_map: 公司ID到名称的映射字典
+        csv_filename: CSV文件名（用于在Markdown中引用）
+        company_display_name: 公司显示名称
+        version_desc: 版本描述
+    
+    Returns:
+        Markdown文件名，如果失败返回None
+    """
+    if not stats:
+        return None
+    
+    # 从CSV文件名生成Markdown文件名
+    md_filename = csv_filename.replace('.csv', '.md')
+    
+    # 统计信息
+    total_devices = stats.get('total_devices', 0)
+    system_types = stats.get('system_types', {})
+    system_versions = stats.get('system_versions', {})
+    certification_types = stats.get('certification_types', {})
+    companies = stats.get('companies', {})
+    
+    # 生成Markdown文档
+    md_content = f'''# OpenHarmony 兼容性设备统计报告
+
+**查询公司**: {company_display_name}  
+**系统版本**: {version_desc}  
+**统计日期**: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+---
+
+## 📊 统计摘要
+
+### 总体数据
+
+- **总设备数**: {total_devices:,} 个
+- **涉及公司数**: {len(companies)} 个
+- **系统版本数**: {len(system_versions)} 个
+
+---
+
+## 📦 按系统类型统计
+
+| 系统类型 | 设备数量 | 占比 |
+|---------|---------|------|
+'''
+    
+    # 按系统类型统计
+    total_for_percentage = sum(system_types.values())
+    for sys_type, count in sorted(system_types.items(), key=lambda x: x[1], reverse=True):
+        percentage = (count / total_for_percentage * 100) if total_for_percentage > 0 else 0
+        md_content += f'| {sys_type} | {count:,} | {percentage:.1f}% |\n'
+    
+    md_content += '\n---\n\n## 🔢 按系统版本统计\n\n'
+    md_content += '| 排名 | 系统版本 | 设备数量 |\n'
+    md_content += '|------|---------|---------|\n'
+    
+    # 按系统版本统计（前20名）
+    sorted_versions = sorted(system_versions.items(), key=lambda x: x[1], reverse=True)
+    for rank, (version, count) in enumerate(sorted_versions[:20], 1):
+        md_content += f'| {rank} | {version} | {count:,} |\n'
+    
+    md_content += '\n---\n\n## 🏢 按认证类型统计\n\n'
+    md_content += '| 认证类型 | 设备数量 | 占比 |\n'
+    md_content += '|---------|---------|------|\n'
+    
+    # 按认证类型统计
+    total_cert = sum(certification_types.values())
+    for cert_type, count in sorted(certification_types.items(), key=lambda x: x[1], reverse=True):
+        percentage = (count / total_cert * 100) if total_cert > 0 else 0
+        md_content += f'| {cert_type} | {count:,} | {percentage:.1f}% |\n'
+    
+    md_content += '\n---\n\n## 🏆 按公司统计（前30名）\n\n'
+    md_content += '| 排名 | 公司名称 | 设备总数 | 轻量系统 | 小型系统 | 标准系统 |\n'
+    md_content += '|------|---------|---------|---------|---------|---------|\n'
+    
+    # 按公司统计（前30名）
+    sorted_companies = sorted(companies.items(), key=lambda x: x[1]['count'], reverse=True)
+    for rank, (company_id, data) in enumerate(sorted_companies[:30], 1):
+        company_display = company_name_map.get(company_id, company_id) if company_name_map else company_id
+        by_type = data.get('by_system_type', {})
+        md_content += f'| {rank} | {company_display} | {data["count"]} | {by_type.get("轻量系统", 0)} | {by_type.get("小型系统", 0)} | {by_type.get("标准系统", 0)} |\n'
+    
+    md_content += '\n---\n\n## 📝 详细说明\n\n'
+    
+    # 前10名公司详情
+    md_content += '### 前10名公司详情\n\n'
+    for rank, (company_id, data) in enumerate(sorted_companies[:10], 1):
+        company_display = company_name_map.get(company_id, company_id) if company_name_map else company_id
+        by_type = data.get('by_system_type', {})
+        by_version = data.get('by_version', {})
+        
+        md_content += f'''#### {rank}. {company_display}
+
+- **设备总数**: {data["count"]} 个
+- **系统类型分布**: 轻量系统 {by_type.get("轻量系统", 0)} 个, 小型系统 {by_type.get("小型系统", 0)} 个, 标准系统 {by_type.get("标准系统", 0)} 个
+- **主要版本**: {', '.join([f"{v}({c}个)" for v, c in sorted(by_version.items(), key=lambda x: x[1], reverse=True)[:3]])}
+
+'''
+    
+    md_content += '\n---\n\n## 📄 数据来源\n\n'
+    md_content += f'- 详细数据已保存到: `{csv_filename}`\n'
+    md_content += f'- CSV文件包含 {total_devices:,} 条完整设备记录\n'
+    md_content += '- 每条记录包含：认证类型、公司名称、设备名称、芯片型号、系统类型、系统版本、软件版本、批准时间、设备型号、描述、图片URL、PCID文件URL等完整信息\n'
+    md_content += '\n---\n\n*本报告由 OpenHarmony 兼容性设备查询工具自动生成*\n'
+    
+    try:
+        with open(md_filename, 'w', encoding='utf-8') as f:
+            f.write(md_content)
+        print(f"✓ 统计报告已保存到Markdown文件: {md_filename}")
+        return md_filename
+    except Exception as e:
+        print(f"⚠ 保存Markdown文件失败: {e}")
+        return None
+
+def get_mock_data():
+    """
+    获取模拟数据（用于演示）
+    """
+    return [
+        {'name': '华为技术有限公司', 'pr': '1250', 'added_code': '45000', 'deleted_code': '12000', 'modified_code': '33000', 'modification_ratio': '15.2%'},
+        {'name': '中软国际', 'pr': '890', 'added_code': '32000', 'deleted_code': '8500', 'modified_code': '23500', 'modification_ratio': '10.8%'},
+        {'name': '软通动力', 'pr': '756', 'added_code': '28000', 'deleted_code': '7200', 'modified_code': '20800', 'modification_ratio': '9.6%'},
+        {'name': '润和软件', 'pr': '634', 'added_code': '24000', 'deleted_code': '6100', 'modified_code': '17900', 'modification_ratio': '8.2%'},
+        {'name': '诚迈科技', 'pr': '521', 'added_code': '21000', 'deleted_code': '5300', 'modified_code': '15700', 'modification_ratio': '7.2%'},
+        {'name': '拓维信息', 'pr': '456', 'added_code': '18000', 'deleted_code': '4600', 'modified_code': '13400', 'modification_ratio': '6.2%'},
+        {'name': '中科创达', 'pr': '389', 'added_code': '15000', 'deleted_code': '3800', 'modified_code': '11200', 'modification_ratio': '5.2%'},
+        {'name': '东软集团', 'pr': '342', 'added_code': '13000', 'deleted_code': '3300', 'modified_code': '9700', 'modification_ratio': '4.5%'},
+        {'name': '恒玄科技', 'pr': '298', 'added_code': '11000', 'deleted_code': '2800', 'modified_code': '8200', 'modification_ratio': '3.8%'},
+        {'name': '九联科技', 'pr': '267', 'added_code': '9800', 'deleted_code': '2500', 'modified_code': '7300', 'modification_ratio': '3.4%'},
+    ]
+
+def main():
+    """
+    主函数
+    支持命令行参数：
+    - 无参数或 'employer': 显示雇主数据
+    - 'author' 或 'contributor': 显示贡献者排名数据
+    - 时间范围参数: '1month', '2month', '3month', '1year', '2year', '3year', 'all'
+    
+    用法示例:
+    python3 getcodecnt.py employer 1month
+    python3 getcodecnt.py author 2month
+    python3 getcodecnt.py 3year
+    """
+    import sys
+    
+    # 获取命令行参数
+    mode = 'employer'  # 默认显示雇主数据
+    time_period = 'all'  # 默认全部时间
+    employer = '深开鸿'  # 默认雇主（用于detail模式）
+    branch = 'master'  # 默认分支（用于detail模式）
+    author_email = ''  # 作者邮箱（用于email模式）
+    max_pages = None  # 最大页数（用于stats模式，None表示获取全部）
+    # 兼容性设备查询参数
+    compatibility_company = ''  # 公司名称或ID（用于compatibility模式），空字符串表示查询所有企业
+    compatibility_version = []  # 系统版本，空列表[]表示查询所有版本
+    compatibility_system_type = None  # 系统类型，None表示全部
+    
+    if len(sys.argv) > 1:
+        arg1 = sys.argv[1].lower()
+        
+        # 检查是否是帮助
+        if arg1 in ['-h', '--help', 'help']:
+            print("用法: python3 getcodecnt.py [mode] [time_period] [employer]")
+            print()
+            print("模式 (mode):")
+            print("  employer  - 显示雇主贡献数据（默认）")
+            print("  author    - 显示贡献者排名数据")
+            print("  detail    - 显示提交详情数据（需要指定雇主）")
+            print("  alldetail - 显示所有主要雇主的提交详情汇总")
+            print("  stats     - 显示提交详情统计报告（支持分页或全部数据）")
+            print("  email     - 根据作者邮箱查询提交详情和统计（需要指定邮箱）")
+            print("  compatibility - 查询兼容性设备列表和统计（支持按公司、版本、系统类型查询）")
+            print()
+            print("时间范围 (time_period):")
+            print("  1week, 1w, 7days, 近1周    - 近1周")
+            print("  2week, 2w, 14days, 近2周   - 近2周")
+            print("  1month, 1m, 近1个月        - 近1个月")
+            print("  2month, 2m, 近2个月        - 近2个月")
+            print("  3month, 3m, 近3个月        - 近3个月")
+            print("  6month, 6m, 近6个月        - 近6个月")
+            print("  1year, 1y, 近1年           - 近1年")
+            print("  2year, 2y, 近2年          - 近2年")
+            print("  3year, 3y, 近3年          - 近3年")
+            print("  all, 全部                  - 全部时间（默认）")
+            print()
+            print("示例:")
+            print("  python3 getcodecnt.py employer 1month")
+            print("  python3 getcodecnt.py author 2month")
+            print("  python3 getcodecnt.py detail 1month 深开鸿")
+            print("  python3 getcodecnt.py detail 3month 华为 master")
+            print("  python3 getcodecnt.py stats all 深开鸿 6.0release")
+            print("  python3 getcodecnt.py stats all 深开鸿 6.0release 5  # 只获取前5页")
+            print("  python3 getcodecnt.py email 1month goujingjing@kaihong.com")
+            print("  python3 getcodecnt.py email 1month goujingjing@kaihong.com master")
+            print("  python3 getcodecnt.py compatibility  # 查询所有企业和所有版本")
+            print("  python3 getcodecnt.py compatibility 深开鸿  # 查询深开鸿的所有版本设备（使用公司名称）")
+            print("  python3 getcodecnt.py compatibility 103  # 查询深开鸿的设备（使用公司ID）")
+            print("  python3 getcodecnt.py compatibility 深开鸿 6  # 查询深开鸿的OpenHarmony 6.0设备")
+            print("  python3 getcodecnt.py compatibility 103 6 轻量系统  # 查询指定版本和系统类型")
+            return
+        
+        # 检查是否是模式参数
+        if arg1 in ['author', 'contributor', 'contributors', 'rank']:
+            mode = 'author'
+            # 检查是否有时间参数
+            if len(sys.argv) > 2:
+                time_period = sys.argv[2]
+        elif arg1 in ['employer', 'employers', 'company', 'companies']:
+            mode = 'employer'
+            # 检查是否有时间参数
+            if len(sys.argv) > 2:
+                time_period = sys.argv[2]
+        elif arg1 in ['detail', 'details']:
+            mode = 'detail'
+            # 检查是否有时间参数和雇主参数
+            if len(sys.argv) > 2:
+                time_period = sys.argv[2]
+            if len(sys.argv) > 3:
+                employer = sys.argv[3]
+            else:
+                employer = '深开鸿'  # 默认雇主
+            if len(sys.argv) > 4:
+                branch = sys.argv[4]
+            else:
+                branch = 'master'  # 默认分支
+        elif arg1 in ['alldetail', 'all-detail', 'all_details', 'all']:
+            mode = 'alldetail'
+            # 检查是否有时间参数
+            if len(sys.argv) > 2:
+                time_period = sys.argv[2]
+            if len(sys.argv) > 3:
+                branch = sys.argv[3]
+            else:
+                branch = 'master'  # 默认分支
+        elif arg1 in ['email', 'author-email', 'authoremail', 'byemail']:
+            mode = 'email'
+            # 检查是否有时间参数和邮箱参数
+            if len(sys.argv) > 2:
+                time_period = sys.argv[2]
+            if len(sys.argv) > 3:
+                author_email = sys.argv[3]
+            else:
+                print("❌ 错误: email模式需要提供作者邮箱")
+                print("   用法: python3 getcodecnt.py email <time_period> <author_email> [branch]")
+                return
+            if len(sys.argv) > 4:
+                branch = sys.argv[4]
+            else:
+                branch = 'master'  # 默认分支
+        elif arg1 in ['yearquery', 'year-query', 'year']:
+            mode = 'yearquery'
+            # 检查是否有邮箱和年份参数
+            if len(sys.argv) > 2:
+                author_email = sys.argv[2]
+            else:
+                print("❌ 错误: yearquery模式需要指定作者邮箱")
+                print("   用法: python3 getcodecnt.py yearquery <author_email> <year>")
+                return
+            if len(sys.argv) > 3:
+                try:
+                    year = int(sys.argv[3])
+                except ValueError:
+                    print(f"❌ 错误: 年份必须是数字，当前值: {sys.argv[3]}")
+                    return
+            else:
+                # 默认使用当前年份
+                from datetime import datetime
+                year = datetime.now().year
+        elif arg1 in ['compatibility', 'compat', 'device', 'devices']:
+            mode = 'compatibility'
+            # 可选参数：公司名称/ID、系统版本、系统类型
+            # 如果提供了第二个参数，可能是公司名称或ID
+            if len(sys.argv) > 2:
+                compatibility_company = sys.argv[2]
+            # 如果提供了第三个参数，可能是版本号或"all"
+            if len(sys.argv) > 3:
+                if sys.argv[3].lower() in ['all', '全部', 'allversions']:
+                    compatibility_version = []  # 空列表表示查询所有版本
+                else:
+                    try:
+                        compatibility_version = [int(sys.argv[3])]
+                    except:
+                        # 如果无法转换为数字，可能是系统类型，跳过版本参数
+                        compatibility_version = []
+            # 如果提供了第四个参数，可能是系统类型
+            if len(sys.argv) > 4:
+                compatibility_system_type = [sys.argv[4]]
+        elif arg1 in ['stats', 'statistics', 'stat']:
+            mode = 'stats'
+            # 检查是否有时间参数和雇主参数
+            if len(sys.argv) > 2:
+                time_period = sys.argv[2]
+            if len(sys.argv) > 3:
+                employer = sys.argv[3]
+            else:
+                employer = '深开鸿'  # 默认雇主
+            if len(sys.argv) > 4:
+                branch = sys.argv[4]
+            else:
+                branch = 'master'  # 默认分支
+            if len(sys.argv) > 5:
+                try:
+                    max_pages = int(sys.argv[5])
+                except:
+                    max_pages = None
+            else:
+                max_pages = None  # 默认获取全部数据
+        else:
+            # 第一个参数可能是时间范围
+            # 检查是否是时间范围参数
+            time_keywords = ['month', 'm', 'year', 'y', '个月', '年', '全部', 'all']
+            if any(keyword in arg1 for keyword in time_keywords):
+                time_period = arg1
+            else:
+                # 可能是模式参数
+                if arg1 in ['author', 'contributor', 'rank']:
+                    mode = 'author'
+                elif arg1 in ['employer', 'company']:
+                    mode = 'employer'
+                elif arg1 in ['detail', 'details']:
+                    mode = 'detail'
+                    employer = '深开鸿'  # 默认雇主
+                    branch = 'master'  # 默认分支
+                elif arg1 in ['alldetail', 'all-detail', 'all_details']:
+                    mode = 'alldetail'
+                    branch = 'master'  # 默认分支
+                elif arg1 in ['email', 'author-email', 'authoremail', 'byemail']:
+                    mode = 'email'
+                    if len(sys.argv) > 2:
+                        author_email = sys.argv[2]
+                    else:
+                        print("❌ 错误: email模式需要提供作者邮箱")
+                        return
+                    branch = 'master'  # 默认分支
+                elif arg1 in ['compatibility', 'compat', 'device', 'devices']:
+                    mode = 'compatibility'
+                    # 可选参数：公司名称/ID、系统版本、系统类型
+                    if len(sys.argv) > 2:
+                        compatibility_company = sys.argv[2]
+                    if len(sys.argv) > 3:
+                        if sys.argv[3].lower() in ['all', '全部', 'allversions']:
+                            compatibility_version = []  # 空列表表示查询所有版本
+                        else:
+                            try:
+                                compatibility_version = [int(sys.argv[3])]
+                            except:
+                                # 如果无法转换为数字，可能是系统类型，跳过版本参数
+                                compatibility_version = []
+                    if len(sys.argv) > 4:
+                        compatibility_system_type = [sys.argv[4]]
+                elif arg1 in ['stats', 'statistics', 'stat']:
+                    mode = 'stats'
+                    employer = '深开鸿'  # 默认雇主
+                    branch = 'master'  # 默认分支
+                    max_pages = None
+    
+    if mode == 'author':
+        # 显示贡献者排名数据
+        print("╔══════════════════════════════════════════════════════════════╗")
+        print("║  OpenHarmony 贡献者排名数据获取工具                          ║")
+        print("║  访问: author/rank                                           ║")
+        print("╚══════════════════════════════════════════════════════════════╝")
+        print()
+        
+        authors = get_author_rank_data(time_period)
+        
+        if authors and len(authors) > 0:
+            print_author_data(authors)
+            # 保存到CSV文件
+            save_to_csv(authors, 'author', time_period)
+        else:
+            print("❌ 无法获取贡献者数据")
+    elif mode == 'detail':
+        # 显示提交详情数据
+        print("╔══════════════════════════════════════════════════════════════╗")
+        print("║  OpenHarmony 提交详情数据获取工具                            ║")
+        print("║  访问: review/metric/detail                                   ║")
+        print("╚══════════════════════════════════════════════════════════════╝")
+        print()
+        
+        result_data = get_detail_data(employer, branch, time_period)
+        
+        if result_data and result_data.get('details'):
+            print_detail_data(result_data)
+            # 保存到CSV文件
+            save_detail_to_csv(result_data)
+        else:
+            print("❌ 无法获取详情数据")
+    elif mode == 'alldetail':
+        # 显示所有雇主的提交详情汇总
+        result_data = get_all_employers_detail(time_period, branch, max_employers=10, page_size=50)
+        
+        if result_data and result_data.get('details'):
+            print_all_details_summary(result_data)
+            # 保存到CSV文件
+            save_all_details_to_csv(result_data)
+        else:
+            print("❌ 无法获取所有雇主的详情数据")
+    elif mode == 'yearquery':
+        # 查询指定作者在指定年份的代码贡献
+        print("╔══════════════════════════════════════════════════════════════╗")
+        print("║  OpenHarmony 年度代码贡献查询工具                            ║")
+        print("║  访问: codeline/author/rank                                    ║")
+        print("╚══════════════════════════════════════════════════════════════╝")
+        print()
+        
+        result = query_author_year_contribution(author_email, year)
+        
+        if result:
+            print("\n" + "=" * 80)
+            print("查询结果")
+            print("=" * 80)
+            print(f"作者邮箱: {result['authorEmail']}")
+            print(f"匹配到的屏蔽邮箱: {result['maskedEmail']}")
+            print(f"雇主: {result['employer']}")
+            print(f"年份: {result['year']}")
+            print(f"\n代码贡献统计:")
+            print(f"  新增代码: {result['additions']:,} 行")
+            print(f"  删除代码: {result['deletions']:,} 行")
+            print(f"  变更代码: {result['changeNum']:,} 行")
+            print(f"  总代码量: {result['additions'] + result['deletions']:,} 行")
+        else:
+            print("\n" + "=" * 80)
+            print("查询结果")
+            print("=" * 80)
+            print(f"❌ 未找到 {author_email} 在 {year} 年的代码贡献数据")
+            print(f"\n可能的原因:")
+            print(f"  1. 该作者在 {year} 年没有代码贡献")
+            print(f"  2. 该作者不在前N名贡献者列表中（author/rank API 可能只返回前N名）")
+            print(f"  3. 需要使用 detail API 按月查询")
+            print(f"\n建议:")
+            print(f"  使用 detail API 按月查询，例如:")
+            print(f"  python3 getcodecnt.py email 1month {author_email}")
+            print(f"  然后对每个月的数据进行汇总")
+    
+    elif mode == 'email':
+        # 根据作者邮箱查询提交详情和统计
+        print("╔══════════════════════════════════════════════════════════════╗")
+        print("║  OpenHarmony 按作者邮箱查询提交详情工具                      ║")
+        print("║  访问: review/metric/detail                                   ║")
+        print("╚══════════════════════════════════════════════════════════════╝")
+        print()
+        
+        email_result = get_email_statistics(author_email, branch, time_period, max_pages=None, page_size=50)
+        
+        if email_result and email_result.get('details'):
+            # 保存到CSV文件
+            period_map = {
+                '近1周': '1week', '近2周': '2week',
+                '近1个月': '1month', '近2个月': '2month', '近3个月': '3month',
+                '近6个月': '6month', '近1年': '1year', '近2年': '2year',
+                '近3年': '3year', '全部时间': 'all'
+            }
+            period_file = period_map.get(email_result['time_period'], 'all')
+            # 清理邮箱用于文件名（替换@和.为_）
+            email_file = author_email.replace('@', '_at_').replace('.', '_')
+            filename = f"email_{email_file}_{branch}_{period_file}.csv"
+            
+            try:
+                with open(filename, 'w', newline='', encoding='utf-8-sig') as csvfile:
+                    fieldnames = ['序号', 'ID', 'UUID', '项目', '仓库', '分支', '雇主', '作者姓名', '作者邮箱', '提交者', '新增代码', '删除代码', '变更数', '回退数', '提交时间', '作者时间', '合并时间', '提交ID', '提交信息', '提交URL', 'PR链接', '仓库ID', 'SIG', '状态']
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                    writer.writeheader()
+                    
+                    for i, detail in enumerate(email_result['details'], 1):
+                        writer.writerow({
+                            '序号': i,
+                            'ID': detail.get('id', 'N/A'),
+                            'UUID': detail.get('uuid', 'N/A'),
+                            '项目': detail.get('project', 'N/A'),
+                            '仓库': detail.get('repo', 'N/A'),
+                            '分支': detail.get('branch', 'N/A'),
+                            '雇主': detail.get('employer', 'N/A'),
+                            '作者姓名': detail.get('author_name', 'N/A'),
+                            '作者邮箱': detail.get('author_email', 'N/A'),
+                            '提交者': detail.get('committer', 'N/A'),
+                            '新增代码': detail.get('additions', '0'),
+                            '删除代码': detail.get('deletions', '0'),
+                            '变更数': detail.get('change_num', '0'),
+                            '回退数': detail.get('rollback_count', '0'),
+                            '提交时间': detail.get('commit_time', 'N/A'),
+                            '作者时间': detail.get('author_date', 'N/A'),
+                            '合并时间': detail.get('merge_time', 'N/A'),
+                            '提交ID': detail.get('commit_id', 'N/A'),
+                            '提交信息': detail.get('commit_message', 'N/A'),
+                            '提交URL': detail.get('commit_url', 'N/A'),
+                            'PR链接': detail.get('pr_url', 'N/A'),
+                            '仓库ID': detail.get('repo_id', 'N/A'),
+                            'SIG': detail.get('sig', 'N/A'),
+                            '状态': detail.get('status', 'N/A')
+                        })
+                
+                print(f"✓ 统计数据已保存到CSV文件: {filename}")
+            except Exception as e:
+                print(f"⚠ 保存CSV文件失败: {e}")
+        else:
+            print("❌ 无法获取统计数据")
+    elif mode == 'stats':
+        # 显示提交详情统计报告
+        print("╔══════════════════════════════════════════════════════════════╗")
+        print("║  OpenHarmony 提交详情统计报告工具                            ║")
+        print("║  访问: review/metric/detail                                   ║")
+        print("╚══════════════════════════════════════════════════════════════╝")
+        print()
+        
+        stats_result = get_detail_statistics(employer, branch, time_period, max_pages=max_pages, page_size=50)
+        
+        if stats_result and stats_result.get('details'):
+            # 保存统计结果到CSV文件
+            period_map = {
+                '近1周': '1week', '近2周': '2week',
+                '近1个月': '1month', '近2个月': '2month', '近3个月': '3month',
+                '近6个月': '6month', '近1年': '1year', '近2年': '2year',
+                '近3年': '3year', '全部时间': 'all'
+            }
+            period_file = period_map.get(stats_result['time_period'], 'all')
+            employer_file = employer.replace(' ', '_').replace('/', '_')
+            filename = f"stats_{employer_file}_{branch}_{period_file}.csv"
+            
+            try:
+                with open(filename, 'w', newline='', encoding='utf-8-sig') as csvfile:
+                    fieldnames = ['序号', 'ID', 'UUID', '项目', '仓库', '分支', '雇主', '作者姓名', '作者邮箱', '提交者', '新增代码', '删除代码', '变更数', '回退数', '提交时间', '作者时间', '合并时间', '提交ID', '提交信息', '提交URL', 'PR链接', '仓库ID', 'SIG', '状态']
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                    writer.writeheader()
+                    
+                    for i, detail in enumerate(stats_result['details'], 1):
+                        writer.writerow({
+                            '序号': i,
+                            'ID': detail.get('id', 'N/A'),
+                            'UUID': detail.get('uuid', 'N/A'),
+                            '项目': detail.get('project', 'N/A'),
+                            '仓库': detail.get('repo', 'N/A'),
+                            '分支': detail.get('branch', 'N/A'),
+                            '雇主': detail.get('employer', 'N/A'),
+                            '作者姓名': detail.get('author_name', 'N/A'),
+                            '作者邮箱': detail.get('author_email', 'N/A'),
+                            '提交者': detail.get('committer', 'N/A'),
+                            '新增代码': detail.get('additions', '0'),
+                            '删除代码': detail.get('deletions', '0'),
+                            '变更数': detail.get('change_num', '0'),
+                            '回退数': detail.get('rollback_count', '0'),
+                            '提交时间': detail.get('commit_time', 'N/A'),
+                            '作者时间': detail.get('author_date', 'N/A'),
+                            '合并时间': detail.get('merge_time', 'N/A'),
+                            '提交ID': detail.get('commit_id', 'N/A'),
+                            '提交信息': detail.get('commit_message', 'N/A'),
+                            '提交URL': detail.get('commit_url', 'N/A'),
+                            'PR链接': detail.get('pr_url', 'N/A'),
+                            '仓库ID': detail.get('repo_id', 'N/A'),
+                            'SIG': detail.get('sig', 'N/A'),
+                            '状态': detail.get('status', 'N/A')
+                        })
+                
+                print(f"✓ 统计数据已保存到CSV文件: {filename}")
+                
+                # 自动生成Markdown统计报告
+                save_stats_to_markdown(stats_result, filename)
+            except Exception as e:
+                print(f"⚠ 保存CSV文件失败: {e}")
+        else:
+            print("❌ 无法获取统计数据")
+    elif mode == 'compatibility':
+        # 查询兼容性设备
+        print("╔══════════════════════════════════════════════════════════════╗")
+        print("║  OpenHarmony 兼容性设备查询工具                                ║")
+        print("║  访问: certificate/external/certificationapply/list          ║")
+        print("╚══════════════════════════════════════════════════════════════╝")
+        print()
+        
+        # 先获取公司列表（用于显示公司名称和名称到ID的映射）
+        print("正在获取公司列表...")
+        company_list = get_company_name_list()
+        company_name_map = {}  # ID -> 名称
+        company_id_map = {}    # 名称 -> ID
+        if company_list:
+            for company in company_list:
+                company_id = company.get('manufactureId', '')
+                company_name = company.get('companyFullName', '')
+                if company_id and company_name:
+                    company_name_map[company_id] = company_name
+                    company_id_map[company_name] = company_id
+                    
+                    # 建立常用简称映射（优先主要公司）
+                    # 深开鸿 -> 深圳开鸿数字产业发展有限公司 (ID: 103)
+                    if company_name == '深圳开鸿数字产业发展有限公司':
+                        company_id_map['深开鸿'] = company_id
+                        company_id_map['深圳开鸿'] = company_id
+                        company_id_map['深圳开鸿数字产业发展有限公司'] = company_id
+                    elif '深圳开鸿' in company_name and '数字产业发展' in company_name:
+                        # 如果还没有设置，则设置
+                        if '深开鸿' not in company_id_map:
+                            company_id_map['深开鸿'] = company_id
+                            company_id_map['深圳开鸿'] = company_id
+                    # 华为 -> 华为终端有限公司 或 华为技术有限公司
+                    if '华为' in company_name and ('终端' in company_name or '技术' in company_name):
+                        if '华为' not in company_id_map or '终端' in company_name:
+                            company_id_map['华为'] = company_id
+                    # 其他常见简称可以在这里添加
+        
+        # 处理公司名称/ID转换
+        company_id_for_query = ''
+        company_display_name = ''
+        if compatibility_company:
+            # 检查是否是ID（纯数字或包含字母数字）
+            if compatibility_company.isdigit() or (len(compatibility_company) <= 5 and any(c.isdigit() for c in compatibility_company)):
+                # 可能是ID，直接使用
+                company_id_for_query = compatibility_company
+                company_display_name = company_name_map.get(company_id_for_query, compatibility_company)
+            else:
+                # 尝试通过名称查找ID
+                # 首先检查精确匹配（包括简称映射）
+                if compatibility_company in company_id_map:
+                    company_id_for_query = company_id_map[compatibility_company]
+                    # 获取完整公司名称用于显示
+                    company_display_name = company_name_map.get(company_id_for_query, compatibility_company)
+                    print(f"✓ 找到匹配公司: {company_display_name} (ID: {company_id_for_query})")
+                else:
+                    # 模糊匹配：查找包含该名称的公司
+                    found = False
+                    best_match = None
+                    best_match_score = 0
+                    
+                    for name, cid in company_id_map.items():
+                        # 检查是否包含关键词
+                        if compatibility_company in name:
+                            # 计算匹配度（优先完全匹配，然后是开头匹配）
+                            score = 0
+                            if name == compatibility_company:
+                                score = 100
+                            elif name.startswith(compatibility_company):
+                                score = 50
+                            elif compatibility_company in name:
+                                score = 30
+                            
+                            if score > best_match_score:
+                                best_match = (name, cid)
+                                best_match_score = score
+                                found = True
+                    
+                    if found and best_match:
+                        company_id_for_query = best_match[1]
+                        company_display_name = company_name_map.get(company_id_for_query, best_match[0])
+                        print(f"✓ 找到匹配公司: {company_display_name} (ID: {company_id_for_query})")
+                    else:
+                        print(f"⚠ 警告: 未找到公司 '{compatibility_company}'，将查询所有企业")
+                        company_id_for_query = ''
+                        company_display_name = '所有企业'
+        else:
+            company_display_name = '所有企业'
+        
+        # 查询兼容性设备
+        print(f"\n正在查询兼容性设备...")
+        print(f"  公司: {company_display_name}")
+        if compatibility_version == []:
+            print(f"  系统版本: 全部版本")
+        else:
+            print(f"  系统版本: {compatibility_version}")
+        if compatibility_system_type:
+            print(f"  系统类型: {compatibility_system_type}")
+        else:
+            print(f"  系统类型: 全部（轻量系统、小型系统、标准系统）")
+        
+        devices_result = get_all_compatibility_devices(
+            certification_type=[0, 1, 2],
+            system_version=compatibility_version if compatibility_version != [] else [1, 2, 3, 4, 5, 6],
+            system_type=compatibility_system_type,
+            company_name=company_id_for_query,
+            search_condition="",
+            max_pages=None,
+            limit=50
+        )
+        
+        if devices_result and devices_result.get('devices'):
+            # 分析统计信息
+            stats = analyze_compatibility_statistics(devices_result)
+            
+            # 打印统计信息
+            print_compatibility_statistics(stats, company_name_map)
+            
+            # 保存到CSV文件
+            devices = devices_result['devices']
+            filename_parts = ['compatibility']
+            if company_id_for_query:
+                filename_parts.append(company_display_name.replace(' ', '_').replace('/', '_'))
+            else:
+                filename_parts.append('all_companies')
+            if compatibility_version != []:
+                filename_parts.append(f"v{compatibility_version[0]}")
+            else:
+                filename_parts.append('all_versions')
+            if compatibility_system_type:
+                filename_parts.append(compatibility_system_type[0].replace('系统', ''))
+            filename = '_'.join(filename_parts) + '.csv'
+            
+            # 生成版本描述
+            if compatibility_version == []:
+                version_desc = "全部版本"
+            else:
+                version_desc = f"OpenHarmony {compatibility_version[0]}.0"
+            
+            try:
+                with open(filename, 'w', newline='', encoding='utf-8-sig') as csvfile:
+                    fieldnames = ['序号', '认证类型', '公司名称', '设备名称', '芯片型号', '系统类型', '系统版本', 
+                                 '软件版本', '批准时间', '设备型号', '描述', '图片URL', 'PCID文件URL']
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                    writer.writeheader()
+                    
+                    for i, device in enumerate(devices, 1):
+                        # 处理图片URL（可能有多个）
+                        pic_urls = device.get('picUrls', {})
+                        pic_url_str = ''
+                        if isinstance(pic_urls, dict):
+                            pic_url_list = list(pic_urls.values())
+                            pic_url_str = '; '.join(pic_url_list[:3])  # 最多显示3个URL
+                        elif isinstance(pic_urls, str):
+                            pic_url_str = pic_urls
+                        
+                        company_id = device.get('companyName', '')
+                        company_display = company_name_map.get(company_id, company_id) if company_id else '未知'
+                        
+                        writer.writerow({
+                            '序号': i,
+                            '认证类型': device.get('certificationType', 'N/A'),
+                            '公司名称': company_display,
+                            '设备名称': device.get('name', 'N/A'),
+                            '芯片型号': device.get('chipModel', 'N/A'),
+                            '系统类型': device.get('systemType', 'N/A'),
+                            '系统版本': device.get('systemVersion', 'N/A'),
+                            '软件版本': device.get('softwareVersion', 'N/A'),
+                            '批准时间': device.get('approvalTime', 'N/A'),
+                            '设备型号': device.get('deviceModel', 'N/A'),
+                            '描述': device.get('desc', 'N/A'),
+                            '图片URL': pic_url_str,
+                            'PCID文件URL': device.get('pcidFileScUrl', 'N/A')
+                        })
+                
+                print(f"✓ 兼容性设备数据已保存到CSV文件: {filename}")
+                
+                # 自动生成Markdown统计报告
+                save_compatibility_stats_to_markdown(stats, company_name_map, filename, company_display_name, version_desc)
+            except Exception as e:
+                print(f"⚠ 保存CSV文件失败: {e}")
+        else:
+            print("❌ 无法获取兼容性设备数据")
+    else:
+        # 显示雇主数据（默认）
+        print("╔══════════════════════════════════════════════════════════════╗")
+        print("║  OpenHarmony 雇主数据获取工具                                ║")
+        print("║  访问: mainEmployerDimension                                 ║")
+        print("╚══════════════════════════════════════════════════════════════╝")
+        print()
+        
+        employers = get_employer_data(time_period)
+        
+        # 验证获取的数据是否有效（检查是否有正确的字段）
+        if employers:
+            valid_employers = []
+            for emp in employers:
+                # 检查是否包含必要的字段且数据合理
+                name = emp.get('name', '')
+                # 检查名称是否合理（不是开发板名称等）
+                if (name and 
+                    len(name) < 50 and  # 名称不应该太长
+                    not any(keyword in name for keyword in ['系统', '开发板', '芯片', 'device_', '主要能力'])):
+                    # 检查是否有数值字段
+                    has_numeric_data = any(
+                        emp.get('pr', '').isdigit() or 
+                        emp.get('added_code', '').isdigit() or 
+                        emp.get('modified_code', '').isdigit()
+                        for emp in [emp]
+                    )
+                    if has_numeric_data or len(valid_employers) < 2:  # 至少要有一些数据
+                        valid_employers.append(emp)
+            employers = valid_employers if len(valid_employers) >= 3 else None
+        
+        if not employers or len(employers) < 3:
+            print("⚠ 无法从网站获取有效数据，使用模拟数据演示功能...")
+            print("   可能的原因：")
+            print("   1. 网页结构已改变或需要JavaScript渲染（建议使用Selenium）")
+            print("   2. 需要登录或验证")
+            print("   3. 网络连接问题或URL已变更")
+            print("   4. 建议使用浏览器开发者工具检查实际的API端点")
+            print("   5. 可能需要查看网页源代码，找到数据加载的API\n")
+            employers = get_mock_data()
+        
+        if employers:
+            print_employer_data(employers)
+            # 保存到CSV文件
+            save_to_csv(employers, 'employer', time_period)
+        else:
+            print("❌ 无法获取数据")
+
+def query_author_year_contribution(author_email, year):
+    """
+    查询指定作者在指定年份的代码贡献量
+    
+    Args:
+        author_email: 作者邮箱，如 "wangshi@kaihong.com"
+        year: 年份，如 2025
+    
+    Returns:
+        dict: 包含代码贡献统计的字典，如果未找到返回None
+    """
+    # 设置时间范围为整年
+    start_time = f"{year}-01-01 00:00:00"
+    end_time = f"{year}-12-31 23:59:59"
+    
+    api_url = "https://www.openharmony.cn/api/statistics/codeline/author/rank"
+    
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Origin': 'https://www.openharmony.cn',
+        'Referer': 'https://www.openharmony.cn/',
+        'Connection': 'keep-alive',
+    }
+    
+    payload = {
+        "project": ["openharmony"],
+        "branch": "master",
+        "repos": [],
+        "repo": "",
+        "isThird": [],
+        "sig": "",
+        "tag": "",
+        "ohFlag": 1,
+        "startTime": start_time,
+        "endTime": end_time,
+        "isExport": 0,
+        "employer": ""
+    }
+    
+    print(f"正在查询 {author_email} 在 {year} 年的代码贡献...")
+    print(f"时间范围: {start_time} 至 {end_time}")
+    
+    try:
+        response = requests.post(api_url, headers=headers, json=payload, timeout=30)
+        response.raise_for_status()
+        
+        data = response.json()
+        
+        if isinstance(data, dict):
+            code = data.get('code', '')
+            message = data.get('message', '')
+            
+            if code == '20000' or code == 20000 or message == '请求成功':
+                data_obj = data.get('data', {})
+                
+                # 处理不同的数据结构
+                authors_list = []
+                if isinstance(data_obj, dict):
+                    authors_list = data_obj.get('resultList', [])
+                    if not authors_list:
+                        for key in ['list', 'records', 'items', 'result', 'authors', 'content', 'data', 'rankList']:
+                            if key in data_obj and isinstance(data_obj[key], list):
+                                authors_list = data_obj[key]
+                                break
+                elif isinstance(data_obj, list):
+                    authors_list = data_obj
+                
+                if authors_list:
+                    print(f"✓ 成功获取 {len(authors_list)} 条贡献者数据")
+                    
+                    # 查找匹配的作者
+                    for item in authors_list:
+                        if isinstance(item, dict):
+                            masked_email = item.get('authorEmail', '')
+                            if masked_email and match_masked_email(masked_email, author_email):
+                                # 找到匹配的作者
+                                result = {
+                                    'authorEmail': author_email,
+                                    'maskedEmail': masked_email,
+                                    'employer': item.get('employer', '未知'),
+                                    'additions': item.get('additions', 0),
+                                    'deletions': item.get('deletions', 0),
+                                    'changeNum': item.get('changeNum', 0),
+                                    'year': year
+                                }
+                                print(f"✓ 找到匹配的作者: {masked_email} -> {author_email}")
+                                return result
+                    
+                    # 如果没有找到匹配的
+                    print(f"⚠ 在 {len(authors_list)} 条数据中未找到匹配的作者")
+                    print(f"   提示: author/rank API 可能只返回前N名贡献者，如果该作者不在前N名，需要使用 detail API 按月查询")
+                    return None
+                else:
+                    print(f"⚠ API返回的数据为空")
+                    return None
+            else:
+                print(f"⚠ API返回错误: code={code}, message={message}")
+                return None
+        else:
+            print(f"⚠ 响应数据格式不正确")
+            return None
+            
+    except requests.exceptions.RequestException as e:
+        print(f"❌ 请求错误: {e}")
+        return None
+    except Exception as e:
+        print(f"❌ 处理错误: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
+
+if __name__ == "__main__":
+    main()
