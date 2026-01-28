@@ -271,16 +271,17 @@ def get_changed_files():
         return changed_files
     
     # Parse porcelain output
-    # Format: XY filename
+    # Format: XY [space?] filename
     # X: staged status, Y: unstaged status
     # M = modified, D = deleted, A = added, ?? = untracked
+    # 路径从第3字符起，可能紧跟空格也可能直接接路径，用 [2:].lstrip() 兼容两种格式
     for line in stdout.strip().split('\n'):
         if not line.strip():
             continue
         
-        # Parse status and filename
+        # Parse status and filename (path may follow XY with or without space)
         status_code = line[:2]
-        file_path = line[3:].strip()
+        file_path = line[2:].lstrip()
         
         if not file_path:
             continue
