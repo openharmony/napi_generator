@@ -980,6 +980,107 @@ def build_hap(project_dir, product='default', build_mode='debug'):
     finally:
         os.chdir(original_dir)
 
+
+def build_test_hap(project_dir, module_name='entry@ohosTest', product='default'):
+    """
+    编译单元测试用例（ohosTest 模块）
+    
+    执行命令: hvigorw --mode module -p module=entry@ohosTest -p isOhosTest=true
+              -p product=default -p buildMode=test assembleHap
+              --analyze=normal --parallel --incremental --daemon
+    
+    Args:
+        project_dir: 项目目录
+        module_name: 测试模块名，默认 'entry@ohosTest'
+        product: 产品名称，默认 'default'
+    
+    Returns:
+        是否成功
+    """
+    print("=" * 80)
+    print("开始编译单元测试用例...")
+    print("=" * 80)
+    
+    original_dir = os.getcwd()
+    
+    try:
+        os.chdir(project_dir)
+        print(f"工作目录: {os.getcwd()}")
+        
+        # 查找 hvigorw（与 build_hap 相同逻辑）
+        hvigorw_path = os.path.join(project_dir, 'hvigorw')
+        if not os.path.exists(hvigorw_path):
+            hos_clt_path = os.environ.get('HOS_CLT_PATH')
+            if hos_clt_path:
+                for root, dirs, files in os.walk(hos_clt_path):
+                    if 'hvigorw' in files:
+                        hvigorw_path = os.path.join(root, 'hvigorw')
+                        break
+                if not os.path.exists(hvigorw_path):
+                    hvigorw_in_path = shutil.which('hvigorw')
+                    if hvigorw_in_path:
+                        hvigorw_path = hvigorw_in_path
+            if not os.path.exists(hvigorw_path):
+                hvigor_dir = os.path.join(project_dir, 'hvigor')
+                if os.path.exists(hvigor_dir):
+                    for root, dirs, files in os.walk(hvigor_dir):
+                        if 'hvigorw' in files:
+                            hvigorw_path = os.path.join(root, 'hvigorw')
+                            break
+            if not os.path.exists(hvigorw_path):
+                print(f"❌ 错误: 未找到 hvigorw 脚本")
+                return False
+        
+        if not os.access(hvigorw_path, os.X_OK):
+            try:
+                os.chmod(hvigorw_path, 0o755)
+            except Exception:
+                pass
+        
+        if not hvigorw_path.startswith('.'):
+            hvigorw_cmd = hvigorw_path
+        else:
+            hvigorw_cmd = './hvigorw'
+        
+        # 编译单元测试：hvigorw --mode module -p module=entry@ohosTest -p isOhosTest=true
+        # -p product=default -p buildMode=test assembleHap --analyze=normal --parallel --incremental --daemon
+        print(f"\n执行单元测试 HAP 构建...")
+        test_build_cmd = [
+            hvigorw_cmd,
+            '--mode', 'module',
+            '-p', f'module={module_name}',
+            '-p', 'isOhosTest=true',
+            '-p', f'product={product}',
+            '-p', 'buildMode=test',
+            'assembleHap',
+            '--analyze=normal',
+            '--parallel',
+            '--incremental',
+            '--daemon'
+        ]
+        print(f"命令: {' '.join(test_build_cmd)}")
+        
+        result = subprocess.run(test_build_cmd, timeout=1800)
+        
+        if result.returncode == 0:
+            print(f"\n✓ 单元测试 HAP 构建成功！")
+            return True
+        else:
+            print(f"\n❌ 单元测试 HAP 构建失败（退出码: {result.returncode}）")
+            return False
+            
+    except subprocess.TimeoutExpired:
+        print(f"\n❌ 构建超时")
+        return False
+    except Exception as e:
+        print(f"\n❌ 构建过程出错: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+    finally:
+        os.chdir(original_dir)
+
+
 def parse_bundle_name(project_dir):
     """
     从 app.json5 文件中解析 bundleName
@@ -1018,7 +1119,7 @@ def parse_bundle_name(project_dir):
 
 def find_unsigned_hap(project_dir):
     """
-    查找未签名的 HAP 文件
+    查找未签名的 HAP 文件（单个，兼容旧逻辑）
     
     Args:
         project_dir: 项目目录
@@ -1026,18 +1127,27 @@ def find_unsigned_hap(project_dir):
     Returns:
         未签名的 HAP 文件路径，如果未找到返回 None
     """
+    all_unsigned = find_all_unsigned_hap(project_dir)
+    if all_unsigned:
+        return all_unsigned[0]
     hap_files = find_hap_files(project_dir)
-    
-    # 优先查找包含 "unsigned" 的 HAP 文件
-    for hap_file in hap_files:
-        if 'unsigned' in hap_file.lower():
-            return hap_file
-    
-    # 如果没有找到 unsigned 的，返回最新的 HAP 文件
     if hap_files:
         return hap_files[0]
-    
     return None
+
+
+def find_all_unsigned_hap(project_dir):
+    """
+    查找所有未签名的 HAP 文件（文件名含 unsigned）
+    
+    Args:
+        project_dir: 项目目录
+    
+    Returns:
+        未签名的 HAP 文件路径列表
+    """
+    hap_files = find_hap_files(project_dir)
+    return [f for f in hap_files if 'unsigned' in os.path.basename(f).lower()]
 
 def sign_hap(project_dir, profile_type='release'):
     """
@@ -1081,14 +1191,15 @@ def sign_hap(project_dir, profile_type='release'):
     
     print(f"✓ 项目 bundleName: {bundle_name}")
     
-    # 查找未签名的 HAP 文件
-    unsigned_hap = find_unsigned_hap(project_dir)
-    if not unsigned_hap:
+    # 查找所有未签名的 HAP 文件（主 HAP 与单元测试 HAP 等）
+    unsigned_haps = find_all_unsigned_hap(project_dir)
+    if not unsigned_haps:
         print("❌ 错误: 未找到未签名的 HAP 文件")
         print("  请先编译项目生成 HAP 文件")
         return False
     
-    print(f"✓ 未签名的 HAP 文件: {unsigned_hap}")
+    for u in unsigned_haps:
+        print(f"✓ 未签名的 HAP 文件: {u}")
     
     # 步骤 1: 创建 autosign 目录
     autosign_dir = os.path.join(project_dir, 'autosign')
@@ -1195,11 +1306,17 @@ def sign_hap(project_dir, profile_type='release'):
         traceback.print_exc()
         return False
     
-    # 计算未签名 HAP 的绝对路径（在切换目录之前）
-    unsigned_hap_abs = os.path.abspath(unsigned_hap)
-    if not os.path.exists(unsigned_hap_abs):
-        print(f"❌ 错误: 未签名的 HAP 文件不存在: {unsigned_hap_abs}")
-        return False
+    # 计算每个未签名 HAP 的绝对路径及对应的 signed 输出路径（同目录，文件名 unsigned -> signed）
+    unsigned_haps_abs = []
+    for u in unsigned_haps:
+        u_abs = os.path.abspath(u)
+        if not os.path.exists(u_abs):
+            print(f"❌ 错误: 未签名的 HAP 文件不存在: {u_abs}")
+            return False
+        out_dir = os.path.dirname(u_abs)
+        out_basename = os.path.basename(u).replace('unsigned', 'signed')
+        signed_out_abs = os.path.join(out_dir, out_basename)
+        unsigned_haps_abs.append((u_abs, signed_out_abs))
     
     # 切换到 autosign 目录
     original_dir = os.getcwd()
@@ -1278,51 +1395,51 @@ def sign_hap(project_dir, profile_type='release'):
             return False
         print(f"✓ profile 文件签名成功")
         
-        # 步骤 7: 对应用包进行签名
+        # 步骤 7: 对每个应用包进行签名（输出到原 HAP 同目录，文件名 unsigned -> signed）
         print(f"\n步骤 7: 对应用包进行签名...")
-        signed_hap = os.path.join(autosign_dir, 'app1-signed.hap')
-        cmd = [
-            'java', '-jar', 'hap-sign-tool.jar', 'sign-app',
-            '-keyAlias', 'oh-app1-key-v1',
-            '-signAlg', 'SHA256withECDSA',
-            '-mode', 'localSign',
-            '-appCertFile', 'app1.cer',
-            '-profileFile', 'app1-profile.p7b',
-            '-inFile', unsigned_hap_abs,
-            '-keystoreFile', './OpenHarmony.p12',
-            '-outFile', 'app1-signed.hap',
-            '-keyPwd', '123456',
-            '-keystorePwd', '123456'
-        ]
-        print(f"  命令: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
-        if result.returncode != 0:
-            print(f"❌ 错误: 对应用包签名失败")
-            print(f"  输出: {result.stdout}")
-            print(f"  错误: {result.stderr}")
-            return False
-        print(f"✓ 应用包签名成功: {signed_hap}")
+        signed_paths = []
+        for idx, (in_abs, out_abs) in enumerate(unsigned_haps_abs, 1):
+            print(f"  正在签名 ({idx}/{len(unsigned_haps_abs)}): {os.path.basename(in_abs)} -> {os.path.basename(out_abs)}")
+            cmd = [
+                'java', '-jar', 'hap-sign-tool.jar', 'sign-app',
+                '-keyAlias', 'oh-app1-key-v1',
+                '-signAlg', 'SHA256withECDSA',
+                '-mode', 'localSign',
+                '-appCertFile', 'app1.cer',
+                '-profileFile', 'app1-profile.p7b',
+                '-inFile', in_abs,
+                '-keystoreFile', './OpenHarmony.p12',
+                '-outFile', out_abs,
+                '-keyPwd', '123456',
+                '-keystorePwd', '123456'
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+            if result.returncode != 0:
+                print(f"❌ 错误: 对应用包签名失败: {in_abs}")
+                print(f"  输出: {result.stdout}")
+                print(f"  错误: {result.stderr}")
+                return False
+            signed_paths.append(out_abs)
+            print(f"  ✓ 已生成: {out_abs}")
         
         # 步骤 8: 验证应用包签名
         print(f"\n步骤 8: 验证应用包签名...")
-        cmd = [
-            'java', '-jar', 'hap-sign-tool.jar', 'verify-app',
-            '-inFile', 'app1-signed.hap',
-            '-outCertChain', './app1.cer',
-            '-outProfile', 'app1-profile.p7b'
-        ]
-        print(f"  命令: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-        if result.returncode != 0:
-            print(f"⚠ 警告: 应用包签名验证失败")
-            print(f"  输出: {result.stdout}")
-            print(f"  错误: {result.stderr}")
-            print(f"  但签名文件已生成，请手动验证")
-        else:
-            print(f"✓ 应用包签名验证成功")
+        for out_abs in signed_paths:
+            cmd = [
+                'java', '-jar', 'hap-sign-tool.jar', 'verify-app',
+                '-inFile', out_abs,
+                '-outCertChain', './app1.cer',
+                '-outProfile', 'app1-profile.p7b'
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+            if result.returncode != 0:
+                print(f"  ⚠ 验证失败: {os.path.basename(out_abs)}")
+            else:
+                print(f"  ✓ 验证成功: {os.path.basename(out_abs)}")
         
         print(f"\n✓ HAP 签名流程完成！")
-        print(f"  签名的 HAP 文件: {signed_hap}")
+        for p in signed_paths:
+            print(f"  签名的 HAP 文件: {p}")
         
     except subprocess.TimeoutExpired:
         print(f"❌ 错误: 签名过程超时")
@@ -1374,18 +1491,22 @@ def main():
         print()
         print("命令:")
         print("  build <project_dir> [product] [build_mode]  - 构建 HAP")
+        print("  build-test <project_dir> [module_name] [product] - 编译单元测试用例（ohosTest 模块）")
         print("  sign <project_dir> [profile_type]           - 对 HAP 进行签名")
         print("  clean-sign <project_dir>                   - 清除签名（删除 autosign 目录）")
         print()
         print("参数:")
         print("  project_dir  - 项目目录路径（必需）")
-        print("  product      - 产品名称，默认 'default'（仅用于 build 命令）")
+        print("  product      - 产品名称，默认 'default'（仅用于 build/build-test 命令）")
         print("  build_mode   - 构建模式，默认 'debug'（可选: debug, release，仅用于 build 命令）")
+        print("  module_name  - 测试模块名，默认 'entry@ohosTest'（仅用于 build-test 命令）")
         print("  profile_type - profile 类型，默认 'release'（可选: debug, release，仅用于 sign 命令）")
         print()
         print("示例:")
         print("  python3 hapbuild.py build /path/to/project")
         print("  python3 hapbuild.py build /path/to/project default debug")
+        print("  python3 hapbuild.py build-test /path/to/project")
+        print("  python3 hapbuild.py build-test /path/to/project entry@ohosTest default")
         print("  python3 hapbuild.py sign /path/to/project")
         print("  python3 hapbuild.py sign /path/to/project release")
         print("  python3 hapbuild.py clean-sign /path/to/project")
@@ -1396,7 +1517,7 @@ def main():
     command = sys.argv[1]
     
     # 向后兼容：如果第一个参数看起来像路径，则作为 build 命令处理
-    if os.path.isdir(command) or (len(sys.argv) >= 2 and not command in ['build', 'sign', 'clean-sign']):
+    if os.path.isdir(command) or (len(sys.argv) >= 2 and command not in ['build', 'build-test', 'sign', 'clean-sign']):
         # 旧的使用方式：python3 hapbuild.py <project_dir> [product] [build_mode]
         project_dir = sys.argv[1]
         product = sys.argv[2] if len(sys.argv) > 2 else 'default'
@@ -1437,6 +1558,26 @@ def main():
         else:
             return 1
     
+    elif command == 'build-test':
+        module_name = sys.argv[3] if len(sys.argv) > 3 else 'entry@ohosTest'
+        product = sys.argv[4] if len(sys.argv) > 4 else 'default'
+        
+        env_ok, env_info = check_environment(project_dir)
+        if not env_ok:
+            print("\n❌ 环境检查失败，请先配置好编译环境")
+            return 1
+        
+        version_ok = verify_version_consistency(project_dir, env_info)
+        if not version_ok:
+            print("\n⚠ 警告: 版本验证失败，但将继续构建")
+        
+        build_ok = build_test_hap(project_dir, module_name=module_name, product=product)
+        
+        if build_ok:
+            return 0
+        else:
+            return 1
+    
     elif command == 'sign':
         profile_type = sys.argv[3] if len(sys.argv) > 3 else 'release'
         if profile_type not in ['debug', 'release']:
@@ -1460,7 +1601,7 @@ def main():
     
     else:
         print(f"❌ 错误: 未知命令: {command}")
-        print("  可用命令: build, sign, clean-sign")
+        print("  可用命令: build, build-test, sign, clean-sign")
         return 1
     
     project_dir = sys.argv[1]
