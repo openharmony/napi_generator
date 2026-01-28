@@ -25,6 +25,7 @@ Commands:
     sign-commits [range] - Sign existing commits (e.g., HEAD~5..HEAD or commit1..commit2)
     push [remote] [branch] - Push commits to remote repository
     config-token [username] [token] - Configure Git credential with token
+    check-copyright [--fix] [--dry-run] - Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
     help            - Show this help message
 """
 
@@ -104,6 +105,7 @@ Commands:
   report [tag]              Generate git-status.txt and git-log.txt files
   commit [message] [--no-sign]  Auto commit and push changes with Signed-off-by (max 2000 lines per commit)
   push [remote] [branch]    Push commits to remote repository
+  check-copyright [--fix] [--dry-run]  Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
   help                      Show this help message
 
 Examples:
@@ -116,6 +118,9 @@ Examples:
   {sys.argv[0]} report v1.4.4.0
   {sys.argv[0]} commit
   {sys.argv[0]} commit "Fix bug in CMakeLists.txt"
+  {sys.argv[0]} check-copyright
+  {sys.argv[0]} check-copyright --fix
+  {sys.argv[0]} check-copyright --dry-run
   {sys.argv[0]} commit "Commit message"
   {sys.argv[0]} commit --no-sign "Commit without signature"
   {sys.argv[0]} sign-commits HEAD~5..HEAD
@@ -343,6 +348,22 @@ def get_file_diff_lines(file_path, status):
             except Exception:
                 additions = 0
     
+    elif status == 'staged':
+        # For staged files, only check staged changes
+        returncode, stdout, stderr = run_git_command(
+            ['diff', '--cached', '--numstat', '--', file_path],
+            capture_output=True
+        )
+        if returncode == 0 and stdout.strip():
+            for line in stdout.strip().split('\n'):
+                parts = line.split('\t')
+                if len(parts) >= 2:
+                    try:
+                        additions += int(parts[0]) if parts[0] != '-' else 0
+                        deletions += int(parts[1]) if parts[1] != '-' else 0
+                    except ValueError:
+                        pass
+    
     else:
         # For modified files, get diff stats
         # Check staged changes first
@@ -377,6 +398,46 @@ def get_file_diff_lines(file_path, status):
     
     total_changes = additions + deletions
     return additions, deletions, total_changes
+
+
+def get_staged_files():
+    """
+    Get list of files in staging area
+    
+    Returns:
+        List of tuples: (file_path, status) where status is 'staged'
+    """
+    returncode, stdout, stderr = run_git_command(
+        ['diff', '--cached', '--name-status'],
+        capture_output=True
+    )
+    
+    if returncode != 0 or not stdout.strip():
+        return []
+    
+    staged_files = []
+    for line in stdout.strip().split('\n'):
+        if not line.strip():
+            continue
+        
+        # Parse status and filename
+        parts = line.split('\t', 1)
+        if len(parts) < 2:
+            continue
+        
+        status_code = parts[0]
+        file_path = parts[1]
+        
+        # Handle renamed files (R100 old_path -> new_path)
+        if status_code.startswith('R'):
+            # For renamed files, use the new path
+            if ' -> ' in file_path:
+                file_path = file_path.split(' -> ')[1]
+        
+        if os.path.exists(file_path) or status_code == 'D':
+            staged_files.append((file_path, 'staged'))
+    
+    return staged_files
 
 
 def get_staged_total_lines():
@@ -697,13 +758,85 @@ def delete_large_file_incremental(file_path, message, commit_count, max_lines_pe
             remaining_lines = lines_to_keep
         
         # Now remaining_lines has <= max_lines_per_part lines
-        # We can delete the file directly, but need to check staged area first
+        # We need to delete the remaining lines and then delete the file
         if len(remaining_lines) > 0:
+            # First, write remaining lines to file (this deletes the previous part)
+            # Then delete the file
             # Check if there are staged files that need to be committed first
             current_staged_lines = get_staged_total_lines()
             remaining_line_count = len(remaining_lines)
             
             # If adding this final deletion would exceed total commit limit, commit staged files first
+            if current_staged_lines > 0 and current_staged_lines + remaining_line_count > max_lines_per_commit:
+                # Commit current staged files first
+                commit_count += 1
+                if message is None:
+                    staged_msg = f"Auto commit: {current_staged_lines} lines changed (before final file deletion)"
+                else:
+                    staged_msg = f"{message} - staged files ({current_staged_lines} lines)"
+                
+                print(f"=== 提交 Commit {commit_count} (暂存区文件) ===")
+                print(f"暂存区行数: {current_staged_lines} 行")
+                print(f"提交信息: {staged_msg}")
+                
+                returncode = run_git_command(make_commit_cmd(staged_msg))
+                if returncode != 0:
+                    print(f"❌ Commit {commit_count} 提交失败")
+                    # Restore full file content
+                    with open(file_path, 'w', encoding='utf-8', errors='ignore') as f:
+                        f.writelines(all_lines)
+                    return commit_count, False
+                
+                print(f"✓ Commit {commit_count} 提交成功")
+                print()
+            
+            # If there were previous deletions (part_idx > 0), we need to commit the deletion of the last part
+            # before deleting the file. Otherwise, we can delete the file directly.
+            if part_idx > 0:
+                # Write remaining lines to file (this stages the deletion of the previous part)
+                with open(file_path, 'w', encoding='utf-8', errors='ignore') as f:
+                    f.writelines(remaining_lines)
+                
+                # Add file to staging area (this will stage the deletion of lines from previous commit)
+                returncode = run_git_command(['add', file_path])
+                if returncode != 0:
+                    print(f"⚠ 警告: 无法暂存文件 {file_path}，跳过")
+                    # Restore full file content
+                    with open(file_path, 'w', encoding='utf-8', errors='ignore') as f:
+                        f.writelines(all_lines)
+                    return commit_count, False
+                
+                # Get current staged lines after adding this deletion
+                current_staged_lines_after = get_staged_total_lines()
+                
+                # Commit the deletion of previous part
+                commit_count += 1
+                if message is None:
+                    part_msg = f"Auto commit: {file_path} (删除部分 {part_idx + 1}, 剩余 {remaining_line_count} 行)"
+                else:
+                    part_msg = f"{message} - {file_path} (删除部分 {part_idx + 1})"
+                
+                print(f"=== 提交 Commit {commit_count} ===")
+                print(f"文件: {file_path} (删除部分 {part_idx + 1})")
+                print(f"剩余行数: {remaining_line_count} 行")
+                print(f"暂存区总行数: {current_staged_lines_after} 行")
+                print(f"提交信息: {part_msg}")
+                
+                returncode = run_git_command(make_commit_cmd(part_msg))
+                if returncode != 0:
+                    print(f"❌ Commit {commit_count} 提交失败")
+                    # Restore full file content
+                    with open(file_path, 'w', encoding='utf-8', errors='ignore') as f:
+                        f.writelines(all_lines)
+                    return commit_count, False
+                
+                print(f"✓ Commit {commit_count} 提交成功")
+                print()
+            
+            # Now delete the file (final deletion)
+            # Check staged area again before final deletion
+            current_staged_lines = get_staged_total_lines()
+            
             if current_staged_lines > 0 and current_staged_lines + remaining_line_count > max_lines_per_commit:
                 # Commit current staged files first
                 commit_count += 1
@@ -807,8 +940,64 @@ def cmd_commit(message=None, sign=False):
     print(f"约束条件: 单次提交总行数 ≤ {MAX_LINES_PER_COMMIT}，单个文件单次提交行数 ≤ {MAX_LINES_PER_PART}")
     print()
     
-    # Get changed files (recursively expanded)
-    changed_files = get_changed_files()
+    commit_count = 0
+    total_files_committed = 0
+    
+    # Check if there are already staged files
+    staged_files = get_staged_files()
+    current_staged_lines = get_staged_total_lines()
+    
+    if staged_files and current_staged_lines > 0:
+        print(f"⚠ 发现暂存区已有 {len(staged_files)} 个文件，共 {current_staged_lines} 行")
+        print("  将先处理暂存区的文件，确保不超过行数限制")
+        print()
+        
+        # If staged area exceeds limit, we need to unstage and process files individually
+        if current_staged_lines > MAX_LINES_PER_COMMIT:
+            print(f"⚠ 暂存区总行数 {current_staged_lines} 超过限制 {MAX_LINES_PER_COMMIT}")
+            print("  将取消暂存，然后逐个文件处理")
+            print()
+            
+            # Unstage all files
+            for file_path, _ in staged_files:
+                returncode = run_git_command(['restore', '--staged', file_path])
+                if returncode != 0:
+                    print(f"⚠ 警告: 无法取消暂存文件 {file_path}")
+            
+            # Now get all changed files including the unstaged ones
+            changed_files = get_changed_files()
+        else:
+            # Staged files are within limit, commit them first
+            print(f"暂存区文件在限制范围内，将先提交这些文件")
+            print()
+            
+            # Commit staged files first
+            commit_count += 1
+            if message is None:
+                commit_msg = f"Auto commit: {current_staged_lines} lines changed"
+            else:
+                commit_msg = message
+            
+            print(f"=== 提交 Commit {commit_count} (暂存区文件) ===")
+            print(f"暂存区行数: {current_staged_lines} 行")
+            print(f"提交信息: {commit_msg}")
+            
+            returncode = run_git_command(make_commit_cmd(commit_msg))
+            if returncode != 0:
+                print(f"❌ Commit {commit_count} 提交失败")
+                return returncode
+            
+            print(f"✓ Commit {commit_count} 提交成功")
+            print()
+            
+            # Update total files committed
+            total_files_committed += len(staged_files)
+            
+            # Now get remaining changed files
+            changed_files = get_changed_files()
+    else:
+        # Get changed files (recursively expanded)
+        changed_files = get_changed_files()
     
     if not changed_files:
         print("✓ 没有需要提交的文件")
@@ -816,9 +1005,6 @@ def cmd_commit(message=None, sign=False):
     
     print(f"发现 {len(changed_files)} 个已修改的文件")
     print()
-    
-    commit_count = 0
-    total_files_committed = 0
     
     # Process files one by one
     for file_path, status in changed_files:
@@ -831,6 +1017,49 @@ def cmd_commit(message=None, sign=False):
         
         # Handle deleted files
         if status == 'deleted':
+            print(f"删除文件: {file_path}")
+            print(f"  删除行数: {file_total} 行")
+            
+            # Handle large files (>1898 lines) by incremental deletion
+            if file_total > MAX_LINES_PER_PART:
+                print(f"  文件超过 {MAX_LINES_PER_PART} 行，将采用增量删除方式")
+                print(f"  限制: 单次删除最多 {MAX_LINES_PER_PART} 行，单次总提交最多 {MAX_LINES_PER_COMMIT} 行")
+                
+                # Check if file still exists (it might have been deleted already)
+                # For deleted files, we need to restore it first to do incremental deletion
+                # Get file content from git
+                returncode, file_content, stderr = run_git_command(
+                    ['show', f'HEAD:{file_path}'],
+                    capture_output=True
+                )
+                
+                if returncode == 0 and file_content:
+                    # File exists in HEAD, restore it temporarily for incremental deletion
+                    # Create directory if needed
+                    file_dir = os.path.dirname(file_path)
+                    if file_dir:  # Only create directory if path has a directory component
+                        os.makedirs(file_dir, exist_ok=True)
+                    with open(file_path, 'w', encoding='utf-8', errors='ignore') as f:
+                        f.write(file_content)
+                    
+                    # Delete file incrementally
+                    commit_count, success = delete_large_file_incremental(
+                        file_path, message, commit_count, MAX_LINES_PER_PART, MAX_LINES_PER_COMMIT, sign
+                    )
+                    if success:
+                        total_files_committed += 1
+                        continue
+                    else:
+                        print(f"⚠ 警告: 增量删除失败，将按原文件删除")
+                        # File might still exist, remove it
+                        if os.path.exists(file_path):
+                            os.remove(file_path)
+                        # Fall through to normal deletion
+                else:
+                    print(f"⚠ 警告: 无法从 git 获取文件内容，将按原文件删除")
+                    # Fall through to normal deletion
+            
+            # Normal file deletion (small files or fallback for large files)
             # Get current staged lines
             current_staged_lines = get_staged_total_lines()
             
@@ -847,7 +1076,7 @@ def cmd_commit(message=None, sign=False):
                 print(f"暂存区行数: {current_staged_lines} 行")
                 print(f"提交信息: {commit_msg}")
                 
-                returncode = run_git_command(['commit', '-m', commit_msg])
+                returncode = run_git_command(make_commit_cmd(commit_msg))
                 if returncode != 0:
                     print(f"❌ Commit {commit_count} 提交失败")
                     return returncode
@@ -856,8 +1085,6 @@ def cmd_commit(message=None, sign=False):
                 print()
             
             # Add deletion
-            print(f"删除文件: {file_path}")
-            print(f"  删除行数: {file_total} 行")
             returncode = run_git_command(['rm', file_path])
             if returncode != 0:
                 print(f"⚠ 警告: 无法暂存删除文件 {file_path}，跳过")
@@ -878,7 +1105,7 @@ def cmd_commit(message=None, sign=False):
                 print(f"暂存区行数: {current_staged_lines} 行")
                 print(f"提交信息: {commit_msg}")
                 
-                returncode = run_git_command(['commit', '-m', commit_msg])
+                returncode = run_git_command(make_commit_cmd(commit_msg))
                 if returncode != 0:
                     print(f"❌ Commit {commit_count} 提交失败")
                     return returncode
@@ -916,35 +1143,64 @@ def cmd_commit(message=None, sign=False):
         # Get current staged lines
         current_staged_lines = get_staged_total_lines()
         
-        # Check if adding this file would exceed the limit
-        if current_staged_lines > 0 and current_staged_lines + file_total > MAX_LINES_PER_COMMIT:
-            # Commit current staged files first
-            commit_count += 1
-            if message is None:
-                commit_msg = f"Auto commit: {current_staged_lines} lines changed"
-            else:
-                commit_msg = message
+        # Check if file is already staged
+        is_already_staged = (status == 'staged')
+        
+        if not is_already_staged:
+            # Check if adding this file would exceed the limit
+            if current_staged_lines > 0 and current_staged_lines + file_total > MAX_LINES_PER_COMMIT:
+                # Commit current staged files first
+                commit_count += 1
+                if message is None:
+                    commit_msg = f"Auto commit: {current_staged_lines} lines changed"
+                else:
+                    commit_msg = message
+                
+                print(f"=== 提交 Commit {commit_count} ===")
+                print(f"暂存区行数: {current_staged_lines} 行")
+                print(f"提交信息: {commit_msg}")
+                
+                returncode = run_git_command(make_commit_cmd(commit_msg))
+                if returncode != 0:
+                    print(f"❌ Commit {commit_count} 提交失败")
+                    return returncode
+                
+                print(f"✓ Commit {commit_count} 提交成功")
+                print()
             
-            print(f"=== 提交 Commit {commit_count} ===")
-            print(f"暂存区行数: {current_staged_lines} 行")
-            print(f"提交信息: {commit_msg}")
+            # Add current file
+            print(f"添加文件: {file_path} ({status})")
+            print(f"  修改行数: +{additions} -{deletions} = {file_total} 行")
             
-            returncode = run_git_command(['commit', '-m', commit_msg])
+            returncode = run_git_command(['add', file_path])
             if returncode != 0:
-                print(f"❌ Commit {commit_count} 提交失败")
-                return returncode
+                print(f"⚠ 警告: 无法暂存文件 {file_path}，跳过")
+                continue
+        else:
+            # File is already staged
+            print(f"处理已暂存文件: {file_path}")
+            print(f"  修改行数: +{additions} -{deletions} = {file_total} 行")
             
-            print(f"✓ Commit {commit_count} 提交成功")
-            print()
-        
-        # Add current file
-        print(f"添加文件: {file_path} ({status})")
-        print(f"  修改行数: +{additions} -{deletions} = {file_total} 行")
-        
-        returncode = run_git_command(['add', file_path])
-        if returncode != 0:
-            print(f"⚠ 警告: 无法暂存文件 {file_path}，跳过")
-            continue
+            # Check if current staged area (including this file) exceeds limit
+            if current_staged_lines > MAX_LINES_PER_COMMIT:
+                # Commit current staged files first
+                commit_count += 1
+                if message is None:
+                    commit_msg = f"Auto commit: {current_staged_lines} lines changed"
+                else:
+                    commit_msg = message
+                
+                print(f"=== 提交 Commit {commit_count} ===")
+                print(f"暂存区行数: {current_staged_lines} 行")
+                print(f"提交信息: {commit_msg}")
+                
+                returncode = run_git_command(make_commit_cmd(commit_msg))
+                if returncode != 0:
+                    print(f"❌ Commit {commit_count} 提交失败")
+                    return returncode
+                
+                print(f"✓ Commit {commit_count} 提交成功")
+                print()
         
         total_files_committed += 1
         
@@ -963,7 +1219,7 @@ def cmd_commit(message=None, sign=False):
             print(f"暂存区行数: {current_staged_lines} 行")
             print(f"提交信息: {commit_msg}")
             
-            returncode = run_git_command(['commit', '-m', commit_msg])
+            returncode = run_git_command(make_commit_cmd(commit_msg))
             if returncode != 0:
                 print(f"❌ Commit {commit_count} 提交失败")
                 return returncode
@@ -984,7 +1240,7 @@ def cmd_commit(message=None, sign=False):
         print(f"暂存区行数: {final_staged_lines} 行")
         print(f"提交信息: {commit_msg}")
         
-        returncode = run_git_command(['commit', '-m', commit_msg])
+        returncode = run_git_command(make_commit_cmd(commit_msg))
         if returncode != 0:
             print(f"❌ Commit {commit_count} 提交失败")
             return returncode
@@ -1009,6 +1265,227 @@ def cmd_commit(message=None, sign=False):
         print("⚠ 警告: 提交成功，但推送失败，请手动执行 push")
     
     return push_result
+
+
+# Copyright header template
+COPYRIGHT_HEADER = """/*
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+"""
+
+# File extensions to check
+COPYRIGHT_FILE_EXTENSIONS = {'.ets', '.h', '.cpp', '.c', '.d.ts'}
+
+
+def has_copyright_header(file_path):
+    """
+    Check if a file has the copyright header
+    
+    Args:
+        file_path: Path to the file to check
+    
+    Returns:
+        True if file has copyright header, False otherwise
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            # Read first 20 lines to check for copyright
+            lines = []
+            for i, line in enumerate(f):
+                if i >= 20:
+                    break
+                lines.append(line)
+            
+            content = ''.join(lines)
+            
+            # Check for copyright keywords
+            copyright_keywords = [
+                'Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.',
+                'Licensed under the Apache License, Version 2.0',
+                'http://www.apache.org/licenses/LICENSE-2.0'
+            ]
+            
+            # All keywords must be present
+            for keyword in copyright_keywords:
+                if keyword not in content:
+                    return False
+            
+            return True
+    except Exception as e:
+        print(f"⚠ 警告: 无法读取文件 {file_path}: {e}")
+        return False
+
+
+def add_copyright_header(file_path):
+    """
+    Add copyright header to the beginning of a file
+    
+    Args:
+        file_path: Path to the file to modify
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        # Read existing content
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            existing_content = f.read()
+        
+        # Check if file already starts with copyright
+        if existing_content.strip().startswith('/*'):
+            # Check if it already has copyright
+            if 'Copyright (c) 2024 Shenzhen Kaihong' in existing_content:
+                return True  # Already has copyright
+        
+        # Add copyright header
+        new_content = COPYRIGHT_HEADER + '\n' + existing_content
+        
+        # Write back to file
+        with open(file_path, 'w', encoding='utf-8', errors='ignore') as f:
+            f.write(new_content)
+        
+        return True
+    except Exception as e:
+        print(f"⚠ 警告: 无法修改文件 {file_path}: {e}")
+        return False
+
+
+def find_source_files(root_dir='.'):
+    """
+    Find all source files that need copyright header check
+    
+    Args:
+        root_dir: Root directory to search from (default: current directory)
+    
+    Returns:
+        List of file paths
+    """
+    source_files = []
+    root_path = Path(root_dir).resolve()
+    
+    # Patterns to exclude
+    exclude_patterns = [
+        '.git',
+        'node_modules',
+        'build',
+        '.build',
+        'ohbuild',
+        'linuxbuild',
+        'ohosbuild',
+        '.hvigor',
+        '.idea',
+        'external',
+        'third_party'
+    ]
+    
+    for ext in COPYRIGHT_FILE_EXTENSIONS:
+        for file_path in root_path.rglob(f'*{ext}'):
+            # Check if file is in excluded directory
+            should_exclude = False
+            for pattern in exclude_patterns:
+                if pattern in file_path.parts:
+                    should_exclude = True
+                    break
+            
+            if not should_exclude and file_path.is_file():
+                source_files.append(file_path)
+    
+    return sorted(source_files)
+
+
+def cmd_check_copyright(dry_run=False, fix=False):
+    """
+    Check and optionally fix copyright headers in source files
+    
+    Args:
+        dry_run: If True, only report files without copyright (default: False)
+        fix: If True, automatically add copyright headers (default: False)
+    
+    Returns:
+        Exit code (0 if all files have copyright, non-zero if some files are missing copyright)
+    """
+    print("=== Copyright Header Check ===")
+    print()
+    
+    if fix:
+        print("模式: 自动修复（将自动添加缺失的版权声明）")
+    elif dry_run:
+        print("模式: 仅检查（不修改文件）")
+    else:
+        print("模式: 检查（使用 --fix 自动修复，使用 --dry-run 仅检查）")
+    print()
+    
+    # Find all source files
+    print("正在扫描源文件...")
+    source_files = find_source_files()
+    print(f"找到 {len(source_files)} 个源文件")
+    print()
+    
+    files_without_copyright = []
+    files_with_copyright = []
+    
+    # Check each file
+    for file_path in source_files:
+        relative_path = file_path.relative_to(Path.cwd())
+        if has_copyright_header(file_path):
+            files_with_copyright.append(file_path)
+        else:
+            files_without_copyright.append(file_path)
+            if not fix:
+                print(f"❌ {relative_path} - 缺少版权声明")
+    
+    print()
+    print(f"✓ 有版权声明: {len(files_with_copyright)} 个文件")
+    print(f"❌ 缺少版权声明: {len(files_without_copyright)} 个文件")
+    print()
+    
+    # Fix files if requested
+    if fix and files_without_copyright:
+        print("=== 开始修复文件 ===")
+        print()
+        fixed_count = 0
+        failed_count = 0
+        
+        for file_path in files_without_copyright:
+            relative_path = file_path.relative_to(Path.cwd())
+            print(f"修复: {relative_path}")
+            if add_copyright_header(file_path):
+                fixed_count += 1
+                print(f"  ✓ 已添加版权声明")
+            else:
+                failed_count += 1
+                print(f"  ❌ 修复失败")
+            print()
+        
+        print(f"=== 修复完成 ===")
+        print(f"✓ 成功修复: {fixed_count} 个文件")
+        if failed_count > 0:
+            print(f"❌ 修复失败: {failed_count} 个文件")
+        print()
+    
+    # Return exit code
+    if files_without_copyright:
+        if fix:
+            return 0 if failed_count == 0 else 1
+        else:
+            print("提示: 使用 --fix 参数可以自动添加版权声明")
+            print()
+            return 1
+    else:
+        print("✓ 所有文件都包含版权声明")
+        print()
+        return 0
 
 
 def cmd_push(remote=None, branch=None):
@@ -1380,6 +1857,11 @@ def main():
         if len(sys.argv) > 3:
             token = sys.argv[3]
         return cmd_config_token(username, token)
+    
+    elif command == 'check-copyright':
+        dry_run = '--dry-run' in sys.argv
+        fix = '--fix' in sys.argv
+        return cmd_check_copyright(dry_run=dry_run, fix=fix)
     
     elif command in ['help', '--help', '-h']:
         show_help()
