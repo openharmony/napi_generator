@@ -13,12 +13,10 @@
  * limitations under the License.
  */
 
-import abilityTest from './Ability.test';
-import indexUitestTest from './IndexUitest.test';
-import indexdtsTest from './Indexdts.test';
+const NativeMock: Record<string, Object> = {
+  'add': (a: number, b: number) => {
+    return a + b;
+  },
+};
 
-export default function testsuite() {
-  abilityTest();
-  indexUitestTest();
-  indexdtsTest();
-}
+export default NativeMock;
