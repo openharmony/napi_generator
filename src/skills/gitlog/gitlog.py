@@ -906,7 +906,7 @@ def delete_large_file_incremental(file_path, message, commit_count, max_lines_pe
         return commit_count, False
 
 
-def cmd_commit(message=None, sign=False):
+def cmd_commit(message=None, sign=True):
     """
     Auto commit and push changes with 2000 lines limit per commit
     Processes files one by one, adding and committing when limit is reached
@@ -915,7 +915,7 @@ def cmd_commit(message=None, sign=False):
     
     Args:
         message: Optional commit message. If None, will generate automatically
-        sign: Whether to add Signed-off-by line to commits (default: False)
+        sign: Whether to add Signed-off-by line to commits (default: True，即默认带 -s)
     
     Returns:
         Exit code (0 if both commit and push succeed, non-zero if either fails)
@@ -923,7 +923,7 @@ def cmd_commit(message=None, sign=False):
     MAX_LINES_PER_COMMIT = 2000
     MAX_LINES_PER_PART = 1898  # For splitting large files
     
-    # Sign is True by default, will add --signoff (-s) to commit
+    # 默认 sign=True，为提交添加 Signed-off-by（git commit -s）
     if sign:
         print("ℹ 将为提交添加 Signed-off-by 行")
         print()
