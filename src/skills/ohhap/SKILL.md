@@ -109,8 +109,10 @@ python3 .claude/skills/ohhap/hapbuild.py clean-sign /path/to/project
    - 检查 SDK 中是否存在项目所需的 API 级别
 
 3. **执行构建**
-   - 执行 `hvigorw clean --no-daemon` 清理项目
-   - 执行 `hvigorw assembleHap --mode module -p product=default -p buildMode=debug --no-daemon` 构建 HAP
+   - 使用 `node $HOS_CLT_PATH/hvigor/bin/hvigorw.js` 替代项目内的 `hvigorw`
+   - 执行 `node hvigorw.js clean --no-daemon` 清理项目
+   - 执行 `node hvigorw.js --mode module -p product=default assembleHap --analyze=normal --parallel --incremental --daemon` 构建主 HAP
+   - 单元测试 HAP：`node hvigorw.js --mode module -p module=entry@ohosTest -p isOhosTest=true -p product=default -p buildMode=test assembleHap --analyze=normal --parallel --incremental --daemon`
    - 自动检查生成的 HAP 文件
 
 4. **HAP 签名流程**（8 步）

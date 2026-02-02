@@ -29,6 +29,34 @@ DEFAULT_COPYRIGHT = """/*
  */
 """
 
+# 编码规范：公共常量放在 constant.ets，生成测试时若不存在则创建此文件（最小集）
+DEFAULT_CONSTANT_ETS = """/*
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// Shared constants for ohosTest (no magic numbers in test code)
+export const MAX = Number.MAX_SAFE_INTEGER;
+export const MIN = Number.MIN_SAFE_INTEGER;
+export const HILOG_DOMAIN = 0x0000;
+export const TEST_FILTER = 0;
+export const VAL_0 = 0;
+export const VAL_1 = 1;
+export const VAL_2 = 2;
+export const VAL_3 = 3;
+export const STRESS_1000 = 1000;
+"""
+
 
 def parse_dts_exports(dts_path: str):
     """
@@ -82,6 +110,15 @@ def parse_dts_exports(dts_path: str):
     return apis
 
 
+def ensure_constant_ets(test_dir: str) -> None:
+    """若 test 目录下无 constant.ets，则创建并写入默认常量（编码规范：公共常量集中在此文件）。"""
+    constant_path = os.path.join(test_dir, 'constant.ets')
+    if not os.path.isfile(constant_path):
+        with open(constant_path, 'w', encoding='utf-8') as f:
+            f.write(DEFAULT_CONSTANT_ETS)
+        print(f"已创建: {constant_path}")
+
+
 def suite_name_from_filename(dts_path: str) -> str:
     """接口文件名去掉特殊符号 + Test。Index.d.ts → IndexdtsTest（整文件名去非字母数字后+Test）。"""
     base = os.path.basename(dts_path)
@@ -107,78 +144,83 @@ def gen_test_cases_for_api(api_name: str, param_types: list, return_type: str, m
     lines = []
     # 参数占位：按类型给默认值，用于生成调用
     def arg_list_normal():
+        # 编码规范：使用 constant.ets 中的常量名代替魔数
         args = []
         for i, t in enumerate(param_types):
             if t == 'number':
-                args.append(str(i + 1))  # 1, 2 for add(a,b) => 3
+                args.append(f'VAL_{i + 1}' if i < 3 else str(i + 1))  # VAL_1, VAL_2, VAL_3
             elif t == 'string':
                 args.append("'a'")
             elif t == 'boolean':
                 args.append('true')
             else:
-                args.append('0')
+                args.append('VAL_0')
         return ', '.join(args)
 
     def arg_list_max():
         args = []
         for i, t in enumerate(param_types):
             if t == 'number':
-                args.append('Number.MAX_SAFE_INTEGER' if i == 0 else '0')
+                args.append('MAX' if i == 0 else 'VAL_0')
             elif t == 'string':
                 args.append("'z'")
             elif t == 'boolean':
                 args.append('true')
             else:
-                args.append('Number.MAX_SAFE_INTEGER' if i == 0 else '0')
+                args.append('MAX' if i == 0 else 'VAL_0')
         return ', '.join(args)
 
     def arg_list_min():
         args = []
         for i, t in enumerate(param_types):
             if t == 'number':
-                args.append('Number.MIN_SAFE_INTEGER' if i == 0 else '0')
+                args.append('MIN' if i == 0 else 'VAL_0')
             elif t == 'string':
                 args.append("''")
             elif t == 'boolean':
                 args.append('false')
             else:
-                args.append('Number.MIN_SAFE_INTEGER' if i == 0 else '0')
+                args.append('MIN' if i == 0 else 'VAL_0')
         return ', '.join(args)
 
     call_normal = f"{module_var}.{api_name}({arg_list_normal()})"
     call_max = f"{module_var}.{api_name}({arg_list_max()})"
     call_min = f"{module_var}.{api_name}({arg_list_min()})"
 
-    # 预期值：根据常见 API 约定简单写；实际需用户按接口语义修改
-    # 对 add(1,2) 预期 3；对 add(MAX,0) 预期 MAX；对 add(MIN,0) 预期 MIN；压力测试 1000 次 add(1,1)=2
+    # 预期值：根据常见 API 约定简单写；实际需用户按接口语义修改（编码规范：用常量名代替魔数）
     if api_name == 'add' and param_types == ['number', 'number']:
-        exp_normal = '3'
-        exp_max = 'Number.MAX_SAFE_INTEGER'
-        exp_min = 'Number.MIN_SAFE_INTEGER'
+        exp_normal = 'VAL_3'
+        exp_max = 'MAX'
+        exp_min = 'MIN'
     else:
         exp_normal = call_normal
         exp_max = call_max
         exp_min = call_min
 
-    # it('add_tc_1', 0, () => { hilog...; let result = lib.add(1,2); expect(result).assertEqual(3); })
-    lines.append(f"    it('{api_name}_tc_1', 0, () => {{")
-    lines.append(f"      hilog.info(0x0000, 'testTag', '%{{public}}s', '{api_name} normal');")
+    # it() 格式：hilog/expect 用常量；每个 it 之间空一行（编码规范）
+    # 注释单行不超过 120 字符
+    lines.append(f"    it('{api_name}_tc_1', TEST_FILTER, () => {{")
+    lines.append(f"      // Test case: name, filter, test function.")
+    lines.append(f"      hilog.info(HILOG_DOMAIN, 'testTag', '%{{public}}s', '{api_name} normal');")
     lines.append(f"      let result = {call_normal};")
     lines.append(f"      expect(result).assertEqual({exp_normal});")
     lines.append(f"    }})")
-    lines.append(f"    it('{api_name}_tc_2', 0, () => {{")
-    lines.append(f"      hilog.info(0x0000, 'testTag', '%{{public}}s', '{api_name} max');")
+    lines.append("")
+    lines.append(f"    it('{api_name}_tc_2', TEST_FILTER, () => {{")
+    lines.append(f"      hilog.info(HILOG_DOMAIN, 'testTag', '%{{public}}s', '{api_name} max');")
     lines.append(f"      let result = {call_max};")
     lines.append(f"      expect(result).assertEqual({exp_max});")
     lines.append(f"    }})")
-    lines.append(f"    it('{api_name}_tc_3', 0, () => {{")
-    lines.append(f"      hilog.info(0x0000, 'testTag', '%{{public}}s', '{api_name} min');")
+    lines.append("")
+    lines.append(f"    it('{api_name}_tc_3', TEST_FILTER, () => {{")
+    lines.append(f"      hilog.info(HILOG_DOMAIN, 'testTag', '%{{public}}s', '{api_name} min');")
     lines.append(f"      let result = {call_min};")
     lines.append(f"      expect(result).assertEqual({exp_min});")
     lines.append(f"    }})")
-    lines.append(f"    it('{api_name}_tc_4', 0, () => {{")
-    lines.append(f"      hilog.info(0x0000, 'testTag', '%{{public}}s', '{api_name} stress');")
-    lines.append(f"      for (let i = 0; i < 1000; i++) {{")
+    lines.append("")
+    lines.append(f"    it('{api_name}_tc_4', TEST_FILTER, () => {{")
+    lines.append(f"      hilog.info(HILOG_DOMAIN, 'testTag', '%{{public}}s', '{api_name} stress');")
+    lines.append(f"      for (let i = VAL_0; i < STRESS_1000; i++) {{")
     lines.append(f"        let result = {call_normal};")
     lines.append(f"        expect(result).assertEqual({exp_normal});")
     lines.append(f"      }}")
@@ -198,20 +240,28 @@ def generate_test_file_content(
     parts.append("import { hilog } from '@kit.PerformanceAnalysisKit';")
     parts.append("import { describe, beforeAll, beforeEach, afterEach, afterAll, it, expect } from '@ohos/hypium';")
     parts.append(f"import {module_var} from '{module_import}';")
+    parts.append("import { HILOG_DOMAIN, TEST_FILTER, VAL_0, VAL_1, VAL_2, VAL_3, MAX, MIN, STRESS_1000 } from './constant';")
     parts.append("")
     parts.append(f"export default function {function_name}() {{")
     parts.append(f"  describe('{suite_name}', () => {{")
+    parts.append("    // Defines a test suite. Two parameters are supported: test suite name and test suite function.")
     parts.append("    beforeAll(() => {")
     parts.append("      // Presets an action, which is performed only once before all test cases of the test suite start.")
+    parts.append("      // This API supports only one parameter: preset action function.")
     parts.append("    })")
     parts.append("    beforeEach(() => {")
     parts.append("      // Presets an action, which is performed before each unit test case starts.")
+    parts.append("      // The number of execution times is the same as the number of test cases defined by **it**.")
+    parts.append("      // This API supports only one parameter: preset action function.")
     parts.append("    })")
     parts.append("    afterEach(() => {")
     parts.append("      // Presets a clear action, which is performed after each unit test case ends.")
+    parts.append("      // The number of execution times is the same as the number of test cases defined by **it**.")
+    parts.append("      // This API supports only one parameter: clear action function.")
     parts.append("    })")
     parts.append("    afterAll(() => {")
     parts.append("      // Presets a clear action, which is performed after all test cases of the test suite end.")
+    parts.append("      // This API supports only one parameter: clear action function.")
     parts.append("    })")
     for name, param_types, return_type in apis:
         parts.append(gen_test_cases_for_api(name, param_types, return_type, module_var))
@@ -274,6 +324,8 @@ def main():
     if not apis:
         print("未在 .d.ts 中解析到导出接口，请检查文件格式。", file=sys.stderr)
         sys.exit(1)
+
+    ensure_constant_ets(test_dir)
 
     suite_name = suite_name_from_filename(dts_path)
     function_name = function_name_from_suite(suite_name)
