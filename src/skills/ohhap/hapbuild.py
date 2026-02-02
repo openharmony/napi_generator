@@ -888,73 +888,40 @@ def build_hap(project_dir, product='default', build_mode='debug'):
         os.chdir(project_dir)
         print(f"工作目录: {os.getcwd()}")
         
-        # 检查 hvigorw 是否存在
-        hvigorw_path = os.path.join(project_dir, 'hvigorw')
-        if not os.path.exists(hvigorw_path):
-            # 尝试从 Command Line Tools 中查找 hvigorw
-            hos_clt_path = os.environ.get('HOS_CLT_PATH')
-            if hos_clt_path:
-                import shutil
-                # 在 Command Line Tools 目录中查找 hvigorw
-                for root, dirs, files in os.walk(hos_clt_path):
-                    if 'hvigorw' in files:
-                        hvigorw_path = os.path.join(root, 'hvigorw')
-                        break
-                
-                # 如果还是找不到，检查 PATH 中是否有 hvigorw
-                if not os.path.exists(hvigorw_path):
-                    hvigorw_in_path = shutil.which('hvigorw')
-                    if hvigorw_in_path:
-                        hvigorw_path = hvigorw_in_path
-            
-            # 如果还是找不到，尝试查找 hvigor 目录中的 hvigorw
-            if not os.path.exists(hvigorw_path):
-                hvigor_dir = os.path.join(project_dir, 'hvigor')
-                if os.path.exists(hvigor_dir):
-                    # 查找 hvigorw 脚本
-                    for root, dirs, files in os.walk(hvigor_dir):
-                        if 'hvigorw' in files:
-                            hvigorw_path = os.path.join(root, 'hvigorw')
-                            break
-            
-            if not os.path.exists(hvigorw_path):
-                print(f"❌ 错误: 未找到 hvigorw 脚本")
-                print(f"  请确保:")
-                print(f"  1. 项目已正确初始化")
-                print(f"  2. HOS_CLT_PATH 环境变量指向正确的 Command Line Tools 目录")
-                print(f"  3. hvigorw 在 PATH 中或项目目录中")
-                return False
-        
-        # 确保 hvigorw 可执行
-        if not os.access(hvigorw_path, os.X_OK):
-            try:
-                os.chmod(hvigorw_path, 0o755)
-            except:
-                pass
-        
-        # 如果 hvigorw 不在项目目录中，使用绝对路径
-        if not hvigorw_path.startswith('.'):
-            hvigorw_cmd = hvigorw_path
-        else:
-            hvigorw_cmd = './hvigorw'
+        # 使用 node 执行 HOS_CLT_PATH 下的 hvigorw.js（替代项目内的 hvigorw）
+        hos_clt_path = os.environ.get('HOS_CLT_PATH')
+        if not hos_clt_path or not os.path.isdir(hos_clt_path):
+            print(f"❌ 错误: 未设置或无效的 HOS_CLT_PATH 环境变量")
+            print(f"  请设置 HOS_CLT_PATH 指向 HarmonyOS Command Line Tools 目录")
+            return False
+        hvigorw_js = os.path.join(hos_clt_path, 'hvigor', 'bin', 'hvigorw.js')
+        if not os.path.isfile(hvigorw_js):
+            print(f"❌ 错误: 未找到 hvigorw.js: {hvigorw_js}")
+            return False
+        node_cmd = '/usr/bin/node'
+        if not os.path.isfile(node_cmd):
+            node_cmd = shutil.which('node') or 'node'
         
         # 执行 clean
         print(f"\n执行清理...")
-        print(f"命令: {hvigorw_cmd} clean --no-daemon")
-        result = subprocess.run([hvigorw_cmd, 'clean', '--no-daemon'], 
-                              capture_output=False, text=True, timeout=600)
+        clean_cmd = [node_cmd, hvigorw_js, 'clean', '--no-daemon']
+        print(f"命令: {' '.join(clean_cmd)}")
+        result = subprocess.run(clean_cmd, capture_output=False, text=True, timeout=600)
         if result.returncode != 0:
             print(f"⚠ 警告: clean 命令执行失败（退出码: {result.returncode}）")
             # 继续执行构建
         
-        # 执行构建
+        # 执行构建：node hvigorw.js --mode module -p product=default assembleHap --analyze=normal --parallel --incremental --daemon
         print(f"\n执行构建...")
         build_cmd = [
-            hvigorw_cmd, 'assembleHap',
+            node_cmd, hvigorw_js,
             '--mode', 'module',
             '-p', f'product={product}',
-            '-p', f'buildMode={build_mode}',
-            '--no-daemon'
+            'assembleHap',
+            '--analyze=normal',
+            '--parallel',
+            '--incremental',
+            '--daemon'
         ]
         print(f"命令: {' '.join(build_cmd)}")
         
@@ -985,7 +952,7 @@ def build_test_hap(project_dir, module_name='entry@ohosTest', product='default')
     """
     编译单元测试用例（ohosTest 模块）
     
-    执行命令: hvigorw --mode module -p module=entry@ohosTest -p isOhosTest=true
+    执行命令: node $HOS_CLT_PATH/hvigor/bin/hvigorw.js --mode module -p module=entry@ohosTest -p isOhosTest=true
               -p product=default -p buildMode=test assembleHap
               --analyze=normal --parallel --incremental --daemon
     
@@ -1007,46 +974,24 @@ def build_test_hap(project_dir, module_name='entry@ohosTest', product='default')
         os.chdir(project_dir)
         print(f"工作目录: {os.getcwd()}")
         
-        # 查找 hvigorw（与 build_hap 相同逻辑）
-        hvigorw_path = os.path.join(project_dir, 'hvigorw')
-        if not os.path.exists(hvigorw_path):
-            hos_clt_path = os.environ.get('HOS_CLT_PATH')
-            if hos_clt_path:
-                for root, dirs, files in os.walk(hos_clt_path):
-                    if 'hvigorw' in files:
-                        hvigorw_path = os.path.join(root, 'hvigorw')
-                        break
-                if not os.path.exists(hvigorw_path):
-                    hvigorw_in_path = shutil.which('hvigorw')
-                    if hvigorw_in_path:
-                        hvigorw_path = hvigorw_in_path
-            if not os.path.exists(hvigorw_path):
-                hvigor_dir = os.path.join(project_dir, 'hvigor')
-                if os.path.exists(hvigor_dir):
-                    for root, dirs, files in os.walk(hvigor_dir):
-                        if 'hvigorw' in files:
-                            hvigorw_path = os.path.join(root, 'hvigorw')
-                            break
-            if not os.path.exists(hvigorw_path):
-                print(f"❌ 错误: 未找到 hvigorw 脚本")
-                return False
+        # 使用 node 执行 HOS_CLT_PATH 下的 hvigorw.js（替代项目内的 hvigorw）
+        hos_clt_path = os.environ.get('HOS_CLT_PATH')
+        if not hos_clt_path or not os.path.isdir(hos_clt_path):
+            print(f"❌ 错误: 未设置或无效的 HOS_CLT_PATH 环境变量")
+            print(f"  请设置 HOS_CLT_PATH 指向 HarmonyOS Command Line Tools 目录")
+            return False
+        hvigorw_js = os.path.join(hos_clt_path, 'hvigor', 'bin', 'hvigorw.js')
+        if not os.path.isfile(hvigorw_js):
+            print(f"❌ 错误: 未找到 hvigorw.js: {hvigorw_js}")
+            return False
+        node_cmd = '/usr/bin/node'
+        if not os.path.isfile(node_cmd):
+            node_cmd = shutil.which('node') or 'node'
         
-        if not os.access(hvigorw_path, os.X_OK):
-            try:
-                os.chmod(hvigorw_path, 0o755)
-            except Exception:
-                pass
-        
-        if not hvigorw_path.startswith('.'):
-            hvigorw_cmd = hvigorw_path
-        else:
-            hvigorw_cmd = './hvigorw'
-        
-        # 编译单元测试：hvigorw --mode module -p module=entry@ohosTest -p isOhosTest=true
-        # -p product=default -p buildMode=test assembleHap --analyze=normal --parallel --incremental --daemon
+        # 编译单元测试：node hvigorw.js --mode module -p module=entry@ohosTest -p isOhosTest=true -p product=default -p buildMode=test assembleHap --analyze=normal --parallel --incremental --daemon
         print(f"\n执行单元测试 HAP 构建...")
         test_build_cmd = [
-            hvigorw_cmd,
+            node_cmd, hvigorw_js,
             '--mode', 'module',
             '-p', f'module={module_name}',
             '-p', 'isOhosTest=true',
