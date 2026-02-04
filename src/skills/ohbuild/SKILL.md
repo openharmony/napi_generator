@@ -1,0 +1,156 @@
+---
+name: ohbuild
+description: "OpenHarmony build skill for compiling fuzz tests and querying module fuzztest targets and coverage args. Use when users need to build a fuzz test (./build.sh --build-target <target> --product-name rk3568 --gn-args <module>_feature_coverage=true), or list fuzz tests and gn-args for a module (check test/fuzztest/BUILD.gn for targets, module BUILD.gn for *_feature_coverage)."
+author: "Created by user"
+created: "2026-02-02"
+version: "1.0.0"
+---
+
+# OH Build (ohbuild) 技能
+
+用于 OpenHarmony 构建相关操作，包括编译 fuzz 测试、查看模块 fuzztest 及对应参数。
+
+---
+
+## 技能一：编译 Fuzz 测试
+
+### 命令格式
+
+在源码根目录（含 `build.sh` 的目录，一般为 `src` 或工程根）执行：
+
+```bash
+./build.sh --build-target <编译目标名> --product-name rk3568 --gn-args <模块>_feature_coverage=true
+```
+
+### 参数说明
+
+| 参数 | 含义 | 示例 / 默认 |
+|------|------|-------------|
+| `--build-target` | 要编译的 fuzz 测试目标名 | 如 `GetAppStatsMahFuzzTest` |
+| `--product-name` | 产品名 | 默认 `rk3568` |
+| `--gn-args` | GN 参数，用于开启该模块的覆盖率 | 如 `battery_statistics_feature_coverage=true` |
+
+### 如何找到「编译目标名」
+
+1. 确认模块下是否有 fuzz 测试：存在目录 **`test/fuzztest`** 即表示该模块有 fuzztest。
+2. 打开 **`test/fuzztest/BUILD.gn`**。
+3. 在 `group("fuzztest")` 的 `deps += [ ... ]` 中，每一项格式为 `"子目标路径:目标名"`，其中的 **目标名** 即为 `--build-target` 的取值。
+
+示例（`src/base/powermgr/battery_statistics/test/fuzztest/BUILD.gn`）：
+
+```gn
+deps += [
+  "getappstatsmah_fuzzer:GetAppStatsMahFuzzTest",
+  "getappstatspercent_fuzzer:GetAppStatsPercentFuzzTest",
+  ...
+]
+```
+
+则 `--build-target` 可填：`GetAppStatsMahFuzzTest`、`GetAppStatsPercentFuzzTest` 等。
+
+### 如何找到「gn-args 参数」
+
+1. 打开该模块的 **BUILD.gn**（通常在模块的 `utils` 或主目录，如 `src/base/powermgr/battery_statistics/utils/BUILD.gn`）。
+2. 在 `declare_args() { ... }` 中查找名为 **`<模块名>_feature_coverage`** 的变量（默认一般为 `false`）。
+3. 编译 fuzz 并开覆盖率时，在命令行中写：`<模块名>_feature_coverage=true`。
+
+示例（`battery_statistics/utils/BUILD.gn`）：
+
+```gn
+declare_args() {
+  battery_statistics_feature_coverage = false
+}
+```
+
+则对应 `--gn-args` 为：`battery_statistics_feature_coverage=true`。
+
+### 命名规则
+
+- 覆盖率开关变量：**`<模块名>_feature_coverage`**（如 `battery_statistics_feature_coverage`、`battery_manager_feature_coverage`）。
+
+### 完整示例
+
+编译 battery_statistics 的 GetAppStatsMahFuzzTest，并开启该模块覆盖率：
+
+```bash
+./build.sh --build-target GetAppStatsMahFuzzTest --product-name rk3568 --gn-args battery_statistics_feature_coverage=true
+```
+
+### 编译完毕后的验证环节（gcno 文件）
+
+编译带覆盖率的 fuzz 测试后，应验证是否生成了模块相关的 **gcno** 文件（覆盖率信息文件）。在源码根目录（含 `build.sh` 的目录，一般为 `src`）下执行：
+
+```bash
+find out/rk3568/obj/ -name "*.gcno"
+```
+
+- **若有**与模块相关的 gcno 文件（路径中包含模块名，如 `power_manager`、`battery_statistics`），则说明该模块已开启覆盖率编译，可进行覆盖率收集与统计；建议将找到的 gcno 路径列出来提示用户。
+- **若无**，请确认编译时使用了 `--gn-args <模块名>_feature_coverage=true`。
+
+使用 ohbuild 脚本验证（可选指定模块名，只列出与该模块相关的 gcno）：
+
+```bash
+# 列出与 power_manager 相关的 gcno
+python3 .claude/skills/ohbuild/ohbuild.py verify-coverage power_manager
+
+# 列出 out/rk3568/obj 下所有 gcno
+python3 .claude/skills/ohbuild/ohbuild.py verify-coverage
+```
+
+---
+
+## 技能二：查看模块的 Fuzztest 及对应参数
+
+用于回答「某模块有哪些 fuzz 测试、编译时要传什么参数」。
+
+### 判断模块是否有 fuzztest
+
+- 看该模块目录下是否存在 **`test/fuzztest`** 目录。
+- 有则说明该模块提供 fuzz 测试。
+
+### 查看所有支持的 fuzz 测试目标
+
+1. 打开 **`<模块路径>/test/fuzztest/BUILD.gn`**。
+2. 在 `group("fuzztest")` 的 `deps += [ ... ]` 中列出所有 `"xxx:目标名"`，**目标名** 即为可用的 `--build-target`。
+
+示例：`battery_statistics` 的 fuzztest 包括 GetAppStatsMahFuzzTest、GetAppStatsPercentFuzzTest、GetBatteryStatsFuzzTest 等（以 BUILD.gn 为准）。
+
+### 查看对应的 gn-args 参数
+
+1. 在该模块的 **BUILD.gn** 中查找（常见位置：模块下的 `utils/BUILD.gn` 或主 BUILD.gn）。
+2. 在 **`declare_args() { ... }`** 里找 **`<模块名>_feature_coverage`** 变量。
+3. 编译该模块任一 fuzz 目标并开覆盖率时，使用：  
+   `--gn-args <模块名>_feature_coverage=true`。
+
+### 小结
+
+- **Fuzz 目标列表**：来自 `test/fuzztest/BUILD.gn` 的 `deps` 中的目标名。
+- **覆盖率参数**：来自模块 BUILD.gn 的 `declare_args()` 中 `*_feature_coverage`，命名规则为 **`<模块名>_feature_coverage`**，默认一般为 `false`。
+
+---
+
+## 使用 Python 脚本
+
+可通过 `ohbuild.py` 查询模块 fuzztest 或生成编译命令：
+
+```bash
+# 查看某模块的 fuzz 测试目标与覆盖率参数（模块名或相对 src 的路径）
+python3 .claude/skills/ohbuild/ohbuild.py list-fuzztest battery_manager
+python3 .claude/skills/ohbuild/ohbuild.py list-fuzztest base/powermgr/battery_statistics
+
+# 生成编译 fuzz 测试的命令（不执行，仅打印）
+python3 .claude/skills/ohbuild/ohbuild.py build-fuzztest GetAppStatsMahFuzzTest --gn-args battery_statistics_feature_coverage=true
+
+# 编译后验证：是否有模块相关 gcno 文件（可选模块名）
+python3 .claude/skills/ohbuild/ohbuild.py verify-coverage power_manager
+python3 .claude/skills/ohbuild/ohbuild.py verify-coverage
+
+# 帮助
+python3 .claude/skills/ohbuild/ohbuild.py help
+```
+
+**命令说明：**
+
+- `list-fuzztest <模块>`：列出该模块下所有 fuzz 目标名及对应的 `*_feature_coverage` 参数。
+- `build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]`：打印对应的 `./build.sh` 命令。
+- `verify-coverage [模块名] [--product-name rk3568]`：编译后验证，在 `out/<product>/obj/` 下查找 `*.gcno`；若指定模块名则只列出与该模块相关的 gcno，若有则列出并提示用户。
