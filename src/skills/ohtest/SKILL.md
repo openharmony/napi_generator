@@ -114,3 +114,86 @@ python3 src/skills/ohtest/ohtest.py \
 
 - 结构参照：`Ability.test.ets`（`export default function abilityTest()`、`describe('ActsAbilityTest', () => { ... })`、beforeAll/beforeEach/afterEach/afterAll、`it('assertContain', 0, () => { ... expect(...).assertEqual(...) })`）。
 - 测试对象：来自 `Index.d.ts` 的导出接口（如 `add`），导入方式与工程一致（如 `import lib from 'libentry.so'`，调用 `lib.add(...)`）。
+
+---
+
+## Fuzz 测试执行（fuzztest.py）
+
+在正确的工作目录和环境（含 hdc 路径）下调用 developer_test 的 `start.sh` 执行 FUZZ 测试套。
+
+### 环境与路径
+
+- **工作目录**：执行时在 `test/testfwk/developer_test` 下调用 `./start.sh`。
+- **hdc**：框架通过 `shutil.which("hdc")` 查找 hdc。脚本会将 **`${OHOS_SDK_PATH}/linux/toolchains`**（及 `toolchains/bin` 若存在）加入 `PATH`，以便框架找到 hdc；未设置 `OHOS_SDK_PATH` 时需保证系统 `PATH` 中已有 hdc。
+- **DEVTESTDIR**：脚本会设置 `DEVTESTDIR` 为 developer_test 的绝对路径，与框架约定一致。
+
+### 何时使用
+
+- 用户说：「执行 GetAppStatsMahFuzzTest 的 fuzz 测试」「跑 FUZZ 用例」「执行 fuzztest」。
+- 需要在本机通过 developer_test 框架在设备上跑指定 FUZZ 测试套时。
+
+### 使用方式
+
+```bash
+# 必选：-ts 测试套名；可选：-p 产品名、--coverage、--dry-run
+python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest
+python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest -p rk3568 --coverage
+python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest --dry-run
+python3 src/.claude/skills/ohtest/fuzztest.py help
+```
+
+| 参数 | 说明 |
+|------|------|
+| `-ts` / `--testsuite` | 测试套名（必填），如 `GetAppStatsMahFuzzTest` |
+| `-p` / `--product` | 产品名，默认 `rk3568` |
+| `--coverage` | 附加 `-cov coverage` 收集覆盖率 |
+| `--dry-run` | 仅打印将要执行的命令，不实际执行 |
+
+执行前需：设备已连接、hdc 可用（设置 `OHOS_SDK_PATH` 或系统 PATH 中含 hdc）。
+
+---
+
+## 分析 fuzztest 测试覆盖率（coverage_analysis.py）
+
+对已跑过带覆盖率 fuzz 测试的设备，收集 gcda、生成 .gcov 并统计覆盖率。
+
+### 流程
+
+1. **在设备上跑带覆盖率的 fuzz 测试**（若尚未跑过）  
+   `python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest --coverage`
+2. **收集覆盖率并生成报告**  
+   `python3 src/.claude/skills/ohtest/coverage_analysis.py run [-p rk3568]`  
+   会从设备上两个路径查找 *.gcda：① 本地根（由本地路径前两级推导，如 `/root/ohos`）；② `/data/gcov/<本地根>`（如 `/data/gcov/root/ohos`）。拷贝到 reports/obj 后，再拷贝对应 *.gcno 与源码，在 reports/obj 内执行 gcov。
+3. **查看覆盖率统计**  
+   `python3 src/.claude/skills/ohtest/coverage_analysis.py analyze`  
+   解析 reports/obj 下的 .gcov 并输出可执行行、已覆盖行、覆盖率百分比及等级。
+
+### 环境
+
+- **hdc**：与 fuzztest 相同，脚本会将 **`${OHOS_SDK_PATH}/linux/toolchains`**（及 `toolchains/bin`）加入 PATH；未设置时需保证系统 PATH 中已有 hdc。
+- 执行 `run` 前需设备已连接且已跑过带 `-cov coverage` 的 fuzz 测试。
+
+### 技能 1：清除分析结果并再次分析
+
+清除 reports/obj 下的覆盖率相关文件（*.gcda、*.gcno、*.cpp、*.gcov），再从设备拉取 gcda、拷贝 gcno/cpp、执行 gcov，最后执行 analyze 输出统计。
+
+```bash
+python3 src/.claude/skills/ohtest/coverage_analysis.py clear-analyze
+python3 src/.claude/skills/ohtest/coverage_analysis.py clear-analyze -p rk3568
+```
+
+### 技能 2：清除分析结果、重新运行 fuzztest 并分析
+
+先清除 reports/obj；再在设备上执行带覆盖率的 fuzz 测试（调用 fuzztest.py）；然后从设备拉取 gcda、生成 .gcov；最后执行 analyze 输出统计。
+
+```bash
+python3 src/.claude/skills/ohtest/coverage_analysis.py clear-rerun-fuzz-analyze
+python3 src/.claude/skills/ohtest/coverage_analysis.py clear-rerun-fuzz-analyze -ts GetAppStatsMahFuzzTest -p rk3568
+```
+
+| 参数 | 说明 |
+|------|------|
+| `-ts` / `--testsuite` | fuzz 测试套名，默认 `GetAppStatsMahFuzzTest` |
+| `-p` / `--product` | 产品名，默认 `rk3568` |
+| `--device` | 指定设备 ID |
+| `--search-root` | 设备上查找 *.gcda 的目录，可多次指定 |
