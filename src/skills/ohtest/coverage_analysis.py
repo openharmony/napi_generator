@@ -2,13 +2,22 @@
 # -*- coding: utf-8 -*-
 """
 测试结果覆盖率分析技能 - 参考 gen_gcovr 实现，不调用 gen_gcovr 程序。
-步骤：1) 连接设备，从设备目录查找 *.gcda 并拷贝到 reports/obj；
-     2) 在 out/<product>/obj 下找同名 *.gcno 拷贝到 reports/obj；
-     3) 在源码模块目录下找对应 .cpp 拷贝到 reports/obj；
-     4) 在 reports/obj 内对每个 cpp 执行 gcov --object-directory . <cpp> 生成覆盖率报告。
+步骤：1) 连接设备，从设备目录查找 *.gcda 并拷贝到报告目录（reports/obj 或 --output-dir 指定）；
+     2) 在 out/<product>/obj 下找同名 *.gcno 拷贝到报告目录；
+     3) 在源码模块目录下找对应 .cpp 拷贝到报告目录；
+     4) 在项目路径的 test/testfwk（如 ~/ohos/60release/src/test/testfwk）下执行 gcov，
+        --object-directory 指向报告目录，gcov 会在 testfwk 目录生成 .gcov 文件；
+     5) 将 testfwk 下生成的所有 .gcov 移动到报告目录。
+
+运行目录与命令（run 子命令）:
+  - 工作目录：项目源码根下的 test/testfwk，即 SRC_ROOT/test/testfwk（如 ~/ohos/60release/src/test/testfwk）。
+  - 执行命令：先 cd 到上述 testfwk 目录，再对报告目录中每个 .cpp 执行：
+    gcov --object-directory <报告目录的绝对路径> <xxx.cpp>
+  - gcov 会在 testfwk 目录生成 .gcov，技能随后将其移动到报告目录，并重写 .gcov 内 Source 行为相对报告目录的路径，便于在报告目录下打开对应源文件。
 
 Usage:
-    python3 coverage_analysis.py run [-p 产品名] [--device 设备]  从设备拉取 gcda → 拷贝 gcno/cpp → 执行 gcov
+    python3 coverage_analysis.py run [-p 产品名] [--output-dir 报告目录] [--device 设备]
+      从设备拉取 gcda → 拷贝 gcno/cpp 到报告目录 → 在 test/testfwk 下执行 gcov → 将 .gcov 移动到报告目录并重写 Source 路径
     python3 coverage_analysis.py analyze [目录]  解析已有 .gcov 并输出覆盖率统计
     python3 coverage_analysis.py clear-analyze  清除分析结果并再次拉取、生成、分析
     python3 coverage_analysis.py clear-rerun-fuzz-analyze [-ts 测试套]  清除后重跑 fuzz 测试并分析
@@ -29,6 +38,8 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 SRC_ROOT = SCRIPT_DIR.parent.parent.parent
 DEV_TEST_ROOT = SRC_ROOT / "test" / "testfwk" / "developer_test"
 REPORTS_OBJ = DEV_TEST_ROOT / "reports" / "obj"
+# gcov 运行目录：在项目路径的 test/testfwk 下运行，以便根据 gcno 中的相对路径找到源文件
+GCOV_WORK_DIR = SRC_ROOT / "test" / "testfwk"
 # analyze 默认目录：与 run 生成的 .gcov 所在目录一致
 DEFAULT_ANALYZE_OBJ = REPORTS_OBJ
 
@@ -155,10 +166,15 @@ def run_coverage(
     product: str = "rk3568",
     device_id: Optional[str] = None,
     search_roots: Optional[List[str]] = None,
+    output_dir: Optional[Path] = None,
 ) -> int:
     """
-    完整流程：连接设备 → 拉取 gcda → 拷贝 gcno/cpp → 在 reports/obj 内执行 gcov。
+    完整流程：连接设备 → 拉取 gcda → 拷贝 gcno/cpp 到报告目录 →
+    在项目路径 test/testfwk 下执行 gcov（--object-directory 指向报告目录）→
+    将 testfwk 下生成的 .gcov 移动到报告目录。
+    output_dir: 报告目录，默认 developer_test/reports/obj；可为 reports/obj_<label>_<stamp>。
     """
+    report_dir = Path(output_dir) if output_dir else REPORTS_OBJ
     _ensure_hdc_path()
     if not shutil.which("hdc"):
         print("未找到 hdc。请设置 OHOS_SDK_PATH（hdc 在 ${OHOS_SDK_PATH}/linux/toolchains）或确保 hdc 在 PATH 中。", file=sys.stderr)
@@ -167,6 +183,10 @@ def run_coverage(
     out_obj = SRC_ROOT / "out" / product / "obj"
     if not out_obj.is_dir():
         print(f"out 目录不存在: {out_obj}", file=sys.stderr)
+        return 1
+
+    if not GCOV_WORK_DIR.is_dir():
+        print(f"gcov 工作目录不存在: {GCOV_WORK_DIR}（应为项目路径的 test/testfwk）", file=sys.stderr)
         return 1
 
     # 1) 设备与 gcda
@@ -182,7 +202,6 @@ def run_coverage(
         return 1
 
     if search_roots is None:
-        # 设备上搜索路径：1) 本地根（如 /root/ohos）；2) /data/gcov/<本地根>（如 /data/gcov/root/ohos），中间目录由本地运行根决定
         device_root = get_device_search_root_from_local()
         search_roots = [
             device_root,
@@ -199,79 +218,128 @@ def run_coverage(
     for p in gcda_on_device:
         print(f"    设备路径: {p}")
 
-    REPORTS_OBJ.mkdir(parents=True, exist_ok=True)
+    report_dir.mkdir(parents=True, exist_ok=True)
+    print(f"覆盖率报告目录: {report_dir}")
 
-    # 拷贝 gcda 到 reports/obj
+    # 拷贝 gcda 到报告目录
     for dev_path in gcda_on_device:
         name = os.path.basename(dev_path)
-        local = REPORTS_OBJ / name
+        local = report_dir / name
         if copy_from_device(device_id, dev_path, local):
             print(f"  已拷贝: {name}")
         else:
             print(f"  拷贝失败: {name}")
 
-    # 2) 对 reports/obj 中每个 .gcda，找同名 .gcno（在 out/<product>/obj 下）
-    gcda_names = [f.stem for f in REPORTS_OBJ.glob("*.gcda")]
+    # 2) 对报告目录中每个 .gcda，找同名 .gcno（在 out/<product>/obj 下）
+    gcda_names = [f.stem for f in report_dir.glob("*.gcda")]
     for base in gcda_names:
         gcno_name = base + ".gcno"
         candidates = list(out_obj.rglob(gcno_name))
         if candidates:
-            shutil.copy2(candidates[0], REPORTS_OBJ / gcno_name)
+            shutil.copy2(candidates[0], report_dir / gcno_name)
             print(f"  已拷贝 gcno: {gcno_name}")
         else:
             print(f"  未找到 gcno: {gcno_name}")
 
-    # 3) 对每个 base，在源码下找对应 .cpp（从模块目录，即 src 下递归）
-    # 排除已在 reports/obj 中的文件，避免 SameFileError
-    reports_obj_resolved = REPORTS_OBJ.resolve()
+    # 3) 对每个 base，在源码下找对应 .cpp 拷贝到报告目录，并记录 base -> 源码路径（供 gcov 使用 -s 与完整路径）
+    report_dir_resolved = report_dir.resolve()
+    base_to_src_cpp: dict = {}  # base -> Path 源码 .cpp 的绝对路径
     for base in gcda_names:
         for ext in SOURCE_EXTENSIONS:
             cpp_name = base + ext
             candidates = [
                 c for c in SRC_ROOT.rglob(cpp_name)
-                if reports_obj_resolved not in c.resolve().parents and c.resolve() != reports_obj_resolved
+                if report_dir_resolved not in c.resolve().parents and c.resolve() != report_dir_resolved
             ]
             if candidates:
-                dst = REPORTS_OBJ / cpp_name
-                if candidates[0].resolve() != dst.resolve():
+                src_cpp = candidates[0].resolve()
+                base_to_src_cpp[base] = src_cpp
+                dst = report_dir / cpp_name
+                if src_cpp != dst.resolve():
                     shutil.copy2(candidates[0], dst)
                 print(f"  已拷贝 cpp: {cpp_name}")
                 break
         else:
             print(f"  未找到源码: {base}.cpp/.c/...")
 
-    # 4) 在 reports/obj 内对每个 cpp 执行 gcov --object-directory . <cpp>
+    # 4) 在项目路径 test/testfwk 下执行 gcov：使用 -r -s <源文件所在目录> --object-directory <报告目录> <源文件完整路径>，与可手动成功的方式一致，使 .gcov 能包含源码行
     cpp_files = []
     for ext in SOURCE_EXTENSIONS:
-        cpp_files.extend(REPORTS_OBJ.glob(f"*{ext}"))
+        cpp_files.extend(report_dir.glob(f"*{ext}"))
     if not cpp_files:
-        print("reports/obj 内无 cpp 文件，跳过 gcov。")
+        print("报告目录内无 cpp 文件，跳过 gcov。")
         return 0
 
     gcov_exe = str(GCOV_PATH) if GCOV_PATH.is_file() else "gcov"
     if GCOV_PATH.is_file():
         print(f"使用 gcov: {GCOV_PATH}")
-    print("在 reports/obj 内执行 gcov ...")
+    obj_dir_abs = str(report_dir.resolve())
+    # 从 testfwk 看报告目录的相对路径（与用户命令一致，如 developer_test/reports/obj_xxx/），使 gcov 能找到 gcno/gcda
+    try:
+        obj_dir_from_testfwk = str(report_dir.resolve().relative_to(GCOV_WORK_DIR.resolve()))
+    except ValueError:
+        obj_dir_from_testfwk = obj_dir_abs
+    print(f"在 {GCOV_WORK_DIR} 下执行 gcov（-r -s <源目录> --object-directory {obj_dir_from_testfwk} <源文件>）...")
     orig_cwd = os.getcwd()
     try:
-        os.chdir(REPORTS_OBJ)
+        os.chdir(GCOV_WORK_DIR)
         for cpp in cpp_files:
-            r = subprocess.run(
-                [gcov_exe, "--object-directory", ".", cpp.name],
-                capture_output=True,
-                text=True,
-                timeout=60,
-            )
+            base = cpp.stem
+            src_cpp = base_to_src_cpp.get(base)
+            if src_cpp and src_cpp.exists():
+                src_dir = str(src_cpp.parent)
+                cmd = [gcov_exe, "-r", "-s", src_dir, "--object-directory", obj_dir_from_testfwk, str(src_cpp)]
+            else:
+                cmd = [gcov_exe, "--object-directory", obj_dir_abs, cpp.name]
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
             if r.returncode == 0:
                 print(f"  gcov 完成: {cpp.name}")
             else:
-                print(f"  gcov 失败: {cpp.name} - {r.stderr[:200] if r.stderr else r.stdout[:200]}")
+                err = (r.stderr or r.stdout or "")[:400]
+                print(f"  gcov 失败: {cpp.name} - {err}")
     finally:
         os.chdir(orig_cwd)
 
+    # 5) 将 testfwk 下生成的所有 .gcov 移动到报告目录，并重写 Source 行为相对报告目录的路径（便于在报告目录下打开源文件）
+    # gcov 在 test/testfwk 下运行，Source 为相对 testfwk 的路径（如 ../../base/...）；报告目录在 developer_test/reports/obj_*
+    # 从 obj_* 到 src 需 5 层 ..（obj_* -> reports -> developer_test -> testfwk -> test -> src），故 ../../base/... -> ../../../../../base/...
+    gcov_to_report_prefix = "../../../.."  # 4 层 ..，加上原路径的 ../../ 共 5 层到 src
+    gcov_generated = list(GCOV_WORK_DIR.glob("*.gcov"))
+    for gcov_file in gcov_generated:
+        dst = report_dir / gcov_file.name
+        try:
+            shutil.move(str(gcov_file), str(dst))
+            print(f"  已移动到报告目录: {gcov_file.name}")
+        except OSError as e:
+            try:
+                shutil.copy2(gcov_file, dst)
+                gcov_file.unlink(missing_ok=True)
+                print(f"  已拷贝到报告目录: {gcov_file.name}")
+            except OSError as e2:
+                print(f"  移动/拷贝失败 {gcov_file.name}: {e2}", file=sys.stderr)
+                continue
+        # 重写 .gcov 内 Source 行：原路径相对 testfwk，改为相对报告目录，使 IDE/工具能从报告目录找到源文件
+        try:
+            text = dst.read_text(encoding="utf-8", errors="ignore")
+            lines = text.splitlines()
+            for i, line in enumerate(lines):
+                if ":Source:" in line and not line.strip().startswith("#"):
+                    # 格式如 "        -:    0:Source:../../base/.../file.cpp"
+                    parts = line.split("Source:", 1)
+                    if len(parts) == 2:
+                        old_path = parts[1].strip()
+                        if old_path.startswith("../") or old_path.startswith("../../"):
+                            # 原路径相对 testfwk（如 ../../base/...），改为相对报告目录（../../../../../base/...）
+                            new_path = (gcov_to_report_prefix + "/" + old_path).replace("//", "/")
+                            lines[i] = parts[0] + "Source:" + new_path
+                    break
+            dst.write_text("\n".join(lines) + ("\n" if text.endswith("\n") else ""), encoding="utf-8")
+        except Exception as e:
+            print(f"  重写 Source 路径失败 {dst.name}: {e}", file=sys.stderr)
+
     print()
     print("覆盖率数据已生成，可用 analyze 查看统计：")
-    print("  python3 .claude/skills/ohtest/coverage_analysis.py analyze " + str(REPORTS_OBJ))
+    print(f"  python3 .claude/skills/ohtest/coverage_analysis.py analyze {report_dir}")
     return 0
 
 
@@ -445,9 +513,19 @@ def main() -> int:
 
     subparsers.add_parser("help", help="显示帮助").set_defaults(which="help")
 
-    run_parser = subparsers.add_parser("run", help="从设备拉取 gcda，拷贝 gcno/cpp，在 reports/obj 内执行 gcov")
+    run_parser = subparsers.add_parser(
+        "run",
+        help="从设备拉取 gcda，拷贝 gcno/cpp，在 test/testfwk 下执行 gcov，将 .gcov 移动到报告目录",
+    )
     run_parser.add_argument("-p", "--product", default="rk3568", help="产品名，默认 rk3568")
     run_parser.add_argument("--device", default=None, help="指定设备 ID，默认使用第一个")
+    run_parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=None,
+        metavar="PATH",
+        help="报告目录，如 developer_test/reports/obj 或 reports/obj_battery_statistics_2602051604；默认 reports/obj",
+    )
     run_parser.add_argument(
         "--search-root",
         action="append",
@@ -504,6 +582,7 @@ def main() -> int:
             product=args.product,
             device_id=args.device,
             search_roots=getattr(args, "search_roots", None),
+            output_dir=getattr(args, "output_dir", None),
         )
 
     if args.command == "analyze":
