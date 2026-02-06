@@ -197,3 +197,41 @@ python3 src/.claude/skills/ohtest/coverage_analysis.py clear-rerun-fuzz-analyze 
 | `-p` / `--product` | 产品名，默认 `rk3568` |
 | `--device` | 指定设备 ID |
 | `--search-root` | 设备上查找 *.gcda 的目录，可多次指定 |
+
+---
+
+## 生成覆盖率缺失的测试用例建议（coverage_gap_tests.py）
+
+根据 **.gcov 覆盖率分析文件** 结合对应 **fuzztest** 测试用例，生成「覆盖率缺失的测试用例」建议。输出包含：**一、覆盖率缺失摘要**；**二、现有 fuzztest 目标**；**三、建议新增/修改的测试用例**（按文件列出未覆盖行与涉及符号）；**四、新增/修改文件建议**；**五、构建与运行**；**六、预期对覆盖率的影响**。参考此前新增 fuzzer（如 `battery_stats_info_fuzzer`）的流程：新增 fuzzer 目录与 BUILD.gn、在 group 的 deps 中注册、反序列化/API/分支类未覆盖时的 fuzzer 写法要点。
+
+### 何时使用
+
+- 用户说：「根据 gcov 分析缺哪些测试用例」「覆盖率缺失要加什么 fuzz 用例」「分析 battery_statistics 的覆盖率并给出补测建议」。
+- 已有 `developer_test/reports/obj_<模块>_<id>` 下的 .gcov 报告，需要针对未覆盖行给出**新增 fuzzer、修改文件、构建运行与预期影响**的结构化建议时。
+
+### 使用方式
+
+```bash
+# 指定报告目录（通常为 reports/obj_<模块>_<id>）；可选 --module、--output
+python3 src/.claude/skills/ohtest/coverage_gap_tests.py analyze-gaps test/testfwk/developer_test/reports/obj_battery_statistics_2602051604
+python3 src/.claude/skills/ohtest/coverage_gap_tests.py analyze-gaps test/testfwk/developer_test/reports/obj_battery_statistics_2602051604 --module battery_statistics
+python3 src/.claude/skills/ohtest/coverage_gap_tests.py analyze-gaps test/testfwk/developer_test/reports/obj_battery_statistics_2602051604 -o coverage_gap_report.txt
+# 不传报告目录时，若 reports 下仅有一个 obj_* 子目录则自动使用该目录
+python3 src/.claude/skills/ohtest/coverage_gap_tests.py analyze-gaps
+python3 src/.claude/skills/ohtest/coverage_gap_tests.py help
+```
+
+| 参数 | 说明 |
+|------|------|
+| `report_dir` | 报告目录，如 `developer_test/reports/obj_battery_statistics_2602051604`；可省略并由脚本自动查找 |
+| `--module` / `-m` | 模块名（如 `battery_statistics`），用于解析现有 fuzztest 目标与模块路径 |
+| `--output` / `-o` | 将报告写入该文件；不指定则打印到 stdout |
+
+### 输出说明
+
+- **一、覆盖率缺失摘要**：按 .gcov 文件列出未覆盖可执行行数及合计。
+- **二、现有 fuzztest 目标**：从该模块的 `test/fuzztest/BUILD.gn` 的 deps 解析出的 FuzzTest 目标列表。
+- **三、建议新增/修改的测试用例**：对未覆盖行较多的文件，列出涉及符号（如 `BatteryStatsInfo::Unmarshalling`）及示例行号与代码片段。
+- **四、新增/修改文件建议**：新增 fuzzer 目录结构（`<source_stem>_fuzzer/`、`*_fuzzer_test.cpp`、BUILD.gn、project.xml、corpus/init）；在 group 的 deps 中注册；反序列化/Setter·Getter·分支类未覆盖时的写法要点。
+- **五、构建与运行**：模块路径、`./build.sh --build-target <NewFuzzTest> --gn-args <module>_feature_coverage=true`、ohbuild 与 fuzztest/coverage_analysis 命令示例。
+- **六、预期对覆盖率的影响**：按文件说明补充对应调用后可提高的行覆盖率。
