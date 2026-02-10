@@ -1,6 +1,6 @@
 ---
 name: gitlog
-description: "Git log skill for analyzing commit history, generating git status reports, and working with git repositories. Use this when users need to view commit history, check repository status, analyze changes, or generate git-related reports."
+description: "Git log skill for analyzing commit history, generating git status reports, and working with git repositories. Use when users need to: view commit history (log, log-stat, log-patch, log-file, log-range, log-first-parent), check repository status (status), generate git reports (report), auto commit and push with Signed-off-by (commit, default -s; push), sign existing commits (sign-commits), configure token (config-token), or check/fix copyright headers (check-copyright). Entry script: gitlog.py."
 author: "Created by user"
 created: "2026-01-20"
 version: "1.0.0"
@@ -50,6 +50,16 @@ Simply ask in natural language, and the assistant will use this skill to help yo
 - "生成 CTS 提交需要的 git log 文件" → Uses `report` command with `--first-parent`
 - "查看某个文件的提交历史" → Uses `log-file` command
 
+**Commit and push:**
+- "用 gitlog 技能提交本项目修改" / "提交项目的修改" → Uses `commit` (default Signed-off-by, then auto push)
+- "提交并推送，不要 Signed-off-by" → Uses `commit --no-sign "message"`
+- "推送到远程" → Uses `push`
+
+**Sign and tooling:**
+- "为最近 5 个提交补 Signed-off-by" → Uses `sign-commits HEAD~5..HEAD`
+- "检查/修复源码版权头" → Uses `check-copyright [--fix] [--dry-run]`
+- "配置 Git 令牌" → Uses `config-token username token`
+
 ### How It Works:
 
 1. **You ask a question** in natural language (English or Chinese)
@@ -59,46 +69,67 @@ Simply ask in natural language, and the assistant will use this skill to help yo
 
 **No need to remember commands!** Just ask naturally, and the assistant will handle it.
 
-## Quick Start - Using the Executable Script
+## Quick Start - Using the Script (gitlog.py)
 
 You can use the skill with specific commands and operations:
 
 ```bash
-# Basic usage
-.claude/skills/gitlog/gitlog.sh <command> [arguments]
+# Basic usage（工程内使用 src/skills 路径，或拷贝到 .claude/skills 后替换为 .claude/skills/gitlog/gitlog.py）
+python3 src/skills/gitlog/gitlog.py <command> [arguments]
 
 # Examples:
-.claude/skills/gitlog/gitlog.sh status              # Show git status
-.claude/skills/gitlog/gitlog.sh log 5               # Show last 5 commits
-.claude/skills/gitlog/gitlog.sh log-oneline 20      # Show last 20 commits (one-line)
-.claude/skills/gitlog/gitlog.sh log-stat 10         # Show last 10 commits with stats
-.claude/skills/gitlog/gitlog.sh log-patch 5         # Show last 5 commits with full diff
-.claude/skills/gitlog/gitlog.sh log-file CMakeLists.txt  # Show log for specific file
-.claude/skills/gitlog/gitlog.sh report v1.4.4.0    # Generate git reports
-.claude/skills/gitlog/gitlog.sh help                # Show help message
+python3 src/skills/gitlog/gitlog.py status              # Show git status
+python3 src/skills/gitlog/gitlog.py log 5               # Show last 5 commits
+python3 src/skills/gitlog/gitlog.py log-oneline 20      # Show last 20 commits (one-line)
+python3 src/skills/gitlog/gitlog.py log-stat 10         # Show last 10 commits with stats
+python3 src/skills/gitlog/gitlog.py log-patch 5         # Show last 5 commits with full diff
+python3 src/skills/gitlog/gitlog.py log-file CMakeLists.txt  # Show log for specific file
+python3 src/skills/gitlog/gitlog.py report v1.4.4.0    # Generate git reports
+python3 src/skills/gitlog/gitlog.py help                # Show help message
 ```
 
-**Available Commands:**
-- `status` - Show git status
-- `log [n]` - Show last n commits (default: 10) in one-line format
-- `log-oneline [n]` - Show last n commits in one-line format
-- `log-stat [n]` - Show last n commits with file statistics
-- `log-patch [n]` - Show last n commits with full patch/diff
-- `log-file <file>` - Show git log for specific file
-- `log-range <from>..<to>` - Show commits between two references (e.g., `tag1..tag2`)
-- `log-first-parent <range>` - Show commits with --first-parent option (e.g., `tag^..HEAD`)
-- `report [tag]` - Generate git-status.txt and git-log.txt files
-- `help` - Show help message
+**Available Commands（与 gitlog.py 一致）:**
 
-**Examples for range queries:**
+| 命令 | 说明 |
+|------|------|
+| `status` | 查看 git status |
+| `log [n]` | 最近 n 条提交（默认 10），单行格式 |
+| `log-oneline [n]` | 同上 |
+| `log-stat [n]` | 最近 n 条提交及文件统计 |
+| `log-patch [n]` | 最近 n 条提交及完整 diff |
+| `log-file <file>` | 指定文件的提交历史 |
+| `log-range <from>..<to>` | 两引用之间的提交（如 tag1..tag2） |
+| `log-first-parent <range>` | 带 --first-parent 的 log（如 tag^..HEAD） |
+| `report [tag]` | 生成 git-status.txt、git-log.txt |
+| **`commit [message] [--no-sign]`** | **自动暂存、分批提交（≤2000 行/次）、默认 Signed-off-by，提交后自动 push；`--no-sign` 关闭签名** |
+| **`push [remote] [branch]`** | **推送到远程（默认 origin 当前分支）** |
+| **`sign-commits [range]`** | **为历史提交补 Signed-off-by（如 HEAD~5..HEAD）** |
+| **`config-token [username] [token]`** | **配置 Git 凭据（PAT 写入 remote URL）** |
+| **`check-copyright [--fix] [--dry-run]`** | **检查/修复源码版权头（.ets/.h/.cpp/.c/.d.ts）** |
+| `help` | 显示帮助 |
+
+**调用方式**：本技能入口为 **`gitlog.py`**（无 gitlog.sh），在工程根目录执行：
 ```bash
-# Show commits between two tags
-.claude/skills/gitlog/gitlog.sh log-range v1.4.3..v1.4.4
+python3 src/skills/gitlog/gitlog.py <command> [arguments]
+# 或拷贝到 .claude/skills 后：
+python3 .claude/skills/gitlog/gitlog.py <command> [arguments]
+```
 
-# Show commits with --first-parent (for CTS submissions)
-.claude/skills/gitlog/gitlog.sh log-first-parent v1.4.4.0^..HEAD
+**Examples for range / commit / push:**
+```bash
+# 标签之间、first-parent
+python3 src/skills/gitlog/gitlog.py log-range v1.4.3..v1.4.4
+python3 src/skills/gitlog/gitlog.py log-first-parent v1.4.4.0^..HEAD
 
-# Equivalent to: git log --first-parent v1.4.4.0^..HEAD
+# 提交并推送（默认 Signed-off-by）
+python3 src/skills/gitlog/gitlog.py commit "feat: add xxx"
+python3 src/skills/gitlog/gitlog.py commit --no-sign "docs: update"
+
+# 补签历史、推送、版权检查
+python3 src/skills/gitlog/gitlog.py sign-commits HEAD~5..HEAD
+python3 src/skills/gitlog/gitlog.py push
+python3 src/skills/gitlog/gitlog.py check-copyright --dry-run
+python3 src/skills/gitlog/gitlog.py check-copyright --fix
 ```
 
 ## Common Git Commands
@@ -129,8 +160,8 @@ git log <tag1>..<tag2>
 git log --first-parent <release tag>^..HEAD
 
 # Using gitlog skill for range queries:
-.claude/skills/gitlog/gitlog.sh log-range <tag1>..<tag2>
-.claude/skills/gitlog/gitlog.sh log-first-parent <release tag>^..HEAD
+python3 src/skills/gitlog/gitlog.py log-range <tag1>..<tag2>
+python3 src/skills/gitlog/gitlog.py log-first-parent <release tag>^..HEAD
 ```
 
 ### Repository Status
@@ -158,7 +189,7 @@ git status > git-status.txt
 git log --first-parent <release tag>^..HEAD > git-log.txt
 
 # Using gitlog skill to generate reports:
-.claude/skills/gitlog/gitlog.sh report <release tag>
+python3 src/skills/gitlog/gitlog.py report <release tag>
 # This automatically generates git-status.txt and git-log.txt
 
 # Generate patches
