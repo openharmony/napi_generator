@@ -167,6 +167,15 @@ python3 .claude/skills/helloworld/getcodecnt.py email 1month goujingjing@kaihong
 python3 .claude/skills/helloworld/getcodecnt.py compatibility
 python3 .claude/skills/helloworld/getcodecnt.py compatibility 103  # 查询深开鸿的设备（使用公司ID）
 python3 .claude/skills/helloworld/getcodecnt.py compatibility 103 6 轻量系统  # 查询指定版本和系统类型
+
+# 所有主要雇主提交详情汇总、提交统计报告、按年份查询
+python3 .claude/skills/helloworld/getcodecnt.py alldetail 1month [master]
+python3 .claude/skills/helloworld/getcodecnt.py stats all 深开鸿 6.0release [max_pages]
+python3 .claude/skills/helloworld/getcodecnt.py yearquery goujingjing@kaihong.com 2025
+
+# 生成 Hello World Python 文件（generate.py）
+python3 .claude/skills/helloworld/generate.py [输出文件名]
+python3 src/skills/helloworld/generate.py hello_world.py
 ```
 
 **支持的时间范围：**
@@ -193,6 +202,10 @@ Simply ask:
 - "Get commit details for 深开鸿 on master branch for last month"
 - "Query commits by email goujingjing@kaihong.com for last month"
 - "Query compatibility devices for company 103"
+- "查看所有主要雇主近 1 个月的提交详情汇总（alldetail）"
+- "查看深开鸿 6.0release 分支的提交统计报告（stats）"
+- "按年份查询某邮箱的提交（yearquery）"
+- "生成 Hello World Python 文件" / "使用 helloworld 技能生成 hello_world.py"
 
 The assistant will automatically use this skill to fetch and display the data with the specified time range.
 
