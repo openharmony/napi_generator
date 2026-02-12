@@ -48,9 +48,45 @@ deps += [
 
 则 `--build-target` 可填：`GetAppStatsMahFuzzTest`、`GetAppStatsPercentFuzzTest` 等。
 
+### 部件 fuzztest 编译目标（一次编译该部件下全部 fuzz 用例）
+
+若要**一次编译该部件下所有 fuzz 测试**，使用「部件 fuzztest 编译目标」：
+
+- 在部件目录下找到 **`test/fuzztest/BUILD.gn`**。
+- 该文件中的 **`group("...")`** 名称（如 `group("fuzztest")` 中的 `fuzztest`）即为目标名。
+- 编译目标格式：**`<模块相对 src 的路径>/test/fuzztest:<group 名>`**。
+
+示例：`battery_statistics` 的 BUILD.gn 为 `group("fuzztest")`，模块路径为 `base/powermgr/battery_statistics`，则部件 fuzztest 编译目标为：
+
+```text
+base/powermgr/battery_statistics/test/fuzztest:fuzztest
+```
+
+编译命令示例：
+
+```bash
+./build.sh --build-target base/powermgr/battery_statistics/test/fuzztest:fuzztest --product-name rk3568 --gn-args battery_statistics_feature_coverage=true
+```
+
+使用 `ohbuild.py build-component-fuzztest <模块>` 可自动解析并打印上述命令（见下方「使用 Python 脚本」）。
+
+### 无 test/fuzztest 目录时：从 bundle.json 取 fuzztest 目标
+
+若部件下**没有** `test/fuzztest/BUILD.gn`，fuzztest 编译目标可能写在 **bundle.json** 的 **build.test** 中（如 `component.build.test`），格式为 `"//路径:目标名"`。编译时**去掉前缀 `//`** 作为 `--build-target`。
+
+示例（`base/accesscontrol/sandbox_manager/bundle.json`）：
+
+```json
+"build": { "test": ["//base/accesscontrol/sandbox_manager:sandbox_manager_build_fuzz_test", ...] }
+```
+
+则 `--build-target` 为：`base/accesscontrol/sandbox_manager:sandbox_manager_build_fuzz_test`。
+
+此类部件的 **`*_feature_coverage`** 常在 **`config/BUILD.gn`** 的 `declare_args()` 中定义，ohbuild 会一并解析。
+
 ### 如何找到「gn-args 参数」
 
-1. 打开该模块的 **BUILD.gn**（通常在模块的 `utils` 或主目录，如 `src/base/powermgr/battery_statistics/utils/BUILD.gn`）。
+1. 打开该模块的 **BUILD.gn**（常见位置：**`config/BUILD.gn`**、`utils/BUILD.gn` 或根目录 BUILD.gn，如 `src/base/accesscontrol/sandbox_manager/config/BUILD.gn`）。
 2. 在 `declare_args() { ... }` 中查找名为 **`<模块名>_feature_coverage`** 的变量（默认一般为 `false`）。
 3. 编译 fuzz 并开覆盖率时，在命令行中写：`<模块名>_feature_coverage=true`。
 
@@ -141,6 +177,10 @@ python3 .claude/skills/ohbuild/ohbuild.py list-fuzztest base/powermgr/battery_st
 # 生成编译 fuzz 测试的命令（不执行，仅打印）
 python3 .claude/skills/ohbuild/ohbuild.py build-fuzztest GetAppStatsMahFuzzTest --gn-args battery_statistics_feature_coverage=true
 
+# 生成「编译部件全部 fuzztest」的命令（从 test/fuzztest/BUILD.gn 的 group 解析目标）
+python3 .claude/skills/ohbuild/ohbuild.py build-component-fuzztest battery_statistics --gn-args battery_statistics_feature_coverage=true
+python3 .claude/skills/ohbuild/ohbuild.py build-component-fuzztest base/powermgr/battery_statistics
+
 # 编译后验证：是否有模块相关 gcno 文件（可选模块名）
 python3 .claude/skills/ohbuild/ohbuild.py verify-coverage power_manager
 python3 .claude/skills/ohbuild/ohbuild.py verify-coverage
@@ -151,6 +191,7 @@ python3 .claude/skills/ohbuild/ohbuild.py help
 
 **命令说明：**
 
-- `list-fuzztest <模块>`：列出该模块下所有 fuzz 目标名及对应的 `*_feature_coverage` 参数。
-- `build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]`：打印对应的 `./build.sh` 命令。
+- `list-fuzztest <模块>`：列出该模块下「部件 fuzztest 编译目标」、所有单个 fuzz 目标名及对应的 `*_feature_coverage` 参数。
+- `build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]`：打印编译**单个** fuzz 目标的 `./build.sh` 命令。
+- `build-component-fuzztest <模块> [--product-name rk3568] [--gn-args xxx=true]`：打印编译**部件全部 fuzztest** 的 `./build.sh` 命令；目标从该部件 `test/fuzztest/BUILD.gn` 的 `group("...")` 解析，形如 `base/powermgr/battery_statistics/test/fuzztest:fuzztest`；若不传 `--gn-args` 则自动用该模块的 `*_feature_coverage=true`。
 - `verify-coverage [模块名] [--product-name rk3568]`：编译后验证，在 `out/<product>/obj/` 下查找 `*.gcno`；若指定模块名则只列出与该模块相关的 gcno，若有则列出并提示用户。

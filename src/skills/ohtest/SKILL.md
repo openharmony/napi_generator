@@ -135,43 +135,102 @@ python3 src/skills/ohtest/ohtest.py \
 ### 使用方式
 
 ```bash
-# 必选：-ts 测试套名；可选：-p 产品名、--coverage、--dry-run
+# 方式一：按测试套名执行（-ts 与 -ss/-tp 至少填其一）
 python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest
-python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest -p rk3568 --coverage
+python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest -p rk3568
 python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest --dry-run
+
+# 方式二：按子系统、部件执行（等价于 start.sh -p 3568 run -t FUZZ -ss customization -tp customization）
+python3 src/.claude/skills/ohtest/fuzztest.py run -ss customization -tp customization -p 3568
+python3 src/.claude/skills/ohtest/fuzztest.py run -ss customization -tp customization --dry-run
+
+# 需收集覆盖率时再加 --coverage
+python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest --coverage
+
 python3 src/.claude/skills/ohtest/fuzztest.py help
 ```
 
 | 参数 | 说明 |
 |------|------|
-| `-ts` / `--testsuite` | 测试套名（必填），如 `GetAppStatsMahFuzzTest` |
-| `-p` / `--product` | 产品名，默认 `rk3568` |
-| `--coverage` | 附加 `-cov coverage` 收集覆盖率 |
+| `-ts` / `--testsuite` | 测试套名，如 `GetAppStatsMahFuzzTest`；与 `-ss`/`-tp` 至少填其一 |
+| `-ss` / `--subsystem` | 子系统，如 `customization`，与 start.sh 的 `run -t FUZZ -ss` 一致 |
+| `-tp` / `--testpart` | 部件，如 `customization`，与 start.sh 的 `run -t FUZZ -tp` 一致 |
+| `-p` / `--product` | 产品名，默认 `rk3568`（如 3568 则传 `-p 3568`） |
+| `--coverage` | 可选：附加 `-cov coverage` 收集覆盖率（拉取与分析时需设备上有 gcda） |
 | `--dry-run` | 仅打印将要执行的命令，不实际执行 |
 
 执行前需：设备已连接、hdc 可用（设置 `OHOS_SDK_PATH` 或系统 PATH 中含 hdc）。
 
 ---
 
+## 查找工程内所有 Fuzztest（find_fuzztest.py）
+
+从工程目录扫描含 **bundle.json** 的部件（有 fuzztest 与无 fuzztest 的均列入同一张表）；有 fuzztest 的解析 **BUILD.gn** 得到测试套件与 **\*_feature_coverage** 覆盖率选项，无 fuzztest 的对应列填 **无**。表格增加一列：部件从 **src** 起的**相对路径**。默认输出 **src/partwithfuzztest.md**。
+
+### 使用方式
+
+```bash
+# 默认扫描整个 src（含 base、arkcompiler、developtools、device 等），输出到 src/partwithfuzztest.md
+python3 src/.claude/skills/ohtest/find_fuzztest.py
+
+# 仅扫描 base 目录
+python3 src/.claude/skills/ohtest/find_fuzztest.py --root base
+
+# 指定输出文件
+python3 src/.claude/skills/ohtest/find_fuzztest.py -o /path/to/partwithfuzztest.md
+```
+
+| 参数 | 说明 |
+|------|------|
+| `--root` | 相对 src 的扫描根目录，默认 `.`（整个 src）；仅 base 时传 `base` |
+| `--output` / `-o` | 输出 Markdown 文件路径，默认 **src/partwithfuzztest.md** |
+
+表格列：**子系统 | 部件 | 相对路径（从 src 起） | 覆盖率编译选项 | Fuzztest 测试套件**。无 fuzztest 的部件在覆盖率与测试套件列填「无」。
+
+---
+
+## 查找所有 ACTS 测试套件（find_actstest.py）
+
+在 **test/xts/acts** 下扫描所有 **BUILD.gn**，识别 **ohos_*_suite**（如 ohos_app_assist_suite、ohos_js_app_suite、ohos_moduletest_suite）定义的 ACTS 测试套件，解析 **hap_name**、**subsystem_name**、**part_name** 及编译对象类型；统计子系统数、部件数、ACTS 测试套件数、目录数，并输出明细表到 **src/all_acts.md**。编译入口来自 bundle.json 的 test 节点：`//test/xts/acts/build:acts_group`。
+
+### 使用方式
+
+```bash
+# 默认输出 src/all_acts.md
+python3 src/.claude/skills/ohtest/find_actstest.py
+
+# 指定输出文件
+python3 src/.claude/skills/ohtest/find_actstest.py -o /path/to/all_acts.md
+```
+
+输出表格列：**目录 | 子系统 | 部件 | 测试套件名 | hap_name | 编译对象**。
+
+---
+
 ## 分析 fuzztest 测试覆盖率（coverage_analysis.py）
 
-对已跑过带覆盖率 fuzz 测试的设备，收集 gcda、生成 .gcov 并统计覆盖率。
+对设备上已有的 gcda 收集、生成 .gcov 并统计覆盖率（设备上需曾跑过带 `-cov coverage` 的 fuzz 测试才会产生 gcda）。
 
 ### 流程
 
-1. **在设备上跑带覆盖率的 fuzz 测试**（若尚未跑过）  
-   `python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest --coverage`
+1. **在设备上跑 fuzz 测试**（若需收集覆盖率，运行时加 `--coverage`）  
+   `python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest`  
+   或按子系统/部件：`python3 src/.claude/skills/ohtest/fuzztest.py run -ss customization -tp customization`  
+   需覆盖率时：`python3 src/.claude/skills/ohtest/fuzztest.py run -ts GetAppStatsMahFuzzTest --coverage`
 2. **收集覆盖率并生成报告**  
-   `python3 src/.claude/skills/ohtest/coverage_analysis.py run [-p rk3568]`  
-   会从设备上两个路径查找 *.gcda：① 本地根（由本地路径前两级推导，如 `/root/ohos`）；② `/data/gcov/<本地根>`（如 `/data/gcov/root/ohos`）。拷贝到 reports/obj 后，再拷贝对应 *.gcno 与源码，在 reports/obj 内执行 gcov。
-3. **查看覆盖率统计**  
-   `python3 src/.claude/skills/ohtest/coverage_analysis.py analyze`  
-   解析 reports/obj 下的 .gcov 并输出可执行行、已覆盖行、覆盖率百分比及等级。
+   - 按测试对象拉取（推荐）：`python3 src/.claude/skills/ohtest/coverage_analysis.py run -t customization -p rk3568`  
+     报告目录为 **reports/obj_customization_yymmddhhmmss**，且仅拉取设备路径中包含 `customization` 的 gcda。  
+   - 拉取全部：`python3 src/.claude/skills/ohtest/coverage_analysis.py run [-p rk3568]`  
+     报告目录默认 reports/obj。  
+   会从设备上两个路径查找 *.gcda，拷贝到报告目录后，再拷贝对应 *.gcno 与源码，在 test/testfwk 下执行 gcov，并将 .gcov 移入报告目录。
+3. **查看覆盖率统计并生成 analysis.md**  
+   `python3 src/.claude/skills/ohtest/coverage_analysis.py analyze [目录]`  
+   解析该目录下的 .gcov，输出可执行行、已覆盖行、覆盖率；并**在该目录下写入 analysis.md**，其中对覆盖率不足 100% 的文件列出**未覆盖代码行（行号与内容）**及**测试建议**（分支/错误处理/空指针等）。
 
 ### 环境
 
 - **hdc**：与 fuzztest 相同，脚本会将 **`${OHOS_SDK_PATH}/linux/toolchains`**（及 `toolchains/bin`）加入 PATH；未设置时需保证系统 PATH 中已有 hdc。
-- 执行 `run` 前需设备已连接且已跑过带 `-cov coverage` 的 fuzz 测试。
+- 执行 `run` 拉取前，设备上需已有 gcda（即曾跑过带 `-cov coverage` 的 fuzz 测试）。
 
 ### 技能 1：清除分析结果并再次分析
 
@@ -184,7 +243,7 @@ python3 src/.claude/skills/ohtest/coverage_analysis.py clear-analyze -p rk3568
 
 ### 技能 2：清除分析结果、重新运行 fuzztest 并分析
 
-先清除 reports/obj；再在设备上执行带覆盖率的 fuzz 测试（调用 fuzztest.py）；然后从设备拉取 gcda、生成 .gcov；最后执行 analyze 输出统计。
+先清除 reports/obj；再在设备上执行 fuzz 测试（调用 fuzztest.py）；然后从设备拉取 gcda、生成 .gcov；最后执行 analyze 输出统计。
 
 ```bash
 python3 src/.claude/skills/ohtest/coverage_analysis.py clear-rerun-fuzz-analyze
@@ -197,6 +256,17 @@ python3 src/.claude/skills/ohtest/coverage_analysis.py clear-rerun-fuzz-analyze 
 | `-p` / `--product` | 产品名，默认 `rk3568` |
 | `--device` | 指定设备 ID |
 | `--search-root` | 设备上查找 *.gcda 的目录，可多次指定 |
+
+### run 子命令：测试对象与目录命名
+
+| 参数 | 说明 |
+|------|------|
+| `-t` / `--target` | 测试对象名（如 `customization`）。指定后：① 报告目录为 **reports/obj_<target>_yymmddhhmmss**；② 仅拉取设备路径中包含该名的 gcda。 |
+| `--output-dir` | 手动指定报告目录；与 `-t` 同时指定时以本参数为准。 |
+
+### analyze 输出：analysis.md
+
+analyze 会在指定目录下生成 **analysis.md**，内容包括：一、覆盖率汇总表；二、对覆盖率 &lt;100% 的文件：**未覆盖代码行**（行号 + 代码内容）、**测试建议**（分支/错误处理/空指针等）。
 
 ---
 
@@ -235,3 +305,33 @@ python3 src/.claude/skills/ohtest/coverage_gap_tests.py help
 - **四、新增/修改文件建议**：新增 fuzzer 目录结构（`<source_stem>_fuzzer/`、`*_fuzzer_test.cpp`、BUILD.gn、project.xml、corpus/init）；在 group 的 deps 中注册；反序列化/Setter·Getter·分支类未覆盖时的写法要点。
 - **五、构建与运行**：模块路径、`./build.sh --build-target <NewFuzzTest> --gn-args <module>_feature_coverage=true`、ohbuild 与 fuzztest/coverage_analysis 命令示例。
 - **六、预期对覆盖率的影响**：按文件说明补充对应调用后可提高的行覆盖率。
+
+---
+
+## ACTS / Fuzztest 发现（find_actstest.py、find_fuzztest.py）
+
+在 **OpenHarmony 源码树**（含 `test/xts/acts` 或各部件 `bundle.json`）中扫描并输出测试套件或部件列表，便于查阅与脚本化。
+
+### find_actstest.py：列出所有 ACTS 测试套件
+
+扫描 **test/xts/acts** 下 BUILD.gn 中的 `ohos_*_suite` 定义，解析 hap_name、subsystem_name、part_name 及套件类型，输出到 Markdown（默认 `src/all_acts.md`）。
+
+**何时使用**：用户说「扫描 test/xts/acts 列出所有 ACTS 测试套」「生成 all_acts 列表」。
+
+**使用方式**：
+```bash
+python3 src/skills/ohtest/find_actstest.py [--output src/all_acts.md]
+python3 src/skills/ohtest/find_actstest.py --output my_acts.md
+```
+
+### find_fuzztest.py：列出含 fuzztest 的部件
+
+从工程目录查找含 `bundle.json` 的部件，有 fuzztest 的解析测试套件与覆盖率选项，无 fuzztest 的也列入表格（对应列填无）。默认输出 `src/partwithfuzztest.md`。可选 `--root <目录>` 只扫描某目录（如 `base`）。
+
+**何时使用**：用户说「列出工程里带 fuzztest 的部件」「扫描 base 下有哪些部件有 fuzz 测试」。
+
+**使用方式**：
+```bash
+python3 src/skills/ohtest/find_fuzztest.py [--root <目录>] [--output src/partwithfuzztest.md]
+python3 src/skills/ohtest/find_fuzztest.py --root base --output base_fuzz.md
+```
