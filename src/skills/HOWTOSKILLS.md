@@ -66,66 +66,79 @@ Sync to AGENTS.md: npx openskills sync
 
 ## 4. 使用工程里的 skill（src/skills 目录概述）
 
-`src/skills` 目录下为本仓库自有的 OpenHarmony / 社区相关技能，可按需拷贝到 `.claude/skills` 使用，或直接以 `python3 src/skills/<技能名>/<脚本>` 调用。
+`src/skills` 下为本仓库自有的 OpenHarmony / 社区相关技能。可拷贝到 `.claude/skills` 供 Cursor 自动选用，或直接 `python3 src/skills/<技能名>/<脚本>` 调用。每个技能按 **功能**、**用法**、**提示句** 说明如下。
 
-### 4.1 技能列表与功能
+---
 
-| 目录 | 功能 | 限制 |
-|------|------|------|
-| **gitlog** | 查看提交历史、仓库状态、按文件/范围查 log、生成 CTS 用 git 报告（git-status.txt、git-log.txt）。**自动提交并推送**（`commit`）：暂存所有修改、按 2000 行/次分批提交、**默认带 Signed-off-by**（`-s`），提交后自动 push；可 `--no-sign` 关闭签名。**补签历史提交**（`sign-commits <range>`）。**推送**（`push`）。 | 依赖本地 `git`；commit 在工程根目录执行。 |
-| **helloworld** | 社区共建统计：雇主代码行贡献、贡献者排名、提交详情（按雇主/分支/时间）、按作者邮箱查提交、兼容性设备查询。数据来自 openharmony.cn 接口。 | 依赖 openharmony.cn 开放 API 与网络；时间范围、雇主名等参数需按接口约定传入。 |
-| **ohbuild** | **OpenHarmony 构建**：编译 fuzz 测试（`./build.sh --build-target <目标> --product-name rk3568 --gn-args <模块>_feature_coverage=true`）；查看模块 fuzztest 目标及对应 gn-args（`test/fuzztest/BUILD.gn`、模块 BUILD.gn 中的 `<模块>_feature_coverage`）；**验证 gcno**（`verify-coverage [模块名]`）确认覆盖率编译是否生效。 | 需在含 `build.sh` 的源码根目录（如 OpenHarmony src）；产品名默认 rk3568。 |
-| **ohhap** | HAP 构建（主包 + ohosTest 测试包）、HAP 签名（debug/release）、清除签名。含环境与 SDK 版本检查。 | **目前仅验证 6.0 release 工程**，5.0/4.0 后续支持；需配置 `HOS_CLT_PATH`、`OHOS_SDK_PATH`；签名依赖证书（如 `~/ohos/60release/.../autosign/result/`）；项目需含 `build-profile.json5`、`hvigorw` 可用。 |
-| **ohhdc** | 设备侧 HAP 管理：列出已安装应用、安装/替换安装 HAP、卸载、**install-project**（安装主 HAP + 测试 HAP）、**deploy-test**（部署运行 HAP 测试：卸载 → `hdc install -r` 主/测 HAP → **从 List.test.ets 自动发现测试套件**并执行 `aa test`）、查看设备日志（hilog）、查看错误/故障日志（data/log/faultlog）、查看前台/运行中应用、启停应用、运行 ohosTest（aa test）。建议与 ohhap 配合。 | 需设备通过 HDC 连接；`hdc` 在 PATH；安装/跑测需已签名 HAP。 |
-| **ohtest** | **dts 单元测试**（`ohtest.py`）：根据 `.d.ts` 接口定义生成测试套（4 类边界用例），并在 List.test.ets 注册。**UITest**（`uitest_gen.py`）：根据 `.ets` 页面生成 UI 测试套（Driver/ON、assertComponentExist、click），参考 [HarmonyOS UITest 指南](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/uitest-guidelines)。**Fuzz 执行**（`fuzztest.py`）：在 developer_test 下执行指定 fuzz 套（`run -ts <套名>`，可选 `--coverage`）。**覆盖率分析**（`coverage_analysis.py`）：从设备拉取 gcda、生成 .gcov、统计覆盖率（run / analyze / clear-analyze / clear-rerun-fuzz-analyze）。 | dts/UITest 解析基于正则，复杂逻辑需人工补充；fuzz/覆盖率需设备已连接、hdc 可用。 |
+### 4.1 gitlog
 
-### 4.2 使用方式
+| 项 | 说明 |
+|----|------|
+| **功能** | 查看提交历史、仓库状态（status）；按条数/文件/范围查 log（log、log-oneline、log-stat、log-patch、log-file、log-range、log-first-parent）；生成 CTS 报告（report）。**自动提交并推送**（commit，默认 Signed-off-by，`--no-sign` 可关）；推送（push）；补签历史（sign-commits）；配置 Git 令牌（config-token）；**检查/修复源码版权头**（check-copyright，支持 .ets/.h/.cpp/.c/.d.ts，`--fix`/`--dry-run`）。 |
+| **用法** | `python3 src/skills/gitlog/gitlog.py status` \| `log [n]` \| `log-oneline [n]` \| `log-stat [n]` \| `log-patch [n]` \| `log-file <文件>` \| `log-range <from>..<to>` \| `log-first-parent <range>` \| `report [tag]` \| **`commit ["说明"]`**（默认 -s） \| `push` \| `sign-commits <range>` \| `config-token [user] [token]` \| `check-copyright [--fix] [--dry-run]` \| `help` |
+| **提示句** | 「查看最近 10 条提交」「查看 CMakeLists.txt 的提交历史」「生成 v1.4.4 到当前的 git log 报告」「用 gitlog 技能提交本项目修改」「为最近 5 个提交补 Signed-off-by」「检查/修复版权头」「配置 Git 令牌」 |
 
-- **方式一**：将需要的技能目录（如 `gitlog`、`helloworld`、`ohbuild`、`ohhap`、`ohhdc`、`ohtest`）从 `src/skills/` 拷贝到 `.claude/skills/`，便于 Cursor 按技能描述自动选用。
-- **方式二**：不拷贝，直接在命令行用工程路径调用，例如：
-  - **gitlog**：`python3 src/skills/gitlog/gitlog.py status` / `log 10` / `commit "提交说明"`（默认带 Signed-off-by，加 `--no-sign` 可关闭）/ `push`
-  - **ohhap**：`python3 src/skills/ohhap/hapbuild.py build <项目根目录>` / `sign <项目根目录> [debug|release]`
-  - **ohhdc**：`python3 src/skills/ohhdc/ohhdc.py deploy-test <项目根目录>`（自动发现测试套件）/ `replace-install <HAP路径>` / `uninstall <bundleName>` / `hilog` / `faultlog [子目录]`
-  - **ohtest**：`python3 src/skills/ohtest/ohtest.py --dts <dts路径> --test-dir <test目录>`；UITest：`python3 src/skills/ohtest/uitest_gen.py --ets <页面.ets> --test-dir <test目录>`；Fuzz：`python3 src/skills/ohtest/fuzztest.py run -ts <套名> [--coverage]`；覆盖率：`python3 src/skills/ohtest/coverage_analysis.py run` / `analyze` / `clear-analyze`
-  - **ohbuild**：在 OpenHarmony 源码根目录执行 `./build.sh --build-target <目标> --product-name rk3568 --gn-args <模块>_feature_coverage=true`；或 `python3 src/skills/ohbuild/ohbuild.py verify-coverage [模块名]` 验证 gcno
+---
 
-### 4.3 验证示例（语言交互请求）
+### 4.2 helloworld
 
-技能通过对话触发，用户用自然语言提出需求，助手根据技能选用对应脚本。以下每项为**用户可说的一句话请求**及技能对应关系：
+| 项 | 说明 |
+|----|------|
+| **功能** | **getcodecnt.py**：OpenHarmony 社区共建数据（openharmony.cn 接口）— 雇主贡献（employer）、贡献者排名（author）、提交详情（detail/alldetail）、提交统计报告（stats）、按作者邮箱查提交（email）、按年份查询（yearquery）、兼容性设备（compatibility）。**generate.py**：生成 Hello World Python 文件。 |
+| **用法** | getcodecnt：`python3 src/skills/helloworld/getcodecnt.py` [employer \| author \| detail \| alldetail \| stats \| email \| yearquery \| compatibility] [时间范围] [雇主名 分支 \| 邮箱 \| 公司ID 版本 系统类型]。时间范围：1week/1month/2month/3month/6month/1year/2year/3year/all。generate：`python3 src/skills/helloworld/generate.py` [输出文件名]。 |
+| **提示句** | 「查看 OpenHarmony 雇主贡献代码信息」「查看近 1 个月的贡献者排名」「查看深开鸿在 master 分支近 1 个月的提交详情」「查看 xxx@kaihong.com 近一月的提交详情」「查询深开鸿的兼容性设备」「查询 OpenHarmony 6.0 的轻量系统兼容设备」「生成 Hello World Python 文件」 |
 
-1. **gitlog**  
-   - 请求示例：「查看最近 10 条提交」「生成 v1.4.4 到当前的 git log 报告」「查看 CMakeLists.txt 的提交历史」「**用 gitlog 技能提交本项目修改**」「提交项目的修改（默认带 Signed-off-by）」  
-   - 对应：`gitlog.py log 10`、`gitlog.py report`、`gitlog.py log-file CMakeLists.txt`、`gitlog.py commit "提交说明"`（默认 -s）、`gitlog.py push`。
+---
 
-2. **helloworld**  
-   - 请求示例：「最近一周的社区代码共建统计」「查看近一个月的贡献者排名」「查询深开鸿在 master 分支近一个月的提交详情」  
-   - 对应：`getcodecnt.py` 查询雇主/贡献者/提交详情等。
+### 4.3 ohbuild
 
-3. **ohbuild**  
-   - 请求示例：「编译 GetAppStatsMahFuzzTest 并开覆盖率」「某模块有哪些 fuzz 测试、编译时传什么 gn-args」「验证 power_manager 模块是否生成了 gcno」  
-   - 对应：在源码根目录执行 `./build.sh --build-target GetAppStatsMahFuzzTest --product-name rk3568 --gn-args <模块>_feature_coverage=true`；查看 `test/fuzztest/BUILD.gn` 与模块 BUILD.gn；`ohbuild.py verify-coverage [模块名]`。
+| 项 | 说明 |
+|----|------|
+| **功能** | OpenHarmony 构建：编译 fuzz 测试（需在含 `build.sh` 的源码根目录）；查看模块 fuzztest 目标及 gn-args（`test/fuzztest/BUILD.gn`、`<模块>_feature_coverage`）；验证编译后是否生成 gcno（`verify-coverage`）。 |
+| **用法** | 源码根目录执行：`./build.sh --build-target <目标名> --product-name rk3568 --gn-args <模块>_feature_coverage=true`。或：`python3 src/skills/ohbuild/ohbuild.py list-fuzztest <模块>` \| `build-fuzztest <目标名> [--gn-args xxx=true]` \| `verify-coverage [模块名]` \| `help`。 |
+| **提示句** | 「编译 GetAppStatsMahFuzzTest 并开覆盖率」「某模块有哪些 fuzz 测试、编译时传什么 gn-args」「验证 power_manager 模块是否生成了 gcno」「列出 battery_statistics 的 fuzz 目标」 |
 
-4. **ohhap**  
-   - 请求示例：「@NativeProj46R 编译、签名这个项目」「编译 NativeProj46R 的单元测试 HAP」  
-   - 对应：`hapbuild.py build`、`hapbuild.py build-test`、`hapbuild.py sign`。
+---
 
-5. **ohhdc**  
-   - 请求示例：「**部署运行这个项目的 HAP 测试用例**」「用 ohhdc 把刚签名的两个 HAP 安装到设备」「卸载后安装项目的 HAP」「运行设备上的 IndexdtsTest 测试套」「查看设备错误日志目录 data/log/faultlog」  
-   - 对应：`ohhdc.py deploy-test <项目根目录>`（自动从 List.test.ets 发现测试套件）、`ohhdc.py install-project <项目根目录>`、`ohhdc.py uninstall <bundleName>` + `install-project`、`ohhdc.py test ...`、`ohhdc.py faultlog` / `faultlog hilog`。
+### 4.4 ohhap
 
-6. **ohtest**  
-   - 请求示例：「根据 Index.d.ts 生成/补全单元测试」「为 libentry 的接口在 ohosTest 里增加测试套」「对 Index.ets 实现 UI 测试 / 为页面生成 UITest」「**执行 GetAppStatsMahFuzzTest 的 fuzz 测试（带覆盖率）**」「收集 fuzz 覆盖率并分析」  
-   - 对应：`ohtest.py --dts <dts路径> --test-dir <test目录>`；UITest：`uitest_gen.py --ets <页面.ets> --test-dir <test目录>`；Fuzz：`fuzztest.py run -ts GetAppStatsMahFuzzTest [--coverage]`；覆盖率：`coverage_analysis.py run` / `analyze` / `clear-rerun-fuzz-analyze`。
+| 项 | 说明 |
+|----|------|
+| **功能** | HAP 构建：主包（build）、**测试包 build-test**；HAP 签名（sign，debug/release）、清除签名（clean-sign）。含环境与 SDK 版本检查。目前仅验证 6.0 release 工程；需 `HOS_CLT_PATH`、`OHOS_SDK_PATH`，项目含 `build-profile.json5`、hvigorw 可用。 |
+| **用法** | `python3 src/skills/ohhap/hapbuild.py build <项目根目录>` \| `build-test <项目根目录>` \| `build <项目根目录> default [debug\|release]`；`sign <项目根目录> [debug\|release]`；`clean-sign <项目根目录>`。 |
+| **提示句** | 「编译 / 构建 NativeProj46R」「编译 NativeProj46R 的单元测试 HAP」「@NativeProj46R 编译、签名这个项目」「对项目 xxx 的 HAP 进行签名」「清除项目 xxx 的签名」 |
 
-### 4.4 典型使用流程
+---
+
+### 4.5 ohhdc
+
+| 项 | 说明 |
+|----|------|
+| **功能** | 设备侧 HAP 管理：列出已安装应用（apps/list-apps）；卸载（uninstall）；安装/替换安装（install/replace-install）；**install-project**（安装主 HAP + 测试 HAP）；**deploy-test**（卸载 → 替换安装主/测 HAP → 从 List.test.ets 自动发现测试套件并 aa test）；查看前台/运行中应用（foreground/fg、dump-all、running/dump-running）；**启停应用**（force-stop/stop、start）；查看设备日志（hilog/logs）、错误/故障日志（faultlog/error-log）；运行 ohosTest（test）。需设备 HDC 连接、hdc 在 PATH。 |
+| **用法** | `python3 src/skills/ohhdc/ohhdc.py apps` \| `uninstall <bundleName>` \| `install <HAP路径>` \| `replace-install <HAP路径>` \| `install-project <项目根目录>` \| **`deploy-test <项目根目录>`** [--suite "A,B"] [--timeout N] \| `test <bundleName> [--suite A,B]` \| `foreground`/`fg`/`dump-all` \| `running`/`dump-running` \| `force-stop`/`stop <bundleName>` \| `start <bundleName> [--ability <abilityName>]` \| `hilog`/`logs [关键字]` \| `faultlog`/`error-log [子目录]`。 |
+| **提示句** | 「查看设备上安装的 HAP」「卸载 ohos.test.xxx」「替换安装这个 HAP」「安装这个项目的两个 HAP」「部署运行这个项目的 HAP 测试用例」「查看前台/运行中应用」「强制关闭/启动应用」「查看设备日志」「查看设备错误日志 data/log/faultlog」 |
+
+---
+
+### 4.6 ohtest
+
+| 项 | 说明 |
+|----|------|
+| **功能** | **dts 单元测试**（ohtest.py）：根据 `.d.ts` 接口生成 ohosTest 测试套（4 类边界用例），并在 List.test.ets 注册。**UITest**（uitest_gen.py）：根据 `.ets` 页面生成 UI 测试套（Driver/ON、assertComponentExist、click）。**Fuzz 执行**（fuzztest.py）：在 developer_test 下执行指定 fuzz 套，可选 `--coverage`。**覆盖率分析**（coverage_analysis.py）：从设备拉取 gcda、生成 .gcov、统计覆盖率（run/analyze/clear-analyze/clear-rerun-fuzz-analyze）。**覆盖率缺口测试建议**（coverage_gap_tests.py）：根据 .gcov 与 fuzztest 用例生成「覆盖率缺失的测试用例」建议（analyze-gaps）。 |
+| **用法** | dts：`python3 src/skills/ohtest/ohtest.py --dts <dts路径> --test-dir <test目录>`。UITest：`python3 src/skills/ohtest/uitest_gen.py --ets <页面.ets> --test-dir <test目录>`。Fuzz：`python3 src/skills/ohtest/fuzztest.py run -ts <套名> [--coverage]`。覆盖率：`python3 src/skills/ohtest/coverage_analysis.py run` \| `analyze` \| `clear-analyze` \| `clear-rerun-fuzz-analyze [-ts 套名]`。**缺口建议**：`python3 src/skills/ohtest/coverage_gap_tests.py analyze-gaps [报告目录] [--module 模块名] [--output 输出文件]`。 |
+| **提示句** | 「根据 Index.d.ts 生成/补全单元测试」「为 libentry 接口在 ohosTest 里增加测试套」「对 Index.ets 实现 UI 测试 / 为页面生成 UITest」「执行 GetAppStatsMahFuzzTest 的 fuzz 测试（带覆盖率）」「收集 fuzz 覆盖率并分析」「根据覆盖率报告生成缺失的测试用例建议」 |
+
+---
+
+### 4.7 典型使用流程
 
 | 场景 | 流程 | 涉及技能 |
 |------|------|----------|
-| **HAP 开发与设备测试** | 1. ohhap 构建主 HAP + 测试 HAP → 2. ohhap 签名（debug/release）→ 3. ohhdc deploy-test（卸载 → 替换安装主/测 HAP → 从 List.test.ets 自动发现测试套件并执行 aa test） | ohhap、ohhdc |
-| **仅安装不跑测** | 1. ohhdc uninstall \<bundleName\> → 2. ohhdc install-project \<项目根目录\> | ohhdc |
-| **单元测试生成与跑测** | 1. ohtest dts / uitest_gen 生成测试套 → 2. ohhap build + sign → 3. ohhdc deploy-test | ohtest、ohhap、ohhdc |
-| **Fuzz 测试与覆盖率** | 1. ohbuild 在源码根目录编译 fuzz（--gn-args \<模块\>_feature_coverage=true）→ 2. ohtest fuzztest.py run -ts \<套名\> --coverage → 3. ohtest coverage_analysis.py run / analyze（或 clear-rerun-fuzz-analyze） | ohbuild、ohtest |
-| **代码提交与推送** | 1. gitlog status 查看修改 → 2. gitlog commit "提交说明"（默认 Signed-off-by）→ 自动 push；或 gitlog push | gitlog |
+| **HAP 开发与设备测试** | ohhap build → sign → ohhdc deploy-test（自动发现测试套件并跑 aa test） | ohhap、ohhdc |
+| **仅安装不跑测** | ohhdc uninstall \<bundleName\> → ohhdc install-project \<项目根目录\> | ohhdc |
+| **单元测试生成与跑测** | ohtest dts / uitest_gen 生成测试套 → ohhap build + sign → ohhdc deploy-test | ohtest、ohhap、ohhdc |
+| **Fuzz 测试与覆盖率** | ohbuild 编译 fuzz（--gn-args \<模块\>_feature_coverage=true）→ ohtest fuzztest run -ts \<套名\> --coverage → ohtest coverage_analysis run/analyze | ohbuild、ohtest |
+| **代码提交与推送** | gitlog status → gitlog commit "提交说明"（默认 Signed-off-by）→ 自动 push | gitlog |
 
 ## 5. 配置hdc连接（确保开发版联网且和Linux服务器可以互相ping通）
 1. 把${OHOS_SDK_PATH}/linux/toolchains加入环境变量
