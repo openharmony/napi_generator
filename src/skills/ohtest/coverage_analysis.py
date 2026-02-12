@@ -16,9 +16,10 @@
   - gcov 会在 testfwk 目录生成 .gcov，技能随后将其移动到报告目录，并重写 .gcov 内 Source 行为相对报告目录的路径，便于在报告目录下打开对应源文件。
 
 Usage:
-    python3 coverage_analysis.py run [-p 产品名] [--output-dir 报告目录] [--device 设备]
-      从设备拉取 gcda → 拷贝 gcno/cpp 到报告目录 → 在 test/testfwk 下执行 gcov → 将 .gcov 移动到报告目录并重写 Source 路径
-    python3 coverage_analysis.py analyze [目录]  解析已有 .gcov 并输出覆盖率统计
+    python3 coverage_analysis.py run [-p 产品名] [--target 测试对象] [--output-dir 报告目录] [--device 设备]
+      从设备拉取 gcda → 拷贝 gcno/cpp 到报告目录 → 在 test/testfwk 下执行 gcov → 将 .gcov 移动到报告目录。
+      --target 指定时：报告目录为 reports/obj_<target>_yymmddhhmmss，且仅拉取设备路径中包含 target 的 gcda。
+    python3 coverage_analysis.py analyze [目录]  解析已有 .gcov 并输出覆盖率统计，并写入该目录下 analysis.md（含未覆盖行与测试建议）
     python3 coverage_analysis.py clear-analyze  清除分析结果并再次拉取、生成、分析
     python3 coverage_analysis.py clear-rerun-fuzz-analyze [-ts 测试套]  清除后重跑 fuzz 测试并分析
     python3 coverage_analysis.py help
@@ -27,9 +28,11 @@ Usage:
 import argparse
 import glob
 import os
+import re
 import shutil
 import subprocess
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import List, Optional, Tuple
 
@@ -167,14 +170,21 @@ def run_coverage(
     device_id: Optional[str] = None,
     search_roots: Optional[List[str]] = None,
     output_dir: Optional[Path] = None,
+    target: Optional[str] = None,
 ) -> int:
     """
-    完整流程：连接设备 → 拉取 gcda → 拷贝 gcno/cpp 到报告目录 →
-    在项目路径 test/testfwk 下执行 gcov（--object-directory 指向报告目录）→
-    将 testfwk 下生成的 .gcov 移动到报告目录。
-    output_dir: 报告目录，默认 developer_test/reports/obj；可为 reports/obj_<label>_<stamp>。
+    完整流程：连接设备 → 拉取 gcda（若指定 target 则仅拉取路径包含 target 的）→ 拷贝 gcno/cpp 到报告目录 →
+    在项目路径 test/testfwk 下执行 gcov → 将 .gcov 移动到报告目录。
+    target: 测试对象名（如 customization）；指定时报告目录为 obj_<target>_yymmddhhmmss，且只拉取设备路径中含 target 的 gcda。
+    output_dir: 报告目录；若未指定且 target 指定，则为 reports/obj_<target>_yymmddhhmmss。
     """
-    report_dir = Path(output_dir) if output_dir else REPORTS_OBJ
+    if output_dir is not None:
+        report_dir = Path(output_dir)
+    elif target:
+        stamp = datetime.now().strftime("%y%m%d%H%M%S")
+        report_dir = DEV_TEST_ROOT / "reports" / f"obj_{target}_{stamp}"
+    else:
+        report_dir = REPORTS_OBJ
     _ensure_hdc_path()
     if not shutil.which("hdc"):
         print("未找到 hdc。请设置 OHOS_SDK_PATH（hdc 在 ${OHOS_SDK_PATH}/linux/toolchains）或确保 hdc 在 PATH 中。", file=sys.stderr)
@@ -214,7 +224,15 @@ def run_coverage(
     if not gcda_on_device:
         print("设备上未找到 *.gcda 文件。请先运行带覆盖率的测试（-cov coverage）。")
         return 1
-    print(f"找到 {len(gcda_on_device)} 个 gcda 文件")
+    if target:
+        target_lower = target.strip().lower()
+        gcda_on_device = [p for p in gcda_on_device if target_lower in p.lower()]
+        print(f"按 target={target} 过滤后保留 {len(gcda_on_device)} 个 gcda 文件")
+        if not gcda_on_device:
+            print("未找到与测试对象相关的 gcda，请确认设备上已运行过该对象的带覆盖率测试。", file=sys.stderr)
+            return 1
+    else:
+        print(f"找到 {len(gcda_on_device)} 个 gcda 文件")
     for p in gcda_on_device:
         print(f"    设备路径: {p}")
 
@@ -344,13 +362,13 @@ def run_coverage(
 
 
 def run_fuzztest(testsuite: str, product: str = "rk3568") -> int:
-    """调用 fuzztest.py 在设备上执行带覆盖率的 fuzz 测试。"""
+    """调用 fuzztest.py 在设备上执行 fuzz 测试。"""
     fuzztest_py = SCRIPT_DIR / "fuzztest.py"
     if not fuzztest_py.is_file():
         print(f"未找到 fuzztest.py: {fuzztest_py}", file=sys.stderr)
         return 1
-    cmd = [sys.executable, str(fuzztest_py), "run", "-ts", testsuite, "-p", product, "--coverage"]
-    print("执行 fuzz 测试（带覆盖率）...")
+    cmd = [sys.executable, str(fuzztest_py), "run", "-ts", testsuite, "-p", product]
+    print("执行 fuzz 测试...")
     print("  " + " ".join(cmd))
     try:
         r = subprocess.run(cmd, cwd=str(SRC_ROOT), env=os.environ.copy(), timeout=300)
@@ -382,7 +400,7 @@ def cmd_clear_rerun_fuzz_analyze(
     device_id: Optional[str] = None,
     search_roots: Optional[List[str]] = None,
 ) -> int:
-    """技能2：清除分析结果，重新在设备上运行 fuzz 测试（带覆盖率），再拉取 gcda 生成 .gcov 并分析。"""
+    """技能2：清除分析结果，重新在设备上运行 fuzz 测试，再拉取 gcda 生成 .gcov 并分析。"""
     print("=== 清除分析结果、重新运行 fuzztest 并分析 ===\n")
     clear_reports_obj()
     print()
@@ -433,7 +451,43 @@ def _is_source_gcov(name: str) -> bool:
     return False
 
 
-def analyze_coverage(reports_obj_dir: Path) -> int:
+def _get_uncovered_lines(gcov_path: Path) -> List[Tuple[int, str]]:
+    """解析 .gcov 文件，返回未覆盖行的列表 [(行号, 代码内容), ...]。"""
+    result = []
+    try:
+        text = gcov_path.read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        return result
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("-:    0:"):
+            continue
+        parts = line.split(":", 2)
+        if len(parts) < 3:
+            continue
+        execution_count = parts[0].strip()
+        if execution_count != GCOV_UNEXECUTED_MARKER:
+            continue
+        try:
+            line_no = int(parts[1].strip())
+        except ValueError:
+            continue
+        code = parts[2].rstrip()
+        result.append((line_no, code))
+    return result
+
+
+def _suggest_tests_for_uncovered(uncovered_lines: List[Tuple[int, str]], filename: str) -> str:
+    """根据未覆盖行内容生成测试建议。"""
+    if not uncovered_lines:
+        return ""
+    return """1. **分支/条件**：若未覆盖行为 if/switch 分支，请在 fuzz 或单元测试中补充使该条件成立的输入（如边界值、特定字符串、空指针等）。
+2. **错误处理**：若为 return/throw 等错误分支，建议补充能触发该错误的输入用例（如非法路径、超长输入、格式错误等）。
+3. **边界与空指针**：若为 `data == nullptr`、`size == 0` 等防护逻辑，可在 fuzz 的 corpus 中增加空文件或零长输入，或单独写单元测试调用时传 nullptr/0。
+"""
+
+
+def analyze_coverage(reports_obj_dir: Path, write_md: bool = True) -> int:
     """对目录下已有 .gcov 做覆盖率分析并打印统计。"""
     if not reports_obj_dir.is_dir():
         print(f"目录不存在: {reports_obj_dir}", file=sys.stderr)
@@ -463,9 +517,14 @@ def analyze_coverage(reports_obj_dir: Path) -> int:
         total_executable += exe
         total_covered += cov
         percent = (cov / exe * 100) if exe > 0 else 0
-        file_stats.append(
-            {"file": gcov_path.name, "executable": exe, "covered": cov, "percent": percent}
-        )
+        uncovered = _get_uncovered_lines(gcov_path) if percent < 100 else []
+        file_stats.append({
+            "file": gcov_path.name,
+            "executable": exe,
+            "covered": cov,
+            "percent": percent,
+            "uncovered_lines": uncovered,
+        })
 
     file_stats.sort(key=lambda x: x["percent"], reverse=True)
 
@@ -492,7 +551,68 @@ def analyze_coverage(reports_obj_dir: Path) -> int:
         print(f"整体覆盖率: {overall:.1f}% （{grade}）")
     else:
         print("无可执行代码统计。")
+
+    if write_md:
+        md_path = reports_obj_dir / "analysis.md"
+        try:
+            _write_analysis_md(reports_obj_dir, file_stats, total_executable, total_covered, md_path)
+            print()
+            print(f"覆盖率分析报告已写入: {md_path}")
+        except Exception as e:
+            print(f"写入 analysis.md 失败: {e}", file=sys.stderr)
     return 0
+
+
+def _write_analysis_md(
+    reports_obj_dir: Path,
+    file_stats: List[dict],
+    total_executable: int,
+    total_covered: int,
+    md_path: Path,
+) -> None:
+    """将覆盖率统计与未覆盖行、测试建议写入 analysis.md。"""
+    overall = (total_covered / total_executable * 100) if total_executable > 0 else 0
+    lines = [
+        "# 覆盖率分析报告",
+        "",
+        f"**数据目录**: `{reports_obj_dir}`",
+        "",
+        "## 一、覆盖率汇总",
+        "",
+        "| 文件名 | 可执行行 | 已覆盖 | 覆盖率 |",
+        "|--------|----------|--------|--------|",
+    ]
+    for s in file_stats:
+        lines.append(f"| {s['file']} | {s['executable']} | {s['covered']} | {s['percent']:.1f}% |")
+    lines.extend([
+        f"| **合计** | **{total_executable}** | **{total_covered}** | **{overall:.1f}%** |",
+        "",
+        "---",
+        "",
+    ])
+    under_100 = [s for s in file_stats if s["percent"] < 100 and s["uncovered_lines"]]
+    if under_100:
+        lines.append("## 二、未覆盖代码与测试建议")
+        lines.append("")
+        for s in under_100:
+            lines.append(f"### {s['file']}")
+            lines.append("")
+            lines.append("#### 未覆盖代码行")
+            lines.append("")
+            for ln, code in s["uncovered_lines"]:
+                code_esc = code.replace("|", "\\|").strip()
+                lines.append(f"- **第 {ln} 行**: `{code_esc}`")
+            lines.append("")
+            lines.append("#### 测试建议")
+            lines.append("")
+            lines.append(_suggest_tests_for_uncovered(s["uncovered_lines"], s["file"]))
+            lines.append("")
+    else:
+        lines.append("## 二、未覆盖代码与测试建议")
+        lines.append("")
+        lines.append("所有已分析文件覆盖率均为 100%，无需补充。")
+        lines.append("")
+    md_path.write_text("\n".join(lines), encoding="utf-8")
 
 
 def main() -> int:
@@ -518,13 +638,19 @@ def main() -> int:
         help="从设备拉取 gcda，拷贝 gcno/cpp，在 test/testfwk 下执行 gcov，将 .gcov 移动到报告目录",
     )
     run_parser.add_argument("-p", "--product", default="rk3568", help="产品名，默认 rk3568")
+    run_parser.add_argument(
+        "-t", "--target",
+        default=None,
+        metavar="NAME",
+        help="测试对象名（如 customization）；指定时报告目录为 obj_<target>_yymmddhhmmss，且仅拉取设备路径中包含该名的 gcda",
+    )
     run_parser.add_argument("--device", default=None, help="指定设备 ID，默认使用第一个")
     run_parser.add_argument(
         "--output-dir",
         type=Path,
         default=None,
         metavar="PATH",
-        help="报告目录，如 developer_test/reports/obj 或 reports/obj_battery_statistics_2602051604；默认 reports/obj",
+        help="报告目录；不指定且未指定 --target 时为 reports/obj",
     )
     run_parser.add_argument(
         "--search-root",
@@ -558,7 +684,7 @@ def main() -> int:
 
     clear_rerun_parser = subparsers.add_parser(
         "clear-rerun-fuzz-analyze",
-        help="清除分析结果，重新在设备上运行 fuzz 测试（带覆盖率），再拉取 gcda 并分析",
+        help="清除分析结果，重新在设备上运行 fuzz 测试，再拉取 gcda 并分析",
     )
     clear_rerun_parser.add_argument("-ts", "--testsuite", default="GetAppStatsMahFuzzTest", help="fuzz 测试套名")
     clear_rerun_parser.add_argument("-p", "--product", default="rk3568", help="产品名")
@@ -583,6 +709,7 @@ def main() -> int:
             device_id=args.device,
             search_roots=getattr(args, "search_roots", None),
             output_dir=getattr(args, "output_dir", None),
+            target=getattr(args, "target", None),
         )
 
     if args.command == "analyze":

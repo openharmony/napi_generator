@@ -7,10 +7,12 @@ OH Build Skill - OpenHarmony 构建与 Fuzz 测试
 Usage:
     python3 ohbuild.py list-fuzztest <模块名或路径>
     python3 ohbuild.py build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]
+    python3 ohbuild.py build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]  编译部件全部 fuzztest
     python3 ohbuild.py verify-coverage [模块名] [--product-name rk3568]  编译后验证是否有模块相关 gcno 文件
     python3 ohbuild.py help
 """
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -49,6 +51,61 @@ def find_module_root(module_arg: str) -> Optional[Path]:
     return None
 
 
+def get_fuzztest_group_name(module_root: Path) -> Optional[str]:
+    """从 test/fuzztest/BUILD.gn 中解析 group("...") 的名称。"""
+    build_gn = module_root / "test" / "fuzztest" / "BUILD.gn"
+    if not build_gn.is_file():
+        return None
+    text = build_gn.read_text(encoding="utf-8", errors="ignore")
+    m = re.search(r'group\s*\(\s*["\'](\w+)["\']\s*\)', text)
+    return m.group(1) if m else None
+
+
+def get_fuzztest_group_target(module_root: Path) -> Optional[str]:
+    """
+    返回部件 fuzztest 的编译目标：<模块相对路径>/test/fuzztest:<group名>。
+    例如 base/powermgr/battery_statistics/test/fuzztest:fuzztest。
+    """
+    try:
+        rel = module_root.relative_to(SRC_ROOT)
+    except ValueError:
+        return None
+    group_name = get_fuzztest_group_name(module_root)
+    if not group_name:
+        return None
+    path_part = rel.as_posix() if isinstance(rel, Path) else str(rel).replace("\\", "/")
+    return f"{path_part}/test/fuzztest:{group_name}"
+
+
+def get_fuzztest_target_from_bundle(module_root: Path) -> Optional[str]:
+    """
+    从部件根目录的 bundle.json 的 build.test 中解析 fuzztest 编译目标。
+    格式如 "//base/accesscontrol/sandbox_manager:sandbox_manager_build_fuzz_test"，
+    返回时去掉前缀 "//"，即 "base/accesscontrol/sandbox_manager:sandbox_manager_build_fuzz_test"。
+    """
+    bundle_json = module_root / "bundle.json"
+    if not bundle_json.is_file():
+        return None
+    try:
+        data = json.loads(bundle_json.read_text(encoding="utf-8", errors="ignore"))
+    except Exception:
+        return None
+    build = data.get("build") or data.get("component", {}).get("build")
+    if not build:
+        return None
+    test_list = build.get("test")
+    if not isinstance(test_list, list):
+        return None
+    for item in test_list:
+        if not isinstance(item, str) or "fuzz" not in item.lower():
+            continue
+        # 去掉 "//" 前缀作为编译命令中的 --build-target
+        target = item.lstrip("/")
+        if target:
+            return target
+    return None
+
+
 def get_fuzztest_targets(module_root: Path) -> list[str]:
     """从 test/fuzztest/BUILD.gn 的 deps 中解析出所有 fuzz 目标名。"""
     build_gn = module_root / "test" / "fuzztest" / "BUILD.gn"
@@ -64,8 +121,9 @@ def get_fuzztest_targets(module_root: Path) -> list[str]:
 
 def get_coverage_arg(module_root: Path) -> Optional[str]:
     """在模块下查找 declare_args 中的 *_feature_coverage 变量名。"""
-    # 常见在 utils/BUILD.gn 或根下 BUILD.gn
+    # 常见在 config/BUILD.gn、utils/BUILD.gn 或根下 BUILD.gn
     candidates = [
+        module_root / "config" / "BUILD.gn",
         module_root / "utils" / "BUILD.gn",
         module_root / "BUILD.gn",
     ]
@@ -111,17 +169,36 @@ def cmd_list_fuzztest(module_arg: str) -> int:
     else:
         print("覆盖率参数: 未在模块 BUILD.gn 中找到 *_feature_coverage 变量")
     print()
+    group_target = get_fuzztest_group_target(module_root)
+    bundle_fuzz_target = get_fuzztest_target_from_bundle(module_root)
+    if group_target:
+        print("部件 fuzztest 编译目标（编译该部件下全部 fuzz 用例，来自 test/fuzztest/BUILD.gn）:")
+        print(f"  {group_target}")
+        print()
+    elif bundle_fuzz_target:
+        print("部件 fuzztest 编译目标（来自 bundle.json build.test）:")
+        print(f"  {bundle_fuzz_target}")
+        print()
     if targets:
-        print("Fuzz 测试目标（--build-target 可选值）:")
+        print("单个 Fuzz 测试目标（--build-target 可选值）:")
         for t in sorted(targets):
             print(f"  - {t}")
         print()
         print("编译示例（在含 build.sh 的目录下执行）:")
         if coverage_arg:
+            if group_target:
+                print(f"  # 编译部件全部 fuzztest")
+                print(f"  ./build.sh --build-target {group_target} --product-name rk3568 --gn-args {coverage_arg}=true")
+                print()
             example_target = targets[0]
+            print(f"  # 仅编译单个 fuzz 目标")
             print(f"  ./build.sh --build-target {example_target} --product-name rk3568 --gn-args {coverage_arg}=true")
     else:
-        print("未找到 fuzz 测试目标（请确认存在 test/fuzztest/BUILD.gn 且 deps 中有 fuzz 目标）")
+        if bundle_fuzz_target and coverage_arg:
+            print("编译示例（在含 build.sh 的目录下执行）:")
+            print(f"  ./build.sh --build-target {bundle_fuzz_target} --product-name rk3568 --gn-args {coverage_arg}=true")
+        elif not group_target and not bundle_fuzz_target:
+            print("未找到 fuzz 测试目标（请确认存在 test/fuzztest/BUILD.gn 或 bundle.json 的 build.test 中有 fuzz 目标）")
 
     return 0
 
@@ -135,6 +212,49 @@ def cmd_build_fuzztest(
     parts = [
         "./build.sh",
         f"--build-target {target}",
+        f"--product-name {product_name}",
+    ]
+    if gn_args:
+        parts.append(f"--gn-args {gn_args}")
+    cmd = " ".join(parts)
+    print("在源码根目录（含 build.sh）下执行：")
+    print()
+    print(cmd)
+    print()
+    return 0
+
+
+def cmd_build_component_fuzztest(
+    module_arg: str,
+    product_name: str = "rk3568",
+    gn_args: Optional[str] = None,
+) -> int:
+    """
+    打印编译「部件全部 fuzztest」的 build.sh 命令。
+    编译目标从部件的 test/fuzztest/BUILD.gn 中 group("...") 得到，形如：
+    base/powermgr/battery_statistics/test/fuzztest:fuzztest
+    """
+    module_root = find_module_root(module_arg)
+    if not module_root:
+        print(f"未找到模块: {module_arg}", file=sys.stderr)
+        print("请使用模块名（如 battery_statistics）或相对 src 的路径（如 base/powermgr/battery_statistics）", file=sys.stderr)
+        return 1
+
+    group_target = get_fuzztest_group_target(module_root)
+    bundle_fuzz_target = get_fuzztest_target_from_bundle(module_root)
+    fuzz_target = group_target or bundle_fuzz_target
+    if not fuzz_target:
+        print(f"模块 {module_arg} 下未找到 fuzztest 目标（test/fuzztest/BUILD.gn 的 group 或 bundle.json 的 build.test）。", file=sys.stderr)
+        return 1
+
+    if gn_args is None:
+        gn_args = get_coverage_arg(module_root)
+        if gn_args:
+            gn_args = f"{gn_args}=true"
+
+    parts = [
+        "./build.sh",
+        f"--build-target {fuzz_target}",
         f"--product-name {product_name}",
     ]
     if gn_args:
@@ -208,7 +328,8 @@ def show_help() -> None:
     print(f"""OH Build Skill v{VERSION}
 用法:
   python3 ohbuild.py list-fuzztest <模块名或路径>  查看模块的 fuzz 目标与覆盖率参数
-  python3 ohbuild.py build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]  打印编译命令
+  python3 ohbuild.py build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]  打印编译单个 fuzz 目标的命令
+  python3 ohbuild.py build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]  打印编译部件全部 fuzztest 的命令
   python3 ohbuild.py verify-coverage [模块名] [--product-name rk3568]  编译后验证是否有模块相关 gcno 文件
   python3 ohbuild.py help  显示本帮助
 
@@ -216,6 +337,7 @@ def show_help() -> None:
   python3 ohbuild.py list-fuzztest battery_manager
   python3 ohbuild.py list-fuzztest base/powermgr/battery_statistics
   python3 ohbuild.py build-fuzztest GetAppStatsMahFuzzTest --gn-args battery_statistics_feature_coverage=true
+  python3 ohbuild.py build-component-fuzztest battery_statistics --gn-args battery_statistics_feature_coverage=true
   python3 ohbuild.py verify-coverage power_manager
   python3 ohbuild.py verify-coverage
 """)
@@ -253,6 +375,26 @@ def main() -> int:
                 continue
             i += 1
         return cmd_build_fuzztest(target, product_name=product_name, gn_args=gn_args)
+
+    if cmd == "build-component-fuzztest":
+        if len(args) < 2:
+            print("请指定模块名或路径，例如: build-component-fuzztest battery_statistics", file=sys.stderr)
+            return 1
+        module_arg = args[1]
+        product_name = "rk3568"
+        gn_args = None
+        i = 2
+        while i < len(args):
+            if args[i] == "--product-name" and i + 1 < len(args):
+                product_name = args[i + 1]
+                i += 2
+                continue
+            if args[i] == "--gn-args" and i + 1 < len(args):
+                gn_args = args[i + 1]
+                i += 2
+                continue
+            i += 1
+        return cmd_build_component_fuzztest(module_arg, product_name=product_name, gn_args=gn_args)
 
     if cmd == "verify-coverage":
         module_name = None

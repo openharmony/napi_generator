@@ -7,7 +7,9 @@ ohtest 技能 - 执行 Fuzz 测试。
 hdc 路径：${OHOS_SDK_PATH}/linux/toolchains，会将其加入 PATH 以便框架找到 hdc。
 
 Usage:
-    python3 fuzztest.py run -ts <测试套名> [-p 产品名] [--coverage] [--dry-run]
+    python3 fuzztest.py run -ts <测试套名> [-p 产品名] [--dry-run]
+    python3 fuzztest.py run -ss <子系统> -tp <部件> [-p 产品名]  # 按子系统/部件跑 FUZZ
+    python3 fuzztest.py run -ts <测试套名> --coverage  # 需收集覆盖率时可选
     python3 fuzztest.py help
 """
 
@@ -51,12 +53,14 @@ def _ensure_env(use_coverage: bool = False) -> int:
 
 
 def run_fuzz(
-    testsuite: str,
+    testsuite: str = None,
     product: str = "rk3568",
     coverage: bool = False,
     dry_run: bool = False,
+    subsystem: str = None,
+    testpart: str = None,
 ) -> int:
-    """在 developer_test 目录下执行 start.sh，运行指定 FUZZ 测试套。"""
+    """在 developer_test 目录下执行 start.sh，运行 FUZZ 测试（可指定测试套名或 -ss/-tp 子系统/部件）。"""
     if not DEV_TEST_ROOT.is_dir():
         print(f"developer_test 目录不存在: {DEV_TEST_ROOT}", file=sys.stderr)
         return 1
@@ -66,6 +70,10 @@ def run_fuzz(
         print(f"start.sh 不存在: {start_sh}", file=sys.stderr)
         return 1
 
+    if not testsuite and not subsystem and not testpart:
+        print("请指定 -ts 测试套名 或 -ss 子系统 或 -tp 部件（至少其一）。", file=sys.stderr)
+        return 1
+
     _ensure_env(use_coverage=coverage)
 
     cmd = [
@@ -73,8 +81,13 @@ def run_fuzz(
         "-p", product,
         "run",
         "-t", "FUZZ",
-        "-ts", testsuite,
     ]
+    if testsuite:
+        cmd.extend(["-ts", testsuite])
+    if subsystem:
+        cmd.extend(["-ss", subsystem])
+    if testpart:
+        cmd.extend(["-tp", testpart])
     if coverage:
         cmd.extend(["-cov", "coverage"])
 
@@ -90,11 +103,11 @@ def run_fuzz(
             cmd,
             cwd=str(DEV_TEST_ROOT),
             env=os.environ.copy(),
-            timeout=300,
+            timeout=3600,  # 60 分钟，fuzz 测试通常需长时间运行
         )
         return ret.returncode
     except subprocess.TimeoutExpired:
-        print("执行超时（300s）。", file=sys.stderr)
+        print("执行超时（60 分钟）。", file=sys.stderr)
         return 124
     except FileNotFoundError as e:
         print(f"执行失败: {e}", file=sys.stderr)
@@ -108,7 +121,10 @@ def main() -> int:
         epilog="""
 示例:
   python3 fuzztest.py run -ts GetAppStatsMahFuzzTest
-  python3 fuzztest.py run -ts GetAppStatsMahFuzzTest -p rk3568 --coverage
+  python3 fuzztest.py run -ts GetAppStatsMahFuzzTest -p rk3568
+  python3 fuzztest.py run -ss customization -tp customization -p rk3568
+  python3 fuzztest.py run -ss customization -tp customization --dry-run
+  python3 fuzztest.py run -ts GetAppStatsMahFuzzTest --coverage
   python3 fuzztest.py run -ts GetAppStatsMahFuzzTest --dry-run
 
 环境:
@@ -121,10 +137,12 @@ def main() -> int:
 
     subparsers.add_parser("help", help="显示帮助").set_defaults(which="help")
 
-    run_parser = subparsers.add_parser("run", help="执行 FUZZ 测试套")
-    run_parser.add_argument("-ts", "--testsuite", required=True, metavar="NAME", help="测试套名，如 GetAppStatsMahFuzzTest")
+    run_parser = subparsers.add_parser("run", help="执行 FUZZ 测试套或按子系统/部件执行")
+    run_parser.add_argument("-ts", "--testsuite", default=None, metavar="NAME", help="测试套名，如 GetAppStatsMahFuzzTest；与 -ss/-tp 至少填其一")
+    run_parser.add_argument("-ss", "--subsystem", default=None, metavar="SUBSYSTEM", help="子系统，如 customization，与 start.sh run -t FUZZ -ss 一致")
+    run_parser.add_argument("-tp", "--testpart", default=None, metavar="TESTPART", help="部件，如 customization，与 start.sh run -t FUZZ -tp 一致")
     run_parser.add_argument("-p", "--product", default="rk3568", help="产品名，默认 rk3568")
-    run_parser.add_argument("--coverage", action="store_true", help="附加 -cov coverage 收集覆盖率")
+    run_parser.add_argument("--coverage", action="store_true", help="可选：附加 -cov coverage 以收集覆盖率（拉取与分析时需设备上有 gcda）")
     run_parser.add_argument("--dry-run", action="store_true", help="仅打印将要执行的命令，不实际执行")
 
     args = parser.parse_args()
@@ -139,6 +157,8 @@ def main() -> int:
             product=args.product,
             coverage=args.coverage,
             dry_run=args.dry_run,
+            subsystem=args.subsystem,
+            testpart=args.testpart,
         )
 
     parser.print_help()
