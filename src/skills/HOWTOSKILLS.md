@@ -95,7 +95,7 @@ Sync to AGENTS.md: npx openskills sync
 | 项 | 说明 |
 |----|------|
 | **功能** | OpenHarmony 构建：编译 fuzz 测试（需在含 `build.sh` 的源码根目录）；查看模块 fuzztest 目标及 gn-args（list-fuzztest）；生成**单个** fuzz 目标编译命令（build-fuzztest）；生成**部件全部** fuzztest 编译命令（build-component-fuzztest）；验证编译后是否生成 gcno（verify-coverage）。 |
-| **用法** | 源码根目录执行：`./build.sh --build-target <目标名> --product-name rk3568 --gn-args <模块>_feature_coverage=true`。或：`python3 src/skills/ohbuild/ohbuild.py list-fuzztest <模块>` \| `build-fuzztest <目标名> [--gn-args xxx=true]` \| **`build-component-fuzztest <模块> [--gn-args xxx=true]`** \| `verify-coverage [模块名]` \| `help`。 |
+| **用法** | 源码根目录执行：`./build.sh --build-target <目标名> --product-name rk3568 --gn-args <模块>_feature_coverage=true`。或：`python3 src/skills/ohbuild/ohbuild.py list-fuzztest <模块名或路径>` \| `build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]` \| `build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]` \| `verify-coverage [模块名] [--product-name rk3568]` \| `help`。 |
 | **提示句** | 「编译 GetAppStatsMahFuzzTest 并开覆盖率」「某模块有哪些 fuzz 测试、编译时传什么 gn-args」「打印编译 battery_statistics 部件全部 fuzztest 的命令」「验证 power_manager 模块是否生成了 gcno」「列出 battery_statistics 的 fuzz 目标」 |
 
 ---
@@ -130,7 +130,27 @@ Sync to AGENTS.md: npx openskills sync
 
 ---
 
-### 4.7 典型使用流程
+### 4.7 ohclitools
+
+| 项 | 说明 |
+|----|------|
+| **功能** | 将 **clitools** 集成到工程编译：**deploy**（拷贝 clitools 到目标 test 目录并在 BUILD.gn 的 deps 中增加 clitools 目标）；**build**（在源码根目录执行 build.sh 编译该 test）；**verify**（检查产物是否存在，可选 **--push-run** 用 hdc 推送到设备并运行）；**all**（依次 deploy → build → verify）。默认目标为 bluetooth test，可 `--test-dir`、`--product-name`。需 `OHOS_SDK_PATH`（verify --push-run 时）。 |
+| **用法** | `python3 src/skills/ohclitools/ohclitool.py deploy [--test-dir PATH]` \| `build [--test-dir PATH] [--product-name NAME]` \| `verify [--product-name NAME] [--push-run]` \| `all [--test-dir PATH] [--product-name NAME] [--push-run]` \| `help`。选项：`--test-dir` 目标 test 目录（默认 foundation/communication/bluetooth/test），`--product-name` 默认 rk3568。 |
+| **提示句** | 「把 clitools 部署到蓝牙 test 并编译」「部署、编译、验证 clitools 并推送到设备运行」「验证 btcommand 产物并推到设备执行」 |
+
+---
+
+### 4.8 ohppt
+
+| 项 | 说明 |
+|----|------|
+| **功能** | **ohppt.py**：根据 Markdown **表格**生成**结构图 PPT**，一行一个矩形框（深灰），列内容为框内子模块；支持 `；` 分多组、` - ` 分标题与子项；黑体 12 号左对齐。**build_architecture_ppt.py**：根据内置架构分析结构生成**固定版式架构图 PPT**（应用层/应用框架层/系统服务层/内核层/芯片层 + 右侧 IDE 和工具链）。依赖：`pip install python-pptx`。 |
+| **用法** | **表格转结构图**：`python3 src/skills/ohppt/ohppt.py <input.md> [output.pptx]`（不指定输出则与输入同名的 .pptx）。**架构图**：`python3 src/skills/ohppt/build_architecture_ppt.py [output.pptx]`。 |
+| **提示句** | 「根据 example.md 的表格生成结构图 PPT」「根据架构分析文档生成 OpenHarmony 架构图 PPT」 |
+
+---
+
+### 4.9 典型使用流程
 
 | 场景 | 流程 | 涉及技能 |
 |------|------|----------|
@@ -138,6 +158,7 @@ Sync to AGENTS.md: npx openskills sync
 | **仅安装不跑测** | ohhdc uninstall \<bundleName\> → ohhdc install-project \<项目根目录\> | ohhdc |
 | **单元测试生成与跑测** | ohtest dts / uitest_gen 生成测试套 → ohhap build + sign → ohhdc deploy-test | ohtest、ohhap、ohhdc |
 | **Fuzz 测试与覆盖率** | ohbuild 编译 fuzz（--gn-args \<模块\>_feature_coverage=true）→ ohtest fuzztest run -ts \<套名\> --coverage → ohtest coverage_analysis run/analyze | ohbuild、ohtest |
+| **clitools 集成与验证** | ohclitools deploy [--test-dir PATH] → build → verify [--push-run]；或一键 `all [--push-run]` | ohclitools |
 | **代码提交与推送** | gitlog status → gitlog commit "提交说明"（默认 Signed-off-by）→ 自动 push | gitlog |
 
 ## 5. 配置hdc连接（确保开发版联网且和Linux服务器可以互相ping通）
