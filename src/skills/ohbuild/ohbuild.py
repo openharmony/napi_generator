@@ -9,11 +9,13 @@ Usage:
     python3 ohbuild.py build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]
     python3 ohbuild.py build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]  编译部件全部 fuzztest
     python3 ohbuild.py verify-coverage [模块名] [--product-name rk3568]  编译后验证是否有模块相关 gcno 文件
+    python3 ohbuild.py build-acts <suite名> [--product-name rk3568] [--system-size standard] [--no-run]  编译 ACTS 指定 suite（在 test/xts/acts 下执行 build.sh）
     python3 ohbuild.py help
 """
 
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Optional
@@ -22,6 +24,8 @@ from typing import Optional
 SCRIPT_DIR = Path(__file__).resolve().parent
 # 假定源码根为 src（即 skills 的上级的上级的上级）
 SRC_ROOT = SCRIPT_DIR.parent.parent.parent
+# ACTS 构建脚本所在目录（执行 build.sh 的工作目录）
+ACTS_BUILD_DIR = SRC_ROOT / "test" / "xts" / "acts"
 
 SKILL_NAME = "ohbuild"
 VERSION = "1.0.0"
@@ -323,6 +327,47 @@ def cmd_verify_coverage(module_name: Optional[str] = None, product_name: str = "
     return 0
 
 
+def cmd_build_acts(
+    suite_name: str,
+    product_name: str = "rk3568",
+    system_size: str = "standard",
+    run: bool = True,
+) -> int:
+    """
+    编译 ACTS 指定 suite。在 test/xts/acts 目录下执行：
+    ./build.sh suite=acts system_size=<size> product_name=<product> suite=<suite_name>
+    suite_name 为用户输入的编译对象，如 ActsAACommandPrintSyncTest。
+    """
+    if not suite_name or not suite_name.strip():
+        print("请指定要编译的 ACTS suite 名，例如: ActsAACommandPrintSyncTest", file=sys.stderr)
+        return 1
+    suite_name = suite_name.strip()
+    if not ACTS_BUILD_DIR.is_dir():
+        print(f"ACTS 构建目录不存在: {ACTS_BUILD_DIR}", file=sys.stderr)
+        return 1
+    build_sh = ACTS_BUILD_DIR / "build.sh"
+    if not build_sh.is_file():
+        print(f"未找到 build.sh: {build_sh}", file=sys.stderr)
+        return 1
+
+    cmd = [
+        "./build.sh",
+        "suite=acts",
+        f"system_size={system_size}",
+        f"product_name={product_name}",
+        f"suite={suite_name}",
+    ]
+    cmd_str = " ".join(cmd)
+    print(f"工作目录: {ACTS_BUILD_DIR}")
+    print(f"执行命令: {cmd_str}")
+    print()
+    if not run:
+        print("（未执行，使用 build-acts 时不加 --no-run 将自动执行）")
+        return 0
+    ret = subprocess.run(cmd_str, cwd=ACTS_BUILD_DIR, shell=True)
+    return ret.returncode
+
+
 def show_help() -> None:
     """打印帮助信息。"""
     print(f"""OH Build Skill v{VERSION}
@@ -331,6 +376,7 @@ def show_help() -> None:
   python3 ohbuild.py build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]  打印编译单个 fuzz 目标的命令
   python3 ohbuild.py build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]  打印编译部件全部 fuzztest 的命令
   python3 ohbuild.py verify-coverage [模块名] [--product-name rk3568]  编译后验证是否有模块相关 gcno 文件
+  python3 ohbuild.py build-acts <suite名> [--product-name rk3568] [--system-size standard] [--no-run]  编译 ACTS 指定 suite
   python3 ohbuild.py help  显示本帮助
 
 示例:
@@ -340,6 +386,8 @@ def show_help() -> None:
   python3 ohbuild.py build-component-fuzztest battery_statistics --gn-args battery_statistics_feature_coverage=true
   python3 ohbuild.py verify-coverage power_manager
   python3 ohbuild.py verify-coverage
+  python3 ohbuild.py build-acts ActsAACommandPrintSyncTest
+  python3 ohbuild.py build-acts ActsAACommandPrintSyncTest --product-name rk3568 --no-run
 """)
 
 
@@ -411,6 +459,36 @@ def main() -> int:
                 continue
             i += 1
         return cmd_verify_coverage(module_name=module_name, product_name=product_name)
+
+    if cmd == "build-acts":
+        if len(args) < 2:
+            print("请指定 ACTS suite 名，例如: build-acts ActsAACommandPrintSyncTest", file=sys.stderr)
+            return 1
+        suite_name = args[1]
+        product_name = "rk3568"
+        system_size = "standard"
+        run = True
+        i = 2
+        while i < len(args):
+            if args[i] == "--product-name" and i + 1 < len(args):
+                product_name = args[i + 1]
+                i += 2
+                continue
+            if args[i] == "--system-size" and i + 1 < len(args):
+                system_size = args[i + 1]
+                i += 2
+                continue
+            if args[i] == "--no-run":
+                run = False
+                i += 1
+                continue
+            i += 1
+        return cmd_build_acts(
+            suite_name=suite_name,
+            product_name=product_name,
+            system_size=system_size,
+            run=run,
+        )
 
     print(f"未知命令: {args[0]}", file=sys.stderr)
     show_help()
