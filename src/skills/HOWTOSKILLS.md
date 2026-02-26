@@ -124,9 +124,9 @@ Sync to AGENTS.md: npx openskills sync
 
 | 项 | 说明 |
 |----|------|
-| **功能** | **dts 单元测试**（ohtest.py）：根据 `.d.ts` 接口生成 ohosTest 测试套（4 类边界用例），并在 List.test.ets 注册。**UITest**（uitest_gen.py）：根据 `.ets` 页面生成 UI 测试套（Driver/ON、assertComponentExist、click）。**Fuzz 执行**（fuzztest.py）：在 developer_test 下执行指定 fuzz 套，可选 `--coverage`。**覆盖率分析**（coverage_analysis.py）：从设备拉取 gcda、生成 .gcov、统计覆盖率（run/analyze/clear-analyze/clear-rerun-fuzz-analyze）。**覆盖率缺口测试建议**（coverage_gap_tests.py）：根据 .gcov 生成「覆盖率缺失的测试用例」建议（analyze-gaps）。**ACTS/Fuzz 发现**（find_actstest.py / find_fuzztest.py）：在 OpenHarmony 源码树中扫描 test/xts/acts 得到 ACTS 套件列表（输出 all_acts.md）、或扫描含 fuzztest 的部件列表（输出 partwithfuzztest.md）。 |
-| **用法** | dts：`python3 src/skills/ohtest/ohtest.py --dts <dts路径> --test-dir <test目录>`。UITest：`python3 src/skills/ohtest/uitest_gen.py --ets <页面.ets> --test-dir <test目录>`。Fuzz：`python3 src/skills/ohtest/fuzztest.py run -ts <套名> [--coverage]`。覆盖率：`python3 src/skills/ohtest/coverage_analysis.py run` \| `analyze` \| `clear-analyze` \| `clear-rerun-fuzz-analyze [-ts 套名]`。缺口建议：`python3 src/skills/ohtest/coverage_gap_tests.py analyze-gaps [报告目录] [--module 模块名] [--output 输出文件]`。**发现**：`python3 src/skills/ohtest/find_actstest.py [--output src/all_acts.md]`；`python3 src/skills/ohtest/find_fuzztest.py [--root base] [--output src/partwithfuzztest.md]`。 |
-| **提示句** | 「根据 Index.d.ts 生成/补全单元测试」「为 libentry 接口在 ohosTest 里增加测试套」「对 Index.ets 实现 UI 测试 / 为页面生成 UITest」「执行 GetAppStatsMahFuzzTest 的 fuzz 测试（带覆盖率）」「收集 fuzz 覆盖率并分析」「根据覆盖率报告生成缺失的测试用例建议」「扫描 test/xts/acts 列出所有 ACTS 测试套」「列出工程里带 fuzztest 的部件」 |
+| **功能** | **dts 单元测试**（ohtest.py）：根据 `.d.ts` 接口生成 ohosTest 测试套（4 类边界用例），并在 List.test.ets 注册。**UITest**（uitest_gen.py）：根据 `.ets` 页面生成 UI 测试套（Driver/ON、assertComponentExist、click）。**Fuzz 执行**（fuzztest.py）：在 developer_test 下执行指定 fuzz 套，可选 `--coverage`、`--dry-run`。**ACTS 运行**（actstest.py）：在 out/<product>/suites/acts/acts 下执行 run.sh run -l <套件名>，解析 Test Summary，定位最新 reports 下的 summary_report。**覆盖率分析**（coverage_analysis.py）：从设备拉取 gcda、生成 .gcov、统计覆盖率（run/analyze/clear-analyze/clear-rerun-fuzz-analyze）。**覆盖率缺口测试建议**（coverage_gap_tests.py）：根据 .gcov 生成「覆盖率缺失的测试用例」建议（analyze-gaps）。**ACTS/Fuzz 发现**（find_actstest.py / find_fuzztest.py）：扫描 test/xts/acts 得 ACTS 套件列表（all_acts.md）、或扫描含 fuzztest 的部件列表（partwithfuzztest.md）。 |
+| **用法** | dts：`python3 src/skills/ohtest/ohtest.py --dts <dts路径> --test-dir <test目录>`。UITest：`python3 src/skills/ohtest/uitest_gen.py --ets <页面.ets> --test-dir <test目录>`。Fuzz：`python3 src/skills/ohtest/fuzztest.py run -ts <套名> [--coverage] [--dry-run]`。**ACTS 运行**：`python3 src/skills/ohtest/actstest.py run <套件名> [--product-name rk3568] [--acts-dir PATH]`。覆盖率：`python3 src/skills/ohtest/coverage_analysis.py run` \| `analyze` \| `clear-analyze` \| `clear-rerun-fuzz-analyze [-ts 套名]`。缺口建议：`python3 src/skills/ohtest/coverage_gap_tests.py analyze-gaps [报告目录] [--module 模块名] [--output 输出文件]`。发现：`python3 src/skills/ohtest/find_actstest.py [--output src/all_acts.md]`；`python3 src/skills/ohtest/find_fuzztest.py [--root base] [--output src/partwithfuzztest.md]`。 |
+| **提示句** | 「根据 Index.d.ts 生成/补全单元测试」「为 libentry 接口在 ohosTest 里增加测试套」「对 Index.ets 实现 UI 测试 / 为页面生成 UITest」「执行 GetAppStatsMahFuzzTest 的 fuzz 测试（带覆盖率）」「运行 ACTS 测试套件 ActsAACommandTest」「收集 fuzz 覆盖率并分析」「根据覆盖率报告生成缺失的测试用例建议」「扫描 test/xts/acts 列出所有 ACTS 测试套」「列出工程里带 fuzztest 的部件」 |
 
 ---
 
@@ -158,6 +158,7 @@ Sync to AGENTS.md: npx openskills sync
 | **仅安装不跑测** | ohhdc uninstall \<bundleName\> → ohhdc install-project \<项目根目录\> | ohhdc |
 | **单元测试生成与跑测** | ohtest dts / uitest_gen 生成测试套 → ohhap build + sign → ohhdc deploy-test | ohtest、ohhap、ohhdc |
 | **Fuzz 测试与覆盖率** | ohbuild 编译 fuzz（--gn-args \<模块\>_feature_coverage=true）→ ohtest fuzztest run -ts \<套名\> --coverage → ohtest coverage_analysis run/analyze | ohbuild、ohtest |
+| **ACTS 测试运行** | 编译 ACTS 后，在 out/\<product\>/suites/acts/acts 下：`python3 src/skills/ohtest/actstest.py run <套件名> [--product-name rk3568]`，解析 Test Summary 并定位 reports | ohtest |
 | **clitools 集成与验证** | ohclitools deploy [--test-dir PATH] → build → verify [--push-run]；或一键 `all [--push-run]` | ohclitools |
 | **代码提交与推送** | gitlog status → gitlog commit "提交说明"（默认 Signed-off-by）→ 自动 push | gitlog |
 
