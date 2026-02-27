@@ -94,9 +94,9 @@ Sync to AGENTS.md: npx openskills sync
 
 | 项 | 说明 |
 |----|------|
-| **功能** | OpenHarmony 构建：编译 fuzz 测试（需在含 `build.sh` 的源码根目录）；查看模块 fuzztest 目标及 gn-args（list-fuzztest）；生成**单个** fuzz 目标编译命令（build-fuzztest）；生成**部件全部** fuzztest 编译命令（build-component-fuzztest）；验证编译后是否生成 gcno（verify-coverage）。 |
-| **用法** | 源码根目录执行：`./build.sh --build-target <目标名> --product-name rk3568 --gn-args <模块>_feature_coverage=true`。或：`python3 src/skills/ohbuild/ohbuild.py list-fuzztest <模块名或路径>` \| `build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]` \| `build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]` \| `verify-coverage [模块名] [--product-name rk3568]` \| `help`。 |
-| **提示句** | 「编译 GetAppStatsMahFuzzTest 并开覆盖率」「某模块有哪些 fuzz 测试、编译时传什么 gn-args」「打印编译 battery_statistics 部件全部 fuzztest 的命令」「验证 power_manager 模块是否生成了 gcno」「列出 battery_statistics 的 fuzz 目标」 |
+| **功能** | OpenHarmony 构建：编译 fuzz 测试（需在含 `build.sh` 的源码根目录）；查看模块 fuzztest 目标及 gn-args（list-fuzztest）；生成**单个** fuzz 目标编译命令（build-fuzztest）；生成**部件全部** fuzztest 编译命令（build-component-fuzztest）；验证编译后是否生成 gcno（verify-coverage）。**编译 ACTS**（build-acts）：编译指定 ACTS 测试套件（可多 suite 逗号分隔），生成 out/\<product\>/suites/acts/acts，可选 `--no-run` 仅编译不执行。 |
+| **用法** | 源码根目录执行：`./build.sh --build-target <目标名> --product-name rk3568 --gn-args <模块>_feature_coverage=true`。或：`python3 src/skills/ohbuild/ohbuild.py list-fuzztest <模块名或路径>` \| `build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]` \| `build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]` \| `verify-coverage [模块名] [--product-name rk3568]` \| **`build-acts <suite名> [--src-dir PATH] [--product-name rk3568] [--system-size standard] [--no-run]`**（多 suite 用逗号分隔） \| `help`。 |
+| **提示句** | 「编译 GetAppStatsMahFuzzTest 并开覆盖率」「某模块有哪些 fuzz 测试、编译时传什么 gn-args」「打印编译 battery_statistics 部件全部 fuzztest 的命令」「验证 power_manager 模块是否生成了 gcno」「列出 battery_statistics 的 fuzz 目标」「编译 ACTS 测试套件 ActsAACommandTest」「编译 ACTS 多个 suite 仅编译不运行（--no-run）」 |
 
 ---
 
@@ -158,7 +158,7 @@ Sync to AGENTS.md: npx openskills sync
 | **仅安装不跑测** | ohhdc uninstall \<bundleName\> → ohhdc install-project \<项目根目录\> | ohhdc |
 | **单元测试生成与跑测** | ohtest dts / uitest_gen 生成测试套 → ohhap build + sign → ohhdc deploy-test | ohtest、ohhap、ohhdc |
 | **Fuzz 测试与覆盖率** | ohbuild 编译 fuzz（--gn-args \<模块\>_feature_coverage=true）→ ohtest fuzztest run -ts \<套名\> --coverage → ohtest coverage_analysis run/analyze | ohbuild、ohtest |
-| **ACTS 测试运行** | 编译 ACTS 后，在 out/\<product\>/suites/acts/acts 下：`python3 src/skills/ohtest/actstest.py run <套件名> [--product-name rk3568]`，解析 Test Summary 并定位 reports | ohtest |
+| **ACTS 测试运行** | ohbuild build-acts \<套件名\> 编译 ACTS → 在 out/\<product\>/suites/acts/acts 下：`python3 src/skills/ohtest/actstest.py run <套件名> [--product-name rk3568]`，解析 Test Summary 并定位 reports | ohbuild、ohtest |
 | **clitools 集成与验证** | ohclitools deploy [--test-dir PATH] → build → verify [--push-run]；或一键 `all [--push-run]` | ohclitools |
 | **代码提交与推送** | gitlog status → gitlog commit "提交说明"（默认 Signed-off-by）→ 自动 push | gitlog |
 
