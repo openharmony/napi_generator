@@ -66,7 +66,7 @@ Sync to AGENTS.md: npx openskills sync
 
 ## 4. 使用工程里的 skill（src/skills 目录概述）
 
-`src/skills` 下为本仓库自有的 OpenHarmony / 社区相关技能。可拷贝到 `.claude/skills` 供 Cursor 自动选用，或直接 `python3 src/skills/<技能名>/<脚本>` 调用。每个技能按 **功能**、**用法**、**提示句** 说明如下。
+`src/skills` 下为本仓库自有的 OpenHarmony / 社区相关技能（共 9 个）。可拷贝到 `.claude/skills` 供 Cursor 自动选用，或直接 `python3 src/skills/<技能名>/<脚本>` 调用。每个技能按 **功能**、**用法**、**提示句** 说明如下。
 
 ---
 
@@ -150,7 +150,17 @@ Sync to AGENTS.md: npx openskills sync
 
 ---
 
-### 4.9 典型使用流程
+### 4.9 ohanalysis
+
+| 项 | 说明 |
+|----|------|
+| **功能** | OpenHarmony 工程**静态分析**（ohanalysis.py）：在项目 `src` 下查找 `bundle.json`，整理子系统、系统能力、组件、deps、inner_kits、test。**bundle**：解析指定路径或前缀下的 bundle.json，输出上述字段（可 `--brief` 仅输出概要）。**scan-all**：全量扫描 src（排除 kernel、third_party、applications 等），生成 Markdown 报告（统计、子系统/组件排名与列表、syscap/inner_kits/deps/test 列表）。**diff**：对比两个 src 路径（如 61release 与 60release），生成两份分析报告及一份增删改对比报告。全量/对比建议超时 60 分钟。 |
+| **用法** | `python3 src/skills/ohanalysis/ohanalysis.py bundle [路径] [--src-dir PATH] [--prefix PATH] [--brief]`（路径不传则扫描整个 src）。`scan-all [--src-dir PATH]`。`diff <PATH1> <PATH2>`（两 src 根目录）。`help`。 |
+| **提示句** | 「解析 foundation/ability/ability_base 的 bundle.json」「扫描整个 OpenHarmony src 生成组件分析报告」「对比 61release 与 60release 的 src 差异」「列出某子系统的 inner_kits 和 test」 |
+
+---
+
+### 4.10 典型使用流程
 
 | 场景 | 流程 | 涉及技能 |
 |------|------|----------|
@@ -160,6 +170,7 @@ Sync to AGENTS.md: npx openskills sync
 | **Fuzz 测试与覆盖率** | ohbuild 编译 fuzz（--gn-args \<模块\>_feature_coverage=true）→ ohtest fuzztest run -ts \<套名\> --coverage → ohtest coverage_analysis run/analyze | ohbuild、ohtest |
 | **ACTS 测试运行** | ohbuild build-acts \<套件名\> 编译 ACTS → 在 out/\<product\>/suites/acts/acts 下：`python3 src/skills/ohtest/actstest.py run <套件名> [--product-name rk3568]`，解析 Test Summary 并定位 reports | ohbuild、ohtest |
 | **clitools 集成与验证** | ohclitools deploy [--test-dir PATH] → build → verify [--push-run]；或一键 `all [--push-run]` | ohclitools |
+| **工程静态分析** | ohanalysis bundle [路径] 解析单组件；scan-all 全量扫描生成报告；diff PATH1 PATH2 对比两版本 src | ohanalysis |
 | **代码提交与推送** | gitlog status → gitlog commit "提交说明"（默认 Signed-off-by）→ 自动 push | gitlog |
 
 ## 5. 配置hdc连接（确保开发版联网且和Linux服务器可以互相ping通）
