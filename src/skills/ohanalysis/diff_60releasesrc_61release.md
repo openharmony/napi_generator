@@ -15,7 +15,7 @@
 | syscap 数量 | 299 | 301 | 2 | - |
 | deps 数量 | 5061 | 5478 | 417 | - |
 | test 数量 | 888 | 912 | 24 | - |
-| ndkapi 数量 | 1791 | 2253 | 462 | - |
+| nokapi 数量 | 1791 | 2253 | 462 | - |
 
 ---
 
@@ -166,7 +166,7 @@
 
 | 变更类型 | 条目 |
 |----------|------|
-| test 新增 | //base/global/i18n/ndk/test:ndk_test |
+| test 新增 | //base/global/i18n/nok/test:nok_test |
 
 **base/global/resource_management**
 
@@ -1082,7 +1082,7 @@
 | deps 新增 | user_file_service |
 | deps 删除 | resource_schedule_service |
 | inner_kits 新增 | //foundation/filemanagement/dfs_service/interfaces/inner_api/native/clouddiskservice_kit_inner:clouddiskservice_kit_inner |
-| inner_kits 新增 | //foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/src:ohclouddiskmanager |
+| inner_kits 新增 | //foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/src:ohclouddiskmanager |
 
 **foundation/filemanagement/file_api**
 
@@ -1204,7 +1204,7 @@
 | inner_kits 新增 | //foundation/multimedia/camera_framework/frameworks/native/camera/base:camera_framework_static |
 | inner_kits 新增 | //foundation/multimedia/camera_framework/frameworks/taihe:copy_camera_taihe |
 | test 新增 | //foundation/multimedia/camera_framework/common/test/unittest:camera_common_utils_test |
-| test 新增 | //foundation/multimedia/camera_framework/frameworks/native/camera/test/unittest/camera_ndk_unittest:camera_ndk_test |
+| test 新增 | //foundation/multimedia/camera_framework/frameworks/native/camera/test/unittest/camera_nok_unittest:camera_nok_test |
 | test 删除 | //foundation/multimedia/camera_framework/interfaces/inner_api/native/test:camera_capture |
 | test 删除 | //foundation/multimedia/camera_framework/interfaces/inner_api/native/test:camera_capture_video |
 | test 删除 | //foundation/multimedia/camera_framework/interfaces/inner_api/native/test:camera_video |
@@ -1675,7 +1675,7 @@
 - //foundation/distributeddatamgr/udmf/interfaces/innerkits:xml_wrapper
 - //foundation/distributeddatamgr/udmf/interfaces/taihe:udmf_taihe_native
 - //foundation/filemanagement/dfs_service/interfaces/inner_api/native/clouddiskservice_kit_inner:clouddiskservice_kit_inner
-- //foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/src:ohclouddiskmanager
+- //foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/src:ohclouddiskmanager
 - //foundation/filemanagement/filemanagement_cangjie_wrapper:copy_sdk_filemanagement_cangjie_libs
 - //foundation/filemanagement/filemanagement_cangjie_wrapper:copy_sdk_filemanagement_cangjie_libs_kit
 - //foundation/filemanagement/user_file_service/interfaces/inner_api/cloud_disk_kit_inner:cloud_disk_manager_kit
@@ -1912,7 +1912,7 @@
 | test名称 | 子系统 | 组件 |
 |----------|--------|------|
 | //base/global/font_manager/test/unittest:unittest | global | font_manager |
-| //base/global/i18n/ndk/test:ndk_test | global | i18n |
+| //base/global/i18n/nok/test:nok_test | global | i18n |
 | //base/hiviewdfx/hichecker/test:hichecker_fuzztest | hiviewdfx | hichecker |
 | //base/hiviewdfx/hicollie/frameworks/app/test/unittest:unittest | hiviewdfx | hicollie |
 | //base/location/location/test/fuzztest:fuzztest | location | location |
@@ -1959,7 +1959,7 @@
 | //foundation/graphic/graphic_3d/lume/LumeBase/test/unittest:unittest | graphic | graphic_3d |
 | //foundation/multimedia/av_codec/test:video_codec_unit_test | multimedia | av_codec |
 | //foundation/multimedia/camera_framework/common/test/unittest:camera_common_utils_test | multimedia | camera_framework |
-| //foundation/multimedia/camera_framework/frameworks/native/camera/test/unittest/camera_ndk_unittest:camera_ndk_test | multimedia | camera_framework |
+| //foundation/multimedia/camera_framework/frameworks/native/camera/test/unittest/camera_nok_unittest:camera_nok_test | multimedia | camera_framework |
 | //foundation/multimedia/midi_framework/test:midi_demo_test | multimedia | midi_framework |
 | //foundation/multimedia/midi_framework/test:midi_unit_test | multimedia | midi_framework |
 | //foundation/resourceschedule/qos_manager/test/fuzztest:fuzztest | resourceschedule | qos_manager |
@@ -2003,9 +2003,9 @@
 | //foundation/multimedia/camera_framework/interfaces/inner_api/native/test:camera_video | multimedia | camera_framework |
 | //foundation/resourceschedule/qos_manager/test/fuzztest:concurrent_fuzztest | resourceschedule | qos_manager |
 
-## 新增 ndkapi 列表（462）
+## 新增 nokapi 列表（462）
 
-| ndkapi名称 | 子系统 | 组件 | api版本 | 路径 |
+| nokapi名称 | 子系统 | 组件 | api版本 | 路径 |
 |------------|--------|------|--------|------|
 | OH_AbilityResourceInfo_Destroy | bundlemanager | bundle_framework | 21 | foundation/bundlemanager/bundle_framework/interfaces/kits/native/bundle/libbundle.nok.json |
 | OH_ArkUI_AxisEvent_HasAxis | arkui | ace_engine | 21 | foundation/arkui/ace_engine/interfaces/native/libace.nok.json |
@@ -2324,17 +2324,17 @@
 | OH_ArkUI_XComponentSurfaceConfig_Create | arkui | ace_engine | 22 | foundation/arkui/ace_engine/interfaces/native/libace.nok.json |
 | OH_ArkUI_XComponentSurfaceConfig_Dispose | arkui | ace_engine | 22 | foundation/arkui/ace_engine/interfaces/native/libace.nok.json |
 | OH_ArkUI_XComponentSurfaceConfig_SetIsOpaque | arkui | ace_engine | 22 | foundation/arkui/ace_engine/interfaces/native/libace.nok.json |
-| OH_CloudDisk_ActiveSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
-| OH_CloudDisk_DeactiveSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
-| OH_CloudDisk_GetFileSyncStates | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
-| OH_CloudDisk_GetSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
-| OH_CloudDisk_GetSyncFolders | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
-| OH_CloudDisk_RegisterSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
-| OH_CloudDisk_RegisterSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
-| OH_CloudDisk_SetFileSyncStates | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
-| OH_CloudDisk_UnregisterSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
-| OH_CloudDisk_UnregisterSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
-| OH_CloudDisk_UpdateCustomAlias | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_ActiveSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_DeactiveSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_GetFileSyncStates | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_GetSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_GetSyncFolders | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_RegisterSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_RegisterSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_SetFileSyncStates | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_UnregisterSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_UnregisterSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
+| OH_CloudDisk_UpdateCustomAlias | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/nok/clouddiskmanager/liboh_cloud_disk_manager.nok.json |
 | OH_GameDevice_AllDeviceInfos_GetCount | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.nok.json |
 | OH_GameDevice_AllDeviceInfos_GetDeviceInfo | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.nok.json |
 | OH_GameDevice_DestroyAllDeviceInfos | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.nok.json |
@@ -2465,11 +2465,11 @@
 | OH_NativeBundle_GetLabel | bundlemanager | bundle_framework | 21 | foundation/bundlemanager/bundle_framework/interfaces/kits/native/bundle/libbundle.nok.json |
 | OH_NativeBundle_GetModuleName | bundlemanager | bundle_framework | 21 | foundation/bundlemanager/bundle_framework/interfaces/kits/native/bundle/libbundle.nok.json |
 | OH_NativeBundle_GetSize | bundlemanager | bundle_framework | 21 | foundation/bundlemanager/bundle_framework/interfaces/kits/native/bundle/libbundle.nok.json |
-| OH_PictureInPicture_SetParentWindowId | window | window_manager |  | foundation/window/window_manager/interfaces/kits/ndk/libwm.nok.json |
-| OH_WindowManager_LockCursor | window | window_manager |  | foundation/window/window_manager/interfaces/kits/ndk/libwm.nok.json |
-| OH_WindowManager_UnlockCursor | window | window_manager |  | foundation/window/window_manager/interfaces/kits/ndk/libwm.nok.json |
+| OH_PictureInPicture_SetParentWindowId | window | window_manager |  | foundation/window/window_manager/interfaces/kits/nok/libwm.nok.json |
+| OH_WindowManager_LockCursor | window | window_manager |  | foundation/window/window_manager/interfaces/kits/nok/libwm.nok.json |
+| OH_WindowManager_UnlockCursor | window | window_manager |  | foundation/window/window_manager/interfaces/kits/nok/libwm.nok.json |
 | VIDEO_METADATA_GENERATOR_STYLE_CONTROL | multimedia | video_processing_engine | 22 | foundation/multimedia/video_processing_engine/interfaces/kits/c/video_processing/libvideo_processing.nok.json |
 
-## 删除 ndkapi 列表（0）
+## 删除 nokapi 列表（0）
 
 （无）
