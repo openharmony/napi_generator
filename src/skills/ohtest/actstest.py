@@ -5,8 +5,9 @@ ACTS 测试运行技能：在 out/rk3568/suites/acts/acts 下执行 run.sh run -
 解析 ResultReporter 的 Test Summary，并定位最新 reports 下的 summary_report.html / summary_report.xml。
 
 Usage:
-    python3 actstest.py run <suite名> [--product-name rk3568] [--acts-dir PATH]
+    python3 actstest.py run <suite名> [--src-dir PATH] [--product-name rk3568] [--acts-dir PATH]
     python3 actstest.py run ActsAACommandTest
+    python3 actstest.py run ActsAACommandPrintOneTest --src-dir ~/ohos/6.1release/src
     python3 actstest.py help
 """
 
@@ -20,9 +21,10 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # 技能在 src/.claude/skills/ohtest/，源码根为 src（上三级）
 SRC_ROOT = SCRIPT_DIR.parent.parent.parent
 
-# 默认 ACTS 运行目录：out/<product>/suites/acts/acts
-def default_acts_dir(product_name: str = "rk3568") -> Path:
-    return SRC_ROOT / "out" / product_name / "suites" / "acts" / "acts"
+# 默认 ACTS 运行目录：<src_root>/out/<product>/suites/acts/acts
+def default_acts_dir(product_name: str = "rk3568", src_root: Path | None = None) -> Path:
+    root = (src_root if src_root is not None else SRC_ROOT)
+    return root / "out" / product_name / "suites" / "acts" / "acts"
 
 # 日志中 ResultReporter 的 Test Summary 行，解析 total / passed / failed / blocked
 SUMMARY_RE = re.compile(
@@ -65,17 +67,20 @@ def cmd_run(
     suite_name: str,
     product_name: str = "rk3568",
     acts_dir: Path | None = None,
+    src_dir: Path | None = None,
 ) -> int:
     """
     在 acts 目录下执行 ./run.sh run -l <suite_name>，
     解析输出中的 Test Summary，并打印最新 reports 下的 summary 文件路径。
+    src_dir 指定时作为工程 src 根，用于计算默认 acts 目录；acts_dir 指定时优先使用。
     """
     suite_name = (suite_name or "").strip()
     if not suite_name:
         print("请指定要运行的 ACTS 用例名，例如: ActsAACommandTest", file=sys.stderr)
         return 1
 
-    run_dir = acts_dir if acts_dir is not None else default_acts_dir(product_name)
+    src_root = (src_dir if src_dir else None)
+    run_dir = acts_dir if acts_dir is not None else default_acts_dir(product_name, src_root)
     run_dir = run_dir.resolve()
     if not run_dir.is_dir():
         print(f"ACTS 运行目录不存在: {run_dir}", file=sys.stderr)
@@ -150,13 +155,14 @@ def show_help() -> None:
   python3 actstest.py help
 
 说明:
-  - 在 out/<product>/suites/acts/acts 下执行: ./run.sh run -l <suite名>
-  - suite名 即要执行的测试用例/套件名，如 ActsAACommandTest
+  - 在 <src_dir>/out/<product>/suites/acts/acts 下执行: ./run.sh run -l <suite名>（未指定 --src-dir 时使用脚本所在工程）
+  - --src-dir 指定工程 src 根路径，如 ~/ohos/6.1release/src，据此确定运行目录
   - 从输出中解析 [ResultReporter] Test Summary: total / passed / failed / blocked
   - 执行目录下 reports 中时间戳最新的目录为本次结果；summary_report.html 为测试报告，summary_report.xml 为各用例结果
 
 示例:
   python3 actstest.py run ActsAACommandTest
+  python3 actstest.py run ActsAACommandPrintOneTest --src-dir ~/ohos/6.1release/src
   python3 actstest.py run ActsAACommandTest --product-name rk3568
 """)
 
@@ -174,15 +180,18 @@ def main() -> int:
     rest = args[1:]  # 去掉 "run"
     parser = argparse.ArgumentParser(description="Run ACTS test suite")
     parser.add_argument("suite_name", nargs="?", default="", help="ACTS 用例/套件名，如 ActsAACommandTest")
+    parser.add_argument("--src-dir", type=Path, default=None, help="工程 src 根路径，如 ~/ohos/6.1release/src，用于确定 out/ 下的 acts 目录")
     parser.add_argument("--product-name", default="rk3568", help="产品名，用于默认 acts 目录 out/<product>/suites/acts/acts")
-    parser.add_argument("--acts-dir", type=Path, default=None, help="ACTS 运行目录，默认 out/<product>/suites/acts/acts")
+    parser.add_argument("--acts-dir", type=Path, default=None, help="ACTS 运行目录，指定后优先于 --src-dir 计算")
     parsed, unknown = parser.parse_known_args(rest)
     suite_name = (parsed.suite_name or "").strip() or (unknown[0] if unknown else "")
+    src_dir = Path(parsed.src_dir).expanduser().resolve() if parsed.src_dir else None
 
     return cmd_run(
         suite_name=suite_name,
         product_name=parsed.product_name,
         acts_dir=parsed.acts_dir,
+        src_dir=src_dir,
     )
 
 

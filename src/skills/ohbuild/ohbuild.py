@@ -9,7 +9,7 @@ Usage:
     python3 ohbuild.py build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]
     python3 ohbuild.py build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]  编译部件全部 fuzztest
     python3 ohbuild.py verify-coverage [模块名] [--product-name rk3568]  编译后验证是否有模块相关 gcno 文件
-    python3 ohbuild.py build-acts <suite名> [--product-name rk3568] [--system-size standard] [--no-run]  编译 ACTS 指定 suite（在 test/xts/acts 下执行 build.sh）
+    python3 ohbuild.py build-acts <suite名> [--src-dir PATH] [--product-name rk3568] [--system-size standard] [--no-run]  编译 ACTS 指定 suite；--src-dir 指定工程 src 根（如 ~/ohos/6.1release/src）
     python3 ohbuild.py help
 """
 
@@ -24,8 +24,9 @@ from typing import Optional
 SCRIPT_DIR = Path(__file__).resolve().parent
 # 假定源码根为 src（即 skills 的上级的上级的上级）
 SRC_ROOT = SCRIPT_DIR.parent.parent.parent
-# ACTS 构建脚本所在目录（执行 build.sh 的工作目录）
-ACTS_BUILD_DIR = SRC_ROOT / "test" / "xts" / "acts"
+# ACTS 构建脚本所在目录（执行 build.sh 的工作目录），可由 --src-dir 覆盖
+def get_acts_build_dir(src_root: Path) -> Path:
+    return src_root / "test" / "xts" / "acts"
 
 SKILL_NAME = "ohbuild"
 VERSION = "1.0.0"
@@ -332,20 +333,24 @@ def cmd_build_acts(
     product_name: str = "rk3568",
     system_size: str = "standard",
     run: bool = True,
+    src_dir: Optional[Path] = None,
 ) -> int:
     """
-    编译 ACTS 指定 suite。在 test/xts/acts 目录下执行：
-    ./build.sh suite=acts system_size=<size> product_name=<product> suite=<suite_name>
-    suite_name 为用户输入的编译对象，如 ActsAACommandPrintSyncTest。
+    编译 ACTS 指定 suite（可多个，逗号分隔）。在 <src_dir>/test/xts/acts 目录下执行：
+    ./build.sh suite=acts system_size=<size> product_name=<product> suite=<suite1>,<suite2>,...
+    src_dir 未指定时使用脚本推断的 SRC_ROOT。
     """
     if not suite_name or not suite_name.strip():
-        print("请指定要编译的 ACTS suite 名，例如: ActsAACommandPrintSyncTest", file=sys.stderr)
+        print("请指定要编译的 ACTS suite 名（多个用逗号分隔），例如: build-acts ActsAACommandTest,AACommand07", file=sys.stderr)
         return 1
-    suite_name = suite_name.strip()
-    if not ACTS_BUILD_DIR.is_dir():
-        print(f"ACTS 构建目录不存在: {ACTS_BUILD_DIR}", file=sys.stderr)
+    # 支持多 suite：逗号分隔，去掉多余空格后拼成 suite=a,b,c
+    suite_name = ",".join(s.strip() for s in suite_name.strip().split(",") if s.strip())
+    src_root = (Path(src_dir).expanduser().resolve() if src_dir else SRC_ROOT)
+    acts_build_dir = get_acts_build_dir(src_root)
+    if not acts_build_dir.is_dir():
+        print(f"ACTS 构建目录不存在: {acts_build_dir}", file=sys.stderr)
         return 1
-    build_sh = ACTS_BUILD_DIR / "build.sh"
+    build_sh = acts_build_dir / "build.sh"
     if not build_sh.is_file():
         print(f"未找到 build.sh: {build_sh}", file=sys.stderr)
         return 1
@@ -358,13 +363,14 @@ def cmd_build_acts(
         f"suite={suite_name}",
     ]
     cmd_str = " ".join(cmd)
-    print(f"工作目录: {ACTS_BUILD_DIR}")
+    print(f"工程 src 根: {src_root}")
+    print(f"工作目录: {acts_build_dir}")
     print(f"执行命令: {cmd_str}")
     print()
     if not run:
         print("（未执行，使用 build-acts 时不加 --no-run 将自动执行）")
         return 0
-    ret = subprocess.run(cmd_str, cwd=ACTS_BUILD_DIR, shell=True)
+    ret = subprocess.run(cmd_str, cwd=acts_build_dir, shell=True)
     return ret.returncode
 
 
@@ -376,7 +382,7 @@ def show_help() -> None:
   python3 ohbuild.py build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]  打印编译单个 fuzz 目标的命令
   python3 ohbuild.py build-component-fuzztest <模块名或路径> [--product-name rk3568] [--gn-args xxx=true]  打印编译部件全部 fuzztest 的命令
   python3 ohbuild.py verify-coverage [模块名] [--product-name rk3568]  编译后验证是否有模块相关 gcno 文件
-  python3 ohbuild.py build-acts <suite名> [--product-name rk3568] [--system-size standard] [--no-run]  编译 ACTS 指定 suite
+  python3 ohbuild.py build-acts <suite名> [--src-dir PATH] [--product-name rk3568] [--system-size standard] [--no-run]  编译 ACTS，多 suite 用逗号分隔；--src-dir 指定工程 src 根
   python3 ohbuild.py help  显示本帮助
 
 示例:
@@ -387,6 +393,8 @@ def show_help() -> None:
   python3 ohbuild.py verify-coverage power_manager
   python3 ohbuild.py verify-coverage
   python3 ohbuild.py build-acts ActsAACommandPrintSyncTest
+  python3 ohbuild.py build-acts AACommand07,AACommand08,ActsAACommandTest --src-dir ~/ohos/61release/src
+  python3 ohbuild.py build-acts ActsAACommandPrintOneTest --src-dir ~/ohos/6.1release/src
   python3 ohbuild.py build-acts ActsAACommandPrintSyncTest --product-name rk3568 --no-run
 """)
 
@@ -468,8 +476,13 @@ def main() -> int:
         product_name = "rk3568"
         system_size = "standard"
         run = True
+        src_dir = None
         i = 2
         while i < len(args):
+            if args[i] == "--src-dir" and i + 1 < len(args):
+                src_dir = Path(args[i + 1]).expanduser().resolve()
+                i += 2
+                continue
             if args[i] == "--product-name" and i + 1 < len(args):
                 product_name = args[i + 1]
                 i += 2
@@ -488,6 +501,7 @@ def main() -> int:
             product_name=product_name,
             system_size=system_size,
             run=run,
+            src_dir=src_dir,
         )
 
     print(f"未知命令: {args[0]}", file=sys.stderr)
