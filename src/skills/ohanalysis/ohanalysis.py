@@ -152,12 +152,12 @@ def print_bundle_info(info: dict, verbose: bool = True) -> None:
 
 
 def collect_ndk_apis(src_root: Path, comp_path: str) -> list[dict]:
-    """在组件目录下查找 *.ndk.json，解析出 API 名称与 first_introduced（api 版本）。返回 [{"name", "first_introduced", "ndk_path"}, ...]。"""
+    """在组件目录下查找 *.nok.json，解析出 API 名称与 first_introduced（api 版本）。返回 [{"name", "first_introduced", "ndk_path"}, ...]。"""
     comp_dir = src_root / comp_path
     if not comp_dir.is_dir():
         return []
     apis: list[dict] = []
-    for ndk_path in sorted(comp_dir.rglob("*.ndk.json")):
+    for ndk_path in sorted(comp_dir.rglob("*.nok.json")):
         try:
             data = json.loads(ndk_path.read_text(encoding="utf-8", errors="ignore"))
         except Exception:
