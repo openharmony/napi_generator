@@ -375,17 +375,17 @@ static void CleanupTask(AsyncCompressContext *context)
 static void GenerateResultMessage(AsyncCompressContext *context, std::string &message, int &errorCode)
 {
     if (context->wasCancelled) {
-        message = "⚠️ 压缩已取消";
+        message = "压缩已取消";
         errorCode = static_cast<int>(ArchiveErrorCode::OPERATION_CANCELLED);
     } else if (context->success) {
-        message = "✅ 压缩成功 (" + context->format + " 格式)";
+        message = "压缩成功 (" + context->format + " 格式)";
         errorCode = ERROR_CODE_SUCCESS;
     } else {
         if (context->archiveError.code != ArchiveErrorCode::SUCCESS) {
             message = context->archiveError.GetFullMessage();
             errorCode = context->archiveError.GetErrorCode();
         } else {
-            message = "❌ 压缩失败: " + context->error;
+            message = "压缩失败: " + context->error;
             errorCode = static_cast<int>(ArchiveErrorCode::COMPRESS_FAILED);
         }
     }

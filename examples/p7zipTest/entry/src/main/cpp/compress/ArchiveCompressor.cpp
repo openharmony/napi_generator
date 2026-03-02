@@ -884,11 +884,7 @@ static uint64_t GetTotalSize(const std::vector<CompressFileItem> &files)
     uint64_t total = 0;
     for (const auto &item : files) {
         if (!item.isDirectory) {
-            try {
-                total += fs::file_size(item.sourcePath);
-            } catch (...) {
-                // 忽略错误
-            }
+            total += fs::file_size(item.sourcePath);
         }
     }
     return total;
@@ -1045,7 +1041,7 @@ static void HandleCompressionError(HRESULT result, const std::string &outputArch
     detail << "HRESULT: 0x" << std::hex << std::setfill('0') << std::setw(HEX_WIDTH_8) << (unsigned int)result <<
             " (" << errName << ")\n输出文件: " << outputArchive;
     if (options.format == CompressFormat::SEVEN_Z && result == HRESULT_E_NOTIMPL) {
-        detail << "\n\n⚠️ 提示：7z编码器不可用，请使用ZIP格式";
+        detail << "\n\n提示：7z编码器不可用，请使用ZIP格式";
         OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "7z encoder not available, please use zip format instead");
     }
     ArchiveError err(errCode, ErrorMessages::GetMessage(errCode), detail.str());

@@ -125,7 +125,7 @@ extern "C" HRESULT CreateObject(const GUID *clsid, const GUID *iid, void **outOb
         return result;
     }
     
-    OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ CreateObject failed: No valid implementation found");
+    OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "CreateObject failed: No valid implementation found");
     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "   Please ensure lib7z.so exports CreateObject symbol");
     return E_NOTIMPL;
 }
