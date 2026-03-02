@@ -1,0 +1,82 @@
+--- a/C/AesHwStub.c
++++ b/C/AesHwStub.c
+@@ -0,0 +1,39 @@
++/* AesHwStub.c -- stubs for HW AES symbols
++   OpenHarmony cross build may compile out AesOpt.o but some objects can still
++   reference AesCbc_*_HW symbols. Provide safe software fallbacks so lib7z.so
++   has no unresolved AES HW symbols at load time.
++
++   This file is Public Domain in spirit (same as upstream style). */
++
++#include "Precomp.h"
++
++#include "Aes.h"
++
++/* HW AES stubs: fallback to software implementations */
++void MY_FAST_CALL AesCbc_Encode_HW(UInt32 *ivAes, Byte *data, size_t numBlocks)
++{
++  AesCbc_Encode(ivAes, data, numBlocks);
++}
++
++void MY_FAST_CALL AesCbc_Decode_HW(UInt32 *ivAes, Byte *data, size_t numBlocks)
++{
++  AesCbc_Decode(ivAes, data, numBlocks);
++}
++
++void MY_FAST_CALL AesCtr_Code_HW(UInt32 *ivAes, Byte *data, size_t numBlocks)
++{
++  AesCtr_Code(ivAes, data, numBlocks);
++}
++
++/* 256-bit optimized variants: fallback to the same software path */
++void MY_FAST_CALL AesCbc_Decode_HW_256(UInt32 *ivAes, Byte *data, size_t numBlocks)
++{
++  AesCbc_Decode(ivAes, data, numBlocks);
++}
++
++void MY_FAST_CALL AesCtr_Code_HW_256(UInt32 *ivAes, Byte *data, size_t numBlocks)
++{
++  AesCtr_Code(ivAes, data, numBlocks);
++}
++
++
+--- a/CPP/7zip/7zip_gcc.mak
++++ b/CPP/7zip/7zip_gcc.mak
+@@ -192,15 +192,15 @@
+ 7z_BIN = bin
+ 7z_LIB = lib
+ ifeq ($(PROG), 7za)
+-7z_ADDON_LIB = -lzstd -llz4 -lbrotlienc -lbrotlidec -lbrotlicommon -llizard -llz5 -lfast-lzma2 -llzhamcomp -llzhamdecomp -llzhamdll
++7z_ADDON_LIB =
+ 7z_ADDON_LIB_FLAG = -L./$(O)/$(7z_LIB)/$(7Z_ADDON_CODEC) -Wl,-rpath='$$ORIGIN'/../$(7z_LIB)/$(7Z_ADDON_CODEC)
+ PROGPATH = $(O)/$(7z_BIN)/$(PROG)$(SHARED_EXT)
+ else ifeq ($(PROG), 7zz)
+-7z_ADDON_LIB = -lzstd -llz4 -lbrotlienc -lbrotlidec -lbrotlicommon -llizard -llz5 -lfast-lzma2 -llzhamcomp -llzhamdecomp -llzhamdll
++7z_ADDON_LIB =
+ 7z_ADDON_LIB_FLAG = -L./$(O)/$(7z_LIB)/$(7Z_ADDON_CODEC) -Wl,-rpath='$$ORIGIN'/../$(7z_LIB)/$(7Z_ADDON_CODEC)
+ PROGPATH = $(O)/$(7z_BIN)/$(PROG)$(SHARED_EXT)
+ else ifeq ($(PROG), 7z)
+-7z_ADDON_LIB = -lzstd -llz4 -lbrotlienc -lbrotlidec -lbrotlicommon -llizard -llz5 -lfast-lzma2 -llzhamcomp -llzhamdecomp -llzhamdll
++7z_ADDON_LIB =
+ 7z_ADDON_LIB_FLAG = -L./$(O)/$(7z_LIB)/$(7Z_ADDON_CODEC) -Wl,-rpath='$$ORIGIN'/$(7Z_ADDON_CODEC)
+ PROGPATH = $(O)/$(7z_LIB)/$(PROG)$(SHARED_EXT)
+ else
+@@ -217,7 +217,7 @@
+ 	$(MY_MKDIR) $(O)/$(7z_LIB)/$(7Z_ADDON_CODEC)
+ 
+ LFLAGS_ALL = -s $(MY_ARCH_2) $(LDFLAGS) $(LD_arch) $(OBJS) $(MY_LIBS) $(LIB2)
+-$(PROGPATH): $(ZSTD_LIB) $(LZ4_LIB) $(BROTLI_LIB) $(LIZARD_LIB) $(LZ5_LIB) $(FAST-LZMA2_LIB) $(LZHAM_LIB) $(OBJS)
++$(PROGPATH): $(OBJS)
+ 	$(CXX) -o $(PROGPATH) $(LFLAGS_ALL) $(7z_ADDON_LIB) $(7z_ADDON_LIB_FLAG)
+ 
+ $(PROGPATH_STATIC): $(OBJS)
+@@ -1107,6 +1107,8 @@
+ 	$(CC) $(CFLAGS) $<
+ $O/Aes.o: ../../../../C/Aes.c
+ 	$(CC) $(CFLAGS) $<
++$O/AesHwStub.o: ../../../../C/AesHwStub.c
++	$(CC) $(CFLAGS) $<
+ $O/Alloc.o: ../../../../C/Alloc.c
+ 	$(CC) $(CFLAGS) $<
+ $O/Bcj2.o: ../../../../C/Bcj2.c
+
