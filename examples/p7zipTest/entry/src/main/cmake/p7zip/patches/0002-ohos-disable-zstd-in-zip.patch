@@ -1,0 +1,34 @@
+--- a/CPP/7zip/Archive/Zip/ZipHandler.cpp
++++ b/CPP/7zip/Archive/Zip/ZipHandler.cpp
+@@ -797,4 +797,5 @@
+   return S_OK;
+ }
+ 
++#ifndef Z7_NO_ZSTD
+ class CZstdDecoder:
+@@ -824,3 +825,4 @@
+ }
+ 
++#endif // Z7_NO_ZSTD
+ class CLzmaDecoder:
+@@ -1233,4 +1234,6 @@
+     }
++#ifndef Z7_NO_ZSTD
+     else if (id == NFileHeader::NCompressionMethod::kZstd)
+       mi.Coder = new CZstdDecoder();
++#endif
+     else if (id == NFileHeader::NCompressionMethod::kXz)
+
+--- a/CPP/7zip/Archive/Zip/ZipAddCommon.cpp
++++ b/CPP/7zip/Archive/Zip/ZipAddCommon.cpp
+@@ -380,8 +380,10 @@
+           }
++#ifndef Z7_NO_ZSTD
+           else if (method == NCompressionMethod::kZstd)
+           {
+             _compressExtractVersion = NCompressionMethod::kExtractVersion_Zstd;
+             NCompress::NZSTD::CEncoder *encoder = new NCompress::NZSTD::CEncoder();
+             _compressEncoder = encoder;
+           }
++#endif
+           else if (method == NCompressionMethod::kXz)

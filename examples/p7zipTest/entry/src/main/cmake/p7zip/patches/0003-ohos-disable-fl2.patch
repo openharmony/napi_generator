@@ -1,0 +1,58 @@
+--- a/CPP/7zip/Compress/Lzma2Encoder.h
++++ b/CPP/7zip/Compress/Lzma2Encoder.h
+@@ -4,7 +4,10 @@
+ #define __LZMA2_ENCODER_H
+ 
+ #include "../../../C/Lzma2Enc.h"
++
++#ifndef Z7_NO_FL2
+ #include "../../../C/fast-lzma2/fast-lzma2.h"
++#endif
+ 
+ #include "../../Common/MyCom.h"
+ 
+@@ -46,6 +49,7 @@
+   virtual ~CEncoder();
+ };
+ 
++#ifndef Z7_NO_FL2
+ // fast lzma2 encode class`
+ class CFastEncoder :
+   public ICompressCoder,
+@@ -95,6 +99,7 @@
+   CFastEncoder();
+   virtual ~CFastEncoder();
+ };
++#endif // Z7_NO_FL2
+ 
+ }}
+ 
+--- a/CPP/7zip/Compress/Lzma2Encoder.cpp
++++ b/CPP/7zip/Compress/Lzma2Encoder.cpp
+@@ -8,7 +8,10 @@
+ #include "../Common/StreamUtils.h"
+ 
+ #include "Lzma2Encoder.h"
++
++#ifndef Z7_NO_FL2
+ #include "../../../C/fast-lzma2/fl2_errors.h"
++#endif
+ 
+ namespace NCompress {
+ 
+@@ -125,6 +128,7 @@
+ }
+ 
+ 
++#ifndef Z7_NO_FL2
+ // Fast LZMA2 encoder
+ 
+ 
+@@ -388,4 +392,6 @@
+   return S_OK;
+ }
+ 
++#endif // Z7_NO_FL2
++
+ }}
+

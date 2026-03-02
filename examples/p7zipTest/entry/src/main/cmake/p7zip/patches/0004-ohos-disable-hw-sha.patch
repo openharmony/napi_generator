@@ -1,0 +1,36 @@
+--- a/C/Sha1.c
++++ b/C/Sha1.c
+@@ -14,6 +14,7 @@
+ // #define USE_MY_MM
+ #endif
+ 
++#ifndef Z7_NO_HW_SHA
+ #ifdef MY_CPU_X86_OR_AMD64
+   #ifdef _MSC_VER
+     #if _MSC_VER >= 1200
+@@ -47,6 +48,7 @@
+     #endif
+   #endif
+ #endif
++#endif
+ 
+ void MY_FAST_CALL Sha1_UpdateBlocks(UInt32 state[5], const Byte *data, size_t numBlocks);
+ 
+--- a/C/Sha256.c
++++ b/C/Sha256.c
+@@ -14,6 +14,7 @@
+ // #define USE_MY_MM
+ #endif
+ 
++#ifndef Z7_NO_HW_SHA
+ #ifdef MY_CPU_X86_OR_AMD64
+   #ifdef _MSC_VER
+     #if _MSC_VER >= 1200
+@@ -47,6 +48,7 @@
+     #endif
+   #endif
+ #endif
++#endif
+ 
+ void MY_FAST_CALL Sha256_UpdateBlocks(UInt32 state[8], const Byte *data, size_t numBlocks);
+
