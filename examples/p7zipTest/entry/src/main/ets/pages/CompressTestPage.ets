@@ -39,7 +39,7 @@ struct CompressTestPage {
   aboutToAppear() {
     this.filesDir = this.context.filesDir;
     this.addLog(`✓ 应用目录: ${this.filesDir}`);
-    this.addLog(`💡 操作流程: 先创建测试文件 → 再选择压缩操作`);
+    this.addLog(`操作流程: 先创建测试文件 → 再选择压缩操作`);
   }
 
   private addLog(message: string) {
@@ -58,7 +58,7 @@ struct CompressTestPage {
     
     const modeText = mode === 'single' ? '单文件' : mode === 'multi' ? '多文件' : '文件夹';
     this.addLog('========================================');
-    this.addLog(`📝 创建 ${modeText} 测试文件`);
+    this.addLog(`创建 ${modeText} 测试文件`);
     this.addLog('========================================');
     
     try {
@@ -182,9 +182,9 @@ struct CompressTestPage {
       
       // 保存创建的文件路径
       this.createdFiles.set(mode, inputPaths);
-      this.createStatusText = `✅ ${modeText}已创建`;
+      this.createStatusText = `${modeText}已创建`;
       
-      this.addLog(`✅ ${modeText} 文件创建成功！`);
+      this.addLog(`${modeText} 文件创建成功！`);
       this.addLog('========================================');
       
       promptAction.showToast({ 
@@ -193,7 +193,7 @@ struct CompressTestPage {
       });
       
     } catch (error) {
-      this.addLog(`❌ 创建失败: ${JSON.stringify(error)}`);
+      this.addLog(`创建失败: ${JSON.stringify(error)}`);
       this.createStatusText = '创建失败';
     } finally {
       this.isCreatingFiles = false;
@@ -212,7 +212,7 @@ struct CompressTestPage {
         message: '请先创建测试文件！', 
         duration: 2000 
       });
-      this.addLog(`⚠️  请先点击"创建文件"按钮`);
+      this.addLog(`请先点击"创建文件"按钮`);
       return;
     }
     
@@ -229,7 +229,7 @@ struct CompressTestPage {
     this.outputPathDisplay = outputPath;
     
     this.addLog('========================================');
-    this.addLog(`🗜️  压缩 ${modeText}.${format}`);
+    this.addLog(`压缩 ${modeText}.${format}`);
     this.addLog('========================================');
     this.statusText = `压缩中...`;
     
@@ -257,26 +257,26 @@ struct CompressTestPage {
         this.fileCount = result.fileCount || 0;
         
         this.addLog('========================================');
-        this.addLog(`✅ 压缩成功！`);
+        this.addLog(`压缩成功！`);
         this.addLog(`   格式: ${result.format}`);
         this.addLog(`   文件数: ${this.fileCount}`);
         this.addLog(`   原始: ${this.formatBytes(this.originalSize)}`);
         this.addLog(`   压缩后: ${this.formatBytes(this.compressedSize)}`);
         this.addLog(`   压缩率: ${this.compressionRatio.toFixed(1)}%`);
         this.addLog('========================================');
-        this.statusText = `✅ 压缩成功`;
+        this.statusText = `压缩成功`;
         
         promptAction.showToast({ 
           message: `压缩成功！`, 
           duration: 2000 
         });
       } else {
-        this.addLog(`❌ 压缩失败: ${result.message}`);
+        this.addLog(`压缩失败: ${result.message}`);
         this.statusText = '压缩失败';
       }
       
     } catch (error) {
-      this.addLog(`❌ 异常: ${JSON.stringify(error)}`);
+      this.addLog(`异常: ${JSON.stringify(error)}`);
       this.statusText = '压缩失败';
     } finally {
       this.isCompressing = false;
@@ -287,18 +287,18 @@ struct CompressTestPage {
   // 取消压缩
   private cancelCompress() {
     if (!this.compressController) {
-      this.addLog('⚠️  没有正在进行的压缩任务');
+      this.addLog('没有正在进行的压缩任务');
       return;
     }
     
-    this.addLog(`🛑 正在取消压缩...`);
+    this.addLog(`正在取消压缩...`);
     const success = this.compressController.cancel();
     
     if (success) {
-      this.addLog('✅ 取消成功');
+      this.addLog('取消成功');
       this.statusText = '已取消';
     } else {
-      this.addLog('⚠️  取消失败');
+      this.addLog('取消失败');
     }
   }
   
@@ -500,7 +500,7 @@ struct CompressTestPage {
             .alignSelf(ItemAlign.Start)
           
           // Zip 格式
-          Text('📦 Zip 格式')
+          Text('Zip 格式')
             .fontSize(16)
             .fontWeight(FontWeight.Bold)
             .margin({ bottom: 10 })
@@ -543,7 +543,7 @@ struct CompressTestPage {
           .margin({ bottom: 15 })
           
           // 7z 格式
-          Text('📦 7z 格式')
+          Text('7z 格式')
             .fontSize(16)
             .fontWeight(FontWeight.Bold)
             .margin({ bottom: 10 })
@@ -594,7 +594,7 @@ struct CompressTestPage {
                   .fontWeight(FontWeight.Bold)
                   .layoutWeight(1)
                 
-                Button('🛑 取消')
+                Button('取消')
                   .height(35)
                   .fontSize(14)
                   .backgroundColor('#F44336')
