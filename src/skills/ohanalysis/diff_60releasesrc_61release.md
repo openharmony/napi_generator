@@ -626,17 +626,17 @@
 | deps 新增 | hisysevent |
 | deps 删除 | access_control_level_manager |
 
-**developtools/profiler**
+**developtools/profilor**
 
 | 变更类型 | 条目 |
 |----------|------|
-| inner_kits 新增 | //developtools/profiler/device/plugins/api:libhidebug |
-| inner_kits 新增 | //developtools/profiler/device/plugins/api:libhidebug_init |
-| inner_kits 删除 | //developtools/profiler/hidebug/interfaces/native/innerkits:libhidebug |
-| inner_kits 删除 | //developtools/profiler/hidebug/interfaces/native/innerkits:libhidebug_init |
-| inner_kits 删除 | //developtools/profiler/host/smartperf/client/client_command:smartperf_daemon |
-| test 新增 | //developtools/profiler/hidebug/test/fuzztest:fuzztest |
-| test 删除 | //developtools/profiler/host/smartperf/client/client_command/test:unittest |
+| inner_kits 新增 | //developtools/profilor/device/plugins/api:libhidebug |
+| inner_kits 新增 | //developtools/profilor/device/plugins/api:libhidebug_init |
+| inner_kits 删除 | //developtools/profilor/hidebug/interfaces/native/innerkits:libhidebug |
+| inner_kits 删除 | //developtools/profilor/hidebug/interfaces/native/innerkits:libhidebug_init |
+| inner_kits 删除 | //developtools/profilor/host/smartperf/client/client_command:smartperf_daemon |
+| test 新增 | //developtools/profilor/hidebug/test/fuzztest:fuzztest |
+| test 删除 | //developtools/profilor/host/smartperf/client/client_command/test:unittest |
 
 **drivers/hdf_core**
 
@@ -847,17 +847,17 @@
 | deps 新增 | harfbuzz |
 | deps 新增 | window_manager_lite |
 
-**foundation/barrierfree/accessibility**
+**foundation/barrierfree/accb**
 
 | 变更类型 | 条目 |
 |----------|------|
 | deps 新增 | json |
-| inner_kits 新增 | //foundation/barrierfree/accessibility/common/interface:accessibility_interface |
-| inner_kits 新增 | //foundation/barrierfree/accessibility/interfaces/innerkits/aafwk:accessibleability |
-| inner_kits 新增 | //foundation/barrierfree/accessibility/interfaces/innerkits/acfwk:accessibilityconfig |
-| inner_kits 新增 | //foundation/barrierfree/accessibility/interfaces/innerkits/asacfwk:accessibilityclient |
-| inner_kits 新增 | //foundation/barrierfree/accessibility/interfaces/innerkits/common:accessibility_common |
-| inner_kits 新增 | //foundation/barrierfree/accessibility/interfaces/kits/cj:cj_accessibility_ffi |
+| inner_kits 新增 | //foundation/barrierfree/accb/common/interface:accessibility_interface |
+| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/aafwk:accessibleability |
+| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/acfwk:accessibilityconfig |
+| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/asacfwk:accessibilityclient |
+| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/common:accessibility_common |
+| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/kits/cj:cj_accessibility_ffi |
 
 **foundation/bundlemanager/app_domain_verify**
 
@@ -1573,8 +1573,8 @@
 - //commonlibrary/utils_lite/js/builtin/simulator:ace_kit_file_simulator
 - //commonlibrary/utils_lite/js/builtin/simulator:ace_kit_kvstore_simulator
 - //commonlibrary/utils_lite:utils_lite
-- //developtools/profiler/device/plugins/api:libhidebug
-- //developtools/profiler/device/plugins/api:libhidebug_init
+- //developtools/profilor/device/plugins/api:libhidebug
+- //developtools/profilor/device/plugins/api:libhidebug_init
 - //domains/game/game_controller_framework/frameworks/native:gamecontroller_client
 - //domains/game/game_controller_framework/frameworks/native:gamecontroller_fwk_client
 - //drivers/hdf_core/adapter/uhdf2/hdi:libhdi_base
@@ -1631,12 +1631,12 @@
 - //foundation/arkui/arkui_cangjie_wrapper/ohos/base:ohos.base
 - //foundation/arkui/arkui_cangjie_wrapper:copy_sdk_arkui_cangjie_libs
 - //foundation/arkui/arkui_cangjie_wrapper:copy_sdk_arkui_cangjie_libs_kit
-- //foundation/barrierfree/accessibility/common/interface:accessibility_interface
-- //foundation/barrierfree/accessibility/interfaces/innerkits/aafwk:accessibleability
-- //foundation/barrierfree/accessibility/interfaces/innerkits/acfwk:accessibilityconfig
-- //foundation/barrierfree/accessibility/interfaces/innerkits/asacfwk:accessibilityclient
-- //foundation/barrierfree/accessibility/interfaces/innerkits/common:accessibility_common
-- //foundation/barrierfree/accessibility/interfaces/kits/cj:cj_accessibility_ffi
+- //foundation/barrierfree/accb/common/interface:accessibility_interface
+- //foundation/barrierfree/accb/interfaces/innerkits/aafwk:accessibleability
+- //foundation/barrierfree/accb/interfaces/innerkits/acfwk:accessibilityconfig
+- //foundation/barrierfree/accb/interfaces/innerkits/asacfwk:accessibilityclient
+- //foundation/barrierfree/accb/interfaces/innerkits/common:accessibility_common
+- //foundation/barrierfree/accb/interfaces/kits/cj:cj_accessibility_ffi
 - //foundation/bundlemanager/bundlemanager_cangjie_wrapper/ohos/bundle/bundle_manager:ohos.bundle.bundle_manager
 - //foundation/bundlemanager/bundlemanager_cangjie_wrapper/ohos/element_name:ohos.element_name
 - //foundation/bundlemanager/bundlemanager_cangjie_wrapper:copy_sdk_bundlemanager_cangjie_libs
@@ -1772,9 +1772,9 @@
 - //base/location/frameworks/native/locator_agent:locator_agent
 - //base/location/frameworks/native/locator_sdk:locator_sdk
 - //base/web/webview/sa:app_fwk_update_service
-- //developtools/profiler/hidebug/interfaces/native/innerkits:libhidebug
-- //developtools/profiler/hidebug/interfaces/native/innerkits:libhidebug_init
-- //developtools/profiler/host/smartperf/client/client_command:smartperf_daemon
+- //developtools/profilor/hidebug/interfaces/native/innerkits:libhidebug
+- //developtools/profilor/hidebug/interfaces/native/innerkits:libhidebug_init
+- //developtools/profilor/host/smartperf/client/client_command:smartperf_daemon
 - //drivers/hdf_core/framework/tools/hc-gen:hc_gen
 - //drivers/interface/audio/v5_0:audio_idl_headers
 - //drivers/interface/audio/v5_0:libaudio_proxy_5.0
@@ -1943,7 +1943,7 @@
 | //base/web/webview/test/unittest/nweb_hisysevent_test:unittest | web | webview |
 | //base/web/webview/test/unittest/sa_web_native_messaging_common_test:unittest | web | webview |
 | //base/web/webview/test/unittest/web_native_messaging_client_test:unittest | web | webview |
-| //developtools/profiler/hidebug/test/fuzztest:fuzztest | developtools | hiprofiler |
+| //developtools/profilor/hidebug/test/fuzztest:fuzztest | developtools | hiprofiler |
 | //domains/game/game_controller_framework/test/fuzztest:fuzztest | game | game_controller_framework |
 | //domains/game/game_controller_framework/test/unittest:unittest | game | game_controller_framework |
 | //drivers/peripheral/midi/test:midi_hdi_test | hdf | drivers_peripheral_midi |
@@ -1984,7 +1984,7 @@
 | //base/location/test/location_network:unittest | location | location |
 | //base/location/test/location_passive:unittest | location | location |
 | //base/powermgr/display_manager/state_manager/test:displaymgr_native_test | powermgr | display_manager |
-| //developtools/profiler/host/smartperf/client/client_command/test:unittest | developtools | hiprofiler |
+| //developtools/profilor/host/smartperf/client/client_command/test:unittest | developtools | hiprofiler |
 | //drivers/peripheral/camera/test/hdi/metadata_test:camera_metadata_operator_ut | hdf | drivers_interface_camera |
 | //drivers/peripheral/camera/test/hdi/sequenceable_test:camera_hdi_sequenceable_ut | hdf | drivers_interface_camera |
 | //foundation/communication/ipc/dbinder/test/fuzztest:fuzztest | communication | ipc |
@@ -2415,8 +2415,8 @@
 | OH_GamePad_RightTrigger_RegisterButtonInputMonitor | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.nok.json |
 | OH_GamePad_RightTrigger_UnregisterAxisInputMonitor | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.nok.json |
 | OH_GamePad_RightTrigger_UnregisterButtonInputMonitor | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.nok.json |
-| OH_HiDebug_ResetCrashObj | developtools | hiprofiler | 23 | developtools/profiler/hidebug/interfaces/native/kits/libhidebug.nok.json |
-| OH_HiDebug_SetCrashObj | developtools | hiprofiler | 23 | developtools/profiler/hidebug/interfaces/native/kits/libhidebug.nok.json |
+| OH_HiDebug_ResetCrashObj | developtools | hiprofiler | 23 | developtools/profilor/hidebug/interfaces/native/kits/libhidebug.nok.json |
+| OH_HiDebug_SetCrashObj | developtools | hiprofiler | 23 | developtools/profilor/hidebug/interfaces/native/kits/libhidebug.nok.json |
 | OH_HiTrace_RegisterTraceListener | hiviewdfx | hitrace | 22 | base/hiviewdfx/hitrace/interfaces/native/kits/libhitrace.nok.json |
 | OH_HiTrace_UnregisterTraceListener | hiviewdfx | hitrace | 22 | base/hiviewdfx/hitrace/interfaces/native/kits/libhitrace.nok.json |
 | OH_Input_AddKeyEventHook | multimodalinput | input | 21 | foundation/multimodalinput/input/interfaces/kits/c/ohinput.nok.json |
