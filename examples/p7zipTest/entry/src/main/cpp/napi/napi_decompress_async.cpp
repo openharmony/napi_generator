@@ -143,13 +143,13 @@ static void ExecuteDecompress(napi_env env, void *data)
 static void GenerateResultMessage(AsyncDecompressData *asyncData, std::string &message, int &errorCode)
 {
     if (asyncData->success) {
-        message = "✅ 解压成功 (" + asyncData->formatName + " 格式)";
+        message = "解压成功 (" + asyncData->formatName + " 格式)";
         errorCode = ERROR_CODE_SUCCESS;
     } else if (asyncData->archiveError.code != ArchiveErrorCode::SUCCESS) {
         message = asyncData->archiveError.GetFullMessage();
         errorCode = asyncData->archiveError.GetErrorCode();
     } else {
-        message = "❌ 解压失败: " + asyncData->error;
+        message = "解压失败: " + asyncData->error;
         errorCode = static_cast<int>(ArchiveErrorCode::DECOMPRESS_FAILED);
     }
 }

@@ -19,14 +19,7 @@ include_directories(${NATIVERENDER_ROOT_PATH}
                     ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/include/p7zip/Common)
 
 # 设置p7zip动态库路径
-set(P7ZIP_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH})
-set(P7ZIP_LIB ${P7ZIP_LIB_DIR}/lib7z.so)
-
-# 打印调试信息
-message(STATUS "=== P7zip Configuration ===")
-message(STATUS "OHOS_ARCH: ${OHOS_ARCH}")
-message(STATUS "P7ZIP_LIB_DIR: ${P7ZIP_LIB_DIR}")
-message(STATUS "P7ZIP_LIB: ${P7ZIP_LIB}")
+set(P7ZIP_LIB "${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/${OHOS_ARCH}/lib7z.so")
 
 # 源文件列表（按模块组织）
 set(COMPRESS_SOURCES
@@ -64,27 +57,17 @@ add_library(entry SHARED ${SOURCES})
 target_link_libraries(entry PUBLIC libace_napi.z.so libhilog_ndk.z.so)
 
 # 链接 p7zip 动态库
-if(EXISTS ${P7ZIP_LIB})
-    message(STATUS "✅ P7ZIP dynamic library found: ${P7ZIP_LIB}")
-    
-    # 直接链接动态库文件（使用完整路径）
-    target_link_libraries(entry PUBLIC ${P7ZIP_LIB})
-    
-    # 添加必要的系统库
-    target_link_libraries(entry PUBLIC pthread dl)
-    
-    # 确保动态库被打包到 HAP 中
-    # 将动态库复制到输出目录
-    add_custom_command(TARGET entry POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${P7ZIP_LIB}
-        $<TARGET_FILE_DIR:entry>/lib7z.so
-        COMMENT "Copying lib7z.so to output directory"
-    )
-    message(STATUS "✅ lib7z.so will be copied to output directory")
-else()
-    message(WARNING "⚠️ P7ZIP library NOT found: ${P7ZIP_LIB}")
-    message(WARNING "Building without p7zip support")
+if(NOT EXISTS "${P7ZIP_LIB}")
+    message(FATAL_ERROR "P7ZIP library NOT found: ${P7ZIP_LIB} (OHOS_ARCH=${OHOS_ARCH})")
 endif()
 
-message(STATUS "=== Build Configuration Complete ===")
+# 直接链接动态库文件（使用完整路径）
+target_link_libraries(entry PUBLIC "${P7ZIP_LIB}" pthread dl)
+
+# 将动态库复制到输出目录，确保被打包进 HAP
+add_custom_command(TARGET entry POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${P7ZIP_LIB}"
+    $<TARGET_FILE_DIR:entry>/lib7z.so
+    COMMENT "Copying lib7z.so to output directory"
+)

@@ -60,7 +60,7 @@ enum class ArchiveErrorCode {
     DIRECTORY_ACCESS_DENIED = 4102, // 目录访问被拒绝
     DIRECTORY_NOT_EMPTY = 4103,     // 目录非空
     DIRECTORY_SCAN_FAILED = 4104,   // 扫描目录失败
-    DISK_FULL = 4200,           // 磁盘空间不足 ⚠️ 重要
+    DISK_FULL = 4200,           // 磁盘空间不足 重要
     DISK_QUOTA_EXCEEDED = 4201, // 超出磁盘配额
     DISK_READ_ONLY = 4202,      // 磁盘只读
     DISK_IO_ERROR = 4203,       // 磁盘IO错误
