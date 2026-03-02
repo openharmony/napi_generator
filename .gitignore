@@ -26,3 +26,8 @@
 /src/generator/.idea/
 /src/package-lock.json
 /src/package.json
+.claude
+*.csv
+*.pdf
+autosign
+__pycache__
