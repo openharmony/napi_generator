@@ -51,10 +51,6 @@ struct MainMenu {
           // 解压功能卡片
           Column() {
             Row() {
-              Text('📦')
-                .fontSize(48)
-                .margin({ right: 20 })
-
               Column() {
                 Text('解压缩')
                   .fontSize(24)
@@ -85,10 +81,6 @@ struct MainMenu {
           // 压缩功能卡片
           Column() {
             Row() {
-              Text('🗜️')
-                .fontSize(48)
-                .margin({ right: 20 })
-
               Column() {
                 Text('压缩')
                   .fontSize(24)
@@ -125,15 +117,15 @@ struct MainMenu {
               .alignSelf(ItemAlign.Start)
 
             Column() {
-              this.FeatureItem('✅', '多格式支持', '支持主流压缩格式')
+              this.FeatureItem('√', '多格式支持', '支持主流压缩格式')
               Divider().margin({ left: 40 })
-              this.FeatureItem('✅', '大文件处理', '自动分块，内存安全')
+              this.FeatureItem('√', '大文件处理', '自动分块，内存安全')
               Divider().margin({ left: 40 })
-              this.FeatureItem('✅', '实时进度', '显示压缩/解压进度')
+              this.FeatureItem('√', '实时进度', '显示压缩/解压进度')
               Divider().margin({ left: 40 })
-              this.FeatureItem('✅', '批量操作', '支持多文件和文件夹')
+              this.FeatureItem('√', '批量操作', '支持多文件和文件夹')
               Divider().margin({ left: 40 })
-              this.FeatureItem('🆕', '完善错误处理', '磁盘空间检查、详细错误码')
+              this.FeatureItem('NEW', '完善错误处理', '磁盘空间检查、详细错误码')
             }
             .width('100%')
             .backgroundColor('#FFFFFF')

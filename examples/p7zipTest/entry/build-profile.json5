@@ -2,8 +2,8 @@
   "apiType": "stageMode",
   "buildOption": {
     "externalNativeOptions": {
-      "path": "./src/main/cpp/CMakeLists.txt",
-      "arguments": "",
+      "path": "./src/main/cpp_bootstrap/CMakeLists.txt",
+      "arguments": "-DP7ZIP_MAKE=<MAKE_EXE_PATH> -DP7ZIP_PATCH_STRICT=ON",
       "cppFlags": "",
       "abiFilters": [
         "arm64-v8a",
