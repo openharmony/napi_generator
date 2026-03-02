@@ -11,6 +11,7 @@ Usage:
 """
 
 import json
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -150,6 +151,169 @@ def print_bundle_info(info: dict, verbose: bool = True) -> None:
     print()
 
 
+def collect_nok_apis(src_root: Path, comp_path: str) -> list[dict]:
+    """在组件目录下查找 *.nok.json，解析出 API 名称与 first_introduced（api 版本）。返回 [{"name", "first_introduced", "nok_path"}, ...]。"""
+    comp_dir = src_root / comp_path
+    if not comp_dir.is_dir():
+        return []
+    apis: list[dict] = []
+    for nok_path in sorted(comp_dir.rglob("*.nok.json")):
+        try:
+            data = json.loads(nok_path.read_text(encoding="utf-8", errors="ignore"))
+        except Exception:
+            continue
+        if not isinstance(data, list):
+            continue
+        rel_nok = nok_path.relative_to(src_root).as_posix() if nok_path.is_relative_to(src_root) else nok_path.name
+        for item in data:
+            if not isinstance(item, dict):
+                continue
+            name = item.get("name")
+            ver = item.get("first_introduced")
+            if name is None:
+                continue
+            apis.append({
+                "name": str(name),
+                "first_introduced": str(ver) if ver is not None else "",
+                "nok_path": rel_nok,
+            })
+    return apis
+
+
+def _parse_build_gn_blocks(content: str) -> list[str]:
+    """从 BUILD.gn 内容中切分出顶层块（每个 target 的 {} 体）。"""
+    blocks = []
+    i = 0
+    while i < len(content):
+        m = re.search(r"\w+\s*\([^)]+\)\s*\{", content[i:])
+        if not m:
+            break
+        brace_start = i + m.end() - 1
+        depth = 1
+        j = brace_start + 1
+        while j < len(content) and depth > 0:
+            if content[j] == "{":
+                depth += 1
+            elif content[j] == "}":
+                depth -= 1
+            j += 1
+        if depth != 0:
+            i = j
+            continue
+        blocks.append(content[brace_start:j])
+        i = j
+    return blocks
+
+
+def _extract_external_deps_from_block(block: str) -> list[str]:
+    """从块内容中提取 external_deps = [ ... ] 与 external_deps += [ ... ] 里的依赖字符串。"""
+    deps = []
+    # 匹配 external_deps = [ 或 external_deps += [
+    for m in re.finditer(r"external_deps\s*(\+\s*)?=\s*\[", block):
+        start = m.end()
+        depth = 1
+        i = start
+        while i < len(block) and depth > 0:
+            if block[i] == "[":
+                depth += 1
+            elif block[i] == "]":
+                depth -= 1
+            i += 1
+        if depth != 0:
+            continue
+        span = block[start : i - 1]
+        for q in re.finditer(r'"([^"]+)"', span):
+            deps.append(q.group(1).strip())
+    return deps
+
+
+def _extract_subsystem_part_from_block(block: str) -> tuple[str, str]:
+    """从块内容中提取 subsystem_name 和 part_name（仅字面量，不含 $ 变量），未找到则返回 ("", "")。"""
+    subs = ""
+    part = ""
+    m = re.search(r'subsystem_name\s*=\s*"([^"]*)"', block)
+    if m:
+        s = m.group(1).strip()
+        if s and not s.startswith("$"):
+            subs = s
+    m = re.search(r'part_name\s*=\s*"([^"]*)"', block)
+    if m:
+        p = m.group(1).strip()
+        if p and not p.startswith("$"):
+            part = p
+    return (subs, part)
+
+
+def collect_build_gn_inner_kit_dependents(src_root: Path) -> dict[str, list[tuple[str, str, str]]]:
+    """
+    扫描 src 下 BUILD.gn，从 external_deps 中收集对 inner_kit 的引用，
+    并从同一块中读取 subsystem_name、part_name。
+    返回: dep_key -> [(subsystem_name, part_name, build_gn_rel_path), ...]
+    dep_key 为 external_deps 中的字符串，如 "i18n:preferred_language"。
+    """
+    result: dict[str, list[tuple[str, str, str]]] = {}
+    for entry in src_root.iterdir():
+        if not entry.is_dir() or entry.name.startswith(".") or entry.name in EXCLUDE_TOP:
+            continue
+        for gn_path in entry.rglob("BUILD.gn"):
+            try:
+                content = gn_path.read_text(encoding="utf-8", errors="ignore")
+            except Exception:
+                continue
+            rel_path = gn_path.relative_to(src_root).as_posix() if gn_path.is_relative_to(src_root) else gn_path.name
+            blocks = _parse_build_gn_blocks(content)
+            for block in blocks:
+                subs, part = _extract_subsystem_part_from_block(block)
+                if not subs and not part:
+                    continue
+                deps = _extract_external_deps_from_block(block)
+                for d in deps:
+                    if not d or ":" not in d:
+                        continue
+                    result.setdefault(d, []).append((subs, part, rel_path))
+    return result
+
+
+def _is_test_path(path: str) -> bool:
+    """依赖路径是否为测试路径（含 test、unittest、tests、fuzztest 等）。"""
+    path_norm = path.replace("\\", "/").strip("/").lower()
+    if path_norm.startswith("test/") or path_norm.startswith("test\\"):
+        return True
+    return "/test/" in path_norm or "/unittest/" in path_norm or "/tests/" in path_norm or "/fuzztest/" in path_norm or path_norm.rstrip("/").endswith("/test") or path_norm.rstrip("/").endswith("/unittest")
+
+
+def _same_subsystem_path(comp_path: str, build_gn_path: str) -> bool:
+    """BUILD.gn 是否在 inner_kit 所属组件的同子系统目录下（不分析自己依赖自己）。"""
+    if not comp_path or not build_gn_path:
+        return False
+    comp_parts = comp_path.replace("\\", "/").strip("/").split("/")
+    if len(comp_parts) < 2:
+        prefix = comp_parts[0] if comp_parts else ""
+    else:
+        prefix = "/".join(comp_parts[:2])
+    gn_norm = build_gn_path.replace("\\", "/").strip("/")
+    return gn_norm.startswith(prefix + "/") or gn_norm == prefix
+
+
+def _inner_kit_dep_key(ik, comp_name: str) -> str | None:
+    """
+    根据 inner_kit 和组件名生成可用于匹配 BUILD.gn external_deps 的 key。
+    inner_kit 的 name 如 "//base/global/i18n/frameworks/intl:preferred_language"，
+    external_deps 中为 "i18n:preferred_language"，返回 "i18n:preferred_language"。
+    """
+    if isinstance(ik, dict):
+        name = ik.get("name") or ""
+    else:
+        name = str(ik)
+    if ":" in name:
+        target = name.split(":")[-1].strip()
+    else:
+        target = name.strip()
+    if not comp_name or not target:
+        return None
+    return f"{comp_name}:{target}"
+
+
 def _dir_from_bundle_path(bundle_path_rel: str) -> str:
     """bundle.json 所在目录相对 src 的路径。"""
     if bundle_path_rel.endswith("/bundle.json"):
@@ -177,6 +341,7 @@ def run_scan(src_root: Path) -> tuple[list[dict], dict[str, list[dict]], dict]:
         inner_kits = info.get("inner_kits") or []
         innerkits_total += len(inner_kits)
 
+        nok_apis = collect_nok_apis(src_root, rel_dir)
         comp_row = {
             "name": comp_name,
             "subsystem": subsys,
@@ -186,6 +351,7 @@ def run_scan(src_root: Path) -> tuple[list[dict], dict[str, list[dict]], dict]:
             "deps": (info.get("deps_components") or []) + (info.get("deps_third_party") or []),
             "sub_component": info.get("sub_component") or [],
             "test": info.get("test") or [],
+            "nok_apis": nok_apis,
         }
         components.append(comp_row)
         if subsys not in subsystems:
@@ -197,6 +363,7 @@ def run_scan(src_root: Path) -> tuple[list[dict], dict[str, list[dict]], dict]:
     syscap_total = sum(len(c.get("syscap") or []) for c in components)
     deps_total = sum(len(c.get("deps") or []) for c in components)
     test_total = sum(len(c.get("test") or []) for c in components)
+    nokapi_total = sum(len(c.get("nok_apis") or []) for c in components)
     counts = {
         "subsystem_count": subsystem_count,
         "component_count": component_count,
@@ -204,6 +371,7 @@ def run_scan(src_root: Path) -> tuple[list[dict], dict[str, list[dict]], dict]:
         "syscap_total": syscap_total,
         "deps_total": deps_total,
         "test_total": test_total,
+        "nokapi_total": nokapi_total,
     }
     return components, subsystems, counts
 
@@ -222,6 +390,7 @@ def write_scan_report(
     syscap_total = counts["syscap_total"]
     deps_total = counts["deps_total"]
     test_total = counts["test_total"]
+    nokapi_total = counts.get("nokapi_total", 0)
     analysis_path_str = str(src_root.as_posix())
 
     lines = [
@@ -241,6 +410,7 @@ def write_scan_report(
         f"| syscap 数量 | {syscap_total} |",
         f"| deps 数量 | {deps_total} |",
         f"| test 数量 | {test_total} |",
+        f"| nokapi 数量 | {nokapi_total} |",
         "",
         "---",
         "",
@@ -256,6 +426,24 @@ def write_scan_report(
     for rank, (subsys_name, cnt) in enumerate(subsys_by_count, 1):
         sn = subsys_name.replace("|", "\\|")
         lines.append(f"| {rank} | {sn} | {cnt} |")
+    # 子系统排名（按 nokapi 数量 Top 50）
+    subsys_nokapi = []
+    for subsys_name, items in subsystems.items():
+        comp_paths = {x["path"] for x in items}
+        n_nokapi = sum(len(c.get("nok_apis") or []) for c in components if c.get("path") in comp_paths)
+        subsys_nokapi.append((subsys_name, n_nokapi))
+    subsys_nokapi.sort(key=lambda x: -x[1])
+    subsys_nokapi = subsys_nokapi[:50]
+    lines.extend([
+        "",
+        "## 子系统排名（按 nokapi 数量 Top 50）",
+        "",
+        "| 排名 | 子系统 | nokapi数量 |",
+        "|------|--------|------------|",
+    ])
+    for rank, (subsys_name, n_nok) in enumerate(subsys_nokapi, 1):
+        sn = subsys_name.replace("|", "\\|")
+        lines.append(f"| {rank} | {sn} | {n_nok} |")
     lines.extend([
         "",
         f"## 子系统列表（数量：{subsystem_count}）",
@@ -383,13 +571,17 @@ def write_scan_report(
             name_cell = str(s).replace("|", "\\|")
             lines.append(f"| {name_cell} | {subsys} | {comp} |")
 
-    # inner_kits 列表：名字，所属子系统，所属组件，路径
+    # 被依赖关系：根据 BUILD.gn 的 external_deps 及同块内 subsystem_name、part_name 判断
+    # dep_key (如 "i18n:preferred_language") -> [(subsystem_name, part_name, build_gn_path), ...]
+    build_gn_dependents = collect_build_gn_inner_kit_dependents(src_root)
+
+    # inner_kits 列表：名字，所属子系统，所属组件，路径，被依赖子系统，被依赖组件，依赖路径
     lines.extend([
         "",
         f"## inner_kits 列表（数量：{innerkits_total}）",
         "",
-        "| 名字 | 所属子系统 | 所属组件 | 路径 |",
-        "|------|------------|----------|------|",
+        "| 名字 | 所属子系统 | 所属组件 | 路径 | 被依赖子系统 | 被依赖组件 | 依赖路径 |",
+        "|------|------------|----------|------|--------------|------------|----------|",
     ])
     for c in sorted(components, key=lambda x: (x["subsystem"], x["name"])):
         subsys = str(c["subsystem"]).replace("|", "\\|")
@@ -399,7 +591,27 @@ def write_scan_report(
             ik_name, ik_path = inner_kit_name_and_path(ik, c["path"])
             ik_name = str(ik_name).replace("|", "\\|")
             ik_path = str(ik_path).replace("|", "\\|")
-            lines.append(f"| {ik_name} | {subsys} | {comp} | {ik_path} |")
+            dep_key = _inner_kit_dep_key(ik, c.get("name"))
+            full_ik_name = (ik.get("name") if isinstance(ik, dict) else str(ik)) or ""
+            dep_list = (
+                build_gn_dependents.get(dep_key, []) if dep_key else []
+            )
+            if not dep_list and full_ik_name:
+                dep_list = build_gn_dependents.get(full_ik_name, [])
+            # 排除测试路径和同子系统路径（不分析自己依赖自己）
+            comp_path_raw = c.get("path") or ""
+            filtered_dep = [
+                (s, p, pt) for s, p, pt in dep_list
+                if not _is_test_path(pt) and not _same_subsystem_path(comp_path_raw, pt)
+            ]
+            unique_dep = list(dict.fromkeys(filtered_dep))
+            if unique_dep:
+                dep_subs_str = ", ".join(sorted(set(s for s, _, _ in unique_dep if s))).replace("|", "\\|")
+                dep_comps_str = ", ".join(sorted(set(p for _, p, _ in unique_dep if p))).replace("|", "\\|")
+                dep_paths_str = ", ".join(sorted(set(pt for _, _, pt in unique_dep))).replace("|", "\\|")
+            else:
+                dep_subs_str = dep_comps_str = dep_paths_str = "无"
+            lines.append(f"| {ik_name} | {subsys} | {comp} | {ik_path} | {dep_subs_str} | {dep_comps_str} | {dep_paths_str} |")
 
     # deps 列表：名字，所属子系统，所属组件，路径
     lines.extend([
@@ -432,6 +644,50 @@ def write_scan_report(
         for t in c["test"] or []:
             t_name = str(t).replace("|", "\\|")
             lines.append(f"| {t_name} | {subsys} | {comp} | {comp_path} |")
+
+    # nokapi 按版本统计
+    version_count: dict[str, int] = {}
+    for c in components:
+        for api in c.get("nok_apis") or []:
+            ver = str(api.get("first_introduced") or "").strip()
+            version_count[ver] = version_count.get(ver, 0) + 1
+    # 版本排序：能转数字的按数字升序，否则按字符串；空串放最后
+    def _version_key(v: str):
+        if not v:
+            return (1, 0, "")
+        try:
+            return (0, int(v), v)
+        except ValueError:
+            return (0, float("inf"), v)
+    sorted_versions = sorted(version_count.keys(), key=_version_key)
+    lines.extend([
+        "",
+        "---",
+        "",
+        "## nokapi 按版本统计",
+        "",
+        "| api版本 | nokapi数量 |",
+        "|--------|------------|",
+    ])
+    for ver in sorted_versions:
+        cnt = version_count[ver]
+        ver_esc = (ver or "（未标注）").replace("|", "\\|")
+        lines.append(f"| {ver_esc} | {cnt} |")
+    lines.extend([
+        "",
+        f"## nokapi 列表（数量：{nokapi_total}）",
+        "",
+        "| nokapi名称 | 子系统 | 组件 | api版本 | 路径 |",
+        "|------------|--------|------|--------|------|",
+    ])
+    for c in sorted(components, key=lambda x: (x["subsystem"], x["name"])):
+        subsys = str(c["subsystem"]).replace("|", "\\|")
+        comp = str(c["name"]).replace("|", "\\|")
+        for api in c.get("nok_apis") or []:
+            api_name = str(api.get("name", "")).replace("|", "\\|")
+            api_ver = str(api.get("first_introduced", "")).replace("|", "\\|")
+            api_path = str(api.get("nok_path", "")).replace("|", "\\|")
+            lines.append(f"| {api_name} | {subsys} | {comp} | {api_ver} | {api_path} |")
 
     lines.append("")
     out_path.write_text("\n".join(lines), encoding="utf-8")
@@ -488,8 +744,8 @@ def _build_diff_report(
         "",
         "## 统计对比",
         "",
-        "| 项目 | 基准（旧） | 对比（新） | 增减 |",
-        "|------|------------|------------|------|",
+        "| 项目 | 基准（旧） | 对比（新） | 增 | 减 |",
+        "|------|------------|------------|-----|-----|",
     ]
     for key, label in [
         ("subsystem_count", "子系统数量"),
@@ -498,11 +754,14 @@ def _build_diff_report(
         ("syscap_total", "syscap 数量"),
         ("deps_total", "deps 数量"),
         ("test_total", "test 数量"),
+        ("nokapi_total", "nokapi 数量"),
     ]:
         v1, v2 = counts1.get(key, 0), counts2.get(key, 0)
-        delta = v2 - v1
-        delta_str = f"+{delta}" if delta > 0 else str(delta)
-        lines.append(f"| {label} | {v1} | {v2} | {delta_str} |")
+        inc = v2 - v1 if v2 > v1 else 0
+        dec = v1 - v2 if v1 > v2 else 0
+        inc_str = str(inc) if inc else "-"
+        dec_str = str(dec) if dec else "-"
+        lines.append(f"| {label} | {v1} | {v2} | {inc_str} | {dec_str} |")
 
     paths1 = {c["path"] for c in components1}
     paths2 = {c["path"] for c in components2}
@@ -773,6 +1032,74 @@ def _build_diff_report(
             subsys_esc = subsys.replace("|", "\\|")
             comp_esc = comp_name.replace("|", "\\|")
             lines.append(f"| {t_esc} | {subsys_esc} | {comp_esc} |")
+    else:
+        lines.append("（无）")
+
+    # 新增/删除 nokapi（表格：nokapi名称、子系统、组件、api版本、路径）
+    set_nokapi1 = set()
+    for c in components1:
+        subsys = str(c.get("subsystem") or "")
+        comp_name = str(c.get("name") or c.get("path") or "")
+        for api in c.get("nok_apis") or []:
+            name = str(api.get("name") or "")
+            if name:
+                set_nokapi1.add((name, subsys, comp_name))
+    set_nokapi2 = set()
+    for c in components2:
+        subsys = str(c.get("subsystem") or "")
+        comp_name = str(c.get("name") or c.get("path") or "")
+        for api in c.get("nok_apis") or []:
+            name = str(api.get("name") or "")
+            if name:
+                set_nokapi2.add((name, subsys, comp_name))
+    added_nokapi_set = set_nokapi2 - set_nokapi1
+    removed_nokapi_set = set_nokapi1 - set_nokapi2
+    added_nokapi_rows = []
+    for c in components2:
+        subsys = str(c.get("subsystem") or "")
+        comp_name = str(c.get("name") or c.get("path") or "")
+        for api in c.get("nok_apis") or []:
+            name = str(api.get("name") or "")
+            if name and (name, subsys, comp_name) in added_nokapi_set:
+                ver = str(api.get("first_introduced") or "")
+                path = str(api.get("nok_path") or "")
+                added_nokapi_rows.append((name, subsys, comp_name, ver, path))
+    removed_nokapi_rows = []
+    for c in components1:
+        subsys = str(c.get("subsystem") or "")
+        comp_name = str(c.get("name") or c.get("path") or "")
+        for api in c.get("nok_apis") or []:
+            name = str(api.get("name") or "")
+            if name and (name, subsys, comp_name) in removed_nokapi_set:
+                ver = str(api.get("first_introduced") or "")
+                path = str(api.get("nok_path") or "")
+                removed_nokapi_rows.append((name, subsys, comp_name, ver, path))
+    added_nokapi_rows.sort(key=lambda x: (x[0], x[1], x[2]))
+    removed_nokapi_rows.sort(key=lambda x: (x[0], x[1], x[2]))
+    lines.extend(["", f"## 新增 nokapi 列表（{len(added_nokapi_rows)}）", ""])
+    if added_nokapi_rows:
+        lines.append("| nokapi名称 | 子系统 | 组件 | api版本 | 路径 |")
+        lines.append("|------------|--------|------|--------|------|")
+        for name, subsys, comp_name, ver, path in added_nokapi_rows:
+            name_esc = name.replace("|", "\\|")
+            subsys_esc = subsys.replace("|", "\\|")
+            comp_esc = comp_name.replace("|", "\\|")
+            ver_esc = ver.replace("|", "\\|")
+            path_esc = path.replace("|", "\\|")
+            lines.append(f"| {name_esc} | {subsys_esc} | {comp_esc} | {ver_esc} | {path_esc} |")
+    else:
+        lines.append("（无）")
+    lines.extend(["", f"## 删除 nokapi 列表（{len(removed_nokapi_rows)}）", ""])
+    if removed_nokapi_rows:
+        lines.append("| nokapi名称 | 子系统 | 组件 | api版本 | 路径 |")
+        lines.append("|------------|--------|------|--------|------|")
+        for name, subsys, comp_name, ver, path in removed_nokapi_rows:
+            name_esc = name.replace("|", "\\|")
+            subsys_esc = subsys.replace("|", "\\|")
+            comp_esc = comp_name.replace("|", "\\|")
+            ver_esc = ver.replace("|", "\\|")
+            path_esc = path.replace("|", "\\|")
+            lines.append(f"| {name_esc} | {subsys_esc} | {comp_esc} | {ver_esc} | {path_esc} |")
     else:
         lines.append("（无）")
 
