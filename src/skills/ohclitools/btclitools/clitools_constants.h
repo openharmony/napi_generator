@@ -1,0 +1,290 @@
+/*
+ * Copyright (C) 2022 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef CLITOOLS_CONSTANTS_H
+#define CLITOOLS_CONSTANTS_H
+
+// Buffer size constants (needed early for inline functions)
+#define LOG_MESSAGE_BUFFER_SIZE                 512
+
+// GATT Service UUIDs (Standard Bluetooth SIG UUIDs)
+#define GATT_SERVICE_GENERIC_ACCESS             "00001800-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_GENERIC_ATTRIBUTE          "00001801-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_DEVICE_INFORMATION         "0000180A-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_BATTERY                    "0000180F-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_HEART_RATE                 "0000180D-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_HEALTH_THERMOMETER         "00001809-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_BLOOD_PRESSURE             "00001810-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_IMMEDIATE_ALERT            "00001802-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_LINK_LOSS                  "00001803-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_TX_POWER                   "00001804-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_REFERENCE_TIME_UPDATE      "00001806-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_NEXT_DST_CHANGE            "00001807-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_GLUCOSE                    "00001808-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_PHONE_ALERT_STATUS         "0000180E-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_ALERT_NOTIFICATION         "00001811-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_HUMAN_INTERFACE_DEVICE     "00001812-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_SCAN_PARAMETERS            "00001813-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_RUNNING_SPEED_AND_CADENCE  "00001814-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_AUTOMATION_IO              "00001815-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_CYCLING_SPEED_AND_CADENCE  "00001816-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_CYCLING_POWER              "00001818-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_LOCATION_AND_NAVIGATION    "00001819-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_ENVIRONMENTAL_SENSING      "0000181A-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_PULSE_OXIMETER             "00001822-0000-1000-8000-00805F9B34FB"
+#define GATT_SERVICE_CURRENT_TIME               "00001805-0000-1000-8000-00805F9B34FB"
+
+// GATT Characteristic UUIDs (Standard Bluetooth SIG UUIDs)
+#define GATT_CHAR_DEVICE_NAME                   "00002A00-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_APPEARANCE                    "00002A01-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_BATTERY_LEVEL                 "00002A19-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_HEART_RATE_MEASUREMENT        "00002A37-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_BODY_SENSOR_LOCATION          "00002A38-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_HEART_RATE_CONTROL_POINT      "00002A39-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_MANUFACTURER_NAME             "00002A29-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_MODEL_NUMBER                  "00002A24-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_SERIAL_NUMBER                 "00002A25-0000-1000-8000-00805F9B34FB"
+
+// String versions for compatibility
+#define GATT_CHAR_MANUFACTURER_NAME_STRING      "00002A29-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_MODEL_NUMBER_STRING           "00002A24-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_SERIAL_NUMBER_STRING          "00002A25-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_HARDWARE_REVISION             "00002A27-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_FIRMWARE_REVISION             "00002A26-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_SOFTWARE_REVISION             "00002A28-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_SYSTEM_ID                     "00002A23-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_IEEE_REGULATORY_CERT          "00002A2A-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_PNP_ID                        "00002A50-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_TEMPERATURE_MEASUREMENT       "00002A1C-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_TEMPERATURE_TYPE              "00002A1D-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_INTERMEDIATE_TEMPERATURE      "00002A1E-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_MEASUREMENT_INTERVAL          "00002A21-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_BLOOD_PRESSURE_MEASUREMENT    "00002A35-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_INTERMEDIATE_CUFF_PRESSURE    "00002A36-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_BLOOD_PRESSURE_FEATURE        "00002A49-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_CURRENT_TIME                  "00002A2B-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_LOCAL_TIME_INFORMATION        "00002A0F-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_REFERENCE_TIME_INFORMATION    "00002A14-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_TIME_WITH_DST                 "00002A11-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_TIME_ACCURACY                 "00002A12-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_TIME_SOURCE                   "00002A13-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_TIME_UPDATE_CONTROL_POINT     "00002A16-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_TIME_UPDATE_STATE             "00002A17-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_TEMPERATURE                   "00002A6E-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_HUMIDITY                      "00002A6F-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_PRESSURE                      "00002A6D-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_UV_INDEX                      "00002A76-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_WIND_CHILL                    "00002A79-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_HEAT_INDEX                    "00002A7A-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_DEW_POINT                     "00002A7B-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_DESCRIPTOR_VALUE_CHANGED      "00002A7D-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_AEROBIC_HEART_RATE_LOWER      "00002A7E-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_AEROBIC_THRESHOLD             "00002A7F-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_AGE                           "00002A80-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_ANAEROBIC_HEART_RATE_LOWER    "00002A81-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_ANAEROBIC_HEART_RATE_UPPER    "00002A82-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_ANAEROBIC_THRESHOLD           "00002A83-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_AEROBIC_HEART_RATE_UPPER      "00002A84-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_DATE_OF_BIRTH                 "00002A85-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_DATE_OF_THRESHOLD_ASSESSMENT  "00002A86-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_EMAIL_ADDRESS                 "00002A87-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_FAT_BURN_HEART_RATE_LOWER     "00002A88-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_FAT_BURN_HEART_RATE_UPPER     "00002A89-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_FIRST_NAME                    "00002A8A-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_FIVE_ZONE_HEART_RATE_LIMITS   "00002A8B-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_GENDER                        "00002A8C-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_HEART_RATE_MAX                "00002A8D-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_HEIGHT                        "00002A8E-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_HIP_CIRCUMFERENCE             "00002A8F-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_LAST_NAME                     "00002A90-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_MAXIMUM_RECOMMENDED_HEART_RATE "00002A91-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_RESTING_HEART_RATE            "00002A92-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_SPORT_TYPE_FOR_AEROBIC        "00002A93-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_THREE_ZONE_HEART_RATE_LIMITS  "00002A94-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_TWO_ZONE_HEART_RATE_LIMIT     "00002A95-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_VO2_MAX                       "00002A96-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_WAIST_CIRCUMFERENCE           "00002A97-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_WEIGHT                        "00002A98-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_DATABASE_CHANGE_INCREMENT     "00002A99-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_USER_INDEX                    "00002A9A-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_BODY_COMPOSITION_FEATURE      "00002A9B-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_BODY_COMPOSITION_MEASUREMENT  "00002A9C-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_WEIGHT_MEASUREMENT            "00002A9D-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_WEIGHT_SCALE_FEATURE          "00002A9E-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_USER_CONTROL_POINT            "00002A9F-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_PLX_SPOT_CHECK_MEASUREMENT    "00002A5E-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_PLX_CONTINUOUS_MEASUREMENT    "00002A5F-0000-1000-8000-00805F9B34FB"
+#define GATT_CHAR_PLX_FEATURES                  "00002A60-0000-1000-8000-00805F9B34FB"
+
+// GATT Descriptor UUIDs (Standard Bluetooth SIG UUIDs)
+#define GATT_DESC_CHARACTERISTIC_EXTENDED_PROPERTIES "00002900-0000-1000-8000-00805F9B34FB"
+#define GATT_DESC_CHARACTERISTIC_USER_DESCRIPTION    "00002901-0000-1000-8000-00805F9B34FB"
+#define GATT_DESC_CLIENT_CHARACTERISTIC_CONFIG       "00002902-0000-1000-8000-00805F9B34FB"
+#define GATT_DESC_SERVER_CHARACTERISTIC_CONFIG       "00002903-0000-1000-8000-00805F9B34FB"
+#define GATT_DESC_CHARACTERISTIC_PRESENTATION_FORMAT "00002904-0000-1000-8000-00805F9B34FB"
+
+// Shorter versions for compatibility
+#define GATT_DESC_CHARACTERISTIC_USER_DESC           "00002901-0000-1000-8000-00805F9B34FB"
+#define GATT_DESC_CHARACTERISTIC_PRESENTATION        "00002904-0000-1000-8000-00805F9B34FB"
+#define GATT_DESC_CHARACTERISTIC_AGGREGATE_FORMAT    "00002905-0000-1000-8000-00805F9B34FB"
+#define GATT_DESC_VALID_RANGE                        "00002906-0000-1000-8000-00805F9B34FB"
+#define GATT_DESC_EXTERNAL_REPORT_REFERENCE          "00002907-0000-1000-8000-00805F9B34FB"
+#define GATT_DESC_REPORT_REFERENCE                   "00002908-0000-1000-8000-00805F9B34FB"
+
+// Custom Service and Characteristic UUIDs
+#define GATT_SERVICE_CUSTOM_TEST                "12345678-1234-1234-1234-123456789ABC"
+#define GATT_CHAR_CUSTOM_READ_WRITE             "87654321-4321-4321-4321-CBA987654321"
+
+// Service Type String Constants
+#define SERVICE_TYPE_BATTERY                    "battery"
+#define SERVICE_TYPE_DEVICE_INFO                "device_info"
+#define SERVICE_TYPE_HEART_RATE                 "heart_rate"
+#define SERVICE_TYPE_CUSTOM                     "custom"
+#define SERVICE_TYPE_THERMOMETER                "thermometer"
+#define SERVICE_TYPE_BLOOD_PRESSURE             "blood_pressure"
+#define SERVICE_TYPE_CURRENT_TIME               "current_time"
+#define SERVICE_TYPE_ENVIRONMENTAL              "environmental"
+#define SERVICE_TYPE_PULSE_OXIMETER             "pulse_oximeter"
+#define SERVICE_TYPE_HEALTH                     "health"
+#define SERVICE_TYPE_ALL                        "all"
+
+// Parameter Prefix String Constants
+#define PARAM_SERVICE                           "service="
+#define PARAM_CHARACTERISTIC                    "characteristic="
+#define PARAM_DESCRIPTOR                        "descriptor="
+#define PARAM_VALUE                             "value="
+#define PARAM_TYPE                              "type="
+#define PARAM_WRITE_TYPE                        "write_type="
+#define PARAM_OPERATION                         "operation="
+#define PARAM_ALL                               "all="
+#define PARAM_FORCE                             "force="
+#define PARAM_MTU                               "mtu="
+#define PARAM_METHOD                            "method="
+#define PARAM_NAME                              "name="
+#define PARAM_MAC                               "mac="
+#define PARAM_PIN                               "pin="
+#define PARAM_MODE                              "mode="
+#define PARAM_DURATION                          "duration="
+#define PARAM_TRANSPORT                         "transport="
+#define PARAM_PROFILE_ID                        "profileid="
+#define PARAM_ACCEPT                            "accept="
+#define PARAM_PASSKEY                           "passkey="
+#define PARAM_DEVICE_TYPE                       "deviceType="
+#define PARAM_CONN_TYPE                         "connType="
+#define PARAM_BUSINESS_TYPE                     "businessType="
+#define PARAM_TYPE_VALUE                        "typeValue="
+#define PARAM_CONTROL_OBJECT                    "controlObject="
+
+// Method type macros
+#define METHOD_DIRECT                           "direct"
+#define METHOD_GATT                             "gatt"
+
+// Value type macros
+#define VALUE_TYPE_HEX                          "hex"
+#define VALUE_TYPE_STRING                       "string"
+
+// Write type macros
+#define WRITE_TYPE_DEFAULT                      "default"
+#define WRITE_TYPE_NO_RESPONSE                  "no_response"
+#define WRITE_TYPE_SIGNED                       "signed"
+
+// Numeric constants
+#define UUID_STANDARD_LENGTH                    36
+#define UUID_DASH_POS_1                         8
+#define UUID_DASH_POS_2                         13
+#define UUID_DASH_POS_3                         18
+#define UUID_DASH_POS_4                         23
+#define CCCD_DATA_LENGTH                        2
+#define PRESENTATION_FORMAT_MIN_LENGTH          7
+#define HEX_CHAR_PAIR_LENGTH                    2
+#define CCCD_VALUE_DISABLED                     0x0000
+#define CCCD_VALUE_NOTIFICATIONS                0x0001
+#define CCCD_VALUE_INDICATIONS                  0x0002
+#define CCCD_VALUE_BOTH                         0x0003
+#define ASCII_PRINTABLE_MIN                     32
+#define ASCII_PRINTABLE_MAX                     126
+#define DEFAULT_SCAN_DURATION                   120
+
+// Default values for GATT services
+#define DEFAULT_BATTERY_LEVEL                   85
+#define DEFAULT_HEART_RATE_BPM                  72
+#define DEFAULT_SENSOR_LOCATION_CHEST           1
+#define DEFAULT_TEMPERATURE_TYPE_BODY           1
+
+// Medical measurement default values
+#define DEFAULT_SYSTOLIC_PRESSURE               120
+#define DEFAULT_DIASTOLIC_PRESSURE              80
+#define DEFAULT_MEAN_ARTERIAL_PRESSURE          93
+#define DEFAULT_PULSE_RATE                      72
+#define DEFAULT_USER_ID                         1
+#define DEFAULT_MEASUREMENT_STATUS              0x0000
+#define DEFAULT_TEMPERATURE_CELSIUS             36.5f
+#define DEFAULT_HUMIDITY_PERCENTAGE             45
+#define DEFAULT_ATMOSPHERIC_PRESSURE            1013
+#define DEFAULT_UV_INDEX                        5
+#define DEFAULT_WIND_CHILL                      20
+#define DEFAULT_HEAT_INDEX                      25
+#define DEFAULT_DEW_POINT                       15
+#define DEFAULT_SPO2_PERCENTAGE                 98
+#define DEFAULT_PULSE_AMPLITUDE_INDEX          1.5f
+
+// Buffer and array size constants
+#define HEX_BYTE_BUFFER_SIZE                    4
+#define DEVICE_NAME_BUFFER_SIZE                 256
+#define MAC_ADDRESS_BUFFER_SIZE                 18
+#define UUID_STRING_BUFFER_SIZE                 37
+#define HEART_RATE_DATA_SIZE                    4
+#define TEMPERATURE_DATA_SIZE                   5
+#define BLOOD_PRESSURE_DATA_SIZE                7
+#define CURRENT_TIME_DATA_SIZE                  10
+#define LOCAL_TIME_INFO_SIZE                    2
+#define ENVIRONMENTAL_TEMP_DATA_SIZE            2
+#define PULSE_OXIMETER_DATA_SIZE                5
+
+// Common numeric constants
+#define TOTAL_HEALTH_SERVICES_COUNT             9
+#define CHAR_DIGIT_MIN                          '0'
+#define CHAR_DIGIT_MAX                          '9'
+#define CHAR_HEX_UPPER_MIN                      'A'
+#define CHAR_HEX_UPPER_MAX                      'F'
+#define CHAR_HEX_LOWER_MIN                      'a'
+#define CHAR_HEX_LOWER_MAX                      'f'
+#define BITS_PER_BYTE                           8
+#define HEX_BASE                                16
+#define BYTE_SHIFT_BITS                         8
+
+// GATT Presentation Format descriptor indices
+#define PRESENTATION_FORMAT_IDX                 0
+#define PRESENTATION_EXPONENT_IDX               1
+#define PRESENTATION_UNIT_LSB_IDX               2
+#define PRESENTATION_UNIT_MSB_IDX               3
+#define PRESENTATION_NAMESPACE_IDX              4
+#define PRESENTATION_DESCRIPTION_LSB_IDX        5
+#define PRESENTATION_DESCRIPTION_MSB_IDX        6
+
+// CCCD data indices
+#define CCCD_LSB_IDX                            0
+#define CCCD_MSB_IDX                            1
+
+// Time data constants
+#define TIME_DATA_SECONDS_OFFSET                0x00
+#define TIME_DATA_DAY_OF_WEEK                   0x01
+#define TIME_DATA_FRACTIONS_256                 0x00
+
+// Service count constants
+#define TOTAL_AVAILABLE_SERVICES                9
+#define HEALTH_SERVICES_COUNT                   5
+
+#endif // CLITOOLS_CONSTANTS_H
