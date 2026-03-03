@@ -12,11 +12,32 @@
 - `cmake/p7zip/scripts/`：下载、打补丁、编译三方库脚本
 - `ets/`：UI 页面与 ArkTS 侧封装
 
-构建关键链路：
+构建关键链路（CMake 调用流程）：
 
-1. `entry/build-profile.json5` 指向 `cpp_bootstrap/CMakeLists.txt`
-2. `cpp_bootstrap` 调用预构建脚本生成 `entry/libs/<ABI>/lib7z.so`
-3. `cpp/CMakeLists.txt` 链接 `lib7z.so` 编译 `libentry.so`
+1. **入口配置（DevEco -> CMake）**  
+   `entry/build-profile.json5` 的 `externalNativeOptions.path` 指向 `entry/src/main/cpp_bootstrap/CMakeLists.txt`，Native 构建从 bootstrap 工程启动。
+
+2. **configure 阶段：先执行预构建脚本**  
+   `cpp_bootstrap/CMakeLists.txt` 在 `include(prebuild_lib7z.cmake)` 时立即进入脚本流程：
+   - 读取并校验关键参数（如 `OHOS_ARCH`、`OHOS_SDK`、`P7ZIP_MAKE`、`P7ZIP_MAKE_HINTS`）
+   - 计算输出目标：`entry/libs/<ABI>/lib7z.so`
+   - 当目标已存在且 `P7ZIP_REBUILD_IF_EXISTS=OFF` 时直接跳过，避免重复重建
+
+3. **预构建脚本内部调用链（script mode）**  
+   `prebuild_lib7z.cmake` 内部通过 `execute_process(... -P xxx.cmake)` 按顺序调用：
+   - `apply_patches.cmake`：对解压后的上游 p7zip 源码应用 `patches/000*.patch`
+   - `build_one_abi.cmake`：按当前 ABI 选择 target triple，调用 `makefile.gcc` 编译 `7z.so`，并复制为 `entry/libs/<ABI>/lib7z.so`
+   - `header_manifest.cmake`：维护需要同步到 `entry/libs/include/p7zip` 的头文件清单（用于自动同步和校验）
+   其中公共日志函数来自 `p7zip_log.cmake`。
+
+4. **configure 阶段继续：配置业务 Native 目标**  
+   预构建返回后，`cpp_bootstrap/CMakeLists.txt` 再 `add_subdirectory(../cpp)`，进入 `entry/src/main/cpp/CMakeLists.txt` 配置 `entry` 目标（`libentry.so`）。
+
+5. **build 阶段：兜底规则与依赖顺序**  
+   `cpp_bootstrap/CMakeLists.txt` 使用 `add_custom_command(OUTPUT lib7z.so)` + `add_custom_target(p7zip_prebuild_lib7z)` 注册兜底规则；并通过 `add_dependencies(entry p7zip_prebuild_lib7z)` 确保 `entry` 构建前 `lib7z.so` 可用。
+
+6. **最终链接关系**  
+   `cpp/CMakeLists.txt` 中 `entry` 目标直接链接 `entry/libs/<ABI>/lib7z.so`；若缺失会触发 fatal error，避免生成不可运行的 `libentry.so`。
 
 ## 2. 新增压缩/解压能力
 
@@ -58,13 +79,9 @@ int errorNumber = static_cast<int>(code);
 2. 重新构建并观察补丁应用结果
 3. 修复或重做 `000*.patch`
 4. 在三个 ABI 上完成回归验证
+5. 若头文件集合发生变化，同步更新 `entry/src/main/cmake/p7zip/scripts/header_manifest.cmake`
 
-注意：
-
-- 优先通过 patch 文件维护变更，不建议在下载源码上做临时手改
-- 脚本参数修改后建议 clean + build，避免旧缓存影响
-
-## 6. 调试建议
+## 5. 调试建议
 
 常见问题与定位路径：
 
