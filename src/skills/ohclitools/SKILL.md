@@ -1,87 +1,98 @@
 # ohclitools 技能说明
 
-本技能用于将 **clitools** 目录集成到工程编译路径中，并在对应 BUILD.gn 中增加编译对象，最后进行编译验证。
+本技能用于将**用户指定的源目录**（如 btclitools）拷贝到**目标 test 目录**，从源目录的 BUILD.gn 自动识别可编译目标并加入 test 的 BUILD.gn，执行编译、验证，并可选择将产物推送到设备并运行。
 
 ---
 
-## 一、将 clitools 拷贝到编译路径
+## 一、技能能力
 
-1. **源路径**：`src/.claude/skills/ohclitools/clitools/`  
-   - 包含：`BUILD.gn`、`*.cpp`、`*.h`、`README.md` 等。
+| 能力 | 说明 |
+|------|------|
+| **拷贝部署** | 将源目录（如 `btclitools`）完整拷贝到 `test_dir/<源目录名>`，并在 test 目录的 BUILD.gn 的 group deps 中增加 `"<源目录名>:<目标名>"`（目标从源 BUILD.gn 解析，可多个）。 |
+| **编译** | 从源 BUILD.gn 解析可编译目标（executable/ohos_executable/shared_library/static_library），以**仅目标名**（如 `btcommand`）传给 `build.sh --build-target`，多个目标用逗号分隔。 |
+| **验证** | 在 `out/<product>` 下按目标名查找产物（strip 或 exe.unstripped），检查是否存在。 |
+| **推送到设备并运行** | 使用 `OHOS_SDK_PATH` 下的 hdc：将首个可执行产物推送到设备 `/tmp/<目标名>`，`chmod +x` 后执行。需设备已连接且环境变量已配置。 |
 
-2. **目标路径**：按子系统/模块放到对应 **test 目录下**，统一使用子目录名 `clitools`。  
-   - 示例（蓝牙）：`src/foundation/communication/bluetooth/test/clitools/`  
-   - 通用形式：`<子系统或模块根>/<模块名>/test/clitools/`
-
-3. **操作示例**（在仓库根目录执行）：
-   ```bash
-   # 以蓝牙为例
-   TARGET_TEST_DIR="src/foundation/communication/bluetooth/test"
-   mkdir -p "$TARGET_TEST_DIR/clitools"
-   cp -r src/.claude/skills/ohclitools/clitools/* "$TARGET_TEST_DIR/clitools/"
-   ```
-   - 拷贝后目标目录中应包含：`BUILD.gn`、`clitools.cpp`、`common.cpp`、`mischandle.cpp`、`common_dump.cpp`、`common_callback.cpp` 以及对应头文件等。
-
-4. **注意**：  
-   - 若目标 test 下已有 `clitools` 目录，可按需覆盖或先备份。  
-   - 当前 `clitools/BUILD.gn` 内使用变量 `BLUETOOTH_TOOLS_DIR = "$SUBSYSTEM_DIR/bluetooth/test/clitools"`，即约定该 BUILD.gn 所在目录即为源码目录；拷贝到上述路径后无需改路径即可参与编译。
+**约定**：
+- 源目录与 test 目录均由用户通过参数指定（或使用脚本内默认值）。
+- 编译目标不写死：从源目录的 `BUILD.gn` 中正则匹配 `executable("x")`、`ohos_executable("x")` 等得到目标名列表。
 
 ---
 
-## 二、在对应 BUILD.gn 中增加 clitools 编译对象
+## 二、对应脚本
 
-1. **需要修改的 BUILD.gn**：**test 目录下的 BUILD.gn**（即 clitools 的上一级）。  
-   - 示例：`src/foundation/communication/bluetooth/test/BUILD.gn`。
+- **脚本路径**：`src/.claude/skills/ohclitools/ohclitool.py`
+- **运行位置**：在工程 **src 目录**下执行（即 `build.sh` 所在目录）。
 
-2. **修改方式**：在已有的 `group`（如 `unit_test`）的 `deps` 中增加对 clitools 中目标的依赖。  
-   - 若 clitools 的 BUILD.gn 中目标名为 `btcommand`，则增加：`"clitools:btcommand"`。  
-   - 若为其他可执行或静态库目标，将 `clitools:<目标名>` 加入 `deps` 即可。
+### 命令与参数
 
-3. **示例**（在 `group("unit_test")` 的 `deps` 中增加一行）：
-   ```gn
-   group("unit_test") {
-       testonly = true
-       deps = [
-           "unittest/napi:unittest",
-           "clitools:btcommand",   # 增加：编译 clitools 下的可执行/目标
-       ]
-   }
-   ```
-   - 这样在执行对 `unit_test` 或该 test 目录的编译时，会一并编译 clitools 中的目标。
+| 命令 | 说明 | 主要参数 |
+|------|------|----------|
+| `deploy` | 拷贝源目录到 test 并修改 BUILD.gn | `--source-dir`、`--test-dir` |
+| `build` | 编译（--build-target 仅传目标名，多目标逗号分隔） | `--source-dir`、`--test-dir`、`--product-name` |
+| `verify` | 检查产物是否存在；加 `--push-run` 时推送到设备并运行 | `--source-dir`、`--product-name`、`--push-run` |
+| `all` | 顺序执行 deploy → build → verify（可选 `--push-run`） | 同上 |
+| `help` | 打印用法与示例 | - |
 
-4. **若 test 下没有 group**：  
-   - 可新建一个 `group`，`deps = [ "clitools:<目标名>" ]`，或在该目录的其它已有目标中增加对 `clitools:<目标名>` 的依赖，使 clitools 纳入同一套编译流程。
+### 参数说明
 
----
+- **--source-dir PATH**：源目录（如 btclitools），相对 src 或绝对路径。默认：`.claude/skills/ohclitools/btclitools`
+- **--test-dir PATH**：目标 test 目录，相对 src 或绝对路径。默认：`foundation/communication/bluetooth/test`
+- **--product-name NAME**：产品名，默认：`rk3568`
+- **--push-run**：仅在 `verify`/`all` 时有效；验证后使用 hdc 推送到设备 `/tmp/<目标名>` 并执行
 
-## 三、编译验证
+### 脚本调用示例
 
-1. **在工程根目录执行**（根据实际使用的构建命令调整）：
-   ```bash
-   # 仅编译 bluetooth test（含 clitools）
-   ./build.sh --product-name <产品名> --ccache foundation/communication/bluetooth/test:unit_test
+```bash
+# 在 src 目录下执行
+cd /path/to/ohos/src
 
-   # 或编译整个 bluetooth 子系统
-   ./build.sh --product-name <产品名> --ccache foundation/communication/bluetooth
-   ```
-   - 将 `<产品名>` 替换为实际产品（如 `rk3568`、`hi3516dv300` 等）。
+# 一键：拷贝 + 编译 + 验证（不推设备）
+python3 .claude/skills/ohclitools/ohclitool.py all \
+  --source-dir .claude/skills/ohclitools/btclitools \
+  --test-dir foundation/communication/bluetooth/test \
+  --product-name rk3568
 
-2. **验证结果**：  
-   - 无编译错误、链接错误，且生成预期产物（如 `btcommand` 可执行文件在 out 目录对应路径下）。  
-   - 若有单元测试或脚本可运行该可执行文件，可再做了运行验证。
-
-3. **常见问题**：  
-   - 若报头文件或依赖找不到：检查 clitools 的 BUILD.gn 中 `include_dirs`、`deps`、`external_deps` 是否与该工程路径一致。  
-   - 若报路径错误：确认拷贝后的路径与 BUILD.gn 中 `BLUETOOTH_TOOLS_DIR`（或等价变量）一致，且该 BUILD.gn 位于 `test/clitools/BUILD.gn`。
+# 仅推送到设备并运行（需已编译过且设置 OHOS_SDK_PATH）
+python3 .claude/skills/ohclitools/ohclitool.py verify \
+  --source-dir .claude/skills/ohclitools/btclitools \
+  --product-name rk3568 \
+  --push-run
+```
 
 ---
 
-## 四、流程小结
+## 三、对应提示词
+
+用户在与 AI 协作时，可使用下列提示词触发本技能（由 AI 调用上述脚本完成）：
+
+1. **拷贝并接入**
+   - 「使用技能将 @btclitools 拷贝到 @test 目录」
+   - 「把 xx 目录拷贝到 yy/test 下并改 BUILD.gn」
+
+2. **拷贝 + 编译 + 验证**
+   - 「使用技能将 @btclitools 拷贝到 @test 目录，然后进行编译和验证」
+   - 「用 ohclitools 技能部署 btclitools 到 bluetooth test 并编译验证」
+
+3. **推送到设备并运行**
+   - 「使用技能将编译生成的 btcommand 发送到设备上并验证运行」
+   - 「用 ohclitools 把产物推到设备并运行」
+
+4. **仅编译 / 仅验证**
+   - 「用 ohclitools 只编译 btclitools」
+   - 「用 ohclitools 验证 btcommand 产物是否存在」
+
+**提示词要点**：指明「源目录」「test 目录」时可用 @ 引用；需要推设备时说明「发送到设备」「验证运行」或「push-run」。
+
+---
+
+## 四、流程与路径约定（参考）
 
 | 步骤 | 操作 |
 |------|------|
-| 1 | 将 `src/.claude/skills/ohclitools/clitools/` 下全部内容拷贝到目标 `<test_dir>/clitools/`（如 `bluetooth/test/clitools/`） |
-| 2 | 在 `<test_dir>/BUILD.gn` 的 group 或相应目标的 `deps` 中增加 `"clitools:<目标名>"`（如 `"clitools:btcommand"`） |
-| 3 | 在仓库根目录执行 build 命令，指定该 test 或对应子系统，完成编译验证 |
+| 1 | 将 `--source-dir` 指向的目录拷贝到 `test_dir/<source_dir名>`（如 `test/btclitools`） |
+| 2 | 解析源目录下 `BUILD.gn` 中的 executable/ohos_executable 等，得到目标名列表；在 `test_dir/BUILD.gn` 的 group deps 中增加 `"<源目录名>:<目标名>"` |
+| 3 | 执行 `build.sh --build-target <目标名1>,<目标名2>,... --product-name <产品名>`（仅目标名，无路径） |
+| 4 | 在 `out/<product>` 及 `exe.unstripped` 下按目标名查找可执行文件；若带 `--push-run`，则用 hdc 推送到设备 `/tmp/<目标名>` 并执行 |
 
-按上述步骤即可在任意目标 test 目录下接入 clitools 并完成编译验证。
+若目标 test 下已有同名子目录或 BUILD.gn 中已有对应 dep，脚本会覆盖拷贝并跳过重复添加依赖。
