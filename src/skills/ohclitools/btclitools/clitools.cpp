@@ -1896,3 +1896,801 @@ static void HandleGattWriteCharactValue(int argc, const char* argv[])
  *   - Controls notifications/indications
  *   - Values: 0x0000 (disabled), 0x0001 (notifications), 0x0002 (indications)
  *
+ * Characteristic User Description (0x2901):
+ *   - Human-readable description of characteristic
+ *   - Usually a UTF-8 string
+ *
+ * Characteristic Presentation Format (0x2904):
+ *   - Describes how to interpret characteristic value
+ *   - Contains format, exponent, unit, namespace, description
+ *
+ * Characteristic Aggregate Format (0x2905):
+ *   - Groups multiple characteristics
+ *   - Contains list of characteristic handles
+ *
+ * @descriptor_hierarchy
+ * Service (e.g., Battery Service 0x180F)
+ *   └── Characteristic (e.g., Battery Level 0x2A19)
+ *       ├── Descriptor (e.g., CCCD 0x2902)
+ *       ├── Descriptor (e.g., User Description 0x2901)
+ *       └── Descriptor (e.g., Presentation Format 0x2904)
+ *
+ * @output_format
+ * The function displays descriptor data in multiple formats:
+ * - Current cached value (if available)
+ * - Hexadecimal format: "01 00" (for CCCD notifications enabled)
+ * - String format: "Battery Level" (for User Description)
+ * - Data length information
+ * - Descriptor interpretation (for known descriptor types)
+ *
+ * @prerequisites
+ * - Bluetooth must be enabled
+ * - GATT client must be connected using 'gattconn' command
+ * - Target descriptor must support read operations
+ * - Service and characteristic must exist and be discovered
+ *
+ * @notes
+ * - Read operation is asynchronous
+ * - Result will be received in GATT callback (OnDescriptorReadResult)
+ * - Services are automatically discovered if not already done
+ * - Descriptor properties are validated before reading
+ * - Shows both cached value and initiates fresh read
+ * - Some descriptors may be write-only or not readable
+ *
+ * @error_handling
+ * - Service not found: Lists available services
+ * - Characteristic not found: Lists available characteristics in service
+ * - Descriptor not found: Lists available descriptors in characteristic
+ * - Read permission denied: Warns but attempts read anyway
+ * - Connection issues: Provides detailed error codes
+ *
+ * @see_also
+ * - gattwritedes: Write descriptor values
+ * - gattreadcv: Read characteristic values
+ * - gattconn: Connect to GATT device
+ * - gattgetserv: List available services
+ */
+static void HandleGattReadDescripValue(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+
+    if (ShouldReturnVoid(g_gattClient == nullptr,
+        "GATT client not initialized. Use 'gattconn' command first.")) {
+        return;
+    }
+
+    std::string serviceUuid;
+    std::string characteristicUuid;
+    std::string descriptorUuid;
+
+    AssertReturnWithFunction(!GeStrValue(argc, argv, PARAM_SERVICE, serviceUuid) ||
+        !GeStrValue(argc, argv, PARAM_CHARACTERISTIC, characteristicUuid) ||
+        !GeStrValue(argc, argv, PARAM_DESCRIPTOR, descriptorUuid), [&]() {
+        PrintGattReadDescriptorUsage();
+    });
+
+    Logd("Reading descriptor: service=%s, characteristic=%s, descriptor=%s",
+         serviceUuid.c_str(), characteristicUuid.c_str(), descriptorUuid.c_str());
+
+    // Find the specified service (with automatic service discovery)
+    GattService* targetService = GetServiceByUuid(serviceUuid);
+    if (AssertAndDumpServiceNotFoundWithDiscovery(targetService, serviceUuid)) {
+        return;
+    }
+
+    // Find the specified characteristic
+    UUID cUuid = UUID::FromString(characteristicUuid);
+    GattCharacteristic* targetCharacteristic = targetService->GetCharacteristic(cUuid);
+    if (AssertAndDumpCharacteristicNotFound(targetCharacteristic, characteristicUuid, targetService, serviceUuid)) {
+        return;
+    }
+
+    // Find the specified descriptor
+    UUID dUuid = UUID::FromString(descriptorUuid);
+    GattDescriptor* targetDescriptor = targetCharacteristic->GetDescriptor(dUuid);
+    if (AssertAndDumpDescriptorNotFound(targetDescriptor, descriptorUuid, targetCharacteristic, characteristicUuid)) {
+        return;
+    }
+
+    Logd("Found descriptor: %s", descriptorUuid.c_str());
+
+    // Check if the descriptor supports read operation
+    CheckReadPermission(targetDescriptor, "Descriptor");
+
+    // Display current value if available
+    DumpDescriptorValue(targetDescriptor);
+
+    // Perform the read operation
+    Logd("Sending read request...");
+    int result = g_gattClient->ReadDescriptor(*targetDescriptor);
+    if (result == BT_NO_ERROR) {
+        Logd("GATT ReadDescriptor request sent successfully");
+        Logd("Result will be received in GATT callback (OnDescriptorReadResult)");
+    } else {
+        Logd("Failed to read descriptor, error code: %d", result);
+
+        // Provide error code interpretation
+        PrintBluetoothErrorCode(result, "GATT read descriptor");
+    }
+}
+
+/**
+ * @brief Write value to a GATT descriptor on a remote BLE device
+ *
+ * This function writes data to a specified GATT descriptor. It supports
+ * both hexadecimal and string data formats. Descriptors are commonly used
+ * to configure characteristics (e.g., enable/disable notifications).
+ *
+ * @param argc Number of command line arguments
+ * @param argv Array of command line arguments
+ *
+ * @usage
+ * gattwritedes service=service_uuid characteristic=characteristic_uuid descriptor=descriptor_uuid
+ *            value=data [type=hex|string]
+ *
+ * @parameters
+ * - service: UUID of the GATT service (required)
+ * - characteristic: UUID of the GATT characteristic (required)
+ * - descriptor: UUID of the GATT descriptor (required)
+ * - value: Data to write (required)
+ * - type: Data format - VALUE_TYPE_HEX or VALUE_TYPE_STRING (optional, default: VALUE_TYPE_HEX)
+ *
+ * @examples
+ * // Enable notifications on Battery Level characteristic (CCCD = 0x0001)
+ * gattwritedes service=0000180F-0000-1000-8000-00805F9B34FB characteristic=00002A19-0000-1000-8000-00805F9B34FB
+ *            descriptor=00002902-0000-1000-8000-00805F9B34FB value=0100 type=hex
+ *
+ * // Enable indications on Heart Rate Measurement (CCCD = 0x0002)
+ * gattwritedes service=0000180D-0000-1000-8000-00805F9B34FB characteristic=00002A37-0000-1000-8000-00805F9B34FB
+ *            descriptor=00002902-0000-1000-8000-00805F9B34FB value=0200 type=hex
+ *
+ * // Disable notifications/indications (CCCD = 0x0000)
+ * gattwritedes service=0000180F-0000-1000-8000-00805F9B34FB characteristic=00002A19-0000-1000-8000-00805F9B34FB
+ *            descriptor=00002902-0000-1000-8000-00805F9B34FB value=0000 type=hex
+ *
+ * // Write User Description string
+ * gattwritedes service=0000180D-0000-1000-8000-00805F9B34FB characteristic=00002A37-0000-1000-8000-00805F9B34FB
+ *            descriptor=00002901-0000-1000-8000-00805F9B34FB value="Heart Rate Sensor" type=string
+ *
+ * // Using predefined UUID macros
+ * gattwritedes service=GATT_SERVICE_BATTERY characteristic=GATT_CHAR_BATTERY_LEVEL
+ *            descriptor=GATT_DESC_CLIENT_CHARACTERISTIC_CONFIG value=0100 type=hex
+ * gattwritedes service=GATT_SERVICE_HEART_RATE characteristic=GATT_CHAR_HEART_RATE_MEASUREMENT
+ *            descriptor=GATT_DESC_CHARACTERISTIC_USER_DESC value="HR Monitor" type=string
+ *
+ * @common_descriptor_operations
+ * Client Characteristic Configuration (CCCD - 0x2902):
+ *   - Disable: value=0000 (notifications and indications off)
+ *   - Enable Notifications: value=0100 (notifications on)
+ *   - Enable Indications: value=0200 (indications on)
+ *   - Enable Both: value=0300 (both notifications and indications on)
+ *
+ * Characteristic User Description (0x2901):
+ *   - Write human-readable description string
+ *   - Example: value="Temperature Sensor" type=string
+ *
+ * Characteristic Presentation Format (0x2904):
+ *   - Write 7-byte format descriptor
+ *   - Format: [Format][Exponent][Unit_LSB][Unit_MSB][Namespace][Description_LSB][Description_MSB]
+ *   - Example: value=04002DAD0100 type=hex (uint8, no exponent, percentage unit)
+ *
+ * @cccd_values
+ * CCCD (Client Characteristic Configuration) common values:
+ * - 0x0000: Notifications and Indications disabled
+ * - 0x0001: Notifications enabled
+ * - 0x0002: Indications enabled
+ * - 0x0003: Both Notifications and Indications enabled
+ *
+ * @data_formats
+ * - hex: Hexadecimal string format (e.g., "0100", "48656C6C6F")
+ *   - Must have even number of characters
+ *   - Each pair represents one byte in hex format
+ *   - Little-endian for multi-byte values (CCCD: 0x0001 = "0100")
+ * - string: Plain text string format (e.g., "Hello World")
+ *   - Converted to UTF-8 bytes automatically
+ *   - Suitable for User Description descriptors
+ *
+ * @prerequisites
+ * - Bluetooth must be enabled
+ * - GATT client must be connected using 'gattconn' command
+ * - Target descriptor must support write operations
+ * - Service and characteristic must exist and be discovered
+ *
+ * @notes
+ * - Write operation is asynchronous
+ * - Result will be received in GATT callback (OnDescriptorWriteResult)
+ * - Services are automatically discovered if not already done
+ * - Descriptor permissions are validated before writing
+ * - CCCD writes are the most common descriptor write operations
+ * - Some descriptors may be read-only
+ *
+ * @error_handling
+ * - Service not found: Lists available services
+ * - Characteristic not found: Lists available characteristics in service
+ * - Descriptor not found: Lists available descriptors in characteristic
+ * - Write permission denied: Warns but attempts write anyway
+ * - Invalid data format: Provides format requirements
+ * - Connection issues: Provides detailed error codes
+ *
+ * @see_also
+ * - gattreaddes: Read descriptor values
+ * - gattwritecv: Write characteristic values
+ * - gattconn: Connect to GATT device
+ * - gattgetserv: List available services
+ */
+static void HandleGattWriteDescripValue(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+
+    if (ShouldReturnVoid(g_gattClient == nullptr,
+        "GATT client not initialized. Use 'gattconn' command first.")) {
+        return;
+    }
+
+    std::string serviceUuid;
+    std::string characteristicUuid;
+    std::string descriptorUuid;
+    std::string value;
+
+    AssertReturnWithFunction(!GeStrValue(argc, argv, PARAM_SERVICE, serviceUuid) ||
+        !GeStrValue(argc, argv, PARAM_CHARACTERISTIC, characteristicUuid) ||
+        !GeStrValue(argc, argv, PARAM_DESCRIPTOR, descriptorUuid) ||
+        !GeStrValue(argc, argv, PARAM_VALUE, value), [&]() {
+        PrintGattWriteDescriptorUsage();
+    });
+
+    // Get optional parameters
+    std::string valueType;
+    if (!GeStrValue(argc, argv, PARAM_TYPE, valueType)) {
+        valueType = VALUE_TYPE_HEX; // Default to hex
+    }
+
+    Logd("Writing descriptor: service=%s, characteristic=%s, descriptor=%s, value=%s, type=%s",
+         serviceUuid.c_str(), characteristicUuid.c_str(), descriptorUuid.c_str(), value.c_str(), valueType.c_str());
+
+    // Find the specified service (with automatic service discovery)
+    GattService* targetService = GetServiceByUuid(serviceUuid);
+    if (AssertAndDumpServiceNotFoundWithDiscovery(targetService, serviceUuid)) {
+        return;
+    }
+
+    // Find the specified characteristic
+    UUID cUuid = UUID::FromString(characteristicUuid);
+    GattCharacteristic* targetCharacteristic = targetService->GetCharacteristic(cUuid);
+    if (AssertAndDumpCharacteristicNotFound(targetCharacteristic, characteristicUuid, targetService, serviceUuid)) {
+        return;
+    }
+
+    // Find the specified descriptor
+    UUID dUuid = UUID::FromString(descriptorUuid);
+    GattDescriptor* targetDescriptor = targetCharacteristic->GetDescriptor(dUuid);
+    if (AssertAndDumpDescriptorNotFound(targetDescriptor, descriptorUuid, targetCharacteristic, characteristicUuid)) {
+        return;
+    }
+
+    Logd("Found descriptor: %s", descriptorUuid.c_str());
+
+    // Check if the descriptor supports write operation
+    CheckWritePermission(targetDescriptor, "Descriptor");
+
+    // Convert value based on type
+    std::vector<uint8_t> data;
+
+    if (!OHOS::Bluetooth::ConvertDescriptorValueByType(value, valueType, data, dUuid)) {
+        return;
+    }
+
+    if (data.empty()) {
+        Logd("Error: No data to write");
+        return;
+    }
+
+    // Set the value in the descriptor
+    targetDescriptor->SetValue(data.data(), data.size());
+
+    // Perform the write operation
+    GattWriteDescriptor(targetDescriptor, dUuid);
+}
+
+static void HandleGattGetRssi(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+    if (g_gattClient != nullptr) {
+        int result = g_gattClient->RequestConnectionPriority(0); // Request RSSI
+        Logd("GATT GetRssi request result[%d]", result);
+    } else {
+        Logd("GATT client not initialized. Use 'gattconn' command first.");
+    }
+}
+
+static void HandleGattSetMtuSize(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+    if (g_gattClient != nullptr) {
+        int mtu = GATT_DEFAULT_MTU_SIZE; // Default MTU size
+        if (!GetIntValue(argc, argv, PARAM_MTU, mtu)) {
+            mtu = GATT_DEFAULT_MTU_SIZE; // Use default if not specified
+            Logd("MTU not specified, using default: %d", mtu);
+        }
+
+        int result = g_gattClient->RequestBleMtuSize(mtu);
+        Logd("GATT SetMtuSize mtu[%d] result[%d]", mtu, result);
+    } else {
+        Logd("GATT client not initialized. Use 'gattconn' command first.");
+    }
+}
+
+static void HandleGattCreateServer(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+
+    // Check if BLE is enabled
+    if (g_bluetoothHost == nullptr) {
+        g_bluetoothHost = &BluetoothHost::GetDefaultHost();
+    }
+
+    if (ShouldReturnVoid(!g_bluetoothHost->IsBleEnabled(),
+        "BLE is not enabled. Please enable BLE first using 'bleenable' command.")) {
+        return;
+    }
+
+    // Check for force parameter
+    std::string forceParam;
+    bool forceCreate = false;
+    if (GeStrValue(argc, argv, PARAM_FORCE, forceParam)) {
+        forceCreate = (forceParam == "true" || forceParam == "1");
+    }
+
+    // Check if server already exists
+    if (g_gattServer != nullptr) {
+        if (forceCreate) {
+            Logd("Force recreating GATT Server...");
+            CloseGattServer();
+        } else {
+            Logd("GATT Server already exists. Use 'force=true' to recreate or close it first.");
+            Logd("Current server status: Ready for service operations");
+            return;
+        }
+    }
+
+    // Create server callback
+    g_gattServerCallback = std::make_shared<BleGattServerCallback>();
+    if (ShouldReturnVoid(g_gattServerCallback == nullptr, "Failed to create GATT Server callback")) {
+        return;
+    }
+
+    // Create GATT Server instance
+    std::shared_ptr<GattServerCallback> callback =
+        std::static_pointer_cast<GattServerCallback>(g_gattServerCallback);
+    g_gattServer = GattServer::CreateInstance(callback);
+    if (g_gattServer != nullptr) {
+        Logd("GATT Server created successfully");
+        Logd("Server is ready to add services and accept connections");
+        Logd("Use 'gattaddservices' to add services to the server");
+    } else {
+        Logd("Failed to create GATT Server instance");
+        g_gattServerCallback = nullptr;
+    }
+}
+
+static void HandleGattAddServices(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+
+    // Check if GATT Server exists
+    if (ShouldReturnVoid(g_gattServer == nullptr,
+        "GATT Server not created. Use 'gattcreateserver' first.")) {
+        return;
+    }
+
+    // Check for service type parameter
+    std::string serviceType;
+    if (!GeStrValue(argc, argv, PARAM_TYPE, serviceType)) {
+        serviceType = "battery"; // Default service type
+    }
+
+    Logd("Adding GATT service type: %s", serviceType.c_str());
+
+    int result = BT_ERR_INTERNAL_ERROR;
+    if (serviceType == SERVICE_TYPE_BATTERY) {
+        result = AddBatteryService();
+    } else if (serviceType == SERVICE_TYPE_DEVICE_INFO) {
+        result = AddDeviceInformationService();
+    } else if (serviceType == SERVICE_TYPE_HEART_RATE) {
+        result = AddHeartRateService();
+    } else if (serviceType == SERVICE_TYPE_CUSTOM) {
+        result = AddCustomService();
+    } else if (serviceType == SERVICE_TYPE_THERMOMETER) {
+        result = AddHealthThermometerService();
+    } else if (serviceType == SERVICE_TYPE_BLOOD_PRESSURE) {
+        result = AddBloodPressureService();
+    } else if (serviceType == SERVICE_TYPE_CURRENT_TIME) {
+        result = AddCurrentTimeService();
+    } else if (serviceType == SERVICE_TYPE_ENVIRONMENTAL) {
+        result = AddEnvironmentalSensingService();
+    } else if (serviceType == SERVICE_TYPE_PULSE_OXIMETER) {
+        result = AddPulseOximeterService();
+    } else if (serviceType == SERVICE_TYPE_HEALTH) {
+        // Add health-related services
+        result = AddHealthRelatedService();
+    } else if (serviceType == SERVICE_TYPE_ALL) {
+        // Add all available services
+        result = AddAllService();
+    } else {
+        Logd("Unknown service type: %s", serviceType.c_str());
+        DumpCreateServiceUsage();
+    }
+
+    if (result == BT_NO_ERROR) {
+        Logd("GATT Service '%s' added successfully", serviceType.c_str());
+    } else {
+        Logd("Failed to add GATT Service '%s', error code: %d", serviceType.c_str(), result);
+    }
+}
+
+/**
+ * @brief Remove GATT services from the GATT server
+ *
+ * This function removes one or more GATT services from the active GATT server.
+ * It supports removing specific services by UUID or clearing all services.
+ *
+ * @param argc Number of command line arguments
+ * @param argv Array of command line arguments
+ *
+ * @usage
+ * gattdelservices [service=service_uuid] [all=true]
+ *
+ * @parameters
+ * - service: UUID of the specific service to remove (optional)
+ * - all: Remove all services if set to "true" (optional)
+ * - If no parameters provided, lists available services for removal
+ *
+ * @examples
+ * // Remove specific service by UUID
+ * gattdelservices service=0000180F-0000-1000-8000-00805F9B34FB
+ *
+ * // Remove service using predefined macro
+ * gattdelservices service=GATT_SERVICE_BATTERY
+ *
+ * // Remove all services
+ * gattdelservices all=true
+ *
+ * // List available services for removal
+ * gattdelservices
+ *
+ * @common_services
+ * Standard GATT services that can be removed:
+ * - Battery Service: GATT_SERVICE_BATTERY (0000180F-0000-1000-8000-00805F9B34FB)
+ * - Device Information: GATT_SERVICE_DEVICE_INFORMATION (0000180A-0000-1000-8000-00805F9B34FB)
+ * - Heart Rate: GATT_SERVICE_HEART_RATE (0000180D-0000-1000-8000-00805F9B34FB)
+ * - Health Thermometer: GATT_SERVICE_HEALTH_THERMOMETER (00001809-0000-1000-8000-00805F9B34FB)
+ * - Blood Pressure: GATT_SERVICE_BLOOD_PRESSURE (00001810-0000-1000-8000-00805F9B34FB)
+ * - Current Time: GATT_SERVICE_CURRENT_TIME (00001805-0000-1000-8000-00805F9B34FB)
+ * - Environmental Sensing: GATT_SERVICE_ENVIRONMENTAL_SENSING (0000181A-0000-1000-8000-00805F9B34FB)
+ * - Pulse Oximeter: GATT_SERVICE_PULSE_OXIMETER (00001822-0000-1000-8000-00805F9B34FB)
+ * - Custom Test Service: GATT_SERVICE_CUSTOM_TEST (12345678-1234-1234-1234-123456789ABC)
+ *
+ * @prerequisites
+ * - Bluetooth must be enabled
+ * - GATT server must be created using 'gattcreateserver' command
+ * - Services must be added using 'gattaddservices' command
+ *
+ * @notes
+ * - Removing a service also removes all its characteristics and descriptors
+ * - Both primary and secondary services with the same UUID will be removed
+ * - Service removal is immediate and cannot be undone
+ * - Connected clients will be notified of service changes
+ * - Removing all services does not close the GATT server
+ *
+ * @error_handling
+ * - Server not initialized: Provides guidance to create server first
+ * - Service not found: Lists available services
+ * - Removal failure: Provides detailed error codes
+ * - Invalid UUID format: Provides format requirements
+ *
+ * @see_also
+ * - gattcreateserver: Create GATT server
+ * - gattaddservices: Add services to server
+ * - gattserverstatus: Check server status and services
+ * - gattcloseserver: Close GATT server
+ */
+static void HandleGattDelServices(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+
+    if (ShouldReturnVoid(g_gattServer == nullptr,
+        "GATT server not initialized. Use 'gattcreateserver' command first.")) {
+        return;
+    }
+
+    std::string serviceUuid;
+    std::string removeAll;
+
+    bool hasServiceParam = GeStrValue(argc, argv, PARAM_SERVICE, serviceUuid);
+    bool hasAllParam = GeStrValue(argc, argv, PARAM_ALL, removeAll);
+    // If no parameters provided, list available services
+    if (!hasServiceParam && !hasAllParam) {
+        ListAvailableServices();
+        return;
+    }
+
+    // Remove all services
+    if (hasAllParam && (removeAll == "true" || removeAll == "1")) {
+        RemoveAllService();
+        return;
+    }
+
+    // Remove specific service
+    if (hasServiceParam) {
+        RemoveSpecificService(serviceUuid);
+        return;
+    }
+
+    // Invalid parameters
+    Logd("Error: Invalid parameters");
+    PrintUsageAndExamples(GATT_DEL_SERVICES_CMD, GATT_DEL_SERVICES_USAGE, GATT_DEL_SERVICES_EXAMPLES);
+}
+
+static void HandleGattCreateClient(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+    std::string mac;
+    GetMac(argc, argv, mac);
+
+    if (!mac.empty()) {
+        Logd("Creating GATT client for device: %s", mac.c_str());
+        BluetoothRemoteDevice remoteDevice(mac, 1);
+        g_gattCallback = std::make_shared<BleGattClientCallback>();
+        g_gattClient = std::make_shared<GattClient>(remoteDevice);
+        g_currentGattDeviceAddress = mac; // Store the device address
+        Logd("GATT client created successfully");
+    } else {
+        Logd("Usage: gattcreateclient mac=device_mac_address");
+    }
+}
+
+static void HandleGattServerStatus(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+
+    if (ShouldReturnVoid(g_gattServer == nullptr,
+        "GATT Server Status: Not created. Use 'gattcreateserver' to create a GATT server")) {
+        return;
+    }
+
+    Logd("GATT Server Status: Active");
+
+    // Get and display services
+    std::list<GattService> &services = g_gattServer->GetServices();
+    Logd("Number of services: %zu", services.size());
+
+    if (!services.empty()) {
+        int serviceIndex = 0;
+        for (auto& service : services) {
+            Logd("  Service[%d]: UUID=%s, Primary=%s",
+                serviceIndex++,
+                service.GetUuid().ToString().c_str(),
+                service.IsPrimary() ? "true" : "false");
+
+            // Display characteristics for each service
+            const std::vector<GattCharacteristic>& characteristics = service.GetCharacteristics();
+            for (size_t i = 0; i < characteristics.size(); i++) {
+                Logd("    Characteristic[%zu]: UUID=%s",
+                    i, characteristics[i].GetUuid().ToString().c_str());
+            }
+        }
+    } else {
+        Logd("No services added yet. Use 'gattaddservices' to add services");
+    }
+}
+
+static void HandleGattCloseServer(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+    if (ShouldReturnVoid(g_gattServer == nullptr, "No GATT Server to close")) {
+        return;
+    }
+    CloseGattServer();
+}
+
+static void HandleBleGetConnectedDevices(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+    if (g_bluetoothHost == nullptr) {
+        g_bluetoothHost = &BluetoothHost::GetDefaultHost();
+    }
+
+    std::vector<BluetoothRemoteDevice> connectedDevices;
+    int result = g_bluetoothHost->GetPairedDevices(BT_TRANSPORT_BLE, connectedDevices);
+
+    Logd("BLE GetConnectedDevices result[%d]: found %zu devices", result, connectedDevices.size());
+    for (size_t i = 0; i < connectedDevices.size(); i++) {
+        const BluetoothRemoteDevice& device = connectedDevices[i];
+        Logd("  Device[%zu]: %s - %s", i, device.GetDeviceAddr().c_str(), device.GetDeviceName().c_str());
+    }
+}
+
+static void HandleDisconnect(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+    std::string mac;
+    GetMac(argc, argv, mac);
+
+    if (!mac.empty()) {
+        BluetoothRemoteDevice remoteDevice = g_bluetoothHost->GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
+        // For classic Bluetooth, we would disconnect profiles
+        Logd("Disconnect request for device: %s", mac.c_str());
+        // Note: Actual disconnection would require profile-specific disconnect calls
+    } else {
+        Logd("Usage: disconnect mac=device_mac_address");
+    }
+}
+
+static void HandleGetStatus(int argc, const char* argv[])
+{
+    Logd("enter command handler:%s", argv[CMD_IDX]);
+    if (g_bluetoothHost == nullptr) {
+        g_bluetoothHost = &BluetoothHost::GetDefaultHost();
+    }
+
+    DumpBrStatus();
+
+    // Get discovery status
+    bool isDiscovering = false;
+    int ret = g_bluetoothHost->IsBtDiscovering(isDiscovering, BT_TRANSPORT_BREDR);
+    Logd("Is Discovering[%d]: %s", ret, isDiscovering ? "YES" : "NO");
+
+    long long endTime = isDiscovering ? g_bluetoothHost->GetBtDiscoveryEndMillis() : 0;
+    EXEC_IF(isDiscovering, "Discovery End Time: %lld", endTime);
+}
+
+const struct StaCliCmd g_staCliCmds[] = {
+    // br interaction
+    {"enable", HandleEnable, "enable"},
+    {"disable", HandleDisable, "disable"},
+    {"enablebr", HandleEnableBr, "enablebr"},
+    {"disablebr", HandleDisableBr, "disablebr"},
+    {"enableble", HandleEnableBle, "enableble"},
+    {"disableble", HandleDisableBle, "disableble"},
+    {"brscan", HandleBrScan, "brscan"},
+    {"brstop", HandleBrStop, "brstop"},
+    {"getstate", HandleBtState, "getstate"},
+    {"getbluetoothstate", HandleBluetoothState, "getbluetoothstate"},
+    {"getlocname", HandleBrGetLocalName, "getlocname"},
+    {"setlocname", HandleBrSetLocalName, "setlocname name=%s"},
+    {"getretname", HandleBrGetRemoteName, "getretname mac=%s"},
+    {"setretname", HandleBrSetRemoteName, "setretname mac=%s name=%s"},
+    {"getrebatinfo", HandleBrGetRemoteBatteryInfo, "getrebatinfo mac=%s"},
+    {"getconntime", HandleBrGetLastConnectTime, "getconntime mac=%s"},
+    {"getpairs", HandleBrPairedDevices, "getpairs transport=%d"},
+    {"getpairstate", HandleBrPaireState, "getpairstate mac=%s"},
+    {"getprofilestate", HandleBrProfileState, "getprofilestate profileid=%d"},
+    {"confirmPaire", HandleBrConfirmPair, "confirmPaire mac=%s"},
+    {"setPinCode", HandleBrSetPinCode, "setPinCode pin=%s"},
+    {"getBtScanMode", HandleBrGetBtScanMode, "getBtScanMode"},
+    {"setBtScanMode", HandleBrSetBtScanMode, "setBtScanMode mode=%d duration=%d"},
+    {"getbondablemode", HandleBrGetBondableMode, "getbondablemode transport=%d"},
+    {"setbondablemode", HandleBrSetBondableMode, "setbondablemode transport=%d mode=%d"},
+    {"isdiscovering", HandleBrIsDiscovering, "isdiscovering transport=%d"},
+    {"getdiscoveryendtime", HandleBrGetDiscoveryEndTime, "getdiscoveryendtime"},
+    {"startdiscovery", HandleBrStartDiscovery, "startdiscovery"},
+    {"canceldiscovery", HandleBrCancelDiscovery, "canceldiscovery"},
+    {"removeallpairs", HandleBrRemoveAllPairs, "removeallpairs"},
+    {"removePaire", HandleBrRemovePair, "removePaire mac=%s"},
+    {"startpair", HandleBrStartPair, "startpair mac=%s"},
+    {"cancelpair", HandleBrCancelPair, "cancelpair mac=%s"},
+    {"isbondedfromlocal", HandleBrIsBondedFromLocal, "isbondedfromlocal transport=%d mac=%s"},
+    {"isaclconnected", HandleBrIsAclConnected, "isaclconnected transport=%d mac=%s"},
+    {"isaclencrypted", HandleBrIsAclEncrypted, "isaclencrypted transport=%d mac=%s"},
+    {"getdeviceclass", HandleBrGetDeviceClass, "getdeviceclass transport=%d mac=%s"},
+    {"getdeviceproductid", HandleBrGetDeviceProductId, "getdeviceproductid mac=%s"},
+    {"getdeviceuuids", HandleBrGetDeviceUuids, "getdeviceuuids mac=%s"},
+    {"setdevicepin", HandleBrSetDevicePin, "setdevicepin mac=%s pin=%s"},
+    {"setdevicepairingconfirmation", HandleBrSetDevicePairingConfirmation,
+        "setdevicepairingconfirmation mac=%s accept=%d"},
+    {"setdevicepasskey", HandleBrSetDevicePasskey, "setdevicepasskey mac=%s passkey=%d accept=%d"},
+    {"pairrequestreply", HandleBrPairRequestReply, "pairrequestreply mac=%s accept=%d"},
+    {"gettransporttype", HandleBrGetTransportType, "gettransporttype mac=%s"},
+    {"readremoterssivalue", HandleBrReadRemoteRssiValue, "readremoterssivalue mac=%s"},
+    {"isvalidbluetoothremotedevice", HandleBrIsValidBluetoothRemoteDevice, "isvalidbluetoothremotedevice mac=%s"},
+    {"getdeviceproducttype", HandleBrGetDeviceProductType, "getdeviceproducttype mac=%s"},
+    {"setdevicecustomtype", HandleBrSetDeviceCustomType, "setdevicecustomtype mac=%s deviceType=%d"},
+    {"getdevicevendorid", HandleBrGetDeviceVendorId, "getdevicevendorid mac=%s"},
+    {"getdeviceproductid", HandleBrGetDeviceProductId, "getdeviceproductid mac=%s"},
+    {"issupportvirtualautoconnect", HandleBrIsSupportVirtualAutoConnect, "issupportvirtualautoconnect mac=%s"},
+    {"setvirtualautoconnecttype", HandleBrSetVirtualAutoConnectType,
+        "setvirtualautoconnecttype mac=%s connType=%d businessType=%d"},
+    {"controldeviceaction", HandleBrControlDeviceAction,
+        "controldeviceaction mac=%s type=%d typeValue=%d controlObject=%d"},
+    // If needed use: {"getlastconnectiontime", HandleBrGetLastConnectionTime, "getlastconnectiontime mac=%s"},
+    {"getcloudbondstate", HandleBrGetCloudBondState, "getcloudbondstate mac=%s"},
+    {"getdevicetransport", HandleBrGetDeviceTransport, "getdevicetransport mac=%s"},
+
+    // ble interaction
+    {"blescan", HandleBleScan, "blescan"},
+    {"blestop", HandleBleStop, "blestop"},
+    {"gattconn", HandleGattConnect, "bleconn mac=%s"},
+    {"gattdisc", HandleGattDisconnect, "bledisc"},
+    {"gattgetserv", HandleGattGetServices, "gattgetserv"},
+    {"gattgetdname", HandleGattGetDeviceName, "gattgetdname [method=direct|gatt]"},
+    {"gattreadcv", HandleGattReadCharactValue, "gattreadcv service=service_uuid characteristic=characteristic_uuid"},
+    {"gattwritecv", HandleGattWriteCharactValue,
+        "gattwritecv service=service_uuid characteristic=characteristic_uuid value=data [type=hex|string] "
+        "[write_type=default|no_response|signed]"},
+    {"gattreaddes", HandleGattReadDescripValue,
+        "gattreaddes service=service_uuid characteristic=characteristic_uuid descriptor=descriptor_uuid"},
+    {"gattwritedes", HandleGattWriteDescripValue,
+        "gattwritedes service=service_uuid characteristic=characteristic_uuid descriptor=descriptor_uuid "
+        "value=data [type=hex|string]"},
+    {"gattgetrssi", HandleGattGetRssi, "gattgetrssi"},
+    {"gattsetmtu", HandleGattSetMtuSize, "gattsetmtu mtu=%d"},
+    {"gattcreateserver", HandleGattCreateServer, "gattcreateserver [force=true]"},
+    {"gattaddservices", HandleGattAddServices,
+        "gattaddservices [type=battery|device_info|heart_rate|thermometer|blood_pressure|current_time|"
+        "environmental|pulse_oximeter|custom|health|all]"},
+    {"gattdelservices", HandleGattDelServices, "gattdelservices [service=service_uuid] [all=true]"},
+    {"gattserverstatus", HandleGattServerStatus, "gattserverstatus"},
+    {"gattcloseserver", HandleGattCloseServer, "gattcloseserver"},
+    {"gattcreateclient", HandleGattCreateClient, "gattcreateclient"},
+    {"blegetconnected", HandleBleGetConnectedDevices, "blegetconnected"},
+
+    // rich interaction
+    {"wait", HandleWaitOperation, "wait operation=operation_name"},
+    {"waitasync", HandleWaitOperationAsync, "waitasync operation=operation_name"},
+    {"interactive", HandleInteractive, "interactive"}
+};
+
+const int g_staCliCmdsCount = sizeof(g_staCliCmds) / sizeof(g_staCliCmds[0]);
+
+static void HelpCommand(const char *command)
+{
+    int count = g_staCliCmdsCount;
+    for (int i = 0; i < count; i++) {
+        if (strcmp(command, g_staCliCmds[i].cmd) == 0) {
+            Logd("%s", g_staCliCmds[i].usage);
+            return;
+        }
+    }
+    Logd("can not find command %s", command);
+}
+
+void Help(void)
+{
+    Logd("%s", "support command as follows:");
+    int count = g_staCliCmdsCount;
+    for (int i = 0; i < count; i++) {
+        Logd("%s", g_staCliCmds[i].usage);
+    }
+}
+
+void HandleUserCommand(int argc, const char *argv[])
+{
+    AssertReturnWithFunction(argc < ARG_IDX, [&]() {
+        Help();
+    });
+
+    int count = g_staCliCmdsCount;
+    for (int i = 0; i < count; i++) {
+        if (strcmp(g_staCliCmds[i].cmd, argv[CMD_IDX]) == 0) {
+            if (g_staCliCmds[i].handler != nullptr) {
+                RegisterCallbacks();
+                g_staCliCmds[i].handler(argc, argv);
+                DeregisterCallbacks();
+            } else {
+                Logd("no handler for command:%s", g_staCliCmds[i].cmd);
+            }
+            return;
+        }
+    }
+    Help();
+}
+
+}
+}
+
+int main(int argc, char *argv[])
+{
+    OHOS::Bluetooth::HandleUserCommand(argc, const_cast<const char **>(argv));
+    return 0;
+}
+
