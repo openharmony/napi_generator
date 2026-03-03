@@ -5,6 +5,9 @@ project(p7zipTest_bootstrap)
 set(REPO_ROOT "${CMAKE_CURRENT_LIST_DIR}/../../../..")
 get_filename_component(REPO_ROOT "${REPO_ROOT}" ABSOLUTE)
 set(_p7zip_prebuild "${CMAKE_CURRENT_LIST_DIR}/../cmake/p7zip/scripts/prebuild_lib7z.cmake")
+if(NOT DEFINED OHOS_ARCH OR OHOS_ARCH STREQUAL "")
+  message(FATAL_ERROR "OHOS_ARCH is required (e.g. arm64-v8a / armeabi-v7a / x86_64).")
+endif()
 
 # Prebuild lib7z.so if missing (runs at configure time), then configure the original native module.
 include("${_p7zip_prebuild}")
@@ -18,11 +21,10 @@ set(_p7zip_prebuild_defs
   "-DOHOS_ARCH=${OHOS_ARCH}"
   "-DOHOS_SDK=${OHOS_SDK}"
   "-DP7ZIP_MAKE=${P7ZIP_MAKE}"
+  "-DP7ZIP_MAKE_HINTS=${P7ZIP_MAKE_HINTS}"
   "-DP7ZIP_JOBS=${P7ZIP_JOBS}"
   "-DP7ZIP_REBUILD_IF_EXISTS=${P7ZIP_REBUILD_IF_EXISTS}"
   "-DP7ZIP_TARBALL_URL=${P7ZIP_TARBALL_URL}"
-  "-DP7ZIP_VERIFY_TARBALL=${P7ZIP_VERIFY_TARBALL}"
-  "-DP7ZIP_TARBALL_SHA256=${P7ZIP_TARBALL_SHA256}"
   "-DP7ZIP_APPLY_OHOS_PATCHES=${P7ZIP_APPLY_OHOS_PATCHES}"
   "-DP7ZIP_PATCH_STRICT=${P7ZIP_PATCH_STRICT}"
   "-DP7ZIP_QUIET=${P7ZIP_QUIET}"
@@ -31,7 +33,12 @@ set(_p7zip_prebuild_defs
 add_custom_command(
   OUTPUT "${_p7zip_out}"
   COMMAND "${CMAKE_COMMAND}" ${_p7zip_prebuild_defs} -P "${_p7zip_prebuild}"
-  DEPENDS "${_p7zip_prebuild}"
+  DEPENDS
+    "${_p7zip_prebuild}"
+    "${CMAKE_CURRENT_LIST_DIR}/../cmake/p7zip/scripts/header_manifest.cmake"
+    "${CMAKE_CURRENT_LIST_DIR}/../cmake/p7zip/scripts/apply_patches.cmake"
+    "${CMAKE_CURRENT_LIST_DIR}/../cmake/p7zip/scripts/build_one_abi.cmake"
+    "${CMAKE_CURRENT_LIST_DIR}/../cmake/p7zip/scripts/p7zip_log.cmake"
   VERBATIM
   COMMENT "Prebuilding lib7z.so (${OHOS_ARCH})"
 )

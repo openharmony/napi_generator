@@ -44,7 +44,7 @@
 1. 从 [w64devkit Releases](https://github.com/skeeto/w64devkit/releases) 下载压缩包并解压到固定目录  
    例如：`C:/software/MinGW-w64/w64devkit`
 2. 确认 `<W64DEVKIT_ROOT>/bin` 下存在 `make.exe`
-3. 可选：将 `<W64DEVKIT_ROOT>/bin` 加入系统 `Path`
+3. 将 `<W64DEVKIT_ROOT>/bin` 加入系统 `Path`
 4. 验证命令：
 
 ```powershell
@@ -67,7 +67,7 @@ make --version
 
 ## 3. 配置工程
 
-编辑 `entry/build-profile.json5`，确认 `externalNativeOptions`：
+3.1 编辑 `entry/build-profile.json5`，确认 `externalNativeOptions`：
 
 ```json5
 "externalNativeOptions": {
@@ -87,6 +87,10 @@ make --version
 - `<MAKE_EXE_PATH>` 必须替换为本机绝对路径
 - 示例：`C:/software/MinGW-w64/w64devkit/bin/make.exe`
 - 修改 `arguments` 后，建议先 clean 再 Build
+- 可选：强制覆盖重建已有产物  
+  `-DP7ZIP_REBUILD_IF_EXISTS=ON`
+- 头文件 `entry/libs/include/p7zip` 会在预构建过程中由脚本自动同步，无需手动拷贝
+- 头文件同步清单由 `entry/src/main/cmake/p7zip/scripts/header_manifest.cmake` 维护
 
 ---
 
@@ -95,7 +99,7 @@ make --version
 在 DevEco Studio 中执行：
 
 1. 打开工程 `p7zipTest`
-2. 运行 `Build > Build Hap(s)/APP(s)`
+2. 运行 `Build > Build Hap(s)/APP(s) > Build Hap(s)  `
 
 构建流程会自动执行：
 
@@ -107,7 +111,7 @@ make --version
 默认行为：
 
 - 目标不存在时自动生成
-- 目标已存在时默认重建覆盖（`P7ZIP_REBUILD_IF_EXISTS=ON`）
+- 目标已存在时默认跳过重建（`P7ZIP_REBUILD_IF_EXISTS=OFF`）
 
 ---
 
@@ -141,3 +145,11 @@ make --version
 ### 6.4 `missing and no known rule to make it`
 
 通常为构建规则缺失。请确认 `entry/src/main/cpp_bootstrap/CMakeLists.txt` 未删除预构建相关规则。
+
+### 6.5 头文件同步后仍编译报错
+
+若报错出现在 `entry/libs/include/p7zip` 下，请检查：
+
+- `entry/src/main/cmake/p7zip/scripts/header_manifest.cmake` 是否包含所需头文件
+- 预构建是否实际执行（日志中应出现 `[p7zip-prebuild] Synced headers`）
+- 修改 `header_manifest.cmake` 后，建议执行 `clean + rebuild`

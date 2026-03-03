@@ -73,7 +73,7 @@ p7zipTest/
 │       ├── arm64-v8a/lib7z.so
 │       ├── armeabi-v7a/lib7z.so
 │       ├── x86_64/lib7z.so
-│       └── include/                   # p7zip 头文件（如需扩展二次开发）
+│       └── include/                   # p7zip 头文件
 └── README.md                          # 项目总览
 ```
 
@@ -106,7 +106,6 @@ p7zipTest/
    
    ```bash
    git clone git@gitcode.com:openharmony/napi_generator.git 
-   cd p7zipTest
    ```
    
 2. **使用 DevEco Studio 打开项目**
@@ -116,22 +115,21 @@ p7zipTest/
 3. **配置 SDK**
    
 - 确保已安装 OpenHarmony SDK API 18+
-  
+
 4. **配置 Native 构建参数**
 
    编辑 `entry/build-profile.json5`，确认：
 
    - `externalNativeOptions.path` 指向 `./src/main/cpp_bootstrap/CMakeLists.txt`
    - `externalNativeOptions.arguments` 包含 `-DP7ZIP_MAKE=<MAKE_EXE_PATH>`
+   - 可选：`-DP7ZIP_MAKE_HINTS=<候选路径1;候选路径2>`
+   - 默认 `P7ZIP_REBUILD_IF_EXISTS=OFF`（已有 `lib7z.so` 时跳过重建）
 
 5. **构建项目**
 
    - 执行 `Build → Build Hap(s)/APP(s)`
-   - 构建过程会自动完成：下载 p7zip 源码、应用补丁、编译 `lib7z.so`、再编译 `libentry.so`
-  
-6. **运行**
-   - 连接 OpenHarmony 设备
-   - Run → Run 'entry'
+   - 构建会自动完成：下载 p7zip、应用补丁、同步 `entry/libs/include/p7zip` 头文件、构建 `lib7z.so`、再构建 `libentry.so`
+   - 头文件同步清单维护在 `entry/src/main/cmake/p7zip/scripts/header_manifest.cmake`
 
 > 详细参数说明、环境配置与故障排查请参考：[编译构建](docs/BUILD_AND_USAGE_GUIDE.md)
 
@@ -145,7 +143,7 @@ hdc install entry-default-signed.hap
 
 ## 使用示例与 API 文档
 
-详细请参见：[USAGE_EXAMPLES.md](docs/USAGE_EXAMPLES.md)
+详细请参见：[使用示例](docs/USAGE_EXAMPLES.md)
 
 ## 错误码
 
