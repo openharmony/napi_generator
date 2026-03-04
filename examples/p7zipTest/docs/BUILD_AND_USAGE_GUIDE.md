@@ -34,15 +34,15 @@
 变量说明（在后续步骤中会使用）：
 
 - `<W64DEVKIT_ROOT>`：w64devkit 的安装根目录
-- `<MAKE_EXE_PATH>`：`make.exe` 的完整绝对路径，通常为 `<W64DEVKIT_ROOT>/bin/make.exe`
+- `<MAKE_EXE_PATH>`：`make.exe` 的完整路径，通常为 `<W64DEVKIT_ROOT>/bin/make.exe`
 
 示例：
 
-- 若 `<W64DEVKIT_ROOT>` 为 `C:/software/MinGW-w64/w64devkit`
-- 则 `<MAKE_EXE_PATH>` 为 `C:/software/MinGW-w64/w64devkit/bin/make.exe`
+- 若 `<W64DEVKIT_ROOT>` 为 `C:/software/w64devkit`
+- 则 `<MAKE_EXE_PATH>` 为 `C:/software/w64devkit/bin/make.exe`
 
 1. 从 [w64devkit Releases](https://github.com/skeeto/w64devkit/releases) 下载压缩包并解压到固定目录  
-   例如：`C:/software/MinGW-w64/w64devkit`
+   例如：`C:/software/w64devkit`
 2. 确认 `<W64DEVKIT_ROOT>/bin` 下存在 `make.exe`
 3. 将 `<W64DEVKIT_ROOT>/bin` 加入系统 `Path`
 4. 验证命令：
@@ -60,7 +60,7 @@ make --version
 例如：
 
 ```powershell
-"C:/software/MinGW-w64/w64devkit/bin/make.exe" --version
+"C:/software/w64devkit/bin/make.exe" --version
 ```
 
 ---
@@ -84,8 +84,8 @@ make --version
 
 参数说明：
 
-- `<MAKE_EXE_PATH>` 必须替换为本机绝对路径
-- 示例：`C:/software/MinGW-w64/w64devkit/bin/make.exe`
+- `<MAKE_EXE_PATH>` 必须替换为本机完整路径
+- 示例：`C:/software/w64devkit/bin/make.exe`
 - 修改 `arguments` 后，建议先 clean 再 Build
 - 可选：强制覆盖重建已有产物  
   `-DP7ZIP_REBUILD_IF_EXISTS=ON`
@@ -129,7 +129,7 @@ make --version
 
 ### 6.1 `MAKE_EXE was provided but does not exist`
 
-`P7ZIP_MAKE` 配置路径无效。请改为真实存在的 `make.exe` 绝对路径。
+`P7ZIP_MAKE` 配置路径无效。请改为真实存在的 `make.exe` 完整路径。
 
 ### 6.2 `make is required to build p7zip`
 

@@ -544,7 +544,7 @@ void CArchiveExtractCallback::CalculateTotalSize()
         totalSize += GetFileSizeFromProperty(prop, i);
     }
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "总大小: %llu bytes (%llu MB)", totalSize,
-            totalSize / (BYTES_PER_KB * BYTES_PER_KB));
+        totalSize / (BYTES_PER_KB * BYTES_PER_KB));
 }
 // 触发初始进度报告
 void CArchiveExtractCallback::ReportInitialProgress()
