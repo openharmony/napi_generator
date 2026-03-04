@@ -4,15 +4,15 @@
 
 `patches/` 存放所有为 OpenHarmony 交叉编译 `lib7z.so` 所需的源码/Makefile 改动，全部以 **unified diff** 的 `*.patch` 形式管理。
 
-构建时不会让你手改源码：预构建脚本会先把上游 p7zip 源码解压到工作副本目录，然后 **按顺序应用这些 patch**。
+构建时无需手改源码：预构建脚本会先把上游 p7zip 源码解压到工作副本目录，然后 **按顺序应用这些 patch**。
 
-### 上游基线（非常重要）
+### 上游基线
 
 这些 patch 是基于 `UPSTREAM_COMMIT.txt` 指定的上游版本生成的：
 
 - `UPSTREAM_COMMIT.txt`：固定的 commit hash
 
-如果你更换上游版本，可能会出现 patch 不能应用（hunk failed）。这时需要重新生成 patch。
+如果更换上游版本，可能会出现 patch 不能应用（hunk failed）。这时需要重新生成 patch。
 
 ### patch 列表
 
