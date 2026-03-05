@@ -93,45 +93,59 @@ p7zipTest/
 
 ## 快速开始
 
-### 环境要求
+### 构建（Windows）
 
-- OpenHarmony SDK: API 18 或更高
-- DevEco Studio: DevEco Studio 5.0.2 Release
-- 操作系统: Windows
-- GNU make（建议使用 w64devkit 提供的 `make.exe`）
+#### 环境准备
 
-### 构建步骤
+- DevEco Studio：5.0.2 Release
+- OpenHarmony Native SDK：API 18+
+- GNU make：建议使用 `w64devkit` 提供的 `make.exe`（示例路径：`D:/software/w64devkit/bin/make.exe`，用户需修为为本机路径）
 
-1. **克隆项目**
-   
-   ```bash
-   git clone git@gitcode.com:openharmony/napi_generator.git 
-   ```
-   
-2. **使用 DevEco Studio 打开项目**
-   
-- File → Open → napi_generator/examples/p7zipTest
-  
-3. **配置 SDK**
-   
-- 确保已安装 OpenHarmony SDK API 18+
+安装与验证步骤：
 
-4. **配置 Native 构建参数**
+1. 下载并解压 [w64devkit Releases](https://github.com/skeeto/w64devkit/releases) 到固定目录（如 `D:/software/w64devkit`）
+2. 确认 `D:/software/w64devkit/bin` 下存在 `make.exe`
+3. 将 `D:/software/w64devkit/bin` 加入系统 `Path`
+4. 验证命令：
 
-   编辑 `entry/build-profile.json5`，确认：
+```powershell
+make --version
+```
 
-   - `externalNativeOptions.path` 指向 `./src/main/cpp_bootstrap/CMakeLists.txt`
-   - `externalNativeOptions.arguments` 包含 `-DP7ZIP_MAKE=<MAKE_EXE_PATH>`
-   - 可选：`-DP7ZIP_MAKE_HINTS=<候选路径1;候选路径2>`
-   - 默认 `P7ZIP_REBUILD_IF_EXISTS=OFF`（已有 `lib7z.so` 时跳过重建）
+也可直接执行（按本机安装路径修改）：
 
-5. **构建项目**
+```powershell
+"D:/software/w64devkit/bin/make.exe" --version
+```
 
-   - 执行 `Build → Build Hap(s)/APP(s)`
-   - 构建会自动完成：下载 p7zip、应用补丁、同步 `entry/libs/include/p7zip` 头文件、构建 `lib7z.so`、再构建 `libentry.so`
-   - 头文件同步清单维护在 `entry/src/main/cmake/p7zip/scripts/header_manifest.cmake`
+#### 配置工程
 
-> 详细参数说明、环境配置与故障排查请参考：[编译构建](docs/BUILD_AND_USAGE_GUIDE.md)
+编辑 `entry/build-profile.json5`，确认 `externalNativeOptions`：
+
+```json5
+"externalNativeOptions": {
+  "path": "./src/main/cpp_bootstrap/CMakeLists.txt",
+  "arguments": "-DP7ZIP_MAKE=D:/software/w64devkit/bin/make.exe -DP7ZIP_PATCH_STRICT=ON",
+  "cppFlags": "",
+  "abiFilters": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ]
+}
+```
+
+配置要点：
+
+- `P7ZIP_MAKE` 请填写本机 `make.exe` 的完整路径
+- 修改 `arguments` 后建议执行 `clean + rebuild`
+- 默认 `P7ZIP_REBUILD_IF_EXISTS=OFF`（已有 `lib7z.so` 时跳过重建）
+- 如需每次强制重建可加：`-DP7ZIP_REBUILD_IF_EXISTS=ON`
+- `entry/libs/include/p7zip` 头文件由预构建自动同步（清单见 `entry/src/main/cmake/p7zip/scripts/header_manifest.cmake`）
+
+在 DevEco Studio 执行 `Build > Build Hap(s)/APP(s) > Build Hap(s)`，会自动完成 p7zip 下载、补丁应用、头文件同步和 `lib7z.so/libentry.so` 构建。
+
+构建后确认产物：`entry/libs/arm64-v8a/lib7z.so`、`entry/libs/armeabi-v7a/lib7z.so`、`entry/libs/x86_64/lib7z.so`。
 
 ### 安装预编译包
 
