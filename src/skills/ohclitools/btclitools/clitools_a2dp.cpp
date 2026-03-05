@@ -34,7 +34,7 @@ constexpr int K_STATE_CONNECTED = 1;
 constexpr int K_STATE_DISCONNECTING = 2;
 constexpr int K_STATE_DISCONNECTED = 3;
 constexpr int K_STATE_INVALID = -1;
-const char *a2dpStateStr(int state)
+const char *A2dpStateStr(int state)
 {
     switch (state) {
         case K_STATE_CONNECTING: return "connecting";
@@ -123,7 +123,7 @@ void HandleA2dpGetDeviceState(int argc, const char *argv[])
     }
     int state = K_STATE_INVALID;
     int ret = profile->GetDeviceState(device, state);
-    Logd("a2dpgetdevicestate: state=%d (%s) ret=%d", state, a2dpStateStr(state), ret);
+    Logd("a2dpgetdevicestate: state=%d (%s) ret=%d", state, A2dpStateStr(state), ret);
 }
 
 void HandleA2dpSetActiveSink(int argc, const char *argv[])
