@@ -101,8 +101,9 @@ python3 src/skills/gitlog/gitlog.py help                # Show help message
 | `log-range <from>..<to>` | 两引用之间的提交（如 tag1..tag2） |
 | `log-first-parent <range>` | 带 --first-parent 的 log（如 tag^..HEAD） |
 | `report [tag]` | 生成 git-status.txt、git-log.txt |
-| **`commit [message] [--no-sign]`** | **自动暂存、分批提交（≤2000 行/次）、默认 Signed-off-by，提交后自动 push；`--no-sign` 关闭签名** |
+| **`commit [message] [--no-sign] [--skip-style-check]`** | **自动暂存、分批提交（≤2000 行/次）、默认 Signed-off-by，提交后自动 push；提交前会执行代码规范检查（仅针对本次变更的 C/C++ 等文件），可用 `--skip-style-check` 跳过** |
 | **`push [remote] [branch]`** | **推送到远程（默认 origin 当前分支）** |
+| **`check-style [path] [--all]`** | **代码规范检查：常量 UPPER_SNAKE、函数 PascalCase、禁止魔数；默认仅检查当前变更文件，`--all` 扫描指定 path 下全部匹配文件（通用，不固定路径）** |
 | **`sign-commits [range]`** | **为历史提交补 Signed-off-by（如 HEAD~5..HEAD）** |
 | **`config-token [username] [token]`** | **配置 Git 凭据（PAT 写入 remote URL）** |
 | **`check-copyright [--fix] [--dry-run]`** | **检查/修复源码版权头（.ets/.h/.cpp/.c/.d.ts）** |
@@ -121,9 +122,14 @@ python3 .claude/skills/gitlog/gitlog.py <command> [arguments]
 python3 src/skills/gitlog/gitlog.py log-range v1.4.3..v1.4.4
 python3 src/skills/gitlog/gitlog.py log-first-parent v1.4.4.0^..HEAD
 
-# 提交并推送（默认 Signed-off-by）
+# 提交并推送（默认 Signed-off-by；提交前会跑代码规范检查）
 python3 src/skills/gitlog/gitlog.py commit "feat: add xxx"
 python3 src/skills/gitlog/gitlog.py commit --no-sign "docs: update"
+python3 src/skills/gitlog/gitlog.py commit "msg" --skip-style-check   # 跳过规范检查
+
+# 代码规范检查（可单独执行）
+python3 src/skills/gitlog/gitlog.py check-style                      # 仅检查本次变更中的 C/C++ 等文件
+python3 src/skills/gitlog/gitlog.py check-style /path/to/src --all   # 扫描 path 下全部匹配文件
 
 # 补签历史、推送、版权检查
 python3 src/skills/gitlog/gitlog.py sign-commits HEAD~5..HEAD
@@ -131,6 +137,19 @@ python3 src/skills/gitlog/gitlog.py push
 python3 src/skills/gitlog/gitlog.py check-copyright --dry-run
 python3 src/skills/gitlog/gitlog.py check-copyright --fix
 ```
+
+### 代码规范检查（check-style）规则与修改方法（通用）
+
+执行 `commit` 前会默认对**本次变更**中的 C/C++ 等源文件做规范检查；也可单独执行 `check-style`。规则与修改方式如下（不依赖固定路径或工程）：
+
+| 规则 | 说明 | 修改方法 |
+|------|------|----------|
+| **常量命名** | 全局/静态常量须全大写下划线（UPPER_SNAKE_CASE），不得使用 kCamelCase 或首字母小写 | 将常量名改为全大写下划线，如 `kDefaultSppServerName` → `K_DEFAULT_SPP_SERVER_NAME`；在常量头文件中用 `#define` 或 `const` 定义，代码中引用该常量名 |
+| **函数命名** | 对外接口/Handler 函数须大驼峰（PascalCase），首字母大写 | 将函数名改为首字母大写，如 `handleA2dpConnect` → `HandleA2dpConnect`、`a2dpStateStr` → `A2dpStateStr`；同步修改声明、定义及所有调用处 |
+| **魔数禁止** | 代码中不得直接写未命名数字常量（如 64、30000） | 在工程约定的常量头文件中用 `#define NAME value` 定义常量，在代码中用 `NAME` 替代数字，如 `64` → `SPP_READ_HEX_DISPLAY_MAX_BYTES` |
+
+- 仅检查扩展名为 `.c`、`.cpp`、`.h`、`.cc`、`.cxx`、`.hpp` 的文件；默认只检查当前 git 变更中的文件，可用 `check-style [path] --all` 扫描指定目录下全部匹配文件。
+- 若检查不通过，提交会中止；修复后重新执行 `commit`，或使用 `commit --skip-style-check` 跳过检查。
 
 ## Common Git Commands
 

@@ -16,6 +16,10 @@
 #ifndef CLITOOLS_H
 #define CLITOOLS_H
 
+/**
+ * Main header for btclitools CLI. Module-to-bundle mapping and design: see DESIGN.md in this directory.
+ */
+
 #include <cstdarg>
 #include <cstring>
 #include <iostream>
@@ -39,6 +43,9 @@
 #include "ohos_bt_gatt.h"
 #include "mischandle.h"
 #include "clitools_constants.h"
+#include "clitools_a2dp.h"
+#include "clitools_socket.h"
+#include "clitools_profile.h"
 
 // Utility functions
 template<typename T, size_t N>
@@ -246,8 +253,18 @@ void DumpDescriptorValue(const OHOS::Bluetooth::GattDescriptor* descriptor);
 namespace OHOS {
 namespace Bluetooth {
 
-// Global variables
+// Global variables (defined in clitools.cpp, used by host/gatt modules)
+extern BluetoothHost* g_bluetoothHost;
+extern std::shared_ptr<BleCentralManager> g_bleCentralManager;
+extern std::shared_ptr<GattClient> g_gattClient;
+extern std::shared_ptr<GattServer> g_gattServer;
+extern std::string g_currentGattDeviceAddress;
 extern std::string g_mac;
+
+// GATT command usage (defined in clitools.cpp, used by clitools_gatt_client)
+extern const char* const GATT_WRITE_CV_CMD;
+extern const char* const GATT_WRITE_CV_USAGE;
+extern const std::vector<std::string> GATT_WRITE_CV_EXAMPLES;
 
 // Service management functions
 int AddHealthRelatedService();
@@ -404,6 +421,10 @@ void HandleBrSetVirtualAutoConnectType(int argc, const char* argv[]);
 void HandleBrControlDeviceAction(int argc, const char* argv[]);
 void HandleBrGetCloudBondState(int argc, const char* argv[]);
 void HandleBrGetDeviceTransport(int argc, const char* argv[]);
+
+// A2DP (clitools_a2dp)
+// Socket/SPP (clitools_socket)
+// Profile (clitools_profile) - handlers declared in respective headers
 
 // Service removal result reporting function
 void ReportOverallResult(bool foundPrimary, bool foundSecondary, int primaryResult, int secondaryResult,
