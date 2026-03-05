@@ -143,6 +143,11 @@ function(_p7zip_prepare_env)
     endif()
     set(P7ZIP_TARBALL_URL "https://codeload.github.com/p7zip-project/p7zip/tar.gz/${P7ZIP_TAG}")
   endif()
+
+  # Propagate derived values to caller scope.
+  set(P7ZIP_JOBS "${P7ZIP_JOBS}" PARENT_SCOPE)
+  set(OHOS_SDK "${OHOS_SDK}" PARENT_SCOPE)
+  set(P7ZIP_TARBALL_URL "${P7ZIP_TARBALL_URL}" PARENT_SCOPE)
 endfunction()
 
 _p7zip_headers_need_sync("${_include_p7zip}" "_expected_header_rel" _need_sync_headers)
