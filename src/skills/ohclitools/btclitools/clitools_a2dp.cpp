@@ -29,18 +29,18 @@
 #include <vector>
 
 namespace {
-constexpr int kStateConnecting = 0;
-constexpr int kStateConnected = 1;
-constexpr int kStateDisconnecting = 2;
-constexpr int kStateDisconnected = 3;
-constexpr int kStateInvalid = -1;
+constexpr int K_STATE_CONNECTING = 0;
+constexpr int K_STATE_CONNECTED = 1;
+constexpr int K_STATE_DISCONNECTING = 2;
+constexpr int K_STATE_DISCONNECTED = 3;
+constexpr int K_STATE_INVALID = -1;
 const char *a2dpStateStr(int state)
 {
     switch (state) {
-        case kStateConnecting: return "connecting";
-        case kStateConnected: return "connected";
-        case kStateDisconnecting: return "disconnecting";
-        case kStateDisconnected: return "disconnected";
+        case K_STATE_CONNECTING: return "connecting";
+        case K_STATE_CONNECTED: return "connected";
+        case K_STATE_DISCONNECTING: return "disconnecting";
+        case K_STATE_DISCONNECTED: return "disconnected";
         default: return "invalid";
     }
 }
@@ -52,7 +52,7 @@ using OHOS::Bluetooth::BluetoothRemoteDevice;
 using OHOS::Bluetooth::GeStrValue;
 using OHOS::Bluetooth::GetIntValue;
 
-void handleA2dpConnect(int argc, const char *argv[])
+void HandleA2dpConnect(int argc, const char *argv[])
 {
     std::string mac;
     if (!GeStrValue(argc, argv, PARAM_MAC, mac)) {
@@ -70,7 +70,7 @@ void handleA2dpConnect(int argc, const char *argv[])
     Logd("a2dpconnect: ret=%d", ret);
 }
 
-void handleA2dpDisconnect(int argc, const char *argv[])
+void HandleA2dpDisconnect(int argc, const char *argv[])
 {
     std::string mac;
     if (!GeStrValue(argc, argv, PARAM_MAC, mac)) {
@@ -88,14 +88,14 @@ void handleA2dpDisconnect(int argc, const char *argv[])
     Logd("a2dpdisconnect: ret=%d", ret);
 }
 
-void handleA2dpGetDevices(int argc, const char *argv[])
+void HandleA2dpGetDevices(int argc, const char *argv[])
 {
     A2dpSource *profile = A2dpSource::GetProfile();
     if (profile == nullptr) {
         Logd("a2dp: GetProfile failed");
         return;
     }
-    std::vector<int> states = { kStateConnected, kStateConnecting, kStateDisconnecting };
+    std::vector<int> states = { K_STATE_CONNECTED, K_STATE_CONNECTING, K_STATE_DISCONNECTING };
     std::vector<BluetoothRemoteDevice> devices;
     int ret = profile->GetDevicesByStates(states, devices);
     if (ret != static_cast<int>(devices.size())) {
@@ -107,7 +107,7 @@ void handleA2dpGetDevices(int argc, const char *argv[])
     Logd("a2dpgetdevices: count=%zu", devices.size());
 }
 
-void handleA2dpGetDeviceState(int argc, const char *argv[])
+void HandleA2dpGetDeviceState(int argc, const char *argv[])
 {
     std::string mac;
     if (!GeStrValue(argc, argv, PARAM_MAC, mac)) {
@@ -121,12 +121,12 @@ void handleA2dpGetDeviceState(int argc, const char *argv[])
         Logd("a2dp: GetProfile failed");
         return;
     }
-    int state = kStateInvalid;
+    int state = K_STATE_INVALID;
     int ret = profile->GetDeviceState(device, state);
     Logd("a2dpgetdevicestate: state=%d (%s) ret=%d", state, a2dpStateStr(state), ret);
 }
 
-void handleA2dpSetActiveSink(int argc, const char *argv[])
+void HandleA2dpSetActiveSink(int argc, const char *argv[])
 {
     std::string mac;
     if (!GeStrValue(argc, argv, PARAM_MAC, mac)) {
@@ -144,7 +144,7 @@ void handleA2dpSetActiveSink(int argc, const char *argv[])
     Logd("a2dpsetactive: ret=%d", ret);
 }
 
-void handleA2dpGetActiveSink(int argc, const char *argv[])
+void HandleA2dpGetActiveSink(int argc, const char *argv[])
 {
     A2dpSource *profile = A2dpSource::GetProfile();
     if (profile == nullptr) {
@@ -155,7 +155,7 @@ void handleA2dpGetActiveSink(int argc, const char *argv[])
     Logd("a2dpgetactive: %s", active.GetDeviceAddr().c_str());
 }
 
-void handleA2dpStartPlaying(int argc, const char *argv[])
+void HandleA2dpStartPlaying(int argc, const char *argv[])
 {
     std::string mac;
     if (!GeStrValue(argc, argv, PARAM_MAC, mac)) {
@@ -173,7 +173,7 @@ void handleA2dpStartPlaying(int argc, const char *argv[])
     Logd("a2dpstartplaying: ret=%d", ret);
 }
 
-void handleA2dpSuspendPlaying(int argc, const char *argv[])
+void HandleA2dpSuspendPlaying(int argc, const char *argv[])
 {
     std::string mac;
     if (!GeStrValue(argc, argv, PARAM_MAC, mac)) {
@@ -191,7 +191,7 @@ void handleA2dpSuspendPlaying(int argc, const char *argv[])
     Logd("a2dpsuspendplaying: ret=%d", ret);
 }
 
-void handleA2dpStopPlaying(int argc, const char *argv[])
+void HandleA2dpStopPlaying(int argc, const char *argv[])
 {
     std::string mac;
     if (!GeStrValue(argc, argv, PARAM_MAC, mac)) {
@@ -209,7 +209,7 @@ void handleA2dpStopPlaying(int argc, const char *argv[])
     Logd("a2dpstopplaying: ret=%d", ret);
 }
 
-void handleA2dpGetPlayingState(int argc, const char *argv[])
+void HandleA2dpGetPlayingState(int argc, const char *argv[])
 {
     std::string mac;
     if (!GeStrValue(argc, argv, PARAM_MAC, mac)) {

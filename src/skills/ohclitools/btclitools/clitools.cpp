@@ -372,28 +372,28 @@ const struct StaCliCmd g_staCliCmds[] = {
     {"blegetconnected", HandleBleGetConnectedDevices, "blegetconnected"},
 
     // a2dp (clitools_a2dp -> bluetooth_a2dp_src.h)
-    {"a2dpconnect", handleA2dpConnect, "a2dpconnect mac=xx:xx:xx:xx:xx:xx"},
-    {"a2dpdisconnect", handleA2dpDisconnect, "a2dpdisconnect mac=xx:xx:xx:xx:xx:xx"},
-    {"a2dpgetdevices", handleA2dpGetDevices, "a2dpgetdevices"},
-    {"a2dpgetdevicestate", handleA2dpGetDeviceState, "a2dpgetdevicestate mac=xx:xx:xx:xx:xx:xx"},
-    {"a2dpsetactive", handleA2dpSetActiveSink, "a2dpsetactive mac=xx:xx:xx:xx:xx:xx"},
-    {"a2dpgetactive", handleA2dpGetActiveSink, "a2dpgetactive"},
-    {"a2dpstartplaying", handleA2dpStartPlaying, "a2dpstartplaying mac=xx:xx:xx:xx:xx:xx"},
-    {"a2dpsuspendplaying", handleA2dpSuspendPlaying, "a2dpsuspendplaying mac=xx:xx:xx:xx:xx:xx"},
-    {"a2dpstopplaying", handleA2dpStopPlaying, "a2dpstopplaying mac=xx:xx:xx:xx:xx:xx"},
-    {"a2dpgetplayingstate", handleA2dpGetPlayingState, "a2dpgetplayingstate mac=xx:xx:xx:xx:xx:xx"},
+    {"a2dpconnect", HandleA2dpConnect, "a2dpconnect mac=xx:xx:xx:xx:xx:xx"},
+    {"a2dpdisconnect", HandleA2dpDisconnect, "a2dpdisconnect mac=xx:xx:xx:xx:xx:xx"},
+    {"a2dpgetdevices", HandleA2dpGetDevices, "a2dpgetdevices"},
+    {"a2dpgetdevicestate", HandleA2dpGetDeviceState, "a2dpgetdevicestate mac=xx:xx:xx:xx:xx:xx"},
+    {"a2dpsetactive", HandleA2dpSetActiveSink, "a2dpsetactive mac=xx:xx:xx:xx:xx:xx"},
+    {"a2dpgetactive", HandleA2dpGetActiveSink, "a2dpgetactive"},
+    {"a2dpstartplaying", HandleA2dpStartPlaying, "a2dpstartplaying mac=xx:xx:xx:xx:xx:xx"},
+    {"a2dpsuspendplaying", HandleA2dpSuspendPlaying, "a2dpsuspendplaying mac=xx:xx:xx:xx:xx:xx"},
+    {"a2dpstopplaying", HandleA2dpStopPlaying, "a2dpstopplaying mac=xx:xx:xx:xx:xx:xx"},
+    {"a2dpgetplayingstate", HandleA2dpGetPlayingState, "a2dpgetplayingstate mac=xx:xx:xx:xx:xx:xx"},
 
     // socket/spp (clitools_socket -> bluetooth_socket.h)
-    {"spplisten", handleSppListen, "spplisten [name=server_name]"},
-    {"sppaccept", handleSppAccept, "sppaccept [timeout=ms]"},
-    {"sppconnect", handleSppConnect, "sppconnect mac=xx:xx:xx:xx:xx:xx"},
-    {"sppdisconnect", handleSppDisconnect, "sppdisconnect"},
-    {"sppread", handleSppRead, "sppread [len=bytes]"},
-    {"sppwrite", handleSppWrite, "sppwrite value=data"},
-    {"sppserverclose", handleSppServerClose, "sppserverclose"},
+    {"spplisten", HandleSppListen, "spplisten [name=server_name]"},
+    {"sppaccept", HandleSppAccept, "sppaccept [timeout=ms]"},
+    {"sppconnect", HandleSppConnect, "sppconnect mac=xx:xx:xx:xx:xx:xx"},
+    {"sppdisconnect", HandleSppDisconnect, "sppdisconnect"},
+    {"sppread", HandleSppRead, "sppread [len=bytes]"},
+    {"sppwrite", HandleSppWrite, "sppwrite value=data"},
+    {"sppserverclose", HandleSppServerClose, "sppserverclose"},
 
     // profile (clitools_profile -> bluetooth_profile_manager.h, stub)
-    {"profileserviceon", handleProfileServiceOn, "profileserviceon"},
+    {"profileserviceon", HandleProfileServiceOn, "profileserviceon"},
 
     // rich interaction (mischandle, no bundle header)
     {"wait", HandleWaitOperation, "wait operation=operation_name"},
