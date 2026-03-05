@@ -31,7 +31,6 @@ p7zipTest/
 ├── AppScope/                          # 应用级配置
 │   └── app.json5                      # 应用基本信息
 ├── docs/                              # 项目文档
-│   ├── BUILD_AND_USAGE_GUIDE.md       # 编译与使用指南（自动构建流程）
 │   ├── USAGE_EXAMPLES.md              # ArkTS/C++ 调用示例
 │   ├── DEVELOPMENT_GUIDE.md           # 开发维护指南
 │   └── ERROR_CODES_REFERENCE.md       # 错误码文档
@@ -115,7 +114,7 @@ make --version
 也可直接执行（按本机安装路径修改）：
 
 ```powershell
-"D:/software/w64devkit/bin/make.exe" --version
+D:/software/w64devkit/bin/make.exe --version
 ```
 
 #### 配置工程
