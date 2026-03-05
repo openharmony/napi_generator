@@ -55,10 +55,16 @@ config("btframework_public_config") {
 
 local_base_sources = [
   "$BLUETOOTH_TOOLS_DIR/clitools.cpp",
+  "$BLUETOOTH_TOOLS_DIR/clitools_host.cpp",
+  "$BLUETOOTH_TOOLS_DIR/clitools_gatt_client.cpp",
+  "$BLUETOOTH_TOOLS_DIR/clitools_gatt_server.cpp",
   "$BLUETOOTH_TOOLS_DIR/common.cpp",
   "$BLUETOOTH_TOOLS_DIR/mischandle.cpp",
   "$BLUETOOTH_TOOLS_DIR/common_dump.cpp",
   "$BLUETOOTH_TOOLS_DIR/common_callback.cpp",
+  "$BLUETOOTH_TOOLS_DIR/clitools_a2dp.cpp",
+  "$BLUETOOTH_TOOLS_DIR/clitools_socket.cpp",
+  "$BLUETOOTH_TOOLS_DIR/clitools_profile.cpp",
 ]
 
 ohos_executable("btcommand") {
@@ -76,6 +82,7 @@ ohos_executable("btcommand") {
   include_dirs = [
     "$BLUETOOTH_INTERFACES_DIR/inner_api/include",
     "$BLUETOOTH_INTERFACES_DIR/inner_api/include/c_header",
+    "$BLUETOOTH_FRAMEWORK_DIR/inner/ipc/include",
   ]
   deps = [ "$BLUETOOTH_FRAMEWORK_DIR/inner:btframework" ]
   external_deps = [
