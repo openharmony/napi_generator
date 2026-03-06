@@ -1,19 +1,31 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-OH Clitools Skill - 将用户指定的源目录（如 btclitools）与框架接口对齐：支持接口覆盖检查、拷贝部署、编译与产物验证、推送到设备运行。
-编译对象从源目录的 BUILD.gn 中自动识别（executable/ohos_executable 等），多个目标用逗号传给 --build-target。
+OH Clitools Skill - 将用户指定的源目录（如 btclitools/wificlitools）与框架接口对齐：支持接口覆盖检查、
+拷贝部署、编译与产物验证、推送到设备运行。编译对象从源目录的 BUILD.gn 中自动识别（executable/
+ohos_executable 等），多个目标用逗号传给 --build-target。
 
 Usage:
     python3 ohclitool.py coverage [--bundle-json PATH] [--source-dir PATH] [--output PATH]  接口覆盖检查
     python3 ohclitool.py deploy --source-dir PATH --test-dir PATH  拷贝源目录到 test 并修改 BUILD.gn
     python3 ohclitool.py build --source-dir PATH --test-dir PATH [--product-name NAME]  执行编译
     python3 ohclitool.py verify --source-dir PATH [--product-name NAME] [--push-run]  验证产物
-    python3 ohclitool.py all --source-dir PATH --test-dir PATH [--product-name NAME] [--push-run]  deploy + build + verify
+    python3 ohclitool.py all --source-dir PATH --test-dir PATH [--product-name NAME] [--push-run]  deploy+build+verify
     python3 ohclitool.py help
 
-推送到设备时使用 ${OHOS_SDK_PATH}/linux/toolchains/hdc：file send -> chmod +x -> shell 运行；
-带 --push-run 时还会解析设备输出的「support command as follows:」与源码 g_staCliCmds 命令列表对比一致性。
+推送到设备：使用 ${OHOS_SDK_PATH}/linux/toolchains/hdc：file send -> chmod +x -> shell 运行；
+带 --push-run 时解析设备输出「support command as follows:」与源码 g_staCliCmds 对比一致性。
+
+CLI 代码规范（生成/补齐 clitools 代码时须遵守，详见 SKILL.md 与各工具 DESIGN.md）：
+- 魔数禁止，常量/枚举命名 UPPER_SNAKE_CASE（禁止 k 前缀或 camelCase）；函数名 PascalCase；单行 ≤120 字符。
+- 变量声明：同一行不写多个变量（如 std::string a, b 改为分行声明）。
+- 注释位置：说明性注释不写行尾，单独一行写在被注释代码上一行。
+- 换行：续行时运算符放行尾，行尾与下一行行首不留空格。
+- 头文件：不在头文件中使用匿名 namespace 或 static 定义非外部可见符号；常量用 inline constexpr 或 .cpp 中定义。
+- Get 类接口：终端须 dump 具体 info（字段级），不能只打印 success。
+- Callback 接口：注册 callback 并等待返回值，必须带 timeout；默认 2s，scan 类长操作默认 30s。
+- Usage 两段式：① 接口功能与参数说明（参数标明 string/int）；② " ex: wificommand <cmd> [args]"。
+- Usage 示例值：与框架/测试一致（如 setcountrycode 用 code=86）；枚举型罗列枚举及传入值。
 """
 
 import json
@@ -43,6 +55,10 @@ BUILD_TARGET_PATTERN = re.compile(
 
 # clitools.cpp 命令表中每条的 cmd 名：{"cmd", Handler, "usage"}
 STACLI_CMD_NAME_PATTERN = re.compile(r'\{\s*"([^"]+)"\s*,\s*\w+', re.MULTILINE)
+
+# CLI 实现约定：callback 默认超时(ms)；scan 等长操作超时(ms)，超时后结束动作
+DEFAULT_CALLBACK_TIMEOUT_MS = 2000
+SCAN_OR_LONG_OP_TIMEOUT_MS = 30000
 
 VERSION = "1.0.0"
 
@@ -312,7 +328,7 @@ def _add_dep_to_build_gn(build_gn: Path, dep: str) -> bool:
         return False
     prefix, inner, suffix = mat.group(1), mat.group(2), mat.group(3)
     new_inner = inner.rstrip()
-    if not new_inner.endswith(","):
+    if new_inner and not new_inner.endswith(","):
         new_inner = new_inner + ","
     new_inner = new_inner + "\n        \"" + dep + "\"\n    "
     new_text = text[: mat.start()] + prefix + new_inner + suffix + text[mat.end() :]

@@ -23,7 +23,8 @@ void Log(const char *fmt, ...)
     // Set locale to support UTF-8 in Linux environment
     static bool localeInitialized = false;
     if (!localeInitialized) {
-        setlocale(LC_ALL, "");  // Use system default locale, usually supports UTF-8
+        // Use system default locale, usually supports UTF-8
+        setlocale(LC_ALL, "");
         localeInitialized = true;
     }
 

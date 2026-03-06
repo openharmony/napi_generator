@@ -16,7 +16,7 @@
 /**
  * @file clitools_socket.cpp
  * @brief Socket/SPP CLI implementation (bluetooth_socket.h).
- * Single line length <= 110 chars; camelCase; no magic numbers; no double blank lines.
+ * Single line length <= 120 chars; PascalCase for functions; no magic numbers; no double blank lines.
  */
 
 #include "clitools_socket.h"
@@ -32,9 +32,13 @@
 #include <cstdint>
 
 namespace {
-constexpr int K_DEFAULT_ACCEPT_TIMEOUT_MS = 30000;
-constexpr size_t K_MAX_READ_BUF_LEN = 4096;
-const char *K_DEFAULT_SPP_SERVER_NAME = "BtCliSppServer";
+constexpr int DEFAULT_ACCEPT_TIMEOUT_MS = 30000;
+constexpr size_t MAX_READ_BUF_LEN = 4096;
+/** Max bytes to show in hex for sppread (truncate with "..." if larger). */
+constexpr size_t MAX_SPP_READ_DISPLAY_BYTES = 64;
+/** Buffer size for "%02x " (2 hex digits + space + null). */
+constexpr size_t HEX_BYTE_PRINT_BUF_SIZE = 4;
+const char *DEFAULT_SPP_SERVER_NAME = "BtCliSppServer";
 std::shared_ptr<OHOS::Bluetooth::ServerSocket> g_sppServer = nullptr;
 std::shared_ptr<OHOS::Bluetooth::ClientSocket> g_sppClient = nullptr;
 } // namespace
@@ -50,7 +54,7 @@ using OHOS::Bluetooth::UUID;
 
 void HandleSppListen(int argc, const char *argv[])
 {
-    std::string name = K_DEFAULT_SPP_SERVER_NAME;
+    std::string name = DEFAULT_SPP_SERVER_NAME;
     GeStrValue(argc, argv, PARAM_NAME, name);
     if (g_sppServer != nullptr) {
         Logd("spplisten: closing previous server");
@@ -69,7 +73,7 @@ void HandleSppListen(int argc, const char *argv[])
 
 void HandleSppAccept(int argc, const char *argv[])
 {
-    int timeoutMs = K_DEFAULT_ACCEPT_TIMEOUT_MS;
+    int timeoutMs = DEFAULT_ACCEPT_TIMEOUT_MS;
     GetIntValue(argc, argv, "timeout=", timeoutMs);
     if (g_sppServer == nullptr) {
         Logd("sppaccept: no server, call spplisten first");
@@ -99,7 +103,7 @@ void HandleSppConnect(int argc, const char *argv[])
         g_sppClient = nullptr;
     }
     BluetoothHost &host = BluetoothHost::GetDefaultHost();
-    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, 0);  // 0 = BR/EDR
+    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
     UUID uuid = UUID::FromString(OHOS::Bluetooth::BLUETOOTH_UUID_SPP);
     g_sppClient = SocketFactory::BuildRfcommDataSocketByServiceRecord(device, uuid);
     if (g_sppClient == nullptr) {
@@ -128,10 +132,10 @@ void HandleSppRead(int argc, const char *argv[])
         Logd("sppread: no connected client");
         return;
     }
-    int len = static_cast<int>(K_MAX_READ_BUF_LEN);
+    int len = static_cast<int>(MAX_READ_BUF_LEN);
     GetIntValue(argc, argv, "len=", len);
-    if (len <= 0 || static_cast<size_t>(len) > K_MAX_READ_BUF_LEN) {
-        len = static_cast<int>(K_MAX_READ_BUF_LEN);
+    if (len <= 0 || static_cast<size_t>(len) > MAX_READ_BUF_LEN) {
+        len = static_cast<int>(MAX_READ_BUF_LEN);
     }
     std::vector<uint8_t> buf(static_cast<size_t>(len), 0);
     std::shared_ptr<OHOS::Bluetooth::InputStream> in = g_sppClient->GetInputStream();
@@ -141,15 +145,15 @@ void HandleSppRead(int argc, const char *argv[])
     }
     ssize_t n = in->Read(buf.data(), static_cast<size_t>(len));
     if (n > 0) {
-        const size_t showLen = (static_cast<size_t>(n) > SPP_READ_HEX_DISPLAY_MAX_BYTES)
-            ? static_cast<size_t>(SPP_READ_HEX_DISPLAY_MAX_BYTES) : static_cast<size_t>(n);
+        const size_t showLen = (static_cast<size_t>(n) > MAX_SPP_READ_DISPLAY_BYTES)
+            ? MAX_SPP_READ_DISPLAY_BYTES : static_cast<size_t>(n);
         std::string hexStr;
         for (size_t i = 0; i < showLen; i++) {
-            char b[4];
+            char b[HEX_BYTE_PRINT_BUF_SIZE];
             (void)sprintf_s(b, sizeof(b), "%02x ", buf[i]);
             hexStr += b;
         }
-        if (static_cast<size_t>(n) > SPP_READ_HEX_DISPLAY_MAX_BYTES) {
+        if (static_cast<size_t>(n) > MAX_SPP_READ_DISPLAY_BYTES) {
             hexStr += "...";
         }
         Logd("sppread: %zd bytes: %s", n, hexStr.c_str());

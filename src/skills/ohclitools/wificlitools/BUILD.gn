@@ -1,0 +1,64 @@
+# Copyright (C) 2025 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# wificlitools CLI (design see DESIGN.md).
+# Deploy: copy this directory to foundation/communication/wifi/wifi/test/wificlitools
+# and add "test/wificlitools:wificommand" to test/BUILD.gn group deps.
+
+import("//build/ohos.gni")
+import("//foundation/communication/wifi/wifi/wifi.gni")
+
+ohos_executable("wificommand") {
+  sanitize = {
+    cfi = true
+    cfi_cross_dso = true
+    boundary_sanitize = false
+    integer_overflow = false
+    ubsan = false
+    cfi_vcall_icall_only = true
+    debug = false
+  }
+
+  sources = [
+    "clitools.cpp",
+    "common.cpp",
+  ]
+  sources += [ "clitools_sta.cpp" ]
+  sources += [ "clitools_hotspot.cpp" ]
+  sources += [ "clitools_p2p.cpp" ]
+  sources += [ "clitools_hid2d.cpp" ]
+
+  include_dirs = [
+    ".",
+    "$WIFI_ROOT_DIR/interfaces/inner_api",
+    "$WIFI_ROOT_DIR/frameworks/native/include",
+    "$WIFI_ROOT_DIR/frameworks/native/interfaces",
+    "$WIFI_ROOT_DIR/services/wifi_standard/wifi_framework/wifi_toolkit/include",
+    "$WIFI_ROOT_DIR/services/wifi_standard/wifi_framework/wifi_toolkit/net_helper",
+  ]
+
+  deps = [ "$WIFI_ROOT_DIR/frameworks/native:wifi_sdk" ]
+  external_deps = [
+    "c_utils:utils",
+    "ipc:ipc_single",
+    "samgr:samgr_proxy",
+  ]
+
+  cflags_cc = [
+    "-fPIC",
+    "-Wno-unused-parameter",
+  ]
+
+  part_name = "wifi"
+  subsystem_name = "communication"
+}
