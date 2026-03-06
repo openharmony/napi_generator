@@ -22,7 +22,7 @@
 #include "clitools_profile.h"
 #include "clitools.h"
 
-void HandleProfileServiceOn(int argc, const char *argv[])
+void handleProfileServiceOn(int argc, const char *argv[])
 {
     (void)argc;
     (void)argv;

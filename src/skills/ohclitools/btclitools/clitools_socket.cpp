@@ -32,9 +32,9 @@
 #include <cstdint>
 
 namespace {
-constexpr int K_DEFAULT_ACCEPT_TIMEOUT_MS = 30000;
-constexpr size_t K_MAX_READ_BUF_LEN = 4096;
-const char *K_DEFAULT_SPP_SERVER_NAME = "BtCliSppServer";
+constexpr int kDefaultAcceptTimeoutMs = 30000;
+constexpr size_t kMaxReadBufLen = 4096;
+const char *kDefaultSppServerName = "BtCliSppServer";
 std::shared_ptr<OHOS::Bluetooth::ServerSocket> g_sppServer = nullptr;
 std::shared_ptr<OHOS::Bluetooth::ClientSocket> g_sppClient = nullptr;
 } // namespace
@@ -48,9 +48,9 @@ using OHOS::Bluetooth::ServerSocket;
 using OHOS::Bluetooth::SocketFactory;
 using OHOS::Bluetooth::UUID;
 
-void HandleSppListen(int argc, const char *argv[])
+void handleSppListen(int argc, const char *argv[])
 {
-    std::string name = K_DEFAULT_SPP_SERVER_NAME;
+    std::string name = kDefaultSppServerName;
     GeStrValue(argc, argv, PARAM_NAME, name);
     if (g_sppServer != nullptr) {
         Logd("spplisten: closing previous server");
@@ -67,9 +67,9 @@ void HandleSppListen(int argc, const char *argv[])
     Logd("spplisten: Listen ret=%d name=%s", ret, name.c_str());
 }
 
-void HandleSppAccept(int argc, const char *argv[])
+void handleSppAccept(int argc, const char *argv[])
 {
-    int timeoutMs = K_DEFAULT_ACCEPT_TIMEOUT_MS;
+    int timeoutMs = kDefaultAcceptTimeoutMs;
     GetIntValue(argc, argv, "timeout=", timeoutMs);
     if (g_sppServer == nullptr) {
         Logd("sppaccept: no server, call spplisten first");
@@ -87,7 +87,7 @@ void HandleSppAccept(int argc, const char *argv[])
     Logd("sppaccept: connected");
 }
 
-void HandleSppConnect(int argc, const char *argv[])
+void handleSppConnect(int argc, const char *argv[])
 {
     std::string mac;
     if (!GeStrValue(argc, argv, PARAM_MAC, mac)) {
@@ -111,7 +111,7 @@ void HandleSppConnect(int argc, const char *argv[])
     Logd("sppconnect: ret=%d", ret);
 }
 
-void HandleSppDisconnect(int argc, const char *argv[])
+void handleSppDisconnect(int argc, const char *argv[])
 {
     if (g_sppClient == nullptr) {
         Logd("sppdisconnect: no client");
@@ -122,16 +122,16 @@ void HandleSppDisconnect(int argc, const char *argv[])
     Logd("sppdisconnect: done");
 }
 
-void HandleSppRead(int argc, const char *argv[])
+void handleSppRead(int argc, const char *argv[])
 {
     if (g_sppClient == nullptr || !g_sppClient->IsConnected()) {
         Logd("sppread: no connected client");
         return;
     }
-    int len = static_cast<int>(K_MAX_READ_BUF_LEN);
+    int len = static_cast<int>(kMaxReadBufLen);
     GetIntValue(argc, argv, "len=", len);
-    if (len <= 0 || static_cast<size_t>(len) > K_MAX_READ_BUF_LEN) {
-        len = static_cast<int>(K_MAX_READ_BUF_LEN);
+    if (len <= 0 || static_cast<size_t>(len) > kMaxReadBufLen) {
+        len = static_cast<int>(kMaxReadBufLen);
     }
     std::vector<uint8_t> buf(static_cast<size_t>(len), 0);
     std::shared_ptr<OHOS::Bluetooth::InputStream> in = g_sppClient->GetInputStream();
@@ -141,15 +141,14 @@ void HandleSppRead(int argc, const char *argv[])
     }
     ssize_t n = in->Read(buf.data(), static_cast<size_t>(len));
     if (n > 0) {
-        const size_t showLen = (static_cast<size_t>(n) > SPP_READ_HEX_DISPLAY_MAX_BYTES)
-            ? static_cast<size_t>(SPP_READ_HEX_DISPLAY_MAX_BYTES) : static_cast<size_t>(n);
+        const size_t showLen = (static_cast<size_t>(n) > 64) ? 64 : static_cast<size_t>(n);
         std::string hexStr;
         for (size_t i = 0; i < showLen; i++) {
             char b[4];
             (void)sprintf_s(b, sizeof(b), "%02x ", buf[i]);
             hexStr += b;
         }
-        if (static_cast<size_t>(n) > SPP_READ_HEX_DISPLAY_MAX_BYTES) {
+        if (static_cast<size_t>(n) > 64) {
             hexStr += "...";
         }
         Logd("sppread: %zd bytes: %s", n, hexStr.c_str());
@@ -158,7 +157,7 @@ void HandleSppRead(int argc, const char *argv[])
     }
 }
 
-void HandleSppWrite(int argc, const char *argv[])
+void handleSppWrite(int argc, const char *argv[])
 {
     if (g_sppClient == nullptr || !g_sppClient->IsConnected()) {
         Logd("sppwrite: no connected client");
@@ -178,7 +177,7 @@ void HandleSppWrite(int argc, const char *argv[])
     Logd("sppwrite: wrote %zu bytes ret=%d", data.size(), ret);
 }
 
-void HandleSppServerClose(int argc, const char *argv[])
+void handleSppServerClose(int argc, const char *argv[])
 {
     if (g_sppClient != nullptr) {
         g_sppClient->Close();

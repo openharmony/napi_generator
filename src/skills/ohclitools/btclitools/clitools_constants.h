@@ -242,7 +242,6 @@
 
 // Buffer and array size constants
 #define HEX_BYTE_BUFFER_SIZE                    4
-#define SPP_READ_HEX_DISPLAY_MAX_BYTES          64
 #define DEVICE_NAME_BUFFER_SIZE                 256
 #define MAC_ADDRESS_BUFFER_SIZE                 18
 #define UUID_STRING_BUFFER_SIZE                 37
