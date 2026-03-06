@@ -33,7 +33,7 @@ constexpr int STATE_CONNECTED = 1;
 constexpr int STATE_DISCONNECTING = 2;
 constexpr int STATE_DISCONNECTED = 3;
 constexpr int STATE_INVALID = -1;
-const char *a2dpStateStr(int state)
+const char *A2dpStateStr(int state)
 {
     switch (state) {
         case STATE_CONNECTING: return "connecting";
@@ -59,8 +59,7 @@ void HandleA2dpConnect(int argc, const char *argv[])
         return;
     }
     BluetoothHost &host = BluetoothHost::GetDefaultHost();
-    // 0 = BR/EDR
-    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, 0);
+    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
     A2dpSource *profile = A2dpSource::GetProfile();
     if (profile == nullptr) {
         Logd("a2dp: GetProfile failed");
@@ -78,8 +77,7 @@ void HandleA2dpDisconnect(int argc, const char *argv[])
         return;
     }
     BluetoothHost &host = BluetoothHost::GetDefaultHost();
-    // 0 = BR/EDR
-    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, 0);
+    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
     A2dpSource *profile = A2dpSource::GetProfile();
     if (profile == nullptr) {
         Logd("a2dp: GetProfile failed");
@@ -116,8 +114,7 @@ void HandleA2dpGetDeviceState(int argc, const char *argv[])
         return;
     }
     BluetoothHost &host = BluetoothHost::GetDefaultHost();
-    // 0 = BR/EDR
-    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, 0);
+    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
     A2dpSource *profile = A2dpSource::GetProfile();
     if (profile == nullptr) {
         Logd("a2dp: GetProfile failed");
@@ -125,7 +122,7 @@ void HandleA2dpGetDeviceState(int argc, const char *argv[])
     }
     int state = STATE_INVALID;
     int ret = profile->GetDeviceState(device, state);
-    Logd("a2dpgetdevicestate: state=%d (%s) ret=%d", state, a2dpStateStr(state), ret);
+    Logd("a2dpgetdevicestate: state=%d (%s) ret=%d", state, A2dpStateStr(state), ret);
 }
 
 void HandleA2dpSetActiveSink(int argc, const char *argv[])
@@ -136,8 +133,7 @@ void HandleA2dpSetActiveSink(int argc, const char *argv[])
         return;
     }
     BluetoothHost &host = BluetoothHost::GetDefaultHost();
-    // 0 = BR/EDR
-    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, 0);
+    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
     A2dpSource *profile = A2dpSource::GetProfile();
     if (profile == nullptr) {
         Logd("a2dp: GetProfile failed");
@@ -166,8 +162,7 @@ void HandleA2dpStartPlaying(int argc, const char *argv[])
         return;
     }
     BluetoothHost &host = BluetoothHost::GetDefaultHost();
-    // 0 = BR/EDR
-    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, 0);
+    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
     A2dpSource *profile = A2dpSource::GetProfile();
     if (profile == nullptr) {
         Logd("a2dp: GetProfile failed");
@@ -185,8 +180,7 @@ void HandleA2dpSuspendPlaying(int argc, const char *argv[])
         return;
     }
     BluetoothHost &host = BluetoothHost::GetDefaultHost();
-    // 0 = BR/EDR
-    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, 0);
+    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
     A2dpSource *profile = A2dpSource::GetProfile();
     if (profile == nullptr) {
         Logd("a2dp: GetProfile failed");
@@ -204,8 +198,7 @@ void HandleA2dpStopPlaying(int argc, const char *argv[])
         return;
     }
     BluetoothHost &host = BluetoothHost::GetDefaultHost();
-    // 0 = BR/EDR
-    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, 0);
+    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
     A2dpSource *profile = A2dpSource::GetProfile();
     if (profile == nullptr) {
         Logd("a2dp: GetProfile failed");
@@ -223,8 +216,7 @@ void HandleA2dpGetPlayingState(int argc, const char *argv[])
         return;
     }
     BluetoothHost &host = BluetoothHost::GetDefaultHost();
-    // 0 = BR/EDR
-    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, 0);
+    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
     A2dpSource *profile = A2dpSource::GetProfile();
     if (profile == nullptr) {
         Logd("a2dp: GetProfile failed");

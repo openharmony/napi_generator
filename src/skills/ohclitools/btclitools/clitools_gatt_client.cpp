@@ -57,7 +57,7 @@ void HandleGattConnect(int argc, const char* argv[])
     std::string mac;
     GetMac(argc, argv, mac);
     Logd("GetMac mac:%s", mac.c_str());
-    BluetoothRemoteDevice remoteDevice(mac, 1);
+    BluetoothRemoteDevice remoteDevice(mac, BT_TRANSPORT_BLE);
     g_gattClient = std::make_shared<GattClient>(remoteDevice);
     // Store the device address
     g_currentGattDeviceAddress = mac;
@@ -897,7 +897,7 @@ void HandleGattCreateClient(int argc, const char* argv[])
 
     if (!mac.empty()) {
         Logd("Creating GATT client for device: %s", mac.c_str());
-        BluetoothRemoteDevice remoteDevice(mac, 1);
+        BluetoothRemoteDevice remoteDevice(mac, BT_TRANSPORT_BLE);
         g_gattCallback = std::make_shared<BleGattClientCallback>();
         g_gattClient = std::make_shared<GattClient>(remoteDevice);
         // Store the device address

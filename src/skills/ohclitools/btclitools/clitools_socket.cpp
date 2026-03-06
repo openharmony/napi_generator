@@ -34,6 +34,10 @@
 namespace {
 constexpr int DEFAULT_ACCEPT_TIMEOUT_MS = 30000;
 constexpr size_t MAX_READ_BUF_LEN = 4096;
+/** Max bytes to show in hex for sppread (truncate with "..." if larger). */
+constexpr size_t MAX_SPP_READ_DISPLAY_BYTES = 64;
+/** Buffer size for "%02x " (2 hex digits + space + null). */
+constexpr size_t HEX_BYTE_PRINT_BUF_SIZE = 4;
 const char *DEFAULT_SPP_SERVER_NAME = "BtCliSppServer";
 std::shared_ptr<OHOS::Bluetooth::ServerSocket> g_sppServer = nullptr;
 std::shared_ptr<OHOS::Bluetooth::ClientSocket> g_sppClient = nullptr;
@@ -99,8 +103,7 @@ void HandleSppConnect(int argc, const char *argv[])
         g_sppClient = nullptr;
     }
     BluetoothHost &host = BluetoothHost::GetDefaultHost();
-    // 0 = BR/EDR
-    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, 0);
+    BluetoothRemoteDevice device = host.GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
     UUID uuid = UUID::FromString(OHOS::Bluetooth::BLUETOOTH_UUID_SPP);
     g_sppClient = SocketFactory::BuildRfcommDataSocketByServiceRecord(device, uuid);
     if (g_sppClient == nullptr) {
@@ -142,15 +145,15 @@ void HandleSppRead(int argc, const char *argv[])
     }
     ssize_t n = in->Read(buf.data(), static_cast<size_t>(len));
     if (n > 0) {
-        const size_t showLen = (static_cast<size_t>(n) > SPP_READ_HEX_DISPLAY_MAX_BYTES)
-            ? SPP_READ_HEX_DISPLAY_MAX_BYTES : static_cast<size_t>(n);
+        const size_t showLen = (static_cast<size_t>(n) > MAX_SPP_READ_DISPLAY_BYTES)
+            ? MAX_SPP_READ_DISPLAY_BYTES : static_cast<size_t>(n);
         std::string hexStr;
         for (size_t i = 0; i < showLen; i++) {
-            char b[4];
+            char b[HEX_BYTE_PRINT_BUF_SIZE];
             (void)sprintf_s(b, sizeof(b), "%02x ", buf[i]);
             hexStr += b;
         }
-        if (static_cast<size_t>(n) > SPP_READ_HEX_DISPLAY_MAX_BYTES) {
+        if (static_cast<size_t>(n) > MAX_SPP_READ_DISPLAY_BYTES) {
             hexStr += "...";
         }
         Logd("sppread: %zd bytes: %s", n, hexStr.c_str());
