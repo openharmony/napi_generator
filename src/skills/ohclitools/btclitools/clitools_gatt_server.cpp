@@ -409,7 +409,8 @@ void HandleGattAddServices(int argc, const char* argv[])
     // Check for service type parameter
     std::string serviceType;
     if (!GeStrValue(argc, argv, PARAM_TYPE, serviceType)) {
-        serviceType = "battery"; // Default service type
+        // Default service type
+        serviceType = "battery";
     }
 
     Logd("Adding GATT service type: %s", serviceType.c_str());

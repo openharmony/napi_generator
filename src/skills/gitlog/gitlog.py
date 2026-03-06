@@ -1535,7 +1535,7 @@ def _check_file_style(file_path, content):
         # 2) 函数定义：返回类型后跟首字母小写的函数名（C/C++ 常见）
         if re.search(r'^(?:const\s+)?(?:char|int|void|bool|size_t|uint\d*_t|int\d*_t)\s*\*?\s+[a-z][a-zA-Z0-9]*\s*\(', stripped):
             m = re.search(r'\b([a-z][a-zA-Z0-9]*)\s*\(', stripped)
-            if m and m.group(1) not in ('if', 'for', 'while', 'switch', 'return', 'sizeof', 'static_cast', 'reinterpret_cast'):
+            if m and m.group(1) not in ('if', 'for', 'while', 'switch', 'return', 'sizeof', 'static_cast', 'reinterpret_cast', 'main'):
                 violations.append((i, 'FUNCTION_NAMING', f'函数名首字母小写: {m.group(1)!r}',
                     '改为大驼峰，如 HandleXxx、A2dpStateStr'))
         # 3) 魔数：比较运算符后的 2~3 位或更大整数（排除 0,1,-1）

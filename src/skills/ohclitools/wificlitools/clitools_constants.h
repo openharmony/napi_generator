@@ -16,60 +16,70 @@
 /**
  * @file clitools_constants.h
  * @brief Named constants for wificlitools. No magic numbers in .cpp.
+ * Do not use anonymous namespace or static in headers; use inline constexpr.
  */
 
 #ifndef WIFICLITOOLS_CLITOOLS_CONSTANTS_H
 #define WIFICLITOOLS_CLITOOLS_CONSTANTS_H
 
 /** Minimum argc for main: program name + at least one command. */
-static const int MIN_ARGC_WITH_CMD = 2;
+inline constexpr int MIN_ARGC_WITH_CMD = 2;
 
 /** Index of command name in argv (argv[0] after main strips program name). */
-static const int CMD_IDX = 0;
+inline constexpr int CMD_IDX = 0;
 /** First optional argument index (argv[1] = first key=value). */
-static const int ARG_IDX_FIRST = 1;
+inline constexpr int ARG_IDX_FIRST = 1;
+/** Second optional argument index (e.g. argv[2] for PNO periodMs). */
+inline constexpr int ARG_IDX_SECOND = 2;
+/** Third optional argument index (e.g. argv[3] for PNO suspendReason). */
+inline constexpr int ARG_IDX_THIRD = 3;
+
+/** Minimum argc to have period argument (startpnoscan: cmd + start|stop + periodMs). */
+inline constexpr int MIN_ARGC_FOR_PNO_PERIOD = 3;
+/** Minimum argc to have suspend reason (startpnoscan: cmd + start|stop + periodMs + suspendReason). */
+inline constexpr int MIN_ARGC_FOR_PNO_SUSPEND = 4;
 
 /** Minimum length for WPA pre-shared key. */
-static const int MIN_WPA_PASSWORD_LEN = 8;
+inline constexpr int MIN_WPA_PASSWORD_LEN = 8;
 
 /** Argument prefix length: "ssid=" */
-static const int PREFIX_LEN_SSID = 5;
+inline constexpr int PREFIX_LEN_SSID = 5;
 /** Argument prefix length: "password=" */
-static const int PREFIX_LEN_PASSWORD = 9;
+inline constexpr int PREFIX_LEN_PASSWORD = 9;
 
 /** Default PNO scan period in milliseconds when not specified. */
-static const int DEFAULT_PNO_PERIOD_MS = 60000;
+inline constexpr int DEFAULT_PNO_PERIOD_MS = 60000;
 /** Default suspend reason for PNO scan when not specified. */
-static const int DEFAULT_SUSPEND_REASON = 0;
+inline constexpr int DEFAULT_SUSPEND_REASON = 0;
 
 /** Invalid or unset network id. */
-static const int INVALID_NETWORK_ID = -1;
+inline constexpr int INVALID_NETWORK_ID = -1;
 
 /** Hotspot service instance id (first instance). */
-static const int HOTSPOT_INSTANCE_ID = 0;
+inline constexpr int HOTSPOT_INSTANCE_ID = 0;
 
 /** Default band for getvalidchannels when not specified: 1 = 2.4G. */
-static const int DEFAULT_BAND_VALID_CHANNELS = 1;
+inline constexpr int DEFAULT_BAND_VALID_CHANNELS = 1;
 
 /** Default power model when not specified: 1 = GENERAL. */
-static const int DEFAULT_POWER_MODEL = 1;
+inline constexpr int DEFAULT_POWER_MODEL = 1;
 
 /** Default config type for Hid2d getselfcfg/setpeercfg. */
-static const int DEFAULT_CFG_TYPE = 1;
+inline constexpr int DEFAULT_CFG_TYPE = 1;
 
 /** Default frequency for Hid2d create group (5G Hz). */
-static const int DEFAULT_HID2D_FREQ = 5180;
+inline constexpr int DEFAULT_HID2D_FREQ = 5180;
 /** Default frequency type for Hid2d: 0 = FREQUENCY_DEFAULT. */
-static const int DEFAULT_HID2D_FREQ_TYPE = 0;
+inline constexpr int DEFAULT_HID2D_FREQ_TYPE = 0;
 /** Default group type: 0 = GROUPSTOPALIVE, 1 = GROUPKEEPALIVE. */
-static const int DEFAULT_GROUP_TYPE = 0;
+inline constexpr int DEFAULT_GROUP_TYPE = 0;
 
 /** Max number of 5G channels to dump in one list (avoid flood). */
-static const int MAX_DUMP_CHANNEL_COUNT = 20;
+inline constexpr int MAX_DUMP_CHANNEL_COUNT = 20;
 
 /** Callback wait timeout for normal operations (ms). */
-static const int DEFAULT_CALLBACK_TIMEOUT_MS = 2000;
+inline constexpr int DEFAULT_CALLBACK_TIMEOUT_MS = 2000;
 /** Callback wait timeout for scan or other long operations (ms). */
-static const int SCAN_CALLBACK_TIMEOUT_MS = 30000;
+inline constexpr int SCAN_CALLBACK_TIMEOUT_MS = 30000;
 
 #endif  // WIFICLITOOLS_CLITOOLS_CONSTANTS_H

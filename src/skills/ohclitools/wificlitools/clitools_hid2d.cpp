@@ -198,7 +198,8 @@ void HandleHid2dRemoveGcGroup(int argc, const char* argv[])
  */
 void HandleHid2dConnect(int argc, const char* argv[])
 {
-    std::string ssid, bssid;
+    std::string ssid;
+    std::string bssid;
     ParseStrArg(argc, argv, "ssid=", ssid);
     ParseStrArg(argc, argv, "bssid=", bssid);
     if (g_hid2d == nullptr) {
@@ -219,7 +220,8 @@ void HandleHid2dConnect(int argc, const char* argv[])
 
 void HandleHid2dConfigIpAddr(int argc, const char* argv[])
 {
-    std::string ifName, ip;
+    std::string ifName;
+    std::string ip;
     if (!ParseStrArg(argc, argv, "ifname=", ifName) || !ParseStrArg(argc, argv, "ip=", ip)) {
         Logd("usage: hid2dconfigipaddr ifname=xxx ip=xxx");
         return;

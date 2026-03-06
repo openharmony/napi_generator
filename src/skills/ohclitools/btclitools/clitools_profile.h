@@ -21,6 +21,6 @@
  * @brief Command-line handlers for Bluetooth profile manager (btframework bluetooth_profile_manager.h).
  */
 
-void handleProfileServiceOn(int argc, const char *argv[]);
+void HandleProfileServiceOn(int argc, const char *argv[]);
 
 #endif // CLITOOLS_PROFILE_H

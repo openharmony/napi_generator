@@ -143,9 +143,13 @@ common.cpp         → common.h
 | 规范项 | 要求 |
 |--------|------|
 | **魔数禁止** | 不得在逻辑中直接写魔法数字/字符串，一律用具名常量或枚举。 |
-| **行宽** | 单行字符数不超过 110（含缩进与注释），超长时换行缩进。 |
+| **行宽** | 单行字符数不超过 120（含缩进与注释），超长时换行缩进。 |
 | **函数名** | 大驼峰（PascalCase），如 `HandleWifiEnable`、`ParseIntArg`。 |
-| **常量名** | 全大写 + 下划线（UPPER_SNAKE_CASE），如 `WIFI_OPT_SUCCESS`、`DEFAULT_CALLBACK_TIMEOUT_MS`。 |
+| **常量名** | 全大写 + 下划线（UPPER_SNAKE_CASE），如 `WIFI_OPT_SUCCESS`、`DEFAULT_CALLBACK_TIMEOUT_MS`；禁止 k 前缀或 camelCase。 |
+| **变量声明** | 同一行不声明多个变量（如 `std::string ifName, ip;` 改为两行：`std::string ifName;`、`std::string ip;`）。 |
+| **注释位置** | 说明性注释不写在行尾；应单独占一行，写在被注释代码的**上一行**。 |
+| **换行与运算符** | 续行时运算符放在行尾，行尾与下一行行首不留空格（如 `&&`、`\|\|` 在上一行末尾）。 |
+| **头文件** | 不在头文件中使用匿名 namespace 或 static 定义非外部可见符号；常量用 `inline constexpr`（C++17）或移至 .cpp 定义。 |
 | **Get 类接口** | 凡「获取信息」类接口（如 GetLinkedInfo、GetDeviceConfigs、GetScanInfoList），需在终端 **dump 出具体 info**（字段级打印），不能只打印「success」。 |
 | **Callback 接口** | 若框架 API 为异步回调（如注册 callback 等待结果），需：① 注册 callback；② 等待回调结果并带 **timeout**。默认超时 **2s**；对 scan 等长时间操作默认 **30s**，超时后结束 scan 动作并返回。 |
 | **Usage 两段式** | 每个命令的 usage 分两部分：① 接口功能与参数说明（参数标明 **string** 或 **int**，如 `code= string`、`networkId= int`）；② 使用示例，以 ` ex: wificommand <cmd> [args]` 结尾。 |

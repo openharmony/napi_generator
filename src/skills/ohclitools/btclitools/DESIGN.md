@@ -121,9 +121,24 @@ common_dump / common_callback
 ## 六、命名与可读性约定
 
 - **命令**：小写、连续字母，如 `a2dpconnect`、`spplisten`；与框架能力一一对应时在注释中标明头文件。
-- **Handler 函数**：`HandleXxx`（Host/GATT 等已有）或 `handleXxx`（如 handleA2dpConnect）；新模块建议与现有风格一致（如 A2DP/Socket/Profile 使用 handle 前缀）。
+- **Handler 函数**：大驼峰（PascalCase），如 `HandleXxx`、`HandleA2dpConnect`；新模块与现有风格一致。
 - **文件**：`clitools_<模块名>.h/cpp` 对应单一能力域；`common_*` 表示跨模块公共能力。
 - **注释**：在模块头文件顶部用 `@brief` 或 `@file` 说明对应 btframework 头；在命令表旁用简短注释标明「bundle 头 ↔ 命令组」。
+
+---
+
+## 六（附）、代码规范（与 ohclitools 技能一致）
+
+| 规范项 | 要求 |
+|--------|------|
+| **魔数禁止** | 不得在逻辑中直接写魔法数字/字符串，一律用具名常量或枚举。 |
+| **行宽** | 单行字符数不超过 120（含缩进与注释），超长时换行缩进。 |
+| **函数名** | 大驼峰（PascalCase），如 `HandleXxx`、`ParseIntArg`。 |
+| **常量名** | 全大写 + 下划线（UPPER_SNAKE_CASE），如 `LOG_MESSAGE_BUFFER_SIZE`、`DEFAULT_ACCEPT_TIMEOUT_MS`；禁止 k 前缀或 camelCase（如 `kStateConnecting` 改为 `STATE_CONNECTING`）。 |
+| **变量声明** | 同一行不声明多个变量（如 `std::string a, b;` 改为两行分别声明）。 |
+| **换行与运算符** | 续行时运算符放在行尾，行尾与下一行行首不留空格（如 `&&`、`\|\|` 在上一行末尾）。 |
+| **头文件** | 不在头文件中使用匿名 namespace 或 static 定义非外部可见符号；常量用 `#define` 或 `inline constexpr` 或移至 .cpp 定义。 |
+| **注释位置** | 说明性注释不写在行尾；应单独占一行，写在被注释代码的**上一行**（如 `// 0 = BR/EDR` 放在 `GetRemoteDevice(mac, 0)` 上一行）。 |
 
 ---
 

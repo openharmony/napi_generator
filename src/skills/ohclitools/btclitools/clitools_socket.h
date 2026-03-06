@@ -21,12 +21,12 @@
  * @brief Command-line handlers for Bluetooth Socket/SPP (btframework bluetooth_socket.h).
  */
 
-void handleSppListen(int argc, const char *argv[]);
-void handleSppAccept(int argc, const char *argv[]);
-void handleSppConnect(int argc, const char *argv[]);
-void handleSppDisconnect(int argc, const char *argv[]);
-void handleSppRead(int argc, const char *argv[]);
-void handleSppWrite(int argc, const char *argv[]);
-void handleSppServerClose(int argc, const char *argv[]);
+void HandleSppListen(int argc, const char *argv[]);
+void HandleSppAccept(int argc, const char *argv[]);
+void HandleSppConnect(int argc, const char *argv[]);
+void HandleSppDisconnect(int argc, const char *argv[]);
+void HandleSppRead(int argc, const char *argv[]);
+void HandleSppWrite(int argc, const char *argv[]);
+void HandleSppServerClose(int argc, const char *argv[]);
 
 #endif // CLITOOLS_SOCKET_H

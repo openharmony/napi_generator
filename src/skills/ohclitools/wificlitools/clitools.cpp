@@ -44,7 +44,8 @@ static const StaCliCmd g_staCliCmds[] = {
     {"getscanonlyavailable", HandleGetScanOnlyAvailable,
      "Get scan-only-available. No args. ex: wificommand getscanonlyavailable"},
     {"startpnoscan", HandleStartPnoScan,
-     "Start/stop PNO scan. [start|stop] string, [periodMs] int, [suspendReason] int. ex: wificommand startpnoscan start"},
+     "Start/stop PNO scan. [start|stop] string, [periodMs] int, [suspendReason] int. "
+     "ex: wificommand startpnoscan start"},
     {"wificonnect", HandleWifiConnect,
      "Connect AP. ssid= string, [password= string]. ex: wificommand wificonnect ssid=MyAP password=xxx"},
     {"wifidisconnect", HandleWifiDisconnect, "Disconnect. No args. ex: wificommand wifidisconnect"},
