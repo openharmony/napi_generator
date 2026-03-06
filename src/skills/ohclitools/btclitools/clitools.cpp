@@ -98,9 +98,11 @@ bool AssertAndDumpServiceNotFoundWithDiscovery(const OHOS::Bluetooth::GattServic
                 Logd("  Service[%zu]: %s", i, services[i].GetUuid().ToString().c_str());
             }
         }
-        return true; // Should return from calling function
+        // Should return from calling function
+        return true;
     }
-    return false; // Continue execution
+    // Continue execution
+    return false;
 }
 
 void DumpBrStatus()

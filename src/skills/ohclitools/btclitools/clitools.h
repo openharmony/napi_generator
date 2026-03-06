@@ -71,9 +71,11 @@ inline bool AssertWithReturn(bool condition, const char* message, ReturnType* re
 {
     if (condition) {
         Logd("%s", message);
-        return true; // Indicates should return
+        // Indicates should return
+        return true;
     }
-    return false; // Continue execution
+    // Continue execution
+    return false;
 }
 
 // Function-based alternatives to replace problematic macros with return statements
@@ -81,18 +83,22 @@ inline bool ShouldReturnVoid(bool condition, const char* message)
 {
     if (condition) {
         Logd("%s", message);
-        return true; // Indicates caller should return
+        // Indicates caller should return
+        return true;
     }
-    return false; // Continue execution
+    // Continue execution
+    return false;
 }
 
 inline bool ShouldReturnFalse(bool condition, const char* message)
 {
     if (condition) {
         Logd("%s", message);
-        return true; // Indicates caller should return false
+        // Indicates caller should return false
+        return true;
     }
-    return false; // Continue execution
+    // Continue execution
+    return false;
 }
 
 // Overloaded versions for formatted strings (using C-style variadic functions)
@@ -104,9 +110,11 @@ inline bool ShouldReturnVoid(bool condition, const char* format, const char* arg
         if (result > 0) {
             Log(buffer, arg);
         }
-        return true; // Indicates caller should return
+        // Indicates caller should return
+        return true;
     }
-    return false; // Continue execution
+    // Continue execution
+    return false;
 }
 
 // Usage examples:
