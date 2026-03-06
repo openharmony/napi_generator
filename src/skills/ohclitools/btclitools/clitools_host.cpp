@@ -330,7 +330,8 @@ void HandleBrSetBtScanMode(int argc, const char* argv[])
     }
 
     if (!GetIntValue(argc, argv, PARAM_DURATION, duration)) {
-        duration = DEFAULT_SCAN_DURATION; // Default scan duration in seconds
+        // Default scan duration in seconds
+        duration = DEFAULT_SCAN_DURATION;
         Logd("Duration not specified, using default: %d seconds", duration);
     }
 
@@ -345,11 +346,13 @@ void HandleBrGetBondableMode(int argc, const char* argv[])
         g_bluetoothHost = &BluetoothHost::GetDefaultHost();
     }
 
-    int transport = BT_TRANSPORT_BREDR; // Default transport
+    // Default transport
+    int transport = BT_TRANSPORT_BREDR;
 
     // Try to get transport parameter if provided
     if (!GetIntValue(argc, argv, PARAM_TRANSPORT, transport)) {
-        transport = BT_TRANSPORT_BREDR; // Use default if not specified
+        // Use default if not specified
+        transport = BT_TRANSPORT_BREDR;
         Logd("Transport not specified, using default: %d (BT_TRANSPORT_BREDR)", transport);
     }
 
@@ -369,12 +372,15 @@ void HandleBrSetBondableMode(int argc, const char* argv[])
         g_bluetoothHost = &BluetoothHost::GetDefaultHost();
     }
 
-    int transport = BT_TRANSPORT_BREDR; // Default transport
-    int mode = BONDABLE_MODE_ON; // Default mode
+    // Default transport
+    int transport = BT_TRANSPORT_BREDR;
+    // Default mode
+    int mode = BONDABLE_MODE_ON;
 
     // Get transport parameter
     if (!GetIntValue(argc, argv, PARAM_TRANSPORT, transport)) {
-        transport = BT_TRANSPORT_BREDR; // Use default if not specified
+        // Use default if not specified
+        transport = BT_TRANSPORT_BREDR;
         Logd("Transport not specified, using default: %d (BT_TRANSPORT_BREDR)", transport);
     }
 
@@ -401,11 +407,13 @@ void HandleBrIsDiscovering(int argc, const char* argv[])
         g_bluetoothHost = &BluetoothHost::GetDefaultHost();
     }
 
-    int transport = BT_TRANSPORT_BREDR; // Default transport
+    // Default transport
+    int transport = BT_TRANSPORT_BREDR;
 
     // Try to get transport parameter if provided
     if (!GetIntValue(argc, argv, PARAM_TRANSPORT, transport)) {
-        transport = BT_TRANSPORT_BREDR; // Use default if not specified
+        // Use default if not specified
+        transport = BT_TRANSPORT_BREDR;
         Logd("Transport not specified, using default: %d (BT_TRANSPORT_BREDR)", transport);
     }
 
@@ -510,7 +518,8 @@ void HandleBrIsBondedFromLocal(int argc, const char* argv[])
 
     GetMac(argc, argv, mac);
     if (!GetIntValue(argc, argv, PARAM_TRANSPORT, transport)) {
-        transport = BT_TRANSPORT_BREDR; // Use default if not specified
+        // Use default if not specified
+        transport = BT_TRANSPORT_BREDR;
     }
 
     BluetoothRemoteDevice remoteDevice = g_bluetoothHost->GetRemoteDevice(mac, transport);
@@ -529,7 +538,8 @@ void HandleBrIsAclConnected(int argc, const char* argv[])
 
     GetMac(argc, argv, mac);
     if (!GetIntValue(argc, argv, PARAM_TRANSPORT, transport)) {
-        transport = BT_TRANSPORT_BREDR; // Use default if not specified
+        // Use default if not specified
+        transport = BT_TRANSPORT_BREDR;
     }
 
     BluetoothRemoteDevice remoteDevice = g_bluetoothHost->GetRemoteDevice(mac, transport);
@@ -548,7 +558,8 @@ void HandleBrIsAclEncrypted(int argc, const char* argv[])
 
     GetMac(argc, argv, mac);
     if (!GetIntValue(argc, argv, PARAM_TRANSPORT, transport)) {
-        transport = BT_TRANSPORT_BREDR; // Use default if not specified
+        // Use default if not specified
+        transport = BT_TRANSPORT_BREDR;
     }
 
     BluetoothRemoteDevice remoteDevice = g_bluetoothHost->GetRemoteDevice(mac, transport);
@@ -567,7 +578,8 @@ void HandleBrGetDeviceClass(int argc, const char* argv[])
 
     GetMac(argc, argv, mac);
     if (!GetIntValue(argc, argv, PARAM_TRANSPORT, transport)) {
-        transport = BT_TRANSPORT_BREDR; // Use default if not specified
+        // Use default if not specified
+        transport = BT_TRANSPORT_BREDR;
     }
 
     BluetoothRemoteDevice remoteDevice = g_bluetoothHost->GetRemoteDevice(mac, transport);
@@ -621,11 +633,13 @@ void HandleBrSetDevicePairingConfirmation(int argc, const char* argv[])
 {
     Logd("enter command handler:%s", argv[CMD_IDX]);
     std::string mac;
-    int accept = 1; // Default accept
+    // Default accept
+    int accept = 1;
 
     GetMac(argc, argv, mac);
     if (!GetIntValue(argc, argv, "accept=", accept)) {
-        accept = 1; // Default accept
+        // Default accept
+        accept = 1;
     }
 
     BluetoothRemoteDevice remoteDevice = g_bluetoothHost->GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
@@ -639,7 +653,8 @@ void HandleBrSetDevicePasskey(int argc, const char* argv[])
     Logd("enter command handler:%s", argv[CMD_IDX]);
     std::string mac;
     int passkey = 0;
-    int accept = 1; // Default accept
+    // Default accept
+    int accept = 1;
 
     GetMac(argc, argv, mac);
     if (ShouldReturnVoid(!GetIntValue(argc, argv, "passkey=", passkey),
@@ -647,7 +662,8 @@ void HandleBrSetDevicePasskey(int argc, const char* argv[])
         return;
     }
     if (!GetIntValue(argc, argv, "accept=", accept)) {
-        accept = 1; // Default accept
+        // Default accept
+        accept = 1;
     }
 
     BluetoothRemoteDevice remoteDevice = g_bluetoothHost->GetRemoteDevice(mac, BT_TRANSPORT_BREDR);
@@ -660,11 +676,13 @@ void HandleBrPairRequestReply(int argc, const char* argv[])
 {
     Logd("enter command handler:%s", argv[CMD_IDX]);
     std::string mac;
-    int accept = 1; // Default accept
+    // Default accept
+    int accept = 1;
 
     GetMac(argc, argv, mac);
     if (!GetIntValue(argc, argv, "accept=", accept)) {
-        accept = 1; // Default accept
+        // Default accept
+        accept = 1;
     }
 
     BluetoothRemoteDevice remoteDevice = g_bluetoothHost->GetRemoteDevice(mac, BT_TRANSPORT_BREDR);

@@ -21,15 +21,15 @@
  * @brief Command-line handlers for A2DP source profile (btframework bluetooth_a2dp_src.h).
  */
 
-void handleA2dpConnect(int argc, const char *argv[]);
-void handleA2dpDisconnect(int argc, const char *argv[]);
-void handleA2dpGetDevices(int argc, const char *argv[]);
-void handleA2dpGetDeviceState(int argc, const char *argv[]);
-void handleA2dpSetActiveSink(int argc, const char *argv[]);
-void handleA2dpGetActiveSink(int argc, const char *argv[]);
-void handleA2dpStartPlaying(int argc, const char *argv[]);
-void handleA2dpSuspendPlaying(int argc, const char *argv[]);
-void handleA2dpStopPlaying(int argc, const char *argv[]);
-void handleA2dpGetPlayingState(int argc, const char *argv[]);
+void HandleA2dpConnect(int argc, const char *argv[]);
+void HandleA2dpDisconnect(int argc, const char *argv[]);
+void HandleA2dpGetDevices(int argc, const char *argv[]);
+void HandleA2dpGetDeviceState(int argc, const char *argv[]);
+void HandleA2dpSetActiveSink(int argc, const char *argv[]);
+void HandleA2dpGetActiveSink(int argc, const char *argv[]);
+void HandleA2dpStartPlaying(int argc, const char *argv[]);
+void HandleA2dpSuspendPlaying(int argc, const char *argv[]);
+void HandleA2dpStopPlaying(int argc, const char *argv[]);
+void HandleA2dpGetPlayingState(int argc, const char *argv[]);
 
 #endif // CLITOOLS_A2DP_H

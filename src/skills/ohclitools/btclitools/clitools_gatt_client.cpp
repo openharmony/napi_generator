@@ -59,7 +59,8 @@ void HandleGattConnect(int argc, const char* argv[])
     Logd("GetMac mac:%s", mac.c_str());
     BluetoothRemoteDevice remoteDevice(mac, 1);
     g_gattClient = std::make_shared<GattClient>(remoteDevice);
-    g_currentGattDeviceAddress = mac; // Store the device address
+    // Store the device address
+    g_currentGattDeviceAddress = mac;
     g_gattClient->Connect(g_gattCallback, false, BT_TRANSPORT_BLE);
 }
 
@@ -189,7 +190,8 @@ void HandleGattGetDeviceName(int argc, const char* argv[])
     // Check for method parameter (direct or gatt)
     std::string method;
     if (!GeStrValue(argc, argv, PARAM_METHOD, method)) {
-        method = METHOD_DIRECT; // Default method
+        // Default method
+        method = METHOD_DIRECT;
     }
 
     if (method == METHOD_DIRECT) {
@@ -468,11 +470,13 @@ void HandleGattWriteCharactValue(int argc, const char* argv[])
     // Get optional parameters
     std::string valueType;
     if (!GeStrValue(argc, argv, PARAM_TYPE, valueType)) {
-        valueType = VALUE_TYPE_HEX; // Default to hex
+        // Default to hex
+        valueType = VALUE_TYPE_HEX;
     }
 
     if (!GeStrValue(argc, argv, PARAM_WRITE_TYPE, writeType)) {
-        writeType = WRITE_TYPE_DEFAULT; // Default write type
+        // Default write type
+        writeType = WRITE_TYPE_DEFAULT;
     }
 
     Logd("Writing characteristic: service=%s, characteristic=%s, value=%s, type=%s, write_type=%s",
@@ -802,7 +806,8 @@ void HandleGattWriteDescripValue(int argc, const char* argv[])
     // Get optional parameters
     std::string valueType;
     if (!GeStrValue(argc, argv, PARAM_TYPE, valueType)) {
-        valueType = VALUE_TYPE_HEX; // Default to hex
+        // Default to hex
+        valueType = VALUE_TYPE_HEX;
     }
 
     Logd("Writing descriptor: service=%s, characteristic=%s, descriptor=%s, value=%s, type=%s",
@@ -856,7 +861,8 @@ void HandleGattGetRssi(int argc, const char* argv[])
 {
     Logd("enter command handler:%s", argv[CMD_IDX]);
     if (g_gattClient != nullptr) {
-        int result = g_gattClient->RequestConnectionPriority(0); // Request RSSI
+        // Request RSSI
+        int result = g_gattClient->RequestConnectionPriority(0);
         Logd("GATT GetRssi request result[%d]", result);
     } else {
         Logd("GATT client not initialized. Use 'gattconn' command first.");
@@ -867,9 +873,11 @@ void HandleGattSetMtuSize(int argc, const char* argv[])
 {
     Logd("enter command handler:%s", argv[CMD_IDX]);
     if (g_gattClient != nullptr) {
-        int mtu = GATT_DEFAULT_MTU_SIZE; // Default MTU size
+        // Default MTU size
+        int mtu = GATT_DEFAULT_MTU_SIZE;
         if (!GetIntValue(argc, argv, PARAM_MTU, mtu)) {
-            mtu = GATT_DEFAULT_MTU_SIZE; // Use default if not specified
+            // Use default if not specified
+            mtu = GATT_DEFAULT_MTU_SIZE;
             Logd("MTU not specified, using default: %d", mtu);
         }
 
@@ -892,7 +900,8 @@ void HandleGattCreateClient(int argc, const char* argv[])
         BluetoothRemoteDevice remoteDevice(mac, 1);
         g_gattCallback = std::make_shared<BleGattClientCallback>();
         g_gattClient = std::make_shared<GattClient>(remoteDevice);
-        g_currentGattDeviceAddress = mac; // Store the device address
+        // Store the device address
+        g_currentGattDeviceAddress = mac;
         Logd("GATT client created successfully");
     } else {
         Logd("Usage: gattcreateclient mac=device_mac_address");

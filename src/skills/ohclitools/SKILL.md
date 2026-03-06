@@ -42,9 +42,13 @@ wificlitools 参考 wifi bundle 的 inner_api（wifi_sdk / wifi_base / wifi_util
 | 规范项 | 要求 |
 |--------|------|
 | **魔数禁止** | 不得使用魔数，一律用具名常量或枚举。 |
-| **行宽** | 单行不超过 110 字符。 |
+| **行宽** | 单行不超过 120 字符（含缩进与注释）。 |
 | **函数名** | 大驼峰（PascalCase）。 |
-| **常量名** | 全大写 + 下划线（UPPER_SNAKE_CASE）。 |
+| **常量名** | 全大写 + 下划线（UPPER_SNAKE_CASE）；禁止 k 前缀或 camelCase（如 `kDefaultXxx` 改为 `DEFAULT_XXX`）。 |
+| **变量声明** | 同一行不声明多个变量（如 `std::string ifName, ip;` 改为两行：`std::string ifName;`、`std::string ip;`）。 |
+| **注释位置** | 说明性注释不写在行尾；应单独占一行，写在被注释代码的**上一行**（如 `// 0 = BR/EDR` 放在 `GetRemoteDevice(mac, 0)` 上一行）。 |
+| **换行与运算符** | 续行时运算符放在行尾，行尾与下一行行首不留空格（如 `&&`、`\|\|` 在上一行末尾，下一行直接接表达式）。 |
+| **头文件** | 不在头文件中使用匿名 namespace 或 static 定义非外部可见符号；常量用 `inline constexpr`（C++17）或移至 .cpp 中定义。 |
 | **Get 类接口** | 必须在终端 dump 出具体 info（字段级），不能只打印 success。 |
 | **Callback** | 需注册 callback 并等待返回值；**必须带 timeout**。默认 2s；scan 等长时间操作默认 30s，超时后结束动作。 |
 | **Usage 两段式** | 每个命令的 usage 分两部分：① **接口功能与参数说明**（参数需标明 **string** 或 **int**，如 `code= string`、`networkId= int`）；② **使用示例**，固定以 ` ex: wificommand <cmd> [args]` 结尾。 |

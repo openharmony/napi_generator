@@ -17,7 +17,11 @@ Usage:
 带 --push-run 时解析设备输出「support command as follows:」与源码 g_staCliCmds 对比一致性。
 
 CLI 代码规范（生成/补齐 clitools 代码时须遵守，详见 SKILL.md 与各工具 DESIGN.md）：
-- 魔数禁止，常量/枚举命名 UPPER_SNAKE_CASE；函数名 PascalCase；单行 ≤110 字符。
+- 魔数禁止，常量/枚举命名 UPPER_SNAKE_CASE（禁止 k 前缀或 camelCase）；函数名 PascalCase；单行 ≤120 字符。
+- 变量声明：同一行不写多个变量（如 std::string a, b 改为分行声明）。
+- 注释位置：说明性注释不写行尾，单独一行写在被注释代码上一行。
+- 换行：续行时运算符放行尾，行尾与下一行行首不留空格。
+- 头文件：不在头文件中使用匿名 namespace 或 static 定义非外部可见符号；常量用 inline constexpr 或 .cpp 中定义。
 - Get 类接口：终端须 dump 具体 info（字段级），不能只打印 success。
 - Callback 接口：注册 callback 并等待返回值，必须带 timeout；默认 2s，scan 类长操作默认 30s。
 - Usage 两段式：① 接口功能与参数说明（参数标明 string/int）；② " ex: wificommand <cmd> [args]"。

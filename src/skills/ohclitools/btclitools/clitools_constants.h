@@ -241,6 +241,7 @@
 #define DEFAULT_PULSE_AMPLITUDE_INDEX          1.5f
 
 // Buffer and array size constants
+#define SPP_READ_HEX_DISPLAY_MAX_BYTES           64
 #define HEX_BYTE_BUFFER_SIZE                    4
 #define DEVICE_NAME_BUFFER_SIZE                 256
 #define MAC_ADDRESS_BUFFER_SIZE                 18

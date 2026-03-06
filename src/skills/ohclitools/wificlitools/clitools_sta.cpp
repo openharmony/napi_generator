@@ -338,14 +338,14 @@ void HandleStartPnoScan(int argc, const char* argv[])
     int periodMs = DEFAULT_PNO_PERIOD_MS;
     int suspendReason = DEFAULT_SUSPEND_REASON;
     if (argc >= MIN_ARGC_WITH_CMD) {
-        isStart = (strcmp(argv[ARG_IDX_FIRST], "stop") != 0
-            && strcmp(argv[ARG_IDX_FIRST], "0") != 0);
+        isStart = (strcmp(argv[ARG_IDX_FIRST], "stop") != 0 &&
+            strcmp(argv[ARG_IDX_FIRST], "0") != 0);
     }
-    if (argc >= 3) {
-        periodMs = atoi(argv[2]);
+    if (argc >= MIN_ARGC_FOR_PNO_PERIOD) {
+        periodMs = atoi(argv[ARG_IDX_SECOND]);
     }
-    if (argc >= 4) {
-        suspendReason = atoi(argv[3]);
+    if (argc >= MIN_ARGC_FOR_PNO_SUSPEND) {
+        suspendReason = atoi(argv[ARG_IDX_THIRD]);
     }
     if (g_wifiScan == nullptr) {
         Logd("WifiScan instance is null");
@@ -367,7 +367,8 @@ void HandleStartPnoScan(int argc, const char* argv[])
  */
 void HandleWifiConnect(int argc, const char* argv[])
 {
-    std::string ssid, password;
+    std::string ssid;
+    std::string password;
     if (!ParseConnectArgs(argc, argv, ssid, password)) {
         Logd("usage: wificonnect ssid=xxx [password=xxx]");
         return;
@@ -380,8 +381,8 @@ void HandleWifiConnect(int argc, const char* argv[])
     config.ssid = ssid;
     config.preSharedKey = password;
     config.keyMgmt = password.empty() ? KEY_MGMT_NONE : KEY_MGMT_WPA_PSK;
-    if (!password.empty()
-        && password.length() < static_cast<size_t>(MIN_WPA_PASSWORD_LEN)) {
+    if (!password.empty() &&
+        password.length() < static_cast<size_t>(MIN_WPA_PASSWORD_LEN)) {
         Logd("password length should be >= %d", MIN_WPA_PASSWORD_LEN);
         return;
     }
@@ -533,7 +534,8 @@ void HandleGetDeviceConfigs(int argc, const char* argv[])
  */
 void HandleAddDeviceConfig(int argc, const char* argv[])
 {
-    std::string ssid, password;
+    std::string ssid;
+    std::string password;
     if (!ParseConnectArgs(argc, argv, ssid, password)) {
         Logd("usage: adddeviceconfig ssid=xxx [password=xxx]");
         return;

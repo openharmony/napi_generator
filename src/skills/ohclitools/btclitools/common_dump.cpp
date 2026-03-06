@@ -74,7 +74,8 @@ bool IsValidUuidFormat(const std::string& uuid)
     // Check that all other characters are hexadecimal
     for (size_t i = 0; i < uuid.length(); i++) {
         if (i == UUID_DASH_POS_1 || i == UUID_DASH_POS_2 || i == UUID_DASH_POS_3 || i == UUID_DASH_POS_4) {
-            continue; // Skip dash positions
+            // Skip dash positions
+            continue;
         }
         char c = uuid[i];
         if (!((c >= CHAR_DIGIT_MIN && c <= CHAR_DIGIT_MAX) ||
@@ -506,9 +507,11 @@ bool AssertAndDumpServiceNotFound(const GattService* service, const std::string&
         for (size_t i = 0; i < services.size(); i++) {
             Logd("  Service[%zu]: %s", i, services[i].GetUuid().ToString().c_str());
         }
-        return true; // Should return from calling function
+        // Should return from calling function
+        return true;
     }
-    return false; // Continue execution
+    // Continue execution
+    return false;
 }
 
 bool AssertAndDumpCharacteristicNotFound(const GattCharacteristic* characteristic,
@@ -523,9 +526,11 @@ bool AssertAndDumpCharacteristicNotFound(const GattCharacteristic* characteristi
         for (size_t i = 0; i < characteristics.size(); i++) {
             Logd("  Characteristic[%zu]: %s", i, characteristics[i].GetUuid().ToString().c_str());
         }
-        return true; // Should return from calling function
+        // Should return from calling function
+        return true;
     }
-    return false; // Continue execution
+    // Continue execution
+    return false;
 }
 
 bool AssertAndDumpDescriptorNotFound(const GattDescriptor* descriptor,
@@ -541,9 +546,11 @@ bool AssertAndDumpDescriptorNotFound(const GattDescriptor* descriptor,
         for (size_t i = 0; i < descriptors.size(); i++) {
             Logd("  Descriptor[%zu]: %s", i, descriptors[i].GetUuid().ToString().c_str());
         }
-        return true; // Should return from calling function
+        // Should return from calling function
+        return true;
     }
-    return false; // Continue execution
+    // Continue execution
+    return false;
 }
 
 bool AssertAndDumpServiceNotFoundWithServices(const GattService* service,
@@ -560,9 +567,11 @@ bool AssertAndDumpServiceNotFoundWithServices(const GattService* service,
         } else {
             Logd("No services available. Try discovering services first.");
         }
-        return true; // Should return from calling function
+        // Should return from calling function
+        return true;
     }
-    return false; // Continue execution
+    // Continue execution
+    return false;
 }
 
 // Parameter parsing utility function
@@ -776,7 +785,8 @@ bool GetMac(int argc, const char *argv[], std::string& mac)
         std::string prefix = PARAM_MAC;
 
         if (input.substr(0, prefix.length()) == prefix) {
-            mac = input.substr(prefix.length());  // Extract content after "mac="
+            // Extract content after "mac="
+            mac = input.substr(prefix.length());
             Logd("MAC: %s\n", mac.c_str());
         } else {
             Logd("wrong input: mac=00:00:00:00:00:00\n");
