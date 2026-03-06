@@ -121,7 +121,7 @@ common_dump / common_callback
 ## 六、命名与可读性约定
 
 - **命令**：小写、连续字母，如 `a2dpconnect`、`spplisten`；与框架能力一一对应时在注释中标明头文件。
-- **Handler 函数**：统一使用 `HandleXxx` 首字母大写（如 HandleA2dpConnect、HandleSppListen），与 Host/GATT 等模块一致。
+- **Handler 函数**：`HandleXxx`（Host/GATT 等已有）或 `handleXxx`（如 handleA2dpConnect）；新模块建议与现有风格一致（如 A2DP/Socket/Profile 使用 handle 前缀）。
 - **文件**：`clitools_<模块名>.h/cpp` 对应单一能力域；`common_*` 表示跨模块公共能力。
 - **注释**：在模块头文件顶部用 `@brief` 或 `@file` 说明对应 btframework 头；在命令表旁用简短注释标明「bundle 头 ↔ 命令组」。
 

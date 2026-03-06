@@ -19,6 +19,37 @@
 - 源目录与 test 目录由参数指定或使用脚本默认值；编译目标从源目录 BUILD.gn 自动解析。
 - 接口检查以 bundle.json 中名为 btframework 的 inner_kit 为准；覆盖指 clitools 源码中 include 了对应头文件或等效实现。
 
+### 支持的 CLI 工具
+
+| 工具 | 源目录（默认） | test 目录（部署目标） | 产物名 | 设计文档 |
+|------|----------------|------------------------|--------|----------|
+| **btclitools** | `.claude/skills/ohclitools/btclitools` | `foundation/communication/bluetooth/test` | btcommand | btclitools/DESIGN.md |
+| **wificlitools** | `.claude/skills/ohclitools/wificlitools` | `foundation/communication/wifi/wifi/test` | wificommand | wificlitools/DESIGN.md |
+
+wificlitools 参考 wifi bundle 的 inner_api（wifi_sdk / wifi_base / wifi_utils），按 STA、Hotspot、P2P、Hid2d 能力域划分模块，设计目标与 btclitools 的 DESIGN.md 一致（文件与功能清晰、降低耦合、功能单一、接口对应可读、**接口全覆盖**）。详见各工具目录下 DESIGN.md。
+
+### wificlitools 生成过程与问题摘要
+
+| 阶段 | 问题与处理 |
+|------|------------|
+| 部署 | 空 `deps = []` 时插入首项产生 `deps = [, "..."` 语法错误 → ohclitool.py 的 _add_dep_to_build_gn 改为仅在已有内容时补逗号。 |
+| 编译 | 未使用函数报错 → 删除未调用 stub；define.h 依赖 system_ability_definition.h → BUILD.gn 增加 ipc/samgr 的 external_deps 与 include_dirs。 |
+| 类型 | WifiLinkedInfo::ipAddress 为 unsigned int → 打印用 %u。 |
+| 覆盖 | 对照 bundle inner_api 全量补充 STA/Scan/Hotspot/P2P 命令并新增 Hid2d 模块，确保所有对外能力有对应命令行。 |
+
+### CLI 代码规范（生成/补齐代码时须遵守）
+
+| 规范项 | 要求 |
+|--------|------|
+| **魔数禁止** | 不得使用魔数，一律用具名常量或枚举。 |
+| **行宽** | 单行不超过 110 字符。 |
+| **函数名** | 大驼峰（PascalCase）。 |
+| **常量名** | 全大写 + 下划线（UPPER_SNAKE_CASE）。 |
+| **Get 类接口** | 必须在终端 dump 出具体 info（字段级），不能只打印 success。 |
+| **Callback** | 需注册 callback 并等待返回值；**必须带 timeout**。默认 2s；scan 等长时间操作默认 30s，超时后结束动作。 |
+| **Usage 两段式** | 每个命令的 usage 分两部分：① **接口功能与参数说明**（参数需标明 **string** 或 **int**，如 `code= string`、`networkId= int`）；② **使用示例**，固定以 ` ex: wificommand <cmd> [args]` 结尾。 |
+| **Usage 示例值** | 示例中的取值应与框架/测试代码一致（如 SetCountryCode 测试用 `"86"`，则 usage 写 `ex: wificommand setcountrycode code=86`，不写 CN）。枚举型在说明中罗列所有枚举及对应传入值（如 `band= int 1\|2`）。 |
+
 ---
 
 ## 二、对应脚本
@@ -73,6 +104,12 @@ python3 .claude/skills/ohclitools/ohclitool.py verify \
   --source-dir .claude/skills/ohclitools/btclitools \
   --product-name rk3568 \
   --push-run
+
+# wificlitools：拷贝到 wifi test、编译、验证
+python3 .claude/skills/ohclitools/ohclitool.py all \
+  --source-dir .claude/skills/ohclitools/wificlitools \
+  --test-dir foundation/communication/wifi/wifi/test \
+  --product-name rk3568
 ```
 
 ---
@@ -101,20 +138,25 @@ python3 .claude/skills/ohclitools/ohclitool.py verify \
    - 「用 ohclitools 只编译 btclitools」
    - 「用 ohclitools 验证 btcommand 产物是否存在」
 
+6. **wificlitools**
+   - 「使用技能将 wificlitools 拷贝到 wifi test 目录，然后进行编译和验证」
+   - 「用 ohclitools 部署 wificlitools 并编译」
+   - 「参考 wificlitools/DESIGN.md 对未实现接口补齐代码，遵守代码规范（无魔数、行宽≤110、Get 类 dump info、callback 带 timeout、usage 两段式且标明参数 string/int、示例与框架/测试一致如 code=86）」 
+
 ---
 
 ## 四、完整流程（接口检查 → 代码生成 → 编译 → 验证 → 设备运行）
 
 | 步骤 | 操作 | 脚本命令示例 |
 |------|------|--------------|
-| 1 | 根据 bundle 检查 btframework 接口在 clitools 中的覆盖情况 | `ohclitool.py coverage [--output REPORT.md]` |
-| 2 | 根据报告对未覆盖接口生成/补齐代码（clitools_模块名.h/cpp，注册命令） | 人工或 AI 按报告实现 |
+| 1 | 根据 bundle 检查接口在 clitools 中的覆盖情况 | `ohclitool.py coverage [--output REPORT.md]` |
+| 2 | 根据报告对未覆盖接口生成/补齐代码（clitools_模块名.h/cpp，注册命令）；须遵守上文「CLI 代码规范」 | 人工或 AI 按报告与 DESIGN.md 实现 |
 | 3 | 拷贝源目录到 test 并修改 BUILD.gn | `ohclitool.py deploy` |
 | 4 | 编译 | `ohclitool.py build` |
 | 5 | 验证产物是否存在 | `ohclitool.py verify` |
 | 6 | 将产物推送到设备并测试运行（含命令列表对比） | `ohclitool.py verify --push-run` |
 
-也可一键执行 3～6：`ohclitool.py all [--push-run]`。
+也可一键执行 3～6：`ohclitool.py all [--push-run]`。生成/补齐代码时 callback 超时参考：`ohclitool.py` 中 `DEFAULT_CALLBACK_TIMEOUT_MS`（2s）、`SCAN_OR_LONG_OP_TIMEOUT_MS`（30s）。
 
 ---
 
