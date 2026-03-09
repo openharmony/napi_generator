@@ -26,6 +26,7 @@
 #include <cstring>
 #include <cstdio>
 
+#include "securec.h"
 #include "session.h"
 
 /**
@@ -96,7 +97,7 @@ void HandleCreateSessionServer(int argc, const char* argv[])
         Logd("usage: createsessionserver sessionName=com.test.session");
         return;
     }
-    memset(&g_sessionListener, 0, sizeof(g_sessionListener));
+    (void)memset_s(&g_sessionListener, sizeof(g_sessionListener), 0, sizeof(g_sessionListener));
     g_sessionListener.OnSessionOpened = OnSessionOpened;
     g_sessionListener.OnSessionClosed = OnSessionClosed;
     g_sessionListener.OnBytesReceived = OnBytesReceived;

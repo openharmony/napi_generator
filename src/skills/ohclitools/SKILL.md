@@ -68,6 +68,11 @@ dsclitools 参考 dsoftbus bundle 的 softbus_client（bus_center、common、ses
 - **禁止局部变量使用易与常量混淆的 k 前缀**：如用 `keyLen` 而非 `klen`（常量才用全大写+下划线）。
 - **禁止 Get 类 handler 只打印 success**：必须对返回的结构体做字段级 dump（DumpXxx 或逐字段 Logd）。
 
+### 安全与行宽（避免静态检查/安全规范报错，生成/修改代码时须遵守）
+
+- **禁止使用不安全函数 `strncpy`、`memset`**：须改用安全接口 **`strncpy_s`**、**`memset_s`**。需在源文件中 `#include "securec.h"`，并在 BUILD.gn 的 **external_deps** 中增加 **`"bounds_checking_function:libsec_shared"`**（勿用绝对路径 `deps = [ "//third_party/..." ]`，否则 GN 报错不允许跨组件绝对依赖）。用法示例：`strncpy_s(dest, destMax, src, count)`；`memset_s(dest, destMax, value, count)`，返回值可 `(void)` 忽略。
+- **单行不超过 120 字符**：含缩进与注释在内，超过时须换行（如长字符串拆为多行字面量拼接、参数列表换行等），避免「Current line length is more than 120 characters」类告警。
+
 ### 命名与可读性约定（与各工具 DESIGN.md「六」一致，生成/修改代码时须遵守）
 
 以下约定与 wificlitools/dsclitools 等 DESIGN.md 中「六、命名与可读性约定」一致，避免命令/文件/注释风格不一致。
