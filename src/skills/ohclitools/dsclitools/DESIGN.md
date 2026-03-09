@@ -116,6 +116,8 @@
 | **Usage 示例值** | 示例取值与框架/测试一致；枚举型罗列枚举及传入值（如 `key= int 0-14`）。 |
 | **数据结构打印** | 收到的数据结构（如 NodeBasicInfo、MetaNodeInfo、会话名/deviceId 等）须通过 **DumpXxx** 或字段级 Logd 输出，不得只打印 success。 |
 | **函数注释** | 每个函数（含 handler、工具函数）需用注释声明 **参数说明** 与 **返回值说明**；**每个 @param、@return 单独占一行**，不得写在同一行。 |
+| **安全函数** | 禁止使用 `strncpy`、`memset`，须使用 `strncpy_s`、`memset_s`（`#include "securec.h"`，并链接 bounds_checking_function）。 |
+| **行宽** | 单行不超过 120 字符，超长须换行（如长字符串拆为多行拼接）。 |
 
 ---
 

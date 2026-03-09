@@ -46,7 +46,10 @@ ohos_executable("dscommand") {
     "$dsoftbus_root_path/interfaces/kits/transport",
   ]
 
-  external_deps = [ "dsoftbus:softbus_client" ]
+  external_deps = [
+    "dsoftbus:softbus_client",
+    "bounds_checking_function:libsec_shared",
+  ]
 
   cflags_cc = [
     "-fPIC",

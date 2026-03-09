@@ -26,6 +26,7 @@
 #include <cstring>
 #include <cstdio>
 
+#include "securec.h"
 #include "softbus_bus_center.h"
 #include "softbus_common.h"
 
@@ -192,16 +193,13 @@ void HandleJoinLNN(int argc, const char* argv[])
     int t = atoi(typeStr);
     if (t == CONNECTION_ADDR_WLAN) {
         addr.type = CONNECTION_ADDR_WLAN;
-        (void)strncpy(addr.info.ip.ip, addrStr, IP_STR_MAX_LEN - 1);
-        addr.info.ip.ip[IP_STR_MAX_LEN - 1] = '\0';
+        (void)strncpy_s(addr.info.ip.ip, IP_STR_MAX_LEN, addrStr, IP_STR_MAX_LEN - 1);
     } else if (t == CONNECTION_ADDR_BR) {
         addr.type = CONNECTION_ADDR_BR;
-        (void)strncpy(addr.info.br.brMac, addrStr, BT_MAC_LEN - 1);
-        addr.info.br.brMac[BT_MAC_LEN - 1] = '\0';
+        (void)strncpy_s(addr.info.br.brMac, BT_MAC_LEN, addrStr, BT_MAC_LEN - 1);
     } else {
         addr.type = static_cast<ConnectionAddrType>(t);
-        (void)strncpy(addr.info.ip.ip, addrStr, IP_STR_MAX_LEN - 1);
-        addr.info.ip.ip[IP_STR_MAX_LEN - 1] = '\0';
+        (void)strncpy_s(addr.info.ip.ip, IP_STR_MAX_LEN, addrStr, IP_STR_MAX_LEN - 1);
     }
     int32_t ret = JoinLNN(DEFAULT_PKG_NAME, &addr, nullptr, false);
     Logd("JoinLNN ret: %d (async)", ret);
@@ -245,7 +243,7 @@ void HandleRegNodeCb(int argc, const char* argv[])
     if (eventsStr != nullptr) {
         events = static_cast<uint32_t>(strtoul(eventsStr, nullptr, 0));
     }
-    memset(&g_nodeStateCb, 0, sizeof(g_nodeStateCb));
+    (void)memset_s(&g_nodeStateCb, sizeof(g_nodeStateCb), 0, sizeof(g_nodeStateCb));
     g_nodeStateCb.events = events;
     g_nodeStateCb.onNodeOnline = OnNodeOnlineCb;
     g_nodeStateCb.onNodeOffline = OnNodeOfflineCb;
@@ -310,7 +308,7 @@ void HandleStartTimeSync(int argc, const char* argv[])
         period = static_cast<TimeSyncPeriod>(atoi(periodStr));
     }
     static ITimeSyncCb syncCb;
-    memset(&syncCb, 0, sizeof(syncCb));
+    (void)memset_s(&syncCb, sizeof(syncCb), 0, sizeof(syncCb));
     syncCb.onTimeSyncResult = [](const TimeSyncResultInfo* inf, int32_t retCode) {
         (void)inf;
         Logd("[cb] onTimeSyncResult retCode: %d", retCode);
@@ -338,7 +336,7 @@ void HandlePublishLNN(int argc, const char* argv[])
     info.capabilityData = nullptr;
     info.dataLen = 0;
     static IPublishCb pubCb;
-    memset(&pubCb, 0, sizeof(pubCb));
+    (void)memset_s(&pubCb, sizeof(pubCb), 0, sizeof(pubCb));
     pubCb.OnPublishResult = [](int publishId, PublishResult reason) {
         Logd("[cb] OnPublishResult publishId: %d reason: %d", publishId, reason);
     };
@@ -379,7 +377,7 @@ void HandleRefreshLNN(int argc, const char* argv[])
     info.capabilityData = nullptr;
     info.dataLen = 0;
     static IRefreshCallback refCb;
-    memset(&refCb, 0, sizeof(refCb));
+    (void)memset_s(&refCb, sizeof(refCb), 0, sizeof(refCb));
     refCb.OnDiscoverResult = [](int32_t refreshId, RefreshResult reason) {
         Logd("[cb] OnDiscoverResult refreshId: %d reason: %d", refreshId, reason);
     };

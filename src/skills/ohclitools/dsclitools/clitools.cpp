@@ -47,9 +47,11 @@ static const DsCliCmd G_DS_CLI_CMDS[] = {
     {"unregnodecb", HandleUnregNodeCb,
      "Unregister node state callback. No args. ex: dscommand unregnodecb"},
     {"setnodedatachangeflag", HandleSetNodeDataChangeFlag,
-     "Set node data change flag. networkId= string, flag= uint16. ex: dscommand setnodedatachangeflag networkId=xxx flag=0"},
+     "Set node data change flag. networkId= string, flag= uint16. "
+     "ex: dscommand setnodedatachangeflag networkId=xxx flag=0"},
     {"starttimesync", HandleStartTimeSync,
-     "Start time sync (async). targetNetworkId= string, accuracy= int, period= int. ex: dscommand starttimesync targetNetworkId=xxx"},
+     "Start time sync (async). targetNetworkId= string, accuracy= int, period= int. "
+     "ex: dscommand starttimesync targetNetworkId=xxx"},
     {"publishlnn", HandlePublishLNN,
      "Publish LNN (async). ex: dscommand publishlnn"},
     {"stoppublishlnn", HandleStopPublishLNN,
@@ -65,13 +67,15 @@ static const DsCliCmd G_DS_CLI_CMDS[] = {
     {"getallmetanodeinfo", HandleGetAllMetaNodeInfo,
      "Get all meta node info. No args. ex: dscommand getallmetanodeinfo"},
     {"shiftlnngear", HandleShiftLNNGear,
-     "Shift LNN gear. callerId= string, [targetNetworkId=], [cycle=],[duration=]. ex: dscommand shiftlnngear callerId=dsclitools"},
+     "Shift LNN gear. callerId= string, [targetNetworkId=], [cycle=],[duration=]. "
+     "ex: dscommand shiftlnngear callerId=dsclitools"},
     {"synctrustedrelationship", HandleSyncTrustedRelationShip,
      "Sync trusted relationship. msg= string (JSON). ex: dscommand synctrustedrelationship msg={}"},
     {"setdisplayname", HandleSetDisplayName,
      "Set display name. nameData= string (cJSON). ex: dscommand setdisplayname nameData={\"name\":\"x\"}"},
     {"creategroupowner", HandleCreateGroupOwner,
-     "Create group owner (async). frequency= int, freqType= int. ex: dscommand creategroupowner frequency=5180 freqType=0"},
+     "Create group owner (async). frequency= int, freqType= int. "
+     "ex: dscommand creategroupowner frequency=5180 freqType=0"},
 
     // Session
     {"createsessionserver", HandleCreateSessionServer,
@@ -79,7 +83,8 @@ static const DsCliCmd G_DS_CLI_CMDS[] = {
     {"removesessionserver", HandleRemoveSessionServer,
      "Remove session server. sessionName= string. ex: dscommand removesessionserver sessionName=com.test.session"},
     {"opensession", HandleOpenSession,
-     "Open session (async). mySession= string, peerSession= string, peerNetworkId= string. ex: dscommand opensession mySession=s1 peerSession=s2 peerNetworkId=xxx"},
+     "Open session (async). mySession= string, peerSession= string, peerNetworkId= string. "
+     "ex: dscommand opensession mySession=s1 peerSession=s2 peerNetworkId=xxx"},
     {"closesession", HandleCloseSession,
      "Close session. sessionId= int. ex: dscommand closesession sessionId=1"},
     {"sendbytes", HandleSendBytes,
