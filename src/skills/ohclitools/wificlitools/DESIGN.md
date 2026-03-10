@@ -136,6 +136,16 @@ common.cpp         → common.h
 - **文件**：`clitools_<模块名>.h/cpp` 对应单一能力域；`common_*` 表示跨模块公共能力。
 - **注释**：在模块头文件顶部说明对应 inner_api/头文件；在命令表旁用简短注释标明「bundle inner_api ↔ 命令组」。
 
+### 命名与可读性约定 检查清单
+
+| 检查项 | 状态 | 说明 |
+|--------|------|------|
+| **命令** | 已落实 | 命令名为小写、连续字母（wifienable、wifiscan、hotspotenable 等）；命令表注释标明各分组对应头文件。 |
+| **Handler 函数** | 已落实 | 大驼峰 HandleXxx（HandleWifiEnable、HandleHotspotEnable、HandleP2pXxx、HandleHid2dXxx）。 |
+| **常量** | 已落实 | clitools_constants.h 中全大写+下划线（CMD_IDX、MIN_WPA_PASSWORD_LEN、DEFAULT_CALLBACK_TIMEOUT_MS 等）；逻辑中无魔数。 |
+| **文件** | 已落实 | clitools_sta / clitools_hotspot / clitools_p2p / clitools_hid2d 对应单一能力域；common.h/cpp 为跨模块公共。 |
+| **注释** | 已落实 | 各 clitools_*.h 顶部 @brief 说明对应 inner_api/头文件；clitools.cpp 命令表旁注释标明 bundle inner_api ↔ 命令组。 |
+
 ---
 
 ## 六（附）、代码规范（与 ohclitools 技能一致）
