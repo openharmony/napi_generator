@@ -23,10 +23,11 @@
 
 #include <cstdlib>
 
-// Command table: STA (wifi_device.h, wifi_scan.h) -> clitools_sta
-//               Hotspot (wifi_hotspot.h) -> clitools_hotspot
-//               P2P (wifi_p2p.h) -> clitools_p2p
-//               Hid2d (wifi_hid2d.h) -> clitools_hid2d
+// Command table (bundle inner_api ↔ 命令组):
+//   STA: wifi_device.h, wifi_scan.h -> clitools_sta
+//   Hotspot: wifi_hotspot.h -> clitools_hotspot
+//   P2P: wifi_p2p.h -> clitools_p2p
+//   Hid2d: wifi_hid2d.h -> clitools_hid2d
 /* Usage: part1 = interface function and params; part2 = " ex: wificommand ..." */
 static const StaCliCmd g_staCliCmds[] = {
     // STA (wifi_device.h, wifi_scan.h)
