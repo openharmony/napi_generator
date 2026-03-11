@@ -865,6 +865,17 @@ def check_hap_files(project_dir):
     
     return True
 
+def _resolve_node_cmd(hos_clt_path):
+    """优先使用 HOS_CLT_PATH/tool/node/bin/node，否则 /usr/bin/node 或 PATH 中的 node。"""
+    if hos_clt_path and os.path.isdir(hos_clt_path):
+        clt_node = os.path.join(hos_clt_path, 'tool', 'node', 'bin', 'node')
+        if os.path.isfile(clt_node):
+            return clt_node
+    if os.path.isfile('/usr/bin/node'):
+        return '/usr/bin/node'
+    return shutil.which('node') or 'node'
+
+
 def build_hap(project_dir, product='default', build_mode='debug'):
     """
     构建 HAP
@@ -881,13 +892,12 @@ def build_hap(project_dir, product='default', build_mode='debug'):
     print("开始构建 HAP...")
     print("=" * 80)
     
-    original_dir = os.getcwd()
+    project_dir = os.path.abspath(project_dir)
+    if not os.path.isdir(project_dir):
+        print(f"❌ 错误: 项目目录不存在: {project_dir}")
+        return False
     
     try:
-        # 切换到项目目录
-        os.chdir(project_dir)
-        print(f"工作目录: {os.getcwd()}")
-        
         # 使用 node 执行 HOS_CLT_PATH 下的 hvigorw.js（替代项目内的 hvigorw）
         hos_clt_path = os.environ.get('HOS_CLT_PATH')
         if not hos_clt_path or not os.path.isdir(hos_clt_path):
@@ -898,20 +908,20 @@ def build_hap(project_dir, product='default', build_mode='debug'):
         if not os.path.isfile(hvigorw_js):
             print(f"❌ 错误: 未找到 hvigorw.js: {hvigorw_js}")
             return False
-        node_cmd = '/usr/bin/node'
-        if not os.path.isfile(node_cmd):
-            node_cmd = shutil.which('node') or 'node'
+        node_cmd = _resolve_node_cmd(hos_clt_path)
+        print(f"工作目录: {project_dir}")
+        print(f"Node: {node_cmd}")
         
-        # 执行 clean
+        # 执行 clean（子进程 cwd=project_dir，确保 hvigor 读到项目内配置）
         print(f"\n执行清理...")
         clean_cmd = [node_cmd, hvigorw_js, 'clean', '--no-daemon']
         print(f"命令: {' '.join(clean_cmd)}")
-        result = subprocess.run(clean_cmd, capture_output=False, text=True, timeout=600)
+        result = subprocess.run(clean_cmd, capture_output=False, text=True, timeout=600, cwd=project_dir)
         if result.returncode != 0:
             print(f"⚠ 警告: clean 命令执行失败（退出码: {result.returncode}）")
             # 继续执行构建
         
-        # 执行构建：node hvigorw.js --mode module -p product=default assembleHap --analyze=normal --parallel --incremental --daemon
+        # 执行构建
         print(f"\n执行构建...")
         build_cmd = [
             node_cmd, hvigorw_js,
@@ -925,12 +935,11 @@ def build_hap(project_dir, product='default', build_mode='debug'):
         ]
         print(f"命令: {' '.join(build_cmd)}")
         
-        result = subprocess.run(build_cmd, timeout=1800)
+        result = subprocess.run(build_cmd, timeout=1800, cwd=project_dir)
         
         if result.returncode == 0:
             print(f"\n✓ HAP 构建成功！")
-            # 检查生成的 HAP 文件（使用当前工作目录，因为已经在项目目录中）
-            check_hap_files(os.getcwd())
+            check_hap_files(project_dir)
             return True
         else:
             print(f"\n❌ HAP 构建失败（退出码: {result.returncode}）")
@@ -944,8 +953,6 @@ def build_hap(project_dir, product='default', build_mode='debug'):
         import traceback
         traceback.print_exc()
         return False
-    finally:
-        os.chdir(original_dir)
 
 
 def build_test_hap(project_dir, module_name='entry@ohosTest', product='default'):
@@ -968,12 +975,12 @@ def build_test_hap(project_dir, module_name='entry@ohosTest', product='default')
     print("开始编译单元测试用例...")
     print("=" * 80)
     
-    original_dir = os.getcwd()
+    project_dir = os.path.abspath(project_dir)
+    if not os.path.isdir(project_dir):
+        print(f"❌ 错误: 项目目录不存在: {project_dir}")
+        return False
     
     try:
-        os.chdir(project_dir)
-        print(f"工作目录: {os.getcwd()}")
-        
         # 使用 node 执行 HOS_CLT_PATH 下的 hvigorw.js（替代项目内的 hvigorw）
         hos_clt_path = os.environ.get('HOS_CLT_PATH')
         if not hos_clt_path or not os.path.isdir(hos_clt_path):
@@ -984,11 +991,11 @@ def build_test_hap(project_dir, module_name='entry@ohosTest', product='default')
         if not os.path.isfile(hvigorw_js):
             print(f"❌ 错误: 未找到 hvigorw.js: {hvigorw_js}")
             return False
-        node_cmd = '/usr/bin/node'
-        if not os.path.isfile(node_cmd):
-            node_cmd = shutil.which('node') or 'node'
+        node_cmd = _resolve_node_cmd(hos_clt_path)
+        print(f"工作目录: {project_dir}")
+        print(f"Node: {node_cmd}")
         
-        # 编译单元测试：node hvigorw.js --mode module -p module=entry@ohosTest -p isOhosTest=true -p product=default -p buildMode=test assembleHap --analyze=normal --parallel --incremental --daemon
+        # 编译单元测试（子进程 cwd=project_dir，确保 hvigor 读到项目内配置）
         print(f"\n执行单元测试 HAP 构建...")
         test_build_cmd = [
             node_cmd, hvigorw_js,
@@ -1005,7 +1012,7 @@ def build_test_hap(project_dir, module_name='entry@ohosTest', product='default')
         ]
         print(f"命令: {' '.join(test_build_cmd)}")
         
-        result = subprocess.run(test_build_cmd, timeout=1800)
+        result = subprocess.run(test_build_cmd, timeout=1800, cwd=project_dir)
         
         if result.returncode == 0:
             print(f"\n✓ 单元测试 HAP 构建成功！")
@@ -1022,8 +1029,6 @@ def build_test_hap(project_dir, module_name='entry@ohosTest', product='default')
         import traceback
         traceback.print_exc()
         return False
-    finally:
-        os.chdir(original_dir)
 
 
 def parse_bundle_name(project_dir):
@@ -1460,21 +1465,25 @@ def main():
         return 1
     
     command = sys.argv[1]
+    known_commands = ['build', 'build-test', 'sign', 'clean-sign']
     
-    # 向后兼容：如果第一个参数看起来像路径，则作为 build 命令处理
-    if os.path.isdir(command) or (len(sys.argv) >= 2 and command not in ['build', 'build-test', 'sign', 'clean-sign']):
-        # 旧的使用方式：python3 hapbuild.py <project_dir> [product] [build_mode]
+    # 新用法优先：若第一个参数是已知命令且提供了第二参数，则按 命令 + 项目目录 解析（避免 "build" 被误判为项目下的 build 目录）
+    if command in known_commands and len(sys.argv) >= 3:
+        project_dir = sys.argv[2]
+    elif os.path.isdir(command) or (len(sys.argv) >= 2 and command not in known_commands):
+        # 向后兼容：python3 hapbuild.py <project_dir> [product] [build_mode]
         project_dir = sys.argv[1]
         product = sys.argv[2] if len(sys.argv) > 2 else 'default'
         build_mode = sys.argv[3] if len(sys.argv) > 3 else 'debug'
         command = 'build'
     else:
-        # 新的使用方式：python3 hapbuild.py <command> <project_dir> [options]
         if len(sys.argv) < 3:
             print("❌ 错误: 缺少项目目录参数")
             return 1
         project_dir = sys.argv[2]
     
+    # 统一转为绝对路径，避免受调用方 cwd 影响
+    project_dir = os.path.abspath(project_dir)
     # 检查项目目录
     if not os.path.isdir(project_dir):
         print(f"❌ 错误: 项目目录不存在: {project_dir}")
