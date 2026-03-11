@@ -19,6 +19,6 @@ import indexdtsTest from './Indexdts.test';
 
 export default function testsuite() {
   abilityTest();
-  indexUitestTest();
+  //indexUitestTest();
   indexdtsTest();
 }

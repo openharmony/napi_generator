@@ -3,12 +3,12 @@ name: ohproj
 description: "创建、编译、签名、编译测试、执行测试 OpenHarmony 原生应用项目（基于 NativeProj46R 模板），含 NAPI 对接规范与测试报告说明。"
 author: "Created by user"
 created: "2026-01-20"
-version: "1.3.0"
+version: "1.4.0"
 ---
 
 # ohproj 技能说明
 
-本技能提供 **创建**、**编译**、**签名**、**编译测试用例**、**执行测试用例** 与 **清除签名** 六类能力，面向基于模板 NativeProj46R 的原生应用项目（含 NAPI + ArkTS）。配套设计文档与代码规范见 **DESIGN.md**，测试报告格式见 **八、测试报告格式**。
+本技能提供 **创建**、**编译**、**签名**、**编译测试用例**、**执行测试用例** 与 **清除签名** 六类能力，面向基于模板 NativeProj46R 的原生应用项目（含 NAPI + ArkTS）。配套设计文档与代码规范见 **DESIGN.md**，测试报告格式见 **八、测试报告格式**。**常见问题与避免**（编译失败、测试依赖缺失、mock 未关、用例不足等）见 **KNOWN_ISSUES_AND_AVOIDANCE.md**。
 
 ---
 
@@ -16,7 +16,7 @@ version: "1.3.0"
 
 | 能力 | 说明 | 调用方式 |
 |------|------|----------|
-| **创建项目** | 从模板拷贝并重命名目录与 bundleName，可选接入用户 C/C++ 代码目录 | `ohproj.py create <项目名> [--code-dir <路径>]` 或按 SKILL 步骤 4.x 手工执行 |
+| **创建项目** | 从模板拷贝并重命名目录与 bundleName，可选接入用户 C/C++ 代码目录；可选 `--setup-cjson` 一键完成 cJSON 接入（CMake、NAPI、测试、mock、oh_modules） | `ohproj.py create <项目名> [--code-dir <路径>] [--setup-cjson]` 或按 SKILL 步骤 4.x 手工执行 |
 | **编译** | 检查环境并构建主 HAP（委托 ohhap/hapbuild.py） | `ohproj.py build <项目目录>` |
 | **签名** | 对未签名主 HAP 与测试 HAP 进行 release/debug 签名 | `ohproj.py sign <项目目录> [release\|debug]` |
 | **编译测试用例** | 构建 ohosTest 模块的单元测试 HAP（委托 hapbuild.py build-test） | `ohproj.py build-test <项目目录>` |
@@ -24,6 +24,8 @@ version: "1.3.0"
 | **清除签名** | 删除项目下的 autosign 目录 | `ohproj.py clean-sign <项目目录>` |
 
 **环境依赖**：编译与签名需 HarmonyOS Command Line Tools、OpenHarmony SDK（见 ohhap 技能）；签名还需 Java 及证书目录。执行测试需设备已连接且 hdc 可用（见 ohhdc 技能）。
+
+**编译时 Node 与工作目录**：`ohproj.py build` / `build-test` 委托 ohhap 的 hapbuild.py 执行；hapbuild 优先使用 **${HOS_CLT_PATH}/tool/node/bin/node** 运行 hvigor，若不存在则回退到 /usr/bin/node 或 PATH 中的 node；且子进程以 **cwd=项目目录** 执行，确保 hvigor 读取项目内 hvigor-config 等配置，避免“配置文件不存在”类错误。
 
 ---
 
@@ -70,6 +72,7 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 - 「用 ohproj 创建原生项目，项目名 xxx，要接入的代码目录是 yyy」
 - 「执行创建原生项目技能，项目名称 ohson，需要引入目录是 cJSON-master，需要导出的接口是 cJSON.h 里 CJSON_PUBLIC 声明的接口，并完成应用代码调用和测试用例编写，最后编译、签名并检查结果」
 - 「对导出的接口完善对应单元测试，并编译和执行测试用例」
+- 「学习 tests 目录里测试用例的设计和实现，对比 Cjsondts.test.ets 整理单元测试设计规范，补齐 ohproj 对设计、实现测试用例的能力并补全测试用例」→ 见 DESIGN.md 第六节、SKILL 步骤 4.6
 
 **编译与签名**
 
@@ -89,6 +92,8 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 - 「为啥 Index.d.ts 没有暴露接口？」→ 检查 `entry/src/main/cpp/types/libentry/Index.d.ts` 与 `entry/oh_modules/libentry.so/Index.d.ts` 是否同步、是否导出全部 NAPI 接口。
 - 「CjsondtsTest 报 undefined is not callable」→ 按步骤 4.5 将 `entry/src/mock/mock-config.json5` 清空为 `{}`。
 - 「某条用例失败了，修改下」→ 根据测试报告中 `OHOS_REPORT_STATUS_CODE: -2` 与 `test=CaseName`、`stream=` 定位用例，结合 DESIGN.md 代码规范修复。
+- **编译报 uv_cwd、@ohos/hypium 解析失败、测试用例数量不足等** → 见 **KNOWN_ISSUES_AND_AVOIDANCE.md** 的成因与避免/修复步骤。
+- **build 或 build-test 报 `ENOENT: uv_cwd`** → 到**项目根目录**下手动执行 KNOWN_ISSUES 1.1 节「手动修复步骤」中的两条 hvigor 命令（均带 `--no-daemon`），完成主 HAP 与测试 HAP 构建后再执行 `ohproj.py sign`、`ohproj.py test`。
 
 ---
 
@@ -98,6 +103,7 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 |------|------|
 | 创建项目（仅拷贝+重命名+bundleName） | `python3 .claude/skills/ohproj/ohproj.py create arkcJson` |
 | 创建并接入代码目录 | `python3 .claude/skills/ohproj/ohproj.py create arkcJson --code-dir .claude/skills/ohproj/cJSON-master` |
+| 创建并一键完成 cJSON 接入（标准化可编译可测） | `python3 .claude/skills/ohproj/ohproj.py create <项目名> --code-dir .claude/skills/ohproj/cJSON-master --setup-cjson` |
 | 编译主 HAP | `python3 .claude/skills/ohproj/ohproj.py build /root/ohos/61release/src/.claude/skills/ohproj/arkcJsonNativeProj46R` |
 | 签名（release） | `python3 .claude/skills/ohproj/ohproj.py sign /root/ohos/61release/src/.claude/skills/ohproj/arkcJsonNativeProj46R` |
 | 签名（debug） | `python3 .claude/skills/ohproj/ohproj.py sign /path/to/project debug` |
@@ -138,6 +144,26 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 - 新增 `*dts.test.ets`，在 `List.test.ets` 中 import 并注册测试套件。
 
 **重要注意——单元测试须覆盖所有导出接口**：为每个通过 NAPI 导出的接口编写至少一个测试用例，测试用例需**覆盖所有**在 Index.d.ts 中声明的接口，不得遗漏。若只对部分接口写测试，未覆盖的接口在后续修改中容易引入回归且难以发现。创建项目时请根据 Index.d.ts 的导出列表逐项编写或补充测试，确保每个接口都有对应测试。
+
+### 4.6 设计/实现测试用例的规范与步骤（与 DESIGN 六、6.9–6.10 对应）
+
+编写或补全 NAPI 单元测试时，应遵循 **entry/src/ohosTest/ets/test** 下既有用例（如 Indexdts.test.ets、Cjsondts.test.ets）与 **DESIGN.md 第六节「单元测试设计规范与方法」**及**测试数据要求（6.9）、补全清单（6.10）**：
+
+1. **结构**：使用 `describe('SuiteName', () => { ... })` 与 `it('caseName', TEST_FILTER, () => { ... })`；按需使用 beforeAll/beforeEach/afterEach/afterAll。
+2. **命名**：用例名采用 `apiName_scenario` 或 `apiName_inputOrCondition_expected`，便于从报告 `test=CaseName` 定位；可选与 Indexdts 一致的 `api_tc_NNN_category`。
+3. **常量**：从 **constant.ets** 引入 TEST_FILTER、HILOG_DOMAIN、VAL_*、NEG_*、INVALID_HANDLE（若已定义）等，避免魔数。
+4. **AAA 与清理**：Arrange（准备输入）→ Act（调用 NAPI）→ Assert（expect(...).assertEqual(...)）；对拥有的 handle 在用例末尾调用 lib.xxxDelete(h) 等做资源清理；已转移所有权的 item 勿重复 Delete。
+5. **显式类型**：变量与返回值写明类型（如 `const h: number`、`const out: string | null`），满足 ArkTS 规范。
+6. **覆盖类型**：每个导出接口至少一条**正向**用例；酌情增加**边界**（空串、空数组、下标边界）与**无效输入**（无效 JSON、无效 handle）用例，参考 cJSON 源码 tests/misc_tests.c 的 null/非法输入设计。
+7. **可追溯**：每个 it 内可用 hilog.info(HILOG_DOMAIN, 'testTag', '%{public}s', 'caseName') 打与用例名一致的日志。
+8. **补全清单**：新增 NAPI 接口后，在对应 *dts.test.ets 中按上述规范增加 it，无需改 List.test.ets（套件已统一注册）；并对照 Index.d.ts 检查是否还有未覆盖的接口，补齐用例。
+
+**测试数据要求**（详见 DESIGN 6.9）：  
+- 不使用文件 IO，输入用**内联字符串/常量**；数值与句柄无效值用 **constant.ets**（VAL_*、NEG_*、INVALID_HANDLE）。  
+- 同一接口多种等价输入（如 Compare 对 string/number/null/array/boolean）应**分用例**覆盖；打印类补零、负数等典型值；Minify 补「去空白、保留内容」断言。  
+- 与 C 侧测试的差异与补全建议见 **CJSONDTS_comparison.md**，C 侧测试设计见 **cJSON_tests_design.md**。
+
+**创建项目与补全测试时的自检**：请对照 **KNOWN_ISSUES_AND_AVOIDANCE.md** 第三节「创建项目时的检查清单」，避免编译失败（uv_cwd、oh_modules 缺失、CMake 未配）、测试失败（mock 未关、Indexdts 类型错误、DetachItemViaPointer 逻辑）、以及用例数量与设计文档不一致。
 
 ### 4.5 步骤五：单元测试使用真实 NAPI（必做，避免 CjsondtsTest 等失败）
 
@@ -250,6 +276,7 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 | NAPI 与 TS 声明 | `entry/src/main/cpp/napi_init.cpp`、`entry/src/main/cpp/types/libentry/Index.d.ts`、`entry/oh_modules/libentry.so/Index.d.ts` |
 | 单元测试 mock 配置 | `entry/src/mock/mock-config.json5`（NAPI 测试须取消对 libentry.so 的 mock，见 4.5） |
 | 设计文档与代码规范 | `.claude/skills/ohproj/DESIGN.md` |
+| 常见问题与避免指南 | `.claude/skills/ohproj/KNOWN_ISSUES_AND_AVOIDANCE.md` |
 
 ---
 
@@ -261,6 +288,7 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 - **NAPI 单元测试失败**：若 CjsondtsTest 等报 "undefined is not callable"，检查 `entry/src/mock/mock-config.json5` 是否仍对 `libentry.so` 做了 mock；按步骤 4.5 清空该配置后重新 build-test、sign、test。
 - **导出与测试范围**：用户要求“导出某头文件的 CJSON_PUBLIC/全部公开接口”时，须导出**所有**该头文件中的公开接口（napi_init.cpp + Index.d.ts 全量对应），且单元测试须**覆盖所有**已导出接口，每个接口至少一个测试用例（见步骤 4.3、4.4 注意）。
 - **设计文档与代码规范**：详见本目录下 **DESIGN.md**（NAPI 封装约定、ArkTS/测试代码规范、已知问题与修复）。
+- **常见问题与避免**：创建/编译/测试前可参考 **KNOWN_ISSUES_AND_AVOIDANCE.md**，避免编译 uv_cwd、@ohos/hypium 缺失、mock 未关、用例不足、DetachItemViaPointer 等逻辑错误再次发生。
 
 ---
 
