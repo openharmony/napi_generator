@@ -98,7 +98,74 @@
 
 ---
 
-## 六、命令行与能力速查
+## 六、单元测试设计规范与方法
+
+本节整理自 **entry/src/ohosTest/ets/test** 下 Ability.test.ets、Indexdts.test.ets、Cjsondts.test.ets 与 cJSON 源码 **tests/misc_tests.c** 的设计与实现，作为 ohproj 下 NAPI 单元测试的规范。
+
+### 6.1 测试结构（Hypium）
+
+- **套件**：`describe('SuiteName', () => { ... })`，如 `CjsondtsTest`、`ActsAbilityTest`。
+- **用例**：`it('caseName', TEST_FILTER, () => { ... })`，第三参数为测试函数；TEST_FILTER 来自 constant.ets（通常为 0）。
+- **生命周期**：`beforeAll`、`beforeEach`、`afterEach`、`afterAll` 按需使用；无共享资源时可留空。
+
+### 6.2 用例命名
+
+- **推荐**：`apiName_scenario` 或 `apiName_inputOrCondition_expected`。  
+  例：`cjsonParse_valid_json_returns_handle`、`cjsonParse_invalid_json_returns_zero`、`cjsonGetObjectItem_and_getStringValue`。
+- **可选**（与 Indexdts 对齐）：`api_tc_NNN_category`，如 `add_tc_001_zero_zero`，NNN 为三位编号，category 为语义分类。
+- 名称需能直接对应到「测哪个接口、什么场景、期望结果」，便于从报告中的 `test=CaseName` 定位。
+
+### 6.3 常量与魔数
+
+- 使用 **constant.ets** 中的常量，避免魔数：`TEST_FILTER`、`HILOG_DOMAIN`、`VAL_0`、`VAL_1`、`NEG_1`、`MAX`、`MIN`、浮点用 `F_1_5` 等；NAPI 句柄无效值可用 `VAL_0` 或单独定义 `INVALID_HANDLE = 0` 并在 constant 中导出。
+- 与 Indexdts.test.ets 一致：同一类测试（如加法）尽量用 constant 中的 VAL_*/NEG_*/F_* 表达输入与期望，便于维护与对照。
+
+### 6.4 Arrange-Act-Assert 与清理
+
+- **Arrange**：准备输入（如 JSON 字符串、handle、key）。
+- **Act**：调用被测接口（如 `lib.cjsonParse(...)`、`lib.cjsonGetObjectItem(h, 'key')`）。
+- **Assert**：`expect(actual).assertEqual(expected)` 或 `expect(condition).assertEqual(true)`；布尔/空值用明确比较，避免依赖不稳定的断言（如 assertContain 改用 `expect(a.includes(b)).assertEqual(true)`）。
+- **清理**：对 NAPI 返回的、由调用方拥有的 handle 在用例末尾调用 `lib.cjsonDelete(h)`，避免句柄泄漏；已通过 Add* 转移所有权的 item 不要再 Delete。
+
+### 6.5 显式类型与单焦点
+
+- 所有变量、返回值使用**显式类型**（如 `const ver: string = ...`、`const h: number = ...`、`const out: string | null = ...`），满足 ArkTS 的 arkts-no-any-unknown 要求。
+- 单用例单焦点：一个 it 验证一种行为或一个场景；可在一个用例内组合多个 API 调用（如 GetObjectItem + GetStringValue），但断言目标应清晰。
+
+### 6.6 正向、边界与无效输入
+
+- **正向**：合法输入，期望成功结果（如有效 JSON 解析得到非 0 handle，GetObjectItem 得到子节点）。
+- **边界**：空字符串、空数组、长度为 0、下标边界等（如 CreateIntArray([])、GetArrayItem 越界行为若 NAPI 有定义则覆盖）。
+- **无效输入**：参考 cJSON misc_tests 的 null/非法输入；在 NAPI 层对应为无效 handle（0）、错误输入（如无效 JSON），期望返回 0/false 或安全不崩溃。
+
+### 6.7 日志与可追溯
+
+- 每个 it 内可用 `hilog.info(HILOG_DOMAIN, 'testTag', '%{public}s', 'caseName');` 打一条与用例名一致的日志，便于从设备日志或报告反查。
+
+### 6.8 与 Cjsondts.test.ets 的对应
+
+- Cjsondts.test.ets 按「接口名_场景」命名，每个导出接口至少一条正向用例，部分接口补充无效输入（如 cjsonParse_invalid_json_returns_zero）。
+- 新增接口时：在 Index.d.ts 与 napi_init 中声明/实现后，在 Cjsondts.test.ets 中按 6.1–6.6 增加对应 it，并在 List.test.ets 中已通过 `cjsondtsTest()` 统一注册，无需改 List。
+
+### 6.9 测试数据要求
+
+- **数据来源**：ohosTest 中不使用文件 IO，测试输入以内联字符串/常量形式写在用例内。
+- **数值与字面量**：优先从 constant.ets 引入（VAL_0、VAL_42、NEG_1、INVALID_HANDLE 等），避免魔数。
+- **JSON 字符串**：用例内直接写 JSON 字面量；若需与 C 侧 tests/inputs 对齐，可将典型内容内联复制到用例中，不读文件。
+- **句柄无效值**：统一用 INVALID_HANDLE（0）；断言用 expect(h === INVALID_HANDLE).assertEqual(true) 或 expect(h !== INVALID_HANDLE).assertEqual(true)。
+- **补全策略**：同一接口多种输入（如 Compare 对 string/number/null/array/boolean）分用例覆盖；打印类补零、负数等典型值。
+
+### 6.10 补全清单与 C 侧对照
+
+- Index.d.ts 中每个导出接口至少一条正向用例（含 IsInvalid、IsRaw、DetachItemViaPointer 等）。
+- Compare 除 equal/not_equal 外，补 strings、numbers、null、arrays、booleans 及与 invalid handle 比较返回 false。
+- 边界与无效：空串解析、missing key、array 上 GetObjectItem、GetArrayItem 越界、Delete(INVALID_HANDLE) 不抛。
+- 打印与 Minify：Print 对 number 零/负数；Minify 对带空格输入断言去空白并保留内容。
+- 与 C 侧差异见 ohproj 下 CJSONDTS_comparison.md；设计见 cJSON_tests_design.md。
+
+---
+
+## 七、命令行与能力速查
 
 - **创建**：`python3 ohproj.py create <项目名> [--code-dir <路径>]`
 - **编译**：`python3 ohproj.py build <项目目录>`
