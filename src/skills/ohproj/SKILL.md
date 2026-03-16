@@ -139,24 +139,32 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 
 **重要注意——须导出原有代码的全体接口**：以接入代码的头文件为准（如 cJSON.h 中所有 `CJSON_PUBLIC` 声明的接口），必须在 `napi_init.cpp` 中**全部**实现 NAPI 封装，并在 `Index.d.ts` 中**全部**声明，不得只实现或声明部分接口。若只导出部分接口，会导致应用层或测试无法调用未导出接口，且与“完整对接原有 C/C++ API”的目标不符。创建项目时请先对照头文件逐项核对，确保每个公开接口都有对应的 NAPI 与 .d.ts 声明。
 
+**宏 / 结构体 / 枚举的导出约定**：C 头文件中的宏、结构体、枚举**不**在 .d.ts 中“原样”导出；详见本目录下 **NAPI_EXPORT_CONVENTIONS.md**。宏的取值通过 NAPI 常量 getter（如 `sqlite3Const*`）或 .d.ts 字面常量体现；结构体对应为句柄类型（如 `Sqlite3Handle = number`）；枚举取值按宏处理或使用 TS 枚举/常量。
+
 ### 4.4 步骤四：测试用例与 List.test.ets
 
 - 新增 `*dts.test.ets`，在 `List.test.ets` 中 import 并注册测试套件。
 
 **重要注意——单元测试须覆盖所有导出接口**：为每个通过 NAPI 导出的接口编写至少一个测试用例，测试用例需**覆盖所有**在 Index.d.ts 中声明的接口，不得遗漏。若只对部分接口写测试，未覆盖的接口在后续修改中容易引入回归且难以发现。创建项目时请根据 Index.d.ts 的导出列表逐项编写或补充测试，确保每个接口都有对应测试。
 
+**每接口至少三类用例（强制）**：每个导出接口须具备至少 **3 种**测试用例，便于按接口统计覆盖、回归与可读性。命名与含义见 **4.6** 及本目录下 **TEST_CASE_DESIGN.md**。
+
 ### 4.6 设计/实现测试用例的规范与步骤（与 DESIGN 六、6.9–6.10 对应）
 
-编写或补全 NAPI 单元测试时，应遵循 **entry/src/ohosTest/ets/test** 下既有用例（如 Indexdts.test.ets、Cjsondts.test.ets）与 **DESIGN.md 第六节「单元测试设计规范与方法」**及**测试数据要求（6.9）、补全清单（6.10）**：
+编写或补全 NAPI 单元测试时，应遵循 **entry/src/ohosTest/ets/test** 下既有用例（如 Indexdts.test.ets、Cjsondts.test.ets）与 **DESIGN.md 第六节「单元测试设计规范与方法」**及**测试数据要求（6.9）、补全清单（6.10）**，以及本技能 **「每接口至少三类用例」** 约定（详见 **TEST_CASE_DESIGN.md**）：
 
 1. **结构**：使用 `describe('SuiteName', () => { ... })` 与 `it('caseName', TEST_FILTER, () => { ... })`；按需使用 beforeAll/beforeEach/afterEach/afterAll。
-2. **命名**：用例名采用 `apiName_scenario` 或 `apiName_inputOrCondition_expected`，便于从报告 `test=CaseName` 定位；可选与 Indexdts 一致的 `api_tc_NNN_category`。
+2. **命名（三类用例，必须沿用）**：每个接口至少 3 条用例，用例名须带明确后缀，便于按接口统计是否满足「至少 3 类」：
+   - **正常功能**：`apiName_normal_<场景或结果>`（如 `sqlite3Open_normal_memory_returns_handle`）
+   - **边界值**：`apiName_boundary_<条件>`（如 `sqlite3Open_boundary_empty_path`、`sqlite3Exec_boundary_empty_sql`）
+   - **返回值**：`apiName_return_value_<类型或含义>`（如 `sqlite3Open_return_value_handle_type`、`sqlite3Close_return_value_is_number`）
+   - 可选兼容旧写法：`apiName_<scenario>`、`apiName_<inputOrCondition>_<expected>`，但补全时优先使用上述三类命名。
 3. **常量**：从 **constant.ets** 引入 TEST_FILTER、HILOG_DOMAIN、VAL_*、NEG_*、INVALID_HANDLE（若已定义）等，避免魔数。
 4. **AAA 与清理**：Arrange（准备输入）→ Act（调用 NAPI）→ Assert（expect(...).assertEqual(...)）；对拥有的 handle 在用例末尾调用 lib.xxxDelete(h) 等做资源清理；已转移所有权的 item 勿重复 Delete。
 5. **显式类型**：变量与返回值写明类型（如 `const h: number`、`const out: string | null`），满足 ArkTS 规范。
-6. **覆盖类型**：每个导出接口至少一条**正向**用例；酌情增加**边界**（空串、空数组、下标边界）与**无效输入**（无效 JSON、无效 handle）用例，参考 cJSON 源码 tests/misc_tests.c 的 null/非法输入设计。
+6. **覆盖类型**：每个导出接口至少一条**正向**用例；**且**至少一条**边界**（空串、空数组、下标边界、无效 handle 等）与至少一条**返回值**（类型、范围、rc 等）用例，使该接口满足「正常 / 边界 / 返回值」三类。参考 cJSON 源码 tests/misc_tests.c 的 null/非法输入设计。
 7. **可追溯**：每个 it 内可用 hilog.info(HILOG_DOMAIN, 'testTag', '%{public}s', 'caseName') 打与用例名一致的日志。
-8. **补全清单**：新增 NAPI 接口后，在对应 *dts.test.ets 中按上述规范增加 it，无需改 List.test.ets（套件已统一注册）；并对照 Index.d.ts 检查是否还有未覆盖的接口，补齐用例。
+8. **补全清单**：新增 NAPI 接口后，在对应 *dts.test.ets 中按上述规范增加 it（**至少 3 条**：normal、boundary、return_value），无需改 List.test.ets（套件已统一注册）；并对照 Index.d.ts 检查是否还有未覆盖的接口或未满 3 类的接口，补齐用例。
 
 **测试数据要求**（详见 DESIGN 6.9）：  
 - 不使用文件 IO，输入用**内联字符串/常量**；数值与句柄无效值用 **constant.ets**（VAL_*、NEG_*、INVALID_HANDLE）。  
@@ -276,6 +284,8 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 | NAPI 与 TS 声明 | `entry/src/main/cpp/napi_init.cpp`、`entry/src/main/cpp/types/libentry/Index.d.ts`、`entry/oh_modules/libentry.so/Index.d.ts` |
 | 单元测试 mock 配置 | `entry/src/mock/mock-config.json5`（NAPI 测试须取消对 libentry.so 的 mock，见 4.5） |
 | 设计文档与代码规范 | `.claude/skills/ohproj/DESIGN.md` |
+| 测试用例三类命名与设计约定 | `.claude/skills/ohproj/TEST_CASE_DESIGN.md` |
+| NAPI 宏/结构体/枚举导出约定 | `.claude/skills/ohproj/NAPI_EXPORT_CONVENTIONS.md` |
 | 常见问题与避免指南 | `.claude/skills/ohproj/KNOWN_ISSUES_AND_AVOIDANCE.md` |
 
 ---
@@ -286,7 +296,7 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 - **输出**：执行命令后给出简要结论（成功/失败）及产物路径；若失败，摘录关键报错便于排查。
 - **执行测试流程**：通常顺序为 `build` → `build-test` → `sign`（对主 HAP 与测试 HAP 均签名）→ `test`；`test` 会先卸载再安装主 HAP 与测试 HAP，然后执行 `aa test`。
 - **NAPI 单元测试失败**：若 CjsondtsTest 等报 "undefined is not callable"，检查 `entry/src/mock/mock-config.json5` 是否仍对 `libentry.so` 做了 mock；按步骤 4.5 清空该配置后重新 build-test、sign、test。
-- **导出与测试范围**：用户要求“导出某头文件的 CJSON_PUBLIC/全部公开接口”时，须导出**所有**该头文件中的公开接口（napi_init.cpp + Index.d.ts 全量对应），且单元测试须**覆盖所有**已导出接口，每个接口至少一个测试用例（见步骤 4.3、4.4 注意）。
+- **导出与测试范围**：用户要求“导出某头文件的 CJSON_PUBLIC/全部公开接口”时，须导出**所有**该头文件中的公开接口（napi_init.cpp + Index.d.ts 全量对应），且单元测试须**覆盖所有**已导出接口，**每个接口至少 3 类用例**（正常/边界/返回值），命名沿用 **TEST_CASE_DESIGN.md**（见步骤 4.3、4.4、4.6）。
 - **设计文档与代码规范**：详见本目录下 **DESIGN.md**（NAPI 封装约定、ArkTS/测试代码规范、已知问题与修复）。
 - **常见问题与避免**：创建/编译/测试前可参考 **KNOWN_ISSUES_AND_AVOIDANCE.md**，避免编译 uv_cwd、@ohos/hypium 缺失、mock 未关、用例不足、DetachItemViaPointer 等逻辑错误再次发生。
 
