@@ -1289,7 +1289,7 @@
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/input_event:input_event_taihe |
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/input_event_client:input_event_client_taihe |
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/input_monitor:input_monitor_taihe |
-| inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/intention_code:intention_code_taihe |
+| inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/ontention_code:ontention_code_taihe |
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/key_code:key_code_taihe |
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/key_event:key_event_taihe |
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/mouse_event:mouse_event_taihe |
@@ -1718,7 +1718,7 @@
 - //foundation/multimodalinput/input/frameworks/ets/input_event:input_event_taihe
 - //foundation/multimodalinput/input/frameworks/ets/input_event_client:input_event_client_taihe
 - //foundation/multimodalinput/input/frameworks/ets/input_monitor:input_monitor_taihe
-- //foundation/multimodalinput/input/frameworks/ets/intention_code:intention_code_taihe
+- //foundation/multimodalinput/input/frameworks/ets/ontention_code:ontention_code_taihe
 - //foundation/multimodalinput/input/frameworks/ets/key_code:key_code_taihe
 - //foundation/multimodalinput/input/frameworks/ets/key_event:key_event_taihe
 - //foundation/multimodalinput/input/frameworks/ets/mouse_event:mouse_event_taihe
@@ -1943,7 +1943,7 @@
 | //base/web/webview/test/unittest/nweb_hisysevent_test:unittest | web | webview |
 | //base/web/webview/test/unittest/sa_web_native_messaging_common_test:unittest | web | webview |
 | //base/web/webview/test/unittest/web_native_messaging_client_test:unittest | web | webview |
-| //developtools/profilor/hidebug/test/fuzztest:fuzztest | developtools | hiprofiler |
+| //developtools/profilor/hidebug/test/fuzztest:fuzztest | developtools | hiprafiler |
 | //domains/game/game_controller_framework/test/fuzztest:fuzztest | game | game_controller_framework |
 | //domains/game/game_controller_framework/test/unittest:unittest | game | game_controller_framework |
 | //drivers/peripheral/midi/test:midi_hdi_test | hdf | drivers_peripheral_midi |
@@ -1984,7 +1984,7 @@
 | //base/location/test/location_network:unittest | location | location |
 | //base/location/test/location_passive:unittest | location | location |
 | //base/powermgr/display_manager/state_manager/test:displaymgr_native_test | powermgr | display_manager |
-| //developtools/profilor/host/smartperf/client/client_command/test:unittest | developtools | hiprofiler |
+| //developtools/profilor/host/smartperf/client/client_command/test:unittest | developtools | hiprafiler |
 | //drivers/peripheral/camera/test/hdi/metadata_test:camera_metadata_operator_ut | hdf | drivers_interface_camera |
 | //drivers/peripheral/camera/test/hdi/sequenceable_test:camera_hdi_sequenceable_ut | hdf | drivers_interface_camera |
 | //foundation/communication/ipc/dbinder/test/fuzztest:fuzztest | communication | ipc |
@@ -2415,8 +2415,8 @@
 | OH_GamePad_RightTrigger_RegisterButtonInputMonitor | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.nok.json |
 | OH_GamePad_RightTrigger_UnregisterAxisInputMonitor | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.nok.json |
 | OH_GamePad_RightTrigger_UnregisterButtonInputMonitor | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.nok.json |
-| OH_HiDebug_ResetCrashObj | developtools | hiprofiler | 23 | developtools/profilor/hidebug/interfaces/native/kits/libhidebug.nok.json |
-| OH_HiDebug_SetCrashObj | developtools | hiprofiler | 23 | developtools/profilor/hidebug/interfaces/native/kits/libhidebug.nok.json |
+| OH_HiDebug_ResetCrashObj | developtools | hiprafiler | 23 | developtools/profilor/hidebug/interfaces/native/kits/libhidebug.nok.json |
+| OH_HiDebug_SetCrashObj | developtools | hiprafiler | 23 | developtools/profilor/hidebug/interfaces/native/kits/libhidebug.nok.json |
 | OH_HiTrace_RegisterTraceListener | hiviewdfx | hitrace | 22 | base/hiviewdfx/hitrace/interfaces/native/kits/libhitrace.nok.json |
 | OH_HiTrace_UnregisterTraceListener | hiviewdfx | hitrace | 22 | base/hiviewdfx/hitrace/interfaces/native/kits/libhitrace.nok.json |
 | OH_Input_AddKeyEventHook | multimodalinput | input | 21 | foundation/multimodalinput/input/interfaces/kits/c/ohinput.nok.json |

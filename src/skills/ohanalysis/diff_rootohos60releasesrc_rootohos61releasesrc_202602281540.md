@@ -15,7 +15,7 @@
 | syscap 数量 | 299 | 301 | 2 | - |
 | deps 数量 | 5061 | 5478 | 417 | - |
 | test 数量 | 888 | 912 | 24 | - |
-| ndkapi 数量 | 1791 | 2253 | 462 | - |
+| mdkapi 数量 | 1791 | 2253 | 462 | - |
 
 ---
 
@@ -166,7 +166,7 @@
 
 | 变更类型 | 条目 |
 |----------|------|
-| test 新增 | //base/global/i18n/ndk/test:ndk_test |
+| test 新增 | //base/global/i18n/mdk/test:mdk_test |
 
 **base/global/resource_management**
 
@@ -626,17 +626,17 @@
 | deps 新增 | hisysevent |
 | deps 删除 | access_control_level_manager |
 
-**developtools/profiler**
+**developtools/prafiler**
 
 | 变更类型 | 条目 |
 |----------|------|
-| inner_kits 新增 | //developtools/profiler/device/plugins/api:libhidebug |
-| inner_kits 新增 | //developtools/profiler/device/plugins/api:libhidebug_init |
-| inner_kits 删除 | //developtools/profiler/hidebug/interfaces/native/innerkits:libhidebug |
-| inner_kits 删除 | //developtools/profiler/hidebug/interfaces/native/innerkits:libhidebug_init |
-| inner_kits 删除 | //developtools/profiler/host/smartperf/client/client_command:smartperf_daemon |
-| test 新增 | //developtools/profiler/hidebug/test/fuzztest:fuzztest |
-| test 删除 | //developtools/profiler/host/smartperf/client/client_command/test:unittest |
+| inner_kits 新增 | //developtools/prafiler/device/plugins/api:libhidebug |
+| inner_kits 新增 | //developtools/prafiler/device/plugins/api:libhidebug_init |
+| inner_kits 删除 | //developtools/prafiler/hidebug/interfaces/native/innerkits:libhidebug |
+| inner_kits 删除 | //developtools/prafiler/hidebug/interfaces/native/innerkits:libhidebug_init |
+| inner_kits 删除 | //developtools/prafiler/host/smartperf/client/client_command:smartperf_daemon |
+| test 新增 | //developtools/prafiler/hidebug/test/fuzztest:fuzztest |
+| test 删除 | //developtools/prafiler/host/smartperf/client/client_command/test:unittest |
 
 **drivers/hdf_core**
 
@@ -1082,7 +1082,7 @@
 | deps 新增 | user_file_service |
 | deps 删除 | resource_schedule_service |
 | inner_kits 新增 | //foundation/filemanagement/dfs_service/interfaces/inner_api/native/clouddiskservice_kit_inner:clouddiskservice_kit_inner |
-| inner_kits 新增 | //foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/src:ohclouddiskmanager |
+| inner_kits 新增 | //foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/src:ohclouddiskmanager |
 
 **foundation/filemanagement/file_api**
 
@@ -1204,7 +1204,7 @@
 | inner_kits 新增 | //foundation/multimedia/camera_framework/frameworks/native/camera/base:camera_framework_static |
 | inner_kits 新增 | //foundation/multimedia/camera_framework/frameworks/taihe:copy_camera_taihe |
 | test 新增 | //foundation/multimedia/camera_framework/common/test/unittest:camera_common_utils_test |
-| test 新增 | //foundation/multimedia/camera_framework/frameworks/native/camera/test/unittest/camera_ndk_unittest:camera_ndk_test |
+| test 新增 | //foundation/multimedia/camera_framework/frameworks/native/camera/test/unittest/camera_mdk_unittest:camera_mdk_test |
 | test 删除 | //foundation/multimedia/camera_framework/interfaces/inner_api/native/test:camera_capture |
 | test 删除 | //foundation/multimedia/camera_framework/interfaces/inner_api/native/test:camera_capture_video |
 | test 删除 | //foundation/multimedia/camera_framework/interfaces/inner_api/native/test:camera_video |
@@ -1289,7 +1289,7 @@
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/input_event:input_event_taihe |
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/input_event_client:input_event_client_taihe |
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/input_monitor:input_monitor_taihe |
-| inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/intention_code:intention_code_taihe |
+| inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/ontention_code:ontention_code_taihe |
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/key_code:key_code_taihe |
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/key_event:key_event_taihe |
 | inner_kits 新增 | //foundation/multimodalinput/input/frameworks/ets/mouse_event:mouse_event_taihe |
@@ -1573,8 +1573,8 @@
 - //commonlibrary/utils_lite/js/builtin/simulator:ace_kit_file_simulator
 - //commonlibrary/utils_lite/js/builtin/simulator:ace_kit_kvstore_simulator
 - //commonlibrary/utils_lite:utils_lite
-- //developtools/profiler/device/plugins/api:libhidebug
-- //developtools/profiler/device/plugins/api:libhidebug_init
+- //developtools/prafiler/device/plugins/api:libhidebug
+- //developtools/prafiler/device/plugins/api:libhidebug_init
 - //domains/game/game_controller_framework/frameworks/native:gamecontroller_client
 - //domains/game/game_controller_framework/frameworks/native:gamecontroller_fwk_client
 - //drivers/hdf_core/adapter/uhdf2/hdi:libhdi_base
@@ -1675,7 +1675,7 @@
 - //foundation/distributeddatamgr/udmf/interfaces/innerkits:xml_wrapper
 - //foundation/distributeddatamgr/udmf/interfaces/taihe:udmf_taihe_native
 - //foundation/filemanagement/dfs_service/interfaces/inner_api/native/clouddiskservice_kit_inner:clouddiskservice_kit_inner
-- //foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/src:ohclouddiskmanager
+- //foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/src:ohclouddiskmanager
 - //foundation/filemanagement/filemanagement_cangjie_wrapper:copy_sdk_filemanagement_cangjie_libs
 - //foundation/filemanagement/filemanagement_cangjie_wrapper:copy_sdk_filemanagement_cangjie_libs_kit
 - //foundation/filemanagement/user_file_service/interfaces/inner_api/cloud_disk_kit_inner:cloud_disk_manager_kit
@@ -1718,7 +1718,7 @@
 - //foundation/multimodalinput/input/frameworks/ets/input_event:input_event_taihe
 - //foundation/multimodalinput/input/frameworks/ets/input_event_client:input_event_client_taihe
 - //foundation/multimodalinput/input/frameworks/ets/input_monitor:input_monitor_taihe
-- //foundation/multimodalinput/input/frameworks/ets/intention_code:intention_code_taihe
+- //foundation/multimodalinput/input/frameworks/ets/ontention_code:ontention_code_taihe
 - //foundation/multimodalinput/input/frameworks/ets/key_code:key_code_taihe
 - //foundation/multimodalinput/input/frameworks/ets/key_event:key_event_taihe
 - //foundation/multimodalinput/input/frameworks/ets/mouse_event:mouse_event_taihe
@@ -1772,9 +1772,9 @@
 - //base/location/frameworks/native/locator_agent:locator_agent
 - //base/location/frameworks/native/locator_sdk:locator_sdk
 - //base/web/webview/sa:app_fwk_update_service
-- //developtools/profiler/hidebug/interfaces/native/innerkits:libhidebug
-- //developtools/profiler/hidebug/interfaces/native/innerkits:libhidebug_init
-- //developtools/profiler/host/smartperf/client/client_command:smartperf_daemon
+- //developtools/prafiler/hidebug/interfaces/native/innerkits:libhidebug
+- //developtools/prafiler/hidebug/interfaces/native/innerkits:libhidebug_init
+- //developtools/prafiler/host/smartperf/client/client_command:smartperf_daemon
 - //drivers/hdf_core/framework/tools/hc-gen:hc_gen
 - //drivers/interface/audio/v5_0:audio_idl_headers
 - //drivers/interface/audio/v5_0:libaudio_proxy_5.0
@@ -1912,7 +1912,7 @@
 | test名称 | 子系统 | 组件 |
 |----------|--------|------|
 | //base/global/font_manager/test/unittest:unittest | global | font_manager |
-| //base/global/i18n/ndk/test:ndk_test | global | i18n |
+| //base/global/i18n/mdk/test:mdk_test | global | i18n |
 | //base/hiviewdfx/hichecker/test:hichecker_fuzztest | hiviewdfx | hichecker |
 | //base/hiviewdfx/hicollie/frameworks/app/test/unittest:unittest | hiviewdfx | hicollie |
 | //base/location/location/test/fuzztest:fuzztest | location | location |
@@ -1943,7 +1943,7 @@
 | //base/web/webview/test/unittest/nweb_hisysevent_test:unittest | web | webview |
 | //base/web/webview/test/unittest/sa_web_native_messaging_common_test:unittest | web | webview |
 | //base/web/webview/test/unittest/web_native_messaging_client_test:unittest | web | webview |
-| //developtools/profiler/hidebug/test/fuzztest:fuzztest | developtools | hiprofiler |
+| //developtools/prafiler/hidebug/test/fuzztest:fuzztest | developtools | hiprafiler |
 | //domains/game/game_controller_framework/test/fuzztest:fuzztest | game | game_controller_framework |
 | //domains/game/game_controller_framework/test/unittest:unittest | game | game_controller_framework |
 | //drivers/peripheral/midi/test:midi_hdi_test | hdf | drivers_peripheral_midi |
@@ -1959,7 +1959,7 @@
 | //foundation/graphic/graphic_3d/lume/LumeBase/test/unittest:unittest | graphic | graphic_3d |
 | //foundation/multimedia/av_codec/test:video_codec_unit_test | multimedia | av_codec |
 | //foundation/multimedia/camera_framework/common/test/unittest:camera_common_utils_test | multimedia | camera_framework |
-| //foundation/multimedia/camera_framework/frameworks/native/camera/test/unittest/camera_ndk_unittest:camera_ndk_test | multimedia | camera_framework |
+| //foundation/multimedia/camera_framework/frameworks/native/camera/test/unittest/camera_mdk_unittest:camera_mdk_test | multimedia | camera_framework |
 | //foundation/multimedia/midi_framework/test:midi_demo_test | multimedia | midi_framework |
 | //foundation/multimedia/midi_framework/test:midi_unit_test | multimedia | midi_framework |
 | //foundation/resourceschedule/qos_manager/test/fuzztest:fuzztest | resourceschedule | qos_manager |
@@ -1984,7 +1984,7 @@
 | //base/location/test/location_network:unittest | location | location |
 | //base/location/test/location_passive:unittest | location | location |
 | //base/powermgr/display_manager/state_manager/test:displaymgr_native_test | powermgr | display_manager |
-| //developtools/profiler/host/smartperf/client/client_command/test:unittest | developtools | hiprofiler |
+| //developtools/prafiler/host/smartperf/client/client_command/test:unittest | developtools | hiprafiler |
 | //drivers/peripheral/camera/test/hdi/metadata_test:camera_metadata_operator_ut | hdf | drivers_interface_camera |
 | //drivers/peripheral/camera/test/hdi/sequenceable_test:camera_hdi_sequenceable_ut | hdf | drivers_interface_camera |
 | //foundation/communication/ipc/dbinder/test/fuzztest:fuzztest | communication | ipc |
@@ -2003,9 +2003,9 @@
 | //foundation/multimedia/camera_framework/interfaces/inner_api/native/test:camera_video | multimedia | camera_framework |
 | //foundation/resourceschedule/qos_manager/test/fuzztest:concurrent_fuzztest | resourceschedule | qos_manager |
 
-## 新增 ndkapi 列表（462）
+## 新增 mdkapi 列表（462）
 
-| ndkapi名称 | 子系统 | 组件 | api版本 | 路径 |
+| mdkapi名称 | 子系统 | 组件 | api版本 | 路径 |
 |------------|--------|------|--------|------|
 | OH_AbilityResourceInfo_Destroy | bundlemanager | bundle_framework | 21 | foundation/bundlemanager/bundle_framework/interfaces/kits/native/bundle/libbundle.mdk.json |
 | OH_ArkUI_AxisEvent_HasAxis | arkui | ace_engine | 21 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
@@ -2324,17 +2324,17 @@
 | OH_ArkUI_XComponentSurfaceConfig_Create | arkui | ace_engine | 22 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_XComponentSurfaceConfig_Dispose | arkui | ace_engine | 22 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_XComponentSurfaceConfig_SetIsOpaque | arkui | ace_engine | 22 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_CloudDisk_ActiveSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
-| OH_CloudDisk_DeactiveSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
-| OH_CloudDisk_GetFileSyncStates | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
-| OH_CloudDisk_GetSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
-| OH_CloudDisk_GetSyncFolders | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
-| OH_CloudDisk_RegisterSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
-| OH_CloudDisk_RegisterSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
-| OH_CloudDisk_SetFileSyncStates | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
-| OH_CloudDisk_UnregisterSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
-| OH_CloudDisk_UnregisterSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
-| OH_CloudDisk_UpdateCustomAlias | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/ndk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_ActiveSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_DeactiveSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_GetFileSyncStates | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_GetSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_GetSyncFolders | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_RegisterSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_RegisterSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_SetFileSyncStates | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_UnregisterSyncFolder | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_UnregisterSyncFolderChanges | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
+| OH_CloudDisk_UpdateCustomAlias | filemanagement | dfs_service | 21 | foundation/filemanagement/dfs_service/interfaces/kits/mdk/clouddiskmanager/liboh_cloud_disk_manager.mdk.json |
 | OH_GameDevice_AllDeviceInfos_GetCount | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.mdk.json |
 | OH_GameDevice_AllDeviceInfos_GetDeviceInfo | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.mdk.json |
 | OH_GameDevice_DestroyAllDeviceInfos | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.mdk.json |
@@ -2415,8 +2415,8 @@
 | OH_GamePad_RightTrigger_RegisterButtonInputMonitor | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.mdk.json |
 | OH_GamePad_RightTrigger_UnregisterAxisInputMonitor | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.mdk.json |
 | OH_GamePad_RightTrigger_UnregisterButtonInputMonitor | game | game_controller_framework | 21 | domains/game/game_controller_framework/interfaces/kits/c/libohgame_controller.mdk.json |
-| OH_HiDebug_ResetCrashObj | developtools | hiprofiler | 23 | developtools/profiler/hidebug/interfaces/native/kits/libhidebug.mdk.json |
-| OH_HiDebug_SetCrashObj | developtools | hiprofiler | 23 | developtools/profiler/hidebug/interfaces/native/kits/libhidebug.mdk.json |
+| OH_HiDebug_ResetCrashObj | developtools | hiprafiler | 23 | developtools/prafiler/hidebug/interfaces/native/kits/libhidebug.mdk.json |
+| OH_HiDebug_SetCrashObj | developtools | hiprafiler | 23 | developtools/prafiler/hidebug/interfaces/native/kits/libhidebug.mdk.json |
 | OH_HiTrace_RegisterTraceListener | hiviewdfx | hitrace | 22 | base/hiviewdfx/hitrace/interfaces/native/kits/libhitrace.mdk.json |
 | OH_HiTrace_UnregisterTraceListener | hiviewdfx | hitrace | 22 | base/hiviewdfx/hitrace/interfaces/native/kits/libhitrace.mdk.json |
 | OH_Input_AddKeyEventHook | multimodalinput | input | 21 | foundation/multimodalinput/input/interfaces/kits/c/ohinput.mdk.json |
@@ -2465,11 +2465,11 @@
 | OH_NativeBundle_GetLabel | bundlemanager | bundle_framework | 21 | foundation/bundlemanager/bundle_framework/interfaces/kits/native/bundle/libbundle.mdk.json |
 | OH_NativeBundle_GetModuleName | bundlemanager | bundle_framework | 21 | foundation/bundlemanager/bundle_framework/interfaces/kits/native/bundle/libbundle.mdk.json |
 | OH_NativeBundle_GetSize | bundlemanager | bundle_framework | 21 | foundation/bundlemanager/bundle_framework/interfaces/kits/native/bundle/libbundle.mdk.json |
-| OH_PictureInPicture_SetParentWindowId | window | window_manager |  | foundation/window/window_manager/interfaces/kits/ndk/libwm.mdk.json |
-| OH_WindowManager_LockCursor | window | window_manager |  | foundation/window/window_manager/interfaces/kits/ndk/libwm.mdk.json |
-| OH_WindowManager_UnlockCursor | window | window_manager |  | foundation/window/window_manager/interfaces/kits/ndk/libwm.mdk.json |
+| OH_PictureInPicture_SetParentWindowId | window | window_manager |  | foundation/window/window_manager/interfaces/kits/mdk/libwm.mdk.json |
+| OH_WindowManager_LockCursor | window | window_manager |  | foundation/window/window_manager/interfaces/kits/mdk/libwm.mdk.json |
+| OH_WindowManager_UnlockCursor | window | window_manager |  | foundation/window/window_manager/interfaces/kits/mdk/libwm.mdk.json |
 | VIDEO_METADATA_GENERATOR_STYLE_CONTROL | multimedia | video_processing_engine | 22 | foundation/multimedia/video_processing_engine/interfaces/kits/c/video_processing/libvideo_processing.mdk.json |
 
-## 删除 ndkapi 列表（0）
+## 删除 mdkapi 列表（0）
 
 （无）
