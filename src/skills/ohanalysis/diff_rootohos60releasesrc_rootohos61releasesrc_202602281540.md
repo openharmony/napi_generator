@@ -2063,7 +2063,7 @@
 | OH_ArkUI_NativeModule_GetContextFromAniValue | arkui | ace_engine | 22 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_NativeModule_GetDrawableDescriptorFromAniValue | arkui | ace_engine | 22 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_NativeModule_GetDrawableDescriptorFromResourceAniValue | arkui | ace_engine | 22 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_NativeModule_GetNativeAccessibilityProvider | arkui | ace_engine | 23 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_NativeModule_GetNativeAccossibilityProvider | arkui | ace_engine | 23 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_NativeModule_GetNavDestinationAniParam | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_NativeModule_GetNodeContentFromAniValue | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_NativeModule_GetNodeHandleFromAniValue | arkui | ace_engine | 22 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |

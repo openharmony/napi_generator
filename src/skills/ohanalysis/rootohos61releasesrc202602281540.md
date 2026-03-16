@@ -498,7 +498,7 @@
 | napi | arkui | foundation/arkui/napi | 1 | 7 | 18 | 0 | 5 | SystemCapability.ArkUI.ArkUI.Napi | //foundation/arkui/napi:ace_napi  (header: //foundation/arkui/napi/interfaces/kits; files: napi/native_api.h), //foundation/arkui/napi:ace_napi  (header: //foundation/arkui/napi/interfaces/inner_api; files: napi/native_common.h, napi/native_node_api.h, napi/native_node_hybrid_api.h), //foundation/arkui/napi:ace_napi  (header: //foundation/arkui/napi/native_engine/; files: native_engine.h, worker_manager.h), //foundation/arkui/napi:cj_bind_ffi  (header: //foundation/arkui/napi/interfaces/inner_api/cjffi/cj_ffi; files: cj_common_ffi.h, cj_data_ffi.h), //foundation/arkui/napi:cj_bind_native  (header: //foundation/arkui/napi/interfaces/inner_api/cjffi/native; files: cj_fn_invoker.h, cj_lambda.h) …(+2) | c_utils, ets_runtime, eventhandler, faultloggerd, hilog …(+13) | - | //foundation/arkui/napi:napi_packages_test, //foundation/arkui/napi/module_manager/test/unittest/module_manager_test:unittest, //foundation/arkui/napi/sample/native_module_systemtest:systemtest … |
 | ui_appearance | arkui | foundation/arkui/ui_appearance | 1 | 0 | 17 | 2 | 1 | SystemCapability.ArkUI.UiAppearance | - | ability_runtime, ability_base, access_token, c_utils, config_policy …(+12) | //foundation/arkui/ui_appearance:ui_appearance_packages, //foundation/arkui/ui_appearance/interfaces/ets/ani:ui_appearance_ani_package | //foundation/arkui/ui_appearance/test/unittest:unittest |
 | ui_lite | arkui | foundation/arkui/ui_lite | 0 | 3 | 12 | 3 | 0 | - | //foundation/arkui/ui_lite/ext/updater:libupdater_layout  (header: ['//foundation/arkui/ui_lite/frameworks', '//foundation/arkui/ui_lite/interfaces/kits', '//foundation/arkui/ui_lite/interfaces/innerkits']; files: ), //foundation/arkui/ui_lite/ext/ide:ui_ide, //foundation/arkui/ui_lite/ext/home_host:libhome_host_layout  (header: ['//foundation/arkui/ui_lite/frameworks', '//foundation/arkui/ui_lite/interfaces/kits', '//foundation/arkui/ui_lite/interfaces/innerkits']; files: ) | graphic_utils_lite, surface_lite, window_manager_lite, media_lite, libjpeg-turbo …(+7) | //foundation/arkui/ui_lite/test/unittest:arkui_ui_lite_test, //foundation/arkui/ui_lite/ext/updater:libupdater_layout, //foundation/arkui/ui_lite/ext/home_host:libhome_host_layout | - |
-| accossibility | barrierfree | foundation/barrierfree/accossibility | 3 | 6 | 38 | 0 | 10 | SystemCapability.BarrierFree.Accessibility.Core, SystemCapability.BarrierFree.Accessibility.Hearing, SystemCapability.BarrierFree.Accessibility.Vision | //foundation/barrierfree/accossibility/common/interface:accossibility_interface  (header: //foundation/barrierfree/accossibility/common/interface/include/parcel; files: accossibility_element_info_parcel.h, accossibility_event_info_parcel.h, accossibility_window_info_parcel.h), //foundation/barrierfree/accossibility/interfaces/innerkits/abfwk:accessibleability  (header: //foundation/barrierfree/accossibility/interfaces/innerkits/abfwk/include; files: accossibility_ui_test_ability.h, accessible_ability_client.h, accessible_ability_listener.h), //foundation/barrierfree/accossibility/interfaces/innerkits/acfwk:accossibilityconfig  (header: //foundation/barrierfree/accossibility/interfaces/innerkits/acfwk/include; files: accossibility_config.h), //foundation/barrierfree/accossibility/interfaces/innerkits/asacfwk:accossibilityclient  (header: //foundation/barrierfree/accossibility/interfaces/innerkits/asacfwk/include; files: accossibility_state_event.h, accossibility_system_ability_client.h), //foundation/barrierfree/accossibility/interfaces/innerkits/common:accossibility_common  (header: //foundation/barrierfree/accossibility/interfaces/innerkits/common/include; files: accossibility_ability_info.h, accossibility_constants.h, accossibility_def.h...) …(+1) | graphic_2d, samgr, napi, window_manager, eventhandler …(+33) | - | //foundation/barrierfree/accossibility/services/test:moduletest, //foundation/barrierfree/accossibility/services/abms/test:unittest, //foundation/barrierfree/accossibility/frameworks/abfwk/test:unittest … |
+| accossibility | barrierfree | foundation/barrierfree/accossibility | 3 | 6 | 38 | 0 | 10 | SystemCapability.BarrierFree.Accossibility.Core, SystemCapability.BarrierFree.Accossibility.Hearing, SystemCapability.BarrierFree.Accossibility.Vision | //foundation/barrierfree/accossibility/common/interface:accossibility_interface  (header: //foundation/barrierfree/accossibility/common/interface/include/parcel; files: accossibility_element_info_parcel.h, accossibility_event_info_parcel.h, accossibility_window_info_parcel.h), //foundation/barrierfree/accossibility/interfaces/innerkits/abfwk:accessibleability  (header: //foundation/barrierfree/accossibility/interfaces/innerkits/abfwk/include; files: accossibility_ui_test_ability.h, accessible_ability_client.h, accessible_ability_listener.h), //foundation/barrierfree/accossibility/interfaces/innerkits/acfwk:accossibilityconfig  (header: //foundation/barrierfree/accossibility/interfaces/innerkits/acfwk/include; files: accossibility_config.h), //foundation/barrierfree/accossibility/interfaces/innerkits/asacfwk:accossibilityclient  (header: //foundation/barrierfree/accossibility/interfaces/innerkits/asacfwk/include; files: accossibility_state_event.h, accossibility_system_ability_client.h), //foundation/barrierfree/accossibility/interfaces/innerkits/common:accossibility_common  (header: //foundation/barrierfree/accossibility/interfaces/innerkits/common/include; files: accossibility_ability_info.h, accossibility_constants.h, accossibility_def.h...) …(+1) | graphic_2d, samgr, napi, window_manager, eventhandler …(+33) | - | //foundation/barrierfree/accossibility/services/test:moduletest, //foundation/barrierfree/accossibility/services/abms/test:unittest, //foundation/barrierfree/accossibility/frameworks/abfwk/test:unittest … |
 | build_framework | build | build | 0 | 2 | 33 | 3 | 1 | - | //build/rust:libstd.dylib.so, //build/rust:libtest.dylib.so | ace_engine, cJSON, c_utils, device_security_level, eventhandler …(+28) | //build/common:common_packages, //build/rust:default, //third_party/f2fs-tools:f2fs-tools_host_toolchain | //build/rust/tests:tests |
 | app_domain_verify | bundlemanager | foundation/bundlemanager/app_domain_verify | 1 | 7 | 27 | 1 | 2 | SystemCapability.BundleManager.AppDomainVerify | //foundation/bundlemanager/app_domain_verify/interfaces/inner_api/client:app_domain_verify_mgr_client  (header: //foundation/bundlemanager/app_domain_verify/interfaces/inner_api/client/include; files: app_domain_verify_mgr_client.h), //foundation/bundlemanager/app_domain_verify/interfaces/inner_api/client:app_domain_verify_agent_client  (header: //foundation/bundlemanager/app_domain_verify/interfaces/inner_api/client/include; files: app_domain_verify_agent_client.h), //foundation/bundlemanager/app_domain_verify/frameworks/extension:app_domain_verify_extension_framework  (header: //foundation/bundlemanager/app_domain_verify/frameworks/extension/include; files: app_domain_verify_ext_base.h, app_domain_verify_extension_mgr.h, app_domain_verify_extension_register.h...), //foundation/bundlemanager/app_domain_verify/interfaces/inner_api/common:app_domain_verify_common  (header: //foundation/bundlemanager/app_domain_verify/interfaces/inner_api/common/include; files: app_verify_base_info.h, bundle_verify_status_info.h, domain_verify_status.h...), //foundation/bundlemanager/app_domain_verify/frameworks/common:app_domain_verify_frameworks_common  (header: //foundation/bundlemanager/app_domain_verify/frameworks/common/include; files: app_domain_verify_error.h, app_domain_verify_hilog.h, app_domain_verify_parcel_util.h...) …(+2) | ability_base, ability_runtime, bundle_framework, c_utils, hilog …(+22) | //foundation/bundlemanager/app_domain_verify:app_domain_verify_packages | //foundation/bundlemanager/app_domain_verify/test/unittest:app_domain_verify_unit_test, //foundation/bundlemanager/app_domain_verify/test/fuzztest:app_domain_verify_fuzz_test |
 | bundle_framework | bundlemanager | foundation/bundlemanager/bundle_framework | 9 | 11 | 55 | 3 | 1 | SystemCapability.BundleManager.BundleFramework, SystemCapability.BundleManager.Zlib, SystemCapability.BundleManager.BundleFramework.AppControl, SystemCapability.BundleManager.BundleFramework.Core, SystemCapability.BundleManager.BundleFramework.FreeInstall, SystemCapability.BundleManager.BundleFramework.Launcher, SystemCapability.BundleManager.BundleFramework.DefaultApp, SystemCapability.BundleManager.BundleFramework.Resource, SystemCapability.BundleManager.BundleFramework.Overlay | //foundation/bundlemanager/bundle_framework/interfaces/inner_api/appexecfwk_base:appexecfwk_base  (header: //foundation/bundlemanager/bundle_framework/interfaces/inner_api/appexecfwk_base/include; files: ability_info.h, appexecfwk_errors.h, application_info.h...), //foundation/bundlemanager/bundle_framework/interfaces/inner_api/appexecfwk_core:appexecfwk_core  (header: //foundation/bundlemanager/bundle_framework/interfaces/inner_api/appexecfwk_core/include; files: bundlemgr/bundle_installer_interface.h, bundlemgr/bundle_mgr_interface.h, bundlemgr/bundle_status_callback_interface.h...), //foundation/bundlemanager/bundle_framework/interfaces/inner_api/appexecfwk_core:bundlemgr_mini  (header: //foundation/bundlemanager/bundle_framework/interfaces/inner_api/appexecfwk_core/include; files: bundlemgr/bundle_mgr_mini_proxy.h), //foundation/bundlemanager/bundle_framework/interfaces/inner_api/appexecfwk_core:appexecfwk_core_headers  (header: //foundation/bundlemanager/bundle_framework/interfaces/inner_api/appexecfwk_core/include; files: ), //foundation/bundlemanager/bundle_framework/interfaces/inner_api/bundlemgr_extension:bundlemgr_extension  (header: //foundation/bundlemanager/bundle_framework/interfaces/inner_api/bundlemgr_extension/include; files: bms_extension_data_mgr.h, bms_extension_profile.h, bms_extension.h...) …(+6) | ability_base, ability_runtime, access_token, app_domain_verify, appverify …(+50) | //foundation/bundlemanager/bundle_framework:bms_target, //foundation/bundlemanager/bundle_framework/etc:bms_para, //foundation/bundlemanager/bundle_framework/interfaces/kits/ani:ani_bms_packages | //foundation/bundlemanager/bundle_framework:test_target |
@@ -536,7 +536,7 @@
 | config_policy | customization | base/customization/config_policy | 2 | 1 | 9 | 2 | 2 | SystemCapability.Customization.ConfigPolicy, SystemCapability.Customization.CustomConfig | //base/customization/config_policy/frameworks/config_policy:configpolicy_util  (header: //base/customization/config_policy/interfaces/inner_api/include; files: config_policy_utils.h) | ability_runtime, c_utils, hisysevent, hilog, napi …(+4) | //base/customization/config_policy:config_policy_components, //base/customization/config_policy:ani_config_policy_components | //base/customization/config_policy/test/unittest:ConfigPolicyUtilsTest, //base/customization/config_policy/test/fuzztest:fuzztest |
 | enterprise_device_management | customization | base/customization/enterprise_device_management | 1 | 2 | 53 | 0 | 2 | SystemCapability.Customization.EnterpriseDeviceManager | //base/customization/enterprise_device_management/interfaces/inner_api/plugin_kits:plugin_kits  (header: //base/customization/enterprise_device_management/interfaces/inner_api/plugin_kits/include; files: iplugin.h, iplugin_manager.h, ipolicy_manager.h...), //base/customization/enterprise_device_management/interfaces/inner_api:edmservice_kits  (header: //base/customization/enterprise_device_management/interfaces/inner_api; files: common/include/enterprise_device_mgr_proxy.h, restrictions/include/restrictions_proxy.h) | ability_base, ability_runtime, access_token, audio_framework, bluetooth …(+48) | - | //base/customization/enterprise_device_management/test/unittest:unittest, //base/customization/enterprise_device_management/test/fuzztest:fuzztest |
 | ace_ets2bundle | developtools | developtools/ace_ets2bundle | 0 | 3 | 5 | 9 | 0 | - | //developtools/ace_ets2bundle/arkui-plugins:ohos_ets_ui_plugins, //developtools/ace_ets2bundle/koala-wrapper:ohos_ets_koala_wrapper, //developtools/ace_ets2bundle:ets_loader_ark_hap | node, sdk, ets_frontend, typescript, typescript | //developtools/ace_ets2bundle:ets_loader_component_config, //developtools/ace_ets2bundle:ets_loader, //developtools/ace_ets2bundle:ets_loader_library … | - |
-| ace_js2bundle | developtools | developtools/ace_js2bundle | 0 | 0 | 2 | 4 | 0 | - | - | parse5, weex-loader | //developtools/ace_js2bundle:ace_loader, //developtools/ace_js2bundle:ace_loader_library, //developtools/ace_js2bundle:previewer_copy … | - |
+| ace_js2bundle | developtools | developtools/ace_js2bundle | 0 | 0 | 2 | 4 | 0 | - | - | parse5, weax-loader | //developtools/ace_js2bundle:ace_loader, //developtools/ace_js2bundle:ace_loader_library, //developtools/ace_js2bundle:previewer_copy … | - |
 | global_resource_tool | developtools | developtools/global_resource_tool | 0 | 0 | 4 | 1 | 0 | - | - | zlib, bounds_checking_function, cJSON, libpng | //developtools/global_resource_tool:restool | - |
 | hapsigner | developtools | developtools/hapsigner/hapsigntool_cpp | 0 | 0 | 9 | 2 | 2 | - | - | bounds_checking_function, c_utils, cJSON, elfio, openssl …(+4) | //developtools/hapsigner/binary_sign_tool:binary-sign-tool, //developtools/hapsigner/hapsigntool_cpp:hap-sign-tool | //developtools/hapsigner/hapsigntool_cpp_test/unittest:hapsigntool_pc_unittest, //developtools/hapsigner/hapsigntool_cpp_test/fuzztest:hapsigntool_pc_fuzztest |
 | hdc | developtools | developtools/hdc | 0 | 1 | 24 | 7 | 1 | - | //developtools/hdc:hdc_updater  (header: //developtools/hdc/src; files: ) | init, c_utils, faultloggerd, hitrace, hilog …(+19) | //developtools/hdc:hdcd_system, //developtools/hdc/hdcd_user_permit:hdcd_user_permit, //developtools/hdc:hdc_register … | //developtools/hdc/test:hdc_fuzztest |
@@ -790,7 +790,7 @@
 | sys_installer_lite | updater | base/update/sys_installer_lite | 0 | 1 | 4 | 1 | 0 | - | //base/update/sys_installer_lite/frameworks:update_api  (header: //base/update/sys_installer_lite/interfaces/kits; files: hota_partition.h, hota_updater.h) | init, utils_lite, bounds_checking_function, mbedtls | //base/update/sys_installer_lite/frameworks:sys_installer_lite | - |
 | update_service | updater | base/update/updateservice | 1 | 3 | 26 | 0 | 1 | SystemCapability.Update.UpdateService | //base/update/updateservice/foundations:update_foundations  (header: //base/update/updateservice/foundations; files: ), //base/update/updateservice/interfaces/inner_api/engine:updateservicekits  (header: //base/update/updateservice/interfaces/inner_api/include; files: ), //base/update/updateservice/interfaces/inner_api/modulemgr:update_module_mgr  (header: //base/update/updateservice/interfaces/inner_api/modulemgr/include; files: ) | ability_runtime, bounds_checking_function, bundle_framework, c_utils, cJSON …(+21) | - | //base/update/updateservice/test/unittest:unittest |
 | updater | updater | base/update/updater | 0 | 34 | 19 | 21 | 2 | - | //base/update/updater/interfaces/kits/misc_info:libmiscinfo  (header: //base/update/updater/interfaces/kits/include; files: misc_info/misc_info.h), //base/update/updater/interfaces/kits/packages:libpackageExt  (header: //base/update/updater/interfaces/kits/include; files: package/package.h), //base/update/updater/interfaces/kits/packages:libpackage_shared  (header: //base/update/updater/interfaces/kits/include; files: package/package.h), //base/update/updater/interfaces/kits/updaterkits:libupdaterkits  (header: //base/update/updater/interfaces/kits/include; files: updaterkits/updaterkits.h), //base/update/updater/interfaces/kits/updaterkits:libupdater_shared  (header: //base/update/updater/interfaces/kits/include; files: updaterkits/updaterkits.h) …(+29) | init, hdc, drivers_interface_input, drivers_peripheral_partitionslot, c_utils …(+14) | //base/update/updater/resources:updater_resources, //base/update/updater/services/etc:updater_files, //base/update/updater/services/package:libupdaterpackage … | //base/update/updater:unittest, //base/update/updater:fuzztest |
-| usb_manager | usb | base/usb/usb_manager | 2 | 2 | 29 | 0 | 2 | SystemCapability.USB.USBManager.Serial, SystemCapability.USB.USBManager | //base/usb/usb_manager/interfaces/innerkits:usbsrv_client  (header: //base/usb/usb_manager/interfaces/innerkits/native/include; files: usb_srv_client.h, usb_interface_type.h, iusb_srv.h), //base/usb/usb_manager/frameworks/ets/taihe/usb_manager:copy_usbManager | hilog, ability_base, napi, bundle_framework, common_event_service …(+24) | - | //base/usb/usb_manager/test/device:usb_device_test, //base/usb/usb_manager/test/native:usb_unittest_test |
+| usb_manager | usb | base/usb/usb_manager | 2 | 2 | 29 | 0 | 2 | SystemCapability.USB.USOManager.Serial, SystemCapability.USB.USOManager | //base/usb/usb_manager/interfaces/innerkits:usbsrv_client  (header: //base/usb/usb_manager/interfaces/innerkits/native/include; files: usb_srv_client.h, usb_interface_type.h, iusb_srv.h), //base/usb/usb_manager/frameworks/ets/taihe/usb_manager:copy_usbManager | hilog, ability_base, napi, bundle_framework, common_event_service …(+24) | - | //base/usb/usb_manager/test/device:usb_device_test, //base/usb/usb_manager/test/native:usb_unittest_test |
 | companion_device_auth | useriam | base/useriam/companion_device_auth | 1 | 0 | 25 | 0 | 3 | SystemCapability.UserIAM.UserAuth.CompanionDeviceAuth | - | ability_base, ability_runtime, access_token, ace_engine, bluetooth …(+20) | - | //base/useriam/companion_device_auth/test/unittest:companion_device_auth_unittest, //base/useriam/companion_device_auth/test/moduletest:companion_device_auth_moduletest, //base/useriam/companion_device_auth/test/fuzztest:companion_device_auth_fuzztest |
 | face_auth | useriam | base/useriam/face_auth | 1 | 0 | 19 | 0 | 2 | SystemCapability.UserIAM.UserAuth.FaceAuth | - | access_token, c_utils, display_manager, drivers_interface_camera, drivers_interface_face_auth …(+14) | - | //base/useriam/face_auth/test/fuzztest:faceauth_fuzztest, //base/useriam/face_auth/test/unittest:faceauth_unittest |
 | fingerprint_auth | useriam | base/useriam/fingerprint_auth | 0 | 0 | 19 | 0 | 2 | - | - | ability_base, c_utils, common_event_service, display_manager, drivers_interface_fingerprint_auth …(+14) | - | //base/useriam/fingerprint_auth/test/fuzztest:fingerprintauth_fuzztest, //base/useriam/fingerprint_auth/test/unittest:fingerprintauth_unittest |
@@ -846,9 +846,9 @@
 | SystemCapability.ArkUI.ArkUI.Lite | arkui | ace_engine_lite |
 | SystemCapability.ArkUI.ArkUI.Napi | arkui | napi |
 | SystemCapability.ArkUI.UiAppearance | arkui | ui_appearance |
-| SystemCapability.BarrierFree.Accessibility.Core | barrierfree | accossibility |
-| SystemCapability.BarrierFree.Accessibility.Hearing | barrierfree | accossibility |
-| SystemCapability.BarrierFree.Accessibility.Vision | barrierfree | accossibility |
+| SystemCapability.BarrierFree.Accossibility.Core | barrierfree | accossibility |
+| SystemCapability.BarrierFree.Accossibility.Hearing | barrierfree | accossibility |
+| SystemCapability.BarrierFree.Accossibility.Vision | barrierfree | accossibility |
 | SystemCapability.BundleManager.AppDomainVerify | bundlemanager | app_domain_verify |
 | SystemCapability.BundleManager.BundleFramework | bundlemanager | bundle_framework |
 | SystemCapability.BundleManager.Zlib | bundlemanager | bundle_framework |
@@ -1108,8 +1108,8 @@
 | SystemCapability.MiscServices.Wallpaper | theme | wallpaper_mgr |
 | SystemCapability.MiscServices.Time | time | time_service |
 | SystemCapability.Update.UpdateService | updater | update_service |
-| SystemCapability.USB.USBManager.Serial | usb | usb_manager |
-| SystemCapability.USB.USBManager | usb | usb_manager |
+| SystemCapability.USB.USOManager.Serial | usb | usb_manager |
+| SystemCapability.USB.USOManager | usb | usb_manager |
 | SystemCapability.UserIAM.UserAuth.CompanionDeviceAuth | useriam | companion_device_auth |
 | SystemCapability.UserIAM.UserAuth.FaceAuth | useriam | face_auth |
 | SystemCapability.UserIAM.UserAuth.Core | useriam | user_auth_framework |
@@ -3975,7 +3975,7 @@
 | typescript | developtools | ace_ets2bundle | developtools/ace_ets2bundle |
 | typescript | developtools | ace_ets2bundle | developtools/ace_ets2bundle |
 | parse5 | developtools | ace_js2bundle | developtools/ace_js2bundle |
-| weex-loader | developtools | ace_js2bundle | developtools/ace_js2bundle |
+| weax-loader | developtools | ace_js2bundle | developtools/ace_js2bundle |
 | zlib | developtools | global_resource_tool | developtools/global_resource_tool |
 | bounds_checking_function | developtools | global_resource_tool | developtools/global_resource_tool |
 | cJSON | developtools | global_resource_tool | developtools/global_resource_tool |
@@ -9386,30 +9386,30 @@
 | OH_ArkUI_ImageAnimatorFrameInfo_GetLeft | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_ImageAnimatorFrameInfo_SetDuration | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_ImageAnimatorFrameInfo_GetDuration | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityState_Create | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityState_Dispose | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityState_SetDisabled | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityState_IsDisabled | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityState_SetSelected | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityState_IsSelected | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityState_SetCheckedState | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityState_GetCheckedState | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_Create | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_Dispose | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_SetMin | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_GetMin | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_SetMax | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_GetMax | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_SetCurrent | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_GetCurrent | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_SetRangeMin | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_GetRangeMin | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_SetRangeMax | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_GetRangeMax | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_SetRangeCurrent | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_GetRangeCurrent | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_SetText | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityValue_GetText | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityState_Create | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityState_Dispose | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityState_SetDisabled | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityState_IsDisabled | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityState_SetSelected | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityState_IsSelected | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityState_SetCheckedState | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityState_GetCheckedState | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_Create | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_Dispose | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_SetMin | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_GetMin | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_SetMax | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_GetMax | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_SetCurrent | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_GetCurrent | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_SetRangeMin | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_GetRangeMin | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_SetRangeMax | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_GetRangeMax | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_SetRangeCurrent | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_GetRangeCurrent | arkui | ace_engine | 16 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_SetText | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityValue_GetText | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_NodeUtils_GetLayoutSize | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_NodeUtils_GetLayoutPosition | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_NodeUtils_GetLayoutPositionInWindow | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
@@ -9625,61 +9625,61 @@
 | OH_ArkUI_CustomSpanDrawInfo_GetLineTop | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_CustomSpanDrawInfo_GetLineBottom | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_CustomSpanDrawInfo_GetBaseline | arkui | ace_engine | 12 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityProviderRegisterCallback | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_SendAccessibilityAsyncEvent | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AddAndGetAccessibilityElementInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetParentId | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetComponentType | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetContents | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetHintText | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetAccessibilityText | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetAccessibilityDescription | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetChildNodeIds | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetOperationActions | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetScreenRect | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetCheckable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetChecked | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetFocusable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetFocused | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetVisible | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetAccessibilityFocused | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetSelected | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetClickable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetLongClickable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetEnabled | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetIsPassword | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetScrollable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetEditable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetIsHint | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetRangeInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetGridInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetGridItemInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetSelectedTextStart | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetSelectedTextEnd | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetCurrentItemIndex | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetStartItemIndex | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetEndItemIndex | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetItemCount | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetAccessibilityOffset | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetAccessibilityGroup | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetAccessibilityLevel | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetZIndex | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetAccessibilityOpacity | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetBackgroundColor | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetBackgroundImage | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetBlur | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetHitTestBehavior | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_CreateAccessibilityEventInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_DestoryAccessibilityEventInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityEventSetEventType | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityEventSetTextAnnouncedForAccessibility | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityEventSetRequestFocusId | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityEventSetElementInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_FindAccessibilityActionArgumentByKey | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_CreateAccessibilityElementInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_DestoryAccessibilityElementInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_NativeXComponent_GetNativeAccessibilityProvider | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityElementInfoSetElementId | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityProviderRegisterCallback | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_SendAccossibilityAsyncEvent | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AddAndGetAccossibilityElementInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetParentId | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetComponentType | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetContents | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetHintText | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetAccossibilityText | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetAccossibilityDescription | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetChildNodeIds | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetOperationActions | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetScreenRect | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetCheckable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetChecked | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetFocusable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetFocused | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetVisible | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetAccossibilityFocused | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetSelected | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetClickable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetLongClickable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetEnabled | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetIsPassword | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetScrollable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetEditable | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetIsHint | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetRangeInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetGridInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetGridItemInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetSelectedTextStart | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetSelectedTextEnd | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetCurrentItemIndex | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetStartItemIndex | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetEndItemIndex | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetItemCount | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetAccossibilityOffset | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetAccossibilityGroup | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetAccossibilityLevel | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetZIndex | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetAccossibilityOpacity | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetBackgroundColor | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetBackgroundImage | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetBlur | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetHitTestBehavior | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_CreateAccossibilityEventInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_DestoryAccossibilityEventInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityEventSetEventType | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityEventSetTextAnnouncedForAccossibility | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityEventSetRequestFocusId | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityEventSetElementInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_FindAccossibilityActionArgumentByKey | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_CreateAccossibilityElementInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_DestoryAccossibilityElementInfo | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_NativeXComponent_GetNativeAccossibilityProvider | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityElementInfoSetElementId | arkui | ace_engine | 13 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_StyledString_Descriptor_Create | arkui | ace_engine | 14 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_StyledString_Descriptor_Destroy | arkui | ace_engine | 14 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_UnmarshallStyledStringDescriptor | arkui | ace_engine | 14 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
@@ -9698,7 +9698,7 @@
 | OH_ArkUI_KeyEvent_SetConsumed | arkui | ace_engine | 14 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_FocusAxisEvent_GetAxisValue | arkui | ace_engine | 15 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_FocusAxisEvent_SetStopPropagation | arkui | ace_engine | 15 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityProviderRegisterCallbackWithInstance | arkui | ace_engine | 15 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityProviderRegisterCallbackWithInstance | arkui | ace_engine | 15 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_PointerEvent_GetChangedPointerId | arkui | ace_engine | 15 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_KeyEvent_Dispatch | arkui | ace_engine | 15 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_KeyEvent_IsNumLockOn | arkui | ace_engine | 19 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
@@ -9911,8 +9911,8 @@
 | OH_ArkUI_XComponent_RegisterOnFrameCallback | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_XComponent_UnregisterOnFrameCallback | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_XComponent_SetNeedSoftKeyboard | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityProvider_Create | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_AccessibilityProvider_Dispose | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityProvider_Create | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_AccossibilityProvider_Dispose | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_SurfaceCallback_SetSurfaceShowEvent | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_SurfaceCallback_SetSurfaceHideEvent | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_DragEvent_GetTouchPointXToGlobalDisplay | arkui | ace_engine | 20 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
@@ -10353,7 +10353,7 @@
 | OH_ArkUI_RichEditorTextStyle_GetTextBackgroundRadius | arkui | ace_engine | 24 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_RichEditorStyledStringController_SetTypingStyle | arkui | ace_engine | 24 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_RichEditorStyledStringController_GetTypingStyle | arkui | ace_engine | 24 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
-| OH_ArkUI_NativeModule_GetNativeAccessibilityProvider | arkui | ace_engine | 23 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
+| OH_ArkUI_NativeModule_GetNativeAccossibilityProvider | arkui | ace_engine | 23 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_Swiper_StartFakeDrag | arkui | ace_engine | 23 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_Swiper_FakeDragBy | arkui | ace_engine | 23 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
 | OH_ArkUI_Swiper_StopFakeDrag | arkui | ace_engine | 23 | foundation/arkui/ace_engine/interfaces/native/libace.mdk.json |
