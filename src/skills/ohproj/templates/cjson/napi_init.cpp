@@ -428,7 +428,7 @@ static napi_value CjsonParseWithLength(napi_env env, napi_callback_info info)
     napi_get_value_string_utf8(env, args[0], &str[0], len + 1, &len);
     uint32_t uLen = 0;
     napi_get_value_uint32(env, args[1], &uLen);
-    size_t bufLen = (uLen > 0) ? (size_t)uLen : len;
+    size_t bufLen = (uLen > 0) ? static_cast<size_t>(uLen) : len;
     cJSON* root = cJSON_ParseWithLength(str.c_str(), bufLen);
     int64_t id = StoreHandle(root);
     napi_value result;
