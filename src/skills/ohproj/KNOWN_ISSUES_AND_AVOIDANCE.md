@@ -135,6 +135,23 @@ node "$HOS_CLT_PATH/hvigor/bin/hvigorw.js" --mode module -p module=entry@ohosTes
 
 ---
 
+### 2.5 SQLite 项目：sqlite3.h 有 300+ 接口，NAPI 只导出了少量（如 7 个）
+
+**现象**：sqlite3.h 中声明了约 300+ 个 C API（如 368 个），但 ohsqlite 的 napi_init.cpp 只导出了约 7 个（sqlite3_libversion、open、close、exec、errmsg、errcode + add），与「导出头文件里的接口」预期不符。
+
+**原因**：创建 ohsqlite 时采用**最小可用集**实现——只封装了「开库 / 关库 / 执行 SQL / 取错误信息」这条链路，便于快速完成「应用调用 + 测试用例 + 编译执行」。未按 sqlite3.h 全量逐一手写 NAPI 封装。
+
+**避免/补全**：
+
+- **明确范围**：若需求是「导出 sqlite3.h 里全部/大部分接口」，应在创建前约定是「最小集」还是「按模块分批补全」；当前模板仅为最小集。
+- **按模块扩展**：可优先补全以下类别（每类需在 napi_init.cpp 中增加句柄映射、NAPI 包装，并在 Index.d.ts 与测试中补全）：
+  - **预处理语句**：sqlite3_prepare_v2、sqlite3_step、sqlite3_bind_*、sqlite3_column_*、sqlite3_finalize、sqlite3_reset（需增加 sqlite3_stmt* 的 handle 表）；
+  - **结果与错误**：sqlite3_changes、sqlite3_total_changes、sqlite3_extended_errcode、sqlite3_errstr 等；
+  - **其它**：sqlite3_open_v2、sqlite3_get_table、sqlite3_backup、sqlite3_blob、sqlite3_config 等按需添加。
+- **参考文档**：见 **SQLITE_NAPI_SCOPE.md**（当前已导出列表与可扩展清单）。
+
+---
+
 ## 三、创建项目时的检查清单（避免通用错误）
 
 在完成「创建项目 + 接入代码 + NAPI + 测试」后，建议按下列清单自检，避免上述问题再次发生。
@@ -158,7 +175,8 @@ node "$HOS_CLT_PATH/hvigor/bin/hvigorw.js" --mode module -p module=entry@ohosTes
 - **DESIGN.md**：NAPI 封装约定、ArkTS/测试代码规范。  
 - **CJSONDTS_comparison.md**：C 测试与 Cjsondts 用例对比、差异与补全建议。  
 - **cJSON_tests_design.md**：C 侧 tests 目录测试设计与数据。  
-- **ohsonNativeProj46R_Cjsondts_差异分析.md**：68 条 vs 51 条差异、缺 NAPI 与仅缺用例的清单。
+- **ohsonNativeProj46R_Cjsondts_差异分析.md**：68 条 vs 51 条差异、缺 NAPI 与仅缺用例的清单。  
+- **SQLITE_NAPI_SCOPE.md**：SQLite NAPI 当前已导出接口与 sqlite3.h 全量接口的差异、补全建议。
 
 ---
 
@@ -173,6 +191,7 @@ node "$HOS_CLT_PATH/hvigor/bin/hvigorw.js" --mode module -p module=entry@ohosTes
 | Indexdts 编译 arkts-no-any-unknown | 模板用例无显式类型 | 不注册 indexdtsTest 或为变量补显式类型 |
 | DetachItemViaPointer 用例失败 | Add 后原句柄失效，用旧句柄 Detach | 用 GetArrayItem 取新句柄再 Detach |
 | 测试用例数量少于设计 | 只做了每接口一条，未按设计文档补全 | 按 CJSONDTS_comparison/cJSON_tests_design 补用例与缺失 NAPI |
+| SQLite 只导出约 7 个接口、与 sqlite3.h 300+ 不符 | 采用最小可用集，未全量封装 | 见 2.5；按 SQLITE_NAPI_SCOPE.md 分批补全 prepare/step/bind/column 等 |
 
 以上内容已纳入 ohproj 技能，执行创建/编译/测试时请优先对照本指南与 SKILL 步骤，避免重复出现同类错误。
 

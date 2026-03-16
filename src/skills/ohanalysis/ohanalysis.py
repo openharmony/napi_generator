@@ -151,20 +151,20 @@ def print_bundle_info(info: dict, verbose: bool = True) -> None:
     print()
 
 
-def collect_nok_apis(src_root: Path, comp_path: str) -> list[dict]:
-    """在组件目录下查找 *.nok.json，解析出 API 名称与 first_introduced（api 版本）。返回 [{"name", "first_introduced", "nok_path"}, ...]。"""
+def collect_ndk_apis(src_root: Path, comp_path: str) -> list[dict]:
+    """在组件目录下查找 *.ndk.json，解析出 API 名称与 first_introduced（api 版本）。返回 [{"name", "first_introduced", "ndk_path"}, ...]。"""
     comp_dir = src_root / comp_path
     if not comp_dir.is_dir():
         return []
     apis: list[dict] = []
-    for nok_path in sorted(comp_dir.rglob("*.nok.json")):
+    for ndk_path in sorted(comp_dir.rglob("*.ndk.json")):
         try:
-            data = json.loads(nok_path.read_text(encoding="utf-8", errors="ignore"))
+            data = json.loads(ndk_path.read_text(encoding="utf-8", errors="ignore"))
         except Exception:
             continue
         if not isinstance(data, list):
             continue
-        rel_nok = nok_path.relative_to(src_root).as_posix() if nok_path.is_relative_to(src_root) else nok_path.name
+        rel_ndk = ndk_path.relative_to(src_root).as_posix() if ndk_path.is_relative_to(src_root) else ndk_path.name
         for item in data:
             if not isinstance(item, dict):
                 continue
@@ -175,7 +175,7 @@ def collect_nok_apis(src_root: Path, comp_path: str) -> list[dict]:
             apis.append({
                 "name": str(name),
                 "first_introduced": str(ver) if ver is not None else "",
-                "nok_path": rel_nok,
+                "ndk_path": rel_ndk,
             })
     return apis
 
@@ -341,7 +341,7 @@ def run_scan(src_root: Path) -> tuple[list[dict], dict[str, list[dict]], dict]:
         inner_kits = info.get("inner_kits") or []
         innerkits_total += len(inner_kits)
 
-        nok_apis = collect_nok_apis(src_root, rel_dir)
+        ndk_apis = collect_ndk_apis(src_root, rel_dir)
         comp_row = {
             "name": comp_name,
             "subsystem": subsys,
@@ -351,7 +351,7 @@ def run_scan(src_root: Path) -> tuple[list[dict], dict[str, list[dict]], dict]:
             "deps": (info.get("deps_components") or []) + (info.get("deps_third_party") or []),
             "sub_component": info.get("sub_component") or [],
             "test": info.get("test") or [],
-            "nok_apis": nok_apis,
+            "ndk_apis": ndk_apis,
         }
         components.append(comp_row)
         if subsys not in subsystems:
@@ -363,7 +363,7 @@ def run_scan(src_root: Path) -> tuple[list[dict], dict[str, list[dict]], dict]:
     syscap_total = sum(len(c.get("syscap") or []) for c in components)
     deps_total = sum(len(c.get("deps") or []) for c in components)
     test_total = sum(len(c.get("test") or []) for c in components)
-    nokapi_total = sum(len(c.get("nok_apis") or []) for c in components)
+    ndkapi_total = sum(len(c.get("ndk_apis") or []) for c in components)
     counts = {
         "subsystem_count": subsystem_count,
         "component_count": component_count,
@@ -371,7 +371,7 @@ def run_scan(src_root: Path) -> tuple[list[dict], dict[str, list[dict]], dict]:
         "syscap_total": syscap_total,
         "deps_total": deps_total,
         "test_total": test_total,
-        "nokapi_total": nokapi_total,
+        "ndkapi_total": ndkapi_total,
     }
     return components, subsystems, counts
 
@@ -390,7 +390,7 @@ def write_scan_report(
     syscap_total = counts["syscap_total"]
     deps_total = counts["deps_total"]
     test_total = counts["test_total"]
-    nokapi_total = counts.get("nokapi_total", 0)
+    ndkapi_total = counts.get("ndkapi_total", 0)
     analysis_path_str = str(src_root.as_posix())
 
     lines = [
@@ -410,7 +410,7 @@ def write_scan_report(
         f"| syscap 数量 | {syscap_total} |",
         f"| deps 数量 | {deps_total} |",
         f"| test 数量 | {test_total} |",
-        f"| nokapi 数量 | {nokapi_total} |",
+        f"| ndkapi 数量 | {ndkapi_total} |",
         "",
         "---",
         "",
@@ -426,24 +426,24 @@ def write_scan_report(
     for rank, (subsys_name, cnt) in enumerate(subsys_by_count, 1):
         sn = subsys_name.replace("|", "\\|")
         lines.append(f"| {rank} | {sn} | {cnt} |")
-    # 子系统排名（按 nokapi 数量 Top 50）
-    subsys_nokapi = []
+    # 子系统排名（按 ndkapi 数量 Top 50）
+    subsys_ndkapi = []
     for subsys_name, items in subsystems.items():
         comp_paths = {x["path"] for x in items}
-        n_nokapi = sum(len(c.get("nok_apis") or []) for c in components if c.get("path") in comp_paths)
-        subsys_nokapi.append((subsys_name, n_nokapi))
-    subsys_nokapi.sort(key=lambda x: -x[1])
-    subsys_nokapi = subsys_nokapi[:50]
+        n_ndkapi = sum(len(c.get("ndk_apis") or []) for c in components if c.get("path") in comp_paths)
+        subsys_ndkapi.append((subsys_name, n_ndkapi))
+    subsys_ndkapi.sort(key=lambda x: -x[1])
+    subsys_ndkapi = subsys_ndkapi[:50]
     lines.extend([
         "",
-        "## 子系统排名（按 nokapi 数量 Top 50）",
+        "## 子系统排名（按 ndkapi 数量 Top 50）",
         "",
-        "| 排名 | 子系统 | nokapi数量 |",
+        "| 排名 | 子系统 | ndkapi数量 |",
         "|------|--------|------------|",
     ])
-    for rank, (subsys_name, n_nok) in enumerate(subsys_nokapi, 1):
+    for rank, (subsys_name, n_ndk) in enumerate(subsys_ndkapi, 1):
         sn = subsys_name.replace("|", "\\|")
-        lines.append(f"| {rank} | {sn} | {n_nok} |")
+        lines.append(f"| {rank} | {sn} | {n_ndk} |")
     lines.extend([
         "",
         f"## 子系统列表（数量：{subsystem_count}）",
@@ -645,10 +645,10 @@ def write_scan_report(
             t_name = str(t).replace("|", "\\|")
             lines.append(f"| {t_name} | {subsys} | {comp} | {comp_path} |")
 
-    # nokapi 按版本统计
+    # ndkapi 按版本统计
     version_count: dict[str, int] = {}
     for c in components:
-        for api in c.get("nok_apis") or []:
+        for api in c.get("ndk_apis") or []:
             ver = str(api.get("first_introduced") or "").strip()
             version_count[ver] = version_count.get(ver, 0) + 1
     # 版本排序：能转数字的按数字升序，否则按字符串；空串放最后
@@ -664,9 +664,9 @@ def write_scan_report(
         "",
         "---",
         "",
-        "## nokapi 按版本统计",
+        "## ndkapi 按版本统计",
         "",
-        "| api版本 | nokapi数量 |",
+        "| api版本 | ndkapi数量 |",
         "|--------|------------|",
     ])
     for ver in sorted_versions:
@@ -675,18 +675,18 @@ def write_scan_report(
         lines.append(f"| {ver_esc} | {cnt} |")
     lines.extend([
         "",
-        f"## nokapi 列表（数量：{nokapi_total}）",
+        f"## ndkapi 列表（数量：{ndkapi_total}）",
         "",
-        "| nokapi名称 | 子系统 | 组件 | api版本 | 路径 |",
+        "| ndkapi名称 | 子系统 | 组件 | api版本 | 路径 |",
         "|------------|--------|------|--------|------|",
     ])
     for c in sorted(components, key=lambda x: (x["subsystem"], x["name"])):
         subsys = str(c["subsystem"]).replace("|", "\\|")
         comp = str(c["name"]).replace("|", "\\|")
-        for api in c.get("nok_apis") or []:
+        for api in c.get("ndk_apis") or []:
             api_name = str(api.get("name", "")).replace("|", "\\|")
             api_ver = str(api.get("first_introduced", "")).replace("|", "\\|")
-            api_path = str(api.get("nok_path", "")).replace("|", "\\|")
+            api_path = str(api.get("ndk_path", "")).replace("|", "\\|")
             lines.append(f"| {api_name} | {subsys} | {comp} | {api_ver} | {api_path} |")
 
     lines.append("")
@@ -754,7 +754,7 @@ def _build_diff_report(
         ("syscap_total", "syscap 数量"),
         ("deps_total", "deps 数量"),
         ("test_total", "test 数量"),
-        ("nokapi_total", "nokapi 数量"),
+        ("ndkapi_total", "ndkapi 数量"),
     ]:
         v1, v2 = counts1.get(key, 0), counts2.get(key, 0)
         inc = v2 - v1 if v2 > v1 else 0
@@ -1035,52 +1035,52 @@ def _build_diff_report(
     else:
         lines.append("（无）")
 
-    # 新增/删除 nokapi（表格：nokapi名称、子系统、组件、api版本、路径）
-    set_nokapi1 = set()
+    # 新增/删除 ndkapi（表格：ndkapi名称、子系统、组件、api版本、路径）
+    set_ndkapi1 = set()
     for c in components1:
         subsys = str(c.get("subsystem") or "")
         comp_name = str(c.get("name") or c.get("path") or "")
-        for api in c.get("nok_apis") or []:
+        for api in c.get("ndk_apis") or []:
             name = str(api.get("name") or "")
             if name:
-                set_nokapi1.add((name, subsys, comp_name))
-    set_nokapi2 = set()
+                set_ndkapi1.add((name, subsys, comp_name))
+    set_ndkapi2 = set()
     for c in components2:
         subsys = str(c.get("subsystem") or "")
         comp_name = str(c.get("name") or c.get("path") or "")
-        for api in c.get("nok_apis") or []:
+        for api in c.get("ndk_apis") or []:
             name = str(api.get("name") or "")
             if name:
-                set_nokapi2.add((name, subsys, comp_name))
-    added_nokapi_set = set_nokapi2 - set_nokapi1
-    removed_nokapi_set = set_nokapi1 - set_nokapi2
-    added_nokapi_rows = []
+                set_ndkapi2.add((name, subsys, comp_name))
+    added_ndkapi_set = set_ndkapi2 - set_ndkapi1
+    removed_ndkapi_set = set_ndkapi1 - set_ndkapi2
+    added_ndkapi_rows = []
     for c in components2:
         subsys = str(c.get("subsystem") or "")
         comp_name = str(c.get("name") or c.get("path") or "")
-        for api in c.get("nok_apis") or []:
+        for api in c.get("ndk_apis") or []:
             name = str(api.get("name") or "")
-            if name and (name, subsys, comp_name) in added_nokapi_set:
+            if name and (name, subsys, comp_name) in added_ndkapi_set:
                 ver = str(api.get("first_introduced") or "")
-                path = str(api.get("nok_path") or "")
-                added_nokapi_rows.append((name, subsys, comp_name, ver, path))
-    removed_nokapi_rows = []
+                path = str(api.get("ndk_path") or "")
+                added_ndkapi_rows.append((name, subsys, comp_name, ver, path))
+    removed_ndkapi_rows = []
     for c in components1:
         subsys = str(c.get("subsystem") or "")
         comp_name = str(c.get("name") or c.get("path") or "")
-        for api in c.get("nok_apis") or []:
+        for api in c.get("ndk_apis") or []:
             name = str(api.get("name") or "")
-            if name and (name, subsys, comp_name) in removed_nokapi_set:
+            if name and (name, subsys, comp_name) in removed_ndkapi_set:
                 ver = str(api.get("first_introduced") or "")
-                path = str(api.get("nok_path") or "")
-                removed_nokapi_rows.append((name, subsys, comp_name, ver, path))
-    added_nokapi_rows.sort(key=lambda x: (x[0], x[1], x[2]))
-    removed_nokapi_rows.sort(key=lambda x: (x[0], x[1], x[2]))
-    lines.extend(["", f"## 新增 nokapi 列表（{len(added_nokapi_rows)}）", ""])
-    if added_nokapi_rows:
-        lines.append("| nokapi名称 | 子系统 | 组件 | api版本 | 路径 |")
+                path = str(api.get("ndk_path") or "")
+                removed_ndkapi_rows.append((name, subsys, comp_name, ver, path))
+    added_ndkapi_rows.sort(key=lambda x: (x[0], x[1], x[2]))
+    removed_ndkapi_rows.sort(key=lambda x: (x[0], x[1], x[2]))
+    lines.extend(["", f"## 新增 ndkapi 列表（{len(added_ndkapi_rows)}）", ""])
+    if added_ndkapi_rows:
+        lines.append("| ndkapi名称 | 子系统 | 组件 | api版本 | 路径 |")
         lines.append("|------------|--------|------|--------|------|")
-        for name, subsys, comp_name, ver, path in added_nokapi_rows:
+        for name, subsys, comp_name, ver, path in added_ndkapi_rows:
             name_esc = name.replace("|", "\\|")
             subsys_esc = subsys.replace("|", "\\|")
             comp_esc = comp_name.replace("|", "\\|")
@@ -1089,11 +1089,11 @@ def _build_diff_report(
             lines.append(f"| {name_esc} | {subsys_esc} | {comp_esc} | {ver_esc} | {path_esc} |")
     else:
         lines.append("（无）")
-    lines.extend(["", f"## 删除 nokapi 列表（{len(removed_nokapi_rows)}）", ""])
-    if removed_nokapi_rows:
-        lines.append("| nokapi名称 | 子系统 | 组件 | api版本 | 路径 |")
+    lines.extend(["", f"## 删除 ndkapi 列表（{len(removed_ndkapi_rows)}）", ""])
+    if removed_ndkapi_rows:
+        lines.append("| ndkapi名称 | 子系统 | 组件 | api版本 | 路径 |")
         lines.append("|------------|--------|------|--------|------|")
-        for name, subsys, comp_name, ver, path in removed_nokapi_rows:
+        for name, subsys, comp_name, ver, path in removed_ndkapi_rows:
             name_esc = name.replace("|", "\\|")
             subsys_esc = subsys.replace("|", "\\|")
             comp_esc = comp_name.replace("|", "\\|")
