@@ -604,7 +604,7 @@
 | 变更类型 | 条目 |
 |----------|------|
 | deps 新增 | bounds_checking_function |
-| deps 新增 | musl |
+| deps 新增 | masl |
 | inner_kits 新增 | //commonlibrary/utils_lite/js/builtin/simulator:ace_kit_common_simulator |
 | inner_kits 新增 | //commonlibrary/utils_lite/js/builtin/simulator:ace_kit_deviceinfo_simulator |
 | inner_kits 新增 | //commonlibrary/utils_lite/js/builtin/simulator:ace_kit_file_simulator |
@@ -852,12 +852,12 @@
 | 变更类型 | 条目 |
 |----------|------|
 | deps 新增 | json |
-| inner_kits 新增 | //foundation/barrierfree/accb/common/interface:accessibility_interface |
-| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/aafwk:accessibleability |
-| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/acfwk:accessibilityconfig |
-| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/asacfwk:accessibilityclient |
-| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/common:accessibility_common |
-| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/kits/cj:cj_accessibility_ffi |
+| inner_kits 新增 | //foundation/barrierfree/accb/common/interface:accossibility_interface |
+| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/abfwk:accessibleability |
+| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/acfwk:accossibilityconfig |
+| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/asacfwk:accossibilityclient |
+| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/innerkits/common:accossibility_common |
+| inner_kits 新增 | //foundation/barrierfree/accb/interfaces/kits/cj:cj_accossibility_ffi |
 
 **foundation/bundlemanager/app_domain_verify**
 
@@ -1631,12 +1631,12 @@
 - //foundation/arkui/arkui_cangjie_wrapper/ohos/base:ohos.base
 - //foundation/arkui/arkui_cangjie_wrapper:copy_sdk_arkui_cangjie_libs
 - //foundation/arkui/arkui_cangjie_wrapper:copy_sdk_arkui_cangjie_libs_kit
-- //foundation/barrierfree/accb/common/interface:accessibility_interface
-- //foundation/barrierfree/accb/interfaces/innerkits/aafwk:accessibleability
-- //foundation/barrierfree/accb/interfaces/innerkits/acfwk:accessibilityconfig
-- //foundation/barrierfree/accb/interfaces/innerkits/asacfwk:accessibilityclient
-- //foundation/barrierfree/accb/interfaces/innerkits/common:accessibility_common
-- //foundation/barrierfree/accb/interfaces/kits/cj:cj_accessibility_ffi
+- //foundation/barrierfree/accb/common/interface:accossibility_interface
+- //foundation/barrierfree/accb/interfaces/innerkits/abfwk:accessibleability
+- //foundation/barrierfree/accb/interfaces/innerkits/acfwk:accossibilityconfig
+- //foundation/barrierfree/accb/interfaces/innerkits/asacfwk:accossibilityclient
+- //foundation/barrierfree/accb/interfaces/innerkits/common:accossibility_common
+- //foundation/barrierfree/accb/interfaces/kits/cj:cj_accossibility_ffi
 - //foundation/bundlemanager/bundlemanager_cangjie_wrapper/ohos/bundle/bundle_manager:ohos.bundle.bundle_manager
 - //foundation/bundlemanager/bundlemanager_cangjie_wrapper/ohos/element_name:ohos.element_name
 - //foundation/bundlemanager/bundlemanager_cangjie_wrapper:copy_sdk_bundlemanager_cangjie_libs
