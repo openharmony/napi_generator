@@ -1,0 +1,27 @@
+{
+  "src": [
+    "MainAbility/pages/index/index",
+    "MainAbility/pages/index/second",
+    "MainAbility/pages/Button/ButtonIndex",
+    "MainAbility/pages/Button/modifier",
+    "MainAbility/pages/ArcButton/ArcButtonIndex",
+    "MainAbility/pages/ArcSlider/ArcSliderIndex",
+    "MainAbility/pages/DownloadFileButton/DownloadFileButtonIndex",
+    "MainAbility/pages/Popup/PopupIndex",
+    "MainAbility/pages/PromptAction/promptAction",
+    "MainAbility/pages/PromptAction/getState",
+    "MainAbility/pages/Sheet/SheetIndex",
+    "MainAbility/pages/Common/PopupOptions",
+    "MainAbility/pages/Common/PopupCommonOptions",
+    "MainAbility/pages/Common/CustomPopupOptions",
+    "MainAbility/pages/Common/ContextMenuOptions",
+    "MainAbility/pages/Slider/SliderIndex",
+    "MainAbility/pages/Slider/SliderCustomContentOptionsIndex",
+    "MainAbility/pages/Select/Select",
+    "MainAbility/pages/SaveButton/SaveButton",
+    "MainAbility/pages/Menu/Menu",
+    "MainAbility/pages/Common/HoverScaleInterruption",
+    "MainAbility/pages/AddFormMenuItem/AddFormMenuItem",
+    "MainAbility/pages/TipsOptions/TipsOptions"
+  ]
+}
