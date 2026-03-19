@@ -25,7 +25,6 @@ Commands:
     sign-commits [range] - Sign existing commits (e.g., HEAD~5..HEAD or commit1..commit2)
     push [remote] [branch] - Push commits to remote repository
     config-token [username] [token] - Configure Git credential with token
-    check-style [path] [--all] - Code style check (constants: UPPER_SNAKE; functions: PascalCase; no magic numbers)
     check-copyright [--fix] [--dry-run] - Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
     help            - Show this help message
 """
@@ -104,9 +103,8 @@ Commands:
   log-range <from>..<to>    Show commits between two references
   log-first-parent <range>  Show commits with --first-parent (e.g., tag^..HEAD)
   report [tag]              Generate git-status.txt and git-log.txt files
-  commit [message] [--no-sign] [--skip-style-check]  Commit and push (default: run code style check first)
+  commit [message] [--no-sign]  Auto commit and push changes with Signed-off-by (max 2000 lines per commit)
   push [remote] [branch]    Push commits to remote repository
-  check-style [path] [--all] Run code style check (constants: UPPER_SNAKE; functions: PascalCase; no magic numbers)
   check-copyright [--fix] [--dry-run]  Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
   help                      Show this help message
 
@@ -125,9 +123,6 @@ Examples:
   {sys.argv[0]} check-copyright --dry-run
   {sys.argv[0]} commit "Commit message"
   {sys.argv[0]} commit --no-sign "Commit without signature"
-  {sys.argv[0]} commit "msg" --skip-style-check   Skip code style check before commit
-  {sys.argv[0]} check-style                        Check changed C/C++ files for style
-  {sys.argv[0]} check-style /path --all            Check all C/C++ files under path
   {sys.argv[0]} sign-commits HEAD~5..HEAD
   {sys.argv[0]} sign-commits 3d5a298..HEAD
   {sys.argv[0]} config-token username your_token_here
@@ -1494,135 +1489,6 @@ def cmd_check_copyright(dry_run=False, fix=False):
         return 0
 
 
-# ---------------------------------------------------------------------------
-# 代码规范检查（通用，不固定路径与工程）
-# ---------------------------------------------------------------------------
-
-STYLE_RULES = """
-代码规范检查规则与修改方法（通用）:
-1) 常量命名：全局/静态常量应使用全大写下划线（UPPER_SNAKE_CASE），不得使用 kCamelCase 或首字母小写。
-   修改方法：将常量名改为全大写下划线，如 kDefaultSppServerName → K_DEFAULT_SPP_SERVER_NAME；在常量头文件中用 #define 或 const 定义，代码中引用该常量名。
-2) 函数命名：对外接口/Handler 函数应使用大驼峰（PascalCase），即首字母大写。
-   修改方法：将函数名改为首字母大写，如 handleA2dpConnect → HandleA2dpConnect、a2dpStateStr → A2dpStateStr；同步修改声明、定义及所有调用处。
-3) 魔数禁止：代码中不应直接出现未命名数字常量（如 64、30000），应使用命名常量。
-   修改方法：在工程约定的常量头文件中用 #define NAME value 定义常量，在代码中用 NAME 替代数字；如 64 → SPP_READ_HEX_DISPLAY_MAX_BYTES。
-"""
-
-# 参与规范检查的默认扩展名（可配置，不固定工程）
-DEFAULT_STYLE_EXTENSIONS = ('.c', '.cpp', '.h', '.cc', '.cxx', '.hpp')
-
-# 扫描时排除的目录名（通用）
-STYLE_EXCLUDE_DIRS = {'.git', 'build', 'out', 'node_modules', 'third_party', '__pycache__'}
-
-
-def _check_file_style(file_path, content):
-    """
-    对单个文件内容做规范检查，返回违规列表 [(line_no, rule_id, message, fix_hint), ...]。
-    通用实现，不依赖固定路径。
-    """
-    violations = []
-    lines = content.splitlines()
-    for i, line in enumerate(lines, 1):
-        stripped = line.strip()
-        # 1) 常量：kXxx 或 const/constexpr 后首字母小写的标识符（简单启发）
-        if re.search(r'\b(const|constexpr)\s+', stripped):
-            # kCamelCase
-            m = re.search(r'\bk([A-Z][a-zA-Z0-9]*)\s*=', stripped)
-            if m:
-                violations.append((i, 'CONSTANT_NAMING', f'常量使用 k 前缀: {m.group(1)!r}',
-                    '改为全大写下划线，如 K_DEFAULT_SPP_SERVER_NAME'))
-            # 已排除 k 前缀时，可再检查 const type name = 中 name 首字母小写（略复杂，此处仅做 k 前缀）
-        # 2) 函数定义：返回类型后跟首字母小写的函数名（C/C++ 常见）
-        if re.search(r'^(?:const\s+)?(?:char|int|void|bool|size_t|uint\d*_t|int\d*_t)\s*\*?\s+[a-z][a-zA-Z0-9]*\s*\(', stripped):
-            m = re.search(r'\b([a-z][a-zA-Z0-9]*)\s*\(', stripped)
-            if m and m.group(1) not in ('if', 'for', 'while', 'switch', 'return', 'sizeof', 'static_cast', 'reinterpret_cast', 'main'):
-                violations.append((i, 'FUNCTION_NAMING', f'函数名首字母小写: {m.group(1)!r}',
-                    '改为大驼峰，如 HandleXxx、A2dpStateStr'))
-        # 3) 魔数：比较运算符后的 2~3 位或更大整数（排除 0,1,-1）
-        if re.search(r'(>|<|==|!=|<=|>=)\s*([2-9]\d{1,2}|[1-9]\d{3,})\b', stripped):
-            m = re.search(r'(>|<|==|!=|<=|>=)\s*([2-9]\d{1,2}|[1-9]\d{3,})\b', stripped)
-            if m:
-                violations.append((i, 'MAGIC_NUMBER', f'代码中直接使用数字: {m.group(2)}',
-                    '在常量头文件中定义命名常量，用常量名替代该数字'))
-    return violations
-
-
-def cmd_check_style(root_path=None, extensions=None, only_changed=True):
-    """
-    对指定范围源文件执行代码规范检查（常量命名、函数命名、魔数）。
-    root_path: 扫描根目录，None 表示当前工作目录（或 git 根目录）。
-    extensions: 参与检查的扩展名元组，None 使用 DEFAULT_STYLE_EXTENSIONS。
-    only_changed: True 时仅检查当前 git 变更文件；False 时递归扫描 root_path 下所有匹配文件。
-    返回: 0 无违规，1 存在违规。
-    """
-    print("=== 代码规范检查 ===")
-    print()
-    root = Path(root_path) if root_path else Path.cwd()
-    root = root.resolve()
-    if not root.is_dir():
-        print(f"❌ 根路径不是目录: {root}")
-        return 1
-    exts = extensions or DEFAULT_STYLE_EXTENSIONS
-    exts_set = set(exts)
-
-    if only_changed:
-        try:
-            code, out, _ = run_git_command(['rev-parse', '--show-toplevel'], capture_output=True)
-            if code == 0 and out.strip():
-                git_root = Path(out.strip()).resolve()
-            else:
-                git_root = root
-        except Exception:
-            git_root = root
-        changed = get_changed_files()
-        files_to_check = []
-        for fp, _ in changed:
-            if Path(fp).suffix in exts_set and (root / fp).exists():
-                files_to_check.append(Path(fp))
-        # 去重并相对于 root 显示
-        files_to_check = sorted(set(files_to_check))
-        print(f"检查范围: 当前变更中匹配扩展名 {exts} 的文件（共 {len(files_to_check)} 个）")
-    else:
-        files_to_check = []
-        for parent, dirs, names in os.walk(root, topdown=True):
-            dirs[:] = [d for d in dirs if d not in STYLE_EXCLUDE_DIRS]
-            for name in names:
-                if Path(name).suffix in exts_set:
-                    files_to_check.append(Path(parent) / name)
-        print(f"检查范围: {root} 下扩展名 {exts} 的文件（共 {len(files_to_check)} 个）")
-
-    print()
-    total_violations = 0
-    for path in files_to_check:
-        try:
-            text = path.read_text(encoding='utf-8', errors='ignore')
-        except Exception as e:
-            print(f"⚠ 无法读取: {path} ({e})")
-            continue
-        rel = path if path.is_absolute() else path
-        try:
-            rel = path.relative_to(root)
-        except ValueError:
-            pass
-        vlist = _check_file_style(path, text)
-        if vlist:
-            total_violations += len(vlist)
-            print(f"  {rel}")
-            for ln, rule, msg, hint in vlist:
-                print(f"    行 {ln} [{rule}] {msg}")
-                print(f"      修改方法: {hint}")
-            print()
-    if total_violations > 0:
-        print(f"❌ 共 {total_violations} 处规范问题")
-        print()
-        print(STYLE_RULES.strip())
-        print()
-        return 1
-    print("✓ 未发现规范问题")
-    print()
-    return 0
-
-
 def cmd_push(remote=None, branch=None):
     """
     Push commits to remote repository
@@ -1954,10 +1820,7 @@ def main():
         message = None
         sign = True  # 默认启用签名
         args = sys.argv[2:] if len(sys.argv) > 2 else []
-        skip_style_check = '--skip-style-check' in args
-        if skip_style_check:
-            args.remove('--skip-style-check')
-
+        
         # Parse arguments
         if '--sign' in args:
             sign = True
@@ -1965,17 +1828,11 @@ def main():
         elif '--no-sign' in args:
             sign = False
             args.remove('--no-sign')
-
+        
         if args:
             # Join remaining arguments as commit message
             message = ' '.join(args)
-
-        # 提交前执行代码规范检查（仅检查本次变更中的 C/C++ 等文件），可用 --skip-style-check 跳过
-        if not skip_style_check:
-            if cmd_check_style(root_path=None, extensions=None, only_changed=True) != 0:
-                print("提示: 修复上述规范问题后重新提交，或使用 --skip-style-check 跳过检查")
-                return 1
-
+        
         return cmd_commit(message, sign)
     
     elif command == 'push':
@@ -2006,19 +1863,7 @@ def main():
         dry_run = '--dry-run' in sys.argv
         fix = '--fix' in sys.argv
         return cmd_check_copyright(dry_run=dry_run, fix=fix)
-
-    elif command == 'check-style':
-        args = sys.argv[2:] if len(sys.argv) > 2 else []
-        path_arg = None
-        only_changed = True
-        if '--all' in args:
-            args.remove('--all')
-            only_changed = False
-        if args and not args[0].startswith('--'):
-            path_arg = args[0]
-            args = args[1:]
-        return cmd_check_style(root_path=path_arg, extensions=None, only_changed=only_changed)
-
+    
     elif command in ['help', '--help', '-h']:
         show_help()
         return 0

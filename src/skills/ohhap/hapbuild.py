@@ -1052,7 +1052,8 @@ def parse_bundle_name(project_dir):
                 with open(app_json5_path, 'r', encoding='utf-8') as f:
                     content = f.read()
                 
-                # 移除注释
+                # 移除注释（含块注释 /* */ 与行注释 //）
+                content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
                 content = re.sub(r'//.*', '', content)
                 content = re.sub(r',\s*}', '}', content)
                 content = re.sub(r',\s*]', ']', content)

@@ -15,12 +15,13 @@ import sys
 import time
 
 
-def run_hdc_command(command):
+def run_hdc_command(command, timeout_sec=120):
     """
     执行 hdc 命令
     
     Args:
         command: hdc 命令字符串
+        timeout_sec: 超时秒数，默认 120（安装 HAP 等操作可能较慢）
         
     Returns:
         tuple: (success: bool, output: str, error: str)
@@ -31,7 +32,7 @@ def run_hdc_command(command):
             shell=True,
             capture_output=True,
             text=True,
-            timeout=30
+            timeout=timeout_sec
         )
         return result.returncode == 0, result.stdout, result.stderr
     except subprocess.TimeoutExpired:
