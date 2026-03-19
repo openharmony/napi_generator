@@ -44,11 +44,15 @@ Simply ask in natural language, and the assistant will use this skill to help yo
 - "Show commits for CMakeLists.txt" → Uses `log-file` command
 - "Show commits between v1.4.3 and v1.4.4" → Uses `log-range` command
 - "Generate git report for CTS submission" → Uses `report` command
+- "查看本项目有多少分支" → Uses `branches` command
+- "列出所有本地分支" → Uses `branches --local` command
+- "查看远程分支分类统计" → Uses `branches --remote` command
 
 **Advanced queries:**
 - "查看两个标签之间的提交" → Uses `log-range` command
 - "生成 CTS 提交需要的 git log 文件" → Uses `report` command with `--first-parent`
 - "查看某个文件的提交历史" → Uses `log-file` command
+- "统计远程分支有多少 weekly / release / feature" → Uses `branches --remote` command
 
 ### How It Works:
 
@@ -88,6 +92,7 @@ You can use the skill with specific commands and operations:
 - `log-range <from>..<to>` - Show commits between two references (e.g., `tag1..tag2`)
 - `log-first-parent <range>` - Show commits with --first-parent option (e.g., `tag^..HEAD`)
 - `report [tag]` - Generate git-status.txt and git-log.txt files
+- `branches [--all|--local|--remote]` - List and count branches with categorized statistics
 - `help` - Show help message
 
 **Examples for range queries:**
@@ -101,7 +106,37 @@ You can use the skill with specific commands and operations:
 # Equivalent to: git log --first-parent v1.4.4.0^..HEAD
 ```
 
+**Examples for branch queries:**
+```bash
+# List all branches (local + remote) with category statistics
+python3 .claude/skills/gitlog/gitlog.py branches
+
+# List local branches only
+python3 .claude/skills/gitlog/gitlog.py branches --local
+
+# List remote branches only (with category breakdown)
+python3 .claude/skills/gitlog/gitlog.py branches --remote
+```
+
 ## Common Git Commands
+
+### Viewing Branches
+
+```bash
+# List all local branches
+git branch
+
+# List all local and remote branches
+git branch -a
+
+# List remote branches only
+git branch -r
+
+# Using gitlog skill (with category statistics):
+python3 .claude/skills/gitlog/gitlog.py branches
+python3 .claude/skills/gitlog/gitlog.py branches --local
+python3 .claude/skills/gitlog/gitlog.py branches --remote
+```
 
 ### Viewing Commit History
 

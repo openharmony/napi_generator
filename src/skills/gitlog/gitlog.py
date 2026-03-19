@@ -21,6 +21,7 @@ Commands:
     log-range <from>..<to>  - Show commits between two references
     log-first-parent <range>  - Show commits with --first-parent option
     report [tag]    - Generate git status and log reports
+    branches [--all|--local|--remote] - List and count branches with categorized statistics
     commit [message] [--no-sign] - Auto commit and push changes with Signed-off-by (max 2000 lines per commit)
     sign-commits [range] - Sign existing commits (e.g., HEAD~5..HEAD or commit1..commit2)
     push [remote] [branch] - Push commits to remote repository
@@ -103,6 +104,7 @@ Commands:
   log-range <from>..<to>    Show commits between two references
   log-first-parent <range>  Show commits with --first-parent (e.g., tag^..HEAD)
   report [tag]              Generate git-status.txt and git-log.txt files
+  branches [--all|--local|--remote]  List and count branches with categorized statistics
   commit [message] [--no-sign]  Auto commit and push changes with Signed-off-by (max 2000 lines per commit)
   push [remote] [branch]    Push commits to remote repository
   check-copyright [--fix] [--dry-run]  Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
@@ -116,6 +118,9 @@ Examples:
   {sys.argv[0]} log-range v1.4.3..v1.4.4
   {sys.argv[0]} log-first-parent v1.4.4.0^..HEAD
   {sys.argv[0]} report v1.4.4.0
+  {sys.argv[0]} branches
+  {sys.argv[0]} branches --local
+  {sys.argv[0]} branches --remote
   {sys.argv[0]} commit
   {sys.argv[0]} commit "Fix bug in CMakeLists.txt"
   {sys.argv[0]} check-copyright
@@ -1489,6 +1494,130 @@ def cmd_check_copyright(dry_run=False, fix=False):
         return 0
 
 
+def cmd_branches(mode='all'):
+    """
+    List and count branches in the repository with categorized statistics.
+
+    @param mode: Branch scope: 'all' (default), 'local', or 'remote'
+    @return Exit code (0 on success, non-zero on error)
+    """
+    print("=== Git Branches ===")
+    print()
+
+    # 1. Get current branch
+    rc, current_branch, _ = run_git_command(
+        ['rev-parse', '--abbrev-ref', 'HEAD'], capture_output=True
+    )
+    current_branch = current_branch.strip() if rc == 0 else '(unknown)'
+
+    # 2. Determine git branch flags
+    if mode == 'local':
+        git_args = ['branch']
+    elif mode == 'remote':
+        git_args = ['branch', '-r']
+    else:
+        git_args = ['branch', '-a']
+
+    rc, stdout, stderr = run_git_command(git_args, capture_output=True)
+    if rc != 0:
+        print(f"❌ 错误: 无法获取分支列表: {stderr}")
+        return rc
+
+    all_lines = [line.strip().lstrip('* ') for line in stdout.splitlines() if line.strip()]
+
+    # 3. Separate local / remote
+    local_branches = []
+    remote_branches = []
+    for b in all_lines:
+        if b.startswith('remotes/'):
+            name = b[len('remotes/'):]
+            # Skip HEAD pointer alias (e.g. origin/HEAD -> origin/master)
+            if ' -> ' not in name:
+                remote_branches.append(name)
+        else:
+            local_branches.append(b)
+
+    # 4. Categorize remote branches
+    categories = {
+        'weekly': [],
+        'release_beta': [],
+        'feature': [],
+        'debug': [],
+        'monthly': [],
+        'master_snapshot': [],
+        'other': [],
+    }
+
+    for b in remote_branches:
+        # Strip "origin/" prefix for pattern matching
+        short = b.split('/', 1)[1] if '/' in b else b
+        if short.startswith('weekly_'):
+            categories['weekly'].append(b)
+        elif short.startswith('OpenHarmony-') and ('-Release' in short or '-Beta' in short):
+            categories['release_beta'].append(b)
+        elif short.startswith('OpenHarmony_feature_') or short.startswith('feature/') or short.startswith('feature_'):
+            categories['feature'].append(b)
+        elif short.startswith('OpenHarmony_debug_'):
+            categories['debug'].append(b)
+        elif short.startswith('monthly_'):
+            categories['monthly'].append(b)
+        elif short.startswith('master_'):
+            categories['master_snapshot'].append(b)
+        else:
+            categories['other'].append(b)
+
+    total_local = len(local_branches)
+    total_remote = len(remote_branches)
+    total_all = total_local + total_remote
+
+    # 5. Print summary
+    print(f"📌 当前分支: {current_branch}")
+    print()
+    print(f"📊 分支统计（共 {total_all} 个）")
+    print(f"  本地分支:  {total_local} 个")
+    print(f"  远程分支:  {total_remote} 个")
+    print()
+
+    # 6. Print local branches
+    if mode in ('all', 'local'):
+        print("── 本地分支 ──────────────────────────")
+        for b in local_branches:
+            marker = ' ◀ 当前' if b == current_branch else ''
+            print(f"  {b}{marker}")
+        print()
+
+    # 7. Print remote branch categories
+    if mode in ('all', 'remote'):
+        cat_labels = {
+            'release_beta':     ('OpenHarmony 正式/Beta 版本', categories['release_beta']),
+            'feature':          ('Feature 特性分支',           categories['feature']),
+            'debug':            ('Debug 调试分支',             categories['debug']),
+            'monthly':          ('月版本快照（monthly_）',      categories['monthly']),
+            'master_snapshot':  ('master 时间戳快照',          categories['master_snapshot']),
+            'other':            ('其他特殊分支',                categories['other']),
+            'weekly':           ('周版本快照（weekly_）',       categories['weekly']),
+        }
+
+        print("── 远程分支分类 ──────────────────────")
+        for key, (label, blist) in cat_labels.items():
+            if not blist:
+                continue
+            print(f"  【{label}】 {len(blist)} 个")
+            # Only expand non-weekly categories for readability
+            if key != 'weekly':
+                for b in blist:
+                    print(f"    - {b}")
+            else:
+                # Show range for weekly branches
+                dates = sorted(b.split('weekly_')[1] for b in blist if 'weekly_' in b)
+                if dates:
+                    print(f"    范围: {dates[0]} → {dates[-1]}")
+            print()
+
+    print(f"✓ 共 {total_all} 个分支（本地 {total_local} + 远程 {total_remote}）")
+    return 0
+
+
 def cmd_push(remote=None, branch=None):
     """
     Push commits to remote repository
@@ -1815,7 +1944,15 @@ def main():
     elif command == 'report':
         tag = sys.argv[2] if len(sys.argv) > 2 else 'HEAD'
         return cmd_report(tag)
-    
+
+    elif command == 'branches':
+        mode = 'all'
+        if '--local' in sys.argv:
+            mode = 'local'
+        elif '--remote' in sys.argv:
+            mode = 'remote'
+        return cmd_branches(mode)
+
     elif command == 'commit':
         message = None
         sign = True  # 默认启用签名

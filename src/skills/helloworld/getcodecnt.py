@@ -723,31 +723,35 @@ def parse_author_json_data(data_list):
 
 def print_author_data(authors):
     """
-    打印贡献者数据
+    打印贡献者数据，每人一行，便于阅读。
     """
     if not authors:
         print("未找到贡献者数据")
         return
     
+    show_list = authors[:10]
     print("\n" + "="*120)
     print(f"{'排名':<6} {'贡献者邮箱':<50} {'PR数':<12} {'新增代码':<12} {'删除代码':<12} {'修改代码':<12} {'修改量占比':<12}")
     print("="*120)
     
-    for i, author in enumerate(authors[:10], 1):
+    for i, author in enumerate(show_list, 1):
         name = author.get('name', 'N/A')
         pr = author.get('pr', 'N/A')
         added = author.get('added_code', 'N/A')
         deleted = author.get('deleted_code', 'N/A')
         modified = author.get('modified_code', 'N/A')
         ratio = author.get('modification_ratio', 'N/A')
-        
-        # 如果名称太长，截断显示
-        display_name = name[:48] if len(name) > 48 else name
-        
-        print(f"{i:<6} {display_name:<50} {pr:<12} {added:<12} {deleted:<12} {modified:<12} {ratio:<12}")
+        # 确保为字符串且无换行，避免多人在一行
+        display_name = str(name)[:48].replace('\n', ' ').replace('\r', ' ') if name else 'N/A'
+        added_s = str(added) if added is not None else 'N/A'
+        deleted_s = str(deleted) if deleted is not None else 'N/A'
+        modified_s = str(modified) if modified is not None else 'N/A'
+        ratio_s = str(ratio) if ratio is not None else 'N/A'
+        pr_s = str(pr) if pr is not None else 'N/A'
+        print(f"{i:<6} {display_name:<50} {pr_s:<12} {added_s:<12} {deleted_s:<12} {modified_s:<12} {ratio_s:<12}", end='\n')
     
     print("="*120)
-    print(f"\n共显示 {len(authors[:10])} 名贡献者的数据\n")
+    print(f"\n共显示 {len(show_list)} 名贡献者的数据\n")
 
 def save_to_csv(data, query_type, time_period):
     """
