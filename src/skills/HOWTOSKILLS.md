@@ -59,54 +59,75 @@ Sync to AGENTS.md: npx openskills sync
 
 ## 3. 检查skill安装
 1. 项目目录里多出来.claude/skills目录，里面有17个skill
-2. 通过agent对话问cursor，现在有多少skll，他回答：“从 anthropics/skills 安装的技能（17个）”
+2. 通过 agent 对话问 Cursor，现在有多少 skill，应能答出从 anthropics/skills 安装的技能数量（示例为 17 个，以实际安装为准）
 3，使用一个技能，如："使用pdf技能创建个pdf，存到项目根目录"
 
 ## 4. 使用工程里的 skill（src/skills 目录概述）
 
-`src/skills` 目录下为本仓库自有的 OpenHarmony / 社区相关技能，可按需拷贝到 `.claude/skills` 使用，或直接以 `python3 src/skills/<技能名>/<脚本>` 调用。
+`src/skills` 目录下为本仓库自有的 OpenHarmony / 社区相关技能，共 **11** 个（各目录内有 `SKILL.md` 详述）。可按需将整个技能目录拷贝到 `.claude/skills/`，便于 Agent 按描述自动选用；也可不拷贝，直接用 **`python3 <仓库根>/src/skills/<技能名>/<脚本>.py`** 调用。
 
-### 4.1 技能列表与功能
+> **区分**：**ohhap** 负责 **HAP 应用** 的 hvigor 构建与签名；**ohbuild** 负责 **fuzz 测试编译、覆盖率 gn-args、部件 fuzztest 目标** 等，与 HAP 流程不同。
 
-| 目录 | 功能 | 限制 |
-|------|------|------|
-| **gitlog** | 查看提交历史、仓库状态、按文件/范围查 log、生成 CTS 用 git 报告（如 git-status.txt、git-log.txt）。适合代码提交与发布前检查。 | 依赖本地 `git`；部分能力通过 `gitlog.sh` 调用，需在工程内使用。 |
-| **helloworld** | 社区共建统计：雇主代码行贡献、贡献者排名、提交详情（按雇主/分支/时间）、按作者邮箱查提交、兼容性设备查询。数据来自 openharmony.cn 接口。 | 依赖 openharmony.cn 开放 API 与网络；时间范围、雇主名等参数需按接口约定传入。 |
-| **ohhap** | HAP 构建（主包 + ohosTest 测试包）、HAP 签名（debug/release）、清除签名。含环境与 SDK 版本检查。 | **目前仅验证 6.0 release 工程**，5.0/4.0 后续支持；需配置 `HOS_CLT_PATH`、`OHOS_SDK_PATH`；签名依赖证书（如 `~/ohos/60release/.../autosign/result/`）；项目需含 `build-profile.json5`、`hvigorw` 可用。 |
-| **ohhdc** | 设备侧 HAP 管理：列出已安装应用、安装/替换安装 HAP、卸载、**查看设备日志（hilog）**、**查看错误/故障日志（data/log/faultlog：faultlogger/freeze/hilog/temp）**、查看前台/运行中应用、启停应用、**运行 ohosTest 单元测试**（aa test）。建议与 ohhap 配合：编译签名后用 ohhdc 安装并跑测。 | 需设备通过 HDC 连接（如 `hdc list targets` 有输出）；`hdc` 需在 PATH（如 `~/.bashrc` 已配置）；安装/跑测需已签名的 HAP。 |
-| **ohtest** | **dts 单元测试**：根据 `.d.ts` 接口定义生成测试套（4 类边界用例）。**UITest**：根据 `.ets` 页面文件生成 UI 测试套（`uitest_gen.py`）：对页面内每个控件、布局和动作分别生成用例（Driver/ON、assertComponentExist、click），参考 [HarmonyOS UITest 指南](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/uitest-guidelines)。 | dts：仅解析 export const/function；UITest：解析基于正则，仅识别 @State/Text/onClick/Row/Column，复杂逻辑需人工补充。 |
+### 4.1 技能总览
+
+| 目录 | 功能概要 | 主要脚本 / 说明 |
+|------|----------|-----------------|
+| **gitlog** | 仓库状态、按条数/文件/范围查 log、生成报告、**提交**（默认先 **check-style**）、**push**、**check-style** / **check-copyright**、**sign-commits**、**config-token**、**branches** 等 | `gitlog/gitlog.py` |
+| **helloworld** | 社区共建统计：雇主贡献、作者排名、提交详情、邮箱查询、兼容性、年度/区间统计；另有示例代码生成 | `helloworld/getcodecnt.py`、`helloworld/generate.py` |
+| **ohhap** | HAP 主包 / ohosTest 测试包构建、debug/release 签名、清除签名、环境检查 | `ohhap/hapbuild.py` |
+| **ohbuild** | 列出模块 fuzz 目标、编译单个/部件 fuzztest、**verify-coverage**（覆盖率 gn-args 提示） | `ohbuild/ohbuild.py` |
+| **ohhdc** | 设备应用列表、安装/替换/卸载 HAP、hilog、**faultlog**、前台应用、启停应用、**aa test**、部署测试等 | `ohhdc/ohhdc.py` |
+| **ohtest** | dts 生成单测、**UITest**（ets）、**fuzztest**、查找 fuzz/ACTS 套件、**ACTS run**、覆盖率分析与缺口 | `ohtest/ohtest.py`、`uitest_gen.py`、`fuzztest.py`、`find_fuzztest.py`、`find_actstest.py`、`actstest.py`、`coverage_analysis.py`、`coverage_gap_tests.py` |
+| **ohanalysis** | 解析 `bundle.json`、全量扫描生成 MD 报告、两版 `src` **diff** 对比 | `ohanalysis/ohanalysis.py`（大工程建议超时 **60 分钟**） |
+| **ohclitools** | btclitools / wificlitools / dsclitools：接口覆盖、部署到 test、编译、验证、推设备跑测 | `ohclitools/ohclitool.py`（在 OH **src** 根执行） |
+| **ohppt** | Markdown 表格等 → PPTX | `ohppt/ohppt.py`（需 `python-pptx`） |
+| **ohproj** | 模板工程 **create**、**build** / **sign** / **build-test** / **test** / **clean-sign** | `ohproj/ohproj.py` |
+| **ohservices** | SystemAbility（sampletest 9009）从白名单、SELinux、init 到 **HiDumper** 的全流程文档与检查 | 以 `SKILL.md`、`saguide.md` 为主；辅助脚本 `ohservices/ohsa.py`（如 `all` / `build` / `device`） |
+
+**常见限制（摘要）**
+
+- **gitlog**：依赖本机 `git`；`commit` 默认会先执行风格检查，可用技能文档中的参数跳过。
+- **helloworld**：依赖 openharmony.cn 开放接口与网络；时间范围、雇主名等需符合接口约定。
+- **ohhap**：**目前主要验证 6.0 release 类工程**；需 `HOS_CLT_PATH`、`OHOS_SDK_PATH`；签名依赖证书与 `build-profile.json5`、可用 `hvigorw`。
+- **ohhdc**：设备需 `hdc list targets` 可见；安装/跑测需已签名 HAP。
+- **ohtest**：dts 仅解析部分导出形式；UITest 为基于正则的页面解析，复杂交互需人工补全。
+- **ohanalysis**：全量 `scan-all` / `diff` 耗时长，**建议单次调用超时约 60 分钟**。
+
+**环境与路径（常用）**
+
+- HAP / 部分工具：`HOS_CLT_PATH`、`OHOS_SDK_PATH`（见本文档开头）。
+- **ohhdc / 设备**：`hdc` 在 PATH；参见下文 **§5**。
+- **ohclitools**：在含 `build.sh` 的 OpenHarmony **src** 目录下执行；依赖 `OHOS_SDK_PATH` 中的 hdc 做推送运行。
 
 ### 4.2 使用方式
 
-- **方式一**：将需要的技能目录（如 `gitlog`、`helloworld`、`ohhap`、`ohhdc`、`ohtest`）从 `src/skills/` 拷贝到 `.claude/skills/`，便于 Cursor 按技能描述自动选用。
-- **方式二**：不拷贝，直接在命令行用工程路径调用，例如：
+- **方式一**：将需要的技能目录从 `src/skills/<名>/` 拷贝到项目 `.claude/skills/<名>/`，与通过 openskills 安装的技能并列，便于对话中引用「某技能」。
+- **方式二**：命令行直接使用仓库内路径（在 **napi_generator 仓库根** 下）：
   - `python3 src/skills/ohhap/hapbuild.py build src/skills/ohhap/NativeProj46R`
   - `python3 src/skills/ohhdc/ohhdc.py replace-install <HAP路径>`
-  - `python3 src/skills/ohtest/ohtest.py --dts <dts路径> --test-dir <test目录>`
+  - `python3 src/skills/gitlog/gitlog.py log 10`
+  - `python3 src/skills/ohtest/ohtest.py --dts <路径> --test-dir <目录>`
+- 各技能 **`SKILL.md`** 中的示例若写 `.claude/skills/...`，将前缀换为 **`src/skills/...`** 即可在未拷贝时等价运行。
 
-### 4.3 验证示例（语言交互请求）
+### 4.3 对话提示句与命令速查
 
-技能通过对话触发，用户用自然语言提出需求，助手根据技能选用对应脚本。以下每项为**用户可说的一句话请求**及技能对应关系：
+Agent 多由自然语言触发；下表为**用户可说的提示句**与**典型命令**对应关系（细节以各目录 `SKILL.md` 为准）。
 
-1. **gitlog**  
-   - 请求示例：「查看最近 10 条提交」「生成 v1.4.4 到当前的 git log 报告」「查看 CMakeLists.txt 的提交历史」  
-   - 对应：`gitlog.sh log 10`、`gitlog.sh report`、`gitlog.sh log-file CMakeLists.txt` 等。
+| 技能 | 提示句示例 | 典型命令（仓库根下） |
+|------|------------|----------------------|
+| **gitlog** | 「看下仓库状态」「最近 20 条提交」「从 v1.4.4 到 HEAD 生成 git 报告」「提交本次改动并推送」（需说明是否跳过风格检查）「跑一下 check-style / check-copyright」「配置 gitee token」 | `python3 src/skills/gitlog/gitlog.py status` / `log 20` / `report` / `commit -m "msg"` / `push` / `check-style` / `check-copyright` |
+| **helloworld** | 「近一个月贡献者排名」「某雇主在 master 上的提交详情」「按邮箱查提交」「兼容性设备查询」「生成 helloworld 示例」 | `python3 src/skills/helloworld/getcodecnt.py ...`（子命令见 SKILL）；`python3 src/skills/helloworld/generate.py` |
+| **ohhap** | 「编译并签名 NativeProj46R」「只打 ohosTest 包」「清除签名」「检查编译环境」 | `python3 src/skills/ohhap/hapbuild.py build …` / `build-test` / `sign` / `clean-sign` |
+| **ohbuild** | 「列出某模块的 fuzz 目标」「编译某个 FuzzTest」「编译整个部件的 fuzztest」「查覆盖率要配什么 gn-args」 | `python3 src/skills/ohbuild/ohbuild.py list-fuzztest …` / `build-fuzztest …` / `build-component-fuzztest …` / `verify-coverage …` |
+| **ohhdc** | 「把签好的 HAP 装到设备」「替换安装」「跑 ohosTest 某套件」「看 faultlog / hilog」「列出已装应用」 | `python3 src/skills/ohhdc/ohhdc.py install …` / `replace-install …` / `test …` / `faultlog …` / `apps` |
+| **ohtest** | 「根据 d.ts 生成单测」「给 Index.ets 生成 UITest」「生成/编译 fuzz」「扫描仓库里所有 fuzz 套件」「扫描 ACTS 套件列表」「在 out 里跑某个 ACTS suite」「做覆盖率分析/缺口」 | `ohtest.py --dts …`；`uitest_gen.py --ets …`；`fuzztest.py …`；`find_fuzztest.py`；`find_actstest.py`；`actstest.py run <SuiteName>`；`coverage_analysis.py` / `coverage_gap_tests.py` |
+| **ohanalysis** | 「解析某个部件的 bundle」「全 src 扫 bundle 出报告」「对比两个 release 的 src 差异」 | `python3 src/skills/ohanalysis/ohanalysis.py bundle …` / `scan-all` / `diff PATH1 PATH2` |
+| **ohclitools** | 「检查 btclitools 对接口覆盖」「部署 wificlitools 并编译验证」「推 dscommand 上设备跑一下」 | 在 OH **src** 下执行：`python3 <本仓库>/src/skills/ohclitools/ohclitool.py`，子命令含 `coverage`、`deploy`、`build`、`verify`、`all`（见 SKILL） |
+| **ohppt** | 「把这份 MD 表格转成 PPT」 | `python3 src/skills/ohppt/ohppt.py …` |
+| **ohproj** | 「用模板创建一个 OH 工程」「编译/签名/跑测模板工程」 | `python3 src/skills/ohproj/ohproj.py`，子命令如 `create`、`build`、`sign`、`build-test`、`test`、`clean-sign` |
+| **ohservices** | 「按 sampletest 配 SystemAbility」「SELinux / init 报错怎么查」「用 ohsa 检查设备上 SA」 | 阅读 `src/skills/ohservices/SKILL.md`；`python3 src/skills/ohservices/ohsa.py device` 等 |
 
-2. **helloworld**  
-   - 请求示例：「最近一周的社区代码共建统计」「查看近一个月的贡献者排名」「查询深开鸿在 master 分支近一个月的提交详情」  
-   - 对应：`getcodecnt.py` 查询雇主/贡献者/提交详情等。
-
-3. **ohhap**  
-   - 请求示例：「@NativeProj46R 编译、签名这个项目」「编译 NativeProj46R 的单元测试 HAP」  
-   - 对应：`hapbuild.py build`、`hapbuild.py build-test`、`hapbuild.py sign`。
-
-4. **ohhdc**  
-   - 请求示例：「用 ohhdc 把刚签名的两个 HAP 安装到设备」「运行设备上的 IndexdtsTest 测试套」「查看设备错误日志目录 data/log/faultlog」「列出 faultlog 下的 hilog 并读某个文件」  
-   - 对应：`ohhdc.py replace-install <HAP路径>`、`ohhdc.py test ...`、`ohhdc.py faultlog` / `ohhdc.py faultlog hilog` / `ohhdc.py faultlog --cat hilog/xxx.log`。
-
-5. **ohtest**  
-   - 请求示例：「根据 Index.d.ts 生成/补全单元测试」「为 libentry 的接口在 ohosTest 里增加测试套」「对 Index.ets 实现 UI 测试 / 为页面生成 UITest」  
-   - 对应：`ohtest.py --dts <dts路径> --test-dir <test目录>`；UITest：`uitest_gen.py --ets <页面.ets路径> --test-dir <test目录>`。
+**典型串联**：**ohhap** 构建签名 → **ohhdc** 安装 → **ohhdc test** 或 **ohtest**（dts/UITest/fuzz/ACTS）→ 日志用 **ohhdc faultlog**。静态体量与依赖对比用 **ohanalysis**；命令行工具闭环用 **ohclitools**。
 
 ## 5. 配置hdc连接（确保开发版联网且和Linux服务器可以互相ping通）
 1. 把${OHOS_SDK_PATH}/linux/toolchains加入环境变量
