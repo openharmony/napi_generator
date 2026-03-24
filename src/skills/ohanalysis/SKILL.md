@@ -7,6 +7,7 @@
 - **单 bundle 解析（`bundle`）**：解析指定路径或前缀下的 `bundle.json`，输出子系统、系统能力、组件名、deps、inner_kits、test 等字段，便于查看依赖与对外接口。
 - **全量扫描报告（`scan-all`）**：扫描整个 `src`（排除 `kernel`、`third_party`、`applications` 及以 `.` 开头的目录），根据所有 `bundle.json` 生成一份 Markdown 报告，包含统计、子系统/组件排名与列表、syscap/inner_kits/deps/test 列表。
 - **两目录对比（`diff`）**：给定两个 `src` 路径（如 61release 与 60release），先分别分析并生成两份 MD 报告，再对比两者在子系统、组件、inner_kits、syscap、deps、test 上的数量与条目，输出增、删、改列表并保存为对比报告（`diff_路径1_路径2_时间.md`）。
+- **可执行文件与 bundle 关联（`executables`）**：在 `BUILD.gn` 中扫描所有 `ohos_executable`，将 GN 标签与 `bundle.json` 关联，并可选比对 `out/<产品>/packages/phone/system/**` 下是否存在与 `output_name`（缺省 target 名）同名的文件，生成 Markdown：含 **phone system** 列、目标名、子系统、部件、GN 标签、路径、编译选项、`bundle.json`、用法启发式；未在 bundle 出现的目标列附录。
 
 ## 技能调用方式
 
@@ -80,6 +81,24 @@ python3 .claude/skills/ohanalysis/ohanalysis.py help
 
 对比报告文件名：**diff_** + 路径1（去掉 `/`）+ **_** + 路径2（去掉 `/`）+ **_** + 时间戳 + **.md**，保存在 `.claude/skills/ohanalysis/` 目录下。约定 PATH1 为基准（旧）、PATH2 为对比（新）。
 
+### `executables [选项]`
+
+扫描 `BUILD.gn` 中的 `ohos_executable`，与 `bundle.json` 关联，并比对 **phone** 形态产物目录 `out/<产品>/packages/phone/system/**` 是否含同名二进制，输出 Markdown。
+
+**默认行为（可不写任何选项）**：扫描 8 个顶层目录并集 `base,build,developtools,device,drivers,foundation,test,productdefine`；**启用** phone system 检测；报告写入 `.claude/skills/ohanalysis/ohos_executable_8dirs.md`。
+
+| 选项 | 说明 |
+|------|------|
+| `--src-dir PATH` | 工程 `src` 根目录，不传则自动推断（与 `ohanalysis.py` 同目录上溯到 `src`）。 |
+| `--prefix PATH` | 覆盖默认 8 目录；**英文逗号分隔**多前缀（并集），如 `--prefix base,foundation`。 |
+| `--full-src` | 扫描整棵 `src`（排除 `kernel` 等），不再使用默认 8 目录。 |
+| `--out-product NAME` | phone system 检测限定 `out/<NAME>/packages/phone/system`（如 `rk3568`）；不传则合并 `out` 下全部已有该路径的产品。 |
+| `--skip-phone-system` | 不扫描 `out`，报告中「phone system」列为跳过/未检测。 |
+| `--only-in-bundle` | 仅输出在至少一个 `bundle.json` 中出现过的目标，不输出附录。 |
+| `-o 输出.md` | 指定报告路径；不传则默认为 `ohos_executable_8dirs.md`（在 `ohanalysis` 技能目录下）。 |
+
+**说明**：关联规则为「GN 标签出现在某 `bundle.json` 全文任意位置」即视为该部件相关；**phone system** 列将 GN 中 `output_name`（缺省为 target 名）与编译产物目录 `out/<产品>/packages/phone/system/**` 下**任意子路径**的文件名比对，**是**表示当前 out 树里存在同名文件（与是否曾编进本次镜像、是否 testonly 无关，以磁盘为准）。**用法说明**为启发式：优先识别 `{"子命令", Handler, "说明"}` 类静态命令表并结合 `Help()`/`argv` 分发；其次才是注释中的 `Usage:`、`--help` 等，不保证与运行时行为完全一致。
+
 ---
 
 ## 使用样例
@@ -108,6 +127,23 @@ python3 .claude/skills/ohanalysis/ohanalysis.py scan-all
 
 # 指定 src 根目录
 python3 .claude/skills/ohanalysis/ohanalysis.py scan-all --src-dir ~/ohos/61release/src
+```
+
+### executables 命令
+
+```bash
+# 默认：8 目录 + phone system 检测 + 输出 ohos_executable_8dirs.md
+python3 .claude/skills/ohanalysis/ohanalysis.py executables
+
+# 限定某一产品的 phone 包路径
+python3 .claude/skills/ohanalysis/ohanalysis.py executables --out-product rk3568
+
+# 自定义前缀或输出路径
+python3 .claude/skills/ohanalysis/ohanalysis.py executables \
+  --prefix foundation/communication -o communication_executables.md
+
+# 全 src 扫描（排除 kernel 等）
+python3 .claude/skills/ohanalysis/ohanalysis.py executables --full-src -o all_executables.md
 ```
 
 ### diff 命令
@@ -178,3 +214,7 @@ python3 .claude/skills/ohanalysis/ohanalysis.py help
 ```
 
 对比报告内容包含：统计对比表，以及新增/删除/变更的子系统、组件、syscap、inner_kits、deps、test 列表。
+
+### executables 命令输出
+
+运行结束后会在控制台打印：已在 bundle 中关联的数量、未在 bundle 中出现的数量（若未使用 `--only-in-bundle`）、报告保存路径。报告含统计与主表（含编译选项摘要与用法说明），未匹配项在附录中列出。
