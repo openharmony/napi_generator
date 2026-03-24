@@ -1,6 +1,6 @@
 ---
-name: ohhap
-description: "OpenHarmony HAP 构建、签名、清除签名与 ohosTest 测试包编译（hapbuild.py）。"
+name: ohbuild
+description: "build ohos acts project."
 author: "Created by user"
 created: "2026-01-20"
 version: "1.0.0"
