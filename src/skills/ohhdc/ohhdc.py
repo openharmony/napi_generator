@@ -2,17 +2,55 @@
 # -*- coding: utf-8 -*-
 """
 OpenHarmony HDC 工具
-提供设备管理和应用查看功能
+提供设备管理和应用查看功能。
+
+截图相关：
+- screenshot/snapshot：设备 snapshot_display 整屏截图。
+- screenshot-app/snap-app：先 aa start（预设别名见 SCREENSHOT_APP_ALIASES），再整屏截图。
+
+Wi‑Fi（wificlitools）：
+- wifi-kaihong：hdc shell 执行 wificommand wifienable + wificonnect（默认 SSID KaiHong、密码 KaiHong@888）。
 """
 
 import argparse
 import json
 import os
 import re
+from datetime import datetime
+from pathlib import Path
 import shlex
 import subprocess
 import sys
 import time
+
+# 技能脚本所在目录：截图、layout 等产物默认写入其下子目录
+OH_HDC_SKILL_DIR = Path(__file__).resolve().parent
+OH_HDC_SCREENSHOT_DIR = OH_HDC_SKILL_DIR / "screenshot"
+OH_HDC_LAYOUT_DIR = OH_HDC_SKILL_DIR / "layout"
+
+
+def resolve_ohhdc_artifact_path(
+    subdir: Path,
+    user_path: str | None,
+    default_filename: str,
+) -> str:
+    """
+    解析本机保存路径：未指定或仅为文件名时，写入 ohhdc 技能目录下 subdir。
+    绝对路径或含目录的相对路径按用户指定落盘（并创建父目录）。
+    """
+    subdir.mkdir(parents=True, exist_ok=True)
+    if not user_path:
+        return str((subdir / default_filename).resolve())
+    p = Path(user_path)
+    if p.is_absolute():
+        rp = p.expanduser().resolve()
+        rp.parent.mkdir(parents=True, exist_ok=True)
+        return str(rp)
+    if p.parent == Path("."):
+        return str((subdir / p.name).resolve())
+    rp = p.expanduser().resolve()
+    rp.parent.mkdir(parents=True, exist_ok=True)
+    return str(rp)
 
 
 def run_hdc_command(command, timeout_sec=120):
@@ -39,6 +77,153 @@ def run_hdc_command(command, timeout_sec=120):
         return False, "", "命令执行超时"
     except Exception as e:
         return False, "", str(e)
+
+
+# wificlitools 产物：见 foundation/communication/wifi/wifi/test/wificlitools/BUILD.gn（ohos_executable wificommand）
+# 默认未 install 进 system 分区；可 push 到可写目录后用绝对路径调用（与 ohclitools 约定一致）。
+WIFICOMMAND_BIN_DEFAULT = "wificommand"
+DEFAULT_WIFI_KAIHONG_SSID = "KaiHong"
+DEFAULT_WIFI_KAIHONG_PASSWORD = "KaiHong@888"
+DEFAULT_WIFICOMMAND_REMOTE_PATH = "/data/local/tmp/wificommand"
+DEFAULT_WIFI_PRODUCT = "rk3568"
+
+
+def infer_ohos_src_root(explicit: str | None) -> Path | None:
+    """从 --ohos-src、环境变量 OHOS_SRC 或本脚本向上查找含 build.sh 的源码根。"""
+    if explicit:
+        p = Path(explicit).expanduser().resolve()
+        return p if p.is_dir() else None
+    env = os.environ.get("OHOS_SRC", "").strip()
+    if env:
+        p = Path(env).expanduser().resolve()
+        return p if p.is_dir() else None
+    c = Path(__file__).resolve().parent
+    for _ in range(10):
+        if (c / "build.sh").is_file():
+            return c
+        if c.parent == c:
+            break
+        c = c.parent
+    return None
+
+
+def find_wificommand_host_binary(ohos_src: Path, product: str) -> Path | None:
+    """在 out/<product> 下查找 wificommand 可执行文件（strip 或 unstripped）。"""
+    out = ohos_src / "out" / product
+    candidates = [
+        out / "communication" / "wifi" / "wificommand",
+        out / "exe.unstripped" / "communication" / "wifi" / "wificommand",
+    ]
+    for p in candidates:
+        if p.is_file() and os.access(p, os.X_OK):
+            return p
+        if p.is_file():
+            return p
+    return None
+
+
+def hdc_file_send(local_path: str, remote_path: str, timeout_sec: int = 120):
+    """hdc file send local remote（经 bash -c + source bashrc 以找到 hdc）。"""
+    inner = (
+        "source ~/.bashrc 2>/dev/null; "
+        f"hdc file send {shlex.quote(local_path)} {shlex.quote(remote_path)}"
+    )
+    cmd = "bash -c " + shlex.quote(inner)
+    return run_hdc_command(cmd, timeout_sec=timeout_sec)
+
+
+def run_wifi_push_wificommand(
+    *,
+    local_bin: str | None,
+    ohos_src: Path | None,
+    product: str,
+    remote_path: str,
+) -> tuple[bool, str]:
+    """
+    将本机 wificommand 推到设备 remote_path 并 chmod +x。
+
+    Returns:
+        (success, message)
+    """
+    host_path: Path | None = None
+    if local_bin:
+        host_path = Path(local_bin).expanduser().resolve()
+        if not host_path.is_file():
+            return False, f"本机文件不存在: {host_path}"
+    elif ohos_src is not None:
+        host_path = find_wificommand_host_binary(ohos_src, product)
+        if host_path is None:
+            return (
+                False,
+                f"未在 {ohos_src / 'out' / product} 下找到 wificommand；"
+                f"请先编译: ./build.sh --product-name {product} --build-target wificommand",
+            )
+    else:
+        return False, "请指定本机 wificommand 路径（target 参数）或 --ohos-src 以自动查找 out 目录"
+
+    ok, out, err = hdc_file_send(str(host_path), remote_path, timeout_sec=180)
+    detail = (out or "") + (err or "")
+    if not ok:
+        return False, f"hdc file send 失败: {detail.strip() or err}"
+
+    ok2, out2, err2 = run_hdc_shell_remote(f"chmod 755 {shlex.quote(remote_path)}", timeout_sec=30)
+    if not ok2:
+        return False, f"chmod 失败: {(out2 or '') + (err2 or '')}"
+
+    return True, f"已推送 {host_path} -> {remote_path}"
+
+
+def run_hdc_shell_remote(remote_cmd: str, timeout_sec: int = 120):
+    """
+    执行 hdc shell，remote_cmd 为设备侧完整命令行（经 shlex.quote，避免主机 shell 注入）。
+
+    Returns:
+        tuple: (success: bool, output: str, error: str)
+    """
+    full = "hdc shell " + shlex.quote(remote_cmd)
+    return run_hdc_command(full, timeout_sec=timeout_sec)
+
+
+def wifi_wificommand_enable_and_connect(
+    ssid: str,
+    password: str,
+    *,
+    wificommand_bin: str = WIFICOMMAND_BIN_DEFAULT,
+    fetch_status: bool = True,
+    timeout_enable_sec: int = 60,
+    timeout_connect_sec: int = 120,
+    timeout_status_sec: int = 30,
+):
+    """
+    使用 wificommand（wificlitools）打开 Wi‑Fi 并按 SSID/密码连接；可选再查状态。
+
+    Args:
+        wificommand_bin: 设备侧可执行文件名或绝对路径（如 /data/local/tmp/wificommand）。
+
+    Returns:
+        tuple: (all_ok: bool, log: list of (step_name, success, stdout, stderr))
+    """
+    log = []
+    bin_name = wificommand_bin
+
+    def _step(name: str, remote: str, tmo: int) -> bool:
+        ok, out, err = run_hdc_shell_remote(remote, timeout_sec=tmo)
+        log.append((name, ok, out or "", err or ""))
+        return ok
+
+    ok_enable = _step("wifienable", f"{bin_name} wifienable", timeout_enable_sec)
+    if not ok_enable:
+        return False, log
+
+    connect_remote = f"{bin_name} wificonnect ssid={ssid} password={password}"
+    ok_connect = _step("wificonnect", connect_remote, timeout_connect_sec)
+    if not ok_connect:
+        return False, log
+
+    if fetch_status:
+        _step("wifigetstatus", f"{bin_name} wifigetstatus", timeout_status_sec)
+
+    return True, log
 
 
 def list_installed_apps():
@@ -105,6 +290,185 @@ def install_hap(hap_path):
     path_quoted = shlex.quote(hap_path)
     command = f'bash -c "source ~/.bashrc && hdc install {path_quoted}"'
     return run_hdc_command(command)
+
+
+# sysfs LED 节点名（与板级设备树命名一致；物理灯颜色可能与节点名不一致，见 SKILL）
+LED_SYSFS_NAMES = frozenset({"red", "green", "blue"})
+
+
+def set_device_led(sysfs_name: str, brightness: int) -> tuple:
+    """
+    通过 hdc shell 写入 /sys/class/leds/<name>/brightness（0 关 / 1 开）。
+
+    Args:
+        sysfs_name: red / green / blue（sysfs 目录名）
+        brightness: 0 或 1
+
+    Returns:
+        tuple: (success: bool, output: str, error: str)
+    """
+    if sysfs_name not in LED_SYSFS_NAMES:
+        return False, "", f"不支持的 LED 节点: {sysfs_name}"
+    if brightness not in (0, 1):
+        return False, "", "brightness 仅支持 0 或 1"
+    inner = f"echo {brightness} > /sys/class/leds/{sysfs_name}/brightness"
+    inner_q = shlex.quote(inner)
+    command = f'bash -c "source ~/.bashrc && hdc shell {inner_q}"'
+    return run_hdc_command(command, timeout_sec=30)
+
+
+# snapshot_display 合法输出目录（见 window_manager/snapshot snapshot_utils.cpp）
+DEFAULT_SCREENSHOT_DEVICE_PATH = "/data/local/tmp/ohhdc_screenshot.jpeg"
+
+# screenshot-app：短别名 -> (bundleName, defaultAbility)。先 aa start 再整屏 snapshot_display。
+# 非别名须显式传 --ability（与设备上 module.json5 中主 Ability 一致）。
+SCREENSHOT_APP_ALIASES: dict[str, tuple[str, str]] = {
+    "etsclock": ("ohos.samples.etsclock", "MainAbility"),
+}
+
+
+def resolve_screenshot_app_bundle_ability(
+    alias_or_bundle: str,
+    ability_override: str | None,
+) -> tuple[tuple[str, str] | None, str | None]:
+    """
+    解析 screenshot-app 的包名与 Ability。
+
+    Returns:
+        ((bundle, ability), None) 成功；(None, error_message) 失败。
+    """
+    raw = alias_or_bundle.strip()
+    if not raw:
+        return None, "应用别名或包名不能为空"
+    key = raw.lower()
+    if key in SCREENSHOT_APP_ALIASES:
+        b, default_a = SCREENSHOT_APP_ALIASES[key]
+        return (b, ability_override or default_a), None
+    if not ability_override:
+        return None, (
+            "非预设别名时必须指定主 Ability，例如: "
+            "ohhdc.py screenshot-app ohos.samples.xxx --ability EntryAbility"
+        )
+    return (raw, ability_override), None
+
+
+def take_screenshot_to_local(
+    local_path: str,
+    device_path: str | None = None,
+    display_id: int | None = None,
+) -> tuple:
+    """
+    设备上执行 snapshot_display 写入固定路径，再用 hdc file recv 拉到本地。
+
+    Args:
+        local_path: 本机保存路径（绝对或相对）
+        device_path: 设备端文件路径，默认 /data/local/tmp/ohhdc_screenshot.jpeg
+        display_id: 若指定则传 -i displayId，否则使用设备默认屏
+
+    Returns:
+        tuple: (success: bool, log_output: str, error: str, resolved_local: str)
+    """
+    dev = device_path or DEFAULT_SCREENSHOT_DEVICE_PATH
+    if display_id is not None:
+        inner = f"snapshot_display -i {int(display_id)} -f {shlex.quote(dev)}"
+    else:
+        inner = f"snapshot_display -f {shlex.quote(dev)}"
+    inner_q = shlex.quote(inner)
+    snap_cmd = f'bash -c "source ~/.bashrc && hdc shell {inner_q}"'
+    ok, out, err = run_hdc_command(snap_cmd, timeout_sec=120)
+    snap_log = ((out or "") + "\n" + (err or "")).strip()
+    if not ok:
+        hint = ""
+        low = snap_log.lower()
+        if "developer" in low and "mode" in low:
+            hint = (
+                "\n提示: snapshot_display 要求开启开发者模式"
+                "（如 persist 参数 const.security.developermode.state）。"
+            )
+        return False, snap_log, (err or out or "snapshot_display 执行失败") + hint, local_path
+
+    local_abs = str(Path(local_path).expanduser().resolve())
+    Path(local_abs).parent.mkdir(parents=True, exist_ok=True)
+    dq = shlex.quote(dev)
+    lq = shlex.quote(local_abs)
+    recv_cmd = f'bash -c "source ~/.bashrc && hdc file recv {dq} {lq}"'
+    ok2, out2, err2 = run_hdc_command(recv_cmd, timeout_sec=120)
+    recv_log = ((out2 or "") + "\n" + (err2 or "")).strip()
+    full_log = snap_log + ("\n\n--- hdc file recv ---\n" + recv_log if recv_log else "")
+    if not ok2:
+        return False, full_log, err2 or out2 or "hdc file recv 失败", local_abs
+    return True, full_log, "", local_abs
+
+
+# uitest dumpLayout 设备端输出路径（需在可写目录，一般用 /data/local/tmp）
+DEFAULT_UISTEST_LAYOUT_DEVICE_PATH = "/data/local/tmp/ohhdc_uitest_layout.json"
+
+
+def dump_uitest_layout_to_local(
+    local_path: str,
+    device_path: str | None = None,
+    display_id: int | None = None,
+    bundle: str | None = None,
+    window_id: str | None = None,
+    merge_windows: bool | None = None,
+    include_font_attrs: bool = False,
+    independent_nodes: bool = False,
+    extend_attr: str | None = None,
+) -> tuple:
+    """
+    hdc shell uitest dumpLayout -p <设备路径>，再 hdc file recv 拉到本地。
+    若内容为合法 JSON，会格式化为缩进后写回，便于阅读。
+
+    Returns:
+        tuple: (success, log_output, error, resolved_local)
+    """
+    dev = device_path or DEFAULT_UISTEST_LAYOUT_DEVICE_PATH
+    inner = "uitest dumpLayout -p " + shlex.quote(dev)
+    if independent_nodes:
+        inner += " -i"
+    if include_font_attrs:
+        inner += " -a"
+    if bundle:
+        inner += " -b " + shlex.quote(bundle)
+    if window_id is not None and str(window_id).strip() != "":
+        inner += " -w " + shlex.quote(str(window_id))
+    if merge_windows is not None:
+        inner += " -m " + ("true" if merge_windows else "false")
+    if display_id is not None:
+        inner += " -d " + str(int(display_id))
+    if extend_attr:
+        inner += " -e " + shlex.quote(extend_attr)
+
+    inner_q = shlex.quote(inner)
+    shell_cmd = f'bash -c "source ~/.bashrc && hdc shell {inner_q}"'
+    ok, out, err = run_hdc_command(shell_cmd, timeout_sec=120)
+    run_log = ((out or "") + "\n" + (err or "")).strip()
+    if not ok:
+        return False, run_log, err or out or "uitest dumpLayout 执行失败", local_path
+
+    local_abs = str(Path(local_path).expanduser().resolve())
+    Path(local_abs).parent.mkdir(parents=True, exist_ok=True)
+    dq = shlex.quote(dev)
+    lq = shlex.quote(local_abs)
+    recv_cmd = f'bash -c "source ~/.bashrc && hdc file recv {dq} {lq}"'
+    ok2, out2, err2 = run_hdc_command(recv_cmd, timeout_sec=120)
+    recv_log = ((out2 or "") + "\n" + (err2 or "")).strip()
+    full_log = run_log + ("\n\n--- hdc file recv ---\n" + recv_log if recv_log else "")
+    if not ok2:
+        return False, full_log, err2 or out2 or "hdc file recv 失败", local_abs
+
+    try:
+        raw = Path(local_abs).read_text(encoding="utf-8", errors="replace")
+        obj = json.loads(raw)
+        Path(local_abs).write_text(
+            json.dumps(obj, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        full_log += "\n\n(已格式化为缩进 JSON)"
+    except (json.JSONDecodeError, OSError, TypeError):
+        full_log += "\n\n(内容非 JSON 或格式化跳过，已按原始文件保存)"
+
+    return True, full_log, "", local_abs
 
 
 def replace_install_hap(hap_path):
@@ -805,23 +1169,42 @@ def format_apps_as_markdown(apps):
 def main():
     """主函数"""
     parser = argparse.ArgumentParser(
-        description='OpenHarmony HDC 工具 - 设备应用管理（查看/安装/卸载 HAP，查看前台应用）'
+        description='OpenHarmony HDC 工具 - 设备应用管理（查看/安装/卸载 HAP，查看前台应用，LED 控制等）'
     )
     parser.add_argument(
         'action',
-        choices=['list-apps', 'apps', 'uninstall', 'install', 'replace-install', 'install-project', 'deploy-test', 'foreground', 'fg', 'running', 'dump-all', 'dump-running', 'force-stop', 'stop', 'start', 'test', 'hilog', 'logs', 'faultlog', 'error-log'],
-        help='操作：apps/list-apps=查看已安装应用; uninstall=卸载; install=安装单个HAP; replace-install=替换安装; install-project=按项目安装主HAP+测试HAP; deploy-test=部署运行HAP测试用例(卸载->install -r 两个HAP->aa test); foreground/fg=查看前台应用; running=查看运行中的应用; dump-all=查看所有ability; dump-running=查看运行中的ability; force-stop/stop=强制关闭应用; start=启动应用; test=运行测试; hilog/logs=查看设备日志; faultlog/error-log=查看错误日志目录'
+        choices=[
+            'list-apps', 'apps', 'uninstall', 'install', 'replace-install', 'install-project',
+            'deploy-test', 'foreground', 'fg', 'running', 'dump-all', 'dump-running',
+            'force-stop', 'stop', 'start', 'test', 'hilog', 'logs', 'faultlog', 'error-log',
+            'led', 'screenshot', 'snapshot', 'screenshot-app', 'snap-app',
+            'layout', 'dump-layout', 'wifi-kaihong', 'wifi-push-wificommand', 'wifi-check-wificommand',
+        ],
+        help='操作：wifi-kaihong=开 Wi‑Fi 连 KaiHong；wifi-push-wificommand=推送 wificommand；wifi-check-wificommand=检查设备/本机产物',
     )
     parser.add_argument(
         'target',
         nargs='?',
-        help='卸载/强制关闭时填 bundleName；install 时填 HAP 文件路径；install-project/deploy-test 时填项目根目录；replace-install 时填 HAP 文件路径；启动应用时填 bundleName；运行测试时填 bundleName；hilog/logs 时填过滤关键字（可选）；faultlog/error-log 时填子目录名（faultlogger/freeze/hilog/temp）'
+        help='卸载/安装等见各子命令；led 填节点名；screenshot/snapshot/layout 填本机保存路径；screenshot-app 填应用别名或包名',
+    )
+    parser.add_argument(
+        'screenshot_app_local_path',
+        nargs='?',
+        default=None,
+        metavar='LOCAL_JPEG',
+        help='screenshot-app：本机保存路径（可选）。led：第三参写 on/off（因 argparse 顺序，`led green off` 中 off 占此位）',
+    )
+    parser.add_argument(
+        'led_onoff',
+        nargs='?',
+        choices=['on', 'off'],
+        help='仅与 led 联用：on=写入 brightness 1，off=写入 brightness 0。示例: ohhdc.py led red on'
     )
     parser.add_argument(
         '--ability',
         '-a',
         dest='ability_name',
-        help='启动应用时指定 Ability 名称（如 EntryAbility），与 start 命令一起使用'
+        help='启动应用时指定 Ability（如 EntryAbility）；与 start、screenshot-app（非预设别名时必填）联用'
     )
     parser.add_argument(
         '--module',
@@ -904,7 +1287,355 @@ def main():
         metavar='N',
         help='faultlog/error-log 与 --cat 同时使用时，仅输出文件最后 N 行'
     )
+    parser.add_argument(
+        '--device-file',
+        dest='remote_device_file',
+        metavar='REMOTE_PATH',
+        default=None,
+        help='screenshot：设备端截图路径（默认 /data/local/tmp/ohhdc_screenshot.jpeg）；layout：uitest -p 设备端路径（默认 /data/local/tmp/ohhdc_uitest_layout.json）',
+    )
+    parser.add_argument(
+        '--display-id',
+        type=int,
+        dest='hdc_display_id',
+        default=None,
+        metavar='N',
+        help='screenshot/screenshot-app：snapshot_display -i；layout：uitest dumpLayout -d',
+    )
+    parser.add_argument(
+        '--app-delay',
+        type=float,
+        default=2.0,
+        dest='app_start_delay',
+        metavar='SEC',
+        help='screenshot-app：aa start 成功后等待秒数再截图，默认 2.0',
+    )
+    parser.add_argument(
+        '--bundle',
+        dest='uitest_bundle',
+        default=None,
+        metavar='NAME',
+        help='layout/dump-layout：uitest dumpLayout -b 目标窗口包名',
+    )
+    parser.add_argument(
+        '--window-id',
+        dest='uitest_window_id',
+        default=None,
+        metavar='ID',
+        help='layout/dump-layout：uitest dumpLayout -w',
+    )
+    parser.add_argument(
+        '--layout-independent',
+        action='store_true',
+        help='layout：uitest dumpLayout -i（不合并窗口等）',
+    )
+    parser.add_argument(
+        '--layout-font',
+        action='store_true',
+        help='layout：uitest dumpLayout -a 包含字体属性',
+    )
+    parser.add_argument(
+        '--layout-merge',
+        choices=['true', 'false'],
+        default=None,
+        help='layout：uitest dumpLayout -m',
+    )
+    parser.add_argument(
+        '--layout-extend',
+        dest='uitest_extend_attr',
+        default=None,
+        metavar='NAME',
+        help='layout：uitest dumpLayout -e 扩展属性',
+    )
+    parser.add_argument(
+        '--wifi-ssid',
+        default=DEFAULT_WIFI_KAIHONG_SSID,
+        help=f'wifi-kaihong：SSID，默认 {DEFAULT_WIFI_KAIHONG_SSID}',
+    )
+    parser.add_argument(
+        '--wifi-password',
+        default=DEFAULT_WIFI_KAIHONG_PASSWORD,
+        help='wifi-kaihong：密码，默认 KaiHong@888',
+    )
+    parser.add_argument(
+        '--no-wifi-status',
+        action='store_true',
+        dest='wifi_no_status',
+        help='wifi-kaihong：连接成功后不执行 wifigetstatus',
+    )
+    parser.add_argument(
+        '--ohos-src',
+        default=None,
+        help='wifi-push / wifi-check / --push-wificommand：OpenHarmony 源码根（含 build.sh），或设环境变量 OHOS_SRC',
+    )
+    parser.add_argument(
+        '--wifi-product',
+        default=DEFAULT_WIFI_PRODUCT,
+        help=f'在 out/<product> 下查找 wificommand，默认 {DEFAULT_WIFI_PRODUCT}',
+    )
+    parser.add_argument(
+        '--wificommand-remote',
+        default=DEFAULT_WIFICOMMAND_REMOTE_PATH,
+        help=f'推送到设备上的路径，默认 {DEFAULT_WIFICOMMAND_REMOTE_PATH}',
+    )
+    parser.add_argument(
+        '--push-wificommand',
+        action='store_true',
+        dest='push_wificommand',
+        help='wifi-kaihong：执行前先推送本机编译的 wificommand 到 --wificommand-remote（需 --ohos-src 或 OHOS_SRC）',
+    )
+    parser.add_argument(
+        '--wifi-device-bin',
+        default=None,
+        metavar='PATH_OR_NAME',
+        help='设备侧 wificommand：命令名或绝对路径；默认 wificommand（依赖 PATH）。与 --push-wificommand 连用时以推送路径为准',
+    )
     args = parser.parse_args()
+
+    if args.action == 'wifi-check-wificommand':
+        print("=== 设备侧（wificommand 是否存在）===\n")
+        checks = [
+            ("PATH", "command -v wificommand 2>/dev/null || echo NOT_IN_PATH"),
+            ("/system/bin", "ls -la /system/bin/wificommand 2>&1"),
+            ("常用临时路径", f"ls -la {DEFAULT_WIFICOMMAND_REMOTE_PATH} 2>&1"),
+        ]
+        for title, rcmd in checks:
+            ok, o, e = run_hdc_shell_remote(rcmd, timeout_sec=20)
+            text = (o or e or "").strip() or "(无输出)"
+            print(f"[{title}]\n{text}\n")
+        src = infer_ohos_src_root(args.ohos_src)
+        print("=== 本机编译产物（out 目录）===\n")
+        if src:
+            found = find_wificommand_host_binary(src, args.wifi_product)
+            print(f"OHOS_SRC={src}")
+            print(f"product={args.wifi_product}")
+            print(f"查找结果: {found or '未找到可执行文件'}")
+            if not found:
+                print(
+                    f"\n可执行: cd {src} && ./build.sh --product-name {args.wifi_product} "
+                    f"--build-target wificommand"
+                )
+        else:
+            print("未推断源码根：请传 --ohos-src 或设置 OHOS_SRC")
+        print(
+            "\n说明：wificlitools 的 GN **未** 设置 install_enable，默认 **不会** 进 system 镜像；"
+            "需单独编 wificommand 后使用 **wifi-push-wificommand** 或 **wifi-kaihong --push-wificommand**。"
+        )
+        return
+
+    if args.action == 'wifi-push-wificommand':
+        src = infer_ohos_src_root(args.ohos_src)
+        ok_push, msg = run_wifi_push_wificommand(
+            local_bin=args.target,
+            ohos_src=src,
+            product=args.wifi_product,
+            remote_path=args.wificommand_remote,
+        )
+        print(msg)
+        if ok_push:
+            r = args.wificommand_remote
+            print(f"\n✓ 设备上可执行: {r}")
+            print(f"  示例: hdc shell \"{r} wifienable\"")
+        else:
+            print("\n❌ 推送失败。", file=sys.stderr)
+            sys.exit(1)
+        return
+
+    if args.action == 'wifi-kaihong':
+        ssid = args.wifi_ssid
+        password = args.wifi_password
+        pwd_hint = "(空，开放热点)" if not password else "********"
+
+        device_bin = args.wifi_device_bin or WIFICOMMAND_BIN_DEFAULT
+        if args.push_wificommand:
+            src = infer_ohos_src_root(args.ohos_src)
+            if src is None:
+                print(
+                    "❌ --push-wificommand 需要源码根：请传 --ohos-src 或设置环境变量 OHOS_SRC",
+                    file=sys.stderr,
+                )
+                sys.exit(1)
+            ok_push, msg = run_wifi_push_wificommand(
+                local_bin=None,
+                ohos_src=src,
+                product=args.wifi_product,
+                remote_path=args.wificommand_remote,
+            )
+            print(msg)
+            if not ok_push:
+                sys.exit(1)
+            device_bin = args.wificommand_remote
+
+        print(
+            f"→ 使用设备侧 `{device_bin}`：wifienable，然后 "
+            f"wificonnect ssid={ssid!r} password={pwd_hint}"
+        )
+        ok, steps_log = wifi_wificommand_enable_and_connect(
+            ssid,
+            password,
+            wificommand_bin=device_bin,
+            fetch_status=not args.wifi_no_status,
+        )
+        for step_name, step_ok, out, err in steps_log:
+            mark = "✓" if step_ok else "❌"
+            print(f"{mark} {step_name}")
+            if out.strip():
+                print(out.rstrip())
+            if err.strip():
+                print(err.rstrip(), file=sys.stderr)
+        if ok:
+            print(
+                "\n✓ wifi-kaihong：已执行 wifienable 与 wificonnect；"
+                "若未连上请检查设备是否包含 wificommand、热点是否可达、密码与加密方式（开放网可省略密码参数见 wificlitools 说明）。"
+            )
+        else:
+            print(
+                "\n❌ wifi-kaihong：wifienable 或 wificonnect 失败；"
+                "请确认镜像已安装 wificommand（wificlitools），且 hdc 已连接设备。",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        return
+
+    if args.action == 'led':
+        if not args.target or args.target not in LED_SYSFS_NAMES:
+            print(
+                "❌ 错误: led 请指定 sysfs 节点名 red / green / blue，以及 on 或 off。\n"
+                "  示例: ohhdc.py led red on    # 等价 hdc shell \"echo 1 > /sys/class/leds/red/brightness\"\n"
+                "        ohhdc.py led red off\n"
+                "        ohhdc.py led green on\n"
+                "        ohhdc.py led blue off",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        # 第三位置参数是 screenshot 占位，故 `led green off` 中 off 落在 screenshot_app_local_path
+        led_state = args.led_onoff
+        if led_state not in ('on', 'off') and args.screenshot_app_local_path in ('on', 'off'):
+            led_state = args.screenshot_app_local_path
+        if led_state not in ('on', 'off'):
+            print(
+                "❌ 错误: led 请再指定 on 或 off，例如: ohhdc.py led green off",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        val = 1 if led_state == 'on' else 0
+        success, out, err = set_device_led(args.target, val)
+        if success:
+            state_zh = "开" if val == 1 else "关"
+            print(
+                f"✓ LED `{args.target}` 已{state_zh}（brightness={val}）\n"
+                f"  等价: hdc shell \"echo {val} > /sys/class/leds/{args.target}/brightness\""
+            )
+            if out and out.strip():
+                print(out)
+        else:
+            print(f"❌ LED 设置失败: {err or out}", file=sys.stderr)
+            sys.exit(1)
+        return
+
+    if args.action in ('screenshot', 'snapshot'):
+        default_snap = f"ohhdc_screenshot_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpeg"
+        local_out = resolve_ohhdc_artifact_path(
+            OH_HDC_SCREENSHOT_DIR,
+            args.target,
+            default_snap,
+        )
+        ok, log, err, resolved = take_screenshot_to_local(
+            local_out,
+            device_path=args.remote_device_file,
+            display_id=args.hdc_display_id,
+        )
+        if log:
+            print(log)
+        if ok:
+            print(f"\n✓ 截图已保存到: {resolved}")
+        else:
+            print(f"\n❌ 截图失败: {err}", file=sys.stderr)
+            sys.exit(1)
+        return
+
+    if args.action in ('screenshot-app', 'snap-app'):
+        if not args.target:
+            print(
+                "❌ 错误: 请提供应用别名或包名，例如: "
+                "ohhdc.py screenshot-app etsclock\n"
+                "  完整包名需带 Ability: "
+                "ohhdc.py screenshot-app ohos.samples.xxx --ability EntryAbility",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        resolved_pair, err_msg = resolve_screenshot_app_bundle_ability(
+            args.target, args.ability_name
+        )
+        if resolved_pair is None:
+            print(f"❌ 错误: {err_msg}", file=sys.stderr)
+            sys.exit(1)
+        bundle_name, ability_name = resolved_pair
+        print(f"→ 启动应用: {bundle_name} / {ability_name}")
+        ok_start, out_start, err_start = start_app(bundle_name, ability_name)
+        if out_start and out_start.strip():
+            print(out_start.strip())
+        if not ok_start:
+            print(f"❌ 启动应用失败: {err_start or out_start}", file=sys.stderr)
+            sys.exit(1)
+        delay_sec = float(args.app_start_delay)
+        if delay_sec > 0:
+            print(f"→ 等待 {delay_sec}s 后截图 …")
+            time.sleep(delay_sec)
+        safe_tag = re.sub(r"[^\w\-.]", "_", args.target.strip())[:80]
+        default_snap = f"screenshot_app_{safe_tag}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpeg"
+        local_out = resolve_ohhdc_artifact_path(
+            OH_HDC_SCREENSHOT_DIR,
+            args.screenshot_app_local_path,
+            default_snap,
+        )
+        ok, log, err, resolved = take_screenshot_to_local(
+            local_out,
+            device_path=args.remote_device_file,
+            display_id=args.hdc_display_id,
+        )
+        if log:
+            print(log)
+        if ok:
+            print(f"\n✓ [{bundle_name}] 截图已保存到: {resolved}")
+            print(
+                "  说明: 与 snapshot_display 一致为整屏位图；多窗同屏时其它窗口可能入镜。"
+                "仅裁某一窗口请配合 layout bounds 在本机裁剪。"
+            )
+        else:
+            print(f"\n❌ 截图失败: {err}", file=sys.stderr)
+            sys.exit(1)
+        return
+
+    if args.action in ('layout', 'dump-layout'):
+        default_json = f"uitest_layout_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        local_out = resolve_ohhdc_artifact_path(
+            OH_HDC_LAYOUT_DIR,
+            args.target,
+            default_json,
+        )
+        merge_bool = None
+        if args.layout_merge is not None:
+            merge_bool = args.layout_merge == "true"
+        ok, log, err, resolved = dump_uitest_layout_to_local(
+            local_out,
+            device_path=args.remote_device_file,
+            display_id=args.hdc_display_id,
+            bundle=args.uitest_bundle,
+            window_id=args.uitest_window_id,
+            merge_windows=merge_bool,
+            include_font_attrs=args.layout_font,
+            independent_nodes=args.layout_independent,
+            extend_attr=args.uitest_extend_attr,
+        )
+        if log:
+            print(log)
+        if ok:
+            print(f"\n✓ 当前页面 layout 已保存到: {resolved}")
+        else:
+            print(f"\n❌ layout 导出失败: {err}", file=sys.stderr)
+            sys.exit(1)
+        return
     
     if args.action in ['list-apps', 'apps']:
         success, apps, error = list_installed_apps()

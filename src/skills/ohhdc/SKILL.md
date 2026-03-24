@@ -1,14 +1,14 @@
 ---
 name: ohhdc
-description: "OpenHarmony HDC tool for device HAP management. Use when users need to list installed apps, uninstall a HAP (bm uninstall -n <bundleName>), install a HAP (hdc install <path>), install-project to install main HAP and test HAP with two hdc install commands, deploy-test to uninstall then hdc install -r both HAPs and run aa test (部署运行 HAP 测试用例), replace-install a HAP (hdc -r install <path>), view device logs (hdc shell hilog; hilog -b D for debug, hilog -p off to show private, param set hilog.flowctrl.proc.on false to disable flow control, hilog | grep <pattern> to filter by keyword/pid), view error/fault logs under data/log/faultlog (subdirs faultlogger, freeze, hilog, temp; list or cat files for analysis), view foreground/running apps (aa dump -a / aa dump -r), force-stop an app (aa force-stop <bundleName>), start an app (aa start -a <abilityName> -b <bundleName>), or run tests (aa test -b <bundleName> -m <moduleName> -s unittest OpenHarmonyTestRunner -s class <suiteName>[#<caseName>] -s timeout <timeout>). Presents results in Markdown format."
+description: "OpenHarmony HDC tool for device HAP management. Use when users need to list installed apps, uninstall a HAP (bm uninstall -n <bundleName>), install a HAP (hdc install <path>), install-project to install main HAP and test HAP with two hdc install commands, deploy-test to uninstall then hdc install -r both HAPs and run aa test (部署运行 HAP 测试用例), replace-install a HAP (hdc -r install <path>), take a display screenshot (snapshot_display + hdc file recv; default under ohhdc/screenshot/), screenshot-app/snap-app to aa start a preset app alias then screenshot (SCREENSHOT_APP_ALIASES in ohhdc.py, e.g. etsclock → ohos.samples.etsclock/MainAbility), dump current UI layout JSON via hdc shell uitest dumpLayout + file recv (ohhdc.py layout/dump-layout; default under ohhdc/layout/), control board LEDs via sysfs (ohhdc.py led red|green|blue on|off → echo 0/1 > /sys/class/leds/<name>/brightness), enable Wi-Fi and connect AP via wificlitools (wifi-kaihong / wifi-push-wificommand / wifi-check-wificommand; wificommand often not in system image—use push or --push-wificommand; default SSID KaiHong password KaiHong@888), view device logs (hdc shell hilog; hilog -b D for debug, hilog -p off to show private, param set hilog.flowctrl.proc.on false to disable flow control, hilog | grep <pattern> to filter by keyword/pid), view error/fault logs under data/log/faultlog (subdirs faultlogger, freeze, hilog, temp; list or cat files for analysis), view foreground/running apps (aa dump -a / aa dump -r), force-stop an app (aa force-stop <bundleName>), start an app (aa start -a <abilityName> -b <bundleName>), or run tests (aa test -b <bundleName> -m <moduleName> -s unittest OpenHarmonyTestRunner -s class <suiteName>[#<caseName>] -s timeout <timeout>). Presents results in Markdown format."
 author: "Created by user"
 created: "2026-01-28"
-version: "1.0.0"
+version: "1.0.2"
 ---
 
 # OpenHarmony HDC Skill
 
-This skill provides capabilities for OpenHarmony/HarmonyOS devices via HDC (HarmonyOS Device Connector): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例: uninstall → `hdc install -r` main + test HAP → `aa test`), **replace-install HAP**, **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
+This skill provides capabilities for OpenHarmony/HarmonyOS devices via HDC (HarmonyOS Device Connector): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例: uninstall → `hdc install -r` main + test HAP → `aa test`), **replace-install HAP**, **display screenshot** (`snapshot_display` + `hdc file recv`，默认保存到技能目录 `screenshot/`), **app-scoped screenshot** (`screenshot-app` / `snap-app`: `aa start` then `snapshot_display`; 预设别名见 `ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`), **UI layout JSON** (`uitest dumpLayout` + `hdc file recv`，默认保存到 `layout/`), **Wi‑Fi via wificommand** (`wifi-kaihong`: enable Wi‑Fi and connect default **KaiHong** / **KaiHong@888** or custom `--wifi-ssid` / `--wifi-password`), **control LEDs** (`/sys/class/leds/{red,green,blue}/brightness`), **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
 
 ## Query Installed Apps
 
@@ -588,6 +588,229 @@ python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
 
 ---
 
+## 屏幕截图（snapshot_display + file recv）
+
+### Feature Description
+
+1. 在设备上执行 **`snapshot_display`**，通过 **`-f`** 将图片写到固定路径（默认 **`/data/local/tmp/ohhdc_screenshot.jpeg`**，须在 `/data/local/tmp` 下且扩展名为 `.jpeg` / `.png`，与系统工具校验一致）。
+2. 使用 **`hdc file recv <设备路径> <本机路径>`** 将文件拉到本地。
+3. **本机默认目录**：`.claude/skills/ohhdc/screenshot/`（仅文件名或省略路径时自动写入该目录；写绝对路径则按指定位置保存）。
+
+**注意**：`snapshot_display` 在源码中要求设备处于**开发者模式**，否则会提示 `not developer mode` 并退出。
+
+**实现与 windowId 说明**：`-i` / `--display-id` 为 **DisplayId**（整屏/某块屏），**不是** windowId；按窗口截图需见设计文档  
+[docs/snapshot_display_design.md](docs/snapshot_display_design.md)（含 layout bounds + 裁剪等可行路径）。
+
+### Quick Start – Script
+
+```bash
+# 默认：.claude/skills/ohhdc/screenshot/ohhdc_screenshot_YYYYMMDD_HHMMSS.jpeg
+python3 .claude/skills/ohhdc/ohhdc.py screenshot
+
+# 与 screenshot 等价
+python3 .claude/skills/ohhdc/ohhdc.py snapshot
+
+# 仅指定文件名 → 仍保存在 screenshot/ 下
+python3 .claude/skills/ohhdc/ohhdc.py screenshot my.jpeg
+
+# 任意本机绝对路径
+python3 .claude/skills/ohhdc/ohhdc.py screenshot /tmp/screen.jpeg
+
+# 指定显示 ID（多屏）
+python3 .claude/skills/ohhdc/ohhdc.py screenshot --display-id 0
+
+# 指定设备端路径（需仍满足 snapshot 路径/后缀规则）
+python3 .claude/skills/ohhdc/ohhdc.py snapshot --device-file /data/local/tmp/my.jpeg
+```
+
+### Usage in Conversation
+
+- “截个图保存到桌面” → `ohhdc.py screenshot ~/Desktop/screen.jpeg`
+- “用 hdc 抓屏” → `ohhdc.py snapshot`
+
+---
+
+## 指定应用截图（screenshot-app / snap-app）
+
+### Feature Description
+
+1. 根据 **别名**（`ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`）或 **完整包名 + `--ability`**，在设备上执行 **`aa start`**，等待界面就绪后执行 **`snapshot_display`**，再 **`hdc file recv`** 拉到本机。
+2. 与 **整屏截图** 一致：仍是 **Display 位图**，不是按 windowId 单独出图；多窗同屏时其它窗口可能入镜。仅裁某一窗口需 **layout bounds + 本机裁剪**（见 [docs/snapshot_display_design.md](docs/snapshot_display_design.md)）。
+3. **预设别名**（可在 `ohhdc.py` 中扩展）：
+
+| 别名 | bundleName | 默认 Ability |
+|------|------------|--------------|
+| `etsclock` | `ohos.samples.etsclock` | `MainAbility` |
+
+非别名：`ohhdc.py screenshot-app <bundleName> --ability <AbilityName>`。
+
+### Quick Start – Script
+
+```bash
+# 预设别名：先启动 etsclock，约 2s 后整屏截图 → ohhdc/screenshot/screenshot_app_etsclock_*.jpeg
+python3 .claude/skills/ohhdc/ohhdc.py screenshot-app etsclock
+
+# 等价
+python3 .claude/skills/ohhdc/ohhdc.py snap-app etsclock
+
+# 指定本机保存路径（第二参数仅 screenshot-app 使用）
+python3 .claude/skills/ohhdc/ohhdc.py screenshot-app etsclock ./clock.jpeg
+
+# 完整包名 + Ability
+python3 .claude/skills/ohhdc/ohhdc.py screenshot-app ohos.samples.etsclock -a MainAbility
+
+# 多屏、启动后等待更久再截
+python3 .claude/skills/ohhdc/ohhdc.py screenshot-app etsclock --display-id 0 --app-delay 3.5
+```
+
+### Usage in Conversation
+
+- “截一张 etsclock 的图” → `ohhdc.py screenshot-app etsclock`
+- “先打开应用再截图” → `ohhdc.py snap-app <别名>` 或包名 + `-a`
+
+### 扩展预设别名
+
+编辑 `.claude/skills/ohhdc/ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`，增加  
+`"短名": ("完整包名", "默认主Ability")`。
+
+---
+
+## 当前页面 layout（uitest dumpLayout + file recv）
+
+### Feature Description
+
+1. 在设备上执行 **`hdc shell uitest dumpLayout -p <设备端路径>`**（与 arkxtest `uitest` 命令行一致），将当前界面控件树导出为 **JSON**。
+2. 使用 **`hdc file recv`** 将 JSON 拉到本机；若内容为合法 JSON，脚本会**缩进格式化**后写回。
+3. **本机默认目录**：`.claude/skills/ohhdc/layout/`（默认文件名 `uitest_layout_YYYYMMDD_HHMMSS.json`）。
+
+设备端默认路径：`/data/local/tmp/ohhdc_uitest_layout.json`（可用 `--device-file` 修改）。
+
+可选参数与 `uitest dumpLayout` 对应：`--display-id`（`-d`）、`--bundle`（`-b`）、`--window-id`（`-w`）、`--layout-merge true|false`（`-m`）、`--layout-font`（`-a`）、`--layout-independent`（`-i`）、`--layout-extend`（`-e`）。
+
+### Quick Start – Script
+
+```bash
+# 默认写入 .claude/skills/ohhdc/layout/uitest_layout_*.json
+python3 .claude/skills/ohhdc/ohhdc.py layout
+
+# 等价
+python3 .claude/skills/ohhdc/ohhdc.py dump-layout
+
+# 指定本机文件名（仍在 layout/ 目录）
+python3 .claude/skills/ohhdc/ohhdc.py layout ui.json
+
+# 指定包名窗口、显示 ID 等
+python3 .claude/skills/ohhdc/ohhdc.py layout --bundle com.example.app --display-id 0
+```
+
+### Usage in Conversation
+
+- “导出当前页面布局 json” → `ohhdc.py layout`
+- “把 uitest layout 存到项目里” → `ohhdc.py layout /path/to/out.json`
+
+---
+
+## Wi‑Fi：wificommand 开网并连 KaiHong（wifi-kaihong）
+
+### Feature Description
+
+使用 **wificlitools** 可执行文件 **`wificommand`**（源码 `foundation/communication/wifi/wifi/test/wificlitools`，GN 目标 `wificommand`）。通过 HDC 依次执行：
+
+1. **`wifienable`** — 打开 Wi‑Fi  
+2. **`wificonnect ssid=<SSID> password=<密码>`** — 连接热点（默认 **SSID `KaiHong`**、密码 **`KaiHong@888`**）  
+3. **`wifigetstatus`** — 打印状态（可用 `--no-wifi-status` 跳过）
+
+设备侧整条命令经 **`shlex.quote`** 传给 `hdc shell`，避免主机对 `@` 等字符误解析。
+
+**镜像里是否自带 `wificommand`？**  
+`wificlitools/BUILD.gn` 中 **`ohos_executable("wificommand")` 未设置 `install_enable`**，且目标挂在 **`test/BUILD.gn`** 的 **`unittest`** 组，**默认不会打进 system 分区**。因此多数产品镜像 **没有** `/system/bin/wificommand`。
+
+**处理方式**：
+
+1. **检查**：`ohhdc.py wifi-check-wificommand`（设备 PATH、`/system/bin`、临时路径 + 本机 `out/<product>` 是否已有产物）。  
+2. **单独编译**（在源码根）：`./build.sh --product-name <产品> --build-target wificommand`  
+   产物常见路径：`out/<产品>/communication/wifi/wificommand` 或 `out/<产品>/exe.unstripped/communication/wifi/wificommand`。  
+3. **推送到设备**：`ohhdc.py wifi-push-wificommand`（按 `out` 自动查找，或第一个参数传本机二进制绝对路径），默认推到 **`/data/local/tmp/wificommand`** 并 **`chmod 755`**。  
+4. **一键推送并连 KaiHong**：`ohhdc.py wifi-kaihong --push-wificommand --ohos-src <源码根>`（或设置 **`OHOS_SRC`**）。  
+5. 已手动推送时可用 **`--wifi-device-bin /data/local/tmp/wificommand`** 指定设备侧路径。
+
+### Quick Start – Script
+
+```bash
+# 先看设备上有没有、本机 out 里有没有编过
+python3 .claude/skills/ohhdc/ohhdc.py wifi-check-wificommand --ohos-src /path/to/openharmony/src
+
+# 仅推送 wificommand（从 out/<wifi-product> 自动查找）
+python3 .claude/skills/ohhdc/ohhdc.py wifi-push-wificommand --ohos-src /path/to/src --wifi-product rk3568
+
+# 指定本机二进制路径推送（第二个参数为可选 positional target）
+python3 .claude/skills/ohhdc/ohhdc.py wifi-push-wificommand /path/to/out/rk3568/communication/wifi/wificommand
+
+# 镜像无 wificommand 时：先推送再连 KaiHong / KaiHong@888
+export OHOS_SRC=/path/to/src
+python3 .claude/skills/ohhdc/ohhdc.py wifi-kaihong --push-wificommand
+
+# 已推到默认路径时，也可显式指定设备侧二进制
+python3 .claude/skills/ohhdc/ohhdc.py wifi-kaihong --wifi-device-bin /data/local/tmp/wificommand
+
+# 覆盖 SSID / 密码
+python3 .claude/skills/ohhdc/ohhdc.py wifi-kaihong --wifi-ssid MyAP --wifi-password 'secret123'
+
+python3 .claude/skills/ohhdc/ohhdc.py wifi-kaihong --no-wifi-status
+```
+
+### Usage in Conversation
+
+- “用 wificlitools 打开 WiFi 并连 KaiHong” → 先 **`wifi-check-wificommand`**；若无则 **`wifi-push-wificommand`** 或 **`wifi-kaihong --push-wificommand`**  
+- “连公司热点 MySSID 密码 xxx” → `ohhdc.py wifi-kaihong --wifi-ssid MySSID --wifi-password xxx`
+
+### 与 wificlitools 文档
+
+命令语义与 **`wificlitools/DESIGN.md`**、`clitools.cpp` 中 **`wifienable` / `wificonnect`** 一致；开放热点可不传密码（`--wifi-password ''`），对应框架 **`KEY_MGMT_NONE`**。
+
+---
+
+## 控制 LED（sysfs brightness）
+
+### Feature Description
+
+通过 `hdc shell` 向设备写入 `/sys/class/leds/<节点名>/brightness`，**0 为关、1 为开**（与常见 GPIO LED 驱动一致）：
+
+| 口语/用途（示例板） | sysfs 节点 | 关 | 开 |
+|--------------------|------------|----|----|
+| 红灯 | `red` | `echo 0 > .../red/brightness` | `echo 1 > .../red/brightness` |
+| 蓝灯（部分板卡上对应 **green** 节点） | `green` | `echo 0 > .../green/brightness` | `echo 1 > .../green/brightness` |
+| 绿灯（部分板卡上对应 **blue** 节点） | `blue` | `echo 0 > .../blue/brightness` | `echo 1 > .../blue/brightness` |
+
+> **说明**：Linux 下 LED 的 **sysfs 目录名**（`red`/`green`/`blue`）由设备树/驱动决定，可能与外壳丝印颜色不一致；脚本使用 **节点名** `red` / `green` / `blue`，请按你的硬件实际路径选用。
+
+### Quick Start – Script
+
+```bash
+# 红灯开 / 关（等价于 hdc shell "echo 1 > /sys/class/leds/red/brightness"）
+python3 .claude/skills/ohhdc/ohhdc.py led red on
+python3 .claude/skills/ohhdc/ohhdc.py led red off
+
+# sysfs 为 green 的灯（文档中常称蓝灯）
+python3 .claude/skills/ohhdc/ohhdc.py led green on
+python3 .claude/skills/ohhdc/ohhdc.py led green off
+
+# sysfs 为 blue 的灯（文档中常称绿灯）
+python3 .claude/skills/ohhdc/ohhdc.py led blue on
+python3 .claude/skills/ohhdc/ohhdc.py led blue off
+```
+
+**参数**：`led <red|green|blue> <on|off>`。
+
+**底层命令示例**：`hdc shell "echo 1 > /sys/class/leds/blue/brightness"` 为打开 sysfs 名为 `blue` 的灯。
+
+### Usage in Conversation
+
+- “把设备红灯打开” → `ohhdc.py led red on`
+- “关掉 green 节点的 LED” → `ohhdc.py led green off`
+
+---
+
 ## 环境与通用说明
 
 ### Environment Requirements（适用于所有操作）
@@ -637,3 +860,8 @@ python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
 | 强制关闭应用 / force-stop   | Run `ohhdc.py force-stop <bundleName>` 或 `ohhdc.py stop <bundleName>`，如 `force-stop com.ohos.settings` |
 | 启动应用 / start            | Run `ohhdc.py start <bundleName> --ability <abilityName>`，如 `start com.ohos.settings --ability EntryAbility` |
 | 运行测试 / test             | Run `ohhdc.py test <bundleName> --module <moduleName> --suite <suiteName> [--case <caseName>]`，如 `test ohos.test.nativeproj46r -m entry_test -s ActsAbilityTest -c assertContain` |
+| 开关 LED（sysfs）           | Run `ohhdc.py led <red\|green\|blue> <on\|off>`，如 `led red on`、`led blue off` |
+| 屏幕截图                    | `screenshot` / `snapshot`，默认 `ohhdc/screenshot/`；可选 `--display-id`、`--device-file` |
+| 指定应用截图（先启动再截）   | `screenshot-app` / `snap-app <别名>` 或包名 + `--ability`；可选第二参数为本机路径、`--app-delay`、`--display-id` |
+| 页面 layout JSON            | `layout` / `dump-layout`，默认 `ohhdc/layout/`；可选 `--bundle`、`--window-id`、`--display-id`、`--device-file`、`--layout-*` |
+| Wi‑Fi wificommand / KaiHong | `wifi-kaihong`（可选 `--push-wificommand` + `--ohos-src` / `OHOS_SRC`）；`wifi-push-wificommand`；`wifi-check-wificommand`；默认 SSID/密码见上节 |

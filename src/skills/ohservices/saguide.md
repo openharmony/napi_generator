@@ -146,10 +146,11 @@ foundation/communication/<sa_service>/
 | SA profile | system/profile/sampletest.json |
 | init 配置  | system/etc/init/sampletest.cfg |
 
-可使用本技能脚本快速检查：
+可使用本技能脚本快速检查（另支持 `device-files`、`hilog-disk`、`dmesg`、`hidumper`、`diag` 等，见 SKILL.md「ohsa.py」小节）：
 
 ```bash
 python3 .claude/skills/ohservices/ohsa.py build
+python3 .claude/skills/ohservices/ohsa.py diag   # 设备综合诊断（需 hdc）
 ```
 
 ---
@@ -251,5 +252,21 @@ hidumper -s Sampletest
 
 ## 九、参考
 
-- 本技能 **SKILL.md**：sampletest 完整配置与修改汇总、ohsa.py 用法。
+- 本技能 **SKILL.md**：sampletest 完整配置、**bundle.json**、**init.cfg / hilog.para** 落盘与参数、**修改清单与 HiDumper 调试汇总**、**startup_guard** 说明、**Publish 日志** 与 **get 之后 binder** 排查、ohsa.py 用法。
 - 官方设计文档：`foundation/systemabilitymgr/safwk/SystemAbility_Design_And_Sample_zh.md`。
+
+---
+
+## 十、与 SKILL.md 分工（避免重复与遗漏）
+
+| 主题 | saguide.md | SKILL.md |
+|------|------------|----------|
+| 线性全流程（创建→验证） | 主干 | 流程总览表 + 「与 saguide 对照：易遗漏环节」 |
+| bundle.json、system_ability_definition.h | 目录树提及 | **专节 + 补缺表** |
+| Publish 成功/失败 | §5.3 | **专节「确认是否已向 samgr 注册」** |
+| 编译收尾 WARNING | 未展开 | **startup_guard / sampletest not in start cmd list** |
+| hilog 落盘、init.cfg、hilog.para | 仅引用 hilog/dmesg | **完整示例与参数说明** |
+| 修改文件清单、落盘 grep 命令 | §六、§八 | **大表 + 可复制命令** |
+| HiDumper binder 后续 AVC | 未写 | **§ HiDumper 小节 C** |
+
+阅读顺序建议：**先 saguide 走通一遍 → 再 SKILL 查配置与踩坑**。
