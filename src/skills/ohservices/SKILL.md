@@ -1,6 +1,6 @@
 ---
 name: ohservices
-description: "OpenHarmony SystemAbility 从创建、编译、部署到运行与 HiDumper 的完整流程。提供 sampletest（SA ID 9009）样例、全部修改清单与 HiDumper 问题点/调试方法汇总、白名单/产品/高权限/SELinux 配置、build.sh 编译、init/hilog 配置、进程与日志检查（ps/hilog/dmesg）、ohsa.py 检查脚本、HiDumper 接口实现与使用。配套 saguide.md 讲述创建、编译、调试、验证一个 SA 的全流程。"
+description: "OpenHarmony SystemAbility 从创建、编译、部署到运行与 HiDumper 的完整流程。提供 sampletest（SA ID 9009）样例、全部修改清单与 HiDumper 问题点/调试方法汇总、白名单/产品/高权限/SELinux 配置、build.sh 编译、init/hilog 配置。ohsa.py 固化：build/device/all、device-files、hilog-disk、dmesg、hidumper、diag（多设备 -t/OHSA_HDC_TARGET）。配套 saguide.md 全流程。"
 author: "Created by user"
 version: "2.1.0"
 ---
@@ -13,13 +13,31 @@ version: "2.1.0"
 
 | 阶段 | 内容 |
 |------|------|
-| 创建 | 目录结构、sa_profile、etc/init、server 代码（含 Dump） |
+| 创建 | SA ID/进程名规划、**bundle.json**、目录结构、sa_profile、etc/init、server 代码（含 Dump） |
 | 集成 | 白名单 → 产品配置 → 高权限白名单 → init 加载 /etc/init → SELinux（secon + type + init allow + *.te + service_contexts + domain_baseline） |
-| 编译 | build.sh、编译错误（ioctl→allowxperm、sadomain→domain_baseline）与修复、验证产物 |
+| 编译 | build.sh、编译错误（ioctl→allowxperm、sadomain→domain_baseline）与修复、**打包校验/startup_guard 提示**、验证产物 |
 | 部署 | 烧录镜像、重启 |
-| 运行确认 | ps（sa_main+sampletest.json 或 进程名 sampletest）、hilog、ohsa.py device |
+| 运行确认 | ps、hilog、**Publish 成功/失败日志**、ohsa.py device |
 | 日志 | hilog 实时/落盘、dmesg 查 init/execv/SELinux、init.cfg hilog 命令、hilog.para 参数 |
-| HiDumper | hidumper -ls / -s 9009 / -a "-h"，Dump() 实现 |
+| HiDumper | hidumper -ls / -s、Dump()、**samgr get**；若仍失败再查 **binder/call** 类 AVC |
+
+---
+
+## 与 saguide.md 对照：易遗漏环节（流程补缺）
+
+相对 **saguide.md** 的线性流程，本技能原文中曾偏弱或未单独成节的点如下，已在上表与下文各节补全：
+
+| 环节 | 说明 |
+|------|------|
+| **bundle.json** | 部件的 `component.build.service_group` 必须列出 sa_profile、server so、init cfg 等 GN 目标，否则仅有白名单/产品配置仍可能编不进预期产物。 |
+| **SA ID 与全局头文件** | 若希望全仓其它模块用统一宏引用 SA ID，可在 `foundation/systemabilitymgr/samgr/.../system_ability_definition.h` 增加枚举；**样例亦可仅用** `sampletest_ability_id.h` 的 `#define SAMPLE_TEST_SA_ID 9009`，但需自行保证与 profile/SELinux **不与其他 SA 冲突**。 |
+| **sa_profile 中 distributed** | 建议显式 `"distributed": false`（与 `Publish`/`AddSystemAbility` 的 `isDistributed` 一致），避免与 samgr 校验不一致。 |
+| **Publish 是否成功** | 进程在 ≠ 已注册到 samgr；需在 hilog 中确认 `Sampletest started` 或 `Publish failed`（见「设备上确认」）。 |
+| **编译收尾 startup_guard** | 可能出现 `sampletest is not in start cmd list` 等 WARNING；多为「独立 cfg 未写进主 init.cfg 的 start 列表」类规则提示，**若 build.sh 仍判成功**可按产品策略忽略或按 [startup_guard README](https://gitee.com/openharmony/developtools_integration_verification/tree/master/tools/startup_guard) 调整。 |
+| **HiDumper 除 get 外** | `allow hidumper_service sa_xxx:samgr_class { get }` 通过后，若 Dump 仍失败，在落盘/dmesg 中查 **binder `call`** 等是否仍有 `avc: denied`（hidumper_service → 业务域）。 |
+| **镜像产物路径** | 32/64 位产品可能只有 `lib` 或 `lib64`，验证时用 `ohsa.py build` 或两处都查。 |
+
+更偏「步骤清单」的叙述见同目录 **saguide.md**；本文件侧重 **配置细节、命令、问题汇总**。
 
 ---
 
@@ -64,12 +82,24 @@ foundation/communication/sampletest_service/
 
 ## 配置说明
 
+### bundle.json（部件入口）
+
+- **component.name**：与 `indep_component_whitelist.json`、产品 `component` 字段一致（如 `sampletest_service`）。
+- **component.subsystem**：与产品 json 中子系统一致（如 `communication`）。
+- **component.build.service_group**：必须包含 sa_profile、共享库、init cfg 等目标的 GN 标签（样例见仓库内 `foundation/communication/sampletest_service/bundle.json`）。漏写会导致部件未编出对应 so/cfg。
+
+### SA ID 声明（二选一或并用）
+
+- **推荐（样例做法）**：在 `sampletest_ability_id.h` 中 `#define SAMPLE_TEST_SA_ID 9009`，与 `REGISTER_SYSTEM_ABILITY_BY_ID`、profile、`service_contexts` 一致。
+- **全仓统一枚举（可选）**：在 `system_ability_definition.h` 增加正式枚举/宏，便于其他模块 `#include`；注意与官方 ID **不冲突**。
+
 ### sa_profile/9009.json
 
 - **process**：sampletest（与 cfg 中 service name 一致）
 - **name**：9009（与代码 SAMPLE_TEST_SA_ID 一致）
 - **libpath**：libsampletest_server.z.so
 - **run-on-create**：true
+- **distributed**：建议 `false`（与默认 Publish 的 non-distributed 一致）
 - **dump_level**：1（供框架/HiDumper 使用）
 
 ### etc/init/sampletest.cfg
@@ -144,6 +174,12 @@ foundation/communication/sampletest_service/
 - 全量编译耗时长，可将 **timeout 设为 6 小时**（21600000 ms）等足够时间。
 - 单编 SA 库：`./build.sh --product-name rk3568 --build-target sampletest_server`。
 
+### 打包阶段校验（startup_guard 等）
+
+- 收尾可能出现 **NO-Config-Cmds-In-Init** 等检查：例如 `sampletest is not in start cmd list`（独立 `/system/etc/init/*.cfg` 未出现在主 `init.cfg` 的 start 列表中）。
+- **若最终仍打印 `build success`**：一般为 WARNING 或与其它 NOT ALLOWED 项并存，需按产品线要求处理；与「post-fs-data 里 start sampletest」的独立 cfg 并不矛盾。
+- 需消除告警时：查阅 `developtools/integration_verification` 下 **startup_guard** 对应规则的 README。
+
 ### 验证产物
 
 编译成功后确认以下存在（路径相对于 `out/rk3568/packages/phone/system/`）：
@@ -179,20 +215,46 @@ ls out/rk3568/packages/phone/system/lib/libsampletest_server.z.so \
   hdc shell hilog | grep -i sampletest
   ```
 
-### 本技能脚本（推荐）
+### 确认是否已向 samgr 注册（Publish）
+
+- **进程在跑 ≠ 已在 samgr 注册**。必须在 hilog（实时或 `/data/log/hilog` 落盘）中确认：
+  - **`Sampletest started`**（或你自定义的成功日志）→ `Publish(this)` 成功，一般可与 hidumper `CheckSystemAbility` 联动排查。
+  - **`Publish failed`** → 优先查 `AddSystemAbilityInner selinux`、`IsDistributedSa … no Profile`、profile 是否进镜像。
+- 与 **saguide.md §5.3** 一致，建议新 SA 均在 OnStart 内打明确成功/失败日志。
+
+### 本技能脚本 ohsa.py（能力固化）
+
+脚本路径：`.claude/skills/ohservices/ohsa.py`，将技能中的**编译检查、设备进程、镜像内文件、落盘 hilog 诊断、dmesg、hidumper** 固化为子命令（与 SKILL 中排查命令一致）。
 
 ```bash
-# 检查编译产物 + 设备
+# 检查编译产物 + 设备（默认；exit 以编译产物为准）
 python3 .claude/skills/ohservices/ohsa.py all
 
-# 仅编译产物
+# 仅编译产物（out 默认 out/rk3568，可用 --product / --out）
 python3 .claude/skills/ohservices/ohsa.py build
 
-# 仅设备（进程 + hilog；进程匹配 sa_main+sampletest.json 或 进程名 sampletest）
+# 设备：进程 + 实时 hilog（可加 --no-hilog；多设备用 -t SERIAL 或 OHSA_HDC_TARGET）
 python3 .claude/skills/ohservices/ohsa.py device
+
+# 设备上 /system 下 cfg、profile、so 是否存在（对应「镜像内文件」排查）
+python3 .claude/skills/ohservices/ohsa.py device-files
+
+# 落盘 hilog（/data/log/hilog/*.gz）grep：Publish / selinux / hidumper / avc 等关键模式
+python3 .claude/skills/ohservices/ohsa.py hilog-disk
+
+# dmesg 中与 init、execv、secon、avc 相关摘要
+python3 .claude/skills/ohservices/ohsa.py dmesg
+
+# 在设备上执行 hidumper -s 9009（可用 --hidumper-name Sampletest）
+python3 .claude/skills/ohservices/ohsa.py hidumper
+
+# 综合诊断：device-files + 进程 + hilog-disk + dmesg（逐项打印，exit 0）
+python3 .claude/skills/ohservices/ohsa.py diag
 ```
 
-脚本会输出是否存在、以及匹配到的进程行；device 检查通过即表示“存在 sampletest 运行迹象”。
+常用参数：`--hilog-lines N` 控制展示行数；`-t <序列号>` 指定 hdc 设备。
+
+**说明**：`device` 检查通过 = 进程或实时 hilog 中有 sampletest 迹象；`hilog-disk` 无匹配可能表示未开落盘或无历史日志，不代表 SA 未运行。
 
 ### 手动检查命令汇总
 
@@ -336,6 +398,11 @@ allow hidumper_service sa_sampletest_server:samgr_class { get };
 
 重编镜像并烧录后，`hidumper -s 9009` / `-s Sampletest` 应能取到 binder 并调用 `Dump()`。
 
+#### C. get 已通过但 Dump 仍无输出或失败
+
+- 若已无 `CheckSystemAbilityInner selinux permission denied`，但仍无 dump 内容或事务失败，在 **hilog/dmesg** 中搜 `avc: denied` 是否与 **binder `call`**、`hidumper_service` → `sampletest_service`（或你的业务域）相关。
+- 按需补 SELinux：`allow hidumper_service sampletest_service:binder { call };`（具体以 AVC 为准，不同版本策略类名可能略有差异）。
+
 #### 小结
 
 - 先 grep 落盘 hilog：`CheckSystemAbilityInner selinux` + `9009`、`avc: denied { get }`、`AddSystemAbilityInner`、`Publish failed`、`Sampletest started`。  
@@ -345,7 +412,7 @@ allow hidumper_service sa_sampletest_server:samgr_class { get };
 
 ## 接口说明
 
-- **ISampletest**：`Ping(int32_t value)` 返回 `value + 1`。
+- **ISampletest**：`Ping(int32_t value)` 当前样例实现为**原样返回** `value`（以 `sampletest.cpp` 为准）。
 - **Dump**：供 HiDumper 调用，支持无参状态输出与 `-h` 帮助。
 - 客户端通过 `GetSystemAbility(9009)` 获取服务，经 SampletestProxy 调用 Ping()。
 
