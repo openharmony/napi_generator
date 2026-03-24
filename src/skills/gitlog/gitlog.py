@@ -22,11 +22,12 @@ Commands:
     log-first-parent <range>  - Show commits with --first-parent option
     report [tag]    - Generate git status and log reports
     branches [--all|--local|--remote] - List and count branches with categorized statistics
-    commit [message] [--no-sign] - Auto commit and push changes with Signed-off-by (max 2000 lines per commit)
+    commit [message] [--no-sign] [--skip-style-check] - Auto commit and push (runs check-style on changed C/C++ unless skipped)
     sign-commits [range] - Sign existing commits (e.g., HEAD~5..HEAD or commit1..commit2)
     push [remote] [branch] - Push commits to remote repository
     config-token [username] [token] - Configure Git credential with token
     check-copyright [--fix] [--dry-run] - Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
+    check-style [--all] - C/C++ checks: G.CNS.02, G.EXP.14-CPP, line≤120, one statement/line, if with braces
     help            - Show this help message
 """
 
@@ -105,9 +106,10 @@ Commands:
   log-first-parent <range>  Show commits with --first-parent (e.g., tag^..HEAD)
   report [tag]              Generate git-status.txt and git-log.txt files
   branches [--all|--local|--remote]  List and count branches with categorized statistics
-  commit [message] [--no-sign]  Auto commit and push changes with Signed-off-by (max 2000 lines per commit)
+  commit [message] [--no-sign] [--skip-style-check]  Auto commit and push (pre-commit C/C++ style check by default)
   push [remote] [branch]    Push commits to remote repository
   check-copyright [--fix] [--dry-run]  Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
+  check-style [--all]       C/C++: G.CNS.02, G.EXP.14-CPP, 行≤120, 单行单语句, if 必须大括号
   help                      Show this help message
 
 Examples:
@@ -126,12 +128,15 @@ Examples:
   {sys.argv[0]} check-copyright
   {sys.argv[0]} check-copyright --fix
   {sys.argv[0]} check-copyright --dry-run
+  {sys.argv[0]} check-style
+  {sys.argv[0]} check-style --all
   {sys.argv[0]} commit "Commit message"
   {sys.argv[0]} commit --no-sign "Commit without signature"
   {sys.argv[0]} sign-commits HEAD~5..HEAD
   {sys.argv[0]} sign-commits 3d5a298..HEAD
   {sys.argv[0]} config-token username your_token_here
   (Note: commit command will automatically push after committing)
+  (Note: commit runs check-style on changed .cpp/.h unless you pass --skip-style-check)
   (Note: By default, commits will include Signed-off-by line. Use --no-sign to disable it)
   {sys.argv[0]} push
   {sys.argv[0]} push origin master
@@ -911,7 +916,7 @@ def delete_large_file_incremental(file_path, message, commit_count, max_lines_pe
         return commit_count, False
 
 
-def cmd_commit(message=None, sign=True):
+def cmd_commit(message=None, sign=True, skip_style_check=False):
     """
     Auto commit and push changes with 2000 lines limit per commit
     Processes files one by one, adding and committing when limit is reached
@@ -921,12 +926,18 @@ def cmd_commit(message=None, sign=True):
     Args:
         message: Optional commit message. If None, will generate automatically
         sign: Whether to add Signed-off-by line to commits (default: True，即默认带 -s)
+        skip_style_check: If False (default), run check-style on changed C/C++ before any commit
     
     Returns:
         Exit code (0 if both commit and push succeed, non-zero if either fails)
     """
     MAX_LINES_PER_COMMIT = 2000
     MAX_LINES_PER_PART = 1898  # For splitting large files
+
+    if not skip_style_check:
+        style_rc = cmd_check_style(scan_all=False)
+        if style_rc != 0:
+            return style_rc
     
     # 默认 sign=True，为提交添加 Signed-off-by（git commit -s）
     if sign:
@@ -1408,6 +1419,227 @@ def find_source_files(root_dir='.'):
                 source_files.append(file_path)
     
     return sorted(source_files)
+
+
+# --- OpenHarmony-oriented C/C++ style (G.CNS.02, G.EXP.14-CPP, layout/brace rules) ---
+
+STYLE_CPP_SUFFIXES = ('.cpp', '.cc', '.cxx', '.hpp', '.h', '.hh')
+STYLE_MAX_LINE_LENGTH = 120
+
+# G.CNS.02: NAPI callback argc / args[] stack array size should not use raw literals ≥ 2
+_RE_NAPI_ARGC_LITERAL = re.compile(r'\bsize_t\s+argc\s*=\s*(\d+)\s*;')
+_RE_NAPI_ARGS_STACK = re.compile(r'\bnapi_value\s+args\[\s*(\d+)\s*\]\s*;')
+
+
+def _style_strip_line_comment(line):
+    if '//' in line:
+        return line.split('//', 1)[0]
+    return line
+
+
+def _style_top_level_semicolon_count(s):
+    """Count semicolons at nesting depth 0 (skip for/while/if parens and braced blocks)."""
+    depth = 0
+    count = 0
+    for c in s:
+        if c in '([{':
+            depth += 1
+        elif c in ')]}':
+            if depth > 0:
+                depth -= 1
+        elif c == ';' and depth == 0:
+            count += 1
+    return count
+
+
+def _style_if_missing_brace_issues(lines):
+    """
+    Flag `if` whose body is not wrapped in `{` } (same line or next non-empty line).
+    Skips lines that are clearly `else if` continuation (handled when body of prior if).
+    """
+    issues = []
+    n = len(lines)
+    i = 0
+    while i < n:
+        raw = lines[i]
+        code = _style_strip_line_comment(raw).rstrip()
+        if not code.strip():
+            i += 1
+            continue
+        m = re.match(r'^\s*if\s*\(', code)
+        if not m:
+            i += 1
+            continue
+        if re.search(r'\bif\s+constexpr\s*\(', code):
+            i += 1
+            continue
+        open_idx = m.end() - 1
+        depth = 0
+        j = open_idx
+        close_idx = -1
+        while j < len(code):
+            c = code[j]
+            if c == '(':
+                depth += 1
+            elif c == ')':
+                depth -= 1
+                if depth == 0:
+                    close_idx = j
+                    break
+            j += 1
+        if close_idx < 0:
+            i += 1
+            continue
+        after = code[close_idx + 1:].strip()
+        lineno = i + 1
+        if after.startswith('{'):
+            i += 1
+            continue
+        if after != '':
+            issues.append((lineno, 'BRACE', 'if 语句体应使用大括号'))
+            i += 1
+            continue
+        k = i + 1
+        while k < n:
+            next_code = _style_strip_line_comment(lines[k]).strip()
+            if not next_code:
+                k += 1
+                continue
+            if next_code.startswith('{'):
+                break
+            issues.append((lineno, 'BRACE', 'if 语句体应使用大括号'))
+            break
+        i += 1
+    return issues
+
+
+def _style_line_has_c_style_cast(code):
+    """G.EXP.14-CPP: flag common (T)expr C casts in C++ sources."""
+    if not code or code.isspace():
+        return False
+    # Allowlist: macro / attribute noise
+    if re.search(r'__attribute__\s*\(\(', code):
+        return False
+    # Typical C-style casts to replace with static_cast / reinterpret_cast
+    cast_type = (
+        r'(?:const\s+)?(?:volatile\s+)?'
+        r'(?:void\s*\*|size_t|ssize_t|intptr_t|uintptr_t|ptrdiff_t|'
+        r'u?int(?:8|16|32|64)_t|'
+        r'(?:unsigned\s+)?(?:char|short|int|long|long\s+long)\b|'
+        r'float|double|bool)'
+    )
+    # (type) where type matches above, followed by expression start
+    if re.search(r'\(\s*' + cast_type + r'\s*\)\s*[\w(]', code):
+        return True
+    # ((void*)0) and (void*)0
+    if re.search(r'\(\s*\(?\s*void\s*\*\s*\)?\s*0\s*\)', code):
+        return True
+    return False
+
+
+def check_cpp_style_file(file_path):
+    """
+    Returns list of (line_number, rule_id, message).
+    """
+    issues = []
+    try:
+        text = file_path.read_text(encoding='utf-8', errors='replace')
+    except OSError as e:
+        return [(0, 'IO', f'无法读取: {file_path}: {e}')]
+    lines = text.splitlines()
+    for lineno, line in enumerate(lines, 1):
+        stripped = line.strip()
+        if not stripped or stripped.startswith('#'):
+            continue
+        raw_line = line.rstrip('\r\n')
+        if len(raw_line) > STYLE_MAX_LINE_LENGTH:
+            code0 = _style_strip_line_comment(line)
+            st0 = code0.strip()
+            if not (st0.startswith('//') or st0.startswith('*')):
+                issues.append(
+                    (lineno, 'LINE-LENGTH',
+                     f'行宽 {len(raw_line)} 超过 {STYLE_MAX_LINE_LENGTH}，请换行或缩短')
+                )
+        code = _style_strip_line_comment(line)
+        if not code.strip():
+            continue
+        if _style_top_level_semicolon_count(code) > 1:
+            st = code.lstrip()
+            if not (st.startswith('for ') or st.startswith('for(')):
+                issues.append((lineno, 'ONE-STATEMENT', '一行只应有一条语句，请拆分或多行'))
+        m = _RE_NAPI_ARGC_LITERAL.search(code)
+        if m:
+            n = int(m.group(1))
+            if n >= 2:
+                issues.append((lineno, 'G.CNS.02', f'不要用难以理解的 argc 字面量 {n}，请使用 constexpr 命名常量'))
+        m = _RE_NAPI_ARGS_STACK.search(code)
+        if m:
+            n = int(m.group(1))
+            if n >= 2:
+                issues.append((lineno, 'G.CNS.02', f'napi_value args[{n}] 不要用魔法数字作栈数组长度，请用命名常量'))
+        if _style_line_has_c_style_cast(code):
+            issues.append((lineno, 'G.EXP.14-CPP', '不要使用 C 风格强制转换，请使用 static_cast / reinterpret_cast / const_cast'))
+    issues.extend(_style_if_missing_brace_issues(lines))
+    issues.sort(key=lambda x: (x[0], x[1]))
+    return issues
+
+
+def _style_collect_paths_from_changes():
+    """Paths to existing C/C++ files among git changes (modified / untracked)."""
+    paths = []
+    for file_path, status in get_changed_files():
+        if status == 'deleted':
+            continue
+        if not file_path.endswith(STYLE_CPP_SUFFIXES):
+            continue
+        p = Path(file_path)
+        if p.is_file():
+            paths.append(p.resolve())
+    return paths
+
+
+def cmd_check_style(scan_all=False):
+    """
+    Run C/C++ style heuristics: G.CNS.02, G.EXP.14-CPP, LINE-LENGTH (≤120),
+    ONE-STATEMENT (depth-0 semicolons), BRACE (if 必须带大括号).
+
+    Args:
+        scan_all: If True, scan repo tree (same roots as copyright); else only changed files.
+    """
+    print('=== C/C++ Style Check (G.CNS.02, G.EXP.14-CPP, 行宽/单语句/if 大括号) ===')
+    print()
+    if scan_all:
+        print('范围: 仓库内全部源文件（排除 third_party 等目录）')
+        roots = find_source_files()
+        paths = [p for p in roots if p.suffix in STYLE_CPP_SUFFIXES]
+    else:
+        print('范围: 当前工作区已变更的 .cpp/.h 等文件')
+        paths = _style_collect_paths_from_changes()
+    if not paths:
+        print('✓ 无待检查的 C/C++ 文件')
+        print()
+        return 0
+    total_issues = 0
+    for p in sorted(set(paths)):
+        rel = p
+        try:
+            rel = p.relative_to(Path.cwd())
+        except ValueError:
+            rel = p
+        found = check_cpp_style_file(p)
+        if found:
+            total_issues += len(found)
+            print(f'❌ {rel}')
+            for ln, rule, msg in found:
+                print(f'   行 {ln}: [{rule}] {msg}')
+            print()
+    if total_issues:
+        print(f'共 {total_issues} 处问题。修复后再提交，或使用 commit --skip-style-check 跳过（不推荐）。')
+        print()
+        return 1
+    print(f'✓ 已检查 {len(paths)} 个文件，未发现问题')
+    print()
+    return 0
 
 
 def cmd_check_copyright(dry_run=False, fix=False):
@@ -1956,7 +2188,8 @@ def main():
     elif command == 'commit':
         message = None
         sign = True  # 默认启用签名
-        args = sys.argv[2:] if len(sys.argv) > 2 else []
+        skip_style_check = '--skip-style-check' in sys.argv
+        args = [a for a in (sys.argv[2:] if len(sys.argv) > 2 else []) if a != '--skip-style-check']
         
         # Parse arguments
         if '--sign' in args:
@@ -1970,7 +2203,7 @@ def main():
             # Join remaining arguments as commit message
             message = ' '.join(args)
         
-        return cmd_commit(message, sign)
+        return cmd_commit(message, sign, skip_style_check)
     
     elif command == 'push':
         remote = None
@@ -2000,6 +2233,10 @@ def main():
         dry_run = '--dry-run' in sys.argv
         fix = '--fix' in sys.argv
         return cmd_check_copyright(dry_run=dry_run, fix=fix)
+    
+    elif command == 'check-style':
+        scan_all = '--all' in sys.argv
+        return cmd_check_style(scan_all=scan_all)
     
     elif command in ['help', '--help', '-h']:
         show_help()
