@@ -21,9 +21,12 @@
 #include <cstring>
 
 namespace {
-constexpr size_t kNapiArgCountOne = 1;
-constexpr size_t kNapiArgCountTwo = 2;
-constexpr size_t kNapiArgCountThree = 3;
+constexpr size_t K_NAPI_ARG_COUNT_ONE = 1;
+constexpr size_t K_NAPI_ARG_COUNT_TWO = 2;
+constexpr size_t K_NAPI_ARG_COUNT_THREE = 3;
+constexpr size_t K_NAPI_ARG_INDEX_0 = 0;
+constexpr size_t K_NAPI_ARG_INDEX_1 = 1;
+constexpr size_t K_NAPI_ARG_INDEX_2 = 2;
 } // namespace
 
 #define NAPI_METHOD_ENTRY(utf8name, callback) \
@@ -85,13 +88,13 @@ static napi_value CjsonVersion(napi_env env, napi_callback_info info)
 
 static napi_value CjsonParse(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[0], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_0], nullptr, 0, &len);
     std::string str(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[0], &str[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_0], &str[0], len + 1, &len);
     cJSON* root = cJSON_Parse(str.c_str());
     int64_t id = StoreHandle(root);
     napi_value result;
@@ -101,11 +104,11 @@ static napi_value CjsonParse(napi_env env, napi_callback_info info)
 
 static napi_value CjsonPrint(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     if (!item) {
         napi_value nullVal;
@@ -126,11 +129,11 @@ static napi_value CjsonPrint(napi_env env, napi_callback_info info)
 
 static napi_value CjsonPrintUnformatted(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     if (!item) {
         napi_value nullVal;
@@ -151,11 +154,11 @@ static napi_value CjsonPrintUnformatted(napi_env env, napi_callback_info info)
 
 static napi_value CjsonDelete(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     RemoveHandle(id);
     napi_value undef;
     napi_get_undefined(env, &undef);
@@ -164,15 +167,15 @@ static napi_value CjsonDelete(napi_env env, napi_callback_info info)
 
 static napi_value CjsonGetObjectItem(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
     cJSON* obj = GetHandle(id);
     cJSON* item = obj ? cJSON_GetObjectItem(obj, key.c_str()) : nullptr;
     int64_t outId = StoreBorrowed(item);
@@ -183,13 +186,13 @@ static napi_value CjsonGetObjectItem(napi_env env, napi_callback_info info)
 
 static napi_value CjsonGetArrayItem(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     int32_t index = 0;
-    napi_get_value_int32(env, args[1], &index);
+    napi_get_value_int32(env, args[K_NAPI_ARG_INDEX_1], &index);
     cJSON* arr = GetHandle(id);
     cJSON* item = arr ? cJSON_GetArrayItem(arr, index) : nullptr;
     int64_t outId = StoreBorrowed(item);
@@ -200,11 +203,11 @@ static napi_value CjsonGetArrayItem(napi_env env, napi_callback_info info)
 
 static napi_value CjsonGetArraySize(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* arr = GetHandle(id);
     int size = arr ? cJSON_GetArraySize(arr) : 0;
     napi_value result;
@@ -214,11 +217,11 @@ static napi_value CjsonGetArraySize(napi_env env, napi_callback_info info)
 
 static napi_value CjsonGetStringValue(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     char* s = item ? cJSON_GetStringValue(item) : nullptr;
     if (!s) {
@@ -233,11 +236,11 @@ static napi_value CjsonGetStringValue(napi_env env, napi_callback_info info)
 
 static napi_value CjsonGetNumberValue(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     double v = item ? cJSON_GetNumberValue(item) : 0.0;
     napi_value result;
@@ -247,11 +250,11 @@ static napi_value CjsonGetNumberValue(napi_env env, napi_callback_info info)
 
 static napi_value CjsonIsObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     bool b = item ? cJSON_IsObject(item) : false;
     napi_value result;
@@ -261,11 +264,11 @@ static napi_value CjsonIsObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonIsArray(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     bool b = item ? cJSON_IsArray(item) : false;
     napi_value result;
@@ -275,11 +278,11 @@ static napi_value CjsonIsArray(napi_env env, napi_callback_info info)
 
 static napi_value CjsonIsString(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     bool b = item ? cJSON_IsString(item) : false;
     napi_value result;
@@ -289,11 +292,11 @@ static napi_value CjsonIsString(napi_env env, napi_callback_info info)
 
 static napi_value CjsonIsNumber(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     bool b = item ? cJSON_IsNumber(item) : false;
     napi_value result;
@@ -303,11 +306,11 @@ static napi_value CjsonIsNumber(napi_env env, napi_callback_info info)
 
 static napi_value CjsonIsNull(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     bool b = item ? cJSON_IsNull(item) : false;
     napi_value result;
@@ -335,13 +338,13 @@ static napi_value CjsonCreateArray(napi_env env, napi_callback_info info)
 
 static napi_value CjsonCreateString(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[0], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_0], nullptr, 0, &len);
     std::string str(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[0], &str[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_0], &str[0], len + 1, &len);
     cJSON* item = cJSON_CreateString(str.c_str());
     int64_t id = StoreHandle(item);
     napi_value result;
@@ -351,11 +354,11 @@ static napi_value CjsonCreateString(napi_env env, napi_callback_info info)
 
 static napi_value CjsonCreateNumber(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     double num = 0;
-    napi_get_value_double(env, args[0], &num);
+    napi_get_value_double(env, args[K_NAPI_ARG_INDEX_0], &num);
     cJSON* item = cJSON_CreateNumber(num);
     int64_t id = StoreHandle(item);
     napi_value result;
@@ -365,11 +368,11 @@ static napi_value CjsonCreateNumber(napi_env env, napi_callback_info info)
 
 static napi_value CjsonCreateBool(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     bool b = false;
-    napi_get_value_bool(env, args[0], &b);
+    napi_get_value_bool(env, args[K_NAPI_ARG_INDEX_0], &b);
     cJSON* item = cJSON_CreateBool(b ? 1 : 0);
     int64_t id = StoreHandle(item);
     napi_value result;
@@ -388,16 +391,17 @@ static napi_value CjsonCreateNull(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddItemToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t objId = 0, itemId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    int64_t objId = 0;
+    int64_t itemId = 0;
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
-    napi_get_value_int64(env, args[2], &itemId);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_2], &itemId);
     cJSON* obj = GetHandle(objId);
     cJSON* item = GetHandle(itemId);
     cJSON_bool ok = (obj && item) ? cJSON_AddItemToObject(obj, key.c_str(), item) : 0;
@@ -411,12 +415,13 @@ static napi_value CjsonAddItemToObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddItemToArray(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t arrId = 0, itemId = 0;
-    napi_get_value_int64(env, args[0], &arrId);
-    napi_get_value_int64(env, args[1], &itemId);
+    int64_t arrId = 0;
+    int64_t itemId = 0;
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &arrId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_1], &itemId);
     cJSON* arr = GetHandle(arrId);
     cJSON* item = GetHandle(itemId);
     cJSON_bool ok = (arr && item) ? cJSON_AddItemToArray(arr, item) : 0;
@@ -430,15 +435,15 @@ static napi_value CjsonAddItemToArray(napi_env env, napi_callback_info info)
 
 static napi_value CjsonParseWithLength(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[0], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_0], nullptr, 0, &len);
     std::string str(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[0], &str[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_0], &str[0], len + 1, &len);
     uint32_t uLen = 0;
-    napi_get_value_uint32(env, args[1], &uLen);
+    napi_get_value_uint32(env, args[K_NAPI_ARG_INDEX_1], &uLen);
     size_t bufLen = (uLen > 0) ? static_cast<size_t>(uLen) : len;
     cJSON* root = cJSON_ParseWithLength(str.c_str(), bufLen);
     int64_t id = StoreHandle(root);
@@ -462,15 +467,15 @@ static napi_value CjsonGetErrorPtr(napi_env env, napi_callback_info info)
 
 static napi_value CjsonHasObjectItem(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
     cJSON* obj = GetHandle(id);
     cJSON_bool b = obj ? cJSON_HasObjectItem(obj, key.c_str()) : 0;
     napi_value result;
@@ -480,15 +485,15 @@ static napi_value CjsonHasObjectItem(napi_env env, napi_callback_info info)
 
 static napi_value CjsonGetObjectItemCaseSensitive(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
     cJSON* obj = GetHandle(id);
     cJSON* item = obj ? cJSON_GetObjectItemCaseSensitive(obj, key.c_str()) : nullptr;
     int64_t outId = StoreBorrowed(item);
@@ -499,11 +504,11 @@ static napi_value CjsonGetObjectItemCaseSensitive(napi_env env, napi_callback_in
 
 static napi_value CjsonIsInvalid(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     cJSON_bool b = item ? cJSON_IsInvalid(item) : 1;
     napi_value result;
@@ -513,11 +518,11 @@ static napi_value CjsonIsInvalid(napi_env env, napi_callback_info info)
 
 static napi_value CjsonIsFalse(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     bool b = item ? cJSON_IsFalse(item) : false;
     napi_value result;
@@ -527,11 +532,11 @@ static napi_value CjsonIsFalse(napi_env env, napi_callback_info info)
 
 static napi_value CjsonIsTrue(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     bool b = item ? cJSON_IsTrue(item) : false;
     napi_value result;
@@ -541,11 +546,11 @@ static napi_value CjsonIsTrue(napi_env env, napi_callback_info info)
 
 static napi_value CjsonIsBool(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     bool b = item ? cJSON_IsBool(item) : false;
     napi_value result;
@@ -555,11 +560,11 @@ static napi_value CjsonIsBool(napi_env env, napi_callback_info info)
 
 static napi_value CjsonIsRaw(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     cJSON* item = GetHandle(id);
     bool b = item ? cJSON_IsRaw(item) : false;
     napi_value result;
@@ -587,13 +592,13 @@ static napi_value CjsonCreateFalse(napi_env env, napi_callback_info info)
 
 static napi_value CjsonCreateRaw(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[0], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_0], nullptr, 0, &len);
     std::string str(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[0], &str[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_0], &str[0], len + 1, &len);
     cJSON* item = cJSON_CreateRaw(str.c_str());
     int64_t id = StoreHandle(item);
     napi_value result;
@@ -603,15 +608,15 @@ static napi_value CjsonCreateRaw(napi_env env, napi_callback_info info)
 
 static napi_value CjsonPrintBuffered(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     int32_t prebuffer = 256;
-    napi_get_value_int32(env, args[1], &prebuffer);
+    napi_get_value_int32(env, args[K_NAPI_ARG_INDEX_1], &prebuffer);
     bool fmt = false;
-    napi_get_value_bool(env, args[2], &fmt);
+    napi_get_value_bool(env, args[K_NAPI_ARG_INDEX_2], &fmt);
     cJSON* item = GetHandle(id);
     if (!item) {
         napi_value nullVal;
@@ -632,16 +637,17 @@ static napi_value CjsonPrintBuffered(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddItemToObjectCS(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t objId = 0, itemId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    int64_t objId = 0;
+    int64_t itemId = 0;
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
-    napi_get_value_int64(env, args[2], &itemId);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_2], &itemId);
     cJSON* obj = GetHandle(objId);
     cJSON* item = GetHandle(itemId);
     cJSON_bool ok = (obj && item) ? cJSON_AddItemToObjectCS(obj, key.c_str(), item) : 0;
@@ -655,12 +661,13 @@ static napi_value CjsonAddItemToObjectCS(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddItemReferenceToArray(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t arrId = 0, itemId = 0;
-    napi_get_value_int64(env, args[0], &arrId);
-    napi_get_value_int64(env, args[1], &itemId);
+    int64_t arrId = 0;
+    int64_t itemId = 0;
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &arrId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_1], &itemId);
     cJSON* arr = GetHandle(arrId);
     cJSON* item = GetHandle(itemId);
     cJSON_bool ok = (arr && item) ? cJSON_AddItemReferenceToArray(arr, item) : 0;
@@ -671,16 +678,17 @@ static napi_value CjsonAddItemReferenceToArray(napi_env env, napi_callback_info 
 
 static napi_value CjsonAddItemReferenceToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t objId = 0, itemId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    int64_t objId = 0;
+    int64_t itemId = 0;
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
-    napi_get_value_int64(env, args[2], &itemId);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_2], &itemId);
     cJSON* obj = GetHandle(objId);
     cJSON* item = GetHandle(itemId);
     cJSON_bool ok = (obj && item) ? cJSON_AddItemReferenceToObject(obj, key.c_str(), item) : 0;
@@ -691,12 +699,13 @@ static napi_value CjsonAddItemReferenceToObject(napi_env env, napi_callback_info
 
 static napi_value CjsonDetachItemViaPointer(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t parentId = 0, itemId = 0;
-    napi_get_value_int64(env, args[0], &parentId);
-    napi_get_value_int64(env, args[1], &itemId);
+    int64_t parentId = 0;
+    int64_t itemId = 0;
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &parentId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_1], &itemId);
     cJSON* parent = GetHandle(parentId);
     cJSON* item = GetHandle(itemId);
     cJSON* detached = (parent && item) ? cJSON_DetachItemViaPointer(parent, item) : nullptr;
@@ -714,13 +723,13 @@ static napi_value CjsonDetachItemViaPointer(napi_env env, napi_callback_info inf
 
 static napi_value CjsonDetachItemFromArray(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t arrId = 0;
     int32_t which = 0;
-    napi_get_value_int64(env, args[0], &arrId);
-    napi_get_value_int32(env, args[1], &which);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &arrId);
+    napi_get_value_int32(env, args[K_NAPI_ARG_INDEX_1], &which);
     cJSON* arr = GetHandle(arrId);
     cJSON* detached = arr ? cJSON_DetachItemFromArray(arr, which) : nullptr;
     int64_t outId = detached ? StoreHandle(detached) : 0;
@@ -731,13 +740,13 @@ static napi_value CjsonDetachItemFromArray(napi_env env, napi_callback_info info
 
 static napi_value CjsonDeleteItemFromArray(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t arrId = 0;
     int32_t which = 0;
-    napi_get_value_int64(env, args[0], &arrId);
-    napi_get_value_int32(env, args[1], &which);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &arrId);
+    napi_get_value_int32(env, args[K_NAPI_ARG_INDEX_1], &which);
     cJSON* arr = GetHandle(arrId);
     if (arr) {
         cJSON_DeleteItemFromArray(arr, which);
@@ -749,15 +758,15 @@ static napi_value CjsonDeleteItemFromArray(napi_env env, napi_callback_info info
 
 static napi_value CjsonDetachItemFromObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
     cJSON* obj = GetHandle(objId);
     cJSON* detached = obj ? cJSON_DetachItemFromObject(obj, key.c_str()) : nullptr;
     int64_t outId = detached ? StoreHandle(detached) : 0;
@@ -768,15 +777,15 @@ static napi_value CjsonDetachItemFromObject(napi_env env, napi_callback_info inf
 
 static napi_value CjsonDetachItemFromObjectCaseSensitive(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
     cJSON* obj = GetHandle(objId);
     cJSON* detached = obj ? cJSON_DetachItemFromObjectCaseSensitive(obj, key.c_str()) : nullptr;
     int64_t outId = detached ? StoreHandle(detached) : 0;
@@ -787,15 +796,15 @@ static napi_value CjsonDetachItemFromObjectCaseSensitive(napi_env env, napi_call
 
 static napi_value CjsonDeleteItemFromObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
     cJSON* obj = GetHandle(objId);
     if (obj) {
         cJSON_DeleteItemFromObject(obj, key.c_str());
@@ -807,15 +816,15 @@ static napi_value CjsonDeleteItemFromObject(napi_env env, napi_callback_info inf
 
 static napi_value CjsonDeleteItemFromObjectCaseSensitive(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
     cJSON* obj = GetHandle(objId);
     if (obj) {
         cJSON_DeleteItemFromObjectCaseSensitive(obj, key.c_str());
@@ -827,14 +836,15 @@ static napi_value CjsonDeleteItemFromObjectCaseSensitive(napi_env env, napi_call
 
 static napi_value CjsonInsertItemInArray(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t arrId = 0, itemId = 0;
+    int64_t arrId = 0;
+    int64_t itemId = 0;
     int32_t which = 0;
-    napi_get_value_int64(env, args[0], &arrId);
-    napi_get_value_int32(env, args[1], &which);
-    napi_get_value_int64(env, args[2], &itemId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &arrId);
+    napi_get_value_int32(env, args[K_NAPI_ARG_INDEX_1], &which);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_2], &itemId);
     cJSON* arr = GetHandle(arrId);
     cJSON* item = GetHandle(itemId);
     cJSON_bool ok = (arr && item) ? cJSON_InsertItemInArray(arr, which, item) : 0;
@@ -848,13 +858,15 @@ static napi_value CjsonInsertItemInArray(napi_env env, napi_callback_info info)
 
 static napi_value CjsonReplaceItemViaPointer(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t parentId = 0, itemId = 0, replacementId = 0;
-    napi_get_value_int64(env, args[0], &parentId);
-    napi_get_value_int64(env, args[1], &itemId);
-    napi_get_value_int64(env, args[2], &replacementId);
+    int64_t parentId = 0;
+    int64_t itemId = 0;
+    int64_t replacementId = 0;
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &parentId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_1], &itemId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_2], &replacementId);
     cJSON* parent = GetHandle(parentId);
     cJSON* item = GetHandle(itemId);
     cJSON* replacement = GetHandle(replacementId);
@@ -873,14 +885,15 @@ static napi_value CjsonReplaceItemViaPointer(napi_env env, napi_callback_info in
 
 static napi_value CjsonReplaceItemInArray(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t arrId = 0, itemId = 0;
+    int64_t arrId = 0;
+    int64_t itemId = 0;
     int32_t which = 0;
-    napi_get_value_int64(env, args[0], &arrId);
-    napi_get_value_int32(env, args[1], &which);
-    napi_get_value_int64(env, args[2], &itemId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &arrId);
+    napi_get_value_int32(env, args[K_NAPI_ARG_INDEX_1], &which);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_2], &itemId);
     cJSON* arr = GetHandle(arrId);
     cJSON* item = GetHandle(itemId);
     cJSON_bool ok = (arr && item) ? cJSON_ReplaceItemInArray(arr, which, item) : 0;
@@ -894,16 +907,17 @@ static napi_value CjsonReplaceItemInArray(napi_env env, napi_callback_info info)
 
 static napi_value CjsonReplaceItemInObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t objId = 0, itemId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    int64_t objId = 0;
+    int64_t itemId = 0;
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
-    napi_get_value_int64(env, args[2], &itemId);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_2], &itemId);
     cJSON* obj = GetHandle(objId);
     cJSON* item = GetHandle(itemId);
     cJSON_bool ok = (obj && item) ? cJSON_ReplaceItemInObject(obj, key.c_str(), item) : 0;
@@ -917,16 +931,17 @@ static napi_value CjsonReplaceItemInObject(napi_env env, napi_callback_info info
 
 static napi_value CjsonReplaceItemInObjectCaseSensitive(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t objId = 0, itemId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    int64_t objId = 0;
+    int64_t itemId = 0;
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string key(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &key[0], len + 1, &len);
-    napi_get_value_int64(env, args[2], &itemId);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &key[0], len + 1, &len);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_2], &itemId);
     cJSON* obj = GetHandle(objId);
     cJSON* item = GetHandle(itemId);
     cJSON_bool ok = (obj && item) ? cJSON_ReplaceItemInObjectCaseSensitive(obj, key.c_str(), item) : 0;
@@ -940,13 +955,13 @@ static napi_value CjsonReplaceItemInObjectCaseSensitive(napi_env env, napi_callb
 
 static napi_value CjsonDuplicate(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
     bool recurse = true;
-    napi_get_value_int64(env, args[0], &id);
-    napi_get_value_bool(env, args[1], &recurse);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
+    napi_get_value_bool(env, args[K_NAPI_ARG_INDEX_1], &recurse);
     cJSON* item = GetHandle(id);
     cJSON* dup = item ? cJSON_Duplicate(item, recurse ? 1 : 0) : nullptr;
     int64_t outId = dup ? StoreHandle(dup) : 0;
@@ -957,14 +972,15 @@ static napi_value CjsonDuplicate(napi_env env, napi_callback_info info)
 
 static napi_value CjsonCompare(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    int64_t idA = 0, idB = 0;
+    int64_t idA = 0;
+    int64_t idB = 0;
     bool caseSensitive = false;
-    napi_get_value_int64(env, args[0], &idA);
-    napi_get_value_int64(env, args[1], &idB);
-    napi_get_value_bool(env, args[2], &caseSensitive);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &idA);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_1], &idB);
+    napi_get_value_bool(env, args[K_NAPI_ARG_INDEX_2], &caseSensitive);
     cJSON* a = GetHandle(idA);
     cJSON* b = GetHandle(idB);
     cJSON_bool ok = (a && b) ? cJSON_Compare(a, b, caseSensitive ? 1 : 0) : 0;
@@ -975,13 +991,13 @@ static napi_value CjsonCompare(napi_env env, napi_callback_info info)
 
 static napi_value CjsonMinify(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[0], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_0], nullptr, 0, &len);
     std::string str(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[0], &str[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_0], &str[0], len + 1, &len);
     cJSON_Minify(&str[0]);
     napi_value result;
     napi_create_string_utf8(env, str.c_str(), NAPI_AUTO_LENGTH, &result);
@@ -990,15 +1006,15 @@ static napi_value CjsonMinify(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddNullToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string name(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &name[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &name[0], len + 1, &len);
     cJSON* obj = GetHandle(objId);
     cJSON* added = obj ? cJSON_AddNullToObject(obj, name.c_str()) : nullptr;
     int64_t outId = added ? StoreBorrowed(added) : 0;
@@ -1009,15 +1025,15 @@ static napi_value CjsonAddNullToObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddTrueToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string name(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &name[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &name[0], len + 1, &len);
     cJSON* obj = GetHandle(objId);
     cJSON* added = obj ? cJSON_AddTrueToObject(obj, name.c_str()) : nullptr;
     int64_t outId = added ? StoreBorrowed(added) : 0;
@@ -1028,15 +1044,15 @@ static napi_value CjsonAddTrueToObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddFalseToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string name(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &name[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &name[0], len + 1, &len);
     cJSON* obj = GetHandle(objId);
     cJSON* added = obj ? cJSON_AddFalseToObject(obj, name.c_str()) : nullptr;
     int64_t outId = added ? StoreBorrowed(added) : 0;
@@ -1047,17 +1063,17 @@ static napi_value CjsonAddFalseToObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddBoolToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string name(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &name[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &name[0], len + 1, &len);
     bool b = false;
-    napi_get_value_bool(env, args[2], &b);
+    napi_get_value_bool(env, args[K_NAPI_ARG_INDEX_2], &b);
     cJSON* obj = GetHandle(objId);
     cJSON* added = obj ? cJSON_AddBoolToObject(obj, name.c_str(), b ? 1 : 0) : nullptr;
     int64_t outId = added ? StoreBorrowed(added) : 0;
@@ -1068,17 +1084,17 @@ static napi_value CjsonAddBoolToObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddNumberToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string name(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &name[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &name[0], len + 1, &len);
     double num = 0;
-    napi_get_value_double(env, args[2], &num);
+    napi_get_value_double(env, args[K_NAPI_ARG_INDEX_2], &num);
     cJSON* obj = GetHandle(objId);
     cJSON* added = obj ? cJSON_AddNumberToObject(obj, name.c_str(), num) : nullptr;
     int64_t outId = added ? StoreBorrowed(added) : 0;
@@ -1089,19 +1105,19 @@ static napi_value CjsonAddNumberToObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddStringToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t nlen = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &nlen);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &nlen);
     std::string name(nlen + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &name[0], nlen + 1, &nlen);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &name[0], nlen + 1, &nlen);
     size_t vlen = 0;
-    napi_get_value_string_utf8(env, args[2], nullptr, 0, &vlen);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_2], nullptr, 0, &vlen);
     std::string val(vlen + 1, '\0');
-    napi_get_value_string_utf8(env, args[2], &val[0], vlen + 1, &vlen);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_2], &val[0], vlen + 1, &vlen);
     cJSON* obj = GetHandle(objId);
     cJSON* added = obj ? cJSON_AddStringToObject(obj, name.c_str(), val.c_str()) : nullptr;
     int64_t outId = added ? StoreBorrowed(added) : 0;
@@ -1112,19 +1128,19 @@ static napi_value CjsonAddStringToObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddRawToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountThree;
-    napi_value args[kNapiArgCountThree];
+    size_t argc = K_NAPI_ARG_COUNT_THREE;
+    napi_value args[K_NAPI_ARG_COUNT_THREE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t nlen = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &nlen);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &nlen);
     std::string name(nlen + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &name[0], nlen + 1, &nlen);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &name[0], nlen + 1, &nlen);
     size_t vlen = 0;
-    napi_get_value_string_utf8(env, args[2], nullptr, 0, &vlen);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_2], nullptr, 0, &vlen);
     std::string raw(vlen + 1, '\0');
-    napi_get_value_string_utf8(env, args[2], &raw[0], vlen + 1, &vlen);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_2], &raw[0], vlen + 1, &vlen);
     cJSON* obj = GetHandle(objId);
     cJSON* added = obj ? cJSON_AddRawToObject(obj, name.c_str(), raw.c_str()) : nullptr;
     int64_t outId = added ? StoreBorrowed(added) : 0;
@@ -1135,15 +1151,15 @@ static napi_value CjsonAddRawToObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddObjectToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string name(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &name[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &name[0], len + 1, &len);
     cJSON* obj = GetHandle(objId);
     cJSON* added = obj ? cJSON_AddObjectToObject(obj, name.c_str()) : nullptr;
     int64_t outId = added ? StoreHandle(added) : 0;
@@ -1154,15 +1170,15 @@ static napi_value CjsonAddObjectToObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonAddArrayToObject(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t objId = 0;
-    napi_get_value_int64(env, args[0], &objId);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &objId);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string name(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &name[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &name[0], len + 1, &len);
     cJSON* obj = GetHandle(objId);
     cJSON* added = obj ? cJSON_AddArrayToObject(obj, name.c_str()) : nullptr;
     int64_t outId = added ? StoreHandle(added) : 0;
@@ -1173,15 +1189,15 @@ static napi_value CjsonAddArrayToObject(napi_env env, napi_callback_info info)
 
 static napi_value CjsonSetValuestring(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     size_t len = 0;
-    napi_get_value_string_utf8(env, args[1], nullptr, 0, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], nullptr, 0, &len);
     std::string val(len + 1, '\0');
-    napi_get_value_string_utf8(env, args[1], &val[0], len + 1, &len);
+    napi_get_value_string_utf8(env, args[K_NAPI_ARG_INDEX_1], &val[0], len + 1, &len);
     cJSON* item = GetHandle(id);
     char* out = item ? cJSON_SetValuestring(item, val.c_str()) : nullptr;
     if (!out) {
@@ -1196,11 +1212,11 @@ static napi_value CjsonSetValuestring(napi_env env, napi_callback_info info)
 
 static napi_value CjsonMalloc(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int32_t sizeVal = 0;
-    napi_get_value_int32(env, args[0], &sizeVal);
+    napi_get_value_int32(env, args[K_NAPI_ARG_INDEX_0], &sizeVal);
     size_t size = (sizeVal > 0) ? static_cast<size_t>(sizeVal) : 0;
     void* ptr = cJSON_malloc(size);
     if (!ptr) {
@@ -1215,11 +1231,11 @@ static napi_value CjsonMalloc(napi_env env, napi_callback_info info)
 
 static napi_value CjsonFree(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountOne;
-    napi_value args[kNapiArgCountOne];
+    size_t argc = K_NAPI_ARG_COUNT_ONE;
+    napi_value args[K_NAPI_ARG_COUNT_ONE];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
     int64_t id = 0;
-    napi_get_value_int64(env, args[0], &id);
+    napi_get_value_int64(env, args[K_NAPI_ARG_INDEX_0], &id);
     void* ptr = reinterpret_cast<void*>(static_cast<uintptr_t>(id));
     cJSON_free(ptr);
     napi_value undef;
@@ -1229,12 +1245,13 @@ static napi_value CjsonFree(napi_env env, napi_callback_info info)
 
 static napi_value Add(napi_env env, napi_callback_info info)
 {
-    size_t argc = kNapiArgCountTwo;
-    napi_value args[kNapiArgCountTwo];
+    size_t argc = K_NAPI_ARG_COUNT_TWO;
+    napi_value args[K_NAPI_ARG_COUNT_TWO];
     napi_get_cb_info(env, info, &argc, args, nullptr, nullptr);
-    double value0 = 0, value1 = 0;
-    napi_get_value_double(env, args[0], &value0);
-    napi_get_value_double(env, args[1], &value1);
+    double value0 = 0;
+    double value1 = 0;
+    napi_get_value_double(env, args[K_NAPI_ARG_INDEX_0], &value0);
+    napi_get_value_double(env, args[K_NAPI_ARG_INDEX_1], &value1);
     napi_value sum;
     napi_create_double(env, value0 + value1, &sum);
     return sum;
