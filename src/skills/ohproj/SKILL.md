@@ -1,14 +1,16 @@
 ---
 name: ohproj
-description: "创建、编译、签名、编译测试、执行测试 OpenHarmony 原生应用项目（基于 NativeProj46R 模板），含 NAPI 对接规范与测试报告说明。"
+description: "创建、编译、签名、编译测试、执行测试 OpenHarmony 原生应用项目（基于 NativeProj46R 模板），含 NAPI 对接规范与测试报告说明。可选关联 ohservices 技能与 ohsa.py：在同仓库做系统镜像/SystemAbility 开发或需设备侧 hilog/hidumper 诊断时使用。"
 author: "Created by user"
 created: "2026-01-20"
-version: "1.4.0"
+version: "1.6.1"
 ---
 
 # ohproj 技能说明
 
 本技能提供 **创建**、**编译**、**签名**、**编译测试用例**、**执行测试用例** 与 **清除签名** 六类能力，面向基于模板 NativeProj46R 的原生应用项目（含 NAPI + ArkTS）。配套设计文档与代码规范见 **DESIGN.md**，测试报告格式见 **八、测试报告格式**。**常见问题与避免**（编译失败、测试依赖缺失、mock 未关、用例不足等）见 **KNOWN_ISSUES_AND_AVOIDANCE.md**。
+
+**系统镜像侧 `snapshot_record` 屏幕录制 MP4**（非 HAP）：开发与烧录流程、修改文件清单、SELinux、调试命令见 **第十节**；可执行脚本 **`.claude/skills/ohrecord/ohrecord.py`** 与技能说明 **`.claude/skills/ohrecord/SKILL.md`**。
 
 ---
 
@@ -24,6 +26,8 @@ version: "1.4.0"
 | **清除签名** | 删除项目下的 autosign 目录 | `ohproj.py clean-sign <项目目录>` |
 
 **环境依赖**：编译与签名需 HarmonyOS Command Line Tools、OpenHarmony SDK（见 ohhap 技能）；签名还需 Java 及证书目录。执行测试需设备已连接且 hdc 可用（见 ohhdc 技能）。
+
+**可选关联（系统 SA / 镜像侧）**：若在同一源码树中开发**系统镜像**、调试 **SystemAbility（如 sampletest）**、或需在设备上批量查 **落盘 hilog / dmesg / hidumper**，可使用 **ohservices** 技能中的 **`ohsa.py`**（与纯 ArkTS 应用流程独立，见下文 **九、关联技能：ohservices / ohsa.py**）。
 
 **编译时 Node 与工作目录**：`ohproj.py build` / `build-test` 委托 ohhap 的 hapbuild.py 执行；hapbuild 优先使用 **${HOS_CLT_PATH}/tool/node/bin/node** 运行 hvigor，若不存在则回退到 /usr/bin/node 或 PATH 中的 node；且子进程以 **cwd=项目目录** 执行，确保 hvigor 读取项目内 hvigor-config 等配置，避免“配置文件不存在”类错误。
 
@@ -111,6 +115,7 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 | 执行单元测试（部署并运行） | `python3 .claude/skills/ohproj/ohproj.py test /path/to/ohsonNativeProj46R` |
 | 执行测试（指定超时毫秒） | `python3 .claude/skills/ohproj/ohproj.py test /path/to/project --timeout 120000` |
 | 清除签名 | `python3 .claude/skills/ohproj/ohproj.py clean-sign /path/to/project` |
+| **snapshot_record / MP4（系统镜像）** | 见 **第十节**；`python3 .claude/skills/ohrecord/ohrecord.py <子命令>` |
 
 ---
 
@@ -133,6 +138,7 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 ### 4.3 步骤三：NAPI 与 Index.d.ts、ArkTS 调用
 
 - 在 `napi_init.cpp` 中实现 C 接口的 NAPI 封装并注册到 exports。
+- **G.PRE.02-CPP（用函数代替函数式宏）**：注册 `napi_property_descriptor` 时**不要**使用 `#define NAPI_METHOD_ENTRY(...)` 等**类函数宏**填充结构体；应使用 **`static` 函数**（如模板 **`templates/cjson/napi_init.cpp`** 中的 `MakeNapiMethodEntry(const char* utf8name, napi_callback method)`）返回与宏展开等价的描述符，满足规范并便于类型检查与单步调试。
 - 在 `entry/src/main/cpp/types/libentry/Index.d.ts` 中声明 TypeScript 接口。
 - 同步更新 `entry/oh_modules/libentry.so/Index.d.ts`（与 types 一致），避免编译使用旧声明。
 - 在 `Index.ets` 中为变量添加**显式类型**（避免 arkts-no-any-unknown）。
@@ -278,6 +284,7 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 | 生成项目目录 | `.claude/skills/ohproj/<命名>NativeProj46R` |
 | 编译/签名/编译测试脚本 | `.claude/skills/ohhap/hapbuild.py` |
 | 执行测试脚本 | `.claude/skills/ohhdc/ohhdc.py`（deploy-test） |
+| 系统 SA / 镜像产物与设备诊断（可选） | `.claude/skills/ohservices/ohsa.py`；说明见 **ohservices/SKILL.md** |
 | 未签名主 HAP | `entry/build/default/outputs/default/entry-default-unsigned.hap` |
 | 已签名主 HAP | `entry/build/default/outputs/default/entry-default-signed.hap` |
 | 测试 HAP（未签名/已签名） | `entry/build/default/outputs/ohosTest/entry-ohosTest-unsigned.hap` / `entry-ohosTest-signed.hap` |
@@ -355,3 +362,172 @@ TestFinished-ResultMsg: your test finished!!!
 ```
 
 **说明**：若某用例失败，在报告中搜索 `OHOS_REPORT_STATUS_CODE: -2`，其前的 `test=CaseName` 即为失败用例名，`stream=` 为断言或错误信息；可根据 DESIGN.md 中的代码规范与已知问题排查（如 mock 配置、AddItemToObjectCS 键生命周期、assertContain 替代写法等）。
+
+---
+
+## 九、关联技能：ohservices / ohsa.py（系统 SystemAbility 与设备诊断）
+
+本技能（**ohproj**）面向 **ArkTS + NAPI 应用工程**（HAP 编译、签名、`aa test`）。**ohservices** 技能与脚本 **`ohsa.py`** 面向**同仓库内**的 **sampletest 等 SystemAbility 样例**与**系统镜像产物/设备侧**排查，二者职责不同，可按需组合使用。
+
+### 9.1 何时使用 ohsa.py
+
+| 场景 | 说明 |
+|------|------|
+| 已烧录 **rk3568 等**系统镜像，需确认 **sampletest** 进程 / profile / init | `ohsa.py device`、`device-files`、`diag` |
+| 需查 **落盘 hilog** 中 Publish、SELinux、hidumper 关键字 | `ohsa.py hilog-disk` |
+| 需查 **dmesg** 中 init/execv/secon | `ohsa.py dmesg` |
+| 验证 **hidumper -s 9009** | `ohsa.py hidumper`（或 `--hidumper-name Sampletest`） |
+| 仅验证 **out 目录下**是否已编出 sampletest 的 so/profile/cfg | `ohsa.py build`（默认 `out/rk3568`，可用 `--product` / `--out`） |
+
+### 9.2 命令示例（在**源码根**或任意目录执行，建议绝对路径）
+
+```bash
+# 综合诊断：设备上 /system 文件 + 进程 + 落盘 hilog 摘要 + dmesg（需 hdc 已连接）
+python3 /path/to/src/.claude/skills/ohservices/ohsa.py diag
+
+# 多设备指定序列号（等价 hdc -t）
+python3 /path/to/src/.claude/skills/ohservices/ohsa.py -t 192.168.x.x:8710 diag
+
+# 仅检查本机编译产物是否包含 sampletest（不连设备）
+python3 /path/to/src/.claude/skills/ohservices/ohsa.py build --product rk3568
+
+# 与 ohproj 测试衔接：应用测完后在同一设备上查系统侧日志
+python3 /path/to/src/.claude/skills/ohproj/ohproj.py test /path/to/xxxNativeProj46R
+python3 /path/to/src/.claude/skills/ohservices/ohsa.py hilog-disk
+```
+
+### 9.3 文档与完整子命令
+
+- **完整说明与参数**：`.claude/skills/ohservices/SKILL.md`（「本技能脚本 ohsa.py」小节）。
+- **全流程指南**：`.claude/skills/ohservices/saguide.md`。
+
+---
+
+## 十、snapshot_record 屏幕录制 MP4（系统侧改动与 ohrecord）
+
+本节记录 **`snapshot_record`** 通过 **AVScreenCapture / CAPTURE_FILE** 在设备上输出 **MP4** 的完整工程说明：实现思路、涉及路径、编译与烧录、设备准备、验证与调试、已遇问题与解决方案。**固化的命令行操作**请优先使用 **`.claude/skills/ohrecord/ohrecord.py`**（见 **10.8**）；本节为权威说明文档。
+
+### 10.1 背景与目标
+
+- **目标**：在 **开发者模式** 下，使用系统命令 **`snapshot_record`** 将默认显示内容录制为 **MP4**，文件由 **媒体服务进程** 创建与写入，路径需满足 **SELinux** 与 **策略类型** 要求。
+- **关键点**：客户端仅传 **绝对路径**；**服务端 `InitRecorder`** 在 **无 IPC 传入 fd** 时对路径执行 **`open(O_RDWR|O_CREAT|O_TRUNC)`**；避免 **`fd://` + Binder `WriteFileDescriptor`** 在部分 native 调用链上失败导致 **`Init` 提前失败、`Release` 表现为 IPC 错误**。
+
+### 10.2 架构与数据流（简述）
+
+1. **`snapshot_record`**（window_manager 部件）构造 **`AVScreenCaptureConfig`**，`recorderInfo.url` 为 **`/data/test/media/xxx.mp4`**，申请 **NativeToken**（含 **`ohos.permission.CAPTURE_SCREEN`** 等）后 **`ScreenCapture::Init` → `StartScreenRecording`**。
+2. **`ScreenCaptureImpl`**（player_framework 客户端）：若 url 为 **`fd://`**，走 **`SetOutputFile` + SetRecorderInfo**；若为 **绝对路径**，仅 **SetRecorderInfo**，由服务端打开文件。
+3. **`ScreenCaptureServer::InitRecorder`**（player_framework 服务端）：当 **`outputFd_ < 0`** 且 url **非 `fd://` 前缀** 时，在 **media_service** 进程内 **`open` 路径** 再交给 **Recorder**。
+4. **SELinux**：`media_service` **不得** 对通用 **`data_file:file`** 随意 **`create/write`**（易触发 **`domain.te` neverallow**）。**`/data/test/media(/.*)?`** 在 **`file_contexts`** 中标记为 **`data_test_media_file`**；**`media_service.te`** 授予对该类型 **dir/file** 的 **`create/write/...`** 及 **`data_test_file:dir`** 的 **`search`**（进入测试目录树）。
+
+### 10.3 修改文件清单（路径与原因）
+
+| 路径 | 修改原因 |
+|------|----------|
+| `foundation/multimedia/player_framework/frameworks/native/screen_capture/screen_capture_impl.cpp` | **`InitCaptureFile`**：区分 **`fd://` 与绝对路径**；路径模式不再依赖客户端 **`SetOutputFile` 传 fd**，避免 Binder 传 fd/dup 失败。 |
+| `foundation/multimedia/player_framework/services/services/screen_capture/server/screen_capture_server.cpp` | **`InitRecorder`**：无有效 fd 且非 **`fd://`** 时 **服务端 `open` 输出路径**；失败打 **`errno`** 日志（如 **EACCES=13**）。 |
+| `foundation/multimedia/player_framework/services/services/screen_capture/ipc/screen_capture_service_proxy.cpp` | **`WriteFileDescriptor`** 返回值校验，与 recorder 等代理一致，避免静默失败。 |
+| `foundation/window/window_manager/snapshot/src/snapshot_record.cpp` | 使用 **绝对路径** 填配置；注释说明由 **媒体服务** 打开文件。 |
+| `foundation/window/window_manager/snapshot/src/snapshot_record_utils.cpp` | **`VALID_RECORD_PATH=/data/test/media`**；**`FillCaptureFileConfig`** 等与 **服务端 open + SELinux 类型** 对齐；路径 **`realpath`** 校验。 |
+| `foundation/window/window_manager/snapshot/include/snapshot_record_utils.h` | 配置填充接口注释与路径约定一致。 |
+| `foundation/window/window_manager/snapshot/BUILD.gn` | **`snapshot_record`** 可执行文件依赖 **media_client** 等（既有）；确认 **`install_enable`** 使二进制进系统镜像。 |
+| `base/security/selinux_adapter/sepolicy/ohos_policy/multimedia/player/system/media_service.te` | 增加 **`data_test_file:dir`** 与 **`data_test_media_file`** 的 **allow**；**不** 放宽 **`data_file:file` 随意写**（避免 neverallow）。 |
+| `base/security/selinux_adapter/sepolicy/ohos_policy/multimedia/player/system/file_contexts` | **`/data/test/media(/.*)?` → `data_test_media_file`**（若已存在则保持；与本方案一致即可）。 |
+
+### 10.4 编译与输出物确认（开发步骤）
+
+1. **环境**：OpenHarmony 标准编译环境；源码根目录含 **`build.sh`**。
+2. **全量编译（示例 rk3568）**：
+   ```bash
+   cd <源码根>
+   ./build.sh --product-name rk3568
+   ```
+   或使用：`python3 .claude/skills/ohrecord/ohrecord.py build --product rk3568`
+3. **本机确认媒体库含路径 open 逻辑**（编译完成后）：
+   ```bash
+   python3 .claude/skills/ohrecord/ohrecord.py verify-host-so --product rk3568
+   ```
+   在 **`out/<product>/.../libmedia_service.z.so`** 的 **`strings`** 中应出现：**`InitRecorder open output by file path (no IPC fd)`**。
+4. **镜像产物**：烧写对应产品的 **system** 等分区后，设备上应存在 **`/system/bin/snapshot_record`**；**`libmedia_service.z.so`** 常见路径为 **`/system/lib/`**（或 **`lib64`**，视产品架构）。
+
+### 10.5 部署步骤（烧录与设备准备）
+
+1. **烧录** 包含上述改动的镜像（与日常版本流程相同）。
+2. **开发者模式**：`param get const.security.developermode.state` 为 **true**（否则 **`snapshot_record`** 会直接退出）。
+3. **录制目录与 SELinux 标签**（测试步骤 **必做**）：
+   ```bash
+   mkdir -p /data/test/media
+   chmod 777 /data/test/media
+   chcon u:object_r:data_test_media_file:s0 /data/test/media
+   ```
+   或使用：`python3 .claude/skills/ohrecord/ohrecord.py prep-device`
+4. **原因**：手工 **`mkdir`** 的目录常被标为 **`data_file`**，`media_service` **`open(O_CREAT)`** 会 **拒绝（errno 13, EACCES）**，客户端表现为 **`StartScreenRecording` 失败 ret=331350054**，hilog 见 **`InitRecorder open path failed, errno:13`**。**`chcon`** 为 **`data_test_media_file`** 后与 **`file_contexts`** 一致，录制可成功。
+
+### 10.6 运行命令与运行产物确认（测试步骤）
+
+**多设备**时指定：`hdc -t <序列号>` 或 **`OHRECORD_HDC_TARGET`**。
+
+| 步骤 | 命令 |
+|------|------|
+| 列出设备 | `hdc list targets` 或 `python3 .claude/skills/ohrecord/ohrecord.py targets` |
+| 设备状态 | `python3 .claude/skills/ohrecord/ohrecord.py device-status` |
+| 验证设备 so | `python3 .claude/skills/ohrecord/ohrecord.py verify-device-so` |
+| 录制 60 秒 | `python3 .claude/skills/ohrecord/ohrecord.py record -s 60 -f /data/test/media/rk_demo_60s.mp4` |
+| 设备上校验文件 | `python3 .claude/skills/ohrecord/ohrecord.py verify-remote-mp4 -r /data/test/media/rk_demo_60s.mp4` |
+| 拉取到 PC | `python3 .claude/skills/ohrecord/ohrecord.py pull -r /data/test/media/rk_demo_60s.mp4` |
+
+**产物属性**：成功时文件属主多为 **`media:media_rw`**；文件头含 **`ftyp`**（如 **`ftypmp42`**）；体积随码率与时长变化。
+
+**等价手工命令示例**：
+
+```bash
+snapshot_record -s 60 -f /data/test/media/rk_demo_60s.mp4
+hdc file recv /data/test/media/rk_demo_60s.mp4 ./
+```
+
+### 10.7 调试与验证命令（问题排查）
+
+| 现象 / 目的 | 命令 |
+|-------------|------|
+| ScreenCapture / InitRecorder 详情 | `hilog -x \| grep -iE 'ScreenCaptureServer\|InitRecorder\|StartScreenCaptureFile\|open path failed'` |
+| 一键拉尾部（脚本） | `python3 .claude/skills/ohrecord/ohrecord.py hilog-capture` |
+| 目录 **SELinux** 上下文 | `ls -ldZ /data/test/media`（应为 **`data_test_media_file`**） |
+| **AVC**（内核拒绝） | `dmesg \| grep avc`（关注 **`media_service`** 与 **`/data/test`**） |
+| 关闭 hilog 流控（可选） | `param set hilog.flowctrl.proc.on false` |
+| 临时确认是否 SELinux 导致 | **`setenforce 0` 仅用于定位**；量产应修 **策略/标签**，勿依赖 Permissive。 |
+
+**典型错误码**：**331350054** 在本流程中曾与 **`InitRecorder` 失败** 同时出现；结合 hilog 中 **`errno`** 判断是 **权限/SELinux** 还是其他 I/O。
+
+### 10.8 ohrecord.py 子命令汇总（固化操作）
+
+在源码根或任意目录执行（自动推断 **`OHOS_SRC`** 或通过 **`--src`** 指定）：
+
+| 子命令 | 作用 |
+|--------|------|
+| `paths` | 打印关键源文件路径与 **§10.3** 对应关系 |
+| `build --product <名>` | **`./build.sh --product-name`** |
+| `prep-device` | 设备 **`mkdir/chmod/chcon`** |
+| `device-status` | 开发者模式、**SELinux**、目录 **ls -Z** |
+| `verify-host-so` | 本机 **out** 下 **libmedia_service.z.so** 特征串 |
+| `verify-device-so` | 设备 **.so** 特征串 |
+| `record -s N -f <设备绝对路径>` | 执行 **snapshot_record** |
+| `pull -r <远程路径> [-l 本地路径]` | **hdc file recv**，默认 **`ohrecord/recv/`** |
+| `verify-remote-mp4 -r <路径>` | 设备上 **ls/wc/xxxd** |
+| `hilog-capture [--tail N]` | 过滤 **ScreenCapture** 相关 hilog |
+| `targets` | **hdc list targets** |
+
+### 10.9 已遇问题与解决方案（小结）
+
+| 问题 | 原因 | 解决方案 |
+|------|------|----------|
+| **`StartScreenRecording` ret=331350054**，无 MP4 | **`InitRecorder open` 失败，errno=13（EACCES）** | 将 **`/data/test/media`** 标为 **`data_test_media_file`**（**`chcon`/`restorecon`**），避免仅为 **`data_file`** |
+| 策略编译 **neverallow** | 对 **`data_file:file`** 放开 **create/write** | **仅** 使用 **`data_test_media_file` + 固定路径**，不改 **`domain.te`** 禁止项 |
+| **Binder / IPC** 异常、Init 很早失败 | **`fd://` 传 fd** 在部分 native 路径不稳定 | **路径模式**：客户端不传 fd，**服务端 open**（见 **§10.2**） |
+| **`hdc` 多设备** | 未指定 target | **`hdc -t`** 或 **`OHRECORD_HDC_TARGET`** |
+
+### 10.10 代码与策略规范（延续 ohproj 原则）
+
+- 修改保持与周边一致的 **日志宏、错误码检查、注释风格**；不扩大无关重构。
+- **SELinux**：新增 **allow** 须有 **file_contexts** 与 **type** 支撑；避免 **neverallow** 冲突。
+- **测试**：以 **真机 + Enforcing** 下 **`/data/test/media`** 成功生成 **MP4** 为准；**`strings` 特征串**作为镜像是否包含新逻辑的辅助证据。
+
+**相关技能**：**ohhdc**（通用 HDC）、**ohservices/ohsa.py**（**dmesg**、落盘 **hilog**、系统部件诊断）。
