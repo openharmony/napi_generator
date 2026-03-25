@@ -82,6 +82,16 @@ You can use the skill with specific commands and operations:
 .claude/skills/gitlog/gitlog.sh help                # Show help message
 ```
 
+**C/C++ style (OpenHarmony-oriented):**
+- `check-style` — scans **changed** `.cpp`/`.h`/`.hpp`/`.cc`/`.cxx` for: **G.CNS.02** (magic NAPI `argc`、`napi_value args[]` 栈长度，以及 **`args[0|1|2…]` 数字下标**，应改为 UPPER_SNAKE_CASE 如 `K_NAPI_ARG_INDEX_0`), **NAMING**（全局 `constexpr` 禁止 `kPascalCase`，须 `K_NAPI_*` 式大写）, **G.EXP.14-CPP** (no C-style casts), **LINE-LENGTH** (≤120 columns, excluding lines that are only `//` or block-comment `*` lines), **ONE-STATEMENT** (at most one top-level `;` per line; `for (...)` excluded；**禁止** `int64_t a = 0, b = 0;` 等同行多变量声明), **BRACE** (`if` 体必须用大括号，含换行写的单行体).
+- `check-style --all` — same rules on all C/C++ files under the copyright scan roots (excludes `third_party`, `build`, etc.).
+- `commit …` runs `check-style` on changed C/C++ first; use `commit --skip-style-check` only if you must bypass (not recommended).
+
+```bash
+python3 src/skills/gitlog/gitlog.py check-style
+python3 src/skills/gitlog/gitlog.py check-style --all
+```
+
 **Available Commands:**
 - `status` - Show git status
 - `log [n]` - Show last n commits (default: 10) in one-line format

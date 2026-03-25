@@ -10,6 +10,7 @@ Usage:
     python3 ohanalysis.py bundle --src-dir ~/ohos/61release/src foundation/ability/ability_base
 """
 
+import importlib.util
 import json
 import re
 import sys
@@ -1167,6 +1168,41 @@ def cmd_bundle(path_arg: str | None, src_dir: Path | None, prefix: str | None, v
     return 0
 
 
+def load_executables_module():
+    """加载同目录 oh_executable_report.py（避免包路径问题）。"""
+    path = SCRIPT_DIR / "oh_executable_report.py"
+    spec = importlib.util.spec_from_file_location("oh_executable_report", path)
+    if spec is None or spec.loader is None:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def cmd_executables(
+    src_dir: Path | None,
+    only_in_bundle: bool,
+    out_file: str | None,
+    path_prefix: str | list[str] | None,
+    out_product: str | None = None,
+    skip_phone_system: bool = False,
+    full_src: bool = False,
+) -> int:
+    mod = load_executables_module()
+    if mod is None:
+        print("错误: 无法加载 oh_executable_report.py", file=sys.stderr)
+        return 1
+    return mod.cmd_executables_report(
+        src_dir,
+        only_in_bundle,
+        out_file,
+        path_prefix=path_prefix,
+        out_product=out_product,
+        skip_phone_system=skip_phone_system,
+        full_src=full_src,
+    )
+
+
 def show_help() -> None:
     print("""ohanalysis - OpenHarmony 工程分析
 Usage:
@@ -1184,6 +1220,13 @@ Usage:
   diff PATH1 PATH2
     比较两个 src 目录：先分别分析并生成两份 MD 报告，再生成增删改对比报告。
     对比报告文件名：diff_路径1_路径2_时间.md，保存在 skills/ohanalysis 目录下。
+  executables [--src-dir PATH] [--prefix 相对src前缀] [--full-src] [--out-product 产品目录名] [--skip-phone-system] [--only-in-bundle] [-o 输出.md]
+    扫描 ohos_executable，与 bundle.json 关联；默认扫描 8 个顶层目录并集（base,build,developtools,device,drivers,foundation,test,productdefine）；
+    默认比对 out/*/packages/phone/system（phone system 列）；默认输出 .claude/skills/ohanalysis/ohos_executable_8dirs.md。
+    --prefix 逗号分隔并集；与默认二选一，指定后覆盖默认 8 目录。
+    --full-src 扫描整棵 src（排除 kernel 等），不再使用默认 8 目录。
+    --out-product 如 rk3568 限定 phone system 检测路径；不传则合并 out 下全部已有 packages/phone/system 的产品。
+    --skip-phone-system 不比对 out。
   help
 """)
 
@@ -1209,6 +1252,64 @@ def main() -> int:
             print("用法: diff PATH1 PATH2", file=sys.stderr)
             return 1
         return cmd_diff(Path(args[1]), Path(args[2]))
+    if cmd == "executables":
+        src_dir = None
+        only_in_bundle = False
+        out_file = None
+        out_product = None
+        skip_phone_system = False
+        full_src = False
+        path_prefixes: list[str] = []
+        i = 1
+        while i < len(args):
+            if args[i] == "--src-dir" and i + 1 < len(args):
+                src_dir = Path(args[i + 1])
+                i += 2
+                continue
+            if args[i] == "--prefix" and i + 1 < len(args):
+                path_prefixes.extend(
+                    [p.strip() for p in args[i + 1].split(",") if p.strip()]
+                )
+                i += 2
+                continue
+            if args[i] == "--full-src":
+                full_src = True
+                i += 1
+                continue
+            if args[i] == "--out-product" and i + 1 < len(args):
+                out_product = args[i + 1]
+                i += 2
+                continue
+            if args[i] == "--skip-phone-system":
+                skip_phone_system = True
+                i += 1
+                continue
+            if args[i] == "--only-in-bundle":
+                only_in_bundle = True
+                i += 1
+                continue
+            if args[i] == "-o" and i + 1 < len(args):
+                out_file = args[i + 1]
+                i += 2
+                continue
+            i += 1
+        if full_src:
+            path_prefix = None
+        elif not path_prefixes:
+            path_prefix = None
+        elif len(path_prefixes) == 1:
+            path_prefix = path_prefixes[0]
+        else:
+            path_prefix = path_prefixes
+        return cmd_executables(
+            src_dir,
+            only_in_bundle,
+            out_file,
+            path_prefix,
+            out_product=out_product,
+            skip_phone_system=skip_phone_system,
+            full_src=full_src,
+        )
     if cmd != "bundle":
         print("未知命令，使用 help 查看用法。", file=sys.stderr)
         return 1
