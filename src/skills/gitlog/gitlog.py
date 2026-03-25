@@ -27,7 +27,7 @@ Commands:
     push [remote] [branch] - Push commits to remote repository
     config-token [username] [token] - Configure Git credential with token
     check-copyright [--fix] [--dry-run] - Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
-    check-style [--all] - C/C++ checks: G.CNS.02, G.EXP.14-CPP, line≤120, one statement/line, if with braces
+    check-style [--all] - C/C++: G.CNS.02, NAMING(constexpr UPPER_SNAKE), G.EXP.14-CPP, line≤120, one stmt/line, if braces
     help            - Show this help message
 """
 
@@ -109,7 +109,7 @@ Commands:
   commit [message] [--no-sign] [--skip-style-check]  Auto commit and push (pre-commit C/C++ style check by default)
   push [remote] [branch]    Push commits to remote repository
   check-copyright [--fix] [--dry-run]  Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
-  check-style [--all]       C/C++: G.CNS.02, G.EXP.14-CPP, 行≤120, 单行单语句, if 必须大括号
+  check-style [--all]       C/C++: G.CNS.02, NAMING(k前缀常量→UPPER_SNAKE), G.EXP.14-CPP, 行≤120, 单语句, if 大括号
   help                      Show this help message
 
 Examples:
@@ -1429,6 +1429,40 @@ STYLE_MAX_LINE_LENGTH = 120
 # G.CNS.02: NAPI callback argc / args[] stack array size should not use raw literals ≥ 2
 _RE_NAPI_ARGC_LITERAL = re.compile(r'\bsize_t\s+argc\s*=\s*(\d+)\s*;')
 _RE_NAPI_ARGS_STACK = re.compile(r'\bnapi_value\s+args\[\s*(\d+)\s*\]\s*;')
+# NAPI callback: args[0]/args[1]/… must use named indices (e.g. K_NAPI_ARG_INDEX_0), not literals
+_RE_NAPI_ARGS_SUBSCRIPT = re.compile(r'\bargs\[\s*(\d+)\s*\]')
+
+def _style_constexpr_kprefixed_decl_name(code):
+    """
+    OpenHarmony: file/namespace scope constexpr constants should be UPPER_SNAKE_CASE.
+    Return declarator name if it looks like kPascalCase (e.g. kNapiArgCountOne); else None.
+    Uses LHS of the first '=' only (avoids RHS identifiers like kDefault).
+    """
+    if '//' in code:
+        code = code.split('//', 1)[0]
+    code_st = code.strip()
+    if not code_st.startswith('constexpr') or '=' not in code_st:
+        return None
+    lhs = code_st.split('=', 1)[0].strip()
+    if not lhs.startswith('constexpr'):
+        return None
+    after_kw = lhs[len('constexpr'):].lstrip()
+    if not after_kw:
+        return None
+    parts = re.split(r'\s+', after_kw)
+    last = parts[-1]
+    if any(c in last for c in '()[]:*&<'):
+        return None
+    if re.fullmatch(r'k[A-Z][a-zA-Z0-9]*', last):
+        return last
+    return None
+# Comma-separated definitions: int64_t a = 0, b = 0; — one line should have one statement
+_RE_MULTI_VAR_DECL = re.compile(
+    r'^\s*(?:static\s+)?(?:const\s+)?'
+    r'(?:int64_t|int32_t|uint32_t|uint64_t|int16_t|uint16_t|int8_t|uint8_t|double|float|bool|'
+    r'size_t|ptrdiff_t)\s+'
+    r'\w+\s*=\s*[^;]+,\s*\w+\s*='
+)
 
 
 def _style_strip_line_comment(line):
@@ -1563,6 +1597,8 @@ def check_cpp_style_file(file_path):
         code = _style_strip_line_comment(line)
         if not code.strip():
             continue
+        if _RE_MULTI_VAR_DECL.search(code):
+            issues.append((lineno, 'ONE-STATEMENT', '一行只应有一条声明，勿在同一行用逗号定义多个变量'))
         if _style_top_level_semicolon_count(code) > 1:
             st = code.lstrip()
             if not (st.startswith('for ') or st.startswith('for(')):
@@ -1577,6 +1613,16 @@ def check_cpp_style_file(file_path):
             n = int(m.group(1))
             if n >= 2:
                 issues.append((lineno, 'G.CNS.02', f'napi_value args[{n}] 不要用魔法数字作栈数组长度，请用命名常量'))
+        m = _RE_NAPI_ARGS_SUBSCRIPT.search(code)
+        if m:
+            n = int(m.group(1))
+            issues.append((lineno, 'G.CNS.02', f'不要用 args[{n}] 魔法下标，请使用 UPPER_SNAKE_CASE 索引常量（如 K_NAPI_ARG_INDEX_{n}）'))
+        bad_const = _style_constexpr_kprefixed_decl_name(code)
+        if bad_const:
+            issues.append(
+                (lineno, 'NAMING',
+                 f'全局 constexpr 常量应使用 UPPER_SNAKE_CASE（如 K_NAPI_ARG_COUNT_ONE），不要使用 `{bad_const}`')
+            )
         if _style_line_has_c_style_cast(code):
             issues.append((lineno, 'G.EXP.14-CPP', '不要使用 C 风格强制转换，请使用 static_cast / reinterpret_cast / const_cast'))
     issues.extend(_style_if_missing_brace_issues(lines))
@@ -1600,13 +1646,13 @@ def _style_collect_paths_from_changes():
 
 def cmd_check_style(scan_all=False):
     """
-    Run C/C++ style heuristics: G.CNS.02, G.EXP.14-CPP, LINE-LENGTH (≤120),
-    ONE-STATEMENT (depth-0 semicolons), BRACE (if 必须带大括号).
+    Run C/C++ style heuristics: G.CNS.02, NAMING (constexpr 全局常量须 UPPER_SNAKE_CASE),
+    G.EXP.14-CPP, LINE-LENGTH (≤120), ONE-STATEMENT, BRACE (if 必须带大括号).
 
     Args:
         scan_all: If True, scan repo tree (same roots as copyright); else only changed files.
     """
-    print('=== C/C++ Style Check (G.CNS.02, G.EXP.14-CPP, 行宽/单语句/if 大括号) ===')
+    print('=== C/C++ Style Check (G.CNS.02, NAMING, G.EXP.14-CPP, 行宽/单语句/禁同行多变量/if 大括号) ===')
     print()
     if scan_all:
         print('范围: 仓库内全部源文件（排除 third_party 等目录）')
