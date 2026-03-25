@@ -3,7 +3,7 @@ name: ohproj
 description: "创建、编译、签名、编译测试、执行测试 OpenHarmony 原生应用项目（基于 NativeProj46R 模板），含 NAPI 对接规范与测试报告说明。可选关联 ohservices 技能与 ohsa.py：在同仓库做系统镜像/SystemAbility 开发或需设备侧 hilog/hidumper 诊断时使用。"
 author: "Created by user"
 created: "2026-01-20"
-version: "1.6.0"
+version: "1.6.1"
 ---
 
 # ohproj 技能说明
@@ -138,6 +138,7 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 ### 4.3 步骤三：NAPI 与 Index.d.ts、ArkTS 调用
 
 - 在 `napi_init.cpp` 中实现 C 接口的 NAPI 封装并注册到 exports。
+- **G.PRE.02-CPP（用函数代替函数式宏）**：注册 `napi_property_descriptor` 时**不要**使用 `#define NAPI_METHOD_ENTRY(...)` 等**类函数宏**填充结构体；应使用 **`static` 函数**（如模板 **`templates/cjson/napi_init.cpp`** 中的 `MakeNapiMethodEntry(const char* utf8name, napi_callback method)`）返回与宏展开等价的描述符，满足规范并便于类型检查与单步调试。
 - 在 `entry/src/main/cpp/types/libentry/Index.d.ts` 中声明 TypeScript 接口。
 - 同步更新 `entry/oh_modules/libentry.so/Index.d.ts`（与 types 一致），避免编译使用旧声明。
 - 在 `Index.ets` 中为变量添加**显式类型**（避免 arkts-no-any-unknown）。
