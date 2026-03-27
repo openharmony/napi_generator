@@ -33,3 +33,8 @@ autosign
 __pycache__
 # 误生成的 ohhdc 技能嵌套副本（截图/pyc 等，勿入库）
 /src/skills/ohhdc/ohhdc/
+*.exe
+*.img
+*.cfg
+*.bin
+*.log

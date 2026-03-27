@@ -1,0 +1,4 @@
+# paramiko: SFTP sync when sshpass is unavailable
+paramiko>=3.0.0
+# pexpect: sync-images --expect-scp (interactive scp on Windows)
+pexpect>=4.9.0
