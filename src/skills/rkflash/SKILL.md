@@ -1,16 +1,16 @@
 ---
 name: rkflash
-description: "Rockchip OH 镜像技能：pscp/scp/paramiko 同步；images/config.cfg 驱动 upgrade_tool+hdc 烧录；默认版本校验与 VERIFY OK 后 sysfs 关灯；完成=进程 exit0 且未 --no-verify-version。见 SKILL.md。"
+description: "Rockchip OH 镜像技能：同步须配置 rkflash_sync_config.json 或 RKFLASH_* 环境变量（无内置主机/密码）；pscp/scp/paramiko 同步；config.cfg 驱动烧录；默认版本校验与 VERIFY OK 后关灯。见 SKILL.md。"
 author: "Created by user"
 created: "2026-03-25"
-version: "1.4.7"
+version: "1.5.0"
 ---
 
 # rkflash 技能
 
 本文档与 **`rkflash.py`** 实现一一对应：同步多种方式、**`images/images/` 摊平**、**`config.cfg` 驱动的烧录流程**（典型 **18** 步）、**默认版本校验**、**校验通过后关灯**、**模块常量**与**退出码**。
 
-在 **Windows**（或已配置 OpenSSH/`sshpass` 的 Linux）下，将 **`images/`** 中分区镜像按 **`images/config.cfg`** 解析出的顺序与 **`di` 参数**烧录到 **Rockchip** 开发板（**无**代码内写死的 **`REQUIRED_IMAGES`** 列表）。支持从内网服务器 **`192.168.16.71`** 等多种方式同步镜像。**烧录日志**：**`log/rkflash_<时间>.log`**（UTF-8，步骤标题**英文**）；**expect-scp 调试日志**：**`log/rkflash_sync_expect_<时间>.log`**。**与 `rkflash.py` 顶部模块 docstring、`--help` 描述一致**（子命令、**`config.cfg`** 解析、**烧录完成判定**、**`--no-verify-version` / `--no-leds-off`**）。
+在 **Windows**（或已配置 OpenSSH/`sshpass` 的 Linux）下，将 **`images/`** 中分区镜像按 **`images/config.cfg`** 解析出的顺序与 **`di` 参数**烧录到 **Rockchip** 开发板（**无**代码内写死的 **`REQUIRED_IMAGES`** 列表）。**同步与版本校验**所依赖的 **SSH 主机、用户、密码、远端镜像路径**等**不设仓库默认值**，须通过 **CLI / 环境变量 / `<base>/rkflash_sync_config.json`** 配置；在交互终端下可对缺项**逐条提示输入**，非 TTY 则**报错退出**并说明如何配置。**烧录日志**：**`log/rkflash_<时间>.log`**（UTF-8，步骤标题**英文**）；**expect-scp 调试日志**：**`log/rkflash_sync_expect_<时间>.log`**。**与 `rkflash.py` 顶部模块 docstring、`--help` 描述一致**（子命令、**`config.cfg`** 解析、**烧录完成判定**、**`--no-verify-version` / `--no-leds-off`**）。
 
 ---
 
@@ -23,7 +23,7 @@ version: "1.4.7"
 | **布局** | **`images/config.cfg`** 必选；**`load_flash_layout_from_config`** 得 **`ul`** 与各 **`di`**；**`analyze-config`** 打印人读结果 |
 | **烧录** | **`flash_all`**：**`hdc shell reboot loader`**（内置等待 **15s**）+ **`upgrade_tool.exe`** 多步 **`td`/`rcb`/`ul`/`di`/`rd`** |
 | **验收** | 默认 **`verify_flashed_version_against_server`**：延时 → **`hdc shell param get`** → 拉 **`ohos.para`** 比对 **`SOFTWARE_VERSION_PARAM`** |
-| **关灯** | **VERIFY OK** 且未 **`--no-leds-off`**：**`hdc shell sh -c`**（**`RKFLASH_LEDS_OFF_CMD`** 或默认 sysfs）；**失败不导致 exit 1** |
+| **关灯** | **VERIFY OK** 且未 **`--no-leds-off`**：**`hdc shell sh -c`**（**`rkflash_sync_config.json`** 的 **`leds_off_cmd` / `leds_off_names`** 或 **`RKFLASH_LEDS_NAMES`**，否则默认 **blue,green,red**）；**失败不导致 exit 1** |
 | **输出** | 终端 **`print`/`RuntimeError`**：**英文 ASCII**；**`log/*.log`**：**UTF-8** |
 
 ---
@@ -33,11 +33,11 @@ version: "1.4.7"
 | 能力 | 说明 |
 |------|------|
 | **`pscp-sync`** | PuTTY **`pscp -batch -pw -r`**，`cwd=<base>/images`，拉远端目录到 **`.`**；成功后可摊平 **`images/images/`** |
-| **`raw-scp`** | **`shell=True`** 执行 **`RAW_SCP_SHELL_CMD`** 或 **`--cmd`**，交互密码；成功后可摊平 |
+| **`raw-scp`** | **`shell=True`** 执行 **`--cmd` / `RKFLASH_RAW_SCP_CMD` / `raw_scp_cmd`**（JSON），交互密码；成功后可摊平 |
 | **`sync-images`** | **sshpass+scp** / **paramiko SFTP 递归** / **`--expect-scp`（pexpect）**；**不**做 `images/images/` 摊平（远端用 **`remote/.`** 或 SFTP 扁平拉取） |
 | **烧录** | **`hdc shell reboot loader`** + **`upgrade_tool`**；**`ul`/`di` 参数**由 **`images/config.cfg`** 解析（典型 18 步，见下） |
 | **版本校验** | 默认开启：设备 **`hdc shell param get`** 解析 **`const.product.software.version`**，与服务器 **`ohos.para`** 同键比对；**`--no-verify-version`** 仅调试用，**不能**作为「烧录完成」依据 |
-| **关灯（校验通过后）** | **`VERIFY OK`** 之后 **`hdc shell sh -c`** 执行脚本：默认将 **`/sys/class/leds/*/brightness`** 写 **0**（尽力而为，失败**不**影响 **exit 0**）；**`RKFLASH_LEDS_OFF_CMD`** 可覆写脚本；**`--no-leds-off`** 关闭此步 |
+| **关灯（校验通过后）** | **`VERIFY OK`** 之后 **`hdc shell sh -c`** 执行脚本（尽力而为，失败**不**影响 **exit 0**）；优先级：**`leds_off_cmd`**（整段 sh）> **`RKFLASH_LEDS_NAMES`** / **`leds_off_names`** > 默认 **blue,green,red**；**`--no-leds-off`** 关闭此步 |
 | **终端文案** | 脚本 **`print` / `--help` / `RuntimeError`** 为**英文 ASCII**；外部工具输出原样 |
 
 ---
@@ -66,16 +66,40 @@ version: "1.4.7"
 
 ---
 
+独立 **关灯技能**见同仓库 **`src/skills/ohleds/`**（**`ohleds.py`**）：仅通过 **`hdc`** 关 sysfs 灯；可与 rkflash 共用 **`RKFLASH_LEDS_NAMES`**；**`ohhdc`** 亦提供 **`led … on|off`** 细粒度控制。
+
+---
+
+## 必填配置（同步 / 版本校验 / `raw-scp`）
+
+1. **配置文件（推荐）**：将 **`rkflash_sync_config.example.json`** 复制为技能根下的 **`rkflash_sync_config.json`**（与 **`rkflash.py`** 同目录，或通过 **`--base`** 指向的根），填写 **`sync_host`**、**`sync_user`**、**`sync_remote`**；密码建议用环境变量 **`RKFLASH_SSH_PASSWORD`**，或写入 JSON 的 **`sync_password`**（**勿提交含真实密码的 JSON 到公开仓库**；仓库 **`.gitignore`** 已忽略该文件名）。
+2. **环境变量**：**`RKFLASH_SYNC_HOST`**、**`RKFLASH_SYNC_USER`**、**`RKFLASH_SSH_PASSWORD`**、**`RKFLASH_SYNC_REMOTE`**（远端 **phone images** 目录的绝对路径）。可选：**`RKFLASH_REMOTE_OHOS_PARA`**（未设且 **`sync_remote`** 以 **`/images`** 结尾时，脚本会推导 **`.../system/etc/param/ohos.para`**）、**`RKFLASH_SYNC_PORT`**、**`RKFLASH_RAW_SCP_CMD`**（**`raw-scp`** 整行 shell 命令）。
+3. **CLI**：各子命令的 **`--host` / `--user` / `--password` / `--remote`**（及主命令的 **`--verify-*` / `--remote-ohos-para`**）覆盖文件与环境。
+4. **交互终端**：缺项时脚本可 **`input` / `getpass`** 补全；**无 TTY** 时直接 **`RuntimeError`** 并打印上述配置说明。
+
+**`analyze-config`** 与 **`--no-verify-version`** 的纯烧录路径**不**要求 SSH 配置；**`pscp-sync` / `sync-images` / `raw-scp`** 及默认带版本校验的主命令**必须**能解析出完整连接信息。
+
+---
+
 ## 环境变量一览
 
 | 变量 | 用途 |
 |------|------|
-| **`RKFLASH_SSH_PASSWORD`** | SSH 密码（**所有**需密码的同步与**拉取 `ohos.para`**；未设时脚本默认 **`kaihong`**） |
+| **`RKFLASH_SYNC_HOST`** | SSH 主机（同步与拉取 **`ohos.para`**；可被 CLI **`--host` / `--verify-host`** 覆盖） |
+| **`RKFLASH_SYNC_USER`** | SSH 用户名 |
+| **`RKFLASH_SSH_PASSWORD`** | SSH 密码（同步与 **`ohos.para`**；可被 **`--password` / `--verify-password`** 或 JSON **`sync_password`** 覆盖） |
+| **`RKFLASH_SYNC_REMOTE`** | 远端 **images** 目录绝对路径（**`pscp-sync` / `sync-images`**；用于推导 **`ohos.para`** 路径） |
+| **`RKFLASH_SYNC_PORT`** | SSH 端口（默认 **22**） |
+| **`RKFLASH_REMOTE_OHOS_PARA`** | 远端 **`ohos.para`** 绝对路径（可选；未设时按 **`sync_remote`** 推导） |
+| **`RKFLASH_RAW_SCP_CMD`** | **`raw-scp`** 默认 shell 命令行（可被 **`--cmd`** 或 JSON **`raw_scp_cmd`** 覆盖） |
 | **`RKFLASH_PSCP`** | **`pscp.exe`** 路径（**`pscp-sync`**、**版本校验拉单文件**优先使用） |
 | **`RKFLASH_SSHPASS`** | **`sshpass`** 可执行文件路径 |
 | **`RKFLASH_SCP`** | **`--expect-scp`** 时优先使用的 **`scp.exe`**（建议系统 OpenSSH） |
 | **`RKFLASH_EXPECT_PHASE1_TIMEOUT`** | expect-scp **首阶段**等待秒数（默认 **300**） |
-| **`RKFLASH_LEDS_OFF_CMD`** | **`VERIFY OK`** 后 **`hdc shell sh -c`** 的**整段** shell 脚本（覆写默认 sysfs 关灯逻辑）；不设则用内置循环写 **`brightness`** |
+| **`leds_off_cmd`**（`rkflash_sync_config.json`） | **`VERIFY OK`** 后 **`hdc shell sh -c`** 的**整段** shell（**优先级最高**；空字符串则忽略） |
+| **`RKFLASH_LEDS_NAMES`** | 逗号分隔 sysfs 名；**优先于** JSON **`leds_off_names`**（当未使用 **`leds_off_cmd`** 时） |
+| **`leds_off_names`**（`rkflash_sync_config.json`） | 同 **`RKFLASH_LEDS_NAMES`**；未设环境变量时从 JSON 读 |
+| （以上均无） | 默认关灯：**blue、green、red** 三个节点（与此前写死命名一致）；需全盘 sysfs 时可于 JSON 设 **`leds_off_cmd`** 为自定义循环脚本 |
 
 ---
 
@@ -88,7 +112,7 @@ version: "1.4.7"
 | 工具 | 来源 / 典型形态 | 脚本中的用途 | 说明 |
 |------|-----------------|--------------|------|
 | **`pscp.exe`** | [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) 套件 | **`pscp-sync`** 整目录 **`pscp -batch -pw -r`**；**版本校验**时 **`pscp` 单文件**拉取远端 **`ohos.para`** 到临时文件 | Windows 常见路径 **`C:\PuTTY\pscp.exe`**；路径由 **`--pscp` / `RKFLASH_PSCP` / PATH** 解析；拉 **`ohos.para` 失败时**可改走 **paramiko**（见下） |
-| **`scp`（及底层 `ssh`）** | **OpenSSH 客户端**（Windows「可选功能」、Linux 发行版包）或 **Git for Windows** 自带的 MSYS **`scp`** | **`raw-scp`**：整行在 **`shell=True`** 下执行（默认 **`RAW_SCP_SHELL_CMD`**）；**`sync-images`** 在 **sshpass+scp** 或 **`--expect-scp`** 分支中启动 **`scp`** | **`--expect-scp`** 建议 **`RKFLASH_SCP`** 指向 **`%SystemRoot%\System32\OpenSSH\scp.exe`**，避免 Git MSYS 版在无 TTY 下不出密码提示 |
+| **`scp`（及底层 `ssh`）** | **OpenSSH 客户端**（Windows「可选功能」、Linux 发行版包）或 **Git for Windows** 自带的 MSYS **`scp`** | **`raw-scp`**：整行在 **`shell=True`** 下执行（**`--cmd` / `RKFLASH_RAW_SCP_CMD` / `raw_scp_cmd`**）；**`sync-images`** 在 **sshpass+scp** 或 **`--expect-scp`** 分支中启动 **`scp`** | **`--expect-scp`** 建议 **`RKFLASH_SCP`** 指向 **`%SystemRoot%\System32\OpenSSH\scp.exe`**，避免 Git MSYS 版在无 TTY 下不出密码提示 |
 | **`sshpass`** | Linux 常见包（如 `apt install sshpass`） | **`sync-images`** 走 **`sshpass -p … scp -r …`** 时作为子进程 argv[0] | **Windows 通常没有**；该路径下多用 **`pscp-sync`**、**`--expect-scp`** 或 **paramiko** |
 | **`hdc`** | **OpenHarmony / HarmonyOS Device Connector**（SDK 或独立工具，需在 **PATH**） | **`hdc shell reboot loader`**；**`hdc shell param get`**（烧录后版本校验）；**`VERIFY OK`** 后 **`hdc shell sh -c`** 关灯（默认 sysfs） | 烧录、校验、关灯均依赖本机可执行 **`hdc`** |
 | **`upgrade_tool.exe`** | **Rockchip** 官方烧录工具（Windows **`exe`**） | **`flash_all`** 中 **`td` / `rcb` / `ul` / `di` / `rd`** 等子命令 | 必须放在技能根 **`bin/upgrade_tool.exe`**（与 **`rkflash.py`** 中 **`_ensure_dirs`** 一致） |
@@ -120,18 +144,13 @@ version: "1.4.7"
 
 | 名称 | 含义 |
 |------|------|
-| **`DEFAULT_SYNC_HOST`** | `192.168.16.71` |
-| **`DEFAULT_SYNC_USER`** | `root` |
-| **`DEFAULT_SYNC_PASSWORD`** | `kaihong`（勿提交到公开仓库） |
-| **`DEFAULT_SYNC_REMOTE`** | `/root/images`（**`sync-images`** 默认 **`--remote`**） |
-| **`DEFAULT_PSCP_REMOTE_IMAGES`** | `/root/ohos/61release/src/out/rk3568/packages/phone/images` |
-| **`DEFAULT_REMOTE_OHOS_PARA`** | 由 **`DEFAULT_PSCP_REMOTE_IMAGES`** 将末尾 **`/images`** 换为 **`/system/etc/param/ohos.para`** |
+| **`CONFIG_JSON_NAME`** | **`rkflash_sync_config.json`**（位于 **`--base`** 技能根；与 **`rkflash_sync_config.example.json`** 同结构） |
+| **`RkflashSshConfig`** | **`_resolve_rkflash_ssh_config()`** 的解析结果：**`host` / `port` / `user` / `password` / `remote_images` / `remote_ohos_para`** |
 | **`DEFAULT_PSCP_SYNC_TIMEOUT_SEC`** | **1800**（**`pscp-sync`** 整次子进程超时，超则 **124**） |
-| **`DEFAULT_PSCP_EXE`** | `C:\PuTTY\pscp.exe`（Windows 存在则优先） |
-| **`RAW_SCP_SHELL_CMD`** | 与 **`raw-scp`** 默认一致的 **`scp`** 整行（含 **`://root/...`**） |
+| **`DEFAULT_PSCP_EXE`** | `C:\PuTTY\pscp.exe`（**仅**在文件存在时作为 **`pscp`** 候选路径，非凭据） |
 | **`SOFTWARE_VERSION_PARAM`** | **`const.product.software.version`**（设备 param 与 **`ohos.para`** 解析键） |
 | **`images/config.cfg`** | **必选**：二进制 Rockchip 配置；脚本解析 **UTF-16-LE** 分区标签与镜像路径，得到 **`CfgFlashLayout`**（**`load_flash_layout_from_config`**）：**`loader_basename`**、**`partitions`**（**`di_flag` + `image_basename`**）。烧录前检查与 **`di`/`ul` 参数**均来自此文件 |
-| **默认关灯脚本** | 代码内 **`_DEFAULT_LEDS_OFF_SH`**：若存在 **`/sys/class/leds`**，对各子目录 **`brightness`** 写 **0**；可由 **`RKFLASH_LEDS_OFF_CMD`** 整段替换 |
+| **默认关灯** | 未配置 **`leds_off_cmd`** 且无命名列表时：对 **blue / green / red** 的 **`brightness`** 写 **0**；全盘 sysfs 循环见代码内 **`_DEFAULT_LEDS_OFF_SH`**（供 **`leds_off_cmd`** 或扩展使用） |
 
 ---
 
@@ -148,15 +167,7 @@ version: "1.4.7"
 
 ## 推荐流程（同步 → 烧录 → 版本校验）
 
-**远端 images（与 `pscp-sync` / `raw-scp` 默认一致）：**
-
-**`root@192.168.16.71:/root/ohos/61release/src/out/rk3568/packages/phone/images`**
-
-**默认 `ohos.para`（版本校验）：**
-
-**`/root/ohos/61release/src/out/rk3568/packages/phone/system/etc/param/ohos.para`**
-
-若你修改 **`--remote`**（同步）或 **`--remote-ohos-para`**（校验），需自行保证二者与当前产物树一致。
+先完成 **[必填配置](#必填配置同步--版本校验--raw-scp)**（**`rkflash_sync_config.json`** 或环境变量）。**`sync_remote`** 应指向编译产物树下的 **phone `images`** 目录（绝对路径）；若未单独设置 **`remote_ohos_para`** 且路径以 **`/images`** 结尾，脚本会将 **`ohos.para`** 推导为同级 **`system/etc/param/ohos.para`**。若 **`sync_remote`** 不以 **`/images`** 结尾或布局不同，请显式设置 **`RKFLASH_REMOTE_OHOS_PARA`**（或 JSON **`remote_ohos_para`** / **`--remote-ohos-para`**）。
 
 ### 烧录完成判定（与脚本退出码一致）
 
@@ -167,12 +178,17 @@ version: "1.4.7"
 
 **`python rkflash.py` 进程 exit 0** 表示上述默认路径（含校验）**全部成功**；**exit 1** 表示烧录或校验任一失败。运行烧录时须**等待进程结束**并查看退出码与日志，不能视为「命令发出即完成」。**`--no-verify-version`** 仅用于调试（例如无网、无 `hdc`），**不**用于确认量产/发布烧录完成。
 
-**校验通过后的关灯**：在 **VERIFY OK** 之后，脚本会**尽力**通过 **`hdc`** 执行关灯（默认写 **`/sys/class/leds/*/brightness`**）。关灯失败或板子无 sysfs 灯节点时**仍**可为 **exit 0**（与「烧录+版本确认」无关）；不需要关灯时用 **`--no-leds-off`**，板型特殊命令用 **`RKFLASH_LEDS_OFF_CMD`**。
+**校验通过后的关灯**：在 **VERIFY OK** 之后，脚本会**尽力**通过 **`hdc`** 执行关灯（配置见 **`rkflash_sync_config.json`** 的 **`leds_off_cmd` / `leds_off_names`**，否则默认 **blue,green,red**）。关灯失败或板子无对应节点时**仍**可为 **exit 0**；不需要关灯时用 **`--no-leds-off`**，特殊板型在 JSON 中设置 **`leds_off_cmd`** 为整段 **`sh`**。
 
 ```bash
 # 仓库根目录；Windows 可将 python3 换成 python
+# 须已配置 SSH（见 rkflash_sync_config.json 或环境变量），例如：
+#   set RKFLASH_SYNC_HOST=...
+#   set RKFLASH_SYNC_USER=root
+#   set RKFLASH_SSH_PASSWORD=...
+#   set RKFLASH_SYNC_REMOTE=/path/to/.../packages/phone/images
 python3 src/skills/rkflash/rkflash.py pscp-sync
-# 标准烧录 + 默认版本校验 + VERIFY OK 后关灯；须等到进程 exit 0
+# 标准烧录 + 默认版本校验 + VERIFY OK 后关灯；须等到进程 exit 0（同样需要 SSH 配置以拉 ohos.para）
 python3 src/skills/rkflash/rkflash.py
 # 仅调试：跳过校验与关灯，不表示烧录结果已确认
 # python3 src/skills/rkflash/rkflash.py --no-verify-version
@@ -206,11 +222,8 @@ python3 src/skills/rkflash/rkflash.py
 |------|------|
 | `--base` | `rkflash.py` 所在目录 |
 | `--pscp` | 见上 |
-| `--host` | `192.168.16.71` |
-| `--user` | `root` |
-| `--password` / `RKFLASH_SSH_PASSWORD` | `kaihong` |
-| `-P` / `--port` | `22` |
-| `--remote` | 同 **`DEFAULT_PSCP_REMOTE_IMAGES`** |
+| `--host` / `--user` / `--password` / `--remote` | **无**；来自 **[必填配置](#必填配置同步--版本校验--raw-scp)** 或 CLI |
+| `-P` / `--port` | **22**（或由 **`RKFLASH_SYNC_PORT` / `sync_port`**） |
 | `--timeout` | **1800**（秒） |
 
 **`images/images/`**：远端目录名为 **`images`** 且 **`cwd`** 为本地 **`images/`** 时易出现内层 **`images/`**；**仅在同步成功（0）后摊平**。
@@ -219,14 +232,14 @@ python3 src/skills/rkflash/rkflash.py
 
 ## `raw-scp`
 
-- **`cwd=<base>/images`**，默认执行 **`RAW_SCP_SHELL_CMD`**；**`--cmd`** 整行覆盖。
+- **`cwd=<base>/images`**，命令行来自 **`--cmd` / `RKFLASH_RAW_SCP_CMD` / JSON `raw_scp_cmd`**；缺省且非 TTY 则报错。
 - **成功（0）后摊平**内层 **`images/images/`**，英文提示 **`[raw-scp] flattened ...`**。
 - 启动时打印 **`[raw-scp] cwd=...`**、**`[raw-scp] cmd=...`**。
 
 | 参数 | 默认 |
 |------|------|
 | `--base` | 脚本目录 |
-| `--cmd` | 默认常量 **`RAW_SCP_SHELL_CMD`** |
+| `--cmd` | **无**；须配置 **`RKFLASH_RAW_SCP_CMD`** 或 **`raw_scp_cmd`**（或交互输入） |
 
 ---
 
@@ -237,11 +250,8 @@ python3 src/skills/rkflash/rkflash.py
 | 参数 | 默认 | 说明 |
 |------|------|------|
 | `--base` | 脚本目录 | 技能根；同步目标 **`<base>/images`** |
-| `--host` | `192.168.16.71` | |
-| `-P` / `--port` | `22` | |
-| `--user` | `root` | |
-| `--password` | 环境 / `kaihong` | |
-| `--remote` | **`/root/images`** | 拉 OH phone 请改为 **`.../packages/phone/images`** |
+| `--host` / `--user` / `--password` / `--remote` | **无** | **[必填配置](#必填配置同步--版本校验--raw-scp)** 或 CLI |
+| `-P` / `--port` | **22** 或 **`RKFLASH_SYNC_PORT`** | |
 | `--no-prefer-scp` | 关 | 打开则**不**用 sshpass+scp，**强制 paramiko** |
 | `--sshpass` | 无 | 或 **`RKFLASH_SSHPASS`** |
 | `--scp-only` | 关 | **仅** sshpass+scp；无 sshpass 则报错 |
@@ -284,24 +294,22 @@ python3 src/skills/rkflash/rkflash.py
 - **`Flash finished, log: ...`** 之后：等待 **`--verify-delay`（默认 60s）**，再 **`hdc shell param get`**，脚本内正则取 **`SOFTWARE_VERSION_PARAM`**（**不依赖本机 `grep`**）。
 - 拉 **`--remote-ohos-para`**：**先 `pscp` 单文件到系统临时文件**（可能向终端打进度行），失败则用 **paramiko SFTP** 读远端文件。
 - 结果追加到**同一烧录日志**：**`Post-flash version check`**、**`VERIFY OK`** / **`VERIFY FAIL`**；成功时 **`Version verify OK: ...`**。
-- **`VERIFY OK`** 后（除非 **`--no-leds-off`**）：日志 **`Turn off all LEDs`**，执行 **`hdc shell sh -c`**（默认 sysfs 脚本或 **`RKFLASH_LEDS_OFF_CMD`**）；成功时终端 **`All LEDs off (best-effort).`**，失败仅警告**不**改退出码。
+- **`VERIFY OK`** 后（除非 **`--no-leds-off`**）：日志 **`Turn off all LEDs`**，执行 **`hdc shell sh -c`**（见 **`leds_off_cmd` / 命名列表 / 默认 blue,green,red**）；成功时终端 **`All LEDs off (best-effort).`**，失败仅警告**不**改退出码。
 
-| 参数 | 默认 |
-|------|------|
-| `--no-verify-version` | 不设则**执行**校验；若指定则跳过（**仅调试**，与 **`rkflash.py --help`** 说明一致） |
-| `--no-leds-off` | 不设则在 **VERIFY OK** 后执行默认关灯；指定则**不**执行 |
-| `--verify-host` | `192.168.16.71` |
-| `--verify-user` | `root` |
-| `--verify-password` | `RKFLASH_SSH_PASSWORD` / `kaihong` |
-| `--verify-port` | `22` |
-| `--remote-ohos-para` | **`DEFAULT_REMOTE_OHOS_PARA`** |
-| `--verify-delay` | **60** |
-| `--verify-hdc-timeout` | **120** |
-| `--verify-pscp-timeout` | **120** |
-| `--base` | 脚本目录 |
-| `--hdc-timeout` | **120**（**`hdc shell reboot loader`**） |
-| `--step-timeout` | **600**（**`td` / `rcb` / `rd`** 等） |
-| `--long-timeout` | **7200**（**`ul`、各 `di` 下载**） |
+| 参数 | 默认 | 说明 |
+|------|------|------|
+| `--no-verify-version` | 关 | 指定则跳过校验（**仅调试**） |
+| `--no-leds-off` | 关 | 指定则校验通过后**不**关灯 |
+| `--verify-host` / `--verify-user` / `--verify-password` | **无** | 与同步相同配置源；CLI 可单独覆盖 |
+| `--verify-port` | **22** | 或 **`RKFLASH_SYNC_PORT` / `sync_port`** |
+| `--remote-ohos-para` | **无** | **`RKFLASH_REMOTE_OHOS_PARA`**、JSON、或由 **`sync_remote`** 推导 |
+| `--verify-delay` | **60** | 秒 |
+| `--verify-hdc-timeout` | **120** | 秒 |
+| `--verify-pscp-timeout` | **120** | 秒 |
+| `--base` | 脚本目录 | 技能根 |
+| `--hdc-timeout` | **120** | **`hdc shell reboot loader`** |
+| `--step-timeout` | **600** | **`td` / `rcb` / `rd`** 等 |
+| `--long-timeout` | **7200** | **`ul`、各 `di` 下载** |
 
 **说明**：**`--verify-hdc-timeout`** 同时用于 **`hdc shell param get`** 与 **VERIFY OK** 后关灯脚本的 **`hdc shell sh -c`**（同一秒数，与 **`rkflash.py --help`** 一致）。
 
@@ -345,7 +353,8 @@ python3 src/skills/rkflash/rkflash.py
 | 符号 | 作用 |
 |------|------|
 | **`CfgFlashLayout`** / **`CfgFlashPartition`** | **`config.cfg`** 解析结果（**`loader_basename`**、分区 **`di_flag`** 与 **`image_basename`**） |
-| **`sync_images_from_server(base, host=..., expect_scp=..., ...)`** | 同步到 **`base/images`** |
+| **`sync_images_from_server(base, host=..., password=..., remote_dir=..., ...)`** | 同步到 **`base/images`**（**`host`/`user`/`password`/`remote_dir`** 须由调用方提供，无模块级默认） |
+| **`_resolve_rkflash_ssh_config(...)`** | 从 CLI/环境/JSON/TTY 解析 **`RkflashSshConfig`** |
 | **`flash_all(base, hdc_timeout, step_timeout, long_timeout)`** | 烧录，返回 **`log` 文件 `Path`**（读 **`images/config.cfg`**） |
 | **`load_flash_layout_from_config(cfg_path)`** / **`parse_rockchip_config_cfg_flash_layout(data)`** | 解析烧录布局：**`ul`** 与各 **`di`** 参数 |
 | **`parse_rockchip_config_cfg_burn_files(data)`** | **`(img_basenames, [loader_bin])`**，无 **`di_flag`** |
@@ -375,10 +384,10 @@ python3 src/skills/rkflash/rkflash.py
 ### 推荐提示词（中文）
 
 1. **只做同步（Windows + PuTTY）**  
-   「在仓库里用 **`rkflash` 技能**：进入 **`src/skills/rkflash`**，执行 **`python rkflash.py pscp-sync`**，**等待命令跑完**，确认 **exit 0** 且如有 **`flattened nested images/images/`** 提示。不要中途把长时间同步当失败。」
+   「在仓库里用 **`rkflash` 技能**：先让用户配置 **`rkflash_sync_config.json`**（或 **`RKFLASH_SYNC_*` / `RKFLASH_SSH_PASSWORD`**），再进入 **`src/skills/rkflash`** 执行 **`python rkflash.py pscp-sync`**，**等待命令跑完**，确认 **exit 0** 且如有 **`flattened nested images/images/`** 提示。不要中途把长时间同步当失败。」
 
 2. **同步 + 完整烧录验收**  
-   「用 **`src/skills/rkflash/rkflash.py`**：先 **`python rkflash.py pscp-sync`** 等 **exit 0**；再 **`python rkflash.py`**（**不要**加 **`--no-verify-version`**），**必须等待整个进程结束**。成功标准：**exit 0**，终端出现 **`Version verify OK`**，日志 **`log/rkflash_*.log`** 含 **`VERIFY OK`**；若出现 **`All LEDs off (best-effort).`** 表示关灯已尝试。」
+   「用 **`src/skills/rkflash/rkflash.py`**：确保 **SSH 同步配置**已就绪；先 **`python rkflash.py pscp-sync`** 等 **exit 0**；再 **`python rkflash.py`**（**不要**加 **`--no-verify-version`**），**必须等待整个进程结束**。成功标准：**exit 0**，终端出现 **`Version verify OK`**，日志 **`log/rkflash_*.log`** 含 **`VERIFY OK`**；若出现 **`All LEDs off (best-effort).`** 表示关灯已尝试。」
 
 3. **检查 config 与镜像列表**  
    「在技能根执行 **`python rkflash.py analyze-config`**，把输出的 **Loader** 和 **`di` 行**列出来，确认与 **`images/`** 下文件一致。」
@@ -390,10 +399,11 @@ python3 src/skills/rkflash/rkflash.py
    「烧录后要做版本校验但**不要** sysfs 关灯：**`python rkflash.py --no-leds-off`**。」
 
 6. **板子关灯命令特殊**  
-   「烧录验收通过后关灯要用自定义脚本：设置环境变量 **`RKFLASH_LEDS_OFF_CMD`** 为整段 **`sh`** 脚本，再跑 **`python rkflash.py`**。」
+   「烧录验收通过后关灯要用自定义脚本：在 **`rkflash_sync_config.json`** 里设置 **`leds_off_cmd`** 为整段 **`sh`**，再跑 **`python rkflash.py`**。」
 
 ### 助手必须遵守
 
+- **同步 / 默认版本校验**前须具备 **`rkflash_sync_config.json`** 或等价环境变量；**禁止**假设仓库内写死服务器地址或密码。
 - **禁止**在 **`python rkflash.py`**（默认参数）未结束时就报告「烧录完成」。
 - **量产 / 发布**结论仅当 **exit 0** 且**未**使用 **`--no-verify-version`**。
 - 关灯失败、**`hdc`** 超时于关灯步骤：**不**推翻「版本已校验一致」的结论（仍为 **exit 0**）。
