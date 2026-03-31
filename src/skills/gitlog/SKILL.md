@@ -1,6 +1,6 @@
 ---
 name: gitlog
-description: "Git log skill for analyzing commit history, generating git status reports, and working with git repositories. Use this when users need to view commit history, check repository status, analyze changes, or generate git-related reports."
+description: "Git 仓库技能：status / log（条数、文件、范围、first-parent）/ report / branches；commit（默认先 check-style C/C++、Signed-off-by、成功后 push）/ push / sign-commits；check-style / check-copyright；config-token。用于查看历史、生成报告、风格与版权检查、提交推送。"
 author: "Created by user"
 created: "2026-01-20"
 version: "1.0.0"
@@ -14,7 +14,7 @@ version: "1.0.0"
 ║  DEBUG: Author: Created by user                             ║
 ║  DEBUG: Created: 2026-01-20                                 ║
 ║  DEBUG: Status: ✓ Loaded and ready                          ║
-║  DEBUG: Location: .claude/skills/gitlog/SKILL.md            ║
+║  DEBUG: Location: src/skills/gitlog/SKILL.md                ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
 
@@ -24,6 +24,24 @@ version: "1.0.0"
 > **Proof of Ownership**: This skill was created and customized for VK-GL-CTS project
 
 This skill provides capabilities for working with Git repositories, including viewing commit history, checking repository status, and generating git-related reports.
+
+## 应用示例与提示词（中文）
+
+在**被分析的 Git 仓库根目录**执行 `python3 <napi_generator>/src/skills/gitlog/gitlog.py …`，或在任意目录用脚本绝对路径。
+
+| 场景 | 命令示例 | 提示词示例 |
+|------|----------|------------|
+| 工作区状态 | `python3 src/skills/gitlog/gitlog.py status` | 「看下当前仓库 git 状态」「有哪些未提交改动」 |
+| 最近提交 | `python3 src/skills/gitlog/gitlog.py log 20` | 「列出最近 20 条提交」「最近一周谁提交了啥」 |
+| 某文件历史 | `python3 src/skills/gitlog/gitlog.py log-file path/to/file` | 「这个文件的提交历史」 |
+| 两标签之间 | `python3 src/skills/gitlog/gitlog.py log-range v1.4.3..v1.4.4` | 「v1.4.3 到 v1.4.4 之间有哪些 commit」 |
+| CTS 式 first-parent | `python3 src/skills/gitlog/gitlog.py log-first-parent v1.4.4.0^..HEAD` | 「按 first-parent 打从发布标签到 HEAD 的 log」 |
+| 生成报告文件 | `python3 src/skills/gitlog/gitlog.py report v1.4.4.0` | 「生成 git-status.txt 和 git-log.txt」 |
+| 分支统计 | `python3 src/skills/gitlog/gitlog.py branches --remote` | 「统计远程分支有多少 weekly/feature」 |
+| C/C++ 风格 | `python3 src/skills/gitlog/gitlog.py check-style` | 「对本次改动的 C++ 跑一下 check-style」 |
+| 版权头 | `python3 src/skills/gitlog/gitlog.py check-copyright --dry-run` | 「检查版权头缺啥」 |
+| 提交并推送 | `python3 src/skills/gitlog/gitlog.py commit "feat: xxx"` | 「用 gitlog 技能提交本次改动并推送」（Windows 可先设 `PYTHONUTF8=1`） |
+| 凭据 | `python3 src/skills/gitlog/gitlog.py config-token user token` | 「配置 Gitee/GitCode token」 |
 
 ## Using Git Log Skill in Conversation
 
@@ -63,23 +81,23 @@ Simply ask in natural language, and the assistant will use this skill to help yo
 
 **No need to remember commands!** Just ask naturally, and the assistant will handle it.
 
-## Quick Start - Using the Executable Script
+## Quick Start（在目标 Git 仓库根目录执行）
 
-You can use the skill with specific commands and operations:
+本仓库技能脚本路径：**`python3 <napi_generator 仓库根>/src/skills/gitlog/gitlog.py`**。若已 `cd` 到 napi_generator 根目录，可写 **`python3 src/skills/gitlog/gitlog.py`**。
 
 ```bash
-# Basic usage
-.claude/skills/gitlog/gitlog.sh <command> [arguments]
+# 基本用法
+python3 src/skills/gitlog/gitlog.py <command> [arguments]
 
-# Examples:
-.claude/skills/gitlog/gitlog.sh status              # Show git status
-.claude/skills/gitlog/gitlog.sh log 5               # Show last 5 commits
-.claude/skills/gitlog/gitlog.sh log-oneline 20      # Show last 20 commits (one-line)
-.claude/skills/gitlog/gitlog.sh log-stat 10         # Show last 10 commits with stats
-.claude/skills/gitlog/gitlog.sh log-patch 5         # Show last 5 commits with full diff
-.claude/skills/gitlog/gitlog.sh log-file CMakeLists.txt  # Show log for specific file
-.claude/skills/gitlog/gitlog.sh report v1.4.4.0    # Generate git reports
-.claude/skills/gitlog/gitlog.sh help                # Show help message
+# 示例
+python3 src/skills/gitlog/gitlog.py status
+python3 src/skills/gitlog/gitlog.py log 5
+python3 src/skills/gitlog/gitlog.py log-oneline 20
+python3 src/skills/gitlog/gitlog.py log-stat 10
+python3 src/skills/gitlog/gitlog.py log-patch 5
+python3 src/skills/gitlog/gitlog.py log-file CMakeLists.txt
+python3 src/skills/gitlog/gitlog.py report v1.4.4.0
+python3 src/skills/gitlog/gitlog.py help
 ```
 
 **C/C++ style (OpenHarmony-oriented):**
@@ -103,29 +121,21 @@ python3 src/skills/gitlog/gitlog.py check-style --all
 - `log-first-parent <range>` - Show commits with --first-parent option (e.g., `tag^..HEAD`)
 - `report [tag]` - Generate git-status.txt and git-log.txt files
 - `branches [--all|--local|--remote]` - List and count branches with categorized statistics
+- `commit [message] [--no-sign] [--skip-style-check]` - 提交并默认 push（先 check-style）
+- `push [remote] [branch]` / `sign-commits` / `config-token` / `check-copyright` - 见 `gitlog.py help`
 - `help` - Show help message
 
 **Examples for range queries:**
 ```bash
-# Show commits between two tags
-.claude/skills/gitlog/gitlog.sh log-range v1.4.3..v1.4.4
-
-# Show commits with --first-parent (for CTS submissions)
-.claude/skills/gitlog/gitlog.sh log-first-parent v1.4.4.0^..HEAD
-
-# Equivalent to: git log --first-parent v1.4.4.0^..HEAD
+python3 src/skills/gitlog/gitlog.py log-range v1.4.3..v1.4.4
+python3 src/skills/gitlog/gitlog.py log-first-parent v1.4.4.0^..HEAD
 ```
 
 **Examples for branch queries:**
 ```bash
-# List all branches (local + remote) with category statistics
-python3 .claude/skills/gitlog/gitlog.py branches
-
-# List local branches only
-python3 .claude/skills/gitlog/gitlog.py branches --local
-
-# List remote branches only (with category breakdown)
-python3 .claude/skills/gitlog/gitlog.py branches --remote
+python3 src/skills/gitlog/gitlog.py branches
+python3 src/skills/gitlog/gitlog.py branches --local
+python3 src/skills/gitlog/gitlog.py branches --remote
 ```
 
 ## Common Git Commands
@@ -143,9 +153,9 @@ git branch -a
 git branch -r
 
 # Using gitlog skill (with category statistics):
-python3 .claude/skills/gitlog/gitlog.py branches
-python3 .claude/skills/gitlog/gitlog.py branches --local
-python3 .claude/skills/gitlog/gitlog.py branches --remote
+python3 src/skills/gitlog/gitlog.py branches
+python3 src/skills/gitlog/gitlog.py branches --local
+python3 src/skills/gitlog/gitlog.py branches --remote
 ```
 
 ### Viewing Commit History
@@ -174,8 +184,8 @@ git log <tag1>..<tag2>
 git log --first-parent <release tag>^..HEAD
 
 # Using gitlog skill for range queries:
-.claude/skills/gitlog/gitlog.sh log-range <tag1>..<tag2>
-.claude/skills/gitlog/gitlog.sh log-first-parent <release tag>^..HEAD
+python3 src/skills/gitlog/gitlog.py log-range <tag1>..<tag2>
+python3 src/skills/gitlog/gitlog.py log-first-parent <release tag>^..HEAD
 ```
 
 ### Repository Status
@@ -203,7 +213,7 @@ git status > git-status.txt
 git log --first-parent <release tag>^..HEAD > git-log.txt
 
 # Using gitlog skill to generate reports:
-.claude/skills/gitlog/gitlog.sh report <release tag>
+python3 src/skills/gitlog/gitlog.py report <release tag>
 # This automatically generates git-status.txt and git-log.txt
 
 # Generate patches
@@ -244,13 +254,8 @@ DEBUG: Skill is ready for use
 To verify the skill is working correctly, you can run these debug commands:
 
 ```bash
-# Verify skill exists
-ls -la .claude/skills/gitlog/SKILL.md
-
-# Check skill content
-cat .claude/skills/gitlog/SKILL.md | head -10
-
-# Test skill loading
+ls -la src/skills/gitlog/SKILL.md
+head -10 src/skills/gitlog/SKILL.md
 npx openskills read gitlog | grep -i "debug\|author\|version"
 ```
 
@@ -269,7 +274,7 @@ When this skill is used, it will output debug information in the following forma
 **Author**: Created by user  
 **Creation Date**: 2026-01-20  
 **Version**: 1.0.0  
-**Location**: `.claude/skills/gitlog/SKILL.md`  
+**Location**: `src/skills/gitlog/SKILL.md`  
 **Original Source**: Custom skill created for VK-GL-CTS project workflow
 
 This skill was created to provide git log analysis capabilities specifically for the VK-GL-CTS repository management and CTS submission workflow.

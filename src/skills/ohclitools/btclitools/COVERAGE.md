@@ -1,6 +1,6 @@
 # btframework inner_kits 接口覆盖检查
 
-依据 bundle: `foundation/communication/bluetooth/bundle.json`，源目录: `.claude/skills/ohclitools/btclitools`。
+依据 bundle: `foundation/communication/bluetooth/bundle.json`，源目录: `src/skills/ohclitools/btclitools`（相对 napi_generator 仓库根）。
 
 - 声明头文件数: 25
 - 已覆盖（源码中已 include）: 14

@@ -1,6 +1,6 @@
 ---
 name: helloworld
-description: "hello world skill is used to show openharmony main employer codeline, top author codeline, and commit detail data."
+description: "OpenHarmony 社区数据：雇主贡献与作者排名、按分支/时间的提交详情、按邮箱查提交、兼容性等（openharmony.cn 接口）；另有 generate.py 示例代码生成。脚本 getcodecnt.py、generate.py。依赖网络。"
 author: "Created by user"
 created: "2026-01-20"
 version: "1.0.0"
@@ -14,7 +14,7 @@ version: "1.0.0"
 ║  DEBUG: Author: Created by user                             ║
 ║  DEBUG: Created: 2026-01-20                                 ║
 ║  DEBUG: Status: ✓ Loaded and ready                          ║
-║  DEBUG: Location: .claude/skills/helloworld/SKILL.md        ║
+║  DEBUG: Location: src/skills/helloworld/SKILL.md            ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
 
@@ -30,6 +30,19 @@ This skill provides capabilities for:
 4. **Viewing OpenHarmony commit detail data** (submission details by employer and branch)
 5. **Querying commits by author email** (submit details and statistics by email address)
 6. **Querying compatibility devices** (certified devices by company, version, and system type)
+
+## 应用示例与提示词（中文）
+
+依赖 **openharmony.cn** 开放接口与网络。在 **napi_generator 仓库根** 执行。
+
+| 场景 | 命令示例 | 提示词示例 |
+|------|----------|------------|
+| 雇主贡献 | `python3 src/skills/helloworld/getcodecnt.py employer 1month` | 「近一个月各雇主代码行贡献排名」 |
+| 作者排名 | `python3 src/skills/helloworld/getcodecnt.py author 1month` | 「近一个月作者提交行数排名」 |
+| 提交详情 | `python3 src/skills/helloworld/getcodecnt.py detail 1month 深开鸿 master` | 「深开鸿在 master 近一月提交明细」 |
+| 按邮箱 | `python3 src/skills/helloworld/getcodecnt.py email 1month user@example.com` | 「查这个邮箱近期的提交」 |
+| 兼容性 | `python3 src/skills/helloworld/getcodecnt.py compatibility` | 「兼容性设备相关统计」 |
+| 示例代码 | `python3 src/skills/helloworld/generate.py` | 「生成 helloworld 示例工程」 |
 
 ## Features
 
@@ -144,29 +157,29 @@ The skill accesses the OpenHarmony compatibility API to get certified device inf
 **Method 1: Using the Script Directly**
 ```bash
 # 查看雇主数据（默认，全部时间）
-python3 .claude/skills/helloworld/getcodecnt.py
-python3 .claude/skills/helloworld/getcodecnt.py employer
+python3 src/skills/helloworld/getcodecnt.py
+python3 src/skills/helloworld/getcodecnt.py employer
 
 # 查看贡献者排名数据
-python3 .claude/skills/helloworld/getcodecnt.py author
+python3 src/skills/helloworld/getcodecnt.py author
 
 # 指定时间范围查询
-python3 .claude/skills/helloworld/getcodecnt.py employer 1month    # 近1个月
-python3 .claude/skills/helloworld/getcodecnt.py author 2month      # 近2个月
-python3 .claude/skills/helloworld/getcodecnt.py 3year              # 近3年
+python3 src/skills/helloworld/getcodecnt.py employer 1month    # 近1个月
+python3 src/skills/helloworld/getcodecnt.py author 2month      # 近2个月
+python3 src/skills/helloworld/getcodecnt.py 3year              # 近3年
 
 # 查看提交详情（需要指定雇主和分支）
-python3 .claude/skills/helloworld/getcodecnt.py detail 1month 深开鸿 master
-python3 .claude/skills/helloworld/getcodecnt.py detail 3month 华为 master
+python3 src/skills/helloworld/getcodecnt.py detail 1month 深开鸿 master
+python3 src/skills/helloworld/getcodecnt.py detail 3month 华为 master
 
 # 根据作者邮箱查询提交详情和统计
-python3 .claude/skills/helloworld/getcodecnt.py email 1month goujingjing@kaihong.com
-python3 .claude/skills/helloworld/getcodecnt.py email 1month goujingjing@kaihong.com master
+python3 src/skills/helloworld/getcodecnt.py email 1month goujingjing@kaihong.com
+python3 src/skills/helloworld/getcodecnt.py email 1month goujingjing@kaihong.com master
 
 # 查询兼容性设备（支持按公司、版本、系统类型查询）
-python3 .claude/skills/helloworld/getcodecnt.py compatibility
-python3 .claude/skills/helloworld/getcodecnt.py compatibility 103  # 查询深开鸿的设备（使用公司ID）
-python3 .claude/skills/helloworld/getcodecnt.py compatibility 103 6 轻量系统  # 查询指定版本和系统类型
+python3 src/skills/helloworld/getcodecnt.py compatibility
+python3 src/skills/helloworld/getcodecnt.py compatibility 103  # 查询深开鸿的设备（使用公司ID）
+python3 src/skills/helloworld/getcodecnt.py compatibility 103 6 轻量系统  # 查询指定版本和系统类型
 ```
 
 **支持的时间范围：**
@@ -278,7 +291,7 @@ OpenHarmony 6.0 Release        9
 **Author**: Created by user  
 **Creation Date**: 2026-01-20  
 **Version**: 1.0.0  
-**Location**: `.claude/skills/helloworld/SKILL.md`  
+**Location**: `src/skills/helloworld/SKILL.md`  
 **Scripts**: 
 - `generate.py` - Generates hello world Python files
 - `getcodecnt.py` - Fetches OpenHarmony data (employer, contributor, and commit details)

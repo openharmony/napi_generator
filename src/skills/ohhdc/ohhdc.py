@@ -82,8 +82,8 @@ def run_hdc_command(command, timeout_sec=120):
 # wificlitools 产物：见 foundation/communication/wifi/wifi/test/wificlitools/BUILD.gn（ohos_executable wificommand）
 # 默认未 install 进 system 分区；可 push 到可写目录后用绝对路径调用（与 ohclitools 约定一致）。
 WIFICOMMAND_BIN_DEFAULT = "wificommand"
-DEFAULT_WIFI_KAIHONG_SSID = "KaiHong"
-DEFAULT_WIFI_KAIHONG_PASSWORD = "KaiHong@888"
+DEFAULT_WIFI_KAIHONG_SSID = "xxx"
+DEFAULT_WIFI_KAIHONG_PASSWORD = "xxxxxx"
 DEFAULT_WIFICOMMAND_REMOTE_PATH = "/data/local/tmp/wificommand"
 DEFAULT_WIFI_PRODUCT = "rk3568"
 

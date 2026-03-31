@@ -12,6 +12,19 @@ version: "1.5.0"
 
 在 **Windows**（或已配置 OpenSSH/`sshpass` 的 Linux）下，将 **`images/`** 中分区镜像按 **`images/config.cfg`** 解析出的顺序与 **`di` 参数**烧录到 **Rockchip** 开发板（**无**代码内写死的 **`REQUIRED_IMAGES`** 列表）。**同步与版本校验**所依赖的 **SSH 主机、用户、密码、远端镜像路径**等**不设仓库默认值**，须通过 **CLI / 环境变量 / `<base>/rkflash_sync_config.json`** 配置；在交互终端下可对缺项**逐条提示输入**，非 TTY 则**报错退出**并说明如何配置。**烧录日志**：**`log/rkflash_<时间>.log`**（UTF-8，步骤标题**英文**）；**expect-scp 调试日志**：**`log/rkflash_sync_expect_<时间>.log`**。**与 `rkflash.py` 顶部模块 docstring、`--help` 描述一致**（子命令、**`config.cfg`** 解析、**烧录完成判定**、**`--no-verify-version` / `--no-leds-off`**）。
 
+## 应用示例与提示词
+
+在 **napi_generator 仓库根** 下进入 **`src/skills/rkflash`**（或带 `--base` 指向该目录）。须先配置 **`rkflash_sync_config.json`**（从 **`rkflash_sync_config.example.json`** 复制，**勿提交真实密码**）。
+
+| 场景 | 命令示例 | 提示词示例 |
+|------|----------|------------|
+| 查看布局 | `python3 src/skills/rkflash/rkflash.py analyze-config` | 「解析当前 images 下 config.cfg 的烧录顺序」 |
+| PuTTY 同步 | `python3 src/skills/rkflash/rkflash.py pscp-sync` | 「用 pscp 从编译机同步镜像到本机再准备烧录」 |
+| 一键烧录 | `python3 src/skills/rkflash/rkflash.py flash_all` | 「同步完成后执行 flash_all 烧录 RK 板」 |
+| 跳过版本校验 | `python3 src/skills/rkflash/rkflash.py flash_all --no-verify-version` | 「先烧录不做 ohos.para 版本比对」 |
+| 不关灯 | `python3 src/skills/rkflash/rkflash.py flash_all --no-leds-off` | 「烧录通过后不要 hdc 关灯」 |
+| 帮助 | `python3 src/skills/rkflash/rkflash.py --help` | 「rkflash 有哪些子命令和参数」 |
+
 ---
 
 ## 功能简介（与 `rkflash.py` 对齐）

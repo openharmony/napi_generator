@@ -34,7 +34,7 @@ def infer_src_root(explicit: str | None) -> Path:
     env = os.environ.get("OHOS_SRC", "").strip()
     if env:
         return Path(env).expanduser().resolve()
-    # .../src/.claude/skills/ohrecord/ohrecord.py -> parents[3] == src
+    # 从脚本位置向上查找含 build.sh 的目录（OpenHarmony 源码根）
     p = Path(__file__).resolve()
     for i in range(1, min(8, len(p.parts))):
         cand = p.parents[i]
@@ -93,7 +93,7 @@ def cmd_paths(args: argparse.Namespace) -> int:
         print(f"  {ex} {rel}")
     print(f"\n  设备录制目录（须匹配 SELinux）: {DEFAULT_RECORD_DIR}")
     print(f"  设备媒体库（常见）: {DEFAULT_DEVICE_SO} 或 {DEFAULT_DEVICE_SO_ALT}")
-    print(f"  详细说明: {root / '.claude/skills/ohproj/SKILL.md'} （第十节）")
+    print("  详细说明: napi_generator 仓库 src/skills/ohproj/SKILL.md（第十节）")
     return 0
 
 
