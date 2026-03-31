@@ -1,6 +1,6 @@
 ---
-name: ohbuild
-description: "build ohos acts project."
+name: ohhap
+description: "OpenHarmony HAP 应用构建与签名：环境检查、SDK 版本校验、hvigor 编译主包与 ohosTest、release/debug 签名、清除签名。需 HOS_CLT_PATH、OHOS_SDK_PATH 与项目 build-profile.json5。脚本 hapbuild.py。与 ohbuild（fuzz/部件编译）不同。"
 author: "Created by user"
 created: "2026-01-20"
 version: "1.0.0"
@@ -17,6 +17,19 @@ version: "1.0.0"
 3. **HAP 构建**：执行 HAP 应用的编译
 4. **HAP 签名**：对编译生成的 HAP 文件进行签名
 5. **清除签名**：清除签名相关的临时文件
+
+## 应用示例与提示词
+
+需 **`HOS_CLT_PATH`**、**`OHOS_SDK_PATH`**；在 **napi_generator 仓库根** 执行时脚本路径如下，**`<项目目录>`** 多为 **`src/skills/ohhap/NativeProj46R`** 或你自建的 HAP 工程绝对路径。
+
+| 场景 | 命令示例 | 提示词示例 |
+|------|----------|------------|
+| 编译 HAP | `python3 src/skills/ohhap/hapbuild.py build src/skills/ohhap/NativeProj46R` | 「用 ohhap 编译 NativeProj46R 模板工程」 |
+| 指定 product/mode | `python3 src/skills/ohhap/hapbuild.py build <项目> default release` | 「打成 release 主包」 |
+| 签主包 | `python3 src/skills/ohhap/hapbuild.py sign <项目> release` | 「对未签名 HAP 做 release 签名」 |
+| 编测试包 | `python3 src/skills/ohhap/hapbuild.py build-test <项目>` | 「只构建 ohosTest HAP」 |
+| 清签名 | `python3 src/skills/ohhap/hapbuild.py clean-sign <项目>` | 「清除 autosign 临时文件」 |
+| 查看用法 | `python3 src/skills/ohhap/hapbuild.py`（无参打印命令列表） | 「hapbuild 支持哪些子命令」 |
 
 ## 环境要求
 
@@ -44,45 +57,45 @@ version: "1.0.0"
 
 ```bash
 # 基本用法（使用默认 product 和 debug 模式）
-python3 .claude/skills/ohhap/hapbuild.py build <project_dir>
+python3 src/skills/ohhap/hapbuild.py build <project_dir>
 
 # 向后兼容：直接使用项目目录（自动识别为 build 命令）
-python3 .claude/skills/ohhap/hapbuild.py <project_dir>
+python3 src/skills/ohhap/hapbuild.py <project_dir>
 
 # 指定 product 和 build_mode
-python3 .claude/skills/ohhap/hapbuild.py build <project_dir> <product> <build_mode>
+python3 src/skills/ohhap/hapbuild.py build <project_dir> <product> <build_mode>
 
 # 示例
-python3 .claude/skills/ohhap/hapbuild.py build /path/to/project
-python3 .claude/skills/ohhap/hapbuild.py build /path/to/project default debug
-python3 .claude/skills/ohhap/hapbuild.py build /path/to/project default release
+python3 src/skills/ohhap/hapbuild.py build /path/to/project
+python3 src/skills/ohhap/hapbuild.py build /path/to/project default debug
+python3 src/skills/ohhap/hapbuild.py build /path/to/project default release
 ```
 
 #### 签名 HAP
 
 ```bash
 # 使用 release profile 签名（默认）
-python3 .claude/skills/ohhap/hapbuild.py sign <project_dir>
+python3 src/skills/ohhap/hapbuild.py sign <project_dir>
 
 # 使用 debug profile 签名
-python3 .claude/skills/ohhap/hapbuild.py sign <project_dir> debug
+python3 src/skills/ohhap/hapbuild.py sign <project_dir> debug
 
 # 使用 release profile 签名
-python3 .claude/skills/ohhap/hapbuild.py sign <project_dir> release
+python3 src/skills/ohhap/hapbuild.py sign <project_dir> release
 
 # 示例
-python3 .claude/skills/ohhap/hapbuild.py sign /path/to/project
-python3 .claude/skills/ohhap/hapbuild.py sign /path/to/project release
+python3 src/skills/ohhap/hapbuild.py sign /path/to/project
+python3 src/skills/ohhap/hapbuild.py sign /path/to/project release
 ```
 
 #### 清除签名
 
 ```bash
 # 清除签名（删除 autosign 目录）
-python3 .claude/skills/ohhap/hapbuild.py clean-sign <project_dir>
+python3 src/skills/ohhap/hapbuild.py clean-sign <project_dir>
 
 # 示例
-python3 .claude/skills/ohhap/hapbuild.py clean-sign /path/to/project
+python3 src/skills/ohhap/hapbuild.py clean-sign /path/to/project
 ```
 
 ### 对话方式

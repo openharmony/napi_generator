@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Optional
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-# 从 src/.claude/skills/ohtest 到 src
+# 从本脚本位置推断 OpenHarmony 源码根（见实现）
 SRC_ROOT = SCRIPT_DIR.parent.parent.parent
 
 

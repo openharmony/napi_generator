@@ -39,8 +39,8 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 SRC_ROOT = SCRIPT_DIR.parent.parent.parent
 
-# 默认源目录、test 目录、bundle.json（相对 src，当用户未指定时使用）
-DEFAULT_SOURCE_DIR = Path(".claude/skills/ohclitools/btclitools")
+# 默认源目录（与脚本同目录下的 btclitools）；test/bundle 相对 OpenHarmony 源码 src（见 SRC_ROOT）
+DEFAULT_SOURCE_DIR = SCRIPT_DIR / "btclitools"
 DEFAULT_TEST_DIR = Path("foundation/communication/bluetooth/test")
 DEFAULT_BUNDLE_JSON = Path("foundation/communication/bluetooth/bundle.json")
 
@@ -555,17 +555,17 @@ def show_help() -> None:
 
 选项:
   --bundle-json PATH   (coverage) bundle.json 路径，默认: foundation/communication/bluetooth/bundle.json
-  --source-dir PATH    源目录（如 btclitools），默认: .claude/skills/ohclitools/btclitools
+  --source-dir PATH    源目录（如 btclitools），默认: <脚本目录>/btclitools（仓库内即 src/skills/ohclitools/btclitools）
   --test-dir PATH      目标 test 目录，默认: foundation/communication/bluetooth/test
   --product-name NAME  产品名，默认: rk3568
   --output PATH        (coverage) 覆盖率报告输出路径（可选）
   --push-run           验证时推送到设备 /data/local/tmp、chmod +x 并运行，并比较设备输出命令列表与源码是否一致
 
-示例:
-  python3 ohclitool.py coverage --source-dir .claude/skills/ohclitools/btclitools --output btclitools/COVERAGE.md
-  python3 ohclitool.py deploy --source-dir .claude/skills/ohclitools/btclitools --test-dir foundation/communication/bluetooth/test
-  python3 ohclitool.py verify --source-dir .claude/skills/ohclitools/btclitools --push-run
-  python3 ohclitool.py all --source-dir .claude/skills/ohclitools/btclitools --test-dir foundation/communication/bluetooth/test --push-run
+示例（在 OpenHarmony 源码 src 根下执行，脚本填本仓库绝对路径或相对路径）:
+  python3 <napi_generator>/src/skills/ohclitools/ohclitool.py coverage --source-dir <napi_generator>/src/skills/ohclitools/btclitools --output btclitools/COVERAGE.md
+  python3 <napi_generator>/src/skills/ohclitools/ohclitool.py deploy --source-dir <napi_generator>/src/skills/ohclitools/btclitools --test-dir foundation/communication/bluetooth/test
+  python3 <napi_generator>/src/skills/ohclitools/ohclitool.py verify --push-run
+  python3 <napi_generator>/src/skills/ohclitools/ohclitool.py all --test-dir foundation/communication/bluetooth/test --push-run
 """)
 
 

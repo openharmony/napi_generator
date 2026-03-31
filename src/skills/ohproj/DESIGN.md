@@ -6,8 +6,8 @@
 
 ## 一、项目结构概览
 
-- **模板**：`.claude/skills/ohhap/NativeProj46R`
-- **生成项目**：`.claude/skills/ohproj/<命名>NativeProj46R`
+- **模板**：`src/skills/ohhap/NativeProj46R`
+- **生成项目**：`src/skills/ohproj/<命名>NativeProj46R`
 - **bundleName**：`ohos.<命名小写无符号>.nativeproj46r`
 
 关键目录与文件：

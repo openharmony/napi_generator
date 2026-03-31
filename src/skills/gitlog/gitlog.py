@@ -9,7 +9,7 @@ Version: 1.0.0
 Usage:
     python3 gitlog.py <command> [arguments]
     or
-    python3 .claude/skills/gitlog/gitlog.py <command> [arguments]
+    python3 src/skills/gitlog/gitlog.py <command> [arguments]
 
 Commands:
     status          - Show git status
@@ -2013,7 +2013,7 @@ def cmd_sign_commits(range_str=None):
         print("  5. 启动 GPG agent: gpg-agent --daemon")
         print()
         print("或者运行以下命令快速配置：")
-        print("  python3 .claude/skills/gitlog/gitlog.py setup-gpg")
+        print("  python3 src/skills/gitlog/gitlog.py setup-gpg")
         return 1
     
     signing_key = stdout.strip()

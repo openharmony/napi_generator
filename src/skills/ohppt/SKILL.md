@@ -1,6 +1,23 @@
+---
+name: ohppt
+description: "将 Markdown 文档中的表格转为结构图 PPTX（每行一框、列内子模块、支持层级分隔）。依赖 python-pptx。脚本 ohppt.py、build_architecture_ppt.py。"
+author: "Created by user"
+version: "1.0.0"
+---
+
 # ohppt：根据 MD 表格生成结构图 PPT
 
 根据 Markdown 文档中的**表格**生成**结构图 PPT**：每一行对应一个矩形框（深灰），每一列对应框内的子模块（矩形），支持层级（`；` 分多组、` - ` 分标题与子项）。文字左对齐、黑体、12 号字。
+
+## 应用示例与提示词
+
+在 **napi_generator 仓库根** 下执行（需已 `pip install python-pptx`）。
+
+| 场景 | 命令示例 | 提示词示例 |
+|------|----------|------------|
+| 生成 PPTX | `python3 src/skills/ohppt/ohppt.py docs/arch.md out/arch.pptx` | 「把这份 Markdown 里的表格转成结构图 PPT」 |
+| 默认同名输出 | `python3 src/skills/ohppt/ohppt.py docs/arch.md` | 「对 arch.md 生成同名 pptx」 |
+| 架构脚本 | `python3 src/skills/ohppt/build_architecture_ppt.py --help` | 「用 ohppt 里的 build_architecture_ppt 生成幻灯片」 |
 
 ## 依赖
 
@@ -11,7 +28,8 @@ pip install python-pptx
 ## 使用方式
 
 ```bash
-python3 ohppt.py <input.md> [output.pptx]
+cd <napi_generator 仓库根>
+python3 src/skills/ohppt/ohppt.py <input.md> [output.pptx]
 ```
 
 - 不指定输出时，默认输出为与输入同名的 `.pptx`（如 `example.md` → `example.pptx`）。
