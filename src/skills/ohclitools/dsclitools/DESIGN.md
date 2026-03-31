@@ -123,7 +123,7 @@
 
 ## 六、与 ohclitools 技能的关系
 
-- **部署**：`ohclitool.py deploy --source-dir .claude/skills/ohclitools/dsclitools --test-dir foundation/communication/dsoftbus/tests`
+- **部署**：`ohclitool.py deploy --source-dir <napi_generator>/src/skills/ohclitools/dsclitools --test-dir foundation/communication/dsoftbus/tests`
 - **编译**：解析 dsclitools/BUILD.gn 得到目标名 `dscommand`，需在 dsoftbus 工程内编译（依赖 softbus_client）。
 - **验证**：`ohclitool.py verify --push-run` 可对比设备输出命令列表与源码 g_staCliCmds 一致性。
 

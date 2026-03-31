@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-# 脚本所在目录：src/.claude/skills/ohbuild/
+# 脚本所在目录：napi_generator 仓库内 src/skills/ohbuild/
 SCRIPT_DIR = Path(__file__).resolve().parent
 # 假定源码根为 src（即 skills 的上级的上级的上级）
 SRC_ROOT = SCRIPT_DIR.parent.parent.parent

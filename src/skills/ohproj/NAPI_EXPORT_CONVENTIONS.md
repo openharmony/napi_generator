@@ -76,5 +76,5 @@
 |------|------------|
 | NAPI 实现 | 项目下 `entry/src/main/cpp/napi_init.cpp` |
 | TS 声明 | 项目下 `entry/src/main/cpp/types/libentry/Index.d.ts` |
-| 测试用例设计 | `.claude/skills/ohproj/TEST_CASE_DESIGN.md` |
-| 技能说明 | `.claude/skills/ohproj/SKILL.md` |
+| 测试用例设计 | `src/skills/ohproj/TEST_CASE_DESIGN.md` |
+| 技能说明 | `src/skills/ohproj/SKILL.md` |

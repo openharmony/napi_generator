@@ -10,7 +10,7 @@ version: "1.6.1"
 
 本技能提供 **创建**、**编译**、**签名**、**编译测试用例**、**执行测试用例** 与 **清除签名** 六类能力，面向基于模板 NativeProj46R 的原生应用项目（含 NAPI + ArkTS）。配套设计文档与代码规范见 **DESIGN.md**，测试报告格式见 **八、测试报告格式**。**常见问题与避免**（编译失败、测试依赖缺失、mock 未关、用例不足等）见 **KNOWN_ISSUES_AND_AVOIDANCE.md**。
 
-**系统镜像侧 `snapshot_record` 屏幕录制 MP4**（非 HAP）：开发与烧录流程、修改文件清单、SELinux、调试命令见 **第十节**；可执行脚本 **`.claude/skills/ohrecord/ohrecord.py`** 与技能说明 **`.claude/skills/ohrecord/SKILL.md`**。
+**系统镜像侧 `snapshot_record` 屏幕录制 MP4**（非 HAP）：开发与烧录流程、修改文件清单、SELinux、调试命令见 **第十节**；可执行脚本 **`src/skills/ohrecord/ohrecord.py`** 与 **`src/skills/ohrecord/SKILL.md`**。
 
 ---
 
@@ -41,32 +41,32 @@ version: "1.6.1"
 
 ```bash
 # 创建项目（在 ohproj 目录下生成 <项目名>NativeProj46R）
-python3 .claude/skills/ohproj/ohproj.py create <项目名> [--code-dir <用户代码目录>]
+python3 src/skills/ohproj/ohproj.py create <项目名> [--code-dir <用户代码目录>]
 
 # 编译主 HAP
-python3 .claude/skills/ohproj/ohproj.py build <项目目录绝对路径>
+python3 src/skills/ohproj/ohproj.py build <项目目录绝对路径>
 
 # 签名（默认 release）
-python3 .claude/skills/ohproj/ohproj.py sign <项目目录绝对路径> [release|debug]
+python3 src/skills/ohproj/ohproj.py sign <项目目录绝对路径> [release|debug]
 
 # 编译单元测试 HAP
-python3 .claude/skills/ohproj/ohproj.py build-test <项目目录绝对路径>
+python3 src/skills/ohproj/ohproj.py build-test <项目目录绝对路径>
 
 # 执行单元测试（部署到设备并运行）
-python3 .claude/skills/ohproj/ohproj.py test <项目目录绝对路径> [--timeout 毫秒]
+python3 src/skills/ohproj/ohproj.py test <项目目录绝对路径> [--timeout 毫秒]
 
 # 清除签名
-python3 .claude/skills/ohproj/ohproj.py clean-sign <项目目录绝对路径>
+python3 src/skills/ohproj/ohproj.py clean-sign <项目目录绝对路径>
 ```
 
 **直接调用 ohhap / ohhdc（与 ohproj 等价）：**
 
 ```bash
-python3 .claude/skills/ohhap/hapbuild.py build <项目目录绝对路径>
-python3 .claude/skills/ohhap/hapbuild.py sign <项目目录绝对路径> [release|debug]
-python3 .claude/skills/ohhap/hapbuild.py build-test <项目目录绝对路径>
-python3 .claude/skills/ohhap/hapbuild.py clean-sign <项目目录绝对路径>
-python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--timeout 毫秒]
+python3 src/skills/ohhap/hapbuild.py build <项目目录绝对路径>
+python3 src/skills/ohhap/hapbuild.py sign <项目目录绝对路径> [release|debug]
+python3 src/skills/ohhap/hapbuild.py build-test <项目目录绝对路径>
+python3 src/skills/ohhap/hapbuild.py clean-sign <项目目录绝对路径>
+python3 src/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--timeout 毫秒]
 ```
 
 ### 2.2 对话/提示词（供 AI 与用户使用）
@@ -105,17 +105,17 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 
 | 意图 | 命令 |
 |------|------|
-| 创建项目（仅拷贝+重命名+bundleName） | `python3 .claude/skills/ohproj/ohproj.py create arkcJson` |
-| 创建并接入代码目录 | `python3 .claude/skills/ohproj/ohproj.py create arkcJson --code-dir .claude/skills/ohproj/cJSON-master` |
-| 创建并一键完成 cJSON 接入（标准化可编译可测） | `python3 .claude/skills/ohproj/ohproj.py create <项目名> --code-dir .claude/skills/ohproj/cJSON-master --setup-cjson` |
-| 编译主 HAP | `python3 .claude/skills/ohproj/ohproj.py build /root/ohos/61release/src/.claude/skills/ohproj/arkcJsonNativeProj46R` |
-| 签名（release） | `python3 .claude/skills/ohproj/ohproj.py sign /root/ohos/61release/src/.claude/skills/ohproj/arkcJsonNativeProj46R` |
-| 签名（debug） | `python3 .claude/skills/ohproj/ohproj.py sign /path/to/project debug` |
-| 编译单元测试 HAP | `python3 .claude/skills/ohproj/ohproj.py build-test /path/to/ohsonNativeProj46R` |
-| 执行单元测试（部署并运行） | `python3 .claude/skills/ohproj/ohproj.py test /path/to/ohsonNativeProj46R` |
-| 执行测试（指定超时毫秒） | `python3 .claude/skills/ohproj/ohproj.py test /path/to/project --timeout 120000` |
-| 清除签名 | `python3 .claude/skills/ohproj/ohproj.py clean-sign /path/to/project` |
-| **snapshot_record / MP4（系统镜像）** | 见 **第十节**；`python3 .claude/skills/ohrecord/ohrecord.py <子命令>` |
+| 创建项目（仅拷贝+重命名+bundleName） | `python3 src/skills/ohproj/ohproj.py create arkcJson` |
+| 创建并接入代码目录 | `python3 src/skills/ohproj/ohproj.py create arkcJson --code-dir src/skills/ohproj/cJSON-master` |
+| 创建并一键完成 cJSON 接入（标准化可编译可测） | `python3 src/skills/ohproj/ohproj.py create <项目名> --code-dir src/skills/ohproj/cJSON-master --setup-cjson` |
+| 编译主 HAP | `python3 src/skills/ohproj/ohproj.py build <napi_generator 仓库根>/src/skills/ohproj/arkcJsonNativeProj46R` |
+| 签名（release） | `python3 src/skills/ohproj/ohproj.py sign <napi_generator 仓库根>/src/skills/ohproj/arkcJsonNativeProj46R` |
+| 签名（debug） | `python3 src/skills/ohproj/ohproj.py sign /path/to/project debug` |
+| 编译单元测试 HAP | `python3 src/skills/ohproj/ohproj.py build-test /path/to/ohsonNativeProj46R` |
+| 执行单元测试（部署并运行） | `python3 src/skills/ohproj/ohproj.py test /path/to/ohsonNativeProj46R` |
+| 执行测试（指定超时毫秒） | `python3 src/skills/ohproj/ohproj.py test /path/to/project --timeout 120000` |
+| 清除签名 | `python3 src/skills/ohproj/ohproj.py clean-sign /path/to/project` |
+| **snapshot_record / MP4（系统镜像）** | 见 **第十节**；`python3 src/skills/ohrecord/ohrecord.py <子命令>` |
 
 ---
 
@@ -125,8 +125,8 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 
 ### 4.1 步骤一：拷贝模板并修改命名与 bundleName
 
-- **模板路径**：`.claude/skills/ohhap/NativeProj46R`
-- **目标路径**：`.claude/skills/ohproj/<命名>NativeProj46R`
+- **模板路径**：`src/skills/ohhap/NativeProj46R`
+- **目标路径**：`src/skills/ohproj/<命名>NativeProj46R`
 - **bundleName**：`ohos.<命名小写>.nativeproj46r`（如 `arkcJson` → `ohos.arkcjson.nativeproj46r`）
 - **修改文件**：`AppScope/app.json5`、`autosign/UnsgnedReleasedProfileTemplate.json` 中的 `bundleName` / `bundle-name`
 
@@ -221,7 +221,7 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 ================================================================================
 开始构建 HAP...
 ================================================================================
-工作目录: /root/ohos/61release/src/.claude/skills/ohproj/arkcJsonNativeProj46R
+工作目录: <napi_generator 仓库根>/src/skills/ohproj/arkcJsonNativeProj46R
 执行清理...
 执行构建...
 ✓ HAP 构建成功！
@@ -280,20 +280,20 @@ python3 .claude/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--
 
 | 用途 | 路径或文件 |
 |------|------------|
-| 模板工程 | `.claude/skills/ohhap/NativeProj46R` |
-| 生成项目目录 | `.claude/skills/ohproj/<命名>NativeProj46R` |
-| 编译/签名/编译测试脚本 | `.claude/skills/ohhap/hapbuild.py` |
-| 执行测试脚本 | `.claude/skills/ohhdc/ohhdc.py`（deploy-test） |
-| 系统 SA / 镜像产物与设备诊断（可选） | `.claude/skills/ohservices/ohsa.py`；说明见 **ohservices/SKILL.md** |
+| 模板工程 | `src/skills/ohhap/NativeProj46R` |
+| 生成项目目录 | `src/skills/ohproj/<命名>NativeProj46R` |
+| 编译/签名/编译测试脚本 | `src/skills/ohhap/hapbuild.py` |
+| 执行测试脚本 | `src/skills/ohhdc/ohhdc.py`（deploy-test） |
+| 系统 SA / 镜像产物与设备诊断（可选） | `src/skills/ohservices/ohsa.py`；说明见 **ohservices/SKILL.md** |
 | 未签名主 HAP | `entry/build/default/outputs/default/entry-default-unsigned.hap` |
 | 已签名主 HAP | `entry/build/default/outputs/default/entry-default-signed.hap` |
 | 测试 HAP（未签名/已签名） | `entry/build/default/outputs/ohosTest/entry-ohosTest-unsigned.hap` / `entry-ohosTest-signed.hap` |
 | NAPI 与 TS 声明 | `entry/src/main/cpp/napi_init.cpp`、`entry/src/main/cpp/types/libentry/Index.d.ts`、`entry/oh_modules/libentry.so/Index.d.ts` |
 | 单元测试 mock 配置 | `entry/src/mock/mock-config.json5`（NAPI 测试须取消对 libentry.so 的 mock，见 4.5） |
-| 设计文档与代码规范 | `.claude/skills/ohproj/DESIGN.md` |
-| 测试用例三类命名与设计约定 | `.claude/skills/ohproj/TEST_CASE_DESIGN.md` |
-| NAPI 宏/结构体/枚举导出约定 | `.claude/skills/ohproj/NAPI_EXPORT_CONVENTIONS.md` |
-| 常见问题与避免指南 | `.claude/skills/ohproj/KNOWN_ISSUES_AND_AVOIDANCE.md` |
+| 设计文档与代码规范 | `src/skills/ohproj/DESIGN.md` |
+| 测试用例三类命名与设计约定 | `src/skills/ohproj/TEST_CASE_DESIGN.md` |
+| NAPI 宏/结构体/枚举导出约定 | `src/skills/ohproj/NAPI_EXPORT_CONVENTIONS.md` |
+| 常见问题与避免指南 | `src/skills/ohproj/KNOWN_ISSUES_AND_AVOIDANCE.md` |
 
 ---
 
@@ -383,29 +383,29 @@ TestFinished-ResultMsg: your test finished!!!
 
 ```bash
 # 综合诊断：设备上 /system 文件 + 进程 + 落盘 hilog 摘要 + dmesg（需 hdc 已连接）
-python3 /path/to/src/.claude/skills/ohservices/ohsa.py diag
+python3 <napi_generator 仓库根>/src/skills/ohservices/ohsa.py diag
 
 # 多设备指定序列号（等价 hdc -t）
-python3 /path/to/src/.claude/skills/ohservices/ohsa.py -t 192.168.x.x:8710 diag
+python3 <napi_generator 仓库根>/src/skills/ohservices/ohsa.py -t 192.168.x.x:8710 diag
 
 # 仅检查本机编译产物是否包含 sampletest（不连设备）
-python3 /path/to/src/.claude/skills/ohservices/ohsa.py build --product rk3568
+python3 <napi_generator 仓库根>/src/skills/ohservices/ohsa.py build --product rk3568
 
 # 与 ohproj 测试衔接：应用测完后在同一设备上查系统侧日志
-python3 /path/to/src/.claude/skills/ohproj/ohproj.py test /path/to/xxxNativeProj46R
-python3 /path/to/src/.claude/skills/ohservices/ohsa.py hilog-disk
+python3 <napi_generator 仓库根>/src/skills/ohproj/ohproj.py test /path/to/xxxNativeProj46R
+python3 <napi_generator 仓库根>/src/skills/ohservices/ohsa.py hilog-disk
 ```
 
 ### 9.3 文档与完整子命令
 
-- **完整说明与参数**：`.claude/skills/ohservices/SKILL.md`（「本技能脚本 ohsa.py」小节）。
-- **全流程指南**：`.claude/skills/ohservices/saguide.md`。
+- **完整说明与参数**：`src/skills/ohservices/SKILL.md`（「本技能脚本 ohsa.py」小节）。
+- **全流程指南**：`src/skills/ohservices/saguide.md`。
 
 ---
 
 ## 十、snapshot_record 屏幕录制 MP4（系统侧改动与 ohrecord）
 
-本节记录 **`snapshot_record`** 通过 **AVScreenCapture / CAPTURE_FILE** 在设备上输出 **MP4** 的完整工程说明：实现思路、涉及路径、编译与烧录、设备准备、验证与调试、已遇问题与解决方案。**固化的命令行操作**请优先使用 **`.claude/skills/ohrecord/ohrecord.py`**（见 **10.8**）；本节为权威说明文档。
+本节记录 **`snapshot_record`** 通过 **AVScreenCapture / CAPTURE_FILE** 在设备上输出 **MP4** 的完整工程说明：实现思路、涉及路径、编译与烧录、设备准备、验证与调试、已遇问题与解决方案。**固化的命令行操作**请优先使用 **`src/skills/ohrecord/ohrecord.py`**（见 **10.8**）；本节为权威说明文档。
 
 ### 10.1 背景与目标
 
@@ -441,10 +441,10 @@ python3 /path/to/src/.claude/skills/ohservices/ohsa.py hilog-disk
    cd <源码根>
    ./build.sh --product-name rk3568
    ```
-   或使用：`python3 .claude/skills/ohrecord/ohrecord.py build --product rk3568`
+   或使用：`python3 src/skills/ohrecord/ohrecord.py build --product rk3568`
 3. **本机确认媒体库含路径 open 逻辑**（编译完成后）：
    ```bash
-   python3 .claude/skills/ohrecord/ohrecord.py verify-host-so --product rk3568
+   python3 src/skills/ohrecord/ohrecord.py verify-host-so --product rk3568
    ```
    在 **`out/<product>/.../libmedia_service.z.so`** 的 **`strings`** 中应出现：**`InitRecorder open output by file path (no IPC fd)`**。
 4. **镜像产物**：烧写对应产品的 **system** 等分区后，设备上应存在 **`/system/bin/snapshot_record`**；**`libmedia_service.z.so`** 常见路径为 **`/system/lib/`**（或 **`lib64`**，视产品架构）。
@@ -459,7 +459,7 @@ python3 /path/to/src/.claude/skills/ohservices/ohsa.py hilog-disk
    chmod 777 /data/test/media
    chcon u:object_r:data_test_media_file:s0 /data/test/media
    ```
-   或使用：`python3 .claude/skills/ohrecord/ohrecord.py prep-device`
+   或使用：`python3 src/skills/ohrecord/ohrecord.py prep-device`
 4. **原因**：手工 **`mkdir`** 的目录常被标为 **`data_file`**，`media_service` **`open(O_CREAT)`** 会 **拒绝（errno 13, EACCES）**，客户端表现为 **`StartScreenRecording` 失败 ret=331350054**，hilog 见 **`InitRecorder open path failed, errno:13`**。**`chcon`** 为 **`data_test_media_file`** 后与 **`file_contexts`** 一致，录制可成功。
 
 ### 10.6 运行命令与运行产物确认（测试步骤）
@@ -468,12 +468,12 @@ python3 /path/to/src/.claude/skills/ohservices/ohsa.py hilog-disk
 
 | 步骤 | 命令 |
 |------|------|
-| 列出设备 | `hdc list targets` 或 `python3 .claude/skills/ohrecord/ohrecord.py targets` |
-| 设备状态 | `python3 .claude/skills/ohrecord/ohrecord.py device-status` |
-| 验证设备 so | `python3 .claude/skills/ohrecord/ohrecord.py verify-device-so` |
-| 录制 60 秒 | `python3 .claude/skills/ohrecord/ohrecord.py record -s 60 -f /data/test/media/rk_demo_60s.mp4` |
-| 设备上校验文件 | `python3 .claude/skills/ohrecord/ohrecord.py verify-remote-mp4 -r /data/test/media/rk_demo_60s.mp4` |
-| 拉取到 PC | `python3 .claude/skills/ohrecord/ohrecord.py pull -r /data/test/media/rk_demo_60s.mp4` |
+| 列出设备 | `hdc list targets` 或 `python3 src/skills/ohrecord/ohrecord.py targets` |
+| 设备状态 | `python3 src/skills/ohrecord/ohrecord.py device-status` |
+| 验证设备 so | `python3 src/skills/ohrecord/ohrecord.py verify-device-so` |
+| 录制 60 秒 | `python3 src/skills/ohrecord/ohrecord.py record -s 60 -f /data/test/media/rk_demo_60s.mp4` |
+| 设备上校验文件 | `python3 src/skills/ohrecord/ohrecord.py verify-remote-mp4 -r /data/test/media/rk_demo_60s.mp4` |
+| 拉取到 PC | `python3 src/skills/ohrecord/ohrecord.py pull -r /data/test/media/rk_demo_60s.mp4` |
 
 **产物属性**：成功时文件属主多为 **`media:media_rw`**；文件头含 **`ftyp`**（如 **`ftypmp42`**）；体积随码率与时长变化。
 
@@ -489,7 +489,7 @@ hdc file recv /data/test/media/rk_demo_60s.mp4 ./
 | 现象 / 目的 | 命令 |
 |-------------|------|
 | ScreenCapture / InitRecorder 详情 | `hilog -x \| grep -iE 'ScreenCaptureServer\|InitRecorder\|StartScreenCaptureFile\|open path failed'` |
-| 一键拉尾部（脚本） | `python3 .claude/skills/ohrecord/ohrecord.py hilog-capture` |
+| 一键拉尾部（脚本） | `python3 src/skills/ohrecord/ohrecord.py hilog-capture` |
 | 目录 **SELinux** 上下文 | `ls -ldZ /data/test/media`（应为 **`data_test_media_file`**） |
 | **AVC**（内核拒绝） | `dmesg \| grep avc`（关注 **`media_service`** 与 **`/data/test`**） |
 | 关闭 hilog 流控（可选） | `param set hilog.flowctrl.proc.on false` |

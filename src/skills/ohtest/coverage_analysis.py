@@ -36,7 +36,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional, Tuple
 
-# 脚本所在目录：src/.claude/skills/ohtest/
+# 脚本所在目录：napi_generator/src/skills/ohtest/
 SCRIPT_DIR = Path(__file__).resolve().parent
 SRC_ROOT = SCRIPT_DIR.parent.parent.parent
 DEV_TEST_ROOT = SRC_ROOT / "test" / "testfwk" / "developer_test"
@@ -357,7 +357,7 @@ def run_coverage(
 
     print()
     print("覆盖率数据已生成，可用 analyze 查看统计：")
-    print(f"  python3 .claude/skills/ohtest/coverage_analysis.py analyze {report_dir}")
+    print(f"  python3 src/skills/ohtest/coverage_analysis.py analyze {report_dir}")
     return 0
 
 
@@ -503,7 +503,7 @@ def analyze_coverage(reports_obj_dir: Path, write_md: bool = True) -> int:
         gcda_files = list(reports_obj_dir.glob("*.gcda"))
         if gcda_files:
             print("当前目录下没有 .gcov 报告文件，但有 .gcda 数据。")
-            print("请先执行: python3 .claude/skills/ohtest/coverage_analysis.py run")
+            print("请先执行: python3 src/skills/ohtest/coverage_analysis.py run")
             return 1
         print(f"目录下未找到可用的 .gcov 文件: {reports_obj_dir}")
         return 1

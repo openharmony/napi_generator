@@ -1,6 +1,25 @@
+---
+name: ohclitools
+description: "OpenHarmony CLI 工具闭环：btclitools / wificlitools / dsclitools 等与 btframework inner_kits 对齐；coverage、deploy、build、verify、设备推送运行。须在含 build.sh 的 OH 源码根执行。脚本 ohclitool.py。"
+author: "Created by user"
+version: "1.0.0"
+---
+
 # ohclitools 技能说明
 
 本技能用于将**用户指定的源目录**（如 btclitools）与**框架接口**对齐：支持根据 bundle 中 inner_kits 做接口覆盖检查、生成/补齐对应 CLI 代码、拷贝部署、编译、验证，以及将编译产物推送到设备并测试运行。
+
+## 应用示例与提示词
+
+在 **OpenHarmony 源码 `src` 根**下执行；脚本路径 **`python3 <napi_generator>/src/skills/ohclitools/ohclitool.py`**。默认 **`--source-dir`** 为脚本同目录下 **`btclitools/`**。
+
+| 场景 | 命令示例 | 提示词示例 |
+|------|----------|------------|
+| 接口覆盖 | `python3 <napi_generator>/src/skills/ohclitools/ohclitool.py coverage --output btclitools/COVERAGE.md` | 「查 btclitools 对 btframework 头文件 include 覆盖率」 |
+| 部署到 test | `python3 <napi_generator>/src/skills/ohclitools/ohclitool.py deploy --test-dir foundation/communication/bluetooth/test` | 「把技能里的 btclitools 拷到蓝牙 test 并改 BUILD.gn」 |
+| 编译 | `python3 <napi_generator>/src/skills/ohclitools/ohclitool.py build --test-dir foundation/communication/bluetooth/test` | 「在 src 根编 btclitools 对应目标」 |
+| 验证并推设备 | `python3 <napi_generator>/src/skills/ohclitools/ohclitool.py verify --push-run` | 「验证 out 产物并 hdc 推上去跑一下」 |
+| 一键 all | `python3 <napi_generator>/src/skills/ohclitools/ohclitool.py all --test-dir foundation/communication/bluetooth/test --push-run` | 「deploy+build+verify 全流程」 |
 
 ---
 
@@ -23,9 +42,9 @@
 
 | 工具 | 源目录（默认） | test 目录（部署目标） | 产物名 | 设计文档 |
 |------|----------------|------------------------|--------|----------|
-| **btclitools** | `.claude/skills/ohclitools/btclitools` | `foundation/communication/bluetooth/test` | btcommand | btclitools/DESIGN.md |
-| **wificlitools** | `.claude/skills/ohclitools/wificlitools` | `foundation/communication/wifi/wifi/test` | wificommand | wificlitools/DESIGN.md |
-| **dsclitools** | `.claude/skills/ohclitools/dsclitools` | `foundation/communication/dsoftbus/tests` | dscommand | dsclitools/DESIGN.md |
+| **btclitools** | `src/skills/ohclitools/btclitools` | `foundation/communication/bluetooth/test` | btcommand | btclitools/DESIGN.md |
+| **wificlitools** | `src/skills/ohclitools/wificlitools` | `foundation/communication/wifi/wifi/test` | wificommand | wificlitools/DESIGN.md |
+| **dsclitools** | `src/skills/ohclitools/dsclitools` | `foundation/communication/dsoftbus/tests` | dscommand | dsclitools/DESIGN.md |
 
 wificlitools 参考 wifi bundle 的 inner_api（wifi_sdk / wifi_base / wifi_utils），按 STA、Hotspot、P2P、Hid2d 能力域划分模块，设计目标与 btclitools 的 DESIGN.md 一致（文件与功能清晰、降低耦合、功能单一、接口对应可读、**接口全覆盖**）。详见各工具目录下 DESIGN.md。
 
@@ -91,7 +110,7 @@ dsclitools 参考 dsoftbus bundle 的 softbus_client（bus_center、common、ses
 
 ## 二、对应脚本
 
-- **脚本路径**：`src/.claude/skills/ohclitools/ohclitool.py`
+- **脚本路径**：`src/src/skills/ohclitools/ohclitool.py`
 - **运行位置**：在工程 **src 目录**下执行（即 `build.sh` 所在目录）。
 
 ### 命令与参数
@@ -108,7 +127,7 @@ dsclitools 参考 dsoftbus bundle 的 softbus_client（bus_center、common、ses
 ### 参数说明
 
 - **--bundle-json PATH**：bundle.json 路径（用于 coverage），相对 src 或绝对路径。默认：`foundation/communication/bluetooth/bundle.json`
-- **--source-dir PATH**：源目录（如 btclitools），相对 src 或绝对路径。默认：`.claude/skills/ohclitools/btclitools`
+- **--source-dir PATH**：源目录（如 btclitools），相对 src 或绝对路径。默认：`src/skills/ohclitools/btclitools`
 - **--test-dir PATH**：目标 test 目录。默认：`foundation/communication/bluetooth/test`
 - **--product-name NAME**：产品名，默认：`rk3568`
 - **--output PATH**：coverage 报告输出路径（可选）；不指定则只打印到 stdout
@@ -121,30 +140,30 @@ dsclitools 参考 dsoftbus bundle 的 softbus_client（bus_center、common、ses
 cd /path/to/ohos/src
 
 # 接口覆盖检查，输出到控制台
-python3 .claude/skills/ohclitools/ohclitool.py coverage \
+python3 src/skills/ohclitools/ohclitool.py coverage \
   --bundle-json foundation/communication/bluetooth/bundle.json \
-  --source-dir .claude/skills/ohclitools/btclitools
+  --source-dir src/skills/ohclitools/btclitools
 
 # 接口覆盖检查，并写入报告文件
-python3 .claude/skills/ohclitools/ohclitool.py coverage \
-  --source-dir .claude/skills/ohclitools/btclitools \
-  --output .claude/skills/ohclitools/btclitools/BTFRAMEWORK_COVERAGE.md
+python3 src/skills/ohclitools/ohclitool.py coverage \
+  --source-dir src/skills/ohclitools/btclitools \
+  --output src/skills/ohclitools/btclitools/BTFRAMEWORK_COVERAGE.md
 
 # 一键：拷贝 + 编译 + 验证
-python3 .claude/skills/ohclitools/ohclitool.py all \
-  --source-dir .claude/skills/ohclitools/btclitools \
+python3 src/skills/ohclitools/ohclitool.py all \
+  --source-dir src/skills/ohclitools/btclitools \
   --test-dir foundation/communication/bluetooth/test \
   --product-name rk3568
 
 # 验证并将产物推送到设备运行
-python3 .claude/skills/ohclitools/ohclitool.py verify \
-  --source-dir .claude/skills/ohclitools/btclitools \
+python3 src/skills/ohclitools/ohclitool.py verify \
+  --source-dir src/skills/ohclitools/btclitools \
   --product-name rk3568 \
   --push-run
 
 # wificlitools：拷贝到 wifi test、编译、验证
-python3 .claude/skills/ohclitools/ohclitool.py all \
-  --source-dir .claude/skills/ohclitools/wificlitools \
+python3 src/skills/ohclitools/ohclitool.py all \
+  --source-dir src/skills/ohclitools/wificlitools \
   --test-dir foundation/communication/wifi/wifi/test \
   --product-name rk3568
 ```

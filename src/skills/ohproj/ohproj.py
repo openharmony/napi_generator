@@ -3,7 +3,7 @@
 """
 ohproj - OpenHarmony 原生应用项目：创建、编译、签名、编译测试、执行测试
 
-能力（详见 .claude/skills/ohproj/SKILL.md）：
+能力（详见 src/skills/ohproj/SKILL.md）：
   create      - 从 NativeProj46R 模板创建新项目（拷贝+重命名+bundleName，可选 --code-dir 接入代码）
   build       - 编译主 HAP（委托 ohhap/hapbuild.py）
   sign        - 对未签名主 HAP 与测试 HAP 签名（release/debug）

@@ -46,7 +46,7 @@ node "$HOS_CLT_PATH/hvigor/bin/hvigorw.js" --mode module -p module=entry@ohosTes
 **避免/修复**：
 
 1. **创建项目后**：从模板目录把 `oh_modules` 下的测试依赖拷贝到新项目。  
-   - 模板路径：`.claude/skills/ohhap/NativeProj46R/oh_modules`  
+   - 模板路径：`src/skills/ohhap/NativeProj46R/oh_modules`  
    - 目标路径：`<新项目>/oh_modules`  
    - 至少拷贝 `@ohos/hypium`、`@ohos/hamock`（即 `oh_modules/@ohos/` 目录）。
 2. **或**：在新项目根目录执行 `ohpm install`（若根目录已有 `oh-package.json5` 且声明了对 `@ohos/hypium` 的依赖），确保能拉取到依赖。

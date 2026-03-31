@@ -38,3 +38,4 @@ __pycache__
 *.cfg
 *.bin
 *.log
+/src/skills/rkflash/rkflash_sync_config.json
