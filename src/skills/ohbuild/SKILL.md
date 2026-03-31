@@ -10,6 +10,18 @@ version: "1.0.0"
 
 用于 OpenHarmony 构建相关操作，包括编译 fuzz 测试、查看模块 fuzztest 及对应参数。
 
+## 应用示例与提示词
+
+在 **OpenHarmony 源码根**（含 **`build.sh`**）下执行；脚本使用 **napi_generator** 内路径。
+
+| 场景 | 命令示例 | 提示词示例 |
+|------|----------|------------|
+| 列 fuzz 目标 | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py list-fuzztest battery_manager` | 「列出 battery_manager 部件有哪些 fuzztest 目标」 |
+| 编单个 fuzz | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py build-fuzztest GetAppStatsMahFuzzTest --gn-args battery_statistics_feature_coverage=true` | 「编译 GetAppStatsMahFuzzTest 并打开覆盖率 gn-args」 |
+| 部件全 fuzz | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py build-component-fuzztest battery_statistics` | 「把该部件所有 fuzztest 编出来」 |
+| 查覆盖率参数 | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py verify-coverage power_manager` | 「power_manager 开覆盖率要配什么 gn-args」 |
+| 帮助 | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py help` | 「ohbuild 子命令怎么用」 |
+
 ---
 
 ## 技能一：编译 Fuzz 测试
@@ -127,10 +139,10 @@ find out/rk3568/obj/ -name "*.gcno"
 
 ```bash
 # 列出与 power_manager 相关的 gcno
-python3 .claude/skills/ohbuild/ohbuild.py verify-coverage power_manager
+python3 src/skills/ohbuild/ohbuild.py verify-coverage power_manager
 
 # 列出 out/rk3568/obj 下所有 gcno
-python3 .claude/skills/ohbuild/ohbuild.py verify-coverage
+python3 src/skills/ohbuild/ohbuild.py verify-coverage
 ```
 
 ---
@@ -171,22 +183,22 @@ python3 .claude/skills/ohbuild/ohbuild.py verify-coverage
 
 ```bash
 # 查看某模块的 fuzz 测试目标与覆盖率参数（模块名或相对 src 的路径）
-python3 .claude/skills/ohbuild/ohbuild.py list-fuzztest battery_manager
-python3 .claude/skills/ohbuild/ohbuild.py list-fuzztest base/powermgr/battery_statistics
+python3 src/skills/ohbuild/ohbuild.py list-fuzztest battery_manager
+python3 src/skills/ohbuild/ohbuild.py list-fuzztest base/powermgr/battery_statistics
 
 # 生成编译 fuzz 测试的命令（不执行，仅打印）
-python3 .claude/skills/ohbuild/ohbuild.py build-fuzztest GetAppStatsMahFuzzTest --gn-args battery_statistics_feature_coverage=true
+python3 src/skills/ohbuild/ohbuild.py build-fuzztest GetAppStatsMahFuzzTest --gn-args battery_statistics_feature_coverage=true
 
 # 生成「编译部件全部 fuzztest」的命令（从 test/fuzztest/BUILD.gn 的 group 解析目标）
-python3 .claude/skills/ohbuild/ohbuild.py build-component-fuzztest battery_statistics --gn-args battery_statistics_feature_coverage=true
-python3 .claude/skills/ohbuild/ohbuild.py build-component-fuzztest base/powermgr/battery_statistics
+python3 src/skills/ohbuild/ohbuild.py build-component-fuzztest battery_statistics --gn-args battery_statistics_feature_coverage=true
+python3 src/skills/ohbuild/ohbuild.py build-component-fuzztest base/powermgr/battery_statistics
 
 # 编译后验证：是否有模块相关 gcno 文件（可选模块名）
-python3 .claude/skills/ohbuild/ohbuild.py verify-coverage power_manager
-python3 .claude/skills/ohbuild/ohbuild.py verify-coverage
+python3 src/skills/ohbuild/ohbuild.py verify-coverage power_manager
+python3 src/skills/ohbuild/ohbuild.py verify-coverage
 
 # 帮助
-python3 .claude/skills/ohbuild/ohbuild.py help
+python3 src/skills/ohbuild/ohbuild.py help
 ```
 
 **命令说明：**

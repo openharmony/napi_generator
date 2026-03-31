@@ -18,7 +18,7 @@ from datetime import datetime
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-# 默认源码根：skills 所在为 src/.claude/skills/ohanalysis
+# 默认源码根：由命令行/当前工作目录推断（脚本位于 napi_generator/src/skills/ohanalysis）
 SRC_ROOT_DEFAULT = SCRIPT_DIR.parent.parent.parent
 
 # 全量扫描时排除的顶层目录（以及以.开头的隐藏目录，out 为构建输出目录默认不分析）
@@ -1164,7 +1164,7 @@ def cmd_bundle(path_arg: str | None, src_dir: Path | None, prefix: str | None, v
             print("---")
             print_bundle_info(info, verbose=verbose)
     print("\n提示：以上结果仅输出到终端，未写入文件。如需保存请使用重定向，例如：")
-    print("  python3 .claude/skills/ohanalysis/ohanalysis.py bundle [路径] [选项] --src-dir <src路径> > bundle_result.txt\n")
+    print("  python3 src/skills/ohanalysis/ohanalysis.py bundle [路径] [选项] --src-dir <src路径> > bundle_result.txt\n")
     return 0
 
 
@@ -1222,7 +1222,7 @@ Usage:
     对比报告文件名：diff_路径1_路径2_时间.md，保存在 skills/ohanalysis 目录下。
   executables [--src-dir PATH] [--prefix 相对src前缀] [--full-src] [--out-product 产品目录名] [--skip-phone-system] [--only-in-bundle] [-o 输出.md]
     扫描 ohos_executable，与 bundle.json 关联；默认扫描 8 个顶层目录并集（base,build,developtools,device,drivers,foundation,test,productdefine）；
-    默认比对 out/*/packages/phone/system（phone system 列）；默认输出 .claude/skills/ohanalysis/ohos_executable_8dirs.md。
+    默认比对 out/*/packages/phone/system（phone system 列）；默认输出 src/skills/ohanalysis/ohos_executable_8dirs.md（相对 napi_generator 仓库根）。
     --prefix 逗号分隔并集；与默认二选一，指定后覆盖默认 8 目录。
     --full-src 扫描整棵 src（排除 kernel 等），不再使用默认 8 目录。
     --out-product 如 rk3568 限定 phone system 检测路径；不传则合并 out 下全部已有 packages/phone/system 的产品。

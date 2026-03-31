@@ -1,3 +1,10 @@
+---
+name: ohanalysis
+description: "OpenHarmony 静态分析：解析 bundle.json（子系统、syscap、deps、inner_kits、test）；全量 scan-all 生成 MD 报告；两版 src diff 对比；executables 扫描 ohos_executable 与产物对照。脚本 ohanalysis.py、oh_executable_report.py。大工程建议超时 60 分钟。"
+author: "Created by user"
+version: "1.0.0"
+---
+
 # ohanalysis 技能
 
 对 OpenHarmony 工程做静态分析：在项目目录（如 `src`）下查找 `bundle.json`，整理**子系统、系统能力、组件、deps、inner_kits、test** 等信息，支持单目录解析与全量扫描并生成 Markdown 报告。
@@ -9,27 +16,36 @@
 - **两目录对比（`diff`）**：给定两个 `src` 路径（如 61release 与 60release），先分别分析并生成两份 MD 报告，再对比两者在子系统、组件、inner_kits、syscap、deps、test 上的数量与条目，输出增、删、改列表并保存为对比报告（`diff_路径1_路径2_时间.md`）。
 - **可执行文件与 bundle 关联（`executables`）**：在 `BUILD.gn` 中扫描所有 `ohos_executable`，将 GN 标签与 `bundle.json` 关联，并可选比对 `out/<产品>/packages/phone/system/**` 下是否存在与 `output_name`（缺省 target 名）同名的文件，生成 Markdown：含 **phone system** 列、目标名、子系统、部件、GN 标签、路径、编译选项、`bundle.json`、用法启发式；未在 bundle 出现的目标列附录。
 
+## 应用示例与提示词
+
+| 场景 | 命令示例 | 提示词示例 |
+|------|----------|------------|
+| 解析单个 bundle | `cd ~/ohos/61release/src && python3 /path/to/napi_generator/src/skills/ohanalysis/ohanalysis.py bundle foundation/ability/ability_base` | 「把这个部件的 bundle.json 依赖和 inner_kits 打出来」 |
+| 全量扫描 | `python3 src/skills/ohanalysis/ohanalysis.py scan-all --src-dir ~/ohos/61release/src` | 「扫描整个 src 生成 bundle 汇总 MD」 |
+| 两版对比 | `python3 src/skills/ohanalysis/ohanalysis.py diff ~/ohos/61/src ~/ohos/60/src` | 「对比 61 和 60 的部件与 syscap 差异」 |
+| 可执行文件报告 | `python3 src/skills/ohanalysis/ohanalysis.py executables --out-product rk3568` | 「列出 GN 里 ohos_executable 和 out 里有没有对应文件」 |
+| 帮助 | `python3 src/skills/ohanalysis/ohanalysis.py help` | 「ohanalysis 有哪些命令」 |
+
 ## 技能调用方式
 
 **执行超时建议：60 分钟**。全量解析或扫描大型工程时耗时长，调用本技能时请将超时时间设为 60 分钟（3600000 毫秒），避免中途被中断。
 
-脚本路径（相对工程 `src` 根目录）：
+脚本路径：**`<napi_generator 仓库根>/src/skills/ohanalysis/ohanalysis.py`**。下文示例均在 **仓库根** 下执行（请先 `cd` 到 napi_generator 根目录，或将 `python3 src/skills/...` 换为 `python3 <绝对路径>/src/skills/...`）。
 
-```
-.claude/skills/ohanalysis/ohanalysis.py
-```
-
-在工程 `src` 根目录下执行：
+在 OpenHarmony 工程 **`src` 根目录**下分析时，常用：
 
 ```bash
-python3 .claude/skills/ohanalysis/ohanalysis.py <命令> [参数] [选项]
+cd /path/to/openharmony/src
+python3 /path/to/napi_generator/src/skills/ohanalysis/ohanalysis.py <命令> [参数] [选项]
 ```
 
 查看帮助：
 
 ```bash
-python3 .claude/skills/ohanalysis/ohanalysis.py help
+python3 src/skills/ohanalysis/ohanalysis.py help
 ```
+
+**输出目录**：报告默认写在 **脚本所在目录**，即 **`src/skills/ohanalysis/`**（相对 napi_generator 仓库根）。
 
 ---
 
@@ -63,7 +79,7 @@ python3 .claude/skills/ohanalysis/ohanalysis.py help
 - 组件排名：按 syscap、inner_kits、deps、sub_component、test 数量各 Top 50
 - 组件列表、syscap 列表、inner_kits 列表、deps 列表、test 列表
 
-报告文件名：**分析路径去掉 `/` + 时间戳**（如 `rootohos61releasesrc202502271430.md`），保存在 `.claude/skills/ohanalysis/` 目录下。
+报告文件名：**分析路径去掉 `/` + 时间戳**（如 `rootohos61releasesrc202502271430.md`），保存在 `src/skills/ohanalysis/` 目录下。
 
 | 选项 | 说明 |
 |------|------|
@@ -79,13 +95,13 @@ python3 .claude/skills/ohanalysis/ohanalysis.py help
    - 组件：新增组件列表、删除组件列表、变更组件列表（同一路径下 syscap/deps/inner_kits/test 等有变化）
    - syscap / inner_kits / deps / test：各自的新增列表、删除列表
 
-对比报告文件名：**diff_** + 路径1（去掉 `/`）+ **_** + 路径2（去掉 `/`）+ **_** + 时间戳 + **.md**，保存在 `.claude/skills/ohanalysis/` 目录下。约定 PATH1 为基准（旧）、PATH2 为对比（新）。
+对比报告文件名：**diff_** + 路径1（去掉 `/`）+ **_** + 路径2（去掉 `/`）+ **_** + 时间戳 + **.md**，保存在 `src/skills/ohanalysis/` 目录下。约定 PATH1 为基准（旧）、PATH2 为对比（新）。
 
 ### `executables [选项]`
 
 扫描 `BUILD.gn` 中的 `ohos_executable`，与 `bundle.json` 关联，并比对 **phone** 形态产物目录 `out/<产品>/packages/phone/system/**` 是否含同名二进制，输出 Markdown。
 
-**默认行为（可不写任何选项）**：扫描 8 个顶层目录并集 `base,build,developtools,device,drivers,foundation,test,productdefine`；**启用** phone system 检测；报告写入 `.claude/skills/ohanalysis/ohos_executable_8dirs.md`。
+**默认行为（可不写任何选项）**：扫描 8 个顶层目录并集 `base,build,developtools,device,drivers,foundation,test,productdefine`；**启用** phone system 检测；报告写入 `src/skills/ohanalysis/ohos_executable_8dirs.md`。
 
 | 选项 | 说明 |
 |------|------|
@@ -107,50 +123,50 @@ python3 .claude/skills/ohanalysis/ohanalysis.py help
 
 ```bash
 # 解析 foundation/ability/ability_base 的 bundle.json
-python3 .claude/skills/ohanalysis/ohanalysis.py bundle foundation/ability/ability_base
+python3 src/skills/ohanalysis/ohanalysis.py bundle foundation/ability/ability_base
 
 # 指定 61release 的 src
-python3 .claude/skills/ohanalysis/ohanalysis.py bundle foundation/ability/ability_base --src-dir ~/ohos/61release/src
+python3 src/skills/ohanalysis/ohanalysis.py bundle foundation/ability/ability_base --src-dir ~/ohos/61release/src
 
 # 只扫描 foundation/ability 下的所有 bundle，并简要输出
-python3 .claude/skills/ohanalysis/ohanalysis.py bundle --prefix foundation/ability --brief
+python3 src/skills/ohanalysis/ohanalysis.py bundle --prefix foundation/ability --brief
 
 # 不传路径：扫描整个 src 下所有 bundle.json
-python3 .claude/skills/ohanalysis/ohanalysis.py bundle
+python3 src/skills/ohanalysis/ohanalysis.py bundle
 ```
 
 ### scan-all 命令
 
 ```bash
 # 使用默认 src 根目录做全量扫描并生成报告
-python3 .claude/skills/ohanalysis/ohanalysis.py scan-all
+python3 src/skills/ohanalysis/ohanalysis.py scan-all
 
 # 指定 src 根目录
-python3 .claude/skills/ohanalysis/ohanalysis.py scan-all --src-dir ~/ohos/61release/src
+python3 src/skills/ohanalysis/ohanalysis.py scan-all --src-dir ~/ohos/61release/src
 ```
 
 ### executables 命令
 
 ```bash
 # 默认：8 目录 + phone system 检测 + 输出 ohos_executable_8dirs.md
-python3 .claude/skills/ohanalysis/ohanalysis.py executables
+python3 src/skills/ohanalysis/ohanalysis.py executables
 
 # 限定某一产品的 phone 包路径
-python3 .claude/skills/ohanalysis/ohanalysis.py executables --out-product rk3568
+python3 src/skills/ohanalysis/ohanalysis.py executables --out-product rk3568
 
 # 自定义前缀或输出路径
-python3 .claude/skills/ohanalysis/ohanalysis.py executables \
+python3 src/skills/ohanalysis/ohanalysis.py executables \
   --prefix foundation/communication -o communication_executables.md
 
 # 全 src 扫描（排除 kernel 等）
-python3 .claude/skills/ohanalysis/ohanalysis.py executables --full-src -o all_executables.md
+python3 src/skills/ohanalysis/ohanalysis.py executables --full-src -o all_executables.md
 ```
 
 ### diff 命令
 
 ```bash
 # 比较 61release 与 60release 的 src
-python3 .claude/skills/ohanalysis/ohanalysis.py diff ~/ohos/61release/src ~/ohos/60release/src
+python3 src/skills/ohanalysis/ohanalysis.py diff ~/ohos/61release/src ~/ohos/60release/src
 ```
 
 运行结束后会打印两份分析报告的路径与一份对比报告的路径。
@@ -158,7 +174,7 @@ python3 .claude/skills/ohanalysis/ohanalysis.py diff ~/ohos/61release/src ~/ohos
 ### 帮助
 
 ```bash
-python3 .claude/skills/ohanalysis/ohanalysis.py help
+python3 src/skills/ohanalysis/ohanalysis.py help
 ```
 
 ---
@@ -192,11 +208,11 @@ python3 .claude/skills/ohanalysis/ohanalysis.py help
 
 ```
 报告已生成并保存。
-保存路径: /root/ohos/61release/src/.claude/skills/ohanalysis/rootohos61releasesrc202502271430.md
+保存路径: /path/to/napi_generator/src/skills/ohanalysis/rootohos61releasesrc202502271430.md
 （子系统 42，组件 380，InnerKits 1250）
 ```
 
-报告文件保存在 `.claude/skills/ohanalysis/` 目录下，文件名格式为「分析路径去掉 / + 时间戳」的 `.md` 文件。
+报告文件保存在 `src/skills/ohanalysis/` 目录下，文件名格式为「分析路径去掉 / + 时间戳」的 `.md` 文件。
 
 ### bundle 命令输出
 

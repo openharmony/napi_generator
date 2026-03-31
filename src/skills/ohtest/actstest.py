@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-# 技能在 src/.claude/skills/ohtest/，源码根为 src（上三级）
+# 技能在 napi_generator/src/skills/ohtest/；ACTS 路径相对 OpenHarmony 源码根解析
 SRC_ROOT = SCRIPT_DIR.parent.parent.parent
 
 # 默认 ACTS 运行目录：<src_root>/out/<product>/suites/acts/acts

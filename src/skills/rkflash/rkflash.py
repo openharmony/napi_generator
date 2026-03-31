@@ -12,7 +12,7 @@ Subcommands (pass as argv[1]; otherwise flash mode):
                --no-verify-version skips version check; use only for debugging, not to confirm production flash.
                After VERIFY OK (default path): best-effort hdc turns off sysfs LEDs; --no-leds-off to skip.
   sync-images  cmd_sync_images -> sync_images_from_server() into <base>/images/. Exit 0/1.
-  raw-scp      cmd_raw_scp: shell RAW_SCP_SHELL_CMD (or --cmd) with cwd=<base>/images. Exit = scp exit code.
+  raw-scp      cmd_raw_scp: shell command from --cmd / RKFLASH_RAW_SCP_CMD / config raw_scp_cmd; cwd=<base>/images.
   pscp-sync    cmd_pscp_sync: pscp -batch -pw -r ... Exit 0 ok, 1 error, 124 subprocess timeout.
   analyze-config  cmd_analyze_config: parse binary <base>/images/config.cfg; print loader basename,
                   partition cfg labels, di flags (-resource, -u, ...), and image basenames. Exit 0/1.
@@ -28,26 +28,30 @@ images/config.cfg (required for flash):
 Capabilities (see SKILL.md for full CLI tables and Chinese prose):
   - _flatten_nested_images_subdir: after pscp-sync/raw-scp exit 0, hoist images/images/* to images/.
   - Post-flash verify: hdc shell param get -> SOFTWARE_VERSION_PARAM vs remote ohos.para (same key).
-    DEFAULT_REMOTE_OHOS_PARA is derived from DEFAULT_PSCP_REMOTE_IMAGES (.../images -> .../system/etc/param/ohos.para).
+    Remote ohos.para path is derived from sync_remote when it ends with /images (see _derive_remote_ohos_para).
     Fetch order: pscp single file to tempfile, else paramiko SFTP.
     After VERIFY OK: best-effort hdc shell sh -c turns off Linux sysfs LEDs (/sys/class/leds/*/brightness);
-    RKFLASH_LEDS_OFF_CMD overrides script; --no-leds-off disables; failures do not change exit 0.
+    rkflash_sync_config.json leds_off_cmd overrides script; --no-leds-off disables; failures do not change exit 0.
   - sync-images transport priority: if --expect-scp then pexpect scp; elif --scp-only then sshpass scp only;
     elif prefer_scp and sshpass then sshpass scp; else paramiko SFTP recursive.
   - User-facing script output: English ASCII; log files UTF-8.
 
 Module constants:
-  DEFAULT_SYNC_HOST, DEFAULT_SYNC_USER, DEFAULT_SYNC_PASSWORD, DEFAULT_SYNC_REMOTE (/root/images for sync-images),
-  DEFAULT_PSCP_REMOTE_IMAGES, DEFAULT_PSCP_SYNC_TIMEOUT_SEC (1800), DEFAULT_PSCP_EXE, RAW_SCP_SHELL_CMD,
-  DEFAULT_REMOTE_OHOS_PARA, SOFTWARE_VERSION_PARAM (= const.product.software.version).
+  CONFIG_JSON_NAME (rkflash_sync_config.json under --base), DEFAULT_PSCP_SYNC_TIMEOUT_SEC (1800), DEFAULT_PSCP_EXE,
+  SOFTWARE_VERSION_PARAM (= const.product.software.version).
+  SSH host/user/password/remote paths: no defaults; CLI, env, <base>/rkflash_sync_config.json, or TTY prompts.
 
 Public layout helpers:
   load_flash_layout_from_config(cfg_path), parse_rockchip_config_cfg_flash_layout(bytes),
   parse_rockchip_config_cfg_burn_files(bytes) -> (img basenames, [loader bin]).
 
 Env:
-  RKFLASH_SSH_PASSWORD, RKFLASH_PSCP, RKFLASH_SSHPASS, RKFLASH_SCP, RKFLASH_EXPECT_PHASE1_TIMEOUT,
-  RKFLASH_LEDS_OFF_CMD (optional full sh script for hdc shell sh -c after VERIFY OK; default sysfs LEDs).
+  RKFLASH_SYNC_HOST, RKFLASH_SYNC_USER, RKFLASH_SSH_PASSWORD, RKFLASH_SYNC_REMOTE, RKFLASH_SYNC_PORT,
+  RKFLASH_REMOTE_OHOS_PARA, RKFLASH_RAW_SCP_CMD,
+  RKFLASH_PSCP, RKFLASH_SSHPASS, RKFLASH_SCP, RKFLASH_EXPECT_PHASE1_TIMEOUT,
+  RKFLASH_LEDS_NAMES (optional comma-separated names under /sys/class/leds/); else rkflash_sync_config.json leds_off_names; else default blue,green,red.
+  leds_off_cmd in rkflash_sync_config.json (optional full sh for hdc after VERIFY OK; highest priority among LED options).
+  leds_off_names in rkflash_sync_config.json (array or comma string), same meaning.
 
 Flash: upgrade_tool output must contain ok (except rcb step). Dependencies: pip install -r requirements-sync.txt for paramiko/pexpect.
 
@@ -75,6 +79,91 @@ def _skill_base(explicit: Path | None) -> Path:
     if explicit is not None:
         return explicit.expanduser().resolve()
     return Path(__file__).resolve().parent
+
+
+def _skill_base_from_flash_log(log_path: Path) -> Path | None:
+    """Skill root from ``<base>/log/rkflash_*.log``."""
+    p = log_path.resolve()
+    if p.parent.name == "log":
+        return p.parent.parent
+    return None
+
+
+# Sysfs LED directory basename under /sys/class/leds/<name>/brightness
+_LED_SYSFS_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
+
+
+def _split_led_name_tokens(s: str) -> list[str]:
+    return [p.strip() for p in s.replace(";", ",").split(",") if p.strip()]
+
+
+def _leds_off_script_for_named_leds(names: list[str]) -> str:
+    """Write 0 to each /sys/class/leds/<name>/brightness if present."""
+    parts: list[str] = []
+    for raw in names:
+        n = str(raw).strip()
+        if not _LED_SYSFS_NAME_RE.match(n):
+            continue
+        parts.append(
+            f'[ -e "/sys/class/leds/{n}/brightness" ] && '
+            f'echo 0 > "/sys/class/leds/{n}/brightness" 2>/dev/null; '
+        )
+    return "".join(parts) if parts else _DEFAULT_LEDS_OFF_SH
+
+
+def _collect_led_names_from_config(log_path: Path | None) -> list[str]:
+    """Env RKFLASH_LEDS_NAMES wins; else rkflash_sync_config.json ``leds_off_names``."""
+    env = (os.environ.get("RKFLASH_LEDS_NAMES") or "").strip()
+    if env:
+        return [n for n in _split_led_name_tokens(env) if _LED_SYSFS_NAME_RE.match(n)]
+    if log_path is None:
+        return []
+    base = _skill_base_from_flash_log(log_path)
+    if base is None:
+        return []
+    cfg = _load_sync_config_json(base)
+    raw = cfg.get("leds_off_names")
+    out: list[str] = []
+    if isinstance(raw, list):
+        for x in raw:
+            n = str(x).strip()
+            if _LED_SYSFS_NAME_RE.match(n):
+                out.append(n)
+    elif isinstance(raw, str) and raw.strip():
+        out = [n for n in _split_led_name_tokens(raw) if _LED_SYSFS_NAME_RE.match(n)]
+    return out
+
+
+def _load_leds_off_cmd_from_rkflash_config(log_path: Path | None) -> str | None:
+    """Full sh body from ``<base>/rkflash_sync_config.json`` key ``leds_off_cmd``."""
+    if log_path is None:
+        return None
+    base = _skill_base_from_flash_log(log_path)
+    if base is None:
+        return None
+    cfg = _load_sync_config_json(base)
+    c = cfg.get("leds_off_cmd")
+    if isinstance(c, str) and c.strip():
+        return c.strip()
+    return None
+
+
+def _resolve_leds_off_script(log_path: Path | None) -> tuple[str, str | None]:
+    """
+    Returns (sh_body, note for log).
+    Priority: rkflash_sync_config.json leds_off_cmd >
+             RKFLASH_LEDS_NAMES / config leds_off_names >
+             default blue,green,red (same as prior hardcoded named set).
+    """
+    custom = _load_leds_off_cmd_from_rkflash_config(log_path)
+    if custom:
+        return custom, "rkflash_sync_config.json leds_off_cmd"
+    names = _collect_led_names_from_config(log_path)
+    if names:
+        script = _leds_off_script_for_named_leds(names)
+        return script, "named LEDs: " + ",".join(names)
+    script = _leds_off_script_for_named_leds(["blue", "green", "red"])
+    return script, "default blue,green,red"
 
 
 def _flatten_nested_images_subdir(images_dir: Path) -> None:
@@ -106,50 +195,253 @@ def _flatten_nested_images_subdir(images_dir: Path) -> None:
         shutil.rmtree(nested, ignore_errors=True)
 
 
-DEFAULT_SYNC_HOST = "192.168.16.71"
-DEFAULT_SYNC_USER = "root"
-DEFAULT_SYNC_PASSWORD = "kaihong"
-# Default --remote for sync-images when not set (generic placeholder)
-DEFAULT_SYNC_REMOTE = "/root/images"
+CONFIG_JSON_NAME = "rkflash_sync_config.json"
 
-# Same scp as manual terminal (cwd skill-root/images/, dest `.`); OH phone images on server
-RAW_SCP_SHELL_CMD = (
-    "scp -r root@192.168.16.71://root/ohos/61release/src/out/rk3568/packages/phone/images ."
-)
-
-# PuTTY pscp common path on Windows; pscp-sync default remote matches RAW_SCP (single-colon form)
+# PuTTY pscp common path on Windows; used only if that file exists
 DEFAULT_PSCP_EXE = Path(r"C:\PuTTY\pscp.exe")
-DEFAULT_PSCP_REMOTE_IMAGES = "/root/ohos/61release/src/out/rk3568/packages/phone/images"
 # Large syncs can take many minutes; full pscp subprocess max wait (sec); exit 124 on timeout
 DEFAULT_PSCP_SYNC_TIMEOUT_SEC = 1800
 
-# Server ohos.para next to default phone images tree (out/rk3568/packages/phone/system/...)
-_p_img = DEFAULT_PSCP_REMOTE_IMAGES.rstrip("/")
-DEFAULT_REMOTE_OHOS_PARA = (
-    _p_img[: -len("/images")] + "/system/etc/param/ohos.para"
-    if _p_img.endswith("/images")
-    else _p_img + "/system/etc/param/ohos.para"
-)
-
 SOFTWARE_VERSION_PARAM = "const.product.software.version"
+
+
+@dataclass(frozen=True)
+class RkflashSshConfig:
+    host: str
+    port: int
+    user: str
+    password: str
+    remote_images: str
+    remote_ohos_para: str
+
+
+def _empty_to_none(s: str | None) -> str | None:
+    if s is None:
+        return None
+    t = str(s).strip()
+    return t if t else None
+
+
+def _interactive_config_allowed() -> bool:
+    try:
+        return bool(sys.stdin.isatty() and sys.stderr.isatty())
+    except Exception:
+        return False
+
+
+def _load_sync_config_json(base: Path) -> dict:
+    p = (base / CONFIG_JSON_NAME).resolve()
+    if not p.is_file():
+        return {}
+    import json
+
+    try:
+        with p.open(encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        raise RuntimeError(f"Invalid {CONFIG_JSON_NAME}: {p} ({e})") from e
+    return data if isinstance(data, dict) else {}
+
+
+def _derive_remote_ohos_para(remote_images: str) -> str:
+    r = remote_images.rstrip("/")
+    if r.endswith("/images"):
+        return r[: -len("/images")] + "/system/etc/param/ohos.para"
+    return r + "/system/etc/param/ohos.para"
+
+
+def _config_missing_message(base: Path) -> str:
+    here = Path(__file__).resolve().parent
+    example = here / "rkflash_sync_config.example.json"
+    return (
+        "rkflash: SSH/sync configuration is incomplete.\n"
+        "Provide CLI flags, environment variables, or copy the template into your skill root:\n"
+        f"  copy template: {example}\n"
+        f"  config file:   {base / CONFIG_JSON_NAME}\n"
+        "Environment variables:\n"
+        "  RKFLASH_SYNC_HOST, RKFLASH_SYNC_USER, RKFLASH_SSH_PASSWORD,\n"
+        "  RKFLASH_SYNC_REMOTE (absolute path to phone images on server),\n"
+        "  RKFLASH_REMOTE_OHOS_PARA (optional; derived if sync_remote ends with /images),\n"
+        "  RKFLASH_SYNC_PORT (optional, default 22),\n"
+        "  RKFLASH_RAW_SCP_CMD (for raw-scp subcommand).\n"
+    )
+
+
+def _resolve_port(port_cli: int | None, cfg: dict) -> int:
+    if port_cli is not None:
+        return int(port_cli)
+    e = _empty_to_none(os.environ.get("RKFLASH_SYNC_PORT"))
+    if e is not None:
+        try:
+            return int(e)
+        except ValueError:
+            pass
+    sp = cfg.get("sync_port")
+    if sp is not None:
+        try:
+            return int(sp)
+        except (ValueError, TypeError):
+            pass
+    return 22
+
+
+def _resolve_rkflash_ssh_config(
+    base: Path,
+    *,
+    host_cli: str | None,
+    port_cli: int | None,
+    user_cli: str | None,
+    password_cli: str | None,
+    remote_images_cli: str | None,
+    remote_ohos_cli: str | None,
+    require_remote_images: bool,
+    require_remote_ohos: bool,
+    interactive: bool | None = None,
+) -> RkflashSshConfig:
+    if interactive is None:
+        interactive = _interactive_config_allowed()
+    cfg = _load_sync_config_json(base)
+
+    def pick_str(
+        cli: str | None,
+        env_key: str,
+        json_key: str,
+        prompt_label: str,
+        *,
+        required: bool,
+        secret: bool = False,
+    ) -> str | None:
+        v = _empty_to_none(cli)
+        if v is not None:
+            return v
+        if env_key:
+            v = _empty_to_none(os.environ.get(env_key))
+            if v is not None:
+                return v
+        jv = cfg.get(json_key)
+        if isinstance(jv, str) and jv.strip():
+            return jv.strip()
+        if interactive and required:
+            if secret:
+                import getpass
+
+                got = getpass.getpass(f"rkflash: {prompt_label}: ")
+            else:
+                got = input(f"rkflash: {prompt_label}: ")
+            got = got.strip()
+            if got:
+                return got
+        return None
+
+    host = pick_str(
+        host_cli,
+        "RKFLASH_SYNC_HOST",
+        "sync_host",
+        "SSH host",
+        required=True,
+    )
+    user = pick_str(
+        user_cli,
+        "RKFLASH_SYNC_USER",
+        "sync_user",
+        "SSH username",
+        required=True,
+    )
+    pwd = pick_str(
+        password_cli,
+        "RKFLASH_SSH_PASSWORD",
+        "sync_password",
+        "SSH password",
+        required=True,
+        secret=True,
+    )
+
+    remote_images_opt = pick_str(
+        remote_images_cli,
+        "RKFLASH_SYNC_REMOTE",
+        "sync_remote",
+        "remote images directory (absolute path on server)",
+        required=require_remote_images,
+    )
+    if require_remote_images and not remote_images_opt:
+        raise RuntimeError(
+            _config_missing_message(base) + "\nMissing remote images directory for sync."
+        )
+
+    port = _resolve_port(port_cli, cfg)
+
+    rohos = pick_str(
+        remote_ohos_cli,
+        "RKFLASH_REMOTE_OHOS_PARA",
+        "remote_ohos_para",
+        "remote path to ohos.para",
+        required=False,
+    )
+    if rohos is None and remote_images_opt:
+        rohos = _derive_remote_ohos_para(remote_images_opt)
+    if require_remote_ohos and not rohos:
+        if interactive:
+            got = input("rkflash: remote path to ohos.para: ").strip()
+            if got:
+                rohos = got
+        if not rohos:
+            raise RuntimeError(
+                _config_missing_message(base)
+                + "\nMissing remote ohos.para path (RKFLASH_REMOTE_OHOS_PARA or derive from sync_remote ending with /images)."
+            )
+
+    if not host or not user or not pwd:
+        raise RuntimeError(_config_missing_message(base))
+
+    return RkflashSshConfig(
+        host=host,
+        port=port,
+        user=user,
+        password=pwd,
+        remote_images=remote_images_opt or "",
+        remote_ohos_para=rohos or "",
+    )
+
+
+def _resolve_raw_scp_command(
+    base: Path, cmd_cli: str | None, interactive: bool | None = None
+) -> str:
+    if interactive is None:
+        interactive = _interactive_config_allowed()
+    v = _empty_to_none(cmd_cli)
+    if v:
+        return v
+    v = _empty_to_none(os.environ.get("RKFLASH_RAW_SCP_CMD"))
+    if v:
+        return v
+    cfg = _load_sync_config_json(base)
+    rc = cfg.get("raw_scp_cmd")
+    if isinstance(rc, str) and rc.strip():
+        return rc.strip()
+    if interactive:
+        got = input(
+            "rkflash raw-scp: full shell command (cwd will be <base>/images): "
+        ).strip()
+        if got:
+            return got
+    raise RuntimeError(
+        "rkflash raw-scp: missing command. Use --cmd, environment RKFLASH_RAW_SCP_CMD, "
+        f"or raw_scp_cmd in {CONFIG_JSON_NAME} (see rkflash_sync_config.example.json)."
+    )
 _SOFTWARE_VERSION_RE = re.compile(
     rf"^[ \t]*{re.escape(SOFTWARE_VERSION_PARAM)}[ \t]*=[ \t]*([^\r\n]+)[ \t]*\r?$",
     re.IGNORECASE | re.MULTILINE,
 )
 
 # After VERIFY OK: hdc shell sh -c "<script>" turns off Linux sysfs LEDs (best-effort, non-fatal).
-# Set RKFLASH_LEDS_OFF_CMD to the full sh body for vendor boards (replaces default).
+# Prefer rkflash_sync_config.json "leds_off_cmd" (full sh body) or "leds_off_names" / env RKFLASH_LEDS_NAMES.
+# Fallback when unset: blue,green,red via _leds_off_script_for_named_leds. _DEFAULT_LEDS_OFF_SH: all leds/* (used if named list empty).
 _DEFAULT_LEDS_OFF_SH = (
     "if [ -d /sys/class/leds ]; then "
     "for d in /sys/class/leds/*; do "
     '[ -e "$d/brightness" ] && echo 0 > "$d/brightness" 2>/dev/null; '
     "done; fi"
 )
-
-
-def _leds_off_shell_script() -> str:
-    custom = (os.environ.get("RKFLASH_LEDS_OFF_CMD") or "").strip()
-    return custom if custom else _DEFAULT_LEDS_OFF_SH
 
 
 def _sftp_get_recursive(sftp, remote_dir: str, local_dir: Path) -> None:
@@ -443,11 +735,11 @@ def _sync_images_pexpect_scp(
 def sync_images_from_server(
     base: Path,
     *,
-    host: str = DEFAULT_SYNC_HOST,
+    host: str,
     port: int = 22,
-    user: str = DEFAULT_SYNC_USER,
-    password: str | None = None,
-    remote_dir: str = DEFAULT_SYNC_REMOTE,
+    user: str,
+    password: str,
+    remote_dir: str,
     prefer_scp: bool = True,
     sshpass_path: str | None = None,
     scp_only: bool = False,
@@ -460,9 +752,7 @@ def sync_images_from_server(
     Else: sshpass+scp if available, else paramiko SFTP.
     scp_only=True: sshpass+scp only (mutually exclusive with expect_scp; expect wins).
     """
-    pwd = password if password is not None else os.environ.get(
-        "RKFLASH_SSH_PASSWORD", DEFAULT_SYNC_PASSWORD
-    )
+    pwd = password
     images_dir = (base / "images").resolve()
 
     if expect_scp:
@@ -502,18 +792,32 @@ def _parse_sync_argv(argv: list[str]) -> argparse.Namespace:
         default=None,
         help="Skill root directory (default: directory containing rkflash.py)",
     )
-    p.add_argument("--host", default=DEFAULT_SYNC_HOST, help="SSH host")
-    p.add_argument("-P", "--port", type=int, default=22, help="SSH port")
-    p.add_argument("--user", default=DEFAULT_SYNC_USER, help="SSH username")
+    p.add_argument(
+        "--host",
+        default=None,
+        help="SSH host (else RKFLASH_SYNC_HOST or rkflash_sync_config.json)",
+    )
+    p.add_argument(
+        "-P",
+        "--port",
+        type=int,
+        default=None,
+        help="SSH port (default 22; or RKFLASH_SYNC_PORT / sync_port in config)",
+    )
+    p.add_argument(
+        "--user",
+        default=None,
+        help="SSH username (else RKFLASH_SYNC_USER or config)",
+    )
     p.add_argument(
         "--password",
         default=None,
-        help="SSH password (default: env RKFLASH_SSH_PASSWORD, else kaihong)",
+        help="SSH password (else RKFLASH_SSH_PASSWORD or sync_password in config)",
     )
     p.add_argument(
         "--remote",
-        default=DEFAULT_SYNC_REMOTE,
-        help="Remote images directory (recursively copied into local images/)",
+        default=None,
+        help="Remote images directory (else RKFLASH_SYNC_REMOTE or config)",
     )
     p.add_argument(
         "--no-prefer-scp",
@@ -559,7 +863,7 @@ def _parse_raw_scp_argv(argv: list[str]) -> argparse.Namespace:
     p.add_argument(
         "--cmd",
         default=None,
-        help="Override default scp command line (default matches manual terminal, incl. //root/...)",
+        help="Full scp shell command (else RKFLASH_RAW_SCP_CMD or raw_scp_cmd in config)",
     )
     return p.parse_args(argv)
 
@@ -570,7 +874,11 @@ def cmd_raw_scp(argv: list[str]) -> int:
     base = _skill_base(args.base)
     images_dir = (base / "images").resolve()
     images_dir.mkdir(parents=True, exist_ok=True)
-    cmd = (args.cmd or RAW_SCP_SHELL_CMD).strip()
+    try:
+        cmd = _resolve_raw_scp_command(base, args.cmd).strip()
+    except RuntimeError as e:
+        print(str(e), file=sys.stderr)
+        return 1
     print(f"[raw-scp] cwd={images_dir}", flush=True)
     print(f"[raw-scp] cmd={cmd!r}", flush=True)
     code = subprocess.call(
@@ -618,26 +926,34 @@ def _parse_pscp_sync_argv(argv: list[str]) -> argparse.Namespace:
         "--pscp",
         default=None,
         metavar="EXE",
-        help="pscp.exe path (default C:\\PuTTY\\pscp.exe, RKFLASH_PSCP, or PATH)",
+        help="pscp.exe path (RKFLASH_PSCP, optional C:\\PuTTY\\pscp.exe if present, or PATH)",
     )
-    p.add_argument("--host", default=DEFAULT_SYNC_HOST)
-    p.add_argument("--user", default=DEFAULT_SYNC_USER)
+    p.add_argument(
+        "--host",
+        default=None,
+        help="SSH host (else RKFLASH_SYNC_HOST or config)",
+    )
+    p.add_argument(
+        "--user",
+        default=None,
+        help="SSH user (else RKFLASH_SYNC_USER or config)",
+    )
     p.add_argument(
         "--password",
         default=None,
-        help="SSH password (default RKFLASH_SSH_PASSWORD, else kaihong)",
+        help="SSH password (else RKFLASH_SSH_PASSWORD or config)",
     )
     p.add_argument(
         "-P",
         "--port",
         type=int,
-        default=22,
-        help="SSH port (passed to pscp -P)",
+        default=None,
+        help="SSH port (default 22; passed to pscp -P)",
     )
     p.add_argument(
         "--remote",
-        default=DEFAULT_PSCP_REMOTE_IMAGES,
-        help="Remote directory absolute path (no user@host: prefix)",
+        default=None,
+        help="Remote directory absolute path (else RKFLASH_SYNC_REMOTE or config)",
     )
     p.add_argument(
         "--timeout",
@@ -660,9 +976,24 @@ def cmd_pscp_sync(argv: list[str]) -> int:
     except RuntimeError as e:
         print(str(e), file=sys.stderr)
         return 1
-    pwd = args.password or os.environ.get("RKFLASH_SSH_PASSWORD", DEFAULT_SYNC_PASSWORD)
-    remote = args.remote.strip().rstrip("/")
-    spec = f"{args.user}@{args.host}:{remote}"
+    try:
+        sc = _resolve_rkflash_ssh_config(
+            base,
+            host_cli=args.host,
+            port_cli=args.port,
+            user_cli=args.user,
+            password_cli=args.password,
+            remote_images_cli=args.remote,
+            remote_ohos_cli=None,
+            require_remote_images=True,
+            require_remote_ohos=False,
+        )
+    except RuntimeError as e:
+        print(str(e), file=sys.stderr)
+        return 1
+    pwd = sc.password
+    remote = sc.remote_images.strip().rstrip("/")
+    spec = f"{sc.user}@{sc.host}:{remote}"
     cmd: list[str] = [
         str(pscp),
         "-batch",
@@ -670,7 +1001,7 @@ def cmd_pscp_sync(argv: list[str]) -> int:
         pwd,
         "-r",
         "-P",
-        str(args.port),
+        str(sc.port),
         spec,
         ".",
     ]
@@ -701,13 +1032,24 @@ def cmd_sync_images(argv: list[str]) -> int:
     args = _parse_sync_argv(argv)
     base = _skill_base(args.base)
     try:
+        sc = _resolve_rkflash_ssh_config(
+            base,
+            host_cli=args.host,
+            port_cli=args.port,
+            user_cli=args.user,
+            password_cli=args.password,
+            remote_images_cli=args.remote,
+            remote_ohos_cli=None,
+            require_remote_images=True,
+            require_remote_ohos=False,
+        )
         sync_images_from_server(
             base,
-            host=args.host,
-            port=args.port,
-            user=args.user,
-            password=args.password,
-            remote_dir=args.remote,
+            host=sc.host,
+            port=sc.port,
+            user=sc.user,
+            password=sc.password,
+            remote_dir=sc.remote_images,
             prefer_scp=not args.no_prefer_scp,
             sshpass_path=args.sshpass,
             scp_only=args.scp_only,
@@ -717,7 +1059,7 @@ def cmd_sync_images(argv: list[str]) -> int:
     except RuntimeError as e:
         print(str(e), file=sys.stderr)
         return 1
-    print(f"Synced {args.user}@{args.host}:{args.remote} -> {base / 'images'}")
+    print(f"Synced {sc.user}@{sc.host}:{sc.remote_images} -> {base / 'images'}")
     return 0
 
 
@@ -1075,11 +1417,12 @@ def _append_log_lines(log_path: Path, lines: list[str]) -> None:
 
 def _hdc_turn_off_all_leds_after_verify(log_path: Path, hdc_timeout: int) -> None:
     """Best-effort: write 0 to /sys/class/leds/*/brightness via hdc. Does not raise."""
-    script = _leds_off_shell_script()
+    script, mode_note = _resolve_leds_off_script(log_path)
     cmd_note = "hdc shell sh -c <LED script>"
+    extra = f" ({mode_note})\n" if mode_note else "\n"
     _append_log_lines(
         log_path,
-        ["\n=== Turn off all LEDs (after VERIFY OK) ===\n", f"$ {cmd_note}\n"],
+        ["\n=== Turn off all LEDs (after VERIFY OK) ===\n", extra, f"$ {cmd_note}\n"],
     )
     argv = ["hdc", "shell", "sh", "-c", script]
     try:
@@ -1139,7 +1482,7 @@ def verify_flashed_version_against_server(
     After flash + reset: wait, read const.product.software.version from device (hdc shell param get),
     fetch same key from server ohos.para, compare. Match => success proof; mismatch => RuntimeError.
     hdc_timeout applies to both param get and the optional post-verify LEDs-off hdc shell.
-    If leds_off and match, run best-effort hdc script to turn off sysfs LEDs (see _DEFAULT_LEDS_OFF_SH).
+    If leds_off and match, run best-effort hdc script (see _resolve_leds_off_script: config leds_off_cmd, names, or default blue,green,red).
     """
     _append_log_lines(
         log_path,
@@ -1439,30 +1782,30 @@ def main() -> int:
     )
     p.add_argument(
         "--verify-host",
-        default=DEFAULT_SYNC_HOST,
-        help="SSH host for fetching ohos.para (default: same as sync server)",
+        default=None,
+        help="SSH host for ohos.para (else RKFLASH_SYNC_HOST or config)",
     )
     p.add_argument(
         "--verify-user",
-        default=DEFAULT_SYNC_USER,
-        help="SSH user for ohos.para fetch",
+        default=None,
+        help="SSH user for ohos.para (else RKFLASH_SYNC_USER or config)",
     )
     p.add_argument(
         "--verify-password",
         default=None,
-        help="SSH password for ohos.para (default: RKFLASH_SSH_PASSWORD or kaihong)",
+        help="SSH password for ohos.para (else RKFLASH_SSH_PASSWORD or config)",
     )
     p.add_argument(
         "--verify-port",
         type=int,
-        default=22,
-        help="SSH port for ohos.para fetch (default 22)",
+        default=None,
+        help="SSH port for ohos.para (default 22; or RKFLASH_SYNC_PORT / config)",
     )
     p.add_argument(
         "--remote-ohos-para",
-        default=DEFAULT_REMOTE_OHOS_PARA,
+        default=None,
         metavar="PATH",
-        help="Remote absolute path to ohos.para under phone package tree",
+        help="Remote ohos.para path (else RKFLASH_REMOTE_OHOS_PARA, config, or derived from sync_remote)",
     )
     p.add_argument(
         "--verify-delay",
@@ -1497,17 +1840,29 @@ def main() -> int:
         return 1
     print(f"Flash finished, log: {log_path}")
     if not args.no_verify_version:
-        vpwd = args.verify_password or os.environ.get(
-            "RKFLASH_SSH_PASSWORD", DEFAULT_SYNC_PASSWORD
-        )
+        try:
+            vcfg = _resolve_rkflash_ssh_config(
+                base,
+                host_cli=args.verify_host,
+                port_cli=args.verify_port,
+                user_cli=args.verify_user,
+                password_cli=args.verify_password,
+                remote_images_cli=None,
+                remote_ohos_cli=args.remote_ohos_para,
+                require_remote_images=False,
+                require_remote_ohos=True,
+            )
+        except RuntimeError as e:
+            print(str(e), file=sys.stderr)
+            return 1
         try:
             verify_flashed_version_against_server(
                 log_path,
-                host=args.verify_host,
-                port=args.verify_port,
-                user=args.verify_user,
-                password=vpwd,
-                remote_ohos_para=str(args.remote_ohos_para).strip(),
+                host=vcfg.host,
+                port=vcfg.port,
+                user=vcfg.user,
+                password=vcfg.password,
+                remote_ohos_para=vcfg.remote_ohos_para.strip(),
                 delay_sec=args.verify_delay,
                 hdc_timeout=args.verify_hdc_timeout,
                 pscp_timeout=args.verify_pscp_timeout,

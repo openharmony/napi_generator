@@ -188,7 +188,7 @@ common.cpp         → common.h
 
 ## 七、与 ohclitools 技能的关系
 
-- **部署**：使用 `ohclitool.py deploy --source-dir .claude/skills/ohclitools/wificlitools --test-dir foundation/communication/wifi/wifi/test` 将 wificlitools 拷贝到 test 并修改 BUILD.gn。
+- **部署**：使用 `ohclitool.py deploy --source-dir <napi_generator>/src/skills/ohclitools/wificlitools --test-dir foundation/communication/wifi/wifi/test` 将 wificlitools 拷贝到 test 并修改 BUILD.gn。
 - **编译**：`ohclitool.py build` 解析 wificlitools/BUILD.gn 得到目标名 `wificommand`，传给 `build.sh --build-target wificommand`。
 - **验证与设备运行**：`ohclitool.py verify --push-run` 将产物推送到设备并比较命令列表与源码一致性（需在 ohclitool.py 中支持 wifi 的 test 路径与产物路径）。
 

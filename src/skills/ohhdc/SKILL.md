@@ -10,6 +10,20 @@ version: "1.0.2"
 
 This skill provides capabilities for OpenHarmony/HarmonyOS devices via HDC (HarmonyOS Device Connector): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例: uninstall → `hdc install -r` main + test HAP → `aa test`), **replace-install HAP**, **display screenshot** (`snapshot_display` + `hdc file recv`，默认保存到技能目录 `screenshot/`), **app-scoped screenshot** (`screenshot-app` / `snap-app`: `aa start` then `snapshot_display`; 预设别名见 `ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`), **UI layout JSON** (`uitest dumpLayout` + `hdc file recv`，默认保存到 `layout/`), **Wi‑Fi via wificommand** (`wifi-kaihong`: enable Wi‑Fi and connect default **KaiHong** / **KaiHong@888** or custom `--wifi-ssid` / `--wifi-password`), **control LEDs** (`/sys/class/leds/{red,green,blue}/brightness`), **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
 
+## 应用示例与提示词（中文）
+
+在 **napi_generator 仓库根** 执行；需 **`hdc`** 在 PATH、设备已连接。
+
+| 场景 | 命令示例 | 提示词示例 |
+|------|----------|------------|
+| 已装应用 | `python3 src/skills/ohhdc/ohhdc.py apps` | 「列出设备上所有 HAP bundle」 |
+| 安装/覆盖 | `python3 src/skills/ohhdc/ohhdc.py replace-install /path/to-signed.hap` | 「替换安装这个签好的 hap」 |
+| 跑 ohosTest | `python3 src/skills/ohhdc/ohhdc.py test <bundle> -m <module> ...` | 「在设备上跑 nativeproj 的单元测试套件」 |
+| 故障日志 | `python3 src/skills/ohhdc/ohhdc.py faultlog` | 「看下 faultlog 目录里最近错误」 |
+| 截屏 | `python3 src/skills/ohhdc/ohhdc.py screenshot` | 「截一张全屏保存到技能 screenshot 目录」 |
+| Wi‑Fi | `python3 src/skills/ohhdc/ohhdc.py wifi-kaihong` | 「连上默认 KaiHong AP」 |
+| 帮助 | `python3 src/skills/ohhdc/ohhdc.py --help` | 「ohhdc 有哪些子命令」 |
+
 ## Query Installed Apps
 
 ### Feature Description
@@ -46,13 +60,13 @@ The assistant uses this skill to run the script and show the result in Markdown.
 # From project root; ensure hdc is available (e.g. source ~/.bashrc in your shell first)
 
 # List installed apps, Markdown format (default)
-python3 .claude/skills/ohhdc/ohhdc.py apps
+python3 src/skills/ohhdc/ohhdc.py apps
 
 # Same, explicit format
-python3 .claude/skills/ohhdc/ohhdc.py list-apps --format markdown
+python3 src/skills/ohhdc/ohhdc.py list-apps --format markdown
 
 # Plain text list
-python3 .claude/skills/ohhdc/ohhdc.py apps --format plain
+python3 src/skills/ohhdc/ohhdc.py apps --format plain
 ```
 
 **Available commands:**
@@ -89,7 +103,7 @@ python3 .claude/skills/ohhdc/ohhdc.py apps --format plain
 
 ```bash
 # Uninstall by bundle name (required)
-python3 .claude/skills/ohhdc/ohhdc.py uninstall com.example.p7zipTest
+python3 src/skills/ohhdc/ohhdc.py uninstall com.example.p7zipTest
 ```
 
 **Parameter:** `target` = bundle name (e.g. `com.example.p7zipTest`).
@@ -123,7 +137,7 @@ python3 .claude/skills/ohhdc/ohhdc.py uninstall com.example.p7zipTest
 
 ```bash
 # Install HAP (target = full path to .hap file)
-python3 .claude/skills/ohhdc/ohhdc.py install /root/workspace/napi_generator/src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap
+python3 src/skills/ohhdc/ohhdc.py install /root/workspace/napi_generator/src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap
 ```
 
 **Parameter:** `target` = absolute or relative path to the `.hap` file.
@@ -222,7 +236,7 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 
 ```bash
 # Replace-install HAP (target = full path to .hap file)
-python3 .claude/skills/ohhdc/ohhdc.py replace-install /root/workspace/napi_generator/src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap
+python3 src/skills/ohhdc/ohhdc.py replace-install /root/workspace/napi_generator/src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap
 ```
 
 **Parameter:** `target` = absolute or relative path to the `.hap` file.
@@ -400,17 +414,17 @@ Extracts key information: bundle name, ability name, ability type, app state (FO
 
 ```bash
 # View foreground apps (default: shows foreground + running processes)
-python3 .claude/skills/ohhdc/ohhdc.py foreground
+python3 src/skills/ohhdc/ohhdc.py foreground
 
 # Same, short form
-python3 .claude/skills/ohhdc/ohhdc.py fg
+python3 src/skills/ohhdc/ohhdc.py fg
 
 # View all abilities (including background)
-python3 .claude/skills/ohhdc/ohhdc.py dump-all
+python3 src/skills/ohhdc/ohhdc.py dump-all
 
 # View running abilities only
-python3 .claude/skills/ohhdc/ohhdc.py running
-python3 .claude/skills/ohhdc/ohhdc.py dump-running
+python3 src/skills/ohhdc/ohhdc.py running
+python3 src/skills/ohhdc/ohhdc.py dump-running
 ```
 
 **Available commands:**
@@ -453,10 +467,10 @@ python3 .claude/skills/ohhdc/ohhdc.py dump-running
 
 ```bash
 # Force-stop by bundle name (required)
-python3 .claude/skills/ohhdc/ohhdc.py force-stop com.ohos.settings
+python3 src/skills/ohhdc/ohhdc.py force-stop com.ohos.settings
 
 # Same, short form
-python3 .claude/skills/ohhdc/ohhdc.py stop com.ohos.settings
+python3 src/skills/ohhdc/ohhdc.py stop com.ohos.settings
 ```
 
 **Parameter:** `target` = bundle name (e.g. `com.ohos.settings`).
@@ -490,10 +504,10 @@ python3 .claude/skills/ohhdc/ohhdc.py stop com.ohos.settings
 
 ```bash
 # Start app (requires bundleName and ability name)
-python3 .claude/skills/ohhdc/ohhdc.py start com.ohos.settings --ability EntryAbility
+python3 src/skills/ohhdc/ohhdc.py start com.ohos.settings --ability EntryAbility
 
 # Same, using short form
-python3 .claude/skills/ohhdc/ohhdc.py start com.ohos.settings -a EntryAbility
+python3 src/skills/ohhdc/ohhdc.py start com.ohos.settings -a EntryAbility
 ```
 
 **Parameters:**
@@ -543,20 +557,20 @@ Supports:
 
 ```bash
 # Run specific test case
-python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
+python3 src/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
   --module entry_test \
   --suite ActsAbilityTest \
   --case assertContain \
   --timeout 15000
 
 # Run full test suite (omit --case)
-python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
+python3 src/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
   --module entry_test \
   --suite ActsAbilityTest \
   --timeout 15000
 
 # Using short form
-python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
+python3 src/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
   -m entry_test \
   -s ActsAbilityTest \
   -c assertContain \
@@ -574,15 +588,15 @@ python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
 
 ```bash
 # Run specific test case
-python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
+python3 src/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
   -m entry_test -s ActsAbilityTest -c assertContain
 
 # Run full test suite
-python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
+python3 src/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
   -m entry_test -s ActsAbilityTest
 
 # With custom timeout (30 seconds)
-python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
+python3 src/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
   -m entry_test -s ActsAbilityTest -t 30000
 ```
 
@@ -594,7 +608,7 @@ python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
 
 1. 在设备上执行 **`snapshot_display`**，通过 **`-f`** 将图片写到固定路径（默认 **`/data/local/tmp/ohhdc_screenshot.jpeg`**，须在 `/data/local/tmp` 下且扩展名为 `.jpeg` / `.png`，与系统工具校验一致）。
 2. 使用 **`hdc file recv <设备路径> <本机路径>`** 将文件拉到本地。
-3. **本机默认目录**：`.claude/skills/ohhdc/screenshot/`（仅文件名或省略路径时自动写入该目录；写绝对路径则按指定位置保存）。
+3. **本机默认目录**：`src/skills/ohhdc/screenshot/`（仅文件名或省略路径时自动写入该目录；写绝对路径则按指定位置保存）。
 
 **注意**：`snapshot_display` 在源码中要求设备处于**开发者模式**，否则会提示 `not developer mode` 并退出。
 
@@ -604,23 +618,23 @@ python3 .claude/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
 ### Quick Start – Script
 
 ```bash
-# 默认：.claude/skills/ohhdc/screenshot/ohhdc_screenshot_YYYYMMDD_HHMMSS.jpeg
-python3 .claude/skills/ohhdc/ohhdc.py screenshot
+# 默认：src/skills/ohhdc/screenshot/ohhdc_screenshot_YYYYMMDD_HHMMSS.jpeg
+python3 src/skills/ohhdc/ohhdc.py screenshot
 
 # 与 screenshot 等价
-python3 .claude/skills/ohhdc/ohhdc.py snapshot
+python3 src/skills/ohhdc/ohhdc.py snapshot
 
 # 仅指定文件名 → 仍保存在 screenshot/ 下
-python3 .claude/skills/ohhdc/ohhdc.py screenshot my.jpeg
+python3 src/skills/ohhdc/ohhdc.py screenshot my.jpeg
 
 # 任意本机绝对路径
-python3 .claude/skills/ohhdc/ohhdc.py screenshot /tmp/screen.jpeg
+python3 src/skills/ohhdc/ohhdc.py screenshot /tmp/screen.jpeg
 
 # 指定显示 ID（多屏）
-python3 .claude/skills/ohhdc/ohhdc.py screenshot --display-id 0
+python3 src/skills/ohhdc/ohhdc.py screenshot --display-id 0
 
 # 指定设备端路径（需仍满足 snapshot 路径/后缀规则）
-python3 .claude/skills/ohhdc/ohhdc.py snapshot --device-file /data/local/tmp/my.jpeg
+python3 src/skills/ohhdc/ohhdc.py snapshot --device-file /data/local/tmp/my.jpeg
 ```
 
 ### Usage in Conversation
@@ -648,19 +662,19 @@ python3 .claude/skills/ohhdc/ohhdc.py snapshot --device-file /data/local/tmp/my.
 
 ```bash
 # 预设别名：先启动 etsclock，约 2s 后整屏截图 → ohhdc/screenshot/screenshot_app_etsclock_*.jpeg
-python3 .claude/skills/ohhdc/ohhdc.py screenshot-app etsclock
+python3 src/skills/ohhdc/ohhdc.py screenshot-app etsclock
 
 # 等价
-python3 .claude/skills/ohhdc/ohhdc.py snap-app etsclock
+python3 src/skills/ohhdc/ohhdc.py snap-app etsclock
 
 # 指定本机保存路径（第二参数仅 screenshot-app 使用）
-python3 .claude/skills/ohhdc/ohhdc.py screenshot-app etsclock ./clock.jpeg
+python3 src/skills/ohhdc/ohhdc.py screenshot-app etsclock ./clock.jpeg
 
 # 完整包名 + Ability
-python3 .claude/skills/ohhdc/ohhdc.py screenshot-app ohos.samples.etsclock -a MainAbility
+python3 src/skills/ohhdc/ohhdc.py screenshot-app ohos.samples.etsclock -a MainAbility
 
 # 多屏、启动后等待更久再截
-python3 .claude/skills/ohhdc/ohhdc.py screenshot-app etsclock --display-id 0 --app-delay 3.5
+python3 src/skills/ohhdc/ohhdc.py screenshot-app etsclock --display-id 0 --app-delay 3.5
 ```
 
 ### Usage in Conversation
@@ -670,7 +684,7 @@ python3 .claude/skills/ohhdc/ohhdc.py screenshot-app etsclock --display-id 0 --a
 
 ### 扩展预设别名
 
-编辑 `.claude/skills/ohhdc/ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`，增加  
+编辑 `src/skills/ohhdc/ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`，增加  
 `"短名": ("完整包名", "默认主Ability")`。
 
 ---
@@ -681,7 +695,7 @@ python3 .claude/skills/ohhdc/ohhdc.py screenshot-app etsclock --display-id 0 --a
 
 1. 在设备上执行 **`hdc shell uitest dumpLayout -p <设备端路径>`**（与 arkxtest `uitest` 命令行一致），将当前界面控件树导出为 **JSON**。
 2. 使用 **`hdc file recv`** 将 JSON 拉到本机；若内容为合法 JSON，脚本会**缩进格式化**后写回。
-3. **本机默认目录**：`.claude/skills/ohhdc/layout/`（默认文件名 `uitest_layout_YYYYMMDD_HHMMSS.json`）。
+3. **本机默认目录**：`src/skills/ohhdc/layout/`（默认文件名 `uitest_layout_YYYYMMDD_HHMMSS.json`）。
 
 设备端默认路径：`/data/local/tmp/ohhdc_uitest_layout.json`（可用 `--device-file` 修改）。
 
@@ -690,17 +704,17 @@ python3 .claude/skills/ohhdc/ohhdc.py screenshot-app etsclock --display-id 0 --a
 ### Quick Start – Script
 
 ```bash
-# 默认写入 .claude/skills/ohhdc/layout/uitest_layout_*.json
-python3 .claude/skills/ohhdc/ohhdc.py layout
+# 默认写入 src/skills/ohhdc/layout/uitest_layout_*.json
+python3 src/skills/ohhdc/ohhdc.py layout
 
 # 等价
-python3 .claude/skills/ohhdc/ohhdc.py dump-layout
+python3 src/skills/ohhdc/ohhdc.py dump-layout
 
 # 指定本机文件名（仍在 layout/ 目录）
-python3 .claude/skills/ohhdc/ohhdc.py layout ui.json
+python3 src/skills/ohhdc/ohhdc.py layout ui.json
 
 # 指定包名窗口、显示 ID 等
-python3 .claude/skills/ohhdc/ohhdc.py layout --bundle com.example.app --display-id 0
+python3 src/skills/ohhdc/ohhdc.py layout --bundle com.example.app --display-id 0
 ```
 
 ### Usage in Conversation
@@ -738,25 +752,25 @@ python3 .claude/skills/ohhdc/ohhdc.py layout --bundle com.example.app --display-
 
 ```bash
 # 先看设备上有没有、本机 out 里有没有编过
-python3 .claude/skills/ohhdc/ohhdc.py wifi-check-wificommand --ohos-src /path/to/openharmony/src
+python3 src/skills/ohhdc/ohhdc.py wifi-check-wificommand --ohos-src /path/to/openharmony/src
 
 # 仅推送 wificommand（从 out/<wifi-product> 自动查找）
-python3 .claude/skills/ohhdc/ohhdc.py wifi-push-wificommand --ohos-src /path/to/src --wifi-product rk3568
+python3 src/skills/ohhdc/ohhdc.py wifi-push-wificommand --ohos-src /path/to/src --wifi-product rk3568
 
 # 指定本机二进制路径推送（第二个参数为可选 positional target）
-python3 .claude/skills/ohhdc/ohhdc.py wifi-push-wificommand /path/to/out/rk3568/communication/wifi/wificommand
+python3 src/skills/ohhdc/ohhdc.py wifi-push-wificommand /path/to/out/rk3568/communication/wifi/wificommand
 
 # 镜像无 wificommand 时：先推送再连 KaiHong / KaiHong@888
 export OHOS_SRC=/path/to/src
-python3 .claude/skills/ohhdc/ohhdc.py wifi-kaihong --push-wificommand
+python3 src/skills/ohhdc/ohhdc.py wifi-kaihong --push-wificommand
 
 # 已推到默认路径时，也可显式指定设备侧二进制
-python3 .claude/skills/ohhdc/ohhdc.py wifi-kaihong --wifi-device-bin /data/local/tmp/wificommand
+python3 src/skills/ohhdc/ohhdc.py wifi-kaihong --wifi-device-bin /data/local/tmp/wificommand
 
 # 覆盖 SSID / 密码
-python3 .claude/skills/ohhdc/ohhdc.py wifi-kaihong --wifi-ssid MyAP --wifi-password 'secret123'
+python3 src/skills/ohhdc/ohhdc.py wifi-kaihong --wifi-ssid MyAP --wifi-password 'secret123'
 
-python3 .claude/skills/ohhdc/ohhdc.py wifi-kaihong --no-wifi-status
+python3 src/skills/ohhdc/ohhdc.py wifi-kaihong --no-wifi-status
 ```
 
 ### Usage in Conversation
@@ -788,16 +802,16 @@ python3 .claude/skills/ohhdc/ohhdc.py wifi-kaihong --no-wifi-status
 
 ```bash
 # 红灯开 / 关（等价于 hdc shell "echo 1 > /sys/class/leds/red/brightness"）
-python3 .claude/skills/ohhdc/ohhdc.py led red on
-python3 .claude/skills/ohhdc/ohhdc.py led red off
+python3 src/skills/ohhdc/ohhdc.py led red on
+python3 src/skills/ohhdc/ohhdc.py led red off
 
 # sysfs 为 green 的灯（文档中常称蓝灯）
-python3 .claude/skills/ohhdc/ohhdc.py led green on
-python3 .claude/skills/ohhdc/ohhdc.py led green off
+python3 src/skills/ohhdc/ohhdc.py led green on
+python3 src/skills/ohhdc/ohhdc.py led green off
 
 # sysfs 为 blue 的灯（文档中常称绿灯）
-python3 .claude/skills/ohhdc/ohhdc.py led blue on
-python3 .claude/skills/ohhdc/ohhdc.py led blue off
+python3 src/skills/ohhdc/ohhdc.py led blue on
+python3 src/skills/ohhdc/ohhdc.py led blue off
 ```
 
 **参数**：`led <red|green|blue> <on|off>`。
@@ -840,8 +854,8 @@ python3 .claude/skills/ohhdc/ohhdc.py led blue off
 
 ### Script Location
 
-- **Skill**: `.claude/skills/ohhdc/SKILL.md`
-- **Script**: `.claude/skills/ohhdc/ohhdc.py`
+- **Skill**: `src/skills/ohhdc/SKILL.md`
+- **Script**: `src/skills/ohhdc/ohhdc.py`
 
 ### Summary
 
