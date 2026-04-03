@@ -1,6 +1,6 @@
 ---
 name: ohbuild
-description: "OpenHarmony build skill for compiling fuzz tests and querying module fuzztest targets and coverage args. Use when users need to build a fuzz test (./build.sh --build-target <target> --product-name rk3568 --gn-args <module>_feature_coverage=true), or list fuzz tests and gn-args for a module (check test/fuzztest/BUILD.gn for targets, module BUILD.gn for *_feature_coverage)."
+description: "OpenHarmony build skill: fuzz tests (list/build/verify-coverage gn-args), component fuzztest, and ACTS suite build via build-acts (test/xts/acts/build.sh). Use when users need fuzz or ACTS compilation from OH src."
 author: "Created by user"
 created: "2026-02-02"
 version: "1.0.0"
@@ -8,7 +8,7 @@ version: "1.0.0"
 
 # OH Build (ohbuild) 技能
 
-用于 OpenHarmony 构建相关操作，包括编译 fuzz 测试、查看模块 fuzztest 及对应参数。
+用于 OpenHarmony 构建相关操作：编译 **fuzz** 测试、查看模块 fuzztest 及覆盖率 **gn-args**、以及 **`build-acts`** 在 **`test/xts/acts`** 下编指定 **ACTS suite**（与 **ohtest/actstest.py**「跑 suite」互补：此处侧重 acts 目录内 **`build.sh`** 编译链）。
 
 ## 应用示例与提示词
 
@@ -20,7 +20,22 @@ version: "1.0.0"
 | 编单个 fuzz | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py build-fuzztest GetAppStatsMahFuzzTest --gn-args battery_statistics_feature_coverage=true` | 「编译 GetAppStatsMahFuzzTest 并打开覆盖率 gn-args」 |
 | 部件全 fuzz | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py build-component-fuzztest battery_statistics` | 「把该部件所有 fuzztest 编出来」 |
 | 查覆盖率参数 | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py verify-coverage power_manager` | 「power_manager 开覆盖率要配什么 gn-args」 |
+| 编 ACTS suite | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py build-acts ActsAACommandPrintSyncTest --src-dir ~/ohos/61release/src` | 「在 acts 目录编某个 ACTS 套件」「多个 suite 用逗号」 |
 | 帮助 | `python3 <napi_generator>/src/skills/ohbuild/ohbuild.py help` | 「ohbuild 子命令怎么用」 |
+
+### `build-acts`（ACTS 编译）
+
+在 OpenHarmony **`src` 根** 下应存在 **`test/xts/acts/build.sh`**。脚本在该目录执行：
+
+`./build.sh suite=acts system_size=<size> product_name=<product> suite=<suite1>,<suite2>,...`
+
+| 参数 | 说明 |
+|------|------|
+| 第一个位置参数 | suite 名；多个用 **英文逗号** 分隔 |
+| `--src-dir` | 工程 **`src` 根**（未传则用脚本内置推断的 `SRC_ROOT`，与 napi_generator 相对布局有关；**大仓开发建议总是传 `--src-dir`**） |
+| `--product-name` | 默认 `rk3568` |
+| `--system-size` | 默认 `standard` |
+| `--no-run` | 只打印将执行的命令，不真正执行 |
 
 ---
 
@@ -197,12 +212,16 @@ python3 src/skills/ohbuild/ohbuild.py build-component-fuzztest base/powermgr/bat
 python3 src/skills/ohbuild/ohbuild.py verify-coverage power_manager
 python3 src/skills/ohbuild/ohbuild.py verify-coverage
 
+# 编译 ACTS（在 test/xts/acts 下执行 build.sh；多 suite 逗号分隔）
+python3 src/skills/ohbuild/ohbuild.py build-acts ActsAACommandPrintSyncTest --src-dir ~/ohos/61release/src
+
 # 帮助
 python3 src/skills/ohbuild/ohbuild.py help
 ```
 
 **命令说明：**
 
+- `build-acts <suite>[,suite2] [--src-dir PATH] [--product-name rk3568] [--system-size standard] [--no-run]`：在 **`test/xts/acts`** 目录执行 ACTS 编译；**`--no-run`** 时只打印将执行的命令。
 - `list-fuzztest <模块>`：列出该模块下「部件 fuzztest 编译目标」、所有单个 fuzz 目标名及对应的 `*_feature_coverage` 参数。
 - `build-fuzztest <目标名> [--product-name rk3568] [--gn-args xxx=true]`：打印编译**单个** fuzz 目标的 `./build.sh` 命令。
 - `build-component-fuzztest <模块> [--product-name rk3568] [--gn-args xxx=true]`：打印编译**部件全部 fuzztest** 的 `./build.sh` 命令；目标从该部件 `test/fuzztest/BUILD.gn` 的 `group("...")` 解析，形如 `base/powermgr/battery_statistics/test/fuzztest:fuzztest`；若不传 `--gn-args` 则自动用该模块的 `*_feature_coverage=true`。
