@@ -2,25 +2,12 @@
 name: ohservices
 description: "OpenHarmony SystemAbility 从创建、编译、部署到运行与 HiDumper 的完整流程。提供 sampletest（SA ID 9009）样例、全部修改清单与 HiDumper 问题点/调试方法汇总、白名单/产品/高权限/SELinux 配置、build.sh 编译、init/hilog 配置。ohsa.py 固化：build/device/all、device-files、hilog-disk、dmesg、hidumper、diag（多设备 -t/OHSA_HDC_TARGET）。配套 saguide.md 全流程。"
 author: "Created by user"
-version: "2.1.0"
+version: "2.1.1"
 ---
 
 # OpenHarmony SystemAbility 样例服务（sampletest）完整流程
 
 本技能覆盖：**创建 SystemAbility → 编译与集成（含错误修复）→ 部署与运行确认 → 日志查看（hilog/dmesg）→ HiDumper 接口适配** 全流程能力与问题解法。
-
-## 应用示例与提示词
-
-文档为主，脚本 **`src/skills/ohservices/ohsa.py`** 固化常用检查（需 **hdc** / 本机 **out** 视子命令而定）。
-
-| 场景 | 命令示例 | 提示词示例 |
-|------|----------|------------|
-| 设备侧 SA | `python3 src/skills/ohservices/ohsa.py device` | 「看下 sampletest 进程和发布情况」 |
-| 综合诊断 | `python3 src/skills/ohservices/ohsa.py diag` | 「做一次设备+hilog+dmesg 综合诊断」 |
-| 编译产物检查 | `python3 src/skills/ohservices/ohsa.py build --product rk3568` | 「out 里有没有 sampletest 的 so 和 profile」 |
-| 落盘 hilog | `python3 src/skills/ohservices/ohsa.py hilog-disk` | 「查落盘 hilog 里 Publish/SELinux」 |
-| HiDumper | `python3 src/skills/ohservices/ohsa.py hidumper` | 「hidumper -s 9009 是否正常」 |
-| 多设备 | `python3 src/skills/ohservices/ohsa.py -t 192.168.x.x:8710 diag` | 「指定 hdc 设备跑 diag」 |
 
 ## 流程总览
 
@@ -50,7 +37,7 @@ version: "2.1.0"
 | **HiDumper 除 get 外** | `allow hidumper_service sa_xxx:samgr_class { get }` 通过后，若 Dump 仍失败，在落盘/dmesg 中查 **binder `call`** 等是否仍有 `avc: denied`（hidumper_service → 业务域）。 |
 | **镜像产物路径** | 32/64 位产品可能只有 `lib` 或 `lib64`，验证时用 `ohsa.py build` 或两处都查。 |
 
-更偏「步骤清单」的叙述见同目录 **saguide.md**；本文件侧重 **配置细节、命令、问题汇总**。
+**saguide.md** 已扩展为与 **ohhdf/howtohdf.md** 同风格的**零基础阶段长文**（阶段 1–21 + 附录）；本文件侧重 **配置细节、命令、问题汇总**。建议：**先 saguide 跟阶段走一遍，再回本 SKILL 查表与 grep**。
 
 ---
 
@@ -237,32 +224,32 @@ ls out/rk3568/packages/phone/system/lib/libsampletest_server.z.so \
 
 ### 本技能脚本 ohsa.py（能力固化）
 
-脚本路径：`src/skills/ohservices/ohsa.py`，将技能中的**编译检查、设备进程、镜像内文件、落盘 hilog 诊断、dmesg、hidumper** 固化为子命令（与 SKILL 中排查命令一致）。
+脚本路径：`.claude/skills/ohservices/ohsa.py`，将技能中的**编译检查、设备进程、镜像内文件、落盘 hilog 诊断、dmesg、hidumper** 固化为子命令（与 SKILL 中排查命令一致）。
 
 ```bash
 # 检查编译产物 + 设备（默认；exit 以编译产物为准）
-python3 src/skills/ohservices/ohsa.py all
+python3 .claude/skills/ohservices/ohsa.py all
 
 # 仅编译产物（out 默认 out/rk3568，可用 --product / --out）
-python3 src/skills/ohservices/ohsa.py build
+python3 .claude/skills/ohservices/ohsa.py build
 
 # 设备：进程 + 实时 hilog（可加 --no-hilog；多设备用 -t SERIAL 或 OHSA_HDC_TARGET）
-python3 src/skills/ohservices/ohsa.py device
+python3 .claude/skills/ohservices/ohsa.py device
 
 # 设备上 /system 下 cfg、profile、so 是否存在（对应「镜像内文件」排查）
-python3 src/skills/ohservices/ohsa.py device-files
+python3 .claude/skills/ohservices/ohsa.py device-files
 
 # 落盘 hilog（/data/log/hilog/*.gz）grep：Publish / selinux / hidumper / avc 等关键模式
-python3 src/skills/ohservices/ohsa.py hilog-disk
+python3 .claude/skills/ohservices/ohsa.py hilog-disk
 
 # dmesg 中与 init、execv、secon、avc 相关摘要
-python3 src/skills/ohservices/ohsa.py dmesg
+python3 .claude/skills/ohservices/ohsa.py dmesg
 
 # 在设备上执行 hidumper -s 9009（可用 --hidumper-name Sampletest）
-python3 src/skills/ohservices/ohsa.py hidumper
+python3 .claude/skills/ohservices/ohsa.py hidumper
 
 # 综合诊断：device-files + 进程 + hilog-disk + dmesg（逐项打印，exit 0）
-python3 src/skills/ohservices/ohsa.py diag
+python3 .claude/skills/ohservices/ohsa.py diag
 ```
 
 常用参数：`--hilog-lines N` 控制展示行数；`-t <序列号>` 指定 hdc 设备。
@@ -489,7 +476,7 @@ zcat ./hilog_dump/hilog.*.gz | grep -E '9009|Sampletest|Publish|GetServiceCheck|
 
 ### 五、调试方法速查
 
-- **确认进程**：`hdc shell "ps -ef | grep -E 'sampletest|sa_main'"` 或 `python3 src/skills/ohservices/ohsa.py device`
+- **确认进程**：`hdc shell "ps -ef | grep -E 'sampletest|sa_main'"` 或 `python3 .claude/skills/ohservices/ohsa.py device`
 - **确认 Publish 结果**：hilog 中搜 `Sampletest started`（成功）或 `Publish failed`（失败）
 - **确认 init/execv/SELinux**：`hdc shell "dmesg | grep -iE 'sampletest|ServiceStart|execv|secon|avc'"`
 - **确认 hidumper 能否取到 SA**：先执行 `hidumper -s 9009`，再在落盘 hilog 中搜 `GetServiceCheck`、`CheckSystemAbilityInner`、`avc: denied { get }` 判断是 add 问题还是 get 问题。
@@ -499,5 +486,5 @@ zcat ./hilog_dump/hilog.*.gz | grep -E '9009|Sampletest|Publish|GetServiceCheck|
 ## 参考文档
 
 - SystemAbility 设计与实现：`foundation/systemabilitymgr/safwk/SystemAbility_Design_And_Sample_zh.md`
-- 本技能目录下 **saguide.md**：创建、编译、调试、验证一个 SystemAbility 的全流程说明。
+- 本技能目录下 **saguide.md**：零基础阶段化全流程（创建→集成→SELinux→HiDumper→有序排查），与本文互补。
 - 本技能目录下可保留该文档副本便于查阅。
