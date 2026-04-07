@@ -36,7 +36,7 @@ version: "1.2.0"
 
 ## 脚本 `ohhdf.py`（在 OH 源码根或子目录执行）
 
-在 **napi_generator 仓库根** 下示例路径为 **`src/skills/ohhdf/ohhdf.py`**（与 **HOWTOSKILLS.md** 一致）；若将技能拷至 **`.claude/skills/ohhdf/`**，可改用对应路径。
+在 **napi_generator 仓库根** 下示例路径为 **`src/skills/ohhdf/ohhdf.py`**（与 **HOWTOSKILLS.md** 一致）。
 
 ```bash
 python3 src/skills/ohhdf/ohhdf.py guide

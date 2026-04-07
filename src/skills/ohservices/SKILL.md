@@ -224,32 +224,32 @@ ls out/rk3568/packages/phone/system/lib/libsampletest_server.z.so \
 
 ### 本技能脚本 ohsa.py（能力固化）
 
-脚本路径：`.claude/skills/ohservices/ohsa.py`，将技能中的**编译检查、设备进程、镜像内文件、落盘 hilog 诊断、dmesg、hidumper** 固化为子命令（与 SKILL 中排查命令一致）。
+脚本路径：`src/skills/ohservices/ohsa.py`，将技能中的**编译检查、设备进程、镜像内文件、落盘 hilog 诊断、dmesg、hidumper** 固化为子命令（与 SKILL 中排查命令一致）。
 
 ```bash
 # 检查编译产物 + 设备（默认；exit 以编译产物为准）
-python3 .claude/skills/ohservices/ohsa.py all
+python3 src/skills/ohservices/ohsa.py all
 
 # 仅编译产物（out 默认 out/rk3568，可用 --product / --out）
-python3 .claude/skills/ohservices/ohsa.py build
+python3 src/skills/ohservices/ohsa.py build
 
 # 设备：进程 + 实时 hilog（可加 --no-hilog；多设备用 -t SERIAL 或 OHSA_HDC_TARGET）
-python3 .claude/skills/ohservices/ohsa.py device
+python3 src/skills/ohservices/ohsa.py device
 
 # 设备上 /system 下 cfg、profile、so 是否存在（对应「镜像内文件」排查）
-python3 .claude/skills/ohservices/ohsa.py device-files
+python3 src/skills/ohservices/ohsa.py device-files
 
 # 落盘 hilog（/data/log/hilog/*.gz）grep：Publish / selinux / hidumper / avc 等关键模式
-python3 .claude/skills/ohservices/ohsa.py hilog-disk
+python3 src/skills/ohservices/ohsa.py hilog-disk
 
 # dmesg 中与 init、execv、secon、avc 相关摘要
-python3 .claude/skills/ohservices/ohsa.py dmesg
+python3 src/skills/ohservices/ohsa.py dmesg
 
 # 在设备上执行 hidumper -s 9009（可用 --hidumper-name Sampletest）
-python3 .claude/skills/ohservices/ohsa.py hidumper
+python3 src/skills/ohservices/ohsa.py hidumper
 
 # 综合诊断：device-files + 进程 + hilog-disk + dmesg（逐项打印，exit 0）
-python3 .claude/skills/ohservices/ohsa.py diag
+python3 src/skills/ohservices/ohsa.py diag
 ```
 
 常用参数：`--hilog-lines N` 控制展示行数；`-t <序列号>` 指定 hdc 设备。
@@ -476,7 +476,7 @@ zcat ./hilog_dump/hilog.*.gz | grep -E '9009|Sampletest|Publish|GetServiceCheck|
 
 ### 五、调试方法速查
 
-- **确认进程**：`hdc shell "ps -ef | grep -E 'sampletest|sa_main'"` 或 `python3 .claude/skills/ohservices/ohsa.py device`
+- **确认进程**：`hdc shell "ps -ef | grep -E 'sampletest|sa_main'"` 或 `python3 src/skills/ohservices/ohsa.py device`
 - **确认 Publish 结果**：hilog 中搜 `Sampletest started`（成功）或 `Publish failed`（失败）
 - **确认 init/execv/SELinux**：`hdc shell "dmesg | grep -iE 'sampletest|ServiceStart|execv|secon|avc'"`
 - **确认 hidumper 能否取到 SA**：先执行 `hidumper -s 9009`，再在落盘 hilog 中搜 `GetServiceCheck`、`CheckSystemAbilityInner`、`avc: denied { get }` 判断是 add 问题还是 get 问题。

@@ -494,7 +494,7 @@ def install_project_haps(project_dir):
       - 测试 HAP: {project_dir}/entry/build/default/outputs/ohosTest/entry-ohosTest-signed.hap
 
     Args:
-        project_dir: 项目根目录，如 /root/workspace/napi_generator/examples/NativeProj46R
+        project_dir: 项目根目录，如 napi_generator 仓库根下的 examples/NativeProj46R 或其绝对路径
 
     Returns:
         tuple: (success: bool, output: str, error: str)

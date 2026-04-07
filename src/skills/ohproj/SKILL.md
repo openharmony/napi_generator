@@ -215,8 +215,8 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--time
 ================================================================================
 检查编译环境...
 ================================================================================
-✓ HarmonyOS Command Line Tools 路径: /root/toolchains/command-line-tools
-✓ OpenHarmony SDK 路径: /root/toolchains/ohos-sdk-6.0-release
+✓ HarmonyOS Command Line Tools 路径: <你的 Command Line Tools 目录>
+✓ OpenHarmony SDK 路径: <你的 ohos-sdk 目录>
 ...
 ================================================================================
 开始构建 HAP...
@@ -254,7 +254,7 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test <项目目录绝对路径> [--time
 ================================================================================
 开始构建测试 HAP...
 ================================================================================
-工作目录: /root/ohos/.../ohsonNativeProj46R
+工作目录: <你的 HAP 工程根目录>
 ...
 ✓ 测试 HAP 构建成功！
   测试 HAP: entry/build/default/outputs/default/entry_test-default-unsigned.hap
