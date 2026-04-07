@@ -219,7 +219,7 @@ python3 src/skills/rkflash/rkflash.py
 |------|----------|
 | **`pscp-sync`** | **Windows**，**PuTTY**，**`-pw` 非交互**，适合脚本 |
 | **`raw-scp`** | 与终端手工 **`scp`** 完全一致，需交互密码 |
-| **`sync-images`** | **Linux sshpass**、**paramiko**、**`--expect-scp`**；默认 **`--remote /root/images`**，拉 OH 产物需改 **`--remote`** |
+| **`sync-images`** | **Linux sshpass**、**paramiko**、**`--expect-scp`**；默认远端镜像目录需用 **`--remote`** 指定（按你的编译机实际路径填写） |
 
 ---
 

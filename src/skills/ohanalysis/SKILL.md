@@ -184,7 +184,7 @@ python3 src/skills/ohanalysis/ohanalysis.py help
 ### bundle 命令输出
 
 ```
-共 1 个 bundle.json（src_root=/root/ohos/60release/src）
+共 1 个 bundle.json（src_root=/path/to/openharmony/src）
 
 ---
   path:           foundation/ability/ability_base/bundle.json

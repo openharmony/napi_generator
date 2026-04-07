@@ -20,7 +20,7 @@
 2. **临时**：先结束已有 hvigor 相关 Node 进程，再重新执行 build/build-test，且使用 `--no-daemon` 执行 hvigor。
 3. **项目目录**：始终使用**绝对路径**作为项目目录调用 `build`/`build-test`，避免工作目录歧义。
 
-**手动修复步骤（当 ohproj.py build 或 build-test 已报 uv_cwd 时）**：在项目根目录下执行以下命令，用 `--no-daemon` 替代默认的 daemon 构建，完成后再执行 `ohproj.py sign` 与 `ohproj.py test`。环境变量 `HOS_CLT_PATH` 需已设置（如 `/root/toolchains/command-line-tools`）。
+**手动修复步骤（当 ohproj.py build 或 build-test 已报 uv_cwd 时）**：在项目根目录下执行以下命令，用 `--no-daemon` 替代默认的 daemon 构建，完成后再执行 `ohproj.py sign` 与 `ohproj.py test`。环境变量 `HOS_CLT_PATH` 需已设置（指向本机 **Command Line Tools** 根目录）。
 
 ```bash
 # 进入项目目录（使用实际项目绝对路径）
