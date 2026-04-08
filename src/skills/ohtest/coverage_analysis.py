@@ -150,15 +150,15 @@ def clear_reports_obj() -> int:
 
 def get_device_search_root_from_local(local_root: Optional[Path] = None) -> str:
     """
-    根据本地路径取前两个顶层目录，作为设备上的搜索根目录。
-    例如本地为 /root/ohos/60release/src → 设备搜索路径 /root/ohos。
+    根据本地路径取绝对路径的第 2、3 路径段，作为设备上的搜索根目录。
+    例如本地为 **/a/b/c/d**（Unix 绝对路径）→ 返回 **/a/b**。
     """
     if local_root is None:
         local_root = SRC_ROOT
     p = local_root.resolve()
     parts = p.parts  # ('/', 'root', 'ohos', ...) 或 ('root', 'ohos', ...)
     if len(parts) >= 3:
-        # 绝对路径: 取 parts[1] 与 parts[2] 组成 /root/ohos
+        # 绝对路径: 取第 1、2 段路径分量（跳过根 ''）组成 /seg1/seg2
         return "/" + parts[1].strip("/") + "/" + parts[2].strip("/")
     if len(parts) == 2:
         return "/" + parts[1].strip("/")
@@ -657,7 +657,7 @@ def main() -> int:
         action="append",
         dest="search_roots",
         metavar="PATH",
-        help="设备上查找 *.gcda 的目录，可多次指定；不指定时用本地根（如 /root/ohos）及 /data/gcov/<本地根>",
+        help="设备上查找 *.gcda 的目录，可多次指定；不指定时用本地 OH 源码根推导的路径及 /data/gcov/<推导前缀>",
     )
 
     analyze_parser = subparsers.add_parser("analyze", help="对已有 .gcov 目录做覆盖率分析")

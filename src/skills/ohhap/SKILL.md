@@ -36,11 +36,11 @@ version: "1.0.0"
 ### 必需的环境变量
 
 - `HOS_CLT_PATH`: HarmonyOS Command Line Tools 路径
-  - 例如: `/root/toolchains/command-line-tools`
+  - 例如: `<本机 Command Line Tools 根目录>`
   - 需要包含 `version.txt` 文件
 
 - `OHOS_SDK_PATH`: OpenHarmony SDK 路径
-  - 例如: `/root/toolchains/ohos-sdk-6.0-release`
+  - 例如: `<本机 ohos-sdk 根目录>`
   - 需要包含 `daily_build.log` 文件
 
 ### 工具版本要求
@@ -184,13 +184,13 @@ ohpm 6.0.1
 ================================================================================
 检查编译环境...
 ================================================================================
-✓ HarmonyOS Command Line Tools 路径: /root/toolchains/command-line-tools
+✓ HarmonyOS Command Line Tools 路径: <你的 Command Line Tools 目录>
   SDK名称: Command Line Tools
   运行系统: linux-x64
   版本: 6.0.1.260
   Hvigor版本: 6.21.2
   OHPM版本: 6.0.1
-✓ OpenHarmony SDK 路径: /root/toolchains/ohos-sdk-6.0-release
+✓ OpenHarmony SDK 路径: <你的 ohos-sdk 目录>
   SDK版本: OpenHarmony_6.0.0.47
 ✓ Node.js 版本: v18.20.1 (符合要求)
 ✓ Hvigor 版本: 6.21.2 (符合要求)

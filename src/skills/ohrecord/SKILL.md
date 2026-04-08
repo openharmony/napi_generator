@@ -8,7 +8,7 @@ version: "1.6.0"
 
 # ohrecord 技能说明
 
-本技能描述 **`snapshot_record`** 录屏 **MP4**、`audio_record_demo` 麦克风录音、**`audio_play_demo`** 本地文件音乐播放（**OHAudio Renderer**）、**`camera_record` / `camera_record_demo`** 摄像头录像 **MP4**。录屏的详细步骤写在 **`src/skills/ohproj/SKILL.md` 第十节**；本文件提供索引与 **`ohrecord.py`** 用法。命令路径与 **`HOWTOSKILLS.md`** 一致：在 **napi_generator 仓库根** 下使用 **`src/skills/ohrecord/...`**；若将技能拷至 **`.claude/skills/ohrecord/`**，把示例中的 `src/skills/ohrecord` 换成对应拷贝路径即可。
+本技能描述 **`snapshot_record`** 录屏 **MP4**、`audio_record_demo` 麦克风录音、**`audio_play_demo`** 本地文件音乐播放（**OHAudio Renderer**）、**`camera_record` / `camera_record_demo`** 摄像头录像 **MP4**。录屏的详细步骤写在 **`src/skills/ohproj/SKILL.md` 第十节**；本文件提供索引与 **`ohrecord.py`** 用法。命令路径与 **`HOWTOSKILLS.md`** 一致：在 **napi_generator 仓库根** 下使用 **`src/skills/ohrecord/...`**。
 
 ---
 

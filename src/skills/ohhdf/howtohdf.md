@@ -26,7 +26,7 @@
 
 - `drivers/peripheral/bluehdf/...`
 
-均相对于你的 **OpenHarmony 源码根**。若你的根目录是 `/root/ohos/61release/src`，则完整路径为 `/root/ohos/61release/src/drivers/peripheral/bluehdf/...`。
+均相对于你的 **OpenHarmony 源码根**。若根目录为 **`/path/to/openharmony/src`**，则完整路径为 **`/path/to/openharmony/src/drivers/peripheral/bluehdf/...`**。
 
 ### 0.4 文档与脚本索引
 
@@ -43,9 +43,9 @@
 ### 0.5 本文 vs 全仓库 `src/skills`
 
 - **`howtohdf.md`（本文）**只讲 **HDF / ohhdf** 这一条线，**不是**「技能总表」。
-- **napi_generator** 里 **自有技能目录**全部在 **`src/skills/<目录名>/`** 下，当前与 **`HOWTOSKILLS.md`** §4.1 一致，共 **14** 个（下列顺序与 §4.1 技能总览表相同，便于核对）：
+- **napi_generator** 里 **自有技能目录**全部在 **`src/skills/<目录名>/`** 下，当前与 **`HOWTOSKILLS.md`** §4.1 一致，共 **15** 个（下列顺序与 §4.1 技能总览表相同，便于核对）：
 
-**`gitlog`** · **`helloworld`** · **`ohhap`** · **`ohbuild`** · **`ohhdc`** · **`ohhdf`**（本文 + **`SKILL.md`** + **`ohhdf.py`**）· **`ohtest`** · **`ohanalysis`** · **`ohclitools`** · **`ohppt`** · **`ohproj`** · **`ohservices`** · **`rkflash`** · **`ohrecord`**
+**`gitlog`** · **`helloworld`** · **`ohhap`** · **`ohbuild`** · **`ohhdc`** · **`ohhdf`**（本文 + **`SKILL.md`** + **`ohhdf.py`**）· **`ohipc`** · **`ohtest`** · **`ohanalysis`** · **`ohclitools`** · **`ohppt`** · **`ohproj`** · **`ohservices`** · **`rkflash`** · **`ohrecord`**
 
 - HDF 实操常与 **`ohhdc`**（hdc、**`led`** sysfs）、**`ohproj`**（应用 / NAPI 索引）、**`ohbuild`**（整编/单编习惯）、**`rkflash`**（整机镜像）等交叉；需要时用 **`HOWTOSKILLS.md`** §4.3 的提示句与命令速查。
 

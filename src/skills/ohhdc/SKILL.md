@@ -130,14 +130,14 @@ python3 src/skills/ohhdc/ohhdc.py uninstall com.example.p7zipTest
 
 ### Usage in Conversation
 
-- "安装 /root/workspace/napi_generator/src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap"
+- "安装 `src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap`"（假定当前目录为 **napi_generator** 仓库根）
 - "Install the HAP at .../app1-signed.hap to the device"
 
 ### Quick Start – Script
 
 ```bash
-# Install HAP (target = full path to .hap file)
-python3 src/skills/ohhdc/ohhdc.py install /root/workspace/napi_generator/src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap
+# Install HAP（在 napi_generator 仓库根下；也可用 .hap 的绝对路径）
+python3 src/skills/ohhdc/ohhdc.py install src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap
 ```
 
 **Parameter:** `target` = absolute or relative path to the `.hap` file.
@@ -164,15 +164,15 @@ python3 src/skills/ohhdc/ohhdc.py install /root/workspace/napi_generator/src/ski
 ### Quick Start – Script
 
 ```bash
-# 按项目安装（target = 项目根目录）
-python3 src/skills/ohhdc/ohhdc.py install-project /root/workspace/napi_generator/examples/NativeProj46R
+# 按项目安装（target = 项目根目录；示例为仓库内 examples/NativeProj46R）
+python3 src/skills/ohhdc/ohhdc.py install-project examples/NativeProj46R
 ```
 
 或手动执行两个命令：
 
 ```bash
-hdc install /root/workspace/napi_generator/examples/NativeProj46R/entry/build/default/outputs/default/entry-default-signed.hap
-hdc install /root/workspace/napi_generator/examples/NativeProj46R/entry/build/default/outputs/ohosTest/entry-ohosTest-signed.hap
+hdc install examples/NativeProj46R/entry/build/default/outputs/default/entry-default-signed.hap
+hdc install examples/NativeProj46R/entry/build/default/outputs/ohosTest/entry-ohosTest-signed.hap
 ```
 
 **Parameter:** `target` = 项目根目录（含 `entry/build/...` 的上级目录）。
@@ -199,7 +199,7 @@ hdc install /root/workspace/napi_generator/examples/NativeProj46R/entry/build/de
 
 ```bash
 # 部署运行测试（target = 项目根目录；测试套件从 List.test.ets 自动发现，默认 -m entry_test -t 15000）
-python3 src/skills/ohhdc/ohhdc.py deploy-test /root/workspace/napi_generator/examples/NativeProj46R
+python3 src/skills/ohhdc/ohhdc.py deploy-test examples/NativeProj46R
 
 # 指定测试套件与超时（覆盖自动发现）
 python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "ActsAbilityTest,IndexUitestTest" --timeout 20000
@@ -229,14 +229,14 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 
 ### Usage in Conversation
 
-- "替换安装 /root/workspace/napi_generator/src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap"
+- "替换安装 `src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap`"（假定当前目录为 **napi_generator** 仓库根）
 - "Replace-install the HAP at .../app1-signed.hap"
 
 ### Quick Start – Script
 
 ```bash
-# Replace-install HAP (target = full path to .hap file)
-python3 src/skills/ohhdc/ohhdc.py replace-install /root/workspace/napi_generator/src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap
+# Replace-install HAP（在 napi_generator 仓库根下；也可用 .hap 的绝对路径）
+python3 src/skills/ohhdc/ohhdc.py replace-install src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap
 ```
 
 **Parameter:** `target` = absolute or relative path to the `.hap` file.
