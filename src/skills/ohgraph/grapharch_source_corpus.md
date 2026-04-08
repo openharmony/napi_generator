@@ -3794,3 +3794,1901 @@ class Matrix3`
 - **行数**：425
 - **首条类型声明摘抄**：`class RSTransform`
 
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_occlusion_region.h`
+- **行数**：396
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_occlusion_region_helper.h`
+- **行数**：114
+- **首条类型声明摘抄**：`enum RectType`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_optional_trace.h`
+- **行数**：209
+- **首条类型声明摘抄**：`class RenderTrace`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_rect.h`
+- **行数**：522
+- **首条类型声明摘抄**：`template<typename T>
+class RectT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_rectangles_merger.h`
+- **行数**：67
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_self_draw_rect_change_callback_constraint.h`
+- **行数**：40
+- **首条类型声明摘抄**：`struct RectSize`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_shared_context.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_singleton.h`
+- **行数**：57
+- **首条类型声明摘抄**：`template <typename T>
+class RSSingleton`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_special_layer_manager.h`
+- **行数**：130
+- **首条类型声明摘抄**：`enum SpecialLayerType`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_switching_thread.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_thread_handler.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class RSTaskMessage`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_thread_looper.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSThreadLooper`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_threshold_detector.h`
+- **行数**：53
+- **首条类型声明摘抄**：`template<class T>
+class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_vector2.h`
+- **行数**：305
+- **首条类型声明摘抄**：`template<typename T>
+class Vector2`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_vector3.h`
+- **行数**：284
+- **首条类型声明摘抄**：`template<typename T>
+class Vector3`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_vector4.h`
+- **行数**：590
+- **首条类型声明摘抄**：`template<typename T>
+class Vector4`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_xcollie.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/delegate/rs_delegate.h`
+- **行数**：28
+- **首条类型声明摘抄**：`class RSDelegate`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/delegate/rs_functional_delegate.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/dirty_region/rs_filter_dirty_collector.h`
+- **行数**：131
+- **首条类型声明摘抄**：`struct FilterDirtyRegionInfo`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/dirty_region/rs_gpu_dirty_collector.h`
+- **行数**：81
+- **首条类型声明摘抄**：`enum CacheOption`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/dirty_region/rs_optimize_canvas_dirty_collector.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/display_engine/rs_color_temperature.h`
+- **行数**：96
+- **首条类型声明摘抄**：`class RSColorTemperatureInterface`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/display_engine/rs_luminance_control.h`
+- **行数**：174
+- **首条类型声明摘抄**：`enum CLOSEHDR_SCENEID`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/display_engine/rs_vpe_manager.h`
+- **行数**：72
+- **首条类型声明摘抄**：`class RSVpeManager`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/drawable/rs_drawable.h`
+- **行数**：172
+- **首条类型声明摘抄**：`class RSRenderNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/drawable/rs_misc_drawable.h`
+- **行数**：297
+- **首条类型声明摘抄**：`class RSColorPickerManager`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/drawable/rs_point_light_drawable.h`
+- **行数**：96
+- **首条类型声明摘抄**：`class RuntimeShaderBuilder`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/drawable/rs_property_drawable.h`
+- **行数**：241
+- **首条类型声明摘抄**：`class RSRenderNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/drawable/rs_property_drawable_background.h`
+- **行数**：249
+- **首条类型声明摘抄**：`class RSProperties`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/drawable/rs_property_drawable_foreground.h`
+- **行数**：256
+- **首条类型声明摘抄**：`class RSFilter`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/drawable/rs_property_drawable_utils.h`
+- **行数**：160
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/drawable/rs_render_node_drawable_adapter.h`
+- **行数**：443
+- **首条类型声明摘抄**：`class RSRenderNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/drawable/rs_render_node_shadow_drawable.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSRenderNodeShadowDrawable`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/effect/rs_render_effect_template.h`
+- **行数**：465
+- **首条类型声明摘抄**：`class GEVisualEffectContainer`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/effect/rs_render_filter_base.h`
+- **行数**：137
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/effect/rs_render_mask_base.h`
+- **行数**：81
+- **首条类型声明摘抄**：`class GEShaderMask`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/effect/rs_render_property_tag.h`
+- **行数**：138
+- **首条类型声明摘抄**：`template<const char* Name, class PropertyType>
+struct RenderPropertyTagBase`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/effect/rs_render_shader_base.h`
+- **行数**：104
+- **首条类型声明摘抄**：`class GEVisualEffectContainer`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/effect/rs_render_shape_base.h`
+- **行数**：81
+- **首条类型声明摘抄**：`class GEShaderShape`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/capture/rs_capture_pixelmap_manager.h`
+- **行数**：91
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/capture/rs_ui_capture.h`
+- **行数**：51
+- **首条类型声明摘抄**：`struct Location`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/capture/rs_ui_capture_helper.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/color_picker/color_pick_alt_manager.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class ColorPickAltManager`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/color_picker/i_color_picker_manager.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class RSPaintFilterCanvas`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/color_picker/rs_color_picker_manager.h`
+- **行数**：76
+- **首条类型声明摘抄**：`class RSColorPickerManager`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/color_picker/rs_color_picker_thread.h`
+- **行数**：75
+- **首条类型声明摘抄**：`class RenderContext`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/color_picker/rs_color_picker_utils.h`
+- **行数**：138
+- **首条类型声明摘抄**：`class IColorPickerManager`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/color_picker/rs_hetero_color_picker.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class RSHeteroColorPicker`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/hdr/rs_colorspace_util.h`
+- **行数**：54
+- **首条类型声明摘抄**：`class RSColorSpaceUtil`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/hyper_graphic_manager/rs_render_frame_rate_linker.h`
+- **行数**：91
+- **首条类型声明摘抄**：`class RSIFrameRateLinkerExpectedFpsUpdateCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/hyper_graphic_manager/rs_render_frame_rate_linker_map.h`
+- **行数**：55
+- **首条类型声明摘抄**：`class RSRenderFrameRateLinker`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/image_detail_enhancer/rs_image_detail_enhancer_thread.h`
+- **行数**：134
+- **首条类型声明摘抄**：`struct RSImageParams`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/image_detail_enhancer/rs_image_detail_enhancer_util.h`
+- **行数**：45
+- **首条类型声明摘抄**：`struct RSImageDetailEnhanceParams`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/memory_info_manager/rs_memory_info_manager.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class PixelMap`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/opinc/rs_opinc_cache.h`
+- **行数**：94
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/opinc/rs_opinc_manager.h`
+- **行数**：81
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/render_group/rs_render_group_cache.h`
+- **行数**：90
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/single_frame_composer/rs_single_frame_composer.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/window_keyframe/rs_window_keyframe_node_command.h`
+- **行数**：47
+- **首条类型声明摘抄**：`enum RSWindowKeyFrameNodeCommandType`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/feature/window_keyframe/rs_window_keyframe_render_node.h`
+- **行数**：72
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/gfx/dump/rs_dump_manager.h`
+- **行数**：153
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/gfx/first_frame_notifier/rs_first_frame_notifier.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/gfx/fps_info/rs_surface_fps.h`
+- **行数**：52
+- **首条类型声明摘抄**：`struct FPSStat`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/gfx/fps_info/rs_surface_fps_manager.h`
+- **行数**：134
+- **首条类型声明摘抄**：`template<typename Key, typename Value>
+class BoundedUnorderedMap`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/gfx/performance/rs_perfmonitor_reporter.h`
+- **行数**：118
+- **首条类型声明摘抄**：`enum BLUR_CLEAR_CACHE_REASON`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/hpae_base/rs_hpae_base_data.h`
+- **行数**：103
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/hpae_base/rs_hpae_base_types.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class RSPaintFilterCanvas`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/hpae_base/rs_hpae_ffrt_pattern_manager.h`
+- **行数**：203
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/hpae_base/rs_hpae_filter_cache_manager.h`
+- **行数**：143
+- **首条类型声明摘抄**：`class RSDrawingFilter`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/hpae_base/rs_hpae_fusion_operator.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/hpae_base/rs_hpae_hianimation.h`
+- **行数**：96
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/hpae_base/rs_hpae_hianimation_types.h`
+- **行数**：129
+- **首条类型声明摘抄**：`struct HaeRect`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/hpae_base/rs_hpae_log.h`
+- **行数**：50
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/hpae_base/rs_hpae_scheduler.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/hwc/rs_hwc_recorder.h`
+- **行数**：109
+- **首条类型声明摘抄**：`struct RSHwcRecorder`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/info_collection/rs_gpu_dirty_region_collection.h`
+- **行数**：96
+- **首条类型声明摘抄**：`struct ActiveDirtyRegionInfo`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/info_collection/rs_hardware_compose_disabled_reason_collection.h`
+- **行数**：87
+- **首条类型声明摘抄**：`enum HwcDisabledReasons`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/info_collection/rs_hdr_collection.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/info_collection/rs_layer_compose_collection.h`
+- **行数**：62
+- **首条类型声明摘抄**：`struct LayerComposeInfo`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/brightness_info_change_callback.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class RSIBrightnessInfoChangeCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/brightness_info_change_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/buffer_available_callback.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class RSIBufferAvailableCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/buffer_available_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/buffer_clear_callback.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSIBufferClearCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/buffer_clear_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/iapplication_agent.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSTransactionData`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/iapplication_agent_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/pointer_render/pointer_luminance_change_callback.h`
+- **行数**：32
+- **首条类型声明摘抄**：`class RSIPointerLuminanceChangeCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/pointer_render/pointer_luminance_change_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_icanvas_surface_buffer_callback.h`
+- **行数**：41
+- **首条类型声明摘抄**：`class RSICanvasSurfaceBufferCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_icanvas_surface_buffer_callback_ipc_interface_code.h`
+- **行数**：30
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_ifirst_frame_commit_callback.h`
+- **行数**：33
+- **首条类型声明摘抄**：`class RSIFirstFrameCommitCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_ifirst_frame_commit_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_iframe_rate_linker_expected_fps_update_callback.h`
+- **行数**：35
+- **首条类型声明摘抄**：`class RSIFrameRateLinkerExpectedFpsUpdateCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_iframe_rate_linker_expected_fps_update_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_ihgm_config_change_callback.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSIHgmConfigChangeCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_ihgm_config_change_callback_ipc_interface_code.h`
+- **行数**：31
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_iocclusion_change_callback.h`
+- **行数**：33
+- **首条类型声明摘抄**：`class RSIOcclusionChangeCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_iocclusion_change_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_ipc_callbacks_check.h`
+- **行数**：35
+- **首条类型声明摘抄**：`class SendRequestRemote`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_iself_drawing_node_rect_change_callback.h`
+- **行数**：34
+- **首条类型声明摘抄**：`class RSISelfDrawingNodeRectChangeCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_iself_drawing_node_rect_change_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_isurface_occlusion_change_callback.h`
+- **行数**：33
+- **首条类型声明摘抄**：`class RSISurfaceOcclusionChangeCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_isurface_occlusion_change_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_iuiextension_callback.h`
+- **行数**：35
+- **首条类型声明摘抄**：`class RSIUIExtensionCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_iuiextension_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_surface_buffer_callback.h`
+- **行数**：89
+- **首条类型声明摘抄**：`struct FinishCallbackRet`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_surface_buffer_callback_ipc_interface_code.h`
+- **行数**：30
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_transaction_data_callback.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSITransactionDataCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/rs_transaction_data_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/screen_change_callback.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class RSIScreenChangeCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/screen_change_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/screen_switching_notify_callback.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSIScreenSwitchingNotifyCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/screen_switching_notify_callback_ipc_interface_code.h`
+- **行数**：29
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/surface_capture_callback.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSISurfaceCaptureCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_callbacks/surface_capture_callback_ipc_interface_code.h`
+- **行数**：30
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_security/rs_ipc_interface_code_access_verifier_base.h`
+- **行数**：86
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_security/rs_ipc_interface_code_security_manager.h`
+- **行数**：97
+- **首条类型声明摘抄**：`class RSInterfaceCodeSecurityManager`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_security/rs_ipc_interface_code_underlying_type.h`
+- **行数**：54
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/ipc_security/rs_ipc_interface_permission_type.h`
+- **行数**：38
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/memory/rs_dfx_string.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class DfxString`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/memory/rs_memory_flow_control.h`
+- **行数**：67
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/memory/rs_memory_graphic.h`
+- **行数**：56
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/memory/rs_memory_snapshot.h`
+- **行数**：83
+- **首条类型声明摘抄**：`struct MemorySnapshotInfo`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/memory/rs_memory_track.h`
+- **行数**：149
+- **首条类型声明摘抄**：`enum MEMORY_TYPE`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/memory/rs_tag_tracker.h`
+- **行数**：84
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier/rs_animatable_arithmetic.h`
+- **行数**：86
+- **首条类型声明摘抄**：`template<typename T>
+class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier/rs_render_property.h`
+- **行数**：642
+- **首条类型声明摘抄**：`class DrawCmdList`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_alpha_render_modifier.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_background_filter_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_behind_window_filter_render_modifier.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_blend_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_border_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_color_picker_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_compositing_filter_render_modifier.h`
+- **行数**：54
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_dynamic_light_up_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_foreground_filter_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_hdr_brightness_render_modifier.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_mask_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_material_filter_render_modifier.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_outline_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_particle_effect_render_modifier.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_pixel_stretch_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_point_light_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_shadow_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_use_effect_render_modifier.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class RSRenderNodeDrawableAdapter`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/appearance/rs_visibility_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/background/rs_background_color_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/background/rs_background_image_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/background/rs_background_ng_shader_render_modifier.h`
+- **行数**：43
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/background/rs_background_shader_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/foreground/rs_env_foreground_color_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/foreground/rs_foreground_color_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/foreground/rs_foreground_shader_render_modifier.h`
+- **行数**：43
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/geometry/rs_bounds_clip_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/geometry/rs_bounds_render_modifier.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/geometry/rs_frame_clip_render_modifier.h`
+- **行数**：59
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/geometry/rs_frame_render_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/geometry/rs_transform_render_modifier.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/rs_modifier_ng_type.h`
+- **行数**：333
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/modifier_ng/rs_render_modifier_ng.h`
+- **行数**：336
+- **首条类型声明摘抄**：`class RSRenderNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/monitor/aps_monitor_impl.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class ApsMonitorImpl`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/monitor/self_drawing_node_monitor.h`
+- **行数**：63
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/offscreen_render/rs_offscreen_render_thread.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class RenderContext`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/params/rs_canvas_drawing_render_params.h`
+- **行数**：28
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/params/rs_effect_render_params.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/params/rs_logical_display_render_params.h`
+- **行数**：176
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/params/rs_render_params.h`
+- **行数**：624
+- **首条类型声明摘抄**：`struct DirtyRegionInfoForDFX`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/params/rs_render_thread_params.h`
+- **行数**：655
+- **首条类型声明摘抄**：`class RSProcessor`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/params/rs_screen_render_params.h`
+- **行数**：287
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/params/rs_surface_render_params.h`
+- **行数**：964
+- **首条类型声明摘抄**：`class RSSurfaceRenderNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_base_render_node.h`
+- **行数**：20
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_canvas_drawing_render_node.h`
+- **行数**：129
+- **首条类型声明摘抄**：`class RSRecordingCanvas`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_canvas_render_node.h`
+- **行数**：111
+- **首条类型声明摘抄**：`class DrawCmdList`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_context.h`
+- **行数**：270
+- **首条类型声明摘抄**：`enum ClearMemoryMoment`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_dirty_region_manager.h`
+- **行数**：371
+- **首条类型声明摘抄**：`enum DebugRegionType`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_draw_cmd.h`
+- **行数**：496
+- **首条类型声明摘抄**：`class VulkanCleanupHelper`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_draw_cmd_list.h`
+- **行数**：100
+- **首条类型声明摘抄**：`class DrawCmdList`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_effect_render_node.h`
+- **行数**：124
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_logical_display_render_node.h`
+- **行数**：239
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_occlusion_config.h`
+- **行数**：44
+- **首条类型声明摘抄**：`class RSOcclusionConfig`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_paint_filter_canvas.h`
+- **行数**：681
+- **首条类型声明摘抄**：`class RSFilter`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_proxy_render_node.h`
+- **行数**：75
+- **首条类型声明摘抄**：`class RSSurfaceRenderNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_record_cmd_utils.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class ExtendRecordingCanvas`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_recording_canvas.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class PixelMap`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_render_display_sync.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_render_node.h`
+- **行数**：1480
+- **首条类型声明摘抄**：`class RSChildrenDrawable`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_render_node_allocator.h`
+- **行数**：66
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_render_node_gc.h`
+- **行数**：161
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_render_node_map.h`
+- **行数**：139
+- **首条类型声明摘抄**：`class RSRenderNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_render_result.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class RSRenderResult`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_root_render_node.h`
+- **行数**：86
+- **首条类型声明摘抄**：`class RSSurface`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_screen_render_node.h`
+- **行数**：603
+- **首条类型声明摘抄**：`class RSSurfaceRenderNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_surface_buffer_callback_manager.h`
+- **行数**：191
+- **首条类型声明摘抄**：`class RSISurfaceBufferCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_surface_handler.h`
+- **行数**：360
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_surface_render_node.h`
+- **行数**：2180
+- **首条类型声明摘抄**：`class OcclusionNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_surface_render_node_utils.h`
+- **行数**：34
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_task_dispatcher.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_uni_render_judgement.h`
+- **行数**：53
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/rs_union_render_node.h`
+- **行数**：129
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/pipeline/sk_resource_manager.h`
+- **行数**：64
+- **首条类型声明摘抄**：`struct SharedTextureContext`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/common/rs_accessibility.h`
+- **行数**：43
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/common/rs_event_detector.h`
+- **行数**：119
+- **首条类型声明摘抄**：`struct RSSysEventMsg`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/common/rs_event_manager.h`
+- **行数**：57
+- **首条类型声明摘抄**：`struct RSEventState`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/common/rs_hisysevent.h`
+- **行数**：82
+- **首条类型声明摘抄**：`enum RSEventType`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/common/rs_innovation.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSInnovation`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/common/rs_log.h`
+- **行数**：278
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/common/rs_surface_ext.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class RSPaintFilterCanvas`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/common/rs_system_properties.h`
+- **行数**：432
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/drawing/rs_surface.h`
+- **行数**：71
+- **首条类型声明摘抄**：`class RenderContext`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/drawing/rs_surface_converter.h`
+- **行数**：31
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/drawing/rs_surface_frame.h`
+- **行数**：52
+- **首条类型声明摘抄**：`class RenderContext`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/drawing/rs_vsync_client.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSVsyncClient`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/backend/surface_buffer_utils.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class SurfaceBufferUtils`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/overdraw/rs_canvas_listener.h`
+- **行数**：84
+- **首条类型声明摘抄**：`class RSCanvasListener`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/overdraw/rs_cpu_overdraw_canvas_listener.h`
+- **行数**：83
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/overdraw/rs_gpu_overdraw_canvas_listener.h`
+- **行数**：83
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/overdraw/rs_listened_canvas.h`
+- **行数**：76
+- **首条类型声明摘抄**：`class RSCanvasListener`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/overdraw/rs_overdraw_controller.h`
+- **行数**：95
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_iclient_to_render_connection.h`
+- **行数**：145
+- **首条类型声明摘抄**：`class RSIClientToRenderConnection`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_iclient_to_service_connection.h`
+- **行数**：462
+- **首条类型声明摘抄**：`class RSIClientToServiceConnection`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_irender_connection_token.h`
+- **行数**：35
+- **首条类型声明摘抄**：`class RSIConnectionToken`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_irender_service.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSIRenderService`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_irender_service_connection_ipc_interface_code.h`
+- **行数**：255
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_irender_service_connection_ipc_interface_code_access_verifier.h`
+- **行数**：59
+- **首条类型声明摘抄**：`class RSIRenderServiceConnectionInterfaceCodeAccessVerifier`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_irender_service_ipc_interface_code.h`
+- **行数**：30
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_irender_service_ipc_interface_code_access_verifier.h`
+- **行数**：56
+- **首条类型声明摘抄**：`class RSIRenderServiceInterfaceCodeAccessVerifier`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_jank_report_thread.h`
+- **行数**：46
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_jank_stats.h`
+- **行数**：303
+- **首条类型声明摘抄**：`struct JankFrames`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_jank_stats_helper.h`
+- **行数**：65
+- **首条类型声明摘抄**：`class RSJankStatsRenderFrameHelper`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/platform/ohos/rs_node_stats.h`
+- **行数**：83
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/property/rs_color_picker_def.h`
+- **行数**：96
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/property/rs_point_light_manager.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/property/rs_properties.h`
+- **行数**：1164
+- **首条类型声明摘抄**：`class RSRenderNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/property/rs_properties_def.h`
+- **行数**：411
+- **首条类型声明摘抄**：`class RSObjGeometry`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/property/rs_properties_painter.h`
+- **行数**：109
+- **首条类型声明摘抄**：`class RSPaintFilterCanvas`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/property/rs_property_trace.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_attraction_effect_filter.h`
+- **行数**：95
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_blur_filter.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_border.h`
+- **行数**：141
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_color_adaptive_filter.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class RSColorAdaptiveFilter`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_color_extract.h`
+- **行数**：305
+- **首条类型声明摘抄**：`class RSColorExtract`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_color_picker.h`
+- **行数**：62
+- **首条类型声明摘抄**：`struct HSV`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_colorful_shadow_filter.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_colorspace_convert.h`
+- **行数**：86
+- **首条类型声明摘抄**：`class PixelMap`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_complex_shader.h`
+- **行数**：55
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_distortion_shader_filter.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_drawing_filter.h`
+- **行数**：205
+- **首条类型声明摘抄**：`class RSPaintFilterCanvas`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_effect_luminance_manager.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_filter.h`
+- **行数**：157
+- **首条类型声明摘抄**：`enum BLUR_COLOR_MODE`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_filter_cache_manager.h`
+- **行数**：255
+- **首条类型声明摘抄**：`class RSDrawingFilter`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_filter_cache_memory_controller.h`
+- **行数**：52
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_flow_light_sweep_shader.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_fly_out_shader_filter.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_foreground_effect_filter.h`
+- **行数**：99
+- **首条类型声明摘抄**：`struct ForegroundEffectParam`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_gradient_blur_para.h`
+- **行数**：77
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_hdr_ui_brightness_filter.h`
+- **行数**：52
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_high_performance_visual_engine.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class RSPaintFilterCanvas`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_hps_blur.h`
+- **行数**：52
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_image.h`
+- **行数**：217
+- **首条类型声明摘抄**：`class PixelMap`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_image_base.h`
+- **行数**：146
+- **首条类型声明摘抄**：`class PixelMap`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_image_cache.h`
+- **行数**：91
+- **首条类型声明摘抄**：`class PixelMap`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_kawase_blur.h`
+- **行数**：102
+- **首条类型声明摘抄**：`struct KawaseParameter`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_light_up_effect_filter.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_magnifier_para.h`
+- **行数**：81
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_mask.h`
+- **行数**：106
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_material_filter.h`
+- **行数**：110
+- **首条类型声明摘抄**：`enum MATERIAL_BLUR_STYLE`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_motion_blur_filter.h`
+- **行数**：88
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_particles_drawable.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_path.h`
+- **行数**：65
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_pixel_map_shader.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_pixel_map_shader_obj.h`
+- **行数**：61
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_pixel_map_util.h`
+- **行数**：52
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_pixel_stretch_params.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_aibar_filter.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_always_snapshot_filter.h`
+- **行数**：35
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_filter_base.h`
+- **行数**：101
+- **首条类型声明摘抄**：`class GEVisualEffectContainer`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_grey_filter.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_kawase_blur_filter.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_light_blur_filter.h`
+- **行数**：64
+- **首条类型声明摘抄**：`struct LightBlurParameter`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_linear_gradient_blur_filter.h`
+- **行数**：52
+- **首条类型声明摘抄**：`class RSLinearGradientBlurShaderFilter`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_magnifier_filter.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_maskcolor_filter.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_mesa_blur_filter.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_render_water_ripple_filter.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_shader.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_shadow.h`
+- **行数**：91
+- **首条类型声明摘抄**：`enum SHADOW_COLOR_STRATEGY`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_skia_filter.h`
+- **行数**：54
+- **首条类型声明摘抄**：`class RSPaintFilterCanvas`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_spherize_effect_filter.h`
+- **行数**：56
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render/rs_typeface_cache.h`
+- **行数**：102
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/drawing_context.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class DrawingContext`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/ohos/render_context_ohos_gl.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class RenderContextOhosGl`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/ohos/render_context_ohos_raster.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class RenderContextOhosRaster`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/ohos/render_context_ohos_vk.h`
+- **行数**：43
+- **首条类型声明摘抄**：`class RenderContextOhosVk`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/ohos/rs_render_surface_ohos.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class RSRenderSurfaceOhos`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/render_backend_utils.h`
+- **行数**：31
+- **首条类型声明摘抄**：`class RenderBackendUtils`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/render_context_base.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class RenderContextBase`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/render_context_factory.h`
+- **行数**：31
+- **首条类型声明摘抄**：`class RenderContextBaseFactory`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/rs_render_surface.h`
+- **行数**：73
+- **首条类型声明摘抄**：`class RSRenderSurface`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/rs_render_surface_frame.h`
+- **行数**：126
+- **首条类型声明摘抄**：`enum PlatformName`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/render_backend/rs_surface_factory.h`
+- **行数**：33
+- **首条类型声明摘抄**：`class RSSurfaceFactory`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/screen_manager/rs_screen_capability.h`
+- **行数**：74
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/screen_manager/rs_screen_data.h`
+- **行数**：63
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/screen_manager/rs_screen_hdr_capability.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/screen_manager/rs_screen_info.h`
+- **行数**：112
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/screen_manager/rs_screen_mode_info.h`
+- **行数**：56
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/screen_manager/rs_screen_node_listener.h`
+- **行数**：32
+- **首条类型声明摘抄**：`class RSIScreenNodeListener`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/screen_manager/rs_screen_property.h`
+- **行数**：151
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/screen_manager/rs_screen_props.h`
+- **行数**：52
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/screen_manager/rs_virtual_screen_resolution.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/screen_manager/screen_types.h`
+- **行数**：323
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rp_hgm_config_data.h`
+- **行数**：74
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_ashmem_helper.h`
+- **行数**：107
+- **首条类型声明摘抄**：`class AshmemAllocator`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_client_render_comm_def_info.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class SurfaceCaptureCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_hgm_config_data.h`
+- **行数**：104
+- **首条类型声明摘抄**：`struct AnimDynamicItem`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_hrp_service.h`
+- **行数**：118
+- **首条类型声明摘抄**：`enum HrpServiceDir`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_irender_client.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSSyncTask`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_marshalling_helper.h`
+- **行数**：487
+- **首条类型声明摘抄**：`class PixelMap`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_occlusion_data.h`
+- **行数**：58
+- **首条类型声明摘抄**：`enum WINDOW_LAYER_INFO_TYPE`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_render_pipeline_client.h`
+- **行数**：217
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_render_service_client.h`
+- **行数**：509
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_render_service_client_info.h`
+- **行数**：62
+- **首条类型声明摘抄**：`struct DataBaseRs`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_self_drawing_node_rect_data.h`
+- **行数**：55
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_transaction_data.h`
+- **行数**：246
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_transaction_data_callback_manager.h`
+- **行数**：63
+- **首条类型声明摘抄**：`class RSITransactionDataCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_transaction_handler.h`
+- **行数**：137
+- **首条类型声明摘抄**：`class RSTransactionHandler`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_transaction_proxy.h`
+- **行数**：133
+- **首条类型声明摘抄**：`class RSSyncTask`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/transaction/rs_uiextension_data.h`
+- **行数**：74
+- **首条类型声明摘抄**：`struct SecRectInfo`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/variable_frame_rate/rs_variable_frame_rate.h`
+- **行数**：80
+- **首条类型声明摘抄**：`struct EventInfo`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/visitor/rs_node_visitor.h`
+- **行数**：75
+- **首条类型声明摘抄**：`class RSRenderNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/common/rs_thread_handler_generic.h`
+- **行数**：46
+- **首条类型声明摘抄**：`class RSThreadHandlerGeneric`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/common/rs_thread_looper_generic.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSThreadLooperGeneric`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/common/rs_thread_looper_impl.h`
+- **行数**：84
+- **首条类型声明摘抄**：`class ThreadLooperMessage`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/brightness_info_change_callback_proxy.h`
+- **行数**：41
+- **首条类型声明摘抄**：`class RSBrightnessInfoChangeCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/brightness_info_change_callback_stub.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/buffer_available_callback_proxy.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSBufferAvailableCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/buffer_available_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/buffer_clear_callback_proxy.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSBufferClearCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/buffer_clear_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/hgm_config_change_callback_proxy.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSHgmConfigChangeCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/hgm_config_change_callback_stub.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/pointer_render/pointer_luminance_callback_proxy.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSPointerLuminanceChangeCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/pointer_render/pointer_luminance_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_application_agent_proxy.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSApplicationAgentProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_application_agent_stub.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_canvas_surface_buffer_callback_proxy.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSCanvasSurfaceBufferCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_canvas_surface_buffer_callback_stub.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_first_frame_commit_callback_proxy.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSFirstFrameCommitCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_first_frame_commit_callback_stub.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_frame_rate_linker_expected_fps_update_callback_proxy.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSFrameRateLinkerExpectedFpsUpdateCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_frame_rate_linker_expected_fps_update_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_occlusion_change_callback_proxy.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSOcclusionChangeCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_occlusion_change_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_rt_refresh_callback.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_self_drawing_node_rect_change_callback_proxy.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSSelfDrawingNodeRectChangeCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_self_drawing_node_rect_change_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_surface_buffer_callback_proxy.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSSurfaceBufferCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_surface_buffer_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_surface_occlusion_change_callback_proxy.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSSurfaceOcclusionChangeCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_surface_occlusion_change_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_transaction_data_callback_proxy.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSTransactionDataCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_transaction_data_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_uiextension_callback_proxy.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSUIExtensionCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/rs_uiextension_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/screen_change_callback_proxy.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSScreenChangeCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/screen_change_callback_stub.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/screen_switching_notify_callback_proxy.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSScreenSwitchingNotifyCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/screen_switching_notify_callback_stub.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/surface_capture_callback_proxy.h`
+- **行数**：41
+- **首条类型声明摘抄**：`class RSSurfaceCaptureCallbackProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/ipc_callbacks/surface_capture_callback_stub.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/darwin/rs_surface_darwin.h`
+- **行数**：71
+- **首条类型声明摘抄**：`class RenderContext`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/darwin/rs_surface_frame_darwin.h`
+- **行数**：57
+- **首条类型声明摘抄**：`class RSSurfaceFrameDarwin`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/darwin/rs_vsync_client_darwin.h`
+- **行数**：84
+- **首条类型声明摘抄**：`template<class T>
+class SemQueue`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/backend/native_buffer_utils.h`
+- **行数**：164
+- **首条类型声明摘抄**：`struct DestroySemaphoreInfo`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/backend/rs_surface_frame_ohos_gl.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class RSSurfaceFrameOhosGl`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/backend/rs_surface_frame_ohos_raster.h`
+- **行数**：76
+- **首条类型声明摘抄**：`class RSSurfaceFrameOhosRaster`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/backend/rs_surface_frame_ohos_vulkan.h`
+- **行数**：66
+- **首条类型声明摘抄**：`class RSSurfaceFrameOhosVulkan`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/backend/rs_surface_ohos_gl.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class RSSurfaceOhosGl`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/backend/rs_surface_ohos_raster.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class RSSurfaceOhosRaster`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/backend/rs_surface_ohos_vulkan.h`
+- **行数**：123
+- **首条类型声明摘抄**：`class RSSurfaceOhosVulkan`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/backend/rs_vulkan_context.h`
+- **行数**：519
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/backend/rs_vulkan_header_ext.h`
+- **行数**：43
+- **首条类型声明摘抄**：`typedef enum VkStructureTypeHUAWEI {`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/backend/rs_vulkan_mem_statistic.h`
+- **行数**：91
+- **首条类型声明摘抄**：`class RsVulkanMemStat`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/rs_client_to_render_connection_proxy.h`
+- **行数**：114
+- **首条类型声明摘抄**：`class RSClientToRenderConnectionProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/rs_client_to_service_connection_proxy.h`
+- **行数**：434
+- **首条类型声明摘抄**：`class RSClientToServiceConnectionProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/rs_render_service_connect_hub.h`
+- **行数**：90
+- **首条类型声明摘抄**：`class RSRenderServiceConnectHub`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/rs_render_service_proxy.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class RSRenderServiceProxy`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/rs_surface_frame_ohos.h`
+- **行数**：41
+- **首条类型声明摘抄**：`class RenderContext`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/rs_surface_ohos.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class RenderContext`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/ohos/rs_vsync_client_ohos.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class RSVsyncClientOhos`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/windows/rs_surface_frame_windows.h`
+- **行数**：59
+- **首条类型声明摘抄**：`class RSSurfaceFrameWindows`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/windows/rs_surface_windows.h`
+- **行数**：71
+- **首条类型声明摘抄**：`class RenderContext`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_base/src/platform/windows/rs_vsync_client_windows.h`
+- **行数**：84
+- **首条类型声明摘抄**：`template<class T>
+class SemQueue`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_animation.h`
+- **行数**：165
+- **首条类型声明摘抄**：`class RSNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_animation_callback.h`
+- **行数**：77
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_animation_timing_curve.h`
+- **行数**：114
+- **首条类型声明摘抄**：`class RSInterpolator`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_curve_animation.h`
+- **行数**：54
+- **首条类型声明摘抄**：`class RSRenderCurveAnimation`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_implicit_animation_param.h`
+- **行数**：181
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_implicit_animator.h`
+- **行数**：144
+- **首条类型声明摘抄**：`class AnimationFinishCallback`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_implicit_animator_map.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class RSImplicitAnimator`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_interactive_implict_animator.h`
+- **行数**：125
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_interpolating_spring_animation.h`
+- **行数**：63
+- **首条类型声明摘抄**：`class RSRenderInterpolatingSpringAnimation`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_keyframe_animation.h`
+- **行数**：72
+- **首条类型声明摘抄**：`class RSRenderKeyframeAnimation`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_motion_path_option.h`
+- **行数**：88
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_particle_params.h`
+- **行数**：243
+- **首条类型声明摘抄**：`template<typename T>
+class RSB_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_path_animation.h`
+- **行数**：118
+- **首条类型声明摘抄**：`class RSPath`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_property_animation.h`
+- **行数**：85
+- **首条类型声明摘抄**：`class RSPropertyBase`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_spring_animation.h`
+- **行数**：67
+- **首条类型声明摘抄**：`class RSRenderSpringAnimation`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_symbol_animation.h`
+- **行数**：217
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_symbol_node_config.h`
+- **行数**：32
+- **首条类型声明摘抄**：`struct AnimationNodeConfig`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_transition.h`
+- **行数**：57
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/animation/rs_transition_effect.h`
+- **行数**：66
+- **首条类型声明摘抄**：`class RSRenderTransitionEffect`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/feature/anco_manager/rs_ext_node_operation.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/feature/composite_layer/rs_composite_layer_utils.h`
+- **行数**：44
+- **首条类型声明摘抄**：`class RSSurfaceNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/feature/hyper_graphic_manager/rs_frame_rate_linker.h`
+- **行数**：56
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/feature/hyper_graphic_manager/rs_frame_rate_policy.h`
+- **行数**：81
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/feature/hyper_graphic_manager/rs_ui_display_soloist.h`
+- **行数**：200
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/feature/ui_capture/rs_divided_ui_capture.h`
+- **行数**：88
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/feature/window_keyframe/rs_window_keyframe_node.h`
+- **行数**：110
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier/rs_modifier_extractor.h`
+- **行数**：689
+- **首条类型声明摘抄**：`class RSNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier/rs_modifier_manager.h`
+- **行数**：225
+- **首条类型声明摘抄**：`class RSRenderAnimation`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier/rs_modifier_manager_map.h`
+- **行数**：88
+- **首条类型声明摘抄**：`class RSModifierManager`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier/rs_property.h`
+- **行数**：984
+- **首条类型声明摘抄**：`class RSModifier`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier/rs_showing_properties_freezer.h`
+- **行数**：352
+- **首条类型声明摘抄**：`class RSNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_alpha_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_background_filter_modifier.h`
+- **行数**：71
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_behind_window_filter_modifier.h`
+- **行数**：44
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_blend_modifier.h`
+- **行数**：54
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_border_modifier.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_color_picker_modifier.h`
+- **行数**：46
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_compositing_filter_modifier.h`
+- **行数**：80
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_dynamic_light_up_modifier.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_foreground_filter_modifier.h`
+- **行数**：66
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_hdr_brightness_modifier.h`
+- **行数**：43
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_mask_modifier.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_material_filter_modifier.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_outline_modifier.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_particle_effect_modifier.h`
+- **行数**：43
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_pixel_stretch_modifier.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_point_light_modifier.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_shadow_modifier.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_use_effect_modifier.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/appearance/rs_visibility_modifier.h`
+- **行数**：44
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/background/rs_background_color_modifier.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/background/rs_background_image_modifier.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/background/rs_background_ng_shader_modifier.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/background/rs_background_shader_modifier.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/custom/rs_background_style_modifier.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/custom/rs_content_style_modifier.h`
+- **行数**：52
+- **首条类型声明摘抄**：`class RSUIDirector`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/custom/rs_custom_modifier.h`
+- **行数**：100
+- **首条类型声明摘抄**：`class RSNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/custom/rs_foreground_style_modifier.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/custom/rs_node_modifier.h`
+- **行数**：46
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/custom/rs_transition_style_modifier.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/foreground/rs_env_foreground_color_modifier.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/foreground/rs_foreground_color_modifier.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/foreground/rs_foreground_shader_modifier.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/geometry/rs_bounds_clip_modifier.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/geometry/rs_bounds_modifier.h`
+- **行数**：65
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/geometry/rs_frame_clip_modifier.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/geometry/rs_frame_modifier.h`
+- **行数**：56
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/geometry/rs_transform_modifier.h`
+- **行数**：79
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/overlay/rs_overlay_style_modifier.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class RSC_EXPORT`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_ng/rs_modifier_ng.h`
+- **行数**：161
+- **首条类型声明摘抄**：`class RSModifierExtractor`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_render_thread/rs_modifiers_draw.h`
+- **行数**：204
+- **首条类型声明摘抄**：`class PixelMap`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/modifier_render_thread/rs_modifiers_draw_thread.h`
+- **行数**：169
+- **首条类型声明摘抄**：`template<typename Task>
+class ScheduledTask`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/pipeline/rs_node_map.h`
+- **行数**：78
+- **首条类型声明摘抄**：`class RSNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/pipeline/rs_node_map_v2.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class RSNode`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/pipeline/rs_render_thread.h`
+- **行数**：182
+- **首条类型声明摘抄**：`class HighContrastObserver`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/render_thread/jank_detector/rs_jank_detector.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class RSJankDetector`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/render_thread/rs_render_thread_stats.h`
+- **行数**：68
+- **首条类型声明摘抄**：`class RSRenderThreadStats`
+
+## `foundation/graphic/graphic_2d/rosen/modules/render_service_client/core/render_thread/rs_render_thread_util.h`
