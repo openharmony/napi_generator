@@ -218,7 +218,7 @@ def _parse_client_success(out: str) -> tuple[bool, list[str]]:
         (rf"last notify:.*{re.escape(LAST_NOTIFY_B)}", f"last notify contains {LAST_NOTIFY_B}"),
         (r"GetClientCount ret=0.*count=\d+", "GetClientCount ret=0 + count=N"),
         (r"GetPeerList ret=0", "GetPeerList ret=0"),
-        # Type / boundary / error / perf / conc (ipc_demo_client_main.cpp)
+        
         (r"UT_TYPE_SCALARS ok\b", "UT_TYPE_SCALARS"),
         (r"UT_TYPE_STRING16 ok\b", "UT_TYPE_STRING16"),
         (r"UT_BOUND_EMPTY_INT32VEC ok\b", "UT_BOUND_EMPTY_INT32VEC"),
