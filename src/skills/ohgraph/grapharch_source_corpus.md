@@ -13284,3 +13284,607 @@ struct GEFilterTypeInfo`
    244 |     {
    245 |         if (!context_) {
    246 |             return ClearMemoryMoment::NO_CLEAR;
+   247 |         }
+   248 |         return context_->clearMoment_;
+   249 |     }
+   250 | 
+   251 |     void SetClearMoment(ClearMemoryMoment moment)
+   252 |     {
+   253 |         if (!context_) {
+   254 |             return;
+   255 |         }
+   256 |         context_->clearMoment_ = moment;
+   257 |     }
+   258 | 
+   259 |     bool IsPCThreeFingerScenesListScene() const
+   260 |     {
+   261 |         return !threeFingerScenesList_.empty();
+   262 |     }
+   263 | 
+   264 |     void SurfaceOcclusionChangeCallback(VisibleData& dstCurVisVec);
+   265 |     void SurfaceOcclusionCallback();
+   266 |     bool CheckSurfaceOcclusionNeedProcess(NodeId id);
+   267 |     void SubscribeAppState();
+   268 |     void HandleOnTrim(Memory::SystemMemoryLevel level);
+   269 |     void SetCurtainScreenUsingStatus(bool isCurtainScreenOn);
+   270 |     void AddPidNeedDropFrame(const std::vector<int32_t>& pidList, int32_t dropFrameLevel = 0);
+   271 |     void ClearNeedDropframePidList();
+   272 |     void RemoveDropFramePid(pid_t pid);
+   273 |     bool IsNeedDropFrameByPid(NodeId nodeId);
+   274 |     int32_t GetDropFrameLevelByPid(NodeId nodeId);
+   275 |     void SetLuminanceChangingStatus(ScreenId id, bool isLuminanceChanged);
+   276 |     bool ExchangeLuminanceChangingStatus(ScreenId id);
+   277 | 
+   278 |     void SetFrameIsRender(bool isRender);
+   279 |     void AddSelfDrawingNodes(std::shared_ptr<RSSurfaceRenderNode> selfDrawingNode);
+   280 |     const std::vector<std::shared_ptr<RSSurfaceRenderNode>>& GetSelfDrawingNodes() const;
+   281 |     void ClearSelfDrawingNodes();
+   282 | 
+   283 |     bool GetDiscardJankFrames() const
+   284 |     {
+   285 |         return discardJankFrames_.load();
+   286 |     }
+   287 | 
+   288 |     void SetDiscardJankFrames(bool discardJankFrames)
+   289 |     {
+   290 |         if (discardJankFrames_.load() != discardJankFrames) {
+   291 |             discardJankFrames_.store(discardJankFrames);
+   292 |         }
+   293 |     }
+   294 | 
+   295 |     bool GetSkipJankAnimatorFrame() const
+   296 |     {
+   297 |         return skipJankAnimatorFrame_.load();
+   298 |     }
+   299 | 
+   300 |     bool IsFirstFrameOfDrawingCacheDFXSwitch() const
+   301 |     {
+   302 |         return isDrawingCacheDfxEnabledOfCurFrame_ != isDrawingCacheDfxEnabledOfLastFrame_;
+   303 |     }
+   304 | 
+   305 |     void SetDrawingCacheDfxEnabledOfCurFrame(bool isDrawingCacheDfxEnabledOfCurFrame)
+   306 |     {
+   307 |         isDrawingCacheDfxEnabledOfCurFrame_ = isDrawingCacheDfxEnabledOfCurFrame;
+   308 |     }
+   309 | 
+   310 |     void SetSkipJankAnimatorFrame(bool skipJankAnimatorFrame)
+   311 |     {
+   312 |         skipJankAnimatorFrame_.store(skipJankAnimatorFrame);
+   313 |     }
+   314 | 
+   315 |     bool IsRequestedNextVSync();
+   316 | 
+   317 |     bool IsOcclusionNodesNeedSync(NodeId id, bool useCurWindow);
+   318 | 
+   319 |     void CallbackDrawContextStatusToWMS(bool isUniRender = false);
+   320 |     void SetHardwareTaskNum(uint32_t num);
+   321 |     void RegisterUIExtensionCallback(pid_t pid, uint64_t userId, sptr<RSIUIExtensionCallback> callback,
+   322 |         bool unobscured = false);
+   323 |     void UnRegisterUIExtensionCallback(pid_t pid);
+   324 | 
+   325 |     void SetAncoForceDoDirect(bool direct);
+   326 | 
+   327 |     bool IsSystemAnimatedScenesListEmpty() const
+   328 |     {
+   329 |         return systemAnimatedScenesList_.empty();
+   330 |     }
+   331 | 
+   332 |     RSVsyncRateReduceManager& GetRSVsyncRateReduceManager()
+   333 |     {
+   334 |         return rsVsyncRateReduceManager_;
+   335 |     }
+   336 | 
+   337 |     bool IsFirstFrameOfOverdrawSwitch() const
+   338 |     {
+   339 |         return isOverDrawEnabledOfCurFrame_ != isOverDrawEnabledOfLastFrame_;
+   340 |     }
+   341 | 
+   342 |     uint64_t GetRealTimeOffsetOfDvsync(int64_t time);
+   343 | 
+   344 |     static bool GetMultiDisplay(const std::shared_ptr<RSBaseRenderNode>& rootNode);
+   345 | 
+   346 |     bool GetMultiDisplayChange() const
+   347 |     {
+   348 |         return isMultiDisplayChange_;
+   349 |     }
+   350 |     bool GetMultiDisplayStatus() const
+   351 |     {
+   352 |         return isMultiDisplayPre_;
+   353 |     }
+   354 | 
+   355 |     bool HasWiredMirrorDisplay() const
+   356 |     {
+   357 |         return hasWiredMirrorDisplay_;
+   358 |     }
+   359 |     bool HasVirtualMirrorDisplay() const
+   360 |     {
+   361 |         return hasVirtualMirrorDisplay_;
+   362 |     }
+   363 |     uint64_t GetCurrentVsyncTime() const
+   364 |     {
+   365 |         return curTime_;
+   366 |     }
+   367 | 
+   368 |     bool GetIfStatusBarDirtyOnly() const
+   369 |     {
+   370 |         return ifStatusBarDirtyOnly_.load();
+   371 |     }
+   372 | 
+   373 |     void SetIfStatusBarDirtyOnly(bool ifStatusBarDirtyOnly)
+   374 |     {
+   375 |         ifStatusBarDirtyOnly_.store(ifStatusBarDirtyOnly);
+   376 |     }
+   377 | 
+   378 |     struct GPUCompositonCacheGuard {
+   379 |         GPUCompositonCacheGuard()
+   380 |         {
+   381 |             RSMainThread::Instance()->StartGPUDraw();
+   382 |         }
+   383 | 
+   384 |         ~GPUCompositonCacheGuard()
+   385 |         {
+   386 |             RSMainThread::Instance()->EndGPUDraw();
+   387 |         }
+   388 |     };
+   389 | 
+   390 |     void AddToUnmappedCacheSet(uint64_t bufferId)
+   391 |     {
+   392 |         std::lock_guard<std::mutex> lock(unmappedCacheSetMutex_);
+   393 |         unmappedCacheSet_.insert(bufferId);
+   394 |     }
+   395 | 
+   396 |     void AddToUnmappedCacheSet(const std::set<uint64_t>& seqNumSet)
+   397 |     {
+   398 |         std::lock_guard<std::mutex> lock(unmappedCacheSetMutex_);
+   399 |         unmappedCacheSet_.insert(seqNumSet.begin(), seqNumSet.end());
+   400 |     }
+   401 | 
+   402 |     void SetAnimationOcclusionInfo(const std::string& sceneId, bool isStart);
+   403 | 
+   404 |     bool GetIsAnimationOcclusion() const
+   405 |     {
+   406 |         return isAnimationOcclusion_.first;
+   407 |     }
+   408 | 
+   409 |     void ClearUnmappedCache();
+   410 |     void InitVulkanErrorCallback(Drawing::GPUContext* gpuContext);
+   411 |     void NotifyUnmarshalTask(int64_t uiTimestamp);
+   412 |     void NotifyPackageEvent(const std::vector<std::string>& packageList);
+   413 |     void HandleTouchEvent(int32_t touchStatus, int32_t touchCnt);
+   414 |     void SetBufferInfo(uint64_t id, const std::string &name, uint32_t queueSize,
+   415 |         int32_t bufferCount, int64_t lastConsumeTime, bool isUrgent);
+   416 |     void GetFrontBufferDesiredPresentTimeStamp(
+   417 |         const sptr<IConsumerSurface>& consumer, int64_t& desiredPresentTimeStamp);
+   418 | 
+   419 |     // Enable HWCompose
+   420 |     bool IsHardwareEnabledNodesNeedSync();
+   421 |     void SetTaskEndWithTime(int64_t time);
+   422 | 
+   423 |     uint32_t GetVsyncRefreshRate();
+   424 |     void DVSyncUpdate(uint64_t dvsyncTime, uint64_t vsyncTime);
+   425 |     void MarkNodeDirty(uint64_t nodeId);
+   426 |     void SendColorPickerCallback(uint64_t nodeId, uint32_t color);
+   427 | 
+   428 |     void SetHasSurfaceLockLayer(bool hasSurfaceLockLayer);
+   429 |     bool HasDRMOrSurfaceLockLayer() const;
+   430 | 
+   431 |     bool IsReadyForSyncTask() const;
+   432 | 
+   433 |     bool TransitionDataMutexLockIfNoCommands();
+   434 |     void TransitionDataMutexUnlock();
+   435 | 
+   436 |     const std::shared_ptr<RSHwcContext>& GetHwcContext() const { return hwcContext_; }
+   437 | 
+   438 |     std::unordered_map<ScreenId, RSRenderNode::WeakPtrSet>& GetMutableAIBarNodes()
+   439 |     {
+   440 |         return aibarNodes_;
+   441 |     }
+   442 | 
+   443 | private:
+   444 |     // TransactionDataIndexMap is Pid to {index of RSTransactionData, vector of std::unique_ptr<RSTransactionData>}
+   445 |     using TransactionDataIndexMap = std::unordered_map<pid_t,
+   446 |         std::pair<uint64_t, std::vector<std::unique_ptr<RSTransactionData>>>>;
+   447 |     using DrawablesVec = std::vector<std::tuple<NodeId, NodeId,
+   448 |         DrawableV2::RSRenderNodeDrawableAdapter::SharedPtr>>;
+   449 | 
+   450 |     RSMainThread();
+   451 |     ~RSMainThread() noexcept;
+   452 |     RSMainThread(const RSMainThread&) = delete;
+   453 |     RSMainThread(const RSMainThread&&) = delete;
+   454 |     RSMainThread& operator=(const RSMainThread&) = delete;
+   455 |     RSMainThread& operator=(const RSMainThread&&) = delete;
+   456 | 
+   457 |     void OnVsync(uint64_t timestamp, uint64_t frameCount, void* data);
+   458 |     void ProcessCommand();
+   459 |     void UpdateSubSurfaceCnt();
+   460 |     void Animate(uint64_t timestamp);
+   461 |     void ConsumeAndUpdateAllNodes();
+   462 |     void ReleaseAllNodesBuffer();
+   463 |     void Render();
+   464 |     void OnUniRenderDraw();
+   465 |     void SetDeviceType();
+   466 |     void UniRender(std::shared_ptr<RSBaseRenderNode> rootNode);
+   467 |     bool CheckSurfaceNeedProcess(OcclusionRectISet& occlusionSurfaces, std::shared_ptr<RSSurfaceRenderNode> curSurface);
+   468 |     RSVisibleLevel CalcSurfaceNodeVisibleRegion(const std::shared_ptr<RSScreenRenderNode>& screenNode,
+   469 |         const std::shared_ptr<RSSurfaceRenderNode>& surfaceNode, Occlusion::Region& accumulatedRegion,
+   470 |         Occlusion::Region& curRegion, Occlusion::Region& totalRegion);
+   471 |     void CalcOcclusionImplementation(const std::shared_ptr<RSScreenRenderNode>& screenNode,
+   472 |         std::vector<RSBaseRenderNode::SharedPtr>& curAllSurfaces, VisibleData& dstCurVisVec);
+   473 |     void CalcOcclusion();
+   474 |     void CallbackToWMS(VisibleData& curVisVec);
+   475 |     void SendCommands();
+   476 |     void InitRSEventDetector();
+   477 |     void RemoveRSEventDetector();
+   478 |     void SetRSEventDetectorLoopStartTag();
+   479 |     void SetRSEventDetectorLoopFinishTag();
+   480 |     void CheckSystemSceneStatus();
+   481 |     void RegisterScreenNodeListener();
+   482 |     void UpdateScreenNodeScreenId();
+   483 | 
+   484 |     uint32_t GetRefreshRate() const;
+   485 |     uint32_t GetDynamicRefreshRate() const;
+   486 |     static void OnHideNotchStatusCallback(const char *key, const char *value, void *context);
+   487 |     static void OnDrawingCacheDfxSwitchCallback(const char *key, const char *value, void *context);
+   488 |     static void OnFmtTraceSwitchCallback(const char *key, const char *value, void *context);
+   489 | 
+   490 |     bool DoParallelComposition(std::shared_ptr<RSBaseRenderNode> rootNode);
+   491 | 
+   492 |     void ClassifyRSTransactionData(std::shared_ptr<RSTransactionData> rsTransactionData);
+   493 |     void ProcessRSTransactionData(std::unique_ptr<RSTransactionData>& rsTransactionData, pid_t pid);
+   494 |     void ProcessSyncRSTransactionData(std::unique_ptr<RSTransactionData>& rsTransactionData, pid_t pid);
+   495 |     void ProcessSyncTransactionCount(std::unique_ptr<RSTransactionData>& rsTransactionData);
+   496 |     void StartSyncTransactionFallbackTask(std::unique_ptr<RSTransactionData>& rsTransactionData);
+   497 |     void ProcessAllSyncTransactionData();
+   498 |     void ProcessCommandForDividedRender();
+   499 |     void ProcessCommandForUniRender();
+   500 |     void WaitUntilUnmarshallingTaskFinished();
+   501 |     void MergeToEffectiveTransactionDataMap(TransactionDataMap& cachedTransactionDataMap);
+   502 | 
+   503 |     void ClearDisplayBuffer();
+   504 |     void PerfAfterAnim(bool needRequestNextVsync);
+   505 |     void PerfForBlurIfNeeded();
+   506 |     void RenderFrameStart(uint64_t timestamp);
+   507 |     void CheckAndUpdateTransactionIndex(
+   508 |         std::shared_ptr<TransactionDataMap>& transactionDataEffective, std::string& transactionFlags);
+   509 | 
+   510 |     bool IsResidentProcess(pid_t pid) const;
+   511 |     uint32_t GetForceCommitReason() const;
+   512 |     void RegisterHwcEvent();
+   513 | 
+   514 |     void TraverseCanvasDrawingNodes();
+   515 | 
+   516 |     void SetFocusLeashWindowId();
+   517 |     void ProcessHgmFrameRate(uint64_t timestamp);
+   518 |     RSVisibleLevel GetRegionVisibleLevel(const Occlusion::Region& curRegion,
+   519 |         const Occlusion::Region& visibleRegion);
+   520 |     void PrintCurrentStatus();
+   521 |     void UpdateGpuContextCacheSize();
+   522 |     void ProcessScreenHotPlugEvents();
+   523 | #ifdef RES_SCHED_ENABLE
+   524 |     void SubScribeSystemAbility();
+   525 | #endif
+   526 | #if defined(RS_ENABLE_CHIPSET_VSYNC)
+   527 |     void ConnectChipsetVsyncSer();
+   528 |     void SetVsyncInfo(uint64_t timestamp);
+   529 | #endif
+   530 | 
+   531 |     void RSJankStatsOnVsyncStart(int64_t onVsyncStartTime, int64_t onVsyncStartTimeSteady,
+   532 |                                  float onVsyncStartTimeSteadyFloat);
+   533 |     void RSJankStatsOnVsyncEnd(int64_t onVsyncStartTime, int64_t onVsyncStartTimeSteady,
+   534 |                                float onVsyncStartTimeSteadyFloat);
+   535 |     int64_t GetCurrentSystimeMs() const;
+   536 |     int64_t GetCurrentSteadyTimeMs() const;
+   537 |     float GetCurrentSteadyTimeMsFloat() const;
+   538 |     void RequestNextVsyncForCachedCommand(std::string& transactionFlags, pid_t pid, uint64_t curIndex);
+   539 |     void UpdateLuminanceAndColorTemp();
+   540 | 
+   541 |     void PrepareUiCaptureTasks(std::shared_ptr<RSUniRenderVisitor> uniVisitor);
+   542 |     void UIExtensionNodesTraverseAndCallback();
+   543 |     bool CheckUIExtensionCallbackDataChanged() const;
+   544 |     void RequestNextVSyncInner(VSyncReceiver::FrameCallback callback,
+   545 |         const std::string& fromWhom = "unknown", int64_t lastVSyncTS = 0, const int64_t& requestVsyncTime = 0);
+   546 | 
+   547 |     void OnCommitDumpClientNodeTree(NodeId nodeId, pid_t pid, uint32_t taskId, const std::string& result);
+   548 | 
+   549 |     // Used for CommitAndReleaseLayers task
+   550 |     void SetFrameInfo(uint64_t frameCount, bool forceRefreshFlag);
+   551 | 
+   552 |     // Record change status of multi or single display
+   553 |     void MultiDisplayChange(bool isMultiDisplay);
+   554 |     void DumpEventHandlerInfo();
+   555 |     std::string SubHistoryEventQueue(std::string input);
+   556 |     std::string SubPriorityEventQueue(std::string input);
+   557 | 
+   558 |     // Enable HWCompose
+   559 |     void CollectInfoForHardwareComposer();
+   560 |     void ResetHardwareEnabledState(bool isUniRender);
+   561 |     void CheckIfHardwareForcedDisabled();
+   562 |     bool DoDirectComposition(std::shared_ptr<RSBaseRenderNode> rootNode, bool waitForRT);
+   563 |     bool NeedConsumeMultiCommand(int32_t& dvsyncPid);
+   564 |     bool NeedConsumeDVSyncCommand(uint32_t& endIndex,
+   565 |         std::vector<std::unique_ptr<RSTransactionData>>& transactionVec);
+   566 |     class RSScreenNodeListener : public RSIScreenNodeListener {
+   567 |     public:
+   568 |         ~RSScreenNodeListener() override = default;
+   569 | 
+   570 |         void OnScreenConnect(ScreenId id, const sptr<RSScreenProperty>& property) override;
+   571 |         void OnScreenDisconnect(ScreenId id) override;
+   572 |         void OnScreenPropertyChanged(ScreenId id, const sptr<RSScreenProperty>& property) override;
+   573 |     };
+   574 | 
+   575 |     bool IfStatusBarDirtyOnly();
+   576 | 
+   577 |     void StartGPUDraw();
+   578 |     void EndGPUDraw();
+   579 | 
+   580 |     void UpdateDirectCompositionByAnimate(bool animateNeedRequestNextVsync);
+   581 |     void HandleTunnelLayerId(const std::shared_ptr<RSSurfaceHandler>& surfaceHandler,
+   582 |         const std::shared_ptr<RSSurfaceRenderNode>& surfaceNode);
+   583 | 
+   584 |     void ProcessNeedAttachedNodes();
+   585 | 
+   586 |     bool isUniRender_ = RSUniRenderJudgement::IsUniRender();
+   587 |     bool needWaitUnmarshalFinished_ = true;
+   588 |     bool clearMemoryFinished_ = true;
+   589 |     bool clearMemDeeply_ = false;
+   590 |     // Used to refresh the whole display when AccessibilityConfig is changed
+   591 |     bool isAccessibilityConfigChanged_ = false;
+   592 |     // Used to refresh the whole display when curtain screen status is changed
+   593 |     bool isCurtainScreenUsingStatusChanged_ = false;
+   594 | 
+   595 |     std::atomic<bool> ifStatusBarDirtyOnly_ = false;
+   596 |     const uint8_t opacity_ = 255;
+   597 |     bool vsyncControlEnabled_ = true;
+   598 |     bool systemAnimatedScenesEnabled_ = false;
+   599 |     mutable std::atomic_bool hasWiredMirrorDisplay_ = false;
+   600 |     mutable std::atomic_bool hasVirtualMirrorDisplay_ = false;
+   601 | 
+   602 | #ifdef RS_ENABLE_GPU
+   603 |     bool needDrawFrame_ = true;
+   604 |     bool needPostAndWait_ = true;
+   605 |     bool isLastFrameNeedPostAndWait_ = true;
+   606 | #endif
+   607 | 
+   608 |     bool isNeedResetClearMemoryTask_ = false;
+   609 |     bool watermarkFlag_ = false;
+   610 |     bool lastWatermarkFlag_ = false;
+   611 |     bool hasProtectedLayer_ = false;
+   612 |     bool hasSurfaceLockLayer_ = false;
+   613 |     DeviceType deviceType_ = DeviceType::PHONE;
+   614 |     bool isCachedSurfaceUpdated_ = false;
+   615 |     // used for informing hgm the bundle name of SurfaceRenderNodes
+   616 |     bool forceUpdateUniRenderFlag_ = false;
+   617 |     // for drawing cache dfx
+   618 |     bool isDrawingCacheDfxEnabledOfCurFrame_ = false;
+   619 |     bool isDrawingCacheDfxEnabledOfLastFrame_ = false;
+   620 |     // for dvsync (animate requestNextVSync after mark rsnotrendering)
+   621 |     bool forceUIFirstChanged_ = false;
+   622 |     bool lastFrameUIExtensionDataEmpty_ = false;
+   623 |     // overDraw
+   624 |     bool isOverDrawEnabledOfCurFrame_ = false;
+   625 |     bool isOverDrawEnabledOfLastFrame_ = false;
+   626 | #if defined(RS_ENABLE_CHIPSET_VSYNC)
+   627 |     bool initVsyncServiceFlag_ = true;
+   628 | #endif
+   629 |     bool isCurtainScreenOn_ = false;
+   630 |     // partial render
+   631 |     bool isForceRefresh_ = false;
+   632 |     // record multidisplay status change
+   633 |     bool isMultiDisplayPre_ = false;
+   634 |     bool isMultiDisplayChange_ = false;
+   635 |     std::atomic<bool> isDirty_ = false;
+   636 |     bool prevHdrSwitchStatus_ = true;
+   637 |     std::atomic<bool> screenPowerOnChanged_ = false;
+   638 |     std::atomic_bool doWindowAnimate_ = false;
+   639 |     std::atomic<bool> isGlobalDarkColorMode_ = false;
+   640 |     // for statistic of jank frames
+   641 |     std::atomic_bool discardJankFrames_ = false;
+   642 |     std::atomic_bool skipJankAnimatorFrame_ = false;
+   643 |     bool isImplicitAnimationEnd_ = false;
+   644 |     std::pair<bool, time_t> isAnimationOcclusion_;
+   645 | 
+   646 |     pid_t lastCleanCachePid_ = -1;
+   647 |     int32_t unmarshalFinishedCount_ = 0;
+   648 |     pid_t desktopPidForRotationScene_ = 0;
+   649 |     int32_t subscribeFailCount_ = 0;
+   650 |     SystemAnimatedScenes systemAnimatedScenes_ = SystemAnimatedScenes::OTHERS; // guard by systemAndRegularMutex_
+   651 |     bool isRegularAnimation_ = false; // guard by systemAndRegularMutex_
+   652 |     mutable std::mutex systemAndRegularMutex_;
+   653 |     uint32_t leashWindowCount_ = 0;
+   654 |     pid_t exitedPid_ = -1;
+   655 |     RsParallelType rsParallelType_;
+   656 |     std::atomic<int32_t> focusAppPid_ = -1;
+   657 |     std::atomic<int32_t> focusAppUid_ = -1;
+   658 |     std::atomic<uint32_t> requestNextVsyncNum_ = 0;
+   659 |     std::atomic<uint32_t> drawingRequestNextVsyncNum_ = 0;
+   660 |     uint64_t curTime_ = 0;
+   661 |     uint64_t timestamp_ = 0;
+   662 |     uint64_t vsyncId_ = 0;
+   663 |     uint64_t lastAnimateTimestamp_ = 0;
+   664 |     uint64_t prePerfTimestamp_ = 0;
+   665 |     uint64_t lastCleanCacheTimestamp_ = 0;
+   666 |     uint64_t focusLeashWindowId_ = 0;
+   667 |     std::string focusLeashWindowName_ = "";
+   668 |     std::string appWindowName_ = "";
+   669 |     uint32_t appPid_ = 0;
+   670 |     uint64_t lastFocusNodeId_ = 0;
+   671 |     uint64_t appWindowId_ = 0;
+   672 |     ScreenId screenNodeScreenId_ = 0;
+   673 |     std::atomic<uint64_t> focusNodeId_ = 0;
+   674 |     std::atomic<uint64_t> frameCount_ = 0;
+   675 |     std::atomic<bool> isRunning_ = false;
+   676 |     std::shared_ptr<AppExecFwk::EventRunner> runner_ = nullptr;
+   677 |     std::shared_ptr<AppExecFwk::EventHandler> handler_ = nullptr;
+   678 |     std::shared_ptr<RSContext> context_;
+   679 |     std::shared_ptr<VSyncReceiver> receiver_ = nullptr;
+   680 |     sptr<VSyncDistributor> appVSyncDistributor_ = nullptr;
+   681 |     std::shared_ptr<RSBaseRenderEngine> renderEngine_;
+   682 |     std::shared_ptr<RSBaseEventDetector> rsCompositionTimeoutDetector_;
+   683 |     std::shared_ptr<Drawing::Image> watermarkImg_ = nullptr; // display safterWatermask(true) or hide it(false)
+   684 |     std::shared_ptr<RSAppStateListener> rsAppStateListener_;
+   685 |     std::unique_ptr<RSVsyncClient> vsyncClient_ = nullptr;
+   686 |     RSTaskMessage::RSTask mainLoop_;
+   687 |     std::unordered_map<NodeId, uint64_t> dividedRenderbufferTimestamps_;
+   688 | 
+   689 |     std::mutex transitionDataMutex_;
+   690 |     std::unordered_map<NodeId, std::map<uint64_t, std::vector<std::unique_ptr<RSCommand>>>> cachedCommands_;
+   691 |     std::map<uint64_t, std::vector<std::unique_ptr<RSCommand>>> effectiveCommands_;
+   692 |     std::map<uint64_t, std::vector<std::unique_ptr<RSCommand>>> pendingEffectiveCommands_;
+   693 |     std::unordered_map<pid_t, std::vector<std::unique_ptr<RSTransactionData>>> syncTransactionData_;
+   694 |     std::unordered_map<int32_t, int32_t> subSyncTransactionCounts_;
+   695 | 
+   696 |     TransactionDataMap cachedTransactionDataMap_;
+   697 |     TransactionDataIndexMap effectiveTransactionDataIndexMap_;
+   698 |     std::unordered_map<pid_t, uint64_t> transactionDataLastWaitTime_;
+   699 | 
+   700 |     int64_t requestNextVsyncTime_ = -1;
+   701 |     bool isHdrSwitchChanged_ = false;
+   702 |     bool isColorTemperatureOn_ = false;
+   703 | 
+   704 |     /**
+   705 |      * @brief A set to store buffer IDs of images that are about to be unmapped from GPU cache.
+   706 |      *
+   707 |      * This set is used to track images that are no longer needed and should be removed from the GPU cache.
+   708 |      * When an image is unmapped, its buffer ID is added to this set. During the rendering process,
+   709 |      * if an image is found in this set, it means that the image is no longer needed and can be safely
+   710 |      * removed from the GPU cache.
+   711 |      */
+   712 |     std::set<uint64_t> unmappedCacheSet_ = {}; // must protected by unmappedCacheSetMutex_
+   713 |     std::mutex unmappedCacheSetMutex_;
+   714 | 
+   715 |     /**
+   716 |      * @brief An atomic integer to keep track of the GPU draw count.
+   717 |      *
+   718 |      * This variable is used to safely increment and decrement the count of GPU draw operations
+   719 |      * across multiple threads without causing data races.
+   720 |      */
+   721 |     std::atomic<int> gpuDrawCount_ = 0;
+   722 | 
+   723 |     std::string transactionFlags_ = "";
+   724 |     std::unordered_map<uint32_t, sptr<IApplicationAgent>> applicationAgentMap_;
+   725 | 
+   726 |     std::thread::id mainThreadId_;
+   727 |     std::map<pid_t, sptr<RSIOcclusionChangeCallback>> occlusionListeners_;
+   728 |     std::mutex occlusionMutex_;
+   729 | 
+   730 |     RSTaskMessage::RSTask unmarshalBarrierTask_;
+   731 |     std::condition_variable unmarshalTaskCond_;
+   732 |     std::mutex unmarshalMutex_;
+   733 | 
+   734 |     mutable std::mutex uniRenderMutex_;
+   735 | 
+   736 |     // Used to refresh the whole display when luminance is changed
+   737 |     std::unordered_map<ScreenId, bool> displayLuminanceChanged_;
+   738 |     std::mutex luminanceMutex_;
+   739 | 
+   740 |     VisibleData lastVisVec_;
+   741 |     std::map<NodeId, uint64_t> lastDrawStatusMap_;
+   742 |     std::vector<NodeId> curDrawStatusVec_;
+   743 |     std::vector<NodeId> lastSurfaceIds_;
+   744 |     std::string focusAppBundleName_ = "";
+   745 |     std::string focusAppAbilityName_ = "";
+   746 | 
+   747 |     RSEventManager rsEventManager_;
+   748 | 
+   749 |     std::vector<std::shared_ptr<RSSurfaceRenderNode>> selfDrawingNodes_;
+   750 | #ifdef RS_ENABLE_GPU
+   751 |     std::vector<DrawableV2::RSRenderNodeDrawableAdapter::SharedPtr> selfDrawables_;
+   752 | #endif
+   753 | 
+   754 |     // Enable HWCompose
+   755 |     std::vector<std::shared_ptr<RSSurfaceRenderNode>> hardwareEnabledNodes_;
+   756 |     DrawablesVec hardwareEnabledDrwawables_;
+   757 |     bool isHardwareEnabledBufferUpdated_ = false;
+   758 |     bool isHardwareForcedDisabled_ = false; // if app node has shadow or filter, disable hardware composer for all
+   759 |     bool doDirectComposition_ = true;
+   760 |     bool lastAnimateNeedRequestNextVsync_ = false;
+   761 |     RSDirectCompositionHelper directComposeHelper_;
+   762 |     std::shared_ptr<RSHwcContext> hwcContext_ = nullptr;
+   763 | 
+   764 |     // for aibar
+   765 |     std::unordered_map<ScreenId, RSRenderNode::WeakPtrSet> aibarNodes_;
+   766 | 
+   767 |     // for client node tree dump
+   768 |     struct NodeTreeDumpTask {
+   769 |         size_t count = 0;
+   770 |         size_t completionCount = 0;
+   771 |         std::map<pid_t, std::optional<std::string>> data;
+   772 |     };
+   773 |     std::mutex nodeTreeDumpMutex_;
+   774 |     std::condition_variable nodeTreeDumpCondVar_;
+   775 |     std::unordered_map<uint32_t, NodeTreeDumpTask> nodeTreeDumpTasks_;
+   776 | 
+   777 |     std::unordered_map<pid_t, uint32_t> registerSurfaceWaterMaskCount_;
+   778 | 
+   779 |     // for ui first
+   780 |     std::mutex mutex_;
+   781 |     std::queue<std::shared_ptr<Drawing::Surface>> tmpSurfaces_;
+   782 | 
+   783 |     // for surface occlusion change callback
+   784 |     std::mutex surfaceOcclusionMutex_;
+   785 |     std::vector<NodeId> lastRegisteredSurfaceOnTree_;
+   786 |     std::mutex systemAnimatedScenesMutex_;
+   787 |     std::list<std::pair<SystemAnimatedScenes, time_t>> systemAnimatedScenesList_;
+   788 |     std::list<std::pair<SystemAnimatedScenes, time_t>> threeFingerScenesList_;
+   789 |     std::unordered_map<NodeId, // map<node ID, <pid, callback, partition points vector, level>>
+   790 |         std::tuple<pid_t, sptr<RSISurfaceOcclusionChangeCallback>,
+   791 |         std::vector<float>, uint8_t>> surfaceOcclusionListeners_;
+   792 |     std::unordered_map<NodeId, // map<node ID, <surface node, app window node>>
+   793 |         std::pair<std::shared_ptr<RSSurfaceRenderNode>, std::shared_ptr<RSSurfaceRenderNode>>> savedAppWindowNode_;
+   794 | 
+   795 |     // used for watermark
+   796 |     std::mutex watermarkMutex_;
+   797 | 
+   798 |     // for ui captures
+   799 |     std::vector<std::tuple<NodeId, std::function<void()>>> pendingUiCaptureTasks_;
+   800 |     std::queue<std::tuple<NodeId, std::function<void()>>> uiCaptureTasks_;
+   801 |     // uiextension
+   802 |     std::mutex uiExtensionMutex_;
+   803 |     UIExtensionCallbackData uiExtensionCallbackData_;
+   804 |     UIExtensionCallbackData unobscureduiExtensionCallbackData_;
+   805 |     // <pid, <uid, callback>>
+   806 |     std::map<pid_t, std::pair<uint64_t, sptr<RSIUIExtensionCallback>>> uiExtensionListenners_ = {};
+   807 |     std::map<pid_t, std::pair<uint64_t, sptr<RSIUIExtensionCallback>>> uiUnobscuredExtensionListenners_ = {};
+   808 | 
+   809 | #ifdef RS_PROFILER_ENABLED
+   810 |     friend class RSProfiler;
+   811 | #endif
+   812 |     std::set<pid_t> exitedPidSet_;
+   813 | #ifdef RS_ENABLE_GPU
+   814 |     RSDrawFrame drawFrame_;
+   815 | #endif
+   816 |     std::unique_ptr<RSRenderThreadParams> renderThreadParams_ = nullptr; // sync to render thread
+   817 |     std::unordered_map<int32_t, int32_t> surfacePidNeedDropFrame_;  // pid -> dropFrameLevel
+   818 |     RSVsyncRateReduceManager rsVsyncRateReduceManager_;
+   819 |     RSSurfaceWatermarkHelper surfaceWatermarkHelper_;
+   820 | 
+   821 |     // for record fastcompose time change
+   822 |     uint64_t lastFastComposeTimeStamp_ = 0;
+   823 |     uint64_t lastFastComposeTimeStampDiff_ = 0;
+   824 |     std::atomic<bool> waitForDVSyncFrame_ = false;
+   825 |     std::atomic<uint64_t> vsyncRsTimestamp_ = 0;
+   826 |     std::string dumpInfo_;
+   827 |     std::atomic<uint32_t> currentNum_ = 0;
+   828 | #if defined(ACCESSIBILITY_ENABLE)
+   829 |     std::shared_ptr<AccessibilityObserver> accessibilityObserver_;
+   830 | #endif
+   831 | #ifdef RES_SCHED_ENABLE
+   832 |     sptr<VSyncSystemAbilityListener> saStatusChangeListener_ = nullptr;
+   833 | #endif
+   834 | 
+   835 |     std::function<void(const std::shared_ptr<RSSurfaceRenderNode>& surfaceNode)> consumeAndUpdateNode_;
+   836 |     HgmContext hgmContext_;
+   837 |     std::mutex dumpInfoMutex_;
+   838 | 
+   839 |     bool hasCanvasDrawingNodeCachedOp_ = false;
+   840 | };
+   841 | } // namespace OHOS::Rosen
+   842 | #endif // RS_MAIN_THREAD
+```
+
+---
+## 生成脚本文末统计
+- **头文件数**：3031
+- **读失败数**：0
+- **总行数**：13784
+
