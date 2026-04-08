@@ -67,7 +67,7 @@ def infer_src_root(explicit: str | None) -> Path:
     env = os.environ.get("OHOS_SRC", "").strip()
     if env:
         return Path(env).expanduser().resolve()
-    # 从脚本位置向上查找含 build.sh 的目录作为 OH 源码根（支持仓库内 src/skills/ohrecord/ 或 .claude/skills/ohrecord/ 等布局）
+    # 从脚本位置向上查找含 build.sh 的目录作为 OH 源码根（脚本可位于本仓库 src/skills/ohrecord/ 等路径下）
     p = Path(__file__).resolve()
     for i in range(1, min(8, len(p.parts))):
         cand = p.parents[i]

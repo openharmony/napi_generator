@@ -26,9 +26,9 @@
 
 | 资源 | 路径 |
 |------|------|
-| **本教程（零基础长文）** | `.claude/skills/ohservices/saguide.md` |
-| 字段 / 踩坑 / 大表 | `.claude/skills/ohservices/SKILL.md` |
-| 命令固化 | `.claude/skills/ohservices/ohsa.py` |
+| **本教程（零基础长文）** | `src/skills/ohservices/saguide.md` |
+| 字段 / 踩坑 / 大表 | `src/skills/ohservices/SKILL.md` |
+| 命令固化 | `src/skills/ohservices/ohsa.py` |
 | 框架说明（官方） | `foundation/systemabilitymgr/safwk/SystemAbility_Design_And_Sample_zh.md` |
 
 ### 0.5 本仓库样例位置（可直接对照）
@@ -467,7 +467,7 @@ ls out/rk3568/packages/phone/system/lib/libsampletest_server.z.so \
 **脚本**（源码根）：
 
 ```bash
-python3 .claude/skills/ohservices/ohsa.py build
+python3 src/skills/ohservices/ohsa.py build
 ```
 
 ---
@@ -505,7 +505,7 @@ hdc shell "hidumper -ls"
 hdc shell "hidumper -s 9009"
 ```
 
-或使用 **`python3 .claude/skills/ohservices/ohsa.py hidumper`**。
+或使用 **`python3 src/skills/ohservices/ohsa.py hidumper`**。
 
 ---
 
@@ -599,14 +599,14 @@ hdc shell "begetctl start_service sampletest"
 ## 附录 B：`ohsa.py` 子命令速查
 
 ```bash
-python3 .claude/skills/ohservices/ohsa.py all       # 产物 + 设备（默认）
-python3 .claude/skills/ohservices/ohsa.py build
-python3 .claude/skills/ohservices/ohsa.py device
-python3 .claude/skills/ohservices/ohsa.py device-files
-python3 .claude/skills/ohservices/ohsa.py hilog-disk
-python3 .claude/skills/ohservices/ohsa.py dmesg
-python3 .claude/skills/ohservices/ohsa.py hidumper
-python3 .claude/skills/ohservices/ohsa.py diag
+python3 src/skills/ohservices/ohsa.py all       # 产物 + 设备（默认）
+python3 src/skills/ohservices/ohsa.py build
+python3 src/skills/ohservices/ohsa.py device
+python3 src/skills/ohservices/ohsa.py device-files
+python3 src/skills/ohservices/ohsa.py hilog-disk
+python3 src/skills/ohservices/ohsa.py dmesg
+python3 src/skills/ohservices/ohsa.py hidumper
+python3 src/skills/ohservices/ohsa.py diag
 ```
 
 多设备：**`-t <序列号>`** 或环境变量 **`OHSA_HDC_TARGET`**。
