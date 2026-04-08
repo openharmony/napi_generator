@@ -7590,3 +7590,1901 @@ struct pair`
 - **行数**：95
 - **首条类型声明摘抄**：`class IEcs`
 
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/ecs/intf_system_graph_loader.h`
+- **行数**：100
+- **首条类型声明摘抄**：`class IFileManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/engine_info.h`
+- **行数**：57
+- **首条类型声明摘抄**：`struct VersionInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/image/intf_animated_image.h`
+- **行数**：77
+- **首条类型声明摘抄**：`class IAnimatedImage`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/image/intf_image_container.h`
+- **行数**：177
+- **首条类型声明摘抄**：`class IImageContainer`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/image/intf_image_loader_manager.h`
+- **行数**：249
+- **首条类型声明摘抄**：`template<class T>
+class array_view`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/implementation_uids.h`
+- **行数**：36
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/intf_engine.h`
+- **行数**：153
+- **首条类型声明摘抄**：`template<class T>
+class array_view`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/intf_logger.h`
+- **行数**：145
+- **首条类型声明摘抄**：`class ILogger`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/io/intf_directory.h`
+- **行数**：76
+- **首条类型声明摘抄**：`class IDirectory`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/io/intf_file.h`
+- **行数**：103
+- **首条类型声明摘抄**：`class IFile`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/io/intf_file_manager.h`
+- **行数**：174
+- **首条类型声明摘抄**：`class IFileManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/io/intf_file_monitor.h`
+- **行数**：64
+- **首条类型声明摘抄**：`template<typename T>
+class vector`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/io/intf_file_system.h`
+- **行数**：109
+- **首条类型声明摘抄**：`class IFilesystem`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/io/intf_filesystem_api.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class IFileSystemApi`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/json/json.h`
+- **行数**：1282
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/log.h`
+- **行数**：230
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/namespace.h`
+- **行数**：32
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/perf/cpu_perf_scope.h`
+- **行数**：273
+- **首条类型声明摘抄**：`class NullIPerformanceTrace`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/perf/intf_performance_data_manager.h`
+- **行数**：213
+- **首条类型声明摘抄**：`class IPerformanceTrace`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/perf/intf_performance_trace.h`
+- **行数**：91
+- **首条类型声明摘抄**：`class IPerformanceTrace`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/plugin/intf_class_factory.h`
+- **行数**：78
+- **首条类型声明摘抄**：`class IClassFactory`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/plugin/intf_class_info.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class IClassInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/plugin/intf_class_register.h`
+- **行数**：88
+- **首条类型声明摘抄**：`struct InterfaceTypeInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/plugin/intf_interface.h`
+- **行数**：165
+- **首条类型声明摘抄**：`class IInterface`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/plugin/intf_interface_helper.h`
+- **行数**：75
+- **首条类型声明摘抄**：`template<typename... Interfaces>
+class IInterfaceHelper`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/plugin/intf_plugin.h`
+- **行数**：227
+- **首条类型声明摘抄**：`class IEngine`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/plugin/intf_plugin_decl.h`
+- **行数**：34
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/plugin/intf_plugin_register.h`
+- **行数**：138
+- **首条类型声明摘抄**：`struct Uid`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/property/intf_property_api.h`
+- **行数**：70
+- **首条类型声明摘抄**：`struct Property`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/property/intf_property_handle.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class IPropertyApi`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/property/property.h`
+- **行数**：180
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/property/property_handle_util.h`
+- **行数**：186
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/property/property_types.h`
+- **行数**：162
+- **首条类型声明摘抄**：`template<class T>
+struct is_defined`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/property/scoped_handle.h`
+- **行数**：141
+- **首条类型声明摘抄**：`template<typename CharT>
+class basic_string_view`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/property_tools/property_api_impl.h`
+- **行数**：73
+- **首条类型声明摘抄**：`struct Property`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/property_tools/property_data.h`
+- **行数**：121
+- **首条类型声明摘抄**：`struct Property`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/property_tools/property_macros.h`
+- **行数**：56
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/resources/intf_resource.h`
+- **行数**：165
+- **首条类型声明摘抄**：`struct ResourceId`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/resources/intf_resource_manager.h`
+- **行数**：314
+- **首条类型声明摘抄**：`class IResourceType`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/threading/intf_thread_pool.h`
+- **行数**：261
+- **首条类型声明摘抄**：`template<class T>
+class array_view`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/util/intf_frustum_util.h`
+- **行数**：89
+- **首条类型声明摘抄**：`class Mat4X4`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/core/util/parallel_sort.h`
+- **行数**：135
+- **首条类型声明摘抄**：`template<typename Fn>
+class FunctionTask`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/platform/common/core/os/extensions_create_info.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class IPerformanceTrace`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/platform/common/core/os/intf_platform.h`
+- **行数**：53
+- **首条类型声明摘抄**：`struct PlatformData`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/platform/common/core/os/platform_create_info.h`
+- **行数**：40
+- **首条类型声明摘抄**：`struct PlatformCreateInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/platform/common/core/os/platform_trace_info.h`
+- **行数**：31
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/platform/ohos/core/os/intf_platform.h`
+- **行数**：57
+- **首条类型声明摘抄**：`struct PlatformData`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/platform/ohos/core/os/platform_create_info.h`
+- **行数**：54
+- **首条类型声明摘抄**：`class ResourceManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/api/platform/ohos/core/os/platform_trace_info.h`
+- **行数**：31
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/ecshelper/ComponentTools/base_manager.h`
+- **行数**：146
+- **首条类型声明摘抄**：`class IEcs`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/ecshelper/ComponentTools/component_query.h`
+- **行数**：148
+- **首条类型声明摘抄**：`template<class T>
+class array_view`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/ecs/entity_manager.h`
+- **行数**：102
+- **首条类型声明摘抄**：`template<class T1, class T2>
+struct pair`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/engine.h`
+- **行数**：110
+- **首条类型声明摘抄**：`template<class T1, class T2>
+struct pair`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/engine_factory.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class IInterface`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/image/image_loader_manager.h`
+- **行数**：76
+- **首条类型声明摘抄**：`template<class T>
+class array_view`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/image/loaders/gl_util.h`
+- **行数**：521
+- **首条类型声明摘抄**：`struct GlImageFormatInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/image/loaders/image_loader_astc.h`
+- **行数**：26
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/image/loaders/image_loader_ktx.h`
+- **行数**：26
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/image/loaders/image_loader_stb_image.h`
+- **行数**：38
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/dev/file_monitor.h`
+- **行数**：83
+- **首条类型声明摘抄**：`class IFileManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/file_manager.h`
+- **行数**：84
+- **首条类型声明摘抄**：`class ProxyFilesystem`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/memory_file.h`
+- **行数**：96
+- **首条类型声明摘抄**：`class MemoryFileStorage`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/memory_filesystem.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class MemoryFileStorage`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/path_tools.h`
+- **行数**：52
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/proxy_directory.h`
+- **行数**：46
+- **首条类型声明摘抄**：`class ProxyDirectory`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/proxy_filesystem.h`
+- **行数**：77
+- **首条类型声明摘抄**：`class FileManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/rofs_filesystem.h`
+- **行数**：71
+- **首条类型声明摘抄**：`class RoFileSystem`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/std_directory.h`
+- **行数**：60
+- **首条类型声明摘抄**：`struct DirImpl`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/std_file.h`
+- **行数**：73
+- **首条类型声明摘抄**：`class StdFile`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/io/std_filesystem.h`
+- **行数**：67
+- **首条类型声明摘抄**：`class StdFilesystem`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/loader/json_util.h`
+- **行数**：129
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/loader/system_graph_loader.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class IEcs`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/log/logger.h`
+- **行数**：82
+- **首条类型声明摘抄**：`struct Uid`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/log/logger_output.h`
+- **行数**：44
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/os/intf_library.h`
+- **行数**：60
+- **首条类型声明摘抄**：`struct IPlugin`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/os/ohos/library_ohos.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class LibraryOHOS`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/os/ohos/ohos_file.h`
+- **行数**：165
+- **首条类型声明摘抄**：`struct OhosDirImpl`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/os/ohos/ohos_filesystem.h`
+- **行数**：73
+- **首条类型声明摘抄**：`class FileManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/os/ohos/platform_ohos.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class ResourceManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/os/platform.h`
+- **行数**：33
+- **首条类型声明摘抄**：`struct PlatformCreateExtensionInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/perf/performance_data_manager.h`
+- **行数**：138
+- **首条类型声明摘抄**：`class PerformanceDataManagerFactory`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/plugin_registry.h`
+- **行数**：121
+- **首条类型声明摘抄**：`class PluginRegistry`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/static_plugin_decl.h`
+- **行数**：98
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/threading/dispatcher_impl.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class DispatcherImpl`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/threading/dispatcher_task_queue.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class DispatcherTaskQueue`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/threading/parallel_impl.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class ParallelImpl`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/threading/parallel_task_queue.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class ParallelTaskQueue`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/threading/sequential_impl.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class SequentialImpl`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/threading/sequential_task_queue.h`
+- **行数**：71
+- **首条类型声明摘抄**：`template<class T>
+class array_view`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/threading/task_queue.h`
+- **行数**：129
+- **首条类型声明摘抄**：`class FunctionTask`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/threading/task_queue_factory.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class TaskQueueFactory`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/util/frustum_util.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class Mat4X4`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/util/linear_allocator.h`
+- **行数**：99
+- **首条类型声明摘抄**：`class LinearAllocator`
+
+## `foundation/graphic/graphic_3d/lume/LumeEngine/src/util/string_util.h`
+- **行数**：120
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeFont/api/font/implementation_uids.h`
+- **行数**：27
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeFont/api/font/intf_font.h`
+- **行数**：120
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeFont/api/font/intf_font_manager.h`
+- **行数**：170
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeFont/api/font/namespace.h`
+- **行数**：24
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeFont/src/face_data.h`
+- **行数**：65
+- **首条类型声明摘抄**：`class FontData`
+
+## `foundation/graphic/graphic_3d/lume/LumeFont/src/font.h`
+- **行数**：81
+- **首条类型声明摘抄**：`class FaceData`
+
+## `foundation/graphic/graphic_3d/lume/LumeFont/src/font_buffer.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class FaceData`
+
+## `foundation/graphic/graphic_3d/lume/LumeFont/src/font_data.h`
+- **行数**：74
+- **首条类型声明摘抄**：`struct UiText`
+
+## `foundation/graphic/graphic_3d/lume/LumeFont/src/font_defs.h`
+- **行数**：197
+- **首条类型声明摘抄**：`struct RenderData`
+
+## `foundation/graphic/graphic_3d/lume/LumeFont/src/font_manager.h`
+- **行数**：198
+- **首条类型声明摘抄**：`class IRenderContext`
+
+## `foundation/graphic/graphic_3d/lume/LumeJpg/api/jpg/implementation_uids.h`
+- **行数**：25
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeJpg/src/jpg/image_loader_jpg.h`
+- **行数**：29
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/animation.h`
+- **行数**：401
+- **首条类型声明摘抄**：`class Animation`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/array_util.h`
+- **行数**：131
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/call_context.h`
+- **行数**：337
+- **首条类型声明摘抄**：`struct CallArg`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/compatible_value_util.h`
+- **行数**：73
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/connector.h`
+- **行数**：80
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/container/find_cache.h`
+- **行数**：143
+- **首条类型声明摘抄**：`class FindCacheBase`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/container/find_containers.h`
+- **行数**：88
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/container/observer.h`
+- **行数**：124
+- **首条类型声明摘抄**：`class ObjectHierarchyObserver`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/curves.h`
+- **行数**：154
+- **首条类型声明摘抄**：`class EasingCurve`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/deferred_callback.h`
+- **行数**：129
+- **首条类型声明摘抄**：`template<typename Func>
+class QueueTask`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/engine/util.h`
+- **行数**：129
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/event_handler.h`
+- **行数**：218
+- **首条类型声明摘抄**：`class EventHandler`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/function.h`
+- **行数**：282
+- **首条类型声明摘抄**：`template<typename Interface, typename Func>
+class DefaultFunction`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/future.h`
+- **行数**：189
+- **首条类型声明摘抄**：`template<typename Func>
+class ContinuationFunction`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/interface_object.h`
+- **行数**：313
+- **首条类型声明摘抄**：`class InterfaceObjectBase`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/internal/breadth_first_iteration.h`
+- **行数**：84
+- **首条类型声明摘抄**：`template<template<typename> class InterableCallable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/internal/depth_first_iteration.h`
+- **行数**：68
+- **首条类型声明摘抄**：`template<template<typename> class InterableCallable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/internal/iteration.h`
+- **行数**：89
+- **首条类型声明摘抄**：`template<template<typename> class InterableCallable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/internal/iteration_types.h`
+- **行数**：93
+- **首条类型声明摘抄**：`template<typename Func>
+struct IterationFuncType`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/iteration.h`
+- **行数**：138
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/locking.h`
+- **行数**：172
+- **首条类型声明摘抄**：`class InterfaceLock`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/make_callback.h`
+- **行数**：89
+- **首条类型声明摘抄**：`template<typename Callable, typename Func, typename Signature = typename Callable::FunctionType>
+class Callback`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/metadata_util.h`
+- **行数**：195
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/number.h`
+- **行数**：98
+- **首条类型声明摘抄**：`class Number`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/object.h`
+- **行数**：359
+- **首条类型声明摘抄**：`class Object`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/object_name.h`
+- **行数**：74
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/property/array_element_bind.h`
+- **行数**：103
+- **首条类型声明摘抄**：`class ArrayElementBind`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/property/array_property_changes_recognizer.h`
+- **行数**：113
+- **首条类型声明摘抄**：`template<typename ValueType>
+struct AddedValue`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/property/array_property_event_handler.h`
+- **行数**：83
+- **首条类型声明摘抄**：`template<typename ValueType>
+class ArrayPropertyChangedEventHandler`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/property/binding.h`
+- **行数**：91
+- **首条类型声明摘抄**：`class Binding`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/property/custom_value.h`
+- **行数**：102
+- **首条类型声明摘抄**：`template<typename Type, typename GetFunc, typename SetFunc>
+class CustomValue`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/property/default_value_bind.h`
+- **行数**：131
+- **首条类型声明摘抄**：`class DefaultValueBind`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/property/property_event_handler.h`
+- **行数**：92
+- **首条类型声明摘抄**：`class PropertyEventHandler`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/property/property_info.h`
+- **行数**：122
+- **首条类型声明摘抄**：`class PropertyInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/resource/derived_from_template.h`
+- **行数**：85
+- **首条类型声明摘抄**：`class DerivedFromTemplate`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/resource/resource_template_access.h`
+- **行数**：119
+- **首条类型声明摘抄**：`class ResourceTemplateAccess`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/task.h`
+- **行数**：67
+- **首条类型声明摘抄**：`template<typename Func>
+class QueueWaitableTask`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/task_queue.h`
+- **行数**：65
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/threading/mutex.h`
+- **行数**：165
+- **首条类型声明摘抄**：`class Mutex`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/threading/primitive_api.h`
+- **行数**：54
+- **首条类型声明摘抄**：`struct ThreadId`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/timer.h`
+- **行数**：196
+- **首条类型声明摘抄**：`class Timer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/api/util.h`
+- **行数**：373
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/algorithms.h`
+- **行数**：50
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/bit_field.h`
+- **行数**：276
+- **首条类型声明摘抄**：`class BitField`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/capture.h`
+- **行数**：169
+- **首条类型声明摘抄**：`template<typename T>
+struct CaptureWrapper`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/expected.h`
+- **行数**：169
+- **首条类型声明摘抄**：`enum GenericError`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/ids.h`
+- **行数**：126
+- **首条类型声明摘抄**：`template<typename>
+class IdBase`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/interface_macros.h`
+- **行数**：138
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/interface_traits.h`
+- **行数**：317
+- **首条类型声明摘抄**：`class ptr_base`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/interface_utils.h`
+- **行数**：143
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/macros.h`
+- **行数**：31
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/meta_types.h`
+- **行数**：254
+- **首条类型声明摘抄**：`template<typename t>
+struct MetaType`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/namespace.h`
+- **行数**：41
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/object_traits.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class IObject`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/plugin.h`
+- **行数**：35
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/ref_uri.h`
+- **行数**：543
+- **首条类型声明摘抄**：`class RefUri`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/time_span.h`
+- **行数**：335
+- **首条类型声明摘抄**：`class TimeSpan`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/type_traits.h`
+- **行数**：124
+- **首条类型声明摘抄**：`template<typename... Types>
+struct TypeList`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/types.h`
+- **行数**：229
+- **首条类型声明摘抄**：`struct NoCheckT`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/base/version.h`
+- **行数**：106
+- **首条类型声明摘抄**：`class Version`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/animation/interpolator.h`
+- **行数**：49
+- **首条类型声明摘抄**：`template<class Type>
+class Interpolator`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/any_builder.h`
+- **行数**：88
+- **首条类型声明摘抄**：`template<typename AnyType>
+class DefaultAnyBuilder`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/attachment/attachment.h`
+- **行数**：91
+- **首条类型声明摘抄**：`template<class BaseInterface>
+class AttachmentBaseFwd`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/attachment/behavior.h`
+- **行数**：204
+- **首条类型声明摘抄**：`class BehaviorBase`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/base_object.h`
+- **行数**：130
+- **首条类型声明摘抄**：`class BaseObject`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/base_object_fwd.h`
+- **行数**：202
+- **首条类型声明摘抄**：`class BaseObjectFwd`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/engine/core_any.h`
+- **行数**：110
+- **首条类型声明摘抄**：`template<typename Type, typename Conv, typename... CoreType>
+class CoreAny`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/engine/core_enum_any.h`
+- **行数**：189
+- **首条类型声明摘抄**：`template<typename Type, typename Conv, typename... CoreType>
+class CoreEnumAny`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/engine/internal_access.h`
+- **行数**：197
+- **首条类型声明摘抄**：`template<typename T>
+struct IsArray`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/event_impl.h`
+- **行数**：324
+- **首条类型声明摘抄**：`template<typename EventType>
+struct EventImplTraits`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/event_util.h`
+- **行数**：41
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/implementation_macros.h`
+- **行数**：506
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/metadata_helpers.h`
+- **行数**：171
+- **首条类型声明摘抄**：`template<typename Interface>
+struct MetadataObject`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/minimal_object.h`
+- **行数**：73
+- **首条类型声明摘抄**：`class MinimalObject`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/object.h`
+- **行数**：185
+- **首条类型声明摘抄**：`class MetaObject`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/object_container.h`
+- **行数**：158
+- **首条类型声明摘抄**：`class CommonObjectContainerFwd`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/object_factory.h`
+- **行数**：121
+- **首条类型声明摘抄**：`class ObjectFactory`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/object_fwd.h`
+- **行数**：193
+- **首条类型声明摘抄**：`class ObjectFwd`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/resolve_helper.h`
+- **行数**：37
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/resource/resource.h`
+- **行数**：79
+- **首条类型声明摘抄**：`class Resource`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/serialization/common_value_serializers.h`
+- **行数**：91
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/serialization/serializer.h`
+- **行数**：215
+- **首条类型声明摘抄**：`template<typename Type>
+struct NamedValue`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/serialization/value_serializer.h`
+- **行数**：84
+- **首条类型声明摘抄**：`template<typename Type, typename ExportFunc, typename ImportFunc>
+struct ValueSerializer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/ext/task_queue.h`
+- **行数**：67
+- **首条类型声明摘抄**：`class PromisedQueueTask`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/animation/builtin_animations.h`
+- **行数**：124
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/animation/intf_animation.h`
+- **行数**：311
+- **首条类型声明摘抄**：`class IStaggeredAnimation`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/animation/intf_animation_controller.h`
+- **行数**：119
+- **首条类型声明摘抄**：`class IAnimation`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/animation/intf_animation_modifier.h`
+- **行数**：76
+- **首条类型声明摘抄**：`class IAnimationModifier`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/animation/intf_interpolator.h`
+- **行数**：56
+- **首条类型声明摘抄**：`class IInterpolator`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/animation/modifiers/intf_loop.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class ILoop`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/animation/modifiers/intf_speed.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class ISpeed`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/builtin_objects.h`
+- **行数**：155
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/curves/intf_bezier.h`
+- **行数**：46
+- **首条类型声明摘抄**：`class ICubicBezier`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/curves/intf_curve.h`
+- **行数**：44
+- **首条类型声明摘抄**：`template<class T>
+class ICurve`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/curves/intf_curve_1d.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class ICurve1D`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/curves/intf_curve_2d.h`
+- **行数**：44
+- **首条类型声明摘抄**：`class ICurve2D`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/curves/intf_easing_curve.h`
+- **行数**：44
+- **首条类型声明摘抄**：`class IEasingCurve`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/detail/any.h`
+- **行数**：80
+- **首条类型声明摘抄**：`template<typename Type, typename = EnableSpecialisationType>
+struct MapAnyType`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/detail/any_pointer_compatibility.h`
+- **行数**：233
+- **首条类型声明摘抄**：`template<bool IsConst, bool IsWeak>
+struct AnyPointerCompatibility`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/detail/array_property.h`
+- **行数**：361
+- **首条类型声明摘抄**：`template<typename Base>
+class ConstTypelessArrayPropertyInterfaceImpl`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/detail/base_any.h`
+- **行数**：485
+- **首条类型声明摘抄**：`template<typename Type>
+class BaseTypedAny`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/detail/enum.h`
+- **行数**：226
+- **首条类型声明摘抄**：`template<typename Type>
+class EnumBase`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/detail/multi_type_any.h`
+- **行数**：186
+- **首条类型声明摘抄**：`struct StaticCastConv`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/detail/property.h`
+- **行数**：399
+- **首条类型声明摘抄**：`class ConstTypelessPropertyInterface`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/engine/intf_engine_data.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class IEngineData`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/engine/intf_engine_input_property_manager.h`
+- **行数**：78
+- **首条类型声明摘抄**：`class IEngineInputPropertyManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/engine/intf_engine_type.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class IEngineType`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/engine/intf_engine_value.h`
+- **行数**：172
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/engine/intf_engine_value_manager.h`
+- **行数**：122
+- **首条类型声明摘抄**：`struct EngineValueOptions`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/enum_macros.h`
+- **行数**：71
+- **首条类型声明摘抄**：`template<typename Type>
+struct EnumValue`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/event.h`
+- **行数**：75
+- **首条类型声明摘抄**：`class IEvent`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/interface_helpers.h`
+- **行数**：378
+- **首条类型声明摘抄**：`template<typename Type, typename = int>
+struct IsIntroduceInterface`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/interface_macros.h`
+- **行数**：98
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_any.h`
+- **行数**：228
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_attach.h`
+- **行数**：137
+- **首条类型声明摘抄**：`class IAttachment`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_attachment.h`
+- **行数**：84
+- **首条类型声明摘抄**：`class IAttachable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_attachment_container.h`
+- **行数**：123
+- **首条类型声明摘抄**：`class IAttachmentContainer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_call_context.h`
+- **行数**：122
+- **首条类型声明摘抄**：`struct ArgumentNameValue`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_callable.h`
+- **行数**：35
+- **首条类型声明摘抄**：`class ICallable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_class_registry.h`
+- **行数**：86
+- **首条类型声明摘抄**：`struct IOnClassRegistrationChangedInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_clock.h`
+- **行数**：46
+- **首条类型声明摘抄**：`class IClock`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_cloneable.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class ICloneable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_comparable.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class IComparable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_connector.h`
+- **行数**：63
+- **首条类型声明摘抄**：`class IConnector`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_containable.h`
+- **行数**：75
+- **首条类型声明摘抄**：`class IContainable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_container.h`
+- **行数**：388
+- **首条类型声明摘抄**：`struct IOnChildChangedInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_container_observer.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class IContainerObserver`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_container_query.h`
+- **行数**：90
+- **首条类型声明摘抄**：`class IContainerQuery`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_content.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class IContent`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_derived.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class IDerived`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_enum.h`
+- **行数**：54
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_event.h`
+- **行数**：145
+- **首条类型声明摘抄**：`class IEvent`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_function.h`
+- **行数**：92
+- **首条类型声明摘抄**：`class IFunction`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_future.h`
+- **行数**：108
+- **首条类型声明摘抄**：`class ITaskQueue`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_info.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class IInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_iterable.h`
+- **行数**：114
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_lifecycle.h`
+- **行数**：61
+- **首条类型声明摘抄**：`class IMetadata`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_lockable.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class ILockable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_manual_clock.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class IManualClock`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_meta_object_lib.h`
+- **行数**：65
+- **首条类型声明摘抄**：`struct SyncApi`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_metadata.h`
+- **行数**：254
+- **首条类型声明摘抄**：`struct MetadataInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_named.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class INamed`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_notify_on_change.h`
+- **行数**：46
+- **首条类型声明摘抄**：`class INotifyOnChange`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_object.h`
+- **行数**：177
+- **首条类型声明摘抄**：`class IObjectRegistry`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_object_context.h`
+- **行数**：70
+- **首条类型声明摘抄**：`class IObjectContext`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_object_factory.h`
+- **行数**：77
+- **首条类型声明摘抄**：`class IObject`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_object_flags.h`
+- **行数**：134
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_object_hierarchy_observer.h`
+- **行数**：141
+- **首条类型声明摘抄**：`struct IOnHierarchyChangedInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_object_registry.h`
+- **行数**：437
+- **首条类型声明摘抄**：`struct ObjectCategoryItem`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_owner.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class IProperty`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_promise.h`
+- **行数**：59
+- **首条类型声明摘抄**：`class IPromise`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_proxy_object.h`
+- **行数**：89
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_recyclable.h`
+- **行数**：43
+- **首条类型声明摘抄**：`class IRecyclable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_required_interfaces.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class IRequiredInterfaces`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_startable.h`
+- **行数**：83
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_startable_controller.h`
+- **行数**：114
+- **首条类型声明摘抄**：`class IStartableController`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_static_metadata.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class IStaticMetadata`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_task_queue.h`
+- **行数**：181
+- **首条类型声明摘抄**：`class ITaskQueueTask`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_task_queue_extend.h`
+- **行数**：35
+- **首条类型声明摘抄**：`class ITaskQueueExtend`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_task_queue_registry.h`
+- **行数**：99
+- **首条类型声明摘抄**：`class IPromise`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_tickable.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class ITickable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_tickable_controller.h`
+- **行数**：66
+- **首条类型声明摘抄**：`class ITickableController`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/intf_value.h`
+- **行数**：41
+- **首条类型声明摘抄**：`class IValue`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/loaders/intf_class_content_loader.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class IClassContentLoader`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/loaders/intf_content_loader.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class IContentLoader`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/loaders/intf_dynamic_content_loader.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class IDynamicContentLoader`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/loaders/intf_file_content_loader.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class IFileContentLoader`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/metadata_query.h`
+- **行数**：30
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/model/data_model_index.h`
+- **行数**：94
+- **首条类型声明摘抄**：`class DataModelIndex`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/model/intf_data_model.h`
+- **行数**：109
+- **首条类型声明摘抄**：`struct IOnDataAddedInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/model/intf_object_provider.h`
+- **行数**：120
+- **首条类型声明摘抄**：`class IObjectProvider`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/object_macros.h`
+- **行数**：42
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/object_type_info.h`
+- **行数**：52
+- **首条类型声明摘抄**：`struct ObjectTypeInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/array_property.h`
+- **行数**：121
+- **首条类型声明摘抄**：`template<typename Type>
+class ArrayProperty`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/construct_array_property.h`
+- **行数**：89
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/construct_property.h`
+- **行数**：175
+- **首条类型声明摘抄**：`struct ValuePtrBase`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/intf_bind.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class IBind`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/intf_modifier.h`
+- **行数**：75
+- **首条类型声明摘抄**：`enum EvaluationResult`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/intf_property.h`
+- **行数**：72
+- **首条类型声明摘抄**：`class IProperty`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/intf_property_internal.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class IPropertyInternal`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/intf_property_register.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class AnyBuilder`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/intf_stack_property.h`
+- **行数**：92
+- **首条类型声明摘抄**：`class IStackProperty`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/intf_stack_resetable.h`
+- **行数**：60
+- **首条类型声明摘抄**：`enum ResetResult`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/property.h`
+- **行数**：141
+- **首条类型声明摘抄**：`template<typename Type>
+class Property`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/property/property_events.h`
+- **行数**：35
+- **首条类型声明摘抄**：`struct IOnTypedChangedInfo`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/resource/intf_dynamic_resource.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class IDynamicResource`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/resource/intf_object_resource.h`
+- **行数**：35
+- **首条类型声明摘抄**：`class IObjectResource`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/resource/intf_object_template.h`
+- **行数**：55
+- **首条类型声明摘抄**：`class IObjectTemplate`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/resource/intf_owned_resource_groups.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class IOwnedResourceGroups`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/resource/intf_resource.h`
+- **行数**：83
+- **首条类型声明摘抄**：`class IDerivedFromTemplate`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/resource/intf_resource_consumer.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class IResourceConsumer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/resource/intf_resource_group_handle.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class IResourceGroupHandle`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/resource/intf_resource_query.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class IResourceQuery`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_export_context.h`
+- **行数**：94
+- **首条类型声明摘抄**：`class IExportFunctions`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_exporter.h`
+- **行数**：81
+- **首条类型声明摘抄**：`class IRefUriBuilder`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_exporter_state.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class IExporterState`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_global_serialization_data.h`
+- **行数**：58
+- **首条类型声明摘抄**：`struct SerializationSettings`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_import_context.h`
+- **行数**：101
+- **首条类型声明摘抄**：`class IImportFunctions`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_importer.h`
+- **行数**：89
+- **首条类型声明摘抄**：`struct ImportOptions`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_refuri_builder.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class IExporterState`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_ser_input.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class ISerInput`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_ser_node.h`
+- **行数**：135
+- **首条类型声明摘抄**：`class ISerNodeVisitor`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_ser_output.h`
+- **行数**：36
+- **首条类型声明摘抄**：`class ISerOutput`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_ser_transformation.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class ISerTransformation`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_serializable.h`
+- **行数**：56
+- **首条类型声明摘抄**：`class ISerializable`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/intf_value_serializer.h`
+- **行数**：41
+- **首条类型声明摘抄**：`class IValueSerializer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/serialization/ser_metadata.h`
+- **行数**：75
+- **首条类型声明摘抄**：`struct SerMetadataEntity`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/simple_event.h`
+- **行数**：52
+- **首条类型声明摘抄**：`template<typename MyEvent, typename Signature = void()>
+class SimpleEvent`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/static_object_metadata.h`
+- **行数**：68
+- **首条类型声明摘抄**：`class IOwner`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/include/meta/interface/threading/primitive_api.h`
+- **行数**：67
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/animation.h`
+- **行数**：501
+- **首条类型声明摘抄**：`template<class BaseAnimationInterface>
+class BaseAnimationFwd`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/animation_controller.h`
+- **行数**：74
+- **首条类型声明摘抄**：`class AnimationController`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/animation_modifier.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class AnimationModifierFwd`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/animation_state.h`
+- **行数**：263
+- **首条类型声明摘抄**：`class AnimationState`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/interpolator.h`
+- **行数**：30
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/intf_animation_internal.h`
+- **行数**：103
+- **首条类型声明摘抄**：`class IAnimationInternal`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/keyframe_animation.h`
+- **行数**：72
+- **首条类型声明摘抄**：`class KeyframeAnimation`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/modifiers/loop.h`
+- **行数**：63
+- **首条类型声明摘抄**：`class LoopModifier`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/modifiers/reverse.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class ReverseModifier`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/modifiers/speed.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class SpeedModifier`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/parallel_animation.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class ParallelAnimation`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/property_animation.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class PropertyAnimation`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/sequential_animation.h`
+- **行数**：63
+- **首条类型声明摘抄**：`class SequentialAnimation`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/staggered_animation_state.h`
+- **行数**：157
+- **首条类型声明摘抄**：`class StaggeredAnimationState`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/track_animation.h`
+- **行数**：110
+- **首条类型声明摘抄**：`class TrackAnimation`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/animation/track_animation_state.h`
+- **行数**：116
+- **首条类型声明摘抄**：`class TrackAnimationState`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/any.h`
+- **行数**：83
+- **首条类型声明摘抄**：`class DummyAny`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/attachment_container.h`
+- **行数**：82
+- **首条类型声明摘抄**：`class AttachmentContainer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/base_object.h`
+- **行数**：33
+- **首条类型声明摘抄**：`class BaseObject`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/call_context.h`
+- **行数**：66
+- **首条类型声明摘抄**：`class DefaultCallContext`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/class_registry.h`
+- **行数**：81
+- **首条类型声明摘抄**：`class ClassRegistry`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/connector.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class Connector`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/container/container.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class Container`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/container/container_base.h`
+- **行数**：93
+- **首条类型声明摘抄**：`class ContainerBase`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/container/flat_container.h`
+- **行数**：44
+- **首条类型声明摘抄**：`class FlatContainer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/container/object_container.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class ObjectContainer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/container/object_flat_container.h`
+- **行数**：41
+- **首条类型声明摘抄**：`class ObjectFlatContainer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/container_observer.h`
+- **行数**：86
+- **首条类型声明摘抄**：`class ContainerChangeListener`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/curves/bezier_curve.h`
+- **行数**：70
+- **首条类型声明摘抄**：`class CubicBezierEasingCurve`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/curves/easing_curve.h`
+- **行数**：78
+- **首条类型声明摘抄**：`class name`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/engine/engine_input_property_manager.h`
+- **行数**：55
+- **首条类型声明摘抄**：`class EngineInputPropertyManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/engine/engine_value.h`
+- **行数**：89
+- **首条类型声明摘抄**：`class EngineValue`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/engine/engine_value_manager.h`
+- **行数**：83
+- **首条类型声明摘抄**：`class EngineValueManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/functions.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class SettableFunction`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/future.h`
+- **行数**：136
+- **首条类型声明摘抄**：`class ContinuationQueueTask`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/keep_alive.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class KeepAlive`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/loaders/class_content_loader.h`
+- **行数**：54
+- **首条类型声明摘抄**：`class ClassContentLoader`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/loaders/csv_parser.h`
+- **行数**：71
+- **首条类型声明摘抄**：`class CsvParser`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/loaders/csv_string_resource_loader.h`
+- **行数**：72
+- **首条类型声明摘抄**：`class CsvStringResourceLoader`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/loaders/json_content_loader.h`
+- **行数**：59
+- **首条类型声明摘抄**：`class JsonContentLoader`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/meta_object_lib.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class MetaObjectLib`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/model/composite_object_provider.h`
+- **行数**：74
+- **首条类型声明摘抄**：`class CompositeObjectProvider`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/model/container_data_model.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class ContainerDataModel`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/model/content_loader_object_provider.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class ContentLoaderObjectProvider`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/model/instantiating_object_provider.h`
+- **行数**：37
+- **首条类型声明摘抄**：`class InstantiatingObjectProvider`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/model/object_provider_base.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class ObjectProviderBase`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/number.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class Number`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/object.h`
+- **行数**：29
+- **首条类型声明摘抄**：`class Object`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/object_context.h`
+- **行数**：74
+- **首条类型声明摘抄**：`class ObjectContext`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/object_data_container.h`
+- **行数**：67
+- **首条类型声明摘抄**：`class ObjectDataContainer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/object_hierarchy_observer.h`
+- **行数**：149
+- **首条类型声明摘抄**：`class ObjectHierarchyObserver`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/object_name.h`
+- **行数**：55
+- **首条类型声明摘抄**：`class ObjectName`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/object_registry.h`
+- **行数**：201
+- **首条类型声明摘抄**：`class IRandom`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/property/bind.h`
+- **行数**：68
+- **首条类型声明摘抄**：`class Bind`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/property/dependencies.h`
+- **行数**：56
+- **首条类型声明摘抄**：`class Dependencies`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/property/property.h`
+- **行数**：129
+- **首条类型声明摘抄**：`class PropertyBase`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/property/stack_property.h`
+- **行数**：118
+- **首条类型声明摘抄**：`class StackProperty`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/proxy_object.h`
+- **行数**：104
+- **首条类型声明摘抄**：`class ProxyObject`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/random.h`
+- **行数**：27
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/ref_uri_util.h`
+- **行数**：33
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/resource/animation_resource.h`
+- **行数**：128
+- **首条类型声明摘抄**：`class AnimationResourceType`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/resource/file_resource_manager.h`
+- **行数**：109
+- **首条类型声明摘抄**：`struct ResourceData`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/resource/memfile.h`
+- **行数**：103
+- **首条类型声明摘抄**：`struct MemFile`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/resource/object_resource.h`
+- **行数**：86
+- **首条类型声明摘抄**：`class ObjectResource`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/resource/object_template.h`
+- **行数**：78
+- **首条类型声明摘抄**：`class ObjectTemplate`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/resource/resource_group_handle.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class ResourceGroupHandle`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/resource/resource_placeholder.h`
+- **行数**：66
+- **首条类型声明摘抄**：`class ResourcePlaceholder`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/serialization/backend/debug_output.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class DebugOutput`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/serialization/backend/json_input.h`
+- **行数**：70
+- **首条类型声明摘抄**：`class JsonInput`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/serialization/backend/json_output.h`
+- **行数**：44
+- **首条类型声明摘抄**：`class JsonOutput`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/serialization/exporter.h`
+- **行数**：150
+- **首条类型声明摘抄**：`class Exporter`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/serialization/importer.h`
+- **行数**：149
+- **首条类型声明摘抄**：`class Importer`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/serialization/json_exporter.h`
+- **行数**：42
+- **首条类型声明摘抄**：`class JsonExporter`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/serialization/json_importer.h`
+- **行数**：55
+- **首条类型声明摘抄**：`class JsonImporter`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/serialization/metav1_compat.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class MetaMigrateV1`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/serialization/refuri_builder.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class RefUriBuilder`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/serialization/ser_nodes.h`
+- **行数**：287
+- **首条类型声明摘抄**：`class NilNode`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/startable_object_controller.h`
+- **行数**：143
+- **首条类型声明摘抄**：`class IStartableObjectControllerInternal`
+
+## `foundation/graphic/graphic_3d/lume/LumeMeta/src/task_queue.h`
+- **行数**：235
+- **首条类型声明摘抄**：`class TaskQueueImpl`
+
+## `foundation/graphic/graphic_3d/lume/LumePng/api/png/implementation_uids.h`
+- **行数**：25
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumePng/src/png/image_loader_png.h`
+- **行数**：28
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/datastore/intf_render_data_store.h`
+- **行数**：108
+- **首条类型声明摘抄**：`struct Uid`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/datastore/intf_render_data_store_default_acceleration_structure_staging.h`
+- **行数**：78
+- **首条类型声明摘抄**：`class IRenderDataStoreDefaultAccelerationStructureStaging`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/datastore/intf_render_data_store_default_gpu_resource_data_copy.h`
+- **行数**：68
+- **首条类型声明摘抄**：`class IRenderDataStoreDefaultGpuResourceDataCopy`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/datastore/intf_render_data_store_default_staging.h`
+- **行数**：162
+- **首条类型声明摘抄**：`class IRenderDataStoreDefaultStaging`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/datastore/intf_render_data_store_manager.h`
+- **行数**：93
+- **首条类型声明摘抄**：`struct Uid`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/datastore/intf_render_data_store_pod.h`
+- **行数**：85
+- **首条类型声明摘抄**：`class IRenderDataStorePod`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/datastore/intf_render_data_store_post_process.h`
+- **行数**：163
+- **首条类型声明摘抄**：`class IRenderDataStorePostProcess`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/datastore/intf_render_data_store_render_post_processes.h`
+- **行数**：82
+- **首条类型声明摘抄**：`class IRenderDataStoreRenderPostProcesses`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/datastore/intf_render_data_store_shader_passes.h`
+- **行数**：123
+- **首条类型声明摘抄**：`class IRenderDataStoreShaderPasses`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/datastore/render_data_store_render_pods.h`
+- **行数**：556
+- **首条类型声明摘抄**：`struct NodeGraphBackBufferConfiguration`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/device/gpu_resource_desc.h`
+- **行数**：450
+- **首条类型声明摘抄**：`enum ImageType`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/device/intf_device.h`
+- **行数**：249
+- **首条类型声明摘抄**：`class IGpuResourceManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/device/intf_gpu_resource_cache.h`
+- **行数**：109
+- **首条类型声明摘抄**：`struct CacheGpuImageDesc`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/device/intf_gpu_resource_manager.h`
+- **行数**：827
+- **首条类型声明摘抄**：`struct BackendSpecificImageDesc`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/device/intf_shader_manager.h`
+- **行数**：982
+- **首条类型声明摘抄**：`class IShaderManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/device/intf_shader_pipeline_binder.h`
+- **行数**：272
+- **首条类型声明摘抄**：`class IShaderPipelineBinder`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/device/pipeline_layout_desc.h`
+- **行数**：267
+- **首条类型声明摘抄**：`struct PipelineLayoutConstants`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/device/pipeline_state_desc.h`
+- **行数**：1640
+- **首条类型声明摘抄**：`struct Size2D`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/gles/intf_device_gles.h`
+- **行数**：417
+- **首条类型声明摘抄**：`struct BackendExtraGLES`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/implementation_uids.h`
+- **行数**：44
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/intf_plugin.h`
+- **行数**：115
+- **首条类型声明摘抄**：`class IRenderContext`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/intf_render_context.h`
+- **行数**：151
+- **首条类型声明摘抄**：`class IEngine`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/intf_renderer.h`
+- **行数**：123
+- **首条类型声明摘抄**：`class IRenderDataStoreManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/loader/intf_render_data_configuration_loader.h`
+- **行数**：74
+- **首条类型声明摘抄**：`class IFileManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/namespace.h`
+- **行数**：27
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_node_context_descriptor_set_manager.h`
+- **行数**：150
+- **首条类型声明摘抄**：`class Device`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_node_context_pso_manager.h`
+- **行数**：143
+- **首条类型声明摘抄**：`class Device`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_pipeline_descriptor_set_binder.h`
+- **行数**：334
+- **首条类型声明摘抄**：`class IDescriptorSetBinder`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_backend_node.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class ILowLevelDevice`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_command_list.h`
+- **行数**：566
+- **首条类型声明摘抄**：`struct RenderPassDesc`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_node.h`
+- **行数**：108
+- **首条类型声明摘抄**：`class IRenderCommandList`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_node_context_manager.h`
+- **行数**：132
+- **首条类型声明摘抄**：`class IRenderContext`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_node_copy_util.h`
+- **行数**：94
+- **首条类型声明摘抄**：`class IRenderNodeContextManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_node_graph_manager.h`
+- **行数**：302
+- **首条类型声明摘抄**：`class IRenderNodeGraphLoader`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_node_graph_share_manager.h`
+- **行数**：159
+- **首条类型声明摘抄**：`class IRenderNodeGraphShareManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_node_parser_util.h`
+- **行数**：118
+- **首条类型声明摘抄**：`class IRenderNodeParserUtil`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_node_post_process_interface_util.h`
+- **行数**：95
+- **首条类型声明摘抄**：`class IRenderNodeContextManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_node_post_process_util.h`
+- **行数**：102
+- **首条类型声明摘抄**：`class IRenderNodeContextManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_node_util.h`
+- **行数**：139
+- **首条类型声明摘抄**：`struct PipelineLayout`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_post_process.h`
+- **行数**：77
+- **首条类型声明摘抄**：`class IRenderNodeContextManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/nodecontext/intf_render_post_process_node.h`
+- **行数**：118
+- **首条类型声明摘抄**：`class IRenderNodeContextManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/property/property_types.h`
+- **行数**：49
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/render_data_structures.h`
+- **行数**：526
+- **首条类型声明摘抄**：`struct VertexBuffer`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/resource_handle.h`
+- **行数**：286
+- **首条类型声明摘抄**：`struct RenderHandle`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/shaders/common/render_blur_common.h`
+- **行数**：418
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/shaders/common/render_color_conversion_common.h`
+- **行数**：241
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/shaders/common/render_compatibility_common.h`
+- **行数**：109
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/shaders/common/render_packing_common.h`
+- **行数**：58
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/shaders/common/render_post_process_blocks.h`
+- **行数**：192
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/shaders/common/render_post_process_common.h`
+- **行数**：54
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/shaders/common/render_post_process_layout_common.h`
+- **行数**：45
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/shaders/common/render_post_process_structs_common.h`
+- **行数**：132
+- **首条类型声明摘抄**：`struct GlobalPostProcessStruct`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/shaders/common/render_tonemap_common.h`
+- **行数**：104
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/util/intf_render_frame_util.h`
+- **行数**：176
+- **首条类型声明摘抄**：`class IRenderFrameUtil`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/util/intf_render_util.h`
+- **行数**：100
+- **首条类型声明摘抄**：`class IRenderFrameUtil`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/util/performance_data_structures.h`
+- **行数**：81
+- **首条类型声明摘抄**：`struct RenderPerformanceDataConstants`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/api/render/vulkan/intf_device_vk.h`
+- **行数**：263
+- **首条类型声明摘抄**：`struct BackendExtraVk`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/assets/render/shaders/common/bloom_common.h`
+- **行数**：321
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/assets/render/shaders/common/cmaa2_common.h`
+- **行数**：143
+- **首条类型声明摘抄**：`struct ControlBufferStruct`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/assets/render/shaders/common/fxaa_reference.h`
+- **行数**：141
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/src/datastore/render_data_store_default_acceleration_structure_staging.h`
+- **行数**：143
+- **首条类型声明摘抄**：`class IGpuResourceManager`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/src/datastore/render_data_store_default_gpu_resource_data_copy.h`
+- **行数**：96
+- **首条类型声明摘抄**：`class IRenderContext`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/src/datastore/render_data_store_default_staging.h`
+- **行数**：164
+- **首条类型声明摘抄**：`class IRenderContext`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/src/datastore/render_data_store_manager.h`
+- **行数**：103
+- **首条类型声明摘抄**：`class IRenderContext`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/src/datastore/render_data_store_pod.h`
+- **行数**：107
+- **首条类型声明摘抄**：`class IRenderContext`
+
+## `foundation/graphic/graphic_3d/lume/LumeRender/src/datastore/render_data_store_post_process.h`
+- **行数**：232
