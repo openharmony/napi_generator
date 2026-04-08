@@ -11386,3 +11386,1901 @@ class unordered_map`
 
 ## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/external_window.h`
 - **行数**：843
+- **首条类型声明摘抄**：`struct NativeWindow`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/ibuffer_consumer_listener.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class IBufferConsumerListener`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/ibuffer_producer.h`
+- **行数**：334
+- **首条类型声明摘抄**：`class SyncFence`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/ibuffer_producer_listener.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class IProducerListener`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/iconsumer_surface.h`
+- **行数**：402
+- **首条类型声明摘抄**：`class IConsumerSurface`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/native_buffer.h`
+- **行数**：400
+- **首条类型声明摘抄**：`struct OH_NativeBuffer`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/native_buffer_inner.h`
+- **行数**：38
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/native_surface.h`
+- **行数**：76
+- **首条类型声明摘抄**：`class NativeSurface`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/surface.h`
+- **行数**：684
+- **首条类型声明摘抄**：`class Surface`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/surface_buffer.h`
+- **行数**：268
+- **首条类型声明摘抄**：`struct BufferWrapper`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/surface_delegate.h`
+- **行数**：169
+- **首条类型声明摘抄**：`struct NativeSurfaceCallback`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/surface_tunnel_handle.h`
+- **行数**：43
+- **首条类型声明摘抄**：`class SurfaceTunnelHandle`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/surface_type.h`
+- **行数**：563
+- **首条类型声明摘抄**：`typedef struct {`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/surface_utils.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class SurfaceUtils`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/surface/window.h`
+- **行数**：121
+- **首条类型声明摘抄**：`enum NativeObjectMagic`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/sync_fence/sync_fence.h`
+- **行数**：84
+- **首条类型声明摘抄**：`enum FenceStatus`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/utils/buffer_handle.h`
+- **行数**：49
+- **首条类型声明摘抄**：`typedef struct {`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/utils/buffer_handle_parcel.h`
+- **行数**：43
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/utils/buffer_handle_utils.h`
+- **行数**：45
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/utils/isurface_aps_plugin.h`
+- **行数**：78
+- **首条类型声明摘抄**：`class ISurfaceApsPlugin`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/utils/native_fence.h`
+- **行数**：105
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/utils/surface_aps_sdr_utils.h`
+- **行数**：78
+- **首条类型声明摘抄**：`class SurfaceApsSdrUtils`
+
+## `foundation/graphic/graphic_surface/interfaces/inner_api/utils/sync_fence.h`
+- **行数**：84
+- **首条类型声明摘抄**：`enum FenceStatus`
+
+## `foundation/graphic/graphic_surface/sandbox/sandbox_utils.h`
+- **行数**：30
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_surface/surface/include/buffer_client_producer.h`
+- **行数**：152
+- **首条类型声明摘抄**：`class BufferClientProducer`
+
+## `foundation/graphic/graphic_surface/surface/include/buffer_extra_data_impl.h`
+- **行数**：57
+- **首条类型声明摘抄**：`class BufferExtraDataImpl`
+
+## `foundation/graphic/graphic_surface/surface/include/buffer_handle.h`
+- **行数**：44
+- **首条类型声明摘抄**：`typedef struct {`
+
+## `foundation/graphic/graphic_surface/surface/include/buffer_log.h`
+- **行数**：64
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_surface/surface/include/buffer_producer_listener.h`
+- **行数**：312
+- **首条类型声明摘抄**：`class ProducerListenerProxy`
+
+## `foundation/graphic/graphic_surface/surface/include/buffer_queue.h`
+- **行数**：456
+- **首条类型声明摘抄**：`enum BufferState`
+
+## `foundation/graphic/graphic_surface/surface/include/buffer_queue_consumer.h`
+- **行数**：115
+- **首条类型声明摘抄**：`class SURFACE_HIDDEN`
+
+## `foundation/graphic/graphic_surface/surface/include/buffer_queue_producer.h`
+- **行数**：251
+- **首条类型声明摘抄**：`class SURFACE_HIDDEN`
+
+## `foundation/graphic/graphic_surface/surface/include/buffer_utils.h`
+- **行数**：140
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_surface/surface/include/consumer_surface.h`
+- **行数**：775
+- **首条类型声明摘抄**：`class ConsumerSurface`
+
+## `foundation/graphic/graphic_surface/surface/include/consumer_surface_delegator.h`
+- **行数**：46
+- **首条类型声明摘抄**：`class ConsumerSurfaceDelegator`
+
+## `foundation/graphic/graphic_surface/surface/include/delegator_adapter.h`
+- **行数**：100
+- **首条类型声明摘抄**：`struct IBufferProducer::RequestBufferReturnValue`
+
+## `foundation/graphic/graphic_surface/surface/include/metadata_helper.h`
+- **行数**：139
+- **首条类型声明摘抄**：`class MetadataHelper`
+
+## `foundation/graphic/graphic_surface/surface/include/native_window.h`
+- **行数**：54
+- **首条类型声明摘抄**：`struct SURFACE_HIDDEN`
+
+## `foundation/graphic/graphic_surface/surface/include/producer_surface.h`
+- **行数**：936
+- **首条类型声明摘抄**：`struct NativeWindow`
+
+## `foundation/graphic/graphic_surface/surface/include/producer_surface_delegator.h`
+- **行数**：43
+- **首条类型声明摘抄**：`class ProducerSurfaceDelegator`
+
+## `foundation/graphic/graphic_surface/surface/include/surface_buffer_impl.h`
+- **行数**：149
+- **首条类型声明摘抄**：`struct BufferWrapper`
+
+## `foundation/graphic/graphic_surface/surface/include/tv_pq_metadata.h`
+- **行数**：61
+- **首条类型声明摘抄**：`struct TvVideoWindow`
+
+## `foundation/graphic/graphic_surface/sync_fence/include/acquire_fence_manager.h`
+- **行数**：34
+- **首条类型声明摘抄**：`class AcquireFenceTracker`
+
+## `foundation/graphic/graphic_surface/sync_fence/include/frame_sched.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class FrameSched`
+
+## `foundation/graphic/graphic_surface/sync_fence/include/sync_fence_tracker.h`
+- **行数**：80
+- **首条类型声明摘抄**：`class SyncFenceTracker`
+
+## `foundation/graphic/graphic_surface/test_header/export/test_header.h`
+- **行数**：43
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_surface/utils/frame_report/export/frame_report.h`
+- **行数**：75
+- **首条类型声明摘抄**：`class FrameReport`
+
+## `foundation/graphic/graphic_surface/utils/hebc_white_list/hebc_white_list.h`
+- **行数**：54
+- **首条类型声明摘抄**：`class HebcWhiteList`
+
+## `foundation/graphic/graphic_surface/utils/rs_frame_report_ext/include/rs_frame_report_ext.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class RsFrameReportExt`
+
+## `foundation/graphic/graphic_surface/utils/trace/surface_trace.h`
+- **行数**：37
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/graphic_config.h`
+- **行数**：601
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/graphic_locker.h`
+- **行数**：124
+- **首条类型声明摘抄**：`class GraphicLocker`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/graphic_mutex.h`
+- **行数**：100
+- **首条类型声明摘抄**：`class GraphicMutex`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/graphic_neon_pipeline.h`
+- **行数**：374
+- **首条类型声明摘抄**：`class NeonBlendPipeLine`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/graphic_neon_utils.h`
+- **行数**：320
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/graphic_performance.h`
+- **行数**：153
+- **首条类型声明摘抄**：`struct PerformanceItem`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/graphic_semaphore.h`
+- **行数**：119
+- **首条类型声明摘抄**：`class GraphicSemaphore`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/graphic_thread.h`
+- **行数**：73
+- **首条类型声明摘抄**：`struct ThreadAttr`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/graphic_timer.h`
+- **行数**：89
+- **首条类型声明摘抄**：`class GraphicTimer`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/hal_atomic.h`
+- **行数**：63
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/hal_cpu.h`
+- **行数**：61
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/hal_tick.h`
+- **行数**：59
+- **首条类型声明摘抄**：`class HALTick`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/hals/gfx_engines.h`
+- **行数**：49
+- **首条类型声明摘抄**：`class GfxEngines`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/innerkits/hals/hi_fbdev.h`
+- **行数**：55
+- **首条类型声明摘抄**：`enum LayerRotateType`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/color.h`
+- **行数**：928
+- **首条类型声明摘抄**：`struct Color24`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/common_macros.h`
+- **行数**：51
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/common/common_basics.h`
+- **行数**：408
+- **首条类型声明摘抄**：`enum VertexGenerateFlags`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/common/common_clip_operate.h`
+- **行数**：95
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/common/common_math.h`
+- **行数**：97
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/common/paint.h`
+- **行数**：787
+- **首条类型声明摘抄**：`class Paint`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/depiction/depict_adaptor_vertex_generate.h`
+- **行数**：311
+- **首条类型声明摘抄**：`struct EmptyMarkers`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/depiction/depict_curve.h`
+- **行数**：164
+- **首条类型声明摘抄**：`class DepictCurve`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/depiction/depict_dash.h`
+- **行数**：76
+- **首条类型声明摘抄**：`struct DepictDash`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/depiction/depict_stroke.h`
+- **行数**：171
+- **首条类型声明摘抄**：`template <class VertexSource>
+struct DepictStroke`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/depiction/depict_transform.h`
+- **行数**：81
+- **首条类型声明摘抄**：`template <class VertexSource>
+class DepictTransform`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/imagefilter/filter_blur.h`
+- **行数**：136
+- **首条类型声明摘抄**：`class Filterblur`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/rasterizer/rasterizer_cells_antialias.h`
+- **行数**：296
+- **首条类型声明摘抄**：`struct CellBuildAntiAlias`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/rasterizer/rasterizer_scanline_antialias.h`
+- **行数**：224
+- **首条类型声明摘抄**：`class RasterizerScanlineAntialias`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/rasterizer/rasterizer_scanline_clip.h`
+- **行数**：181
+- **首条类型声明摘抄**：`enum PolyMaxCoord`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/scanline/geometry_scanline.h`
+- **行数**：193
+- **首条类型声明摘抄**：`class GeometryScanline`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/spancolorfill/fill_base.h`
+- **行数**：117
+- **首条类型声明摘抄**：`class FillBase`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/spancolorfill/fill_gradient.h`
+- **行数**：236
+- **首条类型声明摘抄**：`class Gradient`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/spancolorfill/fill_gradient_lut.h`
+- **行数**：187
+- **首条类型声明摘抄**：`class FillGradientLut`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/spancolorfill/fill_interpolator.h`
+- **行数**：140
+- **首条类型声明摘抄**：`struct ColorInterpolator`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/spancolorfill/fill_pattern_rgba.h`
+- **行数**：149
+- **首条类型声明摘抄**：`class FillPatternRgba`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexgenerate/vertex_generate_dash.h`
+- **行数**：130
+- **首条类型声明摘抄**：`class VertexGenerateDash`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexgenerate/vertex_generate_stroke.h`
+- **行数**：142
+- **首条类型声明摘抄**：`class VertexGenerateStroke`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexprimitive/geometry_arc.h`
+- **行数**：122
+- **首条类型声明摘抄**：`class GeometryArc`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexprimitive/geometry_bezier_arc.h`
+- **行数**：267
+- **首条类型声明摘抄**：`class BezierArc`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexprimitive/geometry_curves.h`
+- **行数**：629
+- **首条类型声明摘抄**：`enum CurveApproximationMethod`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexprimitive/geometry_dda_line.h`
+- **行数**：87
+- **首条类型声明摘抄**：`class GeometryDdaLine`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexprimitive/geometry_math_stroke.h`
+- **行数**：452
+- **首条类型声明摘抄**：`enum LineCap`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexprimitive/geometry_path_storage.h`
+- **行数**：487
+- **首条类型声明摘抄**：`class VertexBlockStorage`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexprimitive/geometry_plaindata_array.h`
+- **行数**：183
+- **首条类型声明摘抄**：`template <class T>
+class GeometryPlainDataArray`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexprimitive/geometry_range_adapter.h`
+- **行数**：240
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexprimitive/geometry_shorten_path.h`
+- **行数**：35
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/diagram/vertexprimitive/geometry_vertex_sequence.h`
+- **行数**：184
+- **首条类型声明摘抄**：`struct VertexDist`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/file.h`
+- **行数**：45
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/geometry2d.h`
+- **行数**：311
+- **首条类型声明摘抄**：`class Line`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/graphic_assert.h`
+- **行数**：51
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/graphic_buffer.h`
+- **行数**：60
+- **首条类型声明摘抄**：`struct BufferInfo`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/graphic_log.h`
+- **行数**：82
+- **首条类型声明摘抄**：`typedef enum {`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/graphic_math.h`
+- **行数**：977
+- **首条类型声明摘抄**：`template<typename T>
+class Vector2`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/graphic_types.h`
+- **行数**：204
+- **首条类型声明摘抄**：`enum BlurLevel`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/heap_base.h`
+- **行数**：77
+- **首条类型声明摘抄**：`class HeapBase`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/image_info.h`
+- **行数**：81
+- **首条类型声明摘抄**：`enum CompressMode`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/input_event_info.h`
+- **行数**：94
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/list.h`
+- **行数**：376
+- **首条类型声明摘抄**：`template<typename T>
+class ListNode`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/mem_api.h`
+- **行数**：92
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/pixel_format_utils.h`
+- **行数**：103
+- **首条类型声明摘抄**：`union PF_ARGB1555`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/rect.h`
+- **行数**：510
+- **首条类型声明摘抄**：`template <typename T> class CommonRect`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/style.h`
+- **行数**：532
+- **首条类型声明摘抄**：`enum CapType`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/sys_info.h`
+- **行数**：159
+- **首条类型声明摘抄**：`class SysInfo`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/trans_affine.h`
+- **行数**：291
+- **首条类型声明摘抄**：`class TransAffine`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/transform.h`
+- **行数**：313
+- **首条类型声明摘抄**：`class TransformMap`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/vector.h`
+- **行数**：196
+- **首条类型声明摘抄**：`template<typename T> class Vector`
+
+## `foundation/graphic/graphic_utils_lite/interfaces/kits/gfx_utils/version.h`
+- **行数**：59
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphics_effect/include/cache/ge_cache_provider.h`
+- **行数**：56
+- **首条类型声明摘抄**：`struct IGECache`
+
+## `foundation/graphic/graphics_effect/include/cache/ge_image_cache_provider.h`
+- **行数**：53
+- **首条类型声明摘抄**：`struct GEImageCache`
+
+## `foundation/graphic/graphics_effect/include/ext/gex_complex_shader.h`
+- **行数**：39
+- **首条类型声明摘抄**：`class GEXComplexShader`
+
+## `foundation/graphic/graphics_effect/include/ext/gex_complex_shader_params.h`
+- **行数**：59
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphics_effect/include/ext/gex_dot_matrix_shader.h`
+- **行数**：38
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ext/gex_dot_matrix_shader_params.h`
+- **行数**：72
+- **首条类型声明摘抄**：`struct RotateEffectParams`
+
+## `foundation/graphic/graphics_effect/include/ext/gex_flow_light_sweep_shader.h`
+- **行数**：48
+- **首条类型声明摘抄**：`struct GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_aibar_shader_filter.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class GEAIBarShaderFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_aurora_noise_shader.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_bezier_warp_shader_filter.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class GEBezierWarpShaderFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_border_light_shader.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_circle_flowlight_effect.h`
+- **行数**：66
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_color_gradient_effect.h`
+- **行数**：65
+- **首条类型声明摘抄**：`class GEColorGradientEffect`
+
+## `foundation/graphic/graphics_effect/include/ge_color_gradient_shader_filter.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class GEColorGradientShaderFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_common.h`
+- **行数**：87
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphics_effect/include/ge_content_light_shader_filter.h`
+- **行数**：56
+- **首条类型声明摘抄**：`class GEContentLightFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_contour_diagonal_flow_light_shader.h`
+- **行数**：113
+- **首条类型声明摘抄**：`struct Grid`
+
+## `foundation/graphic/graphics_effect/include/ge_direct_draw_on_canvas_pass.h`
+- **行数**：40
+- **首条类型声明摘抄**：`struct DirectDrawOnCanvasFlag`
+
+## `foundation/graphic/graphics_effect/include/ge_direction_light_shader_filter.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_dispersion_shader_filter.h`
+- **行数**：78
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_displacement_distort_shader_filter.h`
+- **行数**：74
+- **首条类型声明摘抄**：`class GEDisplacementDistortFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_double_ripple_shader_mask.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_edge_light_shader_filter.h`
+- **行数**：72
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_external_dynamic_loader.h`
+- **行数**：45
+- **首条类型声明摘抄**：`class GEExternalDynamicLoader`
+
+## `foundation/graphic/graphics_effect/include/ge_filter_composer.h`
+- **行数**：80
+- **首条类型声明摘抄**：`class GEFilterComposer`
+
+## `foundation/graphic/graphics_effect/include/ge_filter_composer_pass.h`
+- **行数**：205
+- **首条类型声明摘抄**：`class IGEFilterComposableFlags`
+
+## `foundation/graphic/graphics_effect/include/ge_filter_type.h`
+- **行数**：119
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphics_effect/include/ge_filter_type_info.h`
+- **行数**：66
+- **首条类型声明摘抄**：`template<typename T, typename = void>
+struct GEFilterTypeInfo`
+
+## `foundation/graphic/graphics_effect/include/ge_frame_gradient_shader_mask.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_frosted_glass_blur_shader_filter.h`
+- **行数**：44
+- **首条类型声明摘抄**：`struct IGECacheProvider`
+
+## `foundation/graphic/graphics_effect/include/ge_frosted_glass_effect.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class GEFrostedGlassEffect`
+
+## `foundation/graphic/graphics_effect/include/ge_frosted_glass_shader_filter.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class GEMESABlurShaderFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_gamma_correction_filter.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_gradient_blur_para.h`
+- **行数**：67
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphics_effect/include/ge_grey_shader_filter.h`
+- **行数**：44
+- **首条类型声明摘抄**：`class GEGreyShaderFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_grid_warp_shader_filter.h`
+- **行数**：67
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphics_effect/include/ge_hps_build_pass.h`
+- **行数**：41
+- **首条类型声明摘抄**：`class GEHpsBuildPass`
+
+## `foundation/graphic/graphics_effect/include/ge_hps_effect_filter.h`
+- **行数**：114
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_hps_upscale_pass.h`
+- **行数**：30
+- **首条类型声明摘抄**：`class GEHpsUpscalePass`
+
+## `foundation/graphic/graphics_effect/include/ge_image_shader_mask.h`
+- **行数**：48
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_kawase_blur_shader_filter.h`
+- **行数**：94
+- **首条类型声明摘抄**：`struct OffsetInfo`
+
+## `foundation/graphic/graphics_effect/include/ge_linear_gradient_blur_shader_filter.h`
+- **行数**：83
+- **首条类型声明摘抄**：`class GELinearGradientBlurShaderFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_linear_gradient_shader_mask.h`
+- **行数**：52
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_log.h`
+- **行数**：47
+- **首条类型声明摘抄**：*（无匹配，可能仅有宏/内联包含）*
+
+## `foundation/graphic/graphics_effect/include/ge_magnifier_shader_filter.h`
+- **行数**：93
+- **首条类型声明摘抄**：`class GEMagnifierParams`
+
+## `foundation/graphic/graphics_effect/include/ge_map_color_by_brightness_shader_filter.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_mask_transition_shader_filter.h`
+- **行数**：41
+- **首条类型声明摘抄**：`class GEMaskTransitionShaderFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_mesa_blur_shader_filter.h`
+- **行数**：169
+- **首条类型声明摘抄**：`class GEMESABlurShaderFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_mesa_fusion_pass.h`
+- **行数**：35
+- **首条类型声明摘抄**：`class GEMesaFusionPass`
+
+## `foundation/graphic/graphics_effect/include/ge_particle_circular_halo_shader.h`
+- **行数**：77
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_pixel_map_shader_mask.h`
+- **行数**：52
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_radial_gradient_shader_mask.h`
+- **行数**：53
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_render.h`
+- **行数**：237
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_ripple_shader_mask.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_shader.h`
+- **行数**：86
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_shader_filter.h`
+- **行数**：113
+- **首条类型声明摘抄**：`class GEShaderFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_shader_filter_params.h`
+- **行数**：1356
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphics_effect/include/ge_shader_mask.h`
+- **行数**：63
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_sound_wave_filter.h`
+- **行数**：195
+- **首条类型声明摘抄**：`class GESoundWaveFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_system_properties.h`
+- **行数**：50
+- **首条类型声明摘抄**：`class GESystemProperties`
+
+## `foundation/graphic/graphics_effect/include/ge_tone_mapping_helper.h`
+- **行数**：47
+- **首条类型声明摘抄**：`class GEToneMappingHelper`
+
+## `foundation/graphic/graphics_effect/include/ge_use_effect_shader_mask.h`
+- **行数**：59
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_variable_radius_blur_shader_filter.h`
+- **行数**：62
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_visual_effect.h`
+- **行数**：133
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphics_effect/include/ge_visual_effect_container.h`
+- **行数**：65
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_visual_effect_impl.h`
+- **行数**：852
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_water_ripple_filter.h`
+- **行数**：380
+- **首条类型声明摘抄**：`class GEWaterRippleFilter`
+
+## `foundation/graphic/graphics_effect/include/ge_wave_gradient_shader_mask.h`
+- **行数**：51
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/ge_wavy_ripple_light_shader.h`
+- **行数**：57
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_border_shader.h`
+- **行数**：84
+- **首条类型声明摘抄**：`class GESDFBorderShader`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_clip_shader.h`
+- **行数**：68
+- **首条类型声明摘抄**：`class GESDFClipShader`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_color_shader.h`
+- **行数**：67
+- **首条类型声明摘抄**：`class GESDFColorShader`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_edge_light.h`
+- **行数**：75
+- **首条类型声明摘抄**：`class GESDFEdgeLight`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_empty_shader_shape.h`
+- **行数**：43
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_from_image_filter.h`
+- **行数**：77
+- **首条类型声明摘抄**：`class GESDFFromImageFilter`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_pixelmap_shader_shape.h`
+- **行数**：69
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_rrect_shader_shape.h`
+- **行数**：64
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_shader_shape.h`
+- **行数**：51
+- **首条类型声明摘抄**：`enum class`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_shadow_shader.h`
+- **行数**：106
+- **首条类型声明摘抄**：`class GESDFShadowShader`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_transform_shader_shape.h`
+- **行数**：61
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_sdf_union_op_shader_shape.h`
+- **行数**：84
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/sdf/ge_shader_shape.h`
+- **行数**：40
+- **首条类型声明摘抄**：`class GE_EXPORT`
+
+## `foundation/graphic/graphics_effect/include/utils/ge_downcast.h`
+- **行数**：104
+- **首条类型声明摘抄**：`struct ExactDowncastUtils`
+
+## `foundation/graphic/graphics_effect/include/utils/ge_trace.h`
+- **行数**：71
+- **首条类型声明摘抄**：`class GEOptionalTrace`
+
+## `foundation/graphic/surface_lite/frameworks/buffer_client_producer.h`
+- **行数**：186
+- **首条类型声明摘抄**：`class BufferClientProducer`
+
+## `foundation/graphic/surface_lite/frameworks/buffer_manager.h`
+- **行数**：110
+- **首条类型声明摘抄**：`class BufferManager`
+
+## `foundation/graphic/surface_lite/frameworks/buffer_queue_producer.h`
+- **行数**：207
+- **首条类型声明摘抄**：`class BufferQueueProducer`
+
+## `foundation/graphic/surface_lite/interfaces/innerkits/buffer_common.h`
+- **行数**：45
+- **首条类型声明摘抄**：`enum BufferErrorCode`
+
+## `foundation/graphic/surface_lite/interfaces/innerkits/buffer_producer.h`
+- **行数**：192
+- **首条类型声明摘抄**：`class BufferProducer`
+
+## `foundation/graphic/surface_lite/interfaces/innerkits/buffer_queue.h`
+- **行数**：225
+- **首条类型声明摘抄**：`struct PlaneInfo`
+
+## `foundation/graphic/surface_lite/interfaces/innerkits/buffer_queue_consumer.h`
+- **行数**：60
+- **首条类型声明摘抄**：`class BufferQueueConsumer`
+
+## `foundation/graphic/surface_lite/interfaces/innerkits/surface_buffer_impl.h`
+- **行数**：376
+- **首条类型声明摘抄**：`enum BufferState`
+
+## `foundation/graphic/surface_lite/interfaces/innerkits/surface_impl.h`
+- **行数**：242
+- **首条类型声明摘抄**：`class SurfaceImpl`
+
+## `foundation/graphic/surface_lite/interfaces/kits/ibuffer_consumer_listener.h`
+- **行数**：58
+- **首条类型声明摘抄**：`class IBufferConsumerListener`
+
+## `foundation/graphic/surface_lite/interfaces/kits/surface.h`
+- **行数**：320
+- **首条类型声明摘抄**：`class Surface`
+
+## `foundation/graphic/surface_lite/interfaces/kits/surface_buffer.h`
+- **行数**：154
+- **首条类型声明摘抄**：`class SurfaceBuffer`
+
+## `foundation/graphic/surface_lite/interfaces/kits/surface_type.h`
+- **行数**：72
+- **首条类型声明摘抄**：`enum BufferConsumerUsage`
+
+---
+
+## 指定文件全文嵌入（带行号）
+
+### 完整正文：`foundation/graphic/graphic_2d/rosen/modules/render_service_base/include/common/rs_common_def.h`（780 行）
+
+```cpp
+     1 | /*
+     2 |  * Copyright (c) 2021-2023 Huawei Device Co., Ltd.
+     3 |  * Licensed under the Apache License, Version 2.0 (the "License");
+     4 |  * you may not use this file except in compliance with the License.
+     5 |  * You may obtain a copy of the License at
+     6 |  *
+     7 |  *     http://www.apache.org/licenses/LICENSE-2.0
+     8 |  *
+     9 |  * Unless required by applicable law or agreed to in writing, software
+    10 |  * distributed under the License is distributed on an "AS IS" BASIS,
+    11 |  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    12 |  * See the License for the specific language governing permissions and
+    13 |  * limitations under the License.
+    14 |  */
+    15 | #ifndef RENDER_SERVICE_CLIENT_CORE_COMMON_RS_COMMON_DEF_H
+    16 | #define RENDER_SERVICE_CLIENT_CORE_COMMON_RS_COMMON_DEF_H
+    17 | 
+    18 | #include <atomic>
+    19 | #include <cmath>
+    20 | #include <functional>
+    21 | #include <limits.h>
+    22 | #include <limits>
+    23 | #include <memory>
+    24 | #include <string>
+    25 | #include <unordered_map>
+    26 | #include <unordered_set>
+    27 | #include <unistd.h>
+    28 | #include <utils/rect.h>
+    29 | #include <vector>
+    30 | 
+    31 | #include "common/rs_macros.h"
+    32 | #include "common/rs_anco_type.h"
+    33 | #include "draw/color.h"
+    34 | #include "../../../../utils/color_manager/export/color_space.h"
+    35 | 
+    36 | namespace OHOS {
+    37 | class Surface;
+    38 | 
+    39 | namespace Rosen {
+    40 | using AnimationId = uint64_t;
+    41 | using NodeType = uint8_t;
+    42 | using FrameRateLinkerId = uint64_t;
+    43 | using InteractiveImplictAnimatorId = uint64_t;
+    44 | using LeashPersistentId = uint64_t;
+    45 | using ModifierId = uint64_t;
+    46 | using NodeId = uint64_t;
+    47 | using PropertyId = uint64_t;
+    48 | using SurfaceId = uint64_t;
+    49 | 
+    50 | constexpr uint32_t UNI_MAIN_THREAD_INDEX = UINT32_MAX;
+    51 | constexpr uint32_t UNI_RENDER_THREAD_INDEX = UNI_MAIN_THREAD_INDEX - 1;
+    52 | constexpr uint64_t INVALID_NODEID = 0;
+    53 | constexpr int32_t INSTANCE_ID_UNDEFINED = -1;
+    54 | constexpr uint32_t RGBA_MAX = 255;
+    55 | constexpr uint64_t INVALID_LEASH_PERSISTENTID = 0;
+    56 | constexpr uint8_t TOP_OCCLUSION_SURFACES_NUM = 3;
+    57 | constexpr uint8_t OCCLUSION_ENABLE_SCENE_NUM = 2;
+    58 | constexpr int16_t DEFAULT_OCCLUSION_SURFACE_ORDER = -1;
+    59 | constexpr int MAX_DIRTY_ALIGNMENT_SIZE = 128;
+    60 | inline const std::string CAPTURE_WINDOW_NAME = "CapsuleWindow";
+    61 | constexpr uint32_t DEFAULT_DYNAMIC_RANGE_MODE_STANDARD = 2;
+    62 | constexpr uint32_t DYNAMIC_RANGE_MODE_HIGH = 0;
+    63 | constexpr uint32_t DYNAMIC_RANGE_MODE_CONSTRAINT = 1;
+    64 | constexpr int32_t UI_PiPLINE_NUM_UNDEFINED = -1;
+    65 | 
+    66 | template<typename T>
+    67 | inline constexpr bool ROSEN_EQ(const T& x, const T& y)
+    68 | {
+    69 |     if constexpr (std::is_floating_point<T>::value) {
+    70 |         return (std::abs((x) - (y)) <= (std::numeric_limits<T>::epsilon()));
+    71 |     } else {
+    72 |         return x == y;
+    73 |     }
+    74 | }
+    75 | 
+    76 | template<typename T>
+    77 | inline bool ROSEN_EQ(T x, T y, T epsilon)
+    78 | {
+    79 |     return (std::abs((x) - (y)) <= (epsilon));
+    80 | }
+    81 | 
+    82 | template<typename T>
+    83 | inline bool ROSEN_EQ(const std::weak_ptr<T>& x, const std::weak_ptr<T>& y)
+    84 | {
+    85 |     return !(x.owner_before(y) || y.owner_before(x));
+    86 | }
+    87 | 
+    88 | template<typename T>
+    89 | inline constexpr bool ROSEN_NE(const T& x, const T& y)
+    90 | {
+    91 |     return !ROSEN_EQ(x, y);
+    92 | }
+    93 | 
+    94 | inline bool ROSEN_LNE(float left, float right) // less not equal
+    95 | {
+    96 |     constexpr float epsilon = -0.001f;
+    97 |     return (left - right) < epsilon;
+    98 | }
+    99 | 
+   100 | inline bool ROSEN_GNE(float left, float right) // great not equal
+   101 | {
+   102 |     constexpr float epsilon = 0.001f;
+   103 |     return (left - right) > epsilon;
+   104 | }
+   105 | 
+   106 | inline bool ROSEN_GE(float left, float right) // great or equal
+   107 | {
+   108 |     constexpr float epsilon = -0.001f;
+   109 |     return (left - right) > epsilon;
+   110 | }
+   111 | 
+   112 | inline bool ROSEN_LE(float left, float right) // less or equal
+   113 | {
+   114 |     constexpr float epsilon = 0.001f;
+   115 |     return (left - right) < epsilon;
+   116 | }
+   117 | 
+   118 | /**
+   119 |  * Bitmask enumeration for hierarchical type identification
+   120 |  * Descendant types must include all ancestor bits following the rules:
+   121 |  * childFlags = ParentFlags | AdditionalBits
+   122 |  */
+   123 | enum class RSUINodeType : uint32_t {
+   124 |     UNKNOW               = 0x0000u,
+   125 |     RS_NODE              = 0x0001u,
+   126 |     DISPLAY_NODE         = 0x0011u,
+   127 |     SURFACE_NODE         = 0x0021u,
+   128 |     PROXY_NODE           = 0x0041u,
+   129 |     CANVAS_NODE          = 0x0081u,
+   130 |     EFFECT_NODE          = 0x0101u,
+   131 |     WINDOW_KEYFRAME_NODE = 0x0801u,
+   132 |     ROOT_NODE            = 0x1081u,
+   133 |     CANVAS_DRAWING_NODE  = 0x2081u,
+   134 |     UNION_NODE           = 0x4081u,
+   135 | };
+   136 | 
+   137 | enum class FollowType : uint8_t {
+   138 |     NONE,
+   139 |     FOLLOW_TO_PARENT,
+   140 |     FOLLOW_TO_SELF,
+   141 | };
+   142 | 
+   143 | enum class RSSurfaceFrameType : uint8_t {
+   144 |     NONE = 0,
+   145 |     RS_SURFACE_FRAME = 1,
+   146 |     RS_SURFACE_FRAME_DARWIN = 2,
+   147 |     RS_SURFACE_FRAME_OHOS = 3,
+   148 |     RS_SURFACE_FRAME_WINDOWS = 4,
+   149 |     RS_SURFACE_FRAME_OHOS_GL = 5,
+   150 |     RS_SURFACE_FRAME_OHOS_RASTER = 6,
+   151 |     RS_SURFACE_FRAME_OHOS_VULKAN = 7,
+   152 | };
+   153 | 
+   154 | #define LIKELY(exp) (__builtin_expect((exp) != 0, true))
+   155 | #define UNLIKELY(exp) (__builtin_expect((exp) != 0, false))
+   156 | 
+   157 | #ifdef CM_FEATURE_ENABLE
+   158 | #define CM_INLINE __attribute__((always_inline))
+   159 | #else
+   160 | #define CM_INLINE
+   161 | #endif
+   162 | 
+   163 | /**
+   164 |  * Bitmask enumeration for hierarchical type identification
+   165 |  * Descendant types must include all ancestor bits following the rule:
+   166 |  *   ChildFlags = ParentFlags | AdditionalBits
+   167 |  */
+   168 | enum class RSRenderNodeType : uint32_t {
+   169 |     UNKNOW                 = 0x0000u,
+   170 |     RS_NODE                = 0x0001u,
+   171 |     SCREEN_NODE            = 0x0011u,
+   172 |     SURFACE_NODE           = 0x0021u,
+   173 |     PROXY_NODE             = 0x0041u,
+   174 |     CANVAS_NODE            = 0x0081u,
+   175 |     EFFECT_NODE            = 0x0101u,
+   176 |     ROUND_CORNER_NODE      = 0x0201u,
+   177 |     LOGICAL_DISPLAY_NODE   = 0x0401u,
+   178 |     WINDOW_KEYFRAME_NODE   = 0x0801u,
+   179 |     ROOT_NODE              = 0x1081u,
+   180 |     CANVAS_DRAWING_NODE    = 0x2081u,
+   181 |     UNION_NODE             = 0x4081u,
+   182 | };
+   183 | 
+   184 | // types for Processor
+   185 | enum class RSProcessorType : uint32_t {
+   186 |     UNKNOW                          = 0x0000u,
+   187 |     RS_PROCESSOR                    = 0x0001u,
+   188 |     PHYSICAL_SCREEN_PROCESSOR       = 0x0011u,
+   189 |     VIRTUAL_SCREEN_PROCESSOR        = 0x0021u,
+   190 |     UNIRENDER_PROCESSOR             = 0x0041u,
+   191 |     UNIRENDER_VIRTUAL_PROCESSOR     = 0x0081u,
+   192 | };
+   193 | 
+   194 | enum class CompositeType : uint32_t {
+   195 |     UNI_RENDER_COMPOSITE = 0,
+   196 |     UNI_RENDER_MIRROR_COMPOSITE,
+   197 |     UNI_RENDER_EXPAND_COMPOSITE,
+   198 |     HARDWARE_COMPOSITE,
+   199 |     SOFTWARE_COMPOSITE
+   200 | };
+   201 | 
+   202 | enum RSRenderParamsDirtyType {
+   203 |     NO_DIRTY = 0,
+   204 |     MATRIX_DIRTY,
+   205 |     LAYER_INFO_DIRTY,
+   206 |     BUFFER_INFO_DIRTY,
+   207 |     DRAWING_CACHE_TYPE_DIRTY,
+   208 |     MAX_DIRTY_TYPE,
+   209 | };
+   210 | 
+   211 | enum class NodeDirtyType : uint32_t {
+   212 |     NOT_DIRTY           = 0x0000u,
+   213 |     GEOMETRY            = 0x0001u,
+   214 |     BACKGROUND          = 0x0002u,
+   215 |     CONTENT             = 0x0004u,
+   216 |     FOREGROUND          = 0x0008u,
+   217 |     OVERLAY             = 0x0010u,
+   218 |     APPEARANCE          = 0x0020u,
+   219 | };
+   220 | 
+   221 | enum class CacheType : uint8_t {
+   222 |     NONE = 0,
+   223 |     CONTENT,
+   224 |     ANIMATE_PROPERTY,
+   225 | };
+   226 | 
+   227 | enum class DrawableCacheType : uint8_t {
+   228 |     NONE = 0,
+   229 |     CONTENT,
+   230 | };
+   231 | 
+   232 | enum RSDrawingCacheType : uint8_t {
+   233 |     DISABLED_CACHE = 0,
+   234 |     FORCED_CACHE,           // must-to-do case
+   235 |     TARGETED_CACHE,         // suggested case which could be disabled by optimized strategy
+   236 |     FOREGROUND_FILTER_CACHE // using cache to draw foreground filter
+   237 | };
+   238 | 
+   239 | enum class FilterCacheType : uint8_t {
+   240 |     NONE              = 0,
+   241 |     SNAPSHOT          = 1,
+   242 |     FILTERED_SNAPSHOT = 2,
+   243 |     BOTH              = SNAPSHOT | FILTERED_SNAPSHOT,
+   244 | };
+   245 | 
+   246 | // opinc state
+   247 | enum NodeCacheState : uint8_t {
+   248 |     STATE_INIT = 0,
+   249 |     STATE_CHANGE,
+   250 |     STATE_UNCHANGE,
+   251 |     STATE_DISABLE,
+   252 | };
+   253 | 
+   254 | enum NodeChangeType : uint8_t {
+   255 |     KEEP_UNCHANGE = 0,
+   256 |     SELF_DIRTY,
+   257 | };
+   258 | 
+   259 | // opinc cache state
+   260 | enum NodeStrategyType : uint8_t {
+   261 |     CACHE_NONE = 0,
+   262 |     DDGR_OPINC_DYNAMIC,
+   263 |     OPINC_AUTOCACHE,
+   264 |     NODE_GROUP,
+   265 |     CACHE_DISABLE,
+   266 | };
+   267 | 
+   268 | enum NodeRecordState : uint8_t {
+   269 |     RECORD_NONE = 0,
+   270 |     RECORD_CALCULATE,
+   271 |     RECORD_CACHING,
+   272 |     RECORD_CACHED,
+   273 |     RECORD_DISABLE,
+   274 | };
+   275 | 
+   276 | enum DrawAreaEnableState : uint8_t {
+   277 |     DRAW_AREA_INIT = 0,
+   278 |     DRAW_AREA_ENABLE,
+   279 |     DRAW_AREA_DISABLE,
+   280 | };
+   281 | 
+   282 | // priority for node, higher number means lower priority
+   283 | enum class NodePriorityType : uint8_t {
+   284 |     MAIN_PRIORITY = 0, // node must render in main thread
+   285 |     SUB_FOCUSNODE_PRIORITY, // node render in sub thread with the highest priority
+   286 |     SUB_VIDEO_PRIORITY, // node render in sub thread with the second highest priority
+   287 |     SUB_HIGH_PRIORITY, // node render in sub thread with the second priority
+   288 |     SUB_LOW_PRIORITY, // node render in sub thread with low priority
+   289 | };
+   290 | 
+   291 | enum class RSVisibleLevel : uint32_t {
+   292 |     RS_ALL_VISIBLE = 0,
+   293 |     RS_SEMI_NONDEFAULT_VISIBLE,
+   294 |     RS_SEMI_DEFAULT_VISIBLE,
+   295 |     RS_INVISIBLE,
+   296 |     RS_SYSTEM_ANIMATE_SCENE,
+   297 |     RS_UNKNOW_VISIBLE_LEVEL,
+   298 | };
+   299 | 
+   300 | // status for sub thread node
+   301 | enum class CacheProcessStatus : uint8_t {
+   302 |     WAITING = 0, // waiting for process
+   303 |     DOING, // processing
+   304 |     DONE, // processed
+   305 |     SKIPPED, // skip cur process and wait for next new data to process
+   306 |     UNKNOWN,
+   307 | };
+   308 | 
+   309 | // the type of surfaceCapture
+   310 | enum class SurfaceCaptureType : uint8_t {
+   311 |     DEFAULT_CAPTURE = 0,       // displayNode capture or window capture
+   312 |     UICAPTURE = 1,             // UI capture
+   313 |     SURFACE_CAPTURE_TYPE_BUTT, // a boundary for SurfaceTureCaptureType Security Check
+   314 | };
+   315 | 
+   316 | #ifdef TP_FEATURE_ENABLE
+   317 | // the type of TpFeatureConfig
+   318 | enum class TpFeatureConfigType : uint8_t {
+   319 |     DEFAULT_TP_FEATURE = 0,
+   320 |     AFT_TP_FEATURE,
+   321 | };
+   322 | #endif
+   323 | 
+   324 | // types for RenderNodeDrawable
+   325 | enum class RSRenderNodeDrawableType : uint32_t {
+   326 |     UNKNOW = 0,
+   327 |     RS_NODE_DRAWABLE,
+   328 |     LOGICAL_DISPLAY_NODE_DRAWABLE,
+   329 |     SCREEN_NODE_DRAWABLE,
+   330 |     SURFACE_NODE_DRAWABLE,
+   331 |     CANVAS_NODE_DRAWABLE,
+   332 |     EFFECT_NODE_DRAWABLE,
+   333 |     ROOT_NODE_DRAWABLE,
+   334 |     CANVAS_DRAWING_NODE_DRAWABLE,
+   335 |     UNION_NODE_DRAWABLE,
+   336 |     WINDOW_KEYFRAME_NODE_DRAWABLE,
+   337 | };
+   338 | 
+   339 | // zOrder of topLayer
+   340 | enum class TopLayerZOrder : uint32_t {
+   341 |     ROUNDED_CORNER_TOP = 9901,
+   342 |     ROUNDED_CORNER_BOTTOM = 9900,
+   343 |     POINTER_WINDOW = 9800,
+   344 |     CHARGE_ACTION_TEXT = 9300,
+   345 |     CHARGE_3D_MOTION = 9200,
+   346 |     STYLUS = 9100,
+   347 |     MINIMUM_VALUE = 9000,
+   348 | };
+   349 | 
+   350 | struct FocusAppInfo {
+   351 |     int32_t pid = -1;
+   352 |     int32_t uid = -1;
+   353 |     std::string bundleName = "";
+   354 |     std::string abilityName = "";
+   355 |     uint64_t focusNodeId = 0;
+   356 | };
+   357 | 
+   358 | struct RSUICaptureInRangeParam {
+   359 |     NodeId endNodeId = INVALID_NODEID;
+   360 |     bool useBeginNodeSize = true;
+   361 | };
+   362 | 
+   363 | enum class CaptureError : uint8_t {
+   364 |     CAPTURE_OK = 0,
+   365 |     CAPTURE_NO_PERMISSION,
+   366 |     CAPTURE_NO_NODE,
+   367 |     CAPTURE_CONFIG_WRONG,
+   368 |     CAPTURE_PIXELMAP_NULL,
+   369 |     CAPTURE_PIXELMAP_COPY_ERROR,
+   370 |     CAPTURE_NULL_FAIL,
+   371 |     HDR_SET_FAIL,
+   372 |     CAPTURE_RENDER_FAIL,
+   373 |     AUTO_NOT_SUPPORT,
+   374 |     COLOR_SPACE_NOT_SUPPORT,
+   375 |     DYNAMIC_RANGE_NOT_SUPPORT,
+   376 |     CAPTURE_NO_SECURE_PERMISSION,
+   377 |     // please add new enum before this comment
+   378 |     CAPTURE_ERROR_BOUNDARY_BUTT,
+   379 | };
+   380 | 
+   381 | struct RSSurfaceCaptureConfig {
+   382 |     float scaleX = 1.0f;
+   383 |     float scaleY = 1.0f;
+   384 |     bool useDma = false;
+   385 |     bool useCurWindow = true;
+   386 |     SurfaceCaptureType captureType = SurfaceCaptureType::DEFAULT_CAPTURE;
+   387 |     bool isSync = false;
+   388 |     Drawing::Rect mainScreenRect = {};
+   389 |     std::vector<NodeId> blackList = {}; // exclude surfacenode in screenshot
+   390 |     bool isSoloNodeUiCapture = false;
+   391 |     bool isHdrCapture = false;
+   392 |     bool needF16WindowCaptureForScRGB = false;
+   393 |     bool needErrorCode = false;
+   394 |     RSUICaptureInRangeParam uiCaptureInRangeParam = {};
+   395 |     Drawing::Rect specifiedAreaRect = {};
+   396 |     uint32_t backGroundColor = Drawing::Color::COLOR_TRANSPARENT;
+   397 |     // {colorspace, isAutoAjust}
+   398 |     std::pair<uint32_t, bool> colorSpace = {OHOS::ColorManager::ColorSpaceName::SRGB, false};
+   399 |     // {dynamicRangeMode, isAutoAjust}
+   400 |     std::pair<uint32_t, bool> dynamicRangeMode = {DEFAULT_DYNAMIC_RANGE_MODE_STANDARD, false};
+   401 |     bool isSyncRender = false;
+   402 |     bool isConfigTriggered = false;
+   403 | 
+   404 |     // When adding new members, please ensure to add the corresponding comparison logic in the operator== and
+   405 |     // serialization/deserialization logic in the OnSurfaceCapture method.
+   406 |     bool operator==(const RSSurfaceCaptureConfig& config) const
+   407 |     {
+   408 |         return ROSEN_EQ(scaleX, config.scaleX) && ROSEN_EQ(scaleY, config.scaleY) &&
+   409 |                (useDma == config.useDma) && (useCurWindow == config.useCurWindow) &&
+   410 |                (captureType == config.captureType) && (isSync == config.isSync) &&
+   411 |                (mainScreenRect == config.mainScreenRect) && (blackList == config.blackList) &&
+   412 |                (isSoloNodeUiCapture == config.isSoloNodeUiCapture) &&
+   413 |                (isHdrCapture == config.isHdrCapture) &&
+   414 |                (needF16WindowCaptureForScRGB == config.needF16WindowCaptureForScRGB) &&
+   415 |                (needErrorCode == config.needErrorCode) &&
+   416 |                (uiCaptureInRangeParam.endNodeId == config.uiCaptureInRangeParam.endNodeId) &&
+   417 |                (uiCaptureInRangeParam.useBeginNodeSize == config.uiCaptureInRangeParam.useBeginNodeSize) &&
+   418 |                (specifiedAreaRect == config.specifiedAreaRect) &&
+   419 |                (backGroundColor == config.backGroundColor) &&
+   420 |                (colorSpace == config.colorSpace) &&
+   421 |                (dynamicRangeMode == config.dynamicRangeMode);
+   422 |     }
+   423 | };
+   424 | 
+   425 | struct RSSurfaceCaptureBlurParam {
+   426 |     bool isNeedBlur = false;
+   427 |     float blurRadius = 1E-6;
+   428 | };
+   429 | 
+   430 | struct RSSurfaceCaptureParam {
+   431 |     NodeId id = 0;
+   432 |     RSSurfaceCaptureConfig config = {};
+   433 |     bool isSystemCalling = false;
+   434 |     bool isSelfCapture = false;
+   435 |     bool isFreeze = false;
+   436 |     RSSurfaceCaptureBlurParam blurParam = {};
+   437 |     bool needCaptureSpecialLayer = false;
+   438 |     bool hasDirtyContentInSurfaceCapture = false;
+   439 | };
+   440 | 
+   441 | struct RSSurfaceCapturePermissions {
+   442 |     bool screenCapturePermission = false;
+   443 |     bool isSystemCalling = false;
+   444 |     bool selfCapture = false;
+   445 | };
+   446 | 
+   447 | #define CHECK_FALSE_RETURN(var)      \
+   448 |     do {                             \
+   449 |         if (!(var)) {                \
+   450 |             return;                  \
+   451 |         }                            \
+   452 |     } while (0)                      \
+   453 | 
+   454 | #define CHECK_FALSE_RETURN_VALUE(var, value)     \
+   455 |     do {                                         \
+   456 |         if (!(var)) {                            \
+   457 |             return value;                        \
+   458 |         }                                        \
+   459 |     } while (0)
+   460 | 
+   461 | #define IS_SCB_WINDOW_TYPE(windowType)                                                                                 \
+   462 |     (windowType == SurfaceWindowType::SYSTEM_SCB_WINDOW || windowType == SurfaceWindowType::SCB_DESKTOP ||             \
+   463 |         windowType == SurfaceWindowType::SCB_WALLPAPER || windowType == SurfaceWindowType::SCB_SCREEN_LOCK ||          \
+   464 |         windowType == SurfaceWindowType::SCB_NEGATIVE_SCREEN || windowType == SurfaceWindowType::SCB_DROPDOWN_PANEL || \
+   465 |         windowType == SurfaceWindowType::SCB_VOLUME_PANEL ||                                                           \
+   466 |         windowType == SurfaceWindowType::SCB_BANNER_NOTIFICATION || windowType == SurfaceWindowType::SCB_GESTURE_BACK)
+   467 | 
+   468 | enum class DeviceType : uint8_t {
+   469 |     PHONE,
+   470 |     PC,
+   471 |     TABLET,
+   472 |     OTHERS,
+   473 | };
+   474 | 
+   475 | enum GrallocBufferAttr : uint32_t {
+   476 |     // used in set roi region to codec, must be the same as private key in codec
+   477 |     GRALLOC_BUFFER_ATTR_BUFFER_ROI_INFO = 2054,
+   478 | };
+   479 | 
+   480 | // types for PC SystemAnimatedScenes
+   481 | enum class SystemAnimatedScenes : uint32_t {
+   482 |     ENTER_MISSION_CENTER, // Enter the mission center
+   483 |     EXIT_MISSION_CENTER, // Exit the mission center
+   484 |     ENTER_TFS_WINDOW, // Three-finger sliding window recovery
+   485 |     EXIT_TFU_WINDOW, // The three-finger up window disappears
+   486 |     ENTER_WINDOW_FULL_SCREEN, // Enter the window full screen
+   487 |     EXIT_WINDOW_FULL_SCREEN, // Exit the window full screen
+   488 |     ENTER_MAX_WINDOW, // Enter the window maximization state
+   489 |     EXIT_MAX_WINDOW, // Exit the window maximization state
+   490 |     ENTER_SPLIT_SCREEN, // Enter the split screen
+   491 |     EXIT_SPLIT_SCREEN, // Exit the split screen
+   492 |     ENTER_APP_CENTER, // Enter the app center
+   493 |     EXIT_APP_CENTER, // Exit the app center
+   494 |     APPEAR_MISSION_CENTER, // A special case scenario that displays the mission center
+   495 |     ENTER_WIND_CLEAR, // Enter win+D in clear screen mode
+   496 |     ENTER_WIND_RECOVER, // Enter win+D in recover mode
+   497 |     ENTER_RECENTS, // Enter recents only for phone, end with EXIT_RECENTS instead of OTHERS
+   498 |     EXIT_RECENTS, // Exit recents only for phone
+   499 |     LOCKSCREEN_TO_LAUNCHER, // Enter unlock screen for pc scene
+   500 |     ENTER_MIN_WINDOW, // Enter the window minimization state
+   501 |     RECOVER_MIN_WINDOW, // Recover minimized window
+   502 |     SNAPSHOT_ROTATION,  //  Enter tablet's snapshot rotation scene
+   503 |     DRAG_WINDOW, // Enter scale window scene
+   504 |     OTHERS, // 1.Default state 2.The state in which the animation ends
+   505 | };
+   506 | 
+   507 | // types for RSSurfaceRenderNode
+   508 | enum class RSSurfaceNodeType : uint8_t {
+   509 |     DEFAULT,
+   510 |     APP_WINDOW_NODE,          // surfacenode created as app main window
+   511 |     STARTING_WINDOW_NODE,     // starting window, surfacenode created by wms
+   512 |     SELF_DRAWING_WINDOW_NODE, // create by wms, such as bootanimation
+   513 |     LEASH_WINDOW_NODE,        // leashwindow
+   514 |     ABILITY_COMPONENT_NODE,   // surfacenode created as ability component
+   515 |     SELF_DRAWING_NODE,        // surfacenode created by arkui component (except ability component)
+   516 |     SURFACE_TEXTURE_NODE,      // create by video
+   517 |     FOREGROUND_SURFACE,
+   518 |     SCB_SCREEN_NODE,          // surfacenode created as sceneboard
+   519 |     UI_EXTENSION_COMMON_NODE, // uiextension node
+   520 |     UI_EXTENSION_SECURE_NODE, // uiextension node that requires info callback
+   521 |     CURSOR_NODE,              // cursor node created by MMI
+   522 |     ABILITY_MAGNIFICATION_NODE, // local magnification
+   523 |     NODE_MAX,
+   524 | };
+   525 | 
+   526 | enum class MultiThreadCacheType : uint8_t {
+   527 |     NONE = 0,
+   528 |     LEASH_WINDOW,
+   529 |     ARKTS_CARD,
+   530 |     NONFOCUS_WINDOW,
+   531 | };
+   532 | 
+   533 | enum class UiFirstModeType : uint8_t {
+   534 |     SINGLE_WINDOW_MODE,
+   535 |     MULTI_WINDOW_MODE,
+   536 | };
+   537 | 
+   538 | //Each command HAVE TO have UNIQUE ID in ALL HISTORY
+   539 | //If a command is not used and you want to delete it,
+   540 | //just COMMENT it - and never use this value anymore
+   541 | 
+   542 | enum class UiFirstCcmType : uint8_t {
+   543 |     SINGLE = 1,
+   544 |     MULTI = 2,
+   545 |     HYBRID = 3,
+   546 | };
+   547 | 
+   548 | enum class RSUIFirstSwitch {
+   549 |     NONE = 0,               // follow RS rules
+   550 |     MODAL_WINDOW_CLOSE = 1, // open app with modal window animation, close uifirst
+   551 |     FORCE_DISABLE = 2,      // force close uifirst
+   552 |     FORCE_ENABLE = 3,       // force open uifirst
+   553 |     FORCE_ENABLE_LIMIT = 4, // force open uifirst, but for limited
+   554 |     FORCE_DISABLE_NONFOCUS = 5, // force close uifirst when only in nonfocus window
+   555 |     FORCE_DISABLE_CARD = 6, // force close uifirst on card
+   556 | };
+   557 | 
+   558 | enum class SelfDrawingNodeType : uint8_t {
+   559 |     DEFAULT,
+   560 |     VIDEO,
+   561 |     XCOM,
+   562 | };
+   563 | 
+   564 | enum class SurfaceWindowType : uint8_t {
+   565 |     DEFAULT_WINDOW = 0,
+   566 |     SYSTEM_SCB_WINDOW = 1,
+   567 |     SCB_DESKTOP = 2,
+   568 |     SCB_WALLPAPER = 3,
+   569 |     SCB_SCREEN_LOCK = 4,
+   570 |     SCB_NEGATIVE_SCREEN = 5,
+   571 |     SCB_DROPDOWN_PANEL = 6,
+   572 |     SCB_VOLUME_PANEL = 7,
+   573 |     SCB_BANNER_NOTIFICATION = 8,
+   574 |     SCB_GESTURE_BACK = 9,
+   575 | };
+   576 | 
+   577 | enum class SurfaceHwcNodeType : uint8_t {
+   578 |     DEFAULT_HWC_TYPE = 0,
+   579 |     DEFAULT_HWC_VIDEO = 1,
+   580 |     DEFAULT_HWC_ROSENWEB = 2,
+   581 | };
+   582 | 
+   583 | struct RSSurfaceRenderNodeConfig {
+   584 |     NodeId id = 0;
+   585 |     std::string name = "SurfaceNode";
+   586 |     RSSurfaceNodeType nodeType = RSSurfaceNodeType::DEFAULT;
+   587 |     void* additionalData = nullptr;
+   588 |     bool isTextureExportNode = false;
+   589 |     bool isSync = false;
+   590 |     enum SurfaceWindowType surfaceWindowType = SurfaceWindowType::DEFAULT_WINDOW;
+   591 |     std::string bundleName = "";
+   592 | };
+   593 | 
+   594 | struct RSAdvancedDirtyConfig {
+   595 |     // a threshold, if the number of rectangles is larger than it, we will merge all rectangles to one
+   596 |     static const int RECT_NUM_MERGING_ALL = 35;
+   597 |     // a threshold, if the number of rectangles is larger than it, we will merge all rectangles by level
+   598 |     static const int RECT_NUM_MERGING_BY_LEVEL = 20;
+   599 |     // maximal number of dirty rectangles in one surface/display node when advancedDirty is opened
+   600 |     static const int MAX_RECT_NUM_EACH_NODE = 10;
+   601 |     // number of dirty rectangles in one surface/display node when advancedDirty is closed
+   602 |     static const int DISABLED_RECT_NUM_EACH_NODE = 1;
+   603 |     // expected number of rectangles after merging
+   604 |     static const int EXPECTED_OUTPUT_NUM = 3;
+   605 |     // maximal tolerable cost in merging
+   606 |     // if the merging cost of two rectangles is larger than it, we will not merge
+   607 |     // later it could be set to a quantity related to screen area
+   608 |     static const int MAX_TOLERABLE_COST = INT_MAX;
+   609 | };
+   610 | 
+   611 | static RSAdvancedDirtyConfig advancedDirtyConfig;
+   612 | 
+   613 | // codes for arkui-x start
+   614 | // types for RSSurfaceExt
+   615 | enum class RSSurfaceExtType : uint8_t {
+   616 |     NONE,
+   617 |     SURFACE_TEXTURE,
+   618 |     SURFACE_PLATFORM_TEXTURE,
+   619 | };
+   620 | 
+   621 | struct RSSurfaceExtConfig {
+   622 |     RSSurfaceExtType type = RSSurfaceExtType::NONE;
+   623 |     void* additionalData = nullptr;
+   624 | };
+   625 | using RSSurfaceTextureConfig = RSSurfaceExtConfig;
+   626 | using RSSurfaceTextureAttachCallBack = std::function<void(int64_t textureId, bool attach)>;
+   627 | using RSSurfaceTextureUpdateCallBack = std::function<void(std::vector<float>&)>;
+   628 | using RSSurfaceTextureInitTypeCallBack = std::function<void(int32_t&)>;
+   629 | // codes for arkui-x end
+   630 | 
+   631 | struct RSDisplayNodeConfig {
+   632 |     uint64_t screenId = 0;
+   633 |     bool isMirrored = false;
+   634 |     NodeId mirrorNodeId = 0;
+   635 |     bool isSync = false;
+   636 |     uint32_t mirrorSourceRotation = 4; // default INVALID_SCREEN_ROTATION
+   637 | };
+   638 | 
+   639 | // ability state of surface node
+   640 | enum class RSSurfaceNodeAbilityState : uint8_t {
+   641 |     BACKGROUND,
+   642 |     FOREGROUND,
+   643 | };
+   644 | 
+   645 | struct SubSurfaceCntUpdateInfo {
+   646 |     int updateCnt_ = 0;
+   647 |     NodeId preParentId_ = INVALID_NODEID;
+   648 |     NodeId curParentId_ = INVALID_NODEID;
+   649 | };
+   650 | 
+   651 | constexpr int64_t NS_TO_S = 1000000000;
+   652 | constexpr int64_t NS_PER_MS = 1000000;
+   653 | constexpr uint32_t SIZE_UPPER_LIMIT = 1000;
+   654 | constexpr uint32_t PARTICLE_EMMITER_UPPER_LIMIT = 2000;
+   655 | constexpr uint32_t PARTICLE_UPPER_LIMIT = 1000000;
+   656 | 
+   657 | #if defined(M_PI)
+   658 | constexpr float PI = M_PI;
+   659 | #else
+   660 | static const float PI = std::atanf(1.0) * 4;
+   661 | #endif
+   662 | 
+   663 | class MemObject {
+   664 | public:
+   665 |     explicit MemObject(size_t size) : size_(size) {}
+   666 |     virtual ~MemObject() = default;
+   667 | 
+   668 |     void* operator new(size_t size);
+   669 |     void operator delete(void* ptr);
+   670 | 
+   671 |     void* operator new(std::size_t size, const std::nothrow_t&) noexcept;
+   672 |     void operator delete(void* ptr, const std::nothrow_t&) noexcept;
+   673 | 
+   674 | protected:
+   675 |     size_t size_;
+   676 | };
+   677 | 
+   678 | inline constexpr pid_t ExtractPid(uint64_t id)
+   679 | {
+   680 |     // extract high 32 bits of nodeid/animationId/propertyId as pid
+   681 |     return static_cast<pid_t>(id >> 32);
+   682 | }
+   683 | 
+   684 | inline constexpr int32_t ExtractTid(uint64_t token)
+   685 | {
+   686 |     // extract high 32 bits of token as tid
+   687 |     return static_cast<int32_t>(token >> 32);
+   688 | }
+   689 | 
+   690 | inline constexpr uint64_t MakeNodeId(pid_t pid, uint32_t uid)
+   691 | {
+   692 |     // combine pid and uid to nodeId
+   693 |     return (static_cast<uint64_t>(pid) << 32) | uid;
+   694 | }
+   695 | 
+   696 | inline uint64_t GenerateUniqueNodeIdForRS()
+   697 | {
+   698 |     static std::atomic<uint32_t> uid { 0 };
+   699 |     return MakeNodeId(getpid(), uid.fetch_add(1, std::memory_order_relaxed));
+   700 | }
+   701 | 
+   702 | template<class Container, class Predicate>
+   703 | inline typename Container::size_type EraseIf(Container& container, Predicate pred)
+   704 | {
+   705 |     // erase from container if pred returns true, backport of c++20 std::remove_if
+   706 |     typename Container::size_type oldSize = container.size();
+   707 |     const typename Container::iterator end = container.end();
+   708 |     for (typename Container::iterator iter = container.begin(); iter != end;) {
+   709 |         if (pred(*iter)) {
+   710 |             iter = container.erase(iter);
+   711 |         } else {
+   712 |             ++iter;
+   713 |         }
+   714 |     }
+   715 |     return oldSize - container.size();
+   716 | }
+   717 | 
+   718 | enum class RSInterfaceErrorCode : uint32_t {
+   719 | #undef NO_ERROR
+   720 |     NO_ERROR = 0,
+   721 |     NONSYSTEM_CALLING,
+   722 |     NOT_SELF_CALLING,
+   723 |     WRITE_PARCEL_ERROR,
+   724 |     UNKNOWN_ERROR,
+   725 |     NULLPTR_ERROR,
+   726 | };
+   727 | 
+   728 | struct VSyncConnParam {
+   729 |     uint64_t id = 0;
+   730 |     NodeId windowNodeId = 0;
+   731 |     bool fromXcomponent = false;
+   732 | };
+   733 | 
+   734 | enum DrawNodeType : uint32_t {
+   735 |     PureContainerType = 0,
+   736 |     MergeableType,
+   737 |     DrawPropertyType,
+   738 |     GeometryPropertyType
+   739 | };
+   740 | 
+   741 | enum class ComponentEnableSwitch : uint8_t {
+   742 |     TEXTBLOB = 0,
+   743 |     SVG,
+   744 |     HMSYMBOL,
+   745 |     CANVAS,
+   746 |     MAX_VALUE,
+   747 | };
+   748 | typedef enum : uint32_t {
+   749 |     SA_WATER_MARK_DEFAULT_SIZE = 0, // 512KB
+   750 |     SA_WATER_MARK_MIDDLE_SIZE = 1, // 6M
+   751 |     SA_WATER_MARK_BOTTOM = 2,
+   752 | } SaSurfaceWatermarkMaxSize;
+   753 | 
+   754 | typedef enum : uint32_t {
+   755 |     WATER_MARK_SUCCESS = 0,
+   756 |     WATER_MARK_NAME_ERROR = (1U << 1),
+   757 |     WATER_MARK_RS_CONNECTION_ERROR = (1U << 2),
+   758 |     WATER_MARK_IMG_ASTC_ERROR = (1U << 3),
+   759 |     WATER_MARK_NOT_SUPPORT_ERROR = (1U << 4),
+   760 |     WATER_MARK_RENDER_SERVICE_NULL = (1U << 5),
+   761 |     WATER_MARK_WRITE_PARCEL_ERR = (1U << 6),
+   762 |     WATER_MARK_IPC_ERROR = (1U << 7),
+   763 |     WATER_MARK_READ_PARCEL_ERR = (1U << 8),
+   764 |     WATER_MARK_RS_NOT_FIND_NODE = (1U << 9),
+   765 |     WATER_MARK_PERMISSION_ERROR = (1U << 10),
+   766 |     WATER_MARK_IMG_SIZE_ERROR = (1U << 11),
+   767 |     WATER_MARK_NODE_NOT_SCREEN = (1U << 12),
+   768 |     WATER_MARK_PIXELMAP_INVALID = (1U << 13),
+   769 |     WATER_MARK_NOT_SURFACE_NODE_ERROR = (1U << 14),
+   770 |     WATER_MARK_INVALID_WATERMARK_TYPE = (1U << 15),
+   771 | } SurfaceWatermarkStatusCode;
+   772 | 
+   773 | typedef enum : uint8_t {
+   774 |     CUSTOM_WATER_MARK = 0,
+   775 |     SYSTEM_WATER_MARK = 1,
+   776 |     INVALID_WATER_MARK = 2,
+   777 | } SurfaceWatermarkType;
+   778 | } // namespace Rosen
+   779 | } // namespace OHOS
+   780 | #endif // RENDER_SERVICE_CLIENT_CORE_COMMON_RS_COMMON_DEF_H
+```
+
+### 完整正文：`foundation/graphic/graphic_2d/rosen/modules/render_service/core/pipeline/main_thread/rs_main_thread.h`（842 行）
+
+```cpp
+     1 | /*
+     2 |  * Copyright (c) 2021-2023 Huawei Device Co., Ltd.
+     3 |  * Licensed under the Apache License, Version 2.0 (the "License");
+     4 |  * you may not use this file except in compliance with the License.
+     5 |  * You may obtain a copy of the License at
+     6 |  *
+     7 |  *     http://www.apache.org/licenses/LICENSE-2.0
+     8 |  *
+     9 |  * Unless required by applicable law or agreed to in writing, software
+    10 |  * distributed under the License is distributed on an "AS IS" BASIS,
+    11 |  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    12 |  * See the License for the specific language governing permissions and
+    13 |  * limitations under the License.
+    14 |  */
+    15 | 
+    16 | #ifndef RS_MAIN_THREAD
+    17 | #define RS_MAIN_THREAD
+    18 | 
+    19 | #include <event_handler.h>
+    20 | #include <future>
+    21 | #include <memory>
+    22 | #include <mutex>
+    23 | #include <queue>
+    24 | #include <set>
+    25 | #include <thread>
+    26 | 
+    27 | #include "refbase.h"
+    28 | #include "pipeline/render_thread/rs_base_render_engine.h"
+    29 | #include "pipeline/render_thread/rs_draw_frame.h"
+    30 | #include "vsync_distributor.h"
+    31 | #include "vsync_receiver.h"
+    32 | 
+    33 | #include "command/rs_command.h"
+    34 | #include "common/rs_common_def.h"
+    35 | #include "common/rs_thread_handler.h"
+    36 | #include "common/rs_thread_looper.h"
+    37 | #include "drawable/rs_render_node_drawable_adapter.h"
+    38 | #include "ipc_callbacks/iapplication_agent.h"
+    39 | #include "ipc_callbacks/rs_iocclusion_change_callback.h"
+    40 | #include "ipc_callbacks/rs_isurface_occlusion_change_callback.h"
+    41 | #include "ipc_callbacks/rs_iuiextension_callback.h"
+    42 | #include "memory/rs_app_state_listener.h"
+    43 | #include "memory/rs_memory_graphic.h"
+    44 | #include "params/rs_render_thread_params.h"
+    45 | #include "pipeline/rs_context.h"
+    46 | #include "pipeline/rs_uni_render_judgement.h"
+    47 | #include "pipeline/hwc/rs_direct_composition_helper.h"
+    48 | #include "pipeline/hwc/rs_hwc_context.h"
+    49 | #include "feature/hyper_graphic_manager/hgm_context.h"
+    50 | #include "feature/image_detail_enhancer/rs_image_detail_enhancer_thread.h"
+    51 | #include "feature/vrate/rs_vsync_rate_reduce_manager.h"
+    52 | #include "feature/watermark/rs_surface_watermark.h"
+    53 | #include "platform/common/rs_event_manager.h"
+    54 | #include "screen_manager/rs_screen_node_listener.h"
+    55 | #include "platform/drawing/rs_vsync_client.h"
+    56 | #include "transaction/rs_transaction_data.h"
+    57 | #include "transaction/rs_uiextension_data.h"
+    58 | 
+    59 | #ifdef RES_SCHED_ENABLE
+    60 | #include "vsync_system_ability_listener.h"
+    61 | #endif
+    62 | 
+    63 | #include "hgm_core.h"
+    64 | namespace OHOS::Rosen {
+    65 | #if defined(ACCESSIBILITY_ENABLE)
+    66 | class AccessibilityObserver;
+    67 | #endif
+    68 | class HgmFrameRateManager;
+    69 | class RSUniRenderVisitor;
+    70 | struct FrameRateRangeData;
+    71 | namespace Detail {
+    72 | template<typename Task>
+    73 | class ScheduledTask : public RefBase {
+    74 | public:
+    75 |     static auto Create(Task&& task)
+    76 |     {
+    77 |         sptr<ScheduledTask<Task>> t(new ScheduledTask(std::forward<Task&&>(task)));
+    78 |         return std::make_pair(t, t->task_.get_future());
+    79 |     }
+    80 | 
+    81 |     void Run()
+    82 |     {
+    83 |         task_();
+    84 |     }
+    85 | 
+    86 | private:
+    87 |     explicit ScheduledTask(Task&& task) : task_(std::move(task)) {}
+    88 |     ~ScheduledTask() override = default;
+    89 | 
+    90 |     using Return = std::invoke_result_t<Task>;
+    91 |     std::packaged_task<Return()> task_;
+    92 | };
+    93 | } // namespace Detail
+    94 | 
+    95 | class RSMainThread {
+    96 | public:
+    97 |     static RSMainThread* Instance();
+    98 | 
+    99 |     void Init(const std::shared_ptr<AppExecFwk::EventRunner>& runner,
+   100 |         const std::shared_ptr<AppExecFwk::EventHandler>& handler);
+   101 |     void Start();
+   102 |     void UpdateFocusNodeId(NodeId focusNodeId);
+   103 |     bool IsNeedProcessBySingleFrameComposer(std::unique_ptr<RSTransactionData>& rsTransactionData);
+   104 |     void ProcessDataBySingleFrameComposer(std::unique_ptr<RSTransactionData>& rsTransactionData);
+   105 |     void RecvRSTransactionData(std::unique_ptr<RSTransactionData>& rsTransactionData);
+   106 |     void RequestNextVSync(
+   107 |         const std::string& fromWhom = "unknown", int64_t lastVSyncTS = 0, const int64_t& requestVsyncTime = 0);
+   108 |     void PostTask(RSTaskMessage::RSTask task);
+   109 |     void PostTask(RSTaskMessage::RSTask task, const std::string& name, int64_t delayTime,
+   110 |         AppExecFwk::EventQueue::Priority priority = AppExecFwk::EventQueue::Priority::IDLE);
+   111 |     void RemoveTask(const std::string& name);
+   112 |     bool PostSyncTask(RSTaskMessage::RSTask task);
+   113 |     bool IsIdle() const;
+   114 |     void TransactionDataMapDump(const TransactionDataMap& transactionDataMap, std::string& dumpString);
+   115 |     void RenderServiceTreeDump(std::string& dumpString, bool forceDumpSingleFrame = true,
+   116 |         bool needUpdateJankStats = false);
+   117 |     void SendClientDumpNodeTreeCommands(uint32_t taskId);
+   118 |     void CollectClientNodeTreeResult(uint32_t taskId, std::string& dumpString, size_t timeout);
+   119 |     void RsEventParamDump(std::string& dumpString);
+   120 |     void UpdateAnimateNodeFlag();
+   121 |     void ResetAnimateNodeFlag();
+   122 |     void ClearMemoryCache(ClearMemoryMoment moment, bool deeply = false, pid_t pid = -1);
+   123 |     void SetForceRsDVsync(const std::string& sceneId);
+   124 | 
+   125 |     template<typename Task, typename Return = std::invoke_result_t<Task>>
+   126 |     std::future<Return> ScheduleTask(Task&& task)
+   127 |     {
+   128 |         auto [scheduledTask, taskFuture] = Detail::ScheduledTask<Task>::Create(std::forward<Task&&>(task));
+   129 |         PostTask([t(std::move(scheduledTask))]() { t->Run(); });
+   130 |         return std::move(taskFuture);
+   131 |     }
+   132 | 
+   133 |     const std::shared_ptr<RSBaseRenderEngine> GetRenderEngine() const
+   134 |     {
+   135 |         RS_LOGD("You'd better to call GetRenderEngine from RSUniRenderThread directly");
+   136 | #ifdef RS_ENABLE_GPU
+   137 |         return isUniRender_ ? std::move(RSUniRenderThread::Instance().GetRenderEngine()) : renderEngine_;
+   138 | #else
+   139 |         return renderEngine_;
+   140 | #endif
+   141 |     }
+   142 | 
+   143 |     RSContext& GetContext()
+   144 |     {
+   145 |         return *context_;
+   146 |     }
+   147 | 
+   148 |     void SetGlobalDarkColorMode(bool isDark)
+   149 |     {
+   150 |         isGlobalDarkColorMode_ = isDark;
+   151 |     }
+   152 | 
+   153 |     bool GetGlobalDarkColorMode() const
+   154 |     {
+   155 |         return isGlobalDarkColorMode_;
+   156 |     }
+   157 | 
+   158 |     void RegisterApplicationAgent(uint32_t pid, sptr<IApplicationAgent> app);
+   159 |     void UnRegisterApplicationAgent(sptr<IApplicationAgent> app);
+   160 | 
+   161 |     void RegisterOcclusionChangeCallback(pid_t pid, sptr<RSIOcclusionChangeCallback> callback);
+   162 |     void UnRegisterOcclusionChangeCallback(pid_t pid);
+   163 | 
+   164 |     void RegisterSurfaceOcclusionChangeCallback(
+   165 |         NodeId id, pid_t pid, sptr<RSISurfaceOcclusionChangeCallback> callback, std::vector<float>& partitionPoints);
+   166 |     void UnRegisterSurfaceOcclusionChangeCallback(NodeId id);
+   167 |     void ClearSurfaceOcclusionChangeCallback(pid_t pid);
+   168 |     bool SurfaceOcclusionCallBackIfOnTreeStateChanged();
+   169 | 
+   170 |     void ClearTransactionDataPidInfo(pid_t remotePid);
+   171 |     void AddTransactionDataPidInfo(pid_t remotePid);
+   172 | 
+   173 |     void SetFocusAppInfo(const FocusAppInfo& info);
+   174 |     const std::unordered_map<NodeId, bool>& GetCacheCmdSkippedNodes() const;
+   175 | 
+   176 |     sptr<VSyncDistributor> rsVSyncDistributor_;
+   177 |     sptr<VSyncController> rsVSyncController_;
+   178 |     sptr<VSyncController> appVSyncController_;
+   179 |     sptr<VSyncGenerator> vsyncGenerator_;
+   180 | 
+   181 |     void ReleaseSurface();
+   182 |     void AddToReleaseQueue(std::shared_ptr<Drawing::Surface>&& surface);
+   183 |     void ReleaseImageMem();
+   184 | 
+   185 |     void AddUiCaptureTask(NodeId id, std::function<void()> task);
+   186 |     void ProcessUiCaptureTasks();
+   187 | 
+   188 |     void SetDirtyFlag(bool isDirty = true);
+   189 |     bool GetDirtyFlag();
+   190 |     void SetAccessibilityConfigChanged();
+   191 |     void SetScreenPowerOnChanged(bool val);
+   192 |     bool GetScreenPowerOnChanged() const;
+   193 |     bool IsAccessibilityConfigChanged() const;
+   194 |     bool IsCurtainScreenUsingStatusChanged() const;
+   195 |     bool IsFastComposeAllow(uint64_t unsignedVsyncPeriod, bool nextVsyncRequested,
+   196 |         uint64_t unsignedNowTime, uint64_t lastVsyncTime);
+   197 |     // check if timestamp in vsync receiver sync with mainthread timestamp, if not, return false;
+   198 |     bool IsFastComposeVsyncTimeSync(uint64_t unsignedVsyncPeriod, bool nextVsyncRequested,
+   199 |         uint64_t unsignedNowTime, uint64_t lastVsyncTime, int64_t vsyncTimeStamp);
+   200 |     bool CheckFastCompose(int64_t bufferTimeStamp);
+   201 |     bool CheckAdaptiveCompose();
+   202 |     void ForceRefreshForUni(bool needDelay = false);
+   203 |     void CountMem(int pid, MemoryGraphic& mem);
+   204 |     void CountMem(std::vector<MemoryGraphic>& mems);
+   205 |     bool SetSystemAnimatedScenes(SystemAnimatedScenes systemAnimatedScenes, bool isRegularAnimation = false);
+   206 |     SystemAnimatedScenes GetSystemAnimatedScenes();
+   207 |     bool GetIsRegularAnimation() const;
+   208 |     // Save marks, and use it for SurfaceNodes later.
+   209 |     void SetWatermark(const pid_t& pid, const std::string& name, std::shared_ptr<Media::PixelMap> watermark);
+   210 |     uint32_t SetSurfaceWatermark(pid_t pid, const std::string& name,
+   211 |         std::shared_ptr<Media::PixelMap> watermark, const std::vector<NodeId>& nodeIdList,
+   212 |         SurfaceWatermarkType watermarkType, bool isSystemCalling = false);
+   213 |     void ClearSurfaceWatermark(pid_t pid, const std::string& name, bool isSystemCalling);
+   214 |     void ClearSurfaceWatermark(pid_t pid);
+   215 |     void ClearSurfaceWatermarkForNodes(pid_t pid, const std::string& name,
+   216 |         const std::vector<NodeId>& nodeIdList, bool isSystemCalling);
+   217 |     // Save marks, and use it for ScreenNode later.
+   218 |     void ShowWatermark(const std::shared_ptr<Media::PixelMap> &watermarkImg, bool flag);
+   219 |     void SetIsCachedSurfaceUpdated(bool isCachedSurfaceUpdated);
+   220 |     pid_t GetDesktopPidForRotationScene() const;
+   221 |     void SetForceUpdateUniRenderFlag(bool flag)
+   222 |     {
+   223 |         forceUpdateUniRenderFlag_ = flag;
+   224 |     }
+   225 |     std::shared_ptr<Drawing::Image> GetWatermarkImg();
+   226 |     bool GetWatermarkFlag();
+   227 | 
+   228 |     bool IsWatermarkFlagChanged() const
+   229 |     {
+   230 |         return lastWatermarkFlag_ != watermarkFlag_;
+   231 |     }
+   232 | 
+   233 |     void SetAppVSyncDistributor(const sptr<VSyncDistributor>& appVSyncDistributor)
+   234 |     {
+   235 |         appVSyncDistributor_ = appVSyncDistributor;
+   236 |     }
+   237 | 
+   238 |     DeviceType GetDeviceType() const;
+   239 |     bool HasMirrorDisplay() const;
+   240 |     uint64_t GetFocusNodeId() const;
+   241 |     uint64_t GetFocusLeashWindowId() const;
+   242 | 
+   243 |     ClearMemoryMoment GetClearMoment() const
+   244 |     {
+   245 |         if (!context_) {
+   246 |             return ClearMemoryMoment::NO_CLEAR;
