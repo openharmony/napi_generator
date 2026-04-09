@@ -9,7 +9,7 @@ Version: 1.0.0
 Usage:
     python3 gitlog.py <command> [arguments]
     or
-    python3 src/skills/gitlog/gitlog.py <command> [arguments]
+    python3 .claude/skills/gitlog/gitlog.py <command> [arguments]
 
 Commands:
     status          - Show git status
@@ -22,12 +22,12 @@ Commands:
     log-first-parent <range>  - Show commits with --first-parent option
     report [tag]    - Generate git status and log reports
     branches [--all|--local|--remote] - List and count branches with categorized statistics
-    commit [message] [--no-sign] [--skip-style-check] - Auto commit and push (runs check-style on changed C/C++ unless skipped)
+    commit [message] [--no-sign] - Auto commit and push changes with Signed-off-by (max 2000 lines per commit)
     sign-commits [range] - Sign existing commits (e.g., HEAD~5..HEAD or commit1..commit2)
     push [remote] [branch] - Push commits to remote repository
     config-token [username] [token] - Configure Git credential with token
     check-copyright [--fix] [--dry-run] - Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
-    check-style [--all] - C/C++: G.CNS.02, NAMING(constexpr UPPER_SNAKE), G.EXP.14-CPP, line≤120, one stmt/line, if braces
+    dir-csv <dir> [--remote origin] [--out file.csv] - Export commit history for path to CSV (default under gitlog/)
     help            - Show this help message
 """
 
@@ -35,12 +35,14 @@ import sys
 import subprocess
 import os
 import re
+import csv
+from datetime import datetime
 from pathlib import Path
 
 # Script metadata
 SCRIPT_DIR = Path(__file__).parent.absolute()
 SKILL_NAME = "gitlog"
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 AUTHOR = "Created by user"
 
 
@@ -54,13 +56,14 @@ def print_debug_info(command):
     print()
 
 
-def run_git_command(args, capture_output=False):
+def run_git_command(args, capture_output=False, cwd=None):
     """
     Run a git command and return the result
     
     Args:
         args: List of git command arguments
         capture_output: If True, capture and return output; if False, print directly
+        cwd: Working directory for git (optional)
     
     Returns:
         If capture_output is True, returns (returncode, stdout, stderr)
@@ -74,11 +77,12 @@ def run_git_command(args, capture_output=False):
                 git_cmd,
                 capture_output=True,
                 text=True,
-                check=False
+                check=False,
+                cwd=cwd,
             )
             return result.returncode, result.stdout, result.stderr
         else:
-            result = subprocess.run(git_cmd, check=False)
+            result = subprocess.run(git_cmd, check=False, cwd=cwd)
             return result.returncode
     except FileNotFoundError:
         print("❌ 错误: 未找到 git 命令，请确保 Git 已安装并在 PATH 中")
@@ -86,6 +90,106 @@ def run_git_command(args, capture_output=False):
     except Exception as e:
         print(f"❌ 错误: 执行 git 命令时出错: {e}")
         sys.exit(1)
+
+
+def remote_to_commit_url(remote_url: str, sha: str) -> str:
+    """Best-effort HTTPS commit URL from `git remote get-url` output."""
+    if not remote_url or not sha:
+        return ""
+    u = remote_url.strip().rstrip("/")
+    # git@host:org/repo.git
+    m = re.match(r"^git@([^:]+):(.+?)(?:\.git)?$", u)
+    if m:
+        host, path = m.group(1), m.group(2).strip("/")
+        return f"https://{host}/{path}/commit/{sha}"
+    # ssh://git@host/path/repo.git
+    m = re.match(r"^ssh://(?:git@)?([^/]+)/(.+?)(?:\.git)?$", u)
+    if m:
+        host, path = m.group(1), m.group(2).strip("/")
+        if host.startswith("git@"):
+            host = host.split("@", 1)[-1]
+        return f"https://{host}/{path}/commit/{sha}"
+    # https://host/org/repo(.git)
+    m = re.match(r"^https?://([^/]+)/(.+?)(?:\.git)?/?$", u)
+    if m:
+        host, path = m.group(1), m.group(2).strip("/")
+        # strip user:token@
+        if "@" in host:
+            host = host.split("@")[-1]
+        return f"https://{host}/{path}/commit/{sha}"
+    return f"{u}#{sha}"
+
+
+def cmd_dir_csv(target_dir, remote_name="origin", out_csv=None):
+    """
+    Export git log for all commits touching a path (directory) to CSV under gitlog skill dir.
+
+    Columns: 提交人, 提交时间, commit_id, url
+    """
+    if not target_dir:
+        print("❌ 错误: 请指定目录路径")
+        print(f"用法: {sys.argv[0]} dir-csv <目录> [--remote origin] [--out 路径.csv]")
+        return 1
+
+    abs_dir = os.path.abspath(os.path.expanduser(target_dir))
+    if not os.path.isdir(abs_dir):
+        print(f"❌ 错误: 不是目录: {abs_dir}")
+        return 1
+
+    rc, git_root, err = run_git_command(["rev-parse", "--show-toplevel"], capture_output=True, cwd=abs_dir)
+    if rc != 0:
+        print(f"❌ 错误: 指定路径不在 Git 仓库内: {err.strip()}")
+        return 1
+
+    git_root = git_root.strip()
+    rel = os.path.relpath(abs_dir, git_root)
+    path_arg = "." if rel == "." else rel.replace(os.sep, "/")
+
+    sep = "\x1f"
+    pretty = sep.join(["%H", "%an", "%ae", "%aI"])
+    rc, log_out, err = run_git_command(
+        ["log", f"--pretty=format:{pretty}", "--", path_arg],
+        capture_output=True,
+        cwd=git_root,
+    )
+    if rc != 0:
+        print(f"❌ 错误: git log 失败: {err.strip()}")
+        return rc
+
+    rc, remote_url, _ = run_git_command(
+        ["remote", "get-url", remote_name], capture_output=True, cwd=git_root
+    )
+    base_remote = remote_url.strip() if rc == 0 else ""
+
+    rows = []
+    for line in log_out.splitlines():
+        parts = line.split(sep)
+        if len(parts) < 4:
+            continue
+        sha, an, ae, ai = parts[0], parts[1], parts[2], parts[3]
+        url = remote_to_commit_url(base_remote, sha)
+        rows.append((an, ai, sha, url))
+
+    if out_csv:
+        out_path = os.path.abspath(os.path.expanduser(out_csv))
+    else:
+        safe = re.sub(r"[^a-zA-Z0-9_.-]+", "_", path_arg)[:100].strip("_") or "repo_root"
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        out_path = str(SCRIPT_DIR / f"dir_commit_history_{safe}_{ts}.csv")
+
+    out_dir = os.path.dirname(out_path)
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
+    with open(out_path, "w", newline="", encoding="utf-8-sig") as fp:
+        w = csv.writer(fp)
+        w.writerow(["提交人", "提交时间", "commit_id", "url"])
+        w.writerows(rows)
+
+    print(f"✓ 仓库根: {git_root}")
+    print(f"✓ 路径过滤: {path_arg}（相对仓库根）")
+    print(f"✓ 远程: {remote_name} → {base_remote or '(无)'}")
+    print(f"✓ 共 {len(rows)} 条提交 → {out_path}")
+    return 0
 
 
 def show_help():
@@ -106,10 +210,10 @@ Commands:
   log-first-parent <range>  Show commits with --first-parent (e.g., tag^..HEAD)
   report [tag]              Generate git-status.txt and git-log.txt files
   branches [--all|--local|--remote]  List and count branches with categorized statistics
-  commit [message] [--no-sign] [--skip-style-check]  Auto commit and push (pre-commit C/C++ style check by default)
+  commit [message] [--no-sign]  Auto commit and push changes with Signed-off-by (max 2000 lines per commit)
   push [remote] [branch]    Push commits to remote repository
   check-copyright [--fix] [--dry-run]  Check and fix copyright headers in source files (.ets, .h, .cpp, .c, .d.ts)
-  check-style [--all]       C/C++: G.CNS.02, NAMING(k前缀常量→UPPER_SNAKE), G.EXP.14-CPP, 行≤120, 单语句, if 大括号
+  dir-csv <目录> [--remote origin] [--out 文件.csv]  导出该目录（相对仓库）下所有相关提交到 CSV；默认写入技能目录 .claude/skills/gitlog/
   help                      Show this help message
 
 Examples:
@@ -128,19 +232,19 @@ Examples:
   {sys.argv[0]} check-copyright
   {sys.argv[0]} check-copyright --fix
   {sys.argv[0]} check-copyright --dry-run
-  {sys.argv[0]} check-style
-  {sys.argv[0]} check-style --all
   {sys.argv[0]} commit "Commit message"
   {sys.argv[0]} commit --no-sign "Commit without signature"
   {sys.argv[0]} sign-commits HEAD~5..HEAD
   {sys.argv[0]} sign-commits 3d5a298..HEAD
   {sys.argv[0]} config-token username your_token_here
   (Note: commit command will automatically push after committing)
-  (Note: commit runs check-style on changed .cpp/.h unless you pass --skip-style-check)
   (Note: By default, commits will include Signed-off-by line. Use --no-sign to disable it)
   {sys.argv[0]} push
   {sys.argv[0]} push origin master
   {sys.argv[0]} config-token username your_token_here
+  {sys.argv[0]} dir-csv foundation/graphic
+  {sys.argv[0]} dir-csv ./src --remote origin
+  {sys.argv[0]} dir-csv ./mydir --out /tmp/commits.csv
 """
     print(help_text)
 
@@ -916,7 +1020,7 @@ def delete_large_file_incremental(file_path, message, commit_count, max_lines_pe
         return commit_count, False
 
 
-def cmd_commit(message=None, sign=True, skip_style_check=False):
+def cmd_commit(message=None, sign=True):
     """
     Auto commit and push changes with 2000 lines limit per commit
     Processes files one by one, adding and committing when limit is reached
@@ -926,18 +1030,12 @@ def cmd_commit(message=None, sign=True, skip_style_check=False):
     Args:
         message: Optional commit message. If None, will generate automatically
         sign: Whether to add Signed-off-by line to commits (default: True，即默认带 -s)
-        skip_style_check: If False (default), run check-style on changed C/C++ before any commit
     
     Returns:
         Exit code (0 if both commit and push succeed, non-zero if either fails)
     """
     MAX_LINES_PER_COMMIT = 2000
     MAX_LINES_PER_PART = 1898  # For splitting large files
-
-    if not skip_style_check:
-        style_rc = cmd_check_style(scan_all=False)
-        if style_rc != 0:
-            return style_rc
     
     # 默认 sign=True，为提交添加 Signed-off-by（git commit -s）
     if sign:
@@ -1421,273 +1519,6 @@ def find_source_files(root_dir='.'):
     return sorted(source_files)
 
 
-# --- OpenHarmony-oriented C/C++ style (G.CNS.02, G.EXP.14-CPP, layout/brace rules) ---
-
-STYLE_CPP_SUFFIXES = ('.cpp', '.cc', '.cxx', '.hpp', '.h', '.hh')
-STYLE_MAX_LINE_LENGTH = 120
-
-# G.CNS.02: NAPI callback argc / args[] stack array size should not use raw literals ≥ 2
-_RE_NAPI_ARGC_LITERAL = re.compile(r'\bsize_t\s+argc\s*=\s*(\d+)\s*;')
-_RE_NAPI_ARGS_STACK = re.compile(r'\bnapi_value\s+args\[\s*(\d+)\s*\]\s*;')
-# NAPI callback: args[0]/args[1]/… must use named indices (e.g. K_NAPI_ARG_INDEX_0), not literals
-_RE_NAPI_ARGS_SUBSCRIPT = re.compile(r'\bargs\[\s*(\d+)\s*\]')
-
-def _style_constexpr_kprefixed_decl_name(code):
-    """
-    OpenHarmony: file/namespace scope constexpr constants should be UPPER_SNAKE_CASE.
-    Return declarator name if it looks like kPascalCase (e.g. kNapiArgCountOne); else None.
-    Uses LHS of the first '=' only (avoids RHS identifiers like kDefault).
-    """
-    if '//' in code:
-        code = code.split('//', 1)[0]
-    code_st = code.strip()
-    if not code_st.startswith('constexpr') or '=' not in code_st:
-        return None
-    lhs = code_st.split('=', 1)[0].strip()
-    if not lhs.startswith('constexpr'):
-        return None
-    after_kw = lhs[len('constexpr'):].lstrip()
-    if not after_kw:
-        return None
-    parts = re.split(r'\s+', after_kw)
-    last = parts[-1]
-    if any(c in last for c in '()[]:*&<'):
-        return None
-    if re.fullmatch(r'k[A-Z][a-zA-Z0-9]*', last):
-        return last
-    return None
-# Comma-separated definitions: int64_t a = 0, b = 0; — one line should have one statement
-_RE_MULTI_VAR_DECL = re.compile(
-    r'^\s*(?:static\s+)?(?:const\s+)?'
-    r'(?:int64_t|int32_t|uint32_t|uint64_t|int16_t|uint16_t|int8_t|uint8_t|double|float|bool|'
-    r'size_t|ptrdiff_t)\s+'
-    r'\w+\s*=\s*[^;]+,\s*\w+\s*='
-)
-
-
-def _style_strip_line_comment(line):
-    if '//' in line:
-        return line.split('//', 1)[0]
-    return line
-
-
-def _style_top_level_semicolon_count(s):
-    """Count semicolons at nesting depth 0 (skip for/while/if parens and braced blocks)."""
-    depth = 0
-    count = 0
-    for c in s:
-        if c in '([{':
-            depth += 1
-        elif c in ')]}':
-            if depth > 0:
-                depth -= 1
-        elif c == ';' and depth == 0:
-            count += 1
-    return count
-
-
-def _style_if_missing_brace_issues(lines):
-    """
-    Flag `if` whose body is not wrapped in `{` } (same line or next non-empty line).
-    Skips lines that are clearly `else if` continuation (handled when body of prior if).
-    """
-    issues = []
-    n = len(lines)
-    i = 0
-    while i < n:
-        raw = lines[i]
-        code = _style_strip_line_comment(raw).rstrip()
-        if not code.strip():
-            i += 1
-            continue
-        m = re.match(r'^\s*if\s*\(', code)
-        if not m:
-            i += 1
-            continue
-        if re.search(r'\bif\s+constexpr\s*\(', code):
-            i += 1
-            continue
-        open_idx = m.end() - 1
-        depth = 0
-        j = open_idx
-        close_idx = -1
-        while j < len(code):
-            c = code[j]
-            if c == '(':
-                depth += 1
-            elif c == ')':
-                depth -= 1
-                if depth == 0:
-                    close_idx = j
-                    break
-            j += 1
-        if close_idx < 0:
-            i += 1
-            continue
-        after = code[close_idx + 1:].strip()
-        lineno = i + 1
-        if after.startswith('{'):
-            i += 1
-            continue
-        if after != '':
-            issues.append((lineno, 'BRACE', 'if 语句体应使用大括号'))
-            i += 1
-            continue
-        k = i + 1
-        while k < n:
-            next_code = _style_strip_line_comment(lines[k]).strip()
-            if not next_code:
-                k += 1
-                continue
-            if next_code.startswith('{'):
-                break
-            issues.append((lineno, 'BRACE', 'if 语句体应使用大括号'))
-            break
-        i += 1
-    return issues
-
-
-def _style_line_has_c_style_cast(code):
-    """G.EXP.14-CPP: flag common (T)expr C casts in C++ sources."""
-    if not code or code.isspace():
-        return False
-    # Allowlist: macro / attribute noise
-    if re.search(r'__attribute__\s*\(\(', code):
-        return False
-    # Typical C-style casts to replace with static_cast / reinterpret_cast
-    cast_type = (
-        r'(?:const\s+)?(?:volatile\s+)?'
-        r'(?:void\s*\*|size_t|ssize_t|intptr_t|uintptr_t|ptrdiff_t|'
-        r'u?int(?:8|16|32|64)_t|'
-        r'(?:unsigned\s+)?(?:char|short|int|long|long\s+long)\b|'
-        r'float|double|bool)'
-    )
-    # (type) where type matches above, followed by expression start
-    if re.search(r'\(\s*' + cast_type + r'\s*\)\s*[\w(]', code):
-        return True
-    # ((void*)0) and (void*)0
-    if re.search(r'\(\s*\(?\s*void\s*\*\s*\)?\s*0\s*\)', code):
-        return True
-    return False
-
-
-def check_cpp_style_file(file_path):
-    """
-    Returns list of (line_number, rule_id, message).
-    """
-    issues = []
-    try:
-        text = file_path.read_text(encoding='utf-8', errors='replace')
-    except OSError as e:
-        return [(0, 'IO', f'无法读取: {file_path}: {e}')]
-    lines = text.splitlines()
-    for lineno, line in enumerate(lines, 1):
-        stripped = line.strip()
-        if not stripped or stripped.startswith('#'):
-            continue
-        raw_line = line.rstrip('\r\n')
-        if len(raw_line) > STYLE_MAX_LINE_LENGTH:
-            code0 = _style_strip_line_comment(line)
-            st0 = code0.strip()
-            if not (st0.startswith('//') or st0.startswith('*')):
-                issues.append(
-                    (lineno, 'LINE-LENGTH',
-                     f'行宽 {len(raw_line)} 超过 {STYLE_MAX_LINE_LENGTH}，请换行或缩短')
-                )
-        code = _style_strip_line_comment(line)
-        if not code.strip():
-            continue
-        if _RE_MULTI_VAR_DECL.search(code):
-            issues.append((lineno, 'ONE-STATEMENT', '一行只应有一条声明，勿在同一行用逗号定义多个变量'))
-        if _style_top_level_semicolon_count(code) > 1:
-            st = code.lstrip()
-            if not (st.startswith('for ') or st.startswith('for(')):
-                issues.append((lineno, 'ONE-STATEMENT', '一行只应有一条语句，请拆分或多行'))
-        m = _RE_NAPI_ARGC_LITERAL.search(code)
-        if m:
-            n = int(m.group(1))
-            if n >= 2:
-                issues.append((lineno, 'G.CNS.02', f'不要用难以理解的 argc 字面量 {n}，请使用 constexpr 命名常量'))
-        m = _RE_NAPI_ARGS_STACK.search(code)
-        if m:
-            n = int(m.group(1))
-            if n >= 2:
-                issues.append((lineno, 'G.CNS.02', f'napi_value args[{n}] 不要用魔法数字作栈数组长度，请用命名常量'))
-        m = _RE_NAPI_ARGS_SUBSCRIPT.search(code)
-        if m:
-            n = int(m.group(1))
-            issues.append((lineno, 'G.CNS.02', f'不要用 args[{n}] 魔法下标，请使用 UPPER_SNAKE_CASE 索引常量（如 K_NAPI_ARG_INDEX_{n}）'))
-        bad_const = _style_constexpr_kprefixed_decl_name(code)
-        if bad_const:
-            issues.append(
-                (lineno, 'NAMING',
-                 f'全局 constexpr 常量应使用 UPPER_SNAKE_CASE（如 K_NAPI_ARG_COUNT_ONE），不要使用 `{bad_const}`')
-            )
-        if _style_line_has_c_style_cast(code):
-            issues.append((lineno, 'G.EXP.14-CPP', '不要使用 C 风格强制转换，请使用 static_cast / reinterpret_cast / const_cast'))
-    issues.extend(_style_if_missing_brace_issues(lines))
-    issues.sort(key=lambda x: (x[0], x[1]))
-    return issues
-
-
-def _style_collect_paths_from_changes():
-    """Paths to existing C/C++ files among git changes (modified / untracked)."""
-    paths = []
-    for file_path, status in get_changed_files():
-        if status == 'deleted':
-            continue
-        if not file_path.endswith(STYLE_CPP_SUFFIXES):
-            continue
-        p = Path(file_path)
-        if p.is_file():
-            paths.append(p.resolve())
-    return paths
-
-
-def cmd_check_style(scan_all=False):
-    """
-    Run C/C++ style heuristics: G.CNS.02, NAMING (constexpr 全局常量须 UPPER_SNAKE_CASE),
-    G.EXP.14-CPP, LINE-LENGTH (≤120), ONE-STATEMENT, BRACE (if 必须带大括号).
-
-    Args:
-        scan_all: If True, scan repo tree (same roots as copyright); else only changed files.
-    """
-    print('=== C/C++ Style Check (G.CNS.02, NAMING, G.EXP.14-CPP, 行宽/单语句/禁同行多变量/if 大括号) ===')
-    print()
-    if scan_all:
-        print('范围: 仓库内全部源文件（排除 third_party 等目录）')
-        roots = find_source_files()
-        paths = [p for p in roots if p.suffix in STYLE_CPP_SUFFIXES]
-    else:
-        print('范围: 当前工作区已变更的 .cpp/.h 等文件')
-        paths = _style_collect_paths_from_changes()
-    if not paths:
-        print('✓ 无待检查的 C/C++ 文件')
-        print()
-        return 0
-    total_issues = 0
-    for p in sorted(set(paths)):
-        rel = p
-        try:
-            rel = p.relative_to(Path.cwd())
-        except ValueError:
-            rel = p
-        found = check_cpp_style_file(p)
-        if found:
-            total_issues += len(found)
-            print(f'❌ {rel}')
-            for ln, rule, msg in found:
-                print(f'   行 {ln}: [{rule}] {msg}')
-            print()
-    if total_issues:
-        print(f'共 {total_issues} 处问题。修复后再提交，或使用 commit --skip-style-check 跳过（不推荐）。')
-        print()
-        return 1
-    print(f'✓ 已检查 {len(paths)} 个文件，未发现问题')
-    print()
-    return 0
-
-
 def cmd_check_copyright(dry_run=False, fix=False):
     """
     Check and optionally fix copyright headers in source files
@@ -2013,7 +1844,7 @@ def cmd_sign_commits(range_str=None):
         print("  5. 启动 GPG agent: gpg-agent --daemon")
         print()
         print("或者运行以下命令快速配置：")
-        print("  python3 src/skills/gitlog/gitlog.py setup-gpg")
+        print("  python3 .claude/skills/gitlog/gitlog.py setup-gpg")
         return 1
     
     signing_key = stdout.strip()
@@ -2234,8 +2065,7 @@ def main():
     elif command == 'commit':
         message = None
         sign = True  # 默认启用签名
-        skip_style_check = '--skip-style-check' in sys.argv
-        args = [a for a in (sys.argv[2:] if len(sys.argv) > 2 else []) if a != '--skip-style-check']
+        args = sys.argv[2:] if len(sys.argv) > 2 else []
         
         # Parse arguments
         if '--sign' in args:
@@ -2249,7 +2079,7 @@ def main():
             # Join remaining arguments as commit message
             message = ' '.join(args)
         
-        return cmd_commit(message, sign, skip_style_check)
+        return cmd_commit(message, sign)
     
     elif command == 'push':
         remote = None
@@ -2279,11 +2109,26 @@ def main():
         dry_run = '--dry-run' in sys.argv
         fix = '--fix' in sys.argv
         return cmd_check_copyright(dry_run=dry_run, fix=fix)
-    
-    elif command == 'check-style':
-        scan_all = '--all' in sys.argv
-        return cmd_check_style(scan_all=scan_all)
-    
+
+    elif command == 'dir-csv':
+        args_rest = sys.argv[2:]
+        remote_name = "origin"
+        out_path = None
+        positional = []
+        i = 0
+        while i < len(args_rest):
+            if args_rest[i] == "--remote" and i + 1 < len(args_rest):
+                remote_name = args_rest[i + 1]
+                i += 2
+            elif args_rest[i] == "--out" and i + 1 < len(args_rest):
+                out_path = args_rest[i + 1]
+                i += 2
+            else:
+                positional.append(args_rest[i])
+                i += 1
+        target = positional[0] if positional else None
+        return cmd_dir_csv(target, remote_name, out_path)
+
     elif command in ['help', '--help', '-h']:
         show_help()
         return 0
