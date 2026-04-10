@@ -33,3 +33,15 @@ function(_p7zip_trim _in _max_len _out_var)
   set(${_out_var} "${_s}" PARENT_SCOPE)
 endfunction()
 
+# _var: variable *name*; _what: short description for errors
+function(_p7zip_require_host_tool _var _what)
+  if(NOT DEFINED ${_var} OR "${${_var}}" STREQUAL "")
+    message(FATAL_ERROR "[p7zip] ${_what}: ${_var} is empty. Edit entry/src/main/cpp/CMakeLists.txt and fill absolute path.")
+  endif()
+  get_filename_component(_abs "${${_var}}" ABSOLUTE)
+  if(NOT EXISTS "${_abs}")
+    message(FATAL_ERROR "[p7zip] ${_what}: file not found (${_abs}). Check ${${_var}} in entry/src/main/cpp/CMakeLists.txt.")
+  endif()
+  set(${_var} "${_abs}" PARENT_SCOPE)
+endfunction()
+
