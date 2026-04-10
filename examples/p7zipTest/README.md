@@ -32,32 +32,23 @@ p7zipTest/
 │   └── app.json5                      # 应用基本信息
 ├── docs/                              # 项目文档
 │   ├── USAGE_EXAMPLES.md              # ArkTS/C++ 调用示例
+│   ├── BUILD_AND_USAGE_GUIDE.md       # 构建与使用指南
 │   ├── DEVELOPMENT_GUIDE.md           # 开发维护指南
 │   └── ERROR_CODES_REFERENCE.md       # 错误码文档
 ├── entry/                             # 主模块
 │   ├── build-profile.json5            # Native 构建入口与参数
 │   ├── src/main/
 │   │   ├── cpp/                       # C++ 原生代码
-│   │   │   ├── common/                # 通用工具
-│   │   │   │   ├── common.h           # 常量定义
-│   │   │   │   ├── ErrorCodes.h/cpp   # 错误码系统
-│   │   │   │   ├── FormatDetector.h/cpp # 格式检测器
-│   │   │   │   └── LzmaUtils.h/cpp    # LZMA 工具
-│   │   │   ├── compress/              # 压缩模块
-│   │   │   │   └── ArchiveCompressor.h/cpp
-│   │   │   ├── decompress/            # 解压模块
-│   │   │   │   ├── ArchiveHandler.h/cpp
-│   │   │   │   └── UnifiedDecompressor.h/cpp
-│   │   │   ├── napi/                  # Node-API 接口
-│   │   │   │   ├── napi_compress_async.cpp
-│   │   │   │   ├── napi_decompress_async.cpp
-│   │   │   │   └── napi_init.cpp
-│   │   │   └── CMakeLists.txt         # 业务库构建（libentry.so）
-│   │   ├── cpp_bootstrap/
-│   │   │   └── CMakeLists.txt         # 预构建入口（先构建 lib7z.so，再编译 cpp）
-│   │   ├── cmake/p7zip/
-│   │   │   ├── patches/               # p7zip 补丁与基线 commit
-│   │   │   └── scripts/               # prebuild/apply/build 等脚本
+│   │   │   ├── thirdparty/
+│   │   │   │   ├── source/            # 下载并保留的三方源码
+│   │   │   │   └── patch/             # 合并后的 OHOS 补丁、基线与脚本
+│   │   │   │       └── scripts/       # patch + prebuild + logging 脚本
+│   │   │   ├── wrapper/               # napi包裹层代码
+│   │   │   │   ├── common/            # 通用工具
+│   │   │   │   ├── compress/          # 压缩模块
+│   │   │   │   ├── decompress/        # 解压模块
+│   │   │   │   └── napi/              # Node-API 接口
+│   │   │   └── CMakeLists.txt         # 构建总入口（prebuild/apply/build + entry）
 │   │   ├── ets/                       # ArkTS 代码
 │   │   │   ├── pages/                 # UI 页面
 │   │   │   │   ├── MainMenu.ets       # 主菜单
@@ -69,12 +60,15 @@ p7zipTest/
 │   │   │       └── TestFileGenerator.ets # 测试文件生成器
 │   │   └── module.json5               # 模块配置
 │   └── libs/                          # 构建时自动生成的三方库产物
-│       ├── arm64-v8a/lib7z.so
-│       ├── armeabi-v7a/lib7z.so
-│       ├── x86_64/lib7z.so
-│       └── include/                   # p7zip 头文件
+│       └── (历史目录，当前流程不依赖)
 └── README.md                          # 项目总览
 ```
+
+当前 `lib7z.so` 产物路径为：
+
+- `entry/src/main/cpp/thirdparty/source/arm64-v8a/lib7z.so`
+- `entry/src/main/cpp/thirdparty/source/armeabi-v7a/lib7z.so`
+- `entry/src/main/cpp/thirdparty/source/x86_64/lib7z.so`
 
 ## 支持的格式
 
@@ -98,33 +92,28 @@ p7zipTest/
 
 - DevEco Studio：5.0.2 Release
 - OpenHarmony Native SDK：API 18+
-- GNU make：建议使用 `w64devkit` 提供的 `make.exe`（示例路径：`D:/software/w64devkit/bin/make.exe`，用户需修为为本机路径）
+- **宿主工具（本机）**：用于打补丁与编译 p7zip 源码，需在工程内配置完整路径（见下），不依赖 DevEco 传入的精简 `PATH`。
 
-安装与验证步骤：
-
-1. 下载并解压 [w64devkit Releases](https://github.com/skeeto/w64devkit/releases) 到固定目录（如 `D:/software/w64devkit`）
-2. 确认 `D:/software/w64devkit/bin` 下存在 `make.exe`
-3. 将 `D:/software/w64devkit/bin` 加入系统 `Path`
-4. 验证命令：
-
-```powershell
-make --version
-```
-
-也可直接执行（按本机安装路径修改）：
-
-```powershell
-D:/software/w64devkit/bin/make.exe --version
-```
+1. 编辑 `entry/src/main/cpp/CMakeLists.txt`（这是唯一需要用户填写路径的地方）。
+2. 填写以下变量的**完整路径**：
+   - `P7ZIP_HOST_MAKE`：GNU `make.exe`
+   - `P7ZIP_HOST_GIT`：`git.exe`
+   - `P7ZIP_HOST_PATCH`：GNU `patch.exe`
+   - `P7ZIP_HOST_SH`（可选，Windows 建议填）：`sh.exe`；留空则使用 `cmd.exe`。
+3. 当前环境的完整示例（可直接对照）：
+   - `P7ZIP_HOST_MAKE = C:/software/MinGW-w64/w64devkit/bin/make.exe`
+   - `P7ZIP_HOST_GIT = C:/software/Git/cmd/git.exe`
+   - `P7ZIP_HOST_PATCH = C:/software/Git/usr/bin/patch.exe`
+   - `P7ZIP_HOST_SH = C:/software/Git/usr/bin/sh.exe`
 
 #### 配置工程
 
-编辑 `entry/build-profile.json5`，确认 `externalNativeOptions`：
+编辑 `entry/build-profile.json5`，确认 `externalNativeOptions`（可按需保留 `P7ZIP_PATCH_STRICT` 等 CMake 变量；**不再**用 `arguments` 传 `make` 路径）：
 
 ```json5
 "externalNativeOptions": {
-  "path": "./src/main/cpp_bootstrap/CMakeLists.txt",
-  "arguments": "-DP7ZIP_MAKE=D:/software/w64devkit/bin/make.exe -DP7ZIP_PATCH_STRICT=ON",
+  "path": "./src/main/cpp/CMakeLists.txt",
+  "arguments": "-DP7ZIP_PATCH_STRICT=ON",
   "cppFlags": "",
   "abiFilters": [
     "arm64-v8a",
@@ -136,15 +125,24 @@ D:/software/w64devkit/bin/make.exe --version
 
 配置要点：
 
-- `P7ZIP_MAKE` 请填写本机 `make.exe` 的完整路径
-- 修改 `arguments` 后建议执行 `clean + rebuild`
+- 宿主 `make` / `git` / `patch` 路径**仅**在 `entry/src/main/cpp/CMakeLists.txt` 中配置
+- 修改 `arguments` 或 `CMakeLists.txt` 中路径变量后建议执行 `clean + rebuild`
 - 默认 `P7ZIP_REBUILD_IF_EXISTS=OFF`（已有 `lib7z.so` 时跳过重建）
 - 如需每次强制重建可加：`-DP7ZIP_REBUILD_IF_EXISTS=ON`
-- `entry/libs/include/p7zip` 头文件由预构建自动同步（清单见 `entry/src/main/cmake/p7zip/scripts/header_manifest.cmake`）
+- 头文件直接使用 `entry/src/main/cpp/thirdparty/source/p7zip-<commit>/CPP`，不再依赖 `entry/libs/include/p7zip` 同步流程
+- 下载得到的 p7zip 源码会保留在 `entry/src/main/cpp/thirdparty/source/`
 
-在 DevEco Studio 执行 `Build > Build Hap(s)/APP(s) > Build Hap(s)`，会自动完成 p7zip 下载、补丁应用、头文件同步和 `lib7z.so/libentry.so` 构建。
+在 DevEco Studio 执行 `Build > Build Hap(s)/APP(s) > Build Hap(s)`，会自动完成 p7zip 下载、补丁应用和 `lib7z.so/libentry.so` 构建。
 
-构建后确认产物：`entry/libs/arm64-v8a/lib7z.so`、`entry/libs/armeabi-v7a/lib7z.so`、`entry/libs/x86_64/lib7z.so`。
+构建链路（简版）：
+
+1. DevEco 从 `entry/build-profile.json5` 进入 `entry/src/main/cpp/CMakeLists.txt`
+2. `include(prebuild_lib7z.cmake)` 在**配置阶段（configure）**触发预构建脚本
+3. 预构建脚本下载源码、应用 `ohos-all.patch`、调用上游 `makefile.gcc` 产出 `lib7z.so`
+4. `entry` 目标链接 `lib7z.so`、`libace_napi.z.so`、`libhilog_ndk.z.so`
+5. **构建阶段（build）**通过 `add_custom_command` + `add_dependencies` 执行兜底构建规则
+
+构建后确认产物：`entry/src/main/cpp/thirdparty/source/arm64-v8a/lib7z.so`、`entry/src/main/cpp/thirdparty/source/armeabi-v7a/lib7z.so`、`entry/src/main/cpp/thirdparty/source/x86_64/lib7z.so`。
 
 ### 安装预编译包
 

@@ -18,9 +18,9 @@ napi_value CancelDecompress(napi_env env, napi_callback_info info);
 
 详细实现参见：
 
-- [napi_compress_async.cpp](../entry/src/main/cpp/napi/napi_compress_async.cpp)
-- [napi_decompress_async.cpp](../entry/src/main/cpp/napi/napi_decompress_async.cpp)
-- [napi_init.cpp](../entry/src/main/cpp/napi/napi_init.cpp)
+- [napi_compress_async.cpp](../entry/src/main/cpp/wrapper/napi/napi_compress_async.cpp)
+- [napi_decompress_async.cpp](../entry/src/main/cpp/wrapper/napi/napi_decompress_async.cpp)
+- [napi_init.cpp](../entry/src/main/cpp/wrapper/napi/napi_init.cpp)
 
 ### 压缩相关 API
 
