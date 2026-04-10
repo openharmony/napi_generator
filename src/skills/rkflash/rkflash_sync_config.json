@@ -1,0 +1,10 @@
+{
+  "sync_host": "192.168.16.71",
+  "sync_port": 22,
+  "sync_user": "root",
+  "sync_password": "kaihong",
+  "sync_remote": "/root/ohos/61release/src/out/rk3568/packages/phone/images",
+  "remote_ohos_para": "",
+  "raw_scp_cmd": "",
+  "leds_off_names": ["blue", "green", "red"]
+}
