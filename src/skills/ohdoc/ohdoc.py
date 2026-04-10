@@ -23,7 +23,7 @@ CLI：python ohdoc.py napi-test-doc [选项] / python ohdoc.py csv-test-doc [选
     用例追溯←功能模块；需求描述←用例名称；预置/步骤/预期←前置条件、步骤描述、预期结果；维护人、执行日期等见 SKILL.md。
     _fill_one_table 使用 data['identifier'] 作为行 0 右栏（缺省同 name，TS 模式不变）。
 
-详述与表格字段映射见同目录 SKILL.md。
+详述与表格字段映射见同目录 SKILL.md。Word 模板与 CSV 须放在 template/ 下本地自备（根 .gitignore 忽略 *.docx/*.csv，不入库）。
 """
 
 from __future__ import annotations

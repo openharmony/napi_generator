@@ -3,7 +3,7 @@ name: ohdoc
 description: "从「任务7.2：NAPI测试用例模板.docx」生成 Word：① `napi-test-doc` 从 TypeScript `*.test.ts` 解析填表；② `csv-test-doc` 从测试用例列表 CSV 填表。依赖 python-docx。详见本文与 HOWTOSKILLS.md §4.5。"
 author: "Created by user"
 created: "2026-04-10"
-version: "1.2.2"
+version: "1.2.3"
 ---
 
 # ohdoc：NAPI 测试用例文档生成
@@ -28,6 +28,8 @@ pip install -r src/skills/ohdoc/requirements.txt
 ```
 
 （**`python-docx`**，见 **`requirements.txt`**。）
+
+**模板与 CSV**：将 **`任务7.2：NAPI测试用例模板.docx`**（及可选设计文档模板、测试用例列表 **`.csv`**）置于 **`template/`** 目录下，**由你本地自备**。仓库根 **`.gitignore`** 中的 **`*.docx`** / **`*.csv`** 会忽略这些文件，**不会提交到 Git**；克隆仓库后需自行拷贝模板再运行脚本。
 
 ## 子命令与入口
 
@@ -147,11 +149,11 @@ python src/skills/ohdoc/ohdoc.py csv-test-doc --csv src/skills/ohdoc/template/11
 
 | 路径 | 说明 |
 |------|------|
-| **`template/任务7.2：NAPI测试用例模板.docx`** | 版式来源（勿删）；与「设计文档」模板区分。 |
+| **`template/任务7.2：NAPI测试用例模板.docx`** | 版式来源（**本地自备**，不入库）；与「设计文档」模板区分。 |
 | **`ohdoc.py`** | CLI 与生成逻辑；**模块 docstring** 为简要设计说明。 |
 | **`requirements.txt`** | **`python-docx`**。 |
-| **`napitest{YYYYMMDD}.docx`** / **`csvtest{YYYYMMDD}.docx`** | 默认生成物（可加入 **`.gitignore`**）。 |
-| **`template/*.csv`**（可选） | 测试用例列表来源示例，非脚本必需。 |
+| **`napitest{YYYYMMDD}.docx`** / **`csvtest{YYYYMMDD}.docx`** | 默认生成物（由 **`*.docx`** 忽略，不入库）。 |
+| **`template/*.csv`**（可选） | 测试用例列表；**本地自备**，不入库。 |
 
 ## 限制
 
