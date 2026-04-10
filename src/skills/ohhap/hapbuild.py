@@ -1,13 +1,26 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-OpenHarmony HAP 构建工具
-功能：
-1. 检查编译环境（SDK、工具链、Node版本、Hvigor版本）
-2. 验证版本一致性
-3. 执行 HAP 编译
-4. HAP 签名功能
-5. 清除签名功能
+OpenHarmony HAP 构建与签名（Windows / Linux 同一套逻辑，路径自适应）。
+
+功能概要：
+1. 检查编译环境（HOS_CLT_PATH、OHOS_SDK_PATH、Node、Hvigor 等）
+2. 验证 SDK 与 build-profile.json5 的版本一致性（支持 targetSdkVersion 为 6.0.0(20) 或数字 20）
+3. 执行 HAP 编译（主包 / ohosTest）
+4. HAP 签名（sign）与清除签名工作目录（clean-sign）
+
+编译传参：build / build-test 的第一个参数为工程根目录（含 build-profile.json5），相对或绝对路径均可；
+os.path.abspath 规范化。环境检查时会检查并必要时修正工程根下 local.properties 的 sdk.dir（与 OHOS_SDK_PATH
+一致）。详见 SKILL.md「Windows 下编译」。
+
+签名相关约定（详见同目录 SKILL.md）：
+- 环境变量：签名需 OHOS_SDK_PATH 或 DEVECO_SDK_HOME；证书目录 OHOS_HAPSIGNER_RESULT（含 OpenHarmony.p12、
+  rootCA.cer、subCA.cer 及 profile 用 pem）；可选 OHOS_HAPSIGNER_AUTOSIGN（模板与证书分目录时）。
+- hap-sign-tool.jar：优先按工程 API 在 <SDK>/<api>/toolchains/lib 查找（Windows DevEco 常见），其次
+  <SDK>/linux/toolchains/lib（Linux 常见）。
+- 项目下 autosign/：拷贝证书与工具后执行 hap-sign-tool；若 p12 中已有不兼容的 oh-app1-key-v1，会尝试用
+  keytool（JAVA_HOME 或 java.home 下 keytool / keytool.exe）在工作副本删除该别名后再 generate-keypair。
+- build-profile 中含 Windows 绝对路径的签名字段时，另有逻辑清理/提示，避免在 Linux 上误用。
 """
 
 import os
@@ -1100,6 +1113,168 @@ def find_all_unsigned_hap(project_dir):
     hap_files = find_hap_files(project_dir)
     return [f for f in hap_files if 'unsigned' in os.path.basename(f).lower()]
 
+
+def _sign_parse_api_level_from_build_profile(project_dir):
+    """从 build-profile.json5 解析 API 级别（支持数字 20 或 6.0.0(20) 形式）。"""
+    bp = os.path.join(project_dir, 'build-profile.json5')
+    if not os.path.isfile(bp):
+        return None
+    try:
+        with open(bp, 'r', encoding='utf-8') as f:
+            content = f.read()
+        content = re.sub(r'//.*', '', content)
+        content = re.sub(r',\s*}', '}', content)
+        content = re.sub(r',\s*]', ']', content)
+        data = json.loads(content)
+        products = (data.get('app') or {}).get('products') or []
+        if not products:
+            return None
+        p0 = products[0]
+        for key in ('compileSdkVersion', 'targetSdkVersion', 'compatibleSdkVersion'):
+            v = p0.get(key)
+            if v is None:
+                continue
+            if isinstance(v, int):
+                return str(v)
+            s = str(v).strip()
+            m = re.search(r'\((\d+)\)', s)
+            if m:
+                return m.group(1)
+            if s.isdigit():
+                return s
+    except Exception:
+        return None
+    return None
+
+
+def _resolve_hap_toolchain_lib(ohos_sdk_path, project_dir):
+    """解析含 hap-sign-tool.jar 的目录（支持 linux/… 与 Windows 下 <sdk>/<api>/toolchains/lib）。"""
+    if not ohos_sdk_path or not os.path.isdir(ohos_sdk_path):
+        return None
+    api = _sign_parse_api_level_from_build_profile(project_dir)
+    candidates = []
+    if api:
+        candidates.append(os.path.join(ohos_sdk_path, str(api), 'toolchains', 'lib'))
+    candidates.append(os.path.join(ohos_sdk_path, 'linux', 'toolchains', 'lib'))
+    try:
+        nums = sorted([n for n in os.listdir(ohos_sdk_path) if n.isdigit()], key=int, reverse=True)
+        for n in nums:
+            candidates.append(os.path.join(ohos_sdk_path, n, 'toolchains', 'lib'))
+    except OSError:
+        pass
+    seen = set()
+    for d in candidates:
+        if d in seen:
+            continue
+        seen.add(d)
+        jar = os.path.join(d, 'hap-sign-tool.jar')
+        if os.path.isfile(jar):
+            return d
+    return None
+
+
+def _resolve_hapsigner_result_dir():
+    """
+    OpenHarmony 源码 developtools/hapsigner/autosign/result（含 rootCA.cer、subCA.cer 等）。
+    优先环境变量 OHOS_HAPSIGNER_RESULT，其次 ~/ohos/*release/.../result。
+    """
+    env = (os.environ.get('OHOS_HAPSIGNER_RESULT') or '').strip()
+    if env:
+        p = os.path.normpath(os.path.expanduser(env))
+        if os.path.isdir(p):
+            return p
+    home = os.path.expanduser('~')
+    for ver in (
+        '63release', '62release', '61release', '60release',
+        '5.0release', '4.1release', '4.0release',
+    ):
+        cand = os.path.join(home, 'ohos', ver, 'src', 'developtools', 'hapsigner', 'autosign', 'result')
+        if os.path.isfile(os.path.join(cand, 'rootCA.cer')):
+            return cand
+    return None
+
+
+def _resolve_hapsigner_autosign_dir(cert_result_dir):
+    """Profile 模板所在目录（Unsgned*ProfileTemplate.json）。优先 OHOS_HAPSIGNER_AUTOSIGN。"""
+    env = (os.environ.get('OHOS_HAPSIGNER_AUTOSIGN') or '').strip()
+    if env:
+        p = os.path.normpath(os.path.expanduser(env))
+        if os.path.isdir(p):
+            return p
+    if cert_result_dir:
+        # 证书与模板在同一目录（自备 autosign 合并 layout，不等同于源码里的 result 子目录）
+        for name in ('UnsgnedReleasedProfileTemplate.json', 'UnsgnedDebugProfileTemplate.json'):
+            if os.path.isfile(os.path.join(cert_result_dir, name)):
+                return cert_result_dir
+        base = os.path.dirname(cert_result_dir)
+        if os.path.isdir(base):
+            return base
+    home = os.path.expanduser('~')
+    for ver in ('63release', '62release', '61release', '60release'):
+        cand = os.path.join(home, 'ohos', ver, 'src', 'developtools', 'hapsigner', 'autosign')
+        if os.path.isdir(cand):
+            return cand
+    return None
+
+
+def _find_java_home_from_runtime():
+    try:
+        r = subprocess.run(
+            ['java', '-XshowSettings:properties', '-version'],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        for block in (r.stderr or '', r.stdout or ''):
+            for line in block.splitlines():
+                s = line.strip()
+                if s.startswith('java.home = '):
+                    return s.split('=', 1)[1].strip()
+    except Exception:
+        pass
+    jh = (os.environ.get('JAVA_HOME') or '').strip()
+    return jh or None
+
+
+def _find_keytool_path():
+    jh = (os.environ.get('JAVA_HOME') or '').strip()
+    if jh:
+        for name in ('keytool.exe', 'keytool'):
+            p = os.path.join(jh, 'bin', name)
+            if os.path.isfile(p):
+                return p
+    jh = _find_java_home_from_runtime()
+    if jh:
+        for name in ('keytool.exe', 'keytool'):
+            p = os.path.join(jh, 'bin', name)
+            if os.path.isfile(p):
+                return p
+    return None
+
+
+def _try_remove_sign_key_alias(autosign_dir, store_pass='123456', alias='oh-app1-key-v1'):
+    """
+    若 p12 中已有旧流程写入的 oh-app1-key-v1，部分环境下 hap-sign-tool 读取私钥会失败；
+    在 generate-keypair 前用 keytool 删除该别名，再生成即可与工具链一致。
+    """
+    kt = _find_keytool_path()
+    if not kt:
+        return False
+    ks = os.path.join(autosign_dir, 'OpenHarmony.p12')
+    if not os.path.isfile(ks):
+        return False
+    r = subprocess.run(
+        [kt, '-delete', '-alias', alias, '-keystore', ks, '-storepass', store_pass, '-storetype', 'PKCS12'],
+        capture_output=True,
+        text=True,
+        timeout=120,
+    )
+    if r.returncode == 0:
+        print(f"  ℹ 已用 keytool 移除旧别名 {alias}，将重新生成应用密钥对")
+        return True
+    return False
+
+
 def sign_hap(project_dir, profile_type='release'):
     """
     对 HAP 文件进行签名
@@ -1116,23 +1291,26 @@ def sign_hap(project_dir, profile_type='release'):
     print("=" * 80)
     
     # 检查环境变量
-    ohos_sdk_path = os.environ.get('OHOS_SDK_PATH')
+    ohos_sdk_path = os.environ.get('OHOS_SDK_PATH') or os.environ.get('DEVECO_SDK_HOME')
     if not ohos_sdk_path:
-        print("❌ 错误: 未设置环境变量 OHOS_SDK_PATH")
+        print("❌ 错误: 未设置环境变量 OHOS_SDK_PATH 或 DEVECO_SDK_HOME")
         return False
     
-    # 检查证书文件目录
-    cert_source_dir = os.path.expanduser('~/ohos/60release/src/developtools/hapsigner/autosign/result')
-    if not os.path.exists(cert_source_dir):
-        print(f"❌ 错误: 证书文件目录不存在: {cert_source_dir}")
-        print("  请确保已正确设置证书文件路径")
+    # 证书目录：OpenHarmony 源码 hapsigner/autosign/result（含 rootCA.cer、subCA.cer）
+    cert_source_dir = _resolve_hapsigner_result_dir()
+    if not cert_source_dir:
+        print("❌ 错误: 未找到 hapsigner 证书目录（需含 rootCA.cer、subCA.cer、OpenHarmony.p12 等）")
+        print("  请设置 OHOS_HAPSIGNER_RESULT 指向 developtools/hapsigner/autosign/result")
+        print("  或在本机 ~/ohos/<版本>release/src/developtools/hapsigner/autosign/result 准备证书")
         return False
     
-    # 检查 SDK 工具
-    hap_sign_tool = os.path.join(ohos_sdk_path, 'linux', 'toolchains', 'lib', 'hap-sign-tool.jar')
-    if not os.path.exists(hap_sign_tool):
-        print(f"❌ 错误: 未找到 hap-sign-tool.jar: {hap_sign_tool}")
+    toolchain_lib_dir = _resolve_hap_toolchain_lib(ohos_sdk_path, project_dir)
+    if not toolchain_lib_dir:
+        print(f"❌ 错误: 未找到 hap-sign-tool.jar（已检查 SDK 下 API 目录与 linux/toolchains/lib）")
+        print(f"  OHOS_SDK_PATH / DEVECO_SDK_HOME = {ohos_sdk_path}")
         return False
+    
+    hap_sign_tool = os.path.join(toolchain_lib_dir, 'hap-sign-tool.jar')
     
     # 解析 bundleName
     bundle_name = parse_bundle_name(project_dir)
@@ -1168,19 +1346,26 @@ def sign_hap(project_dir, profile_type='release'):
     # 步骤 2: 拷贝证书文件和相关文件
     print(f"\n步骤 2: 拷贝证书文件和相关文件...")
     try:
-        # 拷贝证书文件
-        cert_files = ['OpenHarmony.p12', 'OpenHarmonyProfileRelease.pem', 'rootCA.cer', 'subCA.cer']
-        for cert_file in cert_files:
+        # 拷贝证书文件（CA 链与 p12 必须来自 hapsigner/autosign/result）
+        required_certs = ['OpenHarmony.p12', 'rootCA.cer', 'subCA.cer']
+        for cert_file in required_certs:
             src = os.path.join(cert_source_dir, cert_file)
+            if not os.path.exists(src):
+                print(f"❌ 错误: 必需证书文件不存在: {src}")
+                return False
+            shutil.copy2(src, os.path.join(autosign_dir, cert_file))
+            print(f"  ✓ 已拷贝: {cert_file}")
+        for pem in ('OpenHarmonyProfileRelease.pem', 'OpenHarmonyProfileDebug.pem'):
+            src = os.path.join(cert_source_dir, pem)
             if os.path.exists(src):
-                dst = os.path.join(autosign_dir, cert_file)
-                shutil.copy2(src, dst)
-                print(f"  ✓ 已拷贝: {cert_file}")
-            else:
-                print(f"  ⚠ 警告: 证书文件不存在: {src}")
+                shutil.copy2(src, os.path.join(autosign_dir, pem))
+                print(f"  ✓ 已拷贝: {pem}")
+        need_pem = 'OpenHarmonyProfileRelease.pem' if profile_type == 'release' else 'OpenHarmonyProfileDebug.pem'
+        if not os.path.exists(os.path.join(autosign_dir, need_pem)):
+            print(f"❌ 错误: {profile_type} 签名需要 {need_pem}，但证书目录中未找到: {cert_source_dir}")
+            return False
         
         # 拷贝工具文件
-        toolchain_lib_dir = os.path.join(ohos_sdk_path, 'linux', 'toolchains', 'lib')
         tool_files = ['hap-sign-tool.jar', 'app_check_tool.jar', 'app_packing_tool.jar', 
                       'app_unpacking_tool.jar', 'binary-sign-tool']
         for tool_file in tool_files:
@@ -1191,7 +1376,11 @@ def sign_hap(project_dir, profile_type='release'):
                 print(f"  ✓ 已拷贝: {tool_file}")
         
         # 拷贝模板文件
-        template_source_dir = os.path.expanduser('~/ohos/60release/src/developtools/hapsigner/autosign')
+        template_source_dir = _resolve_hapsigner_autosign_dir(cert_source_dir)
+        if not template_source_dir:
+            print("❌ 错误: 未找到 Profile 模板目录（Unsgned*ProfileTemplate.json）")
+            print("  请设置 OHOS_HAPSIGNER_AUTOSIGN 指向 developtools/hapsigner/autosign")
+            return False
         template_files = ['UnsgnedDebugProfileTemplate.json', 'UnsgnedReleasedProfileTemplate.json']
         for template_file in template_files:
             src = os.path.join(template_source_dir, template_file)
@@ -1276,6 +1465,7 @@ def sign_hap(project_dir, profile_type='release'):
         
         # 步骤 4: 生成应用签名证书密钥对
         print(f"\n步骤 4: 生成应用签名证书密钥对...")
+        _try_remove_sign_key_alias(autosign_dir)
         cmd = [
             'java', '-jar', 'hap-sign-tool.jar', 'generate-keypair',
             '-keyAlias', 'oh-app1-key-v1',
@@ -1288,11 +1478,16 @@ def sign_hap(project_dir, profile_type='release'):
         print(f"  命令: {' '.join(cmd)}")
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
         if result.returncode != 0:
-            print(f"❌ 错误: 生成密钥对失败")
-            print(f"  输出: {result.stdout}")
-            print(f"  错误: {result.stderr}")
-            return False
-        print(f"✓ 密钥对生成成功")
+            combined = (result.stdout or '') + (result.stderr or '')
+            if 'Key alias is exist' in combined or '11014002' in combined:
+                print(f"  ℹ 密钥别名 oh-app1-key-v1 已在 OpenHarmony.p12 中，跳过生成，沿用已有密钥")
+            else:
+                print(f"❌ 错误: 生成密钥对失败")
+                print(f"  输出: {result.stdout}")
+                print(f"  错误: {result.stderr}")
+                return False
+        else:
+            print(f"✓ 密钥对生成成功")
         
         # 步骤 5: 生成应用签名证书
         print(f"\n步骤 5: 生成应用签名证书...")
@@ -1325,12 +1520,18 @@ def sign_hap(project_dir, profile_type='release'):
         # 步骤 6: 对 profile 文件进行签名
         print(f"\n步骤 6: 对 profile 文件进行签名...")
         profile_template = 'UnsgnedReleasedProfileTemplate.json' if profile_type == 'release' else 'UnsgnedDebugProfileTemplate.json'
+        if profile_type == 'release':
+            profile_key_alias = 'openharmony application profile release'
+            profile_pem = './OpenHarmonyProfileRelease.pem'
+        else:
+            profile_key_alias = 'openharmony application profile debug'
+            profile_pem = './OpenHarmonyProfileDebug.pem'
         cmd = [
             'java', '-jar', 'hap-sign-tool.jar', 'sign-profile',
-            '-keyAlias', 'openharmony application profile release',
+            '-keyAlias', profile_key_alias,
             '-signAlg', 'SHA256withECDSA',
             '-mode', 'localSign',
-            '-profileCertFile', './OpenHarmonyProfileRelease.pem',
+            '-profileCertFile', profile_pem,
             '-inFile', profile_template,
             '-keystoreFile', './OpenHarmony.p12',
             '-outFile', 'app1-profile.p7b',
