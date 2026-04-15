@@ -11,7 +11,7 @@
 -a参数中包含的依赖：
 
 ```
-(-DOPENSSL_INCLUDE_DIR=/home/kaihong1/Openharmony1207/third_party/boringssl/src/include,-DOPENSSL_CRYPTO_LIBRARY=/home/kaihong1/Openharmony1207/out/hi3516dv300/developtools/profiler/libcrypto.z.so,-DOPENSSL_SSL_LIBRARY=/home/kaihong1/Openharmony1207/out/hi3516dv300/developtools/profiler/libssl.z.so)
+(-DOPENSSL_INCLUDE_DIR=/home/kaihong1/Openharmony1207/third_party/boringssl/src/include,-DOPENSSL_CRYPTO_LIBRARY=/home/kaihong1/Openharmony1207/out/hi3516dv300/developtools/pro-filer/libcrypto.z.so,-DOPENSSL_SSL_LIBRARY=/home/kaihong1/Openharmony1207/out/hi3516dv300/developtools/pro-filer/libssl.z.so)
 ```
 
 生成的BUILD.gn文件（build_tmp/lib/BUILD.gn）：
@@ -19,8 +19,8 @@
 ```
  ...
  deps = [
-        "//out/hi3516dv300/developtools/profiler/libssl.z.so",
-        "//out/hi3516dv300/developtools/profiler/libcrypto.z.so"
+        "//out/hi3516dv300/developtools/pro-filer/libssl.z.so",
+        "//out/hi3516dv300/developtools/pro-filer/libcrypto.z.so"
     ]
  ...
 ```

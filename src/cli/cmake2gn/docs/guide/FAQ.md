@@ -30,7 +30,7 @@
 
 问题解决：OpenHarmony源码存在openssl库，且在out路径下包含libcrypto.z.so镜像。因此，在使用VS Code插件转换生成gn脚本时，在编译选项中指定libcrypto.z.so路径、openssl库源文件路径即可，命令如下：
 
-	(-DOPENSSL_ROOT_DIR=abc,-DOPENSSL_INCLUDE_DIR=/home/harmony/OpenHarmony/third_party/boringssl/src/include,-DOPENSSL_CRYPTO_LIBRARY=/home/harmony/OpenHarmony/out/khdvk_rk3568_a/developtools/profiler/libcrypto.z.so)
+	(-DOPENSSL_ROOT_DIR=abc,-DOPENSSL_INCLUDE_DIR=/home/harmony/OpenHarmony/third_party/boringssl/src/include,-DOPENSSL_CRYPTO_LIBRARY=/home/harmony/OpenHarmony/out/khdvk_rk3568_a/developtools/pro-filer/libcrypto.z.so)
 
 ![](./../figures/curl_not_find_openssl_lib.png)
 
@@ -42,7 +42,7 @@
 
 问题解决：编译转换时增加指定libssl.z.so路径，命令如下：
 
-	(-DOPENSSL_ROOT_DIR=abc,-DOPENSSL_INCLUDE_DIR=/home/harmony/OpenHarmony/third_party/boringssl/src/include,-DOPENSSL_CRYPTO_LIBRARY=/home/harmony/OpenHarmony/out/khdvk_rk3568_a/developtools/profiler/libcrypto.z.so,-DOPENSSL_SSL_LIBRARY=/home/harmony/OpenHarmony/out/khdvk_rk3568_a/developtools/profiler/libssl.z.so)
+	(-DOPENSSL_ROOT_DIR=abc,-DOPENSSL_INCLUDE_DIR=/home/harmony/OpenHarmony/third_party/boringssl/src/include,-DOPENSSL_CRYPTO_LIBRARY=/home/harmony/OpenHarmony/out/khdvk_rk3568_a/developtools/pro-filer/libcrypto.z.so,-DOPENSSL_SSL_LIBRARY=/home/harmony/OpenHarmony/out/khdvk_rk3568_a/developtools/pro-filer/libssl.z.so)
 
 ![](./../figures/curl_generate.png)
 
@@ -58,17 +58,17 @@
 
 ### 转换third_party/libphonenumber库
 
-1、使用VS Code插件转换libphonenumber库时，参数填写如图所示，点击ok之后，右下角弹出genError日志，可将日志信息全部复制到日记本等工具，查看日志显示: "Can't find Google C++ Testing Framework"。
+1、使用VS Code插件转换libphonenumber库时，参数填写如图所示，点击ok之后，右下角弹出genError日志，可将日志信息全部复制到日记本等工具，查看日志显示: "Can't find Go-ogle C++ Testing Framework"。
 
 ![](./../figures/libphnum_not_find_gg.png)
 
 ![](./../figures/libphnum_not_find_gtest.png)
 
-问题定位：工具在转换时未指定gtest路径，导致转换生成gn脚本时找不到“Google C++ Testing Framework”。
+问题定位：工具在转换时未指定gtest路径，导致转换生成gn脚本时找不到“go-ogle C++ Testing Framework”。
 
 问题解决：OpenHarmony源码存在gtest库，因此在使用VS Code插件转换时，在编译选项处指定gtest路径即可，具体填写如下：
 
-	(-DGTEST_INCLUDE_DIR=/home/harmony/OpenHarmony/third_party/googletest/googletest/include)
+	(-DGTEST_INCLUDE_DIR=/home/harmony/OpenHarmony/third_party/go-ogletest/go-ogletest/include)
 
 ![](./../figures/libphnum_not_find_gg_sourcedir.png)
 
@@ -80,7 +80,7 @@
 
 问题解决：在工具编译选项处增加指定GTEST_SOURCE_DIR路径，具体填写如下：
 
-	(-DGTEST_INCLUDE_DIR=/home/harmony/OpenHarmony/third_party/googletest/googletest/include,-DGTEST_SOURCE_DIR=/home/harmony/OpenHarmony/third_party/googletest/googletest)
+	(-DGTEST_INCLUDE_DIR=/home/harmony/OpenHarmony/third_party/go-ogletest/go-ogletest/include,-DGTEST_SOURCE_DIR=/home/harmony/OpenHarmony/third_party/go-ogletest/go-ogletest)
 
 ![](./../figures/libphnum_generate_success.png)
 
