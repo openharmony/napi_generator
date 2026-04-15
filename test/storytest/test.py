@@ -10,6 +10,7 @@
 import os
 import sys
 
+
 def do_test():
     if not os.path.isfile("@ohos.test.d.ts"):
         return
@@ -42,7 +43,7 @@ if __name__ == "__main__":
                 do_test()
                 os.chdir("..")
             else:
-                print("error",fn,"is not exist")
+                print("error", fn, "is not exist")
     else:
         for fn in os.listdir("."):
             if os.path.isdir(fn):
