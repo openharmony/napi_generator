@@ -2390,11 +2390,11 @@
     },
     {
       "name": "Font_family_regular",
-      "value": "HarmonyOS Sans SC-Regular"
+      "value": "Sans SC-Regular"
     },
     {
       "name": "Font_family_medium",
-      "value": "HarmonyOS Sans SC-Medium"
+      "value": "Sans SC-Medium"
     },
     {
       "name": "Folder_expansion",
