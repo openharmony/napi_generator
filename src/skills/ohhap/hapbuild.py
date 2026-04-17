@@ -13,7 +13,14 @@ OpenHarmony HAP 构建与签名（Windows / Linux 同一套逻辑，路径自适
 os.path.abspath 规范化。环境检查时会检查并必要时修正工程根下 local.properties 的 sdk.dir（与 OHOS_SDK_PATH
 一致）。详见 SKILL.md「Windows 下编译」。
 
+Hvigor 入口（与 ohxtsstatic 静态 XTS 对齐）：
+- 默认使用 $HOS_CLT_PATH/hvigor/bin/hvigorw.js
+- 静态用例工程：设置 OHOS_USE_HVIGOR_STATIC=1 使用 $HOS_CLT_PATH/hvigor-static/bin/hvigorw.js
+- 或设置 OHOS_HVIGORW_JS 为 hvigorw.js 的绝对路径（最高优先级）
+
 签名相关约定（详见同目录 SKILL.md）：
+- build / build-test 成功后：若已设置 OHOS_HAPSIGNER_RESULT（或存在默认证书目录），自动执行命令行签名；
+  可用 OHOS_HAPSIGNER_AUTO_SIGN=0 关闭；OHOS_HAPSIGNER_PROFILE 可强制 debug/release。
 - 环境变量：签名需 OHOS_SDK_PATH 或 DEVECO_SDK_HOME；证书目录 OHOS_HAPSIGNER_RESULT（含 OpenHarmony.p12、
   rootCA.cer、subCA.cer 及 profile 用 pem）；可选 OHOS_HAPSIGNER_AUTOSIGN（模板与证书分目录时）。
 - hap-sign-tool.jar：优先按工程 API 在 <SDK>/<api>/toolchains/lib 查找（Windows DevEco 常见），其次
@@ -889,6 +896,33 @@ def _resolve_node_cmd(hos_clt_path):
     return shutil.which('node') or 'node'
 
 
+def _resolve_hvigorw_js(hos_clt_path):
+    """
+    解析用于 assembleHap 的 hvigorw.js 路径。
+
+    优先级：
+    1) 环境变量 OHOS_HVIGORW_JS（须为存在的文件路径）
+    2) OHOS_USE_HVIGOR_STATIC 为 1/true/yes/on 时：HOS_CLT_PATH/hvigor-static/bin/hvigorw.js（静态 XTS / ArkTS 1.2 等）
+    3) 默认：HOS_CLT_PATH/hvigor/bin/hvigorw.js
+    4) 若默认不存在且 hvigor-static 存在，则回退到 hvigor-static
+    """
+    if not hos_clt_path or not os.path.isdir(hos_clt_path):
+        return None
+    override = os.environ.get('OHOS_HVIGORW_JS', '').strip()
+    if override:
+        return override if os.path.isfile(override) else None
+    static_js = os.path.join(hos_clt_path, 'hvigor-static', 'bin', 'hvigorw.js')
+    use_static = os.environ.get('OHOS_USE_HVIGOR_STATIC', '').strip().lower() in ('1', 'true', 'yes', 'on')
+    if use_static:
+        return static_js if os.path.isfile(static_js) else None
+    default_js = os.path.join(hos_clt_path, 'hvigor', 'bin', 'hvigorw.js')
+    if os.path.isfile(default_js):
+        return default_js
+    if os.path.isfile(static_js):
+        return static_js
+    return None
+
+
 def build_hap(project_dir, product='default', build_mode='debug'):
     """
     构建 HAP
@@ -917,13 +951,14 @@ def build_hap(project_dir, product='default', build_mode='debug'):
             print(f"❌ 错误: 未设置或无效的 HOS_CLT_PATH 环境变量")
             print(f"  请设置 HOS_CLT_PATH 指向 HarmonyOS Command Line Tools 目录")
             return False
-        hvigorw_js = os.path.join(hos_clt_path, 'hvigor', 'bin', 'hvigorw.js')
-        if not os.path.isfile(hvigorw_js):
-            print(f"❌ 错误: 未找到 hvigorw.js: {hvigorw_js}")
+        hvigorw_js = _resolve_hvigorw_js(hos_clt_path)
+        if not hvigorw_js or not os.path.isfile(hvigorw_js):
+            print(f"❌ 错误: 未找到可用的 hvigorw.js（已查 OHOS_HVIGORW_JS、OHOS_USE_HVIGOR_STATIC → hvigor-static、hvigor/bin）")
             return False
         node_cmd = _resolve_node_cmd(hos_clt_path)
         print(f"工作目录: {project_dir}")
         print(f"Node: {node_cmd}")
+        print(f"Hvigor: {hvigorw_js}")
         
         # 执行 clean（子进程 cwd=project_dir，确保 hvigor 读到项目内配置）
         print(f"\n执行清理...")
@@ -1000,13 +1035,14 @@ def build_test_hap(project_dir, module_name='entry@ohosTest', product='default')
             print(f"❌ 错误: 未设置或无效的 HOS_CLT_PATH 环境变量")
             print(f"  请设置 HOS_CLT_PATH 指向 HarmonyOS Command Line Tools 目录")
             return False
-        hvigorw_js = os.path.join(hos_clt_path, 'hvigor', 'bin', 'hvigorw.js')
-        if not os.path.isfile(hvigorw_js):
-            print(f"❌ 错误: 未找到 hvigorw.js: {hvigorw_js}")
+        hvigorw_js = _resolve_hvigorw_js(hos_clt_path)
+        if not hvigorw_js or not os.path.isfile(hvigorw_js):
+            print(f"❌ 错误: 未找到可用的 hvigorw.js（已查 OHOS_HVIGORW_JS、OHOS_USE_HVIGOR_STATIC → hvigor-static、hvigor/bin）")
             return False
         node_cmd = _resolve_node_cmd(hos_clt_path)
         print(f"工作目录: {project_dir}")
         print(f"Node: {node_cmd}")
+        print(f"Hvigor: {hvigorw_js}")
         
         # 编译单元测试（子进程 cwd=project_dir，确保 hvigor 读到项目内配置）
         print(f"\n执行单元测试 HAP 构建...")
@@ -1042,6 +1078,42 @@ def build_test_hap(project_dir, module_name='entry@ohosTest', product='default')
         import traceback
         traceback.print_exc()
         return False
+
+
+def auto_sign_after_build(project_dir, build_mode='debug'):
+    """
+    在 build / build-test 成功后按需执行命令行签名（与 hvigor SignHap 无关）。
+
+    环境变量：
+    - OHOS_HAPSIGNER_AUTO_SIGN: 默认开启（1）；设为 0/false/no/off 则跳过自动签名。
+    - OHOS_HAPSIGNER_PROFILE: 显式指定 debug 或 release；未设时按 build_mode 选择
+      （release 构建 -> release，否则 -> debug）。若推断为 debug 但证书目录无
+      OpenHarmonyProfileDebug.pem（hapsigner result 常见仅有 release），则自动改用 release。
+    - OHOS_HAPSIGNER_RESULT: 证书目录（与 sign 子命令相同）；未设置且无法解析默认路径时跳过，不判失败。
+    """
+    flag = os.environ.get('OHOS_HAPSIGNER_AUTO_SIGN', '1').strip().lower()
+    if flag in ('0', 'false', 'no', 'off'):
+        print('\nℹ 已跳过自动签名（OHOS_HAPSIGNER_AUTO_SIGN=0）')
+        return True
+    cert_dir = _resolve_hapsigner_result_dir()
+    if not cert_dir:
+        print('\nℹ 未找到 hapsigner 证书目录，跳过自动签名（请设置 OHOS_HAPSIGNER_RESULT 或准备源码树 developtools/hapsigner/autosign/result）')
+        return True
+    explicit = os.environ.get('OHOS_HAPSIGNER_PROFILE', '').strip().lower()
+    if explicit in ('debug', 'release'):
+        profile = explicit
+    else:
+        profile = 'release' if build_mode == 'release' else 'debug'
+        if profile == 'debug' and not os.path.isfile(os.path.join(cert_dir, 'OpenHarmonyProfileDebug.pem')):
+            print('\nℹ 证书目录无 OpenHarmonyProfileDebug.pem，自动签名改用 release profile（可设置 OHOS_HAPSIGNER_PROFILE=release 固定行为）')
+            profile = 'release'
+    print('\n' + '=' * 80)
+    print(f'自动执行 HAP 签名（profile={profile}）...')
+    print('=' * 80)
+    ok = sign_hap(project_dir, profile)
+    if not ok:
+        print('\n❌ 自动签名失败；可单独执行: python3 hapbuild.py sign <项目目录> ' + profile)
+    return ok
 
 
 def parse_bundle_name(project_dir):
@@ -1706,8 +1778,10 @@ def main():
         if not version_ok:
             print("\n⚠ 警告: 版本验证失败，但将继续构建")
         
-        # 构建 HAP
+        # 构建 HAP，成功后自动命令行签名（见 auto_sign_after_build）
         build_ok = build_hap(project_dir, product, build_mode)
+        if build_ok:
+            build_ok = auto_sign_after_build(project_dir, build_mode)
         
         if build_ok:
             return 0
@@ -1728,6 +1802,8 @@ def main():
             print("\n⚠ 警告: 版本验证失败，但将继续构建")
         
         build_ok = build_test_hap(project_dir, module_name=module_name, product=product)
+        if build_ok:
+            build_ok = auto_sign_after_build(project_dir, 'debug')
         
         if build_ok:
             return 0

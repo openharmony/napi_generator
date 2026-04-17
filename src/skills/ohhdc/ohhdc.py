@@ -21,6 +21,7 @@ from pathlib import Path
 import shlex
 import subprocess
 import sys
+import threading
 import time
 
 # 技能脚本所在目录：截图、layout 等产物默认写入其下子目录
@@ -534,6 +535,7 @@ def _parse_bundle_name(project_dir):
         try:
             with open(path, 'r', encoding='utf-8') as f:
                 content = f.read()
+            content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
             content = re.sub(r'//.*', '', content)
             content = re.sub(r',\s*}', '}', content)
             content = re.sub(r',\s*]', ']', content)
@@ -856,6 +858,308 @@ def run_faultlog_read(rel_path, tail_lines=None):
         return False, "", str(e)
 
 
+def capture_hilog_after_aa_test(bundle_name: str) -> str:
+    """
+    在 aa test 命令结束后拉取一小段设备 hilog。Hypium / TestRunner 多数只写 hilog，
+    故「命令之后的问题」需依赖本段才能在本机看到。
+
+    环境变量：
+    - OHOS_AA_TEST_SKIP_HILOG: 若为 1/true，本函数立即返回空串（由调用方跳过拼接）。
+    - OHOS_AA_TEST_HILOG_SEC: 采集秒数，默认 20，范围约 5～120。
+    - OHOS_AA_TEST_HILOG_GREP: 主机侧 grep -E 正则；未设时使用 bundle + Hypium 等关键字。
+    """
+    if os.environ.get("OHOS_AA_TEST_SKIP_HILOG", "").strip().lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    ):
+        return ""
+    sec = (os.environ.get("OHOS_AA_TEST_HILOG_SEC") or "").strip()
+    timeout_sec = int(sec) if sec.isdigit() else 20
+    timeout_sec = max(5, min(120, timeout_sec))
+    pattern = _aa_test_hilog_grep_pattern(bundle_name)
+    ok, out, err = run_hilog(
+        level="D",
+        private_off=True,
+        flowctrl_off=True,
+        grep_filter=pattern,
+        timeout_sec=timeout_sec,
+    )
+    text = ((out or "") + (err or "")).strip()
+    if len(text) < 80 and pattern:
+        ok2, out2, err2 = run_hilog(
+            level=None,
+            private_off=False,
+            flowctrl_off=True,
+            grep_filter=None,
+            timeout_sec=min(12, timeout_sec),
+        )
+        wide = ((out2 or "") + (err2 or "")).strip()
+        if wide:
+            text = (
+                "（grep 命中较少，以下为短时长、无过滤 hilog 前缀片段，完整请设备上 hilog）\n"
+                + wide[:50000]
+            )
+    return text
+
+
+def _aa_test_hilog_grep_pattern(bundle_name: str) -> str:
+    pattern = (os.environ.get("OHOS_AA_TEST_HILOG_GREP") or "").strip()
+    if pattern:
+        return pattern
+    safe_bn = re.escape(bundle_name)
+    return (
+        f"Hypium|{safe_bn}|OpenHarmonyTestRunner|testTag|"
+        "ARKUI|Ace|JSAPP|Assertion|expect|FAIL|Error|AA|Ability"
+    )
+
+
+def _hilog_during_aa_worker(
+    bundle_name: str,
+    stop_event: threading.Event,
+    chunks: list,
+    lock: threading.Lock,
+) -> None:
+    """
+    与 aa test 并行：周期性短采 hilog，便于看执行过程中哪里出错。
+    """
+    poll = (os.environ.get("OHOS_AA_TEST_HILOG_POLL_SEC") or "").strip()
+    poll_sec = float(poll) if poll else 3.0
+    poll_sec = max(1.0, min(30.0, poll_sec))
+    sl = (os.environ.get("OHOS_AA_TEST_HILOG_SLICE_SEC") or "").strip()
+    slice_sec = int(sl) if sl.isdigit() else 5
+    slice_sec = max(2, min(15, slice_sec))
+    pattern = _aa_test_hilog_grep_pattern(bundle_name)
+    max_total = 800_000
+    while not stop_event.is_set():
+        ok, out, err = run_hilog(
+            level="D",
+            private_off=True,
+            flowctrl_off=True,
+            grep_filter=pattern,
+            timeout_sec=slice_sec,
+        )
+        block = ((out or "") + (err or "")).strip()
+        if block:
+            stamp = time.strftime("%H:%M:%S")
+            with lock:
+                total = sum(len(c) for c in chunks)
+                if total < max_total:
+                    chunks.append(f"\n--- [执行中 hilog @{stamp}] ---\n{block}\n")
+        if stop_event.wait(timeout=poll_sec):
+            break
+
+
+def _append_hilog_after_aa(bundle_name: str, base: str) -> str:
+    """将 capture_hilog_after_aa_test 结果拼到 aa test 输出后。"""
+    if os.environ.get("OHOS_AA_TEST_SKIP_HILOG", "").strip().lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    ):
+        return base
+    snip = capture_hilog_after_aa_test(bundle_name)
+    if not snip.strip():
+        return (
+            base
+            + "\n\n--- 设备 hilog 摘录：未采到内容（无设备、grep 无匹配或 hilog 为空）；"
+            "可设置 OHOS_AA_TEST_HILOG_GREP 放宽条件，或手动: hdc shell hilog ---\n"
+        )
+    return (
+        base
+        + "\n\n--- 设备 hilog 摘录（aa test 结束后自动抓取，见 capture_hilog_after_aa_test）---\n"
+        + snip
+    )
+
+
+def run_aa_test_unittest(
+    bundle_name: str,
+    module_name: str = "entry",
+    runner_path: str = "OpenHarmonyTestRunner",
+    timeout_ms: int = 15000,
+):
+    """
+    静态 XTS / Hypium 一体包：主模块内 TestRunner，通过 -s unittest 指定。
+
+    官方文档（unittest-guidelines / aa-tool）要求 **-s unittest** 的取值为 **Runner 类名**，
+    例如 ``OpenHarmonyTestRunner``，示例多为::
+        aa test -b <bundle> -m entry -s timeout 10000 -s unittest OpenHarmonyTestRunner
+    **注意 -s timeout 写在 -s unittest 之前**（与文档示例一致）；使用 ``/ets/testrunner/...``
+    路径形式在部分版本上可能无法匹配 testRunner。
+
+    若设备返回 10106002 等，可能与 **release 签名包不支持 aa test** 有关，需 debug 包或设备策略允许。
+
+    Returns:
+        tuple: (success: bool, output: str, error: str)
+    """
+    # 环境变量可覆盖 Runner 串（类名或设备侧路径）、框架侧 -s timeout（毫秒）
+    runner = (os.environ.get("OHOS_AA_TEST_UNITTEST_RUNNER") or "").strip() or runner_path
+    env_to = (os.environ.get("OHOS_AA_TEST_TIMEOUT_MS") or "").strip()
+    if env_to.isdigit():
+        timeout_ms = int(env_to)
+    parts = [
+        "aa",
+        "test",
+        "-b",
+        bundle_name,
+        "-m",
+        module_name,
+        "-s",
+        "timeout",
+        str(int(timeout_ms)),
+        "-s",
+        "unittest",
+        runner,
+    ]
+    inner = " ".join(shlex.quote(p) for p in parts)
+    # Hypium 常把详细进度打在 hilog，aa test 进程 stdout 可能很少或缓冲久；可选 tee 落盘便于排障
+    log_file = (os.environ.get("OHOS_AA_TEST_LOG_FILE") or "").strip()
+    if log_file:
+        lp = shlex.quote(os.path.abspath(os.path.expanduser(log_file)))
+        shell_inner = f"hdc shell {shlex.quote(inner)} 2>&1 | tee {lp}"
+    else:
+        shell_inner = f"hdc shell {shlex.quote(inner)}"
+    command = f'bash -c "source ~/.bashrc && {shell_inner}"'
+    # -s timeout 为设备侧框架毫秒；整包 Hypium 墙钟常远大于该值，子进程等待须单独给足余量
+    env_wall = (os.environ.get("OHOS_AA_TEST_WALL_SEC") or "").strip()
+    if env_wall.isdigit():
+        wait_sec = max(60, int(env_wall))
+    else:
+        wait_sec = max(1800, int(timeout_ms) // 1000 + 1200)
+
+    skip_all_hilog = os.environ.get("OHOS_AA_TEST_SKIP_HILOG", "").strip().lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    )
+    during_ok = os.environ.get("OHOS_AA_TEST_SKIP_HILOG_DURING", "").strip().lower() not in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    )
+    if skip_all_hilog:
+        during_ok = False
+
+    chunks: list = []
+    chunk_lock = threading.Lock()
+    stop_event = threading.Event()
+    worker = None  # threading.Thread
+    if during_ok:
+        worker = threading.Thread(
+            target=_hilog_during_aa_worker,
+            args=(bundle_name, stop_event, chunks, chunk_lock),
+            daemon=True,
+            name="hilog-during-aa-test",
+        )
+        worker.start()
+
+    def _merge_during_into(base: str) -> str:
+        with chunk_lock:
+            during_txt = "".join(chunks)
+        if not during_txt.strip():
+            return base
+        return (
+            "--- 设备 hilog（aa test 执行过程中轮询；OHOS_AA_TEST_SKIP_HILOG_DURING=1 可关闭）---\n"
+            + during_txt
+            + "\n--- aa test 进程标准输出 ---\n"
+            + base
+        )
+
+    try:
+        # 合并 stderr 到 stdout（不能与 capture_output 同时使用）
+        result = subprocess.run(
+            command,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=wait_sec,
+        )
+        out = result.stdout or ""
+        out = _merge_during_into(out)
+        out = _append_hilog_after_aa(bundle_name, out)
+        return result.returncode == 0, out, ""
+    except subprocess.TimeoutExpired as e:
+        partial = (e.stdout or "") + (e.stderr or "")
+        partial = _merge_during_into(partial)
+        partial = _append_hilog_after_aa(bundle_name, partial)
+        hint = (
+            "\n\n（说明）若执行中 hilog 仍少：可放宽 OHOS_AA_TEST_HILOG_GREP，或手动 hdc shell hilog。\n"
+            "超时秒数用 OHOS_AA_TEST_WALL_SEC；落盘用 OHOS_AA_TEST_LOG_FILE。\n"
+        )
+        if not partial.strip():
+            partial = (
+                f"(子进程已超时 {wait_sec}s；capture 未收到 stdout/stderr 片段)\n"
+                + hint
+            )
+        else:
+            partial = (
+                f"--- aa test 超时前进程输出（可能不完整）---\n{partial}\n"
+                f"--- 超时 {wait_sec}s ---"
+                + hint
+            )
+        return False, partial, f"aa test 子进程超时（>{wait_sec}s）"
+    except Exception as e:
+        return False, "", str(e)
+    finally:
+        stop_event.set()
+        if worker is not None:
+            worker.join(timeout=45)
+
+
+def deploy_static_xts_test(
+    project_dir: str,
+    module_name: str = "entry",
+    runner_path: str = "OpenHarmonyTestRunner",
+    timeout_ms: int = 15000,
+):
+    """
+    静态 XTS：仅替换安装主包 entry-default-signed.hap，再执行 run_aa_test_unittest。
+    不要求 ohosTest 独立 HAP（与 deploy_and_run_test 不同）。
+
+    Returns:
+        tuple: (success: bool, log: str, error: str)
+    """
+    project_dir = os.path.abspath(project_dir)
+    main_hap = os.path.join(
+        project_dir,
+        "entry",
+        "build",
+        "default",
+        "outputs",
+        "default",
+        "entry-default-signed.hap",
+    )
+    if not os.path.isfile(main_hap):
+        return False, "", f"主 signed HAP 不存在: {main_hap}"
+    bn = _parse_bundle_name(project_dir)
+    if not bn:
+        return (
+            False,
+            "",
+            "无法解析 bundleName，请确保 AppScope/app.json5 含 app.bundleName",
+        )
+    lines = []
+    ok_u, out_u, err_u = uninstall_hap(bn)
+    lines.append(f"卸载: {(out_u or err_u or '').strip() or 'ok'}")
+    ok_i, out_i, err_i = replace_install_hap(main_hap)
+    lines.append(f"安装主 HAP: {(out_i or err_i or '').strip()}")
+    if not ok_i:
+        return False, "\n".join(lines), err_i or out_i or "replace-install 失败"
+    ok_t, out_t, err_t = run_aa_test_unittest(
+        bn, module_name, runner_path, timeout_ms
+    )
+    lines.append("--- aa test (unittest) ---")
+    lines.append((out_t or err_t or "").strip())
+    if not ok_t:
+        return False, "\n".join(lines), err_t or "aa test 失败"
+    return True, "\n".join(lines), ""
+
+
 def run_test(bundle_name, module_name, suite_name, case_name=None, timeout=15000):
     """
     运行测试用例
@@ -1175,7 +1479,7 @@ def main():
         'action',
         choices=[
             'list-apps', 'apps', 'uninstall', 'install', 'replace-install', 'install-project',
-            'deploy-test', 'foreground', 'fg', 'running', 'dump-all', 'dump-running',
+            'deploy-test', 'static-deploy-test', 'foreground', 'fg', 'running', 'dump-all', 'dump-running',
             'force-stop', 'stop', 'start', 'test', 'hilog', 'logs', 'faultlog', 'error-log',
             'led', 'screenshot', 'snapshot', 'screenshot-app', 'snap-app',
             'layout', 'dump-layout', 'wifi-kaihong', 'wifi-push-wificommand', 'wifi-check-wificommand',
@@ -1210,7 +1514,13 @@ def main():
         '--module',
         '-m',
         dest='module_name',
-        help='运行测试时指定模块名（如 entry_test），与 test 命令一起使用'
+        help='运行测试时指定模块名（如 entry_test 或静态 XTS 的 entry），与 test / static-deploy-test 一起使用'
+    )
+    parser.add_argument(
+        '--unittest-runner',
+        dest='unittest_runner',
+        default='OpenHarmonyTestRunner',
+        help='static-deploy-test：-s unittest 后的 Runner（与文档一致多为类名 OpenHarmonyTestRunner；路径形式可设 OHOS_AA_TEST_UNITTEST_RUNNER）',
     )
     parser.add_argument(
         '--suite',
@@ -1698,6 +2008,32 @@ def main():
             print(f"✓ 项目安装成功: {args.target}\n{out}".strip() or f"✓ 项目安装成功: {args.target}")
         else:
             print(f"❌ 项目安装失败: {err or out}", file=sys.stderr)
+            sys.exit(1)
+        return
+
+    if args.action == 'static-deploy-test':
+        if not args.target:
+            print(
+                "❌ 错误: static-deploy-test 请提供项目根目录，如: "
+                "ohhdc.py static-deploy-test /path/to/static_xts_project",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        success, out, err = deploy_static_xts_test(
+            args.target,
+            module_name=(args.module_name or "entry").strip(),
+            runner_path=(args.unittest_runner or "OpenHarmonyTestRunner").strip(),
+            timeout_ms=int(args.timeout),
+        )
+        if success:
+            print(
+                f"✓ static-deploy-test 完成: {args.target}\n{out}".strip()
+                or f"✓ static-deploy-test 完成: {args.target}"
+            )
+        else:
+            print(f"❌ static-deploy-test 失败: {err or out}", file=sys.stderr)
+            if out:
+                print(out, file=sys.stderr)
             sys.exit(1)
         return
 
