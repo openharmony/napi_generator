@@ -97,9 +97,7 @@ gn脚本生成工具目前支持两种入口，分别是可执行程序、VS Cod
 1、在终端中进入ohos.toolchain.cmake所在的build_tmp目录下，运行cmake，查看cmake环境是否可以正常使用，命令如下：
 
 	 harmony@Ubuntu-64:~/OpenHarmony/third_party/mbedtls-development/build_tmp$ cmake .. -DCMAKE_TOOLCHAIN_FILE=ohos.toolchain.cmake
-	 -- The C compiler identification is Clang 10.0.1
-	 -- Check for working C compiler: /home/harmony/OpenHarmony/prebuilts/clang/ohos/linux-x86_64/llvm/bin/clang
-	 -- Check for working C compiler: /home/harmony/OpenHarmony/prebuilts/clang/ohos/linux-x86_64/llvm/bin/clang -- works
+	 
 	 -- Detecting C compiler ABI info
 	 -- Detecting C compiler ABI info - done
 	 -- Detecting C compile features
@@ -115,12 +113,7 @@ gn脚本生成工具目前支持两种入口，分别是可执行程序、VS Cod
 1、在终端中进入到可执行程序gn-gen-linux所在的目录，并运行gn-gen-linux，命令如下：
 
 	harmony@Ubuntu-64:~/service/example$ ./gn-gen-linux -o out/khdvk_rk3568_a -p /home/harmony/OpenHarmony -f  third_party/mbedtls-development/CMakeLists.txt -s test_subsystem -m mbedtls-development
-	INFO (1) -- The C compiler identification is Clang 10.0.1
-	
-	INFO (2) -- Check for working C compiler: /home/harmony/OpenHarmony/prebuilts/clang/ohos/linux-x86_64/llvm/bin/clang
-	
-	INFO (3) -- Check for working C compiler: /home/harmony/OpenHarmony/prebuilts/clang/ohos/linux-x86_64/llvm/bin/clang -- works
-	
+		
 	......
 	
 	INFO (647) -------------------generate gn ok

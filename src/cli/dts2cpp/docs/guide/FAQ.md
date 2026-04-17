@@ -16,7 +16,6 @@
 	> {"tag":"v3.2","name":"node-v10.24.1-linux-x64"}
 	> Building base binary from source:
 	> built-v10.24.1-linux-x64
-	> Fetching Node.js source archive from nodejs.org...
 	> Error! AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
 
 问题定位：这是由于在使用pkg命令打包生成.exe文件时，需要连接github来生成对应的可执行程序，由于国内的网络的问题，连接github的时候有时候时连接不上的。
