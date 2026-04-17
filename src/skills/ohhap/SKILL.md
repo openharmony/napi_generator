@@ -1,9 +1,9 @@
 ---
 name: ohhap
-description: "OpenHarmony HAP 应用构建与签名：环境检查、SDK 版本校验、hvigor 编译主包与 ohosTest、release/debug 签名、清除签名。需 HOS_CLT_PATH、OHOS_SDK_PATH（签名可兼用 DEVECO_SDK_HOME）、hapsigner 证书目录（OHOS_HAPSIGNER_RESULT 等）与 build-profile.json5。脚本 hapbuild.py；Windows/Linux 同一套逻辑，SDK 与证书路径自动适配。与 ohbuild（fuzz/部件编译）不同。"
+description: "OpenHarmony HAP 应用构建与签名：环境检查、SDK 版本校验、hvigor 编译主包与 ohosTest；在设置 OHOS_HAPSIGNER_RESULT 时 build/build-test 成功后自动命令行签名，亦可单独 sign 或清除签名。需 HOS_CLT_PATH、OHOS_SDK_PATH 与项目 build-profile.json5。脚本 hapbuild.py。与 ohbuild（fuzz/部件编译）不同。"
 author: "Created by user"
 created: "2026-01-20"
-version: "1.0.3"
+version: "1.0.0"
 ---
 
 # OpenHarmony HAP 构建工具
@@ -20,7 +20,7 @@ version: "1.0.3"
 
 ## 应用示例与提示词
 
-需 **`HOS_CLT_PATH`**、**`OHOS_SDK_PATH`**；**签名**还需 hapsigner 证书（见下文 **`OHOS_HAPSIGNER_RESULT`**）。在 **napi_generator 仓库根** 执行时脚本路径如下，**`<项目目录>`** 可为 **`src/skills/ohhap/EmptyProj46R`**、**`NativeProj46R`** 或自建 HAP 工程绝对路径。Windows 下命令把 `python3` 换成 `python` 即可。
+需 **`HOS_CLT_PATH`**、**`OHOS_SDK_PATH`**；在 **napi_generator 仓库根** 执行时脚本路径如下，**`<项目目录>`** 多为 **`src/skills/ohhap/NativeProj46R`** 或你自建的 HAP 工程绝对路径。
 
 | 场景 | 命令示例 | 提示词示例 |
 |------|----------|------------|
@@ -39,45 +39,25 @@ version: "1.0.3"
   - 例如: `<本机 Command Line Tools 根目录>`
   - 需要包含 `version.txt` 文件
 
-- `OHOS_SDK_PATH`: OpenHarmony / DevEco SDK 根目录（构建与签名校验均用）
-  - 例如 Linux: `<本机 ohos-sdk>`；Windows 常见: `D:\Program Files\Huawei\ohossdk`
-  - 构建侧：通常需要存在 `daily_build.log`（依你本机 SDK 布局而定）
-- `DEVECO_SDK_HOME`（可选）: 与 `OHOS_SDK_PATH` 二选一或同时设置时，**签名**解析 `hap-sign-tool.jar` 会读取其中任一
+- `OHOS_SDK_PATH`: OpenHarmony SDK 路径
+  - 例如: `<本机 ohos-sdk 根目录>`
+  - 需要包含 `daily_build.log` 文件
 
-**仅签名额外需要（证书来自 OpenHarmony 源码 hapsigner 或自备合并目录）：**
+### 自动命令行签名（与 `build` / `build-test` 串联）
 
-- `OHOS_HAPSIGNER_RESULT`: 指向含 **`OpenHarmony.p12`、`rootCA.cer`、`subCA.cer`** 及 profile 用 **`.pem`** 的目录  
-  - 源码标准布局：`.../developtools/hapsigner/autosign/result`  
-  - 若证书与 **`Unsgned*ProfileTemplate.json` 在同一目录**（自备 `autosign` 合并目录），设此变量指向该目录即可，脚本会自动在同一目录找模板
-- `OHOS_HAPSIGNER_AUTOSIGN`（可选）: 仅当证书在 `.../result`、模板在上级 `.../autosign` 且自动推断失败时再设，指向含模板 JSON 的 `autosign` 目录
-- 未设置 `OHOS_HAPSIGNER_RESULT` 时，会尝试 `~/ohos/<*release>/src/developtools/hapsigner/autosign/result`（Linux/macOS 或 Windows 下对应 **`%USERPROFILE%\ohos\...`**）
+在 **`OHOS_HAPSIGNER_RESULT`** 指向 hapsigner 证书目录（含 `OpenHarmony.p12`、`rootCA.cer`、`subCA.cer` 及对应 profile 的 pem）时，`build` / `build-test` **成功后会自动执行**与 `sign` 子命令相同的命令行签名，无需再单独跑 `sign`。
+
+- **`OHOS_HAPSIGNER_AUTO_SIGN`**: 默认开启；设为 `0` / `false` / `no` / `off` 则只构建、不自动签名。
+- **`OHOS_HAPSIGNER_PROFILE`**: 可选，显式指定 `debug` 或 `release`；未设时按构建模式选择（`release` 构建对应 release 签名，否则为 debug）。若推断为 debug 但证书目录没有 `OpenHarmonyProfileDebug.pem`（仅自备 release 材料时常见），**自动改用 release 签名**。
+- 若未设置 **`OHOS_HAPSIGNER_RESULT`** 且本机不存在默认的 `~/ohos/.../hapsigner/autosign/result`，则**跳过**自动签名（构建仍计为成功）。
+
+**说明**：hvigor 内置 SignHap 依赖 DevEco 加密密码与 `material/` 密钥材料；自动签名走 **hap-sign-tool 命令行**，与 `build-profile.json5` 中明文密码是否通过校验无关。静态 XTS 工程宜保持 **`signingConfigs` 为空**，由本流程出 **unsigned** 后再自动签出 **signed HAP**。
 
 ### 工具版本要求
 
 - **Node.js**: v18.20.1
 - **Hvigor**: 6.21.2
 - **项目目录**: 需要包含 `build-profile.json5` 配置文件
-- **Java / keytool**: 签名依赖 `java`；若 `OpenHarmony.p12` 中已有损坏或与工具链不兼容的 **`oh-app1-key-v1`**，脚本会尝试用 **`keytool`**（随 JDK/JRE，通常与 `java` 同套件）在工作副本中删除该别名后再生成密钥对
-
-## Windows 与 Linux
-
-### Windows 下编译：如何传工程路径、要改什么
-
-- **`hapbuild.py build <project_dir> …`**：`<project_dir>` 必须是 **HAP 工程根目录**（含 **`build-profile.json5`**）。传参方式与 Linux **相同**：
-  - **相对路径**（在 **napi_generator 仓库根** 执行）：如 `src/skills/ohhap/EmptyProj46R`。
-  - **绝对路径**：如 `D:\gitcode\wshikh\napi_generator_9904\src\skills\ohhap\EmptyProj46R`。
-  - 脚本内会对目录做 **`os.path.abspath`** 规范化；**正斜杠 `/` 与反斜杠 `\` 均可**。
-- **路径中含空格**（如 `D:\Program Files\...`）：在 **PowerShell / CMD** 里对**参数或环境变量值**加 **英文双引号**，例如  
-  `$env:OHOS_SDK_PATH = "D:\Program Files\Huawei\ohossdk"`，  
-  `python src\skills\ohhap\hapbuild.py build "D:\my projects\MyApp"`。
-- **`local.properties`（工程根目录）**：Gradle/hvigor 用 **`sdk.dir=`** 指向本机 **SDK 根目录**（与 **`OHOS_SDK_PATH`** 应一致）。执行 **`hapbuild.py`** 做环境检查时，会 **读取并可在缺失/无效时自动创建或修正** `sdk.dir`（以 **`OHOS_SDK_PATH`** 为准），一般**无需**在 Windows 上为编译单独再改一版脚本；若仅命令行构建，保证 **`OHOS_SDK_PATH`** 正确即可。该文件常含本机绝对路径，**多数团队不提交版本库**，每人本地一份或由脚本生成。
-- **子命令与参数**：**build / build-test / sign / clean-sign** 在 Windows 与 Linux **一致**，仅需把文档里的 **`python3`** 换成 **`python`**（若本机如此）。
-
-- **同一脚本 `hapbuild.py`**，不按系统分支写两套命令；路径用 `os.path`，在家目录等处 Windows 为 **`%USERPROFILE%`**，等价于文档中的 `~`。
-- **差异主要在 SDK 目录结构**：Linux 常见 **`$OHOS_SDK_PATH/linux/toolchains/lib/hap-sign-tool.jar`**；Windows 上 DevEco 常放在 **`$OHOS_SDK_PATH/<API>/toolchains/lib/`**（如 `20/toolchains/lib`）。脚本会按 **`build-profile.json5` 中的 API 级别** 与 `linux/toolchains/lib` 等路径依次查找。
-- **构建**：`hvigorw` 通过 `node $HOS_CLT_PATH/hvigor/bin/hvigorw.js` 调用，与系统无关；**`build-profile.json5` 中含 Windows 绝对路径的签名字段**时，脚本内另有逻辑会提示或清理，避免在 Linux 上误用 Windows 路径。
-- **签名**：流程均为「项目根下建 **`autosign/`** → 拷贝证书与工具 → `java -jar hap-sign-tool.jar`」；与 Ubuntu 上一致。
-- **p12 里已有 `oh-app1-key-v1` 导致 `generate-app-cert` 报错（如别名已存在、私钥格式/口令与 `hap-sign-tool` 不一致）**：这是**证书/历史操作**问题，**与 Linux 或 Windows 无本质区别**；同一套逻辑已在 `hapbuild.py` 固化——优先用 **`keytool`** 在工作副本的 `OpenHarmony.p12` 上删除该别名（自动解析 **`JAVA_HOME`** 或当前 **`java`** 的 `java.home`，Windows 下查找 **`keytool.exe`**，Linux/macOS 下查找 **`keytool`**），再执行 `generate-keypair`；若无 **keytool**，仍保留「别名已存在则跳过 `generate-keypair`」的退路（可能继续在问题 p12 上失败，需换干净 **`OHOS_HAPSIGNER_RESULT`** 中的 p12 或安装 JDK）。
 
 ## 使用方法
 
@@ -99,6 +79,17 @@ python3 src/skills/ohhap/hapbuild.py build <project_dir> <product> <build_mode>
 python3 src/skills/ohhap/hapbuild.py build /path/to/project
 python3 src/skills/ohhap/hapbuild.py build /path/to/project default debug
 python3 src/skills/ohhap/hapbuild.py build /path/to/project default release
+```
+
+**一次跑通「构建 + 自动签名」**（静态 XTS 等，工程内需有 `signing-materials` 或等价目录并设 `OHOS_HAPSIGNER_RESULT`）：
+
+```bash
+export HOS_CLT_PATH=<Command-Line-Tools 根目录>
+export OHOS_SDK_PATH=<openharmony/static 等 SDK 根，需能解析到 hap-sign-tool.jar>
+export OHOS_HAPSIGNER_RESULT=<含 p12/CA/pem 的目录>
+export OHOS_USE_HVIGOR_STATIC=1   # 使用 hvigor-static 时
+python3 src/skills/ohhap/hapbuild.py build <project_dir> default debug
+# 成功则 exit 0，且生成 entry-default-unsigned.hap 与 entry-default-signed.hap（路径以模块为准）
 ```
 
 #### 签名 HAP
@@ -158,15 +149,18 @@ python3 src/skills/ohhap/hapbuild.py clean-sign /path/to/project
    - 单元测试 HAP：`node hvigorw.js --mode module -p module=entry@ohosTest -p isOhosTest=true -p product=default -p buildMode=test assembleHap --analyze=normal --parallel --incremental --daemon`
    - 自动检查生成的 HAP 文件
 
-4. **HAP 签名流程**（8 步，与下文「HAP 签名功能说明」一致；Windows / Linux 相同）
-   - 步骤 1: 在工程根目录创建 `autosign` 目录（已存在则清空）
-   - 步骤 2: 拷贝证书与工具到 `autosign`（证书来自 `OHOS_HAPSIGNER_RESULT` 等；工具来自 SDK 解析到的 toolchains/lib）
-   - 步骤 3: 修改模板 JSON 中的 `bundle-name`（从 `AppScope/app.json5` 读取）
-   - 步骤 4: 必要时 `keytool` 删除工作副本 p12 内旧 `oh-app1-key-v1`，再 `generate-keypair`（或别名已存在则跳过）
-   - 步骤 5: `generate-app-cert`
-   - 步骤 6: `sign-profile`（release / debug 别名与 pem 不同）
-   - 步骤 7: `sign-app`，已签名 HAP 与 `*-unsigned.hap` 同目录，文件名 `unsigned` → `signed`
-   - 步骤 8: `verify-app`
+4. **构建后自动签名（默认开启，条件见上文「自动命令行签名」）**
+   - 若证书目录可用，在构建成功后继续执行 `sign` 同逻辑的 hap-sign-tool 流程，生成 **signed HAP**。
+
+5. **HAP 签名流程**（`sign` 子命令或上述自动签名，8 步）
+   - 步骤 1: 在工程根目录创建 `autosign` 目录
+   - 步骤 2: 拷贝证书文件和相关工具文件到 `autosign` 目录
+   - 步骤 3: 修改模板 JSON 文件中的 `bundle-name`（从 `app.json5` 读取）
+   - 步骤 4: 生成应用签名证书密钥对
+   - 步骤 5: 生成应用签名证书
+   - 步骤 6: 对 profile 文件进行签名
+   - 步骤 7: 对应用包进行签名
+   - 步骤 8: 验证应用包签名
 
 ## 版本信息解析
 
@@ -206,7 +200,7 @@ ohpm 6.0.1
 }
 ```
 
-其中 `(20)` 表示 API 级别；**`compileSdkVersion` / `targetSdkVersion` 也可直接写数字 `20`**（与 `hapbuild.py` 解析一致）。SDK 中对应 `.../20/` 或 `openharmony/20/` 等布局依安装而定。
+其中 `(20)` 表示 API 级别，对应 SDK 中的 `sdk/openharmony/20/` 目录。
 
 ## 示例输出
 
@@ -249,29 +243,34 @@ ohpm 6.0.1
 ✓ HAP 构建成功！
 ```
 
-## HAP 签名功能说明（与 `hapbuild.py` 中 `sign_hap` 一致）
+## HAP 签名功能说明
 
-### 签名流程（8 步）
+### 签名流程
 
-1. **创建 `autosign` 目录**：在项目根目录创建（若已存在会先清空）
-2. **拷贝证书**：自 **`OHOS_HAPSIGNER_RESULT`**（或自动发现的 `~/ohos/.../result`）拷贝 `OpenHarmony.p12`、`rootCA.cer`、`subCA.cer` 及当前模式所需 profile **`.pem`**
-3. **拷贝工具**：自 SDK 解析到的目录拷贝 `hap-sign-tool.jar` 等（**Linux：`linux/toolchains/lib`；Windows：常为 `<API>/toolchains/lib`**）
-4. **拷贝模板**：自 **`OHOS_HAPSIGNER_AUTOSIGN`** 或证书目录的上一级 / 与证书同目录（合并 layout）拷贝 `UnsgnedDebugProfileTemplate.json` / `UnsgnedReleasedProfileTemplate.json`
-5. **改模板**：从 `AppScope/app.json5` 读取 `bundleName` 写入模板
-6. **生成应用密钥与证书**：必要时 **`keytool -delete`** 去掉工作副本 p12 内旧的 `oh-app1-key-v1` 后，再 `generate-keypair` → `generate-app-cert`
-7. **`sign-profile` → `sign-app`**：未签名 HAP 文件名中的 `unsigned` 替换为 `signed`，**输出在与未签名 HAP 同一 `outputs` 目录**
-8. **`verify-app`**：校验签名后的 HAP
+签名功能会自动执行以下步骤：
 
-### 产物位置
+1. **创建 autosign 目录**：在项目根目录创建 `autosign` 目录用于存放签名相关文件
+2. **拷贝证书文件**：从 `~/ohos/60release/src/developtools/hapsigner/autosign/result/` 拷贝证书文件
+3. **拷贝工具文件**：从 `$OHOS_SDK_PATH/linux/toolchains/lib/` 拷贝签名工具
+4. **修改模板文件**：自动从 `AppScope/app.json5` 读取 `bundleName` 并更新到模板文件
+5. **生成密钥对**：使用 `hap-sign-tool.jar` 生成应用签名证书密钥对
+6. **生成证书**：生成应用签名证书链
+7. **签名 profile**：对 profile 文件进行签名
+8. **签名 HAP**：对未签名的 HAP 文件进行签名
+9. **验证签名**：验证签名后的 HAP 文件
 
-- **已签名 HAP**（典型）：`<module>/build/default/outputs/default/*-signed.hap`（例如 `entry-default-signed.hap`），与 `*-unsigned.hap` 同目录
-- **中间文件**：`<project_dir>/autosign/`（`app1.cer`、`app1-profile.p7b`、临时 p12 副本等）
+### 签名文件位置
+
+- **签名的 HAP 文件**: `<project_dir>/autosign/app1-signed.hap`
+- **证书文件**: `<project_dir>/autosign/app1.cer`
+- **Profile 文件**: `<project_dir>/autosign/app1-profile.p7b`
 
 ### 签名要求
 
-- 已执行 **build** 生成带 **`unsigned`** 的 HAP
-- **`OHOS_SDK_PATH` 或 `DEVECO_SDK_HOME`**、`java` 可用；证书目录见上文 **`OHOS_HAPSIGNER_RESULT`**
-- **`AppScope/app.json5`** 中含有效 **`bundleName`**
+- 需要先编译项目生成未签名的 HAP 文件
+- 需要 `OHOS_SDK_PATH` 环境变量指向正确的 SDK 路径
+- 需要证书文件位于 `~/ohos/60release/src/developtools/hapsigner/autosign/result/`
+- 项目需要包含 `AppScope/app.json5` 文件，且包含有效的 `bundleName`
 
 ### 清除签名
 
@@ -279,9 +278,8 @@ ohpm 6.0.1
 
 ## 脚本文件
 
-- `hapbuild.py`: HAP 构建和签名主脚本（文件头含与 **SKILL.md** 对齐的摘要说明）
+- `hapbuild.py`: HAP 构建和签名主脚本
 - `crosscompile.py`: 交叉编译脚本（待实现）
-- 仓库级 **`src/skills/HOWTOSKILLS.md` §4.4**：ohhap 构建/签名环境变量、**Linux / Windows PowerShell** 示例与产物路径速查（与本文档互为补充）
 
 ## 注意事项
 
@@ -289,5 +287,5 @@ ohpm 6.0.1
 2. 环境变量必须在运行前正确设置
 3. 版本不一致时会显示警告，但构建仍会继续
 4. 构建过程可能需要较长时间，请耐心等待
-5. 签名需要 **Java**；若需自动清理 p12 内旧 **`oh-app1-key-v1`**，请保证 **`keytool`** 可用（与 `java` 同属一个 JDK/JRE 时最省事）
-6. 脚本中 keystore 默认口令为 **`123456`**（与 OpenHarmony 预置调试链一致）；生产环境请改用自有证书与口令并自行调整脚本或流程
+5. 签名功能需要 Java 环境，确保 `java` 命令可用
+6. 签名过程中会使用默认密码 `123456`，生产环境请使用自己的证书和密码

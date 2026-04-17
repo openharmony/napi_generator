@@ -209,6 +209,44 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 
 ---
 
+## 静态 XTS：仅主包 + unittest TestRunner（static-deploy-test）
+
+### Feature Description
+
+**ArkTS `use static` + Hypium 一体工程**常见形态：无独立 ohosTest HAP，测试入口为 **主模块** 内的 **`OpenHarmonyTestRunner`**。设备侧推荐与文档一致：
+
+`aa test -b <bundleName> -m entry -s timeout <ms> -s unittest OpenHarmonyTestRunner`
+
+（**先 timeout 再 unittest**；Runner 用**类名**，勿误用 `/ets/testrunner/...` 路径 unless 环境要求。）
+
+本动作依次：**卸载同包名 → `hdc install -r` 仅主包 `entry-default-signed.hap` → 执行上述形态的 `aa test`**。与 **`deploy-test`**（双 HAP + `-s class`）互斥，请按工程类型选用。
+
+### Quick Start – Script
+
+```bash
+python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/static_xts_project
+export OHOS_AA_TEST_TIMEOUT_MS=600000
+python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/project --timeout 600000 -m entry --unittest-runner OpenHarmonyTestRunner
+# 本机等待 aa test 结束的墙钟（秒）：默认至少约 30 分钟；套件很大时可增大
+export OHOS_AA_TEST_WALL_SEC=7200
+python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/project
+```
+
+**说明**：`--timeout` 传给设备的 `-s timeout`（毫秒）；子进程最长等待由 **`OHOS_AA_TEST_WALL_SEC`** 控制（未设时默认 **≥1800s**），与设备参数不是同一含义。框架单测超时还可设 **`OHOS_AA_TEST_TIMEOUT_MS`**（覆盖 `-s timeout` 毫秒值，整包 Hypium 建议 **≥ 300000**）。
+
+**「测试没跑起来」常见原因（非等待时间）**：
+1. **`-s unittest` 取值**：官方文档要求多为 **类名** `OpenHarmonyTestRunner`，不是路径 `/ets/testrunner/...`；脚本默认已改为类名，路径可通过 **`OHOS_AA_TEST_UNITTEST_RUNNER`** 或 **`--unittest-runner`** 指定。
+2. **参数顺序**：文档示例为 **`-s timeout <ms> -s unittest <runner>`**，顺序与部分环境解析有关，脚本已按此排列。
+3. **Release 签名**：部分设备上 **release 签名的 HAP 无法执行 `aa test`**（错误码 **10106002**），需使用 **debug 包** 或符合设备策略的签名。
+
+**日志为何常「看不到」**：Hypium 大量输出在设备 **hilog**，`aa test` 回传到本机终端的 stdout 可能很少；超时场景下旧实现还曾**丢弃**子进程已有片段。现支持：**合并 stderr**、超时**保留已捕获片段**、**`OHOS_AA_TEST_LOG_FILE`** 用 `tee` 落盘。
+
+**aa test 执行过程中轮询 hilog**：自 `aa test` 启动起，后台线程按间隔（**`OHOS_AA_TEST_HILOG_POLL_SEC`**，默认 3s）短采 **hilog**（单次时长 **`OHOS_AA_TEST_HILOG_SLICE_SEC`**，默认 5s），拼在 **标准输出之前**，便于看「跑的过程中」哪一步出错。**`OHOS_AA_TEST_SKIP_HILOG_DURING=1`** 可关；**`OHOS_AA_TEST_SKIP_HILOG=1`** 会同时关闭「过程中」与「结束后」两段自动 hilog。
+
+**aa test 结束后自动抓 hilog**：返回前再调用 **`capture_hilog_after_aa_test`**（约 **20s** 一段）。可调 **`OHOS_AA_TEST_HILOG_SEC`**、**`OHOS_AA_TEST_HILOG_GREP`**（与过程中共用同一 grep 变量）。
+
+---
+
 ## Replace Install HAP
 
 ### Feature Description
