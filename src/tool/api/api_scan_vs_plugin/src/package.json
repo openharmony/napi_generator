@@ -1,7 +1,7 @@
 {
 	"name": "ApiScan",
 	"displayName": "API Scan",
-	"description": "This tool can scan the Android APIs in OpenHarmony Projects",
+	"description": "This tool can scan the An-droid APIs in OpenHarmony Projects",
 	"keywords": [
 		"api_scan",
 		"api"
