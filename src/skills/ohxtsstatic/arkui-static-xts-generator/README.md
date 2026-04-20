@@ -15,9 +15,9 @@
    - `arkui-static-xts-generator/SKILL.md`（生成器原文，可选阅读）  
 3. 拷贝完成后，**不要**删掉本 `README.md`（或可与上游合并时保留其中「下载说明」一节）。
 
-## 与 Cursor / 双份 skill 路径
+## 与 IDE（双份 skill）路径
 
-若使用 **`.claude/skills/ohxtsstatic/`** 下的同名 ohxtsstatic，请在 **`ohxtsstatic/arkui-static-xts-generator/`** 下同样放置一份（或符号链接到同一份目录）。
+若使用 **`.claude/skills/ohxtsstatic/`** 下的同名 ohxtsstatic（编辑器侧技能目录），请在 **`ohxtsstatic/arkui-static-xts-generator/`** 下同样放置一份（或符号链接到同一份目录）。
 
 ## 旧目录名
 

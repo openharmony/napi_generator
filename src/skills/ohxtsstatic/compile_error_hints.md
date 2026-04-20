@@ -1,8 +1,8 @@
 # ohxtsstatic：Static XTS 编译与运行期排障速查
 
-本文档与 **`SKILL.md`** 配套，供 `ohxtsflow.py hints` 打印及检索。内容已**自包含**，不依赖其他仓库中的「经验总结」外链。
+本文档与 **`SKILL.md`** 配套，供 `ohxtsflow.py hints` 打印及检索。内容为**独立可读**，不依赖其他仓库中的「经验总结」外链。
 
-在 **技能融合模型** 中，本文档主要覆盖 **L1**（与 **L0 SDK** 相邻的编译/运行/Hypium 硬错误）。**L1.5/L2**（测什么、模板与 `@tc`）仍以 **`arkui-static-xts-generator/categories/`**、**`common/`**（**须先从 GitCode 下载放置**，见 **`arkui-static-xts-generator/README.md`**）及主文 **§〇～二** 为准；排障时若涉导入、步骤枚举、页面骨架，可交叉查阅 **`common/`**。
+在 **技能融合模型** 中，本文档主要覆盖 **第 1 层**（与 **SDK 类型定义层** 相邻的编译/运行/Hypium 硬错误）。**第 1.5 / 第 2 层**（测什么、模板与 `@tc`）仍以 **`arkui-static-xts-generator/categories/`**、**`common/`**（**须先从 GitCode 下载放置**，见 **`arkui-static-xts-generator/README.md`**）及主文 **§〇～二** 为准；排障时若涉导入、步骤枚举、页面骨架，可交叉查阅 **`common/`**。
 
 ---
 
@@ -23,7 +23,7 @@
 
 - **默认**：**`node $HOS_CLT_PATH/hvigor/bin/hvigorw.js`**（传统/非静态套件常见）。  
 - **静态 `use static` 用例工程**：在 **`command-line-tools`** 下维护 **`hvigor-static/`**（`bin/hvigorw.js` 与插件与默认目录并列），编译前 **`export OHOS_USE_HVIGOR_STATIC=1`**。  
-- **显式路径**：**`export OHOS_HVIGORW_JS=/绝对路径/hvigorw.js`** 时优先于以上两者。  
+- **显式路径**：**`export OHOS_HVIGORW_JS=/完整路径/hvigorw.js`** 时优先于以上两者。  
 - 自检：**`python3 src/skills/ohxtsstatic/ohxtsflow.py env`** 会打印两类入口是否存在。
 
 ---
@@ -55,7 +55,7 @@
 
 | 话题 | 在 SKILL.md 中 |
 |------|----------------|
-| API/SDK 绝对优先、禁止臆造 | **§ 核心原则** |
+| 以 API/SDK 为准、禁止臆造 | **§ 核心原则** |
 | 从明细到页面+用例的步骤 | **§ 开发工作流 A–D** |
 | 布局、路由、id/key | **§ 页面与布局** |
 | 生命周期、AppStorage、对话框 | **§ 测试隔离与生命周期** |

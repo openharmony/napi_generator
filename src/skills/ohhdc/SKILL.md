@@ -1,6 +1,6 @@
 ---
 name: ohhdc
-description: "OpenHarmony HDC tool for device HAP management. Use when users need to list installed apps, uninstall a HAP (bm uninstall -n <bundleName>), install a HAP (hdc install <path>), install-project to install main HAP and test HAP with two hdc install commands, deploy-test to uninstall then hdc install -r both HAPs and run aa test (部署运行 HAP 测试用例), replace-install a HAP (hdc -r install <path>), take a display screenshot (snapshot_display + hdc file recv; default under ohhdc/screenshot/), screenshot-app/snap-app to aa start a preset app alias then screenshot (SCREENSHOT_APP_ALIASES in ohhdc.py, e.g. etsclock → ohos.samples.etsclock/MainAbility), dump current UI layout JSON via hdc shell uitest dumpLayout + file recv (ohhdc.py layout/dump-layout; default under ohhdc/layout/), control board LEDs via sysfs (ohhdc.py led red|green|blue on|off → echo 0/1 > /sys/class/leds/<name>/brightness), enable Wi-Fi and connect AP via wificlitools (wifi-kaihong / wifi-push-wificommand / wifi-check-wificommand; wificommand often not in system image—use push or --push-wificommand; default SSID KaiHong password KaiHong@888), view device logs (hdc shell hilog; hilog -b D for debug, hilog -p off to show private, param set hilog.flowctrl.proc.on false to disable flow control, hilog | grep <pattern> to filter by keyword/pid), view error/fault logs under data/log/faultlog (subdirs faultlogger, freeze, hilog, temp; list or cat files for analysis), view foreground/running apps (aa dump -a / aa dump -r), force-stop an app (aa force-stop <bundleName>), start an app (aa start -a <abilityName> -b <bundleName>), or run tests (aa test -b <bundleName> -m <moduleName> -s unittest OpenHarmonyTestRunner -s class <suiteName>[#<caseName>] -s timeout <timeout>). Presents results in Markdown format."
+description: "OpenHarmony HDC tool for device HAP management. Use when users need to list installed apps, uninstall a HAP (bm uninstall -n <bundleName>), install a HAP (hdc install <path>), install-project to install main HAP and test HAP with two hdc install commands, deploy-test to uninstall then hdc install -r both HAPs and run on-device application tests (部署运行 HAP 测试用例), replace-install a HAP (hdc -r install <path>), take a display screenshot (snapshot_display + hdc file recv; default under ohhdc/screenshot/), screenshot-app/snap-app to aa start a preset app alias then screenshot (SCREENSHOT_APP_ALIASES in ohhdc.py, e.g. etsclock → ohos.samples.etsclock/MainAbility), dump current UI layout JSON via hdc shell uitest dumpLayout + file recv (ohhdc.py layout/dump-layout; default under ohhdc/layout/), control board LEDs via sysfs (ohhdc.py led red|green|blue on|off → echo 0/1 > /sys/class/leds/<name>/brightness), enable Wi-Fi and connect AP via wificlitools (wifi-kaihong / wifi-push-wificommand / wifi-check-wificommand; wificommand often not in system image—use push or --push-wificommand; default SSID KaiHong password KaiHong@888), view device logs (hdc shell hilog; hilog -b D for debug, hilog -p off to show private, param set hilog.flowctrl.proc.on false to disable flow control, hilog | grep <pattern> to filter by keyword/pid), view error/fault logs under data/log/faultlog (subdirs faultlogger, freeze, hilog, temp; list or cat files for analysis), view foreground/running apps (aa dump -a / aa dump -r), force-stop an app (aa force-stop <bundleName>), start an app (aa start -a <abilityName> -b <bundleName>), or run tests via the device shell application-test command line. Presents results in Markdown format."
 author: "Created by user"
 created: "2026-01-28"
 version: "1.0.2"
@@ -183,8 +183,8 @@ hdc install examples/NativeProj46R/entry/build/default/outputs/ohosTest/entry-oh
 
 ### Feature Description
 
-**部署并运行 HAP 测试用例**：依次执行「卸载同包名应用 → 使用 `hdc install -r` 安装主 HAP → 使用 `hdc install -r` 安装测试 HAP → 执行 `hdc shell aa test` 运行指定测试套件」。  
-等价于历史记录中的完整流程：先卸载，再两条 `hdc install -r`，最后 `aa test -b ... -m entry_test -s unittest OpenHarmonyTestRunner -s class <套件名列表> -s timeout 15000`。
+**部署并运行 HAP 测试用例**：依次执行「卸载同包名应用 → 使用 `hdc install -r` 安装主 HAP → 使用 `hdc install -r` 安装测试 HAP → 经 **`hdc shell`** 执行设备侧 **应用测试命令**（OpenHarmony 文档常写作 **`aa`** + **`test`** + 参数）」。  
+等价于历史记录中的完整流程：先卸载，再两条 `hdc install -r`，最后在设备 shell 内执行 **`aa`** **`test`** `-b … -m entry_test -s unittest OpenHarmonyTestRunner -s class <套件名列表> -s timeout 15000`。
 
 - 包名（bundleName）未指定时，从项目 `AppScope/app.json5` 解析。
 - 主 HAP、测试 HAP 路径约定与 install-project 相同。
@@ -219,7 +219,7 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 
 （**先 timeout 再 unittest**；Runner 用**类名**，勿误用 `/ets/testrunner/...` 路径 unless 环境要求。）
 
-本动作依次：**卸载同包名 → `hdc install -r` 仅主包 `entry-default-signed.hap` → 执行上述形态的 `aa test`**。与 **`deploy-test`**（双 HAP + `-s class`）互斥，请按工程类型选用。
+本动作依次：**卸载同包名 → `hdc install -r` 仅主包 `entry-default-signed.hap` → 执行上述形态的应用测试命令**。与 **`deploy-test`**（双 HAP + `-s class`）互斥，请按工程类型选用。
 
 ### Quick Start – Script
 
@@ -227,7 +227,7 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/static_xts_project
 export OHOS_AA_TEST_TIMEOUT_MS=600000
 python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/project --timeout 600000 -m entry --unittest-runner OpenHarmonyTestRunner
-# 本机等待 aa test 结束的墙钟（秒）：默认至少约 30 分钟；套件很大时可增大
+# 本机等待设备应用测试结束的墙钟（秒）：默认至少约 30 分钟；套件很大时可增大
 export OHOS_AA_TEST_WALL_SEC=7200
 python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/project
 ```
@@ -237,13 +237,13 @@ python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/project
 **「测试没跑起来」常见原因（非等待时间）**：
 1. **`-s unittest` 取值**：官方文档要求多为 **类名** `OpenHarmonyTestRunner`，不是路径 `/ets/testrunner/...`；脚本默认已改为类名，路径可通过 **`OHOS_AA_TEST_UNITTEST_RUNNER`** 或 **`--unittest-runner`** 指定。
 2. **参数顺序**：文档示例为 **`-s timeout <ms> -s unittest <runner>`**，顺序与部分环境解析有关，脚本已按此排列。
-3. **Release 签名**：部分设备上 **release 签名的 HAP 无法执行 `aa test`**（错误码 **10106002**），需使用 **debug 包** 或符合设备策略的签名。
+3. **Release 签名**：部分设备上 **release 签名的 HAP 无法执行应用测试子命令**（错误码 **10106002**），需使用 **debug 包** 或符合设备策略的签名。
 
-**日志为何常「看不到」**：Hypium 大量输出在设备 **hilog**，`aa test` 回传到本机终端的 stdout 可能很少；超时场景下旧实现还曾**丢弃**子进程已有片段。现支持：**合并 stderr**、超时**保留已捕获片段**、**`OHOS_AA_TEST_LOG_FILE`** 用 `tee` 落盘。
+**日志为何常「看不到」**：Hypium 大量输出在设备 **hilog**，应用测试子进程回传到本机终端的 stdout 可能很少；超时场景下旧实现还曾**丢弃**子进程已有片段。现支持：**合并 stderr**、超时**保留已捕获片段**、**`OHOS_AA_TEST_LOG_FILE`** 用 `tee` 落盘。
 
-**aa test 执行过程中轮询 hilog**：自 `aa test` 启动起，后台线程按间隔（**`OHOS_AA_TEST_HILOG_POLL_SEC`**，默认 3s）短采 **hilog**（单次时长 **`OHOS_AA_TEST_HILOG_SLICE_SEC`**，默认 5s），拼在 **标准输出之前**，便于看「跑的过程中」哪一步出错。**`OHOS_AA_TEST_SKIP_HILOG_DURING=1`** 可关；**`OHOS_AA_TEST_SKIP_HILOG=1`** 会同时关闭「过程中」与「结束后」两段自动 hilog。
+**应用测试执行过程中轮询 hilog**：自应用测试子进程启动起，后台线程按间隔（**`OHOS_AA_TEST_HILOG_POLL_SEC`**，默认 3s）短采 **hilog**（单次时长 **`OHOS_AA_TEST_HILOG_SLICE_SEC`**，默认 5s），拼在 **标准输出之前**，便于看「跑的过程中」哪一步出错。**`OHOS_AA_TEST_SKIP_HILOG_DURING=1`** 可关；**`OHOS_AA_TEST_SKIP_HILOG=1`** 会同时关闭「过程中」与「结束后」两段自动 hilog。
 
-**aa test 结束后自动抓 hilog**：返回前再调用 **`capture_hilog_after_aa_test`**（约 **20s** 一段）。可调 **`OHOS_AA_TEST_HILOG_SEC`**、**`OHOS_AA_TEST_HILOG_GREP`**（与过程中共用同一 grep 变量）。
+**应用测试结束后自动抓 hilog**：返回前再调用 **`capture_hilog_after_aa_test`**（约 **20s** 一段）。可调 **`OHOS_AA_TEST_HILOG_SEC`**、**`OHOS_AA_TEST_HILOG_GREP`**（与过程中共用同一 grep 变量）。
 
 ---
 
@@ -904,7 +904,7 @@ python3 src/skills/ohhdc/ohhdc.py led blue off
 | 卸载 xxx 应用 / uninstall   | Run `ohhdc.py uninstall <bundleName>`，如 `uninstall com.example.p7zipTest` |
 | 安装 HAP / install          | Run `ohhdc.py install <HAP 路径>`，如 `install /path/to/app-signed.hap` |
 | 按项目安装 / install-project | Run `ohhdc.py install-project <项目根目录>`，依次执行 `hdc install` 主 HAP 与测试 HAP |
-| 部署运行 HAP 测试用例 / deploy-test | Run `ohhdc.py deploy-test <项目根目录>`，卸载 → `hdc install -r` 主 HAP、测试 HAP → `aa test` |
+| 部署运行 HAP 测试用例 / deploy-test | Run `ohhdc.py deploy-test <项目根目录>`，卸载 → `hdc install -r` 主 HAP、测试 HAP → **设备应用测试命令** |
 | 替换安装 HAP / replace-install | Run `ohhdc.py replace-install <HAP 路径>`，如 `replace-install /path/to/app-signed.hap` |
 | 查看前台应用 / foreground   | Run `ohhdc.py foreground` 或 `ohhdc.py fg`，展示前台应用和运行进程 |
 | 查看正在运行的应用 / running | Run `ohhdc.py running`，展示运行中的应用进程 |

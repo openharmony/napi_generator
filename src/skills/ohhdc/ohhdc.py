@@ -915,6 +915,30 @@ def _aa_test_hilog_grep_pattern(bundle_name: str) -> str:
     )
 
 
+def _hilog_during_aa_poll_slice(
+    chunks: list,
+    lock: threading.Lock,
+    pattern: str,
+    slice_sec: int,
+    max_total: int,
+) -> None:
+    _, out, err = run_hilog(
+        level="D",
+        private_off=True,
+        flowctrl_off=True,
+        grep_filter=pattern,
+        timeout_sec=slice_sec,
+    )
+    block = ((out or "") + (err or "")).strip()
+    if not block:
+        return
+    stamp = time.strftime("%H:%M:%S")
+    with lock:
+        total = sum(len(c) for c in chunks)
+        if total < max_total:
+            chunks.append(f"\n--- [执行中 hilog @{stamp}] ---\n{block}\n")
+
+
 def _hilog_during_aa_worker(
     bundle_name: str,
     stop_event: threading.Event,
@@ -933,20 +957,7 @@ def _hilog_during_aa_worker(
     pattern = _aa_test_hilog_grep_pattern(bundle_name)
     max_total = 800_000
     while not stop_event.is_set():
-        ok, out, err = run_hilog(
-            level="D",
-            private_off=True,
-            flowctrl_off=True,
-            grep_filter=pattern,
-            timeout_sec=slice_sec,
-        )
-        block = ((out or "") + (err or "")).strip()
-        if block:
-            stamp = time.strftime("%H:%M:%S")
-            with lock:
-                total = sum(len(c) for c in chunks)
-                if total < max_total:
-                    chunks.append(f"\n--- [执行中 hilog @{stamp}] ---\n{block}\n")
+        _hilog_during_aa_poll_slice(chunks, lock, pattern, slice_sec, max_total)
         if stop_event.wait(timeout=poll_sec):
             break
 
@@ -1018,10 +1029,9 @@ def run_aa_test_unittest(
     log_file = (os.environ.get("OHOS_AA_TEST_LOG_FILE") or "").strip()
     if log_file:
         lp = shlex.quote(os.path.abspath(os.path.expanduser(log_file)))
-        shell_inner = f"hdc shell {shlex.quote(inner)} 2>&1 | tee {lp}"
+        script = f"source ~/.bashrc && hdc shell {shlex.quote(inner)} 2>&1 | tee {lp}"
     else:
-        shell_inner = f"hdc shell {shlex.quote(inner)}"
-    command = f'bash -c "source ~/.bashrc && {shell_inner}"'
+        script = f"source ~/.bashrc && hdc shell {shlex.quote(inner)}"
     # -s timeout 为设备侧框架毫秒；整包 Hypium 墙钟常远大于该值，子进程等待须单独给足余量
     env_wall = (os.environ.get("OHOS_AA_TEST_WALL_SEC") or "").strip()
     if env_wall.isdigit():
@@ -1070,10 +1080,10 @@ def run_aa_test_unittest(
         )
 
     try:
-        # 合并 stderr 到 stdout（不能与 capture_output 同时使用）
+        # 合并 stderr 到 stdout（不能与 capture_output 同时使用）；显式 exec bash，避免 subprocess shell=True
         result = subprocess.run(
-            command,
-            shell=True,
+            ["bash", "-c", script],
+            shell=False,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,

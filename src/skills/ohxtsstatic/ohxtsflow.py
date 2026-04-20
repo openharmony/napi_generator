@@ -3,17 +3,17 @@
 """
 ohxtsstatic 全流程编排入口：串联 ohhap / ohhdc / ohtest / ohproj 惯例命令。
 
-一体化流水线与分层权威见同目录 **SKILL.md**（**技能融合模型**、**§〇 路由表**、**§二**）；测试范式细则见 **arkui-static-xts-generator/**（须从 GitCode 下载放置，见该目录 **README.md**）。
+一体化流水线与分层优先级见同目录 **SKILL.md**（**技能融合模型**、**§〇 路由表**、**§二**）；测试范式细则见 **arkui-static-xts-generator/**（须从 GitCode 下载放置，见该目录 **README.md**）。
 
 不替代各子技能实现；仅统一路径、参数与阶段顺序，便于 Agent 或人工一键执行。
 
 用法（均在 napi_generator 仓库根下执行时可用相对路径）：
   python3 src/skills/ohxtsstatic/ohxtsflow.py env
-  python3 src/skills/ohxtsstatic/ohxtsflow.py build-all <HAP工程绝对路径>
+  python3 src/skills/ohxtsstatic/ohxtsflow.py build-all <HAP工程完整路径>
   python3 src/skills/ohxtsstatic/ohxtsflow.py install <signed.hap> [--replace]
-  python3 src/skills/ohxtsstatic/ohxtsflow.py deploy-test <HAP工程绝对路径> [--timeout 毫秒]   # 主包+ohosTest 双包 + class 套件
-  python3 src/skills/ohxtsstatic/ohxtsflow.py static-device-test <HAP工程绝对路径> [--timeout 毫秒]  # 仅主 signed.hap + unittest TestRunner（静态 XTS）
-  python3 src/skills/ohxtsstatic/ohxtsflow.py run-static-pipeline <HAP工程绝对路径>  # build（含自动签名）→ static-device-test
+  python3 src/skills/ohxtsstatic/ohxtsflow.py deploy-test <HAP工程完整路径> [--timeout 毫秒]   # 主包+ohosTest 双包 + class 套件
+  python3 src/skills/ohxtsstatic/ohxtsflow.py static-device-test <HAP工程完整路径> [--timeout 毫秒]  # 仅主 signed.hap + unittest TestRunner（静态 XTS）
+  python3 src/skills/ohxtsstatic/ohxtsflow.py run-static-pipeline <HAP工程完整路径>  # build（含自动签名）→ static-device-test
   python3 src/skills/ohxtsstatic/ohxtsflow.py logs [--faultlog] [--pattern 正则]
   python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <日志文件>  # 摘要失败原因与优化提示
   python3 src/skills/ohxtsstatic/ohxtsflow.py hints
@@ -324,7 +324,11 @@ def main() -> int:
         "hints": cmd_hints,
         "workflow-print": cmd_workflow_print,
     }
-    return handlers[ns.cmd](ns)
+    handler = handlers.get(ns.cmd)
+    if handler is None:
+        print(f"未知子命令: {ns.cmd}", file=sys.stderr)
+        return 2
+    return handler(ns)
 
 
 if __name__ == "__main__":
