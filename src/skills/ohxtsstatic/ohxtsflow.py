@@ -155,7 +155,7 @@ def cmd_run_static_pipeline(ns: argparse.Namespace) -> int:
 
 def analyze_hypium_like_log(text: str) -> str:
     """
-    对 aa test / hilog 保存的文本做轻量摘要，便于人工或 Agent 迭代用例。
+    对应用测试标准输出 / hilog 保存的文本做轻量摘要，便于人工或 Agent 迭代用例。
     非完整解析器；以关键词与行级模式为主。
     """
     lines = text.splitlines()
@@ -181,7 +181,9 @@ def analyze_hypium_like_log(text: str) -> str:
     hints: list[str] = []
     low = joined.lower()
     if "timeout" in low or "超时" in joined:
-        hints.append("含 timeout/超时：可考虑增大 aa test -s timeout、或减少单 it 内同步等待；对照 test_rules / Hypium。")
+        hints.append(
+            "含 timeout/超时：可考虑增大设备侧 `-s timeout`（毫秒）、或减少单 it 内同步等待；对照 test_rules / Hypium。"
+        )
     if "findcomponent" in low or "Component is not found" in joined:
         hints.append("组件未找到：核对 id、页面是否已导航、afterEach 是否清状态导致树变化。")
     if "assert" in low and "fail" in low:
@@ -247,7 +249,7 @@ def cmd_workflow_print(_: argparse.Namespace) -> int:
     return 0
 
 
-def main() -> int:
+def _make_ohxts_cli_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description="ohxtsstatic 全流程编排")
     sp = ap.add_subparsers(dest="cmd", required=True)
 
@@ -261,16 +263,24 @@ def main() -> int:
     ins.add_argument("hap", help="已签名 .hap 路径")
     ins.add_argument("--replace", action="store_true", help="使用 replace-install")
 
-    dt = sp.add_parser("deploy-test", help="ohhdc deploy-test（卸装→装主+测→aa test）")
+    dt = sp.add_parser(
+        "deploy-test",
+        help="ohhdc deploy-test（卸装→装主包与测试包→设备应用测试）",
+    )
     dt.add_argument("project", help="HAP 工程根目录")
     dt.add_argument("--timeout", type=int, default=None)
 
     sdt = sp.add_parser(
         "static-device-test",
-        help="静态 XTS：仅主包 + aa test unittest TestRunner（见 ohhdc static-deploy-test）",
+        help="静态 XTS：仅主包 + unittest TestRunner（见 ohhdc static-deploy-test）",
     )
     sdt.add_argument("project", help="HAP 工程根目录")
-    sdt.add_argument("--timeout", type=int, default=15000, help="aa test -s timeout（毫秒），默认 15000")
+    sdt.add_argument(
+        "--timeout",
+        type=int,
+        default=15000,
+        help="设备侧 -s timeout（毫秒），默认 15000",
+    )
     sdt.add_argument(
         "-m",
         "--module",
@@ -297,11 +307,19 @@ def main() -> int:
         choices=("debug", "release"),
         help="hvigor 构建模式，默认 debug",
     )
-    rsp.add_argument("--timeout", type=int, default=15000, help="aa test 超时毫秒，默认 15000")
+    rsp.add_argument(
+        "--timeout",
+        type=int,
+        default=15000,
+        help="设备侧 timeout 毫秒，默认 15000",
+    )
     rsp.add_argument("-m", "--module", dest="module", default=None, help="测试模块名，默认 entry")
     rsp.add_argument("--unittest-runner", dest="unittest_runner", default=None, help="TestRunner 设备路径")
 
-    atl = sp.add_parser("analyze-test-log", help="分析保存的 Hypium/aa test 日志并输出摘要与启发式建议")
+    atl = sp.add_parser(
+        "analyze-test-log",
+        help="分析保存的 Hypium / 设备应用测试日志并输出摘要与启发式建议",
+    )
     atl.add_argument("log_file", help="本机日志文件路径")
 
     lg = sp.add_parser("logs", help="设备 hilog 过滤或 faultlog")
@@ -310,7 +328,11 @@ def main() -> int:
 
     sp.add_parser("hints", help="打印 compile_error_hints.md")
     sp.add_parser("workflow-print", help="从 SKILL.md 摘录阶段流水线")
+    return ap
 
+
+def main() -> int:
+    ap = _make_ohxts_cli_parser()
     ns = ap.parse_args()
     handlers = {
         "env": cmd_env,

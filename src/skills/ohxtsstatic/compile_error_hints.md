@@ -1,8 +1,8 @@
 # ohxtsstatic：Static XTS 编译与运行期排障速查
 
-本文档与 **`SKILL.md`** 配套，供 `ohxtsflow.py hints` 打印及检索。内容为**独立可读**，不依赖其他仓库中的「经验总结」外链。
+本文档与 **`SKILL.md`** 配套，供 `ohxtsflow.py hints` 打印及检索。内容为**独立可读**，不依赖外部仓库中的「经验总结」外链。
 
-在 **技能融合模型** 中，本文档主要覆盖 **第 1 层**（与 **SDK 类型定义层** 相邻的编译/运行/Hypium 硬错误）。**第 1.5 / 第 2 层**（测什么、模板与 `@tc`）仍以 **`arkui-static-xts-generator/categories/`**、**`common/`**（**须先从 GitCode 下载放置**，见 **`arkui-static-xts-generator/README.md`**）及主文 **§〇～二** 为准；排障时若涉导入、步骤枚举、页面骨架，可交叉查阅 **`common/`**。
+在 **技能融合模型** 中，本文档主要覆盖**第一层**（与 **SDK 类型定义层** 相邻的编译/运行/Hypium 硬错误）。**第 1.5 / 第 2 层**（测什么、模板与 `@tc`）仍以 **`arkui-static-xts-generator/categories/`**、**`common/`**（**须先从 GitCode 下载放置**，见 **`arkui-static-xts-generator/README.md`**）及主文 **§〇～二** 为准；排障时若涉导入、步骤枚举、页面骨架，可交叉查阅 **`common/`**。
 
 ---
 
@@ -35,7 +35,7 @@
 | `indexOf('fieldName') === -1` 批量失败 | Inspector 序列化**不出现**该驼峰字段名 | 降级：**节点存在 + `$attrs` 片段**；或换 SDK 中实际存在的字段名；注释说明「序列化限制」 |
 | 断言失败：期望数字、日志为字符串 | `getString` 返回 `'0'`/`'1'` | **`assertEqual('0')`** 或与套件统一 `Number()` 再比 |
 | 套件 A 过后套件 B 必挂 | **AppStorage** 未清、**对话框**未关 | `afterEach`：`AppStorage.delete` 本套件键；`CustomDialogController.close()`；必要时 `sleep` |
-| 永远进不了页面 | **`main_pages.json` `path`** 与 **`Router.replaceUrl` `url`** 不一致 | 逐项对齐；日志打印 `router.getState()` |
+| 始终无法进入页面 | **`main_pages.json` `path`** 与 **`Router.replaceUrl` `url`** 不一致 | 逐项对齐；日志打印 `router.getState()` |
 | `findComponent` 找不到 | **id/key** 与页面不一致；或外层 **Scroll**/可视区域 | 页面保证 `.id('x')`；布局用百分比 `maxHeight` 保证一屏可操作 |
 | 点击了但回调未触发（触摸类） | 自动化 **click** 不触发 **onTouch** | 放宽断言：**控件存在 OR 回调**；或加大延迟；注释说明限制 |
 | 日志难过滤 | 关键词未统一 | 全路径强制 **`[ARKUI_NEW]`** 或与套件 **`LOG_TAG`** 一致 |

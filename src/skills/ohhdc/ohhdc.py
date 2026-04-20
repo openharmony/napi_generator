@@ -16,6 +16,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 from datetime import datetime
 from pathlib import Path
 import shlex
@@ -858,9 +859,9 @@ def run_faultlog_read(rel_path, tail_lines=None):
         return False, "", str(e)
 
 
-def capture_hilog_after_aa_test(bundle_name: str) -> str:
+def capture_hilog_after_app_test(bundle_name: str) -> str:
     """
-    在 aa test 命令结束后拉取一小段设备 hilog。Hypium / TestRunner 多数只写 hilog，
+    在设备应用测试命令结束后拉取一小段设备 hilog。Hypium / TestRunner 多数只写 hilog，
     故「命令之后的问题」需依赖本段才能在本机看到。
 
     环境变量：
@@ -878,7 +879,7 @@ def capture_hilog_after_aa_test(bundle_name: str) -> str:
     sec = (os.environ.get("OHOS_AA_TEST_HILOG_SEC") or "").strip()
     timeout_sec = int(sec) if sec.isdigit() else 20
     timeout_sec = max(5, min(120, timeout_sec))
-    pattern = _aa_test_hilog_grep_pattern(bundle_name)
+    pattern = _app_test_hilog_pattern(bundle_name)
     ok, out, err = run_hilog(
         level="D",
         private_off=True,
@@ -904,14 +905,14 @@ def capture_hilog_after_aa_test(bundle_name: str) -> str:
     return text
 
 
-def _aa_test_hilog_grep_pattern(bundle_name: str) -> str:
+def _app_test_hilog_pattern(bundle_name: str) -> str:
     pattern = (os.environ.get("OHOS_AA_TEST_HILOG_GREP") or "").strip()
     if pattern:
         return pattern
     safe_bn = re.escape(bundle_name)
     return (
         f"Hypium|{safe_bn}|OpenHarmonyTestRunner|testTag|"
-        "ARKUI|Ace|JSAPP|Assertion|expect|FAIL|Error|AA|Ability"
+        "ARKUI|Ace|JSAPP|Assertion|expect|FAIL|Error|Ability"
     )
 
 
@@ -939,14 +940,14 @@ def _hilog_during_aa_poll_slice(
             chunks.append(f"\n--- [执行中 hilog @{stamp}] ---\n{block}\n")
 
 
-def _hilog_during_aa_worker(
+def _hilog_during_app_test_worker(
     bundle_name: str,
     stop_event: threading.Event,
     chunks: list,
     lock: threading.Lock,
 ) -> None:
     """
-    与 aa test 并行：周期性短采 hilog，便于看执行过程中哪里出错。
+    与应用测试并行：周期性短采 hilog，便于看执行过程中哪里出错。
     """
     poll = (os.environ.get("OHOS_AA_TEST_HILOG_POLL_SEC") or "").strip()
     poll_sec = float(poll) if poll else 3.0
@@ -954,7 +955,7 @@ def _hilog_during_aa_worker(
     sl = (os.environ.get("OHOS_AA_TEST_HILOG_SLICE_SEC") or "").strip()
     slice_sec = int(sl) if sl.isdigit() else 5
     slice_sec = max(2, min(15, slice_sec))
-    pattern = _aa_test_hilog_grep_pattern(bundle_name)
+    pattern = _app_test_hilog_pattern(bundle_name)
     max_total = 800_000
     while not stop_event.is_set():
         _hilog_during_aa_poll_slice(chunks, lock, pattern, slice_sec, max_total)
@@ -962,8 +963,8 @@ def _hilog_during_aa_worker(
             break
 
 
-def _append_hilog_after_aa(bundle_name: str, base: str) -> str:
-    """将 capture_hilog_after_aa_test 结果拼到 aa test 输出后。"""
+def _append_hilog_after_app(bundle_name: str, base: str) -> str:
+    """将 capture_hilog_after_app_test 结果拼到应用测试输出后。"""
     if os.environ.get("OHOS_AA_TEST_SKIP_HILOG", "").strip().lower() in (
         "1",
         "true",
@@ -971,7 +972,7 @@ def _append_hilog_after_aa(bundle_name: str, base: str) -> str:
         "on",
     ):
         return base
-    snip = capture_hilog_after_aa_test(bundle_name)
+    snip = capture_hilog_after_app_test(bundle_name)
     if not snip.strip():
         return (
             base
@@ -980,36 +981,184 @@ def _append_hilog_after_aa(bundle_name: str, base: str) -> str:
         )
     return (
         base
-        + "\n\n--- 设备 hilog 摘录（aa test 结束后自动抓取，见 capture_hilog_after_aa_test）---\n"
+        + "\n\n--- 设备 hilog 摘录（应用测试结束后自动抓取，见 capture_hilog_after_app_test）---\n"
         + snip
     )
 
 
-def run_aa_test_unittest(
+def _resolve_hdc_executable() -> str:
+    """
+    解析本机 hdc 路径（不使用 bash/login shell）。
+
+    顺序：OH_HDC_BIN / OHOS_HDC_BIN / HDC_BIN → PATH → OHOS_SDK_PATH 下常见 toolchains/hdc。
+    用于替代历史上 `source ~/.bashrc && hdc` 对 PATH 的依赖，行为与多数 OH 开发环境一致。
+    """
+    for key in ("OH_HDC_BIN", "OHOS_HDC_BIN", "HDC_BIN"):
+        p = (os.environ.get(key) or "").strip()
+        if p and os.path.isfile(p) and os.access(p, os.X_OK):
+            return p
+    which_hdc = shutil.which("hdc")
+    if which_hdc:
+        return which_hdc
+    sdk = (os.environ.get("OHOS_SDK_PATH") or "").strip()
+    if sdk:
+        plat_sub = "windows" if sys.platform.startswith("win") else "linux"
+        cand = os.path.join(sdk, plat_sub, "toolchains", "hdc")
+        if sys.platform.startswith("win"):
+            cand_exe = cand + ".exe"
+            if os.path.isfile(cand_exe):
+                return cand_exe
+        elif os.path.isfile(cand) and os.access(cand, os.X_OK):
+            return cand
+        mac_cand = os.path.join(sdk, "mac", "toolchains", "hdc")
+        if os.path.isfile(mac_cand) and os.access(mac_cand, os.X_OK):
+            return mac_cand
+    return "hdc"
+
+
+def _merge_hilog_during_chunks_into_stdout(
+    chunks: list, chunk_lock: threading.Lock, base: str
+) -> str:
+    """将执行过程中轮询到的 hilog 片段拼到应用测试标准输出之前。"""
+    with chunk_lock:
+        during_txt = "".join(chunks)
+    if not during_txt.strip():
+        return base
+    return (
+        "--- 设备 hilog（应用测试执行过程中轮询；OHOS_AA_TEST_SKIP_HILOG_DURING=1 可关闭）---\n"
+        + during_txt
+        + "\n--- 应用测试进程标准输出 ---\n"
+        + base
+    )
+
+
+def _prepare_app_test_log_path(log_file: str) -> str | None:
+    """解析 OHOS_AA_TEST_LOG_FILE 路径并创建父目录；空串返回 None。"""
+    if not (log_file or "").strip():
+        return None
+    path = os.path.abspath(os.path.expanduser(log_file.strip()))
+    try:
+        os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    except OSError:
+        pass
+    return path
+
+
+def _run_hdc_shell_with_optional_streaming_log(
+    remote_line: str,
+    wait_sec: int,
+    log_file: str,
+) -> tuple[int, str]:
+    """
+    执行 hdc shell：stderr 合并到 stdout。
+
+    - 未设置 OHOS_AA_TEST_LOG_FILE：与单次 subprocess.run 等价。
+    - 已设置：边读 stdout 边写入日志文件（行为等同原 bash 管道 `... | tee <path>`），仍不全机走 shell。
+    """
+    log_path = _prepare_app_test_log_path(log_file)
+    hdc_bin = _resolve_hdc_executable()
+    cmd = [hdc_bin, "shell", remote_line]
+
+    if log_path is None:
+        result = subprocess.run(
+            cmd,
+            shell=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=wait_sec,
+        )
+        return result.returncode, result.stdout or ""
+
+    proc = subprocess.Popen(
+        cmd,
+        shell=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+    )
+    parts: list[str] = []
+    buf_lock = threading.Lock()
+
+    def _drain_stdout_to_memory_and_log() -> None:
+        assert proc.stdout is not None
+        lf = None
+        try:
+            try:
+                lf = open(log_path, "w", encoding="utf-8")
+            except OSError:
+                lf = None
+            while True:
+                chunk = proc.stdout.read(8192)
+                if not chunk:
+                    break
+                with buf_lock:
+                    parts.append(chunk)
+                if lf:
+                    try:
+                        lf.write(chunk)
+                        lf.flush()
+                    except OSError:
+                        pass
+        finally:
+            if lf:
+                try:
+                    lf.close()
+                except OSError:
+                    pass
+
+    drainer = threading.Thread(
+        target=_drain_stdout_to_memory_and_log,
+        name="hdc-app-test-tee",
+        daemon=True,
+    )
+    drainer.start()
+
+    try:
+        rc = proc.wait(timeout=wait_sec)
+    except subprocess.TimeoutExpired:
+        try:
+            proc.kill()
+        except OSError:
+            pass
+        try:
+            proc.wait(timeout=60)
+        except Exception:
+            pass
+        drainer.join(timeout=180)
+        with buf_lock:
+            partial = "".join(parts)
+        raise subprocess.TimeoutExpired(
+            cmd=cmd,
+            timeout=wait_sec,
+            output=partial,
+            stderr=None,
+        ) from None
+
+    drainer.join(timeout=180)
+    with buf_lock:
+        return rc, "".join(parts)
+
+
+def _resolve_app_test_wall_sec(timeout_ms: int) -> int:
+    env_wall = (os.environ.get("OHOS_AA_TEST_WALL_SEC") or "").strip()
+    if env_wall.isdigit():
+        return max(60, int(env_wall))
+    return max(1800, int(timeout_ms) // 1000 + 1200)
+
+
+def _build_app_test_remote_line(
     bundle_name: str,
-    module_name: str = "entry",
-    runner_path: str = "OpenHarmonyTestRunner",
-    timeout_ms: int = 15000,
-):
-    """
-    静态 XTS / Hypium 一体包：主模块内 TestRunner，通过 -s unittest 指定。
-
-    官方文档（unittest-guidelines / aa-tool）要求 **-s unittest** 的取值为 **Runner 类名**，
-    例如 ``OpenHarmonyTestRunner``，示例多为::
-        aa test -b <bundle> -m entry -s timeout 10000 -s unittest OpenHarmonyTestRunner
-    **注意 -s timeout 写在 -s unittest 之前**（与文档示例一致）；使用 ``/ets/testrunner/...``
-    路径形式在部分版本上可能无法匹配 testRunner。
-
-    若设备返回 10106002 等，可能与 **release 签名包不支持 aa test** 有关，需 debug 包或设备策略允许。
-
-    Returns:
-        tuple: (success: bool, output: str, error: str)
-    """
-    # 环境变量可覆盖 Runner 串（类名或设备侧路径）、框架侧 -s timeout（毫秒）
+    module_name: str,
+    runner_path: str,
+    timeout_ms: int,
+) -> tuple[str, int]:
+    """拼出设备 shell 内执行的远程命令行（参数已转义），并返回生效后的超时毫秒。"""
     runner = (os.environ.get("OHOS_AA_TEST_UNITTEST_RUNNER") or "").strip() or runner_path
     env_to = (os.environ.get("OHOS_AA_TEST_TIMEOUT_MS") or "").strip()
+    effective_ms = timeout_ms
     if env_to.isdigit():
-        timeout_ms = int(env_to)
+        effective_ms = int(env_to)
     parts = [
         "aa",
         "test",
@@ -1019,25 +1168,79 @@ def run_aa_test_unittest(
         module_name,
         "-s",
         "timeout",
-        str(int(timeout_ms)),
+        str(int(effective_ms)),
         "-s",
         "unittest",
         runner,
     ]
     inner = " ".join(shlex.quote(p) for p in parts)
-    # Hypium 常把详细进度打在 hilog，aa test 进程 stdout 可能很少或缓冲久；可选 tee 落盘便于排障
+    return inner, effective_ms
+
+
+def _execute_app_test_remote_try(
+    bundle_name: str,
+    inner: str,
+    wait_sec: int,
+    log_file: str,
+    chunks: list,
+    chunk_lock: threading.Lock,
+) -> tuple[bool, str, str]:
+    """执行 `hdc shell` 远程应用测试并合并 hilog；成功/超时均返回 (ok, out, err)。"""
+    hint = (
+        "\n\n（说明）若执行中 hilog 仍少：可放宽 OHOS_AA_TEST_HILOG_GREP，或手动 hdc shell hilog。\n"
+        "超时秒数用 OHOS_AA_TEST_WALL_SEC；落盘用 OHOS_AA_TEST_LOG_FILE。\n"
+    )
+    try:
+        rc, out = _run_hdc_shell_with_optional_streaming_log(
+            inner, wait_sec, log_file
+        )
+        out = _merge_hilog_during_chunks_into_stdout(chunks, chunk_lock, out)
+        out = _append_hilog_after_app(bundle_name, out)
+        return rc == 0, out, ""
+    except subprocess.TimeoutExpired as e:
+        partial = (getattr(e, "output", None) or getattr(e, "stdout", None) or "") + (
+            getattr(e, "stderr", None) or ""
+        )
+        partial = _merge_hilog_during_chunks_into_stdout(chunks, chunk_lock, partial)
+        partial = _append_hilog_after_app(bundle_name, partial)
+        if not partial.strip():
+            partial = (
+                f"(子进程已超时 {wait_sec}s；capture 未收到 stdout/stderr 片段)\n"
+                + hint
+            )
+        else:
+            partial = (
+                f"--- 应用测试超时前进程输出（可能不完整）---\n{partial}\n"
+                f"--- 超时 {wait_sec}s ---"
+                + hint
+            )
+        return False, partial, f"应用测试子进程超时（>{wait_sec}s）"
+    except Exception as e:
+        return False, "", str(e)
+
+
+def run_aa_test_unittest(
+    bundle_name: str,
+    module_name: str = "entry",
+    runner_path: str = "OpenHarmonyTestRunner",
+    timeout_ms: int = 15000,
+):
+    """
+    静态 XTS / Hypium 一体包：主模块内 TestRunner，通过设备侧 ``-s unittest`` 指定 Runner。
+
+    官方文档要求 **unittest** 参数取 **Runner 类名**（如 ``OpenHarmonyTestRunner``），
+    **timeout** 参数写在 **unittest** 之前；设备 shell 内路径 ``/ets/testrunner/...`` 在部分版本可能无效。
+
+    若设备返回 10106002 等，可能与 **release 签名包不支持设备应用测试子命令** 有关，需 debug 包或策略放行。
+
+    Returns:
+        tuple: (success: bool, output: str, error: str)
+    """
+    inner, timeout_ms = _build_app_test_remote_line(
+        bundle_name, module_name, runner_path, timeout_ms
+    )
     log_file = (os.environ.get("OHOS_AA_TEST_LOG_FILE") or "").strip()
-    if log_file:
-        lp = shlex.quote(os.path.abspath(os.path.expanduser(log_file)))
-        script = f"source ~/.bashrc && hdc shell {shlex.quote(inner)} 2>&1 | tee {lp}"
-    else:
-        script = f"source ~/.bashrc && hdc shell {shlex.quote(inner)}"
-    # -s timeout 为设备侧框架毫秒；整包 Hypium 墙钟常远大于该值，子进程等待须单独给足余量
-    env_wall = (os.environ.get("OHOS_AA_TEST_WALL_SEC") or "").strip()
-    if env_wall.isdigit():
-        wait_sec = max(60, int(env_wall))
-    else:
-        wait_sec = max(1800, int(timeout_ms) // 1000 + 1200)
+    wait_sec = _resolve_app_test_wall_sec(timeout_ms)
 
     skip_all_hilog = os.environ.get("OHOS_AA_TEST_SKIP_HILOG", "").strip().lower() in (
         "1",
@@ -1060,61 +1263,17 @@ def run_aa_test_unittest(
     worker = None  # threading.Thread
     if during_ok:
         worker = threading.Thread(
-            target=_hilog_during_aa_worker,
+            target=_hilog_during_app_test_worker,
             args=(bundle_name, stop_event, chunks, chunk_lock),
             daemon=True,
-            name="hilog-during-aa-test",
+            name="hilog-during-app-test",
         )
         worker.start()
 
-    def _merge_during_into(base: str) -> str:
-        with chunk_lock:
-            during_txt = "".join(chunks)
-        if not during_txt.strip():
-            return base
-        return (
-            "--- 设备 hilog（aa test 执行过程中轮询；OHOS_AA_TEST_SKIP_HILOG_DURING=1 可关闭）---\n"
-            + during_txt
-            + "\n--- aa test 进程标准输出 ---\n"
-            + base
-        )
-
     try:
-        # 合并 stderr 到 stdout（不能与 capture_output 同时使用）；显式 exec bash，避免 subprocess shell=True
-        result = subprocess.run(
-            ["bash", "-c", script],
-            shell=False,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            timeout=wait_sec,
+        return _execute_app_test_remote_try(
+            bundle_name, inner, wait_sec, log_file, chunks, chunk_lock
         )
-        out = result.stdout or ""
-        out = _merge_during_into(out)
-        out = _append_hilog_after_aa(bundle_name, out)
-        return result.returncode == 0, out, ""
-    except subprocess.TimeoutExpired as e:
-        partial = (e.stdout or "") + (e.stderr or "")
-        partial = _merge_during_into(partial)
-        partial = _append_hilog_after_aa(bundle_name, partial)
-        hint = (
-            "\n\n（说明）若执行中 hilog 仍少：可放宽 OHOS_AA_TEST_HILOG_GREP，或手动 hdc shell hilog。\n"
-            "超时秒数用 OHOS_AA_TEST_WALL_SEC；落盘用 OHOS_AA_TEST_LOG_FILE。\n"
-        )
-        if not partial.strip():
-            partial = (
-                f"(子进程已超时 {wait_sec}s；capture 未收到 stdout/stderr 片段)\n"
-                + hint
-            )
-        else:
-            partial = (
-                f"--- aa test 超时前进程输出（可能不完整）---\n{partial}\n"
-                f"--- 超时 {wait_sec}s ---"
-                + hint
-            )
-        return False, partial, f"aa test 子进程超时（>{wait_sec}s）"
-    except Exception as e:
-        return False, "", str(e)
     finally:
         stop_event.set()
         if worker is not None:
@@ -1480,8 +1639,8 @@ def format_apps_as_markdown(apps):
     return markdown
 
 
-def main():
-    """主函数"""
+def _build_ohhdc_arg_parser():
+    """构建 ohhdc 命令行解析器。"""
     parser = argparse.ArgumentParser(
         description='OpenHarmony HDC 工具 - 设备应用管理（查看/安装/卸载 HAP，查看前台应用，LED 控制等）'
     )
@@ -1628,7 +1787,7 @@ def main():
         default=2.0,
         dest='app_start_delay',
         metavar='SEC',
-        help='screenshot-app：aa start 成功后等待秒数再截图，默认 2.0',
+        help='screenshot-app：应用启动命令返回成功后等待秒数再截图，默认 2.0',
     )
     parser.add_argument(
         '--bundle',
@@ -1710,8 +1869,11 @@ def main():
         metavar='PATH_OR_NAME',
         help='设备侧 wificommand：命令名或绝对路径；默认 wificommand（依赖 PATH）。与 --push-wificommand 连用时以推送路径为准',
     )
-    args = parser.parse_args()
+    return parser
 
+
+def _ohhdc_dispatch_cli(args, parser):
+    """根据解析结果执行子命令。"""
     if args.action == 'wifi-check-wificommand':
         print("=== 设备侧（wificommand 是否存在）===\n")
         checks = [
@@ -2194,6 +2356,13 @@ def main():
 
     parser.print_help()
     sys.exit(1)
+
+
+def main():
+    """主函数：解析参数并分发 CLI。"""
+    parser = _build_ohhdc_arg_parser()
+    args = parser.parse_args()
+    _ohhdc_dispatch_cli(args, parser)
 
 
 if __name__ == '__main__':

@@ -923,6 +923,34 @@ def _resolve_hvigorw_js(hos_clt_path):
     return None
 
 
+def _load_hvigor_project_env(project_dir: str) -> tuple[str, str, str] | None:
+    """解析 HOS_CLT_PATH、node、hvigorw.js；失败时打印原因并返回 None。"""
+    project_dir = os.path.abspath(project_dir)
+    if not os.path.isdir(project_dir):
+        print(f"❌ 错误: 项目目录不存在: {project_dir}")
+        return None
+    hos_clt_path = os.environ.get('HOS_CLT_PATH')
+    if not hos_clt_path or not os.path.isdir(hos_clt_path):
+        print(f"❌ 错误: 未设置或无效的 HOS_CLT_PATH 环境变量")
+        print(f"  请设置 HOS_CLT_PATH 指向 HarmonyOS Command Line Tools 目录")
+        return None
+    hvigorw_js = _resolve_hvigorw_js(hos_clt_path)
+    if not hvigorw_js or not os.path.isfile(hvigorw_js):
+        print(f"❌ 错误: 未找到可用的 hvigorw.js（已查 OHOS_HVIGORW_JS、OHOS_USE_HVIGOR_STATIC → hvigor-static、hvigor/bin）")
+        return None
+    node_cmd = _resolve_node_cmd(hos_clt_path)
+    return project_dir, node_cmd, hvigorw_js
+
+
+def _hvigor_clean_module(project_dir: str, node_cmd: str, hvigorw_js: str) -> None:
+    print(f"\n执行清理...")
+    clean_cmd = [node_cmd, hvigorw_js, 'clean', '--no-daemon']
+    print(f"命令: {' '.join(clean_cmd)}")
+    result = subprocess.run(clean_cmd, capture_output=False, text=True, timeout=600, cwd=project_dir)
+    if result.returncode != 0:
+        print(f"⚠ 警告: clean 命令执行失败（退出码: {result.returncode}）")
+
+
 def build_hap(project_dir, product='default', build_mode='debug'):
     """
     构建 HAP
@@ -939,37 +967,16 @@ def build_hap(project_dir, product='default', build_mode='debug'):
     print("开始构建 HAP...")
     print("=" * 80)
     
-    project_dir = os.path.abspath(project_dir)
-    if not os.path.isdir(project_dir):
-        print(f"❌ 错误: 项目目录不存在: {project_dir}")
-        return False
-    
     try:
-        # 使用 node 执行 HOS_CLT_PATH 下的 hvigorw.js（替代项目内的 hvigorw）
-        hos_clt_path = os.environ.get('HOS_CLT_PATH')
-        if not hos_clt_path or not os.path.isdir(hos_clt_path):
-            print(f"❌ 错误: 未设置或无效的 HOS_CLT_PATH 环境变量")
-            print(f"  请设置 HOS_CLT_PATH 指向 HarmonyOS Command Line Tools 目录")
+        loaded = _load_hvigor_project_env(project_dir)
+        if loaded is None:
             return False
-        hvigorw_js = _resolve_hvigorw_js(hos_clt_path)
-        if not hvigorw_js or not os.path.isfile(hvigorw_js):
-            print(f"❌ 错误: 未找到可用的 hvigorw.js（已查 OHOS_HVIGORW_JS、OHOS_USE_HVIGOR_STATIC → hvigor-static、hvigor/bin）")
-            return False
-        node_cmd = _resolve_node_cmd(hos_clt_path)
+        project_dir, node_cmd, hvigorw_js = loaded
         print(f"工作目录: {project_dir}")
         print(f"Node: {node_cmd}")
         print(f"Hvigor: {hvigorw_js}")
-        
-        # 执行 clean（子进程 cwd=project_dir，确保 hvigor 读到项目内配置）
-        print(f"\n执行清理...")
-        clean_cmd = [node_cmd, hvigorw_js, 'clean', '--no-daemon']
-        print(f"命令: {' '.join(clean_cmd)}")
-        result = subprocess.run(clean_cmd, capture_output=False, text=True, timeout=600, cwd=project_dir)
-        if result.returncode != 0:
-            print(f"⚠ 警告: clean 命令执行失败（退出码: {result.returncode}）")
-            # 继续执行构建
-        
-        # 执行构建
+        _hvigor_clean_module(project_dir, node_cmd, hvigorw_js)
+
         print(f"\n执行构建...")
         build_cmd = [
             node_cmd, hvigorw_js,
@@ -1023,28 +1030,15 @@ def build_test_hap(project_dir, module_name='entry@ohosTest', product='default')
     print("开始编译单元测试用例...")
     print("=" * 80)
     
-    project_dir = os.path.abspath(project_dir)
-    if not os.path.isdir(project_dir):
-        print(f"❌ 错误: 项目目录不存在: {project_dir}")
-        return False
-    
     try:
-        # 使用 node 执行 HOS_CLT_PATH 下的 hvigorw.js（替代项目内的 hvigorw）
-        hos_clt_path = os.environ.get('HOS_CLT_PATH')
-        if not hos_clt_path or not os.path.isdir(hos_clt_path):
-            print(f"❌ 错误: 未设置或无效的 HOS_CLT_PATH 环境变量")
-            print(f"  请设置 HOS_CLT_PATH 指向 HarmonyOS Command Line Tools 目录")
+        loaded = _load_hvigor_project_env(project_dir)
+        if loaded is None:
             return False
-        hvigorw_js = _resolve_hvigorw_js(hos_clt_path)
-        if not hvigorw_js or not os.path.isfile(hvigorw_js):
-            print(f"❌ 错误: 未找到可用的 hvigorw.js（已查 OHOS_HVIGORW_JS、OHOS_USE_HVIGOR_STATIC → hvigor-static、hvigor/bin）")
-            return False
-        node_cmd = _resolve_node_cmd(hos_clt_path)
+        project_dir, node_cmd, hvigorw_js = loaded
         print(f"工作目录: {project_dir}")
         print(f"Node: {node_cmd}")
         print(f"Hvigor: {hvigorw_js}")
-        
-        # 编译单元测试（子进程 cwd=project_dir，确保 hvigor 读到项目内配置）
+
         print(f"\n执行单元测试 HAP 构建...")
         test_build_cmd = [
             node_cmd, hvigorw_js,
@@ -1678,6 +1672,38 @@ def sign_hap(project_dir, profile_type='release'):
     
     return True
 
+def _hapbuild_main_build(project_dir: str) -> int:
+    product = sys.argv[3] if len(sys.argv) > 3 else 'default'
+    build_mode = sys.argv[4] if len(sys.argv) > 4 else 'debug'
+    env_ok, env_info = check_environment(project_dir)
+    if not env_ok:
+        print("\n❌ 环境检查失败，请先配置好编译环境")
+        return 1
+    version_ok = verify_version_consistency(project_dir, env_info)
+    if not version_ok:
+        print("\n⚠ 警告: 版本验证失败，但将继续构建")
+    build_ok = build_hap(project_dir, product, build_mode)
+    if build_ok:
+        build_ok = auto_sign_after_build(project_dir, build_mode)
+    return 0 if build_ok else 1
+
+
+def _hapbuild_main_build_test(project_dir: str) -> int:
+    module_name = sys.argv[3] if len(sys.argv) > 3 else 'entry@ohosTest'
+    product = sys.argv[4] if len(sys.argv) > 4 else 'default'
+    env_ok, env_info = check_environment(project_dir)
+    if not env_ok:
+        print("\n❌ 环境检查失败，请先配置好编译环境")
+        return 1
+    version_ok = verify_version_consistency(project_dir, env_info)
+    if not version_ok:
+        print("\n⚠ 警告: 版本验证失败，但将继续构建")
+    build_ok = build_test_hap(project_dir, module_name=module_name, product=product)
+    if build_ok:
+        build_ok = auto_sign_after_build(project_dir, 'debug')
+    return 0 if build_ok else 1
+
+
 def clean_sign(project_dir):
     """
     清除签名（删除 autosign 目录）
@@ -1706,163 +1732,83 @@ def clean_sign(project_dir):
         print(f"❌ 错误: 删除 autosign 目录失败: {e}")
         return False
 
-def main():
-    """
-    主函数
-    """
-    if len(sys.argv) < 2:
-        print("用法: python3 hapbuild.py <command> [options]")
-        print()
-        print("命令:")
-        print("  build <project_dir> [product] [build_mode]  - 构建 HAP")
-        print("  build-test <project_dir> [module_name] [product] - 编译单元测试用例（ohosTest 模块）")
-        print("  sign <project_dir> [profile_type]           - 对 HAP 进行签名")
-        print("  clean-sign <project_dir>                   - 清除签名（删除 autosign 目录）")
-        print()
-        print("参数:")
-        print("  project_dir  - 项目目录路径（必需）")
-        print("  product      - 产品名称，默认 'default'（仅用于 build/build-test 命令）")
-        print("  build_mode   - 构建模式，默认 'debug'（可选: debug, release，仅用于 build 命令）")
-        print("  module_name  - 测试模块名，默认 'entry@ohosTest'（仅用于 build-test 命令）")
-        print("  profile_type - profile 类型，默认 'release'（可选: debug, release，仅用于 sign 命令）")
-        print()
-        print("示例（在 napi_generator 仓库根，路径按实际调整）:")
-        print("  python3 src/skills/ohhap/hapbuild.py build /path/to/project")
-        print("  python3 src/skills/ohhap/hapbuild.py build /path/to/project default debug")
-        print("  python3 src/skills/ohhap/hapbuild.py build-test /path/to/project")
-        print("  python3 src/skills/ohhap/hapbuild.py build-test /path/to/project entry@ohosTest default")
-        print("  python3 src/skills/ohhap/hapbuild.py sign /path/to/project")
-        print("  python3 src/skills/ohhap/hapbuild.py sign /path/to/project release")
-        print("  python3 src/skills/ohhap/hapbuild.py clean-sign /path/to/project")
-        print()
-        print("注意: 为了向后兼容，如果第一个参数不是命令，将作为 build 命令处理")
-        return 1
-    
+def _hapbuild_print_cli_usage():
+    print("用法: python3 hapbuild.py <command> [options]")
+    print()
+    print("命令:")
+    print("  build <project_dir> [product] [build_mode]  - 构建 HAP")
+    print("  build-test <project_dir> [module_name] [product] - 编译单元测试用例（ohosTest 模块）")
+    print("  sign <project_dir> [profile_type]           - 对 HAP 进行签名")
+    print("  clean-sign <project_dir>                   - 清除签名（删除 autosign 目录）")
+    print()
+    print("参数:")
+    print("  project_dir  - 项目目录路径（必需）")
+    print("  product      - 产品名称，默认 'default'（仅用于 build/build-test 命令）")
+    print("  build_mode   - 构建模式，默认 'debug'（可选: debug, release，仅用于 build 命令）")
+    print("  module_name  - 测试模块名，默认 'entry@ohosTest'（仅用于 build-test 命令）")
+    print("  profile_type - profile 类型，默认 'release'（可选: debug, release，仅用于 sign 命令）")
+    print()
+    print("示例（在 napi_generator 仓库根，路径按实际调整）:")
+    print("  python3 src/skills/ohhap/hapbuild.py build /path/to/project")
+    print("  python3 src/skills/ohhap/hapbuild.py build /path/to/project default debug")
+    print("  python3 src/skills/ohhap/hapbuild.py build-test /path/to/project")
+    print("  python3 src/skills/ohhap/hapbuild.py build-test /path/to/project entry@ohosTest default")
+    print("  python3 src/skills/ohhap/hapbuild.py sign /path/to/project")
+    print("  python3 src/skills/ohhap/hapbuild.py sign /path/to/project release")
+    print("  python3 src/skills/ohhap/hapbuild.py clean-sign /path/to/project")
+    print()
+    print("注意: 为了向后兼容，如果第一个参数不是命令，将作为 build 命令处理")
+
+
+def _hapbuild_resolve_cli_project():
+    """解析 argv，返回 (command, project_dir)。project_dir 尚未效验存在。"""
     command = sys.argv[1]
     known_commands = ['build', 'build-test', 'sign', 'clean-sign']
-    
-    # 新用法优先：若第一个参数是已知命令且提供了第二参数，则按 命令 + 项目目录 解析（避免 "build" 被误判为项目下的 build 目录）
     if command in known_commands and len(sys.argv) >= 3:
         project_dir = sys.argv[2]
     elif os.path.isdir(command) or (len(sys.argv) >= 2 and command not in known_commands):
-        # 向后兼容：python3 hapbuild.py <project_dir> [product] [build_mode]
         project_dir = sys.argv[1]
-        product = sys.argv[2] if len(sys.argv) > 2 else 'default'
-        build_mode = sys.argv[3] if len(sys.argv) > 3 else 'debug'
         command = 'build'
     else:
         if len(sys.argv) < 3:
             print("❌ 错误: 缺少项目目录参数")
-            return 1
+            return None, None
         project_dir = sys.argv[2]
-    
-    # 统一转为绝对路径，避免受调用方 cwd 影响
-    project_dir = os.path.abspath(project_dir)
-    # 检查项目目录
-    if not os.path.isdir(project_dir):
-        print(f"❌ 错误: 项目目录不存在: {project_dir}")
-        return 1
-    
+    return command, os.path.abspath(project_dir)
+
+
+def _hapbuild_dispatch(command, project_dir):
     if command == 'build':
-        product = sys.argv[3] if len(sys.argv) > 3 else 'default'
-        build_mode = sys.argv[4] if len(sys.argv) > 4 else 'debug'
-        
-        # 检查环境
-        env_ok, env_info = check_environment(project_dir)
-        if not env_ok:
-            print("\n❌ 环境检查失败，请先配置好编译环境")
-            return 1
-        
-        # 验证版本一致性
-        version_ok = verify_version_consistency(project_dir, env_info)
-        if not version_ok:
-            print("\n⚠ 警告: 版本验证失败，但将继续构建")
-        
-        # 构建 HAP，成功后自动命令行签名（见 auto_sign_after_build）
-        build_ok = build_hap(project_dir, product, build_mode)
-        if build_ok:
-            build_ok = auto_sign_after_build(project_dir, build_mode)
-        
-        if build_ok:
-            return 0
-        else:
-            return 1
-    
-    elif command == 'build-test':
-        module_name = sys.argv[3] if len(sys.argv) > 3 else 'entry@ohosTest'
-        product = sys.argv[4] if len(sys.argv) > 4 else 'default'
-        
-        env_ok, env_info = check_environment(project_dir)
-        if not env_ok:
-            print("\n❌ 环境检查失败，请先配置好编译环境")
-            return 1
-        
-        version_ok = verify_version_consistency(project_dir, env_info)
-        if not version_ok:
-            print("\n⚠ 警告: 版本验证失败，但将继续构建")
-        
-        build_ok = build_test_hap(project_dir, module_name=module_name, product=product)
-        if build_ok:
-            build_ok = auto_sign_after_build(project_dir, 'debug')
-        
-        if build_ok:
-            return 0
-        else:
-            return 1
-    
-    elif command == 'sign':
+        return _hapbuild_main_build(project_dir)
+    if command == 'build-test':
+        return _hapbuild_main_build_test(project_dir)
+    if command == 'sign':
         profile_type = sys.argv[3] if len(sys.argv) > 3 else 'release'
         if profile_type not in ['debug', 'release']:
             print(f"❌ 错误: 无效的 profile_type: {profile_type}，必须是 'debug' 或 'release'")
             return 1
-        
-        sign_ok = sign_hap(project_dir, profile_type)
-        
-        if sign_ok:
-            return 0
-        else:
-            return 1
-    
-    elif command == 'clean-sign':
-        clean_ok = clean_sign(project_dir)
-        
-        if clean_ok:
-            return 0
-        else:
-            return 1
-    
-    else:
-        print(f"❌ 错误: 未知命令: {command}")
-        print("  可用命令: build, build-test, sign, clean-sign")
+        return 0 if sign_hap(project_dir, profile_type) else 1
+    if command == 'clean-sign':
+        return 0 if clean_sign(project_dir) else 1
+    print(f"❌ 错误: 未知命令: {command}")
+    print("  可用命令: build, build-test, sign, clean-sign")
+    return 1
+
+
+def main():
+    """主函数"""
+    if len(sys.argv) < 2:
+        _hapbuild_print_cli_usage()
         return 1
-    
-    project_dir = sys.argv[1]
-    product = sys.argv[2] if len(sys.argv) > 2 else 'default'
-    build_mode = sys.argv[3] if len(sys.argv) > 3 else 'debug'
-    
-    # 检查项目目录
+
+    command, project_dir = _hapbuild_resolve_cli_project()
+    if command is None:
+        return 1
     if not os.path.isdir(project_dir):
         print(f"❌ 错误: 项目目录不存在: {project_dir}")
         return 1
-    
-    # 检查环境
-    env_ok, env_info = check_environment(project_dir)
-    if not env_ok:
-        print("\n❌ 环境检查失败，请先配置好编译环境")
-        return 1
-    
-    # 验证版本一致性
-    version_ok = verify_version_consistency(project_dir, env_info)
-    if not version_ok:
-        print("\n⚠ 警告: 版本验证失败，但将继续构建")
-    
-    # 构建 HAP
-    build_ok = build_hap(project_dir, product, build_mode)
-    
-    if build_ok:
-        return 0
-    else:
-        return 1
+    return _hapbuild_dispatch(command, project_dir)
+
 
 if __name__ == "__main__":
     sys.exit(main())
