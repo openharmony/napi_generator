@@ -1673,7 +1673,7 @@ def format_apps_as_markdown(apps):
     return markdown
 
 
-def _ohhdc_fill_parser_positionals_and_tests(parser: argparse.ArgumentParser) -> None:
+def _ohhdc_fill_parser_actions(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         'action',
         choices=[
@@ -1685,6 +1685,9 @@ def _ohhdc_fill_parser_positionals_and_tests(parser: argparse.ArgumentParser) ->
         ],
         help='操作：wifi-kaihong=开 Wi‑Fi 连 KaiHong；wifi-push-wificommand=推送 wificommand；wifi-check-wificommand=检查设备/本机产物',
     )
+
+
+def _ohhdc_fill_parser_positionals(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         'target',
         nargs='?',
@@ -1703,6 +1706,9 @@ def _ohhdc_fill_parser_positionals_and_tests(parser: argparse.ArgumentParser) ->
         choices=['on', 'off'],
         help='仅与 led 联用：on=写入 brightness 1，off=写入 brightness 0。示例: ohhdc.py led red on'
     )
+
+
+def _ohhdc_fill_parser_tests_and_format(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         '--ability',
         '-a',
@@ -1747,6 +1753,12 @@ def _ohhdc_fill_parser_positionals_and_tests(parser: argparse.ArgumentParser) ->
         default='markdown',
         help='仅对 apps 生效：输出格式 markdown/md 或 plain/list'
     )
+
+
+def _ohhdc_fill_parser_positionals_and_tests(parser: argparse.ArgumentParser) -> None:
+    _ohhdc_fill_parser_actions(parser)
+    _ohhdc_fill_parser_positionals(parser)
+    _ohhdc_fill_parser_tests_and_format(parser)
 
 
 def _ohhdc_fill_parser_hilog_fault(parser: argparse.ArgumentParser) -> None:
@@ -1801,7 +1813,7 @@ def _ohhdc_fill_parser_hilog_fault(parser: argparse.ArgumentParser) -> None:
     )
 
 
-def _ohhdc_fill_parser_media_layout(parser: argparse.ArgumentParser) -> None:
+def _ohhdc_fill_parser_screenshot_display(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         '--device-file',
         dest='remote_device_file',
@@ -1825,6 +1837,9 @@ def _ohhdc_fill_parser_media_layout(parser: argparse.ArgumentParser) -> None:
         metavar='SEC',
         help='screenshot-app：应用启动命令返回成功后等待秒数再截图，默认 2.0',
     )
+
+
+def _ohhdc_fill_parser_layout_uitest(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         '--bundle',
         dest='uitest_bundle',
@@ -1862,6 +1877,11 @@ def _ohhdc_fill_parser_media_layout(parser: argparse.ArgumentParser) -> None:
         metavar='NAME',
         help='layout：uitest dumpLayout -e 扩展属性',
     )
+
+
+def _ohhdc_fill_parser_media_layout(parser: argparse.ArgumentParser) -> None:
+    _ohhdc_fill_parser_screenshot_display(parser)
+    _ohhdc_fill_parser_layout_uitest(parser)
 
 
 def _ohhdc_fill_parser_wifi(parser: argparse.ArgumentParser) -> None:
@@ -2068,119 +2088,126 @@ def _try_dispatch_wifi_family(args, parser) -> bool:
 
 
 def _try_dispatch_led(args, parser) -> bool:
-    if args.action == 'led':
-        if not args.target or args.target not in LED_SYSFS_NAMES:
-            print(
-                "❌ 错误: led 请指定 sysfs 节点名 red / green / blue，以及 on 或 off。\n"
-                "  示例: ohhdc.py led red on    # 等价 hdc shell \"echo 1 > /sys/class/leds/red/brightness\"\n"
-                "        ohhdc.py led red off\n"
-                "        ohhdc.py led green on\n"
-                "        ohhdc.py led blue off",
-                file=sys.stderr,
-            )
-            sys.exit(1)
-        # 第三位置参数是 screenshot 占位，故 `led green off` 中 off 落在 screenshot_app_local_path
-        led_state = args.led_onoff
-        if led_state not in ('on', 'off') and args.screenshot_app_local_path in ('on', 'off'):
-            led_state = args.screenshot_app_local_path
-        if led_state not in ('on', 'off'):
-            print(
-                "❌ 错误: led 请再指定 on 或 off，例如: ohhdc.py led green off",
-                file=sys.stderr,
-            )
-            sys.exit(1)
-        val = 1 if led_state == 'on' else 0
-        success, out, err = set_device_led(args.target, val)
-        if success:
-            state_zh = "开" if val == 1 else "关"
-            print(
-                f"✓ LED `{args.target}` 已{state_zh}（brightness={val}）\n"
-                f"  等价: hdc shell \"echo {val} > /sys/class/leds/{args.target}/brightness\""
-            )
-            if out and out.strip():
-                print(out)
-        else:
-            print(f"❌ LED 设置失败: {err or out}", file=sys.stderr)
-            sys.exit(1)
+    if args.action != 'led':
+        return False
+    if not args.target or args.target not in LED_SYSFS_NAMES:
+        print(
+            "❌ 错误: led 请指定 sysfs 节点名 red / green / blue，以及 on 或 off。\n"
+            "  示例: ohhdc.py led red on    # 等价 hdc shell \"echo 1 > /sys/class/leds/red/brightness\"\n"
+            "        ohhdc.py led red off\n"
+            "        ohhdc.py led green on\n"
+            "        ohhdc.py led blue off",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    # 第三位置参数是 screenshot 占位，故 `led green off` 中 off 落在 screenshot_app_local_path
+    led_state = args.led_onoff
+    if led_state not in ('on', 'off') and args.screenshot_app_local_path in ('on', 'off'):
+        led_state = args.screenshot_app_local_path
+    if led_state not in ('on', 'off'):
+        print(
+            "❌ 错误: led 请再指定 on 或 off，例如: ohhdc.py led green off",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    val = 1 if led_state == 'on' else 0
+    success, out, err = set_device_led(args.target, val)
+    if not success:
+        print(f"❌ LED 设置失败: {err or out}", file=sys.stderr)
+        sys.exit(1)
+    state_zh = "开" if val == 1 else "关"
+    print(
+        f"✓ LED `{args.target}` 已{state_zh}（brightness={val}）\n"
+        f"  等价: hdc shell \"echo {val} > /sys/class/leds/{args.target}/brightness\""
+    )
+    if out and out.strip():
+        print(out)
     return True
 
-    return False
+
+def _screenshot_cli_full_screen(args) -> None:
+    default_snap = f"ohhdc_screenshot_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpeg"
+    local_out = resolve_ohhdc_artifact_path(
+        OH_HDC_SCREENSHOT_DIR,
+        args.target,
+        default_snap,
+    )
+    ok, log, err, resolved = take_screenshot_to_local(
+        local_out,
+        device_path=args.remote_device_file,
+        display_id=args.hdc_display_id,
+    )
+    if log:
+        print(log)
+    if not ok:
+        print(f"\n❌ 截图失败: {err}", file=sys.stderr)
+        sys.exit(1)
+    print(f"\n✓ 截图已保存到: {resolved}")
+
+
+def _screenshot_take_after_app_ready(bundle_name: str, args) -> None:
+    delay_sec = float(args.app_start_delay)
+    if delay_sec > 0:
+        print(f"→ 等待 {delay_sec}s 后截图 …")
+        time.sleep(delay_sec)
+    safe_tag = re.sub(r"[^\w\-.]", "_", args.target.strip())[:80]
+    default_snap = f"screenshot_app_{safe_tag}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpeg"
+    local_out = resolve_ohhdc_artifact_path(
+        OH_HDC_SCREENSHOT_DIR,
+        args.screenshot_app_local_path,
+        default_snap,
+    )
+    ok, log, err, resolved = take_screenshot_to_local(
+        local_out,
+        device_path=args.remote_device_file,
+        display_id=args.hdc_display_id,
+    )
+    if log:
+        print(log)
+    if not ok:
+        print(f"\n❌ 截图失败: {err}", file=sys.stderr)
+        sys.exit(1)
+    print(f"\n✓ [{bundle_name}] 截图已保存到: {resolved}")
+    print(
+        "  说明: 与 snapshot_display 一致为整屏位图；多窗同屏时其它窗口可能入镜。"
+        "仅裁某一窗口请配合 layout bounds 在本机裁剪。"
+    )
+
+
+def _screenshot_cli_app_scoped(args) -> None:
+    if not args.target:
+        print(
+            "❌ 错误: 请提供应用别名或包名，例如: "
+            "ohhdc.py screenshot-app etsclock\n"
+            "  完整包名需带 Ability: "
+            "ohhdc.py screenshot-app ohos.samples.xxx --ability EntryAbility",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    resolved_pair, err_msg = resolve_screenshot_app_bundle_ability(
+        args.target, args.ability_name
+    )
+    if resolved_pair is None:
+        print(f"❌ 错误: {err_msg}", file=sys.stderr)
+        sys.exit(1)
+    bundle_name, ability_name = resolved_pair
+    print(f"→ 启动应用: {bundle_name} / {ability_name}")
+    ok_start, out_start, err_start = start_app(bundle_name, ability_name)
+    if out_start and out_start.strip():
+        print(out_start.strip())
+    if not ok_start:
+        print(f"❌ 启动应用失败: {err_start or out_start}", file=sys.stderr)
+        sys.exit(1)
+    _screenshot_take_after_app_ready(bundle_name, args)
+
 
 def _try_dispatch_screenshot_family(args, parser) -> bool:
     if args.action in ('screenshot', 'snapshot'):
-        default_snap = f"ohhdc_screenshot_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpeg"
-        local_out = resolve_ohhdc_artifact_path(
-            OH_HDC_SCREENSHOT_DIR,
-            args.target,
-            default_snap,
-        )
-        ok, log, err, resolved = take_screenshot_to_local(
-            local_out,
-            device_path=args.remote_device_file,
-            display_id=args.hdc_display_id,
-        )
-        if log:
-            print(log)
-        if ok:
-            print(f"\n✓ 截图已保存到: {resolved}")
-        else:
-            print(f"\n❌ 截图失败: {err}", file=sys.stderr)
-            sys.exit(1)
+        _screenshot_cli_full_screen(args)
         return True
-
     if args.action in ('screenshot-app', 'snap-app'):
-        if not args.target:
-            print(
-                "❌ 错误: 请提供应用别名或包名，例如: "
-                "ohhdc.py screenshot-app etsclock\n"
-                "  完整包名需带 Ability: "
-                "ohhdc.py screenshot-app ohos.samples.xxx --ability EntryAbility",
-                file=sys.stderr,
-            )
-            sys.exit(1)
-        resolved_pair, err_msg = resolve_screenshot_app_bundle_ability(
-            args.target, args.ability_name
-        )
-        if resolved_pair is None:
-            print(f"❌ 错误: {err_msg}", file=sys.stderr)
-            sys.exit(1)
-        bundle_name, ability_name = resolved_pair
-        print(f"→ 启动应用: {bundle_name} / {ability_name}")
-        ok_start, out_start, err_start = start_app(bundle_name, ability_name)
-        if out_start and out_start.strip():
-            print(out_start.strip())
-        if not ok_start:
-            print(f"❌ 启动应用失败: {err_start or out_start}", file=sys.stderr)
-            sys.exit(1)
-        delay_sec = float(args.app_start_delay)
-        if delay_sec > 0:
-            print(f"→ 等待 {delay_sec}s 后截图 …")
-            time.sleep(delay_sec)
-        safe_tag = re.sub(r"[^\w\-.]", "_", args.target.strip())[:80]
-        default_snap = f"screenshot_app_{safe_tag}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpeg"
-        local_out = resolve_ohhdc_artifact_path(
-            OH_HDC_SCREENSHOT_DIR,
-            args.screenshot_app_local_path,
-            default_snap,
-        )
-        ok, log, err, resolved = take_screenshot_to_local(
-            local_out,
-            device_path=args.remote_device_file,
-            display_id=args.hdc_display_id,
-        )
-        if log:
-            print(log)
-        if ok:
-            print(f"\n✓ [{bundle_name}] 截图已保存到: {resolved}")
-            print(
-                "  说明: 与 snapshot_display 一致为整屏位图；多窗同屏时其它窗口可能入镜。"
-                "仅裁某一窗口请配合 layout bounds 在本机裁剪。"
-            )
-        else:
-            print(f"\n❌ 截图失败: {err}", file=sys.stderr)
-            sys.exit(1)
+        _screenshot_cli_app_scoped(args)
         return True
-
     return False
 
 
@@ -2218,71 +2245,82 @@ def _try_dispatch_layout(args, parser) -> bool:
     return False
 
 
+def _apps_cli_list_installed(args) -> None:
+    success, apps, error = list_installed_apps()
+    if not success:
+        print(f"❌ 错误: {error}", file=sys.stderr)
+        sys.exit(1)
+    if args.format in ('markdown', 'md'):
+        print(format_apps_as_markdown(apps))
+        return
+    if not apps:
+        print("未找到已安装的应用。")
+        return
+    print(f"已安装应用（共 {len(apps)} 个）：\n")
+    for app in apps:
+        print(f"  - {app}")
+
+
+def _apps_cli_uninstall(args) -> None:
+    if not args.target:
+        print("❌ 错误: 卸载请提供 bundleName，如: ohhdc.py uninstall com.example.p7zipTest", file=sys.stderr)
+        sys.exit(1)
+    success, out, err = uninstall_hap(args.target)
+    if not success:
+        print(f"❌ 卸载失败: {err or out}", file=sys.stderr)
+        sys.exit(1)
+    print(f"✓ 已卸载: {args.target}\n{out}".strip() or f"✓ 已卸载: {args.target}")
+
+
+def _apps_cli_install(args) -> None:
+    if not args.target:
+        print("❌ 错误: 安装请提供 HAP 文件路径，如: ohhdc.py install /path/to/app-signed.hap", file=sys.stderr)
+        sys.exit(1)
+    success, out, err = install_hap(args.target)
+    if not success:
+        print(f"❌ 安装失败: {err or out}", file=sys.stderr)
+        sys.exit(1)
+    print(f"✓ 安装成功: {args.target}\n{out}".strip() or f"✓ 安装成功: {args.target}")
+
+
+def _apps_cli_replace_install(args) -> None:
+    if not args.target:
+        print("❌ 错误: 替换安装请提供 HAP 文件路径，如: ohhdc.py replace-install /path/to/app-signed.hap", file=sys.stderr)
+        sys.exit(1)
+    success, out, err = replace_install_hap(args.target)
+    if not success:
+        print(f"❌ 替换安装失败: {err or out}", file=sys.stderr)
+        sys.exit(1)
+    print(f"✓ 替换安装成功: {args.target}\n{out}".strip() or f"✓ 替换安装成功: {args.target}")
+
+
+def _apps_cli_install_project(args) -> None:
+    if not args.target:
+        print("❌ 错误: install-project 请提供项目根目录，如: ohhdc.py install-project /path/to/NativeProj46R", file=sys.stderr)
+        sys.exit(1)
+    success, out, err = install_project_haps(args.target)
+    if not success:
+        print(f"❌ 项目安装失败: {err or out}", file=sys.stderr)
+        sys.exit(1)
+    print(f"✓ 项目安装成功: {args.target}\n{out}".strip() or f"✓ 项目安装成功: {args.target}")
+
+
 def _try_dispatch_apps_install_family(args, parser) -> bool:
-    if args.action in ['list-apps', 'apps']:
-        success, apps, error = list_installed_apps()
-        if not success:
-            print(f"❌ 错误: {error}", file=sys.stderr)
-            sys.exit(1)
-        if args.format in ['markdown', 'md']:
-            print(format_apps_as_markdown(apps))
-        else:
-            if apps:
-                print(f"已安装应用（共 {len(apps)} 个）：\n")
-                for app in apps:
-                    print(f"  - {app}")
-            else:
-                print("未找到已安装的应用。")
+    if args.action in ('list-apps', 'apps'):
+        _apps_cli_list_installed(args)
         return True
-
     if args.action == 'uninstall':
-        if not args.target:
-            print("❌ 错误: 卸载请提供 bundleName，如: ohhdc.py uninstall com.example.p7zipTest", file=sys.stderr)
-            sys.exit(1)
-        success, out, err = uninstall_hap(args.target)
-        if success:
-            print(f"✓ 已卸载: {args.target}\n{out}".strip() or f"✓ 已卸载: {args.target}")
-        else:
-            print(f"❌ 卸载失败: {err or out}", file=sys.stderr)
-            sys.exit(1)
+        _apps_cli_uninstall(args)
         return True
-
     if args.action == 'install':
-        if not args.target:
-            print("❌ 错误: 安装请提供 HAP 文件路径，如: ohhdc.py install /path/to/app-signed.hap", file=sys.stderr)
-            sys.exit(1)
-        success, out, err = install_hap(args.target)
-        if success:
-            print(f"✓ 安装成功: {args.target}\n{out}".strip() or f"✓ 安装成功: {args.target}")
-        else:
-            print(f"❌ 安装失败: {err or out}", file=sys.stderr)
-            sys.exit(1)
+        _apps_cli_install(args)
         return True
-
     if args.action == 'replace-install':
-        if not args.target:
-            print("❌ 错误: 替换安装请提供 HAP 文件路径，如: ohhdc.py replace-install /path/to/app-signed.hap", file=sys.stderr)
-            sys.exit(1)
-        success, out, err = replace_install_hap(args.target)
-        if success:
-            print(f"✓ 替换安装成功: {args.target}\n{out}".strip() or f"✓ 替换安装成功: {args.target}")
-        else:
-            print(f"❌ 替换安装失败: {err or out}", file=sys.stderr)
-            sys.exit(1)
+        _apps_cli_replace_install(args)
         return True
-
     if args.action == 'install-project':
-        if not args.target:
-            print("❌ 错误: install-project 请提供项目根目录，如: ohhdc.py install-project /path/to/NativeProj46R", file=sys.stderr)
-            sys.exit(1)
-        success, out, err = install_project_haps(args.target)
-        if success:
-            print(f"✓ 项目安装成功: {args.target}\n{out}".strip() or f"✓ 项目安装成功: {args.target}")
-        else:
-            print(f"❌ 项目安装失败: {err or out}", file=sys.stderr)
-            sys.exit(1)
+        _apps_cli_install_project(args)
         return True
-
     return False
 
 
