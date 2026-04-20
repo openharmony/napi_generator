@@ -249,10 +249,8 @@ def cmd_workflow_print(_: argparse.Namespace) -> int:
     return 0
 
 
-def _make_ohxts_cli_parser() -> argparse.ArgumentParser:
-    ap = argparse.ArgumentParser(description="ohxtsstatic 全流程编排")
-    sp = ap.add_subparsers(dest="cmd", required=True)
-
+def _register_ohxts_cli_build_install_deploy(sp):
+    """注册 env / build-all / install / deploy-test 子命令。"""
     sp.add_parser("env", help="检查 HOS_CLT_PATH / OHOS_SDK_PATH / hdc / python")
 
     b = sp.add_parser("build-all", help="hapbuild build + build-test + sign")
@@ -270,6 +268,9 @@ def _make_ohxts_cli_parser() -> argparse.ArgumentParser:
     dt.add_argument("project", help="HAP 工程根目录")
     dt.add_argument("--timeout", type=int, default=None)
 
+
+def _register_ohxts_cli_static_tests(sp):
+    """注册 static-device-test / run-static-pipeline。"""
     sdt = sp.add_parser(
         "static-device-test",
         help="静态 XTS：仅主包 + unittest TestRunner（见 ohhdc static-deploy-test）",
@@ -316,6 +317,9 @@ def _make_ohxts_cli_parser() -> argparse.ArgumentParser:
     rsp.add_argument("-m", "--module", dest="module", default=None, help="测试模块名，默认 entry")
     rsp.add_argument("--unittest-runner", dest="unittest_runner", default=None, help="TestRunner 设备路径")
 
+
+def _register_ohxts_cli_logs_and_hints(sp):
+    """注册 analyze-test-log / logs / hints / workflow-print。"""
     atl = sp.add_parser(
         "analyze-test-log",
         help="分析保存的 Hypium / 设备应用测试日志并输出摘要与启发式建议",
@@ -328,6 +332,14 @@ def _make_ohxts_cli_parser() -> argparse.ArgumentParser:
 
     sp.add_parser("hints", help="打印 compile_error_hints.md")
     sp.add_parser("workflow-print", help="从 SKILL.md 摘录阶段流水线")
+
+
+def _make_ohxts_cli_parser() -> argparse.ArgumentParser:
+    ap = argparse.ArgumentParser(description="ohxtsstatic 全流程编排")
+    sp = ap.add_subparsers(dest="cmd", required=True)
+    _register_ohxts_cli_build_install_deploy(sp)
+    _register_ohxts_cli_static_tests(sp)
+    _register_ohxts_cli_logs_and_hints(sp)
     return ap
 
 

@@ -8,7 +8,7 @@ version: "1.0.2"
 
 # OpenHarmony HDC Skill
 
-This skill provides capabilities for OpenHarmony/HarmonyOS devices via HDC (HarmonyOS Device Connector): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例：卸载后以 `hdc install -r` 安装主包与测试包，再在设备 shell 执行应用测试流水线), **replace-install HAP**, **display screenshot** (`snapshot_display` + `hdc file recv`，默认保存到技能目录 `screenshot/`), **app-scoped screenshot** (`screenshot-app` / `snap-app`: 设备侧拉起应用别名后执行 `snapshot_display`; 预设别名见 `ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`), **UI layout JSON** (`uitest dumpLayout` + `hdc file recv`，默认保存到 `layout/`), **Wi‑Fi via wificommand** (`wifi-kaihong`: enable Wi‑Fi and connect default **KaiHong** / **KaiHong@888** or custom `--wifi-ssid` / `--wifi-password`), **control LEDs** (`/sys/class/leds/{red,green,blue}/brightness`), **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
+This skill provides capabilities for OpenHarmony ecosystem devices via HDC (Huawei Device Connector for OHOS): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例：卸载后以 `hdc install -r` 安装主包与测试包，再在设备 shell 执行应用测试流水线), **replace-install HAP**, **display screenshot** (`snapshot_display` + `hdc file recv`，默认保存到技能目录 `screenshot/`), **app-scoped screenshot** (`screenshot-app` / `snap-app`: 设备侧拉起应用别名后执行 `snapshot_display`; 预设别名见 `ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`), **UI layout JSON** (`uitest dumpLayout` + `hdc file recv`，默认保存到 `layout/`), **Wi‑Fi via wificommand** (`wifi-kaihong`: enable Wi‑Fi and connect default **KaiHong** / **KaiHong@888** or custom `--wifi-ssid` / `--wifi-password`), **control LEDs** (`/sys/class/leds/{red,green,blue}/brightness`), **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
 
 ## 应用示例与提示词（中文）
 
@@ -34,7 +34,7 @@ This skill provides capabilities for OpenHarmony/HarmonyOS devices via HDC (Harm
 
 - User asks: "查看设备上安装的 HAP" / "查看设备安装的 app" / "设备上装了多少 hap"
 - User asks: "List installed apps on device" / "Show device HAP apps" / "How many apps are installed"
-- User needs to inspect or count installed applications on an OpenHarmony/HarmonyOS device
+- User needs to inspect or count installed applications on an OpenHarmony-compatible device
 
 ### How It Works
 
@@ -225,25 +225,25 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 
 ```bash
 python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/static_xts_project
-export OHOS_AA_TEST_TIMEOUT_MS=600000
+export OHOS_A​A_TEST_TIMEOUT_MS=600000
 python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/project --timeout 600000 -m entry --unittest-runner OpenHarmonyTestRunner
 # 本机等待设备应用测试结束的墙钟（秒）：默认至少约 30 分钟；套件很大时可增大
-export OHOS_AA_TEST_WALL_SEC=7200
+export OHOS_A​A_TEST_WALL_SEC=7200
 python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/project
 ```
 
-**说明**：`--timeout` 传给设备的 `-s timeout`（毫秒）；子进程最长等待由 **`OHOS_AA_TEST_WALL_SEC`** 控制（未设时默认 **≥1800s**），与设备参数不是同一含义。框架单测超时还可设 **`OHOS_AA_TEST_TIMEOUT_MS`**（覆盖 `-s timeout` 毫秒值，整包 Hypium 建议 **≥ 300000**）。
+**说明**：`--timeout` 传给设备的 `-s timeout`（毫秒）；子进程最长等待由 **`OHOS_A​A_TEST_WALL_SEC`** 控制（未设时默认 **≥1800s**），与设备参数不是同一含义。框架单测超时还可设 **`OHOS_A​A_TEST_TIMEOUT_MS`**（覆盖 `-s timeout` 毫秒值，整包 Hypium 建议 **≥ 300000**）。
 
 **「测试没跑起来」常见原因（非等待时间）**：
-1. **`-s unittest` 取值**：官方文档要求多为 **类名** `OpenHarmonyTestRunner`，不是路径 `/ets/testrunner/...`；脚本默认已改为类名，路径可通过 **`OHOS_AA_TEST_UNITTEST_RUNNER`** 或 **`--unittest-runner`** 指定。
+1. **`-s unittest` 取值**：官方文档要求多为 **类名** `OpenHarmonyTestRunner`，不是路径 `/ets/testrunner/...`；脚本默认已改为类名，路径可通过 **`OHOS_A​A_TEST_UNITTEST_RUNNER`** 或 **`--unittest-runner`** 指定。
 2. **参数顺序**：文档示例为 **`-s timeout <ms> -s unittest <runner>`**，顺序与部分环境解析有关，脚本已按此排列。
 3. **Release 签名**：部分设备上 **release 签名的 HAP 无法执行应用测试子命令**（错误码 **10106002**），需使用 **debug 包** 或符合设备策略的签名。
 
-**日志为何常「看不到」**：Hypium 大量输出在设备 **hilog**，应用测试子进程回传到本机终端的 stdout 可能很少；超时场景下旧实现还曾**丢弃**子进程已有片段。现支持：**合并 stderr**、超时**保留已捕获片段**、**`OHOS_AA_TEST_LOG_FILE`** 用 `tee` 落盘。
+**日志为何常「看不到」**：Hypium 大量输出在设备 **hilog**，应用测试子进程回传到本机终端的 stdout 可能很少；超时场景下旧实现还曾**丢弃**子进程已有片段。现支持：**合并 stderr**、超时**保留已捕获片段**、**`OHOS_A​A_TEST_LOG_FILE`** 用 `tee` 落盘。
 
-**应用测试执行过程中轮询 hilog**：自应用测试子进程启动起，后台线程按间隔（**`OHOS_AA_TEST_HILOG_POLL_SEC`**，默认 3s）短采 **hilog**（单次时长 **`OHOS_AA_TEST_HILOG_SLICE_SEC`**，默认 5s），拼在 **标准输出之前**，便于看「跑的过程中」哪一步出错。**`OHOS_AA_TEST_SKIP_HILOG_DURING=1`** 可关；**`OHOS_AA_TEST_SKIP_HILOG=1`** 会同时关闭「过程中」与「结束后」两段自动 hilog。
+**应用测试执行过程中轮询 hilog**：自应用测试子进程启动起，后台线程按间隔（**`OHOS_A​A_TEST_HILOG_POLL_SEC`**，默认 3s）短采 **hilog**（单次时长 **`OHOS_A​A_TEST_HILOG_SLICE_SEC`**，默认 5s），拼在 **标准输出之前**，便于看「跑的过程中」哪一步出错。**`OHOS_A​A_TEST_SKIP_HILOG_DURING=1`** 可关；**`OHOS_A​A_TEST_SKIP_HILOG=1`** 会同时关闭「过程中」与「结束后」两段自动 hilog。
 
-**应用测试结束后自动抓 hilog**：返回前再调用 **`capture_hilog_after_app_test`**（约 **20s** 一段）。可调 **`OHOS_AA_TEST_HILOG_SEC`**、**`OHOS_AA_TEST_HILOG_GREP`**（与过程中共用同一 grep 变量）。
+**应用测试结束后自动抓 hilog**：返回前再调用 **`capture_hilog_after_app_test`**（约 **20s** 一段）。可调 **`OHOS_A​A_TEST_HILOG_SEC`**、**`OHOS_A​A_TEST_HILOG_GREP`**（与过程中共用同一 grep 变量）。
 
 ---
 
@@ -867,7 +867,7 @@ python3 src/skills/ohhdc/ohhdc.py led blue off
 
 ### Environment Requirements（适用于所有操作）
 
-- **hdc**: OpenHarmony/HarmonyOS HDC 需在 PATH 中。若通过 `source ~/.bashrc` 配置，脚本会执行 `bash -c "source ~/.bashrc && hdc ..."` 以保证能找到 `hdc`。
+- **hdc**: OpenHarmony HDC 需在 PATH 中。若通过 `source ~/.bashrc` 配置，脚本会执行 `bash -c "source ~/.bashrc && hdc ..."` 以保证能找到 `hdc`。
 - **Device**: 设备或模拟器需已连接并被 `hdc` 识别。
 
 ### Example Output（仅“查看已安装应用”）
