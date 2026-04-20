@@ -605,7 +605,7 @@ def check_environment(project_dir=None):
     all_ok = True
     
     # 检查环境变量（先检查，以便获取默认 SDK 路径）
-    hos_clt_path = check_env_var('HOS_CLT_PATH', 'HarmonyOS Command Line Tools 路径')
+    hos_clt_path = check_env_var('HOS_CLT_PATH', 'OpenHarmony DevEco / OH 命令行工具（HOS_CLT）路径')
     if not hos_clt_path:
         all_ok = False
     else:
@@ -932,7 +932,7 @@ def _load_hvigor_project_env(project_dir: str) -> tuple[str, str, str] | None:
     hos_clt_path = os.environ.get('HOS_CLT_PATH')
     if not hos_clt_path or not os.path.isdir(hos_clt_path):
         print(f"❌ 错误: 未设置或无效的 HOS_CLT_PATH 环境变量")
-        print(f"  请设置 HOS_CLT_PATH 指向 HarmonyOS Command Line Tools 目录")
+        print(f"  请设置 HOS_CLT_PATH 指向 OpenHarmony / DevEco 命令行工具根目录")
         return None
     hvigorw_js = _resolve_hvigorw_js(hos_clt_path)
     if not hvigorw_js or not os.path.isfile(hvigorw_js):
@@ -1672,6 +1672,7 @@ def sign_hap(project_dir, profile_type='release'):
     
     return True
 
+
 def _hapbuild_main_build(project_dir: str) -> int:
     product = sys.argv[3] if len(sys.argv) > 3 else 'default'
     build_mode = sys.argv[4] if len(sys.argv) > 4 else 'debug'
@@ -1731,6 +1732,7 @@ def clean_sign(project_dir):
     except Exception as e:
         print(f"❌ 错误: 删除 autosign 目录失败: {e}")
         return False
+
 
 def _hapbuild_print_cli_usage():
     print("用法: python3 hapbuild.py <command> [options]")
