@@ -511,7 +511,7 @@ export function getDtsClasses(rootInfo: GenInfo) {
           let callbackContent = method.returns === 'void'? 'cbf: () => void' : `cbf: (param: ${transTskey2Ckey(method.returns)}) => void`
           classBody += `\t${method.name}Async(${methodContent}${callbackContent}): void;\n`
           // promise方法
-          classBody += `\t${method.name}Promsie(${methodContent.slice(0, -2)}): Promise<${transTskey2Ckey(method.returns)}>;\n`
+          classBody += `\t${method.name}Promise(${methodContent.slice(0, -2)}): Promise<${transTskey2Ckey(method.returns)}>;\n`
         };
       }
     } catch (e) {
