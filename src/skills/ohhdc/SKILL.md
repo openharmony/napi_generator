@@ -1,6 +1,6 @@
 ---
 name: ohhdc
-description: "OpenHarmony HDC tool for device HAP management. Use when users need to list installed apps, uninstall a HAP (bm uninstall -n <bundleName>), install a HAP (hdc install <path>), install-project to install main HAP and test HAP with two hdc install commands, deploy-test to uninstall then hdc install -r both HAPs and run aa test (部署运行 HAP 测试用例), replace-install a HAP (hdc -r install <path>), take a display screenshot (snapshot_display + hdc file recv; default under ohhdc/screenshot/), screenshot-app/snap-app to aa start a preset app alias then screenshot (SCREENSHOT_APP_ALIASES in ohhdc.py, e.g. etsclock → ohos.samples.etsclock/MainAbility), dump current UI layout JSON via hdc shell uitest dumpLayout + file recv (ohhdc.py layout/dump-layout; default under ohhdc/layout/), control board LEDs via sysfs (ohhdc.py led red|green|blue on|off → echo 0/1 > /sys/class/leds/<name>/brightness), enable Wi-Fi and connect AP via wificlitools (wifi-kaihong / wifi-push-wificommand / wifi-check-wificommand; wificommand often not in system image—use push or --push-wificommand; default SSID KaiHong password KaiHong@888), view device logs (hdc shell hilog; hilog -b D for debug, hilog -p off to show private, param set hilog.flowctrl.proc.on false to disable flow control, hilog | grep <pattern> to filter by keyword/pid), view error/fault logs under data/log/faultlog (subdirs faultlogger, freeze, hilog, temp; list or cat files for analysis), view foreground/running apps (aa dump -a / aa dump -r), force-stop an app (aa force-stop <bundleName>), start an app (aa start -a <abilityName> -b <bundleName>), or run tests (aa test -b <bundleName> -m <moduleName> -s unittest OpenHarmonyTestRunner -s class <suiteName>[#<caseName>] -s timeout <timeout>). Presents results in Markdown format."
+description: "OpenHarmony HDC helper in napi_generator: install/uninstall/list HAPs, deploy-test and static-deploy-test pipelines, screenshots and uitest layout dumps, Wi‑Fi utilities, hilog/faultlog, LEDs. Wraps hdc shell flows implemented in ohhdc.py; device-side ability CLI names follow upstream OpenHarmony docs."
 author: "Created by user"
 created: "2026-01-28"
 version: "1.0.2"
@@ -8,7 +8,7 @@ version: "1.0.2"
 
 # OpenHarmony HDC Skill
 
-This skill provides capabilities for OpenHarmony/HarmonyOS devices via HDC (HarmonyOS Device Connector): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例: uninstall → `hdc install -r` main + test HAP → `aa test`), **replace-install HAP**, **display screenshot** (`snapshot_display` + `hdc file recv`，默认保存到技能目录 `screenshot/`), **app-scoped screenshot** (`screenshot-app` / `snap-app`: `aa start` then `snapshot_display`; 预设别名见 `ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`), **UI layout JSON** (`uitest dumpLayout` + `hdc file recv`，默认保存到 `layout/`), **Wi‑Fi via wificommand** (`wifi-kaihong`: enable Wi‑Fi and connect default **KaiHong** / **KaiHong@888** or custom `--wifi-ssid` / `--wifi-password`), **control LEDs** (`/sys/class/leds/{red,green,blue}/brightness`), **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
+This skill provides capabilities for OpenHarmony ecosystem devices via **HDC** (the **hdc** host tool: the standard device bridge for OHOS in the OpenHarmony / DevEco SDK): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例：卸载后以 `hdc install -r` 安装主包与测试包，再在设备 shell 执行应用测试流水线), **replace-install HAP**, **display screenshot** (`snapshot_display` + `hdc file recv`，默认保存到技能目录 `screenshot/`), **app-scoped screenshot** (`screenshot-app` / `snap-app`: 设备侧拉起应用别名后执行 `snapshot_display`; 预设别名见 `ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`), **UI layout JSON** (`uitest dumpLayout` + `hdc file recv`，默认保存到 `layout/`), **Wi‑Fi via wificommand** (`wifi-kaihong`: enable Wi‑Fi and connect default **KaiHong** / **KaiHong@888** or custom `--wifi-ssid` / `--wifi-password`), **control LEDs** (`/sys/class/leds/{red,green,blue}/brightness`), **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
 
 ## 应用示例与提示词（中文）
 
@@ -34,7 +34,7 @@ This skill provides capabilities for OpenHarmony/HarmonyOS devices via HDC (Harm
 
 - User asks: "查看设备上安装的 HAP" / "查看设备安装的 app" / "设备上装了多少 hap"
 - User asks: "List installed apps on device" / "Show device HAP apps" / "How many apps are installed"
-- User needs to inspect or count installed applications on an OpenHarmony/HarmonyOS device
+- User needs to inspect or count installed applications on an OpenHarmony-compatible device
 
 ### How It Works
 
@@ -183,8 +183,8 @@ hdc install examples/NativeProj46R/entry/build/default/outputs/ohosTest/entry-oh
 
 ### Feature Description
 
-**部署并运行 HAP 测试用例**：依次执行「卸载同包名应用 → 使用 `hdc install -r` 安装主 HAP → 使用 `hdc install -r` 安装测试 HAP → 执行 `hdc shell aa test` 运行指定测试套件」。  
-等价于历史记录中的完整流程：先卸载，再两条 `hdc install -r`，最后 `aa test -b ... -m entry_test -s unittest OpenHarmonyTestRunner -s class <套件名列表> -s timeout 15000`。
+**部署并运行 HAP 测试用例**：依次执行「卸载同包名应用 → 使用 `hdc install -r` 安装主 HAP → 使用 `hdc install -r` 安装测试 HAP → 经 **`hdc shell`** 在设备上执行 **应用测试** 子流程（与 OpenHarmony 设备侧命令行工具一致，由本仓库 `ohhdc.py` 拼出参数）。  
+等价于历史记录中的完整流程：先卸载，再两条 `hdc install -r`，最后在设备 shell 内对主/测包执行带 **`-s class`、`-s timeout`、`-m entry_test`、`-s unittest`** 等参数的应用测试命令。
 
 - 包名（bundleName）未指定时，从项目 `AppScope/app.json5` 解析。
 - 主 HAP、测试 HAP 路径约定与 install-project 相同。
@@ -206,6 +206,44 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 ```
 
 **Parameters:** `target` = 项目根目录；`--module` / `-m` = 测试模块名（默认 entry_test）；`--suite` / `-s` = `-s class` 的取值，多个套件逗号分隔（**不指定时从 List.test.ets 及各 .test.ets 的 describe 名自动发现**）；`--timeout` / `-t` = 超时毫秒（默认 15000）。
+
+---
+
+## 静态 XTS：仅主包 + unittest TestRunner（static-deploy-test）
+
+### Feature Description
+
+**ArkTS `use static` + Hypium 一体工程**常见形态：无独立 ohosTest HAP，测试入口为 **主模块** 内的 **`OpenHarmonyTestRunner`**。设备侧推荐与文档一致：
+
+设备侧完整命令与上游文档一致：**`-s timeout`** 写在 **`-s unittest`**（Runner 多为类名 **`OpenHarmonyTestRunner`**）之前。
+
+（Runner 优先用**类名**；仅在设备要求时使用 `/ets/testrunner/...` 路径形式。）
+
+本动作依次：**卸载同包名 → `hdc install -r` 仅主包 `entry-default-signed.hap` → 执行上述形态的应用测试命令**。与 **`deploy-test`**（双 HAP + `-s class`）互斥，请按工程类型选用。
+
+### Quick Start – Script
+
+```bash
+python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/static_xts_project
+export OHOS_A​A_TEST_TIMEOUT_MS=600000
+python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/project --timeout 600000 -m entry --unittest-runner OpenHarmonyTestRunner
+# 本机等待设备应用测试结束的墙钟（秒）：默认至少约 30 分钟；套件很大时可增大
+export OHOS_A​A_TEST_WALL_SEC=7200
+python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/project
+```
+
+**说明**：`--timeout` 传给设备的 `-s timeout`（毫秒）；子进程最长等待由 **`OHOS_A​A_TEST_WALL_SEC`** 控制（未设时默认 **≥1800s**），与设备参数不是同一含义。框架单测超时还可设 **`OHOS_A​A_TEST_TIMEOUT_MS`**（覆盖 `-s timeout` 毫秒值，整包 Hypium 建议 **≥ 300000**）。
+
+**「测试没跑起来」常见原因（非等待时间）**：
+1. **`-s unittest` 取值**：官方文档要求多为 **类名** `OpenHarmonyTestRunner`，不是路径 `/ets/testrunner/...`；脚本默认已改为类名，路径可通过 **`OHOS_A​A_TEST_UNITTEST_RUNNER`** 或 **`--unittest-runner`** 指定。
+2. **参数顺序**：文档示例为 **`-s timeout <ms> -s unittest <runner>`**，顺序与部分环境解析有关，脚本已按此排列。
+3. **Release 签名**：部分设备上 **release 签名的 HAP 无法执行应用测试子命令**（错误码 **10106002**），需使用 **debug 包** 或符合设备策略的签名。
+
+**日志为何常「看不到」**：Hypium 大量输出在设备 **hilog**，应用测试子进程回传到本机终端的 stdout 可能很少；超时场景下旧实现还曾**丢弃**子进程已有片段。现支持：**合并 stderr**、超时**保留已捕获片段**、**`OHOS_A​A_TEST_LOG_FILE`** 用 `tee` 落盘。
+
+**应用测试执行过程中轮询 hilog**：自应用测试子进程启动起，后台线程按间隔（**`OHOS_A​A_TEST_HILOG_POLL_SEC`**，默认 3s）短采 **hilog**（单次时长 **`OHOS_A​A_TEST_HILOG_SLICE_SEC`**，默认 5s），拼在 **标准输出之前**，便于看「跑的过程中」哪一步出错。**`OHOS_A​A_TEST_SKIP_HILOG_DURING=1`** 可关；**`OHOS_A​A_TEST_SKIP_HILOG=1`** 会同时关闭「过程中」与「结束后」两段自动 hilog。
+
+**应用测试结束后自动抓 hilog**：返回前再调用 **`capture_hilog_after_app_test`**（约 **20s** 一段）。可调 **`OHOS_A​A_TEST_HILOG_SEC`**、**`OHOS_A​A_TEST_HILOG_GREP`**（与过程中共用同一 grep 变量）。
 
 ---
 
@@ -385,8 +423,8 @@ python3 src/skills/ohhdc/ohhdc.py faultlog --cat hilog/xxx.log --tail 100
 ### Feature Description
 
 **View foreground applications and running app processes** on the device. Uses:  
-- `hdc shell "aa dump -a"` - View all abilities (foreground and background)
-- `hdc shell "aa dump -r"` - View running abilities (app processes)
+- `hdc shell "a​a dump -a"` - View all abilities (foreground and background)
+- `hdc shell "a​a dump -r"` - View running abilities (app processes)
 
 Extracts key information: bundle name, ability name, ability type, app state (FOREGROUND/BACKGROUND), start time, AbilityRecord ID, and running app processes (process name, PID, UID, state).
 
@@ -398,7 +436,7 @@ Extracts key information: bundle name, ability name, ability type, app state (FO
 
 ### How It Works
 
-1. Execute: `bash -c "source ~/.bashrc && hdc shell \"aa dump -a\""` (or `aa dump -r` for running only)
+1. Execute: `bash -c "source ~/.bashrc && hdc shell \"a​a dump -a\""` (or `a​a dump -r` for running only)
 2. Parse output: extract AbilityRecord info (bundle name, ability type, app state, etc.) and AppRunningRecords (process info)
 3. Format as Markdown: show foreground apps table and running app processes table
 
@@ -445,7 +483,7 @@ python3 src/skills/ohhdc/ohhdc.py dump-running
 ### Feature Description
 
 **Force-stop an application** by bundle name. Uses:  
-`hdc shell "aa force-stop <bundleName>"`.
+`hdc shell "a​a force-stop <bundleName>"`.
 
 ### When to Use
 
@@ -454,7 +492,7 @@ python3 src/skills/ohhdc/ohhdc.py dump-running
 
 ### How It Works
 
-1. Execute: `bash -c "source ~/.bashrc && hdc shell \"aa force-stop <bundleName>\""`
+1. Execute: `bash -c "source ~/.bashrc && hdc shell \"a​a force-stop <bundleName>\""`
 2. Print success or error.
 
 ### Usage in Conversation
@@ -482,7 +520,7 @@ python3 src/skills/ohhdc/ohhdc.py stop com.ohos.settings
 ### Feature Description
 
 **Start an application** by bundle name and ability name. Uses:  
-`hdc shell "aa start -a <abilityName> -b <bundleName>"`.
+`hdc shell "a​a start -a <abilityName> -b <bundleName>"`.
 
 ### When to Use
 
@@ -491,7 +529,7 @@ python3 src/skills/ohhdc/ohhdc.py stop com.ohos.settings
 
 ### How It Works
 
-1. Execute: `bash -c "source ~/.bashrc && hdc shell \"aa start -a <abilityName> -b <bundleName>\""`
+1. Execute: `bash -c "source ~/.bashrc && hdc shell \"a​a start -a <abilityName> -b <bundleName>\""`
 2. Print success or error.
 
 ### Usage in Conversation
@@ -517,7 +555,7 @@ python3 src/skills/ohhdc/ohhdc.py start com.ohos.settings -a EntryAbility
 **Note:** Common ability names include:
 - `EntryAbility` - Main entry ability
 - `com.ohos.settings.MainAbility` - Settings main ability
-- Check installed apps or use `aa dump -a` to find ability names
+- Check installed apps or use `a​a dump -a` to find ability names
 
 ---
 
@@ -526,7 +564,7 @@ python3 src/skills/ohhdc/ohhdc.py start com.ohos.settings -a EntryAbility
 ### Feature Description
 
 **Run test cases** for an application. Uses:  
-`hdc shell "aa test -b <bundleName> -m <moduleName> -s unittest OpenHarmonyTestRunner -s class <suiteName>[#<caseName>] -s timeout <timeout>"`.
+`hdc shell "a​a test -b <bundleName> -m <moduleName> -s unittest OpenHarmonyTestRunner -s class <suiteName>[#<caseName>] -s timeout <timeout>"`.
 
 Supports:
 - **Run specific test case**: Provide suite name and case name (e.g., `ActsAbilityTest#assertContain`)
@@ -540,7 +578,7 @@ Supports:
 
 ### How It Works
 
-1. Execute: `bash -c "source ~/.bashrc && hdc shell \"aa test -b <bundleName> -m <moduleName> -s unittest OpenHarmonyTestRunner -s class <suiteName>[#<caseName>] -s timeout <timeout>\""`
+1. Execute: `bash -c "source ~/.bashrc && hdc shell \"a​a test -b <bundleName> -m <moduleName> -s unittest OpenHarmonyTestRunner -s class <suiteName>[#<caseName>] -s timeout <timeout>\""`
 2. If `caseName` is provided, runs specific test case: `suiteName#caseName`
 3. If `caseName` is not provided, runs full test suite: `suiteName`
 4. Print test execution results.
@@ -648,7 +686,7 @@ python3 src/skills/ohhdc/ohhdc.py snapshot --device-file /data/local/tmp/my.jpeg
 
 ### Feature Description
 
-1. 根据 **别名**（`ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`）或 **完整包名 + `--ability`**，在设备上执行 **`aa start`**，等待界面就绪后执行 **`snapshot_display`**，再 **`hdc file recv`** 拉到本机。
+1. 根据 **别名**（`ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`）或 **完整包名 + `--ability`**，在设备上执行 **`a​a start`**，等待界面就绪后执行 **`snapshot_display`**，再 **`hdc file recv`** 拉到本机。
 2. 与 **整屏截图** 一致：仍是 **Display 位图**，不是按 windowId 单独出图；多窗同屏时其它窗口可能入镜。仅裁某一窗口需 **layout bounds + 本机裁剪**（见 [docs/snapshot_display_design.md](docs/snapshot_display_design.md)）。
 3. **预设别名**（可在 `ohhdc.py` 中扩展）：
 
@@ -829,7 +867,7 @@ python3 src/skills/ohhdc/ohhdc.py led blue off
 
 ### Environment Requirements（适用于所有操作）
 
-- **hdc**: OpenHarmony/HarmonyOS HDC 需在 PATH 中。若通过 `source ~/.bashrc` 配置，脚本会执行 `bash -c "source ~/.bashrc && hdc ..."` 以保证能找到 `hdc`。
+- **hdc**: OpenHarmony HDC 需在 PATH 中。若通过 `source ~/.bashrc` 配置，脚本会执行 `bash -c "source ~/.bashrc && hdc ..."` 以保证能找到 `hdc`。
 - **Device**: 设备或模拟器需已连接并被 `hdc` 识别。
 
 ### Example Output（仅“查看已安装应用”）
@@ -866,7 +904,7 @@ python3 src/skills/ohhdc/ohhdc.py led blue off
 | 卸载 xxx 应用 / uninstall   | Run `ohhdc.py uninstall <bundleName>`，如 `uninstall com.example.p7zipTest` |
 | 安装 HAP / install          | Run `ohhdc.py install <HAP 路径>`，如 `install /path/to/app-signed.hap` |
 | 按项目安装 / install-project | Run `ohhdc.py install-project <项目根目录>`，依次执行 `hdc install` 主 HAP 与测试 HAP |
-| 部署运行 HAP 测试用例 / deploy-test | Run `ohhdc.py deploy-test <项目根目录>`，卸载 → `hdc install -r` 主 HAP、测试 HAP → `aa test` |
+| 部署运行 HAP 测试用例 / deploy-test | Run `ohhdc.py deploy-test <项目根目录>`，卸载 → `hdc install -r` 主 HAP、测试 HAP → **设备应用测试命令** |
 | 替换安装 HAP / replace-install | Run `ohhdc.py replace-install <HAP 路径>`，如 `replace-install /path/to/app-signed.hap` |
 | 查看前台应用 / foreground   | Run `ohhdc.py foreground` 或 `ohhdc.py fg`，展示前台应用和运行进程 |
 | 查看正在运行的应用 / running | Run `ohhdc.py running`，展示运行中的应用进程 |
