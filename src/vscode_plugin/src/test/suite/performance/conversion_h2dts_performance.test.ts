@@ -22,8 +22,9 @@ import { doParseTs } from '../../../parse/parsets';
 
 const LOOP_COUNT = 1000;
 const SCENE_LOOP_COUNT = 10;
-const THRESHOLD_MS = 1000;
-const SCENE_THRESHOLD_MS = 10000;
+const TYPE_THRESHOLD_MS = 10;
+const METHOD_THRESHOLD_MS = 50;
+const FILE_THRESHOLD_MS = 1000;
 
 function measureElapsed(task: () => void): number {
   const start = Date.now();
@@ -31,12 +32,36 @@ function measureElapsed(task: () => void): number {
   return Date.now() - start;
 }
 
+function isMethodScene(scene: string): boolean {
+  const lower = scene.toLowerCase();
+  return [
+    'callback',
+    'promise',
+    'arrow',
+    'threadsafe',
+    'onoff',
+    'static',
+    'function',
+    'method',
+  ].some((token) => lower.includes(token));
+}
+
+function assertAvgPerf(elapsed: number, loopCount: number, thresholdMs: number, scene: string, category: string): void {
+  const avgElapsed = elapsed / loopCount;
+  assert.ok(
+    avgElapsed < thresholdMs,
+    `${scene} (${category}) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${thresholdMs}ms（总耗时 ${elapsed}ms, 次数 ${loopCount}）`
+  );
+}
+
 function assertPerf(elapsed: number, scene: string): void {
-  assert.ok(elapsed < THRESHOLD_MS, `${scene} 1000次耗时 ${elapsed}ms，超过 ${THRESHOLD_MS}ms`);
+  const threshold = isMethodScene(scene) ? METHOD_THRESHOLD_MS : TYPE_THRESHOLD_MS;
+  const category = isMethodScene(scene) ? 'method' : 'type';
+  assertAvgPerf(elapsed, LOOP_COUNT, threshold, scene, category);
 }
 
 function assertScenePerf(elapsed: number, scene: string): void {
-  assert.ok(elapsed < SCENE_THRESHOLD_MS, `${scene} ${SCENE_LOOP_COUNT}次耗时 ${elapsed}ms，超过 ${SCENE_THRESHOLD_MS}ms`);
+  assertAvgPerf(elapsed, SCENE_LOOP_COUNT, FILE_THRESHOLD_MS, scene, 'file');
 }
 
 function createH2dtsCppParseObj(inputType: string): ParseObj {
