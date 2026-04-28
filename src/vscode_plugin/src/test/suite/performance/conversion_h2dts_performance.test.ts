@@ -32,38 +32,6 @@ function measureElapsed(task: () => void): number {
   return Date.now() - start;
 }
 
-function isMethodScene(scene: string): boolean {
-  const lower = scene.toLowerCase();
-  return [
-    'callback',
-    'promise',
-    'arrow',
-    'threadsafe',
-    'onoff',
-    'static',
-    'function',
-    'method',
-  ].some((token) => lower.includes(token));
-}
-
-function assertAvgPerf(elapsed: number, loopCount: number, thresholdMs: number, scene: string, category: string): void {
-  const avgElapsed = elapsed / loopCount;
-  assert.ok(
-    avgElapsed < thresholdMs,
-    `${scene} (${category}) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${thresholdMs}ms（总耗时 ${elapsed}ms, 次数 ${loopCount}）`
-  );
-}
-
-function assertPerf(elapsed: number, scene: string): void {
-  const threshold = isMethodScene(scene) ? METHOD_THRESHOLD_MS : TYPE_THRESHOLD_MS;
-  const category = isMethodScene(scene) ? 'method' : 'type';
-  assertAvgPerf(elapsed, LOOP_COUNT, threshold, scene, category);
-}
-
-function assertScenePerf(elapsed: number, scene: string): void {
-  assertAvgPerf(elapsed, SCENE_LOOP_COUNT, FILE_THRESHOLD_MS, scene, 'file');
-}
-
 function createH2dtsCppParseObj(inputType: string): ParseObj {
   const classes: ClassObj[] = [{
     name: 'PerfClass',
@@ -106,7 +74,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'string');
-    assertPerf(elapsed, 'h2dts_type_char');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_char (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_std_string', () => {
@@ -117,7 +86,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'string');
-    assertPerf(elapsed, 'h2dts_type_std_string');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_std_string (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_char8', () => {
@@ -128,7 +98,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'string');
-    assertPerf(elapsed, 'h2dts_type_char8');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_char8 (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_char16', () => {
@@ -139,7 +110,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'string');
-    assertPerf(elapsed, 'h2dts_type_char16');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_char16 (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_char32', () => {
@@ -150,7 +122,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'string');
-    assertPerf(elapsed, 'h2dts_type_char32');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_char32 (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_int', () => {
@@ -161,7 +134,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_int');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_int (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_short', () => {
@@ -172,7 +146,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_short');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_short (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_long', () => {
@@ -183,7 +158,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_long');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_long (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_double', () => {
@@ -194,7 +170,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_double');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_double (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_float', () => {
@@ -205,7 +182,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_float');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_float (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_bool', () => {
@@ -216,7 +194,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'boolean');
-    assertPerf(elapsed, 'h2dts_type_bool');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_bool (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_int64', () => {
@@ -227,7 +206,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_int64');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_int64 (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_unsigned_long', () => {
@@ -238,7 +218,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_unsigned_long');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_unsigned_long (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_uint32', () => {
@@ -249,7 +230,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_uint32');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_uint32 (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_size_t', () => {
@@ -260,7 +242,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_size_t');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_size_t (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_vector_int', () => {
@@ -271,7 +254,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Array<number>');
-    assertPerf(elapsed, 'h2dts_type_vector_int');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_vector_int (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_deque_int', () => {
@@ -282,7 +266,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Array<number>');
-    assertPerf(elapsed, 'h2dts_type_deque_int');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_deque_int (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_array_double', () => {
@@ -293,7 +278,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Array<number>');
-    assertPerf(elapsed, 'h2dts_type_array_double');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_array_double (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_map_string_int', () => {
@@ -304,7 +290,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Map<string, number>');
-    assertPerf(elapsed, 'h2dts_type_map_string_int');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_map_string_int (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_map_stdstring_bool', () => {
@@ -315,7 +302,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Map<string, boolean>');
-    assertPerf(elapsed, 'h2dts_type_map_stdstring_bool');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_map_stdstring_bool (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_set_bool', () => {
@@ -326,7 +314,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Set<boolean>');
-    assertPerf(elapsed, 'h2dts_type_set_bool');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_set_bool (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_tuple', () => {
@@ -337,7 +326,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, '[number, boolean]');
-    assertPerf(elapsed, 'h2dts_type_tuple');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_tuple (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_pair', () => {
@@ -348,7 +338,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, '[number, boolean]');
-    assertPerf(elapsed, 'h2dts_type_pair');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_pair (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_unique_ptr', () => {
@@ -359,7 +350,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_unique_ptr');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_unique_ptr (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_shared_ptr', () => {
@@ -370,7 +362,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_shared_ptr');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_shared_ptr (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_function', () => {
@@ -381,7 +374,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, '(param0: number, param1: number)=>void');
-    assertPerf(elapsed, 'h2dts_type_function');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < METHOD_THRESHOLD_MS, `h2dts_type_function (method) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${METHOD_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_date', () => {
@@ -392,7 +386,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Date');
-    assertPerf(elapsed, 'h2dts_type_date');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_date (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_complex', () => {
@@ -403,7 +398,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, '{real: number, imag: number}');
-    assertPerf(elapsed, 'h2dts_type_complex');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_complex (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_vector_iterator', () => {
@@ -414,7 +410,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'IterableIterator<Array<number>>');
-    assertPerf(elapsed, 'h2dts_type_vector_iterator');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_vector_iterator (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_unordered_map_string_int', () => {
@@ -425,7 +422,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Map<string, number>');
-    assertPerf(elapsed, 'h2dts_type_unordered_map_string_int');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_unordered_map_string_int (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_unordered_set_bool', () => {
@@ -436,7 +434,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Set<boolean>');
-    assertPerf(elapsed, 'h2dts_type_unordered_set_bool');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_unordered_set_bool (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_weak_ptr_int', () => {
@@ -447,7 +446,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'number');
-    assertPerf(elapsed, 'h2dts_type_weak_ptr_int');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_weak_ptr_int (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_function_string_bool', () => {
@@ -458,7 +458,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, '(param0: string, param1: boolean)=>void');
-    assertPerf(elapsed, 'h2dts_type_function_string_bool');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < METHOD_THRESHOLD_MS, `h2dts_type_function_string_bool (method) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${METHOD_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_list_string', () => {
@@ -469,7 +470,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Array<string>');
-    assertPerf(elapsed, 'h2dts_type_list_string');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_list_string (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_queue_int', () => {
@@ -480,7 +482,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Array<number>');
-    assertPerf(elapsed, 'h2dts_type_queue_int');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_queue_int (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_priority_queue_double', () => {
@@ -491,7 +494,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Array<number>');
-    assertPerf(elapsed, 'h2dts_type_priority_queue_double');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_priority_queue_double (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_multimap_string_int', () => {
@@ -502,7 +506,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Map<string, number>');
-    assertPerf(elapsed, 'h2dts_type_multimap_string_int');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_multimap_string_int (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_multiset_bool', () => {
@@ -513,7 +518,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Set<boolean>');
-    assertPerf(elapsed, 'h2dts_type_multiset_bool');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_multiset_bool (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   test('h2dts_type_tm_date', () => {
@@ -524,7 +530,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, 'Date');
-    assertPerf(elapsed, 'h2dts_type_tm_date');
+    const avgElapsed = elapsed / LOOP_COUNT;
+    assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `h2dts_type_tm_date (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
   // h2dts 场景性能（static/class/namespace）
@@ -536,7 +543,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.strictEqual(converted, '(param0: number, param1: boolean)=>number');
-    assertScenePerf(elapsed, 'h2dts_scene_static_function');
+    const avgElapsed = elapsed / SCENE_LOOP_COUNT;
+    assert.ok(avgElapsed < FILE_THRESHOLD_MS, `h2dts_scene_static_function (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
   test('h2dts_scene_class_members_methods_10_under_10s', () => {
@@ -552,7 +560,8 @@ suite('Performance_Conversion_Suite', function() {
     });
     assert.deepStrictEqual(fieldResults, ['number', 'string', 'boolean', 'Array<number>']);
     assert.deepStrictEqual(methodResults, ['number', '(param0: number)=>void']);
-    assertScenePerf(elapsed, 'h2dts_scene_class_members_methods');
+    const avgElapsed = elapsed / SCENE_LOOP_COUNT;
+    assert.ok(avgElapsed < FILE_THRESHOLD_MS, `h2dts_scene_class_members_methods (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
   test('h2dts_scene_namespace_variables_functions_10_under_10s', () => {
@@ -564,7 +573,8 @@ suite('Performance_Conversion_Suite', function() {
       }
     });
     assert.deepStrictEqual(converted, ['any', 'any', 'Map<string, number>', '(param0: number)=>void']);
-    assertScenePerf(elapsed, 'h2dts_scene_namespace_variables_functions');
+    const avgElapsed = elapsed / SCENE_LOOP_COUNT;
+    assert.ok(avgElapsed < FILE_THRESHOLD_MS, `h2dts_scene_namespace_variables_functions (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
 });
