@@ -232,7 +232,7 @@ static bool OpenArchiveAndStream(const std::string &inputFile, IInArchive *archi
 {
     *fileSpec = new CInFileStream();
     if (!(*fileSpec)->Open(inputFile.c_str())) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 打开文件失败: %s", inputFile.c_str());
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "打开文件失败: %s", inputFile.c_str());
         archive->Release();
         delete *fileSpec;
         return false;
@@ -241,7 +241,7 @@ static bool OpenArchiveAndStream(const std::string &inputFile, IInArchive *archi
     UInt64 maxCheckStartPosition = ARCHIVE_SCAN_SIZE_ALT;
     HRESULT openResult = archive->Open(*fileSpec, &maxCheckStartPosition, openCallback);
     if (openResult != S_OK) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 打开归档失败: 0x%x", openResult);
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "打开归档失败: 0x%x", openResult);
         archive->Release();
         delete *fileSpec;
         return false;
@@ -276,18 +276,18 @@ bool UnifiedDecompressor::GetUncompressedSize(const std::string &inputFile, Arch
 {
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "=== GetUncompressedSize START ===");
     if (!uncompressedSize) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ uncompressedSize 参数为空");
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "uncompressedSize 参数为空");
         return false;
     }
     *uncompressedSize = 0;
     if (IsStreamFormat(format)) {
-        OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "⚠️ 流格式无法提前获取未压缩大小");
+        OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "流格式无法提前获取未压缩大小");
         return false;
     }
     std::string errorMsg;
     IInArchive *archive = ArchiveHandler::CreateArchiveHandler(inputFile, &errorMsg, nullptr);
     if (!archive) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 创建归档对象失败: %s", errorMsg.c_str());
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "创建归档对象失败: %s", errorMsg.c_str());
         return false;
     }
     CInFileStream *fileSpec = nullptr;
@@ -299,14 +299,14 @@ bool UnifiedDecompressor::GetUncompressedSize(const std::string &inputFile, Arch
         archive->GetNumberOfItems(&numItems);
         OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "文件数量: %u", numItems);
         AccumulateFileSizes(archive, numItems, uncompressedSize);
-        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✅ 获取成功：总文件数 %u，未压缩大小 %lu bytes (%.2f MB)",
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "获取成功：总文件数 %u，未压缩大小 %lu bytes (%.2f MB)",
                      numItems, (unsigned long)*uncompressedSize, *uncompressedSize / static_cast<double>(BYTES_PER_MB));
         archive->Close();
         archive->Release();
         delete fileSpec;
         return true;
     } catch (const std::exception &e) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 异常: %s", e.what());
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "异常: %s", e.what());
         archive->Close();
         archive->Release();
         delete fileSpec;

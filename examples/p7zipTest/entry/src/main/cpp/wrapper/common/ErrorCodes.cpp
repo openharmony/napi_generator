@@ -58,7 +58,7 @@ const std::map<ArchiveErrorCode, std::string> ErrorMessages::messages = {
     {ArchiveErrorCode::DIRECTORY_ACCESS_DENIED, "目录访问被拒绝，权限不足"},
     {ArchiveErrorCode::DIRECTORY_NOT_EMPTY, "目录非空"},
     {ArchiveErrorCode::DIRECTORY_SCAN_FAILED, "扫描目录失败"},
-    {ArchiveErrorCode::DISK_FULL, "⚠️ 磁盘空间不足"},
+    {ArchiveErrorCode::DISK_FULL, "磁盘空间不足"},
     {ArchiveErrorCode::DISK_QUOTA_EXCEEDED, "超出磁盘配额限制"},
     {ArchiveErrorCode::DISK_READ_ONLY, "磁盘为只读，无法写入"},
     {ArchiveErrorCode::DISK_IO_ERROR, "磁盘IO错误"},
@@ -88,10 +88,10 @@ static ArchiveErrorCode MapErrnoToCode(int err)
         case EPERM:
             return ArchiveErrorCode::FILE_ACCESS_DENIED;
         case ENOSPC:
-            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 磁盘空间不足！errno=ENOSPC");
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "磁盘空间不足！errno=ENOSPC");
             return ArchiveErrorCode::DISK_FULL;
         case EDQUOT:
-            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 超出磁盘配额！errno=EDQUOT");
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "超出磁盘配额！errno=EDQUOT");
             return ArchiveErrorCode::DISK_QUOTA_EXCEEDED;
         case EROFS:
             return ArchiveErrorCode::DISK_READ_ONLY;
@@ -166,7 +166,7 @@ static ArchiveError CreateDiskFullError(const std::string &path, uint64_t requir
     detail << "路径: " << path << "\n需要空间: " << std::fixed << std::setprecision(DECIMAL_PRECISION_2) <<
         requiredMB << " MB" << "\n可用空间: " << availableMB << " MB" <<
         "\n空间不足: " << (requiredMB - availableMB) << " MB";
-    OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 磁盘空间不足！需要=%.2f MB, 可用=%.2f MB", requiredMB,
+    OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "磁盘空间不足！需要=%.2f MB, 可用=%.2f MB", requiredMB,
         availableMB);
     return ArchiveError(ArchiveErrorCode::DISK_FULL, ErrorMessages::GetMessage(ArchiveErrorCode::DISK_FULL),
         detail.str());
@@ -181,7 +181,7 @@ ArchiveError ArchiveError::CheckDiskSpace(const std::string &path, uint64_t requ
     uint64_t availableBytes = 0;
     if (!GetAvailableSpace(checkPath, availableBytes)) {
         int err = errno;
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ statvfs失败: errno=%d (%s)", err, strerror(err));
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "statvfs失败: errno=%d (%s)", err, strerror(err));
         return FromErrno(err, "无法获取磁盘空间信息: " + checkPath);
     }
     OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "磁盘可用空间: %.2f MB",
@@ -215,7 +215,7 @@ static ArchiveError CheckPathPermissions(const std::string &path, const struct s
         ArchiveErrorCode code = S_ISDIR(pathStat.st_mode) ? ArchiveErrorCode::DIRECTORY_ACCESS_DENIED
                                                           : ArchiveErrorCode::FILE_ACCESS_DENIED;
         std::string detail = "路径: " + path + "\n需要权限: " + (needWrite ? "读写" : "只读");
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 权限不足！path=%s, needWrite=%d", path.c_str(),
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "权限不足！path=%s, needWrite=%d", path.c_str(),
                      needWrite);
         return ArchiveError(code, ErrorMessages::GetMessage(code), detail);
     }
