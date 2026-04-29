@@ -168,19 +168,19 @@ bool CInFileStream::Open(const char *fileName)
     if (!file.good()) {
         // 记录详细的错误信息
         int err = errno;
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 文件打开失败: %s, errno=%d (%s)", fileName, err,
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "文件打开失败: %s, errno=%d (%s)", fileName, err,
                      strerror(err));
         return false;
     }
     fileSize = file.tellg();
     if (fileSize < 0) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 无法获取文件大小: %s", fileName);
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "无法获取文件大小: %s", fileName);
         file.close();
         return false;
     }
     file.seekg(0);
     filePath = fileName;
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✓ 文件打开成功: %s (大小: %llu bytes)", fileName,
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "文件打开成功: %s (大小: %llu bytes)", fileName,
                  (unsigned long long)fileSize);
     return true;
 }
@@ -228,20 +228,20 @@ STDMETHODIMP CInFileStream::Read(void *data, UInt32 size, UInt32 *processedSize)
         *processedSize = 0;
     }
     if (!file.is_open()) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Read failed: file not open");
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "Read failed: file not open");
         return E_FAIL;
     }
     file.read((char *)data, size);
     UInt32 realSize = file.gcount();
     if (file.bad()) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Read failed: bad() = true, errno=%d (%s)", errno,
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "Read failed: bad() = true, errno=%d (%s)", errno,
                      strerror(errno));
         return E_FAIL;
     }
     if (processedSize) {
         *processedSize = realSize;
     }
-    OH_LOG_Print(LOG_APP, LOG_DEBUG, LOG_DOMAIN, LOG_TAG, "📖 Read: requested=%u, actual=%u, eof=%d", size, realSize,
+    OH_LOG_Print(LOG_APP, LOG_DEBUG, LOG_DOMAIN, LOG_TAG, "Read: requested=%u, actual=%u, eof=%d", size, realSize,
                  file.eof());
     return S_OK;
 }
@@ -249,7 +249,7 @@ STDMETHODIMP CInFileStream::Read(void *data, UInt32 size, UInt32 *processedSize)
 STDMETHODIMP CInFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPosition)
 {
     if (!file.is_open()) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Seek failed: file not open");
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "Seek failed: file not open");
         return E_FAIL;
     }
     std::ios::seekdir dir;
@@ -264,14 +264,14 @@ STDMETHODIMP CInFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPos
             dir = std::ios::end;
             break;
         default:
-            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Seek failed: invalid seekOrigin=%u", seekOrigin);
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "Seek failed: invalid seekOrigin=%u", seekOrigin);
             return STG_E_INVALIDFUNCTION;
     }
     // 清除错误状态（特别是 eof）
     file.clear();
     file.seekg(offset, dir);
     if (file.fail()) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Seek failed: offset=%lld, origin=%u, errno=%d (%s)",
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "Seek failed: offset=%lld, origin=%u, errno=%d (%s)",
                      (long long)offset, seekOrigin, errno, strerror(errno));
         return E_FAIL;
     }
@@ -279,7 +279,7 @@ STDMETHODIMP CInFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPos
     if (newPosition) {
         *newPosition = pos;
     }
-    OH_LOG_Print(LOG_APP, LOG_DEBUG, LOG_DOMAIN, LOG_TAG, "🔍 Seek: offset=%lld, origin=%u → pos=%lld",
+    OH_LOG_Print(LOG_APP, LOG_DEBUG, LOG_DOMAIN, LOG_TAG, "Seek: offset=%lld, origin=%u → pos=%lld",
                  (long long)offset, seekOrigin, (long long)pos);
     return S_OK;
 }
@@ -294,7 +294,7 @@ COutFileStream::COutFileStream() : file(nullptr), refCount(1) {}
 
 COutFileStream::~COutFileStream()
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🔨 析构函数: %s", filePath.c_str());
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "析构函数: %s", filePath.c_str());
     Close();
 }
 
@@ -310,11 +310,11 @@ bool COutFileStream::Open(const char *fileName)
     // 打开文件：使用 FILE* 支持 fseek（7z 格式需要）
     file = fopen(fileName, "wb");
     if (!file) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Open failed: %s, errno=%d (%s)", fileName, errno,
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "Open failed: %s, errno=%d (%s)", fileName, errno,
                      strerror(errno));
         return false;
     }
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✅ Open success: %s", fileName);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "Open success: %s", fileName);
     return true;
 }
 
@@ -325,10 +325,10 @@ void COutFileStream::Close()
         fflush(file);
         // 关闭文件
         if (fclose(file) != 0) {
-            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Close failed for %s: errno=%d (%s)",
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "Close failed for %s: errno=%d (%s)",
                          filePath.c_str(), errno, strerror(errno));
         } else {
-            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✓ 文件已关闭: %s", filePath.c_str());
+            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "文件已关闭: %s", filePath.c_str());
         }
         file = nullptr;
     }
@@ -354,7 +354,7 @@ STDMETHODIMP COutFileStream::QueryInterface(REFIID iid, void **outObject)
 STDMETHODIMP_(ULONG) COutFileStream::AddRef()
 {
     ULONG newCount = ++refCount;
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📈 AddRef: %s, refCount: %u → %u", filePath.c_str(),
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "AddRef: %s, refCount: %u → %u", filePath.c_str(),
                  (unsigned int)(newCount - 1), (unsigned int)newCount);
     return newCount;
 }
@@ -362,29 +362,29 @@ STDMETHODIMP_(ULONG) COutFileStream::AddRef()
 STDMETHODIMP_(ULONG) COutFileStream::Release()
 {
     ULONG newCount = --refCount;
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📉 Release: %s, refCount: %u → %u", filePath.c_str(),
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "Release: %s, refCount: %u → %u", filePath.c_str(),
                  (unsigned int)(newCount + 1), (unsigned int)newCount);
     if (newCount != 0) {
         return newCount;
     }
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🗑️  删除对象: %s", filePath.c_str());
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "删除对象: %s", filePath.c_str());
     delete this;
     return 0;
 }
 
 STDMETHODIMP COutFileStream::Write(const void *data, UInt32 size, UInt32 *processedSize)
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📝 Write called: size=%u, file=%s", size, filePath.c_str());
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "Write called: size=%u, file=%s", size, filePath.c_str());
     if (processedSize) {
         *processedSize = 0;
     }
     if (!file) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Write failed: file not open for %s",
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "Write failed: file not open for %s",
                      filePath.c_str());
         return E_FAIL;
     }
     if (size == 0) {
-        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "ℹ️  Write size=0, returning S_OK");
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "Write size=0, returning S_OK");
         // size=0 是合法的，直接返回成功
         return S_OK;
     }
@@ -396,14 +396,14 @@ STDMETHODIMP COutFileStream::Write(const void *data, UInt32 size, UInt32 *proces
         // 特别处理磁盘空间不足错误
         if (err == ENOSPC) {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG,
-                         "❌❌❌ 磁盘空间不足！文件: %s, 尝试写入: %u bytes, 实际写入: %zu bytes", filePath.c_str(),
+                         "磁盘空间不足！文件: %s, 尝试写入: %u bytes, 实际写入: %zu bytes", filePath.c_str(),
                          size, written);
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "请释放磁盘空间后重试！");
         } else if (err == EDQUOT) {
-            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌❌❌ 超出磁盘配额！文件: %s", filePath.c_str());
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "超出磁盘配额！文件: %s", filePath.c_str());
         } else {
             OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG,
-                         "❌ Write failed for %s: expected=%u, actual=%zu, errno=%d (%s)", filePath.c_str(), size,
+                         "Write failed for %s: expected=%u, actual=%zu, errno=%d (%s)", filePath.c_str(), size,
                          written, err, strerror(err));
         }
         return E_FAIL;
@@ -412,11 +412,11 @@ STDMETHODIMP COutFileStream::Write(const void *data, UInt32 size, UInt32 *proces
     if (fflush(file) != 0) {
         int err = errno;
         if (err == ENOSPC) {
-            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌❌❌ 磁盘空间不足（刷新时）！文件: %s",
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "磁盘空间不足（刷新时）！文件: %s",
                          filePath.c_str());
         }
         // fflush失败也要报告，但不一定要返回错误（数据可能已写入）
-        OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "⚠️  fflush警告: errno=%d (%s)", err, strerror(err));
+        OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "fflush警告: errno=%d (%s)", err, strerror(err));
     }
     if (processedSize) {
         *processedSize = (UInt32)written;
@@ -433,10 +433,10 @@ STDMETHODIMP COutFileStream::Write(const void *data, UInt32 size, UInt32 *proces
 
 STDMETHODIMP COutFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPosition)
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🔍 Seek called: offset=%lld, origin=%u, file=%s",
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "Seek called: offset=%lld, origin=%u, file=%s",
                  (long long)offset, seekOrigin, filePath.c_str());
     if (!file) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ Seek failed: file not open for %s",
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "Seek failed: file not open for %s",
                      filePath.c_str());
         return E_FAIL;
     }
@@ -445,7 +445,7 @@ STDMETHODIMP COutFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPo
     // 执行 seek
     if (fseek(file, offset, origin) != 0) {
         OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG,
-                     "❌ Seek failed for %s: offset=%lld, origin=%u, errno=%d (%s)", filePath.c_str(),
+                     "Seek failed for %s: offset=%lld, origin=%u, errno=%d (%s)", filePath.c_str(),
                      (long long)offset, seekOrigin, errno, strerror(errno));
         return E_FAIL;
     }
@@ -453,12 +453,12 @@ STDMETHODIMP COutFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPo
     if (newPosition) {
         long pos = ftell(file);
         if (pos < 0) {
-            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ ftell failed for %s: errno=%d (%s)",
+            OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "ftell failed for %s: errno=%d (%s)",
                          filePath.c_str(), errno, strerror(errno));
             return E_FAIL;
         }
         *newPosition = (UInt64)pos;
-        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✅ Seek success: new position=%llu",
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "Seek success: new position=%llu",
                      (unsigned long long)*newPosition);
     }
     return S_OK;
@@ -466,7 +466,7 @@ STDMETHODIMP COutFileStream::Seek(Int64 offset, UInt32 seekOrigin, UInt64 *newPo
 
 STDMETHODIMP COutFileStream::SetSize(UInt64 newSize)
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📏 SetSize called: newSize=%llu, file=%s",
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "SetSize called: newSize=%llu, file=%s",
                  (unsigned long long)newSize, filePath.c_str());
     // 7z 库可能会调用此方法预分配空间，我们简单返回 S_OK
     // 在实际应用中，可以使用 ftruncate 来真正设置文件大小
@@ -480,17 +480,17 @@ CArchiveExtractCallback::CArchiveExtractCallback()
 
 CArchiveExtractCallback::~CArchiveExtractCallback() {}
 
-// 🔧 统一的进度报告函数 - 确保进度永不回退
+// 统一的进度报告函数 - 确保进度永不回退
 void CArchiveExtractCallback::ReportProgress(uint64_t processed, const std::string &message)
 {
     if (!progressCallback) {
         return;
     }
-    // 🔧 关键：使用max确保进度单调递增
+    // 关键：使用max确保进度单调递增
     uint64_t safeProcessed = processed;
     if (lastReportedProgress > safeProcessed) {
         safeProcessed = lastReportedProgress; // 不允许回退
-        OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "⚠️  进度防回退：%lu→%lu, 保持%lu",
+        OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "进度防回退：%lu→%lu, 保持%lu",
                      (unsigned long)processed, (unsigned long)safeProcessed, (unsigned long)lastReportedProgress);
     }
     uint64_t displayTotal = totalSize > 0 ? totalSize : 100;
@@ -507,8 +507,8 @@ void CArchiveExtractCallback::ReportProgress(uint64_t processed, const std::stri
         progressCallback(safeProcessed, displayTotal, message);
         lastReportedProgress = safeProcessed;
         int percentage = displayTotal > 0 ? (int)((safeProcessed * PERCENT_100) / displayTotal) : 0;
-        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 进度: %d%% (%lu/%lu) - %s", percentage,
-                     (unsigned long)safeProcessed, (unsigned long)displayTotal, message.c_str());
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "进度: %d%% (%lu/%lu) - %s", percentage,
+            (unsigned long)safeProcessed, (unsigned long)displayTotal, message.c_str());
     }
 }
 
@@ -543,8 +543,8 @@ void CArchiveExtractCallback::CalculateTotalSize()
         archiveHandler->GetProperty(i, kpidSize, &prop);
         totalSize += GetFileSizeFromProperty(prop, i);
     }
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 总大小: %llu bytes (%llu MB)", totalSize,
-                 totalSize / (BYTES_PER_KB * BYTES_PER_KB));
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "总大小: %llu bytes (%llu MB)", totalSize,
+        totalSize / (BYTES_PER_KB * BYTES_PER_KB));
 }
 // 触发初始进度报告
 void CArchiveExtractCallback::ReportInitialProgress()
@@ -553,12 +553,12 @@ void CArchiveExtractCallback::ReportInitialProgress()
                             " NumFiles=" + std::to_string(numFiles) +
                             " DisplayTotal=" + std::to_string(totalSize > 0 ? totalSize : 100);
     OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "%s", debugInit.c_str());
-    std::string initMsg = "🚀 准备解压 " + std::to_string(numFiles) + " 个文件...";
+    std::string initMsg = "准备解压 " + std::to_string(numFiles) + " 个文件...";
     ReportProgress(0, initMsg);
     // 小文件快速进度提示
     if (totalSize > 0 && totalSize < BYTES_PER_KB) {
         uint64_t smallProgress = (totalSize / PERCENT_100) ? (totalSize / PERCENT_100) : 1;
-        ReportProgress(smallProgress, "⚡ 小文件快速解压中...");
+        ReportProgress(smallProgress, "小文件快速解压中...");
     }
 }
 
@@ -576,7 +576,7 @@ void CArchiveExtractCallback::Init(IInArchive *archiveHandler, const char *sourc
                  callback ? "NOT NULL" : "NULL");
     CreateDirRecursive(this->directoryPath);
     this->archiveHandler->GetNumberOfItems(&this->numFiles);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 Init: 归档包含 %u 个条目", numFiles);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "Init: 归档包含 %u 个条目", numFiles);
     CalculateTotalSize();
     ReportInitialProgress();
 }
@@ -615,7 +615,7 @@ STDMETHODIMP CArchiveExtractCallback::SetCompleted(const UInt64 *completeValue)
 {
     if (completeValue) {
         uint64_t reportedProgress = *completeValue;
-        // 🔧 使用max(completeValue, processedSize)确保进度不回退
+        // 使用max(completeValue, processedSize)确保进度不回退
         uint64_t actualCompleted = reportedProgress > processedSize ? reportedProgress : processedSize;
         int percentage = totalSize > 0 ? (int)((actualCompleted * PERCENT_100) / totalSize) : 0;
         std::string msg = "解压中... (" + std::to_string(percentage) + "%)";
@@ -636,7 +636,7 @@ std::string CArchiveExtractCallback::GetAndProcessFileName(UInt32 index)
     if (fileName.empty()) {
         if (!sourceArchivePath.empty()) {
             fileName = InferFileNameFromArchive(sourceArchivePath);
-            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📝 从压缩包名推断文件名: %s", fileName.c_str());
+            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "从压缩包名推断文件名: %s", fileName.c_str());
         }
         if (fileName.empty()) {
             fileName = "file_" + std::to_string(index);
@@ -653,7 +653,7 @@ bool CArchiveExtractCallback::CheckAndHandleDirectory(UInt32 index, const std::s
     if (prop.vt == VT_BOOL && prop.boolVal != VARIANT_FALSE) {
         std::string fullPath = directoryPath + "/" + fileName;
         CreateDirRecursive(fullPath);
-        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📁 创建目录: %s", fileName.c_str());
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "创建目录: %s", fileName.c_str());
         return true;
     }
     return false;
@@ -681,7 +681,7 @@ HRESULT CArchiveExtractCallback::CreateOutputFileStream(const std::string &fileN
     std::string fullPath = directoryPath + "/" + fileName;
     COutFileStream *outFileStreamSpec = new COutFileStream;
     if (!outFileStreamSpec->Open(fullPath.c_str())) {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 无法打开输出文件: %s", fullPath.c_str());
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "无法打开输出文件: %s", fullPath.c_str());
         delete outFileStreamSpec;
         return E_FAIL;
     }
@@ -689,10 +689,10 @@ HRESULT CArchiveExtractCallback::CreateOutputFileStream(const std::string &fileN
     outFileStream = outFileStreamSpec;
     *outStream = outFileStreamSpec;
     outFileStreamSpec->AddRef();
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✅ 打开文件: %s (预期大小: %lu bytes)", fileName.c_str(),
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "打开文件: %s (预期大小: %lu bytes)", fileName.c_str(),
                  (unsigned long)fileSize);
     std::string fileInfo =
-        "📄 [" + std::to_string(currentIndex + 1) + "/" + std::to_string(numFiles) + "] " + fileName;
+        "[" + std::to_string(currentIndex + 1) + "/" + std::to_string(numFiles) + "] " + fileName;
     ReportProgress(processedSize, fileInfo);
     return S_OK;
 }
@@ -701,10 +701,10 @@ STDMETHODIMP CArchiveExtractCallback::GetStream(UInt32 index, ISequentialOutStre
 {
     *outStream = nullptr;
     currentIndex = index;
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📥 GetStream: index=%u, askExtractMode=%d", index,
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "GetStream: index=%u, askExtractMode=%d", index,
                  askExtractMode);
     if (askExtractMode != NArchive::NExtract::NAskMode::kExtract) {
-        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "⏭️  跳过提取（mode != kExtract）");
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "跳过提取（mode != kExtract）");
         return S_OK;
     }
     std::string fileName = GetAndProcessFileName(index);
@@ -717,27 +717,27 @@ STDMETHODIMP CArchiveExtractCallback::GetStream(UInt32 index, ISequentialOutStre
 
 STDMETHODIMP CArchiveExtractCallback::PrepareOperation(Int32 askExtractMode)
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🔧 PrepareOperation: askExtractMode=%d", askExtractMode);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "PrepareOperation: askExtractMode=%d", askExtractMode);
     return S_OK;
 }
 
 STDMETHODIMP CArchiveExtractCallback::SetOperationResult(Int32 opRes)
 {
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🏁 SetOperationResult: opRes=%d, outFileStream=%p", opRes,
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "SetOperationResult: opRes=%d, outFileStream=%p", opRes,
                  outFileStream);
-    // ⚠️  关键步骤：必须先关闭文件！（参考 p7zip Client7z.cpp:458-464）
+    // 关键步骤：必须先关闭文件！（参考 p7zip Client7z.cpp:458-464）
     // 不调用 Close() 会导致：
     //   1. 缓冲区数据不写入磁盘 → 文件大小为 0
     //   2. 文件保持打开状态 → 产生 .fuse_hidden 文件
     if (outFileStream != nullptr) {
         // 使用原始指针调用 Close()（参考 p7zip 标准实现）
         if (outFileStreamSpec) {
-            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🔒 正在关闭文件流 (opRes=%d)...", opRes);
+            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "正在关闭文件流 (opRes=%d)...", opRes);
             outFileStreamSpec->Close(); // 刷新缓冲区到磁盘
         }
         // 释放引用（这可能导致对象删除）
         ULONG refCount = outFileStream->Release();
-        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📉 Release() 后引用计数: %u", (unsigned int)refCount);
+        OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "Release() 后引用计数: %u", (unsigned int)refCount);
         outFileStream = nullptr;
         outFileStreamSpec = nullptr;
     }
@@ -750,16 +750,16 @@ STDMETHODIMP CArchiveExtractCallback::SetOperationResult(Int32 opRes)
         if (prop.vt == VT_UI8) {
             currentFileSize = prop.uhVal.QuadPart;
             processedSize += currentFileSize;
-            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✅ 文件提取成功 (index=%u, size=%lu, type=VT_UI8)",
+            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "文件提取成功 (index=%u, size=%lu, type=VT_UI8)",
                          currentIndex, (unsigned long)currentFileSize);
         } else if (prop.vt == VT_UI4) {
-            // 🔧 修复：处理小文件（返回VT_UI4类型）
+            // 修复：处理小文件（返回VT_UI4类型）
             currentFileSize = prop.ulVal;
             processedSize += currentFileSize;
-            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "✅ 文件提取成功 (index=%u, size=%lu, type=VT_UI4)",
+            OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "文件提取成功 (index=%u, size=%lu, type=VT_UI4)",
                          currentIndex, (unsigned long)currentFileSize);
         } else {
-            OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "⚠️  文件大小类型未知: vt=%u", prop.vt);
+            OH_LOG_Print(LOG_APP, LOG_WARN, LOG_DOMAIN, LOG_TAG, "文件大小类型未知: vt=%u", prop.vt);
         }
         // 立即触发进度回调（每完成一个文件）
         uint64_t actualProcessed = processedSize;
@@ -768,11 +768,11 @@ STDMETHODIMP CArchiveExtractCallback::SetOperationResult(Int32 opRes)
             actualProcessed = totalSize;
         }
         // 显示完成的文件计数
-        std::string progress = "✅ 已完成 " + std::to_string(currentIndex + INDEX_OFFSET_NEXT) + "/" +
+        std::string progress = "已完成 " + std::to_string(currentIndex + INDEX_OFFSET_NEXT) + "/" +
                                std::to_string(numFiles) + " 个文件";
         ReportProgress(actualProcessed, progress);
     } else {
-        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "❌ 文件提取失败 (index=%u, opRes=%d)", currentIndex,
+        OH_LOG_Print(LOG_APP, LOG_ERROR, LOG_DOMAIN, LOG_TAG, "文件提取失败 (index=%u, opRes=%d)", currentIndex,
                      opRes);
     }
     return S_OK;
@@ -965,9 +965,9 @@ static void SendFinalProgress(IInArchive *archive, ArchiveExtractCallback callba
         }
     }
     uint64_t displayTotal = totalSize > 0 ? totalSize : 100;
-    std::string finalMsg = "✅ 解压完成！共 " + std::to_string(numItems) + " 个文件";
+    std::string finalMsg = "解压完成！共 " + std::to_string(numItems) + " 个文件";
     callback(displayTotal, displayTotal, finalMsg);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📊 最终进度回调: 100%% - %s", finalMsg.c_str());
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "最终进度回调: 100%% - %s", finalMsg.c_str());
 }
 
 bool ArchiveHandler::ExtractArchive(const ExtractOptions &options)
@@ -983,11 +983,11 @@ bool ArchiveHandler::ExtractArchive(const ExtractOptions &options)
     }
     UInt32 numItems = 0;
     archive->GetNumberOfItems(&numItems);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "📦 Archive contains %u items", numItems);
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "Archive contains %u items", numItems);
     CArchiveExtractCallback *extractCallbackSpec = new CArchiveExtractCallback;
     extractCallbackSpec->Init(archive, options.archivePath.c_str(), options.outputDir.c_str(),
                               options.password.empty() ? nullptr : options.password.c_str(), options.callback);
-    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "🚀 Starting extraction...");
+    OH_LOG_Print(LOG_APP, LOG_INFO, LOG_DOMAIN, LOG_TAG, "Starting extraction...");
     HRESULT result = archive->Extract(nullptr, (UInt32)(Int32)-1, 0, extractCallbackSpec);
     if (result != S_OK) {
         HandleExtractionError(result, options.archivePath, options.outputDir, options.error, options.archiveError);

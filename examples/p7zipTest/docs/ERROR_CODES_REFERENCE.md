@@ -222,7 +222,7 @@ enum ArchiveErrorCode {
     FILE_ACCESS_DENIED = 4007,
     DIRECTORY_NOT_FOUND = 4100,
     
-    // 磁盘错误（最重要）
+    // 磁盘错误（关键）
     DISK_FULL = 4200,
     DISK_QUOTA_EXCEEDED = 4201,
     
