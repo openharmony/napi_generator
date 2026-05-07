@@ -67,6 +67,7 @@ suite('Performance_Conversion_Suite', function() {
   vscode.window.showInformationMessage('Start conversion performance tests.');
 
   // dts2cpp 类型性能
+  // 测试内容：验证 dts2cpp_type_number 的基础类型转换结果与性能阈值。
   test('dts2cpp_type_number', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -79,6 +80,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_number (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_string 的基础类型转换结果与性能阈值。
   test('dts2cpp_type_string', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -91,6 +93,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_string (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_boolean 的基础类型转换结果与性能阈值。
   test('dts2cpp_type_boolean', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -103,6 +106,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_boolean (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_void 的基础类型转换结果与性能阈值。
   test('dts2cpp_type_void', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -115,6 +119,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_void (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_number_array_short 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_number_array_short', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -127,6 +132,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_number_array_short (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_string_array_short 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_string_array_short', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -139,6 +145,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_string_array_short (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_boolean_array_short 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_boolean_array_short', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -151,6 +158,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_boolean_array_short (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_array_number 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_array_number', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -163,6 +171,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_array_number (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_array_string 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_array_string', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -175,6 +184,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_array_string (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_array_boolean 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_array_boolean', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -187,6 +197,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_array_boolean (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_map_string_number_space 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_map_string_number_space', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -199,6 +210,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_map_string_number_space (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_map_string_number 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_map_string_number', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -211,6 +223,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_map_string_number (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_map_string_string 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_map_string_string', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -223,6 +236,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_map_string_string (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_map_string_boolean 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_map_string_boolean', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -235,6 +249,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_map_string_boolean (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_map_number_number 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_map_number_number', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -247,6 +262,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_map_number_number (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_map_number_string 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_map_number_string', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -259,6 +275,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_map_number_string (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_map_number_boolean 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_map_number_boolean', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -271,6 +288,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_map_number_boolean (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_set_string 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_set_string', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -283,6 +301,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_set_string (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_set_number 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_set_number', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -295,6 +314,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_set_number (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_set_boolean 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_set_boolean', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -307,6 +327,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_set_boolean (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_any 的基础类型转换结果与性能阈值。
   test('dts2cpp_type_any', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -319,6 +340,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_any (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_object 的基础类型转换结果与性能阈值。
   test('dts2cpp_type_object', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -331,6 +353,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_object (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_callback 的函数类型转换结果与性能阈值。
   test('dts2cpp_type_callback', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -343,6 +366,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < METHOD_THRESHOLD_MS, `dts2cpp_type_callback (method) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${METHOD_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_arrow 的函数类型转换结果与性能阈值。
   test('dts2cpp_type_arrow', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -355,6 +379,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < METHOD_THRESHOLD_MS, `dts2cpp_type_arrow (method) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${METHOD_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_callback_string 的函数类型转换结果与性能阈值。
   test('dts2cpp_type_callback_string', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -367,6 +392,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < METHOD_THRESHOLD_MS, `dts2cpp_type_callback_string (method) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${METHOD_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_callback_boolean 的函数类型转换结果与性能阈值。
   test('dts2cpp_type_callback_boolean', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -379,6 +405,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < METHOD_THRESHOLD_MS, `dts2cpp_type_callback_boolean (method) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${METHOD_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_arrow_return_number 的函数类型转换结果与性能阈值。
   test('dts2cpp_type_arrow_return_number', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -391,6 +418,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < METHOD_THRESHOLD_MS, `dts2cpp_type_arrow_return_number (method) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${METHOD_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_map_string_string_space 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_map_string_string_space', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -403,6 +431,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_map_string_string_space (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_map_number_string_space 的数组/容器类型转换结果与性能阈值。
   test('dts2cpp_type_map_number_string_space', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -415,6 +444,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_map_number_string_space (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_arrow_no_param 的函数类型转换结果与性能阈值。
   test('dts2cpp_type_arrow_no_param', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -427,6 +457,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < METHOD_THRESHOLD_MS, `dts2cpp_type_arrow_no_param (method) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${METHOD_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_arrow_bool_to_string 的函数类型转换结果与性能阈值。
   test('dts2cpp_type_arrow_bool_to_string', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -439,6 +470,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < METHOD_THRESHOLD_MS, `dts2cpp_type_arrow_bool_to_string (method) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${METHOD_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_type_custom_passthrough 的基础类型转换结果与性能阈值。
   test('dts2cpp_type_custom_passthrough', () => {
     let converted = '';
     const elapsed = measureElapsed(() => {
@@ -451,6 +483,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < TYPE_THRESHOLD_MS, `dts2cpp_type_custom_passthrough (type) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${TYPE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_function_scene_callback_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_function_scene_callback_10_under_10s', () => {
     const source = 'function register(cb: Callback<number>): void { return; }';
     let paramType = '';
@@ -467,6 +500,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_function_scene_callback (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_function_scene_promise_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_function_scene_promise_10_under_10s', () => {
     const source = 'function getData(v: number): Promise<number> { return Promise.resolve(v); }';
     let returnType = '';
@@ -483,6 +517,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_function_scene_promise (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_function_scene_on_off_dollar_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_function_scene_on_off_dollar_10_under_10s', () => {
     const source = `
       function on(event: string, cb: Callback<number>): void { return; }
@@ -506,6 +541,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_function_scene_on_off_dollar (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_function_scene_arrow_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_function_scene_arrow_10_under_10s', () => {
     let convertedType = '';
     const elapsed = measureElapsed(() => {
@@ -519,6 +555,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_function_scene_arrow (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_function_scene_threadsafe_like_callback_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_function_scene_threadsafe_like_callback_10_under_10s', () => {
     const source = 'function start(tsfn: Callback<number>): void { return; }';
     let convertedType = '';
@@ -535,6 +572,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_function_scene_threadsafe_like_callback (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_import_and_namespace_scene_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_import_and_namespace_scene_10_under_10s', () => {
     const source = `
       import { CustomType } from './custom_type';
@@ -556,6 +594,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_import_and_namespace_scene (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_namespace_variable_and_function_scene_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_namespace_variable_and_function_scene_10_under_10s', () => {
     const source = `
       namespace PerfNS {
@@ -582,6 +621,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_namespace_variable_and_function_scene (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_function_scene_static_method_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_function_scene_static_method_10_under_10s', () => {
     const source = `
       class ToolSet {
@@ -602,6 +642,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_function_scene_static_method (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_enum_scene_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_enum_scene_10_under_10s', () => {
     const source = `
       enum PerfDirection {
@@ -626,6 +667,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_enum_scene (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_struct_scene_map_set_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_struct_scene_map_set_10_under_10s', () => {
     const source = `
       interface PerfData {
@@ -650,6 +692,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_struct_scene_map_set (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_class_scene_callback_and_return_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_class_scene_callback_and_return_10_under_10s', () => {
     const source = `
       class PerfWorker {
@@ -673,6 +716,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_class_scene_callback_and_return (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_namespace_class_static_combo_scene_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_namespace_class_static_combo_scene_10_under_10s', () => {
     const source = `
       namespace PerfNS {
@@ -701,6 +745,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_namespace_class_static_combo_scene (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_namespace_enum_function_scene_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_namespace_enum_function_scene_10_under_10s', () => {
     const source = `
       namespace PerfNS {
@@ -728,6 +773,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_namespace_enum_function_scene (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_struct_scene_arrow_member_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_struct_scene_arrow_member_10_under_10s', () => {
     const source = `
       interface PerfHandler {
@@ -748,6 +794,7 @@ suite('Performance_Conversion_Suite', function() {
     assert.ok(avgElapsed < FILE_THRESHOLD_MS, `dts2cpp_struct_scene_arrow_member (file) 平均耗时 ${avgElapsed.toFixed(3)}ms，阈值 ${FILE_THRESHOLD_MS}ms（总耗时 ${elapsed}ms, 次数 ${SCENE_LOOP_COUNT}）`);
   });
 
+  // 测试内容：验证 dts2cpp_class_scene_map_param_scene_10_under_10s 的场景级转换能力与性能阈值。
   test('dts2cpp_class_scene_map_param_scene_10_under_10s', () => {
     const source = `
       class PerfStore {
