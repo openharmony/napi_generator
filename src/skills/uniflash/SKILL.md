@@ -60,7 +60,7 @@ version: "1.0.0"
 
 | 变量 | 用途 |
 |------|------|
-| **`UNIFLASH_CMDDLOADER`** | **CmdDloader.exe** 绝对路径 |
+| **`UNIFLASH_CMDDLOADER`** | **CmdDloader.exe** 路径 |
 | **`UNIFLASH_HDC_TARGET`** | 多设备时 **hdc -t** 目标 |
 
 ## 外部依赖
