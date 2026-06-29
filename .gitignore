@@ -46,3 +46,5 @@ build
 !/src/skills/ohxtsstatic/arkui-static-xts-generator/README.md
 /src/skills/ohxtsdynamic/arkui-dynamic-xts-generator/*
 !/src/skills/ohxtsdynamic/arkui-dynamic-xts-generator/README.md
+/src/skills/ohxtscapi/arkui-capi-xts-generator-v3/*
+!/src/skills/ohxtscapi/arkui-capi-xts-generator-v3/README.md
