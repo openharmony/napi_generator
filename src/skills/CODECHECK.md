@@ -53,9 +53,11 @@ git diff --cached --shortstat   # 须 < 2000
 # Python 语法
 python3 -m py_compile src/skills/ohxtsstatic/*.py src/skills/ohxtsdynamic/*.py
 
-# 敏感词粗查（可选）
-bash src/skills/codecheck-words.sh
+# 敏感词粗查（可选，脚本在 aiSkill 根、不进本仓）
+bash /root/aiSkill/codecheck-words.sh
 ```
+
+经验与误报说明见 **`/root/aiSkill/CODECHECK-NOTES.md`**。
 
 ---
 
@@ -66,3 +68,5 @@ bash src/skills/codecheck-words.sh
 - 同步：`sync-skills.sh push-xts`（ohxtsstatic）；ohxtsdynamic 手动 rsync 或同流程
 
 **提交顺序**：先 CodeCheck → 再 `git commit -sm` → 用户要求时再 `git push`。
+
+**本地门禁脚本**：`/root/aiSkill/codecheck-words.sh`（含 Apache 版权头，**勿放入 napi_generator 仓**）。
