@@ -72,10 +72,10 @@ version: "1.4.0"
 
 | 层级 | 来源 |
 |------|------|
-| **L0** | SDK `normal/26` 下 `.d.ets` |
-| **L1** | 本文 + **`compile_error_hints.md`** + **[abnormal-options-xts.md](abnormal-options-xts.md)**（异常参数） |
-| **L1.5** | **`arkui-dynamic-xts-generator/categories/*.md`** |
-| **L2** | **`arkui-dynamic-xts-generator/common/*.md`** |
+| **Tier-0** | SDK `normal/26` 下 `.d.ets` |
+| **Tier-1** | 本文 + **`compile_error_hints.md`** + **[abnormal-options-xts.md](abnormal-options-xts.md)**（异常参数） |
+| **Tier-1.5** | **`arkui-dynamic-xts-generator/categories/*.md`** |
+| **Tier-2** | **`arkui-dynamic-xts-generator/common/*.md`** |
 
 **执行顺序**：§〇 归类 → 对齐工程范式 → 写页面 → 写用例 → 注册 → 编签 → 设备 → 报告。
 
@@ -152,7 +152,7 @@ ls entry/build/default/outputs/default/entry-default-signed.hap
 ls entry/build/default/outputs/default/entry-default-unsigned.hap   # 主包
 # ohosTest 测试包路径以 hvigor 产出为准
 
-# 一键：构建 → 装包 → aa test
+# 一键：构建 → 装包 → unittest 设备命令
 python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py run-dynamic-pipeline "$CHIP" --timeout 60000
 ```
 
@@ -178,7 +178,7 @@ python3 ohxtsdynamic/ohxtsflow.py deploy-test "$CHIP" \
   -m entry_test -s CounterV2AbnormalOptionsTest --timeout 300000
 
 # 仅由已有日志生成
-python3 ohxtsdynamic/ohxtsflow.py gen-hypium-report /tmp/aa_test.log \
+python3 ohxtsdynamic/ohxtsflow.py gen-hypium-report /tmp/unittest_device.log \
   --project "$CHIP" --suite CounterV2AbnormalOptionsTest
 ```
 
@@ -205,7 +205,7 @@ python3 ohxtsdynamic/ohxtsflow.py gen-hypium-report /tmp/aa_test.log \
 | 能力 | 脚本 |
 |------|------|
 | 编签 | `ohhap/hapbuild.py` |
-| 设备安装 / aa test | `ohhdc/ohhdc.py` |
+| 设备安装 / unittest 设备命令 | `ohhdc/ohhdc.py` |
 | 编排 | **`ohxtsdynamic/ohxtsflow.py`** |
 
 ---
@@ -439,14 +439,14 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 
 | 层级 | 动态侧要点 |
 |------|------------|
-| **L1** | 每批 `deploy-test -s <Suite>` 后会话三列表格 |
-| **L2** | `ohxtsdynamic/ohxtsflow.py deploy-test` → `REPORT_HTML=...` |
-| **L3-A** | `gen_xdevice_summary_report.py` 增加 `chip_nowear:ChipV2AbnormalOptionsTest:...` 等条目 |
-| **L3-B** | `gen_uncovered_report.py` 更新动态 Counter/ChipV2 未覆盖矩阵 |
+| **Tier-1** | 每批 `deploy-test -s <Suite>` 后会话三列表格 |
+| **Tier-2** | `ohxtsdynamic/ohxtsflow.py deploy-test` → `REPORT_HTML=...` |
+| **Tier-3A** | `gen_xdevice_summary_report.py` 增加 `chip_nowear:ChipV2AbnormalOptionsTest:...` 等条目 |
+| **Tier-3B** | `gen_uncovered_report.py` 更新动态 Counter/ChipV2 未覆盖矩阵 |
 
 ### 动态专项
 
-- **异常批次**：`run_abnormal_device_test.sh`（clean 卸载）全 Pass 后再纳入 L3。
+- **异常批次**：`run_abnormal_device_test.sh`（clean 卸载）全 Pass 后再纳入 Tier-3。
 - **compile_probe**：禁止沿用静态矩阵；CounterV2 动态 35/35 undefined 可编译须单独探测记录。
 - **PR 整测**：`run_pr_batch_report.sh` 中动态项用 `ohxtsdynamic/ohxtsflow.py deploy-test`。
 

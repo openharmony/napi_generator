@@ -1,6 +1,6 @@
 # ohxtsdynamic：动态 ArkUI（V2）XTS 编译与运行期排障速查
 
-与 **`SKILL.md`** 配套。覆盖 **L1** 层；测试范式见 **`arkui-dynamic-xts-generator/categories/`**、**`common/`**。
+与 **`SKILL.md`** 配套。覆盖 **Tier-1** 层；测试范式见 **`arkui-dynamic-xts-generator/categories/`**、**`common/`**。
 
 ---
 

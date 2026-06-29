@@ -10,10 +10,10 @@ ohxtsdynamic 全流程编排：动态 ArkUI（@ComponentV2）XTS 编签与设备
 
 用法：
   python3 ohxtsflow.py env
-  python3 ohxtsflow.py build-all <HAP工程绝对路径>
-  python3 ohxtsflow.py static-device-test <HAP工程绝对路径> [--timeout 毫秒]
-  python3 ohxtsflow.py run-dynamic-pipeline <HAP工程绝对路径>  # build-all → deploy-test → HTML
-  python3 ohxtsflow.py deploy-test <HAP工程绝对路径> [-s Suite] [-m entry_test]
+  python3 ohxtsflow.py build-all <HAP工程完整路径>
+  python3 ohxtsflow.py static-device-test <HAP工程完整路径> [--timeout 毫秒]
+  python3 ohxtsflow.py run-dynamic-pipeline <HAP工程完整路径>  # build-all → deploy-test → HTML
+  python3 ohxtsflow.py deploy-test <HAP工程完整路径> [-s Suite] [-m entry_test]
   python3 ohxtsflow.py gen-hypium-report <日志文件>
   python3 ohxtsflow.py analyze-test-log <日志文件>
   python3 ohxtsflow.py hints
@@ -203,7 +203,7 @@ def _ohhdc() -> Path:
 
 
 def cmd_deploy_test(ns: argparse.Namespace) -> int:
-    """动态双 HAP：卸载 → 装主+测 → aa test -s class。"""
+    """动态双 HAP：卸载 → 装主+测 → unittest 设备命令 -s class。"""
     return _run_device_with_report("deploy-test", ns)
 
 

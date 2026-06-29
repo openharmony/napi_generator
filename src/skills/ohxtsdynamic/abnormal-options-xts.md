@@ -16,7 +16,7 @@
 - ChipV2：`ChipV2Options.label`、`ChipV2Options.label.text`、`label.text`、`prefixIcon.src`、`suffixIcon.src`
 - ChipGroupV2：`Item.label`、`Item.label.text`、`Item.prefixIcon.src`、`chipGroupPadding.top`、`chipGroupPadding.bottom`
 
-**权威矩阵 Excel**：模块内 `tools/abnormal_compile_matrix.xlsx`（由 `tools/compile_probe_matrix.py` 逐条单独编译生成，约 30 分钟）。
+**基准矩阵 Excel**：模块内 `tools/abnormal_compile_matrix.xlsx`（由 `tools/compile_probe_matrix.py` 逐条单独编译生成，约 30 分钟）。
 
 ### 1.1 CounterV2（动态 `ace_ets_module_counter`，已实测 2026-06-23）
 

@@ -3,17 +3,17 @@
 """
 ohxtsstatic 全流程编排入口：串联 ohhap / ohhdc / ohtest / ohproj 惯例命令。
 
-一体化流水线与分层权威见同目录 **SKILL.md**（**技能融合模型**、**§〇 路由表**、**§二**）；测试范式细则见 **arkui-static-xts-generator/**（须从 GitCode 下载放置，见该目录 **README.md**）。
+一体化流水线与分层模型见同目录 **SKILL.md**（**技能融合模型**、**§〇 路由表**、**§二**）；测试范式细则见 **arkui-static-xts-generator/**（须从 GitCode 下载放置，见该目录 **README.md**）。
 
 不替代各子技能实现；仅统一路径、参数与阶段顺序，便于 Agent 或人工一键执行。
 
 用法（均在 napi_generator 仓库根下执行时可用相对路径）：
   python3 src/skills/ohxtsstatic/ohxtsflow.py env
-  python3 src/skills/ohxtsstatic/ohxtsflow.py build-all <HAP工程绝对路径>
+  python3 src/skills/ohxtsstatic/ohxtsflow.py build-all <HAP工程完整路径>
   python3 src/skills/ohxtsstatic/ohxtsflow.py install <signed.hap> [--replace]
-  python3 src/skills/ohxtsstatic/ohxtsflow.py deploy-test <HAP工程绝对路径> [--timeout 毫秒]   # 主包+ohosTest 双包 + class 套件
-  python3 src/skills/ohxtsstatic/ohxtsflow.py static-device-test <HAP工程绝对路径> [--timeout 毫秒]  # 仅主 signed.hap + unittest TestRunner（静态 XTS）
-  python3 src/skills/ohxtsstatic/ohxtsflow.py run-static-pipeline <HAP工程绝对路径>  # build → static-device-test → HTML
+  python3 src/skills/ohxtsstatic/ohxtsflow.py deploy-test <HAP工程完整路径> [--timeout 毫秒]
+  python3 src/skills/ohxtsstatic/ohxtsflow.py static-device-test <HAP工程完整路径> [--timeout 毫秒]
+  python3 src/skills/ohxtsstatic/ohxtsflow.py run-static-pipeline <HAP工程完整路径>
   python3 src/skills/ohxtsstatic/ohxtsflow.py gen-hypium-report <日志文件>
   python3 src/skills/ohxtsstatic/ohxtsflow.py logs [--faultlog] [--pattern 正则]
   python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <日志文件>  # 摘要失败原因与优化提示
@@ -188,7 +188,7 @@ def cmd_deploy_test(ns: argparse.Namespace) -> int:
 
 
 def cmd_static_device_test(ns: argparse.Namespace) -> int:
-    """静态 XTS：ohhdc static-deploy-test（卸载→装主包→aa test unittest TestRunner）。"""
+    """静态 XTS：ohhdc static-deploy-test（卸载→装主包→设备 unittest）。"""
     return _run_device_with_report("static-deploy-test", ns)
 
 
@@ -220,7 +220,7 @@ def cmd_gen_hypium_report(ns: argparse.Namespace) -> int:
 
 def analyze_hypium_like_log(text: str) -> str:
     """
-    对 aa test / hilog 保存的文本做轻量摘要，便于人工或 Agent 迭代用例。
+    对设备 unittest 日志 / hilog 保存的文本做轻量摘要，便于人工或 Agent 迭代用例。
     非完整解析器；以关键词与行级模式为主。
     """
     lines = text.splitlines()
@@ -246,7 +246,9 @@ def analyze_hypium_like_log(text: str) -> str:
     hints: list[str] = []
     low = joined.lower()
     if "timeout" in low or "超时" in joined:
-        hints.append("含 timeout/超时：可考虑增大 aa test -s timeout、或减少单 it 内同步等待；对照 test_rules / Hypium。")
+        hints.append(
+            "含 timeout/超时：可增大 ohhdc --timeout、或减少单 it 内同步等待；对照 test_rules / Hypium。"
+        )
     if "findcomponent" in low or "Component is not found" in joined:
         hints.append("组件未找到：核对 id、页面是否已导航、afterEach 是否清状态导致树变化。")
     if "assert" in low and "fail" in low:
@@ -312,21 +314,9 @@ def cmd_workflow_print(_: argparse.Namespace) -> int:
     return 0
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description="ohxtsstatic 全流程编排")
-    sp = ap.add_subparsers(dest="cmd", required=True)
-
-    sp.add_parser("env", help="检查 HOS_CLT_PATH / OHOS_SDK_PATH / hdc / python")
-
-    b = sp.add_parser("build-all", help="hapbuild build + build-test + sign")
-    b.add_argument("project", help="HAP 工程根目录（含 build-profile.json5）")
-    b.add_argument("--profile", default="release", choices=("release", "debug"))
-
-    ins = sp.add_parser("install", help="ohhdc install / replace-install 单个 HAP")
-    ins.add_argument("hap", help="已签名 .hap 路径")
-    ins.add_argument("--replace", action="store_true", help="使用 replace-install")
-
-    dt = sp.add_parser("deploy-test", help="ohhdc deploy-test（卸装→装主+测→aa test）")
+def _add_device_test_parsers(sp: argparse._SubParsersAction) -> None:
+    """注册设备跑测相关子命令。"""
+    dt = sp.add_parser("deploy-test", help="ohhdc deploy-test（卸装→装主+测→unittest）")
     dt.add_argument("project", help="HAP 工程根目录")
     dt.add_argument("--timeout", type=int, default=None)
     dt.add_argument("-s", "--suite", dest="suite", default=None, help="Hypium 套件名（-s class）")
@@ -335,17 +325,11 @@ def main() -> int:
 
     sdt = sp.add_parser(
         "static-device-test",
-        help="静态 XTS：仅主包 + aa test unittest TestRunner（见 ohhdc static-deploy-test）",
+        help="静态 XTS：仅主包 + unittest TestRunner（见 ohhdc static-deploy-test）",
     )
     sdt.add_argument("project", help="HAP 工程根目录")
-    sdt.add_argument("--timeout", type=int, default=15000, help="aa test -s timeout（毫秒），默认 15000")
-    sdt.add_argument(
-        "-m",
-        "--module",
-        dest="module",
-        default=None,
-        help="模块名，默认 entry",
-    )
+    sdt.add_argument("--timeout", type=int, default=15000, help="设备超时（毫秒），默认 15000")
+    sdt.add_argument("-m", "--module", dest="module", default=None, help="模块名，默认 entry")
     sdt.add_argument(
         "--unittest-runner",
         dest="unittest_runner",
@@ -368,31 +352,16 @@ def main() -> int:
         choices=("debug", "release"),
         help="hvigor 构建模式，默认 debug",
     )
-    rsp.add_argument("--timeout", type=int, default=15000, help="aa test 超时毫秒，默认 15000")
+    rsp.add_argument("--timeout", type=int, default=15000, help="设备超时毫秒，默认 15000")
     rsp.add_argument("-m", "--module", dest="module", default=None, help="测试模块名，默认 entry")
     rsp.add_argument("--unittest-runner", dest="unittest_runner", default=None, help="TestRunner 设备路径")
     rsp.add_argument("-s", "--suite", dest="suite", default=None, help="Hypium 套件名")
     rsp.add_argument("--batch", default=None, help="写入批次 batch_index.html")
     rsp.add_argument("--device", default=None, help="设备 SN（仅写入报告）")
 
-    ghr = sp.add_parser("gen-hypium-report", help="从 aa test 日志生成 HTML 报告")
-    ghr.add_argument("log_file", help="日志文件")
-    ghr.add_argument("--project", default="")
-    ghr.add_argument("--suite", default="")
-    ghr.add_argument("--device", default="")
 
-    atl = sp.add_parser("analyze-test-log", help="分析保存的 Hypium/aa test 日志并输出摘要与启发式建议")
-    atl.add_argument("log_file", help="本机日志文件路径")
-
-    lg = sp.add_parser("logs", help="设备 hilog 过滤或 faultlog")
-    lg.add_argument("--faultlog", action="store_true")
-    lg.add_argument("--pattern", default=None, help="hilog 过滤正则")
-
-    sp.add_parser("hints", help="打印 compile_error_hints.md")
-    sp.add_parser("workflow-print", help="从 SKILL.md 摘录阶段流水线")
-
-    ns = ap.parse_args()
-    handlers = {
+def _command_handlers() -> dict[str, object]:
+    return {
         "env": cmd_env,
         "build-all": cmd_build_all,
         "install": cmd_install,
@@ -405,7 +374,46 @@ def main() -> int:
         "hints": cmd_hints,
         "workflow-print": cmd_workflow_print,
     }
-    return handlers[ns.cmd](ns)
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="ohxtsstatic 全流程编排")
+    sp = ap.add_subparsers(dest="cmd", required=True)
+
+    sp.add_parser("env", help="检查 HOS_CLT_PATH / OHOS_SDK_PATH / hdc / python")
+
+    b = sp.add_parser("build-all", help="hapbuild build + build-test + sign")
+    b.add_argument("project", help="HAP 工程根目录（含 build-profile.json5）")
+    b.add_argument("--profile", default="release", choices=("release", "debug"))
+
+    ins = sp.add_parser("install", help="ohhdc install / replace-install 单个 HAP")
+    ins.add_argument("hap", help="已签名 .hap 路径")
+    ins.add_argument("--replace", action="store_true", help="使用 replace-install")
+
+    _add_device_test_parsers(sp)
+
+    ghr = sp.add_parser("gen-hypium-report", help="从 unittest 设备命令日志生成 HTML 报告")
+    ghr.add_argument("log_file", help="日志文件")
+    ghr.add_argument("--project", default="")
+    ghr.add_argument("--suite", default="")
+    ghr.add_argument("--device", default="")
+
+    atl = sp.add_parser("analyze-test-log", help="分析 Hypium/unittest 日志并输出摘要")
+    atl.add_argument("log_file", help="本机日志文件路径")
+
+    lg = sp.add_parser("logs", help="设备 hilog 过滤或 faultlog")
+    lg.add_argument("--faultlog", action="store_true")
+    lg.add_argument("--pattern", default=None, help="hilog 过滤正则")
+
+    sp.add_parser("hints", help="打印 compile_error_hints.md")
+    sp.add_parser("workflow-print", help="从 SKILL.md 摘录阶段流水线")
+
+    ns = ap.parse_args()
+    handler = _command_handlers().get(ns.cmd)
+    if handler is None:
+        print(f"未知子命令: {ns.cmd}", file=sys.stderr)
+        return 1
+    return handler(ns)  # type: ignore[operator]
 
 
 if __name__ == "__main__":

@@ -26,15 +26,15 @@
 
 | 层级 | 交付物 | 何时产出 |
 |------|--------|----------|
-| **L1 会话报告** | 回复正文 **三列表格**（用例名称｜Pass/Fail｜设计思路） | 每批设备跑测结束 |
-| **L2 Hypium HTML** | `REPORT_HTML=.../hypium/.../summary_report.html` | `static-device-test` / `deploy-test` 终端 |
-| **L3 汇总 / 覆盖率** | `xts_reports/summary_report.html`、`uncovered_properties_report.html` | 多批完成后用户要求「更新报告」 |
+| **Tier-1 会话报告** | 回复正文 **三列表格**（用例名称｜Pass/Fail｜设计思路） | 每批设备跑测结束 |
+| **Tier-2 Hypium HTML** | `REPORT_HTML=.../hypium/.../summary_report.html` | `static-device-test` / `deploy-test` 终端 |
+| **Tier-3 汇总 / 覆盖率** | `xts_reports/summary_report.html`、`uncovered_properties_report.html` | 多批完成后用户要求「更新报告」 |
 
 **禁止**：只给 log 路径、不在会话写三列表格；**禁止**把 gen 脚本/HTML 提交进 xts_acts 仓。
 
 ---
 
-## 2. L2：单套件 Hypium 报告
+## 2. Tier-2：单套件 Hypium 报告
 
 ```bash
 source /root/aiSkill/use-ohos-sdk.sh static   # 或 normal（动态）
@@ -47,14 +47,14 @@ python3 /root/aiSkill/.claude/skills/ohxtsstatic/ohxtsflow.py static-device-test
 
 ```bash
 python3 /root/aiSkill/.claude/skills/ohxtsstatic/ohxtsflow.py gen-hypium-report \
-  /path/to/aa_test.log
+  /path/to/unittest_device.log
 ```
 
-**注意**：`-s` 多套件不要用 `|` 拼接（shell 管道）；应分次跑或合并 parsed_summary（见 L3）。
+**注意**：`-s` 多套件不要用 `|` 拼接（shell 管道）；应分次跑或合并 parsed_summary（见 Tier-3）。
 
 ---
 
-## 3. L3-A：xdevice 风格汇总 `summary_report.html`
+## 3. Tier-3A：xdevice 风格汇总 `summary_report.html`
 
 ```bash
 HYP=/root/aiSkill/develop/xts_acts_local_tools/xts_acts_0622/xts_reports/hypium
@@ -75,7 +75,7 @@ python3 "$GEN" --out "$OUT" --device "192.168.12.220:8710" \
 
 ---
 
-## 4. L3-B：异常参数未覆盖 `uncovered_properties_report.html`
+## 4. Tier-3B：异常参数未覆盖 `uncovered_properties_report.html`
 
 ```bash
 python3 /root/aiSkill/develop/xts_acts_local_tools/xts_acts_0622/advancedComponents/gen_uncovered_report.py
@@ -96,7 +96,7 @@ python3 /root/aiSkill/develop/xts_acts_local_tools/xts_acts_0622/advancedCompone
 
 ```
 1. 按批开发（A/B/C… 或 异常 Phase）→ 每批 -s 套件设备 Pass
-2. 会话内 L1 三列表格
+2. 会话内 Tier-1 三列表格
 3. 全部批次完成后：
    - gen_xdevice_summary_report.py 更新 summary_report.html
    - gen_uncovered_report.py 更新未覆盖报告（异常批次完成后）

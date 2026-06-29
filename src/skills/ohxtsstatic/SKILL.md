@@ -50,8 +50,8 @@ version: "1.4.0"
 
 **开发全流程必须包含**（在 **`hdc` 可用**的前提下，Agent 应实际执行；不可用则单独一节说明阻塞，见下）：
 
-1. **自动跑设备用例**：**`run-static-pipeline`** 或 **`static-device-test`**（或等价 **`aa test`**），使本批次 Hypium 在设备上执行。  
-2. **抓 log**：保留 **`aa test` 标准输出**（含 `OHOS_REPORT_*`）；必要时配合 **`ohhdc` 附带的 hilog 摘录**、`hilog --grep '[ARKUI_NEW]'`。  
+1. **自动跑设备用例**：**`run-static-pipeline`** 或 **`static-device-test`**（或等价 **`unittest 设备命令`**），使本批次 Hypium 在设备上执行。  
+2. **抓 log**：保留 **`unittest 设备命令` 标准输出**（含 `OHOS_REPORT_*`）；必要时配合 **`ohhdc` 附带的 hilog 摘录**、`hilog --grep '[ARKUI_NEW]'`。  
 3. **迭代调试**：若失败，根据日志与 **`analyze-test-log`** 修改页面/用例，重复 **编签 → 设备**，直至通过或明确不可达原因。  
 4. **正式测试报告（会话交付物）**：在**当前对话的回复中**输出结构化报告，**禁止**仅以「请打开某某 log 文件」作为唯一交付；log 文件路径只能作为**附录**，主交付物必须是**下文「正式测试报告」**中的 **三列表格**（用例名称｜Pass/Fail｜设计思路）及汇总等。
 
@@ -60,7 +60,7 @@ version: "1.4.0"
 | 设计 | **§〇** 归类，打开对应 **`categories/*.md`**，检查点 → 页面出口 → 断言可追溯 | 无归类、文档与代码脱节 |
 | 实现 | 预览页 + **`*.test.ets`** + **`List.test.ets`（或工程入口）注册** | 仅有页面或仅有用例 |
 | 编译签包 | **`ohhap` / `ohxtsflow build-all` 成功**，产出可安装 HAP（含签名约定） | 未走工具链、仅 IDE 无红杠 |
-| 设备执行 | **`hdc` 可用**时跑 **`static-device-test`** 或 **`run-static-pipeline`**，`aa test` 对本批次 **全部通过** | **仅编译通过从未装包跑测** |
+| 设备执行 | **`hdc` 可用**时跑 **`static-device-test`** 或 **`run-static-pipeline`**，`unittest 设备命令` 对本批次 **全部通过** | **仅编译通过从未装包跑测** |
 | 调试闭环 | 失败时抓 log、**`analyze-test-log`**、对照 **compile_error_hints / ohhdc SKILL** 改代码并重跑 | 失败后不迭代 |
 | **会话报告** | 按 **「正式测试报告」** 输出 **三列表格**（用例名称｜Pass/Fail｜设计思路）+ 汇总 | **无表格、或仅有 log 路径** |
 
@@ -99,7 +99,7 @@ version: "1.4.0"
    - `hdc` 目标、工程路径、`OHOS_SDK_PATH` / `OHOS_USE_HVIGOR_STATIC` 一行即可。  
 
 2. **执行命令**（代码块）  
-   - 完整可复制的 `run-static-pipeline` / `static-deploy-test` / `aa test`。  
+   - 完整可复制的 `run-static-pipeline` / `static-deploy-test` / `unittest 设备命令`。  
 
 3. **阶段结果**（列表）  
    - 编签：通过/失败；设备：通过/失败/跳过。  
@@ -136,26 +136,26 @@ version: "1.4.0"
 |------|------|--------|
 | **SDK** | `source /root/aiSkill/use-ohos-sdk.sh static` → `OHOS_SDK_PATH`；路径配置 **`/root/aiSkill/sdk-paths.conf`** | P0 |
 | **HOS_CLT_PATH** | 同上 conf 中的 `HOS_CLT_PATH`（见 **SDK_PATHS.md**） | P0 |
-| **Hvigor（静态 XTS 专用）** | 开发 **`use static` + Hypium** 的静态用例工程时，须使用与 **`arkTSVersion` / `compileSdkVersion`** 匹配的 **hvigor**（通常独立于默认 **`hvigor/bin`**）。将 **`hvigor-static`** 置于 **`$HOS_CLT_PATH/hvigor-static/`**，入口为 **`bin/hvigorw.js`**。编译编排（**`ohhap` `hapbuild`** / **`ohxtsflow build-all`**）前执行：**`export OHOS_USE_HVIGOR_STATIC=1`**；或 **`export OHOS_HVIGORW_JS=<hvigorw.js 绝对路径>`**（优先级最高）。未设置时仍使用默认 **`$HOS_CLT_PATH/hvigor/bin/hvigorw.js`**。 | P0（静态批次） |
+| **Hvigor（静态 XTS 专用）** | 开发 **`use static` + Hypium** 的静态用例工程时，须使用与 **`arkTSVersion` / `compileSdkVersion`** 匹配的 **hvigor**（通常独立于默认 **`hvigor/bin`**）。将 **`hvigor-static`** 置于 **`$HOS_CLT_PATH/hvigor-static/`**，入口为 **`bin/hvigorw.js`**。编译编排（**`ohhap` `hapbuild`** / **`ohxtsflow build-all`**）前执行：**`export OHOS_USE_HVIGOR_STATIC=1`**；或 **`export OHOS_HVIGORW_JS=<hvigorw.js 完整路径>`**（优先级最高）。未设置时仍使用默认 **`$HOS_CLT_PATH/hvigor/bin/hvigorw.js`**。 | P0（静态批次） |
 | **接口文档** | 语义、约束、推荐用法；**不能**替代 SDK；**不能**据此发明文档未写的 API | P0 |
 | **用例明细** | 清单 → 映射到「预览页 `.ets` + `.test.ets`」并在 **`List.test.ets`**（或工程约定入口）注册 | P0 |
 | **工程根** | 含 `build-profile.json5`、`entry/`、`AppScope/` | P0 |
-| **`arkui-static-xts-generator/`** | **测试范式资料层（L1.5 / L2）**：**不随 skill 仓库内嵌正文**。须从 **[arkUISkill（GitCode）](https://gitcode.com/qq_44921954/arkUISkill)** 下载 **`arkui-static-xts-generator`**，拷贝到 **`.claude/skills/ohxtsstatic/arkui-static-xts-generator/`**（与 **`SKILL.md` 同级**），至少含 **`categories/`**、**`common/`**。步骤见 **`README.md`**。 | P0 |
+| **`arkui-static-xts-generator/`** | **测试范式资料层（Tier-1.5 / Tier-2）**：**不随 skill 仓库内嵌正文**。须从 **[arkUISkill（GitCode）](https://gitcode.com/qq_44921954/arkUISkill)** 下载 **`arkui-static-xts-generator`**，拷贝到 **`.claude/skills/ohxtsstatic/arkui-static-xts-generator/`**（与 **`SKILL.md` 同级**），至少含 **`categories/`**、**`common/`**。步骤见 **`README.md`**。 | P0 |
 
 **可选**：用户可在业务工程内维护更长的内部规范文档；**非阅读前置条件**，本 skill 已覆盖日常开发与排障所需条款。
 
 ---
 
-## 技能融合模型：一体化权威分层
+## 技能融合模型：一体化分层模型
 
 将 **ohxtsstatic 工程经验** 与 **ArkUI 静态 XTS 六类范式** 合成 **一条流水线**，冲突时按下表 **自上而下** 裁决，**禁止**用分类文档推翻 SDK 或未经验证的臆造 API。
 
 | 层级 | 来源 | 职责 |
 |------|------|------|
-| **L0** | **SDK `.d.ets`** | 能否编译、签名、类型；**最终权威** |
-| **L1** | 本文 **§一～五**、**`compile_error_hints.md`** | `use static` + Hypium/UiTest **硬约束**、多机布局、隔离、日志、路由 |
-| **L1.5** | **`arkui-static-xts-generator/categories/*.md`** | **测什么、怎么验收**：核心思路、检查点、验证方法（按接口 **§〇** 选篇） |
-| **L2** | **`arkui-static-xts-generator/common/`**（`import` / `ets_rules` / `test_rules`） | **书写细则**：显式导入参考、页面与用例骨架、**`@tc.*` JSDoc**；与 L0/L1 冲突时 **服从 L0/L1** |
+| **Tier-0** | **SDK `.d.ets`** | 能否编译、签名、类型；**最终基准** |
+| **Tier-1** | 本文 **§一～五**、**`compile_error_hints.md`** | `use static` + Hypium/UiTest **硬约束**、多机布局、隔离、日志、路由 |
+| **Tier-1.5** | **`arkui-static-xts-generator/categories/*.md`** | **测什么、怎么验收**：核心思路、检查点、验证方法（按接口 **§〇** 选篇） |
+| **Tier-2** | **`arkui-static-xts-generator/common/`**（`import` / `ets_rules` / `test_rules`） | **书写细则**：显式导入参考、页面与用例骨架、**`@tc.*` JSDoc**；与 Tier-0/Tier-1 冲突时 **服从 Tier-0/Tier-1** |
 
 **一体化执行顺序（五步；第 1 步为设计，不可跳过）**
 
@@ -163,7 +163,7 @@ version: "1.4.0"
 2. **§二 A**：在工程内找 **同类已稳套件**，对齐路由与生命周期。  
 3. **§二 B + `ets_rules`**：页面只负责 **可观测状态**（id、AppStorage 出口、§ 三布局）；落实 §〇 的 **页面侧**检查点。  
 4. **§二 C + `test_rules`**：用例落实 §〇 的 **验证方法**；叠加本文 **§一.3**、**§四**。  
-5. **§二 D + §六～七**：自检、**build-all / 签包**、**设备安装与 `aa test`**、**抓 log 与迭代**；在会话中输出 **「正式测试报告」**（**三列表格**为主，见专节）；静态 XTS 多为 **`static-device-test` / `run-static-pipeline`**。
+5. **§二 D + §六～七**：自检、**build-all / 签包**、**设备安装与 `unittest 设备命令`**、**抓 log 与迭代**；在会话中输出 **「正式测试报告」**（**三列表格**为主，见专节）；静态 XTS 多为 **`static-device-test` / `run-static-pipeline`**。
 
 ---
 
@@ -220,7 +220,7 @@ version: "1.4.0"
 
 ### 1.2 导入与模块
 
-- **`use static`**：凡在页面/用例中用到的 **组件与类型** 均须 **显式 import**；模块路径以 **L0 SDK + 本仓已能编过的套件** 为准。  
+- **`use static`**：凡在页面/用例中用到的 **组件与类型** 均须 **显式 import**；模块路径以 **Tier-0 SDK + 本仓已能编过的套件** 为准。  
 - **候选清单**：按符号查阅 **`arkui-static-xts-generator/common/import.md`**（同类符号多路径时 **以工程现有为准**）；**禁止**照抄接口文档或过时代码里的路径导致与当前 kit 不一致。  
 - **接口文档中的 import 示例**若与当前工程 kit 不一致，**不要盲改**工程全局风格；**新增代码**遵循上两条。
 
@@ -237,7 +237,7 @@ version: "1.4.0"
 
 ## 二、编码落地（流水线第 2～5 步：工作流 A–D + 自检）
 
-**前置**：**§〇** 已完成（已打开目标 **`categories/*.md`**，检查点与验证方法明确）；**L2** 细则按需查阅 **`common/ets_rules.md`、`test_rules.md`**。
+**前置**：**§〇** 已完成（已打开目标 **`categories/*.md`**，检查点与验证方法明确）；**Tier-2** 细则按需查阅 **`common/ets_rules.md`、`test_rules.md`**。
 
 ### A. 对齐工程内范式
 
@@ -329,7 +329,7 @@ export OHOS_USE_HVIGOR_STATIC=1                        # 静态工程
 **静态一体工程**（测试打在 entry 内、**无** `ohosTest` 模块，如 `advance_chip_static`、`advance_counter_static`、`api18_static`）：
 
 ```bash
-python3 src/skills/ohhap/hapbuild.py build <工程绝对路径>
+python3 src/skills/ohhap/hapbuild.py build <工程完整路径>
 # 勿用 build-all（其 build-test 会因无 ohosTest 失败）
 ls entry/build/default/outputs/default/entry-default-signed.hap
 ```
@@ -337,7 +337,7 @@ ls entry/build/default/outputs/default/entry-default-signed.hap
 **动态双包工程**（如 `chip_nowear`，含 `entry@ohosTest`）：
 
 ```bash
-python3 src/skills/ohxtsstatic/ohxtsflow.py build-all <工程绝对路径>
+python3 src/skills/ohxtsstatic/ohxtsflow.py build-all <工程完整路径>
 ```
 
 等价 **`hapbuild build` → `build-test`（仅双包）→ `sign`**。失败时：读 hvigor 日志 + **`compile_error_hints.md`** + **§十三**。
@@ -353,37 +353,36 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py build-all <工程绝对路径>
 **传统双包 + class 套件**（`entry_test` 等）：
 
 ```bash
-python3 src/skills/ohhdc/ohhdc.py deploy-test <工程绝对路径> [--timeout 毫秒]
+python3 src/skills/ohhdc/ohhdc.py deploy-test <工程完整路径> [--timeout 毫秒]
 ```
 
-**静态 XTS（`-m entry`，`-s unittest` 多为类名 `OpenHarmonyTestRunner`）**——官方推荐形态接近  
-`aa test -b <bundle> -m entry -s timeout <ms> -s unittest OpenHarmonyTestRunner`（**timeout 在 unittest 前**）；由 **`ohhdc static-deploy-test`** 封装。
+**静态 XTS（`-m entry`，`-s unittest` 多为类名 `OpenHarmonyTestRunner`）**——推荐通过 **`ohhdc static-deploy-test`** 封装（内部调用 Ability Assistant 设备测试命令）；**timeout 参数须在 unittest 之前**。
 
 **新批次验证：优先只跑本批套件**（避免全量 List 中既有用例 App died 误判新用例失败）：
 
 ```bash
 hdc install -r entry/build/default/outputs/default/entry-default-signed.hap
-hdc shell "aa test -b <bundleName> -m entry -s unittest OpenHarmonyTestRunner \
-  -s class YourNewSuiteTest -s timeout 300000"
+python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程完整路径> \
+  --timeout 300000 -s YourNewSuiteTest
 ```
 
 多套件：`-s class SuiteA,SuiteB`。全量 `static-deploy-test` 仅在有明确需求时使用。
 
 ```bash
-python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程绝对路径> [--timeout 15000] [-m entry] [--unittest-runner /ets/testrunner/OpenHarmonyTestRunner]
+python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程完整路径> [--timeout 15000] [-m entry] [--unittest-runner /ets/testrunner/OpenHarmonyTestRunner]
 ```
 
 **编排（推荐）**：
 
 ```bash
 # 仅设备：已本地编签后，装包并跑 unittest
-python3 src/skills/ohxtsstatic/ohxtsflow.py static-device-test <工程绝对路径> [--timeout 15000]
+python3 src/skills/ohxtsstatic/ohxtsflow.py static-device-test <工程完整路径> [--timeout 15000]
 
 # 一键：构建（hapbuild，含 OHOS_HAPSIGNER_RESULT 时自动签名）→ static-device-test
-python3 src/skills/ohxtsstatic/ohxtsflow.py run-static-pipeline <工程绝对路径> [--build-mode debug]
+python3 src/skills/ohxtsstatic/ohxtsflow.py run-static-pipeline <工程完整路径> [--build-mode debug]
 ```
 
-长时间 Hypium 全量：**先** `export OHOS_AA_TEST_WALL_SEC=7200`（秒）再跑 **`static-device-test` / `run-static-pipeline`**，避免本机过早杀掉 `aa test`（与 `--timeout` 设备毫秒不是同一含义，见 **ohhdc/SKILL.md**）。
+长时间 Hypium 全量：**先** `export OHOS_AA_TEST_WALL_SEC=7200`（秒）再跑 **`static-device-test` / `run-static-pipeline`**，避免本机过早杀掉 `unittest 设备命令`（与 `--timeout` 设备毫秒不是同一含义，见 **ohhdc/SKILL.md**）。
 
 **阶段 4 结束时的 Agent 义务**：在 **`hdc` 可用且已执行设备命令**的情况下，必须在**同一会话回复**中按上文 **「正式测试报告」** 输出 **三列表格**（用例名称｜Pass/Fail｜设计思路）及汇总；**不得**只告知用户「去打开某个 log 文件」而不给出结构化报告。
 
@@ -398,7 +397,7 @@ python3 src/skills/ohhdc/ohhdc.py faultlog
 
 ### 阶段 5：分析与优化
 
-- 将 **`aa test` / hilog** 输出保存为文本后，可做轻量摘要（关键词、失败行、启发式建议）：
+- 将 **`unittest 设备命令` / hilog** 输出保存为文本后，可做轻量摘要（关键词、失败行、启发式建议）：
 
 ```bash
 python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <本机日志文件>
@@ -418,10 +417,10 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <本机日志文件
 - [ ] **会话内正式测试报告**：已按 **「正式测试报告」** 节在回复中输出 **核心三列表格**（用例名称｜Pass/Fail｜**非开发也能懂的设计思路**，≤5 句/格），以及环境、命令、汇总、日志要点等；**禁止**以「仅 log 文件路径」作为唯一交付  
 - [ ] **迭代闭环**：设备失败时已改代码并重跑，或已记录不可复现原因
 
-**一体化设计（L1.5 + L2）**
+**一体化设计（Tier-1.5 + Tier-2）**
 
 - [ ] **§〇 路由表** 与所选 **`categories/…/*.md`** 一致；**检查点 → 页面出口 → 断言** 可追溯（非「先写码再套文档」）  
-- [ ] 已按需查阅 **`common/import.md`、`ets_rules.md`、`test_rules.md`**；无 **L0** 不存在的 API、无与 **§一.3** 抵触的 Hypium 写法  
+- [ ] 已按需查阅 **`common/import.md`、`ets_rules.md`、`test_rules.md`**；无 **Tier-0** 不存在的 API、无与 **§一.3** 抵触的 Hypium 写法  
 - [ ] **单 `it` 单点**；页面 **无 expect**；`describe`/`it`（及 `@tc.*` 若适用）与批次或接口 id 一致  
 
 **页面**
@@ -453,7 +452,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <本机日志文件
 
 - [ ] **签名**：已 `source signing-materials/env.sh`；`entry-default-signed.hap` 存在  
 - [ ] **静态一体**：用 `hapbuild build`，**未**误用 `build-all` 的 `build-test`  
-- [ ] **设备**：本批次套件 **`aa test -s class`** 全 Pass（附 `OHOS_REPORT_RESULT`）；非仅全量未跑完  
+- [ ] **设备**：本批次套件 **`static-deploy-test -s <Suite>`** 全 Pass（附 `OHOS_REPORT_RESULT`）；非仅全量未跑完  
 - [ ] **CodeCheck**：G.EXT.01（`@Trace public`）、G.FMT.02（行宽 ≤120）  
 - [ ] 设备 **`deploy-test`** 或通过 **`ohhdc test`** 指定套件时结果可解释
 
@@ -495,7 +494,7 @@ cases:
 
 ## 十、附录：报错速查文件
 
-**`compile_error_hints.md`**：编译与运行期 **表格式** 速查，与 **`ohxtsflow.py hints`** 输出一致；可与本文 **技能融合模型 L1**、**§ 一、五、七** 交叉对照。
+**`compile_error_hints.md`**：编译与运行期 **表格式** 速查，与 **`ohxtsflow.py hints`** 输出一致；可与本文 **技能融合模型 Tier-1**、**§ 一、五、七** 交叉对照。
 
 **`arkui-static-xts-generator/README.md`**：**下载与放置说明**；下载后的 **`SKILL.md`（生成器原文）** 与 ohxtsstatic 主 **`SKILL.md`** 并列阅读时，**执行仍以 ohxtsstatic 主文分层与流水线为准**。
 
@@ -513,13 +512,13 @@ cases:
 
 | 场景 | 提示词示例 |
 |------|------------|
-| 全流程 | 「按 ohxtsstatic：§〇→**编签→设备 `aa test`→抓 log→迭代**；**在会话中输出「正式测试报告」三列表格**（用例名称｜Pass/Fail｜设计思路），不只给 log 路径」 |
+| 全流程 | 「按 ohxtsstatic：§〇→**编签→设备 `unittest 设备命令`→抓 log→迭代**；**在会话中输出「正式测试报告」三列表格**（用例名称｜Pass/Fail｜设计思路），不只给 log 路径」 |
 | 静态 XTS 设备一键 | 「`ohxtsflow run-static-pipeline <工程>`；**会话报告**含**三列表格**与 `OHOS_REPORT_RESULT`」 |
 | 仅跑设备（已编签） | 「`ohxtsflow static-device-test <工程>`；**同上，必须会话内三列表格报告**」 |
 | 日志摘要 | 「`analyze-test-log` 仅作提炼；**填入报告「日志要点」列表**，勿替代整份报告」 |
-| 只排障 | 「对照 ohxtsstatic **compile_error_hints**、**技能融合模型** L0/L1 与 § 七清单，修路由/AppStorage/断言」 |
+| 只排障 | 「对照 ohxtsstatic **compile_error_hints**、**技能融合模型** Tier-0/Tier-1 与 § 七清单，修路由/AppStorage/断言」 |
 | 只编 | 「`hapbuild build <路径>`（静态一体）或 `ohxtsflow build-all`（双包），失败则按 hints 与 hvigor 日志修」 |
-| 归类/设计 | 「接口 XXX：按 ohxtsstatic §〇 **路由表** 选型，摘录检查点与验证方法后再让我写 B/C」 |
+| 归类/设计 | 「接口 XXX：按 ohxtsstatic §〇 **路由表** 选型，摘录检查点与验证方法后再编写 B/C」 |
 
 ---
 
@@ -537,7 +536,7 @@ cases:
   → 写 *.test.ets（单 it 单测试点）
   → main_pages.json + List.test.ets 注册
   → source signing-materials/env.sh → hapbuild build
-  → aa test -s class 只跑本批套件
+  → python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程> -s YourSuiteTest
   → 会话三列表格报告（附 OHOS_REPORT_RESULT）
   →（用户要求时）git commit -sm，diff 审计后 push
 ```
@@ -647,7 +646,7 @@ bash /root/aiSkill/develop/xts_acts_local_tools/init_local_tools_dir.sh <路径>
 
 | 路径/类型 | 说明 |
 |-----------|------|
-| **仓库外** `xts_acts_local_tools/` | **首选**：gen 脚本、`xts_reports/`、`.xlsx` 报告 |
+| **仓库外** `xts_acts_local_tools/` | **推荐**：gen 脚本、`xts_reports/`、`.xlsx` 报告 |
 | **仓库内** `advancedComponents/tools/`、`ace_ets_module_*/tools/` | 根 `.gitignore` 整目录忽略，**含 `.gitignore` 也不提交** |
 | `hypium/`、`autosign/`、`build/`、`vendor/` | 构建与临时目录 |
 
@@ -669,7 +668,7 @@ python3 src/skills/ohhap/hapbuild.py build <静态一体工程>
 | 踩坑 | 预防 |
 |------|------|
 | `OHOS_HAPSIGNER_RESULT` 指工程 `autosign/` | 必须指 `signing-materials/`；sign 会先清空工程 autosign |
-| 只编未跑就宣称完成 | 本批 `aa test -s class Suite` + `OHOS_REPORT_RESULT` |
+| 只编未跑就宣称完成 | 本批 `static-deploy-test -s Suite` + `OHOS_REPORT_RESULT` |
 | 全量 List 第 N 条 App died | 新批次只跑本批套件，全量失败 ≠ 新用例失败 |
 
 ### 13.8 CodeCheck、异常参数、Git 与提交纪律
@@ -707,14 +706,14 @@ python3 src/skills/ohhap/hapbuild.py build <静态一体工程>
 
 | 层级 | 交付 | 命令/产出 |
 |------|------|-----------|
-| L1 | 会话 **三列表格** | 每批 `static-device-test` 后必写 |
-| L2 | Hypium HTML | 终端 `REPORT_HTML=.../hypium/.../summary_report.html` |
-| L3-A | xdevice 汇总 | `gen_xdevice_summary_report.py` → `xts_reports/summary_report.html` |
-| L3-B | 未覆盖属性 | `gen_uncovered_report.py` → `uncovered_properties_report.html` |
+| Tier-1 | 会话 **三列表格** | 每批 `static-device-test` 后必写 |
+| Tier-2 | Hypium HTML | 终端 `REPORT_HTML=.../hypium/.../summary_report.html` |
+| Tier-3A | xdevice 汇总 | `gen_xdevice_summary_report.py` → `xts_reports/summary_report.html` |
+| Tier-3B | 未覆盖属性 | `gen_uncovered_report.py` → `uncovered_properties_report.html` |
 
 **多批合并**：`gen_xdevice_summary_report.py` 支持 `parsed1+parsed2+...`（同 Acts 模块多批 Hypium parsed 合并一条）。
 
-**推荐顺序**：分批开发 → 每批 L1+L2 → 全部 Pass 后更新 L3 → 按 **xts-git-commit** 分批 commit（<2000 行），用户明确要求再 push。
+**推荐顺序**：分批开发 → 每批 Tier-1+Tier-2 → 全部 Pass 后更新 Tier-3 → 按 **xts-git-commit** 分批 commit（<2000 行），用户明确要求再 push。
 
 **本地工具根**（不进 xts_acts Git）：
 

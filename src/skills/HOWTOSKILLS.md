@@ -121,7 +121,7 @@ Sync to AGENTS.md: npx openskills sync
 
 ### 4.2 使用方式
 
-> **Cursor 侧主目录**：`/root/aiSkill/.claude/skills/` 为 IDE Agent 运行时 canonical 目录；OH 工具链 skill 自本仓 **`pull`** 同步，**ohxtsstatic** 自 Cursor 侧 **`push-xts`** 回写。详见 **`/root/aiSkill/.claude/skills/SKILLS_SYNC.md`** 与 **`sync-skills.sh`**。
+> **IDE 侧主目录**：`/root/aiSkill/.claude/skills/` 为 Agent 运行时 canonical 目录；OH 工具链 skill 自本仓 **`pull`** 同步，**ohxtsstatic** 自 IDE 侧 **`push-xts`** 回写。详见 **`/root/aiSkill/.claude/skills/SKILLS_SYNC.md`** 与 **`sync-skills.sh`**。
 
 - **方式一**：将需要的技能目录从 `src/skills/<名>/` 拷贝到编辑器/Agent 所读取的技能目录（由工具配置决定，路径以各工具说明为准），与通过 openskills 安装的技能并列，便于对话中引用「某技能」。**执行命令时仍建议使用本仓库 `src/skills/...` 路径。**
 - **方式二**：命令行直接使用仓库内路径（在 **napi_generator 仓库根** 下）：
