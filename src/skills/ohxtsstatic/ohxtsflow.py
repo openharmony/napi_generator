@@ -3,17 +3,18 @@
 """
 ohxtsstatic 全流程编排入口：串联 ohhap / ohhdc / ohtest / ohproj 惯例命令。
 
-一体化流水线与分层优先级见同目录 **SKILL.md**（**技能融合模型**、**§〇 路由表**、**§二**）；测试范式细则见 **arkui-static-xts-generator/**（须从 GitCode 下载放置，见该目录 **README.md**）。
+一体化流水线与分层权威见同目录 **SKILL.md**（**技能融合模型**、**§〇 路由表**、**§二**）；测试范式细则见 **arkui-static-xts-generator/**（须从 GitCode 下载放置，见该目录 **README.md**）。
 
 不替代各子技能实现；仅统一路径、参数与阶段顺序，便于 Agent 或人工一键执行。
 
 用法（均在 napi_generator 仓库根下执行时可用相对路径）：
   python3 src/skills/ohxtsstatic/ohxtsflow.py env
-  python3 src/skills/ohxtsstatic/ohxtsflow.py build-all <HAP工程完整路径>
+  python3 src/skills/ohxtsstatic/ohxtsflow.py build-all <HAP工程绝对路径>
   python3 src/skills/ohxtsstatic/ohxtsflow.py install <signed.hap> [--replace]
-  python3 src/skills/ohxtsstatic/ohxtsflow.py deploy-test <HAP工程完整路径> [--timeout 毫秒]   # 主包+ohosTest 双包 + class 套件
-  python3 src/skills/ohxtsstatic/ohxtsflow.py static-device-test <HAP工程完整路径> [--timeout 毫秒]  # 仅主 signed.hap + unittest TestRunner（静态 XTS）
-  python3 src/skills/ohxtsstatic/ohxtsflow.py run-static-pipeline <HAP工程完整路径>  # build（含自动签名）→ static-device-test
+  python3 src/skills/ohxtsstatic/ohxtsflow.py deploy-test <HAP工程绝对路径> [--timeout 毫秒]   # 主包+ohosTest 双包 + class 套件
+  python3 src/skills/ohxtsstatic/ohxtsflow.py static-device-test <HAP工程绝对路径> [--timeout 毫秒]  # 仅主 signed.hap + unittest TestRunner（静态 XTS）
+  python3 src/skills/ohxtsstatic/ohxtsflow.py run-static-pipeline <HAP工程绝对路径>  # build → static-device-test → HTML
+  python3 src/skills/ohxtsstatic/ohxtsflow.py gen-hypium-report <日志文件>
   python3 src/skills/ohxtsstatic/ohxtsflow.py logs [--faultlog] [--pattern 正则]
   python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <日志文件>  # 摘要失败原因与优化提示
   python3 src/skills/ohxtsstatic/ohxtsflow.py hints
@@ -28,6 +29,26 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+
+from hypium_html_report import run_subprocess_and_report, write_report_from_log
+
+for _cand in (
+    Path(__file__).resolve().parents[4],
+    Path(__file__).resolve().parents[3],
+):
+    if (_cand / "sdk_paths.py").is_file():
+        sys.path.insert(0, str(_cand))
+        break
+try:
+    import sdk_paths as _sdk_paths
+except ImportError:
+    _sdk_paths = None  # type: ignore
+
+
+def _sdk_get(name: str, default: str = "") -> str:
+    if _sdk_paths is not None:
+        return _sdk_paths.get(name, default)
+    return os.environ.get(name, default)
 
 
 def _repo_skills() -> Path:
@@ -48,16 +69,68 @@ def run(argv: list[str], cwd: str | None = None) -> int:
     return r.returncode
 
 
+def _detect_device_sn() -> str:
+    try:
+        r = subprocess.run(
+            ["hdc", "list", "targets"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        for ln in (r.stdout or "").splitlines():
+            ln = ln.strip()
+            if ln:
+                return ln
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+    return ""
+
+
+def _ohhdc_path() -> Path:
+    return _repo_skills().parent / "ohhdc" / "ohhdc.py"
+
+
+def _build_ohhdc_cmd(action: str, project: str, ns: argparse.Namespace) -> list[str]:
+    cmd = [_py(), str(_ohhdc_path()), action, project]
+    if getattr(ns, "timeout", None) is not None:
+        cmd.extend(["--timeout", str(ns.timeout)])
+    if getattr(ns, "module", None):
+        cmd.extend(["-m", ns.module])
+    if getattr(ns, "unittest_runner", None):
+        cmd.extend(["--unittest-runner", ns.unittest_runner])
+    if getattr(ns, "suite", None):
+        cmd.extend(["-s", ns.suite])
+    return cmd
+
+
+def _run_device_with_report(action: str, ns: argparse.Namespace) -> int:
+    proj = os.path.abspath(ns.project)
+    cmd = _build_ohhdc_cmd(action, proj, ns)
+    device = getattr(ns, "device", None) or _detect_device_sn()
+    suite = getattr(ns, "suite", None) or ""
+    batch = getattr(ns, "batch", None) or ""
+    rc, _ = run_subprocess_and_report(
+        cmd,
+        project=proj,
+        suite=suite,
+        device=device,
+        batch_name=batch,
+    )
+    return rc
+
+
 def cmd_env(_: argparse.Namespace) -> int:
     ok = True
+    if _sdk_paths is not None:
+        _sdk_paths.print_env_hint("static")
     for var in ("HOS_CLT_PATH", "OHOS_SDK_PATH"):
-        v = os.environ.get(var)
+        v = os.environ.get(var) or _sdk_get(var)
         if not v or not os.path.isdir(v):
-            print(f"❌ {var} 未设置或路径不存在")
+            print(f"❌ {var} 未设置或路径不存在: {v or '(空)'}")
             ok = False
         else:
             print(f"✓ {var}={v}")
-    hclt = os.environ.get("HOS_CLT_PATH", "").strip()
+    hclt = (os.environ.get("HOS_CLT_PATH") or _sdk_get("HOS_CLT_PATH")).strip()
     if hclt and os.path.isdir(hclt):
         static_js = os.path.join(hclt, "hvigor-static", "bin", "hvigorw.js")
         default_js = os.path.join(hclt, "hvigor", "bin", "hvigorw.js")
@@ -111,31 +184,12 @@ def cmd_install(ns: argparse.Namespace) -> int:
 
 
 def cmd_deploy_test(ns: argparse.Namespace) -> int:
-    proj = os.path.abspath(ns.project)
-    skills = _repo_skills()
-    ohhdc = skills.parent / "ohhdc" / "ohhdc.py"
-    cmd = [_py(), str(ohhdc), "deploy-test", proj]
-    if ns.timeout is not None:
-        cmd.extend(["--timeout", str(ns.timeout)])
-    return run(cmd)
+    return _run_device_with_report("deploy-test", ns)
 
 
 def cmd_static_device_test(ns: argparse.Namespace) -> int:
     """静态 XTS：ohhdc static-deploy-test（卸载→装主包→aa test unittest TestRunner）。"""
-    proj = os.path.abspath(ns.project)
-    skills = _repo_skills()
-    ohhdc = skills.parent / "ohhdc" / "ohhdc.py"
-    if not ohhdc.is_file():
-        print(f"❌ 未找到 {ohhdc}")
-        return 1
-    cmd = [_py(), str(ohhdc), "static-deploy-test", proj]
-    if ns.timeout is not None:
-        cmd.extend(["--timeout", str(ns.timeout)])
-    if getattr(ns, "module", None):
-        cmd.extend(["-m", ns.module])
-    if getattr(ns, "unittest_runner", None):
-        cmd.extend(["--unittest-runner", ns.unittest_runner])
-    return run(cmd)
+    return _run_device_with_report("static-deploy-test", ns)
 
 
 def cmd_run_static_pipeline(ns: argparse.Namespace) -> int:
@@ -153,9 +207,20 @@ def cmd_run_static_pipeline(ns: argparse.Namespace) -> int:
     return cmd_static_device_test(ns)
 
 
+def cmd_gen_hypium_report(ns: argparse.Namespace) -> int:
+    path = write_report_from_log(
+        ns.log_file,
+        project=ns.project or "",
+        suite=ns.suite or "",
+        device=ns.device or "",
+    )
+    print(f"REPORT_HTML={path}")
+    return 0
+
+
 def analyze_hypium_like_log(text: str) -> str:
     """
-    对应用测试标准输出 / hilog 保存的文本做轻量摘要，便于人工或 Agent 迭代用例。
+    对 aa test / hilog 保存的文本做轻量摘要，便于人工或 Agent 迭代用例。
     非完整解析器；以关键词与行级模式为主。
     """
     lines = text.splitlines()
@@ -181,9 +246,7 @@ def analyze_hypium_like_log(text: str) -> str:
     hints: list[str] = []
     low = joined.lower()
     if "timeout" in low or "超时" in joined:
-        hints.append(
-            "含 timeout/超时：可考虑增大设备侧 `-s timeout`（毫秒）、或减少单 it 内同步等待；对照 test_rules / Hypium。"
-        )
+        hints.append("含 timeout/超时：可考虑增大 aa test -s timeout、或减少单 it 内同步等待；对照 test_rules / Hypium。")
     if "findcomponent" in low or "Component is not found" in joined:
         hints.append("组件未找到：核对 id、页面是否已导航、afterEach 是否清状态导致树变化。")
     if "assert" in low and "fail" in low:
@@ -249,8 +312,10 @@ def cmd_workflow_print(_: argparse.Namespace) -> int:
     return 0
 
 
-def _register_ohxts_cli_build_install_deploy(sp):
-    """注册 env / build-all / install / deploy-test 子命令。"""
+def main() -> int:
+    ap = argparse.ArgumentParser(description="ohxtsstatic 全流程编排")
+    sp = ap.add_subparsers(dest="cmd", required=True)
+
     sp.add_parser("env", help="检查 HOS_CLT_PATH / OHOS_SDK_PATH / hdc / python")
 
     b = sp.add_parser("build-all", help="hapbuild build + build-test + sign")
@@ -261,27 +326,19 @@ def _register_ohxts_cli_build_install_deploy(sp):
     ins.add_argument("hap", help="已签名 .hap 路径")
     ins.add_argument("--replace", action="store_true", help="使用 replace-install")
 
-    dt = sp.add_parser(
-        "deploy-test",
-        help="ohhdc deploy-test（卸装→装主包与测试包→设备应用测试）",
-    )
+    dt = sp.add_parser("deploy-test", help="ohhdc deploy-test（卸装→装主+测→aa test）")
     dt.add_argument("project", help="HAP 工程根目录")
     dt.add_argument("--timeout", type=int, default=None)
+    dt.add_argument("-s", "--suite", dest="suite", default=None, help="Hypium 套件名（-s class）")
+    dt.add_argument("--batch", default=None, help="写入批次 batch_index.html")
+    dt.add_argument("--device", default=None, help="设备 SN（仅写入报告）")
 
-
-def _register_ohxts_cli_static_tests(sp):
-    """注册 static-device-test / run-static-pipeline。"""
     sdt = sp.add_parser(
         "static-device-test",
-        help="静态 XTS：仅主包 + unittest TestRunner（见 ohhdc static-deploy-test）",
+        help="静态 XTS：仅主包 + aa test unittest TestRunner（见 ohhdc static-deploy-test）",
     )
     sdt.add_argument("project", help="HAP 工程根目录")
-    sdt.add_argument(
-        "--timeout",
-        type=int,
-        default=15000,
-        help="设备侧 -s timeout（毫秒），默认 15000",
-    )
+    sdt.add_argument("--timeout", type=int, default=15000, help="aa test -s timeout（毫秒），默认 15000")
     sdt.add_argument(
         "-m",
         "--module",
@@ -295,6 +352,9 @@ def _register_ohxts_cli_static_tests(sp):
         default=None,
         help="设备侧 TestRunner 路径，默认 /ets/testrunner/OpenHarmonyTestRunner",
     )
+    sdt.add_argument("-s", "--suite", dest="suite", default=None, help="Hypium 套件名")
+    sdt.add_argument("--batch", default=None, help="写入批次 batch_index.html")
+    sdt.add_argument("--device", default=None, help="设备 SN（仅写入报告）")
 
     rsp = sp.add_parser(
         "run-static-pipeline",
@@ -308,22 +368,20 @@ def _register_ohxts_cli_static_tests(sp):
         choices=("debug", "release"),
         help="hvigor 构建模式，默认 debug",
     )
-    rsp.add_argument(
-        "--timeout",
-        type=int,
-        default=15000,
-        help="设备侧 timeout 毫秒，默认 15000",
-    )
+    rsp.add_argument("--timeout", type=int, default=15000, help="aa test 超时毫秒，默认 15000")
     rsp.add_argument("-m", "--module", dest="module", default=None, help="测试模块名，默认 entry")
     rsp.add_argument("--unittest-runner", dest="unittest_runner", default=None, help="TestRunner 设备路径")
+    rsp.add_argument("-s", "--suite", dest="suite", default=None, help="Hypium 套件名")
+    rsp.add_argument("--batch", default=None, help="写入批次 batch_index.html")
+    rsp.add_argument("--device", default=None, help="设备 SN（仅写入报告）")
 
+    ghr = sp.add_parser("gen-hypium-report", help="从 aa test 日志生成 HTML 报告")
+    ghr.add_argument("log_file", help="日志文件")
+    ghr.add_argument("--project", default="")
+    ghr.add_argument("--suite", default="")
+    ghr.add_argument("--device", default="")
 
-def _register_ohxts_cli_logs_and_hints(sp):
-    """注册 analyze-test-log / logs / hints / workflow-print。"""
-    atl = sp.add_parser(
-        "analyze-test-log",
-        help="分析保存的 Hypium / 设备应用测试日志并输出摘要与启发式建议",
-    )
+    atl = sp.add_parser("analyze-test-log", help="分析保存的 Hypium/aa test 日志并输出摘要与启发式建议")
     atl.add_argument("log_file", help="本机日志文件路径")
 
     lg = sp.add_parser("logs", help="设备 hilog 过滤或 faultlog")
@@ -333,18 +391,6 @@ def _register_ohxts_cli_logs_and_hints(sp):
     sp.add_parser("hints", help="打印 compile_error_hints.md")
     sp.add_parser("workflow-print", help="从 SKILL.md 摘录阶段流水线")
 
-
-def _make_ohxts_cli_parser() -> argparse.ArgumentParser:
-    ap = argparse.ArgumentParser(description="ohxtsstatic 全流程编排")
-    sp = ap.add_subparsers(dest="cmd", required=True)
-    _register_ohxts_cli_build_install_deploy(sp)
-    _register_ohxts_cli_static_tests(sp)
-    _register_ohxts_cli_logs_and_hints(sp)
-    return ap
-
-
-def main() -> int:
-    ap = _make_ohxts_cli_parser()
     ns = ap.parse_args()
     handlers = {
         "env": cmd_env,
@@ -353,16 +399,13 @@ def main() -> int:
         "deploy-test": cmd_deploy_test,
         "static-device-test": cmd_static_device_test,
         "run-static-pipeline": cmd_run_static_pipeline,
+        "gen-hypium-report": cmd_gen_hypium_report,
         "analyze-test-log": cmd_analyze_test_log,
         "logs": cmd_logs,
         "hints": cmd_hints,
         "workflow-print": cmd_workflow_print,
     }
-    handler = handlers.get(ns.cmd)
-    if handler is None:
-        print(f"未知子命令: {ns.cmd}", file=sys.stderr)
-        return 2
-    return handler(ns)
+    return handlers[ns.cmd](ns)
 
 
 if __name__ == "__main__":

@@ -41,3 +41,8 @@ __pycache__
 *.log
 .hvigor
 build
+# XTS 生成器正文外置下载，仓内仅保留 README
+/src/skills/ohxtsstatic/arkui-static-xts-generator/*
+!/src/skills/ohxtsstatic/arkui-static-xts-generator/README.md
+/src/skills/ohxtsdynamic/arkui-dynamic-xts-generator/*
+!/src/skills/ohxtsdynamic/arkui-dynamic-xts-generator/README.md
