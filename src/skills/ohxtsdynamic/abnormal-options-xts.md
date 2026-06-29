@@ -1,6 +1,6 @@
 # 异常参数（undefined / null）XTS 开发参考
 
-与 **`SKILL.md` §八** 配套。以 **chip_nowear** 已落地实践为准；其他 `@ComponentV2` 高级组件可类比。
+与 **`SKILL.md` §八** 配套。以 **chip_nowear** 已落地实践为准；同类 `@ComponentV2` 高级组件可类比。
 
 ---
 

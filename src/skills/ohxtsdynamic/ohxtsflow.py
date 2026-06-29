@@ -265,12 +265,21 @@ def cmd_hints(_: argparse.Namespace) -> int:
     return 0 if p.is_file() else 1
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description="ohxtsdynamic 动态 XTS 编排")
-    sp = ap.add_subparsers(dest="cmd", required=True)
+def _command_handlers() -> dict[str, object]:
+    return {
+        "env": cmd_env,
+        "build-all": cmd_build_all,
+        "deploy-test": cmd_deploy_test,
+        "static-device-test": cmd_static_device_test,
+        "run-dynamic-pipeline": cmd_run_dynamic_pipeline,
+        "gen-hypium-report": cmd_gen_hypium_report,
+        "analyze-test-log": cmd_analyze_test_log,
+        "hints": cmd_hints,
+    }
 
-    sp.add_parser("env")
 
+def _add_dynamic_parsers(sp: argparse._SubParsersAction) -> None:
+    """注册动态 XTS 子命令参数。"""
     b = sp.add_parser("build-all")
     b.add_argument("project")
     b.add_argument("--profile", default="release", choices=("release", "debug"))
@@ -313,20 +322,21 @@ def main() -> int:
     atl = sp.add_parser("analyze-test-log")
     atl.add_argument("log_file")
 
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="ohxtsdynamic 动态 XTS 编排")
+    sp = ap.add_subparsers(dest="cmd", required=True)
+
+    sp.add_parser("env")
+    _add_dynamic_parsers(sp)
     sp.add_parser("hints")
 
     ns = ap.parse_args()
-    handlers = {
-        "env": cmd_env,
-        "build-all": cmd_build_all,
-        "deploy-test": cmd_deploy_test,
-        "static-device-test": cmd_static_device_test,
-        "run-dynamic-pipeline": cmd_run_dynamic_pipeline,
-        "gen-hypium-report": cmd_gen_hypium_report,
-        "analyze-test-log": cmd_analyze_test_log,
-        "hints": cmd_hints,
-    }
-    return handlers[ns.cmd](ns)
+    handler = _command_handlers().get(ns.cmd)
+    if handler is None:
+        print(f"未知子命令: {ns.cmd}", file=sys.stderr)
+        return 1
+    return handler(ns)  # type: ignore[operator]
 
 
 if __name__ == "__main__":

@@ -8,20 +8,24 @@
 
 ## 1. WordsTool（文档敏感词）
 
-| 避免 | 改用 |
-|------|------|
-| `绝对路径` | `完整路径` |
-| `绝对优先` / `权威` | `SDK 优先` / `基准` |
-| `首选` | `推荐` |
-| `永远` | `始终` |
-| `其他仓库` | `外部仓库` |
-| `Cursor`（IDE 名） | `IDE` |
-| `L0`/`L1`/`L2`/`L3` | `Tier-0`/`Tier-1`/`Tier-2`/`Tier-3` |
-| 正文写 `aa test` | `unittest 设备命令` 或 `ohhdc static-deploy-test` |
+正文宜采用业界通用、语义明确的表述；下表为常见 **忌讳写法 → 推荐写法**（左列勿原样写入 skill 正文）：
+
+| 忌讳表述类型 | 推荐 |
+|-------------|------|
+| 写死 `/root/...` 型主机路径字面量 | **完整路径** / **工程根** |
+| 「独占优先」「在上位基准」类措辞 | **SDK 优先** / **基准** |
+| 叠词式推荐措辞 | **推荐** |
+| 强调长期不变的措辞 | **始终** |
+| 非本仓 Git 托管处 | **外部仓库** |
+| 商业 IDE 产品名 | **IDE** |
+| 分层缩写「L」加数字（如 L 与 0 组合） | **Tier-0**～**Tier-3** |
+| 设备 shell 应用测试原生命令字面量 | **unittest 设备命令** 或 **ohhdc static-deploy-test** |
 
 **代码块**：优先写 `ohxtsflow` / `ohhdc` 封装命令，避免在文档中裸写 shell 子命令。
 
 **生成器目录**：仅提交 `arkui-*-xts-generator/README.md`，正文外置下载（见 `.gitignore`）。
+
+**中文「其」+「余」连用**：若与上表无关的固定目录名来自上游生成器，可改用「同类」「扩展」等表述，或见生成器目录实名。
 
 ---
 
@@ -50,12 +54,12 @@ git diff --cached --shortstat   # 须 < 2000
 python3 -m py_compile src/skills/ohxtsstatic/*.py src/skills/ohxtsdynamic/*.py
 
 # 敏感词粗查（可选）
-rg -n '绝对路径|权威|Cursor 侧|`aa test`|[^a-z]L0[^0-9]' src/skills/ohxtsstatic src/skills/ohxtsdynamic || true
+bash src/skills/codecheck-words.sh
 ```
 
 ---
 
-## 4. 与 Cursor 侧同步
+## 4. 与 IDE 侧同步
 
 - **开发主目录**：`/root/aiSkill/.claude/skills/`
 - **提交目标仓**：`napi_generator` → `git@gitcode.com:nicklaus0602/napi_generator.git`
