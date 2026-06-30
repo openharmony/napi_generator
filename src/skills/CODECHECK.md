@@ -1,6 +1,6 @@
 # napi_generator Skills 提交前 CodeCheck 清单
 
-提交 `src/skills/ohxtsstatic`、`ohxtsdynamic` 或新增 skill 前，**本地先过一遍**，减少 GitCode 门禁驳回。
+提交 `src/skills/ohxtsstatic`、`ohxtsdynamic`、`ohxtscapi` 或新增 skill 前，**本地先过一遍**，减少 GitCode 门禁驳回。
 
 配合 **`xts-git-commit`**（`-sm`、Co-authored-by: Agent、单笔 <2000 行）使用。
 
@@ -19,9 +19,14 @@
 | 非本仓 Git 托管处 | **外部仓库** |
 | 商业 IDE 产品名 | **IDE** |
 | 分层缩写「L」加数字（如 L 与 0 组合） | **Tier-0**～**Tier-3** |
-| 设备 shell 应用测试原生命令字面量 | **unittest 设备命令** 或 **ohhdc static-deploy-test** |
+| 设备 shell 应用测试原生命令字面量 | **unittest 设备命令** 或 **ohhdc deploy-test** |
+| Native 开发套件库文件名中的三字母缩写 | 写 **ArkUI Native 桥接库**，勿直写 so 全名 |
+| 「第一次运行」类中文 | **生成器未就位时** / **环境初始化时** |
+| 平行仓默认版权主体名 | **平行仓默认版权头**（勿写厂商英文名） |
 
-**代码块**：优先写 `ohxtsflow` / `ohhdc` 封装命令，避免在文档中裸写 shell 子命令。
+**Shell 脚本**：须含 **Apache 2.0 + Kaihong 版权头**（OAT.3 / OAT.4），参考 `codecheck-words.sh`。
+
+**代码块**：优先写 `ohxtsflow` / `ohxtscflow` / `ohhdc` 封装命令，避免在文档中裸写 shell 子命令。
 
 **生成器目录**：仅提交 `arkui-*-xts-generator/README.md`，正文外置下载（见 `.gitignore`）。
 
@@ -51,10 +56,10 @@ cd /root/aiSkill/napi_generator
 git diff --cached --shortstat   # 须 < 2000
 
 # Python 语法
-python3 -m py_compile src/skills/ohxtsstatic/*.py src/skills/ohxtsdynamic/*.py
+python3 -m py_compile src/skills/ohxtsstatic/*.py src/skills/ohxtsdynamic/*.py src/skills/ohxtscapi/*.py
 
-# 敏感词粗查（可选）
-bash src/skills/codecheck-words.sh
+# 敏感词粗查（含 ohxtscapi）
+bash src/skills/codecheck-words.sh ohxtscapi
 ```
 
 经验与误报说明见 **`/root/aiSkill/CODECHECK-NOTES.md`**。

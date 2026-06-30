@@ -102,7 +102,7 @@ version: "1.0.0"
 ```bash
 source use-ohos-sdk.sh normal
 unset OHOS_USE_HVIGOR_STATIC
-bash src/skills/ohxtscapi/fetch-capi-generator.sh   # 首次
+bash src/skills/ohxtscapi/fetch-capi-generator.sh   # 生成器未就位时
 python3 src/skills/ohxtscapi/ohxtscflow.py env
 ```
 
@@ -178,7 +178,7 @@ python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline \
 
 - 遵循 **`xts-git-commit`** + xts_acts **`miscellaneous/xts_code_check.md`**（xtscheck）
 - 工程脚手架清单：**[PROJECT_CHECKLIST.md](PROJECT_CHECKLIST.md)**
-- 新增文件版权：**Kaihong**（非 Huawei 模板头）
+- 新增文件版权：**Kaihong**（勿沿用平行仓默认版权头）
 - 无辅助 HAP 依赖时：**仅** `ohos_js_app_suite`，`Test.json` 只装 `Acts*Test.hap`
 - 生成器目录 **仅 README 入库**；`fetch-capi-generator.sh` 拉取的内容 **不提交**
 - 单笔 commit **<2000 行**；用例与 CodeCheck fix **分 commit**

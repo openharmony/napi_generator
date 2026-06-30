@@ -16,7 +16,7 @@
 # 模式集中在此脚本，避免 CODECHECK.md 自触发门禁。
 # 用法（在 napi_generator 仓库根）：
 #   bash src/skills/codecheck-words.sh [skill 目录名 …]
-# 默认：ohxtsstatic ohxtsdynamic
+# 默认：ohxtsstatic ohxtsdynamic；可追加 ohxtscapi 等目录名
 
 set -euo pipefail
 
@@ -43,7 +43,7 @@ if [[ ${#SCAN_PATHS[@]} -eq 0 ]]; then
   exit 1
 fi
 
-PATTERN='绝对路径|权威|Cursor 侧|`aa test`|[^a-z]L0[^0-9]'
+PATTERN='绝对路径|权威|Cursor 侧|`aa test`|\baa test\b|_ndk\.|首次|huawei|Huawei|[^a-z]L0[^0-9]'
 
 if command -v rg >/dev/null 2>&1; then
   rg -n "$PATTERN" "${SCAN_PATHS[@]}" || true

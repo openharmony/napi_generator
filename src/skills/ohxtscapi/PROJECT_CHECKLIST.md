@@ -88,8 +88,8 @@ python3 src/skills/ohxtscapi/ohxtscflow.py deploy-test <工程路径> -s <Suite>
 ```
 
 - CAPI 动态工程：`build-all` = **主包 build（编 native .so）+ build-test + sign**
-- 新批次务必 **`-s` 指定套件**；多套件用逗号分隔（如 `SuiteA,SuiteB`）时 **ohhdc 会分次 aa test**
-- **禁止**单次 `aa test -s class A,B`（设备会挂起直至超时）
+- 新批次务必 **`-s` 指定套件**；多套件逗号分隔（如 `SuiteA,SuiteB`）时 **ohhdc 分次 deploy-test**
+- **禁止**单次 unittest 将多个 class 拼在同一 `-s class` 参数（设备会挂起直至超时）
 
 ---
 

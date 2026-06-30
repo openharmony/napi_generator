@@ -10,7 +10,7 @@
 |------|----------|------|
 | `OH_ArkUI_*` 未声明 | 头文件缺失或 API 版本不匹配 | 对照 SDK `native` 头文件与工程 `compileSdkVersion` |
 | `napi_define_properties` 重复 | `NapiFuncInitTest.cpp` 未注册或重复注册 | 检查 `EXTERN_C_START` 块与 `.cpp` 中 `Init` |
-| 链接 `libace_ndk.z.so` 失败 | CMake `target_link_libraries` 缺项 | 对照同工程已有 `CMakeLists.txt` |
+| 链接 ArkUI Native 桥接库失败 | CMake `target_link_libraries` 缺 ace 相关项 | 对照同工程已有 `CMakeLists.txt` |
 | C++ 编过、HAP 无 so | 未编入 entry 主模块 | 确认 `CMakeLists.txt` 在 entry 且 hvigor native 开启 |
 
 ## 2. 类别 / 库选错
@@ -27,7 +27,7 @@
 |------|------|
 | `assertEqual(0)` 失败 | 读 C++ 返回值约定；对照 `SUCCESS` 宏与错误码 |
 | 仅 C++ 改完未重编 HAP | **`ohxtscflow build-all`**（build + build-test + sign）再 `deploy-test` |
-| 全量 List 误判 | **`-s` 只跑本批套件**；多套件逗号分隔时 ohhdc **分次** aa test |
+| 全量 List 误判 | **`-s` 只跑本批套件**；多套件逗号分隔时 ohhdc **分次** unittest 设备命令 |
 | `deploy-test` 超时无结果 | 勿单次 `-s class A,B`；已修复为分套件顺序执行 |
 | xtscheck 缺 `@tc.name` | 禁止 `forEach` 注册 `it()`；每条用例显式 `/** @tc.* */` + `it()` |
 | `@tc.name` 与用例名不一致 | 三者统一为 `SUB_*`：`@tc.name` = `@tc.number` = `it()` 首参 |
