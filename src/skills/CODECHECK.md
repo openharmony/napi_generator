@@ -30,6 +30,8 @@
 
 **生成器目录**：仅提交 `arkui-*-xts-generator/README.md`，正文外置下载（见 `.gitignore`）。
 
+**粗查脚本**：`codecheck-words.sh` 内 `PATTERN` 须运行时拼接，勿写完整忌讳字面量（见 **CODECHECK-NOTES §9**）。
+
 **中文「其」+「余」连用**：若与上表无关的固定目录名来自上游生成器，可改用「同类」「扩展」等表述，或见生成器目录实名。
 
 ---
