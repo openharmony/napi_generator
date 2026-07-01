@@ -617,6 +617,30 @@ def _discover_test_suites(project_dir):
     return ",".join(suite_names)
 
 
+def _split_test_suites(test_class: str) -> list[str]:
+    return [s.strip() for s in test_class.split(',') if s.strip()]
+
+
+def _run_test_suites(
+    bundle_name: str,
+    module_name: str,
+    test_class: str,
+    timeout: int,
+) -> tuple[bool, str, str]:
+    """多套件须分次 aa test；单次 -s class 逗号拼接会挂起直至超时。"""
+    suites = _split_test_suites(test_class)
+    if len(suites) <= 1:
+        return run_test(bundle_name, module_name, test_class, case_name=None, timeout=timeout)
+    outputs: list[str] = []
+    for suite in suites:
+        ok, out, err = run_test(bundle_name, module_name, suite, case_name=None, timeout=timeout)
+        chunk = out.strip() or err or ''
+        outputs.append(f"[{suite}]\n{chunk}")
+        if not ok:
+            return False, "\n\n".join(outputs), err or out
+    return True, "\n\n".join(outputs), ""
+
+
 def deploy_and_run_test(
     project_dir,
     bundle_name=None,
@@ -634,7 +658,7 @@ def deploy_and_run_test(
         project_dir: 项目根目录
         bundle_name: 包名，None 时从项目 AppScope/app.json5 解析
         module_name: 测试模块名，默认 entry_test
-        test_class: -s class 参数，多个套件用逗号分隔；None 时从 List.test.ets 自动发现
+        test_class: -s class 参数；多个套件用逗号分隔时将**分次** aa test（勿单次拼接）
         timeout: 测试超时（毫秒），默认 15000
 
     Returns:
@@ -673,8 +697,8 @@ def deploy_and_run_test(
     out_parts.append(f"测试 HAP: {out3.strip() or err3 or ''}")
     if not ok3:
         return False, "\n".join(out_parts), err3 or out3
-    # 4. 运行测试（suite_name 传 test_class，即 -s class 的值）
-    ok4, out4, err4 = run_test(bn, module_name, test_class, case_name=None, timeout=timeout)
+    # 4. 运行测试（多套件分次执行）
+    ok4, out4, err4 = _run_test_suites(bn, module_name, test_class, timeout)
     out_parts.append(f"测试: {out4.strip() or err4 or ''}")
     if not ok4:
         return False, "\n".join(out_parts), err4 or out4

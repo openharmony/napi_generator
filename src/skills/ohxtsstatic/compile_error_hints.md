@@ -1,8 +1,8 @@
 # ohxtsstatic：Static XTS 编译与运行期排障速查
 
-本文档与 **`SKILL.md`** 配套，供 `ohxtsflow.py hints` 打印及检索。内容为**独立可读**，不依赖外部仓库中的「经验总结」外链。
+本文档与 **`SKILL.md`** 配套，供 `ohxtsflow.py hints` 打印及检索。内容已**自包含**，不依赖外部仓库中的「经验总结」外链。
 
-在 **技能融合模型** 中，本文档主要覆盖**第一层**（与 **SDK 类型定义层** 相邻的编译/运行/Hypium 硬错误）。**第 1.5 / 第 2 层**（测什么、模板与 `@tc`）仍以 **`arkui-static-xts-generator/categories/`**、**`common/`**（**须先从 GitCode 下载放置**，见 **`arkui-static-xts-generator/README.md`**）及主文 **§〇～二** 为准；排障时若涉导入、步骤枚举、页面骨架，可交叉查阅 **`common/`**。
+在 **技能融合模型** 中，本文档主要覆盖 **Tier-1**（与 **Tier-0 SDK** 相邻的编译/运行/Hypium 硬错误）。**Tier-1.5/Tier-2**（测什么、模板与 `@tc`）仍以 **`arkui-static-xts-generator/categories/`**、**`common/`**（**须先从 GitCode 下载放置**，见 **`arkui-static-xts-generator/README.md`**）及主文 **§〇～二** 为准；排障时若涉导入、步骤枚举、页面骨架，可交叉查阅 **`common/`**。
 
 ---
 
@@ -55,7 +55,7 @@
 
 | 话题 | 在 SKILL.md 中 |
 |------|----------------|
-| 以 API/SDK 为准、禁止臆造 | **§ 核心原则** |
+| API/SDK SDK 优先、禁止臆造 | **§ 核心原则** |
 | 从明细到页面+用例的步骤 | **§ 开发工作流 A–D** |
 | 布局、路由、id/key | **§ 页面与布局** |
 | 生命周期、AppStorage、对话框 | **§ 测试隔离与生命周期** |
