@@ -171,14 +171,14 @@ python3 /root/aiSkill/.claude/skills/ohhdc/ohhdc.py deploy-test "$CHIP" \
 
 与 ohxtsstatic 相同：**三列表格**（用例名称｜Pass/Fail｜设计思路 ≤5 句），附环境、命令、`OHOS_REPORT_RESULT` 汇总。
 
-**HTML 可视化（推荐）**：`deploy-test` / `run-dynamic-pipeline` 结束后自动输出 `REPORT_HTML=...`，浏览器打开 `summary_report.html`（XTS 风格汇总 + 用例明细表）。
+**HTML 可视化（推荐）**：`deploy-test` / `run-dynamic-pipeline` 结束后自动输出 `REPORT_HTML=...`（**xDevice 格式**），浏览器打开 `summary_report.html`。
 
 ```bash
 python3 ohxtsdynamic/ohxtsflow.py deploy-test "$CHIP" \
   -m entry_test -s CounterV2AbnormalOptionsTest --timeout 300000
 
 # 仅由已有日志生成
-python3 ohxtsdynamic/ohxtsflow.py gen-hypium-report /tmp/unittest_device.log \
+python3 ohxtsdynamic/ohxtsflow.py gen-xdevice-report /tmp/unittest_device.log \
   --project "$CHIP" --suite CounterV2AbnormalOptionsTest
 ```
 
@@ -354,14 +354,67 @@ cases: []
 
 ### 9.4 常规 API 用例范式
 
+**写 `.test.ets` 前（硬步骤）**：打开**同工程、同模块**最近 Pass 的 `*.test.ets`（如 ACTS menu：`bindContextMenuTest/bindContextMenuHapticFeedback.test.ets`），**复制 JSDoc + `it` 签名骨架**再改业务；禁止自创无 `@tc.*` 的 `it`。
+
+**页面 id/key 命名（ACTS / 常规工程）**：`{页面名}_{组件语义名}`；同页同类型多个时 `{页面名}_{组件语义名}_01`、`_02`…（页面名 = 预览页文件名去掉 `.ets`，如 `BindContextMenuByIsShowOptions`）。
+
 ```typescript
 beforeEach → router.clear() + pushUrl + CommonFunc.sleep(2000)
 afterEach  → hilog / 清理 AppStorage
 it         → driver.findComponent(ON.id(...)).click() 或 Inspector 链式读属性
 ```
 
+**每条 `it` 前必填 JSDoc（硬门禁；缺任一条视为用例未写完）**；**`@tc.number` = `@tc.name` = `it('…')` 首参字符串必须完全相同**（三者一字不差）。
+
+**编号格式（与同仓 Pass 用例对齐）**：
+
+| 模块 | 格式 | 示例 |
+|------|------|------|
+| Menu 等 | `SUB_ARKUI_MENU_{场景}_{0100}` | `SUB_ARKUI_MENU_BCMByIsShow_blurOptions_policy_all_0300` |
+| ChipV2 异常 | `SUB_ARKUI_CHIPV2_ABN_{属性}_UNDEFINED_0100` | `SUB_ARKUI_CHIPV2_ABN_BGSYSMATERIAL_UNDEFINED_0100` |
+
+```typescript
+/**
+ * @tc.number SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100
+ * @tc.name   SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100
+ * @tc.desc   bindContextMenuByIsShow enableArrow=true
+ * @tc.type   FUNCTION
+ * @tc.size   MEDIUMTEST
+ * @tc.level  LEVEL1
+ */
+it('SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100', TestType.FUNCTION | Size.MEDIUMTEST | Level.LEVEL1, async (done: Function) => { ... });
+```
+
 - 每条 `it` 对应明细表**一行**或文档**一个验收点**
-- `@tc.name` / `@tc.number` / `@tc.desc` / `@tc.level` 与 `it` 标题一致
+- JSDoc 块与 `it(` **紧邻、中间无空行**；`@tc.desc` 写一行验收说明，**不必**与 `it` 标题相同
+- **禁止**批量正则替换 `@tc.name`（易整文件损坏）
+- **提交 / 宣称完成前必跑自检**（退出码非 0 则禁止 commit）：
+
+```bash
+python3 - <<'PY'
+import re, sys, pathlib
+root = pathlib.Path(sys.argv[1])
+bad = []
+pat = re.compile(
+    r"/\*\*[\s\S]*?@tc\.number\s+(\S+)[\s\S]*?@tc\.name\s+(\S+)[\s\S]*?\*/\s*"
+    r"it\(\s*['\"]([^'\"]+)['\"]",
+    re.M,
+)
+for f in root.rglob("*.test.ets"):
+    if "hypium" in f.parts:
+        continue
+    txt = f.read_text(encoding="utf-8", errors="replace")
+    for m in pat.finditer(txt):
+        num, name, it_title = m.group(1), m.group(2), m.group(3)
+        if num != name or num != it_title:
+            bad.append(f"{f}:{num}!={name}!={it_title}")
+if bad:
+    print("\n".join(bad[:20]))
+    sys.exit(1)
+print("OK: @tc.number = @tc.name = it()")
+PY
+ arkui/ace_ets_module_ui/ace_ets_module_dialog/ace_ets_module_menu/entry/src/main/ets/test
+```
 - 回调类：页面 `AppStorage.setOrCreate` 出口，用例读回断言
 - 动效类：只验 **结束态** 属性，不做帧级断言
 
@@ -418,6 +471,8 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 [ ] build-all：主包 + 测试包 signed HAP
 [ ] 本批 deploy-test Pass（OHOS_REPORT_RESULT）
 [ ] 异常：compile_probe 结论与跑测一致
+[ ] 每条 it 前有完整 /** @tc.number … @tc.level */（缺任一条不得宣称开发完成）
+[ ] 页面 id/key 符合 §9.4「页面名_组件名[_01]」；用例引用已同步
 [ ] 会话三列表格报告
 ```
 
@@ -428,6 +483,8 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 | 异常 Options | `chipV2/abnormal/ChipV2AbnormalOptions.ets` | `ChipV2AbnormalOptions.test.ets` | `assertPropSame` / `assertChildrenSame` |
 | 异常 SystemMaterial | 动态 `ChipV2AbnormalOptions` 内 `abn_bgSysMaterial_*` | `SUB_ARKUI_CHIPV2_ABN_BGSYSMATERIAL_UNDEFINED_0100` | `assertSystemMaterialSame` |
 | CounterV2 异常 | `CounterV2/abnormal/CounterV2Abnormal*.ets` | `CounterV2Abnormal*Test` | 35 条 undefined 全 Pass |
+| ACTS menu bindContextMenu | `pages/bindContextMenuTest/...` | `bindContextMenuTest/bindContextMenuHapticFeedback.test.ets` | 完整 `@tc.*` + `TestType.FUNCTION \| Size.MEDIUMTEST` |
+| ACTS bindContextMenuByIsShow | `pages/bindContextMenuByIsShow/BindContextMenuByIsShowOptions.ets` | `test/bindContextMenuByIsShow/BindContextMenuByIsShowOptions.test.ets` | isShown 点击 + onWillDisappear 文本断言 |
 
 ---
 
@@ -440,7 +497,7 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 | 层级 | 动态侧要点 |
 |------|------------|
 | **Tier-1** | 每批 `deploy-test -s <Suite>` 后会话三列表格 |
-| **Tier-2** | `ohxtsdynamic/ohxtsflow.py deploy-test` → `REPORT_HTML=...` |
+| **xDevice 报告** | `ohxtsdynamic/ohxtsflow.py deploy-test` → `REPORT_HTML=...` |
 | **Tier-3A** | `gen_xdevice_summary_report.py` 增加 `chip_nowear:ChipV2AbnormalOptionsTest:...` 等条目 |
 | **Tier-3B** | `gen_uncovered_report.py` 更新动态 Counter/ChipV2 未覆盖矩阵 |
 

@@ -40,7 +40,7 @@ version: "1.4.0"
 3. **`hdc list targets`**：若非空 → **`run-static-pipeline` 或 `static-device-test`**（参数见 **ohhdc/SKILL.md**）。  
 4. **失败**：根据 stdout / hilog / `analyze-test-log` 改代码，重复 2～3，直至通过或阻塞已记录。  
 5. **同一会话回复**：按 **「正式测试报告」** 节输出 **核心三列表格**（用例名称｜Pass/Fail｜设计思路）及后续小节（不得只丢 log 路径）。  
-6. **HTML 可视化**：`static-device-test` / `run-static-pipeline` 结束后终端打印 `REPORT_HTML=...`；浏览器打开 `summary_report.html`。离线：`ohxtsflow gen-hypium-report <log>`。多批汇总与未覆盖报告见 **§十四** 与 **[REPORTING.md](REPORTING.md)**（脚本在 `xts_acts_local_tools/`，不进 git）。
+6. **HTML 可视化**：`static-device-test` / `run-static-pipeline` 结束后终端打印 `REPORT_HTML=...`（**xDevice 格式**，Vue + Element Plus）；浏览器打开 `summary_report.html`。离线：`ohxtsflow gen-xdevice-report <log>`。多模块汇总与未覆盖报告见 **§十四** 与 **[REPORTING.md](REPORTING.md)**。
 
 ---
 
@@ -206,7 +206,7 @@ version: "1.4.0"
 ### 与 §二 B/C 的接力（融合要点）
 
 - **页面**：为 §〇 的检查点提供 **稳定 id**（及工程 **key**）、**AppStorage/状态** 等可观测出口；弹窗/气泡按 **1.2 / 2.4** 等篇用 **文本或能力内约定** 定位，并与 **§ 三** 布局策略一致。  
-- **测试**：按 §〇 **验证方法** 写 `findComponent` / Inspector **链式** / 必要时 `sleep`；**`describe`/`it` 命名** 与批次或接口 id 对齐；需要 **`@tc.*` JSDoc** 时对照 **`common/test_rules.md`**，且不与 **§一～五** 冲突。  
+- **测试**：按 §〇 **验证方法** 写 `findComponent` / Inspector **链式** / 必要时 `sleep`；**`describe`/`it` 命名** 与批次或接口 id 对齐；**每条 `it` 前必填 `@tc.*` JSDoc**（ACTS/XTS 一律适用；细则 **`common/test_rules.md`**），且不与 **§一～五** 冲突。  
 - **统一质量条**：**单 `it` 单测试点**；**页面配置 / 测试断言** 分离；**等价类精简**；禁止在页面里堆 **expect**。
 
 ## 一、核心原则（必须遵守）
@@ -249,14 +249,65 @@ version: "1.4.0"
 ### B. 页面（预览页 `.ets`）
 
 - **承接 §〇**：每个 **检查点** 都应有 **可观测出口**（id、`$attrs` 可读字段、**AppStorage**、显隐结果）；**动效类**以 **结束态** 暴露，避免在页面写断言。  
-- 需要 Inspector / 自动化：组件 **`.id('语义化稳定名')`**（可与 **`ets_rules`** 的 `{component}_{场景}` 风格对齐），并按工程约定加 **`.key(...)`**。  
+- 需要 Inspector / 自动化：组件 **`.id('{页面名}_{组件语义名}')`**；同页同类型多个时用 **`_01`、`_02`** 递增（页面名 = 预览页文件名去掉 `.ets`）；Menu 等容器加 **`.key('{页面名}_menu')`** 等与 id 同前缀。  
 - 回调里 **`AppStorage.setOrCreate('suitePrefix_key', value)`** 供用例断言（与 **§ 四** 清理键一致）。  
 - **Options** 在 **`aboutToAppear` / 字段初始化** 集中构造；**§ 三** 的根布局与多按钮 **constraintSize** 策略优先于个人随意排版。
 
 ### C. 测试（`.test.ets`）
 
+- **写用例前（硬步骤）**：打开**同工程**最近 Pass 的 `*.test.ets`（如 menu 静态：`BindContextMenuTest/ContextMenuOptions.test.ets`），**复制 JSDoc + `it` 签名**再改业务。
 - **明细表默认粒度**：用户或台账给出 **「模块/类/方法/函数」明细表** 时，**默认一行对应一条 `it` 单独验收**，**不得**在未说明的情况下合并多行到单条用例；若需合并，须由需求方**书面约定**。
-- **承接 §〇**：每条用例对应 **分类文档中的验证方法** 之一（或一条主验证 + 一条辅助）；**`it` 标题 / `id` / 可选 `@tc.number`** 与批次或接口规范一致（细则 **`test_rules.md`**）。  
+- **承接 §〇**：每条用例对应 **分类文档中的验证方法** 之一（或一条主验证 + 一条辅助）；**`it` 标题 / 页面 id / `@tc.number`** 与批次或接口规范一致（细则 **`test_rules.md`**）。  
+- **每条 `it` 前必填 JSDoc（硬门禁）**；**`@tc.number` = `@tc.name` = `it('…')` 首参字符串必须完全相同**（三者一字不差，禁止 `Test_001` / `0100` 混用或只改其一）。
+
+**编号格式（与同仓 Pass 用例对齐，禁止自创后缀）**：
+
+| 模块 | 格式 | 示例 |
+|------|------|------|
+| Menu 等 ArkUI | `SUB_ARKUI_MENU_{场景}_{0100}` | `SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100` |
+| Chip 等高级组件 | `SUB_ARKUI_{模块}_{场景}_{0100}` | `SUB_ARKUI_CHIP_BGSYSMAT_NORMAL_0100` |
+
+```typescript
+/**
+ * @tc.number SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100
+ * @tc.name   SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100
+ * @tc.desc   bindContextMenuByIsShow enableArrow=true
+ * @tc.type   FUNCTION
+ * @tc.size   MEDIUMTEST
+ * @tc.level  LEVEL1
+ */
+it('SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100', Level.LEVEL1, async (done: () => void): Promise<void> => { ... });
+```
+
+- JSDoc 块与 `it(` **紧邻、中间无空行**；`@tc.desc` 写一行验收说明即可，**不必**与 `it` 标题相同。
+- **禁止**批量正则替换 `@tc.name`（易整文件损坏）；改编号须逐条或按 `it` 块局部 patch。
+- **提交 / 宣称完成前必跑自检**（退出码非 0 则禁止 commit）：
+
+```bash
+python3 - <<'PY'
+import re, sys, pathlib
+root = pathlib.Path(sys.argv[1])
+bad = []
+pat = re.compile(
+    r"/\*\*[\s\S]*?@tc\.number\s+(\S+)[\s\S]*?@tc\.name\s+(\S+)[\s\S]*?\*/\s*"
+    r"it\(\s*['\"]([^'\"]+)['\"]",
+    re.M,
+)
+for f in root.rglob("*.test.ets"):
+    if "hypium" in f.parts:
+        continue
+    txt = f.read_text(encoding="utf-8", errors="replace")
+    for m in pat.finditer(txt):
+        num, name, it_title = m.group(1), m.group(2), m.group(3)
+        if num != name or num != it_title:
+            bad.append(f"{f}:{num}!={name}!={it_title}")
+if bad:
+    print("\n".join(bad[:20]))
+    sys.exit(1)
+print("OK: @tc.number = @tc.name = it()")
+PY
+ arkui/ace_ets_module_ui/ace_ets_module_dialog/ace_ets_module_menu_static/entry/src/main/src/test
+```
 - **Inspector**：`parseJsonElement` / `getInspectorByKey` 后 **链式** `.getElement('$attrs').getString(...)`，避免中间变量被推断为 `Object`。  
 - **点击**：一律 **`driver.findComponent` + `click()`**，禁止对 **`ON`** 调 `click`。  
 - **枚举 / 属性**：`getString` 常为 **字符串**（如 `'0'`），断言与之一致。  
@@ -421,7 +472,8 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <本机日志文件
 
 - [ ] **§〇 路由表** 与所选 **`categories/…/*.md`** 一致；**检查点 → 页面出口 → 断言** 可追溯（非「先写码再套文档」）  
 - [ ] 已按需查阅 **`common/import.md`、`ets_rules.md`、`test_rules.md`**；无 **Tier-0** 不存在的 API、无与 **§一.3** 抵触的 Hypium 写法  
-- [ ] **单 `it` 单点**；页面 **无 expect**；`describe`/`it`（及 `@tc.*` 若适用）与批次或接口 id 一致  
+- [ ] **单 `it` 单点**；页面 **无 expect**；`describe`/`it` 与批次或接口 id 一致；**每条 `it` 前有完整 `@tc.number`～`@tc.level`（缺任一条不得宣称开发完成）**
+- [ ] 页面 **id/key** 符合 **§二 B**「页面名_组件名[_01]」；用例中 `ON.id` / `getInspectorByKey` 已同步  
 
 **页面**
 
@@ -702,18 +754,18 @@ python3 src/skills/ohhap/hapbuild.py build <静态一体工程>
 
 ## 十四、报告与覆盖率整合（2026-06）
 
-**完整命令与路径**见同目录 **[REPORTING.md](REPORTING.md)**。Agent 须掌握三层交付：
+**完整命令与路径**见同目录 **[REPORTING.md](REPORTING.md)**。Agent 须掌握两层交付 + 可选汇总：
 
 | 层级 | 交付 | 命令/产出 |
 |------|------|-----------|
 | Tier-1 | 会话 **三列表格** | 每批 `static-device-test` 后必写 |
-| Tier-2 | Hypium HTML | 终端 `REPORT_HTML=.../hypium/.../summary_report.html` |
-| Tier-3A | xdevice 汇总 | `gen_xdevice_summary_report.py` → `xts_reports/summary_report.html` |
-| Tier-3B | 未覆盖属性 | `gen_uncovered_report.py` → `uncovered_properties_report.html` |
+| xDevice HTML | Vue + Element Plus 报告 | 终端 `REPORT_HTML=.../hypium/.../summary_report.html` |
+| 多模块汇总 | 整测 summary | `gen_xdevice_summary_report.py` → `xts_reports/summary_report.html` |
+| 未覆盖属性 | 覆盖率 HTML | `gen_uncovered_report.py` → `uncovered_properties_report.html` |
 
-**多批合并**：`gen_xdevice_summary_report.py` 支持 `parsed1+parsed2+...`（同 Acts 模块多批 Hypium parsed 合并一条）。
+**多批合并**：`gen_xdevice_summary_report.py` 支持 `parsed1+parsed2+...`（同 Acts 模块多批 parsed 合并一条）。
 
-**推荐顺序**：分批开发 → 每批 Tier-1+Tier-2 → 全部 Pass 后更新 Tier-3 → 按 **xts-git-commit** 分批 commit（<2000 行），用户明确要求再 push。
+**推荐顺序**：分批开发 → 每批 Tier-1 + xDevice 报告 → 全部 Pass 后更新多模块汇总 → 按 **xts-git-commit** 分批 commit。
 
 **本地工具根**（不进 xts_acts Git）：
 
