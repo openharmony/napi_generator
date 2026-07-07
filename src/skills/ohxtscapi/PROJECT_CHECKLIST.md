@@ -8,13 +8,15 @@
 
 | 检查项 | 正确做法 | 常见错误 |
 |--------|----------|----------|
-| GN 模板 | 仅 `ohos_js_app_suite("Acts*Test")` | 误留 `ohos_app_assist_suite` + `deps` |
-| 辅助 HAP | **无依赖时不配置** assist suite | 从 parallelize 模板拷贝遗留 |
-| `Test.json` kits | 仅安装 `Acts*Test.hap` | 同时安装主包 HAP（已无 assist 时多余） |
+| **libnativefunc 在 Main** | `ohos_app_assist_suite` + Test `deps` + **双 HAP 安装** | 只装 Test HAP → `nativeFunc` 为 null |
+| **仅 Hypium、无 native** | 仅 `ohos_js_app_suite`，`Test.json` 只装 Test HAP | 误删 assist 或误加双包 |
+| GN 模板 | assist + test 成对，或单 test（无 native 依赖） | 从 parallelize 拷贝后未裁剪 |
+| `Test.json` kits | 与 BUILD.gn 一致：单包或双包 | assist 已配但 kits 只装 Test |
 | `subsystem_name` / `part_name` | `arkui` / `ace_engine` | 缺省 |
 | CMake | 仅编 `nativefunc` 与被测 `.cpp` | 拷贝 `nativerender`、无关组件目录 |
+| `signature/openharmony_sx.p7b` | bundle 与 `module.json5` bundleName 前缀一致 | 沿用 parallelize 的 bundle 名 |
 
-**判断是否需要 assist HAP**：`Test.json` 与设备跑测是否**仅安装测试 HAP 即可 Pass**。若是，删除 `ohos_app_assist_suite` 及 `deps`。
+**判断是否需要 assist HAP**：Hypium 是否 `import nativeFunc from 'libnativefunc.so'` 且 so 在 **entry 主模块** CMake 产出？是 → **必须双 HAP**。
 
 ---
 
@@ -97,8 +99,11 @@ python3 src/skills/ohxtscapi/ohxtscflow.py deploy-test <工程路径> -s <Suite>
 
 1. 读本清单 + **`miscellaneous/xts_code_check.md`**
 2. 确认 `@tc.name` / `@tc.number` / `it()` 三一致
-3. `git diff --cached --shortstat` < 2000
-4. 无 `build/`、`autosign/`、`local.properties` 入暂存
+3. **G.FMT.06-CPP**：`.cpp` 多行函数调用续行 = **起始行缩进 + 4**；见 **`ohos-gate-compliance`**
+4. **`run-capi-pipeline` 已含自动门禁+commit**；单独补跑：`python3 src/skills/ohos-gate-compliance/scripts/gate_review.py <工程> -s Suite`
+5. **门禁手工修复后须加固 `ohos-gate-compliance` skill**（`scripts/` 检测/自动修复 + 文档）
+6. `git diff --cached --shortstat` < 2000
+7. 无 `build/`、`autosign/`、`local.properties` 入暂存
 
 ---
 

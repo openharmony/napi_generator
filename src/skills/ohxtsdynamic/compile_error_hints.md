@@ -56,3 +56,14 @@ python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py env
 | 整段 `$attrs` 断言不稳定 | 含 `id` 等噪声 | 改 `assertPropSame` 单属性（§2.1） |
 | `Type 'null' is not assignable` | 预期行为 | 记 `abnormal_compile_failures.md`，**不提交** null 用例 |
 | `chipGroupPadding.top` + `undefined` 编不过 | `Length` 非可选 | 记失败表，**不提交**该 undefined 用例 |
+
+---
+
+## 5. 调试模式（轻量化 vs 源码级）
+
+| 模式 | 何时 | 入口 |
+|------|------|------|
+| **轻量化调试**（**默认**） | 日常 develop 编签跑测 | **`ohxtsflow build-all` / `run-dynamic-pipeline`** + **`ohhdc deploy-test`** |
+| **源码级调试** | 用户**显式**要求 master GN + xdevice | **`xts-develop-master-cycle`**；见 **SKILL.md §3.1** |
+
+**禁止**未申明时默认 rsync master 或改 master prebuilts；为 master 旧 SDK 写的 `entry/` 临时补丁勿提交 PR。

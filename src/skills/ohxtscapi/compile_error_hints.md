@@ -18,7 +18,8 @@
 | 现象 | 原因 | 处理 |
 |------|------|------|
 | Inspector 断言全失败 | 无页面 API 误用 render 库 | 回到 **CATEGORY_ROUTING** 改类别 |
-| `nativeFunc.xxx` undefined | 用例 import 错库 | 无页面用 `libnativefunc.so`，有页面用 `libnativerender.so` |
+| `nativeFunc.xxx` undefined / null | 用例 import 错库或未装 Main HAP | 无页面用 `libnativefunc.so`；确认 **assist HAP** 已装（`Test.json` 双包） |
+| `Cannot load property of null or undefined` | 仅装 Test HAP，Main 无 `libnativefunc.so` | 恢复 **`ohos_app_assist_suite`** + `Test.json` 双 HAP；见 **SKILL.md §调试模式** |
 | 回调 API 段错误 | 未在 UI 事件链中调用 | 改为类别 3/4/8，补页面与手势/拖拽触发 |
 
 ## 3. Hypium / 设备 / xtscheck
@@ -31,7 +32,7 @@
 | `deploy-test` 超时无结果 | 勿单次 `-s class A,B`；已修复为分套件顺序执行 |
 | xtscheck 缺 `@tc.name` | 禁止 `forEach` 注册 `it()`；每条用例显式 `/** @tc.* */` + `it()` |
 | `@tc.name` 与用例名不一致 | 三者统一为 `SUB_*`：`@tc.name` = `@tc.number` = `it()` 首参 |
-| assist HAP 多余 | 无依赖时删 `ohos_app_assist_suite`，`Test.json` 仅 `Acts*Test.hap` |
+| assist HAP 配置 | 无 native 依赖可仅 Test HAP；**含 `libnativefunc.so` 必须双 HAP** | 见 **PROJECT_CHECKLIST.md** 与 **SKILL.md §调试模式** |
 
 完整清单见 **`PROJECT_CHECKLIST.md`**。
 

@@ -4,9 +4,9 @@ description: >-
   OpenHarmony 动态 ArkUI（@ComponentV2）Hypium XTS 一体化技能：常规 API 用例 +
   异常参数（undefined/null）编译探测与成对 Inspector 断言。配合 arkui-dynamic-xts-generator；
   SDK 用 normal（Dyn）。触发词：动态 XTS、ChipV2、ChipGroupV2、异常参数、undefined、null、
-  AbnormalAssert、compile_probe、ohxtsdynamic。含 §九 多批次开发经验、§十/REPORTING.md 报告整合。
+  异常参数、undefined、null、AbnormalAssert、compile_probe、ohxtsdynamic。含 §九/§9.10 多批次开发经验（含 BCM 动+静 CI 踩坑）、§十/REPORTING.md 报告整合。默认轻量化调试；显式申明才走源码级调试。
 author: "napi_generator"
-version: "1.4.0"
+version: "1.5.0"
 ---
 
 # ohxtsdynamic：动态 ArkUI XTS 一体化 Skill
@@ -49,9 +49,12 @@ version: "1.4.0"
 2. 编写页面 + Hypium 用例 + 注册
 3. **`ohxtsflow build-all` 或 `run-dynamic-pipeline`**
 4. **`hdc` 可用则设备跑测**，会话内输出 **正式测试报告**（三列表格）
-5. 多批完成后用户要求「更新报告」→ **§十** + **[REPORTING.md](REPORTING.md)**（汇总 HTML、未覆盖报告）
+5. **`run-dynamic-pipeline` 全绿后**：自动 **门禁 review → 修复 → commit**（`ohos-gate-compliance/scripts/gate_review.py`，profile=ets）。**门禁手工修复后须同步加固 `ohos-gate-compliance` skill**（见该 skill §「门禁修复 → Skill 加固」）。
+6. 多批完成后用户要求「更新报告」→ **§十** + **[REPORTING.md](REPORTING.md)**（汇总 HTML、未覆盖报告）
 
 **例外**（须用户明说）：「只要编译」「不要 hdc」「只改某一文件」。
+
+**调试模式**：默认 **轻量化调试**（develop + `ohxtsflow`/`ohhdc`）；仅用户**显式**要求「源码级调试 / 同步 master / GN 编译 / xdevice」时才走 **源码级调试**（见 **§3.1**）。
 
 ---
 
@@ -97,6 +100,7 @@ version: "1.4.0"
 4. **Hypium**：`findComponent` + `click`；Inspector 链式读取；`expect` 内避免可选链（同 ohxtsstatic）。
 5. **路由**：ACTS 工程常用 `router.pushUrl({ url: 'MainAbility/pages/chipV2/ChipV2Api1' })`，与 **`main_pages.json`** 一致。
 6. **日志**：建议前缀 **`[ARKUI_DYN]`**。
+7. **`@tc.*` JSDoc（开发期硬门禁）**：**写每条 `it` 的同一时刻**须写全六字段（`number/name/desc/type/size/level`），且 **`@tc.number` = `@tc.name` = `it('…')` 首参一致**；**禁止**先写裸 `it`、提交前再补 @tc。缺任一条 → 用例未写完，不得编签/设备。提交前脚本仅**复核**（见 **§9.4**）。
 
 ---
 
@@ -187,6 +191,19 @@ python3 ohxtsdynamic/ohxtsflow.py gen-xdevice-report /tmp/unittest_device.log \
 `/root/aiSkill/develop/xts_acts_local_tools/xts_acts_0622/xts_reports/hypium/<工程>_<套件>_<时间>/summary_report.html`
 
 多 HAP 批次加 `--batch recent_chip` 会额外写 `batch_index.html`。
+
+### 3.1 调试模式：轻量化（默认）与源码级（显式触发）
+
+**总原则**：**默认轻量化**；**禁止**未申明时默认同步 master 或改 master prebuilts。
+
+| 模式 | 适用 | 要点 |
+|------|------|------|
+| **轻量化调试** | 日常开发（**默认**） | develop 树（如 `xts_acts_0622`）→ **`ohxtsflow build-all` / `run-dynamic-pipeline`** → **`ohhdc deploy-test`** → 会话三列表格 + `REPORT_HTML` |
+| **源码级调试** | 用户**显式**要求 | develop → rsync **`/root/master/test/xts/acts`** → **`./build.sh suite=acts ... suite=<Acts*Test>`** → HAP 入 `testcases` → **`python3 -m xdevice run acts`** → `summary_report.html` |
+
+**编排 skill**：**`xts-develop-master-cycle`**。动态双 HAP 工程（如 chip_nowear）在 master 侧同样须 **Main + Test** 两个 HAP 与 `Test.json` 一致。
+
+**PR 注意**：为 master 旧 SDK 本地编过而改的 `build-profile.json5`（如 `compileSdkVersion` 整数化）、`entry/` 临时补丁，**勿与功能 PR 混提**；流水线 SDK 与 master prebuilts 不一致时，以 **轻量化调试 + CI** 为准。
 
 ---
 
@@ -364,7 +381,7 @@ afterEach  → hilog / 清理 AppStorage
 it         → driver.findComponent(ON.id(...)).click() 或 Inspector 链式读属性
 ```
 
-**每条 `it` 前必填 JSDoc（硬门禁；缺任一条视为用例未写完）**；**`@tc.number` = `@tc.name` = `it('…')` 首参字符串必须完全相同**（三者一字不差）。
+**每条 `it` 前必填 JSDoc（硬门禁；与 `it` 同批写完，禁止提交前再补）**；**`@tc.number` = `@tc.name` = `it('…')` 首参字符串必须完全相同**（三者一字不差）。**缺六字段中任一条 → 该条用例视为未完成**，不得联调编签。
 
 **编号格式（与同仓 Pass 用例对齐）**：
 
@@ -388,7 +405,7 @@ it('SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100', TestType.FUNCTION | Size.
 - 每条 `it` 对应明细表**一行**或文档**一个验收点**
 - JSDoc 块与 `it(` **紧邻、中间无空行**；`@tc.desc` 写一行验收说明，**不必**与 `it` 标题相同
 - **禁止**批量正则替换 `@tc.name`（易整文件损坏）
-- **提交 / 宣称完成前必跑自检**（退出码非 0 则禁止 commit）：
+- **提交 / 宣称完成前必跑自检**（**复核**开发期已写全的 `@tc`；退出码非 0 则禁止 commit）：
 
 ```bash
 python3 - <<'PY'
@@ -451,7 +468,7 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 
 ### 9.7 CodeCheck、Git 与提交纪律
 
-**CodeCheck**：`@Trace public`；单行 ≤ 120 字符。
+**CodeCheck**：`@Trace public`；单行 ≤ 120 字符；**G.FMT.06**：枚举多分支 setter 用 **`switch`** 替代 if-else 链（见 **§9.10.2**）。
 
 **禁止默认提交**：`advancedComponents` 下所有 `tools/` 目录由根 `.gitignore` 整目录忽略；脚本/报告只放 `xts_acts_local_tools/`。**不确定是否该提交时必须先问用户**，不得与用例混 commit。
 
@@ -471,7 +488,7 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 [ ] build-all：主包 + 测试包 signed HAP
 [ ] 本批 deploy-test Pass（OHOS_REPORT_RESULT）
 [ ] 异常：compile_probe 结论与跑测一致
-[ ] 每条 it 前有完整 /** @tc.number … @tc.level */（缺任一条不得宣称开发完成）
+[ ] 每条 it 前有完整 /** @tc.number … @tc.level */（**编写 `it` 时同批写全**，非提交前补；缺任一条不得编签/设备）
 [ ] 页面 id/key 符合 §9.4「页面名_组件名[_01]」；用例引用已同步
 [ ] 会话三列表格报告
 ```
@@ -485,6 +502,42 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 | CounterV2 异常 | `CounterV2/abnormal/CounterV2Abnormal*.ets` | `CounterV2Abnormal*Test` | 35 条 undefined 全 Pass |
 | ACTS menu bindContextMenu | `pages/bindContextMenuTest/...` | `bindContextMenuTest/bindContextMenuHapticFeedback.test.ets` | 完整 `@tc.*` + `TestType.FUNCTION \| Size.MEDIUMTEST` |
 | ACTS bindContextMenuByIsShow | `pages/bindContextMenuByIsShow/BindContextMenuByIsShowOptions.ets` | `test/bindContextMenuByIsShow/BindContextMenuByIsShowOptions.test.ets` | isShown 点击 + onWillDisappear 文本断言 |
+
+### 9.10 动+静成对开发（menu / dialog BCM 批次，2026-07）
+
+与 **ohxtsstatic §13.10** 配套：同一 API 往往有 **动态**（`ace_ets_module_menu`）+ **静态**（`ace_ets_module_menu_static`）+ 关联静态（如 `ace_ets_module_dialog_api23_static`）。
+
+#### 9.10.1 禁止「动态页原样拷到 _static」
+
+| 动态可写 | 静态须改 |
+|----------|----------|
+| 无 `'use static'` | **第 1 行** `'use static';` + 版权 + import |
+| `previewAnimationOptions: { scale: [...] }` | 加 **`as ContextMenuAnimationOptions`** |
+| `mask: { backgroundBlurStyle: ... }` | 加 **`as MenuMaskType`** |
+| `colorMode: null`、`position: null` | **删除**；null 矩阵留在 **`ace_ets_module_dialog_Popup`** |
+| `private fmtIdx(idx: number)` | 同样用 **`number`**，勿写 `int` |
+
+**流程**：动态页先编过 → **按 §13.10 清单改静态版** → 分别注册 `main_pages.json` / `List.test.ets`（动、静各 4 处）。
+
+#### 9.10.2 CodeCheck（动态侧）
+
+| 规则 | 修复 |
+|------|------|
+| **G.FMT.06** | `@Param` / setter 内枚举分支：**if-else 链 → `switch`**（本批 `BindContextMenuByIsShowBlurMask.ets` 动态版） |
+| **G.FMT.02** | 单行 ≤ 120 字符 |
+
+#### 9.10.3 PR 与 CI
+
+- **冲突高发**：`List.test.ets`、`main_pages.json`——**无互斥时尽量保留双方**新增 suite/path；**存在真冲突**时按功能语义与 upstream 意图**酌情合并**，勿强制两侧全留（详见 **ohxtsstatic §13.10.5**）。
+- **`build-profile.json5`**：CI `check_hvigor` 要求 **`compileSdkVersion: "26.0.0"`**（勿为本地 hvigor 改成 `"26"`）。
+- **判绿**：`menu_static` 日志末尾 **`BUILD SUCCESSFUL`** 即过；整批 ninja 仍可能因 **api23_static** 单文件失败——查 **§13.10.3** null 字面量。
+
+#### 9.10.4 异常 null/undefined 分工
+
+| 覆盖类型 | 工程 |
+|----------|------|
+| bindContextMenu **null + undefined 全矩阵** | 动态 **`ace_ets_module_dialog_Popup`**（`bindContextResponseNull.ets`） |
+| api23 静态 dialog + colorMode/gridStyle | **`ace_ets_module_dialog_api23_static`**：仅 TOP/BOTTOM + **省略可选字段** |
 
 ---
 

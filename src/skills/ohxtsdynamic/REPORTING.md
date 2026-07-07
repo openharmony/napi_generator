@@ -1,27 +1,16 @@
-# XTS 报告与覆盖率（动态侧）
+# 动态 XTS 报告
 
-与 **`ohxtsstatic/REPORTING.md`** 内容一致；动态开发时重点看 **§2 Tier-2**（`deploy-test`）与 **§7 PR 整测**。
-
-**本地工具根**（不进 Git）：
-
-```
-/root/aiSkill/develop/xts_acts_local_tools/xts_acts_0622/
-```
-
-**快速命令**：
+与 **`ohxtsstatic/REPORTING.md`** 一致：单批跑测自动产出 **xDevice 格式** `REPORT_HTML`；多模块汇总用 `gen_xdevice_summary_report.py`。
 
 ```bash
-# Tier-2 单套件
-source /root/aiSkill/use-ohos-sdk.sh normal && unset OHOS_USE_HVIGOR_STATIC
-python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py deploy-test \
-  <chip_nowear 工程> -s ChipV2AbnormalOptionsTest --device 192.168.12.220:8710
+# 单批（deploy-test 后终端 REPORT_HTML=...）
+python3 src/skills/ohxtsdynamic/ohxtsflow.py deploy-test <工程> -s "<Suite>"
 
-# Tier-3 汇总（与静态模块同一 summary_report.html）
+# 离线
+python3 src/skills/ohxtsdynamic/ohxtsflow.py gen-xdevice-report /tmp/unittest.log \
+  --project <工程根> -s "<Suite>"
+
+# 多模块整测汇总
 python3 .../advancedComponents/gen_xdevice_summary_report.py --out .../xts_reports \
-  "chip_nowear:ChipV2AbnormalOptionsTest:<hypium>/parsed_summary.json|<hypium>/summary_report.html"
-
-# Tier-3 未覆盖
-python3 .../advancedComponents/gen_uncovered_report.py
+  "chip_nowear:ChipV2AbnormalOptionsTest:<hypium>/parsed_summary.json"
 ```
-
-完整说明、批次经验、禁止提交表 → **`../ohxtsstatic/REPORTING.md`**。
