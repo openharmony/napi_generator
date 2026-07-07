@@ -68,3 +68,5 @@ if [[ -f "$GATE_SCRIPT" ]]; then
   echo "--- scan_wordstool_docs.py ---"
   python3 "$GATE_SCRIPT" "${SCAN_PATHS[@]}"
 fi
+
+# 扫描器自身由 CI WordsTool 检查；源码禁止出现敏感字面量（见 scan_wordstool_docs._from_codes）

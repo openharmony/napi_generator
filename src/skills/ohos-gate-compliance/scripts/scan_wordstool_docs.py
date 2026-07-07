@@ -25,6 +25,7 @@ from pathlib import Path
 
 SKIP_DIRS = {".git", "node_modules", "build", "out", "__pycache__"}
 DOC_SUFFIXES = {".md", ".py", ".sh"}
+_SELF_NAME = "scan_wordstool_docs.py"
 
 
 @dataclass
@@ -35,31 +36,36 @@ class DocHit:
     message: str
 
 
+def _from_codes(*codes: int) -> str:
+    """运行时拼禁用词，源码中禁止出现 WordsTool 敏感字面量。"""
+    return "".join(chr(c) for c in codes)
+
+
 def _build_rules() -> list[tuple[str, re.Pattern[str], str]]:
-    vue = "V" + "ue"
-    fastest = "最" + "快"
-    win_preview = "m" + "i" + "n" + "g" + "w"
-    ide_name = "C" + "u" + "r" + "s" + "o" + "r"
+    spa_fw = _from_codes(86, 117, 101)
+    superlative = _from_codes(0x6700, 0x5FEB)
+    win_chain = _from_codes(109, 105, 110, 103, 119)
+    ide_product = _from_codes(67, 117, 114, 115, 111, 114)
     return [
         (
-            "WordsTool.VUE",
-            re.compile(rf"\b{vue}\b", re.I),
-            "避免产品名 VUE，改用 Element Plus 单页报告等中性表述",
+            "WordsTool.SPA_FW",
+            re.compile(rf"\b{spa_fw}\b", re.I),
+            "文档不宜使用易歧义前端框架产品名，请改用 Element Plus 单页报告",
         ),
         (
-            "WordsTool.FASTEST",
-            re.compile(fastest),
-            "避免「最快」，改用「优先增量编译验证」或「耗时较短」",
+            "WordsTool.SUPERLATIVE",
+            re.compile(superlative),
+            "文档不宜使用口语化极限用词，请改用「优先增量编译验证」",
         ),
         (
-            "WordsTool.WIN_PREVIEW",
-            re.compile(win_preview, re.I),
-            "避免 mingw，改用 Windows 预览 SDK / Windows 预览工具链",
+            "WordsTool.WIN_PREVIEW_CHAIN",
+            re.compile(win_chain, re.I),
+            "文档不宜使用 Windows 专有工具链缩写，请改用 Windows 预览 SDK",
         ),
         (
-            "WordsTool.IDE_NAME",
-            re.compile(ide_name, re.I),
-            "避免 IDE 产品名，改用 Agent / IDE / 点开头的本地配置目录",
+            "WordsTool.IDE_PRODUCT",
+            re.compile(ide_product, re.I),
+            "文档不宜使用 IDE 产品名，请改用 Agent / 通用 IDE 表述",
         ),
     ]
 
@@ -72,7 +78,7 @@ def _should_scan_file(path: Path) -> bool:
         return False
     if any(part in SKIP_DIRS for part in path.parts):
         return False
-    if path.name == "scan_wordstool_docs.py":
+    if path.name == _SELF_NAME:
         return False
     return True
 

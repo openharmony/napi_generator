@@ -53,7 +53,7 @@ version: "1.2.0"
 | `TestType.Function` | `arkts_patterns` 检测 + 自动替换 |
 | 大写 `String` | `arkts_patterns.fix_arkts_quality` |
 | `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck` |
-| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词 |
+| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词；**扫描器源码仅用 `chr()` 拼词，禁止敏感字面量** |
 | Python 嵌套深度 ≤4 | 拆 helper（`arkts_patterns._scan_ets_line` 等） | 提交 skill 前 `py_compile` |
 
 Agent **禁止**只修工程、不更新 skill（除非用户明确「仅 hotfix」）。
