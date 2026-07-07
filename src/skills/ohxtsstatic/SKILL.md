@@ -42,7 +42,7 @@ version: "1.5.0"
 3. **`hdc list targets`**：若非空 → **`run-static-pipeline` 或 `static-device-test`**（参数见 **ohhdc/SKILL.md**）。  
 4. **失败**：根据 stdout / hilog / `analyze-test-log` 改代码，重复 2～3，直至通过或阻塞已记录。  
 5. **同一会话回复**：按 **「正式测试报告」** 节输出 **核心三列表格**（用例名称｜Pass/Fail｜设计思路）及后续小节（不得只丢 log 路径）。  
-6. **HTML 可视化**：`static-device-test` / `run-static-pipeline` 结束后终端打印 `REPORT_HTML=...`（**xDevice 格式**，Vue + Element Plus）；浏览器打开 `summary_report.html`。离线：`ohxtsflow gen-xdevice-report <log>`。多模块汇总与未覆盖报告见 **§十四** 与 **[REPORTING.md](REPORTING.md)**。
+6. **HTML 可视化**：`static-device-test` / `run-static-pipeline` 结束后终端打印 `REPORT_HTML=...`（**xDevice 格式**，Element Plus 单页报告）；浏览器打开 `summary_report.html`。离线：`ohxtsflow gen-xdevice-report <log>`。多模块汇总与未覆盖报告见 **§十四** 与 **[REPORTING.md](REPORTING.md)**。
 7. **门禁 + commit**：**`run-static-pipeline` 设备全绿后**自动跑 `ohos-gate-compliance/scripts/gate_review.py`（profile=ets）；`--skip-commit` 可仅 review。**门禁手工修复后须同步加固 `ohos-gate-compliance` skill**（见该 skill §「门禁修复 → Skill 加固」）。
 
 ---
@@ -873,7 +873,7 @@ import { Entry, Column, ContextMenuOptions, ... } from '@ohos.arkui.component';
 | 层级 | 交付 | 命令/产出 |
 |------|------|-----------|
 | Tier-1 | 会话 **三列表格** | 每批 `static-device-test` 后必写 |
-| xDevice HTML | Vue + Element Plus 报告 | 终端 `REPORT_HTML=.../hypium/.../summary_report.html` |
+| xDevice HTML | Element Plus 单页报告 | 终端 `REPORT_HTML=.../hypium/.../summary_report.html` |
 | 多模块汇总 | 整测 summary | `gen_xdevice_summary_report.py` → `xts_reports/summary_report.html` |
 | 未覆盖属性 | 覆盖率 HTML | `gen_uncovered_report.py` → `uncovered_properties_report.html` |
 

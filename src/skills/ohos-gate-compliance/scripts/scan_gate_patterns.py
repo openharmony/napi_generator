@@ -24,18 +24,29 @@ from arkts_patterns import RULES, scan_ets_text
 SKIP_DIRS = {".git", "node_modules", "oh_modules", "build", "out", "autosign", "hypium"}
 
 
+def _append_ets_file(files: list[Path], candidate: Path) -> None:
+    if any(part in SKIP_DIRS for part in candidate.parts):
+        return
+    files.append(candidate)
+
+
+def _collect_ets_under_dir(p: Path, files: list[Path]) -> None:
+    for f in p.rglob("*.ets"):
+        _append_ets_file(files, f)
+
+
+def _collect_ets_at_path(p: Path, files: list[Path]) -> None:
+    if p.is_file() and p.suffix == ".ets":
+        files.append(p)
+        return
+    if p.is_dir():
+        _collect_ets_under_dir(p, files)
+
+
 def iter_ets_files(root: Path, subpaths: list[str]) -> list[Path]:
     files: list[Path] = []
     for sp in subpaths:
-        p = root / sp.replace("\\", "/")
-        if p.is_file() and p.suffix == ".ets":
-            files.append(p)
-            continue
-        if p.is_dir():
-            for f in p.rglob("*.ets"):
-                if any(part in SKIP_DIRS for part in f.parts):
-                    continue
-                files.append(f)
+        _collect_ets_at_path(root / sp.replace("\\", "/"), files)
     return sorted(set(files))
 
 

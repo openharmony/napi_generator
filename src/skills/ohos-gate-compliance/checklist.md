@@ -45,7 +45,8 @@
 
 - [ ] `git commit -sm` + Signed-off-by
 - [ ] `git log -1 --format=full` 已核对
-- [ ] 未提交 `root/`、`.cursor/` 等无关目录
+- [ ] 未提交 `root/`、IDE 点开头的本地配置目录等无关路径
+- [ ] skill 文档已通过 `scan_wordstool_docs.py`（WordsTool 文档用词）
 
 ## G. C++ 合规（ace_engine）
 

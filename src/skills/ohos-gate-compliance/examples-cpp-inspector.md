@@ -90,7 +90,7 @@ if (index < 1 || index > MAX_SLIDER_FIELD_INSPECTOR_INDEX) {
 
 **经验**：Inspector 序号上限等与 `__SliderField01__` 格式相关的边界值，用 `constexpr` 命名，勿裸数字。
 
-## 案例 9：CI 链接未定义符号（unittest / mingw SDK）
+## 案例 9：CI 链接未定义符号（unittest / Windows 预览 SDK）
 
 **问题 A（dayu200 precise）**：`capi_all_accessors_test` 链接失败，`TextFreeScrollController` / `TextScrollBar2D` 未定义；此前只补了 `text_field_free_scroller.cpp`。
 
@@ -99,7 +99,7 @@ if (index < 1 || index > MAX_SLIDER_FIELD_INSPECTOR_INDEX) {
 - `pattern/text/text_free_scroll_controller.cpp`
 - `pattern/text/text_scroll_bar_2d.cpp`
 
-**问题 B（ohos-sdk mingw）**：`libprompt.dll` / `libpromptaction.dll` 缺 `ContainerScope::CurrentIdWithReason()`；preview 平台未设 `build_container_scope_lib`，prompt 未链 `ace_container_scope_static`。
+**问题 B（ohos-sdk Windows 预览工具链）**：`libprompt.dll` / `libpromptaction.dll` 缺 `ContainerScope::CurrentIdWithReason()`；preview 平台未设 `build_container_scope_lib`，prompt 未链 `ace_container_scope_static`。
 
 **修复 B**：`adapter/preview/build/preview_common.gni` 增加 `build_container_scope_lib = true`（与 ohos `common.gni` 对齐），使 prompt/promptaction 自动依赖 `ace_container_scope_static`。
 

@@ -53,6 +53,8 @@ version: "1.2.0"
 | `TestType.Function` | `arkts_patterns` 检测 + 自动替换 |
 | 大写 `String` | `arkts_patterns.fix_arkts_quality` |
 | `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck` |
+| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词 |
+| Python 嵌套深度 ≤4 | 拆 helper（`arkts_patterns._scan_ets_line` 等） | 提交 skill 前 `py_compile` |
 
 Agent **禁止**只修工程、不更新 skill（除非用户明确「仅 hotfix」）。
 
@@ -97,6 +99,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | **`gate_review.py`** | pipeline 主入口：review + 修复 + commit |
 | **`arkts_patterns.py`** | ArkTS Quality 规则库（被 gate_review 引用） |
 | **`scan_gate_patterns.py`** | 独立 CLI，扫仓库路径下 `.ets`（调试/PR 前粗查） |
+| **`scan_wordstool_docs.py`** | WordsTool 文档用词扫描（skill `.md` / 脚本，提交前必跑） |
 
 ---
 

@@ -21,7 +21,7 @@
 | 层级 | 交付物 | 何时产出 |
 |------|--------|----------|
 | **Tier-1 会话报告** | 回复正文 **三列表格**（用例名称｜Pass/Fail｜设计思路） | 每批设备跑测结束 |
-| **xDevice HTML** | `REPORT_HTML=.../hypium/.../summary_report.html`（Vue + Element Plus） | `static-device-test` / `deploy-test` / pipeline 终端 |
+| **xDevice HTML** | `REPORT_HTML=.../hypium/.../summary_report.html`（Element Plus 单页报告） | `static-device-test` / `deploy-test` / pipeline 终端 |
 
 **多模块整测汇总**：全部批次完成后，用 `gen_xdevice_summary_report.py` 合并多条 `parsed_summary.json` → `xts_reports/summary_report.html`。
 

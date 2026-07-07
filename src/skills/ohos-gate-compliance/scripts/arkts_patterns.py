@@ -78,31 +78,56 @@ def fix_arkts_quality(text: str) -> tuple[str, int]:
     return text, n
 
 
+def _is_comment_line(stripped: str) -> bool:
+    return stripped.startswith("//") or stripped.startswith("*")
+
+
+def _match_arkts_rule(line: str, rule_id: str, pat: re.Pattern[str], msg: str) -> PatternHit | None:
+    if rule_id == "ARKTS_NO_INT" and "ResourceColor" in line:
+        return None
+    if not pat.search(line):
+        return None
+    if rule_id == "BARE_KEY_RISK":
+        m = re.search(r"\.key\(\s*['\"]([^'\"]+)['\"]", line)
+        if m and "_" in m.group(1):
+            return None
+    return PatternHit(0, rule_id, msg)
+
+
+def _static_fontcolor_hit(line: str, static: bool) -> PatternHit | None:
+    if not static:
+        return None
+    if not re.search(r"@State\s+\w+\s*:\s*number\s*=.*0x[0-9A-Fa-f]", line):
+        return None
+    return PatternHit(
+        0,
+        "STATIC_FONTCOLOR_RISK",
+        "static 文件中 number 赋十六进制色，fontColor 可能需 ResourceColor",
+    )
+
+
+def _scan_ets_line(line_no: int, line: str, static: bool) -> list[PatternHit]:
+    stripped = line.strip()
+    if _is_comment_line(stripped):
+        return []
+    hits: list[PatternHit] = []
+    for rule_id, pat, msg in RULES:
+        hit = _match_arkts_rule(line, rule_id, pat, msg)
+        if hit is not None:
+            hit.line = line_no
+            hits.append(hit)
+    font_hit = _static_fontcolor_hit(line, static)
+    if font_hit is not None:
+        font_hit.line = line_no
+        hits.append(font_hit)
+    return hits
+
+
 def scan_ets_text(path: Path, text: str) -> list[PatternHit]:
     if path.suffix != ".ets":
         return []
     static = is_static_file(text)
     hits: list[PatternHit] = []
     for i, line in enumerate(text.splitlines(), 1):
-        stripped = line.strip()
-        if stripped.startswith("//") or stripped.startswith("*"):
-            continue
-        for rule_id, pat, msg in RULES:
-            if rule_id == "ARKTS_NO_INT" and "ResourceColor" in line:
-                continue
-            if not pat.search(line):
-                continue
-            if rule_id == "BARE_KEY_RISK":
-                m = re.search(r"\.key\(\s*['\"]([^'\"]+)['\"]", line)
-                if m and "_" in m.group(1):
-                    continue
-            hits.append(PatternHit(i, rule_id, msg))
-        if static and re.search(r"@State\s+\w+\s*:\s*number\s*=.*0x[0-9A-Fa-f]", line):
-            hits.append(
-                PatternHit(
-                    i,
-                    "STATIC_FONTCOLOR_RISK",
-                    "static 文件中 number 赋十六进制色，fontColor 可能需 ResourceColor",
-                )
-            )
+        hits.extend(_scan_ets_line(i, line, static))
     return hits

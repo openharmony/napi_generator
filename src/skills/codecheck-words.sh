@@ -16,7 +16,7 @@
 # 模式集中在此脚本，避免 CODECHECK.md 自触发门禁。
 # 用法（在 napi_generator 仓库根）：
 #   bash src/skills/codecheck-words.sh [skill 目录名 …]
-# 默认：ohxtsstatic ohxtsdynamic；可追加 ohxtscapi 等目录名
+# 默认：ohxtsstatic ohxtsdynamic ohos-gate-compliance；可追加 ohxtscapi 等目录名
 
 set -euo pipefail
 
@@ -25,7 +25,7 @@ SKILLS_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [[ $# -gt 0 ]]; then
   DIRS=("$@")
 else
-  DIRS=(ohxtsstatic ohxtsdynamic)
+  DIRS=(ohxtsstatic ohxtsdynamic ohos-gate-compliance)
 fi
 
 SCAN_PATHS=()
@@ -61,4 +61,10 @@ if command -v rg >/dev/null 2>&1; then
   rg -n "$PATTERN" "${SCAN_PATHS[@]}" || true
 else
   grep -rnE "$PATTERN" "${SCAN_PATHS[@]}" || true
+fi
+
+GATE_SCRIPT="${SKILLS_ROOT}/ohos-gate-compliance/scripts/scan_wordstool_docs.py"
+if [[ -f "$GATE_SCRIPT" ]]; then
+  echo "--- scan_wordstool_docs.py ---"
+  python3 "$GATE_SCRIPT" "${SCAN_PATHS[@]}"
 fi

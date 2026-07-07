@@ -75,7 +75,7 @@ cp inspector/path/file 6.1tag/path/file
 ## 编译 target 依赖关系
 
 ```
-ace_core_components_base_ng_ohos  (base 层，最快)
+ace_core_components_base_ng_ohos  (base 层，优先增量编译验证)
         ↓
 libace_compatible               (主引擎，~1-2h)
         ↓
