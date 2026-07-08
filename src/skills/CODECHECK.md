@@ -1,6 +1,6 @@
 # napi_generator Skills 提交前 CodeCheck 清单
 
-提交 `src/skills/ohxtsstatic`、`ohxtsdynamic`、`ohxtscapi` 或新增 skill 前，**本地先过一遍**，减少 GitCode 门禁驳回。
+提交 `src/skills/ohxtsstatic`、`ohxtsdynamic`、`ohxtscapi`、`ohos-gate-compliance` 或新增 skill 前，**本地先过一遍**，减少 GitCode 门禁驳回。
 
 配合 **`xts-git-commit`**（`-sm`、Co-authored-by: Agent、单笔 <2000 行）使用。
 
@@ -58,11 +58,13 @@ cd /root/aiSkill/napi_generator
 git diff --cached --shortstat   # 须 < 2000
 
 # Python 语法
-python3 -m py_compile src/skills/ohxtsstatic/*.py src/skills/ohxtsdynamic/*.py src/skills/ohxtscapi/*.py
+python3 -m py_compile src/skills/ohos-gate-compliance/scripts/*.py src/skills/ohxtsstatic/*.py src/skills/ohxtsdynamic/*.py src/skills/ohxtscapi/*.py
 
 # 敏感词粗查（含 ohxtscapi）
 bash src/skills/codecheck-words.sh ohxtscapi
 ```
+
+**门禁修复后加固**：若本次变更是因 Quality/xtscheck/G.FMT 等门禁修 skill，须同步更新 `ohos-gate-compliance/scripts/`（检测或自动修复）及 `SKILL.md` / `checklist.md` 示例表；见 **ohos-gate-compliance/SKILL.md §「门禁修复 → Skill 加固」**。
 
 经验与误报说明见 **`/root/aiSkill/CODECHECK-NOTES.md`**。
 

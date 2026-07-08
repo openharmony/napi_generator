@@ -93,6 +93,8 @@ Sync to AGENTS.md: npx openskills sync
 | **ohrecord** | **snapshot_record** 录屏 **MP4**；**audio_record_demo** / **audio_play_demo** / **camera_record** 等单编与设备链路；路径、SELinux、**hilog**、**.so** 校验；录屏修改清单见 **ohproj/SKILL.md 第十节** | `ohrecord/ohrecord.py`（子命令含 `paths`、`build`、`prep-device`、`device-status`、`record`、`pull`、`verify-host-so`、`verify-device-so`、`verify-remote-mp4`、`hilog-capture`、`targets` 及 **`audio-*` / `play-*` / `cam-*`** 等，完整列表见 **ohrecord/SKILL.md**） |
 | **ohxtsstatic** | **ArkTS `use static` + Hypium XTS 一体化**（§十三 多批次、§十四/REPORTING.md 报告）；**ohxtsflow.py**；静态须 **`OHOS_USE_HVIGOR_STATIC=1`**；**arkui-static-xts-generator/** 仅 README，正文外置下载 | `ohxtsstatic/ohxtsflow.py`；**SKILL.md** v1.4+ |
 | **ohxtsdynamic** | **@ComponentV2 动态 ArkUI + Hypium XTS**；异常参数 undefined/null；**§九～十** 批次与报告；normal SDK + 默认 hvigor；**arkui-dynamic-xts-generator/** 仅 README，正文外置下载 | `ohxtsdynamic/ohxtsflow.py`；**ohxtsdynamic/SKILL.md** v1.4+ |
+| **ohxtscapi** | **ArkUI CAPI + Hypium XTS**；NAPI/C++ 用例；**run-capi-pipeline**（编签→设备→门禁→commit）；**arkui-capi-xts-generator-v3/** | `ohxtscapi/ohxtscflow.py`；**ohxtscapi/SKILL.md** |
+| **ohos-gate-compliance** | **PR 门禁统一入口**：`scripts/gate_review.py`（pipeline 自动）、`arkts_patterns.py`、`scan_gate_patterns.py`；按 ets/capi 选规则 | `ohos-gate-compliance/SKILL.md` |
 
 **常见限制（摘要）**
 

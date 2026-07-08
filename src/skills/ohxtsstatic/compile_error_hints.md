@@ -18,6 +18,12 @@
 | 导入路径与文档示例不一致 | 文档示例来自另一 kit 版本 | **不改坏工程既有风格**；新代码只按本工程已能编过的 import + SDK |
 | `onClick` 与 `async` / `ClickEvent` | 版本差异 | 以 **当前 SDK** 的签名为准；编不过再改为非 async 或调整事件类型 |
 | `arkTSVersion` / Schema 与 **hvigor** 不匹配、`BUILD FAILED` 于配置阶段 | 使用了默认 **`hvigor/bin`**，与静态工程 **`build-profile.json5`** 不兼容 | 静态 XTS：置 **`OHOS_USE_HVIGOR_STATIC=1`**，使 **`hapbuild`** 使用 **`$HOS_CLT_PATH/hvigor-static/bin/hvigorw.js`**；或 **`OHOS_HVIGORW_JS`** 指向正确 **`hvigorw.js`**（见 **SKILL.md** 必备输入表） |
+| **`"import" statements after other statements are not allowed`**（`arkts-no-misplaced-imports`） | **`'use static'` 写在版权头之后** | **第 1 行** `'use static';`，版权紧随其后，再 `import`（见 **SKILL.md §13.10.1**） |
+| 连锁 **`Cannot find module '@ohos.arkui.component'`** / **`Cannot find type 'Builder'`** | 多为 misplaced-imports 导致解析失败 | 先修文件头顺序，勿先改 hypium/SDK |
+| **`Object literal must correspond to some explicitly declared class or interface`**（`arkts-no-untyped-obj-literals`） | 嵌套 Options 无类型（如 `previewAnimationOptions`、`mask`） | 内层 `as ContextMenuAnimationOptions` / `MenuMaskType`；外层 `as ContextMenuOptions`（**§13.10.2**） |
+| **`Cannot find name 'int'`** | 静态页误用 ArkTS 1.1 的 `int` | 改为 **`number`** |
+| **`Type 'null' is not compatible with ... AnchoredColorMode`**（静态 api23/menu） | 静态 **禁止** Options 内 `colorMode: null`、`position: null` | null 用例放**动态** Popup；静态用**省略字段**表达 undefined（**§13.10.3**） |
+| CI **`check_hvigor`**：`compileSdkVersion` 与 `api_version` 不一致 | 误改为 `"26"` 或数字 | OpenHarmony CI 通常 **`"26.0.0"`**；对照已绿 commit，勿仅按本地 hvigor 改（**§13.10.4**） |
 
 ### 1.1 Hvigor：`hvigor-static` 与默认 `hvigor`
 
@@ -61,3 +67,4 @@
 | 生命周期、AppStorage、对话框 | **§ 测试隔离与生命周期** |
 | 日志 phase | **§ 日志规范** |
 | 提交前自检列表 | **§ 编译与提交检查清单** |
+| 轻量化 / 源码级调试 | **§6.1 调试模式**；**`xts-develop-master-cycle`** |

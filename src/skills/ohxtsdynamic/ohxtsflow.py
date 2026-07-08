@@ -14,7 +14,7 @@ ohxtsdynamic 全流程编排：动态 ArkUI（@ComponentV2）XTS 编签与设备
   python3 ohxtsflow.py static-device-test <HAP工程完整路径> [--timeout 毫秒]
   python3 ohxtsflow.py run-dynamic-pipeline <HAP工程完整路径>  # build-all → deploy-test → HTML
   python3 ohxtsflow.py deploy-test <HAP工程完整路径> [-s Suite] [-m entry_test]
-  python3 ohxtsflow.py gen-hypium-report <日志文件>
+  python3 ohxtsflow.py gen-xdevice-report <日志文件>
   python3 ohxtsflow.py analyze-test-log <日志文件>
   python3 ohxtsflow.py hints
 """
@@ -29,8 +29,11 @@ import sys
 from pathlib import Path
 
 _SKILLS_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(_SKILLS_ROOT))
 sys.path.insert(0, str(_SKILLS_ROOT / "ohxtsstatic"))
-from hypium_html_report import run_subprocess_and_report, write_report_from_log
+sys.path.insert(0, str(_SKILLS_ROOT / "ohos-gate-compliance" / "scripts"))
+from hypium_html_report import run_subprocess_and_report, write_report_from_log  # noqa: E402
+from gate_review import run_post_test_gate_pipeline  # noqa: E402
 
 _AISKILL_ROOT = Path(__file__).resolve().parents[3]
 if str(_AISKILL_ROOT) not in sys.path:
@@ -216,11 +219,41 @@ def cmd_static_device_test(ns: argparse.Namespace) -> int:
     return _run_device_with_report("static-deploy-test", ns)
 
 
+def _run_gate_after_test(ns: argparse.Namespace, test_rc: int) -> int:
+    if test_rc != 0:
+        return test_rc
+    if getattr(ns, "skip_gate", False) and getattr(ns, "skip_commit", False):
+        return 0
+    return run_post_test_gate_pipeline(
+        os.path.abspath(ns.project),
+        suite=getattr(ns, "suite", None) or "",
+        scope=getattr(ns, "commit_scope", None) or "arkui-dynamic",
+        skip_gate=getattr(ns, "skip_gate", False),
+        skip_commit=getattr(ns, "skip_commit", False),
+        commit_title=getattr(ns, "commit_title", "") or "",
+        commit_body=getattr(ns, "commit_body", "") or "",
+    )
+
+
 def cmd_run_dynamic_pipeline(ns: argparse.Namespace) -> int:
-    """build-all → deploy-test（动态双 HAP 标准路径）。"""
+    """build-all → deploy-test → gate → commit。"""
     if cmd_build_all(ns) != 0:
         return 1
-    return cmd_deploy_test(ns)
+    rc = cmd_deploy_test(ns)
+    return _run_gate_after_test(ns, rc)
+
+
+def cmd_gate_review_commit(ns: argparse.Namespace) -> int:
+    return run_post_test_gate_pipeline(
+        os.path.abspath(ns.project),
+        suite=getattr(ns, "suite", None) or "",
+        scope=getattr(ns, "commit_scope", None) or "arkui-dynamic",
+        skip_gate=getattr(ns, "skip_gate", False),
+        skip_commit=getattr(ns, "skip_commit", False),
+        commit_title=getattr(ns, "commit_title", "") or "",
+        commit_body=getattr(ns, "commit_body", "") or "",
+        require_tests_passed=not getattr(ns, "skip_test_check", False),
+    )
 
 
 def analyze_hypium_like_log(text: str) -> str:
@@ -239,15 +272,19 @@ def analyze_hypium_like_log(text: str) -> str:
     return "".join(out)
 
 
-def cmd_gen_hypium_report(ns: argparse.Namespace) -> int:
+def cmd_gen_xdevice_report(ns: argparse.Namespace) -> int:
     path = write_report_from_log(
         ns.log_file,
         project=ns.project or "",
         suite=ns.suite or "",
         device=ns.device or "",
+        xts_module=getattr(ns, "xts_module", "") or "",
     )
     print(f"REPORT_HTML={path}")
     return 0
+
+
+cmd_gen_hypium_report = cmd_gen_xdevice_report
 
 
 def cmd_analyze_test_log(ns: argparse.Namespace) -> int:
@@ -272,10 +309,47 @@ def _command_handlers() -> dict[str, object]:
         "deploy-test": cmd_deploy_test,
         "static-device-test": cmd_static_device_test,
         "run-dynamic-pipeline": cmd_run_dynamic_pipeline,
+        "gate-review-commit": cmd_gate_review_commit,
+        "gen-xdevice-report": cmd_gen_xdevice_report,
         "gen-hypium-report": cmd_gen_hypium_report,
         "analyze-test-log": cmd_analyze_test_log,
         "hints": cmd_hints,
     }
+
+
+def _add_gate_args(p: argparse.ArgumentParser) -> None:
+    p.add_argument("--skip-gate", action="store_true")
+    p.add_argument("--skip-commit", action="store_true")
+    p.add_argument("--commit-scope", default="arkui-dynamic")
+    p.add_argument("--commit-title", default="")
+    p.add_argument("--commit-body", default="")
+
+
+def _add_gate_review_parser(sp: argparse._SubParsersAction, default_scope: str) -> None:
+    gr = sp.add_parser("gate-review-commit")
+    gr.add_argument("project")
+    gr.add_argument("-s", "--suite", default=None)
+    gr.add_argument("--skip-gate", action="store_true")
+    gr.add_argument("--skip-commit", action="store_true")
+    gr.add_argument("--skip-test-check", action="store_true")
+    gr.add_argument("--commit-scope", default=default_scope)
+    gr.add_argument("--commit-title", default="")
+    gr.add_argument("--commit-body", default="")
+
+
+def _add_report_log_parsers(sp: argparse._SubParsersAction) -> None:
+    for cmd_name, help_text in (
+        ("gen-xdevice-report", "从 unittest 日志生成 xDevice HTML 报告"),
+        ("gen-hypium-report", "（兼容旧名，同 gen-xdevice-report）"),
+    ):
+        ghr = sp.add_parser(cmd_name, help=help_text)
+        ghr.add_argument("log_file")
+        ghr.add_argument("--project", default="")
+        ghr.add_argument("--suite", default="")
+        ghr.add_argument("--device", default="")
+        ghr.add_argument("--xts-module", default="")
+    atl = sp.add_parser("analyze-test-log")
+    atl.add_argument("log_file")
 
 
 def _add_dynamic_parsers(sp: argparse._SubParsersAction) -> None:
@@ -284,7 +358,7 @@ def _add_dynamic_parsers(sp: argparse._SubParsersAction) -> None:
     b.add_argument("project")
     b.add_argument("--profile", default="release", choices=("release", "debug"))
 
-    dt = sp.add_parser("deploy-test", help="动态双 HAP deploy-test + HTML 报告")
+    dt = sp.add_parser("deploy-test", help="动态双 HAP deploy-test + xDevice HTML 报告")
     dt.add_argument("project")
     dt.add_argument("--timeout", type=int, default=15000)
     dt.add_argument("-m", "--module", dest="module", default="entry_test")
@@ -312,15 +386,8 @@ def _add_dynamic_parsers(sp: argparse._SubParsersAction) -> None:
     rdp.add_argument("-s", "--suite", dest="suite", default=None)
     rdp.add_argument("--batch", default=None)
     rdp.add_argument("--device", default=None)
-
-    ghr = sp.add_parser("gen-hypium-report")
-    ghr.add_argument("log_file")
-    ghr.add_argument("--project", default="")
-    ghr.add_argument("--suite", default="")
-    ghr.add_argument("--device", default="")
-
-    atl = sp.add_parser("analyze-test-log")
-    atl.add_argument("log_file")
+    _add_gate_args(rdp)
+    _add_gate_review_parser(sp, "arkui-dynamic")
 
 
 def main() -> int:
@@ -329,6 +396,7 @@ def main() -> int:
 
     sp.add_parser("env")
     _add_dynamic_parsers(sp)
+    _add_report_log_parsers(sp)
     sp.add_parser("hints")
 
     ns = ap.parse_args()

@@ -14,7 +14,7 @@ ohxtsstatic 全流程编排入口：串联 ohhap / ohhdc / ohtest / ohproj 惯�
   python3 src/skills/ohxtsstatic/ohxtsflow.py deploy-test <HAP工程完整路径> [--timeout 毫秒]
   python3 src/skills/ohxtsstatic/ohxtsflow.py static-device-test <HAP工程完整路径> [--timeout 毫秒]
   python3 src/skills/ohxtsstatic/ohxtsflow.py run-static-pipeline <HAP工程完整路径>
-  python3 src/skills/ohxtsstatic/ohxtsflow.py gen-hypium-report <日志文件>
+  python3 src/skills/ohxtsstatic/ohxtsflow.py gen-xdevice-report <日志文件>
   python3 src/skills/ohxtsstatic/ohxtsflow.py logs [--faultlog] [--pattern 正则]
   python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <日志文件>  # 摘要失败原因与优化提示
   python3 src/skills/ohxtsstatic/ohxtsflow.py hints
@@ -31,6 +31,11 @@ import sys
 from pathlib import Path
 
 from hypium_html_report import run_subprocess_and_report, write_report_from_log
+
+_SKILLS_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(_SKILLS_ROOT))
+sys.path.insert(0, str(_SKILLS_ROOT / "ohos-gate-compliance" / "scripts"))
+from gate_review import run_post_test_gate_pipeline  # noqa: E402
 
 for _cand in (
     Path(__file__).resolve().parents[4],
@@ -193,7 +198,7 @@ def cmd_static_device_test(ns: argparse.Namespace) -> int:
 
 
 def cmd_run_static_pipeline(ns: argparse.Namespace) -> int:
-    """构建（hapbuild build，含证书时自动签名）→ static-device-test。"""
+    """构建（hapbuild build，含证书时自动签名）→ static-device-test → gate → commit。"""
     proj = os.path.abspath(ns.project)
     skills = _repo_skills()
     hapbuild = skills.parent / "ohhap" / "hapbuild.py"
@@ -204,18 +209,52 @@ def cmd_run_static_pipeline(ns: argparse.Namespace) -> int:
     if c0 != 0:
         print("❌ 构建失败，已中止设备侧测试")
         return c0
-    return cmd_static_device_test(ns)
+    rc = cmd_static_device_test(ns)
+    return _run_gate_after_test(ns, rc)
 
 
-def cmd_gen_hypium_report(ns: argparse.Namespace) -> int:
+def _run_gate_after_test(ns: argparse.Namespace, test_rc: int) -> int:
+    if test_rc != 0:
+        return test_rc
+    if getattr(ns, "skip_gate", False) and getattr(ns, "skip_commit", False):
+        return 0
+    return run_post_test_gate_pipeline(
+        os.path.abspath(ns.project),
+        suite=getattr(ns, "suite", None) or "",
+        scope=getattr(ns, "commit_scope", None) or "arkui-static",
+        skip_gate=getattr(ns, "skip_gate", False),
+        skip_commit=getattr(ns, "skip_commit", False),
+        commit_title=getattr(ns, "commit_title", "") or "",
+        commit_body=getattr(ns, "commit_body", "") or "",
+    )
+
+
+def cmd_gate_review_commit(ns: argparse.Namespace) -> int:
+    return run_post_test_gate_pipeline(
+        os.path.abspath(ns.project),
+        suite=getattr(ns, "suite", None) or "",
+        scope=getattr(ns, "commit_scope", None) or "arkui-static",
+        skip_gate=getattr(ns, "skip_gate", False),
+        skip_commit=getattr(ns, "skip_commit", False),
+        commit_title=getattr(ns, "commit_title", "") or "",
+        commit_body=getattr(ns, "commit_body", "") or "",
+        require_tests_passed=not getattr(ns, "skip_test_check", False),
+    )
+
+
+def cmd_gen_xdevice_report(ns: argparse.Namespace) -> int:
     path = write_report_from_log(
         ns.log_file,
         project=ns.project or "",
         suite=ns.suite or "",
         device=ns.device or "",
+        xts_module=getattr(ns, "xts_module", "") or "",
     )
     print(f"REPORT_HTML={path}")
     return 0
+
+
+cmd_gen_hypium_report = cmd_gen_xdevice_report
 
 
 def analyze_hypium_like_log(text: str) -> str:
@@ -314,6 +353,26 @@ def cmd_workflow_print(_: argparse.Namespace) -> int:
     return 0
 
 
+def _add_gate_args(p: argparse.ArgumentParser) -> None:
+    p.add_argument("--skip-gate", action="store_true", help="跳过门禁 review")
+    p.add_argument("--skip-commit", action="store_true", help="跳过自动 commit")
+    p.add_argument("--commit-scope", default="arkui-static")
+    p.add_argument("--commit-title", default="")
+    p.add_argument("--commit-body", default="")
+
+
+def _add_gate_review_parser(sp: argparse._SubParsersAction, default_scope: str) -> None:
+    gr = sp.add_parser("gate-review-commit", help="测试通过后的门禁 review + commit")
+    gr.add_argument("project")
+    gr.add_argument("-s", "--suite", default=None)
+    gr.add_argument("--skip-gate", action="store_true")
+    gr.add_argument("--skip-commit", action="store_true")
+    gr.add_argument("--skip-test-check", action="store_true")
+    gr.add_argument("--commit-scope", default=default_scope)
+    gr.add_argument("--commit-title", default="")
+    gr.add_argument("--commit-body", default="")
+
+
 def _add_device_test_parsers(sp: argparse._SubParsersAction) -> None:
     """注册设备跑测相关子命令。"""
     dt = sp.add_parser("deploy-test", help="ohhdc deploy-test（卸装→装主+测→unittest）")
@@ -358,6 +417,8 @@ def _add_device_test_parsers(sp: argparse._SubParsersAction) -> None:
     rsp.add_argument("-s", "--suite", dest="suite", default=None, help="Hypium 套件名")
     rsp.add_argument("--batch", default=None, help="写入批次 batch_index.html")
     rsp.add_argument("--device", default=None, help="设备 SN（仅写入报告）")
+    _add_gate_args(rsp)
+    _add_gate_review_parser(sp, "arkui-static")
 
 
 def _command_handlers() -> dict[str, object]:
@@ -368,6 +429,8 @@ def _command_handlers() -> dict[str, object]:
         "deploy-test": cmd_deploy_test,
         "static-device-test": cmd_static_device_test,
         "run-static-pipeline": cmd_run_static_pipeline,
+        "gate-review-commit": cmd_gate_review_commit,
+        "gen-xdevice-report": cmd_gen_xdevice_report,
         "gen-hypium-report": cmd_gen_hypium_report,
         "analyze-test-log": cmd_analyze_test_log,
         "logs": cmd_logs,
@@ -392,11 +455,16 @@ def main() -> int:
 
     _add_device_test_parsers(sp)
 
-    ghr = sp.add_parser("gen-hypium-report", help="从 unittest 设备命令日志生成 HTML 报告")
-    ghr.add_argument("log_file", help="日志文件")
-    ghr.add_argument("--project", default="")
-    ghr.add_argument("--suite", default="")
-    ghr.add_argument("--device", default="")
+    for cmd_name, help_text in (
+        ("gen-xdevice-report", "从 unittest 日志生成 xDevice HTML 报告"),
+        ("gen-hypium-report", "（兼容旧名，同 gen-xdevice-report）"),
+    ):
+        ghr = sp.add_parser(cmd_name, help=help_text)
+        ghr.add_argument("log_file", help="日志文件")
+        ghr.add_argument("--project", default="")
+        ghr.add_argument("--suite", default="")
+        ghr.add_argument("--device", default="")
+        ghr.add_argument("--xts-module", default="")
 
     atl = sp.add_parser("analyze-test-log", help="分析 Hypium/unittest 日志并输出摘要")
     atl.add_argument("log_file", help="本机日志文件路径")

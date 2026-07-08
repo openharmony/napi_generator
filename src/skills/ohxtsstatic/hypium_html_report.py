@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""从 unittest 设备命令 / Hypium 日志生成 XTS 风格 HTML 可视化报告。"""
+"""从 unittest 设备命令 / Hypium 日志解析并生成 xDevice 风格 HTML 报告。"""
 
 from __future__ import annotations
 
 import html
+import importlib.util
 import json
 import os
 import re
@@ -43,6 +44,7 @@ class ReportSummary:
 class ParsedLog:
     suites: list[str] = field(default_factory=list)
     cases: list[TestCaseRow] = field(default_factory=list)
+    summaries: list[ReportSummary] = field(default_factory=list)
     summary: Optional[ReportSummary] = None
     finished_code: Optional[int] = None
     finished_msg: str = ""
@@ -99,6 +101,63 @@ def _parse_duration(line: str) -> Optional[int]:
     return int(m.group(1)) if m else None
 
 
+def _merge_summaries(items: list[ReportSummary]) -> Optional[ReportSummary]:
+    if not items:
+        return None
+    total = sum(s.total for s in items)
+    failure = sum(s.failure for s in items)
+    error = sum(s.error for s in items)
+    pass_count = sum(s.pass_count for s in items)
+    ignore = sum(s.ignore for s in items)
+    duration_ms = sum(s.duration_ms or 0 for s in items) or None
+    if len(items) == 1:
+        raw_line = items[0].raw_line
+    else:
+        raw_line = (
+            f"merged: Tests run: {total}, Failure: {failure}, "
+            f"Error: {error}, Pass: {pass_count}, Ignore: {ignore}"
+        )
+    return ReportSummary(
+        total=total,
+        failure=failure,
+        error=error,
+        pass_count=pass_count,
+        ignore=ignore,
+        duration_ms=duration_ms,
+        raw_line=raw_line,
+    )
+
+
+def _summary_from_cases(cases: list[TestCaseRow]) -> ReportSummary:
+    total = len(cases)
+    pass_count = sum(1 for c in cases if c.status == "PASS")
+    failure = sum(1 for c in cases if c.status == "FAIL")
+    error = sum(1 for c in cases if c.status == "ERROR")
+    ignore = total - pass_count - failure - error
+    duration_ms = sum(c.duration_ms or 0 for c in cases) or None
+    return ReportSummary(
+        total=total,
+        pass_count=pass_count,
+        failure=failure,
+        error=error,
+        ignore=max(ignore, 0),
+        duration_ms=duration_ms,
+        raw_line=(
+            f"from cases: Tests run: {total}, Failure: {failure}, "
+            f"Error: {error}, Pass: {pass_count}, Ignore: {max(ignore, 0)}"
+        ),
+    )
+
+
+def _finalize_parsed_log(parsed: ParsedLog) -> None:
+    parsed.summary = _merge_summaries(parsed.summaries)
+    if not parsed.cases:
+        return
+    from_cases = _summary_from_cases(parsed.cases)
+    if parsed.summary is None or parsed.summary.total != len(parsed.cases):
+        parsed.summary = from_cases
+
+
 def _flush_pending(ctx: _LineContext) -> None:
     if not (ctx.current_suite and ctx.current_test):
         return
@@ -132,10 +191,10 @@ def _apply_summary_line(ctx: _LineContext, line: str) -> bool:
         return False
     summ = _parse_summary_line(line)
     if summ:
-        ctx.result.summary = summ
-    dur = _parse_duration(line)
-    if dur and ctx.result.summary:
-        ctx.result.summary.duration_ms = dur
+        dur = _parse_duration(line)
+        if dur:
+            summ.duration_ms = dur
+        ctx.result.summaries.append(summ)
     return True
 
 
@@ -231,6 +290,7 @@ def parse_unittest_device_log(text: str) -> ParsedLog:
     for raw in text.splitlines():
         _process_log_line(raw, ctx)
     ctx.result.cases = _rows_from_codes(ctx)
+    _finalize_parsed_log(ctx.result)
     return ctx.result
 
 
@@ -254,161 +314,90 @@ def _report_dir(project: str, suite: Optional[str]) -> Path:
     return base / safe
 
 
-def _status_color(status: str) -> str:
-    if status == "PASS":
-        return "#2e7d32"
-    if status == "ERROR":
-        return "#c62828"
-    return "#ef6c00"
+def _gen_xdevice_script() -> Path:
+    return _default_tools_root() / "advancedComponents" / "gen_xdevice_summary_report.py"
 
 
-def _build_summary_bar(parsed: ParsedLog) -> str:
-    s = parsed.summary
-    if not s:
-        total = len(parsed.cases)
-        passed = sum(1 for c in parsed.cases if c.status == "PASS")
-        failed = total - passed
-        return (
-            f"<p>用例 <b>{total}</b> · Pass <b style='color:#2e7d32'>{passed}</b> · "
-            f"Fail/Error <b style='color:#c62828'>{failed}</b></p>"
+def _acts_root_from_project(project: str) -> Path:
+    env = os.environ.get("XTS_ACTS_ROOT", "").strip()
+    if env:
+        return Path(env)
+    if project:
+        proj = Path(project).resolve()
+        for parent in [proj, *proj.parents]:
+            if (parent / "arkui").is_dir():
+                return parent
+    return Path("/root/aiSkill/develop/xts_acts")
+
+
+def _load_xdevice_builder():
+    script = _gen_xdevice_script()
+    if not script.is_file():
+        raise FileNotFoundError(
+            f"未找到 xdevice 报告脚本: {script}\n"
+            "请确认 XTS_LOCAL_TOOLS_ROOT 已初始化"
+            "（见 xts_acts_local_tools/init_local_tools_dir.sh）"
         )
-    dur = f" · 耗时 <b>{s.duration_ms}ms</b>" if s.duration_ms else ""
-    return (
-        f"<p>Tests run: <b>{s.total}</b> · Pass <b style='color:#2e7d32'>{s.pass_count}</b> · "
-        f"Failure <b>{s.failure}</b> · Error <b style='color:#c62828'>{s.error}</b> · "
-        f"Ignore <b>{s.ignore}</b>{dur}</p>"
+    mod_name = "gen_xdevice_summary_report"
+    spec = importlib.util.spec_from_file_location(mod_name, script)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"无法加载 {script}")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _write_parsed_json(parsed: ParsedLog, dest: Path) -> Path:
+    parsed_path = dest / "parsed_summary.json"
+    parsed_path.write_text(
+        json.dumps(
+            {
+                "suites": parsed.suites,
+                "cases": [c.__dict__ for c in parsed.cases],
+                "summaries": [s.__dict__ for s in parsed.summaries],
+                "summary": parsed.summary.__dict__ if parsed.summary else None,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
     )
+    return parsed_path
 
 
-def _case_rows(parsed: ParsedLog) -> str:
-    rows: list[str] = []
-    for c in parsed.cases:
-        color = _status_color(c.status)
-        msg = html.escape(c.message[:500])
-        stack = html.escape(c.stack[:800]) if c.stack else ""
-        err_cell = msg
-        if stack:
-            err_cell += f"<pre class='stack'>{stack}</pre>"
-        dur = f"{c.duration_ms}ms" if c.duration_ms is not None else "—"
-        rows.append(
-            "<tr>"
-            f"<td>{html.escape(c.suite)}</td>"
-            f"<td>{html.escape(c.name)}</td>"
-            f"<td style='color:{color};font-weight:600'>{c.status}</td>"
-            f"<td>{dur}</td>"
-            f"<td class='err'>{err_cell or '—'}</td>"
-            "</tr>"
-        )
-    if not rows:
-        rows.append(
-            "<tr><td colspan='5'>未解析到用例行（检查日志是否含 OHOS_REPORT_STATUS）</td></tr>"
-        )
-    return "\n".join(rows)
-
-
-def _overall_status(parsed: ParsedLog) -> str:
-    if parsed.app_died:
-        return "FAIL"
-    if parsed.summary and (parsed.summary.failure or parsed.summary.error):
-        return "FAIL"
-    if any(c.status != "PASS" for c in parsed.cases):
-        return "FAIL"
-    return "PASS"
-
-
-def _meta_rows(
-    parsed: ParsedLog,
-    *,
-    project: str,
-    suite: str,
-    device: str,
-    log_path: str,
-    command: str,
-) -> list[tuple[str, str]]:
-    rows = [
-        ("工程", project or "—"),
-        ("套件", suite or (", ".join(parsed.suites) if parsed.suites else "—")),
-        ("设备", device or "—"),
-        ("生成时间", datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-        ("日志", log_path or "—"),
-        ("命令", command or "—"),
-    ]
-    if parsed.finished_msg:
-        rows.append(("TestFinished", parsed.finished_msg))
-    if parsed.summary and parsed.summary.raw_line:
-        rows.append(("OHOS_REPORT", parsed.summary.raw_line))
-    return rows
-
-
-def _html_styles(overall_color: str) -> str:
-    return f"""
-body {{ font-family: system-ui, sans-serif; margin: 24px; background: #fafafa; }}
-.card {{ background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 16px;
-  box-shadow: 0 1px 3px rgba(0,0,0,.08); }}
-h1 {{ margin: 0 0 8px; font-size: 1.4rem; }}
-.badge {{ display: inline-block; padding: 4px 12px; border-radius: 4px;
-  color: #fff; background: {overall_color}; font-weight: 600; }}
-table {{ border-collapse: collapse; width: 100%; font-size: 14px; }}
-th, td {{ border: 1px solid #e0e0e0; padding: 8px; text-align: left; vertical-align: top; }}
-th {{ background: #f5f5f5; }}
-pre.stack {{ margin: 6px 0 0; font-size: 11px; white-space: pre-wrap;
-  background: #f5f5f5; padding: 6px; max-height: 120px; overflow: auto; }}
-td.err {{ max-width: 480px; word-break: break-word; }}
-.meta th {{ width: 120px; }}
-"""
-
-
-def build_html(
-    parsed: ParsedLog,
+def write_xdevice_report_from_parsed(
+    parsed_path: Path,
+    out_dir: Path,
     *,
     project: str = "",
     suite: str = "",
     device: str = "",
-    command: str = "",
-    log_path: str = "",
-) -> str:
-    overall = _overall_status(parsed)
-    oc = _status_color("PASS" if overall == "PASS" else "ERROR")
-    meta_html = "".join(
-        f"<tr><th>{html.escape(k)}</th><td>{html.escape(str(v))}</td></tr>"
-        for k, v in _meta_rows(
-            parsed,
-            project=project,
-            suite=suite,
-            device=device,
-            log_path=log_path,
-            command=command,
-        )
+    xts_module: str = "",
+) -> Path:
+    """从 parsed_summary.json 生成 xDevice 风格 summary_report.html。"""
+    xdev = _load_xdevice_builder()
+    label = Path(project).name if project else parsed_path.parent.name
+    acts_root = _acts_root_from_project(project)
+    module_index = xdev._build_project_module_index(acts_root)
+    module_name = xdev._resolve_module_name(
+        label, parsed_path, xts_module, module_index
     )
-    title = html.escape(suite or Path(project).name)
-    return f"""<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8"/>
-<title>Hypium 测试报告 — {title}</title>
-<style>{_html_styles(oc)}</style>
-</head>
-<body>
-<div class="card">
-  <h1>Hypium / unittest 设备命令可视化报告</h1>
-  <span class="badge">{overall}</span>
-  {_build_summary_bar(parsed)}
-</div>
-<div class="card">
-  <h2>环境</h2>
-  <table class="meta"><tbody>{meta_html}</tbody></table>
-</div>
-<div class="card">
-  <h2>用例明细</h2>
-  <table>
-    <thead><tr>
-      <th>Suite</th><th>用例</th><th>结果</th><th>耗时</th><th>错误/说明</th>
-    </tr></thead>
-    <tbody>{_case_rows(parsed)}</tbody>
-  </table>
-</div>
-</body>
-</html>"""
+    suite_name = suite
+    if not suite_name:
+        data = json.loads(parsed_path.read_text(encoding="utf-8"))
+        suites_list = data.get("suites") or []
+        suite_name = ", ".join(suites_list) if suites_list else label
+    mod = xdev._module_from_parsed(
+        module_name, suite_name or label, parsed_path, report_html=None
+    )
+    oh_ver = os.environ.get("OHOS_DEVICE_VERSION", xdev.DEFAULT_OH_VERSION)
+    return xdev.build_report(
+        [{"module": mod}],
+        out_dir,
+        device=device,
+        elapsed_sec=float(mod.get("time") or 0),
+        oh_version=oh_ver,
+    )
 
 
 def write_report_from_log(
@@ -419,42 +408,42 @@ def write_report_from_log(
     device: str = "",
     command: str = "",
     out_dir: Optional[str | Path] = None,
+    xts_module: str = "",
 ) -> Path:
-    """解析日志并写入 summary_report.html，返回报告目录。"""
+    """解析日志，写入 parsed_summary.json 与 xDevice summary_report.html。"""
     log_p = Path(log_path).expanduser().resolve()
     text = log_p.read_text(encoding="utf-8", errors="replace")
     parsed = parse_unittest_device_log(text)
     dest = Path(out_dir) if out_dir else _report_dir(project, suite)
     dest.mkdir(parents=True, exist_ok=True)
 
-    html_path = dest / "summary_report.html"
-    html_path.write_text(
-        build_html(
-            parsed,
-            project=project,
-            suite=suite,
-            device=device,
-            command=command,
-            log_path=str(log_p),
-        ),
-        encoding="utf-8",
-    )
-    (dest / "parsed_summary.json").write_text(
+    parsed_path = _write_parsed_json(parsed, dest)
+    log_name = f"{_AA_CLI}_test.log"
+    if log_p.parent != dest:
+        (dest / log_name).write_text(text, encoding="utf-8")
+    meta = dest / "run_meta.json"
+    meta.write_text(
         json.dumps(
             {
-                "suites": parsed.suites,
-                "cases": [c.__dict__ for c in parsed.cases],
-                "summary": parsed.summary.__dict__ if parsed.summary else None,
+                "project": project,
+                "suite": suite,
+                "device": device,
+                "command": command,
+                "log_path": str(log_p),
             },
             ensure_ascii=False,
             indent=2,
         ),
         encoding="utf-8",
     )
-    log_name = f"{_AA_CLI}_test.log"
-    if log_p.parent != dest:
-        (dest / log_name).write_text(text, encoding="utf-8")
-    return html_path
+    return write_xdevice_report_from_parsed(
+        parsed_path,
+        dest,
+        project=project,
+        suite=suite,
+        device=device,
+        xts_module=xts_module,
+    )
 
 
 def append_batch_index(report_html: Path, batch_name: str = "default") -> Path:
@@ -497,7 +486,7 @@ def run_subprocess_and_report(
     device: str = "",
     batch_name: str = "",
 ) -> tuple[int, Optional[Path]]:
-    """执行 ohhdc 等设备命令，落盘日志并生成 summary_report.html。"""
+    """执行 ohhdc 等设备命令，落盘日志并生成 xDevice summary_report.html。"""
     dest = _report_dir(project, suite or None)
     dest.mkdir(parents=True, exist_ok=True)
     log_file = dest / f"{_AA_CLI}_test.log"
@@ -528,11 +517,12 @@ def run_subprocess_and_report(
 def main() -> int:
     import argparse
 
-    ap = argparse.ArgumentParser(description="从 unittest 设备命令日志生成 HTML 报告")
+    ap = argparse.ArgumentParser(description="从 unittest 设备命令日志生成 xDevice HTML 报告")
     ap.add_argument("--log", required=True, help="日志文件路径")
     ap.add_argument("--project", default="", help="HAP 工程路径")
     ap.add_argument("--suite", default="", help="Hypium 套件名")
     ap.add_argument("--device", default="", help="设备 SN")
+    ap.add_argument("--xts-module", default="", help="ActsAce...Test 模块名（可选，默认从 Test.json 解析）")
     ap.add_argument("--batch", default="", help="写入批次 batch_index.html")
     ns = ap.parse_args()
     path = write_report_from_log(
@@ -540,6 +530,7 @@ def main() -> int:
         project=ns.project,
         suite=ns.suite,
         device=ns.device,
+        xts_module=ns.xts_module,
     )
     print(f"REPORT_HTML={path}")
     if ns.batch:

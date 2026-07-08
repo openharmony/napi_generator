@@ -33,7 +33,7 @@ version: "1.0.0"
 
 | 项 | 路径 |
 |----|------|
-| 代码仓 | **xts_acts**（develop 工作区） |
+| 代码仓 | **xts_acts**（develop 工作区） / **xts_acts_0622**（master 同步仓） |
 | API26 SystemMaterial（参考） | `arkui/ace_c_arkui_test_api26_systemmaterial/` |
 | API26 CAPI | `arkui/ace_c_arkui_test_api26/` |
 | API23 | `arkui/ace_c_arkui_test_api23/` |
@@ -51,7 +51,8 @@ version: "1.0.0"
 2. 编写 **`.cpp`** + 注册 **`NapiFuncInitTest.cpp`** 或 **`NapiRenderInitTest.cpp`**
 3. 编写 **`.test.ets`** + **`List.test.ets`**
 4. **`ohxtscflow build-all` → `deploy-test`**（或 **`run-capi-pipeline`**）
-5. 会话 **Tier-1 三列表格**；终端 **Tier-2 `REPORT_HTML`**
+5. 会话 **Tier-1 三列表格**；终端 **`REPORT_HTML`（xDevice 格式）**
+6. **`run-capi-pipeline` 设备全绿后**：自动 **门禁 review → 修复 → commit**（§6；`--skip-commit` 可跳过）
 
 ---
 
@@ -153,7 +154,31 @@ python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline \
 
 ### 5. 报告
 
-见 **[REPORTING.md](REPORTING.md)**：Tier-1 会话表 + Tier-2 `REPORT_HTML` + Tier-3 汇总脚本。
+见 **[REPORTING.md](REPORTING.md)**：Tier-1 会话表 + xDevice `REPORT_HTML` + 多模块汇总脚本。
+
+### 6. 测试通过后：门禁 review + commit（默认）
+
+**`run-capi-pipeline` 在设备测试全 Pass 后**自动执行 `ohos-gate-compliance/scripts/gate_review.py`（profile=capi）：
+
+| 步骤 | 说明 |
+|------|------|
+| 校验结果 | 解析 `OHOS_REPORT_RESULT`，fail/error≠0 则中止 |
+| 门禁 scan | 本工程 **git 变更** 的 `.ets/.cpp/.h`（xtscheck + G.FMT.05/06） |
+| 自动修复 | `@tc` 冒号、`*/` 空行、G.FMT.06 实参续行（起始行+4） |
+| commit | `git-commit-agent.sh -sm`，仅本工程目录；遵循 **xts-git-commit** |
+
+```bash
+python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline <工程> -s <Suite> \
+  --commit-title "SystemMaterial DisplayMode 用例"
+
+# 只 review 不 commit
+python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline <工程> -s Suite --skip-commit
+
+# 测试已过，单独补跑门禁+commit
+python3 src/skills/ohos-gate-compliance/scripts/gate_review.py <工程> -s Suite --skip-test-check
+```
+
+复杂门禁（圈复杂度、nbnc）见 **`ohos-gate-compliance`**；Agent 须在 review 失败时手工修后再 `--skip-test-check` 重跑。**手工修门禁后须同步加固 `ohos-gate-compliance` skill**（检测/自动修复/文档，见该 skill §「门禁修复 → Skill 加固」）。
 
 ---
 
@@ -170,7 +195,7 @@ python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline \
 | HAP 编签 | `ohhap/hapbuild.py` |
 | 设备安装 / unittest | `ohhdc/ohhdc.py` |
 | 编排 | **`ohxtscapi/ohxtscflow.py`** |
-| HTML 报告 | `ohxtsstatic/hypium_html_report.py`（经 ohxtscflow 调用） |
+| xDevice 报告 | `ohxtsstatic/hypium_html_report.py`（经 ohxtscflow 调用，输出 xDevice 模板） |
 
 ---
 
@@ -179,9 +204,62 @@ python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline \
 - 遵循 **`xts-git-commit`** + xts_acts **`miscellaneous/xts_code_check.md`**（xtscheck）
 - 工程脚手架清单：**[PROJECT_CHECKLIST.md](PROJECT_CHECKLIST.md)**
 - 新增文件版权：**Kaihong**（勿沿用平行仓默认版权头）
-- 无辅助 HAP 依赖时：**仅** `ohos_js_app_suite`，`Test.json` 只装 `Acts*Test.hap`
+- **libnativefunc.so 在 Main HAP**：须 **双 HAP**（`ohos_app_assist_suite` + Test `deps` + `Test.json` 双包安装），见 **§SystemMaterial 实战**
+- **C++ CodeCheck**：多行函数调用续行须 **G.FMT.06-CPP**（实参续行 = 起始行缩进 + 4），见 **`ohos-gate-compliance`**
 - 生成器目录 **仅 README 入库**；`fetch-capi-generator.sh` 拉取的内容 **不提交**
 - 单笔 commit **<2000 行**；用例与 CodeCheck fix **分 commit**
+
+---
+
+## §SystemMaterial 实战（api26 避坑）
+
+来源：`ace_c_arkui_test_api26_systemmaterial` 设备 30/30 全失败 → 修复后 Pass。
+
+### 症状
+
+Hypium 报 `Cannot load property of null or undefined`；`import nativeFunc from 'libnativefunc.so'` 得到 **null**。
+
+### 根因
+
+| 项 | 说明 |
+|----|------|
+| **双 HAP** | `libnativefunc.so` 编进 **Main assist HAP**，Test HAP 仅含 Hypium；只装 Test 则 so 缺失 |
+| **Main 须先编** | 仅 `build-test` 时 native 被跳过，Main HAP 无 `.so` |
+| **签名 bundle** | `signature/openharmony_sx.p7b` 的 bundle 须与 `module.json5` 一致（如 `api26_systemmaterial`） |
+
+### GN / Test.json 正确模板
+
+```gn
+ohos_app_assist_suite("ActsAceCArkUI26SystemMaterial") { ... }
+
+ohos_js_app_suite("ActsAceCArkUI26SystemMaterialTest") {
+  deps = [ ":ActsAceCArkUI26SystemMaterial" ]
+}
+```
+
+```json
+"test-file-name": [
+  "ActsAceCArkUI26SystemMaterialTest.hap",
+  "ActsAceCArkUI26SystemMaterial.hap"
+]
+```
+
+### 编签顺序
+
+```bash
+python3 ohxtscflow.py build-all <工程>   # Main build（编 native）+ build-test + sign
+python3 ohxtscflow.py deploy-test <工程> -s ImmersiveMaterialTest,CustomDialogSystemMaterialTest -m entry_test
+```
+
+### API 覆盖拆分（SystemMaterial 批次）
+
+| 套件 | C++ 源 | 覆盖 API |
+|------|--------|----------|
+| `ImmersiveMaterialTest` | `ImmersiveMaterialTest.cpp` + `NodeSystemMaterialTest.cpp` | ImmersiveMaterial / LightEffect / GetSystemMaterialSupported / NODE_SYSTEM_MATERIAL(127) |
+| `CustomDialogSystemMaterialTest` | `CustomDialogMaterialTest.cpp` | SetSystemMaterial / SetSystemMaterialInOptions |
+| `CustomDialogDisplayModeTest` | `CustomDialogDisplayModeTest.cpp` | SetDisplayModeInSubWindow / OH_ARKUI_DIALOG_DISPLAY_MODE_* |
+
+**八类路由**：上述均为 **类别 2（无页面）** + **类别 6（Dialog 参数）**，走 `libnativefunc.so`。
 
 ---
 

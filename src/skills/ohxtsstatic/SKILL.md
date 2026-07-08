@@ -1,8 +1,8 @@
 ---
 name: ohxtsstatic
-description: "OpenHarmony ArkTS use static + Hypium XTS 一体化技能：三要素 + 工程根；**会话正式测试报告**须含**三列表格**；§十四/REPORTING.md 汇总与未覆盖报告。含 §十三 多批次开发经验。ohxtsflow/ohhdc、arkui-static-xts-generator。"
+description: "OpenHarmony ArkTS use static + Hypium XTS 一体化技能：三要素 + 工程根；**会话正式测试报告**须含**三列表格**；§十四/REPORTING.md 汇总与未覆盖报告。含 §十三/§13.10 多批次开发经验（含 BCM 动+静 CI 踩坑）。ohxtsflow/ohhdc、arkui-static-xts-generator。默认轻量化调试；显式申明才走源码级调试。"
 author: "napi_generator"
-version: "1.4.0"
+version: "1.5.0"
 ---
 
 # ohxtsstatic：ArkTS **`use static`** + Hypium 静态 XTS **一体化** Skill
@@ -33,6 +33,8 @@ version: "1.4.0"
 
 **未出现上述例外 → 禁止**停在「只提交源码/只 hapbuild」并宣称完成。
 
+**调试模式**：默认 **轻量化调试**（§六 `ohxtsflow`/`ohhdc`）；仅用户**显式**要求「源码级调试 / 同步 master / GN 编译 / xdevice」时才走 **源码级调试**（见 **§6.1**）。
+
 ### Agent 默认执行顺序（不可跳步）
 
 1. **§〇～§二**：设计、页面、Hypium、入口注册。  
@@ -40,7 +42,8 @@ version: "1.4.0"
 3. **`hdc list targets`**：若非空 → **`run-static-pipeline` 或 `static-device-test`**（参数见 **ohhdc/SKILL.md**）。  
 4. **失败**：根据 stdout / hilog / `analyze-test-log` 改代码，重复 2～3，直至通过或阻塞已记录。  
 5. **同一会话回复**：按 **「正式测试报告」** 节输出 **核心三列表格**（用例名称｜Pass/Fail｜设计思路）及后续小节（不得只丢 log 路径）。  
-6. **HTML 可视化**：`static-device-test` / `run-static-pipeline` 结束后终端打印 `REPORT_HTML=...`；浏览器打开 `summary_report.html`。离线：`ohxtsflow gen-hypium-report <log>`。多批汇总与未覆盖报告见 **§十四** 与 **[REPORTING.md](REPORTING.md)**（脚本在 `xts_acts_local_tools/`，不进 git）。
+6. **HTML 可视化**：`static-device-test` / `run-static-pipeline` 结束后终端打印 `REPORT_HTML=...`（**xDevice 格式**，Element Plus 单页报告）；浏览器打开 `summary_report.html`。离线：`ohxtsflow gen-xdevice-report <log>`。多模块汇总与未覆盖报告见 **§十四** 与 **[REPORTING.md](REPORTING.md)**。
+7. **门禁 + commit**：**`run-static-pipeline` 设备全绿后**自动跑 `ohos-gate-compliance/scripts/gate_review.py`（profile=ets）；`--skip-commit` 可仅 review。**门禁手工修复后须同步加固 `ohos-gate-compliance` skill**（见该 skill §「门禁修复 → Skill 加固」）。
 
 ---
 
@@ -206,7 +209,7 @@ version: "1.4.0"
 ### 与 §二 B/C 的接力（融合要点）
 
 - **页面**：为 §〇 的检查点提供 **稳定 id**（及工程 **key**）、**AppStorage/状态** 等可观测出口；弹窗/气泡按 **1.2 / 2.4** 等篇用 **文本或能力内约定** 定位，并与 **§ 三** 布局策略一致。  
-- **测试**：按 §〇 **验证方法** 写 `findComponent` / Inspector **链式** / 必要时 `sleep`；**`describe`/`it` 命名** 与批次或接口 id 对齐；需要 **`@tc.*` JSDoc** 时对照 **`common/test_rules.md`**，且不与 **§一～五** 冲突。  
+- **测试**：按 §〇 **验证方法** 写 `findComponent` / Inspector **链式** / 必要时 `sleep`；**`describe`/`it` 命名** 与批次或接口 id 对齐；**每条 `it` 前必填 `@tc.*` JSDoc**（ACTS/XTS 一律适用；细则 **`common/test_rules.md`**），且不与 **§一～五** 冲突。  
 - **统一质量条**：**单 `it` 单测试点**；**页面配置 / 测试断言** 分离；**等价类精简**；禁止在页面里堆 **expect**。
 
 ## 一、核心原则（必须遵守）
@@ -233,6 +236,19 @@ version: "1.4.0"
 | 无统一前缀的散乱 `console.info`（排障困难） | 日志含 **`[ARKUI_NEW]`** 或套件内统一 **`LOG_TAG`** |
 | 用例间残留 **AppStorage** / 未关 **Dialog** | `afterEach` 删除本套件键；`dialogController.close()` |
 
+### 1.4 `@tc.*` 文档注释（开发期硬门禁，非提交前才补）
+
+**写每一条 `it(` 的同一时刻**，其紧挨上方的 JSDoc **必须已写全** `@tc.number`、`@tc.name`、`@tc.desc`、`@tc.type`、`@tc.size`、`@tc.level` 六行，且 **`@tc.number` = `@tc.name` = `it('…')` 首参完全一致**。
+
+| 禁止 | 正确 |
+|------|------|
+| 先写裸 `it(...)`，计划「提交前再补 @tc」 | **复制 Pass 套件 JSDoc 骨架 → 改编号与 desc → 再写 `it` 体** |
+| `@tc.desc` 留空、`TODO`、占位符 | desc 写**一行可读的验收说明**（测什么、怎样算通过） |
+| 缺 `@tc.type` / `@tc.size` / `@tc.level` 任一字段 | 六字段齐全；细则 **§二 C**、**`test_rules.md`** |
+| 批量正则改 `@tc.name` | 逐条或按 `it` 块局部 patch |
+
+**提交前自检脚本**（§二 C）仅用于**复核**，**不能**替代开发阶段一次性写全；缺 `@tc` 的 `it` **视为用例未写完**，不得进入编签/设备阶段，更不得宣称批次完成。
+
 ---
 
 ## 二、编码落地（流水线第 2～5 步：工作流 A–D + 自检）
@@ -249,14 +265,65 @@ version: "1.4.0"
 ### B. 页面（预览页 `.ets`）
 
 - **承接 §〇**：每个 **检查点** 都应有 **可观测出口**（id、`$attrs` 可读字段、**AppStorage**、显隐结果）；**动效类**以 **结束态** 暴露，避免在页面写断言。  
-- 需要 Inspector / 自动化：组件 **`.id('语义化稳定名')`**（可与 **`ets_rules`** 的 `{component}_{场景}` 风格对齐），并按工程约定加 **`.key(...)`**。  
+- 需要 Inspector / 自动化：组件 **`.id('{页面名}_{组件语义名}')`**；同页同类型多个时用 **`_01`、`_02`** 递增（页面名 = 预览页文件名去掉 `.ets`）；Menu 等容器加 **`.key('{页面名}_menu')`** 等与 id 同前缀。  
 - 回调里 **`AppStorage.setOrCreate('suitePrefix_key', value)`** 供用例断言（与 **§ 四** 清理键一致）。  
 - **Options** 在 **`aboutToAppear` / 字段初始化** 集中构造；**§ 三** 的根布局与多按钮 **constraintSize** 策略优先于个人随意排版。
 
 ### C. 测试（`.test.ets`）
 
+- **写用例前（硬步骤）**：打开**同工程**最近 Pass 的 `*.test.ets`（如 menu 静态：`BindContextMenuTest/ContextMenuOptions.test.ets`），**复制 JSDoc + `it` 签名**再改业务。
 - **明细表默认粒度**：用户或台账给出 **「模块/类/方法/函数」明细表** 时，**默认一行对应一条 `it` 单独验收**，**不得**在未说明的情况下合并多行到单条用例；若需合并，须由需求方**书面约定**。
-- **承接 §〇**：每条用例对应 **分类文档中的验证方法** 之一（或一条主验证 + 一条辅助）；**`it` 标题 / `id` / 可选 `@tc.number`** 与批次或接口规范一致（细则 **`test_rules.md`**）。  
+- **承接 §〇**：每条用例对应 **分类文档中的验证方法** 之一（或一条主验证 + 一条辅助）；**`it` 标题 / 页面 id / `@tc.number`** 与批次或接口规范一致（细则 **`test_rules.md`**）。  
+- **每条 `it` 前必填 JSDoc（硬门禁；与 `it` 同批写完，禁止提交前再补）**；**`@tc.number` = `@tc.name` = `it('…')` 首参字符串必须完全相同**（三者一字不差，禁止 `Test_001` / `0100` 混用或只改其一）。**缺六字段中任一条 → 该条用例视为未完成**，不得联调编签。
+
+**编号格式（与同仓 Pass 用例对齐，禁止自创后缀）**：
+
+| 模块 | 格式 | 示例 |
+|------|------|------|
+| Menu 等 ArkUI | `SUB_ARKUI_MENU_{场景}_{0100}` | `SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100` |
+| Chip 等高级组件 | `SUB_ARKUI_{模块}_{场景}_{0100}` | `SUB_ARKUI_CHIP_BGSYSMAT_NORMAL_0100` |
+
+```typescript
+/**
+ * @tc.number SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100
+ * @tc.name   SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100
+ * @tc.desc   bindContextMenuByIsShow enableArrow=true
+ * @tc.type   FUNCTION
+ * @tc.size   MEDIUMTEST
+ * @tc.level  LEVEL1
+ */
+it('SUB_ARKUI_MENU_BCMByIsShow_enableArrow_true_0100', Level.LEVEL1, async (done: () => void): Promise<void> => { ... });
+```
+
+- JSDoc 块与 `it(` **紧邻、中间无空行**；`@tc.desc` 写一行验收说明即可，**不必**与 `it` 标题相同。
+- **禁止**批量正则替换 `@tc.name`（易整文件损坏）；改编号须逐条或按 `it` 块局部 patch。
+- **提交 / 宣称完成前必跑自检**（**复核**开发期已写全的 `@tc`；退出码非 0 则禁止 commit）：
+
+```bash
+python3 - <<'PY'
+import re, sys, pathlib
+root = pathlib.Path(sys.argv[1])
+bad = []
+pat = re.compile(
+    r"/\*\*[\s\S]*?@tc\.number\s+(\S+)[\s\S]*?@tc\.name\s+(\S+)[\s\S]*?\*/\s*"
+    r"it\(\s*['\"]([^'\"]+)['\"]",
+    re.M,
+)
+for f in root.rglob("*.test.ets"):
+    if "hypium" in f.parts:
+        continue
+    txt = f.read_text(encoding="utf-8", errors="replace")
+    for m in pat.finditer(txt):
+        num, name, it_title = m.group(1), m.group(2), m.group(3)
+        if num != name or num != it_title:
+            bad.append(f"{f}:{num}!={name}!={it_title}")
+if bad:
+    print("\n".join(bad[:20]))
+    sys.exit(1)
+print("OK: @tc.number = @tc.name = it()")
+PY
+ arkui/ace_ets_module_ui/ace_ets_module_dialog/ace_ets_module_menu_static/entry/src/main/src/test
+```
 - **Inspector**：`parseJsonElement` / `getInspectorByKey` 后 **链式** `.getElement('$attrs').getString(...)`，避免中间变量被推断为 `Object`。  
 - **点击**：一律 **`driver.findComponent` + `click()`**，禁止对 **`ON`** 调 `click`。  
 - **枚举 / 属性**：`getString` 常为 **字符串**（如 `'0'`），断言与之一致。  
@@ -406,6 +473,22 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <本机日志文件
 - 对照 **`compile_error_hints.md` §2**；优化脆性断言、路由与清理逻辑；重复阶段 2–4。  
 - **每轮设备跑测结束后**，在会话中**更新「正式测试报告」**（含失败时的迭代说明），直至通过或阻塞已文档化。
 
+### 6.1 调试模式：轻量化（默认）与源码级（显式触发）
+
+**总原则**：**默认轻量化**；**禁止**未申明时默认同步 master 或改 master prebuilts。
+
+| 模式 | 适用 | 要点 |
+|------|------|------|
+| **轻量化调试** | 日常开发（**默认**） | develop 树 → **`OHOS_USE_HVIGOR_STATIC=1`** + **`hapbuild build`**（一体）或 **`ohxtsflow build-all`**（双包）→ **`static-device-test` / `run-static-pipeline`** → 会话三列表格 + `REPORT_HTML` |
+| **源码级调试** | 用户**显式**要求 | develop → rsync **`/root/master/test/xts/acts`** → **`./build.sh suite=acts product_name=rk3568 ... suite=<Acts*Test>`** → HAP 拷贝至 `testcases` → **`python3 -m xdevice run acts`** → `summary_report.html` |
+
+**编排 skill**：**`xts-develop-master-cycle`**（脚本 `run-develop-cycle.sh` / `run-batch-cycle.sh`）。
+
+**PR / CI 注意**：
+
+- 静态 CI 通常要求 **`compileSdkVersion`: `"26.0.0"`** 字符串；勿为 master 本地 `check_hvigor` 改成整数 `26` 后提交。
+- 为 master 旧 prebuilts 本地编过而改的 `entry/` 临时补丁**勿与功能 PR 混提**。
+
 ---
 
 ## 七、编译与提交检查清单（提交前逐项打勾）
@@ -421,7 +504,8 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <本机日志文件
 
 - [ ] **§〇 路由表** 与所选 **`categories/…/*.md`** 一致；**检查点 → 页面出口 → 断言** 可追溯（非「先写码再套文档」）  
 - [ ] 已按需查阅 **`common/import.md`、`ets_rules.md`、`test_rules.md`**；无 **Tier-0** 不存在的 API、无与 **§一.3** 抵触的 Hypium 写法  
-- [ ] **单 `it` 单点**；页面 **无 expect**；`describe`/`it`（及 `@tc.*` 若适用）与批次或接口 id 一致  
+- [ ] **单 `it` 单点**；页面 **无 expect**；`describe`/`it` 与批次或接口 id 一致；**每条 `it` 在编写时已带完整 `@tc.number`～`@tc.level`（非提交前补；缺任一条不得进入编签/设备）**
+- [ ] 页面 **id/key** 符合 **§二 B**「页面名_组件名[_01]」；用例中 `ON.id` / `getInspectorByKey` 已同步  
 
 **页面**
 
@@ -563,7 +647,7 @@ cases:
 | 测试套件 | `ChipOptionsBackgroundSystemMaterialTest` | `describe` 名与类名一致 |
 | 用例 id | `SUB_ARKUI_{模块}_{场景}_{序号}` | 如 `SUB_ARKUI_CHIP_BGSYSMAT_NORMAL_0100` |
 
-**版权**：新增 `.ets` 用 **Kaihong** 头（与工程已提交套件一致），文件首行业务代码前加 **`'use static';`**。
+**版权与文件头（硬门禁）**：新增 `.ets` 用 **Kaihong** 头；**第 1 行必须是 `'use static';`**，其后才是版权块，再才是 `import`（与同工程 `ContextMenuOptions.ets`、`bindContextMenu.ets` 一致）。**禁止**版权写在 `'use static'` 之前——CI 会报 `arkts-no-misplaced-imports` 并连锁 `Cannot find module '@ohos.arkui.component'`、`Cannot find type 'Builder'`。
 
 ### 13.3 页面开发范式
 
@@ -673,7 +757,7 @@ python3 src/skills/ohhap/hapbuild.py build <静态一体工程>
 
 ### 13.8 CodeCheck、异常参数、Git 与提交纪律
 
-**CodeCheck**：`@Trace public`（G.EXT.01）；单行 ≤ 120 字符（G.FMT.02）。
+**CodeCheck**：`@Trace public`（G.EXT.01）；单行 ≤ 120 字符（G.FMT.02）；**setter / 分支链** 遇枚举多分支时用 **`switch` 替代 if-else 链**（G.FMT.06，见 **§13.10.5**）。
 
 **异常参数**：null 全拒 → 不写写跑测页；undefined 编译失败项归档；可编译项补 `_d`/`_u`。静态 Chip 异常曾遇 `LinkerVerificationError`（旧镜像/SDK）→ 换镜像后 14 套 112 it 已 Pass；仍建议小批 port、逐批编签验证。
 
@@ -697,23 +781,105 @@ python3 src/skills/ohhap/hapbuild.py build <静态一体工程>
 | ChipGroup 同上 | `ChipGroup/ChipGroupSystemMaterialPage.ets` 等 | `ChipGroupSystemMaterialTest` 等 | 同模式复用 |
 | menu/popup/select 正常值 | `ace_ets_module_menu_static` 等 | A～D 批各套件 | 见 **§十四** / REPORTING.md §6 |
 | chip 异常 14 套 | `Chip/abnormal/*.ets` | `ChipAbnormal*Test` 等 | 新镜像整测 Pass |
+| **menu bindContextMenuByIsShow** | `pages/bindContextMenuByIsShow/*.ets` | `BindContextMenuByIsShowTest/*.test.ets` | 见 **§13.10**（`'use static'` 首行 + 嵌套字面量类型断言） |
+
+### 13.10 ACTS menu_static / bindContextMenuByIsShow 批次：CI 与门禁踩坑（2026-07）
+
+本批 **动+静成对**（`ace_ets_module_menu` + `ace_ets_module_menu_static` + `ace_ets_module_dialog_api23_static`）在 **OpenHarmony CI `dayu200_xts_static`** 与 **CodeCheck** 上的经验，**新批静态页开发前必读**。
+
+#### 13.10.1 静态页文件头（P0，编不过的首要原因）
+
+```typescript
+'use static';
+/**
+ * Copyright (c) 2026 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * ...
+ */
+
+import { Entry, Column, ContextMenuOptions, ... } from '@ohos.arkui.component';
+```
+
+| 错误写法 | CI 现象 |
+|----------|---------|
+| 版权 → `'use static'` → `import` | `arkts-no-misplaced-imports`；连锁 `Cannot find module '@ohos.arkui.component'` |
+| 从动态页整文件拷贝未改头 | 同上 + 缺 `'use static'` |
+
+**对照范本**：同工程 `bindContextMenu/ContextMenuOptions.ets`、`bindContextMenu.ets`。
+
+#### 13.10.2 嵌套 Options 字面量须显式类型（P0）
+
+静态 ArkTS **禁止**无类型嵌套对象字面量（`arkts-no-untyped-obj-literals`）。**外层** `as ContextMenuOptions` **不能**豁免内层字段。
+
+| 字段 | 写法（与同工程 Pass 页一致） |
+|------|------------------------------|
+| `previewAnimationOptions` | `{ scale: [0.8, 1.0] } as ContextMenuAnimationOptions` |
+| `hoverScale` / `hoverScaleInterruption` | 整段 `{ hoverScale: [...], hoverScaleInterruption: false } as ContextMenuAnimationOptions` |
+| `mask` | `mask: { backgroundBlurStyle: BlurStyle.Thin } as MenuMaskType` |
+| `gridStyle` | `{ count: 4, position: MenuGridPosition.TOP } as MenuGridStyleOptions`，再外包 `} as ContextMenuOptions` |
+
+**import 须补**：`ContextMenuAnimationOptions`、`MenuMaskType`、`MenuGridStyleOptions`（按需）。
+
+#### 13.10.3 类型与 null 字面量（P0）
+
+| 项 | 静态 | 动态 |
+|----|------|------|
+| 索引/参数类型 | **`number`**，禁止 `int` | 动态亦用 `number` |
+| `colorMode: null` / `position: null` | **禁止**（即使 `as ContextMenuOptions`） | 动态 Popup 可写（如 `bindContextResponseNull.ets`） |
+| undefined 语义 | **省略**可选字段，如 `gridStyle: { count: 4 }` | 可显式 `undefined` |
+
+**分工**：null/undefined **全矩阵**放动态 `ace_ets_module_dialog_Popup`；**api23_static** 只保留静态可编过的 TOP/BOTTOM + 省略字段用例，勿从动态页原样复制 null 块。
+
+#### 13.10.4 `build-profile.json5` 与 CI check_hvigor（P0）
+
+| 环境 | `compileSdkVersion` |
+|------|---------------------|
+| **OpenHarmony CI**（`prebuilts/hvigor/7.26.0.static` + `api_version 26.0.0`） | **`"26.0.0"`**（M.S.F 字符串） |
+| 本地 command-line-tools 默认 hvigor | 可能报 `00306042` 要求数字——**以 CI 为准**，勿为本地通过改成 `"26"` |
+
+改 SDK 版本前：**先看 CI `check_hvigor` 日志**，再对照同仓已绿 commit 的 `build-profile.json5`。
+
+#### 13.10.5 CodeCheck 与 PR 合并
+
+| 规则 | 本批修复 |
+|------|----------|
+| **G.FMT.06** | Options setter 内 **if-else 链改 `switch`**（如 `BindContextMenuByIsShowBlurMask.ets`） |
+| **G.FMT.02** | 单行 ≤ 120 字符 |
+| PR 冲突 | **以功能语义为准**：`List.test.ets`、`main_pages.json` 等同路径无逻辑冲突时，**能并则并**（动/静各自 suite、path 通常可共存）；**真冲突**（同一段落互斥改法、重复注册、语义不可兼得）须**逐段读 diff、对照 upstream 意图酌情取舍**，勿机械「两侧全留」或「一侧全删」；业务 `.ets` 按合并后编签/用例是否仍成立裁决 |
+
+#### 13.10.6 CI 编译判读
+
+- **`menu_static`**：中间大量 `getUIContext` / hypium `core.ets` **告警**时，若末尾 **`BUILD SUCCESSFUL`** 即通过；勿被 warning 数量误导。
+- **`api23_static`**：仅 **3 条语义 error** 即可导致整批 ninja 失败——优先查 **PR 改动页** 的 null 字面量，再查 hypium。
+- 本地 `hapbuild` 与 CI **hvigor/SDK 路径不一致**时，**以 CI 日志为准**补修后再 push。
+
+#### 13.10.7 动+静成对开发检查清单（提交前）
+
+```
+[ ] 静态页第 1 行 'use static';，版权在其后
+[ ] 嵌套 Options 已 as ContextMenuAnimationOptions / MenuMaskType / MenuGridStyleOptions
+[ ] 无 int；无 colorMode/position 的 null 字面量（静态）
+[ ] compileSdkVersion 与 CI 一致（通常 "26.0.0"）
+[ ] 动/静 main_pages.json + List.test.ets 均已注册
+[ ] CodeCheck：setter 无超长 if-else 链（G.FMT.06）
+[ ] git commit -sm；未纳入 autosign/、hypium/、tools/
+```
 
 ---
 
 ## 十四、报告与覆盖率整合（2026-06）
 
-**完整命令与路径**见同目录 **[REPORTING.md](REPORTING.md)**。Agent 须掌握三层交付：
+**完整命令与路径**见同目录 **[REPORTING.md](REPORTING.md)**。Agent 须掌握两层交付 + 可选汇总：
 
 | 层级 | 交付 | 命令/产出 |
 |------|------|-----------|
 | Tier-1 | 会话 **三列表格** | 每批 `static-device-test` 后必写 |
-| Tier-2 | Hypium HTML | 终端 `REPORT_HTML=.../hypium/.../summary_report.html` |
-| Tier-3A | xdevice 汇总 | `gen_xdevice_summary_report.py` → `xts_reports/summary_report.html` |
-| Tier-3B | 未覆盖属性 | `gen_uncovered_report.py` → `uncovered_properties_report.html` |
+| xDevice HTML | Element Plus 单页报告 | 终端 `REPORT_HTML=.../hypium/.../summary_report.html` |
+| 多模块汇总 | 整测 summary | `gen_xdevice_summary_report.py` → `xts_reports/summary_report.html` |
+| 未覆盖属性 | 覆盖率 HTML | `gen_uncovered_report.py` → `uncovered_properties_report.html` |
 
-**多批合并**：`gen_xdevice_summary_report.py` 支持 `parsed1+parsed2+...`（同 Acts 模块多批 Hypium parsed 合并一条）。
+**多批合并**：`gen_xdevice_summary_report.py` 支持 `parsed1+parsed2+...`（同 Acts 模块多批 parsed 合并一条）。
 
-**推荐顺序**：分批开发 → 每批 Tier-1+Tier-2 → 全部 Pass 后更新 Tier-3 → 按 **xts-git-commit** 分批 commit（<2000 行），用户明确要求再 push。
+**推荐顺序**：分批开发 → 每批 Tier-1 + xDevice 报告 → 全部 Pass 后更新多模块汇总 → 按 **xts-git-commit** 分批 commit。
 
 **本地工具根**（不进 xts_acts Git）：
 

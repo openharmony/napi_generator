@@ -8,7 +8,7 @@ ohxtscapi 全流程编排：ArkUI CAPI（C++ NAPI + Hypium）XTS 编签与设备
   python3 ohxtscflow.py build-all <HAP工程完整路径>
   python3 ohxtscflow.py deploy-test <HAP工程完整路径> [-s Suite] [-m entry_test]
   python3 ohxtscflow.py run-capi-pipeline <HAP工程完整路径>
-  python3 ohxtscflow.py gen-hypium-report <日志文件>
+  python3 ohxtscflow.py gen-xdevice-report <日志文件>
   python3 ohxtscflow.py analyze-test-log <日志文件>
   python3 ohxtscflow.py hints
   python3 ohxtscflow.py category-routing
@@ -23,9 +23,13 @@ import sys
 from pathlib import Path
 
 _SKILLS = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(_SKILLS))
 sys.path.insert(0, str(_SKILLS / "ohxtsstatic"))
-from hypium_html_report import run_subprocess_and_report, write_report_from_log
-from ohxtsflow import analyze_hypium_like_log
+sys.path.insert(0, str(_SKILLS / "ohos-gate-compliance" / "scripts"))
+from hypium_html_report import run_subprocess_and_report, write_report_from_log  # noqa: E402
+from ohxtsflow import analyze_hypium_like_log  # noqa: E402
+from gate_review import run_post_test_gate_pipeline  # noqa: E402
+
 
 _AISKILL = Path(__file__).resolve().parents[3]
 if str(_AISKILL) not in sys.path:
@@ -154,22 +158,56 @@ def cmd_deploy_test(ns: argparse.Namespace) -> int:
     return _run_with_report("deploy-test", ns)
 
 
+def _run_gate_after_test(ns: argparse.Namespace, test_rc: int) -> int:
+    if test_rc != 0:
+        return test_rc
+    if getattr(ns, "skip_gate", False) and getattr(ns, "skip_commit", False):
+        return 0
+    return run_post_test_gate_pipeline(
+        os.path.abspath(ns.project),
+        suite=getattr(ns, "suite", None) or "",
+        scope=getattr(ns, "commit_scope", None) or "arkui-capi",
+        skip_gate=getattr(ns, "skip_gate", False),
+        skip_commit=getattr(ns, "skip_commit", False),
+        commit_title=getattr(ns, "commit_title", "") or "",
+        commit_body=getattr(ns, "commit_body", "") or "",
+    )
+
+
 def cmd_run_capi_pipeline(ns: argparse.Namespace) -> int:
     rc = cmd_build_all(ns)
     if rc != 0:
         return rc
-    return cmd_deploy_test(ns)
+    rc = cmd_deploy_test(ns)
+    return _run_gate_after_test(ns, rc)
 
 
-def cmd_gen_hypium_report(ns: argparse.Namespace) -> int:
+def cmd_gate_review_commit(ns: argparse.Namespace) -> int:
+    return run_post_test_gate_pipeline(
+        os.path.abspath(ns.project),
+        suite=getattr(ns, "suite", None) or "",
+        scope=getattr(ns, "commit_scope", None) or "arkui-capi",
+        skip_gate=getattr(ns, "skip_gate", False),
+        skip_commit=getattr(ns, "skip_commit", False),
+        commit_title=getattr(ns, "commit_title", "") or "",
+        commit_body=getattr(ns, "commit_body", "") or "",
+        require_tests_passed=not getattr(ns, "skip_test_check", False),
+    )
+
+
+def cmd_gen_xdevice_report(ns: argparse.Namespace) -> int:
     path = write_report_from_log(
         ns.log_file,
         project=ns.project or "",
         suite=ns.suite or "",
         device=ns.device or "",
+        xts_module=getattr(ns, "xts_module", "") or "",
     )
     print(f"REPORT_HTML={path}")
     return 0
+
+
+cmd_gen_hypium_report = cmd_gen_xdevice_report
 
 
 def cmd_analyze_test_log(ns: argparse.Namespace) -> int:
@@ -197,6 +235,14 @@ def cmd_category_routing(_: argparse.Namespace) -> int:
     return 0
 
 
+def _add_gate_args(p: argparse.ArgumentParser) -> None:
+    p.add_argument("--skip-gate", action="store_true", help="跳过门禁 review")
+    p.add_argument("--skip-commit", action="store_true", help="跳过自动 commit")
+    p.add_argument("--commit-scope", default="arkui-capi")
+    p.add_argument("--commit-title", default="")
+    p.add_argument("--commit-body", default="")
+
+
 def _add_device_parsers(sp: argparse._SubParsersAction) -> None:
     dt = sp.add_parser("deploy-test", help="ohhdc deploy-test（主包+ohosTest）")
     dt.add_argument("project")
@@ -205,14 +251,39 @@ def _add_device_parsers(sp: argparse._SubParsersAction) -> None:
     dt.add_argument("-s", "--suite", default=None)
     dt.add_argument("--batch", default=None)
     dt.add_argument("--device", default=None)
+    _add_gate_args(dt)
 
-    pl = sp.add_parser("run-capi-pipeline", help="build-all → deploy-test → HTML")
+    pl = sp.add_parser("run-capi-pipeline", help="build-all → deploy-test → gate → commit")
     pl.add_argument("project")
     pl.add_argument("--timeout", type=int, default=300000)
     pl.add_argument("-m", "--module", default="entry_test")
     pl.add_argument("-s", "--suite", default=None)
     pl.add_argument("--batch", default=None)
     pl.add_argument("--device", default=None)
+    _add_gate_args(pl)
+
+    gr = sp.add_parser("gate-review-commit", help="测试通过后的门禁 review + commit")
+    gr.add_argument("project")
+    gr.add_argument("-s", "--suite", default=None)
+    gr.add_argument("--skip-gate", action="store_true")
+    gr.add_argument("--skip-commit", action="store_true")
+    gr.add_argument("--skip-test-check", action="store_true")
+    gr.add_argument("--commit-scope", default="arkui-capi")
+    gr.add_argument("--commit-title", default="")
+    gr.add_argument("--commit-body", default="")
+
+
+def _add_gen_report_parser(sp: argparse._SubParsersAction) -> None:
+    for cmd_name, help_text in (
+        ("gen-xdevice-report", "从 unittest 日志生成 xDevice HTML 报告"),
+        ("gen-hypium-report", "（兼容旧名，同 gen-xdevice-report）"),
+    ):
+        p = sp.add_parser(cmd_name, help=help_text)
+        p.add_argument("log_file")
+        p.add_argument("--project", default="")
+        p.add_argument("--suite", default="")
+        p.add_argument("--device", default="")
+        p.add_argument("--xts-module", default="")
 
 
 def _handlers() -> dict[str, object]:
@@ -221,6 +292,8 @@ def _handlers() -> dict[str, object]:
         "build-all": cmd_build_all,
         "deploy-test": cmd_deploy_test,
         "run-capi-pipeline": cmd_run_capi_pipeline,
+        "gate-review-commit": cmd_gate_review_commit,
+        "gen-xdevice-report": cmd_gen_xdevice_report,
         "gen-hypium-report": cmd_gen_hypium_report,
         "analyze-test-log": cmd_analyze_test_log,
         "hints": cmd_hints,
@@ -237,12 +310,7 @@ def main() -> int:
     b.add_argument("project")
     b.add_argument("profile", nargs="?", default="release", choices=["debug", "release"])
     _add_device_parsers(sp)
-
-    ghr = sp.add_parser("gen-hypium-report")
-    ghr.add_argument("log_file")
-    ghr.add_argument("--project", default="")
-    ghr.add_argument("--suite", default="")
-    ghr.add_argument("--device", default="")
+    _add_gen_report_parser(sp)
 
     atl = sp.add_parser("analyze-test-log")
     atl.add_argument("log_file")
