@@ -114,7 +114,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | `int` | 报告 | 改 `number` |
 | `.key('foo')` 无下划线 | 报告 | `页面名_组件名` |
 | static 十六进制 fontColor | 报告 | `ResourceColor` 或字符串 |
-| Dialog NORMAL 后遮罩残留 → 下 Suite `Empty Text`/`null.click` | — | NORMAL/UEC 后 `dismissOpenDialog`；`getInspectorByKey` 空串勿 `JSON.parse`；结果 Text 常驻（IDLE）；UEC 清场**仅**一次 `pressBack` |
+| Dialog NORMAL 后遮罩残留 → 下 Suite `Empty Text`/`null.click` | — | NORMAL 后关弹窗；`getInspectorByKey` 空串勿 `JSON.parse`；结果 Text 常驻（IDLE）；Suite **间**禁 `pressBack`（会打后台）；全量须**一次连跑**复测，分组重装会假绿 |
 
 ## C++ 高频（仅 capi profile）
 
