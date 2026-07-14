@@ -116,19 +116,41 @@ def fix_ets_xtscheck(text: str) -> tuple[str, int]:
     return text, n
 
 
+def _is_hypium_test_ets(path: Path) -> bool:
+    """ohosTest 或一体工程 entry/.../test/*.test.ets。"""
+    s = str(path).replace("\\", "/")
+    if path.suffix != ".ets":
+        return False
+    if "/ohosTest/" in s:
+        return True
+    return s.endswith(".test.ets") and "/ets/test/" in s
+
+
 def check_ets_xtscheck(path: Path, text: str) -> list[GateIssue]:
     issues: list[GateIssue] = []
-    if path.suffix != ".ets" or "/ohosTest/" not in str(path):
+    if not _is_hypium_test_ets(path):
         return issues
     if re.search(r"\.forEach\s*\([^)]*\)\s*=>\s*\{[^}]*\bit\s*\(", text, re.S):
         issues.append(GateIssue(path, 0, "xtscheck", "禁止 forEach 动态生成 it()"))
-    for m in re.finditer(
-        r"/\*\*.*?\*/\s*\n(\s*)it\(\s*['\"]([^'\"]+)['\"]",
-        text,
-        re.S,
-    ):
-        block = m.group(0)
+    # 裸 it()：前方无紧邻 @tc JSDoc（缺 number/name 即报）
+    for m in re.finditer(r"(?m)^(\s*)it\(\s*['\"]([^'\"]+)['\"]", text):
         it_name = m.group(2)
+        before = text[: m.start()]
+        # 取 it 前最近一块注释
+        prev_lines = before.splitlines()[-20:]
+        block = "\n".join(prev_lines)
+        if "*/" not in block or "@tc.number" not in block or "@tc.name" not in block:
+            line_no = before.count("\n") + 1
+            issues.append(
+                GateIssue(
+                    path,
+                    line_no,
+                    "xtscheck",
+                    f"it() 缺少完整 @tc JSDoc: {it_name}",
+                )
+            )
+            continue
+        # 与已有逻辑一致：有文档时校验 number/name 与 it 名
         nm = re.search(r"@tc\.name\s+(\S+)", block)
         num = re.search(r"@tc\.number\s+(\S+)", block)
         if nm and nm.group(1) != it_name:
