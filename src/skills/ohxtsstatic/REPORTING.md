@@ -23,6 +23,8 @@
 | **Tier-1 会话报告** | 回复正文 **三列表格**（用例名称｜Pass/Fail｜设计思路） | 每批设备跑测结束 |
 | **xDevice HTML** | `REPORT_HTML=.../hypium/.../summary_report.html`（Element Plus 单页报告） | `static-device-test` / `deploy-test` / pipeline 终端 |
 
+**工程整测**：交付/推仓前的「全绿」须来自**一次**装包连跑全部 Suite 的日志/HTML；禁止多次 `static-deploy-test` 重装后拼表（见 **SKILL.md**「工程整测硬门禁」、**ohos-gate-compliance**）。
+
 **多模块整测汇总**：全部批次完成后，用 `gen_xdevice_summary_report.py` 合并多条 `parsed_summary.json` → `xts_reports/summary_report.html`。
 
 **禁止**：只给 log 路径、不在会话写三列表格；**禁止**把 gen 脚本/HTML 提交进 xts_acts 仓。

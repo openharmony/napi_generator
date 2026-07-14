@@ -49,8 +49,9 @@ version: "1.5.1"
 2. 编写页面 + Hypium 用例 + 注册
 3. **`ohxtsflow build-all` 或 `run-dynamic-pipeline`**
 4. **`hdc` 可用则设备跑测**，会话内输出 **正式测试报告**（三列表格）
-5. **`run-dynamic-pipeline` 全绿后**：自动 **门禁 review → 修复 → commit**（`xts_shared/xts_gate_review.py`）
-6. 多批完成后用户要求「更新报告」→ **§十** + **[REPORTING.md](REPORTING.md)**（汇总 HTML、未覆盖报告）
+5. **工程交付 / 推仓前**：`List.test` **全部** Suite **一次**装包连跑（禁止多次 `deploy-test` 重装拼绿；见「工程整测硬门禁」）
+6. **整测全绿后**：门禁 review → 修复 → commit
+7. 多批完成后用户要求「更新报告」→ **§十** + **[REPORTING.md](REPORTING.md)**（汇总 HTML、未覆盖报告）
 
 **例外**（须用户明说）：「只要编译」「不要 hdc」「只改某一文件」。
 

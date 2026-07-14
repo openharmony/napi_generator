@@ -2,7 +2,9 @@
 
 ## 域选择
 
-- [ ] **ArkTS / XTS** — 改 `xts_acts_*` HAP → 勾选 A～F
+- [ ] **ArkTS 动态**（ohxtsdynamic）— 勾选 A～F + **整测一次连跑**
+- [ ] **ArkTS 静态**（ohxtsstatic）— 勾选 A～F + **整测一次连跑**
+- [ ] **CAPI / C++ NAPI**（ohxtscapi）— 勾选 A～F（ets）+ G～J（若改 framework）+ **整测一次连跑**
 - [ ] **C++ / ace_engine** — 改 `frameworks/` 等 → 勾选 G～J
 - [ ] **双域同批** — 两域分别勾选并分 commit
 

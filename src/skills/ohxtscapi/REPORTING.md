@@ -9,6 +9,8 @@
 | **Tier-1 会话** | 三列表格（用例名｜Pass/Fail｜设计思路） | 每批 `deploy-test` 后 |
 | **xDevice HTML** | `REPORT_HTML=.../hypium/.../summary_report.html` | `deploy-test` / `run-capi-pipeline` |
 
+**工程整测**：会话/HTML 须来自**一次**装包连跑（`-s` 列齐全部 Suite）；禁止多次 `deploy-test` 重装后拼表。见 **SKILL.md**「工程整测硬门禁」。
+
 多模块整测汇总见 **`ohxtsstatic/REPORTING.md` §3**（`gen_xdevice_summary_report.py`）。
 
 ## 命令

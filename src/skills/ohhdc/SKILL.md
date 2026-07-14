@@ -207,14 +207,15 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 
 **Parameters:** `target` = 项目根目录；`--module` / `-m` = 测试模块名（默认 entry_test）；`--suite` / `-s` = `-s class` 的取值，多个套件逗号分隔（**不指定时从 List.test.ets 及各 .test.ets 的 describe 名自动发现**）；`--timeout` / `-t` = 超时毫秒（默认 15000）。
 
-### 工程整测硬门禁（Agent 必遵）
+### 工程整测硬门禁（Agent 必遵；动态 / 静态 / CAPI 共用）
 
 | 场景 | 做法 |
 |------|------|
-| **工程整测**（交付、推仓前、复现/对标门禁·xDevice） | **单次** `deploy-test`：`-s` 一次带上全部 Suite（逗号分隔），或**省略** `-s` 走自动发现；**只卸装一次 → 连跑全部** |
+| **工程整测**（交付、推仓前、复现/对标门禁·xDevice） | **单次** `deploy-test` / `static-deploy-test`：`-s` 带齐全部 Suite，或省略 `-s`；**只卸装+安装一次** |
 | **单批调试** | 允许 `-s OneSuite`；**禁止**据此写「工程全绿」 |
 
-**禁止**：把全量拆成多次 `deploy-test`/`static-deploy-test`，且每次重装后把各段报告拼成通过。每次重装会打断 Suite 间 UI/遮罩状态，**测不到**整包串扰（Dialog/`pressBack` → 下一 Suite `null.click` 等）。详见 **ohos-gate-compliance**「设备整测硬门禁」。
+**允许**：`-s A,B,C` 时本脚本**内部分次** `aa test`（避免多 class 拼参挂起）——仍属**一次装包连跑**。  
+**禁止**：Agent 外层循环多次调用本命令（每次重装）再拼绿。详见 **ohos-gate-compliance**「设备整测硬门禁」。
 
 ---
 

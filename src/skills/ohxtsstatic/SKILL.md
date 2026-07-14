@@ -41,9 +41,10 @@ version: "1.5.0"
 2. **编签**：**静态一体**工程用 **`hapbuild build`**（勿误用 `build-all` 的 `build-test`）；**双包**工程用 **`ohxtsflow build-all`**。签名前须 **`source signing-materials/env.sh`**（见 **§十三**）。  
 3. **`hdc list targets`**：若非空 → **`run-static-pipeline` 或 `static-device-test`**（参数见 **ohhdc/SKILL.md**）。  
 4. **失败**：根据 stdout / hilog / `analyze-test-log` 改代码，重复 2～3，直至通过或阻塞已记录。  
-5. **同一会话回复**：按 **「正式测试报告」** 节输出 **核心三列表格**（用例名称｜Pass/Fail｜设计思路）及后续小节（不得只丢 log 路径）。  
-6. **HTML 可视化**：`static-device-test` / `run-static-pipeline` 结束后终端打印 `REPORT_HTML=...`（**xDevice 格式**，Element Plus 单页报告）；浏览器打开 `summary_report.html`。离线：`ohxtsflow gen-xdevice-report <log>`。多模块汇总与未覆盖报告见 **§十四** 与 **[REPORTING.md](REPORTING.md)**。
-7. **门禁 + commit**：**`run-static-pipeline` 设备全绿后**自动跑 `ohos-gate-compliance/scripts/gate_review.py`（profile=ets）；`--skip-commit` 可仅 review。**门禁手工修复后须同步加固 `ohos-gate-compliance` skill**（见该 skill §「门禁修复 → Skill 加固」）。
+5. **同一会话回复**：按 **「正式测试报告」** 节输出 **核心三列表格**（用例名称｜Pass/Fail｜设计思路）及后续章节（不得只丢 log 路径）。  
+6. **HTML 可视化**：`static-device-test` / `run-static-pipeline` 结束后终端打印 `REPORT_HTML=...`（**xDevice 格式**，Element Plus 单页报告）；浏览器打开 `summary_report.html`。离线：`ohxtsflow gen-xdevice-report <log>`。多模块汇总与未覆盖报告见 **§十四** 与 **[REPORTING.md](REPORTING.md)**。  
+7. **工程交付 / 推仓前**：对工程 `List.test` **全部** Suite **一次**装包连跑（`static-deploy-test` / `static-device-test`）；**禁止**多次部署重装拼绿（见 **「工程整测硬门禁」** 与 **ohos-gate-compliance**）。  
+8. **门禁 + commit**：设备**整测**全绿后跑 `ohos-gate-compliance/scripts/gate_review.py`（profile=ets）；`--skip-commit` 可仅 review。**门禁手工修复后须同步加固 skill**。
 
 ---
 
@@ -63,7 +64,8 @@ version: "1.5.0"
 | 设计 | **§〇** 归类，打开对应 **`categories/*.md`**，检查点 → 页面出口 → 断言可追溯 | 无归类、文档与代码脱节 |
 | 实现 | 预览页 + **`*.test.ets`** + **`List.test.ets`（或工程入口）注册** | 仅有页面或仅有用例 |
 | 编译签包 | **`ohhap` / `ohxtsflow build-all` 成功**，产出可安装 HAP（含签名约定） | 未走工具链、仅 IDE 无红杠 |
-| 设备执行 | **`hdc` 可用**时跑 **`static-device-test`** 或 **`run-static-pipeline`**，`unittest 设备命令` 对本批次 **全部通过** | **仅编译通过从未装包跑测** |
+| 设备执行 | **`hdc` 可用**时跑 **`static-device-test`** 或 **`run-static-pipeline`**，本批用例设备通过 | **仅编译通过从未装包跑测** |
+| **工程整测** | 交付/推仓前：**一次**装包连跑 **全部** Suite Pass（勿多次 `static-deploy-test` 重装拼绿） | 仅单批 `-s` Pass 或拆段重装拼绿 |
 | 调试闭环 | 失败时抓 log、**`analyze-test-log`**、对照 **compile_error_hints / ohhdc SKILL** 改代码并重跑 | 失败后不迭代 |
 | **会话报告** | 按 **「正式测试报告」** 输出 **三列表格**（用例名称｜Pass/Fail｜设计思路）+ 汇总 | **无表格、或仅有 log 路径** |
 

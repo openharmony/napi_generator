@@ -3,9 +3,9 @@ name: ohxtscapi
 description: >-
   OpenHarmony ArkUI CAPI XTS 一体化技能：C++ NAPI + Hypium；八类路由；
   编签、设备跑测、三层报告。SDK 用 normal。触发词：CAPI XTS、OH_ArkUI_、
-  libnativefunc、libnativerender、NapiFuncInit、ohxtscapi。
+  libnativefunc、libnativerender、NapiFuncInit、ohxtscapi。含 §签名 Profile 新建工程 p7b 硬门禁。
 author: "napi_generator"
-version: "1.0.0"
+version: "1.1.0"
 ---
 
 # ohxtscapi：ArkUI CAPI XTS 一体化 Skill
@@ -52,7 +52,18 @@ version: "1.0.0"
 3. 编写 **`.test.ets`** + **`List.test.ets`**
 4. **`ohxtscflow build-all` → `deploy-test`**（或 **`run-capi-pipeline`**）
 5. 会话 **Tier-1 三列表格**；终端 **`REPORT_HTML`（xDevice 格式）**
-6. **`run-capi-pipeline` 设备全绿后**：自动 **门禁 review → 修复 → commit**（§6；`--skip-commit` 可跳过）
+6. **工程交付 / commit 前**：对 `List.test` **全部** Suite 做**一次**装包连跑（见下「工程整测硬门禁」）
+
+---
+
+## 工程整测硬门禁（CAPI / C++，与动态·静态共用）
+
+| 必须 | 禁止 |
+|------|------|
+| **一次** `ohxtscflow deploy-test`（或 pipeline 内设备阶段）：`-s SuiteA,SuiteB,...` 覆盖全部套件，或省略 `-s`；**卸装安装各一次** | Agent **多次**调用 `deploy-test`/`run-capi-pipeline` 且每次重装，再拼「全绿」 |
+| 单批开发用 `-s OneSuite` | 把单批 Pass 写成「工程整测通过」 |
+
+**说明**：ohhdc 对多 Suite **内部分次** `aa test`（勿把多个 class 拼进**同一次** shell `-s class`，设备会挂起）——这是**同一次装包后的分次跑测**，**不等于**多次 `deploy-test` 重装。详 **ohos-gate-compliance**「设备整测硬门禁」、**ohhdc**「工程整测硬门禁」。
 
 ---
 
@@ -150,35 +161,12 @@ python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline \
 ```
 
 - 默认测试模块 **`entry_test`**（ohosTest）
-- 新批次 **必须 `-s` 套件名**，避免全量 List
+- 新批次开发调试：**`-s` 本批套件名**
+- **工程交付 / 推仓前**：`-s` 列齐全部 Suite（或省略），**一次** `deploy-test` 连跑；禁止多次 `deploy-test` 重装拼绿
 
 ### 5. 报告
 
 见 **[REPORTING.md](REPORTING.md)**：Tier-1 会话表 + xDevice `REPORT_HTML` + 多模块汇总脚本。
-
-### 6. 测试通过后：门禁 review + commit（默认）
-
-**`run-capi-pipeline` 在设备测试全 Pass 后**自动执行 `ohos-gate-compliance/scripts/gate_review.py`（profile=capi）：
-
-| 步骤 | 说明 |
-|------|------|
-| 校验结果 | 解析 `OHOS_REPORT_RESULT`，fail/error≠0 则中止 |
-| 门禁 scan | 本工程 **git 变更** 的 `.ets/.cpp/.h`（xtscheck + G.FMT.05/06） |
-| 自动修复 | `@tc` 冒号、`*/` 空行、G.FMT.06 实参续行（起始行+4） |
-| commit | `git-commit-agent.sh -sm`，仅本工程目录；遵循 **xts-git-commit** |
-
-```bash
-python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline <工程> -s <Suite> \
-  --commit-title "SystemMaterial DisplayMode 用例"
-
-# 只 review 不 commit
-python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline <工程> -s Suite --skip-commit
-
-# 测试已过，单独补跑门禁+commit
-python3 src/skills/ohos-gate-compliance/scripts/gate_review.py <工程> -s Suite --skip-test-check
-```
-
-复杂门禁（圈复杂度、nbnc）见 **`ohos-gate-compliance`**；Agent 须在 review 失败时手工修后再 `--skip-test-check` 重跑。**手工修门禁后须同步加固 `ohos-gate-compliance` skill**（检测/自动修复/文档，见该 skill §「门禁修复 → Skill 加固」）。
 
 ---
 
@@ -205,7 +193,7 @@ python3 src/skills/ohos-gate-compliance/scripts/gate_review.py <工程> -s Suite
 - 工程脚手架清单：**[PROJECT_CHECKLIST.md](PROJECT_CHECKLIST.md)**
 - 新增文件版权：**Kaihong**（勿沿用平行仓默认版权头）
 - **libnativefunc.so 在 Main HAP**：须 **双 HAP**（`ohos_app_assist_suite` + Test `deps` + `Test.json` 双包安装），见 **§SystemMaterial 实战**
-- **C++ CodeCheck**：多行函数调用续行须 **G.FMT.06-CPP**（实参续行 = 起始行缩进 + 4），见 **`ohos-gate-compliance`**
+- **C++ CodeCheck**：多行函数调用续行须 **G.FMT.06-CPP**（实参续行 8 空格），见 **ohos-gate-compliance-pr-check**
 - 生成器目录 **仅 README 入库**；`fetch-capi-generator.sh` 拉取的内容 **不提交**
 - 单笔 commit **<2000 行**；用例与 CodeCheck fix **分 commit**
 
@@ -225,7 +213,9 @@ Hypium 报 `Cannot load property of null or undefined`；`import nativeFunc from
 |----|------|
 | **双 HAP** | `libnativefunc.so` 编进 **Main assist HAP**，Test HAP 仅含 Hypium；只装 Test 则 so 缺失 |
 | **Main 须先编** | 仅 `build-test` 时 native 被跳过，Main HAP 无 `.so` |
-| **签名 bundle** | `signature/openharmony_sx.p7b` 的 bundle 须与 `module.json5` 一致（如 `api26_systemmaterial`） |
+| **签名 bundle** | `signature/openharmony_sx.p7b` 的 bundle 须与 **`AppScope/app.json5` bundleName** 一致 | 从 parallelize 等模板 **拷贝 p7b 未 regen**（**已两次事故，禁止第三次**） |
+
+**修复**：**§签名 Profile** → `gen-xts-signature-p7b.sh <工程根>`。
 
 ### GN / Test.json 正确模板
 
@@ -248,7 +238,10 @@ ohos_js_app_suite("ActsAceCArkUI26SystemMaterialTest") {
 
 ```bash
 python3 ohxtscflow.py build-all <工程>   # Main build（编 native）+ build-test + sign
-python3 ohxtscflow.py deploy-test <工程> -s ImmersiveMaterialTest,CustomDialogSystemMaterialTest -m entry_test
+# 工程整测：一次装包；多 Suite 逗号分隔（ohhdc 内部分次 aa test，不重装）
+python3 ohxtscflow.py deploy-test <工程> \
+  -s ImmersiveMaterialTest,CustomDialogSystemMaterialTest,CustomDialogDisplayModeTest \
+  -m entry_test
 ```
 
 ### API 覆盖拆分（SystemMaterial 批次）
@@ -260,6 +253,34 @@ python3 ohxtscflow.py deploy-test <工程> -s ImmersiveMaterialTest,CustomDialog
 | `CustomDialogDisplayModeTest` | `CustomDialogDisplayModeTest.cpp` | SetDisplayModeInSubWindow / OH_ARKUI_DIALOG_DISPLAY_MODE_* |
 
 **八类路由**：上述均为 **类别 2（无页面）** + **类别 6（Dialog 参数）**，走 `libnativefunc.so`。
+
+---
+
+## §签名 Profile：新建 CAPI 工程 p7b（P0 硬门禁）
+
+> **与 ohxtsstatic §13.12、ohxtsdynamic §9.11 同一铁律**；**已两次生产事故**，**禁止第三次**。
+
+**适用**：从 `ace_c_arkui_test_parallelize` / 其他 CAPI 模板 **新建** 工程，或修改 **`AppScope/app.json5` bundleName** 后。
+
+| 禁止 | 必须 |
+|------|------|
+| `cp 模板/signature/openharmony_sx.p7b` 提交 | **`gen-xts-signature-p7b.sh <工程根>`** |
+| 「沿用 parallelize 的 bundle 名」写进 checklist 就提交 | `strings p7b` 与 **app.json5 bundleName 逐字一致** |
+| 只装 Test HAP 忽略 p7b | assist + Test **共用** 同一 p7b |
+
+```bash
+bash /root/aiSkill/.claude/skills/xts_shared/gen-xts-signature-p7b.sh <工程根>
+strings <工程根>/signature/openharmony_sx.p7b | grep bundle-name
+grep bundleName <工程根>/AppScope/app.json5
+```
+
+**脚手架顺序（CAPI 双 HAP）**：
+
+1. 裁剪模板 → 改 `AppScope/app.json5`、`BUILD.gn`（assist + test）、`Test.json` 双包  
+2. **`gen-xts-signature-p7b.sh`**  
+3. 写 C++ / Hypium → `ohxtscflow build-all` → `deploy-test` → commit  
+
+详见 **`xts_shared/SIGNATURE-P7B.md`**、**PROJECT_CHECKLIST.md §1.1**。
 
 ---
 
