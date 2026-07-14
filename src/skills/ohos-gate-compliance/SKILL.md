@@ -134,6 +134,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | `.key('foo')` 无下划线 | 报告 | `页面名_组件名` |
 | static 十六进制 fontColor | 报告 | `ResourceColor` 或字符串 |
 | Dialog 遮罩/`pressBack` → 下 Suite `Empty Text`/`null.click` | — | NORMAL 后关弹窗；空 Inspector 勿 `JSON.parse`；Suite **间**禁 `pressBack`；见上节**整测须一次连跑** |
+| Dialog `DocumentViewPicker` 模拟 UEC → 后续 Suite 全 `component not found` | — | **禁止**系统 FilePicker/UIExtension；改可自动化子窗正例；禁 `expect(true)`/`env skip` 假绿 |
 | 拆多次 deploy-test 重装后宣称全绿 | — | 工程整测改为**一次连跑**全部 Suite（见上节） |
 | 裸 `it()` 无 `@tc.*` JSDoc | 报告 | 每条 `it` 同批写全六字段；`gate_review` 扫 `*.test.ets`（含一体工程 `entry/.../test/`） |
 
