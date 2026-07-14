@@ -103,6 +103,17 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 
 ---
 
+## 设备整测硬门禁（全量 / PR 宣称绿）
+
+> **Dialog ErrorCode 等「多 Suite 串扰」实锤**：拆成多次 `deploy-test`、每次卸装会把 Suite 间遮罩/`pressBack` 串扰洗掉 → **本地假绿、门禁/xDevice 整包大面积 `null.click`**。
+
+| 场景 | 必须 | 禁止 |
+|------|------|------|
+| **工程整测**（交付、commit/push 前、对标 xDevice/CI 产物） | **一次** `deploy-test` / `static-deploy-test`：`-s` 列出 `List.test` 中**全部** Suite（或省略 `-s` 走自动发现），**装包一次、连跑到底** | 拆成多次 `deploy-test`/`static-deploy-test`，且每次重装；再把各段 Pass **拼成「全绿」** |
+| **单批/开发中调试** | 允许 `-s OneSuite` 只跑本批 | 不得据此宣称「工程整测通过」 |
+
+报告可信条件：会话/HTML 须对应**同一次**连跑日志；禁止多段 `OHOS_REPORT_RESULT` 人工相加当整测。
+
 ## ArkTS 高频
 
 | 问题 | 自动？ | 修复 |
@@ -114,7 +125,8 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | `int` | 报告 | 改 `number` |
 | `.key('foo')` 无下划线 | 报告 | `页面名_组件名` |
 | static 十六进制 fontColor | 报告 | `ResourceColor` 或字符串 |
-| Dialog NORMAL 后遮罩残留 → 下 Suite `Empty Text`/`null.click` | — | NORMAL 后关弹窗；`getInspectorByKey` 空串勿 `JSON.parse`；结果 Text 常驻（IDLE）；Suite **间**禁 `pressBack`（会打后台）；全量须**一次连跑**复测，分组重装会假绿 |
+| Dialog 遮罩/`pressBack` → 下 Suite `Empty Text`/`null.click` | — | NORMAL 后关弹窗；空 Inspector 勿 `JSON.parse`；Suite **间**禁 `pressBack`；见上节**整测须一次连跑** |
+| 拆多次 deploy-test 重装后宣称全绿 | — | 工程整测改为**一次连跑**全部 Suite（见上节） |
 
 ## C++ 高频（仅 capi profile）
 

@@ -207,6 +207,15 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 
 **Parameters:** `target` = 项目根目录；`--module` / `-m` = 测试模块名（默认 entry_test）；`--suite` / `-s` = `-s class` 的取值，多个套件逗号分隔（**不指定时从 List.test.ets 及各 .test.ets 的 describe 名自动发现**）；`--timeout` / `-t` = 超时毫秒（默认 15000）。
 
+### 工程整测硬门禁（Agent 必遵）
+
+| 场景 | 做法 |
+|------|------|
+| **工程整测**（交付、推仓前、复现/对标门禁·xDevice） | **单次** `deploy-test`：`-s` 一次带上全部 Suite（逗号分隔），或**省略** `-s` 走自动发现；**只卸装一次 → 连跑全部** |
+| **单批调试** | 允许 `-s OneSuite`；**禁止**据此写「工程全绿」 |
+
+**禁止**：把全量拆成多次 `deploy-test`/`static-deploy-test`，且每次重装后把各段报告拼成通过。每次重装会打断 Suite 间 UI/遮罩状态，**测不到**整包串扰（Dialog/`pressBack` → 下一 Suite `null.click` 等）。详见 **ohos-gate-compliance**「设备整测硬门禁」。
+
 ---
 
 ## 静态 XTS：仅主包 + unittest TestRunner（static-deploy-test）
@@ -220,6 +229,8 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 （Runner 优先用**类名**；仅在设备要求时使用 `/ets/testrunner/...` 路径形式。）
 
 本动作依次：**卸载同包名 → `hdc install -r` 仅主包 `entry-default-signed.hap` → 执行上述形态的应用测试命令**。与 **`deploy-test`**（双 HAP + `-s class`）互斥，请按工程类型选用。
+
+工程整测同样遵守上文 **「工程整测硬门禁」**：全部 Suite **一次** `static-deploy-test` 连跑，禁止多次重装拼绿。
 
 ### Quick Start – Script
 

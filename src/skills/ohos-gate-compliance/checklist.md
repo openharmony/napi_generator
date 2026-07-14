@@ -35,6 +35,7 @@
 - [ ] `@tc.number` / `@tc.name` 与用例一致（若改测试）
 - [ ] 合并冲突未保留「仅 id 无 key」或旧 key 版本
 - [ ] Dialog/Present 类：`NORMAL`/`UEC` 后关闭遮罩；Inspector `content` 读取防空 JSON；勿连续多次 `pressBack` 退出用例页
+- [ ] **工程整测**：全部 Suite **一次** `deploy-test`/`static-deploy-test` 连跑（禁止拆多次且每次重装后拼结果）
 
 ## E. 加固批次附加（ArkTS）
 

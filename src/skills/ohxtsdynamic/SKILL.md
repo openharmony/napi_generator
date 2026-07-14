@@ -4,9 +4,9 @@ description: >-
   OpenHarmony 动态 ArkUI（@ComponentV2）Hypium XTS 一体化技能：常规 API 用例 +
   异常参数（undefined/null）编译探测与成对 Inspector 断言。配合 arkui-dynamic-xts-generator；
   SDK 用 normal（Dyn）。触发词：动态 XTS、ChipV2、ChipGroupV2、异常参数、undefined、null、
-  异常参数、undefined、null、AbnormalAssert、compile_probe、ohxtsdynamic。含 §九/§9.10 多批次开发经验（含 BCM 动+静 CI 踩坑）、§十/REPORTING.md 报告整合。默认轻量化调试；显式申明才走源码级调试。
+  异常参数、undefined、null、AbnormalAssert、compile_probe、ohxtsdynamic。含 §九/§9.10 多批次开发经验（含 BCM 动+静 CI 踩坑）、§9.11 新建工程 p7b 硬门禁、§十/REPORTING.md 报告整合。默认轻量化调试；显式申明才走源码级调试。
 author: "napi_generator"
-version: "1.5.0"
+version: "1.5.1"
 ---
 
 # ohxtsdynamic：动态 ArkUI XTS 一体化 Skill
@@ -49,7 +49,7 @@ version: "1.5.0"
 2. 编写页面 + Hypium 用例 + 注册
 3. **`ohxtsflow build-all` 或 `run-dynamic-pipeline`**
 4. **`hdc` 可用则设备跑测**，会话内输出 **正式测试报告**（三列表格）
-5. **`run-dynamic-pipeline` 全绿后**：自动 **门禁 review → 修复 → commit**（`ohos-gate-compliance/scripts/gate_review.py`，profile=ets）。**门禁手工修复后须同步加固 `ohos-gate-compliance` skill**（见该 skill §「门禁修复 → Skill 加固」）。
+5. **`run-dynamic-pipeline` 全绿后**：自动 **门禁 review → 修复 → commit**（`xts_shared/xts_gate_review.py`）
 6. 多批完成后用户要求「更新报告」→ **§十** + **[REPORTING.md](REPORTING.md)**（汇总 HTML、未覆盖报告）
 
 **例外**（须用户明说）：「只要编译」「不要 hdc」「只改某一文件」。
@@ -166,6 +166,14 @@ python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py run-dynamic-pipel
 python3 /root/aiSkill/.claude/skills/ohhdc/ohhdc.py deploy-test "$CHIP" \
   --module entry_test --class YourNewSuiteTest --timeout 300000
 ```
+
+**工程整测硬门禁（交付 / commit 前 / 对标 CI·xDevice）**：
+
+| 必须 | 禁止 |
+|------|------|
+| **一次** `deploy-test`：`-s SuiteA,SuiteB,...` 覆盖 `List.test` **全部**套件（或省略 `-s` 自动发现），**只装包一次、连跑到底** | 拆成多次 `deploy-test`、每次卸装重装；再把各段 Pass 拼成「全绿」 |
+
+拆段重装会洗掉 Suite 间遮罩/`pressBack` 串扰 → **本地假绿、门禁产物大面积失败**（见 **ohos-gate-compliance**「设备整测硬门禁」）。单批 `-s OneSuite` 仅用于开发调试，**不得**当作工程整测通过。
 
 异常参数批次：`tools/run_abnormal_device_test.sh`（**clean 卸载**旧包后再跑）。
 
@@ -317,6 +325,7 @@ cases: []
 ```
 读 API 文档 + SDK .d.ets（normal/26）
   → arkui-dynamic-xts-generator §〇 归类
+  → 【新建工程】§9.11 gen-xts-signature-p7b.sh（禁止拷贝模板 p7b）
   → 对齐工程内已 Pass 的相近套件（路由、Options 构造、断言形态）
   → 写 @ComponentV2 预览页 + *.test.ets（单 it 单点）
   → main_pages.json + List.test.ets 注册
@@ -465,6 +474,38 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 | 签名源指工程 `autosign/` | 必须 `signing-materials/` |
 | 异常批次假失败 | `run_abnormal_device_test.sh` clean 卸载 |
 | 全量 List 失败误判新用例 | `deploy-test --class SuiteName` |
+| **CI/GN 验签失败** | 模板拷贝 p7b，bundle 与 app.json5 不一致 | **§9.11** `gen-xts-signature-p7b.sh` |
+
+### 9.11 新建工程：signature/openharmony_sx.p7b（P0 硬门禁，与 static/CAPI 共用）
+
+> **已两次生产事故**（静态 AlertDalog_static 误拷 button_static profile）。**绝对禁止第三次**。
+
+**适用**：从 chip/menu/button/parallelize 等 **模板新建** 动态工程，或修改 **`AppScope/app.json5` bundleName** / **`Test.json` bundle-name** 后。
+
+**禁止（零例外）**：
+
+| 禁止 | 后果 |
+|------|------|
+| `cp 模板/signature/openharmony_sx.p7b` 提交 | CI/GN 签出 HAP 与 app bundle 不一致 → **接口人验签失败** |
+| 双 HAP 只改 Test.json 不重做 p7b | Main/Test 共用 p7b，bundle 错则**两包均无效** |
+| hapbuild 本地 signed.hap 通过即交付 | 本地 **signing-materials 临时证书** ≠ 进仓 **p7b** |
+
+**必须（定 bundleName 后、写页面/用例前）**：
+
+```bash
+bash /root/aiSkill/.claude/skills/xts_shared/gen-xts-signature-p7b.sh <工程根>
+strings <工程根>/signature/openharmony_sx.p7b | grep bundle-name
+grep bundleName <工程根>/AppScope/app.json5
+```
+
+**脚手架顺序（动态双 HAP）**：
+
+1. 拷贝模板 → 改 `AppScope/app.json5`、`Test.json`、`BUILD.gn`（Main + Test）  
+2. **`gen-xts-signature-p7b.sh`** → `signature/openharmony_sx.p7b`  
+3. 删 `autosign/`，勿提交  
+4. 写页面/用例 → `build-all` → 设备 → commit  
+
+共用说明见 **`xts_shared/SIGNATURE-P7B.md`**；静态侧见 **ohxtsstatic §13.12**；CAPI 见 **ohxtscapi §签名 Profile**。
 
 ### 9.7 CodeCheck、Git 与提交纪律
 
@@ -479,6 +520,7 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 [ ] 未 git add tools/xts_reports、*.xlsx 等本地报告
 [ ] 存疑路径已获用户确认
 [ ] git commit -sm；禁止 git add -A
+[ ] **p7b（§9.11）**：已 gen-xts-signature-p7b.sh；bundle 与 app.json5 一致；**禁止模板拷贝**
 ```
 
 ### 9.8 交付前自检（设备）
@@ -486,7 +528,7 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 ```
 [ ] source signing-materials/env.sh；normal SDK；unset OHOS_USE_HVIGOR_STATIC
 [ ] build-all：主包 + 测试包 signed HAP
-[ ] 本批 deploy-test Pass（OHOS_REPORT_RESULT）
+[ ] 本批 deploy-test Pass（OHOS_REPORT_RESULT）；**工程交付/推仓前**另做**一次连跑**全部 Suite（禁止多段重装拼绿）
 [ ] 异常：compile_probe 结论与跑测一致
 [ ] 每条 it 前有完整 /** @tc.number … @tc.level */（**编写 `it` 时同批写全**，非提交前补；缺任一条不得编签/设备）
 [ ] 页面 id/key 符合 §9.4「页面名_组件名[_01]」；用例引用已同步

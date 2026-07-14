@@ -433,7 +433,9 @@ python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程完整路径> \
   --timeout 300000 -s YourNewSuiteTest
 ```
 
-多套件：`-s class SuiteA,SuiteB`。全量 `static-deploy-test` 仅在有明确需求时使用。
+多套件：`-s class SuiteA,SuiteB`。
+
+**工程整测硬门禁（交付 / commit 前 / 对标 CI·xDevice）**：**一次** `static-deploy-test`（或 `static-device-test`）连跑 `List.test` **全部** Suite；**禁止**拆成多次部署且每次重装后再拼「全绿」（会漏 Suite 间串扰，见 **ohos-gate-compliance**「设备整测硬门禁」）。单批 `-s OneSuite` 仅调试用。
 
 ```bash
 python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程完整路径> [--timeout 15000] [-m entry] [--unittest-runner /ets/testrunner/OpenHarmonyTestRunner]
@@ -537,6 +539,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <本机日志文件
 - [ ] **签名**：已 `source signing-materials/env.sh`；`entry-default-signed.hap` 存在  
 - [ ] **静态一体**：用 `hapbuild build`，**未**误用 `build-all` 的 `build-test`  
 - [ ] **设备**：本批次套件 **`static-deploy-test -s <Suite>`** 全 Pass（附 `OHOS_REPORT_RESULT`）；非仅全量未跑完  
+- [ ] **工程交付/推仓前**：全部 Suite **一次**连跑 Pass（禁止多次 `static-deploy-test` 重装拼绿）  
 - [ ] **CodeCheck**：G.EXT.01（`@Trace public`）、G.FMT.02（行宽 ≤120）  
 - [ ] 设备 **`deploy-test`** 或通过 **`ohhdc test`** 指定套件时结果可解释
 
