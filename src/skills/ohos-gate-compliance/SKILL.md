@@ -52,6 +52,7 @@ version: "1.2.0"
 | G.CNS.02 Inspector 魔法数 | `constexpr` 命名边界值 | 见 `examples-cpp-inspector.md` 案例 8 |
 | `TestType.Function` | `arkts_patterns` 检测 + 自动替换 |
 | 大写 `String` | `arkts_patterns.fix_arkts_quality` |
+| `'use static'` 下 `int` 误报 ARKTS_NO_INT | `arkts_patterns`：static 文件跳过该规则 |
 | `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck` |
 | WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词；**扫描器源码仅用 `chr()` 拼词，禁止敏感字面量** |
 | Python 嵌套深度 ≤4 | 拆 helper（`arkts_patterns._scan_ets_line` 等） | 提交 skill 前 `py_compile` |
@@ -130,7 +131,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | 大写 `String` | ✅ | `string` |
 | `@tc.name:` 冒号 | ✅ | 空格分隔 |
 | `*/` 与 `it()` 空行 | ✅ | 删空行 |
-| `int` | 报告 | 改 `number` |
+| `int` | 报告（**仅动态**） | 改 `number`；**`'use static'` 文件跳过**（`int` 合法） |
 | `.key('foo')` 无下划线 | 报告 | `页面名_组件名` |
 | static 十六进制 fontColor | 报告 | `ResourceColor` 或字符串 |
 | Dialog 遮罩/`pressBack` → 下 Suite `Empty Text`/`null.click` | — | NORMAL 后关弹窗；空 Inspector 勿 `JSON.parse`；Suite **间**禁 `pressBack`；见上节**整测须一次连跑** |

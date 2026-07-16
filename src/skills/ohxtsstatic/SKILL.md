@@ -759,6 +759,9 @@ python3 src/skills/ohhap/hapbuild.py build <静态一体工程>
 | `OHOS_HAPSIGNER_RESULT` 指工程 `autosign/` | 必须指 `signing-materials/`；sign 会先清空工程 autosign |
 | 只编未跑就宣称完成 | 本批 `static-deploy-test -s Suite` + `OHOS_REPORT_RESULT` |
 | 全量 List 第 N 条 App died | 新批次只跑本批套件，全量失败 ≠ 新用例失败 |
+| hvigor-static 报找不到 components（`metaVersion` 3.0.2） | 本地临时将 SDK 各包 `oh-uni-package.json` 的 `metaVersion` 改为 **3.0.1**（勿提交 SDK） |
+| `@ohos/hypium-binary` 预编译 abc 与设备 etsstdlib ABI 不一致（如 `Array.create`/`Map.get` Y vs Object）→ Runner 起不来或协程挂死 | **勿**先 sync GitCode 覆盖；用本机已验证 `entry/src/hypium`（SDK `src_static` + 最小补丁，删掉模板 `testAbility`/`testrunner`）；**禁止提交** `hypium/`；Runner/用例改相对路径 `../../../hypium` |
+| 误用 `source use-ohos-sdk.sh static` 导致 SDK 路径漂移 | 显式：`OHOS_SDK_PATH=$HOS_CLT_PATH/sdk/default/openharmony/static` + `OHOS_USE_HVIGOR_STATIC=1` |
 
 ### 13.8 CodeCheck、异常参数、Git 与提交纪律
 
