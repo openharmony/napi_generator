@@ -137,9 +137,11 @@ def check_ets_xtscheck(path: Path, text: str) -> list[GateIssue]:
         it_name = m.group(2)
         before = text[: m.start()]
         # 取 it 前最近一块注释
-        prev_lines = before.splitlines()[-20:]
-        block = "\n".join(prev_lines)
-        if "*/" not in block or "@tc.number" not in block or "@tc.name" not in block:
+        tail = before[-3000:] if len(before) > 3000 else before
+        doc_match = None
+        for doc in re.finditer(r"/\*\*.*?\*/", tail, re.S):
+            doc_match = doc
+        if doc_match is None:
             line_no = before.count("\n") + 1
             issues.append(
                 GateIssue(
@@ -150,9 +152,20 @@ def check_ets_xtscheck(path: Path, text: str) -> list[GateIssue]:
                 )
             )
             continue
-        # 与已有逻辑一致：有文档时校验 number/name 与 it 名
-        nm = re.search(r"@tc\.name\s+(\S+)", block)
-        num = re.search(r"@tc\.number\s+(\S+)", block)
+        doc_block = doc_match.group(0)
+        if "@tc.number" not in doc_block or "@tc.name" not in doc_block:
+            line_no = before.count("\n") + 1
+            issues.append(
+                GateIssue(
+                    path,
+                    line_no,
+                    "xtscheck",
+                    f"it() 缺少完整 @tc JSDoc: {it_name}",
+                )
+            )
+            continue
+        nm = re.search(r"@tc\.name\s+(\S+)", doc_block)
+        num = re.search(r"@tc\.number\s+(\S+)", doc_block)
         if nm and nm.group(1) != it_name:
             issues.append(
                 GateIssue(
