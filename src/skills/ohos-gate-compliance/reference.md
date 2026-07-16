@@ -47,6 +47,34 @@ for line in open('file.cpp'):
 └─ 参数过多(>5) → struct 聚合参数
 ```
 
+## G.FUD.05 / 超大函数：NAPI `GetXxxProps` 表注册（CAPI）
+
+**现象**：`NapiFuncInit*.cpp` 里单个 `GetMaterialProps`（或同类）用超长 `static napi_property_descriptor desc[] = { ... }`，
+nbnc / 非空非注释行 > 50，触发 **G.FUD.05** 与 **超大函数[C++]**。
+
+**修法（不影响导出符号集合）**：按业务域拆成多个 `GetXxxProps`，`Init` 内多次 `napi_define_properties`（或经薄封装
+`DefineXxxProps` 依次注册）。禁止为过线把多条 `MakeProp` 硬塞同一行。
+
+```cpp
+// before: 一个 GetMaterialProps 内 30+ MakeMaterialProp → nbnc≈57
+// after:
+static napi_property_descriptor *GetMaterialCoreProps(size_t *count);   // Immersive/LightEffect
+static napi_property_descriptor *GetMaterialDialogProps(size_t *count); // CustomDialog/Node/DisplayMode
+static bool DefineMaterialProps(napi_env env, napi_value exports)
+{
+    size_t coreCount = 0;
+    size_t dialogCount = 0;
+    auto *core = GetMaterialCoreProps(&coreCount);
+    auto *dialog = GetMaterialDialogProps(&dialogCount);
+    if (napi_define_properties(env, exports, coreCount, core) != napi_ok) {
+        return false;
+    }
+    return napi_define_properties(env, exports, dialogCount, dialog) == napi_ok;
+}
+```
+
+案例：`ace_c_arkui_test_api26_systemmaterial/.../NapiFuncInitTest.cpp`（PR 门禁 G.FUD.05）。
+
 ## struct 参数设计约束（C++17）
 
 | 成员类型 | 默认构造 | 赋值 | 建议 |

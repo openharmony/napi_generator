@@ -56,7 +56,7 @@
 
 ## G. C++ 合规（ace_engine）
 
-- [ ] 圈复杂度 ≤20、函数 nbnc ≤50、嵌套 ≤4
+- [ ] 圈复杂度 ≤20、函数 nbnc ≤50、嵌套 ≤4（NAPI `GetXxxProps` 超长表：拆多函数 + 多次 define，见 reference）
 - [ ] 行宽 ≤120（G.FMT.05）
 - [ ] 函数调用实参续行 = 起始行缩进 + 4（G.FMT.06-CPP，非固定 8）
 - [ ] 无裸魔法数（已用 `constexpr` / 命名常量）
