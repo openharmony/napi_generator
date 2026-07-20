@@ -264,6 +264,66 @@ def check_arkts_patterns(path: Path, text: str) -> list[GateIssue]:
     ]
 
 
+# CI check_hvigor：compileSdkVersion / targetSdkVersion 须为 "M.S.F" 字符串（如 "26.0.0"）。
+# 禁止为本地 hvigor 00306042 改成数字后提交（ohxtsdynamic §9.10.3 / ohxtsstatic §13.10）。
+_SDK_VER_KEYS = ("compileSdkVersion", "targetSdkVersion")
+_SDK_VER_BAD = re.compile(
+    r'("(?:' + "|".join(_SDK_VER_KEYS) + r')"\s*:\s*)(\d+)\b'
+)
+_SDK_VER_SHORT_STR = re.compile(
+    r'("(?:' + "|".join(_SDK_VER_KEYS) + r')"\s*:\s*")(\d+)(")'
+)
+
+
+def fix_build_profile_compile_sdk(text: str) -> tuple[str, int]:
+    """将数字或 "26" 形式规范为 "26.0.0"（仅 compile/targetSdkVersion）。"""
+    n = 0
+
+    def _num_to_msf(m: re.Match[str]) -> str:
+        nonlocal n
+        n += 1
+        return f'{m.group(1)}"{m.group(2)}.0.0"'
+
+    def _short_to_msf(m: re.Match[str]) -> str:
+        nonlocal n
+        n += 1
+        return f'{m.group(1)}{m.group(2)}.0.0{m.group(3)}'
+
+    text = _SDK_VER_BAD.sub(_num_to_msf, text)
+    text = _SDK_VER_SHORT_STR.sub(_short_to_msf, text)
+    return text, n
+
+
+def check_build_profile_compile_sdk(path: Path, text: str) -> list[GateIssue]:
+    issues: list[GateIssue] = []
+    if path.name != "build-profile.json5":
+        return issues
+    for i, line in enumerate(text.splitlines(), 1):
+        for key in _SDK_VER_KEYS:
+            if key not in line:
+                continue
+            if re.search(rf'"{key}"\s*:\s*\d+\b', line):
+                issues.append(
+                    GateIssue(
+                        path,
+                        i,
+                        "CI.SDK.01",
+                        f'{key} 须为 "M.S.F" 字符串（如 "26.0.0"），'
+                        "禁止提交数字（本地 00306042 勿写入仓）",
+                    )
+                )
+            elif re.search(rf'"{key}"\s*:\s*"\d+"\s*,?', line):
+                issues.append(
+                    GateIssue(
+                        path,
+                        i,
+                        "CI.SDK.01",
+                        f'{key} 须为完整 "M.S.F"（如 "26.0.0"），勿写 "26"',
+                    )
+                )
+    return issues
+
+
 def apply_auto_fixes(path: Path, profile: ProjectProfile) -> int:
     try:
         text = path.read_text(encoding="utf-8")
@@ -278,6 +338,9 @@ def apply_auto_fixes(path: Path, profile: ProjectProfile) -> int:
     if profile == ProjectProfile.CAPI and path.suffix in (".cpp", ".h"):
         text, n = fix_cpp_fmt06(text)
         total += n
+    if path.name == "build-profile.json5":
+        text, n = fix_build_profile_compile_sdk(text)
+        total += n
     if total:
         path.write_text(text, encoding="utf-8")
     return total
@@ -285,12 +348,19 @@ def apply_auto_fixes(path: Path, profile: ProjectProfile) -> int:
 
 def gate_target_files(project: Path, profile: ProjectProfile) -> list[Path]:
     repo = find_git_root(project)
+    bp = project / "build-profile.json5"
     if repo is None:
-        return project_source_files(project, profile)
+        out = project_source_files(project, profile)
+        if bp.is_file():
+            out.append(bp)
+        return out
     try:
         rel_proj = project.resolve().relative_to(repo.resolve())
     except ValueError:
-        return project_source_files(project, profile)
+        out = project_source_files(project, profile)
+        if bp.is_file():
+            out.append(bp)
+        return out
     status = subprocess.run(
         ["git", "-C", str(repo), "status", "--porcelain", str(rel_proj)],
         capture_output=True,
@@ -304,15 +374,22 @@ def gate_target_files(project: Path, profile: ProjectProfile) -> list[Path]:
         if any(x in rel for x in ("/build/", "/.cxx/", "/autosign/", "/hypium/")):
             continue
         fp = repo / rel
-        if fp.is_file() and _suffix_ok(fp.suffix, profile):
+        if not fp.is_file():
+            continue
+        if fp.name == "build-profile.json5" or _suffix_ok(fp.suffix, profile):
             paths.append(fp)
     if paths:
         return sorted(set(paths))
-    return project_source_files(project, profile)
+    out = project_source_files(project, profile)
+    if bp.is_file():
+        out.append(bp)
+    return out
 
 
 def scan_file(path: Path, text: str, profile: ProjectProfile) -> list[GateIssue]:
     issues: list[GateIssue] = []
+    if path.name == "build-profile.json5":
+        return check_build_profile_compile_sdk(path, text)
     issues.extend(check_ets_xtscheck(path, text))
     issues.extend(check_arkts_patterns(path, text))
     issues.extend(check_line_width(path, text))

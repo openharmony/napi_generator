@@ -17,7 +17,7 @@ version: "1.2.0"
 
 | profile | 典型工程 | 自动检查 | 自动修复 |
 |---------|----------|----------|----------|
-| **ets** | ohxtsstatic / ohxtsdynamic HAP | xtscheck、ArkTS Quality、G.FMT.05 | @tc 冒号、空行、String→string、TestType.FUNCTION |
+| **ets** | ohxtsstatic / ohxtsdynamic HAP | xtscheck、ArkTS Quality、G.FMT.05、**CI.SDK.01** | @tc 冒号、空行、String→string、TestType.FUNCTION、**compileSdkVersion→"M.S.F"** |
 | **capi** | ohxtscapi HAP | 上述 + **G.FMT.06-CPP**（仅 `.cpp/.h`） | 上述 + 实参续行 **起始行+4** |
 
 **ETS 工程不跑 C++ 规则**；CAPI 工程对 `.ets` 仍跑 ArkTS 规则。
@@ -57,6 +57,7 @@ version: "1.2.0"
 | WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词；**扫描器源码仅用 `chr()` 拼词，禁止敏感字面量** |
 | Python 嵌套深度 ≤4 | 拆 helper（`arkts_patterns._scan_ets_line` 等） | 提交 skill 前 `py_compile` |
 | G.FUD.05 / 超大函数 `GetXxxProps` | 按域拆多表 + 多次 `napi_define_properties` | 见 `reference.md` NAPI 表注册 |
+| **CI.SDK.01** `compileSdkVersion` 数字/"26" | `gate_review` 检测+自动改 `"26.0.0"`；**`git-commit-agent.sh` 暂存预检拦截** | 以 CI 为准，本地 00306042 勿入仓 |
 
 Agent **禁止**只修工程、不更新 skill（除非用户明确「仅 hotfix」）。
 
