@@ -700,6 +700,25 @@ def deploy_and_run_test(
         return False, "", f"主 HAP 不存在: {main_hap}"
     if not os.path.isfile(test_hap):
         return False, "", f"测试 HAP 不存在: {test_hap}"
+    # 主包过期告警：页面在 main，只编测包会导致本地假绿、门禁才暴露页崩溃
+    try:
+        main_mtime = os.path.getmtime(main_hap)
+        pages_root = os.path.join(project_dir, "entry", "src", "main", "ets")
+        newest_src = 0.0
+        if os.path.isdir(pages_root):
+            for root, _dirs, files in os.walk(pages_root):
+                for fn in files:
+                    if fn.endswith((".ets", ".ts")):
+                        newest_src = max(newest_src, os.path.getmtime(os.path.join(root, fn)))
+        if newest_src and main_mtime + 1.0 < newest_src:
+            print(
+                f"⚠ 主 HAP 早于 entry/src/main 源码（主包可能过期）。"
+                f"请先 hapbuild build+build-test+sign 再 deploy-test。"
+                f" main_hap_mtime={main_mtime:.0f} newest_main_ets={newest_src:.0f}",
+                flush=True,
+            )
+    except OSError:
+        pass
     bn = bundle_name or _parse_bundle_name(project_dir)
     if not bn:
         return False, "", "无法解析 bundleName，请指定 bundle_name 或确保项目 AppScope/app.json5 存在且含 app.bundleName"
