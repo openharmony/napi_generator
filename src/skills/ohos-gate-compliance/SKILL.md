@@ -125,6 +125,18 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 
 报告可信条件：会话/HTML 须对应**同一次**装包后的连跑日志；禁止多段日志人工相加当整测。
 
+### 动态双 HAP：主包页面 vs 测包用例（StateMgmtNullUndefined 实锤）
+
+> **现象**：本地宣称全绿，门禁/xDevice 产物手动测才发现「装饰器异常入参导致页面崩溃」（如 `@Monitor(null)` → `Cannot read property enableWildcard of null`）。
+
+| 根因 | 说明 | 必须 |
+|------|------|------|
+| **主包过期** | 页面在 `entry/src/main`（主 HAP），用例在 ohosTest；只 `build-test`/`只装测包` 时主包仍是旧页面 → **本地装不到崩溃页** | 改页面后必须 `build` + `build-test` + `sign`，`deploy-test` 装 **主+测** 两包；宣称绿前核对两包 mtime |
+| **push 吞错** | `PagePushHelper.pushPage` 若 `catch` 后不 `throw`，页面 abc 崩溃（`Cannot execute ark file` / push `code:100001`）可能被后续弱断言漏掉 | `pushUrl` 失败必须抛出；`assertTitleVisible` 找不到节点必须 Fail |
+| **编过 ≠ 可加载** | 部分装饰器 null/undefined **编译通过、运行崩溃** | 不可测则删异常用例并归档；禁止「用合法参数冒充已覆盖异常入参」 |
+
+**宣称工程全绿前自检**：同一次 `deploy-test` 日志中无 `Cannot execute ark file`、`enableWildcard of null`、`[PagePushHelper] push ... error`；HTML 对应该次装包。
+
 ## ArkTS 高频
 
 | 问题 | 自动？ | 修复 |
@@ -139,6 +151,8 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | Dialog 遮罩/`pressBack` → 下 Suite `Empty Text`/`null.click` | — | NORMAL 后关弹窗；空 Inspector 勿 `JSON.parse`；Suite **间**禁 `pressBack`；见上节**整测须一次连跑** |
 | Dialog `DocumentViewPicker` 模拟 UEC → 后续 Suite 全 `component not found` | — | **禁止**系统 FilePicker/UIExtension；改可自动化子窗正例；禁 `expect(true)`/`env skip` 假绿 |
 | 拆多次 deploy-test 重装后宣称全绿 | — | 工程整测改为**一次连跑**全部 Suite（见上节） |
+| 双 HAP 只编测包 / 主包过期 → 本地假绿、门禁页崩溃 | — | 改 `MainAbility/pages` 后必须重编**主+测**并双包安装；见上节「主包页面 vs 测包」 |
+| `PagePushHelper` 吞 `pushUrl` 错误 | — | catch 后必须 `throw`；页面装饰器崩溃应直接 Fail |
 | 裸 `it()` 无 `@tc.*` JSDoc | 报告 | 每条 `it` 同批写全六字段；`gate_review` 扫 `*.test.ets`（含一体工程 `entry/.../test/`） |
 
 ## C++ 高频（仅 capi profile / ohxtscapi）

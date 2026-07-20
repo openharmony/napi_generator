@@ -517,6 +517,25 @@ def install_project_haps(project_dir):
         return False, "", f"主 HAP 不存在: {main_hap}"
     if not os.path.isfile(test_hap):
         return False, "", f"测试 HAP 不存在: {test_hap}"
+    # 主包过期告警：页面在 main，只编测包会导致本地假绿、门禁才暴露页崩溃
+    try:
+        main_mtime = os.path.getmtime(main_hap)
+        pages_root = os.path.join(project_dir, "entry", "src", "main", "ets")
+        newest_src = 0.0
+        if os.path.isdir(pages_root):
+            for root, _dirs, files in os.walk(pages_root):
+                for fn in files:
+                    if fn.endswith((".ets", ".ts")):
+                        newest_src = max(newest_src, os.path.getmtime(os.path.join(root, fn)))
+        if newest_src and main_mtime + 1.0 < newest_src:
+            print(
+                f"⚠ 主 HAP 早于 entry/src/main 源码（主包可能过期）。"
+                f"请先 hapbuild build+build-test+sign 再 deploy-test。"
+                f" main_hap_mtime={main_mtime:.0f} newest_main_ets={newest_src:.0f}",
+                flush=True,
+            )
+    except OSError:
+        pass
     out_parts = []
     success1, out1, err1 = install_hap(main_hap)
     out_parts.append(f"主 HAP: {out1.strip() or (err1 or '')}")
@@ -560,10 +579,12 @@ def _discover_test_suites(project_dir):
     再在各 .test.ets 文件中取 describe('SuiteName', ...) 的 SuiteName，
     返回逗号分隔的套件名，供 aa test -s class 使用；失败返回 None。
     """
-    list_path = os.path.join(
-        project_dir, 'entry', 'src', 'ohosTest', 'ets', 'test', 'List.test.ets'
-    )
-    if not os.path.isfile(list_path):
+    list_candidates = [
+        os.path.join(project_dir, 'entry', 'src', 'ohosTest', 'ets', 'test', 'List.test.ets'),
+        os.path.join(project_dir, 'entry', 'src', 'main', 'ets', 'test', 'List.test.ets'),
+    ]
+    list_path = next((p for p in list_candidates if os.path.isfile(p)), None)
+    if list_path is None:
         return None
     try:
         with open(list_path, 'r', encoding='utf-8') as f:
@@ -594,7 +615,7 @@ def _discover_test_suites(project_dir):
         i += 1
     body = list_content[brace + 1:i - 1] if depth == 0 else ""
     call_order = re.findall(r"(\w+)\s*\(\s*\)", body)
-    test_dir = os.path.join(project_dir, 'entry', 'src', 'ohosTest', 'ets', 'test')
+    test_dir = os.path.dirname(list_path)
     suite_names = []
     for func_name in call_order:
         file_name = import_map.get(func_name)
@@ -1210,6 +1231,7 @@ def _build_app_test_remote_line(
     module_name: str,
     runner_path: str,
     timeout_ms: int,
+    test_class: str | None = None,
 ) -> tuple[str, int]:
     """拼出设备 shell 内执行的远程命令行（参数已转义），并返回生效后的超时毫秒。"""
     runner = (os.environ.get(_ev_oh_app_test("UNITTEST_RUNNER")) or "").strip() or runner_path
@@ -1231,6 +1253,9 @@ def _build_app_test_remote_line(
         "unittest",
         runner,
     ]
+    cls = (test_class or "").strip()
+    if cls:
+        parts.extend(["-s", "class", cls])
     inner = " ".join(shlex.quote(p) for p in parts)
     return inner, effective_ms
 
@@ -1282,12 +1307,14 @@ def run_aa_test_unittest(
     module_name: str = "entry",
     runner_path: str = "OpenHarmonyTestRunner",
     timeout_ms: int = 15000,
+    test_class: str | None = None,
 ):
     """
     静态 XTS / Hypium 一体包：主模块内 TestRunner，通过设备侧 ``-s unittest`` 指定 Runner。
 
     官方文档要求 **unittest** 参数取 **Runner 类名**（如 ``OpenHarmonyTestRunner``），
     **timeout** 参数写在 **unittest** 之前；设备 shell 内路径 ``/ets/testrunner/...`` 在部分版本可能无效。
+    可选 ``test_class`` → ``-s class``（多套件逗号分隔时须由调用方分次调用）。
 
     若设备返回 10106002 等，可能与 **release 签名包不支持设备应用测试子命令** 有关，需 debug 包或策略放行。
 
@@ -1295,7 +1322,7 @@ def run_aa_test_unittest(
         tuple: (success: bool, output: str, error: str)
     """
     inner, timeout_ms = _build_app_test_remote_line(
-        bundle_name, module_name, runner_path, timeout_ms
+        bundle_name, module_name, runner_path, timeout_ms, test_class=test_class
     )
     log_file = (os.environ.get(_ev_oh_app_test("LOG_FILE")) or "").strip()
     wait_sec = _resolve_app_test_wall_sec(timeout_ms)
@@ -1338,15 +1365,42 @@ def run_aa_test_unittest(
             worker.join(timeout=45)
 
 
+def _run_static_aa_suites(
+    bundle_name: str,
+    module_name: str,
+    runner_path: str,
+    timeout_ms: int,
+    test_class: str | None,
+) -> tuple[bool, str, str]:
+    """静态一体包分次 aa test；无 class 则整包一次（兼容旧行为）。"""
+    suites = _split_test_suites(test_class) if test_class else []
+    if not suites:
+        return run_aa_test_unittest(
+            bundle_name, module_name, runner_path, timeout_ms, test_class=None
+        )
+    chunks: list[str] = []
+    for suite in suites:
+        ok, out, err = run_aa_test_unittest(
+            bundle_name, module_name, runner_path, timeout_ms, test_class=suite
+        )
+        chunks.append(f"--- aa test class={suite} ---")
+        chunks.append((out or err or "").strip())
+        if not ok:
+            return False, "\n".join(chunks), err or f"aa test 失败: {suite}"
+    return True, "\n".join(chunks), ""
+
+
 def deploy_static_xts_test(
     project_dir: str,
     module_name: str = "entry",
     runner_path: str = "OpenHarmonyTestRunner",
     timeout_ms: int = 15000,
+    test_class: str | None = None,
 ):
     """
     静态 XTS：仅替换安装主包 entry-default-signed.hap，再执行 run_aa_test_unittest。
     不要求 ohosTest 独立 HAP（与 deploy_and_run_test 不同）。
+    ``test_class`` 多套件逗号分隔时分次 ``-s class``（勿单次拼逗号，易挂起）。
 
     Returns:
         tuple: (success: bool, log: str, error: str)
@@ -1377,11 +1431,10 @@ def deploy_static_xts_test(
     lines.append(f"安装主 HAP: {(out_i or err_i or '').strip()}")
     if not ok_i:
         return False, "\n".join(lines), err_i or out_i or "replace-install 失败"
-    ok_t, out_t, err_t = run_aa_test_unittest(
-        bn, module_name, runner_path, timeout_ms
+    ok_t, out_t, err_t = _run_static_aa_suites(
+        bn, module_name, runner_path, timeout_ms, test_class
     )
-    lines.append("--- aa test (unittest) ---")
-    lines.append((out_t or err_t or "").strip())
+    lines.append(out_t.strip())
     if not ok_t:
         return False, "\n".join(lines), err_t or "aa test 失败"
     return True, "\n".join(lines), ""
@@ -1755,7 +1808,7 @@ def _ohhdc_fill_parser_tests_and_format(parser: argparse.ArgumentParser) -> None
         '--suite',
         '-s',
         dest='suite_name',
-        help='运行测试时指定测试套件名（如 ActsAbilityTest），与 test 命令一起使用'
+        help='Hypium 套件名（-s class）；与 test / static-deploy-test 一起使用，多套件逗号分隔分次跑'
     )
     parser.add_argument(
         '--case',
@@ -2357,11 +2410,13 @@ def _try_dispatch_deploy_tests(args, parser) -> bool:
                 file=sys.stderr,
             )
             sys.exit(1)
+        suite = args.suite_name.strip() if args.suite_name else None
         success, out, err = deploy_static_xts_test(
             args.target,
             module_name=(args.module_name or "entry").strip(),
             runner_path=(args.unittest_runner or "OpenHarmonyTestRunner").strip(),
             timeout_ms=int(args.timeout),
+            test_class=suite,
         )
         if success:
             print(

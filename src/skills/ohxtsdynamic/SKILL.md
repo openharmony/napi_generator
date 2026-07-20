@@ -528,7 +528,9 @@ grep bundleName <工程根>/AppScope/app.json5
 
 ```
 [ ] source signing-materials/env.sh；normal SDK；unset OHOS_USE_HVIGOR_STATIC
-[ ] build-all：主包 + 测试包 signed HAP
+[ ] build-all：主包 + 测试包 signed HAP（**改 MainAbility/pages 后禁止只 build-test**；主包过期 → 本地假绿、门禁页崩溃）
+[ ] deploy-test 一次装主+测；日志无 `Cannot execute ark file` / `PagePushHelper] push ... error`
+[ ] PagePushHelper：`pushUrl` 失败必须 throw（禁吞错）
 [ ] 本批 deploy-test Pass（OHOS_REPORT_RESULT）；**工程交付/推仓前**另做**一次连跑**全部 Suite（禁止多段重装拼绿）
 [ ] 异常：compile_probe 结论与跑测一致
 [ ] 每条 it 前有完整 /** @tc.number … @tc.level */（**编写 `it` 时同批写全**，非提交前补；缺任一条不得编签/设备）
