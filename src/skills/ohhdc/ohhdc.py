@@ -607,7 +607,7 @@ def _extract_braced_body(text: str, start_marker: str) -> str | None:
         i += 1
     if depth != 0:
         return None
-    return text[brace + 1 : i - 1]
+    return text[brace + 1:i - 1]
 
 
 def _suite_name_from_test_file(file_path: str) -> str | None:

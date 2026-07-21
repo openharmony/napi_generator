@@ -49,6 +49,7 @@ version: "1.2.0"
 | 规则 | 加固方式 |
 |------|----------|
 | G.FMT.06-CPP 实参续行 | 起始行缩进 + 4（8→12，4→8） | `gate_review.fix_cpp_fmt06` |
+| **G.FMT.04** `:` 前空格 | `brace + 1 : i` → `brace + 1:i` | `gate_review.fix_py_fmt04_space_before_colon` |
 | G.CNS.02 Inspector 魔法数 | `constexpr` 命名边界值 | 见 `examples-cpp-inspector.md` 案例 8 |
 | `TestType.Function` | `arkts_patterns` 检测 + 自动替换 |
 | 大写 `String` | `arkts_patterns.fix_arkts_quality` |

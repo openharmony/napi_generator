@@ -65,7 +65,7 @@ def detect_project_profile(project: Path) -> ProjectProfile:
 
 
 def _suffix_ok(suffix: str, profile: ProjectProfile) -> bool:
-    if suffix == ".ets" or suffix == ".ts":
+    if suffix in (".ets", ".ts", ".py"):
         return True
     if profile == ProjectProfile.CAPI and suffix in (".cpp", ".h"):
         return True
@@ -254,6 +254,24 @@ def check_line_width(path: Path, text: str) -> list[GateIssue]:
     return issues
 
 
+def fix_py_fmt04_space_before_colon(text: str) -> tuple[str, int]:
+    """G.FMT.04：去掉 ':' 前多余空格（如切片 brace + 1 : i → brace + 1:i）。"""
+    text2, n = re.subn(r" +:", ":", text)
+    return text2, n
+
+
+def check_py_fmt04_space_before_colon(path: Path, text: str) -> list[GateIssue]:
+    issues: list[GateIssue] = []
+    if path.suffix != ".py":
+        return issues
+    for i, line in enumerate(text.splitlines(), 1):
+        if re.search(r" +:", line):
+            issues.append(
+                GateIssue(path, i, "G.FMT.04", "whitespace before ':'（':' 前勿空格）")
+            )
+    return issues
+
+
 def check_arkts_patterns(path: Path, text: str) -> list[GateIssue]:
     return [
         GateIssue(path, h.line, h.rule, h.message)
@@ -332,6 +350,9 @@ def apply_auto_fixes(path: Path, profile: ProjectProfile) -> int:
         total += n
         text, n = fix_arkts_quality(text)
         total += n
+    if path.suffix == ".py":
+        text, n = fix_py_fmt04_space_before_colon(text)
+        total += n
     if profile == ProjectProfile.CAPI and path.suffix in (".cpp", ".h"):
         text, n = fix_cpp_fmt06(text)
         total += n
@@ -390,6 +411,7 @@ def scan_file(path: Path, text: str, profile: ProjectProfile) -> list[GateIssue]
     issues.extend(check_ets_xtscheck(path, text))
     issues.extend(check_arkts_patterns(path, text))
     issues.extend(check_line_width(path, text))
+    issues.extend(check_py_fmt04_space_before_colon(path, text))
     if profile == ProjectProfile.CAPI:
         issues.extend(check_cpp_fmt06(path, text))
     return issues
