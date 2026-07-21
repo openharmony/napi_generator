@@ -184,7 +184,7 @@ python3 /root/aiSkill/.claude/skills/ohhdc/ohhdc.py deploy-test "$CHIP" \
 
 与 ohxtsstatic 相同：**三列表格**（用例名称｜Pass/Fail｜设计思路 ≤5 句），附环境、命令、`OHOS_REPORT_RESULT` 汇总。
 
-**HTML 可视化（推荐）**：`deploy-test` / `run-dynamic-pipeline` 结束后自动输出 `REPORT_HTML=...`（**xDevice 格式**），浏览器打开 `summary_report.html`。
+**HTML 可视化（推荐）**：`deploy-test` / `run-dynamic-pipeline` 结束后自动输出 `REPORT_HTML=...`（**仅 xDevice 格式**），浏览器打开 `summary_report.html`。**禁止**自写汇总页；`--batch` 产生的 `batch_index.html` **仅本地导航**，不作接口人交付。
 
 ```bash
 python3 ohxtsdynamic/ohxtsflow.py deploy-test "$CHIP" \
@@ -199,7 +199,7 @@ python3 ohxtsdynamic/ohxtsflow.py gen-xdevice-report /tmp/unittest_device.log \
 
 `/root/aiSkill/develop/xts_acts_local_tools/xts_acts_0622/xts_reports/hypium/<工程>_<套件>_<时间>/summary_report.html`
 
-多 HAP 批次加 `--batch recent_chip` 会额外写 `batch_index.html`。
+**commit 后截图**：交 **一张** `summary_top.png`（Summary→最多 10 行 Module）；**多 HAP 只截合并汇总页**。见 **[REPORTING.md](REPORTING.md)**。
 
 ### 3.1 调试模式：轻量化（默认）与源码级（显式触发）
 

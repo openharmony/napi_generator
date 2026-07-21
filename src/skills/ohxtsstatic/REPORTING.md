@@ -29,6 +29,23 @@
 
 **禁止**：只给 log 路径、不在会话写三列表格；**禁止**把 gen 脚本/HTML 提交进 xts_acts 仓。
 
+### HTML / 截图硬门禁（接口人只认 xdevice）
+
+| 禁止 | 必须 |
+|------|------|
+| 自写深色/表格汇总页、`batch_index.html` 当正式交付 | **仅**官方 xdevice `summary_report.html`（Element Plus） |
+| 多 HAP 时对每个子 HAP 各截一张 | **一张**汇总截图 `summary_top.png` |
+
+**commit（及用户要求的 push）完成后**：
+
+- 交付 **一张** `summary_top.png`：上到 Summary，下到 Test Details，**最多 10 行** Module
+- **单 HAP**：该次 `REPORT_HTML` 对应报告截一张
+- **多 HAP / master 合并**：只截 `merge-xdevice-reports.py`（或 `gen_xdevice_summary_report.py`）合并后的那一页
+- 脚本（master/xdevice）：`xts-develop-master-cycle/scripts/screenshot-xdevice-summary.sh`
+- 会话内用 Read 打开 png，让用户直接看到图
+
+`batch_index.html` / `--batch` 仅可作**本地导航**，**禁止**当作接口人验收物。
+
 ---
 
 ## 2. 单批 xDevice 报告（默认）

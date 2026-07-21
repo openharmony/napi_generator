@@ -166,7 +166,9 @@ python3 src/skills/ohxtscapi/ohxtscflow.py run-capi-pipeline \
 
 ### 5. 报告
 
-见 **[REPORTING.md](REPORTING.md)**：Tier-1 会话表 + xDevice `REPORT_HTML` + 多模块汇总脚本。
+见 **[REPORTING.md](REPORTING.md)**：Tier-1 会话表 + **仅** xDevice `REPORT_HTML` + 多模块汇总脚本。
+
+**commit 后**：交付 **一张** `summary_top.png`（多 HAP 只截合并页，最多 10 行 Module）；禁止自写汇总页。
 
 ---
 

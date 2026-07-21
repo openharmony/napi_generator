@@ -1,4 +1,9 @@
 # 如何使用SKILL
+
+> **技能主仓**：本目录（`napi_generator/src/skills`）为远端提交的 **canonical** 源。  
+> 优化 skill **先改这里**，再执行 `/root/aiSkill/.claude/skills/sync-skills.sh pull-xts`（或 `pull`）同步到 Cursor 运行时 `.claude/skills`。  
+> 详见同级策略说明也可对照 `.claude/skills/SKILLS_SYNC.md`。
+
 > 以下内容描述了怎么在cursor的工程里增加skill能力，方便开发和使用。
 > 需要的环境如下：
 > 1. cursor，打开一个工程，比如napi_generator
