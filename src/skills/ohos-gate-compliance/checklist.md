@@ -52,7 +52,8 @@
 - [ ] `git commit -sm` + Signed-off-by
 - [ ] `git log -1 --format=full` 已核对
 - [ ] 未提交 `root/`、IDE 点开头的本地配置目录等无关路径
-- [ ] skill 文档已通过 `scan_wordstool_docs.py`（WordsTool 文档用词）
+- [ ] skill 文档已通过 `scan_wordstool_docs.py`（WordsTool 文档用词，含 .297 / .241 / doc1）
+- [ ] skill 内 Python：函数嵌套深度 ≤4、nbnc 行数 ≤50（超限须拆 helper）
 
 ## G. C++ 合规（ace_engine）
 

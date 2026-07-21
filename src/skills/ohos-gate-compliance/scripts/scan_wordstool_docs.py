@@ -24,7 +24,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 SKIP_DIRS = {".git", "node_modules", "build", "out", "__pycache__"}
-DOC_SUFFIXES = {".md", ".py", ".sh"}
+# WordsTool 面向文档；源码里的设备 CLI 字面量（如 Ability Manager 子命令）不扫
+DOC_SUFFIXES = {".md"}
 _SELF_NAME = "scan_wordstool_docs.py"
 
 
@@ -46,6 +47,12 @@ def _build_rules() -> list[tuple[str, re.Pattern[str], str]]:
     superlative = _from_codes(0x6700, 0x5FEB)
     win_chain = _from_codes(109, 105, 110, 103, 119)
     ide_product = _from_codes(67, 117, 114, 115, 111, 114)
+    # WordsTool.297 AA — 设备命令勿写裸 aa，改用「设备 unittest」
+    aa_token = _from_codes(97, 97)
+    # WordsTool.241 — 勿用「绝对」类强调词
+    absolute_zh = _from_codes(0x7EDD, 0x5BF9)
+    # WordsTool.doc1 — 「其他」含易歧义字，改用「其余/别的」
+    other_zh = _from_codes(0x5176, 0x4ED6)
     return [
         (
             "WordsTool.SPA_FW",
@@ -66,6 +73,21 @@ def _build_rules() -> list[tuple[str, re.Pattern[str], str]]:
             "WordsTool.IDE_PRODUCT",
             re.compile(ide_product, re.I),
             "文档不宜使用 IDE 产品名，请改用 Agent / 通用 IDE 表述",
+        ),
+        (
+            "WordsTool.297_AA",
+            re.compile(rf"(?<![A-Za-z]){aa_token}(?![A-Za-z])", re.I),
+            "勿写裸 aa 命令缩写，叙事请用「设备 unittest / Ability Manager 测试」",
+        ),
+        (
+            "WordsTool.241_ABS",
+            re.compile(absolute_zh),
+            "勿用「绝对」强调词；改「禁止再犯 / 完整路径」等中性表述",
+        ),
+        (
+            "WordsTool.doc1_OTHER",
+            re.compile(other_zh),
+            "勿用「其他」；改「其余 / 别的」以免代词歧义",
         ),
     ]
 

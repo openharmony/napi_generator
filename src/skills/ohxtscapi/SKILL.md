@@ -63,7 +63,7 @@ version: "1.1.0"
 | **一次** `ohxtscflow deploy-test`（或 pipeline 内设备阶段）：`-s SuiteA,SuiteB,...` 覆盖全部套件，或省略 `-s`；**卸装安装各一次** | Agent **多次**调用 `deploy-test`/`run-capi-pipeline` 且每次重装，再拼「全绿」 |
 | 单批开发用 `-s OneSuite` | 把单批 Pass 写成「工程整测通过」 |
 
-**说明**：ohhdc 对多 Suite **内部分次** `aa test`（勿把多个 class 拼进**同一次** shell `-s class`，设备会挂起）——这是**同一次装包后的分次跑测**，**不等于**多次 `deploy-test` 重装。详 **ohos-gate-compliance**「设备整测硬门禁」、**ohhdc**「工程整测硬门禁」。
+**说明**：ohhdc 对多 Suite **内部分次** 设备 unittest（勿把多个 class 拼进**同一次** shell `-s class`，设备会挂起）——这是**同一次装包后的分次跑测**，**不等于**多次 `deploy-test` 重装。详 **ohos-gate-compliance**「设备整测硬门禁」、**ohhdc**「工程整测硬门禁」。
 
 ---
 
@@ -240,7 +240,7 @@ ohos_js_app_suite("ActsAceCArkUI26SystemMaterialTest") {
 
 ```bash
 python3 ohxtscflow.py build-all <工程>   # Main build（编 native）+ build-test + sign
-# 工程整测：一次装包；多 Suite 逗号分隔（ohhdc 内部分次 aa test，不重装）
+# 工程整测：一次装包；多 Suite 逗号分隔（ohhdc 内部分次设备 unittest，不重装）
 python3 ohxtscflow.py deploy-test <工程> \
   -s ImmersiveMaterialTest,CustomDialogSystemMaterialTest,CustomDialogDisplayModeTest \
   -m entry_test
@@ -262,7 +262,7 @@ python3 ohxtscflow.py deploy-test <工程> \
 
 > **与 ohxtsstatic §13.12、ohxtsdynamic §9.11 同一铁律**；**已两次生产事故**，**禁止第三次**。
 
-**适用**：从 `ace_c_arkui_test_parallelize` / 其他 CAPI 模板 **新建** 工程，或修改 **`AppScope/app.json5` bundleName** 后。
+**适用**：从 `ace_c_arkui_test_parallelize` / 其余 CAPI 模板 **新建** 工程，或修改 **`AppScope/app.json5` bundleName** 后。
 
 | 禁止 | 必须 |
 |------|------|

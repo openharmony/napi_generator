@@ -493,6 +493,45 @@ def replace_install_hap(hap_path):
     return run_hdc_command(command)
 
 
+def _newest_ets_mtime(pages_root: str) -> float:
+    """目录下最新 .ets/.ts mtime；目录不存在返回 0。"""
+    newest = 0.0
+    if not os.path.isdir(pages_root):
+        return newest
+    for root, _dirs, files in os.walk(pages_root):
+        for fn in files:
+            if fn.endswith((".ets", ".ts")):
+                newest = max(newest, os.path.getmtime(os.path.join(root, fn)))
+    return newest
+
+
+def _warn_if_main_hap_stale(project_dir: str, main_hap: str) -> None:
+    """主包早于 entry/src/main 源码时告警（页面在 main，只编测包会假绿）。"""
+    try:
+        main_mtime = os.path.getmtime(main_hap)
+        pages_root = os.path.join(project_dir, "entry", "src", "main", "ets")
+        newest_src = _newest_ets_mtime(pages_root)
+        if newest_src and main_mtime + 1.0 < newest_src:
+            print(
+                f"⚠ 主 HAP 早于 entry/src/main 源码（主包可能过期）。"
+                f"请先 hapbuild build+build-test+sign 再 deploy-test。"
+                f" main_hap_mtime={main_mtime:.0f} newest_main_ets={newest_src:.0f}",
+                flush=True,
+            )
+    except OSError:
+        pass
+
+
+def _project_signed_haps(project_dir: str) -> tuple[str, str]:
+    main_hap = os.path.join(
+        project_dir, "entry", "build", "default", "outputs", "default", "entry-default-signed.hap"
+    )
+    test_hap = os.path.join(
+        project_dir, "entry", "build", "default", "outputs", "ohosTest", "entry-ohosTest-signed.hap"
+    )
+    return main_hap, test_hap
+
+
 def install_project_haps(project_dir):
     """
     按项目安装两个 HAP：先安装主 HAP，等 1 秒后再安装测试 HAP（均使用 hdc install，不用 -r）。
@@ -507,41 +546,18 @@ def install_project_haps(project_dir):
         tuple: (success: bool, output: str, error: str)
     """
     project_dir = os.path.abspath(project_dir)
-    main_hap = os.path.join(
-        project_dir, 'entry', 'build', 'default', 'outputs', 'default', 'entry-default-signed.hap'
-    )
-    test_hap = os.path.join(
-        project_dir, 'entry', 'build', 'default', 'outputs', 'ohosTest', 'entry-ohosTest-signed.hap'
-    )
+    main_hap, test_hap = _project_signed_haps(project_dir)
     if not os.path.isfile(main_hap):
         return False, "", f"主 HAP 不存在: {main_hap}"
     if not os.path.isfile(test_hap):
         return False, "", f"测试 HAP 不存在: {test_hap}"
-    # 主包过期告警：页面在 main，只编测包会导致本地假绿、门禁才暴露页崩溃
-    try:
-        main_mtime = os.path.getmtime(main_hap)
-        pages_root = os.path.join(project_dir, "entry", "src", "main", "ets")
-        newest_src = 0.0
-        if os.path.isdir(pages_root):
-            for root, _dirs, files in os.walk(pages_root):
-                for fn in files:
-                    if fn.endswith((".ets", ".ts")):
-                        newest_src = max(newest_src, os.path.getmtime(os.path.join(root, fn)))
-        if newest_src and main_mtime + 1.0 < newest_src:
-            print(
-                f"⚠ 主 HAP 早于 entry/src/main 源码（主包可能过期）。"
-                f"请先 hapbuild build+build-test+sign 再 deploy-test。"
-                f" main_hap_mtime={main_mtime:.0f} newest_main_ets={newest_src:.0f}",
-                flush=True,
-            )
-    except OSError:
-        pass
+    _warn_if_main_hap_stale(project_dir, main_hap)
     out_parts = []
     success1, out1, err1 = install_hap(main_hap)
     out_parts.append(f"主 HAP: {out1.strip() or (err1 or '')}")
     if not success1:
         return False, "\n".join(out_parts), err1 or out1
-    time.sleep(1)  # 装完主 HAP 等 1 秒再装测试 HAP
+    time.sleep(1)
     success2, out2, err2 = install_hap(test_hap)
     out_parts.append(f"测试 HAP: {out2.strip() or (err2 or '')}")
     if not success2:
@@ -573,47 +589,63 @@ def _parse_bundle_name(project_dir):
     return None
 
 
+def _extract_braced_body(text: str, start_marker: str) -> str | None:
+    start = text.find(start_marker)
+    if start == -1:
+        return None
+    brace = text.find("{", start)
+    if brace == -1:
+        return None
+    depth = 1
+    i = brace + 1
+    while i < len(text) and depth > 0:
+        ch = text[i]
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+        i += 1
+    if depth != 0:
+        return None
+    return text[brace + 1 : i - 1]
+
+
+def _suite_name_from_test_file(file_path: str) -> str | None:
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            file_content = f.read()
+    except OSError:
+        return None
+    desc = re.search(r"describe\s*\(\s*['\"]([^'\"]+)['\"]\s*,\s*", file_content)
+    return desc.group(1) if desc else None
+
+
 def _discover_test_suites(project_dir):
     """
-    从项目 entry/src/ohosTest/ets/test/List.test.ets 解析测试套件列表，
-    再在各 .test.ets 文件中取 describe('SuiteName', ...) 的 SuiteName，
-    返回逗号分隔的套件名，供 aa test -s class 使用；失败返回 None。
+    从 List.test.ets 解析套件列表，再取各 .test.ets 中 describe 名，
+    返回逗号分隔套件名（供设备 unittest -s class）；失败返回 None。
     """
     list_candidates = [
-        os.path.join(project_dir, 'entry', 'src', 'ohosTest', 'ets', 'test', 'List.test.ets'),
-        os.path.join(project_dir, 'entry', 'src', 'main', 'ets', 'test', 'List.test.ets'),
+        os.path.join(project_dir, "entry", "src", "ohosTest", "ets", "test", "List.test.ets"),
+        os.path.join(project_dir, "entry", "src", "main", "ets", "test", "List.test.ets"),
     ]
     list_path = next((p for p in list_candidates if os.path.isfile(p)), None)
     if list_path is None:
         return None
     try:
-        with open(list_path, 'r', encoding='utf-8') as f:
+        with open(list_path, "r", encoding="utf-8") as f:
             list_content = f.read()
-    except Exception:
+    except OSError:
         return None
-    # import foo from './Bar.test'; -> map foo -> Bar.test.ets
     import_map = {}
     for m in re.finditer(r"import\s+(\w+)\s+from\s+['\"]\./([^'\"]+)['\"]\s*;", list_content):
         name, path = m.group(1), m.group(2)
-        if not path.endswith('.ets'):
-            path = (path + '.ets') if path.endswith('.test') else (path + '.test.ets')
+        if not path.endswith(".ets"):
+            path = (path + ".ets") if path.endswith(".test") else (path + ".test.ets")
         import_map[name] = path
-    # 在 export default function testsuite() { ... } 内找 xxx();
-    start = list_content.find("export default function")
-    if start == -1:
+    body = _extract_braced_body(list_content, "export default function")
+    if body is None:
         return None
-    brace = list_content.find("{", start)
-    if brace == -1:
-        return None
-    depth = 1
-    i = brace + 1
-    while i < len(list_content) and depth > 0:
-        if list_content[i] == "{":
-            depth += 1
-        elif list_content[i] == "}":
-            depth -= 1
-        i += 1
-    body = list_content[brace + 1:i - 1] if depth == 0 else ""
     call_order = re.findall(r"(\w+)\s*\(\s*\)", body)
     test_dir = os.path.dirname(list_path)
     suite_names = []
@@ -624,15 +656,9 @@ def _discover_test_suites(project_dir):
         file_path = os.path.join(test_dir, file_name)
         if not os.path.isfile(file_path):
             continue
-        try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                file_content = f.read()
-        except Exception:
-            continue
-        # 取第一个 describe('SuiteName', ...)
-        desc = re.search(r"describe\s*\(\s*['\"]([^'\"]+)['\"]\s*,\s*", file_content)
-        if desc:
-            suite_names.append(desc.group(1))
+        suite = _suite_name_from_test_file(file_path)
+        if suite:
+            suite_names.append(suite)
     if not suite_names:
         return None
     return ",".join(suite_names)
@@ -648,96 +674,60 @@ def _run_test_suites(
     test_class: str,
     timeout: int,
 ) -> tuple[bool, str, str]:
-    """多套件须分次 aa test；单次 -s class 逗号拼接会挂起直至超时。"""
+    """多套件须分次设备 unittest；单次 -s class 逗号拼接会挂起直至超时。"""
     suites = _split_test_suites(test_class)
     if len(suites) <= 1:
         return run_test(bundle_name, module_name, test_class, case_name=None, timeout=timeout)
     outputs: list[str] = []
     for suite in suites:
         ok, out, err = run_test(bundle_name, module_name, suite, case_name=None, timeout=timeout)
-        chunk = out.strip() or err or ''
+        chunk = out.strip() or err or ""
         outputs.append(f"[{suite}]\n{chunk}")
         if not ok:
             return False, "\n\n".join(outputs), err or out
     return True, "\n\n".join(outputs), ""
 
 
+def _resolve_deploy_test_class(project_dir: str, test_class) -> str:
+    if test_class is None or (isinstance(test_class, str) and not test_class.strip()):
+        return _discover_test_suites(project_dir) or "ActsAbilityTest,IndexUitestTest"
+    return test_class.strip()
+
+
 def deploy_and_run_test(
     project_dir,
     bundle_name=None,
-    module_name='entry_test',
+    module_name="entry_test",
     test_class=None,
     timeout=15000,
 ):
     """
-    部署运行 HAP 测试用例：先卸载同包名应用，再 hdc install -r 安装主 HAP 与测试 HAP，最后执行 aa test。
-    等价于依次执行：卸载 -> hdc install -r 主HAP -> hdc install -r 测试HAP -> hdc shell aa test ...
-    测试套件由 entry/src/ohosTest/ets/test/List.test.ets 及各 .test.ets 中的 describe 名动态解析；
-    若 test_class 为 None 且解析失败，则回退为 ActsAbilityTest,IndexUitestTest。
-
-    Args:
-        project_dir: 项目根目录
-        bundle_name: 包名，None 时从项目 AppScope/app.json5 解析
-        module_name: 测试模块名，默认 entry_test
-        test_class: -s class 参数；多个套件用逗号分隔时将**分次** aa test（勿单次拼接）
-        timeout: 测试超时（毫秒），默认 15000
-
-    Returns:
-        tuple: (success: bool, output: str, error: str)
+    部署并跑测：卸载 → 安装主/测 HAP → 设备 unittest。
+    多套件由 List.test.ets / describe 解析；逗号分隔时分次跑测（勿单次拼接）。
     """
     project_dir = os.path.abspath(project_dir)
-    if test_class is None or (isinstance(test_class, str) and not test_class.strip()):
-        test_class = _discover_test_suites(project_dir) or 'ActsAbilityTest,IndexUitestTest'
-    else:
-        test_class = test_class.strip()
-    main_hap = os.path.join(
-        project_dir, 'entry', 'build', 'default', 'outputs', 'default', 'entry-default-signed.hap'
-    )
-    test_hap = os.path.join(
-        project_dir, 'entry', 'build', 'default', 'outputs', 'ohosTest', 'entry-ohosTest-signed.hap'
-    )
+    test_class = _resolve_deploy_test_class(project_dir, test_class)
+    main_hap, test_hap = _project_signed_haps(project_dir)
     if not os.path.isfile(main_hap):
         return False, "", f"主 HAP 不存在: {main_hap}"
     if not os.path.isfile(test_hap):
         return False, "", f"测试 HAP 不存在: {test_hap}"
-    # 主包过期告警：页面在 main，只编测包会导致本地假绿、门禁才暴露页崩溃
-    try:
-        main_mtime = os.path.getmtime(main_hap)
-        pages_root = os.path.join(project_dir, "entry", "src", "main", "ets")
-        newest_src = 0.0
-        if os.path.isdir(pages_root):
-            for root, _dirs, files in os.walk(pages_root):
-                for fn in files:
-                    if fn.endswith((".ets", ".ts")):
-                        newest_src = max(newest_src, os.path.getmtime(os.path.join(root, fn)))
-        if newest_src and main_mtime + 1.0 < newest_src:
-            print(
-                f"⚠ 主 HAP 早于 entry/src/main 源码（主包可能过期）。"
-                f"请先 hapbuild build+build-test+sign 再 deploy-test。"
-                f" main_hap_mtime={main_mtime:.0f} newest_main_ets={newest_src:.0f}",
-                flush=True,
-            )
-    except OSError:
-        pass
+    _warn_if_main_hap_stale(project_dir, main_hap)
     bn = bundle_name or _parse_bundle_name(project_dir)
     if not bn:
         return False, "", "无法解析 bundleName，请指定 bundle_name 或确保项目 AppScope/app.json5 存在且含 app.bundleName"
 
     out_parts = []
-    # 1. 卸载
     ok1, out1, err1 = uninstall_hap(bn)
     out_parts.append(f"卸载: {out1.strip() or err1 or 'ok'}")
-    # 2. 替换安装主 HAP
     ok2, out2, err2 = replace_install_hap(main_hap)
     out_parts.append(f"主 HAP: {out2.strip() or err2 or ''}")
     if not ok2:
         return False, "\n".join(out_parts), err2 or out2
-    # 3. 替换安装测试 HAP
     ok3, out3, err3 = replace_install_hap(test_hap)
     out_parts.append(f"测试 HAP: {out3.strip() or err3 or ''}")
     if not ok3:
         return False, "\n".join(out_parts), err3 or out3
-    # 4. 运行测试（多套件分次执行）
     ok4, out4, err4 = _run_test_suites(bn, module_name, test_class, timeout)
     out_parts.append(f"测试: {out4.strip() or err4 or ''}")
     if not ok4:

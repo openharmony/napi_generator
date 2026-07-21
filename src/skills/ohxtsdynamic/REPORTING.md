@@ -14,7 +14,7 @@
 ```bash
 # 单批调试（deploy-test 后终端 REPORT_HTML=...）
 python3 src/skills/ohxtsdynamic/ohxtsflow.py deploy-test <工程> -s "<Suite>"
-# 工程整测：-s 列齐全部 Suite（一次装包；ohhdc 可内部分次 aa test）
+# 工程整测：-s 列齐全部 Suite（一次装包；ohhdc 可内部分次设备 unittest）
 python3 src/skills/ohxtsdynamic/ohxtsflow.py deploy-test <工程> -s "SuiteA,SuiteB,SuiteC"
 
 # 离线

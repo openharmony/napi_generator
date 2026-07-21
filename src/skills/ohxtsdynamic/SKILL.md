@@ -479,7 +479,7 @@ python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
 
 ### 9.11 新建工程：signature/openharmony_sx.p7b（P0 硬门禁，与 static/CAPI 共用）
 
-> **已两次生产事故**（静态 AlertDalog_static 误拷 button_static profile）。**绝对禁止第三次**。
+> **已两次生产事故**（静态 AlertDalog_static 误拷 button_static profile）。**禁止再犯**。
 
 **适用**：从 chip/menu/button/parallelize 等 **模板新建** 动态工程，或修改 **`AppScope/app.json5` bundleName** / **`Test.json` bundle-name** 后。
 

@@ -136,7 +136,7 @@ python3 src/skills/ohhdc/ohhdc.py uninstall com.example.p7zipTest
 ### Quick Start – Script
 
 ```bash
-# Install HAP（在 napi_generator 仓库根下；也可用 .hap 的绝对路径）
+# Install HAP（在 napi_generator 仓库根下；也可用 .hap 的完整路径）
 python3 src/skills/ohhdc/ohhdc.py install src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap
 ```
 
@@ -214,7 +214,7 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 | **工程整测**（交付、推仓前、复现/对标门禁·xDevice） | **单次** `deploy-test` / `static-deploy-test`：`-s` 带齐全部 Suite，或省略 `-s`；**只卸装+安装一次** |
 | **单批调试** | 允许 `-s OneSuite`；**禁止**据此写「工程全绿」 |
 
-**允许**：`-s A,B,C` 时本脚本**内部分次** `aa test`（避免多 class 拼参挂起）——仍属**一次装包连跑**。  
+**允许**：`-s A,B,C` 时本脚本**内部分次** 设备 unittest（避免多 class 拼参挂起）——仍属**一次装包连跑**。  
 **禁止**：Agent 外层循环多次调用本命令（每次重装）再拼绿。详见 **ohos-gate-compliance**「设备整测硬门禁」。
 
 ---
@@ -285,7 +285,7 @@ python3 src/skills/ohhdc/ohhdc.py static-deploy-test /path/to/project
 ### Quick Start – Script
 
 ```bash
-# Replace-install HAP（在 napi_generator 仓库根下；也可用 .hap 的绝对路径）
+# Replace-install HAP（在 napi_generator 仓库根下；也可用 .hap 的完整路径）
 python3 src/skills/ohhdc/ohhdc.py replace-install src/skills/ohhap/NativeProj46R/autosign/app1-signed.hap
 ```
 
@@ -658,7 +658,7 @@ python3 src/skills/ohhdc/ohhdc.py test ohos.test.nativeproj46r \
 
 1. 在设备上执行 **`snapshot_display`**，通过 **`-f`** 将图片写到固定路径（默认 **`/data/local/tmp/ohhdc_screenshot.jpeg`**，须在 `/data/local/tmp` 下且扩展名为 `.jpeg` / `.png`，与系统工具校验一致）。
 2. 使用 **`hdc file recv <设备路径> <本机路径>`** 将文件拉到本地。
-3. **本机默认目录**：`src/skills/ohhdc/screenshot/`（仅文件名或省略路径时自动写入该目录；写绝对路径则按指定位置保存）。
+3. **本机默认目录**：`src/skills/ohhdc/screenshot/`（仅文件名或省略路径时自动写入该目录；写完整路径则按指定位置保存）。
 
 **注意**：`snapshot_display` 在源码中要求设备处于**开发者模式**，否则会提示 `not developer mode` 并退出。
 
@@ -677,7 +677,7 @@ python3 src/skills/ohhdc/ohhdc.py snapshot
 # 仅指定文件名 → 仍保存在 screenshot/ 下
 python3 src/skills/ohhdc/ohhdc.py screenshot my.jpeg
 
-# 任意本机绝对路径
+# 任意本机完整路径
 python3 src/skills/ohhdc/ohhdc.py screenshot /tmp/screen.jpeg
 
 # 指定显示 ID（多屏）
@@ -794,7 +794,7 @@ python3 src/skills/ohhdc/ohhdc.py layout --bundle com.example.app --display-id 0
 1. **检查**：`ohhdc.py wifi-check-wificommand`（设备 PATH、`/system/bin`、临时路径 + 本机 `out/<product>` 是否已有产物）。  
 2. **单独编译**（在源码根）：`./build.sh --product-name <产品> --build-target wificommand`  
    产物常见路径：`out/<产品>/communication/wifi/wificommand` 或 `out/<产品>/exe.unstripped/communication/wifi/wificommand`。  
-3. **推送到设备**：`ohhdc.py wifi-push-wificommand`（按 `out` 自动查找，或第一个参数传本机二进制绝对路径），默认推到 **`/data/local/tmp/wificommand`** 并 **`chmod 755`**。  
+3. **推送到设备**：`ohhdc.py wifi-push-wificommand`（按 `out` 自动查找，或第一个参数传本机二进制完整路径），默认推到 **`/data/local/tmp/wificommand`** 并 **`chmod 755`**。  
 4. **一键推送并连 KaiHong**：`ohhdc.py wifi-kaihong --push-wificommand --ohos-src <源码根>`（或设置 **`OHOS_SRC`**）。  
 5. 已手动推送时可用 **`--wifi-device-bin /data/local/tmp/wificommand`** 指定设备侧路径。
 

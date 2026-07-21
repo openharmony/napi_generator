@@ -126,60 +126,57 @@ def _is_hypium_test_ets(path: Path) -> bool:
     return s.endswith(".test.ets") and "/ets/test/" in s
 
 
+def _nearest_jsdoc(before: str) -> str | None:
+    tail = before[-3000:] if len(before) > 3000 else before
+    doc_match = None
+    for doc in re.finditer(r"/\*\*.*?\*/", tail, re.S):
+        doc_match = doc
+    return doc_match.group(0) if doc_match else None
+
+
+def _check_one_it_jsdoc(path: Path, text: str, m: re.Match[str]) -> list[GateIssue]:
+    issues: list[GateIssue] = []
+    it_name = m.group(2)
+    before = text[: m.start()]
+    line_no = before.count("\n") + 1
+    doc_block = _nearest_jsdoc(before)
+    if doc_block is None:
+        issues.append(
+            GateIssue(path, line_no, "xtscheck", f"it() 缺少完整 @tc JSDoc: {it_name}")
+        )
+        return issues
+    if "@tc.number" not in doc_block or "@tc.name" not in doc_block:
+        issues.append(
+            GateIssue(path, line_no, "xtscheck", f"it() 缺少完整 @tc JSDoc: {it_name}")
+        )
+        return issues
+    nm = re.search(r"@tc\.name\s+(\S+)", doc_block)
+    num = re.search(r"@tc\.number\s+(\S+)", doc_block)
+    if nm and nm.group(1) != it_name:
+        issues.append(
+            GateIssue(
+                path, 0, "xtscheck",
+                f"@tc.name 与 it() 不一致: {nm.group(1)} != {it_name}",
+            )
+        )
+    if num and num.group(1) != it_name:
+        issues.append(
+            GateIssue(
+                path, 0, "xtscheck",
+                f"@tc.number 与 it() 不一致: {num.group(1)} != {it_name}",
+            )
+        )
+    return issues
+
+
 def check_ets_xtscheck(path: Path, text: str) -> list[GateIssue]:
     issues: list[GateIssue] = []
     if not _is_hypium_test_ets(path):
         return issues
     if re.search(r"\.forEach\s*\([^)]*\)\s*=>\s*\{[^}]*\bit\s*\(", text, re.S):
         issues.append(GateIssue(path, 0, "xtscheck", "禁止 forEach 动态生成 it()"))
-    # 裸 it()：前方无紧邻 @tc JSDoc（缺 number/name 即报）
     for m in re.finditer(r"(?m)^(\s*)it\(\s*['\"]([^'\"]+)['\"]", text):
-        it_name = m.group(2)
-        before = text[: m.start()]
-        # 取 it 前最近一块注释
-        tail = before[-3000:] if len(before) > 3000 else before
-        doc_match = None
-        for doc in re.finditer(r"/\*\*.*?\*/", tail, re.S):
-            doc_match = doc
-        if doc_match is None:
-            line_no = before.count("\n") + 1
-            issues.append(
-                GateIssue(
-                    path,
-                    line_no,
-                    "xtscheck",
-                    f"it() 缺少完整 @tc JSDoc: {it_name}",
-                )
-            )
-            continue
-        doc_block = doc_match.group(0)
-        if "@tc.number" not in doc_block or "@tc.name" not in doc_block:
-            line_no = before.count("\n") + 1
-            issues.append(
-                GateIssue(
-                    path,
-                    line_no,
-                    "xtscheck",
-                    f"it() 缺少完整 @tc JSDoc: {it_name}",
-                )
-            )
-            continue
-        nm = re.search(r"@tc\.name\s+(\S+)", doc_block)
-        num = re.search(r"@tc\.number\s+(\S+)", doc_block)
-        if nm and nm.group(1) != it_name:
-            issues.append(
-                GateIssue(
-                    path, 0, "xtscheck",
-                    f"@tc.name 与 it() 不一致: {nm.group(1)} != {it_name}",
-                )
-            )
-        if num and num.group(1) != it_name:
-            issues.append(
-                GateIssue(
-                    path, 0, "xtscheck",
-                    f"@tc.number 与 it() 不一致: {num.group(1)} != {it_name}",
-                )
-            )
+        issues.extend(_check_one_it_jsdoc(path, text, m))
     return issues
 
 

@@ -19,7 +19,7 @@
 
 | 检查项 | 正确做法 | 常见错误（**已两次事故**） |
 |--------|----------|---------------------------|
-| **bundle 一致** | p7b 内 `bundle-name` = **`AppScope/app.json5` bundleName** | 沿用 parallelize / 其他模板 p7b |
+| **bundle 一致** | p7b 内 `bundle-name` = **`AppScope/app.json5` bundleName** | 沿用 parallelize / 其余模板 p7b |
 | **生成方式** | **`bash .../xts_shared/gen-xts-signature-p7b.sh <工程根>`** | `cp 模板/signature/*` |
 | **双 HAP** | Main assist 与 Test **共用** 同一 p7b | 只改 Test.json 不重做 p7b |
 | **提交前** | `strings p7b \| grep bundle-name` 与 app.json5 一致 | hapbuild 本地 signed 通过即 push |
@@ -105,7 +105,7 @@ python3 src/skills/ohxtscapi/ohxtscflow.py deploy-test <工程路径> -s <Suite>
 
 - CAPI 动态工程：`build-all` = **主包 build（编 native .so）+ build-test + sign**
 - 新批次调试：`-s` 本批套件
-- **工程整测（交付/推仓前）**：**一次** `deploy-test -s SuiteA,SuiteB,...`（或省略 `-s`）；ohhdc **内部**对多 Suite 分次 `aa test`，但**只卸装安装一次**
+- **工程整测（交付/推仓前）**：**一次** `deploy-test -s SuiteA,SuiteB,...`（或省略 `-s`）；ohhdc **内部**对多 Suite 分次设备 unittest，但**只卸装安装一次**
 - **禁止** Agent 外层循环多次 `deploy-test`/`run-capi-pipeline`（每次重装）再拼绿（假绿，见 **ohos-gate-compliance**「设备整测硬门禁」）
 - **禁止**把多个 class 拼进**同一次**设备 shell 的单个 `-s class` 参数（会挂起）；应用 **一次** `deploy-test` + 逗号列表，交 ohhdc 内部分次
 

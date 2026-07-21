@@ -54,8 +54,8 @@ version: "1.2.0"
 | 大写 `String` | `arkts_patterns.fix_arkts_quality` |
 | `'use static'` 下 `int` 误报 ARKTS_NO_INT | `arkts_patterns`：static 文件跳过该规则 |
 | `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck` |
-| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词；**扫描器源码仅用 `chr()` 拼词，禁止敏感字面量** |
-| Python 嵌套深度 ≤4 | 拆 helper（`arkts_patterns._scan_ets_line` 等） | 提交 skill 前 `py_compile` |
+| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词；扫描器源码仅用 `chr()` 拼词；含 **.297**（勿裸写设备命令缩写，叙事用「设备 unittest」）、**.241**（勿强调词）、**doc1**（勿易歧义代词结构，改用「其余」） |
+| Python 嵌套深度 ≤4 / nbnc ≤50 | 拆 helper（`ohhdc._warn_if_main_hap_stale`、`gate_review._check_one_it_jsdoc` 等） | 提交 skill 前 `py_compile` |
 | G.FUD.05 / 超大函数 `GetXxxProps` | 按域拆多表 + 多次 `napi_define_properties` | 见 `reference.md` NAPI 表注册 |
 | **CI.SDK.01** `compileSdkVersion` 数字/"26" | `gate_review` 检测+自动改 `"26.0.0"`；**`git-commit-agent.sh` 暂存预检拦截** | 以 CI 为准，本地 00306042 勿入仓 |
 
@@ -116,11 +116,11 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | **工程整测**（交付、commit/push 前、对标 xDevice/CI 产物） | **一次**装包：`deploy-test` / `static-deploy-test` / `ohxtscflow deploy-test`（或 pipeline 内设备阶段）—— `-s` 列齐 `List.test` **全部** Suite，或省略 `-s` 自动发现；**卸装安装各一次后连跑** | Agent **自己**多次调用 `deploy-test`/`static-deploy-test`/`run-*-pipeline`（每次都卸装重装）；再把各段 Pass **拼成「全绿」** |
 | **单批/开发中调试** | 允许 `-s OneSuite` | 不得据此宣称「工程整测通过」 |
 
-**与 ohhdc 多 Suite 分次 `aa test` 的区别**（勿混）：
+**与 ohhdc 多 Suite 分次设备 unittest 的区别**（勿混）：
 
 | 做法 | 是否允许 | 说明 |
 |------|----------|------|
-| **一次** `deploy-test -s A,B,C` | ✅ | ohhdc **内部**对多 class **分次** `aa test`（避免设备挂起），但 **只卸装/安装一次** → **算连跑** |
+| **一次** `deploy-test -s A,B,C` | ✅ | ohhdc **内部**对多 class **分次**设备 unittest（避免设备挂起），但 **只卸装/安装一次** → **算连跑** |
 | 循环三次各自 `deploy-test -s A` / `-s B` / `-s C` | ❌ | 每次重装，洗掉 Suite 间状态 → **假绿** |
 
 报告可信条件：会话/HTML 须对应**同一次**装包后的连跑日志；禁止多段日志人工相加当整测。
@@ -162,7 +162,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | G.FMT.06-CPP | ✅ | 实参续行 = **起始行缩进 + 4**（非固定 8） |
 | G.FMT.05 行宽 | 报告 | 手工折行 |
 | nbnc / 圈复杂度 | — | 见 [reference.md](reference.md) |
-| CAPI 工程整测拆多次 `deploy-test` 重装拼绿 | — | **一次** `ohxtscflow deploy-test -s SuiteA,SuiteB,...`（ohhdc 内部分次 aa test、**不重装**）；见上节 |
+| CAPI 工程整测拆多次 `deploy-test` 重装拼绿 | — | **一次** `ohxtscflow deploy-test -s SuiteA,SuiteB,...`（ohhdc 内部分次设备 unittest、**不重装**）；见上节 |
 
 G.FMT.06 示例见 [reference.md](reference.md)。
 

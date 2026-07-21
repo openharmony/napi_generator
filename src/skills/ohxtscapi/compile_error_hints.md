@@ -29,9 +29,9 @@
 | **`nativeFunc` 为 null / Cannot load property** | **双 HAP**：Main assist + Test；`build-all` 先编 Main |
 | 仅 C++ 改完未重编 HAP | **`ohxtscflow build-all`**（build + build-test + sign）再 `deploy-test` |
 | 全量 List 误判新批次 | 开发调试 **`-s` 本批套件**；**工程整测**须一次 `deploy-test` 带齐全部 Suite |
-| 多套件设备挂起 | **勿**把 `A,B` 塞进同一次 shell 的单个 `-s class`；用 **一次** `deploy-test -s A,B`（ohhdc **内部分次** aa test、**不重装**） |
+| 多套件设备挂起 | **勿**把 `A,B` 塞进同一次 shell 的单个 `-s class`；用 **一次** `deploy-test -s A,B`（ohhdc **内部分次** 设备 unittest、**不重装**） |
 | 拆多次 `deploy-test` 重装后本地全绿、CI 大失败 | **假绿**；改为 **一次装包连跑**（见 ohos-gate-compliance「设备整测硬门禁」） |
-| `deploy-test` 超时无结果 | 检查是否误用「一次 shell 多 class」；应用 ohhdc 分次 aa test |
+| `deploy-test` 超时无结果 | 检查是否误用「一次 shell 多 class」；应用 ohhdc 分次设备 unittest |
 | xtscheck 缺 `@tc.name` | 禁止 `forEach` 注册 `it()`；每条用例显式 `/** @tc.* */` + `it()` |
 | `@tc.name` 与用例名不一致 | 三者统一为 `SUB_*`：`@tc.name` = `@tc.number` = `it()` 首参 |
 | assist HAP 配置不一致 | native 在 Main → 双 HAP；无 native → 单 Test HAP |
