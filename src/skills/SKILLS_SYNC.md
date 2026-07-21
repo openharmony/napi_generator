@@ -5,10 +5,10 @@
 | 目录 | 角色 | 随 Git 提交 |
 |------|------|-------------|
 | **`/root/aiSkill/napi_generator/src/skills`** | **技能主仓（canonical）**；用户 push 远端的目标 | 是（napi_generator） |
-| **`/root/aiSkill/.claude/skills`** | Cursor Agent **运行时镜像** | 部分 |
+| **`/root/aiSkill/.claude/skills`** | Agent **运行时镜像** | 部分 |
 
 **以后优化 skill：先改 `napi_generator/src/skills`，再 `sync-skills.sh pull-xts`（或 `pull`）同步到 `.claude`。**  
-禁止长期只改 `.claude` / `.cursor` 副本导致远端仓落后。
+禁止长期只改 `.claude` 运行时副本导致远端仓落后。
 
 ---
 
@@ -30,7 +30,7 @@
 
 → `./sync-skills.sh pull`
 
-### C. Cursor 专用（可仅在 `.claude/skills`；若要进远端须拷入 napi）
+### C. 运行时专用（可仅在 `.claude/skills`；若要进远端须拷入 napi）
 
 | Skill | 说明 |
 |-------|------|
@@ -59,9 +59,9 @@
 
 ---
 
-## Cursor 符号链接
+## 运行时符号链接
 
-`~/.cursor/skills/<name>` 应 **symlink** 到 `/root/aiSkill/.claude/skills/<name>`。
+编辑器侧 `skills/<name>` 目录应 **symlink** 到 `/root/aiSkill/.claude/skills/<name>`（指向运行时镜像）。
 
 ---
 

@@ -1,12 +1,12 @@
 # 如何使用SKILL
 
 > **技能主仓**：本目录（`napi_generator/src/skills`）为远端提交的 **canonical** 源。  
-> 优化 skill **先改这里**，再执行 `/root/aiSkill/.claude/skills/sync-skills.sh pull-xts`（或 `pull`）同步到 Cursor 运行时 `.claude/skills`。  
+> 优化 skill **先改这里**，再执行 `/root/aiSkill/.claude/skills/sync-skills.sh pull-xts`（或 `pull`）同步到 Agent 运行时 `.claude/skills`。  
 > 详见同级策略说明也可对照 `.claude/skills/SKILLS_SYNC.md`。
 
-> 以下内容描述了怎么在cursor的工程里增加skill能力，方便开发和使用。
+> 以下内容描述了怎么在工程里增加 skill 能力，方便开发和使用。
 > 需要的环境如下：
-> 1. cursor，打开一个工程，比如napi_generator
+> 1. 任一支持 Agent Skill 的 IDE，打开一个工程，比如 napi_generator
 > 2. openharmony sdk：ohos-sdk-6.0-release
 > 3. commandline tools：# Command Line Tools(linux-x64) Version: 6.0.1.260
 > 4. node：v20.20.0
@@ -67,7 +67,7 @@ Sync to AGENTS.md: npx openskills sync
 
 ## 3. 检查skill安装
 1. 项目目录里出现 openskills 安装的技能目录（终端会打印路径），其中有已安装的 skill（示例为 17 个，以实际为准）
-2. 通过 agent 对话问 Cursor，现在有多少 skill，应能答出从 anthropics/skills 安装的技能数量（示例为 17 个，以实际安装为准）
+2. 通过 agent 对话问当前有多少 skill，应能答出从 anthropics/skills 安装的技能数量（示例为 17 个，以实际安装为准）
 3. 使用一个技能，如："使用 pdf 技能创建个 pdf，存到项目根目录"
 
 ## 4. 使用工程里的 skill（src/skills 目录概述）
