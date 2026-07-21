@@ -998,6 +998,18 @@ def build_hap(project_dir, product='default', build_mode='debug'):
             return True
         else:
             print(f"\n❌ HAP 构建失败（退出码: {result.returncode}）")
+            bp = os.path.join(project_dir, 'build-profile.json5')
+            try:
+                with open(bp, 'r', encoding='utf-8') as f:
+                    bp_txt = f.read()
+            except OSError:
+                bp_txt = ''
+            if re.search(r'"compileSdkVersion"\s*:\s*"\d+\.\d+\.\d+"', bp_txt):
+                print(
+                    "提示: 若日志含 00306042，本地可临时把 compileSdkVersion 改为数字 "
+                    "仅用于编签；提交前必须恢复为 CI 字符串 \"26.0.0\""
+                    "（gate_review / git-commit-agent 会拦截数字入仓）。"
+                )
             return False
             
     except subprocess.TimeoutExpired:

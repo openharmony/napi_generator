@@ -41,9 +41,10 @@ version: "1.5.0"
 2. **编签**：**静态一体**工程用 **`hapbuild build`**（勿误用 `build-all` 的 `build-test`）；**双包**工程用 **`ohxtsflow build-all`**。签名前须 **`source signing-materials/env.sh`**（见 **§十三**）。  
 3. **`hdc list targets`**：若非空 → **`run-static-pipeline` 或 `static-device-test`**（参数见 **ohhdc/SKILL.md**）。  
 4. **失败**：根据 stdout / hilog / `analyze-test-log` 改代码，重复 2～3，直至通过或阻塞已记录。  
-5. **同一会话回复**：按 **「正式测试报告」** 节输出 **核心三列表格**（用例名称｜Pass/Fail｜设计思路）及后续小节（不得只丢 log 路径）。  
-6. **HTML 可视化**：`static-device-test` / `run-static-pipeline` 结束后终端打印 `REPORT_HTML=...`（**xDevice 格式**，Element Plus 单页报告）；浏览器打开 `summary_report.html`。离线：`ohxtsflow gen-xdevice-report <log>`。多模块汇总与未覆盖报告见 **§十四** 与 **[REPORTING.md](REPORTING.md)**。
-7. **门禁 + commit**：**`run-static-pipeline` 设备全绿后**自动跑 `ohos-gate-compliance/scripts/gate_review.py`（profile=ets）；`--skip-commit` 可仅 review。**门禁手工修复后须同步加固 `ohos-gate-compliance` skill**（见该 skill §「门禁修复 → Skill 加固」）。
+5. **同一会话回复**：按 **「正式测试报告」** 节输出 **核心三列表格**（用例名称｜Pass/Fail｜设计思路）及后续章节（不得只丢 log 路径）。  
+6. **HTML 可视化**：`static-device-test` / `run-static-pipeline` 结束后终端打印 `REPORT_HTML=...`（**仅 xDevice 格式**）；**禁止**自写汇总页。commit 后交 **一张** `summary_top.png`（多 HAP 只截合并页，最多 10 行 Module）。见 **[REPORTING.md](REPORTING.md)**。  
+7. **工程交付 / 推仓前**：对工程 `List.test` **全部** Suite **一次**装包连跑（`static-deploy-test` / `static-device-test`）；**禁止**多次部署重装拼绿（见 **「工程整测硬门禁」** 与 **ohos-gate-compliance**）。  
+8. **门禁 + commit**：设备**整测**全绿后跑 `ohos-gate-compliance/scripts/gate_review.py`（profile=ets）；`--skip-commit` 可仅 review。**门禁手工修复后须同步加固 skill**。
 
 ---
 
@@ -63,7 +64,8 @@ version: "1.5.0"
 | 设计 | **§〇** 归类，打开对应 **`categories/*.md`**，检查点 → 页面出口 → 断言可追溯 | 无归类、文档与代码脱节 |
 | 实现 | 预览页 + **`*.test.ets`** + **`List.test.ets`（或工程入口）注册** | 仅有页面或仅有用例 |
 | 编译签包 | **`ohhap` / `ohxtsflow build-all` 成功**，产出可安装 HAP（含签名约定） | 未走工具链、仅 IDE 无红杠 |
-| 设备执行 | **`hdc` 可用**时跑 **`static-device-test`** 或 **`run-static-pipeline`**，`unittest 设备命令` 对本批次 **全部通过** | **仅编译通过从未装包跑测** |
+| 设备执行 | **`hdc` 可用**时跑 **`static-device-test`** 或 **`run-static-pipeline`**，本批用例设备通过 | **仅编译通过从未装包跑测** |
+| **工程整测** | 交付/推仓前：**一次**装包连跑 **全部** Suite Pass（勿多次 `static-deploy-test` 重装拼绿） | 仅单批 `-s` Pass 或拆段重装拼绿 |
 | 调试闭环 | 失败时抓 log、**`analyze-test-log`**、对照 **compile_error_hints / ohhdc SKILL** 改代码并重跑 | 失败后不迭代 |
 | **会话报告** | 按 **「正式测试报告」** 输出 **三列表格**（用例名称｜Pass/Fail｜设计思路）+ 汇总 | **无表格、或仅有 log 路径** |
 
@@ -433,7 +435,9 @@ python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程完整路径> \
   --timeout 300000 -s YourNewSuiteTest
 ```
 
-多套件：`-s class SuiteA,SuiteB`。全量 `static-deploy-test` 仅在有明确需求时使用。
+多套件：`-s class SuiteA,SuiteB`。
+
+**工程整测硬门禁（交付 / commit 前 / 对标 CI·xDevice）**：**一次** `static-deploy-test`（或 `static-device-test`）连跑 `List.test` **全部** Suite；**禁止**拆成多次部署且每次重装后再拼「全绿」（会漏 Suite 间串扰，见 **ohos-gate-compliance**「设备整测硬门禁」）。单批 `-s OneSuite` 仅调试用。
 
 ```bash
 python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程完整路径> [--timeout 15000] [-m entry] [--unittest-runner /ets/testrunner/OpenHarmonyTestRunner]
@@ -537,6 +541,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <本机日志文件
 - [ ] **签名**：已 `source signing-materials/env.sh`；`entry-default-signed.hap` 存在  
 - [ ] **静态一体**：用 `hapbuild build`，**未**误用 `build-all` 的 `build-test`  
 - [ ] **设备**：本批次套件 **`static-deploy-test -s <Suite>`** 全 Pass（附 `OHOS_REPORT_RESULT`）；非仅全量未跑完  
+- [ ] **工程交付/推仓前**：全部 Suite **一次**连跑 Pass（禁止多次 `static-deploy-test` 重装拼绿）  
 - [ ] **CodeCheck**：G.EXT.01（`@Trace public`）、G.FMT.02（行宽 ≤120）  
 - [ ] 设备 **`deploy-test`** 或通过 **`ohhdc test`** 指定套件时结果可解释
 
@@ -754,6 +759,9 @@ python3 src/skills/ohhap/hapbuild.py build <静态一体工程>
 | `OHOS_HAPSIGNER_RESULT` 指工程 `autosign/` | 必须指 `signing-materials/`；sign 会先清空工程 autosign |
 | 只编未跑就宣称完成 | 本批 `static-deploy-test -s Suite` + `OHOS_REPORT_RESULT` |
 | 全量 List 第 N 条 App died | 新批次只跑本批套件，全量失败 ≠ 新用例失败 |
+| hvigor-static 报找不到 components（`metaVersion` 3.0.2） | 本地临时将 SDK 各包 `oh-uni-package.json` 的 `metaVersion` 改为 **3.0.1**（勿提交 SDK） |
+| `@ohos/hypium-binary` 预编译 abc 与设备 etsstdlib ABI 不一致（如 `Array.create`/`Map.get` Y vs Object）→ Runner 起不来或协程挂死 | **勿**先 sync GitCode 覆盖；用本机已验证 `entry/src/hypium`（SDK `src_static` + 最小补丁，删掉模板 `testAbility`/`testrunner`）；**禁止提交** `hypium/`；Runner/用例改相对路径 `../../../hypium` |
+| 误用 `source use-ohos-sdk.sh static` 导致 SDK 路径漂移 | 显式：`OHOS_SDK_PATH=$HOS_CLT_PATH/sdk/default/openharmony/static` + `OHOS_USE_HVIGOR_STATIC=1` |
 
 ### 13.8 CodeCheck、异常参数、Git 与提交纪律
 
@@ -879,7 +887,7 @@ import { Entry, Column, ContextMenuOptions, ... } from '@ohos.arkui.component';
 
 **多批合并**：`gen_xdevice_summary_report.py` 支持 `parsed1+parsed2+...`（同 Acts 模块多批 parsed 合并一条）。
 
-**推荐顺序**：分批开发 → 每批 Tier-1 + xDevice 报告 → 全部 Pass 后更新多模块汇总 → 按 **xts-git-commit** 分批 commit。
+**推荐顺序**：分批开发 → 每批 Tier-1 + xDevice 报告 → 全部 Pass 后更新多模块汇总 → 按 **xts-git-commit** 分批 commit → **交付一张** `summary_top.png`（多 HAP 只截合并页；见 **REPORTING.md** 硬门禁）。
 
 **本地工具根**（不进 xts_acts Git）：
 
@@ -887,4 +895,4 @@ import { Entry, Column, ContextMenuOptions, ... } from '@ohos.arkui.component';
 /root/aiSkill/develop/xts_acts_local_tools/xts_acts_0622/
 ```
 
-**关联 skill**：`xts-git-commit`（提交纪律）、`xts-develop-master-cycle`（master/xdevice 整仓报告）。
+**关联 skill**：`xts-git-commit`（提交纪律 + commit 后截图）、`xts-develop-master-cycle`（master/xdevice 整仓报告与截图脚本）。

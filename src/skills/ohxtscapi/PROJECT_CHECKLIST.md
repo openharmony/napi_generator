@@ -14,7 +14,21 @@
 | `Test.json` kits | 与 BUILD.gn 一致：单包或双包 | assist 已配但 kits 只装 Test |
 | `subsystem_name` / `part_name` | `arkui` / `ace_engine` | 缺省 |
 | CMake | 仅编 `nativefunc` 与被测 `.cpp` | 拷贝 `nativerender`、无关组件目录 |
-| `signature/openharmony_sx.p7b` | bundle 与 `module.json5` bundleName 前缀一致 | 沿用 parallelize 的 bundle 名 |
+
+### 1.1 signature/openharmony_sx.p7b（P0，**禁止模板拷贝**）
+
+| 检查项 | 正确做法 | 常见错误（**已两次事故**） |
+|--------|----------|---------------------------|
+| **bundle 一致** | p7b 内 `bundle-name` = **`AppScope/app.json5` bundleName** | 沿用 parallelize / 其余模板 p7b |
+| **生成方式** | **`bash .../xts_shared/gen-xts-signature-p7b.sh <工程根>`** | `cp 模板/signature/*` |
+| **双 HAP** | Main assist 与 Test **共用** 同一 p7b | 只改 Test.json 不重做 p7b |
+| **提交前** | `strings p7b \| grep bundle-name` 与 app.json5 一致 | hapbuild 本地 signed 通过即 push |
+
+```bash
+bash /root/aiSkill/.claude/skills/xts_shared/gen-xts-signature-p7b.sh <工程根>
+```
+
+共用说明：**`xts_shared/SIGNATURE-P7B.md`**；**ohxtscapi SKILL §签名 Profile**。
 
 **判断是否需要 assist HAP**：Hypium 是否 `import nativeFunc from 'libnativefunc.so'` 且 so 在 **entry 主模块** CMake 产出？是 → **必须双 HAP**。
 
@@ -90,20 +104,22 @@ python3 src/skills/ohxtscapi/ohxtscflow.py deploy-test <工程路径> -s <Suite>
 ```
 
 - CAPI 动态工程：`build-all` = **主包 build（编 native .so）+ build-test + sign**
-- 新批次务必 **`-s` 指定套件**；多套件逗号分隔（如 `SuiteA,SuiteB`）时 **ohhdc 分次 deploy-test**
-- **禁止**单次 unittest 将多个 class 拼在同一 `-s class` 参数（设备会挂起直至超时）
+- 新批次调试：`-s` 本批套件
+- **工程整测（交付/推仓前）**：**一次** `deploy-test -s SuiteA,SuiteB,...`（或省略 `-s`）；ohhdc **内部**对多 Suite 分次设备 unittest，但**只卸装安装一次**
+- **禁止** Agent 外层循环多次 `deploy-test`/`run-capi-pipeline`（每次重装）再拼绿（假绿，见 **ohos-gate-compliance**「设备整测硬门禁」）
+- **禁止**把多个 class 拼进**同一次**设备 shell 的单个 `-s class` 参数（会挂起）；应用 **一次** `deploy-test` + 逗号列表，交 ohhdc 内部分次
 
 ---
 
-## 5. PR 前 CodeCheck
+## PR 前 CodeCheck
 
 1. 读本清单 + **`miscellaneous/xts_code_check.md`**
 2. 确认 `@tc.name` / `@tc.number` / `it()` 三一致
-3. **G.FMT.06-CPP**：`.cpp` 多行函数调用续行 = **起始行缩进 + 4**；见 **`ohos-gate-compliance`**
-4. **`run-capi-pipeline` 已含自动门禁+commit**；单独补跑：`python3 src/skills/ohos-gate-compliance/scripts/gate_review.py <工程> -s Suite`
-5. **门禁手工修复后须加固 `ohos-gate-compliance` skill**（`scripts/` 检测/自动修复 + 文档）
-6. `git diff --cached --shortstat` < 2000
-7. 无 `build/`、`autosign/`、`local.properties` 入暂存
+3. **G.FMT.06-CPP**：`.cpp` 多行函数调用续行参数 **8 空格**（操作符留行末）；见 **ohos-gate-compliance-pr-check** §G.FMT.06-CPP
+4. `git diff --cached --shortstat` < 2000
+5. 无 `build/`、`autosign/`、`local.properties` 入暂存
+6. **`signature/openharmony_sx.p7b`**：§1.1 已 gen，bundle 与 app.json5 一致（**非模板拷贝**）
+7. **工程整测**：全部 Suite **一次** `deploy-test` 连跑 Pass（禁止多次重装拼绿）
 
 ---
 

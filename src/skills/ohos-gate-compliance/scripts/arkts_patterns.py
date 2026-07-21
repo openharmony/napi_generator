@@ -82,7 +82,16 @@ def _is_comment_line(stripped: str) -> bool:
     return stripped.startswith("//") or stripped.startswith("*")
 
 
-def _match_arkts_rule(line: str, rule_id: str, pat: re.Pattern[str], msg: str) -> PatternHit | None:
+def _match_arkts_rule(
+    line: str,
+    rule_id: str,
+    pat: re.Pattern[str],
+    msg: str,
+    static: bool = False,
+) -> PatternHit | None:
+    # 'use static' 工程以 int 为合法数值类型，勿按动态 ArkTS 要求改为 number
+    if rule_id == "ARKTS_NO_INT" and static:
+        return None
     if rule_id == "ARKTS_NO_INT" and "ResourceColor" in line:
         return None
     if not pat.search(line):
@@ -112,7 +121,7 @@ def _scan_ets_line(line_no: int, line: str, static: bool) -> list[PatternHit]:
         return []
     hits: list[PatternHit] = []
     for rule_id, pat, msg in RULES:
-        hit = _match_arkts_rule(line, rule_id, pat, msg)
+        hit = _match_arkts_rule(line, rule_id, pat, msg, static=static)
         if hit is not None:
             hit.line = line_no
             hits.append(hit)

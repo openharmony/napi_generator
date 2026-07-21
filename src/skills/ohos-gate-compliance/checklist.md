@@ -2,7 +2,9 @@
 
 ## 域选择
 
-- [ ] **ArkTS / XTS** — 改 `xts_acts_*` HAP → 勾选 A～F
+- [ ] **ArkTS 动态**（ohxtsdynamic）— 勾选 A～F + **整测一次连跑**
+- [ ] **ArkTS 静态**（ohxtsstatic）— 勾选 A～F + **整测一次连跑**
+- [ ] **CAPI / C++ NAPI**（ohxtscapi）— 勾选 A～F（ets）+ G～J（若改 framework）+ **整测一次连跑**
 - [ ] **C++ / ace_engine** — 改 `frameworks/` 等 → 勾选 G～J
 - [ ] **双域同批** — 两域分别勾选并分 commit
 
@@ -33,7 +35,11 @@
 
 - [ ] 无大段注释掉的废弃代码
 - [ ] `@tc.number` / `@tc.name` 与用例一致（若改测试）
+- [ ] 无裸 `it()`：每条 `it` 前紧邻完整 `/** @tc.number … @tc.level */`（含一体工程 `entry/.../*.test.ets`）
 - [ ] 合并冲突未保留「仅 id 无 key」或旧 key 版本
+- [ ] Dialog/Present 类：`NORMAL`/`UEC` 后只点 OK/取消关遮罩；Inspector 防空 JSON；**禁止**「找不到取消就 pressBack」（会把 Ability 切后台）
+- [ ] Dialog **禁止** `DocumentViewPicker`/`FilePicker`/`系统 UIExtension` 模拟 UEC：Extension 退出后 UiTest `FindWidgets` 可永久失联并污染后续 Suite；103306 系统 UEC 勿用 `expect(true)`/`env skip` 假绿
+- [ ] **工程整测**：全部 Suite **一次** `deploy-test`/`static-deploy-test` 连跑（禁止拆多次且每次重装后拼结果）
 
 ## E. 加固批次附加（ArkTS）
 
@@ -46,11 +52,13 @@
 - [ ] `git commit -sm` + Signed-off-by
 - [ ] `git log -1 --format=full` 已核对
 - [ ] 未提交 `root/`、IDE 点开头的本地配置目录等无关路径
-- [ ] skill 文档已通过 `scan_wordstool_docs.py`（WordsTool 文档用词）
+- [ ] skill 文档已通过 `scan_wordstool_docs.py`（WordsTool 文档用词，规则号 .297 / .241 / doc1）
+- [ ] skill 内 Python：函数嵌套深度 ≤4、nbnc 行数 ≤50（超限须拆 helper）
+- [ ] skill 内 Python：G.FMT.04 无冒号前空格（切片写 `a + 1:b` 而非带空格的冒号写法）
 
 ## G. C++ 合规（ace_engine）
 
-- [ ] 圈复杂度 ≤20、函数 nbnc ≤50、嵌套 ≤4
+- [ ] 圈复杂度 ≤20、函数 nbnc ≤50、嵌套 ≤4（NAPI `GetXxxProps` 超长表：拆多函数 + 多次 define，见 reference）
 - [ ] 行宽 ≤120（G.FMT.05）
 - [ ] 函数调用实参续行 = 起始行缩进 + 4（G.FMT.06-CPP，非固定 8）
 - [ ] 无裸魔法数（已用 `constexpr` / 命名常量）
