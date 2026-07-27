@@ -18,7 +18,7 @@ version: "1.2.0"
 | profile | 典型工程 | 自动检查 | 自动修复 |
 |---------|----------|----------|----------|
 | **ets** | ohxtsstatic / ohxtsdynamic HAP | xtscheck、ArkTS Quality、G.FMT.05、**CI.SDK.01** | @tc 冒号、空行、String→string、TestType.FUNCTION、**compileSdkVersion→"M.S.F"** |
-| **capi** | ohxtscapi HAP | 上述 + **G.FMT.06-CPP**（仅 `.cpp/.h`） | 上述 + 实参续行 **起始行+4** |
+| **capi** | ohxtscapi HAP | 上述 + **G.FMT.06-CPP** + **G.FUD.05**（仅 `.cpp/.h`） | 上述 + 实参续行 **起始行+4**；FUD.05 仅检测 |
 
 **ETS 工程不跑 C++ 规则**；CAPI 工程对 `.ets` 仍跑 ArkTS 规则。
 
@@ -57,7 +57,7 @@ version: "1.2.0"
 | `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck` |
 | WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词；扫描器源码仅用 `chr()` 拼词；含 **.297**（勿裸写设备命令缩写，叙事用「设备 unittest」）、**.241**（勿强调词）、**doc1**（勿易歧义代词结构，改用「其余」） |
 | Python 嵌套深度 ≤4 / nbnc ≤50 | 拆 helper（`ohhdc._warn_if_main_hap_stale`、`gate_review._check_one_it_jsdoc` 等） | 提交 skill 前 `py_compile` |
-| G.FUD.05 / 超大函数 `GetXxxProps` | 按域拆多表 + 多次 `napi_define_properties` | 见 `reference.md` NAPI 表注册 |
+| G.FUD.05 / 超大函数 `GetXxxProps` | 检测 nbnc>50；修法：按域拆多表 + 多次 `napi_define_properties` | `gate_review.check_cpp_fud05` + `reference.md` |
 | **CI.SDK.01** `compileSdkVersion` 数字/"26" | `gate_review` 检测+自动改 `"26.0.0"`；**`git-commit-agent.sh` 暂存预检拦截** | 以 CI 为准，本地 00306042 勿入仓 |
 
 Agent **禁止**只修工程、不更新 skill（除非用户明确「仅 hotfix」）。
@@ -160,7 +160,8 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 
 | 规则 | 自动？ | 修复 |
 |------|--------|------|
-| G.FMT.06-CPP | ✅ | 实参续行 = **起始行缩进 + 4**（非固定 8） |
+| G.FMT.06-CPP | ✅ 自动修 | 实参续行 = **起始行缩进 + 4**（非固定 8） |
+| G.FUD.05 | ✅ 检测 | nbnc>50；须按域拆 `GetXxxProps`（见 reference） |
 | G.FMT.05 行宽 | 报告 | 手工折行 |
 | nbnc / 圈复杂度 | — | 见 [reference.md](reference.md) |
 | CAPI 工程整测拆多次 `deploy-test` 重装拼绿 | — | **一次** `ohxtscflow deploy-test -s SuiteA,SuiteB,...`（ohhdc 内部分次设备 unittest、**不重装**）；见上节 |

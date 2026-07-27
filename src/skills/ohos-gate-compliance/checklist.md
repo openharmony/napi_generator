@@ -60,7 +60,8 @@
 
 - [ ] 圈复杂度 ≤20、函数 nbnc ≤50、嵌套 ≤4（NAPI `GetXxxProps` 超长表：拆多函数 + 多次 define，见 reference）
 - [ ] 行宽 ≤120（G.FMT.05）
-- [ ] 函数调用实参续行 = 起始行缩进 + 4（G.FMT.06-CPP，非固定 8）
+- [ ] 函数调用实参续行 = 起始行缩进 + 4（G.FMT.06-CPP，非固定 8；如 8→12）
+- [ ] CAPI `GetXxxProps` / Init 注册函数 nbnc ≤50（G.FUD.05；超限按域拆表）
 - [ ] 无裸魔法数（已用 `constexpr` / 命名常量）
 - [ ] 头文件 nbnc 未超标（大实现已迁 `.cpp` + `BUILD.gn` 已注册）
 - [ ] 新/改文件含 Apache 2.0 许可证头（OAT.3）

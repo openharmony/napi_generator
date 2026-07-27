@@ -56,24 +56,31 @@ nbnc / 非空非注释行 > 50，触发 **G.FUD.05** 与 **超大函数[C++]**�
 `DefineXxxProps` 依次注册）。禁止为过线把多条 `MakeProp` 硬塞同一行。
 
 ```cpp
-// before: 一个 GetMaterialProps 内 30+ MakeMaterialProp → nbnc≈57
+// before: 一个 GetMaterialDialogProps 内 Dialog+NullPointer 混装 → nbnc≈60
 // after:
-static napi_property_descriptor *GetMaterialCoreProps(size_t *count);   // Immersive/LightEffect
-static napi_property_descriptor *GetMaterialDialogProps(size_t *count); // CustomDialog/Node/DisplayMode
+static napi_property_descriptor *GetMaterialCoreProps(size_t *count);        // Immersive/LightEffect
+static napi_property_descriptor *GetMaterialDialogProps(size_t *count);      // CustomDialog/Node/DisplayMode
+static napi_property_descriptor *GetMaterialNullPointerProps(size_t *count); // 空指针 API 表
 static bool DefineMaterialProps(napi_env env, napi_value exports)
 {
     size_t coreCount = 0;
     size_t dialogCount = 0;
+    size_t nullCount = 0;
     auto *core = GetMaterialCoreProps(&coreCount);
     auto *dialog = GetMaterialDialogProps(&dialogCount);
+    auto *nullDesc = GetMaterialNullPointerProps(&nullCount);
     if (napi_define_properties(env, exports, coreCount, core) != napi_ok) {
         return false;
     }
-    return napi_define_properties(env, exports, dialogCount, dialog) == napi_ok;
+    if (napi_define_properties(env, exports, dialogCount, dialog) != napi_ok) {
+        return false;
+    }
+    return napi_define_properties(env, exports, nullCount, nullDesc) == napi_ok;
 }
 ```
 
 案例：`ace_c_arkui_test_api26_systemmaterial/.../NapiFuncInitTest.cpp`（PR 门禁 G.FUD.05）。
+**门禁**：`gate_review.check_cpp_fud05` 对 CAPI `.cpp/.h` 自动检测 nbnc>50（不自动拆分，须人工按域拆表）。
 
 ## struct 参数设计约束（C++17）
 
