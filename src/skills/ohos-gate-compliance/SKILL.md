@@ -146,6 +146,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | 大写 `String` | ✅ | `string` |
 | `@tc.name:` 冒号 | ✅ | 空格分隔 |
 | `*/` 与 `it()` 空行 | ✅ | 删空行 |
+| G.FMT.05 行宽 | 报告 | 单行 ≤120 字符；长日志参数、对象字面量按语义折行 |
 | `int` | 报告（**仅动态**） | 改 `number`；**`'use static'` 文件跳过**（`int` 合法） |
 | `.key('foo')` 无下划线 | 报告 | `页面名_组件名` |
 | static 十六进制 fontColor | 报告 | `ResourceColor` 或字符串 |
