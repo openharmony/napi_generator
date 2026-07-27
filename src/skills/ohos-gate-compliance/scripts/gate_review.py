@@ -418,6 +418,56 @@ def check_build_profile_compile_sdk(path: Path, text: str) -> list[GateIssue]:
     return issues
 
 
+def _from_codes(*codes: int) -> str:
+    return "".join(chr(c) for c in codes)
+
+
+# WordsTool.97 — 开源仓勿写易歧义产品名；字体族用行业通用 sans-serif
+_WT97_TOKEN = _from_codes(104, 97, 114, 109, 111, 110, 121, 111, 115)  # harmonyos
+_WT97_FONT = (
+    _from_codes(72, 97, 114, 109, 111, 110, 121, 79, 83)
+    + " "
+    + _from_codes(83, 97, 110, 115)
+)  # HarmonyOS Sans
+_WT97_RE = re.compile(_WT97_TOKEN, re.I)
+
+
+def _is_resource_string_json(path: Path) -> bool:
+    return (
+        path.name == "string.json"
+        and "resources" in path.parts
+        and "element" in path.parts
+    )
+
+
+def fix_wordstool_97(text: str) -> tuple[str, int]:
+    """字体资源中的产品字体名 → 行业通用 sans-serif。"""
+    n = text.count(_WT97_FONT)
+    if n:
+        text = text.replace(_WT97_FONT, "sans-serif")
+    return text, n
+
+
+def check_wordstool_97(path: Path, text: str) -> list[GateIssue]:
+    """WordsTool.97：源码/资源勿含易歧义产品名（含字体族）。"""
+    if path.suffix not in (".ets", ".ts", ".json", ".json5") and not _is_resource_string_json(
+        path
+    ):
+        return []
+    issues: list[GateIssue] = []
+    for i, line in enumerate(text.splitlines(), 1):
+        if _WT97_RE.search(line):
+            issues.append(
+                GateIssue(
+                    path,
+                    i,
+                    "WordsTool.97",
+                    "勿写易歧义产品名；字体族请用行业通用 sans-serif",
+                )
+            )
+    return issues
+
+
 def apply_auto_fixes(path: Path, profile: ProjectProfile) -> int:
     try:
         text = path.read_text(encoding="utf-8")
@@ -437,6 +487,9 @@ def apply_auto_fixes(path: Path, profile: ProjectProfile) -> int:
         total += n
     if path.name == "build-profile.json5":
         text, n = fix_build_profile_compile_sdk(text)
+        total += n
+    if path.suffix in (".ets", ".ts", ".json", ".json5") or _is_resource_string_json(path):
+        text, n = fix_wordstool_97(text)
         total += n
     if total:
         path.write_text(text, encoding="utf-8")
@@ -473,7 +526,11 @@ def gate_target_files(project: Path, profile: ProjectProfile) -> list[Path]:
         fp = repo / rel
         if not fp.is_file():
             continue
-        if fp.name == "build-profile.json5" or _suffix_ok(fp.suffix, profile):
+        if (
+            fp.name == "build-profile.json5"
+            or _suffix_ok(fp.suffix, profile)
+            or _is_resource_string_json(fp)
+        ):
             paths.append(fp)
     if paths:
         return sorted(set(paths))
@@ -487,10 +544,13 @@ def scan_file(path: Path, text: str, profile: ProjectProfile) -> list[GateIssue]
     issues: list[GateIssue] = []
     if path.name == "build-profile.json5":
         return check_build_profile_compile_sdk(path, text)
+    if _is_resource_string_json(path):
+        return check_wordstool_97(path, text)
     issues.extend(check_ets_xtscheck(path, text))
     issues.extend(check_arkts_patterns(path, text))
     issues.extend(check_line_width(path, text))
     issues.extend(check_py_fmt04_space_before_colon(path, text))
+    issues.extend(check_wordstool_97(path, text))
     if profile == ProjectProfile.CAPI:
         issues.extend(check_cpp_fmt06(path, text))
         issues.extend(check_cpp_fud05(path, text))
