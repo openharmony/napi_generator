@@ -119,16 +119,25 @@ ace_engine                      (全量，最慢)
 
 ## G.FMT.06-CPP 函数调用参数换行
 
-**规则**：操作符留在行末；续行参数缩进 = **起始行缩进 + 4**（非固定 8）。亦允许与首参列对齐。
+**规则**：操作符留在行末；续行参数缩进 = **起始行缩进 + 4**（非固定 8）。亦允许与首参列对齐。  
+**函数声明**同样适用：续行勿写成仅 1 个空格（门禁报 `indentation is [1]`）。
 
 ```cpp
 // ❌ 续行与起始行同级（8→8）— 门禁报 should be [12]
         MakeMaterialProp(
         "testFoo001", TestFoo001),
 
+// ❌ 声明续行仅 1 空格 — 门禁报 should be [4] or align
+std::string Foo(
+ const std::string& a);
+
 // ✅ 续行多缩进一层（8→12）
         MakeMaterialProp(
             "testFoo001", TestFoo001),
+
+// ✅ 声明续行 4 空格
+std::string Foo(
+    const std::string& a);
 
 // ✅ 函数体 4 空格起始 → 续行 8（ASSERT_EQ 等）
     ASSERT_EQ(OH_ArkUI_CustomDialog_SetDisplayModeInSubWindow(

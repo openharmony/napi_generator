@@ -209,7 +209,8 @@ def fix_cpp_fmt06(text: str) -> tuple[str, int]:
         out_indent = indent
         if call_base is not None and core and not core.startswith(")"):
             expected = _fmt06_expected_indent(call_base)
-            if indent <= call_base:
+            # 续行至少起始行+4；声明续行仅 1 空格亦须抬到 expected
+            if indent < expected:
                 out_indent = expected
                 n += 1
         out.append(" " * out_indent + core + ending)
@@ -230,7 +231,7 @@ def check_cpp_fmt06(path: Path, text: str) -> list[GateIssue]:
         indent = len(line) - len(stripped)
         if call_base is not None and stripped and not stripped.startswith(")"):
             expected = _fmt06_expected_indent(call_base)
-            if indent <= call_base:
+            if indent < expected:
                 issues.append(
                     GateIssue(
                         path, i, "G.FMT.06-CPP",

@@ -117,6 +117,36 @@ CalendarDialogView::SetCalendarPaintProperties(settingData, monthFrameNode);
 
 单测内已有 `monthFrameNode`，补第二参即可，**不改业务逻辑**。
 
+## 案例 11：inspector_id_helper 声明续行 1 空格 / 魔法数 / 嵌套
+
+**问题**：
+
+- G.FMT.06：函数声明参数续行只有 1 空格（应为 4 或与首参对齐）
+- G.CNS.02：`i+1`/`i+2`/`i+3`、`key.size() == 4` 等裸数字
+- 超大深度 / G.FUD.05：`ExtractKeyFromInspectorId` 嵌套 >4
+- G.EXP.43：注释掉的 `return tag + "_"` 残留
+- G.FUD.06：`GetOutermostFrameAncestor` 内联超 10 行
+
+**修复**：
+
+```cpp
+// 声明续行至少 4 空格
+std::string InspectorIdHelper::Foo(
+    const RefPtr<FrameNode>& node, const std::string& prefix);
+
+// 命名常量
+constexpr size_t ORDINAL_FOUR_CHAR_LEN = 4;
+constexpr size_t INDEX_PLUS_ONE = 1;
+
+// 嵌套：把 "NN__" 解析抽到匿名命名空间 helper
+std::string TryExtractTwoDigitAutoKey(const std::string& suffix);
+
+// 超长 inline → 声明在 .h，定义在 .cpp
+static RefPtr<FrameNode> GetOutermostFrameAncestor(const RefPtr<FrameNode>& node);
+```
+
+**经验**：helper 新函数声明续行一律 4 空格起；序号/下划线偏移一律进 `InspectorIdConstants`。
+
 ## Commit 分批示例（本次）
 
 | Commit | 范围 | 约行数 |
