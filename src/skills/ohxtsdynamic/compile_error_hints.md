@@ -53,7 +53,7 @@ python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py env
 | 批量探测 0 通过 | 同文件多探测 + 错误行干扰 | 用 `compile_probe_matrix.py` **逐条单独编译** |
 | 设备大量 Fail、本地刚编过 | **旧 HAP 未卸载** | clean build + 卸载 + `deploy-test` 重装 |
 | 起测即 `App died` / Ability 起不来 | **双 HAP 只编了 ohosTest**（`build-test`）或未装主包 | `ohxtsflow build-all`（build+build-test+sign）→ `deploy-test` 装主+测；校验两份 `*-signed.hap` |
-| 改了页面仍跑旧 UI / 假绿 | **主包过期**（只重编测包）或**改码未重编** | 改 `entry/src/main` / ohosTest 后必须重跑 `build-all`；`ohhdc` 对过期 HAP **硬失败** |
+| 改了页面仍跑旧 UI / 假绿 | **主包过期**（只重编测包）或**改码未重编** | 过期 HAP **被删除**；须 `build-all`；`ohxtsflow deploy-test` 缺包时自动重编，**禁止用旧包** |
 | `NO_RESULT` / 无 `OHOS_REPORT_RESULT` | 装包失败、锁屏、只装测包 | 解锁设备；双包重装；**禁止**当环境偶发略过 |
 | 装包 `9568450` / `9568289` | release 包用了 `-g`，或 PASTEBOARD 未进 profile ACL | `hdc install` 无 `-g`；profile 加 restricted-permissions |
 | `queue.shift()` 编译错误 | ArkTS 不支持 | Inspector BFS 改索引遍历 |

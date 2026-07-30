@@ -439,7 +439,7 @@ python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程完整路径> \
 
 **工程整测硬门禁（交付 / commit 前 / 对标 CI·xDevice）**：**一次** `static-deploy-test`（或 `static-device-test`）连跑 `List.test` **全部** Suite；**禁止**拆成多次部署且每次重装后再拼「全绿」（会漏 Suite 间串扰，见 **ohos-gate-compliance**「设备整测硬门禁」）。单批 `-s OneSuite` 仅调试用。
 
-**改码必重编**：任意 `.ets`/resources 变更后须 `hapbuild build`（一体）或 `ohxtsflow build-all`（双包）+ sign，再 deploy；`ohhdc` 对过期 HAP **硬失败**。PR 工程范围以 `git diff` 路径为准，禁按 commit 文案裁剪。
+**改码必重编**：任意 `.ets`/resources 变更后过期 HAP **作废删除**；须 `hapbuild build`（一体）或 `build-all`（双包）+ sign；`ohxtsflow` **不查找旧包**，缺则自动重编。PR 工程范围以 `git diff` 路径为准，禁按 commit 文案裁剪。
 
 ```bash
 python3 src/skills/ohhdc/ohhdc.py static-deploy-test <工程完整路径> [--timeout 15000] [-m entry] [--unittest-runner /ets/testrunner/OpenHarmonyTestRunner]

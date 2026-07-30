@@ -117,6 +117,9 @@ def _build_ohhdc_cmd(action: str, project: str, ns: argparse.Namespace) -> list[
 
 def _run_device_with_report(action: str, ns: argparse.Namespace) -> int:
     proj = os.path.abspath(ns.project)
+    # 根源：作废过期 HAP；缺失则强制 build-all，禁止查找/使用旧包
+    if _ensure_installable_haps_or_rebuild(action, ns) != 0:
+        return 1
     cmd = _build_ohhdc_cmd(action, proj, ns)
     device = getattr(ns, "device", None) or _detect_device_sn()
     suite = getattr(ns, "suite", None) or ""
@@ -129,6 +132,41 @@ def _run_device_with_report(action: str, ns: argparse.Namespace) -> int:
         batch_name=batch,
     )
     return rc
+
+
+def _load_ohhdc_module():
+    import importlib.util
+
+    path = _ohhdc_path()
+    spec = importlib.util.spec_from_file_location("ohhdc_mod", path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"无法加载 ohhdc: {path}")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _ensure_installable_haps_or_rebuild(action: str, ns: argparse.Namespace) -> int:
+    """
+    deploy 前：先 purge 过期包；若无可装包则自动 build-all。
+    从根源杜绝「改码后仍用旧包测试」。
+    """
+    proj = os.path.abspath(ns.project)
+    try:
+        oh = _load_ohhdc_module()
+    except Exception as exc:  # noqa: BLE001
+        print(f"❌ 加载 ohhdc 失败: {exc}")
+        return 1
+    purged = oh.purge_stale_project_haps(proj)
+    if purged:
+        print(f"🗑 已作废过期 HAP {len(purged)} 个（禁止用旧包测试）")
+    need_test = action == "deploy-test" and _is_dual_hap_project(proj)
+    _m, _t, err = oh.resolve_installable_haps(proj, need_test_hap=need_test)
+    if not err:
+        return 0
+    print(f"ℹ {err}")
+    print("→ 自动 build-all 后再测（skill 链路不查找旧包）")
+    return cmd_build_all(ns)
 
 
 def cmd_env(_: argparse.Namespace) -> int:
@@ -220,10 +258,11 @@ def cmd_build_all(ns: argparse.Namespace) -> int:
         print("ℹ 检测到 entry/src/ohosTest → 双 HAP：将执行 build + build-test + sign")
     env = os.environ.copy()
     env.pop("OHOS_USE_HVIGOR_STATIC", None)
+    profile = getattr(ns, "profile", None) or "release"
     for step in (
         [_py(), str(hapbuild), "build", proj],
         [_py(), str(hapbuild), "build-test", proj],
-        [_py(), str(hapbuild), "sign", proj, ns.profile],
+        [_py(), str(hapbuild), "sign", proj, profile],
     ):
         print("+", " ".join(step))
         if subprocess.run(step, env=env).returncode != 0:

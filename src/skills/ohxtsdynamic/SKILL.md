@@ -150,9 +150,9 @@ hdc list targets
 |------|----------|
 | 只 `hapbuild build-test`（或只签测包） | 设备 `App died` / Ability 起不来；主包过期 → **本地假绿、页崩溃** |
 | 只 `hdc install` 测包、不装主包 | unittest 找不到 Ability / `Cannot execute ark file` |
-| 改了 `MainAbility`/`pages`/`rawfile` 后只重编测包 | 主 HAP mtime 落后源码；**ohhdc 硬失败**（`_require_haps_fresh`），须重跑 **`build-all`** |
+| 改了 `MainAbility`/`pages`/`rawfile` 后只重编测包 | 主 HAP 被 **作废删除**；`deploy-test`/`ohxtsflow` **不装旧包**，缺包则自动 **`build-all`** |
 | 把 `build-test` 成功当成「可交付」 | 门禁 / xDevice 装双包后大面积失败 |
-| **改码后不重编、直接用旧 signed.hap 复测** | 接口人复测翻车（PR#42066）；**禁止**；任何 `.ets`/resources 变更后必须先 `build-all` 再 `deploy-test` |
+| **改码后不重编、直接用旧 signed.hap 复测** | **根源禁止**：`purge_stale_project_haps` 删过期包；装包入口拒装；`ohxtsflow deploy-test` 不查找旧包、缺则自动 `build-all` |
 | 按单 commit 文案收窄 HAP 列表 | 同 PR 其它工程漏测；范围以 **`git diff` 路径** 为准 |
 
 **编签后硬校验（缺任一文件 → 不得 deploy）**：
@@ -506,7 +506,7 @@ python3 ohhdc/ohhdc.py deploy-test <工程根> -m entry_test ...
 | 动态工程残留 `OHOS_USE_HVIGOR_STATIC=1` | 编签前 `unset` |
 | 签名源指工程 `autosign/` | 必须 `signing-materials/` |
 | **只 `build-test` / 只装测包**（Web/DFX 等双 HAP 高频） | 判定 `entry/src/ohosTest/` → **`build-all`**；装包用 **`deploy-test`**（主+测）；缺主包 → `App died` |
-| 改 main/pages 后只重编测包 | 主 HAP 过期；`ohhdc` stale 告警后仍须重跑 **`build-all`** |
+| 改 main/pages 后只重编测包 | 主 HAP **作废**；须 **`build-all`**（或走 `ohxtsflow deploy-test` 自动重编） |
 | `local.properties` 指错 SDK（如 `sdk/openharmony`） | 动态：**`…/openharmony/normal`**；编签中可 `chmod a-w local.properties` 防被改写 |
 | 异常批次假失败 | `run_abnormal_device_test.sh` clean 卸载 |
 | 全量 List 失败误判新用例 | `deploy-test --class SuiteName` |
@@ -565,7 +565,7 @@ grep bundleName <工程根>/AppScope/app.json5
 [ ] source signing-materials/env.sh；normal SDK；unset OHOS_USE_HVIGOR_STATIC
 [ ] **双 HAP 判定**：有 `entry/src/ohosTest/` → 只用 `build-all`（禁单独 `build-test`）
 [ ] build-all 后两包均存在：`…/default/entry-default-signed.hap` + `…/ohosTest/entry-ohosTest-signed.hap`
-[ ] **改码后已重编**：本批源码 mtime ≤ 两包 signed.hap mtime（否则 `deploy-test` 会硬失败）
+[ ] **改码后已重编**：过期包已作废；两包 signed.hap 为重编产物（否则装包被拒 / ohxtsflow 自动 build-all）
 [ ] **PR 工程列表**来自 diff 路径，未按 commit 文案裁剪
 [ ] 设备已解锁；每 HAP 有 `OHOS_REPORT_RESULT` 且 Fail=0 Error=0（无 RESULT 不得宣称通过）
 [ ] deploy-test 一次装主+测；日志无 `App died` / `Cannot execute ark file` / `PagePushHelper] push ... error`

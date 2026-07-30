@@ -294,6 +294,9 @@ def install_hap(hap_path):
     Returns:
         tuple: (success: bool, output: str, error: str)
     """
+    refuse = _refuse_if_project_hap_stale(hap_path)
+    if refuse:
+        return False, "", refuse
     path_quoted = shlex.quote(hap_path)
     command = f'bash -c "source ~/.bashrc && hdc install {path_quoted}"'
     return run_hdc_command(command)
@@ -488,6 +491,9 @@ def replace_install_hap(hap_path):
     Returns:
         tuple: (success: bool, output: str, error: str)
     """
+    refuse = _refuse_if_project_hap_stale(hap_path)
+    if refuse:
+        return False, "", refuse
     path_quoted = shlex.quote(hap_path)
     command = f'bash -c "source ~/.bashrc && hdc -r install {path_quoted}"'
     return run_hdc_command(command)
@@ -511,44 +517,141 @@ def _newest_ets_mtime(pages_root: str) -> float:
     return _newest_src_mtime(pages_root)
 
 
-def _hap_stale_msg(label: str, hap_path: str, src_root: str, hint: str) -> str:
-    """若 hap 早于源码则返回错误文案，否则空串。"""
+def _project_signed_haps(project_dir: str) -> tuple[str, str]:
+    main_hap = os.path.join(
+        project_dir, "entry", "build", "default", "outputs", "default",
+        "entry-default-signed.hap",
+    )
+    test_hap = os.path.join(
+        project_dir, "entry", "build", "default", "outputs", "ohosTest",
+        "entry-ohosTest-signed.hap",
+    )
+    return main_hap, test_hap
+
+
+def _hap_older_than_src(hap_path: str, src_root: str) -> bool:
+    """HAP 存在且 mtime 严格早于源码树 → True。"""
+    if not os.path.isfile(hap_path) or not os.path.isdir(src_root):
+        return False
     try:
-        if not os.path.isfile(hap_path):
-            return f"{label} 不存在: {hap_path}"
-        hap_mtime = os.path.getmtime(hap_path)
-        newest_src = _newest_src_mtime(src_root)
-        if newest_src and newest_src > hap_mtime:
+        newest = _newest_src_mtime(src_root)
+        return bool(newest) and newest > os.path.getmtime(hap_path)
+    except OSError:
+        return False
+
+
+def _unlink_quiet(path: str) -> bool:
+    try:
+        if os.path.isfile(path):
+            os.unlink(path)
+            return True
+    except OSError:
+        pass
+    return False
+
+
+def _purge_one_stale_hap(hap_path: str, src_root: str, label: str) -> list[str]:
+    """源码新于 HAP 时删除 signed（及同目录 unsigned），返回已删路径。"""
+    deleted: list[str] = []
+    if not _hap_older_than_src(hap_path, src_root):
+        return deleted
+    for p in (hap_path, hap_path.replace("-signed.hap", "-unsigned.hap")):
+        if _unlink_quiet(p):
+            deleted.append(p)
+            print(f"🗑 已作废过期{label}: {p}", flush=True)
+    return deleted
+
+
+def purge_stale_project_haps(project_dir: str) -> list[str]:
+    """
+    根源门禁：源码已改则删除磁盘上的过期 signed/unsigned HAP，
+    使后续链路无法再「找到旧包去装」。
+    """
+    project_dir = os.path.abspath(project_dir)
+    main_hap, test_hap = _project_signed_haps(project_dir)
+    deleted: list[str] = []
+    main_src = os.path.join(project_dir, "entry", "src", "main")
+    deleted.extend(_purge_one_stale_hap(main_hap, main_src, "主 HAP"))
+    test_src = os.path.join(project_dir, "entry", "src", "ohosTest")
+    if os.path.isdir(test_src):
+        deleted.extend(_purge_one_stale_hap(test_hap, test_src, "测试 HAP"))
+    return deleted
+
+
+def resolve_installable_haps(
+    project_dir: str, need_test_hap: bool = True
+) -> tuple[str, str, str]:
+    """
+    装包前唯一入口：先作废过期包，再解析路径。
+    返回 (main_hap, test_hap_or_empty, error)。error 非空则禁止安装。
+    """
+    project_dir = os.path.abspath(project_dir)
+    purged = purge_stale_project_haps(project_dir)
+    main_hap, test_hap = _project_signed_haps(project_dir)
+    if not os.path.isfile(main_hap):
+        extra = f"；已作废过期包 {len(purged)} 个" if purged else ""
+        return (
+            main_hap,
+            test_hap if need_test_hap else "",
+            f"主 HAP 不可用（不存在或已因源码变更作废）: {main_hap}{extra}。"
+            f"须先 ohxtsflow build-all / hapbuild build+sign，禁止用旧包测试",
+        )
+    if need_test_hap and os.path.isdir(
+        os.path.join(project_dir, "entry", "src", "ohosTest")
+    ):
+        if not os.path.isfile(test_hap):
+            extra = f"；已作废过期包 {len(purged)} 个" if purged else ""
             return (
-                f"{label} 早于源码（禁止用旧包复测）。{hint} "
-                f"hap_mtime={hap_mtime:.0f} newest_src={newest_src:.0f} src={src_root}"
+                main_hap,
+                test_hap,
+                f"测试 HAP 不可用（不存在或已因源码变更作废）: {test_hap}{extra}。"
+                f"须先 ohxtsflow build-all（禁只 build-test）",
             )
-    except OSError as exc:
-        return f"{label} mtime 检查失败: {exc}"
+        return main_hap, test_hap, ""
+    return main_hap, "", ""
+
+
+def _project_root_from_hap(hap_path: str) -> str:
+    """从 .../entry/build/.../*.hap 上溯到含 build-profile.json5 的工程根。"""
+    cur = os.path.abspath(hap_path)
+    for _ in range(10):
+        cur = os.path.dirname(cur)
+        if not cur or cur == os.path.dirname(cur):
+            break
+        if os.path.isfile(os.path.join(cur, "build-profile.json5")):
+            return cur
+    return ""
+
+
+def _refuse_if_project_hap_stale(hap_path: str) -> str:
+    """
+    单文件 install/replace-install 入口：若属某工程产物且源码已改，
+    先作废过期包并拒绝安装（杜绝绕过 deploy 直接装旧包）。
+    """
+    root = _project_root_from_hap(hap_path)
+    if not root:
+        return ""
+    purged = purge_stale_project_haps(root)
+    abs_hap = os.path.abspath(hap_path)
+    if purged and (abs_hap in purged or not os.path.isfile(abs_hap)):
+        return (
+            f"拒绝安装过期 HAP（源码已变更，已作废 {len(purged)} 个包）。"
+            f"请先 build-all / hapbuild build+sign: {root}"
+        )
+    if not os.path.isfile(abs_hap):
+        return f"HAP 不存在（可能已被作废）: {abs_hap}"
     return ""
 
 
 def _require_haps_fresh(project_dir: str, main_hap: str, test_hap: str = "") -> str:
-    """
-    改码后必须重编再测：任一侧 HAP 落后源码 → 返回错误（硬失败，非告警）。
-    双 HAP：主包对 entry/src/main，测包对 entry/src/ohosTest。
-    """
-    hint_dual = "请 ohxtsflow build-all（build+build-test+sign）后重跑"
-    hint_main = "请 hapbuild build + sign 后重跑"
-    main_src = os.path.join(project_dir, "entry", "src", "main")
-    err = _hap_stale_msg("主 HAP", main_hap, main_src, hint_dual if test_hap else hint_main)
-    if err:
-        return err
-    if not test_hap:
-        return ""
-    test_src = os.path.join(project_dir, "entry", "src", "ohosTest")
-    if not os.path.isdir(test_src):
-        return ""
-    return _hap_stale_msg("测试 HAP", test_hap, test_src, hint_dual)
+    """兼容旧名：作废过期包后若仍不可用则返回错误。"""
+    need_test = bool(test_hap)
+    _m, _t, err = resolve_installable_haps(project_dir, need_test_hap=need_test)
+    return err
 
 
 def _warn_if_main_hap_stale(project_dir: str, main_hap: str) -> None:
-    """兼容旧调用：改为硬失败前打印；deploy 路径请用 _require_haps_fresh。"""
+    """兼容旧调用。"""
     msg = _require_haps_fresh(project_dir, main_hap, "")
     if msg:
         print(f"❌ {msg}", flush=True)
@@ -602,16 +705,6 @@ def _unittest_report_ok(output: str) -> tuple[bool, str]:
     return True, last.strip()
 
 
-def _project_signed_haps(project_dir: str) -> tuple[str, str]:
-    main_hap = os.path.join(
-        project_dir, "entry", "build", "default", "outputs", "default", "entry-default-signed.hap"
-    )
-    test_hap = os.path.join(
-        project_dir, "entry", "build", "default", "outputs", "ohosTest", "entry-ohosTest-signed.hap"
-    )
-    return main_hap, test_hap
-
-
 def install_project_haps(project_dir):
     """
     按项目安装两个 HAP：先安装主 HAP，等 1 秒后再安装测试 HAP（均使用 hdc install，不用 -r）。
@@ -626,14 +719,9 @@ def install_project_haps(project_dir):
         tuple: (success: bool, output: str, error: str)
     """
     project_dir = os.path.abspath(project_dir)
-    main_hap, test_hap = _project_signed_haps(project_dir)
-    if not os.path.isfile(main_hap):
-        return False, "", f"主 HAP 不存在: {main_hap}"
-    if not os.path.isfile(test_hap):
-        return False, "", f"测试 HAP 不存在: {test_hap}"
-    stale = _require_haps_fresh(project_dir, main_hap, test_hap)
-    if stale:
-        return False, "", stale
+    main_hap, test_hap, err = resolve_installable_haps(project_dir, need_test_hap=True)
+    if err:
+        return False, "", err
     out_parts = []
     success1, out1, err1 = install_hap(main_hap)
     out_parts.append(f"主 HAP: {out1.strip() or (err1 or '')}")
@@ -791,24 +879,12 @@ def deploy_and_run_test(
     """
     project_dir = os.path.abspath(project_dir)
     test_class = _resolve_deploy_test_class(project_dir, test_class)
-    main_hap, test_hap = _project_signed_haps(project_dir)
-    if not os.path.isfile(main_hap):
-        hint = (
-            "；双 HAP 工程请先 ohxtsflow build-all（build+build-test+sign），"
-            "禁止只 build-test"
-            if os.path.isdir(os.path.join(project_dir, "entry", "src", "ohosTest"))
-            else ""
-        )
-        return False, "", f"主 HAP 不存在: {main_hap}{hint}"
-    if not os.path.isfile(test_hap):
-        return (
-            False,
-            "",
-            f"测试 HAP 不存在: {test_hap}；请 hapbuild build-test + sign（或 ohxtsflow build-all）",
-        )
-    stale = _require_haps_fresh(project_dir, main_hap, test_hap)
-    if stale:
-        return False, "", stale
+    # 装包唯一入口：先作废过期包，再解析；无可用包则拒绝（不装旧包）
+    main_hap, test_hap, err = resolve_installable_haps(
+        project_dir, need_test_hap=True
+    )
+    if err:
+        return False, "", err
     bn = bundle_name or _parse_bundle_name(project_dir)
     if not bn:
         return False, "", "无法解析 bundleName，请指定 bundle_name 或确保项目 AppScope/app.json5 存在且含 app.bundleName"
@@ -1518,21 +1594,12 @@ def deploy_static_xts_test(
         tuple: (success: bool, log: str, error: str)
     """
     project_dir = os.path.abspath(project_dir)
-    main_hap = os.path.join(
-        project_dir,
-        "entry",
-        "build",
-        "default",
-        "outputs",
-        "default",
-        "entry-default-signed.hap",
+    # 装包唯一入口：先作废过期主包；静态一体不要求 ohosTest HAP
+    main_hap, _test_hap, err = resolve_installable_haps(
+        project_dir, need_test_hap=False
     )
-    if not os.path.isfile(main_hap):
-        return False, "", f"主 signed HAP 不存在: {main_hap}"
-    # 静态一体：测码也在 main；用 main 树（含 src/main）做新鲜度校验
-    stale = _require_haps_fresh(project_dir, main_hap, "")
-    if stale:
-        return False, "", stale
+    if err:
+        return False, "", err
     bn = _parse_bundle_name(project_dir)
     if not bn:
         return (

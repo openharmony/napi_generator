@@ -4,7 +4,7 @@ description: >-
   OpenHarmony PR 门禁合规（统一入口）：XTS pipeline 自动 review+commit、ArkTS Quality、
   xtscheck、CAPI G.FMT.05/06。按工程类型 ets/capi 自动选规则。触发词：门禁、CodeCheck、
   gate-review、PR 提交前、G.FMT.06、门禁加固。
-version: "1.3.0"
+version: "1.2.0"
 ---
 
 # OpenHarmony 门禁合规（统一入口）
@@ -50,7 +50,7 @@ version: "1.3.0"
 |------|----------|
 | G.FMT.06-CPP 实参续行 | 起始行缩进 + 4（8→12，4→8）；**声明续行勿仅 1 空格** | `gate_review.fix_cpp_fmt06` |
 | **G.FMT.04** `:` 前空格 | `brace + 1 : i` → `brace + 1:i` | `gate_review.fix_py_fmt04_space_before_colon` |
-| **DEV.REBUILD.01** 改码后旧 HAP 复测 | ohhdc `_require_haps_fresh` **硬失败** | `deploy-test`/`static-deploy-test` |
+| **DEV.REBUILD.01** 改码后旧 HAP 复测 | ohhdc **作废过期 HAP**（`purge_stale_project_haps`）+ 装包入口拒装；ohxtsflow **不查找旧包**，缺失则自动 `build-all` | `deploy-test`/`static-deploy-test` |
 | **DEV.REPORT.01** 无 OHOS_REPORT_RESULT | ohhdc `_unittest_report_ok` **硬失败** | 禁 NO_RESULT 当偶发 |
 | **DEV.SCOPE.01** PR 范围收窄假绿 | checklist + 三 skill SKILL | 以 `git diff` 路径列工程，禁按 commit 文案裁剪 |
 | G.CNS.02 Inspector 魔法数 | `constexpr` 命名边界值（`ORDINAL_FOUR_CHAR_LEN` / `INDEX_PLUS_*`） | 见 `examples-cpp-inspector.md` 案例 8 / 11 |
@@ -155,7 +155,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | **设备卫生** | 跑测前唤醒 + `setmode 602` + 上滑解锁 + `killall uitest` | 锁屏态硬跑 UiTest |
 | **结果门禁** | 必须有 `OHOS_REPORT_RESULT` 且 Fail=0 Error=0 | 无 RESULT 仍写「测试通过」 |
 
-**脚本硬失败（ohhdc）**：`deploy-test` / `install-project` / `static-deploy-test` 在 HAP **mtime 早于源码** 时 **直接失败**（不再仅告警）；装包失败附 9568450/9568289 提示；跑测结束校验 `OHOS_REPORT_RESULT`。
+**脚本根源门禁（ohhdc / ohxtsflow）**：源码新于 HAP 时 **删除** signed/unsigned（不作废则无法再「找到旧包」）；`install`/`replace-install`/`deploy-test`/`install-project`/`static-deploy-test` **拒装**已作废包；`ohxtsflow deploy-test` / `static-device-test` 在缺包时 **自动重编** 再测。装包失败附 9568450/9568289 提示；跑测结束校验 `OHOS_REPORT_RESULT`。
 
 ## ArkTS 高频
 
