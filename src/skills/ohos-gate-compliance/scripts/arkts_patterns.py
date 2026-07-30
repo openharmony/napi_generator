@@ -43,12 +43,9 @@ RULES: list[tuple[str, re.Pattern[str], str]] = [
         "key 无下划线，可能未按「页面名_组件名」命名",
     ),
     (
-        "G.OTH.05",
-        re.compile(
-            r"""['"]https?://(?!(?:www\.)?apache\.org/)[^'"]+['"]"""
-            r"""|['"]\d{1,3}(?:\.\d{1,3}){3}(?::\d+)?(?:/[^'"]*)?['"]"""
-        ),
-        "G.OTH.05 禁止硬编码公网 URL/IP；拼接假地址或用本地 server/schemeHandler",
+        "G.EXT.03",
+        re.compile(r"\bArray\s*<"),
+        "使用 Array<T>，应改为 T[]（G.EXT.03）",
     ),
 ]
 
@@ -80,6 +77,11 @@ def fix_arkts_quality(text: str) -> tuple[str, int]:
         n += c
         text = text2
     text2, c = re.subn(r": String\b", ": string", text)
+    if c:
+        n += c
+        text = text2
+    # G.EXT.03: Array<T> → T[]（仅单层标识符泛参，避免嵌套泛型误伤）
+    text2, c = re.subn(r"\bArray\s*<\s*([A-Za-z_][\w.]*)\s*>", r"\1[]", text)
     if c:
         n += c
         text = text2

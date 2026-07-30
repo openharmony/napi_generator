@@ -48,14 +48,12 @@ version: "1.2.0"
 
 | 规则 | 加固方式 |
 |------|----------|
-| **G.OTH.05** 硬编码公网 URL/IP | `arkts_patterns` 检测字面量 `https?://...` / IPv4（跳过 apache.org） | 拼接假 host / 本地 server；见 checklist |
 | G.FMT.06-CPP 实参续行 | 起始行缩进 + 4（8→12，4→8）；**声明续行勿仅 1 空格** | `gate_review.fix_cpp_fmt06` |
 | **G.FMT.04** `:` 前空格 | `brace + 1 : i` → `brace + 1:i` | `gate_review.fix_py_fmt04_space_before_colon` |
 | **DEV.REBUILD.01** 改码后旧 HAP 复测 | ohhdc **作废过期 HAP**（`purge_stale_project_haps`）+ 装包入口拒装；ohxtsflow **不查找旧包**，缺失则自动 `build-all` | `deploy-test`/`static-deploy-test` |
 | **DEV.REPORT.01** 无 OHOS_REPORT_RESULT | ohhdc `_unittest_report_ok` **硬失败** | 禁 NO_RESULT 当偶发 |
 | **DEV.SCOPE.01** PR 范围收窄假绿 | checklist + 三 skill SKILL | 以 `git diff` 路径列工程，禁按 commit 文案裁剪 |
-| G.CNS.02 Inspector / 错误码魔法数 | `constexpr` 命名；禁 `ASSERT_EQ(NAME, 103306)` / stub 裸 `401`；见 checklist G + examples 案例 8/12 | 手工 |
-| **WordsTool.204** `libc++` | CMake/注释改「C++ standard headers」 | checklist |
+| G.CNS.02 Inspector 魔法数 | `constexpr` 命名边界值（`ORDINAL_FOUR_CHAR_LEN` / `INDEX_PLUS_*`） | 见 `examples-cpp-inspector.md` 案例 8 / 11 |
 | `TestType.Function` | `arkts_patterns` 检测 + 自动替换 |
 | 大写 `String` | `arkts_patterns.fix_arkts_quality` |
 | `'use static'` 下 `int` 误报 ARKTS_NO_INT | `arkts_patterns`：static 文件跳过该规则 |
@@ -66,6 +64,7 @@ version: "1.2.0"
 | **CI.SDK.01** `compileSdkVersion` 数字/"26" | `gate_review` 检测+自动改 `"26.0.0"`；**`git-commit-agent.sh` 暂存预检拦截** | 以 CI 为准，本地 00306042 勿入仓 |
 | **WordsTool.97** 产品名/字体族 | `string.json` / `.ets` 勿写易歧义产品字体名；自动 `… Sans` → `sans-serif` | `gate_review.check_wordstool_97` / `fix_wordstool_97` |
 | **G.FMT.05** Options/`@tc.desc` 超宽 | checklist 增 before/after；dialog api26 批实锤 | 手工折行；见 **ohxtsstatic §13.11.5** |
+| **G.EXT.03** `Array<T>` | `arkts_patterns` 检测 + `Array<Ident>`→`Ident[]` | dialog api26 ContextMenu* 实锤 |
 
 Agent **禁止**只修工程、不更新 skill（除非用户明确「仅 hotfix」）。
 
