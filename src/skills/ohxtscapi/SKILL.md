@@ -253,8 +253,24 @@ python3 ohxtscflow.py deploy-test <工程> \
 | `ImmersiveMaterialTest` | `ImmersiveMaterialTest.cpp` + `NodeSystemMaterialTest.cpp` | ImmersiveMaterial / LightEffect / GetSystemMaterialSupported / NODE_SYSTEM_MATERIAL(127) |
 | `CustomDialogSystemMaterialTest` | `CustomDialogMaterialTest.cpp` | SetSystemMaterial / SetSystemMaterialInOptions |
 | `CustomDialogDisplayModeTest` | `CustomDialogDisplayModeTest.cpp` | SetDisplayModeInSubWindow / OH_ARKUI_DIALOG_DISPLAY_MODE_* |
+| `CustomDialogOpenCallbackTest` | `CustomDialogOpenCallbackTest.cpp` + `CustomDialogApi26Compat.h` | OpenDialogWithCallback 及错误码（见下节） |
 
 **八类路由**：上述均为 **类别 2（无页面）** + **类别 6（Dialog 参数）**，走 `libnativefunc.so`。
+
+### OpenDialogWithCallback（API26，public SDK 弱符号）
+
+来源：同工程追加 `CustomDialogOpenCallbackTest`（4 Pass）。
+
+| 项 | 说明 |
+|----|------|
+| **症状** | 链 `OH_ArkUI_CustomDialog_OpenDialogWithCallback` 时 public SDK / 板端 **缺符号** 或编不过 |
+| **根因** | 该 API 当前主要在 **static libace** 暴露；normal/public 头可能无声明 |
+| **做法** | 工程内 **`CustomDialogApi26Compat.h`**：声明回调类型 + 函数；按需 **weak stub**，使错误码/回调路径用例可编可跑 |
+| **注册** | `CMakeLists` 加源 → `MaterialTestDecl.h` / `NapiFuncInitTest.cpp` → `index.d.ts` → Hypium `List.test` |
+| **断言** | 关注回调 `errorCode`（如 103306 / 103308）与 `dialogId`；对齐已有 Dialog 错误码约定 |
+| **勿做** | 为链上该符号去改系统 SDK；勿把 weak stub 当成「接口已在全量固件落地」的证明 |
+
+**排障顺序**：先确认双 HAP + `build-all`（§SystemMaterial）→ 再查 Compat 头是否纳入编译 → 最后看 Hypium `-s CustomDialogOpenCallbackTest`。
 
 ---
 

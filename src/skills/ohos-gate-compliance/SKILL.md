@@ -63,6 +63,7 @@ version: "1.2.0"
 | G.FUD.05 / 超大函数 `GetXxxProps` | 检测 nbnc>50；修法：按域拆多表 + 多次 `napi_define_properties` | `gate_review.check_cpp_fud05` + `reference.md` |
 | **CI.SDK.01** `compileSdkVersion` 数字/"26" | `gate_review` 检测+自动改 `"26.0.0"`；**`git-commit-agent.sh` 暂存预检拦截** | 以 CI 为准，本地 00306042 勿入仓 |
 | **WordsTool.97** 产品名/字体族 | `string.json` / `.ets` 勿写易歧义产品字体名；自动 `… Sans` → `sans-serif` | `gate_review.check_wordstool_97` / `fix_wordstool_97` |
+| **G.FMT.05** Options/`@tc.desc` 超宽 | checklist 增 before/after；dialog api26 批实锤 | 手工折行；见 **ohxtsstatic §13.11.5** |
 
 Agent **禁止**只修工程、不更新 skill（除非用户明确「仅 hotfix」）。
 
@@ -165,7 +166,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | 大写 `String` | ✅ | `string` |
 | `@tc.name:` 冒号 | ✅ | 空格分隔 |
 | `*/` 与 `it()` 空行 | ✅ | 删空行 |
-| G.FMT.05 行宽 | 报告 | 单行 ≤120 字符；长日志参数、对象字面量按语义折行 |
+| G.FMT.05 行宽 | 报告 | 单行 ≤120；**Options 字面量 / 长 `@tc.desc`** 拆多行（dialog api26 批实锤） |
 | `int` | 报告（**仅动态**） | 改 `number`；**`'use static'` 文件跳过**（`int` 合法） |
 | `.key('foo')` 无下划线 | 报告 | `页面名_组件名` |
 | static 十六进制 fontColor | 报告 | `ResourceColor` 或字符串 |

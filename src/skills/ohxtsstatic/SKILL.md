@@ -1,6 +1,6 @@
 ---
 name: ohxtsstatic
-description: "OpenHarmony ArkTS use static + Hypium XTS 一体化技能：三要素 + 工程根；**会话正式测试报告**须含**三列表格**；§十四/REPORTING.md 汇总与未覆盖报告。含 §十三/§13.10 多批次开发经验（含 BCM 动+静 CI 踩坑）。ohxtsflow/ohhdc、arkui-static-xts-generator。默认轻量化调试；显式申明才走源码级调试。"
+description: "OpenHarmony ArkTS use static + Hypium XTS 一体化技能：三要素 + 工程根；**会话正式测试报告**须含**三列表格**；§十四/REPORTING.md 汇总与未覆盖报告。含 §十三/§13.10～§13.11 多批次开发经验（BCM CI、dialog api26 Hypium/板端）。ohxtsflow/ohhdc、arkui-static-xts-generator。默认轻量化调试；显式申明才走源码级调试。"
 author: "napi_generator"
 version: "1.5.0"
 ---
@@ -237,6 +237,8 @@ version: "1.5.0"
 | `expect(obj?.a).assertEqual(v)` | `if (obj) { expect(obj.a).assertEqual(v) }` |
 | 无统一前缀的散乱 `console.info`（排障困难） | 日志含 **`[ARKUI_NEW]`** 或套件内统一 **`LOG_TAG`** |
 | 用例间残留 **AppStorage** / 未关 **Dialog** | `afterEach` 删除本套件键；`dialogController.close()` |
+| **`describe`/`export default function` 名过长**（堆叠完整 Options 类名） | **短套件名**（如 `PopupCommonBlurOptsTest`）；过长易导致 Hypium **`Tests run: 0`**（§13.11.1） |
+| 本工程 hypium 下 **`async (done) + done()`** | 对齐已绿套件写 **`async () => {}`**；`done` 形参可触发 Class verification failed、整套件无输出（§13.11.2） |
 
 ### 1.4 `@tc.*` 文档注释（开发期硬门禁，非提交前才补）
 
@@ -872,6 +874,63 @@ import { Entry, Column, ContextMenuOptions, ... } from '@ohos.arkui.component';
 [ ] 动/静 main_pages.json + List.test.ets 均已注册
 [ ] CodeCheck：setter 无超长 if-else 链（G.FMT.06）
 [ ] git commit -sm；未纳入 autosign/、hypium/、tools/
+```
+
+### 13.11 dialog api26_static 批次：Hypium / 板端 / 流程（2026-07）
+
+来源：`ace_ets_module_dialog_api26_static`（65 Pass）+ 同批 CAPI 见 **ohxtscapi §OpenDialogWithCallback**。
+
+#### 症状 → 动作（先查这张表）
+
+| 症状 | 先查 | 动作 |
+|------|------|------|
+| 某套件 **`Tests run: 0`** / 日志无该 `describe` | `describe` 名是否超长、与 `-s class` 是否一致 | **缩短套件名**；`List.test` / `aa test -s` 与 `describe` **逐字一致** |
+| 套件无输出 + 日志 **`Class verification failed`** | `it` 是否 `async (done)…done()` | 改为 **`async () => {}`**；以同工程已绿 CustomDialog 套件为模板 |
+| 打开页即 **`LinkerVerificationError`** | 板端镜像是否缺该 API 符号 | **页面 stub + 注释**；可测部分改用同域已绿 API（如 ImmersiveStyle）；**禁止**假绿伪装全量行为测 |
+| 本地编过、CI/`hapbuild` 失败 | `compileSdkVersion` 是否数字/`"26"`；SDK 路径 | 仓内恢复 **`"26.0.0"`**；静态用 **`OHOS_SDK_PATH=.../static` + `OHOS_USE_HVIGOR_STATIC=1`**（勿 `source use-ohos-sdk.sh static` 顶替） |
+| `aa test` 长时间空等 / 偶发无结果 | 设备是否被其他 unittest 占用 | 跑前确认无并发 `aa test`；本批用 `-s` 单套件调试，整测再一次连跑 |
+| 改码后复测全绿但行为不对 | 是否装了旧 HAP | **清缓存重编**后再测（**DEV.REBUILD.01**）；禁止沿用旧包 |
+
+#### 13.11.1 套件命名（P0）
+
+- Hypium 按 **`describe` 字符串**匹配；过长或与 `-s` 不一致 → **整套 0 跑**。
+- **正确**：`describe('PopupCommonBlurOptsTest', …)` / `export default function PopupCommonBlurOptsTest`
+- **错误**：`PopupCommonOptionsBackgroundBlurStyleOptionsTest` 一类把完整 API/Options 名堆进套件名。
+- 文件名、页面 struct 可保留长名；**仅套件入口名必须短且稳定**。
+
+#### 13.11.2 `done` 回调与静态 hypium（P0）
+
+- 部分静态工程 hypium（`getFunctionArgumentsCount` 异常）对 **`async (done: Function)` + `done()`** 会在 ArkEtsVm 校验失败 → **该 `describe` 静默无用例输出**。
+- **默认写法**：`it('…', Level.LEVELx, async () => { … });`（无 `done`）。
+- **写前必看**：同工程最近 Pass 的 `*.test.ets` 回调签名，**禁止**从动态工程或其它 hypium 版本照搬 `done`。
+
+#### 13.11.3 板端缺符号时的覆盖策略
+
+- `CacheMaxCountForHSP*` / `menuSystemMaterial` 等在旧镜像上可能 **LinkerVerificationError**。
+- **允许**：页面 stub + 文件头注释说明固件补齐后恢复；用例侧用 **已绿同域 API**（如 `ImmersiveStyle` / `ImmersiveMaterial`）覆盖枚举/构造。
+- **禁止**：页面空转却宣称「接口行为已测」；禁止为此去 **`sync_hypium_from_gitcode.py`**（见工作区 hypium 规则）。
+
+#### 13.11.4 静态编签环境与提交前恢复
+
+```bash
+export HOS_CLT_PATH=/root/aiSkill/command-line-tools
+export OHOS_SDK_PATH=/root/aiSkill/command-line-tools/sdk/default/openharmony/static
+export OHOS_USE_HVIGOR_STATIC=1
+source …/signing-materials/env.sh   # 禁止 OHOS_HAPSIGNER_RESULT 指工程 autosign/
+```
+
+- 本地 00306042 等限制可**临时**改数字 `compileSdkVersion`，**commit 前必须恢复** `"26.0.0"` / compatible 字符串（`git-commit-agent` / gate **CI.SDK.01** 会拦）。
+- 一体工程用 **`hapbuild build`**，勿误用无 ohosTest 的 `build-all`。
+
+#### 13.11.5 本批提交前检查清单
+
+```
+[ ] describe / List.test / -s class 短名一致
+[ ] it 回调为 async () => {}（无 done），对齐已绿套件
+[ ] 板端 Linker 缺符号：stub+注释，或降级为同域已绿 API 断言
+[ ] Options 字面量 / @tc.desc 单行 ≤120（G.FMT.05）；过长拆多行
+[ ] build-profile 为 "26.0.0" 字符串；未纳入 hypium/autosign/tools
+[ ] 整测：一次装包连跑；交付前清缓存重编（禁旧包）
 ```
 
 ---

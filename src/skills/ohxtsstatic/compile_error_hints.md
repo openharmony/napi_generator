@@ -45,6 +45,10 @@
 | `findComponent` 找不到 | **id/key** 与页面不一致；或外层 **Scroll**/可视区域 | 页面保证 `.id('x')`；布局用百分比 `maxHeight` 保证一屏可操作 |
 | 点击了但回调未触发（触摸类） | 自动化 **click** 不触发 **onTouch** | 放宽断言：**控件存在 OR 回调**；或加大延迟；注释说明限制 |
 | 日志难过滤 | 关键词未统一 | 全路径强制 **`[ARKUI_NEW]`** 或与套件 **`LOG_TAG`** 一致 |
+| 某套件 **`Tests run: 0`** / 无 `describe` 日志 | **`describe` 名过长**或与 `-s class` 不一致 | **缩短套件名**；与 `List.test` / `aa test -s` 逐字一致（**SKILL.md §13.11.1**） |
+| 套件静默无输出 + **`Class verification failed`** | `async (done)+done()` 与本工程静态 hypium 不兼容 | 改为 **`async () => {}`**（**§13.11.2**） |
+| 进页即 **`LinkerVerificationError`** | 板端镜像缺 API 符号 | 页面 stub + 注释；可测部分改用同域已绿 API（**§13.11.3**） |
+| 长时间空等无 `OHOS_REPORT_RESULT` | 设备被其他 `aa test` 占用 | 确认设备空闲后再跑；禁并发抢占 |
 
 ---
 
@@ -68,3 +72,4 @@
 | 日志 phase | **§ 日志规范** |
 | 提交前自检列表 | **§ 编译与提交检查清单** |
 | 轻量化 / 源码级调试 | **§6.1 调试模式**；**`xts-develop-master-cycle`** |
+| 套件名 / `done` / 板端 Linker | **§13.11** |

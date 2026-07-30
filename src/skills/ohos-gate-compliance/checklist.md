@@ -35,6 +35,16 @@
 
 - [ ] 无大段注释掉的废弃代码
 - [ ] G.FMT.05：源码单行 ≤120 字符；长日志参数、对象字面量按语义折行
+  - Options 一行塞多字段易超宽，改为：
+    ```ets
+    // bad: let opts: BackgroundBlurStyleOptions = { policy: ..., inactiveColor: ..., colorMode: ... };
+    let opts: BackgroundBlurStyleOptions = {
+      policy: BlurStyleActivePolicy.ALWAYS_ACTIVE,
+      inactiveColor: Color.Blue,
+      colorMode: ThemeColorMode.LIGHT
+    };
+    ```
+  - `@tc.desc` 过长时缩短为可读摘要，勿堆完整类名
 - [ ] `@tc.number` / `@tc.name` 与用例一致（若改测试）
 - [ ] 无裸 `it()`：每条 `it` 前紧邻完整 `/** @tc.number … @tc.level */`（含一体工程 `entry/.../*.test.ets`）
 - [ ] 合并冲突未保留「仅 id 无 key」或旧 key 版本
