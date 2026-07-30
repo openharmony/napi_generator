@@ -91,7 +91,18 @@
 - [ ] 行宽 ≤120（G.FMT.05）
 - [ ] 函数调用实参续行 = 起始行缩进 + 4（G.FMT.06-CPP，非固定 8；如 8→12）
 - [ ] CAPI `GetXxxProps` / Init 注册函数 nbnc ≤50（G.FUD.05；超限按域拆表）
-- [ ] 无裸魔法数（已用 `constexpr` / 命名常量）
+- [ ] 无裸魔法数（已用 `constexpr` / 命名常量）（**G.CNS.02**）
+  - 错误码：`ASSERT_EQ(NAME, 103306)` 仍算裸字面量；数值只放在命名 `constexpr`，用例侧用 `ASSERT_NE`/`ASSERT_EQ` 对命名常量或 SDK 枚举
+  - stub/回调：`401`/`-1` 改用已有 `INVALID_PARAM` / `PARAM_NEGATIVE_1`
+  ```cpp
+  // bad
+  ASSERT_EQ(DIALOG_ERR_NODE_MOUNT_FAILURE, 103306);
+  callback(401, -1, userData);
+  // good（数值仅在 Compat.h：constexpr int32_t DIALOG_ERR_... = ...）
+  ASSERT_NE(DIALOG_ERR_NODE_MOUNT_FAILURE, SUCCESS);
+  callback(INVALID_PARAM, PARAM_NEGATIVE_1, userData);
+  ```
+- [ ] **WordsTool.204**：源码/CMake 注释勿写 `libc++`；改「C++ standard headers / C++ standard library」
 - [ ] 头文件 nbnc 未超标（大实现已迁 `.cpp` + `BUILD.gn` 已注册）
 - [ ] 新/改文件含 Apache 2.0 许可证头（OAT.3）
 - [ ] 无注释掉的大段废弃代码

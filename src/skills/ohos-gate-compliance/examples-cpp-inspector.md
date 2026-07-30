@@ -147,6 +147,29 @@ static RefPtr<FrameNode> GetOutermostFrameAncestor(const RefPtr<FrameNode>& node
 
 **经验**：helper 新函数声明续行一律 4 空格起；序号/下划线偏移一律进 `InspectorIdConstants`。
 
+## 案例 12：CAPI 错误码 ASSERT / weak stub G.CNS.02 + WordsTool.204
+
+**问题**（api26 systemmaterial）：
+
+- `ASSERT_EQ(DIALOG_ERR_NODE_MOUNT_FAILURE, 103306)` 仍触发 G.CNS.02（右值裸字面量）
+- weak stub `callback(401, -1, …)` 同规则
+- CMake 注释写 `libc++` → WordsTool.204
+
+**修复**：
+
+```cpp
+// Compat.h 保留唯一数值定义
+constexpr int32_t DIALOG_ERR_NODE_MOUNT_FAILURE = 103306;
+// 用例：对命名常量 / SDK 枚举比较，勿再写裸码
+ASSERT_NE(DIALOG_ERR_NODE_MOUNT_FAILURE, SUCCESS);
+callback(INVALID_PARAM, PARAM_NEGATIVE_1, userData);
+```
+
+```cmake
+# bad: ... breaks normal libc++ (nullptr_t).
+# good: ... breaks C++ standard headers (nullptr_t).
+```
+
 ## Commit 分批示例（本次）
 
 | Commit | 范围 | 约行数 |

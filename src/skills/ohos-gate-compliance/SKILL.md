@@ -54,7 +54,8 @@ version: "1.2.0"
 | **DEV.REBUILD.01** 改码后旧 HAP 复测 | ohhdc **作废过期 HAP**（`purge_stale_project_haps`）+ 装包入口拒装；ohxtsflow **不查找旧包**，缺失则自动 `build-all` | `deploy-test`/`static-deploy-test` |
 | **DEV.REPORT.01** 无 OHOS_REPORT_RESULT | ohhdc `_unittest_report_ok` **硬失败** | 禁 NO_RESULT 当偶发 |
 | **DEV.SCOPE.01** PR 范围收窄假绿 | checklist + 三 skill SKILL | 以 `git diff` 路径列工程，禁按 commit 文案裁剪 |
-| G.CNS.02 Inspector 魔法数 | `constexpr` 命名边界值（`ORDINAL_FOUR_CHAR_LEN` / `INDEX_PLUS_*`） | 见 `examples-cpp-inspector.md` 案例 8 / 11 |
+| G.CNS.02 Inspector / 错误码魔法数 | `constexpr` 命名；禁 `ASSERT_EQ(NAME, 103306)` / stub 裸 `401`；见 checklist G + examples 案例 8/12 | 手工 |
+| **WordsTool.204** `libc++` | CMake/注释改「C++ standard headers」 | checklist |
 | `TestType.Function` | `arkts_patterns` 检测 + 自动替换 |
 | 大写 `String` | `arkts_patterns.fix_arkts_quality` |
 | `'use static'` 下 `int` 误报 ARKTS_NO_INT | `arkts_patterns`：static 文件跳过该规则 |
