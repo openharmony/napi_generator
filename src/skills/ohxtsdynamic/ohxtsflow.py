@@ -180,12 +180,44 @@ def cmd_env(_: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def _dual_hap_signed_paths(proj: str) -> tuple[str, str]:
+    main_hap = os.path.join(
+        proj, "entry", "build", "default", "outputs", "default", "entry-default-signed.hap"
+    )
+    test_hap = os.path.join(
+        proj, "entry", "build", "default", "outputs", "ohosTest", "entry-ohosTest-signed.hap"
+    )
+    return main_hap, test_hap
+
+
+def _is_dual_hap_project(proj: str) -> bool:
+    return os.path.isdir(os.path.join(proj, "entry", "src", "ohosTest"))
+
+
+def _verify_dual_hap_outputs(proj: str) -> int:
+    """双 HAP 工程：编签后必须同时存在主包与测包 signed.hap。"""
+    if not _is_dual_hap_project(proj):
+        return 0
+    main_hap, test_hap = _dual_hap_signed_paths(proj)
+    missing = [p for p in (main_hap, test_hap) if not os.path.isfile(p)]
+    if not missing:
+        print(f"✓ 双 HAP 产物校验通过:\n  {main_hap}\n  {test_hap}")
+        return 0
+    print("❌ 双 HAP 工程缺 signed 产物（禁止只 build-test / 只签测包）:")
+    for p in missing:
+        print(f"  missing: {p}")
+    print("  须: hapbuild build + build-test + sign（ohxtsflow build-all）")
+    return 1
+
+
 def cmd_build_all(ns: argparse.Namespace) -> int:
     proj = os.path.abspath(ns.project)
     hapbuild = _napi_skills() / "ohhap" / "hapbuild.py"
     if not hapbuild.is_file():
         print(f"❌ 未找到 {hapbuild}")
         return 1
+    if _is_dual_hap_project(proj):
+        print("ℹ 检测到 entry/src/ohosTest → 双 HAP：将执行 build + build-test + sign")
     env = os.environ.copy()
     env.pop("OHOS_USE_HVIGOR_STATIC", None)
     for step in (
@@ -197,6 +229,8 @@ def cmd_build_all(ns: argparse.Namespace) -> int:
         if subprocess.run(step, env=env).returncode != 0:
             print("❌ 构建失败，见 compile_error_hints.md")
             return 1
+    if _verify_dual_hap_outputs(proj) != 0:
+        return 1
     print("✓ build + build-test + sign 完成")
     return 0
 

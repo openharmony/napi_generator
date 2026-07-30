@@ -493,33 +493,113 @@ def replace_install_hap(hap_path):
     return run_hdc_command(command)
 
 
-def _newest_ets_mtime(pages_root: str) -> float:
-    """目录下最新 .ets/.ts mtime；目录不存在返回 0。"""
+def _newest_src_mtime(pages_root: str) -> float:
+    """目录下最新源码 mtime（.ets/.ts/.html/.json5）；目录不存在返回 0。"""
     newest = 0.0
     if not os.path.isdir(pages_root):
         return newest
+    suffixes = (".ets", ".ts", ".html", ".json5", ".css", ".json")
     for root, _dirs, files in os.walk(pages_root):
         for fn in files:
-            if fn.endswith((".ets", ".ts")):
+            if fn.endswith(suffixes):
                 newest = max(newest, os.path.getmtime(os.path.join(root, fn)))
     return newest
 
 
-def _warn_if_main_hap_stale(project_dir: str, main_hap: str) -> None:
-    """主包早于 entry/src/main 源码时告警（页面在 main，只编测包会假绿）。"""
+def _newest_ets_mtime(pages_root: str) -> float:
+    """兼容旧名：同 _newest_src_mtime。"""
+    return _newest_src_mtime(pages_root)
+
+
+def _hap_stale_msg(label: str, hap_path: str, src_root: str, hint: str) -> str:
+    """若 hap 早于源码则返回错误文案，否则空串。"""
     try:
-        main_mtime = os.path.getmtime(main_hap)
-        pages_root = os.path.join(project_dir, "entry", "src", "main", "ets")
-        newest_src = _newest_ets_mtime(pages_root)
-        if newest_src and main_mtime + 1.0 < newest_src:
-            print(
-                f"⚠ 主 HAP 早于 entry/src/main 源码（主包可能过期）。"
-                f"请先 hapbuild build+build-test+sign 再 deploy-test。"
-                f" main_hap_mtime={main_mtime:.0f} newest_main_ets={newest_src:.0f}",
-                flush=True,
+        if not os.path.isfile(hap_path):
+            return f"{label} 不存在: {hap_path}"
+        hap_mtime = os.path.getmtime(hap_path)
+        newest_src = _newest_src_mtime(src_root)
+        if newest_src and newest_src > hap_mtime:
+            return (
+                f"{label} 早于源码（禁止用旧包复测）。{hint} "
+                f"hap_mtime={hap_mtime:.0f} newest_src={newest_src:.0f} src={src_root}"
             )
-    except OSError:
-        pass
+    except OSError as exc:
+        return f"{label} mtime 检查失败: {exc}"
+    return ""
+
+
+def _require_haps_fresh(project_dir: str, main_hap: str, test_hap: str = "") -> str:
+    """
+    改码后必须重编再测：任一侧 HAP 落后源码 → 返回错误（硬失败，非告警）。
+    双 HAP：主包对 entry/src/main，测包对 entry/src/ohosTest。
+    """
+    hint_dual = "请 ohxtsflow build-all（build+build-test+sign）后重跑"
+    hint_main = "请 hapbuild build + sign 后重跑"
+    main_src = os.path.join(project_dir, "entry", "src", "main")
+    err = _hap_stale_msg("主 HAP", main_hap, main_src, hint_dual if test_hap else hint_main)
+    if err:
+        return err
+    if not test_hap:
+        return ""
+    test_src = os.path.join(project_dir, "entry", "src", "ohosTest")
+    if not os.path.isdir(test_src):
+        return ""
+    return _hap_stale_msg("测试 HAP", test_hap, test_src, hint_dual)
+
+
+def _warn_if_main_hap_stale(project_dir: str, main_hap: str) -> None:
+    """兼容旧调用：改为硬失败前打印；deploy 路径请用 _require_haps_fresh。"""
+    msg = _require_haps_fresh(project_dir, main_hap, "")
+    if msg:
+        print(f"❌ {msg}", flush=True)
+
+
+def _prepare_device_for_uitest() -> None:
+    """跑测前唤醒/熄屏模式/上滑解锁/清 uitest，降低锁屏假失败。"""
+    cmds = [
+        "killall uitest",
+        "power-shell wakeup",
+        "power-shell setmode 602",
+        "uinput -T -m 360 1100 360 400",
+    ]
+    for c in cmds:
+        run_hdc_command(f'bash -c "source ~/.bashrc && hdc shell \\"{c}\\""')
+
+
+def _install_fail_hint(output: str) -> str:
+    """装包失败时补充常见错误码说明。"""
+    text = output or ""
+    if "9568450" in text or "must be debug type" in text:
+        return (
+            "；勿对 release 包用 bm/hdc install -g（9568450）。"
+            "受限权限（如 READ_PASTEBOARD）须在签名 profile 中 "
+            "apl=system_core + restricted-permissions/acls 后 hdc install（无 -g）"
+        )
+    if "9568289" in text or "READ_PASTEBOARD" in text:
+        return (
+            "；受限权限授予失败：重签时将权限写入 profile restricted-permissions/"
+            "allowed-acls（apl=system_core），勿只改 module.json5"
+        )
+    return ""
+
+
+def _unittest_report_ok(output: str) -> tuple[bool, str]:
+    """解析 OHOS_REPORT_RESULT；无结果或 Fail/Error>0 → 失败（禁把 NO_RESULT 当偶发）。"""
+    lines = [ln for ln in (output or "").splitlines() if "OHOS_REPORT_RESULT" in ln]
+    if not lines:
+        if "App died" in (output or ""):
+            return False, "NO_RESULT/App died（常因只装测包或主包过期；须 build-all 双包重装）"
+        return False, "NO_RESULT：无 OHOS_REPORT_RESULT（禁当环境偶发略过）"
+    last = lines[-1]
+    m_fail = re.search(r"Failure:\s*(\d+)", last)
+    m_err = re.search(r"Error:\s*(\d+)", last)
+    fail_n = int(m_fail.group(1)) if m_fail else -1
+    err_n = int(m_err.group(1)) if m_err else -1
+    if fail_n < 0 or err_n < 0:
+        return False, f"无法解析结果行: {last}"
+    if fail_n > 0 or err_n > 0:
+        return False, last.strip()
+    return True, last.strip()
 
 
 def _project_signed_haps(project_dir: str) -> tuple[str, str]:
@@ -551,17 +631,21 @@ def install_project_haps(project_dir):
         return False, "", f"主 HAP 不存在: {main_hap}"
     if not os.path.isfile(test_hap):
         return False, "", f"测试 HAP 不存在: {test_hap}"
-    _warn_if_main_hap_stale(project_dir, main_hap)
+    stale = _require_haps_fresh(project_dir, main_hap, test_hap)
+    if stale:
+        return False, "", stale
     out_parts = []
     success1, out1, err1 = install_hap(main_hap)
     out_parts.append(f"主 HAP: {out1.strip() or (err1 or '')}")
     if not success1:
-        return False, "\n".join(out_parts), err1 or out1
+        hint = _install_fail_hint(f"{out1}\n{err1}")
+        return False, "\n".join(out_parts), (err1 or out1 or "") + hint
     time.sleep(1)
     success2, out2, err2 = install_hap(test_hap)
     out_parts.append(f"测试 HAP: {out2.strip() or (err2 or '')}")
     if not success2:
-        return False, "\n".join(out_parts), err2 or out2
+        hint = _install_fail_hint(f"{out2}\n{err2}")
+        return False, "\n".join(out_parts), (err2 or out2 or "") + hint
     return True, "\n".join(out_parts), ""
 
 
@@ -709,29 +793,48 @@ def deploy_and_run_test(
     test_class = _resolve_deploy_test_class(project_dir, test_class)
     main_hap, test_hap = _project_signed_haps(project_dir)
     if not os.path.isfile(main_hap):
-        return False, "", f"主 HAP 不存在: {main_hap}"
+        hint = (
+            "；双 HAP 工程请先 ohxtsflow build-all（build+build-test+sign），"
+            "禁止只 build-test"
+            if os.path.isdir(os.path.join(project_dir, "entry", "src", "ohosTest"))
+            else ""
+        )
+        return False, "", f"主 HAP 不存在: {main_hap}{hint}"
     if not os.path.isfile(test_hap):
-        return False, "", f"测试 HAP 不存在: {test_hap}"
-    _warn_if_main_hap_stale(project_dir, main_hap)
+        return (
+            False,
+            "",
+            f"测试 HAP 不存在: {test_hap}；请 hapbuild build-test + sign（或 ohxtsflow build-all）",
+        )
+    stale = _require_haps_fresh(project_dir, main_hap, test_hap)
+    if stale:
+        return False, "", stale
     bn = bundle_name or _parse_bundle_name(project_dir)
     if not bn:
         return False, "", "无法解析 bundleName，请指定 bundle_name 或确保项目 AppScope/app.json5 存在且含 app.bundleName"
 
+    _prepare_device_for_uitest()
     out_parts = []
     ok1, out1, err1 = uninstall_hap(bn)
     out_parts.append(f"卸载: {out1.strip() or err1 or 'ok'}")
     ok2, out2, err2 = replace_install_hap(main_hap)
     out_parts.append(f"主 HAP: {out2.strip() or err2 or ''}")
     if not ok2:
-        return False, "\n".join(out_parts), err2 or out2
+        hint = _install_fail_hint(f"{out2}\n{err2}")
+        return False, "\n".join(out_parts), (err2 or out2 or "") + hint
     ok3, out3, err3 = replace_install_hap(test_hap)
     out_parts.append(f"测试 HAP: {out3.strip() or err3 or ''}")
     if not ok3:
-        return False, "\n".join(out_parts), err3 or out3
+        hint = _install_fail_hint(f"{out3}\n{err3}")
+        return False, "\n".join(out_parts), (err3 or out3 or "") + hint
     ok4, out4, err4 = _run_test_suites(bn, module_name, test_class, timeout)
     out_parts.append(f"测试: {out4.strip() or err4 or ''}")
     if not ok4:
         return False, "\n".join(out_parts), err4 or out4
+    report_ok, report_msg = _unittest_report_ok(out4)
+    out_parts.append(f"结果校验: {report_msg}")
+    if not report_ok:
+        return False, "\n".join(out_parts), report_msg
     return True, "\n".join(out_parts), ""
 
 
@@ -1426,6 +1529,10 @@ def deploy_static_xts_test(
     )
     if not os.path.isfile(main_hap):
         return False, "", f"主 signed HAP 不存在: {main_hap}"
+    # 静态一体：测码也在 main；用 main 树（含 src/main）做新鲜度校验
+    stale = _require_haps_fresh(project_dir, main_hap, "")
+    if stale:
+        return False, "", stale
     bn = _parse_bundle_name(project_dir)
     if not bn:
         return (
@@ -1433,19 +1540,25 @@ def deploy_static_xts_test(
             "",
             "无法解析 bundleName，请确保 AppScope/app.json5 含 app.bundleName",
         )
+    _prepare_device_for_uitest()
     lines = []
     ok_u, out_u, err_u = uninstall_hap(bn)
     lines.append(f"卸载: {(out_u or err_u or '').strip() or 'ok'}")
     ok_i, out_i, err_i = replace_install_hap(main_hap)
     lines.append(f"安装主 HAP: {(out_i or err_i or '').strip()}")
     if not ok_i:
-        return False, "\n".join(lines), err_i or out_i or "replace-install 失败"
+        hint = _install_fail_hint(f"{out_i}\n{err_i}")
+        return False, "\n".join(lines), (err_i or out_i or "replace-install 失败") + hint
     ok_t, out_t, err_t = _run_static_aa_suites(
         bn, module_name, runner_path, timeout_ms, test_class
     )
     lines.append(out_t.strip())
     if not ok_t:
         return False, "\n".join(lines), err_t or "aa test 失败"
+    report_ok, report_msg = _unittest_report_ok(out_t)
+    lines.append(f"结果校验: {report_msg}")
+    if not report_ok:
+        return False, "\n".join(lines), report_msg
     return True, "\n".join(lines), ""
 
 

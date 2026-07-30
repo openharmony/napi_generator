@@ -1,6 +1,6 @@
 # ohxtsdynamic：动态 ArkUI（V2）XTS 编译与运行期排障速查
 
-与 **`SKILL.md`** 配套。覆盖 **Tier-1** 层；测试范式见 **`arkui-dynamic-xts-generator/categories/`**、**`common/`**。
+与 **`SKILL.md`** 配套。覆盖 **L1** 层；测试范式见 **`arkui-dynamic-xts-generator/categories/`**、**`common/`**。
 
 ---
 
@@ -52,18 +52,12 @@ python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py env
 | `multiple properties with the same name` | `ChipGroupV2Item` **重复 label** | body 已是 `new ChipGroupV2Item({...})` 时直接 `items: [body]` |
 | 批量探测 0 通过 | 同文件多探测 + 错误行干扰 | 用 `compile_probe_matrix.py` **逐条单独编译** |
 | 设备大量 Fail、本地刚编过 | **旧 HAP 未卸载** | clean build + 卸载 + `deploy-test` 重装 |
+| 起测即 `App died` / Ability 起不来 | **双 HAP 只编了 ohosTest**（`build-test`）或未装主包 | `ohxtsflow build-all`（build+build-test+sign）→ `deploy-test` 装主+测；校验两份 `*-signed.hap` |
+| 改了页面仍跑旧 UI / 假绿 | **主包过期**（只重编测包）或**改码未重编** | 改 `entry/src/main` / ohosTest 后必须重跑 `build-all`；`ohhdc` 对过期 HAP **硬失败** |
+| `NO_RESULT` / 无 `OHOS_REPORT_RESULT` | 装包失败、锁屏、只装测包 | 解锁设备；双包重装；**禁止**当环境偶发略过 |
+| 装包 `9568450` / `9568289` | release 包用了 `-g`，或 PASTEBOARD 未进 profile ACL | `hdc install` 无 `-g`；profile 加 restricted-permissions |
 | `queue.shift()` 编译错误 | ArkTS 不支持 | Inspector BFS 改索引遍历 |
 | 整段 `$attrs` 断言不稳定 | 含 `id` 等噪声 | 改 `assertPropSame` 单属性（§2.1） |
 | `Type 'null' is not assignable` | 预期行为 | 记 `abnormal_compile_failures.md`，**不提交** null 用例 |
 | `chipGroupPadding.top` + `undefined` 编不过 | `Length` 非可选 | 记失败表，**不提交**该 undefined 用例 |
-
----
-
-## 5. 调试模式（轻量化 vs 源码级）
-
-| 模式 | 何时 | 入口 |
-|------|------|------|
-| **轻量化调试**（**默认**） | 日常 develop 编签跑测 | **`ohxtsflow build-all` / `run-dynamic-pipeline`** + **`ohhdc deploy-test`** |
-| **源码级调试** | 用户**显式**要求 master GN + xdevice | **`xts-develop-master-cycle`**；见 **SKILL.md §3.1** |
-
-**禁止**未申明时默认 rsync master 或改 master prebuilts；为 master 旧 SDK 写的 `entry/` 临时补丁勿提交 PR。
+| **CI/GN HAP 签名失败** | 模板拷贝 p7b，bundle 与 app.json5 不一致 | **§9.11** / **`xts_shared/gen-xts-signature-p7b.sh`** |

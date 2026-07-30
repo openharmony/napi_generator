@@ -213,9 +213,14 @@ python3 src/skills/ohhdc/ohhdc.py deploy-test /path/to/NativeProj46R --suite "Ac
 |------|------|
 | **工程整测**（交付、推仓前、复现/对标门禁·xDevice） | **单次** `deploy-test` / `static-deploy-test`：`-s` 带齐全部 Suite，或省略 `-s`；**只卸装+安装一次** |
 | **单批调试** | 允许 `-s OneSuite`；**禁止**据此写「工程全绿」 |
+| **改码后复测** | 源码变更后**必须先重编再 deploy**；signed.hap **早于**源码 → **硬失败**（禁旧包） |
+| **结果** | 须有 `OHOS_REPORT_RESULT` 且 Fail=0 Error=0；无 RESULT / App died **不得**宣称通过 |
 
 **允许**：`-s A,B,C` 时本脚本**内部分次** 设备 unittest（避免多 class 拼参挂起）——仍属**一次装包连跑**。  
-**禁止**：Agent 外层循环多次调用本命令（每次重装）再拼绿。详见 **ohos-gate-compliance**「设备整测硬门禁」。
+**禁止**：Agent 外层循环多次调用本命令（每次重装）再拼绿。详见 **ohos-gate-compliance**「设备整测硬门禁」与「改码后强制重编」。
+
+**装包**：`hdc install` / `-r`（**勿**对 release 包加 `-g`，否则 9568450）。受限权限靠签名 profile ACL。
+deploy 前自动：wakeup / setmode 602 / 上滑解锁 / killall uitest。
 
 ---
 

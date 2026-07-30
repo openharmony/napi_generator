@@ -4,9 +4,9 @@ description: >-
   OpenHarmony 动态 ArkUI（@ComponentV2）Hypium XTS 一体化技能：常规 API 用例 +
   异常参数（undefined/null）编译探测与成对 Inspector 断言。配合 arkui-dynamic-xts-generator；
   SDK 用 normal（Dyn）。触发词：动态 XTS、ChipV2、ChipGroupV2、异常参数、undefined、null、
-  异常参数、undefined、null、AbnormalAssert、compile_probe、ohxtsdynamic。含 §九/§9.10 多批次开发经验（含 BCM 动+静 CI 踩坑）、§9.11 新建工程 p7b 硬门禁、§十/REPORTING.md 报告整合。默认轻量化调试；显式申明才走源码级调试。
+  异常参数、undefined、null、AbnormalAssert、compile_probe、ohxtsdynamic。含 §九/§9.10 多批次开发经验（含 BCM 动+静 CI 踩坑）、§9.11 新建工程 p7b 硬门禁、阶段2～4 **双 HAP 编测硬门禁**（主+ohosTest 须 build-all）、§十/REPORTING.md 报告整合。默认轻量化调试；显式申明才走源码级调试。
 author: "napi_generator"
-version: "1.5.1"
+version: "1.5.3"
 ---
 
 # ohxtsdynamic：动态 ArkUI XTS 一体化 Skill
@@ -135,6 +135,34 @@ hdc list targets
 
 ### 阶段 2～4：编签与设备
 
+#### 双 HAP 编测硬门禁（主入口 HAP + ohosTest HAP）
+
+多数动态 / Web ACTS 工程同时产出 **主包**与 **测试包**。Agent 在编签与跑测前**必须先判定工程形态**，再选命令；**禁止**对双 HAP 工程只跑 `hapbuild build-test`。
+
+| 判定 | 依据 | 编签 | 安装 / 跑测 |
+|------|------|------|-------------|
+| **双 HAP** | 存在 `entry/src/ohosTest/`（或 `module.json5` 含 ohosTest 产物路径） | **`ohxtsflow build-all`** = `hapbuild build` + `build-test` + `sign` | **`ohhdc deploy-test`** / `install-project`：**先主后测**，两包都装 |
+| **单 HAP（静态一体等）** | 无独立 ohosTest 模块；测码在 `entry/src/main` | 见 **ohxtsstatic**（常 `hapbuild build` + sign） | **`static-deploy-test`**（只装主包） |
+
+**双 HAP 禁止 / 后果**：
+
+| 禁止 | 典型症状 |
+|------|----------|
+| 只 `hapbuild build-test`（或只签测包） | 设备 `App died` / Ability 起不来；主包过期 → **本地假绿、页崩溃** |
+| 只 `hdc install` 测包、不装主包 | unittest 找不到 Ability / `Cannot execute ark file` |
+| 改了 `MainAbility`/`pages`/`rawfile` 后只重编测包 | 主 HAP mtime 落后源码；**ohhdc 硬失败**（`_require_haps_fresh`），须重跑 **`build-all`** |
+| 把 `build-test` 成功当成「可交付」 | 门禁 / xDevice 装双包后大面积失败 |
+| **改码后不重编、直接用旧 signed.hap 复测** | 接口人复测翻车（PR#42066）；**禁止**；任何 `.ets`/resources 变更后必须先 `build-all` 再 `deploy-test` |
+| 按单 commit 文案收窄 HAP 列表 | 同 PR 其它工程漏测；范围以 **`git diff` 路径** 为准 |
+
+**编签后硬校验（缺任一文件 → 不得 deploy）**：
+
+```bash
+# 相对工程根
+test -f entry/build/default/outputs/default/entry-default-signed.hap
+test -f entry/build/default/outputs/ohosTest/entry-ohosTest-signed.hap
+```
+
 **签名（必须先做）**：
 
 ```bash
@@ -151,13 +179,13 @@ unset OHOS_USE_HVIGOR_STATIC
 ```bash
 CHIP=/root/aiSkill/develop/xts_acts_0622/arkui/ace_ets_module_ui/ace_ets_module_advancedComponents/ace_ets_module_chip_nowear
 
-# 编签（主包 + ohosTest + 签名）
+# 编签（主包 + ohosTest + 签名）— 双 HAP 唯一推荐入口
 python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py build-all "$CHIP"
+# build-all 结束须同时存在：
 ls entry/build/default/outputs/default/entry-default-signed.hap
-ls entry/build/default/outputs/default/entry-default-unsigned.hap   # 主包
-# ohosTest 测试包路径以 hvigor 产出为准
+ls entry/build/default/outputs/ohosTest/entry-ohosTest-signed.hap
 
-# 一键：构建 → 装包 → unittest 设备命令
+# 一键：构建 → 装包（主+测）→ unittest
 python3 /root/aiSkill/.claude/skills/ohxtsdynamic/ohxtsflow.py run-dynamic-pipeline "$CHIP" --timeout 60000
 ```
 
@@ -466,13 +494,20 @@ PY
 ```bash
 source arkui/.../signing-materials/env.sh
 source /root/aiSkill/use-ohos-sdk.sh normal && unset OHOS_USE_HVIGOR_STATIC
-python3 ohxtsdynamic/ohxtsflow.py build-all <chip_nowear>
+# 双 HAP：必须 build-all（build + build-test + sign），禁止只 build-test
+python3 ohxtsdynamic/ohxtsflow.py build-all <工程根>
+test -f <工程根>/entry/build/default/outputs/default/entry-default-signed.hap
+test -f <工程根>/entry/build/default/outputs/ohosTest/entry-ohosTest-signed.hap
+python3 ohhdc/ohhdc.py deploy-test <工程根> -m entry_test ...
 ```
 
 | 踩坑 | 预防 |
 |------|------|
 | 动态工程残留 `OHOS_USE_HVIGOR_STATIC=1` | 编签前 `unset` |
 | 签名源指工程 `autosign/` | 必须 `signing-materials/` |
+| **只 `build-test` / 只装测包**（Web/DFX 等双 HAP 高频） | 判定 `entry/src/ohosTest/` → **`build-all`**；装包用 **`deploy-test`**（主+测）；缺主包 → `App died` |
+| 改 main/pages 后只重编测包 | 主 HAP 过期；`ohhdc` stale 告警后仍须重跑 **`build-all`** |
+| `local.properties` 指错 SDK（如 `sdk/openharmony`） | 动态：**`…/openharmony/normal`**；编签中可 `chmod a-w local.properties` 防被改写 |
 | 异常批次假失败 | `run_abnormal_device_test.sh` clean 卸载 |
 | 全量 List 失败误判新用例 | `deploy-test --class SuiteName` |
 | **CI/GN 验签失败** | 模板拷贝 p7b，bundle 与 app.json5 不一致 | **§9.11** `gen-xts-signature-p7b.sh` |
@@ -528,8 +563,12 @@ grep bundleName <工程根>/AppScope/app.json5
 
 ```
 [ ] source signing-materials/env.sh；normal SDK；unset OHOS_USE_HVIGOR_STATIC
-[ ] build-all：主包 + 测试包 signed HAP（**改 MainAbility/pages 后禁止只 build-test**；主包过期 → 本地假绿、门禁页崩溃）
-[ ] deploy-test 一次装主+测；日志无 `Cannot execute ark file` / `PagePushHelper] push ... error`
+[ ] **双 HAP 判定**：有 `entry/src/ohosTest/` → 只用 `build-all`（禁单独 `build-test`）
+[ ] build-all 后两包均存在：`…/default/entry-default-signed.hap` + `…/ohosTest/entry-ohosTest-signed.hap`
+[ ] **改码后已重编**：本批源码 mtime ≤ 两包 signed.hap mtime（否则 `deploy-test` 会硬失败）
+[ ] **PR 工程列表**来自 diff 路径，未按 commit 文案裁剪
+[ ] 设备已解锁；每 HAP 有 `OHOS_REPORT_RESULT` 且 Fail=0 Error=0（无 RESULT 不得宣称通过）
+[ ] deploy-test 一次装主+测；日志无 `App died` / `Cannot execute ark file` / `PagePushHelper] push ... error`
 [ ] PagePushHelper：`pushUrl` 失败必须 throw（禁吞错）
 [ ] 本批 deploy-test Pass（OHOS_REPORT_RESULT）；**工程交付/推仓前**另做**一次连跑**全部 Suite（禁止多段重装拼绿）
 [ ] 异常：compile_probe 结论与跑测一致

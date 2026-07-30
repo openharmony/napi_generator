@@ -41,6 +41,11 @@
 - [ ] Dialog/Present 类：`NORMAL`/`UEC` 后只点 OK/取消关遮罩；Inspector 防空 JSON；**禁止**「找不到取消就 pressBack」（会把 Ability 切后台）
 - [ ] Dialog **禁止** `DocumentViewPicker`/`FilePicker`/`系统 UIExtension` 模拟 UEC：Extension 退出后 UiTest `FindWidgets` 可永久失联并污染后续 Suite；103306 系统 UEC 勿用 `expect(true)`/`env skip` 假绿
 - [ ] **工程整测**：全部 Suite **一次** `deploy-test`/`static-deploy-test` 连跑（禁止拆多次且每次重装后拼结果）
+- [ ] **改码必重编（DEV.REBUILD.01）**：本批有 `.ets`/resources 改动 → 已对该工程 `build-all`（双 HAP）或 `hapbuild build`（静态）+ sign；**未**用改码前的旧 signed.hap 复测
+- [ ] **双包双装**：有 `entry/src/ohosTest/` → 主+测两包均新编并均已 `hdc install`（勿 `install -g` 对 release）
+- [ ] **PR 范围（DEV.SCOPE.01）**：工程列表来自 `git diff <base>...HEAD --name-only` 反推，**未**按单 commit 文案跳过同 PR 其它 HAP
+- [ ] **结果真实（DEV.REPORT.01）**：每 HAP 日志含 `OHOS_REPORT_RESULT` 且 Fail=0 Error=0；无 RESULT / App died **不得**写「通过」
+- [ ] **设备卫生**：跑测前已解锁（wakeup/setmode/上滑）；无锁屏挡 UiTest
 
 ## E. 加固批次附加（ArkTS）
 

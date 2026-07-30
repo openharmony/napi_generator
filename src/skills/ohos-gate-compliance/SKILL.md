@@ -4,7 +4,7 @@ description: >-
   OpenHarmony PR 门禁合规（统一入口）：XTS pipeline 自动 review+commit、ArkTS Quality、
   xtscheck、CAPI G.FMT.05/06。按工程类型 ets/capi 自动选规则。触发词：门禁、CodeCheck、
   gate-review、PR 提交前、G.FMT.06、门禁加固。
-version: "1.2.0"
+version: "1.3.0"
 ---
 
 # OpenHarmony 门禁合规（统一入口）
@@ -50,6 +50,9 @@ version: "1.2.0"
 |------|----------|
 | G.FMT.06-CPP 实参续行 | 起始行缩进 + 4（8→12，4→8）；**声明续行勿仅 1 空格** | `gate_review.fix_cpp_fmt06` |
 | **G.FMT.04** `:` 前空格 | `brace + 1 : i` → `brace + 1:i` | `gate_review.fix_py_fmt04_space_before_colon` |
+| **DEV.REBUILD.01** 改码后旧 HAP 复测 | ohhdc `_require_haps_fresh` **硬失败** | `deploy-test`/`static-deploy-test` |
+| **DEV.REPORT.01** 无 OHOS_REPORT_RESULT | ohhdc `_unittest_report_ok` **硬失败** | 禁 NO_RESULT 当偶发 |
+| **DEV.SCOPE.01** PR 范围收窄假绿 | checklist + 三 skill SKILL | 以 `git diff` 路径列工程，禁按 commit 文案裁剪 |
 | G.CNS.02 Inspector 魔法数 | `constexpr` 命名边界值（`ORDINAL_FOUR_CHAR_LEN` / `INDEX_PLUS_*`） | 见 `examples-cpp-inspector.md` 案例 8 / 11 |
 | `TestType.Function` | `arkts_patterns` 检测 + 自动替换 |
 | 大写 `String` | `arkts_patterns.fix_arkts_quality` |
@@ -139,6 +142,21 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 
 **宣称工程全绿前自检**：同一次 `deploy-test` 日志中无 `Cannot execute ark file`、`enableWildcard of null`、`[PagePushHelper] push ... error`；HTML 对应该次装包。
 
+### 改码后强制重编（禁旧包复测 · PR#42066 实锤）
+
+> **现象**：接口人复测一堆失败，本地却「全绿」——根因是**改码后未重编/未双包重装**、范围收窄、锁屏假失败、NO_RESULT 当偶发。
+
+| 铁律 | 必须 | 禁止 |
+|------|------|------|
+| **有代码改动 → 必须重编再测** | 改 `.ets`/`.html`/`.json5`/resources 后，对该工程再跑 **`build-all`（双 HAP）或 `hapbuild build`（静态一体）+ sign**，再用**新 signed.hap** 装包 | 改完直接 `aa test` / 沿用磁盘上旧 HAP / 只重装测包 |
+| **双 HAP 双编双装** | `entry/src/ohosTest/` 存在 → `build` + `build-test` + `sign`，`deploy-test` **先主后测** | 只 `build-test`；`bm install -g` 对 release 包（9568450） |
+| **PR/批次范围** | 以 **PR 全部改动路径**（`git diff upstream/master...HEAD --name-only`）反推工程列表；**含** basic_rendering / permissions 等 | 按**单 commit 文案**「12 个 HAP」收窄而跳过同 PR 其它工程 |
+| **装包真实性** | `hdc install`（无 `-g`）；卸装 → 装主 → 装测；受限权限靠 **profile ACL/restricted-permissions**（apl=system_core） | 把 `NO_RESULT`/`App died`/`9568289` 当环境偶发略过 |
+| **设备卫生** | 跑测前唤醒 + `setmode 602` + 上滑解锁 + `killall uitest` | 锁屏态硬跑 UiTest |
+| **结果门禁** | 必须有 `OHOS_REPORT_RESULT` 且 Fail=0 Error=0 | 无 RESULT 仍写「测试通过」 |
+
+**脚本硬失败（ohhdc）**：`deploy-test` / `install-project` / `static-deploy-test` 在 HAP **mtime 早于源码** 时 **直接失败**（不再仅告警）；装包失败附 9568450/9568289 提示；跑测结束校验 `OHOS_REPORT_RESULT`。
+
 ## ArkTS 高频
 
 | 问题 | 自动？ | 修复 |
@@ -155,6 +173,8 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | Dialog `DocumentViewPicker` 模拟 UEC → 后续 Suite 全 `component not found` | — | **禁止**系统 FilePicker/UIExtension；改可自动化子窗正例；禁 `expect(true)`/`env skip` 假绿 |
 | 拆多次 deploy-test 重装后宣称全绿 | — | 工程整测改为**一次连跑**全部 Suite（见上节） |
 | 双 HAP 只编测包 / 主包过期 → 本地假绿、门禁页崩溃 | — | 改 `MainAbility/pages` 后必须重编**主+测**并双包安装；见上节「主包页面 vs 测包」 |
+| 改码后用旧 HAP 复测 / 按 commit 文案收窄 PR 范围 | ✅ ohhdc 新鲜度硬失败 | 见上节「改码后强制重编」；PR 范围以 diff 路径为准 |
+| `NO_RESULT`/`App died` 当偶发 | ✅ ohhdc 结果校验 | 须重编双包重装；禁写「测试通过」 |
 | `PagePushHelper` 吞 `pushUrl` 错误 | — | catch 后必须 `throw`；页面装饰器崩溃应直接 Fail |
 | 裸 `it()` 无 `@tc.*` JSDoc | 报告 | 每条 `it` 同批写全六字段；`gate_review` 扫 `*.test.ets`（含一体工程 `entry/.../test/`） |
 
