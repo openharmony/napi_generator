@@ -48,6 +48,7 @@ version: "1.2.0"
 
 | 规则 | 加固方式 |
 |------|----------|
+| **G.OTH.05** 硬编码公网 URL/IP | `arkts_patterns` 检测字面量 `https?://...` / IPv4（跳过 apache.org） | 拼接假 host / 本地 server；见 checklist |
 | G.FMT.06-CPP 实参续行 | 起始行缩进 + 4（8→12，4→8）；**声明续行勿仅 1 空格** | `gate_review.fix_cpp_fmt06` |
 | **G.FMT.04** `:` 前空格 | `brace + 1 : i` → `brace + 1:i` | `gate_review.fix_py_fmt04_space_before_colon` |
 | **DEV.REBUILD.01** 改码后旧 HAP 复测 | ohhdc **作废过期 HAP**（`purge_stale_project_haps`）+ 装包入口拒装；ohxtsflow **不查找旧包**，缺失则自动 `build-all` | `deploy-test`/`static-deploy-test` |

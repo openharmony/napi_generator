@@ -34,6 +34,18 @@
 ## D. 代码质量（ArkTS）
 
 - [ ] 无大段注释掉的废弃代码
+- [ ] **G.OTH.05**：禁止硬编码公网 URL/IP（如 `'https://www.example.com/...'`）
+  - schemeHandler 假地址：拆成 `scheme + host + path` 拼接（host 用 `local.test` 等非公网），勿整段字面量
+  - 业务请求：用 `XtsTestServer` / `resource://rawfile/...`，勿写公网域名
+  ```ets
+  // bad
+  this.controller.postUrl('https://www.example.com/body-stream-read', data);
+  // good
+  let schemePart: string = 'https://';
+  let hostPart: string = 'local.test';
+  let pathPart: string = '/body-stream-read';
+  this.controller.postUrl(schemePart + hostPart + pathPart, data);
+  ```
 - [ ] G.FMT.05：源码单行 ≤120 字符；长日志参数、对象字面量按语义折行
   - Options 一行塞多字段易超宽，改为：
     ```ets

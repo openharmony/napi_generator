@@ -42,6 +42,14 @@ RULES: list[tuple[str, re.Pattern[str], str]] = [
         re.compile(r"\.key\(\s*['\"](?!.*_.+)[^'\"]+['\"]\s*\)"),
         "key 无下划线，可能未按「页面名_组件名」命名",
     ),
+    (
+        "G.OTH.05",
+        re.compile(
+            r"""['"]https?://(?!(?:www\.)?apache\.org/)[^'"]+['"]"""
+            r"""|['"]\d{1,3}(?:\.\d{1,3}){3}(?::\d+)?(?:/[^'"]*)?['"]"""
+        ),
+        "G.OTH.05 禁止硬编码公网 URL/IP；拼接假地址或用本地 server/schemeHandler",
+    ),
 ]
 
 
