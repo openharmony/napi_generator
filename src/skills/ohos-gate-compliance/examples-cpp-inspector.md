@@ -74,21 +74,28 @@ bool VideoPattern::NeedLift() const {
 
 **修复**：`GetName() const`；`ExtractKeyFromInspectorId` 需 `FrameNode` → `DynamicCast`。
 
-## 案例 8：slider_pattern G.CNS.02 魔法数 99
+## 案例 8：slider_pattern / InspectorIdHelper G.CNS.02 魔法数 99
 
-**问题**：`GenerateUniqueInspectorId` 中 `index > 99` 触发 G.CNS.02（难以理解的字面量）。
+**问题**：`index > 99`（如 `GenerateUniqueInspectorId`、`GenerateNumberedInspectorId`）触发 G.CNS.02（难以理解的字面量）。
 
 **修复**（行为不变，仅命名常量）：
 
 ```cpp
+// 组件内局部常量（slider 等）
 constexpr int32_t MAX_SLIDER_FIELD_INSPECTOR_INDEX = 99;
-// ...
 if (index < 1 || index > MAX_SLIDER_FIELD_INSPECTOR_INDEX) {
     return INSPECTOR_PREFIX;
 }
+
+// Helper 公共常量（inspector_id_helper.h · InspectorIdConstants）
+constexpr int32_t MIN_TWO_DIGIT_ORDINAL_INDEX = 1;
+constexpr int32_t MAX_TWO_DIGIT_ORDINAL_INDEX = 99;
+if (index < MIN_TWO_DIGIT_ORDINAL_INDEX || index > MAX_TWO_DIGIT_ORDINAL_INDEX) {
+    return "";
+}
 ```
 
-**经验**：Inspector 序号上限等与 `__SliderField01__` 格式相关的边界值，用 `constexpr` 命名，勿裸数字。
+**经验**：两位序号 `01..99` 与 `__XxxField01__` 格式相关的边界值，用 `constexpr` 命名，勿裸数字 `99`/`1`。
 
 ## 案例 9：CI 链接未定义符号（unittest / Windows 预览 SDK）
 
