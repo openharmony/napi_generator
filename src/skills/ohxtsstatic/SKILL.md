@@ -238,7 +238,7 @@ version: "1.5.0"
 | 无统一前缀的散乱 `console.info`（排障困难） | 日志含 **`[ARKUI_NEW]`** 或套件内统一 **`LOG_TAG`** |
 | 用例间残留 **AppStorage** / 未关 **Dialog** | `afterEach` 删除本套件键；`dialogController.close()` |
 | **`describe`/`export default function` 名过长**（堆叠完整 Options 类名） | **短套件名**（如 `PopupCommonBlurOptsTest`）；过长易导致 Hypium **`Tests run: 0`**（§13.11.1） |
-| 本工程 hypium 下 **`async (done) + done()`** | 对齐已绿套件写 **`async () => {}`**；`done` 形参可触发 Class verification failed、整套件无输出（§13.11.2） |
+| 本工程 hypium 下 **`async (done) + done()` 已复现 ClassCast / `Tests run: 0`** | 对齐已绿套件写 **`async () => {}`**（§13.11.2）；**禁止见 done 就删**；动态/CAPI 工程不适用本行 |
 
 ### 1.4 `@tc.*` 文档注释（开发期硬门禁，非提交前才补）
 
@@ -684,7 +684,8 @@ cases:
 
 ```typescript
 beforeAll → UtilsTest.startAbility(bundleName, 'EntryAbility')
-beforeEach → routerInstance.clear() + pushUrl 到本页 + sleep(2000)
+beforeEach → 不在目标页才 pushUrl；首次进页 sleep(800～1000)（禁每条 2000）
+afterEach → Suite 内禁 pressBack 离页；详见 ohxtsdynamic §9.10.5 耗时约定
 afterEach  → sleep(500)；清理本套件 AppStorage 键
 ```
 
@@ -900,8 +901,11 @@ import { Entry, Column, ContextMenuOptions, ... } from '@ohos.arkui.component';
 
 #### 13.11.2 `done` 回调与静态 hypium（P0）
 
+- **适用范围仅静态工程**（`'use static'` / 本工程 static hypium）。**动态（ohxtsdynamic）与 CAPI 工程禁止按本条去 `done`。**
 - 部分静态工程 hypium（`getFunctionArgumentsCount` 异常）对 **`async (done: Function)` + `done()`** 会在 ArkEtsVm 校验失败 → **该 `describe` 静默无用例输出**。
-- **默认写法**：`it('…', Level.LEVELx, async () => { … });`（无 `done`）。
+- **触发条件（须同时满足才改）**：① 当前工程为静态；② **本工程已复现** `Class verification failed` / 套件 `Tests run: 0` / ClassCast；③ 同工程已绿套件已是无 `done` 写法。
+- **默认写法（静态）**：`it('…', Level.LEVELx, async () => { … });`（无 `done`）。
+- **禁止**：见仓内其它项目有 `done` 就批量删除；**禁止**把本条规则套到 dialog_api26 等动态 HAP。
 - **写前必看**：同工程最近 Pass 的 `*.test.ets` 回调签名，**禁止**从动态工程或其它 hypium 版本照搬 `done`。
 
 #### 13.11.3 板端缺符号时的覆盖策略

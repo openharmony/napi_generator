@@ -419,6 +419,53 @@ def check_build_profile_compile_sdk(path: Path, text: str) -> list[GateIssue]:
     return issues
 
 
+# 7.0 CI Kit 可能未再导出 Dialog API；须直连 ohos 模块（dialog_api26 实锤）
+_DIALOG_KIT_SYMS = frozenset(
+    {
+        "dialog",
+        "DialogPresenter",
+        "DialogResult",
+        "DialogState",
+        "DialogDismissal",
+        "DialogBaseController",
+        "DialogBaseAlignment",
+        "DialogButtonOrientation",
+    }
+)
+_IMPORT_KIT_ARKUI = re.compile(
+    r"import\s+(?:([A-Za-z_]\w*)\s*,\s*)?\{([^}]*)\}\s*from\s*['\"]@kit\.ArkUI['\"]",
+    re.S,
+)
+
+
+def check_dialog_api_kit_import(path: Path, text: str) -> list[GateIssue]:
+    """CI.KIT.01：Dialog* / dialog 勿从 @kit.ArkUI 导入（7.0 门禁 Kit 常缺再导出）。"""
+    if path.suffix != ".ets":
+        return []
+    issues: list[GateIssue] = []
+    for m in _IMPORT_KIT_ARKUI.finditer(text):
+        names: list[str] = []
+        if m.group(1):
+            names.append(m.group(1))
+        names.extend(re.findall(r"[A-Za-z_]\w*", m.group(2)))
+        bad = sorted({n for n in names if n in _DIALOG_KIT_SYMS})
+        if not bad:
+            continue
+        line = text[: m.start()].count("\n") + 1
+        issues.append(
+            GateIssue(
+                path,
+                line,
+                "CI.KIT.01",
+                "Dialog API "
+                + ",".join(bad)
+                + " 勿从 @kit.ArkUI 导入；改用 @ohos.arkui.UIContext"
+                + "（DialogPresenter）/ @ohos.arkui.dialog（dialog/枚举/Result 等）",
+            )
+        )
+    return issues
+
+
 def _from_codes(*codes: int) -> str:
     return "".join(chr(c) for c in codes)
 
@@ -549,6 +596,7 @@ def scan_file(path: Path, text: str, profile: ProjectProfile) -> list[GateIssue]
         return check_wordstool_97(path, text)
     issues.extend(check_ets_xtscheck(path, text))
     issues.extend(check_arkts_patterns(path, text))
+    issues.extend(check_dialog_api_kit_import(path, text))
     issues.extend(check_line_width(path, text))
     issues.extend(check_py_fmt04_space_before_colon(path, text))
     issues.extend(check_wordstool_97(path, text))

@@ -61,6 +61,10 @@
 - [ ] 无裸 `it()`：每条 `it` 前紧邻完整 `/** @tc.number … @tc.level */`（含一体工程 `entry/.../*.test.ets`）
 - [ ] 合并冲突未保留「仅 id 无 key」或旧 key 版本
 - [ ] Dialog/Present 类：`NORMAL`/`UEC` 后只点 OK/取消关遮罩；Inspector 防空 JSON；**禁止**「找不到取消就 pressBack」（会把 Ability 切后台）
+- [ ] **CI.KIT.01 / CI.SDK.DIALOG.01**（7.0 门禁）：
+  - 本地/设备 SDK 有 Dialog API 时：`DialogPresenter` ← `@ohos.arkui.UIContext`；`dialog`/枚举/`DialogResult` ← `@ohos.arkui.dialog`；**勿** `from '@kit.ArkUI'`。
+  - **若 CI 报** `Cannot find module '@ohos.arkui.dialog'` **或** `UIContext` **无** `getDialogPresenter`：属 **CI prebuilts SDK 未带该 API**（与导入路径无关）→ 父级 `BUILD.gn` **暂注释**该 HAP deps，注释标明 SDK 补齐后恢复。
+  - 嵌套 Options 须显式类型：`dialog.DialogMessage` / `dialog.DialogButton[]`。
 - [ ] Dialog **禁止** `DocumentViewPicker`/`FilePicker`/`系统 UIExtension` 模拟 UEC：Extension 退出后 UiTest `FindWidgets` 可永久失联并污染后续 Suite；103306 系统 UEC 勿用 `expect(true)`/`env skip` 假绿
 - [ ] **工程整测**：全部 Suite **一次** `deploy-test`/`static-deploy-test` 连跑（禁止拆多次且每次重装后拼结果）
 - [ ] **改码必重编（DEV.REBUILD.01）**：本批有 `.ets`/resources 改动 → 过期 HAP **已作废**；须 `build-all`/`hapbuild build`+sign 出新包再测；**禁止**查找/安装改码前旧 signed.hap

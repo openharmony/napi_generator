@@ -212,7 +212,7 @@ python3 /root/aiSkill/.claude/skills/ohhdc/ohhdc.py deploy-test "$CHIP" \
 
 与 ohxtsstatic 相同：**三列表格**（用例名称｜Pass/Fail｜设计思路 ≤5 句），附环境、命令、`OHOS_REPORT_RESULT` 汇总。
 
-**HTML 可视化（推荐）**：`deploy-test` / `run-dynamic-pipeline` 结束后自动输出 `REPORT_HTML=...`（**仅 xDevice 格式**），浏览器打开 `summary_report.html`。**禁止**自写汇总页；`--batch` 产生的 `batch_index.html` **仅本地导航**，不作接口人交付。
+**HTML 可视化（推荐）**：`deploy-test` / `run-dynamic-pipeline` 结束后自动输出 `REPORT_HTML=...` 与 `SCREENSHOT_PNG=...`（**仅 xDevice 格式**）。**禁止**自写汇总页；`--batch` 产生的 `batch_index.html` **仅本地导航**，不作接口人交付。**禁止**只贴 HTML 路径收工——须 **Read** `summary_top.png` 出图。
 
 ```bash
 python3 ohxtsdynamic/ohxtsflow.py deploy-test "$CHIP" \
@@ -227,7 +227,7 @@ python3 ohxtsdynamic/ohxtsflow.py gen-xdevice-report /tmp/unittest_device.log \
 
 `/root/aiSkill/develop/xts_acts_local_tools/xts_acts_0622/xts_reports/hypium/<工程>_<套件>_<时间>/summary_report.html`
 
-**commit 后截图**：交 **一张** `summary_top.png`（Summary→最多 10 行 Module）；**多 HAP 只截合并汇总页**。见 **[REPORTING.md](REPORTING.md)**。
+**commit 后截图**：流水线应已打印 `SCREENSHOT_PNG=`；会话须 **Read** 出图（多 HAP 只截合并汇总页）。见 **[REPORTING.md](REPORTING.md)**。
 
 ### 3.1 调试模式：轻量化（默认）与源码级（显式触发）
 
@@ -414,10 +414,19 @@ cases: []
 **页面 id/key 命名（ACTS / 常规工程）**：`{页面名}_{组件语义名}`；同页同类型多个时 `{页面名}_{组件语义名}_01`、`_02`…（页面名 = 预览页文件名去掉 `.ets`，如 `BindContextMenuByIsShowOptions`）。
 
 ```typescript
-beforeEach → router.clear() + pushUrl + CommonFunc.sleep(2000)
-afterEach  → hilog / 清理 AppStorage
-it         → driver.findComponent(ON.id(...)).click() 或 Inspector 链式读属性
+beforeEach → 不在目标页才 pushUrl；首次进页 sleep(800～1000) 即可（禁每条 2000）
+afterEach  → 同 Suite 内禁止 pressBack 离页；仅 afterAll/Suite 末按需退回
+it         → waitForComponent + 短 settle(200～400)；禁成对固定 sleep(800+1200+800)
 ```
+
+**耗时硬约束（避免无效墙钟，dialog_api26 实锤：固定 sleep≈墙钟）**：
+
+| 禁止 | 应改为 |
+|------|--------|
+| 每条 `afterEach pressBack` 再 `beforeEach push+2s` | Suite 内留页；`openPageIfNeeded` |
+| `it` 内堆固定 `sleep(800/1200)` | `waitForComponent` + 短 settle |
+| 一点属性一条 `it` 放大矩阵 | 同页矩阵轻合并为少量 `it`（断言逐步保留） |
+| 靠砍覆盖面「假加速」 | 禁止删枚举值/异常探针只为赶时 |
 
 **每条 `it` 前必填 JSDoc（硬门禁；与 `it` 同批写完，禁止提交前再补）**；**`@tc.number` = `@tc.name` = `it('…')` 首参字符串必须完全相同**（三者一字不差）。**缺六字段中任一条 → 该条用例视为未完成**，不得联调编签。
 
@@ -622,6 +631,18 @@ grep bundleName <工程根>/AppScope/app.json5
 |----------|------|
 | bindContextMenu **null + undefined 全矩阵** | 动态 **`ace_ets_module_dialog_Popup`**（`bindContextResponseNull.ets`） |
 | api23 静态 dialog + colorMode/gridStyle | **`ace_ets_module_dialog_api23_static`**：仅 TOP/BOTTOM + **省略可选字段** |
+
+#### 9.10.5 用例耗时（留页 + 缩 sleep + 轻合并）
+
+写/改 Hypium 前估算：`CommonFunc.sleep` 合计若接近墙钟 → **瓶颈在固定等待**，不是断言本身。
+
+1. **留页**：`afterEach` 去掉无条件 `pressBack`；`afterAll` 再退页，避免污染下一 Suite。
+2. **短等待**：优先 `waitForComponent`；click 后 settle **200～400ms**。
+3. **轻合并**：同页矩阵/枚举/异常探针可并入少量 `it` 顺序点按并逐项 assert；`@tc.number` 语义用 desc/子步保留。
+4. **超时回调**：整包稳定后按实测墙钟回调 `Test.json` 的 `test-timeout`/`shell-timeout`（略高于墙钟，忌长期 1200000 过松）。
+5. **浮层清理**：关 Dialog/菜单用 OK 文案或「有遮罩才 pressBack」；盲目 `pressBack` 会离页导致后续 `clickId` 失败。
+
+参考：`ace_ets_module_dialog_api26`（约 16min→7min，Helper：`DialogApi26TestHelper`）。
 
 ---
 
