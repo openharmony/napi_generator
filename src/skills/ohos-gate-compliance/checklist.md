@@ -87,6 +87,7 @@
 - [ ] 未提交 `root/`、IDE 点开头的本地配置目录等无关路径
 - [ ] skill 文档已通过 `scan_wordstool_docs.py`（WordsTool 文档用词，规则号 .297 / .241 / doc1）
 - [ ] **WordsTool.97**：资源 `string.json` / 用例勿写易歧义产品字体名；字体族用 `sans-serif`（`gate_review` 可自动替换）
+- [ ] **WordsTool.177 Surface / .143 NDK / .5 Accessibility**：用例注释/id/`it()` 勿裸写；改 host/TEXTURE、NATIVE、a11y；本地 `tools/` 生成器可 gitignore 规避 Python nbnc
 - [ ] skill 内 Python：函数嵌套深度 ≤4、nbnc 行数 ≤50（超限须拆 helper）
 - [ ] skill 内 Python：G.FMT.04 无冒号前空格（切片写 `a + 1:b` 而非带空格的冒号写法）
 
