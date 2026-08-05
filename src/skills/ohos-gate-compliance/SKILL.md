@@ -57,7 +57,9 @@ version: "1.2.0"
 | `TestType.Function` | `arkts_patterns` 检测 + 自动替换 |
 | 大写 `String` | `arkts_patterns.fix_arkts_quality` |
 | `'use static'` 下 `int` 误报 ARKTS_NO_INT | `arkts_patterns`：static 文件跳过该规则 |
-| `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck` |
+| `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck`（**保留** `@tc.xxx : ` 冒号格式，勿剥冒号） |
+| Hypium `/*` JSDoc / 仅核对 `@tc.number`↔`it()` | `gate_review._nearest_jsdoc` 接受 `/*`/`/**`；**不**强制 `@tc.name` 等于 `it()`（英文标题场景） |
+| G.FMT.05 长 `import` | `check_line_width` **跳过** `import ` 行（后置批量折行） |
 | WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词；扫描器源码仅用 `chr()` 拼词；含 **.297**（勿裸写设备命令缩写，叙事用「设备 unittest」）、**.241**（勿强调词）、**doc1**（勿易歧义代词结构，改用「其余」） |
 | Python 嵌套深度 ≤4 / nbnc ≤50 | 拆 helper（`ohhdc._warn_if_main_hap_stale`、`gate_review._check_one_it_jsdoc` 等） | 提交 skill 前 `py_compile` |
 | G.FUD.05 / 超大函数 `GetXxxProps` | 检测 nbnc>50；修法：按域拆多表 + 多次 `napi_define_properties` | `gate_review.check_cpp_fud05` + `reference.md` |
@@ -66,7 +68,7 @@ version: "1.2.0"
 | **G.FMT.05** Options/`@tc.desc` 超宽 | checklist 增 before/after；dialog api26 批实锤 | 手工折行；见 **ohxtsstatic §13.11.5** |
 | **G.EXT.03** `Array<T>` | `arkts_patterns` 检测 + `Array<Ident>`→`Ident[]` | dialog api26 ContextMenu* 实锤 |
 | **CI.KIT.01** Dialog* 从 `@kit.ArkUI` | `gate_review.check_dialog_api_kit_import`（仅检测） | 有 API 时改 `@ohos.arkui.UIContext` / `@ohos.arkui.dialog` + 显式嵌套类型 |
-| **CI.SDK.DIALOG.01** CI 无 Dialog API | 手工：父 `BUILD.gn` 暂注释该 HAP deps | CI 报缺 `@ohos.arkui.dialog`/`getDialogPresenter` 时与导入无关；SDK 补齐后再编入 |
+| **CI.SDK.DIALOG.01** CI 无 Dialog API | 手工：父 `BUILD.gn` 暂注释该 HAP deps | CI 报缺 `@ohos.arkui.dialog`/`getDialogPresenter` 时与导入无关；**本地 DevEco SDK ≠ CI prebuilts**，勿仅凭本地编过就恢复 deps；CI SDK 合入后再编入 |
 
 Agent **禁止**只修工程、不更新 skill（除非用户明确「仅 hotfix」）。
 
@@ -167,7 +169,9 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 |------|--------|------|
 | `TestType.Function` | ✅ | `TestType.FUNCTION` |
 | 大写 `String` | ✅ | `string` |
-| `@tc.name:` 冒号 | ✅ | 空格分隔 |
+| `@tc.name:` 冒号 | ✅ | 规范为 `@tc.xxx : `（**保留冒号**，勿剥成空格） |
+| `/*` / `/**` @tc 块 | ✅ 检测 | `_nearest_jsdoc` 兼容两种；仅 `@tc.number` 与 `it()` 一致 |
+| 长 `import` 超宽 | ⏭️ 跳过 | 后置批量折行；业务行仍 ≤120 |
 | `*/` 与 `it()` 空行 | ✅ | 删空行 |
 | G.FMT.05 行宽 | 报告 | 单行 ≤120；**Options 字面量 / 长 `@tc.desc`** 拆多行（dialog api26 批实锤） |
 | `int` | 报告（**仅动态**） | 改 `number`；**`'use static'` 文件跳过**（`int` 合法） |
@@ -209,5 +213,5 @@ G.FMT.06 示例见 [reference.md](reference.md)。
 1. **禁止**让用户手动跑 `scan_gate_patterns.py`，除非调试；正常走 `run-*-pipeline`
 2. 设备测试未全 Pass 不做 gate commit
 3. gate exit 2 → 修代码 → **加固本 skill** → `--skip-test-check` 重跑
-4. 只 `git add` 本工程路径；单笔 diff +与-之和 <2000
+4. 只 `git add` 本工程路径；单笔 diff +与-之和 <1900（本地；硬上限 2000）
 5. **门禁手工修复后必须加固本 skill**（见上文「门禁修复 → Skill 加固」）
