@@ -1,7 +1,12 @@
 # 如何使用SKILL
-> 以下内容描述了怎么在cursor的工程里增加skill能力，方便开发和使用。
+
+> **技能主仓**：本目录（`napi_generator/src/skills`）为远端提交的 **canonical** 源。  
+> 优化 skill **先改这里**，再执行 `/root/aiSkill/.claude/skills/sync-skills.sh pull-xts`（或 `pull`）同步到 Agent 运行时 `.claude/skills`。  
+> 详见同级策略说明也可对照 `.claude/skills/SKILLS_SYNC.md`。
+
+> 以下内容描述了怎么在工程里增加 skill 能力，方便开发和使用。
 > 需要的环境如下：
-> 1. cursor，打开一个工程，比如napi_generator
+> 1. 任一支持 Agent Skill 的 IDE，打开一个工程，比如 napi_generator
 > 2. openharmony sdk：ohos-sdk-6.0-release
 > 3. commandline tools：# Command Line Tools(linux-x64) Version: 6.0.1.260
 > 4. node：v20.20.0
@@ -62,12 +67,12 @@ Sync to AGENTS.md: npx openskills sync
 
 ## 3. 检查skill安装
 1. 项目目录里出现 openskills 安装的技能目录（终端会打印路径），其中有已安装的 skill（示例为 17 个，以实际为准）
-2. 通过 agent 对话问 Cursor，现在有多少 skill，应能答出从 anthropics/skills 安装的技能数量（示例为 17 个，以实际安装为准）
+2. 通过 agent 对话问当前有多少 skill，应能答出从 anthropics/skills 安装的技能数量（示例为 17 个，以实际安装为准）
 3. 使用一个技能，如："使用 pdf 技能创建个 pdf，存到项目根目录"
 
 ## 4. 使用工程里的 skill（src/skills 目录概述）
 
-`src/skills` 目录下为本仓库自有的 OpenHarmony / 社区相关技能，共 **16** 个（各目录内有 `SKILL.md` 详述；部分技能另含 `*.py` 入口）。**文档与示例中的命令一律以 `napi_generator` 仓库根下的 `src/skills/...` 为准**（在仓库根执行时可直接写 `python3 src/skills/<技能>/<脚本>.py`）。**运行脚本时请始终使用本仓库内路径**（或环境变量 **`${NAPI_GENERATOR_ROOT}/src/skills/...`**），勿混用编辑器侧技能安装目录中的副本路径。
+`src/skills` 目录下为本仓库自有的 OpenHarmony / 社区相关技能，共 **17** 个（各目录内有 `SKILL.md` 详述；部分技能另含 `*.py` 入口）。**文档与示例中的命令一律以 `napi_generator` 仓库根下的 `src/skills/...` 为准**（在仓库根执行时可直接写 `python3 src/skills/<技能>/<脚本>.py`）。**运行脚本时请始终使用本仓库内路径**（或环境变量 **`${NAPI_GENERATOR_ROOT}/src/skills/...`**），勿混用编辑器侧技能安装目录中的副本路径。
 
 > **区分**：**ohhap** 负责 **HAP 应用** 的 hvigor 构建与签名；**ohbuild** 负责 **fuzz 编译**、**verify-coverage / gn-args**、**build-acts（ACTS suite 在 `test/xts/acts` 下编译）** 等，与 HAP 流程不同（**跑** ACTS 用例见 **ohtest/actstest.py**）。**ohdoc** 负责从 **Word 测试用例模板**（**`template/`** 下 **NAPI测试用例** 模板）生成测试用例 **docx**（需 **python-docx**）：**`napi-test-doc`** 从 **`*.test.ts`** 解析填表（**`napitest{日期}.docx`**；**`--test-dir`** 合并多篇、**`【文件名】`** 分节）；**`csv-test-doc`** 从测试用例列表 **`.csv`**（如 **`11314873…csv`**）按列填表（**`csvtest{日期}.docx`**，默认执行日期 **2026/04/10**；**用例标识**=**用例编号**，**所属攻关任务** 固定 **投屏分享**，**用例追溯**=**功能模块**）。详见 **ohdoc/SKILL.md**、本文 **§4.5**。**ohhdf** 负责 **标准系统（如 rk3568）HDF**：Light / bluehdf 样例、**单编与推送**、**hilog / dmesg / hidumper** 调试（见 **ohhdf/howtohdf.md**、**ohhdf.py**）。**ohipc** 负责 **`foundation/communication/ipc_example`**：**IPC 架构**（**ipcarch.md**）、**零基础长文**（**howtoipc.md**，体例对齐 **howtohdf**）、**`ohipc.py`**：`howto`（**`--full`**）、`arch`、`paths`、**build / push / `test` / `test-concurrent` / `perf` / `test-parcel`** 等。**rkflash** 负责 **Rockchip 镜像同步与烧录**（与 HAP/fuzz 无关）。**ohrecord** 为 **系统侧 snapshot_record 录屏 MP4** 流程，与 **ohproj** HAP 模板互补（详文见 **ohproj/SKILL.md** 第十节）。
 
@@ -91,6 +96,10 @@ Sync to AGENTS.md: npx openskills sync
 | **ohservices** | SystemAbility（sampletest 9009）从白名单、SELinux、init 到 **HiDumper** 的全流程文档与检查 | 以 `SKILL.md`、`saguide.md` 为主；辅助脚本 **`ohservices/ohsa.py`**：`build`、`device`、`all`、`device-files`、`hilog-disk`、`dmesg`、`hidumper`、`diag`（多设备 **`-t`** / **`OHSA_HDC_TARGET`**） |
 | **rkflash** | Rockchip **OH 镜像**：SSH 同步（pscp/scp/paramiko 等）到本地 **`images/`**，按 **`config.cfg`** 驱动 **`upgrade_tool` 烧录**；默认版本校验、VERIFY 后关灯；**无内置同步主机/密码**，须 **`rkflash_sync_config.json`**（勿提交真实密码；见根目录 `.gitignore`）或 **`RKFLASH_*` 环境变量** | `rkflash/rkflash.py`；示例配置 `rkflash_sync_config.example.json` |
 | **ohrecord** | **snapshot_record** 录屏 **MP4**；**audio_record_demo** / **audio_play_demo** / **camera_record** 等单编与设备链路；路径、SELinux、**hilog**、**.so** 校验；录屏修改清单见 **ohproj/SKILL.md 第十节** | `ohrecord/ohrecord.py`（子命令含 `paths`、`build`、`prep-device`、`device-status`、`record`、`pull`、`verify-host-so`、`verify-device-so`、`verify-remote-mp4`、`hilog-capture`、`targets` 及 **`audio-*` / `play-*` / `cam-*`** 等，完整列表见 **ohrecord/SKILL.md**） |
+| **ohxtsstatic** | **ArkTS `use static` + Hypium XTS 一体化**（§十三 多批次、§十四/REPORTING.md 报告）；**ohxtsflow.py**；静态须 **`OHOS_USE_HVIGOR_STATIC=1`**；**arkui-static-xts-generator/** 仅 README，正文外置下载 | `ohxtsstatic/ohxtsflow.py`；**SKILL.md** v1.4+ |
+| **ohxtsdynamic** | **@ComponentV2 动态 ArkUI + Hypium XTS**；异常参数 undefined/null；**§九～十** 批次与报告；normal SDK + 默认 hvigor；**arkui-dynamic-xts-generator/** 仅 README，正文外置下载 | `ohxtsdynamic/ohxtsflow.py`；**ohxtsdynamic/SKILL.md** v1.4+ |
+| **ohxtscapi** | **ArkUI CAPI + Hypium XTS**；NAPI/C++ 用例；**run-capi-pipeline**（编签→设备→门禁→commit）；**arkui-capi-xts-generator-v3/** | `ohxtscapi/ohxtscflow.py`；**ohxtscapi/SKILL.md** |
+| **ohos-gate-compliance** | **PR 门禁统一入口**：`scripts/gate_review.py`（pipeline 自动）、`arkts_patterns.py`、`scan_gate_patterns.py`；按 ets/capi 选规则 | `ohos-gate-compliance/SKILL.md` |
 
 **常见限制（摘要）**
 
@@ -106,6 +115,8 @@ Sync to AGENTS.md: npx openskills sync
 - **ohbuild**：**`build-acts`** 依赖 OpenHarmony 工程内 **`test/xts/acts/build.sh`**；**`--src-dir`** 应指向你的 **`src` 根**（勿依赖脚本默认推断，除非目录布局与说明一致）。
 - **rkflash**：依赖本机 **hdc**、**Rockchip upgrade_tool**（常见为 Windows）、同步工具（**pscp** / OpenSSH **scp** / **paramiko** 等）；同步参数须自行配置，**不要将含真实密码的 `rkflash_sync_config.json` 提交到仓库**。
 - **ohrecord**：依赖 **hdc** 连接设备；全量 **`build`** 与镜像侧改动见文档，录制路径须落在 **`/data/test/media`** 并注意 **SELinux 标签**（见该技能 `SKILL.md`）。
+- **ohxtsstatic**：编排依赖 **ohhap/ohhdc**；规范与排障以本目录 **SKILL.md**、**compile_error_hints.md** 为准；**ArkUI 接口范式** 见 **`arkui-static-xts-generator/`**（**须从 [arkUISkill（GitCode）](https://gitcode.com/qq_44921954/arkUISkill) 自行下载放置**，见 **`arkui-static-xts-generator/README.md`**；**勿提交 categories/common 正文**）；**静态用例工程**编译前设置 **`OHOS_USE_HVIGOR_STATIC=1`**，使 **`hapbuild`** 使用 **`hvigor-static`**（见 **SKILL.md**）。
+- **ohxtsdynamic**：与 **ohxtsstatic** 互补，面向 **@ComponentV2** 动态组件；SDK 用 **normal**（`source use-ohos-sdk.sh normal`），**勿设** **`OHOS_USE_HVIGOR_STATIC`**；**arkui-dynamic-xts-generator/** 同静态，**仅 README 入库**，正文外置下载；编排 **`ohxtsdynamic/ohxtsflow.py`** + **ohhap/ohhdc**。
 
 **环境与路径（常用）**
 
@@ -116,6 +127,8 @@ Sync to AGENTS.md: npx openskills sync
 - **ohipc**：在 OpenHarmony **源码根**下执行 **`ohipc.py`**；板测与 **ohhdc** 一样依赖 **hdc** 与可写的 **`/data/local/tmp/`**（**`test-parcel`** 等）。
 
 ### 4.2 使用方式
+
+> **IDE 侧主目录**：`/root/aiSkill/.claude/skills/` 为 Agent 运行时 canonical 目录；OH 工具链 skill 自本仓 **`pull`** 同步，**ohxtsstatic** 自 IDE 侧 **`push-xts`** 回写。详见 **`/root/aiSkill/.claude/skills/SKILLS_SYNC.md`** 与 **`sync-skills.sh`**。
 
 - **方式一**：将需要的技能目录从 `src/skills/<名>/` 拷贝到编辑器/Agent 所读取的技能目录（由工具配置决定，路径以各工具说明为准），与通过 openskills 安装的技能并列，便于对话中引用「某技能」。**执行命令时仍建议使用本仓库 `src/skills/...` 路径。**
 - **方式二**：命令行直接使用仓库内路径（在 **napi_generator 仓库根** 下）：
@@ -150,10 +163,12 @@ Agent 多由自然语言触发；下表为**用户可说的提示句**与**典�
 | **ohservices** | 「按 sampletest 配 SystemAbility」「SELinux / init 报错怎么查」「用 ohsa 做设备/编译/HiDumper 诊断」 | 阅读 `src/skills/ohservices/SKILL.md`；`python3 src/skills/ohservices/ohsa.py device` / `diag` / `build --product rk3568` / `hidumper` / `hilog-disk` 等（见 **ohservices/SKILL.md**） |
 | **rkflash** | 「从编译机同步 RK 镜像到本机并烧录」「跑 pscp-sync / flash_all」「关掉校验或关灯选项」 | 先配置 **`src/skills/rkflash/rkflash_sync_config.json`**（从 **`rkflash_sync_config.example.json`** 复制）或环境变量；`python3 src/skills/rkflash/rkflash.py pscp-sync` / `flash_all` 等（见 `SKILL.md`） |
 | **ohrecord** | 「准备 snapshot_record 目录与标签」「录一段屏并拉回 MP4」「麦克风 audio / 音乐 play / 摄像头 cam」「查录屏相关 hilog」 | `prep-device` / `record --seconds 60 -f /data/test/media/x.mp4` / `pull --remote …` / `verify-host-so` / `verify-device-so` / **`audio-*` / `play-*` / `cam-*`**（含 **`audio-pull`**）/ `cam-run --pull --verify -- auto 10` / `hilog-capture` / `targets`（命令前加 **`python3 src/skills/ohrecord/ohrecord.py`**；**`-f` 同 `--file`**；完整见 **ohrecord/SKILL.md**） |
+| **ohxtsstatic** | 「一体化 static + Hypium」「§〇 路由+检查点」「SDK+明细+docs」「build-all/deploy-test」 | `python3 src/skills/ohxtsstatic/ohxtsflow.py` 同上；**SKILL.md** + **compile_error_hints** + **arkui-static-xts-generator/**（外置下载） |
+| **ohxtsdynamic** | 「动态 ChipV2/CounterV2 XTS」「异常参数 compile_probe」「deploy-test / run-dynamic-pipeline」 | `python3 src/skills/ohxtsdynamic/ohxtsflow.py build-all` / `deploy-test` / `run-dynamic-pipeline`；**normal SDK**；**arkui-dynamic-xts-generator/**（外置下载） |
 
 ### 4.4 ohhap：构建与签名（Windows / Linux 对照）
 
-- **编译时工程路径怎么传**：`hapbuild.py build <project_dir>` 的 `<project_dir>` 为 **HAP 工程根**（含 **`build-profile.json5`**）。在仓库根可用相对路径（如 **`src/skills/ohhap/EmptyProj46R`**），也可用 **绝对路径**；**`/` 与 `\` 均可**；路径含空格时整条加 **英文双引号**。与 Linux **同一参数语义**，仅执行器多为 **`python`** 而非 **`python3`**。
+- **编译时工程路径怎么传**：`hapbuild.py build <project_dir>` 的 `<project_dir>` 为 **HAP 工程根**（含 **`build-profile.json5`**）。在仓库根可用相对路径（如 **`src/skills/ohhap/EmptyProj46R`**），也可用 **从盘符或根目录写起的完整路径**；**`/` 与 `\` 均可**；路径含空格时整条加 **英文双引号**。与 Linux **同一参数语义**，仅执行器多为 **`python`** 而非 **`python3`**。
 - **`local.properties`**：工程根下 **`sdk.dir=`** 指向本机 SDK；**`hapbuild.py`** 在环境检查阶段会 **检查并可在缺失/无效时写入或修正** `sdk.dir`（与 **`OHOS_SDK_PATH`** 对齐），一般不必手工改脚本；该文件常 **不提交 Git**。详见 **ohhap/SKILL.md**「Windows 下编译：如何传工程路径、要改什么」。
 - **同一入口**：`src/skills/ohhap/hapbuild.py`；**不**按系统维护两套脚本，差异由 **路径解析**（`os.path`、`expanduser`）与 **SDK 目录布局**消化。
 - **构建**：均需 **`HOS_CLT_PATH`**、**`OHOS_SDK_PATH`**；hvigor 通过 **`node $HOS_CLT_PATH/hvigor/bin/hvigorw.js`** 调用（与 OS 无关）。
@@ -197,7 +212,7 @@ python src\skills\ohhap\hapbuild.py sign src\skills\ohhap\EmptyProj46R release
 - **`csv-test-doc`**：**`--csv <测试用例列表.csv>`**（UTF-8；列含 **用例名称**、**功能模块**、**用例编号**、**维护人**、**前置条件**、**步骤描述**、**预期结果** 等）；默认输出 **`csvtest{YYYYMMDD}.docx`**；**`--exec-date`** 默认 **2026/04/10**；标题 **`任务{n}. {用例名称}测试用例`**；表格侧 **用例标识**=**用例编号**，**所属攻关任务** 固定 **投屏分享**，**用例追溯**=**功能模块**（详见 **`ohdoc/SKILL.md`**「CSV 模式」）。
 - **详述**：字段映射、参数表、限制与故障（含 **PermissionError** 占锁）见 **`src/skills/ohdoc/SKILL.md`**。
 
-**典型串联**：**ohhap** 构建签名 → **ohhdc** 安装 → **ohhdc test** 或 **ohtest**（dts/UITest/fuzz/ACTS）→ 日志用 **ohhdc faultlog**。**HDF 驱动 / light / bluehdf** 开发与设备验证：**ohhdf**（编推、**hilog-hdf**）并可配合 **ohhdc**（如 **led**）。**Binder / ipc_example 跨进程与 Parcel 单测**：**ohipc**（**`ohipc.py test`** / **`test-parcel`**）+ **ohhdc**（hdc）。静态体量与依赖对比用 **ohanalysis**；命令行工具闭环用 **ohclitools**。整机 **Rockchip 镜像**同步烧录用 **rkflash**；**系统镜像侧录屏**用 **ohrecord**（与 **ohproj §10** 对照）。
+**典型串联**：**ohxtsstatic**（`ohxtsflow.py`）可串联 **ohhap** 构建签名与 **ohhdc deploy-test/hilog**；一般流程为 **ohhap** 构建签名 → **ohhdc** 安装 → **ohhdc test** 或 **ohtest**（dts/UITest/fuzz/ACTS）→ 日志用 **ohhdc faultlog**。**HDF 驱动 / light / bluehdf** 开发与设备验证：**ohhdf**（编推、**hilog-hdf**）并可配合 **ohhdc**（如 **led**）。**Binder / ipc_example 跨进程与 Parcel 单测**：**ohipc**（**`ohipc.py test`** / **`test-parcel`**）+ **ohhdc**（hdc）。静态体量与依赖对比用 **ohanalysis**；命令行工具闭环用 **ohclitools**。整机 **Rockchip 镜像**同步烧录用 **rkflash**；**系统镜像侧录屏**用 **ohrecord**（与 **ohproj §10** 对照）。
 
 ## 5. 配置hdc连接（确保开发版联网且和Linux服务器可以互相ping通）
 1. 把${OHOS_SDK_PATH}/linux/toolchains加入环境变量

@@ -103,7 +103,7 @@ export class CompressTaskController {
  * - 多个文件
  * - 文件夹（自动递归）
  * - 文件和文件夹混合
- * - 支持取消操作 ⭐
+ * - 支持取消操作
  * 
  * @param inputPaths 输入路径（可以是单个字符串或字符串数组，自动识别）
  * @param outputPath 输出压缩包路径
@@ -136,7 +136,7 @@ export class CompressTaskController {
  * );
  * const result = await ctrl.promise;
  * 
- * // 示例5：支持取消 ⭐
+ * // 示例5：支持取消
  * const ctrl = compressItems(['/bigdir'], '/output.zip', { format: 'zip' });
  * // 3秒后取消
  * setTimeout(() => ctrl.cancel(), 3000);

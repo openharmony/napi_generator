@@ -44,7 +44,7 @@ struct DecompressTestPage {
   aboutToAppear() {
     this.filesDir = this.context.filesDir;
     this.addLog(`✓ 应用目录: ${this.filesDir}`);
-    this.addLog(`💡 操作流程: ①创建文件 → ②创建压缩包 → ③解压测试`);
+    this.addLog(`操作流程: ①创建文件 → ②创建压缩包 → ③解压测试`);
   }
 
   private addLog(message: string) {
@@ -63,7 +63,7 @@ struct DecompressTestPage {
     
     const modeText = mode === 'single' ? '单文件' : '多文件';
     this.addLog('========================================');
-    this.addLog(`📝 创建 ${modeText} 测试文件`);
+    this.addLog(`创建 ${modeText} 测试文件`);
     this.addLog('========================================');
     
     try {
@@ -139,9 +139,9 @@ struct DecompressTestPage {
       
       // 保存创建的文件路径
       this.createdFiles.set(mode, inputPaths);
-      this.createStatusText = `✅ ${modeText}已创建`;
+      this.createStatusText = `${modeText}已创建`;
       
-      this.addLog(`✅ ${modeText} 文件创建成功！`);
+      this.addLog(`${modeText} 文件创建成功！`);
       this.addLog('========================================');
       
       promptAction.showToast({ 
@@ -150,7 +150,7 @@ struct DecompressTestPage {
       });
       
     } catch (error) {
-      this.addLog(`❌ 创建失败: ${JSON.stringify(error)}`);
+      this.addLog(`创建失败: ${JSON.stringify(error)}`);
       this.createStatusText = '创建失败';
     } finally {
       this.isCreatingFiles = false;
@@ -169,7 +169,7 @@ struct DecompressTestPage {
         message: '请先创建测试文件！', 
         duration: 2000 
       });
-      this.addLog(`⚠️  请先点击"创建文件"按钮`);
+      this.addLog(`请先点击"创建文件"按钮`);
       return;
     }
     
@@ -182,7 +182,7 @@ struct DecompressTestPage {
     this.outputPathDisplay = outputPath;
     
     this.addLog('========================================');
-    this.addLog(`📦 创建 ${modeText}.${format} 压缩包`);
+    this.addLog(`创建 ${modeText}.${format} 压缩包`);
     this.addLog('========================================');
     this.compressStatusText = `压缩中...`;
     
@@ -208,23 +208,23 @@ struct DecompressTestPage {
         const archiveKey = `${mode}_${format}`;
         this.createdArchives.set(archiveKey, outputPath);
         
-        this.addLog(`✅ ${modeText}.${format} 压缩包创建成功！`);
+        this.addLog(`${modeText}.${format} 压缩包创建成功！`);
         this.addLog(`   文件数: ${result.fileCount}`);
         this.addLog(`   压缩率: ${result.compressionRatio?.toFixed(1)}%`);
         this.addLog('========================================');
-        this.compressStatusText = `✅ ${modeText}.${format}已创建`;
+        this.compressStatusText = `${modeText}.${format}已创建`;
         
         promptAction.showToast({ 
           message: `压缩包创建完成！`, 
           duration: 2000 
         });
       } else {
-        this.addLog(`❌ 压缩失败: ${result.message}`);
+        this.addLog(`压缩失败: ${result.message}`);
         this.compressStatusText = '压缩失败';
       }
       
     } catch (error) {
-      this.addLog(`❌ 异常: ${JSON.stringify(error)}`);
+      this.addLog(`异常: ${JSON.stringify(error)}`);
       this.compressStatusText = '压缩失败';
     } finally {
       this.isCompressing = false;
@@ -244,7 +244,7 @@ struct DecompressTestPage {
         message: '请先创建压缩包！', 
         duration: 2000 
       });
-      this.addLog(`⚠️  请先点击"创建压缩包"按钮`);
+      this.addLog(`请先点击"创建压缩包"按钮`);
       return;
     }
     
@@ -259,8 +259,8 @@ struct DecompressTestPage {
     this.outputPathDisplay = outputPath;
     
     this.addLog('========================================');
-    this.addLog(`🚀 解压 ${modeText}.${format}`);
-    this.addLog(`📁 输出目录: decompress_${mode}_${format}/`);
+    this.addLog(`解压 ${modeText}.${format}`);
+    this.addLog(`输出目录: decompress_${mode}_${format}/`);
     this.addLog('========================================');
     this.statusText = `解压中...`;
     
@@ -274,7 +274,7 @@ struct DecompressTestPage {
       
       // 进度监听
       unzip.on('start', () => {
-        this.addLog('▶️  解压已启动');
+        this.addLog('解压已启动');
       });
       
       unzip.on('progress', (prog: DecompressProgress) => {
@@ -286,7 +286,7 @@ struct DecompressTestPage {
       });
       
       unzip.on('error', (error: Error) => {
-        this.addLog(`❌ 错误: ${JSON.stringify(error)}`);
+        this.addLog(`错误: ${JSON.stringify(error)}`);
       });
       
       // 执行解压
@@ -296,7 +296,7 @@ struct DecompressTestPage {
         this.extractedFiles = result.files || [];
         
         this.addLog('========================================');
-        this.addLog(`✅ ${modeText}.${format} 解压成功！`);
+        this.addLog(`${modeText}.${format} 解压成功！`);
         this.addLog(`   格式: ${result.format || '未知'}`);
         this.addLog(`   文件数: ${this.extractedFiles.length}`);
         
@@ -310,19 +310,19 @@ struct DecompressTestPage {
         }
         
         this.addLog('========================================');
-        this.statusText = `✅ 解压成功`;
+        this.statusText = `解压成功`;
         
         promptAction.showToast({ 
           message: `解压成功！`, 
           duration: 2000 
         });
       } else {
-        this.addLog(`❌ 解压失败: ${result.message}`);
+        this.addLog(`解压失败: ${result.message}`);
         this.statusText = '解压失败';
       }
       
     } catch (error) {
-      this.addLog(`❌ 异常: ${JSON.stringify(error)}`);
+      this.addLog(`异常: ${JSON.stringify(error)}`);
       this.statusText = '解压失败';
     } finally {
       this.isDecompressing = false;
@@ -509,7 +509,7 @@ struct DecompressTestPage {
             .alignSelf(ItemAlign.Start)
           
           // Zip 格式
-          Text('📦 Zip 格式')
+          Text('Zip 格式')
             .fontSize(15)
             .fontWeight(FontWeight.Bold)
             .margin({ bottom: 8 })
@@ -541,7 +541,7 @@ struct DecompressTestPage {
           .margin({ bottom: 12 })
           
           // 7z 格式
-          Text('📦 7z 格式')
+          Text('7z 格式')
             .fontSize(15)
             .fontWeight(FontWeight.Bold)
             .margin({ bottom: 8 })
@@ -619,7 +619,7 @@ struct DecompressTestPage {
             .alignSelf(ItemAlign.Start)
           
           // Zip 格式
-          Text('📦 Zip 格式')
+          Text('Zip 格式')
             .fontSize(15)
             .fontWeight(FontWeight.Bold)
             .margin({ bottom: 8 })
@@ -651,7 +651,7 @@ struct DecompressTestPage {
           .margin({ bottom: 12 })
           
           // 7z 格式
-          Text('📦 7z 格式')
+          Text('7z 格式')
             .fontSize(15)
             .fontWeight(FontWeight.Bold)
             .margin({ bottom: 8 })

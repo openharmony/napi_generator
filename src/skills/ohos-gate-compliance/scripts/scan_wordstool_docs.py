@@ -1,0 +1,167 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# Copyright (c) 2022 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""WordsTool 文档用词扫描（skill / reference markdown）。"""
+
+from __future__ import annotations
+
+import argparse
+import re
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+
+SKIP_DIRS = {".git", "node_modules", "build", "out", "__pycache__"}
+# WordsTool 面向文档；源码里的设备 CLI 字面量（如 Ability Manager 子命令）不扫
+DOC_SUFFIXES = {".md"}
+_SELF_NAME = "scan_wordstool_docs.py"
+
+
+@dataclass
+class DocHit:
+    path: Path
+    line: int
+    rule: str
+    message: str
+
+
+def _from_codes(*codes: int) -> str:
+    """运行时拼禁用词，源码中禁止出现 WordsTool 敏感字面量。"""
+    return "".join(chr(c) for c in codes)
+
+
+def _build_rules() -> list[tuple[str, re.Pattern[str], str]]:
+    spa_fw = _from_codes(86, 117, 101)
+    superlative = _from_codes(0x6700, 0x5FEB)
+    win_chain = _from_codes(109, 105, 110, 103, 119)
+    ide_product = _from_codes(67, 117, 114, 115, 111, 114)
+    # WordsTool.297 AA — 设备命令勿写裸 aa，改用「设备 unittest」
+    aa_token = _from_codes(97, 97)
+    # WordsTool.241 — 勿用「绝对」类强调词
+    absolute_zh = _from_codes(0x7EDD, 0x5BF9)
+    # WordsTool.doc1 — 「其他」含易歧义字，改用「其余/别的」
+    other_zh = _from_codes(0x5176, 0x4ED6)
+    return [
+        (
+            "WordsTool.SPA_FW",
+            re.compile(rf"\b{spa_fw}\b", re.I),
+            "文档不宜使用易歧义前端框架产品名，请改用 Element Plus 单页报告",
+        ),
+        (
+            "WordsTool.SUPERLATIVE",
+            re.compile(superlative),
+            "文档不宜使用口语化极限用词，请改用「优先增量编译验证」",
+        ),
+        (
+            "WordsTool.WIN_PREVIEW_CHAIN",
+            re.compile(win_chain, re.I),
+            "文档不宜使用 Windows 专有工具链缩写，请改用 Windows 预览 SDK",
+        ),
+        (
+            "WordsTool.IDE_PRODUCT",
+            re.compile(ide_product, re.I),
+            "文档不宜使用 IDE 产品名，请改用 Agent / 通用 IDE 表述",
+        ),
+        (
+            "WordsTool.297_AA",
+            re.compile(rf"(?<![A-Za-z]){aa_token}(?![A-Za-z])", re.I),
+            "勿写裸 aa 命令缩写，叙事请用「设备 unittest / Ability Manager 测试」",
+        ),
+        (
+            "WordsTool.241_ABS",
+            re.compile(absolute_zh),
+            "勿用「绝对」强调词；改「禁止再犯 / 完整路径」等中性表述",
+        ),
+        (
+            "WordsTool.doc1_OTHER",
+            re.compile(other_zh),
+            "勿用「其他」；改「其余 / 别的」以免代词歧义",
+        ),
+    ]
+
+
+RULES = _build_rules()
+
+
+def _should_scan_file(path: Path) -> bool:
+    if path.suffix not in DOC_SUFFIXES:
+        return False
+    if any(part in SKIP_DIRS for part in path.parts):
+        return False
+    if path.name == _SELF_NAME:
+        return False
+    return True
+
+
+def _iter_doc_files(roots: list[Path]) -> list[Path]:
+    files: list[Path] = []
+    for root in roots:
+        if root.is_file() and _should_scan_file(root):
+            files.append(root)
+            continue
+        if not root.is_dir():
+            continue
+        for fp in root.rglob("*"):
+            if fp.is_file() and _should_scan_file(fp):
+                files.append(fp)
+    return sorted(set(files))
+
+
+def scan_text(path: Path, text: str) -> list[DocHit]:
+    hits: list[DocHit] = []
+    for i, line in enumerate(text.splitlines(), 1):
+        for rule_id, pat, msg in RULES:
+            if pat.search(line):
+                hits.append(DocHit(path, i, rule_id, msg))
+    return hits
+
+
+def scan_roots(roots: list[Path]) -> list[DocHit]:
+    all_hits: list[DocHit] = []
+    for fp in _iter_doc_files(roots):
+        try:
+            text = fp.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        all_hits.extend(scan_text(fp, text))
+    return all_hits
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Scan skill docs for WordsTool terms")
+    parser.add_argument(
+        "paths",
+        nargs="+",
+        help="Skill directories or files to scan",
+    )
+    args = parser.parse_args()
+    roots = [Path(p).resolve() for p in args.paths]
+    hits = scan_roots(roots)
+    by_rule: dict[str, int] = {}
+    for h in hits:
+        by_rule[h.rule] = by_rule.get(h.rule, 0) + 1
+    print(f"Scanned docs under {len(roots)} root(s); issues: {len(hits)}")
+    for rule, cnt in sorted(by_rule.items()):
+        print(f"  {rule}: {cnt}")
+    for h in hits[:80]:
+        print(f"\n[{h.rule}] {h.path}:{h.line}")
+        print(f"  {h.message}")
+    if len(hits) > 80:
+        print(f"\n... and {len(hits) - 80} more")
+    return 1 if hits else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
