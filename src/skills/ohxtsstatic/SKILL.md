@@ -684,7 +684,7 @@ cases:
 
 ```typescript
 beforeAll → UtilsTest.startAbility(bundleName, 'EntryAbility')
-beforeEach → 不在目标页才 pushUrl；首次进页 sleep(800～1000)（禁每条 2000）
+beforeEach → 不在目标页才 pushUrl；初次进页 sleep(800～1000)（禁每条 2000）
 afterEach → Suite 内禁 pressBack 离页；详见 ohxtsdynamic §9.10.5 耗时约定
 afterEach  → sleep(500)；清理本套件 AppStorage 键
 ```

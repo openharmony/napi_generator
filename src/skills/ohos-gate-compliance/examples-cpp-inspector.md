@@ -160,7 +160,7 @@ static RefPtr<FrameNode> GetOutermostFrameAncestor(const RefPtr<FrameNode>& node
 
 - `ASSERT_EQ(DIALOG_ERR_NODE_MOUNT_FAILURE, 103306)` 仍触发 G.CNS.02（右值裸字面量）
 - weak stub `callback(401, -1, …)` 同规则
-- CMake 注释写 `libc++` → WordsTool.204
+- CMake 注释写 C++ 运行时库短名 → WordsTool.204
 
 **修复**：
 
@@ -173,7 +173,7 @@ callback(INVALID_PARAM, PARAM_NEGATIVE_1, userData);
 ```
 
 ```cmake
-# bad: ... breaks normal libc++ (nullptr_t).
+# bad: ... breaks normal C++ runtime short-name (nullptr_t).
 # good: ... breaks C++ standard headers (nullptr_t).
 ```
 

@@ -36,7 +36,7 @@ cat > "$HELPERS" <<'EOF'
 #include <arkui/native_material.h>
 #include <arkui/native_node.h>
 
-// kh-server master prebuilts SDK 26 头文件滞后；符号在设备 libace_ndk.z.so 上解析。
+// kh-server master prebuilts SDK 26 头文件滞后；符号在设备侧 Ace native 动态库上解析。
 #if !defined(OH_ARKUI_DIALOG_DISPLAY_MODE_SCREEN_BASED)
 typedef enum {
     OH_ARKUI_DIALOG_DISPLAY_MODE_SCREEN_BASED = 0,

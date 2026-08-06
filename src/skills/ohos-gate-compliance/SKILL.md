@@ -60,13 +60,14 @@ version: "1.2.0"
 | `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck`（**保留** `@tc.xxx : ` 冒号格式，勿剥冒号） |
 | Hypium `/*` JSDoc / 仅核对 `@tc.number`↔`it()` | `gate_review._nearest_jsdoc` 接受 `/*`/`/**`；**不**强制 `@tc.name` 等于 `it()`（英文标题场景） |
 | G.FMT.05 长 `import` | `check_line_width` **跳过** `import ` 行（后置批量折行） |
-| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `codecheck-words.sh` | 禁用易歧义产品名与口语化极限词；扫描器源码仅用 `chr()` 拼词；含 **.297**（勿裸写设备命令缩写，叙事用「设备 unittest」）、**.241**（勿强调词）、**doc1**（勿易歧义代词结构，改用「其余」） |
-| Python 嵌套深度 ≤4 / nbnc ≤50 | 拆 helper（`ohhdc._warn_if_main_hap_stale`、`gate_review._check_one_it_jsdoc` 等） | 提交 skill 前 `py_compile` |
+| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `precheck_skill_commit.sh` | 禁用易歧义产品名与口语化极限词；扫描器源码仅用 `chr()` 拼词；含 **.297**（勿裸写设备命令缩写，叙事用「设备 unittest」）、**.241**（勿强调词）、**doc1**（勿易歧义代词结构，改用「其余」）、**.249/.296/.166/.93/.204/.5** 等 |
+| Python 嵌套深度 ≤4 / nbnc ≤50 / 文件 ≤2000 | 拆 helper；`scan_skill_repo_gate.py` 提交前硬拦 | 提交 skill 前跑 `precheck_skill_commit.sh` |
+| G.EDV.04 `shell=True` / bash argv0 | `scan_skill_repo_gate`（gate / develop-master-cycle / xts_shared） | 列表 argv；脚本直跑勿包 bash |
 | G.FUD.05 / 超大函数 `GetXxxProps` | 检测 nbnc>50；修法：按域拆多表 + 多次 `napi_define_properties` | `gate_review.check_cpp_fud05` + `reference.md` |
 | **CI.SDK.01** `compileSdkVersion` 数字/"26" | `gate_review` 检测+自动改 `"26.0.0"`；**`git-commit-agent.sh` 暂存预检拦截** | 以 CI 为准，本地 00306042 勿入仓 |
 | **WordsTool.97** 产品名/字体族 | `string.json` / `.ets` 勿写易歧义产品字体名；自动 `… Sans` → `sans-serif` | `gate_review.check_wordstool_97` / `fix_wordstool_97` |
-| **WordsTool.66** 易歧义片段 d8 | 用例号/路径/json 勿含；uuid 改 `SUB_*` 语义号 | `gate_review.check_wordstool_66` |
-| **WordsTool.143** NDK | 文档/注释/用例号改 NATIVE 或「专用提供方」 | `gate_review.check_wordstool_143` |
+| **WordsTool.66** 易歧义双字符片段 | 用例号/路径/json 勿含；uuid 改 `SUB_*` 语义号 | `gate_review.check_wordstool_66` |
+| **WordsTool.143** 本地开发套件缩写 | 文档/注释/用例号改 NATIVE 或「专用提供方」 | `gate_review.check_wordstool_143` |
 | **G.FMT.05** Options/`@tc.desc` 超宽 | checklist 增 before/after；dialog api26 批实锤 | 手工折行；见 **ohxtsstatic §13.11.5** |
 | **G.EXT.03** `Array<T>` | `arkts_patterns` 检测 + `Array<Ident>`→`Ident[]` | dialog api26 ContextMenu* 实锤 |
 | **CI.KIT.01** Dialog* 从 `@kit.ArkUI` | `gate_review.check_dialog_api_kit_import`（仅检测） | 有 API 时改 `@ohos.arkui.UIContext` / `@ohos.arkui.dialog` + 显式嵌套类型 |
@@ -115,7 +116,9 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 | **`gate_review.py`** | pipeline 主入口：review + 修复 + commit |
 | **`arkts_patterns.py`** | ArkTS Quality 规则库（被 gate_review 引用） |
 | **`scan_gate_patterns.py`** | 独立 CLI，扫仓库路径下 `.ets`（调试/PR 前粗查） |
-| **`scan_wordstool_docs.py`** | WordsTool 文档用词扫描（skill `.md` / 脚本，提交前必跑） |
+| **`scan_wordstool_docs.py`** | WordsTool 文档/脚本用词扫描（`.md`/`.sh`/部分 `.py`） |
+| **`scan_skill_repo_gate.py`** | skill 仓 Python：文件 nbnc≤2000、函数 nbnc≤50/CC≤20/深度≤4、snake_case 模块名、硬目录禁 `shell=True`/`bash` argv0 |
+| **`precheck_skill_commit.sh`** | **skill 仓提交前一键**：WordsTool + Python gate + `py_compile` |
 
 ---
 
@@ -156,7 +159,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py gate-review-commit <工程> -s Suite
 
 | 铁律 | 必须 | 禁止 |
 |------|------|------|
-| **有代码改动 → 必须重编再测** | 改 `.ets`/`.html`/`.json5`/resources 后，对该工程再跑 **`build-all`（双 HAP）或 `hapbuild build`（静态一体）+ sign**，再用**新 signed.hap** 装包 | 改完直接 `aa test` / 沿用磁盘上旧 HAP / 只重装测包 |
+| **有代码改动 → 必须重编再测** | 改 `.ets`/`.html`/`.json5`/resources 后，对该工程再跑 **`build-all`（双 HAP）或 `hapbuild build`（静态一体）+ sign**，再用**新 signed.hap** 装包 | 改完直接跑设备 unittest / 沿用磁盘上旧 HAP / 只重装测包 |
 | **双 HAP 双编双装** | `entry/src/ohosTest/` 存在 → `build` + `build-test` + `sign`，`deploy-test` **先主后测** | 只 `build-test`；`bm install -g` 对 release 包（9568450） |
 | **PR/批次范围** | 以 **PR 全部改动路径**（`git diff upstream/master...HEAD --name-only`）反推工程列表；**含** basic_rendering / permissions 等 | 按**单 commit 文案**「12 个 HAP」收窄而跳过同 PR 其它工程 |
 | **装包真实性** | `hdc install`（无 `-g`）；卸装 → 装主 → 装测；受限权限靠 **profile ACL/restricted-permissions**（apl=system_core） | 把 `NO_RESULT`/`App died`/`9568289` 当环境偶发略过 |

@@ -365,5 +365,5 @@ run_xdevice_suite() {
 
 latest_report_html() {
   find "$REPORT_ROOT" -name 'summary_report.html' -printf '%T@ %p\n' 2>/dev/null \
-    | sort -rn | head -1 | awk '{ print $2 }'
+    | sort -r -n | head -1 | awk '{ print $2 }'
 }

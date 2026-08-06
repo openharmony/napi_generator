@@ -416,7 +416,7 @@ cases: []
 **页面 id/key 命名（ACTS / 常规工程）**：`{页面名}_{组件语义名}`；同页同类型多个时 `{页面名}_{组件语义名}_01`、`_02`…（页面名 = 预览页文件名去掉 `.ets`，如 `BindContextMenuByIsShowOptions`）。
 
 ```typescript
-beforeEach → 不在目标页才 pushUrl；首次进页 sleep(800～1000) 即可（禁每条 2000）
+beforeEach → 不在目标页才 pushUrl；初次进页 sleep(800～1000) 即可（禁每条 2000）
 afterEach  → 同 Suite 内禁止 pressBack 离页；仅 afterAll/Suite 末按需退回
 it         → waitForComponent + 短 settle(200～400)；禁成对固定 sleep(800+1200+800)
 ```

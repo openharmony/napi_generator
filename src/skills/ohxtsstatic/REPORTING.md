@@ -40,7 +40,7 @@
 
 - 交付 **一张** `summary_top.png`：上到 Summary，下到 Test Details，**最多 10 行** Module
 - **单 HAP**：该次 `REPORT_HTML` 对应报告截一张
-- **多 HAP / master 合并**：只截 `merge-xdevice-reports.py`（或 `gen_xdevice_summary_report.py`）合并后的那一页
+- **多 HAP / master 合并**：只截 `merge_xdevice_reports.py`（或 `gen_xdevice_summary_report.py`）合并后的那一页
 - 脚本（master/xdevice）：`xts-develop-master-cycle/scripts/screenshot-xdevice-summary.sh`
 - 会话内用 Read 打开 png，让用户直接看到图
 

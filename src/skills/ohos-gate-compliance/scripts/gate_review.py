@@ -276,6 +276,37 @@ def _cpp_nbnc_line(stripped: str, in_block: bool) -> tuple[bool, bool]:
     return True, False
 
 
+def _cpp_find_body_start(lines: list[str], sig_idx: int) -> int:
+    """Return body '{' line index, or -1 if declaration-only."""
+    j = sig_idx
+    while j < len(lines) and j < sig_idx + 8:
+        s = lines[j].lstrip()
+        if "{" in s and not s.rstrip().endswith(";"):
+            return j
+        if s.endswith(";") and "{" not in s:
+            return -1
+        j += 1
+    return -1
+
+
+def _cpp_func_nbnc(lines: list[str], body_start: int) -> tuple[int, int]:
+    """Return (nbnc_count, last_line_index) for function body starting at body_start."""
+    depth = 0
+    nbnc = 0
+    in_block = False
+    k = body_start
+    while k < len(lines):
+        s = lines[k].lstrip()
+        counts, in_block = _cpp_nbnc_line(s, in_block)
+        if counts and k > body_start and s not in ("}", "};"):
+            nbnc += 1
+        depth += s.count("{") - s.count("}")
+        if k > body_start and depth <= 0:
+            break
+        k += 1
+    return nbnc, k
+
+
 def check_cpp_fud05(path: Path, text: str) -> list[GateIssue]:
     """G.FUD.05 / 超大函数：nbnc（非空非注释）行数 > 50。"""
     issues: list[GateIssue] = []
@@ -284,52 +315,26 @@ def check_cpp_fud05(path: Path, text: str) -> list[GateIssue]:
     lines = text.splitlines()
     i = 0
     while i < len(lines):
-        stripped = lines[i].lstrip()
-        m = _FUNC_SIG_RE.match(stripped)
+        m = _FUNC_SIG_RE.match(lines[i].lstrip())
         if not m:
             i += 1
             continue
-        name = m.group(1)
-        # Find opening brace of body (same or following lines before ';')
-        j = i
-        body_start = -1
-        while j < len(lines) and j < i + 8:
-            s = lines[j].lstrip()
-            if "{" in s and not s.rstrip().endswith(";"):
-                body_start = j
-                break
-            if s.endswith(";") and "{" not in s:
-                break
-            j += 1
+        body_start = _cpp_find_body_start(lines, i)
         if body_start < 0:
             i += 1
             continue
-        depth = 0
-        nbnc = 0
-        in_block = False
-        k = body_start
-        while k < len(lines):
-            s = lines[k].lstrip()
-            counts, in_block = _cpp_nbnc_line(s, in_block)
-            if counts and k > body_start:
-                # Exclude the closing brace-only line of the function
-                if not (s == "}" or s == "};"):
-                    nbnc += 1
-            depth += s.count("{") - s.count("}")
-            if k > body_start and depth <= 0:
-                break
-            k += 1
+        nbnc, end_k = _cpp_func_nbnc(lines, body_start)
         if nbnc > _MAX_FUNC_NBNC:
             issues.append(
                 GateIssue(
                     path,
                     i + 1,
                     "G.FUD.05",
-                    f"函数 {name}() nbnc={nbnc} > {_MAX_FUNC_NBNC}；"
+                    f"函数 {m.group(1)}() nbnc={nbnc} > {_MAX_FUNC_NBNC}；"
                     f"CAPI 表注册请拆 GetXxxProps（见 reference.md）",
                 )
             )
-        i = max(k, i + 1)
+        i = max(end_k, i + 1)
     return issues
 
 
@@ -483,12 +488,12 @@ def _from_codes(*codes: int) -> str:
 
 
 # WordsTool.97 — 开源仓勿写易歧义产品名；字体族用行业通用 sans-serif
-_WT97_TOKEN = _from_codes(104, 97, 114, 109, 111, 110, 121, 111, 115)  # harmonyos
+_WT97_TOKEN = _from_codes(104, 97, 114, 109, 111, 110, 121, 111, 115)
 _WT97_FONT = (
     _from_codes(72, 97, 114, 109, 111, 110, 121, 79, 83)
     + " "
     + _from_codes(83, 97, 110, 115)
-)  # HarmonyOS Sans
+)
 _WT97_RE = re.compile(_WT97_TOKEN, re.I)
 
 
@@ -529,14 +534,14 @@ def check_wordstool_97(path: Path, text: str) -> list[GateIssue]:
 
 
 # WordsTool.66 / .143 — 敏感片段用 chr 拼，避免 skill 源码裸写
-_WT66_D8 = _from_codes(100, 56)  # d + 8
-_WT66_RE = re.compile(_WT66_D8, re.I)
-_WT143_NDK = _from_codes(110, 100, 107)  # n + d + k
-_WT143_RE = re.compile(_WT143_NDK, re.I)
+_WT66_TOKEN = _from_codes(100, 56)
+_WT66_RE = re.compile(_WT66_TOKEN, re.I)
+_WT143_TOKEN = _from_codes(110, 100, 107)
+_WT143_RE = re.compile(_WT143_TOKEN, re.I)
 
 
 def check_wordstool_66(path: Path, text: str) -> list[GateIssue]:
-    """WordsTool.66：用例号/路径/json 键勿含易歧义片段 d8（常见于 uuid）。"""
+    """WordsTool.66：用例号/路径/json 键勿含易歧义双字符片段（常见于 uuid）。"""
     if path.suffix not in (".ets", ".ts", ".json", ".json5"):
         return []
     issues: list[GateIssue] = []
@@ -554,7 +559,7 @@ def check_wordstool_66(path: Path, text: str) -> list[GateIssue]:
 
 
 def check_wordstool_143(path: Path, text: str) -> list[GateIssue]:
-    """WordsTool.143：文档/注释勿裸写 NDK，改 NATIVE 或「专用提供方」。"""
+    """WordsTool.143：文档/注释勿裸写本地开发套件缩写，改 NATIVE 或「专用提供方」。"""
     if path.suffix not in (".ets", ".ts", ".md", ".json", ".json5"):
         return []
     issues: list[GateIssue] = []
@@ -565,7 +570,7 @@ def check_wordstool_143(path: Path, text: str) -> list[GateIssue]:
                     path,
                     i,
                     "WordsTool.143",
-                    "勿裸写 NDK；用例号/文档改 NATIVE 或「专用提供方」表述",
+                    "勿裸写本地开发套件缩写；用例号/文档改 NATIVE 或「专用提供方」表述",
                 )
             )
     return issues
