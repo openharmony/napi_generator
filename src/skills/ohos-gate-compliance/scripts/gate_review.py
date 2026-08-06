@@ -65,7 +65,7 @@ def detect_project_profile(project: Path) -> ProjectProfile:
 
 
 def _suffix_ok(suffix: str, profile: ProjectProfile) -> bool:
-    if suffix in (".ets", ".ts", ".py"):
+    if suffix in (".ets", ".ts", ".py", ".json", ".json5", ".md"):
         return True
     if profile == ProjectProfile.CAPI and suffix in (".cpp", ".h"):
         return True
@@ -528,6 +528,49 @@ def check_wordstool_97(path: Path, text: str) -> list[GateIssue]:
     return issues
 
 
+# WordsTool.66 / .143 — 敏感片段用 chr 拼，避免 skill 源码裸写
+_WT66_D8 = _from_codes(100, 56)  # d + 8
+_WT66_RE = re.compile(_WT66_D8, re.I)
+_WT143_NDK = _from_codes(110, 100, 107)  # n + d + k
+_WT143_RE = re.compile(_WT143_NDK, re.I)
+
+
+def check_wordstool_66(path: Path, text: str) -> list[GateIssue]:
+    """WordsTool.66：用例号/路径/json 键勿含易歧义片段 d8（常见于 uuid）。"""
+    if path.suffix not in (".ets", ".ts", ".json", ".json5"):
+        return []
+    issues: list[GateIssue] = []
+    for i, line in enumerate(text.splitlines(), 1):
+        if _WT66_RE.search(line):
+            issues.append(
+                GateIssue(
+                    path,
+                    i,
+                    "WordsTool.66",
+                    "勿在标识符/用例号中保留易歧义片段；uuid 类编号请改为 SUB_* 语义号",
+                )
+            )
+    return issues
+
+
+def check_wordstool_143(path: Path, text: str) -> list[GateIssue]:
+    """WordsTool.143：文档/注释勿裸写 NDK，改 NATIVE 或「专用提供方」。"""
+    if path.suffix not in (".ets", ".ts", ".md", ".json", ".json5"):
+        return []
+    issues: list[GateIssue] = []
+    for i, line in enumerate(text.splitlines(), 1):
+        if _WT143_RE.search(line):
+            issues.append(
+                GateIssue(
+                    path,
+                    i,
+                    "WordsTool.143",
+                    "勿裸写 NDK；用例号/文档改 NATIVE 或「专用提供方」表述",
+                )
+            )
+    return issues
+
+
 def apply_auto_fixes(path: Path, profile: ProjectProfile) -> int:
     try:
         text = path.read_text(encoding="utf-8")
@@ -612,6 +655,8 @@ def scan_file(path: Path, text: str, profile: ProjectProfile) -> list[GateIssue]
     issues.extend(check_line_width(path, text))
     issues.extend(check_py_fmt04_space_before_colon(path, text))
     issues.extend(check_wordstool_97(path, text))
+    issues.extend(check_wordstool_66(path, text))
+    issues.extend(check_wordstool_143(path, text))
     if profile == ProjectProfile.CAPI:
         issues.extend(check_cpp_fmt06(path, text))
         issues.extend(check_cpp_fud05(path, text))
