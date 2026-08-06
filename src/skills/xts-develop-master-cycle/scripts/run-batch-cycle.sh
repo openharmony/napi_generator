@@ -85,7 +85,7 @@ while IFS= read -r suite; do
 done <<<"$SUITES"
 
 # 多 HAP 汇总：仅允许官方 xdevice summary_report.html（禁止自写 batch_index / 自定义汇总页）
-MERGE_PY="$SCRIPT_DIR/merge-xdevice-reports.py"
+MERGE_PY="$SCRIPT_DIR/merge_xdevice_reports.py"
 python3 "$MERGE_PY" --out "$INDEX_DIR" --name "$BATCH_NAME" --from-tsv "$RESULTS_FILE"
 echo "REPORT_HTML=$INDEX_DIR/summary_report.html"
 # 整批只截这一张（Summary→最多 10 行 Module），不要对每个子 HAP 截

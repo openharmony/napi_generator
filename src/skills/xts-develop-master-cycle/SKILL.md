@@ -18,7 +18,7 @@ version: "1.4.0"
 | 禁止 | 必须 |
 |------|------|
 | 自写深色/表格汇总页、`batch_index.html` 自定义页 | 单次跑测：xdevice 产出的 `summary_report.html` |
-| 另造「dashboard / 汇总卡片」HTML | 多 HAP 合并：`scripts/merge-xdevice-reports.py` 合并各次 `data.js` → 同一套 xdevice 模板 |
+| 另造「dashboard / 汇总卡片」HTML | 多 HAP 合并：`scripts/merge_xdevice_reports.py` 合并各次 `data.js` → 同一套 xdevice 模板 |
 | 把自写页当作正式交付给接口人 | 路径形如 `.../xdevice_reports/<dir>/summary_report.html` |
 
 违反即视为未交付报告。会话内可用文字表格；**文件级 HTML 只交 xdevice**。
@@ -30,7 +30,7 @@ version: "1.4.0"
 | 场景 | 截几张 | 截什么 |
 |------|--------|--------|
 | **单个 HAP** | **1 张** | 该次 `summary_report.html` → `summary_top.png` |
-| **多个 HAP** | **仅 1 张**（合并汇总） | `merge-xdevice-reports.py` 产出的合并 `summary_report.html` → `summary_top.png` |
+| **多个 HAP** | **仅 1 张**（合并汇总） | `merge_xdevice_reports.py` 产出的合并 `summary_report.html` → `summary_top.png` |
 | 多 HAP 子 Suite 单独跑测目录 | **禁止再截** | `run-batch-cycle` / 手动多跑设 `XDEVICE_SKIP_SHOT=1` |
 
 ### 流水线自动截图（避免硬门禁落空）
@@ -39,7 +39,7 @@ version: "1.4.0"
 |------|------|
 | `module-lib.sh` xdevice 单 HAP | 自动 `screenshot-xdevice-summary.sh` |
 | `run-batch-cycle.sh` | 子 HAP `XDEVICE_SKIP_SHOT=1` → **合并后**自动截一张 |
-| `merge-xdevice-reports.py` | 合并结束调用 `auto_screenshot_xdevice.py` |
+| `merge_xdevice_reports.py` | 合并结束调用 `auto_screenshot_xdevice.py` |
 | hypium `deploy-test` / `gen-xdevice-report` | `hypium_html_report.py` 写完 HTML 后自动截 |
 
 终端应出现 `SCREENSHOT_PNG=...`（或 `SCREENSHOT_SKIP=...` 时须补跑脚本并说明原因）。
@@ -63,7 +63,7 @@ version: "1.4.0"
 | master（GN 编译） | `/root/master/test/xts/acts` |
 | HAP 产物 | `/root/master/out/rk3568/suites/haps/` → 拷贝到 `.../acts/testcases/` |
 | xdevice 报告 | `/root/master/out/rk3568/suites/acts/acts/xdevice_reports/<时间戳>/summary_report.html` |
-| 多 HAP 合并报告 | `.../xdevice_reports/<batch_dir>/summary_report.html`（`merge-xdevice-reports.py`） |
+| 多 HAP 合并报告 | `.../xdevice_reports/<batch_dir>/summary_report.html`（`merge_xdevice_reports.py`） |
 | 汇总截图 | 同目录 `summary_top.png`（Summary→最多 10 行 Module） |
 
 ## 最近批次涉及的多 HAP（已注册）
@@ -127,7 +127,7 @@ cd /root/aiSkill/.claude/skills/xts-develop-master-cycle/scripts
 手工合并已有多次跑测报告：
 
 ```bash
-python3 scripts/merge-xdevice-reports.py --out /path/to/out_dir --name my_batch \
+python3 scripts/merge_xdevice_reports.py --out /path/to/out_dir --name my_batch \
   /path/to/report_a /path/to/report_b
 ```
 
@@ -193,7 +193,7 @@ develop 树用 `hapbuild` 验证通过后，再同步 master 走 xdevice 出正�
 |------|------|
 | `scripts/run-develop-cycle.sh` | Linux 单 Suite 闭环（单 HAP 自动截 `summary_top.png`） |
 | `scripts/run-batch-cycle.sh` | 多 Suite → 合并 xdevice；**子 HAP 不截图**，合并后只截 **1** 张 |
-| `scripts/merge-xdevice-reports.py` | 多份 xdevice 报告合并（唯一允许的多 HAP HTML 汇总方式；结束后自动截图） |
+| `scripts/merge_xdevice_reports.py` | 多份 xdevice 报告合并（唯一允许的多 HAP HTML 汇总方式；结束后自动截图） |
 | `scripts/auto_screenshot_xdevice.py` | 报告后自动截图入口（尊重 `XDEVICE_SKIP_SHOT`；打印 `SCREENSHOT_PNG=`） |
 | `scripts/screenshot-xdevice-summary.sh` | 截 Summary→Test Details（最多 10 行）→ `summary_top.png` |
 | `scripts/module-lib.sh` | sync / build / xdevice 封装（`XDEVICE_SKIP_SHOT=1` 跳过单次截图） |

@@ -40,8 +40,11 @@ def maybe_screenshot(html_or_dir: str | Path) -> Path | None:
         print(f"SCREENSHOT_SKIP=missing_script:{_SHOT_SH}", file=sys.stderr)
         return None
     try:
+        # G.EDV.04：禁止 shell 注入；禁止以 bash/sh 作 argv0
+        if not os.access(_SHOT_SH, os.X_OK):
+            _SHOT_SH.chmod(_SHOT_SH.stat().st_mode | 0o111)
         proc = subprocess.run(
-            ["bash", str(_SHOT_SH), str(html)],
+            [str(_SHOT_SH), str(html)],
             capture_output=True,
             text=True,
             timeout=240,
@@ -61,7 +64,7 @@ def maybe_screenshot(html_or_dir: str | Path) -> Path | None:
         return None
     png = html.parent / "summary_top.png"
     if png.is_file():
-        # shell already prints SCREENSHOT_PNG=; ensure if stdout was empty
+        # 子进程已打印 SCREENSHOT_PNG=；stdout 为空时补打
         if "SCREENSHOT_PNG=" not in (proc.stdout or ""):
             print(f"SCREENSHOT_PNG={png}")
         return png
