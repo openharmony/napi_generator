@@ -538,7 +538,7 @@ python3 src/skills/ohxtsstatic/ohxtsflow.py analyze-test-log <本机日志文件
 - [ ] `git diff --cached --ignore-cr-at-eol` 无假 diff（禁止 `Write` 整文件覆盖 CRLF 文件）
 - [ ] 仅 `git add` 明确路径；禁止 `git add -A`；无 `hypium/`、工程内 `autosign/`、`build/`、`tools/vendor/`
 - [ ] `git commit -sm` + `Co-authored-by: Agent`；`git log -1` 含 `Signed-off-by`
-- [ ] 单笔 commit ≤ 2000 行；用例与 fix 分 commit
+- [ ] 单笔 commit ≤ 1900 行（本地；硬上限 2000）；用例与 fix 分 commit
 
 **工具链**
 
@@ -734,7 +734,7 @@ bash /root/aiSkill/develop/xts_acts_local_tools/init_local_tools_dir.sh <路径>
 3. `main_pages.json` 增加 path
 4. `List.test.ets`：`import` + `YourSuiteTest();`
 
-**提交拆分**：`test(...)` 用例与 `fix(...)` 类型注解/CodeCheck **分 commit**；单笔 **insertions+deletions ≤ 2000**。
+**提交拆分**：`test(...)` 用例与 `fix(...)` 类型注解/CodeCheck **分 commit**；单笔 **insertions+deletions < 1900**（本地软上限；门禁硬上限 2000）。
 
 **禁止提交（默认不进仓，存疑须先问用户）**：
 
@@ -777,7 +777,7 @@ python3 src/skills/ohhap/hapbuild.py build <静态一体工程>
 **Git 提交前强制自检**：
 
 ```
-[ ] git diff --cached --shortstat 合计行数 ≤ 2000（+ 与 - 之和）
+[ ] git diff --cached --shortstat 合计行数 < 1900（+ 与 - 之和；硬上限 2000）
 [ ] 未纳入 tools/xts_reports、gen_*.py、patch/fix 脚本（见 §13.5 禁止表）
 [ ] 不确定是否进仓的文件 → 已询问用户，未擅自 git add
 [ ] git commit -sm；禁止 git add -A
@@ -885,11 +885,11 @@ import { Entry, Column, ContextMenuOptions, ... } from '@ohos.arkui.component';
 
 | 症状 | 先查 | 动作 |
 |------|------|------|
-| 某套件 **`Tests run: 0`** / 日志无该 `describe` | `describe` 名是否超长、与 `-s class` 是否一致 | **缩短套件名**；`List.test` / `aa test -s` 与 `describe` **逐字一致** |
+| 某套件 **`Tests run: 0`** / 日志无该 `describe` | `describe` 名是否超长、与 `-s class` 是否一致 | **缩短套件名**；`List.test` / 设备 unittest `-s` 与 `describe` **逐字一致** |
 | 套件无输出 + 日志 **`Class verification failed`** | `it` 是否 `async (done)…done()` | 改为 **`async () => {}`**；以同工程已绿 CustomDialog 套件为模板 |
 | 打开页即 **`LinkerVerificationError`** | 板端镜像是否缺该 API 符号 | **页面 stub + 注释**；可测部分改用同域已绿 API（如 ImmersiveStyle）；**禁止**假绿伪装全量行为测 |
 | 本地编过、CI/`hapbuild` 失败 | `compileSdkVersion` 是否数字/`"26"`；SDK 路径 | 仓内恢复 **`"26.0.0"`**；静态用 **`OHOS_SDK_PATH=.../static` + `OHOS_USE_HVIGOR_STATIC=1`**（勿 `source use-ohos-sdk.sh static` 顶替） |
-| `aa test` 长时间空等 / 偶发无结果 | 设备是否被其他 unittest 占用 | 跑前确认无并发 `aa test`；本批用 `-s` 单套件调试，整测再一次连跑 |
+| 设备 unittest 长时间空等 / 偶发无结果 | 设备是否被其余 unittest 占用 | 跑前确认无并发设备 unittest；本批用 `-s` 单套件调试，整测再一次连跑 |
 | 改码后复测全绿但行为不对 | 是否装了旧 HAP | **清缓存重编**后再测（**DEV.REBUILD.01**）；禁止沿用旧包 |
 
 #### 13.11.1 套件命名（P0）

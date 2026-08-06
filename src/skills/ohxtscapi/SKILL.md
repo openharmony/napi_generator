@@ -144,7 +144,6 @@ import nativeFunc from 'libnativefunc.so';
  * @tc.size   MEDIUMTEST
  * @tc.level  LEVEL1
  */
-// CAPI/动态：保留 done；禁止按静态 hypium「ClassCast 去 done」规则删除
 it('SUB_ARKUI_CAPI_EXAMPLE_0100', Level.LEVEL1, async (done: Function) => {
   expect(nativeFunc.testNativeXxx001()).assertEqual(0);
   done();
