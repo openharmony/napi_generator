@@ -35,6 +35,12 @@ const DERIVE_MATRIX: Record<ContextId, DeriveId[]> = {
   GEN: ['RAW', 'ARR1', 'PROM'],
 };
 
+const CTR_CONTEXTS: ContextId[] = ['FLD', 'PAR', 'RET', 'TAL'];
+const CTR_DERIVES: DeriveId[] = ['RAW', 'OPT', 'ARR1', 'PROM'];
+const MAP_CONTEXTS: ContextId[] = ['FLD', 'PAR', 'RET', 'TAL'];
+const MAP_DERIVES: DeriveId[] = ['RAW', 'OPT', 'PROM'];
+const C2_CONTEXTS: ContextId[] = ['FLD', 'PAR', 'RET'];
+
 function buildPriTypes(): PriTypeDef[] {
   const numSources: Array<[string, string]> = [
     ['int', 'number'],
@@ -93,13 +99,21 @@ const CONTAINER_KINDS: Array<{ id: string; wrapC: (e: string) => string; wrapTs:
   { id: 'CTR_priq', wrapC: (e) => `std::priority_queue<${e}>`, wrapTs: (e) => `Array<${e}>` },
 ];
 
-const MAP_KINDS: Array<{ id: string; wrapC: (k: string, v: string) => string; wrapTs: (k: string, v: string) => string }> = [
+const MAP_KINDS: Array<{
+  id: string;
+  wrapC: (k: string, v: string) => string;
+  wrapTs: (k: string, v: string) => string;
+}> = [
   { id: 'CTR_map', wrapC: (k, v) => `std::map<${k}, ${v}>`, wrapTs: (k, v) => `Map<${k}, ${v}>` },
   { id: 'CTR_umap', wrapC: (k, v) => `std::unordered_map<${k}, ${v}>`, wrapTs: (k, v) => `Map<${k}, ${v}>` },
   { id: 'CTR_mmap', wrapC: (k, v) => `std::multimap<${k}, ${v}>`, wrapTs: (k, v) => `Map<${k}, ${v}>` },
 ];
 
-function applyQuality(cType: string, tsType: string, q: QualityId): { inputType: string; expectTs: string; negative: boolean } {
+function applyQuality(
+  cType: string,
+  tsType: string,
+  q: QualityId
+): { inputType: string; expectTs: string; negative: boolean } {
   switch (q) {
     case 'NORM':
       return { inputType: cType, expectTs: tsType, negative: false };
@@ -174,6 +188,262 @@ function padToTarget(bag: Scenario[], seen: Set<string>, target: number): void {
   }
 }
 
+function shapePriInput(
+  t: PriTypeDef,
+  der: DeriveId,
+  q: QualityId,
+  derived: { cType: string; tsType: string }
+): { inputType: string; expectTs: string; negative: boolean } {
+  const baseForQ = der === 'ARR1' || der === 'PTR' ? t.cType : derived.cType;
+  const tsForQ = der === 'ARR1' ? derived.tsType : t.tsType;
+  const shaped =
+    der === 'ARR1'
+      ? applyQuality(derived.cType, derived.tsType, q)
+      : applyQuality(baseForQ, tsForQ, q);
+  if (der !== 'PTR' || q === 'ERR') {
+    return shaped;
+  }
+  let inputType = `${t.cType}*`;
+  if (q === 'BOUND') {
+    inputType = `  ${t.cType} *  `;
+  }
+  return { inputType, expectTs: t.tsType, negative: shaped.negative };
+}
+
+function pushPriQuality(
+  bag: Scenario[],
+  seen: Set<string>,
+  t: PriTypeDef,
+  ctx: ContextId,
+  der: DeriveId,
+  q: QualityId
+): void {
+  const derived = applyDerive(t.cType, t.tsType, der);
+  const shaped = shapePriInput(t, der, q, derived);
+  pushScenario(bag, seen, {
+    typeId: t.typeId,
+    context: ctx,
+    derive: der,
+    quality: q,
+    variant: 0,
+    family: 'PRI',
+    cType: t.cType,
+    tsType: t.tsType,
+    inputType: shaped.inputType,
+    expectTs: shaped.expectTs,
+    negative: shaped.negative,
+  });
+}
+
+function expandPriType(bag: Scenario[], seen: Set<string>, t: PriTypeDef): void {
+  for (const ctx of CONTEXTS) {
+    for (const der of DERIVE_MATRIX[ctx]) {
+      if (der === 'PTR' && t.cType === 'void') {
+        continue;
+      }
+      for (const q of QUALITIES) {
+        pushPriQuality(bag, seen, t, ctx, der, q);
+      }
+    }
+  }
+}
+
+function expandPriScenarios(bag: Scenario[], seen: Set<string>, pri: PriTypeDef[]): void {
+  for (const t of pri) {
+    expandPriType(bag, seen, t);
+  }
+}
+
+function pushCtrCell(
+  bag: Scenario[],
+  seen: Set<string>,
+  ctr: (typeof CONTAINER_KINDS)[0],
+  elem: PriTypeDef,
+  ctx: ContextId,
+  der: DeriveId,
+  q: QualityId
+): void {
+  const cInner = ctr.wrapC(elem.cType);
+  const tsInner = ctr.wrapTs(elem.tsType);
+  const derived =
+    der === 'ARR1'
+      ? { cType: `std::vector<${cInner}>`, tsType: `Array<${tsInner}>` }
+      : { cType: cInner, tsType: tsInner };
+  const shaped = applyQuality(derived.cType, derived.tsType, q);
+  pushScenario(bag, seen, {
+    typeId: `${ctr.id}__${elem.typeId}`,
+    context: ctx,
+    derive: der,
+    quality: q,
+    variant: 0,
+    family: 'CTR',
+    cType: derived.cType,
+    tsType: derived.tsType,
+    inputType: shaped.inputType,
+    expectTs: shaped.expectTs,
+    negative: shaped.negative,
+  });
+}
+
+function expandCtrElemPair(
+  bag: Scenario[],
+  seen: Set<string>,
+  ctr: (typeof CONTAINER_KINDS)[0],
+  elem: PriTypeDef
+): void {
+  for (const ctx of CTR_CONTEXTS) {
+    for (const der of CTR_DERIVES) {
+      for (const q of QUALITIES) {
+        pushCtrCell(bag, seen, ctr, elem, ctx, der, q);
+      }
+    }
+  }
+}
+
+function expandContainerScenarios(bag: Scenario[], seen: Set<string>, elemPool: PriTypeDef[]): void {
+  for (const ctr of CONTAINER_KINDS) {
+    for (const elem of elemPool) {
+      expandCtrElemPair(bag, seen, ctr, elem);
+    }
+  }
+}
+
+function isMapKeyType(p: PriTypeDef): boolean {
+  return (
+    ['string', 'int', 'bool', 'double', 'size_t', 'float', 'long'].includes(p.cType) ||
+    p.typeId.startsWith('PRI_str') ||
+    p.typeId === 'PRI_bool' ||
+    p.typeId === 'PRI_char'
+  );
+}
+
+function pushMapCell(
+  bag: Scenario[],
+  seen: Set<string>,
+  mk: (typeof MAP_KINDS)[0],
+  k: PriTypeDef,
+  v: PriTypeDef,
+  ctx: ContextId,
+  der: DeriveId,
+  q: QualityId
+): void {
+  const cType = mk.wrapC(k.cType, v.cType);
+  const tsType = mk.wrapTs(k.tsType, v.tsType);
+  const shaped = applyQuality(cType, tsType, q);
+  pushScenario(bag, seen, {
+    typeId: `${mk.id}__${k.typeId}__${v.typeId}`,
+    context: ctx,
+    derive: der,
+    quality: q,
+    variant: 0,
+    family: 'CTR',
+    cType,
+    tsType,
+    inputType: shaped.inputType,
+    expectTs: shaped.expectTs,
+    negative: shaped.negative,
+  });
+}
+
+function expandMapKeyVal(
+  bag: Scenario[],
+  seen: Set<string>,
+  mk: (typeof MAP_KINDS)[0],
+  k: PriTypeDef,
+  v: PriTypeDef
+): void {
+  for (const ctx of MAP_CONTEXTS) {
+    for (const der of MAP_DERIVES) {
+      for (const q of QUALITIES) {
+        pushMapCell(bag, seen, mk, k, v, ctx, der, q);
+      }
+    }
+  }
+}
+
+function expandMapScenarios(bag: Scenario[], seen: Set<string>, elemPool: PriTypeDef[]): void {
+  const mapKeys = elemPool.filter(isMapKeyType);
+  for (const mk of MAP_KINDS) {
+    for (const k of mapKeys) {
+      for (const v of elemPool) {
+        expandMapKeyVal(bag, seen, mk, k, v);
+      }
+    }
+  }
+}
+
+function pushC2Triple(bag: Scenario[], seen: Set<string>, elem: PriTypeDef, ctx: ContextId, q: QualityId): void {
+  const c1 = `std::vector<std::map<std::string, ${elem.cType}>>`;
+  const t1 = `Array<Map<string, ${elem.tsType}>>`;
+  const s1 = applyQuality(c1, t1, q);
+  pushScenario(bag, seen, {
+    typeId: `C2_vec_map__${elem.typeId}`,
+    context: ctx,
+    derive: 'RAW',
+    quality: q,
+    variant: 0,
+    family: 'C2',
+    cType: c1,
+    tsType: t1,
+    inputType: s1.inputType,
+    expectTs: s1.expectTs,
+    negative: s1.negative,
+  });
+
+  const c2 = `std::set<std::vector<${elem.cType}>>`;
+  const t2 = `Set<Array<${elem.tsType}>>`;
+  const s2 = applyQuality(c2, t2, q);
+  pushScenario(bag, seen, {
+    typeId: `C2_set_vec__${elem.typeId}`,
+    context: ctx,
+    derive: 'RAW',
+    quality: q,
+    variant: 0,
+    family: 'C2',
+    cType: c2,
+    tsType: t2,
+    inputType: s2.inputType,
+    expectTs: s2.expectTs,
+    negative: s2.negative,
+  });
+
+  const c3 = `std::pair<${elem.cType}, int>`;
+  const t3 = `[${elem.tsType}, number]`;
+  const s3 = applyQuality(c3, t3, q);
+  pushScenario(bag, seen, {
+    typeId: `C2_pair__${elem.typeId}`,
+    context: ctx,
+    derive: 'RAW',
+    quality: q,
+    variant: 0,
+    family: 'C2',
+    cType: c3,
+    tsType: t3,
+    inputType: s3.inputType,
+    expectTs: s3.expectTs,
+    negative: s3.negative,
+  });
+}
+
+function expandC2Scenarios(bag: Scenario[], seen: Set<string>, elemPool: PriTypeDef[]): void {
+  for (const elem of elemPool) {
+    for (const ctx of C2_CONTEXTS) {
+      for (const q of QUALITIES) {
+        pushC2Triple(bag, seen, elem, ctx, q);
+      }
+    }
+  }
+}
+
+function assertExpandTargets(bag: Scenario[]): void {
+  if (bag.length <= N_CL) {
+    throw new Error(`expandTCross produced ${bag.length} <= N_CL=${N_CL}`);
+  }
+  if (bag.length < B2_SHARED_T_TARGET) {
+    throw new Error(`expandTCross produced ${bag.length} < B2_SHARED_T_TARGET=${B2_SHARED_T_TARGET}`);
+  }
+}
+
 /**
  * 展开交叉表（PRI + CTR + C2），铺满至 B2_SHARED_T_TARGET。
  * 对外仍用 getTCrossB1 名称以兼容 B1 入口（现为 B2 体量）。
@@ -182,187 +452,16 @@ export function expandTCrossB1(): Scenario[] {
   const pri = buildPriTypes();
   const bag: Scenario[] = [];
   const seen = new Set<string>();
-
-  for (const t of pri) {
-    for (const ctx of CONTEXTS) {
-      for (const der of DERIVE_MATRIX[ctx]) {
-        if (der === 'PTR' && t.cType === 'void') {
-          continue;
-        }
-        const derived = applyDerive(t.cType, t.tsType, der);
-        for (const q of QUALITIES) {
-          const baseForQ = der === 'ARR1' || der === 'PTR' ? t.cType : derived.cType;
-          const tsForQ = der === 'ARR1' ? derived.tsType : t.tsType;
-          const shaped =
-            der === 'ARR1'
-              ? applyQuality(derived.cType, derived.tsType, q)
-              : applyQuality(baseForQ, tsForQ, q);
-          let inputType = shaped.inputType;
-          let expectTs = shaped.expectTs;
-          if (der === 'PTR' && q !== 'ERR') {
-            inputType = `${t.cType}*`;
-            expectTs = t.tsType;
-            if (q === 'BOUND') {
-              inputType = `  ${t.cType} *  `;
-            }
-          }
-          pushScenario(bag, seen, {
-            typeId: t.typeId,
-            context: ctx,
-            derive: der,
-            quality: q,
-            variant: 0,
-            family: 'PRI',
-            cType: t.cType,
-            tsType: t.tsType,
-            inputType,
-            expectTs,
-            negative: shaped.negative,
-          });
-        }
-      }
-    }
-  }
-
   const elemPool = pri.filter((p) => p.cType !== 'void');
-  const ctrContexts: ContextId[] = ['FLD', 'PAR', 'RET', 'TAL'];
-  const ctrDerives: DeriveId[] = ['RAW', 'OPT', 'ARR1', 'PROM'];
-  for (const ctr of CONTAINER_KINDS) {
-    for (const elem of elemPool) {
-      for (const ctx of ctrContexts) {
-        for (const der of ctrDerives) {
-          for (const q of QUALITIES) {
-            const cInner = ctr.wrapC(elem.cType);
-            const tsInner = ctr.wrapTs(elem.tsType);
-            const derived =
-              der === 'ARR1'
-                ? { cType: `std::vector<${cInner}>`, tsType: `Array<${tsInner}>` }
-                : { cType: cInner, tsType: tsInner };
-            const shaped = applyQuality(derived.cType, derived.tsType, q);
-            pushScenario(bag, seen, {
-              typeId: `${ctr.id}__${elem.typeId}`,
-              context: ctx,
-              derive: der,
-              quality: q,
-              variant: 0,
-              family: 'CTR',
-              cType: derived.cType,
-              tsType: derived.tsType,
-              inputType: shaped.inputType,
-              expectTs: shaped.expectTs,
-              negative: shaped.negative,
-            });
-          }
-        }
-      }
-    }
-  }
 
-  const mapKeys = elemPool.filter(
-    (p) =>
-      ['string', 'int', 'bool', 'double', 'size_t', 'float', 'long'].includes(p.cType) ||
-      p.typeId.startsWith('PRI_str') ||
-      p.typeId === 'PRI_bool' ||
-      p.typeId === 'PRI_char'
-  );
-  const mapVals = elemPool;
-  for (const mk of MAP_KINDS) {
-    for (const k of mapKeys) {
-      for (const v of mapVals) {
-        for (const ctx of ['FLD', 'PAR', 'RET', 'TAL'] as ContextId[]) {
-          for (const der of ['RAW', 'OPT', 'PROM'] as DeriveId[]) {
-            for (const q of QUALITIES) {
-              const cType = mk.wrapC(k.cType, v.cType);
-              const tsType = mk.wrapTs(k.tsType, v.tsType);
-              const shaped = applyQuality(cType, tsType, q);
-              pushScenario(bag, seen, {
-                typeId: `${mk.id}__${k.typeId}__${v.typeId}`,
-                context: ctx,
-                derive: der,
-                quality: q,
-                variant: 0,
-                family: 'CTR',
-                cType,
-                tsType,
-                inputType: shaped.inputType,
-                expectTs: shaped.expectTs,
-                negative: shaped.negative,
-              });
-            }
-          }
-        }
-      }
-    }
-  }
+  expandPriScenarios(bag, seen, pri);
+  expandContainerScenarios(bag, seen, elemPool);
+  expandMapScenarios(bag, seen, elemPool);
+  expandC2Scenarios(bag, seen, elemPool);
 
-  // C2：vector<map> / set<vector> / pair
-  for (const elem of elemPool) {
-    for (const ctx of ['FLD', 'PAR', 'RET'] as ContextId[]) {
-      for (const q of QUALITIES) {
-        const c1 = `std::vector<std::map<std::string, ${elem.cType}>>`;
-        const t1 = `Array<Map<string, ${elem.tsType}>>`;
-        const s1 = applyQuality(c1, t1, q);
-        pushScenario(bag, seen, {
-          typeId: `C2_vec_map__${elem.typeId}`,
-          context: ctx,
-          derive: 'RAW',
-          quality: q,
-          variant: 0,
-          family: 'C2',
-          cType: c1,
-          tsType: t1,
-          inputType: s1.inputType,
-          expectTs: s1.expectTs,
-          negative: s1.negative,
-        });
-
-        const c2 = `std::set<std::vector<${elem.cType}>>`;
-        const t2 = `Set<Array<${elem.tsType}>>`;
-        const s2 = applyQuality(c2, t2, q);
-        pushScenario(bag, seen, {
-          typeId: `C2_set_vec__${elem.typeId}`,
-          context: ctx,
-          derive: 'RAW',
-          quality: q,
-          variant: 0,
-          family: 'C2',
-          cType: c2,
-          tsType: t2,
-          inputType: s2.inputType,
-          expectTs: s2.expectTs,
-          negative: s2.negative,
-        });
-
-        const c3 = `std::pair<${elem.cType}, int>`;
-        const t3 = `[${elem.tsType}, number]`;
-        const s3 = applyQuality(c3, t3, q);
-        pushScenario(bag, seen, {
-          typeId: `C2_pair__${elem.typeId}`,
-          context: ctx,
-          derive: 'RAW',
-          quality: q,
-          variant: 0,
-          family: 'C2',
-          cType: c3,
-          tsType: t3,
-          inputType: s3.inputType,
-          expectTs: s3.expectTs,
-          negative: s3.negative,
-        });
-      }
-    }
-  }
-
-  // 先满足 B1，再铺满 B2
   padToTarget(bag, seen, B1_MIN_PER_SUITE);
   padToTarget(bag, seen, B2_SHARED_T_TARGET);
-
-  if (bag.length <= N_CL) {
-    throw new Error(`expandTCross produced ${bag.length} <= N_CL=${N_CL}`);
-  }
-  if (bag.length < B2_SHARED_T_TARGET) {
-    throw new Error(`expandTCross produced ${bag.length} < B2_SHARED_T_TARGET=${B2_SHARED_T_TARGET}`);
-  }
+  assertExpandTargets(bag);
   return bag;
 }
 
