@@ -240,6 +240,8 @@ python3 ohxtsdynamic/ohxtsflow.py gen-xdevice-report /tmp/unittest_device.log \
 
 **编排 skill**：**`xts-develop-master-cycle`**。动态双 HAP 工程（如 chip_nowear）在 master 侧同样须 **Main + Test** 两个 HAP 与 `Test.json` 一致。
 
+> **P0（源码级调试）**：`run-develop-cycle.sh` **编前必作废** `${Suite}.hap`+`${Suite}Main.hap` 与 obj/hvigor；**编后**校验 HAP 内 `ets/modules.abc` zip 时间 ≥ `entry/src` 最新源；假包自动 full-clean 重编。**禁止**只靠增量 stamp 导致 Main `modules.abc` 停在旧时间戳。
+
 **PR 注意**：为 master 旧 SDK 本地编过而改的 `build-profile.json5`（如 `compileSdkVersion` 整数化）、`entry/` 临时补丁，**勿与功能 PR 混提**；流水线 SDK 与 master prebuilts 不一致时，以 **轻量化调试 + CI** 为准。
 
 ---
@@ -561,7 +563,7 @@ grep bundleName <工程根>/AppScope/app.json5
 **提交前自检**：
 
 ```
-[ ] 单笔 commit 变更行数（+/- 合计）≤ 2000
+[ ] 单笔 commit 变更行数（+/- 合计）< 1900（本地；硬上限 2000）
 [ ] 未 git add tools/xts_reports、*.xlsx 等本地报告
 [ ] 存疑路径已获用户确认
 [ ] git commit -sm；禁止 git add -A
