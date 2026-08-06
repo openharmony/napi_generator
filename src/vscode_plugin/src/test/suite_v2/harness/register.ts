@@ -15,10 +15,40 @@
 
 import * as assert from 'assert';
 import { getTCrossB1 } from '../catalog/expand';
-import { Scenario, SuiteKind } from '../catalog/types';
+import { Scenario, SuiteKind, TcMeta } from '../catalog/types';
 import { buildTcMeta, formatTcComment } from './tc_meta';
 
 export type CaseRunner = (sc: Scenario) => void;
+
+function resolveSmokeLimit(total: number): { list: Scenario[]; wantAll: boolean } {
+  const all = getTCrossB1();
+  const full = process.env.SUITE_V2_FULL === '1';
+  const smokeRaw = process.env.SUITE_V2_SMOKE;
+  const wantAll = full || smokeRaw === '0' || smokeRaw === 'all';
+  const limit = wantAll ? total : Math.max(1, parseInt(smokeRaw || '200', 10) || 200);
+  return { list: all.slice(0, limit), wantAll };
+}
+
+function assertTcComment(tcComment: string, meta: TcMeta): void {
+  assert.strictEqual(tcComment, formatTcComment(meta));
+  assert.ok(tcComment.includes(`@tc.number ${meta.number}`));
+  assert.ok(tcComment.includes(`@tc.name ${meta.name}`));
+  assert.ok(tcComment.includes(`@tc.desc ${meta.desc}`));
+  assert.ok(tcComment.includes(`@tc.size ${meta.size}`));
+  assert.ok(tcComment.includes('@tc.type Function'));
+  assert.ok(tcComment.includes(`@tc.level ${meta.level}`));
+  assert.ok(tcComment.includes(`@pair ${meta.pair}`));
+}
+
+function registerOneCase(suiteKind: SuiteKind, sc: Scenario, index: number, runner: CaseRunner): void {
+  const meta = buildTcMeta(suiteKind, sc, index);
+  const tcComment = formatTcComment(meta);
+  test(meta.name, function () {
+    assertTcComment(tcComment, meta);
+    (this as { tc?: TcMeta }).tc = meta;
+    runner(sc);
+  });
+}
 
 /**
  * 表驱动注册：每条用例携带 commonlibrary 风格 @tc.* 元数据。
@@ -28,37 +58,11 @@ export type CaseRunner = (sc: Scenario) => void;
  */
 export function registerTableDriven(suiteKind: SuiteKind, suiteTitle: string, runner: CaseRunner): void {
   const all = getTCrossB1();
-  // 默认每套只注册 200 条冒烟；显式 SUITE_V2_FULL=1 或 SUITE_V2_SMOKE=all/0 才全量
-  const full = process.env.SUITE_V2_FULL === '1';
-  const smokeRaw = process.env.SUITE_V2_SMOKE;
-  const wantAll = full || smokeRaw === '0' || smokeRaw === 'all';
-  const limit = wantAll ? all.length : Math.max(1, parseInt(smokeRaw || '200', 10) || 200);
-  const list = all.slice(0, limit);
+  const { list, wantAll } = resolveSmokeLimit(all.length);
   console.log(`[suite_v2] ${suiteTitle}: register ${list.length}/${all.length} (full=${wantAll})`);
 
   suite(suiteTitle, function () {
     this.timeout(30000);
-    list.forEach((sc, index) => {
-      const meta = buildTcMeta(suiteKind, sc, index);
-      const tcComment = formatTcComment(meta);
-
-      /*
-       * 下列 test 在运行时按场景展开；每条均带独立 @tc 元数据（见 tcComment）。
-       * 物理带注释的分片文件可由 tools/generate_b1 生成到 generated/。
-       */
-      test(meta.name, function () {
-        // 每条用例独立 @tc.* 注释块（字符串形式，与 generate_b1 落盘内容一致）
-        assert.strictEqual(tcComment, formatTcComment(meta));
-        assert.ok(tcComment.includes(`@tc.number ${meta.number}`));
-        assert.ok(tcComment.includes(`@tc.name ${meta.name}`));
-        assert.ok(tcComment.includes(`@tc.desc ${meta.desc}`));
-        assert.ok(tcComment.includes(`@tc.size ${meta.size}`));
-        assert.ok(tcComment.includes('@tc.type Function'));
-        assert.ok(tcComment.includes(`@tc.level ${meta.level}`));
-        assert.ok(tcComment.includes(`@pair ${meta.pair}`));
-        (this as { tc?: typeof meta }).tc = meta;
-        runner(sc);
-      });
-    });
+    list.forEach((sc, index) => registerOneCase(suiteKind, sc, index, runner));
   });
 }
