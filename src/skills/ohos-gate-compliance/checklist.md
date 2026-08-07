@@ -88,6 +88,9 @@
 - [ ] skill 文档已通过 `scan_wordstool_docs.py`（WordsTool 文档用词，规则号 .297 / .241 / doc1）
 - [ ] **WordsTool.97**：资源 `string.json` / 用例勿写易歧义产品字体名；字体族用 `sans-serif`（`gate_review` 可自动替换）
 - [ ] **WordsTool.66**：用例号/`it()`/路径/json 键勿含易歧义双字符片段（uuid 常见）；改为语义化 `SUB_*`
+- [ ] **WordsTool.100**：`.ets` 勿写易歧义厂商品牌域名（CDN host）；属性桩页 `Web(src)` 用 `$rawfile('…')`，勿复制主测页厂商 URL
+  - before: 桩页 `Web` 的 `src` 写成厂商 CDN
+  - after: `Web({ src: $rawfile('common_index.html'), controller: … }).enableXxx(null)`
 - [ ] **WordsTool.177 Surface / .143 本地开发套件缩写 / .5 a11y 全称**：用例注释/id/`it()` 勿裸写；改 host/TEXTURE、NATIVE、a11y；本地 `tools/` 生成器可 gitignore 规避 Python nbnc
 - [ ] skill 内 Python：函数嵌套深度 ≤4、nbnc 行数 ≤50（超限须拆 helper）
 - [ ] skill 内 Python：G.FMT.04 无冒号前空格（切片写 `a + 1:b` 而非带空格的冒号写法）

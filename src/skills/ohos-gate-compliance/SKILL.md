@@ -68,6 +68,7 @@ version: "1.2.0"
 | **WordsTool.97** 产品名/字体族 | `string.json` / `.ets` 勿写易歧义产品字体名；自动 `… Sans` → `sans-serif` | `gate_review.check_wordstool_97` / `fix_wordstool_97` |
 | **WordsTool.66** 易歧义双字符片段 | 用例号/路径/json 勿含；uuid 改 `SUB_*` 语义号 | `gate_review.check_wordstool_66` |
 | **WordsTool.143** 本地开发套件缩写 | 文档/注释/用例号改 NATIVE 或「专用提供方」 | `gate_review.check_wordstool_143` |
+| **WordsTool.100** 厂商品牌域名 | `.ets` 勿写易歧义厂商 CDN/域名；属性桩页 `Web(src)` 用 `$rawfile('…')` | `gate_review.check_wordstool_100` |
 | **G.FMT.05** Options/`@tc.desc` 超宽 | checklist 增 before/after；dialog api26 批实锤 | 手工折行；见 **ohxtsstatic §13.11.5** |
 | **G.EXT.03** `Array<T>` | `arkts_patterns` 检测 + `Array<Ident>`→`Ident[]` | dialog api26 ContextMenu* 实锤 |
 | **CI.KIT.01** Dialog* 从 `@kit.ArkUI` | `gate_review.check_dialog_api_kit_import`（仅检测） | 有 API 时改 `@ohos.arkui.UIContext` / `@ohos.arkui.dialog` + 显式嵌套类型 |

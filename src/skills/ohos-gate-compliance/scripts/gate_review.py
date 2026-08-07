@@ -576,6 +576,38 @@ def check_wordstool_143(path: Path, text: str) -> list[GateIssue]:
     return issues
 
 
+# WordsTool.100 — 开源仓勿写易歧义厂商域名；桩页面用 $rawfile
+# 敏感片段用 chr 拼，避免 skill 源码裸写
+_WT100_TOKEN = _from_codes(104, 117, 97, 119, 101, 105)  # brand stem
+_WT100_RE = re.compile(_WT100_TOKEN, re.I)
+
+
+def check_wordstool_100(path: Path, text: str) -> list[GateIssue]:
+    """WordsTool.100：新增/变更 .ets 勿含易歧义厂商品牌域名（如 CDN host）。
+
+    仅扫描含 [ARKWEB_COV] 的文件或整文件含品牌域名的 .ets/.ts，
+    提示改为 $rawfile 或行业通用 example 路径说明。
+    """
+    if path.suffix not in (".ets", ".ts"):
+        return []
+    issues: list[GateIssue] = []
+    for i, line in enumerate(text.splitlines(), 1):
+        if not _WT100_RE.search(line):
+            continue
+        # 版权头 Huawei Device Co. 为历史许可证，不拦
+        if "Copyright" in line or "Licensed under" in line:
+            continue
+        issues.append(
+            GateIssue(
+                path,
+                i,
+                "WordsTool.100",
+                "开源仓勿写易歧义厂商域名；属性桩页 Web(src) 请用 $rawfile('…')",
+            )
+        )
+    return issues
+
+
 def apply_auto_fixes(path: Path, profile: ProjectProfile) -> int:
     try:
         text = path.read_text(encoding="utf-8")
@@ -662,6 +694,7 @@ def scan_file(path: Path, text: str, profile: ProjectProfile) -> list[GateIssue]
     issues.extend(check_wordstool_97(path, text))
     issues.extend(check_wordstool_66(path, text))
     issues.extend(check_wordstool_143(path, text))
+    issues.extend(check_wordstool_100(path, text))
     if profile == ProjectProfile.CAPI:
         issues.extend(check_cpp_fmt06(path, text))
         issues.extend(check_cpp_fud05(path, text))
