@@ -56,6 +56,12 @@
       colorMode: ThemeColorMode.LIGHT
     };
     ```
+  - 长 `console.info`/`console.log`（含用例名前缀 + `JSON.stringify`）须在 `+` 处折行：
+    ```ets
+    // bad: console.info('[Suite_case_0100] strJson1 content: ' + JSON.stringify(...));
+    console.info('[Suite_case_0100] strJson1 content: ' +
+      JSON.stringify(JSON.parse(strJson1).$attrs.content));
+    ```
   - `@tc.desc` 过长时缩短为可读摘要，勿堆完整类名
 - [ ] `@tc.number` 与 `it()` 一致（`@tc.name` 可为英文标题，不强制等于用例号）
 - [ ] 无裸 `it()`：每条 `it` 前紧邻完整 `@tc` 块（`/*` 或 `/**`，含 `@tc.number` / `@tc.name`；一体工程 `entry/.../*.test.ets`）
