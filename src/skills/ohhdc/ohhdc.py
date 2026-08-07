@@ -6,10 +6,11 @@ OpenHarmony HDC 工具
 
 截图相关：
 - screenshot/snapshot：设备 snapshot_display 整屏截图。
-- screenshot-app/snap-app：先 aa start（预设别名见 SCREENSHOT_APP_ALIASES），再整屏截图。
+- screenshot-app/snap-app：先 Ability Manager start（预设别名见 SCREENSHOT_APP_ALIASES），再整屏截图。
 
 Wi‑Fi（wificlitools）：
-- wifi-kaihong：hdc shell 执行 wificommand wifienable + wificonnect（默认 SSID KaiHong、密码 KaiHong@888）。
+- wifi-kaihong：hdc shell 执行 wificommand wifienable + wificonnect
+  （默认 SSID KaiHong；口令见环境变量 OHHDC_WIFI_PSK）。
 """
 
 import argparse
@@ -24,6 +25,24 @@ import subprocess
 import sys
 import threading
 import time
+
+import ohhdc_wifi as _ohhdc_wifi
+from ohhdc_ability import format_abilities_as_markdown, parse_ability_dump
+from ohhdc_wifi import (
+    DEFAULT_WIFI_KAIHONG_PSK,
+    DEFAULT_WIFI_KAIHONG_SSID,
+    DEFAULT_WIFI_PRODUCT,
+    DEFAULT_WIFICOMMAND_REMOTE_PATH,
+    WIFICOMMAND_BIN_DEFAULT,
+    _ohhdc_fill_parser_wifi,
+    _try_dispatch_wifi_family,
+    find_wificommand_host_binary,
+    hdc_file_send,
+    infer_ohos_src_root,
+    run_hdc_shell_remote,
+    run_wifi_push_wificommand,
+    wifi_wificommand_enable_and_connect,
+)
 
 # 技能脚本所在目录：截图、layout 等产物默认写入其下子目录
 OH_HDC_SKILL_DIR = Path(__file__).resolve().parent
@@ -86,25 +105,7 @@ def run_hdc_command(command, timeout_sec=120):
         return False, "", str(e)
 
 
-# Wi‑Fi / Ability 解析拆到子模块，控制本文件 NBNC；CLI 仍经本模块 re-export 调度。
-import ohhdc_wifi as _ohhdc_wifi
-from ohhdc_ability import format_abilities_as_markdown, parse_ability_dump
-from ohhdc_wifi import (
-    DEFAULT_WIFI_KAIHONG_PASSWORD,
-    DEFAULT_WIFI_KAIHONG_SSID,
-    DEFAULT_WIFI_PRODUCT,
-    DEFAULT_WIFICOMMAND_REMOTE_PATH,
-    WIFICOMMAND_BIN_DEFAULT,
-    _ohhdc_fill_parser_wifi,
-    _try_dispatch_wifi_family,
-    find_wificommand_host_binary,
-    hdc_file_send,
-    infer_ohos_src_root,
-    run_hdc_shell_remote,
-    run_wifi_push_wificommand,
-    wifi_wificommand_enable_and_connect,
-)
-
+# Wi‑Fi / Ability 解析拆到子模块；注入 hdc 执行器供 wifi 子模块调用。
 _ohhdc_wifi.bind_wifi_hdc(run_hdc_command)
 
 

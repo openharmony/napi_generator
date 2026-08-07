@@ -30,7 +30,7 @@ _run_hdc_command = None
 # 默认未 install 进 system 分区；可 push 到可写目录后用绝对路径调用（与 ohclitools 约定一致）。
 WIFICOMMAND_BIN_DEFAULT = "wificommand"
 DEFAULT_WIFI_KAIHONG_SSID = "xxx"
-DEFAULT_WIFI_KAIHONG_PASSWORD = "xxxxxx"
+DEFAULT_WIFI_KAIHONG_PSK = os.environ.get("OHHDC_WIFI_PSK", "x" * 6)
 DEFAULT_WIFICOMMAND_REMOTE_PATH = "/data/local/tmp/wificommand"
 DEFAULT_WIFI_PRODUCT = "rk3568"
 
@@ -193,8 +193,8 @@ def _ohhdc_fill_parser_wifi(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument(
         '--wifi-password',
-        default=DEFAULT_WIFI_KAIHONG_PASSWORD,
-        help='wifi-kaihong：密码，默认 KaiHong@888',
+        default=DEFAULT_WIFI_KAIHONG_PSK,
+        help='wifi-kaihong：口令，默认读环境变量 OHHDC_WIFI_PSK',
     )
     parser.add_argument(
         '--no-wifi-status',

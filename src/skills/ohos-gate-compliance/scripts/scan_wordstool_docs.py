@@ -13,7 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""WordsTool 文档/脚本用词扫描（skill 仓提交前）。敏感词仅用 chr() 拼接。"""
+"""WordsTool 文档/脚本用词扫描（skill 仓提交前）。敏感词仅用 chr() 拼接。
+
+Self-scan note: this scanner source must not contain contiguous forbidden
+token literals (build patterns via _from_codes / chr only; rule ids use
+numeric suffixes only, e.g. WordsTool.93 / .166 / .66).
+"""
 
 from __future__ import annotations
 
@@ -38,6 +43,8 @@ _PY_SKIP_RULES = {
     "WordsTool.LEVEL1",
     "WordsTool.doc1_OTHER",
 }
+_RULE_ID_66 = "WordsTool.66"
+_RULE_ID_166 = "WordsTool.166"
 
 
 @dataclass
@@ -53,51 +60,18 @@ def _from_codes(*codes: int) -> str:
     return "".join(chr(c) for c in codes)
 
 
-def _build_rules() -> list[tuple[str, re.Pattern[str], str]]:
-    spa_fw = _from_codes(86, 117, 101)
+def _rules_zh() -> list[tuple[str, re.Pattern[str], str]]:
+    """中文禁用词规则（各自独立编译）。"""
     superlative = _from_codes(0x6700, 0x5FEB)
-    win_chain = _from_codes(109, 105, 110, 103, 119)
-    ide_product = _from_codes(67, 117, 114, 115, 111, 114)
-    aa_token = _from_codes(97, 97)
     absolute_zh = _from_codes(0x7EDD, 0x5BF9)
     other_zh = _from_codes(0x5176, 0x4ED6)
     first_zh = _from_codes(0x9996, 0x6B21)
     authority_zh = _from_codes(0x6743, 0x5A01)
-    product_lower = _from_codes(104, 97, 114, 109, 111, 110, 121, 111, 115)
-    a11y_full = _from_codes(
-        65, 99, 99, 101, 115, 115, 105, 98, 105, 108, 105, 116, 121
-    )
-    native_kit = _from_codes(110, 100, 107)
-    ambiguous_d8 = _from_codes(100, 56)
-    cpp_rt = _from_codes(108, 105, 98, 99) + "++"
-    gms = _from_codes(103, 109, 115)
-    rn = _from_codes(114, 110)
-    level_one = _from_codes(76, 49)
     return [
-        (
-            "WordsTool.SPA_FW",
-            re.compile(rf"\b{spa_fw}\b", re.I),
-            "文档不宜使用易歧义前端框架产品名，请改用 Element Plus 单页报告",
-        ),
         (
             "WordsTool.SUPERLATIVE",
             re.compile(superlative),
             "文档不宜使用口语化极限用词，请改用「优先增量编译验证」",
-        ),
-        (
-            "WordsTool.WIN_PREVIEW_CHAIN",
-            re.compile(win_chain, re.I),
-            "文档不宜使用 Windows 专有工具链缩写，请改用 Windows 预览 SDK",
-        ),
-        (
-            "WordsTool.IDE_PRODUCT",
-            re.compile(ide_product, re.I),
-            "文档不宜使用 IDE 产品名，请改用 Agent / 通用 IDE 表述",
-        ),
-        (
-            "WordsTool.297_AA",
-            re.compile(rf"(?<![A-Za-z]){aa_token}(?![A-Za-z])", re.I),
-            "勿写裸设备命令缩写，叙事请用「设备 unittest / Ability Manager 测试」",
         ),
         (
             "WordsTool.241_ABS",
@@ -119,10 +93,51 @@ def _build_rules() -> list[tuple[str, re.Pattern[str], str]]:
             re.compile(authority_zh),
             "勿用易歧义强调称谓；改「规范脚本 / 正式约定」",
         ),
+    ]
+
+
+def _rules_en_product() -> list[tuple[str, re.Pattern[str], str]]:
+    """产品名 / IDE / 框架类英文禁用词。"""
+    spa_fw = _from_codes(86, 117, 101)
+    win_chain = _from_codes(109, 105, 110, 103, 119)
+    ide_product = _from_codes(67, 117, 114, 115, 111, 114)
+    product_lower = _from_codes(104, 97, 114, 109, 111, 110, 121, 111, 115)
+    return [
+        (
+            "WordsTool.SPA_FW",
+            re.compile(rf"\b{spa_fw}\b", re.I),
+            "文档不宜使用易歧义前端框架产品名，请改用 Element Plus 单页报告",
+        ),
+        (
+            "WordsTool.WIN_PREVIEW_CHAIN",
+            re.compile(win_chain, re.I),
+            "文档不宜使用 Windows 专有工具链缩写，请改用 Windows 预览 SDK",
+        ),
+        (
+            "WordsTool.IDE_PRODUCT",
+            re.compile(ide_product, re.I),
+            "文档不宜使用 IDE 产品名，请改用 Agent / 通用 IDE 表述",
+        ),
         (
             "WordsTool.97_PRODUCT",
             re.compile(product_lower, re.I),
             "勿写易歧义产品名；字体族用 sans-serif",
+        ),
+    ]
+
+
+def _rules_en_abbr_kit() -> list[tuple[str, re.Pattern[str], str]]:
+    """设备命令 / a11y / native kit 缩写。"""
+    aa_token = _from_codes(97, 97)
+    a11y_full = _from_codes(
+        65, 99, 99, 101, 115, 115, 105, 98, 105, 108, 105, 116, 121
+    )
+    native_kit = _from_codes(110, 100, 107)
+    return [
+        (
+            "WordsTool.297_AA",
+            re.compile(rf"(?<![A-Za-z]){aa_token}(?![A-Za-z])", re.I),
+            "勿写裸设备命令缩写，叙事请用「设备 unittest / Ability Manager 测试」",
         ),
         (
             "WordsTool.5_A11Y",
@@ -134,9 +149,20 @@ def _build_rules() -> list[tuple[str, re.Pattern[str], str]]:
             re.compile(rf"(?<![A-Za-z]){native_kit}(?![A-Za-z])", re.I),
             "勿裸写本地开发套件缩写；改 NATIVE / 专用提供方",
         ),
+    ]
+
+
+def _rules_en_abbr_misc() -> list[tuple[str, re.Pattern[str], str]]:
+    """双/三字母片段与运行时库短名。"""
+    tok_c = _from_codes(100, 56)
+    cpp_rt = _from_codes(108, 105, 98, 99) + "++"
+    tok_a = _from_codes(103, 109, 115)
+    tok_b = _from_codes(114, 110)
+    level_one = _from_codes(76, 49)
+    return [
         (
-            "WordsTool.66_D8",
-            re.compile(rf"(?<![A-Za-z0-9]){ambiguous_d8}(?![A-Za-z0-9])", re.I),
+            _RULE_ID_66,
+            re.compile(rf"(?<![A-Za-z0-9]){tok_c}(?![A-Za-z0-9])", re.I),
             "勿在标识符/用例号中保留易歧义双字符片段",
         ),
         (
@@ -145,13 +171,13 @@ def _build_rules() -> list[tuple[str, re.Pattern[str], str]]:
             "勿写 C++ 运行时库短名；改 C++ standard library",
         ),
         (
-            "WordsTool.93_GMS",
-            re.compile(rf"\b{gms}\b", re.I),
+            "WordsTool.93",
+            re.compile(rf"\b{tok_a}\b", re.I),
             "勿裸写易歧义三字母缩写；证书串请拆分字面量",
         ),
         (
-            "WordsTool.166_RN",
-            re.compile(rf"(?<![A-Za-z]){rn}(?![A-Za-z])", re.I),
+            _RULE_ID_166,
+            re.compile(rf"(?<![A-Za-z]){tok_b}(?![A-Za-z])", re.I),
             "勿裸写易歧义双字母缩写；sort 用 -r -n；证书串请拆分字面量",
         ),
         (
@@ -160,6 +186,14 @@ def _build_rules() -> list[tuple[str, re.Pattern[str], str]]:
             "勿写 L + 数字层标记；改「第一层」",
         ),
     ]
+
+
+def _rules_en_tokens() -> list[tuple[str, re.Pattern[str], str]]:
+    return _rules_en_product() + _rules_en_abbr_kit() + _rules_en_abbr_misc()
+
+
+def _build_rules() -> list[tuple[str, re.Pattern[str], str]]:
+    return _rules_zh() + _rules_en_tokens()
 
 
 RULES = _build_rules()
@@ -201,13 +235,37 @@ def _line_exempt(line: str) -> bool:
     return any(s in line for s in _SKIP_LINE_SUBSTR)
 
 
-def _rn_hit(line: str) -> bool:
-    """独立 rn 缩写；忽略 return/dirname/internal 内嵌字母。"""
+def _tok_b_hit(line: str) -> bool:
+    """Standalone two-letter abbr; ignore return/dirname/internal embeds."""
     low = line.lower()
     tmp = low
     for w in ("return", "dirname", "internal"):
         tmp = tmp.replace(w, " ")
-    return re.search(r"(?<![a-z0-9])rn(?![a-z0-9])", tmp) is not None
+    tok = _from_codes(114, 110)
+    return re.search(rf"(?<![a-z0-9]){re.escape(tok)}(?![a-z0-9])", tmp) is not None
+
+
+def _match_line_rules(
+    path: Path,
+    line_no: int,
+    line: str,
+    is_py: bool,
+    is_sh: bool,
+) -> list[DocHit]:
+    hits: list[DocHit] = []
+    for rule_id, pat, msg in RULES:
+        if is_py and rule_id in _PY_SKIP_RULES:
+            continue
+        # base64/.sh 中双字符片段噪声大，仅拦 md/py 标识符场景
+        if is_sh and rule_id == _RULE_ID_66:
+            continue
+        if rule_id == _RULE_ID_166:
+            if _tok_b_hit(line):
+                hits.append(DocHit(path, line_no, rule_id, msg))
+            continue
+        if pat.search(line):
+            hits.append(DocHit(path, line_no, rule_id, msg))
+    return hits
 
 
 def scan_text(path: Path, text: str) -> list[DocHit]:
@@ -217,18 +275,7 @@ def scan_text(path: Path, text: str) -> list[DocHit]:
     for i, line in enumerate(text.splitlines(), 1):
         if _line_exempt(line):
             continue
-        for rule_id, pat, msg in RULES:
-            if is_py and rule_id in _PY_SKIP_RULES:
-                continue
-            # base64/.sh 中双字符片段噪声大，仅拦 md/py 标识符场景
-            if is_sh and rule_id == "WordsTool.66_D8":
-                continue
-            if rule_id == "WordsTool.166_RN":
-                if _rn_hit(line):
-                    hits.append(DocHit(path, i, rule_id, msg))
-                continue
-            if pat.search(line):
-                hits.append(DocHit(path, i, rule_id, msg))
+        hits.extend(_match_line_rules(path, i, line, is_py, is_sh))
     return hits
 
 

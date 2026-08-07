@@ -18,221 +18,244 @@
 from __future__ import annotations
 
 
+def _bracket_field(line: str, marker: str) -> str | None:
+    try:
+        return line.split(marker)[1].split("]")[0]
+    except Exception:
+        return None
+
+
+def _hash_field(line: str, marker: str) -> str | None:
+    try:
+        return line.split(marker)[1].split()[0]
+    except Exception:
+        return None
+
+
+def _new_result() -> dict:
+    return {
+        "abilities": [],
+        "running_apps": [],
+        "foreground_apps": [],
+    }
+
+
+def _start_ability_record(result: dict, line: str, state: dict) -> None:
+    if state["current_ability"]:
+        result["abilities"].append(state["current_ability"])
+    ability = {}
+    rid = _hash_field(line, "AbilityRecord ID #")
+    if rid is not None:
+        ability["ability_record_id"] = rid
+    state["current_ability"] = ability
+    state["in_ability_record"] = True
+
+
+def _apply_ability_fields(result: dict, line: str, ability: dict) -> None:
+    mapping = (
+        ("bundle name [", "bundle_name"),
+        ("main name [", "main_name"),
+        ("ability type [", "ability_type"),
+        ("app name [", "app_name"),
+        ("start time [", "start_time"),
+    )
+    for marker, key in mapping:
+        if marker in line:
+            val = _bracket_field(line, marker)
+            if val is not None:
+                ability[key] = val
+    if "app state #" in line:
+        app_state = _hash_field(line, "app state #")
+        if app_state is not None:
+            ability["app_state"] = app_state
+            if app_state == "FOREGROUND":
+                result["foreground_apps"].append(ability.copy())
+    elif "state #" in line and "AbilityRecord" not in line:
+        state_val = _hash_field(line, "state #")
+        if state_val is not None:
+            ability["state"] = state_val
+        if "start time [" in line:
+            st = _bracket_field(line, "start time [")
+            if st is not None:
+                ability["start_time"] = st
+
+
+def _leave_ability_record(line: str, result: dict, state: dict) -> bool:
+    leaves = (
+        line.startswith("MissionList")
+        or line.startswith("ExtensionRecords")
+        or line.startswith("AppRunningRecords")
+    )
+    if not leaves:
+        return False
+    if state["current_ability"]:
+        result["abilities"].append(state["current_ability"])
+    state["current_ability"] = None
+    state["in_ability_record"] = False
+    return True
+
+
+def _start_app_running(result: dict, line: str, state: dict) -> None:
+    if state["current_app"]:
+        result["running_apps"].append(state["current_app"])
+    app = {}
+    rid = _hash_field(line, "AppRunningRecord ID #")
+    if rid is not None:
+        app["record_id"] = rid
+    state["current_app"] = app
+    state["in_app_running_record"] = True
+
+
+def _apply_app_fields(line: str, app: dict) -> None:
+    if "process name [" in line:
+        val = _bracket_field(line, "process name [")
+        if val is not None:
+            app["process_name"] = val
+    for marker, key in (("pid #", "pid"), ("uid #", "uid")):
+        if marker in line:
+            val = _hash_field(line, marker)
+            if val is not None:
+                app[key] = val
+    if "state #" in line and "AppRunningRecord" not in line:
+        val = _hash_field(line, "state #")
+        if val is not None:
+            app["state"] = val
+
+
+def _leave_app_running(line: str, result: dict, state: dict) -> None:
+    leaves = line.startswith("ExtensionRecords") or line.startswith(
+        "PendingWantRecords"
+    )
+    if not leaves:
+        return
+    app = state["current_app"]
+    if app and app.get("process_name"):
+        result["running_apps"].append(app)
+    state["current_app"] = None
+    state["in_app_running_record"] = False
+
+
+def _handle_ability_line(result: dict, line: str, state: dict) -> None:
+    if "AbilityRecord ID #" in line:
+        _start_ability_record(result, line, state)
+    if state["in_ability_record"] and state["current_ability"]:
+        _apply_ability_fields(result, line, state["current_ability"])
+        _leave_ability_record(line, result, state)
+
+
+def _handle_app_line(result: dict, line: str, state: dict) -> None:
+    if "AppRunningRecord ID #" in line:
+        _start_app_running(result, line, state)
+        return
+    if state["in_app_running_record"] and state["current_app"]:
+        _apply_app_fields(line, state["current_app"])
+        _leave_app_running(line, result, state)
+
+
 def parse_ability_dump(output):
     """
-    解析 aa dump -a 或 aa dump -r 的输出，提取关键信息
-    
+    解析 Ability Manager dump（-a / -r）输出，提取关键信息。
+
     Args:
-        output: aa dump 命令的原始输出
-        
+        output: Ability Manager dump 命令的原始输出
+
     Returns:
         dict: 包含解析后的信息
     """
-    result = {
-        'abilities': [],
-        'running_apps': [],
-        'foreground_apps': []
+    result = _new_result()
+    state = {
+        "current_ability": None,
+        "in_ability_record": False,
+        "in_app_running_record": False,
+        "current_app": None,
     }
-    
-    current_ability = None
-    in_ability_record = False
-    in_app_running_record = False
-    current_app = None
-    in_mission = False
-    
-    for line in output.split('\n'):
-        original_line = line
-        line = line.strip()
-        
-        # 跳过空行和注释
-        if not line or line.startswith('#'):
+    for raw in output.split("\n"):
+        line = raw.strip()
+        if not line or line.startswith("#"):
             continue
-        
-        # 检测是否进入新的 Mission 或 AbilityRecord
-        if 'AbilityRecord ID #' in line:
-            if current_ability:
-                result['abilities'].append(current_ability)
-            current_ability = {}
-            in_ability_record = True
-            try:
-                current_ability['ability_record_id'] = line.split('AbilityRecord ID #')[1].split()[0]
-            except:
-                pass
-        
-        # 解析 AbilityRecord 的字段（可能在缩进的行中）
-        if in_ability_record and current_ability:
-            if 'bundle name [' in line:
-                try:
-                    current_ability['bundle_name'] = line.split('bundle name [')[1].split(']')[0]
-                except:
-                    pass
-            elif 'main name [' in line:
-                try:
-                    current_ability['main_name'] = line.split('main name [')[1].split(']')[0]
-                except:
-                    pass
-            elif 'ability type [' in line:
-                try:
-                    current_ability['ability_type'] = line.split('ability type [')[1].split(']')[0]
-                except:
-                    pass
-            elif 'app state #' in line:
-                try:
-                    app_state = line.split('app state #')[1].split()[0]
-                    current_ability['app_state'] = app_state
-                    if app_state == 'FOREGROUND':
-                        result['foreground_apps'].append(current_ability.copy())
-                except:
-                    pass
-            elif 'state #' in line and 'app state' not in line and 'AbilityRecord' not in line:
-                try:
-                    state = line.split('state #')[1].split()[0]
-                    current_ability['state'] = state
-                    # start time 可能在同一行
-                    if 'start time [' in line:
-                        try:
-                            current_ability['start_time'] = line.split('start time [')[1].split(']')[0]
-                        except:
-                            pass
-                except:
-                    pass
-            elif 'start time [' in line:
-                try:
-                    current_ability['start_time'] = line.split('start time [')[1].split(']')[0]
-                except:
-                    pass
-            elif 'app name [' in line:
-                try:
-                    current_ability['app_name'] = line.split('app name [')[1].split(']')[0]
-                except:
-                    pass
-            
-            # 检测是否离开 AbilityRecord（遇到新的 Mission 或其他主要部分）
-            if line.startswith('MissionList') or line.startswith('ExtensionRecords') or line.startswith('AppRunningRecords'):
-                if current_ability:
-                    result['abilities'].append(current_ability)
-                current_ability = None
-                in_ability_record = False
-        
-        # 解析 AppRunningRecords
-        if 'AppRunningRecord ID #' in line:
-            if current_app:
-                result['running_apps'].append(current_app)
-            current_app = {}
-            in_app_running_record = True
-            try:
-                current_app['record_id'] = line.split('AppRunningRecord ID #')[1].split()[0]
-            except:
-                pass
-        
-        if in_app_running_record and current_app:
-            if 'process name [' in line:
-                try:
-                    current_app['process_name'] = line.split('process name [')[1].split(']')[0]
-                except:
-                    pass
-            if 'pid #' in line:
-                try:
-                    current_app['pid'] = line.split('pid #')[1].split()[0]
-                except:
-                    pass
-            if 'uid #' in line:
-                try:
-                    current_app['uid'] = line.split('uid #')[1].split()[0]
-                except:
-                    pass
-            if 'state #' in line and 'AppRunningRecord' not in line:
-                try:
-                    current_app['state'] = line.split('state #')[1].split()[0]
-                except:
-                    pass
-            
-            # 检测是否离开 AppRunningRecord（遇到新的主要部分）
-            if line.startswith('ExtensionRecords') or line.startswith('PendingWantRecords') or (line.startswith('AppRunningRecord ID #') and current_app.get('record_id')):
-                if current_app and current_app.get('process_name'):
-                    result['running_apps'].append(current_app)
-                current_app = {}
-                in_app_running_record = False
-                if 'AppRunningRecord ID #' in line:
-                    in_app_running_record = True
-                    try:
-                        current_app = {'record_id': line.split('AppRunningRecord ID #')[1].split()[0]}
-                    except:
-                        current_app = {}
-    
-    # 添加最后一个
-    if current_ability:
-        result['abilities'].append(current_ability)
-    if current_app:
-        result['running_apps'].append(current_app)
-    
+        _handle_ability_line(result, line, state)
+        _handle_app_line(result, line, state)
+    if state["current_ability"]:
+        result["abilities"].append(state["current_ability"])
+    if state["current_app"]:
+        result["running_apps"].append(state["current_app"])
     return result
+
+
+def _md_foreground(parsed_data: dict) -> str:
+    apps = parsed_data["foreground_apps"]
+    if not apps:
+        return "### 前台应用\n\n未找到前台应用。\n\n"
+    lines = [
+        "### 前台应用\n\n",
+        f"共找到 **{len(apps)}** 个前台应用：\n\n",
+        "| 序号 | Bundle Name | Ability Name | Type | State | AbilityRecord ID | Start Time |\n",
+        "|------|-------------|--------------|------|-------|------------------|------------|\n",
+    ]
+    for index, app in enumerate(apps, 1):
+        lines.append(
+            f"| {index} | `{app.get('bundle_name', 'N/A')}` | "
+            f"`{app.get('main_name', 'N/A')}` | {app.get('ability_type', 'N/A')} | "
+            f"{app.get('app_state', 'N/A')} | {app.get('ability_record_id', 'N/A')} | "
+            f"{app.get('start_time', 'N/A')} |\n"
+        )
+    lines.append("\n")
+    return "".join(lines)
+
+
+def _md_running(parsed_data: dict) -> str:
+    apps = parsed_data["running_apps"]
+    if not apps:
+        return "### 运行中的应用进程\n\n未找到运行中的应用进程。\n\n"
+    lines = [
+        "### 运行中的应用进程\n\n",
+        f"共找到 **{len(apps)}** 个运行中的应用进程：\n\n",
+        "| 序号 | Process Name | PID | UID | State |\n",
+        "|------|--------------|-----|-----|-------|\n",
+    ]
+    for index, app in enumerate(apps, 1):
+        lines.append(
+            f"| {index} | `{app.get('process_name', 'N/A')}` | "
+            f"{app.get('pid', 'N/A')} | {app.get('uid', 'N/A')} | "
+            f"{app.get('state', 'N/A')} |\n"
+        )
+    lines.append("\n")
+    return "".join(lines)
+
+
+def _md_all_abilities(parsed_data: dict) -> str:
+    apps = parsed_data["abilities"]
+    if not apps:
+        return ""
+    lines = [
+        "### 所有 Ability（包括后台）\n\n",
+        f"共找到 **{len(apps)}** 个 ability：\n\n",
+        "| 序号 | Bundle Name | Ability Name | Type | App State | State | AbilityRecord ID |\n",
+        "|------|-------------|--------------|------|-----------|-------|------------------|\n",
+    ]
+    for index, app in enumerate(apps, 1):
+        lines.append(
+            f"| {index} | `{app.get('bundle_name', 'N/A')}` | "
+            f"`{app.get('main_name', 'N/A')}` | {app.get('ability_type', 'N/A')} | "
+            f"{app.get('app_state', 'N/A')} | {app.get('state', 'N/A')} | "
+            f"{app.get('ability_record_id', 'N/A')} |\n"
+        )
+    lines.append("\n")
+    return "".join(lines)
 
 
 def format_abilities_as_markdown(parsed_data, show_all=False):
     """
     将解析后的 ability 信息格式化为 Markdown
-    
+
     Args:
         parsed_data: parse_ability_dump 返回的字典
         show_all: 是否显示所有 ability（包括后台），默认只显示前台
-        
+
     Returns:
         str: Markdown 格式的字符串
     """
-    markdown = "## 设备应用状态\n\n"
-    
-    # 前台应用
-    if parsed_data['foreground_apps']:
-        markdown += "### 前台应用\n\n"
-        markdown += f"共找到 **{len(parsed_data['foreground_apps'])}** 个前台应用：\n\n"
-        markdown += "| 序号 | Bundle Name | Ability Name | Type | State | AbilityRecord ID | Start Time |\n"
-        markdown += "|------|-------------|--------------|------|-------|------------------|------------|\n"
-        
-        for index, app in enumerate(parsed_data['foreground_apps'], 1):
-            bundle_name = app.get('bundle_name', 'N/A')
-            main_name = app.get('main_name', 'N/A')
-            ability_type = app.get('ability_type', 'N/A')
-            app_state = app.get('app_state', 'N/A')
-            ability_id = app.get('ability_record_id', 'N/A')
-            start_time = app.get('start_time', 'N/A')
-            markdown += f"| {index} | `{bundle_name}` | `{main_name}` | {ability_type} | {app_state} | {ability_id} | {start_time} |\n"
-        markdown += "\n"
-    else:
-        markdown += "### 前台应用\n\n未找到前台应用。\n\n"
-    
-    # 运行中的应用进程
-    if parsed_data['running_apps']:
-        markdown += "### 运行中的应用进程\n\n"
-        markdown += f"共找到 **{len(parsed_data['running_apps'])}** 个运行中的应用进程：\n\n"
-        markdown += "| 序号 | Process Name | PID | UID | State |\n"
-        markdown += "|------|--------------|-----|-----|-------|\n"
-        
-        for index, app in enumerate(parsed_data['running_apps'], 1):
-            process_name = app.get('process_name', 'N/A')
-            pid = app.get('pid', 'N/A')
-            uid = app.get('uid', 'N/A')
-            state = app.get('state', 'N/A')
-            markdown += f"| {index} | `{process_name}` | {pid} | {uid} | {state} |\n"
-        markdown += "\n"
-    else:
-        markdown += "### 运行中的应用进程\n\n未找到运行中的应用进程。\n\n"
-    
-    # 所有 ability（如果 show_all=True）
-    if show_all and parsed_data['abilities']:
-        markdown += "### 所有 Ability（包括后台）\n\n"
-        markdown += f"共找到 **{len(parsed_data['abilities'])}** 个 ability：\n\n"
-        markdown += "| 序号 | Bundle Name | Ability Name | Type | App State | State | AbilityRecord ID |\n"
-        markdown += "|------|-------------|--------------|------|-----------|-------|------------------|\n"
-        
-        for index, app in enumerate(parsed_data['abilities'], 1):
-            bundle_name = app.get('bundle_name', 'N/A')
-            main_name = app.get('main_name', 'N/A')
-            ability_type = app.get('ability_type', 'N/A')
-            app_state = app.get('app_state', 'N/A')
-            state = app.get('state', 'N/A')
-            ability_id = app.get('ability_record_id', 'N/A')
-            markdown += f"| {index} | `{bundle_name}` | `{main_name}` | {ability_type} | {app_state} | {state} | {ability_id} |\n"
-        markdown += "\n"
-    
-    return markdown
+    parts = ["## 设备应用状态\n\n", _md_foreground(parsed_data), _md_running(parsed_data)]
+    if show_all:
+        parts.append(_md_all_abilities(parsed_data))
+    return "".join(parts)

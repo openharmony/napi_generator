@@ -8,7 +8,7 @@ version: "1.0.2"
 
 # OpenHarmony HDC Skill
 
-This skill provides capabilities for OpenHarmony ecosystem devices via **HDC** (the **hdc** host tool: the standard device bridge for OHOS in the OpenHarmony / DevEco SDK): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例：卸载后以 `hdc install -r` 安装主包与测试包，再在设备 shell 执行应用测试流水线), **replace-install HAP**, **display screenshot** (`snapshot_display` + `hdc file recv`，默认保存到技能目录 `screenshot/`), **app-scoped screenshot** (`screenshot-app` / `snap-app`: 设备侧拉起应用别名后执行 `snapshot_display`; 预设别名见 `ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`), **UI layout JSON** (`uitest dumpLayout` + `hdc file recv`，默认保存到 `layout/`), **Wi‑Fi via wificommand** (`wifi-kaihong`: enable Wi‑Fi and connect default **KaiHong** / **KaiHong@888** or custom `--wifi-ssid` / `--wifi-password`), **control LEDs** (`/sys/class/leds/{red,green,blue}/brightness`), **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
+This skill provides capabilities for OpenHarmony ecosystem devices via **HDC** (the **hdc** host tool: the standard device bridge for OHOS in the OpenHarmony / DevEco SDK): **list installed HAP apps**, **uninstall HAP**, **install HAP**, **install-project** (install main + test HAP with two `hdc install` commands), **deploy-test** (部署运行 HAP 测试用例：卸载后以 `hdc install -r` 安装主包与测试包，再在设备 shell 执行应用测试流水线), **replace-install HAP**, **display screenshot** (`snapshot_display` + `hdc file recv`，默认保存到技能目录 `screenshot/`), **app-scoped screenshot** (`screenshot-app` / `snap-app`: 设备侧拉起应用别名后执行 `snapshot_display`; 预设别名见 `ohhdc.py` 中 `SCREENSHOT_APP_ALIASES`), **UI layout JSON** (`uitest dumpLayout` + `hdc file recv`，默认保存到 `layout/`), **Wi‑Fi via wificommand** (`wifi-kaihong`: enable Wi‑Fi and connect default **KaiHong** / env `OHHDC_WIFI_PSK` or custom `--wifi-ssid` / `--wifi-password`), **control LEDs** (`/sys/class/leds/{red,green,blue}/brightness`), **view device logs (hilog)**, **view error/fault logs (data/log/faultlog)**, **view foreground/running applications**, **force-stop applications**, **start applications**, and **run tests**.
 
 ## 应用示例与提示词（中文）
 
@@ -786,7 +786,7 @@ python3 src/skills/ohhdc/ohhdc.py layout --bundle com.example.app --display-id 0
 使用 **wificlitools** 可执行文件 **`wificommand`**（源码 `foundation/communication/wifi/wifi/test/wificlitools`，GN 目标 `wificommand`）。通过 HDC 依次执行：
 
 1. **`wifienable`** — 打开 Wi‑Fi  
-2. **`wificonnect ssid=<SSID> password=<密码>`** — 连接热点（默认 **SSID `KaiHong`**、密码 **`KaiHong@888`**）  
+2. **`wificonnect ssid=<SSID> password=<口令>`** — 连接热点（默认 **SSID `KaiHong`**；口令默认读环境变量 **`OHHDC_WIFI_PSK`**，可用 `--wifi-password` 覆盖）  
 3. **`wifigetstatus`** — 打印状态（可用 `--no-wifi-status` 跳过）
 
 设备侧整条命令经 **`shlex.quote`** 传给 `hdc shell`，避免主机对 `@` 等字符误解析。
@@ -815,8 +815,9 @@ python3 src/skills/ohhdc/ohhdc.py wifi-push-wificommand --ohos-src /path/to/src 
 # 指定本机二进制路径推送（第二个参数为可选 positional target）
 python3 src/skills/ohhdc/ohhdc.py wifi-push-wificommand /path/to/out/rk3568/communication/wifi/wificommand
 
-# 镜像无 wificommand 时：先推送再连 KaiHong / KaiHong@888
+# 镜像无 wificommand 时：先推送再连 KaiHong（口令见 OHHDC_WIFI_PSK）
 export OHOS_SRC=/path/to/src
+export OHHDC_WIFI_PSK=your_psk_here
 python3 src/skills/ohhdc/ohhdc.py wifi-kaihong --push-wificommand
 
 # 已推到默认路径时，也可显式指定设备侧二进制

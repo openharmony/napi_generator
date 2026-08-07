@@ -51,8 +51,8 @@ _SHELL_HARD_PARTS = (
     "xts-develop-master-cycle",
     "xts_shared",
 )
-# 设备 CLI 历史大函数：仅拦文件级 nbnc；函数级交给后续拆分
-_FUNC_SKIP_PARTS = {"ohhdc"}
+# 仅跳过 ohhdc.py 函数级（历史大函数）；ohhdc_ability / ohhdc_wifi 必须过 FUNC
+_FUNC_SKIP_NAMES = {"ohhdc.py"}
 _SELF_SKIP_NAMES = {
     "scan_skill_repo_gate.py",
     "scan_wordstool_docs.py",
@@ -74,7 +74,9 @@ def _shell_hard(path: Path) -> bool:
 def _func_check(path: Path) -> bool:
     if path.name in _SELF_SKIP_NAMES:
         return False
-    return not any(part in _FUNC_SKIP_PARTS for part in path.parts)
+    if path.name in _FUNC_SKIP_NAMES:
+        return False
+    return True
 
 
 def _nbnc_lines(lines: list[str]) -> int:
@@ -171,7 +173,7 @@ def _check_functions(path: Path, lines: list[str], tree: ast.AST) -> list[Hit]:
     for node in ast.walk(tree):
         if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             continue
-        body = lines[node.lineno - 1 : node.end_lineno or node.lineno]
+        body = lines[node.lineno - 1:node.end_lineno or node.lineno]
         nbnc = _nbnc_lines(body)
         cc = _func_cc(node)
         depth = _func_depth(node)
