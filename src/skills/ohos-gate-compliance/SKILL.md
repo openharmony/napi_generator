@@ -60,7 +60,7 @@ version: "1.2.0"
 | `@tc.name:` 冒号、`*/` 空行 | `gate_review.fix_ets_xtscheck`（**保留** `@tc.xxx : ` 冒号格式，勿剥冒号） |
 | Hypium `/*` JSDoc / 仅核对 `@tc.number`↔`it()` | `gate_review._nearest_jsdoc` 接受 `/*`/`/**`；**不**强制 `@tc.name` 等于 `it()`（英文标题场景） |
 | G.FMT.05 长 `import` | `check_line_width` **跳过** `import ` 行（后置批量折行） |
-| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `precheck_skill_commit.sh` | 禁用易歧义产品名与口语化极限词；扫描器源码仅用 `chr()` 拼词；含 **.297**（勿裸写设备命令缩写，叙事用「设备 unittest」）、**.241**（勿强调词）、**doc1**（勿易歧义代词结构，改用「其余」）、**.249/.296/.166/.93/.204/.5** 等 |
+| WordsTool 文档用词 | `scripts/scan_wordstool_docs.py` + `precheck_skill_commit.sh` | 禁用易歧义产品名与口语化极限词；扫描器源码仅用 `chr()` 拼词；含 **.297**（勿裸写设备命令缩写，叙事用「设备 unittest」）、**.241**（勿强调词）、**doc1**（勿易歧义代词结构，改用「其余」）、**.249/.296/.166/.93/.204/.5/.100** 等 |
 | Python 嵌套深度 ≤4 / nbnc ≤50 / 文件 ≤2000 | 拆 helper；`scan_skill_repo_gate.py` 提交前硬拦 | 提交 skill 前跑 `precheck_skill_commit.sh` |
 | G.EDV.04 `shell=True` / bash argv0 | `scan_skill_repo_gate`（gate / develop-master-cycle / xts_shared） | 列表 argv；脚本直跑勿包 bash |
 | G.FUD.05 / 超大函数 `GetXxxProps` | 检测 nbnc>50；修法：按域拆多表 + 多次 `napi_define_properties` | `gate_review.check_cpp_fud05` + `reference.md` |

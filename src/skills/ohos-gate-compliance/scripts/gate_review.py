@@ -594,7 +594,7 @@ def check_wordstool_100(path: Path, text: str) -> list[GateIssue]:
     for i, line in enumerate(text.splitlines(), 1):
         if not _WT100_RE.search(line):
             continue
-        # 版权头 Huawei Device Co. 为历史许可证，不拦
+        # 版权头 / 许可证行（历史 SPDX）不拦
         if "Copyright" in line or "Licensed under" in line:
             continue
         issues.append(

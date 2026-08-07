@@ -97,11 +97,13 @@ def _rules_zh() -> list[tuple[str, re.Pattern[str], str]]:
 
 
 def _rules_en_product() -> list[tuple[str, re.Pattern[str], str]]:
-    """产品名 / IDE / 框架类英文禁用词。"""
+    """产品名 / IDE / 框架 / 厂商品牌类英文禁用词。"""
     spa_fw = _from_codes(86, 117, 101)
     win_chain = _from_codes(109, 105, 110, 103, 119)
     ide_product = _from_codes(67, 117, 114, 115, 111, 114)
     product_lower = _from_codes(104, 97, 114, 109, 111, 110, 121, 111, 115)
+    # WordsTool.100 — 厂商品牌词干（chr 拼接，源码勿裸写）
+    vendor_stem = _from_codes(104, 117, 97, 119, 101, 105)
     return [
         (
             "WordsTool.SPA_FW",
@@ -122,6 +124,11 @@ def _rules_en_product() -> list[tuple[str, re.Pattern[str], str]]:
             "WordsTool.97_PRODUCT",
             re.compile(product_lower, re.I),
             "勿写易歧义产品名；字体族用 sans-serif",
+        ),
+        (
+            "WordsTool.100",
+            re.compile(vendor_stem, re.I),
+            "勿裸写易歧义厂商品牌；CDN/域名改 $rawfile 或 example 路径",
         ),
     ]
 
@@ -263,6 +270,10 @@ def _match_line_rules(
             if _tok_b_hit(line):
                 hits.append(DocHit(path, line_no, rule_id, msg))
             continue
+        if rule_id == "WordsTool.100":
+            # 历史版权 / 许可证行不拦
+            if "Copyright" in line or "Licensed under" in line:
+                continue
         if pat.search(line):
             hits.append(DocHit(path, line_no, rule_id, msg))
     return hits
