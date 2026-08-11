@@ -937,6 +937,75 @@ source …/signing-materials/env.sh   # 禁止 OHOS_HAPSIGNER_RESULT 指工程 a
 [ ] 整测：一次装包连跑；交付前清缓存重编（禁旧包）
 ```
 
+#### 13.12 uicontext_static 批次：SDK26 编译链适配 + onBackPress/NodeIdentity 固件限制（2026-08）
+
+来源：`ace_ets_module_uicontext_static`（45 Pass）：OverlayManagerOptions.onBackPress（1.1/1.2）+ NodeIdentity(nodeRenderState)。
+
+#### 13.12.1 SDK 26 升级后的构建链适配（P0，先查这张表）
+
+| 症状 | 根因 | 动作 |
+|------|------|------|
+| hvigor-static 报 `Unable to find the following components: toolchains:26, ArkTS:26…` | 新 SDK 各包 `oh-uni-package.json` metaVersion=**3.0.2**，hvigor-static 只支持 ≤3.0.1 | 本地临时把 `static/26/{ets,js,native,previewer,toolchains}/oh-uni-package.json` 的 `meta.metaVersion` 改 **3.0.1**（**勿提交 SDK**；skill 自身 `res/` 校验脚本已覆盖） |
+| 同上但 meta 已降级仍找不到 | `sdk.dir` 指错层级 | SDK26 布局为 `<sdkRoot>/<apiVersion>/<component>` → `local.properties` 的 `sdk.dir` 指向 **`.../openharmony/static`**（不带 26）；hvigor 6.22.4（动态）不支持 arkTSVersion 1.2，**静态必须 hvigor-static** |
+| 编译器报 SDK 自己的 d.ets `'CommonMethod' has already imported` | 新 SDK 声明文件在旧编译器下报错 | 属 warning（W0440）**非致命**；以 `BUILD SUCCESSFUL` 为准，勿被 warning 数量误导 |
+| 编不过报 `Failed to proceed to ES2PANDA_STATE_CHECKED` | 导出成员缺类型注解（见 13.12.2） | 批量补注解后重编 |
+| hapbuild 内部 `--daemon` 模式 chokidar 崩 | 文件多 + daemon 监听 | 用 `hvigorw assembleHap --no-daemon` 构建 + `hapbuild.py sign` 单独签名 |
+
+#### 13.12.2 SDK26 编译器规则：导出成员必须显式类型注解（P0）
+
+**规则**：SDK26 静态编译器（ArkTS 1.2）要求**导出**的顶层函数/类成员有显式类型注解，否则 `ESE71336 requires type annotation`。
+
+- 测试入口：`export default function XxxTest(): void`（原无返回类型直接报错）
+- 类静态属性：`static isStartedAbility: boolean = false`
+- 页面公共方法：`showInfo(...): void`；**有返回值的方法必须标真实返回类型**（如 `getComponentRect(...): RectValue`，勿标 void）
+- 批量处理注意 **CRLF 行尾**：`sed -E` 会漏匹配，用 `perl -i -pe 's/...\r?$.../'` 或 python 处理
+- 覆盖范围：**整个工程**（页面 common、models、全部 test 文件），不只新改文件
+
+**hypium 替换**：旧工程 `entry/src/hypium`（gitcode 同步版）在新编译器下大量 `requires type annotation` → **用 SDK 自带 `@ohos/hypium/src_static` 替换**：
+
+```bash
+SDK_H=<SDK>/26/js/build-tools/ace-loader/node_modules/@ohos/hypium/src_static
+cp -rf $SDK_H/* entry/src/hypium/ && rm -rf entry/src/hypium/testAbility entry/src/hypium/testrunner
+```
+
+**禁止提交** `entry/src/hypium/`（gitignore 已含）。
+
+#### 13.12.3 新 API 开发要点（setOverlayManagerOptions / onNodeRenderState）
+
+- `setOverlayManagerOptions(options): boolean` 是 **UIContext 的方法**（不是 OverlayManager）；仅**首次获取 OverlayManager 实例前**调用返回 true，之后返回 false。**注册一次即可**，切换行为用回调读 AppStorage/全局状态（`@StorageLink` 双向绑定）。
+- **回调禁止捕获页面 `this`**（页面销毁后悬空 → SIGSEGV `liboverlayManager_ani.so` 崩溃）：回调体只读写 **AppStorage**；页面状态用 `@StorageLink('key')` 同步显示。
+- `onNodeRenderState(nodeIdentity, cb)` / `offNodeRenderState` 在 **`UIContext.getUIObserver()`** 上（不在 UIContext 本体）。`NodeRenderState` 为 `const enum`（ABOUT_TO_RENDER_IN=0/OUT=1）。
+- 回调触发时机：**注册时立即回调一次**（当前节点状态）；渲染状态变化在**节点挂载/卸载**时（改文本内容不触发，需 `if` 条件渲染切换）。
+- 接口覆盖建议：入参（options 字面量）、返回值（注册返回 boolean 显示到页面断言）、调用（按钮触发）、异常（try-catch 置 fail 状态）。
+
+#### 13.12.4 设备固件限制（onBackPress / nodeRenderState 真机踩坑）
+
+| 现象 | 根因（固件/环境） | 规避 |
+|------|------|------|
+| 注册 onBackPress 后**页面跳转**（replaceUrl/pushUrl）→ `StackOverflowError` 崩溃 | CleanPageOverlay 清 overlay 时调 onBackPress 回调重入 | ① onBackPress describe 放 **List.test 最后**；② 用例间**不跳转**（beforeEach 仅 waitPageReady）；③ 用例结束**关闭 overlay**（新增 close 按钮 removeComponentContent），保证后续跳转无 overlay 可清理 |
+| 同一页面实例**第二次 pressBack 不触发** onBackPress（走 `UIAbility.onBackPressed`） | 长运行进程下 back 事件分发到页面而非 overlay（仅**首次进入的页面实例**可靠） | pressBack 交互**尽力验证**（try-catch 不阻断），核心断言用注册返回值 + overlay 显示 |
+| 点击 overlay 内容后 back 仍到页面 | overlay 内容 **Text 不可聚焦** | overlay 内容用 **Button**（可聚焦） |
+| 节点**销毁**（FrameNode 析构）触发 RenderMonitor 回调 → SIGSEGV 栈溢出 | 固件在 CleanupPipelineResources 中调回调 + HiLog 栈溢出 | 不销毁节点：利用**注册时立即回调**验证 NodeIdentity 注册生效，断言 `callback_` 状态 |
+| 断言失败被 try-catch 捕获后用例仍判 fail | 静态 hypium：断言失败即使被 catch 也计入失败 | 容错步骤用**非断言 helper**（`clickIfExists`：findComponent 判空再 click），禁止 `expect` 包住可跳过步骤 |
+| `it` 用 `async (done)` + done() 断言被吞 | hypium 静态模式（见 §13.11.2） | 统一 `async (): Promise<void> => {}` |
+
+#### 13.12.5 调试效率（重要）
+
+- **单套件调试**：`aa test -b <bundle> -m entry -s unittest OpenHarmonyTestRunner -s timeout 90000 -s class <Suite>`，改码后**只跑新套件**，全量留到最后一次验证（全量 List 第 N 条失败 ≠ 新用例失败）。
+- 页面跳转/交互类用例：beforeAll 用 `ensurePage()`（**已在目标页则不再 replaceUrl**——重复进入会破坏 onBackPress 拦截状态；页面退出后自动重进）。
+- **先清设备残留应用再测试**：`bm dump -a` 找出旧测试包批量卸载，避免跑错 HAP / hilog 串台（残留进程输出会混入 `OHOS_REPORT_RESULT`，校验取到最后一条旧结果导致误判）。
+
+#### 13.12.6 本批提交前检查清单
+
+```
+[ ] build-profile compileSdkVersion="26.0.0" 字符串（本地数字仅临时，提交前恢复）
+[ ] 未纳入 entry/src/hypium/、autosign/、local.properties
+[ ] 全部导出成员显式类型注解；新用例无 done 模式
+[ ] 容错步骤用 clickIfExists 非断言 helper
+[ ] onBackPress describe 在 List 最后；用例结束关闭 overlay
+[ ] 单套件调试全绿 + 整测一次连跑全绿（45/45）
+```
+
 ---
 
 ## 十四、报告与覆盖率整合（2026-06）
