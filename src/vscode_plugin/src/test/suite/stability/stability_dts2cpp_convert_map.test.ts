@@ -27,8 +27,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0001', () => {
     try {
       const result = transCkey2Dtskey('Map<string,number>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0001 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0001 convert output non-empty");
       assert.strictEqual(result, "std::map<std::string, double>", "dts2cpp_convert_map_0001 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0001 execution error: ${String(err)}`);
@@ -42,8 +41,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample11');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, double>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, double>",
         "dts2cpp_convert_map_0002 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0002 execution error: ${String(err)}`);
@@ -55,15 +53,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet11.ts', `
         function sampleRet11(): Map<string,number> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, double>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, double>",
         "dts2cpp_convert_map_0003 return convert output");
       const generated = generateFunctions(converted, 'sampleRet11.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet11') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -77,8 +73,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass11 { field: Map<string,number>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<std::string, double>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<std::string, double>",
         "dts2cpp_convert_map_0004 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0004 execution error: ${String(err)}`);
@@ -90,19 +85,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline11.ts', `
         function pipeline11(p: Map<string,number>): Map<string,number> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, double>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, double>",
         "dts2cpp_convert_map_0005 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, double>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, double>",
         "dts2cpp_convert_map_0005 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline11.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline11') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -113,8 +105,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0006', () => {
     try {
       const result = transCkey2Dtskey('Map<string,string>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0006 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0006 convert output non-empty");
       assert.strictEqual(result, "std::map<std::string, std::string>", "dts2cpp_convert_map_0006 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0006 execution error: ${String(err)}`);
@@ -128,8 +119,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample12');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, std::string>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, std::string>",
         "dts2cpp_convert_map_0007 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0007 execution error: ${String(err)}`);
@@ -141,15 +131,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet12.ts', `
         function sampleRet12(): Map<string,string> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, std::string>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, std::string>",
         "dts2cpp_convert_map_0008 return convert output");
       const generated = generateFunctions(converted, 'sampleRet12.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet12') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -163,8 +151,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass12 { field: Map<string,string>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<std::string, std::string>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<std::string, std::string>",
         "dts2cpp_convert_map_0009 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0009 execution error: ${String(err)}`);
@@ -176,19 +163,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline12.ts', `
         function pipeline12(p: Map<string,string>): Map<string,string> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, std::string>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, std::string>",
         "dts2cpp_convert_map_0010 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, std::string>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, std::string>",
         "dts2cpp_convert_map_0010 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline12.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline12') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -199,8 +183,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0011', () => {
     try {
       const result = transCkey2Dtskey('Map<string,boolean>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0011 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0011 convert output non-empty");
       assert.strictEqual(result, "std::map<std::string, bool>", "dts2cpp_convert_map_0011 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0011 execution error: ${String(err)}`);
@@ -214,8 +197,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample13');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, bool>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, bool>",
         "dts2cpp_convert_map_0012 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0012 execution error: ${String(err)}`);
@@ -227,15 +209,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet13.ts', `
         function sampleRet13(): Map<string,boolean> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, bool>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, bool>",
         "dts2cpp_convert_map_0013 return convert output");
       const generated = generateFunctions(converted, 'sampleRet13.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet13') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -249,8 +229,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass13 { field: Map<string,boolean>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<std::string, bool>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<std::string, bool>",
         "dts2cpp_convert_map_0014 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0014 execution error: ${String(err)}`);
@@ -262,19 +241,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline13.ts', `
         function pipeline13(p: Map<string,boolean>): Map<string,boolean> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, bool>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, bool>",
         "dts2cpp_convert_map_0015 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, bool>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, bool>",
         "dts2cpp_convert_map_0015 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline13.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline13') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -285,8 +261,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0016', () => {
     try {
       const result = transCkey2Dtskey('Map<number,number>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0016 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0016 convert output non-empty");
       assert.strictEqual(result, "std::map<double, double>", "dts2cpp_convert_map_0016 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0016 execution error: ${String(err)}`);
@@ -300,8 +275,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample14');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, double>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, double>",
         "dts2cpp_convert_map_0017 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0017 execution error: ${String(err)}`);
@@ -313,15 +287,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet14.ts', `
         function sampleRet14(): Map<number,number> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, double>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, double>",
         "dts2cpp_convert_map_0018 return convert output");
       const generated = generateFunctions(converted, 'sampleRet14.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet14') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -335,8 +307,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass14 { field: Map<number,number>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<double, double>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<double, double>",
         "dts2cpp_convert_map_0019 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0019 execution error: ${String(err)}`);
@@ -348,19 +319,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline14.ts', `
         function pipeline14(p: Map<number,number>): Map<number,number> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, double>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, double>",
         "dts2cpp_convert_map_0020 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, double>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, double>",
         "dts2cpp_convert_map_0020 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline14.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline14') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -371,8 +339,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0021', () => {
     try {
       const result = transCkey2Dtskey('Map<number,string>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0021 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0021 convert output non-empty");
       assert.strictEqual(result, "std::map<double, std::string>", "dts2cpp_convert_map_0021 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0021 execution error: ${String(err)}`);
@@ -386,8 +353,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample15');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, std::string>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, std::string>",
         "dts2cpp_convert_map_0022 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0022 execution error: ${String(err)}`);
@@ -399,15 +365,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet15.ts', `
         function sampleRet15(): Map<number,string> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, std::string>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, std::string>",
         "dts2cpp_convert_map_0023 return convert output");
       const generated = generateFunctions(converted, 'sampleRet15.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet15') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -421,8 +385,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass15 { field: Map<number,string>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<double, std::string>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<double, std::string>",
         "dts2cpp_convert_map_0024 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0024 execution error: ${String(err)}`);
@@ -434,19 +397,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline15.ts', `
         function pipeline15(p: Map<number,string>): Map<number,string> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, std::string>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, std::string>",
         "dts2cpp_convert_map_0025 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, std::string>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, std::string>",
         "dts2cpp_convert_map_0025 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline15.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline15') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -457,8 +417,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0026', () => {
     try {
       const result = transCkey2Dtskey('Map<number,boolean>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0026 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0026 convert output non-empty");
       assert.strictEqual(result, "std::map<double, bool>", "dts2cpp_convert_map_0026 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0026 execution error: ${String(err)}`);
@@ -472,8 +431,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample16');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, bool>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, bool>",
         "dts2cpp_convert_map_0027 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0027 execution error: ${String(err)}`);
@@ -485,15 +443,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet16.ts', `
         function sampleRet16(): Map<number,boolean> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, bool>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, bool>",
         "dts2cpp_convert_map_0028 return convert output");
       const generated = generateFunctions(converted, 'sampleRet16.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet16') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -507,8 +463,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass16 { field: Map<number,boolean>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<double, bool>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<double, bool>",
         "dts2cpp_convert_map_0029 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0029 execution error: ${String(err)}`);
@@ -520,19 +475,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline16.ts', `
         function pipeline16(p: Map<number,boolean>): Map<number,boolean> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, bool>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, bool>",
         "dts2cpp_convert_map_0030 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, bool>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, bool>",
         "dts2cpp_convert_map_0030 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline16.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline16') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -543,8 +495,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0031', () => {
     try {
       const result = transCkey2Dtskey('Map<string,any>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0031 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0031 convert output non-empty");
       assert.strictEqual(result, "Map<string,any>", "dts2cpp_convert_map_0031 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0031 execution error: ${String(err)}`);
@@ -558,8 +509,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample63');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "Map<string,any>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "Map<string,any>",
         "dts2cpp_convert_map_0032 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0032 execution error: ${String(err)}`);
@@ -571,15 +521,12 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet63.ts', `
         function sampleRet63(): Map<string,any> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "Map<string,any>",
-        "dts2cpp_convert_map_0033 return convert output");
+      assert.strictEqual(converted.funcs[0].returns, "Map<string,any>", "dts2cpp_convert_map_0033 return convert output");
       const generated = generateFunctions(converted, 'sampleRet63.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet63') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -593,8 +540,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass63 { field: Map<string,any>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "Map<string,any>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "Map<string,any>",
         "dts2cpp_convert_map_0034 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0034 execution error: ${String(err)}`);
@@ -606,19 +552,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline63.ts', `
         function pipeline63(p: Map<string,any>): Map<string,any> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "Map<string,any>",
+      assert.strictEqual(converted.funcs[0].returns, "Map<string,any>",
         "dts2cpp_convert_map_0035 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "Map<string,any>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "Map<string,any>",
         "dts2cpp_convert_map_0035 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline63.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline63') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -629,8 +572,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0036', () => {
     try {
       const result = transCkey2Dtskey('Map<string,object>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0036 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0036 convert output non-empty");
       assert.strictEqual(result, "Map<string,object>", "dts2cpp_convert_map_0036 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0036 execution error: ${String(err)}`);
@@ -644,8 +586,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample64');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "Map<string,object>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "Map<string,object>",
         "dts2cpp_convert_map_0037 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0037 execution error: ${String(err)}`);
@@ -657,15 +598,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet64.ts', `
         function sampleRet64(): Map<string,object> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "Map<string,object>",
+      assert.strictEqual(converted.funcs[0].returns, "Map<string,object>",
         "dts2cpp_convert_map_0038 return convert output");
       const generated = generateFunctions(converted, 'sampleRet64.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet64') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -679,8 +618,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass64 { field: Map<string,object>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "Map<string,object>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "Map<string,object>",
         "dts2cpp_convert_map_0039 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0039 execution error: ${String(err)}`);
@@ -692,19 +630,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline64.ts', `
         function pipeline64(p: Map<string,object>): Map<string,object> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "Map<string,object>",
+      assert.strictEqual(converted.funcs[0].returns, "Map<string,object>",
         "dts2cpp_convert_map_0040 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "Map<string,object>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "Map<string,object>",
         "dts2cpp_convert_map_0040 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline64.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline64') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -715,8 +650,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0041', () => {
     try {
       const result = transCkey2Dtskey('Map<object,string>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0041 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0041 convert output non-empty");
       assert.strictEqual(result, "Map<object,string>", "dts2cpp_convert_map_0041 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0041 execution error: ${String(err)}`);
@@ -730,8 +664,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample65');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "Map<object,string>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "Map<object,string>",
         "dts2cpp_convert_map_0042 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0042 execution error: ${String(err)}`);
@@ -743,15 +676,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet65.ts', `
         function sampleRet65(): Map<object,string> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "Map<object,string>",
+      assert.strictEqual(converted.funcs[0].returns, "Map<object,string>",
         "dts2cpp_convert_map_0043 return convert output");
       const generated = generateFunctions(converted, 'sampleRet65.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet65') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -765,8 +696,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass65 { field: Map<object,string>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "Map<object,string>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "Map<object,string>",
         "dts2cpp_convert_map_0044 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0044 execution error: ${String(err)}`);
@@ -778,19 +708,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline65.ts', `
         function pipeline65(p: Map<object,string>): Map<object,string> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "Map<object,string>",
+      assert.strictEqual(converted.funcs[0].returns, "Map<object,string>",
         "dts2cpp_convert_map_0045 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "Map<object,string>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "Map<object,string>",
         "dts2cpp_convert_map_0045 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline65.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline65') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -801,8 +728,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0046', () => {
     try {
       const result = transCkey2Dtskey('Map<any,number>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0046 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0046 convert output non-empty");
       assert.strictEqual(result, "Map<any,number>", "dts2cpp_convert_map_0046 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0046 execution error: ${String(err)}`);
@@ -816,8 +742,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample66');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "Map<any,number>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "Map<any,number>",
         "dts2cpp_convert_map_0047 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0047 execution error: ${String(err)}`);
@@ -829,15 +754,12 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet66.ts', `
         function sampleRet66(): Map<any,number> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "Map<any,number>",
-        "dts2cpp_convert_map_0048 return convert output");
+      assert.strictEqual(converted.funcs[0].returns, "Map<any,number>", "dts2cpp_convert_map_0048 return convert output");
       const generated = generateFunctions(converted, 'sampleRet66.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet66') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -851,8 +773,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass66 { field: Map<any,number>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "Map<any,number>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "Map<any,number>",
         "dts2cpp_convert_map_0049 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0049 execution error: ${String(err)}`);
@@ -864,19 +785,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline66.ts', `
         function pipeline66(p: Map<any,number>): Map<any,number> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "Map<any,number>",
+      assert.strictEqual(converted.funcs[0].returns, "Map<any,number>",
         "dts2cpp_convert_map_0050 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "Map<any,number>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "Map<any,number>",
         "dts2cpp_convert_map_0050 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline66.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline66') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -887,8 +805,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0051', () => {
     try {
       const result = transCkey2Dtskey('Map<string, number>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0051 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0051 convert output non-empty");
       assert.strictEqual(result, "std::map<std::string, double>", "dts2cpp_convert_map_0051 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0051 execution error: ${String(err)}`);
@@ -902,8 +819,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample281');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, double>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, double>",
         "dts2cpp_convert_map_0052 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0052 execution error: ${String(err)}`);
@@ -915,15 +831,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet281.ts', `
         function sampleRet281(): Map<string, number> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, double>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, double>",
         "dts2cpp_convert_map_0053 return convert output");
       const generated = generateFunctions(converted, 'sampleRet281.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet281') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -937,8 +851,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass281 { field: Map<string, number>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<std::string, double>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<std::string, double>",
         "dts2cpp_convert_map_0054 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0054 execution error: ${String(err)}`);
@@ -950,19 +863,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline281.ts', `
         function pipeline281(p: Map<string, number>): Map<string, number> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, double>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, double>",
         "dts2cpp_convert_map_0055 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, double>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, double>",
         "dts2cpp_convert_map_0055 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline281.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline281') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -973,8 +883,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0056', () => {
     try {
       const result = transCkey2Dtskey('Map<string, string>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0056 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0056 convert output non-empty");
       assert.strictEqual(result, "std::map<std::string, std::string>", "dts2cpp_convert_map_0056 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0056 execution error: ${String(err)}`);
@@ -988,8 +897,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample282');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, std::string>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, std::string>",
         "dts2cpp_convert_map_0057 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0057 execution error: ${String(err)}`);
@@ -1001,15 +909,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet282.ts', `
         function sampleRet282(): Map<string, string> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, std::string>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, std::string>",
         "dts2cpp_convert_map_0058 return convert output");
       const generated = generateFunctions(converted, 'sampleRet282.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet282') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1023,8 +929,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass282 { field: Map<string, string>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<std::string, std::string>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<std::string, std::string>",
         "dts2cpp_convert_map_0059 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0059 execution error: ${String(err)}`);
@@ -1036,19 +941,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline282.ts', `
         function pipeline282(p: Map<string, string>): Map<string, string> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, std::string>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, std::string>",
         "dts2cpp_convert_map_0060 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, std::string>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, std::string>",
         "dts2cpp_convert_map_0060 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline282.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline282') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1059,8 +961,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0061', () => {
     try {
       const result = transCkey2Dtskey('Map<string, boolean>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0061 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0061 convert output non-empty");
       assert.strictEqual(result, "std::map<std::string, bool>", "dts2cpp_convert_map_0061 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0061 execution error: ${String(err)}`);
@@ -1074,8 +975,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample283');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, bool>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, bool>",
         "dts2cpp_convert_map_0062 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0062 execution error: ${String(err)}`);
@@ -1087,15 +987,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet283.ts', `
         function sampleRet283(): Map<string, boolean> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, bool>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, bool>",
         "dts2cpp_convert_map_0063 return convert output");
       const generated = generateFunctions(converted, 'sampleRet283.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet283') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1109,8 +1007,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass283 { field: Map<string, boolean>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<std::string, bool>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<std::string, bool>",
         "dts2cpp_convert_map_0064 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0064 execution error: ${String(err)}`);
@@ -1122,19 +1019,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline283.ts', `
         function pipeline283(p: Map<string, boolean>): Map<string, boolean> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<std::string, bool>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<std::string, bool>",
         "dts2cpp_convert_map_0065 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<std::string, bool>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<std::string, bool>",
         "dts2cpp_convert_map_0065 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline283.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline283') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1145,8 +1039,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0066', () => {
     try {
       const result = transCkey2Dtskey('Map<number, number>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0066 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0066 convert output non-empty");
       assert.strictEqual(result, "std::map<double, double>", "dts2cpp_convert_map_0066 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0066 execution error: ${String(err)}`);
@@ -1160,8 +1053,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample284');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, double>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, double>",
         "dts2cpp_convert_map_0067 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0067 execution error: ${String(err)}`);
@@ -1173,15 +1065,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet284.ts', `
         function sampleRet284(): Map<number, number> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, double>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, double>",
         "dts2cpp_convert_map_0068 return convert output");
       const generated = generateFunctions(converted, 'sampleRet284.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet284') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1195,8 +1085,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass284 { field: Map<number, number>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<double, double>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<double, double>",
         "dts2cpp_convert_map_0069 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0069 execution error: ${String(err)}`);
@@ -1208,19 +1097,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline284.ts', `
         function pipeline284(p: Map<number, number>): Map<number, number> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, double>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, double>",
         "dts2cpp_convert_map_0070 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, double>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, double>",
         "dts2cpp_convert_map_0070 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline284.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline284') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1231,8 +1117,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0071', () => {
     try {
       const result = transCkey2Dtskey('Map<number, string>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0071 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0071 convert output non-empty");
       assert.strictEqual(result, "std::map<double, std::string>", "dts2cpp_convert_map_0071 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0071 execution error: ${String(err)}`);
@@ -1246,8 +1131,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample285');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, std::string>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, std::string>",
         "dts2cpp_convert_map_0072 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0072 execution error: ${String(err)}`);
@@ -1259,15 +1143,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet285.ts', `
         function sampleRet285(): Map<number, string> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, std::string>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, std::string>",
         "dts2cpp_convert_map_0073 return convert output");
       const generated = generateFunctions(converted, 'sampleRet285.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet285') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1281,8 +1163,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass285 { field: Map<number, string>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<double, std::string>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<double, std::string>",
         "dts2cpp_convert_map_0074 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0074 execution error: ${String(err)}`);
@@ -1294,19 +1175,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline285.ts', `
         function pipeline285(p: Map<number, string>): Map<number, string> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, std::string>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, std::string>",
         "dts2cpp_convert_map_0075 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, std::string>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, std::string>",
         "dts2cpp_convert_map_0075 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline285.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline285') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1317,8 +1195,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
   test('dts2cpp_convert_map_0076', () => {
     try {
       const result = transCkey2Dtskey('Map<number, boolean>');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_map_0076 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_map_0076 convert output non-empty");
       assert.strictEqual(result, "std::map<double, bool>", "dts2cpp_convert_map_0076 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0076 execution error: ${String(err)}`);
@@ -1332,8 +1209,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample286');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, bool>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, bool>",
         "dts2cpp_convert_map_0077 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0077 execution error: ${String(err)}`);
@@ -1345,15 +1221,13 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('sampleRet286.ts', `
         function sampleRet286(): Map<number, boolean> { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, bool>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, bool>",
         "dts2cpp_convert_map_0078 return convert output");
       const generated = generateFunctions(converted, 'sampleRet286.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet286') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1367,8 +1241,7 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
         class SampleClass286 { field: Map<number, boolean>; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::map<double, bool>",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::map<double, bool>",
         "dts2cpp_convert_map_0079 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_map_0079 execution error: ${String(err)}`);
@@ -1380,19 +1253,16 @@ suite('Stability_DTS2CPP_CONVERT_MAP_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline286.ts', `
         function pipeline286(p: Map<number, boolean>): Map<number, boolean> { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::map<double, bool>",
+      assert.strictEqual(converted.funcs[0].returns, "std::map<double, bool>",
         "dts2cpp_convert_map_0080 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::map<double, bool>",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::map<double, bool>",
         "dts2cpp_convert_map_0080 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline286.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline286') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {

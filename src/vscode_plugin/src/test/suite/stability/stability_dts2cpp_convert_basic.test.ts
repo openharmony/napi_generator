@@ -27,8 +27,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0001', () => {
     try {
       const result = transCkey2Dtskey('number');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0001 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0001 convert output non-empty");
       assert.strictEqual(result, "double", "dts2cpp_convert_basic_0001 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0001 execution error: ${String(err)}`);
@@ -41,8 +40,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample1');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "double",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "double",
         "dts2cpp_convert_basic_0002 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0002 execution error: ${String(err)}`);
@@ -59,8 +57,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet1') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -74,8 +71,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass1 { field: number; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "double",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "double",
         "dts2cpp_convert_basic_0004 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0004 execution error: ${String(err)}`);
@@ -86,19 +82,16 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
     try {
       const converted = transParseObj(doParseTs('pipeline1.ts', `function pipeline1(p: number): number { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "double",
+      assert.strictEqual(converted.funcs[0].returns, "double",
         "dts2cpp_convert_basic_0005 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "double",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "double",
         "dts2cpp_convert_basic_0005 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline1.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline1') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -109,8 +102,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0006', () => {
     try {
       const result = transCkey2Dtskey('string');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0006 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0006 convert output non-empty");
       assert.strictEqual(result, "std::string", "dts2cpp_convert_basic_0006 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0006 execution error: ${String(err)}`);
@@ -123,8 +115,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample2');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::string",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::string",
         "dts2cpp_convert_basic_0007 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0007 execution error: ${String(err)}`);
@@ -141,8 +132,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet2') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -156,8 +146,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass2 { field: string; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::string",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::string",
         "dts2cpp_convert_basic_0009 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0009 execution error: ${String(err)}`);
@@ -168,19 +157,16 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
     try {
       const converted = transParseObj(doParseTs('pipeline2.ts', `function pipeline2(p: string): string { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::string",
+      assert.strictEqual(converted.funcs[0].returns, "std::string",
         "dts2cpp_convert_basic_0010 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::string",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::string",
         "dts2cpp_convert_basic_0010 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline2.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline2') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -191,8 +177,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0011', () => {
     try {
       const result = transCkey2Dtskey('boolean');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0011 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0011 convert output non-empty");
       assert.strictEqual(result, "bool", "dts2cpp_convert_basic_0011 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0011 execution error: ${String(err)}`);
@@ -205,8 +190,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample3');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "bool",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "bool",
         "dts2cpp_convert_basic_0012 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0012 execution error: ${String(err)}`);
@@ -223,8 +207,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet3') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -238,8 +221,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass3 { field: boolean; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "bool",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "bool",
         "dts2cpp_convert_basic_0014 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0014 execution error: ${String(err)}`);
@@ -251,19 +233,15 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline3.ts', `
         function pipeline3(p: boolean): boolean { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "bool",
-        "dts2cpp_convert_basic_0015 pipeline return convert output");
+      assert.strictEqual(converted.funcs[0].returns, "bool", "dts2cpp_convert_basic_0015 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "bool",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "bool",
         "dts2cpp_convert_basic_0015 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline3.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline3') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -274,8 +252,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0016', () => {
     try {
       const result = transCkey2Dtskey('void');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0016 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0016 convert output non-empty");
       assert.strictEqual(result, "void", "dts2cpp_convert_basic_0016 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0016 execution error: ${String(err)}`);
@@ -288,8 +265,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample4');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "void",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "void",
         "dts2cpp_convert_basic_0017 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0017 execution error: ${String(err)}`);
@@ -306,8 +282,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet4') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -321,8 +296,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass4 { field: void; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "void",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "void",
         "dts2cpp_convert_basic_0019 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0019 execution error: ${String(err)}`);
@@ -333,19 +307,15 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
     try {
       const converted = transParseObj(doParseTs('pipeline4.ts', `function pipeline4(p: void): void { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "void",
-        "dts2cpp_convert_basic_0020 pipeline return convert output");
+      assert.strictEqual(converted.funcs[0].returns, "void", "dts2cpp_convert_basic_0020 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "void",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "void",
         "dts2cpp_convert_basic_0020 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline4.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline4') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -356,8 +326,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0021', () => {
     try {
       const result = transCkey2Dtskey('null');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0021 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0021 convert output non-empty");
       assert.strictEqual(result, "null", "dts2cpp_convert_basic_0021 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0021 execution error: ${String(err)}`);
@@ -370,8 +339,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample287');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "null",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "null",
         "dts2cpp_convert_basic_0022 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0022 execution error: ${String(err)}`);
@@ -388,8 +356,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet287') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -403,8 +370,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass287 { field: null; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "null",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "null",
         "dts2cpp_convert_basic_0024 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0024 execution error: ${String(err)}`);
@@ -415,19 +381,15 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
     try {
       const converted = transParseObj(doParseTs('pipeline287.ts', `function pipeline287(p: null): null { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "null",
-        "dts2cpp_convert_basic_0025 pipeline return convert output");
+      assert.strictEqual(converted.funcs[0].returns, "null", "dts2cpp_convert_basic_0025 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "null",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "null",
         "dts2cpp_convert_basic_0025 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline287.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline287') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -438,8 +400,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0026', () => {
     try {
       const result = transCkey2Dtskey('undefined');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0026 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0026 convert output non-empty");
       assert.strictEqual(result, "undefined", "dts2cpp_convert_basic_0026 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0026 execution error: ${String(err)}`);
@@ -452,8 +413,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample288');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "undefined",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "undefined",
         "dts2cpp_convert_basic_0027 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0027 execution error: ${String(err)}`);
@@ -470,8 +430,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet288') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -485,8 +444,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass288 { field: undefined; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "undefined",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "undefined",
         "dts2cpp_convert_basic_0029 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0029 execution error: ${String(err)}`);
@@ -498,19 +456,16 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline288.ts', `
         function pipeline288(p: undefined): undefined { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "undefined",
+      assert.strictEqual(converted.funcs[0].returns, "undefined",
         "dts2cpp_convert_basic_0030 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "undefined",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "undefined",
         "dts2cpp_convert_basic_0030 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline288.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline288') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -521,8 +476,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0031', () => {
     try {
       const result = transCkey2Dtskey('symbol');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0031 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0031 convert output non-empty");
       assert.strictEqual(result, "symbol", "dts2cpp_convert_basic_0031 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0031 execution error: ${String(err)}`);
@@ -535,8 +489,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample289');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "symbol",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "symbol",
         "dts2cpp_convert_basic_0032 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0032 execution error: ${String(err)}`);
@@ -553,8 +506,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet289') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -568,8 +520,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass289 { field: symbol; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "symbol",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "symbol",
         "dts2cpp_convert_basic_0034 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0034 execution error: ${String(err)}`);
@@ -581,19 +532,16 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline289.ts', `
         function pipeline289(p: symbol): symbol { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "symbol",
+      assert.strictEqual(converted.funcs[0].returns, "symbol",
         "dts2cpp_convert_basic_0035 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "symbol",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "symbol",
         "dts2cpp_convert_basic_0035 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline289.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline289') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -604,8 +552,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0036', () => {
     try {
       const result = transCkey2Dtskey('bigint');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0036 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0036 convert output non-empty");
       assert.strictEqual(result, "bigint", "dts2cpp_convert_basic_0036 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0036 execution error: ${String(err)}`);
@@ -618,8 +565,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample290');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "bigint",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "bigint",
         "dts2cpp_convert_basic_0037 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0037 execution error: ${String(err)}`);
@@ -636,8 +582,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet290') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -651,8 +596,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass290 { field: bigint; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "bigint",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "bigint",
         "dts2cpp_convert_basic_0039 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0039 execution error: ${String(err)}`);
@@ -664,19 +608,16 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline290.ts', `
         function pipeline290(p: bigint): bigint { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "bigint",
+      assert.strictEqual(converted.funcs[0].returns, "bigint",
         "dts2cpp_convert_basic_0040 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "bigint",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "bigint",
         "dts2cpp_convert_basic_0040 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline290.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline290') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -687,8 +628,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0041', () => {
     try {
       const result = transCkey2Dtskey('unknown');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0041 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0041 convert output non-empty");
       assert.strictEqual(result, "unknown", "dts2cpp_convert_basic_0041 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0041 execution error: ${String(err)}`);
@@ -701,8 +641,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample291');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "unknown",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "unknown",
         "dts2cpp_convert_basic_0042 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0042 execution error: ${String(err)}`);
@@ -719,8 +658,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet291') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -734,8 +672,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass291 { field: unknown; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "unknown",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "unknown",
         "dts2cpp_convert_basic_0044 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0044 execution error: ${String(err)}`);
@@ -747,19 +684,16 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline291.ts', `
         function pipeline291(p: unknown): unknown { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "unknown",
+      assert.strictEqual(converted.funcs[0].returns, "unknown",
         "dts2cpp_convert_basic_0045 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "unknown",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "unknown",
         "dts2cpp_convert_basic_0045 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline291.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline291') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -770,8 +704,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0046', () => {
     try {
       const result = transCkey2Dtskey('never');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0046 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0046 convert output non-empty");
       assert.strictEqual(result, "never", "dts2cpp_convert_basic_0046 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0046 execution error: ${String(err)}`);
@@ -784,8 +717,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample292');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "never",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "never",
         "dts2cpp_convert_basic_0047 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0047 execution error: ${String(err)}`);
@@ -802,8 +734,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet292') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -817,8 +748,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass292 { field: never; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "never",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "never",
         "dts2cpp_convert_basic_0049 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0049 execution error: ${String(err)}`);
@@ -830,19 +760,16 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline292.ts', `
         function pipeline292(p: never): never { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "never",
+      assert.strictEqual(converted.funcs[0].returns, "never",
         "dts2cpp_convert_basic_0050 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "never",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "never",
         "dts2cpp_convert_basic_0050 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline292.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline292') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -853,8 +780,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0051', () => {
     try {
       const result = transCkey2Dtskey('any');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0051 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0051 convert output non-empty");
       assert.strictEqual(result, "std::any", "dts2cpp_convert_basic_0051 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0051 execution error: ${String(err)}`);
@@ -867,8 +793,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample293');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::any",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::any",
         "dts2cpp_convert_basic_0052 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0052 execution error: ${String(err)}`);
@@ -885,8 +810,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet293') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -900,8 +824,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass293 { field: any; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::any",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::any",
         "dts2cpp_convert_basic_0054 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0054 execution error: ${String(err)}`);
@@ -912,19 +835,16 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
     try {
       const converted = transParseObj(doParseTs('pipeline293.ts', `function pipeline293(p: any): any { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::any",
+      assert.strictEqual(converted.funcs[0].returns, "std::any",
         "dts2cpp_convert_basic_0055 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::any",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::any",
         "dts2cpp_convert_basic_0055 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline293.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline293') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -935,8 +855,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0056', () => {
     try {
       const result = transCkey2Dtskey('object');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0056 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0056 convert output non-empty");
       assert.strictEqual(result, "std::any", "dts2cpp_convert_basic_0056 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0056 execution error: ${String(err)}`);
@@ -949,8 +868,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample294');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::any",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::any",
         "dts2cpp_convert_basic_0057 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0057 execution error: ${String(err)}`);
@@ -967,8 +885,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet294') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -982,8 +899,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass294 { field: object; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "std::any",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "std::any",
         "dts2cpp_convert_basic_0059 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0059 execution error: ${String(err)}`);
@@ -995,19 +911,16 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       const converted = transParseObj(doParseTs('pipeline294.ts', `
         function pipeline294(p: object): object { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "std::any",
+      assert.strictEqual(converted.funcs[0].returns, "std::any",
         "dts2cpp_convert_basic_0060 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "std::any",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "std::any",
         "dts2cpp_convert_basic_0060 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline294.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline294') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1018,8 +931,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
   test('dts2cpp_convert_basic_0061', () => {
     try {
       const result = transCkey2Dtskey('map');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_basic_0061 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_basic_0061 convert output non-empty");
       assert.strictEqual(result, "map", "dts2cpp_convert_basic_0061 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0061 execution error: ${String(err)}`);
@@ -1032,9 +944,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample296');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "map",
-        "dts2cpp_convert_basic_0062 param convert output");
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "map", "dts2cpp_convert_basic_0062 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0062 execution error: ${String(err)}`);
     }
@@ -1050,8 +960,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet296') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1065,8 +974,7 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
         class SampleClass296 { field: map; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "map",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "map",
         "dts2cpp_convert_basic_0064 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_basic_0064 execution error: ${String(err)}`);
@@ -1077,19 +985,15 @@ suite('Stability_DTS2CPP_CONVERT_BASIC_Part01', function() {
     try {
       const converted = transParseObj(doParseTs('pipeline296.ts', `function pipeline296(p: map): map { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "map",
-        "dts2cpp_convert_basic_0065 pipeline return convert output");
+      assert.strictEqual(converted.funcs[0].returns, "map", "dts2cpp_convert_basic_0065 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "map",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "map",
         "dts2cpp_convert_basic_0065 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline296.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline296') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {

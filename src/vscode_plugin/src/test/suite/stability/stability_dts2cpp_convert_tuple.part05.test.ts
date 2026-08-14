@@ -31,8 +31,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample249');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, number, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, number, string]",
         "dts2cpp_convert_tuple_0001 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0001 execution error: ${String(err)}`);
@@ -44,15 +43,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet249.ts', `
         function sampleRet249(): [boolean, number, number, string] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, number, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, number, string]",
         "dts2cpp_convert_tuple_0002 return convert output");
       const generated = generateFunctions(converted, 'sampleRet249.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet249') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -66,8 +63,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass249 { field: [boolean, number, number, string]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, number, number, string]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, number, number, string]",
         "dts2cpp_convert_tuple_0003 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0003 execution error: ${String(err)}`);
@@ -79,19 +75,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('pipeline249.ts', `
         function pipeline249(p: [boolean, number, number, string]): [boolean, number, number, string] { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, number, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, number, string]",
         "dts2cpp_convert_tuple_0004 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, number, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, number, string]",
         "dts2cpp_convert_tuple_0004 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline249.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline249') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -102,8 +95,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0005', () => {
     try {
       const result = transCkey2Dtskey('[boolean, number, number, boolean]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0005 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0005 convert output non-empty");
       assert.strictEqual(result, "[boolean, number, number, boolean]", "dts2cpp_convert_tuple_0005 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0005 execution error: ${String(err)}`);
@@ -117,8 +109,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample250');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, number, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, number, boolean]",
         "dts2cpp_convert_tuple_0006 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0006 execution error: ${String(err)}`);
@@ -130,15 +121,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet250.ts', `
         function sampleRet250(): [boolean, number, number, boolean] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, number, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, number, boolean]",
         "dts2cpp_convert_tuple_0007 return convert output");
       const generated = generateFunctions(converted, 'sampleRet250.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet250') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -152,8 +141,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass250 { field: [boolean, number, number, boolean]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, number, number, boolean]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, number, number, boolean]",
         "dts2cpp_convert_tuple_0008 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0008 execution error: ${String(err)}`);
@@ -166,19 +154,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline250(p: [boolean, number, number, boolean]): [boolean, number, number, boolean] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, number, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, number, boolean]",
         "dts2cpp_convert_tuple_0009 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, number, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, number, boolean]",
         "dts2cpp_convert_tuple_0009 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline250.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline250') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -189,8 +174,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0010', () => {
     try {
       const result = transCkey2Dtskey('[boolean, number, string, number]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0010 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0010 convert output non-empty");
       assert.strictEqual(result, "[boolean, number, string, number]", "dts2cpp_convert_tuple_0010 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0010 execution error: ${String(err)}`);
@@ -204,8 +188,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample251');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, string, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, string, number]",
         "dts2cpp_convert_tuple_0011 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0011 execution error: ${String(err)}`);
@@ -217,15 +200,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet251.ts', `
         function sampleRet251(): [boolean, number, string, number] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, string, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, string, number]",
         "dts2cpp_convert_tuple_0012 return convert output");
       const generated = generateFunctions(converted, 'sampleRet251.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet251') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -239,8 +220,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass251 { field: [boolean, number, string, number]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, number, string, number]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, number, string, number]",
         "dts2cpp_convert_tuple_0013 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0013 execution error: ${String(err)}`);
@@ -252,19 +232,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('pipeline251.ts', `
         function pipeline251(p: [boolean, number, string, number]): [boolean, number, string, number] { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, string, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, string, number]",
         "dts2cpp_convert_tuple_0014 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, string, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, string, number]",
         "dts2cpp_convert_tuple_0014 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline251.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline251') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -275,8 +252,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0015', () => {
     try {
       const result = transCkey2Dtskey('[boolean, number, string, string]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0015 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0015 convert output non-empty");
       assert.strictEqual(result, "[boolean, number, string, string]", "dts2cpp_convert_tuple_0015 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0015 execution error: ${String(err)}`);
@@ -290,8 +266,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample252');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, string, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, string, string]",
         "dts2cpp_convert_tuple_0016 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0016 execution error: ${String(err)}`);
@@ -303,15 +278,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet252.ts', `
         function sampleRet252(): [boolean, number, string, string] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, string, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, string, string]",
         "dts2cpp_convert_tuple_0017 return convert output");
       const generated = generateFunctions(converted, 'sampleRet252.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet252') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -325,8 +298,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass252 { field: [boolean, number, string, string]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, number, string, string]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, number, string, string]",
         "dts2cpp_convert_tuple_0018 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0018 execution error: ${String(err)}`);
@@ -338,19 +310,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('pipeline252.ts', `
         function pipeline252(p: [boolean, number, string, string]): [boolean, number, string, string] { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, string, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, string, string]",
         "dts2cpp_convert_tuple_0019 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, string, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, string, string]",
         "dts2cpp_convert_tuple_0019 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline252.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline252') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -361,8 +330,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0020', () => {
     try {
       const result = transCkey2Dtskey('[boolean, number, string, boolean]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0020 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0020 convert output non-empty");
       assert.strictEqual(result, "[boolean, number, string, boolean]", "dts2cpp_convert_tuple_0020 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0020 execution error: ${String(err)}`);
@@ -376,8 +344,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample253');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, string, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, string, boolean]",
         "dts2cpp_convert_tuple_0021 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0021 execution error: ${String(err)}`);
@@ -389,15 +356,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet253.ts', `
         function sampleRet253(): [boolean, number, string, boolean] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, string, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, string, boolean]",
         "dts2cpp_convert_tuple_0022 return convert output");
       const generated = generateFunctions(converted, 'sampleRet253.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet253') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -411,8 +376,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass253 { field: [boolean, number, string, boolean]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, number, string, boolean]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, number, string, boolean]",
         "dts2cpp_convert_tuple_0023 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0023 execution error: ${String(err)}`);
@@ -425,19 +389,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline253(p: [boolean, number, string, boolean]): [boolean, number, string, boolean] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, string, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, string, boolean]",
         "dts2cpp_convert_tuple_0024 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, string, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, string, boolean]",
         "dts2cpp_convert_tuple_0024 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline253.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline253') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -448,8 +409,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0025', () => {
     try {
       const result = transCkey2Dtskey('[boolean, number, boolean, number]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0025 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0025 convert output non-empty");
       assert.strictEqual(result, "[boolean, number, boolean, number]", "dts2cpp_convert_tuple_0025 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0025 execution error: ${String(err)}`);
@@ -463,8 +423,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample254');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, boolean, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, boolean, number]",
         "dts2cpp_convert_tuple_0026 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0026 execution error: ${String(err)}`);
@@ -476,15 +435,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet254.ts', `
         function sampleRet254(): [boolean, number, boolean, number] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, boolean, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, boolean, number]",
         "dts2cpp_convert_tuple_0027 return convert output");
       const generated = generateFunctions(converted, 'sampleRet254.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet254') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -498,8 +455,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass254 { field: [boolean, number, boolean, number]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, number, boolean, number]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, number, boolean, number]",
         "dts2cpp_convert_tuple_0028 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0028 execution error: ${String(err)}`);
@@ -512,19 +468,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline254(p: [boolean, number, boolean, number]): [boolean, number, boolean, number] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, boolean, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, boolean, number]",
         "dts2cpp_convert_tuple_0029 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, boolean, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, boolean, number]",
         "dts2cpp_convert_tuple_0029 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline254.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline254') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -535,8 +488,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0030', () => {
     try {
       const result = transCkey2Dtskey('[boolean, number, boolean, string]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0030 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0030 convert output non-empty");
       assert.strictEqual(result, "[boolean, number, boolean, string]", "dts2cpp_convert_tuple_0030 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0030 execution error: ${String(err)}`);
@@ -550,8 +502,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample255');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, boolean, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, boolean, string]",
         "dts2cpp_convert_tuple_0031 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0031 execution error: ${String(err)}`);
@@ -563,15 +514,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet255.ts', `
         function sampleRet255(): [boolean, number, boolean, string] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, boolean, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, boolean, string]",
         "dts2cpp_convert_tuple_0032 return convert output");
       const generated = generateFunctions(converted, 'sampleRet255.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet255') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -585,8 +534,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass255 { field: [boolean, number, boolean, string]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, number, boolean, string]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, number, boolean, string]",
         "dts2cpp_convert_tuple_0033 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0033 execution error: ${String(err)}`);
@@ -599,19 +547,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline255(p: [boolean, number, boolean, string]): [boolean, number, boolean, string] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, boolean, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, boolean, string]",
         "dts2cpp_convert_tuple_0034 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, boolean, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, boolean, string]",
         "dts2cpp_convert_tuple_0034 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline255.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline255') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -622,8 +567,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0035', () => {
     try {
       const result = transCkey2Dtskey('[boolean, number, boolean, boolean]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0035 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0035 convert output non-empty");
       assert.strictEqual(result, "[boolean, number, boolean, boolean]", "dts2cpp_convert_tuple_0035 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0035 execution error: ${String(err)}`);
@@ -637,8 +581,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample256');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, boolean, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, boolean, boolean]",
         "dts2cpp_convert_tuple_0036 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0036 execution error: ${String(err)}`);
@@ -650,15 +593,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet256.ts', `
         function sampleRet256(): [boolean, number, boolean, boolean] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, boolean, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, boolean, boolean]",
         "dts2cpp_convert_tuple_0037 return convert output");
       const generated = generateFunctions(converted, 'sampleRet256.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet256') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -672,8 +613,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass256 { field: [boolean, number, boolean, boolean]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, number, boolean, boolean]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, number, boolean, boolean]",
         "dts2cpp_convert_tuple_0038 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0038 execution error: ${String(err)}`);
@@ -686,19 +626,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline256(p: [boolean, number, boolean, boolean]): [boolean, number, boolean, boolean] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, number, boolean, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, number, boolean, boolean]",
         "dts2cpp_convert_tuple_0039 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, number, boolean, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, number, boolean, boolean]",
         "dts2cpp_convert_tuple_0039 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline256.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline256') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -709,8 +646,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0040', () => {
     try {
       const result = transCkey2Dtskey('[boolean, string, number, number]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0040 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0040 convert output non-empty");
       assert.strictEqual(result, "[boolean, string, number, number]", "dts2cpp_convert_tuple_0040 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0040 execution error: ${String(err)}`);
@@ -724,8 +660,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample257');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, number, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, number, number]",
         "dts2cpp_convert_tuple_0041 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0041 execution error: ${String(err)}`);
@@ -737,15 +672,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet257.ts', `
         function sampleRet257(): [boolean, string, number, number] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, number, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, number, number]",
         "dts2cpp_convert_tuple_0042 return convert output");
       const generated = generateFunctions(converted, 'sampleRet257.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet257') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -759,8 +692,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass257 { field: [boolean, string, number, number]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, string, number, number]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, string, number, number]",
         "dts2cpp_convert_tuple_0043 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0043 execution error: ${String(err)}`);
@@ -772,19 +704,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('pipeline257.ts', `
         function pipeline257(p: [boolean, string, number, number]): [boolean, string, number, number] { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, number, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, number, number]",
         "dts2cpp_convert_tuple_0044 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, number, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, number, number]",
         "dts2cpp_convert_tuple_0044 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline257.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline257') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -795,8 +724,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0045', () => {
     try {
       const result = transCkey2Dtskey('[boolean, string, number, string]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0045 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0045 convert output non-empty");
       assert.strictEqual(result, "[boolean, string, number, string]", "dts2cpp_convert_tuple_0045 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0045 execution error: ${String(err)}`);
@@ -810,8 +738,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample258');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, number, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, number, string]",
         "dts2cpp_convert_tuple_0046 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0046 execution error: ${String(err)}`);
@@ -823,15 +750,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet258.ts', `
         function sampleRet258(): [boolean, string, number, string] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, number, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, number, string]",
         "dts2cpp_convert_tuple_0047 return convert output");
       const generated = generateFunctions(converted, 'sampleRet258.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet258') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -845,8 +770,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass258 { field: [boolean, string, number, string]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, string, number, string]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, string, number, string]",
         "dts2cpp_convert_tuple_0048 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0048 execution error: ${String(err)}`);
@@ -858,19 +782,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('pipeline258.ts', `
         function pipeline258(p: [boolean, string, number, string]): [boolean, string, number, string] { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, number, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, number, string]",
         "dts2cpp_convert_tuple_0049 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, number, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, number, string]",
         "dts2cpp_convert_tuple_0049 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline258.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline258') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -881,8 +802,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0050', () => {
     try {
       const result = transCkey2Dtskey('[boolean, string, number, boolean]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0050 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0050 convert output non-empty");
       assert.strictEqual(result, "[boolean, string, number, boolean]", "dts2cpp_convert_tuple_0050 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0050 execution error: ${String(err)}`);
@@ -896,8 +816,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample259');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, number, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, number, boolean]",
         "dts2cpp_convert_tuple_0051 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0051 execution error: ${String(err)}`);
@@ -909,15 +828,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet259.ts', `
         function sampleRet259(): [boolean, string, number, boolean] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, number, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, number, boolean]",
         "dts2cpp_convert_tuple_0052 return convert output");
       const generated = generateFunctions(converted, 'sampleRet259.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet259') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -931,8 +848,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass259 { field: [boolean, string, number, boolean]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, string, number, boolean]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, string, number, boolean]",
         "dts2cpp_convert_tuple_0053 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0053 execution error: ${String(err)}`);
@@ -945,19 +861,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline259(p: [boolean, string, number, boolean]): [boolean, string, number, boolean] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, number, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, number, boolean]",
         "dts2cpp_convert_tuple_0054 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, number, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, number, boolean]",
         "dts2cpp_convert_tuple_0054 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline259.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline259') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -968,8 +881,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0055', () => {
     try {
       const result = transCkey2Dtskey('[boolean, string, string, number]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0055 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0055 convert output non-empty");
       assert.strictEqual(result, "[boolean, string, string, number]", "dts2cpp_convert_tuple_0055 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0055 execution error: ${String(err)}`);
@@ -983,8 +895,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample260');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, string, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, string, number]",
         "dts2cpp_convert_tuple_0056 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0056 execution error: ${String(err)}`);
@@ -996,15 +907,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet260.ts', `
         function sampleRet260(): [boolean, string, string, number] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, string, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, string, number]",
         "dts2cpp_convert_tuple_0057 return convert output");
       const generated = generateFunctions(converted, 'sampleRet260.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet260') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1018,8 +927,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass260 { field: [boolean, string, string, number]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, string, string, number]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, string, string, number]",
         "dts2cpp_convert_tuple_0058 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0058 execution error: ${String(err)}`);
@@ -1031,19 +939,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('pipeline260.ts', `
         function pipeline260(p: [boolean, string, string, number]): [boolean, string, string, number] { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, string, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, string, number]",
         "dts2cpp_convert_tuple_0059 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, string, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, string, number]",
         "dts2cpp_convert_tuple_0059 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline260.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline260') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1054,8 +959,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0060', () => {
     try {
       const result = transCkey2Dtskey('[boolean, string, string, string]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0060 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0060 convert output non-empty");
       assert.strictEqual(result, "[boolean, string, string, string]", "dts2cpp_convert_tuple_0060 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0060 execution error: ${String(err)}`);
@@ -1069,8 +973,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample261');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, string, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, string, string]",
         "dts2cpp_convert_tuple_0061 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0061 execution error: ${String(err)}`);
@@ -1082,15 +985,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet261.ts', `
         function sampleRet261(): [boolean, string, string, string] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, string, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, string, string]",
         "dts2cpp_convert_tuple_0062 return convert output");
       const generated = generateFunctions(converted, 'sampleRet261.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet261') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1104,8 +1005,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass261 { field: [boolean, string, string, string]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, string, string, string]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, string, string, string]",
         "dts2cpp_convert_tuple_0063 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0063 execution error: ${String(err)}`);
@@ -1117,19 +1017,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('pipeline261.ts', `
         function pipeline261(p: [boolean, string, string, string]): [boolean, string, string, string] { return p; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, string, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, string, string]",
         "dts2cpp_convert_tuple_0064 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, string, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, string, string]",
         "dts2cpp_convert_tuple_0064 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline261.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline261') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1140,8 +1037,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0065', () => {
     try {
       const result = transCkey2Dtskey('[boolean, string, string, boolean]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0065 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0065 convert output non-empty");
       assert.strictEqual(result, "[boolean, string, string, boolean]", "dts2cpp_convert_tuple_0065 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0065 execution error: ${String(err)}`);
@@ -1155,8 +1051,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample262');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, string, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, string, boolean]",
         "dts2cpp_convert_tuple_0066 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0066 execution error: ${String(err)}`);
@@ -1168,15 +1063,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet262.ts', `
         function sampleRet262(): [boolean, string, string, boolean] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, string, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, string, boolean]",
         "dts2cpp_convert_tuple_0067 return convert output");
       const generated = generateFunctions(converted, 'sampleRet262.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet262') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1190,8 +1083,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass262 { field: [boolean, string, string, boolean]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, string, string, boolean]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, string, string, boolean]",
         "dts2cpp_convert_tuple_0068 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0068 execution error: ${String(err)}`);
@@ -1204,19 +1096,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline262(p: [boolean, string, string, boolean]): [boolean, string, string, boolean] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, string, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, string, boolean]",
         "dts2cpp_convert_tuple_0069 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, string, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, string, boolean]",
         "dts2cpp_convert_tuple_0069 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline262.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline262') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1227,8 +1116,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0070', () => {
     try {
       const result = transCkey2Dtskey('[boolean, string, boolean, number]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0070 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0070 convert output non-empty");
       assert.strictEqual(result, "[boolean, string, boolean, number]", "dts2cpp_convert_tuple_0070 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0070 execution error: ${String(err)}`);
@@ -1242,8 +1130,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample263');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, boolean, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, boolean, number]",
         "dts2cpp_convert_tuple_0071 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0071 execution error: ${String(err)}`);
@@ -1255,15 +1142,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet263.ts', `
         function sampleRet263(): [boolean, string, boolean, number] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, boolean, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, boolean, number]",
         "dts2cpp_convert_tuple_0072 return convert output");
       const generated = generateFunctions(converted, 'sampleRet263.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet263') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1277,8 +1162,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass263 { field: [boolean, string, boolean, number]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, string, boolean, number]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, string, boolean, number]",
         "dts2cpp_convert_tuple_0073 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0073 execution error: ${String(err)}`);
@@ -1291,19 +1175,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline263(p: [boolean, string, boolean, number]): [boolean, string, boolean, number] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, boolean, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, boolean, number]",
         "dts2cpp_convert_tuple_0074 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, boolean, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, boolean, number]",
         "dts2cpp_convert_tuple_0074 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline263.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline263') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1314,8 +1195,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0075', () => {
     try {
       const result = transCkey2Dtskey('[boolean, string, boolean, string]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0075 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0075 convert output non-empty");
       assert.strictEqual(result, "[boolean, string, boolean, string]", "dts2cpp_convert_tuple_0075 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0075 execution error: ${String(err)}`);
@@ -1329,8 +1209,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample264');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, boolean, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, boolean, string]",
         "dts2cpp_convert_tuple_0076 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0076 execution error: ${String(err)}`);
@@ -1342,15 +1221,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet264.ts', `
         function sampleRet264(): [boolean, string, boolean, string] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, boolean, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, boolean, string]",
         "dts2cpp_convert_tuple_0077 return convert output");
       const generated = generateFunctions(converted, 'sampleRet264.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet264') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1364,8 +1241,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass264 { field: [boolean, string, boolean, string]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, string, boolean, string]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, string, boolean, string]",
         "dts2cpp_convert_tuple_0078 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0078 execution error: ${String(err)}`);
@@ -1378,19 +1254,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline264(p: [boolean, string, boolean, string]): [boolean, string, boolean, string] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, boolean, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, boolean, string]",
         "dts2cpp_convert_tuple_0079 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, boolean, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, boolean, string]",
         "dts2cpp_convert_tuple_0079 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline264.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline264') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1401,8 +1274,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0080', () => {
     try {
       const result = transCkey2Dtskey('[boolean, string, boolean, boolean]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0080 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0080 convert output non-empty");
       assert.strictEqual(result, "[boolean, string, boolean, boolean]", "dts2cpp_convert_tuple_0080 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0080 execution error: ${String(err)}`);
@@ -1416,8 +1288,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample265');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, boolean, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, boolean, boolean]",
         "dts2cpp_convert_tuple_0081 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0081 execution error: ${String(err)}`);
@@ -1429,15 +1300,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet265.ts', `
         function sampleRet265(): [boolean, string, boolean, boolean] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, boolean, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, boolean, boolean]",
         "dts2cpp_convert_tuple_0082 return convert output");
       const generated = generateFunctions(converted, 'sampleRet265.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet265') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1451,8 +1320,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass265 { field: [boolean, string, boolean, boolean]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, string, boolean, boolean]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, string, boolean, boolean]",
         "dts2cpp_convert_tuple_0083 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0083 execution error: ${String(err)}`);
@@ -1465,19 +1333,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline265(p: [boolean, string, boolean, boolean]): [boolean, string, boolean, boolean] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, string, boolean, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, string, boolean, boolean]",
         "dts2cpp_convert_tuple_0084 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, string, boolean, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, string, boolean, boolean]",
         "dts2cpp_convert_tuple_0084 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline265.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline265') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1488,8 +1353,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0085', () => {
     try {
       const result = transCkey2Dtskey('[boolean, boolean, number, number]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0085 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0085 convert output non-empty");
       assert.strictEqual(result, "[boolean, boolean, number, number]", "dts2cpp_convert_tuple_0085 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0085 execution error: ${String(err)}`);
@@ -1503,8 +1367,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample266');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, number, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, number, number]",
         "dts2cpp_convert_tuple_0086 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0086 execution error: ${String(err)}`);
@@ -1516,15 +1379,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet266.ts', `
         function sampleRet266(): [boolean, boolean, number, number] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, number, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, number, number]",
         "dts2cpp_convert_tuple_0087 return convert output");
       const generated = generateFunctions(converted, 'sampleRet266.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet266') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1538,8 +1399,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass266 { field: [boolean, boolean, number, number]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, boolean, number, number]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, boolean, number, number]",
         "dts2cpp_convert_tuple_0088 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0088 execution error: ${String(err)}`);
@@ -1552,19 +1412,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline266(p: [boolean, boolean, number, number]): [boolean, boolean, number, number] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, number, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, number, number]",
         "dts2cpp_convert_tuple_0089 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, number, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, number, number]",
         "dts2cpp_convert_tuple_0089 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline266.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline266') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1575,8 +1432,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0090', () => {
     try {
       const result = transCkey2Dtskey('[boolean, boolean, number, string]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0090 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0090 convert output non-empty");
       assert.strictEqual(result, "[boolean, boolean, number, string]", "dts2cpp_convert_tuple_0090 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0090 execution error: ${String(err)}`);
@@ -1590,8 +1446,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample267');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, number, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, number, string]",
         "dts2cpp_convert_tuple_0091 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0091 execution error: ${String(err)}`);
@@ -1603,15 +1458,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet267.ts', `
         function sampleRet267(): [boolean, boolean, number, string] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, number, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, number, string]",
         "dts2cpp_convert_tuple_0092 return convert output");
       const generated = generateFunctions(converted, 'sampleRet267.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet267') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1625,8 +1478,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass267 { field: [boolean, boolean, number, string]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, boolean, number, string]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, boolean, number, string]",
         "dts2cpp_convert_tuple_0093 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0093 execution error: ${String(err)}`);
@@ -1639,19 +1491,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline267(p: [boolean, boolean, number, string]): [boolean, boolean, number, string] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, number, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, number, string]",
         "dts2cpp_convert_tuple_0094 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, number, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, number, string]",
         "dts2cpp_convert_tuple_0094 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline267.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline267') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1662,8 +1511,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0095', () => {
     try {
       const result = transCkey2Dtskey('[boolean, boolean, number, boolean]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0095 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0095 convert output non-empty");
       assert.strictEqual(result, "[boolean, boolean, number, boolean]", "dts2cpp_convert_tuple_0095 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0095 execution error: ${String(err)}`);
@@ -1677,8 +1525,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample268');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, number, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, number, boolean]",
         "dts2cpp_convert_tuple_0096 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0096 execution error: ${String(err)}`);
@@ -1690,15 +1537,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet268.ts', `
         function sampleRet268(): [boolean, boolean, number, boolean] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, number, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, number, boolean]",
         "dts2cpp_convert_tuple_0097 return convert output");
       const generated = generateFunctions(converted, 'sampleRet268.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet268') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1712,8 +1557,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass268 { field: [boolean, boolean, number, boolean]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, boolean, number, boolean]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, boolean, number, boolean]",
         "dts2cpp_convert_tuple_0098 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0098 execution error: ${String(err)}`);
@@ -1726,19 +1570,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline268(p: [boolean, boolean, number, boolean]): [boolean, boolean, number, boolean] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, number, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, number, boolean]",
         "dts2cpp_convert_tuple_0099 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, number, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, number, boolean]",
         "dts2cpp_convert_tuple_0099 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline268.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline268') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1749,8 +1590,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0100', () => {
     try {
       const result = transCkey2Dtskey('[boolean, boolean, string, number]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0100 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0100 convert output non-empty");
       assert.strictEqual(result, "[boolean, boolean, string, number]", "dts2cpp_convert_tuple_0100 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0100 execution error: ${String(err)}`);
@@ -1764,8 +1604,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample269');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, string, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, string, number]",
         "dts2cpp_convert_tuple_0101 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0101 execution error: ${String(err)}`);
@@ -1777,15 +1616,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet269.ts', `
         function sampleRet269(): [boolean, boolean, string, number] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, string, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, string, number]",
         "dts2cpp_convert_tuple_0102 return convert output");
       const generated = generateFunctions(converted, 'sampleRet269.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet269') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1799,8 +1636,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass269 { field: [boolean, boolean, string, number]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, boolean, string, number]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, boolean, string, number]",
         "dts2cpp_convert_tuple_0103 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0103 execution error: ${String(err)}`);
@@ -1813,19 +1649,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline269(p: [boolean, boolean, string, number]): [boolean, boolean, string, number] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, string, number]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, string, number]",
         "dts2cpp_convert_tuple_0104 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, string, number]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, string, number]",
         "dts2cpp_convert_tuple_0104 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline269.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline269') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1836,8 +1669,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0105', () => {
     try {
       const result = transCkey2Dtskey('[boolean, boolean, string, string]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0105 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0105 convert output non-empty");
       assert.strictEqual(result, "[boolean, boolean, string, string]", "dts2cpp_convert_tuple_0105 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0105 execution error: ${String(err)}`);
@@ -1851,8 +1683,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample270');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, string, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, string, string]",
         "dts2cpp_convert_tuple_0106 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0106 execution error: ${String(err)}`);
@@ -1864,15 +1695,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet270.ts', `
         function sampleRet270(): [boolean, boolean, string, string] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, string, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, string, string]",
         "dts2cpp_convert_tuple_0107 return convert output");
       const generated = generateFunctions(converted, 'sampleRet270.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet270') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1886,8 +1715,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass270 { field: [boolean, boolean, string, string]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, boolean, string, string]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, boolean, string, string]",
         "dts2cpp_convert_tuple_0108 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0108 execution error: ${String(err)}`);
@@ -1900,19 +1728,16 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         function pipeline270(p: [boolean, boolean, string, string]): [boolean, boolean, string, string] { return p;
         }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, string, string]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, string, string]",
         "dts2cpp_convert_tuple_0109 pipeline return convert output");
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, string, string]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, string, string]",
         "dts2cpp_convert_tuple_0109 pipeline param convert output");
       const generated = generateFunctions(converted, 'pipeline270.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('pipeline270') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1923,8 +1748,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
   test('dts2cpp_convert_tuple_0110', () => {
     try {
       const result = transCkey2Dtskey('[boolean, boolean, string, boolean]');
-      assert.ok(typeof result === 'string' && result.length > 0,
-        "dts2cpp_convert_tuple_0110 convert output non-empty");
+      assert.ok(typeof result === 'string' && result.length > 0, "dts2cpp_convert_tuple_0110 convert output non-empty");
       assert.strictEqual(result, "[boolean, boolean, string, boolean]", "dts2cpp_convert_tuple_0110 convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0110 execution error: ${String(err)}`);
@@ -1938,8 +1762,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       assert.ok(Array.isArray(converted.funcs) && converted.funcs.length >= 1, 'must parse function');
       assert.strictEqual(converted.funcs[0].name, 'sample271');
       assert.ok(converted.funcs[0].parameters.length >= 1);
-      assert.strictEqual(converted.funcs[0].parameters[0].type,
-        "[boolean, boolean, string, boolean]",
+      assert.strictEqual(converted.funcs[0].parameters[0].type, "[boolean, boolean, string, boolean]",
         "dts2cpp_convert_tuple_0111 param convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0111 execution error: ${String(err)}`);
@@ -1951,15 +1774,13 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
       const converted = transParseObj(doParseTs('sampleRet271.ts', `
         function sampleRet271(): [boolean, boolean, string, boolean] { return undefined as any; }`));
       assert.ok(converted.funcs.length >= 1);
-      assert.strictEqual(converted.funcs[0].returns,
-        "[boolean, boolean, string, boolean]",
+      assert.strictEqual(converted.funcs[0].returns, "[boolean, boolean, string, boolean]",
         "dts2cpp_convert_tuple_0112 return convert output");
       const generated = generateFunctions(converted, 'sampleRet271.d.ts');
       assert.ok(generated !== undefined && typeof generated === 'object');
       assert.ok(typeof generated.napiHContent === 'string' && generated.napiHContent.length > 0,
         "napiH must be non-empty");
-      assert.ok(typeof generated.napiCppContent === 'string',
-        "napiCpp must exist");
+      assert.ok(typeof generated.napiCppContent === 'string', "napiCpp must exist");
       assert.ok(generated.napiHContent.includes('sampleRet271') || generated.napiCppContent.length > 0,
         "gen must reference function");
     } catch (err) {
@@ -1973,8 +1794,7 @@ suite('Stability_DTS2CPP_CONVERT_TUPLE_Part05', function() {
         class SampleClass271 { field: [boolean, boolean, string, boolean]; method(): void {} }`));
       assert.ok(converted.classes.length >= 1, 'parse must produce class');
       assert.ok(converted.classes[0].variableList.length >= 1);
-      assert.strictEqual(converted.classes[0].variableList[0].type,
-        "[boolean, boolean, string, boolean]",
+      assert.strictEqual(converted.classes[0].variableList[0].type, "[boolean, boolean, string, boolean]",
         "dts2cpp_convert_tuple_0113 class convert output");
     } catch (err) {
       assert.fail(`dts2cpp_convert_tuple_0113 execution error: ${String(err)}`);

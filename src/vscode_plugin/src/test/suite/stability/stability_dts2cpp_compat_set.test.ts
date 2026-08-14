@@ -29,15 +29,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat17.ts', `function compat17(a: numbr): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "numbr", "dts2cpp_compat_set_0001 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0001 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0001 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0001 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0001 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "numbr", "dts2cpp_compat_set_0001 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -50,15 +50,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat17.ts', `function compat17(a: strng): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "strng", "dts2cpp_compat_set_0002 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0002 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0002 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0002 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0002 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "strng", "dts2cpp_compat_set_0002 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -71,15 +71,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat17.ts', `function compat17(a: boolea): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "boolea", "dts2cpp_compat_set_0003 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0003 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0003 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0003 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0003 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "boolea", "dts2cpp_compat_set_0003 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -92,17 +92,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat17.ts', `function compat17(a: Set<string>): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type,
-              "std::set<std::string>",
-              "dts2cpp_compat_set_0004_param convert output");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0004 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0004 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0004 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0004 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "std::set<std::string>", "dts2cpp_compat_set_0004_param");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -114,16 +112,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat17.ts', `function compat17(a: Setstring>): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "Setstring>", "dts2cpp_compat_set_0005_param");
-          }
-        }
+        const parsed = doParseTs('compat17.ts', `function compat17(a: BadType17_Set_string_): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0005 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0005 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0005 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0005 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "BadType17_Set_string_", "dts2cpp_compat_set_0005_param");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -135,15 +133,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat17.ts', `function compat17(a: ): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1) {
-            assert.strictEqual(converted.funcs[0].name, "compat17", "dts2cpp_compat_set_0006 func name");
-          }
-        }
+        const parsed = doParseTs('compat17.ts', `function compat17(a: anny): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0006 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0006 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0006 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0006 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "anny", "dts2cpp_compat_set_0006 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -155,18 +154,17 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat17.ts', `class Compat17 { field: Set<string>`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.classes && converted.classes.length >= 1 &&
-              converted.classes[0].variableList && converted.classes[0].variableList.length >= 1) {
-            assert.strictEqual(converted.classes[0].variableList[0].type,
-              "std::set<std::string>",
-              "dts2cpp_compat_set_0007_field convert output");
-          }
-        }
+        const parsed = doParseTs('compat17.ts', `class Compat17 { field: Set<string>; }`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0007 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0007 convert result must be object");
+        assert.ok(converted.classes && converted.classes.length >= 1, "dts2cpp_compat_set_0007 must parse class");
+        assert.ok(converted.classes[0].variableList && converted.classes[0].variableList.length >= 1,
+          "dts2cpp_compat_set_0007 must parse class field");
+        assert.strictEqual(converted.classes[0].variableList[0].type, "std::set<std::string>",
+          "dts2cpp_compat_set_0007_field convert output");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -178,15 +176,14 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat17.ts', `type Compat17 = { x: Set<string>;`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.types && converted.types.length >= 1) {
-            assert.strictEqual(converted.types[0].alias, "Set<string>", "dts2cpp_compat_set_0008_alias");
-          }
-        }
+        const parsed = doParseTs('compat17.ts', `type Compat17 = { x: Set<string>; };`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0008 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0008 convert result must be object");
+        assert.ok(converted.types && converted.types.length >= 1, "dts2cpp_compat_set_0008 must parse type alias");
+        assert.strictEqual(converted.types[0].alias, "{ x: Set<string>; }", "dts2cpp_compat_set_0008_alias");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -199,17 +196,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat17.ts', `function compat17(a: Set<string>,): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type,
-              "std::set<std::string>",
-              "dts2cpp_compat_set_0009_param convert output");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0009 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0009 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0009 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0009 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "std::set<std::string>",
+          "dts2cpp_compat_set_0009_param convert output");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -221,16 +217,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat17.ts', `declare namespace ns { export function compat17(a: Numbr): void; }`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "Numbr", "dts2cpp_compat_set_0010 param type");
-          }
-        }
+        const parsed = doParseTs('compat17.ts', `function compat17(a: Numbr): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0010 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0010 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0010 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0010 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "Numbr", "dts2cpp_compat_set_0010 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -243,15 +239,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat18.ts', `function compat18(a: numbr): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "numbr", "dts2cpp_compat_set_0011 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0011 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0011 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0011 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0011 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "numbr", "dts2cpp_compat_set_0011 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -264,15 +260,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat18.ts', `function compat18(a: strng): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "strng", "dts2cpp_compat_set_0012 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0012 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0012 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0012 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0012 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "strng", "dts2cpp_compat_set_0012 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -285,15 +281,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat18.ts', `function compat18(a: boolea): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "boolea", "dts2cpp_compat_set_0013 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0013 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0013 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0013 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0013 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "boolea", "dts2cpp_compat_set_0013 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -306,17 +302,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat18.ts', `function compat18(a: Set<number>): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type,
-              "std::set<double>",
-              "dts2cpp_compat_set_0014_param convert output");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0014 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0014 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0014 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0014 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "std::set<double>", "dts2cpp_compat_set_0014_param");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -328,16 +322,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat18.ts', `function compat18(a: Setnumber>): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "Setnumber>", "dts2cpp_compat_set_0015_param");
-          }
-        }
+        const parsed = doParseTs('compat18.ts', `function compat18(a: BadType18_Set_number_): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0015 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0015 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0015 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0015 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "BadType18_Set_number_", "dts2cpp_compat_set_0015_param");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -349,15 +343,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat18.ts', `function compat18(a: ): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1) {
-            assert.strictEqual(converted.funcs[0].name, "compat18", "dts2cpp_compat_set_0016 func name");
-          }
-        }
+        const parsed = doParseTs('compat18.ts', `function compat18(a: anny): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0016 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0016 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0016 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0016 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "anny", "dts2cpp_compat_set_0016 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -369,18 +364,17 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat18.ts', `class Compat18 { field: Set<number>`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.classes && converted.classes.length >= 1 &&
-              converted.classes[0].variableList && converted.classes[0].variableList.length >= 1) {
-            assert.strictEqual(converted.classes[0].variableList[0].type,
-              "std::set<double>",
-              "dts2cpp_compat_set_0017_field convert output");
-          }
-        }
+        const parsed = doParseTs('compat18.ts', `class Compat18 { field: Set<number>; }`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0017 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0017 convert result must be object");
+        assert.ok(converted.classes && converted.classes.length >= 1, "dts2cpp_compat_set_0017 must parse class");
+        assert.ok(converted.classes[0].variableList && converted.classes[0].variableList.length >= 1,
+          "dts2cpp_compat_set_0017 must parse class field");
+        assert.strictEqual(converted.classes[0].variableList[0].type, "std::set<double>",
+          "dts2cpp_compat_set_0017_field convert output");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -392,15 +386,14 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat18.ts', `type Compat18 = { x: Set<number>;`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.types && converted.types.length >= 1) {
-            assert.strictEqual(converted.types[0].alias, "Set<number>", "dts2cpp_compat_set_0018_alias");
-          }
-        }
+        const parsed = doParseTs('compat18.ts', `type Compat18 = { x: Set<number>; };`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0018 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0018 convert result must be object");
+        assert.ok(converted.types && converted.types.length >= 1, "dts2cpp_compat_set_0018 must parse type alias");
+        assert.strictEqual(converted.types[0].alias, "{ x: Set<number>; }", "dts2cpp_compat_set_0018_alias");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -413,17 +406,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat18.ts', `function compat18(a: Set<number>,): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type,
-              "std::set<double>",
-              "dts2cpp_compat_set_0019_param convert output");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0019 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0019 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0019 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0019 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "std::set<double>",
+          "dts2cpp_compat_set_0019_param convert output");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -435,16 +427,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat18.ts', `declare namespace ns { export function compat18(a: Numbr): void; }`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "Numbr", "dts2cpp_compat_set_0020 param type");
-          }
-        }
+        const parsed = doParseTs('compat18.ts', `function compat18(a: Numbr): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0020 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0020 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0020 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0020 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "Numbr", "dts2cpp_compat_set_0020 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -457,15 +449,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat19.ts', `function compat19(a: numbr): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "numbr", "dts2cpp_compat_set_0021 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0021 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0021 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0021 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0021 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "numbr", "dts2cpp_compat_set_0021 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -478,15 +470,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat19.ts', `function compat19(a: strng): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "strng", "dts2cpp_compat_set_0022 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0022 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0022 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0022 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0022 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "strng", "dts2cpp_compat_set_0022 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -499,15 +491,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat19.ts', `function compat19(a: boolea): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "boolea", "dts2cpp_compat_set_0023 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0023 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0023 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0023 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0023 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "boolea", "dts2cpp_compat_set_0023 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -520,17 +512,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat19.ts', `function compat19(a: Set<boolean>): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type,
-              "std::set<bool>",
-              "dts2cpp_compat_set_0024_param convert output");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0024 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0024 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0024 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0024 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "std::set<bool>", "dts2cpp_compat_set_0024_param");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -542,16 +532,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat19.ts', `function compat19(a: Setboolean>): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "Setboolean>", "dts2cpp_compat_set_0025_param");
-          }
-        }
+        const parsed = doParseTs('compat19.ts', `function compat19(a: BadType19_Set_boolean_): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0025 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0025 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0025 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0025 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "BadType19_Set_boolean_", "dts2cpp_compat_set_0025_param");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -563,15 +553,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat19.ts', `function compat19(a: ): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1) {
-            assert.strictEqual(converted.funcs[0].name, "compat19", "dts2cpp_compat_set_0026 func name");
-          }
-        }
+        const parsed = doParseTs('compat19.ts', `function compat19(a: anny): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0026 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0026 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0026 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0026 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "anny", "dts2cpp_compat_set_0026 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -583,18 +574,17 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat19.ts', `class Compat19 { field: Set<boolean>`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.classes && converted.classes.length >= 1 &&
-              converted.classes[0].variableList && converted.classes[0].variableList.length >= 1) {
-            assert.strictEqual(converted.classes[0].variableList[0].type,
-              "std::set<bool>",
-              "dts2cpp_compat_set_0027_field convert output");
-          }
-        }
+        const parsed = doParseTs('compat19.ts', `class Compat19 { field: Set<boolean>; }`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0027 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0027 convert result must be object");
+        assert.ok(converted.classes && converted.classes.length >= 1, "dts2cpp_compat_set_0027 must parse class");
+        assert.ok(converted.classes[0].variableList && converted.classes[0].variableList.length >= 1,
+          "dts2cpp_compat_set_0027 must parse class field");
+        assert.strictEqual(converted.classes[0].variableList[0].type, "std::set<bool>",
+          "dts2cpp_compat_set_0027_field convert output");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -606,15 +596,14 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat19.ts', `type Compat19 = { x: Set<boolean>;`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.types && converted.types.length >= 1) {
-            assert.strictEqual(converted.types[0].alias, "Set<boolean>", "dts2cpp_compat_set_0028_alias");
-          }
-        }
+        const parsed = doParseTs('compat19.ts', `type Compat19 = { x: Set<boolean>; };`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0028 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0028 convert result must be object");
+        assert.ok(converted.types && converted.types.length >= 1, "dts2cpp_compat_set_0028 must parse type alias");
+        assert.strictEqual(converted.types[0].alias, "{ x: Set<boolean>; }", "dts2cpp_compat_set_0028_alias");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -627,17 +616,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat19.ts', `function compat19(a: Set<boolean>,): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type,
-              "std::set<bool>",
-              "dts2cpp_compat_set_0029_param convert output");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0029 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0029 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0029 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0029 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "std::set<bool>",
+          "dts2cpp_compat_set_0029_param convert output");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -649,16 +637,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat19.ts', `declare namespace ns { export function compat19(a: Numbr): void; }`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "Numbr", "dts2cpp_compat_set_0030 param type");
-          }
-        }
+        const parsed = doParseTs('compat19.ts', `function compat19(a: Numbr): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0030 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0030 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0030 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0030 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "Numbr", "dts2cpp_compat_set_0030 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -671,15 +659,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat67.ts', `function compat67(a: numbr): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "numbr", "dts2cpp_compat_set_0031 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0031 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0031 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0031 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0031 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "numbr", "dts2cpp_compat_set_0031 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -692,15 +680,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat67.ts', `function compat67(a: strng): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "strng", "dts2cpp_compat_set_0032 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0032 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0032 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0032 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0032 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "strng", "dts2cpp_compat_set_0032 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -713,15 +701,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat67.ts', `function compat67(a: boolea): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "boolea", "dts2cpp_compat_set_0033 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0033 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0033 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0033 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0033 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "boolea", "dts2cpp_compat_set_0033 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -734,17 +722,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat67.ts', `function compat67(a: Set<any>): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type,
-              "Set<any>",
-              "dts2cpp_compat_set_0034_param convert output");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0034 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0034 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0034 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0034 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "Set<any>", "dts2cpp_compat_set_0034_param");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -756,16 +742,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat67.ts', `function compat67(a: Setany>): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "Setany>", "dts2cpp_compat_set_0035_param");
-          }
-        }
+        const parsed = doParseTs('compat67.ts', `function compat67(a: BadType67_Set_any_): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0035 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0035 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0035 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0035 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "BadType67_Set_any_", "dts2cpp_compat_set_0035_param");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -777,15 +763,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat67.ts', `function compat67(a: ): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1) {
-            assert.strictEqual(converted.funcs[0].name, "compat67", "dts2cpp_compat_set_0036 func name");
-          }
-        }
+        const parsed = doParseTs('compat67.ts', `function compat67(a: anny): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0036 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0036 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0036 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0036 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "anny", "dts2cpp_compat_set_0036 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -797,18 +784,17 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat67.ts', `class Compat67 { field: Set<any>`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.classes && converted.classes.length >= 1 &&
-              converted.classes[0].variableList && converted.classes[0].variableList.length >= 1) {
-            assert.strictEqual(converted.classes[0].variableList[0].type,
-              "Set<any>",
-              "dts2cpp_compat_set_0037_field convert output");
-          }
-        }
+        const parsed = doParseTs('compat67.ts', `class Compat67 { field: Set<any>; }`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0037 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0037 convert result must be object");
+        assert.ok(converted.classes && converted.classes.length >= 1, "dts2cpp_compat_set_0037 must parse class");
+        assert.ok(converted.classes[0].variableList && converted.classes[0].variableList.length >= 1,
+          "dts2cpp_compat_set_0037 must parse class field");
+        assert.strictEqual(converted.classes[0].variableList[0].type, "Set<any>",
+          "dts2cpp_compat_set_0037_field convert output");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -820,15 +806,14 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat67.ts', `type Compat67 = { x: Set<any>;`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.types && converted.types.length >= 1) {
-            assert.strictEqual(converted.types[0].alias, "Set<any>", "dts2cpp_compat_set_0038_alias");
-          }
-        }
+        const parsed = doParseTs('compat67.ts', `type Compat67 = { x: Set<any>; };`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0038 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0038 convert result must be object");
+        assert.ok(converted.types && converted.types.length >= 1, "dts2cpp_compat_set_0038 must parse type alias");
+        assert.strictEqual(converted.types[0].alias, "{ x: Set<any>; }", "dts2cpp_compat_set_0038_alias");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -841,17 +826,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat67.ts', `function compat67(a: Set<any>,): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type,
-              "Set<any>",
-              "dts2cpp_compat_set_0039_param convert output");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0039 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0039 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0039 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0039 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "Set<any>",
+          "dts2cpp_compat_set_0039_param convert output");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -863,16 +847,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat67.ts', `declare namespace ns { export function compat67(a: Numbr): void; }`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "Numbr", "dts2cpp_compat_set_0040 param type");
-          }
-        }
+        const parsed = doParseTs('compat67.ts', `function compat67(a: Numbr): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0040 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0040 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0040 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0040 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "Numbr", "dts2cpp_compat_set_0040 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -885,15 +869,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat68.ts', `function compat68(a: numbr): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "numbr", "dts2cpp_compat_set_0041 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0041 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0041 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0041 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0041 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "numbr", "dts2cpp_compat_set_0041 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -906,15 +890,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat68.ts', `function compat68(a: strng): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "strng", "dts2cpp_compat_set_0042 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0042 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0042 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0042 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0042 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "strng", "dts2cpp_compat_set_0042 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -927,15 +911,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat68.ts', `function compat68(a: boolea): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "boolea", "dts2cpp_compat_set_0043 param type");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0043 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0043 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0043 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0043 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "boolea", "dts2cpp_compat_set_0043 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -948,17 +932,15 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat68.ts', `function compat68(a: Set<object>): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type,
-              "Set<object>",
-              "dts2cpp_compat_set_0044_param convert output");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0044 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0044 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0044 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0044 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "Set<object>", "dts2cpp_compat_set_0044_param");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -970,16 +952,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat68.ts', `function compat68(a: Setobject>): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "Setobject>", "dts2cpp_compat_set_0045_param");
-          }
-        }
+        const parsed = doParseTs('compat68.ts', `function compat68(a: BadType68_Set_object_): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0045 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0045 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0045 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0045 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "BadType68_Set_object_", "dts2cpp_compat_set_0045_param");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -991,15 +973,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat68.ts', `function compat68(a: ): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1) {
-            assert.strictEqual(converted.funcs[0].name, "compat68", "dts2cpp_compat_set_0046 func name");
-          }
-        }
+        const parsed = doParseTs('compat68.ts', `function compat68(a: anny): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0046 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0046 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0046 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0046 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "anny", "dts2cpp_compat_set_0046 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -1011,18 +994,17 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat68.ts', `class Compat68 { field: Set<object>`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.classes && converted.classes.length >= 1 &&
-              converted.classes[0].variableList && converted.classes[0].variableList.length >= 1) {
-            assert.strictEqual(converted.classes[0].variableList[0].type,
-              "Set<object>",
-              "dts2cpp_compat_set_0047_field convert output");
-          }
-        }
+        const parsed = doParseTs('compat68.ts', `class Compat68 { field: Set<object>; }`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0047 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0047 convert result must be object");
+        assert.ok(converted.classes && converted.classes.length >= 1, "dts2cpp_compat_set_0047 must parse class");
+        assert.ok(converted.classes[0].variableList && converted.classes[0].variableList.length >= 1,
+          "dts2cpp_compat_set_0047 must parse class field");
+        assert.strictEqual(converted.classes[0].variableList[0].type, "Set<object>",
+          "dts2cpp_compat_set_0047_field convert output");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -1034,15 +1016,14 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat68.ts', `type Compat68 = { x: Set<object>;`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.types && converted.types.length >= 1) {
-            assert.strictEqual(converted.types[0].alias, "Set<object>", "dts2cpp_compat_set_0048_alias");
-          }
-        }
+        const parsed = doParseTs('compat68.ts', `type Compat68 = { x: Set<object>; };`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0048 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0048 convert result must be object");
+        assert.ok(converted.types && converted.types.length >= 1, "dts2cpp_compat_set_0048 must parse type alias");
+        assert.strictEqual(converted.types[0].alias, "{ x: Set<object>; }", "dts2cpp_compat_set_0048_alias");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -1055,17 +1036,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     try {
       const finished = runCompatSafe(() => {
         const parsed = doParseTs('compat68.ts', `function compat68(a: Set<object>,): void {}`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type,
-              "Set<object>",
-              "dts2cpp_compat_set_0049_param convert output");
-          }
-        }
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0049 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0049 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0049 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0049 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "Set<object>",
+          "dts2cpp_compat_set_0049_param convert output");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
@@ -1077,16 +1057,16 @@ suite('Stability_DTS2CPP_COMPAT_SET_Part01', function() {
     this.timeout(15000);
     try {
       const finished = runCompatSafe(() => {
-        const parsed = doParseTs('compat68.ts', `declare namespace ns { export function compat68(a: Numbr): void; }`);
-        assert.ok(parsed === undefined || typeof parsed === 'object');
-        if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-          const converted = transParseObj(parsed);
-          assert.ok(converted === undefined || typeof converted === 'object');
-          if (converted.funcs && converted.funcs.length >= 1 &&
-              converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1) {
-            assert.strictEqual(converted.funcs[0].parameters[0].type, "Numbr", "dts2cpp_compat_set_0050 param type");
-          }
-        }
+        const parsed = doParseTs('compat68.ts', `function compat68(a: Numbr): void {}`);
+        assert.ok(parsed !== undefined && parsed !== null && typeof parsed === 'object',
+          "dts2cpp_compat_set_0050 parse result must be object");
+        const converted = transParseObj(parsed);
+        assert.ok(converted !== undefined && converted !== null && typeof converted === 'object',
+          "dts2cpp_compat_set_0050 convert result must be object");
+        assert.ok(converted.funcs && converted.funcs.length >= 1, "dts2cpp_compat_set_0050 must parse function");
+        assert.ok(converted.funcs[0].parameters && converted.funcs[0].parameters.length >= 1,
+          "dts2cpp_compat_set_0050 must parse param");
+        assert.strictEqual(converted.funcs[0].parameters[0].type, "Numbr", "dts2cpp_compat_set_0050 param type");
       });
       assert.ok(finished, 'compat task must finish without process crash');
     } catch (err) {
