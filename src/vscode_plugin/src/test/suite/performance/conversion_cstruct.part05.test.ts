@@ -289,7 +289,7 @@ typedef struct SMulti7_4 { int v4; } SMulti7_4;
 typedef struct SMulti7_5 { int v5; } SMulti7_5;
 typedef struct SMulti7_6 { int v6; } SMulti7_6;
 typedef struct SMulti7_7 { int v7; } SMulti7_7;
-typedef struct SMulti7_8 { int v8; } SMulti7_8;
+typedef struct SMulti7_8 { int x8; } SMulti7_8;
 typedef struct SMulti7_9 { int v9; } SMulti7_9;`);
         }
       });
@@ -346,7 +346,7 @@ typedef struct SMulti7_9 { int v9; } SMulti7_9;`);
       assert.strictEqual(objList[8].name, 'SMulti7_8');
       assert.strictEqual(objList[8].alias, 'SMulti7_8');
       assert.strictEqual(objList[8].members.length, 1);
-      assert.strictEqual(objList[8].members[0].name, 'v8');
+      assert.strictEqual(objList[8].members[0].name, 'x8');
       assert.strictEqual(objList[8].members[0].type, 'int');
       assert.strictEqual(objList[8].functions.length, 0);
       assert.strictEqual(objList[9].name, 'SMulti7_9');
@@ -386,7 +386,7 @@ typedef struct SMulti8_4 { int v4; } SMulti8_4;
 typedef struct SMulti8_5 { int v5; } SMulti8_5;
 typedef struct SMulti8_6 { int v6; } SMulti8_6;
 typedef struct SMulti8_7 { int v7; } SMulti8_7;
-typedef struct SMulti8_8 { int v8; } SMulti8_8;
+typedef struct SMulti8_8 { int x8; } SMulti8_8;
 typedef struct SMulti8_9 { int v9; } SMulti8_9;
 typedef struct SMulti8_10 { int v10; } SMulti8_10;
 typedef struct SMulti8_11 { int v11; } SMulti8_11;`);
@@ -445,7 +445,7 @@ typedef struct SMulti8_11 { int v11; } SMulti8_11;`);
       assert.strictEqual(objList[8].name, 'SMulti8_8');
       assert.strictEqual(objList[8].alias, 'SMulti8_8');
       assert.strictEqual(objList[8].members.length, 1);
-      assert.strictEqual(objList[8].members[0].name, 'v8');
+      assert.strictEqual(objList[8].members[0].name, 'x8');
       assert.strictEqual(objList[8].members[0].type, 'int');
       assert.strictEqual(objList[8].functions.length, 0);
       assert.strictEqual(objList[9].name, 'SMulti8_9');
@@ -497,7 +497,7 @@ typedef struct SMulti9_4 { int v4; } SMulti9_4;
 typedef struct SMulti9_5 { int v5; } SMulti9_5;
 typedef struct SMulti9_6 { int v6; } SMulti9_6;
 typedef struct SMulti9_7 { int v7; } SMulti9_7;
-typedef struct SMulti9_8 { int v8; } SMulti9_8;
+typedef struct SMulti9_8 { int x8; } SMulti9_8;
 typedef struct SMulti9_9 { int v9; } SMulti9_9;
 typedef struct SMulti9_10 { int v10; } SMulti9_10;
 typedef struct SMulti9_11 { int v11; } SMulti9_11;
@@ -559,7 +559,7 @@ typedef struct SMulti9_14 { int v14; } SMulti9_14;`);
       assert.strictEqual(objList[8].name, 'SMulti9_8');
       assert.strictEqual(objList[8].alias, 'SMulti9_8');
       assert.strictEqual(objList[8].members.length, 1);
-      assert.strictEqual(objList[8].members[0].name, 'v8');
+      assert.strictEqual(objList[8].members[0].name, 'x8');
       assert.strictEqual(objList[8].members[0].type, 'int');
       assert.strictEqual(objList[8].functions.length, 0);
       assert.strictEqual(objList[9].name, 'SMulti9_9');
@@ -1332,7 +1332,7 @@ typedef struct NsSt9 {
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
           objList = parseStruct(`typedef struct IotaSt8 {
-    int v8;
+    int x8;
     std::string s8;
 } IotaSt8;`);
         }
@@ -1342,7 +1342,7 @@ typedef struct NsSt9 {
       assert.strictEqual(objList[0].name, 'IotaSt8');
       assert.strictEqual(objList[0].alias, 'IotaSt8');
       assert.strictEqual(objList[0].members.length, 2);
-      assert.strictEqual(objList[0].members[0].name, 'v8');
+      assert.strictEqual(objList[0].members[0].name, 'x8');
       assert.strictEqual(objList[0].members[0].type, 'int');
       assert.strictEqual(objList[0].members[1].name, 's8');
       assert.strictEqual(objList[0].members[1].type, 'std::string');
