@@ -1061,7 +1061,7 @@ int fn7(int a);
 namespace lv1_8 {
 namespace lv2_8 {
 namespace lv3_8 {
-const int V8 = 8;
+const int X8 = 8;
 typedef struct S8 { int v; } S8;
 int fn8(int a);
 }
