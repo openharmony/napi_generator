@@ -262,7 +262,7 @@ suite('Performance_C_Struct_Suite', function ()
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
           objList = parseStruct(`typedef struct Big10 {
-    int v0; int v1; int v2; int v3; int v4; int v5; int v6; int v7; int v8; int v9;
+    int v0; int v1; int v2; int v3; int v4; int v5; int v6; int v7; int x8; int v9;
     int v10; int v11; int v12; int v13; int v14; int v15; int v16; int v17; int v18; int v19;
 } Big10;`);
         }
@@ -288,7 +288,7 @@ suite('Performance_C_Struct_Suite', function ()
       assert.strictEqual(objList[0].members[6].type, 'int');
       assert.strictEqual(objList[0].members[7].name, 'v7');
       assert.strictEqual(objList[0].members[7].type, 'int');
-      assert.strictEqual(objList[0].members[8].name, 'v8');
+      assert.strictEqual(objList[0].members[8].name, 'x8');
       assert.strictEqual(objList[0].members[8].type, 'int');
       assert.strictEqual(objList[0].members[9].name, 'v9');
       assert.strictEqual(objList[0].members[9].type, 'int');
