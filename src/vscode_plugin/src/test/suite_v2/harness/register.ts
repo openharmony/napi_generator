@@ -1,0 +1,68 @@
+/*
+ * Copyright (c) 2024 Shenzhen Kaihong Digital Industry Development Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import * as assert from 'assert';
+import { getTCrossB1 } from '../catalog/expand';
+import { Scenario, SuiteKind, TcMeta } from '../catalog/types';
+import { buildTcMeta, formatTcComment } from './tc_meta';
+
+export type CaseRunner = (sc: Scenario) => void;
+
+function resolveSmokeLimit(total: number): { list: Scenario[]; wantAll: boolean } {
+  const all = getTCrossB1();
+  const full = process.env.SUITE_V2_FULL === '1';
+  const smokeRaw = process.env.SUITE_V2_SMOKE;
+  const wantAll = full || smokeRaw === '0' || smokeRaw === 'all';
+  const limit = wantAll ? total : Math.max(1, parseInt(smokeRaw || '200', 10) || 200);
+  return { list: all.slice(0, limit), wantAll };
+}
+
+function assertTcComment(tcComment: string, meta: TcMeta): void {
+  assert.strictEqual(tcComment, formatTcComment(meta));
+  assert.ok(tcComment.includes(`@tc.number ${meta.number}`));
+  assert.ok(tcComment.includes(`@tc.name ${meta.name}`));
+  assert.ok(tcComment.includes(`@tc.desc ${meta.desc}`));
+  assert.ok(tcComment.includes(`@tc.size ${meta.size}`));
+  assert.ok(tcComment.includes('@tc.type Function'));
+  assert.ok(tcComment.includes(`@tc.level ${meta.level}`));
+  assert.ok(tcComment.includes(`@pair ${meta.pair}`));
+}
+
+function registerOneCase(suiteKind: SuiteKind, sc: Scenario, index: number, runner: CaseRunner): void {
+  const meta = buildTcMeta(suiteKind, sc, index);
+  const tcComment = formatTcComment(meta);
+  test(meta.name, function () {
+    assertTcComment(tcComment, meta);
+    (this as { tc?: TcMeta }).tc = meta;
+    runner(sc);
+  });
+}
+
+/**
+ * 表驱动注册：每条用例携带 commonlibrary 风格 @tc.* 元数据。
+ * - test 标题 = @tc.name
+ * - 函数体内保留完整注释块字符串并校验字段（便于报告与对账）
+ * - SUITE_V2_SMOKE=N 时仅注册前 N 条（全量计数仍由 count_gate 保证）
+ */
+export function registerTableDriven(suiteKind: SuiteKind, suiteTitle: string, runner: CaseRunner): void {
+  const all = getTCrossB1();
+  const { list, wantAll } = resolveSmokeLimit(all.length);
+  console.log(`[suite_v2] ${suiteTitle}: register ${list.length}/${all.length} (full=${wantAll})`);
+
+  suite(suiteTitle, function () {
+    this.timeout(30000);
+    list.forEach((sc, index) => registerOneCase(suiteKind, sc, index, runner));
+  });
+}

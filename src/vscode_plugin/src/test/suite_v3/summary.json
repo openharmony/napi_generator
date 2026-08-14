@@ -1,0 +1,13 @@
+{
+  "mode": "sample",
+  "limit": 300,
+  "catalogTotal": 200000,
+  "P": 300,
+  "G": 300,
+  "I": 300,
+  "total": 900,
+  "files": 45,
+  "maxItPerFile": 100,
+  "style": "expanded-inline-it",
+  "generatedAt": "2026-08-05T09:22:11.038Z"
+}
