@@ -123,7 +123,7 @@ suite('Performance_C_Enum_Suite', function ()
       const localLoop = PARSE_LOOP;
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
-          objList = parseEnum(`typedef enum { A8, B8, C8, D8 } CodeT;`);
+          objList = parseEnum(`typedef enum { A8, B8, C8, X8 } CodeT;`);
         }
       });
       assert.ok(objList);
@@ -134,7 +134,7 @@ suite('Performance_C_Enum_Suite', function ()
       assert.strictEqual(objList[0].members[0], 'A8');
       assert.strictEqual(objList[0].members[1], 'B8');
       assert.strictEqual(objList[0].members[2], 'C8');
-      assert.strictEqual(objList[0].members[3], 'D8');
+      assert.strictEqual(objList[0].members[3], 'X8');
       assert.ok(
         elapsed < PARSE_TOTAL_MS,
         `c_enum_0232 总耗时 ${elapsed}ms 超过阈值 ${PARSE_TOTAL_MS}ms（次数 ${localLoop}）`
