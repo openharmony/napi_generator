@@ -398,7 +398,7 @@ suite('Performance_C_Class_Suite', function ()
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
           objList = parseClass(`class Iota8 {
-    int v8;
+    int x8;
     std::string s8;
     void m8();
 };`);
@@ -409,7 +409,7 @@ suite('Performance_C_Class_Suite', function ()
       assert.strictEqual(objList[0].name, 'Iota8');
       assert.strictEqual(objList[0].alias, '');
       assert.strictEqual(objList[0].variableList.length, 2);
-      assert.strictEqual(objList[0].variableList[0].name, 'v8');
+      assert.strictEqual(objList[0].variableList[0].name, 'x8');
       assert.strictEqual(objList[0].variableList[0].type, 'int');
       assert.strictEqual(objList[0].variableList[1].name, 's8');
       assert.strictEqual(objList[0].variableList[1].type, 'std::string');
