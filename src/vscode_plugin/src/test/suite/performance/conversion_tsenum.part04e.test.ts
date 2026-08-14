@@ -286,7 +286,7 @@ suite('Performance_DTS2CPP_Enum_Suite', function ()
         M5 = "v5",
         M6 = "v6",
         M7 = "v7",
-        M8 = "v8",
+        M8 = "x8",
         M9 = "v9",
         M10 = "v10",
         M11 = "v11",
@@ -357,7 +357,7 @@ suite('Performance_DTS2CPP_Enum_Suite', function ()
       assert.strictEqual(enumItem_0!.values![5], '"v5"');
       assert.strictEqual(enumItem_0!.values![6], '"v6"');
       assert.strictEqual(enumItem_0!.values![7], '"v7"');
-      assert.strictEqual(enumItem_0!.values![8], '"v8"');
+      assert.strictEqual(enumItem_0!.values![8], '"x8"');
       assert.strictEqual(enumItem_0!.values![9], '"v9"');
       assert.strictEqual(enumItem_0!.values![10], '"v10"');
       assert.strictEqual(enumItem_0!.values![11], '"v11"');
@@ -1023,7 +1023,7 @@ suite('Performance_DTS2CPP_Enum_Suite', function ()
         M5 = "v5",
         M6 = "v6",
         M7 = "v7",
-        M8 = "v8",
+        M8 = "x8",
         M9 = "v9",
         M10 = "v10",
         M11 = "v11",
@@ -1096,7 +1096,7 @@ suite('Performance_DTS2CPP_Enum_Suite', function ()
       assert.strictEqual(enumItem_0!.values![5], '"v5"');
       assert.strictEqual(enumItem_0!.values![6], '"v6"');
       assert.strictEqual(enumItem_0!.values![7], '"v7"');
-      assert.strictEqual(enumItem_0!.values![8], '"v8"');
+      assert.strictEqual(enumItem_0!.values![8], '"x8"');
       assert.strictEqual(enumItem_0!.values![9], '"v9"');
       assert.strictEqual(enumItem_0!.values![10], '"v10"');
       assert.strictEqual(enumItem_0!.values![11], '"v11"');
@@ -1777,7 +1777,7 @@ suite('Performance_DTS2CPP_Enum_Suite', function ()
         M5 = "v5",
         M6 = "v6",
         M7 = "v7",
-        M8 = "v8",
+        M8 = "x8",
         M9 = "v9",
         M10 = "v10",
         M11 = "v11",
@@ -1852,7 +1852,7 @@ suite('Performance_DTS2CPP_Enum_Suite', function ()
       assert.strictEqual(enumItem_0!.values![5], '"v5"');
       assert.strictEqual(enumItem_0!.values![6], '"v6"');
       assert.strictEqual(enumItem_0!.values![7], '"v7"');
-      assert.strictEqual(enumItem_0!.values![8], '"v8"');
+      assert.strictEqual(enumItem_0!.values![8], '"x8"');
       assert.strictEqual(enumItem_0!.values![9], '"v9"');
       assert.strictEqual(enumItem_0!.values![10], '"v10"');
       assert.strictEqual(enumItem_0!.values![11], '"v11"');
