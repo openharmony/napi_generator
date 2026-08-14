@@ -807,7 +807,7 @@ type UnionType0193 = Box<string> | Box<number>;`
         for (let i = 0; i < localLoop; i++) {
           parseObj = doParseTs(
             'parseUnion0171.ts',
-            `type UnionType0198 = "web" | "ios" | "android" | "harmony" | "windows";`
+            `type UnionType0198 = "web" | "ios" | "other" | "harmony" | "windows";`
           );
         }
       });
@@ -818,7 +818,7 @@ type UnionType0193 = Box<string> | Box<number>;`
       assert.strictEqual(typeItem!.types.length, 5);
       assert.strictEqual(typeItem!.types[0], '"web"');
       assert.strictEqual(typeItem!.types[1], '"ios"');
-      assert.strictEqual(typeItem!.types[2], '"android"');
+      assert.strictEqual(typeItem!.types[2], '"other"');
       assert.strictEqual(typeItem!.types[3], '"harmony"');
       assert.strictEqual(typeItem!.types[4], '"windows"');
 
