@@ -53,20 +53,20 @@ suite('Performance_C_Struct_Suite', function ()
       const localLoop = PARSE_LOOP;
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
-          objList = parseStruct(`typedef struct StM041 {
+          objList = parseStruct(`typedef struct StQ041 {
     std::priority_queue<int> m0;
     std::multimap<int,int> m1;
     std::multiset<int> m2;
     std::unordered_map<std::string,int> m3;
     std::unordered_set<int> m4;
     std::unordered_multimap<int,int> m5;
-} StM041;`);
+} StQ041;`);
         }
       });
       assert.ok(objList);
       assert.strictEqual(objList.length, 1);
-      assert.strictEqual(objList[0].name, 'StM041');
-      assert.strictEqual(objList[0].alias, 'StM041');
+      assert.strictEqual(objList[0].name, 'StQ041');
+      assert.strictEqual(objList[0].alias, 'StQ041');
       assert.strictEqual(objList[0].members.length, 0);
       assert.strictEqual(objList[0].functions.length, 0);
       assert.ok(
@@ -92,20 +92,20 @@ suite('Performance_C_Struct_Suite', function ()
       const localLoop = PARSE_LOOP;
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
-          objList = parseStruct(`typedef struct StM042 {
+          objList = parseStruct(`typedef struct StQ042 {
     std::unordered_multiset<int> m0;
     std::array<int,10> m1;
     std::array<std::string,5> m2;
     std::forward_list<int> m3;
     std::valarray<double> m4;
     std::complex<double> m5;
-} StM042;`);
+} StQ042;`);
         }
       });
       assert.ok(objList);
       assert.strictEqual(objList.length, 1);
-      assert.strictEqual(objList[0].name, 'StM042');
-      assert.strictEqual(objList[0].alias, 'StM042');
+      assert.strictEqual(objList[0].name, 'StQ042');
+      assert.strictEqual(objList[0].alias, 'StQ042');
       assert.strictEqual(objList[0].members.length, 0);
       assert.strictEqual(objList[0].functions.length, 0);
       assert.ok(
@@ -131,20 +131,20 @@ suite('Performance_C_Struct_Suite', function ()
       const localLoop = PARSE_LOOP;
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
-          objList = parseStruct(`typedef struct StM043 {
+          objList = parseStruct(`typedef struct StQ043 {
     std::function<int(int,int)> m0;
     std::function<void(std::string)> m1;
     int m2;
     char m3;
     short m4;
     long m5;
-} StM043;`);
+} StQ043;`);
         }
       });
       assert.ok(objList);
       assert.strictEqual(objList.length, 1);
-      assert.strictEqual(objList[0].name, 'StM043');
-      assert.strictEqual(objList[0].alias, 'StM043');
+      assert.strictEqual(objList[0].name, 'StQ043');
+      assert.strictEqual(objList[0].alias, 'StQ043');
       assert.strictEqual(objList[0].members.length, 4);
       assert.strictEqual(objList[0].members[0].name, 'm2');
       assert.strictEqual(objList[0].members[0].type, 'int');
@@ -178,20 +178,20 @@ suite('Performance_C_Struct_Suite', function ()
       const localLoop = PARSE_LOOP;
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
-          objList = parseStruct(`typedef struct StM044 {
+          objList = parseStruct(`typedef struct StQ044 {
     long long m0;
     float m1;
     double m2;
     bool m3;
     unsigned int m4;
     unsigned char m5;
-} StM044;`);
+} StQ044;`);
         }
       });
       assert.ok(objList);
       assert.strictEqual(objList.length, 1);
-      assert.strictEqual(objList[0].name, 'StM044');
-      assert.strictEqual(objList[0].alias, 'StM044');
+      assert.strictEqual(objList[0].name, 'StQ044');
+      assert.strictEqual(objList[0].alias, 'StQ044');
       assert.strictEqual(objList[0].members.length, 6);
       assert.strictEqual(objList[0].members[0].name, 'm0');
       assert.strictEqual(objList[0].members[0].type, 'long long');
@@ -229,20 +229,20 @@ suite('Performance_C_Struct_Suite', function ()
       const localLoop = PARSE_LOOP;
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
-          objList = parseStruct(`typedef struct StM045 {
+          objList = parseStruct(`typedef struct StQ045 {
     unsigned short m0;
     unsigned long m1;
     unsigned long long m2;
     signed char m3;
     signed short m4;
     signed long m5;
-} StM045;`);
+} StQ045;`);
         }
       });
       assert.ok(objList);
       assert.strictEqual(objList.length, 1);
-      assert.strictEqual(objList[0].name, 'StM045');
-      assert.strictEqual(objList[0].alias, 'StM045');
+      assert.strictEqual(objList[0].name, 'StQ045');
+      assert.strictEqual(objList[0].alias, 'StQ045');
       assert.strictEqual(objList[0].members.length, 6);
       assert.strictEqual(objList[0].members[0].name, 'm0');
       assert.strictEqual(objList[0].members[0].type, 'unsigned short');
@@ -280,20 +280,20 @@ suite('Performance_C_Struct_Suite', function ()
       const localLoop = PARSE_LOOP;
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
-          objList = parseStruct(`typedef struct StM046 {
+          objList = parseStruct(`typedef struct StQ046 {
     wchar_t m0;
     char16_t m1;
     char32_t m2;
     size_t m3;
     int8_t m4;
     int16_t m5;
-} StM046;`);
+} StQ046;`);
         }
       });
       assert.ok(objList);
       assert.strictEqual(objList.length, 1);
-      assert.strictEqual(objList[0].name, 'StM046');
-      assert.strictEqual(objList[0].alias, 'StM046');
+      assert.strictEqual(objList[0].name, 'StQ046');
+      assert.strictEqual(objList[0].alias, 'StQ046');
       assert.strictEqual(objList[0].members.length, 6);
       assert.strictEqual(objList[0].members[0].name, 'm0');
       assert.strictEqual(objList[0].members[0].type, 'wchar_t');
@@ -331,20 +331,20 @@ suite('Performance_C_Struct_Suite', function ()
       const localLoop = PARSE_LOOP;
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
-          objList = parseStruct(`typedef struct StM047 {
+          objList = parseStruct(`typedef struct StQ047 {
     int32_t m0;
     int64_t m1;
     uint8_t m2;
     uint16_t m3;
     uint32_t m4;
     uint64_t m5;
-} StM047;`);
+} StQ047;`);
         }
       });
       assert.ok(objList);
       assert.strictEqual(objList.length, 1);
-      assert.strictEqual(objList[0].name, 'StM047');
-      assert.strictEqual(objList[0].alias, 'StM047');
+      assert.strictEqual(objList[0].name, 'StQ047');
+      assert.strictEqual(objList[0].alias, 'StQ047');
       assert.strictEqual(objList[0].members.length, 6);
       assert.strictEqual(objList[0].members[0].name, 'm0');
       assert.strictEqual(objList[0].members[0].type, 'int32_t');
@@ -382,20 +382,20 @@ suite('Performance_C_Struct_Suite', function ()
       const localLoop = PARSE_LOOP;
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
-          objList = parseStruct(`typedef struct StM048 {
+          objList = parseStruct(`typedef struct StQ048 {
     std::string m0;
     string m1;
     std::wstring m2;
     long double m3;
     void m4;
     std::vector<int> m5;
-} StM048;`);
+} StQ048;`);
         }
       });
       assert.ok(objList);
       assert.strictEqual(objList.length, 1);
-      assert.strictEqual(objList[0].name, 'StM048');
-      assert.strictEqual(objList[0].alias, 'StM048');
+      assert.strictEqual(objList[0].name, 'StQ048');
+      assert.strictEqual(objList[0].alias, 'StQ048');
       assert.strictEqual(objList[0].members.length, 5);
       assert.strictEqual(objList[0].members[0].name, 'm0');
       assert.strictEqual(objList[0].members[0].type, 'std::string');
@@ -431,20 +431,20 @@ suite('Performance_C_Struct_Suite', function ()
       const localLoop = PARSE_LOOP;
       const elapsed = measureElapsed(() => {
         for (let i = 0; i < localLoop; i++) {
-          objList = parseStruct(`typedef struct StM049 {
+          objList = parseStruct(`typedef struct StQ049 {
     std::vector<std::string> m0;
     std::vector<double> m1;
     std::vector<bool> m2;
     std::map<std::string,int> m3;
     std::map<int,std::string> m4;
     std::set<int> m5;
-} StM049;`);
+} StQ049;`);
         }
       });
       assert.ok(objList);
       assert.strictEqual(objList.length, 1);
-      assert.strictEqual(objList[0].name, 'StM049');
-      assert.strictEqual(objList[0].alias, 'StM049');
+      assert.strictEqual(objList[0].name, 'StQ049');
+      assert.strictEqual(objList[0].alias, 'StQ049');
       assert.strictEqual(objList[0].members.length, 0);
       assert.strictEqual(objList[0].functions.length, 0);
       assert.ok(
