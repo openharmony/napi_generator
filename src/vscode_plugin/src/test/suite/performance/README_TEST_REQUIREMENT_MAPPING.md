@@ -3998,3 +3998,639 @@
 | 3864 | `conversion_cstruct.part07.test.ts` | `c_struct_0176` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
 | 3865 | `conversion_cstruct.part07.test.ts` | `c_struct_0177` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
 | 3866 | `conversion_cstruct.part07.test.ts` | `c_struct_0178` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3867 | `conversion_cstruct.part07.test.ts` | `c_struct_0179` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3868 | `conversion_cstruct.part07.test.ts` | `c_struct_0180` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3869 | `conversion_cstruct.part07.test.ts` | `c_struct_0181` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3870 | `conversion_cstruct.part07.test.ts` | `c_struct_0182` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3871 | `conversion_cstruct.part07.test.ts` | `c_struct_0183` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3872 | `conversion_cstruct.part07.test.ts` | `c_struct_0184` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3873 | `conversion_cstruct.part07.test.ts` | `c_struct_0185` | 性能测试 | 3/4 | h2dts parseStruct：扩充-新类型成员：8 个新 std 类型成员 的解析结果与性能。 |
+| 3874 | `conversion_cenum.part01.test.ts` | `c_enum_0001` | 性能测试 | 3/4 | h2dts parseEnum：enum：typedef 基本 的解析结果与性能。 |
+| 3875 | `conversion_cenum.part01.test.ts` | `c_enum_0002` | 性能测试 | 3/4 | h2dts parseEnum：enum：具名基本 的解析结果与性能。 |
+| 3876 | `conversion_cenum.part01.test.ts` | `c_enum_0003` | 性能测试 | 3/4 | h2dts parseEnum：enum：带值 + 别名 的解析结果与性能。 |
+| 3877 | `conversion_cenum.part01.test.ts` | `c_enum_0004` | 性能测试 | 3/4 | h2dts parseEnum：enum：多值 HTTP 状态 的解析结果与性能。 |
+| 3878 | `conversion_cenum.part01.test.ts` | `c_enum_0005` | 性能测试 | 3/4 | h2dts parseEnum：enum：10 成员 的解析结果与性能。 |
+| 3879 | `conversion_cenum.part01.test.ts` | `c_enum_0006` | 性能测试 | 3/4 | h2dts parseEnum：enum：20 成员（规模） 的解析结果与性能。 |
+| 3880 | `conversion_cenum.part01.test.ts` | `c_enum_0007` | 性能测试 | 3/4 | h2dts parseEnum：enum：方向枚举 的解析结果与性能。 |
+| 3881 | `conversion_cenum.part01.test.ts` | `c_enum_0008` | 性能测试 | 3/4 | h2dts parseEnum：namespace：域内 enum 的解析结果与性能。 |
+| 3882 | `conversion_cenum.part01.test.ts` | `c_enum_0009` | 性能测试 | 3/4 | h2dts parseEnum：多 enum：同文件 2 个 的解析结果与性能。 |
+| 3883 | `conversion_cenum.part01.test.ts` | `c_enum_0010` | 性能测试 | 3/4 | h2dts parseEnum：enum：性别枚举 的解析结果与性能。 |
+| 3884 | `conversion_cenum.part01.test.ts` | `c_enum_0011` | 性能测试 | 3/4 | h2dts parseEnum：enum：状态枚举 的解析结果与性能。 |
+| 3885 | `conversion_cenum.part01.test.ts` | `c_enum_0012` | 性能测试 | 3/4 | h2dts parseEnum：enum：位运算值 的解析结果与性能。 |
+| 3886 | `conversion_cenum.part01.test.ts` | `c_enum_0013` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：30 成员 的解析结果与性能。 |
+| 3887 | `conversion_cenum.part01.test.ts` | `c_enum_0014` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：50 成员（规模） 的解析结果与性能。 |
+| 3888 | `conversion_cenum.part01.test.ts` | `c_enum_0015` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：十六进制值 的解析结果与性能。 |
+| 3889 | `conversion_cenum.part01.test.ts` | `c_enum_0016` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：负数值 的解析结果与性能。 |
+| 3890 | `conversion_cenum.part01.test.ts` | `c_enum_0017` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：字符值 的解析结果与性能。 |
+| 3891 | `conversion_cenum.part01.test.ts` | `c_enum_0018` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum-多声明：同文件 4 个 的解析结果与性能。 |
+| 3892 | `conversion_cenum.part01.test.ts` | `c_enum_0019` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：3 个带别名带值 的解析结果与性能。 |
+| 3893 | `conversion_cenum.part01.test.ts` | `c_enum_0020` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：注释 + 尾逗号 的解析结果与性能。 |
+| 3894 | `conversion_cenum.part01.test.ts` | `c_enum_0021` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：数字/字符串混合值 的解析结果与性能。 |
+| 3895 | `conversion_cenum.part01.test.ts` | `c_enum_0022` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum-namespace：域内 2 个 enum 的解析结果与性能。 |
+| 3896 | `conversion_cenum.part01.test.ts` | `c_enum_0023` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：5 位运算值 的解析结果与性能。 |
+| 3897 | `conversion_cenum.part01.test.ts` | `c_enum_0024` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：布尔语义值 的解析结果与性能。 |
+| 3898 | `conversion_cenum.part01.test.ts` | `c_enum_0025` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：星期枚举 + 别名 的解析结果与性能。 |
+| 3899 | `conversion_cenum.part01.test.ts` | `c_enum_0026` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：方位枚举 的解析结果与性能。 |
+| 3900 | `conversion_cenum.part01.test.ts` | `c_enum_0027` | 性能测试 | 3/4 | h2dts parseEnum：扩充-enum：具名无 typedef 的解析结果与性能。 |
+| 3901 | `conversion_cenum.part02.test.ts` | `c_enum_0028` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：2 成员（无赋值） 的解析结果与性能。 |
+| 3902 | `conversion_cenum.part02.test.ts` | `c_enum_0029` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：2 成员（数字赋值） 的解析结果与性能。 |
+| 3903 | `conversion_cenum.part02.test.ts` | `c_enum_0030` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：2 成员（字符串赋值） 的解析结果与性能。 |
+| 3904 | `conversion_cenum.part02.test.ts` | `c_enum_0031` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：2 成员（十六进制赋值） 的解析结果与性能。 |
+| 3905 | `conversion_cenum.part02.test.ts` | `c_enum_0032` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：3 成员（无赋值） 的解析结果与性能。 |
+| 3906 | `conversion_cenum.part02.test.ts` | `c_enum_0033` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：3 成员（数字赋值） 的解析结果与性能。 |
+| 3907 | `conversion_cenum.part02.test.ts` | `c_enum_0034` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：3 成员（字符串赋值） 的解析结果与性能。 |
+| 3908 | `conversion_cenum.part02.test.ts` | `c_enum_0035` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：3 成员（十六进制赋值） 的解析结果与性能。 |
+| 3909 | `conversion_cenum.part02.test.ts` | `c_enum_0036` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：4 成员（无赋值） 的解析结果与性能。 |
+| 3910 | `conversion_cenum.part02.test.ts` | `c_enum_0037` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：4 成员（数字赋值） 的解析结果与性能。 |
+| 3911 | `conversion_cenum.part02.test.ts` | `c_enum_0038` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：4 成员（字符串赋值） 的解析结果与性能。 |
+| 3912 | `conversion_cenum.part02.test.ts` | `c_enum_0039` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：4 成员（十六进制赋值） 的解析结果与性能。 |
+| 3913 | `conversion_cenum.part02.test.ts` | `c_enum_0040` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：5 成员（无赋值） 的解析结果与性能。 |
+| 3914 | `conversion_cenum.part02.test.ts` | `c_enum_0041` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：5 成员（数字赋值） 的解析结果与性能。 |
+| 3915 | `conversion_cenum.part02.test.ts` | `c_enum_0042` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：5 成员（字符串赋值） 的解析结果与性能。 |
+| 3916 | `conversion_cenum.part02.test.ts` | `c_enum_0043` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：5 成员（十六进制赋值） 的解析结果与性能。 |
+| 3917 | `conversion_cenum.part02.test.ts` | `c_enum_0044` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：6 成员（无赋值） 的解析结果与性能。 |
+| 3918 | `conversion_cenum.part02.test.ts` | `c_enum_0045` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：6 成员（数字赋值） 的解析结果与性能。 |
+| 3919 | `conversion_cenum.part02.test.ts` | `c_enum_0046` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：6 成员（字符串赋值） 的解析结果与性能。 |
+| 3920 | `conversion_cenum.part02.test.ts` | `c_enum_0047` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：6 成员（十六进制赋值） 的解析结果与性能。 |
+| 3921 | `conversion_cenum.part02.test.ts` | `c_enum_0048` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：7 成员（无赋值） 的解析结果与性能。 |
+| 3922 | `conversion_cenum.part02.test.ts` | `c_enum_0049` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：7 成员（数字赋值） 的解析结果与性能。 |
+| 3923 | `conversion_cenum.part02.test.ts` | `c_enum_0050` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：7 成员（字符串赋值） 的解析结果与性能。 |
+| 3924 | `conversion_cenum.part02.test.ts` | `c_enum_0051` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：7 成员（十六进制赋值） 的解析结果与性能。 |
+| 3925 | `conversion_cenum.part02.test.ts` | `c_enum_0052` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：8 成员（无赋值） 的解析结果与性能。 |
+| 3926 | `conversion_cenum.part02.test.ts` | `c_enum_0053` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：8 成员（数字赋值） 的解析结果与性能。 |
+| 3927 | `conversion_cenum.part02.test.ts` | `c_enum_0054` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：8 成员（字符串赋值） 的解析结果与性能。 |
+| 3928 | `conversion_cenum.part02.test.ts` | `c_enum_0055` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：8 成员（十六进制赋值） 的解析结果与性能。 |
+| 3929 | `conversion_cenum.part02.test.ts` | `c_enum_0056` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：9 成员（无赋值） 的解析结果与性能。 |
+| 3930 | `conversion_cenum.part02.test.ts` | `c_enum_0057` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：9 成员（数字赋值） 的解析结果与性能。 |
+| 3931 | `conversion_cenum.part02.test.ts` | `c_enum_0058` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：9 成员（字符串赋值） 的解析结果与性能。 |
+| 3932 | `conversion_cenum.part02.test.ts` | `c_enum_0059` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：9 成员（十六进制赋值） 的解析结果与性能。 |
+| 3933 | `conversion_cenum.part02.test.ts` | `c_enum_0060` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：10 成员（无赋值） 的解析结果与性能。 |
+| 3934 | `conversion_cenum.part02.test.ts` | `c_enum_0061` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：10 成员（数字赋值） 的解析结果与性能。 |
+| 3935 | `conversion_cenum.part02.test.ts` | `c_enum_0062` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：10 成员（字符串赋值） 的解析结果与性能。 |
+| 3936 | `conversion_cenum.part02.test.ts` | `c_enum_0063` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：10 成员（十六进制赋值） 的解析结果与性能。 |
+| 3937 | `conversion_cenum.part02.test.ts` | `c_enum_0064` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：11 成员（无赋值） 的解析结果与性能。 |
+| 3938 | `conversion_cenum.part02.test.ts` | `c_enum_0065` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：11 成员（数字赋值） 的解析结果与性能。 |
+| 3939 | `conversion_cenum.part02.test.ts` | `c_enum_0066` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：11 成员（字符串赋值） 的解析结果与性能。 |
+| 3940 | `conversion_cenum.part02.test.ts` | `c_enum_0067` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：11 成员（十六进制赋值） 的解析结果与性能。 |
+| 3941 | `conversion_cenum.part02.test.ts` | `c_enum_0068` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：12 成员（无赋值） 的解析结果与性能。 |
+| 3942 | `conversion_cenum.part03.test.ts` | `c_enum_0069` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：12 成员（数字赋值） 的解析结果与性能。 |
+| 3943 | `conversion_cenum.part03.test.ts` | `c_enum_0070` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：12 成员（字符串赋值） 的解析结果与性能。 |
+| 3944 | `conversion_cenum.part03.test.ts` | `c_enum_0071` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：12 成员（十六进制赋值） 的解析结果与性能。 |
+| 3945 | `conversion_cenum.part03.test.ts` | `c_enum_0072` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：13 成员（无赋值） 的解析结果与性能。 |
+| 3946 | `conversion_cenum.part03.test.ts` | `c_enum_0073` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：13 成员（数字赋值） 的解析结果与性能。 |
+| 3947 | `conversion_cenum.part03.test.ts` | `c_enum_0074` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：13 成员（字符串赋值） 的解析结果与性能。 |
+| 3948 | `conversion_cenum.part03.test.ts` | `c_enum_0075` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：13 成员（十六进制赋值） 的解析结果与性能。 |
+| 3949 | `conversion_cenum.part03.test.ts` | `c_enum_0076` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：14 成员（无赋值） 的解析结果与性能。 |
+| 3950 | `conversion_cenum.part03.test.ts` | `c_enum_0077` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：14 成员（数字赋值） 的解析结果与性能。 |
+| 3951 | `conversion_cenum.part03.test.ts` | `c_enum_0078` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：14 成员（字符串赋值） 的解析结果与性能。 |
+| 3952 | `conversion_cenum.part03.test.ts` | `c_enum_0079` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：14 成员（十六进制赋值） 的解析结果与性能。 |
+| 3953 | `conversion_cenum.part03.test.ts` | `c_enum_0080` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：15 成员（无赋值） 的解析结果与性能。 |
+| 3954 | `conversion_cenum.part03.test.ts` | `c_enum_0081` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：15 成员（数字赋值） 的解析结果与性能。 |
+| 3955 | `conversion_cenum.part03.test.ts` | `c_enum_0082` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：15 成员（字符串赋值） 的解析结果与性能。 |
+| 3956 | `conversion_cenum.part03.test.ts` | `c_enum_0083` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：15 成员（十六进制赋值） 的解析结果与性能。 |
+| 3957 | `conversion_cenum.part03.test.ts` | `c_enum_0084` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：16 成员（无赋值） 的解析结果与性能。 |
+| 3958 | `conversion_cenum.part03.test.ts` | `c_enum_0085` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：16 成员（数字赋值） 的解析结果与性能。 |
+| 3959 | `conversion_cenum.part03.test.ts` | `c_enum_0086` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：16 成员（字符串赋值） 的解析结果与性能。 |
+| 3960 | `conversion_cenum.part03.test.ts` | `c_enum_0087` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：16 成员（十六进制赋值） 的解析结果与性能。 |
+| 3961 | `conversion_cenum.part03.test.ts` | `c_enum_0088` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：17 成员（无赋值） 的解析结果与性能。 |
+| 3962 | `conversion_cenum.part03.test.ts` | `c_enum_0089` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：17 成员（数字赋值） 的解析结果与性能。 |
+| 3963 | `conversion_cenum.part03.test.ts` | `c_enum_0090` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：17 成员（字符串赋值） 的解析结果与性能。 |
+| 3964 | `conversion_cenum.part03.test.ts` | `c_enum_0091` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：17 成员（十六进制赋值） 的解析结果与性能。 |
+| 3965 | `conversion_cenum.part03.test.ts` | `c_enum_0092` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：18 成员（无赋值） 的解析结果与性能。 |
+| 3966 | `conversion_cenum.part03.test.ts` | `c_enum_0093` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：18 成员（数字赋值） 的解析结果与性能。 |
+| 3967 | `conversion_cenum.part03.test.ts` | `c_enum_0094` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：18 成员（字符串赋值） 的解析结果与性能。 |
+| 3968 | `conversion_cenum.part03.test.ts` | `c_enum_0095` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：18 成员（十六进制赋值） 的解析结果与性能。 |
+| 3969 | `conversion_cenum.part03.test.ts` | `c_enum_0096` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：19 成员（无赋值） 的解析结果与性能。 |
+| 3970 | `conversion_cenum.part03.test.ts` | `c_enum_0097` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：19 成员（数字赋值） 的解析结果与性能。 |
+| 3971 | `conversion_cenum.part03.test.ts` | `c_enum_0098` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：19 成员（字符串赋值） 的解析结果与性能。 |
+| 3972 | `conversion_cenum.part04.test.ts` | `c_enum_0099` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：19 成员（十六进制赋值） 的解析结果与性能。 |
+| 3973 | `conversion_cenum.part04.test.ts` | `c_enum_0100` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：20 成员（无赋值） 的解析结果与性能。 |
+| 3974 | `conversion_cenum.part04.test.ts` | `c_enum_0101` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：20 成员（数字赋值） 的解析结果与性能。 |
+| 3975 | `conversion_cenum.part04.test.ts` | `c_enum_0102` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：20 成员（字符串赋值） 的解析结果与性能。 |
+| 3976 | `conversion_cenum.part04.test.ts` | `c_enum_0103` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：20 成员（十六进制赋值） 的解析结果与性能。 |
+| 3977 | `conversion_cenum.part04.test.ts` | `c_enum_0104` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：21 成员（无赋值） 的解析结果与性能。 |
+| 3978 | `conversion_cenum.part04.test.ts` | `c_enum_0105` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：21 成员（数字赋值） 的解析结果与性能。 |
+| 3979 | `conversion_cenum.part04.test.ts` | `c_enum_0106` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：21 成员（字符串赋值） 的解析结果与性能。 |
+| 3980 | `conversion_cenum.part04.test.ts` | `c_enum_0107` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：21 成员（十六进制赋值） 的解析结果与性能。 |
+| 3981 | `conversion_cenum.part04.test.ts` | `c_enum_0108` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：22 成员（无赋值） 的解析结果与性能。 |
+| 3982 | `conversion_cenum.part04.test.ts` | `c_enum_0109` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：22 成员（数字赋值） 的解析结果与性能。 |
+| 3983 | `conversion_cenum.part04.test.ts` | `c_enum_0110` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：22 成员（字符串赋值） 的解析结果与性能。 |
+| 3984 | `conversion_cenum.part04.test.ts` | `c_enum_0111` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：22 成员（十六进制赋值） 的解析结果与性能。 |
+| 3985 | `conversion_cenum.part04.test.ts` | `c_enum_0112` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：23 成员（无赋值） 的解析结果与性能。 |
+| 3986 | `conversion_cenum.part04.test.ts` | `c_enum_0113` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：23 成员（数字赋值） 的解析结果与性能。 |
+| 3987 | `conversion_cenum.part04.test.ts` | `c_enum_0114` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：23 成员（字符串赋值） 的解析结果与性能。 |
+| 3988 | `conversion_cenum.part04.test.ts` | `c_enum_0115` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：23 成员（十六进制赋值） 的解析结果与性能。 |
+| 3989 | `conversion_cenum.part04.test.ts` | `c_enum_0116` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：24 成员（无赋值） 的解析结果与性能。 |
+| 3990 | `conversion_cenum.part04.test.ts` | `c_enum_0117` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：24 成员（数字赋值） 的解析结果与性能。 |
+| 3991 | `conversion_cenum.part04.test.ts` | `c_enum_0118` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：24 成员（字符串赋值） 的解析结果与性能。 |
+| 3992 | `conversion_cenum.part04.test.ts` | `c_enum_0119` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：24 成员（十六进制赋值） 的解析结果与性能。 |
+| 3993 | `conversion_cenum.part04.test.ts` | `c_enum_0120` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：25 成员（无赋值） 的解析结果与性能。 |
+| 3994 | `conversion_cenum.part04.test.ts` | `c_enum_0121` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：25 成员（数字赋值） 的解析结果与性能。 |
+| 3995 | `conversion_cenum.part04.test.ts` | `c_enum_0122` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：25 成员（字符串赋值） 的解析结果与性能。 |
+| 3996 | `conversion_cenum.part05.test.ts` | `c_enum_0123` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：25 成员（十六进制赋值） 的解析结果与性能。 |
+| 3997 | `conversion_cenum.part05.test.ts` | `c_enum_0124` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：26 成员（无赋值） 的解析结果与性能。 |
+| 3998 | `conversion_cenum.part05.test.ts` | `c_enum_0125` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：26 成员（数字赋值） 的解析结果与性能。 |
+| 3999 | `conversion_cenum.part05.test.ts` | `c_enum_0126` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：26 成员（字符串赋值） 的解析结果与性能。 |
+| 4000 | `conversion_cenum.part05.test.ts` | `c_enum_0127` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：26 成员（十六进制赋值） 的解析结果与性能。 |
+| 4001 | `conversion_cenum.part05.test.ts` | `c_enum_0128` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：27 成员（无赋值） 的解析结果与性能。 |
+| 4002 | `conversion_cenum.part05.test.ts` | `c_enum_0129` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：27 成员（数字赋值） 的解析结果与性能。 |
+| 4003 | `conversion_cenum.part05.test.ts` | `c_enum_0130` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：27 成员（字符串赋值） 的解析结果与性能。 |
+| 4004 | `conversion_cenum.part05.test.ts` | `c_enum_0131` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：27 成员（十六进制赋值） 的解析结果与性能。 |
+| 4005 | `conversion_cenum.part05.test.ts` | `c_enum_0132` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：28 成员（无赋值） 的解析结果与性能。 |
+| 4006 | `conversion_cenum.part05.test.ts` | `c_enum_0133` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：28 成员（数字赋值） 的解析结果与性能。 |
+| 4007 | `conversion_cenum.part05.test.ts` | `c_enum_0134` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：28 成员（字符串赋值） 的解析结果与性能。 |
+| 4008 | `conversion_cenum.part05.test.ts` | `c_enum_0135` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：28 成员（十六进制赋值） 的解析结果与性能。 |
+| 4009 | `conversion_cenum.part05.test.ts` | `c_enum_0136` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：29 成员（无赋值） 的解析结果与性能。 |
+| 4010 | `conversion_cenum.part05.test.ts` | `c_enum_0137` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：29 成员（数字赋值） 的解析结果与性能。 |
+| 4011 | `conversion_cenum.part05.test.ts` | `c_enum_0138` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：29 成员（字符串赋值） 的解析结果与性能。 |
+| 4012 | `conversion_cenum.part05.test.ts` | `c_enum_0139` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：29 成员（十六进制赋值） 的解析结果与性能。 |
+| 4013 | `conversion_cenum.part05.test.ts` | `c_enum_0140` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：30 成员（无赋值） 的解析结果与性能。 |
+| 4014 | `conversion_cenum.part05.test.ts` | `c_enum_0141` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：30 成员（数字赋值） 的解析结果与性能。 |
+| 4015 | `conversion_cenum.part05.test.ts` | `c_enum_0142` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：30 成员（字符串赋值） 的解析结果与性能。 |
+| 4016 | `conversion_cenum.part05.test.ts` | `c_enum_0143` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：30 成员（十六进制赋值） 的解析结果与性能。 |
+| 4017 | `conversion_cenum.part06.test.ts` | `c_enum_0144` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：31 成员（无赋值） 的解析结果与性能。 |
+| 4018 | `conversion_cenum.part06.test.ts` | `c_enum_0145` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：31 成员（数字赋值） 的解析结果与性能。 |
+| 4019 | `conversion_cenum.part06.test.ts` | `c_enum_0146` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：31 成员（字符串赋值） 的解析结果与性能。 |
+| 4020 | `conversion_cenum.part06.test.ts` | `c_enum_0147` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：31 成员（十六进制赋值） 的解析结果与性能。 |
+| 4021 | `conversion_cenum.part06.test.ts` | `c_enum_0148` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：32 成员（无赋值） 的解析结果与性能。 |
+| 4022 | `conversion_cenum.part06.test.ts` | `c_enum_0149` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：32 成员（数字赋值） 的解析结果与性能。 |
+| 4023 | `conversion_cenum.part06.test.ts` | `c_enum_0150` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：32 成员（字符串赋值） 的解析结果与性能。 |
+| 4024 | `conversion_cenum.part06.test.ts` | `c_enum_0151` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：32 成员（十六进制赋值） 的解析结果与性能。 |
+| 4025 | `conversion_cenum.part06.test.ts` | `c_enum_0152` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：33 成员（无赋值） 的解析结果与性能。 |
+| 4026 | `conversion_cenum.part06.test.ts` | `c_enum_0153` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：33 成员（数字赋值） 的解析结果与性能。 |
+| 4027 | `conversion_cenum.part06.test.ts` | `c_enum_0154` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：33 成员（字符串赋值） 的解析结果与性能。 |
+| 4028 | `conversion_cenum.part06.test.ts` | `c_enum_0155` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：33 成员（十六进制赋值） 的解析结果与性能。 |
+| 4029 | `conversion_cenum.part06.test.ts` | `c_enum_0156` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：34 成员（无赋值） 的解析结果与性能。 |
+| 4030 | `conversion_cenum.part06.test.ts` | `c_enum_0157` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：34 成员（数字赋值） 的解析结果与性能。 |
+| 4031 | `conversion_cenum.part06.test.ts` | `c_enum_0158` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：34 成员（字符串赋值） 的解析结果与性能。 |
+| 4032 | `conversion_cenum.part06.test.ts` | `c_enum_0159` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：34 成员（十六进制赋值） 的解析结果与性能。 |
+| 4033 | `conversion_cenum.part06.test.ts` | `c_enum_0160` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：35 成员（无赋值） 的解析结果与性能。 |
+| 4034 | `conversion_cenum.part06.test.ts` | `c_enum_0161` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：35 成员（数字赋值） 的解析结果与性能。 |
+| 4035 | `conversion_cenum.part06.test.ts` | `c_enum_0162` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：35 成员（字符串赋值） 的解析结果与性能。 |
+| 4036 | `conversion_cenum.part07.test.ts` | `c_enum_0163` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：35 成员（十六进制赋值） 的解析结果与性能。 |
+| 4037 | `conversion_cenum.part07.test.ts` | `c_enum_0164` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：36 成员（无赋值） 的解析结果与性能。 |
+| 4038 | `conversion_cenum.part07.test.ts` | `c_enum_0165` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：36 成员（数字赋值） 的解析结果与性能。 |
+| 4039 | `conversion_cenum.part07.test.ts` | `c_enum_0166` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：36 成员（字符串赋值） 的解析结果与性能。 |
+| 4040 | `conversion_cenum.part07.test.ts` | `c_enum_0167` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：36 成员（十六进制赋值） 的解析结果与性能。 |
+| 4041 | `conversion_cenum.part07.test.ts` | `c_enum_0168` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：37 成员（无赋值） 的解析结果与性能。 |
+| 4042 | `conversion_cenum.part07.test.ts` | `c_enum_0169` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：37 成员（数字赋值） 的解析结果与性能。 |
+| 4043 | `conversion_cenum.part07.test.ts` | `c_enum_0170` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：37 成员（字符串赋值） 的解析结果与性能。 |
+| 4044 | `conversion_cenum.part07.test.ts` | `c_enum_0171` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：37 成员（十六进制赋值） 的解析结果与性能。 |
+| 4045 | `conversion_cenum.part07.test.ts` | `c_enum_0172` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：38 成员（无赋值） 的解析结果与性能。 |
+| 4046 | `conversion_cenum.part07.test.ts` | `c_enum_0173` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：38 成员（数字赋值） 的解析结果与性能。 |
+| 4047 | `conversion_cenum.part07.test.ts` | `c_enum_0174` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：38 成员（字符串赋值） 的解析结果与性能。 |
+| 4048 | `conversion_cenum.part07.test.ts` | `c_enum_0175` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：38 成员（十六进制赋值） 的解析结果与性能。 |
+| 4049 | `conversion_cenum.part07.test.ts` | `c_enum_0176` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：39 成员（无赋值） 的解析结果与性能。 |
+| 4050 | `conversion_cenum.part07.test.ts` | `c_enum_0177` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：39 成员（数字赋值） 的解析结果与性能。 |
+| 4051 | `conversion_cenum.part07.test.ts` | `c_enum_0178` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：39 成员（字符串赋值） 的解析结果与性能。 |
+| 4052 | `conversion_cenum.part07.test.ts` | `c_enum_0179` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：39 成员（十六进制赋值） 的解析结果与性能。 |
+| 4053 | `conversion_cenum.part08.test.ts` | `c_enum_0180` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：40 成员（无赋值） 的解析结果与性能。 |
+| 4054 | `conversion_cenum.part08.test.ts` | `c_enum_0181` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：40 成员（数字赋值） 的解析结果与性能。 |
+| 4055 | `conversion_cenum.part08.test.ts` | `c_enum_0182` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：40 成员（字符串赋值） 的解析结果与性能。 |
+| 4056 | `conversion_cenum.part08.test.ts` | `c_enum_0183` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：40 成员（十六进制赋值） 的解析结果与性能。 |
+| 4057 | `conversion_cenum.part08.test.ts` | `c_enum_0184` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：41 成员（无赋值） 的解析结果与性能。 |
+| 4058 | `conversion_cenum.part08.test.ts` | `c_enum_0185` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：41 成员（数字赋值） 的解析结果与性能。 |
+| 4059 | `conversion_cenum.part08.test.ts` | `c_enum_0186` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：41 成员（字符串赋值） 的解析结果与性能。 |
+| 4060 | `conversion_cenum.part08.test.ts` | `c_enum_0187` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：41 成员（十六进制赋值） 的解析结果与性能。 |
+| 4061 | `conversion_cenum.part08.test.ts` | `c_enum_0188` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：42 成员（无赋值） 的解析结果与性能。 |
+| 4062 | `conversion_cenum.part08.test.ts` | `c_enum_0189` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：42 成员（数字赋值） 的解析结果与性能。 |
+| 4063 | `conversion_cenum.part08.test.ts` | `c_enum_0190` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：42 成员（字符串赋值） 的解析结果与性能。 |
+| 4064 | `conversion_cenum.part08.test.ts` | `c_enum_0191` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：42 成员（十六进制赋值） 的解析结果与性能。 |
+| 4065 | `conversion_cenum.part08.test.ts` | `c_enum_0192` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：43 成员（无赋值） 的解析结果与性能。 |
+| 4066 | `conversion_cenum.part08.test.ts` | `c_enum_0193` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：43 成员（数字赋值） 的解析结果与性能。 |
+| 4067 | `conversion_cenum.part08.test.ts` | `c_enum_0194` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：43 成员（字符串赋值） 的解析结果与性能。 |
+| 4068 | `conversion_cenum.part08.test.ts` | `c_enum_0195` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：43 成员（十六进制赋值） 的解析结果与性能。 |
+| 4069 | `conversion_cenum.part09.test.ts` | `c_enum_0196` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：44 成员（无赋值） 的解析结果与性能。 |
+| 4070 | `conversion_cenum.part09.test.ts` | `c_enum_0197` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：44 成员（数字赋值） 的解析结果与性能。 |
+| 4071 | `conversion_cenum.part09.test.ts` | `c_enum_0198` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：44 成员（字符串赋值） 的解析结果与性能。 |
+| 4072 | `conversion_cenum.part09.test.ts` | `c_enum_0199` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：44 成员（十六进制赋值） 的解析结果与性能。 |
+| 4073 | `conversion_cenum.part09.test.ts` | `c_enum_0200` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：45 成员（无赋值） 的解析结果与性能。 |
+| 4074 | `conversion_cenum.part09.test.ts` | `c_enum_0201` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：45 成员（数字赋值） 的解析结果与性能。 |
+| 4075 | `conversion_cenum.part09.test.ts` | `c_enum_0202` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：45 成员（字符串赋值） 的解析结果与性能。 |
+| 4076 | `conversion_cenum.part09.test.ts` | `c_enum_0203` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：45 成员（十六进制赋值） 的解析结果与性能。 |
+| 4077 | `conversion_cenum.part09.test.ts` | `c_enum_0204` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：46 成员（无赋值） 的解析结果与性能。 |
+| 4078 | `conversion_cenum.part09.test.ts` | `c_enum_0205` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：46 成员（数字赋值） 的解析结果与性能。 |
+| 4079 | `conversion_cenum.part09.test.ts` | `c_enum_0206` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：46 成员（字符串赋值） 的解析结果与性能。 |
+| 4080 | `conversion_cenum.part09.test.ts` | `c_enum_0207` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：46 成员（十六进制赋值） 的解析结果与性能。 |
+| 4081 | `conversion_cenum.part09.test.ts` | `c_enum_0208` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：47 成员（无赋值） 的解析结果与性能。 |
+| 4082 | `conversion_cenum.part09.test.ts` | `c_enum_0209` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：47 成员（数字赋值） 的解析结果与性能。 |
+| 4083 | `conversion_cenum.part09.test.ts` | `c_enum_0210` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：47 成员（字符串赋值） 的解析结果与性能。 |
+| 4084 | `conversion_cenum.part10.test.ts` | `c_enum_0211` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：47 成员（十六进制赋值） 的解析结果与性能。 |
+| 4085 | `conversion_cenum.part10.test.ts` | `c_enum_0212` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：48 成员（无赋值） 的解析结果与性能。 |
+| 4086 | `conversion_cenum.part10.test.ts` | `c_enum_0213` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：48 成员（数字赋值） 的解析结果与性能。 |
+| 4087 | `conversion_cenum.part10.test.ts` | `c_enum_0214` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：48 成员（字符串赋值） 的解析结果与性能。 |
+| 4088 | `conversion_cenum.part10.test.ts` | `c_enum_0215` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：48 成员（十六进制赋值） 的解析结果与性能。 |
+| 4089 | `conversion_cenum.part10.test.ts` | `c_enum_0216` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：49 成员（无赋值） 的解析结果与性能。 |
+| 4090 | `conversion_cenum.part10.test.ts` | `c_enum_0217` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：49 成员（数字赋值） 的解析结果与性能。 |
+| 4091 | `conversion_cenum.part10.test.ts` | `c_enum_0218` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：49 成员（字符串赋值） 的解析结果与性能。 |
+| 4092 | `conversion_cenum.part10.test.ts` | `c_enum_0219` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：49 成员（十六进制赋值） 的解析结果与性能。 |
+| 4093 | `conversion_cenum.part10.test.ts` | `c_enum_0220` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：50 成员（无赋值） 的解析结果与性能。 |
+| 4094 | `conversion_cenum.part10.test.ts` | `c_enum_0221` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：50 成员（数字赋值） 的解析结果与性能。 |
+| 4095 | `conversion_cenum.part10.test.ts` | `c_enum_0222` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：50 成员（字符串赋值） 的解析结果与性能。 |
+| 4096 | `conversion_cenum.part10.test.ts` | `c_enum_0223` | 性能测试 | 3/4 | h2dts parseEnum：扩充-矩阵：50 成员（十六进制赋值） 的解析结果与性能。 |
+| 4097 | `conversion_cenum.part10.test.ts` | `c_enum_0224` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：ColorT 的解析结果与性能。 |
+| 4098 | `conversion_cenum.part10.test.ts` | `c_enum_0225` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：StatusT 的解析结果与性能。 |
+| 4099 | `conversion_cenum.part10.test.ts` | `c_enum_0226` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：ModeT 的解析结果与性能。 |
+| 4100 | `conversion_cenum.part10.test.ts` | `c_enum_0227` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：LevelT 的解析结果与性能。 |
+| 4101 | `conversion_cenum.part10.test.ts` | `c_enum_0228` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：TypeT 的解析结果与性能。 |
+| 4102 | `conversion_cenum.part10.test.ts` | `c_enum_0229` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：KindT 的解析结果与性能。 |
+| 4103 | `conversion_cenum.part11.test.ts` | `c_enum_0230` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：StateT 的解析结果与性能。 |
+| 4104 | `conversion_cenum.part11.test.ts` | `c_enum_0231` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：FlagT 的解析结果与性能。 |
+| 4105 | `conversion_cenum.part11.test.ts` | `c_enum_0232` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：CodeT 的解析结果与性能。 |
+| 4106 | `conversion_cenum.part11.test.ts` | `c_enum_0233` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：ResultT 的解析结果与性能。 |
+| 4107 | `conversion_cenum.part11.test.ts` | `c_enum_0234` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：GradeT 的解析结果与性能。 |
+| 4108 | `conversion_cenum.part11.test.ts` | `c_enum_0235` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：SizeT 的解析结果与性能。 |
+| 4109 | `conversion_cenum.part11.test.ts` | `c_enum_0236` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：OrderT 的解析结果与性能。 |
+| 4110 | `conversion_cenum.part11.test.ts` | `c_enum_0237` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：PhaseT 的解析结果与性能。 |
+| 4111 | `conversion_cenum.part11.test.ts` | `c_enum_0238` | 性能测试 | 3/4 | h2dts parseEnum：扩充-命名：RankT 的解析结果与性能。 |
+| 4112 | `conversion_cenum.part11.test.ts` | `c_enum_0239` | 性能测试 | 3/4 | h2dts parseEnum：扩充-多 enum：同文件 2 个 的解析结果与性能。 |
+| 4113 | `conversion_cenum.part11.test.ts` | `c_enum_0240` | 性能测试 | 3/4 | h2dts parseEnum：扩充-多 enum：同文件 3 个 的解析结果与性能。 |
+| 4114 | `conversion_cenum.part11.test.ts` | `c_enum_0241` | 性能测试 | 3/4 | h2dts parseEnum：扩充-多 enum：同文件 4 个 的解析结果与性能。 |
+| 4115 | `conversion_cenum.part11.test.ts` | `c_enum_0242` | 性能测试 | 3/4 | h2dts parseEnum：扩充-多 enum：同文件 5 个 的解析结果与性能。 |
+| 4116 | `conversion_cenum.part11.test.ts` | `c_enum_0243` | 性能测试 | 3/4 | h2dts parseEnum：扩充-多 enum：同文件 8 个 的解析结果与性能。 |
+| 4117 | `conversion_cenum.part11.test.ts` | `c_enum_0244` | 性能测试 | 3/4 | h2dts parseEnum：扩充-值形态：位运算 的解析结果与性能。 |
+| 4118 | `conversion_cenum.part11.test.ts` | `c_enum_0245` | 性能测试 | 3/4 | h2dts parseEnum：扩充-值形态：负数 的解析结果与性能。 |
+| 4119 | `conversion_cenum.part11.test.ts` | `c_enum_0246` | 性能测试 | 3/4 | h2dts parseEnum：扩充-值形态：字符 的解析结果与性能。 |
+| 4120 | `conversion_cenum.part11.test.ts` | `c_enum_0247` | 性能测试 | 3/4 | h2dts parseEnum：扩充-值形态：混合 的解析结果与性能。 |
+| 4121 | `conversion_cenum.part11.test.ts` | `c_enum_0248` | 性能测试 | 3/4 | h2dts parseEnum：扩充-值形态：注释 的解析结果与性能。 |
+| 4122 | `conversion_cenum.part11.test.ts` | `c_enum_0249` | 性能测试 | 3/4 | h2dts parseEnum：扩充-值形态：尾逗号 的解析结果与性能。 |
+| 4123 | `conversion_cenum.part11.test.ts` | `c_enum_0250` | 性能测试 | 3/4 | h2dts parseEnum：扩充-值形态：无分号 的解析结果与性能。 |
+| 4124 | `conversion_cenum.part11.test.ts` | `c_enum_0251` | 性能测试 | 3/4 | h2dts parseEnum：扩充-值形态：重复值 的解析结果与性能。 |
+| 4125 | `conversion_cenum.part11.test.ts` | `c_enum_0252` | 性能测试 | 3/4 | h2dts parseEnum：扩充-值形态：大数值 的解析结果与性能。 |
+| 4126 | `conversion_cenum.part11.test.ts` | `c_enum_0253` | 性能测试 | 3/4 | h2dts parseEnum：扩充-值形态：浮点值 的解析结果与性能。 |
+| 4127 | `conversion_cunion.part01.test.ts` | `c_union_0001` | 性能测试 | 3/4 | h2dts parseUnion：union：int/float/char[4] 成员 的解析结果与性能。 |
+| 4128 | `conversion_cunion.part01.test.ts` | `c_union_0002` | 性能测试 | 3/4 | h2dts parseUnion：union：int/double/string* 成员 的解析结果与性能。 |
+| 4129 | `conversion_cunion.part01.test.ts` | `c_union_0003` | 性能测试 | 3/4 | h2dts parseUnion：union：整型族成员 的解析结果与性能。 |
+| 4130 | `conversion_cunion.part01.test.ts` | `c_union_0004` | 性能测试 | 3/4 | h2dts parseUnion：namespace：域内 union 的解析结果与性能。 |
+| 4131 | `conversion_cunion.part01.test.ts` | `c_union_0005` | 性能测试 | 3/4 | h2dts parseUnion：union：bool/int/double/char[8] 成员 的解析结果与性能。 |
+| 4132 | `conversion_cunion.part01.test.ts` | `c_union_0006` | 性能测试 | 3/4 | h2dts parseUnion：多 union：同文件 2 个 的解析结果与性能。 |
+| 4133 | `conversion_cunion.part01.test.ts` | `c_union_0007` | 性能测试 | 3/4 | h2dts parseUnion：扩充-union：整型族 5 成员 的解析结果与性能。 |
+| 4134 | `conversion_cunion.part01.test.ts` | `c_union_0008` | 性能测试 | 3/4 | h2dts parseUnion：扩充-union：浮点族 3 成员 的解析结果与性能。 |
+| 4135 | `conversion_cunion.part01.test.ts` | `c_union_0009` | 性能测试 | 3/4 | h2dts parseUnion：扩充-union：数组成员 的解析结果与性能。 |
+| 4136 | `conversion_cunion.part01.test.ts` | `c_union_0010` | 性能测试 | 3/4 | h2dts parseUnion：扩充-union：指针成员 的解析结果与性能。 |
+| 4137 | `conversion_cunion.part01.test.ts` | `c_union_0011` | 性能测试 | 3/4 | h2dts parseUnion：扩充-union-多声明：同文件 3 个 的解析结果与性能。 |
+| 4138 | `conversion_cunion.part01.test.ts` | `c_union_0012` | 性能测试 | 3/4 | h2dts parseUnion：扩充-union：10 成员 的解析结果与性能。 |
+| 4139 | `conversion_cunion.part01.test.ts` | `c_union_0013` | 性能测试 | 3/4 | h2dts parseUnion：扩充-union-namespace：两层嵌套 的解析结果与性能。 |
+| 4140 | `conversion_cunion.part01.test.ts` | `c_union_0014` | 性能测试 | 3/4 | h2dts parseUnion：扩充-union：混合成员 的解析结果与性能。 |
+| 4141 | `conversion_cunion.part02.test.ts` | `c_union_0015` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4142 | `conversion_cunion.part02.test.ts` | `c_union_0016` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4143 | `conversion_cunion.part02.test.ts` | `c_union_0017` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4144 | `conversion_cunion.part02.test.ts` | `c_union_0018` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4145 | `conversion_cunion.part02.test.ts` | `c_union_0019` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4146 | `conversion_cunion.part02.test.ts` | `c_union_0020` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4147 | `conversion_cunion.part02.test.ts` | `c_union_0021` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4148 | `conversion_cunion.part02.test.ts` | `c_union_0022` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4149 | `conversion_cunion.part02.test.ts` | `c_union_0023` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4150 | `conversion_cunion.part02.test.ts` | `c_union_0024` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4151 | `conversion_cunion.part02.test.ts` | `c_union_0025` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4152 | `conversion_cunion.part02.test.ts` | `c_union_0026` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4153 | `conversion_cunion.part02.test.ts` | `c_union_0027` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4154 | `conversion_cunion.part02.test.ts` | `c_union_0028` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4155 | `conversion_cunion.part02.test.ts` | `c_union_0029` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4156 | `conversion_cunion.part02.test.ts` | `c_union_0030` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4157 | `conversion_cunion.part02.test.ts` | `c_union_0031` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4158 | `conversion_cunion.part02.test.ts` | `c_union_0032` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4159 | `conversion_cunion.part02.test.ts` | `c_union_0033` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4160 | `conversion_cunion.part02.test.ts` | `c_union_0034` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4161 | `conversion_cunion.part02.test.ts` | `c_union_0035` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4162 | `conversion_cunion.part02.test.ts` | `c_union_0036` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4163 | `conversion_cunion.part02.test.ts` | `c_union_0037` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4164 | `conversion_cunion.part02.test.ts` | `c_union_0038` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4165 | `conversion_cunion.part02.test.ts` | `c_union_0039` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4166 | `conversion_cunion.part02.test.ts` | `c_union_0040` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4167 | `conversion_cunion.part02.test.ts` | `c_union_0041` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4168 | `conversion_cunion.part02.test.ts` | `c_union_0042` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4169 | `conversion_cunion.part02.test.ts` | `c_union_0043` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4170 | `conversion_cunion.part02.test.ts` | `c_union_0044` | 性能测试 | 3/4 | h2dts parseUnion：扩充-成员矩阵：4 成员 的解析结果与性能。 |
+| 4171 | `conversion_cunion.part02.test.ts` | `c_union_0045` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：2 成员 的解析结果与性能。 |
+| 4172 | `conversion_cunion.part02.test.ts` | `c_union_0046` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：3 成员 的解析结果与性能。 |
+| 4173 | `conversion_cunion.part02.test.ts` | `c_union_0047` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：4 成员 的解析结果与性能。 |
+| 4174 | `conversion_cunion.part02.test.ts` | `c_union_0048` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：5 成员 的解析结果与性能。 |
+| 4175 | `conversion_cunion.part02.test.ts` | `c_union_0049` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：6 成员 的解析结果与性能。 |
+| 4176 | `conversion_cunion.part02.test.ts` | `c_union_0050` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：7 成员 的解析结果与性能。 |
+| 4177 | `conversion_cunion.part02.test.ts` | `c_union_0051` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：8 成员 的解析结果与性能。 |
+| 4178 | `conversion_cunion.part02.test.ts` | `c_union_0052` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：9 成员 的解析结果与性能。 |
+| 4179 | `conversion_cunion.part02.test.ts` | `c_union_0053` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：10 成员 的解析结果与性能。 |
+| 4180 | `conversion_cunion.part02.test.ts` | `c_union_0054` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：11 成员 的解析结果与性能。 |
+| 4181 | `conversion_cunion.part03.test.ts` | `c_union_0055` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：12 成员 的解析结果与性能。 |
+| 4182 | `conversion_cunion.part03.test.ts` | `c_union_0056` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：13 成员 的解析结果与性能。 |
+| 4183 | `conversion_cunion.part03.test.ts` | `c_union_0057` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：14 成员 的解析结果与性能。 |
+| 4184 | `conversion_cunion.part03.test.ts` | `c_union_0058` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：15 成员 的解析结果与性能。 |
+| 4185 | `conversion_cunion.part03.test.ts` | `c_union_0059` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：16 成员 的解析结果与性能。 |
+| 4186 | `conversion_cunion.part03.test.ts` | `c_union_0060` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：17 成员 的解析结果与性能。 |
+| 4187 | `conversion_cunion.part03.test.ts` | `c_union_0061` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：18 成员 的解析结果与性能。 |
+| 4188 | `conversion_cunion.part03.test.ts` | `c_union_0062` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：19 成员 的解析结果与性能。 |
+| 4189 | `conversion_cunion.part03.test.ts` | `c_union_0063` | 性能测试 | 3/4 | h2dts parseUnion：扩充-规模：20 成员 的解析结果与性能。 |
+| 4190 | `conversion_cunion.part03.test.ts` | `c_union_0064` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：ValueU 的解析结果与性能。 |
+| 4191 | `conversion_cunion.part03.test.ts` | `c_union_0065` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：DataU 的解析结果与性能。 |
+| 4192 | `conversion_cunion.part03.test.ts` | `c_union_0066` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：BufferU 的解析结果与性能。 |
+| 4193 | `conversion_cunion.part03.test.ts` | `c_union_0067` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：ResultU 的解析结果与性能。 |
+| 4194 | `conversion_cunion.part03.test.ts` | `c_union_0068` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：NumberU 的解析结果与性能。 |
+| 4195 | `conversion_cunion.part03.test.ts` | `c_union_0069` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：MixedU 的解析结果与性能。 |
+| 4196 | `conversion_cunion.part03.test.ts` | `c_union_0070` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：RawU 的解析结果与性能。 |
+| 4197 | `conversion_cunion.part03.test.ts` | `c_union_0071` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：PacketU 的解析结果与性能。 |
+| 4198 | `conversion_cunion.part03.test.ts` | `c_union_0072` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：CellU 的解析结果与性能。 |
+| 4199 | `conversion_cunion.part03.test.ts` | `c_union_0073` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：SlotU 的解析结果与性能。 |
+| 4200 | `conversion_cunion.part03.test.ts` | `c_union_0074` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：WordU 的解析结果与性能。 |
+| 4201 | `conversion_cunion.part03.test.ts` | `c_union_0075` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：BlockU 的解析结果与性能。 |
+| 4202 | `conversion_cunion.part03.test.ts` | `c_union_0076` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：FrameU 的解析结果与性能。 |
+| 4203 | `conversion_cunion.part03.test.ts` | `c_union_0077` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：TokenU 的解析结果与性能。 |
+| 4204 | `conversion_cunion.part03.test.ts` | `c_union_0078` | 性能测试 | 3/4 | h2dts parseUnion：扩充-命名：NodeU 的解析结果与性能。 |
+| 4205 | `conversion_cunion.part03.test.ts` | `c_union_0079` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多 union：同文件 2 个 的解析结果与性能。 |
+| 4206 | `conversion_cunion.part03.test.ts` | `c_union_0080` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多 union：同文件 3 个 的解析结果与性能。 |
+| 4207 | `conversion_cunion.part03.test.ts` | `c_union_0081` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多 union：同文件 4 个 的解析结果与性能。 |
+| 4208 | `conversion_cunion.part03.test.ts` | `c_union_0082` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多 union：同文件 5 个 的解析结果与性能。 |
+| 4209 | `conversion_cunion.part03.test.ts` | `c_union_0083` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多 union：同文件 6 个 的解析结果与性能。 |
+| 4210 | `conversion_cunion.part03.test.ts` | `c_union_0084` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多 union：同文件 7 个 的解析结果与性能。 |
+| 4211 | `conversion_cunion.part03.test.ts` | `c_union_0085` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多 union：同文件 8 个 的解析结果与性能。 |
+| 4212 | `conversion_cunion.part03.test.ts` | `c_union_0086` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多 union：同文件 10 个 的解析结果与性能。 |
+| 4213 | `conversion_cunion.part03.test.ts` | `c_union_0087` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多 union：同文件 12 个 的解析结果与性能。 |
+| 4214 | `conversion_cunion.part04.test.ts` | `c_union_0088` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多 union：同文件 15 个 的解析结果与性能。 |
+| 4215 | `conversion_cunion.part04.test.ts` | `c_union_0089` | 性能测试 | 3/4 | h2dts parseUnion：扩充-namespace 的解析结果与性能。 |
+| 4216 | `conversion_cunion.part04.test.ts` | `c_union_0090` | 性能测试 | 3/4 | h2dts parseUnion：扩充-嵌套 namespace 的解析结果与性能。 |
+| 4217 | `conversion_cunion.part04.test.ts` | `c_union_0091` | 性能测试 | 3/4 | h2dts parseUnion：扩充-数组成员 的解析结果与性能。 |
+| 4218 | `conversion_cunion.part04.test.ts` | `c_union_0092` | 性能测试 | 3/4 | h2dts parseUnion：扩充-指针成员 的解析结果与性能。 |
+| 4219 | `conversion_cunion.part04.test.ts` | `c_union_0093` | 性能测试 | 3/4 | h2dts parseUnion：扩充-容器指针 的解析结果与性能。 |
+| 4220 | `conversion_cunion.part04.test.ts` | `c_union_0094` | 性能测试 | 3/4 | h2dts parseUnion：扩充-混合大成员 的解析结果与性能。 |
+| 4221 | `conversion_cunion.part04.test.ts` | `c_union_0095` | 性能测试 | 3/4 | h2dts parseUnion：扩充-单成员 的解析结果与性能。 |
+| 4222 | `conversion_cunion.part04.test.ts` | `c_union_0096` | 性能测试 | 3/4 | h2dts parseUnion：扩充-匿名别名 的解析结果与性能。 |
+| 4223 | `conversion_cunion.part04.test.ts` | `c_union_0097` | 性能测试 | 3/4 | h2dts parseUnion：扩充-注释 的解析结果与性能。 |
+| 4224 | `conversion_cunion.part04.test.ts` | `c_union_0098` | 性能测试 | 3/4 | h2dts parseUnion：扩充-多类型 的解析结果与性能。 |
+| 4225 | `conversion_cunion.part04.test.ts` | `c_union_0099` | 性能测试 | 3/4 | h2dts parseUnion：扩充-两成员 的解析结果与性能。 |
+| 4226 | `conversion_cnamespace.part01.test.ts` | `c_namespace_0001` | 性能测试 | 3/4 | h2dts parseClass：namespace 混合：enum+struct+class+函数 的解析结果与性能。 |
+| 4227 | `conversion_cnamespace.part01.test.ts` | `c_namespace_0002` | 性能测试 | 3/4 | h2dts parseClass：namespace 嵌套：域内多类型 的解析结果与性能。 |
+| 4228 | `conversion_cnamespace.part01.test.ts` | `c_namespace_0003` | 性能测试 | 3/4 | h2dts parseClass：扩充-namespace：变量+enum+struct+class+函数大混合 的解析结果与性能。 |
+| 4229 | `conversion_cnamespace.part01.test.ts` | `c_namespace_0004` | 性能测试 | 3/4 | h2dts parseClass：扩充-namespace：export namespace 变量+struct+函数 的解析结果与性能。 |
+| 4230 | `conversion_cnamespace.part01.test.ts` | `c_namespace_0005` | 性能测试 | 3/4 | h2dts parseClass：扩充-namespace：三层嵌套各含函数 的解析结果与性能。 |
+| 4231 | `conversion_cnamespace.part01.test.ts` | `c_namespace_0006` | 性能测试 | 3/4 | h2dts parseClass：扩充-namespace：变量+函数+enum 的解析结果与性能。 |
+| 4232 | `conversion_cnamespace.part01.test.ts` | `c_namespace_0007` | 性能测试 | 3/4 | h2dts parseClass：扩充-namespace：struct 类型函数出入参 的解析结果与性能。 |
+| 4233 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0008` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 0 型组合 的解析结果与性能。 |
+| 4234 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0009` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 1 型组合 的解析结果与性能。 |
+| 4235 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0010` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 2 型组合 的解析结果与性能。 |
+| 4236 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0011` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 3 型组合 的解析结果与性能。 |
+| 4237 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0012` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 0 型组合 的解析结果与性能。 |
+| 4238 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0013` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 1 型组合 的解析结果与性能。 |
+| 4239 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0014` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 2 型组合 的解析结果与性能。 |
+| 4240 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0015` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 3 型组合 的解析结果与性能。 |
+| 4241 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0016` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 0 型组合 的解析结果与性能。 |
+| 4242 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0017` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 1 型组合 的解析结果与性能。 |
+| 4243 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0018` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 2 型组合 的解析结果与性能。 |
+| 4244 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0019` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 3 型组合 的解析结果与性能。 |
+| 4245 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0020` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 0 型组合 的解析结果与性能。 |
+| 4246 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0021` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 1 型组合 的解析结果与性能。 |
+| 4247 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0022` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 2 型组合 的解析结果与性能。 |
+| 4248 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0023` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 3 型组合 的解析结果与性能。 |
+| 4249 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0024` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 0 型组合 的解析结果与性能。 |
+| 4250 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0025` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 1 型组合 的解析结果与性能。 |
+| 4251 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0026` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 2 型组合 的解析结果与性能。 |
+| 4252 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0027` | 性能测试 | 3/4 | h2dts parseClass：扩充-混合：namespace 3 型组合 的解析结果与性能。 |
+| 4253 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0028` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：2 层 namespace 的解析结果与性能。 |
+| 4254 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0029` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：3 层 namespace 的解析结果与性能。 |
+| 4255 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0030` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：4 层 namespace 的解析结果与性能。 |
+| 4256 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0031` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：2 层 namespace 的解析结果与性能。 |
+| 4257 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0032` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：3 层 namespace 的解析结果与性能。 |
+| 4258 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0033` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：4 层 namespace 的解析结果与性能。 |
+| 4259 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0034` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：2 层 namespace 的解析结果与性能。 |
+| 4260 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0035` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：3 层 namespace 的解析结果与性能。 |
+| 4261 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0036` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：4 层 namespace 的解析结果与性能。 |
+| 4262 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0037` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：2 层 namespace 的解析结果与性能。 |
+| 4263 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0038` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：3 层 namespace 的解析结果与性能。 |
+| 4264 | `conversion_cnamespace.part02.test.ts` | `c_namespace_0039` | 性能测试 | 3/4 | h2dts parseClass：扩充-嵌套：4 层 namespace 的解析结果与性能。 |
+| 4265 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0001` | 性能测试 | 3 | h2dts gen：gen：3 函数 getDtsFunction（同步/Async/Promise 三变体） 的生成结果与性能。 |
+| 4266 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0002` | 性能测试 | 3 | h2dts gen：gen：getDtsFunction 多返回类型 的生成结果与性能。 |
+| 4267 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0003` | 性能测试 | 3 | h2dts gen：gen：class getDtsClasses（变量+方法三变体） 的生成结果与性能。 |
+| 4268 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0004` | 性能测试 | 3 | h2dts gen：gen：class 数组成员 getDtsClasses 的生成结果与性能。 |
+| 4269 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0005` | 性能测试 | 3 | h2dts gen：gen：struct getDtsStructs（成员+方法） 的生成结果与性能。 |
+| 4270 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0006` | 性能测试 | 3 | h2dts gen：gen：struct getDtsStructs 字符串成员 的生成结果与性能。 |
+| 4271 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0007` | 性能测试 | 3 | h2dts gen：gen：enum getDtsEnum 的生成结果与性能。 |
+| 4272 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0008` | 性能测试 | 3 | h2dts gen：gen：enum 带值 getDtsEnum 的生成结果与性能。 |
+| 4273 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0009` | 性能测试 | 3 | h2dts gen：gen：union getDtsUnions 的生成结果与性能。 |
+| 4274 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0010` | 性能测试 | 3 | h2dts gen：gen：混合 ParseObj 全量 genDtsFile 的生成结果与性能。 |
+| 4275 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0011` | 性能测试 | 3 | h2dts gen：gen：getDtsFunction 字符串函数 的生成结果与性能。 |
+| 4276 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0012` | 性能测试 | 3 | h2dts gen：gen：class 容器成员 getDtsClasses 的生成结果与性能。 |
+| 4277 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0013` | 性能测试 | 3 | h2dts gen：gen：struct 方法 getDtsStructs 的生成结果与性能。 |
+| 4278 | `conversion_h2dts_gen.part01.test.ts` | `h2dts_gen_0014` | 性能测试 | 3 | h2dts gen：gen：enum 多值 getDtsEnum 的生成结果与性能。 |
+| 4279 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0015` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 int → number 的生成结果与性能。 |
+| 4280 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0016` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 char → string 的生成结果与性能。 |
+| 4281 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0017` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 short → number 的生成结果与性能。 |
+| 4282 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0018` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 long → number 的生成结果与性能。 |
+| 4283 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0019` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 long long → number 的生成结果与性能。 |
+| 4284 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0020` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 float → number 的生成结果与性能。 |
+| 4285 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0021` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 double → number 的生成结果与性能。 |
+| 4286 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0022` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 bool → boolean 的生成结果与性能。 |
+| 4287 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0023` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 unsigned int → number 的生成结果与性能。 |
+| 4288 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0024` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 unsigned char → string 的生成结果与性能。 |
+| 4289 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0025` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 unsigned short → number 的生成结果与性能。 |
+| 4290 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0026` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 unsigned long → number 的生成结果与性能。 |
+| 4291 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0027` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 unsigned long long → number 的生成结果与性能。 |
+| 4292 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0028` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 signed char → string 的生成结果与性能。 |
+| 4293 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0029` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 signed short → number 的生成结果与性能。 |
+| 4294 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0030` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 signed long → number 的生成结果与性能。 |
+| 4295 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0031` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 wchar_t → string 的生成结果与性能。 |
+| 4296 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0032` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 char16_t → string 的生成结果与性能。 |
+| 4297 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0033` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 char32_t → string 的生成结果与性能。 |
+| 4298 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0034` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 size_t → number 的生成结果与性能。 |
+| 4299 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0035` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 int8_t → number 的生成结果与性能。 |
+| 4300 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0036` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 int16_t → number 的生成结果与性能。 |
+| 4301 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0037` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 int32_t → number 的生成结果与性能。 |
+| 4302 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0038` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 int64_t → number 的生成结果与性能。 |
+| 4303 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0039` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 uint8_t → number 的生成结果与性能。 |
+| 4304 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0040` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 uint16_t → number 的生成结果与性能。 |
+| 4305 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0041` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 uint32_t → number 的生成结果与性能。 |
+| 4306 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0042` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 uint64_t → number 的生成结果与性能。 |
+| 4307 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0043` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 std::string → string 的生成结果与性能。 |
+| 4308 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0044` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 string → string 的生成结果与性能。 |
+| 4309 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0045` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 std::wstring → string 的生成结果与性能。 |
+| 4310 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0046` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 long double → number 的生成结果与性能。 |
+| 4311 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0047` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 void → void 的生成结果与性能。 |
+| 4312 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0048` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 std::vector<int> → Array<number> 的生成结果与性能。 |
+| 4313 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0049` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 std::vector<std::string> → Array<string> 的生成结果与性能。 |
+| 4314 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0050` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 std::map<std::string,int> → Map<string, number> 的生成结果与性能。 |
+| 4315 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0051` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 std::set<int> → Set<number> 的生成结果与性能。 |
+| 4316 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0052` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 std::pair<int,int> → [number, number] 的生成结果与性能。 |
+| 4317 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0053` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 char* → string 的生成结果与性能。 |
+| 4318 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0054` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 int* → number 的生成结果与性能。 |
+| 4319 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0055` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 double* → number 的生成结果与性能。 |
+| 4320 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0056` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 std::string* → string 的生成结果与性能。 |
+| 4321 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0057` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 void* → void 的生成结果与性能。 |
+| 4322 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0058` | 性能测试 | 3 | h2dts gen：扩充-gen：返回 int[10] → number 的生成结果与性能。 |
+| 4323 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0059` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 int → number 的生成结果与性能。 |
+| 4324 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0060` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 double → number 的生成结果与性能。 |
+| 4325 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0061` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 std::string → string 的生成结果与性能。 |
+| 4326 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0062` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 bool → boolean 的生成结果与性能。 |
+| 4327 | `conversion_h2dts_gen.part02.test.ts` | `h2dts_gen_0063` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 char → string 的生成结果与性能。 |
+| 4328 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0064` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 float → number 的生成结果与性能。 |
+| 4329 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0065` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 long → number 的生成结果与性能。 |
+| 4330 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0066` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 short → number 的生成结果与性能。 |
+| 4331 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0067` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 unsigned int → number 的生成结果与性能。 |
+| 4332 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0068` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 size_t → number 的生成结果与性能。 |
+| 4333 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0069` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 std::vector<int> → Array<number> 的生成结果与性能。 |
+| 4334 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0070` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 std::vector<std::string> → Array<string> 的生成结果与性能。 |
+| 4335 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0071` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 std::map<std::string,int> → Map<string, number> 的生成结果与性能。 |
+| 4336 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0072` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 std::set<int> → Set<number> 的生成结果与性能。 |
+| 4337 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0073` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 char* → string 的生成结果与性能。 |
+| 4338 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0074` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 std::wstring → string 的生成结果与性能。 |
+| 4339 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0075` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 int64_t → number 的生成结果与性能。 |
+| 4340 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0076` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 uint32_t → number 的生成结果与性能。 |
+| 4341 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0077` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 long long → number 的生成结果与性能。 |
+| 4342 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0078` | 性能测试 | 3 | h2dts gen：扩充-gen：入参 std::pair<int,int> → [number, number] 的生成结果与性能。 |
+| 4343 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0079` | 性能测试 | 3 | h2dts gen：扩充-gen：class 成员 int/float 的生成结果与性能。 |
+| 4344 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0080` | 性能测试 | 3 | h2dts gen：扩充-gen：class 成员 char/double 的生成结果与性能。 |
+| 4345 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0081` | 性能测试 | 3 | h2dts gen：扩充-gen：class 成员 short/bool 的生成结果与性能。 |
+| 4346 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0082` | 性能测试 | 3 | h2dts gen：扩充-gen：class 成员 long/unsigned int 的生成结果与性能。 |
+| 4347 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0083` | 性能测试 | 3 | h2dts gen：扩充-gen：class 成员 long long/unsigned char 的生成结果与性能。 |
+| 4348 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0084` | 性能测试 | 3 | h2dts gen：扩充-gen：class 成员 float/unsigned short 的生成结果与性能。 |
+| 4349 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0085` | 性能测试 | 3 | h2dts gen：扩充-gen：class 成员 double/unsigned long 的生成结果与性能。 |
+| 4350 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0086` | 性能测试 | 3 | h2dts gen：扩充-gen：class 成员 bool/unsigned long long 的生成结果与性能。 |
+| 4351 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0087` | 性能测试 | 3 | h2dts gen：扩充-gen：class 成员 unsigned int/signed char 的生成结果与性能。 |
+| 4352 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0088` | 性能测试 | 3 | h2dts gen：扩充-gen：class 成员 unsigned char/signed short 的生成结果与性能。 |
+| 4353 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0089` | 性能测试 | 3 | h2dts gen：扩充-gen：struct 成员 long 的生成结果与性能。 |
+| 4354 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0090` | 性能测试 | 3 | h2dts gen：扩充-gen：struct 成员 long long 的生成结果与性能。 |
+| 4355 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0091` | 性能测试 | 3 | h2dts gen：扩充-gen：struct 成员 float 的生成结果与性能。 |
+| 4356 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0092` | 性能测试 | 3 | h2dts gen：扩充-gen：struct 成员 double 的生成结果与性能。 |
+| 4357 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0093` | 性能测试 | 3 | h2dts gen：扩充-gen：struct 成员 bool 的生成结果与性能。 |
+| 4358 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0094` | 性能测试 | 3 | h2dts gen：扩充-gen：struct 成员 unsigned int 的生成结果与性能。 |
+| 4359 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0095` | 性能测试 | 3 | h2dts gen：扩充-gen：enum GenEn000 的生成结果与性能。 |
+| 4360 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0096` | 性能测试 | 3 | h2dts gen：扩充-gen：enum GenEn001 的生成结果与性能。 |
+| 4361 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0097` | 性能测试 | 3 | h2dts gen：扩充-gen：enum GenEn002 的生成结果与性能。 |
+| 4362 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0098` | 性能测试 | 3 | h2dts gen：扩充-gen：enum GenEn003 的生成结果与性能。 |
+| 4363 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0099` | 性能测试 | 3 | h2dts gen：扩充-gen：union GenUn000 的生成结果与性能。 |
+| 4364 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0100` | 性能测试 | 3 | h2dts gen：扩充-gen：union GenUn001 的生成结果与性能。 |
+| 4365 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0101` | 性能测试 | 3 | h2dts gen：扩充-gen：union GenUn002 的生成结果与性能。 |
+| 4366 | `conversion_h2dts_gen.part03.test.ts` | `h2dts_gen_0102` | 性能测试 | 3 | h2dts gen：扩充-gen：union GenUn003 的生成结果与性能。 |
+| 4367 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0103` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::shared_ptr<int> → number 的生成结果与性能。 |
+| 4368 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0104` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::shared_ptr<std::string> → string 的生成结果与性能。 |
+| 4369 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0105` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::unique_ptr<int> → number 的生成结果与性能。 |
+| 4370 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0106` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::optional<int> → number 的生成结果与性能。 |
+| 4371 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0107` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::optional<std::string> → string 的生成结果与性能。 |
+| 4372 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0108` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::variant<int, std::string> → string 的生成结果与性能。 |
+| 4373 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0109` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::string_view → string 的生成结果与性能。 |
+| 4374 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0110` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::bitset<8> → any 的生成结果与性能。 |
+| 4375 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0111` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::span<int> → number 的生成结果与性能。 |
+| 4376 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0112` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::atomic<int> → number 的生成结果与性能。 |
+| 4377 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0113` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::basic_string<char> → string 的生成结果与性能。 |
+| 4378 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0114` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::byte → any 的生成结果与性能。 |
+| 4379 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0115` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::chrono::milliseconds → Date 的生成结果与性能。 |
+| 4380 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0116` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::filesystem::path → any 的生成结果与性能。 |
+| 4381 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0117` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::map<int,int> → Map<number, number> 的生成结果与性能。 |
+| 4382 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0118` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::map<double,std::string> → Map<number, string> 的生成结果与性能。 |
+| 4383 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0119` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::map<std::string,std::string> → Map<string, string> 的生成结果与性能。 |
+| 4384 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0120` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::vector<char> → Array<string> 的生成结果与性能。 |
+| 4385 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0121` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::vector<float> → Array<number> 的生成结果与性能。 |
+| 4386 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0122` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::vector<long> → Array<number> 的生成结果与性能。 |
+| 4387 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0123` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::vector<unsigned int> → Array<number> 的生成结果与性能。 |
+| 4388 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0124` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::vector<std::wstring> → Array<string> 的生成结果与性能。 |
+| 4389 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0125` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::vector<short> → Array<number> 的生成结果与性能。 |
+| 4390 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0126` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::vector<int64_t> → Array<number> 的生成结果与性能。 |
+| 4391 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0127` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::pair<double,double> → [number, number] 的生成结果与性能。 |
+| 4392 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0128` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::tuple<int,std::string,bool> → [number, string, boolean] 的生成结果与性能。 |
+| 4393 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0129` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::tuple<double,double,double> → [number, number, number] 的生成结果与性能。 |
+| 4394 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0130` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::map<wchar_t,int> → Map<string, number> 的生成结果与性能。 |
+| 4395 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0131` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::map<size_t,std::string> → Map<number, string> 的生成结果与性能。 |
+| 4396 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0132` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::optional<bool> → boolean 的生成结果与性能。 |
+| 4397 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0133` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::atomic<bool> → boolean 的生成结果与性能。 |
+| 4398 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0134` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::span<double> → number 的生成结果与性能。 |
+| 4399 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0135` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::bitset<16> → any 的生成结果与性能。 |
+| 4400 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0136` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::vector<size_t> → Array<number> 的生成结果与性能。 |
+| 4401 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0137` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::vector<uint8_t> → Array<number> 的生成结果与性能。 |
+| 4402 | `conversion_h2dts_gen.part04.test.ts` | `h2dts_gen_0138` | 性能测试 | 3 | h2dts gen：扩充-gen 新类型：std::set<double> → Set<number> 的生成结果与性能。 |
+| 4403 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0139` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<double> → Array<number> 的生成结果与性能。 |
+| 4404 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0140` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<bool> → Array<boolean> 的生成结果与性能。 |
+| 4405 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0141` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<wchar_t> → Array<string> 的生成结果与性能。 |
+| 4406 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0142` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<std::wstring> → Array<string> 的生成结果与性能。 |
+| 4407 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0143` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<unsigned int> → Array<number> 的生成结果与性能。 |
+| 4408 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0144` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<short> → Array<number> 的生成结果与性能。 |
+| 4409 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0145` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<int64_t> → Array<number> 的生成结果与性能。 |
+| 4410 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0146` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<uint8_t> → Array<number> 的生成结果与性能。 |
+| 4411 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0147` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<size_t> → Array<number> 的生成结果与性能。 |
+| 4412 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0148` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<char> → Array<string> 的生成结果与性能。 |
+| 4413 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0149` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<float> → Array<number> 的生成结果与性能。 |
+| 4414 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0150` | 性能测试 | 3 | h2dts gen：数组入参 std::vector<long> → Array<number> 的生成结果与性能。 |
+| 4415 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0151` | 性能测试 | 3 | h2dts gen：数组入参 std::array<int,10> → Array<number> 的生成结果与性能。 |
+| 4416 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0152` | 性能测试 | 3 | h2dts gen：数组入参 std::array<std::string,5> → Array<string> 的生成结果与性能。 |
+| 4417 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0153` | 性能测试 | 3 | h2dts gen：数组入参 std::deque<int> → Array<number> 的生成结果与性能。 |
+| 4418 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0154` | 性能测试 | 3 | h2dts gen：数组入参 std::deque<std::string> → Array<string> 的生成结果与性能。 |
+| 4419 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0155` | 性能测试 | 3 | h2dts gen：数组入参 std::list<int> → Array<number> 的生成结果与性能。 |
+| 4420 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0156` | 性能测试 | 3 | h2dts gen：数组入参 std::list<std::string> → Array<string> 的生成结果与性能。 |
+| 4421 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0157` | 性能测试 | 3 | h2dts gen：数组入参 std::forward_list<int> → Array<number> 的生成结果与性能。 |
+| 4422 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0158` | 性能测试 | 3 | h2dts gen：数组入参 std::queue<int> → Array<number> 的生成结果与性能。 |
+| 4423 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0159` | 性能测试 | 3 | h2dts gen：数组入参 std::stack<int> → Array<number> 的生成结果与性能。 |
+| 4424 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0160` | 性能测试 | 3 | h2dts gen：数组入参 std::priority_queue<int> → Array<number> 的生成结果与性能。 |
+| 4425 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0161` | 性能测试 | 3 | h2dts gen：数组入参 std::valarray<double> → Array<number> 的生成结果与性能。 |
+| 4426 | `conversion_h2dts_gen.part05.test.ts` | `h2dts_gen_0162` | 性能测试 | 3 | h2dts gen：数组入参 std::basic_string<char> → string 的生成结果与性能。 |
+| 4427 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0163` | 性能测试 | 3 | h2dts gen：数组入参 C 数组 char[8] 的生成结果与性能。 |
+| 4428 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0164` | 性能测试 | 3 | h2dts gen：数组入参 C 数组 double[4] 的生成结果与性能。 |
+| 4429 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0165` | 性能测试 | 3 | h2dts gen：数组入参 C 数组 bool[2] 的生成结果与性能。 |
+| 4430 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0166` | 性能测试 | 3 | h2dts gen：数组入参 C 数组 long[3] 的生成结果与性能。 |
+| 4431 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0167` | 性能测试 | 3 | h2dts gen：数组入参 C 数组 std::string[5] 的生成结果与性能。 |
+| 4432 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0168` | 性能测试 | 3 | h2dts gen：static 函数 int 返回 的生成结果与性能。 |
+| 4433 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0169` | 性能测试 | 3 | h2dts gen：static 函数 std::string 返回 的生成结果与性能。 |
+| 4434 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0170` | 性能测试 | 3 | h2dts gen：static 函数容器入参 的生成结果与性能。 |
+| 4435 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0171` | 性能测试 | 3 | h2dts gen：static 函数多参 char+double 的生成结果与性能。 |
+| 4436 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0172` | 性能测试 | 3 | h2dts gen：static 函数多参 float 返回 double 的生成结果与性能。 |
+| 4437 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0173` | 性能测试 | 3 | h2dts gen：namespace 内函数 int 返回 的生成结果与性能。 |
+| 4438 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0174` | 性能测试 | 3 | h2dts gen：namespace 内函数 std::string 返回 的生成结果与性能。 |
+| 4439 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0175` | 性能测试 | 3 | h2dts gen：namespace 内多函数 的生成结果与性能。 |
+| 4440 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0176` | 性能测试 | 3 | h2dts gen：namespace 嵌套函数 的生成结果与性能。 |
+| 4441 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0177` | 性能测试 | 3 | h2dts gen：namespace 内数组入参函数 的生成结果与性能。 |
+| 4442 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0178` | 性能测试 | 3 | h2dts gen：namespace 内 class 变量+方法 的生成结果与性能。 |
+| 4443 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0179` | 性能测试 | 3 | h2dts gen：namespace 嵌套 class 的生成结果与性能。 |
+| 4444 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0180` | 性能测试 | 3 | h2dts gen：namespace 内 class static 变量+方法 的生成结果与性能。 |
+| 4445 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0181` | 性能测试 | 3 | h2dts gen：class 容器数组变量+方法 的生成结果与性能。 |
+| 4446 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0182` | 性能测试 | 3 | h2dts gen：class 多维数组/容器数组变量 的生成结果与性能。 |
+| 4447 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0183` | 性能测试 | 3 | h2dts gen：class 多容器变量 的生成结果与性能。 |
+| 4448 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0184` | 性能测试 | 3 | h2dts gen：namespace 内 static 函数 的生成结果与性能。 |
+| 4449 | `conversion_h2dts_gen.part06.test.ts` | `h2dts_gen_0185` | 性能测试 | 3 | h2dts gen：namespace 内 static 函数容器入参 的生成结果与性能。 |
+| 4450 | `conversion_h2dtscpp_gen.part01.test.ts` | `h2dtscpp_gen_0001` | 性能测试 | 4 | h2dtscpp transParseObj：transParseObj：函数类型保持不变（C++→C++ 恒等） 的转换结果与性能。 |
+| 4451 | `conversion_h2dtscpp_gen.part01.test.ts` | `h2dtscpp_gen_0002` | 性能测试 | 4 | h2dtscpp transParseObj：transParseObj：class 变量/函数转换 的转换结果与性能。 |
+| 4452 | `conversion_h2dtscpp_gen.part01.test.ts` | `h2dtscpp_gen_0003` | 性能测试 | 4 | h2dtscpp transParseObj：transParseObj：struct 成员转换 的转换结果与性能。 |
+| 4453 | `conversion_h2dtscpp_gen.part01.test.ts` | `h2dtscpp_gen_0004` | 性能测试 | 4 | h2dtscpp transParseObj：transParseObj：enum 保留 的转换结果与性能。 |
+| 4454 | `conversion_h2dtscpp_gen.part01.test.ts` | `h2dtscpp_gen_0005` | 性能测试 | 4 | h2dtscpp transParseObj：transParseObj：union 成员转换 的转换结果与性能。 |
+| 4455 | `conversion_h2dtscpp_gen.part01.test.ts` | `h2dtscpp_gen_0006` | 性能测试 | 4 | h2dtscpp transParseObj：transParseObj：混合 ParseObj 全量转换 的转换结果与性能。 |
+| 4456 | `conversion_h2dtscpp_gen.part01.test.ts` | `h2dtscpp_gen_0007` | 性能测试 | 4 | h2dtscpp transParseObj：transParseObj：数组/容器参数转换 的转换结果与性能。 |
+| 4457 | `conversion_h2dtscpp_gen.part01.test.ts` | `h2dtscpp_gen_0008` | 性能测试 | 4 | h2dtscpp transParseObj：transParseObj：class 数组成员转换 的转换结果与性能。 |
+| 4458 | `conversion_h2dtscpp_gen.part01.test.ts` | `h2dtscpp_gen_0009` | 性能测试 | 4 | h2dtscpp transParseObj：transParseObj：struct 多维数组成员转换 的转换结果与性能。 |
+| 4459 | `conversion_h2dtscpp_gen.part01.test.ts` | `h2dtscpp_gen_0010` | 性能测试 | 4 | h2dtscpp transParseObj：transParseObj：static/多返回类型转换 的转换结果与性能。 |
+| 4460 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0011` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 1 的转换结果与性能。 |
+| 4461 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0012` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 2 的转换结果与性能。 |
+| 4462 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0013` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 3 的转换结果与性能。 |
+| 4463 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0014` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 4 的转换结果与性能。 |
+| 4464 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0015` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 5 的转换结果与性能。 |
+| 4465 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0016` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 6 的转换结果与性能。 |
+| 4466 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0017` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 7 的转换结果与性能。 |
+| 4467 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0018` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 8 的转换结果与性能。 |
+| 4468 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0019` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 9 的转换结果与性能。 |
+| 4469 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0020` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 10 的转换结果与性能。 |
+| 4470 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0021` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 11 的转换结果与性能。 |
+| 4471 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0022` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：基础类型组 12 的转换结果与性能。 |
+| 4472 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0023` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：容器类型组 1 的转换结果与性能。 |
+| 4473 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0024` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：容器类型组 2 的转换结果与性能。 |
+| 4474 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0025` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：容器类型组 3 的转换结果与性能。 |
+| 4475 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0026` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：容器类型组 4 的转换结果与性能。 |
+| 4476 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0027` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：容器类型组 5 的转换结果与性能。 |
+| 4477 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0028` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：容器类型组 6 的转换结果与性能。 |
+| 4478 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0029` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：容器类型组 7 的转换结果与性能。 |
+| 4479 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0030` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：容器类型组 8 的转换结果与性能。 |
+| 4480 | `conversion_h2dtscpp_gen.part02.test.ts` | `h2dtscpp_gen_0031` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：容器类型组 9 的转换结果与性能。 |
+| 4481 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0032` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：容器类型组 10 的转换结果与性能。 |
+| 4482 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0033` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：class+struct 混合组 1 的转换结果与性能。 |
+| 4483 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0034` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：class+struct 混合组 2 的转换结果与性能。 |
+| 4484 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0035` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：class+struct 混合组 3 的转换结果与性能。 |
+| 4485 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0036` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：class+struct 混合组 4 的转换结果与性能。 |
+| 4486 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0037` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：class+struct 混合组 5 的转换结果与性能。 |
+| 4487 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0038` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：class+struct 混合组 6 的转换结果与性能。 |
+| 4488 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0039` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：class+struct 混合组 7 的转换结果与性能。 |
+| 4489 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0040` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：class+struct 混合组 8 的转换结果与性能。 |
+| 4490 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0041` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：class+struct 混合组 9 的转换结果与性能。 |
+| 4491 | `conversion_h2dtscpp_gen.part03.test.ts` | `h2dtscpp_gen_0042` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj：class+struct 混合组 10 的转换结果与性能。 |
+| 4492 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0043` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 1 的转换结果与性能。 |
+| 4493 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0044` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 2 的转换结果与性能。 |
+| 4494 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0045` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 3 的转换结果与性能。 |
+| 4495 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0046` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 4 的转换结果与性能。 |
+| 4496 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0047` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 5 的转换结果与性能。 |
+| 4497 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0048` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 6 的转换结果与性能。 |
+| 4498 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0049` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 7 的转换结果与性能。 |
+| 4499 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0050` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 8 的转换结果与性能。 |
+| 4500 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0051` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 9 的转换结果与性能。 |
+| 4501 | `conversion_h2dtscpp_gen.part04.test.ts` | `h2dtscpp_gen_0052` | 性能测试 | 4 | h2dtscpp transParseObj：扩充-transParseObj 新类型：组 10 的转换结果与性能。 |
+
