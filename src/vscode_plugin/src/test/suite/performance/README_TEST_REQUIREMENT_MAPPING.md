@@ -328,7 +328,7 @@
 | 194 | `conversion_tsunion.part07.test.ts` | `dts2cpp_union_0194` | 性能测试 | 2 | dts2cpp union type alias TemplateStringsArray | readonly string[] 的解析结果与性能。 |
 | 195 | `conversion_tsunion.part07.test.ts` | `dts2cpp_union_0195` | 性能测试 | 2 | dts2cpp union type alias HeadersInit | Record<string, string> 的解析结果与性能。 |
 | 196 | `conversion_tsunion.part07.test.ts` | `dts2cpp_union_0196` | 性能测试 | 2 | dts2cpp union type alias Blob | ArrayBuffer | string 的解析结果与性能。 |
-| 197 | `conversion_tsunion.part07.test.ts` | `dts2cpp_union_0197` | 性能测试 | 2 | dts2cpp union type alias NodeJS.Timeout | number 的解析结果与性能。 |
+| 197 | `conversion_tsunion.part07.test.ts` | `dts2cpp_union_0197` | 性能测试 | 2 | dts2cpp union type alias Timer | number 的解析结果与性能。 |
 | 198 | `conversion_tsunion.part07.test.ts` | `dts2cpp_union_0198` | 性能测试 | 2 | dts2cpp union type alias Parameters 含可选/union 入参 的解析结果与性能。 |
 | 199 | `conversion_tsunion.part07.test.ts` | `dts2cpp_union_0199` | 性能测试 | 2 | dts2cpp union type alias ReturnType 结果为 union 的解析结果与性能。 |
 | 200 | `conversion_tsunion.part07.test.ts` | `dts2cpp_union_0200` | 性能测试 | 2 | dts2cpp union type alias Awaited 嵌套 Promise union | null 的解析结果与性能。 |
@@ -668,7 +668,7 @@
 | 534 | `conversion_tsunion.part13.test.ts` | `dts2cpp_union_0534` | 性能测试 | 2 | dts2cpp union type alias 容错：泛型括号不闭合（残留成员）。 |
 | 535 | `conversion_tsenum.part01.test.ts` | `dts2cpp_enum_0001` | 性能测试 | 2 | dts2cpp enum 对齐 parsetsenum test_1：一般多行 enum（无赋值） 的解析结果与性能。 |
 | 536 | `conversion_tsenum.part01.test.ts` | `dts2cpp_enum_0002` | 性能测试 | 2 | dts2cpp enum 对齐 test_2：成员带行注释 的解析结果与性能。 |
-| 537 | `conversion_tsenum.part01.test.ts` | `dts2cpp_enum_0003` | 性能测试 | 2 | dts2cpp enum 对齐 test_3：首个成员赋值其余推导 的解析结果与性能。 |
+| 537 | `conversion_tsenum.part01.test.ts` | `dts2cpp_enum_0003` | 性能测试 | 2 | dts2cpp enum 对齐 test_3：第一个成员赋值其余推导 的解析结果与性能。 |
 | 538 | `conversion_tsenum.part01.test.ts` | `dts2cpp_enum_0004` | 性能测试 | 2 | dts2cpp enum 对齐 test_4：全部成员位运算赋值 的解析结果与性能。 |
 | 539 | `conversion_tsenum.part01.test.ts` | `dts2cpp_enum_0005` | 性能测试 | 2 | dts2cpp enum 对齐 test_5：const enum 无赋值 的解析结果与性能。 |
 | 540 | `conversion_tsenum.part01.test.ts` | `dts2cpp_enum_0006` | 性能测试 | 2 | dts2cpp enum 对齐 test_6：const enum 复杂表达式赋值 的解析结果与性能。 |
