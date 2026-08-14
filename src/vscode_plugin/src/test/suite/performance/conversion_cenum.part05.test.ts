@@ -312,7 +312,7 @@ suite('Performance_C_Enum_Suite', function ()
     M5 = "v5",
     M6 = "v6",
     M7 = "v7",
-    M8 = "v8",
+    M8 = "x8",
     M9 = "v9",
     M10 = "v10",
     M11 = "v11",
@@ -346,7 +346,7 @@ suite('Performance_C_Enum_Suite', function ()
       assert.strictEqual(objList[0].members[5], 'M5="v5"');
       assert.strictEqual(objList[0].members[6], 'M6="v6"');
       assert.strictEqual(objList[0].members[7], 'M7="v7"');
-      assert.strictEqual(objList[0].members[8], 'M8="v8"');
+      assert.strictEqual(objList[0].members[8], 'M8="x8"');
       assert.strictEqual(objList[0].members[9], 'M9="v9"');
       assert.strictEqual(objList[0].members[10], 'M10="v10"');
       assert.strictEqual(objList[0].members[11], 'M11="v11"');
@@ -652,7 +652,7 @@ suite('Performance_C_Enum_Suite', function ()
     M5 = "v5",
     M6 = "v6",
     M7 = "v7",
-    M8 = "v8",
+    M8 = "x8",
     M9 = "v9",
     M10 = "v10",
     M11 = "v11",
@@ -687,7 +687,7 @@ suite('Performance_C_Enum_Suite', function ()
       assert.strictEqual(objList[0].members[5], 'M5="v5"');
       assert.strictEqual(objList[0].members[6], 'M6="v6"');
       assert.strictEqual(objList[0].members[7], 'M7="v7"');
-      assert.strictEqual(objList[0].members[8], 'M8="v8"');
+      assert.strictEqual(objList[0].members[8], 'M8="x8"');
       assert.strictEqual(objList[0].members[9], 'M9="v9"');
       assert.strictEqual(objList[0].members[10], 'M10="v10"');
       assert.strictEqual(objList[0].members[11], 'M11="v11"');
@@ -1000,7 +1000,7 @@ suite('Performance_C_Enum_Suite', function ()
     M5 = "v5",
     M6 = "v6",
     M7 = "v7",
-    M8 = "v8",
+    M8 = "x8",
     M9 = "v9",
     M10 = "v10",
     M11 = "v11",
@@ -1036,7 +1036,7 @@ suite('Performance_C_Enum_Suite', function ()
       assert.strictEqual(objList[0].members[5], 'M5="v5"');
       assert.strictEqual(objList[0].members[6], 'M6="v6"');
       assert.strictEqual(objList[0].members[7], 'M7="v7"');
-      assert.strictEqual(objList[0].members[8], 'M8="v8"');
+      assert.strictEqual(objList[0].members[8], 'M8="x8"');
       assert.strictEqual(objList[0].members[9], 'M9="v9"');
       assert.strictEqual(objList[0].members[10], 'M10="v10"');
       assert.strictEqual(objList[0].members[11], 'M11="v11"');
@@ -1356,7 +1356,7 @@ suite('Performance_C_Enum_Suite', function ()
     M5 = "v5",
     M6 = "v6",
     M7 = "v7",
-    M8 = "v8",
+    M8 = "x8",
     M9 = "v9",
     M10 = "v10",
     M11 = "v11",
@@ -1393,7 +1393,7 @@ suite('Performance_C_Enum_Suite', function ()
       assert.strictEqual(objList[0].members[5], 'M5="v5"');
       assert.strictEqual(objList[0].members[6], 'M6="v6"');
       assert.strictEqual(objList[0].members[7], 'M7="v7"');
-      assert.strictEqual(objList[0].members[8], 'M8="v8"');
+      assert.strictEqual(objList[0].members[8], 'M8="x8"');
       assert.strictEqual(objList[0].members[9], 'M9="v9"');
       assert.strictEqual(objList[0].members[10], 'M10="v10"');
       assert.strictEqual(objList[0].members[11], 'M11="v11"');
@@ -1720,7 +1720,7 @@ suite('Performance_C_Enum_Suite', function ()
     M5 = "v5",
     M6 = "v6",
     M7 = "v7",
-    M8 = "v8",
+    M8 = "x8",
     M9 = "v9",
     M10 = "v10",
     M11 = "v11",
@@ -1758,7 +1758,7 @@ suite('Performance_C_Enum_Suite', function ()
       assert.strictEqual(objList[0].members[5], 'M5="v5"');
       assert.strictEqual(objList[0].members[6], 'M6="v6"');
       assert.strictEqual(objList[0].members[7], 'M7="v7"');
-      assert.strictEqual(objList[0].members[8], 'M8="v8"');
+      assert.strictEqual(objList[0].members[8], 'M8="x8"');
       assert.strictEqual(objList[0].members[9], 'M9="v9"');
       assert.strictEqual(objList[0].members[10], 'M10="v10"');
       assert.strictEqual(objList[0].members[11], 'M11="v11"');
